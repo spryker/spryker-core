@@ -142,11 +142,11 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
-    public function getCustomerRawData(): ?CustomerTransfer
+    public function findCustomerRawData(): ?CustomerTransfer
     {
         $customerTransfer = $this->getFactory()
             ->createSessionCustomerSession()
-            ->getCustomerRawData();
+            ->findCustomerRawData();
 
         return $customerTransfer;
     }

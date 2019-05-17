@@ -56,18 +56,6 @@ interface CartsRestApiFacadeInterface
 
     /**
      * Specification:
-     * - Finds customer quote collection.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
-     */
-    public function findQuoteByCustomerAndStore(QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): QuoteCollectionTransfer;
-
-    /**
-     * Specification:
      * - Updates customer quote.
      *
      * @api

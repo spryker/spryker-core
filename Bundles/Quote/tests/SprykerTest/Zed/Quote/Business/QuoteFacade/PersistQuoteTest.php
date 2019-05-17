@@ -112,13 +112,11 @@ class PersistQuoteTest extends Unit
 
         $this->assertFalse($quoteResponseTransfer->getIsSuccessful());
 
-        if (static::ERROR_MESSAGE_STORE_DATA_IS_MISSING) {
-            $errors = array_map(function ($errorMessageTransfer) {
-                return $errorMessageTransfer->getValue();
-            }, (array)$quoteResponseTransfer->getErrors());
+        $errors = array_map(function ($errorMessageTransfer) {
+            return $errorMessageTransfer->getValue();
+        }, (array)$quoteResponseTransfer->getErrors());
 
-            $this->assertContains(static::ERROR_MESSAGE_STORE_DATA_IS_MISSING, $errors);
-        }
+        $this->assertContains(static::ERROR_MESSAGE_STORE_DATA_IS_MISSING, $errors);
     }
 
     /**
@@ -137,13 +135,11 @@ class PersistQuoteTest extends Unit
 
         $this->assertFalse($quoteResponseTransfer->getIsSuccessful());
 
-        if (static::ERROR_MESSAGE_STORE_DATA_IS_MISSING) {
-            $errors = array_map(function ($errorMessageTransfer) {
-                return $errorMessageTransfer->getValue();
-            }, (array)$quoteResponseTransfer->getErrors());
+        $errors = array_map(function ($errorMessageTransfer) {
+            return $errorMessageTransfer->getValue();
+        }, (array)$quoteResponseTransfer->getErrors());
 
-            $this->assertContains(static::ERROR_MESSAGE_STORE_DATA_IS_MISSING, $errors);
-        }
+        $this->assertContains(static::ERROR_MESSAGE_STORE_DATA_IS_MISSING, $errors);
     }
 
     /**

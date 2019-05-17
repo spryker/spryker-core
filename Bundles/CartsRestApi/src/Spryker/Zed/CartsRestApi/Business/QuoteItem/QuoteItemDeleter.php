@@ -79,7 +79,7 @@ class QuoteItemDeleter implements QuoteItemDeleterInterface
      *
      * @return \Generated\Shared\Transfer\PersistentCartChangeTransfer
      */
-    public function createPersistentCartChangeTransfer(
+    protected function createPersistentCartChangeTransfer(
         QuoteTransfer $quoteTransfer,
         RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
     ): PersistentCartChangeTransfer {

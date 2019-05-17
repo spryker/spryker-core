@@ -88,7 +88,7 @@ class GuestCartUpdater implements GuestCartUpdaterInterface
     public function updateGuestCartCustomerReferenceOnRegistration(CustomerTransfer $customerTransfer): CustomerTransfer
     {
         /** @var \Generated\Shared\Transfer\CustomerTransfer|null $anonymousCustomerTransfer */
-        $anonymousCustomerTransfer = $this->customerClient->getCustomerRawData();
+        $anonymousCustomerTransfer = $this->customerClient->findCustomerRawData();
         if ($anonymousCustomerTransfer === null || !($anonymousCustomerTransfer instanceof CustomerTransfer)) {
             return $customerTransfer;
         }

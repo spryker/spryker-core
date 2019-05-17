@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\PersistentCart\Communication\Plugin\CartsRestApi\QuoteCreator;
+namespace Spryker\Zed\CartsRestApi\Communication\Plugin\CartsRestApi;
 
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -13,15 +13,15 @@ use Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteCreatorPluginInterf
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\PersistentCart\Business\PersistentCartFacadeInterface getFacade()
- * @method \Spryker\Zed\PersistentCart\PersistentCartConfig getConfig()
- * @method \Spryker\Zed\PersistentCart\Communication\PersistentCartCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CartsRestApi\Business\CartsRestApiFacadeInterface getFacade()
+ * @method \Spryker\Zed\CartsRestApi\CartsRestApiConfig getConfig()
  */
 class QuoteCreatorPlugin extends AbstractPlugin implements QuoteCreatorPluginInterface
 {
     /**
      * {@inheritdoc}
-     * - Creates quote for customer.
+     * - Creates a single quote for customer.
+     * - Creating of more than one quote is not allowed.
      *
      * @api
      *
@@ -31,6 +31,6 @@ class QuoteCreatorPlugin extends AbstractPlugin implements QuoteCreatorPluginInt
      */
     public function createQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
-        return $this->getFacade()->createQuote($quoteTransfer);
+        return $this->getFacade()->createSingleQuote($quoteTransfer);
     }
 }

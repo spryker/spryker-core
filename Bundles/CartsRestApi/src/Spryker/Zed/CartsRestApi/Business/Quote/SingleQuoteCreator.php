@@ -48,7 +48,7 @@ class SingleQuoteCreator implements SingleQuoteCreatorInterface
             ->setCustomerReference($quoteTransfer->getCustomerReference())
             ->setIdStore($quoteTransfer->getStore()->getIdStore());
 
-        $quoteCollectionTransfer = $this->quoteReader->getQuoteCollectionByQuoteCriteriaFilter($quoteCriteriaFilterTransfer);
+        $quoteCollectionTransfer = $this->quoteReader->getQuoteCollection($quoteCriteriaFilterTransfer);
         if ($quoteCollectionTransfer->getQuotes()->count()) {
             $quoteErrorTransfer = (new QuoteErrorTransfer())
                 ->setErrorIdentifier(CartsRestApiSharedConfig::ERROR_IDENTIFIER_CUSTOMER_ALREADY_HAS_CART);

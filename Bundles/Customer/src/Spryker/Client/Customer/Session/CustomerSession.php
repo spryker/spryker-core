@@ -124,13 +124,15 @@ class CustomerSession implements CustomerSessionInterface
             $customerTransfer
         );
 
+        $this->invalidateCustomerTransferCache();
+
         return $customerTransfer;
     }
 
     /**
      * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
-    public function getCustomerRawData(): ?CustomerTransfer
+    public function findCustomerRawData(): ?CustomerTransfer
     {
         $customerTransfer = $this->sessionClient->get(self::SESSION_KEY);
 

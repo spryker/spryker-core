@@ -54,6 +54,6 @@ class QuoteMapper implements QuoteMapperInterface
         ErrorMessageTransfer $errorMessageTransfer,
         QuoteErrorTransfer $quoteErrorTransfer
     ): QuoteErrorTransfer {
-        return (new QuoteErrorTransfer())->setMessage($errorMessageTransfer->getValue());
+        return $quoteErrorTransfer->setMessage($errorMessageTransfer->getValue());
     }
 }

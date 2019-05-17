@@ -64,7 +64,10 @@ class QuoteItemAdder implements QuoteItemAdderInterface
             ->requireQuoteUuid();
 
         $quoteResponseTransfer = $this->quoteReader->findQuoteByUuid(
-            $this->quoteItemMapper->mapRestCartItemsAttributesTransferToQuoteTransfer($restCartItemsAttributesTransfer)
+            $this->quoteItemMapper->mapRestCartItemsAttributesTransferToQuoteTransfer(
+                $restCartItemsAttributesTransfer,
+                new QuoteTransfer()
+            )
         );
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
@@ -92,7 +95,7 @@ class QuoteItemAdder implements QuoteItemAdderInterface
      *
      * @return \Generated\Shared\Transfer\PersistentCartChangeTransfer
      */
-    public function createPersistentCartChangeTransfer(
+    protected function createPersistentCartChangeTransfer(
         QuoteTransfer $quoteTransfer,
         RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
     ): PersistentCartChangeTransfer {

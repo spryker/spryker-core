@@ -19,16 +19,24 @@ use Symfony\Component\HttpFoundation\Response;
 class CartRestResponseBuilder implements CartRestResponseBuilderInterface
 {
     /**
+     * @var \Spryker\Glue\CartsRestApi\CartsRestApiConfig
+     */
+    protected $config;
+
+    /**
      * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
      */
     protected $restResourceBuilder;
 
     /**
+     * @param \Spryker\Glue\CartsRestApi\CartsRestApiConfig $config
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      */
     public function __construct(
+        CartsRestApiConfig $config,
         RestResourceBuilderInterface $restResourceBuilder
     ) {
+        $this->config = $config;
         $this->restResourceBuilder = $restResourceBuilder;
     }
 
@@ -82,7 +90,7 @@ class CartRestResponseBuilder implements CartRestResponseBuilderInterface
         RestErrorMessageTransfer $restErrorMessageTransfer
     ): RestErrorMessageTransfer {
         if ($quoteErrorTransfer->getErrorIdentifier()) {
-            $errorIdentifierMapping = CartsRestApiConfig::ERROR_IDENTIFIER_TO_REST_ERROR_MAPPING[$quoteErrorTransfer->getErrorIdentifier()];
+            $errorIdentifierMapping = $this->config->getErrorIdentifierToRestErrorMapping()[$quoteErrorTransfer->getErrorIdentifier()];
             $restErrorMessageTransfer->fromArray($errorIdentifierMapping, true);
         }
 

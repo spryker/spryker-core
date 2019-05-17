@@ -90,7 +90,7 @@ class GuestQuoteItemAdder implements GuestQuoteItemAdderInterface
                     ->setErrorIdentifier(CartsRestApiSharedConfig::ERROR_IDENTIFIER_ITEM_VALIDATION));
         }
 
-        $customerQuoteCollection = $this->quoteReader->getQuoteByQuoteCriteriaFilter(
+        $customerQuoteCollection = $this->quoteReader->getQuoteCollection(
             (new QuoteCriteriaFilterTransfer())->setCustomerReference($restCartItemsAttributesTransfer->getCustomerReference())
         );
 
@@ -100,7 +100,10 @@ class GuestQuoteItemAdder implements GuestQuoteItemAdderInterface
         }
 
         $quoteResponseTransfer = $this->quoteReader->findQuoteByUuid(
-            $this->quoteItemMapper->mapRestCartItemsAttributesTransferToQuoteTransfer($restCartItemsAttributesTransfer)
+            $this->quoteItemMapper->mapRestCartItemsAttributesTransferToQuoteTransfer(
+                $restCartItemsAttributesTransfer,
+                new QuoteTransfer()
+            )
         );
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $quoteResponseTransfer;

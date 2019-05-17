@@ -8,7 +8,7 @@
 namespace Spryker\Zed\CartsRestApi;
 
 use Orm\Zed\Quote\Persistence\SpyQuoteQuery;
-use Spryker\Zed\CartsRestApi\Communication\Plugin\CartsRestApi\QuoteCreator\QuoteCreatorPlugin;
+use Spryker\Zed\CartsRestApi\Communication\Plugin\CartsRestApi\QuoteCreatorPlugin;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToCartFacadeBridge;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToPersistentCartFacadeBridge;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToQuoteFacadeBridge;

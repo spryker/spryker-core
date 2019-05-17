@@ -14,9 +14,7 @@ interface CartsRestApiToCustomerClientInterface
     /**
      * {@inheritdoc}
      *
-     * @api
-     *
      * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
-    public function getCustomerRawData(): ?CustomerTransfer;
+    public function findCustomerRawData(): ?CustomerTransfer;
 }

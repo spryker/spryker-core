@@ -17,8 +17,6 @@ use Spryker\Glue\Kernel\AbstractPlugin;
  */
 class SetCustomerBeforeActionPlugin extends AbstractPlugin implements ControllerBeforeActionPluginInterface
 {
-    protected const CUSTOMER_DATA = 'customer data';
-
     /**
      * @api
      *

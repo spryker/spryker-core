@@ -66,24 +66,7 @@ class CartsRestApiFacade extends AbstractFacade implements CartsRestApiFacadeInt
     {
         return $this->getFactory()
             ->createQuoteReader()
-            ->getQuoteCollectionByQuoteCriteriaFilter($quoteCriteriaFilterTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-    /**
-     * @param \Generated\Shared\Transfer\QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
-     */
-    public function findQuoteByCustomerAndStore(QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): QuoteCollectionTransfer
-    {
-        return $this->getFactory()
-            ->createQuoteReader()
-            ->getQuoteByQuoteCriteriaFilter($quoteCriteriaFilterTransfer);
+            ->getQuoteCollection($quoteCriteriaFilterTransfer);
     }
 
     /**

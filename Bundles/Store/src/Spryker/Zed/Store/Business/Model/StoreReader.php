@@ -177,9 +177,7 @@ class StoreReader implements StoreReaderInterface
             return null;
         }
 
-        $storeTransfer = $this->storeMapper->mapStoreTransfer($storeTransfer);
-
-        return $storeTransfer;
+        return $this->storeMapper->mapStoreTransfer($storeTransfer);
     }
 
     /**

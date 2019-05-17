@@ -78,7 +78,7 @@ class QuoteUpdater implements QuoteUpdaterInterface
         $originalQuoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
         $quoteResponseTransfer = $this->validateQuoteResponse($originalQuoteTransfer, $quoteTransfer, $quoteResponseTransfer);
 
-        if (count($quoteResponseTransfer->getErrors()) > 0) {
+        if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $quoteResponseTransfer;
         }
 
@@ -100,7 +100,7 @@ class QuoteUpdater implements QuoteUpdaterInterface
             ->requireCustomerReference()
             ->requireAnonymousCustomerReference();
 
-        $quoteCollectionTransfer = $this->quoteReader->getQuoteByQuoteCriteriaFilter(
+        $quoteCollectionTransfer = $this->quoteReader->getQuoteCollection(
             (new QuoteCriteriaFilterTransfer())
                 ->setCustomerReference($assignGuestQuoteRequestTransfer->getAnonymousCustomerReference())
         );
@@ -149,6 +149,7 @@ class QuoteUpdater implements QuoteUpdaterInterface
             && ($quoteTransfer->getPriceMode() && $quoteTransfer->getPriceMode() !== $originalQuoteTransfer->getPriceMode())
         ) {
             return $quoteResponseTransfer
+                ->setIsSuccessful(false)
                 ->addError((new QuoteErrorTransfer())
                     ->setErrorIdentifier(CartsRestApiSharedConfig::ERROR_IDENTIFIER_CART_CANT_BE_UPDATED));
         }

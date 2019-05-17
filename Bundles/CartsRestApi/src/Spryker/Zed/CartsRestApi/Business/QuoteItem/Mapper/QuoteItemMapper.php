@@ -14,13 +14,15 @@ class QuoteItemMapper implements QuoteItemMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function mapRestCartItemsAttributesTransferToQuoteTransfer(
-        RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
+        RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer,
+        QuoteTransfer $quoteTransfer
     ): QuoteTransfer {
-        return (new QuoteTransfer())
+        return $quoteTransfer
             ->setUuid($restCartItemsAttributesTransfer->getQuoteUuid())
             ->setCustomerReference($restCartItemsAttributesTransfer->getCustomerReference());
     }

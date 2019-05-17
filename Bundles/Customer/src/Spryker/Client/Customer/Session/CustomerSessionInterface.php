@@ -43,7 +43,7 @@ interface CustomerSessionInterface
     /**
      * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
-    public function getCustomerRawData(): ?CustomerTransfer;
+    public function findCustomerRawData(): ?CustomerTransfer;
 
     /**
      * @return void

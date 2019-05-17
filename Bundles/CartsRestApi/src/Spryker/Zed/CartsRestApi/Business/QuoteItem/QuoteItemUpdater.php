@@ -81,7 +81,7 @@ class QuoteItemUpdater implements QuoteItemUpdaterInterface
      *
      * @return \Generated\Shared\Transfer\PersistentCartChangeQuantityTransfer
      */
-    public function createPersistentCartChangeQuantityTransfer(
+    protected function createPersistentCartChangeQuantityTransfer(
         QuoteTransfer $quoteTransfer,
         RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
     ): PersistentCartChangeQuantityTransfer {

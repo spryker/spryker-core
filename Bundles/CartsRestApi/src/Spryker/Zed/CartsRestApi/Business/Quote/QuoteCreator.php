@@ -67,7 +67,7 @@ class QuoteCreator implements QuoteCreatorInterface
 
         $quoteResponseTransfer = $this->quoteCreatorPlugin->createQuote($quoteTransfer);
         if (!$quoteResponseTransfer->getIsSuccessful()) {
-            $this->setQuoteErrorTransfersToQuoteResponse($quoteResponseTransfer);
+            $quoteResponseTransfer = $this->setQuoteErrorTransfersToQuoteResponse($quoteResponseTransfer);
             $quoteResponseTransfer
                 ->addError((new QuoteErrorTransfer())
                     ->setErrorIdentifier(CartsRestApiSharedConfig::ERROR_IDENTIFIER_FAILED_CREATING_CART));
@@ -85,11 +85,12 @@ class QuoteCreator implements QuoteCreatorInterface
     {
         $quoteErrorTransfers = new ArrayObject();
 
+        /** @var \Generated\Shared\Transfer\ErrorMessageTransfer[] $errorTransfers */
         $errorTransfers = $quoteResponseTransfer->getErrors();
-        foreach ($errorTransfers as $errorTransfers) {
-            if ($errorTransfers instanceof ErrorMessageTransfer) {
+        foreach ($errorTransfers as $errorTransfer) {
+            if ($errorTransfer instanceof ErrorMessageTransfer) {
                 $quoteErrorTransfers[] = $this->quoteMapper->mapErrorMessageTransferToQuoteErrorTransfer(
-                    $errorTransfers,
+                    $errorTransfer,
                     new QuoteErrorTransfer()
                 );
             }
