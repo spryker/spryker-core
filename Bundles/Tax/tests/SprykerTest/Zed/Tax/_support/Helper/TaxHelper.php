@@ -52,9 +52,12 @@ class TaxHelper extends Module
             $seedData['fkTaxSet'] = $this->haveTaxSet()->getIdTaxSet();
         }
 
+        $countryTransfer = $this->haveCountry();
+
         /** @var \Generated\Shared\Transfer\TaxRateTransfer $taxRateTransfer */
         $taxRateTransfer = (new TaxRateBuilder($seedData))->build();
-        $taxRateTransfer->setCountry($this->haveCountry());
+        $taxRateTransfer->setCountry($countryTransfer);
+        $taxRateTransfer->setFkCountry($countryTransfer->getIdCountry());
 
         $taxRateTransfer = $this->getLocator()->tax()->facade()->createTaxRate($taxRateTransfer);
 
