@@ -56,15 +56,15 @@ interface DiscountPromotionFacadeInterface
 
     /**
      * Specification:
-     *  - Removes Promotion from Discount.
+     *  - Removes discount promotion from persistence by given discount id if exists.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\DiscountPromotionTransfer $discountPromotionTransfer
+     * @param int $idDiscount
      *
-     * @return int
+     * @return void
      */
-    public function removePromotionFromDiscount(DiscountPromotionTransfer $discountPromotionTransfer): int;
+    public function removePromotionByIdDiscount(int $idDiscount): void;
 
     /**
      * Specification:

@@ -4,6 +4,7 @@
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
+
 namespace SprykerTest\Zed\DiscountPromotion\Business;
 
 use Codeception\Test\Unit;
@@ -17,7 +18,6 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
-use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 
 /**
  * Auto-generated group annotations
@@ -247,7 +247,7 @@ class DiscountPromotionFacadeTest extends Unit
         $discountPromotionTransferSaved = $discountPromotionFacade->createPromotionDiscount($discountPromotionTransfer);
 
         // Act
-        $discountPromotionFacade->removePromotionFromDiscount($discountPromotionTransferSaved);
+        $discountPromotionFacade->removePromotionByIdDiscount($discountPromotionTransferSaved->getFkDiscount());
 
         $discountPromotionTransferUpdated = $discountPromotionFacade->findDiscountPromotionByIdDiscount(
             $discountPromotionTransferSaved->getFkDiscount()
@@ -273,7 +273,7 @@ class DiscountPromotionFacadeTest extends Unit
         $discountPromotionTransfer->setFkDiscount($discountGeneralTransfer->getIdDiscount());
 
         // Act
-        $discountPromotionFacade->removePromotionFromDiscount($discountPromotionTransfer);
+        $discountPromotionFacade->removePromotionByIdDiscount($discountPromotionTransfer->getFkDiscount());
 
         $discountPromotionTransferUpdated = $discountPromotionFacade->findDiscountPromotionByIdDiscount(
             $discountPromotionTransfer->getFkDiscount()
@@ -281,21 +281,6 @@ class DiscountPromotionFacadeTest extends Unit
 
         // Assert
         $this->assertEmpty($discountPromotionTransferUpdated);
-    }
-
-    /**
-     * @return void
-     */
-    public function testDeletePromotionDiscountShouldFailIfNoIdDiscountProvided()
-    {
-        // Arrange
-        $discountPromotionFacade = $this->getDiscountPromotionFacade();
-
-        // Assert
-        $this->expectException(RequiredTransferPropertyException::class);
-
-        // Act
-        $discountPromotionFacade->removePromotionFromDiscount(new DiscountPromotionTransfer());
     }
 
     /**

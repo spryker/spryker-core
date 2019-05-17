@@ -31,8 +31,7 @@ class DiscountPromotionCleanerPostUpdatePlugin extends BaseDiscountPromotionSave
     public function postUpdate(DiscountConfiguratorTransfer $discountConfiguratorTransfer)
     {
         if (!$this->isDiscountWithPromotion($discountConfiguratorTransfer)) {
-            $discountPromotionTransfer = $this->getDiscountPromotionTransfer($discountConfiguratorTransfer);
-            $this->getFacade()->removePromotionFromDiscount($discountPromotionTransfer);
+            $this->getFacade()->removePromotionByIdDiscount($discountConfiguratorTransfer->getDiscountGeneral()->getIdDiscount());
             $discountConfiguratorTransfer->getDiscountCalculator()->setDiscountPromotion(new DiscountPromotionTransfer());
         }
 

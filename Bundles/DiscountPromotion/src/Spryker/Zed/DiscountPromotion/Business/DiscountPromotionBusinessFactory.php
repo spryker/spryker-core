@@ -18,6 +18,7 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 /**
  * @method \Spryker\Zed\DiscountPromotion\DiscountPromotionConfig getConfig()
  * @method \Spryker\Zed\DiscountPromotion\Persistence\DiscountPromotionQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\DiscountPromotion\Persistence\DiscountPromotionEntityManagerInterface getEntityManager()
  */
 class DiscountPromotionBusinessFactory extends AbstractBusinessFactory
 {

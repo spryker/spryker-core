@@ -24,11 +24,4 @@ interface DiscountPromotionWriterInterface
      * @return \Generated\Shared\Transfer\DiscountPromotionTransfer
      */
     public function update(DiscountPromotionTransfer $discountPromotionTransfer);
-
-    /**
-     * @param \Generated\Shared\Transfer\DiscountPromotionTransfer $discountPromotionTransfer
-     *
-     * @return int
-     */
-    public function removePromotionFromDiscount(DiscountPromotionTransfer $discountPromotionTransfer): int;
 }

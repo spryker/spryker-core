@@ -63,20 +63,6 @@ class DiscountPromotionWriter implements DiscountPromotionWriterInterface
     /**
      * @param \Generated\Shared\Transfer\DiscountPromotionTransfer $discountPromotionTransfer
      *
-     * @return int
-     */
-    public function removePromotionFromDiscount(DiscountPromotionTransfer $discountPromotionTransfer): int
-    {
-        $discountPromotionTransfer->requireFkDiscount();
-
-        return $this->discountPromotionQueryContainer
-            ->queryDiscountPromotionByIdDiscount($discountPromotionTransfer->getFkDiscount())
-            ->delete();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\DiscountPromotionTransfer $discountPromotionTransfer
-     *
      * @return \Generated\Shared\Transfer\DiscountPromotionTransfer
      */
     protected function saveDiscountPromotion(DiscountPromotionTransfer $discountPromotionTransfer)
