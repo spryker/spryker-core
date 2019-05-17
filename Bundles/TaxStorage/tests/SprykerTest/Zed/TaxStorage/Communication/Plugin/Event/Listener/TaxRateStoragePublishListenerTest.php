@@ -82,7 +82,7 @@ class TaxRateStoragePublishListenerTest extends Unit
         // Act
         $this->taxRateStoragePublishListener->handleBulk(
             $eventTransfers,
-            TaxEvents::TAX_SET_PUBLISH
+            TaxEvents::ENTITY_SPY_TAX_RATE_UPDATE
         );
         $synchronizationDataTransfers = $this->taxStorageRepository
             ->getSynchronizationDataTransfersFromTaxSetStoragesByIdTaxSets(
@@ -92,6 +92,6 @@ class TaxRateStoragePublishListenerTest extends Unit
         // Assert
         $this->assertCount(1, $synchronizationDataTransfers);
         $synchronizationDataTransfersDataArray = json_decode($synchronizationDataTransfers[0]->getData(), true);
-        $this->assertEquals($this->taxSetTransfer->getIdTaxSet(), $synchronizationDataTransfersDataArray['fk_tax_set']);
+        $this->assertEquals($this->taxSetTransfer->getIdTaxSet(), $synchronizationDataTransfersDataArray['id_tax_set']);
     }
 }
