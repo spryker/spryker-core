@@ -120,10 +120,6 @@ class SwitchDefaultCartResourceShareActivatorStrategy implements SwitchDefaultCa
             ])
         );
 
-        if (!$quoteCollectionTransfer->getQuotes()->count()) {
-            return null;
-        }
-
         return $quoteCollectionTransfer->getQuotes()->offsetGet(0);
     }
 }
