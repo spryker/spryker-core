@@ -64,6 +64,7 @@ class JenkinsSchedulerDependencyProvider extends AbstractBundleDependencyProvide
     {
         $container[static::TWIG_ENVIRONMENT] = function () {
             $twig = $this->getTwigEnvironment();
+
             return new JenkinsSchedulerToTwigEnvironmentBridge($twig);
         };
 
