@@ -80,12 +80,13 @@ class ProductConcreteImageStorageWriter implements ProductConcreteImageStorageWr
     public function unpublish(array $productIds)
     {
         $imageSets = [];
-        $productConcreteLocalizedEntities = [];
+        $productConcreteLocalizedEntitiesToStore = [];
 
         $productConcreteImageSetsBulk = $this->generateProductConcreteImageSets($productIds);
         $productConcreteImageStorageEntities = $this->findProductConcreteImageStorageEntitiesByProductConcreteIds($productIds);
 
-        foreach ($this->findProductConcreteLocalizedEntities($productIds) as $productConcreteLocalizedEntity) {
+        $productConcreteLocalizedEntities = $this->findProductConcreteLocalizedEntities($productIds);
+        foreach ($productConcreteLocalizedEntities as $productConcreteLocalizedEntity) {
             $idProduct = $productConcreteLocalizedEntity->getFkProduct();
             $idProductAttributes = $productConcreteLocalizedEntity->getIdProductAttributes();
             $localeName = $productConcreteLocalizedEntity->getLocale()->getLocaleName();
@@ -94,7 +95,7 @@ class ProductConcreteImageStorageWriter implements ProductConcreteImageStorageWr
                 && $productConcreteImageSetsBulk[$idProduct][$idProductAttributes]->count()
             ) {
                 $imageSets[$idProduct][$idProductAttributes] = $productConcreteImageSetsBulk[$idProduct][$idProductAttributes];
-                $productConcreteLocalizedEntities[] = $productConcreteLocalizedEntity;
+                $productConcreteLocalizedEntitiesToStore[] = $productConcreteLocalizedEntity;
 
                 continue;
             }
@@ -107,7 +108,7 @@ class ProductConcreteImageStorageWriter implements ProductConcreteImageStorageWr
             unset($productConcreteImageStorageEntities[$idProduct][$localeName]);
         }
 
-        $this->storeData($productConcreteLocalizedEntities, $productConcreteImageStorageEntities, $imageSets);
+        $this->storeData($productConcreteLocalizedEntitiesToStore, $productConcreteImageStorageEntities, $imageSets);
     }
 
     /**
