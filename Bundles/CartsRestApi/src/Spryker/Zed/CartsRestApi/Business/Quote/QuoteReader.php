@@ -17,7 +17,6 @@ use Spryker\Shared\CartsRestApi\CartsRestApiConfig as CartsRestApiSharedConfig;
 use Spryker\Zed\CartsRestApi\Business\Quote\Mapper\QuoteMapperInterface;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToQuoteFacadeInterface;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToStoreFacadeInterface;
-use Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPluginInterface;
 
 class QuoteReader implements QuoteReaderInterface
 {
@@ -32,11 +31,6 @@ class QuoteReader implements QuoteReaderInterface
     protected $storeFacade;
 
     /**
-     * @var \Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPluginInterface
-     */
-    protected $quoteCollectionReaderPlugin;
-
-    /**
      * @var \Spryker\Zed\CartsRestApi\Business\Quote\Mapper\QuoteMapperInterface
      */
     protected $quoteMapper;
@@ -44,18 +38,15 @@ class QuoteReader implements QuoteReaderInterface
     /**
      * @param \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToQuoteFacadeInterface $quoteFacade
      * @param \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToStoreFacadeInterface $storeFacade
-     * @param \Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPluginInterface $quoteCollectionReaderPlugin
      * @param \Spryker\Zed\CartsRestApi\Business\Quote\Mapper\QuoteMapperInterface $quoteMapper
      */
     public function __construct(
         CartsRestApiToQuoteFacadeInterface $quoteFacade,
         CartsRestApiToStoreFacadeInterface $storeFacade,
-        QuoteCollectionReaderPluginInterface $quoteCollectionReaderPlugin,
         QuoteMapperInterface $quoteMapper
     ) {
         $this->quoteFacade = $quoteFacade;
         $this->storeFacade = $storeFacade;
-        $this->quoteCollectionReaderPlugin = $quoteCollectionReaderPlugin;
         $this->quoteMapper = $quoteMapper;
     }
 
@@ -90,7 +81,7 @@ class QuoteReader implements QuoteReaderInterface
         $storeTransfer = $this->storeFacade->getCurrentStore();
         $quoteCriteriaFilterTransfer->setIdStore($storeTransfer->getIdStore());
 
-        return $this->quoteCollectionReaderPlugin->getQuoteCollection($quoteCriteriaFilterTransfer);
+        return $this->quoteFacade->getQuoteCollection($quoteCriteriaFilterTransfer);
     }
 
     /**
