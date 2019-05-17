@@ -34,7 +34,6 @@ class SalesDataHelper extends Module
             ->withShippingAddress()
             ->withBillingAddress()
             ->withCurrency()
-            ->withCartRuleDiscount()
             ->build();
 
         $saveOrderTransfer = (new SaveOrderBuilder())->makeEmpty()->build();
