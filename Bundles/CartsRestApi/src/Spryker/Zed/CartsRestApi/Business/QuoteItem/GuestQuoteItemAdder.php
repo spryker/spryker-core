@@ -83,13 +83,6 @@ class GuestQuoteItemAdder implements GuestQuoteItemAdderInterface
             return $this->createGuestQuote($restCartItemsAttributesTransfer);
         }
 
-        $quoteResponseTransfer = new QuoteResponseTransfer();
-        if (!$restCartItemsAttributesTransfer->getSku()) {
-            return $quoteResponseTransfer
-                ->addError((new QuoteErrorTransfer())
-                    ->setErrorIdentifier(CartsRestApiSharedConfig::ERROR_IDENTIFIER_ITEM_VALIDATION));
-        }
-
         $customerQuoteCollection = $this->quoteReader->getQuoteCollection(
             (new QuoteCriteriaFilterTransfer())->setCustomerReference($restCartItemsAttributesTransfer->getCustomerReference())
         );

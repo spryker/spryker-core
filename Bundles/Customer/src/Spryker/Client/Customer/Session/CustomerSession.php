@@ -120,7 +120,7 @@ class CustomerSession implements CustomerSessionInterface
     public function setCustomerRawData(CustomerTransfer $customerTransfer): CustomerTransfer
     {
         $this->sessionClient->set(
-            self::SESSION_KEY,
+            static::SESSION_KEY,
             $customerTransfer
         );
 

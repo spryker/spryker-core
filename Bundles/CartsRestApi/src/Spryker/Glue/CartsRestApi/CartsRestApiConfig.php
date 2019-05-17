@@ -75,6 +75,9 @@ class CartsRestApiConfig extends AbstractBundleConfig
     public const ACTION_GUEST_CART_ITEMS_DELETE = 'delete';
 
     public const RESPONSE_CODE_CART_NOT_FOUND = '101';
+    /**
+     * @deprecated Will be removed in the next major.
+     */
     public const RESPONSE_CODE_ITEM_VALIDATION = '102';
     public const RESPONSE_CODE_ITEM_NOT_FOUND = '103';
     public const RESPONSE_CODE_CART_ID_MISSING = '104';
@@ -93,6 +96,9 @@ class CartsRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_CODE_FAILED_UPDATING_CART_ITEM = '114';
 
     public const EXCEPTION_MESSAGE_CART_ID_MISSING = 'Cart uuid is missing.';
+    /**
+     * @deprecated Will be removed in the next major.
+     */
     public const EXCEPTION_MESSAGE_ITEM_VALIDATION = 'Product sku is missing.';
     public const EXCEPTION_MESSAGE_CART_ITEM_NOT_FOUND = 'Item with the given group key not found in the cart.';
     public const EXCEPTION_MESSAGE_FAILED_TO_CREATE_CART = 'Failed to create cart.';
@@ -137,11 +143,6 @@ class CartsRestApiConfig extends AbstractBundleConfig
                 RestErrorMessageTransfer::CODE => self::RESPONSE_CODE_ITEM_NOT_FOUND,
                 RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
                 RestErrorMessageTransfer::DETAIL => self::EXCEPTION_MESSAGE_CART_ITEM_NOT_FOUND,
-            ],
-            CartsRestApiSharedConfig::ERROR_IDENTIFIER_ITEM_VALIDATION => [
-                RestErrorMessageTransfer::CODE => self::RESPONSE_CODE_ITEM_VALIDATION,
-                RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
-                RestErrorMessageTransfer::DETAIL => self::EXCEPTION_MESSAGE_ITEM_VALIDATION,
             ],
             CartsRestApiSharedConfig::ERROR_IDENTIFIER_FAILED_DELETING_CART => [
                 RestErrorMessageTransfer::CODE => self::RESPONSE_CODE_FAILED_DELETING_CART,
