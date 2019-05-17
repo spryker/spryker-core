@@ -59,4 +59,20 @@ class BusinessOnBehalfClient extends AbstractClient implements BusinessOnBehalfC
     {
         return $this->getFactory()->createZedBusinessOnBehalfStub()->unsetDefaultCompanyUser($customerTransfer);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return bool
+     */
+    public function isCustomerChangeAllowed(CustomerTransfer $customerTransfer): bool
+    {
+        return $this->getFactory()
+            ->createCustomerChecker()
+            ->isCustomerChangeAllowed($customerTransfer);
+    }
 }

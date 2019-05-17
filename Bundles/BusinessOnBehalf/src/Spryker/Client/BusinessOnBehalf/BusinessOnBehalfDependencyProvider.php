@@ -14,6 +14,7 @@ use Spryker\Client\Kernel\Container;
 class BusinessOnBehalfDependencyProvider extends AbstractDependencyProvider
 {
     public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
+    public const PLUGINS_CUSTOMER_CHANGE_ALLOWED_CHECK = 'PLUGINS_CUSTOMER_CHANGE_ALLOWED_CHECK';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -23,6 +24,7 @@ class BusinessOnBehalfDependencyProvider extends AbstractDependencyProvider
     public function provideServiceLayerDependencies(Container $container)
     {
         $container = $this->addZedRequestClient($container);
+        $container = $this->addCustomerChangeAllowedCheckPlugins($container);
 
         return $container;
     }
@@ -39,5 +41,27 @@ class BusinessOnBehalfDependencyProvider extends AbstractDependencyProvider
         };
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addCustomerChangeAllowedCheckPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_CUSTOMER_CHANGE_ALLOWED_CHECK] = function () {
+            return $this->getCustomerChangeAllowedCheckPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Client\BusinessOnBehalfExtension\Dependency\Plugin\CustomerChangeAllowedCheckPluginInterface[]
+     */
+    protected function getCustomerChangeAllowedCheckPlugins(): array
+    {
+        return [];
     }
 }
