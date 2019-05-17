@@ -15,8 +15,6 @@ use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCartItemsAttributesTransfer;
 use Spryker\Shared\CartsRestApi\CartsRestApiConfig as CartsRestApiSharedConfig;
-use Spryker\Zed\CartsRestApi\Business\Quote\QuoteReaderInterface;
-use Spryker\Zed\CartsRestApi\Business\QuoteItem\Mapper\QuoteItemMapperInterface;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToPersistentCartFacadeInterface;
 
 class QuoteItemUpdater implements QuoteItemUpdaterInterface
@@ -27,28 +25,20 @@ class QuoteItemUpdater implements QuoteItemUpdaterInterface
     protected $persistentCartFacade;
 
     /**
-     * @var \Spryker\Zed\CartsRestApi\Business\Quote\QuoteReaderInterface
+     * @var \Spryker\Zed\CartsRestApi\Business\QuoteItem\QuoteItemReaderInterface
      */
-    protected $quoteReader;
-
-    /**
-     * @var \Spryker\Zed\CartsRestApi\Business\QuoteItem\Mapper\QuoteItemMapperInterface
-     */
-    protected $quoteItemMapper;
+    protected $quoteItemReader;
 
     /**
      * @param \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToPersistentCartFacadeInterface $persistentCartFacade
-     * @param \Spryker\Zed\CartsRestApi\Business\Quote\QuoteReaderInterface $quoteReader
-     * @param \Spryker\Zed\CartsRestApi\Business\QuoteItem\Mapper\QuoteItemMapperInterface $quoteItemMapper
+     * @param \Spryker\Zed\CartsRestApi\Business\QuoteItem\QuoteItemReaderInterface $quoteItemReader
      */
     public function __construct(
         CartsRestApiToPersistentCartFacadeInterface $persistentCartFacade,
-        QuoteReaderInterface $quoteReader,
-        QuoteItemMapperInterface $quoteItemMapper
+        QuoteItemReaderInterface $quoteItemReader
     ) {
         $this->persistentCartFacade = $persistentCartFacade;
-        $this->quoteReader = $quoteReader;
-        $this->quoteItemMapper = $quoteItemMapper;
+        $this->quoteItemReader = $quoteItemReader;
     }
 
     /**
@@ -64,23 +54,9 @@ class QuoteItemUpdater implements QuoteItemUpdaterInterface
             ->requireCustomerReference()
             ->requireQuantity();
 
-        $quoteResponseTransfer = $this->quoteReader->findQuoteByUuid(
-            $this->quoteItemMapper->mapRestCartItemsAttributesTransferToQuoteTransfer($restCartItemsAttributesTransfer)
-        );
-
+        $quoteResponseTransfer = $this->quoteItemReader->readQuoteItem($restCartItemsAttributesTransfer);
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $quoteResponseTransfer;
-        }
-
-        $ifRequestedItemIsInQuote = $this->checkRequestedItemIsInQuote(
-            $restCartItemsAttributesTransfer->getSku(),
-            $quoteResponseTransfer->getQuoteTransfer()->getItems()->getArrayCopy()
-        );
-
-        if (!$ifRequestedItemIsInQuote) {
-            return $quoteResponseTransfer
-                ->addError((new QuoteErrorTransfer())
-                    ->setErrorIdentifier(CartsRestApiSharedConfig::ERROR_IDENTIFIER_ITEM_NOT_FOUND));
         }
 
         $persistentCartChangeQuantityTransfer = $this->createPersistentCartChangeQuantityTransfer(
@@ -97,27 +73,6 @@ class QuoteItemUpdater implements QuoteItemUpdaterInterface
         }
 
         return $quoteResponseTransfer;
-    }
-
-    /**
-     * @param string $itemSku
-     * @param array $items
-     *
-     * @return bool
-     */
-    protected function checkRequestedItemIsInQuote(string $itemSku, array $items): bool
-    {
-        if (count($items) === 0) {
-            return false;
-        }
-
-        foreach ($items as $item) {
-            if ($item->getSku() === $itemSku) {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     /**

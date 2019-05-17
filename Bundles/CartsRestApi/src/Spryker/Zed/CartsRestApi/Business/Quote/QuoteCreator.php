@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CartsRestApi\Business\Quote;
 
 use ArrayObject;
+use Generated\Shared\Transfer\ErrorMessageTransfer;
 use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -24,11 +25,6 @@ class QuoteCreator implements QuoteCreatorInterface
     protected $quoteCreatorPlugin;
 
     /**
-     * @var \Spryker\Zed\CartsRestApi\Business\Quote\QuoteReaderInterface
-     */
-    protected $quoteReader;
-
-    /**
      * @var \Spryker\Zed\CartsRestApi\Business\Quote\Mapper\QuoteMapperInterface
      */
     protected $quoteMapper;
@@ -40,18 +36,15 @@ class QuoteCreator implements QuoteCreatorInterface
 
     /**
      * @param \Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteCreatorPluginInterface $quoteCreatorPlugin
-     * @param \Spryker\Zed\CartsRestApi\Business\Quote\QuoteReaderInterface $quoteReader
      * @param \Spryker\Zed\CartsRestApi\Business\Quote\Mapper\QuoteMapperInterface $quoteMapper
      * @param \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToStoreFacadeInterface $storeFacade
      */
     public function __construct(
         QuoteCreatorPluginInterface $quoteCreatorPlugin,
-        QuoteReaderInterface $quoteReader,
         QuoteMapperInterface $quoteMapper,
         CartsRestApiToStoreFacadeInterface $storeFacade
     ) {
         $this->quoteCreatorPlugin = $quoteCreatorPlugin;
-        $this->quoteReader = $quoteReader;
         $this->quoteMapper = $quoteMapper;
         $this->storeFacade = $storeFacade;
     }
@@ -90,17 +83,22 @@ class QuoteCreator implements QuoteCreatorInterface
      */
     protected function setQuoteErrorTransfersToQuoteResponse(QuoteResponseTransfer $quoteResponseTransfer): QuoteResponseTransfer
     {
-        /** @var \Generated\Shared\Transfer\ErrorMessageTransfer[] $errorMessageTransfers */
-        $errorMessageTransfers = $quoteResponseTransfer->getErrors();
-
         $quoteErrorTransfers = new ArrayObject();
-        foreach ($errorMessageTransfers as $errorMessageTransfer) {
-            $quoteErrorTransfers[] = $this->quoteMapper->mapErrorMessageTransferToQuoteErrorTransfer(
-                $errorMessageTransfer,
-                new QuoteErrorTransfer()
-            );
+
+        $errorTransfers = $quoteResponseTransfer->getErrors();
+        foreach ($errorTransfers as $errorTransfers) {
+            if ($errorTransfers instanceof ErrorMessageTransfer) {
+                $quoteErrorTransfers[] = $this->quoteMapper->mapErrorMessageTransferToQuoteErrorTransfer(
+                    $errorTransfers,
+                    new QuoteErrorTransfer()
+                );
+            }
         }
 
-        return $quoteResponseTransfer->setErrors($quoteErrorTransfers);
+        if ($quoteErrorTransfers->count()) {
+            $quoteResponseTransfer->setErrors($quoteErrorTransfers);
+        }
+
+        return $quoteResponseTransfer;
     }
 }

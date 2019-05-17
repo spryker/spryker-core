@@ -29,6 +29,8 @@ use Spryker\Zed\CartsRestApi\Business\QuoteItem\QuoteItemAdder;
 use Spryker\Zed\CartsRestApi\Business\QuoteItem\QuoteItemAdderInterface;
 use Spryker\Zed\CartsRestApi\Business\QuoteItem\QuoteItemDeleter;
 use Spryker\Zed\CartsRestApi\Business\QuoteItem\QuoteItemDeleterInterface;
+use Spryker\Zed\CartsRestApi\Business\QuoteItem\QuoteItemReader;
+use Spryker\Zed\CartsRestApi\Business\QuoteItem\QuoteItemReaderInterface;
 use Spryker\Zed\CartsRestApi\Business\QuoteItem\QuoteItemUpdater;
 use Spryker\Zed\CartsRestApi\Business\QuoteItem\QuoteItemUpdaterInterface;
 use Spryker\Zed\CartsRestApi\CartsRestApiDependencyProvider;
@@ -74,7 +76,6 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
     {
         return new QuoteCreator(
             $this->getQuoteCreatorPlugins(),
-            $this->createQuoteReader(),
             $this->createQuoteMapper(),
             $this->getStoreFacade()
         );
@@ -86,9 +87,8 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
     public function createSingleQuoteCreator(): SingleQuoteCreatorInterface
     {
         return new SingleQuoteCreator(
-            $this->createQuoteReader(),
-            $this->getPersistentCartFacade(),
-            $this->createQuoteMapper()
+            $this->createQuoteCreator(),
+            $this->createQuoteReader()
         );
     }
 
@@ -144,14 +144,24 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\CartsRestApi\Business\QuoteItem\QuoteItemReaderInterface
+     */
+    public function createQuoteItemReader(): QuoteItemReaderInterface
+    {
+        return new QuoteItemReader(
+            $this->createQuoteReader(),
+            $this->createQuoteItemMapper()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\CartsRestApi\Business\QuoteItem\QuoteItemDeleterInterface
      */
     public function createQuoteItemDeleter(): QuoteItemDeleterInterface
     {
         return new QuoteItemDeleter(
             $this->getPersistentCartFacade(),
-            $this->createQuoteReader(),
-            $this->createQuoteItemMapper()
+            $this->createQuoteItemReader()
         );
     }
 
@@ -162,8 +172,7 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
     {
         return new QuoteItemUpdater(
             $this->getPersistentCartFacade(),
-            $this->createQuoteReader(),
-            $this->createQuoteItemMapper()
+            $this->createQuoteItemReader()
         );
     }
 
