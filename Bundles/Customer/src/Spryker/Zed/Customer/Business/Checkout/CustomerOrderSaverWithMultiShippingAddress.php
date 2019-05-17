@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Customer\Business\Customer\AddressInterface;
 use Spryker\Zed\Customer\Business\Customer\CustomerInterface;
+use Spryker\Zed\Customer\CustomerConfig;
 use Spryker\Zed\Customer\Persistence\CustomerRepositoryInterface;
 
 /**
@@ -30,18 +31,26 @@ class CustomerOrderSaverWithMultiShippingAddress extends CustomerOrderSaver
     protected $existingAddresses = [];
 
     /**
+     * @var \Spryker\Zed\Customer\CustomerConfig
+     */
+    protected $customerConfig;
+
+    /**
      * @param \Spryker\Zed\Customer\Business\Customer\CustomerInterface $customer
      * @param \Spryker\Zed\Customer\Business\Customer\AddressInterface $address
      * @param \Spryker\Zed\Customer\Persistence\CustomerRepositoryInterface $customerRepository
+     * @param \Spryker\Zed\Customer\CustomerConfig $customerConfig
      */
     public function __construct(
         CustomerInterface $customer,
         AddressInterface $address,
-        CustomerRepositoryInterface $customerRepository
+        CustomerRepositoryInterface $customerRepository,
+        CustomerConfig $customerConfig
     ) {
         parent::__construct($customer, $address);
 
         $this->customerRepository = $customerRepository;
+        $this->customerConfig = $customerConfig;
     }
 
     /**
@@ -108,6 +117,12 @@ class CustomerOrderSaverWithMultiShippingAddress extends CustomerOrderSaver
      */
     protected function getAddressTransferKey(AddressTransfer $addressTransfer): string
     {
-        return implode(' ', $addressTransfer->toArray());
+        $addressData = $addressTransfer->toArray(true, true);
+
+        foreach ($this->customerConfig->getAddressExcludedFields() as $addressExcludedField) {
+            unset($addressData[$addressExcludedField]);
+        }
+
+        return implode($addressData);
     }
 }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Customer;
 
+use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
 use Spryker\Shared\Customer\CustomerConstants;
 use Spryker\Shared\Kernel\Store;
@@ -65,14 +66,6 @@ class CustomerConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return string
-     */
-    protected function getUniqueIdentifierSeparator()
-    {
-        return '-';
-    }
-
-    /**
      * This method provides list of URLs to render blocks inside customer detail page.
      * URL defines path to external bundle controller. For example: /sales/customer/customer-orders would call sales bundle, customer controller, customerOrders action.
      *
@@ -86,5 +79,24 @@ class CustomerConfig extends AbstractBundleConfig
     public function getCustomerDetailExternalBlocksUrls()
     {
         return [];
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getAddressExcludedFields(): array
+    {
+        return [
+            AddressTransfer::IS_DEFAULT_BILLING,
+            AddressTransfer::IS_DEFAULT_SHIPPING,
+        ];
+    }
+
+    /**
+     * @return string
+     */
+    protected function getUniqueIdentifierSeparator()
+    {
+        return '-';
     }
 }
