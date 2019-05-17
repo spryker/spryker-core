@@ -201,6 +201,7 @@ class CalculatorTest extends Unit
     protected function createComparatorOperators()
     {
         $operators = (new OperatorProvider())->createComparators();
+
         return new ComparatorOperators($operators);
     }
 
@@ -651,6 +652,7 @@ class CalculatorTest extends Unit
             $discountableItemTransfer->setOriginalItemCalculatedDiscounts($itemTransfer->getCalculatedDiscounts());
             $discountableItems[] = $discountableItemTransfer;
         }
+
         return $discountableItems;
     }
 

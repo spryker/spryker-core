@@ -230,6 +230,7 @@ class ControllerFilter implements ControllerFilterInterface
         if (!$controller instanceof ErrorControllerInterface) {
             $restErrorCollectionTransfer = $this->restRequestValidator->validate($httpRequest, $restRequest);
         }
+
         return $restErrorCollectionTransfer;
     }
 
@@ -244,6 +245,7 @@ class ControllerFilter implements ControllerFilterInterface
         foreach ($restErrorCollectionTransfer->getRestErrors() as $restErrorMessageTransfer) {
             $restResponse->addError($restErrorMessageTransfer);
         }
+
         return $restResponse;
     }
 }

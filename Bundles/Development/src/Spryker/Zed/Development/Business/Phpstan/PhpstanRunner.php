@@ -151,6 +151,7 @@ class PhpstanRunner implements PhpstanRunnerInterface
 
         if ($input->getOption(static::OPTION_DRY_RUN)) {
             $output->writeln($command);
+
             return static::CODE_SUCCESS;
         }
 
