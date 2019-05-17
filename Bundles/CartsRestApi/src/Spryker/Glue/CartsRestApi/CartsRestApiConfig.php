@@ -207,6 +207,10 @@ class CartsRestApiConfig extends AbstractBundleConfig
             'status' => Response::HTTP_UNPROCESSABLE_ENTITY,
             'detail' => CartsRestApiSharedConfig::EXCEPTION_MESSAGE_STORE_DATA_IS_MISSING,
         ],
+        CartsRestApiSharedConfig::RESPONSE_CODE_UNAUTHORIZED_ACTION => [
+            'status' => Response::HTTP_FORBIDDEN,
+            'detail' => CartsRestApiSharedConfig::EXCEPTION_DETAILS_UNAUTHORIZED_ACTION,
+        ],
     ];
 
     protected const GUEST_CART_RESOURCES = [

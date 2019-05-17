@@ -29,7 +29,7 @@ class CartsRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_CODE_STORE_DATA_IS_MISSING = '116';
     public const RESPONSE_CODE_PERMISSION_FAILED = '117';
     public const RESPONSE_CODE_STORE_DATA_IS_INVALID = '118';
-    public const RESPONSE_CODE_UNAUTHORIZED_ACTION = '115';
+    public const RESPONSE_CODE_UNAUTHORIZED_ACTION = '119';
 
     public const EXCEPTION_MESSAGE_CART_ID_MISSING = 'Cart uuid is missing.';
     public const EXCEPTION_MESSAGE_ITEM_VALIDATION = 'Product sku is missing.';
