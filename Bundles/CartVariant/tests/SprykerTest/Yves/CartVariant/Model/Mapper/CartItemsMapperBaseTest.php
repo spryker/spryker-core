@@ -41,6 +41,7 @@ class CartItemsMapperBaseTest extends Unit
 
         $mock->method('getAttributeMapByIdProductAbstractForCurrentLocale')
             ->willReturn(json_decode(file_get_contents(__DIR__ . '/json/' . $jsonFileToLoad), true));
+
         return $mock;
     }
 
@@ -67,6 +68,7 @@ class CartItemsMapperBaseTest extends Unit
 
         $mock->method('getProductAvailabilityByIdProductAbstract')
             ->willReturn($this->getAvailabilityTransfer($jsonFileToLoad));
+
         return $mock;
     }
 
@@ -92,6 +94,7 @@ class CartItemsMapperBaseTest extends Unit
             json_decode(file_get_contents(__DIR__ . '/json/' . $jsonFileToLoad), true),
             true
         );
+
         return $transfer;
     }
 

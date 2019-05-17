@@ -368,12 +368,12 @@ class Container implements ContainerInterface, ArrayAccess
      * Do not set the returned callable to the Container, this is done automatically.
      *
      * @param string $id
-     * @param \Closure|object|mixed $service
+     * @param \Closure $service
      *
      * @throws \Spryker\Service\Container\Exception\ContainerException
      * @throws \Spryker\Service\Container\Exception\FrozenServiceException
      *
-     * @return \Closure|object|mixed
+     * @return \Closure
      */
     public function extend(string $id, $service)
     {
@@ -427,12 +427,12 @@ class Container implements ContainerInterface, ArrayAccess
      * Do not set the returned callable to the Container, this is done automatically.
      *
      * @param string $id
-     * @param \Closure|object|mixed $service
+     * @param \Closure $service
      *
      * @throws \Spryker\Service\Container\Exception\ContainerException
      * @throws \Spryker\Service\Container\Exception\FrozenServiceException
      *
-     * @return \Closure|object|mixed
+     * @return \Closure
      */
     protected function extendGlobalService(string $id, $service)
     {
@@ -626,6 +626,7 @@ class Container implements ContainerInterface, ArrayAccess
         // and we need to make sure that the returned to be extended service is added now.
         if (($this->currentExtendingHash !== null && is_object($value)) && spl_object_hash($value) === $this->currentExtendingHash) {
             $this->currentExtendingHash = null;
+
             return;
         }
 
@@ -681,7 +682,7 @@ class Container implements ContainerInterface, ArrayAccess
      * This method (currently) exists only for BC reasons.
      *
      * @param string $id
-     * @param \Closure|object $service
+     * @param \Closure $service
      *
      * @return void
      */
@@ -696,7 +697,7 @@ class Container implements ContainerInterface, ArrayAccess
 
     /**
      * @param string $id
-     * @param \Closure|object $service
+     * @param \Closure $service
      *
      * @return void
      */

@@ -289,6 +289,7 @@ class LockedOrderStateMachineTest extends Unit
             true,
             ['triggerEvent']
         );
+
         return $this->stateMachineMock;
     }
 
@@ -323,6 +324,7 @@ class LockedOrderStateMachineTest extends Unit
     protected function createOmsQueryMock()
     {
         $this->omsQueryMock = $this->getMockBuilder(SpyOmsStateMachineLockQuery::class)->setMethods(['count', 'delete'])->getMock();
+
         return $this->omsQueryMock;
     }
 

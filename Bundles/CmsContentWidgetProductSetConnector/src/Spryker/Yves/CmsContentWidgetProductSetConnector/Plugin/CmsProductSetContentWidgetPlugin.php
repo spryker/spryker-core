@@ -12,7 +12,7 @@ use Spryker\Shared\CmsContentWidget\CmsContentWidgetConfig;
 use Spryker\Shared\CmsContentWidget\Dependency\CmsContentWidgetConfigurationProviderInterface;
 use Spryker\Yves\CmsContentWidget\Dependency\CmsContentWidgetPluginInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
-use Twig_Environment;
+use Twig\Environment;
 
 /**
  * @method \Spryker\Yves\CmsContentWidgetProductSetConnector\CmsContentWidgetProductSetConnectorFactory getFactory()
@@ -41,14 +41,14 @@ class CmsProductSetContentWidgetPlugin extends AbstractPlugin implements CmsCont
     }
 
     /**
-     * @param \Twig_Environment $twig
+     * @param \Twig\Environment $twig
      * @param array $context
      * @param array|string $productSetKeys
      * @param string|null $templateIdentifier
      *
      * @return string
      */
-    public function contentWidgetFunction(Twig_Environment $twig, array $context, $productSetKeys, $templateIdentifier = null)
+    public function contentWidgetFunction(Environment $twig, array $context, $productSetKeys, $templateIdentifier = null)
     {
         return $twig->render(
             $this->resolveTemplatePath($templateIdentifier),
@@ -140,6 +140,7 @@ class CmsProductSetContentWidgetPlugin extends AbstractPlugin implements CmsCont
 
             $productSets[] = $productSet;
         }
+
         return [
             'productSetList' => $productSets,
         ];

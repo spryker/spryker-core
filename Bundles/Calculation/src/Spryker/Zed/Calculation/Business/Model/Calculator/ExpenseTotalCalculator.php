@@ -37,6 +37,7 @@ class ExpenseTotalCalculator implements CalculatorInterface
         foreach ($expenses as $expenseTransfer) {
             $expenseTotal += $expenseTransfer->getSumPrice();
         }
+
         return $expenseTotal;
     }
 }

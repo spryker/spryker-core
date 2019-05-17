@@ -14,16 +14,15 @@ class IdFilterUpdate extends AbstractIdFilter
     /**
      * @param array $ids
      * @param string $itemType
-     * @param string $itemEvent
      *
      * @return array
      */
-    public function filter(array $ids, string $itemType, string $itemEvent): array
+    public function filter(array $ids, string $itemType): array
     {
         $filteredIds = [];
         $itemIdChunks = array_chunk($ids, self::CHUNK_SIZE);
         foreach ($itemIdChunks as $itemIdChunk) {
-            $idCollection = $this->getIdCollection($itemType, $itemIdChunk, $itemEvent);
+            $idCollection = $this->getIdCollection($itemType, $itemIdChunk);
 
             if (count($itemIdChunk) === count($idCollection)) {
                 $filteredIds = array_merge($filteredIds, $itemIdChunk);

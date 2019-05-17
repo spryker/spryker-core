@@ -49,7 +49,7 @@ class Finder implements FinderInterface
     /**
      * @param int $idOrderItem
      *
-     * @return \Spryker\Zed\Oms\Business\Process\EventInterface[]
+     * @return string[]
      */
     public function getManualEvents($idOrderItem)
     {
@@ -63,7 +63,7 @@ class Finder implements FinderInterface
     /**
      * @param int $idSalesOrder
      *
-     * @return \Spryker\Zed\Oms\Business\Process\EventInterface[]
+     * @return string[][]
      */
     public function getManualEventsByIdSalesOrder($idSalesOrder)
     {
@@ -80,7 +80,7 @@ class Finder implements FinderInterface
     /**
      * @param int $idSalesOrder
      *
-     * @return array
+     * @return string[]
      */
     public function getDistinctManualEventsByIdSalesOrder($idSalesOrder)
     {
@@ -97,7 +97,7 @@ class Finder implements FinderInterface
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
      *
-     * @return \Spryker\Zed\Oms\Business\Process\EventInterface[]
+     * @return string[]
      */
     protected function getManualEventsByOrderItemEntity(SpySalesOrderItem $orderItem)
     {

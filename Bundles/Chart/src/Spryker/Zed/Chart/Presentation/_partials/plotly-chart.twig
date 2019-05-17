@@ -2,12 +2,13 @@
 
 {% block chartContent %}
     {% if data.traces | length > 0 %}
-        {% set layout = layout.toArray | merge(
-            {
-                'title':layout.title | default(data.title) | trans,
-                'margin': {'l': 8 * maxLabeLength | default(1)}
-            }) %}
+        {% set layout = layout.toArray | merge({
+            'title':layout.title | default(data.title) | trans,
+            'margin': {'l': 8 * maxLabeLength},
+            'yaxis': {'dtick': 1}
+        }) %}
         <div id="{{ chartDivId }}"></div>
+
         <script src="/assets/js/spryker-zed-chart-plotly-main.js"></script>
         <script>/*<![CDATA[*/
             document.addEventListener('DOMContentLoaded', function(event) {

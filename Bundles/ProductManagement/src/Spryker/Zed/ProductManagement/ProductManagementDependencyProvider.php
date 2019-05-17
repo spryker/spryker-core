@@ -354,6 +354,7 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
         $container[static::FACADE_STOCK] = function (Container $container) {
             return new ProductManagementToStockBridge($container->getLocator()->stock()->facade());
         };
+
         return $container;
     }
 

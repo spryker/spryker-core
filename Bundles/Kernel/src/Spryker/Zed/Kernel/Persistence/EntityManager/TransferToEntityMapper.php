@@ -37,7 +37,7 @@ class TransferToEntityMapper implements TransferToEntityMapperInterface
             }
 
             $parentEntitySetterMethodName = $this->findParentEntitySetterMethodName($propertyName, $entity);
-            if (is_array($value) || $value instanceof ArrayObject) {
+            if ($value instanceof ArrayObject) {
                 foreach ($value as $childTransfer) {
                     $childEntity = $this->mapEntityCollection($childTransfer);
                     $entity->$parentEntitySetterMethodName($childEntity);
@@ -91,6 +91,7 @@ class TransferToEntityMapper implements TransferToEntityMapperInterface
 
             return static::$setterCache[$relationName];
         }
+
         return null;
     }
 
@@ -120,6 +121,7 @@ class TransferToEntityMapper implements TransferToEntityMapperInterface
     protected function getTableMap(ActiveRecordInterface $entity)
     {
         $tableNameClass = $entity::TABLE_MAP;
+
         return $tableNameClass::getTableMap();
     }
 

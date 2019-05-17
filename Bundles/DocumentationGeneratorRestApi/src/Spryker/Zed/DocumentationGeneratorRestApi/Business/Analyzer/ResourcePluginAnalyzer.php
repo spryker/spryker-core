@@ -259,6 +259,7 @@ class ResourcePluginAnalyzer implements ResourcePluginAnalyzerInterface
                     break;
                 }
             }
+
             return $parent;
         }
 

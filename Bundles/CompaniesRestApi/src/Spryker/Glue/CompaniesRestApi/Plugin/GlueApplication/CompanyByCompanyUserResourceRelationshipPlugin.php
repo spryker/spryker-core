@@ -32,7 +32,7 @@ class CompanyByCompanyUserResourceRelationshipPlugin extends AbstractPlugin impl
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         $this->getFactory()
-            ->createCompanyResourceRelationshipExpander()
+            ->createCompanyByCompanyUserResourceRelationshipExpander()
             ->addResourceRelationships($resources, $restRequest);
     }
 
