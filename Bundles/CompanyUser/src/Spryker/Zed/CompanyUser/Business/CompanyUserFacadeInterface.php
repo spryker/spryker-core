@@ -10,6 +10,7 @@ namespace Spryker\Zed\CompanyUser\Business;
 use Generated\Shared\Transfer\CompanyResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
+use Generated\Shared\Transfer\CompanyUserCriteriaTransfer;
 use Generated\Shared\Transfer\CompanyUserResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
@@ -273,4 +274,20 @@ interface CompanyUserFacadeInterface
      * @return int[]
      */
     public function findActiveCompanyUserIdsByCompanyIds(array $companyIds): array;
+
+    /**
+     * Specification:
+     * - Retrieves company user collection according provided criteria.
+     * - Searches "pattern" by at least one of first name, last name, and email.
+     * - Applies "limit" when provided.
+     * - Populates "Customer" and "Company" properties in returned company users.
+     * - Applies "CompanyUserHydrationPluginInterface" plugins on returned company users.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyUserCriteriaTransfer $companyUserCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
+     */
+    public function getCompanyUserCollectionByCriteria(CompanyUserCriteriaTransfer $companyUserCriteriaTransfer): CompanyUserCollectionTransfer;
 }

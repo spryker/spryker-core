@@ -85,6 +85,7 @@ class GroupController extends AbstractController
             );
 
             $this->addSuccessMessage(static::MESSAGE_GROUP_CREATE_SUCCESS);
+
             return $this->redirectResponse('/acl/group/edit?' . static::PARAMETER_ID_GROUP . '=' . $groupTransfer->getIdAclGroup());
         }
 
@@ -129,6 +130,7 @@ class GroupController extends AbstractController
 
             $this->addSuccessMessage(static::MESSAGE_GROUP_UPDATE_SUCCESS);
             $url = sprintf('/acl/group/edit?%s=%d', static::PARAMETER_ID_GROUP, $groupTransfer->getIdAclGroup());
+
             return $this->redirectResponse($url);
         }
 

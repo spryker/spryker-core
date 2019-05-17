@@ -53,6 +53,7 @@ class ShoppingListCollectionOutdateChecker implements ShoppingListCollectionOutd
         if (!$shoppingListCustomerStorageTransfer) {
             return false;
         }
+
         return $shoppingListSession->getUpdatedAt() < $shoppingListCustomerStorageTransfer->getUpdatedAt();
     }
 

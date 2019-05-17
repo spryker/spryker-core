@@ -49,6 +49,7 @@ class CurrencyPostChangePluginExecutor implements CurrencyPostChangePluginExecut
             }
         }
         $this->zedRequestClient->addFlashMessagesFromLastZedRequest();
+
         return true;
     }
 }

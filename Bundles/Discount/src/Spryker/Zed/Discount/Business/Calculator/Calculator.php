@@ -333,7 +333,9 @@ class Calculator implements CalculatorInterface
         $discountIds = [];
 
         foreach ($discountTransferCollection as $discountTransfer) {
-            $discountIds[] = $discountTransfer->getIdDiscount();
+            if ($discountTransfer->getIdDiscount()) {
+                $discountIds[] = $discountTransfer->getIdDiscount();
+            }
         }
 
         return $discountIds;

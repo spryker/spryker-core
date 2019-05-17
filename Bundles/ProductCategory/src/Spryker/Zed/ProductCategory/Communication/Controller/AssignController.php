@@ -84,6 +84,7 @@ class AssignController extends AbstractController
 
         if (!$categoryEntity) {
             $this->addErrorMessage('The category with id "%s" does not exist.', ['%s' => $idCategory]);
+
             return null;
         }
 

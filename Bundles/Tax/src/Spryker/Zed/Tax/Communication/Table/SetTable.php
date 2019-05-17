@@ -95,6 +95,7 @@ class SetTable extends AbstractTable
                 self::TABLE_COL_ACTIONS => $this->getActionButtons($taxSetEntity),
             ];
         }
+
         return $result;
     }
 
@@ -126,6 +127,7 @@ class SetTable extends AbstractTable
                 self::URL_PARAM_ID_TAX_SET => $taxRateEntity->getIdTaxSet(),
             ]
         );
+
         return $this->generateEditButton($editTaxSetUrl, 'Edit');
     }
 
@@ -142,6 +144,7 @@ class SetTable extends AbstractTable
                 self::URL_PARAM_ID_TAX_SET => $taxSetEntity->getIdTaxSet(),
             ]
         );
+
         return $this->generateViewButton($viewTaxSetUrl, 'View');
     }
 

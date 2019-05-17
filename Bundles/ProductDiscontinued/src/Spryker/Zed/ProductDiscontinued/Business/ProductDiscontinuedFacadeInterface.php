@@ -45,6 +45,7 @@ interface ProductDiscontinuedFacadeInterface
     /**
      * Specification:
      *  - Marks concrete product as not discontinued.
+     *  - Executes ProductDiscontinuedPreDeleteCheckPluginInterface plugins before save product as not discontinued.
      *
      * @api
      *
@@ -79,6 +80,18 @@ interface ProductDiscontinuedFacadeInterface
      * @return bool
      */
     public function areAllConcreteProductsDiscontinued(array $productIds): bool;
+
+    /**
+     * Specification:
+     *  - Checks if at least one of given concrete products is discontinued.
+     *
+     * @api
+     *
+     * @param int[] $productConcreteIds
+     *
+     * @return bool
+     */
+    public function isAnyProductConcreteDiscontinued(array $productConcreteIds): bool;
 
     /**
      * Specification:

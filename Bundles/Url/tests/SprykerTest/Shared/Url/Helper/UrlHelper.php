@@ -74,6 +74,7 @@ class UrlHelper extends Module
     protected function createUrlTransfer(): UrlTransfer
     {
         $locale = $this->getLocaleFacade()->getCurrentLocale();
+
         return (new UrlBuilder())->build()->setFkLocale($locale->getIdLocale());
     }
 }

@@ -1,0 +1,20 @@
+{% set deleteButtonTemplate %}
+    <button type="button" class="js-delete-product-set btn btn-sm btn-outline btn-danger">
+        <i class="fa fa-trash"></i>
+        {{ 'Delete' | trans }}
+    </button>
+{% endset %}
+<div
+        class="id-product-set-fields"
+        id="localized-contents-{{ form.parent.vars.name }}"
+        data-delete-button="{{ deleteButtonTemplate | e }}"
+>
+    <div class="js-selected-product-sets-wrapper">
+        {{ form_row(form.idProductSet) }}
+    </div>
+    {{ form.vars.tables.productSetSelectedTable.render | raw }}
+    <h2>{{ 'Available Product Sets' | trans }}</h2>
+    {{ form.vars.tables.productSetViewTable.render | raw }}
+</div>
+<link rel="stylesheet" href="/assets/css/spryker-zed-product-set-add.css" />
+<script src="/assets/js/spryker-zed-product-set-add.js"></script>
