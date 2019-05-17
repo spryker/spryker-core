@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Store\Persistence;
 
-use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -18,21 +17,13 @@ class StoreRepository extends AbstractRepository implements StoreRepositoryInter
     /**
      * @param string $name
      *
-     * @return \Generated\Shared\Transfer\StoreTransfer|null
+     * @return bool
      */
-    public function findStoreByName(string $name): ?StoreTransfer
+    public function storeExists(string $name): bool
     {
-        $storeEntity = $this->getFactory()
+        return $this->getFactory()
             ->createStoreQuery()
             ->filterByName($name)
-            ->findOne();
-
-        if (!$storeEntity) {
-            return null;
-        }
-
-        return $this->getFactory()
-            ->createStoreMapper()
-            ->mapStoreTransfer($storeEntity);
+            ->exists();
     }
 }

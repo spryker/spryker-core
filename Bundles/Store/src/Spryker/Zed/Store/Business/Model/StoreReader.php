@@ -172,12 +172,11 @@ class StoreReader implements StoreReaderInterface
      */
     public function findStoreByName(string $storeName): ?StoreTransfer
     {
-        $storeTransfer = $this->storeRepository->findStoreByName($storeName);
-        if (!$storeTransfer) {
+        if (!$this->storeRepository->storeExists($storeName)) {
             return null;
         }
 
-        return $this->storeMapper->mapStoreTransfer($storeTransfer);
+        return $this->getStoreByName($storeName);
     }
 
     /**

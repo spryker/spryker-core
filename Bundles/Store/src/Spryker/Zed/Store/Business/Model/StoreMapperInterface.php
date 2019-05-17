@@ -20,13 +20,6 @@ interface StoreMapperInterface
     public function mapEntityToTransfer(SpyStore $storeEntity);
 
     /**
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     *
-     * @return \Generated\Shared\Transfer\StoreTransfer
-     */
-    public function mapStoreTransfer(StoreTransfer $storeTransfer): StoreTransfer;
-
-    /**
      * @param \Orm\Zed\Store\Persistence\SpyStore $storeEntity
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
