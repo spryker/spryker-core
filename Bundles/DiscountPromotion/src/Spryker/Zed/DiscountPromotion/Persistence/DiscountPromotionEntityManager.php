@@ -21,7 +21,8 @@ class DiscountPromotionEntityManager extends AbstractEntityManager implements Di
      */
     public function removePromotionByIdDiscount(int $idDiscount): void
     {
-        $this->getFactory()->createDiscountPromotionQuery()
+        $this->getFactory()
+            ->createDiscountPromotionQuery()
             ->filterByFkDiscount($idDiscount)
             ->delete();
     }
