@@ -38,9 +38,9 @@ class SwitchDefaultCartResourceShareActivatorStrategyPlugin extends AbstractPlug
      * - Returns 'isSuccessful=true' with ResourceShareTransfer if cart was switched successfully.
      * - Returns 'isSuccessful=false' with error messages otherwise.
      *
-     * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
-     *
      * @api
+     *
+     * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
      */
@@ -66,9 +66,9 @@ class SwitchDefaultCartResourceShareActivatorStrategyPlugin extends AbstractPlug
      * {@inheritdoc}
      * - Checks if strategy plugin is applicable, based on resource data and provided customer.
      *
-     * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
-     *
      * @api
+     *
+     * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
      *
      * @return bool
      */
