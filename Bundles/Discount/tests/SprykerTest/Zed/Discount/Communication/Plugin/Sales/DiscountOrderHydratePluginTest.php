@@ -49,7 +49,7 @@ class DiscountOrderHydratePluginTest extends Unit
         //Arrange
         $discountOrderHydratePlugin = $this->createDiscountOrderHydratePlugin();
         $orderTransfer = $this->createOrder();
-        $this->createDiscount($orderTransfer);
+        $this->createDiscountForOrder($orderTransfer);
 
         //Act
         $orderTransfer = $discountOrderHydratePlugin->hydrate($orderTransfer);
