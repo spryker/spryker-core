@@ -59,6 +59,8 @@ class PriceProductScheduleValidator implements PriceProductScheduleValidatorInte
                     'Dates must be in right format and "to" date must be greater than "from".'
                 )
             );
+
+            return $priceProductScheduledListImportResponse;
         }
 
         $priceProductScheduleCriteriaFilterTransfer = $this->preparePriceProductScheduleByCriteriaFilter(
