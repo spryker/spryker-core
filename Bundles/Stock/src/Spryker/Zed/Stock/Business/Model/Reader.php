@@ -493,6 +493,7 @@ class Reader implements ReaderInterface
         foreach ($stockCollection as $stockEntity) {
             $types[$stockEntity->getName()] = $stockEntity->getName();
         }
+
         return $types;
     }
 }

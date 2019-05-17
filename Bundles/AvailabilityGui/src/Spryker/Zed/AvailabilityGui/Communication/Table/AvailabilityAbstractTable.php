@@ -203,6 +203,7 @@ class AvailabilityAbstractTable extends AbstractTable
                 static::URL_PARAM_ID_STORE => $this->storeTransfer->getIdStore(),
             ]
         );
+
         return $this->generateViewButton($viewTaxSetUrl, 'View');
     }
 

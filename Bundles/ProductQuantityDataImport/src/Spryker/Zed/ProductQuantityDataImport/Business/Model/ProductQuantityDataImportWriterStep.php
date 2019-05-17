@@ -110,6 +110,7 @@ class ProductQuantityDataImportWriterStep extends PublishAwareStep implements Da
             ->setQuantityMax($dataSet[ProductQuantityDataImportDataSet::COLUMN_QUANTITY_MAX])
             ->setQuantityInterval($dataSet[ProductQuantityDataImportDataSet::COLUMN_QUANTITY_INTERVAL])
             ->save();
+
         return $spyProductQuantityEntity;
     }
 }

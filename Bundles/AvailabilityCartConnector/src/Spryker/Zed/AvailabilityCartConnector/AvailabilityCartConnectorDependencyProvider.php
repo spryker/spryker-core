@@ -57,6 +57,7 @@ class AvailabilityCartConnectorDependencyProvider extends AbstractBundleDependen
         $container[static::FACADE_AVAILABILITY] = function (Container $container) {
             return new AvailabilityCartConnectorToAvailabilityBridge($container->getLocator()->availability()->facade());
         };
+
         return $container;
     }
 }

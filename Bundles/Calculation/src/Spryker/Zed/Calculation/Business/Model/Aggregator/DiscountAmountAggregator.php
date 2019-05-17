@@ -221,6 +221,7 @@ class DiscountAmountAggregator implements CalculatorInterface
             } else {
                 $this->voucherDiscountTotals[$idDiscount] += $discountAmount;
             }
+
             return;
         }
 

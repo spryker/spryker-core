@@ -74,6 +74,7 @@ class EditController extends AbstractController
 
         if (!$isSubmitPersist) {
             $this->addSuccessMessage(static::MESSAGE_OFFER_RELOAD_SUCCESS);
+
             return;
         }
 

@@ -260,6 +260,7 @@ class ProductOptionListTable extends AbstractTable
         foreach ($productOptionGroupEntity->getSpyProductOptionValues() as $productOptionValueEntity) {
             $skus .= $this->wrapInlineCellItem($productOptionValueEntity->getSku());
         }
+
         return $skus;
     }
 
@@ -274,6 +275,7 @@ class ProductOptionListTable extends AbstractTable
         foreach ($productOptionGroupEntity->getSpyProductOptionValues() as $productOptionValueEntity) {
             $names .= $this->wrapInlineCellItem($productOptionValueEntity->getValue());
         }
+
         return $names;
     }
 

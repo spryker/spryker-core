@@ -145,8 +145,10 @@ class DiscountPromotionCollectorStrategy implements DiscountPromotionCollectorSt
             )) {
                 continue;
             }
+
             return $itemTransfer;
         }
+
         return null;
     }
 
@@ -187,6 +189,7 @@ class DiscountPromotionCollectorStrategy implements DiscountPromotionCollectorSt
         if ($promotionItemTransfer->getQuantity() > $availableMaxQuantity) {
             $currentQuantity = $promotionItemTransfer->getMaxQuantity();
         }
+
         return $currentQuantity;
     }
 
@@ -258,6 +261,7 @@ class DiscountPromotionCollectorStrategy implements DiscountPromotionCollectorSt
             }
             $updatedPromotionItems->append($promotionItemTransfer);
         }
+
         return $updatedPromotionItems;
     }
 
@@ -300,6 +304,7 @@ class DiscountPromotionCollectorStrategy implements DiscountPromotionCollectorSt
             }
             $usedNotAppliedCodes[] = $unusedVoucherCode;
         }
+
         return $usedNotAppliedCodes;
     }
 

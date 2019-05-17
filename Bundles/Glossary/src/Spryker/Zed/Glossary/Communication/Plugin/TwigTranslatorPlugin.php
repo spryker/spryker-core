@@ -108,6 +108,7 @@ class TwigTranslatorPlugin extends AbstractTwigExtensionPlugin implements Transl
             if (!$this->getFacade()->hasTranslation($ids[0], $localeTransfer)) {
                 return $ids[0];
             }
+
             return $this->getFacade()->translate($ids[0], $parameters, $localeTransfer);
         }
 

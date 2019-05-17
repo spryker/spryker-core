@@ -209,9 +209,11 @@ class AvailabilityTable extends AbstractTable
     {
         if (!$isBundle) {
             $availabilityEditUrl = $this->createAvailabilityEditUrl($productAbstract);
+
             return $this->generateEditButton($availabilityEditUrl, 'Edit Stock');
         }
         $viewBundleUrl = $this->createViewBundleUrl($productAbstract);
+
         return $this->generateViewButton($viewBundleUrl, 'View bundled products');
     }
 

@@ -62,6 +62,7 @@ class RelationMapper implements RelationMapperInterface
     protected function getForeignPhpIdGetterName(RelationMap $symRelationMap)
     {
         $foreignColumnMap = current($symRelationMap->getForeignColumns());
+
         return 'get' . $foreignColumnMap->getPhpName();
     }
 
@@ -73,6 +74,7 @@ class RelationMapper implements RelationMapperInterface
     protected function getLocalPhpIdGetterName(RelationMap $symRelationMap)
     {
         $localColumnMap = current($symRelationMap->getLocalColumns());
+
         return 'get' . $localColumnMap->getPhpName();
     }
 
@@ -88,6 +90,7 @@ class RelationMapper implements RelationMapperInterface
         foreach ($collection as $entityTransfer) {
             $primaryIds[] = $entityTransfer->$foreignPhpIdName();
         }
+
         return $primaryIds;
     }
 
@@ -182,6 +185,7 @@ class RelationMapper implements RelationMapperInterface
                 $entityTransfer->$addMethod($relatedEntityTransfer);
             }
         }
+
         return $relatedCollection;
     }
 }

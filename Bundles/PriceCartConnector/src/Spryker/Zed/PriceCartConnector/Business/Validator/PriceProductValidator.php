@@ -194,6 +194,7 @@ class PriceProductValidator implements PriceProductValidatorInterface
         if (!$quoteTransfer->getPriceMode()) {
             return $this->priceFacade->getDefaultPriceMode();
         }
+
         return $quoteTransfer->getPriceMode();
     }
 

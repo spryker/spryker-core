@@ -157,6 +157,7 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
         if ($stock <= 0) {
             $translationKey = static::CART_PRE_CHECK_ITEM_AVAILABILITY_EMPTY;
         }
+
         return $translationKey;
     }
 
