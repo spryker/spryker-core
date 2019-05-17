@@ -23,13 +23,14 @@
     </transfer>
 
     <transfer name="ResourceShareData">
-        <property name="idQuote" type="int"/>
-        <property name="shareOption" type="string"/>
+        <property name="idQuote" type="int" />
+        <property name="shareOption" type="string" />
+        <property name="ownerIdCompanyUser" type="int" />
+        <property name="ownerIdCompanyBusinessUnit" type="int" />
     </transfer>
 
     <transfer name="ResourceShare">
         <property name="resourceType" type="string" />
-        <property name="resourceData" type="string" />
         <property name="customerReference" type="string"/>
         <property name="resourceShareData" type="ResourceShareData" />
     </transfer>

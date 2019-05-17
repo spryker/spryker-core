@@ -7,6 +7,7 @@
 
 namespace  Spryker\Client\PersistentCartShare\ResourceShare;
 
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ResourceShareDataTransfer;
 use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\ResourceShareTransfer;
@@ -14,9 +15,15 @@ use Spryker\Client\PersistentCartShare\Dependency\Client\PersistentCartShareToCu
 
 class ResourceShareRequestBuilder implements ResourceShareRequestBuilderInterface
 {
+    /**
+     * @uses \Spryker\Zed\PersistentCartShare\PersistentCartShareConfig::RESOURCE_TYPE_QUOTE
+     */
     protected const RESOURCE_TYPE_QUOTE = 'quote';
-    protected const ID_QUOTE_PARAMETER = 'id_quote';
-    protected const SHARE_OPTION_PARAMETER = 'share_option';
+
+    /**
+     * @uses \Spryker\Zed\PersistentCartShare\PersistentCartShareConfig::SHARE_OPTION_PREVIEW
+     */
+    protected const SHARE_OPTION_PREVIEW = 'PREVIEW';
 
     /**
      * @var \Spryker\Client\PersistentCartShare\Dependency\Client\PersistentCartShareToCustomerClientInterface
@@ -39,20 +46,64 @@ class ResourceShareRequestBuilder implements ResourceShareRequestBuilderInterfac
      */
     public function buildResourceShareRequest(int $idQuote, string $shareOption): ResourceShareRequestTransfer
     {
-        $resourceShareDataTransfer = (new ResourceShareDataTransfer())
-            ->setData([
-                static::ID_QUOTE_PARAMETER => $idQuote,
-                static::SHARE_OPTION_PARAMETER => $shareOption,
-            ]);
+        $customerTransfer = $this->customerClient->getCustomer();
+        $resourceShareDataTransfer = $this->createResolvedByShareOptionResourceShareDataTransfer($idQuote, $shareOption, $customerTransfer);
 
         $resourceShareTransfer = (new ResourceShareTransfer())
             ->setResourceType(static::RESOURCE_TYPE_QUOTE)
-            ->setCustomerReference($this->customerClient->getCustomer()->getCustomerReference())
+            ->setCustomerReference($customerTransfer->getCustomerReference())
             ->setResourceShareData($resourceShareDataTransfer);
 
         $resourceShareRequestTransfer = new ResourceShareRequestTransfer();
         $resourceShareRequestTransfer->setResourceShare($resourceShareTransfer);
 
         return $resourceShareRequestTransfer;
+    }
+
+    /**
+     * @param int $idQuote
+     * @param string $shareOption
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\ResourceShareDataTransfer
+     */
+    protected function createResolvedByShareOptionResourceShareDataTransfer(int $idQuote, string $shareOption, CustomerTransfer $customerTransfer): ResourceShareDataTransfer
+    {
+        if ($shareOption === static::SHARE_OPTION_PREVIEW) {
+            return $this->createCartPreviewResourceShareDataTransfer($idQuote);
+        }
+
+        return $this->createCartShareResourceShareDataTransfer($idQuote, $shareOption, $customerTransfer);
+    }
+
+    /**
+     * @param int $idQuote
+     *
+     * @return \Generated\Shared\Transfer\ResourceShareDataTransfer
+     */
+    protected function createCartPreviewResourceShareDataTransfer(int $idQuote): ResourceShareDataTransfer
+    {
+        return (new ResourceShareDataTransfer())
+            ->setIdQuote($idQuote)
+            ->setShareOption(static::SHARE_OPTION_PREVIEW);
+    }
+
+    /**
+     * @param int $idQuote
+     * @param string $shareOption
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\ResourceShareDataTransfer
+     */
+    protected function createCartShareResourceShareDataTransfer(int $idQuote, string $shareOption, CustomerTransfer $customerTransfer): ResourceShareDataTransfer
+    {
+        $customerTransfer->requireCompanyUserTransfer();
+        $companyUserTransfer = $customerTransfer->getCompanyUserTransfer();
+
+        return (new ResourceShareDataTransfer())
+            ->setIdQuote($idQuote)
+            ->setShareOption($shareOption)
+            ->setOwnerIdCompanyUser($companyUserTransfer->getIdCompanyUser())
+            ->setOwnerIdCompanyBusinessUnit($companyUserTransfer->getFkCompanyBusinessUnit());
     }
 }

@@ -16,10 +16,7 @@ use Generated\Shared\Transfer\ResourceShareDataTransfer;
 use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\ResourceShareTransfer;
 use Orm\Zed\ResourceShare\Persistence\SpyResourceShare;
-use Spryker\Zed\PersistentCartShare\Communication\Plugin\PersistentCartShareResourceDataExpanderStrategyPlugin;
 use Spryker\Zed\PersistentCartShare\PersistentCartShareConfig;
-use Spryker\Zed\ResourceShare\ResourceShareDependencyProvider;
-use Spryker\Zed\ResourceShareExtension\Dependency\Plugin\ResourceShareResourceDataExpanderStrategyPluginInterface;
 
 /**
  * Auto-generated group annotations
@@ -34,24 +31,29 @@ use Spryker\Zed\ResourceShareExtension\Dependency\Plugin\ResourceShareResourceDa
 class PersistentCartShareFacadeTest extends Test
 {
     /**
-     * @see \Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareReader::GLOSSARY_KEY_RESOURCE_IS_NOT_FOUND_BY_PROVIDED_UUID
+     * @uses \Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareReader::GLOSSARY_KEY_RESOURCE_IS_NOT_FOUND_BY_PROVIDED_UUID
      */
     protected const GLOSSARY_KEY_RESOURCE_IS_NOT_FOUND_BY_PROVIDED_UUID = 'resource_share.reader.error.resource_is_not_found_by_provided_uuid';
 
     /**
-     * @see \Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareValidator::GLOSSARY_KEY_RESOURCE_SHARE_IS_EXPIRED
+     * @uses \Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareValidator::GLOSSARY_KEY_RESOURCE_SHARE_IS_EXPIRED
      */
     protected const GLOSSARY_KEY_RESOURCE_SHARE_IS_EXPIRED = 'resource_share.validation.error.resource_share_is_expired';
 
     /**
-     * @see \Spryker\Zed\PersistentCartShare\Business\Quote\QuoteReader::GLOSSARY_KEY_ERROR_QUOTE_NOT_AVAILABLE
+     * @uses \Spryker\Zed\PersistentCartShare\Business\Quote\QuoteReader::GLOSSARY_KEY_ERROR_QUOTE_NOT_AVAILABLE
      */
     protected const GLOSSARY_KEY_ERROR_QUOTE_NOT_AVAILABLE = 'persistent_cart.error.quote.not_available';
 
     /**
-     * @see \Spryker\Zed\PersistentCartShare\Business\Quote\QuoteReader::GLOSSARY_KEY_RESOURCE_IS_NOT_AVAILABLE
+     * @uses \Spryker\Zed\PersistentCartShare\Business\Quote\QuoteReader::GLOSSARY_KEY_RESOURCE_IS_NOT_AVAILABLE
      */
     protected const GLOSSARY_KEY_RESOURCE_IS_NOT_AVAILABLE = 'persistent_cart_share.error.resource_is_not_available';
+
+    /**
+     * @uses \Spryker\Shared\SharedCart\SharedCartConfig::PERMISSION_GROUP_FULL_ACCESS
+     */
+    public const SHARE_OPTION_FULL_ACCESS = 'FULL_ACCESS';
 
     protected const VALUE_NOT_EXISTING_UUID = 'VALUE_NOT_EXISTING_UUID';
     protected const VALUE_NOT_EXISTING_ID_QUOTE = 0;
@@ -71,8 +73,6 @@ class PersistentCartShareFacadeTest extends Test
 
         $resourceShareTransferForRequest = (new ResourceShareTransfer())
             ->setUuid($resourceShareTransfer->getUuid());
-
-        $this->registerResourceShareResourceDataExpanderStrategyPlugin(new PersistentCartShareResourceDataExpanderStrategyPlugin());
 
         // Act
         $quoteResponseTransfer = $this->getFacade()
@@ -135,10 +135,8 @@ class PersistentCartShareFacadeTest extends Test
     {
         // Arrange
         $resourceShareTransferForRequest = $this->createPreviewResourceShare([], [
-            PersistentCartShareConfig::KEY_ID_QUOTE => static::VALUE_NOT_EXISTING_ID_QUOTE,
+            ResourceShareDataTransfer::ID_QUOTE => static::VALUE_NOT_EXISTING_ID_QUOTE,
         ]);
-
-        $this->registerResourceShareResourceDataExpanderStrategyPlugin(new PersistentCartShareResourceDataExpanderStrategyPlugin());
 
         // Act
         $quoteResponseTransfer = $this->getFacade()
@@ -161,10 +159,8 @@ class PersistentCartShareFacadeTest extends Test
     {
         // Arrange
         $resourceShareTransfer = $this->createPreviewResourceShare([], [
-            PersistentCartShareConfig::KEY_SHARE_OPTION => PersistentCartShareConfig::SHARE_OPTION_FULL_ACCESS,
+            ResourceShareDataTransfer::SHARE_OPTION => static::SHARE_OPTION_FULL_ACCESS,
         ]);
-
-        $this->registerResourceShareResourceDataExpanderStrategyPlugin(new PersistentCartShareResourceDataExpanderStrategyPlugin());
 
         // Act
         $quoteResponseTransfer = $this->getFacade()
@@ -193,14 +189,10 @@ class PersistentCartShareFacadeTest extends Test
             QuoteTransfer::CUSTOMER => $customerTransfer,
         ]);
 
-        $resourceShareDataDefaults = [
-            PersistentCartShareConfig::KEY_ID_QUOTE => $quoteTransfer->getIdQuote(),
-            PersistentCartShareConfig::KEY_SHARE_OPTION => PersistentCartShareConfig::SHARE_OPTION_PREVIEW,
-        ];
-
-        $resourceShareDataTransfer = (new ResourceShareDataTransfer())->setData(
-            array_merge($resourceShareDataDefaults, $resourceShareDataSeedData)
-        );
+        $resourceShareDataTransfer = (new ResourceShareDataTransfer())
+            ->setIdQuote($quoteTransfer->getIdQuote())
+            ->setShareOption(PersistentCartShareConfig::SHARE_OPTION_PREVIEW)
+            ->fromArray($resourceShareDataSeedData);
 
         $resourceShareDefaults = [
             ResourceShareTransfer::CUSTOMER_REFERENCE => $quoteTransfer->getCustomerReference(),
@@ -214,19 +206,6 @@ class PersistentCartShareFacadeTest extends Test
         );
 
         return $resourceShareTransfer;
-    }
-
-    /**
-     * @param \Spryker\Zed\ResourceShareExtension\Dependency\Plugin\ResourceShareResourceDataExpanderStrategyPluginInterface $resourceShareResourceDataExpanderStrategyPlugin
-     *
-     * @return void
-     */
-    protected function registerResourceShareResourceDataExpanderStrategyPlugin(
-        ResourceShareResourceDataExpanderStrategyPluginInterface $resourceShareResourceDataExpanderStrategyPlugin
-    ): void {
-        $this->tester->setDependency(ResourceShareDependencyProvider::PLUGINS_RESOURCE_SHARE_RESOURCE_DATA_EXPANDER_STRATEGY, [
-            $resourceShareResourceDataExpanderStrategyPlugin,
-        ]);
     }
 
     /**
