@@ -47,6 +47,6 @@ class CustomerChecker implements CustomerCheckerInterface
             }
         }
 
-        return false;
+        return true;
     }
 }
