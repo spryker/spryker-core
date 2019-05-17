@@ -60,6 +60,7 @@ class TaxHelper extends Module
         $taxRateTransfer->setFkCountry($countryTransfer->getIdCountry());
 
         $taxRateTransfer = $this->getLocator()->tax()->facade()->createTaxRate($taxRateTransfer);
+        $this->getLocator()->tax()->facade()->addTaxRateToTaxSet($seedData['fkTaxSet'], $taxRateTransfer);
 
         $this->getDataCleanupHelper()->_addCleanup(function () use ($taxRateTransfer) {
             $this->getLocator()->tax()->facade()->deleteTaxRate($taxRateTransfer->getIdTaxRate());

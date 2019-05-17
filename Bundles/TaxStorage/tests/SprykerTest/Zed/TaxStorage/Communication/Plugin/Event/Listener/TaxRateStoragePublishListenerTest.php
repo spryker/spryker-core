@@ -86,7 +86,7 @@ class TaxRateStoragePublishListenerTest extends Unit
         );
         $synchronizationDataTransfers = $this->taxStorageRepository
             ->getSynchronizationDataTransfersFromTaxSetStoragesByIdTaxSets(
-                [$idTaxRate]
+                [$this->taxSetTransfer->getIdTaxSet()]
             );
 
         // Assert
