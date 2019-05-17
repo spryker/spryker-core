@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\CartsRestApi\Business\Quote;
 
-use ArrayObject;
 use Generated\Shared\Transfer\AssignGuestQuoteRequestTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
@@ -164,34 +163,7 @@ class QuoteUpdater implements QuoteUpdaterInterface
      */
     protected function performUpdatingQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
-        $quoteUpdateRequestTransfer = $this->quoteMapper->mapQuoteTransferToQuoteUpdateRequestTransfer($quoteTransfer);
-
-        $quoteResponseTransfer = $this->persistentCartFacade->updateQuote($quoteUpdateRequestTransfer);
-        if (!$quoteResponseTransfer->getIsSuccessful()) {
-            $this->setQuoteErrorTransfersToQuoteResponse($quoteResponseTransfer);
-        }
-
-        return $quoteResponseTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    protected function setQuoteErrorTransfersToQuoteResponse(QuoteResponseTransfer $quoteResponseTransfer): QuoteResponseTransfer
-    {
-        /** @var \Generated\Shared\Transfer\ErrorMessageTransfer[] $errorMessageTransfers */
-        $errorMessageTransfers = $quoteResponseTransfer->getErrors();
-
-        $quoteErrorTransfers = new ArrayObject();
-        foreach ($errorMessageTransfers as $errorMessageTransfer) {
-            $quoteErrorTransfers[] = $this->quoteMapper->mapErrorMessageTransferToQuoteErrorTransfer(
-                $errorMessageTransfer,
-                new QuoteErrorTransfer()
-            );
-        }
-
-        return $quoteResponseTransfer->setErrors($quoteErrorTransfers);
+        return $this->persistentCartFacade
+            ->updateQuote($this->quoteMapper->mapQuoteTransferToQuoteUpdateRequestTransfer($quoteTransfer));
     }
 }

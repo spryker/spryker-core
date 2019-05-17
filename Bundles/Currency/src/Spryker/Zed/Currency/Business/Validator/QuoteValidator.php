@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Currency\Business\Validator;
 
-use Generated\Shared\Transfer\ErrorMessageTransfer;
+use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\QuoteValidationResponseTransfer;
 use Spryker\Zed\Currency\Dependency\Facade\CurrencyToStoreFacadeInterface;
@@ -81,9 +81,11 @@ class QuoteValidator implements QuoteValidatorInterface
         string $errorMessage,
         array $parameters = []
     ): QuoteValidationResponseTransfer {
-        $errorTransfer = (new ErrorMessageTransfer())->setValue($errorMessage)
+        $quoteErrorTransfer = (new QuoteErrorTransfer())->setMessage($errorMessage)
             ->setParameters($parameters);
 
-        return $quoteValidationResponseTransfer->addErrors($errorTransfer);
+        return $quoteValidationResponseTransfer
+            ->addErrors($quoteErrorTransfer)
+            ->setIsSuccess(false);
     }
 }

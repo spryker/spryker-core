@@ -39,11 +39,11 @@
 
     <transfer name="QuoteValidationResponse">
         <property name="isSuccess" type="bool"/>
-        <property name="errors" type="ErrorMessage[]"/>
+        <property name="errors" type="QuoteError[]"/>
     </transfer>
 
-    <transfer name="ErrorMessage">
-        <property name="value" type="string"/>
+    <transfer name="QuoteError">
+        <property name="message" type="string"/>
         <property name="parameters" type="array"/>
     </transfer>
 

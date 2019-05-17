@@ -7,8 +7,7 @@
 
 namespace Spryker\Zed\Quote\Business\Validator;
 
-use ArrayObject;
-use Generated\Shared\Transfer\ErrorMessageTransfer;
+use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\QuoteValidationResponseTransfer;
 use Spryker\Zed\Quote\Dependency\Facade\QuoteToStoreFacadeInterface;
@@ -91,12 +90,10 @@ class QuoteValidator implements QuoteValidatorInterface
             $quoteValidationResponseTransferFromPlugin = $quoteValidatorPlugin->validate($quoteTransfer);
 
             if (!$quoteValidationResponseTransferFromPlugin->getIsSuccess()) {
-                $errors = array_merge(
-                    $quoteValidationResponseTransfer->getErrors()->getArrayCopy(),
-                    $quoteValidationResponseTransferFromPlugin->getErrors()->getArrayCopy()
-                );
-                $quoteValidationResponseTransfer->setErrors(new ArrayObject($errors))
-                    ->setIsSuccess(false);
+                foreach ($quoteValidationResponseTransferFromPlugin->getErrors() as $quoteErrorTransfer) {
+                    $quoteValidationResponseTransfer->addErrors($quoteErrorTransfer);
+                }
+                $quoteValidationResponseTransfer->setIsSuccess(false);
             }
         }
 
@@ -115,11 +112,11 @@ class QuoteValidator implements QuoteValidatorInterface
         string $errorMessage,
         array $parameters = []
     ): QuoteValidationResponseTransfer {
-        $errorMessageTransfer = (new ErrorMessageTransfer())->setValue($errorMessage)
+        $quoteErrorTransfer = (new QuoteErrorTransfer())->setMessage($errorMessage)
             ->setParameters($parameters);
 
         return $quoteValidationResponseTransfer
-            ->addErrors($errorMessageTransfer)
+            ->addErrors($quoteErrorTransfer)
             ->setIsSuccess(false);
     }
 }

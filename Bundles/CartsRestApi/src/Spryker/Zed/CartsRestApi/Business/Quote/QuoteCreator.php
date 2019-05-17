@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\CartsRestApi\Business\Quote;
 
-use ArrayObject;
-use Generated\Shared\Transfer\ErrorMessageTransfer;
 use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -67,37 +65,9 @@ class QuoteCreator implements QuoteCreatorInterface
 
         $quoteResponseTransfer = $this->quoteCreatorPlugin->createQuote($quoteTransfer);
         if (!$quoteResponseTransfer->getIsSuccessful()) {
-            $quoteResponseTransfer = $this->setQuoteErrorTransfersToQuoteResponse($quoteResponseTransfer);
             $quoteResponseTransfer
                 ->addError((new QuoteErrorTransfer())
                     ->setErrorIdentifier(CartsRestApiSharedConfig::ERROR_IDENTIFIER_FAILED_CREATING_CART));
-        }
-
-        return $quoteResponseTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    protected function setQuoteErrorTransfersToQuoteResponse(QuoteResponseTransfer $quoteResponseTransfer): QuoteResponseTransfer
-    {
-        $quoteErrorTransfers = new ArrayObject();
-
-        /** @var \Generated\Shared\Transfer\ErrorMessageTransfer[] $errorTransfers */
-        $errorTransfers = $quoteResponseTransfer->getErrors();
-        foreach ($errorTransfers as $errorTransfer) {
-            if ($errorTransfer instanceof ErrorMessageTransfer) {
-                $quoteErrorTransfers[] = $this->quoteMapper->mapErrorMessageTransferToQuoteErrorTransfer(
-                    $errorTransfer,
-                    new QuoteErrorTransfer()
-                );
-            }
-        }
-
-        if ($quoteErrorTransfers->count()) {
-            $quoteResponseTransfer->setErrors($quoteErrorTransfers);
         }
 
         return $quoteResponseTransfer;

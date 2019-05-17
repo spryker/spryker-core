@@ -48,6 +48,7 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::CLIENT_CUSTOMER] = function (Container $container) {
             return new CartsRestApiToCustomerClientBridge($container->getLocator()->customer()->client());
         };
+
         return $container;
     }
 
