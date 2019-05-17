@@ -542,6 +542,7 @@ class ProductFormAdd extends AbstractType
                 new NotBlank(),
             ],
         ]);
+
         return $this;
     }
 
@@ -698,12 +699,14 @@ class ProductFormAdd extends AbstractType
                 if ($value !== null) {
                     $value = new DateTime($value);
                 }
+
                 return $value;
             },
             function ($value) {
                 if ($value instanceof DateTime) {
                     $value = $value->format('Y-m-d H:i:s');
                 }
+
                 return $value;
             }
         );

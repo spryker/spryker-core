@@ -62,4 +62,9 @@
         <property name="text" type="string"/>
     </transfer>
 
+    <transfer name="CompanyUserCriteria">
+        <property name="pattern" type="string"/>
+        <property name="limit" type="int"/>
+    </transfer>
+
 </transfers>

@@ -13,6 +13,8 @@ use Spryker\Yves\Twig\Plugin\TwigFunctionPluginInterface;
 use Twig\TwigFunction;
 
 /**
+ * @deprecated Use `Spryker\Yves\CmsBlock\Plugin\Twig\CmsBlockPlaceholderTwigPlugin` instead.
+ *
  * @method \Spryker\Client\CmsBlock\CmsBlockClientInterface getClient()
  * @method \Spryker\Yves\CmsBlock\CmsBlockFactory getFactory()
  */
@@ -65,6 +67,7 @@ class TwigCmsBlockPlaceholder extends AbstractPlugin implements TwigFunctionPlug
         }
 
         $renderedTwigContent = $twigRenderedPlugin->render([$identifier => $translation], $context);
+
         return $renderedTwigContent[$identifier];
     }
 

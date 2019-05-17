@@ -90,6 +90,7 @@ class DiscountAmountFormatter implements DiscountAmountFormatterInterface
             );
             $moneyValueTransfer->setNetAmount($formattedNetAmount);
         }
+
         return $discountConfiguratorTransfer;
     }
 }

@@ -23,6 +23,7 @@ class IndexController extends AbstractController
         $rootCategoriesTable = $this
             ->getFactory()
             ->createCategoryRootNodeTable($this->getCurrentLocale()->getIdLocale());
+
         return $this->viewResponse([
             'RootCategoriesTable' => $rootCategoriesTable->render(),
         ]);

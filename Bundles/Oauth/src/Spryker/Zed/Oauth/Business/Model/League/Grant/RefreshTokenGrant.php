@@ -4,7 +4,6 @@
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
-
 namespace Spryker\Zed\Oauth\Business\Model\League\Grant;
 
 use DateInterval;
@@ -60,38 +59,31 @@ class RefreshTokenGrant implements GrantInterface
     {
         $oauthResponseTransfer = (new OauthResponseTransfer())
             ->setIsValid(false);
-
         try {
             $accessTokenRequest = new ServerRequest('POST', '', []);
             $accessTokenRequest = $accessTokenRequest->withParsedBody($oauthRequestTransfer->toArray());
-
             $refreshTokenGrant = new LeagueRefreshTokenGrant(
                 $this->repositoryBuilder->createRefreshTokenRepository()
             );
-
             $refreshTokenGrant->setRefreshTokenTTL(
                 new DateInterval($this->oauthConfig->getRefreshTokenTTL())
             );
-
             $this->authorizationServer->enableGrantType(
                 $refreshTokenGrant,
                 new DateInterval($this->oauthConfig->getAccessTokenTTL())
             );
-
             $response = $this->authorizationServer->respondToAccessTokenRequest($accessTokenRequest, new Response());
-
             $data = (string)$response->getBody();
 
             return $oauthResponseTransfer
                 ->fromArray(json_decode($data, true), true)
                 ->setIsValid(true);
         } catch (OAuthServerException $exception) {
-                $oauthErrorTransfer = new OauthErrorTransfer();
-                $oauthErrorTransfer
-                    ->setErrorType($exception->getErrorType())
-                    ->setMessage($exception->getMessage());
-
-                $oauthResponseTransfer->setError($oauthErrorTransfer);
+            $oauthErrorTransfer = new OauthErrorTransfer();
+            $oauthErrorTransfer
+                ->setErrorType($exception->getErrorType())
+                ->setMessage($exception->getMessage());
+            $oauthResponseTransfer->setError($oauthErrorTransfer);
         }
 
         return $oauthResponseTransfer;

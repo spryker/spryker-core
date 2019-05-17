@@ -206,6 +206,7 @@ class ForeignKeysProvider implements ForeignKeysProviderInterface
     {
         $foreignKeyFileTransfer = new ForeignKeyFileTransfer();
 
+        /** @var array $database */
         $database = $xmlElement->xpath('//database')[0] ?: [];
 
         $foreignKeyFileTransfer->setNamespace((string)$database['namespace']);

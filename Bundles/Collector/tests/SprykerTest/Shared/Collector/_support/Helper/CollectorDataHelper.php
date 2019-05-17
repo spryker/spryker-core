@@ -51,6 +51,7 @@ class CollectorDataHelper extends Module
             [
                 'write' => function ($data) use (&$collectedData) {
                     $collectedData[] = $data;
+
                     return $data;
                 },
             ]

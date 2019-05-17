@@ -41,8 +41,8 @@ class AccessGrantExecutor implements AccessGrantExecutorInterface
 
             return $oauthResponseTransfer;
         }
-
         $grantType = $this->grants[$oauthRequestTransfer->getGrantType()];
+
         return $grantType->processAccessTokenRequest($oauthRequestTransfer);
     }
 }

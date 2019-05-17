@@ -47,6 +47,7 @@ class ValidatorConsole extends Console
         $messenger = $this->getMessenger();
 
         $result = $this->getFacade()->validateTransferObjects($messenger, $this->input->getOptions());
+
         return $result ? static::CODE_SUCCESS : static::CODE_ERROR;
     }
 }

@@ -25,11 +25,13 @@ class DoubleSubmitProtectionServiceProvider extends AbstractPlugin implements Se
     {
         $app['form.extension.double_submit_protection'] = $app->share(function ($app) {
             $translator = isset($app['translator']) ? $app['translator'] : null;
+
             return $this->createDoubleSubmitProtectionExtension($app, $translator);
         });
 
         $app->extend('form.extensions', function ($extensions) use ($app) {
             $extensions[] = $app['form.extension.double_submit_protection'];
+
             return $extensions;
         });
     }

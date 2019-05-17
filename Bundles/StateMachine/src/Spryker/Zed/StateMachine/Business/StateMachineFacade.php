@@ -184,7 +184,7 @@ class StateMachineFacade extends AbstractFacade implements StateMachineFacadeInt
      *
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
      *
-     * @return array
+     * @return string[]
      */
     public function getManualEventsForStateMachineItem(StateMachineItemTransfer $stateMachineItemTransfer)
     {
@@ -200,7 +200,7 @@ class StateMachineFacade extends AbstractFacade implements StateMachineFacadeInt
      *
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
      *
-     * @return array
+     * @return string[][]
      */
     public function getManualEventsForStateMachineItems(array $stateMachineItems)
     {
