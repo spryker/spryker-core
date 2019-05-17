@@ -134,7 +134,8 @@ class PropelSchemaParser implements PropelSchemaParserInterface
             $module = $this->getModuleNameFromFile($splFileInfo);
             $uniqueColumnNames = $this->getUniqueColumnNames($splFileInfo);
             $requiredColumnNames = $this->getRequiredColumnNames($splFileInfo);
-            $uniqueFieldToModuleNameMap = $this->addUniqueColumnNames($uniqueFieldToModuleNameMap, $requiredColumnNames, $uniqueColumnNames, $module);
+            $uniqueFieldToModuleNameMap = $this->
+                ($uniqueFieldToModuleNameMap, $requiredColumnNames, $uniqueColumnNames, $module);
         }
 
         return $uniqueFieldToModuleNameMap;
@@ -271,8 +272,8 @@ class PropelSchemaParser implements PropelSchemaParserInterface
 
     /**
      * @param array $uniqueFieldToModuleNameMap
-     * @param array $requiredColumnNames
-     * @param array $uniqueColumnNames
+     * @param string[] $requiredColumnNames
+     * @param string[] $uniqueColumnNames
      * @param string $module
      *
      * @throws \Spryker\Zed\Development\Business\Exception\Dependency\PropelSchemaParserException
