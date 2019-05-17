@@ -67,10 +67,9 @@ class ResourceShareActivator implements ResourceShareActivatorInterface
         ResourceShareRequestTransfer $resourceShareRequestTransfer
     ): ResourceShareResponseTransfer {
         $resourceShareResponseTransfer = new ResourceShareResponseTransfer();
-        $resourceShareTransfer = $resourceShareRequestTransfer->getResourceShare();
 
         foreach ($this->resourceShareActivatorStrategyPlugins as $resourceShareActivatorStrategyPlugin) {
-            if (!$resourceShareActivatorStrategyPlugin->isApplicable($resourceShareTransfer)) {
+            if (!$resourceShareActivatorStrategyPlugin->isApplicable($resourceShareRequestTransfer)) {
                 continue;
             }
 
@@ -91,6 +90,6 @@ class ResourceShareActivator implements ResourceShareActivatorInterface
         }
 
         return $resourceShareResponseTransfer->setIsSuccessful(true)
-            ->setResourceShare($resourceShareTransfer);
+            ->setResourceShare($resourceShareRequestTransfer->getResourceShare());
     }
 }

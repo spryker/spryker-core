@@ -9,7 +9,6 @@ namespace Spryker\Zed\PersistentCartShare\Communication\Plugin;
 
 use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
-use Generated\Shared\Transfer\ResourceShareTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PersistentCartShare\PersistentCartShareConfig;
 use Spryker\Zed\ResourceShareExtension\Dependency\Plugin\ResourceShareActivatorStrategyPluginInterface;
@@ -39,22 +38,22 @@ class CartPreviewActivatorStrategyPlugin extends AbstractPlugin implements Resou
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
+     * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
      *
      * @return bool
      */
-    public function isApplicable(ResourceShareTransfer $resourceShareTransfer): bool
+    public function isApplicable(ResourceShareRequestTransfer $resourceShareRequestTransfer): bool
     {
+        $resourceShareTransfer = $resourceShareRequestTransfer->getResourceShare();
         if ($resourceShareTransfer->getResourceType() !== PersistentCartShareConfig::RESOURCE_TYPE_QUOTE) {
             return false;
         }
 
         $resourceShareTransfer->requireResourceShareData();
         $resourceShareDataTransfer = $resourceShareTransfer->getResourceShareData();
-        $resourceShareData = $resourceShareDataTransfer->getData();
 
-        if (!isset($resourceShareData[PersistentCartShareConfig::KEY_ID_QUOTE], $resourceShareData[PersistentCartShareConfig::KEY_SHARE_OPTION])
-            || $resourceShareData[PersistentCartShareConfig::KEY_SHARE_OPTION] !== PersistentCartShareConfig::SHARE_OPTION_PREVIEW
+        if (!$resourceShareDataTransfer->getIdQuote()
+            || $resourceShareDataTransfer->getShareOption() !== PersistentCartShareConfig::SHARE_OPTION_PREVIEW
         ) {
             return false;
         }
@@ -65,7 +64,7 @@ class CartPreviewActivatorStrategyPlugin extends AbstractPlugin implements Resou
     /**
      * {@inheritdoc}
      * - Does nothing, as no additional actions required for cart preview.
-     * - Returns ResourceShareResponseTransfer with 'isSuccessful=true and provided ResourceShare.
+     * - Returns ResourceShareResponseTransfer with isSuccessful=true and provided ResourceShare.
      *
      * @api
      *
