@@ -25,8 +25,10 @@ class CartShareOptionReader implements CartShareOptionReaderInterface
      * @param \Spryker\Client\PersistentCartShareExtension\Dependency\Plugin\CartShareOptionPluginInterface[] $cartShareOptionPlugins
      * @param \Spryker\Client\PersistentCartShare\Dependency\Client\PersistentCartShareToCustomerClientInterface $customerClient
      */
-    public function __construct(array $cartShareOptionPlugins, PersistentCartShareToCustomerClientInterface $customerClient)
-    {
+    public function __construct(
+        array $cartShareOptionPlugins,
+        PersistentCartShareToCustomerClientInterface $customerClient
+    ) {
         $this->cartShareOptionPlugins = $cartShareOptionPlugins;
         $this->customerClient = $customerClient;
     }

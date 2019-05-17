@@ -31,6 +31,8 @@ class ReadOnlyCartShareOptionPlugin extends AbstractPlugin implements CartShareO
 
     /**
      * {@inheritdoc}
+     * - Returns true if customer is provided and it is a company user.
+     * - Returns false otherwise.
      *
      * @api
      *

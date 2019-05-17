@@ -30,6 +30,7 @@ class PreviewCartShareOptionPlugin extends AbstractPlugin implements CartShareOp
 
     /**
      * {@inheritdoc}
+     * - Returns true, since preview share option is available for all customers, including guests.
      *
      * @api
      *

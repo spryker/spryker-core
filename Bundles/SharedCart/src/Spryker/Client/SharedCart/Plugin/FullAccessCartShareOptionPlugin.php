@@ -28,6 +28,8 @@ class FullAccessCartShareOptionPlugin extends AbstractPlugin implements CartShar
 
     /**
      * {@inheritdoc}
+     * - Returns true if customer is provided and it is a company user.
+     * - Returns false otherwise.
      *
      * @api
      *
