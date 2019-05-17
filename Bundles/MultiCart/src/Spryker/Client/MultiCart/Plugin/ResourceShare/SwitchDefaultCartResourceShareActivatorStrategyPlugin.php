@@ -64,7 +64,8 @@ class SwitchDefaultCartResourceShareActivatorStrategyPlugin extends AbstractPlug
 
     /**
      * {@inheritdoc}
-     * - Checks if strategy plugin is applicable, based on resource data and provided customer.
+     * - Returns 'true', when resource type is Quote, share option is Read-only or Full access and provided customer is company user.
+     * - Returns 'false' otherwise.
      *
      * @api
      *

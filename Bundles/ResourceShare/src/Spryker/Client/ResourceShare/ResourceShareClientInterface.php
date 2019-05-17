@@ -33,6 +33,7 @@ interface ResourceShareClientInterface
      * - Returns with "isSuccess=false" and error message if resource is not found by provided uuid.
      * - Returns with "isLoginRequired=true" when strategy expects logged in customer.
      * - Returns with "isSuccess=true" on success or with error messages otherwise.
+     * - Applies corresponding activator strategy using `ResourceShareActivatorStrategyPluginInterface` stack.
      *
      * @api
      *

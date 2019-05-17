@@ -19,6 +19,9 @@ use Spryker\Client\MultiCart\CartOperation\CartUpdaterInterface;
 
 class SwitchDefaultCartResourceShareActivatorStrategy implements SwitchDefaultCartResourceShareActivatorStrategyInterface
 {
+    /**
+     * @uses \Spryker\Zed\PersistentCartShare\Business\Quote\QuoteReader::GLOSSARY_KEY_RESOURCE_IS_NOT_AVAILABLE
+     */
     protected const GLOSSARY_KEY_RESOURCE_IS_NOT_AVAILABLE = 'persistent_cart_share.error.resource_is_not_available';
 
     /**
