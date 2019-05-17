@@ -91,17 +91,4 @@ interface MultiCartFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
      */
     public function getQuoteCollectionByCriteria(QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): QuoteCollectionTransfer;
-
-    /**
-     * Specification:
-     * - Creates customer quote.
-     * - Quote and CustomerReference must be set in the QuoteTransfer.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    public function createQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
 }

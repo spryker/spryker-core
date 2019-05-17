@@ -155,7 +155,6 @@ class ReadQuoteCollectionTest extends Unit
             ->setQuotes(
                 new ArrayObject(static::COLLECTION_DATA)
             );
-
         return $quoteCollectionTransfer;
     }
 
