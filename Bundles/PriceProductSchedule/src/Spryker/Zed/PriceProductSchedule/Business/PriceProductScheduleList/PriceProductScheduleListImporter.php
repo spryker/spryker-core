@@ -65,20 +65,23 @@ class PriceProductScheduleListImporter implements PriceProductScheduleListImport
     public function importPriceProductSchedules(
         PriceProductScheduledListImportRequestTransfer $priceProductScheduledListImportRequest
     ): PriceProductScheduleListImportResponseTransfer {
-        $priceProductScheduledListImportResponse = (new PriceProductScheduleListImportResponseTransfer())
-            ->setIsSuccess(false);
         $priceProductScheduledListResponse = $this->priceProductScheduleListCreator->createPriceProductScheduleList(
             $priceProductScheduledListImportRequest->getPriceProductScheduleList()
         );
 
+        $priceProductScheduledListImportResponse = (new PriceProductScheduleListImportResponseTransfer())
+            ->setIsSuccess(false)
+            ->setPriceProductScheduleList($priceProductScheduledListResponse->getPriceProductScheduleList());
+
         foreach ($priceProductScheduledListImportRequest->getItems() as $priceProductScheduleImportTransfer) {
             try {
-                $priceProductScheduledListImportResponse = $this->priceProductScheduleValidator->validatePriceProductScheduleImportTransfer(
-                    $priceProductScheduleImportTransfer,
-                    $priceProductScheduledListImportResponse
+                $error = $this->priceProductScheduleValidator->validatePriceProductScheduleImportTransfer(
+                    $priceProductScheduleImportTransfer
                 );
 
-                if ($priceProductScheduledListImportResponse->getErrors()->count() > 0) {
+                if ($error !== null) {
+                    $priceProductScheduledListImportResponse->addError($error);
+
                     continue;
                 }
 

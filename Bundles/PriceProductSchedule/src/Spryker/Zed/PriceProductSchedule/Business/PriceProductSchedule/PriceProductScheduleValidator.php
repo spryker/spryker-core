@@ -11,7 +11,6 @@ use DateTime;
 use Generated\Shared\Transfer\PriceProductScheduleCriteriaFilterTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleImportTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleListImportErrorTransfer;
-use Generated\Shared\Transfer\PriceProductScheduleListImportResponseTransfer;
 use Propel\Runtime\Exception\PropelException;
 use Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleRepositoryInterface;
 use Throwable;
@@ -34,33 +33,24 @@ class PriceProductScheduleValidator implements PriceProductScheduleValidatorInte
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer
-     * @param \Generated\Shared\Transfer\PriceProductScheduleListImportResponseTransfer $priceProductScheduledListImportResponse
      *
-     * @return \Generated\Shared\Transfer\PriceProductScheduleListImportResponseTransfer
+     * @return \Generated\Shared\Transfer\PriceProductScheduleListImportErrorTransfer|null
      */
     public function validatePriceProductScheduleImportTransfer(
-        PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer,
-        PriceProductScheduleListImportResponseTransfer $priceProductScheduledListImportResponse
-    ): PriceProductScheduleListImportResponseTransfer {
+        PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer
+    ): ?PriceProductScheduleListImportErrorTransfer {
         if ($this->isPricesValid($priceProductScheduleImportTransfer) === false) {
-            $priceProductScheduledListImportResponse
-                ->addError(
-                    $this->createPriceProductScheduleListImportErrorTransfer(
-                        $priceProductScheduleImportTransfer,
-                        'Gross and Net Amount must be integer.'
-                    )
-                );
+            return $this->createPriceProductScheduleListImportErrorTransfer(
+                $priceProductScheduleImportTransfer,
+                'Gross and Net Amount must be positive integer.'
+            );
         }
 
         if ($this->isDatesValid($priceProductScheduleImportTransfer) === false) {
-            $priceProductScheduledListImportResponse->addError(
-                $this->createPriceProductScheduleListImportErrorTransfer(
-                    $priceProductScheduleImportTransfer,
-                    'Dates must be in right format and "to" date must be greater than "from".'
-                )
+            return $this->createPriceProductScheduleListImportErrorTransfer(
+                $priceProductScheduleImportTransfer,
+                'Dates must be in right format and to date must be greater than from.'
             );
-
-            return $priceProductScheduledListImportResponse;
         }
 
         $priceProductScheduleCriteriaFilterTransfer = $this->preparePriceProductScheduleByCriteriaFilter(
@@ -73,23 +63,19 @@ class PriceProductScheduleValidator implements PriceProductScheduleValidatorInte
             );
 
             if ($priceProductScheduleTransferCount > 0) {
-                $priceProductScheduledListImportResponse->addError(
-                    $this->createPriceProductScheduleListImportErrorTransfer(
-                        $priceProductScheduleImportTransfer,
-                        'Scheduled price already exists.'
-                    )
+                return $this->createPriceProductScheduleListImportErrorTransfer(
+                    $priceProductScheduleImportTransfer,
+                    'Scheduled price already exists.'
                 );
             }
         } catch (PropelException $exception) {
-            $priceProductScheduledListImportResponse->addError(
-                $this->createPriceProductScheduleListImportErrorTransfer(
-                    $priceProductScheduleImportTransfer,
-                    'Some error happened during insert into the database. Please make sure that data is valid.'
-                )
+            return $this->createPriceProductScheduleListImportErrorTransfer(
+                $priceProductScheduleImportTransfer,
+                'Some error happened during insert into the database. Please make sure that data is valid.'
             );
         }
 
-        return $priceProductScheduledListImportResponse;
+        return null;
     }
 
     /**
@@ -111,8 +97,10 @@ class PriceProductScheduleValidator implements PriceProductScheduleValidatorInte
      */
     protected function isPricesValid(PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer): bool
     {
-        return is_int($priceProductScheduleImportTransfer->getGrossAmount())
-            && is_int($priceProductScheduleImportTransfer->getNetAmount());
+        return is_numeric($priceProductScheduleImportTransfer->getGrossAmount())
+            && is_numeric($priceProductScheduleImportTransfer->getNetAmount())
+            && (int)$priceProductScheduleImportTransfer->getGrossAmount() > 0
+            && (int)$priceProductScheduleImportTransfer->getNetAmount() > 0;
     }
 
     /**

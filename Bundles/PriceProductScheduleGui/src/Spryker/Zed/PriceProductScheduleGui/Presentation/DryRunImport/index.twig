@@ -16,7 +16,7 @@
 
 {% block content %}
 
-    {% embed '@Gui/Partials/widget.twig' %}
+    {% embed '@Gui/Partials/widget.twig' with {widget_title: 'Dry run on your import' | trans} %}
 
         {% block widget_content %}
             <a href="#">{{ 'Learn about file format on our documentation' | trans }}</a>
@@ -33,4 +33,23 @@
 
     {% endembed %}
 
+    {% embed '@Gui/Partials/widget.twig' with {widget_title: 'Errors found inside your file' | trans} %}
+
+        {% block widget_content %}
+
+            {% include '@Gui/Table/table.twig' with {table: errorTable} %}
+
+        {% endblock %}
+
+    {% endembed %}
+
+    {% embed '@Gui/Partials/widget.twig' with {widget_title: 'Row processed with success' | trans} %}
+
+        {% block widget_content %}
+
+            {{ successTable | raw }}
+
+        {% endblock %}
+
+    {% endembed %}
 {% endblock %}

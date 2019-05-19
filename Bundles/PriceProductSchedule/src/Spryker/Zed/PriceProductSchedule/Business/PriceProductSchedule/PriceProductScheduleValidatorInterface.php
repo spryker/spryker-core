@@ -8,18 +8,16 @@
 namespace Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule;
 
 use Generated\Shared\Transfer\PriceProductScheduleImportTransfer;
-use Generated\Shared\Transfer\PriceProductScheduleListImportResponseTransfer;
+use Generated\Shared\Transfer\PriceProductScheduleListImportErrorTransfer;
 
 interface PriceProductScheduleValidatorInterface
 {
     /**
      * @param \Generated\Shared\Transfer\PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer
-     * @param \Generated\Shared\Transfer\PriceProductScheduleListImportResponseTransfer $priceProductScheduledListImportResponse
      *
-     * @return \Generated\Shared\Transfer\PriceProductScheduleListImportResponseTransfer
+     * @return \Generated\Shared\Transfer\PriceProductScheduleListImportErrorTransfer|null
      */
     public function validatePriceProductScheduleImportTransfer(
-        PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer,
-        PriceProductScheduleListImportResponseTransfer $priceProductScheduledListImportResponse
-    ): PriceProductScheduleListImportResponseTransfer;
+        PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer
+    ): ?PriceProductScheduleListImportErrorTransfer;
 }

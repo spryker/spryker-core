@@ -19,7 +19,7 @@ use Spryker\Zed\Propel\PropelConfig;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 /**
- * @method \Spryker\Zed\PriceProductSchedule\Persistence\PriceProductSchedulePersistenceFactory getFactory()
+ * @method PriceProductSchedulePersistenceFactory getFactory()
  */
 class PriceProductScheduleRepository extends AbstractRepository implements PriceProductScheduleRepositoryInterface
 {
@@ -136,7 +136,8 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
     public function findPriceProductSchedulesToEnableByStore(StoreTransfer $storeTransfer): array
     {
         $currentDatabaseEngineName = $this->propelFacade->getCurrentDatabaseEngine();
-        $priceProductScheduleFilteredByMinResultSubQuery = $this->createPriceProductScheduleFilteredByMinResultSubQuery($storeTransfer, $currentDatabaseEngineName);
+        $priceProductScheduleFilteredByMinResultSubQuery = $this->createPriceProductScheduleFilteredByMinResultSubQuery($storeTransfer,
+            $currentDatabaseEngineName);
 
         $priceProductScheduleEntities = $this->getFactory()
             ->createPriceProductScheduleQuery()
@@ -166,15 +167,15 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
             ->createPriceProductScheduleQuery()
             ->joinWithCurrency()
             ->useCurrencyQuery()
-                ->filterByCode($priceProductScheduleCriteriaFilterTransfer->getCurrencyCode())
+            ->filterByCode($priceProductScheduleCriteriaFilterTransfer->getCurrencyCode())
             ->endUse()
             ->joinWithPriceType()
             ->usePriceTypeQuery()
-                ->filterByName($priceProductScheduleCriteriaFilterTransfer->getPriceTypeName())
+            ->filterByName($priceProductScheduleCriteriaFilterTransfer->getPriceTypeName())
             ->endUse()
             ->joinWithStore()
             ->useStoreQuery()
-                ->filterByName($priceProductScheduleCriteriaFilterTransfer->getStoreName())
+            ->filterByName($priceProductScheduleCriteriaFilterTransfer->getStoreName())
             ->endUse()
             ->joinWithPriceProductScheduleList()
             ->filterByNetPrice($priceProductScheduleCriteriaFilterTransfer->getNetAmount())
@@ -186,7 +187,7 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
             $query
                 ->joinWithProductAbstract()
                 ->useProductAbstractQuery()
-                    ->filterBySku($priceProductScheduleCriteriaFilterTransfer->getSkuProductAbstract())
+                ->filterBySku($priceProductScheduleCriteriaFilterTransfer->getSkuProductAbstract())
                 ->endUse();
         }
 
@@ -194,7 +195,7 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
             $query
                 ->joinWithProduct()
                 ->useProductQuery()
-                    ->filterBySku($priceProductScheduleCriteriaFilterTransfer->getSkuProduct())
+                ->filterBySku($priceProductScheduleCriteriaFilterTransfer->getSkuProduct())
                 ->endUse();
         }
 
@@ -238,7 +239,7 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
                 )
             )
             ->usePriceProductScheduleListQuery()
-                ->filterByIsActive(true)
+            ->filterByIsActive(true)
             ->endUse()
             ->filterByFkStore($storeTransfer->getIdStore())
             ->where(sprintf('%s <= now()', SpyPriceProductScheduleTableMap::COL_ACTIVE_FROM))
@@ -255,7 +256,8 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
         StoreTransfer $storeTransfer,
         string $currentDatabaseEngineName
     ): SpyPriceProductScheduleQuery {
-        $priceProductScheduleConcatenatedSubQuery = $this->createPriceProductScheduleConcatenatedSubQuery($storeTransfer, $currentDatabaseEngineName);
+        $priceProductScheduleConcatenatedSubQuery = $this->createPriceProductScheduleConcatenatedSubQuery($storeTransfer,
+            $currentDatabaseEngineName);
 
         return $this->getFactory()
             ->createPriceProductScheduleQuery()

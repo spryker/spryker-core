@@ -52,7 +52,7 @@ class PriceProductScheduleImporter implements PriceProductScheduleImporterInterf
         $headers = current($importItems);
         unset($importItems[0]);
 
-        foreach ($importItems as $importItem) {
+        foreach ($importItems as $rowNumber => $importItem) {
             $priceProductScheduleImportTransfer = $this->priceProductScheduleImportMapper
                 ->mapArrayToPriceProductScheduleTransfer(
                     array_combine($headers, $importItem),
@@ -60,8 +60,7 @@ class PriceProductScheduleImporter implements PriceProductScheduleImporterInterf
                     PriceProductScheduleImportMapInterface::MAP
                 );
 
-            $priceProductScheduleImportTransfer->setGrossAmount((int)$priceProductScheduleImportTransfer->getGrossAmount());
-            $priceProductScheduleImportTransfer->setNetAmount((int)$priceProductScheduleImportTransfer->getNetAmount());
+            $priceProductScheduleImportTransfer->setRowNumber($rowNumber);
 
             $productScheduledListImportRequestTransfer->addItem($priceProductScheduleImportTransfer);
         }

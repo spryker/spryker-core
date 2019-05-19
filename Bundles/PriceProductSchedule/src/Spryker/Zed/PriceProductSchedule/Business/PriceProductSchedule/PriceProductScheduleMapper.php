@@ -113,7 +113,7 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
         if ($priceTypeTransfer === null) {
             throw new PriceProductScheduleListImportException(
                 sprintf(
-                    'Price type was not found by provided sku "%s"',
+                    'Price type was not found by provided sku %s',
                     $priceProductScheduleImportTransfer->getPriceTypeName()
                 )
             );
@@ -137,7 +137,7 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
             if ($productAbstractId === null) {
                 throw new PriceProductScheduleListImportException(
                     sprintf(
-                        'Abstract product was not found by provided sku "%s"',
+                        'Abstract product was not found by provided sku %s',
                         $priceProductScheduleImportTransfer->getSkuProductAbstract()
                     )
                 );
@@ -154,7 +154,7 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
             if ($productConcreteId === null) {
                 throw new PriceProductScheduleListImportException(
                     sprintf(
-                        'Concrete product was not found by provided sku "%s"',
+                        'Concrete product was not found by provided sku %s',
                         $priceProductScheduleImportTransfer->getSkuProduct()
                     )
                 );
@@ -182,13 +182,23 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
         try {
             $currencyTransfer = $this->currencyFacade->fromIsoCode($priceProductScheduleImportTransfer->getCurrencyCode());
         } catch (CurrencyNotFoundException $e) {
-            throw new PriceProductScheduleListImportException($e);
+            throw new PriceProductScheduleListImportException(
+                sprintf(
+                    'Currency with iso code %s not found!',
+                    $priceProductScheduleImportTransfer->getCurrencyCode()
+                )
+            );
         }
 
         try {
             $storeTransfer = $this->storeFacade->getStoreByName($priceProductScheduleImportTransfer->getStoreName());
         } catch (StoreNotFoundException $e) {
-            throw new PriceProductScheduleListImportException($e);
+            throw new PriceProductScheduleListImportException(
+                sprintf(
+                    'Store with name %s not found!',
+                    $priceProductScheduleImportTransfer->getStoreName()
+                )
+            );
         }
 
         return $moneyValueTransfer

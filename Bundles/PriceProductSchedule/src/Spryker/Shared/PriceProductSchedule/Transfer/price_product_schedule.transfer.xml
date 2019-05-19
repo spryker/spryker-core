@@ -23,6 +23,7 @@
         <property name="activeTo" type="string"/>
         <property name="netAmount" type="int"/>
         <property name="grossAmount" type="int"/>
+        <property name="fkPriceProductScheduleList" type="int"/>
     </transfer>
 
     <transfer name="Filter">
@@ -94,6 +95,7 @@
         <property name="activeTo" type="string"/>
         <property name="netAmount" type="int"/>
         <property name="grossAmount" type="int"/>
+        <property name="rowNumber" type="int"/>
     </transfer>
 
     <transfer name="PriceProductScheduleImportMetaData">
@@ -117,6 +119,7 @@
     <transfer name="PriceProductScheduleListImportResponse">
         <property name="errors" type="PriceProductScheduleListImportError[]" singular="error"/>
         <property name="isSuccess" type="bool"/>
+        <property name="priceProductScheduleList" type="PriceProductScheduleList"/>
     </transfer>
 
     <transfer name="PriceProductScheduleListResponse">

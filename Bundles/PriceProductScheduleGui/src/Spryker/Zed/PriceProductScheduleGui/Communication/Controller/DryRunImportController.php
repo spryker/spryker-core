@@ -10,13 +10,15 @@ namespace Spryker\Zed\PriceProductScheduleGui\Communication\Controller;
 use Generated\Shared\Transfer\PriceProductScheduledListImportRequestTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleListImportResponseTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleListTransfer;
+use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Form\PriceProductScheduleImportFormType;
+use Spryker\Zed\PriceProductScheduleGui\Communication\PriceProductScheduleGuiCommunicationFactory;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method \Spryker\Zed\PriceProductScheduleGui\Communication\PriceProductScheduleGuiCommunicationFactory getFactory()
+ * @method PriceProductScheduleGuiCommunicationFactory getFactory()
  */
 class DryRunImportController extends AbstractController
 {
@@ -43,10 +45,37 @@ class DryRunImportController extends AbstractController
             $priceProductScheduleImportForm
         );
 
+        $errorTable = $this->getFactory()
+            ->createImportErrorTable($priceProductScheduleListImportResponseTransfer);
+        $errorTableData = $this->getTableArrayFormat($errorTable);
+
+        $successTable = $this->getFactory()
+            ->createImportSuccessListTable($priceProductScheduleListImportResponseTransfer->getPriceProductScheduleList());
+
         return $this->viewResponse([
             'importForm' => $priceProductScheduleImportForm->createView(),
             'importResponse' => $priceProductScheduleListImportResponseTransfer,
+            'errorTable' => $errorTableData,
+            'successTable' => $successTable->render(),
         ]);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function tableAction(Request $request)
+    {
+        $priceProductScheduleList = (new PriceProductScheduleListTransfer())
+            ->setIdPriceProductScheduleList($request->query->getInt(PriceProductScheduleListTransfer::ID_PRICE_PRODUCT_SCHEDULE_LIST));
+
+        $successTable = $this->getFactory()
+            ->createImportSuccessListTable($priceProductScheduleList);
+
+        return $this->jsonResponse(
+            $successTable->fetchData()
+        );
     }
 
     /**
@@ -78,5 +107,18 @@ class DryRunImportController extends AbstractController
             );
 
         return $this->getFactory()->getPriceProductScheduleFacade()->importPriceProductSchedules($priceProductScheduleListImportRequestTransfer);
+    }
+
+    /**
+     * @param \Spryker\Zed\Gui\Communication\Table\AbstractTable $table
+     *
+     * @return array
+     */
+    protected function getTableArrayFormat(AbstractTable $table)
+    {
+        $tableData = $table->fetchData();
+        $tableData['header'] = $table->getConfiguration()->getHeader();
+
+        return $tableData;
     }
 }
