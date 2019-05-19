@@ -18,6 +18,7 @@ use Symfony\Component\Validator\Constraints\Required;
 
 /**
  * @method \Spryker\Zed\PriceProductScheduleGui\Communication\PriceProductScheduleGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\PriceProductScheduleGui\Persistence\PriceProductScheduleGuiRepositoryInterface getRepository()
  */
 class PriceProductScheduleImportFormType extends AbstractType
 {

@@ -11,7 +11,7 @@ use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
- * @method PriceProductScheduleGuiPersistenceFactory getFactory()
+ * @method \Spryker\Zed\PriceProductScheduleGui\Persistence\PriceProductScheduleGuiPersistenceFactory getFactory()
  */
 class PriceProductScheduleGuiRepository extends AbstractRepository implements PriceProductScheduleGuiRepositoryInterface
 {

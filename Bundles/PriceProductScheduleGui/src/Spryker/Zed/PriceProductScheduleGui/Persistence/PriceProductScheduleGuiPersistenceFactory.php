@@ -10,6 +10,9 @@ namespace Spryker\Zed\PriceProductScheduleGui\Persistence;
 use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
+/**
+ * @method \Spryker\Zed\PriceProductScheduleGui\Persistence\PriceProductScheduleGuiRepositoryInterface getRepository()
+ */
 class PriceProductScheduleGuiPersistenceFactory extends AbstractPersistenceFactory
 {
     /**

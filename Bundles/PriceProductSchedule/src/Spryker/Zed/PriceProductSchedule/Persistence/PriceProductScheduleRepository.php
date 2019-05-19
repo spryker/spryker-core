@@ -19,7 +19,7 @@ use Spryker\Zed\Propel\PropelConfig;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 /**
- * @method PriceProductSchedulePersistenceFactory getFactory()
+ * @method \Spryker\Zed\PriceProductSchedule\Persistence\PriceProductSchedulePersistenceFactory getFactory()
  */
 class PriceProductScheduleRepository extends AbstractRepository implements PriceProductScheduleRepositoryInterface
 {
@@ -136,8 +136,10 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
     public function findPriceProductSchedulesToEnableByStore(StoreTransfer $storeTransfer): array
     {
         $currentDatabaseEngineName = $this->propelFacade->getCurrentDatabaseEngine();
-        $priceProductScheduleFilteredByMinResultSubQuery = $this->createPriceProductScheduleFilteredByMinResultSubQuery($storeTransfer,
-            $currentDatabaseEngineName);
+        $priceProductScheduleFilteredByMinResultSubQuery = $this->createPriceProductScheduleFilteredByMinResultSubQuery(
+            $storeTransfer,
+            $currentDatabaseEngineName
+        );
 
         $priceProductScheduleEntities = $this->getFactory()
             ->createPriceProductScheduleQuery()
@@ -256,8 +258,10 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
         StoreTransfer $storeTransfer,
         string $currentDatabaseEngineName
     ): SpyPriceProductScheduleQuery {
-        $priceProductScheduleConcatenatedSubQuery = $this->createPriceProductScheduleConcatenatedSubQuery($storeTransfer,
-            $currentDatabaseEngineName);
+        $priceProductScheduleConcatenatedSubQuery = $this->createPriceProductScheduleConcatenatedSubQuery(
+            $storeTransfer,
+            $currentDatabaseEngineName
+        );
 
         return $this->getFactory()
             ->createPriceProductScheduleQuery()

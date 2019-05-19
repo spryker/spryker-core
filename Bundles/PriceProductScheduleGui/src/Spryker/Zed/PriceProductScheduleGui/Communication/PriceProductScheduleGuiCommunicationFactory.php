@@ -19,12 +19,11 @@ use Spryker\Zed\PriceProductScheduleGui\Communication\Table\ImportErrorListTable
 use Spryker\Zed\PriceProductScheduleGui\Communication\Table\ImportSuccessListTable;
 use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToPriceProductScheduleFacadeInterface;
 use Spryker\Zed\PriceProductScheduleGui\Dependency\Service\PriceProductScheduleGuiToUtilCsvServiceInterface;
-use Spryker\Zed\PriceProductScheduleGui\Persistence\PriceProductScheduleGuiRepositoryInterface;
 use Spryker\Zed\PriceProductScheduleGui\PriceProductScheduleGuiDependencyProvider;
 use Symfony\Component\Form\FormInterface;
 
 /**
- * @method PriceProductScheduleGuiRepositoryInterface getRepository()
+ * @method \Spryker\Zed\PriceProductScheduleGui\Persistence\PriceProductScheduleGuiRepositoryInterface getRepository()
  */
 class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationFactory
 {
