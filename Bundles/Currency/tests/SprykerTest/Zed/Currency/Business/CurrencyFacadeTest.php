@@ -79,8 +79,8 @@ class CurrencyFacadeTest extends Unit
         $quoteTransfer = new QuoteTransfer();
         $quoteValidationResponseTransfer = $this->getQuoteValidationResponseTransfer($quoteTransfer);
 
-        $errors = array_map(function ($errorMessageTransfer) {
-            return $errorMessageTransfer->getValue();
+        $errors = array_map(function ($quoteErrorTransfer) {
+            return $quoteErrorTransfer->getMessage();
         }, (array)$quoteValidationResponseTransfer->getErrors());
 
         //Act
@@ -98,8 +98,8 @@ class CurrencyFacadeTest extends Unit
             ->setCurrency($currencyTransfer);
         $quoteValidationResponseTransfer = $this->getQuoteValidationResponseTransfer($quoteTransfer);
 
-        $errors = array_map(function ($errorMessageTransfer) {
-            return $errorMessageTransfer->getValue();
+        $errors = array_map(function ($quoteErrorTransfer) {
+            return $quoteErrorTransfer->getMessage();
         }, (array)$quoteValidationResponseTransfer->getErrors());
 
         //Act
@@ -121,8 +121,8 @@ class CurrencyFacadeTest extends Unit
             ->setStore($storeTransfer);
         $quoteValidationResponseTransfer = $this->getQuoteValidationResponseTransfer($quoteTransfer);
 
-        $errors = array_map(function ($errorMessageTransfer) {
-            return $errorMessageTransfer->getValue();
+        $errors = array_map(function ($quoteErrorTransfer) {
+            return $quoteErrorTransfer->getMessage();
         }, (array)$quoteValidationResponseTransfer->getErrors());
 
         //Act
