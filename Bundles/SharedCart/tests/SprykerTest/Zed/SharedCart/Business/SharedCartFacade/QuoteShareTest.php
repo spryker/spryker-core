@@ -9,9 +9,15 @@ namespace SprykerTest\Zed\SharedCart\Business\SharedCartFacade;
 
 use ArrayObject;
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\CompanyUserTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuotePermissionGroupCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuotePermissionGroupTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SharedQuoteCriteriaFilterTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Zed\MultiCart\Communication\Plugin\AddDefaultNameBeforeQuoteSavePlugin;
 use Spryker\Zed\Permission\PermissionDependencyProvider;
 use Spryker\Zed\Quote\QuoteDependencyProvider;
@@ -32,6 +38,9 @@ use Spryker\Zed\SharedCart\Communication\Plugin\WriteSharedCartPermissionPlugin;
  */
 class QuoteShareTest extends Unit
 {
+    protected const READ_ONLY = 'READ_ONLY';
+    protected const STORE_NAME_DE = 'DE';
+
     /**
      * @var \SprykerTest\Zed\SharedCart\SharedCartBusinessTester
      */
@@ -105,7 +114,7 @@ class QuoteShareTest extends Unit
         $quoteTransfer->addShareDetail(
             $this->tester->createShareCartDetail(
                 $companyUserTransfer->getIdCompanyUser(),
-                $this->findQuotePermissionGroup('READ_ONLY')
+                $this->findQuotePermissionGroup(static::READ_ONLY)
             )
         );
         $this->tester->getLocator()->quote()->facade()->updateQuote($quoteTransfer);
@@ -132,7 +141,7 @@ class QuoteShareTest extends Unit
         $quoteTransfer->addShareDetail(
             $this->tester->createShareCartDetail(
                 $companyUserTransfer->getIdCompanyUser(),
-                $this->findQuotePermissionGroup('READ_ONLY')
+                $this->findQuotePermissionGroup(static::READ_ONLY)
             )
         );
         $this->tester->getLocator()->quote()->facade()->updateQuote($quoteTransfer);
@@ -145,6 +154,190 @@ class QuoteShareTest extends Unit
 
         // Assert
         $this->assertFalse($actualQuoteResponseTransfer->getIsSuccessful(), 'Company user shouldn\'t have been able to read the quote from database.');
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetCustomerSharedQuoteCollectionWillReturnCollectionOfSharedQuotes(): void
+    {
+        // Arrange
+        $ownerCustomerTransfer = $this->tester->haveCustomer();
+        $customerTransfer = $this->tester->haveCustomer();
+        $companyTransfer = $this->tester->haveCompany();
+        $companyUser = $this->tester->haveCompanyUser([
+            CompanyUserTransfer::CUSTOMER => $customerTransfer,
+            CompanyUserTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
+        ]);
+        $storeTransfer = $this->tester->haveStore([
+            StoreTransfer::NAME => static::STORE_NAME_DE,
+        ]);
+        $quoteTransfer = $this->tester->havePersistentQuote([
+            QuoteTransfer::CUSTOMER_REFERENCE => $ownerCustomerTransfer->getCustomerReference(),
+            QuoteTransfer::CUSTOMER => $ownerCustomerTransfer,
+            QuoteTransfer::STORE => $storeTransfer,
+        ]);
+        $spyQuotePermissionGroup = $this->tester->haveQuotePermissionGroup(
+            static::READ_ONLY,
+            [ReadSharedCartPermissionPlugin::KEY]
+        );
+        $this->tester->haveQuoteCompanyUser(
+            $companyUser,
+            $quoteTransfer,
+            $spyQuotePermissionGroup
+        );
+
+        $sharedQuoteCriteriaFilterTransfer = (new SharedQuoteCriteriaFilterTransfer())
+            ->setIdCompanyUser($companyUser->getIdCompanyUser())
+            ->setIdStore($storeTransfer->getIdStore());
+
+        // Act
+        $quoteCollectionTransfer = $this->tester->getFacade()->getCustomerSharedQuoteCollection(
+            $sharedQuoteCriteriaFilterTransfer
+        );
+
+        // Assert
+        $this->assertCount(1, $quoteCollectionTransfer->getQuotes());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetCustomerSharedQuoteCollectionWillReturnEmptyCollectionWhenCompanyUserHasNoQuotesSharedWithHer(): void
+    {
+        // Arrange
+        $customerTransfer = $this->tester->haveCustomer();
+        $companyTransfer = $this->tester->haveCompany();
+        $companyUser = $this->tester->haveCompanyUser([
+            CompanyUserTransfer::CUSTOMER => $customerTransfer,
+            CompanyUserTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
+        ]);
+        $storeTransfer = $this->tester->haveStore([
+            StoreTransfer::NAME => static::STORE_NAME_DE,
+        ]);
+
+        $sharedQuoteCriteriaFilterTransfer = (new SharedQuoteCriteriaFilterTransfer())
+            ->setIdCompanyUser($companyUser->getIdCompanyUser())
+            ->setIdStore($storeTransfer->getIdStore());
+
+        // Act
+        $quoteCollectionTransfer = $this->tester->getFacade()->getCustomerSharedQuoteCollection(
+            $sharedQuoteCriteriaFilterTransfer
+        );
+
+        // Assert
+        $this->assertCount(0, $quoteCollectionTransfer->getQuotes());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetCustomerSharedQuoteCollectionWillFailOnIdCompanyUserNotProvidedInParameter(): void
+    {
+        $this->expectException(RequiredTransferPropertyException::class);
+
+        // Arrange
+        $storeTransfer = $this->tester->haveStore([
+            StoreTransfer::NAME => static::STORE_NAME_DE,
+        ]);
+
+        $sharedQuoteCriteriaFilterTransfer = (new SharedQuoteCriteriaFilterTransfer())
+            ->setIdStore($storeTransfer->getIdStore());
+
+        // Act
+        $this->tester->getFacade()->getCustomerSharedQuoteCollection(
+            $sharedQuoteCriteriaFilterTransfer
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandQuoteCollectionWithCustomerSharedQuoteCollectionWillExpandQuoteCollectionWithSharedQuotes(): void
+    {
+        // Arrange
+        $ownerCustomerTransfer = $this->tester->haveCustomer();
+        $customerTransfer = $this->tester->haveCustomer();
+        $companyTransfer = $this->tester->haveCompany();
+        $companyUserTransfer = $this->tester->haveCompanyUser([
+            CompanyUserTransfer::CUSTOMER => $customerTransfer,
+            CompanyUserTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
+        ]);
+        $storeTransfer = $this->tester->haveStore([
+            StoreTransfer::NAME => static::STORE_NAME_DE,
+        ]);
+        $quoteTransfer = $this->tester->havePersistentQuote([
+            QuoteTransfer::CUSTOMER_REFERENCE => $ownerCustomerTransfer->getCustomerReference(),
+            QuoteTransfer::CUSTOMER => $ownerCustomerTransfer,
+            QuoteTransfer::STORE => $storeTransfer,
+        ]);
+        $spyQuotePermissionGroup = $this->tester->haveQuotePermissionGroup(
+            static::READ_ONLY,
+            [ReadSharedCartPermissionPlugin::KEY]
+        );
+        $this->tester->haveQuoteCompanyUser(
+            $companyUserTransfer,
+            $quoteTransfer,
+            $spyQuotePermissionGroup
+        );
+
+        // Act
+        $quoteCollectionTransfer = $this->tester->getFacade()->expandQuoteCollectionWithCustomerSharedQuoteCollection(
+            (new CustomerTransfer())->setCompanyUserTransfer($companyUserTransfer),
+            (new QuoteCollectionTransfer())
+        );
+
+        // Assert
+        $this->assertCount(1, $quoteCollectionTransfer->getQuotes());
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandQuoteCollectionWithCustomerShareDetailWillExpandQuoteCollectionWithShareDetailsCollection(): void
+    {
+        // Arrange
+        $ownerCustomerTransfer = $this->tester->haveCustomer();
+        $customerTransfer = $this->tester->haveCustomer();
+        $companyTransfer = $this->tester->haveCompany();
+        $companyUserTransfer = $this->tester->haveCompanyUser([
+            CompanyUserTransfer::CUSTOMER => $customerTransfer,
+            CompanyUserTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
+        ]);
+        $storeTransfer = $this->tester->haveStore([
+            StoreTransfer::NAME => static::STORE_NAME_DE,
+        ]);
+        $quoteTransfer = $this->tester->havePersistentQuote([
+            QuoteTransfer::CUSTOMER_REFERENCE => $ownerCustomerTransfer->getCustomerReference(),
+            QuoteTransfer::CUSTOMER => $ownerCustomerTransfer,
+            QuoteTransfer::STORE => $storeTransfer,
+        ]);
+        $spyQuotePermissionGroup = $this->tester->haveQuotePermissionGroup(
+            static::READ_ONLY,
+            [ReadSharedCartPermissionPlugin::KEY]
+        );
+        $quoteCompanyUserEntity = $this->tester->haveQuoteCompanyUser(
+            $companyUserTransfer,
+            $quoteTransfer,
+            $spyQuotePermissionGroup
+        );
+
+        // Act
+        $quoteCollectionTransfer = $this->tester->getFacade()->expandQuoteCollectionWithCustomerShareDetail(
+            (new CustomerTransfer())->setCompanyUserTransfer($companyUserTransfer),
+            (new QuoteCollectionTransfer())->addQuote($quoteTransfer)
+        );
+
+        // Assert
+        $this->assertCount(1, $quoteCollectionTransfer->getQuotes());
+        /** @var \Generated\Shared\Transfer\QuoteTransfer $actualQuoteTransfer */
+        $actualQuoteTransfer = $quoteCollectionTransfer->getQuotes()->offsetGet(0);
+        $this->assertCount(1, $actualQuoteTransfer->getShareDetails());
+        /** @var \Generated\Shared\Transfer\ShareDetailTransfer $shareDetailTransfer */
+        $shareDetailTransfer = $actualQuoteTransfer->getShareDetails()->offsetGet(0);
+        $this->assertEquals($quoteCompanyUserEntity->getIdQuoteCompanyUser(), $shareDetailTransfer->getIdQuoteCompanyUser());
+        $this->assertEquals($quoteCompanyUserEntity->getFkCompanyUser(), $shareDetailTransfer->getIdCompanyUser());
+        $this->assertEquals($quoteCompanyUserEntity->getFkQuotePermissionGroup(), $shareDetailTransfer->getQuotePermissionGroup()->getIdQuotePermissionGroup());
     }
 
     /**

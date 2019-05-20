@@ -92,6 +92,22 @@ class QuoteReader implements QuoteReaderInterface
 
         $quoteCollectionTransfer = $this->quoteFacade->getQuoteCollection($quoteCriteriaFilterTransfer);
 
+        return $this->executeQuoteCollectionExpanderPlugins(
+            $quoteCriteriaFilterTransfer,
+            $quoteCollectionTransfer
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\QuoteCollectionTransfer $quoteCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
+     */
+    protected function executeQuoteCollectionExpanderPlugins(
+        QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer,
+        QuoteCollectionTransfer $quoteCollectionTransfer
+    ): QuoteCollectionTransfer {
         foreach ($this->quoteCollectionExpanderPlugins as $quoteCollectionExpanderPlugin) {
             $quoteCollectionTransfer = $quoteCollectionExpanderPlugin->expandQuoteCollection(
                 (new CustomerTransfer())->setCompanyUserTransfer(
