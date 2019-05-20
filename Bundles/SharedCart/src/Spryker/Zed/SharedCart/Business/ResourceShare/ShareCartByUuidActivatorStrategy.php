@@ -102,7 +102,7 @@ class ShareCartByUuidActivatorStrategy implements ShareCartByUuidActivatorStrate
      *
      * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
      */
-    public function findQuoteById(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer
+    protected function findQuoteById(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer
     {
         $idQuote = $resourceShareRequestTransfer->getResourceShare()
             ->getResourceShareData()
