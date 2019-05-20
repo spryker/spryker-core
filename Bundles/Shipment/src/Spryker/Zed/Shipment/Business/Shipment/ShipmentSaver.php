@@ -159,6 +159,7 @@ class ShipmentSaver implements ShipmentSaverInterface
             $shipmentExpenseTransfer->setUnitPriceToPayAggregation(0);
             $shipmentExpenseTransfer->setUnitPrice($price);
             $shipmentExpenseTransfer->setUnitNetPrice($price);
+
             return;
         }
 

@@ -105,6 +105,7 @@ class ShipmentOrderHydrate implements ShipmentOrderHydrateInterface
     {
         $shipmentTransfers = $this->shipmentRepository->findShipmentTransfersByOrder($orderTransfer);
         $shipmentMethodTransfers = $this->shipmentRepository->findShipmentMethodTransfersByShipment($shipmentTransfers);
+
         return $this->getMappedShipmentTransfersToShipmentMethodTransfers($shipmentTransfers, $shipmentMethodTransfers);
     }
 

@@ -10,9 +10,9 @@ namespace Spryker\Zed\Customer\Business\Checkout;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Service\Customer\CustomerServiceInterface;
 use Spryker\Zed\Customer\Business\Customer\AddressInterface;
 use Spryker\Zed\Customer\Business\Customer\CustomerInterface;
-use Spryker\Zed\Customer\CustomerConfig;
 use Spryker\Zed\Customer\Persistence\CustomerRepositoryInterface;
 
 /**
@@ -31,26 +31,26 @@ class CustomerOrderSaverWithMultiShippingAddress extends CustomerOrderSaver
     protected $existingAddresses = [];
 
     /**
-     * @var \Spryker\Zed\Customer\CustomerConfig
+     * @var \Spryker\Service\Customer\CustomerService
      */
-    protected $customerConfig;
+    protected $customerService;
 
     /**
      * @param \Spryker\Zed\Customer\Business\Customer\CustomerInterface $customer
      * @param \Spryker\Zed\Customer\Business\Customer\AddressInterface $address
      * @param \Spryker\Zed\Customer\Persistence\CustomerRepositoryInterface $customerRepository
-     * @param \Spryker\Zed\Customer\CustomerConfig $customerConfig
+     * @param \Spryker\Service\Customer\CustomerServiceInterface $customerService
      */
     public function __construct(
         CustomerInterface $customer,
         AddressInterface $address,
         CustomerRepositoryInterface $customerRepository,
-        CustomerConfig $customerConfig
+        CustomerServiceInterface $customerService
     ) {
         parent::__construct($customer, $address);
 
         $this->customerRepository = $customerRepository;
-        $this->customerConfig = $customerConfig;
+        $this->customerService = $customerService;
     }
 
     /**
@@ -101,28 +101,12 @@ class CustomerOrderSaverWithMultiShippingAddress extends CustomerOrderSaver
             $addressTransfer->setFkCustomer($customer->getIdCustomer());
         }
 
-        $key = $this->getAddressTransferKey($addressTransfer);
+        $key = $this->customerService->getUniqueAddressKey($addressTransfer);
         if (!isset($this->existingAddresses[$key])) {
             $customerAddressTransfer = $this->customerRepository->findAddressByAddressData($addressTransfer);
             $this->existingAddresses[$key] = $customerAddressTransfer ?: $addressTransfer;
         }
 
         return $this->existingAddresses[$key];
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
-     *
-     * @return string
-     */
-    protected function getAddressTransferKey(AddressTransfer $addressTransfer): string
-    {
-        $addressData = $addressTransfer->toArray(true, true);
-
-        foreach ($this->customerConfig->getAddressKeyGenerationExcludedFields() as $addressExcludedField) {
-            unset($addressData[$addressExcludedField]);
-        }
-
-        return implode('', $addressData);
     }
 }

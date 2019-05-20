@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Customer;
 
-use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
 use Spryker\Shared\Customer\CustomerConstants;
 use Spryker\Shared\Kernel\Store;
@@ -79,17 +78,6 @@ class CustomerConfig extends AbstractBundleConfig
     public function getCustomerDetailExternalBlocksUrls()
     {
         return [];
-    }
-
-    /**
-     * @return string[]
-     */
-    public function getAddressKeyGenerationExcludedFields(): array
-    {
-        return [
-            AddressTransfer::IS_DEFAULT_BILLING,
-            AddressTransfer::IS_DEFAULT_SHIPPING,
-        ];
     }
 
     /**

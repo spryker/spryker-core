@@ -11,10 +11,25 @@ use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
+use Spryker\Service\Shipment\Dependency\Service\ShipmentToCustomerServiceInterface;
 
 class ItemsGrouper implements ItemsGrouperInterface
 {
     protected const SHIPMENT_TRANSFER_KEY_PATTERN = '%s-%s-%s';
+
+    /**
+     * @var \Spryker\Service\Shipment\Dependency\Service\ShipmentToCustomerServiceInterface
+     */
+    protected $customerService;
+
+    /**
+     * @param \Spryker\Service\Shipment\Dependency\Service\ShipmentToCustomerServiceInterface $customerService
+     */
+    public function __construct(
+        ShipmentToCustomerServiceInterface $customerService
+    ) {
+        $this->customerService = $customerService;
+    }
 
     /**
      * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
@@ -51,7 +66,7 @@ class ItemsGrouper implements ItemsGrouperInterface
         return md5(sprintf(
             static::SHIPMENT_TRANSFER_KEY_PATTERN,
             $shipmentTransfer->getMethod() ? $shipmentTransfer->getMethod()->getIdShipmentMethod() : '',
-            $shipmentTransfer->getShippingAddress() ? $shipmentTransfer->getShippingAddress()->serialize() : '',
+            $shipmentTransfer->getShippingAddress() ? $this->customerService->getUniqueAddressKey($shipmentTransfer->getShippingAddress()) : '',
             $shipmentTransfer->getRequestedDeliveryDate()
         ));
     }
@@ -64,10 +79,5 @@ class ItemsGrouper implements ItemsGrouperInterface
     protected function assertRequiredShipment(ItemTransfer $itemTransfer): void
     {
         $itemTransfer->requireShipment();
-        /**
-         * @todo Remove this two checks.
-         */
-        $itemTransfer->getShipment()->requireMethod();
-        $itemTransfer->getShipment()->requireShippingAddress();
     }
 }
