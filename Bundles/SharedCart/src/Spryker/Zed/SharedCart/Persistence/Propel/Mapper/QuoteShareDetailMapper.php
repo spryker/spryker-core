@@ -53,7 +53,7 @@ class QuoteShareDetailMapper implements QuoteShareDetailMapperInterface
         );
 
         $shareDetailTransfer->setCompanyUser(
-            $this->mapSpyCompanyUserToCompanyUserTransfer($quoteCompanyUserEntity->getSpyCompanyUser(), new CompanyUserTransfer())
+            $this->mapCompanyUserEntityToCompanyUserTransfer($quoteCompanyUserEntity->getSpyCompanyUser(), new CompanyUserTransfer())
         );
 
         $shareDetailTransfer->setQuotePermissionGroup(
@@ -95,7 +95,7 @@ class QuoteShareDetailMapper implements QuoteShareDetailMapperInterface
      *
      * @return \Generated\Shared\Transfer\CompanyUserTransfer
      */
-    protected function mapSpyCompanyUserToCompanyUserTransfer(
+    protected function mapCompanyUserEntityToCompanyUserTransfer(
         SpyCompanyUser $spyCompanyUser,
         CompanyUserTransfer $companyUserTransfer
     ): CompanyUserTransfer {

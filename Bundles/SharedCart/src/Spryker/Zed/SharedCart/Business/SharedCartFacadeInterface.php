@@ -206,12 +206,11 @@ interface SharedCartFacadeInterface
     /**
      * Specification:
      *  - Finds quote company user by uuid.
-     *  - Requires uuid field to be set in QuoteCompanyUserTransfer.
-     *  - Uuid is not a required field and could be missing.
+     *  - - Requires uuid field to be set in QuoteCompanyUserTransfer taken as parameter.
      *
      * @api
      *
-     * {@internal will work if uuid field is provided.}}
+     * {@internal will work if uuid property is present in QuoteCompanyUserTransfer.}}
      *
      * @param \Generated\Shared\Transfer\QuoteCompanyUserTransfer $quoteCompanyUserTransfer
      *

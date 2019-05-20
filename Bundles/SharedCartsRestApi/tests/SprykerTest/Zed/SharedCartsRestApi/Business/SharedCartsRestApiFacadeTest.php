@@ -145,7 +145,7 @@ class SharedCartsRestApiFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCreateShouldReturnErrorIfCustomerDoNotOwnsAQuote(): void
+    public function testCreateShouldReturnErrorIfCustomerDoesNotOwnQuote(): void
     {
         //Arrange
         $quotePermissionGroupTransfer = (new QuotePermissionGroupTransfer())->fromArray(
@@ -239,7 +239,7 @@ class SharedCartsRestApiFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateShouldReturnErrorIfCustomerDoNotOwnsAQuote(): void
+    public function testUpdateShouldReturnErrorIfCustomerDoesNotOwnQuote(): void
     {
         //Arrange
         $quoteCompanyUserTransfer = $this->tester->haveQuoteCompanyUser(
@@ -323,7 +323,7 @@ class SharedCartsRestApiFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testDeleteShouldReturnErrorIfCustomerDoNotOwnsAQuote(): void
+    public function testDeleteShouldReturnErrorIfCustomerDoesNotOwnQuote(): void
     {
         //Arrange
         $quoteCompanyUserEntityTransfer = $this->tester->haveQuoteCompanyUser(
