@@ -9,7 +9,7 @@ namespace Spryker\Zed\Currency\Dependency\Facade;
 
 use Generated\Shared\Transfer\StoreTransfer;
 
-class CurrencyToStoreFacadeFacadeBridge implements CurrencyToStoreFacadeInterface
+class CurrencyToStoreFacadeBridge implements CurrencyToStoreFacadeInterface
 {
     /**
      * @var \Spryker\Zed\Store\Business\StoreFacadeInterface
