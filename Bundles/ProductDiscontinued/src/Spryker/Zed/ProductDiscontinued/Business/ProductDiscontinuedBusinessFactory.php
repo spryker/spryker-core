@@ -46,7 +46,8 @@ class ProductDiscontinuedBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->getRepository(),
             $this->createProductDiscontinuedPluginExecutor(),
-            $this->getConfig()
+            $this->getConfig(),
+            $this->getProductDiscontinuedPreDeleteCheckPlugins()
         );
     }
 
@@ -151,5 +152,13 @@ class ProductDiscontinuedBusinessFactory extends AbstractBusinessFactory
     public function getPostDeleteProductDiscontinuedPlugins(): array
     {
         return $this->getProvidedDependency(ProductDiscontinuedDependencyProvider::PLUGINS_POST_DELETE_PRODUCT_DISCONTINUED);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductDiscontinuedExtension\Dependency\Plugin\ProductDiscontinuedPreDeleteCheckPluginInterface[]
+     */
+    public function getProductDiscontinuedPreDeleteCheckPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductDiscontinuedDependencyProvider::PLUGINS_PRODUCT_DISCONTINUED_PRE_DELETE_CHECK);
     }
 }

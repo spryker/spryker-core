@@ -118,6 +118,7 @@ class BusinessOnBehalfGuiDependencyProvider extends AbstractBundleDependencyProv
         $container[static::PLUGINS_CUSTOMER_BUSINESS_UNIT_ATTACH_FORM_EXPANDER] = function (Container $container) {
             return $this->getCustomerBusinessUnitAttachFormExpanderPlugins();
         };
+
         return $container;
     }
 

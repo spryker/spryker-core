@@ -110,7 +110,12 @@
 
 
 {% block footer_js %}
-    <script src="/assets/js/spryker-zed-gui-commons.js"></script>
+    {% block common_js %}
+        <script src="/assets/js/spryker-zed-gui-commons.js"></script>
+    {% endblock %}
+    {% block init_js %}
+        <script src="/assets/js/spryker-zed-gui-init.js"></script>
+    {% endblock %}
 {% endblock %}
 
 </body>

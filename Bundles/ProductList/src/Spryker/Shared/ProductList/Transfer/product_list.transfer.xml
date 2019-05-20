@@ -12,6 +12,17 @@
         <property name="productListProductConcreteRelation" type="ProductListProductConcreteRelation"/>
     </transfer>
 
+    <transfer name="ProductListResponse">
+        <property name="productList" type="ProductList"/>
+        <property name="isSuccessful" type="bool"/>
+        <property name="messages" type="Message[]" singular="message"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="value" type="string"/>
+        <property name="parameters" type="array"/>
+    </transfer>
+
     <transfer name="ProductListCategoryRelation">
         <property name="idProductList" type="int"/>
         <property name="categoryIds" type="int[]"/>

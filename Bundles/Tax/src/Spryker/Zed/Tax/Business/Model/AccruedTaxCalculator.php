@@ -33,7 +33,7 @@ class AccruedTaxCalculator implements AccruedTaxCalculatorInterface
 
     /**
      * @param int $price Price as integer (e. g 15508 for 155.08)
-     * @param int $taxRate
+     * @param float $taxRate
      * @param bool $round
      * @param string|null $identifier
      *
@@ -95,6 +95,7 @@ class AccruedTaxCalculator implements AccruedTaxCalculatorInterface
         if (isset(static::$roundingErrorBucket[$identifier])) {
             $roundingError = static::$roundingErrorBucket[$identifier];
             static::$roundingErrorBucket[$identifier] = 0;
+
             return $roundingError;
         }
 

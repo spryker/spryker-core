@@ -131,6 +131,7 @@ class Reservation implements ReservationInterface
             }
             $reservationQuantity += $omsProductReservationStoreEntity->getReservationQuantity();
         }
+
         return $reservationQuantity;
     }
 

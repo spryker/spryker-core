@@ -114,6 +114,7 @@ class CmsPageTable extends AbstractTable
     protected function buildUrlList(array $item)
     {
         $cmsUrls = $this->extractUrls($item);
+
         return implode('<br />', $cmsUrls);
     }
 
@@ -412,7 +413,7 @@ class CmsPageTable extends AbstractTable
     /**
      * @param array $item
      *
-     * @return array
+     * @return string[]
      */
     protected function extractUrls(array $item)
     {
@@ -499,6 +500,7 @@ class CmsPageTable extends AbstractTable
     protected function mapResults(array $item, $urlPrefix)
     {
         $actions = implode(' ', $this->buildLinks($item, $urlPrefix));
+
         return [
             CmsPageTableConstants::COL_ID_CMS_PAGE => $item[CmsPageTableConstants::COL_ID_CMS_PAGE],
             CmsPageTableConstants::COL_NAME => $this->buildCmsPageName($item),
