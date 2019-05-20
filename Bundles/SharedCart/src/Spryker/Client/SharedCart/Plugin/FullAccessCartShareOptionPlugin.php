@@ -7,14 +7,13 @@
 
 namespace Spryker\Client\SharedCart\Plugin;
 
+use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\PersistentCartShareExtension\Dependency\Plugin\CartShareOptionPluginInterface;
 use Spryker\Shared\SharedCart\SharedCartConfig as SharedSharedCartConfig;
 
 class FullAccessCartShareOptionPlugin extends AbstractPlugin implements CartShareOptionPluginInterface
 {
-    protected const KEY_FULL_ACCESS = 'FULL_ACCESS';
-
     /**
      * {@inheritdoc}
      *
@@ -24,7 +23,29 @@ class FullAccessCartShareOptionPlugin extends AbstractPlugin implements CartShar
      */
     public function getKey(): string
     {
-        return static::KEY_FULL_ACCESS;
+        return SharedSharedCartConfig::PERMISSION_GROUP_FULL_ACCESS;
+    }
+
+    /**
+     * {@inheritdoc}
+     * - Returns true if customer is provided and it is a company user.
+     * - Returns false otherwise.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer|null $customerTransfer
+     *
+     * @return bool
+     */
+    public function isApplicable(?CustomerTransfer $customerTransfer): bool
+    {
+        if (!$customerTransfer) {
+            return false;
+        }
+
+        $companyUserTransfer = $customerTransfer->getCompanyUserTransfer();
+
+        return $companyUserTransfer && $companyUserTransfer->getIdCompanyUser();
     }
 
     /**

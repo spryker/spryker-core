@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\PersistentCartShare\Plugin;
 
+use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\PersistentCartShareExtension\Dependency\Plugin\CartShareOptionPluginInterface;
 
@@ -25,6 +26,21 @@ class PreviewCartShareOptionPlugin extends AbstractPlugin implements CartShareOp
     public function getKey(): string
     {
         return static::KEY_PREVIEW;
+    }
+
+    /**
+     * {@inheritdoc}
+     * - Returns true, since preview share option is available for all customers, including guests.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer|null $customerTransfer
+     *
+     * @return bool
+     */
+    public function isApplicable(?CustomerTransfer $customerTransfer): bool
+    {
+        return true;
     }
 
     /**

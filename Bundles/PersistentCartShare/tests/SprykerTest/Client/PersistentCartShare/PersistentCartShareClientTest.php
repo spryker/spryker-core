@@ -8,6 +8,8 @@
 namespace SprykerTest\Client\PersistentCartShare;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\CustomerTransfer;
+use Spryker\Client\PersistentCartShare\Dependency\Client\PersistentCartShareToCustomerClientInterface;
 use Spryker\Client\PersistentCartShare\PersistentCartShareDependencyProvider;
 use Spryker\Client\PersistentCartShareExtension\Dependency\Plugin\CartShareOptionPluginInterface;
 
@@ -23,6 +25,7 @@ class PersistentCartShareClientTest extends Unit
 {
     protected const VALUE_SHARE_OPTION_GROUP = 'VALUE_SHARE_OPTION_GROUP';
     protected const VALUE_KEY = 'VALUE_KEY';
+    protected const VALUE_IS_APPLICABLE = true;
 
     /**
      * @var \SprykerTest\Client\PersistentCartShare\PersistentCartShareClientTester
@@ -41,6 +44,10 @@ class PersistentCartShareClientTest extends Unit
                 $this->createShareOptionPluginMock(),
             ]
         );
+        $this->tester->setDependency(
+            PersistentCartShareDependencyProvider::CLIENT_CUSTOMER,
+            $this->createCustomerClientMock()
+        );
 
         // Act
         $cartShareOptions = $this->tester->getPersistentCartShareClient()->getCartShareOptions();
@@ -56,7 +63,7 @@ class PersistentCartShareClientTest extends Unit
     protected function createShareOptionPluginMock()
     {
         $cartShareOptionPluginMock = $this->getMockBuilder(CartShareOptionPluginInterface::class)
-            ->setMethods(['getKey', 'getShareOptionGroup'])
+            ->setMethods(['getKey', 'getShareOptionGroup', 'isApplicable'])
             ->getMock();
 
         $cartShareOptionPluginMock
@@ -67,6 +74,21 @@ class PersistentCartShareClientTest extends Unit
             ->method('getShareOptionGroup')
             ->willReturn(static::VALUE_SHARE_OPTION_GROUP);
 
+        $cartShareOptionPluginMock
+            ->method('isApplicable')
+            ->willReturn(static::VALUE_IS_APPLICABLE);
+
         return $cartShareOptionPluginMock;
+    }
+
+    /**
+     * @return \Spryker\Client\PersistentCartShare\Dependency\Client\PersistentCartShareToCustomerClientInterface|\PHPUnit\Framework\MockObject\MockObject
+     */
+    protected function createCustomerClientMock()
+    {
+        $customerClientMock = $this->getMockBuilder(PersistentCartShareToCustomerClientInterface::class)->getMock();
+        $customerClientMock->method('getCustomer')->willReturn(new CustomerTransfer());
+
+        return $customerClientMock;
     }
 }
