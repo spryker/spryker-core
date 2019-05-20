@@ -48,7 +48,7 @@ class CartsRestApiZedStub implements CartsRestApiZedStubInterface
      *
      * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
      */
-    public function getQuoteCollectionByQuoteCriteriaFilter(QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): QuoteCollectionTransfer
+    public function getQuoteCollection(QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): QuoteCollectionTransfer
     {
         /** @var \Generated\Shared\Transfer\QuoteCollectionTransfer $quoteCollectionTransfer */
         $quoteCollectionTransfer = $this->zedRequestClient

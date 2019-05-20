@@ -45,11 +45,11 @@ class CartsRestApiClient extends AbstractClient implements CartsRestApiClientInt
      *
      * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
      */
-    public function getQuoteCollectionByQuoteCriteriaFilter(QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): QuoteCollectionTransfer
+    public function getQuoteCollection(QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): QuoteCollectionTransfer
     {
         return $this->getFactory()
             ->createCartsRestApiZedStub()
-            ->getQuoteCollectionByQuoteCriteriaFilter($quoteCriteriaFilterTransfer);
+            ->getQuoteCollection($quoteCriteriaFilterTransfer);
     }
 
     /**

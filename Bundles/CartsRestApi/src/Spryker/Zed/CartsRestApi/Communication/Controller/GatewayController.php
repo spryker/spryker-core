@@ -35,9 +35,9 @@ class GatewayController extends AbstractGatewayController
      *
      * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
      */
-    public function getQuoteCollectionByQuoteCriteriaFilterAction(QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): QuoteCollectionTransfer
+    public function getQuoteCollectionAction(QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): QuoteCollectionTransfer
     {
-        return $this->getFacade()->getQuoteCollectionByQuoteCriteriaFilter($quoteCriteriaFilterTransfer);
+        return $this->getFacade()->getQuoteCollection($quoteCriteriaFilterTransfer);
     }
 
     /**

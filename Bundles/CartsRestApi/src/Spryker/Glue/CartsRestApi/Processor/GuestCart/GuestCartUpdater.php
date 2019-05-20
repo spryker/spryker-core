@@ -93,7 +93,7 @@ class GuestCartUpdater implements GuestCartUpdaterInterface
             return $customerTransfer;
         }
 
-        $restQuoteCollectionTransfer = $this->cartsRestApiClient->getQuoteCollectionByQuoteCriteriaFilter(
+        $restQuoteCollectionTransfer = $this->cartsRestApiClient->getQuoteCollection(
             (new QuoteCriteriaFilterTransfer())->setCustomerReference($anonymousCustomerTransfer->getCustomerReference())
         );
 

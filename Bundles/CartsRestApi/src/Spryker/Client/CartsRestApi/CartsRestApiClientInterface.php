@@ -19,7 +19,7 @@ interface CartsRestApiClientInterface
     /**
      * Specification:
      * - Finds quote by uuid.
-     * - Uuid must be set in the QuoteTransfer taken as parameter.
+     * - uuid and customerReference must be set in the QuoteTransfer taken as parameter.
      *
      * @api
      *
@@ -40,12 +40,12 @@ interface CartsRestApiClientInterface
      *
      * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
      */
-    public function getQuoteCollectionByQuoteCriteriaFilter(QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): QuoteCollectionTransfer;
+    public function getQuoteCollection(QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): QuoteCollectionTransfer;
 
     /**
      * Specification:
-     * - Updates customer quote.
-     * - Uuid and CustomerReference must be set in the QuoteTransfer.
+     * - Updates customer quote data.
+     * - uuid and CustomerTransfer must be set in the QuoteTransfer.
      *
      * @api
      *
@@ -57,7 +57,8 @@ interface CartsRestApiClientInterface
 
     /**
      * Specification:
-     * - Creates customer quote.
+     * - Creates quote for customer.
+     * - CustomerTransfer must be set in the QuoteTransfer.
      *
      * @api
      *
@@ -70,7 +71,7 @@ interface CartsRestApiClientInterface
     /**
      * Specification:
      * - Deletes customer quote.
-     * - Quote and customerReference must be set in the RestQuoteRequestTransfer.
+     * - uuid and CustomerTransfer must be set in the QuoteTransfer.
      *
      * @api
      *
@@ -82,8 +83,8 @@ interface CartsRestApiClientInterface
 
     /**
      * Specification:
-     * - Updates cart item quantity.
-     * - Quote and customerReference must be set in the RestCartItemRequestTransfer.
+     * - Updates item quantity in cart.
+     * - QuoteTransfer, customerReference, sku and quantity must be set in the RestCartItemsAttributesTransfer.
      *
      * @api
      *
@@ -109,7 +110,7 @@ interface CartsRestApiClientInterface
     /**
      * Specification:
      * - Removes item from cart.
-     * - Quote and customerReference must be set in the RestCartItemsAttributesTransfer.
+     * - QuoteTransfer, customerReference, sku and quantity must be set in the RestCartItemsAttributesTransfer.
      *
      * @api
      *
@@ -121,8 +122,8 @@ interface CartsRestApiClientInterface
 
     /**
      * Specification:
-     * - Adds an item to the guest cart.
-     * - Quote and customerReference must be set in the RestCartItemsAttributesTransfer.
+     * - Adds an item to the cart of guest user.
+     * - sku and customerReference must be set in the RestCartItemsAttributesTransfer.
      *
      * @api
      *
@@ -135,7 +136,7 @@ interface CartsRestApiClientInterface
     /**
      * Specification:
      * - Transforms a guest cart to the regular cart.
-     * - Quote and customerReference must be set in the AssigningGuestQuoteRequestTransfer.
+     * - anonymousCustomerReference and customerReference must be set in the AssignGuestQuoteRequestTransfer.
      *
      * @api
      *

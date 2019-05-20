@@ -32,7 +32,7 @@ interface CartsRestApiFacadeInterface
     /**
      * Specification:
      * - Finds customer quote by uuid.
-     * - Uuid and customerReference must be set in the QuoteTransfer taken as parameter.
+     * - uuid and customerReference must be set in the QuoteTransfer taken as parameter.
      *
      * @api
      *
@@ -44,7 +44,9 @@ interface CartsRestApiFacadeInterface
 
     /**
      * Specification:
-     * - Finds customer quote collection.
+     * - Retrieves customer quote collection filtered by criteria.
+     * - Filters by customer reference when provided.
+     * - Filters by current store ID.
      *
      * @api
      *
@@ -52,11 +54,13 @@ interface CartsRestApiFacadeInterface
      *
      * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
      */
-    public function getQuoteCollectionByQuoteCriteriaFilter(QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): QuoteCollectionTransfer;
+    public function getQuoteCollection(QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): QuoteCollectionTransfer;
 
     /**
      * Specification:
-     * - Updates customer quote.
+     * - Updates existing quote entity from QuoteTransfer.
+     * - uuid and CustomerTransfer must be set in the QuoteTransfer.
+     * - Reloads all items in cart.
      *
      * @api
      *
@@ -68,7 +72,8 @@ interface CartsRestApiFacadeInterface
 
     /**
      * Specification:
-     * - Creates customer quote.
+     * - Creates new quote entity.
+     * - CustomerTransfer must be set in the QuoteTransfer.
      *
      * @api
      *
@@ -80,7 +85,8 @@ interface CartsRestApiFacadeInterface
 
     /**
      * Specification:
-     * - Creates customer quote.
+     * - Creates a single quote for customer.
+     * - Creating of more than one quote is not allowed.
      *
      * @api
      *
@@ -92,7 +98,8 @@ interface CartsRestApiFacadeInterface
 
     /**
      * Specification:
-     * - Deletes customer quote.
+     * - Removes quote from DB.
+     * - uuid and CustomerTransfer must be set in the QuoteTransfer.
      *
      * @api
      *
@@ -105,7 +112,7 @@ interface CartsRestApiFacadeInterface
     /**
      * Specification:
      * - Updates cart item quantity.
-     * - Quote and customerReference must be set in the RestCartItemsAttributesTransfer.
+     * - QuoteTransfer, customerReference, sku and quantity must be set in the RestCartItemsAttributesTransfer.
      *
      * @api
      *
@@ -131,7 +138,7 @@ interface CartsRestApiFacadeInterface
     /**
      * Specification:
      * - Removes item from cart.
-     * - Quote and customerReference must be set in the RestCartItemsAttributesTransfer.
+     * - QuoteTransfer, customerReference, sku and quantity must be set in the RestCartItemsAttributesTransfer.
      *
      * @api
      *
@@ -144,7 +151,7 @@ interface CartsRestApiFacadeInterface
     /**
      * Specification:
      * - Adds an item to the guest cart.
-     * - Quote and customerReference must be set in the RestCartItemsAttributesTransfer.
+     * - sku and customerReference must be set in the RestCartItemsAttributesTransfer.
      *
      * @api
      *
@@ -157,7 +164,7 @@ interface CartsRestApiFacadeInterface
     /**
      * Specification:
      * - Transforms a guest cart to the regular cart.
-     * - Quote and customerReference must be set in the AssignGuestQuoteRequestTransfer.
+     * - anonymousCustomerReference and customerReference must be set in the AssignGuestQuoteRequestTransfer.
      *
      * @api
      *

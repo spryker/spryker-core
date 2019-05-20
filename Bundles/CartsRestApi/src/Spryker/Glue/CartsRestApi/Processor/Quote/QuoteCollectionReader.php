@@ -33,6 +33,6 @@ class QuoteCollectionReader implements QuoteCollectionReaderInterface
      */
     public function getQuoteCollectionByCriteria(QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): QuoteCollectionTransfer
     {
-        return $this->cartsRestApiClient->getQuoteCollectionByQuoteCriteriaFilter($quoteCriteriaFilterTransfer);
+        return $this->cartsRestApiClient->getQuoteCollection($quoteCriteriaFilterTransfer);
     }
 }
