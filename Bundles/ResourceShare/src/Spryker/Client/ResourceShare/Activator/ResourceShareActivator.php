@@ -10,6 +10,7 @@ namespace Spryker\Client\ResourceShare\Activator;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
+use Spryker\Client\ResourceShare\Exception\ResourceShareActivatorStrategyNotFoundException;
 use Spryker\Client\ResourceShare\Zed\ResourceShareStubInterface;
 
 class ResourceShareActivator implements ResourceShareActivatorInterface
@@ -58,6 +59,8 @@ class ResourceShareActivator implements ResourceShareActivatorInterface
     /**
      * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
      *
+     * @throws \Spryker\Client\ResourceShare\Exception\ResourceShareActivatorStrategyNotFoundException
+     *
      * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
      */
     protected function executeResourceShareActivatorStrategyPlugins(
@@ -78,15 +81,11 @@ class ResourceShareActivator implements ResourceShareActivatorInterface
                     );
             }
 
-            $strategyResourceShareResponseTransfer = $resourceShareActivatorStrategyPlugin->execute($resourceShareRequestTransfer);
-            if (!$strategyResourceShareResponseTransfer->getIsSuccessful()) {
-                return $strategyResourceShareResponseTransfer;
-            }
-
-            break;
+            return $resourceShareActivatorStrategyPlugin->execute($resourceShareRequestTransfer);
         }
 
-        return $resourceShareResponseTransfer->setIsSuccessful(true)
-            ->setResourceShare($resourceShareRequestTransfer->getResourceShare());
+        throw new ResourceShareActivatorStrategyNotFoundException(
+            'Resource share activator strategy was not found. Please define one.'
+        );
     }
 }
