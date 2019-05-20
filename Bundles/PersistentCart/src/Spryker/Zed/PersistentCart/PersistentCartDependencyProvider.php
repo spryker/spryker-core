@@ -191,6 +191,7 @@ class PersistentCartDependencyProvider extends AbstractBundleDependencyProvider
                 $container->getLocator()->utilQuantity()->service()
             );
         };
+
         return $container;
     }
 

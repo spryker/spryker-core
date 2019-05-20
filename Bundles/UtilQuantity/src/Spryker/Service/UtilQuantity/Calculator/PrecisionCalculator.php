@@ -28,6 +28,7 @@ class PrecisionCalculator implements PrecisionCalculatorInterface
     protected function getQuantityPrecision(float $quantity): int
     {
         $stringQuantity = (string)$quantity;
+
         return strlen(substr($stringQuantity, strpos($stringQuantity, '.') + 1));
     }
 }

@@ -85,6 +85,7 @@ class ProductQuantityRounderTest extends Unit
     protected function getDataForGetNearestQuantityWithMinMaxAndInterval($min, $max, $interval, $quantity, $expectedResult)
     {
         $productQuantityTransfer = $this->createProductQuantityTransfer($min, $interval, $max);
+
         return [$productQuantityTransfer, $quantity, $expectedResult];
     }
 
@@ -131,6 +132,7 @@ class ProductQuantityRounderTest extends Unit
     protected function getDataForGetNearestQuantityWithMax($max, $quantity, $expectedResult): array
     {
         $productQuantityTransfer = $this->createProductQuantityTransfer(null, null, $max);
+
         return [$productQuantityTransfer, $quantity, $expectedResult];
     }
 
@@ -180,6 +182,7 @@ class ProductQuantityRounderTest extends Unit
     protected function getDataForGetNearestQuantityWithMinAndMax($min, $max, $quantity, $expectedResult): array
     {
         $productQuantityStorageTransfer = $this->createProductQuantityTransfer($min, null, $max);
+
         return [$productQuantityStorageTransfer, $quantity, $expectedResult];
     }
 
@@ -191,6 +194,7 @@ class ProductQuantityRounderTest extends Unit
         $utilQuantityService = new ProductQuantityToUtilQuantityServiceBridge(
             $this->tester->getLocator()->utilQuantity()->service()
         );
+
         return new ProductQuantityRounder(new ProductQuantityConfig(), $utilQuantityService);
     }
 
