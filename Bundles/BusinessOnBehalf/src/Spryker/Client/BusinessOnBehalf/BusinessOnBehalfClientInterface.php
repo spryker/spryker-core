@@ -56,7 +56,7 @@ interface BusinessOnBehalfClientInterface
 
     /**
      * Specification:
-     * - Executes stack of plugins CustomerChangeAllowedCheckPluginInterface.
+     * - Executes stack of plugins CompanyUserChangeAllowedCheckPluginInterface.
      * - Returns false if at least one plugin returns false.
      * - Returns true by default.
      *
@@ -66,5 +66,5 @@ interface BusinessOnBehalfClientInterface
      *
      * @return bool
      */
-    public function isCustomerChangeAllowed(CustomerTransfer $customerTransfer): bool;
+    public function isCompanyUserChangeAllowed(CustomerTransfer $customerTransfer): bool;
 }

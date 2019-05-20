@@ -7,8 +7,8 @@
 
 namespace Spryker\Client\BusinessOnBehalf;
 
-use Spryker\Client\BusinessOnBehalf\Checker\CustomerChecker;
-use Spryker\Client\BusinessOnBehalf\Checker\CustomerCheckerInterface;
+use Spryker\Client\BusinessOnBehalf\Checker\CompanyUserChecker;
+use Spryker\Client\BusinessOnBehalf\Checker\CompanyUserCheckerInterface;
 use Spryker\Client\BusinessOnBehalf\Dependency\Client\BusinessOnBehalfToZedRequestClientInterface;
 use Spryker\Client\BusinessOnBehalf\Zed\BusinessOnBehalfStub;
 use Spryker\Client\BusinessOnBehalf\Zed\BusinessOnBehalfStubInterface;
@@ -17,12 +17,12 @@ use Spryker\Client\Kernel\AbstractFactory;
 class BusinessOnBehalfFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Client\BusinessOnBehalf\Checker\CustomerCheckerInterface
+     * @return \Spryker\Client\BusinessOnBehalf\Checker\CompanyUserCheckerInterface
      */
-    public function createCustomerChecker(): CustomerCheckerInterface
+    public function createCustomerChecker(): CompanyUserCheckerInterface
     {
-        return new CustomerChecker(
-            $this->getCustomerChangeAllowedCheckPlugins()
+        return new CompanyUserChecker(
+            $this->getCompanyUserChangeAllowedCheckPlugins()
         );
     }
 
@@ -43,10 +43,10 @@ class BusinessOnBehalfFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\BusinessOnBehalfExtension\Dependency\Plugin\CustomerChangeAllowedCheckPluginInterface[]
+     * @return \Spryker\Client\BusinessOnBehalfExtension\Dependency\Plugin\CompanyUserChangeAllowedCheckPluginInterface[]
      */
-    public function getCustomerChangeAllowedCheckPlugins(): array
+    public function getCompanyUserChangeAllowedCheckPlugins(): array
     {
-        return $this->getProvidedDependency(BusinessOnBehalfDependencyProvider::PLUGINS_CUSTOMER_CHANGE_ALLOWED_CHECK);
+        return $this->getProvidedDependency(BusinessOnBehalfDependencyProvider::PLUGINS_COMPANY_USER_CHANGE_ALLOWED_CHECK);
     }
 }

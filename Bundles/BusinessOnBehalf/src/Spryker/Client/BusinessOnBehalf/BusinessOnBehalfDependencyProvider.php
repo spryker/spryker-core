@@ -14,7 +14,7 @@ use Spryker\Client\Kernel\Container;
 class BusinessOnBehalfDependencyProvider extends AbstractDependencyProvider
 {
     public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
-    public const PLUGINS_CUSTOMER_CHANGE_ALLOWED_CHECK = 'PLUGINS_CUSTOMER_CHANGE_ALLOWED_CHECK';
+    public const PLUGINS_COMPANY_USER_CHANGE_ALLOWED_CHECK = 'PLUGINS_COMPANY_USER_CHANGE_ALLOWED_CHECK';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -24,7 +24,7 @@ class BusinessOnBehalfDependencyProvider extends AbstractDependencyProvider
     public function provideServiceLayerDependencies(Container $container)
     {
         $container = $this->addZedRequestClient($container);
-        $container = $this->addCustomerChangeAllowedCheckPlugins($container);
+        $container = $this->addCompanyUserChangeAllowedCheckPlugins($container);
 
         return $container;
     }
@@ -48,19 +48,19 @@ class BusinessOnBehalfDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addCustomerChangeAllowedCheckPlugins(Container $container): Container
+    protected function addCompanyUserChangeAllowedCheckPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_CUSTOMER_CHANGE_ALLOWED_CHECK] = function () {
-            return $this->getCustomerChangeAllowedCheckPlugins();
+        $container[static::PLUGINS_COMPANY_USER_CHANGE_ALLOWED_CHECK] = function () {
+            return $this->getCompanyUserChangeAllowedCheckPlugins();
         };
 
         return $container;
     }
 
     /**
-     * @return \Spryker\Client\BusinessOnBehalfExtension\Dependency\Plugin\CustomerChangeAllowedCheckPluginInterface[]
+     * @return \Spryker\Client\BusinessOnBehalfExtension\Dependency\Plugin\CompanyUserChangeAllowedCheckPluginInterface[]
      */
-    protected function getCustomerChangeAllowedCheckPlugins(): array
+    protected function getCompanyUserChangeAllowedCheckPlugins(): array
     {
         return [];
     }

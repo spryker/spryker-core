@@ -493,4 +493,20 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
             ->createCustomerSecuredPattern()
             ->getCustomerSecuredPattern();
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $accessToken
+     *
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
+     */
+    public function getCustomerByAccessToken(string $accessToken): CustomerResponseTransfer
+    {
+        return $this->getFactory()
+            ->createCustomerAccessTokenReader()
+            ->getCustomerByAccessToken($accessToken);
+    }
 }

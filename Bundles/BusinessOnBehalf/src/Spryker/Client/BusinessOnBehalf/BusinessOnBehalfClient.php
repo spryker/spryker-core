@@ -69,10 +69,10 @@ class BusinessOnBehalfClient extends AbstractClient implements BusinessOnBehalfC
      *
      * @return bool
      */
-    public function isCustomerChangeAllowed(CustomerTransfer $customerTransfer): bool
+    public function isCompanyUserChangeAllowed(CustomerTransfer $customerTransfer): bool
     {
         return $this->getFactory()
             ->createCustomerChecker()
-            ->isCustomerChangeAllowed($customerTransfer);
+            ->isCompanyUserChangeAllowed($customerTransfer);
     }
 }

@@ -382,4 +382,18 @@ interface CustomerClientInterface
      * @return string
      */
     public function getCustomerSecuredPattern(): string;
+
+    /**
+     * Specification:
+     * - Makes Zed request.
+     * - Retrieves customer by access token.
+     * - Executes CustomerExpanderPlugin stack.
+     *
+     * @api
+     *
+     * @param string $accessToken
+     *
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
+     */
+    public function getCustomerByAccessToken(string $accessToken): CustomerResponseTransfer;
 }

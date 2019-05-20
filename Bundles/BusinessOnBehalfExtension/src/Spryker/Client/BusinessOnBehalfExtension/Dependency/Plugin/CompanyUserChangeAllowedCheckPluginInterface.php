@@ -5,16 +5,21 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\BusinessOnBehalf\Checker;
+namespace Spryker\Client\BusinessOnBehalfExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 
-interface CustomerCheckerInterface
+interface CompanyUserChangeAllowedCheckPluginInterface
 {
     /**
+     * Specification:
+     * - Checks if company user is applicable for change.
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return bool
      */
-    public function isCustomerChangeAllowed(CustomerTransfer $customerTransfer): bool;
+    public function check(CustomerTransfer $customerTransfer): bool;
 }
