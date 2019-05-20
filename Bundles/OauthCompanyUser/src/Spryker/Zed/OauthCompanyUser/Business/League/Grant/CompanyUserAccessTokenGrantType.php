@@ -83,6 +83,7 @@ class CompanyUserAccessTokenGrantType extends AbstractGrant implements GrantType
             $this->getEmitter()->emit($this->createRequestEvent(RequestEvent::USER_AUTHENTICATION_FAILED, $request));
             throw OAuthServerException::invalidCredentials();
         }
+
         return $userEntity;
     }
 
