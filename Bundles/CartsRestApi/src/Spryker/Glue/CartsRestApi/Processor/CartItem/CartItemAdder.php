@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\CartsRestApi\Processor\CartItem;
 
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\RestCartItemsAttributesTransfer;
 use Spryker\Client\CartsRestApi\CartsRestApiClientInterface;
 use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
@@ -81,11 +82,9 @@ class CartItemAdder implements CartItemAdderInterface
             $this->findCartIdentifier($restRequest)
         );
 
-        foreach ($this->quoteCustomerExpanderPlugins as $quoteCustomerExpanderPlugin) {
-            $restCartItemRequestTransfer->setCustomer(
-                $quoteCustomerExpanderPlugin->expand($restCartItemRequestTransfer->getCustomer(), $restRequest)
-            );
-        }
+        $restCartItemRequestTransfer->setCustomer(
+            $this->executeCustomerExpanderPlugin($restCartItemRequestTransfer->getCustomer(), $restRequest)
+        );
 
         $quoteResponseTransfer = $this->cartsRestApiClient->addItem($restCartItemRequestTransfer);
         if (count($quoteResponseTransfer->getErrorCodes()) > 0) {
@@ -113,5 +112,20 @@ class CartItemAdder implements CartItemAdderInterface
         }
 
         return null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    protected function executeCustomerExpanderPlugin(CustomerTransfer $customerTransfer, RestRequestInterface $restRequest): CustomerTransfer
+    {
+        foreach ($this->quoteCustomerExpanderPlugins as $quoteCustomerExpanderPlugin) {
+            $customerTransfer = $quoteCustomerExpanderPlugin->expand($customerTransfer, $restRequest);
+        }
+
+        return $customerTransfer;
     }
 }

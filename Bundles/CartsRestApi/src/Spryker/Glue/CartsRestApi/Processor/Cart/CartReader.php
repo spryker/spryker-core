@@ -98,11 +98,9 @@ class CartReader implements CartReaderInterface
             ->setCustomer(new CustomerTransfer())
             ->setUuid($uuidCart);
 
-        foreach ($this->quoteCustomerExpanderPlugins as $quoteCustomerExpanderPlugin) {
-            $quoteTransfer->setCustomer(
-                $quoteCustomerExpanderPlugin->expand($quoteTransfer->getCustomer(), $restRequest)
-            );
-        }
+        $quoteTransfer->setCustomer(
+            $this->executeCustomerExpanderPlugin($quoteTransfer->getCustomer(), $restRequest)
+        );
 
         $quoteResponseTransfer = $this->cartsRestApiClient->findQuoteByUuid($quoteTransfer);
         if ($quoteResponseTransfer->getIsSuccessful() === false
@@ -197,5 +195,20 @@ class CartReader implements CartReaderInterface
         }
 
         return $restResponse;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    protected function executeCustomerExpanderPlugin(CustomerTransfer $customerTransfer, RestRequestInterface $restRequest): CustomerTransfer
+    {
+        foreach ($this->quoteCustomerExpanderPlugins as $quoteCustomerExpanderPlugin) {
+            $customerTransfer = $quoteCustomerExpanderPlugin->expand($customerTransfer, $restRequest);
+        }
+
+        return $customerTransfer;
     }
 }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\CartsRestApi\Processor\CartItem;
 
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Client\CartsRestApi\CartsRestApiClientInterface;
 use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
@@ -71,11 +72,9 @@ class CartItemDeleter implements CartItemDeleterInterface
             $uuidQuote
         );
 
-        foreach ($this->quoteCustomerExpanderPlugins as $quoteCustomerExpanderPlugin) {
-            $restCartItemRequestTransfer->setCustomer(
-                $quoteCustomerExpanderPlugin->expand($restCartItemRequestTransfer->getCustomer(), $restRequest)
-            );
-        }
+        $restCartItemRequestTransfer->setCustomer(
+            $this->executeCustomerExpanderPlugin($restCartItemRequestTransfer->getCustomer(), $restRequest)
+        );
 
         $quoteResponseTransfer = $this->cartsRestApiClient->deleteItem($restCartItemRequestTransfer);
         if (count($quoteResponseTransfer->getErrorCodes()) > 0) {
@@ -98,5 +97,20 @@ class CartItemDeleter implements CartItemDeleterInterface
         }
 
         return null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    protected function executeCustomerExpanderPlugin(CustomerTransfer $customerTransfer, RestRequestInterface $restRequest): CustomerTransfer
+    {
+        foreach ($this->quoteCustomerExpanderPlugins as $quoteCustomerExpanderPlugin) {
+            $customerTransfer = $quoteCustomerExpanderPlugin->expand($customerTransfer, $restRequest);
+        }
+
+        return $customerTransfer;
     }
 }

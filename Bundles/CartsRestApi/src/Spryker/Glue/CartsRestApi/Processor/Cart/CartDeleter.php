@@ -66,11 +66,9 @@ class CartDeleter implements CartDeleterInterface
             ->setCustomer((new CustomerTransfer())->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier()))
             ->setUuid($restRequest->getResource()->getId());
 
-        foreach ($this->quoteCustomerExpanderPlugins as $quoteCustomerExpanderPlugin) {
-            $quoteTransfer->setCustomer(
-                $quoteCustomerExpanderPlugin->expand($quoteTransfer->getCustomer(), $restRequest)
-            );
-        }
+        $quoteTransfer->setCustomer(
+            $this->executeCustomerExpanderPlugin($quoteTransfer->getCustomer(), $restRequest)
+        );
 
         $quoteResponseTransfer = $this->cartsRestApiClient->deleteQuote($quoteTransfer);
         if (count($quoteResponseTransfer->getErrorCodes()) > 0) {
@@ -78,5 +76,20 @@ class CartDeleter implements CartDeleterInterface
         }
 
         return $this->cartRestResponseBuilder->createRestResponse();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    protected function executeCustomerExpanderPlugin(CustomerTransfer $customerTransfer, RestRequestInterface $restRequest): CustomerTransfer
+    {
+        foreach ($this->quoteCustomerExpanderPlugins as $quoteCustomerExpanderPlugin) {
+            $customerTransfer = $quoteCustomerExpanderPlugin->expand($customerTransfer, $restRequest);
+        }
+
+        return $customerTransfer;
     }
 }
