@@ -14,11 +14,13 @@ interface QuoteMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteUpdateRequestTransfer $quoteUpdateRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteUpdateRequestTransfer
      */
     public function mapQuoteTransferToQuoteUpdateRequestTransfer(
-        QuoteTransfer $quoteTransfer
+        QuoteTransfer $quoteTransfer,
+        QuoteUpdateRequestTransfer $quoteUpdateRequestTransfer
     ): QuoteUpdateRequestTransfer;
 
     /**

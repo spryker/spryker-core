@@ -19,7 +19,7 @@ interface CartsRestApiClientInterface
     /**
      * Specification:
      * - Finds quote by uuid.
-     * - uuid and customerReference must be set in the QuoteTransfer taken as parameter.
+     * - uuid must be set in the QuoteTransfer taken as parameter.
      *
      * @api
      *
@@ -32,7 +32,6 @@ interface CartsRestApiClientInterface
     /**
      * Specification:
      * - Finds customer quote collection.
-     * - CustomerReference must be set in the QuoteCriteriaFilterTransfer taken as parameter.
      *
      * @api
      *
@@ -58,7 +57,7 @@ interface CartsRestApiClientInterface
     /**
      * Specification:
      * - Creates quote for customer.
-     * - CustomerTransfer must be set in the QuoteTransfer.
+     * - CustomerTransfer and customerReference must be set in the QuoteTransfer.
      *
      * @api
      *

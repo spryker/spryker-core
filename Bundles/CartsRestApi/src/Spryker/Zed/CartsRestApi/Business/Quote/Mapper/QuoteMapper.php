@@ -15,13 +15,15 @@ class QuoteMapper implements QuoteMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteUpdateRequestTransfer $quoteUpdateRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteUpdateRequestTransfer
      */
-    public function mapQuoteTransferToQuoteUpdateRequestTransfer(QuoteTransfer $quoteTransfer): QuoteUpdateRequestTransfer
-    {
-        $quoteUpdateRequestTransfer = (new QuoteUpdateRequestTransfer())
-            ->fromArray($quoteTransfer->modifiedToArray(), true);
+    public function mapQuoteTransferToQuoteUpdateRequestTransfer(
+        QuoteTransfer $quoteTransfer,
+        QuoteUpdateRequestTransfer $quoteUpdateRequestTransfer
+    ): QuoteUpdateRequestTransfer {
+        $quoteUpdateRequestTransfer->fromArray($quoteTransfer->modifiedToArray(), true);
         $quoteUpdateRequestAttributesTransfer = (new QuoteUpdateRequestAttributesTransfer())
             ->fromArray($quoteTransfer->modifiedToArray(), true);
         $quoteUpdateRequestTransfer->setQuoteUpdateRequestAttributes($quoteUpdateRequestAttributesTransfer);
@@ -39,6 +41,24 @@ class QuoteMapper implements QuoteMapperInterface
         QuoteTransfer $quoteTransfer,
         QuoteTransfer $originalQuoteTransfer
     ): QuoteTransfer {
-        return $originalQuoteTransfer->fromArray($quoteTransfer->modifiedToArray(), true);
+        $originalQuoteTransfer->setCustomer($quoteTransfer->getCustomer());
+
+        $currencyTransfer = $quoteTransfer->getCurrency();
+        $name = $quoteTransfer->getName();
+        $priceMode = $quoteTransfer->getPriceMode();
+
+        if ($priceMode) {
+            $originalQuoteTransfer->setPriceMode($priceMode);
+        }
+
+        if ($currencyTransfer->getCode()) {
+            $originalQuoteTransfer->setCurrency($currencyTransfer);
+        }
+
+        if ($name) {
+            $originalQuoteTransfer->setName($name);
+        }
+
+        return $originalQuoteTransfer;
     }
 }
