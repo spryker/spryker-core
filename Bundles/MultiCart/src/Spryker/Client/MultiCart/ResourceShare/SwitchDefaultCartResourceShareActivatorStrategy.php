@@ -13,28 +13,20 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
 use Generated\Shared\Transfer\ResourceShareTransfer;
-use Spryker\Client\MultiCart\CartOperation\CartReaderInterface;
 use Spryker\Client\MultiCart\CartOperation\CartUpdaterInterface;
 
 class SwitchDefaultCartResourceShareActivatorStrategy implements SwitchDefaultCartResourceShareActivatorStrategyInterface
 {
-    /**
-     * @var \Spryker\Client\MultiCart\CartOperation\CartReaderInterface
-     */
-    protected $cartReader;
-
     /**
      * @var \Spryker\Client\MultiCart\CartOperation\CartUpdaterInterface
      */
     protected $cartUpdater;
 
     /**
-     * @param \Spryker\Client\MultiCart\CartOperation\CartReaderInterface $cartReader
      * @param \Spryker\Client\MultiCart\CartOperation\CartUpdaterInterface $cartUpdater
      */
-    public function __construct(CartReaderInterface $cartReader, CartUpdaterInterface $cartUpdater)
+    public function __construct(CartUpdaterInterface $cartUpdater)
     {
-        $this->cartReader = $cartReader;
         $this->cartUpdater = $cartUpdater;
     }
 

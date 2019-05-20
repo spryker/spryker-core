@@ -116,7 +116,6 @@ class MultiCartFactory extends AbstractFactory
     public function createSwitchDefaultCartResourceShareActivatorStrategy(): SwitchDefaultCartResourceShareActivatorStrategyInterface
     {
         return new SwitchDefaultCartResourceShareActivatorStrategy(
-            $this->createCartReader(),
             $this->createCartUpdater()
         );
     }
