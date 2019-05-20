@@ -206,7 +206,7 @@ interface QuoteFacadeInterface
 
     /**
      * Specification:
-     * - Validates quote before saving.
+     * - Validates quote.
      * - Returns error message when validation failed.
      * - Returns empty transfer if validation success.
      *
