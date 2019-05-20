@@ -18,9 +18,9 @@ use Spryker\Client\ResourceShareExtension\Dependency\Plugin\ResourceShareActivat
 class SwitchDefaultCartResourceShareActivatorStrategyPlugin extends AbstractPlugin implements ResourceShareActivatorStrategyPluginInterface
 {
     /**
-     * @uses \Spryker\Shared\SharedCart\SharedCartConfig::QUOTE_RESOURCE_TYPE
+     * @uses \Spryker\Zed\PersistentCartShare\PersistentCartShareConfig::RESOURCE_TYPE_QUOTE
      */
-    protected const QUOTE_RESOURCE_TYPE = 'quote';
+    protected const RESOURCE_TYPE_QUOTE = 'quote';
 
     /**
      * @uses \Spryker\Shared\SharedCart\SharedCartConfig::PERMISSION_GROUP_READ_ONLY
@@ -82,7 +82,7 @@ class SwitchDefaultCartResourceShareActivatorStrategyPlugin extends AbstractPlug
 
         $resourceShareTransfer = $resourceShareRequestTransfer->getResourceShare();
         $resourceShareTransfer->requireResourceType();
-        if ($resourceShareTransfer->getResourceType() !== static::QUOTE_RESOURCE_TYPE) {
+        if ($resourceShareTransfer->getResourceType() !== static::RESOURCE_TYPE_QUOTE) {
             return false;
         }
 

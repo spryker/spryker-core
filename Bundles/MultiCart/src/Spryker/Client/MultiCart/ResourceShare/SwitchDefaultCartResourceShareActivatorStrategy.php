@@ -9,7 +9,6 @@ namespace Spryker\Client\MultiCart\ResourceShare;
 
 use ArrayObject;
 use Generated\Shared\Transfer\MessageTransfer;
-use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
@@ -19,11 +18,6 @@ use Spryker\Client\MultiCart\CartOperation\CartUpdaterInterface;
 
 class SwitchDefaultCartResourceShareActivatorStrategy implements SwitchDefaultCartResourceShareActivatorStrategyInterface
 {
-    /**
-     * @uses \Spryker\Zed\PersistentCartShare\Business\Quote\QuoteReader::GLOSSARY_KEY_RESOURCE_IS_NOT_AVAILABLE
-     */
-    protected const GLOSSARY_KEY_RESOURCE_IS_NOT_AVAILABLE = 'persistent_cart_share.error.resource_is_not_available';
-
     /**
      * @var \Spryker\Client\MultiCart\CartOperation\CartReaderInterface
      */
@@ -56,14 +50,8 @@ class SwitchDefaultCartResourceShareActivatorStrategy implements SwitchDefaultCa
             ->getResourceShareData();
 
         $resourceShareDataTransfer->requireIdQuote();
-        $quoteTransfer = $this->findQuoteById($resourceShareDataTransfer->getIdQuote());
-        if (!$quoteTransfer) {
-            return (new ResourceShareResponseTransfer())
-                ->setIsSuccessful(false)
-                ->addMessage(
-                    (new MessageTransfer())->setValue(static::GLOSSARY_KEY_RESOURCE_IS_NOT_AVAILABLE)
-                );
-        }
+        $quoteTransfer = (new QuoteTransfer())
+            ->setIdQuote($resourceShareDataTransfer->getIdQuote());
 
         return $this->updateDefaultQuote($quoteTransfer, $resourceShareRequestTransfer->getResourceShare());
     }
@@ -108,21 +96,5 @@ class SwitchDefaultCartResourceShareActivatorStrategy implements SwitchDefaultCa
         }
 
         return $messageTransfers;
-    }
-
-    /**
-     * @param int $idQuote
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer|null
-     */
-    protected function findQuoteById(int $idQuote): ?QuoteTransfer
-    {
-        $quoteCollectionTransfer = $this->cartReader->getQuoteCollectionByCriteria(
-            (new QuoteCriteriaFilterTransfer())->setQuoteIds([
-                $idQuote,
-            ])
-        );
-
-        return $quoteCollectionTransfer->getQuotes()->offsetGet(0);
     }
 }
