@@ -95,16 +95,19 @@ class DiscountOrderHydrate implements DiscountOrderHydrateInterface
 
         if ($salesOrderDiscountEntity->getFkSalesExpense()) {
             $this->addCalculatedDiscountToExpense($orderTransfer, $calculatedDiscountTransfer, $salesOrderDiscountEntity->getFkSalesExpense());
+
             return;
         }
 
         if ($salesOrderDiscountEntity->getFkSalesOrderItemOption()) {
             $this->addCalculatedDiscountToItemProductOption($orderTransfer, $calculatedDiscountTransfer, $salesOrderDiscountEntity->getFkSalesOrderItemOption());
+
             return;
         }
 
         if ($salesOrderDiscountEntity->getFkSalesOrderItem()) {
             $this->addCalculatedDiscountToItem($orderTransfer, $calculatedDiscountTransfer, $salesOrderDiscountEntity->getFkSalesOrderItem());
+
             return;
         }
     }

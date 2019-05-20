@@ -295,6 +295,7 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::SUB_REQUEST_HANDLER] = function () {
             $pimple = new Pimple();
+
             return $pimple->getApplication()['sub_request'];
         };
 

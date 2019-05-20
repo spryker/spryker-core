@@ -172,6 +172,7 @@ class CurrencyReader implements CurrencyReaderInterface
         foreach ($currencyCollection as $currencyEntity) {
             $currencies[] = $this->currencyMapper->mapEntityToTransfer($currencyEntity);
         }
+
         return $currencies;
     }
 
@@ -187,6 +188,7 @@ class CurrencyReader implements CurrencyReaderInterface
         $storeWithCurrencyTransfer->setCurrencies(
             new ArrayObject($this->getCurrenciesByIsoCodes($storeTransfer))
         );
+
         return $storeWithCurrencyTransfer;
     }
 }

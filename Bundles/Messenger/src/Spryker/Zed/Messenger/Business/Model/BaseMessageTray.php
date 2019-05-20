@@ -38,6 +38,7 @@ class BaseMessageTray
 
         if ($this->translationPlugins) {
             $translationPlugin = end($this->translationPlugins);
+
             return $translationPlugin->translate($keyName, $data);
         }
 

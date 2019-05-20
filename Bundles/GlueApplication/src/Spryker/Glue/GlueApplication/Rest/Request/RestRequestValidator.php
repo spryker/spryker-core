@@ -50,6 +50,7 @@ class RestRequestValidator implements RestRequestValidatorInterface
         if (!$restErrorCollectionTransfer) {
             $restErrorCollectionTransfer = $this->executeRestRequestValidatorPlugins($httpRequest, $restRequest);
         }
+
         return $restErrorCollectionTransfer;
     }
 

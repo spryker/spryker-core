@@ -428,6 +428,7 @@ class EditOfferType extends AbstractType
         $quoteTransfer = $offerTransfer->getQuote();
         $storeName = $quoteTransfer->getStore()->getName();
         $currencyCode = $quoteTransfer->getCurrency()->getCode();
+
         return implode(';', [$storeName, $currencyCode]);
     }
 

@@ -234,6 +234,7 @@ class ProductDiscountConnectorFacadeTest extends Unit
         $clauseTransfer->setAcceptedTypes([
             ComparatorOperators::TYPE_STRING,
         ]);
+
         return $clauseTransfer;
     }
 }

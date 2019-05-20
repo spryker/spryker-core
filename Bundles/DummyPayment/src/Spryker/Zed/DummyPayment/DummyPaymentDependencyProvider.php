@@ -40,6 +40,7 @@ class DummyPaymentDependencyProvider extends AbstractBundleDependencyProvider
         $container[self::FACADE_REFUND] = function (Container $container) {
             return new DummyPaymentToRefundBridge($container->getLocator()->refund()->facade());
         };
+
         return $container;
     }
 }
