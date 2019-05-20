@@ -39,6 +39,7 @@ class SubtotalCalculator implements CalculatorInterface
 
             $subtotal += $itemTransfer->getSumSubtotalAggregation();
         }
+
         return $subtotal;
     }
 }

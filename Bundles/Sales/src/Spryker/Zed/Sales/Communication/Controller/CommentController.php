@@ -86,6 +86,7 @@ class CommentController extends AbstractController
             $this->getFacade()->saveComment($commentTransfer);
 
             $this->addSuccessMessage('Comment successfully added');
+
             return $this->redirectResponseExternal($request->headers->get('referer'));
         }
 

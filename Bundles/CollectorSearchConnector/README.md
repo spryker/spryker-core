@@ -7,7 +7,7 @@ CollectorSearchConnector allows to browse through the stored Elasticsearch docum
 ## Installation
 
 ```
-composer require spryker/collector-storage-connector
+composer require spryker/collector-search-connector
 ```
 
 ## Documentation

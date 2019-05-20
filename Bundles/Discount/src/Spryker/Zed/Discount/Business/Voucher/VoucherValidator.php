@@ -56,6 +56,7 @@ class VoucherValidator implements VoucherValidatorInterface
 
         if (!$discountVoucherEntity) {
             $this->addErrorMessage(self::REASON_VOUCHER_CODE_NOT_FOUND);
+
             return false;
         }
 
@@ -71,6 +72,7 @@ class VoucherValidator implements VoucherValidatorInterface
     {
         if (!$discountVoucherEntity->getIsActive()) {
             $this->addErrorMessage(self::REASON_VOUCHER_CODE_NOT_ACTIVE);
+
             return false;
         }
 
@@ -78,16 +80,19 @@ class VoucherValidator implements VoucherValidatorInterface
         $voucherPoolEntity = $discountVoucherEntity->getVoucherPool();
         if (!$voucherPoolEntity) {
             $this->addErrorMessage(self::REASON_VOUCHER_CODE_POOL_MISSING);
+
             return false;
         }
 
         if (!$voucherPoolEntity->getIsActive()) {
             $this->addErrorMessage(self::REASON_VOUCHER_CODE_POOL_NOT_ACTIVE);
+
             return false;
         }
 
         if (!$this->isValidNumberOfUses($discountVoucherEntity)) {
             $this->addInfoMessage(self::REASON_VOUCHER_CODE_LIMIT_REACHED);
+
             return false;
         }
 

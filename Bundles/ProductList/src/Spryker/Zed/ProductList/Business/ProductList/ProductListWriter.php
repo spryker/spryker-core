@@ -242,6 +242,7 @@ class ProductListWriter implements ProductListWriterInterface
             $productListResponseTransfer->getMessages()->getArrayCopy(),
             $resultProductListResponseTransfer->getMessages()->getArrayCopy()
         );
+
         return $productListResponseTransfer
             ->setMessages(new ArrayObject($messageTransfers));
     }

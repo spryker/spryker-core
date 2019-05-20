@@ -92,6 +92,7 @@ class RedirectController extends AbstractController
                 ->createUrlRedirect($urlRedirectTransfer);
 
             $this->addSuccessMessage(static::MESSAGE_REDIRECT_CREATE_SUCCESS);
+
             return $this->redirectResponse(static::REDIRECT_ADDRESS);
         }
 
@@ -135,6 +136,7 @@ class RedirectController extends AbstractController
                 ->updateUrlRedirect($urlRedirectTransfer);
 
             $this->addSuccessMessage(static::MESSAGE_REDIRECT_UPDATE_SUCCESS);
+
             return $this->redirectResponse(static::REDIRECT_ADDRESS);
         }
 
@@ -203,6 +205,7 @@ class RedirectController extends AbstractController
         $this->getFactory()->getUrlFacade()->deleteUrlRedirect($urlRedirectTransfer);
 
         $this->addSuccessMessage(static::MESSAGE_REDIRECT_DELETE_SUCCESS);
+
         return $this->redirectResponse('/cms/redirect');
     }
 }
