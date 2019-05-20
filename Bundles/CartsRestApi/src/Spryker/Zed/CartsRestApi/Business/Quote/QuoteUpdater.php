@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\CartsRestApi\CartsRestApiConfig as CartsRestApiSharedConfig;
-use Spryker\Zed\CartsRestApi\Business\PermissionChecker\QuotePermissionChecker;
+use Spryker\Zed\CartsRestApi\Business\PermissionChecker\QuotePermissionCheckerInterface;
 use Spryker\Zed\CartsRestApi\Business\Quote\Mapper\QuoteMapperInterface;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToCartFacadeInterface;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToPersistentCartFacadeInterface;
@@ -41,7 +41,7 @@ class QuoteUpdater implements QuoteUpdaterInterface
     protected $quoteMapper;
 
     /**
-     * @var \Spryker\Zed\CartsRestApi\Business\PermissionChecker\QuotePermissionChecker
+     * @var \Spryker\Zed\CartsRestApi\Business\PermissionChecker\QuotePermissionCheckerInterface
      */
     protected $quotePermissionChecker;
 
@@ -50,14 +50,14 @@ class QuoteUpdater implements QuoteUpdaterInterface
      * @param \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToCartFacadeInterface $cartFacade
      * @param \Spryker\Zed\CartsRestApi\Business\Quote\QuoteReaderInterface $quoteReader
      * @param \Spryker\Zed\CartsRestApi\Business\Quote\Mapper\QuoteMapperInterface $quoteMapper
-     * @param \Spryker\Zed\CartsRestApi\Business\PermissionChecker\QuotePermissionChecker $quotePermissionChecker
+     * @param \Spryker\Zed\CartsRestApi\Business\PermissionChecker\QuotePermissionCheckerInterface $quotePermissionChecker
      */
     public function __construct(
         CartsRestApiToPersistentCartFacadeInterface $persistentCartFacade,
         CartsRestApiToCartFacadeInterface $cartFacade,
         QuoteReaderInterface $quoteReader,
         QuoteMapperInterface $quoteMapper,
-        QuotePermissionChecker $quotePermissionChecker
+        QuotePermissionCheckerInterface $quotePermissionChecker
     ) {
         $this->persistentCartFacade = $persistentCartFacade;
         $this->cartFacade = $cartFacade;

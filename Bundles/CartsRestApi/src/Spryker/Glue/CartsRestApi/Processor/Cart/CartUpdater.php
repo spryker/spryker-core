@@ -32,7 +32,7 @@ class CartUpdater implements CartUpdaterInterface
     protected $cartRestResponseBuilder;
 
     /**
-     * @var \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\QuoteCustomerExpanderPluginInterface[]
+     * @var \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\CustomerExpanderPluginInterface[]
      */
     protected $quoteCustomerExpanderPlugins;
 
@@ -40,7 +40,7 @@ class CartUpdater implements CartUpdaterInterface
      * @param \Spryker\Client\CartsRestApi\CartsRestApiClientInterface $cartsRestApiClient
      * @param \Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface $cartsResourceMapper
      * @param \Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface $cartRestResponseBuilder
-     * @param \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\QuoteCustomerExpanderPluginInterface[] $quoteCustomerExpanderPlugins
+     * @param \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\CustomerExpanderPluginInterface[] $quoteCustomerExpanderPlugins
      */
     public function __construct(
         CartsRestApiClientInterface $cartsRestApiClient,

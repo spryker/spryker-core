@@ -33,7 +33,7 @@ class CartDeleter implements CartDeleterInterface
     protected $cartsResourceMapper;
 
     /**
-     * @var \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\QuoteCustomerExpanderPluginInterface[]
+     * @var \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\CustomerExpanderPluginInterface[]
      */
     protected $quoteCustomerExpanderPlugins;
 
@@ -41,7 +41,7 @@ class CartDeleter implements CartDeleterInterface
      * @param \Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface $cartRestResponseBuilder
      * @param \Spryker\Client\CartsRestApi\CartsRestApiClientInterface $cartsRestApiClient
      * @param \Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface $cartsResourceMapper
-     * @param \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\QuoteCustomerExpanderPluginInterface[] $quoteCustomerExpanderPlugins
+     * @param \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\CustomerExpanderPluginInterface[] $quoteCustomerExpanderPlugins
      */
     public function __construct(
         CartRestResponseBuilderInterface $cartRestResponseBuilder,

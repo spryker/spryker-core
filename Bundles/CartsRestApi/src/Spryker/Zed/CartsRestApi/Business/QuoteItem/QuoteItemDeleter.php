@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\RestCartItemRequestTransfer;
 use Spryker\Shared\CartsRestApi\CartsRestApiConfig as CartsRestApiSharedConfig;
-use Spryker\Zed\CartsRestApi\Business\PermissionChecker\QuotePermissionChecker;
+use Spryker\Zed\CartsRestApi\Business\PermissionChecker\QuotePermissionCheckerInterface;
 use Spryker\Zed\CartsRestApi\Business\Quote\QuoteReaderInterface;
 use Spryker\Zed\CartsRestApi\Business\QuoteItem\Mapper\QuoteItemMapperInterface;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToPersistentCartFacadeInterface;
@@ -34,7 +34,7 @@ class QuoteItemDeleter implements QuoteItemDeleterInterface
     protected $quoteItemMapper;
 
     /**
-     * @var \Spryker\Zed\CartsRestApi\Business\PermissionChecker\QuotePermissionChecker
+     * @var \Spryker\Zed\CartsRestApi\Business\PermissionChecker\QuotePermissionCheckerInterface
      */
     protected $quotePermissionChecker;
 
@@ -42,13 +42,13 @@ class QuoteItemDeleter implements QuoteItemDeleterInterface
      * @param \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToPersistentCartFacadeInterface $persistentCartFacade
      * @param \Spryker\Zed\CartsRestApi\Business\Quote\QuoteReaderInterface $quoteReader
      * @param \Spryker\Zed\CartsRestApi\Business\QuoteItem\Mapper\QuoteItemMapperInterface $quoteItemMapper
-     * @param \Spryker\Zed\CartsRestApi\Business\PermissionChecker\QuotePermissionChecker $quotePermissionChecker
+     * @param \Spryker\Zed\CartsRestApi\Business\PermissionChecker\QuotePermissionCheckerInterface $quotePermissionChecker
      */
     public function __construct(
         CartsRestApiToPersistentCartFacadeInterface $persistentCartFacade,
         QuoteReaderInterface $quoteReader,
         QuoteItemMapperInterface $quoteItemMapper,
-        QuotePermissionChecker $quotePermissionChecker
+        QuotePermissionCheckerInterface $quotePermissionChecker
     ) {
         $this->persistentCartFacade = $persistentCartFacade;
         $this->quoteReader = $quoteReader;
@@ -71,9 +71,6 @@ class QuoteItemDeleter implements QuoteItemDeleterInterface
         $quoteResponseTransfer = $this->quoteReader->findQuoteByUuid(
             $this->quoteItemMapper->mapRestCartItemRequestTransferToQuoteTransfer($restCartItemRequestTransfer)
         );
-
-        $quoteResponseTransfer->getQuoteTransfer()
-            ->setCustomer($restCartItemRequestTransfer->getCustomer());
 
         if (!$this->quotePermissionChecker->checkQuoteWritePermission($quoteResponseTransfer->getQuoteTransfer())) {
             return $quoteResponseTransfer

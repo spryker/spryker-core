@@ -14,7 +14,7 @@ use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\CartsRestApi\CartsRestApiConfig as CartsRestApiSharedConfig;
-use Spryker\Zed\CartsRestApi\Business\PermissionChecker\QuotePermissionChecker;
+use Spryker\Zed\CartsRestApi\Business\PermissionChecker\QuotePermissionCheckerInterface;
 use Spryker\Zed\CartsRestApi\Business\Quote\Mapper\QuoteMapperInterface;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToQuoteFacadeInterface;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToStoreFacadeInterface;
@@ -43,7 +43,7 @@ class QuoteReader implements QuoteReaderInterface
     protected $quoteMapper;
 
     /**
-     * @var \Spryker\Zed\CartsRestApi\Business\PermissionChecker\QuotePermissionChecker
+     * @var \Spryker\Zed\CartsRestApi\Business\PermissionChecker\QuotePermissionCheckerInterface
      */
     protected $quotePermissionChecker;
 
@@ -52,14 +52,14 @@ class QuoteReader implements QuoteReaderInterface
      * @param \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPluginInterface $quoteCollectionReaderPlugin
      * @param \Spryker\Zed\CartsRestApi\Business\Quote\Mapper\QuoteMapperInterface $quoteMapper
-     * @param \Spryker\Zed\CartsRestApi\Business\PermissionChecker\QuotePermissionChecker $quotePermissionChecker
+     * @param \Spryker\Zed\CartsRestApi\Business\PermissionChecker\QuotePermissionCheckerInterface $quotePermissionChecker
      */
     public function __construct(
         CartsRestApiToQuoteFacadeInterface $quoteFacade,
         CartsRestApiToStoreFacadeInterface $storeFacade,
         QuoteCollectionReaderPluginInterface $quoteCollectionReaderPlugin,
         QuoteMapperInterface $quoteMapper,
-        QuotePermissionChecker $quotePermissionChecker
+        QuotePermissionCheckerInterface $quotePermissionChecker
     ) {
         $this->quoteFacade = $quoteFacade;
         $this->storeFacade = $storeFacade;

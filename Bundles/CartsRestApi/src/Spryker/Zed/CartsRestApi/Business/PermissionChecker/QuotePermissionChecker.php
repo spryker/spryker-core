@@ -10,7 +10,7 @@ namespace Spryker\Zed\CartsRestApi\Business\PermissionChecker;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\PermissionAwareTrait;
 
-class QuotePermissionChecker
+class QuotePermissionChecker implements QuotePermissionCheckerInterface
 {
     use PermissionAwareTrait;
 
@@ -58,11 +58,8 @@ class QuotePermissionChecker
             return false;
         }
 
-        if (!$quoteTransfer->getCustomer()->getCompanyUserTransfer()) {
-            return true;
-        }
-
-        if (!$quoteTransfer->getCustomer()->getCompanyUserTransfer()->getIdCompanyUser()) {
+        if (!$quoteTransfer->getCustomer()->getCompanyUserTransfer()
+            || !$quoteTransfer->getCustomer()->getCompanyUserTransfer()->getIdCompanyUser()) {
             return true;
         }
 

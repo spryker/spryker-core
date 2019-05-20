@@ -8,14 +8,14 @@
 namespace Spryker\Glue\CompanyUsersRestApi\Plugin\CartsRestApi;
 
 use Generated\Shared\Transfer\CustomerTransfer;
-use Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\QuoteCustomerExpanderPluginInterface;
+use Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\CustomerExpanderPluginInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
 
 /**
  * @method \Spryker\Glue\CompanyUsersRestApi\CompanyUsersRestApiFactory getFactory()
  */
-class CompanyUserQuoteCustomerExpanderPlugin extends AbstractPlugin implements QuoteCustomerExpanderPluginInterface
+class CompanyUserCustomerExpanderPlugin extends AbstractPlugin implements CustomerExpanderPluginInterface
 {
     /**
      * {@inheritdoc}

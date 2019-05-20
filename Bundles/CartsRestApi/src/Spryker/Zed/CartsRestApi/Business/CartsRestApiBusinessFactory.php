@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CartsRestApi\Business;
 
 use Spryker\Zed\CartsRestApi\Business\PermissionChecker\QuotePermissionChecker;
+use Spryker\Zed\CartsRestApi\Business\PermissionChecker\QuotePermissionCheckerInterface;
 use Spryker\Zed\CartsRestApi\Business\Quote\Mapper\QuoteMapper;
 use Spryker\Zed\CartsRestApi\Business\Quote\Mapper\QuoteMapperInterface;
 use Spryker\Zed\CartsRestApi\Business\Quote\QuoteCreator;
@@ -176,9 +177,9 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CartsRestApi\Business\PermissionChecker\QuotePermissionChecker
+     * @return \Spryker\Zed\CartsRestApi\Business\PermissionChecker\QuotePermissionCheckerInterface
      */
-    public function createQuotePermissionChecker(): QuotePermissionChecker
+    public function createQuotePermissionChecker(): QuotePermissionCheckerInterface
     {
         return new QuotePermissionChecker();
     }
