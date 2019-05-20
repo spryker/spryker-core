@@ -40,10 +40,10 @@ class QuoteValidator implements QuoteValidatorInterface
     {
         $priceMode = $quoteTransfer->getPriceMode();
         $quoteValidationResponseTransfer = (new QuoteValidationResponseTransfer())
-            ->setIsSuccess(false);
+            ->setIsSuccessful(false);
 
         if (!$priceMode) {
-            return $quoteValidationResponseTransfer->setIsSuccess(true);
+            return $quoteValidationResponseTransfer->setIsSuccessful(true);
         }
 
         $availablePriceModes = $this->priceConfig->getPriceModes();
@@ -56,7 +56,7 @@ class QuoteValidator implements QuoteValidatorInterface
             );
         }
 
-        return $quoteValidationResponseTransfer->setIsSuccess(true);
+        return $quoteValidationResponseTransfer->setIsSuccessful(true);
     }
 
     /**
@@ -76,6 +76,6 @@ class QuoteValidator implements QuoteValidatorInterface
 
         return $quoteValidationResponseTransfer
             ->addErrors($quoteErrorTransfer)
-            ->setIsSuccess(false);
+            ->setIsSuccessful(false);
     }
 }

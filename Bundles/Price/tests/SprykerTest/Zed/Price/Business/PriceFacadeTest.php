@@ -47,7 +47,7 @@ class PriceFacadeTest extends Unit
             return $errorMessageTransfer->getValue();
         }, (array)$quoteValidationResponseTransfer->getErrors());
 
-        $this->assertFalse($quoteValidationResponseTransfer->getIsSuccess());
+        $this->assertFalse($quoteValidationResponseTransfer->getIsSuccessful());
         $this->assertContains(static::ERROR_MESSAGE_PRICE_MODE_DATA_IS_INCORRECT, $errors);
     }
 
@@ -61,7 +61,7 @@ class PriceFacadeTest extends Unit
         $quoteValidationResponseTransfer = $this->getQuoteValidationResponseTransfer($quoteTransfer);
 
         //Act
-        $this->assertTrue($quoteValidationResponseTransfer->getIsSuccess());
+        $this->assertTrue($quoteValidationResponseTransfer->getIsSuccessful());
         $this->assertEmpty($quoteValidationResponseTransfer->getErrors());
     }
 

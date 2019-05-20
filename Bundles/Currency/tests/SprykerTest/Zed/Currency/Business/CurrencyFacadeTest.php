@@ -84,7 +84,7 @@ class CurrencyFacadeTest extends Unit
         }, (array)$quoteValidationResponseTransfer->getErrors());
 
         //Act
-        $this->assertFalse($quoteValidationResponseTransfer->getIsSuccess());
+        $this->assertFalse($quoteValidationResponseTransfer->getIsSuccessful());
         $this->assertContains(static::ERROR_MESSAGE_CURRENCY_DATA_IS_MISSING, $errors);
     }
 
@@ -103,7 +103,7 @@ class CurrencyFacadeTest extends Unit
         }, (array)$quoteValidationResponseTransfer->getErrors());
 
         //Act
-        $this->assertFalse($quoteValidationResponseTransfer->getIsSuccess());
+        $this->assertFalse($quoteValidationResponseTransfer->getIsSuccessful());
         $this->assertContains(static::ERROR_MESSAGE_CURRENCY_DATA_IS_MISSING, $errors);
     }
 
@@ -126,7 +126,7 @@ class CurrencyFacadeTest extends Unit
         }, (array)$quoteValidationResponseTransfer->getErrors());
 
         //Act
-        $this->assertFalse($quoteValidationResponseTransfer->getIsSuccess());
+        $this->assertFalse($quoteValidationResponseTransfer->getIsSuccessful());
         $this->assertContains(static::ERROR_MESSAGE_CURRENCY_DATA_IS_MISSING, $errors);
     }
 
@@ -146,7 +146,7 @@ class CurrencyFacadeTest extends Unit
 
         //Act
 
-        $this->assertTrue($quoteValidationResponseTransfer->getIsSuccess());
+        $this->assertTrue($quoteValidationResponseTransfer->getIsSuccessful());
         $this->assertEmpty($quoteValidationResponseTransfer->getErrors());
     }
 

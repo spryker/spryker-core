@@ -45,7 +45,7 @@ class QuoteValidator implements QuoteValidatorInterface
     public function validate(QuoteTransfer $quoteTransfer): QuoteValidationResponseTransfer
     {
         $quoteValidationResponseTransfer = (new QuoteValidationResponseTransfer())
-            ->setIsSuccess(true);
+            ->setIsSuccessful(true);
         $quoteValidationResponseTransfer = $this->validateStore($quoteTransfer, $quoteValidationResponseTransfer);
         $quoteValidationResponseTransfer = $this->executeQuoteValidatorPlugins($quoteTransfer, $quoteValidationResponseTransfer);
 
@@ -89,11 +89,11 @@ class QuoteValidator implements QuoteValidatorInterface
         foreach ($this->quoteValidatorPlugins as $quoteValidatorPlugin) {
             $quoteValidationResponseTransferFromPlugin = $quoteValidatorPlugin->validate($quoteTransfer);
 
-            if (!$quoteValidationResponseTransferFromPlugin->getIsSuccess()) {
+            if (!$quoteValidationResponseTransferFromPlugin->getIsSuccessful()) {
                 foreach ($quoteValidationResponseTransferFromPlugin->getErrors() as $quoteErrorTransfer) {
                     $quoteValidationResponseTransfer->addErrors($quoteErrorTransfer);
                 }
-                $quoteValidationResponseTransfer->setIsSuccess(false);
+                $quoteValidationResponseTransfer->setIsSuccessful(false);
             }
         }
 
@@ -117,6 +117,6 @@ class QuoteValidator implements QuoteValidatorInterface
 
         return $quoteValidationResponseTransfer
             ->addErrors($quoteErrorTransfer)
-            ->setIsSuccess(false);
+            ->setIsSuccessful(false);
     }
 }

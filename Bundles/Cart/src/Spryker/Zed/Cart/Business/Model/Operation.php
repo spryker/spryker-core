@@ -241,6 +241,11 @@ class Operation implements OperationInterface
             return $quoteTransfer;
         }
 
+        $quoteValidationResponseTransfer = $this->quoteFacade->validateQuote($quoteTransfer);
+        if (!$quoteValidationResponseTransfer->getIsSuccessful()) {
+            return $quoteTransfer;
+        }
+
         $originalQuoteTransfer = (new QuoteTransfer())->fromArray($quoteTransfer->modifiedToArray(), true);
 
         $quoteTransfer = $this->executePreReloadPlugins($quoteTransfer);
