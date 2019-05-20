@@ -28,15 +28,23 @@ class ShareCartByUuidActivatorStrategy implements ShareCartByUuidActivatorStrate
     protected $resourceShareQuoteCompanyUserWriter;
 
     /**
+     * @var \Spryker\Zed\SharedCart\Business\ResourceShare\ResourceShareQuoteReaderInterface
+     */
+    protected $resourceShareQuoteReader;
+
+    /**
      * @param \Spryker\Zed\SharedCart\Persistence\SharedCartRepositoryInterface $sharedCartRepository
      * @param \Spryker\Zed\SharedCart\Business\ResourceShare\ResourceShareQuoteCompanyUserWriterInterface $resourceShareQuoteCompanyUserWriter
+     * @param \Spryker\Zed\SharedCart\Business\ResourceShare\ResourceShareQuoteReaderInterface $resourceShareQuoteReader
      */
     public function __construct(
         SharedCartRepositoryInterface $sharedCartRepository,
-        ResourceShareQuoteCompanyUserWriterInterface $resourceShareQuoteCompanyUserWriter
+        ResourceShareQuoteCompanyUserWriterInterface $resourceShareQuoteCompanyUserWriter,
+        ResourceShareQuoteReaderInterface $resourceShareQuoteReader
     ) {
         $this->sharedCartRepository = $sharedCartRepository;
         $this->resourceShareQuoteCompanyUserWriter = $resourceShareQuoteCompanyUserWriter;
+        $this->resourceShareQuoteReader = $resourceShareQuoteReader;
     }
 
     /**
@@ -67,6 +75,21 @@ class ShareCartByUuidActivatorStrategy implements ShareCartByUuidActivatorStrate
         $shareDetailTransfer = $this->findShareDetail($resourceShareRequestTransfer);
         if ($shareDetailTransfer) {
             return $this->resourceShareQuoteCompanyUserWriter->updateCartShareForProvidedCompanyUser($resourceShareRequestTransfer, $shareDetailTransfer);
+        }
+
+        return $this->createCartShareForProvidedCompanyUser($resourceShareRequestTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
+     */
+    protected function createCartShareForProvidedCompanyUser(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer
+    {
+        $resourceShareResponseTransfer = $this->resourceShareQuoteReader->findQuoteById($resourceShareRequestTransfer);
+        if (!$resourceShareResponseTransfer->getIsSuccessful()) {
+            return $resourceShareResponseTransfer;
         }
 
         return $this->resourceShareQuoteCompanyUserWriter->createCartShareForProvidedCompanyUser($resourceShareRequestTransfer);
