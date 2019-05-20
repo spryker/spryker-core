@@ -24,7 +24,7 @@ abstract class AbstractCompanyUserResourceRelationshipExpander implements Compan
     /**
      * @var \Spryker\Glue\CompanyUsersRestApi\Processor\Mapper\CompanyUserMapperInterface
      */
-    protected $companyUserGroupMapper;
+    protected $companyUserMapper;
 
     /**
      * @param \Spryker\Glue\CompanyUsersRestApi\Processor\CompanyUser\RestResponseBuilder\CompanyUserRestResponseBuilderInterface $companyUserRestResponseBuilder
@@ -35,7 +35,7 @@ abstract class AbstractCompanyUserResourceRelationshipExpander implements Compan
         CompanyUserMapperInterface $companyUserMapper
     ) {
         $this->companyUserResponseBuilder = $companyUserRestResponseBuilder;
-        $this->companyUserGroupMapper = $companyUserMapper;
+        $this->companyUserMapper = $companyUserMapper;
     }
 
     /**
@@ -75,7 +75,7 @@ abstract class AbstractCompanyUserResourceRelationshipExpander implements Compan
     protected function createCompanyUserRestResource(
         CompanyUserTransfer $companyUserTransfer
     ): RestResourceInterface {
-        $restCompanyUserAttributesTransfer = $this->companyUserGroupMapper
+        $restCompanyUserAttributesTransfer = $this->companyUserMapper
             ->mapCompanyUserTransferToRestCompanyUserAttributesTransfer(
                 $companyUserTransfer,
                 new RestCompanyUserAttributesTransfer()

@@ -20,7 +20,7 @@ class CartPermissionGroupByShareDetailResourceRelationshipPlugin extends Abstrac
     /**
      * {@inheritdoc}
      * - Adds cart-permission-groups resource as a relationship.
-     * - Requires ShareDetailTransfer to be provided in resource's payload.
+     * - Relationship applies only if ShareDetailTransfer is provided in resource's payload.
      * - Uses ShareDetailTransfer::quotePermissionGroup from the resource's payload.
      *
      * @api
