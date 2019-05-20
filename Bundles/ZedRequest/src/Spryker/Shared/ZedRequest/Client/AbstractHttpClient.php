@@ -166,6 +166,7 @@ Configured with %s %s:%s in %s. Error: Stacktrace:';
         if (Config::get(static::ZED_API_SSL_ENABLED)) {
             return '(SSL Enabled)';
         }
+
         return '(SSL Disabled)';
     }
 

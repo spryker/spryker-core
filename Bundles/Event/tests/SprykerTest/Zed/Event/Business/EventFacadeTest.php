@@ -306,6 +306,7 @@ class EventFacadeTest extends Unit
 
         $queueReceivedMessageTransfer = new QueueReceiveMessageTransfer();
         $queueReceivedMessageTransfer->setQueueMessage($queueMessageTransfer);
+
         return $queueReceivedMessageTransfer;
     }
 }

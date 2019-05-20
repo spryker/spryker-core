@@ -50,6 +50,7 @@ abstract class AbstractFactory
     protected function createContainer()
     {
         $containerGlobals = $this->createContainerGlobals();
+
         return new Container($containerGlobals->getContainerGlobals());
     }
 
