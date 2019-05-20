@@ -206,7 +206,7 @@ interface SharedCartFacadeInterface
     /**
      * Specification:
      *  - Finds quote company user by uuid.
-     *  - - Requires uuid field to be set in QuoteCompanyUserTransfer taken as parameter.
+     *  - Requires uuid field to be set in QuoteCompanyUserTransfer taken as parameter.
      *
      * @api
      *
