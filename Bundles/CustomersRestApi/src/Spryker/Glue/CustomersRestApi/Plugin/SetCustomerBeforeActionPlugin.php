@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\CustomersRestApi\Plugin;
 
+use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ControllerBeforeActionPluginInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
@@ -28,8 +29,20 @@ class SetCustomerBeforeActionPlugin extends AbstractPlugin implements Controller
      */
     public function beforeAction(string $action, RestRequestInterface $restRequest): void
     {
+        if (!$restRequest->getRestUser()) {
+            return;
+        }
+
+        $user = $restRequest->getRestUser();
+
+        //workaround for customer data, most clients use session client to retrieve customer data.
+        $customerTransfer = (new CustomerTransfer())
+            ->setIdCustomer($user->getSurrogateIdentifier() ? (int)$user->getSurrogateIdentifier() : null)
+            ->setIsDirty(false)
+            ->setCustomerReference($user->getNaturalIdentifier());
+
         $this->getFactory()
-            ->createSessionCreator()
-            ->setCustomer($restRequest);
+            ->getCustomerClient()
+            ->setCustomerRawData($customerTransfer);
     }
 }

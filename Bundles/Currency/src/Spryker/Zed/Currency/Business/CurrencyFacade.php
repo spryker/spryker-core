@@ -8,6 +8,8 @@
 namespace Spryker\Zed\Currency\Business;
 
 use Generated\Shared\Transfer\CurrencyTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\QuoteValidationResponseTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -113,5 +115,19 @@ class CurrencyFacade extends AbstractFacade implements CurrencyFacadeInterface
         return $this->getFactory()
             ->createCurrencyReader()
             ->getDefaultCurrencyForCurrentStore();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteValidationResponseTransfer
+     */
+    public function validateCurrencyInQuote(QuoteTransfer $quoteTransfer): QuoteValidationResponseTransfer
+    {
+        return $this->getFactory()->createQuoteValidator()->validate($quoteTransfer);
     }
 }
