@@ -118,6 +118,11 @@ class CartsRestApiConfig extends AbstractBundleConfig
 
     public const HEADER_ANONYMOUS_CUSTOMER_UNIQUE_ID = 'X-Anonymous-Customer-Unique-Id';
 
+    protected const GUEST_CART_RESOURCES = [
+        CartsRestApiConfig::RESOURCE_GUEST_CARTS,
+        CartsRestApiConfig::RESOURCE_GUEST_CARTS_ITEMS,
+    ];
+
     /**
      * @return array
      */
@@ -181,11 +186,6 @@ class CartsRestApiConfig extends AbstractBundleConfig
             ],
         ];
     }
-
-    protected const GUEST_CART_RESOURCES = [
-        CartsRestApiConfig::RESOURCE_GUEST_CARTS,
-        CartsRestApiConfig::RESOURCE_GUEST_CARTS_ITEMS,
-    ];
 
     /**
      * @return string[]
