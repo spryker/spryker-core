@@ -23,26 +23,4 @@ interface GuestCartRestResponseBuilderInterface
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function createGuestCartRestResponse(QuoteTransfer $quoteTransfer): RestResponseInterface;
-
-    /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function createGuestCartNotFoundErrorRestResponse(): RestResponseInterface;
-
-    /**
-     * @param \Generated\Shared\Transfer\MessageTransfer[] $errors
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function createGuestCartErrorRestResponseFromErrorMessageTransfer(array $errors): RestResponseInterface;
-
-    /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function createGuestCartIdMissingError(): RestResponseInterface;
-
-    /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function createAnonymousCustomerUniqueIdEmptyErrorRestResponse(): RestResponseInterface;
 }

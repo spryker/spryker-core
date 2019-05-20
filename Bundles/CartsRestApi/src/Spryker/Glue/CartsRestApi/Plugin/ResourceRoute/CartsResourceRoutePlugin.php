@@ -30,9 +30,10 @@ class CartsResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePl
     public function configure(ResourceRouteCollectionInterface $resourceRouteCollection): ResourceRouteCollectionInterface
     {
         $resourceRouteCollection
-            ->addGet(CartsRestApiConfig::ACTION_CARTS_GET)
-            ->addPost(CartsRestApiConfig::ACTION_CARTS_POST)
-            ->addDelete(CartsRestApiConfig::ACTION_CARTS_DELETE);
+            ->addGet('get')
+            ->addPost('post')
+            ->addDelete('delete')
+            ->addPatch('patch');
 
         return $resourceRouteCollection;
     }

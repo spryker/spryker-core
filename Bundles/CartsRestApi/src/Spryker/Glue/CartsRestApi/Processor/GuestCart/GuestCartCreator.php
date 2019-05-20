@@ -9,15 +9,16 @@ namespace Spryker\Glue\CartsRestApi\Processor\GuestCart;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\RestErrorMessageTransfer;
-use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
-use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToPersistentCartClientInterface;
+use Spryker\Client\CartsRestApi\CartsRestApiClientInterface;
 use Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
+use Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface;
+use Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\GuestCartRestResponseBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * @deprecated
+ */
 class GuestCartCreator implements GuestCartCreatorInterface
 {
     /**
@@ -26,28 +27,36 @@ class GuestCartCreator implements GuestCartCreatorInterface
     protected $cartsResourceMapper;
 
     /**
-     * @var \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToPersistentCartClientInterface
+     * @var \Spryker\Client\CartsRestApi\CartsRestApiClientInterface
      */
-    protected $persistentCartClient;
+    protected $cartsRestApiClient;
 
     /**
-     * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
+     * @var \Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\GuestCartRestResponseBuilderInterface
      */
-    protected $restResourceBuilder;
+    protected $guestCartRestResponseBuilder;
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
+     * @var \Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface
+     */
+    protected $cartRestResponseBuilder;
+
+    /**
+     * @param \Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\GuestCartRestResponseBuilderInterface $guestCartRestResponseBuilder
+     * @param \Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface $cartRestResponseBuilder
      * @param \Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface $cartsResourceMapper
-     * @param \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToPersistentCartClientInterface $persistentCartClient
+     * @param \Spryker\Client\CartsRestApi\CartsRestApiClientInterface $cartsRestApiClient
      */
     public function __construct(
-        RestResourceBuilderInterface $restResourceBuilder,
+        GuestCartRestResponseBuilderInterface $guestCartRestResponseBuilder,
+        CartRestResponseBuilderInterface $cartRestResponseBuilder,
         CartsResourceMapperInterface $cartsResourceMapper,
-        CartsRestApiToPersistentCartClientInterface $persistentCartClient
+        CartsRestApiClientInterface $cartsRestApiClient
     ) {
-        $this->restResourceBuilder = $restResourceBuilder;
+        $this->guestCartRestResponseBuilder = $guestCartRestResponseBuilder;
+        $this->cartRestResponseBuilder = $cartRestResponseBuilder;
         $this->cartsResourceMapper = $cartsResourceMapper;
-        $this->persistentCartClient = $persistentCartClient;
+        $this->cartsRestApiClient = $cartsRestApiClient;
     }
 
     /**
@@ -57,56 +66,16 @@ class GuestCartCreator implements GuestCartCreatorInterface
      */
     public function create(RestRequestInterface $restRequest): RestResponseInterface
     {
-        $restResponse = $this->restResourceBuilder->createRestResponse();
-        $quoteTransfer = $this->createQuoteTransfer($restRequest);
-        $quoteResponseTransfer = $this->persistentCartClient->createQuote($quoteTransfer);
-
-        if (!$quoteResponseTransfer->getIsSuccessful()) {
-            return $this->createFailedCreatingCartError($restResponse);
-        }
-
-        $restResource = $this->cartsResourceMapper->mapCartsResource(
-            $quoteResponseTransfer->getQuoteTransfer(),
-            $restRequest
+        $quoteTransfer = (new QuoteTransfer())->setCustomer(
+            (new CustomerTransfer())->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier())
         );
 
-        return $restResponse->addResource($restResource);
-    }
+        $quoteResponseTransfer = $this->cartsRestApiClient->createQuote($quoteTransfer);
 
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function createQuoteTransfer(RestRequestInterface $restRequest): QuoteTransfer
-    {
-        $customerTransfer = $this->getCustomerTransfer($restRequest);
+        if ($quoteResponseTransfer->getErrors()->count() > 0) {
+            return $this->cartRestResponseBuilder->createFailedErrorResponse($quoteResponseTransfer->getErrors());
+        }
 
-        return (new QuoteTransfer())->setCustomer($customerTransfer);
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return \Generated\Shared\Transfer\CustomerTransfer
-     */
-    protected function getCustomerTransfer(RestRequestInterface $restRequest): CustomerTransfer
-    {
-        return (new CustomerTransfer())->setCustomerReference($restRequest->getUser()->getNaturalIdentifier());
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $response
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    protected function createFailedCreatingCartError(RestResponseInterface $response): RestResponseInterface
-    {
-        $restErrorTransfer = (new RestErrorMessageTransfer())
-            ->setCode(CartsRestApiConfig::RESPONSE_CODE_FAILED_CREATING_CART)
-            ->setStatus(Response::HTTP_INTERNAL_SERVER_ERROR)
-            ->setDetail(CartsRestApiConfig::EXCEPTION_MESSAGE_FAILED_TO_CREATE_CART);
-
-        return $response->addError($restErrorTransfer);
+        return $this->guestCartRestResponseBuilder->createGuestCartRestResponse($quoteResponseTransfer->getQuoteTransfer());
     }
 }

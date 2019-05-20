@@ -34,7 +34,7 @@ class RestRequestUpdater implements RestRequestUpdaterInterface
      */
     public function updateRestRequestWithAnonymousCustomerId(RestRequestInterface $restRequest): void
     {
-        if ($restRequest->getUser()) {
+        if ($restRequest->getRestUser()) {
             return;
         }
 
@@ -46,6 +46,5 @@ class RestRequestUpdater implements RestRequestUpdaterInterface
 
         $customerReference = $this->persistentCartClient->generateGuestCartCustomerReference($anonymousCustomerUniqueId);
         $restRequest->setRestUser((new RestUserTransfer())->setNaturalIdentifier($customerReference));
-        $restRequest->setUser('', $customerReference);
     }
 }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\CartsRestApi\Controller;
 
+use Generated\Shared\Transfer\RestCartsAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\Kernel\Controller\AbstractController;
@@ -49,12 +50,40 @@ class GuestCartsResourceController extends AbstractController
      */
     public function getAction(RestRequestInterface $restRequest): RestResponseInterface
     {
-        $idQuote = $restRequest->getResource()->getId();
+        $uuidQuote = $restRequest->getResource()->getId();
 
-        if ($idQuote !== null) {
-            return $this->getFactory()->createGuestCartReader()->readByIdentifier($idQuote, $restRequest);
+        if ($uuidQuote !== null) {
+            return $this->getFactory()->createGuestCartReader()->readByIdentifier($uuidQuote, $restRequest);
         }
 
         return $this->getFactory()->createGuestCartReader()->readCurrentCustomerCarts($restRequest);
+    }
+
+    /**
+     * @Glue({
+     *     "patch": {
+     *          "summary": [
+     *              "Updates a guest cart."
+     *          ],
+     *          "parameters": [{
+     *              "name": "X-Anonymous-Customer-Unique-Id",
+     *              "in": "header",
+     *              "required": true
+     *          }],
+     *          "responses": {
+     *              "400": "Cart id is missing.",
+     *              "404": "Cart with given uuid not found."
+     *          }
+     *     }
+     * })
+     *
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param \Generated\Shared\Transfer\RestCartsAttributesTransfer $restCartsAttributesTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function patchAction(RestRequestInterface $restRequest, RestCartsAttributesTransfer $restCartsAttributesTransfer): RestResponseInterface
+    {
+        return $this->getFactory()->createGuestCartUpdater()->updateQuote($restRequest, $restCartsAttributesTransfer);
     }
 }
