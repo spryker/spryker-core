@@ -83,7 +83,7 @@ interface QuoteRequestAgentFacadeInterface
      * - Expects quote request reference to be provided.
      * - Retrieves "Request for Quote" entity filtered by reference.
      * - Expects "Request for Quote" status to be "draft", "in-progress".
-     * - Updates field is_latest_version_hidden to false.
+     * - Updates field is_latest_version_visible to true.
      * - Changes status to "ready".
      *
      * @api
