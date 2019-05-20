@@ -8,12 +8,17 @@
 namespace Spryker\Zed\ContentProductSetGui\Communication;
 
 use Orm\Zed\ProductSet\Persistence\SpyProductSetQuery;
+use Spryker\Zed\ContentProductSetGui\Communication\Mapper\ContentGui\ContentProductSetGuiEditorConfigurationMapper;
+use Spryker\Zed\ContentProductSetGui\Communication\Mapper\ContentGui\ContentProductSetGuiEditorConfigurationMapperInterface;
 use Spryker\Zed\ContentProductSetGui\Communication\Table\ProductSetSelectedTable;
 use Spryker\Zed\ContentProductSetGui\Communication\Table\ProductSetViewTable;
 use Spryker\Zed\ContentProductSetGui\ContentProductSetGuiDependencyProvider;
 use Spryker\Zed\ContentProductSetGui\Dependency\Facade\ContentProductSetGuiToLocaleInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
+/**
+ * @method \Spryker\Zed\ContentProductSetGui\ContentProductSetGuiConfig getConfig()
+ */
 class ContentProductSetGuiCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
@@ -44,6 +49,14 @@ class ContentProductSetGuiCommunicationFactory extends AbstractCommunicationFact
             $identifierPostfix,
             $idProductSet
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ContentProductSetGui\Communication\Mapper\ContentGui\ContentProductSetGuiEditorConfigurationMapperInterface
+     */
+    public function createContentProductSetGuiEditorMapper(): ContentProductSetGuiEditorConfigurationMapperInterface
+    {
+        return new ContentProductSetGuiEditorConfigurationMapper($this->getConfig());
     }
 
     /**
