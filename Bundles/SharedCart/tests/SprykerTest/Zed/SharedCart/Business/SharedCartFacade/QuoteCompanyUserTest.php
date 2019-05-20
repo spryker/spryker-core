@@ -14,7 +14,8 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShareCartRequestTransfer;
 use Generated\Shared\Transfer\ShareDetailCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ShareDetailTransfer;
-use Generated\Shared\Transfer\SpyQuotePermissionGroupEntityTransfer;
+use Spryker\Zed\SharedCart\Communication\Plugin\ReadSharedCartPermissionPlugin;
+use Spryker\Zed\SharedCart\Communication\Plugin\WriteSharedCartPermissionPlugin;
 
 /**
  * Auto-generated group annotations
@@ -28,8 +29,8 @@ use Generated\Shared\Transfer\SpyQuotePermissionGroupEntityTransfer;
  */
 class QuoteCompanyUserTest extends Unit
 {
-    protected const ID_QUOTE_PERMISSION_GROUP_READ = 1;
-    protected const ID_QUOTE_PERMISSION_GROUP_FULL_ACCESS = 2;
+    protected const QUOTE_PERMISSION_GROUP_READ_ONLY = 'READ_ONLY';
+    protected const QUOTE_PERMISSION_GROUP_FULL_ACCESS = 'FULL_ACCESS';
 
     /**
      * @var \SprykerTest\Zed\SharedCart\SharedCartBusinessTester
@@ -47,11 +48,20 @@ class QuoteCompanyUserTest extends Unit
     protected $companyUserTransfer;
 
     /**
+     * @var \Generated\Shared\Transfer\SpyQuotePermissionGroupEntityTransfer
+     */
+    protected $readOnlyQuotePermissionGroup;
+
+    /**
      * @return void
      */
     protected function setUp(): void
     {
         parent::setUp();
+
+        $this->readOnlyQuotePermissionGroup = $this->tester->haveQuotePermissionGroup(static::QUOTE_PERMISSION_GROUP_READ_ONLY, [
+            ReadSharedCartPermissionPlugin::KEY,
+        ]);
 
         $companyTransfer = $this->tester->haveCompany();
         $ownerCustomerTransfer = $this->tester->haveCustomer();
@@ -77,12 +87,12 @@ class QuoteCompanyUserTest extends Unit
         $quoteCompanyUserTransfer = $this->tester->haveQuoteCompanyUser(
             $this->companyUserTransfer,
             $this->quoteTransfer,
-            (new SpyQuotePermissionGroupEntityTransfer())->setIdQuotePermissionGroup(static::ID_QUOTE_PERMISSION_GROUP_READ)
+            $this->readOnlyQuotePermissionGroup
         );
 
         //Act
         $shareDetailCollectionTransfer = $this->tester->getFacade()
-            ->findShareDetailsCollectionByShareDetailCriteria($this->getShareDetailCriteriaTransfer());
+            ->findShareDetailCollectionByShareDetailCriteria($this->getShareDetailCriteriaTransfer());
 
         //Assert
         $this->assertCount(1, $shareDetailCollectionTransfer->getShareDetails());
@@ -100,11 +110,17 @@ class QuoteCompanyUserTest extends Unit
         $quoteCompanyUserTransfer = $this->tester->haveQuoteCompanyUser(
             $this->companyUserTransfer,
             $this->quoteTransfer,
-            (new SpyQuotePermissionGroupEntityTransfer())->setIdQuotePermissionGroup(static::ID_QUOTE_PERMISSION_GROUP_READ)
+            $this->readOnlyQuotePermissionGroup
         );
 
-        $quotePermissionGroupTransfer = (new QuotePermissionGroupTransfer())
-            ->setIdQuotePermissionGroup(static::ID_QUOTE_PERMISSION_GROUP_FULL_ACCESS);
+        $fullAccessQuotePermissionGroup = $this->tester->haveQuotePermissionGroup(static::QUOTE_PERMISSION_GROUP_FULL_ACCESS, [
+            ReadSharedCartPermissionPlugin::KEY,
+            WriteSharedCartPermissionPlugin::KEY,
+        ]);
+        $quotePermissionGroupTransfer = (new QuotePermissionGroupTransfer())->fromArray(
+            $fullAccessQuotePermissionGroup->toArray(),
+            true
+        );
         $shareDetailTransfer = (new ShareDetailTransfer())
             ->setQuotePermissionGroup($quotePermissionGroupTransfer)
             ->setIdQuoteCompanyUser($quoteCompanyUserTransfer->getIdQuoteCompanyUser());
@@ -114,14 +130,14 @@ class QuoteCompanyUserTest extends Unit
         //Act
         $this->tester->getFacade()->updateQuoteCompanyUserPermissionGroup($shareCartRequestTransfer);
         $shareDetailCollectionTransfer = $this->tester->getFacade()
-            ->findShareDetailsCollectionByShareDetailCriteria($this->getShareDetailCriteriaTransfer());
+            ->findShareDetailCollectionByShareDetailCriteria($this->getShareDetailCriteriaTransfer());
 
         //Assert
         $this->assertCount(1, $shareDetailCollectionTransfer->getShareDetails());
         /** @var \Generated\Shared\Transfer\ShareDetailTransfer $shareDetailTransfer */
         $shareDetailTransfer = $shareDetailCollectionTransfer->getShareDetails()->offsetGet(0);
         $this->assertEquals($shareDetailTransfer->getIdCompanyUser(), $this->companyUserTransfer->getIdCompanyUser());
-        $this->assertEquals(static::ID_QUOTE_PERMISSION_GROUP_FULL_ACCESS, $shareDetailTransfer->getQuotePermissionGroup()->getIdQuotePermissionGroup());
+        $this->assertEquals($fullAccessQuotePermissionGroup->getIdQuotePermissionGroup(), $shareDetailTransfer->getQuotePermissionGroup()->getIdQuotePermissionGroup());
     }
 
     /**
@@ -133,7 +149,7 @@ class QuoteCompanyUserTest extends Unit
         $quoteCompanyUserTransfer = $this->tester->haveQuoteCompanyUser(
             $this->companyUserTransfer,
             $this->quoteTransfer,
-            (new SpyQuotePermissionGroupEntityTransfer())->setIdQuotePermissionGroup(static::ID_QUOTE_PERMISSION_GROUP_READ)
+            $this->readOnlyQuotePermissionGroup
         );
 
         $shareDetailTransfer = (new ShareDetailTransfer())
@@ -144,7 +160,7 @@ class QuoteCompanyUserTest extends Unit
         //Act
         $this->tester->getFacade()->deleteQuoteCompanyUser($shareCartRequestTransfer);
         $shareDetailCollectionTransfer = $this->tester->getFacade()
-            ->findShareDetailsCollectionByShareDetailCriteria($this->getShareDetailCriteriaTransfer());
+            ->findShareDetailCollectionByShareDetailCriteria($this->getShareDetailCriteriaTransfer());
 
         //Assert
         $this->assertCount(0, $shareDetailCollectionTransfer->getShareDetails());

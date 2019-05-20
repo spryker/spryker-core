@@ -18,7 +18,6 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\SharedCartsRestApi\Dependency\Client\SharedCartsRestApiToCompanyUserStorageClientInterface;
 use Spryker\Glue\SharedCartsRestApi\Processor\RestResponseBuilder\SharedCartRestResponseBuilderInterface;
 use Spryker\Glue\SharedCartsRestApi\SharedCartsRestApiConfig;
-use Symfony\Component\HttpFoundation\Response;
 
 class SharedCartCreator implements SharedCartCreatorInterface
 {
@@ -66,11 +65,7 @@ class SharedCartCreator implements SharedCartCreatorInterface
     ): RestResponseInterface {
         $cartsResource = $restRequest->findParentResourceByType(SharedCartsRestApiConfig::RESOURCE_CARTS);
         if (!$cartsResource || !$cartsResource->getId()) {
-            return $this->sharedCartRestResponseBuilder->createRestErrorResponse(
-                Response::HTTP_BAD_REQUEST,
-                SharedCartsRestApiConfig::RESPONSE_CODE_CART_ID_MISSING,
-                SharedCartsRestApiConfig::EXCEPTION_MESSAGE_CART_ID_MISSING
-            );
+            return $this->sharedCartRestResponseBuilder->createCartIdMissingErrorResponse();
         }
 
         $companyUserStorageTransfer = $this->companyUserStorageClient->findCompanyUserByMapping(
@@ -78,19 +73,11 @@ class SharedCartCreator implements SharedCartCreatorInterface
             $restSharedCartsAttributesTransfer->getIdCompanyUser()
         );
         if (!$companyUserStorageTransfer) {
-            return $this->sharedCartRestResponseBuilder->createRestErrorResponse(
-                Response::HTTP_NOT_FOUND,
-                SharedCartsRestApiConfig::RESPONSE_CODE_COMPANY_USER_NOT_FOUND,
-                SharedCartsRestApiConfig::RESPONSE_DETAIL_COMPANY_USER_NOT_FOUND
-            );
+            return $this->sharedCartRestResponseBuilder->createCompanyUserNotFoundErrorResponse();
         }
 
-        if (!$this->isCartCanBeShared($restRequest, $companyUserStorageTransfer)) {
-            return $this->sharedCartRestResponseBuilder->createRestErrorResponse(
-                Response::HTTP_FORBIDDEN,
-                SharedCartsRestApiConfig::RESPONSE_CODE_CAN_ONLY_SHARE_CART_WITH_COMPANY_USERS_FROM_SAME_COMPANY,
-                SharedCartsRestApiConfig::RESPONSE_DETAIL_CAN_ONLY_SHARE_CART_WITH_COMPANY_USERS_FROM_SAME_COMPANY
-            );
+        if (!$this->canManageQuoteSharing($restRequest, $companyUserStorageTransfer)) {
+            return $this->sharedCartRestResponseBuilder->createSharingWithOtherCompanyCompanyUserForbiddenErrorResponse();
         }
 
         $shareCartRequestTransfer = $this->createShareCartRequestTransfer(
@@ -118,7 +105,7 @@ class SharedCartCreator implements SharedCartCreatorInterface
      *
      * @return bool
      */
-    protected function isCartCanBeShared(RestRequestInterface $restRequest, CompanyUserStorageTransfer $companyUserStorageTransfer): bool
+    protected function canManageQuoteSharing(RestRequestInterface $restRequest, CompanyUserStorageTransfer $companyUserStorageTransfer): bool
     {
         return $companyUserStorageTransfer->getIdCompany() === $restRequest->getRestUser()->getIdCompany();
     }

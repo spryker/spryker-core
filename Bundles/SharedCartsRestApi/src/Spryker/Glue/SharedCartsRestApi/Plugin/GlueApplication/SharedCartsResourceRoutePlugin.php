@@ -55,7 +55,7 @@ class SharedCartsResourceRoutePlugin extends AbstractPlugin implements ResourceR
      */
     public function getController(): string
     {
-        return SharedCartsRestApiConfig::CONTROLLER_SHARED_CARTS;
+        return 'shared-carts-resource';
     }
 
     /**

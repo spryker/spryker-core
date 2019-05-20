@@ -20,18 +20,29 @@ interface SharedCartRestResponseBuilderInterface
     public function createSharedCartRestResponse(?ShareDetailTransfer $shareDetailTransfer = null): RestResponseInterface;
 
     /**
-     * @param int $status
-     * @param string $code
-     * @param string $detail
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function createRestErrorResponse(int $status, string $code, string $detail): RestResponseInterface;
-
-    /**
      * @param string $errorIdentifier
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function createErrorResponseFromErrorIdentifier(string $errorIdentifier): RestResponseInterface;
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createCartIdMissingErrorResponse(): RestResponseInterface;
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createCompanyUserNotFoundErrorResponse(): RestResponseInterface;
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createSharingWithOtherCompanyCompanyUserForbiddenErrorResponse(): RestResponseInterface;
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createSharedCartIdMissingErrorResponse(): RestResponseInterface;
 }

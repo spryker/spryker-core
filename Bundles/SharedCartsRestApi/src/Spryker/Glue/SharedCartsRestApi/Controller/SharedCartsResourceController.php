@@ -82,7 +82,7 @@ class SharedCartsResourceController extends AbstractController
      * @Glue({
      *     "delete": {
      *          "summary": [
-     *              "Deletes cart by id."
+     *              "Deletes cart sharing."
      *          ],
      *          "parameters": [{
      *              "name": "Accept-Language",

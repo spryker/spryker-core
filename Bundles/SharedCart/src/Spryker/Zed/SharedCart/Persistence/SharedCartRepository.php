@@ -19,6 +19,7 @@ use Orm\Zed\CompanyUser\Persistence\Map\SpyCompanyUserTableMap;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Orm\Zed\Quote\Persistence\Map\SpyQuoteTableMap;
 use Orm\Zed\SharedCart\Persistence\Map\SpyQuoteCompanyUserTableMap;
+use Orm\Zed\SharedCart\Persistence\SpyQuoteCompanyUserQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\Join;
 use Spryker\Shared\SharedCart\SharedCartConfig;
@@ -360,15 +361,13 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
      *
      * @return \Generated\Shared\Transfer\ShareDetailCollectionTransfer
      */
-    public function findShareDetailsCollectionByShareDetailCriteria(ShareDetailCriteriaFilterTransfer $shareDetailCriteriaFilterTransfer): ShareDetailCollectionTransfer
+    public function findShareDetailCollectionByShareDetailCriteria(ShareDetailCriteriaFilterTransfer $shareDetailCriteriaFilterTransfer): ShareDetailCollectionTransfer
     {
         $quoteCompanyUserQuery = $this->getFactory()->createQuoteCompanyUserQuery();
-        if ($shareDetailCriteriaFilterTransfer->getIdQuote()) {
-            $quoteCompanyUserQuery->filterByFkQuote($shareDetailCriteriaFilterTransfer->getIdQuote());
-        }
-        if ($shareDetailCriteriaFilterTransfer->getIdCompanyUser()) {
-            $quoteCompanyUserQuery->filterByFkCompanyUser($shareDetailCriteriaFilterTransfer->getIdCompanyUser());
-        }
+        $quoteCompanyUserQuery = $this->applySharedDetailCriteriaFiltersToQuoteCompanyUserQuery(
+            $quoteCompanyUserQuery,
+            $shareDetailCriteriaFilterTransfer
+        );
 
         $quoteCompanyUserEntities = $quoteCompanyUserQuery
             ->joinWithSpyCompanyUser()
@@ -402,5 +401,25 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
         return $this->getFactory()
             ->createQuoteCompanyUserMapper()
             ->mapQuoteCompanyUserEntityToQuoteCompanyUserTransfer($quoteCompanyUser, new QuoteCompanyUserTransfer());
+    }
+
+    /**
+     * @param \Orm\Zed\SharedCart\Persistence\SpyQuoteCompanyUserQuery $quoteCompanyUserQuery
+     * @param \Generated\Shared\Transfer\ShareDetailCriteriaFilterTransfer $shareDetailCriteriaFilterTransfer
+     *
+     * @return \Orm\Zed\SharedCart\Persistence\SpyQuoteCompanyUserQuery
+     */
+    protected function applySharedDetailCriteriaFiltersToQuoteCompanyUserQuery(
+        SpyQuoteCompanyUserQuery $quoteCompanyUserQuery,
+        ShareDetailCriteriaFilterTransfer $shareDetailCriteriaFilterTransfer
+    ): SpyQuoteCompanyUserQuery {
+        if ($shareDetailCriteriaFilterTransfer->getIdQuote()) {
+            $quoteCompanyUserQuery->filterByFkQuote($shareDetailCriteriaFilterTransfer->getIdQuote());
+        }
+        if ($shareDetailCriteriaFilterTransfer->getIdCompanyUser()) {
+            $quoteCompanyUserQuery->filterByFkCompanyUser($shareDetailCriteriaFilterTransfer->getIdCompanyUser());
+        }
+
+        return $quoteCompanyUserQuery;
     }
 }

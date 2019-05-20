@@ -60,11 +60,11 @@ class SharedCartUpdater implements SharedCartUpdaterInterface
             (new ShareCartRequestTransfer())->addShareDetail($shareDetailTransfer)
         );
 
-        $shareDetailCollection = $this->sharedCartFacade->findShareDetailsCollectionByShareDetailCriteria(
+        $shareDetailCollectionTransfer = $this->sharedCartFacade->findShareDetailCollectionByShareDetailCriteria(
             $this->createShareDetailCriteriaFilterTransfer($quoteTransfer, $quoteCompanyUserTransfer)
         );
 
-        return $shareCartResponseTransfer->setShareDetails($shareDetailCollection->getShareDetails())
+        return $shareCartResponseTransfer->setShareDetails($shareDetailCollectionTransfer->getShareDetails())
             ->setIsSuccessful(true);
     }
 

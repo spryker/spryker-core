@@ -47,5 +47,5 @@ interface SharedCartsRestApiToSharedCartFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ShareDetailCollectionTransfer
      */
-    public function findShareDetailsCollectionByShareDetailCriteria(ShareDetailCriteriaFilterTransfer $shareDetailCriteriaFilterTransfer): ShareDetailCollectionTransfer;
+    public function findShareDetailCollectionByShareDetailCriteria(ShareDetailCriteriaFilterTransfer $shareDetailCriteriaFilterTransfer): ShareDetailCollectionTransfer;
 }

@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\QuoteCompanyUserTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\SharedCart\Persistence\SpyQuoteCompanyUser;
 
-class QuoteCompanyUserMapper implements QuoteCompanyUserMapperInterface
+class QuoteCompanyUserMapper
 {
     /**
      * @param \Orm\Zed\SharedCart\Persistence\SpyQuoteCompanyUser $spyQuoteCompanyUser
@@ -29,6 +29,6 @@ class QuoteCompanyUserMapper implements QuoteCompanyUserMapperInterface
             true
         ));
 
-        return $quoteCompanyUserTransfer->fromArray($spyQuoteCompanyUser->toArray(), true);
+        return $quoteCompanyUserTransfer;
     }
 }

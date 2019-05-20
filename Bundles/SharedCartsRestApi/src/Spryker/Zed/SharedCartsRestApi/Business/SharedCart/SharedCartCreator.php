@@ -78,14 +78,14 @@ class SharedCartCreator implements SharedCartCreatorInterface
             $shareCartRequestTransfer->getShareDetails()->offsetGet(0)
         );
 
-        $shareDetailCollection = $this->sharedCartFacade->findShareDetailsCollectionByShareDetailCriteria(
+        $shareDetailCollectionTransfer = $this->sharedCartFacade->findShareDetailCollectionByShareDetailCriteria(
             $this->createShareDetailCriteriaFilterTransfer($quoteTransfer, $quoteCompanyUserTransfer)
         );
-        if ($shareDetailCollection->getShareDetails()->count() === 0) {
+        if ($shareDetailCollectionTransfer->getShareDetails()->count() === 0) {
             return $shareCartResponseTransfer->setErrorIdentifier(SharedSharedCartsRestApiConfig::ERROR_IDENTIFIER_FAILED_TO_SHARE_CART);
         }
 
-        return $shareCartResponseTransfer->setShareDetails($shareDetailCollection->getShareDetails())
+        return $shareCartResponseTransfer->setShareDetails($shareDetailCollectionTransfer->getShareDetails())
             ->setIsSuccessful(true);
     }
 

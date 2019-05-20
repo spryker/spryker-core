@@ -10,7 +10,7 @@ namespace Spryker\Zed\SharedCartsRestApi\Persistence\Mapper;
 use Generated\Shared\Transfer\QuoteCompanyUserTransfer;
 use Orm\Zed\SharedCart\Persistence\SpyQuoteCompanyUser;
 
-class SharedCartsRestApiMapper implements SharedCartsRestApiMapperInterface
+class SharedCartsRestApiMapper
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteCompanyUserTransfer $quoteCompanyUserTransfer

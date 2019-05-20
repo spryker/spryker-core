@@ -201,7 +201,7 @@ interface SharedCartFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ShareDetailCollectionTransfer
      */
-    public function findShareDetailsCollectionByShareDetailCriteria(ShareDetailCriteriaFilterTransfer $shareDetailCriteriaFilterTransfer): ShareDetailCollectionTransfer;
+    public function findShareDetailCollectionByShareDetailCriteria(ShareDetailCriteriaFilterTransfer $shareDetailCriteriaFilterTransfer): ShareDetailCollectionTransfer;
 
     /**
      * Specification:
@@ -211,7 +211,7 @@ interface SharedCartFacadeInterface
      *
      * @api
      *
-     * {@internal will work if uuid field is provided.}
+     * {@internal will work if uuid field is provided.}}
      *
      * @param \Generated\Shared\Transfer\QuoteCompanyUserTransfer $quoteCompanyUserTransfer
      *
@@ -223,7 +223,7 @@ interface SharedCartFacadeInterface
      * Specification:
      *  - Updates permission group for shared cart.
      *  - Requires ShareDetailTransfer to be set in ShareCartRequestTransfer.
-     *  - Requires idQuoteCompanyUser and PermissionGroupTransfer to be set in ShareDetailTransfer.
+     *  - Requires idQuoteCompanyUser and QuotePermissionGroupTransfer to be set in ShareDetailTransfer.
      *
      * @api
      *
@@ -237,7 +237,7 @@ interface SharedCartFacadeInterface
      * Specification:
      *  - Removes sharing of the quote.
      *  - Requires ShareDetailTransfer to be set in ShareCartRequestTransfer.
-     *  - Requires idQuoteCompanyUser and PermissionGroupTransfer to be set in ShareDetailTransfer.
+     *  - Requires idQuoteCompanyUser to be set in ShareDetailTransfer.
      *
      * @api
      *

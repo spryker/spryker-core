@@ -14,7 +14,7 @@ use Generated\Shared\Transfer\QuotePermissionGroupTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShareCartRequestTransfer;
 use Generated\Shared\Transfer\ShareDetailTransfer;
-use Generated\Shared\Transfer\SpyQuotePermissionGroupEntityTransfer;
+use Spryker\Shared\SharedCartsRestApi\SharedCartsRestApiConfig;
 use Spryker\Zed\SharedCart\Business\SharedCartFacadeInterface;
 
 /**
@@ -30,8 +30,15 @@ use Spryker\Zed\SharedCart\Business\SharedCartFacadeInterface;
  */
 class SharedCartsRestApiFacadeTest extends Unit
 {
-    protected const ID_QUOTE_PERMISSION_GROUP_READ = 1;
-    protected const ID_QUOTE_PERMISSION_GROUP_FULL_ACCESS = 2;
+    protected const QUOTE_PERMISSION_GROUP_READ_ONLY = 'READ_ONLY';
+    protected const QUOTE_PERMISSION_GROUP_FULL_ACCESS = 'FULL_ACCESS';
+
+    protected const READ_SHARED_CART_PERMISSION_PLUGIN_KEY = 'ReadSharedCartPermissionPlugin';
+    protected const WRITE_SHARED_CART_PERMISSION_PLUGIN_KEY = 'WriteSharedCartPermissionPlugin';
+
+    protected const WRONG_QUOTE_UUID = 'WRONG_QUOTE_UUID';
+    protected const WRONG_CUSTOMER_REFERENCE = 'WRONG_CUSTOMER_REFERENCE';
+    protected const WRONG_QUOTE_COMPANY_USER_UUID = 'WRONG_QUOTE_COMPANY_USER_UUID';
 
     /**
      * @var \SprykerTest\Zed\SharedCartsRestApi\SharedCartsRestApiFacadeTester
@@ -49,11 +56,20 @@ class SharedCartsRestApiFacadeTest extends Unit
     protected $companyUserTransfer;
 
     /**
+     * @var \Generated\Shared\Transfer\SpyQuotePermissionGroupEntityTransfer
+     */
+    protected $readOnlyQuotePermissionGroup;
+
+    /**
      * @return void
      */
     protected function setUp(): void
     {
         parent::setUp();
+
+        $this->readOnlyQuotePermissionGroup = $this->tester->haveQuotePermissionGroup(static::QUOTE_PERMISSION_GROUP_READ_ONLY, [
+            static::READ_SHARED_CART_PERMISSION_PLUGIN_KEY,
+        ]);
 
         $companyTransfer = $this->tester->haveCompany();
         $ownerCustomerTransfer = $this->tester->haveCustomer();
@@ -76,10 +92,13 @@ class SharedCartsRestApiFacadeTest extends Unit
     public function testCreateShouldCreateQuoteCompanyUser(): void
     {
         //Arrange
-        $quotePermissionGroup = $this->createQuotePermissionTransfer(static::ID_QUOTE_PERMISSION_GROUP_READ);
+        $quotePermissionGroupTransfer = (new QuotePermissionGroupTransfer())->fromArray(
+            $this->readOnlyQuotePermissionGroup->toArray(),
+            true
+        );
         $shareDetailTransfer = (new ShareDetailTransfer())
             ->setIdCompanyUser($this->companyUserTransfer->getIdCompanyUser())
-            ->setQuotePermissionGroup($quotePermissionGroup);
+            ->setQuotePermissionGroup($quotePermissionGroupTransfer);
         $shareCartRequestTransfer = (new ShareCartRequestTransfer())
             ->addShareDetail($shareDetailTransfer)
             ->setQuoteUuid($this->quoteTransfer->getUuid())
@@ -93,8 +112,60 @@ class SharedCartsRestApiFacadeTest extends Unit
         /** @var \Generated\Shared\Transfer\ShareDetailTransfer $shareDetailTransfer */
         $shareDetailTransfer = $shareCartResponseTransfer->getShareDetails()->offsetGet(0);
         $this->assertEquals($shareDetailTransfer->getIdCompanyUser(), $this->companyUserTransfer->getIdCompanyUser());
-        $this->assertEquals(static::ID_QUOTE_PERMISSION_GROUP_READ, $shareDetailTransfer->getQuotePermissionGroup()->getIdQuotePermissionGroup());
+        $this->assertEquals($quotePermissionGroupTransfer->getIdQuotePermissionGroup(), $shareDetailTransfer->getQuotePermissionGroup()->getIdQuotePermissionGroup());
         $this->assertNotNull($shareDetailTransfer->getUuid());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreateShouldReturnErrorIfQuoteNotFound(): void
+    {
+        //Arrange
+        $quotePermissionGroupTransfer = (new QuotePermissionGroupTransfer())->fromArray(
+            $this->readOnlyQuotePermissionGroup->toArray(),
+            true
+        );
+        $shareDetailTransfer = (new ShareDetailTransfer())
+            ->setIdCompanyUser($this->companyUserTransfer->getIdCompanyUser())
+            ->setQuotePermissionGroup($quotePermissionGroupTransfer);
+        $shareCartRequestTransfer = (new ShareCartRequestTransfer())
+            ->addShareDetail($shareDetailTransfer)
+            ->setQuoteUuid(static::WRONG_QUOTE_UUID)
+            ->setCustomerReference($this->quoteTransfer->getCustomerReference());
+
+        //Act
+        $shareCartResponseTransfer = $this->tester->getFacade()->create($shareCartRequestTransfer);
+
+        //Assert
+        $this->assertCount(0, $shareCartResponseTransfer->getShareDetails());
+        $this->assertEquals(SharedCartsRestApiConfig::ERROR_IDENTIFIER_QUOTE_NOT_FOUND, $shareCartResponseTransfer->getErrorIdentifier());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreateShouldReturnErrorIfCustomerDoNotOwnsAQuote(): void
+    {
+        //Arrange
+        $quotePermissionGroupTransfer = (new QuotePermissionGroupTransfer())->fromArray(
+            $this->readOnlyQuotePermissionGroup->toArray(),
+            true
+        );
+        $shareDetailTransfer = (new ShareDetailTransfer())
+            ->setIdCompanyUser($this->companyUserTransfer->getIdCompanyUser())
+            ->setQuotePermissionGroup($quotePermissionGroupTransfer);
+        $shareCartRequestTransfer = (new ShareCartRequestTransfer())
+            ->addShareDetail($shareDetailTransfer)
+            ->setQuoteUuid($this->quoteTransfer->getUuid())
+            ->setCustomerReference(static::WRONG_CUSTOMER_REFERENCE);
+
+        //Act
+        $shareCartResponseTransfer = $this->tester->getFacade()->create($shareCartRequestTransfer);
+
+        //Assert
+        $this->assertCount(0, $shareCartResponseTransfer->getShareDetails());
+        $this->assertEquals(SharedCartsRestApiConfig::ERROR_IDENTIFIER_ACTION_FORBIDDEN, $shareCartResponseTransfer->getErrorIdentifier());
     }
 
     /**
@@ -106,10 +177,17 @@ class SharedCartsRestApiFacadeTest extends Unit
         $quoteCompanyUserTransfer = $this->tester->haveQuoteCompanyUser(
             $this->companyUserTransfer,
             $this->quoteTransfer,
-            (new SpyQuotePermissionGroupEntityTransfer())->setIdQuotePermissionGroup(static::ID_QUOTE_PERMISSION_GROUP_READ)
+            $this->readOnlyQuotePermissionGroup
         );
 
-        $quotePermissionGroupTransfer = $this->createQuotePermissionTransfer(static::ID_QUOTE_PERMISSION_GROUP_FULL_ACCESS);
+        $fullAccessQuotePermissionGroup = $this->tester->haveQuotePermissionGroup(static::QUOTE_PERMISSION_GROUP_FULL_ACCESS, [
+            static::READ_SHARED_CART_PERMISSION_PLUGIN_KEY,
+            static::WRITE_SHARED_CART_PERMISSION_PLUGIN_KEY,
+        ]);
+        $quotePermissionGroupTransfer = (new QuotePermissionGroupTransfer())->fromArray(
+            $fullAccessQuotePermissionGroup->toArray(),
+            true
+        );
         $shareDetailTransfer = (new ShareDetailTransfer())
             ->setQuotePermissionGroup($quotePermissionGroupTransfer)
             ->setUuid($quoteCompanyUserTransfer->getUuid());
@@ -125,8 +203,72 @@ class SharedCartsRestApiFacadeTest extends Unit
         /** @var \Generated\Shared\Transfer\ShareDetailTransfer $shareDetailTransfer */
         $shareDetailTransfer = $shareCartResponseTransfer->getShareDetails()->offsetGet(0);
         $this->assertEquals($shareDetailTransfer->getIdCompanyUser(), $this->companyUserTransfer->getIdCompanyUser());
-        $this->assertEquals(static::ID_QUOTE_PERMISSION_GROUP_FULL_ACCESS, $shareDetailTransfer->getQuotePermissionGroup()->getIdQuotePermissionGroup());
+        $this->assertEquals($quotePermissionGroupTransfer->getIdQuotePermissionGroup(), $shareDetailTransfer->getQuotePermissionGroup()->getIdQuotePermissionGroup());
         $this->assertNotNull($shareDetailTransfer->getUuid());
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateShouldReturnErrorIfQuoteCompanyUserNotFound(): void
+    {
+        //Arrange
+        $fullAccessQuotePermissionGroup = $this->tester->haveQuotePermissionGroup(static::QUOTE_PERMISSION_GROUP_FULL_ACCESS, [
+            static::READ_SHARED_CART_PERMISSION_PLUGIN_KEY,
+            static::WRITE_SHARED_CART_PERMISSION_PLUGIN_KEY,
+        ]);
+        $quotePermissionGroupTransfer = (new QuotePermissionGroupTransfer())->fromArray(
+            $fullAccessQuotePermissionGroup->toArray(),
+            true
+        );
+        $shareDetailTransfer = (new ShareDetailTransfer())
+            ->setQuotePermissionGroup($quotePermissionGroupTransfer)
+            ->setUuid(static::WRONG_QUOTE_COMPANY_USER_UUID);
+        $shareCartRequestTransfer = (new ShareCartRequestTransfer())
+            ->addShareDetail($shareDetailTransfer)
+            ->setCustomerReference($this->quoteTransfer->getCustomerReference());
+
+        //Act
+        $shareCartResponseTransfer = $this->tester->getFacade()->update($shareCartRequestTransfer);
+
+        //Assert
+        $this->assertCount(0, $shareCartResponseTransfer->getShareDetails());
+        $this->assertEquals(SharedCartsRestApiConfig::ERROR_IDENTIFIER_SHARED_CART_NOT_FOUND, $shareCartResponseTransfer->getErrorIdentifier());
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateShouldReturnErrorIfCustomerDoNotOwnsAQuote(): void
+    {
+        //Arrange
+        $quoteCompanyUserTransfer = $this->tester->haveQuoteCompanyUser(
+            $this->companyUserTransfer,
+            $this->quoteTransfer,
+            $this->readOnlyQuotePermissionGroup
+        );
+
+        $fullAccessQuotePermissionGroup = $this->tester->haveQuotePermissionGroup(static::QUOTE_PERMISSION_GROUP_FULL_ACCESS, [
+            static::READ_SHARED_CART_PERMISSION_PLUGIN_KEY,
+            static::WRITE_SHARED_CART_PERMISSION_PLUGIN_KEY,
+        ]);
+        $quotePermissionGroupTransfer = (new QuotePermissionGroupTransfer())->fromArray(
+            $fullAccessQuotePermissionGroup->toArray(),
+            true
+        );
+        $shareDetailTransfer = (new ShareDetailTransfer())
+            ->setQuotePermissionGroup($quotePermissionGroupTransfer)
+            ->setUuid($quoteCompanyUserTransfer->getUuid());
+        $shareCartRequestTransfer = (new ShareCartRequestTransfer())
+            ->addShareDetail($shareDetailTransfer)
+            ->setCustomerReference(static::WRONG_CUSTOMER_REFERENCE);
+
+        //Act
+        $shareCartResponseTransfer = $this->tester->getFacade()->update($shareCartRequestTransfer);
+
+        //Assert
+        $this->assertCount(0, $shareCartResponseTransfer->getShareDetails());
+        $this->assertEquals(SharedCartsRestApiConfig::ERROR_IDENTIFIER_ACTION_FORBIDDEN, $shareCartResponseTransfer->getErrorIdentifier());
     }
 
     /**
@@ -138,7 +280,7 @@ class SharedCartsRestApiFacadeTest extends Unit
         $quoteCompanyUserEntityTransfer = $this->tester->haveQuoteCompanyUser(
             $this->companyUserTransfer,
             $this->quoteTransfer,
-            (new SpyQuotePermissionGroupEntityTransfer())->setIdQuotePermissionGroup(static::ID_QUOTE_PERMISSION_GROUP_READ)
+            $this->readOnlyQuotePermissionGroup
         );
 
         $shareDetailTransfer = (new ShareDetailTransfer())
@@ -159,20 +301,56 @@ class SharedCartsRestApiFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testDeleteShouldReturnErrorIfQuoteCompanyUserNotFound(): void
+    {
+        //Arrange
+        $shareDetailTransfer = (new ShareDetailTransfer())
+            ->setUuid(static::WRONG_QUOTE_COMPANY_USER_UUID);
+        $shareCartRequestTransfer = (new ShareCartRequestTransfer())
+            ->addShareDetail($shareDetailTransfer)
+            ->setCustomerReference($this->quoteTransfer->getCustomerReference());
+
+        //Act
+        $shareCartResponseTransfer = $this->tester->getFacade()->delete($shareCartRequestTransfer);
+
+        //Assert
+        $this->assertCount(0, $shareCartResponseTransfer->getShareDetails());
+        $this->assertEquals(SharedCartsRestApiConfig::ERROR_IDENTIFIER_SHARED_CART_NOT_FOUND, $shareCartResponseTransfer->getErrorIdentifier());
+    }
+
+    /**
+     * @return void
+     */
+    public function testDeleteShouldReturnErrorIfCustomerDoNotOwnsAQuote(): void
+    {
+        //Arrange
+        $quoteCompanyUserEntityTransfer = $this->tester->haveQuoteCompanyUser(
+            $this->companyUserTransfer,
+            $this->quoteTransfer,
+            $this->readOnlyQuotePermissionGroup
+        );
+
+        $shareDetailTransfer = (new ShareDetailTransfer())
+            ->setUuid($quoteCompanyUserEntityTransfer->getUuid());
+        $shareCartRequestTransfer = (new ShareCartRequestTransfer())
+            ->addShareDetail($shareDetailTransfer)
+            ->setCustomerReference(static::WRONG_CUSTOMER_REFERENCE);
+
+        //Act
+        $shareCartResponseTransfer = $this->tester->getFacade()->delete($shareCartRequestTransfer);
+
+        //Assert
+        $this->assertCount(0, $shareCartResponseTransfer->getShareDetails());
+        $this->assertEquals(SharedCartsRestApiConfig::ERROR_IDENTIFIER_ACTION_FORBIDDEN, $shareCartResponseTransfer->getErrorIdentifier());
+    }
+
+    /**
      * @return \Spryker\Zed\SharedCart\Business\SharedCartFacadeInterface
      */
     protected function getSharedCartFacade(): SharedCartFacadeInterface
     {
         return $this->tester->getLocator()->sharedCart()->facade();
-    }
-
-    /**
-     * @param int $idQuotePermissionGroup
-     *
-     * @return \Generated\Shared\Transfer\QuotePermissionGroupTransfer
-     */
-    protected function createQuotePermissionTransfer(int $idQuotePermissionGroup): QuotePermissionGroupTransfer
-    {
-        return (new QuotePermissionGroupTransfer())->setIdQuotePermissionGroup($idQuotePermissionGroup);
     }
 }

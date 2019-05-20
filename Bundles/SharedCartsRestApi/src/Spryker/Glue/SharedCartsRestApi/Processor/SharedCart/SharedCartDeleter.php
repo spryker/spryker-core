@@ -13,8 +13,6 @@ use Spryker\Client\SharedCartsRestApi\SharedCartsRestApiClientInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\SharedCartsRestApi\Processor\RestResponseBuilder\SharedCartRestResponseBuilderInterface;
-use Spryker\Glue\SharedCartsRestApi\SharedCartsRestApiConfig;
-use Symfony\Component\HttpFoundation\Response;
 
 class SharedCartDeleter implements SharedCartDeleterInterface
 {
@@ -49,11 +47,7 @@ class SharedCartDeleter implements SharedCartDeleterInterface
     {
         $shareCartUuid = $restRequest->getResource()->getId();
         if (!$shareCartUuid) {
-            return $this->sharedCartRestResponseBuilder->createRestErrorResponse(
-                Response::HTTP_BAD_REQUEST,
-                SharedCartsRestApiConfig::RESPONSE_CODE_SHARE_CART_ID_MISSING,
-                SharedCartsRestApiConfig::RESPONSE_DETAIL_SHARE_CART_ID_MISSING
-            );
+            return $this->sharedCartRestResponseBuilder->createSharedCartIdMissingErrorResponse();
         }
 
         $shareCartRequestTransfer = $this->createShareCartRequestTransfer(

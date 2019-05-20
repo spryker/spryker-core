@@ -9,7 +9,6 @@ namespace Spryker\Zed\SharedCartsRestApi\Persistence;
 
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\SharedCartsRestApi\Persistence\Mapper\SharedCartsRestApiMapper;
-use Spryker\Zed\SharedCartsRestApi\Persistence\Mapper\SharedCartsRestApiMapperInterface;
 
 /**
  * @method \Spryker\Zed\SharedCartsRestApi\Persistence\SharedCartsRestApiEntityManagerInterface getEntityManager()
@@ -18,9 +17,9 @@ use Spryker\Zed\SharedCartsRestApi\Persistence\Mapper\SharedCartsRestApiMapperIn
 class SharedCartsRestApiPersistenceFactory extends AbstractPersistenceFactory
 {
     /**
-     * @return \Spryker\Zed\SharedCartsRestApi\Persistence\Mapper\SharedCartsRestApiMapperInterface
+     * @return \Spryker\Zed\SharedCartsRestApi\Persistence\Mapper\SharedCartsRestApiMapper
      */
-    public function createSharedCartRestApiMapper(): SharedCartsRestApiMapperInterface
+    public function createSharedCartRestApiMapper(): SharedCartsRestApiMapper
     {
         return new SharedCartsRestApiMapper();
     }
