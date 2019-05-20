@@ -52,18 +52,20 @@ interface StoragePluginInterface
      * Specification:
      * - Deletes multiple values at a time.
      * - Accepts an array of keys for values to be deleted.
+     * - Returns the number of entries that were deleted.
      *
      * @api
      *
      * @param array $keys
      *
-     * @return void
+     * @return int
      */
-    public function deleteMulti(array $keys): void;
+    public function deleteMulti(array $keys): int;
 
     /**
      * Specification:
      * - Deletes all values.
+     * - Returns the number of entries that were deleted.
      *
      * @api
      *

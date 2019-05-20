@@ -257,12 +257,12 @@ class StorageRedisWrapper implements StorageRedisWrapperInterface
     /**
      * @param array $keys
      *
-     * @return void
+     * @return int
      */
-    public function deleteMulti(array $keys): void
+    public function deleteMulti(array $keys): int
     {
         if (count($keys) === 0) {
-            return;
+            return 0;
         }
 
         $transformedKeys = [];
@@ -270,8 +270,10 @@ class StorageRedisWrapper implements StorageRedisWrapperInterface
             $transformedKeys[] = $this->getKeyName($key);
         }
 
-        $this->redisClient->del($this->connectionKey, $transformedKeys);
+        $result = $this->redisClient->del($this->connectionKey, $transformedKeys);
         $this->addMultiDeleteAccessStats($transformedKeys);
+
+        return $result;
     }
 
     /**
