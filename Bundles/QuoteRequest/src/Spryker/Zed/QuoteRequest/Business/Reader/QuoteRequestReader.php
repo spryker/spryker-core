@@ -138,7 +138,7 @@ class QuoteRequestReader implements QuoteRequestReaderInterface
 
             $quoteRequestTransfer->setLatestVersion($quoteRequestVersionTransfers->offsetGet(0));
 
-            if ($quoteRequestTransfer->getIsLatestVersionHidden()) {
+            if (!$quoteRequestTransfer->getIsLatestVersionVisible()) {
                 if ($quoteRequestVersionTransfers->offsetExists(1)) {
                     $quoteRequestTransfer->setLatestVisibleVersion($quoteRequestVersionTransfers->offsetGet(1));
                 }

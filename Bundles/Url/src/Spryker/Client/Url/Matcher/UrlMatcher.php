@@ -82,6 +82,7 @@ class UrlMatcher implements UrlMatcherInterface
     {
         $url = rawurldecode($url);
         $urlKey = $this->urlKeyBuilder->generateKey($url, $localeName);
+
         return $this->storageClient->get($urlKey);
     }
 }

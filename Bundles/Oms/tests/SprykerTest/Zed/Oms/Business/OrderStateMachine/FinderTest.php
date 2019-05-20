@@ -155,6 +155,7 @@ class FinderTest extends Unit
         $omsOrderItemStateEntity = new SpyOmsOrderItemState();
         $omsOrderItemStateEntity->setName('new');
         $salesOrderItemEntity->setState($omsOrderItemStateEntity);
+
         return $salesOrderItemEntity;
     }
 }

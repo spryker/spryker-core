@@ -504,6 +504,7 @@ class ShipmentFacadeTest extends Test
                 ],
             ],
         ];
+
         return $priceList;
     }
 }

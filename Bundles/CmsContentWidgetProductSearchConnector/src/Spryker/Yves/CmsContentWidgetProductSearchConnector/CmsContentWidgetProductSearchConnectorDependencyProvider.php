@@ -45,6 +45,7 @@ class CmsContentWidgetProductSearchConnectorDependencyProvider extends AbstractB
                 $container->getLocator()->product()->client()
             );
         };
+
         return $container;
     }
 
@@ -60,6 +61,7 @@ class CmsContentWidgetProductSearchConnectorDependencyProvider extends AbstractB
                 $container->getLocator()->search()->client()
             );
         };
+
         return $container;
     }
 }

@@ -193,6 +193,7 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
         $query = $this->getFactory()->createTouchSearchQuery();
         if (is_array($touchIds)) {
             $query->filterByFkTouch($touchIds, Criteria::IN);
+
             return $query;
         }
 
@@ -213,6 +214,7 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
         $query = $this->getFactory()->createTouchStorageQuery();
         if (is_array($touchIds)) {
             $query->filterByFkTouch($touchIds, Criteria::IN);
+
             return $query;
         }
 
