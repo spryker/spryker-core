@@ -10,10 +10,27 @@ namespace Spryker\Zed\GiftCard\Business\Shipment;
 use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Zed\GiftCard\GiftCardConfig;
 
 class ShipmentMethodFilter implements ShipmentMethodFilterInterface
 {
+    /**
+     * @deprecated Use GiftCardConfig::getGiftCardOnlyShipmentMethods() instead.
+     */
     public const NO_SHIPMENT_METHOD = 'No shipment';
+
+    /**
+     * @var \Spryker\Zed\GiftCard\GiftCardConfig
+     */
+    protected $giftCardConfig;
+
+    /**
+     * @param \Spryker\Zed\GiftCard\GiftCardConfig $giftCardConfig
+     */
+    public function __construct(GiftCardConfig $giftCardConfig)
+    {
+        $this->giftCardConfig = $giftCardConfig;
+    }
 
     /**
      * @param \ArrayObject|\Generated\Shared\Transfer\ShipmentMethodTransfer[] $shipmentMethods
@@ -24,10 +41,10 @@ class ShipmentMethodFilter implements ShipmentMethodFilterInterface
     public function filterShipmentMethods(ArrayObject $shipmentMethods, QuoteTransfer $quoteTransfer)
     {
         if ($this->containsOnlyGiftCardItems($quoteTransfer)) {
-            return $this->allowOnlyNoShipment($shipmentMethods);
+            return $this->allowGiftCardOnlyShipmentMethods($shipmentMethods);
         }
 
-        return $this->disallowNoShipment($shipmentMethods);
+        return $this->disallowGiftCardOnlyShipmentMethods($shipmentMethods);
     }
 
     /**
@@ -67,11 +84,12 @@ class ShipmentMethodFilter implements ShipmentMethodFilterInterface
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentMethodTransfer[] $shipmentMethods
      */
-    protected function allowOnlyNoShipment(ArrayObject $shipmentMethods)
+    protected function allowGiftCardOnlyShipmentMethods(ArrayObject $shipmentMethods): ArrayObject
     {
         $result = new ArrayObject();
+        $giftCardOnlyShipmentMethods = $this->getGiftCardOnlyShipmentMethods();
         foreach ($shipmentMethods as $shipmentMethod) {
-            if ($shipmentMethod->getName() === static::NO_SHIPMENT_METHOD) {
+            if (in_array($shipmentMethod->getName(), $giftCardOnlyShipmentMethods)) {
                 $result[] = $shipmentMethod;
             }
         }
@@ -84,15 +102,32 @@ class ShipmentMethodFilter implements ShipmentMethodFilterInterface
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentMethodTransfer[] $shipmentMethods
      */
-    protected function disallowNoShipment(ArrayObject $shipmentMethods)
+    protected function disallowGiftCardOnlyShipmentMethods(ArrayObject $shipmentMethods): ArrayObject
     {
         $result = new ArrayObject();
+        $giftCardOnlyShipmentMethods = $this->getGiftCardOnlyShipmentMethods();
         foreach ($shipmentMethods as $shipmentMethod) {
-            if ($shipmentMethod->getName() !== static::NO_SHIPMENT_METHOD) {
+            if (!in_array($shipmentMethod->getName(), $giftCardOnlyShipmentMethods)) {
                 $result[] = $shipmentMethod;
             }
         }
 
         return $result;
+    }
+
+    /**
+     * @deprecated Added for BC reasons, will be removed in next major release. Use GiftCardConfig::getGiftCardOnlyShipmentMethods() instead.
+     *
+     * @return array
+     */
+    protected function getGiftCardOnlyShipmentMethods(): array
+    {
+        $giftCardOnlyShipmentMethods = $this->giftCardConfig->getGiftCardOnlyShipmentMethods();
+
+        if ($giftCardOnlyShipmentMethods) {
+            return $giftCardOnlyShipmentMethods;
+        }
+
+        return [static::NO_SHIPMENT_METHOD];
     }
 }

@@ -11,7 +11,7 @@ use ArrayObject;
 use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\StoreWithCurrencyTransfer;
 use Spryker\Zed\Currency\Business\Model\Exception\CurrencyNotFoundException;
-use Spryker\Zed\Currency\Dependency\Facade\CurrencyToStoreInterface;
+use Spryker\Zed\Currency\Dependency\Facade\CurrencyToStoreFacadeInterface;
 use Spryker\Zed\Currency\Persistence\CurrencyQueryContainerInterface;
 
 class CurrencyReader implements CurrencyReaderInterface
@@ -27,7 +27,7 @@ class CurrencyReader implements CurrencyReaderInterface
     protected $currencyMapper;
 
     /**
-     * @var \Spryker\Zed\Currency\Dependency\Facade\CurrencyToStoreInterface
+     * @var \Spryker\Zed\Currency\Dependency\Facade\CurrencyToStoreFacadeInterface
      */
     protected $storeFacade;
 
@@ -39,12 +39,12 @@ class CurrencyReader implements CurrencyReaderInterface
     /**
      * @param \Spryker\Zed\Currency\Persistence\CurrencyQueryContainerInterface $currencyQueryContainer
      * @param \Spryker\Zed\Currency\Business\Model\CurrencyMapperInterface $currencyMapper
-     * @param \Spryker\Zed\Currency\Dependency\Facade\CurrencyToStoreInterface $storeFacade
+     * @param \Spryker\Zed\Currency\Dependency\Facade\CurrencyToStoreFacadeInterface $storeFacade
      */
     public function __construct(
         CurrencyQueryContainerInterface $currencyQueryContainer,
         CurrencyMapperInterface $currencyMapper,
-        CurrencyToStoreInterface $storeFacade
+        CurrencyToStoreFacadeInterface $storeFacade
     ) {
 
         $this->currencyQueryContainer = $currencyQueryContainer;
@@ -172,6 +172,7 @@ class CurrencyReader implements CurrencyReaderInterface
         foreach ($currencyCollection as $currencyEntity) {
             $currencies[] = $this->currencyMapper->mapEntityToTransfer($currencyEntity);
         }
+
         return $currencies;
     }
 
@@ -187,6 +188,7 @@ class CurrencyReader implements CurrencyReaderInterface
         $storeWithCurrencyTransfer->setCurrencies(
             new ArrayObject($this->getCurrenciesByIsoCodes($storeTransfer))
         );
+
         return $storeWithCurrencyTransfer;
     }
 }

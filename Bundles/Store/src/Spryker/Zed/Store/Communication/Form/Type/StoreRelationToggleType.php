@@ -21,6 +21,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * @method \Spryker\Zed\Store\Communication\StoreCommunicationFactory getFactory()
  * @method \Spryker\Zed\Store\StoreConfig getConfig()
  * @method \Spryker\Zed\Store\Persistence\StoreQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Store\Persistence\StoreRepositoryInterface getRepository()
  */
 class StoreRelationToggleType extends AbstractType
 {

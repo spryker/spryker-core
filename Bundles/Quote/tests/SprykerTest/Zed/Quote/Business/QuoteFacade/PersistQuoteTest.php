@@ -30,6 +30,9 @@ use Spryker\Zed\Quote\Business\QuoteFacade;
  */
 class PersistQuoteTest extends Unit
 {
+    protected const ERROR_MESSAGE_STORE_DATA_IS_MISSING = 'quote.validation.error.store_is_missing';
+    protected const WRONG_STORE_NAME = 'WRONGSTORENAME';
+
     /**
      * @var \SprykerTest\Zed\Quote\QuoteBusinessTester
      */
@@ -98,6 +101,65 @@ class PersistQuoteTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testPersistQuoteWithValidationEmptyStore(): void
+    {
+        $quoteTransfer = new QuoteTransfer();
+
+        // Act
+        $quoteResponseTransfer = $this->quoteFacade->createQuote($quoteTransfer);
+
+        $this->assertFalse($quoteResponseTransfer->getIsSuccessful());
+
+        $errors = array_map(function ($errorMessageTransfer) {
+            return $errorMessageTransfer->getValue();
+        }, (array)$quoteResponseTransfer->getErrors());
+
+        $this->assertContains(static::ERROR_MESSAGE_STORE_DATA_IS_MISSING, $errors);
+    }
+
+    /**
+     * @return void
+     */
+    public function testPersistQuoteWithValidationEmptyStoreName(): void
+    {
+        $quoteTransfer = new QuoteTransfer();
+        $storeTransfer = new StoreTransfer();
+
+        $quoteTransfer
+            ->setStore($storeTransfer);
+
+        // Act
+        $quoteResponseTransfer = $this->quoteFacade->createQuote($quoteTransfer);
+
+        $this->assertFalse($quoteResponseTransfer->getIsSuccessful());
+
+        $errors = array_map(function ($errorMessageTransfer) {
+            return $errorMessageTransfer->getValue();
+        }, (array)$quoteResponseTransfer->getErrors());
+
+        $this->assertContains(static::ERROR_MESSAGE_STORE_DATA_IS_MISSING, $errors);
+    }
+
+    /**
+     * @return void
+     */
+    public function testPersistQuoteWithValidationWrongStoreName(): void
+    {
+        $quoteTransfer = new QuoteTransfer();
+        $storeTransfer = (new StoreTransfer())
+            ->setName(static::WRONG_STORE_NAME);
+
+        $quoteTransfer
+            ->setStore($storeTransfer);
+
+        // Act
+        $quoteResponseTransfer = $this->quoteFacade->createQuote($quoteTransfer);
+        $this->assertFalse($quoteResponseTransfer->getIsSuccessful());
+    }
+
+    /**
      * @return array
      */
     public function persistQuoteDataProvider()
@@ -124,6 +186,7 @@ class PersistQuoteTest extends Unit
      */
     protected function providePersistFilteredQuoteData()
     {
+        /** @var \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer */
         $quoteTransfer = (new QuoteBuilder())->build();
         $expectedQuoteTransfer = clone $quoteTransfer;
 

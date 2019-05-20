@@ -7,10 +7,13 @@
 
 namespace Spryker\Glue\CartsRestApi\Processor\Mapper;
 
+use Generated\Shared\Transfer\CurrencyTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCartsAttributesTransfer;
 use Generated\Shared\Transfer\RestCartsDiscountsTransfer;
 use Generated\Shared\Transfer\RestCartsTotalsTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
@@ -83,6 +86,28 @@ class CartsResourceMapper implements CartsResourceMapperInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\RestCartsAttributesTransfer $restCartsAttributesTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function mapRestCartsAttributesTransferToQuoteTransfer(
+        RestCartsAttributesTransfer $restCartsAttributesTransfer,
+        QuoteTransfer $quoteTransfer
+    ): QuoteTransfer {
+        $currencyTransfer = (new CurrencyTransfer())->setCode($restCartsAttributesTransfer->getCurrency());
+        $customerTransfer = (new CustomerTransfer())->setCustomerReference($quoteTransfer->getCustomerReference());
+        $storeTransfer = (new StoreTransfer())->setName($restCartsAttributesTransfer->getStore());
+
+        return (new QuoteTransfer())
+            ->fromArray($restCartsAttributesTransfer->toArray(), true)
+            ->setCurrency($currencyTransfer)
+            ->setCustomer($customerTransfer)
+            ->setPriceMode($restCartsAttributesTransfer->getPriceMode())
+            ->setStore($storeTransfer);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $cartResource
      *
@@ -136,6 +161,7 @@ class CartsResourceMapper implements CartsResourceMapperInterface
     {
         if ($quoteTransfer->getTotals() === null) {
             $restCartsAttributesTransfer->setTotals(new RestCartsTotalsTransfer());
+
             return;
         }
 

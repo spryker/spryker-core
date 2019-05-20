@@ -257,6 +257,7 @@ class ZedControllerTable extends Module implements DependsOnModule
     {
         if (!isset($this->currentData['data'])) {
             $this->assertTrue(true);
+
             return;
         }
         $rowNum = count($this->currentData['data']) - 1;

@@ -17,6 +17,7 @@ use Spryker\Zed\Store\StoreDependencyProvider;
 
 /**
  * @method \Spryker\Zed\Store\StoreConfig getConfig()
+ * @method \Spryker\Zed\Store\Persistence\StoreRepositoryInterface getRepository()
  * @method \Spryker\Zed\Store\Persistence\StoreQueryContainerInterface getQueryContainer()
  */
 class StoreBusinessFactory extends AbstractBusinessFactory
@@ -29,6 +30,7 @@ class StoreBusinessFactory extends AbstractBusinessFactory
         return new StoreReader(
             $this->getSharedStore(),
             $this->getQueryContainer(),
+            $this->getRepository(),
             $this->createStoreMapper()
         );
     }

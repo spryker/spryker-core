@@ -77,6 +77,7 @@ class FilterPreferencesController extends AbstractController
             $productSearchAttributeTransfer = $this->getFacade()->createProductSearchAttribute($productSearchAttributeTransfer);
 
             $this->addSuccessMessage(static::MESSAGE_FILTER_PREFERENCE_CREATE_SUCCESS);
+
             return $this->redirectResponse(sprintf(
                 '/product-search/filter-preferences/view?%s=%d',
                 static::PARAM_ID,
@@ -127,6 +128,7 @@ class FilterPreferencesController extends AbstractController
             $productSearchAttributeTransfer = $this->getFacade()->updateProductSearchAttribute($productSearchAttributeTransfer);
 
             $this->addSuccessMessage(static::MESSAGE_FILTER_PREFERENCE_UPDATE_SUCCESS);
+
             return $this->redirectResponse(sprintf(
                 '/product-search/filter-preferences/view?%s=%d',
                 static::PARAM_ID,
