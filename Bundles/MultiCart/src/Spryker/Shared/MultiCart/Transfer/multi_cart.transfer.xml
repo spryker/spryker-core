@@ -16,11 +16,6 @@
         <property name="isSuccessful" type="bool" />
         <property name="customerQuotes" type="QuoteCollection"/>
         <property name="customer" type="Customer" />
-        <property name="errors" type="QuoteError[]" />
-    </transfer>
-
-    <transfer name="QuoteError">
-        <property name="message" type="string" />
     </transfer>
 
     <transfer name="QuoteCollection">
@@ -54,26 +49,6 @@
     <transfer name="Filter">
         <property name="orderBy" type="string"/>
         <property name="orderDirection" type="string"/>
-    </transfer>
-
-    <transfer name="ResourceShare">
-        <property name="resourceType" type="string" />
-        <property name="resourceShareData" type="ResourceShareData" />
-    </transfer>
-
-    <transfer name="ResourceShareData">
-        <property name="idQuote" type="int" />
-        <property name="shareOption" type="string" />
-    </transfer>
-
-    <transfer name="ResourceShareResponse">
-        <property name="isSuccessful" type="bool" />
-        <property name="resourceShare" type="ResourceShare" />
-        <property name="messages" type="Message[]" />
-    </transfer>
-
-    <transfer name="Message">
-        <property name="value" type="string" />
     </transfer>
 
 </transfers>

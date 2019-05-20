@@ -11,8 +11,6 @@ use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\ResourceShareRequestTransfer;
-use Generated\Shared\Transfer\ResourceShareResponseTransfer;
 
 interface MultiCartClientInterface
 {
@@ -172,18 +170,4 @@ interface MultiCartClientInterface
      * @return bool
      */
     public function isQuoteDeletable(): bool;
-
-    /**
-     * Specification:
-     * - Switches default cart for provided Quote and company user.
-     * - Returns 'isSuccessful=true' with ResourceShareTransfer if cart was switched successfully.
-     * - Returns 'isSuccessful=false' with error messages otherwise.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
-     */
-    public function applySwitchDefaultCartResourceShareActivatorStrategy(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer;
 }

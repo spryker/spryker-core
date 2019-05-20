@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\MultiCart\ResourceShare;
+namespace Spryker\Client\SharedCart\ResourceShare;
 
 use ArrayObject;
 use Generated\Shared\Transfer\MessageTransfer;
@@ -13,21 +13,21 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
 use Generated\Shared\Transfer\ResourceShareTransfer;
-use Spryker\Client\MultiCart\CartOperation\CartUpdaterInterface;
+use Spryker\Client\SharedCart\Dependency\Client\SharedCartToMultiCartClientInterface;
 
 class SwitchDefaultCartResourceShareActivatorStrategy implements SwitchDefaultCartResourceShareActivatorStrategyInterface
 {
     /**
-     * @var \Spryker\Client\MultiCart\CartOperation\CartUpdaterInterface
+     * @var \Spryker\Client\SharedCart\Dependency\Client\SharedCartToMultiCartClientInterface
      */
-    protected $cartUpdater;
+    protected $multiCartClient;
 
     /**
-     * @param \Spryker\Client\MultiCart\CartOperation\CartUpdaterInterface $cartUpdater
+     * @param \Spryker\Client\SharedCart\Dependency\Client\SharedCartToMultiCartClientInterface $multiCartClient
      */
-    public function __construct(CartUpdaterInterface $cartUpdater)
+    public function __construct(SharedCartToMultiCartClientInterface $multiCartClient)
     {
-        $this->cartUpdater = $cartUpdater;
+        $this->multiCartClient = $multiCartClient;
     }
 
     /**
@@ -58,7 +58,7 @@ class SwitchDefaultCartResourceShareActivatorStrategy implements SwitchDefaultCa
         QuoteTransfer $quoteTransfer,
         ResourceShareTransfer $resourceShareTransfer
     ): ResourceShareResponseTransfer {
-        $quoteResponseTransfer = $this->cartUpdater->setDefaultQuote($quoteTransfer);
+        $quoteResponseTransfer = $this->multiCartClient->setDefaultQuote($quoteTransfer);
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return (new ResourceShareResponseTransfer())

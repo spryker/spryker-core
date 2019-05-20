@@ -71,7 +71,7 @@ class SharedCartByUuidActivatorStrategyPlugin extends AbstractPlugin implements 
 
         $resourceShareTransfer = $resourceShareRequestTransfer->getResourceShare();
         $resourceShareTransfer->requireResourceType();
-        if ($resourceShareTransfer->getResourceType() !== SharedCartConfig::QUOTE_RESOURCE_TYPE) {
+        if ($resourceShareTransfer->getResourceType() !== SharedCartConfig::RESOURCE_TYPE_QUOTE) {
             return false;
         }
 

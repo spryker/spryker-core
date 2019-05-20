@@ -11,8 +11,6 @@ use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\ResourceShareRequestTransfer;
-use Generated\Shared\Transfer\ResourceShareResponseTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 use Spryker\Shared\Quote\QuoteConfig;
 
@@ -221,21 +219,5 @@ class MultiCartClient extends AbstractClient implements MultiCartClientInterface
         return $this->getFactory()
             ->createCartDeleteChecker()
             ->isQuoteDeletable();
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
-     */
-    public function applySwitchDefaultCartResourceShareActivatorStrategy(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer
-    {
-        return $this->getFactory()
-            ->createSwitchDefaultCartResourceShareActivatorStrategy()
-            ->applySwitchDefaultCartResourceShareActivatorStrategy($resourceShareRequestTransfer);
     }
 }

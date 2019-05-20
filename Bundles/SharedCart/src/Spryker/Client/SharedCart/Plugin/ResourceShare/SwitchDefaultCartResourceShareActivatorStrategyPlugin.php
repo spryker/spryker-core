@@ -5,33 +5,19 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\MultiCart\Plugin\ResourceShare;
+namespace Spryker\Client\SharedCart\Plugin\ResourceShare;
 
 use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\ResourceShareExtension\Dependency\Plugin\ResourceShareActivatorStrategyPluginInterface;
+use Spryker\Shared\SharedCart\SharedCartConfig;
 
 /**
- * @method \Spryker\Client\MultiCart\MultiCartClientInterface getClient()
+ * @method \Spryker\Client\SharedCart\SharedCartClientInterface getClient()
  */
 class SwitchDefaultCartResourceShareActivatorStrategyPlugin extends AbstractPlugin implements ResourceShareActivatorStrategyPluginInterface
 {
-    /**
-     * @uses \Spryker\Zed\PersistentCartShare\PersistentCartShareConfig::RESOURCE_TYPE_QUOTE
-     */
-    protected const RESOURCE_TYPE_QUOTE = 'quote';
-
-    /**
-     * @uses \Spryker\Shared\SharedCart\SharedCartConfig::PERMISSION_GROUP_READ_ONLY
-     */
-    protected const PERMISSION_GROUP_READ_ONLY = 'READ_ONLY';
-
-    /**
-     * @uses \Spryker\Shared\SharedCart\SharedCartConfig::PERMISSION_GROUP_FULL_ACCESS
-     */
-    protected const PERMISSION_GROUP_FULL_ACCESS = 'FULL_ACCESS';
-
     /**
      * {@inheritdoc}
      * - Switches default cart for provided Quote and company user.
@@ -82,13 +68,13 @@ class SwitchDefaultCartResourceShareActivatorStrategyPlugin extends AbstractPlug
 
         $resourceShareTransfer = $resourceShareRequestTransfer->getResourceShare();
         $resourceShareTransfer->requireResourceType();
-        if ($resourceShareTransfer->getResourceType() !== static::RESOURCE_TYPE_QUOTE) {
+        if ($resourceShareTransfer->getResourceType() !== SharedCartConfig::RESOURCE_TYPE_QUOTE) {
             return false;
         }
 
         $resourceShareTransfer->requireResourceShareData();
         $resourceShareDataTransfer = $resourceShareTransfer->getResourceShareData();
 
-        return in_array($resourceShareDataTransfer->getShareOption(), [static::PERMISSION_GROUP_READ_ONLY, static::PERMISSION_GROUP_FULL_ACCESS], true);
+        return in_array($resourceShareDataTransfer->getShareOption(), [SharedCartConfig::PERMISSION_GROUP_READ_ONLY, SharedCartConfig::PERMISSION_GROUP_FULL_ACCESS], true);
     }
 }
