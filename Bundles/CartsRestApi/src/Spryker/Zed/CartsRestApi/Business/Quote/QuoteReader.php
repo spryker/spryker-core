@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\CartsRestApi\Business\Quote;
 
+use Generated\Shared\Transfer\CompanyUserTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteErrorTransfer;
@@ -35,18 +37,26 @@ class QuoteReader implements QuoteReaderInterface
     protected $quoteMapper;
 
     /**
+     * @var \Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionExpanderPluginInterface[]
+     */
+    protected $quoteCollectionExpanderPlugins;
+
+    /**
      * @param \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToQuoteFacadeInterface $quoteFacade
      * @param \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\CartsRestApi\Business\Quote\Mapper\QuoteMapperInterface $quoteMapper
+     * @param \Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionExpanderPluginInterface[] $quoteCollectionExpanderPlugins
      */
     public function __construct(
         CartsRestApiToQuoteFacadeInterface $quoteFacade,
         CartsRestApiToStoreFacadeInterface $storeFacade,
-        QuoteMapperInterface $quoteMapper
+        QuoteMapperInterface $quoteMapper,
+        array $quoteCollectionExpanderPlugins
     ) {
         $this->quoteFacade = $quoteFacade;
         $this->storeFacade = $storeFacade;
         $this->quoteMapper = $quoteMapper;
+        $this->quoteCollectionExpanderPlugins = $quoteCollectionExpanderPlugins;
     }
 
     /**
@@ -80,6 +90,17 @@ class QuoteReader implements QuoteReaderInterface
         $storeTransfer = $this->storeFacade->getCurrentStore();
         $quoteCriteriaFilterTransfer->setIdStore($storeTransfer->getIdStore());
 
-        return $this->quoteFacade->getQuoteCollection($quoteCriteriaFilterTransfer);
+        $quoteCollectionTransfer = $this->quoteFacade->getQuoteCollection($quoteCriteriaFilterTransfer);
+
+        foreach ($this->quoteCollectionExpanderPlugins as $quoteCollectionExpanderPlugin) {
+            $quoteCollectionTransfer = $quoteCollectionExpanderPlugin->expandQuoteCollection(
+                (new CustomerTransfer())->setCompanyUserTransfer(
+                    (new CompanyUserTransfer())->setIdCompanyUser($quoteCriteriaFilterTransfer->getIdCompanyUser())
+                ),
+                $quoteCollectionTransfer
+            );
+        }
+
+        return $quoteCollectionTransfer;
     }
 }
