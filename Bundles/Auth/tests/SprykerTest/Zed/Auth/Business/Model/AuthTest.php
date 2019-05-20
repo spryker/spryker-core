@@ -15,6 +15,7 @@ use Spryker\Zed\Auth\AuthConfig;
 use Spryker\Zed\Auth\Business\Client\StaticToken;
 use Spryker\Zed\Auth\Business\Model\Auth;
 use Spryker\Zed\Auth\Dependency\Facade\AuthToUserBridge;
+use Spryker\Zed\Auth\Dependency\Facade\AuthToUserInterface;
 use Spryker\Zed\User\Business\UserFacade;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
@@ -56,7 +57,7 @@ class AuthTest extends Unit
             ->method('isValidPassword')
             ->will($this->returnValue(true));
 
-        $authModel = $this->prepareSessionRegeneration($userFacade);
+        $authModel = $this->getAuthModelMockWithMigrateCallExpectation($userFacade);
         $result = $authModel->authenticate(static::USERNAME, 'test');
         $this->assertTrue($result);
     }
@@ -70,7 +71,7 @@ class AuthTest extends Unit
         $facadeUser
             ->method('getCurrentUser')
             ->willReturn($this->createUserTransfer(static::USERNAME));
-        $authModel = $this->prepareSessionRegeneration($facadeUser);
+        $authModel = $this->getAuthModelMockWithMigrateCallExpectation($facadeUser);
         $authModel->logout();
     }
 
@@ -204,11 +205,11 @@ class AuthTest extends Unit
     }
 
     /**
-     * @param \Spryker\Zed\Auth\Dependency\Facade\AuthToUserBridge $userFacade
+     * @param \Spryker\Zed\Auth\Dependency\Facade\AuthToUserInterface $userFacade
      *
      * @return \Spryker\Zed\Auth\Business\Model\Auth
      */
-    protected function prepareSessionRegeneration($userFacade)
+    protected function getAuthModelMockWithMigrateCallExpectation(AuthToUserInterface $userFacade): Auth
     {
         $sessionClient = $this->createSessionClient();
         $authModel = new Auth(
