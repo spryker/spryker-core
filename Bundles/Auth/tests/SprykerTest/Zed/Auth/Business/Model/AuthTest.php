@@ -14,6 +14,7 @@ use Spryker\Client\Session\SessionClient;
 use Spryker\Zed\Auth\AuthConfig;
 use Spryker\Zed\Auth\Business\Client\StaticToken;
 use Spryker\Zed\Auth\Business\Model\Auth;
+use Spryker\Zed\Auth\Business\Model\AuthInterface;
 use Spryker\Zed\Auth\Dependency\Facade\AuthToUserBridge;
 use Spryker\Zed\Auth\Dependency\Facade\AuthToUserInterface;
 use Spryker\Zed\User\Business\UserFacade;
@@ -207,9 +208,9 @@ class AuthTest extends Unit
     /**
      * @param \Spryker\Zed\Auth\Dependency\Facade\AuthToUserInterface $userFacade
      *
-     * @return \Spryker\Zed\Auth\Business\Model\Auth
+     * @return \Spryker\Zed\Auth\Business\Model\AuthInterface
      */
-    protected function getAuthModelMockWithMigrateCallExpectation(AuthToUserInterface $userFacade): Auth
+    protected function getAuthModelMockWithMigrateCallExpectation(AuthToUserInterface $userFacade): AuthInterface
     {
         $sessionClient = $this->createSessionClient();
         $authModel = new Auth(
