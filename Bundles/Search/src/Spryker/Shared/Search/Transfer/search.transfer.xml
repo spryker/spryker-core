@@ -133,4 +133,12 @@
         <property name="index" type="string"/>
     </transfer>
 
+    <transfer name="DefinitionValidationResult">
+        <property name="errors" type="DefinitionError[]" singular="error"/>
+    </transfer>
+
+    <transfer name="DefinitionError">
+        <property name="message" type="string"/>
+    </transfer>
+
 </transfers>
