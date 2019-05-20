@@ -65,11 +65,11 @@ class StorageRedisClient extends AbstractClient implements StorageRedisClientInt
      *
      * @param array $keys
      *
-     * @return void
+     * @return int
      */
-    public function deleteMulti(array $keys): void
+    public function deleteMulti(array $keys): int
     {
-        $this->getFactory()->createStorageRedisWrapper()->deleteMulti($keys);
+        return $this->getFactory()->createStorageRedisWrapper()->deleteMulti($keys);
     }
 
     /**

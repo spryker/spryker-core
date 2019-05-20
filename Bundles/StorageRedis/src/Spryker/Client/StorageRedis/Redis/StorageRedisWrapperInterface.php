@@ -37,9 +37,9 @@ interface StorageRedisWrapperInterface
     /**
      * @param array $keys
      *
-     * @return void
+     * @return int
      */
-    public function deleteMulti(array $keys): void;
+    public function deleteMulti(array $keys): int;
 
     /**
      * @return int

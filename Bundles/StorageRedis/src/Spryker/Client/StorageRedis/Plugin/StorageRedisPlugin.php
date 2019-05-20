@@ -13,7 +13,7 @@ use Spryker\Client\StorageExtension\Dependency\Plugin\StoragePluginInterface;
 /**
  * @method \Spryker\Client\StorageRedis\StorageRedisFactory getFactory()
  * @method \Spryker\Client\StorageRedis\StorageRedisConfig getConfig()
- * @method \Spryker\Client\StorageRedis\StorageRedisClient getClient()
+ * @method \Spryker\Client\StorageRedis\StorageRedisClientInterface getClient()
  */
 class StorageRedisPlugin extends AbstractPlugin implements StoragePluginInterface
 {
@@ -68,11 +68,11 @@ class StorageRedisPlugin extends AbstractPlugin implements StoragePluginInterfac
      *
      * @param array $keys
      *
-     * @return void
+     * @return int
      */
-    public function deleteMulti(array $keys): void
+    public function deleteMulti(array $keys): int
     {
-        $this->getClient()->deleteMulti($keys);
+        return $this->getClient()->deleteMulti($keys);
     }
 
     /**
