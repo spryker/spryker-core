@@ -28,6 +28,9 @@ class SharedCartsRestApiConfig extends AbstractBundleConfig
      * @uses \Spryker\Glue\CartsRestApi\CartsRestApiConfig::RESPONSE_CODE_CART_ID_MISSING
      */
     public const RESPONSE_CODE_CART_ID_MISSING = '104';
+    /**
+     * @uses \Spryker\Glue\CompanyUsersRestApi\CompanyUsersRestApiConfig::RESPONSE_CODE_COMPANY_USER_NOT_FOUND
+     */
     public const RESPONSE_CODE_COMPANY_USER_NOT_FOUND = '1404';
     public const RESPONSE_CODE_SHARING_CART_FORBIDDEN = '2701';
     public const RESPONSE_CODE_FAILED_TO_SHARE_CART = '2702';
@@ -43,6 +46,9 @@ class SharedCartsRestApiConfig extends AbstractBundleConfig
      * @uses \Spryker\Glue\CartsRestApi\CartsRestApiConfig::EXCEPTION_MESSAGE_CART_ID_MISSING
      */
     public const EXCEPTION_MESSAGE_CART_ID_MISSING = 'Cart uuid is missing.';
+    /**
+     * @uses \Spryker\Glue\CompanyUsersRestApi\CompanyUsersRestApiConfig::RESPONSE_DETAIL_COMPANY_USER_NOT_FOUND
+     */
     public const RESPONSE_DETAIL_COMPANY_USER_NOT_FOUND = 'Company user not found';
     public const RESPONSE_DETAIL_SHARING_CART_FORBIDDEN = 'Action is forbidden.';
     public const RESPONSE_DETAIL_FAILED_TO_SHARE_CART = 'Failed to share a cart.';
