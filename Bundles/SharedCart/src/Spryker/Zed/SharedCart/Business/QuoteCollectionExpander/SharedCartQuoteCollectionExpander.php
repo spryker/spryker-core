@@ -5,35 +5,35 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\SharedCartsRestApi\Business\QuoteCollectionExpander;
+namespace Spryker\Zed\SharedCart\Business\QuoteCollectionExpander;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\SharedQuoteCriteriaFilterTransfer;
-use Spryker\Zed\SharedCartsRestApi\Dependency\Facade\SharedCartsRestApiToSharedCartFacadeInterface;
-use Spryker\Zed\SharedCartsRestApi\Dependency\Facade\SharedCartsRestApiToStoreFacadeInterface;
+use Spryker\Zed\SharedCart\Business\Model\QuoteReaderInterface;
+use Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToStoreFacadeInterface;
 
 class SharedCartQuoteCollectionExpander implements SharedCartQuoteCollectionExpanderInterface
 {
     /**
-     * @var \Spryker\Zed\SharedCartsRestApi\Dependency\Facade\SharedCartsRestApiToSharedCartFacadeInterface
+     * @var \Spryker\Zed\SharedCart\Business\Model\QuoteReaderInterface
      */
-    protected $sharedCartFacade;
+    protected $quoteReader;
 
     /**
-     * @var \Spryker\Zed\SharedCartsRestApi\Dependency\Facade\SharedCartsRestApiToStoreFacadeInterface
+     * @var \Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToStoreFacadeInterface
      */
     protected $storeFacade;
 
     /**
-     * @param \Spryker\Zed\SharedCartsRestApi\Dependency\Facade\SharedCartsRestApiToSharedCartFacadeInterface $sharedCartFacade
-     * @param \Spryker\Zed\SharedCartsRestApi\Dependency\Facade\SharedCartsRestApiToStoreFacadeInterface $storeFacade
+     * @param \Spryker\Zed\SharedCart\Business\Model\QuoteReaderInterface $quoteReader
+     * @param \Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToStoreFacadeInterface $storeFacade
      */
     public function __construct(
-        SharedCartsRestApiToSharedCartFacadeInterface $sharedCartFacade,
-        SharedCartsRestApiToStoreFacadeInterface $storeFacade
+        QuoteReaderInterface $quoteReader,
+        SharedCartToStoreFacadeInterface $storeFacade
     ) {
-        $this->sharedCartFacade = $sharedCartFacade;
+        $this->quoteReader = $quoteReader;
         $this->storeFacade = $storeFacade;
     }
 
@@ -51,7 +51,7 @@ class SharedCartQuoteCollectionExpander implements SharedCartQuoteCollectionExpa
             ->setIdCompanyUser($customerTransfer->getCompanyUserTransfer()->getIdCompanyUser())
             ->setIdStore($this->storeFacade->getCurrentStore()->getIdStore());
 
-        $sharedQuoteCollectionTransfer = $this->sharedCartFacade->getCustomerSharedQuoteCollection($sharedQuoteCriteriaFilterTransfer);
+        $sharedQuoteCollectionTransfer = $this->quoteReader->findCustomerSharedQuoteCollectionBySharedQuoteCriteriaFilter($sharedQuoteCriteriaFilterTransfer);
         foreach ($sharedQuoteCollectionTransfer->getQuotes() as $quoteTransfer) {
             $quoteCollectionTransfer->addQuote($quoteTransfer);
         }

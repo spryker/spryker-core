@@ -5,17 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\SharedCartsRestApi\Communication\Plugin\MultiCartsRestApi;
+namespace Spryker\Zed\SharedCart\Communication\Plugin\MultiCart;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\MultiCartsRestApiExtension\Dependency\Plugin\QuoteCollectionExpanderPluginInterface;
+use Spryker\Zed\MultiCartExtension\Dependency\Plugin\QuoteCollectionExpanderPluginInterface;
 
 /**
- * @method \Spryker\Zed\SharedCartsRestApi\SharedCartsRestApiConfig getConfig()
- * @method \Spryker\Zed\SharedCartsRestApi\Business\SharedCartsRestApiFacade getFacade()
- * @method \Spryker\Zed\SharedCartsRestApi\Communication\SharedCartsRestApiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\SharedCart\SharedCartConfig getConfig()
+ * @method \Spryker\Zed\SharedCart\Business\SharedCartFacade getFacade()
+ * @method \Spryker\Zed\SharedCart\Communication\SharedCartCommunicationFactory getFactory()
  */
 class QuotePermissionGroupQuoteCollectionExpanderPlugin extends AbstractPlugin implements QuoteCollectionExpanderPluginInterface
 {
@@ -34,8 +34,7 @@ class QuotePermissionGroupQuoteCollectionExpanderPlugin extends AbstractPlugin i
         CustomerTransfer $customerTransfer,
         QuoteCollectionTransfer $quoteCollectionTransfer
     ): QuoteCollectionTransfer {
-        return $this->getFactory()
-            ->createShareDetailQuoteCollectionExpander()
+        return $this->getFacade()
             ->expandQuoteCollectionWithCustomerShareDetail($customerTransfer, $quoteCollectionTransfer);
     }
 }

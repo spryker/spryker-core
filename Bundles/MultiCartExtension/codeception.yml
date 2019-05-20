@@ -1,4 +1,4 @@
-namespace: MultiCartsRestApiExtension
+namespace: MultiCartExtension
 actor: Tester
 paths:
     tests: tests

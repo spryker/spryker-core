@@ -202,4 +202,38 @@ interface SharedCartFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
      */
     public function getCustomerSharedQuoteCollection(SharedQuoteCriteriaFilterTransfer $sharedQuoteCriteriaFilterTransfer): QuoteCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Expands a collection of quotes with collection of quotes shared with the customer.
+     * - Requires CompanyUser::idCompanyUser to be set on the CustomerTransfer taken as a parameter.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\QuoteCollectionTransfer $quoteCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
+     */
+    public function expandQuoteCollectionWithCustomerSharedQuoteCollection(
+        CustomerTransfer $customerTransfer,
+        QuoteCollectionTransfer $quoteCollectionTransfer
+    ): QuoteCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Expands a collection of quotes with ShareDetail.
+     * - Requires CompanyUser::idCompanyUser to be set on the CustomerTransfer taken as a parameter.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\QuoteCollectionTransfer $quoteCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
+     */
+    public function expandQuoteCollectionWithCustomerShareDetail(
+        CustomerTransfer $customerTransfer,
+        QuoteCollectionTransfer $quoteCollectionTransfer
+    ): QuoteCollectionTransfer;
 }

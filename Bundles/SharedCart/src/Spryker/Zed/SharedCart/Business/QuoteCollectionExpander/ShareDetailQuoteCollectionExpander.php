@@ -5,26 +5,26 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\SharedCartsRestApi\Business\QuoteCollectionExpander;
+namespace Spryker\Zed\SharedCart\Business\QuoteCollectionExpander;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
-use Spryker\Zed\SharedCartsRestApi\Dependency\Facade\SharedCartsRestApiToSharedCartFacadeInterface;
+use Spryker\Zed\SharedCart\Business\QuoteShareDetails\QuoteShareDetailsReaderInterface;
 
 class ShareDetailQuoteCollectionExpander implements ShareDetailQuoteCollectionExpanderInterface
 {
     /**
-     * @var \Spryker\Zed\SharedCartsRestApi\Dependency\Facade\SharedCartsRestApiToSharedCartFacadeInterface
+     * @var \Spryker\Zed\SharedCart\Business\QuoteShareDetails\QuoteShareDetailsReaderInterface
      */
-    protected $sharedCartFacade;
+    protected $quoteShareDetailsReader;
 
     /**
-     * @param \Spryker\Zed\SharedCartsRestApi\Dependency\Facade\SharedCartsRestApiToSharedCartFacadeInterface $sharedCartFacade
+     * @param \Spryker\Zed\SharedCart\Business\QuoteShareDetails\QuoteShareDetailsReaderInterface $quoteShareDetailsReader
      */
     public function __construct(
-        SharedCartsRestApiToSharedCartFacadeInterface $sharedCartFacade
+        QuoteShareDetailsReaderInterface $quoteShareDetailsReader
     ) {
-        $this->sharedCartFacade = $sharedCartFacade;
+        $this->quoteShareDetailsReader = $quoteShareDetailsReader;
     }
 
     /**
@@ -42,7 +42,7 @@ class ShareDetailQuoteCollectionExpander implements ShareDetailQuoteCollectionEx
         }
 
         foreach ($quoteCollectionTransfer->getQuotes() as $quoteIndex => $quoteTransfer) {
-            $shareDetailCollectionTransfer = $this->sharedCartFacade->getShareDetailsByIdQuote($quoteTransfer);
+            $shareDetailCollectionTransfer = $this->quoteShareDetailsReader->getShareDetailsByIdQuote($quoteTransfer);
 
             foreach ($shareDetailCollectionTransfer->getShareDetails() as $shareDetailTransfer) {
                 if ($customerTransfer->getCompanyUserTransfer()->getIdCompanyUser() === $shareDetailTransfer->getIdCompanyUser()) {

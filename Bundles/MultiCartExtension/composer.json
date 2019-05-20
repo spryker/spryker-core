@@ -1,7 +1,7 @@
 {
-  "name": "spryker/multi-carts-rest-api-extension",
+  "name": "spryker/multi-cart-extension",
   "type": "library",
-  "description": "MultiCartsRestApiExtension module",
+  "description": "MultiCartExtension module",
   "license": "proprietary",
   "require": {
   },

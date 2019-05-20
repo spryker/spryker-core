@@ -249,4 +249,38 @@ class SharedCartFacade extends AbstractFacade implements SharedCartFacadeInterfa
             ->createQuoteReader()
             ->findCustomerSharedQuoteCollectionBySharedQuoteCriteriaFilter($sharedQuoteCriteriaFilterTransfer);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\QuoteCollectionTransfer $quoteCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
+     */
+    public function expandQuoteCollectionWithCustomerSharedQuoteCollection(CustomerTransfer $customerTransfer, QuoteCollectionTransfer $quoteCollectionTransfer): QuoteCollectionTransfer
+    {
+        return $this->getFactory()
+            ->createSharedCartQuoteCollectionExpander()
+            ->expandQuoteCollectionWithCustomerSharedQuoteCollection($customerTransfer, $quoteCollectionTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\QuoteCollectionTransfer $quoteCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
+     */
+    public function expandQuoteCollectionWithCustomerShareDetail(CustomerTransfer $customerTransfer, QuoteCollectionTransfer $quoteCollectionTransfer): QuoteCollectionTransfer
+    {
+        return $this->getFactory()
+            ->createShareDetailQuoteCollectionExpander()
+            ->expandQuoteCollectionWithCustomerShareDetail($customerTransfer, $quoteCollectionTransfer);
+    }
 }
