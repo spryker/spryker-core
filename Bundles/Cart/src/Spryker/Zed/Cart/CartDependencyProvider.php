@@ -73,6 +73,7 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::FACADE_CALCULATION] = function (Container $container) {
             return new CartToCalculationBridge($container->getLocator()->calculation()->facade());
         };
+
         return $container;
     }
 
@@ -86,6 +87,7 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::FACADE_QUOTE] = function (Container $container) {
             return new CartToQuoteFacadeBridge($container->getLocator()->quote()->facade());
         };
+
         return $container;
     }
 
@@ -99,6 +101,7 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::FACADE_MESSENGER] = function (Container $container) {
             return new CartToMessengerBridge($container->getLocator()->messenger()->facade());
         };
+
         return $container;
     }
 
@@ -112,6 +115,7 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::CART_EXPANDER_PLUGINS] = function (Container $container) {
             return $this->getExpanderPlugins($container);
         };
+
         return $container;
     }
 
@@ -125,6 +129,7 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::CART_POST_SAVE_PLUGINS] = function (Container $container) {
             return $this->getPostSavePlugins($container);
         };
+
         return $container;
     }
 
@@ -152,6 +157,7 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::CART_PRE_CHECK_PLUGINS] = function (Container $container) {
             return $this->getCartPreCheckPlugins($container);
         };
+
         return $container;
     }
 
@@ -179,6 +185,7 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::CART_PRE_RELOAD_PLUGINS] = function (Container $container) {
             return $this->getPreReloadPlugins($container);
         };
+
         return $container;
     }
 
