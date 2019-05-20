@@ -159,7 +159,7 @@ class CartsRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @deprecated
+     * @deprecated Will be removed in the next major.
      *
      * @return \Spryker\Glue\CartsRestApi\Processor\GuestCart\GuestCartCreatorInterface
      */
