@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\SharedCart\Plugin;
 
+use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\PersistentCartShareExtension\Dependency\Plugin\CartShareOptionPluginInterface;
 use Spryker\Shared\SharedCart\SharedCartConfig as SharedSharedCartConfig;
@@ -16,8 +17,6 @@ use Spryker\Shared\SharedCart\SharedCartConfig as SharedSharedCartConfig;
  */
 class ReadOnlyCartShareOptionPlugin extends AbstractPlugin implements CartShareOptionPluginInterface
 {
-    protected const KEY_READ_ONLY = 'READ_ONLY';
-
     /**
      * {@inheritdoc}
      *
@@ -27,7 +26,29 @@ class ReadOnlyCartShareOptionPlugin extends AbstractPlugin implements CartShareO
      */
     public function getKey(): string
     {
-        return static::KEY_READ_ONLY;
+        return SharedSharedCartConfig::PERMISSION_GROUP_READ_ONLY;
+    }
+
+    /**
+     * {@inheritdoc}
+     * - Returns true if customer is provided and it is a company user.
+     * - Returns false otherwise.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer|null $customerTransfer
+     *
+     * @return bool
+     */
+    public function isApplicable(?CustomerTransfer $customerTransfer): bool
+    {
+        if (!$customerTransfer) {
+            return false;
+        }
+
+        $companyUserTransfer = $customerTransfer->getCompanyUserTransfer();
+
+        return $companyUserTransfer && $companyUserTransfer->getIdCompanyUser();
     }
 
     /**
