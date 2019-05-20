@@ -52,7 +52,7 @@ class CartsRestApiZedStub implements CartsRestApiZedStubInterface
     {
         /** @var \Generated\Shared\Transfer\QuoteCollectionTransfer $quoteCollectionTransfer */
         $quoteCollectionTransfer = $this->zedRequestClient
-            ->call('/carts-rest-api/gateway/get-quote-collection-by-quote-criteria-filter', $quoteCriteriaFilterTransfer);
+            ->call('/carts-rest-api/gateway/get-quote-collection', $quoteCriteriaFilterTransfer);
 
         return $quoteCollectionTransfer;
     }
