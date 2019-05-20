@@ -1,0 +1,15 @@
+{
+  "mappings": {
+    "properties": {
+      "id-customer": {
+        "type": "integer"
+      },
+      "join_field": {
+        "type": "join",
+        "relations": {
+          "page": "customer-page"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,147 @@
+{
+  "settings": {
+    "index": {
+      "number_of_shards": 1,
+      "number_of_replicas": 1
+    },
+    "analysis": {
+      "analyzer": {
+        "lowercase_keyword_analyzer": {
+          "tokenizer": "keyword",
+          "filter": [
+            "lowercase"
+          ]
+        },
+        "suggestion_analyzer": {
+          "tokenizer": "standard",
+          "filter": [
+            "lowercase"
+          ]
+        }
+      },
+      "normalizer": {
+        "lowercase_normalizer": {
+          "type": "custom",
+          "char_filter": [],
+          "filter": [
+            "lowercase"
+          ]
+        }
+      }
+    }
+  },
+  "mappings": {
+    "dynamic_templates": [
+      {
+        "search-result-data": {
+          "mapping": {
+            "index": "false"
+          },
+          "path_match": "search-result-data.*"
+        }
+      },
+      {
+        "string_sort": {
+          "mapping": {
+            "analyzer": "lowercase_keyword_analyzer",
+            "type": "keyword"
+          },
+          "path_match": "string-sort.*"
+        }
+      },
+      {
+        "integer_sort": {
+          "mapping": {
+            "type": "integer"
+          },
+          "path_match": "integer-sort.*"
+        }
+      }
+    ],
+    "properties": {
+      "search-result-data": {
+        "type": "object",
+        "properties": {
+
+        }
+      },
+      "type": {
+        "type": "keyword"
+      },
+      "store": {
+        "type": "keyword"
+      },
+      "is-active": {
+        "type": "boolean"
+      },
+      "active-from": {
+        "type": "date"
+      },
+      "active-to": {
+        "type": "date"
+      },
+      "locale": {
+        "type": "keyword"
+      },
+      "full-text": {
+        "type": "text"
+      },
+      "full-text-boosted": {
+        "type": "text"
+      },
+      "string-facet": {
+        "type": "nested",
+        "properties": {
+          "facet-name": {
+            "type": "keyword"
+          },
+          "facet-value": {
+            "type": "keyword"
+          }
+        }
+      },
+      "integer-facet": {
+        "type": "nested",
+        "properties": {
+          "facet-name": {
+            "type": "keyword"
+          },
+          "facet-value": {
+            "type": "integer"
+          }
+        }
+      },
+      "completion-terms": {
+        "type": "keyword",
+        "normalizer": "lowercase_normalizer"
+      },
+      "suggestion-terms": {
+        "type": "text",
+        "analyzer": "suggestion_analyzer"
+      },
+      "string-sort": {
+        "type": "object",
+        "properties": {
+
+        }
+      },
+      "integer-sort": {
+        "type": "object",
+        "properties": {
+
+        }
+      },
+      "category": {
+        "type": "object",
+        "properties": {
+          "direct-parents": {
+            "type": "integer"
+          },
+          "all-parents": {
+            "type": "integer"
+          }
+        }
+      }
+    }
+  }
+}

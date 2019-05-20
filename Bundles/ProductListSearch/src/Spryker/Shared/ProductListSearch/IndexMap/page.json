@@ -1,0 +1,17 @@
+{
+  "mappings": {
+    "properties": {
+      "product-lists": {
+        "type": "object",
+        "properties": {
+          "blacklists": {
+            "type": "integer"
+          },
+          "whitelists": {
+            "type": "integer"
+          }
+        }
+      }
+    }
+  }
+}
