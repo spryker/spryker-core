@@ -50,6 +50,8 @@ class ProductImageStorageRepository extends AbstractRepository implements Produc
             ->innerJoinWithSpyLocale()
             ->innerJoinWithSpyProductImageSetToProductImage()
             ->useSpyProductImageSetToProductImageQuery()
+                ->orderBySortOrder()
+                ->orderByIdProductImageSetToProductImage()
                 ->innerJoinWithSpyProductImage()
             ->endUse()
             ->filterByFkProduct_In($productFks);
@@ -69,6 +71,8 @@ class ProductImageStorageRepository extends AbstractRepository implements Produc
             ->innerJoinWithSpyLocale()
             ->innerJoinWithSpyProductImageSetToProductImage()
             ->useSpyProductImageSetToProductImageQuery()
+                ->orderBySortOrder()
+                ->orderByIdProductImageSetToProductImage()
                 ->innerJoinWithSpyProductImage()
             ->endUse()
             ->filterByFkProductAbstract_In($productAbstractFks);

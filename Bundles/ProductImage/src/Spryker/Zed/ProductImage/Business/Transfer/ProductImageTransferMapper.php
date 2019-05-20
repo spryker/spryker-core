@@ -142,7 +142,7 @@ class ProductImageTransferMapper implements ProductImageTransferMapperInterface
     protected function setProductImages(SpyProductImageSet $productImageSetEntity, ProductImageSetTransfer $productImageSetTransfer)
     {
         $criteria = new Criteria();
-        $criteria->addAscendingOrderByColumn(SpyProductImageSetToProductImageTableMap::COL_SORT_ORDER);
+        $criteria = $this->sortCriteria($criteria);
 
         $imageEntityCollection = [];
         foreach ($productImageSetEntity->getSpyProductImageSetToProductImagesJoinSpyProductImage($criteria) as $entity) {
@@ -151,5 +151,18 @@ class ProductImageTransferMapper implements ProductImageTransferMapperInterface
 
         $imageTransferCollection = $this->mapProductImageCollection(new ObjectCollection($imageEntityCollection), $productImageSetEntity);
         $productImageSetTransfer->setProductImages(new ArrayObject($imageTransferCollection));
+    }
+
+    /**
+     * @param \Propel\Runtime\ActiveQuery\Criteria $criteria
+     *
+     * @return \Propel\Runtime\ActiveQuery\Criteria
+     */
+    protected function sortCriteria(Criteria $criteria): Criteria
+    {
+        $criteria->addAscendingOrderByColumn(SpyProductImageSetToProductImageTableMap::COL_SORT_ORDER);
+        $criteria->addAscendingOrderByColumn(SpyProductImageSetToProductImageTableMap::COL_ID_PRODUCT_IMAGE_SET_TO_PRODUCT_IMAGE);
+
+        return $criteria;
     }
 }

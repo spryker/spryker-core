@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductManagement\Communication\Form\Product;
 use Spryker\Zed\Gui\Communication\Form\Type\ImageType;
 use Spryker\Zed\ProductManagement\Communication\Form\AbstractSubForm;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -34,6 +35,11 @@ class ImageCollectionForm extends AbstractSubForm
     public const OPTION_IMAGE_PREVIEW_LARGE_URL = 'option_image_preview_large_url';
 
     /**
+     * @uses \Spryker\Zed\Gui\Communication\Form\Type\ImageType::OPTION_IMAGE_WIDTH
+     */
+    protected const OPTION_IMAGE_WIDTH = 'image_width';
+
+    /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
@@ -45,12 +51,12 @@ class ImageCollectionForm extends AbstractSubForm
 
         $this
             ->addProductImageIdHiddenField($builder, $options)
-            ->addProductImageLargeUrlHiddenField($builder, $options)
+            ->addProductImageLargeUrlField($builder, $options)
             ->addImageSetIdHiddenField($builder, $options)
             ->addImagePreviewField($builder, $options)
             ->addImageSmallField($builder, $options)
             ->addImageBigField($builder, $options)
-            ->addOrderHiddenField($builder, $options);
+            ->addSortOrderField($builder, $options);
     }
 
     /**
@@ -89,10 +95,12 @@ class ImageCollectionForm extends AbstractSubForm
      *
      * @return $this
      */
-    protected function addProductImageLargeUrlHiddenField(FormBuilderInterface $builder, array $options = [])
+    protected function addProductImageLargeUrlField(FormBuilderInterface $builder, array $options = [])
     {
-        $builder
-            ->add(self::FIELD_IMAGE_PREVIEW_LARGE_URL, HiddenType::class, []);
+        $builder->add(static::FIELD_IMAGE_PREVIEW_LARGE_URL, ImageType::class, [
+            'label' => false,
+            static::OPTION_IMAGE_WIDTH => 150,
+        ]);
 
         return $this;
     }
@@ -123,7 +131,7 @@ class ImageCollectionForm extends AbstractSubForm
             ->add(self::FIELD_IMAGE_PREVIEW, ImageType::class, [
                 'required' => false,
                 'label' => false,
-                ImageType::OPTION_IMAGE_WIDTH => 150,
+                static::OPTION_IMAGE_WIDTH => 150,
             ]);
 
         return $this;
@@ -183,10 +191,10 @@ class ImageCollectionForm extends AbstractSubForm
      *
      * @return $this
      */
-    protected function addOrderHiddenField(FormBuilderInterface $builder, array $options = [])
+    protected function addSortOrderField(FormBuilderInterface $builder, array $options = [])
     {
         $builder
-            ->add(self::FIELD_SORT_ORDER, HiddenType::class, []);
+            ->add(self::FIELD_SORT_ORDER, NumberType::class, []);
 
         return $this;
     }
