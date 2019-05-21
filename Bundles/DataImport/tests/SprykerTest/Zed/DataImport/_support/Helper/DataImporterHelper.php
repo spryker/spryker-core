@@ -58,7 +58,7 @@ class DataImporterHelper extends Module
      * @param bool $isCalled
      * @param \Generated\Shared\Transfer\DataImporterReportTransfer|null $dataImporterReportTransfer
      *
-     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface|\Spryker\Zed\DataImport\Business\DataIMporter\DataImporterImportGroupAwareInterface
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface|\Spryker\Zed\DataImport\Business\DataImporter\DataImporterImportGroupAwareInterface
      */
     public function getDataImporterImportGroupAwareMock(string $importType, string $importGroup, bool $isCalled = false, ?DataImporterReportTransfer $dataImporterReportTransfer = null)
     {
@@ -131,7 +131,7 @@ class DataImporterHelper extends Module
     public function getFailingDataImportStepMock()
     {
         $executeCallback = function () {
-            throw new DataImportException();
+            throw new DataImportException('ExceptionMessage');
         };
         /** @var \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface $dataSetStub */
         $dataSetStub = Stub::makeEmpty(DataImportStepInterface::class, ['execute' => $executeCallback]);

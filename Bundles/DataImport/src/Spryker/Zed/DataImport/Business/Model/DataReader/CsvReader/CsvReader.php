@@ -170,15 +170,11 @@ class CsvReader implements DataReaderInterface, ConfigurableDataReaderInterface,
             try {
                 $dataSet = array_combine($this->dataSetKeys, $dataSet);
             } catch (Exception $e) {
-                $dataSet = false;
-            }
-
-            if ($dataSet === false) {
                 throw new DataSetWithHeaderCombineFailedException(sprintf(
                     'Can not combine data set header with current data set. Keys: "%s", Values "%s"',
                     implode(', ', $this->dataSetKeys),
                     implode(', ', array_values($dataSetBeforeCombine))
-                ));
+                ), 0, $e);
             }
         }
 

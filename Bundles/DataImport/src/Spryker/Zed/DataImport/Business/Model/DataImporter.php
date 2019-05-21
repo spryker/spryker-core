@@ -10,6 +10,7 @@ namespace Spryker\Zed\DataImport\Business\Model;
 use Countable;
 use Exception;
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
+use Generated\Shared\Transfer\DataImporterReportMessageTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
 use Spryker\Shared\ErrorHandler\ErrorLogger;
 use Spryker\Zed\DataImport\Business\DataImporter\DataImporterImportGroupAwareInterface;
@@ -151,12 +152,20 @@ class DataImporter implements
                 $this->importDataSet($dataSet);
                 $dataImporterReportTransfer->setImportedDataSetCount($dataImporterReportTransfer->getImportedDataSetCount() + 1);
             } catch (Exception $dataImportException) {
+                $exceptionMessage = $this->buildExceptionMessage($dataImportException, $dataImporterReportTransfer->getImportedDataSetCount() + 1);
+
                 if ($dataImporterConfigurationTransfer && $dataImporterConfigurationTransfer->getThrowException()) {
-                    throw new DataImportException($this->buildExceptionMessage($dataImportException, $dataImporterReportTransfer->getImportedDataSetCount() + 1), 0, $dataImportException);
+                    throw new DataImportException($exceptionMessage, 0, $dataImportException);
                 }
 
                 ErrorLogger::getInstance()->log($dataImportException);
-                $dataImporterReportTransfer->setIsSuccess(false);
+
+                $dataImporterReportMessageTransfer = new DataImporterReportMessageTransfer();
+                $dataImporterReportMessageTransfer->setMessage($exceptionMessage);
+
+                $dataImporterReportTransfer
+                    ->setIsSuccess(false)
+                    ->addMessage($dataImporterReportMessageTransfer);
             }
 
             unset($dataSet);
