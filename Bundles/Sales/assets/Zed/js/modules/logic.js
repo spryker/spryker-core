@@ -18,21 +18,6 @@ function getSelectedItems(idOrderItem) {
     return selectedItems;
 }
 
-function createTriggerUrl(idOrder, eventName) {
-    var url = '/oms/trigger/trigger-event-for-order';
-    var parameters = {
-        event: eventName,
-        'id-sales-order': idOrder,
-        redirect: '/sales/detail?id-sales-order=' + idOrder
-    };
-
-    parameters.items = getSelectedItems();
-
-    var finalUrl = url + '?' + $.param(parameters);
-
-    return decodeURIComponent(finalUrl);
-}
-
 $(document).ready(function () {
     $('.trigger-event').click(function (e) {
         e.preventDefault();
