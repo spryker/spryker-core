@@ -40,6 +40,14 @@ class ImageCollectionForm extends AbstractSubForm
     protected const OPTION_IMAGE_WIDTH = 'image_width';
 
     /**
+     * @return string
+     */
+    public function getBlockPrefix()
+    {
+        return 'product_image_collection';
+    }
+
+    /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
@@ -194,7 +202,7 @@ class ImageCollectionForm extends AbstractSubForm
     protected function addSortOrderField(FormBuilderInterface $builder, array $options = [])
     {
         $builder
-            ->add(self::FIELD_SORT_ORDER, NumberType::class, []);
+            ->add(static::FIELD_SORT_ORDER, NumberType::class, []);
 
         return $this;
     }
