@@ -59,11 +59,13 @@ var ContentItemEditorPopover = function () {
             this.scrollHandler = function (event) {
                 this.showPopover();
 
-                var $editor = $(event.currentTarget.nextSibling);
-                var editorPosition = $editor.offset().top + $editor.height()
-                var popoverPosition = this.$contentItemPopover.offset().top + this.$contentItemPopover.height();
+                var $editor = $(event.currentTarget.nextSibling).find('.note-editing-area');
+                var editorPositionTop = $editor.offset().top;
+                var editorPositionBottom = editorPositionTop + $editor.height();
+                var popoverPositionTop = this.$contentItemPopover.offset().top;
+                var popoverPositionBottom = popoverPositionTop + this.$contentItemPopover.height();
 
-                if (popoverPosition > editorPosition) {
+                if (popoverPositionBottom > editorPositionBottom || popoverPositionTop < editorPositionTop) {
                     this.hidePopover();
                 }
             };
