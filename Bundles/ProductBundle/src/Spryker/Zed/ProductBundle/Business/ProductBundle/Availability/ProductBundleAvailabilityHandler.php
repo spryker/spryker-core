@@ -226,6 +226,7 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
                 $bundleAvailabilityQuantity
             );
         }
+
         return $bundleAvailabilityQuantity;
     }
 

@@ -176,6 +176,7 @@ class MetaDataProvider implements MetaDataProviderInterface
         foreach ($specificationPlugin->getAttributeTypes() as $attributeType) {
             $attributeFields[] = $specificationPlugin->getFieldName() . '.' . $attributeType;
         }
+
         return $attributeFields;
     }
 

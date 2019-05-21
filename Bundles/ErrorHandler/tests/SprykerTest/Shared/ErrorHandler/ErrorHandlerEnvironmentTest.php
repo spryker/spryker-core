@@ -27,5 +27,16 @@ class ErrorHandlerEnvironmentTest extends Unit
     {
         $errorHandlerEnvironment = new ErrorHandlerEnvironment();
         $errorHandlerEnvironment->initialize();
+
+        $this->resetHandlersToDefault();
+    }
+
+    /**
+     * @return void
+     */
+    protected function resetHandlersToDefault(): void
+    {
+        restore_error_handler();
+        restore_exception_handler();
     }
 }

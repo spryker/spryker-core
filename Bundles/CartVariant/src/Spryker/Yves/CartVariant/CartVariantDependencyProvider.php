@@ -41,6 +41,7 @@ class CartVariantDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::CLIENT_PRODUCT] = function (Container $container) {
             return new CartVariantToProductClientBridge($container->getLocator()->product()->client());
         };
+
         return $container;
     }
 
@@ -54,6 +55,7 @@ class CartVariantDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::CLIENT_AVAILABILITY] = function (Container $container) {
             return new CartVariantToAvailabilityClientBridge($container->getLocator()->availability()->client());
         };
+
         return $container;
     }
 }

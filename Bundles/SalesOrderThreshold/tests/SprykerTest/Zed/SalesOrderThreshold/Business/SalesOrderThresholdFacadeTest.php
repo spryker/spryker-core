@@ -362,6 +362,7 @@ class SalesOrderThresholdFacadeTest extends SalesOrderThresholdMocks
     protected function getFacade(): SalesOrderThresholdFacadeInterface
     {
         $factory = $this->createSalesOrderThresholdBusinessFactoryMock();
+
         return $this->createSalesOrderThresholdFacadeMock($factory);
     }
 }

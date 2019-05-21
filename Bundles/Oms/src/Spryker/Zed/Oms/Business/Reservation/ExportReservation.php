@@ -130,6 +130,7 @@ class ExportReservation implements ExportReservationInterface
             $lastExportedVersion
                 ->setVersion($version)
                 ->save();
+
             return;
         }
 
