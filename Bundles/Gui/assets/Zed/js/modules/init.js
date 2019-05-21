@@ -104,8 +104,8 @@ $(document).ready(function() {
     $('.dropdown-toggle').dropdown();
 
     $('.spryker-form-select2combobox').each(function(index, element) {
-        let select2InitOptions = {};
-        const selectElement = $(element);
+        var select2InitOptions = {};
+        var selectElement = $(element);
 
         if (selectElement.data('autocomplete-url')) {
             select2InitOptions = {
@@ -119,8 +119,8 @@ $(document).ready(function() {
             };
 
             selectElement.on('select2:unselecting', function(e) {
-                const idSelected = e.params.args.data.id;
-                let selectedValues = selectElement.val();
+                var idSelected = e.params.args.data.id;
+                var selectedValues = selectElement.val();
 
                 selectElement.val(selectedValues.filter(function(value) {
                     return value !== ('' + idSelected);
