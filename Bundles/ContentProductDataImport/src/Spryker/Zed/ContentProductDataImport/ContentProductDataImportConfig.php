@@ -21,6 +21,7 @@ class ContentProductDataImportConfig extends DataImportConfig
     public function getContentProductAbstractListDataImporterConfiguration(): DataImporterConfigurationTransfer
     {
         $moduleDataImportDirectory = $this->getModuleRoot() . 'data' . DIRECTORY_SEPARATOR . 'import' . DIRECTORY_SEPARATOR;
+
         return $this->buildImporterConfiguration(
             $moduleDataImportDirectory . static::IMPORT_FILE_NAME,
             static::IMPORT_TYPE_CONTENT_PRODUCT

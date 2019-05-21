@@ -356,6 +356,7 @@ class Store
     {
         if (count($this->currencyIsoCodes) === 0) {
             $this->currencyIsoCode = $currencyIsoCode;
+
             return;
         }
 

@@ -237,6 +237,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
                 );
             }
         }
+
         return $bundledItems;
     }
 
@@ -395,6 +396,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
             } else {
                 $total += $itemTransfer->getUnitGrossPrice();
             }
+
             return $total;
         });
 
@@ -424,6 +426,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
         $options = (array)$itemTransfer->getProductOptions();
         if (count($options) === 0) {
             $bundleItemTransfer->setGroupKey($this->buildGroupKey($bundleItemTransfer));
+
             return;
         }
 
@@ -459,6 +462,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
             $itemTransfer->setUnitNetPrice($unitPrice);
             $itemTransfer->setUnitGrossPrice(0);
             $itemTransfer->setSumGrossPrice(0);
+
             return;
         }
 
@@ -477,6 +481,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
     {
         if ($priceMode === $this->priceFacade->getNetPriceModeIdentifier()) {
             $itemTransfer->requireUnitNetPrice();
+
             return;
         }
 

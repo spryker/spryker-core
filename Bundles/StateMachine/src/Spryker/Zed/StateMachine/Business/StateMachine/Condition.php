@@ -137,6 +137,7 @@ class Condition implements ConditionInterface
 
         if ($conditionCheck === true) {
             $transactionLogger->addCondition($stateMachineItemTransfer, $conditionPlugin);
+
             return true;
         }
 
@@ -156,6 +157,7 @@ class Condition implements ConditionInterface
             $selectedTransition = array_shift($possibleTransitions);
             $targetState = $selectedTransition->getTargetState();
         }
+
         return $targetState;
     }
 
@@ -338,6 +340,7 @@ class Condition implements ConditionInterface
         foreach ($stateMachineItems as $stateMachineItemTransfer) {
             $sourceStates[$stateMachineItemTransfer->getIdentifier()] = $stateMachineItemTransfer->getStateName();
         }
+
         return $sourceStates;
     }
 }

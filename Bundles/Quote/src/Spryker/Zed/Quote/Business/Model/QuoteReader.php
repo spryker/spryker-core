@@ -119,6 +119,7 @@ class QuoteReader implements QuoteReaderInterface
     {
         if (!$quoteTransfer) {
             $quoteResponseTransfer->setIsSuccessful(false);
+
             return $quoteResponseTransfer;
         }
 

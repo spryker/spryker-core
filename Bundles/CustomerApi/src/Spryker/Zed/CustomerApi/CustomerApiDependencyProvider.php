@@ -107,6 +107,7 @@ class CustomerApiDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::FACADE_CUSTOMER] = function (Container $container) {
             return new CustomerApiToCustomerBridge($container->getLocator()->customer()->facade());
         };
+
         return $container;
     }
 }

@@ -205,11 +205,13 @@ class EventQueueConsumer implements EventQueueConsumerInterface
     {
         if (!$eventQueueSendMessageBodyTransfer->getListenerClassName()) {
             $this->logConsumerAction('Listener class name is not set.');
+
             return false;
         }
 
         if (!$eventQueueSendMessageBodyTransfer->getTransferClassName()) {
             $this->logConsumerAction('Transfer class name is not set.');
+
             return false;
         }
 
@@ -220,6 +222,7 @@ class EventQueueConsumer implements EventQueueConsumerInterface
                     $eventQueueSendMessageBodyTransfer->getListenerClassName()
                 )
             );
+
             return false;
         }
 
