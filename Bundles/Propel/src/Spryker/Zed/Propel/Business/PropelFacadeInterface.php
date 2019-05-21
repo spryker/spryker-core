@@ -140,10 +140,12 @@ interface PropelFacadeInterface
     public function dropDatabase();
 
     /**
+     * @api
+     *
+     * @deprecated Will be removed with next major release.
+     *
      * Specification:
      * - Exports database backup for configured driver to `$backupPath`.
-     *
-     * @api
      *
      * @param string $backupPath
      *
@@ -152,10 +154,12 @@ interface PropelFacadeInterface
     public function exportDatabase($backupPath);
 
     /**
+     * @api
+     *
+     * @deprecated Will be removed with next major release.
+     *
      * Specification:
      * - Imports database backup for configured driver from `$backupPath`.
-     *
-     * @api
      *
      * @param string $backupPath
      *
@@ -184,4 +188,14 @@ interface PropelFacadeInterface
      * @return \Generated\Shared\Transfer\SchemaValidationTransfer
      */
     public function validateSchemaXmlFiles(): SchemaValidationTransfer;
+
+    /**
+     * Specification:
+     * - Runs raw SQL script for cleaning all tables, without dropping.
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function cleanDatabase(): void;
 }
