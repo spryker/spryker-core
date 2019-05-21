@@ -79,6 +79,26 @@ class TableConfiguration
     protected $stateSave = true;
 
     /**
+     * @var bool
+     */
+    protected $processing = true;
+
+    /**
+     * @var bool
+     */
+    protected $serverSide = true;
+
+    /**
+     * @var bool
+     */
+    protected $paging = true;
+
+    /**
+     * @var bool
+     */
+    protected $ordering = true;
+
+    /**
      * @return array
      */
     public function getRawColumns()
@@ -345,5 +365,77 @@ class TableConfiguration
     public function setStateSave($stateSave)
     {
         $this->stateSave = $stateSave;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isProcessing(): ?bool
+    {
+        return $this->processing;
+    }
+
+    /**
+     * @param bool $processing
+     *
+     * @return void
+     */
+    public function setProcessing(bool $processing)
+    {
+        $this->processing = $processing;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isServerSide(): ?bool
+    {
+        return $this->serverSide;
+    }
+
+    /**
+     * @param bool $serverSide
+     *
+     * @return void
+     */
+    public function setServerSide(bool $serverSide)
+    {
+        $this->serverSide = $serverSide;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isPaging(): ?bool
+    {
+        return $this->paging;
+    }
+
+    /**
+     * @param bool $paging
+     *
+     * @return void
+     */
+    public function setPaging(bool $paging)
+    {
+        $this->paging = $paging;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isOrdering(): ?bool
+    {
+        return $this->ordering;
+    }
+
+    /**
+     * @param bool $ordering
+     *
+     * @return void
+     */
+    public function setOrdering(bool $ordering)
+    {
+        $this->ordering = $ordering;
     }
 }

@@ -33,4 +33,14 @@ class CartToQuoteFacadeBridge implements CartToQuoteFacadeInterface
     {
         return $this->quoteFacade->isQuoteLocked($quoteTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function unlockQuote(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        return $this->quoteFacade->unlockQuote($quoteTransfer);
+    }
 }

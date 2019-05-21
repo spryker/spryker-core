@@ -51,6 +51,7 @@ class EditCompanyUnitAddressController extends AbstractController
 
         if ($companyUnitAddressForm->isSubmitted()) {
             $this->updateCompanyUnitAddress($companyUnitAddressForm);
+
             return $this->redirectResponse((string)$request->headers->get(static::HEADER_REFERER));
         }
 

@@ -18,6 +18,11 @@ class SubscriberMerger implements SubscriberMergerInterface
     protected $eventSubscriberCollection;
 
     /**
+     * @var \Spryker\Zed\Event\Dependency\EventCollectionInterface|null
+     */
+    protected static $eventCollectionBuffer;
+
+    /**
      * @param \Spryker\Zed\Event\Dependency\EventSubscriberCollectionInterface $eventSubscriberCollection
      */
     public function __construct(EventSubscriberCollectionInterface $eventSubscriberCollection)
@@ -32,10 +37,14 @@ class SubscriberMerger implements SubscriberMergerInterface
      */
     public function mergeSubscribersWith(EventCollectionInterface $eventCollection)
     {
-        foreach ($this->eventSubscriberCollection as $subscriber) {
-            $eventCollection = $subscriber->getSubscribedEvents($eventCollection);
+        if (static::$eventCollectionBuffer === null) {
+            foreach ($this->eventSubscriberCollection as $subscriber) {
+                $eventCollection = $subscriber->getSubscribedEvents($eventCollection);
+            }
+
+            static::$eventCollectionBuffer = $eventCollection;
         }
 
-        return $eventCollection;
+        return static::$eventCollectionBuffer;
     }
 }

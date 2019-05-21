@@ -38,9 +38,11 @@ class AccessGrantExecutor implements AccessGrantExecutorInterface
             $oauthErrorTransfer = new OauthErrorTransfer();
             $oauthErrorTransfer->setMessage(sprintf('Grant type "%s" not found', $oauthRequestTransfer->getGrantType()));
             $oauthResponseTransfer->setError($oauthErrorTransfer);
+
             return $oauthResponseTransfer;
         }
         $grantType = $this->grants[$oauthRequestTransfer->getGrantType()];
+
         return $grantType->processAccessTokenRequest($oauthRequestTransfer);
     }
 }

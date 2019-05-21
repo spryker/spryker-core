@@ -66,6 +66,7 @@ class ProductBundleCheckoutAvailabilityCheck extends BasePreCheck implements Pro
                 }
             }
         }
+
         return $checkoutErrorMessages;
     }
 

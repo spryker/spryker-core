@@ -73,6 +73,7 @@ class ContentWidgetFunctionMatcher implements ContentWidgetFunctionMatcherInterf
         foreach (explode(',', $functionMatch[2]) as $parameter) {
             $parameters[] = $this->sanitizeParameter($parameter);
         }
+
         return $parameters;
     }
 
@@ -101,6 +102,7 @@ class ContentWidgetFunctionMatcher implements ContentWidgetFunctionMatcherInterf
             PREG_SET_ORDER,
             0
         );
+
         return $functionMatches;
     }
 }

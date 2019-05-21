@@ -24,7 +24,9 @@ class CheckoutRestApiConfig extends AbstractBundleConfig
     public const CONTROLLER_CHECKOUT = 'checkout-resource';
 
     public const ACTION_CHECKOUT_DATA_POST = 'post';
+    public const ACTION_CHECKOUT_DATA_GET = 'get';
     public const ACTION_CHECKOUT_POST = 'post';
+    public const ACTION_CHECKOUT_GET = 'get';
 
     public const RESPONSE_CODE_CHECKOUT_DATA_INVALID = '1101';
     public const RESPONSE_CODE_ORDER_NOT_PLACED = '1102';

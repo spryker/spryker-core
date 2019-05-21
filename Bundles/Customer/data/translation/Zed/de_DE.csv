@@ -24,8 +24,8 @@ Delete,Löschen
 "Edit Address","Adresse bearbeiten"
 "Edit Customer","Kunde bearbeiten"
 Email,E-Mail
-"First Name",Vorname
 "First name",Vorname
+"First Name",Vorname
 Gender,Geschlecht
 "Last name",Nachname
 "List Customers","Liste der Kunden"
@@ -35,7 +35,6 @@ Phone,Telefon
 Salutation,Anrede
 Save,Speichern
 "Select one","Eins auswählen"
-"Send password token through email","Passwort-Token per E-Mail senden"
 "Send password token through email","Passwort-Token per E-Mail senden"
 View,Ansicht
 "View Customer","Kunden anzeigen"

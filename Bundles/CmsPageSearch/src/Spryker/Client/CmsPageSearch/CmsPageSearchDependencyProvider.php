@@ -108,6 +108,7 @@ class CmsPageSearchDependencyProvider extends AbstractDependencyProvider
         $container[static::PLUGINS_CMS_PAGE_SEARCH_COUNT_QUERY_EXPANDER] = function () {
             return $this->createCmsPageSearchCountQueryExpanderPlugins();
         };
+
         return $container;
     }
 

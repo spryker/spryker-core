@@ -381,6 +381,7 @@ class Method implements MethodInterface
 
         if (isset($pricePlugins[$method->getPricePlugin()])) {
             $pricePlugin = $this->getPricePlugin($method, $pricePlugins);
+
             return $pricePlugin->getPrice($quoteTransfer);
         }
 

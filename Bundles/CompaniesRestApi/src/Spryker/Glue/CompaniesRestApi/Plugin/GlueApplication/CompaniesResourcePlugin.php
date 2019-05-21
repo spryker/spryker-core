@@ -30,8 +30,7 @@ class CompaniesResourcePlugin extends AbstractPlugin implements ResourceRoutePlu
      */
     public function configure(ResourceRouteCollectionInterface $resourceRouteCollection): ResourceRouteCollectionInterface
     {
-        $resourceRouteCollection
-            ->addGet(CompaniesRestApiConfig::ACTION_COMPANIES_GET);
+        $resourceRouteCollection->addGet('get');
 
         return $resourceRouteCollection;
     }

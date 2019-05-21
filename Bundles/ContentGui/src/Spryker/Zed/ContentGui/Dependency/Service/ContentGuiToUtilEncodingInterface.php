@@ -14,9 +14,9 @@ interface ContentGuiToUtilEncodingInterface
      * @param int|null $options
      * @param int|null $depth
      *
-     * @return string
+     * @return string|null
      */
-    public function encodeJson($value, $options = null, $depth = null);
+    public function encodeJson($value, $options = null, $depth = null): ?string;
 
     /**
      * @param string $jsonValue
@@ -26,5 +26,5 @@ interface ContentGuiToUtilEncodingInterface
      *
      * @return array
      */
-    public function decodeJson($jsonValue, $assoc = false, $depth = null, $options = null);
+    public function decodeJson(string $jsonValue, bool $assoc = false, ?int $depth = null, ?int $options = null);
 }

@@ -170,6 +170,7 @@ class PriceProductConcreteWriter extends BaseProductPriceWriter implements Price
             if ($priceDimensionConcreteSaverPlugin->getDimensionName() !== $priceDimensionType) {
                 continue;
             }
+
             return $priceDimensionConcreteSaverPlugin->savePrice($priceProductTransfer);
         }
 
