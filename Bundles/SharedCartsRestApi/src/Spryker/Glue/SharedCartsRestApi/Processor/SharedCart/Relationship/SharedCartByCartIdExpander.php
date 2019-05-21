@@ -18,7 +18,7 @@ use Spryker\Glue\SharedCartsRestApi\Processor\SharedCart\Mapper\SharedCartMapper
 use Spryker\Glue\SharedCartsRestApi\Processor\SharedCart\Reader\SharedCartReaderInterface;
 use Spryker\Glue\SharedCartsRestApi\SharedCartsRestApiConfig;
 
-class SharedCartsByCartIdExpander implements SharedCartsByCartIdExpanderInterface
+class SharedCartByCartIdExpander implements SharedCartByCartIdExpanderInterface
 {
     /**
      * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface

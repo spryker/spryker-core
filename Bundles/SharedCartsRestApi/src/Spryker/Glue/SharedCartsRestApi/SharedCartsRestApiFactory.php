@@ -12,8 +12,8 @@ use Spryker\Glue\SharedCartsRestApi\Processor\SharedCart\Mapper\SharedCartMapper
 use Spryker\Glue\SharedCartsRestApi\Processor\SharedCart\Mapper\SharedCartMapperInterface;
 use Spryker\Glue\SharedCartsRestApi\Processor\SharedCart\Reader\SharedCartReader;
 use Spryker\Glue\SharedCartsRestApi\Processor\SharedCart\Reader\SharedCartReaderInterface;
-use Spryker\Glue\SharedCartsRestApi\Processor\SharedCart\Relationship\SharedCartsByCartIdExpander;
-use Spryker\Glue\SharedCartsRestApi\Processor\SharedCart\Relationship\SharedCartsByCartIdExpanderInterface;
+use Spryker\Glue\SharedCartsRestApi\Processor\SharedCart\Relationship\SharedCartByCartIdExpander;
+use Spryker\Glue\SharedCartsRestApi\Processor\SharedCart\Relationship\SharedCartByCartIdExpanderInterface;
 
 /**
  * @method \Spryker\Client\SharedCartsRestApi\SharedCartsRestApiClientInterface getClient()
@@ -21,11 +21,11 @@ use Spryker\Glue\SharedCartsRestApi\Processor\SharedCart\Relationship\SharedCart
 class SharedCartsRestApiFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Glue\SharedCartsRestApi\Processor\SharedCart\Relationship\SharedCartsByCartIdExpanderInterface
+     * @return \Spryker\Glue\SharedCartsRestApi\Processor\SharedCart\Relationship\SharedCartByCartIdExpanderInterface
      */
-    public function createSharedCartsByCartIdExpander(): SharedCartsByCartIdExpanderInterface
+    public function createSharedCartByCartIdExpander(): SharedCartByCartIdExpanderInterface
     {
-        return new SharedCartsByCartIdExpander(
+        return new SharedCartByCartIdExpander(
             $this->createSharedCartReader(),
             $this->createSharedCartMapper(),
             $this->getResourceBuilder()
