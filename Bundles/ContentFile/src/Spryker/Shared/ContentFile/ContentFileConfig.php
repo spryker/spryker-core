@@ -12,37 +12,37 @@ use Spryker\Shared\Kernel\AbstractBundleConfig;
 class ContentFileConfig extends AbstractBundleConfig
 {
     /**
-     * Content item abstract product list
+     * Content item file list
      */
     public const CONTENT_TYPE_FILE_LIST = 'File List';
 
     /**
-     * Content item abstract product list
+     * Content item file list
      */
     public const CONTENT_TERM_FILE_LIST = 'File List';
 
     /**
-     * Content item abstract product list function name
+     * Content item file list function name
      */
     public const TWIG_FUNCTION_NAME = 'content_file_list';
 
     /**
-     * Content item abstract product list text-link template identifier
+     * Content item file list text-link template identifier
      */
     protected const WIDGET_TEMPLATE_IDENTIFIER_TEXT_LINK = 'text-link';
 
     /**
-     * Content item abstract product list text-link template name
+     * Content item file list text-link template name
      */
     protected const WIDGET_TEMPLATE_DISPLAY_NAME_TEXT_LINK = 'content_file_list.template.text-link';
 
     /**
-     * Content item abstract product list file-icon-and-size template identifier
+     * Content item file list file-icon-and-size template identifier
      */
     protected const WIDGET_TEMPLATE_IDENTIFIER_FILE_ICON_AND_SIZE = 'file-icon-and-size';
 
     /**
-     * Content item abstract product list file-icon-and-size template name
+     * Content item file list file-icon-and-size template name
      */
     protected const WIDGET_TEMPLATE_DISPLAY_NAME_FILE_ICON_AND_SIZE = 'content_file_list.template.file-icon-and-size';
 }
