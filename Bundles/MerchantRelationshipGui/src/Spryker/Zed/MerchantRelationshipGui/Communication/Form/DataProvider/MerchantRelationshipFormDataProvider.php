@@ -115,6 +115,7 @@ class MerchantRelationshipFormDataProvider
                 $choices[$companyBusinessUnit->getIdCompanyBusinessUnit()] = $companyBusinessUnit->getName();
             }
         }
+
         return $choices;
     }
 

@@ -46,8 +46,6 @@ class FilterPreferencesCest
     }
 
     /**
-     * @skip Drag & drop functionality is not working, need to recheck later with upcoming codeception related fixes
-     *
      * @param \SprykerTest\Zed\ProductSearch\ProductSearchPresentationTester $i
      *
      * @return void

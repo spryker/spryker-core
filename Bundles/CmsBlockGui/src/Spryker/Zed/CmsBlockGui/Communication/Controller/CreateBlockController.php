@@ -53,6 +53,7 @@ class CreateBlockController extends AbstractController
 
                 if (!empty($cmsBlockTransfer)) {
                     $redirectUrl = $this->createSuccessRedirectUrl($cmsBlockTransfer);
+
                     return $this->redirectResponse($redirectUrl);
                 }
             } else {

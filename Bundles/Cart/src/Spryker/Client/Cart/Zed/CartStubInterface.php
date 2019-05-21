@@ -55,4 +55,11 @@ interface CartStubInterface
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function validateQuote(QuoteTransfer $quoteTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function resetQuoteLock(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
 }
