@@ -234,7 +234,6 @@ class SharedCartFacade extends AbstractFacade implements SharedCartFacadeInterfa
             ->findQuotePermissionGroupById($quotePermissionGroupTransfer);
     }
 
-
     /**
      * {@inheritdoc}
      *

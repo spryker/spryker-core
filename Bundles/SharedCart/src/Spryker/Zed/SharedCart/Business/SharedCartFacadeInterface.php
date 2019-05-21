@@ -190,7 +190,6 @@ interface SharedCartFacadeInterface
      */
     public function findQuotePermissionGroupById(QuotePermissionGroupTransfer $quotePermissionGroupTransfer): QuotePermissionGroupResponseTransfer;
 
-
     /**
      * Specification:
      * - Creates cart share for provided Quote and provided company user within the same business unit.
