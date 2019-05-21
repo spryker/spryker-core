@@ -1,36 +1,38 @@
 {
   "mappings": {
-    "dynamic_templates": [
-      {
+    "product-review": {
+      "dynamic_templates": [
+        {
+          "search-result-data": {
+            "mapping": {
+              "index": "false"
+            },
+            "path_match": "search-result-data.*"
+          }
+        }
+      ],
+      "properties": {
         "search-result-data": {
-          "mapping": {
-            "index": "false"
-          },
-          "path_match": "search-result-data.*"
-        }
-      }
-    ],
-    "properties": {
-      "search-result-data": {
-        "type": "object",
-        "properties": {
+          "type": "object",
+          "properties": {
 
+          }
+        },
+        "store": {
+          "type": "keyword"
+        },
+        "locale": {
+          "type": "keyword"
+        },
+        "id-product-abstract": {
+          "type": "integer"
+        },
+        "rating": {
+          "type": "integer"
+        },
+        "created-at": {
+          "type": "keyword"
         }
-      },
-      "store": {
-        "type": "keyword"
-      },
-      "locale": {
-        "type": "keyword"
-      },
-      "id-product-abstract": {
-        "type": "integer"
-      },
-      "rating": {
-        "type": "integer"
-      },
-      "created-at": {
-        "type": "keyword"
       }
     }
   }
