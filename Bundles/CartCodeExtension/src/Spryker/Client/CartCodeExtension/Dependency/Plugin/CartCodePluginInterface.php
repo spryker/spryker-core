@@ -24,7 +24,7 @@ interface CartCodePluginInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function addCandidate(QuoteTransfer $quoteTransfer, $code): QuoteTransfer;
+    public function addCandidate(QuoteTransfer $quoteTransfer, string $code): QuoteTransfer;
 
     /**
      * Specification:
@@ -38,7 +38,7 @@ interface CartCodePluginInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function removeCode(QuoteTransfer $quoteTransfer, $code): QuoteTransfer;
+    public function removeCode(QuoteTransfer $quoteTransfer, string $code): QuoteTransfer;
 
     /**
      * Specification:
@@ -66,5 +66,5 @@ interface CartCodePluginInterface
      *
      * @return \Generated\Shared\Transfer\MessageTransfer|null
      */
-    public function getOperationResponseMessage(QuoteTransfer $quoteTransfer, $code): ?MessageTransfer;
+    public function getOperationResponseMessage(QuoteTransfer $quoteTransfer, string $code): ?MessageTransfer;
 }
