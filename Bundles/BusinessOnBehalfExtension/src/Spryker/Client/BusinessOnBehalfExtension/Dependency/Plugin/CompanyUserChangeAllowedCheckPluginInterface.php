@@ -13,7 +13,7 @@ interface CompanyUserChangeAllowedCheckPluginInterface
 {
     /**
      * Specification:
-     * - Checks if company user is applicable for change.
+     * - Checks if customer is applicable for changing company user.
      *
      * @api
      *
