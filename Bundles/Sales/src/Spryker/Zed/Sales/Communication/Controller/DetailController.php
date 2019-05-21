@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Sales\Communication\Controller;
 
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
@@ -49,12 +50,15 @@ class DetailController extends AbstractController
             return $blockResponseData;
         }
 
+        $orderItemsOmsTriggerFormCollection = $this->getOrderItemsOmsTriggerFormCollection($orderTransfer, $eventsGroupedByItem);
+
         return array_merge([
             'eventsGroupedByItem' => $eventsGroupedByItem,
             'events' => $events,
             'distinctOrderStates' => $distinctOrderStates,
             'order' => $orderTransfer,
             'orderItemSplitFormCollection' => $orderItemSplitFormCollection,
+            'orderItemsOmsTriggerFormCollection' => $orderItemsOmsTriggerFormCollection,
         ], $blockResponseData);
     }
 
@@ -131,5 +135,46 @@ class DetailController extends AbstractController
     protected function getSubRequestHandler()
     {
         return $this->getApplication()['sub_request'];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param array $eventsGroupedByItem
+     *
+     * @return array
+     */
+    protected function getOrderItemsOmsTriggerFormCollection(OrderTransfer $orderTransfer, array $eventsGroupedByItem): array
+    {
+        $orderItemsOmsTriggerFormCollection = [];
+
+        foreach ($orderTransfer->getItems() as $itemTransfer) {
+            $idSalesOrderItem = $itemTransfer->getIdSalesOrderItem();
+
+            $orderItemsOmsTriggerFormCollection[$idSalesOrderItem] = $this->getOrderItemOmsTriggerFormCollection(
+                $itemTransfer,
+                $eventsGroupedByItem[$idSalesOrderItem]
+            );
+        }
+
+        return $orderItemsOmsTriggerFormCollection;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param string[] $events
+     *
+     * @return array
+     */
+    protected function getOrderItemOmsTriggerFormCollection(ItemTransfer $itemTransfer, array $events): array
+    {
+        $orderItemOmsTriggerFormCollection = [];
+
+        foreach ($events as $event) {
+            $orderItemOmsTriggerFormCollection[$event] = $this->getFactory()
+                ->getOrderItemOmsTriggerForm($itemTransfer, $event)
+                ->createView();
+        }
+
+        return $orderItemOmsTriggerFormCollection;
     }
 }

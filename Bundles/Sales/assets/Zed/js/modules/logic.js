@@ -33,21 +33,6 @@ function createTriggerUrl(idOrder, eventName) {
     return decodeURIComponent(finalUrl);
 }
 
-function createTriggerItemUrl(idOrder, idOrderItem, eventName) {
-    var url = '/oms/trigger/trigger-event-for-order-items';
-    var parameters = {
-        event: eventName,
-        'id-sales-order-item': idOrderItem,
-        redirect: '/sales/detail?id-sales-order=' + idOrder
-    };
-
-    parameters.items = getSelectedItems();
-
-    var finalUrl = url + '?' + $.param(parameters);
-
-    return decodeURIComponent(finalUrl);
-}
-
 function disableTrigger($item) {
     $item
         .prop('disabled', true)
@@ -55,20 +40,6 @@ function disableTrigger($item) {
 }
 
 $(document).ready(function() {
-    $('.trigger-order-single-event').click(function(e){
-        e.preventDefault();
-
-        var $item = $(this);
-
-        disableTrigger($item);
-
-        var idOrder = $item.data('id-sales-order');
-        var eventName = $item.data('event');
-        var idOrderItem = $item.data('id-item');
-
-        window.location = createTriggerItemUrl(idOrder, idOrderItem, eventName);
-    });
-
     $('.trigger-order-event').click(function(e){
         e.preventDefault();
 
