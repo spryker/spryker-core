@@ -31,6 +31,7 @@ class AvailableProductConcreteTable extends AbstractProductConcreteTable
                 ->endUse()
                 ->distinct();
         }
+
         return $spyProductQuery;
     }
 }

@@ -99,6 +99,7 @@ class CarrierDiscountDecisionRule implements ShipmentDiscountDecisionRuleInterfa
 
         if ($shipment->getMethod()) {
             $shipmentMethodTransfer = $this->shipmentFacade->findMethodById($shipment->getMethod()->getIdShipmentMethod());
+
             return $shipmentMethodTransfer->getFkShipmentCarrier();
         }
 

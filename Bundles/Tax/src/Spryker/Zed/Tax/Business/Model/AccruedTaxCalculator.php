@@ -95,6 +95,7 @@ class AccruedTaxCalculator implements AccruedTaxCalculatorInterface
         if (isset(static::$roundingErrorBucket[$identifier])) {
             $roundingError = static::$roundingErrorBucket[$identifier];
             static::$roundingErrorBucket[$identifier] = 0;
+
             return $roundingError;
         }
 

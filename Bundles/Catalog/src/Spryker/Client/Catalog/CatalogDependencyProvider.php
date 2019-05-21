@@ -198,6 +198,7 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
         $container[static::PLUGINS_CATALOG_SEARCH_COUNT_QUERY_EXPANDER] = function () {
             return $this->createCatalogSearchCountQueryExpanderPlugins();
         };
+
         return $container;
     }
 
