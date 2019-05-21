@@ -126,7 +126,7 @@ class ContentFileListViewTable extends AbstractTable
 
         return [
             static::COL_ID_FILE => $idFile,
-            static::COL_FILE_NAME => $fileEntity->getSpyFileLocalizedAttributess()->getFirst()->getTitle(),
+            static::COL_FILE_NAME => $fileEntity->getFileName(),
             static::COL_SELECTED => $this->getAddButtonField($idFile),
         ];
     }
