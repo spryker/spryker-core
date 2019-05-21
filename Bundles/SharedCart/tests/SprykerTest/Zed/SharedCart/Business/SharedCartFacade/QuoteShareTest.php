@@ -283,8 +283,8 @@ class QuoteShareTest extends Unit
 
         // Act
         $quoteCollectionTransfer = $this->tester->getFacade()->expandQuoteCollectionWithCustomerSharedQuoteCollection(
-            (new CustomerTransfer())->setCompanyUserTransfer($companyUserTransfer),
-            (new QuoteCollectionTransfer())
+            (new QuoteCollectionTransfer()),
+            (new CustomerTransfer())->setCompanyUserTransfer($companyUserTransfer)
         );
 
         // Assert
@@ -324,8 +324,8 @@ class QuoteShareTest extends Unit
 
         // Act
         $quoteCollectionTransfer = $this->tester->getFacade()->expandQuoteCollectionWithCustomerShareDetail(
-            (new CustomerTransfer())->setCompanyUserTransfer($companyUserTransfer),
-            (new QuoteCollectionTransfer())->addQuote($quoteTransfer)
+            (new QuoteCollectionTransfer())->addQuote($quoteTransfer),
+            (new CustomerTransfer())->setCompanyUserTransfer($companyUserTransfer)
         );
 
         // Assert

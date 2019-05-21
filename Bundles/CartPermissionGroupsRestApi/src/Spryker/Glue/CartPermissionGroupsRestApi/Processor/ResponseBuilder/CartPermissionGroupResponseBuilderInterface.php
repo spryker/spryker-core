@@ -9,7 +9,6 @@ namespace Spryker\Glue\CartPermissionGroupsRestApi\Processor\ResponseBuilder;
 
 use ArrayObject;
 use Generated\Shared\Transfer\QuotePermissionGroupTransfer;
-use Generated\Shared\Transfer\RestCartPermissionGroupsAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 
@@ -35,17 +34,11 @@ interface CartPermissionGroupResponseBuilderInterface
     public function createCartPermissionGroupsResponse(QuotePermissionGroupTransfer $quotePermissionGroupTransfer): RestResponseInterface;
 
     /**
-     * @param string $cartPermissionGroupUuid
-     * @param \Generated\Shared\Transfer\RestCartPermissionGroupsAttributesTransfer $restCartPermissionGroupsAttributesTransfer
-     * @param \Generated\Shared\Transfer\QuotePermissionGroupTransfer|null $quotePermissionGroupTransfer
+     * @param \Generated\Shared\Transfer\QuotePermissionGroupTransfer $quotePermissionGroupTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
-    public function createCartPermissionGroupsResource(
-        string $cartPermissionGroupUuid,
-        RestCartPermissionGroupsAttributesTransfer $restCartPermissionGroupsAttributesTransfer,
-        ?QuotePermissionGroupTransfer $quotePermissionGroupTransfer = null
-    ): RestResourceInterface;
+    public function createCartPermissionGroupsResource(QuotePermissionGroupTransfer $quotePermissionGroupTransfer): RestResourceInterface;
 
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface

@@ -210,14 +210,14 @@ interface SharedCartFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      * @param \Generated\Shared\Transfer\QuoteCollectionTransfer $quoteCollectionTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
      */
     public function expandQuoteCollectionWithCustomerSharedQuoteCollection(
-        CustomerTransfer $customerTransfer,
-        QuoteCollectionTransfer $quoteCollectionTransfer
+        QuoteCollectionTransfer $quoteCollectionTransfer,
+        CustomerTransfer $customerTransfer
     ): QuoteCollectionTransfer;
 
     /**
@@ -227,13 +227,13 @@ interface SharedCartFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      * @param \Generated\Shared\Transfer\QuoteCollectionTransfer $quoteCollectionTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
      */
     public function expandQuoteCollectionWithCustomerShareDetail(
-        CustomerTransfer $customerTransfer,
-        QuoteCollectionTransfer $quoteCollectionTransfer
+        QuoteCollectionTransfer $quoteCollectionTransfer,
+        CustomerTransfer $customerTransfer
     ): QuoteCollectionTransfer;
 }

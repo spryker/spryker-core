@@ -28,29 +28,33 @@ class ShareDetailQuoteCollectionExpander implements ShareDetailQuoteCollectionEx
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      * @param \Generated\Shared\Transfer\QuoteCollectionTransfer $quoteCollectionTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
      */
     public function expandQuoteCollectionWithCustomerShareDetail(
-        CustomerTransfer $customerTransfer,
-        QuoteCollectionTransfer $quoteCollectionTransfer
+        QuoteCollectionTransfer $quoteCollectionTransfer,
+        CustomerTransfer $customerTransfer
     ): QuoteCollectionTransfer {
         if (!$customerTransfer->getCompanyUserTransfer()->getIdCompanyUser()) {
             return $quoteCollectionTransfer;
         }
 
-        foreach ($quoteCollectionTransfer->getQuotes() as $quoteIndex => $quoteTransfer) {
-            $shareDetailCollectionTransfer = $this->quoteShareDetailsReader->getShareDetailsByIdQuote($quoteTransfer);
+        $resultingQuoteCollectionTransfer = new QuoteCollectionTransfer();
+        foreach ($quoteCollectionTransfer->getQuotes() as $quoteTransfer) {
+            $shareDetailCollectionTransfer = $this->quoteShareDetailsReader
+                ->getShareDetailsByIdQuote($quoteTransfer);
 
             foreach ($shareDetailCollectionTransfer->getShareDetails() as $shareDetailTransfer) {
                 if ($customerTransfer->getCompanyUserTransfer()->getIdCompanyUser() === $shareDetailTransfer->getIdCompanyUser()) {
-                    $quoteCollectionTransfer->offsetSet($quoteIndex, $quoteTransfer->addShareDetail($shareDetailTransfer));
+                    $quoteTransfer->addShareDetail($shareDetailTransfer);
+
+                    $resultingQuoteCollectionTransfer->addQuote($quoteTransfer);
                 }
             }
         }
 
-        return $quoteCollectionTransfer;
+        return $resultingQuoteCollectionTransfer;
     }
 }

@@ -20,7 +20,8 @@ class CartPermissionGroupByQuoteTransferResourceRelationshipPlugin extends Abstr
     /**
      * {@inheritdoc}
      * - Adds cart-permission-groups resource as a relationship.
-     * - Requires QuoteTransfer to be provided in resource's payload.
+     * - Relationship applies only if QuoteTransfer is provided as resource's payload.
+     * - Uses QuoteTransfer::shareDetails collection from the resource's payload.
      * - Uses ShareDetailTransfer::quotePermissionGroup from the resource's payload.
      *
      * @api

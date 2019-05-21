@@ -110,10 +110,10 @@ class QuoteReader implements QuoteReaderInterface
     ): QuoteCollectionTransfer {
         foreach ($this->quoteCollectionExpanderPlugins as $quoteCollectionExpanderPlugin) {
             $quoteCollectionTransfer = $quoteCollectionExpanderPlugin->expandQuoteCollection(
+                $quoteCollectionTransfer,
                 (new CustomerTransfer())->setCompanyUserTransfer(
                     (new CompanyUserTransfer())->setIdCompanyUser($quoteCriteriaFilterTransfer->getIdCompanyUser())
-                ),
-                $quoteCollectionTransfer
+                )
             );
         }
 

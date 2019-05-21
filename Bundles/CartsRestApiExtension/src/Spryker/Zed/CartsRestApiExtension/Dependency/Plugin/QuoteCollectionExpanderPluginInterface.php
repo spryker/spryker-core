@@ -18,13 +18,13 @@ interface QuoteCollectionExpanderPluginInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      * @param \Generated\Shared\Transfer\QuoteCollectionTransfer $quoteCollectionTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
      */
     public function expandQuoteCollection(
-        CustomerTransfer $customerTransfer,
-        QuoteCollectionTransfer $quoteCollectionTransfer
+        QuoteCollectionTransfer $quoteCollectionTransfer,
+        CustomerTransfer $customerTransfer
     ): QuoteCollectionTransfer;
 }

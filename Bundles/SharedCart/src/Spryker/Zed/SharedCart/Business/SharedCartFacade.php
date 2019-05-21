@@ -255,16 +255,18 @@ class SharedCartFacade extends AbstractFacade implements SharedCartFacadeInterfa
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      * @param \Generated\Shared\Transfer\QuoteCollectionTransfer $quoteCollectionTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
      */
-    public function expandQuoteCollectionWithCustomerSharedQuoteCollection(CustomerTransfer $customerTransfer, QuoteCollectionTransfer $quoteCollectionTransfer): QuoteCollectionTransfer
-    {
+    public function expandQuoteCollectionWithCustomerSharedQuoteCollection(
+        QuoteCollectionTransfer $quoteCollectionTransfer,
+        CustomerTransfer $customerTransfer
+    ): QuoteCollectionTransfer {
         return $this->getFactory()
             ->createSharedCartQuoteCollectionExpander()
-            ->expandQuoteCollectionWithCustomerSharedQuoteCollection($customerTransfer, $quoteCollectionTransfer);
+            ->expandQuoteCollectionWithCustomerSharedQuoteCollection($quoteCollectionTransfer, $customerTransfer);
     }
 
     /**
@@ -272,15 +274,17 @@ class SharedCartFacade extends AbstractFacade implements SharedCartFacadeInterfa
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      * @param \Generated\Shared\Transfer\QuoteCollectionTransfer $quoteCollectionTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
      */
-    public function expandQuoteCollectionWithCustomerShareDetail(CustomerTransfer $customerTransfer, QuoteCollectionTransfer $quoteCollectionTransfer): QuoteCollectionTransfer
-    {
+    public function expandQuoteCollectionWithCustomerShareDetail(
+        QuoteCollectionTransfer $quoteCollectionTransfer,
+        CustomerTransfer $customerTransfer
+    ): QuoteCollectionTransfer {
         return $this->getFactory()
             ->createShareDetailQuoteCollectionExpander()
-            ->expandQuoteCollectionWithCustomerShareDetail($customerTransfer, $quoteCollectionTransfer);
+            ->expandQuoteCollectionWithCustomerShareDetail($quoteCollectionTransfer, $customerTransfer);
     }
 }

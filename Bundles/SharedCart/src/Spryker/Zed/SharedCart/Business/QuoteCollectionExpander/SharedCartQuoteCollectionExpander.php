@@ -38,20 +38,22 @@ class SharedCartQuoteCollectionExpander implements SharedCartQuoteCollectionExpa
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      * @param \Generated\Shared\Transfer\QuoteCollectionTransfer $quoteCollectionTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
      */
     public function expandQuoteCollectionWithCustomerSharedQuoteCollection(
-        CustomerTransfer $customerTransfer,
-        QuoteCollectionTransfer $quoteCollectionTransfer
+        QuoteCollectionTransfer $quoteCollectionTransfer,
+        CustomerTransfer $customerTransfer
     ): QuoteCollectionTransfer {
         $sharedQuoteCriteriaFilterTransfer = (new SharedQuoteCriteriaFilterTransfer())
             ->setIdCompanyUser($customerTransfer->getCompanyUserTransfer()->getIdCompanyUser())
             ->setIdStore($this->storeFacade->getCurrentStore()->getIdStore());
 
-        $sharedQuoteCollectionTransfer = $this->quoteReader->findCustomerSharedQuoteCollectionBySharedQuoteCriteriaFilter($sharedQuoteCriteriaFilterTransfer);
+        $sharedQuoteCollectionTransfer = $this->quoteReader
+            ->findCustomerSharedQuoteCollectionBySharedQuoteCriteriaFilter($sharedQuoteCriteriaFilterTransfer);
+
         foreach ($sharedQuoteCollectionTransfer->getQuotes() as $quoteTransfer) {
             $quoteCollectionTransfer->addQuote($quoteTransfer);
         }

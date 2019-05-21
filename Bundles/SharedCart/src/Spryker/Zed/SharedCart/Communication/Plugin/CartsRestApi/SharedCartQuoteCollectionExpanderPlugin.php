@@ -25,16 +25,16 @@ class SharedCartQuoteCollectionExpanderPlugin extends AbstractPlugin implements 
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      * @param \Generated\Shared\Transfer\QuoteCollectionTransfer $quoteCollectionTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
      */
     public function expandQuoteCollection(
-        CustomerTransfer $customerTransfer,
-        QuoteCollectionTransfer $quoteCollectionTransfer
+        QuoteCollectionTransfer $quoteCollectionTransfer,
+        CustomerTransfer $customerTransfer
     ): QuoteCollectionTransfer {
         return $this->getFacade()
-            ->expandQuoteCollectionWithCustomerSharedQuoteCollection($customerTransfer, $quoteCollectionTransfer);
+            ->expandQuoteCollectionWithCustomerSharedQuoteCollection($quoteCollectionTransfer, $customerTransfer);
     }
 }
