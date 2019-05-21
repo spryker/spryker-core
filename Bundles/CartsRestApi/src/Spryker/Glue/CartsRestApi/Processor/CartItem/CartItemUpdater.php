@@ -83,7 +83,7 @@ class CartItemUpdater implements CartItemUpdaterInterface
             ->setSku($itemIdentifier)
             ->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier())
             ->setCustomer(
-                $this->executeCustomerExpanderPlugin($restCartItemsAttributesTransfer->getCustomer(), $restRequest)
+                $this->executeCustomerExpanderPlugin(new CustomerTransfer(), $restRequest)
             );
 
         $quoteResponseTransfer = $this->cartsRestApiClient->updateItem($restCartItemsAttributesTransfer);

@@ -102,11 +102,14 @@ class QuoteItemUpdater implements QuoteItemUpdaterInterface
         QuoteTransfer $quoteTransfer,
         RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
     ): PersistentCartChangeQuantityTransfer {
+        $customerTransfer = $restCartItemsAttributesTransfer->getCustomer() ?? new CustomerTransfer();
+        $customerTransfer->setCustomerReference($restCartItemsAttributesTransfer->getCustomerReference());
+
         return (new PersistentCartChangeQuantityTransfer())
             ->setIdQuote($quoteTransfer->getIdQuote())
             ->setItem((new ItemTransfer())
                 ->setSku($restCartItemsAttributesTransfer->getSku())
                 ->setQuantity($restCartItemsAttributesTransfer->getQuantity()))
-            ->setCustomer((new CustomerTransfer())->setCustomerReference($restCartItemsAttributesTransfer->getCustomerReference()));
+            ->setCustomer($customerTransfer);
     }
 }

@@ -100,11 +100,14 @@ class QuoteItemDeleter implements QuoteItemDeleterInterface
         QuoteTransfer $quoteTransfer,
         RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
     ): PersistentCartChangeTransfer {
+        $customerTransfer = $restCartItemsAttributesTransfer->getCustomer() ?? new CustomerTransfer();
+        $customerTransfer->setCustomerReference($restCartItemsAttributesTransfer->getCustomerReference());
+
         return (new PersistentCartChangeTransfer())
             ->setIdQuote($quoteTransfer->getIdQuote())
             ->addItem((new ItemTransfer())
                 ->setSku($restCartItemsAttributesTransfer->getSku())
                 ->setQuantity($restCartItemsAttributesTransfer->getQuantity()))
-            ->setCustomer((new CustomerTransfer())->setCustomerReference($restCartItemsAttributesTransfer->getCustomerReference()));
+            ->setCustomer($customerTransfer);
     }
 }
