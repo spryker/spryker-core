@@ -14,7 +14,7 @@ interface CustomerExpanderPluginInterface
 {
     /**
      * Specification:
-     * - Expands the CustomerTransfer with extra information from payload token.
+     * - Expands the CustomerTransfer using extra information from token payload.
      *
      * @api
      *
