@@ -105,9 +105,9 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addSalesFacade(Container $container): Container
     {
-        $container[static::FACADE_SALES] = function (Container $container) {
+        $container->set(static::FACADE_SALES, function (Container $container) {
             return new ShipmentToSalesFacadeBridge($container->getLocator()->sales()->facade());
-        };
+        });
 
         return $container;
     }
@@ -147,9 +147,9 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCustomerFacade(Container $container)
     {
-        $container[static::FACADE_CUSTOMER] = function (Container $container) {
+        $container->set(static::FACADE_CUSTOMER, function (Container $container) {
             return new ShipmentToCustomerBridge($container->getLocator()->customer()->facade());
-        };
+        });
 
         return $container;
     }
@@ -161,9 +161,9 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addShipmentService(Container $container)
     {
-        $container[static::SERVICE_SHIPMENT] = function (Container $container) {
+        $container->set(static::SERVICE_SHIPMENT, function (Container $container) {
             return $container->getLocator()->shipment()->service();
-        };
+        });
 
         return $container;
     }

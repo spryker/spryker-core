@@ -342,9 +342,9 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCustomerService(Container $container): Container
     {
-        $container[static::SERVICE_CUSTOMER] = function (Container $container): CustomerServiceInterface {
+        $container->set(static::SERVICE_CUSTOMER, function (Container $container): CustomerServiceInterface {
             return $container->getLocator()->customer()->service();
-        };
+        });
 
         return $container;
     }
