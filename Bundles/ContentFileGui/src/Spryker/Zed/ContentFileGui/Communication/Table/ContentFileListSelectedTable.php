@@ -16,7 +16,7 @@ use Spryker\Zed\ContentFileGui\ContentFileGuiConfig;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
-class ContentFileSelectedTable extends AbstractTable
+class ContentFileListSelectedTable extends AbstractTable
 {
     public const TABLE_IDENTIFIER = 'file-list-selected-table';
     public const TABLE_CLASS = 'item-list-selected-table gui-table-data';

@@ -13,7 +13,7 @@ use Orm\Zed\FileManager\Persistence\SpyFileQuery;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
-class ContentFileViewTable extends AbstractTable
+class ContentFileListViewTable extends AbstractTable
 {
     public const TABLE_IDENTIFIER = 'file-list-view-table';
     public const TABLE_CLASS = 'item-list-view-table gui-table-data';

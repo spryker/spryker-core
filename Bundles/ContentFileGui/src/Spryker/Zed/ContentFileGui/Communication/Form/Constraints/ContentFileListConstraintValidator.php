@@ -14,11 +14,11 @@ use Spryker\Zed\ContentFileGui\Communication\Form\FileListContentTermForm;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
-class FileListConstraintValidator extends ConstraintValidator
+class ContentFileListConstraintValidator extends ConstraintValidator
 {
     /**
      * @param array $fileIds The value that should be validated
-     * @param \Symfony\Component\Validator\Constraint|\Spryker\Zed\ContentFileGui\Communication\Form\Constraints\FileListConstraint $constraint The constraint for the validation
+     * @param \Symfony\Component\Validator\Constraint|\Spryker\Zed\ContentFileGui\Communication\Form\Constraints\ContentFileListConstraint $constraint The constraint for the validation
      *
      * @throws \InvalidArgumentException
      *
@@ -26,10 +26,10 @@ class FileListConstraintValidator extends ConstraintValidator
      */
     public function validate($fileIds, Constraint $constraint): void
     {
-        if (!$constraint instanceof FileListConstraint) {
+        if (!$constraint instanceof ContentFileListConstraint) {
             throw new InvalidArgumentException(sprintf(
                 'Expected constraint instance of %s, got %s instead.',
-                FileListConstraint::class,
+                ContentFileListConstraint::class,
                 get_class($constraint)
             ));
         }

@@ -10,7 +10,7 @@ namespace Spryker\Zed\ContentFileGui\Communication\Form\Constraints;
 use Spryker\Zed\ContentFileGui\Dependency\Facade\ContentFileGuiToContentFileFacadeInterface;
 use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 
-class FileListConstraint extends SymfonyConstraint
+class ContentFileListConstraint extends SymfonyConstraint
 {
     /**
      * @var \Spryker\Zed\ContentFileGui\Dependency\Facade\ContentFileGuiToContentFileFacadeInterface

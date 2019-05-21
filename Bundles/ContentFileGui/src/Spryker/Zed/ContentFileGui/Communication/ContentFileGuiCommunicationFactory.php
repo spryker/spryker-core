@@ -8,9 +8,9 @@
 namespace Spryker\Zed\ContentFileGui\Communication;
 
 use Orm\Zed\FileManager\Persistence\SpyFileQuery;
-use Spryker\Zed\ContentFileGui\Communication\Form\Constraints\FileListConstraint;
-use Spryker\Zed\ContentFileGui\Communication\Table\ContentFileSelectedTable;
-use Spryker\Zed\ContentFileGui\Communication\Table\ContentFileViewTable;
+use Spryker\Zed\ContentFileGui\Communication\Form\Constraints\ContentFileListConstraint;
+use Spryker\Zed\ContentFileGui\Communication\Table\ContentFileListSelectedTable;
+use Spryker\Zed\ContentFileGui\Communication\Table\ContentFileListViewTable;
 use Spryker\Zed\ContentFileGui\ContentFileGuiDependencyProvider;
 use Spryker\Zed\ContentFileGui\Dependency\Facade\ContentFileGuiToContentFileFacadeInterface;
 use Spryker\Zed\ContentFileGui\Dependency\Facade\ContentFileGuiToLocaleFacadeInterface;
@@ -24,11 +24,11 @@ class ContentFileGuiCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @param string|null $identifierSuffix
      *
-     * @return \Spryker\Zed\ContentFileGui\Communication\Table\ContentFileViewTable
+     * @return \Spryker\Zed\ContentFileGui\Communication\Table\ContentFileListViewTable
      */
-    public function createContentFileListViewTable(?string $identifierSuffix = null): ContentFileViewTable
+    public function createContentFileListViewTable(?string $identifierSuffix = null): ContentFileListViewTable
     {
-        return new ContentFileViewTable(
+        return new ContentFileListViewTable(
             $this->getFileQueryContainer(),
             $this->getLocaleFacade()->getCurrentLocale(),
             $identifierSuffix
@@ -39,11 +39,11 @@ class ContentFileGuiCommunicationFactory extends AbstractCommunicationFactory
      * @param int[] $fileIds
      * @param string|null $identifierSuffix
      *
-     * @return \Spryker\Zed\ContentFileGui\Communication\Table\ContentFileSelectedTable
+     * @return \Spryker\Zed\ContentFileGui\Communication\Table\ContentFileListSelectedTable
      */
-    public function createContentFileListSelectedTable(array $fileIds, ?string $identifierSuffix = null): ContentFileSelectedTable
+    public function createContentFileListSelectedTable(array $fileIds, ?string $identifierSuffix = null): ContentFileListSelectedTable
     {
-        return new ContentFileSelectedTable(
+        return new ContentFileListSelectedTable(
             $this->getFileQueryContainer(),
             $this->getLocaleFacade()->getCurrentLocale(),
             $fileIds,
@@ -52,11 +52,11 @@ class ContentFileGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\ContentFileGui\Communication\Form\Constraints\FileListConstraint
+     * @return \Spryker\Zed\ContentFileGui\Communication\Form\Constraints\ContentFileListConstraint
      */
-    public function createContentFileListConstraint(): FileListConstraint
+    public function createContentFileListConstraint(): ContentFileListConstraint
     {
-        return new FileListConstraint($this->getContentFileFacade());
+        return new ContentFileListConstraint($this->getContentFileFacade());
     }
 
     /**
