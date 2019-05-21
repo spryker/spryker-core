@@ -25,10 +25,6 @@ class SchedulerCleanConsole extends Console
     protected const SCHEDULERS_OPTION_SHORTCUT = 's';
     protected const SCHEDULERS_OPTION_DESCRIPTION = 'Schedulers that will be executed on this host.';
 
-    protected const JOBS_OPTION = 'jobs';
-    protected const JOBS_OPTION_SHORTCUT = 'j';
-    protected const JOBS_OPTION_DESCRIPTION = 'Scheduler job(s) that will be enabled.';
-
     /**
      * @return void
      */
@@ -45,14 +41,6 @@ class SchedulerCleanConsole extends Console
             []
         );
 
-        $this->addOption(
-            static::JOBS_OPTION,
-            static::JOBS_OPTION_SHORTCUT,
-            InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY,
-            static::JOBS_OPTION_DESCRIPTION,
-            []
-        );
-
         parent::configure();
     }
 
@@ -65,9 +53,8 @@ class SchedulerCleanConsole extends Console
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $schedulers = $input->getOption(static::SCHEDULERS_OPTION);
-        $jobs = $input->getOption(static::JOBS_OPTION);
 
-        $schedulerTransfer = $this->createSchedulerTransfer($schedulers, $jobs);
+        $schedulerTransfer = $this->createSchedulerTransfer($schedulers);
         $schedulerResponseTransfer = $this->getFacade()->clean($schedulerTransfer);
 
         $output->writeln($schedulerResponseTransfer->getMessages());
@@ -77,14 +64,12 @@ class SchedulerCleanConsole extends Console
 
     /**
      * @param array $schedulers
-     * @param array $jobNames
      *
      * @return \Generated\Shared\Transfer\SchedulerTransfer
      */
-    protected function createSchedulerTransfer(array $schedulers, array $jobNames): SchedulerTransfer
+    protected function createSchedulerTransfer(array $schedulers): SchedulerTransfer
     {
         return (new SchedulerTransfer())
-            ->setSchedulers($schedulers)
-            ->setJobNames($jobNames);
+            ->setSchedulers($schedulers);
     }
 }
