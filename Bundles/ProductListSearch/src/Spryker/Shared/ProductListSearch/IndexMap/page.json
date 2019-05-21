@@ -1,14 +1,16 @@
 {
   "mappings": {
-    "properties": {
-      "product-lists": {
-        "type": "object",
-        "properties": {
-          "blacklists": {
-            "type": "integer"
-          },
-          "whitelists": {
-            "type": "integer"
+    "page": {
+      "properties": {
+        "product-lists": {
+          "type": "object",
+          "properties": {
+            "blacklists": {
+              "type": "integer"
+            },
+            "whitelists": {
+              "type": "integer"
+            }
           }
         }
       }
