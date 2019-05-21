@@ -21,7 +21,7 @@ class QuotePermissionGroupQuoteCollectionExpanderPlugin extends AbstractPlugin i
 {
     /**
      * {@inheritdoc}
-     * - Extends quotes collection response share details.
+     * - Expands quotes collection response share details.
      *
      * @api
      *

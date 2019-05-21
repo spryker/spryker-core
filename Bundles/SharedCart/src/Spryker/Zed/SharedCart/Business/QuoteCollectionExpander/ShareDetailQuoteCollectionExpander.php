@@ -21,9 +21,8 @@ class ShareDetailQuoteCollectionExpander implements ShareDetailQuoteCollectionEx
     /**
      * @param \Spryker\Zed\SharedCart\Business\QuoteShareDetails\QuoteShareDetailsReaderInterface $quoteShareDetailsReader
      */
-    public function __construct(
-        QuoteShareDetailsReaderInterface $quoteShareDetailsReader
-    ) {
+    public function __construct(QuoteShareDetailsReaderInterface $quoteShareDetailsReader)
+    {
         $this->quoteShareDetailsReader = $quoteShareDetailsReader;
     }
 
