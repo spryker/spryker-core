@@ -16,6 +16,10 @@ use Spryker\Service\Kernel\AbstractService;
 class CustomerService extends AbstractService implements CustomerServiceInterface
 {
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @return string

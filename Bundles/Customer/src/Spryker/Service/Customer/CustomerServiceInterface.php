@@ -12,6 +12,11 @@ use Generated\Shared\Transfer\AddressTransfer;
 interface CustomerServiceInterface
 {
     /**
+     * Specification:
+     * - Generates unique key for address based on address transfer properties without excluded properties list.
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @return string
