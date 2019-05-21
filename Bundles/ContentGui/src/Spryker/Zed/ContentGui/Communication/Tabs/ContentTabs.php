@@ -10,6 +10,7 @@ namespace Spryker\Zed\ContentGui\Communication\Tabs;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\TabItemTransfer;
 use Generated\Shared\Transfer\TabsViewTransfer;
+use Spryker\Shared\ContentGui\ContentGuiConfig;
 use Spryker\Zed\ContentGui\Dependency\Facade\ContentGuiToLocaleFacadeInterface;
 use Spryker\Zed\Gui\Communication\Tabs\AbstractTabs;
 
@@ -79,7 +80,7 @@ class ContentTabs extends AbstractTabs
     protected function getAvailableLocales(): array
     {
         $defaultLocale = new LocaleTransfer();
-        $defaultLocale->setLocaleName('Default locale');
+        $defaultLocale->setLocaleName(ContentGuiConfig::DEFAULT_LOCALE_NAME);
 
         $locales = $this->localeFacade
             ->getLocaleCollection();

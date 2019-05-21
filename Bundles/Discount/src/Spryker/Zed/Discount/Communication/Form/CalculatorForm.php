@@ -79,6 +79,7 @@ class CalculatorForm extends AbstractType
                 if (!$formData) {
                     return [Constraint::DEFAULT_GROUP];
                 }
+
                 return [
                     Constraint::DEFAULT_GROUP,
                     $formData->getCollectorStrategyType(),

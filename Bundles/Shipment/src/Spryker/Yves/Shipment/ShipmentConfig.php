@@ -12,11 +12,13 @@ use Spryker\Yves\Kernel\AbstractBundleConfig;
 class ShipmentConfig extends AbstractBundleConfig
 {
     /**
+     * @example 'No shipment'
+     *
+     * @deprecated Unused, will be removed with next major release. Use \Spryker\Shared\Shipment\ShipmentConfig::SHIPMENT_METHOD_NAME_NO_SHIPMENT instead.
+     *
      * Specification:
      * - Defines a name of a shipment method, which will be used for orders without selected shipment
      * - The defined shipment method name MUST exist in your DB
-     *
-     * @example 'No shipment'
      *
      * @return string
      */

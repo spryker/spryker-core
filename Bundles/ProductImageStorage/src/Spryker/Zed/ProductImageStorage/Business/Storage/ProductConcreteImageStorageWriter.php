@@ -271,7 +271,7 @@ class ProductConcreteImageStorageWriter implements ProductConcreteImageStorageWr
     /**
      * @param array $productConcreteIds
      *
-     * @return \Orm\Zed\ProductStorage\Persistence\SpyProductConcreteStorage[][]
+     * @return \Orm\Zed\ProductImageStorage\Persistence\SpyProductConcreteImageStorage[][]
      */
     protected function findProductConcreteImageStorageEntitiesByProductConcreteIds(array $productConcreteIds)
     {

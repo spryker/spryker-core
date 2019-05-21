@@ -55,7 +55,7 @@ class IdFilterInsertTest extends Unit
             ->method('getIdCollection')
             ->willReturn($ids);
 
-        $result = $this->idFilterInsert->filter($ids, 'foo', static::ITEM_EVENT_ACTIVE);
+        $result = $this->idFilterInsert->filter($ids, 'foo');
 
         $this->assertSame([], $result);
     }
@@ -77,7 +77,7 @@ class IdFilterInsertTest extends Unit
                 ->willReturn($itemIdChunk);
         }
 
-        $result = $this->idFilterInsert->filter($ids, 'foo', static::ITEM_EVENT_ACTIVE);
+        $result = $this->idFilterInsert->filter($ids, 'foo');
         $this->assertSame([], $result);
     }
 
@@ -97,7 +97,7 @@ class IdFilterInsertTest extends Unit
                 ->willReturn([]);
         }
 
-        $result = $this->idFilterInsert->filter($ids, 'foo', static::ITEM_EVENT_ACTIVE);
+        $result = $this->idFilterInsert->filter($ids, 'foo');
         $this->assertSame($ids, $result);
     }
 }

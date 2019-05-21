@@ -7,6 +7,8 @@
 
     <table name="spy_unauthenticated_customer_access_storage" identifierQuoting="true">
         <column name="id_unauthenticated_customer_access_storage" type="integer" autoIncrement="true" primaryKey="true"/>
+        <column name="key" type="VARCHAR" size="255" required="true"/>
+        <column name="data" type="LONGVARCHAR" required="false"/>
         <id-method-parameter value="unauthenticated_customer_access_storage_pk_seq"/>
         <behavior name="synchronization">
             <parameter name="resource" value="unauthenticated_customer_access"/>

@@ -15,6 +15,7 @@ use Spryker\Zed\Development\DevelopmentConfig;
 use Spryker\Zed\Development\DevelopmentDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use SprykerTest\Zed\Development\Helper\IdeAutoCompletion;
+use Symfony\Component\Finder\Finder;
 
 /**
  * Auto-generated group annotations
@@ -48,7 +49,10 @@ class IdeAutoCompletionWriterTest extends Unit
         });
 
         $tester->canSeeFileFound('AutoCompletion.php', IdeAutoCompletion::TEST_TARGET_DIRECTORY . 'Generated/Yves/Ide/');
-        $tester->canSeeFileFound('BundleAutoCompletion.php', IdeAutoCompletion::TEST_TARGET_DIRECTORY . 'Generated/Yves/Ide/');
+        $finder = new Finder();
+        $finder->in(IdeAutoCompletion::TEST_TARGET_DIRECTORY . 'Generated/Yves/Ide/');
+
+        $this->assertTrue($finder->count() > 1);
     }
 
     /**
@@ -66,7 +70,11 @@ class IdeAutoCompletionWriterTest extends Unit
         });
 
         $tester->canSeeFileFound('AutoCompletion.php', IdeAutoCompletion::TEST_TARGET_DIRECTORY . 'Generated/Zed/Ide/');
-        $tester->canSeeFileFound('BundleAutoCompletion.php', IdeAutoCompletion::TEST_TARGET_DIRECTORY . 'Generated/Zed/Ide/');
+
+        $finder = new Finder();
+        $finder->in(IdeAutoCompletion::TEST_TARGET_DIRECTORY . 'Generated/Zed/Ide/');
+
+        $this->assertTrue($finder->count() > 1);
     }
 
     /**
@@ -84,7 +92,11 @@ class IdeAutoCompletionWriterTest extends Unit
         });
 
         $tester->canSeeFileFound('AutoCompletion.php', IdeAutoCompletion::TEST_TARGET_DIRECTORY . 'Generated/Client/Ide/');
-        $tester->canSeeFileFound('BundleAutoCompletion.php', IdeAutoCompletion::TEST_TARGET_DIRECTORY . 'Generated/Client/Ide/');
+
+        $finder = new Finder();
+        $finder->in(IdeAutoCompletion::TEST_TARGET_DIRECTORY . 'Generated/Client/Ide/');
+
+        $this->assertTrue($finder->count() > 1);
     }
 
     /**
@@ -102,7 +114,6 @@ class IdeAutoCompletionWriterTest extends Unit
         });
 
         $tester->canSeeFileFound('AutoCompletion.php', IdeAutoCompletion::TEST_TARGET_DIRECTORY . 'Generated/Service/Ide/');
-        $tester->canSeeFileFound('BundleAutoCompletion.php', IdeAutoCompletion::TEST_TARGET_DIRECTORY . 'Generated/Service/Ide/');
     }
 
     /**

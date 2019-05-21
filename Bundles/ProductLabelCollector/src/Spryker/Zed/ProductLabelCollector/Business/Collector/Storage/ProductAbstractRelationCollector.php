@@ -77,6 +77,7 @@ class ProductAbstractRelationCollector extends AbstractStoragePropelCollector
             }
             $activeIds[] = $idProductLabel;
         }
+
         return $activeIds;
     }
 

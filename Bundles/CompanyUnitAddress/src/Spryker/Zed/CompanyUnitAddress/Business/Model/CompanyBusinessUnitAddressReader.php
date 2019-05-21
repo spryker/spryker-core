@@ -10,6 +10,7 @@ namespace Spryker\Zed\CompanyUnitAddress\Business\Model;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer;
+use Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 use Spryker\Zed\CompanyUnitAddress\Persistence\CompanyUnitAddressRepositoryInterface;
 
@@ -81,5 +82,30 @@ class CompanyBusinessUnitAddressReader implements CompanyBusinessUnitAddressRead
         }
 
         return $this->companyUnitAddressPluginExecutor->executeCompanyUnitAddressHydratorPlugins($companyUnitAddressTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer
+     */
+    public function findCompanyBusinessUnitAddressByUuid(CompanyUnitAddressTransfer $companyUnitAddressTransfer): CompanyUnitAddressResponseTransfer
+    {
+        $companyUnitAddressTransfer->requireUuid();
+
+        $companyUnitAddressTransfer = $this->repository
+            ->findCompanyBusinessUnitAddressByUuid($companyUnitAddressTransfer->getUuid());
+
+        $companyUnitAddressResponseTransfer = new CompanyUnitAddressResponseTransfer();
+        if (!$companyUnitAddressTransfer) {
+            return $companyUnitAddressResponseTransfer->setIsSuccessful(false);
+        }
+
+        $companyUnitAddressTransfer = $this->companyUnitAddressPluginExecutor
+            ->executeCompanyUnitAddressHydratorPlugins($companyUnitAddressTransfer);
+
+        return $companyUnitAddressResponseTransfer
+            ->setIsSuccessful(true)
+            ->setCompanyUnitAddressTransfer($companyUnitAddressTransfer);
     }
 }

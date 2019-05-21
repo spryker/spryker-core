@@ -72,6 +72,7 @@ class ApiControllerListenerPlugin extends AbstractPlugin implements ApiControlle
             $this->logResponse($responseTransfer);
 
             $responseObject = new Response();
+
             return $this->transformToResponse($requestTransfer, $responseTransfer, $responseObject);
         };
 

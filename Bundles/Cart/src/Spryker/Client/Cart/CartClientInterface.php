@@ -212,7 +212,7 @@ interface CartClientInterface
      *  - Default quote storage strategy \Spryker\Client\Cart\Plugin\SessionQuoteStorageStrategyPlugin.
      *  - Reloads quote from storage.
      *  - Reloads all items in cart as new, it recreates all items transfer, reads new prices, options, bundles using quote storage strategy if quote is not locked.
-     *  - Observe quote changes after reloading.
+     *  - Adds messages about quote-related changes to Messenger.
      *
      * @api
      *
@@ -222,11 +222,24 @@ interface CartClientInterface
 
     /**
      * Specification:
+     *  - Reloads all items in cart as new, it recreates all items transfer, reads new prices, options, bundles if quote is not locked.
+     *  - Adds messages about quote-related changes to Messenger.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function validateSpecificQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
+
+    /**
+     * Specification:
      *  - Resolve quote storage strategy which implements \Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface.
      *  - Default quote storage strategy \Spryker\Client\Cart\Plugin\SessionQuoteStorageStrategyPlugin.
      *  - Update quote currency using quote storage strategy.
      *  - Reloads all items in cart as new, it recreates all items transfer, reads new prices, options, bundles.
-     *   - Returns the unchanged QuoteTransfer and CustomerTransfer with `isSuccessful=false` when provided quote is locked.
+     *  - Returns the unchanged QuoteTransfer and CustomerTransfer with `isSuccessful=false` when provided quote is locked.
      *  - Adds error message to Messenger when quote is locked.
      *
      * @api
@@ -260,4 +273,34 @@ interface CartClientInterface
      * @return \Generated\Shared\Transfer\ItemTransfer|null
      */
     public function findQuoteItem(QuoteTransfer $quoteTransfer, string $sku, ?string $groupKey = null): ?ItemTransfer;
+
+    /**
+     * Specification:
+     * - Makes zed request.
+     * - Loads customer quote from database when storage strategy is in place.
+     * - Executes QuoteLockPreResetPluginInterface plugins before unlock.
+     * - Unlocks quote by setting `isLocked` transfer property to false.
+     * - Reloads all items in cart as new, it recreates all items transfer, reads new prices, options, bundles.
+     * - Save updated quote to database when storage strategy is in place.
+     * - Stores quote in session internally after zed request.
+     *
+     * @api
+     *
+     * @throws \Spryker\Client\Cart\Exception\QuoteStorageStrategyPluginNotFound if storage strategy does not implement `QuoteResetLockQuoteStorageStrategyPluginInterface`.
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function resetQuoteLock(): QuoteResponseTransfer;
+
+    /**
+     * Specification:
+     *  - Locks quote by setting `isLocked` transfer property to true.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function lockQuote(QuoteTransfer $quoteTransfer): QuoteTransfer;
 }

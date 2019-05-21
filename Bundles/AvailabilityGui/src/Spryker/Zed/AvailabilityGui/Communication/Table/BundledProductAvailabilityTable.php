@@ -204,6 +204,7 @@ class BundledProductAvailabilityTable extends AbstractTable
                 return true;
             }
         }
+
         return false;
     }
 

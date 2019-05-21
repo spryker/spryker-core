@@ -8,6 +8,8 @@
 namespace Spryker\Client\ResourceShare;
 
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\ResourceShare\Activator\ResourceShareActivator;
+use Spryker\Client\ResourceShare\Activator\ResourceShareActivatorInterface;
 use Spryker\Client\ResourceShare\Dependency\Client\ResourceShareToZedRequestClientInterface;
 use Spryker\Client\ResourceShare\Zed\ResourceShareStub;
 use Spryker\Client\ResourceShare\Zed\ResourceShareStubInterface;
@@ -23,10 +25,29 @@ class ResourceShareFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Client\ResourceShare\Activator\ResourceShareActivatorInterface
+     */
+    public function createResourceShareActivator(): ResourceShareActivatorInterface
+    {
+        return new ResourceShareActivator(
+            $this->createZedResourceShareStub(),
+            $this->getResourceShareActivatorStrategyPlugins()
+        );
+    }
+
+    /**
      * @return \Spryker\Client\ResourceShare\Dependency\Client\ResourceShareToZedRequestClientInterface
      */
     public function getZedRequestClient(): ResourceShareToZedRequestClientInterface
     {
         return $this->getProvidedDependency(ResourceShareDependencyProvider::CLIENT_ZED_REQUEST);
+    }
+
+    /**
+     * @return \Spryker\Client\ResourceShareExtension\Dependency\Plugin\ResourceShareActivatorStrategyPluginInterface[]
+     */
+    public function getResourceShareActivatorStrategyPlugins(): array
+    {
+        return $this->getProvidedDependency(ResourceShareDependencyProvider::PLUGINS_RESOURCE_SHARE_ACTIVATOR_STRATEGY);
     }
 }

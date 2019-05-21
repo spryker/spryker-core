@@ -8,6 +8,7 @@
 namespace Spryker\Client\ContentBanner;
 
 use Generated\Shared\Transfer\ContentBannerTransfer;
+use Generated\Shared\Transfer\ContentBannerTypeTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -20,6 +21,8 @@ class ContentBannerClient extends AbstractClient implements ContentBannerClientI
      *
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @param \Generated\Shared\Transfer\ContentBannerTransfer $contentBannerTransfer
      *
      * @return array
@@ -29,5 +32,22 @@ class ContentBannerClient extends AbstractClient implements ContentBannerClientI
         return $this->getFactory()
             ->createBannerTermExecutor()
             ->execute($contentBannerTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idContent
+     * @param string $localeName
+     *
+     * @throws \Spryker\Client\ContentBanner\Exception\MissingBannerTermException
+     *
+     * @return \Generated\Shared\Transfer\ContentBannerTypeTransfer|null
+     */
+    public function executeBannerTypeById(int $idContent, string $localeName): ?ContentBannerTypeTransfer
+    {
+        return $this->getFactory()->createContentBannerTypeMapper()->executeBannerTypeById($idContent, $localeName);
     }
 }

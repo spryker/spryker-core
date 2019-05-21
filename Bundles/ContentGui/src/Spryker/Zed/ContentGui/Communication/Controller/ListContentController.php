@@ -36,7 +36,7 @@ class ListContentController extends AbstractController
     /**
      * @return array
      */
-    protected function executeIndexAction()
+    protected function executeIndexAction(): array
     {
         $contentTable = $this->getFactory()->createContentTable();
 

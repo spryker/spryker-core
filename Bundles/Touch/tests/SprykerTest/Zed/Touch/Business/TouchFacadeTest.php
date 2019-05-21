@@ -184,6 +184,8 @@ class TouchFacadeTest extends Unit
     /**
      * @dataProvider bulkTouchSetUniqueIndexMethodsDataProvider
      *
+     * @group TouchFacadeTestIndex
+     *
      * @param string $method
      * @param array $itemIds
      *
