@@ -45,11 +45,11 @@ var ItemListContentItem = function(options)
         var clickInfo = this.getClickInfo(event);
         var indexOfActiveTable = this.$itemsTables.index(clickInfo.clickedTable);
 
-        if (this.isProductAdded(clickInfo.clickedTable, clickInfo.itemId)) {
+        if (this.isItemAdded(clickInfo.clickedTable, clickInfo.itemId)) {
             return;
         }
 
-        this.addProduct(clickInfo.clickedTable, clickInfo.itemId, indexOfActiveTable);
+        this.addItem(clickInfo.clickedTable, clickInfo.itemId, indexOfActiveTable);
     };
 
     this.removeItemButtonHandler = function(event) {
@@ -57,7 +57,7 @@ var ItemListContentItem = function(options)
         var tableRow = clickInfo.button.parents('tr');
 
         this.removeHiddenInput(clickInfo.clickedTable, clickInfo.itemId);
-        this.removeProduct(clickInfo.clickedTable, tableRow, clickInfo.itemId);
+        this.removeItem(clickInfo.clickedTable, tableRow, clickInfo.itemId);
     };
 
     this.changeOrderButtonHandler = function(event) {
@@ -77,12 +77,12 @@ var ItemListContentItem = function(options)
         assignedTable.dataTable().api().clear().draw();
     };
 
-    this.removeProductButtonClick = function(button, assignedTable) {
+    this.removeItemButtonClick = function(button, assignedTable) {
         var itemId = button.data('id');
         var tableRow = button.parents('tr');
 
         this.removeHiddenInput(assignedTable, itemId);
-        this.removeProduct(assignedTable, tableRow, itemId);
+        this.removeItem(assignedTable, tableRow, itemId);
     };
 
     this.changeOrder = function(button, assignedTable) {
@@ -108,7 +108,7 @@ var ItemListContentItem = function(options)
         tableApi.rows.add(tableData).draw();
     };
 
-    this.addProduct = function(itemTable, itemId, indexOfActiveTable) {
+    this.addItem = function(itemTable, itemId, indexOfActiveTable) {
         var rowData = this.getRowData(itemTable, itemId);
         var assignedTable = this.getCurrentAssignedTable(indexOfActiveTable);
         var tablesWrapper = this.getTablesWrapper(assignedTable);
@@ -117,11 +117,11 @@ var ItemListContentItem = function(options)
         assignedTable.dataTable().api().row.add(rowData).draw();
     };
 
-    this.removeProduct = function(assignedTable, tableRow, itemId) {
+    this.removeItem = function(assignedTable, tableRow, itemId) {
         assignedTable.dataTable().api().row(tableRow).remove().draw();
     };
 
-    this.isProductAdded = function(itemTable, itemId) {
+    this.isItemAdded = function(itemTable, itemId) {
         var integerInputsWrapper = this.getHiddenInputsWrapper(this.getTablesWrapper(itemTable));
         var integerInput = this.getHiddenInput(integerInputsWrapper, itemId);
 
