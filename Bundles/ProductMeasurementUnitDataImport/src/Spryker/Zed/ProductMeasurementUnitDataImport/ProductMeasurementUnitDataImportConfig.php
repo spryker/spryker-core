@@ -79,6 +79,7 @@ class ProductMeasurementUnitDataImportConfig extends DataImportConfig
     protected function getModuleDataImportDirectory(): string
     {
         $moduleDataImportDirectory = $this->getModuleRoot() . 'data' . DIRECTORY_SEPARATOR . 'import' . DIRECTORY_SEPARATOR;
+
         return $moduleDataImportDirectory;
     }
 }

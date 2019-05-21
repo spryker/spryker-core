@@ -102,6 +102,7 @@ class UpSellingProductsRestApiDependencyProvider extends AbstractBundleDependenc
                 $container->getLocator()->productsRestApi()->resource()
             );
         };
+
         return $container;
     }
 }

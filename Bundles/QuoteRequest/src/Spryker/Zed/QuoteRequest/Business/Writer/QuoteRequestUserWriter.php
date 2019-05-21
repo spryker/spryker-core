@@ -144,7 +144,7 @@ class QuoteRequestUserWriter implements QuoteRequestUserWriterInterface
         $quoteRequestTransfer
             ->setQuoteRequestReference($quoteRequestReference)
             ->setStatus(SharedQuoteRequestConfig::STATUS_IN_PROGRESS)
-            ->setIsLatestVersionHidden(true);
+            ->setIsLatestVersionVisible(false);
 
         $quoteRequestTransfer = $this->quoteRequestEntityManager->createQuoteRequest($quoteRequestTransfer);
 
@@ -223,7 +223,8 @@ class QuoteRequestUserWriter implements QuoteRequestUserWriterInterface
         $quoteRequestTransfer
             ->setStatus(SharedQuoteRequestConfig::STATUS_IN_PROGRESS)
             ->setLatestVersion($latestQuoteRequestVersionTransfer)
-            ->setLatestVisibleVersion($latestQuoteRequestVersionTransfer);
+            ->setLatestVisibleVersion($latestQuoteRequestVersionTransfer)
+            ->setIsLatestVersionVisible(false);
 
         $quoteRequestTransfer = $this->quoteRequestEntityManager->updateQuoteRequest($quoteRequestTransfer);
 

@@ -132,6 +132,7 @@ class CatalogClient extends AbstractClient implements CatalogClientInterface
             ->createCatalogSearchQuery($searchString);
         $searchQuery = $searchClient
             ->expandQuery($searchQuery, $this->getFactory()->getCatalogSearchCounterQueryExpanderPlugins(), $requestParameters);
+
         return $searchClient->search($searchQuery, [], $requestParameters)->getTotalHits();
     }
 

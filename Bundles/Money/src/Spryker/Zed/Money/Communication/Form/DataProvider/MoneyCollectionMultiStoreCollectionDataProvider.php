@@ -39,6 +39,7 @@ class MoneyCollectionMultiStoreCollectionDataProvider extends BaseMoneyCollectio
                 );
             }
         }
+
         return $moneyValueCollection;
     }
 
