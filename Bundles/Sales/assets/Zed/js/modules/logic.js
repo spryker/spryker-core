@@ -33,24 +33,12 @@ function createTriggerUrl(idOrder, eventName) {
     return decodeURIComponent(finalUrl);
 }
 
-function disableTrigger($item) {
-    $item
-        .prop('disabled', true)
-        .addClass('disabled');
-}
-
-$(document).ready(function() {
-    $('.trigger-order-event').click(function(e){
+$(document).ready(function () {
+    $('.trigger-event').click(function (e) {
         e.preventDefault();
 
-        var $item = $(this);
-        
-        disableTrigger($item);
-
-        var idOrder = $item.data('id-sales-order');
-        var eventName = $item.data('event');
-
-        window.location = createTriggerUrl(idOrder, eventName);
+        $(this).prop('disabled', true).addClass('disabled');
+        $(this).parents('form').first().submit();
     });
 
     $('.item-check').click(function(){

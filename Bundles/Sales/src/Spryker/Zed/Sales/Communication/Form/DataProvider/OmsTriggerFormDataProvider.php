@@ -22,7 +22,7 @@ class OmsTriggerFormDataProvider
     public const QUERY_PARAM_ID_SALES_ORDER_ITEM = 'id-sales-order-item';
     public const QUERY_PARAM_REDIRECT = 'redirect';
 
-    public const SUBMIT_BUTTON_CLASS = 'btn btn-primary btn-sm trigger-order-single-event';
+    public const SUBMIT_BUTTON_CLASS = 'btn btn-primary btn-sm trigger-event';
 
     public const ROUTE_REDIRECT = '/sales/detail';
 
