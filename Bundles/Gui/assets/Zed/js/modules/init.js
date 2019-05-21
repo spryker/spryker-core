@@ -104,22 +104,31 @@ $(document).ready(function() {
     $('.dropdown-toggle').dropdown();
 
     $('.spryker-form-select2combobox').each(function(index, element) {
-        var select2InitOptions = {};
+        let select2InitOptions = {};
+        const selectElement = $(element);
 
-        if ($(element).data('autocomplete-url')) {
-            var autocompleteUrl = $(element).data('autocomplete-url');
+        if (selectElement.data('autocomplete-url')) {
             select2InitOptions = {
                 ajax: {
-                    url: autocompleteUrl,
+                    url: selectElement.data('autocomplete-url'),
                     dataType: 'json',
                     delay: 500,
                     cache: true,
                 },
                 minimumInputLength: 3
             };
+
+            selectElement.on('select2:unselecting', function(e) {
+                const idSelected = e.params.args.data.id;
+                let selectedValues = selectElement.val();
+
+                selectElement.val(selectedValues.filter(function(value) {
+                    return value !== ('' + idSelected);
+                })).trigger('change');
+            });
         }
 
-        $(element).select2(select2InitOptions);
+        selectElement.select2(select2InitOptions);
     });
 
     /* Init tabs */
