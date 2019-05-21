@@ -12,7 +12,7 @@ use Spryker\Shared\Kernel\AbstractBundleConfig;
 class SharedCartConfig extends AbstractBundleConfig
 {
     /**
-     * @uses \Spryker\Zed\PersistentCartShare\PersistentCartShareConfig::RESOURCE_TYPE_QUOTE
+     * @uses \Spryker\Shared\PersistentCartShare\PersistentCartShareConfig::RESOURCE_TYPE_QUOTE
      */
     public const RESOURCE_TYPE_QUOTE = 'quote';
 

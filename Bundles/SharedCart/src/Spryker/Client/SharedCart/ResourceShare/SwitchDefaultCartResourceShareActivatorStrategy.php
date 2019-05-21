@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\SharedCart\ResourceShare;
 
-use ArrayObject;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ResourceShareRequestTransfer;
@@ -17,6 +16,8 @@ use Spryker\Client\SharedCart\Dependency\Client\SharedCartToMultiCartClientInter
 
 class SwitchDefaultCartResourceShareActivatorStrategy implements SwitchDefaultCartResourceShareActivatorStrategyInterface
 {
+    protected const GLOSSARY_KEY_QUOTE_IS_NOT_AVAILABLE = 'persistent_cart.error.quote.not_available';
+
     /**
      * @var \Spryker\Client\SharedCart\Dependency\Client\SharedCartToMultiCartClientInterface
      */
@@ -63,30 +64,14 @@ class SwitchDefaultCartResourceShareActivatorStrategy implements SwitchDefaultCa
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return (new ResourceShareResponseTransfer())
                 ->setIsSuccessful(false)
-                ->setMessages(
-                    $this->mapQuoteErrorTransfersToMessageTransfers($quoteResponseTransfer->getErrors())
+                ->addMessage(
+                    (new MessageTransfer())
+                        ->setValue(static::GLOSSARY_KEY_QUOTE_IS_NOT_AVAILABLE)
                 );
         }
 
         return (new ResourceShareResponseTransfer())
             ->setIsSuccessful(true)
             ->setResourceShare($resourceShareTransfer);
-    }
-
-    /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\QuoteErrorTransfer[] $quoteErrorTransfers
-     *
-     * @return \ArrayObject|\Generated\Shared\Transfer\MessageTransfer[]
-     */
-    protected function mapQuoteErrorTransfersToMessageTransfers(ArrayObject $quoteErrorTransfers): ArrayObject
-    {
-        $messageTransfers = new ArrayObject();
-        foreach ($quoteErrorTransfers as $quoteErrorTransfer) {
-            $messageTransfers->append(
-                (new MessageTransfer())->setValue($quoteErrorTransfer->getMessage())
-            );
-        }
-
-        return $messageTransfers;
     }
 }

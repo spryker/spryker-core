@@ -5,10 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\PersistentCartShare;
+namespace Spryker\Zed\ResourceShare\Business\Exception;
 
-use Spryker\Zed\Kernel\AbstractBundleConfig;
+use Exception;
 
-class PersistentCartShareConfig extends AbstractBundleConfig
+class ResourceShareActivatorStrategyNotFoundException extends Exception
 {
 }
