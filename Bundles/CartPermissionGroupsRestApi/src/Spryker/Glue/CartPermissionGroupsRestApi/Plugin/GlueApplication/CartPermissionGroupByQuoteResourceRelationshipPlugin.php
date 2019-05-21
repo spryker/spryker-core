@@ -15,7 +15,7 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 /**
  * @method \Spryker\Glue\CartPermissionGroupsRestApi\CartPermissionGroupsRestApiFactory getFactory()
  */
-class CartPermissionGroupByQuoteTransferResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
+class CartPermissionGroupByQuoteResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
 {
     /**
      * {@inheritdoc}
@@ -34,7 +34,7 @@ class CartPermissionGroupByQuoteTransferResourceRelationshipPlugin extends Abstr
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         $this->getFactory()
-            ->createCartPermissionGroupByQuoteTransferResourceRelationshipExpander()
+            ->createCartPermissionGroupByQuoteResourceRelationshipExpander()
             ->addResourceRelationships($resources, $restRequest);
     }
 

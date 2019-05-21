@@ -48,10 +48,10 @@ class ShareDetailQuoteCollectionExpander implements ShareDetailQuoteCollectionEx
             foreach ($shareDetailCollectionTransfer->getShareDetails() as $shareDetailTransfer) {
                 if ($customerTransfer->getCompanyUserTransfer()->getIdCompanyUser() === $shareDetailTransfer->getIdCompanyUser()) {
                     $quoteTransfer->addShareDetail($shareDetailTransfer);
-
-                    $resultingQuoteCollectionTransfer->addQuote($quoteTransfer);
                 }
             }
+
+            $resultingQuoteCollectionTransfer->addQuote($quoteTransfer);
         }
 
         return $resultingQuoteCollectionTransfer;

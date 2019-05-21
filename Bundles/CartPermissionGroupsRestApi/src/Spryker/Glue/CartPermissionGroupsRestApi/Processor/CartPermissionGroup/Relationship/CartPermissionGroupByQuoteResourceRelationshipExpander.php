@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\QuotePermissionGroupTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 
-class CartPermissionGroupByQuoteTransferResourceRelationshipExpander extends AbstractCartPermissionGroupResourceRelationshipExpander
+class CartPermissionGroupByQuoteResourceRelationshipExpander extends AbstractCartPermissionGroupResourceRelationshipExpander
 {
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $resource
