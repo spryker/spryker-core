@@ -14,7 +14,7 @@ interface CustomerOauthRequestMapperPluginInterface
 {
     /**
      * Specification:
-     * - Maps additional data to the OauthRequestTransfer property.
+     * - Maps CustomerTransfer data to OauthRequestTransfer.
      *
      * @api
      *
