@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/jenkins-scheduler.svg)](https://travis-ci.org/spryker/jenkins-scheduler)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/jenkins-scheduler/badge.svg)](https://coveralls.io/github/spryker/jenkins-scheduler)
 
-{{ADD DESCRIPTION HERE}}
+Provides Jenkins scheduler functionality.
 
 ## Installation
 

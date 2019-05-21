@@ -53,6 +53,7 @@ class JenkinsJobClean implements JenkinsJobCleanInterface
         foreach ($jobsCleanOutputMessages as $message) {
             $schedulerResponseTransfer->addMessage($message);
         }
+
         return $schedulerResponseTransfer;
     }
 

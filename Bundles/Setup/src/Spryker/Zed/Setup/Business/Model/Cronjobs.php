@@ -124,26 +124,28 @@ class Cronjobs
         include_once $this->getJobConfigPath();
 
         if (!empty($jobs)) {
-            foreach ($jobs as $i => $job) {
-                if (!empty($job['command'])) {
-                    $command = $job['command'];
-                    $commandExpl = explode(' ', $command);
-                    $requestParts = ['module' => '', 'controller' => '', 'action' => ''];
+            return $jobs;
+        }
 
-                    foreach ($commandExpl as $part) {
-                        $segments = array_keys($requestParts);
-                        foreach ($segments as $segment) {
-                            if (strpos($part, $segment . '=') !== false) {
-                                $requestParts[$segment] = str_replace('--' . $segment . '=', '', $part);
-                            }
+        foreach ($jobs as $i => $job) {
+            if (!empty($job['command'])) {
+                $command = $job['command'];
+                $commandExpl = explode(' ', $command);
+                $requestParts = ['module' => '', 'controller' => '', 'action' => ''];
+
+                foreach ($commandExpl as $part) {
+                    $segments = array_keys($requestParts);
+                    foreach ($segments as $segment) {
+                        if (strpos($part, $segment . '=') !== false) {
+                            $requestParts[$segment] = str_replace('--' . $segment . '=', '', $part);
                         }
                     }
-
-                    $jobs[$i]['request'] = '/' . $requestParts['module'] . '/' . $requestParts['controller']
-                        . '/' . $requestParts['action'];
-
-                    $jobs[$i]['id'] = null;
                 }
+
+                $jobs[$i]['request'] = '/' . $requestParts['module'] . '/' . $requestParts['controller']
+                    . '/' . $requestParts['action'];
+
+                $jobs[$i]['id'] = null;
             }
         }
 

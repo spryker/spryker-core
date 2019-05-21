@@ -1,5 +1,6 @@
 {
   "name": "spryker/jenkins-scheduler",
+  "type": "library",
   "description": "JenkinsScheduler module",
   "license": "proprietary",
   "require": {
@@ -21,6 +22,11 @@
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "SprykerTest\\": "tests/SprykerTest/"
     }
   },
   "minimum-stability": "dev",

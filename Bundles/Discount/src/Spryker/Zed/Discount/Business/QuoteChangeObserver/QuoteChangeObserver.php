@@ -121,6 +121,9 @@ class QuoteChangeObserver implements QuoteChangeObserverInterface
     {
         $indexDiscountTransferCollection = [];
         foreach ($discountTransferCollection as $discountTransfer) {
+            if (!$discountTransfer->getIdDiscount()) {
+                continue;
+            }
             $indexDiscountTransferCollection[$discountTransfer->getIdDiscount()] = $discountTransfer;
         }
 
