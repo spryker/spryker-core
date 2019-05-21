@@ -19,6 +19,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class TriggerController extends AbstractController
 {
+    protected const ROUTE_REDIRECT_DEFAULT = '/';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -26,9 +28,13 @@ class TriggerController extends AbstractController
      */
     public function triggerEventForOrderItemsAction(Request $request)
     {
+        if (!$request->isMethod(Request::METHOD_POST)) {
+            return $this->redirectResponse(static::ROUTE_REDIRECT_DEFAULT);
+        }
+
         $idOrderItem = $this->castId($request->query->getInt('id-sales-order-item'));
         $event = $request->query->get('event');
-        $redirect = $request->query->get('redirect', '/');
+        $redirect = $request->query->get('redirect', static::ROUTE_REDIRECT_DEFAULT);
 
         $this->getFacade()->triggerEventForOrderItems($event, [$idOrderItem]);
         $this->addInfoMessage('Status change triggered successfully.');
@@ -43,6 +49,10 @@ class TriggerController extends AbstractController
      */
     public function triggerEventForOrderAction(Request $request)
     {
+        if (!$request->isMethod(Request::METHOD_POST)) {
+            return $this->redirectResponse(static::ROUTE_REDIRECT_DEFAULT);
+        }
+
         $idOrder = $this->castId($request->query->getInt('id-sales-order'));
         $event = $request->query->get('event');
         $redirect = $request->query->get('redirect', '/');
