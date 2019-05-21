@@ -79,6 +79,7 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
 
         if ($bundleProductEntity === null) {
             $this->removeBundleStock($productConcreteTransfer);
+
             return $productConcreteTransfer;
         }
 
@@ -177,6 +178,7 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
                 static::IS_NEVER_OUT_OF_STOCK => $productStockEntity->getIsNeverOutOfStock(),
             ];
         }
+
         return $bundledItemStock;
     }
 
@@ -212,6 +214,7 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
                 static::IS_NEVER_OUT_OF_STOCK => $isAllNeverOutOfStock,
             ];
         }
+
         return $bundleTotalStockPerWarehouse;
     }
 
@@ -227,6 +230,7 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
         if (($bundleStock > $itemStock || $bundleStock == 0) && !$isNeverOutOfStock) {
             return true;
         }
+
         return false;
     }
 
@@ -341,6 +345,7 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
             $productStockEntity->setIsNeverOutOfStock(false);
             $productStockEntity->save();
         }
+
         return $bundleTotalStockPerWarehouse;
     }
 

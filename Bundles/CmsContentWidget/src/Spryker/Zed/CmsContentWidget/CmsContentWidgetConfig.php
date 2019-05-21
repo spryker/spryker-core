@@ -24,4 +24,12 @@ class CmsContentWidgetConfig extends AbstractBundleConfig
     {
         return [];
     }
+
+    /**
+     * @return bool
+     */
+    public function isEditorButtonEnabled(): bool
+    {
+        return false;
+    }
 }

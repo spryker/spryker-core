@@ -271,6 +271,7 @@ class RestRequestValidatorPluginsTest extends Unit
             $this->createMockStoreClient($storeName),
             $mockConfig
         );
+
         return $mockConfigReader;
     }
 

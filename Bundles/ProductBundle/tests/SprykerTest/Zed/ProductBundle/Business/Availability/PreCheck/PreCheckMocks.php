@@ -62,6 +62,7 @@ class PreCheckMocks extends Unit
         $itemTransfer->setSku($this->fixtures['bundle-sku']);
 
         $quoteTransfer->addBundleItem($itemTransfer);
+
         return $quoteTransfer;
     }
 

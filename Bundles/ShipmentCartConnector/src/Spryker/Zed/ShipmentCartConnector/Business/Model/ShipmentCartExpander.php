@@ -114,11 +114,13 @@ class ShipmentCartExpander implements ShipmentCartExpanderInterface
             if ($priceMode === $netModeIdentifier) {
                 $shipmentExpenseTransfer->setUnitGrossPrice(0);
                 $shipmentExpenseTransfer->setUnitNetPrice($moneyValueTransfer->getNetAmount());
+
                 return;
             }
 
             $shipmentExpenseTransfer->setUnitNetPrice(0);
             $shipmentExpenseTransfer->setUnitGrossPrice($moneyValueTransfer->getGrossAmount());
+
             return;
         }
     }

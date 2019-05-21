@@ -14,7 +14,9 @@ use Spryker\Client\Session\SessionClient;
 use Spryker\Zed\Auth\AuthConfig;
 use Spryker\Zed\Auth\Business\Client\StaticToken;
 use Spryker\Zed\Auth\Business\Model\Auth;
+use Spryker\Zed\Auth\Business\Model\AuthInterface;
 use Spryker\Zed\Auth\Dependency\Facade\AuthToUserBridge;
+use Spryker\Zed\Auth\Dependency\Facade\AuthToUserInterface;
 use Spryker\Zed\User\Business\UserFacade;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
@@ -56,7 +58,7 @@ class AuthTest extends Unit
             ->method('isValidPassword')
             ->will($this->returnValue(true));
 
-        $authModel = $this->prepareSessionRegeneration($userFacade);
+        $authModel = $this->getAuthModelMockWithMigrateCallExpectation($userFacade);
         $result = $authModel->authenticate(static::USERNAME, 'test');
         $this->assertTrue($result);
     }
@@ -66,8 +68,11 @@ class AuthTest extends Unit
      */
     public function testSessionRegenerationOnLogout()
     {
-        $this->markTestSkipped();
-        $authModel = $this->prepareSessionRegeneration($this->createFacadeUser());
+        $facadeUser = $this->createFacadeUser();
+        $facadeUser
+            ->method('getCurrentUser')
+            ->willReturn($this->createUserTransfer(static::USERNAME));
+        $authModel = $this->getAuthModelMockWithMigrateCallExpectation($facadeUser);
         $authModel->logout();
     }
 
@@ -166,11 +171,15 @@ class AuthTest extends Unit
      */
     protected function createFacadeUser()
     {
-        $userFacade = $this->getMockBuilder(AuthToUserBridge::class)->setMethods(
-            ['getUserByUsername', 'hasActiveUserByUsername', 'isValidPassword', 'updateUser']
-        )->setConstructorArgs(
-            [new UserFacade()]
-        )->getMock();
+        $userFacade = $this->getMockBuilder(AuthToUserBridge::class)->setMethods([
+            'getUserByUsername',
+            'hasActiveUserByUsername',
+            'isValidPassword',
+            'updateUser',
+            'getCurrentUser',
+        ])->setConstructorArgs([
+            new UserFacade(),
+        ])->getMock();
 
         return $userFacade;
     }
@@ -197,11 +206,11 @@ class AuthTest extends Unit
     }
 
     /**
-     * @param \Spryker\Zed\Auth\Dependency\Facade\AuthToUserBridge $userFacade
+     * @param \Spryker\Zed\Auth\Dependency\Facade\AuthToUserInterface $userFacade
      *
-     * @return \Spryker\Zed\Auth\Business\Model\Auth
+     * @return \Spryker\Zed\Auth\Business\Model\AuthInterface
      */
-    protected function prepareSessionRegeneration($userFacade)
+    protected function getAuthModelMockWithMigrateCallExpectation(AuthToUserInterface $userFacade): AuthInterface
     {
         $sessionClient = $this->createSessionClient();
         $authModel = new Auth(
