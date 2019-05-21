@@ -55,7 +55,7 @@ class TriggerController extends AbstractController
 
         $idOrder = $this->castId($request->query->getInt('id-sales-order'));
         $event = $request->query->get('event');
-        $redirect = $request->query->get('redirect', '/');
+        $redirect = $request->query->get('redirect', static::ROUTE_REDIRECT_DEFAULT);
         $itemsList = $request->query->get('items');
 
         $orderItems = $this->getOrderItemsToTriggerAction($idOrder, $itemsList);
