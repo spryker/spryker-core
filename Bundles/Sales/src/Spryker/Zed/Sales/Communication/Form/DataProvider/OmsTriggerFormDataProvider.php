@@ -9,21 +9,11 @@ namespace Spryker\Zed\Sales\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Spryker\Service\UtilText\Model\Url\Url;
+use Spryker\Zed\Gui\Communication\Form\DataProvider\AbstractOmsTriggerFormDataProvider;
 use Spryker\Zed\Gui\Communication\Form\OmsTriggerForm;
 
-class OmsTriggerFormDataProvider
+class OmsTriggerFormDataProvider extends AbstractOmsTriggerFormDataProvider
 {
-    public const OMS_ACTION_ITEM_TRIGGER = 'trigger-event-for-order-items';
-    public const OMS_ACTION_ORDER_TRIGGER = 'trigger-event-for-order';
-
-    public const QUERY_PARAM_EVENT = 'event';
-    public const QUERY_PARAM_ID_SALES_ORDER = 'id-sales-order';
-    public const QUERY_PARAM_ID_SALES_ORDER_ITEM = 'id-sales-order-item';
-    public const QUERY_PARAM_REDIRECT = 'redirect';
-
-    public const SUBMIT_BUTTON_CLASS = 'btn btn-primary btn-sm trigger-event';
-
     public const ROUTE_REDIRECT = '/sales/detail';
 
     /**
@@ -35,6 +25,9 @@ class OmsTriggerFormDataProvider
     public function getOrderOmsTriggerFormOptions(OrderTransfer $orderTransfer, string $event): array
     {
         $idSalesOrder = $orderTransfer->getIdSalesOrder();
+        $redirectUrlParams = [
+            static::QUERY_PARAM_ID_SALES_ORDER => $idSalesOrder,
+        ];
 
         return [
             OmsTriggerForm::OPTION_OMS_ACTION => static::OMS_ACTION_ORDER_TRIGGER,
@@ -43,7 +36,7 @@ class OmsTriggerFormDataProvider
             OmsTriggerForm::OPTION_QUERY_PARAMS => [
                 static::QUERY_PARAM_EVENT => $event,
                 static::QUERY_PARAM_ID_SALES_ORDER => $idSalesOrder,
-                static::QUERY_PARAM_REDIRECT => $this->createRedirectLink($idSalesOrder),
+                static::QUERY_PARAM_REDIRECT => $this->createRedirectLink(static::ROUTE_REDIRECT, $redirectUrlParams),
             ],
         ];
     }
@@ -56,6 +49,10 @@ class OmsTriggerFormDataProvider
      */
     public function getOrderItemOmsTriggerFormOptions(ItemTransfer $itemTransfer, string $event): array
     {
+        $redirectUrlParams = [
+            static::QUERY_PARAM_ID_SALES_ORDER => $itemTransfer->getFkSalesOrder(),
+        ];
+
         return [
             OmsTriggerForm::OPTION_OMS_ACTION => static::OMS_ACTION_ITEM_TRIGGER,
             OmsTriggerForm::OPTION_EVENT => $event,
@@ -63,21 +60,8 @@ class OmsTriggerFormDataProvider
             OmsTriggerForm::OPTION_QUERY_PARAMS => [
                 static::QUERY_PARAM_EVENT => $event,
                 static::QUERY_PARAM_ID_SALES_ORDER_ITEM => $itemTransfer->getIdSalesOrderItem(),
-                static::QUERY_PARAM_REDIRECT => $this->createRedirectLink($itemTransfer->getFkSalesOrder()),
+                static::QUERY_PARAM_REDIRECT => $this->createRedirectLink(static::ROUTE_REDIRECT, $redirectUrlParams),
             ],
         ];
-    }
-
-    /**
-     * @param int $idSalesOrder
-     *
-     * @return string
-     */
-    protected function createRedirectLink(int $idSalesOrder): string
-    {
-        return Url::generate(
-            static::ROUTE_REDIRECT,
-            [static::QUERY_PARAM_ID_SALES_ORDER => $idSalesOrder]
-        );
     }
 }
