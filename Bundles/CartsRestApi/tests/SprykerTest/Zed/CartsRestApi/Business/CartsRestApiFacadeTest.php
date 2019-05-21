@@ -11,6 +11,7 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use PHPUnit\Framework\MockObject\MockObject;
+use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Zed\CartsRestApi\Business\CartsRestApiBusinessFactory;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToQuoteFacadeBridge;
 use Spryker\Zed\Quote\Business\QuoteFacade;
@@ -77,10 +78,9 @@ class CartsRestApiFacadeTest extends Unit
         $cartsRestApiFacade->setFactory($this->getFailingMockCartsRestApiBusinessFactory());
 
         $quoteTransfer = $this->tester->prepareQuoteTransferWithoutCartUuid();
-        $actualQuoteResponseTransfer = $cartsRestApiFacade->findQuoteByUuid($quoteTransfer);
 
-        $this->assertInstanceOf(QuoteResponseTransfer::class, $actualQuoteResponseTransfer);
-        $this->assertNull($actualQuoteResponseTransfer->getQuoteTransfer());
+        $this->expectException(RequiredTransferPropertyException::class);
+        $cartsRestApiFacade->findQuoteByUuid($quoteTransfer);
     }
 
     /**
@@ -90,7 +90,12 @@ class CartsRestApiFacadeTest extends Unit
     {
         $cartsRestApiBusinessFactoryMock = $this->createPartialMock(
             CartsRestApiBusinessFactory::class,
-            ['getQuoteFacade']
+            [
+                'getQuoteFacade',
+                'getStoreFacade',
+                'getCartFacade',
+                'getPersistentCartFacade',
+            ]
         );
 
         $cartsRestApiBusinessFactoryMock = $this->addMockQuoteFacade($cartsRestApiBusinessFactoryMock);
@@ -109,14 +114,10 @@ class CartsRestApiFacadeTest extends Unit
             QuoteFacade::class,
             [
                 'findQuoteByUuid',
-                'findQuoteByCustomer',
             ]
         );
 
         $quoteFacadeMock->method('findQuoteByUuid')
-            ->willReturn($this->tester->prepareQuoteResponseTransferWithQuote());
-
-        $quoteFacadeMock->method('findQuoteByCustomer')
             ->willReturn($this->tester->prepareQuoteResponseTransferWithQuote());
 
         $cartsRestApiBusinessFactoryMock->method('getQuoteFacade')
@@ -132,7 +133,12 @@ class CartsRestApiFacadeTest extends Unit
     {
         $cartsRestApiBusinessFactoryMock = $this->createPartialMock(
             CartsRestApiBusinessFactory::class,
-            ['getQuoteFacade']
+            [
+                'getQuoteFacade',
+                'getStoreFacade',
+                'getCartFacade',
+                'getPersistentCartFacade',
+            ]
         );
 
         $cartsRestApiBusinessFactoryMock = $this->addFailingMockQuoteFacade($cartsRestApiBusinessFactoryMock);
@@ -151,15 +157,11 @@ class CartsRestApiFacadeTest extends Unit
             QuoteFacade::class,
             [
                 'findQuoteByUuid',
-                'findQuoteByCustomer',
             ]
         );
 
         $quoteFacadeMock->method('findQuoteByUuid')
             ->willReturn($this->tester->prepareQuoteResponseTransferWithoutQuote());
-
-        $quoteFacadeMock->method('findQuoteByCustomer')
-            ->willReturn($this->tester->prepareQuoteResponseTransferWithQuote());
 
         $cartsRestApiBusinessFactoryMock->method('getQuoteFacade')
             ->willReturn((new CartsRestApiToQuoteFacadeBridge($quoteFacadeMock)));
