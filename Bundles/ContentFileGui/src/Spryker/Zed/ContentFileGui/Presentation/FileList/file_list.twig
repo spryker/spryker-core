@@ -1,15 +1,15 @@
 {% set deleteButtonTemplate %}
     <button type="button" class="js-delete-item btn btn-sm btn-outline btn-danger">
         <i class="fa fa-trash"></i>
-        Delete
+        {{ 'Delete' | trans }}
         </button>
     <button type="button" data-direction="up" class="js-reorder-item btn btn-sm btn-outline btn-create">
         <i class="fa fa-arrow-up"></i>
-        Move Up
+        {{ 'Move Up' | trans }}
         </button>
     <button type="button" data-direction="down" class="js-reorder-item btn btn-sm btn-outline btn-create">
         <i class="fa fa-arrow-down"></i>
-        Move Down
+        {{ 'Move Down' | trans }}
     </button>
 {% endset %}
 <div

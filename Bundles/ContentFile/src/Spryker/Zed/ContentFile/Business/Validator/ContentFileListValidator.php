@@ -15,20 +15,20 @@ use Spryker\Zed\ContentFile\ContentFileConfig;
 
 class ContentFileListValidator implements ContentFileListValidatorInterface
 {
-    protected const ERROR_MESSAGE_MAX_NUMBER_OF_FILES = 'There are too many files in the list, please reduce the list size to {number} or fewer.';
-    protected const ERROR_MESSAGE_PARAMETER_COUNT = '{number}';
+    protected const ERROR_MESSAGE_MAX_NUMBER_OF_FILES = 'There are too many files in the list, please reduce the list size to {{ number }} or fewer.';
+    protected const ERROR_MESSAGE_PARAMETER_COUNT = '{{ number }}';
 
     /**
      * @var \Spryker\Zed\ContentFile\ContentFileConfig
      */
-    protected $config;
+    protected $contentFileConfig;
 
     /**
-     * @param \Spryker\Zed\ContentFile\ContentFileConfig $config
+     * @param \Spryker\Zed\ContentFile\ContentFileConfig $contentFileConfig
      */
-    public function __construct(ContentFileConfig $config)
+    public function __construct(ContentFileConfig $contentFileConfig)
     {
-        $this->config = $config;
+        $this->contentFileConfig = $contentFileConfig;
     }
 
     /**
@@ -42,7 +42,7 @@ class ContentFileListValidator implements ContentFileListValidatorInterface
         $contentValidationResponseTransfer = (new ContentValidationResponseTransfer())
             ->setIsSuccess(true);
 
-        $contentParameterMessageTransfer = $this->validateNumberOfFilesConstraint($contentFileListTermTransfer);
+        $contentParameterMessageTransfer = $this->validateNumberOfFiles($contentFileListTermTransfer);
 
         if ($contentParameterMessageTransfer->getMessages()->count()) {
             $contentValidationResponseTransfer->setIsSuccess(false)
@@ -57,11 +57,11 @@ class ContentFileListValidator implements ContentFileListValidatorInterface
      *
      * @return \Generated\Shared\Transfer\ContentParameterMessageTransfer
      */
-    protected function validateNumberOfFilesConstraint(
+    protected function validateNumberOfFiles(
         ContentFileListTermTransfer $contentFileListTermTransfer
     ): ContentParameterMessageTransfer {
         $numberOfFilesInFileList = count($contentFileListTermTransfer->getFileIds());
-        $maxFilesInFileList = $this->config->getMaxFilesInFileList();
+        $maxFilesInFileList = $this->contentFileConfig->getMaxFilesInFileList();
 
         if ($numberOfFilesInFileList > $maxFilesInFileList) {
             $message = (new MessageTransfer())

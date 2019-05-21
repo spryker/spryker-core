@@ -56,11 +56,15 @@ class FileListConstraintValidator extends ConstraintValidator
     protected function addViolations(ContentParameterMessageTransfer $parameterMessageTransfer): void
     {
         foreach ($parameterMessageTransfer->getMessages() as $messageTransfer) {
-            $text = strtr($messageTransfer->getValue(), $messageTransfer->getParameters());
-            $this->context
-                ->buildViolation($text)
-                ->atPath(FileListContentTermForm::FIELD_FILE_IDS)
-                ->addViolation();
+            $constraintViolation = $this->context
+                ->buildViolation($messageTransfer->getValue())
+                ->atPath(FileListContentTermForm::FIELD_FILE_IDS);
+
+            foreach ($messageTransfer->getParameters() as $parameter => $value) {
+                $constraintViolation->setParameter($parameter, $value);
+            }
+
+            $constraintViolation->addViolation();
         }
     }
 }

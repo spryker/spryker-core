@@ -13,13 +13,13 @@ use Orm\Zed\FileManager\Persistence\SpyFileQuery;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
-class FileViewTable extends AbstractTable
+class ContentFileViewTable extends AbstractTable
 {
     public const TABLE_IDENTIFIER = 'file-list-view-table';
     public const TABLE_CLASS = 'item-list-view-table gui-table-data';
     public const BASE_URL = '/content-file-gui/file-list/';
 
-    public const HEADER_NAME = 'Name';
+    public const HEADER_NAME = 'File Name';
     public const HEADER_ID_FILE = 'ID';
 
     public const COL_ID_FILE = 'id_file';
@@ -138,9 +138,14 @@ class FileViewTable extends AbstractTable
      */
     public function getAddButtonField(int $idFile): string
     {
-        return sprintf(
-            '<button type="button" data-id="%1$s" class="btn btn-sm btn-outline btn-create js-add-item"><i class="fa fa-plus"></i>Add to list</button>',
-            $idFile
+        return $actionButtons[] = $this->generateButton(
+            'javascript:void(0)',
+            'Add to list',
+            [
+                'class' => 'btn-create js-add-item',
+                'data-id' => $idFile,
+                'icon' => 'fa-plus',
+            ]
         );
     }
 }

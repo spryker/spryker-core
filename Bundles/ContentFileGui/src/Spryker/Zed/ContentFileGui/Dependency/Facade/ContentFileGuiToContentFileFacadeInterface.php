@@ -10,7 +10,7 @@ namespace Spryker\Zed\ContentFileGui\Dependency\Facade;
 use Generated\Shared\Transfer\ContentFileListTermTransfer;
 use Generated\Shared\Transfer\ContentValidationResponseTransfer;
 
-interface ContentFileGuiToContentFileInterface
+interface ContentFileGuiToContentFileFacadeInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ContentFileListTermTransfer $contentFileListTermTransfer

@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ContentFileGui\Dependency\Facade;
 
-class ContentFileGuiToLocaleBridge implements ContentFileGuiToLocaleInterface
+class ContentFileGuiToLocaleFacadeBridge implements ContentFileGuiToLocaleFacadeInterface
 {
     /**
      * @var \Spryker\Zed\Locale\Business\LocaleFacadeInterface

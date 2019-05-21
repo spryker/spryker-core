@@ -7,21 +7,21 @@
 
 namespace Spryker\Zed\ContentFileGui\Communication\Form\Constraints;
 
-use Spryker\Zed\ContentFileGui\Dependency\Facade\ContentFileGuiToContentFileInterface;
+use Spryker\Zed\ContentFileGui\Dependency\Facade\ContentFileGuiToContentFileFacadeInterface;
 use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 
 class FileListConstraint extends SymfonyConstraint
 {
     /**
-     * @var \Spryker\Zed\ContentFileGui\Dependency\Facade\ContentFileGuiToContentFileInterface
+     * @var \Spryker\Zed\ContentFileGui\Dependency\Facade\ContentFileGuiToContentFileFacadeInterface
      */
     protected $contentFileFacade;
 
     /**
-     * @param \Spryker\Zed\ContentFileGui\Dependency\Facade\ContentFileGuiToContentFileInterface $contentFileFacade
+     * @param \Spryker\Zed\ContentFileGui\Dependency\Facade\ContentFileGuiToContentFileFacadeInterface $contentFileFacade
      * @param array|null $options
      */
-    public function __construct(ContentFileGuiToContentFileInterface $contentFileFacade, ?array $options = null)
+    public function __construct(ContentFileGuiToContentFileFacadeInterface $contentFileFacade, ?array $options = null)
     {
         $this->contentFileFacade = $contentFileFacade;
 
@@ -29,9 +29,9 @@ class FileListConstraint extends SymfonyConstraint
     }
 
     /**
-     * @return \Spryker\Zed\ContentFileGui\Dependency\Facade\ContentFileGuiToContentFileInterface
+     * @return \Spryker\Zed\ContentFileGui\Dependency\Facade\ContentFileGuiToContentFileFacadeInterface
      */
-    public function getContentFileFacade(): ContentFileGuiToContentFileInterface
+    public function getContentFileFacade(): ContentFileGuiToContentFileFacadeInterface
     {
         return $this->contentFileFacade;
     }

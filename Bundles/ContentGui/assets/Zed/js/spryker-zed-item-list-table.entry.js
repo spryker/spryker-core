@@ -5,8 +5,8 @@
 
 'use strict';
 
-if (!window.ContentProductAbstractList) {
+if (!window.ContentItemListTable) {
     require('../sass/table.scss');
     require('./modules/add-item-list-table');
-    window.ContentProductAbstractList = true;
+    window.ContentItemListTable = true;
 }

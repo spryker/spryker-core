@@ -29,31 +29,16 @@ class ContentFileFacadeTest extends Test
     protected $tester;
 
     /**
-     * @var \Spryker\Zed\ContentFile\Business\ContentFileFacadeInterface
-     */
-    protected $contentFileFacade;
-
-    /**
-     * @return void
-     */
-    public function setUp(): void
-    {
-        parent::setUp();
-
-        $this->contentFileFacade = $this->tester->getFacade();
-    }
-
-    /**
      * @return void
      */
     public function testValidateContentFileValidationSuccessful(): void
     {
         // Arrange
         $contentFileListTermTransfer = (new ContentFileListTermTransfer())
-            ->setFileIds(range(0, 15));
+            ->setFileIds(range(1, $this->tester->getModuleConfig()->getMaxFilesInFileList()));
 
         // Act
-        $validationResult = $this->contentFileFacade->validateContentFileListTerm($contentFileListTermTransfer);
+        $validationResult = $this->tester->getFacade()->validateContentFileListTerm($contentFileListTermTransfer);
 
         // Assert
         $this->assertTrue($validationResult->getIsSuccess());
@@ -66,10 +51,10 @@ class ContentFileFacadeTest extends Test
     {
         // Arrange
         $contentFileListTermTransfer = (new ContentFileListTermTransfer())
-            ->setFileIds(range(0, 21));
+            ->setFileIds(range(1, $this->tester->getModuleConfig()->getMaxFilesInFileList() + 1));
 
         // Act
-        $validationResult = $this->contentFileFacade->validateContentFileListTerm($contentFileListTermTransfer);
+        $validationResult = $this->tester->getFacade()->validateContentFileListTerm($contentFileListTermTransfer);
 
         // Assert
         $this->assertFalse($validationResult->getIsSuccess());

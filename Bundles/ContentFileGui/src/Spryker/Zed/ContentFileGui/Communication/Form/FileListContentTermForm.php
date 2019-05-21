@@ -66,10 +66,10 @@ class FileListContentTermForm extends AbstractType
      */
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
-        $view->vars['tables']['fileListViewTable'] = $this->getFactory()->createFileListViewTable(
+        $view->vars['tables']['fileListViewTable'] = $this->getFactory()->createContentFileListViewTable(
             $view->parent->vars['name']
         );
-        $view->vars['tables']['fileListSelectedTable'] = $this->getFactory()->createFileListSelectedTable(
+        $view->vars['tables']['fileListSelectedTable'] = $this->getFactory()->createContentFileListSelectedTable(
             $view->vars['value']->getFileIds(),
             $view->parent->vars['name']
         );
