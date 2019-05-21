@@ -14,6 +14,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductQuantity\Dependency\ProductQuantityEvents;
 
 /**
+ * @deprecated Use \Spryker\Zed\ProductQuantityStorage\Communication\Plugin\Event\ProductQuantityEventResourceBulkRepositoryPlugin instead.
+ *
  * @method \Spryker\Zed\ProductQuantityStorage\Persistence\ProductQuantityStorageRepositoryInterface getRepository()
  * @method \Spryker\Zed\ProductQuantityStorage\Business\ProductQuantityStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductQuantityStorage\Communication\ProductQuantityStorageCommunicationFactory getFactory()
@@ -47,6 +49,7 @@ class ProductQuantityEventResourceRepositoryPlugin extends AbstractPlugin implem
         if (!empty($ids)) {
             return $this->getFacade()->findProductQuantityByProductIdsTransfers($ids);
         }
+
         return $this->getFacade()->findProductQuantityTransfers();
     }
 

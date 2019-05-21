@@ -46,6 +46,7 @@ class ContainerGlobals
             static::$onlyFor[$onlyFor] = [
                 $key => $value,
             ];
+
             return;
         }
 

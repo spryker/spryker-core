@@ -39,6 +39,7 @@ class CmsBlockStorageQueryContainer extends AbstractQueryContainer implements Cm
      */
     public function queryBlockWithRelationsByIds(array $cmsBlockIds)
     {
+        /** @var \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery $query */
         $query = $this->getFactory()->createCmsBlockQuery()
             ->filterByIdCmsBlock_In($cmsBlockIds)
             ->joinWithCmsBlockTemplate()

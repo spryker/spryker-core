@@ -201,6 +201,7 @@ class ShoppingListEntityManager extends AbstractEntityManager implements Shoppin
 
         if ($shoppingListCompanyBusinessUnitEntity !== null) {
             $this->updateShoppingListCompanyBusinessUnit($shoppingListCompanyBusinessUnitTransfer, $shoppingListCompanyBusinessUnitEntity);
+
             return;
         }
 
@@ -222,6 +223,7 @@ class ShoppingListEntityManager extends AbstractEntityManager implements Shoppin
 
         if ($shoppingListCompanyUserEntity !== null) {
             $this->updateShoppingListCompanyUser($shoppingListCompanyUserTransfer, $shoppingListCompanyUserEntity);
+
             return;
         }
 

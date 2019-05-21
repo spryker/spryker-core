@@ -346,6 +346,7 @@ class IndexController extends AbstractController
                 $discountConfiguratorTransfer->getDiscountGeneral()->getIdDiscount()
             )->render();
         }
+
         return $voucherCodesTable;
     }
 

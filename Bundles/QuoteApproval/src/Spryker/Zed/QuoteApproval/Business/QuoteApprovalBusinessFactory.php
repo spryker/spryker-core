@@ -26,6 +26,8 @@ use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalWriter;
 use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalWriterInterface;
 use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApproverListProvider;
 use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApproverListProviderInterface;
+use Spryker\Zed\QuoteApproval\Business\Sanitizer\QuoteApprovalSanitizer;
+use Spryker\Zed\QuoteApproval\Business\Sanitizer\QuoteApprovalSanitizerInterface;
 use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCompanyRoleFacadeInterface;
 use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCompanyUserFacadeInterface;
 use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCustomerFacadeInterface;
@@ -60,7 +62,8 @@ class QuoteApprovalBusinessFactory extends AbstractBusinessFactory
     public function createQuoteLocker(): QuoteLockerInterface
     {
         return new QuoteLocker(
-            $this->getQuoteFacade()
+            $this->getQuoteFacade(),
+            $this->getQuoteApprovalUnlockPreCheckPlugins()
         );
     }
 
@@ -117,6 +120,17 @@ class QuoteApprovalBusinessFactory extends AbstractBusinessFactory
             $this->createQuoteApprovalRequestValidator(),
             $this->getSharedCartFacade(),
             $this->getEntityManager()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\QuoteApproval\Business\Sanitizer\QuoteApprovalSanitizerInterface
+     */
+    public function createQuoteApprovalSanitizer(): QuoteApprovalSanitizerInterface
+    {
+        return new QuoteApprovalSanitizer(
+            $this->getEntityManager(),
+            $this->getRepository()
         );
     }
 
@@ -188,5 +202,13 @@ class QuoteApprovalBusinessFactory extends AbstractBusinessFactory
     public function getCustomerFacade(): QuoteApprovalToCustomerFacadeInterface
     {
         return $this->getProvidedDependency(QuoteApprovalDependencyProvider::FACADE_CUSTOMER);
+    }
+
+    /**
+     * @return \Spryker\Zed\QuoteApprovalExtension\Dependency\Plugin\QuoteApprovalUnlockPreCheckPluginInterface[]
+     */
+    public function getQuoteApprovalUnlockPreCheckPlugins(): array
+    {
+        return $this->getProvidedDependency(QuoteApprovalDependencyProvider::PLUGINS_QUOTE_APPROVAL_UNLOCK_PRE_CHECK);
     }
 }

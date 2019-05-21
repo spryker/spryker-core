@@ -78,6 +78,7 @@ class UpdateProductReviewStatusTest extends Unit
         // Assert
         if ($isTouchActive) {
             $this->tester->assertTouchActive(ProductReviewConfig::RESOURCE_TYPE_PRODUCT_REVIEW, $productReviewTransferToUpdate->getIdProductReview(), 'Product review should have been touched as active.');
+
             return;
         }
 

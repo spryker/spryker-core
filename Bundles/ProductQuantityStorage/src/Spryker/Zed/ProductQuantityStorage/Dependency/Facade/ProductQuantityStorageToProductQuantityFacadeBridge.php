@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductQuantityStorage\Dependency\Facade;
 
+use Generated\Shared\Transfer\FilterTransfer;
+
 class ProductQuantityStorageToProductQuantityFacadeBridge implements ProductQuantityStorageToProductQuantityFacadeInterface
 {
     /**
@@ -38,5 +40,15 @@ class ProductQuantityStorageToProductQuantityFacadeBridge implements ProductQuan
     public function findProductQuantityTransfers(): array
     {
         return $this->productQuantityFacade->findProductQuantityTransfers();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]
+     */
+    public function findFilteredProductQuantityTransfers(FilterTransfer $filterTransfer): array
+    {
+        return $this->productQuantityFacade->findFilteredProductQuantityTransfers($filterTransfer);
     }
 }
