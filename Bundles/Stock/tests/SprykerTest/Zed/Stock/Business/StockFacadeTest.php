@@ -237,14 +237,10 @@ class StockFacadeTest extends Unit
     }
 
     /**
-     * TODO no rollback on error
-     *
      * @return void
      */
     public function testCreateStockProductShouldThrowException()
     {
-        $this->markTestSkipped('Needs to be fixed first');
-
         $this->expectException(StockProductAlreadyExistsException::class);
         $this->expectExceptionMessage('Cannot duplicate entry: this stock type is already set for this product');
 
