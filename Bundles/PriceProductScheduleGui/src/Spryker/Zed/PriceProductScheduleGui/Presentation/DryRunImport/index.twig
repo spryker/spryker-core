@@ -33,6 +33,23 @@
 
     {% endembed %}
 
+    {% embed '@Gui/Partials/widget.twig' with {widget_title: 'Publish the scheduled prices' | trans} %}
+
+        {% block widget_content %}
+            {{ 'By clicking the "Publish" button below, you will send the scheduled prices to the live system.' | trans }}
+            <br>
+
+            {{ 'They will be available to your customers based on the dates' | trans }}
+
+            <br>
+            <br>
+
+            <a href="{{ url('/price-product-schedule-gui/publish', {'idPriceProductScheduleList': priceProductScheduleList.idPriceProductScheduleList }) }}"
+               class="btn btn-primary safe-submit">{{ 'Publish' | trans }}</a>
+        {% endblock %}
+
+    {% endembed %}
+
     {% embed '@Gui/Partials/widget.twig' with {widget_title: 'Errors found inside your file' | trans} %}
 
         {% block widget_content %}

@@ -16,7 +16,7 @@
 
 {% block content %}
 
-    {% embed '@Gui/Partials/widget.twig' %}
+    {% embed '@Gui/Partials/widget.twig' with {widget_title: 'Import new scheduled prices' | trans} %}
 
         {% block widget_content %}
             <a href="#">{{ 'Learn about file format on our documentation' | trans }}</a>

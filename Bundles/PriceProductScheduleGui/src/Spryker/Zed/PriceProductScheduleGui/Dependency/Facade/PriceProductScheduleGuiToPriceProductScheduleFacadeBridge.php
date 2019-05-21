@@ -9,6 +9,9 @@ namespace Spryker\Zed\PriceProductScheduleGui\Dependency\Facade;
 
 use Generated\Shared\Transfer\PriceProductScheduledListImportRequestTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleListImportResponseTransfer;
+use Generated\Shared\Transfer\PriceProductScheduleListRequestTransfer;
+use Generated\Shared\Transfer\PriceProductScheduleListResponseTransfer;
+use Generated\Shared\Transfer\PriceProductScheduleListTransfer;
 
 class PriceProductScheduleGuiToPriceProductScheduleFacadeBridge implements PriceProductScheduleGuiToPriceProductScheduleFacadeInterface
 {
@@ -34,5 +37,27 @@ class PriceProductScheduleGuiToPriceProductScheduleFacadeBridge implements Price
         PriceProductScheduledListImportRequestTransfer $priceProductScheduledListImportRequest
     ): PriceProductScheduleListImportResponseTransfer {
         return $this->priceProductScheduleFacade->importPriceProductSchedules($priceProductScheduledListImportRequest);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductScheduleListTransfer $priceProductScheduleListTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleListResponseTransfer
+     */
+    public function updatePriceProductScheduleList(
+        PriceProductScheduleListTransfer $priceProductScheduleListTransfer
+    ): PriceProductScheduleListResponseTransfer {
+        return $this->priceProductScheduleFacade->updatePriceProductScheduleList($priceProductScheduleListTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductScheduleListRequestTransfer $priceProductScheduleListRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleListResponseTransfer
+     */
+    public function findPriceProductScheduleList(
+        PriceProductScheduleListRequestTransfer $priceProductScheduleListRequestTransfer
+    ): PriceProductScheduleListResponseTransfer {
+        return $this->priceProductScheduleFacade->findPriceProductScheduleList($priceProductScheduleListRequestTransfer);
     }
 }

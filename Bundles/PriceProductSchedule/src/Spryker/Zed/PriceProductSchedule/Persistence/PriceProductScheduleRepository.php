@@ -9,6 +9,8 @@ namespace Spryker\Zed\PriceProductSchedule\Persistence;
 
 use DateTime;
 use Generated\Shared\Transfer\PriceProductScheduleCriteriaFilterTransfer;
+use Generated\Shared\Transfer\PriceProductScheduleListRequestTransfer;
+use Generated\Shared\Transfer\PriceProductScheduleListTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\PriceProductSchedule\Persistence\Map\SpyPriceProductScheduleTableMap;
@@ -302,5 +304,29 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
             SpyPriceProductScheduleTableMap::COL_ID_PRICE_PRODUCT_SCHEDULE,
             static::ALIAS_FILTERED . '.' . static::COL_RESULT
         );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductScheduleListRequestTransfer $priceProductScheduleListRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleListTransfer|null
+     */
+    public function findPriceProductScheduleListById(
+        PriceProductScheduleListRequestTransfer $priceProductScheduleListRequestTransfer
+    ): ?PriceProductScheduleListTransfer {
+        $priceProductScheduleListEntity = $this->getFactory()
+            ->createPriceProductScheduleListQuery()
+            ->filterByIdPriceProductScheduleList($priceProductScheduleListRequestTransfer->getIdPriceProductScheduleList())
+            ->findOne();
+
+        if ($priceProductScheduleListEntity === null) {
+            return null;
+        }
+
+        return $this->getFactory()->createPriceProductScheduleListMapper()
+            ->mapPriceProductScheduleListEntityToPriceProductScheduleListTransfer(
+                $priceProductScheduleListEntity,
+                new PriceProductScheduleListTransfer()
+            );
     }
 }

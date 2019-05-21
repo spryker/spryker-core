@@ -9,6 +9,7 @@ namespace Spryker\Zed\PriceProductSchedule\Business;
 
 use Generated\Shared\Transfer\PriceProductScheduledListImportRequestTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleListImportResponseTransfer;
+use Generated\Shared\Transfer\PriceProductScheduleListRequestTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleListResponseTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleListTransfer;
 
@@ -31,11 +32,11 @@ interface PriceProductScheduleFacadeInterface
      * Specification:
      * - Deletes scheduled prices that has been ended earlier than the days provided as parameter.
      *
-     * @api
-     *
      * @param int $daysRetained
      *
      * @return void
+     * @api
+     *
      */
     public function cleanAppliedScheduledPrices(int $daysRetained): void;
 
@@ -49,7 +50,9 @@ interface PriceProductScheduleFacadeInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduleListResponseTransfer
      */
-    public function createPriceProductScheduleList(PriceProductScheduleListTransfer $priceProductScheduleListTransfer): PriceProductScheduleListResponseTransfer;
+    public function createPriceProductScheduleList(
+        PriceProductScheduleListTransfer $priceProductScheduleListTransfer
+    ): PriceProductScheduleListResponseTransfer;
 
     /**
      * Specification:
@@ -61,7 +64,9 @@ interface PriceProductScheduleFacadeInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduleListResponseTransfer
      */
-    public function updatePriceProductScheduleList(PriceProductScheduleListTransfer $priceProductScheduleListTransfer): PriceProductScheduleListResponseTransfer;
+    public function updatePriceProductScheduleList(
+        PriceProductScheduleListTransfer $priceProductScheduleListTransfer
+    ): PriceProductScheduleListResponseTransfer;
 
     /**
      * Specification:
@@ -73,5 +78,21 @@ interface PriceProductScheduleFacadeInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduleListImportResponseTransfer
      */
-    public function importPriceProductSchedules(PriceProductScheduledListImportRequestTransfer $priceProductScheduledListImportRequest): PriceProductScheduleListImportResponseTransfer;
+    public function importPriceProductSchedules(
+        PriceProductScheduledListImportRequestTransfer $priceProductScheduledListImportRequest
+    ): PriceProductScheduleListImportResponseTransfer;
+
+    /**
+     * Specification:
+     * - Finds price product schedule list by field from request transfer.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PriceProductScheduleListRequestTransfer $priceProductScheduleListRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleListResponseTransfer
+     */
+    public function findPriceProductScheduleList(
+        PriceProductScheduleListRequestTransfer $priceProductScheduleListRequestTransfer
+    ): PriceProductScheduleListResponseTransfer;
 }

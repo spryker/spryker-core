@@ -9,6 +9,7 @@ namespace Spryker\Zed\PriceProductSchedule\Business;
 
 use Generated\Shared\Transfer\PriceProductScheduledListImportRequestTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleListImportResponseTransfer;
+use Generated\Shared\Transfer\PriceProductScheduleListRequestTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleListResponseTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleListTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -98,4 +99,23 @@ class PriceProductScheduleFacade extends AbstractFacade implements PriceProductS
             ->createPriceProductScheduleListImporter()
             ->importPriceProductSchedules($priceProductScheduledListImportRequest);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PriceProductScheduleListRequestTransfer $priceProductScheduleListRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleListResponseTransfer
+     */
+    public function findPriceProductScheduleList(
+        PriceProductScheduleListRequestTransfer $priceProductScheduleListRequestTransfer
+    ): PriceProductScheduleListResponseTransfer {
+        return $this->getFactory()
+            ->createPriceProductScheduleListFinder()
+            ->findPriceProductScheduleList($priceProductScheduleListRequestTransfer);
+    }
+
+
 }

@@ -20,6 +20,9 @@ class ImportErrorListTable extends AbstractTable
      */
     protected $priceProductScheduleListImportResponseTransfer;
 
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductScheduleListImportResponseTransfer $priceProductScheduleListImportResponseTransfer
+     */
     public function __construct(
         PriceProductScheduleListImportResponseTransfer $priceProductScheduleListImportResponseTransfer
     ) {

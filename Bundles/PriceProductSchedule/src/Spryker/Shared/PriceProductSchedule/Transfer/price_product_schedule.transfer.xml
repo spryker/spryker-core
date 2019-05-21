@@ -128,4 +128,8 @@
         <property name="isSuccess" type="bool"/>
     </transfer>
 
+    <transfer name="PriceProductScheduleListRequest">
+        <property name="idPriceProductScheduleList" type="int"/>
+    </transfer>
+
 </transfers>

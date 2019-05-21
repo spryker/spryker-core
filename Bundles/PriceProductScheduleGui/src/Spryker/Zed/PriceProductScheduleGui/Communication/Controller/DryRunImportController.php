@@ -54,7 +54,7 @@ class DryRunImportController extends AbstractController
 
         return $this->viewResponse([
             'importForm' => $priceProductScheduleImportForm->createView(),
-            'importResponse' => $priceProductScheduleListImportResponseTransfer,
+            'priceProductScheduleList' => $priceProductScheduleListImportResponseTransfer->getPriceProductScheduleList(),
             'errorTable' => $errorTableData,
             'successTable' => $successTable->render(),
         ]);
