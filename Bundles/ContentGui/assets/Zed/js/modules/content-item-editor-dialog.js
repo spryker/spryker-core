@@ -55,7 +55,6 @@ var ContentItemDialog = function(
                 });
             };
 
-
             this.showError = function (errorSelector, container) {
                 errorSelector.insertAfter(container);
             };
@@ -86,9 +85,9 @@ var ContentItemDialog = function(
                         widgetHtmlTemplate
                     );
 
-                    this.removeItemFromEditor();
-                    this.addItemInEditor(elementForInsert);
                     this.$ui.hideDialog(this.$dialog);
+                    this.context.invoke('editor.restoreRange');
+                    this.addItemInEditor(elementForInsert);
                 }
 
                 if (!chosenId) {
@@ -101,19 +100,27 @@ var ContentItemDialog = function(
             };
 
             this.addItemInEditor = function (elementForInsert) {
-                this.context.invoke('editor.restoreRange');
-                this.context.invoke('pasteHTML', elementForInsert);
+                var $clickedNode = this.context.invoke('contentItemPopover.getClickedNode');
+
+                if ($clickedNode.length) {
+                    this.clearNode($clickedNode);
+                }
+
+                this.context.invoke('insertNode', elementForInsert);
             };
 
             this.removeItemFromEditor = function () {
-                var $deletedRange = this.$replaceRange.deleteContents();
+                var $clickedNode = this.context.invoke('contentItemPopover.getClickedNode');
 
-                this.$range.create(
-                    $deletedRange.sc,
-                    $deletedRange.so,
-                    $deletedRange.ec,
-                    $deletedRange.eo
-                );
+                this.clearNode($clickedNode);
+                this.context.invoke('contentItemPopover.hidePopover');
+                this.context.invoke('pasteHTML', ' ');
+            };
+
+            this.clearNode = function ($clickedNode) {
+                var $clickedNodeParent = $clickedNode.parent('p');
+
+                $clickedNodeParent.empty();
             };
 
             this.getNewDomElement = function (
@@ -143,7 +150,7 @@ var ContentItemDialog = function(
                     }[param];
                 });
 
-                return $(builtTemplate)[0];
+                return $.parseHTML(builtTemplate.trim())[0];
             };
 
             this.getDialogContent = function (url) {
@@ -182,20 +189,13 @@ var ContentItemDialog = function(
 
             this.show = function (value, target) {
                 var dataset = target[0].dataset;
-                this.$clickedNodeInEditor = this.context.invoke('contentItemPopover.getClickedNode');
-                this.$replaceRange = this.$range.createFromSelection();
+                this.isCreateNew = dataset.hasOwnProperty('new');
 
                 if (!dataset.hasOwnProperty('type')) {
                     return;
                 }
 
-                if (this.$clickedNodeInEditor) {
-                    this.$replaceRange = this.$range.createFromNode(this.$clickedNodeInEditor);
-                } else {
-                    this.context.invoke('editor.saveRange');
-                }
-
-                var urlParams = {type: dataset.type};
+                var urlParams = { type: dataset.type };
 
                 if (dataset.hasOwnProperty('id')) {
                     urlParams.idContent = dataset.id;
@@ -207,6 +207,7 @@ var ContentItemDialog = function(
 
                 var url = dialogContentUrl + '?' + $.param(urlParams);
 
+                this.context.invoke('editor.saveRange');
                 this.clearContent();
                 this.getDialogContent(url);
                 this.$ui.showDialog(this.$dialog);

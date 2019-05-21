@@ -23,14 +23,14 @@ class ContentGuiConfig extends AbstractBundleConfig
      */
     public function getEditorContentWidgetTemplate(): string
     {
-        return '<div class="content-item-editor js-content-item-editor" contenteditable="false" '
-                    . 'data-type="' . static::PARAMETER_TYPE . '" data-id="' . static::PARAMETER_ID . '" '
-                    . 'data-template="' . static::PARAMETER_TEMPLATE . '" data-short-code="' . static::PARAMETER_SHORT_CODE . '">'
-                        . '<p>Content Item Type: <b>' . static::PARAMETER_TYPE . '</b></p>'
-                        . '<p>Content Item ID#: <b>' . static::PARAMETER_ID . '</b></p>'
-                        . '<p>Name: <b>' . static::PARAMETER_NAME . '</b></p>'
-                        . '<p>Template: <b>' . static::PARAMETER_TEMPLATE_DISPLAY_NAME . '</b></p>'
-                . '</div>';
+        return '<span class="content-item-editor js-content-item-editor" contenteditable="false" '
+            . 'data-type="' . static::PARAMETER_TYPE . '" data-id="' . static::PARAMETER_ID . '" '
+            . 'data-template="' . static::PARAMETER_TEMPLATE . '" data-short-code="' . static::PARAMETER_SHORT_CODE . '">'
+                . '<span>Content Item Type: <b>' . static::PARAMETER_TYPE . '</b></span>'
+                . '<span>Content Item ID#: <b>' . static::PARAMETER_ID . '</b></span>'
+                . '<span>Name: <b>' . static::PARAMETER_NAME . '</b></span>'
+                . '<span>Template: <b>' . static::PARAMETER_TEMPLATE_DISPLAY_NAME . '</b></span>'
+            . '</span>';
     }
 
     /**

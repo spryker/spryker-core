@@ -52,6 +52,9 @@ var ContentItemEditor = function(options) {
             popover: {
                 'editContentItem': ['editWidget', 'editContentItem', 'removeContentItem']
             },
+            callbacks: {
+                onKeydown: this.onKeydownHandler
+            },
             dialogsInBody: true
         };
 
@@ -102,19 +105,31 @@ var ContentItemEditor = function(options) {
 
     this.removeContentItemHandler = function (context) {
         return function () {
-            var $clickedNode = context.invoke('contentItemPopover.getClickedNode');
-            var $clickedNodeRange = $.summernote.range.createFromNode($clickedNode);
+            context.invoke('contentItemDialog.removeItemFromEditor');
+        }
+    };
 
-            $clickedNodeRange.deleteContents();
-            context.invoke('contentItemPopover.hidePopover');
-            context.invoke('pasteHTML', ' ');
+    this.onKeydownHandler = function (event) {
+        var pressedKey = event.originalEvent.key;
+
+        if (pressedKey !== 'Enter') {
+            return;
+        }
+
+        var $editor = $(this);
+        var $editorRange = $editor.summernote('editor.createRange');
+        var $contentItem = $($editorRange.sc).find('.js-content-item-editor');
+
+        if ($contentItem.length) {
+            $editorRange.deleteContents();
+            $editor.summernote('pasteHTML', ' ');
         }
     };
 
     this.generateDropdownList = function () {
         return this.dropDownItems.reduce(function(currentList, dropItem) {
             var dropItemTemplate = '<li role="listitem">' +
-                '<a href="#" data-type="' + dropItem.type + '">' +
+                '<a href="#" data-type="' + dropItem.type + '" data-new="true">' +
                 dropItem.name +
                 '</a>' + '</li>';
 
