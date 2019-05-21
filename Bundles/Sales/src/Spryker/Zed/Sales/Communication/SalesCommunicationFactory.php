@@ -9,6 +9,7 @@ namespace Spryker\Zed\Sales\Communication;
 
 use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Gui\Communication\Form\OmsTriggerForm;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Sales\Communication\Form\AddressForm;
@@ -57,6 +58,20 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
     public function getCustomerForm(array $formData = [], array $formOptions = [])
     {
         return $this->createCustomerForm($formData, $formOptions);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param string $event
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getOrderOmsTriggerForm(OrderTransfer $orderTransfer, string $event): FormInterface
+    {
+        $options = $this->createOmsTriggerFormDataProvider()
+            ->getOrderOmsTriggerFormOptions($orderTransfer, $event);
+
+        return $this->getFormFactory()->create(OmsTriggerForm::class, null, $options);
     }
 
     /**

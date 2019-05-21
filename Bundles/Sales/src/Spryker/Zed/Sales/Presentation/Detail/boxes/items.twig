@@ -6,8 +6,10 @@
             {% block widget_content %}
 
                 <div>
-                    {% for event in events %}
-                        <a class="btn btn-primary trigger-order-event" data-id-sales-order="{{ order.idSalesOrder }}" data-event="{{ event }}" href="#">{{ event }}</a>
+                    {% for orderOmsTriggerForm in orderOmsTriggerFormCollection %}
+                        {% include '@Gui/Form/oms_trigger_form.twig' with {
+                            form: orderOmsTriggerForm
+                        } only %}
                     {% endfor %}
                 </div>
 

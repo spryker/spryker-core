@@ -50,14 +50,14 @@ class DetailController extends AbstractController
             return $blockResponseData;
         }
 
+        $orderOmsTriggerFormCollection = $this->getOrderOmsTriggerFormCollection($orderTransfer, $events);
         $orderItemsOmsTriggerFormCollection = $this->getOrderItemsOmsTriggerFormCollection($orderTransfer, $eventsGroupedByItem);
 
         return array_merge([
-            'eventsGroupedByItem' => $eventsGroupedByItem,
-            'events' => $events,
             'distinctOrderStates' => $distinctOrderStates,
             'order' => $orderTransfer,
             'orderItemSplitFormCollection' => $orderItemSplitFormCollection,
+            'orderOmsTriggerFormCollection' => $orderOmsTriggerFormCollection,
             'orderItemsOmsTriggerFormCollection' => $orderItemsOmsTriggerFormCollection,
         ], $blockResponseData);
     }
@@ -150,7 +150,7 @@ class DetailController extends AbstractController
         foreach ($orderTransfer->getItems() as $itemTransfer) {
             $idSalesOrderItem = $itemTransfer->getIdSalesOrderItem();
 
-            $orderItemsOmsTriggerFormCollection[$idSalesOrderItem] = $this->getOrderItemOmsTriggerFormCollection(
+            $orderItemsOmsTriggerFormCollection[$idSalesOrderItem] = $this->getSingleOrderItemOmsTriggerFormCollection(
                 $itemTransfer,
                 $eventsGroupedByItem[$idSalesOrderItem]
             );
@@ -163,9 +163,9 @@ class DetailController extends AbstractController
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param string[] $events
      *
-     * @return array
+     * @return \Symfony\Component\Form\FormView[]
      */
-    protected function getOrderItemOmsTriggerFormCollection(ItemTransfer $itemTransfer, array $events): array
+    protected function getSingleOrderItemOmsTriggerFormCollection(ItemTransfer $itemTransfer, array $events): array
     {
         $orderItemOmsTriggerFormCollection = [];
 
@@ -176,5 +176,24 @@ class DetailController extends AbstractController
         }
 
         return $orderItemOmsTriggerFormCollection;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param string[] $events
+     *
+     * @return \Symfony\Component\Form\FormView[]
+     */
+    protected function getOrderOmsTriggerFormCollection(OrderTransfer $orderTransfer, array $events): array
+    {
+        $orderOmsTriggerFormCollection = [];
+
+        foreach ($events as $event) {
+            $orderOmsTriggerFormCollection[$event] = $this->getFactory()
+                ->getOrderOmsTriggerForm($orderTransfer, $event)
+                ->createView();
+        }
+
+        return $orderOmsTriggerFormCollection;
     }
 }
