@@ -62,6 +62,19 @@ interface StoreFacadeInterface
     public function getStoreByName($storeName);
 
     /**
+     *
+     * Specification:
+     *  - Retrieves store by store name
+     *
+     * @api
+     *
+     * @param string $storeName
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer|null
+     */
+    public function findStoreByName(string $storeName): ?StoreTransfer;
+
+    /**
      * Specification:
      *  - Reads all shared store from Store transfer and populates data from configuration.
      *  - The list of stores with which this store shares database, the value is store name.

@@ -7,16 +7,15 @@
 
 namespace Spryker\Zed\Quote\Business\Validator;
 
-use ArrayObject;
-use Generated\Shared\Transfer\ErrorMessageTransfer;
+use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\QuoteValidationResponseTransfer;
 use Spryker\Zed\Quote\Dependency\Facade\QuoteToStoreFacadeInterface;
-use Spryker\Zed\Store\Business\Model\Exception\StoreNotFoundException;
 
 class QuoteValidator implements QuoteValidatorInterface
 {
     protected const ERROR_MESSAGE_STORE_DATA_IS_MISSING = 'quote.validation.error.store_is_missing';
+    protected const ERROR_MESSAGE_STORE_NOT_FOUND = 'Store not found.';
 
     /**
      * @var \Spryker\Zed\Quote\Dependency\Facade\QuoteToStoreFacadeInterface
@@ -46,7 +45,7 @@ class QuoteValidator implements QuoteValidatorInterface
     public function validate(QuoteTransfer $quoteTransfer): QuoteValidationResponseTransfer
     {
         $quoteValidationResponseTransfer = (new QuoteValidationResponseTransfer())
-            ->setIsSuccess(true);
+            ->setIsSuccessful(true);
         $quoteValidationResponseTransfer = $this->validateStore($quoteTransfer, $quoteValidationResponseTransfer);
         $quoteValidationResponseTransfer = $this->executeQuoteValidatorPlugins($quoteTransfer, $quoteValidationResponseTransfer);
 
@@ -69,10 +68,9 @@ class QuoteValidator implements QuoteValidatorInterface
             return $this->addValidationError($quoteValidationResponseTransfer, static::ERROR_MESSAGE_STORE_DATA_IS_MISSING);
         }
 
-        try {
-            $storeTransfer = $this->storeFacade->getStoreByName($storeTransfer->getName());
-        } catch (StoreNotFoundException $exception) {
-            return $this->addValidationError($quoteValidationResponseTransfer, $exception->getMessage());
+        $storeTransfer = $this->storeFacade->findStoreByName($storeTransfer->getName());
+        if (!$storeTransfer) {
+            return $this->addValidationError($quoteValidationResponseTransfer, static::ERROR_MESSAGE_STORE_NOT_FOUND);
         }
 
         return $quoteValidationResponseTransfer;
@@ -91,13 +89,11 @@ class QuoteValidator implements QuoteValidatorInterface
         foreach ($this->quoteValidatorPlugins as $quoteValidatorPlugin) {
             $quoteValidationResponseTransferFromPlugin = $quoteValidatorPlugin->validate($quoteTransfer);
 
-            if (!$quoteValidationResponseTransferFromPlugin->getIsSuccess()) {
-                $errors = array_merge(
-                    $quoteValidationResponseTransfer->getErrors()->getArrayCopy(),
-                    $quoteValidationResponseTransferFromPlugin->getErrors()->getArrayCopy()
-                );
-                $quoteValidationResponseTransfer->setErrors(new ArrayObject($errors))
-                    ->setIsSuccess(false);
+            if (!$quoteValidationResponseTransferFromPlugin->getIsSuccessful()) {
+                foreach ($quoteValidationResponseTransferFromPlugin->getErrors() as $quoteErrorTransfer) {
+                    $quoteValidationResponseTransfer->addErrors($quoteErrorTransfer);
+                }
+                $quoteValidationResponseTransfer->setIsSuccessful(false);
             }
         }
 
@@ -116,11 +112,11 @@ class QuoteValidator implements QuoteValidatorInterface
         string $errorMessage,
         array $parameters = []
     ): QuoteValidationResponseTransfer {
-        $errorMessageTransfer = (new ErrorMessageTransfer())->setValue($errorMessage)
+        $quoteErrorTransfer = (new QuoteErrorTransfer())->setMessage($errorMessage)
             ->setParameters($parameters);
 
         return $quoteValidationResponseTransfer
-            ->addErrors($errorMessageTransfer)
-            ->setIsSuccess(false);
+            ->addErrors($quoteErrorTransfer)
+            ->setIsSuccessful(false);
     }
 }

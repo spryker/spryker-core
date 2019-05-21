@@ -8,6 +8,7 @@
 namespace Spryker\Glue\CartsRestApi\Processor\Cart;
 
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCartsAttributesTransfer;
 use Spryker\Client\CartsRestApi\CartsRestApiClientInterface;
 use Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface;
@@ -65,17 +66,23 @@ class CartUpdater implements CartUpdaterInterface
         RestRequestInterface $restRequest,
         RestCartsAttributesTransfer $restCartsAttributesTransfer
     ): RestResponseInterface {
-        $quoteTransfer = $this->cartsResourceMapper->mapRestCartsAttributesTransferToQuoteTransfer($restCartsAttributesTransfer, $restRequest);
-        $quoteTransfer->setUuid($restRequest->getResource()->getId());
-
-        $quoteTransfer->setCustomer(
-            $this->executeCustomerExpanderPlugin($quoteTransfer->getCustomer(), $restRequest)
+        $restUser = $restRequest->getRestUser();
+        $quoteTransfer = $this->cartsResourceMapper->mapRestCartsAttributesTransferToQuoteTransfer(
+            $restCartsAttributesTransfer,
+            (new QuoteTransfer())->setCustomerReference($restUser->getNaturalIdentifier())
         );
+
+        $quoteTransfer
+            ->setUuid($restRequest->getResource()->getId())
+            ->setCompanyUserId($restUser->getIdCompany())
+            ->setCustomer(
+                $this->executeCustomerExpanderPlugin($quoteTransfer->getCustomer(), $restRequest)
+            );
 
         $quoteResponseTransfer = $this->cartsRestApiClient->updateQuote($quoteTransfer);
 
-        if (count($quoteResponseTransfer->getErrorCodes()) > 0) {
-            return $this->cartRestResponseBuilder->buildErrorRestResponseBasedOnErrorCodes($quoteResponseTransfer->getErrorCodes());
+        if ($quoteResponseTransfer->getErrors()->count() > 0) {
+            return $this->cartRestResponseBuilder->createFailedErrorResponse($quoteResponseTransfer->getErrors());
         }
 
         $restResource = $this->cartsResourceMapper->mapCartsResource(

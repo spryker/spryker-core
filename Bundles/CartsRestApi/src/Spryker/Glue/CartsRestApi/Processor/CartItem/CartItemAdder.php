@@ -75,20 +75,16 @@ class CartItemAdder implements CartItemAdderInterface
         RestRequestInterface $restRequest,
         RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
     ): RestResponseInterface {
-        $itemTransfer = $this->cartItemsResourceMapper->mapItemAttributesToItemTransfer($restCartItemsAttributesTransfer);
-        $restCartItemRequestTransfer = $this->cartItemsResourceMapper->createRestCartItemRequestTransfer(
-            $itemTransfer,
-            $restRequest,
-            $this->findCartIdentifier($restRequest)
-        );
+        $restCartItemsAttributesTransfer
+            ->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier())
+            ->setQuoteUuid($this->findCartIdentifier($restRequest))
+            ->setCustomer(
+                $this->executeCustomerExpanderPlugin(new CustomerTransfer(), $restRequest)
+            );
 
-        $restCartItemRequestTransfer->setCustomer(
-            $this->executeCustomerExpanderPlugin($restCartItemRequestTransfer->getCustomer(), $restRequest)
-        );
-
-        $quoteResponseTransfer = $this->cartsRestApiClient->addItem($restCartItemRequestTransfer);
-        if (count($quoteResponseTransfer->getErrorCodes()) > 0) {
-            return $this->cartRestResponseBuilder->buildErrorRestResponseBasedOnErrorCodes($quoteResponseTransfer->getErrorCodes());
+        $quoteResponseTransfer = $this->cartsRestApiClient->addItem($restCartItemsAttributesTransfer);
+        if ($quoteResponseTransfer->getErrors()->count() > 0) {
+            return $this->cartRestResponseBuilder->createFailedErrorResponse($quoteResponseTransfer->getErrors());
         }
 
         $restResource = $this->cartsResourceMapper->mapCartsResource(

@@ -7,49 +7,23 @@
 
 namespace Spryker\Zed\CartsRestApi\Business\Quote\Mapper;
 
-use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Shared\Transfer\MessageTransfer;
-use Generated\Shared\Transfer\QuoteCollectionResponseTransfer;
-use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\QuoteUpdateRequestAttributesTransfer;
 use Generated\Shared\Transfer\QuoteUpdateRequestTransfer;
-use Spryker\Zed\CartsRestApi\CartsRestApiConfig;
 
 class QuoteMapper implements QuoteMapperInterface
 {
     /**
-     * @param string $registeredCustomerReference
-     * @param \Generated\Shared\Transfer\QuoteCollectionResponseTransfer $quoteCollectionResponseTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function createQuoteTransfer(
-        string $registeredCustomerReference,
-        QuoteCollectionResponseTransfer $quoteCollectionResponseTransfer
-    ): QuoteTransfer {
-        $quoteCollection = $quoteCollectionResponseTransfer->getQuoteCollection();
-
-        $registeredCustomer = (new CustomerTransfer())->setCustomerReference($registeredCustomerReference);
-        if (!$quoteCollection || $quoteCollection->getQuotes()->count() === 0) {
-            return (new QuoteTransfer())->setCustomer($registeredCustomer);
-        }
-
-        $quoteTransfer = $quoteCollection->getQuotes()[0];
-        $quoteTransfer->setCustomerReference($registeredCustomerReference);
-
-        return $quoteTransfer->setCustomer($registeredCustomer);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteUpdateRequestTransfer $quoteUpdateRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteUpdateRequestTransfer
      */
-    public function mapQuoteTransferToQuoteUpdateRequestTransfer(QuoteTransfer $quoteTransfer): QuoteUpdateRequestTransfer
-    {
-        $quoteUpdateRequestTransfer = (new QuoteUpdateRequestTransfer())
-            ->fromArray($quoteTransfer->modifiedToArray(), true);
+    public function mapQuoteTransferToQuoteUpdateRequestTransfer(
+        QuoteTransfer $quoteTransfer,
+        QuoteUpdateRequestTransfer $quoteUpdateRequestTransfer
+    ): QuoteUpdateRequestTransfer {
+        $quoteUpdateRequestTransfer->fromArray($quoteTransfer->modifiedToArray(), true);
         $quoteUpdateRequestAttributesTransfer = (new QuoteUpdateRequestAttributesTransfer())
             ->fromArray($quoteTransfer->modifiedToArray(), true);
         $quoteUpdateRequestTransfer->setQuoteUpdateRequestAttributes($quoteUpdateRequestAttributesTransfer);
@@ -67,44 +41,24 @@ class QuoteMapper implements QuoteMapperInterface
         QuoteTransfer $quoteTransfer,
         QuoteTransfer $originalQuoteTransfer
     ): QuoteTransfer {
-        return $originalQuoteTransfer->fromArray($quoteTransfer->modifiedToArray(), true);
-    }
+        $originalQuoteTransfer->setCustomer($quoteTransfer->getCustomer());
 
-    /**
-     * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteCollectionResponseTransfer
-     */
-    public function mapQuoteResponseErrorsToRestQuoteCollectionResponseErrors(
-        QuoteResponseTransfer $quoteResponseTransfer
-    ): QuoteCollectionResponseTransfer {
-        $errorCodes = [];
-        foreach ($quoteResponseTransfer->getErrorCodes() as $error) {
-            $errorCodes[] = $error;
+        $currencyTransfer = $quoteTransfer->getCurrency();
+        $name = $quoteTransfer->getName();
+        $priceMode = $quoteTransfer->getPriceMode();
+
+        if ($priceMode) {
+            $originalQuoteTransfer->setPriceMode($priceMode);
         }
 
-        $quoteResponseTransfer->setErrorCodes($errorCodes);
-
-        return (new QuoteCollectionResponseTransfer())->setErrorCodes($errorCodes);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    public function mapQuoteResponseErrorsToRestCodes(
-        QuoteResponseTransfer $quoteResponseTransfer
-    ): QuoteResponseTransfer {
-        $errorCodes = [];
-        foreach ($quoteResponseTransfer->getErrors() as $error) {
-            $errorCodes[] = isset($error[MessageTransfer::VALUE])
-                ? CartsRestApiConfig::RESPONSE_ERROR_MAP[$error[MessageTransfer::VALUE]]
-                : $error->getMessage();
+        if ($currencyTransfer->getCode()) {
+            $originalQuoteTransfer->setCurrency($currencyTransfer);
         }
 
-        $quoteResponseTransfer->setErrorCodes($errorCodes);
+        if ($name) {
+            $originalQuoteTransfer->setName($name);
+        }
 
-        return $quoteResponseTransfer;
+        return $originalQuoteTransfer;
     }
 }

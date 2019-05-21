@@ -8,11 +8,11 @@
 namespace Spryker\Zed\CartsRestApi\Communication\Controller;
 
 use Generated\Shared\Transfer\AssignGuestQuoteRequestTransfer;
-use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Shared\Transfer\QuoteCollectionResponseTransfer;
+use Generated\Shared\Transfer\QuoteCollectionTransfer;
+use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\RestCartItemRequestTransfer;
+use Generated\Shared\Transfer\RestCartItemsAttributesTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
@@ -31,13 +31,13 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteCollectionResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
      */
-    public function getQuoteCollectionByCustomerReferenceAction(CustomerTransfer $customerTransfer): QuoteCollectionResponseTransfer
+    public function getQuoteCollectionAction(QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): QuoteCollectionTransfer
     {
-        return $this->getFacade()->getQuoteCollectionByCustomerReference($customerTransfer);
+        return $this->getFacade()->getQuoteCollection($quoteCriteriaFilterTransfer);
     }
 
     /**
@@ -71,43 +71,43 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestCartItemRequestTransfer $restCartItemRequestTransfer
+     * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function updateItemAction(RestCartItemRequestTransfer $restCartItemRequestTransfer): QuoteResponseTransfer
+    public function updateItemAction(RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer): QuoteResponseTransfer
     {
-        return $this->getFacade()->updateItem($restCartItemRequestTransfer);
+        return $this->getFacade()->updateItem($restCartItemsAttributesTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestCartItemRequestTransfer $restCartItemRequestTransfer
+     * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function addItemAction(RestCartItemRequestTransfer $restCartItemRequestTransfer): QuoteResponseTransfer
+    public function addItemAction(RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer): QuoteResponseTransfer
     {
-        return $this->getFacade()->addItem($restCartItemRequestTransfer);
+        return $this->getFacade()->addItem($restCartItemsAttributesTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestCartItemRequestTransfer $restCartItemRequestTransfer
+     * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function deleteItemAction(RestCartItemRequestTransfer $restCartItemRequestTransfer): QuoteResponseTransfer
+    public function deleteItemAction(RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer): QuoteResponseTransfer
     {
-        return $this->getFacade()->deleteItem($restCartItemRequestTransfer);
+        return $this->getFacade()->deleteItem($restCartItemsAttributesTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestCartItemRequestTransfer $restCartItemRequestTransfer
+     * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function addItemToGuestCartAction(RestCartItemRequestTransfer $restCartItemRequestTransfer): QuoteResponseTransfer
+    public function addItemToGuestCartAction(RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer): QuoteResponseTransfer
     {
-        return $this->getFacade()->addItemToGuestCart($restCartItemRequestTransfer);
+        return $this->getFacade()->addItemToGuestCart($restCartItemsAttributesTransfer);
     }
 
     /**

@@ -9,6 +9,8 @@ namespace Spryker\Zed\Oauth;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Oauth\Communication\Plugin\Oauth\PasswordOauthGrantTypeConfigurationProviderPlugin;
+use Spryker\Zed\Oauth\Communication\Plugin\Oauth\RefreshTokenOauthGrantTypeConfigurationProviderPlugin;
 
 /**
  * @method \Spryker\Zed\Oauth\OauthConfig getConfig()
@@ -96,6 +98,9 @@ class OauthDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function getGrantTypeConfigurationProviderPlugins(): array
     {
-        return [];
+        return [
+            new PasswordOauthGrantTypeConfigurationProviderPlugin(),
+            new RefreshTokenOauthGrantTypeConfigurationProviderPlugin(),
+        ];
     }
 }

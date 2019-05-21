@@ -63,39 +63,30 @@ class QuoteDeleter implements QuoteDeleterInterface
     public function deleteQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
         $quoteTransfer->requireCustomer();
-
-        if (!$quoteTransfer->getUuid()) {
-            $quoteResponseTransfer = (new QuoteResponseTransfer())
-                ->addError((new QuoteErrorTransfer())->setMessage(CartsRestApiSharedConfig::RESPONSE_CODE_CART_ID_MISSING));
-
-            return $this->quoteMapper->mapQuoteResponseErrorsToRestCodes(
-                $quoteResponseTransfer
-            );
-        }
+        $quoteTransfer->requireUuid();
 
         $quoteResponseTransfer = $this->quoteReader->findQuoteByUuid($quoteTransfer);
-        if ($quoteResponseTransfer->getIsSuccessful() === false) {
-            return $this->quoteMapper->mapQuoteResponseErrorsToRestCodes(
-                $quoteResponseTransfer
-            );
+        if (!$quoteResponseTransfer->getIsSuccessful()) {
+            return $quoteResponseTransfer;
         }
 
         $quoteTransfer->setIdQuote($quoteResponseTransfer->getQuoteTransfer()->getIdQuote());
 
         if (!$this->quotePermissionChecker->checkQuoteWritePermission($quoteTransfer)) {
             return $quoteResponseTransfer
-                ->addErrorCode(CartsRestApiSharedConfig::RESPONSE_CODE_UNAUTHORIZED_ACTION);
+                ->setIsSuccessful(false)
+                ->addError((new QuoteErrorTransfer())
+                    ->setErrorIdentifier(CartsRestApiSharedConfig::ERROR_IDENTIFIER_UNAUTHORIZED_ACTION_TO_CART));
         }
 
         $quoteResponseTransfer = $this->persistentCartFacade->deleteQuote(
-            $quoteResponseTransfer->getQuoteTransfer()
-            ->setCustomer($quoteTransfer->getCustomer())
+            $quoteResponseTransfer->getQuoteTransfer()->setCustomer($quoteTransfer->getCustomer())
         );
 
-        if ($quoteResponseTransfer->getIsSuccessful() === false) {
-            return $this->quoteMapper->mapQuoteResponseErrorsToRestCodes(
-                $quoteResponseTransfer
-            );
+        if (!$quoteResponseTransfer->getIsSuccessful()) {
+            $quoteResponseTransfer
+                ->addError((new QuoteErrorTransfer())
+                    ->setErrorIdentifier(CartsRestApiSharedConfig::ERROR_IDENTIFIER_FAILED_DELETING_CART));
         }
 
         return $quoteResponseTransfer;

@@ -12,6 +12,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\Store\Business\StoreBusinessFactory getFactory()
+ * @method \Spryker\Zed\Store\Persistence\StoreRepositoryInterface getRepository()
  */
 class StoreFacade extends AbstractFacade implements StoreFacadeInterface
 {
@@ -70,6 +71,23 @@ class StoreFacade extends AbstractFacade implements StoreFacadeInterface
         return $this->getFactory()
             ->createStoreReader()
             ->getStoreByName($storeName);
+    }
+
+    /**
+     *
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $storeName
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer|null
+     */
+    public function findStoreByName(string $storeName): ?StoreTransfer
+    {
+        return $this->getFactory()
+            ->createStoreReader()
+            ->findStoreByName($storeName);
     }
 
     /**

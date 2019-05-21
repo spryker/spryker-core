@@ -9,9 +9,12 @@ namespace Spryker\Zed\CartsRestApi\Business\Quote;
 
 use Generated\Shared\Transfer\AssignGuestQuoteRequestTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\QuoteCollectionTransfer;
+use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\QuoteUpdateRequestTransfer;
 use Spryker\Shared\CartsRestApi\CartsRestApiConfig as CartsRestApiSharedConfig;
 use Spryker\Zed\CartsRestApi\Business\PermissionChecker\QuotePermissionCheckerInterface;
 use Spryker\Zed\CartsRestApi\Business\Quote\Mapper\QuoteMapperInterface;
@@ -74,35 +77,27 @@ class QuoteUpdater implements QuoteUpdaterInterface
     public function updateQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
         $quoteTransfer->requireCustomer();
-
-        if (!$quoteTransfer->getUuid()) {
-            $quoteResponseTransfer = (new QuoteResponseTransfer())
-                ->addError((new QuoteErrorTransfer())->setMessage(CartsRestApiSharedConfig::RESPONSE_CODE_CART_ID_MISSING));
-
-            return $this->quoteMapper->mapQuoteResponseErrorsToRestCodes(
-                $quoteResponseTransfer
-            );
-        }
+        $quoteTransfer->requireUuid();
 
         $quoteResponseTransfer = $this->quoteReader->findQuoteByUuid($quoteTransfer);
-        if ($quoteResponseTransfer->getIsSuccessful() === false) {
-            return $this->quoteMapper->mapQuoteResponseErrorsToRestCodes(
-                $quoteResponseTransfer
-            );
+
+        if (!$quoteResponseTransfer->getIsSuccessful()) {
+            return $quoteResponseTransfer;
         }
 
         $quoteTransfer->setIdQuote($quoteResponseTransfer->getQuoteTransfer()->getIdQuote());
 
         if (!$this->quotePermissionChecker->checkQuoteWritePermission($quoteTransfer)) {
             return $quoteResponseTransfer
-                ->addErrorCode(CartsRestApiSharedConfig::RESPONSE_CODE_UNAUTHORIZED_ACTION);
+                ->setIsSuccessful(false)
+                ->addError((new QuoteErrorTransfer())
+                    ->setErrorIdentifier(CartsRestApiSharedConfig::ERROR_IDENTIFIER_UNAUTHORIZED_ACTION_TO_CART));
         }
 
         $originalQuoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
+        $quoteResponseTransfer = $this->validateQuoteResponse($originalQuoteTransfer, $quoteTransfer, $quoteResponseTransfer);
 
-        $this->validateQuoteResponse($originalQuoteTransfer, $quoteTransfer, $quoteResponseTransfer);
-
-        if (count($quoteResponseTransfer->getErrors()) > 0) {
+        if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $quoteResponseTransfer;
         }
 
@@ -124,15 +119,37 @@ class QuoteUpdater implements QuoteUpdaterInterface
             ->requireCustomerReference()
             ->requireAnonymousCustomerReference();
 
-        $quoteCollectionResponseTransfer = $this->quoteReader->getQuoteCollectionByCustomerAndStore(
-            (new CustomerTransfer())
+        $quoteCollectionTransfer = $this->quoteReader->getQuoteCollection(
+            (new QuoteCriteriaFilterTransfer())
                 ->setCustomerReference($assignGuestQuoteRequestTransfer->getAnonymousCustomerReference())
         );
 
+        if (!$quoteCollectionTransfer->getQuotes()->count()) {
+            return (new QuoteResponseTransfer())
+                ->setIsSuccessful(false);
+        }
+
         $registeredCustomerReference = $assignGuestQuoteRequestTransfer->getCustomerReference();
-        $quoteTransfer = $this->quoteMapper->createQuoteTransfer($registeredCustomerReference, $quoteCollectionResponseTransfer);
+        $quoteTransfer = $this->createQuoteTransfer($registeredCustomerReference, $quoteCollectionTransfer);
 
         return $this->performUpdatingQuote($quoteTransfer);
+    }
+
+    /**
+     * @param string $registeredCustomerReference
+     * @param \Generated\Shared\Transfer\QuoteCollectionTransfer $quoteCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function createQuoteTransfer(
+        string $registeredCustomerReference,
+        QuoteCollectionTransfer $quoteCollectionTransfer
+    ): QuoteTransfer {
+        $registeredCustomer = (new CustomerTransfer())->setCustomerReference($registeredCustomerReference);
+        $quoteTransfer = $quoteCollectionTransfer->getQuotes()[0];
+        $quoteTransfer->setCustomerReference($registeredCustomerReference);
+
+        return $quoteTransfer->setCustomer($registeredCustomer);
     }
 
     /**
@@ -148,10 +165,12 @@ class QuoteUpdater implements QuoteUpdaterInterface
         QuoteResponseTransfer $quoteResponseTransfer
     ): QuoteResponseTransfer {
         if ($originalQuoteTransfer->getItems()->count() > 0
-            && $quoteTransfer->getPriceMode() !== $originalQuoteTransfer->getPriceMode()
+            && ($quoteTransfer->getPriceMode() && $quoteTransfer->getPriceMode() !== $originalQuoteTransfer->getPriceMode())
         ) {
             return $quoteResponseTransfer
-                ->addError((new QuoteErrorTransfer())->setMessage(CartsRestApiSharedConfig::RESPONSE_CODE_CART_CANT_BE_UPDATED));
+                ->setIsSuccessful(false)
+                ->addError((new QuoteErrorTransfer())
+                    ->setErrorIdentifier(CartsRestApiSharedConfig::ERROR_IDENTIFIER_CART_CANT_BE_UPDATED));
         }
 
         return $quoteResponseTransfer;
@@ -164,15 +183,7 @@ class QuoteUpdater implements QuoteUpdaterInterface
      */
     protected function performUpdatingQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
-        $quoteUpdateRequestTransfer = $this->quoteMapper->mapQuoteTransferToQuoteUpdateRequestTransfer($quoteTransfer);
-
-        $quoteResponseTransfer = $this->persistentCartFacade->updateQuote($quoteUpdateRequestTransfer);
-        if ($quoteResponseTransfer->getIsSuccessful() === false) {
-            return $this->quoteMapper->mapQuoteResponseErrorsToRestCodes(
-                $quoteResponseTransfer
-            );
-        }
-
-        return $quoteResponseTransfer;
+        return $this->persistentCartFacade
+            ->updateQuote($this->quoteMapper->mapQuoteTransferToQuoteUpdateRequestTransfer($quoteTransfer, new QuoteUpdateRequestTransfer()));
     }
 }

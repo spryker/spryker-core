@@ -27,12 +27,10 @@ class CartsRestApiToCustomerClientBridge implements CartsRestApiToCustomerClient
     /**
      * {@inheritdoc}
      *
-     * @api
-     *
      * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
-    public function getCustomerRawData(): ?CustomerTransfer
+    public function findCustomerRawData(): ?CustomerTransfer
     {
-        return $this->customerClient->getCustomerRawData();
+        return $this->customerClient->findCustomerRawData();
     }
 }

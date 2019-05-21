@@ -8,11 +8,11 @@
 namespace Spryker\Zed\CartsRestApi\Business;
 
 use Generated\Shared\Transfer\AssignGuestQuoteRequestTransfer;
-use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Shared\Transfer\QuoteCollectionResponseTransfer;
+use Generated\Shared\Transfer\QuoteCollectionTransfer;
+use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\RestCartItemRequestTransfer;
+use Generated\Shared\Transfer\RestCartItemsAttributesTransfer;
 
 interface CartsRestApiFacadeInterface
 {
@@ -23,7 +23,7 @@ interface CartsRestApiFacadeInterface
      *
      * @api
      *
-     * @deprecated Can be removed in minor.
+     * @deprecated Will be removed in the next major.
      *
      * @return void
      */
@@ -32,7 +32,7 @@ interface CartsRestApiFacadeInterface
     /**
      * Specification:
      * - Finds customer quote by uuid.
-     * - Uuid and customerReference must be set in the QuoteTransfer taken as parameter.
+     * - uuid and customerReference must be set in the QuoteTransfer taken as parameter.
      *
      * @api
      *
@@ -44,31 +44,23 @@ interface CartsRestApiFacadeInterface
 
     /**
      * Specification:
-     * - Finds customer quote collection.
+     * - Retrieves customer quote collection filtered by criteria.
+     * - Filters by customer reference when provided.
+     * - Filters by current store ID.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteCollectionResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
      */
-    public function getQuoteCollectionByCustomerReference(CustomerTransfer $customerTransfer): QuoteCollectionResponseTransfer;
+    public function getQuoteCollection(QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): QuoteCollectionTransfer;
 
     /**
      * Specification:
-     * - Finds customer quote collection.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteCollectionResponseTransfer
-     */
-    public function findQuoteByCustomerAndStore(CustomerTransfer $customerTransfer): QuoteCollectionResponseTransfer;
-
-    /**
-     * Specification:
-     * - Updates customer quote.
+     * - Updates existing quote entity from QuoteTransfer.
+     * - uuid and CustomerTransfer must be set in the QuoteTransfer.
+     * - Reloads all items in cart.
      *
      * @api
      *
@@ -80,7 +72,8 @@ interface CartsRestApiFacadeInterface
 
     /**
      * Specification:
-     * - Creates customer quote.
+     * - Creates new quote entity.
+     * - CustomerTransfer must be set in the QuoteTransfer.
      *
      * @api
      *
@@ -92,7 +85,8 @@ interface CartsRestApiFacadeInterface
 
     /**
      * Specification:
-     * - Creates customer quote.
+     * - Creates a single quote for customer.
+     * - Creating of more than one quote is not allowed.
      *
      * @api
      *
@@ -104,7 +98,8 @@ interface CartsRestApiFacadeInterface
 
     /**
      * Specification:
-     * - Deletes customer quote.
+     * - Removes quote from DB.
+     * - uuid and CustomerTransfer must be set in the QuoteTransfer.
      *
      * @api
      *
@@ -117,59 +112,59 @@ interface CartsRestApiFacadeInterface
     /**
      * Specification:
      * - Updates cart item quantity.
-     * - Quote and customerReference must be set in the RestCartItemRequestTransfer.
+     * - QuoteTransfer, customerReference, sku and quantity must be set in the RestCartItemsAttributesTransfer.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\RestCartItemRequestTransfer $restCartItemRequestTransfer
+     * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function updateItem(RestCartItemRequestTransfer $restCartItemRequestTransfer): QuoteResponseTransfer;
+    public function updateItem(RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer): QuoteResponseTransfer;
 
     /**
      * Specification:
      * - Adds an item to the cart.
-     * - Quote and customerReference must be set in the RestCartItemRequestTransfer.
+     * - Quote and customerReference must be set in the RestCartItemsAttributesTransfer.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\RestCartItemRequestTransfer $restCartItemRequestTransfer
+     * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function addItem(RestCartItemRequestTransfer $restCartItemRequestTransfer): QuoteResponseTransfer;
+    public function addItem(RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer): QuoteResponseTransfer;
 
     /**
      * Specification:
      * - Removes item from cart.
-     * - Quote and customerReference must be set in the RestCartItemRequestTransfer.
+     * - QuoteTransfer, customerReference, sku and quantity must be set in the RestCartItemsAttributesTransfer.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\RestCartItemRequestTransfer $restCartItemRequestTransfer
+     * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function deleteItem(RestCartItemRequestTransfer $restCartItemRequestTransfer): QuoteResponseTransfer;
+    public function deleteItem(RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer): QuoteResponseTransfer;
 
     /**
      * Specification:
      * - Adds an item to the guest cart.
-     * - Quote and customerReference must be set in the RestCartItemRequestTransfer.
+     * - sku and customerReference must be set in the RestCartItemsAttributesTransfer.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\RestCartItemRequestTransfer $restCartItemRequestTransfer
+     * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function addItemToGuestCart(RestCartItemRequestTransfer $restCartItemRequestTransfer): QuoteResponseTransfer;
+    public function addItemToGuestCart(RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer): QuoteResponseTransfer;
 
     /**
      * Specification:
      * - Transforms a guest cart to the regular cart.
-     * - Quote and customerReference must be set in the AssignGuestQuoteRequestTransfer.
+     * - anonymousCustomerReference and customerReference must be set in the AssignGuestQuoteRequestTransfer.
      *
      * @api
      *

@@ -8,25 +8,10 @@
 namespace Spryker\Glue\CartsRestApi\Processor\Mapper;
 
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\RestCartItemRequestTransfer;
 use Generated\Shared\Transfer\RestCartItemsAttributesTransfer;
-use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 interface CartItemsResourceMapperInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $cartItem
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param string|null $uuidQuote
-     *
-     * @return \Generated\Shared\Transfer\RestCartItemRequestTransfer
-     */
-    public function createRestCartItemRequestTransfer(
-        ItemTransfer $cartItem,
-        RestRequestInterface $restRequest,
-        ?string $uuidQuote
-    ): RestCartItemRequestTransfer;
-
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *

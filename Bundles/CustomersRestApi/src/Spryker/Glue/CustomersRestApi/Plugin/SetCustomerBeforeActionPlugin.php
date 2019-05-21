@@ -17,8 +17,6 @@ use Spryker\Glue\Kernel\AbstractPlugin;
  */
 class SetCustomerBeforeActionPlugin extends AbstractPlugin implements ControllerBeforeActionPluginInterface
 {
-    protected const CUSTOMER_DATA = 'customer data';
-
     /**
      * @api
      *
@@ -31,11 +29,11 @@ class SetCustomerBeforeActionPlugin extends AbstractPlugin implements Controller
      */
     public function beforeAction(string $action, RestRequestInterface $restRequest): void
     {
-        if (!$restRequest->getUser()) {
+        if (!$restRequest->getRestUser()) {
             return;
         }
 
-        $user = $restRequest->getUser();
+        $user = $restRequest->getRestUser();
 
         //workaround for customer data, most clients use session client to retrieve customer data.
         $customerTransfer = (new CustomerTransfer())

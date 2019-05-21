@@ -7,26 +7,27 @@
 
 namespace Spryker\Zed\Currency\Business\Validator;
 
-use Generated\Shared\Transfer\ErrorMessageTransfer;
+use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\QuoteValidationResponseTransfer;
-use Spryker\Zed\Currency\Dependency\Facade\CurrencyToStoreInterface;
+use Spryker\Zed\Currency\Dependency\Facade\CurrencyToStoreFacadeInterface;
 
 class QuoteValidator implements QuoteValidatorInterface
 {
     protected const MESSAGE_CURRENCY_DATA_IS_MISSING = 'quote.validation.error.currency_mode_is_missing';
     protected const MESSAGE_CURRENCY_DATA_IS_INCORRECT = 'quote.validation.error.currency_mode_is_incorrect';
     protected const GLOSSARY_KEY_ISO_CODE = '{{iso_code}}';
+    protected const ERROR_MESSAGE_STORE_NOT_FOUND = 'Store not found.';
 
     /**
-     * @var \Spryker\Zed\Currency\Dependency\Facade\CurrencyToStoreInterface
+     * @var \Spryker\Zed\Currency\Dependency\Facade\CurrencyToStoreFacadeInterface
      */
     protected $storeFacade;
 
     /**
-     * @param \Spryker\Zed\Currency\Dependency\Facade\CurrencyToStoreInterface $storeFacade
+     * @param \Spryker\Zed\Currency\Dependency\Facade\CurrencyToStoreFacadeInterface $storeFacade
      */
-    public function __construct(CurrencyToStoreInterface $storeFacade)
+    public function __construct(CurrencyToStoreFacadeInterface $storeFacade)
     {
         $this->storeFacade = $storeFacade;
     }
@@ -40,7 +41,7 @@ class QuoteValidator implements QuoteValidatorInterface
     {
         $currencyTransfer = $quoteTransfer->getCurrency();
         $quoteValidationResponseTransfer = (new QuoteValidationResponseTransfer())
-            ->setIsSuccess(false);
+            ->setIsSuccessful(false);
 
         if (!$currencyTransfer || !$currencyTransfer->getCode()) {
             return $this->addValidationError($quoteValidationResponseTransfer, static::MESSAGE_CURRENCY_DATA_IS_MISSING);
@@ -51,7 +52,11 @@ class QuoteValidator implements QuoteValidatorInterface
         }
 
         $currencyCode = $currencyTransfer->getCode();
-        $storeTransfer = $this->storeFacade->getStoreByName($quoteTransfer->getStore()->getName());
+        $storeTransfer = $this->storeFacade->findStoreByName($quoteTransfer->getStore()->getName());
+
+        if (!$storeTransfer) {
+            return $this->addValidationError($quoteValidationResponseTransfer, static::ERROR_MESSAGE_STORE_NOT_FOUND);
+        }
 
         if ($storeTransfer && array_search($currencyCode, $storeTransfer->getAvailableCurrencyIsoCodes()) === false) {
             return $this->addValidationError(
@@ -61,7 +66,7 @@ class QuoteValidator implements QuoteValidatorInterface
             );
         }
 
-        return $quoteValidationResponseTransfer->setIsSuccess(true);
+        return $quoteValidationResponseTransfer->setIsSuccessful(true);
     }
 
     /**
@@ -76,9 +81,11 @@ class QuoteValidator implements QuoteValidatorInterface
         string $errorMessage,
         array $parameters = []
     ): QuoteValidationResponseTransfer {
-        $errorTransfer = (new ErrorMessageTransfer())->setValue($errorMessage)
+        $quoteErrorTransfer = (new QuoteErrorTransfer())->setMessage($errorMessage)
             ->setParameters($parameters);
 
-        return $quoteValidationResponseTransfer->addErrors($errorTransfer);
+        return $quoteValidationResponseTransfer
+            ->addErrors($quoteErrorTransfer)
+            ->setIsSuccessful(false);
     }
 }

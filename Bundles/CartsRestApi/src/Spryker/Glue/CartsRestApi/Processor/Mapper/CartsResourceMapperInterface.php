@@ -31,19 +31,12 @@ interface CartsResourceMapperInterface
 
     /**
      * @param \Generated\Shared\Transfer\RestCartsAttributesTransfer $restCartsAttributesTransfer
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function mapRestCartsAttributesTransferToQuoteTransfer(
         RestCartsAttributesTransfer $restCartsAttributesTransfer,
-        RestRequestInterface $restRequest
+        QuoteTransfer $quoteTransfer
     ): QuoteTransfer;
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function mapRestRequestToQuoteTransfer(RestRequestInterface $restRequest): QuoteTransfer;
 }

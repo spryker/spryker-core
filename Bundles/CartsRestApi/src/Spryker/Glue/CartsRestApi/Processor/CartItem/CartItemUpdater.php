@@ -79,24 +79,18 @@ class CartItemUpdater implements CartItemUpdaterInterface
         $uuidQuote = $this->findCartIdentifier($restRequest);
         $itemIdentifier = $restRequest->getResource()->getId();
 
-        $itemTransfer = (new ItemTransfer())
+        $restCartItemsAttributesTransfer
+            ->setQuoteUuid($uuidQuote)
             ->setSku($itemIdentifier)
-            ->setQuantity($restCartItemsAttributesTransfer->getQuantity());
+            ->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier())
+            ->setCustomer(
+                $this->executeCustomerExpanderPlugin($restCartItemsAttributesTransfer->getCustomer(), $restRequest)
+            );
 
-        $restCartItemRequestTransfer = $this->cartItemsResourceMapper->createRestCartItemRequestTransfer(
-            $itemTransfer,
-            $restRequest,
-            $uuidQuote
-        );
+        $quoteResponseTransfer = $this->cartsRestApiClient->updateItem($restCartItemsAttributesTransfer);
 
-        $restCartItemRequestTransfer->setCustomer(
-            $this->executeCustomerExpanderPlugin($restCartItemRequestTransfer->getCustomer(), $restRequest)
-        );
-
-        $quoteResponseTransfer = $this->cartsRestApiClient->updateItem($restCartItemRequestTransfer);
-
-        if (count($quoteResponseTransfer->getErrorCodes()) > 0) {
-            return $this->cartRestResponseBuilder->buildErrorRestResponseBasedOnErrorCodes($quoteResponseTransfer->getErrorCodes());
+        if ($quoteResponseTransfer->getErrors()->count() > 0) {
+            return $this->cartRestResponseBuilder->createFailedErrorResponse($quoteResponseTransfer->getErrors());
         }
 
         $restResource = $this->cartsResourceMapper->mapCartsResource(

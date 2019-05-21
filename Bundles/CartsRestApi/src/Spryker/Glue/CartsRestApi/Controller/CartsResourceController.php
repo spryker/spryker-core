@@ -122,7 +122,7 @@ class CartsResourceController extends AbstractController
      *          }],
      *          "responses": {
      *              "400": "Cart id is missing.",
-     *              "404": "Cart with given uuid not found.",
+     *              "404": "Cart with given uuid not found."
      *          }
      *     }
      * })

@@ -7,25 +7,36 @@
 
 namespace Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder;
 
+use ArrayObject;
+use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 class CartRestResponseBuilder implements CartRestResponseBuilderInterface
 {
+    /**
+     * @var \Spryker\Glue\CartsRestApi\CartsRestApiConfig
+     */
+    protected $config;
+
     /**
      * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
      */
     protected $restResourceBuilder;
 
     /**
+     * @param \Spryker\Glue\CartsRestApi\CartsRestApiConfig $config
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      */
     public function __construct(
+        CartsRestApiConfig $config,
         RestResourceBuilderInterface $restResourceBuilder
     ) {
+        $this->config = $config;
         $this->restResourceBuilder = $restResourceBuilder;
     }
 
@@ -48,28 +59,58 @@ class CartRestResponseBuilder implements CartRestResponseBuilderInterface
     }
 
     /**
-     * @param string[] $errorCodes
+     * @param \Generated\Shared\Transfer\QuoteErrorTransfer[]|\ArrayObject $errors
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function buildErrorRestResponseBasedOnErrorCodes(array $errorCodes): RestResponseInterface
+    public function createFailedErrorResponse(ArrayObject $errors): RestResponseInterface
     {
-        $restResponse = $this->createRestResponse();
+        $restResponse = $this->restResourceBuilder->createRestResponse();
 
-        foreach ($errorCodes as $errorCode) {
-            $errorSignature = CartsRestApiConfig::RESPONSE_ERROR_MAP[$errorCode] ?? [
-                    'status' => CartsRestApiConfig::RESPONSE_UNEXPECTED_HTTP_STATUS,
-                    'detail' => $errorCode,
-                ];
-
+        foreach ($errors as $quoteErrorTransfer) {
             $restResponse->addError(
-                (new RestErrorMessageTransfer())
-                    ->setCode($errorCode)
-                    ->setDetail($errorSignature['detail'])
-                    ->setStatus($errorSignature['status'])
+                $this->mapQuoteErrorTransferToRestErrorMessageTransfer(
+                    $quoteErrorTransfer,
+                    new RestErrorMessageTransfer()
+                )
             );
         }
 
         return $restResponse;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteErrorTransfer $quoteErrorTransfer
+     * @param \Generated\Shared\Transfer\RestErrorMessageTransfer $restErrorMessageTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestErrorMessageTransfer
+     */
+    protected function mapQuoteErrorTransferToRestErrorMessageTransfer(
+        QuoteErrorTransfer $quoteErrorTransfer,
+        RestErrorMessageTransfer $restErrorMessageTransfer
+    ): RestErrorMessageTransfer {
+        if ($quoteErrorTransfer->getErrorIdentifier()) {
+            $errorIdentifierMapping = $this->config->getErrorIdentifierToRestErrorMapping()[$quoteErrorTransfer->getErrorIdentifier()];
+            $restErrorMessageTransfer->fromArray($errorIdentifierMapping, true);
+        }
+
+        if ($quoteErrorTransfer->getMessage()) {
+            return $this->createErrorMessageTransfer($quoteErrorTransfer);
+        }
+
+        return $restErrorMessageTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteErrorTransfer $quoteErrorTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestErrorMessageTransfer
+     */
+    protected function createErrorMessageTransfer(QuoteErrorTransfer $quoteErrorTransfer): RestErrorMessageTransfer
+    {
+        return (new RestErrorMessageTransfer())
+            ->setCode(CartsRestApiConfig::RESPONSE_CODE_ITEM_VALIDATION)
+            ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
+            ->setDetail($quoteErrorTransfer->getMessage());
     }
 }

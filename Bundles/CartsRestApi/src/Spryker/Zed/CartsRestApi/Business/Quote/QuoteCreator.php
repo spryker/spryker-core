@@ -23,11 +23,6 @@ class QuoteCreator implements QuoteCreatorInterface
     protected $quoteCreatorPlugin;
 
     /**
-     * @var \Spryker\Zed\CartsRestApi\Business\Quote\QuoteReaderInterface
-     */
-    protected $quoteReader;
-
-    /**
      * @var \Spryker\Zed\CartsRestApi\Business\Quote\Mapper\QuoteMapperInterface
      */
     protected $quoteMapper;
@@ -39,18 +34,15 @@ class QuoteCreator implements QuoteCreatorInterface
 
     /**
      * @param \Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteCreatorPluginInterface $quoteCreatorPlugin
-     * @param \Spryker\Zed\CartsRestApi\Business\Quote\QuoteReaderInterface $quoteReader
      * @param \Spryker\Zed\CartsRestApi\Business\Quote\Mapper\QuoteMapperInterface $quoteMapper
      * @param \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToStoreFacadeInterface $storeFacade
      */
     public function __construct(
         QuoteCreatorPluginInterface $quoteCreatorPlugin,
-        QuoteReaderInterface $quoteReader,
         QuoteMapperInterface $quoteMapper,
         CartsRestApiToStoreFacadeInterface $storeFacade
     ) {
         $this->quoteCreatorPlugin = $quoteCreatorPlugin;
-        $this->quoteReader = $quoteReader;
         $this->quoteMapper = $quoteMapper;
         $this->storeFacade = $storeFacade;
     }
@@ -66,17 +58,16 @@ class QuoteCreator implements QuoteCreatorInterface
 
         $store = $quoteTransfer->getStore();
         if ($store && $store->getName() !== $this->storeFacade->getCurrentStore()->getName()) {
-            $quoteResponseTransfer = (new QuoteResponseTransfer())
-                ->addError((new QuoteErrorTransfer())->setMessage(CartsRestApiSharedConfig::RESPONSE_CODE_STORE_DATA_IS_INVALID));
-
-            return $this->quoteMapper->mapQuoteResponseErrorsToRestCodes($quoteResponseTransfer);
+            return (new QuoteResponseTransfer())
+                ->addError((new QuoteErrorTransfer())
+                    ->setErrorIdentifier(CartsRestApiSharedConfig::ERROR_IDENTIFIER_STORE_DATA_IS_INVALID));
         }
 
         $quoteResponseTransfer = $this->quoteCreatorPlugin->createQuote($quoteTransfer);
         if (!$quoteResponseTransfer->getIsSuccessful()) {
-            return $this->quoteMapper->mapQuoteResponseErrorsToRestCodes(
-                $quoteResponseTransfer
-            );
+            $quoteResponseTransfer
+                ->addError((new QuoteErrorTransfer())
+                    ->setErrorIdentifier(CartsRestApiSharedConfig::ERROR_IDENTIFIER_FAILED_CREATING_CART));
         }
 
         return $quoteResponseTransfer;

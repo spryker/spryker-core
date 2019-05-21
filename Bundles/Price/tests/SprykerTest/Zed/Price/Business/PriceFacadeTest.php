@@ -43,7 +43,12 @@ class PriceFacadeTest extends Unit
         $quoteValidationResponseTransfer = $this->getQuoteValidationResponseTransfer($quoteTransfer);
 
         //Act
-        $this->validatePriceModeInQuote($quoteValidationResponseTransfer, static::ERROR_MESSAGE_PRICE_MODE_DATA_IS_INCORRECT);
+        $errors = array_map(function ($errorMessageTransfer) {
+            return $errorMessageTransfer->getValue();
+        }, (array)$quoteValidationResponseTransfer->getErrors());
+
+        $this->assertFalse($quoteValidationResponseTransfer->getIsSuccessful());
+        $this->assertContains(static::ERROR_MESSAGE_PRICE_MODE_DATA_IS_INCORRECT, $errors);
     }
 
     /**
@@ -56,24 +61,8 @@ class PriceFacadeTest extends Unit
         $quoteValidationResponseTransfer = $this->getQuoteValidationResponseTransfer($quoteTransfer);
 
         //Act
-        $this->assertTrue($quoteValidationResponseTransfer->getIsSuccess());
+        $this->assertTrue($quoteValidationResponseTransfer->getIsSuccessful());
         $this->assertEmpty($quoteValidationResponseTransfer->getErrors());
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteValidationResponseTransfer $quoteValidationResponseTransfer
-     * @param string $errorMessage
-     *
-     * @return void
-     */
-    protected function validatePriceModeInQuote(QuoteValidationResponseTransfer $quoteValidationResponseTransfer, string $errorMessage): void
-    {
-        $errors = array_map(function ($errorMessageTransfer) {
-            return $errorMessageTransfer->getValue();
-        }, (array)$quoteValidationResponseTransfer->getErrors());
-
-        $this->assertFalse($quoteValidationResponseTransfer->getIsSuccess());
-        $this->assertContains($errorMessage, $errors);
     }
 
     /**

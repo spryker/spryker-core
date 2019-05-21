@@ -254,6 +254,7 @@ class Finder implements FinderInterface
     public function findProcessByStateMachineAndProcessName($stateMachineName, $processName)
     {
         $stateMachineProcessTransfer = $this->createStateMachineProcessTransfer($stateMachineName, $processName);
+
         return $this->builder->createProcess($stateMachineProcessTransfer);
     }
 
@@ -334,7 +335,7 @@ class Finder implements FinderInterface
         $stateMachineItemTransfer->setIdItemState($stateMachineItemEntity->getIdStateMachineItemState());
         $stateMachineItemTransfer->setIdStateMachineProcess($stateMachineProcessEntity->getIdStateMachineProcess());
         $stateMachineItemTransfer->setStateName($stateMachineItemEntity->getName());
-        $stateMachineItemTransfer->setStateMachineName($stateMachineProcessEntity->getStateMachineProcesses());
+        $stateMachineItemTransfer->setStateMachineName($stateMachineProcessEntity->getStateMachineName());
 
         $stateMachineItemHistory = $stateMachineItemEntity->getStateHistories();
         if (count($stateMachineItemHistory) > 0) {

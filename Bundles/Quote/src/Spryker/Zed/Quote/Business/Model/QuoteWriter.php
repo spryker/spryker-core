@@ -92,7 +92,7 @@ class QuoteWriter implements QuoteWriterInterface
 
         $quoteValidationResponseTransfer = $this->quoteValidator->validate($quoteTransfer);
 
-        if (!$quoteValidationResponseTransfer->getIsSuccess()) {
+        if (!$quoteValidationResponseTransfer->getIsSuccessful()) {
             return $this->createQuoteResponseTransfer($quoteTransfer)
                 ->setErrors($quoteValidationResponseTransfer->getErrors());
         }
@@ -118,7 +118,7 @@ class QuoteWriter implements QuoteWriterInterface
 
         $quoteValidationResponseTransfer = $this->quoteValidator->validate($quoteTransfer);
 
-        if (!$quoteValidationResponseTransfer->getIsSuccess()) {
+        if (!$quoteValidationResponseTransfer->getIsSuccessful()) {
             return $this->createQuoteResponseTransfer($quoteTransfer)
                 ->setErrors($quoteValidationResponseTransfer->getErrors());
         }

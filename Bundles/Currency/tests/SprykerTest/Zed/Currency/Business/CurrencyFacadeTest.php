@@ -79,8 +79,13 @@ class CurrencyFacadeTest extends Unit
         $quoteTransfer = new QuoteTransfer();
         $quoteValidationResponseTransfer = $this->getQuoteValidationResponseTransfer($quoteTransfer);
 
+        $errors = array_map(function ($errorMessageTransfer) {
+            return $errorMessageTransfer->getValue();
+        }, (array)$quoteValidationResponseTransfer->getErrors());
+
         //Act
-        $this->validateCurrencyInQuote($quoteValidationResponseTransfer, static::ERROR_MESSAGE_CURRENCY_DATA_IS_MISSING);
+        $this->assertFalse($quoteValidationResponseTransfer->getIsSuccessful());
+        $this->assertContains(static::ERROR_MESSAGE_CURRENCY_DATA_IS_MISSING, $errors);
     }
 
     /**
@@ -93,8 +98,13 @@ class CurrencyFacadeTest extends Unit
             ->setCurrency($currencyTransfer);
         $quoteValidationResponseTransfer = $this->getQuoteValidationResponseTransfer($quoteTransfer);
 
+        $errors = array_map(function ($errorMessageTransfer) {
+            return $errorMessageTransfer->getValue();
+        }, (array)$quoteValidationResponseTransfer->getErrors());
+
         //Act
-        $this->validateCurrencyInQuote($quoteValidationResponseTransfer, static::ERROR_MESSAGE_CURRENCY_DATA_IS_MISSING);
+        $this->assertFalse($quoteValidationResponseTransfer->getIsSuccessful());
+        $this->assertContains(static::ERROR_MESSAGE_CURRENCY_DATA_IS_MISSING, $errors);
     }
 
     /**
@@ -111,8 +121,13 @@ class CurrencyFacadeTest extends Unit
             ->setStore($storeTransfer);
         $quoteValidationResponseTransfer = $this->getQuoteValidationResponseTransfer($quoteTransfer);
 
+        $errors = array_map(function ($errorMessageTransfer) {
+            return $errorMessageTransfer->getValue();
+        }, (array)$quoteValidationResponseTransfer->getErrors());
+
         //Act
-        $this->validateCurrencyInQuote($quoteValidationResponseTransfer, static::ERROR_MESSAGE_CURRENCY_DATA_IS_INCORRECT);
+        $this->assertFalse($quoteValidationResponseTransfer->getIsSuccessful());
+        $this->assertContains(static::ERROR_MESSAGE_CURRENCY_DATA_IS_MISSING, $errors);
     }
 
     /**
@@ -131,24 +146,8 @@ class CurrencyFacadeTest extends Unit
 
         //Act
 
-        $this->assertTrue($quoteValidationResponseTransfer->getIsSuccess());
+        $this->assertTrue($quoteValidationResponseTransfer->getIsSuccessful());
         $this->assertEmpty($quoteValidationResponseTransfer->getErrors());
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteValidationResponseTransfer $quoteValidationResponseTransfer
-     * @param string $errorMessage
-     *
-     * @return void
-     */
-    protected function validateCurrencyInQuote(QuoteValidationResponseTransfer $quoteValidationResponseTransfer, string $errorMessage): void
-    {
-        $errors = array_map(function ($errorMessageTransfer) {
-            return $errorMessageTransfer->getValue();
-        }, (array)$quoteValidationResponseTransfer->getErrors());
-
-        $this->assertFalse($quoteValidationResponseTransfer->getIsSuccess());
-        $this->assertContains($errorMessage, $errors);
     }
 
     /**

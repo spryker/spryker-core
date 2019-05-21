@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\QuoteValidationResponseTransfer;
 use Generated\Shared\Transfer\SpyQuoteEntityTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 
@@ -164,6 +165,9 @@ interface QuoteFacadeInterface
     /**
      * Specification:
      *  - Locks quote by setting `isLocked` transfer property to true.
+     *  - Low level Quote locking (use CartFacadeInterface for features).
+     *
+     * @see CartFacadeInterface::resetQuoteLock()
      *
      * @api
      *
@@ -176,6 +180,9 @@ interface QuoteFacadeInterface
     /**
      * Specification:
      *  - Unlocks quote by setting `isLocked` transfer property to false.
+     *  - Low level Quote unlocking (use CartFacadeInterface for features).
+     *
+     * @see CartFacadeInterface::resetQuoteLock()
      *
      * @api
      *
@@ -187,7 +194,7 @@ interface QuoteFacadeInterface
 
     /**
      * Specification:
-     * - Returns true if quote is locked.
+     * - Returns true if provided quote is locked.
      *
      * @api
      *
@@ -196,4 +203,18 @@ interface QuoteFacadeInterface
      * @return bool
      */
     public function isQuoteLocked(QuoteTransfer $quoteTransfer): bool;
+
+    /**
+     * Specification:
+     * - Validates quote.
+     * - Returns error message when validation failed.
+     * - Returns empty transfer if validation success.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteValidationResponseTransfer
+     */
+    public function validateQuote(QuoteTransfer $quoteTransfer): QuoteValidationResponseTransfer;
 }

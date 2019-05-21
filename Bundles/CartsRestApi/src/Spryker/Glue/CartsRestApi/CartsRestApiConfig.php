@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\CartsRestApi;
 
+use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\Kernel\AbstractBundleConfig;
 use Spryker\Shared\CartsRestApi\CartsRestApiConfig as CartsRestApiSharedConfig;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,200 +24,175 @@ class CartsRestApiConfig extends AbstractBundleConfig
     public const CONTROLLER_GUEST_CARTS = 'guest-carts-resource';
     public const CONTROLLER_GUEST_CART_ITEMS = 'guest-cart-items-resource';
 
+    /**
+     * @deprecated Will be removed in the next major.
+     */
     public const ACTION_CARTS_GET = 'get';
+
+    /**
+     * @deprecated Will be removed in the next major.
+     */
     public const ACTION_CARTS_POST = 'post';
+
+    /**
+     * @deprecated Will be removed in the next major.
+     */
     public const ACTION_CARTS_DELETE = 'delete';
 
+    /**
+     * @deprecated Will be removed in the next major.
+     */
     public const ACTION_CART_ITEMS_POST = 'post';
+
+    /**
+     * @deprecated Will be removed in the next major.
+     */
     public const ACTION_CART_ITEMS_PATCH = 'patch';
+
+    /**
+     * @deprecated Will be removed in the next major.
+     */
     public const ACTION_CART_ITEMS_DELETE = 'delete';
 
+    /**
+     * @deprecated Will be removed in the next major.
+     */
     public const ACTION_GUEST_CARTS_GET = 'get';
 
+    /**
+     * @deprecated Will be removed in the next major.
+     */
     public const ACTION_GUEST_CART_ITEMS_POST = 'post';
+
+    /**
+     * @deprecated Will be removed in the next major.
+     */
     public const ACTION_GUEST_CART_ITEMS_PATCH = 'patch';
+
+    /**
+     * @deprecated Will be removed in the next major.
+     */
     public const ACTION_GUEST_CART_ITEMS_DELETE = 'delete';
 
-    /**
-     * @deprecated use \Spryker\Shared\CartsRestApi\CartsRestApiConfig::RESPONSE_CODE_CART_NOT_FOUND
-     */
     public const RESPONSE_CODE_CART_NOT_FOUND = '101';
-
     /**
-     * @deprecated use \Spryker\Shared\CartsRestApi\CartsRestApiConfig::RESPONSE_CODE_ITEM_VALIDATION
+     * @deprecated Will be removed in the next major.
      */
     public const RESPONSE_CODE_ITEM_VALIDATION = '102';
-
-    /**
-     * @deprecated use \Spryker\Shared\CartsRestApi\CartsRestApiConfig::RESPONSE_CODE_ITEM_NOT_FOUND
-     */
     public const RESPONSE_CODE_ITEM_NOT_FOUND = '103';
-
-    /**
-     * @deprecated use \Spryker\Shared\CartsRestApi\CartsRestApiConfig::RESPONSE_CODE_CART_ID_MISSING
-     */
     public const RESPONSE_CODE_CART_ID_MISSING = '104';
-
-    /**
-     * @deprecated use \Spryker\Shared\CartsRestApi\CartsRestApiConfig::RESPONSE_CODE_FAILED_DELETING_CART
-     */
     public const RESPONSE_CODE_FAILED_DELETING_CART = '105';
-
-    /**
-     * @deprecated use \Spryker\Shared\CartsRestApi\CartsRestApiConfig::RESPONSE_CODE_FAILED_DELETING_CART_ITEM
-     */
     public const RESPONSE_CODE_FAILED_DELETING_CART_ITEM = '106';
-
-    /**
-     * @deprecated use \Spryker\Shared\CartsRestApi\CartsRestApiConfig::RESPONSE_CODE_FAILED_CREATING_CART
-     */
     public const RESPONSE_CODE_FAILED_CREATING_CART = '107';
-
     /**
-     * @deprecated use \Spryker\Shared\CartsRestApi\CartsRestApiConfig::RESPONSE_CODE_MISSING_REQUIRED_PARAMETER
+     * @deprecated Will be removed in the next major.
      */
     public const RESPONSE_CODE_MISSING_REQUIRED_PARAMETER = '108';
-
-    /**
-     * @deprecated use \Spryker\Shared\CartsRestApi\CartsRestApiConfig::RESPONSE_CODE_ANONYMOUS_CUSTOMER_UNIQUE_ID_EMPTY
-     */
     public const RESPONSE_CODE_ANONYMOUS_CUSTOMER_UNIQUE_ID_EMPTY = '109';
-
-    /**
-     * @deprecated use \Spryker\Shared\CartsRestApi\CartsRestApiConfig::RESPONSE_CODE_CUSTOMER_ALREADY_HAS_CART
-     */
     public const RESPONSE_CODE_CUSTOMER_ALREADY_HAS_CART = '110';
+    public const RESPONSE_CODE_CART_CANT_BE_UPDATED = '111';
+    public const RESPONSE_CODE_STORE_DATA_IS_INVALID = '112';
+    public const RESPONSE_CODE_FAILED_ADDING_CART_ITEM = '113';
+    public const RESPONSE_CODE_FAILED_UPDATING_CART_ITEM = '114';
+    public const RESPONSE_CODE_UNAUTHORIZED_ACTION_TO_CART = '115';
 
-    /**
-     * @deprecated use \Spryker\Shared\CartsRestApi\CartsRestApiConfig::EXCEPTION_MESSAGE_CART_ID_MISSING
-     */
     public const EXCEPTION_MESSAGE_CART_ID_MISSING = 'Cart uuid is missing.';
-
     /**
-     * @deprecated use \Spryker\Shared\CartsRestApi\CartsRestApiConfig::EXCEPTION_MESSAGE_CART_ITEM_NOT_FOUND
+     * @deprecated Will be removed in the next major.
      */
+    public const EXCEPTION_MESSAGE_ITEM_VALIDATION = 'Product sku is missing.';
     public const EXCEPTION_MESSAGE_CART_ITEM_NOT_FOUND = 'Item with the given group key not found in the cart.';
-
-    /**
-     * @deprecated use \Spryker\Shared\CartsRestApi\CartsRestApiConfig::EXCEPTION_MESSAGE_FAILED_TO_CREATE_CART
-     */
     public const EXCEPTION_MESSAGE_FAILED_TO_CREATE_CART = 'Failed to create cart.';
-
-    /**
-     * @deprecated use \Spryker\Shared\CartsRestApi\CartsRestApiConfig::EXCEPTION_MESSAGE_CART_WITH_ID_NOT_FOUND
-     */
     public const EXCEPTION_MESSAGE_CART_WITH_ID_NOT_FOUND = 'Cart with given uuid not found.';
-
-    /**
-     * @deprecated use \Spryker\Shared\CartsRestApi\CartsRestApiConfig::EXCEPTION_MESSAGE_FAILED_DELETING_CART
-     */
     public const EXCEPTION_MESSAGE_FAILED_DELETING_CART = 'Cart could not be deleted.';
-
-    /**
-     * @deprecated use \Spryker\Shared\CartsRestApi\CartsRestApiConfig::EXCEPTION_MESSAGE_FAILED_DELETING_CART_ITEM
-     */
     public const EXCEPTION_MESSAGE_FAILED_DELETING_CART_ITEM = 'Cart item could not be deleted.';
-
     /**
-     * @deprecated use \Spryker\Shared\CartsRestApi\CartsRestApiConfig::EXCEPTION_MESSAGE_MISSING_REQUIRED_PARAMETER
+     * @deprecated Will be removed in the next major.
      */
     public const EXCEPTION_MESSAGE_MISSING_REQUIRED_PARAMETER = 'Cart uuid or item group key is not specified.';
-
-    /**
-     * @deprecated use \Spryker\Shared\CartsRestApi\CartsRestApiConfig::EXCEPTION_MESSAGE_ANONYMOUS_CUSTOMER_UNIQUE_ID_EMPTY
-     */
     public const EXCEPTION_MESSAGE_ANONYMOUS_CUSTOMER_UNIQUE_ID_EMPTY = 'Anonymous customer unique id is empty.';
-
-    /**
-     * @deprecated use \Spryker\Shared\CartsRestApi\CartsRestApiConfig::EXCEPTION_MESSAGE_CUSTOMER_ALREADY_HAS_CART
-     */
     public const EXCEPTION_MESSAGE_CUSTOMER_ALREADY_HAS_CART = 'Customer already has a cart.';
+    public const EXCEPTION_MESSAGE_PRICE_MODE_CANT_BE_CHANGED = 'Can’t switch price mode when there are items in the cart.';
+    public const EXCEPTION_MESSAGE_STORE_DATA_IS_INVALID = 'Store data is invalid.';
+    public const EXCEPTION_MESSAGE_FAILED_ADDING_CART_ITEM = 'Cart item could not be added.';
+    public const EXCEPTION_MESSAGE_FAILED_UPDATING_CART_ITEM = 'Cart item could not be updated.';
+    public const EXCEPTION_MESSAGE_UNAUTHORIZED_ACTION_TO_CART = 'Unauthorized action to cart';
 
-    /**
-     * @deprecated use \Spryker\Shared\CartsRestApi\CartsRestApiConfig::HEADER_ANONYMOUS_CUSTOMER_UNIQUE_ID
-     */
     public const HEADER_ANONYMOUS_CUSTOMER_UNIQUE_ID = 'X-Anonymous-Customer-Unique-Id';
-
-    public const RESPONSE_UNEXPECTED_HTTP_STATUS = Response::HTTP_INTERNAL_SERVER_ERROR;
-    public const RESPONSE_ERROR_MAP = [
-        CartsRestApiSharedConfig::RESPONSE_CODE_CART_NOT_FOUND => [
-            'status' => Response::HTTP_NOT_FOUND,
-            'detail' => CartsRestApiSharedConfig::EXCEPTION_MESSAGE_CART_WITH_ID_NOT_FOUND,
-        ],
-        CartsRestApiSharedConfig::RESPONSE_CODE_ITEM_NOT_FOUND => [
-            'status' => Response::HTTP_NOT_FOUND,
-            'detail' => CartsRestApiSharedConfig::EXCEPTION_MESSAGE_CART_ITEM_NOT_FOUND,
-        ],
-        CartsRestApiSharedConfig::RESPONSE_CODE_CART_ID_MISSING => [
-            'status' => Response::HTTP_BAD_REQUEST,
-            'detail' => CartsRestApiSharedConfig::EXCEPTION_MESSAGE_CART_ID_MISSING,
-        ],
-        CartsRestApiSharedConfig::RESPONSE_CODE_FAILED_DELETING_CART => [
-            'status' => Response::HTTP_UNPROCESSABLE_ENTITY,
-            'detail' => CartsRestApiSharedConfig::EXCEPTION_MESSAGE_FAILED_DELETING_CART,
-        ],
-        CartsRestApiSharedConfig::RESPONSE_CODE_FAILED_DELETING_CART_ITEM => [
-            'status' => Response::HTTP_UNPROCESSABLE_ENTITY,
-            'detail' => CartsRestApiSharedConfig::EXCEPTION_MESSAGE_FAILED_DELETING_CART_ITEM,
-        ],
-        CartsRestApiSharedConfig::RESPONSE_CODE_FAILED_CREATING_CART => [
-            'status' => Response::HTTP_INTERNAL_SERVER_ERROR,
-            'detail' => CartsRestApiSharedConfig::EXCEPTION_MESSAGE_FAILED_TO_CREATE_CART,
-        ],
-        CartsRestApiSharedConfig::RESPONSE_CODE_MISSING_REQUIRED_PARAMETER => [
-            'status' => Response::HTTP_BAD_REQUEST,
-            'detail' => CartsRestApiSharedConfig::EXCEPTION_MESSAGE_MISSING_REQUIRED_PARAMETER,
-        ],
-        CartsRestApiSharedConfig::RESPONSE_CODE_ANONYMOUS_CUSTOMER_UNIQUE_ID_EMPTY => [
-            'status' => Response::HTTP_BAD_REQUEST,
-            'detail' => CartsRestApiSharedConfig::EXCEPTION_MESSAGE_ANONYMOUS_CUSTOMER_UNIQUE_ID_EMPTY,
-        ],
-        CartsRestApiSharedConfig::RESPONSE_CODE_CUSTOMER_ALREADY_HAS_CART => [
-            'status' => Response::HTTP_UNPROCESSABLE_ENTITY,
-            'detail' => CartsRestApiSharedConfig::EXCEPTION_MESSAGE_CUSTOMER_ALREADY_HAS_CART,
-        ],
-        CartsRestApiSharedConfig::RESPONSE_CODE_PRICE_MODE_DATA_IS_INCORRECT => [
-            'status' => Response::HTTP_UNPROCESSABLE_ENTITY,
-            'detail' => CartsRestApiSharedConfig::EXCEPTION_MESSAGE_PRICE_MODE_DATA_IS_INCORRECT,
-        ],
-        CartsRestApiSharedConfig::RESPONSE_CODE_PRICE_MODE_DATA_IS_MISSING => [
-            'status' => Response::HTTP_UNPROCESSABLE_ENTITY,
-            'detail' => CartsRestApiSharedConfig::EXCEPTION_MESSAGE_PRICE_MODE_DATA_IS_MISSING,
-        ],
-        CartsRestApiSharedConfig::RESPONSE_CODE_CURRENCY_DATA_IS_INCORRECT => [
-            'status' => Response::HTTP_UNPROCESSABLE_ENTITY,
-            'detail' => CartsRestApiSharedConfig::EXCEPTION_MESSAGE_CURRENCY_DATA_IS_INCORRECT,
-        ],
-        CartsRestApiSharedConfig::RESPONSE_CODE_CURRENCY_DATA_IS_MISSING => [
-            'status' => Response::HTTP_UNPROCESSABLE_ENTITY,
-            'detail' => CartsRestApiSharedConfig::EXCEPTION_MESSAGE_CURRENCY_DATA_IS_MISSING,
-        ],
-        CartsRestApiSharedConfig::RESPONSE_CODE_CART_CANT_BE_UPDATED => [
-            'status' => Response::HTTP_UNPROCESSABLE_ENTITY,
-            'detail' => CartsRestApiSharedConfig::EXCEPTION_MESSAGE_PRICE_MODE_CANT_BE_CHANGED,
-        ],
-        CartsRestApiSharedConfig::RESPONSE_CODE_ITEM_VALIDATION => [
-            'status' => Response::HTTP_UNPROCESSABLE_ENTITY,
-            'detail' => CartsRestApiSharedConfig::EXCEPTION_MESSAGE_ITEM_VALIDATION,
-        ],
-        CartsRestApiSharedConfig::RESPONSE_CODE_STORE_DATA_IS_INVALID => [
-            'status' => Response::HTTP_UNPROCESSABLE_ENTITY,
-            'detail' => CartsRestApiSharedConfig::EXCEPTION_MESSAGE_STORE_DATA_IS_INVALID,
-        ],
-        CartsRestApiSharedConfig::RESPONSE_CODE_STORE_DATA_IS_MISSING => [
-            'status' => Response::HTTP_UNPROCESSABLE_ENTITY,
-            'detail' => CartsRestApiSharedConfig::EXCEPTION_MESSAGE_STORE_DATA_IS_MISSING,
-        ],
-        CartsRestApiSharedConfig::RESPONSE_CODE_UNAUTHORIZED_ACTION => [
-            'status' => Response::HTTP_FORBIDDEN,
-            'detail' => CartsRestApiSharedConfig::EXCEPTION_DETAILS_UNAUTHORIZED_ACTION,
-        ],
-    ];
 
     protected const GUEST_CART_RESOURCES = [
         CartsRestApiConfig::RESOURCE_GUEST_CARTS,
         CartsRestApiConfig::RESOURCE_GUEST_CARTS_ITEMS,
     ];
+
+    /**
+     * @return array
+     */
+    public function getErrorIdentifierToRestErrorMapping(): array
+    {
+        return [
+            CartsRestApiSharedConfig::ERROR_IDENTIFIER_CART_NOT_FOUND => [
+                RestErrorMessageTransfer::CODE => self::RESPONSE_CODE_CART_NOT_FOUND,
+                RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
+                RestErrorMessageTransfer::DETAIL => self::EXCEPTION_MESSAGE_CART_WITH_ID_NOT_FOUND,
+            ],
+            CartsRestApiSharedConfig::ERROR_IDENTIFIER_FAILED_CREATING_CART => [
+                RestErrorMessageTransfer::CODE => self::RESPONSE_CODE_FAILED_CREATING_CART,
+                RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
+                RestErrorMessageTransfer::DETAIL => self::EXCEPTION_MESSAGE_FAILED_TO_CREATE_CART,
+            ],
+            CartsRestApiSharedConfig::ERROR_IDENTIFIER_CART_CANT_BE_UPDATED => [
+                RestErrorMessageTransfer::CODE => self::RESPONSE_CODE_CART_CANT_BE_UPDATED,
+                RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
+                RestErrorMessageTransfer::DETAIL => self::EXCEPTION_MESSAGE_PRICE_MODE_CANT_BE_CHANGED,
+            ],
+            CartsRestApiSharedConfig::ERROR_IDENTIFIER_ITEM_NOT_FOUND => [
+                RestErrorMessageTransfer::CODE => self::RESPONSE_CODE_ITEM_NOT_FOUND,
+                RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
+                RestErrorMessageTransfer::DETAIL => self::EXCEPTION_MESSAGE_CART_ITEM_NOT_FOUND,
+            ],
+            CartsRestApiSharedConfig::ERROR_IDENTIFIER_FAILED_DELETING_CART => [
+                RestErrorMessageTransfer::CODE => self::RESPONSE_CODE_FAILED_DELETING_CART,
+                RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
+                RestErrorMessageTransfer::DETAIL => self::EXCEPTION_MESSAGE_FAILED_DELETING_CART,
+            ],
+            CartsRestApiSharedConfig::ERROR_IDENTIFIER_FAILED_ADDING_CART_ITEM => [
+                RestErrorMessageTransfer::CODE => self::RESPONSE_CODE_FAILED_ADDING_CART_ITEM,
+                RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
+                RestErrorMessageTransfer::DETAIL => self::EXCEPTION_MESSAGE_FAILED_ADDING_CART_ITEM,
+            ],
+            CartsRestApiSharedConfig::ERROR_IDENTIFIER_FAILED_UPDATING_CART_ITEM => [
+                RestErrorMessageTransfer::CODE => self::RESPONSE_CODE_FAILED_UPDATING_CART_ITEM,
+                RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
+                RestErrorMessageTransfer::DETAIL => self::EXCEPTION_MESSAGE_FAILED_UPDATING_CART_ITEM,
+            ],
+            CartsRestApiSharedConfig::ERROR_IDENTIFIER_FAILED_DELETING_CART_ITEM => [
+                RestErrorMessageTransfer::CODE => self::RESPONSE_CODE_FAILED_DELETING_CART_ITEM,
+                RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
+                RestErrorMessageTransfer::DETAIL => self::EXCEPTION_MESSAGE_FAILED_DELETING_CART_ITEM,
+            ],
+            CartsRestApiSharedConfig::ERROR_IDENTIFIER_ANONYMOUS_CUSTOMER_UNIQUE_ID_EMPTY => [
+                RestErrorMessageTransfer::CODE => self::RESPONSE_CODE_ANONYMOUS_CUSTOMER_UNIQUE_ID_EMPTY,
+                RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
+                RestErrorMessageTransfer::DETAIL => self::EXCEPTION_MESSAGE_ANONYMOUS_CUSTOMER_UNIQUE_ID_EMPTY,
+            ],
+            CartsRestApiSharedConfig::ERROR_IDENTIFIER_CUSTOMER_ALREADY_HAS_CART => [
+                RestErrorMessageTransfer::CODE => self::RESPONSE_CODE_CUSTOMER_ALREADY_HAS_CART,
+                RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
+                RestErrorMessageTransfer::DETAIL => self::EXCEPTION_MESSAGE_CUSTOMER_ALREADY_HAS_CART,
+            ],
+            CartsRestApiSharedConfig::ERROR_IDENTIFIER_STORE_DATA_IS_INVALID => [
+                RestErrorMessageTransfer::CODE => self::RESPONSE_CODE_STORE_DATA_IS_INVALID,
+                RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
+                RestErrorMessageTransfer::DETAIL => self::EXCEPTION_MESSAGE_STORE_DATA_IS_INVALID,
+            ],
+            CartsRestApiSharedConfig::ERROR_IDENTIFIER_UNAUTHORIZED_ACTION_TO_CART => [
+                RestErrorMessageTransfer::CODE => self::RESPONSE_CODE_UNAUTHORIZED_ACTION_TO_CART,
+                RestErrorMessageTransfer::STATUS => Response::HTTP_FORBIDDEN,
+                RestErrorMessageTransfer::DETAIL => self::EXCEPTION_MESSAGE_UNAUTHORIZED_ACTION_TO_CART,
+            ],
+        ];
+    }
 
     /**
      * @return string[]

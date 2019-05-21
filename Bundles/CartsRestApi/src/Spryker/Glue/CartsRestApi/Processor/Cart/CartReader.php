@@ -9,6 +9,7 @@ namespace Spryker\Glue\CartsRestApi\Processor\Cart;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
+use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\CartsRestApi\CartsRestApiClientInterface;
@@ -70,11 +71,8 @@ class CartReader implements CartReaderInterface
             ->setUuid($uuidCart);
 
         $quoteResponseTransfer = $this->cartsRestApiClient->findQuoteByUuid($quoteTransfer);
-
-        if (count($quoteResponseTransfer->getErrorCodes()) > 0) {
-            return $this->cartRestResponseBuilder->buildErrorRestResponseBasedOnErrorCodes(
-                $quoteResponseTransfer->getErrorCodes()
-            );
+        if ($quoteResponseTransfer->getErrors()->count() > 0) {
+            return $this->cartRestResponseBuilder->createFailedErrorResponse($quoteResponseTransfer->getErrors());
         }
 
         $cartResource = $this->cartsResourceMapper->mapCartsResource(
@@ -103,9 +101,10 @@ class CartReader implements CartReaderInterface
         );
 
         $quoteResponseTransfer = $this->cartsRestApiClient->findQuoteByUuid($quoteTransfer);
-        if ($quoteResponseTransfer->getIsSuccessful() === false
+
+        if (!$quoteResponseTransfer->getIsSuccessful()
             || $restRequest->getRestUser()->getNaturalIdentifier() !== $quoteResponseTransfer->getQuoteTransfer()->getCustomerReference()) {
-            return $this->cartRestResponseBuilder->buildErrorRestResponseBasedOnErrorCodes($quoteResponseTransfer->getErrorCodes());
+            return $this->cartRestResponseBuilder->createFailedErrorResponse($quoteResponseTransfer->getErrors());
         }
 
         $cartResource = $this->cartsResourceMapper->mapCartsResource(
@@ -166,16 +165,12 @@ class CartReader implements CartReaderInterface
      */
     public function getCustomerQuotes(RestRequestInterface $restRequest): QuoteCollectionTransfer
     {
-        $quoteCollectionTransfer = $this->cartsRestApiClient->getQuoteCollectionByCustomerReference(
-            (new CustomerTransfer())
+        $quoteCollectionTransfer = $this->cartsRestApiClient->getQuoteCollection(
+            (new QuoteCriteriaFilterTransfer())
                 ->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier())
         );
 
-        if (!$quoteCollectionTransfer->getQuoteCollection()) {
-            return new QuoteCollectionTransfer();
-        }
-
-        return $quoteCollectionTransfer->getQuoteCollection();
+        return $quoteCollectionTransfer;
     }
 
     /**
