@@ -31,8 +31,8 @@ class SharedCartsByCartIdResourceRelationshipPlugin extends AbstractPlugin imple
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         $this->getFactory()
-            ->createSharedCartExpander()
-            ->addResourceRelationshipsByCartId($resources, $restRequest);
+            ->createSharedCartsByCartIdExpander()
+            ->addResourceRelationships($resources, $restRequest);
     }
 
     /**

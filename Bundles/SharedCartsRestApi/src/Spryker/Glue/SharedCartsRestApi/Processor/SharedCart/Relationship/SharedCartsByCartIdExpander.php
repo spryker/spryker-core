@@ -18,7 +18,7 @@ use Spryker\Glue\SharedCartsRestApi\Processor\SharedCart\Mapper\SharedCartMapper
 use Spryker\Glue\SharedCartsRestApi\Processor\SharedCart\Reader\SharedCartReaderInterface;
 use Spryker\Glue\SharedCartsRestApi\SharedCartsRestApiConfig;
 
-class SharedCartExpander implements SharedCartExpanderInterface
+class SharedCartsByCartIdExpander implements SharedCartsByCartIdExpanderInterface
 {
     /**
      * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
@@ -56,13 +56,15 @@ class SharedCartExpander implements SharedCartExpanderInterface
      *
      * @return void
      */
-    public function addResourceRelationshipsByCartId(array $resources, RestRequestInterface $restRequest): void
+    public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         foreach ($resources as $resource) {
             $quoteTransfer = (new QuoteTransfer())->setUuid($resource->getId());
 
-            $shareDetailCollectionTransfer = $this->sharedCartReader->getSharedCartsByCartUuid($quoteTransfer);
-            $this->addSharedCartRelationship($resource, $shareDetailCollectionTransfer);
+            $shareDetailCollectionTransfer = $this->sharedCartReader
+                ->getSharedCartsByCartUuid($quoteTransfer);
+
+            $this->addSharedCartRelationships($resource, $shareDetailCollectionTransfer);
         }
     }
 
@@ -72,7 +74,7 @@ class SharedCartExpander implements SharedCartExpanderInterface
      *
      * @return void
      */
-    protected function addSharedCartRelationship(
+    protected function addSharedCartRelationships(
         RestResourceInterface $resource,
         ShareDetailCollectionTransfer $shareDetailCollectionTransfer
     ): void {

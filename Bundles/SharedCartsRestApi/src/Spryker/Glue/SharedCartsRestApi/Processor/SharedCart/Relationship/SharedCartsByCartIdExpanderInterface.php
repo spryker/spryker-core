@@ -9,7 +9,7 @@ namespace Spryker\Glue\SharedCartsRestApi\Processor\SharedCart\Relationship;
 
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
-interface SharedCartExpanderInterface
+interface SharedCartsByCartIdExpanderInterface
 {
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
@@ -17,5 +17,5 @@ interface SharedCartExpanderInterface
      *
      * @return void
      */
-    public function addResourceRelationshipsByCartId(array $resources, RestRequestInterface $restRequest): void;
+    public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void;
 }
