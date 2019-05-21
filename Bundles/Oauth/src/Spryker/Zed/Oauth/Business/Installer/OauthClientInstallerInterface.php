@@ -5,12 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\OauthCustomerConnector\Business\Model;
+namespace Spryker\Zed\Oauth\Business\Installer;
 
-/**
- * @deprecated Will be removed in the next major.
- */
-interface InstallerInterface
+interface OauthClientInstallerInterface
 {
     /**
      * @return void

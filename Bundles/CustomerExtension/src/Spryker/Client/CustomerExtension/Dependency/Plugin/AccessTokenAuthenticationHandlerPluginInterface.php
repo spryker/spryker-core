@@ -21,5 +21,5 @@ interface AccessTokenAuthenticationHandlerPluginInterface
      *
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
-    public function getCustomerByToken(string $accessToken): CustomerResponseTransfer;
+    public function getCustomerByAccessToken(string $accessToken): CustomerResponseTransfer;
 }

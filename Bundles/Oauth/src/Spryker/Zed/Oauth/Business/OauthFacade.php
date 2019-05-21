@@ -126,22 +126,12 @@ class OauthFacade extends AbstractFacade implements OauthFacadeInterface
      *
      * @api
      *
-     * @return string
+     * @return void
      */
-    public function getOauthClientIdentifier(): string
+    public function installOauthClientData(): void
     {
-        return $this->getFactory()->getModuleConfig()->getClientId();
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @return string
-     */
-    public function getOauthClientSecret(): string
-    {
-        return $this->getFactory()->getModuleConfig()->getClientSecret();
+        $this->getFactory()
+            ->createOauthClientInstaller()
+            ->install();
     }
 }

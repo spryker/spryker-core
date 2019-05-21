@@ -109,21 +109,11 @@ interface OauthFacadeInterface
 
     /**
      * Specification:
-     *  - Reads customer client identifier.
+     * - Installs oauth client data.
      *
      * @api
      *
-     * @return string
+     * @return void
      */
-    public function getOauthClientIdentifier(): string;
-
-    /**
-     * Specification:
-     *  - Reads customer client secret.
-     *
-     * @api
-     *
-     * @return string
-     */
-    public function getOauthClientSecret(): string;
+    public function installOauthClientData(): void;
 }

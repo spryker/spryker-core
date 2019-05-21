@@ -74,20 +74,4 @@ class OauthCustomerConnectorToOauthFacadeBridge implements OauthCustomerConnecto
     {
         return $this->oauthFacade->getScopesByIdentifiers($customerScopes);
     }
-
-    /**
-     * @return string
-     */
-    public function getOauthClientIdentifier(): string
-    {
-        return $this->oauthFacade->getOauthClientIdentifier();
-    }
-
-    /**
-     * @return string
-     */
-    public function getOauthClientSecret(): string
-    {
-        return $this->oauthFacade->getOauthClientSecret();
-    }
 }

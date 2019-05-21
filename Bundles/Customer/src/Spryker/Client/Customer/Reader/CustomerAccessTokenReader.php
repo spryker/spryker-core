@@ -32,6 +32,6 @@ class CustomerAccessTokenReader implements CustomerAccessTokenReaderInterface
      */
     public function getCustomerByAccessToken(string $accessToken): CustomerResponseTransfer
     {
-        return $this->accessTokenAuthenticationHandlerPlugin->getCustomerByToken($accessToken);
+        return $this->accessTokenAuthenticationHandlerPlugin->getCustomerByAccessToken($accessToken);
     }
 }

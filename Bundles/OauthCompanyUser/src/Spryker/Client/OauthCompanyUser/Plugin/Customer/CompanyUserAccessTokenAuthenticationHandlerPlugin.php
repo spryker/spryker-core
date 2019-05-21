@@ -26,7 +26,7 @@ class CompanyUserAccessTokenAuthenticationHandlerPlugin extends AbstractPlugin i
      *
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
-    public function getCustomerByToken(string $accessToken): CustomerResponseTransfer
+    public function getCustomerByAccessToken(string $accessToken): CustomerResponseTransfer
     {
         return $this->getClient()->getCustomerByAccessToken($accessToken);
     }

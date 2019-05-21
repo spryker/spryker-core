@@ -41,15 +41,27 @@ interface OauthCustomerConnectorFacadeInterface
     public function getScopes(OauthScopeRequestTransfer $oauthScopeRequestTransfer): array;
 
     /**
+     * @api
+     *
+     * @deprecated Will be removed in the next major.
+     *
      * Specification:
      *  - Installs oauth client data.
      *  - Installs oauth scope data.
+     *
+     * @return void
+     */
+    public function installCustomerOauthData(): void;
+
+    /**
+     * Specification:
+     *  - Installs oauth customer scope data.
      *
      * @api
      *
      * @return void
      */
-    public function installCustomerOauthData(): void;
+    public function installOauthCustomerScopeData(): void;
 
     /**
      * Specification:

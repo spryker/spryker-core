@@ -11,12 +11,10 @@ use Spryker\Zed\Installer\Dependency\Plugin\InstallerPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @deprecated Use \Spryker\Zed\Oauth\Communication\Plugin\Installer\OauthClientInstallerPlugin, \Spryker\Zed\OauthCustomerConnector\Communication\Plugin\Installer\OauthCustomerScopeInstallerPlugin instead.
- *
  * @method \Spryker\Zed\OauthCustomerConnector\Business\OauthCustomerConnectorFacadeInterface getFacade()
  * @method \Spryker\Zed\OauthCustomerConnector\OauthCustomerConnectorConfig getConfig()
  */
-class OauthCustomerInstallerPlugin extends AbstractPlugin implements InstallerPluginInterface
+class OauthCustomerScopeInstallerPlugin extends AbstractPlugin implements InstallerPluginInterface
 {
     /**
      * @api
@@ -25,6 +23,6 @@ class OauthCustomerInstallerPlugin extends AbstractPlugin implements InstallerPl
      */
     public function install()
     {
-        $this->getFacade()->installCustomerOauthData();
+        $this->getFacade()->installOauthCustomerScopeData();
     }
 }
