@@ -129,8 +129,10 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
     public function findPriceProductSchedulesToEnableByStore(StoreTransfer $storeTransfer): array
     {
         $currentDatabaseEngineName = $this->propelFacade->getCurrentDatabaseEngine();
-        $priceProductScheduleFilteredByMinResultSubQuery = $this->createPriceProductScheduleFilteredByMinResultSubQuery($storeTransfer,
-            $currentDatabaseEngineName);
+        $priceProductScheduleFilteredByMinResultSubQuery = $this->createPriceProductScheduleFilteredByMinResultSubQuery(
+            $storeTransfer,
+            $currentDatabaseEngineName
+        );
 
         $priceProductScheduleEntities = $this->getFactory()
             ->createPriceProductScheduleQuery()
@@ -240,7 +242,8 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
      */
     protected function getFilterByConcatenatedProductIdExpression(): string
     {
-        return sprintf('(%s) = %s',
+        return sprintf(
+            '(%s) = %s',
             sprintf(
                 static::EXPRESSION_CONCATENATED_PRODUCT_ID,
                 SpyPriceProductScheduleTableMap::COL_FK_PRICE_TYPE,
@@ -261,7 +264,8 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
     {
         $concatenatedResultExpression = $this->getConcatenatedResultExpressionByDbEngineName($databaseEngineName);
 
-        return sprintf('(%s) = %s',
+        return sprintf(
+            '(%s) = %s',
             sprintf(
                 $concatenatedResultExpression,
                 SpyPriceProductScheduleTableMap::COL_ACTIVE_FROM,
