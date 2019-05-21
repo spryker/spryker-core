@@ -1,5 +1,2 @@
 parameters:
     bootstrap: %rootDir%/../../../phpstan-bootstrap.php
-
-    ignoreErrors:
-        - '#Result of || is always true.#'
