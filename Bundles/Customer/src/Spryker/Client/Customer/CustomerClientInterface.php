@@ -385,9 +385,7 @@ interface CustomerClientInterface
 
     /**
      * Specification:
-     * - Makes Zed request.
-     * - Retrieves customer by access token.
-     * - Executes CustomerExpanderPlugin stack.
+     * - Retrieves customer by access token using AccessTokenAuthenticationHandlerPluginInterface.
      *
      * @api
      *
