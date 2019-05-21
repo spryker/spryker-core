@@ -14,6 +14,7 @@ use Spryker\Client\ResourceShare\Dependency\Client\ResourceShareToZedRequestClie
 class ResourceShareDependencyProvider extends AbstractDependencyProvider
 {
     public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
+    public const PLUGINS_RESOURCE_SHARE_ACTIVATOR_STRATEGY = 'PLUGINS_RESOURCE_SHARE_ACTIVATOR_STRATEGY';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -24,6 +25,21 @@ class ResourceShareDependencyProvider extends AbstractDependencyProvider
     {
         $container = parent::provideServiceLayerDependencies($container);
         $container = $this->addZedRequestClient($container);
+        $container = $this->addResourceShareActivatorStrategyPlugins($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addResourceShareActivatorStrategyPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_RESOURCE_SHARE_ACTIVATOR_STRATEGY] = function () {
+            return $this->getResourceShareActivatorStrategyPlugins();
+        };
 
         return $container;
     }
@@ -42,5 +58,13 @@ class ResourceShareDependencyProvider extends AbstractDependencyProvider
         };
 
         return $container;
+    }
+
+    /**
+     * @return \Spryker\Client\ResourceShareExtension\Dependency\Plugin\ResourceShareActivatorStrategyPluginInterface[]
+     */
+    protected function getResourceShareActivatorStrategyPlugins(): array
+    {
+        return [];
     }
 }

@@ -5,26 +5,23 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\SharedCart\Communication\Plugin\ResourceShare;
+namespace Spryker\Client\SharedCart\Plugin\ResourceShare;
 
 use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
+use Spryker\Client\Kernel\AbstractPlugin;
+use Spryker\Client\ResourceShareExtension\Dependency\Plugin\ResourceShareActivatorStrategyPluginInterface;
 use Spryker\Shared\SharedCart\SharedCartConfig;
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\ResourceShareExtension\Dependency\Plugin\ResourceShareActivatorStrategyPluginInterface;
 
 /**
- * @method \Spryker\Zed\SharedCart\Business\SharedCartFacadeInterface getFacade()
- * @method \Spryker\Zed\SharedCart\SharedCartConfig getConfig()
- * @method \Spryker\Zed\SharedCart\Communication\SharedCartCommunicationFactory getFactory()
+ * @method \Spryker\Client\SharedCart\SharedCartClientInterface getClient()
  */
-class SharedCartByUuidActivatorStrategyPlugin extends AbstractPlugin implements ResourceShareActivatorStrategyPluginInterface
+class SwitchDefaultCartResourceShareActivatorStrategyPlugin extends AbstractPlugin implements ResourceShareActivatorStrategyPluginInterface
 {
     /**
      * {@inheritdoc}
-     * - Creates cart share for provided Quote and provided company user within the same business unit.
-     * - Updates permission to Full-access, if resource was shared with higher permission.
-     * - Returns 'isSuccessful=true' with ResourceShareTransfer if cart was shared successfully.
+     * - Switches default cart for provided Quote and company user.
+     * - Returns 'isSuccessful=true' with ResourceShareTransfer if cart was switched successfully.
      * - Returns 'isSuccessful=false' with error messages otherwise.
      *
      * @api
@@ -35,12 +32,12 @@ class SharedCartByUuidActivatorStrategyPlugin extends AbstractPlugin implements 
      */
     public function execute(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer
     {
-        return $this->getFacade()->applyShareCartByUuidActivatorStrategy($resourceShareRequestTransfer);
+        return $this->getClient()->applySwitchDefaultCartResourceShareActivatorStrategy($resourceShareRequestTransfer);
     }
 
     /**
      * {@inheritdoc}
-     * - Returns true, since the customer must be logged-in to apply activator strategy.
+     * - Returns 'true', as activator strategy expects the customer to be logged in.
      *
      * @api
      *
