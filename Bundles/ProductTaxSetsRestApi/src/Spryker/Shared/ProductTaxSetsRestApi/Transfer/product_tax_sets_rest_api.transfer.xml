@@ -14,6 +14,10 @@
         <property name="country" type="string" />
     </transfer>
 
+    <transfer name="TaxSet">
+        <property name="uuid" type="string" />
+    </transfer>
+
     <transfer name="TaxProductStorage">
         <property name="idTaxSet" type="int" />
     </transfer>
