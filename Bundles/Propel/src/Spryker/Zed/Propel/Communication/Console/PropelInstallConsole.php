@@ -86,6 +86,7 @@ class PropelInstallConsole extends Console
         $noDiffOption = $this->input->getOption(self::OPTION_NO_DIFF);
 
         $dependingCommands = [
+            ConvertConfigConsole::COMMAND_NAME,
             CreateDatabaseConsole::COMMAND_NAME,
             PostgresqlCompatibilityConsole::COMMAND_NAME,
             SchemaCopyConsole::COMMAND_NAME,

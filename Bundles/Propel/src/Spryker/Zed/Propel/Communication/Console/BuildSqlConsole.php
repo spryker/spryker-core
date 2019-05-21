@@ -7,13 +7,18 @@
 
 namespace Spryker\Zed\Propel\Communication\Console;
 
-use Spryker\Zed\PropelOrm\Business\Generator\Command\SqlBuildCommand;
+use Spryker\Shared\Config\Config;
+use Spryker\Shared\Propel\PropelConstants;
+use Spryker\Zed\Kernel\Communication\Console\Console;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Process\Process;
 
 /**
  * @method \Spryker\Zed\Propel\Business\PropelFacadeInterface getFacade()
  * @method \Spryker\Zed\Propel\Communication\PropelCommunicationFactory getFactory()
  */
-class BuildSqlConsole extends AbstractPropelCommandWrapper
+class BuildSqlConsole extends Console
 {
     public const COMMAND_NAME = 'propel:sql:build';
 
@@ -29,10 +34,24 @@ class BuildSqlConsole extends AbstractPropelCommandWrapper
     }
 
     /**
-     * @return string
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     *
+     * @return int
      */
-    public function getOriginalCommandClassName(): string
+    protected function execute(InputInterface $input, OutputInterface $output)
     {
-        return SqlBuildCommand::class;
+        $this->info('Build sql');
+
+        $config = Config::get(PropelConstants::PROPEL);
+        $command = 'vendor/bin/propel sql:build --config-dir '
+            . $config['paths']['phpConfDir']
+            . ' --schema-dir ' . $config['paths']['schemaDir'];
+
+        $process = new Process($command, APPLICATION_ROOT_DIR);
+
+        return $process->run(function ($type, $buffer) {
+            echo $buffer;
+        });
     }
 }
