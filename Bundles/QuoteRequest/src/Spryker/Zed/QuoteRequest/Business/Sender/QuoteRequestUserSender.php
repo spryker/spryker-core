@@ -69,7 +69,7 @@ class QuoteRequestUserSender implements QuoteRequestUserSenderInterface
         }
 
         $quoteRequestTransfer->setStatus(SharedQuoteRequestConfig::STATUS_READY);
-        $quoteRequestTransfer->setIsLatestVersionHidden(false);
+        $quoteRequestTransfer->setIsLatestVersionVisible(true);
         $quoteRequestTransfer = $this->quoteRequestEntityManager->updateQuoteRequest($quoteRequestTransfer);
 
         return $quoteRequestResponseTransfer->setQuoteRequest($quoteRequestTransfer);
