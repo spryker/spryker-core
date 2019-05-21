@@ -104,6 +104,9 @@ var ContentItemDialog = function(
 
                 if ($clickedNode.length) {
                     this.clearNode($clickedNode);
+                } else {
+                    var $existingRange = this.context.invoke('editor.createRange');
+                    $($existingRange.sc).parents('p').empty();
                 }
 
                 this.context.invoke('insertNode', elementForInsert);
