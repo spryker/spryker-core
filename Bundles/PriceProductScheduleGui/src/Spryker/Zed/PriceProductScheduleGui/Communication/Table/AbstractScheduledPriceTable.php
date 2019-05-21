@@ -51,8 +51,8 @@ abstract class AbstractScheduledPriceTable extends AbstractTable
             static::COL_STORE => 'Store',
             static::COL_NET_PRICE => 'Net price',
             static::COL_GROSS_PRICE => 'Gross price',
-            static::COL_ACTIVE_FROM => 'Active from',
-            static::COL_ACTIVE_TO => 'Active to',
+            static::COL_ACTIVE_FROM => 'Start from (included)',
+            static::COL_ACTIVE_TO => 'Finish at (included)',
             static::COL_ACTIONS => 'Actions',
         ]);
 
