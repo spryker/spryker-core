@@ -254,6 +254,7 @@ class Finder implements FinderInterface
     public function findProcessByStateMachineAndProcessName($stateMachineName, $processName)
     {
         $stateMachineProcessTransfer = $this->createStateMachineProcessTransfer($stateMachineName, $processName);
+
         return $this->builder->createProcess($stateMachineProcessTransfer);
     }
 

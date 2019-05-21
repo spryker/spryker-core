@@ -133,6 +133,7 @@ class LanguageSwitcherServiceProvider extends AbstractPlugin implements ServiceP
         if (preg_match('/\/(' . implode('|', $languages) . ')/', $currentUrl)) {
             return preg_replace('/\/(' . implode('|', $languages) . ')/', '/' . $replacementLanguage, $currentUrl, 1);
         }
+
         return rtrim('/' . $replacementLanguage . $currentUrl, '/');
     }
 

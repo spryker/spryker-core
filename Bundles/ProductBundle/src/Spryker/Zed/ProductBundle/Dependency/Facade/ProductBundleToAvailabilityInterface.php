@@ -49,6 +49,7 @@ interface ProductBundleToAvailabilityInterface
      * @return int
      */
     public function saveProductAvailabilityForStore($sku, $quantity, StoreTransfer $storeTransfer);
+
     /**
      * @param string $sku
      * @param int $quantity

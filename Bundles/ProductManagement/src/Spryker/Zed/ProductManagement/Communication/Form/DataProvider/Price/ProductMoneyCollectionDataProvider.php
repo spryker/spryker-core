@@ -192,6 +192,7 @@ class ProductMoneyCollectionDataProvider
 
             $currencyIndex[$identifier] = true;
         }
+
         return $currencyIndex;
     }
 

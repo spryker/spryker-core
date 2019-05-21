@@ -105,6 +105,7 @@ class PropelConfigTest extends Unit
     {
         $propelConfigMock = $this->getMockBuilder(PropelConfig::class)->setMethods(['getCurrentDatabaseEngine'])->getMock();
         $propelConfigMock->expects($this->once())->method('getCurrentDatabaseEngine')->willReturn('Un supported database engine');
+
         return $propelConfigMock;
     }
 }

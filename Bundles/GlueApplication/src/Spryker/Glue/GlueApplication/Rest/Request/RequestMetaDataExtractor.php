@@ -108,6 +108,7 @@ class RequestMetaDataExtractor implements RequestMetaDataExtractorInterface
     protected function getLocale(Request $request): string
     {
         $acceptLanguage = (string)$request->headers->get(RequestConstantsInterface::HEADER_ACCEPT_LANGUAGE, '');
+
         return $this->languageNegotiation->getLanguageIsoCode($acceptLanguage);
     }
 

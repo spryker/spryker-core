@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
-use Orm\Zed\Sales\Persistence\SpySalesDiscount;
 use SprykerTest\Zed\Sales\Helper\BusinessHelper;
 
 /**
@@ -115,36 +114,6 @@ class SalesFacadeTest extends Unit
         $orderListTransfer = $salesFacade->getCustomerOrders($orderListTransfer, $salesOrderEntity->getFkCustomer());
 
         $this->assertInstanceOf(OrderListTransfer::class, $orderListTransfer);
-    }
-
-    /**
-     * @return void
-     */
-    public function testCustomerOrderShouldReturnGrandTotalWithDiscounts()
-    {
-        $this->markTestSkipped();
-
-        $salesOrderEntity = $this->tester->create();
-
-        $orderItemEntity = $salesOrderEntity->getItems()[0];
-
-        $orderItemDiscountEntity = new SpySalesDiscount();
-        $orderItemDiscountEntity->setAmount(50);
-        $orderItemDiscountEntity->setFkSalesOrder($salesOrderEntity->getIdSalesOrder());
-        $orderItemDiscountEntity->setFkSalesOrderItem($orderItemEntity->getIdSalesOrderItem());
-        $orderItemDiscountEntity->setName('Discount order saver tester');
-        $orderItemDiscountEntity->setDisplayName('discount');
-        $orderItemDiscountEntity->setDescription('Description');
-        $orderItemDiscountEntity->save();
-
-        $salesFacade = $this->createSalesFacade();
-        $orderListTransfer = new OrderListTransfer();
-        $orderListTransfer = $salesFacade->getCustomerOrders($orderListTransfer, $salesOrderEntity->getFkCustomer());
-
-        $orderTransfer = $orderListTransfer->getOrders()[0];
-        $grandTotal = $orderTransfer->getTotals()->getGrandTotal();
-
-        $this->assertSame(1350, $grandTotal);
     }
 
     /**

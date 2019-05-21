@@ -46,6 +46,7 @@ class PriceCartConnectorDependencyProvider extends AbstractBundleDependencyProvi
         $container[static::FACADE_PRICE_PRODUCT] = function (Container $container) {
             return new PriceCartToPriceProductBridge($container->getLocator()->priceProduct()->facade());
         };
+
         return $container;
     }
 
@@ -59,6 +60,7 @@ class PriceCartConnectorDependencyProvider extends AbstractBundleDependencyProvi
         $container[static::FACADE_PRICE] = function (Container $container) {
             return new PriceCartToPriceBridge($container->getLocator()->price()->facade());
         };
+
         return $container;
     }
 

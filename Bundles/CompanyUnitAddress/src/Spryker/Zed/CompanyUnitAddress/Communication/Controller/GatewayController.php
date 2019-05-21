@@ -91,4 +91,14 @@ class GatewayController extends AbstractGatewayController
 
         return (new CompanyUnitAddressResponseTransfer())->setIsSuccessful(true);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer
+     */
+    public function findCompanyBusinessUnitAddressByUuidAction(CompanyUnitAddressTransfer $companyUnitAddressTransfer): CompanyUnitAddressResponseTransfer
+    {
+        return $this->getFacade()->findCompanyBusinessUnitAddressByUuid($companyUnitAddressTransfer);
+    }
 }

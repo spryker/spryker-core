@@ -33,6 +33,7 @@ class Calculator implements CalculatorInterface
     public function calculateStockForProduct($sku)
     {
         $productEntities = $this->reader->getStocksProduct($sku);
+
         return $this->calculateTotalQuantity($productEntities);
     }
 

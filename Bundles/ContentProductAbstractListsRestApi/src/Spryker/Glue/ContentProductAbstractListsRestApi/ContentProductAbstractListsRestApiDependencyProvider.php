@@ -45,6 +45,7 @@ class ContentProductAbstractListsRestApiDependencyProvider extends AbstractBundl
                 $container->getLocator()->contentProduct()->client()
             );
         };
+
         return $container;
     }
 
