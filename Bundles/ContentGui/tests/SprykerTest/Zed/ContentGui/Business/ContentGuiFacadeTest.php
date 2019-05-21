@@ -279,7 +279,7 @@ class ContentGuiFacadeTest extends Unit
     {
         // Arrange
         $inputString = $this->tester->getOneHtmlWidgetInString($this->bannerContentTransfer);
-        $expectedResult = $this->tester->getOneShortCodeInString($this->bannerContentTransfer);
+        $expectedResult = $this->tester->getOneShortCodeInString($this->bannerContentTransfer, true);
 
         // Act
         $cmsBlockGlossaryTransfer = $this->runConvertCmsBlockGlossaryHtmlToShortCode($inputString);
@@ -295,7 +295,7 @@ class ContentGuiFacadeTest extends Unit
     {
         // Arrange
         $inputString = $this->tester->getTwoSameHtmlWidgetsInString($this->bannerContentTransfer);
-        $expectedResult = $this->tester->getTwoSameShortCodesInString($this->bannerContentTransfer);
+        $expectedResult = $this->tester->getTwoSameShortCodesInString($this->bannerContentTransfer, true);
 
         // Act
         $cmsBlockGlossaryTransfer = $this->runConvertCmsBlockGlossaryHtmlToShortCode($inputString);
@@ -316,7 +316,8 @@ class ContentGuiFacadeTest extends Unit
         );
         $expectedResult = $this->tester->getTwoDifferentShortCodeInString(
             $this->bannerContentTransfer,
-            $this->abstractProductListContentTransfer
+            $this->abstractProductListContentTransfer,
+            true
         );
 
         // Act

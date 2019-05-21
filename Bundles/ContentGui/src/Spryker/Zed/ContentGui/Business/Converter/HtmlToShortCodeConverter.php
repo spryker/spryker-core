@@ -54,7 +54,7 @@ class HtmlToShortCodeConverter implements HtmlConverterInterface
         foreach ($widgets as $widget) {
             $shortCode = $dom->createDocumentFragment();
             $shortCode->appendXML($widget->getAttribute(static::ATTRIBUTE_DATA_SHORT_CODE));
-            $replacements[] = [$shortCode, $widget];
+            $replacements[] = [$shortCode, $widget->parentNode];
         }
 
         return $replacements;
