@@ -86,12 +86,10 @@ class CompanyBusinessUnitResourceRelationshipExpander implements CompanyBusiness
                 new RestCompanyBusinessUnitAttributesTransfer()
             );
 
-        $companyBusinessUnitResource = $this->restResourceBuilder->createRestResource(
+        return $this->restResourceBuilder->createRestResource(
             CompanyBusinessUnitsRestApiConfig::RESOURCE_COMPANY_BUSINESS_UNITS,
             $companyBusinessUnitTransfer->getUuid(),
             $restCompanyBusinessUnitAttributesTransfer
         );
-
-        return $companyBusinessUnitResource;
     }
 }

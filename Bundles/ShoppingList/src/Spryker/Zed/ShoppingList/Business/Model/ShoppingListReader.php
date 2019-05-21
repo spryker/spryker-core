@@ -272,11 +272,11 @@ class ShoppingListReader implements ShoppingListReaderInterface
 
         $companyUserPermissionCollectionTransfer = $this->addReadPermissionToPermissionCollectionTransfer(
             $companyUserPermissionCollectionTransfer,
-            array_merge(
+            array_unique(array_merge(
                 $this->shoppingListRepository->findCompanyUserSharedShoppingListsIds($companyUserTransfer->getIdCompanyUser()),
                 $companyBusinessUnitSharedShoppingListIds,
                 $companyUserOwnShoppingListIds
-            )
+            ))
         );
 
         $companyUserSharedShoppingListIds = $this->shoppingListRepository->getCompanyUserSharedShoppingListIdsByPermissionGroupName(
@@ -292,11 +292,11 @@ class ShoppingListReader implements ShoppingListReaderInterface
 
         $companyUserPermissionCollectionTransfer = $this->addWritePermissionToPermissionCollectionTransfer(
             $companyUserPermissionCollectionTransfer,
-            array_merge(
+            array_unique(array_merge(
                 $companyUserSharedShoppingListIds,
                 $companyBusinessUnitSharedShoppingListIds,
                 $companyUserOwnShoppingListIds
-            )
+            ))
         );
 
         return $companyUserPermissionCollectionTransfer;

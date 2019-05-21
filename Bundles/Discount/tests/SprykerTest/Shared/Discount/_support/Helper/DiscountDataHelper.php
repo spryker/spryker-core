@@ -8,11 +8,13 @@
 namespace SprykerTest\Shared\Discount\Helper;
 
 use Codeception\Module;
+use Generated\Shared\DataBuilder\DiscountBuilder;
 use Generated\Shared\DataBuilder\DiscountConfiguratorBuilder;
 use Generated\Shared\DataBuilder\DiscountGeneralBuilder;
 use Generated\Shared\DataBuilder\DiscountVoucherBuilder;
 use Generated\Shared\DataBuilder\MoneyValueBuilder;
 use Orm\Zed\Discount\Persistence\SpyDiscountQuery;
+use Orm\Zed\Sales\Persistence\SpySalesDiscount;
 use Propel\Runtime\Propel;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
@@ -103,5 +105,26 @@ class DiscountDataHelper extends Module
             $discountEntity->setIsActive(false);
             $discountEntity->save();
         }
+    }
+
+    /**
+     * @param array $seedData
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesDiscount
+     */
+    public function haveSalesDiscount(array $seedData = []): SpySalesDiscount
+    {
+        $discountTransfer = (new DiscountBuilder($seedData))->build();
+        $data = array_merge($discountTransfer->toArray(false), $seedData);
+        $salesDiscountEntity = new SpySalesDiscount();
+        $salesDiscountEntity->fromArray($data);
+        $salesDiscountEntity->save();
+
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($salesDiscountEntity) {
+            $this->debug('Deleting Discount: ' . $salesDiscountEntity->getIdSalesDiscount());
+            $salesDiscountEntity->delete();
+        });
+
+        return $salesDiscountEntity;
     }
 }

@@ -52,6 +52,7 @@ class OrderCommentReader implements OrderCommentReaderInterface
             $commentTransfer = $commentTransfer->fromArray($salesOrderCommentEntity->toArray(), true);
             $comments->addComment($commentTransfer);
         }
+
         return $comments;
     }
 }

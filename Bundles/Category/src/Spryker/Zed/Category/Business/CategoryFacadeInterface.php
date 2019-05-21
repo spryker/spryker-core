@@ -345,7 +345,7 @@ interface CategoryFacadeInterface
      * @param int $idNode
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
-     * @return array
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNode[]|\Propel\Runtime\Collection\ObjectCollection
      */
     public function getChildren($idNode, LocaleTransfer $localeTransfer);
 
@@ -405,7 +405,7 @@ interface CategoryFacadeInterface
      *
      * @deprecated Will be removed with next major release
      *
-     * @param array $categoryKey
+     * @param string $categoryKey
      * @param int $idLocale
      *
      * @return \Generated\Shared\Transfer\CategoryTransfer

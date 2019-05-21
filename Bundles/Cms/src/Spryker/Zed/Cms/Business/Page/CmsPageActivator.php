@@ -142,6 +142,7 @@ class CmsPageActivator implements CmsPageActivatorInterface
                 )
             );
         }
+
         return $cmsPageEntity;
     }
 
