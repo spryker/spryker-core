@@ -8,12 +8,11 @@
 namespace Spryker\Zed\ContentBannerGui\Communication;
 
 use Spryker\Zed\ContentBannerGui\Communication\Form\Constraints\ContentBannerConstraint;
+use Spryker\Zed\ContentBannerGui\Communication\Mapper\ContentGui\ContentBannerContentGuiEditorConfigurationMapper;
+use Spryker\Zed\ContentBannerGui\Communication\Mapper\ContentGui\ContentBannerContentGuiEditorConfigurationMapperInterface;
 use Spryker\Zed\ContentBannerGui\ContentBannerGuiDependencyProvider;
 use Spryker\Zed\ContentBannerGui\Dependency\Facade\ContentBannerGuiToContentBannerInterface;
 use Spryker\Zed\ContentBannerGui\Dependency\Service\ContentBannerGuiToUtilEncodingInterface;
-use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\ContentBannerGui\Communication\Mapper\ContentGui\ContentBannerContentGuiEditorConfigurationMapper;
-use Spryker\Zed\ContentBannerGui\Communication\Mapper\ContentGui\ContentBannerContentGuiEditorConfigurationMapperInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**

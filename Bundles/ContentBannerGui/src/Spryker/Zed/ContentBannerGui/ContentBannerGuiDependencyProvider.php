@@ -12,6 +12,9 @@ use Spryker\Zed\ContentBannerGui\Dependency\Service\ContentBannerGuiToUtilEncodi
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\ContentBannerGui\ContentBannerGuiConfig getConfig()
+ */
 class ContentBannerGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_CONTENT_BANNER = 'FACADE_CONTENT_BANNER';

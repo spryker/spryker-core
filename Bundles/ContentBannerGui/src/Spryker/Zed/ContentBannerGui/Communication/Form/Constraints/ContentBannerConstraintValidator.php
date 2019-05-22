@@ -16,14 +16,14 @@ use Symfony\Component\Validator\ConstraintValidator;
 class ContentBannerConstraintValidator extends ConstraintValidator
 {
     /**
-     * @param string $banner The value that should be validated
+     * @param string $bannerData The value that should be validated
      * @param \Symfony\Component\Validator\Constraint|\Spryker\Zed\ContentBannerGui\Communication\Form\Constraints\ContentBannerConstraint $constraint The constraint for the validation
      *
      * @throws \InvalidArgumentException
      *
      * @return void
      */
-    public function validate($banner, Constraint $constraint): void
+    public function validate($bannerData, Constraint $constraint): void
     {
         if (!$constraint instanceof ContentBannerConstraint) {
             throw new InvalidArgumentException(sprintf(
@@ -34,8 +34,8 @@ class ContentBannerConstraintValidator extends ConstraintValidator
         }
 
         $contentBannerTermTransfer = new ContentBannerTermTransfer();
-        if ($banner !== null) {
-            $contentBannerTermTransfer->fromArray($constraint->getUtilEncoding()->decodeJson($banner, true));
+        if ($bannerData !== null) {
+            $contentBannerTermTransfer->fromArray($constraint->getUtilEncoding()->decodeJson($bannerData, true));
         }
 
         $contentValidationResponseTransfer = $constraint
