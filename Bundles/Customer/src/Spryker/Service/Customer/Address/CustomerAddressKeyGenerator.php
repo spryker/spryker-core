@@ -12,8 +12,6 @@ use Spryker\Service\Customer\CustomerConfig;
 
 class CustomerAddressKeyGenerator implements CustomerAddressKeyGeneratorInterface
 {
-    protected const ADDRESS_KEY_FIELDS_SEPARATOR = '-';
-
     /**
      * @var \Spryker\Zed\Customer\CustomerConfig
      */
@@ -40,6 +38,6 @@ class CustomerAddressKeyGenerator implements CustomerAddressKeyGeneratorInterfac
             unset($addressData[$addressExcludedField]);
         }
 
-        return implode(static::ADDRESS_KEY_FIELDS_SEPARATOR, $addressData);
+        return md5(json_encode($addressData));
     }
 }
