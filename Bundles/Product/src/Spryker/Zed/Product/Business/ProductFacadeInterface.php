@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Product\Business;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductAttributeKeyTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
@@ -765,6 +766,20 @@ interface ProductFacadeInterface
      * @return string[]
      */
     public function suggestProductAbstract(string $suggestion): array;
+
+    /**
+     * Specification:
+     * - Suggests product abstract transfers by name or SKU.
+     * - Uses pagination for returning suggestions.
+     *
+     * @api
+     *
+     * @param string $suggestion
+     * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer[]
+     */
+    public function suggestProductAbstractTransfersPaginated(string $suggestion, PaginationTransfer $paginationTransfer): array;
 
     /**
      * Specification:

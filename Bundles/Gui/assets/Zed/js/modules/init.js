@@ -114,6 +114,11 @@ $(document).ready(function() {
                     dataType: 'json',
                     delay: 500,
                     cache: true,
+                    data: function(params) {
+                        params.page = params.page || 1;
+
+                        return params;
+                    }
                 },
                 minimumInputLength: 3
             };

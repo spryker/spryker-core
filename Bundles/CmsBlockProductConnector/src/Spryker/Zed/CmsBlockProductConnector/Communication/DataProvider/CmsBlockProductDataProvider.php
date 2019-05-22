@@ -117,7 +117,7 @@ class CmsBlockProductDataProvider
                 $productAbstractTransfer->getName(),
                 $productAbstractTransfer->getSku()
             );
-            $selectFieldData[$label] = $productAbstractTransfer->getSku();
+            $selectFieldData[$label] = $productAbstractTransfer->getIdProductAbstract();
         }
 
         return $selectFieldData;

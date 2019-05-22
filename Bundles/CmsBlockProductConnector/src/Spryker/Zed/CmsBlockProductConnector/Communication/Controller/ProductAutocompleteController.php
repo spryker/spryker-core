@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CmsBlockProductConnector\Communication\Controller;
 
+use Generated\Shared\Transfer\PaginationTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,9 +21,14 @@ use Symfony\Component\HttpFoundation\Request;
 class ProductAutocompleteController extends AbstractController
 {
     protected const REQUEST_PARAM_SUGGESTION = 'term';
+    protected const REQUEST_PARAM_PAGE = 'page';
     protected const RESPONSE_KEY_RESULTS = 'results';
+    protected const RESPONSE_KEY_PAGINATION = 'pagination';
+    protected const RESPONSE_KEY_PAGINATION_MORE = 'more';
     protected const RESPONSE_DATA_KEY_ID = 'id';
     protected const RESPONSE_DATA_KEY_TEXT = 'text';
+    protected const DEFAULT_PAGE = 1;
+    protected const DEFAULT_ITEMS_PER_PAGE = 10;
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -32,33 +38,64 @@ class ProductAutocompleteController extends AbstractController
     public function indexAction(Request $request): JsonResponse
     {
         $suggestion = $request->query->get(static::REQUEST_PARAM_SUGGESTION, '');
+        $paginationTransfer = $this->getPaginationTransfer($request);
 
-        $productAbstractSuggestions = $this->getFactory()
+        $productAbstractTransfers = $this->getFactory()
             ->getProductFacade()
-            ->suggestProductAbstract($suggestion);
+            ->suggestProductAbstractTransfersPaginated($suggestion, $paginationTransfer);
 
         return $this->jsonResponse([
-            static::RESPONSE_KEY_RESULTS => $this->transformProductAbstractSuggestionsToAutocompleteData($productAbstractSuggestions),
+            static::RESPONSE_KEY_RESULTS => $this->transformProductAbstractSuggestionsToAutocompleteData($productAbstractTransfers),
+            static::RESPONSE_KEY_PAGINATION => $this->getPaginationData($paginationTransfer),
         ]);
     }
 
     /**
-     * @param string[] $productAbstractSuggestions
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Generated\Shared\Transfer\PaginationTransfer
+     */
+    protected function getPaginationTransfer(Request $request): PaginationTransfer
+    {
+        return (new PaginationTransfer())
+            ->setPage($request->query->getInt(static::REQUEST_PARAM_PAGE, static::DEFAULT_PAGE))
+            ->setMaxPerPage(static::DEFAULT_ITEMS_PER_PAGE);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer[] $productAbstractTransfers
      *
      * @return array
      */
-    protected function transformProductAbstractSuggestionsToAutocompleteData(array $productAbstractSuggestions): array
+    protected function transformProductAbstractSuggestionsToAutocompleteData(array $productAbstractTransfers): array
     {
         $autocompleteData = [];
         $productLabelFormatter = $this->getFactory()->createProductLabelFormatter();
 
-        foreach ($productAbstractSuggestions as $sku => $name) {
+        foreach ($productAbstractTransfers as $productAbstractTransfer) {
             $autocompleteData[] = [
-                static::RESPONSE_DATA_KEY_ID => $sku,
-                static::RESPONSE_DATA_KEY_TEXT => $productLabelFormatter->format($name, $sku),
+                static::RESPONSE_DATA_KEY_ID => $productAbstractTransfer->getIdProductAbstract(),
+                static::RESPONSE_DATA_KEY_TEXT => $productLabelFormatter->format(
+                    $productAbstractTransfer->getName(),
+                    $productAbstractTransfer->getSku()
+                ),
             ];
         }
 
         return $autocompleteData;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
+     *
+     * @return array
+     */
+    protected function getPaginationData(PaginationTransfer $paginationTransfer): array
+    {
+        $hasMoreResults = $paginationTransfer->getLastPage() !== $paginationTransfer->getPage();
+
+        return [
+            static::RESPONSE_KEY_PAGINATION_MORE => $hasMoreResults
+        ];
     }
 }

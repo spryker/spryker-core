@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Product\Business\Product\Suggest;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\PaginationTransfer;
 use Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface;
 use Spryker\Zed\Product\Persistence\ProductRepositoryInterface;
 use Spryker\Zed\Product\ProductConfig;
@@ -58,6 +59,21 @@ class ProductSuggester implements ProductSuggesterInterface
             $suggestion,
             $this->getCurrentLocale(),
             $limit
+        );
+    }
+
+    /**
+     * @param string $suggestion
+     * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer[]
+     */
+    public function suggestProductAbstractTransfersPaginated(string $suggestion, PaginationTransfer $paginationTransfer): array
+    {
+        return $this->productRepository->getProductAbstractTransfersBySkuOrLocalizedName(
+            $suggestion,
+            $paginationTransfer,
+            $this->getCurrentLocale()
         );
     }
 

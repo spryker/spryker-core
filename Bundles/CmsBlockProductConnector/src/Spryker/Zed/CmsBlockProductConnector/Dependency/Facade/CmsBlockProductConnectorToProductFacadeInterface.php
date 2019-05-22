@@ -7,12 +7,15 @@
 
 namespace Spryker\Zed\CmsBlockProductConnector\Dependency\Facade;
 
+use Generated\Shared\Transfer\PaginationTransfer;
+
 interface CmsBlockProductConnectorToProductFacadeInterface
 {
     /**
      * @param string $suggestion
+     * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
      *
-     * @return string[]
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer[]
      */
-    public function suggestProductAbstract(string $suggestion): array;
+    public function suggestProductAbstractTransfersPaginated(string $suggestion, PaginationTransfer $paginationTransfer): array;
 }
