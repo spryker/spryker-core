@@ -28,13 +28,14 @@ class TriggerController extends AbstractController
      */
     public function triggerEventForOrderItemsAction(Request $request)
     {
+        $redirect = $request->query->get('redirect', static::ROUTE_REDIRECT_DEFAULT);
+
         if (!$this->isRequestValid($request)) {
-            return $this->redirectResponse(static::ROUTE_REDIRECT_DEFAULT);
+            return $this->redirectResponse($redirect);
         }
 
         $idOrderItem = $this->castId($request->query->getInt('id-sales-order-item'));
         $event = $request->query->get('event');
-        $redirect = $request->query->get('redirect', static::ROUTE_REDIRECT_DEFAULT);
 
         $this->getFacade()->triggerEventForOrderItems($event, [$idOrderItem]);
         $this->addInfoMessage('Status change triggered successfully.');
@@ -49,13 +50,14 @@ class TriggerController extends AbstractController
      */
     public function triggerEventForOrderAction(Request $request)
     {
+        $redirect = $request->query->get('redirect', static::ROUTE_REDIRECT_DEFAULT);
+
         if (!$this->isRequestValid($request)) {
-            return $this->redirectResponse(static::ROUTE_REDIRECT_DEFAULT);
+            return $this->redirectResponse($redirect);
         }
 
         $idOrder = $this->castId($request->query->getInt('id-sales-order'));
         $event = $request->query->get('event');
-        $redirect = $request->query->get('redirect', static::ROUTE_REDIRECT_DEFAULT);
         $itemsList = $request->query->get('items');
 
         $orderItems = $this->getOrderItemsToTriggerAction($idOrder, $itemsList);
