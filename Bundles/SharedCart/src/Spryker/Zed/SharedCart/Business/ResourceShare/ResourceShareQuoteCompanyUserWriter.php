@@ -22,7 +22,6 @@ use Spryker\Zed\SharedCart\Persistence\SharedCartRepositoryInterface;
 class ResourceShareQuoteCompanyUserWriter implements ResourceShareQuoteCompanyUserWriterInterface
 {
     protected const MESSAGE_TYPE_SUCCESS = 'success';
-    protected const MESSAGE_TYPE_ERROR = 'error';
 
     protected const GLOSSARY_KEY_CART_WAS_SUCCESSFULLY_SHARED = 'shared_cart_page.share.success';
     protected const GLOSSARY_KEY_UNABLE_TO_SHARE_CART = 'shared_cart.resource_share.strategy.error.unable_to_share_cart';
@@ -75,7 +74,7 @@ class ResourceShareQuoteCompanyUserWriter implements ResourceShareQuoteCompanyUs
                 ->setIsSuccessful(false)
                 ->addMessage(
                     (new MessageTransfer())
-                        ->setType(static::MESSAGE_TYPE_SUCCESS)
+                        ->setType(SharedCartConfig::MESSAGE_TYPE_ERROR)
                         ->setValue(static::GLOSSARY_KEY_UNABLE_TO_SHARE_CART)
                 );
         }
