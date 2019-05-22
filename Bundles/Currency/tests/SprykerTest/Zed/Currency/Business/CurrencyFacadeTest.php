@@ -127,7 +127,7 @@ class CurrencyFacadeTest extends Unit
 
         //Act
         $this->assertFalse($quoteValidationResponseTransfer->getIsSuccessful());
-        $this->assertContains(static::ERROR_MESSAGE_CURRENCY_DATA_IS_MISSING, $errors);
+        $this->assertContains(static::ERROR_MESSAGE_CURRENCY_DATA_IS_INCORRECT, $errors);
     }
 
     /**
