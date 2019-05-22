@@ -77,14 +77,6 @@ class ShareCartByUuidActivatorStrategy implements ShareCartByUuidActivatorStrate
                 );
         }
 
-        if ($this->isSharedCartLocked($resourceShareRequestTransfer)) {
-            return (new ResourceShareResponseTransfer())
-                ->setIsSuccessful(false)
-                ->addMessage(
-                    (new MessageTransfer())->setValue(static::GLOSSARY_KEY_QUOTE_IS_NOT_AVAILABLE)
-                );
-        }
-
         $shareDetailTransfer = $this->findShareDetail($resourceShareRequestTransfer);
         if ($shareDetailTransfer) {
             return $this->resourceShareQuoteCompanyUserWriter->updateCartShareForProvidedCompanyUser($resourceShareRequestTransfer, $shareDetailTransfer);
@@ -170,23 +162,5 @@ class ShareCartByUuidActivatorStrategy implements ShareCartByUuidActivatorStrate
         }
 
         return true;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
-     *
-     * @return bool
-     */
-    protected function isSharedCartLocked(ResourceShareRequestTransfer $resourceShareRequestTransfer): bool
-    {
-        $quoteResponseTransfer = $this->quoteFacade->findQuoteById(
-            $resourceShareRequestTransfer->getResourceShare()
-                ->getResourceShareData()
-                ->getIdQuote()
-        );
-
-        return (bool)$quoteResponseTransfer->requireQuoteTransfer()
-            ->getQuoteTransfer()
-            ->getIsLocked();
     }
 }

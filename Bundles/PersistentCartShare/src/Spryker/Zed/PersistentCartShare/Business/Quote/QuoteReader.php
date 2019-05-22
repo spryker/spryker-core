@@ -69,10 +69,6 @@ class QuoteReader implements QuoteReaderInterface
             return $this->createQuoteResponseTransferWithQuoteError(static::GLOSSARY_KEY_QUOTE_IS_NOT_AVAILABLE);
         }
 
-        if ($quoteResponseTransfer->requireQuoteTransfer()->getQuoteTransfer()->getIsLocked()) {
-            return $this->createQuoteResponseTransferWithQuoteError(static::GLOSSARY_KEY_QUOTE_IS_NOT_AVAILABLE);
-        }
-
         return $quoteResponseTransfer;
     }
 
