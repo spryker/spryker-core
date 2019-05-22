@@ -16,7 +16,10 @@ use Spryker\Client\SharedCart\Dependency\Client\SharedCartToMultiCartClientInter
 
 class SwitchDefaultCartResourceShareActivatorStrategy implements SwitchDefaultCartResourceShareActivatorStrategyInterface
 {
-    protected const GLOSSARY_KEY_QUOTE_IS_NOT_AVAILABLE = 'persistent_cart.error.quote.not_available';
+    /**
+     * @uses \Spryker\Zed\PersistentCartShare\Business\Quote\QuoteReader::GLOSSARY_KEY_QUOTE_IS_NOT_AVAILABLE
+     */
+    protected const GLOSSARY_KEY_QUOTE_IS_NOT_AVAILABLE = 'persistent_cart_share.error.quote_is_not_available';
 
     /**
      * @var \Spryker\Client\SharedCart\Dependency\Client\SharedCartToMultiCartClientInterface
