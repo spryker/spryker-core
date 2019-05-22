@@ -7,66 +7,24 @@
 
 namespace Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule;
 
-use Generated\Shared\Transfer\MoneyValueTransfer;
-use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleImportTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
-use Spryker\Zed\Currency\Business\Model\Exception\CurrencyNotFoundException;
-use Spryker\Zed\PriceProductSchedule\Business\Exception\PriceProductScheduleListImportException;
-use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToCurrencyFacadeInterface;
-use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToPriceProductFacadeInterface;
-use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToProductFacadeInterface;
-use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToStoreFacadeInterface;
-use Spryker\Zed\PriceProductSchedule\PriceProductScheduleConfig;
-use Spryker\Zed\Store\Business\Model\Exception\StoreNotFoundException;
 
 class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
 {
     /**
-     * @var \Spryker\Zed\PriceProductSchedule\PriceProductScheduleConfig
+     * @var \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\DataExpander\PriceProductTransferDataExpanderInterface[]
      */
-    protected $priceProductScheduleConfig;
+    protected $dataExpanderList;
 
     /**
-     * @var \Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToPriceProductFacadeInterface
-     */
-    protected $priceProductFacade;
-
-    /**
-     * @var \Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToProductFacadeInterface
-     */
-    protected $productFacade;
-
-    /**
-     * @var \Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToStoreFacadeInterface
-     */
-    protected $storeFacade;
-
-    /**
-     * @var \Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToCurrencyFacadeInterface
-     */
-    protected $currencyFacade;
-
-    /**
-     * @param \Spryker\Zed\PriceProductSchedule\PriceProductScheduleConfig $priceProductScheduleConfig
-     * @param \Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToPriceProductFacadeInterface $priceProductFacade
-     * @param \Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToProductFacadeInterface $productFacade
-     * @param \Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToStoreFacadeInterface $storeFacade
-     * @param \Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToCurrencyFacadeInterface $currencyFacade
+     * @param array $dataExpanderList
      */
     public function __construct(
-        PriceProductScheduleConfig $priceProductScheduleConfig,
-        PriceProductScheduleToPriceProductFacadeInterface $priceProductFacade,
-        PriceProductScheduleToProductFacadeInterface $productFacade,
-        PriceProductScheduleToStoreFacadeInterface $storeFacade,
-        PriceProductScheduleToCurrencyFacadeInterface $currencyFacade
+        array $dataExpanderList
     ) {
-        $this->priceProductScheduleConfig = $priceProductScheduleConfig;
-        $this->priceProductFacade = $priceProductFacade;
-        $this->productFacade = $productFacade;
-        $this->storeFacade = $storeFacade;
-        $this->currencyFacade = $currencyFacade;
+        $this->dataExpanderList = $dataExpanderList;
     }
 
     /**
@@ -93,127 +51,19 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
      * @param \Generated\Shared\Transfer\PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      *
-     * @throws \Spryker\Zed\PriceProductSchedule\Business\Exception\PriceProductScheduleListImportException
-     *
      * @return \Generated\Shared\Transfer\PriceProductTransfer
      */
     protected function mapPriceProductScheduleImportTransferToPriceProductTransfer(
         PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer,
         PriceProductTransfer $priceProductTransfer
     ): PriceProductTransfer {
-        $moneyValueTransfer = $this->mapPriceProductScheduleEntityToMoneyValueTransfer(
-            $priceProductScheduleImportTransfer,
-            new MoneyValueTransfer()
-        );
-
-        $priceTypeTransfer = $this->priceProductFacade->findPriceTypeByName(
-            $priceProductScheduleImportTransfer->getPriceTypeName()
-        );
-
-        if ($priceTypeTransfer === null) {
-            throw new PriceProductScheduleListImportException(
-                sprintf(
-                    'Price type was not found by provided sku %s',
-                    $priceProductScheduleImportTransfer->getPriceTypeName()
-                )
-            );
-        }
-
-        $priceProductDimensionTransfer = $this->getDefaultPriceProductDimension();
-
         $priceProductTransfer
-            ->fromArray($priceProductScheduleImportTransfer->toArray(), true)
-            ->setPriceTypeName($priceTypeTransfer->getName())
-            ->setPriceType($priceTypeTransfer)
-            ->setFkPriceType($priceTypeTransfer->getIdPriceType())
-            ->setMoneyValue($moneyValueTransfer)
-            ->setPriceDimension($priceProductDimensionTransfer);
+            ->fromArray($priceProductScheduleImportTransfer->toArray(), true);
 
-        if ($priceProductScheduleImportTransfer->getSkuProductAbstract()) {
-            $productAbstractId = $this->productFacade->findProductAbstractIdBySku(
-                $priceProductScheduleImportTransfer->getSkuProductAbstract()
-            );
-
-            if ($productAbstractId === null) {
-                throw new PriceProductScheduleListImportException(
-                    sprintf(
-                        'Abstract product was not found by provided sku %s',
-                        $priceProductScheduleImportTransfer->getSkuProductAbstract()
-                    )
-                );
-            }
-            $priceProductTransfer->setIdProductAbstract($productAbstractId);
-            $priceProductTransfer->setSkuProductAbstract($priceProductScheduleImportTransfer->getSkuProductAbstract());
-        }
-
-        if ($priceProductScheduleImportTransfer->getSkuProduct()) {
-            $productConcreteId = $this->productFacade->findProductConcreteIdBySku(
-                $priceProductScheduleImportTransfer->getSkuProduct()
-            );
-
-            if ($productConcreteId === null) {
-                throw new PriceProductScheduleListImportException(
-                    sprintf(
-                        'Concrete product was not found by provided sku %s',
-                        $priceProductScheduleImportTransfer->getSkuProduct()
-                    )
-                );
-            }
-
-            $priceProductTransfer->setIdProduct($productConcreteId);
-            $priceProductTransfer->setSkuProduct($priceProductScheduleImportTransfer->getSkuProduct());
+        foreach ($this->dataExpanderList as $dataExpander) {
+            $priceProductTransfer = $dataExpander->expand($priceProductTransfer, $priceProductScheduleImportTransfer);
         }
 
         return $priceProductTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer
-     * @param \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer
-     *
-     * @throws \Spryker\Zed\PriceProductSchedule\Business\Exception\PriceProductScheduleListImportException
-     *
-     * @return \Generated\Shared\Transfer\MoneyValueTransfer
-     */
-    protected function mapPriceProductScheduleEntityToMoneyValueTransfer(
-        PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer,
-        MoneyValueTransfer $moneyValueTransfer
-    ): MoneyValueTransfer {
-        try {
-            $currencyTransfer = $this->currencyFacade->fromIsoCode($priceProductScheduleImportTransfer->getCurrencyCode());
-        } catch (CurrencyNotFoundException $e) {
-            throw new PriceProductScheduleListImportException(
-                sprintf(
-                    'Currency with iso code %s not found!',
-                    $priceProductScheduleImportTransfer->getCurrencyCode()
-                )
-            );
-        }
-
-        try {
-            $storeTransfer = $this->storeFacade->getStoreByName($priceProductScheduleImportTransfer->getStoreName());
-        } catch (StoreNotFoundException $e) {
-            throw new PriceProductScheduleListImportException(
-                sprintf(
-                    'Store with name %s not found!',
-                    $priceProductScheduleImportTransfer->getStoreName()
-                )
-            );
-        }
-
-        return $moneyValueTransfer
-            ->fromArray($priceProductScheduleImportTransfer->toArray(), true)
-            ->setCurrency($currencyTransfer)
-            ->setFkCurrency($currencyTransfer->getIdCurrency())
-            ->setFkStore($storeTransfer->getIdStore());
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\PriceProductDimensionTransfer
-     */
-    protected function getDefaultPriceProductDimension(): PriceProductDimensionTransfer
-    {
-        return (new PriceProductDimensionTransfer())
-            ->setType($this->priceProductScheduleConfig->getPriceDimensionDefault());
     }
 }
