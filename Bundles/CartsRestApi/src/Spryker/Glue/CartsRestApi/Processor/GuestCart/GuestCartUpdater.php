@@ -9,11 +9,8 @@ namespace Spryker\Glue\CartsRestApi\Processor\GuestCart;
 
 use Generated\Shared\Transfer\AssignGuestQuoteRequestTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCartsAttributesTransfer;
 use Spryker\Client\CartsRestApi\CartsRestApiClientInterface;
-use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToCustomerClientInterface;
 use Spryker\Glue\CartsRestApi\Processor\Cart\CartUpdaterInterface;
 use Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\GuestCartRestResponseBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
@@ -42,29 +39,21 @@ class GuestCartUpdater implements GuestCartUpdaterInterface
     protected $cartsRestApiClient;
 
     /**
-     * @var \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToCustomerClientInterface
-     */
-    protected $customerClient;
-
-    /**
      * @param \Spryker\Glue\CartsRestApi\Processor\GuestCart\GuestCartReaderInterface $guestCartReader
      * @param \Spryker\Glue\CartsRestApi\Processor\Cart\CartUpdaterInterface $cartUpdater
      * @param \Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\GuestCartRestResponseBuilderInterface $guestCartRestResponseBuilder
      * @param \Spryker\Client\CartsRestApi\CartsRestApiClientInterface $cartsRestApiClient
-     * @param \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToCustomerClientInterface $customerClient
      */
     public function __construct(
         GuestCartReaderInterface $guestCartReader,
         CartUpdaterInterface $cartUpdater,
         GuestCartRestResponseBuilderInterface $guestCartRestResponseBuilder,
-        CartsRestApiClientInterface $cartsRestApiClient,
-        CartsRestApiToCustomerClientInterface $customerClient
+        CartsRestApiClientInterface $cartsRestApiClient
     ) {
         $this->guestCartReader = $guestCartReader;
         $this->cartUpdater = $cartUpdater;
         $this->guestCartRestResponseBuilder = $guestCartRestResponseBuilder;
         $this->cartsRestApiClient = $cartsRestApiClient;
-        $this->customerClient = $customerClient;
     }
 
     /**
@@ -78,42 +67,6 @@ class GuestCartUpdater implements GuestCartUpdaterInterface
         RestCartsAttributesTransfer $restCartsAttributesTransfer
     ): RestResponseInterface {
         return $this->cartUpdater->update($restRequest, $restCartsAttributesTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return \Generated\Shared\Transfer\CustomerTransfer
-     */
-    public function updateGuestCartCustomerReferenceOnRegistration(CustomerTransfer $customerTransfer): CustomerTransfer
-    {
-        /** @var \Generated\Shared\Transfer\CustomerTransfer|null $anonymousCustomerTransfer */
-        $anonymousCustomerTransfer = $this->customerClient->findCustomerRawData();
-        if ($anonymousCustomerTransfer === null || !($anonymousCustomerTransfer instanceof CustomerTransfer)) {
-            return $customerTransfer;
-        }
-
-        $restQuoteCollectionTransfer = $this->cartsRestApiClient->getQuoteCollection(
-            (new QuoteCriteriaFilterTransfer())->setCustomerReference($anonymousCustomerTransfer->getCustomerReference())
-        );
-
-        if (!$restQuoteCollectionTransfer->getQuotes()->count()) {
-            return $customerTransfer;
-        }
-
-        $quotes = $restQuoteCollectionTransfer->getQuotes();
-        if ($quotes->count() !== 1) {
-            return $customerTransfer;
-        }
-
-        $quoteTransfer = (new QuoteTransfer())
-            ->setCustomerReference($customerTransfer->getCustomerReference())
-            ->setUuid($quotes[0]->getUuid())
-            ->setCustomer($customerTransfer);
-
-        $this->cartsRestApiClient->updateQuote($quoteTransfer);
-
-        return $customerTransfer;
     }
 
     /**
