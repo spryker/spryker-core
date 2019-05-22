@@ -120,4 +120,22 @@ class CompanyUnitAddressClient extends AbstractClient implements CompanyUnitAddr
             ->createZedCompanyUnitAddressStub()
             ->saveCompanyBusinessUnitAddresses($companyBusinessUnitTransfer);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * {@internal will work if UUID field is provided.}
+     *
+     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer
+     */
+    public function findCompanyBusinessUnitAddressByUuid(CompanyUnitAddressTransfer $companyUnitAddressTransfer): CompanyUnitAddressResponseTransfer
+    {
+        return $this->getFactory()
+            ->createZedCompanyUnitAddressStub()
+            ->findCompanyBusinessUnitAddressByUuid($companyUnitAddressTransfer);
+    }
 }

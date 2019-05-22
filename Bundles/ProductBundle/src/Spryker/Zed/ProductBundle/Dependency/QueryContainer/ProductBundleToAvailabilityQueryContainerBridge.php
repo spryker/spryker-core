@@ -33,6 +33,7 @@ class ProductBundleToAvailabilityQueryContainerBridge implements ProductBundleTo
         if (method_exists($this->queryContainer, 'queryAvailabilityBySkuAndIdStore')) {
             return $this->queryContainer->queryAvailabilityBySkuAndIdStore($sku, $idStore);
         }
+
         return $this->queryContainer->querySpyAvailabilityBySku($sku);
     }
 }

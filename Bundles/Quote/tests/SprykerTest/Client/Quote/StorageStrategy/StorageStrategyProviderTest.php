@@ -12,6 +12,7 @@ use Spryker\Client\Quote\Dependency\Client\QuoteToCurrencyClientInterface;
 use Spryker\Client\Quote\Dependency\Client\QuoteToCustomerClientInterface;
 use Spryker\Client\Quote\Exception\StorageStrategyNotFound;
 use Spryker\Client\Quote\QuoteConfig;
+use Spryker\Client\Quote\QuoteLocker\QuoteLockerInterface;
 use Spryker\Client\Quote\QuoteValidator\QuoteEditStatusValidatorInterface;
 use Spryker\Client\Quote\QuoteValidator\QuoteLockStatusValidatorInterface;
 use Spryker\Client\Quote\Session\QuoteSession;
@@ -158,7 +159,9 @@ class StorageStrategyProviderTest extends Unit
             $this->createQuoteZedStubMock(),
             $this->createQuoteSession(),
             $this->createQuoteLockStatusValidatorMock(),
-            $this->createQuoteEditStatusValidatorMock()
+            $this->createQuoteEditStatusValidatorMock(),
+            $this->createQuoteLockerMock(),
+            []
         );
     }
 
@@ -170,7 +173,8 @@ class StorageStrategyProviderTest extends Unit
         return new SessionStorageStrategy(
             $this->createQuoteSession(),
             $this->createQuoteLockStatusValidatorMock(),
-            $this->createQuoteEditStatusValidatorMock()
+            $this->createQuoteEditStatusValidatorMock(),
+            $this->createQuoteLockerMock()
         );
     }
 
@@ -227,5 +231,13 @@ class StorageStrategyProviderTest extends Unit
     {
         return $this->getMockBuilder(QuoteToCurrencyClientInterface::class)
             ->getMock();
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\Quote\QuoteLocker\QuoteLockerInterface
+     */
+    protected function createQuoteLockerMock()
+    {
+        return $this->createMock(QuoteLockerInterface::class);
     }
 }

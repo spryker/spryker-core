@@ -8,6 +8,7 @@
 namespace Spryker\Zed\PriceProduct\Persistence;
 
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
+use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\SpyPriceProductDefaultEntityTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
@@ -64,5 +65,41 @@ class PriceProductEntityManager extends AbstractEntityManager implements PricePr
         SpyPriceProductDefaultEntityTransfer $spyPriceProductDefaultEntityTransfer
     ): SpyPriceProductDefaultEntityTransfer {
         return $this->save($spyPriceProductDefaultEntityTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return void
+     */
+    public function deletePriceProductStoreByPriceProductTransfer(PriceProductTransfer $priceProductTransfer): void
+    {
+        $priceProductTransfer
+            ->requireMoneyValue();
+
+        $moneyValueTransfer = $priceProductTransfer->getMoneyValue();
+
+        $moneyValueTransfer
+            ->requireCurrency();
+
+        $this->getFactory()
+            ->createPriceProductStoreQuery()
+            ->filterByFkCurrency($moneyValueTransfer->getCurrency()->getIdCurrency())
+            ->filterByFkPriceProduct($priceProductTransfer->getIdPriceProduct())
+            ->filterByFkStore($moneyValueTransfer->getFkStore())
+            ->delete();
+    }
+
+    /**
+     * @param int $idPriceProduct
+     *
+     * @return void
+     */
+    public function deletePriceProductById(int $idPriceProduct): void
+    {
+        $this->getFactory()
+            ->createPriceProductQuery()
+            ->filterByIdPriceProduct($idPriceProduct)
+            ->delete();
     }
 }

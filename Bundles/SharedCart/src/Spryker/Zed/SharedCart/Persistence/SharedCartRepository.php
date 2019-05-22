@@ -135,6 +135,7 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
             ->endUse()
             ->joinWithCustomer()
             ->joinWithSpyQuoteCompanyUser();
+
         return $this->buildQueryFromCriteria($companyUserQuery)->find();
     }
 
@@ -276,6 +277,7 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
         foreach ($quotePermissionGroupEntityTransferList as $quotePermissionGroupEntityTransfer) {
             $quotePermissionGroupTransferList[] = $mapper->mapQuotePermissionGroup($quotePermissionGroupEntityTransfer);
         }
+
         return $quotePermissionGroupTransferList;
     }
 

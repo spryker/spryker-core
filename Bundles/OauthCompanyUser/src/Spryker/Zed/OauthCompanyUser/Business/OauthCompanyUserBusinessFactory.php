@@ -50,7 +50,8 @@ class OauthCompanyUserBusinessFactory extends AbstractBusinessFactory
     {
         return new CompanyUserProvider(
             $this->getCompanyUserFacade(),
-            $this->getUtilEncodingService()
+            $this->getUtilEncodingService(),
+            $this->getOauthCompanyUserIdentifierExpanderPlugins()
         );
     }
 
@@ -76,5 +77,13 @@ class OauthCompanyUserBusinessFactory extends AbstractBusinessFactory
     public function getOauthFacade(): OauthCompanyUserToOauthFacadeInterface
     {
         return $this->getProvidedDependency(OauthCompanyUserDependencyProvider::FACADE_OAUTH);
+    }
+
+    /**
+     * @return \Spryker\Zed\OauthCompanyUserExtension\Dependency\Plugin\OauthCompanyUserIdentifierExpanderPluginInterface[]
+     */
+    public function getOauthCompanyUserIdentifierExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(OauthCompanyUserDependencyProvider::PLUGINS_OAUTH_COMPANY_USER_IDENTIFIER_EXPANDER);
     }
 }

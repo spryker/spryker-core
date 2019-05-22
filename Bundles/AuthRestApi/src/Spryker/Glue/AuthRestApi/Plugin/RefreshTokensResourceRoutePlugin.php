@@ -26,6 +26,7 @@ class RefreshTokensResourceRoutePlugin extends AbstractPlugin implements Resourc
     public function configure(ResourceRouteCollectionInterface $resourceRouteCollection): ResourceRouteCollectionInterface
     {
         $resourceRouteCollection->addPost('post', false);
+        $resourceRouteCollection->addGet('get', false);
 
         return $resourceRouteCollection;
     }
