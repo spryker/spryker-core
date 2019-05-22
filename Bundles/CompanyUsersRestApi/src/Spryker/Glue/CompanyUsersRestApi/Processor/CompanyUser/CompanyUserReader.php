@@ -70,7 +70,7 @@ class CompanyUserReader implements CompanyUserReaderInterface
     {
         $idResource = $restRequest->getResource()->getId();
 
-        if ($idResource === CompanyUsersRestApiConfig::CURRENT_USER_COLLECTION_IDENTIFIER) {
+        if ($idResource === CompanyUsersRestApiConfig::COLLECTION_IDENTIFIER_CURRENT_USER) {
             return $this->getCompanyUsersByCustomerReference($restRequest);
         }
 
@@ -86,7 +86,7 @@ class CompanyUserReader implements CompanyUserReaderInterface
     {
         $idCompany = $restRequest->getRestUser()->getIdCompany();
         if (!$idCompany) {
-            return $this->companyUserRestResponseBuilder->buildCompanyUserNotSelectedErrorResponse();
+            return $this->companyUserRestResponseBuilder->createCompanyUserNotSelectedErrorResponse();
         }
 
         $filterTransfer = $this->createFilterTransfer($restRequest);
@@ -99,7 +99,7 @@ class CompanyUserReader implements CompanyUserReaderInterface
         $companyUserCollectionTransfer = $this->companyUsersRestApiClient
             ->getCompanyUserCollection($companyUserCriteriaFilterTransfer);
 
-        return $this->companyUserRestResponseBuilder->buildCompanyUserCollectionResponse(
+        return $this->companyUserRestResponseBuilder->createCompanyUserCollectionResponse(
             $companyUserCollectionTransfer,
             $companyUserCollectionTransfer->getTotal(),
             $companyUserCollectionTransfer->getFilter()->getLimit()
@@ -116,8 +116,9 @@ class CompanyUserReader implements CompanyUserReaderInterface
     {
         $companyUserStorageTransfer = $this->companyUserStorageClient
             ->findCompanyUserByMapping(static::MAPPING_TYPE_UUID, $companyUserUuid);
+
         if (!$companyUserStorageTransfer) {
-            return $this->companyUserRestResponseBuilder->buildEmptyCompanyUserResponse();
+            return $this->companyUserRestResponseBuilder->createCompanyUserNotFoundErrorResponse();
         }
 
         $companyUserTransfer = (new CompanyUserTransfer())
@@ -125,10 +126,10 @@ class CompanyUserReader implements CompanyUserReaderInterface
         $companyUserTransfer = $this->companyUserClient->getCompanyUserById($companyUserTransfer);
 
         if ($companyUserTransfer->getCompany()->getIdCompany() !== $restRequest->getRestUser()->getIdCompany()) {
-            return $this->companyUserRestResponseBuilder->buildCompanyUserNotSelectedErrorResponse();
+            return $this->companyUserRestResponseBuilder->createCompanyUserNotSelectedErrorResponse();
         }
 
-        return $this->companyUserRestResponseBuilder->buildCompanyUserResponse($companyUserTransfer);
+        return $this->companyUserRestResponseBuilder->createCompanyUserResponse($companyUserTransfer);
     }
 
     /**
@@ -143,7 +144,7 @@ class CompanyUserReader implements CompanyUserReaderInterface
         $companyUserCollectionTransfer = $this->companyUserClient
             ->getActiveCompanyUsersByCustomerReference($customerTransfer);
 
-        return $this->companyUserRestResponseBuilder->buildCompanyUserCollectionResponse($companyUserCollectionTransfer);
+        return $this->companyUserRestResponseBuilder->createCompanyUserCollectionResponse($companyUserCollectionTransfer);
     }
 
     /**

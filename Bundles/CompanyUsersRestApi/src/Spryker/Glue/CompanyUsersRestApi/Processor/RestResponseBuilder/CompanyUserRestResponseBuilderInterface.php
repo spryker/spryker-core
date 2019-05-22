@@ -14,16 +14,11 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 interface CompanyUserRestResponseBuilderInterface
 {
     /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function buildEmptyCompanyUserResponse(): RestResponseInterface;
-
-    /**
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function buildCompanyUserResponse(
+    public function createCompanyUserResponse(
         CompanyUserTransfer $companyUserTransfer
     ): RestResponseInterface;
 
@@ -34,7 +29,7 @@ interface CompanyUserRestResponseBuilderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function buildCompanyUserCollectionResponse(
+    public function createCompanyUserCollectionResponse(
         CompanyUserCollectionTransfer $companyUserCollectionTransfer,
         int $totalItems = 0,
         int $limit = 0
@@ -43,5 +38,10 @@ interface CompanyUserRestResponseBuilderInterface
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function buildCompanyUserNotSelectedErrorResponse(): RestResponseInterface;
+    public function createCompanyUserNotSelectedErrorResponse(): RestResponseInterface;
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createCompanyUserNotFoundErrorResponse(): RestResponseInterface;
 }

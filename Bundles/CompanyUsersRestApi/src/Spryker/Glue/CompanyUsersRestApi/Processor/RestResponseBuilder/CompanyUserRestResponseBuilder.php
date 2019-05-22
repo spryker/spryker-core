@@ -43,25 +43,17 @@ class CompanyUserRestResponseBuilder implements CompanyUserRestResponseBuilderIn
     }
 
     /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function buildEmptyCompanyUserResponse(): RestResponseInterface
-    {
-        return $restResponse = $this->restResourceBuilder->createRestResponse();
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function buildCompanyUserResponse(CompanyUserTransfer $companyUserTransfer): RestResponseInterface
+    public function createCompanyUserResponse(CompanyUserTransfer $companyUserTransfer): RestResponseInterface
     {
-        $restResponse = $this->restResourceBuilder->createRestResponse();
-        $restResource = $this->buildCompanyUserResource($companyUserTransfer);
-        $restResponse->addResource($restResource);
+        $companyUserRestResource = $this->createCompanyUserResource($companyUserTransfer);
 
-        return $restResponse;
+        return $this->restResourceBuilder
+            ->createRestResponse()
+            ->addResource($companyUserRestResource);
     }
 
     /**
@@ -71,7 +63,7 @@ class CompanyUserRestResponseBuilder implements CompanyUserRestResponseBuilderIn
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function buildCompanyUserCollectionResponse(
+    public function createCompanyUserCollectionResponse(
         CompanyUserCollectionTransfer $companyUserCollectionTransfer,
         int $totalItems = 0,
         int $limit = 0
@@ -82,8 +74,8 @@ class CompanyUserRestResponseBuilder implements CompanyUserRestResponseBuilderIn
         );
 
         foreach ($companyUserCollectionTransfer->getCompanyUsers() as $companyUserTransfer) {
-            $restResource = $this->buildCompanyUserResource($companyUserTransfer);
-            $restResponse->addResource($restResource);
+            $companyUserRestResource = $this->createCompanyUserResource($companyUserTransfer);
+            $restResponse->addResource($companyUserRestResource);
         }
 
         return $restResponse;
@@ -92,7 +84,7 @@ class CompanyUserRestResponseBuilder implements CompanyUserRestResponseBuilderIn
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function buildCompanyUserNotSelectedErrorResponse(): RestResponseInterface
+    public function createCompanyUserNotSelectedErrorResponse(): RestResponseInterface
     {
         $restErrorMessageTransfer = (new RestErrorMessageTransfer())
             ->setStatus(Response::HTTP_FORBIDDEN)
@@ -103,11 +95,24 @@ class CompanyUserRestResponseBuilder implements CompanyUserRestResponseBuilderIn
     }
 
     /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createCompanyUserNotFoundErrorResponse(): RestResponseInterface
+    {
+        $restErrorMessageTransfer = (new RestErrorMessageTransfer())
+            ->setStatus(Response::HTTP_NOT_FOUND)
+            ->setCode(CompanyUsersRestApiConfig::RESPONSE_CODE_COMPANY_USER_NOT_FOUND)
+            ->setDetail(CompanyUsersRestApiConfig::RESPONSE_DETAIL_COMPANY_USER_NOT_FOUND);
+
+        return $this->restResourceBuilder->createRestResponse()->addError($restErrorMessageTransfer);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
-    protected function buildCompanyUserResource(CompanyUserTransfer $companyUserTransfer): RestResourceInterface
+    protected function createCompanyUserResource(CompanyUserTransfer $companyUserTransfer): RestResourceInterface
     {
         $restCompanyUserAttributesTransfer = $this->companyUserMapper
             ->mapCompanyUserTransferToRestCompanyUserAttributesTransfer(
