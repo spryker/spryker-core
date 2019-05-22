@@ -29,7 +29,7 @@ abstract class AbstractPropelCommandWrapper extends Console
 
         $propelOriginalCommand = $this->getFactory()
             ->createPropelCommandBuilder()
-            ->createOriginalCommand(
+            ->createCommand(
                 $this->getOriginalCommandClassName()
             );
 

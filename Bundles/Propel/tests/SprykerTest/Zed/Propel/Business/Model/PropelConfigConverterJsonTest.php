@@ -79,10 +79,6 @@ class PropelConfigConverterJsonTest extends Unit
      */
     public function testInitialization()
     {
-        $this->markTestSkipped(
-            'This test will be removed in next major release.'
-        );
-
         $propelConfigConverterJson = new PropelConfigConverterJson($this->getTestConfiguration());
 
         $this->assertInstanceOf(PropelConfigConverterJson::class, $propelConfigConverterJson);
@@ -93,10 +89,6 @@ class PropelConfigConverterJsonTest extends Unit
      */
     public function testInitializationThrowsExceptionWhenDataIsMissing()
     {
-        $this->markTestSkipped(
-            'This test will be removed in next major release.'
-        );
-
         $this->expectException(ConfigMissingPropertyException::class);
         new PropelConfigConverterJson([]);
     }
@@ -106,10 +98,6 @@ class PropelConfigConverterJsonTest extends Unit
      */
     public function testInitializationCreatesTargetDirectory()
     {
-        $this->markTestSkipped(
-            'This test will be removed in next major release.'
-        );
-
         $this->assertFalse(is_dir($this->getFixtureDirectory()));
 
         new PropelConfigConverterJson($this->getTestConfiguration());
@@ -122,10 +110,6 @@ class PropelConfigConverterJsonTest extends Unit
      */
     public function testConvertConfig()
     {
-        $this->markTestSkipped(
-            'This test will be removed in next major release.'
-        );
-
         $this->assertFalse(file_exists($this->fixtureDirectory . self::FILE_NAME));
 
         $propelConfigConverterJson = new PropelConfigConverterJson($this->getTestConfiguration());
@@ -139,10 +123,6 @@ class PropelConfigConverterJsonTest extends Unit
      */
     public function testConvertConfigThrowsExceptionIfFileNotCreated()
     {
-        $this->markTestSkipped(
-            'This test will be removed in next major release.'
-        );
-
         $this->assertFalse(file_exists($this->fixtureDirectory . self::FILE_NAME));
 
         $propelConfigConverterJsonMock = $this->getPropelConfigConvertJsonMock();

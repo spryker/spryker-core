@@ -8,12 +8,12 @@
 namespace Spryker\Zed\PropelOrm\Business\Generator\Command;
 
 use Propel\Generator\Command\SqlBuildCommand as OriginalPropelSqlBuildCommand;
-use Spryker\Zed\PropelOrm\Business\Generator\PropelConfigurableInterface;
+use Spryker\Zed\PropelOrm\Business\Generator\ConfigurablePropelCommandInterface;
 use Spryker\Zed\PropelOrm\Business\Generator\PropelConfiguratorTrait;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class SqlBuildCommand extends OriginalPropelSqlBuildCommand implements PropelConfigurableInterface
+class SqlBuildCommand extends OriginalPropelSqlBuildCommand implements ConfigurablePropelCommandInterface
 {
     use PropelConfiguratorTrait;
 

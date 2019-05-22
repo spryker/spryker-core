@@ -12,7 +12,7 @@ use Spryker\Zed\Propel\Communication\Command\Builder\PropelCommandBuilder;
 use Spryker\Zed\Propel\Communication\Command\Config\PropelCommandConfiguratorInterface;
 use Spryker\Zed\PropelOrm\Business\Generator\Command\ModelBuildCommand;
 use Spryker\Zed\PropelOrm\Business\Generator\Command\SqlBuildCommand;
-use Spryker\Zed\PropelOrm\Business\Generator\PropelConfigurableInterface;
+use Spryker\Zed\PropelOrm\Business\Generator\ConfigurablePropelCommandInterface;
 use Symfony\Component\Console\Command\Command;
 
 /**
@@ -50,11 +50,11 @@ class PropelCommandBuilderTest extends Unit
      *
      * @return void
      */
-    public function testCreateOriginalCommand(string $propelCommandClassName): void
+    public function testCreateCommand(string $propelCommandClassName): void
     {
-        $propelOriginalCommand = $this->propelCommandBuilder->createOriginalCommand($propelCommandClassName);
+        $propelOriginalCommand = $this->propelCommandBuilder->createCommand($propelCommandClassName);
         $this->assertInstanceOf($propelCommandClassName, $propelOriginalCommand);
-        $this->assertInstanceOf(PropelConfigurableInterface::class, $propelOriginalCommand);
+        $this->assertInstanceOf(ConfigurablePropelCommandInterface::class, $propelOriginalCommand);
         $this->assertInstanceOf(Command::class, $propelOriginalCommand);
     }
 

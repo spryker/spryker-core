@@ -27,8 +27,4 @@ use Codeception\Actor;
 class PropelCommunicationTester extends Actor
 {
     use _generated\PropelCommunicationTesterActions;
-
-   /**
-    * Define custom actions here
-    */
 }

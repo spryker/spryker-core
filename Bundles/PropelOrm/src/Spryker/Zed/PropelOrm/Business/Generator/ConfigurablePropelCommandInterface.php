@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\PropelOrm\Business\Generator;
 
-interface PropelConfigurableInterface
+interface ConfigurablePropelCommandInterface
 {
     /**
      * @param array $propelConfig

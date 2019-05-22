@@ -8,12 +8,12 @@
 namespace Spryker\Zed\PropelOrm\Business\Generator\Command;
 
 use Propel\Generator\Command\MigrationDiffCommand as OriginalPropelMigrationDiffCommand;
-use Spryker\Zed\PropelOrm\Business\Generator\PropelConfigurableInterface;
+use Spryker\Zed\PropelOrm\Business\Generator\ConfigurablePropelCommandInterface;
 use Spryker\Zed\PropelOrm\Business\Generator\PropelConfiguratorTrait;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class MigrationDiffCommand extends OriginalPropelMigrationDiffCommand implements PropelConfigurableInterface
+class MigrationDiffCommand extends OriginalPropelMigrationDiffCommand implements ConfigurablePropelCommandInterface
 {
     use PropelConfiguratorTrait;
 

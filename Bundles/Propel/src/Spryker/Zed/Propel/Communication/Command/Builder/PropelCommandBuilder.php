@@ -8,7 +8,7 @@
 namespace Spryker\Zed\Propel\Communication\Command\Builder;
 
 use Spryker\Zed\Propel\Communication\Command\Config\PropelCommandConfiguratorInterface;
-use Spryker\Zed\PropelOrm\Business\Generator\PropelConfigurableInterface;
+use Spryker\Zed\PropelOrm\Business\Generator\ConfigurablePropelCommandInterface;
 use Symfony\Component\Console\Command\Command;
 
 class PropelCommandBuilder implements PropelCommandBuilderInterface
@@ -31,11 +31,11 @@ class PropelCommandBuilder implements PropelCommandBuilderInterface
      *
      * @return \Symfony\Component\Console\Command\Command
      */
-    public function createOriginalCommand(string $originalPropelCommandClassName): Command
+    public function createCommand(string $originalPropelCommandClassName): Command
     {
-        $originalCommand = $this->createCommand($originalPropelCommandClassName);
+        $originalCommand = $this->instantiateCommand($originalPropelCommandClassName);
 
-        if ($originalCommand instanceof PropelConfigurableInterface) {
+        if ($originalCommand instanceof ConfigurablePropelCommandInterface) {
             $this->propelCommandConfigurator->configurePropelCommand($originalCommand);
         }
 
@@ -47,7 +47,7 @@ class PropelCommandBuilder implements PropelCommandBuilderInterface
      *
      * @return \Symfony\Component\Console\Command\Command
      */
-    protected function createCommand(string $commandClassName): Command
+    protected function instantiateCommand(string $commandClassName): Command
     {
         return new $commandClassName();
     }

@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Propel\Communication\Command\Config;
 
-use Spryker\Zed\PropelOrm\Business\Generator\PropelConfigurableInterface;
+use Spryker\Zed\PropelOrm\Business\Generator\ConfigurablePropelCommandInterface;
 
 class PropelCommandConfigurator implements PropelCommandConfiguratorInterface
 {
@@ -28,11 +28,11 @@ class PropelCommandConfigurator implements PropelCommandConfiguratorInterface
     }
 
     /**
-     * @param \Spryker\Zed\PropelOrm\Business\Generator\PropelConfigurableInterface $propelConfigurable
+     * @param \Spryker\Zed\PropelOrm\Business\Generator\ConfigurablePropelCommandInterface $propelConfigurable
      *
-     * @return \Spryker\Zed\PropelOrm\Business\Generator\PropelConfigurableInterface
+     * @return \Spryker\Zed\PropelOrm\Business\Generator\ConfigurablePropelCommandInterface
      */
-    public function configurePropelCommand(PropelConfigurableInterface $propelConfigurable): PropelConfigurableInterface
+    public function configurePropelCommand(ConfigurablePropelCommandInterface $propelConfigurable): ConfigurablePropelCommandInterface
     {
         return $propelConfigurable->setPropelConfig($this->buildPropelConfig());
     }

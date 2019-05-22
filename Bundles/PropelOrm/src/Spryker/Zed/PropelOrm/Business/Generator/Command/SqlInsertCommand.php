@@ -8,12 +8,12 @@
 namespace Spryker\Zed\PropelOrm\Business\Generator\Command;
 
 use Propel\Generator\Command\SqlInsertCommand as OriginalPropelSqlInsertCommand;
-use Spryker\Zed\PropelOrm\Business\Generator\PropelConfigurableInterface;
+use Spryker\Zed\PropelOrm\Business\Generator\ConfigurablePropelCommandInterface;
 use Spryker\Zed\PropelOrm\Business\Generator\PropelConfiguratorTrait;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class SqlInsertCommand extends OriginalPropelSqlInsertCommand implements PropelConfigurableInterface
+class SqlInsertCommand extends OriginalPropelSqlInsertCommand implements ConfigurablePropelCommandInterface
 {
     use PropelConfiguratorTrait;
 
