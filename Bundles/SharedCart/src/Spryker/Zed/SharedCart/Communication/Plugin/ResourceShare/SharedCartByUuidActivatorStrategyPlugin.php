@@ -65,7 +65,7 @@ class SharedCartByUuidActivatorStrategyPlugin extends AbstractPlugin implements 
     public function isApplicable(ResourceShareRequestTransfer $resourceShareRequestTransfer): bool
     {
         $customerTransfer = $resourceShareRequestTransfer->getCustomer();
-        if (!$customerTransfer->getCompanyUserTransfer()) {
+        if (!$customerTransfer || !$customerTransfer->getCompanyUserTransfer()) {
             return false;
         }
 

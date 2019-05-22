@@ -24,7 +24,6 @@
     <transfer name="ResourceShareResponse">
         <property name="isSuccessful" type="bool" />
         <property name="resourceShare" type="ResourceShare" />
-        <property name="isLoginRequired" type="bool" />
         <property name="messages" type="Message[]" singular="message" />
     </transfer>
 

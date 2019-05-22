@@ -12,18 +12,14 @@ use Generated\Shared\Transfer\ResourceShareDataTransfer;
 use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\ResourceShareTransfer;
 use Spryker\Client\PersistentCartShare\Dependency\Client\PersistentCartShareToCustomerClientInterface;
+use Spryker\Shared\PersistentCartShare\PersistentCartShareConfig;
 
 class ResourceShareRequestBuilder implements ResourceShareRequestBuilderInterface
 {
     /**
-     * @uses \Spryker\Zed\PersistentCartShare\PersistentCartShareConfig::RESOURCE_TYPE_QUOTE
+     * @uses \Spryker\Shared\PersistentCartShare\PersistentCartShareConfig::RESOURCE_TYPE_QUOTE
      */
     protected const RESOURCE_TYPE_QUOTE = 'quote';
-
-    /**
-     * @uses \Spryker\Zed\PersistentCartShare\PersistentCartShareConfig::SHARE_OPTION_PREVIEW
-     */
-    protected const SHARE_OPTION_PREVIEW = 'PREVIEW';
 
     /**
      * @var \Spryker\Client\PersistentCartShare\Dependency\Client\PersistentCartShareToCustomerClientInterface
@@ -50,7 +46,7 @@ class ResourceShareRequestBuilder implements ResourceShareRequestBuilderInterfac
         $resourceShareDataTransfer = $this->createResolvedByShareOptionResourceShareDataTransfer($idQuote, $shareOption, $customerTransfer);
 
         $resourceShareTransfer = (new ResourceShareTransfer())
-            ->setResourceType(static::RESOURCE_TYPE_QUOTE)
+            ->setResourceType(PersistentCartShareConfig::RESOURCE_TYPE_QUOTE)
             ->setCustomerReference($customerTransfer->getCustomerReference())
             ->setResourceShareData($resourceShareDataTransfer);
 
@@ -69,7 +65,7 @@ class ResourceShareRequestBuilder implements ResourceShareRequestBuilderInterfac
      */
     protected function createResolvedByShareOptionResourceShareDataTransfer(int $idQuote, string $shareOption, CustomerTransfer $customerTransfer): ResourceShareDataTransfer
     {
-        if ($shareOption === static::SHARE_OPTION_PREVIEW) {
+        if ($shareOption === PersistentCartShareConfig::SHARE_OPTION_PREVIEW) {
             return $this->createCartPreviewResourceShareDataTransfer($idQuote);
         }
 
@@ -85,7 +81,7 @@ class ResourceShareRequestBuilder implements ResourceShareRequestBuilderInterfac
     {
         return (new ResourceShareDataTransfer())
             ->setIdQuote($idQuote)
-            ->setShareOption(static::SHARE_OPTION_PREVIEW);
+            ->setShareOption(PersistentCartShareConfig::SHARE_OPTION_PREVIEW);
     }
 
     /**

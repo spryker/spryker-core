@@ -11,16 +11,23 @@ use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
 use Generated\Shared\Transfer\ShareDetailTransfer;
+use Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToQuoteFacadeInterface;
 use Spryker\Zed\SharedCart\Persistence\SharedCartRepositoryInterface;
 
 class ShareCartByUuidActivatorStrategy implements ShareCartByUuidActivatorStrategyInterface
 {
     protected const GLOSSARY_KEY_CART_ACCESS_DENIED = 'shared_cart.resource_share.strategy.error.cart_access_denied';
+    protected const GLOSSARY_KEY_QUOTE_IS_NOT_AVAILABLE = 'persistent_cart.error.quote.not_available';
 
     /**
      * @var \Spryker\Zed\SharedCart\Persistence\SharedCartRepositoryInterface
      */
     protected $sharedCartRepository;
+
+    /**
+     * @var \Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToQuoteFacadeInterface
+     */
+    protected $quoteFacade;
 
     /**
      * @var \Spryker\Zed\SharedCart\Business\ResourceShare\ResourceShareQuoteCompanyUserWriterInterface
@@ -29,13 +36,16 @@ class ShareCartByUuidActivatorStrategy implements ShareCartByUuidActivatorStrate
 
     /**
      * @param \Spryker\Zed\SharedCart\Persistence\SharedCartRepositoryInterface $sharedCartRepository
+     * @param \Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToQuoteFacadeInterface $quoteFacade
      * @param \Spryker\Zed\SharedCart\Business\ResourceShare\ResourceShareQuoteCompanyUserWriterInterface $resourceShareQuoteCompanyUserWriter
      */
     public function __construct(
         SharedCartRepositoryInterface $sharedCartRepository,
+        SharedCartToQuoteFacadeInterface $quoteFacade,
         ResourceShareQuoteCompanyUserWriterInterface $resourceShareQuoteCompanyUserWriter
     ) {
         $this->sharedCartRepository = $sharedCartRepository;
+        $this->quoteFacade = $quoteFacade;
         $this->resourceShareQuoteCompanyUserWriter = $resourceShareQuoteCompanyUserWriter;
     }
 
@@ -67,6 +77,30 @@ class ShareCartByUuidActivatorStrategy implements ShareCartByUuidActivatorStrate
         $shareDetailTransfer = $this->findShareDetail($resourceShareRequestTransfer);
         if ($shareDetailTransfer) {
             return $this->resourceShareQuoteCompanyUserWriter->updateCartShareForProvidedCompanyUser($resourceShareRequestTransfer, $shareDetailTransfer);
+        }
+
+        return $this->createCartShareForProvidedCompanyUser($resourceShareRequestTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
+     */
+    protected function createCartShareForProvidedCompanyUser(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer
+    {
+        $idQuote = $resourceShareRequestTransfer->getResourceShare()
+            ->getResourceShareData()
+            ->getIdQuote();
+
+        $quoteResponseTransfer = $this->quoteFacade->findQuoteById($idQuote);
+
+        if (!$quoteResponseTransfer->getIsSuccessful()) {
+            return (new ResourceShareResponseTransfer())
+                ->setIsSuccessful(false)
+                ->addMessage(
+                    (new MessageTransfer())->setValue(static::GLOSSARY_KEY_QUOTE_IS_NOT_AVAILABLE)
+                );
         }
 
         return $this->resourceShareQuoteCompanyUserWriter->createCartShareForProvidedCompanyUser($resourceShareRequestTransfer);

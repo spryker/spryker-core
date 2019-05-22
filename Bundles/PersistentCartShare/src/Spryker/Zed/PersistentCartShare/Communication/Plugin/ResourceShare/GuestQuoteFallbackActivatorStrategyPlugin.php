@@ -5,20 +5,23 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\PersistentCartShare\Communication\Plugin;
+namespace Spryker\Zed\PersistentCartShare\Communication\Plugin\ResourceShare;
 
+use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
+use Spryker\Shared\PersistentCartShare\PersistentCartShareConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\PersistentCartShare\PersistentCartShareConfig;
 use Spryker\Zed\ResourceShareExtension\Dependency\Plugin\ResourceShareActivatorStrategyPluginInterface;
 
 /**
  * @method \Spryker\Zed\PersistentCartShare\Business\PersistentCartShareFacade getFacade()
  * @method \Spryker\Zed\PersistentCartShare\PersistentCartShareConfig getConfig()
  */
-class CartPreviewActivatorStrategyPlugin extends AbstractPlugin implements ResourceShareActivatorStrategyPluginInterface
+class GuestQuoteFallbackActivatorStrategyPlugin extends AbstractPlugin implements ResourceShareActivatorStrategyPluginInterface
 {
+    protected const GLOSSARY_KEY_STRATEGY_EXPECTS_LOGGED_IN_CUSTOMER = 'resource_share.activator.error.strategy_expects_logged_in_customer';
+
     /**
      * {@inheritdoc}
      *
@@ -33,7 +36,7 @@ class CartPreviewActivatorStrategyPlugin extends AbstractPlugin implements Resou
 
     /**
      * {@inheritdoc}
-     * - Returns 'true', when resource type is Quote, and share option is Preview.
+     * - Returns 'true', when customer is a guest and resource type is Quote.
      * - Returns 'false' otherwise.
      *
      * @api
@@ -44,6 +47,11 @@ class CartPreviewActivatorStrategyPlugin extends AbstractPlugin implements Resou
      */
     public function isApplicable(ResourceShareRequestTransfer $resourceShareRequestTransfer): bool
     {
+        $customerTransfer = $resourceShareRequestTransfer->getCustomer();
+        if ($customerTransfer) {
+            return false;
+        }
+
         $resourceShareTransfer = $resourceShareRequestTransfer->getResourceShare();
         if ($resourceShareTransfer->getResourceType() !== PersistentCartShareConfig::RESOURCE_TYPE_QUOTE) {
             return false;
@@ -52,9 +60,7 @@ class CartPreviewActivatorStrategyPlugin extends AbstractPlugin implements Resou
         $resourceShareTransfer->requireResourceShareData();
         $resourceShareDataTransfer = $resourceShareTransfer->getResourceShareData();
 
-        if (!$resourceShareDataTransfer->getIdQuote()
-            || $resourceShareDataTransfer->getShareOption() !== PersistentCartShareConfig::SHARE_OPTION_PREVIEW
-        ) {
+        if (!$resourceShareDataTransfer->getIdQuote()) {
             return false;
         }
 
@@ -63,8 +69,7 @@ class CartPreviewActivatorStrategyPlugin extends AbstractPlugin implements Resou
 
     /**
      * {@inheritdoc}
-     * - Does nothing, as no additional actions required for cart preview.
-     * - Returns ResourceShareResponseTransfer with isSuccessful=true and provided ResourceShare.
+     * - Returns ResourceShareResponseTransfer with access denied error message.
      *
      * @api
      *
@@ -75,7 +80,10 @@ class CartPreviewActivatorStrategyPlugin extends AbstractPlugin implements Resou
     public function execute(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer
     {
         return (new ResourceShareResponseTransfer())
-            ->setIsSuccessful(true)
-            ->setResourceShare($resourceShareRequestTransfer->getResourceShare());
+            ->setIsSuccessful(false)
+            ->setIsLoginRequired(true)
+            ->addMessage(
+                (new MessageTransfer())->setValue(static::GLOSSARY_KEY_STRATEGY_EXPECTS_LOGGED_IN_CUSTOMER)
+            );
     }
 }

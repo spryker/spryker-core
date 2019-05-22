@@ -7,14 +7,12 @@
 
 namespace Spryker\Zed\ResourceShare\Business\ResourceShare;
 
-use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
+use Spryker\Zed\ResourceShare\Business\Exception\ResourceShareActivatorStrategyNotFoundException;
 
 class ResourceShareActivator implements ResourceShareActivatorInterface
 {
-    protected const GLOSSARY_KEY_STRATEGY_EXPECTS_LOGGED_IN_CUSTOMER = 'resource_share.activator.error.strategy_expects_logged_in_customer';
-
     /**
      * @var \Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareReaderInterface
      */
@@ -61,35 +59,23 @@ class ResourceShareActivator implements ResourceShareActivatorInterface
     /**
      * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
      *
+     * @throws \Spryker\Zed\ResourceShare\Business\Exception\ResourceShareActivatorStrategyNotFoundException
+     *
      * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
      */
     protected function executeResourceShareActivatorStrategyPlugins(
         ResourceShareRequestTransfer $resourceShareRequestTransfer
     ): ResourceShareResponseTransfer {
-        $resourceShareResponseTransfer = new ResourceShareResponseTransfer();
-
         foreach ($this->resourceShareActivatorStrategyPlugins as $resourceShareActivatorStrategyPlugin) {
             if (!$resourceShareActivatorStrategyPlugin->isApplicable($resourceShareRequestTransfer)) {
                 continue;
             }
 
-            if (!$resourceShareRequestTransfer->getCustomer() && $resourceShareActivatorStrategyPlugin->isLoginRequired()) {
-                return $resourceShareResponseTransfer->setIsSuccessful(false)
-                    ->setIsLoginRequired(true)
-                    ->addMessage(
-                        (new MessageTransfer())->setValue(static::GLOSSARY_KEY_STRATEGY_EXPECTS_LOGGED_IN_CUSTOMER)
-                    );
-            }
-
-            $strategyResourceShareResponseTransfer = $resourceShareActivatorStrategyPlugin->execute($resourceShareRequestTransfer);
-            if (!$strategyResourceShareResponseTransfer->getIsSuccessful()) {
-                return $strategyResourceShareResponseTransfer;
-            }
-
-            break;
+            return $resourceShareActivatorStrategyPlugin->execute($resourceShareRequestTransfer);
         }
 
-        return $resourceShareResponseTransfer->setIsSuccessful(true)
-            ->setResourceShare($resourceShareRequestTransfer->getResourceShare());
+        throw new ResourceShareActivatorStrategyNotFoundException(
+            'Resource share activator strategy was not found. Please define one.'
+        );
     }
 }
