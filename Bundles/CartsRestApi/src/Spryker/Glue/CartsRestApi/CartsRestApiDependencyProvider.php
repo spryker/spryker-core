@@ -76,7 +76,7 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
     protected function addCustomerExpanderPlugins(Container $container): Container
     {
         $container[static::PLUGINS_CUSTOMER_EXPANDER] = function () {
-            return $this->getQuoteCustomerExpanderPlugins();
+            return $this->getCustomerExpanderPlugins();
         };
 
         return $container;
@@ -85,7 +85,7 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @return \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\CustomerExpanderPluginInterface[]
      */
-    protected function getQuoteCustomerExpanderPlugins(): array
+    protected function getCustomerExpanderPlugins(): array
     {
         return [];
     }

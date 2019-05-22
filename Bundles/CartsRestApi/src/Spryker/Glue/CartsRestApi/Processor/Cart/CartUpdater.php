@@ -36,24 +36,24 @@ class CartUpdater implements CartUpdaterInterface
     /**
      * @var \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\CustomerExpanderPluginInterface[]
      */
-    protected $quoteCustomerExpanderPlugins;
+    protected $customerExpanderPlugins;
 
     /**
      * @param \Spryker\Client\CartsRestApi\CartsRestApiClientInterface $cartsRestApiClient
      * @param \Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface $cartsResourceMapper
      * @param \Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface $cartRestResponseBuilder
-     * @param \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\CustomerExpanderPluginInterface[] $quoteCustomerExpanderPlugins
+     * @param \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\CustomerExpanderPluginInterface[] $customerExpanderPlugins
      */
     public function __construct(
         CartsRestApiClientInterface $cartsRestApiClient,
         CartsResourceMapperInterface $cartsResourceMapper,
         CartRestResponseBuilderInterface $cartRestResponseBuilder,
-        array $quoteCustomerExpanderPlugins
+        array $customerExpanderPlugins
     ) {
         $this->cartsRestApiClient = $cartsRestApiClient;
         $this->cartsResourceMapper = $cartsResourceMapper;
         $this->cartRestResponseBuilder = $cartRestResponseBuilder;
-        $this->quoteCustomerExpanderPlugins = $quoteCustomerExpanderPlugins;
+        $this->customerExpanderPlugins = $customerExpanderPlugins;
     }
 
     /**
@@ -72,12 +72,11 @@ class CartUpdater implements CartUpdaterInterface
             (new QuoteTransfer())->setCustomerReference($restUser->getNaturalIdentifier())
         );
 
+        $customer = $this->executeCustomerExpanderPlugins($quoteTransfer->getCustomer(), $restRequest);
         $quoteTransfer
             ->setUuid($restRequest->getResource()->getId())
             ->setCompanyUserId($restUser->getIdCompany())
-            ->setCustomer(
-                $this->executeCustomerExpanderPlugin($quoteTransfer->getCustomer(), $restRequest)
-            );
+            ->setCustomer($customer);
 
         $quoteResponseTransfer = $this->cartsRestApiClient->updateQuote($quoteTransfer);
 
@@ -99,10 +98,10 @@ class CartUpdater implements CartUpdaterInterface
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    protected function executeCustomerExpanderPlugin(CustomerTransfer $customerTransfer, RestRequestInterface $restRequest): CustomerTransfer
+    protected function executeCustomerExpanderPlugins(CustomerTransfer $customerTransfer, RestRequestInterface $restRequest): CustomerTransfer
     {
-        foreach ($this->quoteCustomerExpanderPlugins as $quoteCustomerExpanderPlugin) {
-            $customerTransfer = $quoteCustomerExpanderPlugin->expand($customerTransfer, $restRequest);
+        foreach ($this->customerExpanderPlugins as $customerExpanderPlugin) {
+            $customerTransfer = $customerExpanderPlugin->expand($customerTransfer, $restRequest);
         }
 
         return $customerTransfer;

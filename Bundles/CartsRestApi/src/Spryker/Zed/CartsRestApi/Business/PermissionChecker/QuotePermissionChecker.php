@@ -50,7 +50,7 @@ class QuotePermissionChecker implements QuotePermissionCheckerInterface
      *
      * @return bool
      */
-    protected function checkQuotePermission(QuoteTransfer $quoteTransfer, $permissionPluginKey): bool
+    protected function checkQuotePermission(QuoteTransfer $quoteTransfer, string $permissionPluginKey): bool
     {
         $quoteTransfer->requireIdQuote();
 

@@ -35,24 +35,24 @@ class CartDeleter implements CartDeleterInterface
     /**
      * @var \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\CustomerExpanderPluginInterface[]
      */
-    protected $quoteCustomerExpanderPlugins;
+    protected $customerExpanderPlugins;
 
     /**
      * @param \Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface $cartRestResponseBuilder
      * @param \Spryker\Client\CartsRestApi\CartsRestApiClientInterface $cartsRestApiClient
      * @param \Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface $cartsResourceMapper
-     * @param \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\CustomerExpanderPluginInterface[] $quoteCustomerExpanderPlugins
+     * @param \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\CustomerExpanderPluginInterface[] $customerExpanderPlugins
      */
     public function __construct(
         CartRestResponseBuilderInterface $cartRestResponseBuilder,
         CartsRestApiClientInterface $cartsRestApiClient,
         CartsResourceMapperInterface $cartsResourceMapper,
-        array $quoteCustomerExpanderPlugins
+        array $customerExpanderPlugins
     ) {
         $this->cartRestResponseBuilder = $cartRestResponseBuilder;
         $this->cartsRestApiClient = $cartsRestApiClient;
         $this->cartsResourceMapper = $cartsResourceMapper;
-        $this->quoteCustomerExpanderPlugins = $quoteCustomerExpanderPlugins;
+        $this->customerExpanderPlugins = $customerExpanderPlugins;
     }
 
     /**
@@ -62,13 +62,11 @@ class CartDeleter implements CartDeleterInterface
      */
     public function delete(RestRequestInterface $restRequest): RestResponseInterface
     {
+        $customer = (new CustomerTransfer())->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier());
+        $customer = $this->executeCustomerExpanderPlugins($customer, $restRequest);
         $quoteTransfer = (new QuoteTransfer())
-            ->setCustomer((new CustomerTransfer())->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier()))
+            ->setCustomer($customer)
             ->setUuid($restRequest->getResource()->getId());
-
-        $quoteTransfer->setCustomer(
-            $this->executeCustomerExpanderPlugin($quoteTransfer->getCustomer(), $restRequest)
-        );
 
         $quoteResponseTransfer = $this->cartsRestApiClient->deleteQuote($quoteTransfer);
         if ($quoteResponseTransfer->getErrors()->count() > 0) {
@@ -84,10 +82,10 @@ class CartDeleter implements CartDeleterInterface
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    protected function executeCustomerExpanderPlugin(CustomerTransfer $customerTransfer, RestRequestInterface $restRequest): CustomerTransfer
+    protected function executeCustomerExpanderPlugins(CustomerTransfer $customerTransfer, RestRequestInterface $restRequest): CustomerTransfer
     {
-        foreach ($this->quoteCustomerExpanderPlugins as $quoteCustomerExpanderPlugin) {
-            $customerTransfer = $quoteCustomerExpanderPlugin->expand($customerTransfer, $restRequest);
+        foreach ($this->customerExpanderPlugins as $customerExpanderPlugin) {
+            $customerTransfer = $customerExpanderPlugin->expand($customerTransfer, $restRequest);
         }
 
         return $customerTransfer;

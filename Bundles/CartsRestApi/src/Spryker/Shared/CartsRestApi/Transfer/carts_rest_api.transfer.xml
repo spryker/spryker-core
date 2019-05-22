@@ -27,6 +27,14 @@
         <property name="code" type="string" />
     </transfer>
 
+    <transfer name="Customer">
+        <property name="companyUserTransfer" type="CompanyUser"/>
+        <property name="customerReference" type="string" />
+    </transfer>
+    <transfer name="CompanyUser">
+        <property name="idCompanyUser" type="int"/>
+    </transfer>
+
     <transfer name="RestCartsDiscounts">
         <property name="displayName" type="string" />
         <property name="amount" type="int" />
