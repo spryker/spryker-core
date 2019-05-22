@@ -5,64 +5,51 @@
 
 'use strict';
 
-var ItemListContentItem = function(
-    tablesWrapperSelector,
-    assignedTableSelector,
-    itemTableSelector,
-    integerInputsWrapperSelector,
-    addItemButtonSelector,
-    removeItemButtonSelector,
-    clearAllFieldsSelector,
-    orderButtonSelector,
-    navigationTabLinkSelector,
-    tabsContentSelector
-) {
-    this.tablesWrapperSelector = tablesWrapperSelector;
-    this.integerInputsWrapperSelector = integerInputsWrapperSelector;
-    this.assignedTables = $(assignedTableSelector);
-    this.itemsTables = $(itemTableSelector);
-    this.clearAllFieldsButton = $(clearAllFieldsSelector).removeClass(clearAllFieldsSelector.substring(1));
-    this.addItemButtonSelector = addItemButtonSelector;
-    this.removeItemButtonSelector = removeItemButtonSelector;
-    this.orderButtonSelector = orderButtonSelector;
-    this.navigationTabLinks = $(navigationTabLinkSelector);
-    this.tabsContent = $(tabsContentSelector);
+var ItemListContentItem = function(options)
+{
+    $.extend(this, options);
+
+    this.$assignedTables = $(this.assignedTableSelector);
+    this.$itemsTables = $(this.itemTableSelector);
+    this.$clearAllFieldsButton = $(this.clearAllFieldsSelector).removeClass(this.clearAllFieldsSelector.substring(1));
+    this.$navigationTabLinks = $(this.navigationTabLinkSelector);
+    this.$tabsContent = $(this.tabsContentSelector);
 
     this.mapEvents = function() {
-        this.itemsTables.on('click', this.addItemButtonSelector, this.addItemButtonHandler.bind(this));
-        this.assignedTables.on('click', this.removeItemButtonSelector, this.removeItemButtonHandler.bind(this));
-        this.assignedTables.on('click', this.orderButtonSelector, this.changeOrderButtonHandler.bind(this));
-        this.clearAllFieldsButton.on('click', this.clearAllFieldsButtonsHandler.bind(this));
-        this.navigationTabLinks.on('click', this.resizeTableColumn.bind(this));
+        this.$itemsTables.on('click', this.addItemButtonSelector, this.addItemButtonHandler.bind(this));
+        this.$assignedTables.on('click', this.removeItemButtonSelector, this.removeItemButtonHandler.bind(this));
+        this.$assignedTables.on('click', this.orderButtonSelector, this.changeOrderButtonHandler.bind(this));
+        this.$clearAllFieldsButton.on('click', this.$clearAllFieldsButtonsHandler.bind(this));
+        this.$navigationTabLinks.on('click', this.resizeTableColumn.bind(this));
     };
 
     this.resizeTableColumn = function(event) {
         var tabId = event.target.getAttribute('href');
         var self = this;
-        this.tabsContent.each(function(index, item) {
+        this.$tabsContent.each(function(index, item) {
             var currentTabId = item.getAttribute('id');
             var isOpenTab = tabId.substring(1) === currentTabId;
 
             if (isOpenTab) {
                 $(item).show();
-                $(tabId).find(self.assignedTables).DataTable().columns.adjust().draw();
-                $(tabId).find(self.itemsTables).DataTable().columns.adjust().draw();
+                $(tabId).find(self.$assignedTables).DataTable().columns.adjust().draw();
+                $(tabId).find(self.$itemsTables).DataTable().columns.adjust().draw();
             } else {
                 $(item).hide();
             }
         });
 
-    }
+    };
 
     this.addItemButtonHandler = function(event) {
         var clickInfo = this.getClickInfo(event);
-        var indexOfActiveTable = this.itemsTables.index(clickInfo.clickedTable);
+        var indexOfActiveTable = this.$itemsTables.index(clickInfo.clickedTable);
 
-        if (this.isProductAdded(clickInfo.clickedTable, clickInfo.itemId)) {
+        if (this.isItemAdded(clickInfo.clickedTable, clickInfo.itemId)) {
             return;
         }
 
-        this.addProduct(clickInfo.clickedTable, clickInfo.itemId, indexOfActiveTable);
+        this.addItem(clickInfo.clickedTable, clickInfo.itemId, indexOfActiveTable);
     };
 
     this.removeItemButtonHandler = function(event) {
@@ -70,33 +57,33 @@ var ItemListContentItem = function(
         var tableRow = clickInfo.button.parents('tr');
 
         this.removeHiddenInput(clickInfo.clickedTable, clickInfo.itemId);
-        this.removeProduct(clickInfo.clickedTable, tableRow, clickInfo.itemId);
-    }
+        this.removeItem(clickInfo.clickedTable, tableRow, clickInfo.itemId);
+    };
 
     this.changeOrderButtonHandler = function(event) {
         var clickInfo = this.getClickInfo(event);
 
         this.changeOrder(clickInfo.button, clickInfo.clickedTable);
-    }
+    };
 
-    this.clearAllFieldsButtonsHandler = function(event) {
+    this.$clearAllFieldsButtonsHandler = function(event) {
         event.preventDefault();
 
         var button = $(event.currentTarget);
-        var indexOfclickedButton = this.clearAllFieldsButton.index(button);
+        var indexOfclickedButton = this.$clearAllFieldsButton.index(button);
         var assignedTable = this.getCurrentAssignedTable(indexOfclickedButton);
 
         this.removeAllHiddenInputs(assignedTable);
         assignedTable.dataTable().api().clear().draw();
     };
 
-    this.removeProductButtonClick = function(button, assignedTable) {
+    this.removeItemButtonClick = function(button, assignedTable) {
         var itemId = button.data('id');
         var tableRow = button.parents('tr');
 
         this.removeHiddenInput(assignedTable, itemId);
-        this.removeProduct(assignedTable, tableRow, itemId);
-    }
+        this.removeItem(assignedTable, tableRow, itemId);
+    };
 
     this.changeOrder = function(button, assignedTable) {
         var itemId = button.data('id');
@@ -119,9 +106,9 @@ var ItemListContentItem = function(
 
         tableApi.rows().remove();
         tableApi.rows.add(tableData).draw();
-    }
+    };
 
-    this.addProduct = function(itemTable, itemId, indexOfActiveTable) {
+    this.addItem = function(itemTable, itemId, indexOfActiveTable) {
         var rowData = this.getRowData(itemTable, itemId);
         var assignedTable = this.getCurrentAssignedTable(indexOfActiveTable);
         var tablesWrapper = this.getTablesWrapper(assignedTable);
@@ -130,16 +117,16 @@ var ItemListContentItem = function(
         assignedTable.dataTable().api().row.add(rowData).draw();
     };
 
-    this.removeProduct = function(assignedTable, tableRow, itemId) {
+    this.removeItem = function(assignedTable, tableRow, itemId) {
         assignedTable.dataTable().api().row(tableRow).remove().draw();
     };
 
-    this.isProductAdded = function(itemTable, itemId) {
+    this.isItemAdded = function(itemTable, itemId) {
         var integerInputsWrapper = this.getHiddenInputsWrapper(this.getTablesWrapper(itemTable));
         var integerInput = this.getHiddenInput(integerInputsWrapper, itemId);
 
         return integerInput.length;
-    }
+    };
 
     this.addHiddenInput = function(tablesWrapper, itemId, indexOfActiveTable) {
         var integerInputsWrapper = this.getHiddenInputsWrapper(tablesWrapper);
@@ -172,10 +159,10 @@ var ItemListContentItem = function(
 
 
         return integerInputTemplate.replace(/__name__/g, integerInputsLength + 1);
-    }
+    };
 
     this.getCurrentAssignedTable = function(indexOfActiveTable) {
-        return this.assignedTables.eq(indexOfActiveTable);
+        return this.$assignedTables.eq(indexOfActiveTable);
     };
 
     this.getRowData = function(itemTable, itemId) {
@@ -198,13 +185,13 @@ var ItemListContentItem = function(
 
         buttons.each(function() {
             var button = $(this);
-            if (button.is('button')) {
+            if (button.is('a')) {
                 buttonsTemplate += button.attr('data-id', itemId)[0].outerHTML + ' ';
             }
         });
 
         return buttonsTemplate;
-    }
+    };
 
     this.getHiddenInputTemplate = function(tablesWrapper) {
         return tablesWrapper.data('prototype');
@@ -212,21 +199,21 @@ var ItemListContentItem = function(
 
     this.getHiddenInputsWrapper = function(tablesWrapper) {
         return tablesWrapper.find(this.integerInputsWrapperSelector);
-    }
+    };
 
     this.getHiddenInput = function(wrapper, itemId) {
         return wrapper.find('input[value="' + itemId + '"]');
-    }
+    };
 
     this.getHiddenInputForMoving = function(assignedTable, itemId) {
         var integerInputsWrapper = this.getHiddenInputsWrapper(this.getTablesWrapper(assignedTable));
 
         return this.getHiddenInput(integerInputsWrapper, itemId);
-    }
+    };
 
     this.getTablesWrapper = function(itemTable) {
         return itemTable.parents(this.tablesWrapperSelector)
-    }
+    };
 
     this.getClickInfo = function(event) {
         return {
@@ -234,22 +221,22 @@ var ItemListContentItem = function(
             itemId: $(event.currentTarget).data('id'),
             clickedTable: $(event.delegateTarget)
         }
-    }
+    };
 
     this.mapEvents()
 };
 
 $(document).ready(function () {
-    new ItemListContentItem(
-        '.id-item-fields',
-        '.item-list-selected-table',
-        '.item-list-view-table',
-        '.js-selected-items-wrapper',
-        '.js-add-item',
-        '.js-delete-item',
-        '.clear-fields',
-        '.js-reorder-item',
-        '.nav-tabs a',
-        '.tab-content .tab-pane'
-    );
+    new ItemListContentItem({
+        'tablesWrapperSelector': '.id-item-fields',
+        'assignedTableSelector': '.item-list-selected-table',
+        'itemTableSelector': '.item-list-view-table',
+        'integerInputsWrapperSelector': '.js-selected-items-wrapper',
+        'addItemButtonSelector': '.js-add-item',
+        'removeItemButtonSelector': '.js-delete-item',
+        'clearAllFieldsSelector': '.clear-fields',
+        'orderButtonSelector': '.js-reorder-item',
+        'navigationTabLinkSelector': '.nav-tabs a',
+        'tabsContentSelector': '.tab-content .tab-pane'
+    });
 });

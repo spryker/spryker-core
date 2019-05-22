@@ -16,7 +16,7 @@ use Spryker\Zed\ContentFileGui\ContentFileGuiConfig;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
-class FileSelectedTable extends AbstractTable
+class ContentFileListSelectedTable extends AbstractTable
 {
     public const TABLE_IDENTIFIER = 'file-list-selected-table';
     public const TABLE_CLASS = 'item-list-selected-table gui-table-data';
@@ -53,19 +53,19 @@ class FileSelectedTable extends AbstractTable
     /**
      * @param \Orm\Zed\FileManager\Persistence\SpyFileQuery $fileQueryContainer
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     * @param string|null $identifierSuffix
      * @param int[] $fileIds
+     * @param string|null $identifierSuffix
      */
     public function __construct(
         SpyFileQuery $fileQueryContainer,
         LocaleTransfer $localeTransfer,
-        ?string $identifierSuffix,
-        array $fileIds
+        array $fileIds,
+        ?string $identifierSuffix
     ) {
         $this->fileQueryContainer = $fileQueryContainer;
         $this->localeTransfer = $localeTransfer;
-        $this->identifierSuffix = $identifierSuffix;
         $this->fileIds = $fileIds;
+        $this->identifierSuffix = $identifierSuffix;
     }
 
     /**
@@ -135,10 +135,7 @@ class FileSelectedTable extends AbstractTable
 
         $fileIds = array_values($this->fileIds);
         $query = $this->fileQueryContainer
-            ->filterByIdFile_In($fileIds)
-            ->useSpyFileLocalizedAttributesQuery()
-                ->filterByFkLocale($this->localeTransfer->getIdLocale())
-            ->endUse();
+            ->filterByIdFile_In($fileIds);
 
         $this->setLimit(ContentFileGuiConfig::MAX_NUMBER_FILES_IN_FILE_LIST);
         $queryResults = $this->runQuery($query, $config, true);
@@ -164,7 +161,7 @@ class FileSelectedTable extends AbstractTable
 
         return [
             static::COL_ID_FILE => $idFile,
-            static::COL_FILE_NAME => $fileEntity->getSpyFileLocalizedAttributess()->getFirst()->getTitle(),
+            static::COL_FILE_NAME => $fileEntity->getFileName(),
             static::COL_ACTIONS => $this->getActionButtons($idFile),
         ];
     }
@@ -178,22 +175,37 @@ class FileSelectedTable extends AbstractTable
     {
         $actionButtons = [];
 
-        $actionButtons[] = sprintf(
-            '<button type="button" data-id="%s" class="js-delete-item btn btn-sm btn-outline btn-danger"><i class="fa fa-trash"></i> %s</button>',
-            $idFile,
-            static::BUTTON_DELETE
+        $actionButtons[] = $this->generateButton(
+            '#',
+            static::BUTTON_DELETE,
+            [
+                'class' => 'js-delete-item btn-danger',
+                'data-id' => $idFile,
+                'icon' => 'fa-trash',
+                'onclick' => 'return false;',
+            ]
         );
-
-        $actionButtons[] = sprintf(
-            '<button type="button" data-id="%s" data-direction="up" class="js-reorder-item btn btn-sm btn-outline btn-create"><i class="fa fa-arrow-up"></i> %s</button>',
-            $idFile,
-            static::BUTTON_MOVE_UP
+        $actionButtons[] = $this->generateButton(
+            '#',
+            static::BUTTON_MOVE_UP,
+            [
+                'class' => 'js-reorder-item btn-create',
+                'data-id' => $idFile,
+                'data-direction' => 'up',
+                'icon' => 'fa-arrow-up',
+                'onclick' => 'return false;',
+            ]
         );
-
-        $actionButtons[] = sprintf(
-            '<button type="button" data-id="%s" data-direction="down" class="js-reorder-item btn btn-sm btn-outline btn-create"><i class="fa fa-arrow-down"></i> %s</button>',
-            $idFile,
-            static::BUTTON_MOVE_DOWN
+        $actionButtons[] = $this->generateButton(
+            '#',
+            static::BUTTON_MOVE_DOWN,
+            [
+                'class' => 'js-reorder-item btn-create',
+                'data-id' => $idFile,
+                'data-direction' => 'down',
+                'icon' => 'fa-arrow-down',
+                'onclick' => 'return false;',
+            ]
         );
 
         return implode(' ', $actionButtons);

@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ContentFileGui\Dependency\Facade;
 
-interface ContentFileGuiToLocaleInterface
+interface ContentFileGuiToLocaleFacadeInterface
 {
     /**
      * @return \Generated\Shared\Transfer\LocaleTransfer
