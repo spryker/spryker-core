@@ -23,7 +23,7 @@ class ContentFileListViewTable extends AbstractTable
     public const HEADER_ID_FILE = 'ID';
 
     public const COL_ID_FILE = 'id_file';
-    public const COL_FILE_NAME = 'name';
+    public const COL_FILE_NAME = 'file_name';
     public const COL_SELECTED = 'Selected';
 
     /**
@@ -101,11 +101,7 @@ class ContentFileListViewTable extends AbstractTable
      */
     protected function prepareData(TableConfiguration $config): array
     {
-        $query = $this->fileQueryContainer
-            ->useSpyFileLocalizedAttributesQuery()
-                ->filterByFkLocale($this->localeTransfer->getIdLocale())
-            ->endUse();
-        $queryResults = $this->runQuery($query, $config, true);
+        $queryResults = $this->runQuery($this->fileQueryContainer, $config, true);
 
         $results = [];
         foreach ($queryResults as $fileEntity) {

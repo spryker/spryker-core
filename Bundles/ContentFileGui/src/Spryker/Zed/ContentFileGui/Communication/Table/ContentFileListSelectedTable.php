@@ -135,10 +135,7 @@ class ContentFileListSelectedTable extends AbstractTable
 
         $fileIds = array_values($this->fileIds);
         $query = $this->fileQueryContainer
-            ->filterByIdFile_In($fileIds)
-            ->useSpyFileLocalizedAttributesQuery()
-                ->filterByFkLocale($this->localeTransfer->getIdLocale())
-            ->endUse();
+            ->filterByIdFile_In($fileIds);
 
         $this->setLimit(ContentFileGuiConfig::MAX_NUMBER_FILES_IN_FILE_LIST);
         $queryResults = $this->runQuery($query, $config, true);
