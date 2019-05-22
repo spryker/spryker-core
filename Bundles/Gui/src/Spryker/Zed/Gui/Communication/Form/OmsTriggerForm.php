@@ -27,7 +27,7 @@ class OmsTriggerForm extends AbstractType
 
     public const FIELD_SUBMIT = 'submit';
 
-    protected const ACTION_PTREFIX = '/oms/trigger/';
+    protected const ROUTE_OMS_TRIGGER = '/oms/trigger/';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -46,7 +46,7 @@ class OmsTriggerForm extends AbstractType
      *
      * @return void
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             static::OPTION_EVENT => '',
@@ -59,7 +59,7 @@ class OmsTriggerForm extends AbstractType
     /**
      * @return string
      */
-    public function getParent()
+    public function getParent(): string
     {
         return FormType::class;
     }
@@ -110,7 +110,7 @@ class OmsTriggerForm extends AbstractType
     protected function createAction(array $options): string
     {
         return Url::generate(
-            static::ACTION_PTREFIX . $options[static::OPTION_OMS_ACTION],
+            static::ROUTE_OMS_TRIGGER . $options[static::OPTION_OMS_ACTION],
             $options[static::OPTION_QUERY_PARAMS]
         );
     }

@@ -50,7 +50,6 @@ class DetailController extends AbstractController
 
         return $this->viewResponse([
             'reclamation' => $reclamationTransfer,
-            'eventsGroupedByItem' => $eventsGroupedByItem,
             'orderOmsTriggerFormCollection' => $orderOmsTriggerFormCollection,
             'orderItemsOmsTriggerFormCollection' => $orderItemsOmsTriggerFormCollection,
         ]);
