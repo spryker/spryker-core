@@ -26,7 +26,7 @@ class AddressDataChecker implements AddressDataCheckerInterface
         $lastName = trim($addressTransfer->getLastName());
 
         return $addressTransfer->getIdCustomerAddress() === null
-            && ($firstName === null || $firstName === '') // Allows first name like '000'.
-            && ($lastName === null || $lastName === ''); // Allows last name like '000'.
+            && ($firstName === null || $firstName === '')
+            && ($lastName === null || $lastName === '');
     }
 }
