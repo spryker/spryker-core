@@ -65,6 +65,8 @@ interface OauthFacadeInterface
      *
      * @api
      *
+     * @deprecated Will be removed in the next major.
+     *
      * @param \Generated\Shared\Transfer\OauthClientTransfer $oauthClientTransfer
      *
      * @return \Generated\Shared\Transfer\OauthClientTransfer
@@ -115,5 +117,5 @@ interface OauthFacadeInterface
      *
      * @return void
      */
-    public function installOauthClientData(): void;
+    public function installOauthClient(): void;
 }

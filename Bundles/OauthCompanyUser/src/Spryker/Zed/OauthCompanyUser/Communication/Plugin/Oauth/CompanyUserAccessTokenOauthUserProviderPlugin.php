@@ -23,6 +23,7 @@ class CompanyUserAccessTokenOauthUserProviderPlugin extends AbstractPlugin imple
 {
     /**
      * {@inheritdoc}
+     * - Returns true if CompanyUser GrantType is provided, false otherwise.
      *
      * @api
      *
@@ -41,6 +42,8 @@ class CompanyUserAccessTokenOauthUserProviderPlugin extends AbstractPlugin imple
 
     /**
      * {@inheritdoc}
+     * - Retrieves active company user if idCompanyUser provided.
+     * - Expands the OauthUserTransfer if active company user exists.
      *
      * @api
      *
@@ -67,8 +70,12 @@ class CompanyUserAccessTokenOauthUserProviderPlugin extends AbstractPlugin imple
             ->setIdCustomer($companyUserTransfer->getCustomer()->getIdCustomer())
             ->setIdCompanyUser((string)$companyUserTransfer->getIdCompanyUser());
 
+        $encodedPayload = $this->getFactory()
+            ->getUtilEncodingService()
+            ->encodeJson($companyUserIdentifierTransfer->toArray());
+
         $oauthUserTransfer
-            ->setUserIdentifier(json_encode($companyUserIdentifierTransfer->toArray()))
+            ->setUserIdentifier($encodedPayload)
             ->setIsSuccess(true);
 
         return $oauthUserTransfer;

@@ -49,29 +49,18 @@ class OauthClientInstaller implements OauthClientInstallerInterface
      */
     public function install(): void
     {
-        $oauthClientTransfer = new OauthClientTransfer();
-        $oauthClientTransfer->setIdentifier(
-            $this->oauthConfig->getClientId()
-        );
+        $oauthClientTransfer = (new OauthClientTransfer())
+            ->setIdentifier($this->oauthConfig->getClientId());
 
-        if (!$this->isExistOauthClient($oauthClientTransfer)) {
-            $oauthClientTransfer->setSecret(
-                password_hash($this->oauthConfig->getClientSecret(), PASSWORD_BCRYPT)
-            );
-            $oauthClientTransfer->setIsConfidential(true);
-            $oauthClientTransfer->setName('Customer client');
-
-            $this->oauthClientWriter->save($oauthClientTransfer);
+        if ($this->oauthClientReader->findClientByIdentifier($oauthClientTransfer)) {
+            return;
         }
-    }
 
-    /**
-     * @param \Generated\Shared\Transfer\OauthClientTransfer $oauthClientTransfer
-     *
-     * @return bool
-     */
-    protected function isExistOauthClient(OauthClientTransfer $oauthClientTransfer): bool
-    {
-        return $this->oauthClientReader->findClientByIdentifier($oauthClientTransfer) !== null;
+        $oauthClientTransfer
+            ->setSecret(password_hash($this->oauthConfig->getClientSecret(), PASSWORD_BCRYPT))
+            ->setIsConfidential(true)
+            ->setName('Customer client');
+
+        $this->oauthClientWriter->save($oauthClientTransfer);
     }
 }

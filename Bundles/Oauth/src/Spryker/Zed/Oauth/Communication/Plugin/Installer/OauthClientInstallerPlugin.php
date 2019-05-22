@@ -26,6 +26,6 @@ class OauthClientInstallerPlugin extends AbstractPlugin implements InstallerPlug
      */
     public function install()
     {
-        $this->getFacade()->installOauthClientData();
+        $this->getFacade()->installOauthClient();
     }
 }

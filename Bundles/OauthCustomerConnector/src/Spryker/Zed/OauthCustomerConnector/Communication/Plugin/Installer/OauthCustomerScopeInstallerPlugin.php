@@ -23,6 +23,6 @@ class OauthCustomerScopeInstallerPlugin extends AbstractPlugin implements Instal
      */
     public function install()
     {
-        $this->getFacade()->installOauthCustomerScopeData();
+        $this->getFacade()->installOauthCustomerScope();
     }
 }

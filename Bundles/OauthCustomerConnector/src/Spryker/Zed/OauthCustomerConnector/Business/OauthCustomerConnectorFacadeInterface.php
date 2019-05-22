@@ -43,11 +43,11 @@ interface OauthCustomerConnectorFacadeInterface
     /**
      * @api
      *
-     * @deprecated Will be removed in the next major.
-     *
      * Specification:
      *  - Installs oauth client data.
      *  - Installs oauth scope data.
+     *
+     * @deprecated Will be removed in the next major.
      *
      * @return void
      */
@@ -61,7 +61,7 @@ interface OauthCustomerConnectorFacadeInterface
      *
      * @return void
      */
-    public function installOauthCustomerScopeData(): void;
+    public function installOauthCustomerScope(): void;
 
     /**
      * Specification:

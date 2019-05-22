@@ -20,6 +20,9 @@ use Spryker\Zed\OauthExtension\Dependency\Plugin\OauthGrantTypeConfigurationProv
 class CompanyUserAccessTokenOauthGrantTypeConfigurationProviderPlugin extends AbstractPlugin implements OauthGrantTypeConfigurationProviderPluginInterface
 {
     /**
+     * {@inheritdoc}
+     * - Returns configuration of CompanyUser GrantType.
+     *
      * @api
      *
      * @return \Generated\Shared\Transfer\OauthGrantTypeConfigurationTransfer

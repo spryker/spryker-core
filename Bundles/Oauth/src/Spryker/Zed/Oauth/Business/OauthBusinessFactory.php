@@ -211,14 +211,6 @@ class OauthBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Oauth\OauthConfig
-     */
-    public function getModuleConfig(): OauthConfig
-    {
-        return $this->getConfig();
-    }
-
-    /**
      * @return \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthUserProviderPluginInterface[]
      */
     public function getUserProviderPlugins(): array

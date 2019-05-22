@@ -13,6 +13,8 @@ namespace Spryker\Zed\OauthCustomerConnector\Business\Model;
 interface InstallerInterface
 {
     /**
+     * @deprecated Will be removed in the next major.
+     *
      * @return void
      */
     public function install(): void;

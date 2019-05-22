@@ -9,6 +9,7 @@ namespace Spryker\Zed\OauthCompanyUser\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\OauthCompanyUser\Dependency\Facade\OauthCompanyUserToCompanyUserFacadeInterface;
+use Spryker\Zed\OauthCompanyUser\Dependency\Service\OauthCompanyUserToUtilEncodingServiceInterface;
 use Spryker\Zed\OauthCompanyUser\OauthCompanyUserDependencyProvider;
 
 /**
@@ -23,5 +24,13 @@ class OauthCompanyUserCommunicationFactory extends AbstractCommunicationFactory
     public function getCompanyUserFacade(): OauthCompanyUserToCompanyUserFacadeInterface
     {
         return $this->getProvidedDependency(OauthCompanyUserDependencyProvider::FACADE_COMPANY_USER);
+    }
+
+    /**
+     * @return \Spryker\Zed\OauthCompanyUser\Dependency\Service\OauthCompanyUserToUtilEncodingServiceInterface
+     */
+    public function getUtilEncodingService(): OauthCompanyUserToUtilEncodingServiceInterface
+    {
+        return $this->getProvidedDependency(OauthCompanyUserDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 }

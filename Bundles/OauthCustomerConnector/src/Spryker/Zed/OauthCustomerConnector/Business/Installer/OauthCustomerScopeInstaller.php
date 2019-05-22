@@ -41,34 +41,37 @@ class OauthCustomerScopeInstaller implements OauthCustomerScopeInstallerInterfac
     public function install(): void
     {
         $customerScopes = $this->oauthCustomerConnectorConfig->getCustomerScopes();
-        $oauthScopesTransfers = $this->getScopesByIdentifiers($customerScopes);
+
+        $oauthScopeTransfers = $this->oauthFacade->getScopesByIdentifiers($customerScopes);
+        $oauthScopeTransfers = $this->mapScopesByIdentifiers($oauthScopeTransfers);
 
         foreach ($customerScopes as $customerScope) {
-            if (!$this->isExistOauthScope($customerScope, $oauthScopesTransfers)) {
-                $oauthScopeTransfer = new OauthScopeTransfer();
-                $oauthScopeTransfer->setIdentifier($customerScope);
-
-                $oauthScopesTransfers[$customerScope] = $this->oauthFacade->saveScope($oauthScopeTransfer);
+            if ($this->isOauthScopeExist($customerScope, $oauthScopeTransfers)) {
+                continue;
             }
+
+            $oauthScopeTransfer = (new OauthScopeTransfer())
+                ->setIdentifier($customerScope);
+
+            $oauthScopeTransfers[$customerScope] = $this->oauthFacade->saveScope($oauthScopeTransfer);
         }
     }
 
     /**
-     * @param string[] $customerScopes
+     * @param \Generated\Shared\Transfer\OauthScopeTransfer[] $oauthScopeTransfers
      *
      * @return \Generated\Shared\Transfer\OauthScopeTransfer[] $oauthScopeTransfers
      */
-    protected function getScopesByIdentifiers(array $customerScopes): array
+    protected function mapScopesByIdentifiers(array $oauthScopeTransfers): array
     {
-        $oauthScopesTransfersWithIdentifierKeys = [];
-        $oauthScopesTransfers = $this->oauthFacade->getScopesByIdentifiers($customerScopes);
+        $oauthScopeTransferMap = [];
 
-        foreach ($oauthScopesTransfers as $oauthScopeTransfer) {
-            $oauthScopesIdentifier = $oauthScopeTransfer->getIdentifier();
-            $oauthScopesTransfersWithIdentifierKeys[$oauthScopesIdentifier] = $oauthScopeTransfer;
+        foreach ($oauthScopeTransfers as $oauthScopeTransfer) {
+            $oauthScopeIdentifier = $oauthScopeTransfer->getIdentifier();
+            $oauthScopeTransferMap[$oauthScopeIdentifier] = $oauthScopeTransfer;
         }
 
-        return $oauthScopesTransfersWithIdentifierKeys;
+        return $oauthScopeTransferMap;
     }
 
     /**
@@ -77,7 +80,7 @@ class OauthCustomerScopeInstaller implements OauthCustomerScopeInstallerInterfac
      *
      * @return bool
      */
-    protected function isExistOauthScope(string $oauthScopeIdentifier, array $oauthScopeTransfers): bool
+    protected function isOauthScopeExist(string $oauthScopeIdentifier, array $oauthScopeTransfers): bool
     {
         if (isset($oauthScopeTransfers[$oauthScopeIdentifier])) {
             return true;

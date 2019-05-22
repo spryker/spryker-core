@@ -114,7 +114,7 @@ class CustomerFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\CustomerExtension\Dependency\Plugin\AccessTokenAuthenticationHandlerPluginInterface
      */
-    protected function getAccessTokenAuthenticationHandlerPlugin(): AccessTokenAuthenticationHandlerPluginInterface
+    public function getAccessTokenAuthenticationHandlerPlugin(): AccessTokenAuthenticationHandlerPluginInterface
     {
         return $this->getProvidedDependency(CustomerDependencyProvider::PLUGIN_ACCESS_TOKEN_AUTHENTICATION_HANDLER);
     }
