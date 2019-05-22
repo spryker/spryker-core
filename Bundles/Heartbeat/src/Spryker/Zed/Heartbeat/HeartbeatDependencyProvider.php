@@ -37,11 +37,11 @@ class HeartbeatDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addStorageClient(Container $container): Container
     {
-        $container[static::CLIENT_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_STORAGE, function (Container $container) {
             return new HeartbeatToStorageClientBridge(
                 $container->getLocator()->storage()->client()
             );
-        };
+        });
 
         return $container;
     }

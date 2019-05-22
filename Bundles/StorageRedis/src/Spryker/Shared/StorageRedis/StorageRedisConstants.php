@@ -84,4 +84,12 @@ interface StorageRedisConstants
      * @api
      */
     public const STORAGE_REDIS_PERSISTENT_CONNECTION = 'STORAGE_REDIS:STORAGE_REDIS_PERSISTENT_CONNECTION';
+
+    /**
+     * Specification:
+     * - Specifies the path to rdb dump to import data from.
+     *
+     * @api
+     */
+    public const RDB_DUMP_PATH = 'STORAGE_REDIS:RDB_DUMP_PATH';
 }

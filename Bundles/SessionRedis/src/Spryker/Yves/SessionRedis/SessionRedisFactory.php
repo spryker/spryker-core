@@ -60,7 +60,10 @@ class SessionRedisFactory extends AbstractFactory
     {
         return new SessionHandlerFactory(
             $this->getMonitoringService(),
-            $this->getConfig()->getSessionLifetime()
+            $this->getConfig()->getSessionLifetime(),
+            $this->getConfig()->getLockingTimeoutMilliseconds(),
+            $this->getConfig()->getLockingRetryDelayMicroseconds(),
+            $this->getConfig()->getLockingLockTtlMilliseconds()
         );
     }
 

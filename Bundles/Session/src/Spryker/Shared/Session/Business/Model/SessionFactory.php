@@ -124,7 +124,7 @@ abstract class SessionFactory
     }
 
     /**
-     * @deprecated Use session plugins instead.
+     * @deprecated Use `Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerProviderPluginInterface` instead.
      *
      * @param array|string $connectionParameters
      * @param array $connectionOptions
@@ -137,7 +137,7 @@ abstract class SessionFactory
     }
 
     /**
-     * @deprecated Use session handler plugins instead.
+     * @deprecated Use `Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerProviderPluginInterface` instead.
      *
      * @param \Predis\Client $redisClient
      *

@@ -36,7 +36,7 @@ class SessionLockReleaser implements SessionLockReleaserInterface
      *
      * @return bool
      */
-    public function release($sessionId)
+    public function release($sessionId): bool
     {
         $lockToken = $this->getLockToken($sessionId);
 
@@ -52,7 +52,7 @@ class SessionLockReleaser implements SessionLockReleaserInterface
      *
      * @return string
      */
-    protected function getLockToken($sessionId)
+    protected function getLockToken($sessionId): string
     {
         return $this->lockReader->getTokenForSession($sessionId);
     }

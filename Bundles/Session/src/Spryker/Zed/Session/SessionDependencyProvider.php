@@ -18,7 +18,7 @@ class SessionDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const SESSION_CLIENT = 'SESSION_CLIENT';
     public const MONITORING_SERVICE = 'monitoring service';
-    public const PLUGINS_HANDLER_SESSION = 'PLUGINS_HANDLER_SESSION';
+    public const PLUGINS_SESSION_HANDLER = 'PLUGINS_SESSION_HANDLER';
     public const PLUGINS_YVES_SESSION_LOCK_RELEASER = 'PLUGINS_YVES_SESSION_LOCK_RELEASER';
     public const PLUGINS_ZED_SESSION_LOCK_RELEASER = 'PLUGINS_ZED_SESSION_LOCK_RELEASER';
 
@@ -90,9 +90,9 @@ class SessionDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addSessionHandlerPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_HANDLER_SESSION] = function (Container $container) {
+        $container->set(static::PLUGINS_SESSION_HANDLER, function (Container $container) {
             return $this->getSessionHandlerPlugins();
-        };
+        });
 
         return $container;
     }
@@ -112,9 +112,9 @@ class SessionDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addYvesSessionLockReleaserPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_YVES_SESSION_LOCK_RELEASER] = function (Container $container) {
+        $container->set(static::PLUGINS_YVES_SESSION_LOCK_RELEASER, function (Container $container) {
             return $this->getYvesSessionLockReleaserPlugins();
-        };
+        });
 
         return $container;
     }
@@ -126,9 +126,9 @@ class SessionDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addZedSessionLockReleaserPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_ZED_SESSION_LOCK_RELEASER] = function (Container $container) {
+        $container->set(static::PLUGINS_ZED_SESSION_LOCK_RELEASER, function (Container $container) {
             return $this->getZedSessionLockReleaserPlugins();
-        };
+        });
 
         return $container;
     }

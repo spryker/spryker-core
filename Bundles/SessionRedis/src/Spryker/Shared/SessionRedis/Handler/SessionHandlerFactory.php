@@ -8,14 +8,12 @@
 namespace Spryker\Shared\SessionRedis\Handler;
 
 use SessionHandlerInterface;
-use Spryker\Shared\Config\Config;
 use Spryker\Shared\SessionRedis\Dependency\Service\SessionRedisToMonitoringServiceInterface;
 use Spryker\Shared\SessionRedis\Handler\KeyBuilder\SessionKeyBuilder;
 use Spryker\Shared\SessionRedis\Handler\KeyBuilder\SessionKeyBuilderInterface;
 use Spryker\Shared\SessionRedis\Handler\Lock\SessionLockerInterface;
 use Spryker\Shared\SessionRedis\Handler\Lock\SessionSpinLockLocker;
 use Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface;
-use Spryker\Shared\SessionRedis\SessionRedisConstants;
 
 class SessionHandlerFactory implements SessionHandlerFactoryInterface
 {
@@ -30,13 +28,39 @@ class SessionHandlerFactory implements SessionHandlerFactoryInterface
     protected $sessionLifeTime;
 
     /**
+     * @var int
+     */
+    protected $lockingTimeoutMilliseconds;
+
+    /**
+     * @var int
+     */
+    protected $lockingRetryDelayMilliseconds;
+
+    /**
+     * @var int
+     */
+    protected $lockingLockTtlMilliseconds;
+
+    /**
      * @param \Spryker\Shared\SessionRedis\Dependency\Service\SessionRedisToMonitoringServiceInterface $monitoringService
      * @param int $sessionLifeTime
+     * @param int $lockingTimeoutMilliseconds
+     * @param int $lockingRetryDelayMilliseconds
+     * @param int $lockingLockTtlMilliseconds
      */
-    public function __construct(SessionRedisToMonitoringServiceInterface $monitoringService, int $sessionLifeTime)
-    {
+    public function __construct(
+        SessionRedisToMonitoringServiceInterface $monitoringService,
+        int $sessionLifeTime,
+        int $lockingTimeoutMilliseconds,
+        int $lockingRetryDelayMilliseconds,
+        int $lockingLockTtlMilliseconds
+    ) {
         $this->monitoringService = $monitoringService;
         $this->sessionLifeTime = $sessionLifeTime;
+        $this->lockingTimeoutMilliseconds = $lockingTimeoutMilliseconds;
+        $this->lockingRetryDelayMilliseconds = $lockingRetryDelayMilliseconds;
+        $this->lockingLockTtlMilliseconds = $lockingLockTtlMilliseconds;
     }
 
     /**
@@ -79,9 +103,9 @@ class SessionHandlerFactory implements SessionHandlerFactoryInterface
         return new SessionSpinLockLocker(
             $redisClient,
             $this->createSessionKeyBuilder(),
-            Config::get(SessionRedisConstants::LOCKING_TIMEOUT_MILLISECONDS, 0),
-            Config::get(SessionRedisConstants::LOCKING_RETRY_DELAY_MICROSECONDS, 0),
-            Config::get(SessionRedisConstants::LOCKING_LOCK_TTL_MILLISECONDS, 0)
+            $this->lockingTimeoutMilliseconds,
+            $this->lockingRetryDelayMilliseconds,
+            $this->lockingLockTtlMilliseconds
         );
     }
 

@@ -15,32 +15,32 @@ interface StorageConstants
     public const STORAGE_KV_SOURCE = 'STORAGE_KV_SOURCE';
 
     /**
-     * @deprecated Use StorageRedis module instead.
+     * @deprecated Use `Spryker\Shared\StorageRedis\StorageRedisConstants::STORAGE_REDIS_PROTOCOL` instead.
      */
     public const STORAGE_REDIS_PROTOCOL = 'YVES_STORAGE_REDIS_PROTOCOL';
 
     /**
-     * @deprecated Use StorageRedis module instead.
+     * @deprecated Use `Spryker\Shared\StorageRedis\StorageRedisConstants::STORAGE_REDIS_PASSWORD` instead.
      */
     public const STORAGE_REDIS_PASSWORD = 'YVES_STORAGE_REDIS_PASSWORD';
 
     /**
-     * @deprecated Use StorageRedis module instead.
+     * @deprecated Use `Spryker\Shared\StorageRedis\StorageRedisConstants::STORAGE_REDIS_HOST` instead.
      */
     public const STORAGE_REDIS_HOST = 'YVES_STORAGE_REDIS_HOST';
 
     /**
-     * @deprecated Use StorageRedis module instead.
+     * @deprecated Use `Spryker\Shared\StorageRedis\StorageRedisConstants::STORAGE_REDIS_PORT` instead.
      */
     public const STORAGE_REDIS_PORT = 'YVES_STORAGE_REDIS_PORT';
 
     /**
-     * @deprecated Use StorageRedis module instead.
+     * @deprecated Use `Spryker\Shared\StorageRedis\StorageRedisConstants::STORAGE_REDIS_PERSISTENT_CONNECTION` instead.
      */
     public const STORAGE_PERSISTENT_CONNECTION = 'YVES_STORAGE_PERSISTENT_CONNECTION';
 
     /**
-     * @deprecated Use StorageRedis module instead.
+     * @deprecated Use `Spryker\Shared\StorageRedis\StorageRedisConstants::STORAGE_REDIS_DATABASE` instead.
      */
     public const STORAGE_REDIS_DATABASE = 'YVES_STORAGE_REDIS_DATABASE';
 
@@ -57,7 +57,7 @@ interface StorageConstants
      *
      * @api
      *
-     * @deprecated Use StorageRedis module instead.
+     * @deprecated Use `Spryker\Shared\StorageRedis\StorageRedisConstants::STORAGE_REDIS_DATA_SOURCE_NAMES` instead.
      */
     public const STORAGE_PREDIS_CLIENT_CONFIGURATION = 'STORAGE_PREDIS_CLIENT_CONFIGURATION';
 
@@ -68,7 +68,7 @@ interface StorageConstants
      *
      * @api
      *
-     * @deprecated Use StorageRedis module instead.
+     * @deprecated Use `Spryker\Shared\StorageRedis\StorageRedisConstants::STORAGE_REDIS_CONNECTION_OPTIONS` instead.
      */
     public const STORAGE_PREDIS_CLIENT_OPTIONS = 'STORAGE_PREDIS_CLIENT_OPTIONS';
 }

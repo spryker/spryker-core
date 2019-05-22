@@ -39,13 +39,19 @@ class SessionBusinessFactory extends AbstractBusinessFactory
         $sessionLockReleaserPool = new SessionLockReleaserPool(
             $this->getYvesSessionLockReleaserPlugins()
         );
-        $sessionLockReleaserPool->addLockReleaser(
-            $this->createRedisSessionLockReleaser(
-                $this->getConfig()->getSessionHandlerRedisConnectionParametersYves(),
-                $this->getConfig()->getSessionHandlerRedisConnectionOptionsYves()
-            ),
-            SessionConfig::SESSION_HANDLER_REDIS_LOCKING
-        );
+
+        /**
+         * This check was added because of BC and will be removed in the next major release.
+         */
+        if (!$this->getYvesSessionLockReleaserPlugins()) {
+            $sessionLockReleaserPool->addLockReleaser(
+                $this->createRedisSessionLockReleaser(
+                    $this->getConfig()->getSessionHandlerRedisConnectionParametersYves(),
+                    $this->getConfig()->getSessionHandlerRedisConnectionOptionsYves()
+                ),
+                SessionConfig::SESSION_HANDLER_REDIS_LOCKING
+            );
+        }
 
         return $sessionLockReleaserPool;
     }
@@ -67,19 +73,25 @@ class SessionBusinessFactory extends AbstractBusinessFactory
         $sessionLockReleaserPool = new SessionLockReleaserPool(
             $this->getZedSessionLockReleaserPlugins()
         );
-        $sessionLockReleaserPool->addLockReleaser(
-            $this->createRedisSessionLockReleaser(
-                $this->getConfig()->getSessionHandlerRedisConnectionParametersZed(),
-                $this->getConfig()->getSessionHandlerRedisConnectionOptionsZed()
-            ),
-            SessionConfig::SESSION_HANDLER_REDIS_LOCKING
-        );
+
+        /**
+         * This check was added because of BC and will be removed in the next major release.
+         */
+        if (!$this->getZedSessionLockReleaserPlugins()) {
+            $sessionLockReleaserPool->addLockReleaser(
+                $this->createRedisSessionLockReleaser(
+                    $this->getConfig()->getSessionHandlerRedisConnectionParametersZed(),
+                    $this->getConfig()->getSessionHandlerRedisConnectionOptionsZed()
+                ),
+                SessionConfig::SESSION_HANDLER_REDIS_LOCKING
+            );
+        }
 
         return $sessionLockReleaserPool;
     }
 
     /**
-     * @deprecated Use session handler plugins instead.
+     * @deprecated Use `Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerProviderPluginInterface` instead.
      *
      * @param array|string $connectionParameters
      * @param array $connectionOptions

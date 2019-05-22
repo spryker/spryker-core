@@ -48,10 +48,16 @@ class SessionFactory extends AbstractFactory
         $sessionHandlerPool = new SessionStorageHandlerPool(
             $this->getSessionHandlerPlugins()
         );
-        $sessionHandlerPool
-            ->addHandler($this->createSessionHandlerRedis(), SessionConfig::SESSION_HANDLER_REDIS)
-            ->addHandler($this->createSessionHandlerRedisLocking(), SessionConfig::SESSION_HANDLER_REDIS_LOCKING)
-            ->addHandler($this->createSessionHandlerFile(), SessionConfig::SESSION_HANDLER_FILE);
+
+        /**
+         * This check was added because of BC and will be removed in the next major release.
+         */
+        if (!$this->getSessionHandlerPlugins()) {
+            $sessionHandlerPool
+                ->addHandler($this->createSessionHandlerRedis(), SessionConfig::SESSION_HANDLER_REDIS)
+                ->addHandler($this->createSessionHandlerRedisLocking(), SessionConfig::SESSION_HANDLER_REDIS_LOCKING)
+                ->addHandler($this->createSessionHandlerFile(), SessionConfig::SESSION_HANDLER_FILE);
+        }
 
         return $sessionHandlerPool;
     }

@@ -31,25 +31,25 @@ class SessionRedisConfig extends AbstractBundleConfig
     /**
      * @return int
      */
-    public function getLockingTimeout(): int
+    public function getLockingTimeoutMilliseconds(): int
     {
-        return $this->get(SessionRedisConstants::LOCKING_TIMEOUT_MILLISECONDS, 0);
+        return $this->getSharedConfig()->getLockingTimeoutMilliseconds();
     }
 
     /**
      * @return int
      */
-    public function getLockingRetryDelay(): int
+    public function getLockingRetryDelayMicroseconds(): int
     {
-        return $this->get(SessionRedisConstants::LOCKING_TIMEOUT_MILLISECONDS, 0);
+        return $this->getSharedConfig()->getLockingRetryDelayMicroseconds();
     }
 
     /**
      * @return int
      */
-    public function getLockingLockTtl(): int
+    public function getLockingLockTtlMilliseconds(): int
     {
-        return $this->get(SessionRedisConstants::LOCKING_LOCK_TTL_MILLISECONDS, 0);
+        return $this->getSharedConfig()->getLockingLockTtlMilliseconds();
     }
 
     /**

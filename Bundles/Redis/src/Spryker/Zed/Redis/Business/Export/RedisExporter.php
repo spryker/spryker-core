@@ -26,10 +26,21 @@ class RedisExporter implements RedisExporterInterface
             throw new RedisExportException('No port specified for Redis export.');
         }
 
-        $command = sprintf('redis-cli -p %s --rdb %s', $redisPort, $destination);
+        $command = $this->buildExportCliCommand($destination, $redisPort);
         $process = new Process($command, APPLICATION_ROOT_DIR);
         $process->run();
 
         return $process->isSuccessful();
+    }
+
+    /**
+     * @param string $destination
+     * @param int|null $redisPort
+     *
+     * @return string
+     */
+    protected function buildExportCliCommand(string $destination, ?int $redisPort = null): string
+    {
+        return sprintf('redis-cli -p %s --rdb %s', $redisPort, $destination);
     }
 }

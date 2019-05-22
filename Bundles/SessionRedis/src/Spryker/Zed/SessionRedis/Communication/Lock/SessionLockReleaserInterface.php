@@ -14,5 +14,5 @@ interface SessionLockReleaserInterface
      *
      * @return bool
      */
-    public function release($sessionId);
+    public function release($sessionId): bool;
 }

@@ -19,10 +19,21 @@ class RedisImporter implements RedisImporterInterface
      */
     public function import(string $source, string $destination): bool
     {
-        $command = sprintf('sudo cp %s %s', $source, $destination);
+        $command = $this->buildImportCliCommand($source, $destination);
         $process = new Process($command, APPLICATION_ROOT_DIR);
         $process->run();
 
         return $process->isSuccessful();
+    }
+
+    /**
+     * @param string $source
+     * @param string $destination
+     *
+     * @return string
+     */
+    protected function buildImportCliCommand(string $source, string $destination): string
+    {
+        return sprintf('sudo cp %s %s', $source, $destination);
     }
 }

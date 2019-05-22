@@ -57,9 +57,9 @@ class SessionDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addSessionHandlerPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_SESSION_HANDLER] = function (Container $container) {
+        $container->set(static::PLUGINS_SESSION_HANDLER, function (Container $container) {
             return $this->getSessionHandlerPlugins();
-        };
+        });
 
         return $container;
     }

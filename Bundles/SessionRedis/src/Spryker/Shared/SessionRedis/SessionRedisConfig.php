@@ -11,8 +11,8 @@ use Spryker\Shared\Kernel\AbstractSharedConfig;
 
 class SessionRedisConfig extends AbstractSharedConfig
 {
-    protected const SESSION_HANDLER_REDIS_NAME = 'redis';
-    protected const SESSION_HANDLER_REDIS_LOCKING_NAME = 'redis_locking';
+    public const SESSION_HANDLER_REDIS = 'redis';
+    public const SESSION_HANDLER_REDIS_LOCKING = 'redis_locking';
 
     protected const DEFAULT_REDIS_DATABASE = 0;
 
@@ -21,7 +21,7 @@ class SessionRedisConfig extends AbstractSharedConfig
      */
     public function getSessionHandlerRedisName(): string
     {
-        return static::SESSION_HANDLER_REDIS_NAME;
+        return static::SESSION_HANDLER_REDIS;
     }
 
     /**
@@ -29,7 +29,7 @@ class SessionRedisConfig extends AbstractSharedConfig
      */
     public function getSessionHandlerRedisLockingName(): string
     {
-        return static::SESSION_HANDLER_REDIS_LOCKING_NAME;
+        return static::SESSION_HANDLER_REDIS_LOCKING;
     }
 
     /**
@@ -43,7 +43,7 @@ class SessionRedisConfig extends AbstractSharedConfig
     /**
      * @return int
      */
-    public function getLockingTimeoutInMilliseconds(): int
+    public function getLockingTimeoutMilliseconds(): int
     {
         return $this->get(SessionRedisConstants::LOCKING_TIMEOUT_MILLISECONDS, 0);
     }
@@ -51,7 +51,7 @@ class SessionRedisConfig extends AbstractSharedConfig
     /**
      * @return int
      */
-    public function getLockingRetryDelayInMicroseconds(): int
+    public function getLockingRetryDelayMicroseconds(): int
     {
         return $this->get(SessionRedisConstants::LOCKING_RETRY_DELAY_MICROSECONDS, 0);
     }
@@ -59,7 +59,7 @@ class SessionRedisConfig extends AbstractSharedConfig
     /**
      * @return int
      */
-    public function getLockingLockTtlInMilliseconds(): int
+    public function getLockingLockTtlMilliseconds(): int
     {
         return $this->get(SessionRedisConstants::LOCKING_LOCK_TTL_MILLISECONDS, 0);
     }

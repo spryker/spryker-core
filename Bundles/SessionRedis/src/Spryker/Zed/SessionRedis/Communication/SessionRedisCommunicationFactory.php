@@ -116,7 +116,10 @@ class SessionRedisCommunicationFactory extends AbstractCommunicationFactory
     {
         return new SessionHandlerFactory(
             $this->getMonitoringService(),
-            $this->getConfig()->getZedSessionLifeTime()
+            $this->getConfig()->getZedSessionLifeTime(),
+            $this->getConfig()->getLockingTimeoutMilliseconds(),
+            $this->getConfig()->getLockingRetryDelayMicroseconds(),
+            $this->getConfig()->getLockingLockTtlMilliseconds()
         );
     }
 

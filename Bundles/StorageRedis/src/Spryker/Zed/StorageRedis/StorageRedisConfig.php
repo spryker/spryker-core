@@ -12,7 +12,7 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class StorageRedisConfig extends AbstractBundleConfig
 {
-    protected const RDB_DUMP_PATH = '/var/lib/redis/dump.rdb';
+    public const DEFAULT_REDIS_DATABASE = 0;
 
     /**
      * @return int|null
@@ -23,12 +23,10 @@ class StorageRedisConfig extends AbstractBundleConfig
     }
 
     /**
-     * Returns the path where the rdb dump file should be copied to.
-     *
      * @return string
      */
     public function getRdbDumpPath(): string
     {
-        return static::RDB_DUMP_PATH;
+        return $this->get(StorageRedisConstants::RDB_DUMP_PATH);
     }
 }
