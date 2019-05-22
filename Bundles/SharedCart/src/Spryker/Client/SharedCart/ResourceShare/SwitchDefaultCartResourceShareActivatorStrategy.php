@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
 use Generated\Shared\Transfer\ResourceShareTransfer;
 use Spryker\Client\SharedCart\Dependency\Client\SharedCartToMultiCartClientInterface;
+use Spryker\Shared\SharedCart\SharedCartConfig;
 
 class SwitchDefaultCartResourceShareActivatorStrategy implements SwitchDefaultCartResourceShareActivatorStrategyInterface
 {
@@ -66,6 +67,7 @@ class SwitchDefaultCartResourceShareActivatorStrategy implements SwitchDefaultCa
                 ->setIsSuccessful(false)
                 ->addMessage(
                     (new MessageTransfer())
+                        ->setType(SharedCartConfig::MESSAGE_TYPE_ERROR)
                         ->setValue(static::GLOSSARY_KEY_QUOTE_IS_NOT_AVAILABLE)
                 );
         }

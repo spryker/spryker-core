@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
 use Generated\Shared\Transfer\ShareDetailTransfer;
+use Spryker\Shared\SharedCart\SharedCartConfig;
 use Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToQuoteFacadeInterface;
 use Spryker\Zed\SharedCart\Persistence\SharedCartRepositoryInterface;
 
@@ -70,7 +71,9 @@ class ShareCartByUuidActivatorStrategy implements ShareCartByUuidActivatorStrate
             return (new ResourceShareResponseTransfer())
                 ->setIsSuccessful(false)
                 ->addMessage(
-                    (new MessageTransfer())->setValue(static::GLOSSARY_KEY_CART_ACCESS_DENIED)
+                    (new MessageTransfer())
+                        ->setType(SharedCartConfig::MESSAGE_TYPE_ERROR)
+                        ->setValue(static::GLOSSARY_KEY_CART_ACCESS_DENIED)
                 );
         }
 
@@ -99,7 +102,9 @@ class ShareCartByUuidActivatorStrategy implements ShareCartByUuidActivatorStrate
             return (new ResourceShareResponseTransfer())
                 ->setIsSuccessful(false)
                 ->addMessage(
-                    (new MessageTransfer())->setValue(static::GLOSSARY_KEY_QUOTE_IS_NOT_AVAILABLE)
+                    (new MessageTransfer())
+                        ->setType(SharedCartConfig::MESSAGE_TYPE_ERROR)
+                        ->setValue(static::GLOSSARY_KEY_QUOTE_IS_NOT_AVAILABLE)
                 );
         }
 

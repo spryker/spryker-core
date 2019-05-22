@@ -11,9 +11,9 @@ use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
 use Generated\Shared\Transfer\ResourceShareTransfer;
-use Spryker\Shared\ResourceShare\ResourceShareConfig;
 use Spryker\Zed\ResourceShare\Persistence\ResourceShareEntityManagerInterface;
 use Spryker\Zed\ResourceShare\Persistence\ResourceShareRepositoryInterface;
+use Spryker\Zed\ResourceShare\ResourceShareConfig;
 
 class ResourceShareWriter implements ResourceShareWriterInterface
 {

@@ -10,7 +10,7 @@ namespace Spryker\Zed\ResourceShare\Business\ResourceShare;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
 use Generated\Shared\Transfer\ResourceShareTransfer;
-use Spryker\Shared\ResourceShare\ResourceShareConfig;
+use Spryker\Zed\ResourceShare\ResourceShareConfig;
 
 class ResourceShareValidator implements ResourceShareValidatorInterface
 {
