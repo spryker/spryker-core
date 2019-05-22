@@ -32,7 +32,10 @@ interface CompanyUsersRestApiFacadeInterface
 
     /**
      * Specification
-     * - Retrieves company users which can be filtered by company ID, company user ID, company business unit ID, user ID and/or active flag.
+     * - Retrieves company user collection.
+     * - The resulting collection can be filtered by company ID, company user IDs, company business unit IDs,
+     * company role IDs and/or active flag.
+     * - The resulting collection is filtered by FilterTransfer when it is provided.
      *
      * @api
      *
