@@ -36,7 +36,7 @@ class RedisAdapterProviderTest extends Unit
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -46,14 +46,22 @@ class RedisAdapterProviderTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+
+        $this->cleanupConnectionPool();
+    }
+
+    /**
      * @expectedException \Spryker\Client\Redis\Exception\RedisAdapterNotInitializedException
      *
      * @return void
      */
     public function testThrowsExceptionWhenConnectionNotInitialized(): void
     {
-        $this->resetConnectionPool();
-
         $this->connectionProvider->getAdapter(static::CONNECTION_KEY_SESSION);
     }
 
@@ -62,8 +70,6 @@ class RedisAdapterProviderTest extends Unit
      */
     public function testCanSetUpNewConnection(): void
     {
-        $this->resetConnectionPool();
-
         $this->connectionProvider->setupConnection(static::CONNECTION_KEY_SESSION, new RedisConfigurationTransfer());
         $connection = $this->connectionProvider->getAdapter(static::CONNECTION_KEY_SESSION);
 
@@ -75,8 +81,6 @@ class RedisAdapterProviderTest extends Unit
      */
     public function testCanPrepareDifferentConnectionsForDifferentConnectionKeys(): void
     {
-        $this->resetConnectionPool();
-
         $this->connectionProvider->setupConnection(static::CONNECTION_KEY_SESSION, new RedisConfigurationTransfer());
         $this->connectionProvider->setupConnection(static::CONNECTION_KEY_STORAGE, new RedisConfigurationTransfer());
 
@@ -91,8 +95,6 @@ class RedisAdapterProviderTest extends Unit
      */
     public function testDoesNotSetUpNewConnectionForTheSameConnectionKey(): void
     {
-        $this->resetConnectionPool();
-
         $configurationTransfer = new RedisConfigurationTransfer();
 
         $this->connectionProvider->setupConnection(static::CONNECTION_KEY_SESSION, $configurationTransfer);
@@ -108,11 +110,14 @@ class RedisAdapterProviderTest extends Unit
     /**
      * @return void
      */
-    protected function resetConnectionPool(): void
+    protected function cleanupConnectionPool(): void
     {
-        $connectionPoolReflection = new ReflectionProperty(RedisAdapterProvider::class, 'clientPool');
-        $connectionPoolReflection->setAccessible(true);
-        $connectionPoolReflection->setValue(null, []);
+        $clientPoolReflection = new ReflectionProperty(RedisAdapterProvider::class, 'clientPool');
+        $clientPoolReflection->setAccessible(true);
+        $clientPool = $clientPoolReflection->getValue();
+        unset($clientPool[static::CONNECTION_KEY_SESSION]);
+        unset($clientPool[static::CONNECTION_KEY_STORAGE]);
+        $clientPoolReflection->setValue(null, $clientPool);
     }
 
     /**
