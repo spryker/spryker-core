@@ -122,4 +122,11 @@ interface PriceProductRepositoryInterface
      * @return bool
      */
     public function isPriceProductUsedForOtherCurrencyAndStore(PriceProductTransfer $priceProductTransfer): bool;
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return \Generated\Shared\Transfer\SpyPriceProductStoreEntityTransfer[]
+     */
+    public function findPriceProductStoresByPriceProduct(PriceProductTransfer $priceProductTransfer): array;
 }

@@ -131,7 +131,7 @@ class DataImporterHelper extends Module
     public function getFailingDataImportStepMock()
     {
         $executeCallback = function () {
-            throw new DataImportException();
+            throw new DataImportException('ExceptionMessage');
         };
         /** @var \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface $dataSetStub */
         $dataSetStub = Stub::makeEmpty(DataImportStepInterface::class, ['execute' => $executeCallback]);
