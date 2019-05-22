@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\Oms\Communication;
 
+use Spryker\Zed\Gui\Communication\Form\OmsTriggerForm;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Oms\Communication\Table\TransitionLogTable;
+use Symfony\Component\Form\FormInterface;
 
 /**
  * @method \Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface getQueryContainer()
@@ -26,5 +28,16 @@ class OmsCommunicationFactory extends AbstractCommunicationFactory
         $queryContainer = $this->getQueryContainer();
 
         return new TransitionLogTable($queryContainer);
+    }
+
+    /**
+     * @param mixed|null $data
+     * @param array $options
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createOmsTriggerForm($data = null, array $options = []): FormInterface
+    {
+        return $this->getFormFactory()->create(OmsTriggerForm::class, $data, $options);
     }
 }

@@ -28,7 +28,7 @@ class TriggerController extends AbstractController
      */
     public function triggerEventForOrderItemsAction(Request $request)
     {
-        if (!$request->isMethod(Request::METHOD_POST)) {
+        if (!$this->isRequestValid($request)) {
             return $this->redirectResponse(static::ROUTE_REDIRECT_DEFAULT);
         }
 
@@ -49,7 +49,7 @@ class TriggerController extends AbstractController
      */
     public function triggerEventForOrderAction(Request $request)
     {
-        if (!$request->isMethod(Request::METHOD_POST)) {
+        if (!$this->isRequestValid($request)) {
             return $this->redirectResponse(static::ROUTE_REDIRECT_DEFAULT);
         }
 
@@ -83,5 +83,28 @@ class TriggerController extends AbstractController
         $orderItems = $query->find();
 
         return $orderItems;
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return bool
+     */
+    protected function isRequestValid(Request $request): bool
+    {
+        return $request->isMethod(Request::METHOD_POST) && $this->isCsrfTokenValid($request);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return bool
+     */
+    protected function isCsrfTokenValid(Request $request): bool
+    {
+        return $this->getFactory()
+            ->createOmsTriggerForm()
+            ->handleRequest($request)
+            ->isValid();
     }
 }

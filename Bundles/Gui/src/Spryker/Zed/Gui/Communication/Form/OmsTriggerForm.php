@@ -48,14 +48,11 @@ class OmsTriggerForm extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setRequired([
-            static::OPTION_EVENT,
-        ]);
-
         $resolver->setDefaults([
+            static::OPTION_EVENT => '',
             static::OPTION_OMS_ACTION => '',
             static::OPTION_QUERY_PARAMS => [],
-            static::OPTION_SUBMIT_BUTTON_CLASS => null,
+            static::OPTION_SUBMIT_BUTTON_CLASS => '',
         ]);
     }
 
