@@ -80,6 +80,9 @@ class ProductImageTransferMapper implements ProductImageTransferMapperInterface
             $productImageSetToProductImageEntity = $this->getProductImageSetToProductImageEntity($productImageSetEntity, $productImageEntity);
 
             $productImageTransfer->setSortOrder((int)$productImageSetToProductImageEntity->getSortOrder());
+            $productImageTransfer->setIdProductImageSetToProductImage(
+                (int)$productImageSetToProductImageEntity->getIdProductImageSetToProductImage()
+            );
 
             $transferList[] = $productImageTransfer;
         }
