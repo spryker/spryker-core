@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\SharedCart\Communication\Plugin\CartsRestApi;
 
-use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
+use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionExpanderPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
@@ -26,15 +26,15 @@ class SharedCartQuoteCollectionExpanderPlugin extends AbstractPlugin implements 
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteCollectionTransfer $quoteCollectionTransfer
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
      */
     public function expandQuoteCollection(
         QuoteCollectionTransfer $quoteCollectionTransfer,
-        CustomerTransfer $customerTransfer
+        QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer
     ): QuoteCollectionTransfer {
         return $this->getFacade()
-            ->expandQuoteCollectionWithCustomerSharedQuoteCollection($quoteCollectionTransfer, $customerTransfer);
+            ->expandQuoteCollectionWithCustomerSharedQuoteCollection($quoteCollectionTransfer, $quoteCriteriaFilterTransfer);
     }
 }

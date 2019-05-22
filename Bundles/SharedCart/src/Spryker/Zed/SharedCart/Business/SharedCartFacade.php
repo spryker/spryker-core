@@ -10,6 +10,7 @@ namespace Spryker\Zed\SharedCart\Business;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
+use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuotePermissionGroupCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuotePermissionGroupResponseTransfer;
 use Generated\Shared\Transfer\QuotePermissionGroupTransfer;
@@ -256,17 +257,17 @@ class SharedCartFacade extends AbstractFacade implements SharedCartFacadeInterfa
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteCollectionTransfer $quoteCollectionTransfer
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
      */
     public function expandQuoteCollectionWithCustomerSharedQuoteCollection(
         QuoteCollectionTransfer $quoteCollectionTransfer,
-        CustomerTransfer $customerTransfer
+        QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer
     ): QuoteCollectionTransfer {
         return $this->getFactory()
             ->createSharedCartQuoteCollectionExpander()
-            ->expandQuoteCollectionWithCustomerSharedQuoteCollection($quoteCollectionTransfer, $customerTransfer);
+            ->expandQuoteCollectionWithCustomerSharedQuoteCollection($quoteCollectionTransfer, $quoteCriteriaFilterTransfer);
     }
 
     /**
@@ -275,16 +276,16 @@ class SharedCartFacade extends AbstractFacade implements SharedCartFacadeInterfa
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteCollectionTransfer $quoteCollectionTransfer
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
      */
     public function expandQuoteCollectionWithCustomerShareDetail(
         QuoteCollectionTransfer $quoteCollectionTransfer,
-        CustomerTransfer $customerTransfer
+        QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer
     ): QuoteCollectionTransfer {
         return $this->getFactory()
             ->createShareDetailQuoteCollectionExpander()
-            ->expandQuoteCollectionWithCustomerShareDetail($quoteCollectionTransfer, $customerTransfer);
+            ->expandQuoteCollectionWithCustomerShareDetail($quoteCollectionTransfer, $quoteCriteriaFilterTransfer);
     }
 }

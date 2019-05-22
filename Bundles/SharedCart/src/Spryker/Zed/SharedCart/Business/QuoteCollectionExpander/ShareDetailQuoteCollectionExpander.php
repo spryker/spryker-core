@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\SharedCart\Business\QuoteCollectionExpander;
 
-use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
+use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Spryker\Zed\SharedCart\Business\QuoteShareDetails\QuoteShareDetailsReaderInterface;
 
 class ShareDetailQuoteCollectionExpander implements ShareDetailQuoteCollectionExpanderInterface
@@ -28,15 +28,15 @@ class ShareDetailQuoteCollectionExpander implements ShareDetailQuoteCollectionEx
 
     /**
      * @param \Generated\Shared\Transfer\QuoteCollectionTransfer $quoteCollectionTransfer
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
      */
     public function expandQuoteCollectionWithCustomerShareDetail(
         QuoteCollectionTransfer $quoteCollectionTransfer,
-        CustomerTransfer $customerTransfer
+        QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer
     ): QuoteCollectionTransfer {
-        if (!$customerTransfer->getCompanyUserTransfer()->getIdCompanyUser()) {
+        if (!$quoteCriteriaFilterTransfer->getIdCompanyUser()) {
             return $quoteCollectionTransfer;
         }
 
@@ -46,7 +46,7 @@ class ShareDetailQuoteCollectionExpander implements ShareDetailQuoteCollectionEx
                 ->getShareDetailsByIdQuote($quoteTransfer);
 
             foreach ($shareDetailCollectionTransfer->getShareDetails() as $shareDetailTransfer) {
-                if ($customerTransfer->getCompanyUserTransfer()->getIdCompanyUser() === $shareDetailTransfer->getIdCompanyUser()) {
+                if ($quoteCriteriaFilterTransfer->getIdCompanyUser() === $shareDetailTransfer->getIdCompanyUser()) {
                     $quoteTransfer->addShareDetail($shareDetailTransfer);
                 }
             }

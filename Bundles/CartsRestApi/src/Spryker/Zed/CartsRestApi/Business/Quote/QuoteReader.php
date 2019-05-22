@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\CartsRestApi\Business\Quote;
 
-use Generated\Shared\Transfer\CompanyUserTransfer;
-use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteErrorTransfer;
@@ -111,9 +109,7 @@ class QuoteReader implements QuoteReaderInterface
         foreach ($this->quoteCollectionExpanderPlugins as $quoteCollectionExpanderPlugin) {
             $quoteCollectionTransfer = $quoteCollectionExpanderPlugin->expandQuoteCollection(
                 $quoteCollectionTransfer,
-                (new CustomerTransfer())->setCompanyUserTransfer(
-                    (new CompanyUserTransfer())->setIdCompanyUser($quoteCriteriaFilterTransfer->getIdCompanyUser())
-                )
+                $quoteCriteriaFilterTransfer
             );
         }
 

@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\CartsRestApiExtension\Dependency\Plugin;
 
-use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
+use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 
 interface QuoteCollectionExpanderPluginInterface
 {
@@ -19,12 +19,12 @@ interface QuoteCollectionExpanderPluginInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteCollectionTransfer $quoteCollectionTransfer
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
      */
     public function expandQuoteCollection(
         QuoteCollectionTransfer $quoteCollectionTransfer,
-        CustomerTransfer $customerTransfer
+        QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer
     ): QuoteCollectionTransfer;
 }

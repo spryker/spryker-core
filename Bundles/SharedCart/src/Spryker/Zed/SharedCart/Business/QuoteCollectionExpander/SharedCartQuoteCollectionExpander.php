@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\SharedCart\Business\QuoteCollectionExpander;
 
-use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
+use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\SharedQuoteCriteriaFilterTransfer;
 use Spryker\Zed\SharedCart\Business\Model\QuoteReaderInterface;
 use Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToStoreFacadeInterface;
@@ -39,17 +39,16 @@ class SharedCartQuoteCollectionExpander implements SharedCartQuoteCollectionExpa
 
     /**
      * @param \Generated\Shared\Transfer\QuoteCollectionTransfer $quoteCollectionTransfer
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
      */
     public function expandQuoteCollectionWithCustomerSharedQuoteCollection(
         QuoteCollectionTransfer $quoteCollectionTransfer,
-        CustomerTransfer $customerTransfer
+        QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer
     ): QuoteCollectionTransfer {
         $sharedQuoteCriteriaFilterTransfer = (new SharedQuoteCriteriaFilterTransfer())
-            ->setIdCompanyUser($customerTransfer->getCompanyUserTransfer()->getIdCompanyUser())
-            ->setIdStore($this->storeFacade->getCurrentStore()->getIdStore());
+            ->fromArray($quoteCriteriaFilterTransfer->toArray(), true);
 
         $sharedQuoteCollectionTransfer = $this->quoteReader
             ->findCustomerSharedQuoteCollectionBySharedQuoteCriteriaFilter($sharedQuoteCriteriaFilterTransfer);
