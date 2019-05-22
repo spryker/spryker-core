@@ -47,7 +47,7 @@ class PriceProductTransferPriceTypeDataExpander implements PriceProductTransferD
         if ($priceTypeTransfer === null) {
             throw new PriceProductScheduleListImportException(
                 sprintf(
-                    'Price type was not found by provided sku "%s"',
+                    'Price type was not found by provided sku %s',
                     $priceProductScheduleImportTransfer->getPriceTypeName()
                 )
             );
