@@ -39,6 +39,7 @@ class ProductOptionItemSorter implements ProductOptionItemSorterInterface
         $items = $this->mergeItems($itemsWithoutOptions, $itemsWithOptions);
 
         $orderTransfer->setItems(new ArrayObject($items));
+
         return $orderTransfer;
     }
 

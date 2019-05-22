@@ -12,7 +12,13 @@ use Spryker\Zed\ContentBannerGui\ContentBannerGuiDependencyProvider;
 use Spryker\Zed\ContentBannerGui\Dependency\Facade\ContentBannerGuiToContentBannerInterface;
 use Spryker\Zed\ContentBannerGui\Dependency\Service\ContentBannerGuiToUtilEncodingInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\ContentBannerGui\Communication\Mapper\ContentGui\ContentBannerContentGuiEditorConfigurationMapper;
+use Spryker\Zed\ContentBannerGui\Communication\Mapper\ContentGui\ContentBannerContentGuiEditorConfigurationMapperInterface;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
+/**
+ * @method \Spryker\Zed\ContentBannerGui\ContentBannerGuiConfig getConfig()
+ */
 class ContentBannerGuiCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
@@ -24,6 +30,14 @@ class ContentBannerGuiCommunicationFactory extends AbstractCommunicationFactory
             $this->getContentBannerFacade(),
             $this->getUtilEncoding()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ContentBannerGui\Communication\Mapper\ContentGui\ContentBannerContentGuiEditorConfigurationMapperInterface
+     */
+    public function createContentBannerContentGuiEditorMapper(): ContentBannerContentGuiEditorConfigurationMapperInterface
+    {
+        return new ContentBannerContentGuiEditorConfigurationMapper($this->getConfig());
     }
 
     /**

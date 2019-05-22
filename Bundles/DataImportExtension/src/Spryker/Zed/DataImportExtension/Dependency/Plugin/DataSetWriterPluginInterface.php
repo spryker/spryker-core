@@ -9,6 +9,9 @@ namespace Spryker\Zed\DataImportExtension\Dependency\Plugin;
 
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
+/**
+ * @deprecated Use `\Spryker\Zed\DataImportExtension\Dependency\Plugin\DataSetItemWriterPluginInterface` instead.
+ */
 interface DataSetWriterPluginInterface
 {
     /**

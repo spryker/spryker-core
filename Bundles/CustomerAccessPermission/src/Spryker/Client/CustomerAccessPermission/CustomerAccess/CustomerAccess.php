@@ -41,6 +41,7 @@ class CustomerAccess implements CustomerAccessInterface
     public function getLoggedInCustomerPermissions(): PermissionCollectionTransfer
     {
         $authenticatedCustomerAccess = $this->customerAccessStorageReader->getAuthenticatedCustomerAccess();
+
         return $this->getPermissionsFromCustomerAccess($authenticatedCustomerAccess);
     }
 
@@ -50,6 +51,7 @@ class CustomerAccess implements CustomerAccessInterface
     public function getLoggedOutCustomerPermissions(): PermissionCollectionTransfer
     {
         $unauthenticatedCustomerAccess = $this->customerAccessStorageReader->getUnauthenticatedCustomerAccess();
+
         return $this->getPermissionsFromCustomerAccess($unauthenticatedCustomerAccess);
     }
 

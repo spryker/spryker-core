@@ -85,6 +85,7 @@ class ProductMoneyCollectionType extends AbstractCollectionType
 
         if (!($event->getData() instanceof Countable) || count($event->getData()) === 0) {
             $event->setData($moneyCollectionInitialDataProvider->getInitialData());
+
             return;
         }
 

@@ -5,7 +5,7 @@
 
 'use strict';
 
-var editor = require('ZedGuiEditorConfiguration');
+var editorConfig = require('ZedGuiEditorConfiguration');
 var Tabs = require('./libs/tabs');
 var TranslationCopyFields = require('./libs/translation-copy-fields');
 var Ibox = require('./libs/ibox');
@@ -19,13 +19,13 @@ var dataTablesSearchDelay = function() {
         var dataTable = $(wrapper).find('.gui-table-data');
         var dataTableApi = dataTable.dataTable().api();
         var timeOutId = 0;
-        
+
         if(searchInput.length && dataTable.length) {
             searchInput
             .unbind()
             .bind("input", function(e) {
                 var self = this;
-                
+
                 clearTimeout(timeOutId);
                 timeOutId = setTimeout(function() {
                     dataTableApi.search(self.value).draw();
@@ -36,9 +36,24 @@ var dataTablesSearchDelay = function() {
     });
 }
 
+var editorInit = function() {
+    $('.html-editor').each(function() {
+        var $textarea = $(this);
+        var textareaConfigName = $textarea.data('editor-config');
+
+        var config = editorConfig.getGlobalConfig(textareaConfigName);
+
+        if (!config) {
+            config = editorConfig.getConfig();
+        }
+
+        $textarea.summernote(config);
+    });
+};
+
 $(document).ready(function() {
     // editor
-    $('.html-editor').summernote(editor.getConfig());
+    editorInit();
 
     /* Data tables custom error handling */
     dataTable.setTableErrorMode('none');
@@ -47,7 +62,7 @@ $(document).ready(function() {
     $('.gui-table-data')
         .on('error.dt', dataTable.onError)
         .dataTable(dataTable.defaultConfiguration);
-    
+
     /* Draw data tables without search */
     $('.gui-table-data-no-search')
         .on('error.dt', dataTable.onError)

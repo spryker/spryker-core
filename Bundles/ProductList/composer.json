@@ -11,6 +11,7 @@
     "spryker/messenger": "^3.0.0",
     "spryker/product": "^5.0.0 || ^6.0.0",
     "spryker/product-category": "^4.0.0",
+    "spryker/product-list-extension": "^1.0.0",
     "spryker/propel-orm": "^1.0.0",
     "spryker/util-text": "^1.0.0"
   },

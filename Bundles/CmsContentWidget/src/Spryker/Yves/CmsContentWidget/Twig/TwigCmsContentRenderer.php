@@ -60,6 +60,7 @@ class TwigCmsContentRenderer implements TwigCmsContentRendererInterface
             return $this->twigEnvironment->createTemplate($content)->render($context);
         } catch (Throwable $exception) {
             $this->getLogger()->warning($exception->getMessage(), ['exception' => $exception]);
+
             return $content;
         }
     }

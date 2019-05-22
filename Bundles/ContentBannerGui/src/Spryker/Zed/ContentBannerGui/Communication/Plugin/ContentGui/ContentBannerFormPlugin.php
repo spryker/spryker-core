@@ -16,6 +16,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\ContentBannerGui\Communication\ContentBannerGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ContentBannerGui\ContentBannerGuiConfig getConfig()
  */
 class ContentBannerFormPlugin extends AbstractPlugin implements ContentPluginInterface
 {

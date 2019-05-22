@@ -17,6 +17,8 @@ use Spryker\Client\QuoteApproval\Quote\QuoteStatusCalculator;
 use Spryker\Client\QuoteApproval\Quote\QuoteStatusCalculatorInterface;
 use Spryker\Client\QuoteApproval\Quote\QuoteStatusChecker;
 use Spryker\Client\QuoteApproval\Quote\QuoteStatusCheckerInterface;
+use Spryker\Client\QuoteApproval\QuoteApproval\QuoteApprovalCreator;
+use Spryker\Client\QuoteApproval\QuoteApproval\QuoteApprovalCreatorInterface;
 use Spryker\Client\QuoteApproval\QuoteApproval\QuoteApprovalReader;
 use Spryker\Client\QuoteApproval\QuoteApproval\QuoteApprovalReaderInterface;
 use Spryker\Client\QuoteApproval\Zed\QuoteApprovalStub;
@@ -74,6 +76,16 @@ class QuoteApprovalFactory extends AbstractFactory
     {
         return new QuoteApprovalStub(
             $this->getZedRequestClient()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\QuoteApproval\QuoteApproval\QuoteApprovalCreatorInterface
+     */
+    public function createQuoteApprovalCreator(): QuoteApprovalCreatorInterface
+    {
+        return new QuoteApprovalCreator(
+            $this->createQuoteApprovalStub()
         );
     }
 

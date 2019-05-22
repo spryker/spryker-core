@@ -168,6 +168,7 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
         }
 
         $output = $p->getOutput();
+
         return $output;
     }
 
@@ -228,6 +229,7 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
                 }
             }
         }
+
         return $fileViolations;
     }
 
@@ -242,12 +244,15 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
         if (array_key_exists('violation', $results['file'])) {
             if (array_key_exists('_', $results['file']['violation'])) {
                 $fileViolations[$results['file']['name']][] = $results['file']['violation'];
+
                 return $fileViolations;
             } else {
                 $fileViolations[$results['file']['name']] = $results['file']['violation'];
+
                 return $fileViolations;
             }
         }
+
         return $fileViolations;
     }
 

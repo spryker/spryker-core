@@ -17,6 +17,7 @@ use Symfony\Component\Validator\Constraint;
 
 /**
  * @method \Spryker\Zed\ContentBannerGui\Communication\ContentBannerGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ContentBannerGui\ContentBannerGuiConfig getConfig()
  */
 class BannerContentTermForm extends AbstractType
 {
