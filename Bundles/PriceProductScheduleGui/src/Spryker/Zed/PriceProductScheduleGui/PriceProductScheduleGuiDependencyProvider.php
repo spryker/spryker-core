@@ -41,7 +41,8 @@ class PriceProductScheduleGuiDependencyProvider extends AbstractBundleDependency
      */
     protected function addPriceProductScheduleFacade(Container $container): Container
     {
-        $container[static::FACADE_PRICE_PRODUCT_SCHEDULE] = function ($container) {
+        $container[static::FACADE_PRICE_PRODUCT_SCHEDULE] = function ($container
+        ): PriceProductScheduleGuiToPriceProductScheduleFacadeBridge {
             return new PriceProductScheduleGuiToPriceProductScheduleFacadeBridge($container->getLocator()->priceProductSchedule()->facade());
         };
 
@@ -55,7 +56,8 @@ class PriceProductScheduleGuiDependencyProvider extends AbstractBundleDependency
      */
     protected function addUtilCsvService(Container $container): Container
     {
-        $container[static::SERVICE_UTIL_CSV] = function (Container $container) {
+        $container[static::SERVICE_UTIL_CSV] = function (Container $container
+        ): PriceProductScheduleGuiToUtilCsvServiceBridge {
             return new PriceProductScheduleGuiToUtilCsvServiceBridge(
                 $container->getLocator()->utilCsv()->service()
             );

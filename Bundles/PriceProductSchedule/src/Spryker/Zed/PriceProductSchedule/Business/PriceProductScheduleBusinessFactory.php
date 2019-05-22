@@ -12,6 +12,10 @@ use Spryker\Zed\PriceProductSchedule\Business\PriceProduct\PriceProductFallbackF
 use Spryker\Zed\PriceProductSchedule\Business\PriceProduct\PriceProductFallbackFinderInterface;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProduct\PriceProductUpdater;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProduct\PriceProductUpdaterInterface;
+use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\DataExpander\PriceProductTransferMoneyValueDataExpander;
+use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\DataExpander\PriceProductTransferPriceDimensionDataExpander;
+use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\DataExpander\PriceProductTransferPriceTypeDataExpander;
+use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\DataExpander\PriceProductTransferProductDataExpander;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleApplier;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleApplierInterface;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleCleaner;
@@ -164,12 +168,56 @@ class PriceProductScheduleBusinessFactory extends AbstractBusinessFactory
     public function createPriceProductScheduleMapper(): PriceProductScheduleMapperInterface
     {
         return new PriceProductScheduleMapper(
-            $this->getConfig(),
-            $this->getPriceProductFacade(),
-            $this->getProductFacade(),
+            $this->getPriceProductTransferDataExpanderList()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\DataExpander\PriceProductTransferDataExpanderInterface[]
+     */
+    public function getPriceProductTransferDataExpanderList(): array
+    {
+        return [
+            $this->createPriceProductTransferPriceDimensionDataExpander(),
+            $this->createPriceProductTransferMoneyValueDataExpander(),
+            $this->createPriceProductTransferPriceTypeDataExpander(),
+            $this->createPriceProductTransferProductDataExpander(),
+        ];
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\DataExpander\PriceProductTransferPriceDimensionDataExpander
+     */
+    public function createPriceProductTransferPriceDimensionDataExpander(): PriceProductTransferPriceDimensionDataExpander
+    {
+        return new PriceProductTransferPriceDimensionDataExpander($this->getConfig());
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\DataExpander\PriceProductTransferMoneyValueDataExpander
+     */
+    public function createPriceProductTransferMoneyValueDataExpander(): PriceProductTransferMoneyValueDataExpander
+    {
+        return new PriceProductTransferMoneyValueDataExpander(
             $this->getStoreFacade(),
             $this->getCurrencyFacade()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\DataExpander\PriceProductTransferPriceTypeDataExpander
+     */
+    public function createPriceProductTransferPriceTypeDataExpander(): PriceProductTransferPriceTypeDataExpander
+    {
+        return new PriceProductTransferPriceTypeDataExpander($this->getPriceProductFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\DataExpander\PriceProductTransferProductDataExpander
+     */
+    public function createPriceProductTransferProductDataExpander(): PriceProductTransferProductDataExpander
+    {
+        return new PriceProductTransferProductDataExpander($this->getProductFacade());
     }
 
     /**
