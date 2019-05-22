@@ -72,7 +72,7 @@ class QuoteReader implements QuoteReaderInterface
             return $quoteResponseTransfer
                 ->setIsSuccessful(false)
                 ->addError((new QuoteErrorTransfer())
-                    ->setErrorIdentifier(CartsRestApiSharedConfig::ERROR_IDENTIFIER_UNAUTHORIZED_ACTION_TO_CART));
+                    ->setErrorIdentifier(CartsRestApiSharedConfig::ERROR_IDENTIFIER_CART_NOT_FOUND));
         }
 
         return $quoteResponseTransfer;

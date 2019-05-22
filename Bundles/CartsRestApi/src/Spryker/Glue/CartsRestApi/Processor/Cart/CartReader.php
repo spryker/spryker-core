@@ -91,10 +91,11 @@ class CartReader implements CartReaderInterface
      */
     public function getCustomerQuoteByUuid(string $uuidCart, RestRequestInterface $restRequest): RestResponseInterface
     {
-        $customer = $this->executeCustomerExpanderPlugins(new CustomerTransfer(), $restRequest);
+        $customerTransfer = $this->executeCustomerExpanderPlugins(new CustomerTransfer(), $restRequest);
+        $customerTransfer->setIdCustomer($restRequest->getRestUser()->getSurrogateIdentifier());
         $quoteTransfer = (new QuoteTransfer())
             ->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier())
-            ->setCustomer($customer)
+            ->setCustomer($customerTransfer)
             ->setUuid($uuidCart);
 
         $quoteResponseTransfer = $this->cartsRestApiClient->findQuoteByUuid($quoteTransfer);

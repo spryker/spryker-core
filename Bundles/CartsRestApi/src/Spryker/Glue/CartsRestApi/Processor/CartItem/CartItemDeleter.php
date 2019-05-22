@@ -111,11 +111,15 @@ class CartItemDeleter implements CartItemDeleterInterface
         RestRequestInterface $restRequest,
         ?string $uuidQuote
     ): RestCartItemsAttributesTransfer {
+        $customerTransfer = (new CustomerTransfer())->setIdCustomer(
+            $restRequest->getRestUser()->getSurrogateIdentifier()
+        );
+
         return (new RestCartItemsAttributesTransfer())
             ->setSku($itemIdentifier)
             ->setQuoteUuid($uuidQuote)
             ->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier())
-            ->setCustomer(new CustomerTransfer());
+            ->setCustomer($customerTransfer);
     }
 
     /**

@@ -72,11 +72,12 @@ class CartUpdater implements CartUpdaterInterface
             (new QuoteTransfer())->setCustomerReference($restUser->getNaturalIdentifier())
         );
 
-        $customer = $this->executeCustomerExpanderPlugins($quoteTransfer->getCustomer(), $restRequest);
+        $customerTransfer = $this->executeCustomerExpanderPlugins($quoteTransfer->getCustomer(), $restRequest);
+        $customerTransfer->setIdCustomer($restRequest->getRestUser()->getSurrogateIdentifier());
         $quoteTransfer
             ->setUuid($restRequest->getResource()->getId())
             ->setCompanyUserId($restUser->getIdCompany())
-            ->setCustomer($customer);
+            ->setCustomer($customerTransfer);
 
         $quoteResponseTransfer = $this->cartsRestApiClient->updateQuote($quoteTransfer);
 
