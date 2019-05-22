@@ -377,7 +377,6 @@ class ProductImageFacadeTest extends Unit
             );
             $IdProductImageSetToProductImage = $productImageTransfer->getIdProductImageSetToProductImage();
         }
-
     }
 
     /**
