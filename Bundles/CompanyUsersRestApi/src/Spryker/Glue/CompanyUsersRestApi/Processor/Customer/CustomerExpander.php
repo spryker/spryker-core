@@ -26,7 +26,7 @@ class CustomerExpander implements CustomerExpanderInterface
             return $customerTransfer;
         }
 
-        if($restUserTransfer->getSurrogateIdentifier() !== null){
+        if ($restUserTransfer->getSurrogateIdentifier() !== null) {
             $customerTransfer
                 ->setIdCustomer($restUserTransfer->getSurrogateIdentifier());
         }
