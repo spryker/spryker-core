@@ -85,6 +85,9 @@ class CustomerRepository extends AbstractRepository implements CustomerRepositor
             return null;
         }
 
+        /**
+         * @todo Move this to mapper.
+         */
         return $addressTransfer->fromArray($addressEntity->toArray(), true);
     }
 

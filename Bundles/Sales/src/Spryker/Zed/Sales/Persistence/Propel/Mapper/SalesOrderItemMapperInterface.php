@@ -5,14 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Sales\Business\Model\OrderItem;
+namespace Spryker\Zed\Sales\Persistence\Propel\Mapper;
 
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 
-/**
- * @deprecated Use \Spryker\Zed\Sales\Persistence\Propel\Mapper\SalesOrderItemMapperInterface instead.
- */
 interface SalesOrderItemMapperInterface
 {
     /**
@@ -28,4 +26,11 @@ interface SalesOrderItemMapperInterface
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem
      */
     public function mapSalesOrderItemEntityToSpySalesOrderItemEntity(SpySalesOrderItemEntityTransfer $salesOrderItemEntity): SpySalesOrderItem;
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $spySalesOrderItemEntity
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    public function mapSalesOrderItemEntityToItemTransfer(SpySalesOrderItem $spySalesOrderItemEntity): ItemTransfer;
 }

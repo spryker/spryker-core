@@ -8,8 +8,8 @@
 namespace Spryker\Zed\Sales\Business\OrderItem;
 
 use ArrayObject;
-use Generated\Shared\Transfer\ItemTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
+use Spryker\Zed\Sales\Persistence\Propel\Mapper\SalesOrderItemMapperInterface;
 use Spryker\Zed\Sales\Persistence\SalesRepositoryInterface;
 
 class SalesOrderItemReader implements SalesOrderItemReaderInterface
@@ -20,11 +20,20 @@ class SalesOrderItemReader implements SalesOrderItemReaderInterface
     protected $salesRepository;
 
     /**
-     * @param \Spryker\Zed\Sales\Persistence\SalesRepositoryInterface $salesRepository
+     * @var \Spryker\Zed\Sales\Persistence\Propel\Mapper\SalesOrderItemMapperInterface
      */
-    public function __construct(SalesRepositoryInterface $salesRepository)
-    {
+    protected $salesOrderItemMapper;
+
+    /**
+     * @param \Spryker\Zed\Sales\Persistence\SalesRepositoryInterface $salesRepository
+     * @param \Spryker\Zed\Sales\Persistence\Propel\Mapper\SalesOrderItemMapperInterface $salesOrderItemMapper
+     */
+    public function __construct(
+        SalesRepositoryInterface $salesRepository,
+        SalesOrderItemMapperInterface $salesOrderItemMapper
+    ) {
         $this->salesRepository = $salesRepository;
+        $this->salesOrderItemMapper = $salesOrderItemMapper;
     }
 
     /**
@@ -40,17 +49,15 @@ class SalesOrderItemReader implements SalesOrderItemReaderInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection $salesOrderItemEntities
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[]|\Propel\Runtime\Collection\ObjectCollection $salesOrderItemEntities
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]|\ArrayObject
      */
     protected function hydrateSalesOrderItemTransfersFromPersistence(ObjectCollection $salesOrderItemEntities): ArrayObject
     {
         $salesOrderItemTransfers = new ArrayObject();
-        foreach ($salesOrderItemEntities as $itemEntity) {
-            $itemTransfer = new ItemTransfer();
-            $itemTransfer->fromArray($itemEntity->toArray(), true);
-            $itemTransfer->setShipment($itemEntity->getShipment());
+        foreach ($salesOrderItemEntities as $spySalesOrderItemEntity) {
+            $itemTransfer = $this->salesOrderItemMapper->mapSalesOrderItemEntityToItemTransfer($spySalesOrderItemEntity);
             $salesOrderItemTransfers->append($itemTransfer);
         }
 

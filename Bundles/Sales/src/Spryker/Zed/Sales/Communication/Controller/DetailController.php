@@ -52,9 +52,6 @@ class DetailController extends AbstractController
         $groupedOrderItems = $this->getFacade()
             ->getUniqueOrderItems($orderTransfer->getItems())
             ->getItems();
-//        $groupedOrderItemsByShipment = $this->getFactory()
-//            ->getShipmentService()
-//            ->groupItemsByShipment($orderTransfer->getItems());
 
         return array_merge([
             'eventsGroupedByItem' => $eventsGroupedByItem,
@@ -64,10 +61,7 @@ class DetailController extends AbstractController
             'orderItemSplitFormCollection' => $orderItemSplitFormCollection,
             'groupedOrderItems' => $groupedOrderItems,
             'groupedOrderItemsByShipment' => $orderTransfer->getShipmentGroups(),
-            /**
-             * @todo Refactor this
-             */
-            'isMultiShipmentEnabled' => defined('\Generated\Shared\Transfer\ItemTransfer::SHIPMENT'),
+            'isMultiShipmentEnabled' => $this->isMultiShipmentOrder($orderTransfer),
         ], $blockResponseData);
     }
 
@@ -144,5 +138,21 @@ class DetailController extends AbstractController
     protected function getSubRequestHandler()
     {
         return $this->getApplication()['sub_request'];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return bool
+     */
+    protected function isMultiShipmentOrder(OrderTransfer $orderTransfer): bool
+    {
+        foreach ($orderTransfer->getItems() as $itemTransfer) {
+            if ($itemTransfer->getShipment() === null) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
