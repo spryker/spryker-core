@@ -83,9 +83,7 @@ class GuestQuoteFallbackActivatorStrategyPlugin extends AbstractPlugin implement
             ->setIsSuccessful(false)
             ->setIsLoginRequired(true)
             ->addMessage(
-                (new MessageTransfer())
-                    ->setType(PersistentCartShareConfig::MESSAGE_TYPE_ERROR)
-                    ->setValue(static::GLOSSARY_KEY_STRATEGY_EXPECTS_LOGGED_IN_CUSTOMER)
+                (new MessageTransfer())->setValue(static::GLOSSARY_KEY_STRATEGY_EXPECTS_LOGGED_IN_CUSTOMER)
             );
     }
 }

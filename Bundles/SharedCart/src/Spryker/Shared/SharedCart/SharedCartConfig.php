@@ -16,8 +16,6 @@ class SharedCartConfig extends AbstractBundleConfig
      */
     public const RESOURCE_TYPE_QUOTE = 'quote';
 
-    public const MESSAGE_TYPE_ERROR = 'error';
-
     public const PERMISSION_GROUP_READ_ONLY = 'READ_ONLY';
     public const PERMISSION_GROUP_FULL_ACCESS = 'FULL_ACCESS';
     public const PERMISSION_GROUP_OWNER_ACCESS = 'OWNER_ACCESS';

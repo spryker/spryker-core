@@ -82,9 +82,7 @@ class CustomerQuoteFallbackActivatorStrategyPlugin extends AbstractPlugin implem
         return (new ResourceShareResponseTransfer())
             ->setIsSuccessful(false)
             ->addMessage(
-                (new MessageTransfer())
-                    ->setType(PersistentCartShareConfig::MESSAGE_TYPE_ERROR)
-                    ->setValue(static::GLOSSARY_KEY_CART_ACCESS_DENIED)
+                (new MessageTransfer())->setValue(static::GLOSSARY_KEY_CART_ACCESS_DENIED)
             );
     }
 }
