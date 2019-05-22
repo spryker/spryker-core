@@ -6,6 +6,7 @@
 
     <transfer name="Quote">
         <property name="customerReference" type="string" />
+        <property name="isLocked" type="bool"/>
     </transfer>
 
     <transfer name="Customer">
