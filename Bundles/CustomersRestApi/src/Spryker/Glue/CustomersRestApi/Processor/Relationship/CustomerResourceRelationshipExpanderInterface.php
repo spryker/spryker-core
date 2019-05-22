@@ -9,7 +9,7 @@ namespace Spryker\Glue\CustomersRestApi\Processor\Relationship;
 
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
-interface CustomerResourceExpanderInterface
+interface CustomerResourceRelationshipExpanderInterface
 {
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
@@ -17,5 +17,5 @@ interface CustomerResourceExpanderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
-    public function addResourceRelationshipsByPayload(array $resources, RestRequestInterface $restRequest): array;
+    public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): array;
 }

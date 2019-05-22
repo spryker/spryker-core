@@ -15,7 +15,7 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 /**
  * @method \Spryker\Glue\CustomersRestApi\CustomersRestApiFactory getFactory()
  */
-class CustomerByPayloadResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
+class CustomerByCompanyUserResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
 {
     /**
      * {@inheritdoc}
@@ -31,8 +31,8 @@ class CustomerByPayloadResourceRelationshipPlugin extends AbstractPlugin impleme
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         $this->getFactory()
-            ->createCustomerResourceExpander()
-            ->addResourceRelationshipsByPayload($resources, $restRequest);
+            ->createCustomerByCompanyUserResourceRelationshipExpander()
+            ->addResourceRelationships($resources, $restRequest);
     }
 
     /**

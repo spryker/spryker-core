@@ -31,8 +31,10 @@ use Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomerResourceMapper;
 use Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomerResourceMapperInterface;
 use Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomerRestorePasswordResourceMapper;
 use Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomerRestorePasswordResourceMapperInterface;
-use Spryker\Glue\CustomersRestApi\Processor\Relationship\CustomerResourceExpander;
-use Spryker\Glue\CustomersRestApi\Processor\Relationship\CustomerResourceExpanderInterface;
+use Spryker\Glue\CustomersRestApi\Processor\Relationship\CustomerByCompanyUserResourceRelationshipExpander;
+use Spryker\Glue\CustomersRestApi\Processor\Relationship\CustomerResourceRelationshipExpanderInterface;
+use Spryker\Glue\CustomersRestApi\Processor\RestResponseBuilder\CustomerRestResponseBuilder;
+use Spryker\Glue\CustomersRestApi\Processor\RestResponseBuilder\CustomerRestResponseBuilderInterface;
 use Spryker\Glue\CustomersRestApi\Processor\Session\SessionCreator;
 use Spryker\Glue\CustomersRestApi\Processor\Session\SessionCreatorInterface;
 use Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiError;
@@ -140,11 +142,14 @@ class CustomersRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\CustomersRestApi\Processor\Relationship\CustomerResourceExpanderInterface
+     * @return \Spryker\Glue\CustomersRestApi\Processor\Relationship\CustomerResourceRelationshipExpanderInterface
      */
-    public function createCustomerResourceExpander(): CustomerResourceExpanderInterface
+    public function createCustomerByCompanyUserResourceRelationshipExpander(): CustomerResourceRelationshipExpanderInterface
     {
-        return new CustomerResourceExpander($this->getResourceBuilder());
+        return new CustomerByCompanyUserResourceRelationshipExpander(
+            $this->createCustomerRestResponseBuilder(),
+            $this->createCustomerResourceMapper()
+        );
     }
 
     /**
@@ -203,6 +208,16 @@ class CustomersRestApiFactory extends AbstractFactory
         return new SessionCreator(
             $this->getCustomerClient(),
             $this->getCustomerExpanderPlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\CustomersRestApi\Processor\RestResponseBuilder\CustomerRestResponseBuilderInterface
+     */
+    public function createCustomerRestResponseBuilder(): CustomerRestResponseBuilderInterface
+    {
+        return new CustomerRestResponseBuilder(
+            $this->getResourceBuilder()
         );
     }
 
