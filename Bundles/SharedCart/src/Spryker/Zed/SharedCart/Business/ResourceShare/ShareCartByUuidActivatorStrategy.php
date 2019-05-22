@@ -89,37 +89,21 @@ class ShareCartByUuidActivatorStrategy implements ShareCartByUuidActivatorStrate
      */
     protected function createCartShareForProvidedCompanyUser(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer
     {
-        $resourceShareResponseTransfer = $this->findQuoteById($resourceShareRequestTransfer);
-        if (!$resourceShareResponseTransfer->getIsSuccessful()) {
-            return $resourceShareResponseTransfer;
-        }
-
-        return $this->resourceShareQuoteCompanyUserWriter->createCartShareForProvidedCompanyUser($resourceShareRequestTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
-     */
-    protected function findQuoteById(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer
-    {
         $idQuote = $resourceShareRequestTransfer->getResourceShare()
             ->getResourceShareData()
             ->getIdQuote();
 
         $quoteResponseTransfer = $this->quoteFacade->findQuoteById($idQuote);
-        if ($quoteResponseTransfer->getIsSuccessful()) {
+
+        if (!$quoteResponseTransfer->getIsSuccessful()) {
             return (new ResourceShareResponseTransfer())
-                ->setIsSuccessful(true)
-                ->setResourceShare($resourceShareRequestTransfer->getResourceShare());
+                ->setIsSuccessful(false)
+                ->addMessage(
+                    (new MessageTransfer())->setValue(static::GLOSSARY_KEY_QUOTE_IS_NOT_AVAILABLE)
+                );
         }
 
-        return (new ResourceShareResponseTransfer())
-            ->setIsSuccessful(false)
-            ->addMessage(
-                (new MessageTransfer())->setValue(static::GLOSSARY_KEY_QUOTE_IS_NOT_AVAILABLE)
-            );
+        return $this->resourceShareQuoteCompanyUserWriter->createCartShareForProvidedCompanyUser($resourceShareRequestTransfer);
     }
 
     /**
