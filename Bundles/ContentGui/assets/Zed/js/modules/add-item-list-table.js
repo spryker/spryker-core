@@ -185,7 +185,7 @@ var ItemListContentItem = function(options)
 
         buttons.each(function() {
             var button = $(this);
-            if (button.is('button')) {
+            if (button.is('a')) {
                 buttonsTemplate += button.attr('data-id', itemId)[0].outerHTML + ' ';
             }
         });

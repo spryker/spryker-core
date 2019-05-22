@@ -179,32 +179,35 @@ class ContentFileListSelectedTable extends AbstractTable
         $actionButtons = [];
 
         $actionButtons[] = $this->generateButton(
-            'javascript:void(0);',
+            '#',
             static::BUTTON_DELETE,
             [
                 'class' => 'js-delete-item btn-danger',
                 'data-id' => $idFile,
                 'icon' => 'fa-trash',
+                'onclick' => 'return false;',
             ]
         );
         $actionButtons[] = $this->generateButton(
-            'javascript:void(0);',
+            '#',
             static::BUTTON_MOVE_UP,
             [
                 'class' => 'js-reorder-item btn-create',
                 'data-id' => $idFile,
                 'data-direction' => 'up',
                 'icon' => 'fa-arrow-up',
+                'onclick' => 'return false;',
             ]
         );
         $actionButtons[] = $this->generateButton(
-            'javascript:void(0);',
+            '#',
             static::BUTTON_MOVE_DOWN,
             [
                 'class' => 'js-reorder-item btn-create',
                 'data-id' => $idFile,
                 'data-direction' => 'down',
                 'icon' => 'fa-arrow-down',
+                'onclick' => 'return false;',
             ]
         );
 
