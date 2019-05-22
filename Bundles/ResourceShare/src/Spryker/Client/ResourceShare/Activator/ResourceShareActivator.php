@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\ResourceShare\Activator;
 
-use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
 use Spryker\Client\ResourceShare\Exception\ResourceShareActivatorStrategyNotFoundException;
@@ -15,8 +14,6 @@ use Spryker\Client\ResourceShare\Zed\ResourceShareStubInterface;
 
 class ResourceShareActivator implements ResourceShareActivatorInterface
 {
-    protected const GLOSSARY_KEY_STRATEGY_EXPECTS_LOGGED_IN_CUSTOMER = 'resource_share.activator.error.strategy_expects_logged_in_customer';
-
     /**
      * @var \Spryker\Client\ResourceShare\Zed\ResourceShareStubInterface
      */
@@ -66,19 +63,9 @@ class ResourceShareActivator implements ResourceShareActivatorInterface
     protected function executeResourceShareActivatorStrategyPlugins(
         ResourceShareRequestTransfer $resourceShareRequestTransfer
     ): ResourceShareResponseTransfer {
-        $resourceShareResponseTransfer = new ResourceShareResponseTransfer();
-
         foreach ($this->resourceShareActivatorStrategyPlugins as $resourceShareActivatorStrategyPlugin) {
             if (!$resourceShareActivatorStrategyPlugin->isApplicable($resourceShareRequestTransfer)) {
                 continue;
-            }
-
-            if (!$resourceShareRequestTransfer->getCustomer() && $resourceShareActivatorStrategyPlugin->isLoginRequired()) {
-                return $resourceShareResponseTransfer->setIsSuccessful(false)
-                    ->setIsLoginRequired(true)
-                    ->addMessage(
-                        (new MessageTransfer())->setValue(static::GLOSSARY_KEY_STRATEGY_EXPECTS_LOGGED_IN_CUSTOMER)
-                    );
             }
 
             return $resourceShareActivatorStrategyPlugin->execute($resourceShareRequestTransfer);

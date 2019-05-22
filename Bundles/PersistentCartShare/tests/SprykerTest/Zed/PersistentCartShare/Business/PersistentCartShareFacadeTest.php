@@ -16,7 +16,7 @@ use Generated\Shared\Transfer\ResourceShareDataTransfer;
 use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\ResourceShareTransfer;
 use Orm\Zed\ResourceShare\Persistence\SpyResourceShare;
-use Spryker\Zed\PersistentCartShare\PersistentCartShareConfig;
+use Spryker\Shared\PersistentCartShare\PersistentCartShareConfig;
 
 /**
  * Auto-generated group annotations

@@ -35,11 +35,6 @@
         <property name="isSuccessful" type="bool"/>
         <property name="sharedCustomerQuotes" type="QuoteCollection"/>
         <property name="customerPermissions" type="PermissionCollection"/>
-        <property name="errors" type="QuoteError[]" />
-    </transfer>
-
-    <transfer name="QuoteError">
-        <property name="message" type="string" />
     </transfer>
 
     <transfer name="ShareDetail">
@@ -87,11 +82,31 @@
         <property name="idCompanyBusinessUnit" type="int" />
     </transfer>
 
+    <transfer name="ResourceShare">
+        <property name="resourceType" type="string" />
+        <property name="resourceShareData" type="ResourceShareData" />
+    </transfer>
+
     <transfer name="ResourceShareData">
         <property name="shareOption" type="string" />
         <property name="idQuote" type="int" />
         <property name="ownerIdCompanyUser" type="int" />
         <property name="ownerIdCompanyBusinessUnit" type="int" />
+    </transfer>
+
+    <transfer name="ResourceShareRequest">
+        <property name="customer" type="Customer" />
+        <property name="resourceShare" type="ResourceShare" />
+    </transfer>
+
+    <transfer name="ResourceShareResponse">
+        <property name="isSuccessful" type="bool" />
+        <property name="resourceShare" type="ResourceShare" />
+        <property name="messages" type="Message[]" singular="message" />
+    </transfer>
+
+    <transfer name="Message">
+        <property name="value" type="string" />
     </transfer>
 
 </transfers>
