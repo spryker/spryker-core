@@ -27,8 +27,8 @@ use Spryker\Zed\Currency\Business\CurrencyFacade;
  */
 class CurrencyFacadeTest extends Unit
 {
-    protected const ERROR_MESSAGE_CURRENCY_DATA_IS_MISSING = 'quote.validation.error.currency_mode_is_missing';
-    protected const ERROR_MESSAGE_CURRENCY_DATA_IS_INCORRECT = 'quote.validation.error.currency_mode_is_incorrect';
+    protected const ERROR_MESSAGE_CURRENCY_DATA_IS_MISSING = 'quote.validation.error.currency_is_missing';
+    protected const ERROR_MESSAGE_CURRENCY_DATA_IS_INCORRECT = 'quote.validation.error.currency_is_incorrect';
     protected const WRONG_ISO_CODE = 'WRONGCODE';
     protected const STORE_NAME = 'DE';
     protected const EUR_ISO_CODE = 'EUR';

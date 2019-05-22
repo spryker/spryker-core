@@ -60,7 +60,10 @@ class CartDeleter implements CartDeleterInterface
 
         $quoteResponseTransfer = $this->cartsRestApiClient->deleteQuote($quoteTransfer);
         if ($quoteResponseTransfer->getErrors()->count() > 0) {
-            return $this->cartRestResponseBuilder->createFailedErrorResponse($quoteResponseTransfer->getErrors());
+            return $this->cartRestResponseBuilder->createFailedErrorResponse(
+                $quoteResponseTransfer->getErrors(),
+                $restRequest->getMetadata()->getLocale()
+            );
         }
 
         return $this->cartRestResponseBuilder->createRestResponse();

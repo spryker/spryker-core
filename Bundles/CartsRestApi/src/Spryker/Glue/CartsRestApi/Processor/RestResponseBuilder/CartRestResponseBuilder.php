@@ -11,6 +11,7 @@ use ArrayObject;
 use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
+use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToGlossaryStorageClientInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
@@ -29,15 +30,23 @@ class CartRestResponseBuilder implements CartRestResponseBuilderInterface
     protected $restResourceBuilder;
 
     /**
+     * @var \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToGlossaryStorageClientInterface
+     */
+    protected $glossaryStorageClient;
+
+    /**
      * @param \Spryker\Glue\CartsRestApi\CartsRestApiConfig $config
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
+     * @param \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToGlossaryStorageClientInterface $glossaryStorageClient
      */
     public function __construct(
         CartsRestApiConfig $config,
-        RestResourceBuilderInterface $restResourceBuilder
+        RestResourceBuilderInterface $restResourceBuilder,
+        CartsRestApiToGlossaryStorageClientInterface $glossaryStorageClient
     ) {
         $this->config = $config;
         $this->restResourceBuilder = $restResourceBuilder;
+        $this->glossaryStorageClient = $glossaryStorageClient;
     }
 
     /**
@@ -60,10 +69,11 @@ class CartRestResponseBuilder implements CartRestResponseBuilderInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteErrorTransfer[]|\ArrayObject $errors
+     * @param string $localeName
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createFailedErrorResponse(ArrayObject $errors): RestResponseInterface
+    public function createFailedErrorResponse(ArrayObject $errors, string $localeName): RestResponseInterface
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
@@ -71,7 +81,8 @@ class CartRestResponseBuilder implements CartRestResponseBuilderInterface
             $restResponse->addError(
                 $this->mapQuoteErrorTransferToRestErrorMessageTransfer(
                     $quoteErrorTransfer,
-                    new RestErrorMessageTransfer()
+                    new RestErrorMessageTransfer(),
+                    $localeName
                 )
             );
         }
@@ -82,12 +93,14 @@ class CartRestResponseBuilder implements CartRestResponseBuilderInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteErrorTransfer $quoteErrorTransfer
      * @param \Generated\Shared\Transfer\RestErrorMessageTransfer $restErrorMessageTransfer
+     * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\RestErrorMessageTransfer
      */
     protected function mapQuoteErrorTransferToRestErrorMessageTransfer(
         QuoteErrorTransfer $quoteErrorTransfer,
-        RestErrorMessageTransfer $restErrorMessageTransfer
+        RestErrorMessageTransfer $restErrorMessageTransfer,
+        string $localeName
     ): RestErrorMessageTransfer {
         if ($quoteErrorTransfer->getErrorIdentifier()) {
             $errorIdentifierMapping = $this->config->getErrorIdentifierToRestErrorMapping()[$quoteErrorTransfer->getErrorIdentifier()];
@@ -95,7 +108,7 @@ class CartRestResponseBuilder implements CartRestResponseBuilderInterface
         }
 
         if ($quoteErrorTransfer->getMessage()) {
-            return $this->createErrorMessageTransfer($quoteErrorTransfer);
+            return $this->createErrorMessageTransfer($quoteErrorTransfer, $localeName);
         }
 
         return $restErrorMessageTransfer;
@@ -103,14 +116,15 @@ class CartRestResponseBuilder implements CartRestResponseBuilderInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteErrorTransfer $quoteErrorTransfer
+     * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\RestErrorMessageTransfer
      */
-    protected function createErrorMessageTransfer(QuoteErrorTransfer $quoteErrorTransfer): RestErrorMessageTransfer
+    protected function createErrorMessageTransfer(QuoteErrorTransfer $quoteErrorTransfer, string $localeName): RestErrorMessageTransfer
     {
         return (new RestErrorMessageTransfer())
             ->setCode(CartsRestApiConfig::RESPONSE_CODE_ITEM_VALIDATION)
             ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
-            ->setDetail($quoteErrorTransfer->getMessage());
+            ->setDetail($this->glossaryStorageClient->translate($quoteErrorTransfer->getMessage(), $localeName));
     }
 }

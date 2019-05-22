@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\CartsRestApi\Business\QuoteItem;
 
+use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\PersistentCartChangeTransfer;
 use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -17,14 +17,14 @@ use Generated\Shared\Transfer\RestCartItemsAttributesTransfer;
 use Spryker\Shared\CartsRestApi\CartsRestApiConfig as CartsRestApiSharedConfig;
 use Spryker\Zed\CartsRestApi\Business\Quote\QuoteReaderInterface;
 use Spryker\Zed\CartsRestApi\Business\QuoteItem\Mapper\QuoteItemMapperInterface;
-use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToPersistentCartFacadeInterface;
+use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToCartFacadeInterface;
 
 class QuoteItemAdder implements QuoteItemAdderInterface
 {
     /**
-     * @var \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToPersistentCartFacadeInterface
+     * @var \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToCartFacadeInterface
      */
-    protected $persistentCartFacade;
+    protected $cartFacade;
 
     /**
      * @var \Spryker\Zed\CartsRestApi\Business\Quote\QuoteReaderInterface
@@ -37,16 +37,16 @@ class QuoteItemAdder implements QuoteItemAdderInterface
     protected $quoteItemMapper;
 
     /**
-     * @param \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToPersistentCartFacadeInterface $persistentCartFacade
+     * @param \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToCartFacadeInterface $cartFacade
      * @param \Spryker\Zed\CartsRestApi\Business\Quote\QuoteReaderInterface $quoteReader
      * @param \Spryker\Zed\CartsRestApi\Business\QuoteItem\Mapper\QuoteItemMapperInterface $quoteItemMapper
      */
     public function __construct(
-        CartsRestApiToPersistentCartFacadeInterface $persistentCartFacade,
+        CartsRestApiToCartFacadeInterface $cartFacade,
         QuoteReaderInterface $quoteReader,
         QuoteItemMapperInterface $quoteItemMapper
     ) {
-        $this->persistentCartFacade = $persistentCartFacade;
+        $this->cartFacade = $cartFacade;
         $this->quoteReader = $quoteReader;
         $this->quoteItemMapper = $quoteItemMapper;
     }
@@ -74,12 +74,12 @@ class QuoteItemAdder implements QuoteItemAdderInterface
             return $quoteResponseTransfer;
         }
 
-        $persistentCartChangeTransfer = $this->createPersistentCartChangeTransfer(
+        $persistentCartChangeTransfer = $this->createCartChangeTransfer(
             $quoteResponseTransfer->getQuoteTransfer(),
             $restCartItemsAttributesTransfer
         );
 
-        $quoteResponseTransfer = $this->persistentCartFacade->add($persistentCartChangeTransfer);
+        $quoteResponseTransfer = $this->cartFacade->addToQuote($persistentCartChangeTransfer);
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             $quoteResponseTransfer
                 ->addError((new QuoteErrorTransfer())
@@ -93,17 +93,20 @@ class QuoteItemAdder implements QuoteItemAdderInterface
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
      *
-     * @return \Generated\Shared\Transfer\PersistentCartChangeTransfer
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    protected function createPersistentCartChangeTransfer(
+    protected function createCartChangeTransfer(
         QuoteTransfer $quoteTransfer,
         RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
-    ): PersistentCartChangeTransfer {
-        return (new PersistentCartChangeTransfer())
-            ->setIdQuote($quoteTransfer->getIdQuote())
+    ): CartChangeTransfer {
+        $quoteTransfer
+            ->setCustomer((new CustomerTransfer())
+                ->setCustomerReference($restCartItemsAttributesTransfer->getCustomerReference()));
+
+        return (new CartChangeTransfer())
+            ->setQuote($quoteTransfer)
             ->addItem((new ItemTransfer())
                 ->setSku($restCartItemsAttributesTransfer->getSku())
-                ->setQuantity($restCartItemsAttributesTransfer->getQuantity()))
-            ->setCustomer((new CustomerTransfer())->setCustomerReference($restCartItemsAttributesTransfer->getCustomerReference()));
+                ->setQuantity($restCartItemsAttributesTransfer->getQuantity()));
     }
 }

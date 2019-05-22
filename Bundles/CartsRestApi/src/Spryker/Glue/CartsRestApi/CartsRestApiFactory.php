@@ -8,6 +8,7 @@
 namespace Spryker\Glue\CartsRestApi;
 
 use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToCustomerClientInterface;
+use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToGlossaryStorageClientInterface;
 use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToPersistentCartClientInterface;
 use Spryker\Glue\CartsRestApi\Processor\Cart\CartCreator;
 use Spryker\Glue\CartsRestApi\Processor\Cart\CartCreatorInterface;
@@ -232,7 +233,8 @@ class CartsRestApiFactory extends AbstractFactory
     {
         return new CartRestResponseBuilder(
             $this->getConfig(),
-            $this->getResourceBuilder()
+            $this->getResourceBuilder(),
+            $this->getGlossaryStorageClient()
         );
     }
 
@@ -313,5 +315,13 @@ class CartsRestApiFactory extends AbstractFactory
     public function getCustomerClient(): CartsRestApiToCustomerClientInterface
     {
         return $this->getProvidedDependency(CartsRestApiDependencyProvider::CLIENT_CUSTOMER);
+    }
+
+    /**
+     * @return \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToGlossaryStorageClientInterface
+     */
+    public function getGlossaryStorageClient(): CartsRestApiToGlossaryStorageClientInterface
+    {
+        return $this->getProvidedDependency(CartsRestApiDependencyProvider::CLIENT_GLOSSARY_STORAGE);
     }
 }

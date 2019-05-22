@@ -138,7 +138,9 @@ class QuoteItemOperation implements QuoteItemOperationInterface
 
         $cartChangeTransfer = $this->createCartChangeTransfer($quoteTransfer);
         foreach ($itemTransferList as $itemTransfer) {
-            $cartChangeTransfer->addItem($itemTransfer);
+            if ($itemTransfer) {
+                $cartChangeTransfer->addItem($itemTransfer);
+            }
         }
         $cartChangeTransfer = $this->cartChangeRequestExpander->removeItemRequestExpand($cartChangeTransfer);
         $quoteTransfer = $this->cartFacade->remove($cartChangeTransfer);
