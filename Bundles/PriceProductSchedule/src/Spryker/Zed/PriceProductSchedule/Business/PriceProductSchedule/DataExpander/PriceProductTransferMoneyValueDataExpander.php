@@ -55,13 +55,23 @@ class PriceProductTransferMoneyValueDataExpander implements PriceProductTransfer
         try {
             $currencyTransfer = $this->currencyFacade->fromIsoCode($priceProductScheduleImportTransfer->getCurrencyCode());
         } catch (CurrencyNotFoundException $e) {
-            throw new PriceProductScheduleListImportException($e);
+            throw new PriceProductScheduleListImportException(
+                sprintf(
+                    'Currency was not found by provided iso code %s',
+                    $priceProductScheduleImportTransfer->getCurrencyCode()
+                )
+            );
         }
 
         try {
             $storeTransfer = $this->storeFacade->getStoreByName($priceProductScheduleImportTransfer->getStoreName());
         } catch (StoreNotFoundException $e) {
-            throw new PriceProductScheduleListImportException($e);
+            throw new PriceProductScheduleListImportException(
+                sprintf(
+                    'Store was not found by provided name %s',
+                    $priceProductScheduleImportTransfer->getStoreName()
+                )
+            );
         }
 
         $moneyValueTransfer =

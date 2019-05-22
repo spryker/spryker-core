@@ -48,7 +48,7 @@ class PriceProductTransferProductDataExpander implements PriceProductTransferDat
             if ($productAbstractId === null) {
                 throw new PriceProductScheduleListImportException(
                     sprintf(
-                        'Abstract product was not found by provided sku "%s"',
+                        'Abstract product was not found by provided sku %s',
                         $priceProductScheduleImportTransfer->getSkuProductAbstract()
                     )
                 );
@@ -65,7 +65,7 @@ class PriceProductTransferProductDataExpander implements PriceProductTransferDat
             if ($productConcreteId === null) {
                 throw new PriceProductScheduleListImportException(
                     sprintf(
-                        'Concrete product was not found by provided sku "%s"',
+                        'Concrete product was not found by provided sku %s',
                         $priceProductScheduleImportTransfer->getSkuProduct()
                     )
                 );
