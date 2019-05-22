@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Customer\Business;
 
+use Spryker\Service\Customer\CustomerServiceInterface;
 use Spryker\Zed\Customer\Business\Anonymizer\CustomerAnonymizer;
 use Spryker\Zed\Customer\Business\Checkout\CustomerOrderSaver;
 use Spryker\Zed\Customer\Business\Checkout\CustomerOrderSaverInterface;
@@ -152,7 +153,7 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
             $this->createCustomer(),
             $this->createAddress(),
             $this->getRepository(),
-            $this->getConfig()
+            $this->getCustomerService()
         );
     }
 
@@ -274,5 +275,13 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
         };
 
         return new OrderSaverStrategyResolver($strategyContainer);
+    }
+
+    /**
+     * @return \Spryker\Service\Customer\CustomerServiceInterface
+     */
+    public function getCustomerService(): CustomerServiceInterface
+    {
+        return $this->getProvidedDependency(CustomerDependencyProvider::SERVICE_CUSTOMER);
     }
 }

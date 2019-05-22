@@ -28,6 +28,7 @@ class ShipmentFormEdit extends ShipmentFormCreate
                 static::FIELD_SHIPMENT_SELECTED_ITEMS => $builder->getOption(static::FIELD_SHIPMENT_SELECTED_ITEMS),
             ],
         ]);
+
         return $this;
     }
 }

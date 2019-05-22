@@ -185,6 +185,7 @@ class ShipmentFormCreate extends AbstractType
                 static::FIELD_SHIPMENT_SELECTED_ITEMS => $builder->getOption(static::FIELD_SHIPMENT_SELECTED_ITEMS),
             ],
         ]);
+
         return $this;
     }
 

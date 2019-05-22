@@ -24,6 +24,8 @@ use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCurrencyInterface;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToStoreInterface;
 use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface;
 use Spryker\Zed\Shipment\ShipmentDependencyProvider;
+use Spryker\Zed\ShipmentExtension\Communication\Plugin\ShipmentMethodAvailabilityPluginInterface;
+use Spryker\Zed\ShipmentExtension\Communication\Plugin\ShipmentMethodPricePluginInterface;
 use Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodFilterPluginInterface;
 
 class MethodReader extends Method
@@ -176,10 +178,12 @@ class MethodReader extends Method
                     /**
                      * @deprecated Exists for Backward Compatibility reasons only.
                      */
-                    $shipmentMethods = $shipmentMethodFilter->filterShipmentMethods($shipmentMethods, $quoteTransfer);
+                    $shipmentMethods = $shipmentMethodFilter->filterShipmentMethods($shipmentMethods->getMethods(), $quoteTransfer);
                 }
             }
-            $shipmentGroupTransfer->setAvailableShipmentMethods($shipmentMethods);
+
+            $shipmentMethodsTransfer = (new ShipmentMethodsTransfer())->setMethods($shipmentMethods);
+            $shipmentGroupTransfer->setAvailableShipmentMethods($shipmentMethodsTransfer);
         }
 
         return $shipmentGroupCollectionTransfer;
@@ -370,7 +374,7 @@ class MethodReader extends Method
 
         if ($this->issetDeliveryTimePlugin($method, $deliveryTimePlugins)) {
             $deliveryTimePlugin = $this->getDeliveryTimePlugin($method, $deliveryTimePlugins);
-            if ($availabilityPlugin instanceof ShipmentMethodAvailabilityPluginInterface) {
+            if ($deliveryTimePlugin instanceof ShipmentMethodAvailabilityPluginInterface) {
                 $deliveryTime = $deliveryTimePlugin->getTime($shipmentGroupTransfer, $quoteTransfer);
             } else {
                 /**
@@ -398,7 +402,7 @@ class MethodReader extends Method
      * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethod $method
      * @param array $deliveryTimePlugins
      *
-     * @return \Spryker\Zed\ShipmentExtension\Communication\Plugin\ShipmentMethodDeliveryTimePluginInterface
+     * @return \Spryker\Zed\ShipmentExtension\Communication\Plugin\ShipmentMethodDeliveryTimePluginInterface|\Spryker\Zed\Shipment\Communication\Plugin\ShipmentMethodDeliveryTimePluginInterface
      */
     protected function getDeliveryTimePlugin(SpyShipmentMethod $method, array $deliveryTimePlugins)
     {

@@ -8,6 +8,7 @@
 namespace Spryker\Service\Shipment;
 
 use Spryker\Service\Kernel\AbstractServiceFactory;
+use Spryker\Service\Shipment\Dependency\Service\ShipmentToCustomerServiceInterface;
 use Spryker\Service\Shipment\Items\ItemsGrouper;
 use Spryker\Service\Shipment\Items\ItemsGrouperInterface;
 
@@ -18,6 +19,14 @@ class ShipmentServiceFactory extends AbstractServiceFactory
      */
     public function createItemsGrouper(): ItemsGrouperInterface
     {
-        return new ItemsGrouper();
+        return new ItemsGrouper($this->getCustomerService());
+    }
+
+    /**
+     * @return \Spryker\Service\Shipment\Dependency\Service\ShipmentToCustomerServiceInterface
+     */
+    public function getCustomerService(): ShipmentToCustomerServiceInterface
+    {
+        return $this->getProvidedDependency(ShipmentDependencyProvider::SERVICE_CUSTOMER);
     }
 }
