@@ -58,6 +58,7 @@ class OauthCompanyUserDependencyProvider extends AbstractBundleDependencyProvide
     {
         $container = parent::provideCommunicationLayerDependencies($container);
         $container = $this->addCompanyUserFacade($container);
+        $container = $this->addUtilEncodingService($container);
 
         return $container;
     }
