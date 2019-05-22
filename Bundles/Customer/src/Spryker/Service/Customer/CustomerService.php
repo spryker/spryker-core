@@ -28,4 +28,18 @@ class CustomerService extends AbstractService implements CustomerServiceInterfac
     {
         return $this->getFactory()->createCustomerAddressKeyGenerator()->getUniqueAddressKey($addressTransfer);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\AddressTransfer|null $addressTransfer
+     *
+     * @return bool
+     */
+    public function isAddressEmpty(?AddressTransfer $addressTransfer = null): bool
+    {
+        return $this->getFactory()->createAddressDataChecker()->isAddressEmpty($addressTransfer);
+    }
 }
