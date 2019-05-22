@@ -75,9 +75,6 @@ class CartsRestApiConfig extends AbstractBundleConfig
     public const ACTION_GUEST_CART_ITEMS_DELETE = 'delete';
 
     public const RESPONSE_CODE_CART_NOT_FOUND = '101';
-    /**
-     * @deprecated Will be removed in the next major.
-     */
     public const RESPONSE_CODE_ITEM_VALIDATION = '102';
     public const RESPONSE_CODE_ITEM_NOT_FOUND = '103';
     public const RESPONSE_CODE_CART_ID_MISSING = '104';
