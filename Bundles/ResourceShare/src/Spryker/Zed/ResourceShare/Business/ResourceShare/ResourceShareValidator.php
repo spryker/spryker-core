@@ -10,6 +10,7 @@ namespace Spryker\Zed\ResourceShare\Business\ResourceShare;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
 use Generated\Shared\Transfer\ResourceShareTransfer;
+use Spryker\Shared\ResourceShare\ResourceShareConfig;
 
 class ResourceShareValidator implements ResourceShareValidatorInterface
 {
@@ -27,7 +28,9 @@ class ResourceShareValidator implements ResourceShareValidatorInterface
         if ($this->isResourceShareExpired($resourceShareTransfer)) {
             return $resourceShareResponseTransfer->setIsSuccessful(false)
                 ->addMessage(
-                    (new MessageTransfer())->setValue(static::GLOSSARY_KEY_RESOURCE_SHARE_IS_EXPIRED)
+                    (new MessageTransfer())
+                        ->setType(ResourceShareConfig::MESSAGE_TYPE_ERROR)
+                        ->setValue(static::GLOSSARY_KEY_RESOURCE_SHARE_IS_EXPIRED)
                 );
         }
 

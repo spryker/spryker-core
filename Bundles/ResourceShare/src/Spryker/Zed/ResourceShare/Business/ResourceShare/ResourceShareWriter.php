@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
 use Generated\Shared\Transfer\ResourceShareTransfer;
+use Spryker\Shared\ResourceShare\ResourceShareConfig;
 use Spryker\Zed\ResourceShare\Persistence\ResourceShareEntityManagerInterface;
 use Spryker\Zed\ResourceShare\Persistence\ResourceShareRepositoryInterface;
 
@@ -98,13 +99,17 @@ class ResourceShareWriter implements ResourceShareWriterInterface
 
         if (!$resourceShareTransfer->getResourceType()) {
             return $resourceShareResponseTransfer->addMessage(
-                (new MessageTransfer())->setValue(static::GLOSSARY_KEY_RESOURCE_TYPE_IS_NOT_DEFINED)
+                (new MessageTransfer())
+                    ->setType(ResourceShareConfig::MESSAGE_TYPE_ERROR)
+                    ->setValue(static::GLOSSARY_KEY_RESOURCE_TYPE_IS_NOT_DEFINED)
             );
         }
 
         if (!$resourceShareTransfer->getCustomerReference()) {
             return $resourceShareResponseTransfer->addMessage(
-                (new MessageTransfer())->setValue(static::GLOSSARY_KEY_CUSTOMER_REFERENCE_IS_NOT_DEFINED)
+                (new MessageTransfer())
+                    ->setType(ResourceShareConfig::MESSAGE_TYPE_ERROR)
+                    ->setValue(static::GLOSSARY_KEY_CUSTOMER_REFERENCE_IS_NOT_DEFINED)
             );
         }
 
