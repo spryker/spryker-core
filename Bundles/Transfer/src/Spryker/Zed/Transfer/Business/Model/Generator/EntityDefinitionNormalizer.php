@@ -195,6 +195,7 @@ class EntityDefinitionNormalizer extends DefinitionNormalizer
                 }
             }
         }
+
         return $normalizedDefinition;
     }
 
@@ -211,6 +212,7 @@ class EntityDefinitionNormalizer extends DefinitionNormalizer
 
         if (isset($transferDefinition[self::KEY_NAME])) {
             $entityName = str_replace('_', '', ucwords($transferDefinition[self::KEY_NAME], '_'));
+
             return $transferDefinition[self::ENTITY_NAMESPACE] . '\\' . $entityName;
         }
 

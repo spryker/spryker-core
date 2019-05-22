@@ -47,4 +47,11 @@ interface CompanyUnitAddressRepositoryInterface
      * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer|null
      */
     public function findCompanyUnitAddressById(int $idCompanyUnitAddress): ?CompanyUnitAddressTransfer;
+
+    /**
+     * @param string $companyBusinessUnitAddressUuid
+     *
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer|null
+     */
+    public function findCompanyBusinessUnitAddressByUuid(string $companyBusinessUnitAddressUuid): ?CompanyUnitAddressTransfer;
 }

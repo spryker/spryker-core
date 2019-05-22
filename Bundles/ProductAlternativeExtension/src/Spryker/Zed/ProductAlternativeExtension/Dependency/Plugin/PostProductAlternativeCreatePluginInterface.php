@@ -19,7 +19,7 @@ interface PostProductAlternativeCreatePluginInterface
      *
      * @param \Generated\Shared\Transfer\ProductAlternativeTransfer $productAlternativeTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductAlternativeTransfer
+     * @return void
      */
     public function execute(ProductAlternativeTransfer $productAlternativeTransfer);
 }

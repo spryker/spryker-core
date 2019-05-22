@@ -621,6 +621,7 @@ class BridgeBuilder
     protected function getClassNameFromFqcn($fqcn): string
     {
         $arr = explode('\\', $fqcn);
+
         return end($arr);
     }
 
@@ -702,6 +703,7 @@ class BridgeBuilder
         if ($numberOfReturnParts === 1) {
             if (strpos($methodReturnType, '\\') !== false) {
                 $methodTypeHintArray = explode('\\', $methodReturnType);
+
                 return [
                     static::TYPE_HINT => static::NON_NULLABLE_RETURN_TYPE_HINT . end($methodTypeHintArray),
                     static::FQCN => ltrim($methodReturnType, '\\'),
@@ -729,6 +731,7 @@ class BridgeBuilder
 
         if (strpos($methodTypeHint, '\\') !== false) {
             $methodTypeHintArray = explode('\\', $methodTypeHint);
+
             return [
                 static::TYPE_HINT => static::NULLABLE_RETURN_TYPE_HINT . end($methodTypeHintArray),
                 static::FQCN => ltrim($methodTypeHint, '\\'),

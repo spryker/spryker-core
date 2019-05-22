@@ -44,6 +44,7 @@ class BaseMoneyCollectionDataProvider
         foreach ($submittedMoneyValueCollection as $moneyValueTransfer) {
             $currencyIndex[$moneyValueTransfer->getFkCurrency() . $moneyValueTransfer->getFkStore()] = true;
         }
+
         return $currencyIndex;
     }
 }

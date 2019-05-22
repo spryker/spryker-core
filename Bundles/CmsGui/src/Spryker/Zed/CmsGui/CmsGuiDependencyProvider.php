@@ -88,6 +88,7 @@ class CmsGuiDependencyProvider extends AbstractBundleDependencyProvider
     protected function getTwigEnvironment()
     {
         $pimplePlugin = new Pimple();
+
         return $pimplePlugin->getApplication()['twig'];
     }
 

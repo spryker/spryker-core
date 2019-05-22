@@ -90,6 +90,7 @@ class CmsProductContentWidgetPlugin extends AbstractPlugin implements CmsContent
             if ($numberOfCollectedProducts === 1) {
                 return ['product' => array_shift($products)];
             }
+
             return [];
         }
 

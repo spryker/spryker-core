@@ -7,6 +7,9 @@
 
 namespace Spryker\Client\ContentStorageExtension\Dependency\Plugin;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 interface ContentTermExecutorPluginInterface
 {
     /**

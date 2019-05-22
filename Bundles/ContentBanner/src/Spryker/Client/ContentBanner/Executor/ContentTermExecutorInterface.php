@@ -9,6 +9,9 @@ namespace Spryker\Client\ContentBanner\Executor;
 
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 interface ContentTermExecutorInterface
 {
     /**
