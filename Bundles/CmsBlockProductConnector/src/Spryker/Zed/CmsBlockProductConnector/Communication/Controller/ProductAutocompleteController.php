@@ -95,7 +95,7 @@ class ProductAutocompleteController extends AbstractController
         $hasMoreResults = $paginationTransfer->getLastPage() !== $paginationTransfer->getPage();
 
         return [
-            static::RESPONSE_KEY_PAGINATION_MORE => $hasMoreResults
+            static::RESPONSE_KEY_PAGINATION_MORE => $hasMoreResults,
         ];
     }
 }
