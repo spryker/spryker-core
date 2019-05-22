@@ -43,17 +43,17 @@ class OauthCustomerScopeInstaller implements OauthCustomerScopeInstallerInterfac
         $customerScopes = $this->oauthCustomerConnectorConfig->getCustomerScopes();
 
         $oauthScopeTransfers = $this->oauthFacade->getScopesByIdentifiers($customerScopes);
-        $oauthScopeTransfers = $this->mapScopesByIdentifiers($oauthScopeTransfers);
+        $oauthScopeTransferMap = $this->mapScopesByIdentifiers($oauthScopeTransfers);
 
         foreach ($customerScopes as $customerScope) {
-            if ($this->isOauthScopeExist($customerScope, $oauthScopeTransfers)) {
+            if ($this->isOauthScopeExist($customerScope, $oauthScopeTransferMap)) {
                 continue;
             }
 
             $oauthScopeTransfer = (new OauthScopeTransfer())
                 ->setIdentifier($customerScope);
 
-            $oauthScopeTransfers[$customerScope] = $this->oauthFacade->saveScope($oauthScopeTransfer);
+            $oauthScopeTransferMap[$customerScope] = $this->oauthFacade->saveScope($oauthScopeTransfer);
         }
     }
 
@@ -76,13 +76,13 @@ class OauthCustomerScopeInstaller implements OauthCustomerScopeInstallerInterfac
 
     /**
      * @param string $oauthScopeIdentifier
-     * @param \Generated\Shared\Transfer\OauthScopeTransfer[] $oauthScopeTransfers
+     * @param \Generated\Shared\Transfer\OauthScopeTransfer[] $oauthScopeTransferMap
      *
      * @return bool
      */
-    protected function isOauthScopeExist(string $oauthScopeIdentifier, array $oauthScopeTransfers): bool
+    protected function isOauthScopeExist(string $oauthScopeIdentifier, array $oauthScopeTransferMap): bool
     {
-        if (isset($oauthScopeTransfers[$oauthScopeIdentifier])) {
+        if (isset($oauthScopeTransferMap[$oauthScopeIdentifier])) {
             return true;
         }
 
