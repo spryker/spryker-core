@@ -14,9 +14,9 @@ interface ContentGuiToContentFacadeInterface
     /**
      * @param int $idContent
      *
-     * @return \Generated\Shared\Transfer\ContentTransfer
+     * @return \Generated\Shared\Transfer\ContentTransfer|null
      */
-    public function findContentById(int $idContent): ContentTransfer;
+    public function findContentById(int $idContent): ?ContentTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ContentTransfer $contentTransfer

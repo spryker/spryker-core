@@ -6,6 +6,7 @@ Default,Default
 "Edit Content Item","Edit Content Item"
 "List of Content Items","List of Content Items"
 "Content Item","Content Item"
+"Edit Widget","Edit Widget"
 "Insert","Insert"
 "Insert a Content Item","Insert a Content Item"
 "Select a template","Select a template"
@@ -15,3 +16,4 @@ Default,Default
 "Overview of Content Items","Overview of Content Items"
 "Overwrite default by specifying a different list per specific locale","Overwrite default by specifying a different list per specific locale"
 Save,Save
+"Invalid data provided","Invalid data provided"

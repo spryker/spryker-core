@@ -54,9 +54,14 @@ class CreateGlossaryController extends AbstractController
 
         if ($glossaryForm->isSubmitted()) {
             if ($glossaryForm->isValid()) {
+                $cmsGlossaryTransfer = $glossaryForm->getData();
+                $cmsGlossaryTransfer = $this->getFactory()
+                    ->createCmsGlossaryUpdater()
+                    ->updateBeforeSave($cmsGlossaryTransfer);
+
                 $this->getFactory()
                     ->getCmsFacade()
-                    ->saveCmsGlossary($glossaryForm->getData());
+                    ->saveCmsGlossary($cmsGlossaryTransfer);
 
                 $this->addSuccessMessage('Placeholder translations successfully updated.');
 
@@ -66,9 +71,9 @@ class CreateGlossaryController extends AbstractController
                 )->build();
 
                 return $this->redirectResponse($redirectUrl);
-            } else {
-                $this->addErrorMessage('Invalid data provided.');
             }
+
+            $this->addErrorMessage('Invalid data provided.');
         }
 
         $availableLocales = $this->getFactory()

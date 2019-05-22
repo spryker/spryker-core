@@ -27,6 +27,7 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Symfony\Component\Form\FormInterface;
 
 /**
+ * @method \Spryker\Zed\ContentGui\Business\ContentGuiFacade getFacade()
  * @method \Spryker\Zed\ContentGui\ContentGuiConfig getConfig()
  */
 class ContentGuiCommunicationFactory extends AbstractCommunicationFactory

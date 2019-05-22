@@ -16,7 +16,8 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class ContentByTypeTable extends AbstractTable
 {
-    protected const FIELD_ACTION_CONTENT_ITEM = '<input type="radio" %s name="content-item" value="%s"/>';
+    protected const FIELD_ACTION_CONTENT_ITEM = '<input type="radio" %s  data-content-item-type="%s" data-content-item-name="%s" name="content-item" value="%s"/>';
+    protected const ORDER_CONDITION = '(CASE WHEN %s = %d THEN 1 END)';
 
     /**
      * @var string
@@ -100,6 +101,16 @@ class ContentByTypeTable extends AbstractTable
     protected function prepareData(TableConfiguration $config): array
     {
         $this->contentQuery->filterByContentTypeKey($this->contentType);
+
+        if ($this->idContent) {
+            $orderCondition = sprintf(
+                static::ORDER_CONDITION,
+                SpyContentTableMap::COL_ID_CONTENT,
+                $this->idContent
+            );
+            $this->contentQuery->addAscendingOrderByColumn($orderCondition);
+        }
+
         $contentItems = $this->runQuery($this->contentQuery, $config);
         $results = [];
 
@@ -129,6 +140,8 @@ class ContentByTypeTable extends AbstractTable
         return sprintf(
             static::FIELD_ACTION_CONTENT_ITEM,
             $selectedAttr,
+            $contentItem[ContentTableConstants::COL_CONTENT_TYPE_KEY],
+            $contentItem[ContentTableConstants::COL_NAME],
             $contentItem[ContentTableConstants::COL_ID_CONTENT]
         );
     }
@@ -153,6 +166,12 @@ class ContentByTypeTable extends AbstractTable
      */
     protected function getTableUrl(): string
     {
-        return Url::generate($this->defaultUrl, [ListContentByTypeController::PARAM_CONTENT_TYPE => $this->contentType]);
+        $params = [ListContentByTypeController::PARAM_CONTENT_TYPE => $this->contentType];
+
+        if ($this->idContent) {
+            $params[ListContentByTypeController::PARAM_CONTENT_ID] = $this->idContent;
+        }
+
+        return Url::generate($this->defaultUrl, $params);
     }
 }
