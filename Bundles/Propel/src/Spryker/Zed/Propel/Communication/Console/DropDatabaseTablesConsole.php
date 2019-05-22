@@ -19,7 +19,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class DropDatabaseTablesConsole extends Console
 {
-    public const COMMAND_NAME = 'propel:database:drop-tables';
+    public const COMMAND_NAME = 'propel:tables:drop';
 
     /**
      * @return void
