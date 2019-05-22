@@ -107,6 +107,7 @@
 
     <transfer name="Message">
         <property name="value" type="string" />
+        <property name="type" type="string" />
     </transfer>
 
 </transfers>

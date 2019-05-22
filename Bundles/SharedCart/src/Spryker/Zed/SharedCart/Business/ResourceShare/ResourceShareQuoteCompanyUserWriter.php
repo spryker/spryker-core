@@ -120,18 +120,21 @@ class ResourceShareQuoteCompanyUserWriter implements ResourceShareQuoteCompanyUs
         $fullAccessQuotePermissionGroupTransfer = $this->findQuotePermissionGroupByName($resourceShareOptionName);
         if ($shareDetailTransfer->getQuotePermissionGroup()->getIdQuotePermissionGroup() !== $fullAccessQuotePermissionGroupTransfer->getIdQuotePermissionGroup()) {
             $shareDetailTransfer->setQuotePermissionGroup($fullAccessQuotePermissionGroupTransfer);
-
             $this->sharedCartEntityManager->updateCompanyUserQuotePermissionGroup($shareDetailTransfer);
+
+            return (new ResourceShareResponseTransfer())
+                ->setIsSuccessful(true)
+                ->setResourceShare($resourceShareRequestTransfer->getResourceShare())
+                ->addMessage(
+                    (new MessageTransfer())
+                        ->setType(static::MESSAGE_TYPE_SUCCESS)
+                        ->setValue(static::GLOSSARY_KEY_CART_SHARE_ACCESS_UPDATED)
+                );
         }
 
         return (new ResourceShareResponseTransfer())
             ->setIsSuccessful(true)
-            ->setResourceShare($resourceShareRequestTransfer->getResourceShare())
-            ->addMessage(
-                (new MessageTransfer())
-                    ->setType(static::MESSAGE_TYPE_SUCCESS)
-                    ->setValue(static::GLOSSARY_KEY_CART_SHARE_ACCESS_UPDATED)
-            );
+            ->setResourceShare($resourceShareRequestTransfer->getResourceShare());
     }
 
     /**

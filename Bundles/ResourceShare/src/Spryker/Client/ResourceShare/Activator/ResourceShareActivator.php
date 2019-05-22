@@ -43,14 +43,36 @@ class ResourceShareActivator implements ResourceShareActivatorInterface
      */
     public function activateResourceShare(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer
     {
-        $resourceShareResponseTransfer = $this->zedResourceShareStub->activateResourceShare($resourceShareRequestTransfer);
-        if (!$resourceShareResponseTransfer->getIsSuccessful()) {
-            return $resourceShareResponseTransfer;
+        $zedResourceShareResponseTransfer = $this->zedResourceShareStub->activateResourceShare($resourceShareRequestTransfer);
+        if (!$zedResourceShareResponseTransfer->getIsSuccessful()) {
+            return $zedResourceShareResponseTransfer;
         }
 
-        $resourceShareRequestTransfer->setResourceShare($resourceShareResponseTransfer->getResourceShare());
+        $resourceShareRequestTransfer->setResourceShare($zedResourceShareResponseTransfer->getResourceShare());
+        $strategyResourceShareResponseTransfer = $this->executeResourceShareActivatorStrategyPlugins($resourceShareRequestTransfer);
 
-        return $this->executeResourceShareActivatorStrategyPlugins($resourceShareRequestTransfer);
+        return $this->getResourceShareResponseTransferWithCombinedMessages(
+            $zedResourceShareResponseTransfer,
+            $strategyResourceShareResponseTransfer
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ResourceShareResponseTransfer $zedResourceShareResponseTransfer
+     * @param \Generated\Shared\Transfer\ResourceShareResponseTransfer $strategyResourceShareResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
+     */
+    protected function getResourceShareResponseTransferWithCombinedMessages(
+        ResourceShareResponseTransfer $zedResourceShareResponseTransfer,
+        ResourceShareResponseTransfer $strategyResourceShareResponseTransfer
+    ): ResourceShareResponseTransfer {
+        $messageTransfers = $zedResourceShareResponseTransfer->getMessages();
+        foreach ($strategyResourceShareResponseTransfer->getMessages() as $messageTransfer) {
+            $messageTransfers->append($messageTransfer);
+        }
+
+        return $strategyResourceShareResponseTransfer->setMessages($messageTransfers);
     }
 
     /**
