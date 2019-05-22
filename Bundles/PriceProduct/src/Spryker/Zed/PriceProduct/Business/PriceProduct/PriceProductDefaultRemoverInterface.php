@@ -9,14 +9,12 @@ namespace Spryker\Zed\PriceProduct\Business\PriceProduct;
 
 use Generated\Shared\Transfer\PriceProductTransfer;
 
-interface PriceProductRemoverInterface
+interface PriceProductDefaultRemoverInterface
 {
     /**
-     * @deprecated Please try to avoid removing price product store. Use \Spryker\Zed\PriceProduct\Business\PriceProduct\PriceProductDefaultRemover::removePriceProductDefaultsForPriceProduct.
-     *
      * @param \Generated\Shared\Transfer\PriceProductTransfer $transferPriceProduct
      *
      * @return void
      */
-    public function removePriceProductStore(PriceProductTransfer $transferPriceProduct): void;
+    public function removePriceProductDefaultsForPriceProduct(PriceProductTransfer $transferPriceProduct): void;
 }
