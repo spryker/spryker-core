@@ -79,14 +79,11 @@
     {% endif %}
 </td>
 <td>
-    {% if eventsGroupedByItem[orderItem.IdSalesOrderItem] | length > 0 %}
-        {% for event in eventsGroupedByItem[orderItem.IdSalesOrderItem] %}
-            <a class="btn btn-primary btn-sm trigger-order-single-event"
-               data-id-item="{{ orderItem.idSalesOrderItem }}"
-               data-id-sales-order="{{ orderItem.fkSalesOrder }}"
-               data-id-reclamation="{{ reclamation.idSalesReclamation }}"
-               data-event="{{ event }}" href="#">{{ event }}
-            </a>
+    {% if orderItemsOmsTriggerFormCollection[orderItem.IdSalesOrderItem] | length > 0 %}
+        {% for orderItemOmsTriggerForm in orderItemsOmsTriggerFormCollection[orderItem.IdSalesOrderItem] %}
+            {% include '@Gui/Form/oms_trigger_form.twig' with {
+                form: orderItemOmsTriggerForm
+            } only %}
         {% endfor %}
     {% else -%}
         -

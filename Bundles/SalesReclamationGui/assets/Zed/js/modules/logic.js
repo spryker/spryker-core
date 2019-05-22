@@ -18,25 +18,6 @@ function getSelectedItems(idOrderItem) {
     return selectedItems;
 }
 
-function createTriggerUrl(idOrder, idReclamation, eventName) {
-    var url = '/oms/trigger/trigger-event-for-order';
-    var parameters = {
-        event: eventName,
-        'id-sales-order': idOrder,
-        redirect: '/sales-reclamation-gui/detail?id-reclamation=' + idReclamation
-    };
-
-    parameters.items = getSelectedItems();
-
-    if (!isSpecificItemsSelected(parameters)) {
-        parameters = expandParametersWithClaimedOrderItems(parameters);
-    }
-
-    var finalUrl = url + '?' + $.param(parameters);
-
-    return decodeURIComponent(finalUrl);
-}
-
 function isSpecificItemsSelected(parameters) {
     return parameters.items.length > 0;
 }
@@ -49,21 +30,6 @@ function expandParametersWithClaimedOrderItems(parameters) {
     return parameters;
 }
 
-function createTriggerItemUrl(idOrder, idOrderItem, idReclamation, eventName) {
-    var url = '/oms/trigger/trigger-event-for-order-items';
-    var parameters = {
-        event: eventName,
-        'id-sales-order-item': idOrderItem,
-        redirect: '/sales-reclamation-gui/detail?id-reclamation=' + idReclamation
-    };
-
-    parameters.items = getSelectedItems();
-
-    var finalUrl = url + '?' + $.param(parameters);
-
-    return decodeURIComponent(finalUrl);
-}
-
 function disableTrigger($item) {
     $item
         .prop('disabled', true)
@@ -71,32 +37,11 @@ function disableTrigger($item) {
 }
 
 $(document).ready(function() {
-    $('.trigger-order-single-event').click(function(e) {
-        e.preventDefault();
-        var $item = $(this);
-
-        disableTrigger($item);
-
-        var idOrder = $item.data('id-sales-order');
-        var idReclamation = $item.data('id-reclamation');
-        var eventName = $item.data('event');
-        var idOrderItem = $item.data('id-item');
-
-        window.location = createTriggerItemUrl(idOrder, idOrderItem, idReclamation, eventName);
-    });
-
-    $('.trigger-order-event').click(function(e) {
+    $('.trigger-event').click(function (e) {
         e.preventDefault();
 
-        var $item = $(this);
-
-        disableTrigger($item);
-
-        var idOrder = $item.data('id-sales-order');
-        var idReclamation = $item.data('id-sales-reclamation');
-        var eventName = $item.data('event');
-
-        window.location = createTriggerUrl(idOrder, idReclamation, eventName);
+        $(this).prop('disabled', true).addClass('disabled');
+        $(this).parents('form').first().submit();
     });
 
     $('.more-history').click(function(e) {
