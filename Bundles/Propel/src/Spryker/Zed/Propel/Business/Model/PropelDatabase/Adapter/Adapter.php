@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\Propel\Business\Model\PropelDatabase\Adapter;
 
-use Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\CleanDatabaseInterface;
 use Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\CreateDatabaseInterface;
 use Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\DropDatabaseInterface;
+use Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\DropDatabaseTablesInterface;
 use Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\ExportDatabaseInterface;
 use Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\ImportDatabaseInterface;
 
@@ -41,9 +41,9 @@ class Adapter implements AdapterInterface
     protected $importCommand;
 
     /**
-     * @var \Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\CleanDatabaseInterface
+     * @var \Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\DropDatabaseTablesInterface
      */
-    protected $cleanCommand;
+    protected $dropTablesCommand;
 
     /**
      * @param string $adapter
@@ -51,7 +51,7 @@ class Adapter implements AdapterInterface
      * @param \Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\DropDatabaseInterface $dropCommand
      * @param \Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\ExportDatabaseInterface $exportCommand
      * @param \Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\ImportDatabaseInterface $importCommand
-     * @param \Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\CleanDatabaseInterface $cleanCommand
+     * @param \Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\DropDatabaseTablesInterface $dropTablesCommand
      */
     public function __construct(
         $adapter,
@@ -59,14 +59,14 @@ class Adapter implements AdapterInterface
         DropDatabaseInterface $dropCommand,
         ExportDatabaseInterface $exportCommand,
         ImportDatabaseInterface $importCommand,
-        CleanDatabaseInterface $cleanCommand
+        DropDatabaseTablesInterface $dropTablesCommand
     ) {
         $this->adapter = $adapter;
         $this->createCommand = $createCommand;
         $this->dropCommand = $dropCommand;
         $this->exportCommand = $exportCommand;
         $this->importCommand = $importCommand;
-        $this->cleanCommand = $cleanCommand;
+        $this->dropTablesCommand = $dropTablesCommand;
     }
 
     /**
@@ -116,8 +116,8 @@ class Adapter implements AdapterInterface
     /**
      * @return void
      */
-    public function cleanDatabase(): void
+    public function dropTables(): void
     {
-        $this->cleanCommand->cleanDatabase();
+        $this->dropTablesCommand->dropTables();
     }
 }

@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\Propel\Business\Model\PropelDatabase\Command;
 
-interface CleanDatabaseInterface
+interface DropDatabaseTablesInterface
 {
     /**
      * @return void
      */
-    public function cleanDatabase(): void;
+    public function dropTables(): void;
 }

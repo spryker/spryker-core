@@ -8,14 +8,14 @@
 namespace Spryker\Zed\Propel\Business\Model\PropelDatabase\Adapter\PostgreSql;
 
 use Propel\Runtime\Propel;
-use Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\CleanDatabaseInterface;
+use Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\DropDatabaseTablesInterface;
 
-class CleanPostgreSqlDatabase implements CleanDatabaseInterface
+class DropPostgreSqlDatabaseTables implements DropDatabaseTablesInterface
 {
     /**
      * @return void
      */
-    public function cleanDatabase(): void
+    public function dropTables(): void
     {
         $conn = Propel::getConnection();
         $conn->exec($this->getDropQuery());

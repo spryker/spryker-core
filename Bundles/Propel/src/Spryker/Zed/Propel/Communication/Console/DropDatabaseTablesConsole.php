@@ -17,9 +17,9 @@ use Symfony\Component\Console\Output\OutputInterface;
  * @method \Spryker\Zed\Propel\Business\PropelFacadeInterface getFacade()
  * @method \Spryker\Zed\Propel\Communication\PropelCommunicationFactory getFactory()
  */
-class DatabaseCleanConsole extends Console
+class DropDatabaseTablesConsole extends Console
 {
-    public const COMMAND_NAME = 'propel:database:clean';
+    public const COMMAND_NAME = 'propel:database:drop-tables';
 
     /**
      * @return void
@@ -27,7 +27,7 @@ class DatabaseCleanConsole extends Console
     protected function configure()
     {
         $this->setName(self::COMMAND_NAME);
-        $this->setDescription('Clean existing database.');
+        $this->setDescription('Dropping all database tables, without dropping database.');
 
         parent::configure();
     }
@@ -40,16 +40,22 @@ class DatabaseCleanConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->info('Clean propel database');
+        $this->info('Dropping propel all database tables.');
 
         try {
-            $this->getFacade()->cleanDatabase();
-            $this->info('Database cleaned.');
+            $this->getFacade()->dropDatabaseTables();
+            $this->info('All database tables have been dropped.');
         } catch (ConnectionException $exception) {
             $this->error('Database is not reachable.');
+
+            return static::CODE_ERROR;
         } catch (Exception $exception) {
-            $this->error('Error happened during cleaning.');
+            $this->error('Error happened during dropping database tables.');
             $this->error($exception->getMessage());
+
+            return static::CODE_ERROR;
         }
+
+        return static::CODE_SUCCESS;
     }
 }

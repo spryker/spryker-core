@@ -24,7 +24,7 @@ class DropPostgreSqlDatabase implements DropDatabaseInterface
      */
     public function dropDatabase()
     {
-        if (!$this->isDatabaseExists()) {
+        if (!$this->databaseExists()) {
             return true;
         }
 
@@ -226,7 +226,7 @@ class DropPostgreSqlDatabase implements DropDatabaseInterface
     /**
      * @return bool
      */
-    protected function isDatabaseExists(): bool
+    protected function databaseExists(): bool
     {
         $pdoConnection = $this->createPdoConnection();
 

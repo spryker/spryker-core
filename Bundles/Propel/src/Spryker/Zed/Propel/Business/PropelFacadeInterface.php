@@ -142,7 +142,7 @@ interface PropelFacadeInterface
     /**
      * @api
      *
-     * @deprecated Will be removed with next major release.
+     * @deprecated Will be removed without replacement.
      *
      * Specification:
      * - Exports database backup for configured driver to `$backupPath`.
@@ -156,7 +156,7 @@ interface PropelFacadeInterface
     /**
      * @api
      *
-     * @deprecated Will be removed with next major release.
+     * @deprecated Will be removed without replacement.
      *
      * Specification:
      * - Imports database backup for configured driver from `$backupPath`.
@@ -191,11 +191,11 @@ interface PropelFacadeInterface
 
     /**
      * Specification:
-     * - Runs raw SQL script for cleaning all tables, without dropping.
+     * - Runs raw SQL script for dropping all database tables, without dropping the database.
      *
      * @api
      *
      * @return void
      */
-    public function cleanDatabase(): void;
+    public function dropDatabaseTables(): void;
 }

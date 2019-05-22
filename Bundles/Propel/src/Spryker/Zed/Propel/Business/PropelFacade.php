@@ -246,11 +246,11 @@ class PropelFacade extends AbstractFacade implements PropelFacadeInterface
      *
      * @return void
      */
-    public function cleanDatabase(): void
+    public function dropDatabaseTables(): void
     {
         $this->getFactory()
             ->createPropelDatabaseAdapterCollection()
             ->getAdapter()
-            ->cleanDatabase();
+            ->dropTables();
     }
 }
