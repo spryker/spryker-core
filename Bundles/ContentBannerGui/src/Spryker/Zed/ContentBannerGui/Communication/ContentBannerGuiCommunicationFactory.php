@@ -21,13 +21,16 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 class ContentBannerGuiCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
+     * @param array $options
+     *
      * @return \Spryker\Zed\ContentBannerGui\Communication\Form\Constraints\ContentBannerConstraint
      */
-    public function createContentBannerConstraint(): ContentBannerConstraint
+    public function createContentBannerConstraint(array $options = []): ContentBannerConstraint
     {
         return new ContentBannerConstraint(
             $this->getContentBannerFacade(),
-            $this->getUtilEncoding()
+            $this->getUtilEncoding(),
+            $options
         );
     }
 

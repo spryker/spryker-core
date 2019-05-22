@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraint;
 
@@ -58,8 +59,13 @@ class BannerContentTermForm extends AbstractType
 
                 return [];
             },
-            'constraints' => [$this->getFactory()->createContentBannerConstraint()],
         ]);
+
+        $resolver->setNormalizer('constraints', function (Options $options, $value) {
+                return array_merge($value, [
+                    $this->getFactory()->createContentBannerConstraint(),
+                ]);
+        });
     }
 
     /**
