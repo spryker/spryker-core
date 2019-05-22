@@ -34,6 +34,7 @@ class CompanyUserReader implements CompanyUserReaderInterface
     public function getCompanyUserCollection(
         CompanyUserCriteriaFilterTransfer $companyUserCriteriaFilterTransfer
     ): CompanyUserCollectionTransfer {
-        return $this->companyUserRestApiRepository->getCompanyUserCollection($companyUserCriteriaFilterTransfer);
+        return $this->companyUserRestApiRepository
+            ->getCompanyUserCollection($companyUserCriteriaFilterTransfer);
     }
 }

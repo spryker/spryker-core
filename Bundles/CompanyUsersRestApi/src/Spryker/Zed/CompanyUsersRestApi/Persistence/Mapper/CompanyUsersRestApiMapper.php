@@ -11,72 +11,114 @@ use Generated\Shared\Transfer\CompanyRoleCollectionTransfer;
 use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
+use Orm\Zed\CompanyUser\Persistence\SpyCompanyUser;
+use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Map\TableMap;
 
 class CompanyUsersRestApiMapper
 {
     /**
-     * @param array $companyUsers
-     * @param \Orm\Zed\CompanyRole\Persistence\SpyCompanyRole[] $companyRoles
+     * @param \Propel\Runtime\Collection\ObjectCollection $companyUserCollection
+     * @param \Generated\Shared\Transfer\CompanyUserCollectionTransfer $companyUserCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
      */
-    public function mapCompanyUserCollection(array $companyUsers, array $companyRoles): CompanyUserCollectionTransfer
-    {
-        $companyUserCollectionTransfer = new CompanyUserCollectionTransfer();
-        $indexedCompanyRoles = $this->indexCompanyRoleEntities($companyRoles);
-        foreach ($companyUsers as $companyUser) {
-            $companyUserTransfer = $this->mapEntityTransferToCompanyUserTransfer($companyUser);
-            $companyUserTransfer->setCompanyRoleCollection(
-                $this->mapCompanyRoleEntitiesToCompanyRoleCollectionTransfer($indexedCompanyRoles[$companyUserTransfer->getIdCompanyUser()] ?? [])
+    public function mapCompanyUserEntitiesToCompanyUserCollectionTransfer(
+        ObjectCollection $companyUserCollection,
+        CompanyUserCollectionTransfer $companyUserCollectionTransfer
+    ): CompanyUserCollectionTransfer {
+        foreach ($companyUserCollection as $companyUserEntity) {
+            $companyUserTransfer = $this->mapCompanyUserEntityToCompanyUserTransfer(
+                $companyUserEntity,
+                new CompanyUserTransfer()
             );
-            $companyUserCollectionTransfer
-                ->addCompanyUser($companyUserTransfer);
+
+            $companyUserCollectionTransfer->addCompanyUser($companyUserTransfer);
         }
 
         return $companyUserCollectionTransfer;
     }
 
     /**
-     * @param array $companyUser
+     * @param \Propel\Runtime\Collection\ObjectCollection $companyRoleCollection
+     * @param \Generated\Shared\Transfer\CompanyUserCollectionTransfer $companyUserCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
+     */
+    public function mapCompanyRoleCollectionTransferToCompanyUserCollection(
+        ObjectCollection $companyRoleCollection,
+        CompanyUserCollectionTransfer $companyUserCollectionTransfer
+    ): CompanyUserCollectionTransfer {
+        $indexedCompanyRoles = $this->indexCompanyRoleEntities($companyRoleCollection);
+        foreach ($companyUserCollectionTransfer->getCompanyUsers() as $companyUserTransfer) {
+            if (empty($indexedCompanyRoles[$companyUserTransfer->getIdCompanyUser()])) {
+                continue;
+            }
+
+            $companyRoleCollectionTransfer = $this->mapCompanyRoleEntitiesToCompanyRoleCollectionTransfer(
+                $indexedCompanyRoles[$companyUserTransfer->getIdCompanyUser()],
+                new CompanyRoleCollectionTransfer()
+            );
+
+            $companyUserTransfer->setCompanyRoleCollection($companyRoleCollectionTransfer);
+        }
+
+        return $companyUserCollectionTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\CompanyUser\Persistence\SpyCompanyUser $companyUserEntity
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUserTransfer
      */
-    protected function mapEntityTransferToCompanyUserTransfer(array $companyUser): CompanyUserTransfer
-    {
-         return (new CompanyUserTransfer())->fromArray($companyUser, true);
+    protected function mapCompanyUserEntityToCompanyUserTransfer(
+        SpyCompanyUser $companyUserEntity,
+        CompanyUserTransfer $companyUserTransfer
+    ): CompanyUserTransfer {
+        $companyUserData = $companyUserEntity->toArray(
+            TableMap::TYPE_PHPNAME,
+            true,
+            [],
+            true
+        );
+
+        return $companyUserTransfer->fromArray($companyUserData, true);
     }
 
     /**
-     * @param \Orm\Zed\CompanyRole\Persistence\SpyCompanyRole[] $companyRoles
-     *
-     * @return \Orm\Zed\CompanyRole\Persistence\SpyCompanyRole[][]
-     */
-    protected function indexCompanyRoleEntities(array $companyRoles): array
-    {
-        $indexedCompanyRoles = [];
-        foreach ($companyRoles as $companyRole) {
-            foreach ($companyRole->getSpyCompanyRoleToCompanyUsers() as $companyRoleToCompanyUser) {
-                $indexedCompanyRoles[$companyRoleToCompanyUser->getFkCompanyUser()][] = $companyRole;
-            }
-        }
-
-        return $indexedCompanyRoles;
-    }
-
-    /**
-     * @param \Orm\Zed\CompanyRole\Persistence\SpyCompanyRole[] $companyRoles
+     * @param \Orm\Zed\CompanyRole\Persistence\SpyCompanyRole[] $companyRoleEntities
+     * @param \Generated\Shared\Transfer\CompanyRoleCollectionTransfer $companyRoleCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyRoleCollectionTransfer
      */
-    protected function mapCompanyRoleEntitiesToCompanyRoleCollectionTransfer(array $companyRoles): CompanyRoleCollectionTransfer
-    {
-        $companyRoleCollectionTransfer = new CompanyRoleCollectionTransfer();
-        foreach ($companyRoles as $companyRole) {
+    protected function mapCompanyRoleEntitiesToCompanyRoleCollectionTransfer(
+        array $companyRoleEntities,
+        CompanyRoleCollectionTransfer $companyRoleCollectionTransfer
+    ): CompanyRoleCollectionTransfer {
+        foreach ($companyRoleEntities as $companyRoleEntity) {
             $companyRoleCollectionTransfer->addRole(
-                (new CompanyRoleTransfer())->fromArray($companyRole->toArray(), true)
+                (new CompanyRoleTransfer())->fromArray($companyRoleEntity->toArray(), true)
             );
         }
 
         return $companyRoleCollectionTransfer;
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection $companyRoles
+     *
+     * @return \Orm\Zed\CompanyRole\Persistence\SpyCompanyRole[][]
+     */
+    protected function indexCompanyRoleEntities(ObjectCollection $companyRoles): array
+    {
+        $indexedCompanyRoles = [];
+        foreach ($companyRoles as $companyRoleEntity) {
+            foreach ($companyRoleEntity->getSpyCompanyRoleToCompanyUsers() as $companyRoleToCompanyUserEntity) {
+                $indexedCompanyRoles[$companyRoleToCompanyUserEntity->getFkCompanyUser()][] = $companyRoleEntity;
+            }
+        }
+
+        return $indexedCompanyRoles;
     }
 }

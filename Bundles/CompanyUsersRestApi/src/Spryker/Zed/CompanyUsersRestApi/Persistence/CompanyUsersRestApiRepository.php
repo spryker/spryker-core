@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\SpyCompanyUserEntityTransfer;
 use Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
+use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -45,13 +46,18 @@ class CompanyUsersRestApiRepository extends AbstractRepository implements Compan
         $queryCompanyUser = $this->setQueryFilters($queryCompanyUser, $filterTransfer);
 
         $companyUserEntityCollection = $queryCompanyUser->find();
+
+        $companyUserCollectionTransfer = $this->getFactory()
+            ->createCompanyUsersRestApiMapper()
+            ->mapCompanyUserEntitiesToCompanyUserCollectionTransfer($companyUserEntityCollection, new CompanyUserCollectionTransfer());
+
         $companyRoleEntityCollection = $this->getCompanyRoleEntityCollectionForCompanyUserIds(
             $companyUserEntityCollection->getColumnValues(SpyCompanyUserEntityTransfer::ID_COMPANY_USER)
         );
 
         $companyUserCollectionTransfer = $this->getFactory()
             ->createCompanyUsersRestApiMapper()
-            ->mapCompanyUserCollection($companyUserEntityCollection->toArray(), $companyRoleEntityCollection);
+            ->mapCompanyRoleCollectionTransferToCompanyUserCollection($companyRoleEntityCollection, $companyUserCollectionTransfer);
 
         $companyUserCollectionTransfer->setFilter($filterTransfer);
         $companyUserCollectionTransfer->setTotal($companyUsersCount);
@@ -64,9 +70,9 @@ class CompanyUsersRestApiRepository extends AbstractRepository implements Compan
      *
      * @param int[] $companyUserIds
      *
-     * @return \Orm\Zed\CompanyRole\Persistence\SpyCompanyRole[]
+     * @return \Propel\Runtime\Collection\ObjectCollection
      */
-    protected function getCompanyRoleEntityCollectionForCompanyUserIds(array $companyUserIds): array
+    protected function getCompanyRoleEntityCollectionForCompanyUserIds(array $companyUserIds): ObjectCollection
     {
         $queryCompanyRole = $this->getFactory()->getCompanyRolePropelQuery()
             ->joinWithSpyCompanyRoleToCompanyUser()
@@ -74,7 +80,7 @@ class CompanyUsersRestApiRepository extends AbstractRepository implements Compan
             ->filterByFkCompanyUser_In($companyUserIds)
             ->endUse();
 
-        return $queryCompanyRole->find()->getArrayCopy();
+        return $queryCompanyRole->find();
     }
 
     /**
@@ -177,8 +183,11 @@ class CompanyUsersRestApiRepository extends AbstractRepository implements Compan
         CompanyUserCriteriaFilterTransfer $companyUserCriteriaFilterTransfer
     ): SpyCompanyUserQuery {
         if ($companyUserCriteriaFilterTransfer->getCompanyRolesUuids()) {
-            $queryCompanyUser->useSpyCompanyRoleToCompanyUserQuery()->useCompanyRoleQuery()
-                ->filterByUuid_In($companyUserCriteriaFilterTransfer->getCompanyRolesUuids())
+            $queryCompanyUser
+                ->useSpyCompanyRoleToCompanyUserQuery()
+                    ->useCompanyRoleQuery()
+                        ->filterByUuid_In($companyUserCriteriaFilterTransfer->getCompanyRolesUuids())
+                    ->endUse()
                 ->endUse();
         }
 
