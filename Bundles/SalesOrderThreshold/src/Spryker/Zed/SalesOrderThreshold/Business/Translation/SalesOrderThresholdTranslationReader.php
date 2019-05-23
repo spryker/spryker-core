@@ -7,11 +7,13 @@
 
 namespace Spryker\Zed\SalesOrderThreshold\Business\Translation;
 
+use ArrayObject;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\SalesOrderThresholdLocalizedMessageTransfer;
 use Generated\Shared\Transfer\SalesOrderThresholdTransfer;
+use Generated\Shared\Transfer\TranslationTransfer;
 use Spryker\Zed\SalesOrderThreshold\Dependency\Facade\SalesOrderThresholdToGlossaryFacadeInterface;
-use Spryker\Zed\SalesOrderThreshold\Dependency\Facade\SalesOrderThresholdToStoreFacadeInterface;
+use Spryker\Zed\SalesOrderThreshold\Dependency\Facade\SalesOrderThresholdToLocaleFacadeInterface;
 
 class SalesOrderThresholdTranslationReader implements SalesOrderThresholdTranslationReaderInterface
 {
@@ -21,20 +23,20 @@ class SalesOrderThresholdTranslationReader implements SalesOrderThresholdTransla
     protected $glossaryFacade;
 
     /**
-     * @var \Spryker\Zed\SalesOrderThreshold\Dependency\Facade\SalesOrderThresholdToStoreFacadeInterface
+     * @var \Spryker\Zed\SalesOrderThreshold\Dependency\Facade\SalesOrderThresholdToLocaleFacadeInterface
      */
-    protected $storeFacade;
+    protected $localeFacade;
 
     /**
      * @param \Spryker\Zed\SalesOrderThreshold\Dependency\Facade\SalesOrderThresholdToGlossaryFacadeInterface $glossaryFacade
-     * @param \Spryker\Zed\SalesOrderThreshold\Dependency\Facade\SalesOrderThresholdToStoreFacadeInterface $storeFacade
+     * @param \Spryker\Zed\SalesOrderThreshold\Dependency\Facade\SalesOrderThresholdToLocaleFacadeInterface $localeFacade
      */
     public function __construct(
         SalesOrderThresholdToGlossaryFacadeInterface $glossaryFacade,
-        SalesOrderThresholdToStoreFacadeInterface $storeFacade
+        SalesOrderThresholdToLocaleFacadeInterface $localeFacade
     ) {
         $this->glossaryFacade = $glossaryFacade;
-        $this->storeFacade = $storeFacade;
+        $this->localeFacade = $localeFacade;
     }
 
     /**
@@ -44,76 +46,72 @@ class SalesOrderThresholdTranslationReader implements SalesOrderThresholdTransla
      */
     public function hydrateLocalizedMessages(SalesOrderThresholdTransfer $salesOrderThresholdTransfer): SalesOrderThresholdTransfer
     {
-        $storeTransfer = $this->storeFacade
-            ->getStoreByName($salesOrderThresholdTransfer->getStore()->getName());
-
-        foreach ($storeTransfer->getAvailableLocaleIsoCodes() as $localeIsoCode) {
-            $this->initOrUpdateLocalizedMessages(
-                $salesOrderThresholdTransfer,
-                $localeIsoCode
-            );
+        $glossaryKey = $this->getGlossaryKey($salesOrderThresholdTransfer);
+        if (!$glossaryKey) {
+            return $salesOrderThresholdTransfer;
         }
 
+        $availableLocaleTransfers = $this->localeFacade->getLocaleCollection();
+        $translationTransfers = $this->glossaryFacade->findTranslationsByGlossaryKeyAndLocales($glossaryKey, $availableLocaleTransfers);
+        $localizedMessages = new ArrayObject();
+
+        foreach ($availableLocaleTransfers as $localeTransfer) {
+            $translationTransfer = $this->findTranslationTransferByLocaleId($localeTransfer->getIdLocale(), $translationTransfers);
+            $salesOrderThresholdLocalizedMessageTransfer = $this->createLocalizedMessage($localeTransfer, $translationTransfer);
+
+            $localizedMessages->append($salesOrderThresholdLocalizedMessageTransfer);
+        }
+        $salesOrderThresholdTransfer->setLocalizedMessages($localizedMessages);
+
         return $salesOrderThresholdTransfer;
+    }
+
+    /**
+     * @param int $localeId
+     * @param \Generated\Shared\Transfer\TranslationTransfer[] $translations
+     *
+     * @return \Generated\Shared\Transfer\TranslationTransfer|null
+     */
+    protected function findTranslationTransferByLocaleId(int $localeId, array $translations): ?TranslationTransfer
+    {
+        foreach ($translations as $translation) {
+            if ($translation->getFkLocale() === $localeId) {
+                return $translation;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param \Generated\Shared\Transfer\TranslationTransfer|null $translationTransfer
+     *
+     * @return \Generated\Shared\Transfer\SalesOrderThresholdLocalizedMessageTransfer
+     */
+    protected function createLocalizedMessage(
+        LocaleTransfer $localeTransfer,
+        ?TranslationTransfer $translationTransfer
+    ): SalesOrderThresholdLocalizedMessageTransfer {
+        $message = $translationTransfer ? $translationTransfer->getValue() : null;
+        $salesOrderThresholdLocalizedMessageTransfer = (new SalesOrderThresholdLocalizedMessageTransfer())
+            ->setLocaleCode($localeTransfer->getLocaleName())
+            ->setMessage($message);
+
+        return $salesOrderThresholdLocalizedMessageTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\SalesOrderThresholdTransfer $salesOrderThresholdTransfer
-     * @param string $localeIsoCode
-     *
-     * @return \Generated\Shared\Transfer\SalesOrderThresholdTransfer
-     */
-    protected function initOrUpdateLocalizedMessages(
-        SalesOrderThresholdTransfer $salesOrderThresholdTransfer,
-        string $localeIsoCode
-    ): SalesOrderThresholdTransfer {
-        $translationValue = $this->findTranslationValue(
-            $salesOrderThresholdTransfer->getSalesOrderThresholdValue()->getMessageGlossaryKey(),
-            $this->createLocaleTransfer($localeIsoCode)
-        );
-
-        foreach ($salesOrderThresholdTransfer->getLocalizedMessages() as $salesOrderThresholdLocalizedMessageTransfer) {
-            if ($salesOrderThresholdLocalizedMessageTransfer->getLocaleCode() === $localeIsoCode) {
-                $salesOrderThresholdLocalizedMessageTransfer->setMessage($translationValue);
-
-                return $salesOrderThresholdTransfer;
-            }
-        }
-
-        $salesOrderThresholdTransfer->addLocalizedMessage(
-            (new SalesOrderThresholdLocalizedMessageTransfer())
-                ->setLocaleCode($localeIsoCode)
-                ->setMessage($translationValue)
-        );
-
-        return $salesOrderThresholdTransfer;
-    }
-
-    /**
-     * @param string $localeName
-     *
-     * @return \Generated\Shared\Transfer\LocaleTransfer
-     */
-    protected function createLocaleTransfer(string $localeName): LocaleTransfer
-    {
-        return (new LocaleTransfer())
-            ->setLocaleName($localeName);
-    }
-
-    /**
-     * @param string $keyName
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return string|null
      */
-    protected function findTranslationValue(string $keyName, LocaleTransfer $localeTransfer): ?string
+    protected function getGlossaryKey(SalesOrderThresholdTransfer $salesOrderThresholdTransfer): ?string
     {
-        if (!$this->glossaryFacade->hasTranslation($keyName, $localeTransfer)) {
+        if ($salesOrderThresholdTransfer->getSalesOrderThresholdValue() === null) {
             return null;
         }
 
-        $translationTransfer = $this->glossaryFacade->getTranslation($keyName, $localeTransfer);
-
-        return $translationTransfer->getValue();
+        return $salesOrderThresholdTransfer->getSalesOrderThresholdValue()->getMessageGlossaryKey() ?: null;
     }
 }

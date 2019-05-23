@@ -39,6 +39,7 @@ use Spryker\Zed\SalesOrderThreshold\Business\Translation\SalesOrderThresholdTran
 use Spryker\Zed\SalesOrderThreshold\Business\Translation\SalesOrderThresholdTranslationWriter;
 use Spryker\Zed\SalesOrderThreshold\Business\Translation\SalesOrderThresholdTranslationWriterInterface;
 use Spryker\Zed\SalesOrderThreshold\Dependency\Facade\SalesOrderThresholdToGlossaryFacadeInterface;
+use Spryker\Zed\SalesOrderThreshold\Dependency\Facade\SalesOrderThresholdToLocaleFacadeInterface;
 use Spryker\Zed\SalesOrderThreshold\Dependency\Facade\SalesOrderThresholdToMessengerFacadeInterface;
 use Spryker\Zed\SalesOrderThreshold\Dependency\Facade\SalesOrderThresholdToMoneyFacadeInterface;
 use Spryker\Zed\SalesOrderThreshold\Dependency\Facade\SalesOrderThresholdToSalesFacadeInterface;
@@ -115,7 +116,7 @@ class SalesOrderThresholdBusinessFactory extends AbstractBusinessFactory
     {
         return new SalesOrderThresholdTranslationReader(
             $this->getGlossaryFacade(),
-            $this->getStoreFacade()
+            $this->getLocaleFacade()
         );
     }
 
@@ -242,6 +243,8 @@ class SalesOrderThresholdBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Zed\SalesOrderThreshold\Dependency\Facade\SalesOrderThresholdToStoreFacadeInterface
      */
     public function getStoreFacade(): SalesOrderThresholdToStoreFacadeInterface
@@ -279,5 +282,13 @@ class SalesOrderThresholdBusinessFactory extends AbstractBusinessFactory
     public function getSalesFacade(): SalesOrderThresholdToSalesFacadeInterface
     {
         return $this->getProvidedDependency(SalesOrderThresholdDependencyProvider::FACADE_SALES);
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesOrderThreshold\Dependency\Facade\SalesOrderThresholdToLocaleFacadeInterface
+     */
+    public function getLocaleFacade(): SalesOrderThresholdToLocaleFacadeInterface
+    {
+        return $this->getProvidedDependency(SalesOrderThresholdDependencyProvider::FACADE_LOCALE);
     }
 }

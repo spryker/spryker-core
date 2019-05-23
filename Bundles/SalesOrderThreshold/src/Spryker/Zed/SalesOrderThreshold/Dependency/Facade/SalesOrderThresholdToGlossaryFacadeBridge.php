@@ -39,7 +39,7 @@ class SalesOrderThresholdToGlossaryFacadeBridge implements SalesOrderThresholdTo
 
     /**
      * @param string $keyName
-     * @param \Spryker\Zed\SalesOrderThreshold\Dependency\Facade\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
@@ -66,5 +66,16 @@ class SalesOrderThresholdToGlossaryFacadeBridge implements SalesOrderThresholdTo
     public function saveGlossaryKeyTranslations(KeyTranslationTransfer $keyTranslationTransfer): bool
     {
         return $this->glossaryFacade->saveGlossaryKeyTranslations($keyTranslationTransfer);
+    }
+
+    /**
+     * @param string $glossaryKey
+     * @param \Generated\Shared\Transfer\LocaleTransfer[] $localeTransfers
+     *
+     * @return array
+     */
+    public function findTranslationsByGlossaryKeyAndLocales(string $glossaryKey, array $localeTransfers): array
+    {
+        return $this->glossaryFacade->findTranslationsByGlossaryKeyAndLocales($glossaryKey, $localeTransfers);
     }
 }

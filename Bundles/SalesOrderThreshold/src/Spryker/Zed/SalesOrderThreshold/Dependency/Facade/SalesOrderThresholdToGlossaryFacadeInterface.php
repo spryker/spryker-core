@@ -22,7 +22,7 @@ interface SalesOrderThresholdToGlossaryFacadeInterface
 
     /**
      * @param string $keyName
-     * @param \Spryker\Zed\SalesOrderThreshold\Dependency\Facade\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
@@ -41,4 +41,12 @@ interface SalesOrderThresholdToGlossaryFacadeInterface
      * @return bool
      */
     public function saveGlossaryKeyTranslations(KeyTranslationTransfer $keyTranslationTransfer);
+
+    /**
+     * @param string $glossaryKey
+     * @param \Generated\Shared\Transfer\LocaleTransfer[] $localeTransfers
+     *
+     * @return array
+     */
+    public function findTranslationsByGlossaryKeyAndLocales(string $glossaryKey, array $localeTransfers): array;
 }
