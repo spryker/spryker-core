@@ -14,10 +14,10 @@ use Spryker\Zed\ProductListSearch\Business\ProductAbstract\ProductAbstractReader
 use Spryker\Zed\ProductListSearch\Business\ProductAbstract\ProductAbstractReaderInterface;
 use Spryker\Zed\ProductListSearch\Business\ProductList\ProductDataToProductListMapTransferMapper;
 use Spryker\Zed\ProductListSearch\Business\ProductList\ProductDataToProductListMapTransferMapperInterface;
-use Spryker\Zed\ProductListSearch\Dependency\Facade\ProductListSearchToProductListFacadeInterface;
-use Spryker\Zed\ProductListSearch\ProductListSearchDependencyProvider;
 use Spryker\Zed\ProductListSearch\Business\ProductPage\ProductPageDataExpander;
 use Spryker\Zed\ProductListSearch\Business\ProductPage\ProductPageDataExpanderInterface;
+use Spryker\Zed\ProductListSearch\Dependency\Facade\ProductListSearchToProductListFacadeInterface;
+use Spryker\Zed\ProductListSearch\ProductListSearchDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductListSearch\Persistence\ProductListSearchRepositoryInterface getRepository()
