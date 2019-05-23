@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductStorage\Persistence;
 
+use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
+use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface ProductStorageQueryContainerInterface extends QueryContainerInterface
@@ -23,11 +25,29 @@ interface ProductStorageQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
+     * @param array $productAbstractIds
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
+     */
+    public function queryProductAbstractByProductAbstractIds(array $productAbstractIds): SpyProductAbstractQuery;
+
+    /**
+     * @api
+     *
      * @param array $productIds
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductLocalizedAttributesQuery
      */
     public function queryProductConcreteByIds(array $productIds);
+
+    /**
+     * @api
+     *
+     * @param array $productIds
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
+     */
+    public function queryProductConcreteByProductIds(array $productIds): SpyProductQuery;
 
     /**
      * @api

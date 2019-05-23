@@ -11,6 +11,8 @@ use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMa
 use Orm\Zed\Product\Persistence\Map\SpyProductAttributeKeyTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
+use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
+use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
@@ -56,6 +58,22 @@ class ProductStorageQueryContainer extends AbstractQueryContainer implements Pro
     /**
      * @api
      *
+     * @param array $productAbstractIds
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
+     */
+    public function queryProductAbstractByProductAbstractIds(array $productAbstractIds): SpyProductAbstractQuery
+    {
+        return $this->getFactory()
+            ->getProductQueryContainer()
+            ->queryProductAbstract()
+            ->orderByIdProductAbstract()
+            ->filterByIdProductAbstract_In($productAbstractIds);
+    }
+
+    /**
+     * @api
+     *
      * @param array $productIds
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductLocalizedAttributesQuery
@@ -94,6 +112,22 @@ class ProductStorageQueryContainer extends AbstractQueryContainer implements Pro
     /**
      * @api
      *
+     * @param array $productIds
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
+     */
+    public function queryProductConcreteByProductIds(array $productIds): SpyProductQuery
+    {
+        return $this->getFactory()
+            ->getProductQueryContainer()
+            ->queryProduct()
+            ->orderByIdProduct()
+            ->filterByIdProduct_In($productIds);
+    }
+
+    /**
+     * @api
+     *
      * @param array $productAbstractIds
      *
      * @return \Orm\Zed\ProductStorage\Persistence\SpyProductAbstractStorageQuery
@@ -103,6 +137,7 @@ class ProductStorageQueryContainer extends AbstractQueryContainer implements Pro
         $query = $this
             ->getFactory()
             ->createSpyProductAbstractStorageQuery()
+            ->orderByIdProductAbstractStorage()
             ->filterByFkProductAbstract_In($productAbstractIds);
 
         return $query;
@@ -120,6 +155,7 @@ class ProductStorageQueryContainer extends AbstractQueryContainer implements Pro
         $query = $this
             ->getFactory()
             ->createSpyProductConcreteStorageQuery()
+            ->orderByIdProductConcreteStorage()
             ->filterByFkProduct_In($productIds);
 
         return $query;
