@@ -9,7 +9,6 @@ namespace Spryker\Client\ProductQuantityStorage;
 
 use Generated\Shared\Transfer\ItemValidationTransfer;
 use Generated\Shared\Transfer\ProductQuantityStorageTransfer;
-use Generated\Shared\Transfer\ProductViewTransfer;
 
 interface ProductQuantityStorageClientInterface
 {
@@ -55,18 +54,4 @@ interface ProductQuantityStorageClientInterface
      * @return \Generated\Shared\Transfer\ItemValidationTransfer
      */
     public function validateItemProductQuantity(ItemValidationTransfer $itemValidationTransfer): ItemValidationTransfer;
-
-    /**
-     * Specification:
-     * - Expands ProductViewTransfer with quantity restriction data.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer
-     */
-    public function expandProductViewTransferWithQuantityRestrictions(
-        ProductViewTransfer $productViewTransfer
-    ): ProductViewTransfer;
 }

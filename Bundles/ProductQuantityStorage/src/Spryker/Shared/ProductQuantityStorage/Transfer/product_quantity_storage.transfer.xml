@@ -30,4 +30,10 @@
     <transfer name="ProductQuantity">
         <property name="idProduct" type="int" />
     </transfer>
+
+    <transfer name="QuantityRestriction">
+        <property name="quantityMin" type="float" />
+        <property name="quantityMax" type="float" />
+        <property name="quantityInterval" type="float" />
+    </transfer>
 </transfers>
