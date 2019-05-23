@@ -14,7 +14,6 @@ use Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteValidatorPluginInterface;
 
 /**
  * @method \Spryker\Zed\Currency\Business\CurrencyFacade getFacade()
- * @method \Spryker\Zed\Currency\Communication\CurrencyCommunicationFactory getFactory()
  * @method \Spryker\Zed\Currency\CurrencyConfig getConfig()
  * @method \Spryker\Zed\Currency\Persistence\CurrencyQueryContainer getQueryContainer()()
  */

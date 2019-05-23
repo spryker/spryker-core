@@ -98,7 +98,7 @@ class CartsResourceMapper implements CartsResourceMapperInterface
         $customerTransfer = (new CustomerTransfer())->setCustomerReference($quoteTransfer->getCustomerReference());
         $storeTransfer = (new StoreTransfer())->setName($restCartsAttributesTransfer->getStore());
 
-        return (new QuoteTransfer())
+        return $quoteTransfer
             ->fromArray($restCartsAttributesTransfer->toArray(), true)
             ->setCurrency($currencyTransfer)
             ->setCustomer($customerTransfer)

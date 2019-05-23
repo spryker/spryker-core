@@ -43,8 +43,8 @@ class PriceFacadeTest extends Unit
         $quoteValidationResponseTransfer = $this->getQuoteValidationResponseTransfer($quoteTransfer);
 
         //Act
-        $errors = array_map(function ($errorMessageTransfer) {
-            return $errorMessageTransfer->getValue();
+        $errors = array_map(function ($quoteErrorTransfer) {
+            return $quoteErrorTransfer->getMessage();
         }, (array)$quoteValidationResponseTransfer->getErrors());
 
         $this->assertFalse($quoteValidationResponseTransfer->getIsSuccessful());

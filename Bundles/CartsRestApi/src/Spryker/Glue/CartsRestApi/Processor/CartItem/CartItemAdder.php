@@ -84,7 +84,7 @@ class CartItemAdder implements CartItemAdderInterface
             ->setCustomer($customerTransfer);
 
         $quoteResponseTransfer = $this->cartsRestApiClient->addItem($restCartItemsAttributesTransfer);
-        if ($quoteResponseTransfer->getErrors()->count() > 0) {
+        if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $this->cartRestResponseBuilder->createFailedErrorResponse($quoteResponseTransfer->getErrors());
         }
 

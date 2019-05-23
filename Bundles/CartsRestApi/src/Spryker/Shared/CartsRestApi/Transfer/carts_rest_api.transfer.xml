@@ -108,6 +108,9 @@
         <property name="naturalIdentifier" type="string"/>
     </transfer>
 
+    <transfer name="QuoteCriteriaFilter">
+        <property name="customerReference" type="string"/>
+        <property name="idStore" type="int"/>
+    </transfer>
+
 </transfers>
-
-

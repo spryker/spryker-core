@@ -15,15 +15,6 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 interface GuestCartUpdaterInterface
 {
     /**
-     * @deprecated use updateGuestCartCustomerReferenceOnCreate()
-     *
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return \Generated\Shared\Transfer\CustomerTransfer
-     */
-    public function updateGuestCartCustomerReferenceOnRegistration(CustomerTransfer $customerTransfer): CustomerTransfer;
-
-    /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
