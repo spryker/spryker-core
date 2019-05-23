@@ -24,21 +24,6 @@ class JenkinsSchedulerAdapterPlugin extends AbstractPlugin implements SchedulerA
      * @api
      *
      * @param string $schedulerId
-     * @param \Generated\Shared\Transfer\SchedulerTransfer $schedulerTransfer
-     *
-     * @return bool
-     */
-    public function isApplicable(string $schedulerId, SchedulerTransfer $schedulerTransfer): bool
-    {
-        return empty($schedulerTransfer->getSchedulers()) || in_array($schedulerId, $schedulerTransfer->getSchedulers());
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param string $schedulerId
      * @param \Generated\Shared\Transfer\SchedulerTransfer $scheduleTransfer
      * @param \Generated\Shared\Transfer\SchedulerResponseTransfer $schedulerResponseTransfer
      *

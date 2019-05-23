@@ -51,4 +51,10 @@ interface JenkinsSchedulerConstants
      * @api
      */
     public const JENKINS_DEFAULT_AMOUNT_OF_DAYS_FOR_LOGFILE_ROTATION = 'JENKINS_SCHEDULER:JENKINS_DEFAULT_AMOUNT_OF_DAYS_FOR_LOGFILE_ROTATION';
+
+    /**
+     * Specification:
+     * - Jenkins scheduler identifier.
+     */
+    public const ID_JENKINS_DEFAULT_SCHEDULER = 'JENKINS_SCHEDULER:ID_JENKINS_DEFAULT_SCHEDULER';
 }

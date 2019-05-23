@@ -8,22 +8,21 @@
 namespace Spryker\Zed\Scheduler\Business\ConfigurationReader;
 
 use Generated\Shared\Transfer\SchedulerTransfer;
-use Spryker\Zed\Scheduler\Business\Executor\SchedulerAdapterPluginsExecutorInterface;
 
 class SchedulerConfigurationReader implements SchedulerConfigurationReaderInterface
 {
     /**
-     * @var \Spryker\Zed\Scheduler\Business\Executor\SchedulerAdapterPluginsExecutorInterface
+     * @var \Spryker\Zed\SchedulerExtension\Dependency\Plugin\SchedulerReaderPluginInterface[]
      */
-    protected $schedulerAdapterPluginsExecutor;
+    protected $schedulerConfigurationReaderPlugins;
 
     /**
-     * @param \Spryker\Zed\Scheduler\Business\Executor\SchedulerAdapterPluginsExecutorInterface $schedulerAdapterPluginExecutor
+     * @param \Spryker\Zed\SchedulerExtension\Dependency\Plugin\SchedulerReaderPluginInterface[] $schedulerConfigurationReaderPlugins
      */
     public function __construct(
-        SchedulerAdapterPluginsExecutorInterface $schedulerAdapterPluginExecutor
+        array $schedulerConfigurationReaderPlugins
     ) {
-        $this->schedulerAdapterPluginsExecutor = $schedulerAdapterPluginExecutor;
+        $this->schedulerConfigurationReaderPlugins = $schedulerConfigurationReaderPlugins;
     }
 
     /**
@@ -33,7 +32,9 @@ class SchedulerConfigurationReader implements SchedulerConfigurationReaderInterf
      */
     public function getCronJobsConfiguration(SchedulerTransfer $schedulerTransfer): SchedulerTransfer
     {
-        $schedulerTransfer = $this->schedulerAdapterPluginsExecutor->executeSchedulerReaderPlugins($schedulerTransfer);
+        foreach ($this->schedulerConfigurationReaderPlugins as $schedulerReaderPlugin) {
+            $schedulerTransfer = $schedulerReaderPlugin->readSchedule($schedulerTransfer);
+        }
 
         return $schedulerTransfer;
     }

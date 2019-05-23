@@ -14,19 +14,6 @@ interface SchedulerAdapterPluginInterface
 {
     /**
      * Specification:
-     * - Checks whether this adapter plugin is applicable for the execution.
-     *
-     * @api
-     *
-     * @param string $schedulerId
-     * @param \Generated\Shared\Transfer\SchedulerTransfer $scheduleTransfer
-     *
-     * @return bool
-     */
-    public function isApplicable(string $schedulerId, SchedulerTransfer $scheduleTransfer): bool;
-
-    /**
-     * Specification:
      * - Cleans scheduler(s) job(s) for the current store.
      *
      * @api

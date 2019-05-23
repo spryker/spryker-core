@@ -14,8 +14,6 @@ use Spryker\Zed\Scheduler\Business\ConfigurationReader\PhpConfigurationReader\Ph
 use Spryker\Zed\Scheduler\Business\ConfigurationReader\PhpConfigurationReader\PhpSchedulerReaderInterface;
 use Spryker\Zed\Scheduler\Business\ConfigurationReader\SchedulerConfigurationReader;
 use Spryker\Zed\Scheduler\Business\ConfigurationReader\SchedulerConfigurationReaderInterface;
-use Spryker\Zed\Scheduler\Business\Executor\SchedulerAdapterPluginsExecutor;
-use Spryker\Zed\Scheduler\Business\Executor\SchedulerAdapterPluginsExecutorInterface;
 use Spryker\Zed\Scheduler\Business\Resume\SchedulerResume;
 use Spryker\Zed\Scheduler\Business\Resume\SchedulerResumeInterface;
 use Spryker\Zed\Scheduler\Business\Setup\SchedulerSetup;
@@ -37,7 +35,7 @@ class SchedulerBusinessFactory extends AbstractBusinessFactory
     {
         return new SchedulerSetup(
             $this->createConfigurationReader(),
-            $this->createSchedulerAdapterPluginsExecutor()
+            $this->getSchedulerAdapterPlugins()
         );
     }
 
@@ -48,7 +46,7 @@ class SchedulerBusinessFactory extends AbstractBusinessFactory
     {
         return new SchedulerClean(
             $this->createConfigurationReader(),
-            $this->createSchedulerAdapterPluginsExecutor()
+            $this->getSchedulerAdapterPlugins()
         );
     }
 
@@ -59,7 +57,7 @@ class SchedulerBusinessFactory extends AbstractBusinessFactory
     {
         return new SchedulerSuspend(
             $this->createConfigurationReader(),
-            $this->createSchedulerAdapterPluginsExecutor()
+            $this->getSchedulerAdapterPlugins()
         );
     }
 
@@ -70,7 +68,7 @@ class SchedulerBusinessFactory extends AbstractBusinessFactory
     {
         return new SchedulerResume(
             $this->createConfigurationReader(),
-            $this->createSchedulerAdapterPluginsExecutor()
+            $this->getSchedulerAdapterPlugins()
         );
     }
 
@@ -91,18 +89,7 @@ class SchedulerBusinessFactory extends AbstractBusinessFactory
     public function createConfigurationReader(): SchedulerConfigurationReaderInterface
     {
         return new SchedulerConfigurationReader(
-            $this->createSchedulerAdapterPluginsExecutor()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\Scheduler\Business\Executor\SchedulerAdapterPluginsExecutorInterface
-     */
-    public function createSchedulerAdapterPluginsExecutor(): SchedulerAdapterPluginsExecutorInterface
-    {
-        return new SchedulerAdapterPluginsExecutor(
-            $this->getSchedulerConfigurationReaderPlugins(),
-            $this->getSchedulerAdapterPlugins()
+            $this->getSchedulerConfigurationReaderPlugins()
         );
     }
 

@@ -10,7 +10,6 @@ namespace Spryker\Zed\Scheduler\Business\Setup;
 use Generated\Shared\Transfer\SchedulerResponseTransfer;
 use Generated\Shared\Transfer\SchedulerTransfer;
 use Spryker\Zed\Scheduler\Business\ConfigurationReader\SchedulerConfigurationReaderInterface;
-use Spryker\Zed\Scheduler\Business\Executor\SchedulerAdapterPluginsExecutorInterface;
 
 class SchedulerSetup implements SchedulerSetupInterface
 {
@@ -20,20 +19,20 @@ class SchedulerSetup implements SchedulerSetupInterface
     protected $configurationReader;
 
     /**
-     * @var \Spryker\Zed\Scheduler\Business\Executor\SchedulerAdapterPluginsExecutorInterface
+     * @var \Spryker\Zed\SchedulerExtension\Dependency\Adapter\SchedulerAdapterPluginInterface[]
      */
-    protected $schedulerAdapterPluginsExecutor;
+    protected $schedulerAdapterPlugins;
 
     /**
      * @param \Spryker\Zed\Scheduler\Business\ConfigurationReader\SchedulerConfigurationReaderInterface $configurationReader
-     * @param \Spryker\Zed\Scheduler\Business\Executor\SchedulerAdapterPluginsExecutorInterface $schedulerAdapterPluginExecutor
+     * @param \Spryker\Zed\SchedulerExtension\Dependency\Adapter\SchedulerAdapterPluginInterface[] $schedulerAdapterPlugins
      */
     public function __construct(
         SchedulerConfigurationReaderInterface $configurationReader,
-        SchedulerAdapterPluginsExecutorInterface $schedulerAdapterPluginExecutor
+        array $schedulerAdapterPlugins
     ) {
         $this->configurationReader = $configurationReader;
-        $this->schedulerAdapterPluginsExecutor = $schedulerAdapterPluginExecutor;
+        $this->schedulerAdapterPlugins = $schedulerAdapterPlugins;
     }
 
     /**
@@ -44,7 +43,14 @@ class SchedulerSetup implements SchedulerSetupInterface
     public function setup(SchedulerTransfer $schedulerTransfer): SchedulerResponseTransfer
     {
         $schedulerTransfer = $this->configurationReader->getCronJobsConfiguration($schedulerTransfer);
-        $schedulerResponseTransfer = $this->schedulerAdapterPluginsExecutor->executeSchedulerAdapterPluginsForSchedulerSetup($schedulerTransfer);
+        $schedulerResponseTransfer = new SchedulerResponseTransfer();
+
+        foreach ($this->schedulerAdapterPlugins as $schedulerId => $schedulerAdapterPlugin) {
+            $schedulers = $schedulerTransfer->getSchedulers();
+            if ($schedulers === [] || in_array($schedulerId, $schedulers)) {
+                $schedulerResponseTransfer = $schedulerAdapterPlugin->setup($schedulerId, $schedulerTransfer, $schedulerResponseTransfer);
+            }
+        }
 
         return $schedulerResponseTransfer;
     }
