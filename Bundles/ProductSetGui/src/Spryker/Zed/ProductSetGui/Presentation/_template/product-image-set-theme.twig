@@ -1,8 +1,8 @@
 {% block product_image_set_widget %}
     <div class="panel panel-default image-set">
-        <div class="panel-heading">{{ 'Image Set' | trans }}: {{ form.vars.name }}</div>
+        <div class="panel-heading">{{ 'Image Set' | trans }}: {{ form.name.vars.value }}</div>
         <div class="panel-body">
-            <div class="image-set sep_down m-t-sm">
+            <div class="sep_down m-t-sm">
                 <div class="row">
                     <div class="col-lg-11">{{ form_row(form.name) }}</div>
                 </div>
