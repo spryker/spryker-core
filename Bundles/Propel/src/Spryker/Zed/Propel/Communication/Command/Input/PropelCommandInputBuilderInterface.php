@@ -13,10 +13,10 @@ use Symfony\Component\Console\Input\InputInterface;
 interface PropelCommandInputBuilderInterface
 {
     /**
-     * @param \Symfony\Component\Console\Input\InputDefinition $propelCommandDefinition
-     * @param \Symfony\Component\Console\Input\InputDefinition $originalPropelCommandDefinition
+     * @param \Symfony\Component\Console\Input\InputDefinition $inputDefinition
+     * @param \Symfony\Component\Console\Input\InputDefinition $wrappedInputDefinition
      *
      * @return \Symfony\Component\Console\Input\InputInterface
      */
-    public function buildInput(InputDefinition $propelCommandDefinition, InputDefinition $originalPropelCommandDefinition): InputInterface;
+    public function buildInput(InputDefinition $inputDefinition, InputDefinition $wrappedInputDefinition): InputInterface;
 }

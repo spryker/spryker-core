@@ -12,9 +12,9 @@ use Symfony\Component\Console\Command\Command;
 interface PropelCommandBuilderInterface
 {
     /**
-     * @param string $originalPropelCommandClassName
+     * @param string $propelCommandClassName
      *
      * @return \Symfony\Component\Console\Command\Command
      */
-    public function createCommand(string $originalPropelCommandClassName): Command;
+    public function createCommand(string $propelCommandClassName): Command;
 }

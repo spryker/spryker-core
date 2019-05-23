@@ -14,21 +14,21 @@ use Symfony\Component\Console\Input\InputInterface;
 class PropelCommandInputBuilder implements PropelCommandInputBuilderInterface
 {
     /**
-     * @param \Symfony\Component\Console\Input\InputDefinition $propelCommandDefinition
-     * @param \Symfony\Component\Console\Input\InputDefinition $originalPropelCommandDefinition
+     * @param \Symfony\Component\Console\Input\InputDefinition $inputDefinition
+     * @param \Symfony\Component\Console\Input\InputDefinition $wrappedInputDefinition
      *
      * @return \Symfony\Component\Console\Input\InputInterface
      */
-    public function buildInput(InputDefinition $propelCommandDefinition, InputDefinition $originalPropelCommandDefinition): InputInterface
+    public function buildInput(InputDefinition $inputDefinition, InputDefinition $wrappedInputDefinition): InputInterface
     {
-        $originalPropelCommandDefinition->addArguments(
-            $propelCommandDefinition->getArguments()
+        $wrappedInputDefinition->addArguments(
+            $inputDefinition->getArguments()
         );
 
-        $originalPropelCommandDefinition->addOptions(
-            $propelCommandDefinition->getOptions()
+        $wrappedInputDefinition->addOptions(
+            $inputDefinition->getOptions()
         );
 
-        return new ArgvInput(null, $originalPropelCommandDefinition);
+        return new ArgvInput(null, $wrappedInputDefinition);
     }
 }
