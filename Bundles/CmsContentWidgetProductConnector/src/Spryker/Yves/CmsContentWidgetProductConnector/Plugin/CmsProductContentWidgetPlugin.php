@@ -148,10 +148,6 @@ class CmsProductContentWidgetPlugin extends AbstractPlugin implements CmsContent
 
             $productStorageTransfer = $this->mapProductStorageTransfer($productData);
 
-            if (!$productStorageTransfer->getAvailable()) {
-                continue;
-            }
-
             $products[] = $productStorageTransfer;
         }
 
