@@ -66,7 +66,12 @@ class PriceProductScheduleAbstractTable extends AbstractScheduledPriceTable
     public function getSearchTerm()
     {
         $searchTerm = $this->request->query->get('search', null);
-        $searchTerm['value'] = $this->prepareMoneyValue($searchTerm['value']);
+
+        if (!isset($searchTerm[static::PARAMETER_VALUE]) || mb_strlen($searchTerm[static::PARAMETER_VALUE]) === 0) {
+            return $searchTerm;
+        }
+
+        $searchTerm[static::PARAMETER_VALUE] = $this->prepareMoneyValue($searchTerm[static::PARAMETER_VALUE]);
 
         return $searchTerm;
     }
