@@ -52,7 +52,7 @@ class SessionStorageHandlerPoolTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\SessionHandlerInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\SessionHandlerInterface
      */
     protected function getSessionHandlerInterfaceMock()
     {

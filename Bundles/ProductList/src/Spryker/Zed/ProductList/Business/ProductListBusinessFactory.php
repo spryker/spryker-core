@@ -95,7 +95,9 @@ class ProductListBusinessFactory extends AbstractBusinessFactory
         return new ProductListWriter(
             $this->getEntityManager(),
             $this->createProductListKeyGenerator(),
-            $this->getProductListPostSaverCollection()
+            $this->getProductListPostSaverCollection(),
+            $this->getProductListPreCreatePlugins(),
+            $this->getProductListPreUpdatePlugins()
         );
     }
 
@@ -170,6 +172,22 @@ class ProductListBusinessFactory extends AbstractBusinessFactory
     public function getUtilTextService(): ProductListToUtilTextServiceInterface
     {
         return $this->getProvidedDependency(ProductListDependencyProvider::SERVICE_UTIL_TEXT);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductListExtension\Dependency\Plugin\ProductListPreCreatePluginInterface[]
+     */
+    public function getProductListPreCreatePlugins(): array
+    {
+        return $this->getProvidedDependency(ProductListDependencyProvider::PLUGINS_PRODUCT_LIST_PRE_CREATE);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductListExtension\Dependency\Plugin\ProductListPreUpdatePluginInterface[]
+     */
+    public function getProductListPreUpdatePlugins(): array
+    {
+        return $this->getProvidedDependency(ProductListDependencyProvider::PLUGINS_PRODUCT_LIST_PRE_UPDATE);
     }
 
     /**

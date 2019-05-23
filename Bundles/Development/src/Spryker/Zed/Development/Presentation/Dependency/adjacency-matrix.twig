@@ -8,7 +8,7 @@
             <div class="show-scroll">
                 <table class="table table-bordered table-condensed nowrap">
                     <tr>
-                        <th>From - To</th>
+                        <th>{{ 'From' | trans }} - {{ 'To' | trans }}</th>
                         {% for fromBundle, toBundles in matrixData %}
                             <th{% if fromBundle in engineBundles  %} style="color: red"{% endif %}>{{ fromBundle }}</th>
                         {% endfor %}

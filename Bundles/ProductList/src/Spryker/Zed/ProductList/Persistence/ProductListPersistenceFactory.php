@@ -12,7 +12,6 @@ use Orm\Zed\ProductList\Persistence\SpyProductListProductConcreteQuery;
 use Orm\Zed\ProductList\Persistence\SpyProductListQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\ProductList\Persistence\Mapper\ProductListMapper;
-use Spryker\Zed\ProductList\Persistence\Mapper\ProductListMapperInterface;
 
 /**
  * @method \Spryker\Zed\ProductList\ProductListConfig getConfig()
@@ -46,9 +45,9 @@ class ProductListPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductList\Persistence\Mapper\ProductListMapperInterface
+     * @return \Spryker\Zed\ProductList\Persistence\Mapper\ProductListMapper
      */
-    public function createProductListMapper(): ProductListMapperInterface
+    public function createProductListMapper(): ProductListMapper
     {
         return new ProductListMapper();
     }

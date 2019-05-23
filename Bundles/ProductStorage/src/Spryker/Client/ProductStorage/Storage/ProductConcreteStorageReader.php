@@ -96,7 +96,7 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
             return $collectorData;
         }
 
-        $key = $this->getStorageKey($idProductConcrete, $localeName);
+        $key = $this->getStorageKey((string)$idProductConcrete, $localeName);
 
         return $this->storageClient->get($key);
     }

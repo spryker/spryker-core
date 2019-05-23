@@ -52,7 +52,7 @@ class SpySalesOrderItemTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Orm\Zed\Sales\Persistence\SpySalesOrderItem
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Orm\Zed\Sales\Persistence\SpySalesOrderItem
      */
     protected function createMockedSalesOrderItemEntity()
     {
@@ -70,7 +70,7 @@ class SpySalesOrderItemTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateHistory
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateHistory
      */
     protected function createMockedOmsOrderItemSateHistoryEntity()
     {

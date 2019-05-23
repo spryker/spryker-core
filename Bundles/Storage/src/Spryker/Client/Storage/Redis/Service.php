@@ -50,9 +50,7 @@ class Service implements ServiceInterface
      */
     public function __destruct()
     {
-        if ($this->client) {
-            $this->client->disconnect();
-        }
+        $this->client->disconnect();
     }
 
     /**

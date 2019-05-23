@@ -35,4 +35,20 @@ interface CompanyClientInterface
      * @return \Generated\Shared\Transfer\CompanyTransfer
      */
     public function getCompanyById(CompanyTransfer $companyTransfer): CompanyTransfer;
+
+    /**
+     * Specification:
+     * - Finds a company by uuid.
+     * - Makes zed request.
+     * - Requires uuid field to be set in CompanyTransfer taken as parameter.
+     *
+     * @api
+     *
+     * {@internal will work if UUID field is provided.}
+     *
+     * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyResponseTransfer
+     */
+    public function findCompanyByUuid(CompanyTransfer $companyTransfer): CompanyResponseTransfer;
 }

@@ -14,14 +14,7 @@ interface ProductSetGuiToUrlInterface
     /**
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
-     * @return \Generated\Shared\Transfer\UrlTransfer|null
-     */
-    public function findUrl(UrlTransfer $urlTransfer);
-
-    /**
-     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
-     *
      * @return bool
      */
-    public function hasUrl(UrlTransfer $urlTransfer);
+    public function hasUrlCaseInsensitive(UrlTransfer $urlTransfer): bool;
 }

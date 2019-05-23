@@ -7,7 +7,7 @@
         {% endif %}
     {% endfor %}
 
-{% set widget_title = 'Edit CMS Page: ' | trans ~ pageName %}
+{% set widget_title = 'Edit CMS Page:' | trans ~ ' ' ~ pageName %}
 
 {% block head_title widget_title %}
 {% block section_title widget_title %}

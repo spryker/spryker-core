@@ -18,6 +18,7 @@ use Spryker\Glue\GlueApplication\Rest\Request\RequestFormatterInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\RestRequestValidatorInterface;
 use Spryker\Glue\GlueApplication\Rest\Response\ResponseFormatterInterface;
 use Spryker\Glue\GlueApplication\Rest\Response\ResponseHeadersInterface;
+use Spryker\Glue\GlueApplication\Rest\User\UserProviderInterface;
 use Spryker\Glue\Kernel\Controller\AbstractController;
 use Spryker\Shared\Log\LoggerTrait;
 use Symfony\Component\HttpFoundation\Request;
@@ -68,6 +69,11 @@ class ControllerFilter implements ControllerFilterInterface
     protected $applicationConfig;
 
     /**
+     * @var \Spryker\Glue\GlueApplication\Rest\User\UserProviderInterface
+     */
+    protected $userProvider;
+
+    /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\RequestFormatterInterface $requestFormatter
      * @param \Spryker\Glue\GlueApplication\Rest\Response\ResponseFormatterInterface $responseFormatter
      * @param \Spryker\Glue\GlueApplication\Rest\Response\ResponseHeadersInterface $responseHeaders
@@ -76,6 +82,7 @@ class ControllerFilter implements ControllerFilterInterface
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\GlueApplication\Rest\ControllerCallbacksInterface $controllerCallbacks
      * @param \Spryker\Glue\GlueApplication\GlueApplicationConfig $applicationConfig
+     * @param \Spryker\Glue\GlueApplication\Rest\User\UserProviderInterface $userProvider
      */
     public function __construct(
         RequestFormatterInterface $requestFormatter,
@@ -85,7 +92,8 @@ class ControllerFilter implements ControllerFilterInterface
         RestRequestValidatorInterface $restRequestValidator,
         RestResourceBuilderInterface $restResourceBuilder,
         ControllerCallbacksInterface $controllerCallbacks,
-        GlueApplicationConfig $applicationConfig
+        GlueApplicationConfig $applicationConfig,
+        UserProviderInterface $userProvider
     ) {
         $this->requestFormatter = $requestFormatter;
         $this->responseFormatter = $responseFormatter;
@@ -95,6 +103,7 @@ class ControllerFilter implements ControllerFilterInterface
         $this->restResourceBuilder = $restResourceBuilder;
         $this->controllerCallbacks = $controllerCallbacks;
         $this->applicationConfig = $applicationConfig;
+        $this->userProvider = $userProvider;
     }
 
     /**
@@ -113,9 +122,12 @@ class ControllerFilter implements ControllerFilterInterface
             }
 
             $restRequest = $this->requestFormatter->formatRequest($httpRequest);
+
             $restErrorCollectionTransfer = $this->validateRequest($controller, $httpRequest, $restRequest);
 
             if (!$restErrorCollectionTransfer || !$restErrorCollectionTransfer->getRestErrors()->count()) {
+                $restRequest = $this->userProvider->setUserToRestRequest($restRequest);
+
                 $restResponse = $this->executeAction($controller, $action, $restRequest);
             } else {
                 $restResponse = $this->createErrorResponse($restErrorCollectionTransfer);
@@ -218,6 +230,7 @@ class ControllerFilter implements ControllerFilterInterface
         if (!$controller instanceof ErrorControllerInterface) {
             $restErrorCollectionTransfer = $this->restRequestValidator->validate($httpRequest, $restRequest);
         }
+
         return $restErrorCollectionTransfer;
     }
 
@@ -232,6 +245,7 @@ class ControllerFilter implements ControllerFilterInterface
         foreach ($restErrorCollectionTransfer->getRestErrors() as $restErrorMessageTransfer) {
             $restResponse->addError($restErrorMessageTransfer);
         }
+
         return $restResponse;
     }
 }

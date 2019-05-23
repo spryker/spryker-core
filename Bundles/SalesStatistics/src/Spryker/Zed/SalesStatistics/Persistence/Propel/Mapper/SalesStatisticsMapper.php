@@ -60,6 +60,7 @@ class SalesStatisticsMapper
         foreach ($statistic as $statisticItem) {
             $chartDataTraceTransfer->addLabel($statisticItem[SalesStatisticsRepository::COUNT]);
             $chartDataTraceTransfer->addValue($statisticItem[SalesStatisticsRepository::ITEM_NAME]);
+            $chartDataTraceTransfer->addOption($statisticItem[SalesStatisticsRepository::ITEM_SKU]);
         }
 
         return $chartDataTraceTransfer;

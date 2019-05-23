@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\ProductQuantityStorage\Resolver;
 
-use Spryker\Client\ProductQuantityStorage\Rounder\ProductQuantityRounderInterface;
+use Spryker\Client\ProductQuantityStorage\Dependency\Service\ProductQuantityStorageToProductQuantityServiceInterface;
 use Spryker\Client\ProductQuantityStorage\Storage\ProductQuantityStorageReaderInterface;
 
 class ProductQuantityResolver implements ProductQuantityResolverInterface
@@ -18,20 +18,20 @@ class ProductQuantityResolver implements ProductQuantityResolverInterface
     protected $productQuantityStorageReader;
 
     /**
-     * @var \Spryker\Client\ProductQuantityStorage\Rounder\ProductQuantityRounderInterface
+     * @var \Spryker\Client\ProductQuantityStorage\Dependency\Service\ProductQuantityStorageToProductQuantityServiceInterface
      */
-    protected $productQuantityRounder;
+    protected $productQuantityService;
 
     /**
      * @param \Spryker\Client\ProductQuantityStorage\Storage\ProductQuantityStorageReaderInterface $productQuantityStorageReader
-     * @param \Spryker\Client\ProductQuantityStorage\Rounder\ProductQuantityRounderInterface $productQuantityRounder
+     * @param \Spryker\Client\ProductQuantityStorage\Dependency\Service\ProductQuantityStorageToProductQuantityServiceInterface $productQuantityService
      */
     public function __construct(
         ProductQuantityStorageReaderInterface $productQuantityStorageReader,
-        ProductQuantityRounderInterface $productQuantityRounder
+        ProductQuantityStorageToProductQuantityServiceInterface $productQuantityService
     ) {
         $this->productQuantityStorageReader = $productQuantityStorageReader;
-        $this->productQuantityRounder = $productQuantityRounder;
+        $this->productQuantityService = $productQuantityService;
     }
 
     /**
@@ -42,12 +42,12 @@ class ProductQuantityResolver implements ProductQuantityResolverInterface
      */
     public function getNearestQuantity(int $idProduct, int $quantity): int
     {
-        $productQuantityStorageTransfer = $this->productQuantityStorageReader->findProductQuantityStorage($idProduct);
+        $productQuantityTransfer = $this->productQuantityStorageReader->findProductQuantityStorageMappedToProductQuantityTransfer($idProduct);
 
-        if (!$productQuantityStorageTransfer) {
+        if (!$productQuantityTransfer) {
             return $quantity;
         }
 
-        return $this->productQuantityRounder->getNearestQuantity($productQuantityStorageTransfer, $quantity);
+        return $this->productQuantityService->getNearestQuantity($productQuantityTransfer, $quantity);
     }
 }

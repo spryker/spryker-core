@@ -12,7 +12,7 @@ interface TwigChartFunctionPluginInterface
     /**
      * @api
      *
-     * @return \Twig_SimpleFunction[]
+     * @return \Twig\TwigFunction[]
      */
     public function getChartFunctions(): array;
 }

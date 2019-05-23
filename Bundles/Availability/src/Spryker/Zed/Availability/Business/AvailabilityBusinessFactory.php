@@ -12,6 +12,7 @@ use Spryker\Zed\Availability\Business\Model\AvailabilityHandler;
 use Spryker\Zed\Availability\Business\Model\ProductReservationReader;
 use Spryker\Zed\Availability\Business\Model\ProductsAvailableCheckoutPreCondition;
 use Spryker\Zed\Availability\Business\Model\Sellable;
+use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToEventFacadeInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -43,7 +44,8 @@ class AvailabilityBusinessFactory extends AbstractBusinessFactory
             $this->getTouchFacade(),
             $this->getQueryContainer(),
             $this->getProductFacade(),
-            $this->getStoreFacade()
+            $this->getStoreFacade(),
+            $this->getEventFacade()
         );
     }
 
@@ -105,5 +107,13 @@ class AvailabilityBusinessFactory extends AbstractBusinessFactory
     public function getStoreFacade()
     {
         return $this->getProvidedDependency(AvailabilityDependencyProvider::FACADE_STORE);
+    }
+
+    /**
+     * @return \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToEventFacadeInterface
+     */
+    protected function getEventFacade(): AvailabilityToEventFacadeInterface
+    {
+        return $this->getProvidedDependency(AvailabilityDependencyProvider::FACADE_EVENT);
     }
 }

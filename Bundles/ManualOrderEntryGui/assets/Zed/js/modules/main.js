@@ -5,7 +5,6 @@
 
 'use strict';
 
-require('ZedGui');
 require('../../scss/main.scss');
 
 var shippingAddressToggle = function() {

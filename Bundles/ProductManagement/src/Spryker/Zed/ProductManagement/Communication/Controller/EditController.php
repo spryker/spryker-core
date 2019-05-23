@@ -41,7 +41,9 @@ class EditController extends AddController
             ->findProductAbstractById($idProductAbstract);
 
         if (!$productAbstractTransfer) {
-            $this->addErrorMessage(sprintf('The product [%s] you are trying to edit, does not exist.', $idProductAbstract));
+            $this->addErrorMessage('The product [%s] you are trying to edit, does not exist.', [
+                '%s' => $idProductAbstract,
+            ]);
 
             return new RedirectResponse('/product-management');
         }
@@ -77,10 +79,7 @@ class EditController extends AddController
                     ->getProductFacade()
                     ->touchProductAbstract($idProductAbstract);
 
-                $this->addSuccessMessage(sprintf(
-                    'The product [%s] was saved successfully.',
-                    $productAbstractTransfer->getSku()
-                ));
+                $this->addSuccessMessage('The product [%s] was saved successfully.', ['%s' => $productAbstractTransfer->getSku()]);
 
                 return $this->redirectResponse(
                     urldecode(Url::generate('/product-management/edit', $request->query->all())->build())
@@ -132,7 +131,7 @@ class EditController extends AddController
             ->findProductConcreteById($idProduct);
 
         if (!$productTransfer) {
-            $this->addErrorMessage(sprintf('The product [%s] you are trying to edit, does not exist.', $idProduct));
+            $this->addErrorMessage('The product [%s] you are trying to edit, does not exist.', ['%s' => $idProduct]);
 
             return new RedirectResponse('/product-management/edit?id-product-abstract=' . $idProductAbstract);
         }
@@ -178,10 +177,9 @@ class EditController extends AddController
                     ->getProductFacade()
                     ->touchProductConcrete($idProduct);
 
-                $this->addSuccessMessage(sprintf(
-                    'The product [%s] was saved successfully.',
-                    $productConcreteTransfer->getSku()
-                ));
+                $this->addSuccessMessage('The product [%s] was saved successfully.', [
+                    '%s' => $productConcreteTransfer->getSku(),
+                ]);
 
                 return $this->redirectResponse(
                     urldecode(Url::generate('/product-management/edit/variant', $request->query->all())->build())

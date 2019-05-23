@@ -83,6 +83,6 @@ class TransferConfigTest extends Unit
      */
     public function testGetDataBuilderFileNamePatternReturnsString()
     {
-        $this->assertInternalType('string', $this->getConfig()->getDataBuilderFileNamePattern());
+        $this->assertIsString($this->getConfig()->getDataBuilderFileNamePattern());
     }
 }

@@ -12,6 +12,13 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class OauthCustomerConnectorConfig extends AbstractBundleConfig
 {
+    public const SCOPE_CUSTOMER = 'customer';
+
+    /**
+     * @uses \Spryker\Zed\Oauth\OauthConfig::GRANT_TYPE_PASSWORD
+     */
+    public const GRANT_TYPE_PASSWORD = 'password';
+
     /**
      * The client secret used to authenticate Oauth client requests, to create use "password_hash('your password', PASSWORD_BCRYPT)".
      *
@@ -37,6 +44,6 @@ class OauthCustomerConnectorConfig extends AbstractBundleConfig
      */
     public function getCustomerScopes(): array
     {
-        return ['customer'];
+        return [static::SCOPE_CUSTOMER];
     }
 }

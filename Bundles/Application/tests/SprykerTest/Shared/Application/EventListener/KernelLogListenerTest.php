@@ -152,11 +152,11 @@ class KernelLogListenerTest extends Unit
         $loggerMock = $this->getLoggerMock();
         $kernelLogListener = new KernelLogListener($loggerMock);
 
-        $this->assertInternalType('array', $kernelLogListener->getSubscribedEvents());
+        $this->assertIsArray($kernelLogListener->getSubscribedEvents());
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Psr\Log\LoggerInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Psr\Log\LoggerInterface
      */
     protected function getLoggerMock()
     {
@@ -166,7 +166,7 @@ class KernelLogListenerTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockBuilder|\Symfony\Component\HttpKernel\HttpKernelInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Symfony\Component\HttpKernel\HttpKernelInterface
      */
     protected function getKernelMock()
     {
@@ -176,7 +176,7 @@ class KernelLogListenerTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Symfony\Component\HttpFoundation\Request
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Symfony\Component\HttpFoundation\Request
      */
     protected function getRequestMock()
     {
@@ -186,7 +186,7 @@ class KernelLogListenerTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Symfony\Component\HttpFoundation\Response
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Symfony\Component\HttpFoundation\Response
      */
     protected function responseMock()
     {
@@ -196,7 +196,7 @@ class KernelLogListenerTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function redirectResponseMock()
     {

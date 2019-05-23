@@ -133,6 +133,7 @@ interface ShoppingListStubInterface
      * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer
      */
     public function shareShoppingListWithCompanyBusinessUnit(ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer): ShoppingListShareResponseTransfer;
+
     /**
      * @param \Generated\Shared\Transfer\ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer
      *
@@ -151,6 +152,11 @@ interface ShoppingListStubInterface
      * @return \Generated\Shared\Transfer\MessageTransfer[]
      */
     public function getLastResponseErrorMessages(): array;
+
+    /**
+     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     */
+    public function getResponsesErrorMessages(): array;
 
     /**
      * @param \Generated\Shared\Transfer\ShoppingListDismissRequestTransfer $shoppingListDismissRequest

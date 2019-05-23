@@ -10,10 +10,13 @@ namespace Spryker\Zed\PersistentCart\Business\Model;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\QuoteUpdateRequestTransfer;
+use Spryker\Zed\Kernel\PermissionAwareTrait;
 use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToQuoteFacadeInterface;
 
 class QuoteWriter implements QuoteWriterInterface
 {
+    use PermissionAwareTrait;
+
     /**
      * @var \Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToQuoteFacadeInterface
      */
@@ -110,12 +113,85 @@ class QuoteWriter implements QuoteWriterInterface
             $quoteUpdateRequestTransfer->getIdQuote(),
             $quoteUpdateRequestTransfer->getCustomer()
         );
+
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $this->quoteResponseExpander->expand($quoteResponseTransfer);
         }
+
+        if (!$this->isQuoteOwner($quoteResponseTransfer->getQuoteTransfer()) && !$this->hasCustomerWritePermission($quoteUpdateRequestTransfer)) {
+            $quoteResponseTransfer = (new QuoteResponseTransfer())
+                ->setCustomer($quoteResponseTransfer->getCustomer())
+                ->setIsSuccessful(false);
+
+            return $this->quoteResponseExpander->expand($quoteResponseTransfer);
+        }
+
         $quoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
         $quoteTransfer->fromArray($quoteUpdateRequestTransfer->getQuoteUpdateRequestAttributes()->modifiedToArray(), true);
 
         return $this->quoteItemOperation->reloadItems($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function replaceQuoteByCustomerAndStore(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    {
+        $quoteResponseTransfer = $this->quoteFacade->findQuoteByCustomerAndStore(
+            $quoteTransfer->getCustomer(),
+            $quoteTransfer->getStore()
+        );
+
+        if (!$quoteResponseTransfer->getIsSuccessful()) {
+            return $quoteResponseTransfer;
+        }
+
+        $quoteTransfer->setIdQuote($quoteResponseTransfer->getQuoteTransfer()->getIdQuote());
+
+        return $this->quoteFacade->updateQuote($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteUpdateRequestTransfer $quoteUpdateRequestTransfer
+     *
+     * @return bool
+     */
+    protected function hasCustomerWritePermission(QuoteUpdateRequestTransfer $quoteUpdateRequestTransfer): bool
+    {
+        $companyUserId = $this->findCompanyUserId($quoteUpdateRequestTransfer);
+
+        if (!$companyUserId) {
+            return true;
+        }
+
+        return $this->can('WriteSharedCartPermissionPlugin', $companyUserId, $quoteUpdateRequestTransfer->getIdQuote());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteUpdateRequestTransfer $quoteUpdateRequestTransfer
+     *
+     * @return int|null
+     */
+    protected function findCompanyUserId(QuoteUpdateRequestTransfer $quoteUpdateRequestTransfer): ?int
+    {
+        $companyUserTransfer = $quoteUpdateRequestTransfer
+            ->getCustomer()
+            ->getCompanyUserTransfer();
+
+        return $companyUserTransfer ? $companyUserTransfer->getIdCompanyUser() : null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function isQuoteOwner(QuoteTransfer $quoteTransfer): bool
+    {
+        return $quoteTransfer->requireCustomer()
+                ->getCustomer()
+                ->getCustomerReference() === $quoteTransfer->getCustomerReference();
     }
 }

@@ -36,5 +36,10 @@
         <property name="store" type="Store" />
     </transfer>
 
+    <transfer name="AvailabilityNotificationData">
+        <property name="sku" type="string"/>
+        <property name="store" type="Store"/>
+    </transfer>
+
 </transfers>
 

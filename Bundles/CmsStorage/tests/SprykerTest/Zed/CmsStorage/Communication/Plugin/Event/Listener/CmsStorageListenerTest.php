@@ -39,6 +39,9 @@ use SprykerTest\Zed\CmsStorage\CmsStorageConfigMock;
  */
 class CmsStorageListenerTest extends Unit
 {
+    public const NUMBER_OF_LOCALES = 2;
+    public const NUMBER_OF_STORES = 3;
+
     /**
      * @return void
      */
@@ -203,7 +206,8 @@ class CmsStorageListenerTest extends Unit
     protected function assertCmsPageStorage(int $beforeCount): void
     {
         $count = SpyCmsPageStorageQuery::create()->count();
-        $this->assertGreaterThan($beforeCount, $count);
+
+        $this->assertSame($beforeCount + static::NUMBER_OF_LOCALES * static::NUMBER_OF_STORES, $count);
 
         $cmsPage = SpyCmsPageStorageQuery::create()->filterByLocale('en_US')
             ->orderByIdCmsPageStorage()

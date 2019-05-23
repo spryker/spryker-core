@@ -1,6 +1,6 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% set widget_title = 'View Product Label: "' ~ productLabelTransfer.getName() ~ '"' %}
+{% set widget_title = 'View Product Label' | trans ~ ': "' ~ productLabelTransfer.getName() ~ '"' %}
 {% block section_title %}{{ widget_title }}{% endblock %}
 
 {% block action %}

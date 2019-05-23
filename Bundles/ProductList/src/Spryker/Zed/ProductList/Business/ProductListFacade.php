@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductList\Business;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
+use Generated\Shared\Transfer\ProductListResponseTransfer;
 use Generated\Shared\Transfer\ProductListTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -25,6 +26,8 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
      *
      * @api
      *
+     * @deprecated Use createProductList() or updateProductList() instead.
+     *
      * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
      *
      * @return \Generated\Shared\Transfer\ProductListTransfer
@@ -34,6 +37,38 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
         return $this->getFactory()
             ->createProductListWriter()
             ->saveProductList($productListTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductListResponseTransfer
+     */
+    public function createProductList(ProductListTransfer $productListTransfer): ProductListResponseTransfer
+    {
+        return $this->getFactory()
+            ->createProductListWriter()
+            ->createProductList($productListTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductListResponseTransfer
+     */
+    public function updateProductList(ProductListTransfer $productListTransfer): ProductListResponseTransfer
+    {
+        return $this->getFactory()
+            ->createProductListWriter()
+            ->updateProductList($productListTransfer);
     }
 
     /**
@@ -288,5 +323,21 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
         return $this->getFactory()
             ->createRestrictedItemsFilter()
             ->filterRestrictedItems($quoteTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int[] $productListIds
+     *
+     * @return int[]
+     */
+    public function getProductConcreteIdsByProductListIds(array $productListIds): array
+    {
+        return $this->getFactory()
+            ->createProductListReader()
+            ->getProductConcreteIdsByProductListIds($productListIds);
     }
 }

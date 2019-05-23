@@ -90,7 +90,7 @@ class StepEngineTest extends AbstractStepEngineTest
         $stepEngine = new StepEngine($stepCollection, $this->getDataContainerMock());
         $response = $stepEngine->process($this->getRequest(self::STEP_ROUTE_A));
 
-        $this->assertInternalType('array', $response);
+        $this->assertIsArray($response);
         $this->assertArrayHasKey('previousStepUrl', $response);
     }
 
@@ -115,7 +115,7 @@ class StepEngineTest extends AbstractStepEngineTest
 
         $response = $stepEngine->process($this->getRequest(self::STEP_ROUTE_A), $formCollectionHandlerMock);
 
-        $this->assertInternalType('array', $response);
+        $this->assertIsArray($response);
         $this->assertArrayHasKey('previousStepUrl', $response);
         $this->assertArrayHasKey(self::FORM_NAME, $response);
     }
@@ -154,7 +154,7 @@ class StepEngineTest extends AbstractStepEngineTest
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Symfony\Component\Form\FormInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Symfony\Component\Form\FormInterface
      */
     protected function getFormMock()
     {
@@ -162,7 +162,7 @@ class StepEngineTest extends AbstractStepEngineTest
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Yves\StepEngine\Form\FormCollectionHandlerInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Yves\StepEngine\Form\FormCollectionHandlerInterface
      */
     protected function getFormCollectionHandlerMock()
     {
@@ -172,7 +172,7 @@ class StepEngineTest extends AbstractStepEngineTest
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer|null $dataTransfer
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Yves\StepEngine\Dependency\DataContainer\DataContainerInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Yves\StepEngine\Dependency\DataContainer\DataContainerInterface
      */
     private function getDataContainerMock(?AbstractTransfer $dataTransfer = null)
     {

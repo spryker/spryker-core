@@ -14,19 +14,19 @@ interface VersionGeneratorInterface
      *
      * @return int
      */
-    public function generateNewCmsVersion($idCmsPage);
+    public function generateNewCmsVersion(int $idCmsPage): int;
 
     /**
      * @param int $versionNumber
      *
      * @return string
      */
-    public function generateNewCmsVersionName($versionNumber);
+    public function generateNewCmsVersionName(int $versionNumber): string;
 
     /**
      * @param int $versionNumber
      *
      * @return string
      */
-    public function generateReferenceCmsVersionName($versionNumber);
+    public function generateReferenceCmsVersionName(int $versionNumber): string;
 }

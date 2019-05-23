@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ProductListCategoryRelationTransfer;
 use Generated\Shared\Transfer\ProductListProductConcreteRelationTransfer;
 use Generated\Shared\Transfer\ProductListTransfer;
 use Orm\Zed\ProductList\Persistence\Map\SpyProductListProductConcreteTableMap;
+use Orm\Zed\ProductList\Persistence\Map\SpyProductListTableMap;
 use Spryker\Zed\ProductList\Business\ProductListCategoryRelation\ProductListCategoryRelationReaderInterface;
 use Spryker\Zed\ProductList\Business\ProductListProductConcreteRelation\ProductListProductConcreteRelationReaderInterface;
 use Spryker\Zed\ProductList\Dependency\Facade\ProductListToProductFacadeInterface;
@@ -130,7 +131,18 @@ class ProductListReader implements ProductListReaderInterface
      */
     public function getProductBlacklistIdsByIdProduct(int $idProduct): array
     {
-        return $this->productListRepository->getConcreteProductBlacklistIds($idProduct);
+        return array_unique(
+            array_merge(
+                $this->productListRepository->getProductConcreteProductListIdsForType(
+                    $idProduct,
+                    SpyProductListTableMap::COL_TYPE_BLACKLIST
+                ),
+                $this->productListRepository->getProductConcreteProductListIdsRelatedToCategoriesForType(
+                    $idProduct,
+                    SpyProductListTableMap::COL_TYPE_BLACKLIST
+                )
+            )
+        );
     }
 
     /**
@@ -140,7 +152,18 @@ class ProductListReader implements ProductListReaderInterface
      */
     public function getProductWhitelistIdsByIdProduct(int $idProduct): array
     {
-        return $this->productListRepository->getConcreteProductWhitelistIds($idProduct);
+        return array_unique(
+            array_merge(
+                $this->productListRepository->getProductConcreteProductListIdsForType(
+                    $idProduct,
+                    SpyProductListTableMap::COL_TYPE_WHITELIST
+                ),
+                $this->productListRepository->getProductConcreteProductListIdsRelatedToCategoriesForType(
+                    $idProduct,
+                    SpyProductListTableMap::COL_TYPE_WHITELIST
+                )
+            )
+        );
     }
 
     /**
@@ -199,7 +222,27 @@ class ProductListReader implements ProductListReaderInterface
      */
     public function getProductAbstractIdsByProductListIds(array $productListIds): array
     {
-        return $this->productListRepository->getProductAbstractIdsByProductListIds($productListIds);
+        return array_unique(
+            array_merge(
+                $this->productListRepository->getProductAbstractIdsRelatedToProductConcrete($productListIds),
+                $this->productListRepository->getProductAbstractIdsRelatedToCategories($productListIds)
+            )
+        );
+    }
+
+    /**
+     * @param int[] $productListIds
+     *
+     * @return int[]
+     */
+    public function getProductConcreteIdsByProductListIds(array $productListIds): array
+    {
+        return array_unique(
+            array_merge(
+                $this->productListRepository->getProductConcreteIdsRelatedToProductLists($productListIds),
+                $this->productListRepository->getProductConcreteIdsRelatedToProductListsCategories($productListIds)
+            )
+        );
     }
 
     /**

@@ -37,7 +37,7 @@ class PackageFinder implements PackageFinderInterface
         $packageTransferCollection = [];
 
         foreach ($this->getPackageFinder() as $directoryInfo) {
-            if (in_array($directoryInfo->getFilename(), ['spryker', 'spryker-shop'])) {
+            if (in_array($directoryInfo->getFilename(), $this->config->getInternalPackageDirectories())) {
                 continue;
             }
             $packageTransfer = $this->getPackageTransfer($directoryInfo);

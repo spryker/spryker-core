@@ -125,7 +125,7 @@ class GraphTest extends Unit
      */
     public function testRender()
     {
-        $this->assertInternalType('string', $this->getGraph()->render('svg'));
+        $this->assertIsString($this->getGraph()->render('svg'));
     }
 
     /**
@@ -133,7 +133,7 @@ class GraphTest extends Unit
      */
     public function testRenderWithFileName()
     {
-        $this->assertInternalType('string', $this->getGraph()->render('svg', 'filename'));
+        $this->assertIsString($this->getGraph()->render('svg', 'filename'));
     }
 
     /**
@@ -152,7 +152,7 @@ class GraphTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\Graph\GraphAdapterInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\Graph\GraphAdapterInterface
      */
     private function createAdapterMock()
     {

@@ -148,7 +148,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
 
         $productOptions = $itemTransfer->getProductOptions();
         $priceMode = $quoteTransfer->getPriceMode();
-        $currencyIsoCode = $quoteTransfer->getCurrency()->getCode();
+
         for ($i = 0; $i < $quantity; $i++) {
             $bundleItemTransfer = new ItemTransfer();
             $bundleItemTransfer->fromArray($itemTransfer->toArray(), true);
@@ -164,8 +164,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
             $bundledItems = $this->createBundledItemsTransferCollection(
                 $bundledProducts,
                 $bundleItemIdentifier,
-                $priceMode,
-                $currencyIsoCode
+                $quoteTransfer
             );
 
             $lastBundledItemTransfer = $bundledItems[count($bundledItems) - 1];
@@ -221,12 +220,11 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
     /**
      * @param \Propel\Runtime\Collection\ObjectCollection $bundledProducts
      * @param string $bundleItemIdentifier
-     * @param string $priceMode
-     * @param string $currencyIsoCode
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return array
      */
-    protected function createBundledItemsTransferCollection(ObjectCollection $bundledProducts, $bundleItemIdentifier, $priceMode, $currencyIsoCode)
+    protected function createBundledItemsTransferCollection(ObjectCollection $bundledProducts, $bundleItemIdentifier, QuoteTransfer $quoteTransfer)
     {
         $bundledItems = [];
         foreach ($bundledProducts as $index => $productBundleEntity) {
@@ -235,11 +233,11 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
                 $bundledItems[] = $this->createBundledItemTransfer(
                     $productBundleEntity,
                     $bundleItemIdentifier,
-                    $priceMode,
-                    $currencyIsoCode
+                    $quoteTransfer
                 );
             }
         }
+
         return $bundledItems;
     }
 
@@ -292,16 +290,14 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
     /**
      * @param \Orm\Zed\ProductBundle\Persistence\SpyProductBundle $bundleProductEntity
      * @param string $bundleItemIdentifier
-     * @param string $priceMode
-     * @param string $currencyIsoCode
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\ItemTransfer
      */
     protected function createBundledItemTransfer(
         SpyProductBundle $bundleProductEntity,
         $bundleItemIdentifier,
-        $priceMode,
-        $currencyIsoCode
+        QuoteTransfer $quoteTransfer
     ) {
         $bundledConcreteProductEntity = $bundleProductEntity->getSpyProductRelatedByFkBundledProduct();
 
@@ -316,8 +312,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
 
         $unitPrice = $this->getProductPrice(
             $bundledConcreteProductEntity->getSku(),
-            $currencyIsoCode,
-            $priceMode
+            $quoteTransfer
         );
 
         $itemTransfer = new ItemTransfer();
@@ -329,22 +324,21 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
             ->setQuantity(1)
             ->setRelatedBundleItemIdentifier($bundleItemIdentifier);
 
-        $this->setPrice($itemTransfer, $unitPrice, $priceMode);
+        $this->setPrice($itemTransfer, $unitPrice, $quoteTransfer->getPriceMode());
 
         return $itemTransfer;
     }
 
     /**
      * @param string $sku
-     * @param string $currencyIsoCode
-     * @param string $priceMode
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return int
      */
-    protected function getProductPrice($sku, $currencyIsoCode, $priceMode)
+    protected function getProductPrice($sku, QuoteTransfer $quoteTransfer)
     {
         if (!isset(static::$productPriceCache[$sku])) {
-            $priceFilterTransfer = $this->createPriceProductFilterTransfer($sku, $currencyIsoCode, $priceMode);
+            $priceFilterTransfer = $this->createStoreSpecificPriceProductFilterTransfer($sku, $quoteTransfer);
             static::$productPriceCache[$sku] = $this->priceProductFacade->findPriceFor($priceFilterTransfer);
         }
 
@@ -402,6 +396,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
             } else {
                 $total += $itemTransfer->getUnitGrossPrice();
             }
+
             return $total;
         });
 
@@ -431,6 +426,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
         $options = (array)$itemTransfer->getProductOptions();
         if (count($options) === 0) {
             $bundleItemTransfer->setGroupKey($this->buildGroupKey($bundleItemTransfer));
+
             return;
         }
 
@@ -466,6 +462,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
             $itemTransfer->setUnitNetPrice($unitPrice);
             $itemTransfer->setUnitGrossPrice(0);
             $itemTransfer->setSumGrossPrice(0);
+
             return;
         }
 
@@ -484,6 +481,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
     {
         if ($priceMode === $this->priceFacade->getNetPriceModeIdentifier()) {
             $itemTransfer->requireUnitNetPrice();
+
             return;
         }
 
@@ -507,16 +505,16 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
 
     /**
      * @param string $sku
-     * @param string $currencyIsoCode
-     * @param string $priceMode
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductFilterTransfer
      */
-    protected function createPriceProductFilterTransfer($sku, $currencyIsoCode, $priceMode)
+    protected function createStoreSpecificPriceProductFilterTransfer(string $sku, QuoteTransfer $quoteTransfer): PriceProductFilterTransfer
     {
         return (new PriceProductFilterTransfer())
             ->setSku($sku)
-            ->setCurrencyIsoCode($currencyIsoCode)
-            ->setPriceMode($priceMode);
+            ->setCurrencyIsoCode($quoteTransfer->getCurrency()->getCode())
+            ->setPriceMode($quoteTransfer->getPriceMode())
+            ->setStoreName($quoteTransfer->getStore()->getName());
     }
 }

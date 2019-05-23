@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\QuickOrderItemTransfer;
 use Generated\Shared\Transfer\QuickOrderTransfer;
+use Spryker\Client\QuickOrder\Dependency\Client\QuickOrderToLocaleClientInterface;
 use Spryker\Client\QuickOrder\Dependency\Client\QuickOrderToProductStorageClientInterface;
 
 class ProductConcreteResolver implements ProductConcreteResolverInterface
@@ -27,11 +28,18 @@ class ProductConcreteResolver implements ProductConcreteResolverInterface
     protected $productStorageClient;
 
     /**
-     * @param \Spryker\Client\QuickOrder\Dependency\Client\QuickOrderToProductStorageClientInterface $productStorageClient
+     * @var \Spryker\Client\QuickOrder\Dependency\Client\QuickOrderToLocaleClientInterface
      */
-    public function __construct(QuickOrderToProductStorageClientInterface $productStorageClient)
+    protected $localeClient;
+
+    /**
+     * @param \Spryker\Client\QuickOrder\Dependency\Client\QuickOrderToProductStorageClientInterface $productStorageClient
+     * @param \Spryker\Client\QuickOrder\Dependency\Client\QuickOrderToLocaleClientInterface $localeClient
+     */
+    public function __construct(QuickOrderToProductStorageClientInterface $productStorageClient, QuickOrderToLocaleClientInterface $localeClient)
     {
         $this->productStorageClient = $productStorageClient;
+        $this->localeClient = $localeClient;
     }
 
     /**
@@ -75,6 +83,38 @@ class ProductConcreteResolver implements ProductConcreteResolverInterface
             ->findProductConcreteStorageDataByMappingForCurrentLocale(static::MAPPING_TYPE_SKU, $sku);
 
         if ($productConcreteStorageData === null) {
+            return null;
+        }
+
+        $productConcreteTransfer = (new ProductConcreteTransfer())->fromArray($productConcreteStorageData, true);
+        $localizedAttributesTransfer = (new LocalizedAttributesTransfer())->setName($productConcreteStorageData[static::NAME]);
+
+        return $productConcreteTransfer
+            ->setFkProductAbstract($productConcreteStorageData[static::ID_PRODUCT_ABSTRACT])
+            ->addLocalizedAttributes($localizedAttributesTransfer);
+    }
+
+    /**
+     * @param string $sku
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
+     */
+    public function findProductConcreteWithProductAbstractBySku(string $sku): ?ProductConcreteTransfer
+    {
+        $productConcreteStorageData = $this->productStorageClient
+            ->findProductConcreteStorageDataByMappingForCurrentLocale(static::MAPPING_TYPE_SKU, $sku);
+
+        if ($productConcreteStorageData === null) {
+            return null;
+        }
+
+        $productAbstractStorageData = $this->productStorageClient
+            ->findProductAbstractStorageData(
+                $productConcreteStorageData[static::ID_PRODUCT_ABSTRACT],
+                $this->localeClient->getCurrentLocale()
+            );
+
+        if ($productAbstractStorageData === null) {
             return null;
         }
 

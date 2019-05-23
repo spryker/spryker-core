@@ -36,7 +36,8 @@ class EditMerchantController extends AbstractController
         $merchantTransfer = $dataProvider->getData($idMerchant);
 
         if ($merchantTransfer === null) {
-            $this->addErrorMessage(sprintf('Merchant with id %s doesn\'t exists.', $idMerchant));
+            $this->addErrorMessage("Merchant with id %s doesn't exists.", ['%s' => $idMerchant]);
+
             return $this->redirectResponse(MerchantTableConstants::URL_MERCHANT_LIST);
         }
 

@@ -46,7 +46,7 @@ interface ReceiverInterface
      *
      * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer $queueReceiveMessageTransfer
      *
-     * @return bool
+     * @return void
      */
     public function acknowledge(QueueReceiveMessageTransfer $queueReceiveMessageTransfer);
 
@@ -58,7 +58,7 @@ interface ReceiverInterface
      *
      * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer $queueReceiveMessageTransfer
      *
-     * @return bool
+     * @return void
      */
     public function reject(QueueReceiveMessageTransfer $queueReceiveMessageTransfer);
 

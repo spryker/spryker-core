@@ -5,8 +5,6 @@
 
 'use strict';
 
-require('./main');
-
 var productPosition;
 var allProductsTable;
 var productAbstractSetTable;

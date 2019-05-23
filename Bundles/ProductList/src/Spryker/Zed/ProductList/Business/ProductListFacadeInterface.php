@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductList\Business;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
+use Generated\Shared\Transfer\ProductListResponseTransfer;
 use Generated\Shared\Transfer\ProductListTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
@@ -23,6 +24,7 @@ interface ProductListFacadeInterface
      * - Updates fields in a Product List entity if ProductListTransfer::idProductList is set.
      * - Updates relations to categories.
      * - Updates relations to concrete products.
+     * - Executes ProductListPreSaveInterface plugin stack before save.
      *
      * @api
      *
@@ -31,6 +33,43 @@ interface ProductListFacadeInterface
      * @return \Generated\Shared\Transfer\ProductListTransfer
      */
     public function saveProductList(ProductListTransfer $productListTransfer): ProductListTransfer;
+
+    /**
+     * Specification:
+     * - Requires ProductListTransfer::title.
+     * - Creates a Product List entity.
+     * - Creates relations to categories.
+     * - Creates relations to concrete products.
+     * - Executes ProductListPreCreatePluginInterface plugin stack before save.
+     * - Returns MessageTransfers in messages property to notify about changes that have been made to Product List.
+     * - Returns true isSuccess property if saving was successful.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductListResponseTransfer
+     */
+    public function createProductList(ProductListTransfer $productListTransfer): ProductListResponseTransfer;
+
+    /**
+     * Specification:
+     * - Requires ProductListTransfer::idProductList.
+     * - Finds a Product List by ProductListTransfer::idProductList in the transfer.
+     * - Updates fields in a Product List entity if ProductListTransfer::idProductList is set.
+     * - Updates relations to categories.
+     * - Updates relations to concrete products.
+     * - Executes ProductListPreUpdatePluginInterface plugin stack before save.
+     * - Returns MessageTransfers in messages property to notify about changes that have been made to Product List.
+     * - Returns true isSuccess property if saving was successful.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductListResponseTransfer
+     */
+    public function updateProductList(ProductListTransfer $productListTransfer): ProductListResponseTransfer;
 
     /**
      * Specification:
@@ -155,7 +194,7 @@ interface ProductListFacadeInterface
 
     /**
      * Specification:
-     *  - Retrieves product list IDs with type "blacklist" for the given product concrete ID.
+     *  - Retrieves unique product list IDs with type "blacklist" for the given product concrete ID.
      *
      * @api
      *
@@ -181,7 +220,7 @@ interface ProductListFacadeInterface
 
     /**
      * Specification:
-     *  - Retrieves product list IDs with type "whitelist" for the given product concrete ID.
+     *  - Retrieves unique product list IDs with type "whitelist" for the given product concrete ID.
      *
      * @api
      *
@@ -240,4 +279,16 @@ interface ProductListFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function filterRestrictedItems(QuoteTransfer $quoteTransfer): QuoteTransfer;
+
+    /**
+     * Specification:
+     *  - Finds product concrete ids by product list ids.
+     *
+     * @api
+     *
+     * @param int[] $productListIds
+     *
+     * @return int[]
+     */
+    public function getProductConcreteIdsByProductListIds(array $productListIds): array;
 }

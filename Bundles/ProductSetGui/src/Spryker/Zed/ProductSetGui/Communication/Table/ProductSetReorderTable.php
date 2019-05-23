@@ -132,10 +132,10 @@ class ProductSetReorderTable extends AbstractTable
     protected function getStatusLabel($status)
     {
         if (!$status) {
-            return '<span class="label label-danger">Inactive</span>';
+            return $this->generateLabel('Inactive', 'label-danger');
         }
 
-        return '<span class="label label-info">Active</span>';
+        return $this->generateLabel('Active', 'label-info');
     }
 
     /**

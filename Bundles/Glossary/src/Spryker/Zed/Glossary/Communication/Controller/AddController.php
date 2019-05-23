@@ -45,7 +45,7 @@ class AddController extends AbstractController
             $glossaryFacade->saveGlossaryKeyTranslations($keyTranslationTransfer);
             $idGlossaryKey = $this->getFacade()->getKeyIdentifier($keyTranslationTransfer->getGlossaryKey());
 
-            $this->addSuccessMessage(sprintf(static::MESSAGE_CREATE_SUCCESS, $idGlossaryKey));
+            $this->addSuccessMessage(static::MESSAGE_CREATE_SUCCESS, ['%d' => $idGlossaryKey]);
 
             return $this->redirectResponse('/glossary');
         }

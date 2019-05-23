@@ -25,7 +25,7 @@ class OfferGuiToOmsFacadeBridge implements OfferGuiToOmsFacadeInterface
     /**
      * @param int $idSalesOrder
      *
-     * @return \Spryker\Zed\Oms\Business\Process\EventInterface[]
+     * @return string[][]
      */
     public function getManualEventsByIdSalesOrder(int $idSalesOrder): array
     {
@@ -35,7 +35,7 @@ class OfferGuiToOmsFacadeBridge implements OfferGuiToOmsFacadeInterface
     /**
      * @param int $idSalesOrder
      *
-     * @return array
+     * @return string[]
      */
     public function getDistinctManualEventsByIdSalesOrder(int $idSalesOrder): array
     {

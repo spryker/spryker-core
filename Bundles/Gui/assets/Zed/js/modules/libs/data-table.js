@@ -1,8 +1,24 @@
 'use strict';
 
+function getLocale() {
+    var locale = document.documentElement.dataset.applicationLocale
+    if (typeof(locale) === 'string') {
+
+        return locale.split('_')[0].split('-')[0];
+    }
+    return 'en';
+}
+
+function getTranslation(locale) {
+    return require('./i18n/' + locale + '.json')
+}
+
+var locale = getLocale()
+
 var defaultConfiguration = {
     scrollX: 'auto',
-    autoWidth: false
+    autoWidth: false,
+    language: getTranslation(locale)
 };
 
 var noSearchConfiguration = {

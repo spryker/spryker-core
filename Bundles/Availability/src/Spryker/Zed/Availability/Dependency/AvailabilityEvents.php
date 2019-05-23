@@ -56,4 +56,10 @@ interface AvailabilityEvents
      * @api
      */
     public const ENTITY_SPY_AVAILABILITY_UPDATE = 'Entity.spy_availability.update';
+
+    /**
+     * Specification:
+     * - This event will be used for notifying subscribers if product is available again.
+     */
+    public const AVAILABILITY_NOTIFICATION = 'availability_notification';
 }

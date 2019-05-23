@@ -49,11 +49,11 @@ class TemplatePathMapBuilderTest extends Unit
         $directory = $this->getFixtureDirectory();
         $templateFinder = new TemplatePathMapBuilder(new Finder(), $templateNameBuilder, $directory);
 
-        $this->assertInternalType('array', $templateFinder->build());
+        $this->assertIsArray($templateFinder->build());
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Twig\Business\Model\TemplatePathMapBuilder\TemplateNameBuilderInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Twig\Business\Model\TemplatePathMapBuilder\TemplateNameBuilderInterface
      */
     protected function getTemplateNameBuilderMock()
     {

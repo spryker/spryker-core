@@ -35,6 +35,23 @@ interface SessionConstants
     public const YVES_SESSION_REDIS_PORT = 'SESSION:YVES_SESSION_REDIS_PORT';
     public const YVES_SESSION_REDIS_DATABASE = 'SESSION:YVES_SESSION_REDIS_DATABASE';
 
+    /**
+     * Specification:
+     * - Defines a custom configuration for \Predis\Client when used as Yves session storage.
+     * - This configuration is used exclusively when set, e.g. no other storage configuration will be used for the client.
+     *
+     * @api
+     */
+    public const YVES_SESSION_PREDIS_CLIENT_CONFIGURATION = 'SESSION:YVES_SESSION_PREDIS_CLIENT_CONFIGURATION';
+
+    /**
+     * Specification:
+     * - Defines custom options for \Predis\Client when used as Yves session storage.
+     *
+     * @api
+     */
+    public const YVES_SESSION_PREDIS_CLIENT_OPTIONS = 'SESSION:YVES_SESSION_PREDIS_CLIENT_OPTIONS';
+
     public const ZED_SSL_ENABLED = 'SESSION:ZED_SSL_ENABLED';
     public const ZED_SESSION_SAVE_HANDLER = 'SESSION:ZED_SESSION_SAVE_HANDLER';
     public const ZED_SESSION_COOKIE_NAME = 'SESSION:ZED_SESSION_COOKIE_NAME';
@@ -50,6 +67,22 @@ interface SessionConstants
     public const ZED_SESSION_REDIS_HOST = 'SESSION:ZED_SESSION_REDIS_HOST';
     public const ZED_SESSION_REDIS_PORT = 'SESSION:ZED_SESSION_REDIS_PORT';
     public const ZED_SESSION_REDIS_PASSWORD = 'SESSION:ZED_SESSION_REDIS_PASSWORD';
-
     public const ZED_SESSION_REDIS_DATABASE = 'SESSION:ZED_SESSION_REDIS_DATABASE';
+
+    /**
+     * Specification:
+     * - Defines a custom configuration for \Predis\Client when used as Zed session storage.
+     * - This configuration is used exclusively when set, e.g. no other storage configuration will be used for the client.
+     *
+     * @api
+     */
+    public const ZED_SESSION_PREDIS_CLIENT_CONFIGURATION = 'SESSION:ZED_SESSION_PREDIS_CLIENT_CONFIGURATION';
+
+    /**
+     * Specification:
+     * - Defines custom options for \Predis\Client when used as Zed session storage.
+     *
+     * @api
+     */
+    public const ZED_SESSION_PREDIS_CLIENT_OPTIONS = 'SESSION:ZED_SESSION_PREDIS_CLIENT_OPTIONS';
 }

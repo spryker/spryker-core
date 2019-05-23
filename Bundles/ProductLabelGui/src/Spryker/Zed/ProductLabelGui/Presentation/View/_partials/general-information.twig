@@ -2,36 +2,36 @@
     {% block widget_content %}
         <table class="table">
             <tr>
-                <td>Name</td>
+                <td>{{ 'Name' | trans }}</td>
                 <td>{{ productLabelTransfer.getName() }}</td>
             </tr>
             <tr>
-                <td>Is exclusive</td>
+                <td>{{ 'Is exclusive' | trans }}</td>
                 <td>
                     {% if productLabelTransfer.getIsExclusive() == true %}
-                        Yes
+                        {{ 'Yes' | trans }}
                     {% else %}
-                        No
+                        {{ 'No' | trans }}
                     {% endif %}
                 </td>
             </tr>
             <tr>
-                <td>Valid from</td>
+                <td>{{ 'Valid from' | trans }}</td>
                 <td>
                     {% if productLabelTransfer.getValidFrom() %}
                         {{ productLabelTransfer.getValidFrom() | formatDate }}
                     {% else %}
-                        N/A
+                    {{ 'N/A' | trans }}
                     {% endif %}
                 </td>
             </tr>
             <tr>
-                <td>Valid to</td>
+                <td>{{ 'Valid to' | trans }}</td>
                 <td>
                     {% if productLabelTransfer.getValidTo() %}
                         {{ productLabelTransfer.getValidTo() | formatDate }}
                     {% else %}
-                        N/A
+                    {{ 'N/A' | trans }}
                     {% endif %}
                 </td>
             </tr>

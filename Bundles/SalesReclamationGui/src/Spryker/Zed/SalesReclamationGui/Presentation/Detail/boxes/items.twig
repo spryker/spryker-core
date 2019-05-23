@@ -22,15 +22,18 @@
     </div>
 </div>
 
-{% set widget_title %}
-    Order
-    <a href="{{ url('/sales/detail', {'id-sales-order': reclamation.order.idSalesOrder}) }}">
-        {{ reclamation.order.orderReference }}
-    </a>
-    items:
-{% endset %}
+{% embed '@Gui/Partials/widget.twig' %}
 
-{% embed '@Gui/Partials/widget.twig' with {widget_title: widget_title} %}
+    {% block widget_title %}
+        <h5>
+            {{ 'Order' | trans }}
+            <a href="{{ url('/sales/detail', {'id-sales-order': reclamation.order.idSalesOrder}) }}">
+                {{ reclamation.order.orderReference }}
+            </a>
+            {{ 'items' | trans }}:
+        </h5>
+    {% endblock %}
+
     {% block widget_header_content %}
         Reclamation state: {{ reclamation.isOpen ? 'Open' | trans : 'Close' | trans }}
     {% endblock %}

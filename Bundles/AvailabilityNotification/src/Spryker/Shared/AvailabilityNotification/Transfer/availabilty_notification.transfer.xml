@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="AvailabilityNotificationSubscription">
+        <property name="idAvailabilityNotificationSubscription" type="int" />
+        <property name="sku" type="string" />
+        <property name="email" type="string" />
+        <property name="customerReference" type="string" />
+        <property name="subscriptionKey" type="string" />
+        <property name="locale" type="Locale" />
+        <property name="store" type="Store" />
+    </transfer>
+
+    <transfer name="AvailabilityNotificationSubscriptionResponse">
+        <property name="availabilityNotificationSubscription" type="AvailabilityNotificationSubscription" />
+        <property name="product" type="ProductConcrete" />
+        <property name="isSuccess" type="bool" default="true" />
+        <property name="errorMessage" type="string" />
+    </transfer>
+
+    <transfer name="AvailabilityNotificationSubscriptionRequest">
+        <property name="subscriptionKey" type="string" />
+        <property name="sku" type="string" />
+        <property name="email" type="string" />
+        <property name="customerReference" type="string" />
+    </transfer>
+
+    <transfer name="Mail">
+        <property name="availabilityNotificationSubscriptionMailData" type="AvailabilityNotificationSubscriptionMailData" />
+    </transfer>
+
+    <transfer name="AvailabilityNotificationSubscriptionMailData">
+        <property name="availabilityNotificationSubscription" type="AvailabilityNotificationSubscription" />
+        <property name="availabilityUnsubscriptionLink" type="string" />
+        <property name="productConcrete" type="ProductConcrete"/>
+        <property name="productName" type="string"/>
+        <property name="productUrl" type="string"/>
+        <property name="productImageUrl" type="string"/>
+    </transfer>
+
+    <transfer name="AvailabilityNotificationData">
+        <property name="sku" type="string"/>
+        <property name="store" type="Store"/>
+    </transfer>
+
+    <transfer name="Customer">
+        <property name="availabilityNotificationSubscriptionSkus" type="string[]" singular="availabilityNotificationSubscriptionSku"/>
+    </transfer>
+
+</transfers>

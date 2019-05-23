@@ -41,7 +41,7 @@ class EditController extends AbstractController
             );
 
         if ($formData === []) {
-            $this->addErrorMessage(sprintf('Glossary with id %s doesn\'t exist', $idGlossaryKey));
+            $this->addErrorMessage("Glossary with id %s doesn't exist", ['%s' => $idGlossaryKey]);
 
             return $this->redirectResponse($this->getFactory()->getConfig()->getDefaultRedirectUrl());
         }
@@ -61,11 +61,13 @@ class EditController extends AbstractController
             $glossaryFacade = $this->getFacade();
 
             if ($glossaryFacade->saveGlossaryKeyTranslations($keyTranslationTransfer)) {
-                $this->addSuccessMessage(sprintf(static::MESSAGE_UPDATE_SUCCESS, $idGlossaryKey));
+                $this->addSuccessMessage(static::MESSAGE_UPDATE_SUCCESS, ['%d' => $idGlossaryKey]);
+
                 return $this->redirectResponse('/glossary');
             }
 
             $this->addErrorMessage(static::MESSAGE_UPDATE_ERROR);
+
             return $this->redirectResponse('/glossary');
         }
 

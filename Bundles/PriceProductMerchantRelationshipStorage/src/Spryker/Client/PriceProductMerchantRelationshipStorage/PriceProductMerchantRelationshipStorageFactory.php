@@ -11,6 +11,7 @@ use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\PriceProductMerchantRelationshipStorage\Dependency\Client\PriceProductMerchantRelationshipStorageToCustomerClientInterface;
 use Spryker\Client\PriceProductMerchantRelationshipStorage\Dependency\Client\PriceProductMerchantRelationshipStorageToStorageClientInterface;
 use Spryker\Client\PriceProductMerchantRelationshipStorage\Dependency\Client\PriceProductMerchantRelationshipStorageToStoreClientInterface;
+use Spryker\Client\PriceProductMerchantRelationshipStorage\Dependency\Service\PriceProductMerchantRelationshipStorageToPriceProductServiceInterface;
 use Spryker\Client\PriceProductMerchantRelationshipStorage\Dependency\Service\PriceProductMerchantRelationshipToSynchronizationServiceInterface;
 use Spryker\Client\PriceProductMerchantRelationshipStorage\MerchantRelationshipFinder\CompanyBusinessUnitFinder;
 use Spryker\Client\PriceProductMerchantRelationshipStorage\MerchantRelationshipFinder\CompanyBusinessUnitFinderInterface;
@@ -88,6 +89,14 @@ class PriceProductMerchantRelationshipStorageFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Client\PriceProductMerchantRelationshipStorage\Dependency\Service\PriceProductMerchantRelationshipStorageToPriceProductServiceInterface
+     */
+    public function getPriceProductService(): PriceProductMerchantRelationshipStorageToPriceProductServiceInterface
+    {
+        return $this->getProvidedDependency(PriceProductMerchantRelationshipStorageDependencyProvider::SERVICE_PRICE_PRODUCT);
+    }
+
+    /**
      * @return \Spryker\Client\PriceProductMerchantRelationshipStorage\Dependency\Client\PriceProductMerchantRelationshipStorageToStoreClientInterface
      */
     public function getStoreClient(): PriceProductMerchantRelationshipStorageToStoreClientInterface
@@ -116,6 +125,9 @@ class PriceProductMerchantRelationshipStorageFactory extends AbstractFactory
      */
     public function createPriceProductMapper(): PriceProductMapperInterface
     {
-        return new PriceProductMapper($this->getConfig());
+        return new PriceProductMapper(
+            $this->getConfig(),
+            $this->getPriceProductService()
+        );
     }
 }

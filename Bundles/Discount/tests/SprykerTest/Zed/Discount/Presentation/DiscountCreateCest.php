@@ -56,11 +56,11 @@ class DiscountCreateCest
         $createPage->createDiscount(DiscountCreatePage::EMPTY_DISCOUNT, ['name' => null]);
         $i->dontSee($createPage::MESSAGE_SUCCESSFUL_ALERT_CREATION);
         $i->seeInCurrentUrl($createPage::URL);
-        $createPage->tab('General information');
+        $createPage->tab('tab-content-general');
         $i->seeElement($createPage::CURRENT_TAB_ERROR);
         $i->see('This value should not be blank');
         $i->see('Name', '.has-error');
-        $createPage->tab('Discount calculation');
+        $createPage->tab('tab-content-discount');
         $i->seeElement($createPage::CURRENT_TAB_ERROR);
         $i->see('This value should not be blank');
     }

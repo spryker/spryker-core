@@ -43,11 +43,16 @@ class ProductBusinessTester extends Actor
     protected $productConcreteIds = [];
 
     /**
+     * @var int[]
+     */
+    protected $productAbstractIds = [];
+
+    /**
      * @return void
      */
     public function setUpDatabase(): void
     {
-        $this->productConcreteIds = $this->insertProducts();
+        $this->insertProducts();
     }
 
     /**
@@ -85,21 +90,34 @@ class ProductBusinessTester extends Actor
     /**
      * @return int[]
      */
-    protected function insertProducts(): array
+    public function getProductAbstractIds(): array
+    {
+        return $this->productAbstractIds;
+    }
+
+    /**
+     * @return void
+     */
+    protected function insertProducts(): void
     {
         $productConcreteIds = [];
+        $productAbstractIds = [];
         $productFacade = $this->getProductFacade();
 
-        $productAbstractTransfer = $this->createProductAbstractTransfer();
-        $productAbstractTransfer->setIdProductAbstract(
-            $productFacade->createProductAbstract($productAbstractTransfer)
-        );
+        for ($i = 0; $i < 2; $i++) {
+            $productAbstractTransfer = $this->createProductAbstractTransfer((string)$i);
+            $productAbstractId = $productFacade->createProductAbstract($productAbstractTransfer);
 
-        foreach ($this->createProductConcreteTransferCollection($productAbstractTransfer) as $productConcreteTransfer) {
-            $productConcreteIds[] = $productFacade->createProductConcrete($productConcreteTransfer);
+            $productAbstractTransfer->setIdProductAbstract($productAbstractId);
+            $productAbstractIds[] = $productAbstractId;
+
+            foreach ($this->createProductConcreteTransferCollection($productAbstractTransfer) as $productConcreteTransfer) {
+                $productConcreteIds[] = $productFacade->createProductConcrete($productConcreteTransfer);
+            }
         }
 
-        return $productConcreteIds;
+        $this->productAbstractIds = $productAbstractIds;
+        $this->productConcreteIds = $productConcreteIds;
     }
 
     /**
@@ -111,15 +129,17 @@ class ProductBusinessTester extends Actor
     }
 
     /**
+     * @param string $sku
+     *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
-    protected function createProductAbstractTransfer(): ProductAbstractTransfer
+    protected function createProductAbstractTransfer(string $sku): ProductAbstractTransfer
     {
         $productAbstractTransfer = new ProductAbstractTransfer();
         $productAbstractTransfer->setStoreRelation(
             $this->createStoreRelationTransfer($productAbstractTransfer)
         );
-        $productAbstractTransfer->setSku('abstract_sku');
+        $productAbstractTransfer->setSku('abstract_sku' . $sku);
         $productAbstractTransfer->setIsActive(true);
         $productAbstractTransfer->setLocalizedAttributes(
             new ArrayObject([$this->createLocalizedAttributeTransfer()])

@@ -47,7 +47,7 @@ interface StoreReaderInterface
     public function getStoresWithSharedPersistence(StoreTransfer $storeTransfer);
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getCountries();
 }

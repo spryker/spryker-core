@@ -8,7 +8,7 @@
 namespace Spryker\Shared\Price;
 
 /**
- * @deprecated use \Spryker\Client\Price\PriceClient|\Spryker\Zed\Price\Business\PriceFacade respectively instead
+ * @deprecated Use \Spryker\Client\Price\PriceClient|\Spryker\Zed\Price\Business\PriceFacade respectively instead.
  */
 interface PriceMode
 {

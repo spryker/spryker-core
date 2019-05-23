@@ -87,7 +87,7 @@ class ProductReviewFactory extends AbstractFactory
     }
 
     /**
-     * @deprecated use getProductReviewConfig
+     * @deprecated Use getProductReviewConfig() instead.
      *
      * @return \Spryker\Client\ProductReview\ProductReviewConfig
      */

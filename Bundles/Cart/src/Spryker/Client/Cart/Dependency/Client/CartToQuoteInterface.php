@@ -32,4 +32,18 @@ interface CartToQuoteInterface
      * @return string
      */
     public function getStorageStrategy();
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteLocked(QuoteTransfer $quoteTransfer): bool;
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function lockQuote(QuoteTransfer $quoteTransfer): QuoteTransfer;
 }

@@ -47,7 +47,7 @@ class BundleControllerActionTest extends Unit
      * @param string $action
      * @param string $storeName
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Glue\Kernel\BundleControllerAction
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Glue\Kernel\BundleControllerAction
      */
     protected function getBundleControllerAction($bundle, $controller, $action, $storeName)
     {
@@ -67,7 +67,7 @@ class BundleControllerActionTest extends Unit
     /**
      * @param string $storeName
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\Kernel\ClassResolver\BundleNameResolver
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\Kernel\ClassResolver\BundleNameResolver
      */
     protected function getBundleNameResolverMock($storeName)
     {
