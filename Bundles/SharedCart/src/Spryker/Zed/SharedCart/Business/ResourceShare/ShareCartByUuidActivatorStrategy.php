@@ -17,7 +17,7 @@ use Spryker\Zed\SharedCart\Persistence\SharedCartRepositoryInterface;
 class ShareCartByUuidActivatorStrategy implements ShareCartByUuidActivatorStrategyInterface
 {
     protected const GLOSSARY_KEY_CART_ACCESS_DENIED = 'shared_cart.resource_share.strategy.error.cart_access_denied';
-    protected const GLOSSARY_KEY_QUOTE_IS_NOT_AVAILABLE = 'persistent_cart.error.quote.not_available';
+    protected const GLOSSARY_KEY_QUOTE_IS_NOT_AVAILABLE = 'persistent_cart_share.error.quote_is_not_available';
 
     /**
      * @var \Spryker\Zed\SharedCart\Persistence\SharedCartRepositoryInterface
@@ -71,6 +71,14 @@ class ShareCartByUuidActivatorStrategy implements ShareCartByUuidActivatorStrate
                 ->setIsSuccessful(false)
                 ->addMessage(
                     (new MessageTransfer())->setValue(static::GLOSSARY_KEY_CART_ACCESS_DENIED)
+                );
+        }
+
+        if ($this->isSharedCartLocked($resourceShareRequestTransfer)) {
+            return (new ResourceShareResponseTransfer())
+                ->setIsSuccessful(false)
+                ->addMessage(
+                    (new MessageTransfer())->setValue(static::GLOSSARY_KEY_QUOTE_IS_NOT_AVAILABLE)
                 );
         }
 
@@ -159,5 +167,21 @@ class ShareCartByUuidActivatorStrategy implements ShareCartByUuidActivatorStrate
         }
 
         return true;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
+     *
+     * @return bool
+     */
+    protected function isSharedCartLocked(ResourceShareRequestTransfer $resourceShareRequestTransfer): bool
+    {
+        $quoteResponseTransfer = $this->quoteFacade->findQuoteById(
+            $resourceShareRequestTransfer->getResourceShare()
+                ->getResourceShareData()
+                ->getIdQuote()
+        );
+
+        return $this->quoteFacade->isQuoteLocked($quoteResponseTransfer->getQuoteTransfer());
     }
 }
