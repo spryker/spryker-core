@@ -56,9 +56,9 @@ class StorageDependencyProvider extends AbstractDependencyProvider
      */
     protected function addStoragePlugin(Container $container): Container
     {
-        $container[static::PLUGIN_STORAGE] = function (Container $container) {
+        $container->set(static::PLUGIN_STORAGE, function (Container $container) {
             return $this->getStoragePlugin();
-        };
+        });
 
         return $container;
     }

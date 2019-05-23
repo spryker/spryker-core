@@ -54,13 +54,13 @@ class SessionRedisDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addMonitoringService(Container $container): Container
     {
-        $container[static::SERVICE_MONITORING] = function (Container $container) {
+        $container->set(static::SERVICE_MONITORING, function (Container $container) {
             $sessionToMonitoringServiceBridge = new SessionRedisToMonitoringServiceBridge(
                 $container->getLocator()->monitoring()->service()
             );
 
             return $sessionToMonitoringServiceBridge;
-        };
+        });
 
         return $container;
     }
@@ -72,11 +72,11 @@ class SessionRedisDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addRedisClient(Container $container): Container
     {
-        $container[static::CLIENT_SESSION_REDIS] = function (Container $container) {
+        $container->set(static::CLIENT_SESSION_REDIS, function (Container $container) {
             return new SessionRedisToRedisClientBridge(
                 $container->getLocator()->redis()->client()
             );
-        };
+        });
 
         return $container;
     }

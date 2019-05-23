@@ -38,11 +38,11 @@ class StorageRedisDependencyProvider extends AbstractDependencyProvider
      */
     protected function addRedisClient(Container $container): Container
     {
-        $container[static::CLIENT_REDIS] = function (Container $container) {
+        $container->set(static::CLIENT_REDIS, function (Container $container) {
             return new StorageRedisToRedisClientBridge(
                 $container->getLocator()->redis()->client()
             );
-        };
+        });
 
         return $container;
     }
