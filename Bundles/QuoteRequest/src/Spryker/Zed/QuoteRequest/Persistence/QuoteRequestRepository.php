@@ -181,7 +181,7 @@ class QuoteRequestRepository extends AbstractRepository implements QuoteRequestR
 
         $hiddenQuoteRequestIds = $hiddenQuoteRequestQuery
             ->joinSpyQuoteRequestVersion()
-            ->filterByIsLatestVersionHidden(true)
+            ->filterByIsLatestVersionVisible(false)
             ->groupByIdQuoteRequest()
             ->having(sprintf(
                 'COUNT(%s) = 1',
