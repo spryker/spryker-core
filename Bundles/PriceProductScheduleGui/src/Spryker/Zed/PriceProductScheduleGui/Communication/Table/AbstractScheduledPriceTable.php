@@ -24,6 +24,7 @@ abstract class AbstractScheduledPriceTable extends AbstractTable
     protected const COL_ACTIVE_FROM = 'active_from';
     protected const COL_ACTIVE_TO = 'active_to';
     protected const COL_ACTIONS = 'actions';
+    protected const PRICE_NUMERIC_PATTERN = '/[^0-9]+/';
 
     /**
      * @var \Spryker\Zed\PriceProductScheduleGui\Communication\Formatter\RowFormatterInterface
@@ -37,6 +38,22 @@ abstract class AbstractScheduledPriceTable extends AbstractTable
         RowFormatterInterface $rowFormatter
     ) {
         $this->rowFormatter = $rowFormatter;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSearchTerm()
+    {
+        $searchTerm = $this->request->query->get('search', null);
+
+        if (!isset($searchTerm[static::PARAMETER_VALUE]) || mb_strlen($searchTerm[static::PARAMETER_VALUE]) === 0) {
+            return $searchTerm;
+        }
+
+        $searchTerm[static::PARAMETER_VALUE] = $this->normalizeMoneyValue($searchTerm[static::PARAMETER_VALUE]);
+
+        return $searchTerm;
     }
 
     /**
@@ -182,5 +199,19 @@ abstract class AbstractScheduledPriceTable extends AbstractTable
             ]),
             'Delete'
         );
+    }
+
+    /**
+     * @param string $moneyValue
+     *
+     * @return string
+     */
+    protected function normalizeMoneyValue(string $moneyValue): string
+    {
+        if (filter_var($moneyValue, FILTER_VALIDATE_INT) !== false) {
+            return $moneyValue;
+        }
+
+        return preg_replace(static::PRICE_NUMERIC_PATTERN, '', $moneyValue);
     }
 }
