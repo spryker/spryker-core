@@ -18,19 +18,6 @@ interface CartsRestApiFacadeInterface
 {
     /**
      * Specification:
-     * - Retrieves the list of quotes that do not have the uuid set.
-     * - Saves them one by one to trigger uuid generation.
-     *
-     * @api
-     *
-     * @deprecated Will be removed in the next major.
-     *
-     * @return void
-     */
-    public function updateQuoteUuid(): void;
-
-    /**
-     * Specification:
      * - Finds customer quote by uuid.
      * - uuid and customerReference must be set in the QuoteTransfer taken as parameter.
      *

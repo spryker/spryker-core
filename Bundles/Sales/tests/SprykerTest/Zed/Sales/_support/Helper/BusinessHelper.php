@@ -27,10 +27,25 @@ class BusinessHelper extends Module
     public const DEFAULT_OMS_PROCESS_NAME = 'Test01';
     public const DEFAULT_ITEM_STATE = 'test';
 
+    protected const ORDER_ITEM_QTY = 1;
+    protected const ORDER_ITEM_GROSS_PRICE_1 = 500;
+    protected const ORDER_ITEM_GROSS_PRICE_2 = 800;
+    protected const ORDER_ITEM_TAX_RATE = 19;
+
     /**
+     * @deprecated Use `BusinessHelper::haveSalesOrderEntity` instead.
+     *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrder
      */
     public function create()
+    {
+        return $this->haveSalesOrderEntity();
+    }
+
+    /**
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrder
+     */
+    public function haveSalesOrderEntity(): SpySalesOrder
     {
         $salesOrderAddressEntity = $this->createSalesOrderAddress();
         $omsStateEntity = $this->createOmsState();
@@ -42,18 +57,18 @@ class BusinessHelper extends Module
             $omsStateEntity,
             $salesOrderEntity,
             $omsProcessEntity,
-            1,
-            500,
-            19
+            static::ORDER_ITEM_QTY,
+            static::ORDER_ITEM_GROSS_PRICE_1,
+            static::ORDER_ITEM_TAX_RATE
         );
 
         $this->createOrderItem(
             $omsStateEntity,
             $salesOrderEntity,
             $omsProcessEntity,
-            1,
-            800,
-            19
+            static::ORDER_ITEM_QTY,
+            static::ORDER_ITEM_GROSS_PRICE_2,
+            static::ORDER_ITEM_TAX_RATE
         );
 
         $this->createSpySalesShipment($salesOrderEntity->getIdSalesOrder(), $salesExpenseEntity->getIdSalesExpense());

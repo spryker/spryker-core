@@ -26,8 +26,6 @@ use Spryker\Glue\CartsRestApi\Processor\CartItem\CartItemUpdater;
 use Spryker\Glue\CartsRestApi\Processor\CartItem\CartItemUpdaterInterface;
 use Spryker\Glue\CartsRestApi\Processor\GuestCart\AnonymousCustomerUniqueIdValidator;
 use Spryker\Glue\CartsRestApi\Processor\GuestCart\AnonymousCustomerUniqueIdValidatorInterface;
-use Spryker\Glue\CartsRestApi\Processor\GuestCart\GuestCartCreator;
-use Spryker\Glue\CartsRestApi\Processor\GuestCart\GuestCartCreatorInterface;
 use Spryker\Glue\CartsRestApi\Processor\GuestCart\GuestCartReader;
 use Spryker\Glue\CartsRestApi\Processor\GuestCart\GuestCartReaderInterface;
 use Spryker\Glue\CartsRestApi\Processor\GuestCart\GuestCartUpdater;
@@ -160,21 +158,6 @@ class CartsRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @deprecated Will be removed in the next major.
-     *
-     * @return \Spryker\Glue\CartsRestApi\Processor\GuestCart\GuestCartCreatorInterface
-     */
-    public function createGuestCartCreator(): GuestCartCreatorInterface
-    {
-        return new GuestCartCreator(
-            $this->createGuestCartRestResponseBuilder(),
-            $this->createCartRestResponseBuilder(),
-            $this->createCartsResourceMapper(),
-            $this->getClient()
-        );
-    }
-
-    /**
      * @return \Spryker\Glue\CartsRestApi\Processor\GuestCart\GuestCartUpdaterInterface
      */
     public function createGuestCartUpdater(): GuestCartUpdaterInterface
@@ -183,8 +166,7 @@ class CartsRestApiFactory extends AbstractFactory
             $this->createGuestCartReader(),
             $this->createCartUpdater(),
             $this->createGuestCartRestResponseBuilder(),
-            $this->getClient(),
-            $this->getCustomerClient()
+            $this->getClient()
         );
     }
 
@@ -307,14 +289,6 @@ class CartsRestApiFactory extends AbstractFactory
     public function getPersistentCartClient(): CartsRestApiToPersistentCartClientInterface
     {
         return $this->getProvidedDependency(CartsRestApiDependencyProvider::CLIENT_PERSISTENT_CART);
-    }
-
-    /**
-     * @return \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToCustomerClientInterface
-     */
-    public function getCustomerClient(): CartsRestApiToCustomerClientInterface
-    {
-        return $this->getProvidedDependency(CartsRestApiDependencyProvider::CLIENT_CUSTOMER);
     }
 
     /**

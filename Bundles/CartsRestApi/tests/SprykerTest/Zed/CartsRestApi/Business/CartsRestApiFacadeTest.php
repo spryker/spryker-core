@@ -62,10 +62,9 @@ class CartsRestApiFacadeTest extends Unit
         $cartsRestApiFacade->setFactory($this->getFailingMockCartsRestApiBusinessFactory());
 
         $quoteTransfer = $this->tester->prepareQuoteTransferWithoutCustomerReference();
-        $actualQuoteResponseTransfer = $cartsRestApiFacade->findQuoteByUuid($quoteTransfer);
 
-        $this->assertInstanceOf(QuoteResponseTransfer::class, $actualQuoteResponseTransfer);
-        $this->assertNull($actualQuoteResponseTransfer->getQuoteTransfer());
+        $this->expectException(RequiredTransferPropertyException::class);
+        $cartsRestApiFacade->findQuoteByUuid($quoteTransfer);
     }
 
     /**

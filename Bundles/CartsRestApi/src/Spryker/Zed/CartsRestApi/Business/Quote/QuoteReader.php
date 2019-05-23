@@ -57,14 +57,16 @@ class QuoteReader implements QuoteReaderInterface
     public function findQuoteByUuid(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
         $quoteTransfer->requireUuid();
+        $quoteTransfer->requireCustomerReference();
 
         $quoteResponseTransfer = $this->quoteFacade->findQuoteByUuid($quoteTransfer);
 
-        if (!$quoteResponseTransfer->getIsSuccessful()) {
-            $quoteResponseTransfer->addError(
-                (new QuoteErrorTransfer())
-                    ->setErrorIdentifier(CartsRestApiSharedConfig::ERROR_IDENTIFIER_CART_NOT_FOUND)
-            );
+        if (!$quoteResponseTransfer->getIsSuccessful()
+            || $quoteTransfer->getCustomerReference() !== $quoteResponseTransfer->getQuoteTransfer()->getCustomerReference()
+        ) {
+            $quoteResponseTransfer
+                ->setIsSuccessful(false)
+                ->addError((new QuoteErrorTransfer())->setErrorIdentifier(CartsRestApiSharedConfig::ERROR_IDENTIFIER_CART_NOT_FOUND));
         }
 
         return $quoteResponseTransfer;
