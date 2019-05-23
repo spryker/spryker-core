@@ -374,13 +374,13 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param int[] $productConcreteIds
      *
      * @return int[]
      */
-    public function getProductConcreteIdsByAbstractProductIds(array $productAbstractIds): array
+    public function getProductAbstractIdsByProductConcreteIds(array $productConcreteIds): array
     {
-        return $this->productRepository->getProductAbstractIdsByProductConcreteIds($productAbstractIds);
+        return $this->productRepository->getProductAbstractIdsByProductConcreteIds($productConcreteIds);
     }
 
     /**

@@ -943,15 +943,15 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      *
      * @api
      *
-     * @param int[] $productAbstractIds
+     * @param int[] $productConcreteIds
      *
      * @return int[]
      */
-    public function getProductConcreteIdsByAbstractProductIds(array $productAbstractIds): array
+    public function getProductAbstractIdsByProductConcreteIds(array $productConcreteIds): array
     {
         return $this->getFactory()
             ->createProductConcreteManager()
-            ->getProductConcreteIdsByAbstractProductIds($productAbstractIds);
+            ->getProductAbstractIdsByProductConcreteIds($productConcreteIds);
     }
 
     /**

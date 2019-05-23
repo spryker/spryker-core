@@ -107,11 +107,11 @@ interface ProductConcreteManagerInterface
     public function findProductConcreteIdsByAbstractProductId(int $idProductAbstract): array;
 
     /**
-     * @param int[] $productAbstractIds
+     * @param int[] $productConcreteIds
      *
      * @return int[]
      */
-    public function getProductConcreteIdsByAbstractProductIds(array $productAbstractIds): array;
+    public function getProductAbstractIdsByProductConcreteIds(array $productConcreteIds): array;
 
     /**
      * @param int $idProductConcrete

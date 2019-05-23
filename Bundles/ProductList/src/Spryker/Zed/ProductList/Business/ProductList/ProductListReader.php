@@ -69,16 +69,16 @@ class ProductListReader implements ProductListReaderInterface
     }
 
     /**
-     * @param int[] $productIds
+     * @param int[] $productConcreteIds
      *
      * @return array
      */
-    public function getProductListsByProductIds(array $productIds): array
+    public function getProductListsByProductIds(array $productConcreteIds): array
     {
-        $productConcreteIdsToProductAbstractIdsMap = $this->productFacade->getProductConcreteIdsByAbstractProductIds($productIds);
+        $productConcreteIdsToProductAbstractIdsMap = $this->productFacade->getProductAbstractIdsByProductConcreteIds($productConcreteIds);
 
         $productConcreteLists = $this->mapProductListIdsByIdProductConcreteAndType(
-            $this->productListRepository->getProductListIdsByProductIds($productIds)
+            $this->productListRepository->getProductListIdsByProductIds($productConcreteIds)
         );
 
         $productAbstractLists = $this->getProductAbstractListIdsByProductAbstractIds(

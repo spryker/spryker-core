@@ -23,12 +23,12 @@ class ProductListToProductFacadeBridge implements ProductListToProductFacadeInte
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param int[] $productConcreteIds
      *
      * @return int[]
      */
-    public function getProductConcreteIdsByAbstractProductIds(array $productAbstractIds): array
+    public function getProductAbstractIdsByProductConcreteIds(array $productConcreteIds): array
     {
-        return $this->productFacade->getProductConcreteIdsByAbstractProductIds($productAbstractIds);
+        return $this->productFacade->getProductAbstractIdsByProductConcreteIds($productConcreteIds);
     }
 }

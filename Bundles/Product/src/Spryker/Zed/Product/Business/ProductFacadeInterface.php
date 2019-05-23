@@ -797,11 +797,11 @@ interface ProductFacadeInterface
      *
      * @api
      *
-     * @param int[] $productAbstractIds
+     * @param int[] $productConcreteIds
      *
      * @return int[]
      */
-    public function getProductConcreteIdsByAbstractProductIds(array $productAbstractIds): array;
+    public function getProductAbstractIdsByProductConcreteIds(array $productConcreteIds): array;
 
     /**
      * Specification:

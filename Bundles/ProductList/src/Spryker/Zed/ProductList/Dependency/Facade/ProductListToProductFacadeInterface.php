@@ -10,9 +10,9 @@ namespace Spryker\Zed\ProductList\Dependency\Facade;
 interface ProductListToProductFacadeInterface
 {
     /**
-     * @param int[] $productAbstractIds
+     * @param int[] $productConcreteIds
      *
      * @return int[]
      */
-    public function getProductConcreteIdsByAbstractProductIds(array $productAbstractIds): array;
+    public function getProductAbstractIdsByProductConcreteIds(array $productConcreteIds): array;
 }
