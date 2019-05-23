@@ -16,5 +16,5 @@ interface PriceProductScheduleGuiToMoneyFacadeInterface
      *
      * @return string
      */
-    public function formatWithSymbol(MoneyTransfer $moneyTransfer): string;
+    public function formatWithoutSymbol(MoneyTransfer $moneyTransfer);
 }

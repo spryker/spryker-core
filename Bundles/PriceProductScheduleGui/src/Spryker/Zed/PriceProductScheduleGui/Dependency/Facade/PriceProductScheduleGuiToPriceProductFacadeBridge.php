@@ -25,7 +25,7 @@ class PriceProductScheduleGuiToPriceProductFacadeBridge implements PriceProductS
     /**
      * @return \Generated\Shared\Transfer\PriceTypeTransfer[]
      */
-    public function getPriceTypeValues(): array
+    public function getPriceTypeValues()
     {
         return $this->priceProductFacade->getPriceTypeValues();
     }

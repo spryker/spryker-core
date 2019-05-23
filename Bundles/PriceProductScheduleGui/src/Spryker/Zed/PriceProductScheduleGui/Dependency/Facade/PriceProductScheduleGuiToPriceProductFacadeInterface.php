@@ -12,5 +12,5 @@ interface PriceProductScheduleGuiToPriceProductFacadeInterface
     /**
      * @return \Generated\Shared\Transfer\PriceTypeTransfer[]
      */
-    public function getPriceTypeValues(): array;
+    public function getPriceTypeValues();
 }

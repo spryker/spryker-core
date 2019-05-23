@@ -64,7 +64,7 @@ class RowFormatter implements RowFormatterInterface
         $moneyTransfer->setAmount((string)$amount);
         $moneyTransfer->setCurrency($currencyTransfer);
 
-        return $this->moneyFacade->formatWithSymbol($moneyTransfer);
+        return $this->moneyFacade->formatWithoutSymbol($moneyTransfer);
     }
 
     /**

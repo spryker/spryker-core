@@ -61,6 +61,17 @@ class PriceProductScheduleAbstractTable extends AbstractScheduledPriceTable
     }
 
     /**
+     * @return mixed
+     */
+    public function getSearchTerm()
+    {
+        $searchTerm = $this->request->query->get('search', null);
+        $searchTerm['value'] = $this->prepareMoneyValue($searchTerm['value']);
+
+        return $searchTerm;
+    }
+
+    /**
      * @return \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery
      */
     protected function prepareQuery(): SpyPriceProductScheduleQuery
@@ -70,5 +81,19 @@ class PriceProductScheduleAbstractTable extends AbstractScheduledPriceTable
             ->leftJoinWithStore()
             ->filterByFkProductAbstract($this->fkProductAbstract)
             ->filterByFkPriceType($this->fkPriceType);
+    }
+
+    /**
+     * @param string $moneyValue
+     *
+     * @return string
+     */
+    protected function prepareMoneyValue(string $moneyValue): string
+    {
+        if (filter_var($moneyValue, FILTER_VALIDATE_INT) !== false) {
+            return $moneyValue;
+        }
+
+        return preg_replace('/[^0-9]+/', '', $moneyValue);
     }
 }
