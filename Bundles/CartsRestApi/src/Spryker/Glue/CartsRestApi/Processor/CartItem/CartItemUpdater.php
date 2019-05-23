@@ -77,8 +77,8 @@ class CartItemUpdater implements CartItemUpdaterInterface
     ): RestResponseInterface {
         $uuidQuote = $this->findCartIdentifier($restRequest);
         $itemIdentifier = $restRequest->getResource()->getId();
-        $customerTransfer = $this->executeCustomerExpanderPlugins(new CustomerTransfer(), $restRequest);
-        $customerTransfer->setIdCustomer($restRequest->getRestUser()->getSurrogateIdentifier());
+        $customerTransfer = (new CustomerTransfer())->setIdCustomer($restRequest->getRestUser()->getSurrogateIdentifier());
+        $customerTransfer = $this->executeCustomerExpanderPlugins($customerTransfer, $restRequest);
         $restCartItemsAttributesTransfer
             ->setQuoteUuid($uuidQuote)
             ->setSku($itemIdentifier)

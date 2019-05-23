@@ -72,9 +72,9 @@ class CartItemDeleter implements CartItemDeleterInterface
             $uuidQuote
         );
 
-        $restCartItemsAttributesTransfer->setCustomer(
-            $this->executeCustomerExpanderPlugins($restCartItemsAttributesTransfer->getCustomer(), $restRequest)
-        );
+        $customerTransfer = (new CustomerTransfer())->setIdCustomer($restRequest->getRestUser()->getSurrogateIdentifier());
+        $customerTransfer = $this->executeCustomerExpanderPlugins($customerTransfer, $restRequest);
+        $restCartItemsAttributesTransfer->setCustomer($customerTransfer);
 
         $quoteResponseTransfer = $this->cartsRestApiClient->deleteItem($restCartItemsAttributesTransfer);
         if ($quoteResponseTransfer->getErrors()->count() > 0) {
@@ -111,15 +111,10 @@ class CartItemDeleter implements CartItemDeleterInterface
         RestRequestInterface $restRequest,
         ?string $uuidQuote
     ): RestCartItemsAttributesTransfer {
-        $customerTransfer = (new CustomerTransfer())->setIdCustomer(
-            $restRequest->getRestUser()->getSurrogateIdentifier()
-        );
-
         return (new RestCartItemsAttributesTransfer())
             ->setSku($itemIdentifier)
             ->setQuoteUuid($uuidQuote)
-            ->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier())
-            ->setCustomer($customerTransfer);
+            ->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier());
     }
 
     /**

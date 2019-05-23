@@ -17,12 +17,12 @@ class QuotePermissionChecker implements QuotePermissionCheckerInterface
     /**
      * @uses \Spryker\Client\SharedCart\Plugin\ReadSharedCartPermissionPlugin::KEY
      */
-    protected const READ_SHARED_CART_PERMISSION_PLUGIN_KEY = 'ReadSharedCartPermissionPlugin';
+    protected const PERMISSION_PLUGIN_KEY_READ_SHARED_CART = 'ReadSharedCartPermissionPlugin';
 
     /**
      * @uses \Spryker\Client\SharedCart\Plugin\WriteSharedCartPermissionPlugin::KEY
      */
-    protected const WRITE_SHARED_CART_PERMISSION_PLUGIN_KEY = 'WriteSharedCartPermissionPlugin';
+    protected const PERMISSION_PLUGIN_KEY_WRITE_SHARED_CART = 'WriteSharedCartPermissionPlugin';
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -31,7 +31,7 @@ class QuotePermissionChecker implements QuotePermissionCheckerInterface
      */
     public function checkQuoteReadPermission(QuoteTransfer $quoteTransfer): bool
     {
-        return $this->checkQuotePermission($quoteTransfer, static::READ_SHARED_CART_PERMISSION_PLUGIN_KEY);
+        return $this->checkQuotePermission($quoteTransfer, static::PERMISSION_PLUGIN_KEY_READ_SHARED_CART);
     }
 
     /**
@@ -41,7 +41,7 @@ class QuotePermissionChecker implements QuotePermissionCheckerInterface
      */
     public function checkQuoteWritePermission(QuoteTransfer $quoteTransfer): bool
     {
-        return $this->checkQuotePermission($quoteTransfer, static::WRITE_SHARED_CART_PERMISSION_PLUGIN_KEY);
+        return $this->checkQuotePermission($quoteTransfer, static::PERMISSION_PLUGIN_KEY_WRITE_SHARED_CART);
     }
 
     /**

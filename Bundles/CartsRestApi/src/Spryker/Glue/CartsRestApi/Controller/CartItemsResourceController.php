@@ -97,8 +97,8 @@ class CartItemsResourceController extends AbstractController
      *          }],
      *          "responses": {
      *              "400": "Cart id or item id is not specified.",
-     *              "404": "Cart or cart item not found.",
      *              "403": "Unauthorized cart action.",
+     *              "404": "Cart or cart item not found.",
      *              "422": "Cart item could not be deleted."
      *          }
      *     }
