@@ -94,6 +94,7 @@ class CartsRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_CODE_STORE_DATA_IS_INVALID = '112';
     public const RESPONSE_CODE_FAILED_ADDING_CART_ITEM = '113';
     public const RESPONSE_CODE_FAILED_UPDATING_CART_ITEM = '114';
+    public const RESPONSE_CODE_UNAUTHORIZED_CART_ACTION = '115';
 
     public const EXCEPTION_MESSAGE_CART_ID_MISSING = 'Cart uuid is missing.';
     /**
@@ -115,6 +116,7 @@ class CartsRestApiConfig extends AbstractBundleConfig
     public const EXCEPTION_MESSAGE_STORE_DATA_IS_INVALID = 'Store data is invalid.';
     public const EXCEPTION_MESSAGE_FAILED_ADDING_CART_ITEM = 'Cart item could not be added.';
     public const EXCEPTION_MESSAGE_FAILED_UPDATING_CART_ITEM = 'Cart item could not be updated.';
+    public const EXCEPTION_MESSAGE_UNAUTHORIZED_CART_ACTION = 'Unauthorized cart action.';
 
     public const HEADER_ANONYMOUS_CUSTOMER_UNIQUE_ID = 'X-Anonymous-Customer-Unique-Id';
 
@@ -183,6 +185,11 @@ class CartsRestApiConfig extends AbstractBundleConfig
                 RestErrorMessageTransfer::CODE => self::RESPONSE_CODE_STORE_DATA_IS_INVALID,
                 RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
                 RestErrorMessageTransfer::DETAIL => self::EXCEPTION_MESSAGE_STORE_DATA_IS_INVALID,
+            ],
+            CartsRestApiSharedConfig::ERROR_IDENTIFIER_UNAUTHORIZED_CART_ACTION => [
+                RestErrorMessageTransfer::CODE => self::RESPONSE_CODE_UNAUTHORIZED_CART_ACTION,
+                RestErrorMessageTransfer::STATUS => Response::HTTP_FORBIDDEN,
+                RestErrorMessageTransfer::DETAIL => self::EXCEPTION_MESSAGE_UNAUTHORIZED_CART_ACTION,
             ],
         ];
     }
