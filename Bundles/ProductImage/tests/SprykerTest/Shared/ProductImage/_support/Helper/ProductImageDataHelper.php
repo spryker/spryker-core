@@ -7,6 +7,7 @@
 
 namespace SprykerTest\Shared\ProductImage\Helper;
 
+use ArrayObject;
 use Codeception\Module;
 use Generated\Shared\DataBuilder\ProductImageBuilder;
 use Generated\Shared\DataBuilder\ProductImageSetBuilder;
@@ -52,13 +53,15 @@ class ProductImageDataHelper extends Module
 
         $productImageSetSeed = [
             ProductImageSetTransfer::NAME => static::NAME,
-            ProductImageSetTransfer::PRODUCT_IMAGES => [$productImageTransfer],
             ProductImageSetTransfer::LOCALE => $this->getLocaleFacade()->getCurrentLocale(),
         ];
 
         $productImageSetTransfer = (new ProductImageSetBuilder())
             ->seed($productImageSetOverride + $productImageSetSeed)
             ->build();
+
+        $productImages = $productImageSetOverride[ProductImageSetTransfer::PRODUCT_IMAGES] ?? [$productImageTransfer];
+        $productImageSetTransfer->setProductImages(new ArrayObject($productImages));
 
         $productImageSetTransfer = $productImageFacade->saveProductImageSet($productImageSetTransfer);
 
