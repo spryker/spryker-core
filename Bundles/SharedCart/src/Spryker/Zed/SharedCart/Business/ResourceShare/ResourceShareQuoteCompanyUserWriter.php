@@ -21,7 +21,9 @@ use Spryker\Zed\SharedCart\Persistence\SharedCartRepositoryInterface;
 
 class ResourceShareQuoteCompanyUserWriter implements ResourceShareQuoteCompanyUserWriterInterface
 {
+    protected const GLOSSARY_KEY_CART_WAS_SUCCESSFULLY_SHARED = 'shared_cart_page.share.success';
     protected const GLOSSARY_KEY_UNABLE_TO_SHARE_CART = 'shared_cart.resource_share.strategy.error.unable_to_share_cart';
+    protected const GLOSSARY_KEY_CART_SHARE_ACCESS_UPDATED = 'shared_cart.resource_share.strategy.success.cart_share_access_updated';
 
     /**
      * @var \Spryker\Zed\SharedCart\Persistence\SharedCartRepositoryInterface
@@ -82,7 +84,10 @@ class ResourceShareQuoteCompanyUserWriter implements ResourceShareQuoteCompanyUs
 
         return (new ResourceShareResponseTransfer())
             ->setIsSuccessful(true)
-            ->setResourceShare($resourceShareRequestTransfer->getResourceShare());
+            ->setResourceShare($resourceShareRequestTransfer->getResourceShare())
+            ->addMessage(
+                (new MessageTransfer())->setValue(static::GLOSSARY_KEY_CART_WAS_SUCCESSFULLY_SHARED)
+            );
     }
 
     /**
@@ -108,8 +113,14 @@ class ResourceShareQuoteCompanyUserWriter implements ResourceShareQuoteCompanyUs
         $fullAccessQuotePermissionGroupTransfer = $this->findQuotePermissionGroupByName($resourceShareOptionName);
         if ($shareDetailTransfer->getQuotePermissionGroup()->getIdQuotePermissionGroup() !== $fullAccessQuotePermissionGroupTransfer->getIdQuotePermissionGroup()) {
             $shareDetailTransfer->setQuotePermissionGroup($fullAccessQuotePermissionGroupTransfer);
-
             $this->sharedCartEntityManager->updateCompanyUserQuotePermissionGroup($shareDetailTransfer);
+
+            return (new ResourceShareResponseTransfer())
+                ->setIsSuccessful(true)
+                ->setResourceShare($resourceShareRequestTransfer->getResourceShare())
+                ->addMessage(
+                    (new MessageTransfer())->setValue(static::GLOSSARY_KEY_CART_SHARE_ACCESS_UPDATED)
+                );
         }
 
         return (new ResourceShareResponseTransfer())

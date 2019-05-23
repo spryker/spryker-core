@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\ResourceShare\Activator;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
 use Spryker\Client\ResourceShare\Exception\ResourceShareActivatorStrategyNotFoundException;
@@ -43,14 +44,32 @@ class ResourceShareActivator implements ResourceShareActivatorInterface
      */
     public function activateResourceShare(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer
     {
-        $resourceShareResponseTransfer = $this->zedResourceShareStub->activateResourceShare($resourceShareRequestTransfer);
-        if (!$resourceShareResponseTransfer->getIsSuccessful()) {
-            return $resourceShareResponseTransfer;
+        $zedResourceShareResponseTransfer = $this->zedResourceShareStub->activateResourceShare($resourceShareRequestTransfer);
+        if (!$zedResourceShareResponseTransfer->getIsSuccessful()) {
+            return $zedResourceShareResponseTransfer;
         }
 
-        $resourceShareRequestTransfer->setResourceShare($resourceShareResponseTransfer->getResourceShare());
+        $resourceShareRequestTransfer->setResourceShare($zedResourceShareResponseTransfer->getResourceShare());
+        $strategyResourceShareResponseTransfer = $this->executeResourceShareActivatorStrategyPlugins($resourceShareRequestTransfer);
 
-        return $this->executeResourceShareActivatorStrategyPlugins($resourceShareRequestTransfer);
+        return $strategyResourceShareResponseTransfer->setMessages(
+            $this->mergeResponseMessages($zedResourceShareResponseTransfer->getMessages(), $strategyResourceShareResponseTransfer->getMessages())
+        );
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\MessageTransfer[] $zedResponseMessageTransfers
+     * @param \ArrayObject|\Generated\Shared\Transfer\MessageTransfer[] $strategyResponseMessageTransfers
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\MessageTransfer[]
+     */
+    protected function mergeResponseMessages(ArrayObject $zedResponseMessageTransfers, ArrayObject $strategyResponseMessageTransfers): ArrayObject
+    {
+        foreach ($strategyResponseMessageTransfers as $strategyResponseMessageTransfer) {
+            $zedResponseMessageTransfers->append($strategyResponseMessageTransfer);
+        }
+
+        return $zedResponseMessageTransfers;
     }
 
     /**
