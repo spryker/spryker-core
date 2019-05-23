@@ -11,6 +11,7 @@ use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ResourceShareDataTransfer;
 use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
@@ -62,6 +63,7 @@ class SharedCartFacadeTest extends Test
     protected const VALUE_CUSTOMER_REFERENCE = 'VALUE_CUSTOMER_REFERENCE';
     protected const VALUE_NOT_EXISTING_ID_COMPANY_USER = 0;
     protected const VALUE_NOT_EXISTING_SHARE_OPTION = 'VALUE_NIT_EXISTING_SHARE_OPTION';
+    protected const VALUE_IS_QUOTE_LOCKED_FALSE = false;
 
     /**
      * @var \SprykerTest\Zed\SharedCart\SharedCartBusinessTester
@@ -205,10 +207,16 @@ class SharedCartFacadeTest extends Test
             CompanyUserTransfer::FK_COMPANY_BUSINESS_UNIT => $firstCompanyUserTransfer->getFkCompanyBusinessUnit(),
         ]);
 
+        $customerTransfer = $this->tester->haveCustomer();
+        $quoteTransfer = $this->tester->havePersistentQuote([
+            QuoteTransfer::CUSTOMER => $customerTransfer,
+            QuoteTransfer::IS_LOCKED => static::VALUE_IS_QUOTE_LOCKED_FALSE,
+        ]);
         $resourceShareTransfer = $this->createResourceShareTransfer([
             static::KEY_SHARE_OPTION => static::PERMISSION_GROUP_READ_ONLY,
             static::KEY_OWNER_ID_COMPANY_USER => $secondCompanyUserTransfer->getIdCompanyUser(),
             static::KEY_OWNER_ID_COMPANY_BUSINESS_UNIT => $secondCompanyUserTransfer->getFkCompanyBusinessUnit(),
+            static::KEY_ID_QUOTE => $quoteTransfer->getIdQuote(),
         ]);
 
         $resourceShareRequestTransfer = (new ResourceShareRequestTransfer())
@@ -235,10 +243,17 @@ class SharedCartFacadeTest extends Test
             CompanyUserTransfer::FK_COMPANY_BUSINESS_UNIT => $firstCompanyUserTransfer->getCompanyBusinessUnit()->getIdCompanyBusinessUnit(),
         ]);
 
+        $customerTransfer = $this->tester->haveCustomer();
+        $quoteTransfer = $this->tester->havePersistentQuote([
+            QuoteTransfer::CUSTOMER => $customerTransfer,
+            QuoteTransfer::IS_LOCKED => static::VALUE_IS_QUOTE_LOCKED_FALSE,
+        ]);
+
         $resourceShareTransfer = $this->createResourceShareTransfer([
             static::KEY_SHARE_OPTION => static::PERMISSION_GROUP_FULL_ACCESS,
             static::KEY_OWNER_ID_COMPANY_USER => $secondCompanyUserTransfer->getIdCompanyUser(),
             static::KEY_OWNER_ID_COMPANY_BUSINESS_UNIT => $secondCompanyUserTransfer->getFkCompanyBusinessUnit(),
+            static::KEY_ID_QUOTE => $quoteTransfer->getIdQuote(),
         ]);
 
         $resourceShareRequestTransfer = (new ResourceShareRequestTransfer())
