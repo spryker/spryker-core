@@ -29,8 +29,8 @@ class PriceProductScheduleGuiToMoneyFacadeBridge implements PriceProductSchedule
      *
      * @return string
      */
-    public function formatWithSymbol(MoneyTransfer $moneyTransfer): string
+    public function formatWithoutSymbol(MoneyTransfer $moneyTransfer)
     {
-        return $this->moneyFacade->formatWithSymbol($moneyTransfer);
+        return $this->moneyFacade->formatWithoutSymbol($moneyTransfer);
     }
 }

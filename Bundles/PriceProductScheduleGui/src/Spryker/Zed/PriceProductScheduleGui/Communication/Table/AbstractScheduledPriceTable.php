@@ -24,6 +24,7 @@ abstract class AbstractScheduledPriceTable extends AbstractTable
     protected const COL_ACTIVE_FROM = 'active_from';
     protected const COL_ACTIVE_TO = 'active_to';
     protected const COL_ACTIONS = 'actions';
+    protected const PRICE_NUMERIC_PATTERN = '/[^0-9]+/';
 
     /**
      * @var \Spryker\Zed\PriceProductScheduleGui\Communication\Formatter\RowFormatterInterface
@@ -37,6 +38,22 @@ abstract class AbstractScheduledPriceTable extends AbstractTable
         RowFormatterInterface $rowFormatter
     ) {
         $this->rowFormatter = $rowFormatter;
+    }
+
+    /**
+     * @return array
+     */
+    public function getSearchTerm()
+    {
+        $searchTerm = $this->request->query->get('search', null);
+
+        if (!$this->isSearchTermValid($searchTerm)) {
+            return $this->getDefaultSearchTerm();
+        }
+
+        $searchTerm[static::PARAMETER_VALUE] = $this->normalizeMoneyValue($searchTerm[static::PARAMETER_VALUE]);
+
+        return $searchTerm;
     }
 
     /**
@@ -182,5 +199,45 @@ abstract class AbstractScheduledPriceTable extends AbstractTable
             ]),
             'Delete'
         );
+    }
+
+    /**
+     * @param mixed $searchTerm
+     *
+     * @return bool
+     */
+    protected function isSearchTermValid($searchTerm): bool
+    {
+        return is_array($searchTerm)
+            && array_key_exists(static::PARAMETER_VALUE, $searchTerm)
+            && is_scalar($searchTerm[static::PARAMETER_VALUE]);
+    }
+
+    /**
+     * @return array
+     */
+    protected function getDefaultSearchTerm(): array
+    {
+        return [
+            static::PARAMETER_VALUE => '',
+        ];
+    }
+
+    /**
+     * @param mixed $moneyValue
+     *
+     * @return string
+     */
+    protected function normalizeMoneyValue($moneyValue): string
+    {
+        if (!is_string($moneyValue)) {
+            $moneyValue = (string)$moneyValue;
+        }
+
+        if (filter_var($moneyValue, FILTER_VALIDATE_INT) !== false || mb_strlen($moneyValue) === 0) {
+            return $moneyValue;
+        }
+
+        return preg_replace(static::PRICE_NUMERIC_PATTERN, '', $moneyValue);
     }
 }

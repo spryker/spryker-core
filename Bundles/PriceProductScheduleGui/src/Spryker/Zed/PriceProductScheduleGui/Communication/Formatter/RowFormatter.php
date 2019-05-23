@@ -58,13 +58,14 @@ class RowFormatter implements RowFormatterInterface
      */
     public function formatMoney(int $amount, SpyPriceProductSchedule $priceProductScheduleEntity): string
     {
-        $currencyTransfer = new CurrencyTransfer();
-        $currencyTransfer = $this->currencyMapper->mapCurrencyEntityToTransfer($priceProductScheduleEntity->getCurrency(), $currencyTransfer);
-        $moneyTransfer = new MoneyTransfer();
-        $moneyTransfer->setAmount((string)$amount);
-        $moneyTransfer->setCurrency($currencyTransfer);
+        $currencyTransfer = $this->currencyMapper->mapCurrencyEntityToTransfer(
+            $priceProductScheduleEntity->getCurrency(),
+            new CurrencyTransfer()
+        );
 
-        return $this->moneyFacade->formatWithSymbol($moneyTransfer);
+        $moneyTransfer = $this->createMoneyTransfer($amount, $currencyTransfer);
+
+        return $this->moneyFacade->formatWithoutSymbol($moneyTransfer);
     }
 
     /**
@@ -95,5 +96,20 @@ class RowFormatter implements RowFormatterInterface
         $timeZone = new DateTimeZone($storeTransfer->getTimezone());
 
         return $dateTime->setTimezone($timeZone);
+    }
+
+    /**
+     * @param int $amount
+     * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
+     *
+     * @return \Generated\Shared\Transfer\MoneyTransfer
+     */
+    protected function createMoneyTransfer(int $amount, CurrencyTransfer $currencyTransfer): MoneyTransfer
+    {
+        $moneyTransfer = new MoneyTransfer();
+        $moneyTransfer->setAmount((string)$amount);
+        $moneyTransfer->setCurrency($currencyTransfer);
+
+        return $moneyTransfer;
     }
 }
