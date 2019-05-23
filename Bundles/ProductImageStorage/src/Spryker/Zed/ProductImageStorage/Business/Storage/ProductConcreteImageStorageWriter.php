@@ -79,13 +79,64 @@ class ProductConcreteImageStorageWriter implements ProductConcreteImageStorageWr
      */
     public function unpublish(array $productIds)
     {
+        $productConcreteImageSetsBulk = $this->generateProductConcreteImageSets($productIds);
+        $productConcreteLocalizedEntities = $this->findProductConcreteLocalizedEntities($productIds);
+
+        $productConcreteImageStorageEntities = $this->deleteProductConcreteImageStorageEntities(
+            $this->findProductConcreteImageStorageEntitiesByProductConcreteIds($productIds),
+            $productConcreteLocalizedEntities,
+            $productConcreteImageSetsBulk
+        );
+
+        $this->updateProductConcreteImageStorageEntities(
+            $productConcreteImageStorageEntities,
+            $productConcreteLocalizedEntities,
+            $productConcreteImageSetsBulk
+        );
+    }
+
+    /**
+     * @param \Orm\Zed\ProductImageStorage\Persistence\SpyProductConcreteImageStorage[][] $productConcreteImageStorageEntities
+     * @param \Orm\Zed\Product\Persistence\SpyProductLocalizedAttributes[] $productConcreteLocalizedEntities
+     * @param array $productConcreteImageSetsBulk
+     *
+     * @return void
+     */
+    protected function updateProductConcreteImageStorageEntities(
+        array $productConcreteImageStorageEntities,
+        array $productConcreteLocalizedEntities,
+        array $productConcreteImageSetsBulk
+    ): void {
         $imageSets = [];
         $productConcreteLocalizedEntitiesToStore = [];
 
-        $productConcreteImageSetsBulk = $this->generateProductConcreteImageSets($productIds);
-        $productConcreteImageStorageEntities = $this->findProductConcreteImageStorageEntitiesByProductConcreteIds($productIds);
+        foreach ($productConcreteLocalizedEntities as $productConcreteLocalizedEntity) {
+            $idProduct = $productConcreteLocalizedEntity->getFkProduct();
+            $idProductAttributes = $productConcreteLocalizedEntity->getIdProductAttributes();
 
-        $productConcreteLocalizedEntities = $this->findProductConcreteLocalizedEntities($productIds);
+            if (isset($productConcreteImageSetsBulk[$idProduct][$idProductAttributes])
+                && $productConcreteImageSetsBulk[$idProduct][$idProductAttributes]->count()
+            ) {
+                $imageSets[$idProduct][$idProductAttributes] = $productConcreteImageSetsBulk[$idProduct][$idProductAttributes];
+                $productConcreteLocalizedEntitiesToStore[] = $productConcreteLocalizedEntity;
+            }
+        }
+
+        $this->storeData($productConcreteLocalizedEntitiesToStore, $productConcreteImageStorageEntities, $imageSets);
+    }
+
+    /**
+     * @param \Orm\Zed\ProductImageStorage\Persistence\SpyProductConcreteImageStorage[][] $productConcreteImageStorageEntities
+     * @param \Orm\Zed\Product\Persistence\SpyProductLocalizedAttributes[] $productConcreteLocalizedEntities
+     * @param array $productConcreteImageSetsBulk
+     *
+     * @return \Orm\Zed\ProductImageStorage\Persistence\SpyProductConcreteImageStorage[][]
+     */
+    protected function deleteProductConcreteImageStorageEntities(
+        array $productConcreteImageStorageEntities,
+        array $productConcreteLocalizedEntities,
+        array $productConcreteImageSetsBulk
+    ): array {
         foreach ($productConcreteLocalizedEntities as $productConcreteLocalizedEntity) {
             $idProduct = $productConcreteLocalizedEntity->getFkProduct();
             $idProductAttributes = $productConcreteLocalizedEntity->getIdProductAttributes();
@@ -94,9 +145,6 @@ class ProductConcreteImageStorageWriter implements ProductConcreteImageStorageWr
             if (isset($productConcreteImageSetsBulk[$idProduct][$idProductAttributes])
                 && $productConcreteImageSetsBulk[$idProduct][$idProductAttributes]->count()
             ) {
-                $imageSets[$idProduct][$idProductAttributes] = $productConcreteImageSetsBulk[$idProduct][$idProductAttributes];
-                $productConcreteLocalizedEntitiesToStore[] = $productConcreteLocalizedEntity;
-
                 continue;
             }
 
@@ -108,7 +156,7 @@ class ProductConcreteImageStorageWriter implements ProductConcreteImageStorageWr
             unset($productConcreteImageStorageEntities[$idProduct][$localeName]);
         }
 
-        $this->storeData($productConcreteLocalizedEntitiesToStore, $productConcreteImageStorageEntities, $imageSets);
+        return $productConcreteImageStorageEntities;
     }
 
     /**
