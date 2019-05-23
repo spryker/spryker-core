@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Propel\Communication\Console;
 
-use Spryker\Zed\PropelOrm\Business\Generator\Command\MigrationDiffCommand;
+use Spryker\Zed\PropelOrm\Communication\Generator\Command\MigrationDiffCommand;
 
 /**
  * @method \Spryker\Zed\Propel\Business\PropelFacadeInterface getFacade()
@@ -33,7 +33,7 @@ class DiffConsole extends AbstractPropelCommandWrapper
     /**
      * @return string
      */
-    public function getOriginalCommandClassName(): string
+    public function getCommandClassName(): string
     {
         return MigrationDiffCommand::class;
     }

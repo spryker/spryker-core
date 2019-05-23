@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Propel\Communication\Console;
 
-use Spryker\Zed\PropelOrm\Business\Generator\Command\ModelBuildCommand;
+use Spryker\Zed\PropelOrm\Communication\Generator\Command\ModelBuildCommand;
 
 /**
  * @method \Spryker\Zed\Propel\Business\PropelFacadeInterface getFacade()
@@ -31,7 +31,7 @@ class BuildModelConsole extends AbstractPropelCommandWrapper
     /**
      * @return string
      */
-    public function getOriginalCommandClassName(): string
+    public function getCommandClassName(): string
     {
         return ModelBuildCommand::class;
     }

@@ -28,23 +28,23 @@ class PropelCommandRunner implements PropelCommandRunnerInterface
     }
 
     /**
-     * @param \Symfony\Component\Console\Command\Command $propelOriginalCommand
-     * @param \Symfony\Component\Console\Input\InputDefinition $propelCommandDefinition
+     * @param \Symfony\Component\Console\Command\Command $command
+     * @param \Symfony\Component\Console\Input\InputDefinition $inputDefinition
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
      * @return int
      */
-    public function runOriginalCommand(
-        Command $propelOriginalCommand,
-        InputDefinition $propelCommandDefinition,
+    public function runCommand(
+        Command $command,
+        InputDefinition $inputDefinition,
         OutputInterface $output
     ): int {
         $input = $this->inputBuilder
             ->buildInput(
-                $propelCommandDefinition,
-                $propelOriginalCommand->getDefinition()
+                $inputDefinition,
+                $command->getDefinition()
             );
 
-        return $propelOriginalCommand->run($input, $output);
+        return $command->run($input, $output);
     }
 }

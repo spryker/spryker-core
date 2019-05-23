@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\PropelOrm\Business\Generator;
+namespace Spryker\Zed\PropelOrm\Communication\Generator;
 
 interface ConfigurablePropelCommandInterface
 {

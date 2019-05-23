@@ -5,15 +5,15 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\PropelOrm\Business\Generator\Command;
+namespace Spryker\Zed\PropelOrm\Communication\Generator\Command;
 
-use Propel\Generator\Command\ModelBuildCommand as OriginalPropelModelBuildCommand;
-use Spryker\Zed\PropelOrm\Business\Generator\ConfigurablePropelCommandInterface;
-use Spryker\Zed\PropelOrm\Business\Generator\PropelConfiguratorTrait;
+use Propel\Generator\Command\ModelBuildCommand as PropelModelBuildCommand;
+use Spryker\Zed\PropelOrm\Communication\Generator\ConfigurablePropelCommandInterface;
+use Spryker\Zed\PropelOrm\Communication\Generator\PropelConfiguratorTrait;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class ModelBuildCommand extends OriginalPropelModelBuildCommand implements ConfigurablePropelCommandInterface
+class ModelBuildCommand extends PropelModelBuildCommand implements ConfigurablePropelCommandInterface
 {
     use PropelConfiguratorTrait;
 

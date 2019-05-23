@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Propel\Communication\Console;
 
-use Spryker\Zed\PropelOrm\Business\Generator\Command\MigrationStatusCommand;
+use Spryker\Zed\PropelOrm\Communication\Generator\Command\MigrationStatusCommand;
 
 /**
  * @method \Spryker\Zed\Propel\Business\PropelFacadeInterface getFacade()
@@ -32,7 +32,7 @@ class MigrationCheckConsole extends AbstractPropelCommandWrapper
     /**
      * @return string
      */
-    public function getOriginalCommandClassName(): string
+    public function getCommandClassName(): string
     {
         return MigrationStatusCommand::class;
     }

@@ -10,10 +10,8 @@ namespace SprykerTest\Zed\Propel\Communication\Command\Builder;
 use Codeception\Test\Unit;
 use Spryker\Zed\Propel\Communication\Command\Builder\PropelCommandBuilder;
 use Spryker\Zed\Propel\Communication\Command\Config\PropelCommandConfiguratorInterface;
-use Spryker\Zed\PropelOrm\Business\Generator\Command\ModelBuildCommand;
-use Spryker\Zed\PropelOrm\Business\Generator\Command\SqlBuildCommand;
-use Spryker\Zed\PropelOrm\Business\Generator\ConfigurablePropelCommandInterface;
-use Symfony\Component\Console\Command\Command;
+use Spryker\Zed\PropelOrm\Communication\Generator\Command\ModelBuildCommand;
+use Spryker\Zed\PropelOrm\Communication\Generator\Command\SqlBuildCommand;
 
 /**
  * Auto-generated group annotations
@@ -36,10 +34,12 @@ class PropelCommandBuilderTest extends Unit
     /**
      * @return void
      */
-    protected function _before(): void
+    protected function setUp(): void
     {
+        parent::setUp();
+
         $this->propelCommandBuilder = new PropelCommandBuilder(
-            $this->getMockBuilder(PropelCommandConfiguratorInterface::class)->getMock()
+            $this->getPropelCommandConfiguratorMock()
         );
     }
 
@@ -52,10 +52,16 @@ class PropelCommandBuilderTest extends Unit
      */
     public function testCreateCommand(string $propelCommandClassName): void
     {
-        $propelOriginalCommand = $this->propelCommandBuilder->createCommand($propelCommandClassName);
-        $this->assertInstanceOf($propelCommandClassName, $propelOriginalCommand);
-        $this->assertInstanceOf(ConfigurablePropelCommandInterface::class, $propelOriginalCommand);
-        $this->assertInstanceOf(Command::class, $propelOriginalCommand);
+        $command = $this->propelCommandBuilder->createCommand($propelCommandClassName);
+        $this->assertInstanceOf($propelCommandClassName, $command);
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Propel\Communication\Command\Config\PropelCommandConfiguratorInterface
+     */
+    protected function getPropelCommandConfiguratorMock()
+    {
+        return $this->getMockBuilder(PropelCommandConfiguratorInterface::class)->getMock();
     }
 
     /**

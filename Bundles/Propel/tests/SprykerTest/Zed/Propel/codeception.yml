@@ -26,3 +26,6 @@ suites:
     Communication:
         path: Communication
         class_name: PropelCommunicationTester
+        modules:
+            enabled:
+                - Asserts

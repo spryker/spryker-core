@@ -11,22 +11,18 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Output\OutputInterface;
 
-/**
- * This file is part of the Spryker Suite.
- * For full license information, please view the LICENSE file that was distributed with this source code.
- */
 interface PropelCommandRunnerInterface
 {
     /**
-     * @param \Symfony\Component\Console\Command\Command $propelOriginalCommand
-     * @param \Symfony\Component\Console\Input\InputDefinition $propelCommandDefinition
+     * @param \Symfony\Component\Console\Command\Command $command
+     * @param \Symfony\Component\Console\Input\InputDefinition $inputDefinition
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
      * @return int
      */
-    public function runOriginalCommand(
-        Command $propelOriginalCommand,
-        InputDefinition $propelCommandDefinition,
+    public function runCommand(
+        Command $command,
+        InputDefinition $inputDefinition,
         OutputInterface $output
     ): int;
 }

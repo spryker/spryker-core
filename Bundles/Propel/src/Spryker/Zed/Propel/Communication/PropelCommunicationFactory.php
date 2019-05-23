@@ -82,7 +82,7 @@ class PropelCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Spryker\Zed\Propel\Communication\Command\Config\PropelCommandConfiguratorInterface
      */
-    protected function createPropelCommandConfigurator(): PropelCommandConfiguratorInterface
+    public function createPropelCommandConfigurator(): PropelCommandConfiguratorInterface
     {
         return new PropelCommandConfigurator(
             $this->getConfig()->getPropelConfig()
@@ -92,7 +92,7 @@ class PropelCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Spryker\Zed\Propel\Communication\Command\Input\PropelCommandInputBuilderInterface
      */
-    protected function createPropelCommandInputBuilder(): PropelCommandInputBuilderInterface
+    public function createPropelCommandInputBuilder(): PropelCommandInputBuilderInterface
     {
         return new PropelCommandInputBuilder();
     }

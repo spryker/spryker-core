@@ -5,15 +5,15 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\PropelOrm\Business\Generator\Command;
+namespace Spryker\Zed\PropelOrm\Communication\Generator\Command;
 
-use Propel\Generator\Command\MigrationDiffCommand as OriginalPropelMigrationDiffCommand;
-use Spryker\Zed\PropelOrm\Business\Generator\ConfigurablePropelCommandInterface;
-use Spryker\Zed\PropelOrm\Business\Generator\PropelConfiguratorTrait;
+use Propel\Generator\Command\MigrationDiffCommand as PropelMigrationDiffCommand;
+use Spryker\Zed\PropelOrm\Communication\Generator\ConfigurablePropelCommandInterface;
+use Spryker\Zed\PropelOrm\Communication\Generator\PropelConfiguratorTrait;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class MigrationDiffCommand extends OriginalPropelMigrationDiffCommand implements ConfigurablePropelCommandInterface
+class MigrationDiffCommand extends PropelMigrationDiffCommand implements ConfigurablePropelCommandInterface
 {
     use PropelConfiguratorTrait;
 

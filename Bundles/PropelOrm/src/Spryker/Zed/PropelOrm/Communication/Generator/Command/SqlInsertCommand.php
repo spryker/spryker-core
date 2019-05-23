@@ -5,15 +5,15 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\PropelOrm\Business\Generator\Command;
+namespace Spryker\Zed\PropelOrm\Communication\Generator\Command;
 
-use Propel\Generator\Command\MigrationMigrateCommand as OriginalPropelMigrationMigrateCommand;
-use Spryker\Zed\PropelOrm\Business\Generator\ConfigurablePropelCommandInterface;
-use Spryker\Zed\PropelOrm\Business\Generator\PropelConfiguratorTrait;
+use Propel\Generator\Command\SqlInsertCommand as PropelSqlInsertCommand;
+use Spryker\Zed\PropelOrm\Communication\Generator\ConfigurablePropelCommandInterface;
+use Spryker\Zed\PropelOrm\Communication\Generator\PropelConfiguratorTrait;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class MigrationMigrateCommand extends OriginalPropelMigrationMigrateCommand implements ConfigurablePropelCommandInterface
+class SqlInsertCommand extends PropelSqlInsertCommand implements ConfigurablePropelCommandInterface
 {
     use PropelConfiguratorTrait;
 
