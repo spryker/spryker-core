@@ -55,7 +55,9 @@ class GlossarySynchronizationDataPlugin extends AbstractPlugin implements Synchr
      */
     public function queryData($ids = []): ?ModelCriteria
     {
-        $query = $this->getQueryContainer()->queryGlossaryStorageByGlossaryIds($ids);
+        $query = $this->getQueryContainer()
+            ->queryGlossaryStorageByGlossaryIds($ids)
+            ->orderByIdGlossaryStorage();
 
         if (empty($ids)) {
             $query->clear();

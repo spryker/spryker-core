@@ -12,7 +12,7 @@ interface GlossaryStorageFacadeInterface
     /**
      * @api
      *
-     * @deprecated Use `GlossaryStorageFacadeInterface::writeGlossaryStorageCollection()` instead.
+     * @deprecated Use `\Spryker\Zed\GlossaryStorage\Business\GlossaryStorageFacadeInterface::writeGlossaryStorageCollection()` instead.
      *
      * Specification:
      * - Queries all glossary keys with the given glossaryKeyIds
@@ -28,7 +28,7 @@ interface GlossaryStorageFacadeInterface
     /**
      * @api
      *
-     * @deprecated Use `GlossaryStorageFacadeInterface::deleteGlossaryStorageCollection()` instead.
+     * @deprecated Use `\Spryker\Zed\GlossaryStorage\Business\GlossaryStorageFacadeInterface::deleteGlossaryStorageCollection()` instead.
      *
      * Specification:
      * - Finds and deletes glossary storage entities with the given glossaryKeyIds
@@ -42,28 +42,42 @@ interface GlossaryStorageFacadeInterface
 
     /**
      * Specification:
-     * - Queries all glossary keys with the given glossaryKeyIds
+     * - Queries all glossary keys with the given $eventTransfer by GlossaryKeyEvents
      * - Stores data as json encoded to storage table
      * - Sends a copy of data to queue based on module config
      *
      * @api
      *
-     * @param array $glossaryKeyIds
+     * @param array $eventTransfers
      *
      * @return void
      */
-    public function writeGlossaryStorageCollection(array $glossaryKeyIds);
+    public function writeGlossaryStorageCollectionByGlossaryKeyEvents(array $eventTransfers);
 
     /**
      * Specification:
-     * - Finds and deletes glossary storage entities with the given glossaryKeyIds
+     * - Finds and deletes glossary storage entities with the given $eventTransfer by GlossaryKeyEvents
      * - Sends delete message to queue based on module config
      *
      * @api
      *
-     * @param array $glossaryKeyIds
+     * @param array $eventTransfers
      *
      * @return void
      */
-    public function deleteGlossaryStorageCollection(array $glossaryKeyIds);
+    public function deleteGlossaryStorageCollectionGlossaryKeyByGlossaryKeyEvents(array $eventTransfers);
+
+    /**
+     * Specification:
+     * - Queries all glossary keys with the given $eventTransfer by GlossaryTranslationEvents
+     * - Stores data as json encoded to storage table
+     * - Sends a copy of data to queue based on module config
+     *
+     * @api
+     *
+     * @param array $eventTransfers
+     *
+     * @return void
+     */
+    public function writeGlossaryStorageCollectionByGlossaryTranslationEvents(array $eventTransfers);
 }

@@ -14,6 +14,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\Glossary\Business\GlossaryBusinessFactory getFactory()
+ * @method \Spryker\Zed\Glossary\Persistence\GlossaryRepository getRepository()
  */
 class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
 {
@@ -387,5 +388,19 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
         return $this->getFactory()
             ->createKeyManager()
             ->getKeySuggestions($keyFragment);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param array $glossaryKeyIds
+     *
+     * @return \Generated\Shared\Transfer\SpyGlossaryTranslationEntityTransfer[]
+     */
+    public function findGlossaryTranslationEntityTransfer(array $glossaryKeyIds): array
+    {
+        return $this->getRepository()->findGlossaryTranslationEntityTransfer($glossaryKeyIds);
     }
 }

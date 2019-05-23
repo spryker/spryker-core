@@ -9,6 +9,8 @@
         <column name="id_glossary_storage" type="BIGINT" autoIncrement="true" primaryKey="true"/>
         <column name="fk_glossary_key" type="INTEGER" required="true"/>
         <column name="glossary_key" type="VARCHAR" required="true"/>
+        <column name="locale" type="VARCHAR" required="true"/>
+        <column name="data" type="TEXT" />
         <index name="spy_glossary_storage-fk_glossary_key">
             <index-column name="fk_glossary_key"/>
         </index>

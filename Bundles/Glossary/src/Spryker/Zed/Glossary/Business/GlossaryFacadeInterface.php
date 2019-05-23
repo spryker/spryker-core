@@ -297,4 +297,16 @@ interface GlossaryFacadeInterface
      * @return array
      */
     public function getKeySuggestions($keyFragment);
+
+    /**
+     * Specification:
+     * - Retrieves a collection of glossary translation entity transfer by the provided IDs.
+     *
+     * @api
+     *
+     * @param array $glossaryKeyIds
+     *
+     * @return \Generated\Shared\Transfer\SpyGlossaryTranslationEntityTransfer[]
+     */
+    public function findGlossaryTranslationEntityTransfer(array $glossaryKeyIds): array;
 }

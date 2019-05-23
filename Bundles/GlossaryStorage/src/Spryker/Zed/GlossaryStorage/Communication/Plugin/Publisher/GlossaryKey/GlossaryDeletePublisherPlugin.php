@@ -8,7 +8,6 @@
 namespace Spryker\Zed\GlossaryStorage\Communication\Plugin\Publisher\GlossaryKey;
 
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface;
 
 /**
@@ -19,21 +18,18 @@ use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface;
  */
 class GlossaryDeletePublisherPlugin extends AbstractPlugin implements PublisherPluginInterface
 {
-    use DatabaseTransactionHandlerTrait;
-
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
-     * @param array $eventTransfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
      * @param string $eventName
      *
      * @return void
      */
     public function handleBulk(array $eventTransfers, $eventName)
     {
-        $this->preventTransaction();
-        $glossaryKeyIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
-
-        $this->getFacade()->deleteGlossaryStorageCollection($glossaryKeyIds);
+        $this->getFacade()->deleteGlossaryStorageCollectionGlossaryKeyByGlossaryKeyEvents($eventTransfers);
     }
 }

@@ -11,6 +11,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\GlossaryStorage\Business\GlossaryStorageBusinessFactory getFactory()
+ * @method \Spryker\Zed\GlossaryStorage\Persistence\GlossaryStorageEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\GlossaryStorage\Persistence\GlossaryStorageRepositoryInterface getRepository()
  */
 class GlossaryStorageFacade extends AbstractFacade implements GlossaryStorageFacadeInterface
 {
@@ -25,7 +27,7 @@ class GlossaryStorageFacade extends AbstractFacade implements GlossaryStorageFac
      */
     public function publish(array $glossaryKeyIds)
     {
-        $this->getFactory()->createGlossaryTranslationStorageWriter()->writeGlossaryStorageCollection($glossaryKeyIds);
+        $this->getFactory()->createGlossaryTranslationStorageWriter()->publish($glossaryKeyIds);
     }
 
     /**
@@ -39,7 +41,7 @@ class GlossaryStorageFacade extends AbstractFacade implements GlossaryStorageFac
      */
     public function unpublish(array $glossaryKeyIds)
     {
-        $this->getFactory()->createGlossaryTranslationStorageWriter()->deleteGlossaryStorageCollection($glossaryKeyIds);
+        $this->getFactory()->createGlossaryTranslationStorageWriter()->unpublish($glossaryKeyIds);
     }
 
     /**
@@ -47,13 +49,13 @@ class GlossaryStorageFacade extends AbstractFacade implements GlossaryStorageFac
      *
      * @api
      *
-     * @param array $glossaryKeyIds
+     * @param array $eventTransfers
      *
      * @return void
      */
-    public function writeGlossaryStorageCollection(array $glossaryKeyIds)
+    public function writeGlossaryStorageCollectionByGlossaryKeyEvents(array $eventTransfers)
     {
-        $this->getFactory()->createGlossaryTranslationStorageWriter()->writeGlossaryStorageCollection($glossaryKeyIds);
+        $this->getFactory()->createGlossaryTranslationStorageWriter()->writeGlossaryStorageCollectionByGlossaryKeyEvents($eventTransfers);
     }
 
     /**
@@ -61,12 +63,26 @@ class GlossaryStorageFacade extends AbstractFacade implements GlossaryStorageFac
      *
      * @api
      *
-     * @param array $glossaryKeyIds
+     * @param array $eventTransfers
      *
      * @return void
      */
-    public function deleteGlossaryStorageCollection(array $glossaryKeyIds)
+    public function deleteGlossaryStorageCollectionGlossaryKeyByGlossaryKeyEvents(array $eventTransfers)
     {
-        $this->getFactory()->createGlossaryTranslationStorageWriter()->deleteGlossaryStorageCollection($glossaryKeyIds);
+        $this->getFactory()->createGlossaryTranslationStorageWriter()->deleteGlossaryStorageCollectionByGlossaryKeyEvents($eventTransfers);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param array $eventTransfers
+     *
+     * @return void
+     */
+    public function writeGlossaryStorageCollectionByGlossaryTranslationEvents(array $eventTransfers)
+    {
+        $this->getFactory()->createGlossaryTranslationStorageWriter()->writeGlossaryStorageCollectionByGlossaryTranslationEvents($eventTransfers);
     }
 }

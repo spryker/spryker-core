@@ -8,6 +8,7 @@
 namespace Spryker\Zed\GlossaryStorage;
 
 use Spryker\Zed\GlossaryStorage\Dependency\Facade\GlossaryStorageToEventBehaviorFacadeBridge;
+use Spryker\Zed\GlossaryStorage\Dependency\Facade\GlossaryStorageToGlossaryFacadeBridge;
 use Spryker\Zed\GlossaryStorage\Dependency\QueryContainer\GlossaryStorageToGlossaryQueryContainerBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
@@ -18,7 +19,21 @@ use Spryker\Zed\Kernel\Container;
 class GlossaryStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
+    public const FACADE_GLOSSARY = 'FACADE_GLOSSARY';
     public const QUERY_CONTAINER_GLOSSARY = 'QUERY_CONTAINER_GLOSSARY';
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function provideBusinessLayerDependencies(Container $container)
+    {
+        $this->addEventBehaviorFacade($container);
+        $this->addGlossaryFacade($container);
+
+        return $container;
+    }
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -27,9 +42,7 @@ class GlossaryStorageDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $container[static::FACADE_EVENT_BEHAVIOR] = function (Container $container) {
-            return new GlossaryStorageToEventBehaviorFacadeBridge($container->getLocator()->eventBehavior()->facade());
-        };
+        $this->addEventBehaviorFacade($container);
 
         return $container;
     }
@@ -46,5 +59,29 @@ class GlossaryStorageDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return void
+     */
+    protected function addEventBehaviorFacade(Container $container): void
+    {
+        $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container) {
+            return new GlossaryStorageToEventBehaviorFacadeBridge($container->getLocator()->eventBehavior()->facade());
+        });
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return void
+     */
+    protected function addGlossaryFacade(Container $container): void
+    {
+        $container->set(static::FACADE_GLOSSARY, function (Container $container) {
+            return new GlossaryStorageToGlossaryFacadeBridge($container->getLocator()->glossary()->facade());
+        });
     }
 }

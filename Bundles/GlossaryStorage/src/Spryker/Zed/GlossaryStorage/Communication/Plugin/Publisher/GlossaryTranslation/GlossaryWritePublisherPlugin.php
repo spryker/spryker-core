@@ -7,9 +7,7 @@
 
 namespace Spryker\Zed\GlossaryStorage\Communication\Plugin\Publisher\GlossaryTranslation;
 
-use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryTranslationTableMap;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface;
 
 /**
@@ -20,9 +18,9 @@ use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface;
  */
 class GlossaryWritePublisherPlugin extends AbstractPlugin implements PublisherPluginInterface
 {
-    use DatabaseTransactionHandlerTrait;
-
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
@@ -32,9 +30,6 @@ class GlossaryWritePublisherPlugin extends AbstractPlugin implements PublisherPl
      */
     public function handleBulk(array $eventTransfers, $eventName)
     {
-        $this->preventTransaction();
-        $glossaryKeyIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys($eventTransfers, SpyGlossaryTranslationTableMap::COL_FK_GLOSSARY_KEY);
-
-        $this->getFacade()->writeGlossaryStorageCollection($glossaryKeyIds);
+        $this->getFacade()->writeGlossaryStorageCollectionByGlossaryTranslationEvents($eventTransfers);
     }
 }

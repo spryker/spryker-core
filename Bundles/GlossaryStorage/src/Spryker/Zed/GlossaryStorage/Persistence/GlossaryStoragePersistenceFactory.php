@@ -9,11 +9,14 @@ namespace Spryker\Zed\GlossaryStorage\Persistence;
 
 use Orm\Zed\GlossaryStorage\Persistence\SpyGlossaryStorageQuery;
 use Spryker\Zed\GlossaryStorage\GlossaryStorageDependencyProvider;
+use Spryker\Zed\GlossaryStorage\Persistence\Propel\Mapper\GlossaryStorageMapper;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \Spryker\Zed\GlossaryStorage\GlossaryStorageConfig getConfig()
  * @method \Spryker\Zed\GlossaryStorage\Persistence\GlossaryStorageQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\GlossaryStorage\Persistence\GlossaryStorageEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\GlossaryStorage\Persistence\GlossaryStorageRepositoryInterface getRepository()
  */
 class GlossaryStoragePersistenceFactory extends AbstractPersistenceFactory
 {
@@ -31,5 +34,13 @@ class GlossaryStoragePersistenceFactory extends AbstractPersistenceFactory
     public function getGlossaryQueryContainer()
     {
         return $this->getProvidedDependency(GlossaryStorageDependencyProvider::QUERY_CONTAINER_GLOSSARY);
+    }
+
+    /**
+     * @return \Spryker\Zed\GlossaryStorage\Persistence\Propel\Mapper\GlossaryStorageMapperInterface
+     */
+    public function createGlossaryStorageMapper()
+    {
+        return new GlossaryStorageMapper();
     }
 }
