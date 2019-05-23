@@ -103,6 +103,7 @@ class CartsResourceMapper implements CartsResourceMapperInterface
             ->setCurrency($currencyTransfer)
             ->setCustomer($customerTransfer)
             ->setPriceMode($restCartsAttributesTransfer->getPriceMode())
+            ->setCustomerReference($quoteTransfer->getCustomerReference())
             ->setStore($storeTransfer);
     }
 
