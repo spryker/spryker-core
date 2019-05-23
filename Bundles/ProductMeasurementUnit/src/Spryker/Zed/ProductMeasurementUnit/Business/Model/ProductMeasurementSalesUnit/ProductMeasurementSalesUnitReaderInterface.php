@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductMeasurementUnit\Business\Model\ProductMeasurementSalesUnit;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
 
 interface ProductMeasurementSalesUnitReaderInterface
@@ -36,4 +37,11 @@ interface ProductMeasurementSalesUnitReaderInterface
      * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
      */
     public function getProductMeasurementSalesUnitTransfers(): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
+     */
+    public function findFilteredProductMeasurementSalesUnitTransfers(FilterTransfer $filterTransfer): array;
 }

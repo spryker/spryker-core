@@ -34,6 +34,7 @@ class PriceProductScheduleEntityManager extends AbstractEntityManager implements
         $priceProductScheduleQuery
             ->filterByActiveTo(['max' => $filterTo], Criteria::LESS_THAN)
             ->filterByIsCurrent(false)
+            ->find()
             ->delete();
     }
 

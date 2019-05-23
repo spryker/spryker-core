@@ -191,6 +191,7 @@ class PriceProductServiceTest extends Unit
     protected function getMultiplePriceProductTransfers(): array
     {
         $chfCurrencyData = ['code' => 'CHF', 'name' => 'CHF', 'symbol' => 'CHF'];
+
         return [
             (new PriceProductBuilder(['priceTypeName' => 'DEFAULT']))
                 ->withMoneyValue((new MoneyValueBuilder())->withCurrency())

@@ -75,6 +75,7 @@ class PropelInstallHelper extends Module
     private function getModelBuildCommand()
     {
         $config = Config::get(PropelConstants::PROPEL);
+
         return $this->getBaseCommand()
         . ' vendor/bin/propel model:build'
         . $this->getConfigDirectoryForCommand($config)

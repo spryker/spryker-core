@@ -271,8 +271,8 @@ class PropelSchemaParser implements PropelSchemaParserInterface
 
     /**
      * @param array $uniqueFieldToModuleNameMap
-     * @param array $requiredColumnNames
-     * @param array $uniqueColumnNames
+     * @param string[] $requiredColumnNames
+     * @param string[] $uniqueColumnNames
      * @param string $module
      *
      * @throws \Spryker\Zed\Development\Business\Exception\Dependency\PropelSchemaParserException

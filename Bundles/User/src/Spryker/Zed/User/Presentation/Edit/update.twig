@@ -1,6 +1,7 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% set widget_title = 'Update user' | trans ~ ' #' ~ idUser   %}
+{% set title = 'Edit User' | trans ~ ': ' ~ userForm.vars.value.first_name ~ ' ' ~ userForm.vars.value.last_name %}
+{% set widget_title = 'General Information' | trans  %}
 
 {% block action %}
     {{ backActionButton('/user', 'List Users' | trans) }}

@@ -87,6 +87,7 @@ class IdCompanyUserGrantType extends AbstractGrant implements GrantTypeInterface
             $this->getEmitter()->emit($this->createRequestEvent(RequestEvent::USER_AUTHENTICATION_FAILED, $request));
             throw OAuthServerException::invalidCredentials();
         }
+
         return $userEntity;
     }
 

@@ -626,6 +626,7 @@ class Container implements ContainerInterface, ArrayAccess
         // and we need to make sure that the returned to be extended service is added now.
         if (($this->currentExtendingHash !== null && is_object($value)) && spl_object_hash($value) === $this->currentExtendingHash) {
             $this->currentExtendingHash = null;
+
             return;
         }
 
