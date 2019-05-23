@@ -142,10 +142,10 @@ interface PropelFacadeInterface
     /**
      * @api
      *
-     * @deprecated Will be removed without replacement.
-     *
      * Specification:
      * - Exports database backup for configured driver to `$backupPath`.
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @param string $backupPath
      *
@@ -156,10 +156,10 @@ interface PropelFacadeInterface
     /**
      * @api
      *
-     * @deprecated Will be removed without replacement.
-     *
      * Specification:
      * - Imports database backup for configured driver from `$backupPath`.
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @param string $backupPath
      *

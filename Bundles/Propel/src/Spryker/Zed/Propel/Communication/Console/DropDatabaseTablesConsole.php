@@ -27,7 +27,7 @@ class DropDatabaseTablesConsole extends Console
     protected function configure()
     {
         $this->setName(self::COMMAND_NAME);
-        $this->setDescription('Dropping all database tables, without dropping database.');
+        $this->setDescription('Dropping all database tables, without dropping the database.');
 
         parent::configure();
     }
@@ -40,7 +40,7 @@ class DropDatabaseTablesConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->info('Dropping propel all database tables.');
+        $this->info('Dropping all database tables.');
 
         try {
             $this->getFacade()->dropDatabaseTables();
