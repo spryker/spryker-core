@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CartsRestApi\Business\Quote;
 
+use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -61,9 +62,19 @@ class QuoteDeleter implements QuoteDeleterInterface
             return $quoteResponseTransfer;
         }
 
+        $originalQuoteIsDefault = false;
+        $originalQuoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
+        if ($originalQuoteTransfer->getIsDefault()) {
+            $originalQuoteIsDefault = true;
+        }
+
         $quoteResponseTransfer = $this->persistentCartFacade->deleteQuote(
-            $quoteResponseTransfer->getQuoteTransfer()->setCustomer($quoteTransfer->getCustomer())
+            $originalQuoteTransfer->setCustomer($quoteTransfer->getCustomer())
         );
+
+        if ($originalQuoteIsDefault) {
+            $this->setDefaultCustomerQuote($quoteTransfer);
+        }
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             $quoteResponseTransfer
@@ -72,5 +83,22 @@ class QuoteDeleter implements QuoteDeleterInterface
         }
 
         return $quoteResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    protected function setDefaultCustomerQuote(QuoteTransfer $quoteTransfer): void
+    {
+        $customerQuoteCollection = $this->quoteReader
+            ->getQuoteCollection((new QuoteCriteriaFilterTransfer())
+                ->setCustomerReference($quoteTransfer->getCustomer()->getCustomerReference()));
+
+        $customerQuotes = $customerQuoteCollection->getQuotes();
+        if ($customerQuotes->count()) {
+            $customerQuotes[0]->setIsDefault(true);
+        }
     }
 }
