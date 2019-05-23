@@ -62,7 +62,10 @@ class CartReader implements CartReaderInterface
 
         $quoteResponseTransfer = $this->cartsRestApiClient->findQuoteByUuid($quoteTransfer);
         if (!$quoteResponseTransfer->getIsSuccessful()) {
-            return $this->cartRestResponseBuilder->createFailedErrorResponse($quoteResponseTransfer->getErrors());
+            return $this->cartRestResponseBuilder->createFailedErrorResponse(
+                $quoteResponseTransfer->getErrors(),
+                $restRequest->getMetadata()->getLocale()
+            );
         }
 
         $cartResource = $this->cartsResourceMapper->mapCartsResource(
@@ -88,7 +91,10 @@ class CartReader implements CartReaderInterface
 
         if (!$quoteResponseTransfer->getIsSuccessful()
             || $restRequest->getRestUser()->getNaturalIdentifier() !== $quoteResponseTransfer->getQuoteTransfer()->getCustomerReference()) {
-            return $this->cartRestResponseBuilder->createFailedErrorResponse($quoteResponseTransfer->getErrors());
+            return $this->cartRestResponseBuilder->createFailedErrorResponse(
+                $quoteResponseTransfer->getErrors(),
+                $restRequest->getMetadata()->getLocale()
+            );
         }
 
         $cartResource = $this->cartsResourceMapper->mapCartsResource(

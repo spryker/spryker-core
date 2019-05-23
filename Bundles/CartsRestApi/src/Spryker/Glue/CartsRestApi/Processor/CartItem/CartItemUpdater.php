@@ -75,7 +75,10 @@ class CartItemUpdater implements CartItemUpdaterInterface
         $quoteResponseTransfer = $this->cartsRestApiClient->updateItem($restCartItemsAttributesTransfer);
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
-            return $this->cartRestResponseBuilder->createFailedErrorResponse($quoteResponseTransfer->getErrors());
+            return $this->cartRestResponseBuilder->createFailedErrorResponse(
+                $quoteResponseTransfer->getErrors(),
+                $restRequest->getMetadata()->getLocale()
+            );
         }
 
         $restResource = $this->cartsResourceMapper->mapCartsResource(
