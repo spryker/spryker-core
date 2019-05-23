@@ -41,14 +41,14 @@ abstract class AbstractScheduledPriceTable extends AbstractTable
     }
 
     /**
-     * @return mixed
+     * @return array
      */
     public function getSearchTerm()
     {
         $searchTerm = $this->request->query->get('search', null);
 
-        if (!isset($searchTerm[static::PARAMETER_VALUE]) || mb_strlen($searchTerm[static::PARAMETER_VALUE]) === 0) {
-            return $searchTerm;
+        if(!$this->isSearchTermValid($searchTerm)) {
+            return $this->getDefaultSearchTerm();
         }
 
         $searchTerm[static::PARAMETER_VALUE] = $this->normalizeMoneyValue($searchTerm[static::PARAMETER_VALUE]);
@@ -201,17 +201,45 @@ abstract class AbstractScheduledPriceTable extends AbstractTable
         );
     }
 
+
     /**
-     * @param string $moneyValue
+     * @param mixed $searchTerm
+     *
+     * @return bool
+     */
+    protected function isSearchTermValid($searchTerm): bool
+    {
+        return \is_array($searchTerm)
+            && \array_key_exists(static::PARAMETER_VALUE, $searchTerm)
+            && \is_scalar($searchTerm[static::PARAMETER_VALUE]);
+    }
+    /**
+     * @param mixed $searchTerm
+     *
+     * @return bool
+     */
+    protected function getDefaultSearchTerm(): array
+    {
+        return [
+            static::PARAMETER_VALUE => '',
+        ];
+    }
+
+    /**
+     * @param mixed $moneyValue
      *
      * @return string
      */
-    protected function normalizeMoneyValue(string $moneyValue): string
+    protected function normalizeMoneyValue($moneyValue): string
     {
-        if (filter_var($moneyValue, FILTER_VALIDATE_INT) !== false) {
+        if(!\is_string($moneyValue)) {
+            $moneyValue = (string)$moneyValue;
+        }
+
+        if (\filter_var($moneyValue, FILTER_VALIDATE_INT) !== false || \mb_strlen($moneyValue) === 0) {
             return $moneyValue;
         }
 
-        return preg_replace(static::PRICE_NUMERIC_PATTERN, '', $moneyValue);
+        return \preg_replace(static::PRICE_NUMERIC_PATTERN, '', $moneyValue);
     }
 }
