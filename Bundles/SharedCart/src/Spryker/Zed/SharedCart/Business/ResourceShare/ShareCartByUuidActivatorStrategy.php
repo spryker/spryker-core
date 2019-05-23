@@ -17,9 +17,6 @@ use Spryker\Zed\SharedCart\Persistence\SharedCartRepositoryInterface;
 class ShareCartByUuidActivatorStrategy implements ShareCartByUuidActivatorStrategyInterface
 {
     protected const GLOSSARY_KEY_CART_ACCESS_DENIED = 'shared_cart.resource_share.strategy.error.cart_access_denied';
-    /**
-     * @uses \Spryker\Zed\PersistentCartShare\Business\Quote\QuoteReader::GLOSSARY_KEY_QUOTE_IS_NOT_AVAILABLE
-     */
     protected const GLOSSARY_KEY_QUOTE_IS_NOT_AVAILABLE = 'persistent_cart_share.error.quote_is_not_available';
 
     /**
@@ -185,8 +182,6 @@ class ShareCartByUuidActivatorStrategy implements ShareCartByUuidActivatorStrate
                 ->getIdQuote()
         );
 
-        return (bool)$quoteResponseTransfer->requireQuoteTransfer()
-            ->getQuoteTransfer()
-            ->getIsLocked();
+        return $this->quoteFacade->isQuoteLocked($quoteResponseTransfer->getQuoteTransfer());
     }
 }

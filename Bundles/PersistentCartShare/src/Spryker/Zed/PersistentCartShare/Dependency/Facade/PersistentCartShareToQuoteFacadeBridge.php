@@ -8,6 +8,7 @@
 namespace Spryker\Zed\PersistentCartShare\Dependency\Facade;
 
 use Generated\Shared\Transfer\QuoteResponseTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 class PersistentCartShareToQuoteFacadeBridge implements PersistentCartShareToQuoteFacadeInterface
 {
@@ -32,5 +33,15 @@ class PersistentCartShareToQuoteFacadeBridge implements PersistentCartShareToQuo
     public function findQuoteById($idQuote): QuoteResponseTransfer
     {
         return $this->quoteFacade->findQuoteById($idQuote);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteLocked(QuoteTransfer $quoteTransfer): bool
+    {
+        return $this->quoteFacade->isQuoteLocked($quoteTransfer);
     }
 }
