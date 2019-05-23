@@ -11,9 +11,6 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\SalesMerchantConnector\Business\MerchantOrderReference\MerchantOrderReference;
 use Spryker\Zed\SalesMerchantConnector\Business\MerchantOrderReference\MerchantOrderReferenceInterface;
 
-/**
- * @method \Spryker\Zed\SalesMerchantConnector\SalesMerchantConnectorConfig getConfig()
- */
 class SalesMerchantConnectorBusinessFactory extends AbstractBusinessFactory
 {
     /**
@@ -21,6 +18,6 @@ class SalesMerchantConnectorBusinessFactory extends AbstractBusinessFactory
      */
     public function createMerchantOrderReference(): MerchantOrderReferenceInterface
     {
-        return new MerchantOrderReference($this->getConfig());
+        return new MerchantOrderReference();
     }
 }

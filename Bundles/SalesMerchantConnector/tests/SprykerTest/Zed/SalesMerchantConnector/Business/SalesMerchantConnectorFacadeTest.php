@@ -83,6 +83,7 @@ class SalesMerchantConnectorFacadeTest extends SalesMerchantConnectorMocks
             ->expects($this->any())
             ->method('getMerchantOrderReferencePattern')
             ->willReturn(static::MOCK_MERCHANT_ORDER_REFERENCE_PATTERN);
+
         return $this->createSalesMerchantConnectorFacadeMock($factory);
     }
 }

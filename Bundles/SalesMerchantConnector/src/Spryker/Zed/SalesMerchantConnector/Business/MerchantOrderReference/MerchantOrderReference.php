@@ -9,23 +9,9 @@ namespace Spryker\Zed\SalesMerchantConnector\Business\MerchantOrderReference;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
-use Spryker\Zed\SalesMerchantConnector\SalesMerchantConnectorConfig;
 
 class MerchantOrderReference implements MerchantOrderReferenceInterface
 {
-    /**
-     * @var \Spryker\Zed\SalesMerchantConnector\SalesMerchantConnectorConfig
-     */
-    protected $salesMerchantConnectorConfig;
-
-    /**
-     * @param \Spryker\Zed\SalesMerchantConnector\SalesMerchantConnectorConfig $salesMerchantConnectorConfig
-     */
-    public function __construct(SalesMerchantConnectorConfig $salesMerchantConnectorConfig)
-    {
-        $this->salesMerchantConnectorConfig = $salesMerchantConnectorConfig;
-    }
-
     /**
      * @param \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer $salesOrderItemEntity
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
@@ -41,10 +27,14 @@ class MerchantOrderReference implements MerchantOrderReferenceInterface
             return $salesOrderItemEntity;
         }
 
-        return $salesOrderItemEntity->setMerchantOrderReference(sprintf(
-            $this->salesMerchantConnectorConfig->getMerchantOrderReferencePattern(),
-            $salesOrderItemEntity->getFkSalesOrder(),
-            $itemTransfer->getFkMerchant()
+        //TODO:: Switch MerchantOrderReference to OrderItemReference
+        //TODO:: Add MerchantReference column to SalesOrderItem + add it from ItemTransfer
+
+        return $salesOrderItemEntity->setMerchantOrderItemReference(sprintf(
+            '%s',
+            $salesOrderItemEntity->getIdSalesOrderItem()
         ));
+
+        $salesOrderItemEntity->setMerchantRef($itemTransfer->getUuid);
     }
 }
