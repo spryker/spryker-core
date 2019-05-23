@@ -11,6 +11,7 @@
         <property name="fkProductAbstract" type="int" />
         <property name="abstractSku" type="string" />
         <property name="localizedAttributes" type="LocalizedAttributes[]" />
+        <property name="stores" type="Store[]" />
     </transfer>
 
     <transfer name="ProductAbstract">
@@ -94,6 +95,15 @@
         <property name="lastIndex" type="int"/>
         <property name="firstPage" type="int"/>
         <property name="lastPage" type="int"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="idStore" type="int" />
+    </transfer>
+
+    <transfer name="ProductAbstractSuggestionCollection">
+        <property name="productAbstracts" type="ProductAbstract[]"/>
+        <property name="pagination" type="Pagination"/>
     </transfer>
 
 </transfers>

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CmsBlockProductConnector\Dependency\Facade;
 
 use Generated\Shared\Transfer\PaginationTransfer;
+use Generated\Shared\Transfer\ProductAbstractSuggestionCollectionTransfer;
 
 class CmsBlockProductConnectorToProductFacadeBridge implements CmsBlockProductConnectorToProductFacadeInterface
 {
@@ -28,10 +29,10 @@ class CmsBlockProductConnectorToProductFacadeBridge implements CmsBlockProductCo
      * @param string $suggestion
      * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer[]
+     * @return \Generated\Shared\Transfer\ProductAbstractSuggestionCollectionTransfer
      */
-    public function suggestProductAbstractTransfersPaginated(string $suggestion, PaginationTransfer $paginationTransfer): array
+    public function getPaginatedProductAbstractSuggestions(string $suggestion, PaginationTransfer $paginationTransfer): ProductAbstractSuggestionCollectionTransfer
     {
-        return $this->productFacade->suggestProductAbstractTransfersPaginated($suggestion, $paginationTransfer);
+        return $this->productFacade->getPaginatedProductAbstractSuggestions($suggestion, $paginationTransfer);
     }
 }

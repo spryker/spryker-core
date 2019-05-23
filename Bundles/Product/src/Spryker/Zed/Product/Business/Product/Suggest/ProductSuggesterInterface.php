@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Product\Business\Product\Suggest;
 
 use Generated\Shared\Transfer\PaginationTransfer;
+use Generated\Shared\Transfer\ProductAbstractSuggestionCollectionTransfer;
 
 interface ProductSuggesterInterface
 {
@@ -23,9 +24,9 @@ interface ProductSuggesterInterface
      * @param string $suggestion
      * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer[]
+     * @return \Generated\Shared\Transfer\ProductAbstractSuggestionCollectionTransfer
      */
-    public function suggestProductAbstractTransfersPaginated(string $suggestion, PaginationTransfer $paginationTransfer): array;
+    public function getPaginatedProductAbstractSuggestions(string $suggestion, PaginationTransfer $paginationTransfer): ProductAbstractSuggestionCollectionTransfer;
 
     /**
      * @param string $suggestion

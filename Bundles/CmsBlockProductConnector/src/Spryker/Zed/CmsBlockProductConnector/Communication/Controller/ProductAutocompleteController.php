@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CmsBlockProductConnector\Communication\Controller;
 
+use ArrayObject;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -38,36 +39,41 @@ class ProductAutocompleteController extends AbstractController
     public function indexAction(Request $request): JsonResponse
     {
         $suggestion = $request->query->get(static::REQUEST_PARAM_SUGGESTION, '');
-        $paginationTransfer = $this->getPaginationTransfer($request);
+        $page = $request->query->getInt(static::REQUEST_PARAM_PAGE, static::DEFAULT_PAGE);
+        $paginationTransfer = $this->getPaginationTransfer($page);
 
-        $productAbstractTransfers = $this->getFactory()
+        $productAbstractSuggestionCollectionTransfer = $this->getFactory()
             ->getProductFacade()
-            ->suggestProductAbstractTransfersPaginated($suggestion, $paginationTransfer);
+            ->getPaginatedProductAbstractSuggestions($suggestion, $paginationTransfer);
 
         return $this->jsonResponse([
-            static::RESPONSE_KEY_RESULTS => $this->transformProductAbstractSuggestionsToAutocompleteData($productAbstractTransfers),
-            static::RESPONSE_KEY_PAGINATION => $this->getPaginationData($paginationTransfer),
+            static::RESPONSE_KEY_RESULTS => $this->transformProductAbstractSuggestionsToAutocompleteData(
+                $productAbstractSuggestionCollectionTransfer->getProductAbstracts()
+            ),
+            static::RESPONSE_KEY_PAGINATION => $this->getPaginationData(
+                $productAbstractSuggestionCollectionTransfer->getPagination()
+            ),
         ]);
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param int $page
      *
      * @return \Generated\Shared\Transfer\PaginationTransfer
      */
-    protected function getPaginationTransfer(Request $request): PaginationTransfer
+    protected function getPaginationTransfer(int $page): PaginationTransfer
     {
         return (new PaginationTransfer())
-            ->setPage($request->query->getInt(static::REQUEST_PARAM_PAGE, static::DEFAULT_PAGE))
+            ->setPage($page)
             ->setMaxPerPage(static::DEFAULT_ITEMS_PER_PAGE);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer[] $productAbstractTransfers
+     * @param \ArrayObject|\Generated\Shared\Transfer\ProductAbstractTransfer[] $productAbstractTransfers
      *
      * @return array
      */
-    protected function transformProductAbstractSuggestionsToAutocompleteData(array $productAbstractTransfers): array
+    protected function transformProductAbstractSuggestionsToAutocompleteData(ArrayObject $productAbstractTransfers): array
     {
         $autocompleteData = [];
         $productLabelFormatter = $this->getFactory()->createProductLabelFormatter();

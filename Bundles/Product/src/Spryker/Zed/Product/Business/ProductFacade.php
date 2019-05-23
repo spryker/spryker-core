@@ -9,6 +9,7 @@ namespace Spryker\Zed\Product\Business;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
+use Generated\Shared\Transfer\ProductAbstractSuggestionCollectionTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductAttributeKeyTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
@@ -915,13 +916,13 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      * @param string $suggestion
      * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer[]
+     * @return \Generated\Shared\Transfer\ProductAbstractSuggestionCollectionTransfer
      */
-    public function suggestProductAbstractTransfersPaginated(string $suggestion, PaginationTransfer $paginationTransfer): array
+    public function getPaginatedProductAbstractSuggestions(string $suggestion, PaginationTransfer $paginationTransfer): ProductAbstractSuggestionCollectionTransfer
     {
         return $this->getFactory()
             ->createProductSuggester()
-            ->suggestProductAbstractTransfersPaginated($suggestion, $paginationTransfer);
+            ->getPaginatedProductAbstractSuggestions($suggestion, $paginationTransfer);
     }
 
     /**

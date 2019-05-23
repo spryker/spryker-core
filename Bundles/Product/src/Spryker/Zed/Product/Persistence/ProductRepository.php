@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\Product\Persistence;
 
+use ArrayObject;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
+use Generated\Shared\Transfer\ProductAbstractSuggestionCollectionTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\SpyProductEntityTransfer;
@@ -18,6 +20,7 @@ use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Util\PropelModelPager;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
@@ -313,13 +316,13 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
      * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer[]
+     * @return \Generated\Shared\Transfer\ProductAbstractSuggestionCollectionTransfer
      */
-    public function getProductAbstractTransfersBySkuOrLocalizedName(
+    public function getProductAbstractSuggestionCollectionBySkuOrLocalizedName(
         string $search,
         PaginationTransfer $paginationTransfer,
         LocaleTransfer $localeTransfer
-    ): array {
+    ): ProductAbstractSuggestionCollectionTransfer {
         $criteria = new Criteria();
         $skuLikeCriteria = $criteria->getNewCriterion(
             SpyProductAbstractTableMap::COL_SKU,
@@ -328,30 +331,41 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
         );
 
         $productAbstractQuery = $this->getFactory()
-            ->createProductAbstractQuery();
-        $productAbstractQuery->leftJoinSpyProductAbstractLocalizedAttributes()
+            ->createProductAbstractQuery()
+            ->leftJoinSpyProductAbstractLocalizedAttributes()
             ->useSpyProductAbstractLocalizedAttributesQuery()
                 ->filterByFkLocale($localeTransfer->getIdLocale())
             ->endUse()
             ->withColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_NAME, static::KEY_FILTERED_PRODUCTS_PRODUCT_NAME)
             ->where('lower(' . SpyProductAbstractLocalizedAttributesTableMap::COL_NAME . ') like ?', '%' . mb_strtolower($search) . '%')
-            ->addOr($skuLikeCriteria);
-        $productAbstractQuery->addAscendingOrderByColumn(SpyProductAbstractTableMap::COL_SKU);
-        $productAbstractQuery = $this->applyPagination($productAbstractQuery, $paginationTransfer);
+            ->addOr($skuLikeCriteria)
+            ->addAscendingOrderByColumn(SpyProductAbstractTableMap::COL_SKU);
 
-        return $this->getProductAbstractTransfersMappedFromProductAbstractEntities($productAbstractQuery->find());
+        $paginationModel = $this->getPaginationModelFromQuery($productAbstractQuery, $paginationTransfer);
+        $paginationTransfer->setLastPage($paginationModel->getLastPage());
+        $productAbstractQuery = $paginationModel->getQuery();
+
+        $productAbstractEntities = $productAbstractQuery->find();
+
+        $productAbstractSuggestionCollectionTransfer = new ProductAbstractSuggestionCollectionTransfer();
+        $productAbstractSuggestionCollectionTransfer->setProductAbstracts(
+            $this->getProductAbstractTransfersMappedFromProductAbstractEntities($productAbstractEntities)
+        );
+        $productAbstractSuggestionCollectionTransfer->setPagination($paginationTransfer);
+
+        return $productAbstractSuggestionCollectionTransfer;
     }
 
     /**
      * @param \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $spyProductAbstractQuery
      * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
      *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
+     * @return \Propel\Runtime\Util\PropelModelPager
      */
-    protected function applyPagination(
+    protected function getPaginationModelFromQuery(
         SpyProductAbstractQuery $spyProductAbstractQuery,
         PaginationTransfer $paginationTransfer
-    ): SpyProductAbstractQuery {
+    ): PropelModelPager {
         $page = $paginationTransfer
             ->requirePage()
             ->getPage();
@@ -360,17 +374,7 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
             ->requireMaxPerPage()
             ->getMaxPerPage();
 
-        $paginationModel = $spyProductAbstractQuery->paginate($page, $maxPerPage);
-
-        $paginationTransfer->setNbResults($paginationModel->getNbResults());
-        $paginationTransfer->setFirstIndex($paginationModel->getFirstIndex());
-        $paginationTransfer->setLastIndex($paginationModel->getLastIndex());
-        $paginationTransfer->setFirstPage($paginationModel->getFirstPage());
-        $paginationTransfer->setLastPage($paginationModel->getLastPage());
-        $paginationTransfer->setNextPage($paginationModel->getNextPage());
-        $paginationTransfer->setPreviousPage($paginationModel->getPreviousPage());
-
-        return $paginationModel->getQuery();
+        return $spyProductAbstractQuery->paginate($page, $maxPerPage);
     }
 
     /**
@@ -396,11 +400,11 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
     /**
      * @param \Propel\Runtime\Collection\ObjectCollection $productAbstractEntities
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer[]
+     * @return \ArrayObject|\Generated\Shared\Transfer\ProductAbstractTransfer[]
      */
-    protected function getProductAbstractTransfersMappedFromProductAbstractEntities(ObjectCollection $productAbstractEntities): array
+    protected function getProductAbstractTransfersMappedFromProductAbstractEntities(ObjectCollection $productAbstractEntities): ArrayObject
     {
-        $productAbstractTransfers = [];
+        $productAbstractTransfers = new ArrayObject();
         $productMapper = $this->getFactory()->createProductMapper();
 
         foreach ($productAbstractEntities as $productAbstractEntity) {

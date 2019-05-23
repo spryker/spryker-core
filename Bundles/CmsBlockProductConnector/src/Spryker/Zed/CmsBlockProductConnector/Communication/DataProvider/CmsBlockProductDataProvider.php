@@ -82,7 +82,7 @@ class CmsBlockProductDataProvider
     /**
      * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
      *
-     * @return string[]
+     * @return int[]
      */
     protected function getAssignedProductAbstracts(CmsBlockTransfer $cmsBlockTransfer): array
     {
@@ -106,7 +106,7 @@ class CmsBlockProductDataProvider
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer[] $productAbstractTransfers
      *
-     * @return string[]
+     * @return int[]
      */
     protected function transformProductAbstractTransfersToSelectFieldData(array $productAbstractTransfers): array
     {

@@ -19,4 +19,9 @@
         <property name="lastPage" type="int"/>
     </transfer>
 
+    <transfer name="ProductAbstractSuggestionCollection">
+        <property name="productAbstracts" type="ProductAbstract[]"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
 </transfers>
