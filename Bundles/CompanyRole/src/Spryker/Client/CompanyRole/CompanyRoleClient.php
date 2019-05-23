@@ -183,4 +183,22 @@ class CompanyRoleClient extends AbstractClient implements CompanyRoleClientInter
             ->createCompanyRolePermissionsHandler()
             ->findNonInfrastructuralCompanyRolePermissionsByIdCompanyRole($companyRoleTransfer);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * {@internal will work if UUID field is provided.}
+     *
+     * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyRoleResponseTransfer
+     */
+    public function findCompanyRoleByUuid(CompanyRoleTransfer $companyRoleTransfer): CompanyRoleResponseTransfer
+    {
+        return $this->getFactory()
+            ->createZedCompanyRoleStub()
+            ->findCompanyRoleByUuid($companyRoleTransfer);
+    }
 }

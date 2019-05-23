@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductMeasurementUnitStorage\Persistence;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -68,5 +69,39 @@ class ProductMeasurementUnitStorageRepository extends AbstractRepository impleme
         $query = $this->getFactory()->createProductConcreteMeasurementUnitStorageQuery();
 
         return $this->buildQueryFromCriteria($query)->find();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $productMeasurementUnitIds
+     *
+     * @return \Generated\Shared\Transfer\SpyProductMeasurementUnitStorageEntityTransfer[]
+     */
+    public function findFilteredProductMeasurementUnitStorageEntities(FilterTransfer $filterTransfer, array $productMeasurementUnitIds = []): array
+    {
+        $query = $this->getFactory()->createProductMeasurementUnitStorageQuery();
+
+        if ($productMeasurementUnitIds) {
+            $query->filterByFkProductMeasurementUnit_In($productMeasurementUnitIds);
+        }
+
+        return $this->buildQueryFromCriteria($query, $filterTransfer)->find();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $productIds
+     *
+     * @return \Generated\Shared\Transfer\SpyProductConcreteMeasurementUnitStorageEntityTransfer[]
+     */
+    public function findFilteredProductConcreteMeasurementUnitStorageEntities(FilterTransfer $filterTransfer, array $productIds = []): array
+    {
+        $query = $this->getFactory()->createProductConcreteMeasurementUnitStorageQuery();
+
+        if ($productIds) {
+            $query->filterByFkProduct_In($productIds);
+        }
+
+        return $this->buildQueryFromCriteria($query, $filterTransfer)->find();
     }
 }

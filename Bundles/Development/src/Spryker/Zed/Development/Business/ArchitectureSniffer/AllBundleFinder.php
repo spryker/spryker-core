@@ -104,6 +104,7 @@ class AllBundleFinder implements AllBundleFinderInterface
             $path = APPLICATION_SOURCE_DIR . '/' . $projectNamespace . '/*';
             $allBundles = $this->findBundles($path, $projectNamespace, $allBundles);
         }
+
         return $allBundles;
     }
 
@@ -117,6 +118,7 @@ class AllBundleFinder implements AllBundleFinderInterface
         $path = APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/*/src/Spryker/*';
         $namespace = 'Spryker';
         $allBundles = $this->findBundles($path, $namespace, $allBundles);
+
         return $allBundles;
     }
 
@@ -134,6 +136,7 @@ class AllBundleFinder implements AllBundleFinderInterface
             $path = APPLICATION_VENDOR_DIR . '/' . $namespaceDir . '/*/src/*/*';
             $allBundles = $this->findBundles($path, $coreNamespace, $allBundles);
         }
+
         return $allBundles;
     }
 
@@ -148,6 +151,7 @@ class AllBundleFinder implements AllBundleFinderInterface
             $expl = explode('/', $bundleData['directory']);
             $allBundles[$i]['application'] = $expl[count($expl) - 2];
         }
+
         return $allBundles;
     }
 }

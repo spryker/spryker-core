@@ -404,6 +404,7 @@ class Reader implements ReaderInterface
     {
         $types = $this->stockConfig->getStoreToWarehouseMapping()[$storeTransfer->getName()];
 
+        /** @var \Orm\Zed\Stock\Persistence\SpyStockProduct[] $stockProducts */
         $stockProducts = $this->queryContainer
             ->queryStockByIdProductAndTypes($idProductConcrete, $types)
             ->find();
@@ -444,12 +445,13 @@ class Reader implements ReaderInterface
      */
     public function expandProductConcreteWithStocks(ProductConcreteTransfer $productConcreteTransfer)
     {
+        /** @var \Orm\Zed\Stock\Persistence\SpyStockProduct[] $stockProductCollection */
         $stockProductCollection = $this->queryContainer
             ->queryStockByProducts($productConcreteTransfer->requireIdProductConcrete()->getIdProductConcrete())
             ->innerJoinStock()
             ->find();
 
-        if ($stockProductCollection === null) {
+        if (!$stockProductCollection) {
             return $productConcreteTransfer;
         }
 
@@ -474,6 +476,7 @@ class Reader implements ReaderInterface
         foreach ($stockCollection as $stockEntity) {
             $types[$stockEntity->getName()] = $stockEntity->getName();
         }
+
         return $types;
     }
 }

@@ -16,7 +16,7 @@ interface ProductListGuiToUtilCsvServiceInterface
     /**
      * @param \Symfony\Component\HttpFoundation\File\UploadedFile $file
      *
-     * @return array
+     * @return string[][]
      */
     public function readUploadedFile(UploadedFile $file): array;
 

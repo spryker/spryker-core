@@ -54,13 +54,15 @@ abstract class AbstractCommunicationFactory extends AbstractFactory
      * @param \Spryker\Zed\Kernel\AbstractBundleDependencyProvider $dependencyProvider
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return void
+     * @return \Spryker\Zed\Kernel\Container
      */
     protected function provideExternalDependencies(
         AbstractBundleDependencyProvider $dependencyProvider,
         Container $container
     ) {
         $dependencyProvider->provideCommunicationLayerDependencies($container);
+
+        return $container;
     }
 
     /**

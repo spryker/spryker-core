@@ -437,6 +437,7 @@ class DevelopmentConfig extends AbstractBundleConfig
     public function getArchitectureSnifferRuleset()
     {
         $vendorDir = APPLICATION_VENDOR_DIR . DIRECTORY_SEPARATOR;
+
         return $vendorDir . 'spryker/architecture-sniffer/src/ruleset.xml';
     }
 

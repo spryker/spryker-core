@@ -170,4 +170,20 @@ class CompanyRoleStub implements CompanyRoleStubInterface
 
         return $companyRolePermissionResponseTransfer;
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyRoleResponseTransfer
+     */
+    public function findCompanyRoleByUuid(CompanyRoleTransfer $companyRoleTransfer): CompanyRoleResponseTransfer
+    {
+        /** @var \Generated\Shared\Transfer\CompanyRoleResponseTransfer $companyRoleResponseTransfer */
+        $companyRoleResponseTransfer = $this->zedRequestClient->call(
+            '/company-role/gateway/find-company-role-by-uuid',
+            $companyRoleTransfer
+        );
+
+        return $companyRoleResponseTransfer;
+    }
 }

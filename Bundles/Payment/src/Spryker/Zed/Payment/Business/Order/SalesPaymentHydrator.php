@@ -95,6 +95,7 @@ class SalesPaymentHydrator implements SalesPaymentHydratorInterface
     {
         if ($this->paymentHydratePluginCollection->has($paymentTransfer->getPaymentProvider())) {
             $paymentHydratePlugin = $this->paymentHydratePluginCollection->get($paymentTransfer->getPaymentProvider());
+
             return $paymentHydratePlugin->hydrate($orderTransfer, $paymentTransfer);
         }
 
