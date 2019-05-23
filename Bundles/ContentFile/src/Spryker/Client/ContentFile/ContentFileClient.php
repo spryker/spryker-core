@@ -25,7 +25,7 @@ class ContentFileClient extends AbstractClient implements ContentFileClientInter
      *
      * @return \Generated\Shared\Transfer\ContentFileListTypeTransfer|null
      */
-    public function executeContentFileListTypeById(int $idContent, string $localeName): ?ContentFileListTypeTransfer
+    public function executeFileListTypeById(int $idContent, string $localeName): ?ContentFileListTypeTransfer
     {
         return $this->getFactory()->createContentFileListTypeMapper()->executeFileListTypeById($idContent, $localeName);
     }

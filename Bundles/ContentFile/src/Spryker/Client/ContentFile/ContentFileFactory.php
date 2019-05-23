@@ -8,8 +8,8 @@
 namespace Spryker\Client\ContentFile;
 
 use Spryker\Client\ContentFile\Dependency\Client\ContentFileToContentStorageClientInterface;
-use Spryker\Client\ContentFile\Executor\ContentFileTermExecutorInterface;
-use Spryker\Client\ContentFile\Executor\FileListTermToFileListTypeExecutor;
+use Spryker\Client\ContentFile\Executor\ContentFileListTermExecutorInterface;
+use Spryker\Client\ContentFile\Executor\ContentFileListTermToFileListListTypeExecutor;
 use Spryker\Client\ContentFile\Mapper\ContentFileListTypeMapper;
 use Spryker\Client\ContentFile\Mapper\ContentFileListTypeMapperInterface;
 use Spryker\Client\Kernel\AbstractFactory;
@@ -29,7 +29,7 @@ class ContentFileFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\ContentFile\Executor\ContentFileTermExecutorInterface[]
+     * @return \Spryker\Client\ContentFile\Executor\ContentFileListTermExecutorInterface[]
      */
     public function getContentFileTermExecutorMap(): array
     {
@@ -39,11 +39,11 @@ class ContentFileFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\ContentFile\Executor\ContentFileTermExecutorInterface
+     * @return \Spryker\Client\ContentFile\Executor\ContentFileListTermExecutorInterface
      */
-    public function createFileListTermToFileListTypeExecutor(): ContentFileTermExecutorInterface
+    public function createFileListTermToFileListTypeExecutor(): ContentFileListTermExecutorInterface
     {
-        return new FileListTermToFileListTypeExecutor();
+        return new ContentFileListTermToFileListListTypeExecutor();
     }
 
     /**

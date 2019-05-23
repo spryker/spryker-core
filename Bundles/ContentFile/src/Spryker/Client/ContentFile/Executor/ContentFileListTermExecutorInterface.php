@@ -10,7 +10,7 @@ namespace Spryker\Client\ContentFile\Executor;
 use Generated\Shared\Transfer\ContentFileListTypeTransfer;
 use Generated\Shared\Transfer\ContentTypeContextTransfer;
 
-interface ContentFileTermExecutorInterface
+interface ContentFileListTermExecutorInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ContentTypeContextTransfer $contentTypeContextTransfer

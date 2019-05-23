@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\ContentFileListTermTransfer;
 use Generated\Shared\Transfer\ContentFileListTypeTransfer;
 use Generated\Shared\Transfer\ContentTypeContextTransfer;
 
-class FileListTermToFileListTypeExecutor implements ContentFileTermExecutorInterface
+class ContentFileListTermToFileListListTypeExecutor implements ContentFileListTermExecutorInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ContentTypeContextTransfer $contentTypeContextTransfer

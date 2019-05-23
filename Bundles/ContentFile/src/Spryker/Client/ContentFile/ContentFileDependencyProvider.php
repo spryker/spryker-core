@@ -23,7 +23,6 @@ class ContentFileDependencyProvider extends AbstractDependencyProvider
     public function provideServiceLayerDependencies(Container $container): Container
     {
         $container = parent::provideServiceLayerDependencies($container);
-
         $container = $this->addContentStorage($container);
 
         return $container;

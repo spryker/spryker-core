@@ -7,9 +7,9 @@
 
 namespace Spryker\Shared\ContentFile;
 
-use Spryker\Shared\Kernel\AbstractBundleConfig;
+use Spryker\Shared\Kernel\AbstractSharedConfig;
 
-class ContentFileConfig extends AbstractBundleConfig
+class ContentFileConfig extends AbstractSharedConfig
 {
     /**
      * Content item file list

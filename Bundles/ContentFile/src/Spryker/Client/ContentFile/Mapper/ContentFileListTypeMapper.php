@@ -19,18 +19,18 @@ class ContentFileListTypeMapper implements ContentFileListTypeMapperInterface
     protected $contentStorageClient;
 
     /**
-     * @var \Spryker\Client\ContentFile\Executor\ContentFileTermExecutorInterface[]
+     * @var \Spryker\Client\ContentFile\Executor\ContentFileListTermExecutorInterface[]
      */
-    protected $contentFileTermExecutors;
+    protected $contentFileListTermExecutors;
 
     /**
      * @param \Spryker\Client\ContentFile\Dependency\Client\ContentFileToContentStorageClientInterface $contentStorageClient
-     * @param array $contentFileTermExecutors
+     * @param \Spryker\Client\ContentFile\Executor\ContentFileListTermExecutorInterface[] $contentFileListTermExecutors
      */
-    public function __construct(ContentFileToContentStorageClientInterface $contentStorageClient, array $contentFileTermExecutors)
+    public function __construct(ContentFileToContentStorageClientInterface $contentStorageClient, array $contentFileListTermExecutors)
     {
         $this->contentStorageClient = $contentStorageClient;
-        $this->contentFileTermExecutors = $contentFileTermExecutors;
+        $this->contentFileListTermExecutors = $contentFileListTermExecutors;
     }
 
     /**
@@ -51,13 +51,13 @@ class ContentFileListTypeMapper implements ContentFileListTypeMapperInterface
 
         $term = $contentTypeContextTransfer->getTerm();
 
-        if (!isset($this->contentFileTermExecutors[$term])) {
+        if (!isset($this->contentFileListTermExecutors[$term])) {
             throw new InvalidFileListTermException(
                 sprintf('There is no matching Term for FileListType when provided with term %s.', $term)
             );
         }
 
-        $fileListTermToFileListTypeExecutor = $this->contentFileTermExecutors[$term];
+        $fileListTermToFileListTypeExecutor = $this->contentFileListTermExecutors[$term];
 
         return $fileListTermToFileListTypeExecutor->execute($contentTypeContextTransfer);
     }

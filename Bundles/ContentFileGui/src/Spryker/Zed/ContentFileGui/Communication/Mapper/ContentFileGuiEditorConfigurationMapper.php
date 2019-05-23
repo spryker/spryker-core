@@ -19,14 +19,14 @@ class ContentFileGuiEditorConfigurationMapper implements ContentFileGuiEditorCon
     /**
      * @var \Spryker\Zed\ContentFileGui\ContentFileGuiConfig
      */
-    protected $config;
+    protected $contentFileGuiConfig;
 
     /**
-     * @param \Spryker\Zed\ContentFileGui\ContentFileGuiConfig $config
+     * @param \Spryker\Zed\ContentFileGui\ContentFileGuiConfig $contentFileGuiConfig
      */
-    public function __construct(ContentFileGuiConfig $config)
+    public function __construct(ContentFileGuiConfig $contentFileGuiConfig)
     {
-        $this->config = $config;
+        $this->contentFileGuiConfig = $contentFileGuiConfig;
     }
 
     /**
@@ -36,7 +36,7 @@ class ContentFileGuiEditorConfigurationMapper implements ContentFileGuiEditorCon
     {
         $templates = [];
 
-        foreach ($this->config->getContentWidgetTemplates() as $templateIdentifier => $templateName) {
+        foreach ($this->contentFileGuiConfig->getContentWidgetTemplates() as $templateIdentifier => $templateName) {
             $templates[] = (new ContentWidgetTemplateTransfer())
                 ->setIdentifier($templateIdentifier)
                 ->setName($templateName);
@@ -52,7 +52,7 @@ class ContentFileGuiEditorConfigurationMapper implements ContentFileGuiEditorCon
     {
         return sprintf(
             static::PARAMETER_TWIG_FUNCTION_TEMPLATE_FORMAT,
-            $this->config->getTwigFunctionName(),
+            $this->contentFileGuiConfig->getTwigFunctionName(),
             static::PARAMETER_TWIG_FUNCTION_TEMPLATE_ID,
             static::PARAMETER_TWIG_FUNCTION_TEMPLATE
         );
