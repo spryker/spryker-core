@@ -24,6 +24,7 @@ class QuoteItemMapper implements QuoteItemMapperInterface
     ): QuoteTransfer {
         return $quoteTransfer
             ->setUuid($restCartItemsAttributesTransfer->getQuoteUuid())
-            ->setCustomerReference($restCartItemsAttributesTransfer->getCustomerReference());
+            ->setCustomerReference($restCartItemsAttributesTransfer->getCustomerReference())
+            ->setCustomer($restCartItemsAttributesTransfer->getCustomer());
     }
 }
