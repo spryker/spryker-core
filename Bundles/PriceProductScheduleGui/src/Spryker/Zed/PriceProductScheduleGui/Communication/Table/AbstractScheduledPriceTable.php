@@ -47,7 +47,7 @@ abstract class AbstractScheduledPriceTable extends AbstractTable
     {
         $searchTerm = $this->request->query->get('search', null);
 
-        if(!$this->isSearchTermValid($searchTerm)) {
+        if (!$this->isSearchTermValid($searchTerm)) {
             return $this->getDefaultSearchTerm();
         }
 
@@ -201,7 +201,6 @@ abstract class AbstractScheduledPriceTable extends AbstractTable
         );
     }
 
-
     /**
      * @param mixed $searchTerm
      *
@@ -209,14 +208,13 @@ abstract class AbstractScheduledPriceTable extends AbstractTable
      */
     protected function isSearchTermValid($searchTerm): bool
     {
-        return \is_array($searchTerm)
-            && \array_key_exists(static::PARAMETER_VALUE, $searchTerm)
-            && \is_scalar($searchTerm[static::PARAMETER_VALUE]);
+        return is_array($searchTerm)
+            && array_key_exists(static::PARAMETER_VALUE, $searchTerm)
+            && is_scalar($searchTerm[static::PARAMETER_VALUE]);
     }
+
     /**
-     * @param mixed $searchTerm
-     *
-     * @return bool
+     * @return array
      */
     protected function getDefaultSearchTerm(): array
     {
@@ -232,14 +230,14 @@ abstract class AbstractScheduledPriceTable extends AbstractTable
      */
     protected function normalizeMoneyValue($moneyValue): string
     {
-        if(!\is_string($moneyValue)) {
+        if (!is_string($moneyValue)) {
             $moneyValue = (string)$moneyValue;
         }
 
-        if (\filter_var($moneyValue, FILTER_VALIDATE_INT) !== false || \mb_strlen($moneyValue) === 0) {
+        if (filter_var($moneyValue, FILTER_VALIDATE_INT) !== false || mb_strlen($moneyValue) === 0) {
             return $moneyValue;
         }
 
-        return \preg_replace(static::PRICE_NUMERIC_PATTERN, '', $moneyValue);
+        return preg_replace(static::PRICE_NUMERIC_PATTERN, '', $moneyValue);
     }
 }
