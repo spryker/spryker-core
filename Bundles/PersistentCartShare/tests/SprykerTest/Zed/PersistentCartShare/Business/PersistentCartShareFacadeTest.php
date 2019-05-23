@@ -41,9 +41,9 @@ class PersistentCartShareFacadeTest extends Test
     protected const GLOSSARY_KEY_RESOURCE_SHARE_IS_EXPIRED = 'resource_share.validation.error.resource_share_is_expired';
 
     /**
-     * @uses \Spryker\Zed\PersistentCartShare\Business\Quote\QuoteReader::GLOSSARY_KEY_ERROR_QUOTE_NOT_AVAILABLE
+     * @uses \Spryker\Zed\PersistentCartShare\Business\Quote\QuoteReader::GLOSSARY_KEY_QUOTE_IS_NOT_AVAILABLE
      */
-    protected const GLOSSARY_KEY_ERROR_QUOTE_NOT_AVAILABLE = 'persistent_cart.error.quote.not_available';
+    protected const GLOSSARY_KEY_ERROR_QUOTE_NOT_AVAILABLE = 'persistent_cart_share.error.quote_is_not_available';
 
     /**
      * @uses \Spryker\Zed\PersistentCartShare\Business\Quote\QuoteReader::GLOSSARY_KEY_RESOURCE_IS_NOT_AVAILABLE
