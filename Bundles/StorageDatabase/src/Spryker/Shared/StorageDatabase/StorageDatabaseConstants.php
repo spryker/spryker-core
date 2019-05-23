@@ -66,7 +66,7 @@ interface StorageDatabaseConstants
      *
      * @api
      */
-    public const DB_DEBUG = 'STORAGE_DATABASE:DB_PASSWORD';
+    public const DB_DEBUG = 'STORAGE_DATABASE:DB_DEBUG';
 
     /**
      * Specification:

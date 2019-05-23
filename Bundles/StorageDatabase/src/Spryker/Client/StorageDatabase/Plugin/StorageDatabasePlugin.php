@@ -8,7 +8,7 @@
 namespace Spryker\Client\StorageDatabase\Plugin;
 
 use Spryker\Client\Kernel\AbstractPlugin;
-use Spryker\Client\StorageExtension\Dependency\StoragePluginInterface;
+use Spryker\Client\StorageExtension\Dependency\Plugin\StoragePluginInterface;
 
 /**
  * @method \Spryker\Client\StorageDatabase\StorageDatabaseClientInterface getClient()
@@ -24,7 +24,7 @@ class StorageDatabasePlugin extends AbstractPlugin implements StoragePluginInter
      *
      * @return mixed
      */
-    public function get($key)
+    public function get(string $key)
     {
         return $this->getClient()->get($key);
     }
@@ -38,7 +38,7 @@ class StorageDatabasePlugin extends AbstractPlugin implements StoragePluginInter
      *
      * @return array
      */
-    public function getMulti(array $keys)
+    public function getMulti(array $keys): array
     {
         return $this->getClient()->getMulti($keys);
     }
@@ -50,7 +50,7 @@ class StorageDatabasePlugin extends AbstractPlugin implements StoragePluginInter
      *
      * @return void
      */
-    public function resetAccessStats()
+    public function resetAccessStats(): void
     {
         $this->getClient()->resetAccessStats();
     }
@@ -62,7 +62,7 @@ class StorageDatabasePlugin extends AbstractPlugin implements StoragePluginInter
      *
      * @return array
      */
-    public function getAccessStats()
+    public function getAccessStats(): array
     {
         return $this->getClient()->getAccessStats();
     }
@@ -72,13 +72,11 @@ class StorageDatabasePlugin extends AbstractPlugin implements StoragePluginInter
      *
      * @param bool $debug
      *
-     * @return $this
+     * @return void
      */
-    public function setDebug($debug)
+    public function setDebug(bool $debug): void
     {
         $this->getClient()->setDebug($debug);
-
-        return $this;
     }
 
     /**
@@ -87,16 +85,13 @@ class StorageDatabasePlugin extends AbstractPlugin implements StoragePluginInter
      * @api
      *
      * @param string $key
-     * @param mixed $value
+     * @param string $value
      * @param int|null $ttl
      *
-     * @throws \Exception
-     *
-     * @return mixed
+     * @return void
      */
-    public function set($key, $value, $ttl = null)
+    public function set(string $key, string $value, ?int $ttl = null): void
     {
-        return 0;
     }
 
     /**
@@ -108,7 +103,7 @@ class StorageDatabasePlugin extends AbstractPlugin implements StoragePluginInter
      *
      * @return void
      */
-    public function setMulti(array $items)
+    public function setMulti(array $items): void
     {
     }
 
@@ -119,9 +114,9 @@ class StorageDatabasePlugin extends AbstractPlugin implements StoragePluginInter
      *
      * @param string $key
      *
-     * @return mixed
+     * @return int
      */
-    public function delete($key)
+    public function delete(string $key): int
     {
         return 0;
     }
@@ -133,10 +128,11 @@ class StorageDatabasePlugin extends AbstractPlugin implements StoragePluginInter
      *
      * @param array $keys
      *
-     * @return void
+     * @return int
      */
-    public function deleteMulti(array $keys)
+    public function deleteMulti(array $keys): int
     {
+        return 0;
     }
 
     /**
@@ -146,7 +142,7 @@ class StorageDatabasePlugin extends AbstractPlugin implements StoragePluginInter
      *
      * @return int
      */
-    public function deleteAll()
+    public function deleteAll(): int
     {
         return 0;
     }
@@ -158,7 +154,7 @@ class StorageDatabasePlugin extends AbstractPlugin implements StoragePluginInter
      *
      * @return array
      */
-    public function getStats()
+    public function getStats(): array
     {
         return [];
     }
@@ -170,7 +166,7 @@ class StorageDatabasePlugin extends AbstractPlugin implements StoragePluginInter
      *
      * @return array
      */
-    public function getAllKeys()
+    public function getAllKeys(): array
     {
         return [];
     }
@@ -184,7 +180,7 @@ class StorageDatabasePlugin extends AbstractPlugin implements StoragePluginInter
      *
      * @return array
      */
-    public function getKeys($pattern)
+    public function getKeys(string $pattern): array
     {
         return [];
     }
@@ -196,7 +192,7 @@ class StorageDatabasePlugin extends AbstractPlugin implements StoragePluginInter
      *
      * @return int
      */
-    public function getCountItems()
+    public function getCountItems(): int
     {
         return 0;
     }
