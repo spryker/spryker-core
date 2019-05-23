@@ -19,11 +19,20 @@ class QuoteCalculatorExecutor implements QuoteCalculatorExecutorInterface
     protected $quoteCalculators;
 
     /**
-     * @param \Spryker\Zed\CalculationExtension\Dependency\Plugin\CalculationPluginInterface[]|\Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface[] $quoteCalculators
+     * @var \Spryker\Zed\CalculationExtension\Dependency\Plugin\QuotePostRecalculatePluginStrategyInterface[]
      */
-    public function __construct(array $quoteCalculators)
-    {
+    protected $quotePostRecalculatePlugins;
+
+    /**
+     * @param \Spryker\Zed\CalculationExtension\Dependency\Plugin\CalculationPluginInterface[]|\Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface[] $quoteCalculators
+     * @param \Spryker\Zed\CalculationExtension\Dependency\Plugin\QuotePostRecalculatePluginStrategyInterface[] $quotePostRecalculatePlugins
+     */
+    public function __construct(
+        array $quoteCalculators,
+        array $quotePostRecalculatePlugins
+    ) {
         $this->quoteCalculators = $quoteCalculators;
+        $this->quotePostRecalculatePlugins = $quotePostRecalculatePlugins;
     }
 
     /**
@@ -48,6 +57,7 @@ class QuoteCalculatorExecutor implements QuoteCalculatorExecutorInterface
         }
 
         $quoteTransfer = $this->mapQuoteTransfer($quoteTransfer, $calculableObjectTransfer);
+        $quoteTransfer = $this->executeQuotePostRecalculatePlugins($quoteTransfer);
 
         return $quoteTransfer;
     }
@@ -96,5 +106,21 @@ class QuoteCalculatorExecutor implements QuoteCalculatorExecutorInterface
         $calculableObjectTransfer = $this->mapCalculableObjectTransfer($quoteTransfer);
 
         return $calculableObjectTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function executeQuotePostRecalculatePlugins(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        foreach ($this->quotePostRecalculatePlugins as $quotePostRecalculatePlugin) {
+            if ($quotePostRecalculatePlugin->isApplicable($quoteTransfer)) {
+                $quoteTransfer = $quotePostRecalculatePlugin->execute($quoteTransfer);
+            }
+        }
+
+        return $quoteTransfer;
     }
 }

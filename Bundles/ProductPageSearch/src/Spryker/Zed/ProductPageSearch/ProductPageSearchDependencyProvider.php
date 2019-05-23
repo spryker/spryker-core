@@ -66,8 +66,12 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
     public const PLUGIN_PRODUCT_PRICE_PAGE_DATA = 'PLUGIN_PRODUCT_PRICE_PAGE_DATA';
     public const PLUGIN_PRODUCT_CATEGORY_PAGE_DATA = 'PLUGIN_PRODUCT_CATEGORY_PAGE_DATA';
     public const PLUGIN_PRODUCT_IMAGE_PAGE_DATA = 'PLUGIN_PRODUCT_IMAGE_PAGE_DATA';
-    public const PLUGINS_PRODUCT_CONCRETE_PAGE_MAP_EXPANDER = 'PLUGINS_PRODUCT_CONCRETE_PAGE_MAP_EXPANDER';
     public const PLUGINS_PRODUCT_CONCRETE_PAGE_DATA_EXPANDER = 'PLUGINS_PRODUCT_CONCRETE_PAGE_DATA_EXPANDER';
+    public const PLUGINS_CONCRETE_PRODUCT_PAGE_MAP_EXPANDER = 'PLUGINS_CONCRETE_PRODUCT_PAGE_MAP_EXPANDER';
+    /**
+     * @deprecated Use ProductPageSearchDependencyProvider::PLUGINS_CONCRETE_PRODUCT_PAGE_MAP_EXPANDER instead.
+     */
+    public const PLUGINS_PRODUCT_CONCRETE_PAGE_MAP_EXPANDER = 'PLUGINS_PRODUCT_CONCRETE_PAGE_MAP_EXPANDER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -122,6 +126,10 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
 
         $container[static::PLUGINS_PRODUCT_CONCRETE_PAGE_MAP_EXPANDER] = function () {
             return $this->getProductConcretePageMapExpanderPlugins();
+        };
+
+        $container[static::PLUGINS_CONCRETE_PRODUCT_PAGE_MAP_EXPANDER] = function () {
+            return $this->getConcreteProductPageMapExpanderPlugins();
         };
 
         $container[static::PLUGINS_PRODUCT_CONCRETE_PAGE_DATA_EXPANDER] = function () {
@@ -273,7 +281,7 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
     /**
      * @return \Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductConcretePageMapExpanderPluginInterface[]
      */
-    protected function getProductConcretePageMapExpanderPlugins(): array
+    protected function getConcreteProductPageMapExpanderPlugins(): array
     {
         return [];
     }
@@ -282,6 +290,16 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
      * @return \Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductConcretePageDataExpanderPluginInterface[]
      */
     protected function getProductConcretePageDataExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @deprecated Use ProductPageSearchDependencyProvider::getConcreteProductPageMapExpanderPlugins()
+     *
+     * @return \Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageMapExpanderInterface[]
+     */
+    protected function getProductConcretePageMapExpanderPlugins(): array
     {
         return [];
     }

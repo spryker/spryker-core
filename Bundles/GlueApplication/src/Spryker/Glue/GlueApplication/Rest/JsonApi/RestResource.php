@@ -38,6 +38,11 @@ class RestResource implements RestResourceInterface
     protected $attributes;
 
     /**
+     * @var \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null
+     */
+    protected $payload;
+
+    /**
      * @param string $type
      * @param string|null $id
      * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $attributes
@@ -172,6 +177,26 @@ class RestResource implements RestResourceInterface
     }
 
     /**
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $payload
+     *
+     * @return $this
+     */
+    public function setPayload(?AbstractTransfer $payload)
+    {
+        $this->payload = $payload;
+
+        return $this;
+    }
+
+    /**
+     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null
+     */
+    public function getPayload(): ?AbstractTransfer
+    {
+        return $this->payload;
+    }
+
+    /**
      * @param array $response
      *
      * @return array
@@ -206,6 +231,7 @@ class RestResource implements RestResourceInterface
                 ];
             }
         }
+
         return $relationships;
     }
 

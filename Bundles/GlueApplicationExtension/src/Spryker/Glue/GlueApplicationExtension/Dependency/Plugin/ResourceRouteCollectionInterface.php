@@ -15,9 +15,9 @@ interface ResourceRouteCollectionInterface
      * @param bool $isProtected
      * @param array $context
      *
-     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface
+     * @return $this
      */
-    public function addGet(string $actionName, bool $isProtected = true, array $context = []): self;
+    public function addGet(string $actionName, bool $isProtected = true, array $context = []);
 
     /**
      * @api
@@ -26,9 +26,9 @@ interface ResourceRouteCollectionInterface
      * @param bool $isProtected
      * @param array $context
      *
-     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface
+     * @return $this
      */
-    public function addPost(string $actionName, bool $isProtected = true, array $context = []): self;
+    public function addPost(string $actionName, bool $isProtected = true, array $context = []);
 
     /**
      * @api

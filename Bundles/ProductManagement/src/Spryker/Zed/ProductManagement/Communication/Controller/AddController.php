@@ -65,10 +65,9 @@ class AddController extends AbstractController
                     ->getProductFacade()
                     ->addProduct($productAbstractTransfer, $concreteProductCollection);
 
-                $this->addSuccessMessage(sprintf(
-                    'The product [%s] was added successfully.',
-                    $productAbstractTransfer->getSku()
-                ));
+                $this->addSuccessMessage('The product [%s] was added successfully.', [
+                    '%s' => $productAbstractTransfer->getSku(),
+                ]);
 
                 return $this->createRedirectResponseAfterAdd($idProductAbstract, $request);
             } catch (CategoryUrlExistsException $exception) {

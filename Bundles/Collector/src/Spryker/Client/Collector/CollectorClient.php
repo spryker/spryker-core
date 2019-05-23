@@ -22,7 +22,7 @@ class CollectorClient extends AbstractClient implements UrlMatcherInterface, Col
      *
      * @api
      *
-     * @deprecated use \Spryker\Client\Url\UrlClient::matchUrl
+     * @deprecated Use \Spryker\Client\Url\UrlClient::matchUrl() instead.
      *
      * @param string $url
      * @param string $localeName

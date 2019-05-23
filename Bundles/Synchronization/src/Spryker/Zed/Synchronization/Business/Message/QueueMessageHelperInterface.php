@@ -28,4 +28,13 @@ interface QueueMessageHelperInterface
      * @return mixed|null
      */
     public function decodeJson($jsonValue, $assoc = false, $depth = null, $options = null);
+
+    /**
+     * @param array $value
+     * @param int|null $options
+     * @param int|null $depth
+     *
+     * @return string
+     */
+    public function encodeJson(array $value, ?int $options = null, ?int $depth = null): string;
 }

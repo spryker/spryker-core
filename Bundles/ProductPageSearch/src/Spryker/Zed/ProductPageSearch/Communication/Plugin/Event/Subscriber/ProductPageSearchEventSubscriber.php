@@ -24,7 +24,9 @@ use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductPag
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductPagePriceSearchListener;
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductPagePriceTypeSearchListener;
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductPageProductAbstractListener;
+use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductPageProductAbstractPublishListener;
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductPageProductAbstractStoreSearchListener;
+use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductPageProductAbstractUnpublishListener;
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductPageProductCategorySearchListener;
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductPageProductConcreteLocalizedAttributesSearchListener;
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductPageProductConcreteSearchListener;
@@ -378,7 +380,7 @@ class ProductPageSearchEventSubscriber extends AbstractPlugin implements EventSu
      */
     protected function addProductPageProductPublishAbstractListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductEvents::PRODUCT_ABSTRACT_PUBLISH, new ProductPageProductAbstractListener());
+        $eventCollection->addListenerQueued(ProductEvents::PRODUCT_ABSTRACT_PUBLISH, new ProductPageProductAbstractPublishListener());
     }
 
     /**
@@ -388,7 +390,7 @@ class ProductPageSearchEventSubscriber extends AbstractPlugin implements EventSu
      */
     protected function addProductPageProductUnpublishAbstractListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductEvents::PRODUCT_ABSTRACT_UNPUBLISH, new ProductPageProductAbstractListener());
+        $eventCollection->addListenerQueued(ProductEvents::PRODUCT_ABSTRACT_UNPUBLISH, new ProductPageProductAbstractUnpublishListener());
     }
 
     /**
@@ -398,7 +400,7 @@ class ProductPageSearchEventSubscriber extends AbstractPlugin implements EventSu
      */
     protected function addProductPageProductAbstractCreateListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_CREATE, new ProductPageProductAbstractListener());
+        $eventCollection->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_CREATE, new ProductPageProductAbstractPublishListener());
     }
 
     /**
@@ -408,7 +410,7 @@ class ProductPageSearchEventSubscriber extends AbstractPlugin implements EventSu
      */
     protected function addProductPageProductAbstractUpdateListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_UPDATE, new ProductPageProductAbstractListener());
+        $eventCollection->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_UPDATE, new ProductPageProductAbstractPublishListener());
     }
 
     /**
@@ -418,7 +420,7 @@ class ProductPageSearchEventSubscriber extends AbstractPlugin implements EventSu
      */
     protected function addProductPageProductAbstractDeleteListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_DELETE, new ProductPageProductAbstractListener());
+        $eventCollection->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_DELETE, new ProductPageProductAbstractUnpublishListener());
     }
 
     /**

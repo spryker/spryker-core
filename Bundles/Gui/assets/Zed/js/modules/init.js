@@ -5,16 +5,55 @@
 
 'use strict';
 
-var editor = require('ZedGuiEditorConfiguration');
+var editorConfig = require('ZedGuiEditorConfiguration');
 var Tabs = require('./libs/tabs');
 var TranslationCopyFields = require('./libs/translation-copy-fields');
 var Ibox = require('./libs/ibox');
 var dataTable = require('./libs/data-table');
 var safeChecks = require('./libs/safe-checks');
 
+var dataTablesSearchDelay = function() {
+    var dataTablesWrapper = $('.dataTables_wrapper');
+    dataTablesWrapper.each(function(index, wrapper) {
+        var searchInput = $(wrapper).find('input[type="search"]');
+        var dataTable = $(wrapper).find('.gui-table-data');
+        var dataTableApi = dataTable.dataTable().api();
+        var timeOutId = 0;
+
+        if(searchInput.length && dataTable.length) {
+            searchInput
+            .unbind()
+            .bind("input", function(e) {
+                var self = this;
+
+                clearTimeout(timeOutId);
+                timeOutId = setTimeout(function() {
+                    dataTableApi.search(self.value).draw();
+                }, 1000);
+                return;
+            });
+        }
+    });
+}
+
+var editorInit = function() {
+    $('.html-editor').each(function() {
+        var $textarea = $(this);
+        var textareaConfigName = $textarea.data('editor-config');
+
+        var config = editorConfig.getGlobalConfig(textareaConfigName);
+
+        if (!config) {
+            config = editorConfig.getConfig();
+        }
+
+        $textarea.summernote(config);
+    });
+};
+
 $(document).ready(function() {
     // editor
-    $('.html-editor').summernote(editor.getConfig());
+    editorInit();
 
     /* Data tables custom error handling */
     dataTable.setTableErrorMode('none');
@@ -78,4 +117,8 @@ $(document).ready(function() {
 
     safeChecks.addSafeSubmitCheck();
     safeChecks.addSafeDatetimeCheck();
+});
+
+$(window).on('load', function() {
+    dataTablesSearchDelay();
 });

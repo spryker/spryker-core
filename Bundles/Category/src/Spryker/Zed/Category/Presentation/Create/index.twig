@@ -7,7 +7,7 @@
 {% block section_title %}{{ widget_title }}{% endblock %}
 
 {% block action %}
-    {{ backActionButton('/category/root', 'List of categories' | trans) }}
+    {% include ['@CategoryGui/_partials/back-button.twig', '@Category/_partials/back-button.twig'] %}
 {% endblock %}
 
 {% block content %}

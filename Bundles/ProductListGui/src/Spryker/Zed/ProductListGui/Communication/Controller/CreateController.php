@@ -26,18 +26,27 @@ class CreateController extends ProductListAbstractController
     public function indexAction(Request $request)
     {
         $productListAggregateForm = $this->createProductListAggregateForm($request);
-        $productListTransfer = $this->handleProductListAggregateForm(
+        $productListTransfer = $this->findProductListTransfer(
             $request,
             $productListAggregateForm
         );
 
-        if ($productListTransfer) {
-            $this->addSuccessMessage(sprintf(
-                static::MESSAGE_PRODUCT_LIST_CREATE_SUCCESS,
-                $productListTransfer->getTitle()
-            ));
+        if ($productListTransfer === null) {
+            return $this->viewResponse($this->prepareTemplateVariables($productListAggregateForm));
+        }
 
-            return $this->redirectResponse($this->getEditUrl($productListTransfer->getIdProductList()));
+        $productListResponseTransfer = $this->getFactory()
+            ->getProductListFacade()
+            ->createProductList($productListTransfer);
+
+        $this->addMessagesFromProductListResponseTransfer($productListResponseTransfer);
+
+        if ($productListResponseTransfer->getIsSuccessful()) {
+            $this->addSuccessMessage(static::MESSAGE_PRODUCT_LIST_CREATE_SUCCESS, [
+                '%s' => $productListTransfer->getTitle(),
+            ]);
+
+            return $this->redirectResponse($this->getEditUrl($productListResponseTransfer->getProductList()->getIdProductList()));
         }
 
         return $this->viewResponse($this->prepareTemplateVariables($productListAggregateForm));

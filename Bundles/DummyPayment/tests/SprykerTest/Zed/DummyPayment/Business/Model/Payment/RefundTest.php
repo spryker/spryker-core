@@ -53,7 +53,7 @@ class RefundTest extends Unit
     /**
      * @param \Generated\Shared\Transfer\RefundTransfer $refundTransfer
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\DummyPayment\Dependency\Facade\DummyPaymentToRefundInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\DummyPayment\Dependency\Facade\DummyPaymentToRefundInterface
      */
     protected function getRefundFacadeMock(RefundTransfer $refundTransfer)
     {

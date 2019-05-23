@@ -117,4 +117,18 @@ class ProductQuantityBusinessTester extends Actor
 
         return $cartChangeTransfer;
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    public function addEmptyItemTransferToCartChangeTransfer(CartChangeTransfer $cartChangeTransfer)
+    {
+        $cartChangeTransfer->addItem(
+            (new ItemTransfer())
+        );
+
+        return $cartChangeTransfer;
+    }
 }

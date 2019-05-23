@@ -9,7 +9,7 @@ namespace SprykerTest\Zed\Twig\Communication;
 
 use Codeception\Test\Unit;
 use Spryker\Zed\Twig\Communication\TwigCommunicationFactory;
-use Twig_LoaderInterface;
+use Twig\Loader\LoaderInterface;
 
 /**
  * Auto-generated group annotations
@@ -30,6 +30,6 @@ class TwigCommunicationFactoryTest extends Unit
         $twigCommunicationFactory = new TwigCommunicationFactory();
         $filesystemLoader = $twigCommunicationFactory->createFilesystemLoader();
 
-        $this->assertInstanceOf(Twig_LoaderInterface::class, $filesystemLoader);
+        $this->assertInstanceOf(LoaderInterface::class, $filesystemLoader);
     }
 }

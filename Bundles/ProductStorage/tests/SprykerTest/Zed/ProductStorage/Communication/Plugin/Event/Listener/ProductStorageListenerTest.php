@@ -26,6 +26,8 @@ use Spryker\Zed\ProductStorage\Business\ProductStorageBusinessFactory;
 use Spryker\Zed\ProductStorage\Business\ProductStorageFacade;
 use Spryker\Zed\ProductStorage\Communication\Plugin\Event\Listener\ProductAbstractLocalizedAttributesStorageListener;
 use Spryker\Zed\ProductStorage\Communication\Plugin\Event\Listener\ProductAbstractStorageListener;
+use Spryker\Zed\ProductStorage\Communication\Plugin\Event\Listener\ProductAbstractStoragePublishListener;
+use Spryker\Zed\ProductStorage\Communication\Plugin\Event\Listener\ProductAbstractStorageUnpublishListener;
 use Spryker\Zed\ProductStorage\Communication\Plugin\Event\Listener\ProductAbstractUrlStorageListener;
 use Spryker\Zed\ProductStorage\Communication\Plugin\Event\Listener\ProductConcreteLocalizedAttributesStorageListener;
 use Spryker\Zed\ProductStorage\Communication\Plugin\Event\Listener\ProductConcreteProductAbstractLocalizedAttributesStorageListener;
@@ -33,6 +35,8 @@ use Spryker\Zed\ProductStorage\Communication\Plugin\Event\Listener\ProductConcre
 use Spryker\Zed\ProductStorage\Communication\Plugin\Event\Listener\ProductConcreteProductAbstractStorageListener;
 use Spryker\Zed\ProductStorage\Communication\Plugin\Event\Listener\ProductConcreteProductAbstractUrlStorageListener;
 use Spryker\Zed\ProductStorage\Communication\Plugin\Event\Listener\ProductConcreteStorageListener;
+use Spryker\Zed\ProductStorage\Communication\Plugin\Event\Listener\ProductConcreteStoragePublishListener;
+use Spryker\Zed\ProductStorage\Communication\Plugin\Event\Listener\ProductConcreteStorageUnpublishListener;
 use Spryker\Zed\Store\Business\StoreFacadeInterface;
 use Spryker\Zed\Url\Dependency\UrlEvents;
 use SprykerTest\Zed\ProductStorage\ProductStorageConfigMock;
@@ -103,8 +107,9 @@ class ProductStorageListenerTest extends Unit
     /**
      * @return void
      */
-    public function testProductAbstractStorageListenerStoreData()
+    public function testProductAbstractStorageListenerStoreData(): void
     {
+        // Prepare
         SpyProductAbstractStorageQuery::create()->filterByFkProductAbstract($this->productAbstractTransfer->getIdProductAbstract())->delete();
         $beforeCount = SpyProductAbstractStorageQuery::create()->count();
 
@@ -114,6 +119,8 @@ class ProductStorageListenerTest extends Unit
         $eventTransfers = [
             (new EventEntityTransfer())->setId($this->productAbstractTransfer->getIdProductAbstract()),
         ];
+
+        // Act
         $productAbstractStorageListener->handleBulk($eventTransfers, ProductEvents::PRODUCT_ABSTRACT_PUBLISH);
 
         // Assert
@@ -123,8 +130,52 @@ class ProductStorageListenerTest extends Unit
     /**
      * @return void
      */
-    public function testProductAbstractUrlStorageListenerStoreData()
+    public function testProductAbstractStoragePublishListener(): void
     {
+        // Prepare
+        SpyProductAbstractStorageQuery::create()->filterByFkProductAbstract($this->productAbstractTransfer->getIdProductAbstract())->delete();
+        $beforeCount = SpyProductAbstractStorageQuery::create()->count();
+
+        $productAbstractStoragePublishListener = new ProductAbstractStoragePublishListener();
+        $productAbstractStoragePublishListener->setFacade($this->getProductStorageFacade());
+
+        $eventTransfers = [
+            (new EventEntityTransfer())->setId($this->productAbstractTransfer->getIdProductAbstract()),
+        ];
+
+        // Act
+        $productAbstractStoragePublishListener->handleBulk($eventTransfers, ProductEvents::PRODUCT_ABSTRACT_PUBLISH);
+
+        // Assert
+        $this->assertProductAbstractStorage($beforeCount);
+    }
+
+    /**
+     * @return void
+     */
+    public function testProductAbstractStorageUnpublishListener(): void
+    {
+        // Prepare
+        $productAbstractStorageUnpublishListener = new ProductAbstractStorageUnpublishListener();
+        $productAbstractStorageUnpublishListener->setFacade($this->getProductStorageFacade());
+
+        $eventTransfers = [
+            (new EventEntityTransfer())->setId($this->productAbstractTransfer->getIdProductAbstract()),
+        ];
+
+        // Act
+        $productAbstractStorageUnpublishListener->handleBulk($eventTransfers, ProductEvents::PRODUCT_ABSTRACT_UNPUBLISH);
+
+        // Assert
+        $this->assertSame(0, SpyProductAbstractStorageQuery::create()->filterByFkProductAbstract($this->productAbstractTransfer->getIdProductAbstract())->count());
+    }
+
+    /**
+     * @return void
+     */
+    public function testProductAbstractUrlStorageListenerStoreData(): void
+    {
+        // Prepare
         SpyProductAbstractStorageQuery::create()->filterByFkProductAbstract($this->productAbstractTransfer->getIdProductAbstract())->delete();
         $beforeCount = SpyProductAbstractStorageQuery::create()->count();
 
@@ -137,6 +188,8 @@ class ProductStorageListenerTest extends Unit
             ])
             ->setModifiedColumns([SpyUrlTableMap::COL_URL]),
         ];
+
+        // Act
         $productAbstractUrlStorageListener->handleBulk($eventTransfers, UrlEvents::ENTITY_SPY_URL_CREATE);
 
         // Assert
@@ -146,8 +199,9 @@ class ProductStorageListenerTest extends Unit
     /**
      * @return void
      */
-    public function testProductAbstractLocalizedAttributesStorageListenerStoreData()
+    public function testProductAbstractLocalizedAttributesStorageListenerStoreData(): void
     {
+        // Prepare
         SpyProductAbstractStorageQuery::create()->filterByFkProductAbstract($this->productAbstractTransfer->getIdProductAbstract())->delete();
         $beforeCount = SpyProductAbstractStorageQuery::create()->count();
 
@@ -159,6 +213,8 @@ class ProductStorageListenerTest extends Unit
                 SpyProductAbstractLocalizedAttributesTableMap::COL_FK_PRODUCT_ABSTRACT => $this->productAbstractTransfer->getIdProductAbstract(),
             ]),
         ];
+
+        // Act
         $productAbstractLocalizedAttributesStorageListener->handleBulk($eventTransfers, ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_LOCALIZED_ATTRIBUTES_UPDATE);
 
         // Assert
@@ -168,8 +224,9 @@ class ProductStorageListenerTest extends Unit
     /**
      * @return void
      */
-    public function testProductConcreteProductAbstractRelationStorageListenerStoreData()
+    public function testProductConcreteProductAbstractRelationStorageListenerStoreData(): void
     {
+        // Prepare
         SpyProductAbstractStorageQuery::create()->filterByFkProductAbstract($this->productAbstractTransfer->getIdProductAbstract())->delete();
         $beforeCount = SpyProductAbstractStorageQuery::create()->count();
 
@@ -181,6 +238,8 @@ class ProductStorageListenerTest extends Unit
                 SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT => $this->productAbstractTransfer->getIdProductAbstract(),
             ]),
         ];
+
+        // Act
         $productConcreteProductAbstractRelationStorageListener->handleBulk($eventTransfers, ProductEvents::ENTITY_SPY_PRODUCT_CREATE);
 
         // Assert
@@ -190,8 +249,9 @@ class ProductStorageListenerTest extends Unit
     /**
      * @return void
      */
-    public function testProductConcreteStorageListenerStoreData()
+    public function testProductConcreteStorageListenerStoreData(): void
     {
+        // Prepare
         SpyProductConcreteStorageQuery::create()->filterByFkProduct($this->productConcreteTransfer->getIdProductConcrete())->delete();
         $beforeCount = SpyProductConcreteStorageQuery::create()->count();
 
@@ -201,6 +261,8 @@ class ProductStorageListenerTest extends Unit
         $eventTransfers = [
             (new EventEntityTransfer())->setId($this->productConcreteTransfer->getIdProductConcrete()),
         ];
+
+        // Act
         $productConcreteStorageListener->handleBulk($eventTransfers, ProductEvents::PRODUCT_CONCRETE_PUBLISH);
 
         // Assert
@@ -210,8 +272,52 @@ class ProductStorageListenerTest extends Unit
     /**
      * @return void
      */
-    public function testProductConcreteRelationUrlStorageListenerStoreData()
+    public function testProductConcreteStoragePublishListener(): void
     {
+        // Prepare
+        SpyProductConcreteStorageQuery::create()->filterByFkProduct($this->productConcreteTransfer->getIdProductConcrete())->delete();
+        $beforeCount = SpyProductConcreteStorageQuery::create()->count();
+
+        $productConcreteStoragePublishListener = new ProductConcreteStoragePublishListener();
+        $productConcreteStoragePublishListener->setFacade($this->getProductStorageFacade());
+
+        $eventTransfers = [
+            (new EventEntityTransfer())->setId($this->productConcreteTransfer->getIdProductConcrete()),
+        ];
+
+        // Act
+        $productConcreteStoragePublishListener->handleBulk($eventTransfers, ProductEvents::PRODUCT_CONCRETE_PUBLISH);
+
+        // Assert
+        $this->assertProductConcreteStorage($beforeCount);
+    }
+
+    /**
+     * @return void
+     */
+    public function testProductConcreteStorageUnpublishListener(): void
+    {
+        // Prepare
+        $productConcreteStorageUnpublishListener = new ProductConcreteStorageUnpublishListener();
+        $productConcreteStorageUnpublishListener->setFacade($this->getProductStorageFacade());
+
+        $eventTransfers = [
+            (new EventEntityTransfer())->setId($this->productConcreteTransfer->getIdProductConcrete()),
+        ];
+
+        // Act
+        $productConcreteStorageUnpublishListener->handleBulk($eventTransfers, ProductEvents::PRODUCT_CONCRETE_UNPUBLISH);
+
+        // Assert
+        $this->assertSame(0, SpyProductConcreteStorageQuery::create()->filterByFkProduct($this->productConcreteTransfer->getIdProductConcrete())->count());
+    }
+
+    /**
+     * @return void
+     */
+    public function testProductConcreteRelationUrlStorageListenerStoreData(): void
+    {
+        // Prepare
         SpyProductConcreteStorageQuery::create()->filterByFkProduct($this->productConcreteTransfer->getIdProductConcrete())->delete();
         $beforeCount = SpyProductConcreteStorageQuery::create()->count();
 
@@ -224,6 +330,8 @@ class ProductStorageListenerTest extends Unit
             ])
                 ->setModifiedColumns([SpyUrlTableMap::COL_URL]),
         ];
+
+        // Act
         $productConcreteProductAbstractUrlStorageListener->handleBulk($eventTransfers, UrlEvents::ENTITY_SPY_URL_CREATE);
 
         // Assert
@@ -233,8 +341,9 @@ class ProductStorageListenerTest extends Unit
     /**
      * @return void
      */
-    public function testProductConcreteProductAbstractStorageListenerStoreData()
+    public function testProductConcreteProductAbstractStorageListenerStoreData(): void
     {
+        // Prepare
         SpyProductConcreteStorageQuery::create()->filterByFkProduct($this->productConcreteTransfer->getIdProductConcrete())->delete();
         $beforeCount = SpyProductConcreteStorageQuery::create()->count();
 
@@ -244,6 +353,8 @@ class ProductStorageListenerTest extends Unit
         $eventTransfers = [
             (new EventEntityTransfer())->setId($this->productAbstractTransfer->getIdProductAbstract()),
         ];
+
+        // Act
         $productConcreteProductAbstractStorageListener->handleBulk($eventTransfers, ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_UPDATE);
 
         // Assert
@@ -253,8 +364,9 @@ class ProductStorageListenerTest extends Unit
     /**
      * @return void
      */
-    public function testProductConcreteProductAbstractLocalizedAttributesStorageListenerStoreData()
+    public function testProductConcreteProductAbstractLocalizedAttributesStorageListenerStoreData(): void
     {
+        // Prepare
         SpyProductConcreteStorageQuery::create()->filterByFkProduct($this->productConcreteTransfer->getIdProductConcrete())->delete();
         $beforeCount = SpyProductConcreteStorageQuery::create()->count();
 
@@ -266,6 +378,8 @@ class ProductStorageListenerTest extends Unit
                 SpyProductAbstractLocalizedAttributesTableMap::COL_FK_PRODUCT_ABSTRACT => $this->productAbstractTransfer->getIdProductAbstract(),
             ]),
         ];
+
+        // Act
         $productConcreteProductAbstractLocalizedAttributesStorageListener->handleBulk($eventTransfers, ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_LOCALIZED_ATTRIBUTES_UPDATE);
 
         // Assert
@@ -275,8 +389,9 @@ class ProductStorageListenerTest extends Unit
     /**
      * @return void
      */
-    public function testProductConcreteLocalizedAttributesStorageListenerStoreData()
+    public function testProductConcreteLocalizedAttributesStorageListenerStoreData(): void
     {
+        // Prepare
         SpyProductConcreteStorageQuery::create()->filterByFkProduct($this->productConcreteTransfer->getIdProductConcrete())->delete();
         $beforeCount = SpyProductConcreteStorageQuery::create()->count();
 
@@ -288,6 +403,8 @@ class ProductStorageListenerTest extends Unit
                 SpyProductLocalizedAttributesTableMap::COL_FK_PRODUCT => $this->productConcreteTransfer->getIdProductConcrete(),
             ]),
         ];
+
+        // Act
         $productConcreteLocalizedAttributesStorageListener->handleBulk($eventTransfers, ProductEvents::ENTITY_SPY_PRODUCT_LOCALIZED_ATTRIBUTES_UPDATE);
 
         // Assert
@@ -313,7 +430,7 @@ class ProductStorageListenerTest extends Unit
      *
      * @return void
      */
-    protected function assertProductAbstractStorage($beforeCount)
+    protected function assertProductAbstractStorage(int $beforeCount): void
     {
         $afterCount = SpyProductAbstractStorageQuery::create()->count();
         $this->assertGreaterThan($beforeCount, $afterCount);
@@ -339,7 +456,7 @@ class ProductStorageListenerTest extends Unit
      *
      * @return void
      */
-    protected function assertProductConcreteStorage($beforeCount)
+    protected function assertProductConcreteStorage(int $beforeCount): void
     {
         $afterCount = SpyProductConcreteStorageQuery::create()->count();
         $this->assertGreaterThan($beforeCount, $afterCount);

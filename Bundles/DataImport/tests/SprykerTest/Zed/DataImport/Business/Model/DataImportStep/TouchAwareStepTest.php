@@ -130,7 +130,7 @@ class TouchAwareStepTest extends Unit
      * @param int $calledCount
      * @param string $method
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\DataImport\Dependency\Facade\DataImportToTouchInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\DataImport\Dependency\Facade\DataImportToTouchInterface
      */
     private function getTouchFacadeMock($calledCount = 1, $method = 'bulkTouchSetActive')
     {

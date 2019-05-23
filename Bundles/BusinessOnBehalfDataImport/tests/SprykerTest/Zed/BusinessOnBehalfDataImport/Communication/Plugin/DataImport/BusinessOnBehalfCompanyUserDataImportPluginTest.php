@@ -52,7 +52,7 @@ class BusinessOnBehalfCompanyUserDataImportPluginTest extends Unit
      */
     public function testImportImportsData(): void
     {
-        $this->tester->ensureDatabaseTableIsEmpty();
+        $this->tester->ensureCompanyUserDatabaseTableIsEmpty();
 
         $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
         $dataImporterReaderConfigurationTransfer->setFileName(codecept_data_dir() . 'import/company_user.csv');

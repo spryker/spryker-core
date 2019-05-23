@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Messenger\Communication\Plugin;
 
-use Spryker\Zed\Messenger\Dependency\Plugin\TranslationPluginInterface;
+use Spryker\Zed\MessengerExtension\Dependency\Plugin\TranslationPluginInterface;
 
 class TranslationPlugin implements TranslationPluginInterface
 {

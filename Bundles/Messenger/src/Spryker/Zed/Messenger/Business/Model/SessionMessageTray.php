@@ -9,7 +9,6 @@ namespace Spryker\Zed\Messenger\Business\Model;
 
 use Generated\Shared\Transfer\FlashMessagesTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
-use Spryker\Zed\Messenger\Dependency\Plugin\TranslationPluginInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class SessionMessageTray extends BaseMessageTray implements MessageTrayInterface
@@ -21,11 +20,11 @@ class SessionMessageTray extends BaseMessageTray implements MessageTrayInterface
 
     /**
      * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
-     * @param \Spryker\Zed\Messenger\Dependency\Plugin\TranslationPluginInterface $translationPlugin
+     * @param \Spryker\Zed\MessengerExtension\Dependency\Plugin\TranslationPluginInterface[] $translationPlugins
      */
-    public function __construct(SessionInterface $session, TranslationPluginInterface $translationPlugin)
+    public function __construct(SessionInterface $session, array $translationPlugins)
     {
-        parent::__construct($translationPlugin);
+        parent::__construct($translationPlugins);
         $this->session = $session;
     }
 

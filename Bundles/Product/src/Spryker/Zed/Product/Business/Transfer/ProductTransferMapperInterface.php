@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Product\Business\Transfer;
 
+use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\SpyProductEntityTransfer;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Propel\Runtime\Collection\ObjectCollection;
@@ -33,6 +35,13 @@ interface ProductTransferMapperInterface
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function convertProduct(SpyProduct $productEntity);
+
+    /**
+     * @param \Generated\Shared\Transfer\SpyProductEntityTransfer $productEntityTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function mapSpyProductEntityTransferToProductConcreteTransfer(SpyProductEntityTransfer $productEntityTransfer): ProductConcreteTransfer;
 
     /**
      * @param \Orm\Zed\Product\Persistence\SpyProduct[]|\Propel\Runtime\Collection\ObjectCollection $productCollection

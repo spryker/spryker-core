@@ -193,7 +193,7 @@ class AutoloadUpdaterTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Development\Business\Composer\Updater\AutoloadUpdater
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Development\Business\Composer\Updater\AutoloadUpdater
      */
     protected function getAutoloadUpdaterMock()
     {

@@ -1,0 +1,15 @@
+<div class="btn-group dropdown">
+    <button data-toggle="dropdown" class="btn btn-xs btn-outline {{ class }} dropdown-toggle" aria-expanded="true" {{ parameters }}>{{ icon | raw}} {{ title | trans }}
+        <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu">
+        {% for button in nestedButtons %}
+            {% if button.needDivider %}
+                <li class="divider"></li>
+            {% endif %}
+            <li>
+                <a href="{{ button.url }}" {{ button.params }}>{{ button.title | trans }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>

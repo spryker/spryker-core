@@ -2,5 +2,4 @@ parameters:
     ignoreErrors:
         - '#Call to an undefined method .+ActiveRecordInterface::toArray\(\).#'
         - '#Call to an undefined method Silex\\Application::getTransferSession\(\).#'
-        - '#Call to an undefined method object::setApplication\(\).#'
-        - '#Call to an undefined method object::initialize\(\).#'
+        - '#Class Symfony\\Bridge\\Twig\\Form\\TwigRenderer not found.#'

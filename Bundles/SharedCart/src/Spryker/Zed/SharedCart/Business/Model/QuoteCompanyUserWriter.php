@@ -10,6 +10,7 @@ namespace Spryker\Zed\SharedCart\Business\Model;
 use Generated\Shared\Transfer\QuotePermissionGroupCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuotePermissionGroupTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShareCartRequestTransfer;
 use Generated\Shared\Transfer\ShareDetailTransfer;
 use Generated\Shared\Transfer\SpyQuoteCompanyUserEntityTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
@@ -61,6 +62,22 @@ class QuoteCompanyUserWriter implements QuoteCompanyUserWriterInterface
     {
         $this->sharedCartEntityManager
             ->deleteShareRelationsForCompanyUserId($idCompanyUser);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShareCartRequestTransfer $shareCartRequestTransfer
+     *
+     * @return void
+     */
+    public function addQuoteCompanyUser(ShareCartRequestTransfer $shareCartRequestTransfer): void
+    {
+        $shareCartRequestTransfer->requireIdQuote()
+            ->requireShareDetails();
+
+        /** @var \Generated\Shared\Transfer\ShareDetailTransfer $shareDetailTransfer */
+        $shareDetailTransfer = $shareCartRequestTransfer->getShareDetails()->offsetGet(0);
+
+        $this->createNewQuoteCompanyUser($shareCartRequestTransfer->getIdQuote(), $shareDetailTransfer);
     }
 
     /**

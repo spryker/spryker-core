@@ -11,7 +11,7 @@ interface ResourceRelationshipCollectionInterface
     /**
      * Specification:
      *  - Add relation provider plugins, if any resourceType have relationships added which references the name provided here, this plugin will be called to populate data for that resourceType.
-     * The data will be added to included field as per JSONAPI specification
+     * The data will be added to included field as per JSONAPI specification.
      *
      * e.g resource name = ("items", new CartItemsProductsResourceRelationship()). This relationship must add products to each cart item.
      *
@@ -20,12 +20,12 @@ interface ResourceRelationshipCollectionInterface
      * @param string $resourceType
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface $resourceRelationshipsPlugin
      *
-     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipCollectionInterface
+     * @return $this
      */
-    public function addRelationship(string $resourceType, ResourceRelationshipPluginInterface $resourceRelationshipsPlugin): self;
+    public function addRelationship(string $resourceType, ResourceRelationshipPluginInterface $resourceRelationshipsPlugin);
 
     /**
-     * Checks if resourceType provider by given name exists
+     * Checks if resourceType provider by given name exists.
      *
      * @api
      *
@@ -36,7 +36,7 @@ interface ResourceRelationshipCollectionInterface
     public function hasRelationships(string $resourceType): bool;
 
     /**
-     * Returns resourceType by given name
+     * Returns resourceType by given name.
      *
      * @api
      *

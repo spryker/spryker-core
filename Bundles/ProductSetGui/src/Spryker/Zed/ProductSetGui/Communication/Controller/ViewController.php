@@ -37,10 +37,7 @@ class ViewController extends AbstractController
             ->findProductSet($productSetTransfer);
 
         if (!$productSetTransfer) {
-            $this->addErrorMessage(sprintf(
-                'Product Set #%d not found.',
-                $idProductSet
-            ));
+            $this->addErrorMessage('Product Set #%d not found.', ['%d' => $idProductSet]);
 
             return $this->redirectResponse(Url::generate('/product-set-gui')->build());
         }

@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% set widget_title = 'Category' %}
-{% block section_title %}{{ widget_title }}{% endblock %}
+{% block section_title %}{{ widget_title | trans }}{% endblock %}
 
 {% block action %}
     {{ createActionButton('/category/create', 'Create category' | trans) }}
@@ -14,7 +14,7 @@
 
 {% block content %}
 
-    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Root nodes list' } %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Root nodes list' | trans } %}
         {% block widget_content %}
             {{ rootCategories | raw }}
             <div class="progress hidden" id="category-loader">

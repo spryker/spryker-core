@@ -20,6 +20,7 @@ use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionFinder;
 use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionLoader;
 use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionMerger;
 use Spryker\Zed\Transfer\Business\Model\TransferGenerator;
+use Spryker\Zed\Transfer\TransferConfig;
 use Symfony\Component\Console\Logger\ConsoleLogger;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -45,7 +46,7 @@ class GeneratedTransferTest extends Unit
 
         $generatedTransfer->setTestString('string');
         $this->assertSame('string', $generatedTransfer->getTestString());
-        $this->assertInternalType('string', $generatedTransfer->getTestString());
+        $this->assertIsString($generatedTransfer->getTestString());
 
         $modified = $generatedTransfer->modifiedToArray();
         $this->assertSame(['test_string' => 'string'], $modified);
@@ -69,7 +70,7 @@ class GeneratedTransferTest extends Unit
 
         $generatedTransfer->setTestStringArray(['string a', 'string b']);
         $this->assertSame(['string a', 'string b'], $generatedTransfer->getTestStringArray());
-        $this->assertInternalType('array', $generatedTransfer->getTestStringArray());
+        $this->assertIsArray($generatedTransfer->getTestStringArray());
 
         $generatedTransfer->requireTestStringArray();
 
@@ -100,7 +101,7 @@ class GeneratedTransferTest extends Unit
 
         $generatedTransfer->setTestInt(100);
         $this->assertSame(100, $generatedTransfer->getTestInt());
-        $this->assertInternalType('int', $generatedTransfer->getTestInt());
+        $this->assertIsInt($generatedTransfer->getTestInt());
 
         $modified = $generatedTransfer->modifiedToArray();
         $this->assertSame(['test_int' => 100], $modified);
@@ -124,7 +125,7 @@ class GeneratedTransferTest extends Unit
 
         $generatedTransfer->setTestIntArray([100, 200]);
         $this->assertSame([100, 200], $generatedTransfer->getTestIntArray());
-        $this->assertInternalType('array', $generatedTransfer->getTestIntArray());
+        $this->assertIsArray($generatedTransfer->getTestIntArray());
 
         $modified = $generatedTransfer->modifiedToArray();
         $this->assertSame(['test_int_array' => [100, 200]], $modified);
@@ -153,7 +154,7 @@ class GeneratedTransferTest extends Unit
 
         $generatedTransfer->setTestBool(true);
         $this->assertSame(true, $generatedTransfer->getTestBool());
-        $this->assertInternalType('bool', $generatedTransfer->getTestBool());
+        $this->assertIsBool($generatedTransfer->getTestBool());
 
         $modified = $generatedTransfer->modifiedToArray();
         $this->assertSame(['test_bool' => true], $modified);
@@ -177,7 +178,7 @@ class GeneratedTransferTest extends Unit
 
         $generatedTransfer->setTestBoolArray([true, false]);
         $this->assertSame([true, false], $generatedTransfer->getTestBoolArray());
-        $this->assertInternalType('array', $generatedTransfer->getTestBoolArray());
+        $this->assertIsArray($generatedTransfer->getTestBoolArray());
 
         $modified = $generatedTransfer->modifiedToArray();
         $this->assertSame(['test_bool_array' => [true, false]], $modified);
@@ -206,7 +207,7 @@ class GeneratedTransferTest extends Unit
 
         $generatedTransfer->setTestArray([]);
         $this->assertSame([], $generatedTransfer->getTestArray());
-        $this->assertInternalType('array', $generatedTransfer->getTestArray());
+        $this->assertIsArray($generatedTransfer->getTestArray());
 
         $modified = $generatedTransfer->modifiedToArray();
         $this->assertSame(['test_array' => []], $modified);
@@ -341,7 +342,7 @@ class GeneratedTransferTest extends Unit
      */
     protected function getTargetDirectory()
     {
-        return __DIR__ . '/../../_data/Generated/';
+        return codecept_data_dir('test_files/Generated/');
     }
 
     /**
@@ -360,9 +361,8 @@ class GeneratedTransferTest extends Unit
     protected function getClassGenerator()
     {
         $targetDirectory = $this->getTargetDirectory();
-        $generator = new ClassGenerator($targetDirectory);
 
-        return $generator;
+        return new ClassGenerator($targetDirectory);
     }
 
     /**
@@ -378,7 +378,7 @@ class GeneratedTransferTest extends Unit
         $definitionBuilder = new TransferDefinitionBuilder(
             $loader,
             new TransferDefinitionMerger(),
-            new ClassDefinition()
+            new ClassDefinition(new TransferConfig())
         );
 
         return $definitionBuilder;
@@ -390,7 +390,7 @@ class GeneratedTransferTest extends Unit
     protected function getTestTransferForTesting()
     {
         $sourceDirectories = [
-            __DIR__ . '/Fixtures/GeneratedTest/',
+            codecept_data_dir('GeneratedTest/'),
         ];
         $definitionBuilder = $this->getDefinitionBuilder($sourceDirectories);
 

@@ -17,37 +17,12 @@ class SprykerEcoModulePathBuilder extends AbstractPathBuilder
     protected const ORGANIZATION = 'SprykerEco';
 
     /**
-     * @var string
-     */
-    protected $basePath;
-
-    /**
-     * @param string $basePath
-     */
-    public function __construct(string $basePath)
-    {
-        $this->basePath = $basePath;
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
      *
-     * @return array
+     * @return string
      */
-    public function buildPaths(ModuleTransfer $moduleTransfer): array
+    protected function getModuleName(ModuleTransfer $moduleTransfer): string
     {
-        return [
-            sprintf('%s%s/', $this->basePath, $moduleTransfer->getNameDashed()),
-        ];
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
-     *
-     * @return bool
-     */
-    public function accept(ModuleTransfer $moduleTransfer): bool
-    {
-        return ($moduleTransfer->getOrganization()->getName() === static::ORGANIZATION);
+        return $moduleTransfer->getNameDashed();
     }
 }

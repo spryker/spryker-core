@@ -8,7 +8,7 @@
 namespace Spryker\Zed\CmsContentWidget\Communication\Plugin\CmsPageDataExpander;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Zed\Cms\Dependency\Plugin\CmsPageDataExpanderPluginInterface;
+use Spryker\Zed\CmsExtension\Dependency\Plugin\CmsPageDataExpanderPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**

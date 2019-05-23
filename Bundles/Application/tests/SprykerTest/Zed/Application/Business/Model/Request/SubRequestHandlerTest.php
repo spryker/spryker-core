@@ -72,12 +72,13 @@ class SubRequestHandlerTest extends WebTestCase
 
         $callback = function () use ($app) {
             $subRequestHandler = new SubRequestHandler($app);
+
             return $subRequestHandler->handleSubRequest(new Request(), self::URL_SUB_REQUEST);
         };
 
-        $app->get(self::URL_MASTER_REQUEST, $callback);
+        $app['controllers']->get(self::URL_MASTER_REQUEST, $callback);
         $app->post(self::URL_MASTER_REQUEST, $callback);
-        $app->get(self::URL_SUB_REQUEST, function () use ($app) {
+        $app['controllers']->get(self::URL_SUB_REQUEST, function () {
             return new RedirectResponse(self::URL_SUB_REQUEST);
         });
 

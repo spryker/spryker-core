@@ -17,6 +17,7 @@ use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
+use Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery;
 use Orm\Zed\ProductCategory\Persistence\Map\SpyProductCategoryTableMap;
 use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageSetTableMap;
 use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
@@ -81,6 +82,21 @@ class ProductPageSearchQueryContainer extends AbstractQueryContainer implements 
             ->addJoinCondition('SpyProductSearch', sprintf('spy_product_search.fk_locale = %s', SpyProductAbstractLocalizedAttributesTableMap::COL_FK_LOCALE));
 
         return $query;
+    }
+
+    /**
+     * @api
+     *
+     * @param int[] $productAbstractIds
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery
+     */
+    public function queryProductAbstractWithLocalizedAttributesByIds(array $productAbstractIds): SpyProductAbstractLocalizedAttributesQuery
+    {
+        return $this->getFactory()
+            ->getProductQueryContainer()
+            ->queryAllProductAbstractLocalizedAttributes()
+            ->filterByFkProductAbstract_In($productAbstractIds);
     }
 
     /**

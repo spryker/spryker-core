@@ -23,7 +23,7 @@ interface GlossaryKeyMappingManagerInterface
      *
      * @return string
      */
-    public function translatePlaceholder($idPage, $placeholder, array $data = []);
+    public function translatePlaceholder(int $idPage, string $placeholder, array $data = []): string;
 
     /**
      * @param \Generated\Shared\Transfer\PageKeyMappingTransfer $pageKeyMappingTransfer
@@ -35,7 +35,7 @@ interface GlossaryKeyMappingManagerInterface
      *
      * @return \Generated\Shared\Transfer\PageKeyMappingTransfer
      */
-    public function savePageKeyMapping(PageKeyMappingTransfer $pageKeyMappingTransfer);
+    public function savePageKeyMapping(PageKeyMappingTransfer $pageKeyMappingTransfer): PageKeyMappingTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\PageKeyMappingTransfer $pageKeyMappingTransfer
@@ -43,7 +43,7 @@ interface GlossaryKeyMappingManagerInterface
      *
      * @return \Generated\Shared\Transfer\PageKeyMappingTransfer
      */
-    public function savePageKeyMappingAndTouch(PageKeyMappingTransfer $pageKeyMappingTransfer, ?LocaleTransfer $localeTransfer = null);
+    public function savePageKeyMappingAndTouch(PageKeyMappingTransfer $pageKeyMappingTransfer, ?LocaleTransfer $localeTransfer = null): PageKeyMappingTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
@@ -54,7 +54,7 @@ interface GlossaryKeyMappingManagerInterface
      *
      * @return \Generated\Shared\Transfer\PageKeyMappingTransfer
      */
-    public function addPlaceholderText(PageTransfer $pageTransfer, $placeholder, $value, ?LocaleTransfer $localeTransfer = null, $autoGlossaryKeyIncrement = true);
+    public function addPlaceholderText(PageTransfer $pageTransfer, string $placeholder, string $value, ?LocaleTransfer $localeTransfer = null, bool $autoGlossaryKeyIncrement = true): PageKeyMappingTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
@@ -66,14 +66,14 @@ interface GlossaryKeyMappingManagerInterface
      *
      * @return bool
      */
-    public function deletePageKeyMapping(PageTransfer $pageTransfer, $placeholder);
+    public function deletePageKeyMapping(PageTransfer $pageTransfer, string $placeholder): bool;
 
     /**
      * @param int $idPage
      *
      * @return bool
      */
-    public function deleteGlossaryKeysByIdPage($idPage);
+    public function deleteGlossaryKeysByIdPage(int $idPage): bool;
 
     /**
      * @param int $idPage
@@ -83,7 +83,7 @@ interface GlossaryKeyMappingManagerInterface
      *
      * @return \Generated\Shared\Transfer\PageKeyMappingTransfer
      */
-    public function getPagePlaceholderMapping($idPage, $placeholder);
+    public function getPagePlaceholderMapping(int $idPage, string $placeholder): PageKeyMappingTransfer;
 
     /**
      * @param int $idPage
@@ -91,7 +91,7 @@ interface GlossaryKeyMappingManagerInterface
      *
      * @return bool
      */
-    public function hasPagePlaceholderMapping($idPage, $placeholder);
+    public function hasPagePlaceholderMapping(int $idPage, string $placeholder): bool;
 
     /**
      * @param string $templateName
@@ -100,5 +100,5 @@ interface GlossaryKeyMappingManagerInterface
      *
      * @return string
      */
-    public function generateGlossaryKeyName($templateName, $placeholder, $autoIncrement = true);
+    public function generateGlossaryKeyName(string $templateName, string $placeholder, bool $autoIncrement = true): string;
 }

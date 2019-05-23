@@ -11,6 +11,7 @@ use ArrayObject;
 use Generated\Shared\Transfer\ProductAttributeKeyTransfer;
 use Spryker\Zed\ProductAttribute\Dependency\Facade\ProductAttributeToLocaleInterface;
 use Spryker\Zed\ProductAttribute\Dependency\Facade\ProductAttributeToProductInterface;
+use Spryker\Zed\ProductAttribute\Dependency\Service\ProductAttributeToUtilSanitizeServiceInterface;
 use Spryker\Zed\ProductAttribute\ProductAttributeConfig;
 
 class ProductAttributeWriter implements ProductAttributeWriterInterface
@@ -36,21 +37,29 @@ class ProductAttributeWriter implements ProductAttributeWriterInterface
     protected $productReader;
 
     /**
+     * @var \Spryker\Zed\ProductAttribute\Dependency\Service\ProductAttributeToUtilSanitizeServiceInterface
+     */
+    protected $sanitizeService;
+
+    /**
      * @param \Spryker\Zed\ProductAttribute\Business\Model\Product\ProductAttributeReaderInterface $reader
      * @param \Spryker\Zed\ProductAttribute\Dependency\Facade\ProductAttributeToLocaleInterface $localeFacade
      * @param \Spryker\Zed\ProductAttribute\Dependency\Facade\ProductAttributeToProductInterface $productFacade
      * @param \Spryker\Zed\ProductAttribute\Business\Model\Product\ProductReaderInterface $productReader
+     * @param \Spryker\Zed\ProductAttribute\Dependency\Service\ProductAttributeToUtilSanitizeServiceInterface $sanitizeService
      */
     public function __construct(
         ProductAttributeReaderInterface $reader,
         ProductAttributeToLocaleInterface $localeFacade,
         ProductAttributeToProductInterface $productFacade,
-        ProductReaderInterface $productReader
+        ProductReaderInterface $productReader,
+        ProductAttributeToUtilSanitizeServiceInterface $sanitizeService
     ) {
         $this->reader = $reader;
         $this->localeFacade = $localeFacade;
         $this->productFacade = $productFacade;
         $this->productReader = $productReader;
+        $this->sanitizeService = $sanitizeService;
     }
 
     /**
@@ -136,9 +145,9 @@ class ProductAttributeWriter implements ProductAttributeWriterInterface
         foreach ($attributes as $attribute) {
             $key = $attribute[ProductAttributeKeyTransfer::KEY];
             $localeCode = $attribute['locale_code'];
-            $value = trim($attribute['value']);
+            $value = $this->sanitizeString($attribute['value']);
 
-            if ($value === '') {
+            if ($value === '' || $value === false) {
                 $keysToRemove[$localeCode][$key] = $key;
                 continue;
             }
@@ -147,6 +156,18 @@ class ProductAttributeWriter implements ProductAttributeWriterInterface
         }
 
         return $attributeData;
+    }
+
+    /**
+     * @param string $string
+     *
+     * @return string|bool
+     */
+    protected function sanitizeString(string $string)
+    {
+        $result = trim($string);
+
+        return $this->sanitizeService->escapeHtml($string);
     }
 
     /**

@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductQuantity\Business;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
+use Generated\Shared\Transfer\FilterTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -78,5 +79,54 @@ class ProductQuantityFacade extends AbstractFacade implements ProductQuantityFac
         return $this->getFactory()
             ->createProductQuantityReader()
             ->findProductQuantityTransfers();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    public function normalizeCartChangeTransferItems(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
+    {
+        return $this->getFactory()
+            ->createCartChangeTransferQuantityNormalizer()
+            ->normalizeCartChangeTransferItems($cartChangeTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     * @param array $normalizableFields
+     *
+     * @return bool
+     */
+    public function hasCartChangeTransferNormalizableItems(CartChangeTransfer $cartChangeTransfer, array $normalizableFields): bool
+    {
+        return $this->getFactory()
+            ->createCartChangeTransferNormalizerPreChecker()
+            ->hasNormalizableItems($cartChangeTransfer, $normalizableFields);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]
+     */
+    public function findFilteredProductQuantityTransfers(FilterTransfer $filterTransfer): array
+    {
+        return $this->getFactory()
+            ->createProductQuantityReader()
+            ->findFilteredProductQuantityTransfers($filterTransfer);
     }
 }

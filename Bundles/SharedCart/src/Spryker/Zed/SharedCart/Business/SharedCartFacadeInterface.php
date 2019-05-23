@@ -11,8 +11,10 @@ use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\QuotePermissionGroupCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuotePermissionGroupResponseTransfer;
+use Generated\Shared\Transfer\QuotePermissionGroupTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShareCartRequestTransfer;
 use Generated\Shared\Transfer\ShareDetailCollectionTransfer;
 
 interface SharedCartFacadeInterface
@@ -31,7 +33,7 @@ interface SharedCartFacadeInterface
 
     /**
      * Specification:
-     * - Adds customer shared cart to QuoteResponseTransfer.
+     * - Adds customer shared cart filtered by store to QuoteResponseTransfer.
      *
      * @api
      *
@@ -159,4 +161,30 @@ interface SharedCartFacadeInterface
      * @return void
      */
     public function deleteShareRelationsForCompanyUserId(int $idCompanyUser): void;
+
+    /**
+     * Specification:
+     *  - Shares cart to company user with permission group.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShareCartRequestTransfer $shareCartRequestTransfer
+     *
+     * @return void
+     */
+    public function addQuoteCompanyUser(ShareCartRequestTransfer $shareCartRequestTransfer): void;
+
+    /**
+     * Specification:
+     *  - Finds quote permission group by id.
+     *  - Requires idQuotePermissionGroup field to be set in QuotePermissionGroupTransfer.
+     *  - If quote permission group not found, returns QuotePermissionGroupResponseTransfer with `isSuccess=false`.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuotePermissionGroupTransfer $quotePermissionGroupTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuotePermissionGroupResponseTransfer
+     */
+    public function findQuotePermissionGroupById(QuotePermissionGroupTransfer $quotePermissionGroupTransfer): QuotePermissionGroupResponseTransfer;
 }

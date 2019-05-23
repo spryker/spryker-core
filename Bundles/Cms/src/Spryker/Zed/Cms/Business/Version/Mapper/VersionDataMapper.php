@@ -17,10 +17,12 @@ use Generated\Shared\Transfer\CmsPlaceholderTranslationTransfer;
 use Generated\Shared\Transfer\CmsTemplateTransfer;
 use Generated\Shared\Transfer\CmsVersionDataTransfer;
 use Generated\Shared\Transfer\CmsVersionTransfer;
-use Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMapping;
+use Generated\Shared\Transfer\StoreRelationTransfer;
+use Orm\Zed\Cms\Persistence\Base\SpyCmsGlossaryKeyMapping;
 use Orm\Zed\Cms\Persistence\SpyCmsPage;
 use Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributes;
 use Orm\Zed\Cms\Persistence\SpyCmsVersion;
+use Spryker\Zed\Cms\Business\Page\Store\CmsPageStoreRelationReaderInterface;
 use Spryker\Zed\Cms\Dependency\Service\CmsToUtilEncodingInterface;
 
 class VersionDataMapper implements VersionDataMapperInterface
@@ -31,11 +33,20 @@ class VersionDataMapper implements VersionDataMapperInterface
     protected $utilEncoding;
 
     /**
-     * @param \Spryker\Zed\Cms\Dependency\Service\CmsToUtilEncodingInterface $utilEncoding
+     * @var \Spryker\Zed\Cms\Business\Page\Store\CmsPageStoreRelationReaderInterface
      */
-    public function __construct(CmsToUtilEncodingInterface $utilEncoding)
-    {
+    protected $cmsPageStoreRelationReader;
+
+    /**
+     * @param \Spryker\Zed\Cms\Dependency\Service\CmsToUtilEncodingInterface $utilEncoding
+     * @param \Spryker\Zed\Cms\Business\Page\Store\CmsPageStoreRelationReaderInterface $cmsPageStoreRelationReader
+     */
+    public function __construct(
+        CmsToUtilEncodingInterface $utilEncoding,
+        CmsPageStoreRelationReaderInterface $cmsPageStoreRelationReader
+    ) {
         $this->utilEncoding = $utilEncoding;
+        $this->cmsPageStoreRelationReader = $cmsPageStoreRelationReader;
     }
 
     /**
@@ -43,7 +54,7 @@ class VersionDataMapper implements VersionDataMapperInterface
      *
      * @return string
      */
-    public function mapToJsonData(CmsVersionDataTransfer $cmsVersionDataTransfer)
+    public function mapToJsonData(CmsVersionDataTransfer $cmsVersionDataTransfer): string
     {
         return $this->utilEncoding->encodeJson($cmsVersionDataTransfer->toArray());
     }
@@ -53,7 +64,7 @@ class VersionDataMapper implements VersionDataMapperInterface
      *
      * @return \Generated\Shared\Transfer\CmsVersionDataTransfer
      */
-    public function mapToCmsVersionDataTransfer(SpyCmsPage $cmsPageEntity)
+    public function mapToCmsVersionDataTransfer(SpyCmsPage $cmsPageEntity): CmsVersionDataTransfer
     {
         $cmsVersionDataTransfer = new CmsVersionDataTransfer();
 
@@ -61,6 +72,7 @@ class VersionDataMapper implements VersionDataMapperInterface
         $cmsVersionDataTransfer->setCmsTemplate($cmsTemplateTransfer);
 
         $cmsPageTransfer = $this->mapToCmsPageLocalizedAttributesData($cmsPageEntity);
+        $cmsPageTransfer = $this->mapToCmsPageStoreRelationData($cmsPageTransfer, $cmsPageEntity);
         $cmsVersionDataTransfer->setCmsPage($cmsPageTransfer);
 
         $cmsGlossaryTransfer = $this->mapToCmsGlossaryKeyMappingsData($cmsPageEntity);
@@ -74,7 +86,7 @@ class VersionDataMapper implements VersionDataMapperInterface
      *
      * @return \Generated\Shared\Transfer\CmsVersionTransfer
      */
-    public function mapToCmsVersionTransfer(SpyCmsVersion $cmsVersionEntity)
+    public function mapToCmsVersionTransfer(SpyCmsVersion $cmsVersionEntity): CmsVersionTransfer
     {
         $cmsVersionTransfer = new CmsVersionTransfer();
         $cmsVersionTransfer->fromArray($cmsVersionEntity->toArray(), true);
@@ -87,7 +99,7 @@ class VersionDataMapper implements VersionDataMapperInterface
      *
      * @return \Generated\Shared\Transfer\CmsTemplateTransfer
      */
-    public function mapToCmsTemplateData(SpyCmsPage $cmsPageEntity)
+    public function mapToCmsTemplateData(SpyCmsPage $cmsPageEntity): CmsTemplateTransfer
     {
         $cmsTemplateTransfer = new CmsTemplateTransfer();
         $cmsTemplateTransfer->fromArray($cmsPageEntity->getCmsTemplate()->toArray(), true);
@@ -100,7 +112,7 @@ class VersionDataMapper implements VersionDataMapperInterface
      *
      * @return \Generated\Shared\Transfer\CmsPageTransfer
      */
-    public function mapToCmsPageLocalizedAttributesData(SpyCmsPage $cmsPageEntity)
+    public function mapToCmsPageLocalizedAttributesData(SpyCmsPage $cmsPageEntity): CmsPageTransfer
     {
         $cmsPageTransfer = new CmsPageTransfer();
         $cmsPageTransfer->fromArray($cmsPageEntity->toArray(), true);
@@ -123,7 +135,7 @@ class VersionDataMapper implements VersionDataMapperInterface
      *
      * @return \Generated\Shared\Transfer\CmsGlossaryTransfer
      */
-    public function mapToCmsGlossaryKeyMappingsData(SpyCmsPage $cmsPageEntity)
+    public function mapToCmsGlossaryKeyMappingsData(SpyCmsPage $cmsPageEntity): CmsGlossaryTransfer
     {
         $cmsGlossaryTransfer = new CmsGlossaryTransfer();
 
@@ -142,11 +154,28 @@ class VersionDataMapper implements VersionDataMapperInterface
     }
 
     /**
-     * @param \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMapping $spyCmsGlossaryKeyMapping
+     * @param \Generated\Shared\Transfer\CmsPageTransfer $cmsPageTransfer
+     * @param \Orm\Zed\Cms\Persistence\SpyCmsPage $cmsPageEntity
+     *
+     * @return \Generated\Shared\Transfer\CmsPageTransfer
+     */
+    protected function mapToCmsPageStoreRelationData(CmsPageTransfer $cmsPageTransfer, SpyCmsPage $cmsPageEntity): CmsPageTransfer
+    {
+        $storeRelationTransfer = $this->cmsPageStoreRelationReader->getStoreRelation(
+            (new StoreRelationTransfer())->setIdEntity($cmsPageEntity->getIdCmsPage())
+        );
+
+        $cmsPageTransfer->setStoreRelation($storeRelationTransfer);
+
+        return $cmsPageTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\Cms\Persistence\Base\SpyCmsGlossaryKeyMapping $spyCmsGlossaryKeyMapping
      *
      * @return \ArrayObject
      */
-    protected function createCmsPlaceholderTranslationTransfers(SpyCmsGlossaryKeyMapping $spyCmsGlossaryKeyMapping)
+    protected function createCmsPlaceholderTranslationTransfers(SpyCmsGlossaryKeyMapping $spyCmsGlossaryKeyMapping): ArrayObject
     {
         $cmsGlossaryAttributeTransfers = new ArrayObject();
         foreach ($spyCmsGlossaryKeyMapping->getGlossaryKey()->getSpyGlossaryTranslationsJoinLocale() as $glossaryTranslation) {
@@ -165,7 +194,7 @@ class VersionDataMapper implements VersionDataMapperInterface
      *
      * @return \Generated\Shared\Transfer\CmsPageAttributesTransfer
      */
-    protected function createCmsPageAttributesTransfer(SpyCmsPageLocalizedAttributes $spyCmsPageLocalizedAttributes, $localeName)
+    protected function createCmsPageAttributesTransfer(SpyCmsPageLocalizedAttributes $spyCmsPageLocalizedAttributes, string $localeName): CmsPageAttributesTransfer
     {
         $pageAttributeTransfer = new CmsPageAttributesTransfer();
         $pageAttributeTransfer->setName($spyCmsPageLocalizedAttributes->getName());
@@ -180,7 +209,7 @@ class VersionDataMapper implements VersionDataMapperInterface
      *
      * @return \Generated\Shared\Transfer\CmsPageMetaAttributesTransfer
      */
-    protected function createCmsPageMetaAttributesTransfer(SpyCmsPageLocalizedAttributes $spyCmsPageLocalizedAttributes, $localeName)
+    protected function createCmsPageMetaAttributesTransfer(SpyCmsPageLocalizedAttributes $spyCmsPageLocalizedAttributes, string $localeName): CmsPageMetaAttributesTransfer
     {
         $pageMetaAttributeTransfer = new CmsPageMetaAttributesTransfer();
         $pageMetaAttributeTransfer->setLocaleName($localeName);

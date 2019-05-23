@@ -12,7 +12,7 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/container": "If you want to use ApplicationExtensionInterface or BootableApplicationExtensionInterface"
+    "spryker/container": "If you want to use ApplicationPluginInterface or BootableApplicationPluginInterface"
   },
   "autoload": {
     "psr-4": {

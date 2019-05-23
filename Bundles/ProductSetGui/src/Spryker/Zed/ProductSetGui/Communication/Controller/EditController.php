@@ -42,10 +42,9 @@ class EditController extends AbstractProductSetController
                 ->getProductSetFacade()
                 ->updateProductSet($productSetTransfer);
 
-            $this->addSuccessMessage(sprintf(
-                'Product Set "%s" updated successfully.',
-                $productSetTransfer->getLocalizedData()[0]->getProductSetData()->getName()
-            ));
+            $this->addSuccessMessage('Product Set "%s" updated successfully.', [
+                '%s' => $productSetTransfer->getLocalizedData()[0]->getProductSetData()->getName(),
+            ]);
 
             return $this->redirectResponse(
                 Url::generate('/product-set-gui/view', [
@@ -83,10 +82,9 @@ class EditController extends AbstractProductSetController
             ->getProductSetFacade()
             ->updateProductSet($productSetTransfer);
 
-        $this->addSuccessMessage(sprintf(
-            'Product Set #%d activated successfully.',
-            $productSetTransfer->getIdProductSet()
-        ));
+        $this->addSuccessMessage('Product Set #%d activated successfully.', [
+            '%d' => $productSetTransfer->getIdProductSet(),
+        ]);
 
         return $this->redirectResponse(
             Url::generate('/product-set-gui')->build()
@@ -111,10 +109,9 @@ class EditController extends AbstractProductSetController
             ->getProductSetFacade()
             ->updateProductSet($productSetTransfer);
 
-        $this->addSuccessMessage(sprintf(
-            'Product Set #%d deactivated successfully.',
-            $productSetTransfer->getIdProductSet()
-        ));
+        $this->addSuccessMessage('Product Set #%d deactivated successfully.', [
+            '%d' => $productSetTransfer->getIdProductSet(),
+        ]);
 
         return $this->redirectResponse(
             Url::generate('/product-set-gui')->build()

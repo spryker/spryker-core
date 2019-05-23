@@ -132,7 +132,7 @@ class PhpDocumentorGraphAdapterTest extends Unit
         $adapter = new PhpDocumentorGraphAdapter();
         $adapter->create(self::GRAPH_NAME);
 
-        $this->assertInternalType('string', $adapter->render('svg'));
+        $this->assertIsString($adapter->render('svg'));
     }
 
     /**
@@ -143,7 +143,7 @@ class PhpDocumentorGraphAdapterTest extends Unit
         $adapter = new PhpDocumentorGraphAdapter();
         $adapter->create(self::GRAPH_NAME);
 
-        $this->assertInternalType('string', $adapter->render('svg', sys_get_temp_dir() . '/filename'));
+        $this->assertIsString($adapter->render('svg', sys_get_temp_dir() . '/filename'));
     }
 
     /**

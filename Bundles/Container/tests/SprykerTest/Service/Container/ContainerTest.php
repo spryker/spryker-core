@@ -24,8 +24,26 @@ use Spryker\Service\Container\Exception\NotFoundException;
 class ContainerTest extends Unit
 {
     protected const SERVICE = 'service';
+    protected const SERVICE_GLOBAL = 'global service';
     protected const SERVICE_PROPERTY_1 = 'SERVICE_PROPERTY_1';
     protected const SERVICE_PROPERTY_2 = 'SERVICE_PROPERTY_2';
+
+    /**
+     * @var bool
+     */
+    protected $errorIsTriggered = false;
+
+    /**
+     * @return void
+     */
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $container = new Container();
+        $container->remove(static::SERVICE_GLOBAL);
+        $container->remove(static::SERVICE);
+    }
 
     /**
      * @return void
@@ -123,7 +141,7 @@ class ContainerTest extends Unit
     /**
      * @return void
      */
-    public function testGetThrowsAnExceptionWHenRequestedServiceNotExists(): void
+    public function testGetThrowsAnExceptionWhenRequestedServiceNotExists(): void
     {
         $this->expectException(NotFoundException::class);
 
@@ -172,6 +190,17 @@ class ContainerTest extends Unit
     /**
      * @return void
      */
+    public function testRemoveWithNotExistingServiceIdentifier(): void
+    {
+        $container = new Container();
+        $container->remove(static::SERVICE);
+
+        $this->assertFalse($container->has(static::SERVICE));
+    }
+
+    /**
+     * @return void
+     */
     public function testFactoryThrowsAnExceptionWhenPassedServiceNotInvokable(): void
     {
         $this->expectException(ContainerException::class);
@@ -194,7 +223,7 @@ class ContainerTest extends Unit
     /**
      * @return void
      */
-    public function testProtectServiceIsNotResolved(): void
+    public function testProtectedServiceIsNotResolved(): void
     {
         //Arrange
         $container = new Container();
@@ -207,6 +236,80 @@ class ContainerTest extends Unit
 
         //Assert
         $this->assertSame($service, $container->get(static::SERVICE));
+    }
+
+    /**
+     * @return void
+     */
+    public function testExtendThrowsExceptionWhenPassedServiceIsNotAService(): void
+    {
+        $container = new Container();
+        $container->set(static::SERVICE, function () {
+            return [static::SERVICE_PROPERTY_1 => true];
+        });
+
+        $this->expectException(ContainerException::class);
+        $container->extend(static::SERVICE, 'not a service');
+    }
+
+    /**
+     * @return void
+     */
+    public function testExtendThrowsExceptionWhenTheServiceToBeExtendedIsFrozen(): void
+    {
+        $container = new Container();
+        $container->set(static::SERVICE, function () {
+            return [static::SERVICE_PROPERTY_1 => true];
+        });
+
+        $container->get(static::SERVICE);
+
+        $this->expectException(FrozenServiceException::class);
+        $container->extend(static::SERVICE, function () {
+        });
+    }
+
+    /**
+     * @return void
+     */
+    public function testExtendThrowsExceptionWhenTheServiceToBeExtendedIsNotAnObjectOrNotInvokable(): void
+    {
+        $container = new Container();
+        $container->set(static::SERVICE, 'not an object and not invokable');
+
+        $this->expectException(ContainerException::class);
+        $container->extend(static::SERVICE, function () {
+        });
+    }
+
+    /**
+     * @return void
+     */
+    public function testExtendThrowsExceptionWhenTheServiceToBeExtendedIsProtected(): void
+    {
+        $container = new Container();
+        $container->set(static::SERVICE, $container->protect(function () {
+        }));
+
+        $this->expectException(ContainerException::class);
+        $container->extend(static::SERVICE, function () {
+        });
+    }
+
+    /**
+     * @return void
+     */
+    public function testExtendAFactoryServiceWillReplaceTheServiceInTheFactoryCollection(): void
+    {
+        $container = new Container();
+        $container->set(static::SERVICE, $container->factory(function () {
+            return 'foo';
+        }));
+        $container->extend(static::SERVICE, function ($service) {
+            return $service . 'bar';
+        });
+
+        $this->assertSame('foobar', $container->get(static::SERVICE));
     }
 
     /**
@@ -259,123 +362,43 @@ class ContainerTest extends Unit
         );
     }
 
-    /***************************************************************************************
-     * F O L L O W I N G T E S T S A R E O N L Y P R E S E N T F O R B C R E A S O N S ! ! *
-     ***************************************************************************************/
-
     /**
      * @return void
      */
-    public function testArrayAccessSetAddsService(): void
+    public function testTriggerErrorIsNotExecuted(): void
     {
-        //Arrange
         $container = new Container();
+        $container->set(Container::TRIGGER_ERROR, false);
 
-        //Act
-        $container[static::SERVICE] = function () {
-        };
-
-        //Assert
-        $this->assertTrue($container->has(static::SERVICE));
+        $previousErrorHandler = set_error_handler([$this, 'setErrorTriggered']);
+        $container[static::SERVICE] = 'foo';
+        $this->assertFalse($this->errorIsTriggered, 'Deprecation message should not be shown');
+        set_error_handler($previousErrorHandler);
+        $this->errorIsTriggered = false;
     }
 
     /**
      * @return void
      */
-    public function testArrayAccessSetAddsServiceAsFactory(): void
+    public function testTriggerErrorIsExecutedWhenEnabled(): void
     {
-        //Arrange
         $container = new Container();
-        $container[static::SERVICE] = function () {
-            return new class {
-            };
-        };
+        $container->set(Container::TRIGGER_ERROR, true);
 
-        //Act
-        $service = $container->get(static::SERVICE);
-        $service2 = $container->get(static::SERVICE);
+        $previousErrorHandler = set_error_handler([$this, 'setErrorTriggered']);
+        $container[static::SERVICE] = 'foo';
 
-        //Assert
-        $this->assertNotSame($service, $service2);
+        $this->assertTrue($this->errorIsTriggered, 'Deprecation message should not be shown');
+
+        set_error_handler($previousErrorHandler);
+        $this->errorIsTriggered = false;
     }
 
     /**
      * @return void
      */
-    public function testArrayAccessSetAddsServiceAsShared(): void
+    public function setErrorTriggered(): void
     {
-        //Arrange
-        $container = new Container();
-        $container[static::SERVICE] = $container->share(function () {
-            return new class {
-            };
-        });
-
-        //Act
-        $service = $container->get(static::SERVICE);
-        $service2 = $container->get(static::SERVICE);
-
-        //Assert
-        $this->assertSame($service, $service2);
-    }
-
-    /**
-     * @return void
-     */
-    public function testArrayAccessGetReturnsService(): void
-    {
-        $container = new Container();
-        $container[static::SERVICE] = function () {
-            return static::SERVICE;
-        };
-
-        $this->assertSame(static::SERVICE, $container[static::SERVICE]);
-    }
-
-    /**
-     * @return void
-     */
-    public function testArrayAccessExistsReturnTrueWhenServiceExists(): void
-    {
-        $container = new Container();
-        $container[static::SERVICE] = function () {
-        };
-
-        $this->assertTrue(isset($container[static::SERVICE]));
-    }
-
-    /**
-     * @return void
-     */
-    public function testArrayAccessExistsReturnFalseWhenServiceNotExists(): void
-    {
-        $container = new Container();
-
-        $this->assertFalse(isset($container[static::SERVICE]));
-    }
-
-    /**
-     * @return void
-     */
-    public function testArrayAccessUnsetRemovesService(): void
-    {
-        $container = new Container();
-        $container[static::SERVICE] = function () {
-        };
-        unset($container[static::SERVICE]);
-
-        $this->assertFalse(isset($container[static::SERVICE]));
-    }
-
-    /**
-     * @return void
-     */
-    public function testDeprecatedShareReturnsCallable(): void
-    {
-        $container = new Container();
-        $service = function () {
-        };
-
-        $this->assertSame($service, $container->share($service));
+        $this->errorIsTriggered = true;
     }
 }

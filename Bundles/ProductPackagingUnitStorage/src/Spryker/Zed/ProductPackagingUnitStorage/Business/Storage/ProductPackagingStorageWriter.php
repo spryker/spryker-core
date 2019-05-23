@@ -66,7 +66,7 @@ class ProductPackagingStorageWriter implements ProductPackagingStorageWriterInte
     public function unpublish(array $productAbstractIds): void
     {
         $productAbstractPackagingStorageEntities = $this->productAbstractPackagingUnitStorageReader
-            ->getProductAbstractPackagingUnitStorageEntities($productAbstractIds);
+            ->getProductAbstractPackagingStorageEntities($productAbstractIds);
 
         foreach ($productAbstractPackagingStorageEntities as $productAbstractPackagingStorageEntity) {
             $this->productPackagingUnitStorageEntityManager->deleteProductAbstractPackagingStorageEntity($productAbstractPackagingStorageEntity);

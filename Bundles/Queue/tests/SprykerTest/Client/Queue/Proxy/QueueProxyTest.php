@@ -33,7 +33,7 @@ class QueueProxyTest extends Unit
     protected $queueProxy;
 
     /**
-     * @var \Spryker\Client\Queue\Model\Adapter\AdapterInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Spryker\Client\Queue\Model\Adapter\AdapterInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $queueAdapterMock;
 

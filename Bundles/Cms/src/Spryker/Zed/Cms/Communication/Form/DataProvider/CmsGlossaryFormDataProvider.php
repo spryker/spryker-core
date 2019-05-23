@@ -33,7 +33,7 @@ class CmsGlossaryFormDataProvider
      *
      * @return array
      */
-    public function getData($idPage, $idMapping = null, $placeholder = null, $fkLocale = null)
+    public function getData(int $idPage, ?int $idMapping = null, ?string $placeholder = null, ?int $fkLocale = null): array
     {
         $formItems = [
             CmsGlossaryForm::FIELD_FK_PAGE => $idPage,

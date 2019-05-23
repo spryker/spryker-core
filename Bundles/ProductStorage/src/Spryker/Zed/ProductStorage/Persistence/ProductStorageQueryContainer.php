@@ -44,7 +44,8 @@ class ProductStorageQueryContainer extends AbstractQueryContainer implements Pro
             ->filterByFkProductAbstract_In($productAbstractIds)
             ->setFormatter(ModelCriteria::FORMAT_ARRAY);
 
-        $query
+        /** @var \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery $query */
+        $query = $query
             ->join('SpyProductAbstract.SpyUrl')
             ->addJoinCondition('SpyUrl', 'spy_url.fk_locale = ' . SpyProductAbstractLocalizedAttributesTableMap::COL_FK_LOCALE)
             ->withColumn(SpyUrlTableMap::COL_URL, 'url');
@@ -81,7 +82,8 @@ class ProductStorageQueryContainer extends AbstractQueryContainer implements Pro
             ->withColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_DESCRIPTION, 'abstract_description')
             ->withColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_ATTRIBUTES, 'abstract_attributes');
 
-        $query
+        /** @var \Orm\Zed\Product\Persistence\SpyProductLocalizedAttributesQuery $query */
+        $query = $query
             ->join('SpyProductAbstract.SpyUrl')
             ->addJoinCondition('SpyUrl', 'spy_url.fk_locale = ' . SpyProductLocalizedAttributesTableMap::COL_FK_LOCALE)
             ->withColumn(SpyUrlTableMap::COL_URL, 'url');

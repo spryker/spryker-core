@@ -5,9 +5,6 @@
 
 'use strict';
 
-require('ZedGui');
-require('jquery');
-
 var $list = null;
 var $button = null;
 

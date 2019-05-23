@@ -58,4 +58,11 @@ interface CompanyBusinessUnitGuiToCompanyBusinessUnitFacadeInterface
     public function delete(
         CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
     ): CompanyBusinessUnitResponseTransfer;
+
+    /**
+     * @param int $idCompanyBusinessUnit
+     *
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer|null
+     */
+    public function findCompanyBusinessUnitById(int $idCompanyBusinessUnit): ?CompanyBusinessUnitTransfer;
 }

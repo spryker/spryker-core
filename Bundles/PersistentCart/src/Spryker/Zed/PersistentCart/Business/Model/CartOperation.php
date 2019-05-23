@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\PersistentCartChangeQuantityTransfer;
 use Generated\Shared\Transfer\PersistentCartChangeTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToQuoteFacadeInterface;
 use Spryker\Zed\PersistentCartExtension\Dependency\Plugin\QuoteItemFinderPluginInterface;
 
 class CartOperation implements CartOperationInterface
@@ -38,21 +39,29 @@ class CartOperation implements CartOperationInterface
     protected $quoteItemOperation;
 
     /**
+     * @var \Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToQuoteFacadeInterface
+     */
+    protected $quoteFacade;
+
+    /**
      * @param \Spryker\Zed\PersistentCartExtension\Dependency\Plugin\QuoteItemFinderPluginInterface $itemFinderPlugin
      * @param \Spryker\Zed\PersistentCart\Business\Model\QuoteResponseExpanderInterface $quoteResponseExpander
      * @param \Spryker\Zed\PersistentCart\Business\Model\QuoteResolverInterface $quoteResolver
      * @param \Spryker\Zed\PersistentCart\Business\Model\QuoteItemOperationInterface $quoteItemOperations
+     * @param \Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToQuoteFacadeInterface $quoteFacade
      */
     public function __construct(
         QuoteItemFinderPluginInterface $itemFinderPlugin,
         QuoteResponseExpanderInterface $quoteResponseExpander,
         QuoteResolverInterface $quoteResolver,
-        QuoteItemOperationInterface $quoteItemOperations
+        QuoteItemOperationInterface $quoteItemOperations,
+        PersistentCartToQuoteFacadeInterface $quoteFacade
     ) {
         $this->quoteResponseExpander = $quoteResponseExpander;
         $this->itemFinderPlugin = $itemFinderPlugin;
         $this->quoteResolver = $quoteResolver;
         $this->quoteItemOperation = $quoteItemOperations;
+        $this->quoteFacade = $quoteFacade;
     }
 
     /**
@@ -265,6 +274,11 @@ class CartOperation implements CartOperationInterface
             return $quoteResponseTransfer;
         }
         $customerQuoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
+
+        if ($this->quoteFacade->isQuoteLocked($customerQuoteTransfer)) {
+            return $this->quoteResponseExpander->expand($quoteResponseTransfer);
+        }
+
         $quoteTransfer->fromArray($customerQuoteTransfer->modifiedToArray(), true);
 
         return $this->quoteItemOperation->validate($quoteTransfer);

@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\PathParameterComponentTransfer;
 use Generated\Shared\Transfer\PathSchemaDataTransfer;
 use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\RestTestAlternativeAttributesTransfer;
 use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\RestTestAttributesTransfer;
+use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\RestTestAttributesWithNullablePropertyTransfer;
 
 /**
  * Inherited Methods
@@ -33,9 +34,9 @@ class DocumentationGeneratorRestApiTester extends Actor
 {
     use _generated\DocumentationGeneratorRestApiTesterActions;
 
-   /**
-    * Define custom actions here
-    */
+    /**
+     * Define custom actions here
+     */
 
     protected const METHOD_GET = 'get';
     protected const METHOD_POST = 'post';
@@ -72,8 +73,8 @@ class DocumentationGeneratorRestApiTester extends Actor
     protected const DEFAULT_REQUEST_DESCRIPTION = 'Expected request body.';
     protected const BAD_REQUEST_RESPONSE_DESCRIPTION = 'Bad Request.';
     protected const NOT_FOUND_RESPONSE_DESCRIPTION = 'Not found.';
-    protected const SCHEMA_REF_REST_TEST_RESPONSE_COLLECTION = '#/components/schemas/RestTestCollectionResponse';
 
+    protected const SCHEMA_REF_REST_TEST_RESPONSE_COLLECTION = '#/components/schemas/RestTestCollectionResponse';
     protected const SCHEMA_REF_REST_REQUEST = '#/components/schemas/RestTestRequest';
     protected const SCHEMA_REF_REST_ERROR_MESSAGE = '#/components/schemas/RestErrorMessage';
     protected const SCHEMA_REF_REST_RESPONSE = '#/components/schemas/RestTestResponse';
@@ -88,6 +89,8 @@ class DocumentationGeneratorRestApiTester extends Actor
     protected const SCHEMA_REF_REST_TEST_RESPONSE_ATTRIBUTES = '#/components/schemas/RestTestAttributes';
     protected const SCHEMA_REF_REST_TEST_RESPONSE_COLLECTION_DATA = '#/components/schemas/RestTestCollectionResponseData';
     protected const SCHEMA_REF_REST_TEST_RESPONSE_RESOURCE_DATA = '#/components/schemas/RestTestResponseData';
+    protected const SCHEMA_REF_REST_TEST_ATTRIBUTES_WITH_NULLABLE_PROPERTY = '#/components/schemas/RestTestAttributesWithNullableProperty';
+    protected const SHEMA_REF_REST_TEST_ATTRIBUTES_WITH_NULLABLE_PROPERTY_TRANSFER = '#/components/schemas/RestTestAttributesWithNullablePropertyTransfer';
     protected const SCHEMA_NAME_REST_ERROR_MESSAGE = 'RestErrorMessage';
     protected const SCHEMA_NAME_REST_LINKS = 'RestLinks';
     protected const SCHEMA_NAME_REST_RELATIONSHIPS = 'RestRelationships';
@@ -103,6 +106,8 @@ class DocumentationGeneratorRestApiTester extends Actor
     protected const SCHEMA_NAME_REST_TEST_RESPONSE_COLLECTION_DATA = 'RestTestCollectionResponseData';
     protected const SCHEMA_NAME_REST_TEST_RESPONSE_RESOURCE = 'RestTestResponse';
     protected const SCHEMA_NAME_REST_TEST_RESPONSE_RESOURCE_DATA = 'RestTestResponseData';
+    protected const SCHEMA_NAME_REST_TEST_ATTRIBUTES_WITH_NULLABLE_PROPERTY = 'RestTestAttributesWithNullableProperty';
+    protected const SCHEMA_NAME_REST_TEST_ATTRIBUTES_WITH_NULLABLE_PROPERTY_TRANSFER = 'RestTestAttributesWithNullablePropertyTransfer';
 
     /**
      * @return array
@@ -767,6 +772,55 @@ class DocumentationGeneratorRestApiTester extends Actor
                         'items' => [
                             '$ref' => static::SCHEMA_REF_REST_RELATIONSHIPS,
                         ],
+                    ],
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function getSchemaGeneratorTestResponseAttributesSchemaForTransferWithNullableParameters(): array
+    {
+        return [
+            static::SCHEMA_NAME_REST_TEST_ATTRIBUTES_WITH_NULLABLE_PROPERTY => [
+                'properties' => [
+                    RestTestAttributesWithNullablePropertyTransfer::ATTRIBUTE1 => [
+                        'type' => 'string',
+                        'nullable' => true,
+                    ],
+                    RestTestAttributesWithNullablePropertyTransfer::ATTRIBUTE2 => [
+                        'type' => 'string',
+                    ],
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function getSchemaGeneratorTestResponseDataSchemaWithNullableId(): array
+    {
+        return [
+            static::SCHEMA_NAME_REST_TEST_ATTRIBUTES_WITH_NULLABLE_PROPERTY_TRANSFER => [
+                'properties' => [
+                    'data' => [
+                        '$ref' => static::SHEMA_REF_REST_TEST_ATTRIBUTES_WITH_NULLABLE_PROPERTY_TRANSFER,
+                    ],
+                    'links' => [
+                        '$ref' => static::SCHEMA_REF_REST_LINKS,
+                    ],
+                    'type' => [
+                        'type' => 'string',
+                    ],
+                    'id' => [
+                        'type' => 'string',
+                        'nullable' => true,
+                    ],
+                    'attributes' => [
+                        '$ref' => static::SCHEMA_REF_REST_TEST_ATTRIBUTES_WITH_NULLABLE_PROPERTY,
                     ],
                 ],
             ],

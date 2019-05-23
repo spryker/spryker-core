@@ -14,8 +14,9 @@ use Spryker\Yves\Kernel\Plugin\Pimple;
 class CmsContentWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CMS_CONTENT_WIDGET_PLUGINS = 'CMS CONTENT WIDGET PLUGINS';
-
     public const TWIG_ENVIRONMENT = 'TWIG ENVIRONMENT';
+
+    protected const SERVICE_TWIG = 'twig';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -36,12 +37,12 @@ class CmsContentWidgetDependencyProvider extends AbstractBundleDependencyProvide
     }
 
     /**
-     * @return \Twig_Environment
+     * @return \Twig\Environment
      */
     protected function getTwigEnvironment()
     {
         $pimplePlugin = new Pimple();
-        $twig = $pimplePlugin->getApplication()['twig'];
+        $twig = $pimplePlugin->getApplication()->get(static::SERVICE_TWIG);
 
         return $twig;
     }

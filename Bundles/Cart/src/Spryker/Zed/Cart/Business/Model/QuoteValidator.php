@@ -10,6 +10,7 @@ namespace Spryker\Zed\Cart\Business\Model;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Cart\Dependency\Facade\CartToMessengerInterface;
+use Spryker\Zed\Cart\Dependency\Facade\CartToQuoteFacadeInterface;
 
 class QuoteValidator implements QuoteValidatorInterface
 {
@@ -29,18 +30,26 @@ class QuoteValidator implements QuoteValidatorInterface
     protected $messengerFacade;
 
     /**
+     * @var \Spryker\Zed\Cart\Dependency\Facade\CartToQuoteFacadeInterface
+     */
+    protected $quoteFacade;
+
+    /**
      * @param \Spryker\Zed\Cart\Business\Model\OperationInterface $operation
      * @param \Spryker\Zed\Cart\Business\Model\QuoteChangeObserverInterface $changeNote
      * @param \Spryker\Zed\Cart\Dependency\Facade\CartToMessengerInterface $messengerFacade
+     * @param \Spryker\Zed\Cart\Dependency\Facade\CartToQuoteFacadeInterface $quoteFacade
      */
     public function __construct(
         OperationInterface $operation,
         QuoteChangeObserverInterface $changeNote,
-        CartToMessengerInterface $messengerFacade
+        CartToMessengerInterface $messengerFacade,
+        CartToQuoteFacadeInterface $quoteFacade
     ) {
         $this->operation = $operation;
         $this->changeNote = $changeNote;
         $this->messengerFacade = $messengerFacade;
+        $this->quoteFacade = $quoteFacade;
     }
 
     /**
@@ -54,6 +63,12 @@ class QuoteValidator implements QuoteValidatorInterface
         $quoteValidationResponseTransfer
             ->setQuoteTransfer($quoteTransfer)
             ->setIsSuccessful(false);
+
+        if ($this->quoteFacade->isQuoteLocked($quoteTransfer)) {
+            $quoteValidationResponseTransfer->setIsSuccessful(true);
+
+            return $quoteValidationResponseTransfer;
+        }
 
         if (!count($quoteTransfer->getItems())) {
             return $quoteValidationResponseTransfer;

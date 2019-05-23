@@ -7,6 +7,8 @@
 
 namespace Spryker\Shared\Kernel\ClassResolver;
 
+use Spryker\Shared\Config\Environment;
+
 class ClassInfo
 {
     public const TEST_NAMESPACE_SUFFIX = 'Test';
@@ -48,7 +50,9 @@ class ClassInfo
 
         if ($this->isFullyQualifiedClassName($callerClass)) {
             $callerClassParts = explode('\\', ltrim($callerClass, '\\'));
-            $callerClassParts = $this->adjustTestNamespace($callerClassParts);
+            if (Environment::isTesting()) {
+                $callerClassParts = $this->adjustTestNamespace($callerClassParts);
+            }
         }
 
         $this->callerClassParts = $callerClassParts;

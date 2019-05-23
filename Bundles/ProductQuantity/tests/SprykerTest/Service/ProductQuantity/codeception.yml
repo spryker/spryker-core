@@ -1,0 +1,16 @@
+namespace: SprykerTest\Service\ProductQuantity
+
+paths:
+    tests: .
+    data: ../../../_data
+    support: _support
+    log: ../../../_output
+
+coverage:
+    enabled: true
+    remote: false
+    whitelist: { include: ['../../../../src/*'] }
+
+suites:
+    Service:
+        path: .

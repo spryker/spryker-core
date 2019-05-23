@@ -45,6 +45,7 @@ class RestTestAlternativeAttributesTransfer extends AbstractTransfer
             'is_collection' => false,
             'is_transfer' => false,
             'rest_request_parameter' => 'no',
+            'is_nullable' => false,
         ],
         self::ATTRIBUTE4 => [
             'type' => 'string',
@@ -52,6 +53,7 @@ class RestTestAlternativeAttributesTransfer extends AbstractTransfer
             'is_collection' => false,
             'is_transfer' => false,
             'rest_request_parameter' => 'required',
+            'is_nullable' => false,
         ],
     ];
 

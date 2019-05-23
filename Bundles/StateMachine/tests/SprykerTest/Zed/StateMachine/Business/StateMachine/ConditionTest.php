@@ -107,7 +107,7 @@ class ConditionTest extends StateMachineMocks
     /**
      * @param bool $conditionCheckResult
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\StateMachine\Business\StateMachine\HandlerResolverInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\StateMachine\Business\StateMachine\HandlerResolverInterface
      */
     protected function createStateMachineResolverMock($conditionCheckResult)
     {

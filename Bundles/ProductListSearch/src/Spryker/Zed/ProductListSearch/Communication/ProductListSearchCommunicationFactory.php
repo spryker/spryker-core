@@ -43,4 +43,12 @@ class ProductListSearchCommunicationFactory extends AbstractCommunicationFactory
     {
         return $this->getProvidedDependency(ProductListSearchDependencyProvider::FACADE_PRODUCT_LIST);
     }
+
+    /**
+     * @return \Spryker\Zed\ProductListSearch\Dependency\Facade\ProductListSearchToProductCategoryFacadeInterface
+     */
+    public function getProductCategoryFacade()
+    {
+        return $this->getProvidedDependency(ProductListSearchDependencyProvider::FACADE_PRODUCT_CATEGORY);
+    }
 }

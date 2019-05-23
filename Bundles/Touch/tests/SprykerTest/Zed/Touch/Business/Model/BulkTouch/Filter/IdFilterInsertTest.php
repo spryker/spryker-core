@@ -24,8 +24,10 @@ use Spryker\Zed\Touch\Business\Model\BulkTouch\Filter\IdFilterInsert;
  */
 class IdFilterInsertTest extends Unit
 {
+    public const ITEM_EVENT_ACTIVE = 'active';
+
     /**
-     * @var \Spryker\Zed\Touch\Business\Model\BulkTouch\Filter\IdFilterInsert|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Spryker\Zed\Touch\Business\Model\BulkTouch\Filter\IdFilterInsert|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $idFilterInsert;
 

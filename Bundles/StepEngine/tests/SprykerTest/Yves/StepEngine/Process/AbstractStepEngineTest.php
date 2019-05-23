@@ -55,7 +55,7 @@ abstract class AbstractStepEngineTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Symfony\Component\Routing\Generator\UrlGeneratorInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Symfony\Component\Routing\Generator\UrlGeneratorInterface
      */
     protected function getUrlGeneratorMock()
     {
@@ -111,7 +111,7 @@ abstract class AbstractStepEngineTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\Kernel\Transfer\AbstractTransfer
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
     protected function getDataTransferMock()
     {
@@ -119,7 +119,7 @@ abstract class AbstractStepEngineTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Yves\StepEngine\Dependency\Step\StepWithExternalRedirectInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Yves\StepEngine\Dependency\Step\StepWithExternalRedirectInterface
      */
     protected function getStepWithExternalRedirectUrl()
     {

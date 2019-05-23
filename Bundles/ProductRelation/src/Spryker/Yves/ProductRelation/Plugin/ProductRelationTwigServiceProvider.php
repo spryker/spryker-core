@@ -11,8 +11,8 @@ use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Shared\Log\LoggerTrait;
 use Spryker\Yves\Kernel\AbstractPlugin;
-use Twig_Environment;
-use Twig_SimpleFunction;
+use Twig\Environment;
+use Twig\TwigFunction;
 
 /**
  * @method \Spryker\Yves\ProductRelation\ProductRelationFactory getFactory()
@@ -34,7 +34,7 @@ class ProductRelationTwigServiceProvider extends AbstractPlugin implements Servi
     public function register(Application $app)
     {
         $app['twig'] = $app->share(
-            $app->extend('twig', function (Twig_Environment $twig) {
+            $app->extend('twig', function (Environment $twig) {
                 $twig->addFunction(
                     $this->createProductRelationFunction($twig)
                 );
@@ -45,15 +45,15 @@ class ProductRelationTwigServiceProvider extends AbstractPlugin implements Servi
     }
 
     /**
-     * @param \Twig_Environment $twig
+     * @param \Twig\Environment $twig
      *
-     * @return \Twig_SimpleFunction
+     * @return \Twig\TwigFunction
      */
-    protected function createProductRelationFunction(Twig_Environment $twig)
+    protected function createProductRelationFunction(Environment $twig)
     {
         $options = ['is_safe' => ['html']];
 
-        return new Twig_SimpleFunction('product_relation', function ($type, array $params, $name, $templatePath) use ($twig) {
+        return new TwigFunction('product_relation', function ($type, array $params, $name, $templatePath) use ($twig) {
 
             $productRelationDataProvider = $this->getFactory()
                 ->createDataProviderResolver()
@@ -61,6 +61,7 @@ class ProductRelationTwigServiceProvider extends AbstractPlugin implements Servi
 
             if ($productRelationDataProvider === null) {
                 $this->getLogger()->warning(sprintf('Product relation "%s" data provider not found.', $type));
+
                 return '';
             }
 

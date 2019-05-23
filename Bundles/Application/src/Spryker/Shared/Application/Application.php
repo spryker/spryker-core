@@ -83,15 +83,13 @@ class Application implements HttpKernelInterface, TerminableInterface
     {
         $request = Request::createFromGlobals();
 
-        $this->container->set('request', $request);
-
         $response = $this->handle($request);
         $response->send();
         $this->terminate($request, $response);
     }
 
     /**
-     * @internal Don't use this method unless you know why.
+     * @internal This method is called from the run() method and is for internal use only.
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $type
@@ -101,9 +99,21 @@ class Application implements HttpKernelInterface, TerminableInterface
      */
     public function handle(Request $request, $type = self::MASTER_REQUEST, $catch = true): Response
     {
+        $this->container->set('request', $request);
+        $this->flushControllers();
+
         $response = $this->getKernel()->handle($request);
 
         return $response;
+    }
+
+    /**
+     * @return void
+     */
+    public function flushControllers()
+    {
+        $this->container->get('routes')
+            ->addCollection($this->container->get('controllers')->flush());
     }
 
     /**

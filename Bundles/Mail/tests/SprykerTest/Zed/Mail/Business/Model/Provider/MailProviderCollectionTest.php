@@ -118,7 +118,7 @@ class MailProviderCollectionTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Mail\Dependency\Plugin\MailProviderPluginInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Mail\Dependency\Plugin\MailProviderPluginInterface
      */
     protected function getMailProviderMock()
     {

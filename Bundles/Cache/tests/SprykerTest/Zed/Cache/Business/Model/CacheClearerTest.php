@@ -130,7 +130,7 @@ class CacheClearerTest extends Unit
     /**
      * @param string[] $stores
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Cache\CacheConfig
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Cache\CacheConfig
      */
     protected function getConfigMock(array $stores)
     {
@@ -153,7 +153,7 @@ class CacheClearerTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Symfony\Component\Filesystem\Filesystem
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Symfony\Component\Filesystem\Filesystem
      */
     protected function getFileSystemMock()
     {
@@ -165,7 +165,7 @@ class CacheClearerTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Symfony\Component\Finder\Finder
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Symfony\Component\Finder\Finder
      */
     protected function getFinderMock()
     {

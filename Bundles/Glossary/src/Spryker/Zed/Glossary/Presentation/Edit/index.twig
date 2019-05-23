@@ -1,6 +1,6 @@
 {% extends '@Glossary/Add/index.twig' %}
 
-{% block section_title 'Edit Translation: ' ~ idGlossaryKey %}
+{% block section_title 'Edit Translation' | trans ~ ' : ' ~ idGlossaryKey %}
 {% if widget_title is not defined %}
     {% set widget_title = 'Translation details' %}
 {% endif %}

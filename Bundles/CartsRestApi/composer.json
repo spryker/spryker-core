@@ -15,7 +15,8 @@
     "spryker/propel-orm": "^1.0.0",
     "spryker/quote": "^2.5.0",
     "spryker/symfony": "^3.0.0",
-    "spryker/zed-request": "^3.4.0"
+    "spryker/uuid-behavior": "^1.0.0",
+    "spryker/zed-request": "^3.6.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
@@ -24,7 +25,6 @@
   "suggest": {
     "spryker/auth-rest-api": "If you want to authorize and authenticate customers via access tokens.",
     "spryker/rest-request-validator": "If you want to use rest request validation.",
-    "spryker/uuid-behavior": "Used to generate UUIDs for the cart entities.",
     "spryker/uuid": "If you want to generate UUIDs for existing entities."
   },
   "autoload": {

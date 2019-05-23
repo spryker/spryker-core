@@ -19,12 +19,28 @@ use Spryker\Zed\ProductImage\Dependency\ProductImageEvents;
 use Spryker\Zed\ProductImageStorage\Business\ProductImageStorageBusinessFactory;
 use Spryker\Zed\ProductImageStorage\Business\ProductImageStorageFacade;
 use Spryker\Zed\ProductImageStorage\Communication\Plugin\Event\Listener\ProductAbstractImageSetProductImageStorageListener;
+use Spryker\Zed\ProductImageStorage\Communication\Plugin\Event\Listener\ProductAbstractImageSetProductImageStoragePublishListener;
+use Spryker\Zed\ProductImageStorage\Communication\Plugin\Event\Listener\ProductAbstractImageSetProductImageStorageUnpublishListener;
 use Spryker\Zed\ProductImageStorage\Communication\Plugin\Event\Listener\ProductAbstractImageSetStorageListener;
+use Spryker\Zed\ProductImageStorage\Communication\Plugin\Event\Listener\ProductAbstractImageSetStoragePublishListener;
+use Spryker\Zed\ProductImageStorage\Communication\Plugin\Event\Listener\ProductAbstractImageSetStorageUnpublishListener;
 use Spryker\Zed\ProductImageStorage\Communication\Plugin\Event\Listener\ProductAbstractImageStorageListener;
+use Spryker\Zed\ProductImageStorage\Communication\Plugin\Event\Listener\ProductAbstractImageStoragePublishListener;
+use Spryker\Zed\ProductImageStorage\Communication\Plugin\Event\Listener\ProductAbstractImageStorageUnpublishListener;
 use Spryker\Zed\ProductImageStorage\Communication\Plugin\Event\Listener\ProductConcreteImageSetProductImageStorageListener;
+use Spryker\Zed\ProductImageStorage\Communication\Plugin\Event\Listener\ProductConcreteImageSetProductImageStoragePublishListener;
+use Spryker\Zed\ProductImageStorage\Communication\Plugin\Event\Listener\ProductConcreteImageSetProductImageStorageUnpublishListener;
 use Spryker\Zed\ProductImageStorage\Communication\Plugin\Event\Listener\ProductConcreteImageSetStorageListener;
+use Spryker\Zed\ProductImageStorage\Communication\Plugin\Event\Listener\ProductConcreteImageSetStoragePublishListener;
+use Spryker\Zed\ProductImageStorage\Communication\Plugin\Event\Listener\ProductConcreteImageSetStorageUnpublishListener;
 use Spryker\Zed\ProductImageStorage\Communication\Plugin\Event\Listener\ProductConcreteImageStorageListener;
+use Spryker\Zed\ProductImageStorage\Communication\Plugin\Event\Listener\ProductConcreteImageStoragePublishListener;
+use Spryker\Zed\ProductImageStorage\Communication\Plugin\Event\Listener\ProductConcreteImageStorageUnpublishListener;
+use Spryker\Zed\ProductImageStorage\Communication\Plugin\Event\Listener\ProductImageAbstract\ProductImageAbstractStoragePublishListener;
+use Spryker\Zed\ProductImageStorage\Communication\Plugin\Event\Listener\ProductImageAbstract\ProductImageAbstractStorageUnpublishListener;
 use Spryker\Zed\ProductImageStorage\Communication\Plugin\Event\Listener\ProductImageAbstractPublishStorageListener;
+use Spryker\Zed\ProductImageStorage\Communication\Plugin\Event\Listener\ProductImageConcrete\ProductImageConcreteStoragePublishListener;
+use Spryker\Zed\ProductImageStorage\Communication\Plugin\Event\Listener\ProductImageConcrete\ProductImageConcreteStorageUnpublishListener;
 use Spryker\Zed\ProductImageStorage\Communication\Plugin\Event\Listener\ProductImageConcretePublishStorageListener;
 use SprykerTest\Shared\ProductImage\Helper\ProductImageDataHelper;
 use SprykerTest\Zed\ProductImageStorage\ProductImageStorageConfigMock;
@@ -93,8 +109,9 @@ class ProductImageStorageListenerTest extends Unit
     /**
      * @return void
      */
-    public function testProductImageAbstractPublishStorageListenerStoreData()
+    public function testProductImageAbstractPublishStorageListenerStoreData(): void
     {
+        // Prepare
         SpyProductAbstractImageStorageQuery::create()->filterByFkProductAbstract($this->productAbstractTransfer->getIdProductAbstract())->delete();
         $beforeCount = SpyProductAbstractImageStorageQuery::create()->count();
 
@@ -104,6 +121,8 @@ class ProductImageStorageListenerTest extends Unit
         $eventTransfers = [
             (new EventEntityTransfer())->setId($this->productAbstractTransfer->getIdProductAbstract()),
         ];
+
+        // Act
         $productImageAbstractPublishStorageListener->handleBulk($eventTransfers, ProductImageEvents::PRODUCT_IMAGE_PRODUCT_ABSTRACT_PUBLISH);
 
         // Assert
@@ -113,8 +132,52 @@ class ProductImageStorageListenerTest extends Unit
     /**
      * @return void
      */
-    public function testProductAbstractImageStorageListenerStoreData()
+    public function testProductImageAbstractStoragePublishListenerStoreData(): void
     {
+        // Prepare
+        SpyProductAbstractImageStorageQuery::create()->filterByFkProductAbstract($this->productAbstractTransfer->getIdProductAbstract())->delete();
+        $beforeCount = SpyProductAbstractImageStorageQuery::create()->count();
+
+        $productImageAbstractStoragePublishListener = new ProductImageAbstractStoragePublishListener();
+        $productImageAbstractStoragePublishListener->setFacade($this->getProductImageStorageFacade());
+
+        $eventTransfers = [
+            (new EventEntityTransfer())->setId($this->productAbstractTransfer->getIdProductAbstract()),
+        ];
+
+        // Act
+        $productImageAbstractStoragePublishListener->handleBulk($eventTransfers, ProductImageEvents::PRODUCT_IMAGE_PRODUCT_ABSTRACT_PUBLISH);
+
+        // Assert
+        $this->assertProductAbstractImageStorage($beforeCount);
+    }
+
+    /**
+     * @return void
+     */
+    public function testProductImageAbstractStorageUnpublishListenerStoreData(): void
+    {
+        // Prepare
+        $productImageAbstractUnpublishStorageListener = new ProductImageAbstractStorageUnpublishListener();
+        $productImageAbstractUnpublishStorageListener->setFacade($this->getProductImageStorageFacade());
+
+        $eventTransfers = [
+            (new EventEntityTransfer())->setId($this->productAbstractTransfer->getIdProductAbstract()),
+        ];
+
+        // Act
+        $productImageAbstractUnpublishStorageListener->handleBulk($eventTransfers, ProductImageEvents::PRODUCT_IMAGE_PRODUCT_ABSTRACT_PUBLISH);
+
+        // Assert
+        $this->assertSame(0, SpyProductAbstractImageStorageQuery::create()->filterByFkProductAbstract($this->productAbstractTransfer->getIdProductAbstract())->count());
+    }
+
+    /**
+     * @return void
+     */
+    public function testProductAbstractImageStorageListenerStoreData(): void
+    {
+        // Prepare
         SpyProductAbstractImageStorageQuery::create()->filterByFkProductAbstract($this->productAbstractTransfer->getIdProductAbstract())->delete();
         $beforeCount = SpyProductAbstractImageStorageQuery::create()->count();
 
@@ -127,6 +190,7 @@ class ProductImageStorageListenerTest extends Unit
             $eventTransfers[] = (new EventEntityTransfer())->setId($productImageTransfer->getIdProductImage());
         }
 
+        // Act
         $productImageAbstractPublishStorageListener->handleBulk($eventTransfers, ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_UPDATE);
 
         // Assert
@@ -136,8 +200,56 @@ class ProductImageStorageListenerTest extends Unit
     /**
      * @return void
      */
-    public function testProductAbstractImageSetStorageListenerStoreData()
+    public function testProductAbstractImageEntityStoragePublishListener(): void
     {
+        // Prepare
+        SpyProductAbstractImageStorageQuery::create()->filterByFkProductAbstract($this->productAbstractTransfer->getIdProductAbstract())->delete();
+        $beforeCount = SpyProductAbstractImageStorageQuery::create()->count();
+
+        $productImageAbstractPublishStorageListener = new ProductAbstractImageStoragePublishListener();
+        $productImageAbstractPublishStorageListener->setFacade($this->getProductImageStorageFacade());
+
+        $eventTransfers = [];
+
+        foreach ($this->productImageSetTransfer->getProductImages() as $productImageTransfer) {
+            $eventTransfers[] = (new EventEntityTransfer())->setId($productImageTransfer->getIdProductImage());
+        }
+
+        // Act
+        $productImageAbstractPublishStorageListener->handleBulk($eventTransfers, ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_UPDATE);
+
+        // Assert
+        $this->assertProductAbstractImageStorage($beforeCount);
+    }
+
+    /**
+     * @return void
+     */
+    public function testProductAbstractImageEntityStorageUnpublishListener(): void
+    {
+        // Prepare
+        $productImageAbstractUnpublishStorageListener = new ProductAbstractImageStorageUnpublishListener();
+        $productImageAbstractUnpublishStorageListener->setFacade($this->getProductImageStorageFacade());
+
+        $eventTransfers = [];
+
+        foreach ($this->productImageSetTransfer->getProductImages() as $productImageTransfer) {
+            $eventTransfers[] = (new EventEntityTransfer())->setId($productImageTransfer->getIdProductImage());
+        }
+
+        // Act
+        $productImageAbstractUnpublishStorageListener->handleBulk($eventTransfers, ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_DELETE);
+
+        // Assert
+        $this->assertSame(0, SpyProductAbstractImageStorageQuery::create()->filterByFkProductAbstract($this->productAbstractTransfer->getIdProductAbstract())->count());
+    }
+
+    /**
+     * @return void
+     */
+    public function testProductAbstractImageSetStorageListenerStoreData(): void
+    {
+        // Prepare
         SpyProductAbstractImageStorageQuery::create()->filterByFkProductAbstract($this->productAbstractTransfer->getIdProductAbstract())->delete();
         $beforeCount = SpyProductAbstractImageStorageQuery::create()->count();
 
@@ -149,6 +261,8 @@ class ProductImageStorageListenerTest extends Unit
                 SpyProductImageSetTableMap::COL_FK_PRODUCT_ABSTRACT => $this->productAbstractTransfer->getIdProductAbstract(),
             ]),
         ];
+
+        // Act
         $productAbstractImageSetStorageListener->handleBulk($eventTransfers, ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_SET_CREATE);
 
         // Assert
@@ -158,8 +272,56 @@ class ProductImageStorageListenerTest extends Unit
     /**
      * @return void
      */
-    public function testProductAbstractImageSetProductImageStorageListenerStoreData()
+    public function testProductAbstractImageSetStoragePublishListener(): void
     {
+        // Prepare
+        SpyProductAbstractImageStorageQuery::create()->filterByFkProductAbstract($this->productAbstractTransfer->getIdProductAbstract())->delete();
+        $beforeCount = SpyProductAbstractImageStorageQuery::create()->count();
+
+        $productAbstractImageSetStoragePublishListener = new ProductAbstractImageSetStoragePublishListener();
+        $productAbstractImageSetStoragePublishListener->setFacade($this->getProductImageStorageFacade());
+
+        $eventTransfers = [
+            (new EventEntityTransfer())->setForeignKeys([
+                SpyProductImageSetTableMap::COL_FK_PRODUCT_ABSTRACT => $this->productAbstractTransfer->getIdProductAbstract(),
+            ]),
+        ];
+
+        // Act
+        $productAbstractImageSetStoragePublishListener->handleBulk($eventTransfers, ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_SET_CREATE);
+
+        // Assert
+        $this->assertProductAbstractImageStorage($beforeCount);
+    }
+
+    /**
+     * @return void
+     */
+    public function testProductAbstractImageSetStorageUnpublishListener(): void
+    {
+        // Prepare
+        $productAbstractImageSetStorageUnpublishListener = new ProductAbstractImageSetStorageUnpublishListener();
+        $productAbstractImageSetStorageUnpublishListener->setFacade($this->getProductImageStorageFacade());
+
+        $eventTransfers = [
+            (new EventEntityTransfer())->setForeignKeys([
+                SpyProductImageSetTableMap::COL_FK_PRODUCT_ABSTRACT => $this->productAbstractTransfer->getIdProductAbstract(),
+            ]),
+        ];
+
+        // Act
+        $productAbstractImageSetStorageUnpublishListener->handleBulk($eventTransfers, ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_SET_DELETE);
+
+        // Assert
+        $this->assertSame(0, SpyProductAbstractImageStorageQuery::create()->filterByFkProductAbstract($this->productAbstractTransfer->getIdProductAbstract())->count());
+    }
+
+    /**
+     * @return void
+     */
+    public function testProductAbstractImageSetProductImageStorageListenerStoreData(): void
+    {
+        // Prepare
         SpyProductAbstractImageStorageQuery::create()->filterByFkProductAbstract($this->productAbstractTransfer->getIdProductAbstract())->delete();
         $beforeCount = SpyProductAbstractImageStorageQuery::create()->count();
 
@@ -176,6 +338,7 @@ class ProductImageStorageListenerTest extends Unit
             $eventTransfers[] = (new EventEntityTransfer())->setId($productImageSetToProductImage->getIdProductImageSetToProductImage());
         }
 
+        // Act
         $productAbstractImageSetProductImageStorageListener->handleBulk($eventTransfers, ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_SET_TO_PRODUCT_IMAGE_UPDATE);
 
         // Assert
@@ -185,8 +348,64 @@ class ProductImageStorageListenerTest extends Unit
     /**
      * @return void
      */
+    public function testProductAbstractImageSetProductImageStoragePublishListener(): void
+    {
+        // Prepare
+        SpyProductAbstractImageStorageQuery::create()->filterByFkProductAbstract($this->productAbstractTransfer->getIdProductAbstract())->delete();
+        $beforeCount = SpyProductAbstractImageStorageQuery::create()->count();
+
+        $productAbstractImageSetProductImageStoragePublishListener = new ProductAbstractImageSetProductImageStoragePublishListener();
+        $productAbstractImageSetProductImageStoragePublishListener->setFacade($this->getProductImageStorageFacade());
+
+        $productImageSetToProductImage = SpyProductImageSetToProductImageQuery::create()->findOneByFkProductImageSet(
+            $this->productImageSetTransfer->getIdProductImageSet()
+        );
+
+        $eventTransfers = [];
+
+        if ($productImageSetToProductImage) {
+            $eventTransfers[] = (new EventEntityTransfer())->setId($productImageSetToProductImage->getIdProductImageSetToProductImage());
+        }
+
+        // Act
+        $productAbstractImageSetProductImageStoragePublishListener->handleBulk($eventTransfers, ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_SET_TO_PRODUCT_IMAGE_UPDATE);
+
+        // Assert
+        $this->assertProductAbstractImageStorage($beforeCount);
+    }
+
+    /**
+     * @return void
+     */
+    public function testProductAbstractImageSetProductImageStorageUnpublishListener(): void
+    {
+        // Prepare
+        $productAbstractImageSetProductImageStorageUnpublishListener = new ProductAbstractImageSetProductImageStorageUnpublishListener();
+        $productAbstractImageSetProductImageStorageUnpublishListener->setFacade($this->getProductImageStorageFacade());
+
+        $productImageSetToProductImage = SpyProductImageSetToProductImageQuery::create()->findOneByFkProductImageSet(
+            $this->productImageSetTransfer->getIdProductImageSet()
+        );
+
+        $eventTransfers = [];
+
+        if ($productImageSetToProductImage) {
+            $eventTransfers[] = (new EventEntityTransfer())->setId($productImageSetToProductImage->getIdProductImageSetToProductImage());
+        }
+
+        // Act
+        $productAbstractImageSetProductImageStorageUnpublishListener->handleBulk($eventTransfers, ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_SET_TO_PRODUCT_IMAGE_DELETE);
+
+        // Assert
+        $this->assertSame(0, SpyProductAbstractImageStorageQuery::create()->filterByFkProductAbstract($this->productAbstractTransfer->getIdProductAbstract())->count());
+    }
+
+    /**
+     * @return void
+     */
     public function testProductImageConcretePublishStorageListenerStoreData()
     {
+        // Prepare
         SpyProductConcreteImageStorageQuery::create()->filterByFkProduct($this->productConcreteTransfer->getIdProductConcrete())->delete();
         $beforeCount = SpyProductConcreteImageStorageQuery::create()->count();
 
@@ -196,6 +415,8 @@ class ProductImageStorageListenerTest extends Unit
         $eventTransfers = [
             (new EventEntityTransfer())->setId($this->productConcreteTransfer->getIdProductConcrete()),
         ];
+
+        // Act
         $productImageConcretePublishStorageListener->handleBulk($eventTransfers, ProductImageEvents::PRODUCT_IMAGE_PRODUCT_CONCRETE_PUBLISH);
 
         // Assert
@@ -205,7 +426,50 @@ class ProductImageStorageListenerTest extends Unit
     /**
      * @return void
      */
-    public function testProductConcreteImageStorageListenerStoreData()
+    public function testProductImageConcreteStoragePublishListenerStoreData(): void
+    {
+        // Prepare
+        SpyProductConcreteImageStorageQuery::create()->filterByFkProduct($this->productConcreteTransfer->getIdProductConcrete())->delete();
+        $beforeCount = SpyProductConcreteImageStorageQuery::create()->count();
+
+        $productImageConcreteStoragePublishListener = new ProductImageConcreteStoragePublishListener();
+        $productImageConcreteStoragePublishListener->setFacade($this->getProductImageStorageFacade());
+
+        $eventTransfers = [
+            (new EventEntityTransfer())->setId($this->productConcreteTransfer->getIdProductConcrete()),
+        ];
+
+        // Act
+        $productImageConcreteStoragePublishListener->handleBulk($eventTransfers, ProductImageEvents::PRODUCT_IMAGE_PRODUCT_CONCRETE_PUBLISH);
+
+        // Assert
+        $this->assertProductConcreteImageStorage($beforeCount);
+    }
+
+    /**
+     * @return void
+     */
+    public function testProductImageConcreteStorageUnpublishListenerStoreData(): void
+    {
+        // Prepare
+        $productImageConcreteStorageUnpublishListener = new ProductImageConcreteStorageUnpublishListener();
+        $productImageConcreteStorageUnpublishListener->setFacade($this->getProductImageStorageFacade());
+
+        $eventTransfers = [
+            (new EventEntityTransfer())->setId($this->productConcreteTransfer->getIdProductConcrete()),
+        ];
+
+        // Act
+        $productImageConcreteStorageUnpublishListener->handleBulk($eventTransfers, ProductImageEvents::PRODUCT_IMAGE_PRODUCT_CONCRETE_PUBLISH);
+
+        // Assert
+        $this->assertSame(0, SpyProductConcreteImageStorageQuery::create()->filterByFkProduct($this->productConcreteTransfer->getIdProductConcrete())->count());
+    }
+
+    /**
+     * @return void
+     */
+    public function testProductConcreteImageStorageListenerStoreData(): void
     {
         SpyProductConcreteImageStorageQuery::create()->filterByFkProduct($this->productConcreteTransfer->getIdProductConcrete())->delete();
         $beforeCount = SpyProductConcreteImageStorageQuery::create()->count();
@@ -228,7 +492,54 @@ class ProductImageStorageListenerTest extends Unit
     /**
      * @return void
      */
-    public function testProductConcreteImageSetStorageListenerStoreData()
+    public function testProductConcreteImageStoragePublishListener(): void
+    {
+        // Prepare
+        SpyProductConcreteImageStorageQuery::create()->filterByFkProduct($this->productConcreteTransfer->getIdProductConcrete())->delete();
+        $beforeCount = SpyProductConcreteImageStorageQuery::create()->count();
+
+        $productConcreteImageStoragePublishListener = new ProductConcreteImageStoragePublishListener();
+        $productConcreteImageStoragePublishListener->setFacade($this->getProductImageStorageFacade());
+
+        $eventTransfers = [];
+
+        foreach ($this->productImageSetTransfer->getProductImages() as $productImageTransfer) {
+            $eventTransfers[] = (new EventEntityTransfer())->setId($productImageTransfer->getIdProductImage());
+        }
+
+        // Act
+        $productConcreteImageStoragePublishListener->handleBulk($eventTransfers, ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_UPDATE);
+
+        // Assert
+        $this->assertProductConcreteImageStorage($beforeCount);
+    }
+
+    /**
+     * @return void
+     */
+    public function testProductConcreteImageStorageUnpublishListener(): void
+    {
+        // Prepare
+        $productConcreteImageStorageUnpublishListener = new ProductConcreteImageStorageUnpublishListener();
+        $productConcreteImageStorageUnpublishListener->setFacade($this->getProductImageStorageFacade());
+
+        $eventTransfers = [];
+
+        foreach ($this->productImageSetTransfer->getProductImages() as $productImageTransfer) {
+            $eventTransfers[] = (new EventEntityTransfer())->setId($productImageTransfer->getIdProductImage());
+        }
+
+        // Act
+        $productConcreteImageStorageUnpublishListener->handleBulk($eventTransfers, ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_DELETE);
+
+        // Assert
+        $this->assertSame(0, SpyProductConcreteImageStorageQuery::create()->filterByFkProduct($this->productConcreteTransfer->getIdProductConcrete())->count());
+    }
+
+    /**
+     * @return void
+     */
+    public function testProductConcreteImageSetStorageListenerStoreData(): void
     {
         SpyProductConcreteImageStorageQuery::create()->filterByFkProduct($this->productConcreteTransfer->getIdProductConcrete())->delete();
         $beforeCount = SpyProductConcreteImageStorageQuery::create()->count();
@@ -250,8 +561,56 @@ class ProductImageStorageListenerTest extends Unit
     /**
      * @return void
      */
-    public function testProductConcreteImageSetProductImageStorageListenerStoreData()
+    public function testProductConcreteImageSetStoragePublishListener(): void
     {
+        // Prepare
+        SpyProductConcreteImageStorageQuery::create()->filterByFkProduct($this->productConcreteTransfer->getIdProductConcrete())->delete();
+        $beforeCount = SpyProductConcreteImageStorageQuery::create()->count();
+
+        $productConcreteImageSetStoragePublishListener = new ProductConcreteImageSetStoragePublishListener();
+        $productConcreteImageSetStoragePublishListener->setFacade($this->getProductImageStorageFacade());
+
+        $eventTransfers = [
+            (new EventEntityTransfer())->setForeignKeys([
+                SpyProductImageSetTableMap::COL_FK_PRODUCT => $this->productConcreteTransfer->getIdProductConcrete(),
+            ]),
+        ];
+
+        // Act
+        $productConcreteImageSetStoragePublishListener->handleBulk($eventTransfers, ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_SET_CREATE);
+
+        // Assert
+        $this->assertProductConcreteImageStorage($beforeCount);
+    }
+
+    /**
+     * @return void
+     */
+    public function testProductConcreteImageSetStorageUnpublishListener(): void
+    {
+        // Prepare
+        $productConcreteImageSetStorageListener = new ProductConcreteImageSetStorageUnpublishListener();
+        $productConcreteImageSetStorageListener->setFacade($this->getProductImageStorageFacade());
+
+        $eventTransfers = [
+            (new EventEntityTransfer())->setForeignKeys([
+                SpyProductImageSetTableMap::COL_FK_PRODUCT => $this->productConcreteTransfer->getIdProductConcrete(),
+            ]),
+        ];
+
+        // Act
+        $productConcreteImageSetStorageListener->handleBulk($eventTransfers, ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_SET_DELETE);
+
+        // Assert
+        $this->assertSame(0, SpyProductConcreteImageStorageQuery::create()->filterByFkProduct($this->productConcreteTransfer->getIdProductConcrete())->count());
+    }
+
+    /**
+     * @return void
+     */
+    public function testProductConcreteImageSetProductImageStorageListenerStoreData(): void
+    {
+        // Prepare
         SpyProductConcreteImageStorageQuery::create()->filterByFkProduct($this->productConcreteTransfer->getIdProductConcrete())->delete();
         $beforeCount = SpyProductConcreteImageStorageQuery::create()->count();
 
@@ -266,10 +625,62 @@ class ProductImageStorageListenerTest extends Unit
             $eventTransfers[] = (new EventEntityTransfer())->setId($productImageSetToProductImage->getIdProductImageSetToProductImage());
         }
 
+        // Act
         $productConcreteImageSetProductImageStorageListener->handleBulk($eventTransfers, ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_SET_TO_PRODUCT_IMAGE_UPDATE);
 
         // Assert
         $this->assertProductConcreteImageStorage($beforeCount);
+    }
+
+    /**
+     * @return void
+     */
+    public function testProductConcreteImageSetProductImageStoragePublishListener(): void
+    {
+        // Prepare
+        SpyProductConcreteImageStorageQuery::create()->filterByFkProduct($this->productConcreteTransfer->getIdProductConcrete())->delete();
+        $beforeCount = SpyProductConcreteImageStorageQuery::create()->count();
+
+        $productConcreteImageSetProductImageStoragePublishListener = new ProductConcreteImageSetProductImageStoragePublishListener();
+        $productConcreteImageSetProductImageStoragePublishListener->setFacade($this->getProductImageStorageFacade());
+
+        $productImageSetToProductImage = SpyProductImageSetToProductImageQuery::create()->findOneByFkProductImageSet($this->productImageSetTransfer->getIdProductImageSet());
+
+        $eventTransfers = [];
+
+        if ($productImageSetToProductImage) {
+            $eventTransfers[] = (new EventEntityTransfer())->setId($productImageSetToProductImage->getIdProductImageSetToProductImage());
+        }
+
+        // Act
+        $productConcreteImageSetProductImageStoragePublishListener->handleBulk($eventTransfers, ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_SET_TO_PRODUCT_IMAGE_UPDATE);
+
+        // Assert
+        $this->assertProductConcreteImageStorage($beforeCount);
+    }
+
+    /**
+     * @return void
+     */
+    public function testProductConcreteImageSetProductImageStorageUnpublishListener(): void
+    {
+        // Prepare
+        $productConcreteImageSetProductImageStorageUnpublishListener = new ProductConcreteImageSetProductImageStorageUnpublishListener();
+        $productConcreteImageSetProductImageStorageUnpublishListener->setFacade($this->getProductImageStorageFacade());
+
+        $productImageSetToProductImage = SpyProductImageSetToProductImageQuery::create()->findOneByFkProductImageSet($this->productImageSetTransfer->getIdProductImageSet());
+
+        $eventTransfers = [];
+
+        if ($productImageSetToProductImage) {
+            $eventTransfers[] = (new EventEntityTransfer())->setId($productImageSetToProductImage->getIdProductImageSetToProductImage());
+        }
+
+        // Act
+        $productConcreteImageSetProductImageStorageUnpublishListener->handleBulk($eventTransfers, ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_SET_TO_PRODUCT_IMAGE_DELETE);
+
+        // Assert
+        $this->assertSame(0, SpyProductConcreteImageStorageQuery::create()->filterByFkProduct($this->productConcreteTransfer->getIdProductConcrete())->count());
     }
 
     /**
@@ -291,7 +702,7 @@ class ProductImageStorageListenerTest extends Unit
      *
      * @return void
      */
-    protected function assertProductAbstractImageStorage($beforeCount)
+    protected function assertProductAbstractImageStorage($beforeCount): void
     {
         $productImageStorageCount = SpyProductAbstractImageStorageQuery::create()->count();
         $this->assertGreaterThan($beforeCount, $productImageStorageCount);
@@ -306,7 +717,7 @@ class ProductImageStorageListenerTest extends Unit
      *
      * @return void
      */
-    protected function assertProductConcreteImageStorage($beforeCount)
+    protected function assertProductConcreteImageStorage(int $beforeCount): void
     {
         $productImageStorageCount = SpyProductConcreteImageStorageQuery::create()->count();
         $this->assertGreaterThan($beforeCount, $productImageStorageCount);

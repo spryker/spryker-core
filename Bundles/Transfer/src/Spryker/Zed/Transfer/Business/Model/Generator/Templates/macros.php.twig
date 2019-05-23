@@ -22,6 +22,8 @@
             'is_collection' => {{ property.is_collection ? 'true' : 'false' }},
             'is_transfer' => {{ property.is_transfer ? 'true' : 'false' }},
             'rest_request_parameter' => '{{ property.restRequestParameter is defined ? property.restRequestParameter : 'no' }}',
+            'is_associative' => {{ property.is_associative ? 'true' : 'false' }},
+            'is_nullable' => {{ property.nullable ? 'true' : 'false' }},
         ],
     {% endfor -%}
 ];
@@ -128,6 +130,33 @@
     public function {{ method.name }}({% if method.typeHint %}{{ method.typeHint }} {% endif %}${{ method.property }})
     {
         $this->{{ method.parent }}[] = ${{ method.property }};
+        $this->modifiedProperties[self::{{ method.propertyConst }}] = true;
+
+        return $this;
+    }
+{% endmacro -%}
+
+{# add associative method #}
+{%- macro addAssociative(method) %}
+    {% set propertyKey = method.property ~ 'Key' -%}
+    {% set propertyValue = method.property ~ 'Value' -%}
+    /**
+     {% if method.bundles is defined -%}
+     * @module {{ method.bundles|join('|') }}
+     *
+     {% endif -%}
+     {% if method.deprecationDescription is not null -%}
+     * @deprecated {{ method.deprecationDescription }}
+     *
+     {% endif -%}
+     * @param {{ method.var }} ${{ propertyKey }}
+     * @param {{ method.varValue }} ${{ propertyValue }}
+     *
+     * @return $this
+     */
+    public function {{ method.name }}({% if method.typeHint %}{{ method.typeHint }} {% endif %}${{ propertyKey }}, {% if method.typeHintValue %}{{ method.typeHintValue }} {% endif %}${{ propertyValue }})
+    {
+        $this->{{ method.parent }}[${{ propertyKey }}] = ${{ propertyValue }};
         $this->modifiedProperties[self::{{ method.propertyConst }}] = true;
 
         return $this;

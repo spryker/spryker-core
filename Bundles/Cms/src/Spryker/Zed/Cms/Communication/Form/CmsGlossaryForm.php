@@ -26,6 +26,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  * @method \Spryker\Zed\Cms\Business\CmsFacadeInterface getFacade()
  * @method \Spryker\Zed\Cms\Communication\CmsCommunicationFactory getFactory()
  * @method \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Cms\Persistence\CmsRepositoryInterface getRepository()
  * @method \Spryker\Zed\Cms\CmsConfig getConfig()
  */
 class CmsGlossaryForm extends AbstractType
@@ -38,12 +39,12 @@ class CmsGlossaryForm extends AbstractType
     public const FIELD_SEARCH_OPTION = 'search_option';
     public const FIELD_TRANSLATION = 'translation';
 
-    public const TYPE_GLOSSARY_NEW = 'New glossary';
-    public const TYPE_GLOSSARY_FIND = 'Find glossary';
-    public const TYPE_AUTO_GLOSSARY = 'Auto';
-    public const TYPE_FULLTEXT_SEARCH = 'Full text';
+    protected const TYPE_GLOSSARY_NEW = 'New glossary';
+    protected const TYPE_GLOSSARY_FIND = 'Find glossary';
+    protected const TYPE_AUTO_GLOSSARY = 'Auto';
+    protected const TYPE_FULLTEXT_SEARCH = 'Full text';
 
-    public const GROUP_PLACEHOLDER_CHECK = 'placeholder_check';
+    protected const GROUP_PLACEHOLDER_CHECK = 'placeholder_check';
     public const FIELD_FK_LOCALE = 'fk_locale';
 
     /**
@@ -51,7 +52,7 @@ class CmsGlossaryForm extends AbstractType
      *
      * @return void
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'validation_groups' => function (FormInterface $form) {
@@ -72,7 +73,7 @@ class CmsGlossaryForm extends AbstractType
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this
             ->addFkPageField($builder)
@@ -205,7 +206,7 @@ class CmsGlossaryForm extends AbstractType
     /**
      * @return array
      */
-    protected function getPlaceholderConstants()
+    protected function getPlaceholderConstants(): array
     {
         $placeholderConstraints = [
             new Required(),
@@ -215,7 +216,7 @@ class CmsGlossaryForm extends AbstractType
 
         $placeholderConstraints[] = new Callback([
             'callback' => function ($placeholder, ExecutionContextInterface $context) {
-                    $formData = $context->getRoot()->getViewData();
+                $formData = $context->getRoot()->getViewData();
                 if ($this->getFacade()->hasPagePlaceholderMapping($formData[self::FIELD_FK_PAGE], $placeholder)) {
                     $context->addViolation('Placeholder has already mapped');
                 }
@@ -229,18 +230,8 @@ class CmsGlossaryForm extends AbstractType
     /**
      * @return string
      */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'cms_glossary';
-    }
-
-    /**
-     * @deprecated Use `getBlockPrefix()` instead.
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->getBlockPrefix();
     }
 }

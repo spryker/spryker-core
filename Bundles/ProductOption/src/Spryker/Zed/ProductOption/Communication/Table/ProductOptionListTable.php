@@ -129,7 +129,9 @@ class ProductOptionListTable extends AbstractTable
     {
         $result = [];
 
-        $productQuery = $this->productOptionQueryContainer->queryAllProductOptionGroups();
+        $productQuery = $this->productOptionQueryContainer
+            ->queryAllProductOptionGroups()
+            ->joinSpyProductOptionValue();
 
         /** @var \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup[] $queryResult */
         $queryResult = $this->runQuery($productQuery, $config, true);
@@ -260,6 +262,7 @@ class ProductOptionListTable extends AbstractTable
         foreach ($productOptionGroupEntity->getSpyProductOptionValues() as $productOptionValueEntity) {
             $skus .= $this->wrapInlineCellItem($productOptionValueEntity->getSku());
         }
+
         return $skus;
     }
 
@@ -274,6 +277,7 @@ class ProductOptionListTable extends AbstractTable
         foreach ($productOptionGroupEntity->getSpyProductOptionValues() as $productOptionValueEntity) {
             $names .= $this->wrapInlineCellItem($productOptionValueEntity->getValue());
         }
+
         return $names;
     }
 

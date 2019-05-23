@@ -181,6 +181,7 @@ class VariantTable extends AbstractProductTable
             $this->type == ProductManagementConfig::PRODUCT_TYPE_BUNDLE) {
             return 'Yes';
         }
+
         return 'No';
     }
 
