@@ -8,7 +8,7 @@
     "spryker/cart-extension": "^2.1.0",
     "spryker/kernel": "^3.0.0",
     "spryker/price": "^5.0.0",
-    "spryker/product-option": "^6.6.0"
+    "spryker/product-option": "^7.0.0"
   },
   "require-dev": {
     "spryker/cart": "*",
