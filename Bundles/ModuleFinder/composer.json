@@ -20,7 +20,7 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "SprykerSdkTest\\": "tests/SprykerSdkTest/"
+      "SprykerTest\\": "tests/SprykerTest/"
     }
   },
   "minimum-stability": "dev",
