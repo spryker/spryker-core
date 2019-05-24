@@ -13,6 +13,8 @@ use Generated\Shared\DataBuilder\ProductImageBuilder;
 use Generated\Shared\DataBuilder\ProductImageSetBuilder;
 use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Generated\Shared\Transfer\ProductImageTransfer;
+use Orm\Zed\ProductImage\Persistence\SpyProductImage;
+use Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImage;
 use Spryker\Zed\Locale\Business\LocaleFacadeInterface;
 use Spryker\Zed\ProductImage\Business\ProductImageFacadeInterface;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
@@ -75,6 +77,32 @@ class ProductImageDataHelper extends Module
         });
 
         return $productImageSetTransfer;
+    }
+
+    /**
+     * @param int $idProductImageSet
+     * @param int $sortOrder
+     *
+     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImage
+     */
+    public function createProductImageSetToProductImage(
+        int $idProductImageSet,
+        int $sortOrder
+    ): SpyProductImageSetToProductImage {
+        $productImage = new SpyProductImage();
+        $productImage
+            ->setExternalUrlLarge(static::URL_LARGE)
+            ->setExternalUrlSmall(static::URL_SMALL)
+            ->save();
+
+        $productImageSetToProductImage = new SpyProductImageSetToProductImage();
+        $productImageSetToProductImage
+            ->setFkProductImage($productImage->getIdProductImage())
+            ->setFkProductImageSet($idProductImageSet)
+            ->setSortOrder($sortOrder)
+            ->save();
+
+        return $productImageSetToProductImage;
     }
 
     /**

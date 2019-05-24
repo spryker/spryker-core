@@ -37,6 +37,11 @@ use Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainer;
 class ProductImageFacadeTest extends Unit
 {
     /**
+     * @var \SprykerTest\Zed\ProductImage\ProductImageBusinessTester
+     */
+    protected $tester;
+
+    /**
      * @var \Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainerInterface
      */
     protected $queryContainer;
@@ -123,6 +128,8 @@ class ProductImageFacadeTest extends Unit
      */
     protected function setUp()
     {
+        parent::setUp();
+
         $this->queryContainer = new ProductImageQueryContainer();
         $this->productImageFacade = new ProductImageFacade();
 
@@ -245,32 +252,6 @@ class ProductImageFacadeTest extends Unit
     }
 
     /**
-     * @param int $idProductImageSet
-     * @param int $sortOrder
-     *
-     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImage
-     */
-    protected function createProductImageSetToProductImage(
-        int $idProductImageSet,
-        int $sortOrder
-    ): SpyProductImageSetToProductImage {
-        $productImage = new SpyProductImage();
-        $productImage
-            ->setExternalUrlLarge(static::URL_LARGE)
-            ->setExternalUrlSmall(static::URL_SMALL)
-            ->save();
-
-        $productImageSetToProductImage = new SpyProductImageSetToProductImage();
-        $productImageSetToProductImage
-            ->setFkProductImage($productImage->getIdProductImage())
-            ->setFkProductImageSet($idProductImageSet)
-            ->setSortOrder($sortOrder)
-            ->save();
-
-        return $productImageSetToProductImage;
-    }
-
-    /**
      * @return void
      */
     public function testPersistProductImageShouldCreateImage()
@@ -336,10 +317,10 @@ class ProductImageFacadeTest extends Unit
     public function testGetProductImagesSetCollectionByProductAbstractIdSortsImagesBySortOrderAsc(): void
     {
         // Arrange
-        $this->createProductImageSetToProductImage($this->imageSetSortedAbstract->getIdProductImageSet(), 3);
-        $this->createProductImageSetToProductImage($this->imageSetSortedAbstract->getIdProductImageSet(), 1);
-        $this->createProductImageSetToProductImage($this->imageSetSortedAbstract->getIdProductImageSet(), 0);
-        $this->createProductImageSetToProductImage($this->imageSetSortedAbstract->getIdProductImageSet(), 2);
+        $this->tester->createProductImageSetToProductImage($this->imageSetSortedAbstract->getIdProductImageSet(), 3);
+        $this->tester->createProductImageSetToProductImage($this->imageSetSortedAbstract->getIdProductImageSet(), 1);
+        $this->tester->createProductImageSetToProductImage($this->imageSetSortedAbstract->getIdProductImageSet(), 0);
+        $this->tester->createProductImageSetToProductImage($this->imageSetSortedAbstract->getIdProductImageSet(), 2);
 
         // Act
         $productImageCollection = $this->productImageFacade->getProductImagesSetCollectionByProductAbstractId(
@@ -360,9 +341,9 @@ class ProductImageFacadeTest extends Unit
     public function testGetProductImagesSetCollectionByProductAbstractIdSortsImagesByIdProductImageSetToProductImageAsc(): void
     {
         // Arrange
-        $this->createProductImageSetToProductImage($this->imageSetSortedAbstract->getIdProductImageSet(), 0);
-        $this->createProductImageSetToProductImage($this->imageSetSortedAbstract->getIdProductImageSet(), 0);
-        $this->createProductImageSetToProductImage($this->imageSetSortedAbstract->getIdProductImageSet(), 0);
+        $this->tester->createProductImageSetToProductImage($this->imageSetSortedAbstract->getIdProductImageSet(), 0);
+        $this->tester->createProductImageSetToProductImage($this->imageSetSortedAbstract->getIdProductImageSet(), 0);
+        $this->tester->createProductImageSetToProductImage($this->imageSetSortedAbstract->getIdProductImageSet(), 0);
 
         // Act
         $productImageCollection = $this->productImageFacade->getProductImagesSetCollectionByProductAbstractId(
@@ -370,12 +351,12 @@ class ProductImageFacadeTest extends Unit
         )[0]->getProductImages();
 
         // Assign
-        $IdProductImageSetToProductImage = 0;
+        $idProductImageSetToProductImage = 0;
         foreach ($productImageCollection as $productImageTransfer) {
             $this->assertTrue(
-                $productImageTransfer->getIdProductImageSetToProductImage() > $IdProductImageSetToProductImage
+                $productImageTransfer->getIdProductImageSetToProductImage() > $idProductImageSetToProductImage
             );
-            $IdProductImageSetToProductImage = $productImageTransfer->getIdProductImageSetToProductImage();
+            $idProductImageSetToProductImage = $productImageTransfer->getIdProductImageSetToProductImage();
         }
     }
 
@@ -397,10 +378,10 @@ class ProductImageFacadeTest extends Unit
     public function testGetProductImagesSetCollectionByProductIdSortsImagesBySortOrderAsc(): void
     {
         // Arrange
-        $this->createProductImageSetToProductImage($this->imageSetSortedConcrete->getIdProductImageSet(), 3);
-        $this->createProductImageSetToProductImage($this->imageSetSortedConcrete->getIdProductImageSet(), 1);
-        $this->createProductImageSetToProductImage($this->imageSetSortedConcrete->getIdProductImageSet(), 0);
-        $this->createProductImageSetToProductImage($this->imageSetSortedConcrete->getIdProductImageSet(), 2);
+        $this->tester->createProductImageSetToProductImage($this->imageSetSortedConcrete->getIdProductImageSet(), 3);
+        $this->tester->createProductImageSetToProductImage($this->imageSetSortedConcrete->getIdProductImageSet(), 1);
+        $this->tester->createProductImageSetToProductImage($this->imageSetSortedConcrete->getIdProductImageSet(), 0);
+        $this->tester->createProductImageSetToProductImage($this->imageSetSortedConcrete->getIdProductImageSet(), 2);
 
         // Act
         $productImageCollection = $this->productImageFacade->getProductImagesSetCollectionByProductId(
@@ -421,9 +402,9 @@ class ProductImageFacadeTest extends Unit
     public function testGetProductImagesSetCollectionByProductIdSortsImagesByIdProductImageSetToProductImageAsc(): void
     {
         // Arrange
-        $this->createProductImageSetToProductImage($this->imageSetSortedConcrete->getIdProductImageSet(), 0);
-        $this->createProductImageSetToProductImage($this->imageSetSortedConcrete->getIdProductImageSet(), 0);
-        $this->createProductImageSetToProductImage($this->imageSetSortedConcrete->getIdProductImageSet(), 0);
+        $this->tester->createProductImageSetToProductImage($this->imageSetSortedConcrete->getIdProductImageSet(), 0);
+        $this->tester->createProductImageSetToProductImage($this->imageSetSortedConcrete->getIdProductImageSet(), 0);
+        $this->tester->createProductImageSetToProductImage($this->imageSetSortedConcrete->getIdProductImageSet(), 0);
 
         // Act
         $productImageCollection = $this->productImageFacade->getProductImagesSetCollectionByProductId(
@@ -999,10 +980,10 @@ class ProductImageFacadeTest extends Unit
     public function testFindProductImageSetByIdSortsImagesBySortOrderAsc(): void
     {
         // Arrange
-        $this->createProductImageSetToProductImage($this->imageSetSortedAbstract->getIdProductImageSet(), 3);
-        $this->createProductImageSetToProductImage($this->imageSetSortedAbstract->getIdProductImageSet(), 1);
-        $this->createProductImageSetToProductImage($this->imageSetSortedAbstract->getIdProductImageSet(), 0);
-        $this->createProductImageSetToProductImage($this->imageSetSortedAbstract->getIdProductImageSet(), 2);
+        $this->tester->createProductImageSetToProductImage($this->imageSetSortedAbstract->getIdProductImageSet(), 3);
+        $this->tester->createProductImageSetToProductImage($this->imageSetSortedAbstract->getIdProductImageSet(), 1);
+        $this->tester->createProductImageSetToProductImage($this->imageSetSortedAbstract->getIdProductImageSet(), 0);
+        $this->tester->createProductImageSetToProductImage($this->imageSetSortedAbstract->getIdProductImageSet(), 2);
 
         // Act
         $productImageCollection = $this->productImageFacade->findProductImageSetById(
@@ -1023,9 +1004,9 @@ class ProductImageFacadeTest extends Unit
     public function testFindProductImageSetByIdSortsImagesByidProductImageSetToProductImageAsc(): void
     {
         // Arrange
-        $this->createProductImageSetToProductImage($this->imageSetSortedAbstract->getIdProductImageSet(), 0);
-        $this->createProductImageSetToProductImage($this->imageSetSortedAbstract->getIdProductImageSet(), 0);
-        $this->createProductImageSetToProductImage($this->imageSetSortedAbstract->getIdProductImageSet(), 0);
+        $this->tester->createProductImageSetToProductImage($this->imageSetSortedAbstract->getIdProductImageSet(), 0);
+        $this->tester->createProductImageSetToProductImage($this->imageSetSortedAbstract->getIdProductImageSet(), 0);
+        $this->tester->createProductImageSetToProductImage($this->imageSetSortedAbstract->getIdProductImageSet(), 0);
 
         // Act
         $productImageCollection = $this->productImageFacade->findProductImageSetById(
