@@ -36,7 +36,7 @@ class StoreValidator implements StoreValidatorInterface
      */
     public function validateQuoteStore(QuoteTransfer $quoteTransfer): QuoteValidationResponseTransfer
     {
-        $quoteValidationResponseTransfer = new QuoteValidationResponseTransfer();
+        $quoteValidationResponseTransfer = (new QuoteValidationResponseTransfer())->setIsSuccessful(true);
         $storeTransfer = $quoteTransfer->getStore();
 
         if (!$storeTransfer || !$storeTransfer->getName()) {
