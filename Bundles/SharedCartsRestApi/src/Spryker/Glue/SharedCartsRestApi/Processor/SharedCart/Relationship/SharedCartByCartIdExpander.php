@@ -11,19 +11,19 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestSharedCartsAttributesTransfer;
 use Generated\Shared\Transfer\ShareDetailCollectionTransfer;
 use Generated\Shared\Transfer\ShareDetailTransfer;
+use Spryker\Client\SharedCartsRestApi\SharedCartsRestApiClientInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\SharedCartsRestApi\Processor\SharedCart\Mapper\SharedCartMapperInterface;
-use Spryker\Glue\SharedCartsRestApi\Processor\SharedCart\Reader\SharedCartReaderInterface;
 use Spryker\Glue\SharedCartsRestApi\SharedCartsRestApiConfig;
 
 class SharedCartByCartIdExpander implements SharedCartByCartIdExpanderInterface
 {
     /**
-     * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
+     * @var \Spryker\Client\SharedCartsRestApi\SharedCartsRestApiClientInterface
      */
-    protected $restResourceBuilder;
+    protected $sharedCartsRestApiClient;
 
     /**
      * @var \Spryker\Glue\SharedCartsRestApi\Processor\SharedCart\Mapper\SharedCartMapperInterface
@@ -31,21 +31,21 @@ class SharedCartByCartIdExpander implements SharedCartByCartIdExpanderInterface
     protected $sharedCartMapper;
 
     /**
-     * @var \Spryker\Glue\SharedCartsRestApi\Processor\SharedCart\Reader\SharedCartReaderInterface
+     * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
      */
-    protected $sharedCartReader;
+    protected $restResourceBuilder;
 
     /**
-     * @param \Spryker\Glue\SharedCartsRestApi\Processor\SharedCart\Reader\SharedCartReaderInterface $sharedCartReader
+     * @param \Spryker\Client\SharedCartsRestApi\SharedCartsRestApiClientInterface $sharedCartsRestApiClient
      * @param \Spryker\Glue\SharedCartsRestApi\Processor\SharedCart\Mapper\SharedCartMapperInterface $sharedCartMapper
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      */
     public function __construct(
-        SharedCartReaderInterface $sharedCartReader,
+        SharedCartsRestApiClientInterface $sharedCartsRestApiClient,
         SharedCartMapperInterface $sharedCartMapper,
         RestResourceBuilderInterface $restResourceBuilder
     ) {
-        $this->sharedCartReader = $sharedCartReader;
+        $this->sharedCartsRestApiClient = $sharedCartsRestApiClient;
         $this->sharedCartMapper = $sharedCartMapper;
         $this->restResourceBuilder = $restResourceBuilder;
     }
@@ -61,7 +61,7 @@ class SharedCartByCartIdExpander implements SharedCartByCartIdExpanderInterface
         foreach ($resources as $resource) {
             $quoteTransfer = (new QuoteTransfer())->setUuid($resource->getId());
 
-            $shareDetailCollectionTransfer = $this->sharedCartReader
+            $shareDetailCollectionTransfer = $this->sharedCartsRestApiClient
                 ->getSharedCartsByCartUuid($quoteTransfer);
 
             $this->addSharedCartRelationships($resource, $shareDetailCollectionTransfer);

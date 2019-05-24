@@ -60,15 +60,7 @@ class CartPermissionGroupResponseBuilder implements CartPermissionGroupResponseB
         $restResponse = $this->createEmptyCartPermissionGroupsResponse();
 
         foreach ($quotePermissionGroups as $quotePermissionGroupTransfer) {
-            $cartPermissionGroupsResource = $this->createCartPermissionGroupsResource(
-                (string)$quotePermissionGroupTransfer->getIdQuotePermissionGroup(),
-                $this->cartPermissionGroupMapper->mapQuotePermissionGroupTransferToRestCartPermissionGroupsAttributesTransfer(
-                    $quotePermissionGroupTransfer,
-                    new RestCartPermissionGroupsAttributesTransfer()
-                ),
-                $quotePermissionGroupTransfer
-            );
-            $restResponse->addResource($cartPermissionGroupsResource);
+            $restResponse->addResource($this->createCartPermissionGroupsResource($quotePermissionGroupTransfer));
         }
 
         return $restResponse;
@@ -81,36 +73,25 @@ class CartPermissionGroupResponseBuilder implements CartPermissionGroupResponseB
      */
     public function createCartPermissionGroupsResponse(QuotePermissionGroupTransfer $quotePermissionGroupTransfer): RestResponseInterface
     {
-        $cartPermissionGroupsResource = $this->createCartPermissionGroupsResource(
+        return $this->createEmptyCartPermissionGroupsResponse()
+            ->addResource($this->createCartPermissionGroupsResource($quotePermissionGroupTransfer));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuotePermissionGroupTransfer $quotePermissionGroupTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     */
+    public function createCartPermissionGroupsResource(QuotePermissionGroupTransfer $quotePermissionGroupTransfer): RestResourceInterface
+    {
+        $cartPermissionGroupRestResource = $this->restResourceBuilder->createRestResource(
+            CartPermissionGroupsRestApiConfig::RESOURCE_CART_PERMISSION_GROUPS,
             (string)$quotePermissionGroupTransfer->getIdQuotePermissionGroup(),
             $this->cartPermissionGroupMapper->mapQuotePermissionGroupTransferToRestCartPermissionGroupsAttributesTransfer(
                 $quotePermissionGroupTransfer,
                 new RestCartPermissionGroupsAttributesTransfer()
-            ),
-            $quotePermissionGroupTransfer
+            )
         );
-
-        return $this->createEmptyCartPermissionGroupsResponse()->addResource($cartPermissionGroupsResource);
-    }
-
-    /**
-     * @param string $cartPermissionGroupUuid
-     * @param \Generated\Shared\Transfer\RestCartPermissionGroupsAttributesTransfer $restCartPermissionGroupsAttributesTransfer
-     * @param \Generated\Shared\Transfer\QuotePermissionGroupTransfer|null $quotePermissionGroupTransfer
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
-     */
-    public function createCartPermissionGroupsResource(
-        string $cartPermissionGroupUuid,
-        RestCartPermissionGroupsAttributesTransfer $restCartPermissionGroupsAttributesTransfer,
-        ?QuotePermissionGroupTransfer $quotePermissionGroupTransfer = null
-    ): RestResourceInterface {
-        $cartPermissionGroupRestResource = $this->restResourceBuilder->createRestResource(
-            CartPermissionGroupsRestApiConfig::RESOURCE_CART_PERMISSION_GROUPS,
-            $cartPermissionGroupUuid,
-            $restCartPermissionGroupsAttributesTransfer
-        );
-
         $cartPermissionGroupRestResource->setPayload($quotePermissionGroupTransfer);
 
         return $cartPermissionGroupRestResource;

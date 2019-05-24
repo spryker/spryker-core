@@ -8,8 +8,6 @@
 namespace Spryker\Glue\CartPermissionGroupsRestApi\Processor\CartPermissionGroup\Relationship;
 
 use Generated\Shared\Transfer\QuotePermissionGroupTransfer;
-use Generated\Shared\Transfer\RestCartPermissionGroupsAttributesTransfer;
-use Spryker\Glue\CartPermissionGroupsRestApi\Processor\Mapper\CartPermissionGroupMapperInterface;
 use Spryker\Glue\CartPermissionGroupsRestApi\Processor\ResponseBuilder\CartPermissionGroupResponseBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -22,20 +20,11 @@ abstract class AbstractCartPermissionGroupResourceRelationshipExpander implement
     protected $cartPermissionGroupResponseBuilder;
 
     /**
-     * @var \Spryker\Glue\CartPermissionGroupsRestApi\Processor\Mapper\CartPermissionGroupMapperInterface
-     */
-    protected $cartPermissionGroupMapper;
-
-    /**
      * @param \Spryker\Glue\CartPermissionGroupsRestApi\Processor\ResponseBuilder\CartPermissionGroupResponseBuilderInterface $cartPermissionGroupResponseBuilder
-     * @param \Spryker\Glue\CartPermissionGroupsRestApi\Processor\Mapper\CartPermissionGroupMapperInterface $cartPermissionGroupMapper
      */
-    public function __construct(
-        CartPermissionGroupResponseBuilderInterface $cartPermissionGroupResponseBuilder,
-        CartPermissionGroupMapperInterface $cartPermissionGroupMapper
-    ) {
+    public function __construct(CartPermissionGroupResponseBuilderInterface $cartPermissionGroupResponseBuilder)
+    {
         $this->cartPermissionGroupResponseBuilder = $cartPermissionGroupResponseBuilder;
-        $this->cartPermissionGroupMapper = $cartPermissionGroupMapper;
     }
 
     /**
@@ -75,16 +64,7 @@ abstract class AbstractCartPermissionGroupResourceRelationshipExpander implement
     protected function createCartPermissionGroupRestResource(
         QuotePermissionGroupTransfer $quotePermissionGroupTransfer
     ): RestResourceInterface {
-        $restCartPermissionGroupsAttributesTransfer = $this->cartPermissionGroupMapper
-            ->mapQuotePermissionGroupTransferToRestCartPermissionGroupsAttributesTransfer(
-                $quotePermissionGroupTransfer,
-                new RestCartPermissionGroupsAttributesTransfer()
-            );
-
-        return $this->cartPermissionGroupResponseBuilder->createCartPermissionGroupsResource(
-            (string)$quotePermissionGroupTransfer->getIdQuotePermissionGroup(),
-            $restCartPermissionGroupsAttributesTransfer,
-            $quotePermissionGroupTransfer
-        );
+        return $this->cartPermissionGroupResponseBuilder
+            ->createCartPermissionGroupsResource($quotePermissionGroupTransfer);
     }
 }

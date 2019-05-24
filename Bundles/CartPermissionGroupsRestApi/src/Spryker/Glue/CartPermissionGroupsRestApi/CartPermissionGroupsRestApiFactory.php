@@ -56,8 +56,7 @@ class CartPermissionGroupsRestApiFactory extends AbstractFactory
     public function createCartPermissionGroupByShareDetailResourceRelationshipExpander(): CartPermissionGroupResourceRelationshipExpanderInterface
     {
         return new CartPermissionGroupByShareDetailResourceRelationshipExpander(
-            $this->createCartPermissionGroupResponseBuilder(),
-            $this->createCartPermissionGroupMapper()
+            $this->createCartPermissionGroupResponseBuilder()
         );
     }
 
