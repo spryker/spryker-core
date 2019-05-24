@@ -17,15 +17,15 @@ class StorageRedisExporter implements StorageRedisExporterInterface
     protected $redisFacade;
 
     /**
-     * @var int|null
+     * @var int
      */
     protected $redisPort;
 
     /**
      * @param \Spryker\Zed\StorageRedis\Dependency\Facade\StorageRedisToRedisFacadeInterface $redisFacade
-     * @param int|null $redisPort
+     * @param int $redisPort
      */
-    public function __construct(StorageRedisToRedisFacadeInterface $redisFacade, ?int $redisPort = null)
+    public function __construct(StorageRedisToRedisFacadeInterface $redisFacade, int $redisPort)
     {
         $this->redisFacade = $redisFacade;
         $this->redisPort = $redisPort;

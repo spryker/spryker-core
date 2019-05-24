@@ -14,12 +14,15 @@ class StorageRedisConfig extends AbstractBundleConfig
 {
     public const DEFAULT_REDIS_DATABASE = 0;
 
+    protected const DEFAULT_RDB_DUMP_PATH = '/var/lib/redis/dump.rdb';
+    protected const DEFAULT_STORAGE_REDIS_PORT = 6379;
+
     /**
-     * @return int|null
+     * @return int
      */
-    public function getRedisPort(): ?int
+    public function getRedisPort(): int
     {
-        return $this->get(StorageRedisConstants::STORAGE_REDIS_PORT);
+        return $this->get(StorageRedisConstants::STORAGE_REDIS_PORT, static::DEFAULT_STORAGE_REDIS_PORT);
     }
 
     /**
@@ -27,6 +30,6 @@ class StorageRedisConfig extends AbstractBundleConfig
      */
     public function getRdbDumpPath(): string
     {
-        return $this->get(StorageRedisConstants::RDB_DUMP_PATH);
+        return $this->get(StorageRedisConstants::RDB_DUMP_PATH, static::DEFAULT_RDB_DUMP_PATH);
     }
 }

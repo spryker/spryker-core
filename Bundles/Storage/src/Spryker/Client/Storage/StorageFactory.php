@@ -30,7 +30,7 @@ class StorageFactory extends AbstractFactory
     protected static $storageService;
 
     /**
-     * @deprecated Use `Spryker\Client\StorageExtension\Dependency\Plugin\StoragePluginInterface` implementation instead.
+     * @deprecated Use `Spryker\Client\StorageExtension\Dependency\Plugin\StoragePluginInterface` instead.
      *
      * @return \Spryker\Client\Storage\Redis\ServiceInterface
      */
@@ -63,7 +63,7 @@ class StorageFactory extends AbstractFactory
      */
     protected function createClient()
     {
-        return new Client($this->getConfig(), $this->getPredisClientOptions());
+        return new Client($this->getPredisConfig(), $this->getPredisClientOptions());
     }
 
     /**
@@ -71,7 +71,7 @@ class StorageFactory extends AbstractFactory
      *
      * @return array
      */
-    protected function getConfig()
+    protected function getPredisConfig()
     {
         return $this->getConnectionParameters();
     }

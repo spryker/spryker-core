@@ -19,7 +19,7 @@ interface SessionLockerInterface
     /**
      * @return void
      */
-    public function unlockCurrent();
+    public function unlockCurrent(): void;
 
     /**
      * @param string $sessionId

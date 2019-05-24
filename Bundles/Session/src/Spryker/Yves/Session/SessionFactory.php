@@ -63,6 +63,8 @@ class SessionFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Use `Spryker\Yves\SessionRedis\SessionRedisFactory::createSessionHandlerRedis()` instead.
+     *
      * @return \Spryker\Shared\Session\Business\Handler\SessionHandlerRedis|\SessionHandlerInterface
      */
     protected function createSessionHandlerRedis()
@@ -74,6 +76,8 @@ class SessionFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Use `Spryker\Yves\SessionRedis\SessionRedisFactory::createSessionHandlerRedisLocking()` instead.
+     *
      * @return \Spryker\Shared\Session\Business\Handler\SessionHandlerRedisLocking|\SessionHandlerInterface
      */
     protected function createSessionHandlerRedisLocking()
@@ -85,6 +89,8 @@ class SessionFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Use `Spryker\Yves\SessionFile::createSessionHandlerFile()` instead.
+     *
      * @return \Spryker\Shared\Session\Business\Handler\SessionHandlerRedisLocking|\SessionHandlerInterface
      */
     protected function createSessionHandlerFile()
@@ -95,6 +101,8 @@ class SessionFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Use `Spryker\Yves\SessionRedis\SessionRedisFactory::createSessionHandlerFactory()` instead.
+     *
      * @return \Spryker\Yves\Session\Model\SessionHandlerFactory
      */
     protected function createSessionHandlerFactory()

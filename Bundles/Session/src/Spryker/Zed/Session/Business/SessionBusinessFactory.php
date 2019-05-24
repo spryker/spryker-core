@@ -91,7 +91,7 @@ class SessionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use `Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerProviderPluginInterface` instead.
+     * @deprecated Use `Spryker\Zed\SessionExtension\Dependency\Plugin\SessionLockReleaserPluginInterface` instead.
      *
      * @param array|string $connectionParameters
      * @param array $connectionOptions
@@ -109,6 +109,8 @@ class SessionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Use `Spryker\Zed\SessionExtension\Dependency\Plugin\SessionLockReleaserPluginInterface` instead.
+     *
      * @param array|string $connectionParameters
      * @param array $connectionOptions
      *
@@ -122,6 +124,8 @@ class SessionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Use `Spryker\Zed\SessionExtension\Dependency\Plugin\SessionLockReleaserPluginInterface` instead.
+     *
      * @param \Predis\Client $redisClient
      *
      * @return \Spryker\Shared\Session\Business\Handler\Lock\SessionLockerInterface
@@ -134,6 +138,8 @@ class SessionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Use `Spryker\Zed\SessionExtension\Dependency\Plugin\SessionLockReleaserPluginInterface` instead.
+     *
      * @return \Spryker\Zed\Session\Business\Model\SessionFactory
      */
     protected function createSessionHandlerFactory()
@@ -166,6 +172,8 @@ class SessionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Use `Spryker\Zed\SessionExtension\Dependency\Plugin\SessionLockReleaserPluginInterface` instead.
+     *
      * @param \Predis\Client $redisClient
      *
      * @return \Spryker\Zed\Session\Business\Lock\SessionLockReaderInterface
@@ -179,6 +187,8 @@ class SessionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Use `Spryker\Zed\SessionExtension\Dependency\Plugin\SessionLockReleaserPluginInterface` instead.
+     *
      * @return \Spryker\Shared\Session\Business\Handler\KeyGenerator\LockKeyGeneratorInterface
      */
     protected function createRedisLockKeyGenerator()
