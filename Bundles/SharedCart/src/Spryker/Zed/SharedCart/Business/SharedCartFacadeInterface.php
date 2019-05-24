@@ -207,6 +207,7 @@ interface SharedCartFacadeInterface
     /**
      * Specification:
      * - Expands a collection of quotes with collection of quotes shared with the customer.
+     * - Expands each quote with the QuotePermissionGroup the user has assigned to him.
      * - Requires CompanyUser::idCompanyUser to be set on the CustomerTransfer taken as a parameter.
      *
      * @api

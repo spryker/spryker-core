@@ -22,6 +22,7 @@ class SharedCartQuoteCollectionExpanderPlugin extends AbstractPlugin implements 
     /**
      * {@inheritdoc}
      * - Expands quotes collection response with customer's shared quotes collection.
+     * - Expands each quote with the QuotePermissionGroup the user has assigned to him.
      *
      * @api
      *
