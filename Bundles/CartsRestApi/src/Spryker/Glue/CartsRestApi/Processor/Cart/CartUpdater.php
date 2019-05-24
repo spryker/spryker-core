@@ -66,19 +66,18 @@ class CartUpdater implements CartUpdaterInterface
         RestRequestInterface $restRequest,
         RestCartsAttributesTransfer $restCartsAttributesTransfer
     ): RestResponseInterface {
-        $restUser = $restRequest->getRestUser();
         $customerTransfer = (new CustomerTransfer())
             ->setIdCustomer($restRequest->getRestUser()->getSurrogateIdentifier())
             ->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier());
         $customerTransfer = $this->executeCustomerExpanderPlugins($customerTransfer, $restRequest);
         $quoteTransfer = $this->cartsResourceMapper->mapRestCartsAttributesTransferToQuoteTransfer(
             $restCartsAttributesTransfer,
-            (new QuoteTransfer())->setCustomerReference($restUser->getNaturalIdentifier())
+            (new QuoteTransfer())->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier())
         );
 
         $quoteTransfer
             ->setUuid($restRequest->getResource()->getId())
-            ->setCompanyUserId($restUser->getIdCompany())
+            ->setCompanyUserId($restRequest->getRestUser()->getIdCompany())
             ->setCustomer($customerTransfer);
 
         $quoteResponseTransfer = $this->cartsRestApiClient->updateQuote($quoteTransfer);

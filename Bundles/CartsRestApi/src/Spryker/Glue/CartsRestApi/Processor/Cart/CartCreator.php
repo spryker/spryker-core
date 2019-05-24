@@ -57,13 +57,12 @@ class CartCreator implements CartCreatorInterface
         RestRequestInterface $restRequest,
         RestCartsAttributesTransfer $restCartsAttributesTransfer
     ): RestResponseInterface {
-        $restUser = $restRequest->getRestUser();
         $quoteTransfer = $this->cartsResourceMapper->mapRestCartsAttributesTransferToQuoteTransfer(
             $restCartsAttributesTransfer,
-            (new QuoteTransfer())->setCustomerReference($restUser->getNaturalIdentifier())
+            (new QuoteTransfer())->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier())
         );
 
-        $quoteTransfer->setCompanyUserId($restUser->getIdCompany());
+        $quoteTransfer->setCompanyUserId($restRequest->getRestUser()->getIdCompany());
         $quoteResponseTransfer = $this->cartsRestApiClient->createQuote($quoteTransfer);
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
