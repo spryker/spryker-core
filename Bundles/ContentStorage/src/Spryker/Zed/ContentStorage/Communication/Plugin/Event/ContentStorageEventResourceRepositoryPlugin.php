@@ -40,7 +40,7 @@ class ContentStorageEventResourceRepositoryPlugin extends AbstractPlugin impleme
      *
      * @param int[] $ids
      *
-     * @return \Generated\Shared\Transfer\ContentTransfer[]
+     * @return \Generated\Shared\Transfer\ContentTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
      */
     public function getData(array $ids = []): array
     {
