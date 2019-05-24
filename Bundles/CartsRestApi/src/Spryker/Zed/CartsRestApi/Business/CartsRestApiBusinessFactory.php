@@ -75,7 +75,7 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
     public function createQuoteCreator(): QuoteCreatorInterface
     {
         return new QuoteCreator(
-            $this->getQuoteCreatorPlugins(),
+            $this->getQuoteCreatorPlugin(),
             $this->createQuoteMapper(),
             $this->getStoreFacade()
         );
@@ -87,7 +87,7 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
     public function createSingleQuoteCreator(): SingleQuoteCreatorInterface
     {
         return new SingleQuoteCreator(
-            $this->createQuoteCreator(),
+            $this->getPersistentCartFacade(),
             $this->createQuoteReader()
         );
     }
@@ -227,7 +227,7 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteCreatorPluginInterface
      */
-    public function getQuoteCreatorPlugins(): QuoteCreatorPluginInterface
+    public function getQuoteCreatorPlugin(): QuoteCreatorPluginInterface
     {
         return $this->getProvidedDependency(CartsRestApiDependencyProvider::PLUGIN_QUOTE_CREATOR);
     }

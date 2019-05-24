@@ -8,12 +8,14 @@
 namespace SprykerTest\Zed\CartsRestApi\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Zed\CartsRestApi\Business\CartsRestApiBusinessFactory;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToQuoteFacadeBridge;
+use Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteCreatorPluginInterface;
 use Spryker\Zed\Quote\Business\QuoteFacade;
 
 /**
@@ -83,6 +85,53 @@ class CartsRestApiFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testCreateQuoteWillCreateQuote(): void
+    {
+        /** @var \Spryker\Zed\CartsRestApi\Business\CartsRestApiFacade $cartsRestApiFacade */
+        $cartsRestApiFacade = $this->tester->getFacade();
+        $cartsRestApiFacade->setFactory($this->getMockCartsRestApiBusinessFactory());
+
+        $quoteTransfer = $this->tester->prepareQuoteTransfer();
+        $quoteTransfer->setCustomer((new CustomerTransfer())->setCustomerReference($quoteTransfer->getCustomerReference()));
+
+        $quoteResponseTransfer = $cartsRestApiFacade->createQuote($quoteTransfer);
+
+        $this->assertInstanceOf(QuoteResponseTransfer::class, $quoteResponseTransfer);
+        $this->assertTrue($quoteResponseTransfer->getIsSuccessful());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreateQuoteWillNotCreateQuoteWithOutCustomer(): void
+    {
+        /** @var \Spryker\Zed\CartsRestApi\Business\CartsRestApiFacade $cartsRestApiFacade */
+        $cartsRestApiFacade = $this->tester->getFacade();
+        $cartsRestApiFacade->setFactory($this->getMockCartsRestApiBusinessFactory());
+
+        $quoteTransfer = $this->tester->prepareQuoteTransfer();
+        $this->expectException(RequiredTransferPropertyException::class);
+        $cartsRestApiFacade->createQuote($quoteTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreateSingleQuoteWillNotAllowCreateMoreThanOneQuote(): void
+    {
+        /** @var \Spryker\Zed\CartsRestApi\Business\CartsRestApiFacade $cartsRestApiFacade */
+        $cartsRestApiFacade = $this->tester->getFacade();
+        $cartsRestApiFacade->setFactory($this->getMockCartsRestApiBusinessFactory());
+
+        $quoteTransfer = $this->tester->prepareQuoteTransfer();
+        $quoteResponseTransfer = $cartsRestApiFacade->createSingleQuote($quoteTransfer);
+
+        $this->assertFalse($quoteResponseTransfer->getIsSuccessful());
+    }
+
+    /**
      * @return \PHPUnit\Framework\MockObject\MockObject
      */
     protected function getMockCartsRestApiBusinessFactory(): MockObject
@@ -94,10 +143,12 @@ class CartsRestApiFacadeTest extends Unit
                 'getStoreFacade',
                 'getCartFacade',
                 'getPersistentCartFacade',
+                'getQuoteCreatorPlugin',
             ]
         );
 
         $cartsRestApiBusinessFactoryMock = $this->addMockQuoteFacade($cartsRestApiBusinessFactoryMock);
+        $cartsRestApiBusinessFactoryMock = $this->addQuoteCreatorPlugin($cartsRestApiBusinessFactoryMock);
 
         return $cartsRestApiBusinessFactoryMock;
     }
@@ -118,7 +169,6 @@ class CartsRestApiFacadeTest extends Unit
 
         $quoteFacadeMock->method('findQuoteByUuid')
             ->willReturn($this->tester->prepareQuoteResponseTransferWithQuote());
-
         $cartsRestApiBusinessFactoryMock->method('getQuoteFacade')
             ->willReturn((new CartsRestApiToQuoteFacadeBridge($quoteFacadeMock)));
 
@@ -137,10 +187,12 @@ class CartsRestApiFacadeTest extends Unit
                 'getStoreFacade',
                 'getCartFacade',
                 'getPersistentCartFacade',
+                'getQuoteCreatorPlugin',
             ]
         );
 
         $cartsRestApiBusinessFactoryMock = $this->addFailingMockQuoteFacade($cartsRestApiBusinessFactoryMock);
+        $cartsRestApiBusinessFactoryMock = $this->addQuoteCreatorPlugin($cartsRestApiBusinessFactoryMock);
 
         return $cartsRestApiBusinessFactoryMock;
     }
@@ -166,5 +218,34 @@ class CartsRestApiFacadeTest extends Unit
             ->willReturn((new CartsRestApiToQuoteFacadeBridge($quoteFacadeMock)));
 
         return $cartsRestApiBusinessFactoryMock;
+    }
+
+    /**
+     * @param \PHPUnit\Framework\MockObject\MockObject $cartsRestApiBusinessFactoryMock
+     *
+     * @return \PHPUnit\Framework\MockObject\MockObject
+     */
+    protected function addQuoteCreatorPlugin(MockObject $cartsRestApiBusinessFactoryMock): MockObject
+    {
+        $cartsRestApiBusinessFactoryMock->method('getQuoteCreatorPlugin')
+            ->willReturn($this->createMockQuoteCreatorPlugin());
+
+        return $cartsRestApiBusinessFactoryMock;
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject
+     */
+    protected function createMockQuoteCreatorPlugin(): MockObject
+    {
+        $mockQuoteCreatorPlugin = $this->createPartialMock(
+            QuoteCreatorPluginInterface::class,
+            ['createQuote']
+        );
+        $mockQuoteCreatorPlugin
+            ->method('createQuote')
+            ->willReturn($this->tester->prepareQuoteResponseTransferWithQuote());
+
+        return $mockQuoteCreatorPlugin;
     }
 }

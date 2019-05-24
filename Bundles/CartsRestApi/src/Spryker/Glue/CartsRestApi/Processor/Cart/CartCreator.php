@@ -63,7 +63,7 @@ class CartCreator implements CartCreatorInterface
             (new QuoteTransfer())->setCustomerReference($restUser->getNaturalIdentifier())
         );
 
-        $quoteTransfer->setCompanyUserId($restUser->getIdCompany());
+        $quoteTransfer->setCompanyUserId($restUser->getIdCompanyUser());
         $quoteResponseTransfer = $this->cartsRestApiClient->createQuote($quoteTransfer);
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {

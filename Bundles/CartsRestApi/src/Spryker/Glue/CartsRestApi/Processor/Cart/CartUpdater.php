@@ -65,7 +65,7 @@ class CartUpdater implements CartUpdaterInterface
 
         $quoteTransfer
             ->setUuid($restRequest->getResource()->getId())
-            ->setCompanyUserId($restUser->getIdCompany());
+            ->setCompanyUserId($restUser->getIdCompanyUser());
 
         $quoteResponseTransfer = $this->cartsRestApiClient->updateQuote($quoteTransfer);
 
