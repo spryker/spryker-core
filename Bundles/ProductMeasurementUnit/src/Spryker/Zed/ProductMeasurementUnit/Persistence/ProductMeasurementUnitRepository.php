@@ -230,12 +230,10 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
      */
     public function findFilteredProductMeasurementUnitTransfers(FilterTransfer $filterTransfer): array
     {
-        $query = $this->getFactory()
-            ->createProductMeasurementUnitQuery()
-            ->offset($filterTransfer->getOffset())
-            ->limit($filterTransfer->getLimit());
-
-        $productMeasurementUnitEntityCollection = $query->find();
+        $productMeasurementUnitEntityCollection = $this->buildQueryFromCriteria(
+            $this->getFactory()->createProductMeasurementUnitQuery(),
+            $filterTransfer
+        )->find();
 
         return $this->getMappedProductMeasurementUnitTransfers($productMeasurementUnitEntityCollection);
     }
@@ -274,18 +272,10 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
      */
     protected function findProductMeasurementSalesUnitIdsFilteredByOffsetAndLimit(FilterTransfer $filterTransfer): array
     {
-        $productMeasurementSalesUnitIds = [];
-
-        $query = $this->getFactory()
-            ->createProductMeasurementSalesUnitQuery()
-            ->offset($filterTransfer->getOffset())
-            ->limit($filterTransfer->getLimit());
-
-        foreach ($query->find() as $productMeasurementSalesUnit) {
-            $productMeasurementSalesUnitIds[] = $productMeasurementSalesUnit->getIdProductMeasurementSalesUnit();
-        }
-
-        return $productMeasurementSalesUnitIds;
+        return $this->buildQueryFromCriteria($this->getFactory()->createProductMeasurementSalesUnitQuery(), $filterTransfer)
+            ->select(SpyProductMeasurementSalesUnitTableMap::COL_ID_PRODUCT_MEASUREMENT_SALES_UNIT)
+            ->find()
+            ->toArray();
     }
 
     /**

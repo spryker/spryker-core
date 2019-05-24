@@ -57,9 +57,6 @@ class ProductQuantityStorageRepository extends AbstractRepository implements Pro
             $query->filterByFkProduct_In($productIds);
         }
 
-        $query->setOffset($filterTransfer->getOffset())
-            ->setLimit($filterTransfer->getLimit());
-
-        return $this->buildQueryFromCriteria($query)->find();
+        return $this->buildQueryFromCriteria($query, $filterTransfer)->find();
     }
 }
