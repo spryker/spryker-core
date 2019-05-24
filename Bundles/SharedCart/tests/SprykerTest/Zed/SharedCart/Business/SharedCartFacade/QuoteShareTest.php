@@ -10,8 +10,8 @@ namespace SprykerTest\Zed\SharedCart\Business\SharedCartFacade;
 use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CompanyUserTransfer;
-use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
+use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuotePermissionGroupCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuotePermissionGroupTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -284,60 +284,21 @@ class QuoteShareTest extends Unit
         // Act
         $quoteCollectionTransfer = $this->tester->getFacade()->expandQuoteCollectionWithCustomerSharedQuoteCollection(
             (new QuoteCollectionTransfer()),
-            (new CustomerTransfer())->setCompanyUserTransfer($companyUserTransfer)
+            (new QuoteCriteriaFilterTransfer())
+                ->setIdCompanyUser($companyUserTransfer->getIdCompanyUser())
+                ->setIdStore($storeTransfer->getIdStore())
         );
 
         // Assert
         $this->assertCount(1, $quoteCollectionTransfer->getQuotes());
-    }
-
-    /**
-     * @return void
-     */
-    public function testExpandQuoteCollectionWithCustomerShareDetailWillExpandQuoteCollectionWithShareDetailsCollection(): void
-    {
-        // Arrange
-        $ownerCustomerTransfer = $this->tester->haveCustomer();
-        $customerTransfer = $this->tester->haveCustomer();
-        $companyTransfer = $this->tester->haveCompany();
-        $companyUserTransfer = $this->tester->haveCompanyUser([
-            CompanyUserTransfer::CUSTOMER => $customerTransfer,
-            CompanyUserTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
-        ]);
-        $storeTransfer = $this->tester->haveStore([
-            StoreTransfer::NAME => static::STORE_NAME_DE,
-        ]);
-        $quoteTransfer = $this->tester->havePersistentQuote([
-            QuoteTransfer::CUSTOMER_REFERENCE => $ownerCustomerTransfer->getCustomerReference(),
-            QuoteTransfer::CUSTOMER => $ownerCustomerTransfer,
-            QuoteTransfer::STORE => $storeTransfer,
-        ]);
-        $spyQuotePermissionGroup = $this->tester->haveQuotePermissionGroup(
-            static::READ_ONLY,
-            [ReadSharedCartPermissionPlugin::KEY]
+        /** @var \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer */
+        $quoteTransfer = $quoteCollectionTransfer->getQuotes()->offsetGet(0);
+        $this->assertNotNull($quoteTransfer->getQuotePermissionGroup());
+        $this->assertEquals(
+            $spyQuotePermissionGroup->getIdQuotePermissionGroup(),
+            $quoteTransfer->getQuotePermissionGroup()->getIdQuotePermissionGroup()
         );
-        $quoteCompanyUserEntity = $this->tester->haveQuoteCompanyUser(
-            $companyUserTransfer,
-            $quoteTransfer,
-            $spyQuotePermissionGroup
-        );
-
-        // Act
-        $quoteCollectionTransfer = $this->tester->getFacade()->expandQuoteCollectionWithCustomerShareDetail(
-            (new QuoteCollectionTransfer())->addQuote($quoteTransfer),
-            (new CustomerTransfer())->setCompanyUserTransfer($companyUserTransfer)
-        );
-
-        // Assert
-        $this->assertCount(1, $quoteCollectionTransfer->getQuotes());
-        /** @var \Generated\Shared\Transfer\QuoteTransfer $actualQuoteTransfer */
-        $actualQuoteTransfer = $quoteCollectionTransfer->getQuotes()->offsetGet(0);
-        $this->assertCount(1, $actualQuoteTransfer->getShareDetails());
-        /** @var \Generated\Shared\Transfer\ShareDetailTransfer $shareDetailTransfer */
-        $shareDetailTransfer = $actualQuoteTransfer->getShareDetails()->offsetGet(0);
-        $this->assertEquals($quoteCompanyUserEntity->getIdQuoteCompanyUser(), $shareDetailTransfer->getIdQuoteCompanyUser());
-        $this->assertEquals($quoteCompanyUserEntity->getFkCompanyUser(), $shareDetailTransfer->getIdCompanyUser());
-        $this->assertEquals($quoteCompanyUserEntity->getFkQuotePermissionGroup(), $shareDetailTransfer->getQuotePermissionGroup()->getIdQuotePermissionGroup());
+        $this->assertEquals($spyQuotePermissionGroup->getName(), $quoteTransfer->getQuotePermissionGroup()->getName());
     }
 
     /**
