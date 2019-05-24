@@ -24,10 +24,10 @@ class CartPermissionGroupByQuoteResourceRelationshipExpander extends AbstractCar
          * @var \Generated\Shared\Transfer\QuoteTransfer|null $payload
          */
         $payload = $resource->getPayload();
-        if (!$payload || !($payload instanceof QuoteTransfer) || !$payload->getShareDetails()->count()) {
+        if (!$payload || !($payload instanceof QuoteTransfer) || !$payload->getQuotePermissionGroup()) {
             return null;
         }
 
-        return $payload->getShareDetails()->offsetGet(0)->getQuotePermissionGroup();
+        return $payload->getQuotePermissionGroup();
     }
 }

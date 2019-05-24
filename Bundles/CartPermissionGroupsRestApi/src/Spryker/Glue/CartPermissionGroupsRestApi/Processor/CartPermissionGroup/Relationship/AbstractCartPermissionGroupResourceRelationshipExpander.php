@@ -22,9 +22,8 @@ abstract class AbstractCartPermissionGroupResourceRelationshipExpander implement
     /**
      * @param \Spryker\Glue\CartPermissionGroupsRestApi\Processor\ResponseBuilder\CartPermissionGroupResponseBuilderInterface $cartPermissionGroupResponseBuilder
      */
-    public function __construct(
-        CartPermissionGroupResponseBuilderInterface $cartPermissionGroupResponseBuilder
-    ) {
+    public function __construct(CartPermissionGroupResponseBuilderInterface $cartPermissionGroupResponseBuilder)
+    {
         $this->cartPermissionGroupResponseBuilder = $cartPermissionGroupResponseBuilder;
     }
 
