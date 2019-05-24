@@ -29,11 +29,6 @@ class GenerateIndexMapConsoleTest extends Unit
      */
     public function testCommandIsExecutable()
     {
-        $this->markTestSkipped(
-            'When running in context of whole suite this error comes up "posix_isatty(): could not use stream of type \'MEMORY\'"' . PHP_EOL
-            . 'When it runs as standalone this error does not exists...'
-        );
-
         $application = new Application();
         $application->add(new GenerateIndexMapConsole());
 
