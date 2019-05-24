@@ -1,7 +1,10 @@
 "Abstract Product List","Abstract Product List"
+"content_product_abstract_list.template.default","Standard"
+"content_product_abstract_list.template.top-title","Titel oben"
 Actions,Actions
 "Add more products","Add more products"
 Delete,Delete
+Add to list,Add to list
 ID,ID
 Image,Image
 "Move Down","Move Down"

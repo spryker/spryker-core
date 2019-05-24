@@ -11,8 +11,8 @@ use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Spryker\Zed\ContentProductGui\Communication\Form\Constraints\ContentProductAbstractListConstraint;
 use Spryker\Zed\ContentProductGui\Communication\Mapper\ContentGui\ContentProductContentGuiEditorConfigurationMapper;
 use Spryker\Zed\ContentProductGui\Communication\Mapper\ContentGui\ContentProductContentGuiEditorConfigurationMapperInterface;
-use Spryker\Zed\ContentProductGui\Communication\Table\Builder\ProductAbstractTableColumnContentBuilder;
-use Spryker\Zed\ContentProductGui\Communication\Table\Builder\ProductAbstractTableColumnContentBuilderInterface;
+use Spryker\Zed\ContentProductGui\Communication\Table\Manager\ProductAbstractTableManager;
+use Spryker\Zed\ContentProductGui\Communication\Table\Manager\ProductAbstractTableManagerInterface;
 use Spryker\Zed\ContentProductGui\Communication\Table\ProductAbstractSelectedTable;
 use Spryker\Zed\ContentProductGui\Communication\Table\ProductAbstractViewTable;
 use Spryker\Zed\ContentProductGui\ContentProductGuiDependencyProvider;
@@ -35,7 +35,7 @@ class ContentProductGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return new ProductAbstractViewTable(
             $this->getProductQueryContainer(),
-            $this->createProductAbstractTableColumnContentBuilder(),
+            $this->createProductAbstractTableManager(),
             $this->getLocaleFacade()->getCurrentLocale(),
             $identifierSuffix
         );
@@ -51,7 +51,7 @@ class ContentProductGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return new ProductAbstractSelectedTable(
             $this->getProductQueryContainer(),
-            $this->createProductAbstractTableColumnContentBuilder(),
+            $this->createProductAbstractTableManager(),
             $this->getLocaleFacade()->getCurrentLocale(),
             $identifierSuffix,
             $idProductAbstracts
@@ -67,11 +67,11 @@ class ContentProductGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\ContentProductGui\Communication\Table\Builder\ProductAbstractTableColumnContentBuilderInterface
+     * @return \Spryker\Zed\ContentProductGui\Communication\Table\Manager\ProductAbstractTableManagerInterface
      */
-    public function createProductAbstractTableColumnContentBuilder(): ProductAbstractTableColumnContentBuilderInterface
+    public function createProductAbstractTableManager(): ProductAbstractTableManagerInterface
     {
-        return new ProductAbstractTableColumnContentBuilder($this->getProductImageFacade());
+        return new ProductAbstractTableManager($this->getProductImageFacade());
     }
 
     /**
