@@ -123,7 +123,7 @@ class ProductOptionGroupSaver implements ProductOptionGroupSaverInterface
      *
      * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup
      */
-    protected function getOptionGroupById(int $idProductOptionGroup): SpyProductOptionGroup
+    protected function getOptionGroupById($idProductOptionGroup): SpyProductOptionGroup
     {
         $productOptionGroupEntity = $this->productOptionQueryContainer
             ->queryProductOptionGroupById($idProductOptionGroup)

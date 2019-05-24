@@ -222,7 +222,7 @@ class ProductOptionGroupReader implements ProductOptionGroupReaderInterface
      *
      * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup
      */
-    protected function getProductOptionGroupEntityWithValuesAndValuePricesById(int $idProductOptionGroup): SpyProductOptionGroup
+    protected function getProductOptionGroupEntityWithValuesAndValuePricesById($idProductOptionGroup): SpyProductOptionGroup
     {
         $productOptionGroupCollection = $this->productOptionQueryContainer
             ->queryProductOptionGroupWithProductOptionValuesAndProductOptionValuePricesById($idProductOptionGroup)
