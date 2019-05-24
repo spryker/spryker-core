@@ -32,7 +32,7 @@ class CleanOutputConsoleTest extends Unit
      */
     public function testExecuteWillRemoveGeneratedOutputFilesInSpecifiedDirectories(): void
     {
-        file_put_contents(codecept_data_dir('Fixtures/foo.file'), 'fileContent');
+        $this->createTestFile();
 
         $this->tester->mockConfigMethod('getOutputDirectoriesForCleanup', [codecept_data_dir('Fixtures')]);
         $facade = $this->tester->getFacade();
@@ -49,5 +49,18 @@ class CleanOutputConsoleTest extends Unit
         $commandTester->execute($arguments);
 
         $this->assertSame(CleanOutputConsole::CODE_SUCCESS, $commandTester->getStatusCode());
+    }
+
+    /**
+     * @return void
+     */
+    protected function createTestFile(): void
+    {
+        $pathToFile = codecept_data_dir('Fixtures/foo.file');
+        if (!is_dir(dirname($pathToFile))) {
+            mkdir(dirname($pathToFile), 0777, true);
+        }
+
+        file_put_contents($pathToFile, 'fileContent');
     }
 }
