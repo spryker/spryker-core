@@ -106,6 +106,8 @@
 
     <transfer name="RestUser">
         <property name="naturalIdentifier" type="string"/>
+        <property name="idCompanyUser" type="int"/>
+        <property name="surrogateIdentifier" type="int" />
     </transfer>
 
     <transfer name="QuoteCriteriaFilter">
