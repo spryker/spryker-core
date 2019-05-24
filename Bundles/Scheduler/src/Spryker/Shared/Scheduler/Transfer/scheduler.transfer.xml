@@ -3,14 +3,37 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
-    <transfer name="Scheduler">
-        <property name="stores" type="string[]"/>
-        <property name="schedulers" type="string[]"/>
-        <property name="jobNames" type="string[]"/>
-        <property name="jobs" type="array" singular="job" associative="true"/>
+    <transfer name="SchedulerJob">
+        <property name="name" type="string" />
+        <property name="enable" type="bool" />
+        <property name="command" type="string" />
+        <property name="schedule" type="string" />
+        <property name="payload" type="array" />
+    </transfer>
+
+    <transfer name="SchedulerSchedule">
+        <property name="idScheduler" type="string" />
+        <property name="jobs" type="SchedulerJob[]" singular="job" />
+    </transfer>
+
+    <transfer name="SchedulerFilter">
+        <property name="schedulers" type="string[]" />
+        <property name="jobs" type="string[]" />
+    </transfer>
+
+    <transfer name="SchedulerRequest">
+        <property name="schedule" type="SchedulerSchedule" />
+        <property name="filter" type="SchedulerFilter" />
     </transfer>
 
     <transfer name="SchedulerResponse">
-        <property name="messages" type="array" singular="message"/>
+        <property name="schedule" type="SchedulerSchedule" />
+        <property name="status" type="bool" />
+        <property name="message" type="string" />
     </transfer>
+
+    <transfer name="SchedulerResponseCollection">
+        <property name="responses" type="SchedulerResponse[]" singular="response" />
+    </transfer>
+
 </transfers>

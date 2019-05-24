@@ -7,26 +7,37 @@
 
 namespace Spryker\Zed\Scheduler;
 
+use Spryker\Shared\Scheduler\SchedulerConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class SchedulerConfig extends AbstractBundleConfig
 {
     /**
      * Specification:
-     * - Returns the path to the cronjobs definition, their config and schedule.
+     * - Returns the path to PHP file to retrieve schedule for particular scheduler
      *
      * @api
      *
+     * @param string $idScheduler
+     *
      * @return string
      */
-    public function getCronJobsDefinitionPhpFilePath(): string
+    public function getPhpSchedulerReaderPath(string $idScheduler): string
     {
         return implode(DIRECTORY_SEPARATOR, [
             APPLICATION_ROOT_DIR,
             'config',
             'Zed',
             'cronjobs',
-            'jobs.php',
+            $idScheduler . '.php',
         ]);
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getEnabledSchedulers(): array
+    {
+        return (array)$this->get(SchedulerConstants::ENABLED_SCHEDULERS, []);
     }
 }

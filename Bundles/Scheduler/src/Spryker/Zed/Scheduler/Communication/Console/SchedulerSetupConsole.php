@@ -12,7 +12,7 @@ namespace Spryker\Zed\Scheduler\Communication\Console;
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-use Generated\Shared\Transfer\SchedulerTransfer;
+use Generated\Shared\Transfer\SchedulerRequestTransfer;
 use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -24,7 +24,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class SchedulerSetupConsole extends Console
 {
     public const COMMAND_NAME = 'scheduler:setup';
-    public const DESCRIPTION = 'Set ups scheduler cron jobs.';
+    public const DESCRIPTION = 'Sets up scheduler cron jobs.';
 
     protected const SCHEDULERS_OPTION = 'schedulers';
     protected const SCHEDULERS_OPTION_SHORTCUT = 's';
@@ -59,8 +59,8 @@ class SchedulerSetupConsole extends Console
     {
         $schedulers = $input->getOption(static::SCHEDULERS_OPTION);
 
-        $schedulerTransfer = $this->createSchedulerTransfer($schedulers);
-        $schedulerResponseTransfer = $this->getFacade()->setup($schedulerTransfer);
+        $scheduleTransfer = $this->createSchedulerTransfer($schedulers);
+        $schedulerResponseTransfer = $this->getFacade()->setup($scheduleTransfer);
 
         $output->writeln($schedulerResponseTransfer->getMessages());
 
@@ -70,11 +70,11 @@ class SchedulerSetupConsole extends Console
     /**
      * @param array $schedulers
      *
-     * @return \Generated\Shared\Transfer\SchedulerTransfer
+     * @return \Generated\Shared\Transfer\SchedulerRequestTransfer
      */
-    protected function createSchedulerTransfer(array $schedulers): SchedulerTransfer
+    protected function createSchedulerTransfer(array $schedulers): SchedulerRequestTransfer
     {
-        return (new SchedulerTransfer())
+        return (new SchedulerRequestTransfer())
             ->setSchedulers($schedulers);
     }
 }

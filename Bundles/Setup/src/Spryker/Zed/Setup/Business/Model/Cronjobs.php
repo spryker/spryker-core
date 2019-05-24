@@ -12,7 +12,7 @@ use Spryker\Shared\Config\Environment;
 use Spryker\Zed\Setup\SetupConfig;
 
 /**
- * @deprecated Use JenkinsScheduler module instead. Will be removed with next major release.
+ * @deprecated Use Scheduler module instead. Will be removed with next major release.
  */
 class Cronjobs
 {
