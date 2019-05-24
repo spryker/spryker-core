@@ -220,21 +220,4 @@ interface SharedCartFacadeInterface
         QuoteCollectionTransfer $quoteCollectionTransfer,
         QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer
     ): QuoteCollectionTransfer;
-
-    /**
-     * Specification:
-     * - Expands a collection of quotes with ShareDetail.
-     * - Requires CompanyUser::idCompanyUser to be set on the CustomerTransfer taken as a parameter.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteCollectionTransfer $quoteCollectionTransfer
-     * @param \Generated\Shared\Transfer\QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
-     */
-    public function expandQuoteCollectionWithCustomerShareDetail(
-        QuoteCollectionTransfer $quoteCollectionTransfer,
-        QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer
-    ): QuoteCollectionTransfer;
 }

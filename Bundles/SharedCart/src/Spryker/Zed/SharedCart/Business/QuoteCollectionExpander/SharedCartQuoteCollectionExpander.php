@@ -9,8 +9,10 @@ namespace Spryker\Zed\SharedCart\Business\QuoteCollectionExpander;
 
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SharedQuoteCriteriaFilterTransfer;
 use Spryker\Zed\SharedCart\Business\Model\QuoteReaderInterface;
+use Spryker\Zed\SharedCart\Business\QuoteShareDetails\QuoteShareDetailsReaderInterface;
 use Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToStoreFacadeInterface;
 
 class SharedCartQuoteCollectionExpander implements SharedCartQuoteCollectionExpanderInterface
@@ -26,15 +28,23 @@ class SharedCartQuoteCollectionExpander implements SharedCartQuoteCollectionExpa
     protected $storeFacade;
 
     /**
+     * @var \Spryker\Zed\SharedCart\Business\QuoteShareDetails\QuoteShareDetailsReaderInterface
+     */
+    protected $quoteShareDetailsReader;
+
+    /**
      * @param \Spryker\Zed\SharedCart\Business\Model\QuoteReaderInterface $quoteReader
      * @param \Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToStoreFacadeInterface $storeFacade
+     * @param \Spryker\Zed\SharedCart\Business\QuoteShareDetails\QuoteShareDetailsReaderInterface $quoteShareDetailsReader
      */
     public function __construct(
         QuoteReaderInterface $quoteReader,
-        SharedCartToStoreFacadeInterface $storeFacade
+        SharedCartToStoreFacadeInterface $storeFacade,
+        QuoteShareDetailsReaderInterface $quoteShareDetailsReader
     ) {
         $this->quoteReader = $quoteReader;
         $this->storeFacade = $storeFacade;
+        $this->quoteShareDetailsReader = $quoteShareDetailsReader;
     }
 
     /**
@@ -54,9 +64,33 @@ class SharedCartQuoteCollectionExpander implements SharedCartQuoteCollectionExpa
             ->findCustomerSharedQuoteCollectionBySharedQuoteCriteriaFilter($sharedQuoteCriteriaFilterTransfer);
 
         foreach ($sharedQuoteCollectionTransfer->getQuotes() as $quoteTransfer) {
+            $quoteTransfer = $this->expandQuoteWithCustomerQuotePermissionGroup($quoteTransfer, $quoteCriteriaFilterTransfer);
+
             $quoteCollectionTransfer->addQuote($quoteTransfer);
         }
 
         return $quoteCollectionTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function expandQuoteWithCustomerQuotePermissionGroup(
+        QuoteTransfer $quoteTransfer,
+        QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer
+    ): QuoteTransfer {
+        $shareDetailCollectionTransfer = $this->quoteShareDetailsReader
+            ->getShareDetailsByIdQuote($quoteTransfer);
+
+        foreach ($shareDetailCollectionTransfer->getShareDetails() as $shareDetailTransfer) {
+            if ($quoteCriteriaFilterTransfer->getIdCompanyUser() === $shareDetailTransfer->getIdCompanyUser()) {
+                return $quoteTransfer->setQuotePermissionGroup($shareDetailTransfer->getQuotePermissionGroup());
+            }
+        }
+
+        return $quoteTransfer;
     }
 }

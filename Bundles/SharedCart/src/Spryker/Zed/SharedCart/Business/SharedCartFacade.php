@@ -269,23 +269,4 @@ class SharedCartFacade extends AbstractFacade implements SharedCartFacadeInterfa
             ->createSharedCartQuoteCollectionExpander()
             ->expandQuoteCollectionWithCustomerSharedQuoteCollection($quoteCollectionTransfer, $quoteCriteriaFilterTransfer);
     }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteCollectionTransfer $quoteCollectionTransfer
-     * @param \Generated\Shared\Transfer\QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
-     */
-    public function expandQuoteCollectionWithCustomerShareDetail(
-        QuoteCollectionTransfer $quoteCollectionTransfer,
-        QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer
-    ): QuoteCollectionTransfer {
-        return $this->getFactory()
-            ->createShareDetailQuoteCollectionExpander()
-            ->expandQuoteCollectionWithCustomerShareDetail($quoteCollectionTransfer, $quoteCriteriaFilterTransfer);
-    }
 }
