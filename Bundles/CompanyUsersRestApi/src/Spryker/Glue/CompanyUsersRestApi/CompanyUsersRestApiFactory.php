@@ -10,6 +10,10 @@ namespace Spryker\Glue\CompanyUsersRestApi;
 use Spryker\Glue\CompanyUsersRestApi\Dependency\Client\CompanyUsersRestApiToCompanyUserClientInterface;
 use Spryker\Glue\CompanyUsersRestApi\Processor\CompanyUser\CompanyUserReader;
 use Spryker\Glue\CompanyUsersRestApi\Processor\CompanyUser\CompanyUserReaderInterface;
+use Spryker\Glue\CompanyUsersRestApi\Processor\CompanyUser\Relationship\CompanyUserByShareDetailResourceRelationshipExpander;
+use Spryker\Glue\CompanyUsersRestApi\Processor\CompanyUser\Relationship\CompanyUserResourceRelationshipExpanderInterface;
+use Spryker\Glue\CompanyUsersRestApi\Processor\CompanyUser\RestResponseBuilder\CompanyUserRestResponseBuilder;
+use Spryker\Glue\CompanyUsersRestApi\Processor\CompanyUser\RestResponseBuilder\CompanyUserRestResponseBuilderInterface;
 use Spryker\Glue\CompanyUsersRestApi\Processor\Customer\CustomerExpander;
 use Spryker\Glue\CompanyUsersRestApi\Processor\Customer\CustomerExpanderInterface;
 use Spryker\Glue\CompanyUsersRestApi\Processor\Mapper\CompanyUserMapper;
@@ -44,6 +48,27 @@ class CompanyUsersRestApiFactory extends AbstractFactory
     public function createCustomerExpander(): CustomerExpanderInterface
     {
         return new CustomerExpander();
+    }
+
+    /**
+     * @return \Spryker\Glue\CompanyUsersRestApi\Processor\CompanyUser\RestResponseBuilder\CompanyUserRestResponseBuilderInterface
+     */
+    public function createCompanyUserRestResponseBuilder(): CompanyUserRestResponseBuilderInterface
+    {
+        return new CompanyUserRestResponseBuilder(
+            $this->getResourceBuilder()
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\CompanyUsersRestApi\Processor\CompanyUser\Relationship\CompanyUserResourceRelationshipExpanderInterface
+     */
+    public function createCompanyUserByShareDetailResourceRelationshipExpander(): CompanyUserResourceRelationshipExpanderInterface
+    {
+        return new CompanyUserByShareDetailResourceRelationshipExpander(
+            $this->createCompanyUserRestResponseBuilder(),
+            $this->createCompanyUserMapper()
+        );
     }
 
     /**

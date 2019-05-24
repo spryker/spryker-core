@@ -34,4 +34,8 @@
         <property name="idCompany" type="int"/>
     </transfer>
 
+    <transfer name="ShareDetail">
+        <property name="companyUser" type="CompanyUser"/>
+    </transfer>
+
 </transfers>
