@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Store\Business;
 
+use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\QuoteValidationResponseTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -118,5 +120,21 @@ class StoreFacade extends AbstractFacade implements StoreFacadeInterface
         return $this->getFactory()
             ->createStoreReader()
             ->getCountries();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteValidationResponseTransfer
+     */
+    public function validateQuoteStore(QuoteTransfer $quoteTransfer): QuoteValidationResponseTransfer
+    {
+        return $this->getFactory()
+            ->createStoreValidator()
+            ->validateQuoteStore($quoteTransfer);
     }
 }

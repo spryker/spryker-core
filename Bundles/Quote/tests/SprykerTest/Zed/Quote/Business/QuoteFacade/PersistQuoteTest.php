@@ -30,9 +30,6 @@ use Spryker\Zed\Quote\Business\QuoteFacade;
  */
 class PersistQuoteTest extends Unit
 {
-    protected const ERROR_MESSAGE_STORE_DATA_IS_MISSING = 'quote.validation.error.store_is_missing';
-    protected const WRONG_STORE_NAME = 'WRONGSTORENAME';
-
     /**
      * @var \SprykerTest\Zed\Quote\QuoteBusinessTester
      */
@@ -98,65 +95,6 @@ class PersistQuoteTest extends Unit
         unset($actualQuoteData['id_quote']);
 
         $this->assertArraySubset($expectedQuoteTransfer->modifiedToArray(), $actualQuoteData, 'Quote from database should have returned expected data.');
-    }
-
-    /**
-     * @return void
-     */
-    public function testPersistQuoteWithValidationEmptyStore(): void
-    {
-        $quoteTransfer = new QuoteTransfer();
-
-        // Act
-        $quoteResponseTransfer = $this->quoteFacade->createQuote($quoteTransfer);
-
-        $this->assertFalse($quoteResponseTransfer->getIsSuccessful());
-
-        $errors = array_map(function ($quoteErrorTransfer) {
-            return $quoteErrorTransfer->getMessage();
-        }, (array)$quoteResponseTransfer->getErrors());
-
-        $this->assertContains(static::ERROR_MESSAGE_STORE_DATA_IS_MISSING, $errors);
-    }
-
-    /**
-     * @return void
-     */
-    public function testPersistQuoteWithValidationEmptyStoreName(): void
-    {
-        $quoteTransfer = new QuoteTransfer();
-        $storeTransfer = new StoreTransfer();
-
-        $quoteTransfer
-            ->setStore($storeTransfer);
-
-        // Act
-        $quoteResponseTransfer = $this->quoteFacade->createQuote($quoteTransfer);
-
-        $this->assertFalse($quoteResponseTransfer->getIsSuccessful());
-
-        $errors = array_map(function ($quoteErrorTransfer) {
-            return $quoteErrorTransfer->getMessage();
-        }, (array)$quoteResponseTransfer->getErrors());
-
-        $this->assertContains(static::ERROR_MESSAGE_STORE_DATA_IS_MISSING, $errors);
-    }
-
-    /**
-     * @return void
-     */
-    public function testPersistQuoteWithValidationWrongStoreName(): void
-    {
-        $quoteTransfer = new QuoteTransfer();
-        $storeTransfer = (new StoreTransfer())
-            ->setName(static::WRONG_STORE_NAME);
-
-        $quoteTransfer
-            ->setStore($storeTransfer);
-
-        // Act
-        $quoteResponseTransfer = $this->quoteFacade->createQuote($quoteTransfer);
-        $this->assertFalse($quoteResponseTransfer->getIsSuccessful());
     }
 
     /**
