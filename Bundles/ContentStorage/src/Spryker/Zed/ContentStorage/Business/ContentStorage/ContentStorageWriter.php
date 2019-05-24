@@ -15,7 +15,6 @@ use Spryker\Zed\ContentStorage\Dependency\Service\ContentStorageToUtilEncodingIn
 use Spryker\Zed\ContentStorage\Persistence\ContentStorageEntityManagerInterface;
 use Spryker\Zed\ContentStorage\Persistence\ContentStorageRepositoryInterface;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
-use Traversable;
 
 class ContentStorageWriter implements ContentStorageWriterInterface
 {
@@ -77,12 +76,12 @@ class ContentStorageWriter implements ContentStorageWriterInterface
     }
 
     /**
-     * @param \Traversable|\Generated\Shared\Transfer\ContentTransfer[] $contentTransfers
-     * @param \Traversable|\Generated\Shared\Transfer\ContentStorageTransfer[] $contentStorageTransfers
+     * @param \Generated\Shared\Transfer\ContentTransfer[] $contentTransfers
+     * @param \Generated\Shared\Transfer\ContentStorageTransfer[] $contentStorageTransfers
      *
      * @return bool
      */
-    protected function executePublishTransaction(Traversable $contentTransfers, Traversable $contentStorageTransfers): bool
+    protected function executePublishTransaction(iterable $contentTransfers, iterable $contentStorageTransfers): bool
     {
         $availableLocales = $this->localeFacade->getLocaleCollection();
         $contentStorageTransfers = $this->groupByIdContentAndLocale($contentStorageTransfers);
@@ -143,11 +142,11 @@ class ContentStorageWriter implements ContentStorageWriterInterface
     }
 
     /**
-     * @param \Traversable|\Generated\Shared\Transfer\ContentStorageTransfer[] $contentStorageTransfers
+     * @param \Generated\Shared\Transfer\ContentStorageTransfer[] $contentStorageTransfers
      *
      * @return array
      */
-    protected function groupByIdContentAndLocale(Traversable $contentStorageTransfers): array
+    protected function groupByIdContentAndLocale(iterable $contentStorageTransfers): array
     {
         $contentStorageList = [];
 
