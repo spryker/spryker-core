@@ -10,7 +10,7 @@
         <column name="quote_request_reference" type="VARCHAR" size="255" required="true"/>
         <column name="valid_until" type="TIMESTAMP" required="false"/>
         <column name="status" type="VARCHAR" size="255"/>
-        <column name="is_latest_version_hidden" type="BOOLEAN" default="false"/>
+        <column name="is_latest_version_visible" type="BOOLEAN" default="true"/>
         <column name="uuid" required="false" type="VARCHAR" size="255"/>
 
         <index name="spy_quote_request-fk_company_user">
