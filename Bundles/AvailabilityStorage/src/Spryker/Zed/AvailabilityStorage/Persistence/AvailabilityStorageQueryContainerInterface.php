@@ -37,6 +37,15 @@ interface AvailabilityStorageQueryContainerInterface extends QueryContainerInter
      *
      * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery
      */
+    public function queryAvailabilityByAvailabilityAbstractIds(array $availabilityAbstractIds);
+
+    /**
+     * @api
+     *
+     * @param array $availabilityAbstractIds
+     *
+     * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery
+     */
     public function queryAvailabilityAbstractWithRelationsByIds(array $availabilityAbstractIds);
 
     /**

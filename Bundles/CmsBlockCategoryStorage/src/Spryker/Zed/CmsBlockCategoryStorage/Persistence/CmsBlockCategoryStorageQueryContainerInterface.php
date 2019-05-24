@@ -33,11 +33,22 @@ interface CmsBlockCategoryStorageQueryContainerInterface extends QueryContainerI
     /**
      * @api
      *
+     * @deprecated Use CmsBlockCategoryStorageQueryContainerInterface::queryCmsBlockCategoriesByCmsCategoryIds instead.
+     *
      * @param int[] $cmsBlockCategoriesIds
      *
      * @return \Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnectorQuery
      */
     public function queryCmsBlockCategoriesByIds(array $cmsBlockCategoriesIds): SpyCmsBlockCategoryConnectorQuery;
+
+    /**
+     * @api
+     *
+     * @param int[] $cmsBlockCategoriesIds
+     *
+     * @return \Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnectorQuery
+     */
+    public function queryCmsBlockCategoriesByCmsCategoryIds(array $cmsBlockCategoriesIds): SpyCmsBlockCategoryConnectorQuery;
 
     /**
      * @api
