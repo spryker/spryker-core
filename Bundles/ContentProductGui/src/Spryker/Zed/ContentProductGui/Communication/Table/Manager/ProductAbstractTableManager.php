@@ -53,7 +53,8 @@ class ProductAbstractTableManager implements ProductAbstractTableManagerInterfac
 
         foreach ($productImageSetTransferCollection as $productImageSetTransfer) {
             foreach ($productImageSetTransfer->getProductImages() as $productImageTransfer) {
-                if ($previewUrl = $productImageTransfer->getExternalUrlSmall()) {
+                $previewUrl = $productImageTransfer->getExternalUrlSmall();
+                if ($previewUrl) {
                     return $previewUrl;
                 }
             }
