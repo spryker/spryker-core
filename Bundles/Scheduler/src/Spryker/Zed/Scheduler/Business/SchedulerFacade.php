@@ -7,8 +7,9 @@
 
 namespace Spryker\Zed\Scheduler\Business;
 
-use Generated\Shared\Transfer\SchedulerResponseTransfer;
-use Generated\Shared\Transfer\SchedulerTransfer;
+use Generated\Shared\Transfer\SchedulerRequestTransfer;
+use Generated\Shared\Transfer\SchedulerResponseCollectionTransfer;
+use Generated\Shared\Transfer\SchedulerScheduleTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -21,15 +22,15 @@ class SchedulerFacade extends AbstractFacade implements SchedulerFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\SchedulerTransfer $schedulerTransfer
+     * @param \Generated\Shared\Transfer\SchedulerScheduleTransfer $scheduleTransfer
      *
-     * @return \Generated\Shared\Transfer\SchedulerTransfer
+     * @return \Generated\Shared\Transfer\SchedulerScheduleTransfer
      */
-    public function getPhpCronJobsConfiguration(SchedulerTransfer $schedulerTransfer): SchedulerTransfer
+    public function readScheduleFromPhpSource(SchedulerScheduleTransfer $scheduleTransfer): SchedulerScheduleTransfer
     {
         return $this->getFactory()
             ->createPhpSchedulerReader()
-            ->getPhpCronJobsConfiguration($schedulerTransfer);
+            ->readSchedule($scheduleTransfer);
     }
 
     /**
@@ -37,15 +38,15 @@ class SchedulerFacade extends AbstractFacade implements SchedulerFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\SchedulerTransfer $schedulerTransfer
+     * @param \Generated\Shared\Transfer\SchedulerRequestTransfer $schedulerRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\SchedulerResponseTransfer
+     * @return \Generated\Shared\Transfer\SchedulerResponseCollectionTransfer
      */
-    public function setup(SchedulerTransfer $schedulerTransfer): SchedulerResponseTransfer
+    public function setup(SchedulerRequestTransfer $schedulerRequestTransfer): SchedulerResponseCollectionTransfer
     {
         return $this->getFactory()
             ->createSchedulerSetup()
-            ->setup($schedulerTransfer);
+            ->execute($schedulerRequestTransfer);
     }
 
     /**
@@ -53,15 +54,15 @@ class SchedulerFacade extends AbstractFacade implements SchedulerFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\SchedulerTransfer $schedulerTransfer
+     * @param \Generated\Shared\Transfer\SchedulerRequestTransfer $schedulerRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\SchedulerResponseTransfer
+     * @return \Generated\Shared\Transfer\SchedulerResponseCollectionTransfer
      */
-    public function clean(SchedulerTransfer $schedulerTransfer): SchedulerResponseTransfer
+    public function clean(SchedulerRequestTransfer $schedulerRequestTransfer): SchedulerResponseCollectionTransfer
     {
         return $this->getFactory()
             ->createSchedulerClean()
-            ->clean($schedulerTransfer);
+            ->execute($schedulerRequestTransfer);
     }
 
     /**
@@ -69,15 +70,15 @@ class SchedulerFacade extends AbstractFacade implements SchedulerFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\SchedulerTransfer $schedulerTransfer
+     * @param \Generated\Shared\Transfer\SchedulerRequestTransfer $schedulerRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\SchedulerResponseTransfer
+     * @return \Generated\Shared\Transfer\SchedulerResponseCollectionTransfer
      */
-    public function resume(SchedulerTransfer $schedulerTransfer): SchedulerResponseTransfer
+    public function resume(SchedulerRequestTransfer $schedulerRequestTransfer): SchedulerResponseCollectionTransfer
     {
         return $this->getFactory()
             ->createSchedulerResume()
-            ->resume($schedulerTransfer);
+            ->execute($schedulerRequestTransfer);
     }
 
     /**
@@ -85,14 +86,14 @@ class SchedulerFacade extends AbstractFacade implements SchedulerFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\SchedulerTransfer $schedulerTransfer
+     * @param \Generated\Shared\Transfer\SchedulerRequestTransfer $schedulerRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\SchedulerResponseTransfer
+     * @return \Generated\Shared\Transfer\SchedulerResponseCollectionTransfer
      */
-    public function suspend(SchedulerTransfer $schedulerTransfer): SchedulerResponseTransfer
+    public function suspend(SchedulerRequestTransfer $schedulerRequestTransfer): SchedulerResponseCollectionTransfer
     {
         return $this->getFactory()
             ->createSchedulerSuspend()
-            ->suspend($schedulerTransfer);
+            ->execute($schedulerRequestTransfer);
     }
 }

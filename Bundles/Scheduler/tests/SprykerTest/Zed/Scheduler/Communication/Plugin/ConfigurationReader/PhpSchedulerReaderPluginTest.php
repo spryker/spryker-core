@@ -8,11 +8,11 @@
 namespace SprykerTest\Zed\Scheduler\Communication\Plugin\ConfigurationReader;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\SchedulerTransfer;
+use Generated\Shared\Transfer\SchedulerScheduleTransfer;
 use Spryker\Zed\Scheduler\Business\SchedulerBusinessFactory;
 use Spryker\Zed\Scheduler\Business\SchedulerFacade;
 use Spryker\Zed\Scheduler\Business\SchedulerFacadeInterface;
-use Spryker\Zed\Scheduler\Communication\Plugin\ConfigurationReader\PhpSchedulerReaderPlugin;
+use Spryker\Zed\Scheduler\Communication\Plugin\Scheduler\PhpScheduleReaderPlugin;
 use Spryker\Zed\Scheduler\SchedulerConfig;
 
 /**
@@ -40,14 +40,14 @@ class PhpSchedulerReaderPluginTest extends Unit
      */
     public function testReadSchedulerFromPhpFileSource(): void
     {
-        $phpSchedulerReader = (new PhpSchedulerReaderPlugin())
+        $phpSchedulerReader = (new PhpScheduleReaderPlugin())
             ->setFacade($this->getSchedulerFacade());
 
-        $schedulerTransfer = $phpSchedulerReader->readSchedule(new SchedulerTransfer());
+        $scheduleTransfer = $phpSchedulerReader->readSchedule(new SchedulerScheduleTransfer());
 
-        $this->assertNotEmpty($schedulerTransfer->getJobs());
+        $this->assertNotEmpty($scheduleTransfer->getJobs());
 
-        $this->assertCount(2, $schedulerTransfer->getJobs());
+        $this->assertCount(2, $scheduleTransfer->getJobs());
     }
 
     /**
@@ -71,7 +71,7 @@ class PhpSchedulerReaderPluginTest extends Unit
             ->getMock();
 
         $configMock
-            ->method('getCronJobsDefinitionPhpFilePath')
+            ->method('getPhpSchedulerReaderPath')
             ->willReturn($this->getTestCronJobsDefinitionPhpFilePath());
 
         return $configMock;

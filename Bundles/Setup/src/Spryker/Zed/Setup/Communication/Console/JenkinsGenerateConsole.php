@@ -13,7 +13,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @deprecated Use \Spryker\Zed\Scheduler\Communication\Console\JenkinsSchedulerSetup instead.
+ * @deprecated Use \Spryker\Zed\Scheduler\Communication\Console\SchedulerSetupConsole instead.
  *
  * @method \Spryker\Zed\Setup\Business\SetupFacadeInterface getFacade()
  * @method \Spryker\Zed\Setup\Communication\SetupCommunicationFactory getFactory()

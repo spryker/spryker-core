@@ -17,8 +17,8 @@ use Spryker\Zed\Scheduler\Dependency\Store\SchedulerToStoreBridge;
  */
 class SchedulerDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const SCHEDULER_READER_PLUGINS = 'SCHEDULER_READER_PLUGINS';
-    public const SCHEDULER_ADAPTER_PLUGINS = 'SCHEDULER_ADAPTER_PLUGINS';
+    public const PLUGINS_SCHEDULE_READER = 'SCHEDULER::PLUGINS_SCHEDULE_READER';
+    public const PLUGINS_SCHEDULER_ADAPTER = 'SCHEDULER::PLUGINS_SCHEDULER_ADAPTER';
 
     public const STORE = 'STORE';
 
@@ -43,9 +43,9 @@ class SchedulerDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function addStore(Container $container): Container
     {
-        $container[static::STORE] = function (Container $container) {
+        $container->set(static::STORE, function (Container $container) {
             return new SchedulerToStoreBridge(Store::getInstance());
-        };
+        });
 
         return $container;
     }
@@ -57,9 +57,9 @@ class SchedulerDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addReaderPlugins(Container $container): Container
     {
-        $container[static::SCHEDULER_READER_PLUGINS] = function (Container $container) {
-            return $this->getReaderPlugins();
-        };
+        $container->set(static::PLUGINS_SCHEDULE_READER, function (Container $container) {
+            return $this->getSchedulerReaderPlugins();
+        });
 
         return $container;
     }
@@ -71,25 +71,25 @@ class SchedulerDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addAdapterPlugins(Container $container): Container
     {
-        $container[static::SCHEDULER_ADAPTER_PLUGINS] = function (Container $container) {
-            return $this->getAdapterPlugins();
-        };
+        $container->set(static::PLUGINS_SCHEDULER_ADAPTER, function (Container $container) {
+            return $this->getSchedulerAdapterPlugins();
+        });
 
         return $container;
     }
 
     /**
-     * @return \Spryker\Zed\SchedulerExtension\Dependency\Plugin\SchedulerReaderPluginInterface[]
+     * @return \Spryker\Zed\SchedulerExtension\Dependency\Plugin\ScheduleReaderPluginInterface[]
      */
-    protected function getReaderPlugins(): array
+    protected function getSchedulerReaderPlugins(): array
     {
         return [];
     }
 
     /**
-     * @return \Spryker\Zed\SchedulerExtension\Dependency\Adapter\SchedulerAdapterPluginInterface[]
+     * @return \Spryker\Zed\SchedulerExtension\Dependency\Plugin\SchedulerAdapterPluginInterface[]
      */
-    protected function getAdapterPlugins(): array
+    protected function getSchedulerAdapterPlugins(): array
     {
         return [];
     }

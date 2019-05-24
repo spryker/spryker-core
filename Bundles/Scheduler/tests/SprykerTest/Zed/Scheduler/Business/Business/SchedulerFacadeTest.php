@@ -8,9 +8,9 @@
 namespace SprykerTest\Zed\Scheduler\Business;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\SchedulerResponseTransfer;
-use Generated\Shared\Transfer\SchedulerTransfer;
-use Spryker\Zed\Scheduler\Business\Executor\SchedulerAdapterPluginsExecutor;
+use Generated\Shared\Transfer\SchedulerRequestTransfer;
+use Generated\Shared\Transfer\SchedulerResponseCollectionTransfer;
+use Generated\Shared\Transfer\SchedulerScheduleTransfer;
 use Spryker\Zed\Scheduler\Business\SchedulerBusinessFactory;
 use Spryker\Zed\Scheduler\Business\SchedulerFacade;
 use Spryker\Zed\Scheduler\Business\SchedulerFacadeInterface;
@@ -32,9 +32,9 @@ class SchedulerFacadeTest extends Unit
      */
     public function testSchedulerConfigurationReaderWithoutReaders(): void
     {
-        $schedulerTransfer = $this->getSchedulerFacade()->getPhpCronJobsConfiguration(new SchedulerTransfer());
+        $scheduleTransfer = $this->getSchedulerFacade()->readScheduleFromPhpSource(new SchedulerScheduleTransfer());
 
-        $this->assertInstanceOf(SchedulerTransfer::class, $schedulerTransfer);
+        $this->assertInstanceOf(SchedulerRequestTransfer::class, $scheduleTransfer);
     }
 
     /**
@@ -42,9 +42,9 @@ class SchedulerFacadeTest extends Unit
      */
     public function testSchedulerSetup(): void
     {
-        $schedulerResponseTransfer = $this->getSchedulerFacade()->setup(new SchedulerTransfer());
+        $schedulerResponseCollectionTransfer = $this->getSchedulerFacade()->setup(new SchedulerRequestTransfer());
 
-        $this->assertInstanceOf(SchedulerResponseTransfer::class, $schedulerResponseTransfer);
+        $this->assertInstanceOf(SchedulerResponseCollectionTransfer::class, $schedulerResponseCollectionTransfer);
     }
 
     /**
@@ -52,9 +52,9 @@ class SchedulerFacadeTest extends Unit
      */
     public function testSchedulerClean(): void
     {
-        $schedulerResponseTransfer = $this->getSchedulerFacade()->clean(new SchedulerTransfer());
+        $schedulerResponseCollectionTransfer = $this->getSchedulerFacade()->clean(new SchedulerRequestTransfer());
 
-        $this->assertInstanceOf(SchedulerResponseTransfer::class, $schedulerResponseTransfer);
+        $this->assertInstanceOf(SchedulerResponseCollectionTransfer::class, $schedulerResponseCollectionTransfer);
     }
 
     /**
@@ -62,9 +62,9 @@ class SchedulerFacadeTest extends Unit
      */
     public function testSchedulerResume(): void
     {
-        $schedulerResponseTransfer = $this->getSchedulerFacade()->resume(new SchedulerTransfer());
+        $schedulerResponseCollectionTransfer = $this->getSchedulerFacade()->resume(new SchedulerRequestTransfer());
 
-        $this->assertInstanceOf(SchedulerResponseTransfer::class, $schedulerResponseTransfer);
+        $this->assertInstanceOf(SchedulerResponseCollectionTransfer::class, $schedulerResponseCollectionTransfer);
     }
 
     /**
@@ -72,9 +72,9 @@ class SchedulerFacadeTest extends Unit
      */
     public function testSchedulerSuspend(): void
     {
-        $schedulerResponseTransfer = $this->getSchedulerFacade()->suspend(new SchedulerTransfer());
+        $schedulerResponseCollectionTransfer = $this->getSchedulerFacade()->suspend(new SchedulerRequestTransfer());
 
-        $this->assertInstanceOf(SchedulerResponseTransfer::class, $schedulerResponseTransfer);
+        $this->assertInstanceOf(SchedulerResponseCollectionTransfer::class, $schedulerResponseCollectionTransfer);
     }
 
     /**
@@ -95,47 +95,9 @@ class SchedulerFacadeTest extends Unit
             ->getMock();
 
         $schedulerBusinessFactoryMock
-            ->method('createSchedulerAdapterPluginsExecutor')
-            ->willReturn($this->getSchedulerAdapterPluginsExecutorMock());
+            ->method('getSchedulerAdapterPlugins')
+            ->willReturn([]);
 
         return $schedulerBusinessFactoryMock;
-    }
-
-    /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Scheduler\Business\Executor\SchedulerAdapterPluginsExecutorInterface
-     */
-    protected function getSchedulerAdapterPluginsExecutorMock()
-    {
-        $schedulerAdapterPluginsExecutorMock = $this->getMockBuilder(SchedulerAdapterPluginsExecutor::class)
-            ->disableOriginalConstructor()
-            ->setMethods([
-                'executeSchedulerAdapterPluginsForSchedulerSetup',
-                'executeSchedulerAdapterPluginsForSchedulerClean',
-                'executeSchedulerAdapterPluginsForSchedulerResume',
-                'executeSchedulerAdapterPluginsForSchedulerSuspend',
-            ])
-            ->getMock();
-
-        $schedulerAdapterPluginsExecutorMock
-            ->expects($this->any())
-            ->method('executeSchedulerAdapterPluginsForSchedulerSetup')
-            ->willReturn(new SchedulerResponseTransfer());
-
-        $schedulerAdapterPluginsExecutorMock
-            ->expects($this->any())
-            ->method('executeSchedulerAdapterPluginsForSchedulerClean')
-            ->willReturn(new SchedulerResponseTransfer());
-
-        $schedulerAdapterPluginsExecutorMock
-            ->expects($this->any())
-            ->method('executeSchedulerAdapterPluginsForSchedulerResume')
-            ->willReturn(new SchedulerResponseTransfer());
-
-        $schedulerAdapterPluginsExecutorMock
-            ->expects($this->any())
-            ->method('executeSchedulerAdapterPluginsForSchedulerSuspend')
-            ->willReturn(new SchedulerResponseTransfer());
-
-        return $schedulerAdapterPluginsExecutorMock;
     }
 }

@@ -8,20 +8,15 @@
 namespace Spryker\Zed\Scheduler\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Scheduler\Business\Clean\SchedulerClean;
-use Spryker\Zed\Scheduler\Business\Clean\SchedulerCleanInterface;
-use Spryker\Zed\Scheduler\Business\ConfigurationReader\PhpConfigurationReader\PhpSchedulerReader;
-use Spryker\Zed\Scheduler\Business\ConfigurationReader\PhpConfigurationReader\PhpSchedulerReaderInterface;
-use Spryker\Zed\Scheduler\Business\ConfigurationReader\SchedulerConfigurationReader;
-use Spryker\Zed\Scheduler\Business\ConfigurationReader\SchedulerConfigurationReaderInterface;
-use Spryker\Zed\Scheduler\Business\Executor\SchedulerAdapterPluginsExecutor;
-use Spryker\Zed\Scheduler\Business\Executor\SchedulerAdapterPluginsExecutorInterface;
-use Spryker\Zed\Scheduler\Business\Resume\SchedulerResume;
-use Spryker\Zed\Scheduler\Business\Resume\SchedulerResumeInterface;
-use Spryker\Zed\Scheduler\Business\Setup\SchedulerSetup;
-use Spryker\Zed\Scheduler\Business\Setup\SchedulerSetupInterface;
-use Spryker\Zed\Scheduler\Business\Suspend\SchedulerSuspend;
-use Spryker\Zed\Scheduler\Business\Suspend\SchedulerSuspendInterface;
+use Spryker\Zed\Scheduler\Business\Command\SchedulerCleanCommand;
+use Spryker\Zed\Scheduler\Business\Command\SchedulerCommandInterface;
+use Spryker\Zed\Scheduler\Business\Command\SchedulerResumeCommand;
+use Spryker\Zed\Scheduler\Business\Command\SchedulerSetupCommand;
+use Spryker\Zed\Scheduler\Business\Command\SchedulerSuspendCommand;
+use Spryker\Zed\Scheduler\Business\PhpScheduleReader\PhpScheduleMapper;
+use Spryker\Zed\Scheduler\Business\PhpScheduleReader\PhpScheduleMapperInterface;
+use Spryker\Zed\Scheduler\Business\PhpScheduleReader\PhpScheduleReader;
+use Spryker\Zed\Scheduler\Business\PhpScheduleReader\PhpScheduleReaderInterface;
 use Spryker\Zed\Scheduler\Dependency\Store\SchedulerToStoreInterface;
 use Spryker\Zed\Scheduler\SchedulerDependencyProvider;
 
@@ -31,95 +26,87 @@ use Spryker\Zed\Scheduler\SchedulerDependencyProvider;
 class SchedulerBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\Scheduler\Business\Setup\SchedulerSetupInterface
+     * @return \Spryker\Zed\Scheduler\Business\Command\SchedulerCommandInterface
      */
-    public function createSchedulerSetup(): SchedulerSetupInterface
+    public function createSchedulerSetup(): SchedulerCommandInterface
     {
-        return new SchedulerSetup(
-            $this->createConfigurationReader(),
-            $this->createSchedulerAdapterPluginsExecutor()
+        return new SchedulerSetupCommand(
+            $this->getScheduleReaderPlugins(),
+            $this->getSchedulerAdapterPlugins(),
+            $this->getConfig()
         );
     }
 
     /**
-     * @return \Spryker\Zed\Scheduler\Business\Clean\SchedulerCleanInterface
+     * @return \Spryker\Zed\Scheduler\Business\Command\SchedulerCommandInterface
      */
-    public function createSchedulerClean(): SchedulerCleanInterface
+    public function createSchedulerClean(): SchedulerCommandInterface
     {
-        return new SchedulerClean(
-            $this->createConfigurationReader(),
-            $this->createSchedulerAdapterPluginsExecutor()
+        return new SchedulerCleanCommand(
+            $this->getScheduleReaderPlugins(),
+            $this->getSchedulerAdapterPlugins(),
+            $this->getConfig()
         );
     }
 
     /**
-     * @return \Spryker\Zed\Scheduler\Business\Suspend\SchedulerSuspendInterface
+     * @return \Spryker\Zed\Scheduler\Business\Command\SchedulerCommandInterface
      */
-    public function createSchedulerSuspend(): SchedulerSuspendInterface
+    public function createSchedulerSuspend(): SchedulerCommandInterface
     {
-        return new SchedulerSuspend(
-            $this->createConfigurationReader(),
-            $this->createSchedulerAdapterPluginsExecutor()
+        return new SchedulerSuspendCommand(
+            $this->getScheduleReaderPlugins(),
+            $this->getSchedulerAdapterPlugins(),
+            $this->getConfig()
         );
     }
 
     /**
-     * @return \Spryker\Zed\Scheduler\Business\Resume\SchedulerResumeInterface
+     * @return \Spryker\Zed\Scheduler\Business\Command\SchedulerCommandInterface
      */
-    public function createSchedulerResume(): SchedulerResumeInterface
+    public function createSchedulerResume(): SchedulerCommandInterface
     {
-        return new SchedulerResume(
-            $this->createConfigurationReader(),
-            $this->createSchedulerAdapterPluginsExecutor()
+        return new SchedulerResumeCommand(
+            $this->getScheduleReaderPlugins(),
+            $this->getSchedulerAdapterPlugins(),
+            $this->getConfig()
         );
     }
 
     /**
-     * @return \Spryker\Zed\Scheduler\Business\ConfigurationReader\PhpConfigurationReader\PhpSchedulerReaderInterface
+     * @return \Spryker\Zed\Scheduler\Business\PhpScheduleReader\PhpScheduleReaderInterface
      */
-    public function createPhpSchedulerReader(): PhpSchedulerReaderInterface
+    public function createPhpSchedulerReader(): PhpScheduleReaderInterface
     {
-        return new PhpSchedulerReader(
+        return new PhpScheduleReader(
+            $this->createPhpSchedulerMapper(),
             $this->getStore(),
             $this->getConfig()
         );
     }
 
     /**
-     * @return \Spryker\Zed\Scheduler\Business\ConfigurationReader\SchedulerConfigurationReaderInterface
+     * @return \Spryker\Zed\Scheduler\Business\PhpScheduleReader\PhpScheduleMapperInterface
      */
-    public function createConfigurationReader(): SchedulerConfigurationReaderInterface
+    public function createPhpSchedulerMapper(): PhpScheduleMapperInterface
     {
-        return new SchedulerConfigurationReader(
-            $this->createSchedulerAdapterPluginsExecutor()
-        );
+        return new PhpScheduleMapper();
     }
 
     /**
-     * @return \Spryker\Zed\Scheduler\Business\Executor\SchedulerAdapterPluginsExecutorInterface
+     * @return \Spryker\Zed\SchedulerExtension\Dependency\Plugin\ScheduleReaderPluginInterface[]
      */
-    public function createSchedulerAdapterPluginsExecutor(): SchedulerAdapterPluginsExecutorInterface
+    public function getScheduleReaderPlugins(): array
     {
-        return new SchedulerAdapterPluginsExecutor(
-            $this->getSchedulerConfigurationReaderPlugins(),
-            $this->getSchedulerAdapterPlugins()
-        );
+        return $this->getProvidedDependency(SchedulerDependencyProvider::PLUGINS_SCHEDULE_READER);
     }
 
     /**
-     * @return \Spryker\Zed\SchedulerExtension\Dependency\Plugin\SchedulerReaderPluginInterface[]
-     */
-    public function getSchedulerConfigurationReaderPlugins(): array
-    {
-        return $this->getProvidedDependency(SchedulerDependencyProvider::SCHEDULER_READER_PLUGINS);
-    }
-
-    /**
-     * @return \Spryker\Zed\SchedulerExtension\Dependency\Adapter\SchedulerAdapterPluginInterface[]
+     * @return \Spryker\Zed\SchedulerExtension\Dependency\Plugin\SchedulerAdapterPluginInterface[]
      */
     public function getSchedulerAdapterPlugins(): array
     {
-        return $this->getProvidedDependency(SchedulerDependencyProvider::SCHEDULER_ADAPTER_PLUGINS);
+        return $this->getProvidedDependency(SchedulerDependencyProvider::PLUGINS_SCHEDULER_ADAPTER);
     }
 
     /**
