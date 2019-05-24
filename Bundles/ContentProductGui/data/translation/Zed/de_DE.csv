@@ -1,16 +1,16 @@
-"Abstract Product List","Abstract Product List"
+"Abstract Product List","Abstrakte Produktliste"
 "content_product_abstract_list.template.default","Standard"
 "content_product_abstract_list.template.top-title","Titel oben"
-Actions,Actions
-"Add more products","Add more products"
-Delete,Delete
-Add to list,Add to list
+Actions,Aktionen
+"Add more products","Weitere Produkte hinzufügen"
+Delete,Löschen
+Add to list,Zur Liste hinzufügen
 ID,ID
-Image,Image
-"Move Down","Move Down"
-"Move Up","Move Up"
+Image,Bild
+"Move Down","Runter"
+"Move Up","Hoch"
 Name,Name
-Selected,Selected
+Selected,Ausgewählt
 SKU,SKU
 Status,Status
 Stores,Stores
