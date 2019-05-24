@@ -347,13 +347,11 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
 
         $productAbstractEntities = $productAbstractQuery->find();
 
-        $productAbstractSuggestionCollectionTransfer = new ProductAbstractSuggestionCollectionTransfer();
-        $productAbstractSuggestionCollectionTransfer->setProductAbstracts(
-            $this->getProductAbstractTransfersMappedFromProductAbstractEntities($productAbstractEntities)
-        );
-        $productAbstractSuggestionCollectionTransfer->setPagination($paginationTransfer);
-
-        return $productAbstractSuggestionCollectionTransfer;
+        return (new ProductAbstractSuggestionCollectionTransfer())
+            ->setPagination($paginationTransfer)
+            ->setProductAbstracts(
+                $this->getProductAbstractTransfersMappedFromProductAbstractEntities($productAbstractEntities)
+            );
     }
 
     /**

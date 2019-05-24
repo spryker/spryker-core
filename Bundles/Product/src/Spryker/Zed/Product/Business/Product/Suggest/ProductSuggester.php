@@ -47,8 +47,6 @@ class ProductSuggester implements ProductSuggesterInterface
     }
 
     /**
-     * @deprecated Please use `getPaginatedProductAbstractSuggestions()` instead.
-     *
      * @param string $suggestion
      * @param int|null $limit
      *
