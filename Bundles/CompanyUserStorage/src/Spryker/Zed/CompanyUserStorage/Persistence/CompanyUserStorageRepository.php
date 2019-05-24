@@ -26,13 +26,11 @@ class CompanyUserStorageRepository extends AbstractRepository implements Company
             return [];
         }
 
-        $query = $this->getFactory()
+        return $this->getFactory()
             ->createCompanyUserStorageQuery()
-            ->filterByFkCompanyUser_In($companyUserIds);
-
-        // indexing resulting array with corresponding companyUserIds
-        return $query->find()
-            ->getArrayCopy(SpyCompanyUserStorageEntityTransfer::FK_COMPANY_USER);
+            ->filterByFkCompanyUser_In($companyUserIds)
+            ->find()
+            ->getArrayCopy(SpyCompanyUserStorageEntityTransfer::FK_COMPANY_USER); // indexing resulting array with corresponding companyUserIds
     }
 
     /**
@@ -40,9 +38,9 @@ class CompanyUserStorageRepository extends AbstractRepository implements Company
      */
     public function findAllCompanyUserStorageEntities(): array
     {
-        $query = $this->getFactory()
-            ->createCompanyUserStorageQuery();
-
-        return $query->find()->getArrayCopy();
+        return $this->getFactory()
+            ->createCompanyUserStorageQuery()
+            ->find()
+            ->getArrayCopy();
     }
 }

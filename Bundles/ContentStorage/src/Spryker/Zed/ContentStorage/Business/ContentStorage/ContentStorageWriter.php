@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ContentStorage\Business\ContentStorage;
 
-use ArrayObject;
 use Generated\Shared\Transfer\ContentStorageTransfer;
 use Generated\Shared\Transfer\ContentTransfer;
 use Spryker\Shared\ContentStorage\ContentStorageConfig;
@@ -16,6 +15,7 @@ use Spryker\Zed\ContentStorage\Dependency\Service\ContentStorageToUtilEncodingIn
 use Spryker\Zed\ContentStorage\Persistence\ContentStorageEntityManagerInterface;
 use Spryker\Zed\ContentStorage\Persistence\ContentStorageRepositoryInterface;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
+use Traversable;
 
 class ContentStorageWriter implements ContentStorageWriterInterface
 {
@@ -77,12 +77,12 @@ class ContentStorageWriter implements ContentStorageWriterInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ContentTransfer[] $contentTransfers
-     * @param \ArrayObject|\Generated\Shared\Transfer\ContentStorageTransfer[] $contentStorageTransfers
+     * @param \Traversable|\Generated\Shared\Transfer\ContentTransfer[] $contentTransfers
+     * @param \Traversable|\Generated\Shared\Transfer\ContentStorageTransfer[] $contentStorageTransfers
      *
      * @return bool
      */
-    protected function executePublishTransaction(ArrayObject $contentTransfers, ArrayObject $contentStorageTransfers): bool
+    protected function executePublishTransaction(Traversable $contentTransfers, Traversable $contentStorageTransfers): bool
     {
         $availableLocales = $this->localeFacade->getLocaleCollection();
         $contentStorageTransfers = $this->groupByIdContentAndLocale($contentStorageTransfers);
@@ -143,11 +143,11 @@ class ContentStorageWriter implements ContentStorageWriterInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ContentStorageTransfer[] $contentStorageTransfers
+     * @param \Traversable|\Generated\Shared\Transfer\ContentStorageTransfer[] $contentStorageTransfers
      *
      * @return array
      */
-    protected function groupByIdContentAndLocale(ArrayObject $contentStorageTransfers): array
+    protected function groupByIdContentAndLocale(Traversable $contentStorageTransfers): array
     {
         $contentStorageList = [];
 

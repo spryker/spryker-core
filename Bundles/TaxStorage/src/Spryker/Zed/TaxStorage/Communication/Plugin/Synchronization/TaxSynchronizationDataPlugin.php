@@ -54,11 +54,11 @@ class TaxSynchronizationDataPlugin extends AbstractPlugin implements Synchroniza
      */
     public function getData(array $ids = []): array
     {
-        if (count($ids)) {
-            return $this->getRepository()->getSynchronizationDataTransfersFromTaxSetStoragesByIdTaxSets($ids);
+        if ($ids === []) {
+            return $this->getRepository()->getAllSynchronizationDataTransfersFromTaxSetStorages();
         }
 
-        return $this->getRepository()->getAllSynchronizationDataTransfersFromTaxSetStorages();
+        return $this->getRepository()->getSynchronizationDataTransfersFromTaxSetStoragesByIdTaxSets($ids);
     }
 
     /**
