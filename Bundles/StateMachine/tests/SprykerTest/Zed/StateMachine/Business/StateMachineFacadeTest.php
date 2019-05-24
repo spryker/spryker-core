@@ -21,6 +21,7 @@ use Spryker\Zed\Graph\Communication\Plugin\GraphPlugin;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\StateMachine\Business\StateMachineBusinessFactory;
 use Spryker\Zed\StateMachine\Business\StateMachineFacade;
+use Spryker\Zed\StateMachine\Business\StateMachineFacadeInterface;
 use Spryker\Zed\StateMachine\Dependency\Plugin\StateMachineHandlerInterface;
 use Spryker\Zed\StateMachine\StateMachineDependencyProvider;
 use SprykerTest\Zed\StateMachine\Mocks\StateMachineConfig;
@@ -420,8 +421,8 @@ class StateMachineFacadeTest extends Unit
 
         $this->assertCount(2, $stateMachineItemsWithGivenFlag);
 
+        $this->assertContainsOnlyInstancesOf(StateMachineItemTransfer::class, $stateMachineItemsWithGivenFlag);
         $stateMachineItemTransfer = $stateMachineItemsWithGivenFlag[0];
-        $this->assertInstanceOf(StateMachineItemTransfer::class, $stateMachineItemTransfer);
         $this->assertEquals('invoice created', $stateMachineItemTransfer->getStateName());
         $this->assertEquals($identifier, $stateMachineItemTransfer->getIdentifier());
 
@@ -435,6 +436,45 @@ class StateMachineFacadeTest extends Unit
         );
 
         $this->assertCount(1, $stateMachineItemsWithGivenFlag);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetItemsWithFlagShouldReturnSortedListOfStateMachineItemsWithGivenFlag()
+    {
+        $processName = static::TEST_PROCESS_NAME;
+        $identifier = 1985;
+        $identifier2 = 1986;
+
+        $stateMachineProcessTransfer = new StateMachineProcessTransfer();
+        $stateMachineProcessTransfer->setProcessName($processName);
+        $stateMachineProcessTransfer->setStateMachineName(static::TESTING_SM);
+
+        $stateMachineHandler = new TestStateMachineHandler();
+        $stateMachineFacade = $this->createStateMachineFacade($stateMachineHandler);
+
+        $stateMachineFacade->triggerForNewStateMachineItem($stateMachineProcessTransfer, $identifier);
+        $stateMachineFacade->triggerForNewStateMachineItem($stateMachineProcessTransfer, $identifier2);
+
+        $stateMachineItemsWithGivenFlag = $stateMachineFacade->getItemsWithFlag(
+            $stateMachineProcessTransfer,
+            'Flag1'
+        );
+
+        foreach ($stateMachineItemsWithGivenFlag as $stateMachineItemTransfer) {
+            $this->assertEquals($identifier, $stateMachineItemTransfer->getIdentifier());
+        }
+
+        $stateMachineItemsWithGivenFlag = $stateMachineFacade->getItemsWithFlag(
+            $stateMachineProcessTransfer,
+            'Flag1',
+            'DESC'
+        );
+
+        foreach ($stateMachineItemsWithGivenFlag as $stateMachineItemTransfer) {
+            $this->assertEquals($identifier2, $stateMachineItemTransfer->getIdentifier());
+        }
     }
 
     /**
@@ -643,7 +683,7 @@ class StateMachineFacadeTest extends Unit
      *
      * @return \Spryker\Zed\StateMachine\Business\StateMachineFacade
      */
-    protected function createStateMachineFacade(StateMachineHandlerInterface $stateMachineHandler)
+    protected function createStateMachineFacade(StateMachineHandlerInterface $stateMachineHandler): StateMachineFacadeInterface
     {
         $stateMachineBusinessFactory = new StateMachineBusinessFactory();
         $stateMachineConfig = new StateMachineConfig();
