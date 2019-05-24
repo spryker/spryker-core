@@ -102,7 +102,7 @@ class AbstractProductOptionSaver implements AbstractProductOptionSaverInterface
 
     /**
      * @param string $abstractSku
-     * @param mixed $idProductOptionGroup
+     * @param int $idProductOptionGroup
      *
      * @return bool
      */

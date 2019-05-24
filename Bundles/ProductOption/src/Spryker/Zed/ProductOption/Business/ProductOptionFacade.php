@@ -62,7 +62,7 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
      * @api
      *
      * @param string $abstractSku
-     * @param mixed $idProductOptionGroup
+     * @param int $idProductOptionGroup
      *
      * @return bool
      */
@@ -78,7 +78,7 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
      *
      * @api
      *
-     * @param mixed $idProductOptionValue
+     * @param int $idProductOptionValue
      *
      * @return \Generated\Shared\Transfer\ProductOptionTransfer
      */
@@ -94,7 +94,7 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
      *
      * @api
      *
-     * @param mixed $idProductOptionGroup
+     * @param int $idProductOptionGroup
      *
      * @return \Generated\Shared\Transfer\ProductOptionGroupTransfer
      */

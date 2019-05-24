@@ -37,7 +37,7 @@ class ProductOptionValueReader implements ProductOptionValueReaderInterface
     }
 
     /**
-     * @param mixed $idProductOptionValue
+     * @param int $idProductOptionValue
      *
      * @throws \Spryker\Zed\ProductOption\Business\Exception\ProductOptionNotFoundException
      *

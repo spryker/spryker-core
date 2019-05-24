@@ -87,7 +87,7 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
         }
 
         $deletableProductStorageOptionEntities = $this->getDeletableProductStorageOptionEntities($productAbstractIds);
-        if (count($deletableProductStorageOptionEntities) > 0) {
+        if (count($deletableProductStorageOptionEntities)) {
             $this->deleteStorageData($deletableProductStorageOptionEntities);
         }
 
@@ -119,9 +119,9 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
         $productOptionGroupStatuses = $this->productOptionStorageRepository->getProductOptionGroupStatusesByProductAbstractIds($productAbstractIds);
 
         $deletableEntityIds = [];
-        foreach ($productOptionGroupStatuses as $fkProductAbstract => $productOptionGroupStatus) {
+        foreach ($productOptionGroupStatuses as $idProductAbstract => $productOptionGroupStatus) {
             if ($this->isAllProductOptionGroupsDeactivated($productOptionGroupStatus)) {
-                $deletableEntityIds[] = $fkProductAbstract;
+                $deletableEntityIds[] = $idProductAbstract;
             }
         }
 
@@ -129,14 +129,14 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
     }
 
     /**
-     * @param array $productOptionGroupStatus
+     * @param bool[][] $productOptionGroupStatus
      *
      * @return bool
      */
     protected function isAllProductOptionGroupsDeactivated(array $productOptionGroupStatus): bool
     {
         foreach ($productOptionGroupStatus as $name => $status) {
-            if ($status === true) {
+            if ($status) {
                 return false;
             }
         }
@@ -145,13 +145,13 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
     }
 
     /**
-     * @param array $spyProductAbstractOptionStorageEntities
+     * @param array $productAbstractOptionStorageEntities
      *
      * @return void
      */
-    protected function deleteStorageData(array $spyProductAbstractOptionStorageEntities): void
+    protected function deleteStorageData(array $productAbstractOptionStorageEntities): void
     {
-        foreach ($spyProductAbstractOptionStorageEntities as $productAbstractOptionStorageEntityArray) {
+        foreach ($productAbstractOptionStorageEntities as $productAbstractOptionStorageEntityArray) {
             foreach ($productAbstractOptionStorageEntityArray as $storeName => $productAbstractOptionStorageEntity) {
                 $productAbstractOptionStorageEntity->delete();
             }

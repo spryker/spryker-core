@@ -59,7 +59,7 @@ class ProductOptionGroupReader implements ProductOptionGroupReaderInterface
     }
 
     /**
-     * @param mixed $idProductOptionGroup
+     * @param int $idProductOptionGroup
      *
      * @return \Generated\Shared\Transfer\ProductOptionGroupTransfer
      */
