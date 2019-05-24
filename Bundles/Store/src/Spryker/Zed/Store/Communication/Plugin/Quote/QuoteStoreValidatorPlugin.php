@@ -9,12 +9,16 @@ namespace Spryker\Zed\Store\Communication\Plugin\Quote;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\QuoteValidationResponseTransfer;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteValidatorPluginInterface;
 
 /**
  * @method \Spryker\Zed\Store\Business\StoreFacadeInterface getFacade()
+ * @method \Spryker\Zed\Store\StoreConfig getConfig()
+ * @method \Spryker\Zed\Store\Communication\StoreCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Store\Persistence\StoreQueryContainerInterface getQueryContainer()
  */
-class QuoteStoreValidatorPlugin implements QuoteValidatorPluginInterface
+class QuoteStoreValidatorPlugin extends AbstractPlugin implements QuoteValidatorPluginInterface
 {
     /**
      * {@inheritdoc}
