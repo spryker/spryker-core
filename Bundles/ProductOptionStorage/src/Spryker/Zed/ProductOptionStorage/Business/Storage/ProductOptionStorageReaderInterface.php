@@ -5,14 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductOptionStorage\Persistence;
+namespace Spryker\Zed\ProductOptionStorage\Business\Storage;
 
-interface ProductOptionStorageRepositoryInterface
+interface ProductOptionStorageReaderInterface
 {
     /**
      * @param int[] $productAbstractIds
      *
      * @return array
      */
-    public function getProductOptionGroupStatusesByProductAbstractIds($productAbstractIds): array;
+    public function getProductOptionGroupStatusesByProductAbstractIds(array $productAbstractIds): array;
 }

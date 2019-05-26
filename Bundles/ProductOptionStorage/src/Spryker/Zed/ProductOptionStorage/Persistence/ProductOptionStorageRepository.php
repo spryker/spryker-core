@@ -19,11 +19,11 @@ class ProductOptionStorageRepository extends AbstractRepository implements Produ
     /**
      * @param int[] $productAbstractIds
      *
-     * @return array [[fkProductAbstract => [productOptionGroupName => productOptionGroupStatus]]]
+     * @return array
      */
     public function getProductOptionGroupStatusesByProductAbstractIds($productAbstractIds): array
     {
-        $productOptionGroupStatuses = $this->getFactory()
+        return $this->getFactory()
             ->getProductAbstractProductOptionGroupPropelQuery()
             ->filterByFkProductAbstract_In($productAbstractIds)
             ->joinSpyProductOptionGroup()
@@ -34,9 +34,5 @@ class ProductOptionStorageRepository extends AbstractRepository implements Produ
             ])
             ->find()
             ->toArray();
-
-        return $this->getFactory()
-            ->createProductOptionStorageMapper()
-            ->mapProductOptionGroupStatusesToIndexedProductOptionGroupStatusesArray($productOptionGroupStatuses, []);
     }
 }
