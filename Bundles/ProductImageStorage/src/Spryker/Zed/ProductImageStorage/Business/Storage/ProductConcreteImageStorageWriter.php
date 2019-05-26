@@ -79,18 +79,18 @@ class ProductConcreteImageStorageWriter implements ProductConcreteImageStorageWr
      */
     public function unpublish(array $productIds)
     {
-        $productConcreteImageSetsBulk = $this->generateProductConcreteImageSets($productIds);
         $productConcreteLocalizedEntities = $this->findProductConcreteLocalizedEntities($productIds);
+        $productConcreteImageStorageEntities = $this->findProductConcreteImageStorageEntitiesByProductConcreteIds($productIds);
+        $productConcreteImageSetsBulk = $this->generateProductConcreteImageSets($productIds);
 
-        $productConcreteImageStorageEntities = $this->deleteProductConcreteImageStorageEntities(
-            $this->findProductConcreteImageStorageEntitiesByProductConcreteIds($productIds),
-            $productConcreteLocalizedEntities,
-            $productConcreteImageSetsBulk
+        $this->deleteProductConcreteImageStorageEntities(
+            $productConcreteImageStorageEntities,
+            $productConcreteLocalizedEntities
         );
 
-        $this->updateProductConcreteImageStorageEntities(
-            $productConcreteImageStorageEntities,
+        $this->storeData(
             $productConcreteLocalizedEntities,
+            $productConcreteImageStorageEntities,
             $productConcreteImageSetsBulk
         );
     }
@@ -98,65 +98,51 @@ class ProductConcreteImageStorageWriter implements ProductConcreteImageStorageWr
     /**
      * @param \Orm\Zed\ProductImageStorage\Persistence\SpyProductConcreteImageStorage[][] $productConcreteImageStorageEntities
      * @param \Orm\Zed\Product\Persistence\SpyProductLocalizedAttributes[] $productConcreteLocalizedEntities
-     * @param array $productConcreteImageSetsBulk
      *
      * @return void
      */
-    protected function updateProductConcreteImageStorageEntities(
+    protected function deleteProductConcreteImageStorageEntities(
         array $productConcreteImageStorageEntities,
-        array $productConcreteLocalizedEntities,
-        array $productConcreteImageSetsBulk
+        array $productConcreteLocalizedEntities
     ): void {
-        $imageSets = [];
-        $productConcreteLocalizedEntitiesToStore = [];
+        foreach ($productConcreteImageStorageEntities as $productConcreteImageStorageEntitiesForProduct) {
+            foreach ($productConcreteImageStorageEntitiesForProduct as $productConcreteImageStorageEntity) {
+                $productConcreteLocalizedEntity = $this->findProductConcreteLocalizedEntityByProductIdAndLocale(
+                    $productConcreteImageStorageEntity->getFkProduct(),
+                    $productConcreteImageStorageEntity->getLocale(),
+                    $productConcreteLocalizedEntities
+                );
 
-        foreach ($productConcreteLocalizedEntities as $productConcreteLocalizedEntity) {
-            $idProduct = $productConcreteLocalizedEntity->getFkProduct();
-            $idProductAttributes = $productConcreteLocalizedEntity->getIdProductAttributes();
+                if ($productConcreteLocalizedEntity) {
+                    continue;
+                }
 
-            if (isset($productConcreteImageSetsBulk[$idProduct][$idProductAttributes])
-                && $productConcreteImageSetsBulk[$idProduct][$idProductAttributes]->count()
-            ) {
-                $imageSets[$idProduct][$idProductAttributes] = $productConcreteImageSetsBulk[$idProduct][$idProductAttributes];
-                $productConcreteLocalizedEntitiesToStore[] = $productConcreteLocalizedEntity;
+                $productConcreteImageStorageEntity->delete();
             }
         }
-
-        $this->storeData($productConcreteLocalizedEntitiesToStore, $productConcreteImageStorageEntities, $imageSets);
     }
 
     /**
-     * @param \Orm\Zed\ProductImageStorage\Persistence\SpyProductConcreteImageStorage[][] $productConcreteImageStorageEntities
+     * @param int $idProduct
+     * @param string $localeName
      * @param \Orm\Zed\Product\Persistence\SpyProductLocalizedAttributes[] $productConcreteLocalizedEntities
-     * @param array $productConcreteImageSetsBulk
      *
-     * @return \Orm\Zed\ProductImageStorage\Persistence\SpyProductConcreteImageStorage[][]
+     * @return \Orm\Zed\Product\Persistence\SpyProductLocalizedAttributes|null
      */
-    protected function deleteProductConcreteImageStorageEntities(
-        array $productConcreteImageStorageEntities,
-        array $productConcreteLocalizedEntities,
-        array $productConcreteImageSetsBulk
-    ): array {
+    protected function findProductConcreteLocalizedEntityByProductIdAndLocale(
+        int $idProduct,
+        string $localeName,
+        array $productConcreteLocalizedEntities
+    ): ?SpyProductLocalizedAttributes {
         foreach ($productConcreteLocalizedEntities as $productConcreteLocalizedEntity) {
-            $idProduct = $productConcreteLocalizedEntity->getFkProduct();
-            $idProductAttributes = $productConcreteLocalizedEntity->getIdProductAttributes();
-            $localeName = $productConcreteLocalizedEntity->getLocale()->getLocaleName();
-
-            if (isset($productConcreteImageSetsBulk[$idProduct][$idProductAttributes])
-                && $productConcreteImageSetsBulk[$idProduct][$idProductAttributes]->count()
+            if ($productConcreteLocalizedEntity->getFkProduct() === $idProduct &&
+                $productConcreteLocalizedEntity->getLocale()->getLocaleName() === $localeName
             ) {
-                continue;
+                return $productConcreteLocalizedEntity;
             }
-
-            if (!isset($productConcreteImageStorageEntities[$idProduct][$localeName])) {
-                continue;
-            }
-
-            $productConcreteImageStorageEntities[$idProduct][$localeName]->delete();
-            unset($productConcreteImageStorageEntities[$idProduct][$localeName]);
         }
 
-        return $productConcreteImageStorageEntities;
+        return null;
     }
 
     /**
