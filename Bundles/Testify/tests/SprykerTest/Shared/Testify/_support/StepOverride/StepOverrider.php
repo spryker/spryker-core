@@ -46,6 +46,7 @@ class StepOverrider extends Scenario
         $this->stepDescription = $stepDescription;
         $this->releaseHook = $releaseHook;
 
+        // TODO [E2E] Consider other way to override steps
         $scenarioReflection = new ReflectionObject($scenario);
         $testProperty = $scenarioReflection->getProperty('test');
         $testProperty->setAccessible(true);

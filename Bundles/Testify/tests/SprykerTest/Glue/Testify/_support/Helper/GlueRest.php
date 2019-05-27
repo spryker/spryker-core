@@ -102,6 +102,8 @@ class GlueRest extends REST implements LastConnectionProviderInterface
     }
 
     /**
+     * TODO [E2E] Separate glue user auth stuff
+     *
      * Publishes access token
      *
      * @part json

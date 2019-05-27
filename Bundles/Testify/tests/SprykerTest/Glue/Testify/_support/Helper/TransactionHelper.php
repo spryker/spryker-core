@@ -15,6 +15,7 @@ class TransactionHelper extends SharedTransactionHelper
 {
     /**
      * Preventing opening transaction
+     * // TODO [E2E] Consider preventing transactions
      *
      * @inheritdoc
      */
