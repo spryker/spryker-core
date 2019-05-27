@@ -7,11 +7,11 @@
 
 namespace Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\DataExpander;
 
+use Generated\Shared\Transfer\PriceProductExpandResultTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
-use Spryker\Zed\PriceProductSchedule\Business\Exception\PriceProductScheduleListImportException;
 use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToProductFacadeInterface;
 
-class PriceProductTransferProductDataExpander implements PriceProductTransferDataExpanderInterface
+class PriceProductTransferProductDataExpander extends PriceProductTransferAbstractDataExpander implements PriceProductTransferDataExpanderInterface
 {
     protected const ERROR_MESSAGE_PRODUCT_CONCRETE_NOT_FOUND = 'Concrete product was not found by provided sku %s';
     protected const ERROR_MESSAGE_PRODUCT_ABSTRACT_NOT_FOUND = 'Abstract product was not found by provided sku %s';
@@ -33,25 +33,29 @@ class PriceProductTransferProductDataExpander implements PriceProductTransferDat
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      *
-     * @throws \Spryker\Zed\PriceProductSchedule\Business\Exception\PriceProductScheduleListImportException
-     *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer
+     * @return \Generated\Shared\Transfer\PriceProductExpandResultTransfer
      */
     public function expand(
         PriceProductTransfer $priceProductTransfer
-    ): PriceProductTransfer {
+    ): PriceProductExpandResultTransfer {
+        $priceProductExpandResultTransfer = (new PriceProductExpandResultTransfer())
+            ->setIsSuccess(false);
+
         if ($priceProductTransfer->getSkuProductAbstract()) {
             $productAbstractId = $this->productFacade->findProductAbstractIdBySku(
                 $priceProductTransfer->getSkuProductAbstract()
             );
 
             if ($productAbstractId === null) {
-                throw new PriceProductScheduleListImportException(
+                $priceProductScheduleImportErrorTransfer = $this->createPriceProductScheduleListImportErrorTransfer(
                     sprintf(
                         static::ERROR_MESSAGE_PRODUCT_ABSTRACT_NOT_FOUND,
                         $priceProductTransfer->getSkuProductAbstract()
                     )
                 );
+
+                return $priceProductExpandResultTransfer
+                    ->setError($priceProductScheduleImportErrorTransfer);
             }
             $priceProductTransfer->setIdProductAbstract($productAbstractId);
         }
@@ -62,17 +66,22 @@ class PriceProductTransferProductDataExpander implements PriceProductTransferDat
             );
 
             if ($productConcreteId === null) {
-                throw new PriceProductScheduleListImportException(
+                $priceProductScheduleImportErrorTransfer = $this->createPriceProductScheduleListImportErrorTransfer(
                     sprintf(
                         static::ERROR_MESSAGE_PRODUCT_CONCRETE_NOT_FOUND,
                         $priceProductTransfer->getSkuProduct()
                     )
                 );
+
+                return $priceProductExpandResultTransfer
+                    ->setError($priceProductScheduleImportErrorTransfer);
             }
 
             $priceProductTransfer->setIdProduct($productConcreteId);
         }
 
-        return $priceProductTransfer;
+        return $priceProductExpandResultTransfer
+            ->setPriceProduct($priceProductTransfer)
+            ->setIsSuccess(true);
     }
 }

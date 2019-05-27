@@ -27,12 +27,20 @@ class PriceProductScheduleValidator implements PriceProductScheduleValidatorInte
     protected $priceProductScheduleRepository;
 
     /**
+     * @var \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleImportMapperInterface
+     */
+    protected $priceProductScheduleImportMapper;
+
+    /**
      * @param \Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleRepositoryInterface $priceProductScheduleRepository
+     * @param \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleImportMapperInterface $priceProductScheduleImportMapper
      */
     public function __construct(
-        PriceProductScheduleRepositoryInterface $priceProductScheduleRepository
+        PriceProductScheduleRepositoryInterface $priceProductScheduleRepository,
+        PriceProductScheduleImportMapperInterface $priceProductScheduleImportMapper
     ) {
         $this->priceProductScheduleRepository = $priceProductScheduleRepository;
+        $this->priceProductScheduleImportMapper = $priceProductScheduleImportMapper;
     }
 
     /**
@@ -53,6 +61,8 @@ class PriceProductScheduleValidator implements PriceProductScheduleValidatorInte
                         static::ERROR_MESSAGE_GROSS_AND_NET_VALUE
                     )
                 );
+
+            return $priceProductScheduledListImportResponse;
         }
 
         if ($this->isDatesValid($priceProductScheduleImportTransfer) === false) {
@@ -66,9 +76,11 @@ class PriceProductScheduleValidator implements PriceProductScheduleValidatorInte
             return $priceProductScheduledListImportResponse;
         }
 
-        $priceProductScheduleCriteriaFilterTransfer = $this->preparePriceProductScheduleByCriteriaFilter(
-            $priceProductScheduleImportTransfer
-        );
+        $priceProductScheduleCriteriaFilterTransfer = $this->priceProductScheduleImportMapper
+            ->mapPriceProductScheduleImportTransferToPriceProductScheduleCriteriaFilterTransfer(
+                $priceProductScheduleImportTransfer,
+                new PriceProductScheduleCriteriaFilterTransfer()
+            );
 
         $priceProductScheduleTransferCount = $this->priceProductScheduleRepository->findCountPriceProductScheduleByCriteriaFilter(
             $priceProductScheduleCriteriaFilterTransfer
@@ -84,18 +96,6 @@ class PriceProductScheduleValidator implements PriceProductScheduleValidatorInte
         }
 
         return $priceProductScheduledListImportResponse;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer
-     *
-     * @return \Generated\Shared\Transfer\PriceProductScheduleCriteriaFilterTransfer
-     */
-    protected function preparePriceProductScheduleByCriteriaFilter(
-        PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer
-    ): PriceProductScheduleCriteriaFilterTransfer {
-        return (new PriceProductScheduleCriteriaFilterTransfer())
-            ->fromArray($priceProductScheduleImportTransfer->toArray(), true);
     }
 
     /**

@@ -7,11 +7,11 @@
 
 namespace Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\DataExpander;
 
+use Generated\Shared\Transfer\PriceProductExpandResultTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
-use Spryker\Zed\PriceProductSchedule\Business\Exception\PriceProductScheduleListImportException;
 use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToPriceProductFacadeInterface;
 
-class PriceProductTransferPriceTypeDataExpander implements PriceProductTransferDataExpanderInterface
+class PriceProductTransferPriceTypeDataExpander extends PriceProductTransferAbstractDataExpander implements PriceProductTransferDataExpanderInterface
 {
     protected const ERROR_MESSAGE_PRICE_TYPE_NOT_FOUND = 'Price type was not found by provided sku %s';
 
@@ -32,29 +32,36 @@ class PriceProductTransferPriceTypeDataExpander implements PriceProductTransferD
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      *
-     * @throws \Spryker\Zed\PriceProductSchedule\Business\Exception\PriceProductScheduleListImportException
-     *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer
+     * @return \Generated\Shared\Transfer\PriceProductExpandResultTransfer
      */
     public function expand(
         PriceProductTransfer $priceProductTransfer
-    ): PriceProductTransfer {
+    ): PriceProductExpandResultTransfer {
+        $priceProductExpandResultTransfer = (new PriceProductExpandResultTransfer())
+            ->setIsSuccess(false);
         $priceTypeTransfer = $this->priceProductFacade->findPriceTypeByName(
             $priceProductTransfer->getPriceTypeName()
         );
 
         if ($priceTypeTransfer === null) {
-            throw new PriceProductScheduleListImportException(
+            $priceProductScheduleImportErrorTransfer = $this->createPriceProductScheduleListImportErrorTransfer(
                 sprintf(
                     static::ERROR_MESSAGE_PRICE_TYPE_NOT_FOUND,
                     $priceProductTransfer->getPriceTypeName()
                 )
             );
+
+            return $priceProductExpandResultTransfer
+                ->setError($priceProductScheduleImportErrorTransfer);
         }
 
-        return $priceProductTransfer
+        $priceProductTransfer
             ->setFkPriceType($priceTypeTransfer->getIdPriceType())
             ->setPriceTypeName($priceTypeTransfer->getName())
             ->setPriceType($priceTypeTransfer);
+
+        return $priceProductExpandResultTransfer
+            ->setPriceProduct($priceProductTransfer)
+            ->setIsSuccess(true);
     }
 }

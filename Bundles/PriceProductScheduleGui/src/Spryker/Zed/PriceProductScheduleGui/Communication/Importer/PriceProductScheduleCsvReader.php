@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\PriceProductScheduledListImportRequestTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleImportTransfer;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Mapper\PriceProductScheduleImportMapperInterface;
 use Spryker\Zed\PriceProductScheduleGui\Dependency\Service\PriceProductScheduleGuiToUtilCsvServiceInterface;
-use Spryker\Zed\PriceProductScheduleGui\PriceProductScheduleGuiConfig;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class PriceProductScheduleCsvReader implements PriceProductScheduleCsvReaderInterface
@@ -27,23 +26,15 @@ class PriceProductScheduleCsvReader implements PriceProductScheduleCsvReaderInte
     protected $priceProductScheduleImportMapper;
 
     /**
-     * @var \Spryker\Zed\PriceProductScheduleGui\PriceProductScheduleGuiConfig
-     */
-    protected $priceProductScheduleGuiConfig;
-
-    /**
      * @param \Spryker\Zed\PriceProductScheduleGui\Dependency\Service\PriceProductScheduleGuiToUtilCsvServiceInterface $csvService
      * @param \Spryker\Zed\PriceProductScheduleGui\Communication\Mapper\PriceProductScheduleImportMapperInterface $priceProductScheduleImportMapper
-     * @param \Spryker\Zed\PriceProductScheduleGui\PriceProductScheduleGuiConfig $priceProductScheduleGuiConfig
      */
     public function __construct(
         PriceProductScheduleGuiToUtilCsvServiceInterface $csvService,
-        PriceProductScheduleImportMapperInterface $priceProductScheduleImportMapper,
-        PriceProductScheduleGuiConfig $priceProductScheduleGuiConfig
+        PriceProductScheduleImportMapperInterface $priceProductScheduleImportMapper
     ) {
         $this->csvService = $csvService;
         $this->priceProductScheduleImportMapper = $priceProductScheduleImportMapper;
-        $this->priceProductScheduleGuiConfig = $priceProductScheduleGuiConfig;
     }
 
     /**
@@ -64,8 +55,7 @@ class PriceProductScheduleCsvReader implements PriceProductScheduleCsvReaderInte
             $priceProductScheduleImportTransfer = $this->priceProductScheduleImportMapper
                 ->mapArrayToPriceProductScheduleTransfer(
                     array_combine($headers, $importItem),
-                    new PriceProductScheduleImportTransfer(),
-                    $this->priceProductScheduleGuiConfig->getImportFileToTransferFieldsMap()
+                    new PriceProductScheduleImportTransfer()
                 );
 
             $priceProductScheduleImportTransfer->setGrossAmount((int)$priceProductScheduleImportTransfer->getGrossAmount());

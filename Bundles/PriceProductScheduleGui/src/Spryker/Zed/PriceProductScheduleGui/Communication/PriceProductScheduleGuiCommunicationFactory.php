@@ -45,18 +45,17 @@ class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationF
      */
     public function createPriceProductScheduleImportMapper(): PriceProductScheduleImportMapperInterface
     {
-        return new PriceProductScheduleImportMapper();
+        return new PriceProductScheduleImportMapper($this->getConfig());
     }
 
     /**
      * @return \Spryker\Zed\PriceProductScheduleGui\Communication\Importer\PriceProductScheduleCsvReaderInterface
      */
-    public function createPriceProductScheduleImporter(): PriceProductScheduleCsvReaderInterface
+    public function createPriceProductScheduleCsvReader(): PriceProductScheduleCsvReaderInterface
     {
         return new PriceProductScheduleCsvReader(
             $this->getUtilCsvService(),
-            $this->createPriceProductScheduleImportMapper(),
-            $this->getConfig()
+            $this->createPriceProductScheduleImportMapper()
         );
     }
 

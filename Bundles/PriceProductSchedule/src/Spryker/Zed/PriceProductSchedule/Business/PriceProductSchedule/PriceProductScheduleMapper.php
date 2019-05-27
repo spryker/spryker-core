@@ -17,20 +17,6 @@ use Generated\Shared\Transfer\StoreTransfer;
 class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
 {
     /**
-     * @var \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\DataExpander\PriceProductTransferDataExpanderInterface[]
-     */
-    protected $dataExpanderList;
-
-    /**
-     * @param \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\DataExpander\PriceProductTransferDataExpanderInterface[] $dataExpanderList
-     */
-    public function __construct(
-        array $dataExpanderList
-    ) {
-        $this->dataExpanderList = $dataExpanderList;
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer
      * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
      *
@@ -60,15 +46,14 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
         PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer,
         PriceProductTransfer $priceProductTransfer
     ): PriceProductTransfer {
-        $priceProductTransfer
+        return $priceProductTransfer
             ->fromArray($priceProductScheduleImportTransfer->toArray(), true)
-            ->setMoneyValue($this->mapMoneyValueTransferFromPriceProductScheduleImportTransfer($priceProductScheduleImportTransfer, new MoneyValueTransfer()));
-
-        foreach ($this->dataExpanderList as $dataExpander) {
-            $priceProductTransfer = $dataExpander->expand($priceProductTransfer);
-        }
-
-        return $priceProductTransfer;
+            ->setMoneyValue(
+                $this->mapMoneyValueTransferFromPriceProductScheduleImportTransfer(
+                    $priceProductScheduleImportTransfer,
+                    new MoneyValueTransfer()
+                )
+            );
     }
 
     /**
@@ -86,6 +71,8 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
 
         return $moneyValueTransfer
             ->setCurrency($currencyTransfer)
-            ->setStore($storeTransfer);
+            ->setStore($storeTransfer)
+            ->setNetAmount($priceProductScheduleImportTransfer->getNetAmount())
+            ->setGrossAmount($priceProductScheduleImportTransfer->getGrossAmount());
     }
 }

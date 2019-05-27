@@ -12,11 +12,12 @@ use Generated\Shared\Transfer\PriceProductScheduleListImportResponseTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleListTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Form\PriceProductScheduleImportFormType;
+use Spryker\Zed\PriceProductScheduleGui\Communication\PriceProductScheduleGuiCommunicationFactory;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method \Spryker\Zed\PriceProductScheduleGui\Communication\PriceProductScheduleGuiCommunicationFactory getFactory()
+ * @method PriceProductScheduleGuiCommunicationFactory getFactory()
  */
 class ImportController extends AbstractController
 {
@@ -74,7 +75,7 @@ class ImportController extends AbstractController
             ->getData();
 
         $priceProductScheduleListImportRequestTransfer = $this->getFactory()
-            ->createPriceProductScheduleImporter()
+            ->createPriceProductScheduleCsvReader()
             ->readPriceProductScheduleImportTransfersFromCsvFile(
                 $importCsv,
                 $priceProductScheduleListImportRequestTransfer

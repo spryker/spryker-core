@@ -8,20 +8,21 @@
 namespace Spryker\Zed\PriceProductScheduleGui;
 
 use Generated\Shared\Transfer\PriceProductScheduleImportTransfer;
+use Spryker\Zed\Kernel\AbstractBundleConfig;
 
-class PriceProductScheduleGuiConfig
+class PriceProductScheduleGuiConfig extends AbstractBundleConfig
 {
-    public const KEY_ABSTRACT_SKU = 'abstract_sku';
-    public const KEY_CONCRETE_SKU = 'concrete_sku';
-    public const KEY_STORE = 'store';
-    public const KEY_CURRENCY = 'currency';
-    public const KEY_PRICE_TYPE = 'price_type';
+    protected const KEY_ABSTRACT_SKU = 'abstract_sku';
+    protected const KEY_CONCRETE_SKU = 'concrete_sku';
+    protected const KEY_STORE = 'store';
+    protected const KEY_CURRENCY = 'currency';
+    protected const KEY_PRICE_TYPE = 'price_type';
 
-    public const KEY_PRICE_NET = 'value_net';
-    public const KEY_PRICE_GROSS = 'value_gross';
+    protected const KEY_PRICE_NET = 'value_net';
+    protected const KEY_PRICE_GROSS = 'value_gross';
 
-    public const KEY_INCLUDED_FROM = 'from_included';
-    public const KEY_INCLUDED_TO = 'to_included';
+    protected const KEY_INCLUDED_FROM = 'from_included';
+    protected const KEY_INCLUDED_TO = 'to_included';
 
     /**
      * @return array

@@ -14,13 +14,11 @@ interface PriceProductScheduleImportMapperInterface
     /**
      * @param array $importData
      * @param \Generated\Shared\Transfer\PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer
-     * @param array $fieldsMap
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduleImportTransfer
      */
     public function mapArrayToPriceProductScheduleTransfer(
         array $importData,
-        PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer,
-        array $fieldsMap
+        PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer
     ): PriceProductScheduleImportTransfer;
 }

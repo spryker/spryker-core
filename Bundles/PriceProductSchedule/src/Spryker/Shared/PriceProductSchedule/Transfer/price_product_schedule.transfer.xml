@@ -50,20 +50,20 @@
         <property name="currency" type="Currency"/>
         <property name="netAmount" type="int"/>
         <property name="grossAmount" type="int"/>
-        <property name="store" type="Store" />
+        <property name="store" type="Store"/>
     </transfer>
 
     <transfer name="Store">
-        <property name="idStore" type="int" />
-        <property name="name" type="string" />
-        <property name="selectedCurrencyIsoCode" type="string" />
-        <property name="defaultCurrencyIsoCode" type="string" />
-        <property name="availableCurrencyIsoCodes" type="array" singular="availableCurrencyIsoCode" />
-        <property name="availableLocaleIsoCodes" type="array" singular="availableLocaleCode" />
-        <property name="queuePools" type="array" />
-        <property name="storesWithSharedPersistence" type="array" singular="storeWithSharedPersistence" />
-        <property name="countries" type="array" singular="country" />
-        <property name="timezone" type="string" />
+        <property name="idStore" type="int"/>
+        <property name="name" type="string"/>
+        <property name="selectedCurrencyIsoCode" type="string"/>
+        <property name="defaultCurrencyIsoCode" type="string"/>
+        <property name="availableCurrencyIsoCodes" type="array" singular="availableCurrencyIsoCode"/>
+        <property name="availableLocaleIsoCodes" type="array" singular="availableLocaleCode"/>
+        <property name="queuePools" type="array"/>
+        <property name="storesWithSharedPersistence" type="array" singular="storeWithSharedPersistence"/>
+        <property name="countries" type="array" singular="country"/>
+        <property name="timezone" type="string"/>
     </transfer>
 
     <transfer name="Currency">
@@ -130,6 +130,12 @@
 
     <transfer name="PriceProductScheduleListImportResponse">
         <property name="errors" type="PriceProductScheduleListImportError[]" singular="error"/>
+        <property name="isSuccess" type="bool"/>
+    </transfer>
+
+    <transfer name="PriceProductExpandResult">
+        <property name="priceProduct" type="PriceProduct"/>
+        <property name="error" type="PriceProductScheduleListImportError" singular="error"/>
         <property name="isSuccess" type="bool"/>
     </transfer>
 
