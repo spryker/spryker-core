@@ -4,20 +4,18 @@
   "description": "Comment module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1"
+    "php": ">=7.1",
+    "spryker/customer": "*",
+    "spryker/kernel": "*",
+    "spryker/uuid-behavior": "*"
   },
   "require-dev": {
-    "spryker/checkout": "*",
     "spryker/code-sniffer": "*",
-    "spryker/company": "*",
-    "spryker/company-business-unit": "*",
-    "spryker/customer": "*",
-    "spryker/propel": "*",
     "spryker/testify": "*"
   },
   "autoload": {
     "psr-4": {
-      "Spryker\\": "src/Spryker/",
+      "Spryker\\": "src/Spryker/"
     }
   },
   "autoload-dev": {

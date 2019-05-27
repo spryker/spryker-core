@@ -5,19 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Comment\Business;
+namespace Spryker\Zed\Comment\Business\Reader;
 
 use Generated\Shared\Transfer\CommentRequestTransfer;
 use Generated\Shared\Transfer\CommentThreadTransfer;
 
-interface CommentFacadeInterface
+interface CommentReaderInterface
 {
     /**
-     * Specification:
-     * - Retrieves a comment thread using the provided owner type and owner ID if found.
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\CommentRequestTransfer $commentRequestTransfer
      *
      * @return \Generated\Shared\Transfer\CommentThreadTransfer|null

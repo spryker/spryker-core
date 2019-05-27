@@ -7,43 +7,15 @@
 
 namespace Spryker\Zed\Comment\Persistence;
 
-use Generated\Shared\Transfer\CommentCollectionTransfer;
-use Generated\Shared\Transfer\CommentFilterTransfer;
-use Generated\Shared\Transfer\CommentTransfer;
-use Generated\Shared\Transfer\CommentVersionCollectionTransfer;
-use Generated\Shared\Transfer\CommentVersionFilterTransfer;
+use Generated\Shared\Transfer\CommentRequestTransfer;
+use Generated\Shared\Transfer\CommentThreadTransfer;
 
 interface CommentRepositoryInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\CommentFilterTransfer $quoteRequestFilterTransfer
+     * @param \Generated\Shared\Transfer\CommentRequestTransfer $commentRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\CommentCollectionTransfer
+     * @return \Generated\Shared\Transfer\CommentThreadTransfer|null
      */
-    public function getCommentCollectionByFilter(
-        CommentFilterTransfer $quoteRequestFilterTransfer
-    ): CommentCollectionTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\CommentVersionFilterTransfer $quoteRequestVersionFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\CommentVersionCollectionTransfer
-     */
-    public function getCommentVersionCollectionByFilter(
-        CommentVersionFilterTransfer $quoteRequestVersionFilterTransfer
-    ): CommentVersionCollectionTransfer;
-
-    /**
-     * @param string $customerReference
-     *
-     * @return int
-     */
-    public function countCustomerComments(string $customerReference): int;
-
-    /**
-     * @param string $versionReference
-     *
-     * @return \Generated\Shared\Transfer\CommentTransfer|null
-     */
-    public function findCommentByVersionReference(string $versionReference): ?CommentTransfer;
+    public function findCommentThread(CommentRequestTransfer $commentRequestTransfer): ?CommentThreadTransfer;
 }

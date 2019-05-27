@@ -7,13 +7,9 @@
 
 namespace Spryker\Zed\Comment\Persistence;
 
-use Orm\Zed\Comment\Persistence\SpyCommentQuery;
-use Orm\Zed\Comment\Persistence\SpyCommentVersionQuery;
+use Orm\Zed\Comment\Persistence\SpyCommentThreadQuery;
+use Spryker\Zed\Comment\Persistence\Propel\Mapper\CommentThreadMapper;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
-use Spryker\Zed\Comment\Dependency\Service\CommentToUtilEncodingServiceInterface;
-use Spryker\Zed\Comment\Persistence\Propel\Mapper\CommentMapper;
-use Spryker\Zed\Comment\Persistence\Propel\Mapper\CommentVersionMapper;
-use Spryker\Zed\Comment\CommentDependencyProvider;
 
 /**
  * @method \Spryker\Zed\Comment\CommentConfig getConfig()
@@ -23,45 +19,18 @@ use Spryker\Zed\Comment\CommentDependencyProvider;
 class CommentPersistenceFactory extends AbstractPersistenceFactory
 {
     /**
-     * @return \Orm\Zed\Comment\Persistence\SpyCommentQuery
+     * @return \Orm\Zed\Comment\Persistence\SpyCommentThreadQuery
      */
-    public function getCommentPropelQuery(): SpyCommentQuery
+    public function getCommentThreadPropelQuery(): SpyCommentThreadQuery
     {
-        return SpyCommentQuery::create();
+        return SpyCommentThreadQuery::create();
     }
 
     /**
-     * @return \Orm\Zed\Comment\Persistence\SpyCommentVersionQuery
+     * @return \Spryker\Zed\Comment\Persistence\Propel\Mapper\CommentThreadMapper
      */
-    public function getCommentVersionPropelQuery(): SpyCommentVersionQuery
+    public function createCommentThreadMapping(): CommentThreadMapper
     {
-        return SpyCommentVersionQuery::create();
-    }
-
-    /**
-     * @return \Spryker\Zed\Comment\Persistence\Propel\Mapper\CommentMapper
-     */
-    public function createCommentMapper(): CommentMapper
-    {
-        return new CommentMapper();
-    }
-
-    /**
-     * @return \Spryker\Zed\Comment\Persistence\Propel\Mapper\CommentVersionMapper
-     */
-    public function createCommentVersionMapper(): CommentVersionMapper
-    {
-        return new CommentVersionMapper(
-            $this->getConfig(),
-            $this->getUtilEncodingService()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\Comment\Dependency\Service\CommentToUtilEncodingServiceInterface
-     */
-    public function getUtilEncodingService(): CommentToUtilEncodingServiceInterface
-    {
-        return $this->getProvidedDependency(CommentDependencyProvider::SERVICE_UTIL_ENCODING);
+        return new CommentThreadMapper();
     }
 }
