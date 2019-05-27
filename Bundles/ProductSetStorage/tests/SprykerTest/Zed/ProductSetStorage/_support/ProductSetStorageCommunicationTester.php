@@ -14,6 +14,8 @@ use Generated\Shared\DataBuilder\ProductImageBuilder;
 use Generated\Shared\DataBuilder\ProductSetBuilder;
 use Generated\Shared\Transfer\ProductImageTransfer;
 use Generated\Shared\Transfer\ProductSetTransfer;
+use Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImageQuery;
+use Orm\Zed\ProductSetStorage\Persistence\SpyProductSetStorageQuery;
 use Spryker\Zed\ProductSet\Business\ProductSetFacadeInterface;
 
 /**
@@ -88,6 +90,59 @@ class ProductSetStorageCommunicationTester extends Actor
             ->build();
 
         return $productImageTransfer;
+    }
+
+    /**
+     * @param int $fkProductSet
+     *
+     * @return void
+     */
+    public function deleteProductSetStorageByFkProductSet(int $fkProductSet): void
+    {
+        SpyProductSetStorageQuery::create()->filterByFkProductSet($fkProductSet)->delete();
+    }
+
+    /**
+     * @param int $idProductSet
+     *
+     * @return array[]
+     */
+    public function getProductSetImages(int $idProductSet): array
+    {
+        $productSetStorage = SpyProductSetStorageQuery::create()->findOneByFkProductSet($idProductSet);
+
+        $productSetImages = $productSetStorage->getData()['image_sets'][0]['images'];
+
+        return $productSetImages;
+    }
+
+    /**
+     * @param array $productImages
+     *
+     * @return void
+     */
+    public function assertSortingByIdProductImageSetToProductImage(array $productImages): void
+    {
+        $idProductImageSetToProductImagePrevious = 0;
+        foreach ($productImages as $productImage) {
+            $idProductImageSetToProductImage = SpyProductImageSetToProductImageQuery::create()
+                ->findOneByFkProductImage($productImage['id_product_image'])
+                ->getIdProductImageSetToProductImage();
+            $this->assertTrue(
+                $idProductImageSetToProductImage > $idProductImageSetToProductImagePrevious
+            );
+            $idProductImageSetToProductImagePrevious = $idProductImageSetToProductImage;
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductSetTransfer $productSetTransfer
+     *
+     * @return void
+     */
+    public function deleteProductSet(ProductSetTransfer $productSetTransfer): void
+    {
+        $this->getProductSetFacade()->deleteProductSet($productSetTransfer);
     }
 
     /**

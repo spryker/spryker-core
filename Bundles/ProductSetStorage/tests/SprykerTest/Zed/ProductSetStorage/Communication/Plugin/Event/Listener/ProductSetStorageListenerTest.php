@@ -10,7 +10,6 @@ namespace SprykerTest\Zed\ProductSetStorage\Communication\Plugin\Event\Listener;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\EventEntityTransfer;
 use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageSetTableMap;
-use Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImageQuery;
 use Orm\Zed\ProductSet\Persistence\Map\SpyProductAbstractSetTableMap;
 use Orm\Zed\ProductSet\Persistence\Map\SpyProductSetDataTableMap;
 use Orm\Zed\ProductSetStorage\Persistence\SpyProductSetStorageQuery;
@@ -72,7 +71,7 @@ class ProductSetStorageListenerTest extends Unit
     public function testProductSetStorageListenerStoreData(): void
     {
         // Prepare
-        SpyProductSetStorageQuery::create()->filterByFkProductSet(1)->delete();
+        $this->tester->deleteProductSetStorageByFkProductSet(1);
         $productSetStorageCount = SpyProductSetStorageQuery::create()->count();
 
         $productSetStorageListener = new ProductSetStorageListener();
@@ -95,7 +94,7 @@ class ProductSetStorageListenerTest extends Unit
     public function testProductSetStoragePublishListener(): void
     {
         // Prepare
-        SpyProductSetStorageQuery::create()->filterByFkProductSet(1)->delete();
+        $this->tester->deleteProductSetStorageByFkProductSet(1);
         $productSetStorageCount = SpyProductSetStorageQuery::create()->count();
 
         $productSetStoragePublishListener = new ProductSetStoragePublishListener();
@@ -138,7 +137,7 @@ class ProductSetStorageListenerTest extends Unit
     public function testProductAbstractProductSetStorageListenerStoreData(): void
     {
         // Prepare
-        SpyProductSetStorageQuery::create()->filterByFkProductSet(1)->delete();
+        $this->tester->deleteProductSetStorageByFkProductSet(1);
         $productSetStorageCount = SpyProductSetStorageQuery::create()->count();
 
         $productAbstractProductSetStorageListener = new ProductAbstractProductSetStorageListener();
@@ -163,7 +162,7 @@ class ProductSetStorageListenerTest extends Unit
     public function testProductSetDataStorageListenerStoreData(): void
     {
         // Prepare
-        SpyProductSetStorageQuery::create()->filterByFkProductSet(1)->delete();
+        $this->tester->deleteProductSetStorageByFkProductSet(1);
         $productSetStorageCount = SpyProductSetStorageQuery::create()->count();
 
         $productSetDataStorageListener = new ProductSetDataStorageListener();
@@ -215,7 +214,7 @@ class ProductSetStorageListenerTest extends Unit
     public function testProductSetProductImageSetStorageListenerStoreData(): void
     {
         // Prepare
-        SpyProductSetStorageQuery::create()->filterByFkProductSet(1)->delete();
+        $this->tester->deleteProductSetStorageByFkProductSet(1);
         $productSetStorageCount = SpyProductSetStorageQuery::create()->count();
 
         $productSetProductImageSetStorageListener = new ProductSetProductImageSetStorageListener();
@@ -266,7 +265,7 @@ class ProductSetStorageListenerTest extends Unit
     public function testProductSetUrlStorageListenerStoreData(): void
     {
         // Prepare
-        SpyProductSetStorageQuery::create()->filterByFkProductSet(1)->delete();
+        $this->tester->deleteProductSetStorageByFkProductSet(1);
         $productSetStorageCount = SpyProductSetStorageQuery::create()->count();
 
         $productSetUrlStorageListener = new ProductSetUrlStorageListener();
@@ -303,7 +302,7 @@ class ProductSetStorageListenerTest extends Unit
             $productImageTransferSortedFirst,
         ]);
 
-        SpyProductSetStorageQuery::create()->filterByFkProductSet($productSetTransfer->getIdProductSet())->delete();
+        $this->tester->deleteProductSetStorageByFkProductSet($productSetTransfer->getIdProductSet());
 
         $productSetProductImageSetStorageListener = new ProductSetProductImageSetStorageListener();
         $productSetProductImageSetStorageListener->setFacade($this->getProductSetStorageFacade());
@@ -316,7 +315,8 @@ class ProductSetStorageListenerTest extends Unit
 
         // Act
         $productSetProductImageSetStorageListener->handleBulk($eventTransfers, ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_SET_CREATE);
-        $productSetImages = $this->getProductSetImages($productSetTransfer->getIdProductSet());
+        $productSetImages = $this->tester->getProductSetImages($productSetTransfer->getIdProductSet());
+        $this->tester->deleteProductSet($productSetTransfer);
 
         // Assert
         $this->assertEquals($productImageTransferSortedFirst->getIdProductImage(), $productSetImages[0]['id_product_image']);
@@ -335,7 +335,7 @@ class ProductSetStorageListenerTest extends Unit
             $this->tester->createProductImageTransferWithSortOrder(0),
         ]);
 
-        SpyProductSetStorageQuery::create()->filterByFkProductSet($productSetTransfer->getIdProductSet())->delete();
+        $this->tester->deleteProductSetStorageByFkProductSet($productSetTransfer->getIdProductSet());
 
         $productSetProductImageSetStorageListener = new ProductSetProductImageSetStorageListener();
         $productSetProductImageSetStorageListener->setFacade($this->getProductSetStorageFacade());
@@ -348,10 +348,11 @@ class ProductSetStorageListenerTest extends Unit
 
         // Act
         $productSetProductImageSetStorageListener->handleBulk($eventTransfers, ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_SET_CREATE);
-        $productSetImages = $this->getProductSetImages($productSetTransfer->getIdProductSet());
+        $productSetImages = $this->tester->getProductSetImages($productSetTransfer->getIdProductSet());
 
         // Assert
-        $this->assertSortingByIdProductImageSetToProductImage($productSetImages);
+        $this->tester->assertSortingByIdProductImageSetToProductImage($productSetImages);
+        $this->tester->deleteProductSet($productSetTransfer);
     }
 
     /**
@@ -382,38 +383,5 @@ class ProductSetStorageListenerTest extends Unit
         $this->assertNotNull($spyProductSetStorage);
         $data = $spyProductSetStorage->getData();
         $this->assertSame('HP Product Set', $data['name']);
-    }
-
-    /**
-     * @param int $idProductSet
-     *
-     * @return array[]
-     */
-    protected function getProductSetImages(int $idProductSet): array
-    {
-        $productSetStorage = SpyProductSetStorageQuery::create()->findOneByFkProductSet($idProductSet);
-
-        $productSetImages = $productSetStorage->getData()['image_sets'][0]['images'];
-
-        return $productSetImages;
-    }
-
-    /**
-     * @param array $productImages
-     *
-     * @return void
-     */
-    protected function assertSortingByIdProductImageSetToProductImage(array $productImages): void
-    {
-        $idProductImageSetToProductImagePrevious = 0;
-        foreach ($productImages as $productImage) {
-            $idProductImageSetToProductImage = SpyProductImageSetToProductImageQuery::create()
-                ->findOneByFkProductImage($productImage['id_product_image'])
-                ->getIdProductImageSetToProductImage();
-            $this->assertTrue(
-                $idProductImageSetToProductImage > $idProductImageSetToProductImagePrevious
-            );
-            $idProductImageSetToProductImagePrevious = $idProductImageSetToProductImage;
-        }
     }
 }
