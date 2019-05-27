@@ -27,7 +27,7 @@ class SharedCartRestResponseBuilder implements SharedCartRestResponseBuilderInte
     /**
      * @var \Spryker\Glue\SharedCartsRestApi\Processor\Mapper\SharedCartMapperInterface
      */
-    protected $shareCartMapper;
+    protected $sharedCartMapper;
 
     /**
      * @var \Spryker\Glue\SharedCartsRestApi\SharedCartsRestApiConfig
@@ -36,16 +36,16 @@ class SharedCartRestResponseBuilder implements SharedCartRestResponseBuilderInte
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
-     * @param \Spryker\Glue\SharedCartsRestApi\Processor\Mapper\SharedCartMapperInterface $shareCartMapper
+     * @param \Spryker\Glue\SharedCartsRestApi\Processor\Mapper\SharedCartMapperInterface $sharedCartMapper
      * @param \Spryker\Glue\SharedCartsRestApi\SharedCartsRestApiConfig $sharedCartsRestApiConfig
      */
     public function __construct(
         RestResourceBuilderInterface $restResourceBuilder,
-        SharedCartMapperInterface $shareCartMapper,
+        SharedCartMapperInterface $sharedCartMapper,
         SharedCartsRestApiConfig $sharedCartsRestApiConfig
     ) {
         $this->restResourceBuilder = $restResourceBuilder;
-        $this->shareCartMapper = $shareCartMapper;
+        $this->sharedCartMapper = $sharedCartMapper;
         $this->sharedCartsRestApiConfig = $sharedCartsRestApiConfig;
     }
 
@@ -61,7 +61,7 @@ class SharedCartRestResponseBuilder implements SharedCartRestResponseBuilderInte
             return $restResponse;
         }
 
-        $restSharedCartsAttributesTransfer = $this->shareCartMapper->mapShareDetailTransferToRestSharedCartsAttributesTransfer(
+        $restSharedCartsAttributesTransfer = $this->sharedCartMapper->mapShareDetailTransferToRestSharedCartsAttributesTransfer(
             $shareDetailTransfer,
             new RestSharedCartsAttributesTransfer()
         );
@@ -118,12 +118,12 @@ class SharedCartRestResponseBuilder implements SharedCartRestResponseBuilderInte
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createSharingWithOtherCompanyCompanyUserForbiddenErrorResponse(): RestResponseInterface
+    public function createSharingForbiddenErrorResponse(): RestResponseInterface
     {
         return $this->createRestErrorResponse(
             Response::HTTP_FORBIDDEN,
-            SharedCartsRestApiConfig::RESPONSE_CODE_CAN_ONLY_SHARE_CART_WITH_COMPANY_USERS_FROM_SAME_COMPANY,
-            SharedCartsRestApiConfig::RESPONSE_DETAIL_CAN_ONLY_SHARE_CART_WITH_COMPANY_USERS_FROM_SAME_COMPANY
+            SharedCartsRestApiConfig::RESPONSE_CODE_SHARE_CART_OUTSIDE_THE_COMPANY_FORBIDDEN,
+            SharedCartsRestApiConfig::RESPONSE_DETAIL_SHARE_CART_OUTSIDE_THE_COMPANY_FORBIDDEN
         );
     }
 

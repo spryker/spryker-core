@@ -44,8 +44,8 @@ class QuoteShareDetailsReader implements QuoteShareDetailsReaderInterface
      *
      * @return \Generated\Shared\Transfer\ShareDetailCollectionTransfer
      */
-    public function findShareDetailCollectionByShareDetailCriteria(ShareDetailCriteriaFilterTransfer $shareDetailCriteriaFilterTransfer): ShareDetailCollectionTransfer
+    public function getShareDetailCollectionByShareDetailCriteria(ShareDetailCriteriaFilterTransfer $shareDetailCriteriaFilterTransfer): ShareDetailCollectionTransfer
     {
-        return $this->sharedCartRepository->findShareDetailCollectionByShareDetailCriteria($shareDetailCriteriaFilterTransfer);
+        return $this->sharedCartRepository->getShareDetailCollectionByShareDetailCriteria($shareDetailCriteriaFilterTransfer);
     }
 }

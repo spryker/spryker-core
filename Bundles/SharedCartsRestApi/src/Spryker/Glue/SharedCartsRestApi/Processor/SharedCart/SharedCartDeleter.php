@@ -45,13 +45,13 @@ class SharedCartDeleter implements SharedCartDeleterInterface
      */
     public function delete(RestRequestInterface $restRequest): RestResponseInterface
     {
-        $shareCartUuid = $restRequest->getResource()->getId();
-        if (!$shareCartUuid) {
+        $sharedCartUuid = $restRequest->getResource()->getId();
+        if (!$sharedCartUuid) {
             return $this->sharedCartRestResponseBuilder->createSharedCartIdMissingErrorResponse();
         }
 
         $shareCartRequestTransfer = $this->createShareCartRequestTransfer(
-            $shareCartUuid,
+            $sharedCartUuid,
             $restRequest->getRestUser()->getNaturalIdentifier()
         );
 

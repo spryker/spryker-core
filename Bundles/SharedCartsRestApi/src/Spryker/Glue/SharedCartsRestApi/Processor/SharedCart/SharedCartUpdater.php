@@ -48,13 +48,13 @@ class SharedCartUpdater implements SharedCartUpdaterInterface
      */
     public function update(RestRequestInterface $restRequest, RestSharedCartsAttributesTransfer $restSharedCartsAttributesTransfer): RestResponseInterface
     {
-        $shareCartUuid = $restRequest->getResource()->getId();
-        if (!$shareCartUuid) {
+        $sharedCartUuid = $restRequest->getResource()->getId();
+        if (!$sharedCartUuid) {
             return $this->sharedCartRestResponseBuilder->createSharedCartIdMissingErrorResponse();
         }
 
         $shareCartRequestTransfer = $this->createShareCartRequestTransfer(
-            $shareCartUuid,
+            $sharedCartUuid,
             $restRequest->getRestUser()->getNaturalIdentifier(),
             $restSharedCartsAttributesTransfer->getIdCartPermissionGroup()
         );
@@ -72,18 +72,22 @@ class SharedCartUpdater implements SharedCartUpdaterInterface
     }
 
     /**
-     * @param string $shareCartUuid
+     * @param string $sharedCartUuid
      * @param string $customerReference
      * @param int $idPermissionGroup
      *
      * @return \Generated\Shared\Transfer\ShareCartRequestTransfer
      */
-    protected function createShareCartRequestTransfer(string $shareCartUuid, string $customerReference, int $idPermissionGroup): ShareCartRequestTransfer
-    {
-        $quotePermissionGroupTransfer = (new QuotePermissionGroupTransfer())->setIdQuotePermissionGroup($idPermissionGroup);
+    protected function createShareCartRequestTransfer(
+        string $sharedCartUuid,
+        string $customerReference,
+        int $idPermissionGroup
+    ): ShareCartRequestTransfer {
+        $quotePermissionGroupTransfer = (new QuotePermissionGroupTransfer())
+            ->setIdQuotePermissionGroup($idPermissionGroup);
         $shareDetailTransfer = (new ShareDetailTransfer())
             ->setQuotePermissionGroup($quotePermissionGroupTransfer)
-            ->setUuid($shareCartUuid);
+            ->setUuid($sharedCartUuid);
 
         return (new ShareCartRequestTransfer())
             ->addShareDetail($shareDetailTransfer)

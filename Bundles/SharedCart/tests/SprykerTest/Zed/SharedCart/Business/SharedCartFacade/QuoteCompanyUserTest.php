@@ -92,7 +92,7 @@ class QuoteCompanyUserTest extends Unit
 
         //Act
         $shareDetailCollectionTransfer = $this->tester->getFacade()
-            ->findShareDetailCollectionByShareDetailCriteria($this->getShareDetailCriteriaTransfer());
+            ->getShareDetailCollectionByShareDetailCriteria($this->getShareDetailCriteriaTransfer());
 
         //Assert
         $this->assertCount(1, $shareDetailCollectionTransfer->getShareDetails());
@@ -130,7 +130,7 @@ class QuoteCompanyUserTest extends Unit
         //Act
         $this->tester->getFacade()->updateQuoteCompanyUserPermissionGroup($shareCartRequestTransfer);
         $shareDetailCollectionTransfer = $this->tester->getFacade()
-            ->findShareDetailCollectionByShareDetailCriteria($this->getShareDetailCriteriaTransfer());
+            ->getShareDetailCollectionByShareDetailCriteria($this->getShareDetailCriteriaTransfer());
 
         //Assert
         $this->assertCount(1, $shareDetailCollectionTransfer->getShareDetails());
@@ -160,7 +160,7 @@ class QuoteCompanyUserTest extends Unit
         //Act
         $this->tester->getFacade()->deleteQuoteCompanyUser($shareCartRequestTransfer);
         $shareDetailCollectionTransfer = $this->tester->getFacade()
-            ->findShareDetailCollectionByShareDetailCriteria($this->getShareDetailCriteriaTransfer());
+            ->getShareDetailCollectionByShareDetailCriteria($this->getShareDetailCriteriaTransfer());
 
         //Assert
         $this->assertCount(0, $shareDetailCollectionTransfer->getShareDetails());

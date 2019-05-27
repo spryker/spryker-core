@@ -39,7 +39,7 @@ interface SharedCartRestResponseBuilderInterface
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createSharingWithOtherCompanyCompanyUserForbiddenErrorResponse(): RestResponseInterface;
+    public function createSharingForbiddenErrorResponse(): RestResponseInterface;
 
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface

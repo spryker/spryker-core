@@ -7,6 +7,7 @@
 
 namespace SprykerTest\Zed\SharedCartsRestApi\Business;
 
+use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\QuoteCompanyUserTransfer;
@@ -14,6 +15,7 @@ use Generated\Shared\Transfer\QuotePermissionGroupTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShareCartRequestTransfer;
 use Generated\Shared\Transfer\ShareDetailTransfer;
+use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Shared\SharedCartsRestApi\SharedCartsRestApiConfig;
 use Spryker\Zed\SharedCart\Business\SharedCartFacadeInterface;
 
@@ -140,6 +142,23 @@ class SharedCartsRestApiFacadeTest extends Unit
         //Assert
         $this->assertCount(0, $shareCartResponseTransfer->getShareDetails());
         $this->assertEquals(SharedCartsRestApiConfig::ERROR_IDENTIFIER_QUOTE_NOT_FOUND, $shareCartResponseTransfer->getErrorIdentifier());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreateShouldReturnErrorIfNoShareDetailsProvided(): void
+    {
+        $this->expectException(RequiredTransferPropertyException::class);
+
+        //Arrange
+        $shareCartRequestTransfer = (new ShareCartRequestTransfer())
+            ->setShareDetails(new ArrayObject())
+            ->setQuoteUuid($this->quoteTransfer->getUuid())
+            ->setCustomerReference($this->quoteTransfer->getCustomerReference());
+
+        //Act
+        $this->tester->getFacade()->create($shareCartRequestTransfer);
     }
 
     /**

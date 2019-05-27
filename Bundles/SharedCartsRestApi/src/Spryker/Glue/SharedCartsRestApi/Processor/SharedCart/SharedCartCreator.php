@@ -77,7 +77,7 @@ class SharedCartCreator implements SharedCartCreatorInterface
         }
 
         if (!$this->canManageQuoteSharing($restRequest, $companyUserStorageTransfer)) {
-            return $this->sharedCartRestResponseBuilder->createSharingWithOtherCompanyCompanyUserForbiddenErrorResponse();
+            return $this->sharedCartRestResponseBuilder->createSharingForbiddenErrorResponse();
         }
 
         $shareCartRequestTransfer = $this->createShareCartRequestTransfer(
@@ -118,8 +118,12 @@ class SharedCartCreator implements SharedCartCreatorInterface
      *
      * @return \Generated\Shared\Transfer\ShareCartRequestTransfer
      */
-    protected function createShareCartRequestTransfer(string $quoteUuid, string $customerReference, int $idCompanyUser, int $idPermissionGroup): ShareCartRequestTransfer
-    {
+    protected function createShareCartRequestTransfer(
+        string $quoteUuid,
+        string $customerReference,
+        int $idCompanyUser,
+        int $idPermissionGroup
+    ): ShareCartRequestTransfer {
         $quotePermissionGroupTransfer = (new QuotePermissionGroupTransfer())->setIdQuotePermissionGroup($idPermissionGroup);
         $shareDetailTransfer = (new ShareDetailTransfer())
             ->setQuotePermissionGroup($quotePermissionGroupTransfer)

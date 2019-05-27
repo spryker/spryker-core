@@ -243,11 +243,11 @@ class SharedCartFacade extends AbstractFacade implements SharedCartFacadeInterfa
      *
      * @return \Generated\Shared\Transfer\ShareDetailCollectionTransfer
      */
-    public function findShareDetailCollectionByShareDetailCriteria(ShareDetailCriteriaFilterTransfer $shareDetailCriteriaFilterTransfer): ShareDetailCollectionTransfer
+    public function getShareDetailCollectionByShareDetailCriteria(ShareDetailCriteriaFilterTransfer $shareDetailCriteriaFilterTransfer): ShareDetailCollectionTransfer
     {
         return $this->getFactory()
             ->createQuoteShareDetailsReader()
-            ->findShareDetailCollectionByShareDetailCriteria($shareDetailCriteriaFilterTransfer);
+            ->getShareDetailCollectionByShareDetailCriteria($shareDetailCriteriaFilterTransfer);
     }
 
     /**

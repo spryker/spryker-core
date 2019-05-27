@@ -34,7 +34,7 @@ class SharedCartsRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_CODE_COMPANY_USER_NOT_FOUND = '1404';
     public const RESPONSE_CODE_SHARING_CART_FORBIDDEN = '2701';
     public const RESPONSE_CODE_FAILED_TO_SHARE_CART = '2702';
-    public const RESPONSE_CODE_CAN_ONLY_SHARE_CART_WITH_COMPANY_USERS_FROM_SAME_COMPANY = '2703';
+    public const RESPONSE_CODE_SHARE_CART_OUTSIDE_THE_COMPANY_FORBIDDEN = '2703';
     public const RESPONSE_CODE_SHARED_CART_ID_MISSING = '2704';
     public const RESPONSE_CODE_SHARED_CART_NOT_FOUND = '2705';
 
@@ -52,7 +52,7 @@ class SharedCartsRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_DETAIL_COMPANY_USER_NOT_FOUND = 'Company user not found';
     public const RESPONSE_DETAIL_SHARING_CART_FORBIDDEN = 'Action is forbidden.';
     public const RESPONSE_DETAIL_FAILED_TO_SHARE_CART = 'Failed to share a cart.';
-    public const RESPONSE_DETAIL_CAN_ONLY_SHARE_CART_WITH_COMPANY_USERS_FROM_SAME_COMPANY = 'Cart can be shared only with company users from same company.';
+    public const RESPONSE_DETAIL_SHARE_CART_OUTSIDE_THE_COMPANY_FORBIDDEN = 'Cart can be shared only with company users from same company.';
     public const RESPONSE_DETAIL_SHARED_CART_ID_MISSING = 'Shared cart id is missing.';
     public const RESPONSE_DETAIL_SHARED_CART_NOT_FOUND = 'Shared cart not found.';
 
