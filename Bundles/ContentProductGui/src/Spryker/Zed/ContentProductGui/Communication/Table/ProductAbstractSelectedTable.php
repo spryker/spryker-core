@@ -7,80 +7,23 @@
 
 namespace Spryker\Zed\ContentProductGui\Communication\Table;
 
-use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
-use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
-use Orm\Zed\Product\Persistence\SpyProductAbstractStore;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\ContentProductGui\Communication\Controller\ProductAbstractController;
-use Spryker\Zed\ContentProductGui\Communication\Table\Manager\ProductAbstractTableManagerInterface;
 use Spryker\Zed\ContentProductGui\ContentProductGuiConfig;
-use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
-class ProductAbstractSelectedTable extends AbstractTable
+class ProductAbstractSelectedTable extends AbstractProductAbstractTable
 {
     public const TABLE_IDENTIFIER = 'product-abstract-selected-table';
     public const TABLE_CLASS = 'product-abstract-selected-table gui-table-data';
     public const BASE_URL = '/content-product-gui/product-abstract/';
 
-    public const COL_ID_PRODUCT_ABSTRACT = 'ID';
-    public const COL_SKU = 'SKU';
-    public const COL_IMAGE = 'Image';
-    public const COL_NAME = 'Name';
-    public const COL_STORES = 'Stores';
-    public const COL_STATUS = 'Status';
     public const COL_ACTIONS = 'Actions';
 
     public const BUTTON_DELETE = 'Delete';
     public const BUTTON_MOVE_UP = 'Move Up';
     public const BUTTON_MOVE_DOWN = 'Move Down';
-
-    /**
-     * @var \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
-     */
-    protected $productQueryContainer;
-
-    /**
-     * @var \Spryker\Zed\ContentProductGui\Communication\Table\Manager\ProductAbstractTableManagerInterface
-     */
-    protected $productAbstractTableManager;
-
-    /**
-     * @var \Generated\Shared\Transfer\LocaleTransfer
-     */
-    protected $localeTransfer;
-
-    /**
-     * @var string|null
-     */
-    protected $identifierSuffix;
-
-    /**
-     * @var array
-     */
-    protected $idProductAbstracts;
-
-    /**
-     * @param \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $productQueryContainer
-     * @param \Spryker\Zed\ContentProductGui\Communication\Table\Manager\ProductAbstractTableManagerInterface $productAbstractTableManager
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     * @param string|null $identifierSuffix
-     * @param array $idProductAbstracts
-     */
-    public function __construct(
-        SpyProductAbstractQuery $productQueryContainer,
-        ProductAbstractTableManagerInterface $productAbstractTableManager,
-        LocaleTransfer $localeTransfer,
-        ?string $identifierSuffix,
-        array $idProductAbstracts
-    ) {
-        $this->productQueryContainer = $productQueryContainer;
-        $this->productAbstractTableManager = $productAbstractTableManager;
-        $this->localeTransfer = $localeTransfer;
-        $this->identifierSuffix = $identifierSuffix;
-        $this->idProductAbstracts = $idProductAbstracts;
-    }
 
     /**
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
@@ -186,10 +129,10 @@ class ProductAbstractSelectedTable extends AbstractTable
         return [
             static::COL_ID_PRODUCT_ABSTRACT => $idProductAbstract,
             static::COL_SKU => $productAbstractEntity->getSku(),
-            static::COL_IMAGE => $this->getProductPreview($this->productAbstractTableManager->getProductPreviewUrl($productAbstractEntity)),
+            static::COL_IMAGE => $this->getProductPreview($this->getProductPreviewUrl($productAbstractEntity)),
             static::COL_NAME => $productAbstractEntity->getSpyProductAbstractLocalizedAttributess()->getFirst()->getName(),
             static::COL_STORES => $this->getStoreNames($productAbstractEntity->getSpyProductAbstractStores()->getArrayCopy()),
-            static::COL_STATUS => $this->getStatusLabel($this->productAbstractTableManager->getAbstractProductStatus($productAbstractEntity)),
+            static::COL_STATUS => $this->getStatusLabel($this->getAbstractProductStatus($productAbstractEntity)),
             static::COL_ACTIONS => $this->getActionButtons($productAbstractEntity->getIdProductAbstract()),
         ];
     }
@@ -236,49 +179,5 @@ class ProductAbstractSelectedTable extends AbstractTable
         );
 
         return implode(' ', $actionButtons);
-    }
-
-    /**
-     * @param string $link
-     *
-     * @return string
-     */
-    protected function getProductPreview(string $link): string
-    {
-        if ($link) {
-            return sprintf('<img src="%s">', $link);
-        }
-
-        return '';
-    }
-
-    /**
-     * @param \Orm\Zed\Product\Persistence\SpyProductAbstractStore[] $productAbstractStoreEntities
-     *
-     * @return string
-     */
-    protected function getStoreNames(array $productAbstractStoreEntities): string
-    {
-        return array_reduce(
-            $productAbstractStoreEntities,
-            function (string $accumulator, SpyProductAbstractStore $productAbstractStoreEntity): string {
-                return $accumulator . " " . $this->generateLabel($productAbstractStoreEntity->getSpyStore()->getName(), 'label-info');
-            },
-            ""
-        );
-    }
-
-    /**
-     * @param bool $status
-     *
-     * @return string
-     */
-    protected function getStatusLabel(bool $status): string
-    {
-        if (!$status) {
-            return $this->generateLabel('Inactive', 'label-danger');
-        }
-
-        return $this->generateLabel('Active', 'label-info');
     }
 }
