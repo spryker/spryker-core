@@ -9,7 +9,7 @@ namespace Spryker\Zed\PriceProductSchedule\Business\Store;
 
 use Generated\Shared\Transfer\StoreTransfer;
 
-interface PriceProductScheduleStoreFinderInterface
+interface StoreFinderInterface
 {
     /**
      * @param string $name

@@ -73,5 +73,7 @@ interface PriceProductScheduleFacadeInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduleListImportResponseTransfer
      */
-    public function importPriceProductSchedules(PriceProductScheduledListImportRequestTransfer $priceProductScheduledListImportRequest): PriceProductScheduleListImportResponseTransfer;
+    public function importPriceProductSchedules(
+        PriceProductScheduledListImportRequestTransfer $priceProductScheduledListImportRequest
+    ): PriceProductScheduleListImportResponseTransfer;
 }

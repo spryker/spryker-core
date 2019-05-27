@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToStoreFacadeInterface;
 use Spryker\Zed\Store\Business\Model\Exception\StoreNotFoundException;
 
-class PriceProductScheduleStoreFinder implements PriceProductScheduleStoreFinderInterface
+class StoreFinder implements StoreFinderInterface
 {
     /**
      * @var \Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToStoreFacadeInterface

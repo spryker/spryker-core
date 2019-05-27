@@ -14,12 +14,12 @@ interface PriceProductTransferDataExpanderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
-     * @param \Generated\Shared\Transfer\PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer
+     *
+     * @throws \Spryker\Zed\PriceProductSchedule\Business\Exception\PriceProductScheduleListImportException
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer
      */
     public function expand(
-        PriceProductTransfer $priceProductTransfer,
-        PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer
+        PriceProductTransfer $priceProductTransfer
     ): PriceProductTransfer;
 }

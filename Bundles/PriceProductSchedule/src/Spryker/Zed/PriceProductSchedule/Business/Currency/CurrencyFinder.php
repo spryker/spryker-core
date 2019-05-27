@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\CurrencyTransfer;
 use Spryker\Zed\Currency\Business\Model\Exception\CurrencyNotFoundException;
 use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToCurrencyFacadeInterface;
 
-class PriceProductScheduleCurrencyFinder implements PriceProductScheduleCurrencyFinderInterface
+class CurrencyFinder implements CurrencyFinderInterface
 {
     /**
      * @var \Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToCurrencyFacadeInterface

@@ -7,9 +7,12 @@
 
 namespace Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule;
 
+use Generated\Shared\Transfer\CurrencyTransfer;
+use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleImportTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 
 class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
 {
@@ -19,7 +22,7 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
     protected $dataExpanderList;
 
     /**
-     * @param array $dataExpanderList
+     * @param \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\DataExpander\PriceProductTransferDataExpanderInterface[] $dataExpanderList
      */
     public function __construct(
         array $dataExpanderList
@@ -30,6 +33,8 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
     /**
      * @param \Generated\Shared\Transfer\PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer
      * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
+     *
+     * @throws \Spryker\Zed\PriceProductSchedule\Business\Exception\PriceProductScheduleListImportException
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer
      */
@@ -51,6 +56,8 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
      * @param \Generated\Shared\Transfer\PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      *
+     * @throws \Spryker\Zed\PriceProductSchedule\Business\Exception\PriceProductScheduleListImportException
+     *
      * @return \Generated\Shared\Transfer\PriceProductTransfer
      */
     protected function mapPriceProductScheduleImportTransferToPriceProductTransfer(
@@ -58,12 +65,31 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
         PriceProductTransfer $priceProductTransfer
     ): PriceProductTransfer {
         $priceProductTransfer
-            ->fromArray($priceProductScheduleImportTransfer->toArray(), true);
+            ->fromArray($priceProductScheduleImportTransfer->toArray(), true)
+            ->setMoneyValue($this->mapMoneyValueTransferFromPriceProductScheduleImportTransfer($priceProductScheduleImportTransfer, new MoneyValueTransfer()));
 
         foreach ($this->dataExpanderList as $dataExpander) {
-            $priceProductTransfer = $dataExpander->expand($priceProductTransfer, $priceProductScheduleImportTransfer);
+            $priceProductTransfer = $dataExpander->expand($priceProductTransfer);
         }
 
         return $priceProductTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer
+     * @param \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer
+     *
+     * @return \Generated\Shared\Transfer\MoneyValueTransfer
+     */
+    protected function mapMoneyValueTransferFromPriceProductScheduleImportTransfer(
+        PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer,
+        MoneyValueTransfer $moneyValueTransfer
+    ): MoneyValueTransfer {
+        $currencyTransfer = (new CurrencyTransfer())->setCode($priceProductScheduleImportTransfer->getCurrencyCode());
+        $storeTransfer = (new StoreTransfer())->setName($priceProductScheduleImportTransfer->getStoreName());
+
+        return $moneyValueTransfer
+            ->setCurrency($currencyTransfer)
+            ->setStore($storeTransfer);
     }
 }

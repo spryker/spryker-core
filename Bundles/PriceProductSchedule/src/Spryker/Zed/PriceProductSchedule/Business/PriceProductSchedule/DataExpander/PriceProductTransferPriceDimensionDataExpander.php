@@ -30,13 +30,11 @@ class PriceProductTransferPriceDimensionDataExpander implements PriceProductTran
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
-     * @param \Generated\Shared\Transfer\PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer
      */
     public function expand(
-        PriceProductTransfer $priceProductTransfer,
-        PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer
+        PriceProductTransfer $priceProductTransfer
     ): PriceProductTransfer {
         $priceProductDimensionTransfer = $this->getDefaultPriceProductDimension();
 

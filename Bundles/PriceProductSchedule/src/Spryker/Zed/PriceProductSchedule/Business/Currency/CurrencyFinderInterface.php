@@ -9,7 +9,7 @@ namespace Spryker\Zed\PriceProductSchedule\Business\Currency;
 
 use Generated\Shared\Transfer\CurrencyTransfer;
 
-interface PriceProductScheduleCurrencyFinderInterface
+interface CurrencyFinderInterface
 {
     /**
      * @param string $isoCode

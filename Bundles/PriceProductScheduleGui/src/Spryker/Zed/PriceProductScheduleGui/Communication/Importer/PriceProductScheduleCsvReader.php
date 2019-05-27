@@ -9,12 +9,12 @@ namespace Spryker\Zed\PriceProductScheduleGui\Communication\Importer;
 
 use Generated\Shared\Transfer\PriceProductScheduledListImportRequestTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleImportTransfer;
-use Spryker\Zed\PriceProductScheduleGui\Communication\Mapper\Map\PriceProductScheduleImportMapInterface;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Mapper\PriceProductScheduleImportMapperInterface;
 use Spryker\Zed\PriceProductScheduleGui\Dependency\Service\PriceProductScheduleGuiToUtilCsvServiceInterface;
+use Spryker\Zed\PriceProductScheduleGui\PriceProductScheduleGuiConfig;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-class PriceProductScheduleImporter implements PriceProductScheduleImporterInterface
+class PriceProductScheduleCsvReader implements PriceProductScheduleCsvReaderInterface
 {
     /**
      * @var \Spryker\Zed\PriceProductScheduleGui\Dependency\Service\PriceProductScheduleGuiToUtilCsvServiceInterface
@@ -27,15 +27,23 @@ class PriceProductScheduleImporter implements PriceProductScheduleImporterInterf
     protected $priceProductScheduleImportMapper;
 
     /**
+     * @var \Spryker\Zed\PriceProductScheduleGui\PriceProductScheduleGuiConfig
+     */
+    protected $priceProductScheduleGuiConfig;
+
+    /**
      * @param \Spryker\Zed\PriceProductScheduleGui\Dependency\Service\PriceProductScheduleGuiToUtilCsvServiceInterface $csvService
      * @param \Spryker\Zed\PriceProductScheduleGui\Communication\Mapper\PriceProductScheduleImportMapperInterface $priceProductScheduleImportMapper
+     * @param \Spryker\Zed\PriceProductScheduleGui\PriceProductScheduleGuiConfig $priceProductScheduleGuiConfig
      */
     public function __construct(
         PriceProductScheduleGuiToUtilCsvServiceInterface $csvService,
-        PriceProductScheduleImportMapperInterface $priceProductScheduleImportMapper
+        PriceProductScheduleImportMapperInterface $priceProductScheduleImportMapper,
+        PriceProductScheduleGuiConfig $priceProductScheduleGuiConfig
     ) {
         $this->csvService = $csvService;
         $this->priceProductScheduleImportMapper = $priceProductScheduleImportMapper;
+        $this->priceProductScheduleGuiConfig = $priceProductScheduleGuiConfig;
     }
 
     /**
@@ -44,7 +52,7 @@ class PriceProductScheduleImporter implements PriceProductScheduleImporterInterf
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduledListImportRequestTransfer
      */
-    public function importPriceProductScheduleImportTransfersFromCsvFile(
+    public function readPriceProductScheduleImportTransfersFromCsvFile(
         UploadedFile $importCsv,
         PriceProductScheduledListImportRequestTransfer $productScheduledListImportRequestTransfer
     ): PriceProductScheduledListImportRequestTransfer {
@@ -57,7 +65,7 @@ class PriceProductScheduleImporter implements PriceProductScheduleImporterInterf
                 ->mapArrayToPriceProductScheduleTransfer(
                     array_combine($headers, $importItem),
                     new PriceProductScheduleImportTransfer(),
-                    PriceProductScheduleImportMapInterface::MAP
+                    $this->priceProductScheduleGuiConfig->getImportFileToTransferFieldsMap()
                 );
 
             $priceProductScheduleImportTransfer->setGrossAmount((int)$priceProductScheduleImportTransfer->getGrossAmount());

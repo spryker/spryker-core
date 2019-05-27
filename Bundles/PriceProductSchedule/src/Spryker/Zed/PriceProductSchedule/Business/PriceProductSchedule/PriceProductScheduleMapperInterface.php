@@ -14,7 +14,7 @@ interface PriceProductScheduleMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer
-     * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductTransfer
+     * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
      *
      * @throws \Spryker\Zed\PriceProductSchedule\Business\Exception\PriceProductScheduleListImportException
      *
@@ -22,6 +22,6 @@ interface PriceProductScheduleMapperInterface
      */
     public function mapPriceProductScheduleImportTransferToPriceProductScheduleTransfer(
         PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer,
-        PriceProductScheduleTransfer $priceProductTransfer
+        PriceProductScheduleTransfer $priceProductScheduleTransfer
     ): PriceProductScheduleTransfer;
 }

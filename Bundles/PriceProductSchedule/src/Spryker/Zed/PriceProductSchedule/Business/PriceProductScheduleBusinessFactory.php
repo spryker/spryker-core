@@ -8,8 +8,8 @@
 namespace Spryker\Zed\PriceProductSchedule\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\PriceProductSchedule\Business\Currency\PriceProductScheduleCurrencyFinder;
-use Spryker\Zed\PriceProductSchedule\Business\Currency\PriceProductScheduleCurrencyFinderInterface;
+use Spryker\Zed\PriceProductSchedule\Business\Currency\CurrencyFinder;
+use Spryker\Zed\PriceProductSchedule\Business\Currency\CurrencyFinderInterface;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProduct\PriceProductFallbackFinder;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProduct\PriceProductFallbackFinderInterface;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProduct\PriceProductUpdater;
@@ -36,8 +36,8 @@ use Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleList\PriceProd
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleList\PriceProductScheduleListImporterInterface;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleList\PriceProductScheduleListUpdater;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleList\PriceProductScheduleListUpdaterInterface;
-use Spryker\Zed\PriceProductSchedule\Business\Store\PriceProductScheduleStoreFinder;
-use Spryker\Zed\PriceProductSchedule\Business\Store\PriceProductScheduleStoreFinderInterface;
+use Spryker\Zed\PriceProductSchedule\Business\Store\StoreFinder;
+use Spryker\Zed\PriceProductSchedule\Business\Store\StoreFinderInterface;
 use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToCurrencyFacadeInterface;
 use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToPriceProductFacadeInterface;
 use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToProductFacadeInterface;
@@ -149,7 +149,6 @@ class PriceProductScheduleBusinessFactory extends AbstractBusinessFactory
         return new PriceProductScheduleListImporter(
             $this->getEntityManager(),
             $this->createPriceProductScheduleValidator(),
-            $this->createPriceProductScheduleListCreator(),
             $this->createPriceProductScheduleMapper()
         );
     }
@@ -207,21 +206,21 @@ class PriceProductScheduleBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\PriceProductSchedule\Business\Currency\PriceProductScheduleCurrencyFinderInterface
+     * @return \Spryker\Zed\PriceProductSchedule\Business\Currency\CurrencyFinderInterface
      */
-    public function createPriceProductScheduleCurrencyFinder(): PriceProductScheduleCurrencyFinderInterface
+    public function createPriceProductScheduleCurrencyFinder(): CurrencyFinderInterface
     {
-        return new PriceProductScheduleCurrencyFinder(
+        return new CurrencyFinder(
             $this->getCurrencyFacade()
         );
     }
 
     /**
-     * @return \Spryker\Zed\PriceProductSchedule\Business\Store\PriceProductScheduleStoreFinderInterface
+     * @return \Spryker\Zed\PriceProductSchedule\Business\Store\StoreFinderInterface
      */
-    public function createPriceProductScheduleStoreFinder(): PriceProductScheduleStoreFinderInterface
+    public function createPriceProductScheduleStoreFinder(): StoreFinderInterface
     {
-        return new PriceProductScheduleStoreFinder(
+        return new StoreFinder(
             $this->getStoreFacade()
         );
     }

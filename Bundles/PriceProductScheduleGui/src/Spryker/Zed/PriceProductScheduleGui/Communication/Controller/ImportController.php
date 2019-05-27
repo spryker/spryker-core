@@ -75,11 +75,20 @@ class ImportController extends AbstractController
 
         $priceProductScheduleListImportRequestTransfer = $this->getFactory()
             ->createPriceProductScheduleImporter()
-            ->importPriceProductScheduleImportTransfersFromCsvFile(
+            ->readPriceProductScheduleImportTransfersFromCsvFile(
                 $importCsv,
                 $priceProductScheduleListImportRequestTransfer
             );
 
-        return $this->getFactory()->getPriceProductScheduleFacade()->importPriceProductSchedules($priceProductScheduleListImportRequestTransfer);
+        $priceProductScheduledListResponse = $this->getFactory()->getPriceProductScheduleFacade()->createPriceProductScheduleList(
+            $priceProductScheduleListImportRequestTransfer->getPriceProductScheduleList()
+        );
+
+        $priceProductScheduledList = $priceProductScheduledListResponse->getPriceProductScheduleList();
+        $priceProductScheduleListImportRequestTransfer->setPriceProductScheduleList($priceProductScheduledList);
+
+        return $this->getFactory()->getPriceProductScheduleFacade()->importPriceProductSchedules(
+            $priceProductScheduleListImportRequestTransfer
+        );
     }
 }

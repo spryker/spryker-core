@@ -7,13 +7,14 @@
 
 namespace Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\DataExpander;
 
-use Generated\Shared\Transfer\PriceProductScheduleImportTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Zed\PriceProductSchedule\Business\Exception\PriceProductScheduleListImportException;
 use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToPriceProductFacadeInterface;
 
 class PriceProductTransferPriceTypeDataExpander implements PriceProductTransferDataExpanderInterface
 {
+    protected const ERROR_MESSAGE_PRICE_TYPE_NOT_FOUND = 'Price type was not found by provided sku %s';
+
     /**
      * @var \Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToPriceProductFacadeInterface
      */
@@ -30,25 +31,23 @@ class PriceProductTransferPriceTypeDataExpander implements PriceProductTransferD
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
-     * @param \Generated\Shared\Transfer\PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer
      *
      * @throws \Spryker\Zed\PriceProductSchedule\Business\Exception\PriceProductScheduleListImportException
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer
      */
     public function expand(
-        PriceProductTransfer $priceProductTransfer,
-        PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer
+        PriceProductTransfer $priceProductTransfer
     ): PriceProductTransfer {
         $priceTypeTransfer = $this->priceProductFacade->findPriceTypeByName(
-            $priceProductScheduleImportTransfer->getPriceTypeName()
+            $priceProductTransfer->getPriceTypeName()
         );
 
         if ($priceTypeTransfer === null) {
             throw new PriceProductScheduleListImportException(
                 sprintf(
-                    'Price type was not found by provided sku %s',
-                    $priceProductScheduleImportTransfer->getPriceTypeName()
+                    static::ERROR_MESSAGE_PRICE_TYPE_NOT_FOUND,
+                    $priceProductTransfer->getPriceTypeName()
                 )
             );
         }

@@ -14,6 +14,9 @@ use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToPro
 
 class PriceProductTransferProductDataExpander implements PriceProductTransferDataExpanderInterface
 {
+    protected const ERROR_MESSAGE_PRODUCT_CONCRETE_NOT_FOUND = 'Concrete product was not found by provided sku %s';
+    protected const ERROR_MESSAGE_PRODUCT_ABSTRACT_NOT_FOUND = 'Abstract product was not found by provided sku %s';
+
     /**
      * @var \Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToProductFacadeInterface
      */
@@ -30,49 +33,45 @@ class PriceProductTransferProductDataExpander implements PriceProductTransferDat
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
-     * @param \Generated\Shared\Transfer\PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer
      *
      * @throws \Spryker\Zed\PriceProductSchedule\Business\Exception\PriceProductScheduleListImportException
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer
      */
     public function expand(
-        PriceProductTransfer $priceProductTransfer,
-        PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer
+        PriceProductTransfer $priceProductTransfer
     ): PriceProductTransfer {
-        if ($priceProductScheduleImportTransfer->getSkuProductAbstract()) {
+        if ($priceProductTransfer->getSkuProductAbstract()) {
             $productAbstractId = $this->productFacade->findProductAbstractIdBySku(
-                $priceProductScheduleImportTransfer->getSkuProductAbstract()
+                $priceProductTransfer->getSkuProductAbstract()
             );
 
             if ($productAbstractId === null) {
                 throw new PriceProductScheduleListImportException(
                     sprintf(
-                        'Abstract product was not found by provided sku %s',
-                        $priceProductScheduleImportTransfer->getSkuProductAbstract()
+                        static::ERROR_MESSAGE_PRODUCT_ABSTRACT_NOT_FOUND,
+                        $priceProductTransfer->getSkuProductAbstract()
                     )
                 );
             }
             $priceProductTransfer->setIdProductAbstract($productAbstractId);
-            $priceProductTransfer->setSkuProductAbstract($priceProductScheduleImportTransfer->getSkuProductAbstract());
         }
 
-        if ($priceProductScheduleImportTransfer->getSkuProduct()) {
+        if ($priceProductTransfer->getSkuProduct()) {
             $productConcreteId = $this->productFacade->findProductConcreteIdBySku(
-                $priceProductScheduleImportTransfer->getSkuProduct()
+                $priceProductTransfer->getSkuProduct()
             );
 
             if ($productConcreteId === null) {
                 throw new PriceProductScheduleListImportException(
                     sprintf(
-                        'Concrete product was not found by provided sku %s',
-                        $priceProductScheduleImportTransfer->getSkuProduct()
+                        static::ERROR_MESSAGE_PRODUCT_CONCRETE_NOT_FOUND,
+                        $priceProductTransfer->getSkuProduct()
                     )
                 );
             }
 
             $priceProductTransfer->setIdProduct($productConcreteId);
-            $priceProductTransfer->setSkuProduct($priceProductScheduleImportTransfer->getSkuProduct());
         }
 
         return $priceProductTransfer;

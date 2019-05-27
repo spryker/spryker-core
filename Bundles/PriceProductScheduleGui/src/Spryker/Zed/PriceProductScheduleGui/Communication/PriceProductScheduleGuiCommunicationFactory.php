@@ -9,8 +9,8 @@ namespace Spryker\Zed\PriceProductScheduleGui\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Form\PriceProductScheduleImportFormType;
-use Spryker\Zed\PriceProductScheduleGui\Communication\Importer\PriceProductScheduleImporter;
-use Spryker\Zed\PriceProductScheduleGui\Communication\Importer\PriceProductScheduleImporterInterface;
+use Spryker\Zed\PriceProductScheduleGui\Communication\Importer\PriceProductScheduleCsvReader;
+use Spryker\Zed\PriceProductScheduleGui\Communication\Importer\PriceProductScheduleCsvReaderInterface;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Mapper\PriceProductScheduleImportMapper;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Mapper\PriceProductScheduleImportMapperInterface;
 use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToPriceProductScheduleFacadeInterface;
@@ -18,6 +18,9 @@ use Spryker\Zed\PriceProductScheduleGui\Dependency\Service\PriceProductScheduleG
 use Spryker\Zed\PriceProductScheduleGui\PriceProductScheduleGuiDependencyProvider;
 use Symfony\Component\Form\FormInterface;
 
+/**
+ * @method \Spryker\Zed\PriceProductScheduleGui\PriceProductScheduleGuiConfig getConfig()
+ */
 class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
@@ -46,13 +49,14 @@ class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationF
     }
 
     /**
-     * @return \Spryker\Zed\PriceProductScheduleGui\Communication\Importer\PriceProductScheduleImporterInterface
+     * @return \Spryker\Zed\PriceProductScheduleGui\Communication\Importer\PriceProductScheduleCsvReaderInterface
      */
-    public function createPriceProductScheduleImporter(): PriceProductScheduleImporterInterface
+    public function createPriceProductScheduleImporter(): PriceProductScheduleCsvReaderInterface
     {
-        return new PriceProductScheduleImporter(
+        return new PriceProductScheduleCsvReader(
             $this->getUtilCsvService(),
-            $this->createPriceProductScheduleImportMapper()
+            $this->createPriceProductScheduleImportMapper(),
+            $this->getConfig()
         );
     }
 

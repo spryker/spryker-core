@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\PriceProductScheduledListImportRequestTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleImportTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleListImportErrorTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleListImportResponseTransfer;
+use Generated\Shared\Transfer\PriceProductScheduleListTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Spryker\Zed\PriceProductSchedule\Business\Exception\PriceProductScheduleListImportException;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleMapperInterface;
@@ -30,11 +31,6 @@ class PriceProductScheduleListImporter implements PriceProductScheduleListImport
     protected $priceProductScheduleValidator;
 
     /**
-     * @var \Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleList\PriceProductScheduleListCreatorInterface
-     */
-    protected $priceProductScheduleListCreator;
-
-    /**
      * @var \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleMapperInterface
      */
     protected $priceProductScheduleMapper;
@@ -42,18 +38,15 @@ class PriceProductScheduleListImporter implements PriceProductScheduleListImport
     /**
      * @param \Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleEntityManagerInterface $priceProductScheduleEntityManager
      * @param \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleValidatorInterface $priceProductScheduleValidator
-     * @param \Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleList\PriceProductScheduleListCreatorInterface $priceProductScheduleListCreator
      * @param \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleMapperInterface $priceProductScheduleMapper
      */
     public function __construct(
         PriceProductScheduleEntityManagerInterface $priceProductScheduleEntityManager,
         PriceProductScheduleValidatorInterface $priceProductScheduleValidator,
-        PriceProductScheduleListCreatorInterface $priceProductScheduleListCreator,
         PriceProductScheduleMapperInterface $priceProductScheduleMapper
     ) {
         $this->priceProductScheduleEntityManager = $priceProductScheduleEntityManager;
         $this->priceProductScheduleValidator = $priceProductScheduleValidator;
-        $this->priceProductScheduleListCreator = $priceProductScheduleListCreator;
         $this->priceProductScheduleMapper = $priceProductScheduleMapper;
     }
 
@@ -67,9 +60,6 @@ class PriceProductScheduleListImporter implements PriceProductScheduleListImport
     ): PriceProductScheduleListImportResponseTransfer {
         $priceProductScheduledListImportResponse = (new PriceProductScheduleListImportResponseTransfer())
             ->setIsSuccess(false);
-        $priceProductScheduledListResponse = $this->priceProductScheduleListCreator->createPriceProductScheduleList(
-            $priceProductScheduledListImportRequest->getPriceProductScheduleList()
-        );
 
         foreach ($priceProductScheduledListImportRequest->getItems() as $priceProductScheduleImportTransfer) {
             try {
@@ -82,17 +72,10 @@ class PriceProductScheduleListImporter implements PriceProductScheduleListImport
                     continue;
                 }
 
-                $priceProductScheduleTransfer = $this->priceProductScheduleMapper
-                    ->mapPriceProductScheduleImportTransferToPriceProductScheduleTransfer(
-                        $priceProductScheduleImportTransfer,
-                        new PriceProductScheduleTransfer()
-                    );
-
-                $priceProductScheduleTransfer->setPriceProductScheduleList(
-                    $priceProductScheduledListResponse->getPriceProductScheduleList()
+                $this->savePriceProductSchedule(
+                    $priceProductScheduleImportTransfer,
+                    $priceProductScheduledListImportRequest->getPriceProductScheduleList()
                 );
-
-                $this->priceProductScheduleEntityManager->savePriceProductSchedule($priceProductScheduleTransfer);
 
                 $priceProductScheduledListImportResponse->setIsSuccess(true);
             } catch (PriceProductScheduleListImportException $e) {
@@ -121,5 +104,28 @@ class PriceProductScheduleListImporter implements PriceProductScheduleListImport
         return (new PriceProductScheduleListImportErrorTransfer())
             ->setPriceProductScheduleImport($priceProductScheduleImportTransfer)
             ->setMessage($errorMessage);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer
+     * @param \Generated\Shared\Transfer\PriceProductScheduleListTransfer $priceProductScheduleListTransfer
+     *
+     * @throws \Spryker\Zed\PriceProductSchedule\Business\Exception\PriceProductScheduleListImportException
+     */
+    protected function savePriceProductSchedule(
+        PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer,
+        PriceProductScheduleListTransfer $priceProductScheduleListTransfer
+    ): void {
+        $priceProductScheduleTransfer = $this->priceProductScheduleMapper
+            ->mapPriceProductScheduleImportTransferToPriceProductScheduleTransfer(
+                $priceProductScheduleImportTransfer,
+                new PriceProductScheduleTransfer()
+            );
+
+        $priceProductScheduleTransfer->setPriceProductScheduleList(
+            $priceProductScheduleListTransfer
+        );
+
+        $this->priceProductScheduleEntityManager->savePriceProductSchedule($priceProductScheduleTransfer);
     }
 }
