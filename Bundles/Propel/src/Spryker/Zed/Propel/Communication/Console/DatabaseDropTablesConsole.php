@@ -17,7 +17,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  * @method \Spryker\Zed\Propel\Business\PropelFacadeInterface getFacade()
  * @method \Spryker\Zed\Propel\Communication\PropelCommunicationFactory getFactory()
  */
-class DropDatabaseTablesConsole extends Console
+class DatabaseDropTablesConsole extends Console
 {
     public const COMMAND_NAME = 'propel:tables:drop';
 
