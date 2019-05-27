@@ -43,61 +43,15 @@ class XmlJenkinsJobTemplateGenerator implements JenkinsJobTemplateGeneratorInter
      */
     public function getJobTemplate(SchedulerJobTransfer $schedulerJobTransfer): string
     {
-        $schedulerJobTransfer = $this->extendCommandWithEnvironment($schedulerJobTransfer);
         $schedulerJobTransfer = $this->checkLogRotateVal($schedulerJobTransfer);
 
         $xmlTemplate = $this->twig->render($this->schedulerJenkinsConfig->getJenkinsTemplatePath(), [
             'job' => $schedulerJobTransfer->toArray(),
+            'workingDir' => APPLICATION_ROOT_DIR,
+            'environment' => Environment::getInstance()->getEnvironment(),
         ]);
 
         return $xmlTemplate;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\SchedulerJobTransfer $schedulerJobTransfer
-     *
-     * @return \Generated\Shared\Transfer\SchedulerJobTransfer
-     */
-    protected function extendCommandWithEnvironment(SchedulerJobTransfer $schedulerJobTransfer): SchedulerJobTransfer
-    {
-        $commandTemplate = $this->getCommandTemplate();
-        $environment = Environment::getInstance();
-        $customBashCommand = '';
-        $destination = APPLICATION_ROOT_DIR;
-
-        if ($environment->isNotDevelopment()) {
-            $checkDeployFolderExistsBashCommand = '[ -f ' . APPLICATION_ROOT_DIR . '/deploy/vars ]';
-            $sourceBashCommand = '. ' . APPLICATION_ROOT_DIR . '/deploy/vars';
-
-            $customBashCommand = $checkDeployFolderExistsBashCommand . ' ' . '&amp;&amp;' . ' ' . $sourceBashCommand;
-            $destination = '$destination_release_dir';
-        }
-
-        $extendedCommand = sprintf(
-            $commandTemplate,
-            $customBashCommand,
-            $environment->getEnvironment(),
-            $schedulerJobTransfer->getStore(),
-            $destination,
-            $this->schedulerJenkinsConfig->getCronJobsConfigFilePath(),
-            $schedulerJobTransfer->getCommand()
-        );
-
-        return $schedulerJobTransfer
-            ->setCommand($extendedCommand);
-    }
-
-    /**
-     * @return string
-     */
-    protected function getCommandTemplate(): string
-    {
-        return '%s
-export APPLICATION_ENV=%s
-export APPLICATION_STORE=%s
-cd %s
-. %s
-%s';
     }
 
     /**

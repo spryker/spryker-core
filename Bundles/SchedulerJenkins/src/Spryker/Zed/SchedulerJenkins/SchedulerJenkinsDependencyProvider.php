@@ -77,7 +77,10 @@ class SchedulerJenkinsDependencyProvider extends AbstractBundleDependencyProvide
     protected function getTwigEnvironment(): Environment
     {
         $pimplePlugin = new Pimple();
+        /** @var \Twig\Environment $twig */
         $twig = $pimplePlugin->getApplication()['twig'];
+        $twig
+            ->setCache(false);
 
         return $twig;
     }

@@ -14,6 +14,8 @@ class SchedulerJenkinsConfig extends AbstractBundleConfig
 {
     protected const DEFAULT_AMOUNT_OF_DAYS_FOR_LOGFILE_ROTATION = 7;
 
+    protected const DEFAULT_JENKINS_TEMPLATE_PATH = 'SchedulerJenkins/Jenkins/jenkins.xml.twig';
+
     /**
      * @return array
      */
@@ -30,14 +32,6 @@ class SchedulerJenkinsConfig extends AbstractBundleConfig
     public function getJenkinsBaseUrlBySchedulerId(string $schedulerId): string
     {
         return $this->getJenkinsConfiguration()[$schedulerId];
-    }
-
-    /**
-     * @return string
-     */
-    public function getJenkinsDirectory(): string
-    {
-        return $this->get(SchedulerJenkinsConstants::JENKINS_DIRECTORY);
     }
 
     /**
@@ -59,32 +53,8 @@ class SchedulerJenkinsConfig extends AbstractBundleConfig
     /**
      * @return string
      */
-    public function getJenkinsJobsDirectory(): string
-    {
-        return $this->getJenkinsDirectory() . '/jobs';
-    }
-
-    /**
-     * Returns the path to the environment configuration of cronjob functionality.
-     *
-     * @return string
-     */
-    public function getCronJobsConfigFilePath(): string
-    {
-        return implode(DIRECTORY_SEPARATOR, [
-            APPLICATION_ROOT_DIR,
-            'config',
-            'Zed',
-            'cronjobs',
-            'cron.conf',
-        ]);
-    }
-
-    /**
-     * @return string
-     */
     public function getJenkinsTemplatePath(): string
     {
-        return 'SchedulerJenkins/Jenkins/jenkins.xml.twig';
+        return $this->get(SchedulerJenkinsConstants::JENKINS_TEMPLATE_PATH, static::DEFAULT_JENKINS_TEMPLATE_PATH);
     }
 }

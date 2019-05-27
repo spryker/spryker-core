@@ -1,31 +1,47 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <project>
     <actions/>
-    <description>{% if job.description is not empty %}{{ job.description }}{% endif %}</description>
+    <description>{% block description %}{% if job.description is not empty %}{{ job.description }}{% endif %}{% endblock description %}</description>
+    {% block logRotator %}
     <logRotator>
         <daysToKeep>{{ job.payload.logrotate_days }}</daysToKeep>
         <numToKeep>-1</numToKeep>
         <artifactDaysToKeep>{{ job.payload.logrotate_days }}</artifactDaysToKeep>
         <artifactNumToKeep>-1</artifactNumToKeep>
     </logRotator>
+    {% endblock logRotator %}
     <keepDependencies>false</keepDependencies>
     <properties/>
     <scm class='hudson.scm.NullSCM'/>
     <canRoam>true</canRoam>
-    <disabled>{{ not job.enable }}</disabled>
+    <disabled>{% block disable %}{{ not job.enable }}{% endblock disable %}</disabled>
     <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
     <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+    {% block triggers %}
     <triggers class='vector'>
         <hudson.triggers.TimerTrigger>
             <spec>{{ job.schedule }}</spec>
         </hudson.triggers.TimerTrigger>
     </triggers>
+    {% endblock triggers %}
     <concurrentBuild>false</concurrentBuild>
     <builders>
         <hudson.tasks.Shell>
-            <command>{{ job.command }}</command>
+            <command>
+                {%- block setup %}
+                    [ -z "${PHP_BIN}" ] &amp;&amp; export PHP_BIN=php
+                    export APPLICATION_ENV={{ environment }}
+                    export APPLICATION_STORE={{ job.store }}
+                    cd {{ workingDir }}
+                {% endblock setup -%}
+
+                {%- block command %}
+                    {{ job.command }}
+                {% endblock command -%}
+            </command>
         </hudson.tasks.Shell>
     </builders>
+    {% block publishers %}
     {% if job.notifications is defined and job.notifications is iterable %}
         <publishers>
             <hudson.tasks.Mailer>
@@ -37,5 +53,6 @@
     {% else %}
         <publishers/>
     {% endif %}
+    {% endblock publishers %}
     <buildWrappers/>
 </project>
