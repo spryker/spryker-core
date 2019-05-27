@@ -79,6 +79,7 @@ class CompanyUserProvider implements CompanyUserProviderInterface
             ->setUuid($oauthUserTransfer->getIdCompanyUser());
 
         $companyUserTransfer = $this->companyUserFacade->findActiveCompanyUserByUuid($companyUserTransfer);
+
         return $companyUserTransfer;
     }
 

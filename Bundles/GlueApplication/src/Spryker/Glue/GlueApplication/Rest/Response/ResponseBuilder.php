@@ -1,11 +1,13 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Glue\GlueApplication\Rest\Response;
 
+use Spryker\Glue\GlueApplication\GlueApplicationConfig;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
@@ -104,7 +106,7 @@ class ResponseBuilder implements ResponseBuilderInterface
         $id = $restRequest->getResource()->getId();
         $method = $restRequest->getMetadata()->getMethod();
 
-        return count($data) === 1 && ($id || $method === Request::METHOD_POST);
+        return count($data) === 1 && (($id && $id !== GlueApplicationConfig::COLLECTION_IDENTIFIER_CURRENT_USER) || $method === Request::METHOD_POST);
     }
 
     /**
@@ -204,13 +206,16 @@ class ResponseBuilder implements ResponseBuilderInterface
         $method = $restRequest->getMetadata()->getMethod();
         $idResource = $restRequest->getResource()->getId();
 
-        if ($method === Request::METHOD_GET && $idResource === null) {
+        if ($method === Request::METHOD_GET && ($idResource === null || $this->isCurrentUserCollectionResource($idResource))) {
             $linkParts = [];
             foreach ($restRequest->getParentResources() as $parentResource) {
                 $linkParts[] = $parentResource->getType();
                 $linkParts[] = $parentResource->getId();
             }
             $linkParts[] = $restRequest->getResource()->getType();
+            if ($this->isCurrentUserCollectionResource($idResource)) {
+                $linkParts[] = GlueApplicationConfig::COLLECTION_IDENTIFIER_CURRENT_USER;
+            }
             $queryString = $this->buildQueryString($restRequest->getResource(), $restRequest);
 
             return $this->formatLinks([
@@ -262,5 +267,15 @@ class ResponseBuilder implements ResponseBuilderInterface
         }
 
         return $data;
+    }
+
+    /**
+     * @param string|null $idResource
+     *
+     * @return bool
+     */
+    protected function isCurrentUserCollectionResource(?string $idResource): bool
+    {
+        return $idResource === GlueApplicationConfig::COLLECTION_IDENTIFIER_CURRENT_USER;
     }
 }

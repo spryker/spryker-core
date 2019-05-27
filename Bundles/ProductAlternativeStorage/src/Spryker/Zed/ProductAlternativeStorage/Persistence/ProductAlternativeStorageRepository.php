@@ -131,6 +131,7 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
             ->getProductAbstractPropelQuery();
         $productAbstractQuery->filterByIdProductAbstract_In($productIds)
             ->addAsColumn(ProductAbstractTransfer::SKU, SpyProductAbstractTableMap::COL_SKU);
+
         return $productAbstractQuery->select([SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, ProductAbstractTransfer::SKU])
             ->find()
             ->toArray(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT);

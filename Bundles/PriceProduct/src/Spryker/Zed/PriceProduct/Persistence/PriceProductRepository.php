@@ -346,4 +346,25 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
 
         return $this->buildQueryFromCriteria($priceProductStoreEntityQuery)->exists();
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return \Generated\Shared\Transfer\SpyPriceProductStoreEntityTransfer[]
+     */
+    public function findPriceProductStoresByPriceProduct(PriceProductTransfer $priceProductTransfer): array
+    {
+        $priceProductTransfer->requireMoneyValue();
+
+        $moneyValueTransfer = $priceProductTransfer->getMoneyValue();
+        $moneyValueTransfer->requireCurrency();
+
+        $priceProductStoreEntityQuery = $this->getFactory()
+            ->createPriceProductStoreQuery()
+            ->filterByFkPriceProduct($priceProductTransfer->getIdPriceProduct())
+            ->filterByFkCurrency($moneyValueTransfer->getCurrency()->getIdCurrency())
+            ->filterByFkStore($moneyValueTransfer->getFkStore());
+
+        return $this->buildQueryFromCriteria($priceProductStoreEntityQuery)->find();
+    }
 }

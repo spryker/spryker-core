@@ -33,11 +33,13 @@ interface QuoteApprovalClientInterface
 
     /**
      * Specification:
+     * - Returns unsuccessful response with corresponding message if quote id is not provided.
      * - Makes zed request.
-     * - Clears current cart sharing.
-     * - Shares quote to approver with read only access.
+     * - Returns unsuccessful response with corresponding message if target quote has no items.
+     * - Share cart to approver with read only access.
+     * - Removes all existing cart sharing.
      * - Locks quote.
-     * - Creates QuoteApproval with `Waiting` status.
+     * - Creates new QuoteApproval request in status `waiting`.
      *
      * @api
      *
@@ -52,7 +54,7 @@ interface QuoteApprovalClientInterface
     /**
      * Specification:
      * - Makes zed request.
-     * - Unlocks quote.
+     * - Executes QuoteApprovalUnlockPreCheckPluginInterface plugins, unlocks quote if all registered plugins returns true.
      * - Removes cart sharing with approver.
      * - Removes quote approval request.
      *
@@ -160,7 +162,10 @@ interface QuoteApprovalClientInterface
 
     /**
      * Specification:
-     * - Sends Zed request to decline quote approval request.
+     * - Checks that Approver can approve request.
+     * - Checks that status is "Waiting".
+     * - Sets quote approval request status "Declined" if checks are true.
+     * - Executes QuoteApprovalUnlockPreCheckPluginInterface plugins, unlocks quote if all registered plugins returns true.
      *
      * @api
      *
