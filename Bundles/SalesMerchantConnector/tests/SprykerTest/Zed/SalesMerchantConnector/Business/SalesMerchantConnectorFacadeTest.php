@@ -7,6 +7,7 @@
 
 namespace SprykerTest\Zed\SalesMerchantConnector\Business;
 
+use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
 
@@ -20,56 +21,66 @@ use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
  * @group SalesMerchantConnectorFacadeTest
  * Add your own group annotations below this line
  */
-class SalesMerchantConnectorFacadeTest extends SalesMerchantConnectorMocks
+class SalesMerchantConnectorFacadeTest extends Unit
 {
     /**
      * @var \SprykerTest\Zed\SalesMerchantConnector\SalesMerchantConnectorBusinessTester
      */
     protected $tester;
 
-    protected const MOCK_MERCHANT_ORDER_REFERENCE_PATTERN = '%s/%s';
-
     /**
      * @return void
      */
-    public function testAddMerchantOrderReferenceChangesNothingWhenNoMerchantIdInItemTransfer(): void
+    public function testAddOrderReferencesAddsOrderItemReference(): void
     {
         //arrange
-        $itemTransfer = (new ItemBuilder(['fk_merchant' => null]))->build();
-        $salesOrderItemEntityTransfer = new SpySalesOrderItemEntityTransfer();
+        $idSalesOrderItem = 1;
+        $itemTransfer = (new ItemBuilder())->build();
+        $salesOrderItemEntityTransfer = (new SpySalesOrderItemEntityTransfer())->setIdSalesOrderItem($idSalesOrderItem);
 
         //act
         $newSalesOrderItemEntityTransfer =
-            $this->getFacade()->addMerchantOrderReferenceToSalesOrderItem($salesOrderItemEntityTransfer, $itemTransfer);
+            $this->getFacade()->addOrderReferencesToSalesOrderItem($salesOrderItemEntityTransfer, $itemTransfer);
 
         //assert
-        $this->assertNull($newSalesOrderItemEntityTransfer->getMerchantOrderReference());
+        $this->assertEquals(md5($idSalesOrderItem), $newSalesOrderItemEntityTransfer->getOrderItemReference());
     }
 
     /**
      * @return void
      */
-    public function testAddMerchantOrderReferenceToSalesOrderItemIsSuccessful(): void
+    public function testAddOrderReferencesDoesNotAddMerchantReferenceWhenNull(): void
     {
         //arrange
-        $idSalesOrder = 1;
-        $merchantId = 2;
-        $itemTransfer = (new ItemBuilder(['fk_merchant' => $merchantId]))->build();
-        $salesOrderItemEntityTransfer = (new SpySalesOrderItemEntityTransfer())->setFkSalesOrder($idSalesOrder);
+        $itemTransfer = (new ItemBuilder(['merchantReference' => null]))->build();
+        $salesOrderItemEntityTransfer = new SpySalesOrderItemEntityTransfer();
 
         //act
         $newSalesOrderItemEntityTransfer =
-            $this->getFacade()->addMerchantOrderReferenceToSalesOrderItem($salesOrderItemEntityTransfer, $itemTransfer);
+            $this->getFacade()->addOrderReferencesToSalesOrderItem($salesOrderItemEntityTransfer, $itemTransfer);
 
         //assert
-        $this->assertSame(
-            sprintf(
-                static::MOCK_MERCHANT_ORDER_REFERENCE_PATTERN,
-                $salesOrderItemEntityTransfer->getFkSalesOrder(),
-                $itemTransfer->getFkMerchant()
-            ),
-            $newSalesOrderItemEntityTransfer->getMerchantOrderReference()
-        );
+        $this->assertNull($newSalesOrderItemEntityTransfer->getMerchantReference());
+    }
+
+    /**
+     * @return void
+     */
+    public function testAddOrderReferencesToSalesOrderItemAddsValueToDatabaseEntity(): void
+    {
+        //arrange
+        $idSalesOrderItem = 1;
+        $merchantReference = 'MER-12';
+        $itemTransfer = (new ItemBuilder(['merchantReference' => $merchantReference]))->build();
+        $salesOrderItemEntityTransfer = (new SpySalesOrderItemEntityTransfer())->setIdSalesOrderItem($idSalesOrderItem);
+
+        //act
+        $newSalesOrderItemEntityTransfer =
+            $this->getFacade()->addOrderReferencesToSalesOrderItem($salesOrderItemEntityTransfer, $itemTransfer);
+
+        //assert
+        $this->assertEquals($merchantReference, $newSalesOrderItemEntityTransfer->getMerchantReference());
+        $this->assertEquals(md5($idSalesOrderItem), $newSalesOrderItemEntityTransfer->getOrderItemReference());
     }
 
     /**
@@ -77,13 +88,6 @@ class SalesMerchantConnectorFacadeTest extends SalesMerchantConnectorMocks
      */
     protected function getFacade()
     {
-        $config = $this->createSalesMerchantConnectorConfigMock();
-        $factory = $this->createSalesMerchantConnectorBusinessFactoryMock($config);
-        $factory->getConfig()
-            ->expects($this->any())
-            ->method('getMerchantOrderReferencePattern')
-            ->willReturn(static::MOCK_MERCHANT_ORDER_REFERENCE_PATTERN);
-
-        return $this->createSalesMerchantConnectorFacadeMock($factory);
+        return $this->tester->getFacade();
     }
 }

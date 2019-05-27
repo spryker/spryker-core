@@ -4,6 +4,7 @@
           namespace="Orm\Zed\Sales\Persistence"
           package="src.Orm.Zed.Sales.Persistence">
     <table name="spy_sales_order_item" phpName="SpySalesOrderItem">
-        <column name="merchant_order_reference" type="VARCHAR" required="false"/>
+        <column name="order_item_reference" type="VARCHAR" size="255" required="false"/>
+        <column name="merchant_reference" type="VARCHAR" size="255" required="false"/>
     </table>
 </database>

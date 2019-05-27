@@ -24,7 +24,7 @@ interface SalesMerchantConnectorFacadeInterface
      *
      * @return \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer
      */
-    public function addMerchantOrderReferenceToSalesOrderItem(
+    public function addOrderReferencesToSalesOrderItem(
         SpySalesOrderItemEntityTransfer $salesOrderItemEntity,
         ItemTransfer $itemTransfer
     ): SpySalesOrderItemEntityTransfer;

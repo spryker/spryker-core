@@ -10,7 +10,7 @@ namespace Spryker\Zed\SalesMerchantConnector\Business\MerchantOrderReference;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
 
-interface MerchantOrderReferenceInterface
+interface OrderItemReferencesInterface
 {
     /**
      * @param \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer $salesOrderItemEntity
@@ -18,7 +18,7 @@ interface MerchantOrderReferenceInterface
      *
      * @return \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer
      */
-    public function addMerchantOrderReferenceToSalesOrderItem(
+    public function addReferencesToSalesOrderItem(
         SpySalesOrderItemEntityTransfer $salesOrderItemEntity,
         ItemTransfer $itemTransfer
     ): SpySalesOrderItemEntityTransfer;

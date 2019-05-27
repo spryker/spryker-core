@@ -10,7 +10,7 @@ namespace Spryker\Zed\SalesMerchantConnector\Business\MerchantOrderReference;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
 
-class MerchantOrderReference implements MerchantOrderReferenceInterface
+class OrderItemReferences implements OrderItemReferencesInterface
 {
     /**
      * @param \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer $salesOrderItemEntity
@@ -18,23 +18,36 @@ class MerchantOrderReference implements MerchantOrderReferenceInterface
      *
      * @return \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer
      */
-    public function addMerchantOrderReferenceToSalesOrderItem(
+    public function addReferencesToSalesOrderItem(
         SpySalesOrderItemEntityTransfer $salesOrderItemEntity,
         ItemTransfer $itemTransfer
     ): SpySalesOrderItemEntityTransfer {
-        $merchantId = $itemTransfer->getFkMerchant();
-        if (!$merchantId) {
+        $salesOrderItemEntity->setOrderItemReference(
+            $this->generateOrderItemReference($salesOrderItemEntity->getIdSalesOrderItem())
+        );
+
+        $merchantReference = $itemTransfer->getMerchantReference();
+
+        if (!$merchantReference) {
             return $salesOrderItemEntity;
         }
 
-        //TODO:: Switch MerchantOrderReference to OrderItemReference
-        //TODO:: Add MerchantReference column to SalesOrderItem + add it from ItemTransfer
+        $salesOrderItemEntity->setMerchantReference($merchantReference);
 
-        return $salesOrderItemEntity->setMerchantOrderItemReference(sprintf(
-            '%s',
-            $salesOrderItemEntity->getIdSalesOrderItem()
-        ));
+        return $salesOrderItemEntity;
+    }
 
-        $salesOrderItemEntity->setMerchantRef($itemTransfer->getUuid);
+    /**
+     * @param int|null $idSalesOrderItem
+     *
+     * @return string
+     */
+    protected function generateOrderItemReference(?int $idSalesOrderItem): string
+    {
+        if (!$idSalesOrderItem) {
+            return '';
+        }
+
+        return md5((string)$idSalesOrderItem);
     }
 }

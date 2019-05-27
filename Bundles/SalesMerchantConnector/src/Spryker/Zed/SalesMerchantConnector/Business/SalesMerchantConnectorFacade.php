@@ -26,12 +26,12 @@ class SalesMerchantConnectorFacade extends AbstractFacade implements SalesMercha
      *
      * @return \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer
      */
-    public function addMerchantOrderReferenceToSalesOrderItem(
+    public function addOrderReferencesToSalesOrderItem(
         SpySalesOrderItemEntityTransfer $salesOrderItemEntity,
         ItemTransfer $itemTransfer
     ): SpySalesOrderItemEntityTransfer {
         return $this->getFactory()
-            ->createMerchantOrderReference()
-            ->addMerchantOrderReferenceToSalesOrderItem($salesOrderItemEntity, $itemTransfer);
+            ->createOrderItemReference()
+            ->addReferencesToSalesOrderItem($salesOrderItemEntity, $itemTransfer);
     }
 }

@@ -17,7 +17,7 @@ use Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemExpanderPreSavePluginI
  * @method \Spryker\Zed\SalesMerchantConnector\SalesMerchantConnectorConfig getConfig()
  * @method \Spryker\Zed\SalesMerchantConnector\Business\SalesMerchantConnectorFacadeInterface getFacade()
  */
-class MerchantOrderItemExpanderPreSavePlugin extends AbstractPlugin implements OrderItemExpanderPreSavePluginInterface
+class OrderItemReferenceExpanderPreSavePlugin extends AbstractPlugin implements OrderItemExpanderPreSavePluginInterface
 {
     /**
      * {@inheritdoc}
@@ -34,6 +34,6 @@ class MerchantOrderItemExpanderPreSavePlugin extends AbstractPlugin implements O
      */
     public function expandOrderItem(QuoteTransfer $quoteTransfer, ItemTransfer $itemTransfer, SpySalesOrderItemEntityTransfer $salesOrderItemEntity): SpySalesOrderItemEntityTransfer
     {
-        return $this->getFacade()->addMerchantOrderReferenceToSalesOrderItem($salesOrderItemEntity, $itemTransfer);
+        return $this->getFacade()->addOrderReferencesToSalesOrderItem($salesOrderItemEntity, $itemTransfer);
     }
 }
