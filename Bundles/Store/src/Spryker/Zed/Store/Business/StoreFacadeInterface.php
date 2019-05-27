@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Store\Business;
 
+use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\QuoteValidationResponseTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 
 /**
@@ -96,4 +98,19 @@ interface StoreFacadeInterface
      * @return string[]
      */
     public function getCountries();
+
+    /**
+     * Specification
+     * - Validates store transfer in quote
+     * - Returns QuoteValidationResponseTransfer.isSuccessful=false if QuoteTransfer.Store does not exist
+     * - Returns QuoteValidationResponseTransfer.isSuccessful=false if QuoteTransfer.Store does not have a name
+     * - Returns QuoteValidationResponseTransfer.isSuccessful=false if QuoteTransfer.Store has a store that does not exist
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteValidationResponseTransfer
+     */
+    public function validateQuoteStore(QuoteTransfer $quoteTransfer): QuoteValidationResponseTransfer;
 }

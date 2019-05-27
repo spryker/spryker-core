@@ -404,4 +404,16 @@ interface CustomerClientInterface
      * @return string
      */
     public function getCustomerSecuredPattern(): string;
+
+    /**
+     * Specification:
+     * - Retrieves customer by access token using AccessTokenAuthenticationHandlerPluginInterface.
+     *
+     * @api
+     *
+     * @param string $accessToken
+     *
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
+     */
+    public function getCustomerByAccessToken(string $accessToken): CustomerResponseTransfer;
 }

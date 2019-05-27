@@ -3,6 +3,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/spryker/multi-carts-rest-api/badge.svg)](https://coveralls.io/github/spryker/multi-carts-rest-api)
 
 MultiCartsRestApi module provides API endpoints to create carts and retrieve list of carts
+MultiCartsRestApi module provides multi cart specific information for CartsRestApi module.
 
 ## Installation
 

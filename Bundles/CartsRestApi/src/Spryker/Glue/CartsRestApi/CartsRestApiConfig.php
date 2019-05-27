@@ -24,70 +24,13 @@ class CartsRestApiConfig extends AbstractBundleConfig
     public const CONTROLLER_GUEST_CARTS = 'guest-carts-resource';
     public const CONTROLLER_GUEST_CART_ITEMS = 'guest-cart-items-resource';
 
-    /**
-     * @deprecated Will be removed in the next major.
-     */
-    public const ACTION_CARTS_GET = 'get';
-
-    /**
-     * @deprecated Will be removed in the next major.
-     */
-    public const ACTION_CARTS_POST = 'post';
-
-    /**
-     * @deprecated Will be removed in the next major.
-     */
-    public const ACTION_CARTS_DELETE = 'delete';
-
-    /**
-     * @deprecated Will be removed in the next major.
-     */
-    public const ACTION_CART_ITEMS_POST = 'post';
-
-    /**
-     * @deprecated Will be removed in the next major.
-     */
-    public const ACTION_CART_ITEMS_PATCH = 'patch';
-
-    /**
-     * @deprecated Will be removed in the next major.
-     */
-    public const ACTION_CART_ITEMS_DELETE = 'delete';
-
-    /**
-     * @deprecated Will be removed in the next major.
-     */
-    public const ACTION_GUEST_CARTS_GET = 'get';
-
-    /**
-     * @deprecated Will be removed in the next major.
-     */
-    public const ACTION_GUEST_CART_ITEMS_POST = 'post';
-
-    /**
-     * @deprecated Will be removed in the next major.
-     */
-    public const ACTION_GUEST_CART_ITEMS_PATCH = 'patch';
-
-    /**
-     * @deprecated Will be removed in the next major.
-     */
-    public const ACTION_GUEST_CART_ITEMS_DELETE = 'delete';
-
     public const RESPONSE_CODE_CART_NOT_FOUND = '101';
-    /**
-     * @deprecated Will be removed in the next major.
-     */
     public const RESPONSE_CODE_ITEM_VALIDATION = '102';
     public const RESPONSE_CODE_ITEM_NOT_FOUND = '103';
     public const RESPONSE_CODE_CART_ID_MISSING = '104';
     public const RESPONSE_CODE_FAILED_DELETING_CART = '105';
     public const RESPONSE_CODE_FAILED_DELETING_CART_ITEM = '106';
     public const RESPONSE_CODE_FAILED_CREATING_CART = '107';
-    /**
-     * @deprecated Will be removed in the next major.
-     */
-    public const RESPONSE_CODE_MISSING_REQUIRED_PARAMETER = '108';
     public const RESPONSE_CODE_ANONYMOUS_CUSTOMER_UNIQUE_ID_EMPTY = '109';
     public const RESPONSE_CODE_CUSTOMER_ALREADY_HAS_CART = '110';
     public const RESPONSE_CODE_CART_CANT_BE_UPDATED = '111';
@@ -96,19 +39,11 @@ class CartsRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_CODE_FAILED_UPDATING_CART_ITEM = '114';
 
     public const EXCEPTION_MESSAGE_CART_ID_MISSING = 'Cart uuid is missing.';
-    /**
-     * @deprecated Will be removed in the next major.
-     */
-    public const EXCEPTION_MESSAGE_ITEM_VALIDATION = 'Product sku is missing.';
     public const EXCEPTION_MESSAGE_CART_ITEM_NOT_FOUND = 'Item with the given group key not found in the cart.';
     public const EXCEPTION_MESSAGE_FAILED_TO_CREATE_CART = 'Failed to create cart.';
     public const EXCEPTION_MESSAGE_CART_WITH_ID_NOT_FOUND = 'Cart with given uuid not found.';
     public const EXCEPTION_MESSAGE_FAILED_DELETING_CART = 'Cart could not be deleted.';
     public const EXCEPTION_MESSAGE_FAILED_DELETING_CART_ITEM = 'Cart item could not be deleted.';
-    /**
-     * @deprecated Will be removed in the next major.
-     */
-    public const EXCEPTION_MESSAGE_MISSING_REQUIRED_PARAMETER = 'Cart uuid or item group key is not specified.';
     public const EXCEPTION_MESSAGE_ANONYMOUS_CUSTOMER_UNIQUE_ID_EMPTY = 'Anonymous customer unique id is empty.';
     public const EXCEPTION_MESSAGE_CUSTOMER_ALREADY_HAS_CART = 'Customer already has a cart.';
     public const EXCEPTION_MESSAGE_PRICE_MODE_CANT_BE_CHANGED = 'Can’t switch price mode when there are items in the cart.';

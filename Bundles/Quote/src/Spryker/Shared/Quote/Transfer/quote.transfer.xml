@@ -17,7 +17,6 @@
 
     <transfer name="QuoteCriteriaFilter">
         <property name="customerReference" type="string"/>
-        <property name="idStore" type="int"/>
         <property name="quoteIds" type="int[]"/>
         <property name="filter" type="Filter"/>
         <property name="idStore" type="int"/>
@@ -38,6 +37,7 @@
     </transfer>
 
     <transfer name="QuoteValidationResponse">
+        <property name="isSuccess" type="bool" deprecated="use isSuccessful property instead"/>
         <property name="isSuccessful" type="bool"/>
         <property name="errors" type="QuoteError[]"/>
     </transfer>
