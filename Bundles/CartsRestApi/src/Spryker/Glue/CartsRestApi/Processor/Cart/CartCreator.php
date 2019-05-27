@@ -66,7 +66,7 @@ class CartCreator implements CartCreatorInterface
         $quoteTransfer->setCompanyUserId($restUser->getIdCompany());
         $quoteResponseTransfer = $this->cartsRestApiClient->createQuote($quoteTransfer);
 
-        if ($quoteResponseTransfer->getErrors()->count() > 0) {
+        if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $this->cartRestResponseBuilder->createFailedErrorResponse($quoteResponseTransfer->getErrors());
         }
 

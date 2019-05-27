@@ -120,7 +120,6 @@ class QuoteBusinessFactory extends AbstractBusinessFactory
     public function createQuoteValidator(): QuoteValidatorInterface
     {
         return new QuoteValidator(
-            $this->getStoreFacade(),
             $this->getQuoteValidatorPlugins()
         );
     }
