@@ -67,7 +67,6 @@ class ProductStorageQueryContainer extends AbstractQueryContainer implements Pro
         return $this->getFactory()
             ->getProductQueryContainer()
             ->queryProductAbstract()
-            ->orderByIdProductAbstract()
             ->filterByIdProductAbstract_In($productAbstractIds);
     }
 
@@ -121,7 +120,6 @@ class ProductStorageQueryContainer extends AbstractQueryContainer implements Pro
         return $this->getFactory()
             ->getProductQueryContainer()
             ->queryProduct()
-            ->orderByIdProduct()
             ->filterByIdProduct_In($productIds);
     }
 
@@ -137,7 +135,6 @@ class ProductStorageQueryContainer extends AbstractQueryContainer implements Pro
         $query = $this
             ->getFactory()
             ->createSpyProductAbstractStorageQuery()
-            ->orderByIdProductAbstractStorage()
             ->filterByFkProductAbstract_In($productAbstractIds);
 
         return $query;
@@ -155,7 +152,6 @@ class ProductStorageQueryContainer extends AbstractQueryContainer implements Pro
         $query = $this
             ->getFactory()
             ->createSpyProductConcreteStorageQuery()
-            ->orderByIdProductConcreteStorage()
             ->filterByFkProduct_In($productIds);
 
         return $query;

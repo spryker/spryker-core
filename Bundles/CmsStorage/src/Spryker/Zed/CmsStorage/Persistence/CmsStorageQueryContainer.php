@@ -68,7 +68,6 @@ class CmsStorageQueryContainer extends AbstractQueryContainer implements CmsStor
         return $this->getFactory()
             ->getCmsQueryContainer()
             ->queryPages()
-            ->orderByIdCmsPage()
             ->filterByIdCmsPage_In($cmsPageIds);
     }
 
