@@ -122,6 +122,7 @@ class ProductConcreteProductListSynchronizationDataBulkPlugin extends AbstractPl
     {
         return (new FilterTransfer())
             ->setOrderBy(SpyProductConcreteProductListStorageTableMap::COL_ID_PRODUCT_CONCRETE_PRODUCT_LIST_STORAGE)
+            ->setOrderDirection('ASC')
             ->setOffset($offset)
             ->setLimit($limit);
     }

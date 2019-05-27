@@ -121,6 +121,7 @@ class CustomerAccessSynchronizationDataBulkPlugin extends AbstractPlugin impleme
     {
         return (new FilterTransfer())
             ->setOrderBy(SpyUnauthenticatedCustomerAccessStorageTableMap::COL_ID_UNAUTHENTICATED_CUSTOMER_ACCESS_STORAGE)
+            ->setOrderDirection('ASC')
             ->setOffset($offset)
             ->setLimit($limit);
     }

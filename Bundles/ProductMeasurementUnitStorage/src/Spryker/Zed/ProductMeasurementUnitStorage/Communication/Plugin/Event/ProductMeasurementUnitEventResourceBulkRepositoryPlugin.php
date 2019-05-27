@@ -85,6 +85,7 @@ class ProductMeasurementUnitEventResourceBulkRepositoryPlugin extends AbstractPl
     {
         return (new FilterTransfer())
             ->setOrderBy(SpyProductMeasurementUnitTableMap::COL_ID_PRODUCT_MEASUREMENT_UNIT)
+            ->setOrderDirection('ASC')
             ->setOffset($offset)
             ->setLimit($limit);
     }

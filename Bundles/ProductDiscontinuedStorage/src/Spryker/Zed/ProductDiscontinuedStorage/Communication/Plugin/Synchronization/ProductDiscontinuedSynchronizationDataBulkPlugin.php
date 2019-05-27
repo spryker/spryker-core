@@ -121,6 +121,7 @@ class ProductDiscontinuedSynchronizationDataBulkPlugin extends AbstractPlugin im
     {
         return (new FilterTransfer())
             ->setOrderBy(SpyProductDiscontinuedStorageTableMap::COL_ID_PRODUCT_DISCONTINUED_STORAGE)
+            ->setOrderDirection('ASC')
             ->setOffset($offset)
             ->setLimit($limit);
     }

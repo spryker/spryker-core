@@ -85,6 +85,7 @@ class ProductQuantityEventResourceBulkRepositoryPlugin extends AbstractPlugin im
     {
         return (new FilterTransfer())
             ->setOrderBy(SpyProductQuantityTableMap::COL_ID_PRODUCT_QUANTITY)
+            ->setOrderDirection('ASC')
             ->setOffset($offset)
             ->setLimit($limit);
     }

@@ -120,6 +120,7 @@ class ProductMeasurementUnitSynchronizationDataBulkPlugin extends AbstractPlugin
     {
         return (new FilterTransfer())
             ->setOrderBy(SpyProductMeasurementUnitStorageTableMap::COL_ID_PRODUCT_MEASUREMENT_UNIT_STORAGE)
+            ->setOrderDirection('ASC')
             ->setOffset($offset)
             ->setLimit($limit);
     }

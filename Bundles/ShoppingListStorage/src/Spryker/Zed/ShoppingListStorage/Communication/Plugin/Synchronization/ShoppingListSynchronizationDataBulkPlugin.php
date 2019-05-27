@@ -120,6 +120,7 @@ class ShoppingListSynchronizationDataBulkPlugin extends AbstractPlugin implement
     {
         return (new FilterTransfer())
             ->setOrderBy(SpyShoppingListCustomerStorageTableMap::COL_ID_SHOPPING_LIST_CUSTOMER_STORAGE)
+            ->setOrderDirection('ASC')
             ->setOffset($offset)
             ->setLimit($limit);
     }

@@ -122,6 +122,7 @@ class ProductQuantitySynchronizationDataBulkPlugin extends AbstractPlugin implem
     {
         return (new FilterTransfer())
             ->setOrderBy(SpyProductQuantityStorageTableMap::COL_ID_PRODUCT_QUANTITY_STORAGE)
+            ->setOrderDirection('ASC')
             ->setOffset($offset)
             ->setLimit($limit);
     }

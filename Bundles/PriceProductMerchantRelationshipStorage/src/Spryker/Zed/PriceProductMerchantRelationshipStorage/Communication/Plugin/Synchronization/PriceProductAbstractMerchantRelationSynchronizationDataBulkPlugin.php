@@ -124,6 +124,7 @@ class PriceProductAbstractMerchantRelationSynchronizationDataBulkPlugin extends 
     {
         return (new FilterTransfer())
             ->setOrderBy(SpyPriceProductAbstractMerchantRelationshipStorageTableMap::COL_ID_PRICE_PRODUCT_ABSTRACT_MERCHANT_RELATIONSHIP_STORAGE)
+            ->setOrderDirection('ASC')
             ->setOffset($offset)
             ->setLimit($limit);
     }

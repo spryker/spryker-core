@@ -121,6 +121,7 @@ class ProductConcreteMeasurementUnitSynchronizationDataBulkPlugin extends Abstra
     {
         return (new FilterTransfer())
             ->setOrderBy(SpyProductConcreteMeasurementUnitStorageTableMap::COL_ID_PRODUCT_CONCRETE_MEASUREMENT_UNIT_STORAGE)
+            ->setOrderDirection('ASC')
             ->setOffset($offset)
             ->setLimit($limit);
     }

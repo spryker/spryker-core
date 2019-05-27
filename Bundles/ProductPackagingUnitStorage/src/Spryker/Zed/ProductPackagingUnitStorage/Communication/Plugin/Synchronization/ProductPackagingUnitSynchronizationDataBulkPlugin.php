@@ -122,6 +122,7 @@ class ProductPackagingUnitSynchronizationDataBulkPlugin extends AbstractPlugin i
     {
         return (new FilterTransfer())
             ->setOrderBy(SpyProductAbstractPackagingStorageTableMap::COL_ID_PRODUCT_ABSTRACT_PACKAGING_STORAGE)
+            ->setOrderDirection('ASC')
             ->setOffset($offset)
             ->setLimit($limit);
     }

@@ -85,6 +85,7 @@ class ProductConcreteMeasurementUnitEventResourceBulkRepositoryPlugin extends Ab
     {
         return (new FilterTransfer())
             ->setOrderBy(SpyProductMeasurementSalesUnitTableMap::COL_FK_PRODUCT)
+            ->setOrderDirection('ASC')
             ->setOffset($offset)
             ->setLimit($limit);
     }
