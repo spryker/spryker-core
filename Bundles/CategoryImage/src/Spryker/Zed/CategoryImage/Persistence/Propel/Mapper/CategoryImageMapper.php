@@ -179,8 +179,7 @@ class CategoryImageMapper implements CategoryImageMapperInterface
      */
     protected function hydrateCategoryImages(SpyCategoryImageSet $categoryImageSetEntity, CategoryImageSetTransfer $categoryImageSetTransfer)
     {
-        $criteria = new Criteria();
-        $criteria->addAscendingOrderByColumn(SpyCategoryImageSetToCategoryImageTableMap::COL_SORT_ORDER);
+        $criteria = $this->getCategoryImageSetToCategoryImageCriteria();
 
         $imageEntityCollection = [];
         foreach ($categoryImageSetEntity->getSpyCategoryImageSetToCategoryImagesJoinSpyCategoryImage($criteria) as $entity) {
@@ -189,5 +188,17 @@ class CategoryImageMapper implements CategoryImageMapperInterface
 
         $imageTransferCollection = $this->mapCategoryImageCollection(new ObjectCollection($imageEntityCollection), $categoryImageSetEntity);
         $categoryImageSetTransfer->setCategoryImages(new ArrayObject($imageTransferCollection));
+    }
+
+    /**
+     * @return \Propel\Runtime\ActiveQuery\Criteria
+     */
+    protected function getCategoryImageSetToCategoryImageCriteria(): Criteria
+    {
+        $criteria = new Criteria();
+        $criteria->addAscendingOrderByColumn(SpyCategoryImageSetToCategoryImageTableMap::COL_SORT_ORDER);
+        $criteria->addAscendingOrderByColumn(SpyCategoryImageSetToCategoryImageTableMap::COL_ID_CATEGORY_IMAGE_SET_TO_CATEGORY_IMAGE);
+
+        return $criteria;
     }
 }

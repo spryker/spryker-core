@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CategoryImageTransfer;
 use Spryker\Zed\Gui\Communication\Form\Type\ImageType;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -28,10 +29,16 @@ class ImageCollectionForm extends AbstractType
     public const FIELD_IMAGE_LARGE = 'externalUrlLarge';
     public const FIELD_SORT_ORDER = 'sortOrder';
     public const FIELD_IMAGE_PREVIEW = 'imagePreview';
+    public const FIELD_IMAGE_PREVIEW_LARGE = 'imagePreviewLarge';
 
     public const IMAGE_URL_MIN_LENGTH = 0;
     public const IMAGE_URL_MAX_LENGTH = 2048;
     public const IMAGE_PREVIEW_WIDTH = 150;
+
+    /**
+     * @uses \Spryker\Zed\Gui\Communication\Form\Type\ImageType::OPTION_IMAGE_WIDTH
+     */
+    protected const OPTION_IMAGE_WIDTH = 'image_width';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -47,8 +54,9 @@ class ImageCollectionForm extends AbstractType
             ->addCategoryImageIdHiddenField($builder)
             ->addImagePreviewField($builder)
             ->addImageSmallField($builder)
+            ->addImagePreviewLargeField($builder)
             ->addImageBigField($builder)
-            ->addOrderHiddenField($builder);
+            ->addSortOrderField($builder);
     }
 
     /**
@@ -116,7 +124,7 @@ class ImageCollectionForm extends AbstractType
             'required' => false,
             'label' => false,
             'property_path' => static::FIELD_IMAGE_SMALL,
-            ImageType::OPTION_IMAGE_WIDTH => static::IMAGE_PREVIEW_WIDTH,
+            static::OPTION_IMAGE_WIDTH => static::IMAGE_PREVIEW_WIDTH,
         ]);
 
         return $this;
@@ -149,9 +157,26 @@ class ImageCollectionForm extends AbstractType
      *
      * @return $this
      */
-    protected function addOrderHiddenField(FormBuilderInterface $builder)
+    protected function addImagePreviewLargeField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_SORT_ORDER, HiddenType::class, []);
+        $builder->add(static::FIELD_IMAGE_PREVIEW_LARGE, ImageType::class, [
+            'required' => false,
+            'label' => false,
+            'property_path' => static::FIELD_IMAGE_LARGE,
+            static::OPTION_IMAGE_WIDTH => static::IMAGE_PREVIEW_WIDTH,
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addSortOrderField(FormBuilderInterface $builder)
+    {
+        $builder->add(static::FIELD_SORT_ORDER, NumberType::class, []);
 
         return $this;
     }
