@@ -99,6 +99,10 @@
         <property name="naturalIdentifier" type="string"/>
     </transfer>
 
+    <transfer name="QuoteCriteriaFilter">
+        <property name="idCompanyUser" type="int"/>
+    </transfer>
+
 </transfers>
 
 

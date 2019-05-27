@@ -63,6 +63,7 @@ class CartsResourceMapper implements CartsResourceMapperInterface
             $quoteTransfer->getUuid(),
             $restCartsAttributesTransfer
         );
+        $cartResource->setPayload($quoteTransfer);
         $this->mapCartItems($quoteTransfer, $cartResource);
 
         return $cartResource;
