@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Scheduler\Business;
 
+use Generated\Shared\Transfer\SchedulerFilterTransfer;
 use Generated\Shared\Transfer\SchedulerRequestTransfer;
 use Generated\Shared\Transfer\SchedulerResponseCollectionTransfer;
 use Generated\Shared\Transfer\SchedulerScheduleTransfer;
@@ -19,12 +20,12 @@ interface SchedulerFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\SchedulerRequestTransfer $schedulerRequestTransfer
+     * @param \Generated\Shared\Transfer\SchedulerFilterTransfer $schedulerFilterTransfer
      * @param \Generated\Shared\Transfer\SchedulerScheduleTransfer $scheduleTransfer
      *
      * @return \Generated\Shared\Transfer\SchedulerScheduleTransfer
      */
-    public function readScheduleFromPhpSource(SchedulerRequestTransfer $schedulerRequestTransfer, SchedulerScheduleTransfer $scheduleTransfer): SchedulerScheduleTransfer;
+    public function readScheduleFromPhpSource(SchedulerFilterTransfer $schedulerFilterTransfer, SchedulerScheduleTransfer $scheduleTransfer): SchedulerScheduleTransfer;
 
     /**
      * Specification:
@@ -32,11 +33,11 @@ interface SchedulerFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\SchedulerRequestTransfer $schedulerRequestTransfer
+     * @param \Generated\Shared\Transfer\SchedulerFilterTransfer $schedulerFilterTransfer
      *
      * @return \Generated\Shared\Transfer\SchedulerResponseCollectionTransfer
      */
-    public function setup(SchedulerRequestTransfer $schedulerRequestTransfer): SchedulerResponseCollectionTransfer;
+    public function setup(SchedulerFilterTransfer $schedulerFilterTransfer): SchedulerResponseCollectionTransfer;
 
     /**
      * Specification:
@@ -44,11 +45,11 @@ interface SchedulerFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\SchedulerRequestTransfer $schedulerRequestTransfer
+     * @param \Generated\Shared\Transfer\SchedulerFilterTransfer $schedulerFilterTransfer
      *
      * @return \Generated\Shared\Transfer\SchedulerResponseCollectionTransfer
      */
-    public function clean(SchedulerRequestTransfer $schedulerRequestTransfer): SchedulerResponseCollectionTransfer;
+    public function clean(SchedulerFilterTransfer $schedulerFilterTransfer): SchedulerResponseCollectionTransfer;
 
     /**
      * Specification:
@@ -57,11 +58,11 @@ interface SchedulerFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\SchedulerRequestTransfer $schedulerRequestTransfer
+     * @param \Generated\Shared\Transfer\SchedulerFilterTransfer $schedulerFilterTransfer
      *
      * @return \Generated\Shared\Transfer\SchedulerResponseCollectionTransfer
      */
-    public function resume(SchedulerRequestTransfer $schedulerRequestTransfer): SchedulerResponseCollectionTransfer;
+    public function resume(SchedulerFilterTransfer $schedulerFilterTransfer): SchedulerResponseCollectionTransfer;
 
     /**
      * Specification:
@@ -70,9 +71,9 @@ interface SchedulerFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\SchedulerRequestTransfer $schedulerRequestTransfer
+     * @param \Generated\Shared\Transfer\SchedulerFilterTransfer $schedulerFilterTransfer
      *
      * @return \Generated\Shared\Transfer\SchedulerResponseCollectionTransfer
      */
-    public function suspend(SchedulerRequestTransfer $schedulerRequestTransfer): SchedulerResponseCollectionTransfer;
+    public function suspend(SchedulerFilterTransfer $schedulerFilterTransfer): SchedulerResponseCollectionTransfer;
 }

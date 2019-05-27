@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Scheduler\Communication\Plugin\Scheduler;
 
+use Generated\Shared\Transfer\SchedulerFilterTransfer;
 use Generated\Shared\Transfer\SchedulerRequestTransfer;
 use Generated\Shared\Transfer\SchedulerScheduleTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -25,13 +26,13 @@ class PhpScheduleReaderPlugin extends AbstractPlugin implements ScheduleReaderPl
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\SchedulerRequestTransfer $schedulerRequestTransfer
+     * @param \Generated\Shared\Transfer\SchedulerFilterTransfer $schedulerFilterTransfer
      * @param \Generated\Shared\Transfer\SchedulerScheduleTransfer $scheduleTransfer
      *
      * @return \Generated\Shared\Transfer\SchedulerScheduleTransfer
      */
-    public function readSchedule(SchedulerRequestTransfer $schedulerRequestTransfer, SchedulerScheduleTransfer $scheduleTransfer): SchedulerScheduleTransfer
+    public function readSchedule(SchedulerFilterTransfer $schedulerFilterTransfer, SchedulerScheduleTransfer $scheduleTransfer): SchedulerScheduleTransfer
     {
-        return $this->getFacade()->readScheduleFromPhpSource($schedulerRequestTransfer, $scheduleTransfer);
+        return $this->getFacade()->readScheduleFromPhpSource($schedulerFilterTransfer, $scheduleTransfer);
     }
 }

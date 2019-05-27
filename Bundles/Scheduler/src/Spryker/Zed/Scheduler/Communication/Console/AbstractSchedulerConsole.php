@@ -19,33 +19,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 class AbstractSchedulerConsole extends Console
 {
     /**
-     * @param string[] $schedulers
-     * @param string[] $jobNames
-     *
-     * @return \Generated\Shared\Transfer\SchedulerRequestTransfer
-     */
-    protected function createSchedulerRequestTransfer(array $schedulers, array $jobNames = []): SchedulerRequestTransfer
-    {
-        $schedulerFilterTransfer = $this->createSchedulerFilterTransfer($schedulers, $jobNames);
-
-        return (new SchedulerRequestTransfer())
-            ->setFilter($schedulerFilterTransfer);
-    }
-
-    /**
-     * @param string[] $schedulers
-     * @param string[] $jobNames
-     *
-     * @return \Generated\Shared\Transfer\SchedulerFilterTransfer
-     */
-    protected function createSchedulerFilterTransfer(array $schedulers, array $jobNames = []): SchedulerFilterTransfer
-    {
-        return (new SchedulerFilterTransfer())
-            ->setSchedulers($schedulers)
-            ->setJobs($jobNames);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\SchedulerResponseCollectionTransfer $schedulerResponseCollectionTransfer
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *

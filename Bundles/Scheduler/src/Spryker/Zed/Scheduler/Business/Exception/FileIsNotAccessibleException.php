@@ -9,6 +9,6 @@ namespace Spryker\Zed\Scheduler\Business\Exception;
 
 use Exception;
 
-class SourceFilenameNotFoundException extends Exception
+class FileIsNotAccessibleException extends Exception
 {
 }

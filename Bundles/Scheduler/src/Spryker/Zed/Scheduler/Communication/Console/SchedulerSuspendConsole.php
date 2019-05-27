@@ -13,6 +13,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\Scheduler\Business\SchedulerFacadeInterface getFacade()
+ * @method \Spryker\Zed\Scheduler\Communication\SchedulerCommunicationFactory getFactory()
  */
 class SchedulerSuspendConsole extends AbstractSchedulerConsole
 {
@@ -63,10 +64,15 @@ class SchedulerSuspendConsole extends AbstractSchedulerConsole
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $schedulers = $input->getOption(static::SCHEDULERS_OPTION);
-        $jobs = $input->getOption(static::JOBS_OPTION);
+        $jobNames = $input->getOption(static::JOBS_OPTION);
 
-        $schedulerRequestTransfer = $this->createSchedulerRequestTransfer($schedulers, $jobs);
-        $schedulerResponseCollectionTransfer = $this->getFacade()->suspend($schedulerRequestTransfer);
+        $schedulerFilterTransfer = $this->getFactory()
+            ->createSchedulerFilterBuilder()
+            ->withSchedulerIds($schedulers)
+            ->withJobNames($jobNames)
+            ->build();
+
+        $schedulerResponseCollectionTransfer = $this->getFacade()->suspend($schedulerFilterTransfer);
 
         $this->outputCommandResponse($schedulerResponseCollectionTransfer, $output);
 

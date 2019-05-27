@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Scheduler\Business\Command\Filter;
 
+use Generated\Shared\Transfer\SchedulerFilterTransfer;
 use Generated\Shared\Transfer\SchedulerRequestTransfer;
 use Spryker\Zed\Scheduler\SchedulerConfig;
 
@@ -26,14 +27,13 @@ class SchedulerFilter implements SchedulerFilterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SchedulerRequestTransfer $schedulerRequestTransfer
+     * @param \Generated\Shared\Transfer\SchedulerFilterTransfer $schedulerFilterTransfer
      * @param string[] $allSchedulerKeys
      *
      * @return array
      */
-    public function filterSchedulers(SchedulerRequestTransfer $schedulerRequestTransfer, array $allSchedulerKeys): array
+    public function filterSchedulers(SchedulerFilterTransfer $schedulerFilterTransfer, array $allSchedulerKeys): array
     {
-        $schedulerFilterTransfer = $schedulerRequestTransfer->getFilter();
         $enabledSchedulers = $this->schedulerConfig->getEnabledSchedulers();
 
         if ($schedulerFilterTransfer->getSchedulers() === []) {

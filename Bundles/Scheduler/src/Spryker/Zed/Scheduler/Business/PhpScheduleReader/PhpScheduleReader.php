@@ -7,9 +7,10 @@
 
 namespace Spryker\Zed\Scheduler\Business\PhpScheduleReader;
 
+use Generated\Shared\Transfer\SchedulerFilterTransfer;
 use Generated\Shared\Transfer\SchedulerRequestTransfer;
 use Generated\Shared\Transfer\SchedulerScheduleTransfer;
-use Spryker\Zed\Scheduler\Business\Exception\SourceFilenameNotFoundException;
+use Spryker\Zed\Scheduler\Business\Exception\FileIsNotAccessibleException;
 use Spryker\Zed\Scheduler\Business\PhpScheduleReader\Mapper\PhpScheduleMapperInterface;
 use Spryker\Zed\Scheduler\SchedulerConfig;
 
@@ -38,12 +39,12 @@ class PhpScheduleReader implements PhpScheduleReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SchedulerRequestTransfer $scheduleRequestTransfer
+     * @param \Generated\Shared\Transfer\SchedulerFilterTransfer $schedulerFilterTransfer
      * @param \Generated\Shared\Transfer\SchedulerScheduleTransfer $scheduleTransfer
      *
      * @return \Generated\Shared\Transfer\SchedulerScheduleTransfer
      */
-    public function readSchedule(SchedulerRequestTransfer $scheduleRequestTransfer, SchedulerScheduleTransfer $scheduleTransfer): SchedulerScheduleTransfer
+    public function readSchedule(SchedulerFilterTransfer $schedulerFilterTransfer, SchedulerScheduleTransfer $scheduleTransfer): SchedulerScheduleTransfer
     {
         $sourceFileName = $this->schedulerConfig->getPhpSchedulerReaderPath($scheduleTransfer->getIdScheduler());
 
@@ -53,20 +54,20 @@ class PhpScheduleReader implements PhpScheduleReaderInterface
 
         include_once $sourceFileName;
 
-        return $this->mapper->mapScheduleFromArray($scheduleRequestTransfer, $scheduleTransfer, $jobs);
+        return $this->mapper->mapScheduleFromArray($schedulerFilterTransfer, $scheduleTransfer, $jobs);
     }
 
     /**
      * @param string $sourceFileName
      *
-     * @throws \Spryker\Zed\Scheduler\Business\Exception\SourceFilenameNotFoundException
+     * @throws \Spryker\Zed\Scheduler\Business\Exception\FileIsNotAccessibleException
      *
      * @return void
      */
     protected function assertSourceFileName(string $sourceFileName): void
     {
         if (!file_exists($sourceFileName) || !is_readable($sourceFileName)) {
-            throw new SourceFilenameNotFoundException();
+            throw new FileIsNotAccessibleException();
         }
     }
 }

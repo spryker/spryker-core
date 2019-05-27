@@ -13,6 +13,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\Scheduler\Business\SchedulerFacadeInterface getFacade()
+ * @method \Spryker\Zed\Scheduler\Communication\SchedulerCommunicationFactory getFactory()
  */
 class SchedulerCleanConsole extends AbstractSchedulerConsole
 {
@@ -52,8 +53,12 @@ class SchedulerCleanConsole extends AbstractSchedulerConsole
     {
         $schedulers = $input->getOption(static::SCHEDULERS_OPTION);
 
-        $schedulerRequestTransfer = $this->createSchedulerRequestTransfer($schedulers);
-        $schedulerResponseCollectionTransfer = $this->getFacade()->clean($schedulerRequestTransfer);
+        $schedulerFilterTransfer = $this->getFactory()
+            ->createSchedulerFilterBuilder()
+                ->withSchedulerIds($schedulers)
+            ->build();
+
+        $schedulerResponseCollectionTransfer = $this->getFacade()->clean($schedulerFilterTransfer);
 
         $this->outputCommandResponse($schedulerResponseCollectionTransfer, $output);
 

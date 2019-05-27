@@ -7,15 +7,15 @@
 
 namespace Spryker\Zed\Scheduler\Business\Command;
 
-use Generated\Shared\Transfer\SchedulerRequestTransfer;
+use Generated\Shared\Transfer\SchedulerFilterTransfer;
 use Generated\Shared\Transfer\SchedulerResponseCollectionTransfer;
 
 interface SchedulerCommandInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\SchedulerRequestTransfer $schedulerRequestTransfer
+     * @param \Generated\Shared\Transfer\SchedulerFilterTransfer $schedulerFilterTransfer
      *
      * @return \Generated\Shared\Transfer\SchedulerResponseCollectionTransfer
      */
-    public function execute(SchedulerRequestTransfer $schedulerRequestTransfer): SchedulerResponseCollectionTransfer;
+    public function execute(SchedulerFilterTransfer $schedulerFilterTransfer): SchedulerResponseCollectionTransfer;
 }

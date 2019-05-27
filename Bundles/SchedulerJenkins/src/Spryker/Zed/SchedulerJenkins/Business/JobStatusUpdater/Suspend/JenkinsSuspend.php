@@ -5,15 +5,15 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\SchedulerJenkins\Business\Resume;
+namespace Spryker\Zed\SchedulerJenkins\Business\JobStatusUpdater\Suspend;
 
 use Generated\Shared\Transfer\SchedulerResponseTransfer;
 use Generated\Shared\Transfer\SchedulerScheduleTransfer;
 use Spryker\Zed\SchedulerJenkins\Business\JobStatusUpdater\JenkinsJobStatusUpdaterInterface;
 
-class JenkinsResume implements JenkinsResumeInterface
+class JenkinsSuspend implements JenkinsSuspendInterface
 {
-    protected const RESUME_JOB_URL_TEMPLATE = 'job/%s/enable';
+    protected const SUSPEND_JOB_URL_TEMPLATE = 'job/%s/disable';
 
     /**
      * @var \Spryker\Zed\SchedulerJenkins\Business\JobStatusUpdater\JenkinsJobStatusUpdaterInterface
@@ -34,11 +34,11 @@ class JenkinsResume implements JenkinsResumeInterface
      *
      * @return \Generated\Shared\Transfer\SchedulerResponseTransfer
      */
-    public function resumeSchedulerJenkins(SchedulerScheduleTransfer $scheduleTransfer): SchedulerResponseTransfer
+    public function suspendSchedulerJenkins(SchedulerScheduleTransfer $scheduleTransfer): SchedulerResponseTransfer
     {
         return $this->jenkinsJobStatusUpdater->updateJenkinsJobStatus(
             $scheduleTransfer,
-            static::RESUME_JOB_URL_TEMPLATE
+            static::SUSPEND_JOB_URL_TEMPLATE
         );
     }
 }

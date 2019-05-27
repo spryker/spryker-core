@@ -29,18 +29,14 @@
     </transfer>
 
     <transfer name="SchedulerResponseCollection">
+        <property name="status" type="bool" />
         <property name="responses" type="SchedulerResponse[]" singular="response" />
     </transfer>
 
     <transfer name="SchedulerResponse">
-        <property name="idScheduler" type="string" />
+        <property name="schedule" type="SchedulerSchedule" />
         <property name="status" type="bool" />
-        <property name="schedulerJobResponses" type="SchedulerJobResponse[]" singular="schedulerJobResponse" />
-    </transfer>
-
-    <transfer name="SchedulerJobResponse">
-        <property name="status" type="int"/>
-        <property name="name" type="string"/>
+        <property name="message" type="string" />
     </transfer>
 
 </transfers>

@@ -7,15 +7,15 @@
 
 namespace Spryker\Zed\Scheduler\Business\Command\Filter;
 
-use Generated\Shared\Transfer\SchedulerRequestTransfer;
+use Generated\Shared\Transfer\SchedulerFilterTransfer;
 
 interface SchedulerFilterInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\SchedulerRequestTransfer $schedulerRequestTransfer
+     * @param \Generated\Shared\Transfer\SchedulerFilterTransfer $schedulerFilterTransfer
      * @param string[] $allSchedulerKeys
      *
      * @return array
      */
-    public function filterSchedulers(SchedulerRequestTransfer $schedulerRequestTransfer, array $allSchedulerKeys): array;
+    public function filterSchedulers(SchedulerFilterTransfer $schedulerFilterTransfer, array $allSchedulerKeys): array;
 }

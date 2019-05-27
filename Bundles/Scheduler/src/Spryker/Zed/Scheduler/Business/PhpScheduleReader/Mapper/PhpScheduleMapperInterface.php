@@ -7,20 +7,20 @@
 
 namespace Spryker\Zed\Scheduler\Business\PhpScheduleReader\Mapper;
 
-use Generated\Shared\Transfer\SchedulerRequestTransfer;
+use Generated\Shared\Transfer\SchedulerFilterTransfer;
 use Generated\Shared\Transfer\SchedulerScheduleTransfer;
 
 interface PhpScheduleMapperInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\SchedulerRequestTransfer $scheduleRequestTransfer
+     * @param \Generated\Shared\Transfer\SchedulerFilterTransfer $schedulerFilterTransfer
      * @param \Generated\Shared\Transfer\SchedulerScheduleTransfer $scheduleTransfer
      * @param array $jobs
      *
      * @return \Generated\Shared\Transfer\SchedulerScheduleTransfer
      */
     public function mapScheduleFromArray(
-        SchedulerRequestTransfer $scheduleRequestTransfer,
+        SchedulerFilterTransfer $schedulerFilterTransfer,
         SchedulerScheduleTransfer $scheduleTransfer,
         array $jobs
     ): SchedulerScheduleTransfer;

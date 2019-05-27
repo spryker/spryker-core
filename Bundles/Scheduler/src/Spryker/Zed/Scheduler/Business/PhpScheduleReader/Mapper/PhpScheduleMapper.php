@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Scheduler\Business\PhpScheduleReader\Mapper;
 
+use Generated\Shared\Transfer\SchedulerFilterTransfer;
 use Generated\Shared\Transfer\SchedulerJobTransfer;
 use Generated\Shared\Transfer\SchedulerRequestTransfer;
 use Generated\Shared\Transfer\SchedulerScheduleTransfer;
@@ -43,20 +44,20 @@ class PhpScheduleMapper implements PhpScheduleMapperInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SchedulerRequestTransfer $scheduleRequestTransfer
+     * @param \Generated\Shared\Transfer\SchedulerFilterTransfer $schedulerFilterTransfer
      * @param \Generated\Shared\Transfer\SchedulerScheduleTransfer $scheduleTransfer
      * @param array $jobs
      *
      * @return \Generated\Shared\Transfer\SchedulerScheduleTransfer
      */
     public function mapScheduleFromArray(
-        SchedulerRequestTransfer $scheduleRequestTransfer,
+        SchedulerFilterTransfer $schedulerFilterTransfer,
         SchedulerScheduleTransfer $scheduleTransfer,
         array $jobs
     ): SchedulerScheduleTransfer {
 
         $currentStoreName = $this->store->getStoreName();
-        $filteredJobs = $this->jobsFilter->filterJobsByName($scheduleRequestTransfer->getFilter(), $jobs);
+        $filteredJobs = $this->jobsFilter->filterJobsByName($schedulerFilterTransfer, $jobs);
 
         foreach ($filteredJobs as $filteredJob) {
             $jobStores = $this->mapStoreNamesFromArray($filteredJob) ?: [$currentStoreName];

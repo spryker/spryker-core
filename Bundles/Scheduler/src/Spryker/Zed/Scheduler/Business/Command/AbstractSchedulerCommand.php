@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Scheduler\Business\Command;
 
+use Generated\Shared\Transfer\SchedulerFilterTransfer;
 use Generated\Shared\Transfer\SchedulerRequestTransfer;
 use Generated\Shared\Transfer\SchedulerResponseCollectionTransfer;
 use Generated\Shared\Transfer\SchedulerResponseTransfer;
@@ -47,18 +48,18 @@ abstract class AbstractSchedulerCommand implements SchedulerCommandInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SchedulerRequestTransfer $schedulerRequestTransfer
+     * @param \Generated\Shared\Transfer\SchedulerFilterTransfer $schedulerFilterTransfer
      *
      * @return \Generated\Shared\Transfer\SchedulerResponseCollectionTransfer
      */
-    public function execute(SchedulerRequestTransfer $schedulerRequestTransfer): SchedulerResponseCollectionTransfer
+    public function execute(SchedulerFilterTransfer $schedulerFilterTransfer): SchedulerResponseCollectionTransfer
     {
         $schedulerResponseCollectionTransfer = $this->createSchedulerResponseCollectionTransfer();
-        $allowedSchedulerIds = $this->schedulerFilter->filterSchedulers($schedulerRequestTransfer, array_keys($this->schedulerAdapterPlugins));
+        $allowedSchedulerIds = $this->schedulerFilter->filterSchedulers($schedulerFilterTransfer, array_keys($this->schedulerAdapterPlugins));
 
         foreach ($allowedSchedulerIds as $idScheduler) {
             $schedulerAdapterPlugin = $this->getSchedulerAdapterPluginByIdScheduler($idScheduler);
-            $scheduleTransfer = $this->executeScheduleReaderPlugins($idScheduler, $schedulerRequestTransfer);
+            $scheduleTransfer = $this->executeScheduleReaderPlugins($idScheduler, $schedulerFilterTransfer);
             $schedulerResponseTransfer = $this->executeCommand($schedulerAdapterPlugin, $scheduleTransfer);
 
             $schedulerResponseCollectionTransfer
@@ -91,20 +92,20 @@ abstract class AbstractSchedulerCommand implements SchedulerCommandInterface
 
     /**
      * @param string $idScheduler
-     * @param \Generated\Shared\Transfer\SchedulerRequestTransfer $schedulerRequestTransfer
+     * @param \Generated\Shared\Transfer\SchedulerFilterTransfer $schedulerFilterTransfer
      *
      * @return \Generated\Shared\Transfer\SchedulerScheduleTransfer
      */
     protected function executeScheduleReaderPlugins(
         string $idScheduler,
-        SchedulerRequestTransfer $schedulerRequestTransfer
+        SchedulerFilterTransfer $schedulerFilterTransfer
     ): SchedulerScheduleTransfer {
 
         $scheduleTransfer = (new SchedulerScheduleTransfer())
             ->setIdScheduler($idScheduler);
 
         foreach ($this->schedulerReaderPlugins as $schedulerReaderPlugin) {
-            $scheduleTransfer = $schedulerReaderPlugin->readSchedule($schedulerRequestTransfer, $scheduleTransfer);
+            $scheduleTransfer = $schedulerReaderPlugin->readSchedule($schedulerFilterTransfer, $scheduleTransfer);
         }
 
         return $scheduleTransfer;

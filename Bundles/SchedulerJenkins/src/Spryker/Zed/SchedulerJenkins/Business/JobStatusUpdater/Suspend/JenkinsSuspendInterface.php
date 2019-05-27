@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\SchedulerJenkins\Business\Suspend;
+namespace Spryker\Zed\SchedulerJenkins\Business\JobStatusUpdater\Suspend;
 
 use Generated\Shared\Transfer\SchedulerResponseTransfer;
 use Generated\Shared\Transfer\SchedulerScheduleTransfer;
