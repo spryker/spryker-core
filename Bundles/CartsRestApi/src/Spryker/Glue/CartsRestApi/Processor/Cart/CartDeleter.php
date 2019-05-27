@@ -67,6 +67,7 @@ class CartDeleter implements CartDeleterInterface
             ->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier());
         $customerTransfer = $this->executeCustomerExpanderPlugins($customerTransfer, $restRequest);
         $quoteTransfer = (new QuoteTransfer())
+            ->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier())
             ->setCustomer($customerTransfer)
             ->setUuid($restRequest->getResource()->getId());
 
