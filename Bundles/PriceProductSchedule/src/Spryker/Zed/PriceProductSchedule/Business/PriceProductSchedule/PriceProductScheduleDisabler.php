@@ -147,6 +147,6 @@ class PriceProductScheduleDisabler implements PriceProductScheduleDisablerInterf
             return;
         }
 
-        $this->priceProductFacade->removePriceProductStore($currentPriceProductTransfer);
+        $this->priceProductFacade->removePriceProductDefaultForPriceProduct($currentPriceProductTransfer);
     }
 }
