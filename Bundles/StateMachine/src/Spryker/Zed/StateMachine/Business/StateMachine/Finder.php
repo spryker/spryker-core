@@ -11,15 +11,11 @@ use Generated\Shared\Transfer\StateMachineItemTransfer;
 use Generated\Shared\Transfer\StateMachineProcessTransfer;
 use Orm\Zed\StateMachine\Persistence\SpyStateMachineItemState;
 use Orm\Zed\StateMachine\Persistence\SpyStateMachineProcess;
-use RuntimeException;
 use Spryker\Zed\StateMachine\Business\Exception\StateMachineException;
 use Spryker\Zed\StateMachine\Persistence\StateMachineQueryContainerInterface;
 
 class Finder implements FinderInterface
 {
-    protected const SORT_ASC = 'ASC';
-    protected const SORT_DESC = 'DESC';
-
     /**
      * @var \Spryker\Zed\StateMachine\Business\StateMachine\BuilderInterface
      */
@@ -172,7 +168,8 @@ class Finder implements FinderInterface
 
         $stateMachineItems = $this->getFlaggedStateMachineItems(
             $stateMachineProcessTransfer,
-            array_keys($statesByFlag)
+            array_keys($statesByFlag),
+            $sort
         );
 
         $stateMachineItemsWithFlag = [];
@@ -180,8 +177,7 @@ class Finder implements FinderInterface
             $stateMachineItemTransfer = $this->createStateMachineHistoryItemTransfer(
                 $stateMachineProcessTransfer,
                 $stateMachineItemEntity,
-                $stateMachineProcessEntity,
-                $sort
+                $stateMachineProcessEntity
             );
 
             $stateMachineItemsWithFlag[] = $stateMachineItemTransfer;
@@ -329,15 +325,13 @@ class Finder implements FinderInterface
      * @param \Generated\Shared\Transfer\StateMachineProcessTransfer $stateMachineProcessTransfer
      * @param \Orm\Zed\StateMachine\Persistence\SpyStateMachineItemState $stateMachineItemEntity
      * @param \Orm\Zed\StateMachine\Persistence\SpyStateMachineProcess $stateMachineProcessEntity
-     * @param string $sort
      *
      * @return \Generated\Shared\Transfer\StateMachineItemTransfer
      */
     protected function createStateMachineHistoryItemTransfer(
         StateMachineProcessTransfer $stateMachineProcessTransfer,
         SpyStateMachineItemState $stateMachineItemEntity,
-        SpyStateMachineProcess $stateMachineProcessEntity,
-        string $sort
+        SpyStateMachineProcess $stateMachineProcessEntity
     ) {
 
         $stateMachineItemTransfer = new StateMachineItemTransfer();
@@ -346,34 +340,23 @@ class Finder implements FinderInterface
         $stateMachineItemTransfer->setIdStateMachineProcess($stateMachineProcessEntity->getIdStateMachineProcess());
         $stateMachineItemTransfer->setStateName($stateMachineItemEntity->getName());
         $stateMachineItemTransfer->setStateMachineName($stateMachineProcessEntity->getStateMachineName());
-        $stateMachineItemTransfer->setIdentifier($this->getItemIdentifier($stateMachineItemEntity, $sort));
+        $stateMachineItemTransfer->setIdentifier($this->getItemIdentifier($stateMachineItemEntity));
 
         return $stateMachineItemTransfer;
     }
 
     /**
      * @param \Orm\Zed\StateMachine\Persistence\SpyStateMachineItemState $stateMachineItemEntity
-     * @param string $sort
-     *
-     * @throws \RuntimeException
      *
      * @return int|null
      */
-    protected function getItemIdentifier(SpyStateMachineItemState $stateMachineItemEntity, string $sort): ?int
+    protected function getItemIdentifier(SpyStateMachineItemState $stateMachineItemEntity): ?int
     {
         if ($stateMachineItemEntity->getStateHistories()->count() === 0) {
             return null;
         }
 
-        if ($sort === static::SORT_ASC) {
-            return $stateMachineItemEntity->getStateHistories()->getFirst()->getIdentifier();
-        }
-
-        if ($sort === static::SORT_DESC) {
-            return $stateMachineItemEntity->getStateHistories()->getLast()->getIdentifier();
-        }
-
-        throw new RuntimeException('Sort parameter can only be ASC or DESC');
+        return $stateMachineItemEntity->getStateHistories()->getFirst()->getIdentifier();
     }
 
     /**
@@ -392,15 +375,17 @@ class Finder implements FinderInterface
     /**
      * @param \Generated\Shared\Transfer\StateMachineProcessTransfer $stateMachineProcessTransfer
      * @param array $statesByFlag
+     * @param string $historySortDirection
      *
      * @return \Orm\Zed\StateMachine\Persistence\SpyStateMachineItemState[]|\Propel\Runtime\Collection\ObjectCollection
      */
-    protected function getFlaggedStateMachineItems(StateMachineProcessTransfer $stateMachineProcessTransfer, array $statesByFlag)
+    protected function getFlaggedStateMachineItems(StateMachineProcessTransfer $stateMachineProcessTransfer, array $statesByFlag, string $historySortDirection)
     {
-        $itemStateCollection = $this->queryContainer->queryItemsByIdStateMachineProcessAndItemStates(
+        $itemStateCollection = $this->queryContainer->queryItemsByStateMachineProcessNameAndItemStates(
             $stateMachineProcessTransfer->getStateMachineName(),
             $stateMachineProcessTransfer->getProcessName(),
-            $statesByFlag
+            $statesByFlag,
+            $historySortDirection
         )->find();
 
         return $itemStateCollection;
