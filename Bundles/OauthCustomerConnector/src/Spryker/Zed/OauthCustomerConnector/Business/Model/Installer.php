@@ -12,6 +12,9 @@ use Generated\Shared\Transfer\OauthScopeTransfer;
 use Spryker\Zed\OauthCustomerConnector\Dependency\Facade\OauthCustomerConnectorToOauthFacadeInterface;
 use Spryker\Zed\OauthCustomerConnector\OauthCustomerConnectorConfig;
 
+/**
+ * @deprecated Will be removed in the next major.
+ */
 class Installer implements InstallerInterface
 {
     /**
@@ -37,6 +40,8 @@ class Installer implements InstallerInterface
     }
 
     /**
+     * @deprecated Will be removed in the next major.
+     *
      * @return void
      */
     public function install(): void
