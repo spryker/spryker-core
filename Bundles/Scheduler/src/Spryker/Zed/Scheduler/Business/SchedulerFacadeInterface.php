@@ -19,11 +19,12 @@ interface SchedulerFacadeInterface
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\SchedulerRequestTransfer $schedulerRequestTransfer
      * @param \Generated\Shared\Transfer\SchedulerScheduleTransfer $scheduleTransfer
      *
      * @return \Generated\Shared\Transfer\SchedulerScheduleTransfer
      */
-    public function readScheduleFromPhpSource(SchedulerScheduleTransfer $scheduleTransfer): SchedulerScheduleTransfer;
+    public function readScheduleFromPhpSource(SchedulerRequestTransfer $schedulerRequestTransfer, SchedulerScheduleTransfer $scheduleTransfer): SchedulerScheduleTransfer;
 
     /**
      * Specification:

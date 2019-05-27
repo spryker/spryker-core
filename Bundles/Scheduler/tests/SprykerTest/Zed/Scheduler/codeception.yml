@@ -20,13 +20,14 @@ suites:
             enabled:
                 - Asserts
                 - \SprykerTest\Shared\Testify\Helper\Environment
+                - \SprykerTest\Shared\Testify\Helper\ConfigHelper
                 - \SprykerTest\Shared\Testify\Helper\DependencyHelper
+                - \SprykerTest\Shared\Testify\Helper\LocatorHelper
 
     Communication:
         path: Communication
         class_name: SchedulerCommunicationTester
         modules:
-        enabled:
-              - Asserts
-              - \SprykerTest\Shared\Testify\Helper\Environment
-              - \SprykerTest\Shared\Testify\Helper\DependencyHelper
+            enabled:
+                - Asserts
+                - \SprykerTest\Shared\Testify\Helper\Environment

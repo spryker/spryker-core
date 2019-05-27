@@ -7,22 +7,23 @@
 
 namespace Spryker\Zed\SchedulerJenkins\Business\JobStatusUpdater;
 
-use Generated\Shared\Transfer\SchedulerRequestTransfer;
-use Generated\Shared\Transfer\SchedulerResponseCollectionTransfer;
-use Spryker\Zed\SchedulerJenkins\Business\Api\JenkinsApiInterface;
+use Generated\Shared\Transfer\SchedulerResponseTransfer;
+use Generated\Shared\Transfer\SchedulerScheduleTransfer;
 use Spryker\Zed\SchedulerJenkins\Business\JobReader\JenkinsJobReaderInterface;
+use Spryker\Zed\SchedulerJenkins\Business\JobWriter\JenkinsJobWriterInterface;
 use Spryker\Zed\SchedulerJenkins\SchedulerJenkinsConfig;
 
 class JenkinsJobStatusUpdater implements JenkinsJobStatusUpdaterInterface
 {
-    protected const ALL_JOBS_MESSAGE_TEMPLATE = "Jenkins jobs have been successfully updated (response: %d)";
-    protected const JOB_MESSAGE_TEMPLATE = "[%s] Jenkins job '%s' has been successfully updated (response: %d)";
-    protected const JOB_NOT_FOUND_MESSAGE_TEMPLATE = "[%s] Jenkins job '%s' doesn't exist.";
+    /**
+     * @var \Spryker\Zed\SchedulerJenkins\Business\JobReader\JenkinsJobReaderInterface
+     */
+    protected $jenkinsJobReader;
 
     /**
-     * @var \Spryker\Zed\SchedulerJenkins\Business\Api\JenkinsApiInterface
+     * @var \Spryker\Zed\SchedulerJenkins\Business\JobWriter\JenkinsJobWriterInterface
      */
-    protected $jenkinsApi;
+    protected $jenkinsJobWriter;
 
     /**
      * @var \Spryker\Zed\SchedulerJenkins\SchedulerJenkinsConfig
@@ -30,88 +31,50 @@ class JenkinsJobStatusUpdater implements JenkinsJobStatusUpdaterInterface
     protected $schedulerJenkinsConfig;
 
     /**
-     * @var \Spryker\Zed\SchedulerJenkins\Business\JobReader\JenkinsJobReaderInterface
-     */
-    protected $jenkinsJobReader;
-
-    /**
-     * @param \Spryker\Zed\SchedulerJenkins\Business\Api\JenkinsApiInterface $jenkinsApi
-     * @param \Spryker\Zed\SchedulerJenkins\SchedulerJenkinsConfig $schedulerJenkinsConfig
      * @param \Spryker\Zed\SchedulerJenkins\Business\JobReader\JenkinsJobReaderInterface $jenkinsJobReader
+     * @param \Spryker\Zed\SchedulerJenkins\Business\JobWriter\JenkinsJobWriterInterface $jenkinsJobWriter
+     * @param \Spryker\Zed\SchedulerJenkins\SchedulerJenkinsConfig $schedulerJenkinsConfig
      */
     public function __construct(
-        JenkinsApiInterface $jenkinsApi,
-        SchedulerJenkinsConfig $schedulerJenkinsConfig,
-        JenkinsJobReaderInterface $jenkinsJobReader
+        JenkinsJobReaderInterface $jenkinsJobReader,
+        JenkinsJobWriterInterface $jenkinsJobWriter,
+        SchedulerJenkinsConfig $schedulerJenkinsConfig
     ) {
-        $this->jenkinsApi = $jenkinsApi;
-        $this->schedulerJenkinsConfig = $schedulerJenkinsConfig;
         $this->jenkinsJobReader = $jenkinsJobReader;
+        $this->jenkinsJobWriter = $jenkinsJobWriter;
+        $this->schedulerJenkinsConfig = $schedulerJenkinsConfig;
     }
 
     /**
-     * @param string $schedulerId
-     * @param \Generated\Shared\Transfer\SchedulerRequestTransfer $scheduleTransfer
-     * @param \Generated\Shared\Transfer\SchedulerResponseCollectionTransfer $schedulerResponseTransfer
-     * @param string $requestUrl
+     * @param \Generated\Shared\Transfer\SchedulerScheduleTransfer $scheduleTransfer
+     * @param string $updateJobUrlTemplate
      *
-     * @return \Generated\Shared\Transfer\SchedulerResponseCollectionTransfer
+     * @return \Generated\Shared\Transfer\SchedulerResponseTransfer
      */
-    public function updateAllJenkinsJobsStatus(
-        string $schedulerId,
-        SchedulerRequestTransfer $scheduleTransfer,
-        SchedulerResponseCollectionTransfer $schedulerResponseTransfer,
-        string $requestUrl
-    ): SchedulerResponseCollectionTransfer {
+    public function updateJenkinsJobStatus(
+        SchedulerScheduleTransfer $scheduleTransfer,
+        string $updateJobUrlTemplate
+    ): SchedulerResponseTransfer {
 
-        $jobs = array_keys($scheduleTransfer->getJobs());
-        $existingJobs = $this->jenkinsJobReader->getExistingJobs($schedulerId);
+        $existingJobs = $this->jenkinsJobReader->getExistingJobs($scheduleTransfer->getIdScheduler());
 
-        return $this->updateJenkinsJobs($schedulerId, $existingJobs, $jobs, $requestUrl, $schedulerResponseTransfer);
-    }
+        $schedulerResponseTransfer = (new SchedulerResponseTransfer())
+            ->setIdScheduler($scheduleTransfer->getIdScheduler());
 
-    /**
-     * @param string $schedulerId
-     * @param \Generated\Shared\Transfer\SchedulerRequestTransfer $scheduleTransfer
-     * @param \Generated\Shared\Transfer\SchedulerResponseCollectionTransfer $schedulerResponseTransfer
-     * @param string $requestUrl
-     *
-     * @return \Generated\Shared\Transfer\SchedulerResponseCollectionTransfer
-     */
-    public function updateJenkinsJobStatusByJobsName(
-        string $schedulerId,
-        SchedulerRequestTransfer $scheduleTransfer,
-        SchedulerResponseCollectionTransfer $schedulerResponseTransfer,
-        string $requestUrl
-    ): SchedulerResponseCollectionTransfer {
+        if (empty($existingJobs)) {
+            return $schedulerResponseTransfer;
+        }
 
-        $jobs = $scheduleTransfer->getJobs();
-        $jobsToUpdate = $scheduleTransfer->getJobNames();
-
-        return $this->updateJenkinsJobs($schedulerId, $jobs, $jobsToUpdate, $requestUrl, $schedulerResponseTransfer);
-    }
-
-    /**
-     * @param string $schedulerId
-     * @param array $jobs
-     * @param array $jobsToUpdate
-     * @param string $requestUrl
-     * @param \Generated\Shared\Transfer\SchedulerResponseCollectionTransfer $schedulerResponseTransfer
-     *
-     * @return \Generated\Shared\Transfer\SchedulerResponseCollectionTransfer
-     */
-    protected function updateJenkinsJobs(string $schedulerId, array $jobs, array $jobsToUpdate, string $requestUrl, SchedulerResponseCollectionTransfer $schedulerResponseTransfer): SchedulerResponseCollectionTransfer
-    {
-        foreach ($jobsToUpdate as $key => $jobName) {
-            if (!in_array($jobName, array_keys($jobs))) {
-                $message = sprintf(static::JOB_NOT_FOUND_MESSAGE_TEMPLATE, $schedulerId, $jobName);
-                $schedulerResponseTransfer->addMessage($message);
+        foreach ($scheduleTransfer->getJobs() as $schedulerJobTransfer) {
+            if (!in_array($schedulerJobTransfer->getName(), $existingJobs)) {
                 continue;
             }
-
-            $response = $this->jenkinsApi->executePostRequest($schedulerId, sprintf($requestUrl, $jobName));
-            $message = sprintf(static::JOB_MESSAGE_TEMPLATE, $schedulerId, $jobName, $response->getStatusCode());
-            $schedulerResponseTransfer->addMessage($message);
+            $schedulerJobResponseTransfer = $this->jenkinsJobWriter->updateJenkinsJobStatus(
+                $scheduleTransfer->getIdScheduler(),
+                $schedulerJobTransfer->getName(),
+                $updateJobUrlTemplate
+            );
+            $schedulerResponseTransfer->addSchedulerJobResponse($schedulerJobResponseTransfer);
         }
 
         return $schedulerResponseTransfer;

@@ -7,17 +7,15 @@
 
 namespace Spryker\Zed\SchedulerJenkins\Business\Suspend;
 
-use Generated\Shared\Transfer\SchedulerRequestTransfer;
-use Generated\Shared\Transfer\SchedulerResponseCollectionTransfer;
+use Generated\Shared\Transfer\SchedulerResponseTransfer;
+use Generated\Shared\Transfer\SchedulerScheduleTransfer;
 
 interface JenkinsSuspendInterface
 {
     /**
-     * @param string $schedulerId
-     * @param \Generated\Shared\Transfer\SchedulerRequestTransfer $scheduleTransfer
-     * @param \Generated\Shared\Transfer\SchedulerResponseCollectionTransfer $schedulerResponseTransfer
+     * @param \Generated\Shared\Transfer\SchedulerScheduleTransfer $scheduleTransfer
      *
-     * @return \Generated\Shared\Transfer\SchedulerResponseCollectionTransfer
+     * @return \Generated\Shared\Transfer\SchedulerResponseTransfer
      */
-    public function suspendSchedulerJenkins(string $schedulerId, SchedulerRequestTransfer $scheduleTransfer, SchedulerResponseCollectionTransfer $schedulerResponseTransfer): SchedulerResponseCollectionTransfer;
+    public function suspendSchedulerJenkins(SchedulerScheduleTransfer $scheduleTransfer): SchedulerResponseTransfer;
 }

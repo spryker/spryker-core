@@ -10,9 +10,9 @@ namespace Spryker\Zed\SchedulerJenkins\Business\JobReader;
 interface JenkinsJobReaderInterface
 {
     /**
-     * @param string $schedulerId
+     * @param string $idScheduler
      *
      * @return array
      */
-    public function getExistingJobs(string $schedulerId): array;
+    public function getExistingJobs(string $idScheduler): array;
 }

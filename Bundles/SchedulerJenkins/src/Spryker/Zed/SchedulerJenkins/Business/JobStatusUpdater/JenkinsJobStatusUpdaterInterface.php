@@ -7,28 +7,19 @@
 
 namespace Spryker\Zed\SchedulerJenkins\Business\JobStatusUpdater;
 
-use Generated\Shared\Transfer\SchedulerRequestTransfer;
-use Generated\Shared\Transfer\SchedulerResponseCollectionTransfer;
+use Generated\Shared\Transfer\SchedulerResponseTransfer;
+use Generated\Shared\Transfer\SchedulerScheduleTransfer;
 
 interface JenkinsJobStatusUpdaterInterface
 {
     /**
-     * @param string $schedulerId
-     * @param \Generated\Shared\Transfer\SchedulerRequestTransfer $scheduleTransfer
-     * @param \Generated\Shared\Transfer\SchedulerResponseCollectionTransfer $schedulerResponseTransfer
-     * @param string $requestUrl
+     * @param \Generated\Shared\Transfer\SchedulerScheduleTransfer $scheduleTransfer
+     * @param string $updateJobUrlTemplate
      *
-     * @return \Generated\Shared\Transfer\SchedulerResponseCollectionTransfer
+     * @return \Generated\Shared\Transfer\SchedulerResponseTransfer
      */
-    public function updateAllJenkinsJobsStatus(string $schedulerId, SchedulerRequestTransfer $scheduleTransfer, SchedulerResponseCollectionTransfer $schedulerResponseTransfer, string $requestUrl): SchedulerResponseCollectionTransfer;
-
-    /**
-     * @param string $schedulerId
-     * @param \Generated\Shared\Transfer\SchedulerRequestTransfer $scheduleTransfer
-     * @param \Generated\Shared\Transfer\SchedulerResponseCollectionTransfer $schedulerResponseTransfer
-     * @param string $requestUrl
-     *
-     * @return \Generated\Shared\Transfer\SchedulerResponseCollectionTransfer
-     */
-    public function updateJenkinsJobStatusByJobsName(string $schedulerId, SchedulerRequestTransfer $scheduleTransfer, SchedulerResponseCollectionTransfer $schedulerResponseTransfer, string $requestUrl): SchedulerResponseCollectionTransfer;
+    public function updateJenkinsJobStatus(
+        SchedulerScheduleTransfer $scheduleTransfer,
+        string $updateJobUrlTemplate
+    ): SchedulerResponseTransfer;
 }

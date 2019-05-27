@@ -7,12 +7,14 @@
 
 namespace Spryker\Zed\SchedulerJenkins\Business\TemplateGenerator;
 
+use Generated\Shared\Transfer\SchedulerJobTransfer;
+
 interface JenkinsJobTemplateGeneratorInterface
 {
     /**
-     * @param array $job
+     * @param \Generated\Shared\Transfer\SchedulerJobTransfer $schedulerJobTransfer
      *
      * @return string
      */
-    public function getJobTemplate(array $job): string;
+    public function getJobTemplate(SchedulerJobTransfer $schedulerJobTransfer): string;
 }

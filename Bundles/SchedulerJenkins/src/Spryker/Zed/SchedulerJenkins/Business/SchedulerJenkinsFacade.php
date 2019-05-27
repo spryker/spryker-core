@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\SchedulerJenkins\Business;
 
-use Generated\Shared\Transfer\SchedulerRequestTransfer;
-use Generated\Shared\Transfer\SchedulerResponseCollectionTransfer;
+use Generated\Shared\Transfer\SchedulerResponseTransfer;
+use Generated\Shared\Transfer\SchedulerScheduleTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -21,17 +21,15 @@ class SchedulerJenkinsFacade extends AbstractFacade implements SchedulerJenkinsF
      *
      * @api
      *
-     * @param string $schedulerId
-     * @param \Generated\Shared\Transfer\SchedulerRequestTransfer $scheduleTransfer
-     * @param \Generated\Shared\Transfer\SchedulerResponseCollectionTransfer $schedulerResponseTransfer
+     * @param \Generated\Shared\Transfer\SchedulerScheduleTransfer $scheduleTransfer
      *
-     * @return \Generated\Shared\Transfer\SchedulerResponseCollectionTransfer
+     * @return \Generated\Shared\Transfer\SchedulerResponseTransfer
      */
-    public function setupSchedulerJenkins(string $schedulerId, SchedulerRequestTransfer $scheduleTransfer, SchedulerResponseCollectionTransfer $schedulerResponseTransfer): SchedulerResponseCollectionTransfer
+    public function setupSchedulerJenkins(SchedulerScheduleTransfer $scheduleTransfer): SchedulerResponseTransfer
     {
         return $this->getFactory()
             ->createSchedulerJenkinsSetup()
-            ->setup($schedulerId, $scheduleTransfer, $schedulerResponseTransfer);
+            ->setup($scheduleTransfer);
     }
 
     /**
@@ -39,17 +37,15 @@ class SchedulerJenkinsFacade extends AbstractFacade implements SchedulerJenkinsF
      *
      * @api
      *
-     * @param string $schedulerId
-     * @param \Generated\Shared\Transfer\SchedulerRequestTransfer $scheduleTransfer
-     * @param \Generated\Shared\Transfer\SchedulerResponseCollectionTransfer $schedulerResponseTransfer
+     * @param \Generated\Shared\Transfer\SchedulerScheduleTransfer $scheduleTransfer
      *
-     * @return \Generated\Shared\Transfer\SchedulerResponseCollectionTransfer
+     * @return \Generated\Shared\Transfer\SchedulerResponseTransfer
      */
-    public function cleanSchedulerJenkins(string $schedulerId, SchedulerRequestTransfer $scheduleTransfer, SchedulerResponseCollectionTransfer $schedulerResponseTransfer): SchedulerResponseCollectionTransfer
+    public function cleanSchedulerJenkins(SchedulerScheduleTransfer $scheduleTransfer): SchedulerResponseTransfer
     {
         return $this->getFactory()
             ->createJenkinsJobClean()
-            ->cleanSchedulerJenkins($schedulerId, $scheduleTransfer, $schedulerResponseTransfer);
+            ->cleanSchedulerJenkins($scheduleTransfer);
     }
 
     /**
@@ -57,17 +53,15 @@ class SchedulerJenkinsFacade extends AbstractFacade implements SchedulerJenkinsF
      *
      * @api
      *
-     * @param string $schedulerId
-     * @param \Generated\Shared\Transfer\SchedulerRequestTransfer $scheduleTransfer
-     * @param \Generated\Shared\Transfer\SchedulerResponseCollectionTransfer $schedulerResponseTransfer
+     * @param \Generated\Shared\Transfer\SchedulerScheduleTransfer $scheduleTransfer
      *
-     * @return \Generated\Shared\Transfer\SchedulerResponseCollectionTransfer
+     * @return \Generated\Shared\Transfer\SchedulerResponseTransfer
      */
-    public function suspendSchedulerJenkins(string $schedulerId, SchedulerRequestTransfer $scheduleTransfer, SchedulerResponseCollectionTransfer $schedulerResponseTransfer): SchedulerResponseCollectionTransfer
+    public function suspendSchedulerJenkins(SchedulerScheduleTransfer $scheduleTransfer): SchedulerResponseTransfer
     {
         return $this->getFactory()
             ->createJenkinsSuspend()
-            ->suspendSchedulerJenkins($schedulerId, $scheduleTransfer, $schedulerResponseTransfer);
+            ->suspendSchedulerJenkins($scheduleTransfer);
     }
 
     /**
@@ -75,16 +69,14 @@ class SchedulerJenkinsFacade extends AbstractFacade implements SchedulerJenkinsF
      *
      * @api
      *
-     * @param string $schedulerId
-     * @param \Generated\Shared\Transfer\SchedulerRequestTransfer $scheduleTransfer
-     * @param \Generated\Shared\Transfer\SchedulerResponseCollectionTransfer $schedulerResponseTransfer
+     * @param \Generated\Shared\Transfer\SchedulerScheduleTransfer $scheduleTransfer
      *
-     * @return \Generated\Shared\Transfer\SchedulerResponseCollectionTransfer
+     * @return \Generated\Shared\Transfer\SchedulerResponseTransfer
      */
-    public function resumeSchedulerJenkins(string $schedulerId, SchedulerRequestTransfer $scheduleTransfer, SchedulerResponseCollectionTransfer $schedulerResponseTransfer): SchedulerResponseCollectionTransfer
+    public function resumeSchedulerJenkins(SchedulerScheduleTransfer $scheduleTransfer): SchedulerResponseTransfer
     {
         return $this->getFactory()
             ->createJenkinsResume()
-            ->resumeSchedulerJenkins($schedulerId, $scheduleTransfer, $schedulerResponseTransfer);
+            ->resumeSchedulerJenkins($scheduleTransfer);
     }
 }

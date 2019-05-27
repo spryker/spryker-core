@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\Scheduler\Communication\Console;
 
-use Generated\Shared\Transfer\SchedulerRequestTransfer;
-use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -16,7 +14,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * @method \Spryker\Zed\Scheduler\Business\SchedulerFacadeInterface getFacade()
  */
-class SchedulerCleanConsole extends Console
+class SchedulerCleanConsole extends AbstractSchedulerConsole
 {
     public const COMMAND_NAME = 'scheduler:clean';
     public const DESCRIPTION = 'Cleans scheduler job(s)';
@@ -54,22 +52,11 @@ class SchedulerCleanConsole extends Console
     {
         $schedulers = $input->getOption(static::SCHEDULERS_OPTION);
 
-        $scheduleTransfer = $this->createSchedulerTransfer($schedulers);
-        $schedulerResponseTransfer = $this->getFacade()->clean($scheduleTransfer);
+        $schedulerRequestTransfer = $this->createSchedulerRequestTransfer($schedulers);
+        $schedulerResponseCollectionTransfer = $this->getFacade()->clean($schedulerRequestTransfer);
 
-        $output->writeln($schedulerResponseTransfer->getMessages());
+        $this->outputCommandResponse($schedulerResponseCollectionTransfer, $output);
 
         return static::CODE_SUCCESS;
-    }
-
-    /**
-     * @param array $schedulers
-     *
-     * @return \Generated\Shared\Transfer\SchedulerRequestTransfer
-     */
-    protected function createSchedulerTransfer(array $schedulers): SchedulerRequestTransfer
-    {
-        return (new SchedulerRequestTransfer())
-            ->setSchedulers($schedulers);
     }
 }

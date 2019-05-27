@@ -3,9 +3,9 @@
     <actions/>
     <description>{% if job.description is not empty %}{{ job.description }}{% endif %}</description>
     <logRotator>
-        <daysToKeep>{{ job.daysToKeep }}</daysToKeep>
+        <daysToKeep>{{ job.payload.logrotate_days }}</daysToKeep>
         <numToKeep>-1</numToKeep>
-        <artifactDaysToKeep>{{ job.daysToKeep }}</artifactDaysToKeep>
+        <artifactDaysToKeep>{{ job.payload.logrotate_days }}</artifactDaysToKeep>
         <artifactNumToKeep>-1</artifactNumToKeep>
     </logRotator>
     <keepDependencies>false</keepDependencies>

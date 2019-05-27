@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\SchedulerJenkins\Business\JobWriter;
 
+use Generated\Shared\Transfer\SchedulerJobResponseTransfer;
+
 interface JenkinsJobWriterInterface
 {
     /**
@@ -14,24 +16,33 @@ interface JenkinsJobWriterInterface
      * @param string $name
      * @param string $jobXmlTemplate
      *
-     * @return string
+     * @return \Generated\Shared\Transfer\SchedulerJobResponseTransfer
      */
-    public function createJenkinsJob(string $schedulerId, string $name, string $jobXmlTemplate): string;
+    public function createJenkinsJob(string $schedulerId, string $name, string $jobXmlTemplate): SchedulerJobResponseTransfer;
 
     /**
      * @param string $schedulerId
      * @param string $name
      * @param string $jobXmlTemplate
      *
-     * @return string
+     * @return \Generated\Shared\Transfer\SchedulerJobResponseTransfer
      */
-    public function updateJenkinsJob(string $schedulerId, string $name, string $jobXmlTemplate): string;
+    public function updateJenkinsJob(string $schedulerId, string $name, string $jobXmlTemplate): SchedulerJobResponseTransfer;
 
     /**
      * @param string $schedulerId
      * @param string $name
      *
-     * @return string
+     * @return \Generated\Shared\Transfer\SchedulerJobResponseTransfer
      */
-    public function deleteJenkinsJob(string $schedulerId, string $name): string;
+    public function deleteJenkinsJob(string $schedulerId, string $name): SchedulerJobResponseTransfer;
+
+    /**
+     * @param string $schedulerId
+     * @param string $name
+     * @param string $urlUpdateJobTemplate
+     *
+     * @return \Generated\Shared\Transfer\SchedulerJobResponseTransfer
+     */
+    public function updateJenkinsJobStatus(string $schedulerId, string $name, string $urlUpdateJobTemplate): SchedulerJobResponseTransfer;
 }

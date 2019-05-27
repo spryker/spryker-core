@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\SchedulerJenkins\Business\Clean;
 
-use Generated\Shared\Transfer\SchedulerRequestTransfer;
-use Generated\Shared\Transfer\SchedulerResponseCollectionTransfer;
+use Generated\Shared\Transfer\SchedulerResponseTransfer;
+use Generated\Shared\Transfer\SchedulerScheduleTransfer;
 use Spryker\Zed\SchedulerJenkins\Business\JobReader\JenkinsJobReaderInterface;
 use Spryker\Zed\SchedulerJenkins\Business\JobWriter\JenkinsJobWriterInterface;
 
@@ -37,47 +37,29 @@ class JenkinsJobClean implements JenkinsJobCleanInterface
     }
 
     /**
-     * @param string $schedulerId
-     * @param \Generated\Shared\Transfer\SchedulerRequestTransfer $scheduleTransfer
-     * @param \Generated\Shared\Transfer\SchedulerResponseCollectionTransfer $schedulerResponseTransfer
+     * @param \Generated\Shared\Transfer\SchedulerScheduleTransfer $scheduleTransfer
      *
-     * @return \Generated\Shared\Transfer\SchedulerResponseCollectionTransfer
+     * @return \Generated\Shared\Transfer\SchedulerResponseTransfer
      */
-    public function cleanSchedulerJenkins(string $schedulerId, SchedulerRequestTransfer $scheduleTransfer, SchedulerResponseCollectionTransfer $schedulerResponseTransfer): SchedulerResponseCollectionTransfer
+    public function cleanSchedulerJenkins(SchedulerScheduleTransfer $scheduleTransfer): SchedulerResponseTransfer
     {
-        $jobs = $scheduleTransfer->getJobs();
-        $existingJobs = $this->jenkinsJobReader->getExistingJobs($schedulerId);
+        $idScheduler = $scheduleTransfer->getIdScheduler();
+        $existingJobs = $this->jenkinsJobReader->getExistingJobs($idScheduler);
 
-        $jobsCleanOutputMessages = $this->cleanExistingJobs($schedulerId, $jobs, $existingJobs);
-
-        foreach ($jobsCleanOutputMessages as $message) {
-            $schedulerResponseTransfer->addMessage($message);
-        }
-
-        return $schedulerResponseTransfer;
-    }
-
-    /**
-     * @param string $schedulerId
-     * @param array $jobs
-     * @param array $existingJobs
-     *
-     * @return array
-     */
-    protected function cleanExistingJobs(string $schedulerId, array $jobs, array $existingJobs): array
-    {
-        $outputMessages = [];
+        $schedulerResponseTransfer = (new SchedulerResponseTransfer())
+            ->setIdScheduler($idScheduler);
 
         if (empty($existingJobs)) {
-            return $outputMessages;
+            return $schedulerResponseTransfer;
         }
 
-        foreach ($existingJobs as $name) {
-            if (in_array($name, array_keys($jobs))) {
-                $outputMessages[] = $this->jenkinsJobWriter->deleteJenkinsJob($schedulerId, $name);
+        foreach ($existingJobs as $job) {
+            if (strpos($job, $scheduleTransfer->getStore()) !== false) {
+                $schedulerJobResponseTransfer = $this->jenkinsJobWriter->deleteJenkinsJob($idScheduler, $job);
+                $schedulerResponseTransfer->addSchedulerJobResponse($schedulerJobResponseTransfer);
             }
         }
 
-        return $outputMessages;
+        return $schedulerResponseTransfer;
     }
 }

@@ -7,15 +7,12 @@
 
 namespace Spryker\Zed\SchedulerJenkins\Business\JobWriter;
 
+use Generated\Shared\Transfer\SchedulerJobResponseTransfer;
 use Spryker\Zed\SchedulerJenkins\Business\Api\JenkinsApiInterface;
 use Spryker\Zed\SchedulerJenkins\SchedulerJenkinsConfig;
 
 class JenkinsJobWriter implements JenkinsJobWriterInterface
 {
-    protected const CREATE_JOB_MESSAGE_TEMPLATE = '[%s] CREATE jenkins job: %s (http_response: %d)';
-    protected const UPDATE_JOB_MESSAGE_TEMPLATE = '[%s] UPDATE jenkins job: %s (http_response: %d)';
-    protected const DELETE_JOB_MESSAGE_TEMPLATE = '[%s] DELETE jenkins job: %s (http_response: %d)';
-
     protected const CREATE_JOB_URL_TEMPLATE = 'createItem?name=%s';
     protected const UPDATE_JOB_URL_TEMPLATE = 'job/%s/config.xml';
     protected const DELETE_JOB_URL_TEMPLATE = 'job/%s/doDelete';
@@ -47,9 +44,9 @@ class JenkinsJobWriter implements JenkinsJobWriterInterface
      * @param string $name
      * @param string $jobXmlTemplate
      *
-     * @return string
+     * @return \Generated\Shared\Transfer\SchedulerJobResponseTransfer
      */
-    public function createJenkinsJob(string $schedulerId, string $name, string $jobXmlTemplate): string
+    public function createJenkinsJob(string $schedulerId, string $name, string $jobXmlTemplate): SchedulerJobResponseTransfer
     {
         $response = $this->jenkinsApi->executePostRequest(
             $schedulerId,
@@ -57,7 +54,7 @@ class JenkinsJobWriter implements JenkinsJobWriterInterface
             $jobXmlTemplate
         );
 
-        return $this->getResponseMessage(static::CREATE_JOB_MESSAGE_TEMPLATE, $schedulerId, $name, $response->getStatusCode());
+        return $this->createSchedulerJobResponseTransfer($name, $response->getStatusCode());
     }
 
     /**
@@ -65,9 +62,9 @@ class JenkinsJobWriter implements JenkinsJobWriterInterface
      * @param string $name
      * @param string $jobXmlTemplate
      *
-     * @return string
+     * @return \Generated\Shared\Transfer\SchedulerJobResponseTransfer
      */
-    public function updateJenkinsJob(string $schedulerId, string $name, string $jobXmlTemplate): string
+    public function updateJenkinsJob(string $schedulerId, string $name, string $jobXmlTemplate): SchedulerJobResponseTransfer
     {
         $response = $this->jenkinsApi->executePostRequest(
             $schedulerId,
@@ -75,40 +72,52 @@ class JenkinsJobWriter implements JenkinsJobWriterInterface
             $jobXmlTemplate
         );
 
-        return $this->getResponseMessage(static::UPDATE_JOB_MESSAGE_TEMPLATE, $schedulerId, $name, $response->getStatusCode());
+        return $this->createSchedulerJobResponseTransfer($name, $response->getStatusCode());
     }
 
     /**
      * @param string $schedulerId
      * @param string $name
      *
-     * @return string
+     * @return \Generated\Shared\Transfer\SchedulerJobResponseTransfer
      */
-    public function deleteJenkinsJob(string $schedulerId, string $name): string
+    public function deleteJenkinsJob(string $schedulerId, string $name): SchedulerJobResponseTransfer
     {
         $response = $this->jenkinsApi->executePostRequest(
             $schedulerId,
             sprintf(static::DELETE_JOB_URL_TEMPLATE, $name)
         );
 
-        return $this->getResponseMessage(static::DELETE_JOB_MESSAGE_TEMPLATE, $schedulerId, $name, $response->getStatusCode());
+        return $this->createSchedulerJobResponseTransfer($name, $response->getStatusCode());
     }
 
     /**
-     * @param string $message
      * @param string $schedulerId
      * @param string $name
-     * @param int $responseCode
+     * @param string $urlUpdateJobTemplate
      *
-     * @return string
+     * @return \Generated\Shared\Transfer\SchedulerJobResponseTransfer
      */
-    protected function getResponseMessage(string $message, string $schedulerId, string $name, int $responseCode): string
+    public function updateJenkinsJobStatus(string $schedulerId, string $name, string $urlUpdateJobTemplate): SchedulerJobResponseTransfer
     {
-        return sprintf(
-            $message,
+        $response = $this->jenkinsApi->executePostRequest(
             $schedulerId,
-            $name,
-            $responseCode
+            sprintf($urlUpdateJobTemplate, $name)
         );
+
+        return $this->createSchedulerJobResponseTransfer($name, $response->getStatusCode());
+    }
+
+    /**
+     * @param string $name
+     * @param int $status
+     *
+     * @return \Generated\Shared\Transfer\SchedulerJobResponseTransfer
+     */
+    protected function createSchedulerJobResponseTransfer(string $name, int $status): SchedulerJobResponseTransfer
+    {
+        return (new SchedulerJobResponseTransfer())
+            ->setName($name)
+            ->setStatus($status);
     }
 }

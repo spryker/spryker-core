@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SchedulerExtension\Dependency\Plugin;
 
+use Generated\Shared\Transfer\SchedulerRequestTransfer;
 use Generated\Shared\Transfer\SchedulerScheduleTransfer;
 
 interface ScheduleReaderPluginInterface
@@ -18,9 +19,10 @@ interface ScheduleReaderPluginInterface
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\SchedulerRequestTransfer $schedulerRequestTransfer
      * @param \Generated\Shared\Transfer\SchedulerScheduleTransfer $scheduleTransfer
      *
      * @return \Generated\Shared\Transfer\SchedulerScheduleTransfer
      */
-    public function readSchedule(SchedulerScheduleTransfer $scheduleTransfer): SchedulerScheduleTransfer;
+    public function readSchedule(SchedulerRequestTransfer $schedulerRequestTransfer, SchedulerScheduleTransfer $scheduleTransfer): SchedulerScheduleTransfer;
 }

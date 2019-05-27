@@ -8,7 +8,8 @@
 namespace Spryker\Zed\SchedulerJenkins\Business\Api;
 
 use Psr\Http\Message\ResponseInterface;
-use Spryker\Zed\SchedulerJenkins\Business\Exception\SchedulerJenkinsHostNotFound;
+use Spryker\Shared\SchedulerJenkins\SchedulerJenkinsConfig as SharedSchedulerJenkinsConfig;
+use Spryker\Zed\SchedulerJenkins\Business\Exception\JenkinsBaseUrlNotFound;
 use Spryker\Zed\SchedulerJenkins\Dependency\Guzzle\SchedulerJenkinsToGuzzleInterface;
 use Spryker\Zed\SchedulerJenkins\SchedulerJenkinsConfig;
 
@@ -46,7 +47,7 @@ class JenkinsApi implements JenkinsApiInterface
      */
     public function executeGetRequest(string $schedulerId, string $urlPath): ResponseInterface
     {
-        $requestUrl = $this->getJenkinsRequestUrlBySchedulerId($schedulerId, $urlPath);
+        $requestUrl = $this->getJenkinsBaseUrlBySchedulerId($schedulerId, $urlPath);
         $response = $this->client->get($requestUrl);
 
         return $response;
@@ -61,7 +62,7 @@ class JenkinsApi implements JenkinsApiInterface
      */
     public function executePostRequest(string $schedulerId, string $urlPath, string $xmlTemplate = ''): ResponseInterface
     {
-        $requestUrl = $this->getJenkinsRequestUrlBySchedulerId($schedulerId, $urlPath);
+        $requestUrl = $this->getJenkinsBaseUrlBySchedulerId($schedulerId, $urlPath);
         $requestOptions = $this->getRequestOptions($schedulerId, $xmlTemplate);
         $response = $this->client->post($requestUrl, $requestOptions);
 
@@ -128,29 +129,29 @@ class JenkinsApi implements JenkinsApiInterface
     {
         $schedulerJenkinsConfiguration = $this->getJenkinsConfigurationBySchedulerId($schedulerId);
 
-        if (!isset($schedulerJenkinsConfiguration['credentials'])) {
+        if (!isset($schedulerJenkinsConfiguration[SharedSchedulerJenkinsConfig::SCHEDULER_JENKINS_CREDENTIALS])) {
             return [];
         }
 
-        return $schedulerJenkinsConfiguration['credentials'];
+        return $schedulerJenkinsConfiguration[SharedSchedulerJenkinsConfig::SCHEDULER_JENKINS_CREDENTIALS];
     }
 
     /**
      * @param string $schedulerId
      * @param string $urlPath
      *
-     * @throws \Spryker\Zed\SchedulerJenkins\Business\Exception\SchedulerJenkinsHostNotFound
+     * @throws \Spryker\Zed\SchedulerJenkins\Business\Exception\JenkinsBaseUrlNotFound
      *
      * @return string
      */
-    protected function getJenkinsRequestUrlBySchedulerId(string $schedulerId, string $urlPath): string
+    protected function getJenkinsBaseUrlBySchedulerId(string $schedulerId, string $urlPath): string
     {
         $schedulerJenkinsConfiguration = $this->getJenkinsConfigurationBySchedulerId($schedulerId);
 
-        if (!isset($schedulerJenkinsConfiguration['host'])) {
-            throw new SchedulerJenkinsHostNotFound();
+        if (!isset($schedulerJenkinsConfiguration[SharedSchedulerJenkinsConfig::SCHEDULER_JENKINS_BASE_URL])) {
+            throw new JenkinsBaseUrlNotFound();
         }
 
-        return $schedulerJenkinsConfiguration['host'] . $urlPath;
+        return $schedulerJenkinsConfiguration[SharedSchedulerJenkinsConfig::SCHEDULER_JENKINS_BASE_URL] . $urlPath;
     }
 }

@@ -46,13 +46,13 @@ class JenkinsJobReader implements JenkinsJobReaderInterface
     }
 
     /**
-     * @param string $schedulerId
+     * @param string $idScheduler
      *
      * @return array
      */
-    public function getExistingJobs(string $schedulerId): array
+    public function getExistingJobs(string $idScheduler): array
     {
-        $response = $this->jenkinsApi->executeGetRequest($schedulerId, static::JENKINS_API_JOBS_URL);
+        $response = $this->jenkinsApi->executeGetRequest($idScheduler, static::JENKINS_API_JOBS_URL);
         $jobs = $this->utilEncodingService->decodeJson($response->getBody(), true);
 
         if (empty($jobs['jobs'])) {

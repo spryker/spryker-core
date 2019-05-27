@@ -7,13 +7,14 @@
 
 namespace Spryker\Zed\SchedulerJenkins\Business\Setup;
 
-use Generated\Shared\Transfer\SchedulerRequestTransfer;
-use Generated\Shared\Transfer\SchedulerResponseCollectionTransfer;
+use ArrayObject;
+use Generated\Shared\Transfer\SchedulerResponseTransfer;
+use Generated\Shared\Transfer\SchedulerScheduleTransfer;
 use Spryker\Zed\SchedulerJenkins\Business\JobReader\JenkinsJobReaderInterface;
 use Spryker\Zed\SchedulerJenkins\Business\JobWriter\JenkinsJobWriterInterface;
 use Spryker\Zed\SchedulerJenkins\Business\TemplateGenerator\JenkinsJobTemplateGeneratorInterface;
 
-class SchedulerJenkinsSetup implements SchedulerJenkinsSetupInterface
+class JenkinsSetup implements JenkinsSetupInterface
 {
     /**
      * @var \Spryker\Zed\SchedulerJenkins\Business\JobReader\JenkinsJobReaderInterface
@@ -46,73 +47,94 @@ class SchedulerJenkinsSetup implements SchedulerJenkinsSetupInterface
     }
 
     /**
-     * @param string $schedulerId
-     * @param \Generated\Shared\Transfer\SchedulerRequestTransfer $scheduleTransfer
-     * @param \Generated\Shared\Transfer\SchedulerResponseCollectionTransfer $schedulerResponseTransfer
+     * @param \Generated\Shared\Transfer\SchedulerScheduleTransfer $scheduleTransfer
      *
-     * @return \Generated\Shared\Transfer\SchedulerResponseCollectionTransfer
+     * @return \Generated\Shared\Transfer\SchedulerResponseTransfer
      */
-    public function setup(string $schedulerId, SchedulerRequestTransfer $scheduleTransfer, SchedulerResponseCollectionTransfer $schedulerResponseTransfer): SchedulerResponseCollectionTransfer
+    public function setup(SchedulerScheduleTransfer $scheduleTransfer): SchedulerResponseTransfer
     {
-        $jobs = $scheduleTransfer->getJobs();
-        $existingJobs = $this->jenkinsJobReader->getExistingJobs($schedulerId);
+        $idScheduler = $scheduleTransfer->getIdScheduler();
+        $existingJobs = $this->jenkinsJobReader->getExistingJobs($idScheduler);
 
-        $updateOrDeleteOutputMessages = $this->updateExistingJobs($schedulerId, $jobs, $existingJobs);
-        $createOutputMessages = $this->createJobDefinitions($schedulerId, $jobs, $existingJobs);
-        $setupOutputMessages = array_merge($updateOrDeleteOutputMessages, $createOutputMessages);
+        $updateOrDeleteJobsOutputMessages = $this->updateOrDeleteExistingJobs($scheduleTransfer, $existingJobs);
+        $createJobsOutputMessages = $this->createJobDefinitions($scheduleTransfer, $existingJobs);
 
-        foreach ($setupOutputMessages as $message) {
-            $schedulerResponseTransfer->addMessage($message);
-        }
-
-        return $schedulerResponseTransfer;
+        return (new SchedulerResponseTransfer())
+            ->setIdScheduler($scheduleTransfer->getIdScheduler())
+            ->setSchedulerJobResponses(new ArrayObject(array_merge($updateOrDeleteJobsOutputMessages, $createJobsOutputMessages)));
     }
 
     /**
-     * @param string $schedulerId
-     * @param array $jobs
+     * @param \Generated\Shared\Transfer\SchedulerScheduleTransfer $schedulerTransfer
      * @param array $existingJobs
      *
-     * @return string[]
+     * @return \Generated\Shared\Transfer\SchedulerJobResponseTransfer[]
      */
-    protected function updateExistingJobs(string $schedulerId, array $jobs, array $existingJobs): array
+    protected function updateOrDeleteExistingJobs(SchedulerScheduleTransfer $schedulerTransfer, array $existingJobs): array
     {
-        $outputMessages = [];
+        $schedulerJobResponseTransfers = [];
 
         if (empty($existingJobs)) {
-            return $outputMessages;
+            return $schedulerJobResponseTransfers;
         }
 
-        foreach ($existingJobs as $name) {
-            if (in_array($name, array_keys($jobs))) {
-                $xml = $this->templateGenerator->getJobTemplate($jobs[$name]);
-                $outputMessages[] = $this->jenkinsJobWriter->updateJenkinsJob($schedulerId, $name, $xml);
+        foreach ($schedulerTransfer->getJobs() as $jobTransfer) {
+            if (in_array($jobTransfer->getName(), $existingJobs)) {
+                $xml = $this->templateGenerator->getJobTemplate($jobTransfer);
+                $schedulerJobResponseTransfers[] = $this->jenkinsJobWriter->updateJenkinsJob(
+                    $schedulerTransfer->getIdScheduler(),
+                    $jobTransfer->getName(),
+                    $xml
+                );
+
+                unset($existingJobs[array_search($jobTransfer->getName(), $existingJobs)]);
             }
         }
 
-        return $outputMessages;
+        $schedulerJobResponseTransfers = $this->deleteNotExistingJobs($schedulerTransfer->getIdScheduler(), $existingJobs, $schedulerJobResponseTransfers);
+
+        return $schedulerJobResponseTransfers;
     }
 
     /**
-     * @param string $schedulerId
-     * @param array $jobs
+     * @param \Generated\Shared\Transfer\SchedulerScheduleTransfer $schedulerTransfer
      * @param array $existingJobs
      *
-     * @return string[]
+     * @return \Generated\Shared\Transfer\SchedulerJobResponseTransfer[]
      */
-    protected function createJobDefinitions(string $schedulerId, array $jobs, array $existingJobs): array
+    protected function createJobDefinitions(SchedulerScheduleTransfer $schedulerTransfer, array $existingJobs): array
     {
-        $outputMessages = [];
+        $schedulerJobResponseTransfers = [];
 
-        foreach ($jobs as $key => $job) {
-            if (in_array($key, $existingJobs)) {
+        foreach ($schedulerTransfer->getJobs() as $jobTransfer) {
+            if (in_array($jobTransfer->getName(), $existingJobs)) {
                 continue;
             }
 
-            $jobXmlTemplate = $this->templateGenerator->getJobTemplate($job);
-            $outputMessages[] = $this->jenkinsJobWriter->createJenkinsJob($schedulerId, $key, $jobXmlTemplate);
+            $jobXmlTemplate = $this->templateGenerator->getJobTemplate($jobTransfer);
+            $schedulerJobResponseTransfers[] = $this->jenkinsJobWriter->createJenkinsJob(
+                $schedulerTransfer->getIdScheduler(),
+                $jobTransfer->getName(),
+                $jobXmlTemplate
+            );
         }
 
-        return $outputMessages;
+        return $schedulerJobResponseTransfers;
+    }
+
+    /**
+     * @param string $idScheduler
+     * @param array $jobs
+     * @param array $schedulerJobResponseTransfers
+     *
+     * @return array
+     */
+    protected function deleteNotExistingJobs(string $idScheduler, array $jobs, array $schedulerJobResponseTransfers): array
+    {
+        foreach ($jobs as $job) {
+            $schedulerJobResponseTransfers[] = $this->jenkinsJobWriter->deleteJenkinsJob($idScheduler, $job);
+        }
+
+        return $schedulerJobResponseTransfers;
     }
 }

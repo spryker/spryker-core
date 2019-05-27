@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SchedulerJenkins\Business\TemplateGenerator;
 
+use Generated\Shared\Transfer\SchedulerJobTransfer;
 use Spryker\Shared\Config\Environment;
 use Spryker\Zed\SchedulerJenkins\Dependency\TwigEnvironment\SchedulerJenkinsToTwigEnvironmentInterface;
 use Spryker\Zed\SchedulerJenkins\SchedulerJenkinsConfig;
@@ -36,30 +37,28 @@ class XmlJenkinsJobTemplateGenerator implements JenkinsJobTemplateGeneratorInter
     }
 
     /**
-     * @param array $job
+     * @param \Generated\Shared\Transfer\SchedulerJobTransfer $schedulerJobTransfer
      *
      * @return string
      */
-    public function getJobTemplate(array $job): string
+    public function getJobTemplate(SchedulerJobTransfer $schedulerJobTransfer): string
     {
-        $job['command'] = $this->getCommand($job);
-        $job['daysToKeep'] = $this->getDaysToKeep($job);
-        $job['schedule'] = $this->getSchedule($job);
-        $job['enable'] = $this->isEnabled($job);
+        $schedulerJobTransfer = $this->extendCommandWithEnvironment($schedulerJobTransfer);
+        $schedulerJobTransfer = $this->checkLogRotateVal($schedulerJobTransfer);
 
         $xmlTemplate = $this->twig->render($this->schedulerJenkinsConfig->getJenkinsTemplatePath(), [
-            'job' => $job,
+            'job' => $schedulerJobTransfer->toArray(),
         ]);
 
         return $xmlTemplate;
     }
 
     /**
-     * @param array $job
+     * @param \Generated\Shared\Transfer\SchedulerJobTransfer $schedulerJobTransfer
      *
-     * @return string
+     * @return \Generated\Shared\Transfer\SchedulerJobTransfer
      */
-    protected function getCommand(array $job): string
+    protected function extendCommandWithEnvironment(SchedulerJobTransfer $schedulerJobTransfer): SchedulerJobTransfer
     {
         $commandTemplate = $this->getCommandTemplate();
         $environment = Environment::getInstance();
@@ -74,15 +73,18 @@ class XmlJenkinsJobTemplateGenerator implements JenkinsJobTemplateGeneratorInter
             $destination = '$destination_release_dir';
         }
 
-        return sprintf(
+        $extendedCommand = sprintf(
             $commandTemplate,
             $customBashCommand,
             $environment->getEnvironment(),
-            $job['store'],
+            $schedulerJobTransfer->getStore(),
             $destination,
             $this->schedulerJenkinsConfig->getCronJobsConfigFilePath(),
-            $job['command']
+            $schedulerJobTransfer->getCommand()
         );
+
+        return $schedulerJobTransfer
+            ->setCommand($extendedCommand);
     }
 
     /**
@@ -99,46 +101,20 @@ cd %s
     }
 
     /**
-     * @param array $job
+     * @param \Generated\Shared\Transfer\SchedulerJobTransfer $schedulerJobTransfer
      *
-     * @return int
+     * @return \Generated\Shared\Transfer\SchedulerJobTransfer
      */
-    protected function getDaysToKeep(array $job): int
+    protected function checkLogRotateVal(SchedulerJobTransfer $schedulerJobTransfer): SchedulerJobTransfer
     {
-        if (array_key_exists('logrotate_days', $job) && is_int($job['logrotate_days'])) {
-            return $job['logrotate_days'];
+        $schedulerPayload = $schedulerJobTransfer->getPayload();
+
+        if (array_key_exists('logrotate_days', $schedulerPayload) && is_int($schedulerPayload['logrotate_days'])) {
+            return $schedulerJobTransfer;
         }
 
-        return $this->schedulerJenkinsConfig->getAmountOfDaysForLogFileRotation();
-    }
+        $schedulerPayload['logrotate_days'] = $this->schedulerJenkinsConfig->getAmountOfDaysForLogFileRotation();
 
-    /**
-     * @param array $job
-     *
-     * @return string
-     */
-    protected function isEnabled(array $job): string
-    {
-        return $job['enable'] === true ? 'true' : 'false';
-    }
-
-    /**
-     * @param array $job
-     *
-     * @return string
-     */
-    protected function getSchedule(array $job): string
-    {
-        $schedule = ($job['schedule'] === '') ? '' : $job['schedule'];
-
-        if (array_key_exists('run_on_non_production', $job) && $job['run_on_non_production'] === true) {
-            return $schedule;
-        }
-
-        if (Environment::isNotProduction()) {
-            return '';
-        }
-
-        return $schedule;
+        return $schedulerJobTransfer->setPayload($schedulerPayload);
     }
 }

@@ -5,22 +5,23 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Scheduler\Business\PhpScheduleReader;
+namespace Spryker\Zed\Scheduler\Business\PhpScheduleReader\Mapper;
 
+use Generated\Shared\Transfer\SchedulerRequestTransfer;
 use Generated\Shared\Transfer\SchedulerScheduleTransfer;
 
 interface PhpScheduleMapperInterface
 {
     /**
+     * @param \Generated\Shared\Transfer\SchedulerRequestTransfer $scheduleRequestTransfer
      * @param \Generated\Shared\Transfer\SchedulerScheduleTransfer $scheduleTransfer
      * @param array $jobs
-     * @param string $currentStore
      *
      * @return \Generated\Shared\Transfer\SchedulerScheduleTransfer
      */
     public function mapScheduleFromArray(
+        SchedulerRequestTransfer $scheduleRequestTransfer,
         SchedulerScheduleTransfer $scheduleTransfer,
-        array $jobs,
-        string $currentStore
+        array $jobs
     ): SchedulerScheduleTransfer;
 }

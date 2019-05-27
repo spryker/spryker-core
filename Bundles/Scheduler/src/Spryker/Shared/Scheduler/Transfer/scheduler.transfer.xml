@@ -8,12 +8,14 @@
         <property name="enable" type="bool" />
         <property name="command" type="string" />
         <property name="schedule" type="string" />
+        <property name="store" type="string" />
         <property name="payload" type="array" />
     </transfer>
 
     <transfer name="SchedulerSchedule">
         <property name="idScheduler" type="string" />
         <property name="jobs" type="SchedulerJob[]" singular="job" />
+        <property name="store" type="string"/>
     </transfer>
 
     <transfer name="SchedulerFilter">
@@ -26,14 +28,19 @@
         <property name="filter" type="SchedulerFilter" />
     </transfer>
 
-    <transfer name="SchedulerResponse">
-        <property name="schedule" type="SchedulerSchedule" />
-        <property name="status" type="bool" />
-        <property name="message" type="string" />
-    </transfer>
-
     <transfer name="SchedulerResponseCollection">
         <property name="responses" type="SchedulerResponse[]" singular="response" />
+    </transfer>
+
+    <transfer name="SchedulerResponse">
+        <property name="idScheduler" type="string" />
+        <property name="status" type="bool" />
+        <property name="schedulerJobResponses" type="SchedulerJobResponse[]" singular="schedulerJobResponse" />
+    </transfer>
+
+    <transfer name="SchedulerJobResponse">
+        <property name="status" type="int"/>
+        <property name="name" type="string"/>
     </transfer>
 
 </transfers>

@@ -23,6 +23,6 @@ class SchedulerSetupCommand extends AbstractSchedulerCommand
         SchedulerAdapterPluginInterface $schedulerAdapterPlugin,
         SchedulerScheduleTransfer $schedulerScheduleTransfer
     ): SchedulerResponseTransfer {
-        return $schedulerAdapterPlugin->clean($schedulerScheduleTransfer);
+        return $schedulerAdapterPlugin->setup($schedulerScheduleTransfer);
     }
 }

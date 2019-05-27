@@ -20,8 +20,8 @@ use Spryker\Zed\SchedulerJenkins\Business\JobWriter\JenkinsJobWriter;
 use Spryker\Zed\SchedulerJenkins\Business\JobWriter\JenkinsJobWriterInterface;
 use Spryker\Zed\SchedulerJenkins\Business\Resume\JenkinsResume;
 use Spryker\Zed\SchedulerJenkins\Business\Resume\JenkinsResumeInterface;
-use Spryker\Zed\SchedulerJenkins\Business\Setup\SchedulerJenkinsSetup;
-use Spryker\Zed\SchedulerJenkins\Business\Setup\SchedulerJenkinsSetupInterface;
+use Spryker\Zed\SchedulerJenkins\Business\Setup\JenkinsSetup;
+use Spryker\Zed\SchedulerJenkins\Business\Setup\JenkinsSetupInterface;
 use Spryker\Zed\SchedulerJenkins\Business\Suspend\JenkinsSuspend;
 use Spryker\Zed\SchedulerJenkins\Business\Suspend\JenkinsSuspendInterface;
 use Spryker\Zed\SchedulerJenkins\Business\TemplateGenerator\JenkinsJobTemplateGeneratorInterface;
@@ -37,11 +37,11 @@ use Spryker\Zed\SchedulerJenkins\SchedulerJenkinsDependencyProvider;
 class SchedulerJenkinsBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\SchedulerJenkins\Business\Setup\SchedulerJenkinsSetupInterface
+     * @return \Spryker\Zed\SchedulerJenkins\Business\Setup\JenkinsSetupInterface
      */
-    public function createSchedulerJenkinsSetup(): SchedulerJenkinsSetupInterface
+    public function createSchedulerJenkinsSetup(): JenkinsSetupInterface
     {
-        return new SchedulerJenkinsSetup(
+        return new JenkinsSetup(
             $this->createJenkinsJobReader(),
             $this->createJenkinsJobWriter(),
             $this->createXmkJenkinsJobTemplateGenerator()
@@ -119,9 +119,9 @@ class SchedulerJenkinsBusinessFactory extends AbstractBusinessFactory
     public function createJenkinsJobStatusUpdater(): JenkinsJobStatusUpdaterInterface
     {
         return new JenkinsJobStatusUpdater(
-            $this->createJenkinsApi(),
-            $this->getConfig(),
-            $this->createJenkinsJobReader()
+            $this->createJenkinsJobReader(),
+            $this->createJenkinsJobWriter(),
+            $this->getConfig()
         );
     }
 
@@ -141,7 +141,7 @@ class SchedulerJenkinsBusinessFactory extends AbstractBusinessFactory
      */
     public function getGuzzleClient(): SchedulerJenkinsToGuzzleInterface
     {
-        return $this->getProvidedDependency(SchedulerJenkinsDependencyProvider::GUZZLE_CLIENT);
+        return $this->getProvidedDependency(SchedulerJenkinsDependencyProvider::CLIENT_GUZZLE);
     }
 
     /**

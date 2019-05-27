@@ -5,10 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\SchedulerJenkins\Business\Exception;
+namespace Spryker\Zed\Scheduler\Business\Exception;
 
 use Exception;
 
-class SchedulerJenkinsHostNotFound extends Exception
+class SourceFilenameNotFoundException extends Exception
 {
 }

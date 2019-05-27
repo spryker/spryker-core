@@ -24,7 +24,6 @@ class SchedulerJenkinsAdapterPlugin extends AbstractPlugin implements SchedulerA
      * @api
      *
      * @param \Generated\Shared\Transfer\SchedulerScheduleTransfer $scheduleTransfer
-     * @param \Generated\Shared\Transfer\SchedulerResponseTransfer $schedulerResponseTransfer
      *
      * @return \Generated\Shared\Transfer\SchedulerResponseTransfer
      */
@@ -39,7 +38,6 @@ class SchedulerJenkinsAdapterPlugin extends AbstractPlugin implements SchedulerA
      * @api
      *
      * @param \Generated\Shared\Transfer\SchedulerScheduleTransfer $scheduleTransfer
-     * @param \Generated\Shared\Transfer\SchedulerResponseTransfer $schedulerResponseTransfer
      *
      * @return \Generated\Shared\Transfer\SchedulerResponseTransfer
      */
@@ -50,12 +48,10 @@ class SchedulerJenkinsAdapterPlugin extends AbstractPlugin implements SchedulerA
 
     /**
      * {@inheritdoc}
-     * d
+     *
      * @api
      *
-     * @param string $schedulerId
      * @param \Generated\Shared\Transfer\SchedulerScheduleTransfer $scheduleTransfer
-     * @param \Generated\Shared\Transfer\SchedulerResponseTransfer $schedulerResponseTransfer
      *
      * @return \Generated\Shared\Transfer\SchedulerResponseTransfer
      */
@@ -69,9 +65,7 @@ class SchedulerJenkinsAdapterPlugin extends AbstractPlugin implements SchedulerA
      *
      * @api
      *
-     * @param string $schedulerId
      * @param \Generated\Shared\Transfer\SchedulerScheduleTransfer $scheduleTransfer
-     * @param \Generated\Shared\Transfer\SchedulerResponseTransfer $schedulerResponseTransfer
      *
      * @return \Generated\Shared\Transfer\SchedulerResponseTransfer
      */

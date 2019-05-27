@@ -7,14 +7,18 @@
 
 namespace Spryker\Zed\Scheduler\Business\PhpScheduleReader;
 
+use Generated\Shared\Transfer\SchedulerRequestTransfer;
 use Generated\Shared\Transfer\SchedulerScheduleTransfer;
 
 interface PhpScheduleReaderInterface
 {
     /**
+     * @param \Generated\Shared\Transfer\SchedulerRequestTransfer $scheduleRequestTransfer
      * @param \Generated\Shared\Transfer\SchedulerScheduleTransfer $scheduleTransfer
+     *
+     * @throws \Spryker\Zed\Scheduler\Business\Exception\SourceFilenameNotFoundException
      *
      * @return \Generated\Shared\Transfer\SchedulerScheduleTransfer
      */
-    public function readSchedule(SchedulerScheduleTransfer $scheduleTransfer): SchedulerScheduleTransfer;
+    public function readSchedule(SchedulerRequestTransfer $scheduleRequestTransfer, SchedulerScheduleTransfer $scheduleTransfer): SchedulerScheduleTransfer;
 }

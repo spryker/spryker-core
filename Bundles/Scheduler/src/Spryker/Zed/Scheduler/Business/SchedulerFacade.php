@@ -22,15 +22,16 @@ class SchedulerFacade extends AbstractFacade implements SchedulerFacadeInterface
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\SchedulerRequestTransfer $scheduleRequestTransfer
      * @param \Generated\Shared\Transfer\SchedulerScheduleTransfer $scheduleTransfer
      *
      * @return \Generated\Shared\Transfer\SchedulerScheduleTransfer
      */
-    public function readScheduleFromPhpSource(SchedulerScheduleTransfer $scheduleTransfer): SchedulerScheduleTransfer
+    public function readScheduleFromPhpSource(SchedulerRequestTransfer $scheduleRequestTransfer, SchedulerScheduleTransfer $scheduleTransfer): SchedulerScheduleTransfer
     {
         return $this->getFactory()
             ->createPhpSchedulerReader()
-            ->readSchedule($scheduleTransfer);
+            ->readSchedule($scheduleRequestTransfer, $scheduleTransfer);
     }
 
     /**

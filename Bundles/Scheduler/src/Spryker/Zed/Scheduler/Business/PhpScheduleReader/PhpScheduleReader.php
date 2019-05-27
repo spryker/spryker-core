@@ -7,21 +7,18 @@
 
 namespace Spryker\Zed\Scheduler\Business\PhpScheduleReader;
 
+use Generated\Shared\Transfer\SchedulerRequestTransfer;
 use Generated\Shared\Transfer\SchedulerScheduleTransfer;
-use Spryker\Zed\Scheduler\Dependency\Store\SchedulerToStoreInterface;
+use Spryker\Zed\Scheduler\Business\Exception\SourceFilenameNotFoundException;
+use Spryker\Zed\Scheduler\Business\PhpScheduleReader\Mapper\PhpScheduleMapperInterface;
 use Spryker\Zed\Scheduler\SchedulerConfig;
 
 class PhpScheduleReader implements PhpScheduleReaderInterface
 {
     /**
-     * @var \Spryker\Zed\Scheduler\Business\PhpScheduleReader\PhpScheduleMapperInterface
+     * @var \Spryker\Zed\Scheduler\Business\PhpScheduleReader\Mapper\PhpScheduleMapperInterface
      */
     protected $mapper;
-
-    /**
-     * @var \Spryker\Zed\Scheduler\Dependency\Store\SchedulerToStoreInterface
-     */
-    protected $store;
 
     /**
      * @var \Spryker\Zed\Scheduler\SchedulerConfig
@@ -29,38 +26,47 @@ class PhpScheduleReader implements PhpScheduleReaderInterface
     protected $schedulerConfig;
 
     /**
-     * @param \Spryker\Zed\Scheduler\Business\PhpScheduleReader\PhpScheduleMapperInterface $mapper
-     * @param \Spryker\Zed\Scheduler\Dependency\Store\SchedulerToStoreInterface $store
+     * @param \Spryker\Zed\Scheduler\Business\PhpScheduleReader\Mapper\PhpScheduleMapperInterface $mapper
      * @param \Spryker\Zed\Scheduler\SchedulerConfig $schedulerConfig
      */
     public function __construct(
         PhpScheduleMapperInterface $mapper,
-        SchedulerToStoreInterface $store,
         SchedulerConfig $schedulerConfig
     ) {
         $this->mapper = $mapper;
-        $this->store = $store;
         $this->schedulerConfig = $schedulerConfig;
     }
 
     /**
+     * @param \Generated\Shared\Transfer\SchedulerRequestTransfer $scheduleRequestTransfer
      * @param \Generated\Shared\Transfer\SchedulerScheduleTransfer $scheduleTransfer
      *
      * @return \Generated\Shared\Transfer\SchedulerScheduleTransfer
      */
-    public function readSchedule(SchedulerScheduleTransfer $scheduleTransfer): SchedulerScheduleTransfer
+    public function readSchedule(SchedulerRequestTransfer $scheduleRequestTransfer, SchedulerScheduleTransfer $scheduleTransfer): SchedulerScheduleTransfer
     {
-        $idScheduler = $scheduleTransfer->getIdScheduler();
-        $sourceFileName = $this->schedulerConfig->getPhpSchedulerReaderPath($idScheduler);
+        $sourceFileName = $this->schedulerConfig->getPhpSchedulerReaderPath($scheduleTransfer->getIdScheduler());
 
-        if (!file_exists($sourceFileName) || is_readable($sourceFileName)) {
-            // TODO [Scheduler] warning if file is not reachable
-            return $scheduleTransfer;
-        }
+        $this->assertSourceFileName($sourceFileName);
 
         $jobs = [];
+
         include_once $sourceFileName;
 
-        return $this->mapper->mapScheduleFromArray($scheduleTransfer, $jobs, $this->store->getStoreName());
+        return $this->mapper->mapScheduleFromArray($scheduleRequestTransfer, $scheduleTransfer, $jobs);
+    }
+
+    /**
+     * @param string $sourceFileName
+     *
+     * @throws \Spryker\Zed\Scheduler\Business\Exception\SourceFilenameNotFoundException
+     *
+     * @return void
+     */
+    protected function assertSourceFileName(string $sourceFileName): void
+    {
+        if (!file_exists($sourceFileName) || !is_readable($sourceFileName)) {
+            throw new SourceFilenameNotFoundException();
+        }
     }
 }

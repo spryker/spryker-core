@@ -8,8 +8,11 @@
 namespace SprykerTest\Zed\SchedulerJenkins\Business;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\SchedulerRequestTransfer;
+use Generated\Shared\Transfer\SchedulerJobResponseTransfer;
+use Generated\Shared\Transfer\SchedulerJobTransfer;
 use Generated\Shared\Transfer\SchedulerResponseCollectionTransfer;
+use Generated\Shared\Transfer\SchedulerResponseTransfer;
+use Generated\Shared\Transfer\SchedulerScheduleTransfer;
 use Spryker\Zed\SchedulerJenkins\Business\JobReader\JenkinsJobReader;
 use Spryker\Zed\SchedulerJenkins\Business\JobStatusUpdater\JenkinsJobStatusUpdater;
 use Spryker\Zed\SchedulerJenkins\Business\JobWriter\JenkinsJobWriter;
@@ -36,12 +39,11 @@ class SchedulerJenkinsFacadeTest extends Unit
     public function testSetupSchedulerJenkins(): void
     {
         $scheduleTransfer = $this->createSchedulerTransfer();
-        $schedulerResponseTransfer = $this->createSchedulerResponseTransfer();
-        $schedulerResponseTransfer = $this->getSchedulerFacade()->setupSchedulerJenkins('test', $scheduleTransfer, $schedulerResponseTransfer);
-        $schedulerResponseMessages = $schedulerResponseTransfer->getMessages();
+        $schedulerResponseTransfer = $this->getSchedulerFacade()->setupSchedulerJenkins($scheduleTransfer);
+        $schedulerResponseMessages = $schedulerResponseTransfer->getSchedulerJobResponses();
 
-        $this->assertInstanceOf(SchedulerResponseCollectionTransfer::class, $schedulerResponseTransfer);
-        $this->assertEquals(3, count($schedulerResponseMessages));
+        $this->assertInstanceOf(SchedulerResponseTransfer::class, $schedulerResponseTransfer);
+        $this->assertNotEmpty($schedulerResponseMessages);
     }
 
     /**
@@ -50,80 +52,69 @@ class SchedulerJenkinsFacadeTest extends Unit
     public function testCleanSchedulerJenkins(): void
     {
         $scheduleTransfer = $this->createSchedulerTransfer();
-        $schedulerResponseTransfer = $this->createSchedulerResponseTransfer();
-        $schedulerResponseTransfer = $this->getSchedulerFacade()->cleanSchedulerJenkins('test', $scheduleTransfer, $schedulerResponseTransfer);
-        $schedulerResponseMessages = $schedulerResponseTransfer->getMessages();
+        $schedulerResponseTransfer = $this->getSchedulerFacade()->cleanSchedulerJenkins($scheduleTransfer);
+        $schedulerResponseMessages = $schedulerResponseTransfer->getSchedulerJobResponses();
 
-        $this->assertInstanceOf(SchedulerResponseCollectionTransfer::class, $schedulerResponseTransfer);
-        $this->assertEquals(2, count($schedulerResponseMessages));
+        $this->assertInstanceOf(SchedulerResponseTransfer::class, $schedulerResponseTransfer);
+        $this->assertNotEmpty($schedulerResponseMessages);
     }
 
     /**
      * @return void
      */
-    public function testSuspendAllSchedulerJenkinsJobs(): void
+    public function testSuspendSchedulerJenkinsJobs(): void
     {
         $scheduleTransfer = $this->createSchedulerTransfer();
-        $schedulerResponseTransfer = $this->createSchedulerResponseTransfer();
-        $schedulerResponseTransfer = $this->getSchedulerFacade()->suspendSchedulerJenkins('test', $scheduleTransfer, $schedulerResponseTransfer);
-        $schedulerResponseMessages = $schedulerResponseTransfer->getMessages();
+        $schedulerResponseTransfer = $this->getSchedulerFacade()->suspendSchedulerJenkins($scheduleTransfer);
+        $schedulerResponseMessages = $schedulerResponseTransfer->getSchedulerJobResponses();
 
-        $this->assertInstanceOf(SchedulerResponseCollectionTransfer::class, $schedulerResponseTransfer);
-        $this->assertEquals(2, count($schedulerResponseMessages));
+        $this->assertInstanceOf(SchedulerResponseTransfer::class, $schedulerResponseTransfer);
+        $this->assertNotEmpty($schedulerResponseMessages);
     }
 
     /**
      * @return void
      */
-    public function testSuspendByNameSchedulerJenkinsJobs(): void
+    public function testResumeSchedulerJenkinsJobs(): void
     {
         $scheduleTransfer = $this->createSchedulerTransfer();
-        $schedulerResponseTransfer = $this->createSchedulerResponseTransfer();
-        $schedulerResponseTransfer = $this->getSchedulerFacade()->suspendSchedulerJenkins('test', $scheduleTransfer, $schedulerResponseTransfer);
+        $schedulerResponseTransfer = $this->getSchedulerFacade()->resumeSchedulerJenkins($scheduleTransfer);
+        $schedulerResponseMessages = $schedulerResponseTransfer->getSchedulerJobResponses();
 
-        $this->assertInstanceOf(SchedulerResponseCollectionTransfer::class, $schedulerResponseTransfer);
+        $this->assertInstanceOf(SchedulerResponseTransfer::class, $schedulerResponseTransfer);
+        $this->assertNotEmpty($schedulerResponseMessages);
     }
 
     /**
-     * @return void
+     * @return \Generated\Shared\Transfer\SchedulerScheduleTransfer
      */
-    public function testResumeAllSchedulerJenkinsJobs(): void
+    protected function createSchedulerTransfer(): SchedulerScheduleTransfer
     {
-        $scheduleTransfer = $this->createSchedulerTransfer();
-        $schedulerResponseTransfer = $this->createSchedulerResponseTransfer();
-        $schedulerResponseTransfer = $this->getSchedulerFacade()->resumeSchedulerJenkins('test', $scheduleTransfer, $schedulerResponseTransfer);
-
-        $this->assertInstanceOf(SchedulerResponseCollectionTransfer::class, $schedulerResponseTransfer);
-    }
-
-    /**
-     * @return void
-     */
-    public function testResumeByNameSchedulerJenkinsJobs(): void
-    {
-        $scheduleTransfer = $this->createSchedulerTransfer();
-        $schedulerResponseTransfer = $this->createSchedulerResponseTransfer();
-        $schedulerResponseTransfer = $this->getSchedulerFacade()->resumeSchedulerJenkins('test', $scheduleTransfer, $schedulerResponseTransfer);
-
-        $this->assertInstanceOf(SchedulerResponseCollectionTransfer::class, $schedulerResponseTransfer);
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\SchedulerRequestTransfer
-     */
-    protected function createSchedulerTransfer(): SchedulerRequestTransfer
-    {
-        $testJobs = $this->getTestJobs();
-
-        return (new SchedulerRequestTransfer())
-            ->setJobs($testJobs)
-            ->setSchedulers(['test']);
+        return (new SchedulerScheduleTransfer())
+            ->addJob(
+                (new SchedulerJobTransfer())
+                    ->setName('DE__test')
+                    ->setStore('DE')
+                    ->setEnable(true)
+                    ->setSchedule('* * * * *')
+                    ->setPayload([])
+            )
+            ->addJob(
+                (new SchedulerJobTransfer())
+                    ->setName('DE__test1')
+                    ->setStore('DE')
+                    ->setEnable(true)
+                    ->setSchedule('* * * * *')
+                    ->setPayload([])
+            )
+            ->setIdScheduler('test')
+            ->setStore('DE');
     }
 
     /**
      * @return \Generated\Shared\Transfer\SchedulerResponseCollectionTransfer
      */
-    protected function createSchedulerResponseTransfer(): SchedulerResponseCollectionTransfer
+    protected function createSchedulerResponseCollectionTransfer(): SchedulerResponseCollectionTransfer
     {
         return new SchedulerResponseCollectionTransfer();
     }
@@ -134,15 +125,13 @@ class SchedulerJenkinsFacadeTest extends Unit
     protected function getSchedulerFacade(): SchedulerJenkinsFacadeInterface
     {
         return (new SchedulerJenkinsFacade())
-            ->setFactory($this->getSchedulerBusinessFactoryMock(new SchedulerResponseCollectionTransfer()));
+            ->setFactory($this->getSchedulerBusinessFactoryMock());
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SchedulerResponseCollectionTransfer $schedulerResponseTransfer
-     *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\SchedulerJenkins\Business\SchedulerJenkinsBusinessFactory
      */
-    protected function getSchedulerBusinessFactoryMock(SchedulerResponseCollectionTransfer $schedulerResponseTransfer)
+    protected function getSchedulerBusinessFactoryMock()
     {
         $schedulerJenkinsBusinessFactoryMock = $this->getMockBuilder(SchedulerJenkinsBusinessFactory::class)
             ->setMethods(
@@ -169,7 +158,7 @@ class SchedulerJenkinsFacadeTest extends Unit
 
         $schedulerJenkinsBusinessFactoryMock
             ->method('createJenkinsJobStatusUpdater')
-            ->willReturn($this->getJenkinsJobStatusUpdaterMock($schedulerResponseTransfer));
+            ->willReturn($this->getJenkinsJobStatusUpdaterMock());
 
         return $schedulerJenkinsBusinessFactoryMock;
     }
@@ -201,17 +190,27 @@ class SchedulerJenkinsFacadeTest extends Unit
 
         $schedulerJenkinsJobWriterMock
             ->method('createJenkinsJob')
-            ->willReturn('Job created');
+            ->willReturn($this->createSchedulerJobResponseTransfer('createJenkinsJob'));
 
         $schedulerJenkinsJobWriterMock
             ->method('updateJenkinsJob')
-            ->willReturn('Job updated');
+            ->willReturn($this->createSchedulerJobResponseTransfer('updateJenkinsJob'));
 
         $schedulerJenkinsJobWriterMock
             ->method('deleteJenkinsJob')
-            ->willReturn('Job deleted');
+            ->willReturn($this->createSchedulerJobResponseTransfer('deleteJenkinsJob'));
 
         return $schedulerJenkinsJobWriterMock;
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return \Generated\Shared\Transfer\SchedulerJobResponseTransfer
+     */
+    protected function createSchedulerJobResponseTransfer(string $name): SchedulerJobResponseTransfer
+    {
+        return (new SchedulerJobResponseTransfer())->setName($name);
     }
 
     /**
@@ -231,61 +230,20 @@ class SchedulerJenkinsFacadeTest extends Unit
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SchedulerResponseCollectionTransfer $schedulerResponseTransfer
-     *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\SchedulerJenkins\Business\JobStatusUpdater\JenkinsJobStatusUpdaterInterface
      */
-    protected function getJenkinsJobStatusUpdaterMock(SchedulerResponseCollectionTransfer $schedulerResponseTransfer)
+    protected function getJenkinsJobStatusUpdaterMock()
     {
         $schedulerJenkinsJobStatusUpdaterMock = $this->getMockBuilder(JenkinsJobStatusUpdater::class)
             ->disableOriginalConstructor()
             ->getMock();
 
         $schedulerJenkinsJobStatusUpdaterMock
-            ->method('updateAllJenkinsJobsStatus')
-            ->willReturn($schedulerResponseTransfer->addMessage('Updated all'));
-
-        $schedulerJenkinsJobStatusUpdaterMock
-            ->method('updateJenkinsJobStatusByJobsName')
-            ->willReturn($schedulerResponseTransfer->addMessage('Updated one'));
+            ->method('updateJenkinsJobStatus')
+            ->willReturn((new SchedulerResponseTransfer())
+                ->addSchedulerJobResponse($this->createSchedulerJobResponseTransfer('updateJenkinsJobStatus')));
 
         return $schedulerJenkinsJobStatusUpdaterMock;
-    }
-
-    /**
-     * @return array
-     */
-    protected function getTestJobs(): array
-    {
-        return [
-            "test" => [
-                "name" => "test",
-                "command" => "test",
-                "schedule" => "* * * * *",
-                "enable" => true,
-                "run_on_non_production" => true,
-                "request" => "///",
-                "store" => "DE",
-            ],
-            "test1" => [
-                "name" => "test1",
-                "command" => "test1",
-                "schedule" => "* * * * *",
-                "enable" => true,
-                "run_on_non_production" => true,
-                "request" => "///",
-                "store" => "DE",
-            ],
-            "test2" => [
-                "name" => "test2",
-                "command" => "test2",
-                "schedule" => "* * * * *",
-                "enable" => true,
-                "run_on_non_production" => true,
-                "request" => "///",
-                "store" => "DE",
-            ],
-        ];
     }
 
     /**
@@ -293,6 +251,6 @@ class SchedulerJenkinsFacadeTest extends Unit
      */
     protected function getExistingJobs(): array
     {
-        return ['test', 'test2'];
+        return ['DE__test', 'DE__test1'];
     }
 }

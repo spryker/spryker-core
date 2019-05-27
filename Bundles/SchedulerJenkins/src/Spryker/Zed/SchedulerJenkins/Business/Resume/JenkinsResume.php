@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\SchedulerJenkins\Business\Resume;
 
-use Generated\Shared\Transfer\SchedulerRequestTransfer;
-use Generated\Shared\Transfer\SchedulerResponseCollectionTransfer;
+use Generated\Shared\Transfer\SchedulerResponseTransfer;
+use Generated\Shared\Transfer\SchedulerScheduleTransfer;
 use Spryker\Zed\SchedulerJenkins\Business\JobStatusUpdater\JenkinsJobStatusUpdaterInterface;
 
 class JenkinsResume implements JenkinsResumeInterface
@@ -30,20 +30,15 @@ class JenkinsResume implements JenkinsResumeInterface
     }
 
     /**
-     * @param string $schedulerId
-     * @param \Generated\Shared\Transfer\SchedulerRequestTransfer $scheduleTransfer
-     * @param \Generated\Shared\Transfer\SchedulerResponseCollectionTransfer $schedulerResponseTransfer
+     * @param \Generated\Shared\Transfer\SchedulerScheduleTransfer $scheduleTransfer
      *
-     * @return \Generated\Shared\Transfer\SchedulerResponseCollectionTransfer
+     * @return \Generated\Shared\Transfer\SchedulerResponseTransfer
      */
-    public function resumeSchedulerJenkins(string $schedulerId, SchedulerRequestTransfer $scheduleTransfer, SchedulerResponseCollectionTransfer $schedulerResponseTransfer): SchedulerResponseCollectionTransfer
+    public function resumeSchedulerJenkins(SchedulerScheduleTransfer $scheduleTransfer): SchedulerResponseTransfer
     {
-        $schedulerJobNames = $scheduleTransfer->getJobNames();
-
-        if (!empty($schedulerJobNames)) {
-            return $this->jenkinsJobStatusUpdater->updateJenkinsJobStatusByJobsName($schedulerId, $scheduleTransfer, $schedulerResponseTransfer, static::RESUME_JOB_URL_TEMPLATE);
-        }
-
-        return $this->jenkinsJobStatusUpdater->updateAllJenkinsJobsStatus($schedulerId, $scheduleTransfer, $schedulerResponseTransfer, static::RESUME_JOB_URL_TEMPLATE);
+        return $this->jenkinsJobStatusUpdater->updateJenkinsJobStatus(
+            $scheduleTransfer,
+            static::RESUME_JOB_URL_TEMPLATE
+        );
     }
 }

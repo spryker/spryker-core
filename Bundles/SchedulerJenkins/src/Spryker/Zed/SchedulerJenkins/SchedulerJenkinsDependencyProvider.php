@@ -21,7 +21,7 @@ use Twig\Environment;
  */
 class SchedulerJenkinsDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const GUZZLE_CLIENT = 'GUZZLE_CLIENT';
+    public const CLIENT_GUZZLE = 'CLIENT_GUZZLE';
 
     public const TWIG_ENVIRONMENT = 'TWIG_ENVIRONMENT';
 
@@ -48,7 +48,7 @@ class SchedulerJenkinsDependencyProvider extends AbstractBundleDependencyProvide
      */
     protected function addGuzzleClient(Container $container): Container
     {
-        $container[static::GUZZLE_CLIENT] = function (Container $container) {
+        $container[static::CLIENT_GUZZLE] = function (Container $container) {
             return new SchedulerJenkinsToGuzzleBridge(new Client());
         };
 
