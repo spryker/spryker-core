@@ -6,7 +6,8 @@
   "require": {
     "php": ">=7.1",
     "spryker/cart": "^5.10.0",
-    "spryker/carts-rest-api-extension": "^1.1.0",
+    "spryker/carts-rest-api-extension": "^1.2.0",
+    "spryker/customer": "^6.0.4",
     "spryker/customers-rest-api-extension": "^1.2.0",
     "spryker/glue-application": "^1.18.0",
     "spryker/glue-application-extension": "^1.0.0",
@@ -14,7 +15,7 @@
     "spryker/persistent-cart": "^1.2.0",
     "spryker/propel-orm": "^1.0.0",
     "spryker/quote": "^2.5.0",
-    "spryker/store": "^1.9.0",
+    "spryker/store": "^1.9.1",
     "spryker/symfony": "^3.0.0",
     "spryker/uuid-behavior": "^1.0.0",
     "spryker/zed-request": "^3.6.0"
