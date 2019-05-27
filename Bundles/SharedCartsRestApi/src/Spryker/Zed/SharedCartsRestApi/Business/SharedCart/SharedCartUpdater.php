@@ -41,6 +41,7 @@ class SharedCartUpdater implements SharedCartUpdaterInterface
         /** @var \Generated\Shared\Transfer\ShareDetailTransfer $shareDetailTransfer */
         $shareDetailTransfer = $shareCartRequestTransfer->getShareDetails()->offsetGet(0);
 
+        $shareDetailTransfer->requireUuid();
         $quoteCompanyUserTransfer = $this->sharedCartFacade->findQuoteCompanyUserByUuid(
             (new QuoteCompanyUserTransfer())->setUuid($shareDetailTransfer->getUuid())
         );
