@@ -8,8 +8,8 @@
 namespace Spryker\Zed\Kernel\Persistence\Repository;
 
 use Generated\Shared\Transfer\FilterTransfer;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
-use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 class CriteriaBuilder implements CriteriaBuilderInterface
 {
