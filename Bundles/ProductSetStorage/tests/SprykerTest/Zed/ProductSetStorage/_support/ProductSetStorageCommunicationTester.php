@@ -14,6 +14,7 @@ use Generated\Shared\DataBuilder\ProductImageBuilder;
 use Generated\Shared\DataBuilder\ProductSetBuilder;
 use Generated\Shared\Transfer\ProductImageTransfer;
 use Generated\Shared\Transfer\ProductSetTransfer;
+use Spryker\Zed\ProductSet\Business\ProductSetFacadeInterface;
 
 /**
  * Inherited Methods
@@ -92,7 +93,7 @@ class ProductSetStorageCommunicationTester extends Actor
     /**
      * @return \Spryker\Zed\ProductSet\Business\ProductSetFacadeInterface
      */
-    protected function getProductSetFacade()
+    protected function getProductSetFacade(): ProductSetFacadeInterface
     {
         return $this->getLocator()->productSet()->facade();
     }

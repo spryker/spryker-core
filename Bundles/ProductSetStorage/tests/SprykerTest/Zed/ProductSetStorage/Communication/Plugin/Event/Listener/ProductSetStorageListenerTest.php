@@ -387,7 +387,7 @@ class ProductSetStorageListenerTest extends Unit
     /**
      * @param int $idProductSet
      *
-     * @return array
+     * @return array[]
      */
     protected function getProductSetImages(int $idProductSet): array
     {
