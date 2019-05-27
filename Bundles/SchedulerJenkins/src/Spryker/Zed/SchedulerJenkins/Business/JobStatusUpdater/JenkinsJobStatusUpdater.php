@@ -59,7 +59,7 @@ class JenkinsJobStatusUpdater implements JenkinsJobStatusUpdaterInterface
         $existingJobs = $this->jenkinsJobReader->getExistingJobs($scheduleTransfer->getIdScheduler());
 
         $schedulerResponseTransfer = (new SchedulerResponseTransfer())
-            ->setIdScheduler($scheduleTransfer->getIdScheduler());
+            ->setSchedule($scheduleTransfer);
 
         if (empty($existingJobs)) {
             return $schedulerResponseTransfer;
@@ -69,12 +69,13 @@ class JenkinsJobStatusUpdater implements JenkinsJobStatusUpdaterInterface
             if (!in_array($schedulerJobTransfer->getName(), $existingJobs)) {
                 continue;
             }
-            $schedulerJobResponseTransfer = $this->jenkinsJobWriter->updateJenkinsJobStatus(
+            $schedulerJobResponseMessage = $this->jenkinsJobWriter->updateJenkinsJobStatus(
                 $scheduleTransfer->getIdScheduler(),
                 $schedulerJobTransfer->getName(),
                 $updateJobUrlTemplate
             );
-            $schedulerResponseTransfer->addSchedulerJobResponse($schedulerJobResponseTransfer);
+
+            dump($schedulerJobResponseMessage);
         }
 
         return $schedulerResponseTransfer;

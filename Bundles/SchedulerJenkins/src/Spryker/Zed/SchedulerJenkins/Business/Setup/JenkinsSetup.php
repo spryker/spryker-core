@@ -53,15 +53,12 @@ class JenkinsSetup implements JenkinsSetupInterface
      */
     public function setup(SchedulerScheduleTransfer $scheduleTransfer): SchedulerResponseTransfer
     {
-        $idScheduler = $scheduleTransfer->getIdScheduler();
-        $existingJobs = $this->jenkinsJobReader->getExistingJobs($idScheduler);
-
+        $existingJobs = $this->jenkinsJobReader->getExistingJobs($scheduleTransfer->getIdScheduler());
         $updateOrDeleteJobsOutputMessages = $this->updateOrDeleteExistingJobs($scheduleTransfer, $existingJobs);
         $createJobsOutputMessages = $this->createJobDefinitions($scheduleTransfer, $existingJobs);
 
         return (new SchedulerResponseTransfer())
-            ->setIdScheduler($scheduleTransfer->getIdScheduler())
-            ->setSchedulerJobResponses(new ArrayObject(array_merge($updateOrDeleteJobsOutputMessages, $createJobsOutputMessages)));
+            ->setSchedule($scheduleTransfer);
     }
 
     /**

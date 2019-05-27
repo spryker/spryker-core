@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Scheduler\Business;
 
 use Generated\Shared\Transfer\SchedulerFilterTransfer;
-use Generated\Shared\Transfer\SchedulerRequestTransfer;
 use Generated\Shared\Transfer\SchedulerResponseCollectionTransfer;
 use Generated\Shared\Transfer\SchedulerScheduleTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;

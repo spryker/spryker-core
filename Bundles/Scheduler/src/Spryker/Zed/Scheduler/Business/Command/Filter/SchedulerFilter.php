@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Scheduler\Business\Command\Filter;
 
 use Generated\Shared\Transfer\SchedulerFilterTransfer;
-use Generated\Shared\Transfer\SchedulerRequestTransfer;
 use Spryker\Zed\Scheduler\SchedulerConfig;
 
 class SchedulerFilter implements SchedulerFilterInterface
@@ -40,8 +39,8 @@ class SchedulerFilter implements SchedulerFilterInterface
             return $enabledSchedulers;
         }
 
-        $chosenSchedulers = $schedulerFilterTransfer === null ? $allSchedulerKeys : $schedulerFilterTransfer->getSchedulers();
+//        $chosenSchedulers = $schedulerFilterTransfer->getSchedulers() === null ? $allSchedulerKeys : $schedulerFilterTransfer->getSchedulers();
 
-        return array_intersect($chosenSchedulers, $enabledSchedulers, $allSchedulerKeys);
+        return array_intersect($schedulerFilterTransfer->getSchedulers(), $enabledSchedulers, $allSchedulerKeys);
     }
 }

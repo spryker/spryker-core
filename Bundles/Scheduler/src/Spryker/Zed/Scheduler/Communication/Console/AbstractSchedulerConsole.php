@@ -7,14 +7,13 @@
 
 namespace Spryker\Zed\Scheduler\Communication\Console;
 
-use Generated\Shared\Transfer\SchedulerFilterTransfer;
-use Generated\Shared\Transfer\SchedulerRequestTransfer;
 use Generated\Shared\Transfer\SchedulerResponseCollectionTransfer;
 use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\Scheduler\Business\SchedulerFacadeInterface getFacade()
+ * @method \Spryker\Zed\Scheduler\Communication\SchedulerCommunicationFactory getFactory()
  */
 class AbstractSchedulerConsole extends Console
 {

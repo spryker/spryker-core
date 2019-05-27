@@ -47,7 +47,7 @@ class JenkinsJobClean implements JenkinsJobCleanInterface
         $existingJobs = $this->jenkinsJobReader->getExistingJobs($idScheduler);
 
         $schedulerResponseTransfer = (new SchedulerResponseTransfer())
-            ->setIdScheduler($idScheduler);
+            ->setSchedule($scheduleTransfer);
 
         if (empty($existingJobs)) {
             return $schedulerResponseTransfer;

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\SchedulerJenkins\Business\JobWriter;
 
 use Generated\Shared\Transfer\SchedulerJobResponseTransfer;
+use GuzzleHttp\Exception\ClientException;
 use Spryker\Zed\SchedulerJenkins\Business\Api\JenkinsApiInterface;
 use Spryker\Zed\SchedulerJenkins\SchedulerJenkinsConfig;
 
@@ -96,16 +97,18 @@ class JenkinsJobWriter implements JenkinsJobWriterInterface
      * @param string $name
      * @param string $urlUpdateJobTemplate
      *
-     * @return \Generated\Shared\Transfer\SchedulerJobResponseTransfer
+     * @throws \Spryker\Zed\SchedulerJenkins\Business\Exception\JenkinsBaseUrlNotFound
+     *
+     * @return string
      */
-    public function updateJenkinsJobStatus(string $schedulerId, string $name, string $urlUpdateJobTemplate): SchedulerJobResponseTransfer
+    public function updateJenkinsJobStatus(string $schedulerId, string $name, string $urlUpdateJobTemplate): string
     {
-        $response = $this->jenkinsApi->executePostRequest(
+        $responseMessage = $this->jenkinsApi->executePostRequest(
             $schedulerId,
             sprintf($urlUpdateJobTemplate, $name)
         );
 
-        return $this->createSchedulerJobResponseTransfer($name, $response->getStatusCode());
+        return $responseMessage;
     }
 
     /**

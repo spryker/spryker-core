@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Scheduler\Communication\Plugin\Scheduler;
 
 use Generated\Shared\Transfer\SchedulerFilterTransfer;
-use Generated\Shared\Transfer\SchedulerRequestTransfer;
 use Generated\Shared\Transfer\SchedulerScheduleTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SchedulerExtension\Dependency\Plugin\ScheduleReaderPluginInterface;
@@ -16,6 +15,7 @@ use Spryker\Zed\SchedulerExtension\Dependency\Plugin\ScheduleReaderPluginInterfa
 /**
  * @method \Spryker\Zed\Scheduler\Business\SchedulerFacadeInterface getFacade()
  * @method \Spryker\Zed\Scheduler\SchedulerConfig getConfig()
+ * @method \Spryker\Zed\Scheduler\Communication\SchedulerCommunicationFactory getFactory()
  */
 class PhpScheduleReaderPlugin extends AbstractPlugin implements ScheduleReaderPluginInterface
 {

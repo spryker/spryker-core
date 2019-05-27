@@ -16,6 +16,7 @@ use Twig\Environment;
 /**
  * @method \Spryker\Zed\Scheduler\SchedulerConfig getConfig()
  * @method \Spryker\Zed\Scheduler\Business\SchedulerFacadeInterface getFacade()
+ * @method \Spryker\Zed\Scheduler\Communication\SchedulerCommunicationFactory getFactory()
  */
 class SchedulerTwigServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {

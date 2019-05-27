@@ -42,7 +42,9 @@ interface JenkinsJobWriterInterface
      * @param string $name
      * @param string $urlUpdateJobTemplate
      *
-     * @return \Generated\Shared\Transfer\SchedulerJobResponseTransfer
+     * @throws \Spryker\Zed\SchedulerJenkins\Business\Exception\JenkinsBaseUrlNotFound
+     *
+     * @return string
      */
-    public function updateJenkinsJobStatus(string $schedulerId, string $name, string $urlUpdateJobTemplate): SchedulerJobResponseTransfer;
+    public function updateJenkinsJobStatus(string $schedulerId, string $name, string $urlUpdateJobTemplate): string;
 }

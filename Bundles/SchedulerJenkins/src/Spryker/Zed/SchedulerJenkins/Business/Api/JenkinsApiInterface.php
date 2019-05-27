@@ -28,7 +28,7 @@ interface JenkinsApiInterface
      *
      * @throws \Spryker\Zed\SchedulerJenkins\Business\Exception\JenkinsBaseUrlNotFound
      *
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return string
      */
-    public function executePostRequest(string $schedulerId, string $urlPath, string $xmlTemplate = ''): ResponseInterface;
+    public function executePostRequest(string $schedulerId, string $urlPath, string $xmlTemplate = ''): string;
 }

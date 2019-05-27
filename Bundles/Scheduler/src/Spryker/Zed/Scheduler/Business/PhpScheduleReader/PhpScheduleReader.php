@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Scheduler\Business\PhpScheduleReader;
 
 use Generated\Shared\Transfer\SchedulerFilterTransfer;
-use Generated\Shared\Transfer\SchedulerRequestTransfer;
 use Generated\Shared\Transfer\SchedulerScheduleTransfer;
 use Spryker\Zed\Scheduler\Business\Exception\FileIsNotAccessibleException;
 use Spryker\Zed\Scheduler\Business\PhpScheduleReader\Mapper\PhpScheduleMapperInterface;

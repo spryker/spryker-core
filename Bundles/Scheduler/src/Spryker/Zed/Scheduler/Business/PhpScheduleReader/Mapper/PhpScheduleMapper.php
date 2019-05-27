@@ -9,7 +9,6 @@ namespace Spryker\Zed\Scheduler\Business\PhpScheduleReader\Mapper;
 
 use Generated\Shared\Transfer\SchedulerFilterTransfer;
 use Generated\Shared\Transfer\SchedulerJobTransfer;
-use Generated\Shared\Transfer\SchedulerRequestTransfer;
 use Generated\Shared\Transfer\SchedulerScheduleTransfer;
 use Spryker\Zed\Scheduler\Business\PhpScheduleReader\Filter\JobsFilterInterface;
 use Spryker\Zed\Scheduler\Dependency\Store\SchedulerToStoreInterface;
