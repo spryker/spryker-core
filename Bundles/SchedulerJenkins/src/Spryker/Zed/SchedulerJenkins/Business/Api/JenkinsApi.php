@@ -7,18 +7,19 @@
 
 namespace Spryker\Zed\SchedulerJenkins\Business\Api;
 
-use GuzzleHttp\Exception\BadResponseException;
-use GuzzleHttp\Exception\ClientException;
-use GuzzleHttp\Exception\ServerException;
 use Psr\Http\Message\ResponseInterface;
 use Spryker\Shared\SchedulerJenkins\SchedulerJenkinsConfig as SharedSchedulerJenkinsConfig;
-use Spryker\Zed\SchedulerJenkins\Business\Exception\JenkinsBaseUrlNotFound;
+use Spryker\Zed\SchedulerJenkins\Business\Api\Exception\JenkinsBaseUrlNotFound;
 use Spryker\Zed\SchedulerJenkins\Dependency\Guzzle\SchedulerJenkinsToGuzzleInterface;
 use Spryker\Zed\SchedulerJenkins\SchedulerJenkinsConfig;
 
 class JenkinsApi implements JenkinsApiInterface
 {
     protected const JENKINS_URL_API_CSRF_TOKEN = 'crumbIssuer/api/xml?xpath=concat(//crumbRequestField,":",//crumb)';
+
+    protected const HEADERS_KEY = 'headers';
+    protected const BODY_KEY = 'body';
+    protected const AUTH_KEY = 'auth';
 
     /**
      * @var \Spryker\Zed\SchedulerJenkins\Dependency\Guzzle\SchedulerJenkinsToGuzzleInterface
@@ -61,25 +62,15 @@ class JenkinsApi implements JenkinsApiInterface
      * @param string $urlPath
      * @param string $xmlTemplate
      *
-     * @throws \Spryker\Zed\SchedulerJenkins\Business\Exception\JenkinsBaseUrlNotFound
-     *
-     * @return string
+     * @return \Psr\Http\Message\ResponseInterface
      */
-    public function executePostRequest(string $schedulerId, string $urlPath, string $xmlTemplate = ''): string
+    public function executePostRequest(string $schedulerId, string $urlPath, string $xmlTemplate = ''): ResponseInterface
     {
-        try {
-            $requestUrl = $this->getJenkinsBaseUrlBySchedulerId($schedulerId, $urlPath);
-            $requestOptions = $this->getRequestOptions($schedulerId, $xmlTemplate);
-            $response = $this->client->post($requestUrl, $requestOptions);
-        } catch (ClientException $clientException) {
-            return $clientException->getResponse()->getBody()->getContents();
-        } catch (ServerException $serverException) {
-            return $serverException->getResponse()->getBody()->getContents();
-        } catch (BadResponseException $badResponseException) {
-            return $badResponseException->getResponse()->getBody()->getContents();
-        }
+        $requestUrl = $this->getJenkinsBaseUrlBySchedulerId($schedulerId, $urlPath);
+        $requestOptions = $this->getRequestOptions($schedulerId, $xmlTemplate);
+        $response = $this->client->post($requestUrl, $requestOptions);
 
-        return $response->getBody()->getContents();
+        return $response;
     }
 
     /**
@@ -91,9 +82,9 @@ class JenkinsApi implements JenkinsApiInterface
     protected function getRequestOptions(string $schedulerId, string $xmlTemplate = ''): array
     {
         $requestOptions = [
-            'headers' => $this->getHeaders($xmlTemplate),
-            'body' => $xmlTemplate,
-            'auth' => $this->getJenkinsAuthCredentials($schedulerId),
+            static::HEADERS_KEY => $this->getHeaders($xmlTemplate),
+            static::BODY_KEY => $xmlTemplate,
+            static::AUTH_KEY => $this->getJenkinsAuthCredentials($schedulerId),
         ];
 
         return $requestOptions;
@@ -153,7 +144,7 @@ class JenkinsApi implements JenkinsApiInterface
      * @param string $schedulerId
      * @param string $urlPath
      *
-     * @throws \Spryker\Zed\SchedulerJenkins\Business\Exception\JenkinsBaseUrlNotFound
+     * @throws \Spryker\Zed\SchedulerJenkins\Business\Api\Exception\JenkinsBaseUrlNotFound
      *
      * @return string
      */

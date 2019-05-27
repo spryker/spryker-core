@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\SchedulerJenkins\Business\JobReader;
+namespace Spryker\Zed\SchedulerJenkins\Business\Reader;
 
 use Spryker\Zed\SchedulerJenkins\Business\Api\JenkinsApiInterface;
 use Spryker\Zed\SchedulerJenkins\Dependency\Service\SchedulerJenkinsToUtilEncodingServiceInterface;

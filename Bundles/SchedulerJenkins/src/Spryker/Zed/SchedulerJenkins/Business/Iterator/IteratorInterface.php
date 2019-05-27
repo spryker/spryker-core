@@ -5,17 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\SchedulerJenkins\Business\JobStatusUpdater\Resume;
+namespace Spryker\Zed\SchedulerJenkins\Business\Iterator;
 
 use Generated\Shared\Transfer\SchedulerResponseTransfer;
 use Generated\Shared\Transfer\SchedulerScheduleTransfer;
 
-interface JenkinsResumeInterface
+interface IteratorInterface
 {
     /**
      * @param \Generated\Shared\Transfer\SchedulerScheduleTransfer $scheduleTransfer
      *
      * @return \Generated\Shared\Transfer\SchedulerResponseTransfer
      */
-    public function resumeSchedulerJenkins(SchedulerScheduleTransfer $scheduleTransfer): SchedulerResponseTransfer;
+    public function iterate(SchedulerScheduleTransfer $scheduleTransfer): SchedulerResponseTransfer;
 }

@@ -5,12 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\SchedulerJenkins\Business\JobReader;
+namespace Spryker\Zed\SchedulerJenkins\Business\Reader;
 
 interface JenkinsJobReaderInterface
 {
     /**
      * @param string $idScheduler
+     *
+     * @throws \Spryker\Zed\SchedulerJenkins\Business\Api\Exception\JenkinsBaseUrlNotFound
      *
      * @return array
      */

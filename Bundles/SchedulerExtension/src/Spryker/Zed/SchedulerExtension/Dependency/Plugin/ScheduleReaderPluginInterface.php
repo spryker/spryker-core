@@ -8,7 +8,6 @@
 namespace Spryker\Zed\SchedulerExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\SchedulerFilterTransfer;
-use Generated\Shared\Transfer\SchedulerRequestTransfer;
 use Generated\Shared\Transfer\SchedulerScheduleTransfer;
 
 interface ScheduleReaderPluginInterface

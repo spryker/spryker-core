@@ -17,6 +17,12 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class AbstractSchedulerConsole extends Console
 {
+    protected const OUTPUT_SUCCESS_COLOR = 'green';
+    protected const OUTPUT_ERROR_COLOR = 'red';
+
+    protected const OUTPUT_SUCCESS_MESSAGE = 'OK';
+    protected const OUTPUT_ERROR_MESSAGE = 'ERROR';
+
     /**
      * @param \Generated\Shared\Transfer\SchedulerResponseCollectionTransfer $schedulerResponseCollectionTransfer
      * @param \Symfony\Component\Console\Output\OutputInterface $output
@@ -28,9 +34,12 @@ class AbstractSchedulerConsole extends Console
         OutputInterface $output
     ): void {
         foreach ($schedulerResponseCollectionTransfer->getResponses() as $schedulerResponseTransfer) {
-            $output->writeln(sprintf("<fg=green;options=bold>Scheduler Name: %s</>", $schedulerResponseTransfer->getIdScheduler()));
-            foreach ($schedulerResponseTransfer->getSchedulerJobResponses() as $schedulerJobResponseTransfer) {
-                $output->writeln(sprintf('<fg=green>%s: %s</>', $schedulerJobResponseTransfer->getName(), $schedulerJobResponseTransfer->getStatus()));
+            $status = $schedulerResponseTransfer->getStatus();
+            $outputColor = $status ? static::OUTPUT_SUCCESS_COLOR : static::OUTPUT_ERROR_COLOR;
+            $output->writeln(sprintf("<fg=$outputColor;options=bold>Scheduler Name: %s</>", $schedulerResponseTransfer->getSchedule()->getIdScheduler()));
+            $output->writeln(sprintf("<fg=$outputColor;options=bold>Scheduler Status: %s</>", $status ? static::OUTPUT_SUCCESS_MESSAGE : static::OUTPUT_ERROR_MESSAGE));
+            if ($schedulerResponseTransfer->getMessage() !== null) {
+                $output->writeln($schedulerResponseTransfer->getMessage());
             }
         }
     }

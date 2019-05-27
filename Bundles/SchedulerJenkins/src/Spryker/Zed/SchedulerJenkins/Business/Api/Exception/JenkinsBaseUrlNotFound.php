@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\SchedulerJenkins\Business\Exception;
+namespace Spryker\Zed\SchedulerJenkins\Business\Api\Exception;
 
 use Exception;
 

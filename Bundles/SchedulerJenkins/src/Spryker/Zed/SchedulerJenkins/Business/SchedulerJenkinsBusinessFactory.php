@@ -10,20 +10,17 @@ namespace Spryker\Zed\SchedulerJenkins\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\SchedulerJenkins\Business\Api\JenkinsApi;
 use Spryker\Zed\SchedulerJenkins\Business\Api\JenkinsApiInterface;
-use Spryker\Zed\SchedulerJenkins\Business\Clean\JenkinsJobClean;
-use Spryker\Zed\SchedulerJenkins\Business\Clean\JenkinsJobCleanInterface;
-use Spryker\Zed\SchedulerJenkins\Business\JobReader\JenkinsJobReader;
-use Spryker\Zed\SchedulerJenkins\Business\JobReader\JenkinsJobReaderInterface;
-use Spryker\Zed\SchedulerJenkins\Business\JobStatusUpdater\JenkinsJobStatusUpdater;
-use Spryker\Zed\SchedulerJenkins\Business\JobStatusUpdater\JenkinsJobStatusUpdaterInterface;
-use Spryker\Zed\SchedulerJenkins\Business\JobStatusUpdater\Resume\JenkinsResume;
-use Spryker\Zed\SchedulerJenkins\Business\JobStatusUpdater\Resume\JenkinsResumeInterface;
-use Spryker\Zed\SchedulerJenkins\Business\JobStatusUpdater\Suspend\JenkinsSuspend;
-use Spryker\Zed\SchedulerJenkins\Business\JobStatusUpdater\Suspend\JenkinsSuspendInterface;
-use Spryker\Zed\SchedulerJenkins\Business\JobWriter\JenkinsJobWriter;
-use Spryker\Zed\SchedulerJenkins\Business\JobWriter\JenkinsJobWriterInterface;
-use Spryker\Zed\SchedulerJenkins\Business\Setup\JenkinsSetup;
-use Spryker\Zed\SchedulerJenkins\Business\Setup\JenkinsSetupInterface;
+use Spryker\Zed\SchedulerJenkins\Business\Executor\CreateExecutor;
+use Spryker\Zed\SchedulerJenkins\Business\Executor\DeleteExecutor;
+use Spryker\Zed\SchedulerJenkins\Business\Executor\DisableExecutor;
+use Spryker\Zed\SchedulerJenkins\Business\Executor\EnableExecutor;
+use Spryker\Zed\SchedulerJenkins\Business\Executor\ExecutorInterface;
+use Spryker\Zed\SchedulerJenkins\Business\Executor\NullExecutor;
+use Spryker\Zed\SchedulerJenkins\Business\Executor\UpdateExecutor;
+use Spryker\Zed\SchedulerJenkins\Business\Iterator\Iterator;
+use Spryker\Zed\SchedulerJenkins\Business\Iterator\IteratorInterface;
+use Spryker\Zed\SchedulerJenkins\Business\Reader\JenkinsJobReader;
+use Spryker\Zed\SchedulerJenkins\Business\Reader\JenkinsJobReaderInterface;
 use Spryker\Zed\SchedulerJenkins\Business\TemplateGenerator\JenkinsJobTemplateGeneratorInterface;
 use Spryker\Zed\SchedulerJenkins\Business\TemplateGenerator\XmlJenkinsJobTemplateGenerator;
 use Spryker\Zed\SchedulerJenkins\Dependency\Guzzle\SchedulerJenkinsToGuzzleInterface;
@@ -37,36 +34,72 @@ use Spryker\Zed\SchedulerJenkins\SchedulerJenkinsDependencyProvider;
 class SchedulerJenkinsBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\SchedulerJenkins\Business\Setup\JenkinsSetupInterface
+     * @return \Spryker\Zed\SchedulerJenkins\Business\Api\JenkinsApiInterface
      */
-    public function createSchedulerJenkinsSetup(): JenkinsSetupInterface
+    public function createJenkinsApi(): JenkinsApiInterface
     {
-        return new JenkinsSetup(
-            $this->createJenkinsJobReader(),
-            $this->createJenkinsJobWriter(),
-            $this->createXmkJenkinsJobTemplateGenerator()
+        return new JenkinsApi(
+            $this->getGuzzleClient(),
+            $this->getConfig()
         );
     }
 
     /**
-     * @return \Spryker\Zed\SchedulerJenkins\Business\JobReader\JenkinsJobReaderInterface
+     * @return \Spryker\Zed\SchedulerJenkins\Business\Iterator\IteratorInterface
+     */
+    public function createSchedulerJenkinsSetup(): IteratorInterface
+    {
+        return new Iterator(
+            $this->createJenkinsJobReader(),
+            $this->createUpdateExecutor(),
+            $this->createCreateExecutor()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\SchedulerJenkins\Business\Iterator\IteratorInterface
+     */
+    public function createSchedulerJenkinsClean(): IteratorInterface
+    {
+        return new Iterator(
+            $this->createJenkinsJobReader(),
+            $this->createDeleteExecutor(),
+            $this->createNullExecutor()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\SchedulerJenkins\Business\Iterator\IteratorInterface
+     */
+    public function createSchedulerJenkinsEnable(): IteratorInterface
+    {
+        return new Iterator(
+            $this->createJenkinsJobReader(),
+            $this->createEnableExecutor(),
+            $this->createNullExecutor()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\SchedulerJenkins\Business\Iterator\IteratorInterface
+     */
+    public function createSchedulerJenkinsDisable(): IteratorInterface
+    {
+        return new Iterator(
+            $this->createJenkinsJobReader(),
+            $this->createDisableExecutor(),
+            $this->createNullExecutor()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\SchedulerJenkins\Business\Reader\JenkinsJobReaderInterface
      */
     public function createJenkinsJobReader(): JenkinsJobReaderInterface
     {
         return new JenkinsJobReader(
             $this->createJenkinsApi(),
             $this->getUtilEncodingService(),
-            $this->getConfig()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\SchedulerJenkins\Business\JobWriter\JenkinsJobWriterInterface
-     */
-    public function createJenkinsJobWriter(): JenkinsJobWriterInterface
-    {
-        return new JenkinsJobWriter(
-            $this->createJenkinsApi(),
             $this->getConfig()
         );
     }
@@ -83,57 +116,63 @@ class SchedulerJenkinsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\SchedulerJenkins\Business\JobStatusUpdater\Resume\JenkinsResumeInterface
+     * @return \Spryker\Zed\SchedulerJenkins\Business\Executor\ExecutorInterface
      */
-    public function createJenkinsResume(): JenkinsResumeInterface
+    public function createCreateExecutor(): ExecutorInterface
     {
-        return new JenkinsResume(
-            $this->createJenkinsJobStatusUpdater()
+        return new CreateExecutor(
+            $this->createJenkinsApi(),
+            $this->createXmkJenkinsJobTemplateGenerator()
         );
     }
 
     /**
-     * @return \Spryker\Zed\SchedulerJenkins\Business\JobStatusUpdater\Suspend\JenkinsSuspendInterface
+     * @return \Spryker\Zed\SchedulerJenkins\Business\Executor\ExecutorInterface
      */
-    public function createJenkinsSuspend(): JenkinsSuspendInterface
+    public function createUpdateExecutor(): ExecutorInterface
     {
-        return new JenkinsSuspend(
-            $this->createJenkinsJobStatusUpdater()
+        return new UpdateExecutor(
+            $this->createJenkinsApi(),
+            $this->createXmkJenkinsJobTemplateGenerator()
         );
     }
 
     /**
-     * @return \Spryker\Zed\SchedulerJenkins\Business\Clean\JenkinsJobCleanInterface
+     * @return \Spryker\Zed\SchedulerJenkins\Business\Executor\ExecutorInterface
      */
-    public function createJenkinsJobClean(): JenkinsJobCleanInterface
+    public function createDeleteExecutor(): ExecutorInterface
     {
-        return new JenkinsJobClean(
-            $this->createJenkinsJobReader(),
-            $this->createJenkinsJobWriter()
+        return new DeleteExecutor(
+            $this->createJenkinsApi()
         );
     }
 
     /**
-     * @return \Spryker\Zed\SchedulerJenkins\Business\JobStatusUpdater\JenkinsJobStatusUpdaterInterface
+     * @return \Spryker\Zed\SchedulerJenkins\Business\Executor\ExecutorInterface
      */
-    public function createJenkinsJobStatusUpdater(): JenkinsJobStatusUpdaterInterface
+    public function createEnableExecutor(): ExecutorInterface
     {
-        return new JenkinsJobStatusUpdater(
-            $this->createJenkinsJobReader(),
-            $this->createJenkinsJobWriter(),
-            $this->getConfig()
+        return new EnableExecutor(
+            $this->createJenkinsApi()
         );
     }
 
     /**
-     * @return \Spryker\Zed\SchedulerJenkins\Business\Api\JenkinsApiInterface
+     * @return \Spryker\Zed\SchedulerJenkins\Business\Executor\ExecutorInterface
      */
-    public function createJenkinsApi(): JenkinsApiInterface
+    public function createDisableExecutor(): ExecutorInterface
     {
-        return new JenkinsApi(
-            $this->getGuzzleClient(),
-            $this->getConfig()
+        return new DisableExecutor(
+            $this->createJenkinsApi()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\SchedulerJenkins\Business\Executor\ExecutorInterface
+     */
+    public function createNullExecutor(): ExecutorInterface
+    {
+        return new NullExecutor();
     }
 
     /**
