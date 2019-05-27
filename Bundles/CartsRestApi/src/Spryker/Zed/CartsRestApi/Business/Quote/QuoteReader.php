@@ -62,9 +62,7 @@ class QuoteReader implements QuoteReaderInterface
         $quoteResponseTransfer = $this->quoteFacade->findQuoteByUuid($quoteTransfer);
         $quoteResponseTransfer->getQuoteTransfer()->setCustomer($quoteTransfer->getCustomer());
 
-        if (!$quoteResponseTransfer->getIsSuccessful()
-            || $quoteTransfer->getCustomerReference() !== $quoteResponseTransfer->getQuoteTransfer()->getCustomerReference()
-        ) {
+        if (!$quoteResponseTransfer->getIsSuccessful()) {
             $quoteResponseTransfer
                 ->setIsSuccessful(false)
                 ->addError((new QuoteErrorTransfer())->setErrorIdentifier(CartsRestApiSharedConfig::ERROR_IDENTIFIER_CART_NOT_FOUND));
