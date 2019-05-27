@@ -23,6 +23,9 @@ class PriceProductScheduleGuiConfig
     public const KEY_INCLUDED_FROM = 'from_included';
     public const KEY_INCLUDED_TO = 'to_included';
 
+    /**
+     * @return array
+     */
     public function getImportFileToTransferFieldsMap(): array
     {
         return [
