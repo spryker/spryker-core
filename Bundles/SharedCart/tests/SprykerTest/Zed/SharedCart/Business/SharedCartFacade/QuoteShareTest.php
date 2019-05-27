@@ -175,14 +175,14 @@ class QuoteShareTest extends Unit
             QuoteTransfer::CUSTOMER => $ownerCustomerTransfer,
             QuoteTransfer::STORE => $storeTransfer,
         ]);
-        $spyQuotePermissionGroup = $this->tester->haveQuotePermissionGroup(
+        $spyQuotePermissionGroupEntityTransfer = $this->tester->haveQuotePermissionGroup(
             static::READ_ONLY,
             [ReadSharedCartPermissionPlugin::KEY]
         );
         $this->tester->haveQuoteCompanyUser(
             $companyUserTransfer,
             $quoteTransfer,
-            $spyQuotePermissionGroup
+            $spyQuotePermissionGroupEntityTransfer
         );
 
         // Act
@@ -199,10 +199,10 @@ class QuoteShareTest extends Unit
         $quoteTransfer = $quoteCollectionTransfer->getQuotes()->offsetGet(0);
         $this->assertNotNull($quoteTransfer->getQuotePermissionGroup());
         $this->assertEquals(
-            $spyQuotePermissionGroup->getIdQuotePermissionGroup(),
+            $spyQuotePermissionGroupEntityTransfer->getIdQuotePermissionGroup(),
             $quoteTransfer->getQuotePermissionGroup()->getIdQuotePermissionGroup()
         );
-        $this->assertEquals($spyQuotePermissionGroup->getName(), $quoteTransfer->getQuotePermissionGroup()->getName());
+        $this->assertEquals($spyQuotePermissionGroupEntityTransfer->getName(), $quoteTransfer->getQuotePermissionGroup()->getName());
     }
 
     /**
