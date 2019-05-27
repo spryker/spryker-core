@@ -14,8 +14,7 @@ interface SalesMerchantConnectorFacadeInterface
 {
     /**
      * Specification:
-     * - Adds merchant order reference to sales order item based on config string.
-     * - If there is no fkMerchant in ItemTransfer, returns $salesOrderItemEntity without changes
+     * - TODO: Update
      *
      * @api
      *

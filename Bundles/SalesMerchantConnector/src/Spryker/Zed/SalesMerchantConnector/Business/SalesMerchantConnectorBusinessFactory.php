@@ -8,8 +8,8 @@
 namespace Spryker\Zed\SalesMerchantConnector\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\SalesMerchantConnector\Business\MerchantOrderReference\OrderItemReferences;
-use Spryker\Zed\SalesMerchantConnector\Business\MerchantOrderReference\OrderItemReferencesInterface;
+use Spryker\Zed\SalesMerchantConnector\Business\Expander\OrderItemExpander;
+use Spryker\Zed\SalesMerchantConnector\Business\Expander\OrderItemExpanderInterface;
 
 /**
  * @method \Spryker\Zed\SalesMerchantConnector\SalesMerchantConnectorConfig getConfig()
@@ -17,10 +17,10 @@ use Spryker\Zed\SalesMerchantConnector\Business\MerchantOrderReference\OrderItem
 class SalesMerchantConnectorBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\SalesMerchantConnector\Business\MerchantOrderReference\OrderItemReferencesInterface
+     * @return \Spryker\Zed\SalesMerchantConnector\Business\Expander\OrderItemExpanderInterface
      */
-    public function createOrderItemReference(): OrderItemReferencesInterface
+    public function createOrderItemExpander(): OrderItemExpanderInterface
     {
-        return new OrderItemReferences();
+        return new OrderItemExpander();
     }
 }

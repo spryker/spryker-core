@@ -18,15 +18,15 @@
             <index-column name="fk_product_abstract"/>
         </index>
 
-        <foreign-key name="spy_product_abstract_merchant-fk_merchant" foreignTable="spy_merchant" onDelete="CASCADE" phpName="Merchant">
+        <foreign-key name="spy_product_abstract_merchant-fk_merchant" foreignTable="spy_merchant" phpName="Merchant">
             <reference local="fk_merchant" foreign="id_merchant"/>
         </foreign-key>
 
-        <foreign-key name="spy_product_abstract_merchant-fk_product_abstract" foreignTable="spy_product_abstract" onDelete="CASCADE" phpName="ProductAbstract">
+        <foreign-key name="spy_product_abstract_merchant-fk_product_abstract" foreignTable="spy_product_abstract" phpName="ProductAbstract">
             <reference local="fk_product_abstract" foreign="id_product_abstract"/>
         </foreign-key>
 
-        <unique name="fk_merchant-fk_product_abstract">
+        <unique name="spy_product_abstract_merchant-fk_product_abstract">
             <unique-column name="fk_product_abstract"/>
         </unique>
 

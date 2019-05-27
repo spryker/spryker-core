@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\SalesMerchantConnector\Business\MerchantOrderReference;
+namespace Spryker\Zed\SalesMerchantConnector\Business\Expander;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
 
-interface OrderItemReferencesInterface
+interface OrderItemExpanderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer $salesOrderItemEntity
@@ -18,7 +18,7 @@ interface OrderItemReferencesInterface
      *
      * @return \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer
      */
-    public function addReferencesToSalesOrderItem(
+    public function addReferences(
         SpySalesOrderItemEntityTransfer $salesOrderItemEntity,
         ItemTransfer $itemTransfer
     ): SpySalesOrderItemEntityTransfer;

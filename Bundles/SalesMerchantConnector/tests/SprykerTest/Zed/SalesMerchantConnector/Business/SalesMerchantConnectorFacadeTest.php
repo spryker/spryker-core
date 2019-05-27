@@ -43,7 +43,7 @@ class SalesMerchantConnectorFacadeTest extends Unit
             $this->getFacade()->addOrderReferencesToSalesOrderItem($salesOrderItemEntityTransfer, $itemTransfer);
 
         //assert
-        $this->assertEquals(md5($idSalesOrderItem), $newSalesOrderItemEntityTransfer->getOrderItemReference());
+        $this->assertEquals($this->getSalesOrderItemReference($idSalesOrderItem), $newSalesOrderItemEntityTransfer->getOrderItemReference());
     }
 
     /**
@@ -80,7 +80,7 @@ class SalesMerchantConnectorFacadeTest extends Unit
 
         //assert
         $this->assertEquals($merchantReference, $newSalesOrderItemEntityTransfer->getMerchantReference());
-        $this->assertEquals(md5($idSalesOrderItem), $newSalesOrderItemEntityTransfer->getOrderItemReference());
+        $this->assertEquals($this->getSalesOrderItemReference($idSalesOrderItem), $newSalesOrderItemEntityTransfer->getOrderItemReference());
     }
 
     /**
@@ -89,5 +89,15 @@ class SalesMerchantConnectorFacadeTest extends Unit
     protected function getFacade()
     {
         return $this->tester->getFacade();
+    }
+
+    /**
+     * @param int $idSalesOrderItem
+     *
+     * @return string
+     */
+    protected function getSalesOrderItemReference(int $idSalesOrderItem): string
+    {
+        return md5(sprintf('SOI-%s', (string)$idSalesOrderItem));
     }
 }
