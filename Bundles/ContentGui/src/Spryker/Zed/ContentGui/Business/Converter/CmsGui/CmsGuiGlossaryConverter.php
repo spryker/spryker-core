@@ -62,6 +62,9 @@ class CmsGuiGlossaryConverter extends AbstractCmsGlossaryConverter implements Cm
     {
         foreach ($cmsPlaceholderTranslationTransfers as $cmsPlaceholderTranslationTransfer) {
             $cmsPlaceholderTranslation = $cmsPlaceholderTranslationTransfer->getTranslation();
+            if (!$cmsPlaceholderTranslation) {
+                continue;
+            }
             $cmsPlaceholderTranslation = $this->{$methodName}($cmsPlaceholderTranslation);
             $cmsPlaceholderTranslationTransfer->setTranslation($cmsPlaceholderTranslation);
         }
