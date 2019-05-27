@@ -27,9 +27,7 @@
                 {{ form_rest(form) }}
             </div>
             <div class="col-lg-12">
-                <a href="#" class="btn btn-outline btn-remove safe-submit remove-image-collection">
-                    <i class="fa fa-trash"></i>{{ 'Delete image' | trans }}
-                </a>
+                {{ removeActionButton('#', 'Delete image' | trans, {'class': 'remove-image-collection'}) }}
             </div>
             <div class="col-lg-12">
                 <hr>
