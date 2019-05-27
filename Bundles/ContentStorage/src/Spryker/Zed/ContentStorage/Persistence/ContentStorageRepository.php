@@ -82,24 +82,24 @@ class ContentStorageRepository extends AbstractRepository implements ContentStor
     }
 
     /**
-     * @return \Generated\Shared\Transfer\ContentTransfer[]
+     * @param array $contentIds
+     *
+     * @return \Generated\Shared\Transfer\SpyContentEntityTransfer[]
+     */
+    public function findContentByContentIds(array $contentIds): array
+    {
+        $query = $this->getFactory()
+            ->getContentQuery()
+            ->filterByIdContent($contentIds, Criteria::IN);
+
+        return $this->buildQueryFromCriteria($query)->find();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\SpyContentEntityTransfer[]
      */
     public function findAllContent(): array
     {
-        $contentTransfers = [];
-        $contentEntities = $this->getFactory()
-            ->getContentQuery()
-            ->useSpyContentLocalizedQuery()
-                ->joinSpyLocale()
-            ->endUse()
-            ->find();
-
-        foreach ($contentEntities as $contentEntity) {
-            $contentTransfers[] = $this->getFactory()
-                ->createContentStorageMapper()
-                ->mapContentEntityToTransfer($contentEntity, new ContentTransfer());
-        }
-
-        return $contentTransfers;
+        return $this->buildQueryFromCriteria($this->getFactory()->getContentQuery())->find();
     }
 }

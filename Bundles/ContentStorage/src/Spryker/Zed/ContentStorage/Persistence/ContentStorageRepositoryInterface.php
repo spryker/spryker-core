@@ -32,7 +32,14 @@ interface ContentStorageRepositoryInterface
     public function findAllContentStorage(): array;
 
     /**
-     * @return \Generated\Shared\Transfer\ContentTransfer[]
+     * @param array $contentIds
+     *
+     * @return \Generated\Shared\Transfer\SpyContentEntityTransfer[]
+     */
+    public function findContentByContentIds(array $contentIds): array;
+
+    /**
+     * @return \Generated\Shared\Transfer\SpyContentEntityTransfer[]
      */
     public function findAllContent(): array;
 }
