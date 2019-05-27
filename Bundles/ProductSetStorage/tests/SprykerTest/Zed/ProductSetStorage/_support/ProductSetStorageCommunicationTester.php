@@ -7,7 +7,13 @@
 
 namespace SprykerTest\Zed\ProductSetStorage;
 
+use ArrayObject;
 use Codeception\Actor;
+use Generated\Shared\DataBuilder\LocalizedProductSetBuilder;
+use Generated\Shared\DataBuilder\ProductImageBuilder;
+use Generated\Shared\DataBuilder\ProductSetBuilder;
+use Generated\Shared\Transfer\ProductImageTransfer;
+use Generated\Shared\Transfer\ProductSetTransfer;
 
 /**
  * Inherited Methods
@@ -46,5 +52,48 @@ class ProductSetStorageCommunicationTester extends Actor
         }
 
         return false;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductImageTransfer[] $productImageTransfers
+     *
+     * @return \Generated\Shared\Transfer\ProductSetTransfer
+     */
+    public function createProductSetWithProductImages(array $productImageTransfers): ProductSetTransfer
+    {
+        $localizedProductSetTransfer = (new LocalizedProductSetBuilder())->withProductSetData()->build();
+        $localizedProductSetTransfer->setLocale($this->haveLocale());
+
+        $productAbstractTransfer = $this->haveProductAbstract();
+
+        $productSetTransfer = (new ProductSetBuilder())->withImageSet()->build();
+        $productSetTransfer->addLocalizedData($localizedProductSetTransfer);
+        $productSetTransfer->setIdProductAbstracts([$productAbstractTransfer->getIdProductAbstract()]);
+        $productSetTransfer->getImageSets()[0]->setProductImages(new ArrayObject($productImageTransfers));
+
+        return $this->getProductSetFacade()->createProductSet($productSetTransfer);
+    }
+
+    /**
+     * @param int $sortOrder
+     *
+     * @return \Generated\Shared\Transfer\ProductImageTransfer
+     */
+    public function createProductImageTransferWithSortOrder(int $sortOrder): ProductImageTransfer
+    {
+        /** @var \Generated\Shared\Transfer\ProductImageTransfer $productImageTransfer */
+        $productImageTransfer = (new ProductImageBuilder())
+            ->seed([ProductImageTransfer::SORT_ORDER => $sortOrder])
+            ->build();
+
+        return $productImageTransfer;
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductSet\Business\ProductSetFacadeInterface
+     */
+    protected function getProductSetFacade()
+    {
+        return $this->getLocator()->productSet()->facade();
     }
 }

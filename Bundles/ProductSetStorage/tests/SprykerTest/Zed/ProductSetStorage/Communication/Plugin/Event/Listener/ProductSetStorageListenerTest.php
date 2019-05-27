@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\ProductSetStorage\Communication\Plugin\Event\Listener;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\EventEntityTransfer;
 use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageSetTableMap;
+use Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImageQuery;
 use Orm\Zed\ProductSet\Persistence\Map\SpyProductAbstractSetTableMap;
 use Orm\Zed\ProductSet\Persistence\Map\SpyProductSetDataTableMap;
 use Orm\Zed\ProductSetStorage\Persistence\SpyProductSetStorageQuery;
@@ -288,6 +289,72 @@ class ProductSetStorageListenerTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testProductSetProductImageSetStorageListenerSortsImagesBySortOrderAsc(): void
+    {
+        $productImageTransferSortedSecond = $this->tester->createProductImageTransferWithSortOrder(1);
+        $productImageTransferSortedThird = $this->tester->createProductImageTransferWithSortOrder(2);
+        $productImageTransferSortedFirst = $this->tester->createProductImageTransferWithSortOrder(0);
+
+        $productSetTransfer = $this->tester->createProductSetWithProductImages([
+            $productImageTransferSortedSecond,
+            $productImageTransferSortedThird,
+            $productImageTransferSortedFirst,
+        ]);
+
+        SpyProductSetStorageQuery::create()->filterByFkProductSet($productSetTransfer->getIdProductSet())->delete();
+
+        $productSetProductImageSetStorageListener = new ProductSetProductImageSetStorageListener();
+        $productSetProductImageSetStorageListener->setFacade($this->getProductSetStorageFacade());
+
+        $eventTransfers = [
+            (new EventEntityTransfer())->setForeignKeys([
+                SpyProductImageSetTableMap::COL_FK_RESOURCE_PRODUCT_SET => $productSetTransfer->getIdProductSet(),
+            ]),
+        ];
+
+        // Act
+        $productSetProductImageSetStorageListener->handleBulk($eventTransfers, ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_SET_CREATE);
+        $productSetImages = $this->getProductSetImages($productSetTransfer->getIdProductSet());
+
+        // Assert
+        $this->assertEquals($productImageTransferSortedFirst->getIdProductImage(), $productSetImages[0]['id_product_image']);
+        $this->assertEquals($productImageTransferSortedSecond->getIdProductImage(), $productSetImages[1]['id_product_image']);
+        $this->assertEquals($productImageTransferSortedThird->getIdProductImage(), $productSetImages[2]['id_product_image']);
+    }
+
+    /**
+     * @return void
+     */
+    public function testProductSetProductImageSetStorageListenerSortsImagesByIdProductImageSetToProductImageAsc(): void
+    {
+        $productSetTransfer = $this->tester->createProductSetWithProductImages([
+            $this->tester->createProductImageTransferWithSortOrder(0),
+            $this->tester->createProductImageTransferWithSortOrder(0),
+            $this->tester->createProductImageTransferWithSortOrder(0),
+        ]);
+
+        SpyProductSetStorageQuery::create()->filterByFkProductSet($productSetTransfer->getIdProductSet())->delete();
+
+        $productSetProductImageSetStorageListener = new ProductSetProductImageSetStorageListener();
+        $productSetProductImageSetStorageListener->setFacade($this->getProductSetStorageFacade());
+
+        $eventTransfers = [
+            (new EventEntityTransfer())->setForeignKeys([
+                SpyProductImageSetTableMap::COL_FK_RESOURCE_PRODUCT_SET => $productSetTransfer->getIdProductSet(),
+            ]),
+        ];
+
+        // Act
+        $productSetProductImageSetStorageListener->handleBulk($eventTransfers, ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_SET_CREATE);
+        $productSetImages = $this->getProductSetImages($productSetTransfer->getIdProductSet());
+
+        // Assert
+        $this->assertSortingByIdProductImageSetToProductImage($productSetImages);
+    }
+
+    /**
      * @return \Spryker\Zed\ProductSetStorage\Business\ProductSetStorageFacade
      */
     protected function getProductSetStorageFacade()
@@ -315,5 +382,38 @@ class ProductSetStorageListenerTest extends Unit
         $this->assertNotNull($spyProductSetStorage);
         $data = $spyProductSetStorage->getData();
         $this->assertSame('HP Product Set', $data['name']);
+    }
+
+    /**
+     * @param int $idProductSet
+     *
+     * @return array
+     */
+    protected function getProductSetImages(int $idProductSet): array
+    {
+        $productSetStorage = SpyProductSetStorageQuery::create()->findOneByFkProductSet($idProductSet);
+
+        $productSetImages = $productSetStorage->getData()['image_sets'][0]['images'];
+
+        return $productSetImages;
+    }
+
+    /**
+     * @param array $productImages
+     *
+     * @return void
+     */
+    protected function assertSortingByIdProductImageSetToProductImage(array $productImages): void
+    {
+        $idProductImageSetToProductImagePrevious = 0;
+        foreach ($productImages as $productImage) {
+            $idProductImageSetToProductImage = SpyProductImageSetToProductImageQuery::create()
+                ->findOneByFkProductImage($productImage['id_product_image'])
+                ->getIdProductImageSetToProductImage();
+            $this->assertTrue(
+                $idProductImageSetToProductImage > $idProductImageSetToProductImagePrevious
+            );
+            $idProductImageSetToProductImagePrevious = $idProductImageSetToProductImage;
+        }
     }
 }
