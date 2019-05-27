@@ -15,7 +15,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\ContentFileGui\Communication\ContentFileGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\ContentFileGui\ContentFileGuiConfig getConfig()
  */
-class ContentFileContentGuiEditorPlugin extends AbstractPlugin implements ContentGuiEditorPluginInterface
+class ContentFileListContentGuiEditorPlugin extends AbstractPlugin implements ContentGuiEditorPluginInterface
 {
     /**
      * {@inheritDoc}
