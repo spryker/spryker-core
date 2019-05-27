@@ -110,7 +110,7 @@ class PriceProductScheduleListImporter implements PriceProductScheduleListImport
      * @param \Generated\Shared\Transfer\PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer
      * @param \Generated\Shared\Transfer\PriceProductScheduleListTransfer $priceProductScheduleListTransfer
      *
-     * @throws \Spryker\Zed\PriceProductSchedule\Business\Exception\PriceProductScheduleListImportException
+     * @return void
      */
     protected function savePriceProductSchedule(
         PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer,

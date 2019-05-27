@@ -9,7 +9,6 @@ namespace Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleList;
 
 use Generated\Shared\Transfer\PriceProductScheduledListImportRequestTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleListImportResponseTransfer;
-use Generated\Shared\Transfer\PriceProductScheduleListTransfer;
 
 interface PriceProductScheduleListImporterInterface
 {

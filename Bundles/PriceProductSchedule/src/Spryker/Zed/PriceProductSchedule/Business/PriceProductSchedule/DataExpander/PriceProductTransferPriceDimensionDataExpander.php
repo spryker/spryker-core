@@ -8,7 +8,6 @@
 namespace Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\DataExpander;
 
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
-use Generated\Shared\Transfer\PriceProductScheduleImportTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Zed\PriceProductSchedule\PriceProductScheduleConfig;
 

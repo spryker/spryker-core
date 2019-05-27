@@ -88,7 +88,6 @@ class PriceProductScheduleFacade extends AbstractFacade implements PriceProductS
      * @api
      *
      * @param \Generated\Shared\Transfer\PriceProductScheduledListImportRequestTransfer $priceProductScheduledListImportRequest
-     * @param \Generated\Shared\Transfer\PriceProductScheduleListTransfer $priceProductScheduleListTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduleListImportResponseTransfer
      */
