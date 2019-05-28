@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Comment\Business;
 
 use Generated\Shared\Transfer\CommentRequestTransfer;
+use Generated\Shared\Transfer\CommentThreadResponseTransfer;
 use Generated\Shared\Transfer\CommentThreadTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -32,5 +33,51 @@ class CommentFacade extends AbstractFacade implements CommentFacadeInterface
         return $this->getFactory()
             ->createCommentReader()
             ->findCommentThread($commentRequestTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CommentRequestTransfer $commentRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\CommentThreadResponseTransfer
+     */
+    public function addComment(CommentRequestTransfer $commentRequestTransfer): CommentThreadResponseTransfer
+    {
+        return $this->getFactory()
+            ->createCommentWriter()
+            ->addComment($commentRequestTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CommentRequestTransfer $commentRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\CommentThreadResponseTransfer
+     */
+    public function updateComment(CommentRequestTransfer $commentRequestTransfer): CommentThreadResponseTransfer
+    {
+        return $this->getFactory()
+            ->createCommentWriter()
+            ->updateComment($commentRequestTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CommentRequestTransfer $commentRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\CommentThreadResponseTransfer
+     */
+    public function removeComment(CommentRequestTransfer $commentRequestTransfer): CommentThreadResponseTransfer
+    {
+        // TODO: Implement removeComment() method.
     }
 }

@@ -1,7 +1,6 @@
 namespace: SprykerTest
 
 include:
-  - tests/SprykerTest/Client/Comment
   - tests/SprykerTest/Zed/Comment
 
 paths:

@@ -34,7 +34,7 @@ class CommentReader implements CommentReaderInterface
     public function findCommentThread(CommentRequestTransfer $commentRequestTransfer): ?CommentThreadTransfer
     {
         $commentRequestTransfer
-            ->requireIdOwner()
+            ->requireOwnerId()
             ->requireOwnerType();
 
         return $this->commentRepository->findCommentThread($commentRequestTransfer);

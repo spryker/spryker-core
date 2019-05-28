@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\Comment\Persistence;
 
+use Orm\Zed\Comment\Persistence\SpyCommentQuery;
 use Orm\Zed\Comment\Persistence\SpyCommentThreadQuery;
+use Spryker\Zed\Comment\Persistence\Propel\Mapper\CommentMapper;
 use Spryker\Zed\Comment\Persistence\Propel\Mapper\CommentThreadMapper;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
@@ -27,10 +29,26 @@ class CommentPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
+     * @return \Orm\Zed\Comment\Persistence\SpyCommentQuery
+     */
+    public function getCommentPropelQuery(): SpyCommentQuery
+    {
+        return SpyCommentQuery::create();
+    }
+
+    /**
      * @return \Spryker\Zed\Comment\Persistence\Propel\Mapper\CommentThreadMapper
      */
-    public function createCommentThreadMapping(): CommentThreadMapper
+    public function createCommentThreadMapper(): CommentThreadMapper
     {
         return new CommentThreadMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\Comment\Persistence\Propel\Mapper\CommentMapper
+     */
+    public function createCommentMapper(): CommentMapper
+    {
+        return new CommentMapper();
     }
 }

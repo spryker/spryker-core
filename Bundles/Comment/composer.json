@@ -5,12 +5,13 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/customer": "*",
-    "spryker/kernel": "*",
-    "spryker/uuid-behavior": "*"
+    "spryker/customer": "^7.0.0",
+    "spryker/kernel": "^3.17.0",
+    "spryker/uuid-behavior": "^1.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/propel": "*",
     "spryker/testify": "*"
   },
   "autoload": {

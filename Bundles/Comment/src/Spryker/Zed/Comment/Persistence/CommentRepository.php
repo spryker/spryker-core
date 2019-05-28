@@ -9,6 +9,7 @@ namespace Spryker\Zed\Comment\Persistence;
 
 use Generated\Shared\Transfer\CommentRequestTransfer;
 use Generated\Shared\Transfer\CommentThreadTransfer;
+use Orm\Zed\Comment\Persistence\SpyCommentThreadQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -23,21 +24,45 @@ class CommentRepository extends AbstractRepository implements CommentRepositoryI
      */
     public function findCommentThread(CommentRequestTransfer $commentRequestTransfer): ?CommentThreadTransfer
     {
-        $commentThreadEntity = $this->getFactory()
+        $commentThreadQuery = $this->getFactory()
             ->getCommentThreadPropelQuery()
+            ->filterByOwnerId($commentRequestTransfer->getOwnerId())
+            ->filterByOwnerType($commentRequestTransfer->getOwnerType())
             ->joinWithSpyComment()
             ->useSpyCommentQuery()
-                ->joinWithSpyCommentCommentTag()
                 ->joinWithSpyCustomer()
-            ->endUse()
-            ->findOne();
+                ->leftJoinWithSpyCommentCommentTag()
+            ->endUse();
+
+        $commentThreadQuery = $this->setCommentThreadFilters($commentThreadQuery, $commentRequestTransfer);
+        $commentThreadEntity = $commentThreadQuery->find()->getFirst();
 
         if (!$commentThreadEntity) {
             return null;
         }
 
         return $this->getFactory()
-            ->createCommentThreadMapping()
+            ->createCommentThreadMapper()
             ->mapCommentThreadEntityToCommentThreadTransfer($commentThreadEntity, new CommentThreadTransfer());
+    }
+
+    /**
+     * @param \Orm\Zed\Comment\Persistence\SpyCommentThreadQuery $commentThreadQuery
+     * @param \Generated\Shared\Transfer\CommentRequestTransfer $commentRequestTransfer
+     *
+     * @return \Orm\Zed\Comment\Persistence\SpyCommentThreadQuery
+     */
+    protected function setCommentThreadFilters(
+        SpyCommentThreadQuery $commentThreadQuery,
+        CommentRequestTransfer $commentRequestTransfer
+    ): SpyCommentThreadQuery {
+        if ($commentRequestTransfer->getComment() && $commentRequestTransfer->getComment()->getUuid()) {
+            $commentThreadQuery
+                ->useSpyCommentQuery()
+                ->filterByUuid($commentRequestTransfer->getComment()->getUuid())
+                ->endUse();
+        }
+
+        return $commentThreadQuery;
     }
 }
