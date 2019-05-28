@@ -75,7 +75,7 @@ class TwigExpressionToHtmlConverter implements TwigExpressionConverterInterface
      */
     protected function convertTwigExpressionsToHtml(string $html, ContentGuiEditorPluginInterface $contentEditorPlugin): string
     {
-        $twigExpressions = $this->extractTwigExpressions($html, $contentEditorPlugin->getTwigFunctionTemplate());
+        $twigExpressions = $this->findTwigExpressions($html, $contentEditorPlugin->getTwigFunctionTemplate());
 
         if (!$twigExpressions) {
             return $html;
@@ -90,16 +90,11 @@ class TwigExpressionToHtmlConverter implements TwigExpressionConverterInterface
      *
      * @return array|null
      */
-    protected function extractTwigExpressions(string $html, string $twigFunctionTemplate): ?array
+    protected function findTwigExpressions(string $html, string $twigFunctionTemplate): ?array
     {
-        $twigExpressionRegExpPattern = strtr('/' . $twigFunctionTemplate . '/', [
-            '(' => '\(',
-            ')' => '\)',
-            $this->contentGuiConfig->getParameterId() => '\d+',
-            $this->contentGuiConfig->getParameterTemplate() => '[\w+\-]+',
-        ]);
-
-        preg_match_all($twigExpressionRegExpPattern, $html, $twigExpressions);
+        // Example: {{ content_banner(%ID%, '%TEMPLATE%') }} -> {{ content_banner(.+) }}
+        $twigExpressionPattern = preg_replace('/\(.+\)/', '\(.+?\)', $twigFunctionTemplate);
+        preg_match_all('/' . $twigExpressionPattern . '/', $html, $twigExpressions);
 
         if (!$twigExpressions[0]) {
             return null;
@@ -143,13 +138,13 @@ class TwigExpressionToHtmlConverter implements TwigExpressionConverterInterface
      */
     protected function getEditorContentWidgetByTwigExpression(string $twigExpression, array $contentWidgetTemplateTransfers): ?string
     {
-        $contentTransfer = $this->extractContentItem($twigExpression);
+        $contentTransfer = $this->findContentItem($twigExpression);
 
         if (!$contentTransfer) {
             return null;
         }
 
-        $templateIdentifier = $this->getTemplateIdentifier($twigExpression);
+        $templateIdentifier = $this->findTemplateIdentifier($twigExpression);
         $templateDisplayName = '';
 
         if ($templateIdentifier) {
@@ -171,7 +166,7 @@ class TwigExpressionToHtmlConverter implements TwigExpressionConverterInterface
      *
      * @return \Generated\Shared\Transfer\ContentTransfer|null
      */
-    protected function extractContentItem(string $twigExpression): ?ContentTransfer
+    protected function findContentItem(string $twigExpression): ?ContentTransfer
     {
         preg_match('/\d+/', $twigExpression, $idContent);
 
@@ -197,7 +192,7 @@ class TwigExpressionToHtmlConverter implements TwigExpressionConverterInterface
      *
      * @return string|null
      */
-    protected function getTemplateIdentifier(string $twigFunction): ?string
+    protected function findTemplateIdentifier(string $twigFunction): ?string
     {
         preg_match("/'[\w+\-]+'/", $twigFunction, $templateIdentifier);
 
