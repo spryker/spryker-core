@@ -63,3 +63,26 @@ suites:
                           - Spryker\Zed\ZedNavigation\Communication\Plugin\ServiceProvider\ZedNavigationServiceProvider
                           - \SprykerTest\Shared\Glossary\Helper\TranslationHelper
 
+    Presentation:
+      path: Presentation
+      class_name: OmsPresentationTester
+      modules:
+        enabled:
+          - Asserts
+          - \SprykerTest\Shared\Testify\Helper\Environment
+          - \SprykerTest\Shared\Testify\Helper\ConfigHelper
+          - \SprykerTest\Shared\Config\Helper\ConfigInit
+          - \SprykerTest\Shared\Testify\Helper\LocatorHelper
+          - WebDriver:
+              url: ''
+              browser: chrome
+              window_size: 1920x1080
+              host: 0.0.0.0
+              restart: false
+          - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
+          - \SprykerTest\Shared\Application\Helper\ZedHelper
+          - \SprykerTest\Zed\ZedNavigation\Helper\BreadcrumbHelper
+          - \SprykerTest\Zed\Gui\Helper\DataTableActionHelper
+          - \SprykerTest\Zed\Oms\Helper\OmsHelper
+          - \SprykerTest\Shared\Product\Helper\ProductDataHelper
+          - \SprykerTest\Shared\Sales\Helper\SalesDataHelper

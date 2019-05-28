@@ -1,12 +1,10 @@
 <?php
 
-/**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
- */
+namespace SprykerTest\Zed\Oms\Presentation;
 
-namespace SprykerTest\Zed\Oms\Communication\Controller;
 
+use Generated\Shared\Transfer\ItemTransfer;
+use SprykerTest\Zed\Oms\OmsPresentationTester;
 use SprykerTest\Zed\Oms\PageObject\OrderDetailPage;
 use SprykerTest\Zed\Oms\OmsCommunicationTester;
 
@@ -15,8 +13,7 @@ use SprykerTest\Zed\Oms\OmsCommunicationTester;
  * @group SprykerTest
  * @group Zed
  * @group Oms
- * @group Communication
- * @group Controller
+ * @group Presentation
  * @group TriggerControllerCest
  * Add your own group annotations below this line
  */
@@ -40,13 +37,13 @@ class TriggerControllerCest
     protected $orderTransfer;
 
     /**
-     * @param \SprykerTest\Zed\Customer\CustomerCommunicationTester $i
+     * @param \SprykerTest\Zed\Oms\OmsPresentationTester $i
      *
      * @return void
      */
-    public function _before(OmsCommunicationTester $i)
+    public function _before(OmsPresentationTester $i)
     {
-        $i->haveTestStatemachine([static::OMS_ACTIVE_PROCESS]);
+        $i->configureTestStateMachine([static::OMS_ACTIVE_PROCESS]);
         $this->omsFacade = $i->getOmsFacade();
         $this->salesFacade = $i->getSalesFacade();
 
@@ -72,10 +69,34 @@ class TriggerControllerCest
     /**
      * @return void
      */
-    public function test(OmsCommunicationTester $i)
+    public function testFirst(OmsPresentationTester $i)
     {
+        $i->amZed();
+        $i->amLoggedInUser();
+        $itemTransfer = $this->orderTransfer->getItems()[0];
+        $initialState = $itemTransfer->getState()->getName();
+
+        // Act
         $i->amOnPage(
             sprintf(OrderDetailPage::URL_PATTERN, $this->orderTransfer->getIdSalesOrder())
         );
+
+        $i->makeScreenshot();
+
+//        $i->submitForm('//*[@id="items"]/div[2]/div/div/div[2]/table/tbody[1]/tr/td[8]/form', []);
+//
+//        $latestItemTransfer = $this->getItemLatestData();
+//
+//        $i->assertNotEquals($initialState, $latestItemTransfer->getState()->getName());
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    protected function getItemLatestData(): ItemTransfer
+    {
+        return $this->salesFacade->findOrderByIdSalesOrder(
+            $this->orderTransfer->getIdSalesOrder()
+        )->getItems()[0];
     }
 }
