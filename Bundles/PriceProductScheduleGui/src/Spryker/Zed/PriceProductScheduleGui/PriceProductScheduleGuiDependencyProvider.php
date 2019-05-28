@@ -49,7 +49,9 @@ class PriceProductScheduleGuiDependencyProvider extends AbstractBundleDependency
         $container->set(
             static::FACADE_PRICE_PRODUCT_SCHEDULE,
             function (Container $container): PriceProductScheduleGuiToPriceProductScheduleFacadeInterface {
-                return new PriceProductScheduleGuiToPriceProductScheduleFacadeBridge($container->getLocator()->priceProductSchedule()->facade());
+                return new PriceProductScheduleGuiToPriceProductScheduleFacadeBridge(
+                    $container->getLocator()->priceProductSchedule()->facade()
+                );
             }
         );
 

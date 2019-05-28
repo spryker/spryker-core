@@ -68,7 +68,9 @@ class PriceProductScheduleDependencyProvider extends AbstractBundleDependencyPro
         $container->set(
             static::FACADE_PRICE_PRODUCT,
             function (Container $container): PriceProductScheduleToPriceProductFacadeInterface {
-                return new PriceProductScheduleToPriceProductFacadeBridge($container->getLocator()->priceProduct()->facade());
+                return new PriceProductScheduleToPriceProductFacadeBridge(
+                    $container->getLocator()->priceProduct()->facade()
+                );
             }
         );
 
@@ -85,7 +87,9 @@ class PriceProductScheduleDependencyProvider extends AbstractBundleDependencyPro
         $container->set(
             static::FACADE_STORE,
             function (Container $container): PriceProductScheduleToStoreFacadeInterface {
-                return new PriceProductScheduleToStoreFacadeBridge($container->getLocator()->store()->facade());
+                return new PriceProductScheduleToStoreFacadeBridge(
+                    $container->getLocator()->store()->facade()
+                );
             }
         );
 
@@ -102,7 +106,9 @@ class PriceProductScheduleDependencyProvider extends AbstractBundleDependencyPro
         $container->set(
             static::FACADE_PROPEL,
             function (Container $container): PriceProductScheduleToPropelFacadeInterface {
-                return new PriceProductScheduleToPropelFacadeBridge($container->getLocator()->propel()->facade());
+                return new PriceProductScheduleToPropelFacadeBridge(
+                    $container->getLocator()->propel()->facade()
+                );
             }
         );
 
@@ -119,7 +125,9 @@ class PriceProductScheduleDependencyProvider extends AbstractBundleDependencyPro
         $container->set(
             static::FACADE_PRODUCT,
             function (Container $container): PriceProductScheduleToProductFacadeInterface {
-                return new PriceProductScheduleToProductFacadeBridge($container->getLocator()->product()->facade());
+                return new PriceProductScheduleToProductFacadeBridge(
+                    $container->getLocator()->product()->facade()
+                );
             }
         );
 
@@ -136,7 +144,9 @@ class PriceProductScheduleDependencyProvider extends AbstractBundleDependencyPro
         $container->set(
             static::FACADE_CURRENCY,
             function (Container $container): PriceProductScheduleToCurrencyFacadeInterface {
-                return new PriceProductScheduleToCurrencyFacadeBridge($container->getLocator()->currency()->facade());
+                return new PriceProductScheduleToCurrencyFacadeBridge(
+                    $container->getLocator()->currency()->facade()
+                );
             }
         );
 
