@@ -13,8 +13,8 @@ use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
-use Spryker\Client\PriceProduct\DataReader\PriceEnvironmentReaderInterface;
 use Spryker\Client\PriceProduct\Dependency\Service\PriceProductToUtilPriceServiceInterface;
+use Spryker\Client\PriceProduct\PriceEnvironmentReader\PriceEnvironmentReaderInterface;
 use Spryker\Client\PriceProduct\PriceProductConfig;
 use Spryker\Service\PriceProduct\PriceProductServiceInterface;
 use Spryker\Shared\PriceProduct\PriceProductConfig as SharedPriceProductConfig;
@@ -34,7 +34,7 @@ class ProductPriceResolver implements ProductPriceResolverInterface
     protected $priceProductService;
 
     /**
-     * @var \Spryker\Client\PriceProduct\DataReader\PriceEnvironmentReaderInterface
+     * @var \Spryker\Client\PriceProduct\PriceEnvironmentReader\PriceEnvironmentReaderInterface
      */
     protected $priceEnvironmentReader;
 
@@ -46,7 +46,7 @@ class ProductPriceResolver implements ProductPriceResolverInterface
     /**
      * @param \Spryker\Client\PriceProduct\PriceProductConfig $priceProductConfig
      * @param \Spryker\Service\PriceProduct\PriceProductServiceInterface $priceProductService
-     * @param \Spryker\Client\PriceProduct\DataReader\PriceEnvironmentReaderInterface $priceEnvironmentReader
+     * @param \Spryker\Client\PriceProduct\PriceEnvironmentReader\PriceEnvironmentReaderInterface $priceEnvironmentReader
      * @param \Spryker\Client\PriceProduct\Dependency\Service\PriceProductToUtilPriceServiceInterface $utilPriceService
      */
     public function __construct(

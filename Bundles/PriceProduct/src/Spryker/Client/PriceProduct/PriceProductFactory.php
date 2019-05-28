@@ -8,12 +8,12 @@
 namespace Spryker\Client\PriceProduct;
 
 use Spryker\Client\Kernel\AbstractFactory;
-use Spryker\Client\PriceProduct\DataReader\PriceEnvironmentReader;
-use Spryker\Client\PriceProduct\DataReader\PriceEnvironmentReaderInterface;
 use Spryker\Client\PriceProduct\Dependency\Client\PriceProductToCurrencyClientInterface;
 use Spryker\Client\PriceProduct\Dependency\Client\PriceProductToPriceClientInterface;
 use Spryker\Client\PriceProduct\Dependency\Client\PriceProductToQuoteClientInterface;
 use Spryker\Client\PriceProduct\Dependency\Service\PriceProductToUtilPriceServiceInterface;
+use Spryker\Client\PriceProduct\PriceEnvironmentReader\PriceEnvironmentReader;
+use Spryker\Client\PriceProduct\PriceEnvironmentReader\PriceEnvironmentReaderInterface;
 use Spryker\Client\PriceProduct\ProductPriceResolver\ProductPriceResolver;
 use Spryker\Service\PriceProduct\PriceProductServiceInterface;
 
@@ -36,7 +36,7 @@ class PriceProductFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\PriceProduct\DataReader\PriceEnvironmentReaderInterface
+     * @return \Spryker\Client\PriceProduct\PriceEnvironmentReader\PriceEnvironmentReaderInterface
      */
     public function createPriceEnvironmentReader(): PriceEnvironmentReaderInterface
     {
