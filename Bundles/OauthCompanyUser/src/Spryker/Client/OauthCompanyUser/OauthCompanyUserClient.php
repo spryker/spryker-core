@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\OauthCompanyUser;
 
+use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -19,26 +20,14 @@ class OauthCompanyUserClient extends AbstractClient implements OauthCompanyUserC
      *
      * @api
      *
-     * @return string
+     * @param string $accessToken
+     *
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
-    public function getClientSecret(): string
+    public function getCustomerByAccessToken(string $accessToken): CustomerResponseTransfer
     {
         return $this->getFactory()
-            ->getModuleConfig()
-            ->getClientSecret();
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @return string
-     */
-    public function getClientId(): string
-    {
-        return $this->getFactory()
-            ->getModuleConfig()
-            ->getClientId();
+            ->createCompanyUserAccessTokenReader()
+            ->getCustomerByAccessToken($accessToken);
     }
 }
