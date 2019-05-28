@@ -10,10 +10,8 @@ namespace Spryker\Zed\ContentGui\Business\Converter;
 use DOMDocument;
 use DOMXPath;
 
-class HtmlToShortCodeConverter implements HtmlConverterInterface
+class HtmlToTwigExpressionConverter implements HtmlConverterInterface
 {
-    protected const ATTRIBUTE_DATA_SHORT_CODE = 'data-short-code';
-
     /**
      * @param string $html
      *
@@ -31,8 +29,8 @@ class HtmlToShortCodeConverter implements HtmlConverterInterface
         }
 
         foreach ($replacements as $replacement) {
-            [$shortCode, $widget] = $replacement;
-            $widget->parentNode->replaceChild($shortCode, $widget);
+            [$twigExpression, $widget] = $replacement;
+            $widget->parentNode->replaceChild($twigExpression, $widget);
         }
 
         $html = $dom->saveHTML();
@@ -49,12 +47,12 @@ class HtmlToShortCodeConverter implements HtmlConverterInterface
     {
         $replacements = [];
         $xpath = new DOMXPath($dom);
-        $widgets = $xpath->query('//*[@' . static::ATTRIBUTE_DATA_SHORT_CODE . ']');
+        $widgets = $xpath->query('//*[@contenteditable="false"][@data-id][@data-twig-expression][@data-template][@data-type]');
 
         foreach ($widgets as $widget) {
-            $shortCode = $dom->createDocumentFragment();
-            $shortCode->appendXML($widget->getAttribute(static::ATTRIBUTE_DATA_SHORT_CODE));
-            $replacements[] = [$shortCode, $widget->parentNode];
+            $twigExpression = $dom->createDocumentFragment();
+            $twigExpression->appendXML($widget->getAttribute('data-twig-expression'));
+            $replacements[] = [$twigExpression, $widget->parentNode];
         }
 
         return $replacements;

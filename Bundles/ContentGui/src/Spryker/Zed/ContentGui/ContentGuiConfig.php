@@ -14,7 +14,7 @@ class ContentGuiConfig extends AbstractBundleConfig
     protected const PARAMETER_ID = '%ID%';
     protected const PARAMETER_TYPE = '%TYPE%';
     protected const PARAMETER_TEMPLATE = '%TEMPLATE%';
-    protected const PARAMETER_SHORT_CODE = '%SHORT_CODE%';
+    protected const PARAMETER_TWIG_EXPRESSION = '%TWIG_EXPRESSION%';
     protected const PARAMETER_NAME = '%NAME%';
     protected const PARAMETER_TEMPLATE_DISPLAY_NAME = '%TEMPLATE_DISPLAY_NAME%';
     protected const EDITOR_CONTENT_WIDGET_WRAPPER = '<p>%s</p>';
@@ -26,7 +26,7 @@ class ContentGuiConfig extends AbstractBundleConfig
     {
         return '<span class="content-item-editor js-content-item-editor" contenteditable="false" '
             . 'data-type="' . $this->getParameterType() . '" data-id="' . $this->getParameterId() . '" '
-            . 'data-template="' . $this->getParameterTemplate() . '" data-short-code="' . $this->getParameterShortCode() . '">'
+            . 'data-template="' . $this->getParameterTemplate() . '" data-twig-expression="' . $this->getParameterTwigExpression() . '">'
                 . '<span>Content Item Type: <b>' . $this->getParameterType() . '</b></span>'
                 . '<span>Content Item ID#: <b>' . $this->getParameterId() . '</b></span>'
                 . '<span>Name: <b>' . $this->getParameterName() . '</b></span>'
@@ -61,9 +61,9 @@ class ContentGuiConfig extends AbstractBundleConfig
     /**
      * @return string
      */
-    public function getParameterShortCode(): string
+    public function getParameterTwigExpression(): string
     {
-        return static::PARAMETER_SHORT_CODE;
+        return static::PARAMETER_TWIG_EXPRESSION;
     }
 
     /**

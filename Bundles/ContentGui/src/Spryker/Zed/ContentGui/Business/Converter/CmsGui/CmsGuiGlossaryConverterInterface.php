@@ -16,12 +16,12 @@ interface CmsGuiGlossaryConverterInterface
      *
      * @return \Generated\Shared\Transfer\CmsGlossaryTransfer
      */
-    public function convertShortCodeToHtml(CmsGlossaryTransfer $cmsGlossaryTransfer): CmsGlossaryTransfer;
+    public function convertTwigExpressionToHtml(CmsGlossaryTransfer $cmsGlossaryTransfer): CmsGlossaryTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\CmsGlossaryTransfer $cmsGlossaryTransfer
      *
      * @return \Generated\Shared\Transfer\CmsGlossaryTransfer
      */
-    public function convertHtmlToShortCode(CmsGlossaryTransfer $cmsGlossaryTransfer): CmsGlossaryTransfer;
+    public function convertHtmlToTwigExpression(CmsGlossaryTransfer $cmsGlossaryTransfer): CmsGlossaryTransfer;
 }

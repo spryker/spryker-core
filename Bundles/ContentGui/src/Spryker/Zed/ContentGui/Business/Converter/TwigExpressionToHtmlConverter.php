@@ -13,11 +13,8 @@ use Spryker\Zed\ContentGui\Dependency\Facade\ContentGuiToContentFacadeInterface;
 use Spryker\Zed\ContentGui\Dependency\Facade\ContentGuiToTranslatorFacadeInterface;
 use Spryker\Zed\ContentGuiExtension\Dependency\Plugin\ContentGuiEditorPluginInterface;
 
-class ShortCodeToHtmlConverter implements ShortCodeConverterInterface
+class TwigExpressionToHtmlConverter implements TwigExpressionConverterInterface
 {
-    protected const PATTERN_REGEXP_NUMERIC = '\d+';
-    protected const PATTERN_REGEXP_STRING = '[\w+\-]+';
-
     /**
      * @var \Spryker\Zed\ContentGui\Dependency\Facade\ContentGuiToContentFacadeInterface
      */
@@ -61,10 +58,10 @@ class ShortCodeToHtmlConverter implements ShortCodeConverterInterface
      *
      * @return string
      */
-    public function replaceShortCode(string $html): string
+    public function replaceTwigExpression(string $html): string
     {
         foreach ($this->contentEditorPlugins as $contentEditorPlugin) {
-            $html = $this->convertShortCodesToHtml($html, $contentEditorPlugin);
+            $html = $this->convertTwigExpressionsToHtml($html, $contentEditorPlugin);
         }
 
         return $html;
@@ -76,15 +73,15 @@ class ShortCodeToHtmlConverter implements ShortCodeConverterInterface
      *
      * @return string
      */
-    protected function convertShortCodesToHtml(string $html, ContentGuiEditorPluginInterface $contentEditorPlugin): string
+    protected function convertTwigExpressionsToHtml(string $html, ContentGuiEditorPluginInterface $contentEditorPlugin): string
     {
-        $shortCodes = $this->extractShortCodes($html, $contentEditorPlugin->getTwigFunctionTemplate());
+        $twigExpressions = $this->extractTwigExpressions($html, $contentEditorPlugin->getTwigFunctionTemplate());
 
-        if (!$shortCodes) {
+        if (!$twigExpressions) {
             return $html;
         }
 
-        return $this->replaceShortCodes($html, $shortCodes, $contentEditorPlugin->getTemplates());
+        return $this->replaceTwigExpressions($html, $twigExpressions, $contentEditorPlugin->getTemplates());
     }
 
     /**
@@ -93,66 +90,66 @@ class ShortCodeToHtmlConverter implements ShortCodeConverterInterface
      *
      * @return array|null
      */
-    protected function extractShortCodes(string $html, string $twigFunctionTemplate): ?array
+    protected function extractTwigExpressions(string $html, string $twigFunctionTemplate): ?array
     {
-        $shortCodeRegExpPattern = strtr('/' . $twigFunctionTemplate . '/', [
+        $twigExpressionRegExpPattern = strtr('/' . $twigFunctionTemplate . '/', [
             '(' => '\(',
             ')' => '\)',
-            $this->contentGuiConfig->getParameterId() => static::PATTERN_REGEXP_NUMERIC,
-            $this->contentGuiConfig->getParameterTemplate() => static::PATTERN_REGEXP_STRING,
+            $this->contentGuiConfig->getParameterId() => '\d+',
+            $this->contentGuiConfig->getParameterTemplate() => '[\w+\-]+',
         ]);
 
-        preg_match_all($shortCodeRegExpPattern, $html, $shortCodes);
+        preg_match_all($twigExpressionRegExpPattern, $html, $twigExpressions);
 
-        if (!$shortCodes[0]) {
+        if (!$twigExpressions[0]) {
             return null;
         }
 
-        return $shortCodes[0];
+        return $twigExpressions[0];
     }
 
     /**
      * @param string $html
-     * @param string[] $shortCodes
+     * @param string[] $twigExpressions
      * @param \Generated\Shared\Transfer\ContentWidgetTemplateTransfer[] $contentWidgetTemplateTransfers
      *
      * @return string
      */
-    protected function replaceShortCodes(string $html, array $shortCodes, array $contentWidgetTemplateTransfers): string
+    protected function replaceTwigExpressions(string $html, array $twigExpressions, array $contentWidgetTemplateTransfers): string
     {
-        $shortCodeReplacements = [];
+        $twigExpressionReplacements = [];
 
-        foreach ($shortCodes as $shortCode) {
-            if (isset($shortCodeReplacements[$shortCode])) {
+        foreach ($twigExpressions as $twigExpression) {
+            if (isset($twigExpressionReplacements[$twigExpression])) {
                 continue;
             }
 
-            $editorContentWidget = $this->getEditorContentWidgetByShortCode($shortCode, $contentWidgetTemplateTransfers);
+            $editorContentWidget = $this->getEditorContentWidgetByTwigExpression($twigExpression, $contentWidgetTemplateTransfers);
             if (!$editorContentWidget) {
                 continue;
             }
 
-            $shortCodeReplacements[$shortCode] = sprintf($this->contentGuiConfig->getEditorContentWidgetWrapper(), $editorContentWidget);
+            $twigExpressionReplacements[$twigExpression] = sprintf($this->contentGuiConfig->getEditorContentWidgetWrapper(), $editorContentWidget);
         }
 
-        return strtr($html, $shortCodeReplacements);
+        return strtr($html, $twigExpressionReplacements);
     }
 
     /**
-     * @param string $shortCode
+     * @param string $twigExpression
      * @param \Generated\Shared\Transfer\ContentWidgetTemplateTransfer[] $contentWidgetTemplateTransfers
      *
      * @return string|null
      */
-    protected function getEditorContentWidgetByShortCode(string $shortCode, array $contentWidgetTemplateTransfers): ?string
+    protected function getEditorContentWidgetByTwigExpression(string $twigExpression, array $contentWidgetTemplateTransfers): ?string
     {
-        $contentTransfer = $this->extractContentItem($shortCode);
+        $contentTransfer = $this->extractContentItem($twigExpression);
 
         if (!$contentTransfer) {
             return null;
         }
 
-        $templateIdentifier = $this->extractTemplateIdentifier($shortCode);
+        $templateIdentifier = $this->getTemplateIdentifier($twigExpression);
         $templateDisplayName = '';
 
         if ($templateIdentifier) {
@@ -163,20 +160,20 @@ class ShortCodeToHtmlConverter implements ShortCodeConverterInterface
             $this->contentGuiConfig->getParameterId() => $contentTransfer->getIdContent(),
             $this->contentGuiConfig->getParameterType() => $contentTransfer->getContentTypeKey(),
             $this->contentGuiConfig->getParameterName() => $contentTransfer->getName(),
-            $this->contentGuiConfig->getParameterShortCode() => $shortCode,
+            $this->contentGuiConfig->getParameterTwigExpression() => $twigExpression,
             $this->contentGuiConfig->getParameterTemplate() => $templateIdentifier,
             $this->contentGuiConfig->getParameterTemplateDisplayName() => $templateDisplayName,
         ]);
     }
 
     /**
-     * @param string $shortCode
+     * @param string $twigExpression
      *
      * @return \Generated\Shared\Transfer\ContentTransfer|null
      */
-    protected function extractContentItem(string $shortCode): ?ContentTransfer
+    protected function extractContentItem(string $twigExpression): ?ContentTransfer
     {
-        preg_match('/' . static::PATTERN_REGEXP_NUMERIC . '/', $shortCode, $idContent);
+        preg_match('/\d+/', $twigExpression, $idContent);
 
         if (!$idContent) {
             return null;
@@ -200,9 +197,9 @@ class ShortCodeToHtmlConverter implements ShortCodeConverterInterface
      *
      * @return string|null
      */
-    protected function extractTemplateIdentifier(string $twigFunction): ?string
+    protected function getTemplateIdentifier(string $twigFunction): ?string
     {
-        preg_match("/'" . static::PATTERN_REGEXP_STRING . "'/", $twigFunction, $templateIdentifier);
+        preg_match("/'[\w+\-]+'/", $twigFunction, $templateIdentifier);
 
         if (!$templateIdentifier) {
             return null;

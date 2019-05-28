@@ -7,12 +7,12 @@
 
 namespace Spryker\Zed\ContentGui\Business\Converter;
 
-interface ShortCodeConverterInterface
+interface TwigExpressionConverterInterface
 {
     /**
      * @param string $html
      *
      * @return string
      */
-    public function replaceShortCode(string $html): string;
+    public function replaceTwigExpression(string $html): string;
 }

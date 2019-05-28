@@ -87,9 +87,9 @@ class ContentGuiBusinessTester extends Actor
      *
      * @return string
      */
-    public function getOneShortCodeInString(ContentTransfer $bannerContentTransfer, bool $addLineBreak = false): string
+    public function getOneTwigExpressionInString(ContentTransfer $bannerContentTransfer, bool $addLineBreak = false): string
     {
-        return $this->createShortCode($bannerContentTransfer, static::TEMPLATE_IDENTIFIER_DEFAULT)
+        return $this->createTwigExpression($bannerContentTransfer, static::TEMPLATE_IDENTIFIER_DEFAULT)
             . ($addLineBreak ? "\n" : '');
     }
 
@@ -99,10 +99,10 @@ class ContentGuiBusinessTester extends Actor
      *
      * @return string
      */
-    public function getTwoSameShortCodesInString(ContentTransfer $bannerContentTransfer, bool $addLineBreak = false): string
+    public function getTwoSameTwigExpressionsInString(ContentTransfer $bannerContentTransfer, bool $addLineBreak = false): string
     {
-        return $this->createShortCode($bannerContentTransfer, static::TEMPLATE_IDENTIFIER_DEFAULT)
-            . $this->createShortCode($bannerContentTransfer, static::TEMPLATE_IDENTIFIER_DEFAULT)
+        return $this->createTwigExpression($bannerContentTransfer, static::TEMPLATE_IDENTIFIER_DEFAULT)
+            . $this->createTwigExpression($bannerContentTransfer, static::TEMPLATE_IDENTIFIER_DEFAULT)
             . ($addLineBreak ? "\n" : '');
     }
 
@@ -113,20 +113,20 @@ class ContentGuiBusinessTester extends Actor
      *
      * @return string
      */
-    public function getTwoDifferentShortCodeInString(
+    public function getTwoDifferentTwigExpressionInString(
         ContentTransfer $bannerContentTransfer,
         ContentTransfer $abstractProductListContentTransfer,
         bool $addLineBreak = false
     ): string {
-        return $this->createShortCode($bannerContentTransfer, static::TEMPLATE_IDENTIFIER_DEFAULT)
-            . $this->createShortCode($abstractProductListContentTransfer, static::TEMPLATE_IDENTIFIER_TOP_TITLE)
+        return $this->createTwigExpression($bannerContentTransfer, static::TEMPLATE_IDENTIFIER_DEFAULT)
+            . $this->createTwigExpression($abstractProductListContentTransfer, static::TEMPLATE_IDENTIFIER_TOP_TITLE)
             . ($addLineBreak ? "\n" : '');
     }
 
     /**
      * @return string
      */
-    public function getStringWithoutShortCodesAndWidgets(): string
+    public function getStringWithoutTwigExpressionsAndWidgets(): string
     {
         return '';
     }
@@ -185,7 +185,7 @@ class ContentGuiBusinessTester extends Actor
             $this->getConfig()->getParameterId() => $contentTransfer->getIdContent(),
             $this->getConfig()->getParameterType() => $contentTransfer->getContentTypeKey(),
             $this->getConfig()->getParameterName() => $contentTransfer->getName(),
-            $this->getConfig()->getParameterShortCode() => $this->createShortCode($contentTransfer, $templateIdentifier),
+            $this->getConfig()->getParameterTwigExpression() => $this->createTwigExpression($contentTransfer, $templateIdentifier),
             $this->getConfig()->getParameterTemplate() => $templateIdentifier,
             $this->getConfig()->getParameterTemplateDisplayName() => $templateDisplayName,
         ]);
@@ -199,7 +199,7 @@ class ContentGuiBusinessTester extends Actor
      *
      * @return string
      */
-    protected function createShortCode(ContentTransfer $contentTransfer, string $templateIdentifier): string
+    protected function createTwigExpression(ContentTransfer $contentTransfer, string $templateIdentifier): string
     {
         $twigFunctionTemplate = static::TWIG_FUNCTION_TEMPLATE_BANNER;
 

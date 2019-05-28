@@ -12,23 +12,23 @@ abstract class AbstractCmsGlossaryConverter
     /**
      * @var \Spryker\Zed\ContentGui\Business\Converter\HtmlConverterInterface
      */
-    protected $htmlToShortCodeConverter;
+    protected $htmlToTwigExpressionConverter;
 
     /**
-     * @var \Spryker\Zed\ContentGui\Business\Converter\ShortCodeConverterInterface
+     * @var \Spryker\Zed\ContentGui\Business\Converter\TwigExpressionConverterInterface
      */
-    protected $shortCodeToHtmlConverter;
+    protected $twigExpressionToHtmlConverter;
 
     /**
-     * @param \Spryker\Zed\ContentGui\Business\Converter\HtmlConverterInterface $htmlToShortCodeConverter
-     * @param \Spryker\Zed\ContentGui\Business\Converter\ShortCodeConverterInterface $shortCodeToHtmlConverter
+     * @param \Spryker\Zed\ContentGui\Business\Converter\HtmlConverterInterface $htmlToTwigExpressionConverter
+     * @param \Spryker\Zed\ContentGui\Business\Converter\TwigExpressionConverterInterface $twigExpressionToHtmlConverter
      */
     public function __construct(
-        HtmlConverterInterface $htmlToShortCodeConverter,
-        ShortCodeConverterInterface $shortCodeToHtmlConverter
+        HtmlConverterInterface $htmlToTwigExpressionConverter,
+        TwigExpressionConverterInterface $twigExpressionToHtmlConverter
     ) {
-        $this->htmlToShortCodeConverter = $htmlToShortCodeConverter;
-        $this->shortCodeToHtmlConverter = $shortCodeToHtmlConverter;
+        $this->htmlToTwigExpressionConverter = $htmlToTwigExpressionConverter;
+        $this->twigExpressionToHtmlConverter = $twigExpressionToHtmlConverter;
     }
 
     /**
@@ -36,9 +36,9 @@ abstract class AbstractCmsGlossaryConverter
      *
      * @return string
      */
-    protected function convertTranslationShortCodeToHtml(string $html): string
+    protected function convertTranslationTwigExpressionToHtml(string $html): string
     {
-        return $this->shortCodeToHtmlConverter->replaceShortCode($html);
+        return $this->twigExpressionToHtmlConverter->replaceTwigExpression($html);
     }
 
     /**
@@ -46,8 +46,8 @@ abstract class AbstractCmsGlossaryConverter
      *
      * @return string
      */
-    protected function convertTranslationHtmlToShortCode(string $html): string
+    protected function convertTranslationHtmlToTwigExpression(string $html): string
     {
-        return $this->htmlToShortCodeConverter->replaceWidget($html);
+        return $this->htmlToTwigExpressionConverter->replaceWidget($html);
     }
 }

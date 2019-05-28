@@ -18,9 +18,9 @@ class CmsGuiGlossaryConverter extends AbstractCmsGlossaryConverter implements Cm
      *
      * @return \Generated\Shared\Transfer\CmsGlossaryTransfer
      */
-    public function convertShortCodeToHtml(CmsGlossaryTransfer $cmsGlossaryTransfer): CmsGlossaryTransfer
+    public function convertTwigExpressionToHtml(CmsGlossaryTransfer $cmsGlossaryTransfer): CmsGlossaryTransfer
     {
-        return $this->execute($cmsGlossaryTransfer, 'convertTranslationShortCodeToHtml');
+        return $this->execute($cmsGlossaryTransfer, 'convertTranslationTwigExpressionToHtml');
     }
 
     /**
@@ -28,9 +28,9 @@ class CmsGuiGlossaryConverter extends AbstractCmsGlossaryConverter implements Cm
      *
      * @return \Generated\Shared\Transfer\CmsGlossaryTransfer
      */
-    public function convertHtmlToShortCode(CmsGlossaryTransfer $cmsGlossaryTransfer): CmsGlossaryTransfer
+    public function convertHtmlToTwigExpression(CmsGlossaryTransfer $cmsGlossaryTransfer): CmsGlossaryTransfer
     {
-        return $this->execute($cmsGlossaryTransfer, 'convertTranslationHtmlToShortCode');
+        return $this->execute($cmsGlossaryTransfer, 'convertTranslationHtmlToTwigExpression');
     }
 
     /**

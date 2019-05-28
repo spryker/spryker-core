@@ -25,9 +25,9 @@ class ContentGuiFacade extends AbstractFacade implements ContentGuiFacadeInterfa
      *
      * @return \Generated\Shared\Transfer\CmsGlossaryTransfer
      */
-    public function convertCmsGlossaryHtmlToShortCode(CmsGlossaryTransfer $cmsGlossaryTransfer): CmsGlossaryTransfer
+    public function convertCmsGlossaryHtmlToTwigExpression(CmsGlossaryTransfer $cmsGlossaryTransfer): CmsGlossaryTransfer
     {
-        return $this->getFactory()->createCmsGuiGlossaryConverter()->convertHtmlToShortCode($cmsGlossaryTransfer);
+        return $this->getFactory()->createCmsGuiGlossaryConverter()->convertHtmlToTwigExpression($cmsGlossaryTransfer);
     }
 
     /**
@@ -39,9 +39,9 @@ class ContentGuiFacade extends AbstractFacade implements ContentGuiFacadeInterfa
      *
      * @return \Generated\Shared\Transfer\CmsBlockGlossaryTransfer
      */
-    public function convertCmsBlockGlossaryHtmlToShortCode(CmsBlockGlossaryTransfer $cmsBlockGlossaryTransfer): CmsBlockGlossaryTransfer
+    public function convertCmsBlockGlossaryHtmlToTwigExpression(CmsBlockGlossaryTransfer $cmsBlockGlossaryTransfer): CmsBlockGlossaryTransfer
     {
-        return $this->getFactory()->createCmsBlockGuiGlossaryConverter()->convertHtmlToShortCode($cmsBlockGlossaryTransfer);
+        return $this->getFactory()->createCmsBlockGuiGlossaryConverter()->convertHtmlToTwigExpression($cmsBlockGlossaryTransfer);
     }
 
     /**
@@ -53,9 +53,9 @@ class ContentGuiFacade extends AbstractFacade implements ContentGuiFacadeInterfa
      *
      * @return \Generated\Shared\Transfer\CmsGlossaryTransfer
      */
-    public function convertCmsGlossaryShortCodeToHtml(CmsGlossaryTransfer $cmsGlossaryTransfer): CmsGlossaryTransfer
+    public function convertCmsGlossaryTwigExpressionToHtml(CmsGlossaryTransfer $cmsGlossaryTransfer): CmsGlossaryTransfer
     {
-        return $this->getFactory()->createCmsGuiGlossaryConverter()->convertShortCodeToHtml($cmsGlossaryTransfer);
+        return $this->getFactory()->createCmsGuiGlossaryConverter()->convertTwigExpressionToHtml($cmsGlossaryTransfer);
     }
 
     /**
@@ -67,8 +67,8 @@ class ContentGuiFacade extends AbstractFacade implements ContentGuiFacadeInterfa
      *
      * @return \Generated\Shared\Transfer\CmsBlockGlossaryTransfer
      */
-    public function convertCmsBlockGlossaryShortCodeToHtml(CmsBlockGlossaryTransfer $cmsBlockGlossaryTransfer): CmsBlockGlossaryTransfer
+    public function convertCmsBlockGlossaryTwigExpressionToHtml(CmsBlockGlossaryTransfer $cmsBlockGlossaryTransfer): CmsBlockGlossaryTransfer
     {
-        return $this->getFactory()->createCmsBlockGuiGlossaryConverter()->convertShortCodeToHtml($cmsBlockGlossaryTransfer);
+        return $this->getFactory()->createCmsBlockGuiGlossaryConverter()->convertTwigExpressionToHtml($cmsBlockGlossaryTransfer);
     }
 }

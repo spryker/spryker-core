@@ -16,12 +16,12 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\ContentGui\Communication\ContentGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\ContentGui\ContentGuiConfig getConfig()
  */
-class HtmlToShortCodeCmsBlockGlossaryBeforeSavePlugin extends AbstractPlugin implements CmsBlockGlossaryBeforeSavePluginInterface
+class HtmlToTwigExpressionCmsBlockGlossaryBeforeSavePlugin extends AbstractPlugin implements CmsBlockGlossaryBeforeSavePluginInterface
 {
     /**
      * {@inheritDoc}
      * - Executes before saving CmsBlockGlossaryTransfer data to the database.
-     * - Converts content item html editor widgets to twig short-codes in CmsBlockGlossaryPlaceholderTranslationTransfer translations.
+     * - Converts content item html editor widgets to twig twig expressions in CmsBlockGlossaryPlaceholderTranslationTransfer translations.
      *
      * @api
      *
@@ -31,6 +31,6 @@ class HtmlToShortCodeCmsBlockGlossaryBeforeSavePlugin extends AbstractPlugin imp
      */
     public function execute(CmsBlockGlossaryTransfer $cmsBlockGlossaryTransfer): CmsBlockGlossaryTransfer
     {
-        return $this->getFacade()->convertCmsBlockGlossaryHtmlToShortCode($cmsBlockGlossaryTransfer);
+        return $this->getFacade()->convertCmsBlockGlossaryHtmlToTwigExpression($cmsBlockGlossaryTransfer);
     }
 }

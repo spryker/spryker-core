@@ -12,9 +12,9 @@ use Spryker\Zed\ContentGui\Business\Converter\CmsBlockGui\CmsBlockGuiGlossaryCon
 use Spryker\Zed\ContentGui\Business\Converter\CmsGui\CmsGuiGlossaryConverter;
 use Spryker\Zed\ContentGui\Business\Converter\CmsGui\CmsGuiGlossaryConverterInterface;
 use Spryker\Zed\ContentGui\Business\Converter\HtmlConverterInterface;
-use Spryker\Zed\ContentGui\Business\Converter\HtmlToShortCodeConverter;
-use Spryker\Zed\ContentGui\Business\Converter\ShortCodeConverterInterface;
-use Spryker\Zed\ContentGui\Business\Converter\ShortCodeToHtmlConverter;
+use Spryker\Zed\ContentGui\Business\Converter\HtmlToTwigExpressionConverter;
+use Spryker\Zed\ContentGui\Business\Converter\TwigExpressionConverterInterface;
+use Spryker\Zed\ContentGui\Business\Converter\TwigExpressionToHtmlConverter;
 use Spryker\Zed\ContentGui\ContentGuiDependencyProvider;
 use Spryker\Zed\ContentGui\Dependency\Facade\ContentGuiToContentFacadeInterface;
 use Spryker\Zed\ContentGui\Dependency\Facade\ContentGuiToTranslatorFacadeInterface;
@@ -31,8 +31,8 @@ class ContentGuiBusinessFactory extends AbstractBusinessFactory
     public function createCmsGuiGlossaryConverter(): CmsGuiGlossaryConverterInterface
     {
         return new CmsGuiGlossaryConverter(
-            $this->createHtmlToShortCodeConverter(),
-            $this->createShortCodeToHtmlConverter()
+            $this->createHtmlToTwigExpressionConverter(),
+            $this->createTwigExpressionToHtmlConverter()
         );
     }
 
@@ -42,25 +42,25 @@ class ContentGuiBusinessFactory extends AbstractBusinessFactory
     public function createCmsBlockGuiGlossaryConverter(): CmsBlockGuiGlossaryConverterInterface
     {
         return new CmsBlockGuiGlossaryConverter(
-            $this->createHtmlToShortCodeConverter(),
-            $this->createShortCodeToHtmlConverter()
+            $this->createHtmlToTwigExpressionConverter(),
+            $this->createTwigExpressionToHtmlConverter()
         );
     }
 
     /**
      * @return \Spryker\Zed\ContentGui\Business\Converter\HtmlConverterInterface
      */
-    public function createHtmlToShortCodeConverter(): HtmlConverterInterface
+    public function createHtmlToTwigExpressionConverter(): HtmlConverterInterface
     {
-        return new HtmlToShortCodeConverter();
+        return new HtmlToTwigExpressionConverter();
     }
 
     /**
-     * @return \Spryker\Zed\ContentGui\Business\Converter\ShortCodeConverterInterface
+     * @return \Spryker\Zed\ContentGui\Business\Converter\TwigExpressionConverterInterface
      */
-    public function createShortCodeToHtmlConverter(): ShortCodeConverterInterface
+    public function createTwigExpressionToHtmlConverter(): TwigExpressionConverterInterface
     {
-        return new ShortCodeToHtmlConverter(
+        return new TwigExpressionToHtmlConverter(
             $this->getContentFacade(),
             $this->getConfig(),
             $this->getTranslatorFacade(),

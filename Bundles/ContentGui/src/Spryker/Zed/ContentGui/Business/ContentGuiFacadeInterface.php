@@ -23,7 +23,7 @@ interface ContentGuiFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CmsGlossaryTransfer
      */
-    public function convertCmsGlossaryHtmlToShortCode(CmsGlossaryTransfer $cmsGlossaryTransfer): CmsGlossaryTransfer;
+    public function convertCmsGlossaryHtmlToTwigExpression(CmsGlossaryTransfer $cmsGlossaryTransfer): CmsGlossaryTransfer;
 
     /**
      * Specification:
@@ -36,7 +36,7 @@ interface ContentGuiFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CmsBlockGlossaryTransfer
      */
-    public function convertCmsBlockGlossaryHtmlToShortCode(CmsBlockGlossaryTransfer $cmsBlockGlossaryTransfer): CmsBlockGlossaryTransfer;
+    public function convertCmsBlockGlossaryHtmlToTwigExpression(CmsBlockGlossaryTransfer $cmsBlockGlossaryTransfer): CmsBlockGlossaryTransfer;
 
     /**
      * Specification:
@@ -49,7 +49,7 @@ interface ContentGuiFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CmsGlossaryTransfer
      */
-    public function convertCmsGlossaryShortCodeToHtml(CmsGlossaryTransfer $cmsGlossaryTransfer): CmsGlossaryTransfer;
+    public function convertCmsGlossaryTwigExpressionToHtml(CmsGlossaryTransfer $cmsGlossaryTransfer): CmsGlossaryTransfer;
 
     /**
      * Specification:
@@ -62,5 +62,5 @@ interface ContentGuiFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CmsBlockGlossaryTransfer
      */
-    public function convertCmsBlockGlossaryShortCodeToHtml(CmsBlockGlossaryTransfer $cmsBlockGlossaryTransfer): CmsBlockGlossaryTransfer;
+    public function convertCmsBlockGlossaryTwigExpressionToHtml(CmsBlockGlossaryTransfer $cmsBlockGlossaryTransfer): CmsBlockGlossaryTransfer;
 }
