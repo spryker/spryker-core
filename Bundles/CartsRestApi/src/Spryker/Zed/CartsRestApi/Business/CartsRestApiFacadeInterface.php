@@ -99,7 +99,7 @@ interface CartsRestApiFacadeInterface
     /**
      * Specification:
      * - Updates cart item quantity.
-     * - QuoteTransfer, customerReference, sku and quantity must be set in the RestCartItemsAttributesTransfer.
+     * - quoteUuid, customerReference, sku and quantity must be set in the RestCartItemsAttributesTransfer.
      *
      * @api
      *
@@ -112,7 +112,7 @@ interface CartsRestApiFacadeInterface
     /**
      * Specification:
      * - Adds an item to the cart.
-     * - Quote and customerReference must be set in the RestCartItemsAttributesTransfer.
+     * - quoteUuid, customerReference, sku and quantity must be set in the RestCartItemsAttributesTransfer.
      *
      * @api
      *
@@ -125,7 +125,7 @@ interface CartsRestApiFacadeInterface
     /**
      * Specification:
      * - Removes item from cart.
-     * - QuoteTransfer, customerReference, sku and quantity must be set in the RestCartItemsAttributesTransfer.
+     * - quoteUuid, customerReference, sku must be set in the RestCartItemsAttributesTransfer.
      *
      * @api
      *

@@ -63,7 +63,6 @@ class QuoteDeleter implements QuoteDeleterInterface
         }
 
         $originalQuoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
-
         $originalQuoteIsDefault = $originalQuoteTransfer->getIsDefault();
 
         $quoteResponseTransfer = $this->persistentCartFacade->deleteQuote(

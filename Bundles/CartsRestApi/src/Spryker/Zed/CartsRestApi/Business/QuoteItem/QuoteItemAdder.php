@@ -61,6 +61,7 @@ class QuoteItemAdder implements QuoteItemAdderInterface
         $restCartItemsAttributesTransfer
             ->requireCustomerReference()
             ->requireSku()
+            ->requireQuantity()
             ->requireQuoteUuid();
 
         $quoteResponseTransfer = $this->quoteReader->findQuoteByUuid(
