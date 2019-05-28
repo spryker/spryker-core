@@ -7,11 +7,9 @@
 
 namespace Spryker\Zed\SchedulerJenkins\Business\Api;
 
-use Generated\Shared\Transfer\SchedulerResponseTransfer;
+use Generated\Shared\Transfer\JenkinsResponseTransfer;
 use GuzzleHttp\Exception\BadResponseException;
-use Psr\Http\Message\ResponseInterface;
-use Spryker\Shared\SchedulerJenkins\SchedulerJenkinsConfig as SharedSchedulerJenkinsConfig;
-use Spryker\Zed\SchedulerJenkins\Business\Api\Exception\JenkinsBaseUrlNotFound;
+use Spryker\Zed\SchedulerJenkins\Business\Api\Builder\JenkinsResponseBuilderInterface;
 use Spryker\Zed\SchedulerJenkins\Dependency\Guzzle\SchedulerJenkinsToGuzzleInterface;
 use Spryker\Zed\SchedulerJenkins\SchedulerJenkinsConfig;
 
@@ -25,6 +23,9 @@ class JenkinsApi implements JenkinsApiInterface
 
     protected const SUCCESS_STATUS_CODE = 200;
 
+    protected const REQUEST_GET_METHOD = 'GET';
+    protected const REQUEST_POST_METHOD = 'POST';
+
     /**
      * @var \Spryker\Zed\SchedulerJenkins\Dependency\Guzzle\SchedulerJenkinsToGuzzleInterface
      */
@@ -36,68 +37,97 @@ class JenkinsApi implements JenkinsApiInterface
     protected $schedulerJenkinsConfig;
 
     /**
+     * @var \Spryker\Zed\SchedulerJenkins\Business\Api\Builder\JenkinsResponseBuilderInterface
+     */
+    protected $jenkinsResponseBuilder;
+
+    /**
+     * @var \Spryker\Zed\SchedulerJenkins\Business\Api\JenkinsConfigurationReaderInterface
+     */
+    protected $jenkinsConfigurationReader;
+
+    /**
      * @param \Spryker\Zed\SchedulerJenkins\Dependency\Guzzle\SchedulerJenkinsToGuzzleInterface $client
      * @param \Spryker\Zed\SchedulerJenkins\SchedulerJenkinsConfig $schedulerJenkinsConfig
+     * @param \Spryker\Zed\SchedulerJenkins\Business\Api\Builder\JenkinsResponseBuilderInterface $jenkinsResponseBuilder
+     * @param \Spryker\Zed\SchedulerJenkins\Business\Api\JenkinsConfigurationReaderInterface $jenkinsConfigurationReader
      */
     public function __construct(
         SchedulerJenkinsToGuzzleInterface $client,
-        SchedulerJenkinsConfig $schedulerJenkinsConfig
+        SchedulerJenkinsConfig $schedulerJenkinsConfig,
+        JenkinsResponseBuilderInterface $jenkinsResponseBuilder,
+        JenkinsConfigurationReaderInterface $jenkinsConfigurationReader
     ) {
         $this->client = $client;
         $this->schedulerJenkinsConfig = $schedulerJenkinsConfig;
+        $this->jenkinsResponseBuilder = $jenkinsResponseBuilder;
+        $this->jenkinsConfigurationReader = $jenkinsConfigurationReader;
     }
 
     /**
-     * @param string $schedulerId
+     * @param string $idScheduler
      * @param string $urlPath
      *
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return \Generated\Shared\Transfer\JenkinsResponseTransfer
      */
-    public function executeGetRequest(string $schedulerId, string $urlPath): ResponseInterface
+    public function executeGetRequest(string $idScheduler, string $urlPath): JenkinsResponseTransfer
     {
-        $requestUrl = $this->getJenkinsBaseUrlBySchedulerId($schedulerId, $urlPath);
-        $response = $this->client->get($requestUrl);
-
-        return $response;
+        return $this->executeRequest(static::REQUEST_GET_METHOD, $idScheduler, $urlPath);
     }
 
     /**
-     * @param string $schedulerId
+     * @param string $idScheduler
      * @param string $urlPath
-     * @param string $xmlTemplate
+     * @param string $body
      *
-     * @return \Generated\Shared\Transfer\SchedulerResponseTransfer
+     * @return \Generated\Shared\Transfer\JenkinsResponseTransfer
      */
-    public function executePostRequest(string $schedulerId, string $urlPath, string $xmlTemplate = ''): SchedulerResponseTransfer
+    public function executePostRequest(string $idScheduler, string $urlPath, string $body = ''): JenkinsResponseTransfer
+    {
+        return $this->executeRequest(static::REQUEST_POST_METHOD, $idScheduler, $urlPath);
+    }
+
+    /**
+     * @param string $method
+     * @param string $idScheduler
+     * @param string $urlPath
+     * @param string $body
+     *
+     * @return \Generated\Shared\Transfer\JenkinsResponseTransfer
+     */
+    protected function executeRequest(string $method, string $idScheduler, string $urlPath, string $body = ''): JenkinsResponseTransfer
     {
         try {
-            $requestUrl = $this->getJenkinsBaseUrlBySchedulerId($schedulerId, $urlPath);
-            $requestOptions = $this->getRequestOptions($schedulerId, $xmlTemplate);
-            $response = $this->client->post($requestUrl, $requestOptions);
+            $baseUrl = $this->jenkinsConfigurationReader->getJenkinsBaseUrlBySchedulerId($idScheduler, $urlPath);
+            $requestOptions = $this->getRequestOptions($idScheduler, $body);
+            $response = $this->client->request($method, $baseUrl, $requestOptions);
         } catch (BadResponseException $badResponseException) {
             $exceptionMessage = $badResponseException->getResponse()->getBody()->getContents();
 
-            return (new SchedulerResponseTransfer())
-                ->setMessage($exceptionMessage)
-                ->setStatus(false);
+            return $this->jenkinsResponseBuilder
+                ->withMessage($exceptionMessage)
+                ->withStatus(false)
+                ->build();
         }
 
-        return (new SchedulerResponseTransfer())
-            ->setStatus($response->getStatusCode() === static::SUCCESS_STATUS_CODE);
+        return $this->jenkinsResponseBuilder
+            ->withPayload($response->getBody()->getContents())
+            ->withStatus($response->getStatusCode() === static::SUCCESS_STATUS_CODE)
+            ->build();
     }
 
     /**
      * @param string $schedulerId
-     * @param string $xmlTemplate
+     * @param string $body
      *
      * @return array
      */
-    protected function getRequestOptions(string $schedulerId, string $xmlTemplate = ''): array
+    protected function getRequestOptions(string $schedulerId, string $body = ''): array
     {
         $requestOptions = [
-            static::HEADERS_KEY => $this->getHeaders($xmlTemplate),
-            static::BODY_KEY => $xmlTemplate,
-            static::AUTH_KEY => $this->getJenkinsAuthCredentials($schedulerId),
+            static::HEADERS_KEY => $this->getHeaders($body),
+            static::BODY_KEY => $body,
+            static::AUTH_KEY => $this->jenkinsConfigurationReader->getJenkinsAuthCredentials($schedulerId),
         ];
 
         return $requestOptions;
@@ -119,56 +149,9 @@ class JenkinsApi implements JenkinsApiInterface
         }
 
         if ($this->schedulerJenkinsConfig->isJenkinsCsrfProtectionEnabled()) {
-            $httpHeader[] = $this->client->get(static::JENKINS_URL_API_CSRF_TOKEN);
+            $httpHeader[] = $this->client->request(static::REQUEST_GET_METHOD, static::JENKINS_URL_API_CSRF_TOKEN);
         }
 
         return $httpHeader;
-    }
-
-    /**
-     * @param string $schedulerId
-     *
-     * @return array
-     */
-    protected function getJenkinsConfigurationBySchedulerId(string $schedulerId): array
-    {
-        $schedulerJenkinsConfiguration = $this->schedulerJenkinsConfig->getJenkinsConfiguration();
-
-        return $schedulerJenkinsConfiguration[$schedulerId];
-    }
-
-    /**
-     * @param string $schedulerId
-     *
-     * @return string[]
-     */
-    protected function getJenkinsAuthCredentials(string $schedulerId): array
-    {
-        $schedulerJenkinsConfiguration = $this->getJenkinsConfigurationBySchedulerId($schedulerId);
-
-        if (!isset($schedulerJenkinsConfiguration[SharedSchedulerJenkinsConfig::SCHEDULER_JENKINS_CREDENTIALS])) {
-            return [];
-        }
-
-        return $schedulerJenkinsConfiguration[SharedSchedulerJenkinsConfig::SCHEDULER_JENKINS_CREDENTIALS];
-    }
-
-    /**
-     * @param string $schedulerId
-     * @param string $urlPath
-     *
-     * @throws \Spryker\Zed\SchedulerJenkins\Business\Api\Exception\JenkinsBaseUrlNotFound
-     *
-     * @return string
-     */
-    protected function getJenkinsBaseUrlBySchedulerId(string $schedulerId, string $urlPath): string
-    {
-        $schedulerJenkinsConfiguration = $this->getJenkinsConfigurationBySchedulerId($schedulerId);
-
-        if (!isset($schedulerJenkinsConfiguration[SharedSchedulerJenkinsConfig::SCHEDULER_JENKINS_BASE_URL])) {
-            throw new JenkinsBaseUrlNotFound();
-        }
-
-        return $schedulerJenkinsConfiguration[SharedSchedulerJenkinsConfig::SCHEDULER_JENKINS_BASE_URL] . $urlPath;
     }
 }

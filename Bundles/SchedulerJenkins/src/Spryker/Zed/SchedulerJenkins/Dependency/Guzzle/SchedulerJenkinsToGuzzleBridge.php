@@ -25,24 +25,14 @@ class SchedulerJenkinsToGuzzleBridge implements SchedulerJenkinsToGuzzleInterfac
     }
 
     /**
+     * @param string $method
      * @param string $uri
      * @param array $options
      *
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function get(string $uri, array $options = []): ResponseInterface
+    public function request(string $method, string $uri, array $options = []): ResponseInterface
     {
-        return $this->client->get($uri, $options);
-    }
-
-    /**
-     * @param string $uri
-     * @param array $options
-     *
-     * @return \Psr\Http\Message\ResponseInterface
-     */
-    public function post(string $uri, array $options = []): ResponseInterface
-    {
-        return $this->client->post($uri, $options);
+        return $this->client->request($method, $uri, $options);
     }
 }

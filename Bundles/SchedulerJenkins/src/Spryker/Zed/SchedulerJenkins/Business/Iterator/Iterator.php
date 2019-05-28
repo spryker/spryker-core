@@ -56,7 +56,7 @@ class Iterator implements IteratorInterface
         $existingJobNames = $this->jenkinsJobReader->getExistingJobs($idScheduler);
 
         foreach ($scheduleTransfer->getJobs() as $jobTransfer) {
-            $executor = $this->getModel($jobTransfer, $existingJobNames);
+            $executor = $this->getExecutor($jobTransfer, $existingJobNames);
             $response = $executor->execute($idScheduler, $jobTransfer);
 
             if (!$response->getStatus()) {
@@ -73,7 +73,7 @@ class Iterator implements IteratorInterface
      *
      * @return \Spryker\Zed\SchedulerJenkins\Business\Executor\ExecutorInterface
      */
-    protected function getModel(SchedulerJobTransfer $jobTransfer, array $existingJobNames): ExecutorInterface
+    protected function getExecutor(SchedulerJobTransfer $jobTransfer, array $existingJobNames): ExecutorInterface
     {
         $model = in_array($jobTransfer->getName(), $existingJobNames, true)
             ? $this->executorForExistingJob

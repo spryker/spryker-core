@@ -8,8 +8,12 @@
 namespace Spryker\Zed\SchedulerJenkins\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\SchedulerJenkins\Business\Api\Builder\JenkinsResponseBuilder;
+use Spryker\Zed\SchedulerJenkins\Business\Api\Builder\JenkinsResponseBuilderInterface;
 use Spryker\Zed\SchedulerJenkins\Business\Api\JenkinsApi;
 use Spryker\Zed\SchedulerJenkins\Business\Api\JenkinsApiInterface;
+use Spryker\Zed\SchedulerJenkins\Business\Api\JenkinsConfigurationReader;
+use Spryker\Zed\SchedulerJenkins\Business\Api\JenkinsConfigurationReaderInterface;
 use Spryker\Zed\SchedulerJenkins\Business\Executor\CreateExecutor;
 use Spryker\Zed\SchedulerJenkins\Business\Executor\DeleteExecutor;
 use Spryker\Zed\SchedulerJenkins\Business\Executor\DisableExecutor;
@@ -17,6 +21,8 @@ use Spryker\Zed\SchedulerJenkins\Business\Executor\EnableExecutor;
 use Spryker\Zed\SchedulerJenkins\Business\Executor\ExecutorInterface;
 use Spryker\Zed\SchedulerJenkins\Business\Executor\NullExecutor;
 use Spryker\Zed\SchedulerJenkins\Business\Executor\UpdateExecutor;
+use Spryker\Zed\SchedulerJenkins\Business\Iterator\Builder\SchedulerResponseBuilder;
+use Spryker\Zed\SchedulerJenkins\Business\Iterator\Builder\SchedulerResponseBuilderInterface;
 use Spryker\Zed\SchedulerJenkins\Business\Iterator\Iterator;
 use Spryker\Zed\SchedulerJenkins\Business\Iterator\IteratorInterface;
 use Spryker\Zed\SchedulerJenkins\Business\Reader\JenkinsJobReader;
@@ -40,7 +46,9 @@ class SchedulerJenkinsBusinessFactory extends AbstractBusinessFactory
     {
         return new JenkinsApi(
             $this->getGuzzleClient(),
-            $this->getConfig()
+            $this->getConfig(),
+            $this->createJenkinsResponseBuilder(),
+            $this->createJenkinsApiConfigurationReader()
         );
     }
 
@@ -173,6 +181,32 @@ class SchedulerJenkinsBusinessFactory extends AbstractBusinessFactory
     public function createNullExecutor(): ExecutorInterface
     {
         return new NullExecutor();
+    }
+
+    /**
+     * @return \Spryker\Zed\SchedulerJenkins\Business\Iterator\Builder\SchedulerResponseBuilderInterface
+     */
+    public function createSchedulerResponseBuilder(): SchedulerResponseBuilderInterface
+    {
+        return new SchedulerResponseBuilder();
+    }
+
+    /**
+     * @return \Spryker\Zed\SchedulerJenkins\Business\Api\Builder\JenkinsResponseBuilderInterface
+     */
+    public function createJenkinsResponseBuilder(): JenkinsResponseBuilderInterface
+    {
+        return new JenkinsResponseBuilder();
+    }
+
+    /**
+     * @return \Spryker\Zed\SchedulerJenkins\Business\Api\JenkinsConfigurationReaderInterface
+     */
+    public function createJenkinsApiConfigurationReader(): JenkinsConfigurationReaderInterface
+    {
+        return new JenkinsConfigurationReader(
+            $this->getConfig()
+        );
     }
 
     /**
