@@ -20,6 +20,8 @@ use Spryker\Zed\SharedCart\Business\Model\QuotePermissionGroupReader;
 use Spryker\Zed\SharedCart\Business\Model\QuotePermissionGroupReaderInterface;
 use Spryker\Zed\SharedCart\Business\Model\QuoteReader;
 use Spryker\Zed\SharedCart\Business\Model\QuoteReaderInterface;
+use Spryker\Zed\SharedCart\Business\QuoteCompanyUser\QuoteCompanyUserReader;
+use Spryker\Zed\SharedCart\Business\QuoteCompanyUser\QuoteCompanyUserReaderInterface;
 use Spryker\Zed\SharedCart\Business\QuoteResponseExpander\CustomerPermissionQuoteResponseExpander;
 use Spryker\Zed\SharedCart\Business\QuoteResponseExpander\CustomerShareCartQuoteResponseExpander;
 use Spryker\Zed\SharedCart\Business\QuoteResponseExpander\QuoteResponseExpander;
@@ -140,6 +142,14 @@ class SharedCartBusinessFactory extends AbstractBusinessFactory
         return new QuoteShareDetailsReader(
             $this->getRepository()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\SharedCart\Business\QuoteCompanyUser\QuoteCompanyUserReaderInterface
+     */
+    public function createQuoteCompanyUserReader(): QuoteCompanyUserReaderInterface
+    {
+        return new QuoteCompanyUserReader($this->getRepository());
     }
 
     /**

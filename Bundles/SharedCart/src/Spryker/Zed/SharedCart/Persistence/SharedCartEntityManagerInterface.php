@@ -89,4 +89,11 @@ interface SharedCartEntityManagerInterface
      * @return void
      */
     public function updateCompanyUserQuotePermissionGroup(ShareDetailTransfer $shareDetailTransfer): void;
+
+    /**
+     * @param \Generated\Shared\Transfer\ShareDetailTransfer $shareDetailTransfer
+     *
+     * @return void
+     */
+    public function updateQuoteCompanyUserQuotePermissionGroup(ShareDetailTransfer $shareDetailTransfer): void;
 }
