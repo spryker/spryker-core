@@ -34,11 +34,11 @@ class QuoteReader implements QuoteReaderInterface
      */
     public function getQuoteByResourceShareUuid(string $resourceShareUuid): QuoteResponseTransfer
     {
-        $resourceShareTransfer = (new ResourceShareTransfer())
-            ->setUuid($resourceShareUuid);
-
         $resourceShareRequestTransfer = (new ResourceShareRequestTransfer())
-            ->setResourceShare($resourceShareTransfer);
+            ->setResourceShare(
+                (new ResourceShareTransfer())
+                    ->setUuid($resourceShareUuid)
+            );
 
         return $this->zedPersistentCartShareStub->getQuoteByResourceShareUuid($resourceShareRequestTransfer);
     }

@@ -108,7 +108,8 @@ class ResourceShareWriter implements ResourceShareWriterInterface
             );
         }
 
-        return $resourceShareResponseTransfer->setIsSuccessful(true)
+        return $resourceShareResponseTransfer
+            ->setIsSuccessful(true)
             ->setResourceShare($resourceShareTransfer);
     }
 }

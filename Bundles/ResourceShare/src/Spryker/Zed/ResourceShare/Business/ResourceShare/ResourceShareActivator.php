@@ -48,8 +48,7 @@ class ResourceShareActivator implements ResourceShareActivatorInterface
             return $resourceShareResponseTransfer;
         }
 
-        $resourceShareTransfer = $resourceShareResponseTransfer->getResourceShare();
-        $resourceShareRequestTransfer->setResourceShare($resourceShareTransfer);
+        $resourceShareRequestTransfer->setResourceShare($resourceShareResponseTransfer->getResourceShare());
 
         return $this->executeResourceShareActivatorStrategyPlugins(
             $resourceShareRequestTransfer
@@ -75,7 +74,7 @@ class ResourceShareActivator implements ResourceShareActivatorInterface
         }
 
         throw new ResourceShareActivatorStrategyNotFoundException(
-            'Resource share activator strategy was not found. Please define one.'
+            'Resource share activator strategy was not found.'
         );
     }
 }

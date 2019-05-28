@@ -25,13 +25,15 @@ class ResourceShareValidator implements ResourceShareValidatorInterface
         $resourceShareResponseTransfer = new ResourceShareResponseTransfer();
 
         if ($this->isResourceShareExpired($resourceShareTransfer)) {
-            return $resourceShareResponseTransfer->setIsSuccessful(false)
+            return $resourceShareResponseTransfer
+                ->setIsSuccessful(false)
                 ->addMessage(
                     (new MessageTransfer())->setValue(static::GLOSSARY_KEY_RESOURCE_SHARE_IS_EXPIRED)
                 );
         }
 
-        return $resourceShareResponseTransfer->setIsSuccessful(true)
+        return $resourceShareResponseTransfer
+            ->setIsSuccessful(true)
             ->setResourceShare($resourceShareTransfer);
     }
 

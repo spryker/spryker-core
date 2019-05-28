@@ -63,7 +63,8 @@ class ResourceShareReader implements ResourceShareReaderInterface
         );
 
         if (!$resourceShareTransfer) {
-            return $resourceShareResponseTransfer->setIsSuccessful(false)
+            return $resourceShareResponseTransfer
+                ->setIsSuccessful(false)
                 ->addMessage(
                     (new MessageTransfer())->setValue(static::GLOSSARY_KEY_RESOURCE_IS_NOT_FOUND_BY_PROVIDED_UUID)
                 );
@@ -74,7 +75,8 @@ class ResourceShareReader implements ResourceShareReaderInterface
             return $resourceShareResponseTransfer;
         }
 
-        $resourceShareResponseTransfer->setIsSuccessful(true)
+        $resourceShareResponseTransfer
+            ->setIsSuccessful(true)
             ->setResourceShare($resourceShareTransfer);
 
         return $this->executeResourceDataExpanderStrategyPlugins($resourceShareResponseTransfer);

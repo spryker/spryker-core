@@ -39,7 +39,8 @@ class SwitchDefaultCartResourceShareActivatorStrategy implements SwitchDefaultCa
     public function applySwitchDefaultCartResourceShareActivatorStrategy(
         ResourceShareRequestTransfer $resourceShareRequestTransfer
     ): ResourceShareResponseTransfer {
-        $resourceShareDataTransfer = $resourceShareRequestTransfer->getResourceShare()
+        $resourceShareDataTransfer = $resourceShareRequestTransfer
+            ->getResourceShare()
             ->getResourceShareData();
 
         $resourceShareDataTransfer->requireIdQuote();
