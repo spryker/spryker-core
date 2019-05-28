@@ -123,13 +123,16 @@ class ShortCodeToHtmlConverter implements ShortCodeConverterInterface
         $shortCodeReplacements = [];
 
         foreach ($shortCodes as $shortCode) {
-            $editorContentWidget = $this->getEditorContentWidgetByShortCode($shortCode, $contentWidgetTemplateTransfers);
-
-            if (!$editorContentWidget || isset($shortCodeReplacements[$shortCode])) {
+            if (isset($shortCodeReplacements[$shortCode])) {
                 continue;
             }
 
-            $shortCodeReplacements[$shortCode] = $editorContentWidget;
+            $editorContentWidget = $this->getEditorContentWidgetByShortCode($shortCode, $contentWidgetTemplateTransfers);
+            if (!$editorContentWidget) {
+                continue;
+            }
+
+            $shortCodeReplacements[$shortCode] = sprintf($this->contentGuiConfig->getEditorContentWidgetWrapper(), $editorContentWidget);
         }
 
         return strtr($html, $shortCodeReplacements);

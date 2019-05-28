@@ -17,20 +17,21 @@ class ContentGuiConfig extends AbstractBundleConfig
     protected const PARAMETER_SHORT_CODE = '%SHORT_CODE%';
     protected const PARAMETER_NAME = '%NAME%';
     protected const PARAMETER_TEMPLATE_DISPLAY_NAME = '%TEMPLATE_DISPLAY_NAME%';
+    protected const EDITOR_CONTENT_WIDGET_WRAPPER = '<p>%s</p>';
 
     /**
      * @return string
      */
     public function getEditorContentWidgetTemplate(): string
     {
-        return '<p><span class="content-item-editor js-content-item-editor" contenteditable="false" '
-            . 'data-type="' . static::PARAMETER_TYPE . '" data-id="' . static::PARAMETER_ID . '" '
-            . 'data-template="' . static::PARAMETER_TEMPLATE . '" data-short-code="' . static::PARAMETER_SHORT_CODE . '">'
-                . '<span>Content Item Type: <b>' . static::PARAMETER_TYPE . '</b></span>'
-                . '<span>Content Item ID#: <b>' . static::PARAMETER_ID . '</b></span>'
-                . '<span>Name: <b>' . static::PARAMETER_NAME . '</b></span>'
-                . '<span>Template: <b>' . static::PARAMETER_TEMPLATE_DISPLAY_NAME . '</b></span>'
-            . '</span></p>';
+        return '<span class="content-item-editor js-content-item-editor" contenteditable="false" '
+            . 'data-type="' . $this->getParameterType() . '" data-id="' . $this->getParameterId() . '" '
+            . 'data-template="' . $this->getParameterTemplate() . '" data-short-code="' . $this->getParameterShortCode() . '">'
+                . '<span>Content Item Type: <b>' . $this->getParameterType() . '</b></span>'
+                . '<span>Content Item ID#: <b>' . $this->getParameterId() . '</b></span>'
+                . '<span>Name: <b>' . $this->getParameterName() . '</b></span>'
+                . '<span>Template: <b>' . $this->getParameterTemplateDisplayName() . '</b></span>'
+            . '</span>';
     }
 
     /**
@@ -79,5 +80,13 @@ class ContentGuiConfig extends AbstractBundleConfig
     public function getParameterTemplateDisplayName(): string
     {
         return static::PARAMETER_TEMPLATE_DISPLAY_NAME;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEditorContentWidgetWrapper(): string
+    {
+        return static::EDITOR_CONTENT_WIDGET_WRAPPER;
     }
 }
