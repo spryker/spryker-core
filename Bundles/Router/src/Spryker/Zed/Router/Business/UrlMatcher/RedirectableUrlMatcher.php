@@ -33,7 +33,7 @@ class RedirectableUrlMatcher extends SymfonyRedirectableUrlMatcher
                     $port = ':' . $this->context->getHttpsPort();
                 }
 
-                $url = $scheme . '://' . $this->context->getHost() . $port . $url;
+                $url = sprintf('%s://%s%s%s', $scheme, $this->context->getHost(), $port, $url);
             }
         }
 

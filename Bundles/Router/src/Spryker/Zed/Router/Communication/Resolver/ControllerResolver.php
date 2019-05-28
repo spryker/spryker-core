@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Router\Business\Resolver;
+namespace Spryker\Zed\Router\Communication\Resolver;
 
 use InvalidArgumentException;
 use Spryker\Service\Container\ContainerInterface;

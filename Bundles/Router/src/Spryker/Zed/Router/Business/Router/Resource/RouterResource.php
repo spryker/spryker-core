@@ -117,19 +117,7 @@ class RouterResource implements ResourceInterface
         $pathCandidates = $this->getPathCandidates($module, $controller, $action);
 
         foreach ($pathCandidates as $pathCandidate) {
-            $route = new Route($pathCandidate);
-
-            $route->addDefaults([
-                '_controller' => [$controllerClassName, $method->getName()],
-                '_template' => $template,
-            ]);
-
-            $routeName = str_replace('/', ':', trim($pathCandidate, '/'));
-            if ($routeName === '') {
-                $routeName = 'home';
-            }
-
-            $routeCollection->add($routeName, $route);
+            $routeCollection = $this->addRouteToCollection($method, $routeCollection, $pathCandidate, $controllerClassName, $template);
         }
 
         return $routeCollection;
@@ -231,5 +219,33 @@ class RouterResource implements ResourceInterface
         }
 
         return $this->filterChain;
+    }
+
+    /**
+     * @param \ReflectionMethod $method
+     * @param \Spryker\Zed\Router\Business\Route\RouteCollection $routeCollection
+     * @param string $pathCandidate
+     * @param string $controllerClassName
+     * @param string $template
+     *
+     * @return \Spryker\Zed\Router\Business\Route\RouteCollection
+     */
+    protected function addRouteToCollection(ReflectionMethod $method, RouteCollection $routeCollection, string $pathCandidate, string $controllerClassName, string $template): RouteCollection
+    {
+        $route = new Route($pathCandidate);
+
+        $route->addDefaults([
+            '_controller' => [$controllerClassName, $method->getName()],
+            '_template' => $template,
+        ]);
+
+        $routeName = str_replace('/', ':', trim($pathCandidate, '/'));
+        if ($routeName === '') {
+            $routeName = 'home';
+        }
+
+        $routeCollection->add($routeName, $route);
+
+        return $routeCollection;
     }
 }

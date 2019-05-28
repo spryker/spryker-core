@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Router;
+namespace Spryker\Shared\Router;
 
 /**
  * Declares global environment configuration keys. Do not use it for other class constants.
  */
-interface RouterEnvironmentConfigConstantsZed
+interface RouterConstants
 {
     /**
      * Specification:

@@ -10,7 +10,7 @@ namespace Spryker\Zed\Router\Communication\Plugin\Application;
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\Router\Business\Resolver\ControllerResolver;
+use Spryker\Zed\Router\Communication\Resolver\ControllerResolver;
 use Symfony\Component\HttpKernel\Controller\ArgumentResolver;
 
 /**

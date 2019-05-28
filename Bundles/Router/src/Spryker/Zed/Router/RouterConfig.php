@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Router;
 
 use Spryker\Shared\Kernel\KernelConstants;
+use Spryker\Shared\Router\RouterConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 use Spryker\Zed\Router\Business\UrlMatcher\RedirectableUrlMatcher;
 
@@ -41,10 +42,10 @@ class RouterConfig extends AbstractBundleConfig
      */
     protected function getCachePathIfCacheEnabled(): ?string
     {
-        if ($this->get(RouterEnvironmentConfigConstantsZed::IS_CACHE_ENABLED, true)) {
+        if ($this->get(RouterConstants::IS_CACHE_ENABLED, true)) {
             $defaultCachePath = APPLICATION_ROOT_DIR . '/data/' . APPLICATION_STORE . '/cache/' . APPLICATION . '/routing';
 
-            return $this->get(RouterEnvironmentConfigConstantsZed::CACHE_PATH, $defaultCachePath);
+            return $this->get(RouterConstants::CACHE_PATH, $defaultCachePath);
         }
 
         return null;
@@ -73,7 +74,7 @@ class RouterConfig extends AbstractBundleConfig
      */
     public function isSslEnabled(): bool
     {
-        return $this->get(RouterEnvironmentConfigConstantsZed::IS_SSL_ENABLED, true);
+        return $this->get(RouterConstants::IS_SSL_ENABLED, true);
     }
 
     /**
@@ -81,6 +82,6 @@ class RouterConfig extends AbstractBundleConfig
      */
     public function getSslExcludedRouteNames(): array
     {
-        return $this->get(RouterEnvironmentConfigConstantsZed::SSL_EXCLUDED_ROUTE_NAMES, []);
+        return $this->get(RouterConstants::SSL_EXCLUDED_ROUTE_NAMES, []);
     }
 }
