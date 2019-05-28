@@ -18,7 +18,7 @@ interface OrderItemExpanderInterface
      *
      * @return \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer
      */
-    public function addReferences(
+    public function expandOrderItemWithReferences(
         SpySalesOrderItemEntityTransfer $salesOrderItemEntity,
         ItemTransfer $itemTransfer
     ): SpySalesOrderItemEntityTransfer;

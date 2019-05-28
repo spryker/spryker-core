@@ -34,6 +34,6 @@ class OrderItemReferenceExpanderPreSavePlugin extends AbstractPlugin implements 
      */
     public function expandOrderItem(QuoteTransfer $quoteTransfer, ItemTransfer $itemTransfer, SpySalesOrderItemEntityTransfer $salesOrderItemEntity): SpySalesOrderItemEntityTransfer
     {
-        return $this->getFacade()->addOrderReferencesToSalesOrderItem($salesOrderItemEntity, $itemTransfer);
+        return $this->getFacade()->expandOrderItemWithReferences($salesOrderItemEntity, $itemTransfer);
     }
 }

@@ -14,7 +14,8 @@ interface SalesMerchantConnectorFacadeInterface
 {
     /**
      * Specification:
-     * - TODO: Update
+     * - Adds OrderItemReference to SpySalesOrderItemEntityTransfer by generating the reference based on OrderItem ID
+     * - If ItemTransfer.MerchantReference exists, it adds that to SpySalesOrderItemEntityTransfer as well
      *
      * @api
      *
@@ -23,7 +24,7 @@ interface SalesMerchantConnectorFacadeInterface
      *
      * @return \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer
      */
-    public function addOrderReferencesToSalesOrderItem(
+    public function expandOrderItemWithReferences(
         SpySalesOrderItemEntityTransfer $salesOrderItemEntity,
         ItemTransfer $itemTransfer
     ): SpySalesOrderItemEntityTransfer;

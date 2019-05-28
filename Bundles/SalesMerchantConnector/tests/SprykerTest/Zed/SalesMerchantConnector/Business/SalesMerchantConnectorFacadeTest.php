@@ -40,7 +40,7 @@ class SalesMerchantConnectorFacadeTest extends Unit
 
         //act
         $newSalesOrderItemEntityTransfer =
-            $this->getFacade()->addOrderReferencesToSalesOrderItem($salesOrderItemEntityTransfer, $itemTransfer);
+            $this->getFacade()->expandOrderItemWithReferences($salesOrderItemEntityTransfer, $itemTransfer);
 
         //assert
         $this->assertEquals($this->getSalesOrderItemReference($idSalesOrderItem), $newSalesOrderItemEntityTransfer->getOrderItemReference());
@@ -57,7 +57,7 @@ class SalesMerchantConnectorFacadeTest extends Unit
 
         //act
         $newSalesOrderItemEntityTransfer =
-            $this->getFacade()->addOrderReferencesToSalesOrderItem($salesOrderItemEntityTransfer, $itemTransfer);
+            $this->getFacade()->expandOrderItemWithReferences($salesOrderItemEntityTransfer, $itemTransfer);
 
         //assert
         $this->assertNull($newSalesOrderItemEntityTransfer->getMerchantReference());
@@ -76,7 +76,7 @@ class SalesMerchantConnectorFacadeTest extends Unit
 
         //act
         $newSalesOrderItemEntityTransfer =
-            $this->getFacade()->addOrderReferencesToSalesOrderItem($salesOrderItemEntityTransfer, $itemTransfer);
+            $this->getFacade()->expandOrderItemWithReferences($salesOrderItemEntityTransfer, $itemTransfer);
 
         //assert
         $this->assertEquals($merchantReference, $newSalesOrderItemEntityTransfer->getMerchantReference());
