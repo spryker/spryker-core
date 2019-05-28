@@ -5,7 +5,7 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/calculation": "^5.0.0",
+    "spryker/calculation": "^4.6.0",
     "spryker/cart": "^6.0.0",
     "spryker/checkout": "^5.0.0",
     "spryker/currency": "^3.1.0",
