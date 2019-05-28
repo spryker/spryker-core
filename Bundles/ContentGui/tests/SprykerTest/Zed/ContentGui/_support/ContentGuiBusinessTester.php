@@ -89,7 +89,7 @@ class ContentGuiBusinessTester extends Actor
      */
     public function getOneShortCodeInString(ContentTransfer $bannerContentTransfer, bool $addLineBreak = false): string
     {
-        return '<p>' . $this->createShortCode($bannerContentTransfer, static::TEMPLATE_IDENTIFIER_DEFAULT) . '</p>'
+        return $this->createShortCode($bannerContentTransfer, static::TEMPLATE_IDENTIFIER_DEFAULT)
             . ($addLineBreak ? "\n" : '');
     }
 
@@ -101,8 +101,8 @@ class ContentGuiBusinessTester extends Actor
      */
     public function getTwoSameShortCodesInString(ContentTransfer $bannerContentTransfer, bool $addLineBreak = false): string
     {
-        return '<p>' . $this->createShortCode($bannerContentTransfer, static::TEMPLATE_IDENTIFIER_DEFAULT)
-            . '<p></p>' . $this->createShortCode($bannerContentTransfer, static::TEMPLATE_IDENTIFIER_DEFAULT) . '</p>'
+        return $this->createShortCode($bannerContentTransfer, static::TEMPLATE_IDENTIFIER_DEFAULT)
+            . $this->createShortCode($bannerContentTransfer, static::TEMPLATE_IDENTIFIER_DEFAULT)
             . ($addLineBreak ? "\n" : '');
     }
 
@@ -118,8 +118,8 @@ class ContentGuiBusinessTester extends Actor
         ContentTransfer $abstractProductListContentTransfer,
         bool $addLineBreak = false
     ): string {
-        return '<p>' . $this->createShortCode($bannerContentTransfer, static::TEMPLATE_IDENTIFIER_DEFAULT)
-            . '<p></p>' . $this->createShortCode($abstractProductListContentTransfer, static::TEMPLATE_IDENTIFIER_TOP_TITLE) . '</p>'
+        return $this->createShortCode($bannerContentTransfer, static::TEMPLATE_IDENTIFIER_DEFAULT)
+            . $this->createShortCode($abstractProductListContentTransfer, static::TEMPLATE_IDENTIFIER_TOP_TITLE)
             . ($addLineBreak ? "\n" : '');
     }
 
@@ -128,7 +128,7 @@ class ContentGuiBusinessTester extends Actor
      */
     public function getStringWithoutShortCodesAndWidgets(): string
     {
-        return '<p></p>';
+        return '';
     }
 
     /**
@@ -138,7 +138,7 @@ class ContentGuiBusinessTester extends Actor
      */
     public function getOneHtmlWidgetInString(ContentTransfer $bannerContentTransfer): string
     {
-        return '<p>' . $this->createWidget($bannerContentTransfer) . '</p>';
+        return $this->createWidget($bannerContentTransfer);
     }
 
     /**
@@ -148,8 +148,8 @@ class ContentGuiBusinessTester extends Actor
      */
     public function getTwoSameHtmlWidgetsInString(ContentTransfer $bannerContentTransfer): string
     {
-        return '<p>' . $this->createWidget($bannerContentTransfer)
-            . '<p></p>' . $this->createWidget($bannerContentTransfer) . '</p>';
+        return $this->createWidget($bannerContentTransfer)
+            . $this->createWidget($bannerContentTransfer);
     }
 
     /**
@@ -160,8 +160,8 @@ class ContentGuiBusinessTester extends Actor
      */
     public function getTwoDifferentHtmlWidgetsInString(ContentTransfer $bannerContentTransfer, ContentTransfer $abstractProductListContentTransfer): string
     {
-        return '<p>' . $this->createWidget($bannerContentTransfer)
-            . '<p></p>' . $this->createWidget($abstractProductListContentTransfer) . '</p>';
+        return $this->createWidget($bannerContentTransfer)
+            . $this->createWidget($abstractProductListContentTransfer);
     }
 
     /**
@@ -181,7 +181,7 @@ class ContentGuiBusinessTester extends Actor
             $templateDisplayName = static::TEMPLATE_DISPLAY_NAME_TOP_TITLE;
         }
 
-        return strtr($editorContentWidgetTemplate, [
+        $html = strtr($editorContentWidgetTemplate, [
             $this->getConfig()->getParameterId() => $contentTransfer->getIdContent(),
             $this->getConfig()->getParameterType() => $contentTransfer->getContentTypeKey(),
             $this->getConfig()->getParameterName() => $contentTransfer->getName(),
@@ -189,6 +189,8 @@ class ContentGuiBusinessTester extends Actor
             $this->getConfig()->getParameterTemplate() => $templateIdentifier,
             $this->getConfig()->getParameterTemplateDisplayName() => $templateDisplayName,
         ]);
+
+        return sprintf($this->getConfig()->getEditorContentWidgetWrapper(), $html);
     }
 
     /**
