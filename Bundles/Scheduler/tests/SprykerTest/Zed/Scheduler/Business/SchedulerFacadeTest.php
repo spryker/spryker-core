@@ -10,7 +10,6 @@ namespace SprykerTest\Zed\Scheduler\Business;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\SchedulerFilterTransfer;
 use Generated\Shared\Transfer\SchedulerJobTransfer;
-use Generated\Shared\Transfer\SchedulerRequestTransfer;
 use Generated\Shared\Transfer\SchedulerResponseTransfer;
 use Generated\Shared\Transfer\SchedulerScheduleTransfer;
 use Spryker\Shared\Kernel\Store;
@@ -49,9 +48,9 @@ class SchedulerFacadeTest extends Unit
      */
     public function testSchedulerConfigurationReaderWithoutReadersForTheCurrentStore(): void
     {
-        $schedulerRequestTransfer = $this->createSchedulerRequestTransfer();
+        $schedulerFilterTransfer = $this->createSchedulerFilterTransfer();
         $schedulerTransfer = $this->createSchedulerSchedulerTransfer();
-        $scheduleTransfer = $this->getSchedulerFacade()->readScheduleFromPhpSource($schedulerRequestTransfer, $schedulerTransfer);
+        $scheduleTransfer = $this->getSchedulerFacade()->readScheduleFromPhpSource($schedulerFilterTransfer, $schedulerTransfer);
 
         $this->assertInstanceOf(SchedulerScheduleTransfer::class, $scheduleTransfer);
         $this->assertSame(2, $scheduleTransfer->getJobs()->count());
@@ -66,13 +65,13 @@ class SchedulerFacadeTest extends Unit
      */
     public function testSchedulerSetup(): void
     {
-        $schedulerRequestTransfer = $this->createSchedulerRequestTransfer();
-        $schedulerResponseCollectionTransfer = $this->getSchedulerFacade()->setup($schedulerRequestTransfer);
+        $schedulerFilterTransfer = $this->createSchedulerFilterTransfer();
+        $schedulerResponseCollectionTransfer = $this->getSchedulerFacade()->setup($schedulerFilterTransfer);
 
         $this->assertNotEmpty($schedulerResponseCollectionTransfer->getResponses());
 
         foreach ($schedulerResponseCollectionTransfer->getResponses() as $schedulerResponseTransfer) {
-            $this->assertEquals(static::TEST_SCHEDULER, $schedulerResponseTransfer->getIdScheduler());
+            $this->assertEquals(static::TEST_SCHEDULER, $schedulerResponseTransfer->getSchedule()->getIdScheduler());
         }
     }
 
@@ -81,13 +80,13 @@ class SchedulerFacadeTest extends Unit
      */
     public function testSchedulerClean(): void
     {
-        $schedulerRequestTransfer = $this->createSchedulerRequestTransfer();
-        $schedulerResponseCollectionTransfer = $this->getSchedulerFacade()->clean($schedulerRequestTransfer);
+        $schedulerFilterTransfer = $this->createSchedulerFilterTransfer();
+        $schedulerResponseCollectionTransfer = $this->getSchedulerFacade()->clean($schedulerFilterTransfer);
 
         $this->assertNotEmpty($schedulerResponseCollectionTransfer->getResponses());
 
         foreach ($schedulerResponseCollectionTransfer->getResponses() as $schedulerResponseTransfer) {
-            $this->assertEquals(static::TEST_SCHEDULER, $schedulerResponseTransfer->getIdScheduler());
+            $this->assertEquals(static::TEST_SCHEDULER, $schedulerResponseTransfer->getSchedule()->getIdScheduler());
         }
     }
 
@@ -96,13 +95,13 @@ class SchedulerFacadeTest extends Unit
      */
     public function testSchedulerResume(): void
     {
-        $schedulerRequestTransfer = $this->createSchedulerRequestTransfer();
-        $schedulerResponseCollectionTransfer = $this->getSchedulerFacade()->resume($schedulerRequestTransfer);
+        $schedulerFilterTransfer = $this->createSchedulerFilterTransfer();
+        $schedulerResponseCollectionTransfer = $this->getSchedulerFacade()->resume($schedulerFilterTransfer);
 
         $this->assertNotEmpty($schedulerResponseCollectionTransfer->getResponses());
 
         foreach ($schedulerResponseCollectionTransfer->getResponses() as $schedulerResponseTransfer) {
-            $this->assertEquals(static::TEST_SCHEDULER, $schedulerResponseTransfer->getIdScheduler());
+            $this->assertEquals(static::TEST_SCHEDULER, $schedulerResponseTransfer->getSchedule()->getIdScheduler());
         }
     }
 
@@ -111,13 +110,13 @@ class SchedulerFacadeTest extends Unit
      */
     public function testSchedulerSuspend(): void
     {
-        $schedulerRequestTransfer = $this->createSchedulerRequestTransfer();
+        $schedulerRequestTransfer = $this->createSchedulerFilterTransfer();
         $schedulerResponseCollectionTransfer = $this->getSchedulerFacade()->suspend($schedulerRequestTransfer);
 
         $this->assertNotEmpty($schedulerResponseCollectionTransfer->getResponses());
 
         foreach ($schedulerResponseCollectionTransfer->getResponses() as $schedulerResponseTransfer) {
-            $this->assertEquals(static::TEST_SCHEDULER, $schedulerResponseTransfer->getIdScheduler());
+            $this->assertEquals(static::TEST_SCHEDULER, $schedulerResponseTransfer->getSchedule()->getIdScheduler());
         }
     }
 
@@ -131,13 +130,12 @@ class SchedulerFacadeTest extends Unit
     }
 
     /**
-     * @return \Generated\Shared\Transfer\SchedulerRequestTransfer
+     * @return \Generated\Shared\Transfer\SchedulerFilterTransfer
      */
-    protected function createSchedulerRequestTransfer(): SchedulerRequestTransfer
+    protected function createSchedulerFilterTransfer(): SchedulerFilterTransfer
     {
-        return (new SchedulerRequestTransfer())
-            ->setFilter((new SchedulerFilterTransfer())
-                ->setSchedulers([static::TEST_SCHEDULER]));
+        return (new SchedulerFilterTransfer())
+                ->setSchedulers([static::TEST_SCHEDULER]);
     }
 
     /**
@@ -339,7 +337,7 @@ class SchedulerFacadeTest extends Unit
     protected function createSchedulerResponseTransfer(): SchedulerResponseTransfer
     {
         return (new SchedulerResponseTransfer())
-            ->setIdScheduler(static::TEST_SCHEDULER);
+            ->setSchedule($this->createSchedulerSchedulerTransfer());
     }
 
     /**
