@@ -13,7 +13,7 @@ use Spryker\Client\PriceProduct\Dependency\Client\PriceProductToCurrencyClientIn
 use Spryker\Client\PriceProduct\Dependency\Client\PriceProductToPriceClientInterface;
 use Spryker\Client\PriceProduct\Dependency\Client\PriceProductToQuoteClientInterface;
 
-class CurrentDataReader implements CurrentDataReaderInterface
+class PriceEnvironmentReader implements PriceEnvironmentReaderInterface
 {
     /**
      * @var \Spryker\Client\PriceProduct\Dependency\Client\PriceProductToPriceClientInterface

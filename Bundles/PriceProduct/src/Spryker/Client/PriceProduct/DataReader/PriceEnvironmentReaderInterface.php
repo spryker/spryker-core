@@ -10,7 +10,7 @@ namespace Spryker\Client\PriceProduct\DataReader;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface CurrentDataReaderInterface
+interface PriceEnvironmentReaderInterface
 {
     /**
      * @return string

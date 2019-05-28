@@ -8,8 +8,8 @@
 namespace Spryker\Client\PriceProduct;
 
 use Spryker\Client\Kernel\AbstractFactory;
-use Spryker\Client\PriceProduct\DataReader\CurrentDataReader;
-use Spryker\Client\PriceProduct\DataReader\CurrentDataReaderInterface;
+use Spryker\Client\PriceProduct\DataReader\PriceEnvironmentReader;
+use Spryker\Client\PriceProduct\DataReader\PriceEnvironmentReaderInterface;
 use Spryker\Client\PriceProduct\Dependency\Client\PriceProductToCurrencyClientInterface;
 use Spryker\Client\PriceProduct\Dependency\Client\PriceProductToPriceClientInterface;
 use Spryker\Client\PriceProduct\Dependency\Client\PriceProductToQuoteClientInterface;
@@ -30,17 +30,17 @@ class PriceProductFactory extends AbstractFactory
         return new ProductPriceResolver(
             $this->getConfig(),
             $this->getPriceProductService(),
-            $this->createCurrentDataReader(),
+            $this->createPriceEnvironmentReader(),
             $this->getUtilPriceService()
         );
     }
 
     /**
-     * @return \Spryker\Client\PriceProduct\DataReader\CurrentDataReaderInterface
+     * @return \Spryker\Client\PriceProduct\DataReader\PriceEnvironmentReaderInterface
      */
-    public function createCurrentDataReader(): CurrentDataReaderInterface
+    public function createPriceEnvironmentReader(): PriceEnvironmentReaderInterface
     {
-        return new CurrentDataReader(
+        return new PriceEnvironmentReader(
             $this->getPriceClient(),
             $this->getCurrencyClient(),
             $this->getQuoteClient()

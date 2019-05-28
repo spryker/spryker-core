@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
-use Spryker\Client\PriceProduct\DataReader\CurrentDataReaderInterface;
+use Spryker\Client\PriceProduct\DataReader\PriceEnvironmentReaderInterface;
 use Spryker\Client\PriceProduct\Dependency\Service\PriceProductToUtilPriceServiceInterface;
 use Spryker\Client\PriceProduct\PriceProductConfig;
 use Spryker\Service\PriceProduct\PriceProductServiceInterface;
@@ -34,9 +34,9 @@ class ProductPriceResolver implements ProductPriceResolverInterface
     protected $priceProductService;
 
     /**
-     * @var \Spryker\Client\PriceProduct\DataReader\CurrentDataReaderInterface
+     * @var \Spryker\Client\PriceProduct\DataReader\PriceEnvironmentReaderInterface
      */
-    protected $currentDataReader;
+    protected $priceEnvironmentReader;
 
     /**
      * @var \Spryker\Client\PriceProduct\Dependency\Service\PriceProductToUtilPriceServiceInterface
@@ -46,18 +46,18 @@ class ProductPriceResolver implements ProductPriceResolverInterface
     /**
      * @param \Spryker\Client\PriceProduct\PriceProductConfig $priceProductConfig
      * @param \Spryker\Service\PriceProduct\PriceProductServiceInterface $priceProductService
-     * @param \Spryker\Client\PriceProduct\DataReader\CurrentDataReaderInterface $currentDataReader
+     * @param \Spryker\Client\PriceProduct\DataReader\PriceEnvironmentReaderInterface $priceEnvironmentReader
      * @param \Spryker\Client\PriceProduct\Dependency\Service\PriceProductToUtilPriceServiceInterface $utilPriceService
      */
     public function __construct(
         PriceProductConfig $priceProductConfig,
         PriceProductServiceInterface $priceProductService,
-        CurrentDataReaderInterface $currentDataReader,
+        PriceEnvironmentReaderInterface $priceEnvironmentReader,
         PriceProductToUtilPriceServiceInterface $utilPriceService
     ) {
         $this->priceProductConfig = $priceProductConfig;
         $this->priceProductService = $priceProductService;
-        $this->currentDataReader = $currentDataReader;
+        $this->priceEnvironmentReader = $priceEnvironmentReader;
         $this->utilPriceService = $utilPriceService;
     }
 
@@ -189,10 +189,10 @@ class ProductPriceResolver implements ProductPriceResolverInterface
     protected function buildPriceProductFilterWithCurrentValues(
         ?PriceProductFilterTransfer $priceProductFilterTransfer = null
     ): PriceProductFilterTransfer {
-        $currencyTransfer = $this->currentDataReader->getCurrentCurrency();
-        $priceMode = $this->currentDataReader->getCurrentPriceMode();
+        $currencyTransfer = $this->priceEnvironmentReader->getCurrentCurrency();
+        $priceMode = $this->priceEnvironmentReader->getCurrentPriceMode();
         $priceTypeName = $this->priceProductConfig->getPriceTypeDefaultName();
-        $quote = $this->currentDataReader->getCurrentQuote();
+        $quote = $this->priceEnvironmentReader->getCurrentQuote();
 
         $builtPriceProductFilterTransfer = new PriceProductFilterTransfer();
 
