@@ -7,26 +7,15 @@
 
 namespace Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule;
 
+use Generated\Shared\Transfer\CurrencyTransfer;
+use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleImportTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 
 class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
 {
-    /**
-     * @var \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\DataExpander\PriceProductTransferDataExpanderInterface[]
-     */
-    protected $dataExpanderList;
-
-    /**
-     * @param array $dataExpanderList
-     */
-    public function __construct(
-        array $dataExpanderList
-    ) {
-        $this->dataExpanderList = $dataExpanderList;
-    }
-
     /**
      * @param \Generated\Shared\Transfer\PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer
      * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
@@ -57,13 +46,33 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
         PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer,
         PriceProductTransfer $priceProductTransfer
     ): PriceProductTransfer {
-        $priceProductTransfer
-            ->fromArray($priceProductScheduleImportTransfer->toArray(), true);
+        return $priceProductTransfer
+            ->fromArray($priceProductScheduleImportTransfer->toArray(), true)
+            ->setMoneyValue(
+                $this->mapMoneyValueTransferFromPriceProductScheduleImportTransfer(
+                    $priceProductScheduleImportTransfer,
+                    new MoneyValueTransfer()
+                )
+            );
+    }
 
-        foreach ($this->dataExpanderList as $dataExpander) {
-            $priceProductTransfer = $dataExpander->expand($priceProductTransfer, $priceProductScheduleImportTransfer);
-        }
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer
+     * @param \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer
+     *
+     * @return \Generated\Shared\Transfer\MoneyValueTransfer
+     */
+    protected function mapMoneyValueTransferFromPriceProductScheduleImportTransfer(
+        PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer,
+        MoneyValueTransfer $moneyValueTransfer
+    ): MoneyValueTransfer {
+        $currencyTransfer = (new CurrencyTransfer())->setCode($priceProductScheduleImportTransfer->getCurrencyCode());
+        $storeTransfer = (new StoreTransfer())->setName($priceProductScheduleImportTransfer->getStoreName());
 
-        return $priceProductTransfer;
+        return $moneyValueTransfer
+            ->setCurrency($currencyTransfer)
+            ->setStore($storeTransfer)
+            ->setNetAmount($priceProductScheduleImportTransfer->getNetAmount())
+            ->setGrossAmount($priceProductScheduleImportTransfer->getGrossAmount());
     }
 }

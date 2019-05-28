@@ -20,6 +20,9 @@ class ImportErrorListTable extends AbstractTable
      */
     protected $priceProductScheduleListImportResponseTransfer;
 
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductScheduleListImportResponseTransfer $priceProductScheduleListImportResponseTransfer
+     */
     public function __construct(
         PriceProductScheduleListImportResponseTransfer $priceProductScheduleListImportResponseTransfer
     ) {
@@ -52,10 +55,10 @@ class ImportErrorListTable extends AbstractTable
     {
         $data = [];
 
-        foreach ($this->priceProductScheduleListImportResponseTransfer->getErrors() as $error) {
+        foreach ($this->priceProductScheduleListImportResponseTransfer->getErrors() as $priceProductScheduleListImportErrorTransfer) {
             $data[] = [
-                PriceProductScheduleImportTransfer::ROW_NUMBER => $error->getPriceProductScheduleImport()->getRowNumber(),
-                PriceProductScheduleListImportErrorTransfer::MESSAGE => $error->getMessage(),
+                PriceProductScheduleImportTransfer::ROW_NUMBER => $priceProductScheduleListImportErrorTransfer->getPriceProductScheduleImport()->getRowNumber(),
+                PriceProductScheduleListImportErrorTransfer::MESSAGE => $priceProductScheduleListImportErrorTransfer->getMessage(),
             ];
         }
 

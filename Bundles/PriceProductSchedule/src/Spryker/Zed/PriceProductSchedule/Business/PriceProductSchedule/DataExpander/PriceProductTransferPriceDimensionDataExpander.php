@@ -8,11 +8,11 @@
 namespace Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\DataExpander;
 
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
-use Generated\Shared\Transfer\PriceProductScheduleImportTransfer;
+use Generated\Shared\Transfer\PriceProductExpandResultTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Zed\PriceProductSchedule\PriceProductScheduleConfig;
 
-class PriceProductTransferPriceDimensionDataExpander implements PriceProductTransferDataExpanderInterface
+class PriceProductTransferPriceDimensionDataExpander extends PriceProductTransferAbstractDataExpander
 {
     /**
      * @var \Spryker\Zed\PriceProductSchedule\PriceProductScheduleConfig
@@ -30,18 +30,20 @@ class PriceProductTransferPriceDimensionDataExpander implements PriceProductTran
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
-     * @param \Generated\Shared\Transfer\PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer
+     * @return \Generated\Shared\Transfer\PriceProductExpandResultTransfer
      */
     public function expand(
-        PriceProductTransfer $priceProductTransfer,
-        PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer
-    ): PriceProductTransfer {
+        PriceProductTransfer $priceProductTransfer
+    ): PriceProductExpandResultTransfer {
         $priceProductDimensionTransfer = $this->getDefaultPriceProductDimension();
 
-        return $priceProductTransfer
+        $priceProductTransfer
             ->setPriceDimension($priceProductDimensionTransfer);
+
+        return (new PriceProductExpandResultTransfer())
+            ->setPriceProduct($priceProductTransfer)
+            ->setIsSuccess(true);
     }
 
     /**

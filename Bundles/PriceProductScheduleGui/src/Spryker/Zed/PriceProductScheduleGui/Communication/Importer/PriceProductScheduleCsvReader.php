@@ -9,12 +9,11 @@ namespace Spryker\Zed\PriceProductScheduleGui\Communication\Importer;
 
 use Generated\Shared\Transfer\PriceProductScheduledListImportRequestTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleImportTransfer;
-use Spryker\Zed\PriceProductScheduleGui\Communication\Mapper\Map\PriceProductScheduleImportMapInterface;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Mapper\PriceProductScheduleImportMapperInterface;
 use Spryker\Zed\PriceProductScheduleGui\Dependency\Service\PriceProductScheduleGuiToUtilCsvServiceInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-class PriceProductScheduleImporter implements PriceProductScheduleImporterInterface
+class PriceProductScheduleCsvReader implements PriceProductScheduleCsvReaderInterface
 {
     /**
      * @var \Spryker\Zed\PriceProductScheduleGui\Dependency\Service\PriceProductScheduleGuiToUtilCsvServiceInterface
@@ -44,7 +43,7 @@ class PriceProductScheduleImporter implements PriceProductScheduleImporterInterf
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduledListImportRequestTransfer
      */
-    public function importPriceProductScheduleImportTransfersFromCsvFile(
+    public function readPriceProductScheduleImportTransfersFromCsvFile(
         UploadedFile $importCsv,
         PriceProductScheduledListImportRequestTransfer $productScheduledListImportRequestTransfer
     ): PriceProductScheduledListImportRequestTransfer {
@@ -56,8 +55,7 @@ class PriceProductScheduleImporter implements PriceProductScheduleImporterInterf
             $priceProductScheduleImportTransfer = $this->priceProductScheduleImportMapper
                 ->mapArrayToPriceProductScheduleTransfer(
                     array_combine($headers, $importItem),
-                    new PriceProductScheduleImportTransfer(),
-                    PriceProductScheduleImportMapInterface::MAP
+                    new PriceProductScheduleImportTransfer()
                 );
 
             $priceProductScheduleImportTransfer->setRowNumber($rowNumber);

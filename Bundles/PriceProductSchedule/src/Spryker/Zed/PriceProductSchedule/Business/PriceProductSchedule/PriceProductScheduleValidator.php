@@ -11,24 +11,35 @@ use DateTime;
 use Generated\Shared\Transfer\PriceProductScheduleCriteriaFilterTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleImportTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleListImportErrorTransfer;
-use Propel\Runtime\Exception\PropelException;
 use Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleRepositoryInterface;
 use Throwable;
 
 class PriceProductScheduleValidator implements PriceProductScheduleValidatorInterface
 {
+    protected const ERROR_MESSAGE_GROSS_AND_NET_VALUE = 'Gross and Net Amount must be integer.';
+    protected const ERROR_MESSAGE_ACTIVE_FROM_AND_ACTIVE_TO = 'Dates must be in right format and to date must be greater than from.';
+    protected const ERROR_MESSAGE_SCHEDULED_PRICE_ALREADY_EXISTS = 'Scheduled price already exists.';
+
     /**
      * @var \Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleRepositoryInterface
      */
     protected $priceProductScheduleRepository;
 
     /**
+     * @var \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleImportMapperInterface
+     */
+    protected $priceProductScheduleImportMapper;
+
+    /**
      * @param \Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleRepositoryInterface $priceProductScheduleRepository
+     * @param \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleImportMapperInterface $priceProductScheduleImportMapper
      */
     public function __construct(
-        PriceProductScheduleRepositoryInterface $priceProductScheduleRepository
+        PriceProductScheduleRepositoryInterface $priceProductScheduleRepository,
+        PriceProductScheduleImportMapperInterface $priceProductScheduleImportMapper
     ) {
         $this->priceProductScheduleRepository = $priceProductScheduleRepository;
+        $this->priceProductScheduleImportMapper = $priceProductScheduleImportMapper;
     }
 
     /**
@@ -42,52 +53,35 @@ class PriceProductScheduleValidator implements PriceProductScheduleValidatorInte
         if ($this->isPricesValid($priceProductScheduleImportTransfer) === false) {
             return $this->createPriceProductScheduleListImportErrorTransfer(
                 $priceProductScheduleImportTransfer,
-                'Gross and Net Amount must be positive integer.'
+                static::ERROR_MESSAGE_GROSS_AND_NET_VALUE
             );
         }
 
         if ($this->isDatesValid($priceProductScheduleImportTransfer) === false) {
             return $this->createPriceProductScheduleListImportErrorTransfer(
                 $priceProductScheduleImportTransfer,
-                'Dates must be in right format and to date must be greater than from.'
+                static::ERROR_MESSAGE_ACTIVE_FROM_AND_ACTIVE_TO
             );
         }
 
-        $priceProductScheduleCriteriaFilterTransfer = $this->preparePriceProductScheduleByCriteriaFilter(
-            $priceProductScheduleImportTransfer
-        );
-
-        try {
-            $priceProductScheduleTransferCount = $this->priceProductScheduleRepository->findCountPriceProductScheduleByCriteriaFilter(
-                $priceProductScheduleCriteriaFilterTransfer
+        $priceProductScheduleCriteriaFilterTransfer = $this->priceProductScheduleImportMapper
+            ->mapPriceProductScheduleImportTransferToPriceProductScheduleCriteriaFilterTransfer(
+                $priceProductScheduleImportTransfer,
+                new PriceProductScheduleCriteriaFilterTransfer()
             );
 
-            if ($priceProductScheduleTransferCount > 0) {
-                return $this->createPriceProductScheduleListImportErrorTransfer(
-                    $priceProductScheduleImportTransfer,
-                    'Scheduled price already exists.'
-                );
-            }
-        } catch (PropelException $exception) {
+        $priceProductScheduleTransferCount = $this->priceProductScheduleRepository->findCountPriceProductScheduleByCriteriaFilter(
+            $priceProductScheduleCriteriaFilterTransfer
+        );
+
+        if ($priceProductScheduleTransferCount > 0) {
             return $this->createPriceProductScheduleListImportErrorTransfer(
                 $priceProductScheduleImportTransfer,
-                'Some error happened during insert into the database. Please make sure that data is valid.'
+                static::ERROR_MESSAGE_SCHEDULED_PRICE_ALREADY_EXISTS
             );
         }
 
         return null;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer
-     *
-     * @return \Generated\Shared\Transfer\PriceProductScheduleCriteriaFilterTransfer
-     */
-    protected function preparePriceProductScheduleByCriteriaFilter(
-        PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer
-    ): PriceProductScheduleCriteriaFilterTransfer {
-        return (new PriceProductScheduleCriteriaFilterTransfer())
-            ->fromArray($priceProductScheduleImportTransfer->toArray(), true);
     }
 
     /**
@@ -99,8 +93,8 @@ class PriceProductScheduleValidator implements PriceProductScheduleValidatorInte
     {
         return is_numeric($priceProductScheduleImportTransfer->getGrossAmount())
             && is_numeric($priceProductScheduleImportTransfer->getNetAmount())
-            && (int)$priceProductScheduleImportTransfer->getGrossAmount() > 0
-            && (int)$priceProductScheduleImportTransfer->getNetAmount() > 0;
+            && !is_float($priceProductScheduleImportTransfer->getGrossAmount())
+            && !is_float($priceProductScheduleImportTransfer->getNetAmount());
     }
 
     /**

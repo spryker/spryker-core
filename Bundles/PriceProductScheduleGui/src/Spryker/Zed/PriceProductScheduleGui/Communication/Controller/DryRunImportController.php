@@ -99,14 +99,25 @@ class DryRunImportController extends AbstractController
             ->get(PriceProductScheduleImportFormType::FIELD_FILE_UPLOAD)
             ->getData();
 
+        $priceProductScheduledListResponse = $this->getFactory()
+            ->getPriceProductScheduleFacade()
+            ->createPriceProductScheduleList(
+                $priceProductScheduleListImportRequestTransfer->getPriceProductScheduleList()
+            );
+
+        $priceProductScheduledList = $priceProductScheduledListResponse->getPriceProductScheduleList();
+        $priceProductScheduleListImportRequestTransfer->setPriceProductScheduleList($priceProductScheduledList);
+
         $priceProductScheduleListImportRequestTransfer = $this->getFactory()
-            ->createPriceProductScheduleImporter()
-            ->importPriceProductScheduleImportTransfersFromCsvFile(
+            ->createPriceProductScheduleCsvReader()
+            ->readPriceProductScheduleImportTransfersFromCsvFile(
                 $importCsv,
                 $priceProductScheduleListImportRequestTransfer
             );
 
-        return $this->getFactory()->getPriceProductScheduleFacade()->importPriceProductSchedules($priceProductScheduleListImportRequestTransfer);
+        return $this->getFactory()
+            ->getPriceProductScheduleFacade()
+            ->importPriceProductSchedules($priceProductScheduleListImportRequestTransfer);
     }
 
     /**

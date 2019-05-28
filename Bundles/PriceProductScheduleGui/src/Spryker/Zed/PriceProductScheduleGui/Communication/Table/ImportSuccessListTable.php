@@ -18,21 +18,11 @@ use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
-use Spryker\Zed\PriceProductScheduleGui\Communication\Mapper\Map\PriceProductScheduleImportMapInterface;
 use Spryker\Zed\PriceProductScheduleGui\Persistence\PriceProductScheduleGuiRepositoryInterface;
+use Spryker\Zed\PriceProductScheduleGui\PriceProductScheduleGuiConfig;
 
 class ImportSuccessListTable extends AbstractTable
 {
-    public const KEY_ABSTRACT_SKU = PriceProductScheduleImportMapInterface::KEY_ABSTRACT_SKU;
-    public const KEY_CONCRETE_SKU = PriceProductScheduleImportMapInterface::KEY_CONCRETE_SKU;
-    public const KEY_STORE = PriceProductScheduleImportMapInterface::KEY_STORE;
-    public const KEY_CURRENCY = PriceProductScheduleImportMapInterface::KEY_CURRENCY;
-    public const KEY_PRICE_TYPE = PriceProductScheduleImportMapInterface::KEY_PRICE_TYPE;
-    public const KEY_PRICE_NET = PriceProductScheduleImportMapInterface::KEY_PRICE_NET;
-    public const KEY_PRICE_GROSS = PriceProductScheduleImportMapInterface::KEY_PRICE_GROSS;
-    public const KEY_INCLUDED_FROM = PriceProductScheduleImportMapInterface::KEY_INCLUDED_FROM;
-    public const KEY_INCLUDED_TO = PriceProductScheduleImportMapInterface::KEY_INCLUDED_TO;
-
     /**
      * @var \Spryker\Zed\PriceProductScheduleGui\Persistence\PriceProductScheduleGuiRepositoryInterface
      */
@@ -44,15 +34,23 @@ class ImportSuccessListTable extends AbstractTable
     protected $priceProductScheduleListTransfer;
 
     /**
+     * @var \Spryker\Zed\PriceProductScheduleGui\PriceProductScheduleGuiConfig
+     */
+    protected $priceProductScheduleGuiConfig;
+
+    /**
      * @param \Spryker\Zed\PriceProductScheduleGui\Persistence\PriceProductScheduleGuiRepositoryInterface $priceProductScheduleGuiRepository
      * @param \Generated\Shared\Transfer\PriceProductScheduleListTransfer $priceProductScheduleListTransfer
+     * @param \Spryker\Zed\PriceProductScheduleGui\PriceProductScheduleGuiConfig $priceProductScheduleGuiConfig
      */
     public function __construct(
         PriceProductScheduleGuiRepositoryInterface $priceProductScheduleGuiRepository,
-        PriceProductScheduleListTransfer $priceProductScheduleListTransfer
+        PriceProductScheduleListTransfer $priceProductScheduleListTransfer,
+        PriceProductScheduleGuiConfig $priceProductScheduleGuiConfig
     ) {
         $this->priceProductScheduleGuiRepository = $priceProductScheduleGuiRepository;
         $this->priceProductScheduleListTransfer = $priceProductScheduleListTransfer;
+        $this->priceProductScheduleGuiConfig = $priceProductScheduleGuiConfig;
     }
 
     /**
@@ -62,29 +60,10 @@ class ImportSuccessListTable extends AbstractTable
      */
     protected function configure(TableConfiguration $config)
     {
-        $config->setHeader([
-            static::KEY_ABSTRACT_SKU => static::KEY_ABSTRACT_SKU,
-            static::KEY_CONCRETE_SKU => static::KEY_CONCRETE_SKU,
-            static::KEY_STORE => static::KEY_STORE,
-            static::KEY_CURRENCY => static::KEY_CURRENCY,
-            static::KEY_PRICE_TYPE => static::KEY_PRICE_TYPE,
-            static::KEY_PRICE_NET => static::KEY_PRICE_NET,
-            static::KEY_PRICE_GROSS => static::KEY_PRICE_GROSS,
-            static::KEY_INCLUDED_FROM => static::KEY_INCLUDED_FROM,
-            static::KEY_INCLUDED_TO => static::KEY_INCLUDED_TO,
-        ]);
+        $fields = $this->priceProductScheduleGuiConfig->getFieldsList();
+        $config->setHeader(array_combine($fields, $fields));
 
-        $config->setSortable([
-            static::KEY_ABSTRACT_SKU,
-            static::KEY_CONCRETE_SKU,
-            static::KEY_STORE,
-            static::KEY_CURRENCY,
-            static::KEY_PRICE_TYPE,
-            static::KEY_PRICE_NET,
-            static::KEY_PRICE_GROSS,
-            static::KEY_INCLUDED_FROM,
-            static::KEY_INCLUDED_TO,
-        ]);
+        $config->setSortable($fields);
 
         $config->setUrl(sprintf(
             'table?%s=%d',
@@ -146,14 +125,14 @@ class ImportSuccessListTable extends AbstractTable
         return $this->priceProductScheduleGuiRepository
             ->getPriceProductScheduleQuery()
             ->filterByFkPriceProductScheduleList($this->priceProductScheduleListTransfer->getIdPriceProductScheduleList())
-            ->withColumn(SpyProductAbstractTableMap::COL_SKU, static::KEY_ABSTRACT_SKU)
-            ->withColumn(SpyProductTableMap::COL_SKU, static::KEY_CONCRETE_SKU)
-            ->withColumn(SpyCurrencyTableMap::COL_CODE, static::KEY_CURRENCY)
-            ->withColumn(SpyStoreTableMap::COL_NAME, static::KEY_STORE)
-            ->withColumn(SpyPriceTypeTableMap::COL_NAME, static::KEY_PRICE_TYPE)
-            ->withColumn(SpyPriceProductScheduleTableMap::COL_ACTIVE_FROM, static::KEY_INCLUDED_FROM)
-            ->withColumn(SpyPriceProductScheduleTableMap::COL_ACTIVE_TO, static::KEY_INCLUDED_TO)
-            ->withColumn(SpyPriceProductScheduleTableMap::COL_NET_PRICE, static::KEY_PRICE_NET)
-            ->withColumn(SpyPriceProductScheduleTableMap::COL_GROSS_PRICE, static::KEY_PRICE_GROSS);
+            ->withColumn(SpyProductAbstractTableMap::COL_SKU, $this->priceProductScheduleGuiConfig->getAbstractSkuKey())
+            ->withColumn(SpyProductTableMap::COL_SKU, $this->priceProductScheduleGuiConfig->getConcreteSkuKey())
+            ->withColumn(SpyCurrencyTableMap::COL_CODE, $this->priceProductScheduleGuiConfig->getCurrencyKey())
+            ->withColumn(SpyStoreTableMap::COL_NAME, $this->priceProductScheduleGuiConfig->getStoreKey())
+            ->withColumn(SpyPriceTypeTableMap::COL_NAME, $this->priceProductScheduleGuiConfig->getPriceTypeKey())
+            ->withColumn(SpyPriceProductScheduleTableMap::COL_ACTIVE_FROM, $this->priceProductScheduleGuiConfig->getFromIncludedKey())
+            ->withColumn(SpyPriceProductScheduleTableMap::COL_ACTIVE_TO, $this->priceProductScheduleGuiConfig->getToIncludedKey())
+            ->withColumn(SpyPriceProductScheduleTableMap::COL_NET_PRICE, $this->priceProductScheduleGuiConfig->getValueNetKey())
+            ->withColumn(SpyPriceProductScheduleTableMap::COL_GROSS_PRICE, $this->priceProductScheduleGuiConfig->getValueGrossKey());
     }
 }

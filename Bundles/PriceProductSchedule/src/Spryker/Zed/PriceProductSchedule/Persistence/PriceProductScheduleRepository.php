@@ -158,6 +158,11 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
     }
 
     /**
+     * @module Currency
+     * @module PriceProduct
+     * @module Store
+     * @module Product
+     *
      * @param \Generated\Shared\Transfer\PriceProductScheduleCriteriaFilterTransfer $priceProductScheduleCriteriaFilterTransfer
      *
      * @return int

@@ -6,18 +6,16 @@
         <icon>fa-angle-double-right</icon>
         <pages>
             <price-product-schedule>
+                <label>Import Scheduled Prices</label>
+                <title>Import Scheduled Prices</title>
+                <bundle>price-product-schedule-gui</bundle>
+                <controller>import</controller>
+                <action>index</action>
+                <icon>fa-angle-double-right</icon>
                 <pages>
-                    <price-product-schedule-import>
-                        <label>Import Scheduled Prices</label>
-                        <title>Import Scheduled Prices</title>
-                        <bundle>price-product-schedule-gui</bundle>
-                        <controller>import</controller>
-                        <action>index</action>
-                        <icon>fa-angle-double-right</icon>
-                    </price-product-schedule-import>
                     <price-product-schedule-dry-run-import>
-                        <label>Import</label>
-                        <title>Import</title>
+                        <label>Dry Run Import</label>
+                        <title>Dry Run Import</title>
                         <bundle>price-product-schedule-gui</bundle>
                         <controller>dry-run-import</controller>
                         <action>index</action>

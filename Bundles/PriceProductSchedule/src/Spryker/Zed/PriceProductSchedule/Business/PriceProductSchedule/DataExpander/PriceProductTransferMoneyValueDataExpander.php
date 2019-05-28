@@ -7,80 +7,86 @@
 
 namespace Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\DataExpander;
 
-use Generated\Shared\Transfer\MoneyValueTransfer;
-use Generated\Shared\Transfer\PriceProductScheduleImportTransfer;
+use Generated\Shared\Transfer\PriceProductExpandResultTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
-use Spryker\Zed\Currency\Business\Model\Exception\CurrencyNotFoundException;
-use Spryker\Zed\PriceProductSchedule\Business\Exception\PriceProductScheduleListImportException;
-use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToCurrencyFacadeInterface;
-use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToStoreFacadeInterface;
-use Spryker\Zed\Store\Business\Model\Exception\StoreNotFoundException;
+use Spryker\Zed\PriceProductSchedule\Business\Currency\CurrencyFinderInterface;
+use Spryker\Zed\PriceProductSchedule\Business\Store\StoreFinderInterface;
 
-class PriceProductTransferMoneyValueDataExpander implements PriceProductTransferDataExpanderInterface
+class PriceProductTransferMoneyValueDataExpander extends PriceProductTransferAbstractDataExpander
 {
-    /**
-     * @var \Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToStoreFacadeInterface
-     */
-    protected $storeFacade;
+    protected const ERROR_MESSAGE_CURRENCY_NOT_FOUND = 'Currency was not found by provided iso code %s';
+    protected const ERROR_MESSAGE_STORE_NOT_FOUND = 'Store was not found by provided name %s';
 
     /**
-     * @var \Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToCurrencyFacadeInterface
+     * @var \Spryker\Zed\PriceProductSchedule\Business\Store\StoreFinderInterface
      */
-    protected $currencyFacade;
+    protected $priceProductScheduleStoreFinder;
 
     /**
-     * @param \Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToStoreFacadeInterface $storeFacade
-     * @param \Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToCurrencyFacadeInterface $currencyFacade
+     * @var \Spryker\Zed\PriceProductSchedule\Business\Currency\CurrencyFinderInterface
+     */
+    protected $priceProductScheduleCurrencyFinder;
+
+    /**
+     * @param \Spryker\Zed\PriceProductSchedule\Business\Store\StoreFinderInterface $priceProductScheduleStoreFinder
+     * @param \Spryker\Zed\PriceProductSchedule\Business\Currency\CurrencyFinderInterface $priceProductScheduleCurrencyFinder
      */
     public function __construct(
-        PriceProductScheduleToStoreFacadeInterface $storeFacade,
-        PriceProductScheduleToCurrencyFacadeInterface $currencyFacade
+        StoreFinderInterface $priceProductScheduleStoreFinder,
+        CurrencyFinderInterface $priceProductScheduleCurrencyFinder
     ) {
-        $this->storeFacade = $storeFacade;
-        $this->currencyFacade = $currencyFacade;
+        $this->priceProductScheduleStoreFinder = $priceProductScheduleStoreFinder;
+        $this->priceProductScheduleCurrencyFinder = $priceProductScheduleCurrencyFinder;
     }
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
-     * @param \Generated\Shared\Transfer\PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer
      *
-     * @throws \Spryker\Zed\PriceProductSchedule\Business\Exception\PriceProductScheduleListImportException
-     *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer
+     * @return \Generated\Shared\Transfer\PriceProductExpandResultTransfer
      */
     public function expand(
-        PriceProductTransfer $priceProductTransfer,
-        PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer
-    ): PriceProductTransfer {
-        try {
-            $currencyTransfer = $this->currencyFacade->fromIsoCode($priceProductScheduleImportTransfer->getCurrencyCode());
-        } catch (CurrencyNotFoundException $e) {
-            throw new PriceProductScheduleListImportException(
+        PriceProductTransfer $priceProductTransfer
+    ): PriceProductExpandResultTransfer {
+        $priceProductExpandResultTransfer = (new PriceProductExpandResultTransfer())
+            ->setIsSuccess(false);
+
+        $currencyTransfer = $this->priceProductScheduleCurrencyFinder
+            ->findCurrencyByIsoCode((string)$priceProductTransfer->getMoneyValue()->getCurrency()->getCode());
+
+        if ($currencyTransfer === null) {
+            $priceProductScheduleImportErrorTransfer = $this->createPriceProductScheduleListImportErrorTransfer(
                 sprintf(
-                    'Currency was not found by provided iso code %s',
-                    $priceProductScheduleImportTransfer->getCurrencyCode()
+                    static::ERROR_MESSAGE_CURRENCY_NOT_FOUND,
+                    $priceProductTransfer->getMoneyValue()->getCurrency()->getCode()
                 )
             );
+
+            return $priceProductExpandResultTransfer
+                ->setError($priceProductScheduleImportErrorTransfer);
         }
 
-        try {
-            $storeTransfer = $this->storeFacade->getStoreByName($priceProductScheduleImportTransfer->getStoreName());
-        } catch (StoreNotFoundException $e) {
-            throw new PriceProductScheduleListImportException(
+        $storeTransfer = $this->priceProductScheduleStoreFinder
+            ->findStoreByName((string)$priceProductTransfer->getMoneyValue()->getStore()->getName());
+
+        if ($storeTransfer === null) {
+            $priceProductScheduleImportErrorTransfer = $this->createPriceProductScheduleListImportErrorTransfer(
                 sprintf(
-                    'Store was not found by provided name %s',
-                    $priceProductScheduleImportTransfer->getStoreName()
+                    static::ERROR_MESSAGE_STORE_NOT_FOUND,
+                    $priceProductTransfer->getMoneyValue()->getStore()->getName()
                 )
             );
+
+            return $priceProductExpandResultTransfer
+                ->setError($priceProductScheduleImportErrorTransfer);
         }
 
-        $moneyValueTransfer =
-            (new MoneyValueTransfer())
-            ->fromArray($priceProductScheduleImportTransfer->toArray(), true)
+        $priceProductTransfer->getMoneyValue()
             ->setCurrency($currencyTransfer)
             ->setFkCurrency($currencyTransfer->getIdCurrency())
             ->setFkStore($storeTransfer->getIdStore());
 
-        return $priceProductTransfer->setMoneyValue($moneyValueTransfer);
+        return $priceProductExpandResultTransfer
+            ->setPriceProduct($priceProductTransfer)
+            ->setIsSuccess(true);
     }
 }

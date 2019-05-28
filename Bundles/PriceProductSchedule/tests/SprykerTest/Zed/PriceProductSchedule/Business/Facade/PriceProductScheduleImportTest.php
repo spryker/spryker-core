@@ -79,13 +79,14 @@ class PriceProductScheduleImportTest extends Unit
         // Assign
         $count = 10;
         $priceProductScheduleImportTransfers = $this->prepareValidPriceProductScheduleImportData($count);
-        $priceProductScheduleListTransfer = (new PriceProductScheduleListBuilder())->build();
+        $priceProductScheduleListTransfer = $this->tester->havePriceProductScheduleList();
         $priceProductScheduleImportRequest = (new PriceProductScheduledListImportRequestTransfer())
             ->setPriceProductScheduleList($priceProductScheduleListTransfer)
             ->setItems($priceProductScheduleImportTransfers);
 
         // Act
-        $priceProductScheduleImportResponse = $this->priceProductScheduleFacade->importPriceProductSchedules($priceProductScheduleImportRequest);
+        $priceProductScheduleImportResponse = $this->priceProductScheduleFacade
+            ->importPriceProductSchedules($priceProductScheduleImportRequest);
 
         // Assert
         $this->assertTrue(

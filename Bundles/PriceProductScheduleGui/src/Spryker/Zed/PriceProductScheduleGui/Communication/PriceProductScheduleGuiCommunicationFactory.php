@@ -11,8 +11,8 @@ use Generated\Shared\Transfer\PriceProductScheduleListImportResponseTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleListTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Form\PriceProductScheduleImportFormType;
-use Spryker\Zed\PriceProductScheduleGui\Communication\Importer\PriceProductScheduleImporter;
-use Spryker\Zed\PriceProductScheduleGui\Communication\Importer\PriceProductScheduleImporterInterface;
+use Spryker\Zed\PriceProductScheduleGui\Communication\Importer\PriceProductScheduleCsvReader;
+use Spryker\Zed\PriceProductScheduleGui\Communication\Importer\PriceProductScheduleCsvReaderInterface;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Mapper\PriceProductScheduleImportMapper;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Mapper\PriceProductScheduleImportMapperInterface;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Table\ImportErrorListTable;
@@ -24,6 +24,7 @@ use Symfony\Component\Form\FormInterface;
 
 /**
  * @method \Spryker\Zed\PriceProductScheduleGui\Persistence\PriceProductScheduleGuiRepositoryInterface getRepository()
+ * @method \Spryker\Zed\PriceProductScheduleGui\PriceProductScheduleGuiConfig getConfig()
  */
 class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationFactory
 {
@@ -49,15 +50,15 @@ class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationF
      */
     public function createPriceProductScheduleImportMapper(): PriceProductScheduleImportMapperInterface
     {
-        return new PriceProductScheduleImportMapper();
+        return new PriceProductScheduleImportMapper($this->getConfig());
     }
 
     /**
-     * @return \Spryker\Zed\PriceProductScheduleGui\Communication\Importer\PriceProductScheduleImporterInterface
+     * @return \Spryker\Zed\PriceProductScheduleGui\Communication\Importer\PriceProductScheduleCsvReaderInterface
      */
-    public function createPriceProductScheduleImporter(): PriceProductScheduleImporterInterface
+    public function createPriceProductScheduleCsvReader(): PriceProductScheduleCsvReaderInterface
     {
-        return new PriceProductScheduleImporter(
+        return new PriceProductScheduleCsvReader(
             $this->getUtilCsvService(),
             $this->createPriceProductScheduleImportMapper()
         );
@@ -86,7 +87,8 @@ class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationF
     ): ImportSuccessListTable {
         return new ImportSuccessListTable(
             $this->getRepository(),
-            $priceProductScheduleListTransfer
+            $priceProductScheduleListTransfer,
+            $this->getConfig()
         );
     }
 
