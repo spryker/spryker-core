@@ -156,7 +156,7 @@ class ImageCollectionForm extends AbstractSubForm
         $builder
             ->add(self::FIELD_IMAGE_SMALL, TextType::class, [
                 'required' => true,
-                'label' => 'Small',
+                'label' => 'Small Image URL',
                 'constraints' => [
                     new NotBlank(),
                     new Length([
@@ -180,7 +180,7 @@ class ImageCollectionForm extends AbstractSubForm
         $builder
             ->add(self::FIELD_IMAGE_LARGE, TextType::class, [
                 'required' => true,
-                'label' => 'Large',
+                'label' => 'Large Image URL',
                 'constraints' => [
                     new NotBlank(),
                     new Length([
