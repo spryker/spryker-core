@@ -26,7 +26,7 @@
             <reference local="fk_product_abstract" foreign="id_product_abstract"/>
         </foreign-key>
 
-        <unique name="spy_product_abstract_merchant-fk_product_abstract">
+        <unique name="spy_product_abstract_merchant-unique-fk_product_abstract">
             <unique-column name="fk_product_abstract"/>
         </unique>
 
