@@ -85,28 +85,18 @@ class PriceProductScheduleListImporter implements PriceProductScheduleListImport
                     new PriceProductScheduleTransfer()
                 );
 
-            $priceProductTransfer = $priceProductScheduleTransfer->getPriceProduct();
-
-            foreach ($this->dataExpanderList as $dataExpander) {
-                $priceProductExpandResultTransfer = $dataExpander->expand($priceProductTransfer);
-
-                if ($priceProductExpandResultTransfer->getIsSuccess() === false) {
-                    $priceProductScheduledListImportResponse
-                        ->addError($priceProductExpandResultTransfer
-                            ->getError()
-                            ->setPriceProductScheduleImport($priceProductScheduleImportTransfer));
-                    break;
-                }
-
-                $priceProductTransfer = $priceProductExpandResultTransfer->getPriceProduct();
-            }
+            $this->expandPriceProductTransfer(
+                $priceProductScheduleTransfer,
+                $priceProductScheduleImportTransfer,
+                $priceProductScheduledListImportResponse
+            );
 
             if ($priceProductScheduledListImportResponse->getErrors()->count() > 0) {
                 continue;
             }
 
             $priceProductScheduleTransfer
-                ->setPriceProduct($priceProductTransfer)
+                ->setPriceProduct($priceProductScheduleTransfer->getPriceProduct())
                 ->setPriceProductScheduleList($priceProductScheduledListImportRequest->getPriceProductScheduleList());
 
             $this->priceProductScheduleEntityManager->savePriceProductSchedule($priceProductScheduleTransfer);
@@ -131,5 +121,34 @@ class PriceProductScheduleListImporter implements PriceProductScheduleListImport
         return (new PriceProductScheduleListImportErrorTransfer())
             ->setPriceProductScheduleImport($priceProductScheduleImportTransfer)
             ->setMessage($errorMessage);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
+     * @param \Generated\Shared\Transfer\PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer
+     * @param \Generated\Shared\Transfer\PriceProductScheduleListImportResponseTransfer $priceProductScheduledListImportResponse
+     *
+     * @return void
+     */
+    protected function expandPriceProductTransfer(
+        PriceProductScheduleTransfer $priceProductScheduleTransfer,
+        PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer,
+        PriceProductScheduleListImportResponseTransfer $priceProductScheduledListImportResponse
+    ): void {
+        $priceProductTransfer = $priceProductScheduleTransfer->getPriceProduct();
+
+        foreach ($this->dataExpanderList as $dataExpander) {
+            $priceProductExpandResultTransfer = $dataExpander->expand($priceProductTransfer);
+
+            if ($priceProductExpandResultTransfer->getIsSuccess() === false) {
+                $priceProductScheduledListImportResponse
+                    ->addError($priceProductExpandResultTransfer
+                        ->getError()
+                        ->setPriceProductScheduleImport($priceProductScheduleImportTransfer));
+                break;
+            }
+
+            $priceProductTransfer = $priceProductExpandResultTransfer->getPriceProduct();
+        }
     }
 }
