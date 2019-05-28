@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\PriceProductExpandResultTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToPriceProductFacadeInterface;
 
-class PriceProductTransferPriceTypeDataExpander extends PriceProductTransferAbstractDataExpander implements PriceProductTransferDataExpanderInterface
+class PriceProductTransferPriceTypeDataExpander extends PriceProductTransferAbstractDataExpander
 {
     protected const ERROR_MESSAGE_PRICE_TYPE_NOT_FOUND = 'Price type was not found by provided sku %s';
 

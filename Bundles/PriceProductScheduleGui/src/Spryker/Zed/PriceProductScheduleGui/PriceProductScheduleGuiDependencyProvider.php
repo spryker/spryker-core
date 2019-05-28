@@ -10,7 +10,9 @@ namespace Spryker\Zed\PriceProductScheduleGui;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToPriceProductScheduleFacadeBridge;
+use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToPriceProductScheduleFacadeInterface;
 use Spryker\Zed\PriceProductScheduleGui\Dependency\Service\PriceProductScheduleGuiToUtilCsvServiceBridge;
+use Spryker\Zed\PriceProductScheduleGui\Dependency\Service\PriceProductScheduleGuiToUtilCsvServiceInterface;
 
 /**
  * @method \Spryker\Zed\PriceProductScheduleGui\PriceProductScheduleGuiConfig getConfig()
@@ -44,10 +46,12 @@ class PriceProductScheduleGuiDependencyProvider extends AbstractBundleDependency
      */
     protected function addPriceProductScheduleFacade(Container $container): Container
     {
-        $container->set(static::FACADE_PRICE_PRODUCT_SCHEDULE, function ($container
-        ): PriceProductScheduleGuiToPriceProductScheduleFacadeBridge {
-            return new PriceProductScheduleGuiToPriceProductScheduleFacadeBridge($container->getLocator()->priceProductSchedule()->facade());
-        });
+        $container->set(
+            static::FACADE_PRICE_PRODUCT_SCHEDULE,
+            function (Container $container): PriceProductScheduleGuiToPriceProductScheduleFacadeInterface {
+                return new PriceProductScheduleGuiToPriceProductScheduleFacadeBridge($container->getLocator()->priceProductSchedule()->facade());
+            }
+        );
 
         return $container;
     }
@@ -59,12 +63,14 @@ class PriceProductScheduleGuiDependencyProvider extends AbstractBundleDependency
      */
     protected function addUtilCsvService(Container $container): Container
     {
-        $container->set(static::SERVICE_UTIL_CSV, function (Container $container
-        ): PriceProductScheduleGuiToUtilCsvServiceBridge {
-            return new PriceProductScheduleGuiToUtilCsvServiceBridge(
-                $container->getLocator()->utilCsv()->service()
-            );
-        });
+        $container->set(
+            static::SERVICE_UTIL_CSV,
+            function (Container $container): PriceProductScheduleGuiToUtilCsvServiceInterface {
+                return new PriceProductScheduleGuiToUtilCsvServiceBridge(
+                    $container->getLocator()->utilCsv()->service()
+                );
+            }
+        );
 
         return $container;
     }

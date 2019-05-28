@@ -72,8 +72,6 @@ class PriceProductScheduleImportTest extends Unit
     }
 
     /**
-     * @group test123
-     *
      * @return void
      */
     public function testImportPriceProductSchedulesShouldImportValidSchedules(): void

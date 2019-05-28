@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\PriceProductExpandResultTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToProductFacadeInterface;
 
-class PriceProductTransferProductDataExpander extends PriceProductTransferAbstractDataExpander implements PriceProductTransferDataExpanderInterface
+class PriceProductTransferProductDataExpander extends PriceProductTransferAbstractDataExpander
 {
     protected const ERROR_MESSAGE_PRODUCT_CONCRETE_NOT_FOUND = 'Concrete product was not found by provided sku %s';
     protected const ERROR_MESSAGE_PRODUCT_ABSTRACT_NOT_FOUND = 'Abstract product was not found by provided sku %s';

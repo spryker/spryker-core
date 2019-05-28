@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Zed\PriceProductSchedule\Business\Currency\CurrencyFinderInterface;
 use Spryker\Zed\PriceProductSchedule\Business\Store\StoreFinderInterface;
 
-class PriceProductTransferMoneyValueDataExpander extends PriceProductTransferAbstractDataExpander implements PriceProductTransferDataExpanderInterface
+class PriceProductTransferMoneyValueDataExpander extends PriceProductTransferAbstractDataExpander
 {
     protected const ERROR_MESSAGE_CURRENCY_NOT_FOUND = 'Currency was not found by provided iso code %s';
     protected const ERROR_MESSAGE_STORE_NOT_FOUND = 'Store was not found by provided name %s';
