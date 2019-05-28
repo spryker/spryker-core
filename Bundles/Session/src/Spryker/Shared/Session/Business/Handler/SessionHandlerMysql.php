@@ -9,7 +9,6 @@ namespace Spryker\Shared\Session\Business\Handler;
 
 use PDO;
 use SessionHandlerInterface;
-use Spryker\Shared\Config\Environment;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Session\Dependency\Service\SessionToMonitoringServiceInterface;
 
@@ -60,13 +59,19 @@ class SessionHandlerMysql implements SessionHandlerInterface
     protected $monitoringService;
 
     /**
+     * @var string
+     */
+    protected $environmentName;
+
+    /**
      * @param \Spryker\Shared\Session\Dependency\Service\SessionToMonitoringServiceInterface $monitoringService
+     * @param string $environmentName
      * @param array $hosts
      * @param string|null $user
      * @param string|null $password
      * @param int $lifetime
      */
-    public function __construct(SessionToMonitoringServiceInterface $monitoringService, $hosts = ['127.0.0.1:3306'], $user = null, $password = null, $lifetime = 600)
+    public function __construct(SessionToMonitoringServiceInterface $monitoringService, $environmentName, $hosts = ['127.0.0.1:3306'], $user = null, $password = null, $lifetime = 600)
     {
         $host = $hosts[0];
         if (strpos($host, ':')) {
@@ -76,6 +81,7 @@ class SessionHandlerMysql implements SessionHandlerInterface
         }
 
         $this->monitoringService = $monitoringService;
+        $this->environmentName = $environmentName;
         $this->host = $host;
         $this->user = $user;
         $this->password = $password;
@@ -120,11 +126,10 @@ class SessionHandlerMysql implements SessionHandlerInterface
         $startTime = microtime(true);
 
         $store = Store::getInstance()->getStoreName();
-        $environment = Environment::getInstance()->getEnvironment();
         $query = 'SELECT * FROM session WHERE session.key=? AND session.store=? AND session.environment=? AND session.expires >= session.updated_at + ' . $this->lifetime . ' LIMIT 1';
 
         $statement = $this->connection->prepare($query);
-        $statement->execute([$key, $store, $environment]);
+        $statement->execute([$key, $store, $this->environmentName]);
         $result = $statement->fetch();
         $this->monitoringService->addCustomParameter(self::METRIC_SESSION_READ_TIME, microtime(true) - $startTime);
 
@@ -146,7 +151,6 @@ class SessionHandlerMysql implements SessionHandlerInterface
         }
 
         $startTime = microtime(true);
-        $environment = Environment::getInstance()->getEnvironment();
         $data = json_encode($sessionData);
         $expireTimestamp = time() + $this->lifetime;
         $expires = date('Y-m-d H:i:s', $expireTimestamp);
@@ -156,7 +160,7 @@ class SessionHandlerMysql implements SessionHandlerInterface
         $query = 'REPLACE INTO session (session.key, session.value, session.store, session.environment, session.expires, session.updated_at) VALUES (?,?,?,?,?,?)';
 
         $statement = $this->connection->prepare($query);
-        $result = $statement->execute([$key, $data, $storeName, $environment, $expires, $timestamp]);
+        $result = $statement->execute([$key, $data, $storeName, $this->environmentName, $expires, $timestamp]);
 
         $this->monitoringService->addCustomParameter(self::METRIC_SESSION_WRITE_TIME, microtime(true) - $startTime);
 

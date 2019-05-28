@@ -9,35 +9,46 @@ namespace Spryker\Zed\Session\Communication;
 
 use Spryker\Shared\Session\Business\Model\SessionFactory;
 use Spryker\Shared\Session\Dependency\Service\SessionToMonitoringServiceInterface;
+use Spryker\Zed\Session\SessionConfig;
 
 class SessionHandlerFactory extends SessionFactory
 {
-    /**
-     * @var int
-     */
-    protected $sessionLifeTime;
-
     /**
      * @var \Spryker\Shared\Session\Dependency\Service\SessionToMonitoringServiceInterface
      */
     protected $monitoringService;
 
     /**
-     * @param int $sessionLifeTime
-     * @param \Spryker\Shared\Session\Dependency\Service\SessionToMonitoringServiceInterface $monitoringService
+     * @var \Spryker\Zed\Session\SessionConfig
      */
-    public function __construct($sessionLifeTime, SessionToMonitoringServiceInterface $monitoringService)
-    {
-        $this->sessionLifeTime = $sessionLifeTime;
+    protected $sessionConfig;
+
+    /**
+     * @param \Spryker\Shared\Session\Dependency\Service\SessionToMonitoringServiceInterface $monitoringService
+     * @param \Spryker\Zed\Session\SessionConfig $sessionConfig
+     */
+    public function __construct(
+        SessionToMonitoringServiceInterface $monitoringService,
+        SessionConfig $sessionConfig
+    ) {
         $this->monitoringService = $monitoringService;
+        $this->sessionConfig = $sessionConfig;
     }
 
     /**
      * @return int
      */
-    protected function getSessionLifetime()
+    protected function getSessionLifetime(): int
     {
-        return $this->sessionLifeTime;
+        return $this->sessionConfig->getSessionLifeTime();
+    }
+
+    /**
+     * @return string
+     */
+    protected function getEnvironmentName(): string
+    {
+        return $this->sessionConfig->getEnvironmentName();
     }
 
     /**

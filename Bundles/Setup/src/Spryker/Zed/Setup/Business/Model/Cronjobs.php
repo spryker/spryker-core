@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Setup\Business\Model;
 
 use ErrorException;
-use Spryker\Shared\Config\Environment;
 use Spryker\Zed\Setup\SetupConfig;
 
 class Cronjobs
@@ -119,6 +118,10 @@ class Cronjobs
         $jobs = [];
 
         include_once $this->getJobConfigPath();
+
+        if (empty($jobs)) {
+            return [];
+        }
 
         foreach ($jobs as $i => $job) {
             if (!empty($job['command'])) {
@@ -424,7 +427,7 @@ class Cronjobs
             return $schedule;
         }
 
-        if (Environment::isNotProduction()) {
+        if ($this->config->isSchedulerEnabled()) {
             // Non-production - don't run automatically via Jenkins
             return '';
         }
@@ -465,11 +468,10 @@ cd %s
 
         $cronjobsConfigPath = $this->config->getCronjobsConfigFilePath();
 
-        $environment = Environment::getInstance();
         $customBashCommand = '';
         $destination = APPLICATION_ROOT_DIR;
 
-        if ($environment->isNotDevelopment()) {
+        if ($this->config->isDeployVarsEnabled()) {
             $checkDeployFolderExistsBashCommand = '[ -f ' . APPLICATION_ROOT_DIR . '/deploy/vars ]';
             $sourceBashCommand = '. ' . APPLICATION_ROOT_DIR . '/deploy/vars';
 
@@ -480,7 +482,7 @@ cd %s
         return sprintf(
             $commandTemplate,
             $customBashCommand,
-            $environment->getEnvironment(),
+            $this->config->getEnvironmentName(),
             $store,
             $destination,
             $cronjobsConfigPath,

@@ -92,7 +92,7 @@ class SessionCommunicationFactory extends AbstractCommunicationFactory
      */
     protected function createSessionHandlerFactory()
     {
-        return new SessionHandlerFactory($this->getConfig()->getSessionLifeTime(), $this->getMonitoringService());
+        return new SessionHandlerFactory($this->getMonitoringService(), $this->getConfig());
     }
 
     /**

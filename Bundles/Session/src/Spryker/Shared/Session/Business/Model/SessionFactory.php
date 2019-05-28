@@ -9,7 +9,6 @@ namespace Spryker\Shared\Session\Business\Model;
 
 use Predis\Client;
 use Spryker\Shared\Config\Config;
-use Spryker\Shared\Config\Environment;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Session\Business\Handler\KeyGenerator\Redis\RedisLockKeyGenerator;
 use Spryker\Shared\Session\Business\Handler\KeyGenerator\Redis\RedisSessionKeyGenerator;
@@ -60,8 +59,9 @@ abstract class SessionFactory
         $password = !empty($credentials) && array_key_exists(self::PASSWORD, $credentials) ? $credentials[self::PASSWORD] : null;
         $hosts = $this->getHostsFromSavePath($savePath);
         $lifetime = $this->getSessionLifetime();
+        $environmentName = $this->getEnvironmentName();
 
-        $handler = new SessionHandlerMysql($this->getMonitoringService(), $hosts, $user, $password, $lifetime);
+        $handler = new SessionHandlerMysql($this->getMonitoringService(), $hosts, $user, $password, $lifetime, $environmentName);
         $this->setSessionSaveHandler($handler);
 
         return $handler;
@@ -196,7 +196,12 @@ abstract class SessionFactory
     /**
      * @return int
      */
-    abstract protected function getSessionLifetime();
+    abstract protected function getSessionLifetime(): int;
+
+    /**
+     * @return string
+     */
+    abstract protected function getEnvironmentName(): string;
 
     /**
      * @return \Spryker\Shared\Session\Dependency\Service\SessionToMonitoringServiceInterface
@@ -226,7 +231,7 @@ abstract class SessionFactory
     protected function getBucketName()
     {
         $storeName = Store::getInstance()->getStoreName();
-        $environment = Environment::getInstance()->getEnvironment();
+        $environment = $this->getEnvironmentName();
 
         return $storeName . '_' . $environment . '_' . self::BUCKET_NAME_POSTFIX;
     }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Api;
 
+use Spryker\Shared\Api\ApiConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ApiConfig extends AbstractBundleConfig
@@ -160,5 +161,13 @@ class ApiConfig extends AbstractBundleConfig
         return [
             'REQUEST_URI',
         ];
+    }
+
+    /**
+     * @return bool
+     */
+    public function isApiDebugEnabled(): bool
+    {
+        return $this->get(ApiConstants::ENABLE_API_DEBUG, APPLICATION_ENV === 'development');
     }
 }

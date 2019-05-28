@@ -7,6 +7,9 @@
 
 namespace Spryker\Shared\Config;
 
+/**
+ * @deprecated Use `Factory::getConfig()->getEnvironmentName()` instead.
+ */
 class Environment
 {
     public const DEFAULT_ENVIRONMENT = 'production';
