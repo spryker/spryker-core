@@ -62,9 +62,9 @@ class ShipmentMethodExtender implements ShipmentMethodExtenderInterface
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param \Generated\Shared\Transfer\ShipmentPriceTransfer $shipmentMethodPriceTransfer
      *
-     * @return int
+     * @return int|null
      */
-    protected function getPrice(OrderTransfer $orderTransfer, ShipmentPriceTransfer $shipmentMethodPriceTransfer): int
+    protected function getPrice(OrderTransfer $orderTransfer, ShipmentPriceTransfer $shipmentMethodPriceTransfer): ?int
     {
         return $orderTransfer->getPriceMode() === ShipmentConstants::PRICE_MODE_GROSS ?
             $shipmentMethodPriceTransfer->getDefaultGrossPrice() :
