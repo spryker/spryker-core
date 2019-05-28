@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Required;
@@ -94,9 +95,13 @@ class PriceProductScheduleImportFormType extends AbstractType
     {
         $builder->add(static::FIELD_FILE_UPLOAD, FileType::class, [
             'label' => 'Select your CSV file',
+            'attr' => [
+                'accept' => 'text/csv, text/plain',
+            ],
             'constraints' => [
                 new Required(),
                 new NotBlank(),
+                new File(['mimeTypes' => ['text/csv', 'text/plain']]),
             ],
         ]);
 
