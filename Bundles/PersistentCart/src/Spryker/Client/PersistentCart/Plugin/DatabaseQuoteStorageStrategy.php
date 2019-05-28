@@ -374,7 +374,7 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
 
         $sessionQuoteTransfer = $this->getQuoteClient()->getQuote();
         $persistentQuoteChange->setIdQuote($sessionQuoteTransfer->getIdQuote());
-        $persistentQuoteChange->setSessionQuote($sessionQuoteTransfer);
+        $persistentQuoteChange->setQuote($sessionQuoteTransfer);
 
         return $persistentQuoteChange;
     }
@@ -389,7 +389,7 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
 
         $sessionQuoteTransfer = $this->getQuoteClient()->getQuote();
         $persistentQuoteChange->setIdQuote($sessionQuoteTransfer->getIdQuote());
-        $persistentQuoteChange->setSessionQuote($sessionQuoteTransfer);
+        $persistentQuoteChange->setQuote($sessionQuoteTransfer);
 
         return $persistentQuoteChange;
     }
