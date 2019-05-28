@@ -60,7 +60,9 @@ class PriceProductScheduleFacade extends AbstractFacade implements PriceProductS
     public function createPriceProductScheduleList(
         PriceProductScheduleListTransfer $priceProductScheduleListTransfer
     ): PriceProductScheduleListResponseTransfer {
-        return new PriceProductScheduleListResponseTransfer();
+        return $this->getFactory()
+            ->createPriceProductScheduleListCreator()
+            ->createPriceProductScheduleList($priceProductScheduleListTransfer);
     }
 
     /**
@@ -75,7 +77,9 @@ class PriceProductScheduleFacade extends AbstractFacade implements PriceProductS
     public function updatePriceProductScheduleList(
         PriceProductScheduleListTransfer $priceProductScheduleListTransfer
     ): PriceProductScheduleListResponseTransfer {
-        return new PriceProductScheduleListResponseTransfer();
+        return $this->getFactory()
+            ->createPriceProductScheduleListUpdater()
+            ->updatePriceProductScheduleList($priceProductScheduleListTransfer);
     }
 
     /**
@@ -90,6 +94,8 @@ class PriceProductScheduleFacade extends AbstractFacade implements PriceProductS
     public function importPriceProductSchedules(
         PriceProductScheduledListImportRequestTransfer $priceProductScheduledListImportRequest
     ): PriceProductScheduleListImportResponseTransfer {
-        return new PriceProductScheduleListImportResponseTransfer();
+        return $this->getFactory()
+            ->createPriceProductScheduleListImporter()
+            ->importPriceProductSchedules($priceProductScheduledListImportRequest);
     }
 }

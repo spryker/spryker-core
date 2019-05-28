@@ -165,12 +165,9 @@ class PriceProductScheduleListTest extends Unit
             'Price Product Schedule list should be updated.'
         );
 
-        $priceProductScheduleListEntity = $this->tester->getPriceProductScheduleListQuery()
-            ->findOneByIdPriceProductScheduleList($priceProductScheduleListTransfer->getIdPriceProductScheduleList());
-
         $this->assertEquals(
-            $priceProductScheduleListEntity->toArray(),
-            $priceProductScheduleListTransfer->toArray(),
+            $priceProductScheduleListResponseTransfer->getPriceProductScheduleList(),
+            $priceProductScheduleListTransfer,
             'Values must be updated'
         );
     }

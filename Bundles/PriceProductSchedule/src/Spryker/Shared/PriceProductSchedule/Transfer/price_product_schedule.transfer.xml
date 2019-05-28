@@ -14,6 +14,15 @@
 
     <transfer name="PriceProductScheduleCriteriaFilter">
         <property name="filter" type="Filter"/>
+        <property name="skuProductAbstract" type="string"/>
+        <property name="skuProduct" type="string"/>
+        <property name="priceTypeName" type="string"/>
+        <property name="storeName" type="string"/>
+        <property name="currencyCode" type="string"/>
+        <property name="activeFrom" type="string"/>
+        <property name="activeTo" type="string"/>
+        <property name="netAmount" type="int"/>
+        <property name="grossAmount" type="int"/>
     </transfer>
 
     <transfer name="Filter">
@@ -41,6 +50,20 @@
         <property name="currency" type="Currency"/>
         <property name="netAmount" type="int"/>
         <property name="grossAmount" type="int"/>
+        <property name="store" type="Store"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="idStore" type="int"/>
+        <property name="name" type="string"/>
+        <property name="selectedCurrencyIsoCode" type="string"/>
+        <property name="defaultCurrencyIsoCode" type="string"/>
+        <property name="availableCurrencyIsoCodes" type="array" singular="availableCurrencyIsoCode"/>
+        <property name="availableLocaleIsoCodes" type="array" singular="availableLocaleCode"/>
+        <property name="queuePools" type="array"/>
+        <property name="storesWithSharedPersistence" type="array" singular="storeWithSharedPersistence"/>
+        <property name="countries" type="array" singular="country"/>
+        <property name="timezone" type="string"/>
     </transfer>
 
     <transfer name="Currency">
@@ -80,7 +103,7 @@
         <property name="skuProduct" type="string"/>
         <property name="priceTypeName" type="string"/>
         <property name="storeName" type="string"/>
-        <property name="currencyName" type="string"/>
+        <property name="currencyCode" type="string"/>
         <property name="activeFrom" type="string"/>
         <property name="activeTo" type="string"/>
         <property name="netAmount" type="int"/>
@@ -105,12 +128,18 @@
         <property name="message" type="string"/>
     </transfer>
 
-    <transfer name="PriceProductScheduleListImportResponseTransfer">
+    <transfer name="PriceProductScheduleListImportResponse">
         <property name="errors" type="PriceProductScheduleListImportError[]" singular="error"/>
         <property name="isSuccess" type="bool"/>
     </transfer>
 
-    <transfer name="PriceProductScheduleListResponseTransfer">
+    <transfer name="PriceProductExpandResult">
+        <property name="priceProduct" type="PriceProduct"/>
+        <property name="error" type="PriceProductScheduleListImportError" singular="error"/>
+        <property name="isSuccess" type="bool"/>
+    </transfer>
+
+    <transfer name="PriceProductScheduleListResponse">
         <property name="priceProductScheduleList" type="PriceProductScheduleList"/>
         <property name="errors" type="PriceProductScheduleListError[]" singular="error"/>
         <property name="isSuccess" type="bool"/>
