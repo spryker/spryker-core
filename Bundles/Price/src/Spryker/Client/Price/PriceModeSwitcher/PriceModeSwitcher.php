@@ -10,6 +10,7 @@ namespace Spryker\Client\Price\PriceModeSwitcher;
 use Spryker\Client\Price\Dependency\Client\PriceToQuoteClientInterface;
 use Spryker\Client\Price\Exception\UnknownPriceModeException;
 use Spryker\Client\Price\PriceConfig;
+use Spryker\Client\Price\PriceModeCache\PriceModeCacheManagerInterface;
 
 class PriceModeSwitcher implements PriceModeSwitcherInterface
 {
@@ -29,15 +30,26 @@ class PriceModeSwitcher implements PriceModeSwitcherInterface
     protected $priceModePostUpdatePlugins;
 
     /**
+     * @var \Spryker\Client\Price\PriceModeCache\PriceModeCacheManagerInterface
+     */
+    protected $priceModeCacheManager;
+
+    /**
      * @param \Spryker\Client\Price\Dependency\Client\PriceToQuoteClientInterface $quoteClient
      * @param \Spryker\Client\Price\PriceConfig $priceConfig
      * @param \Spryker\Client\PriceExtension\Dependency\Plugin\PriceModePostUpdatePluginInterface[] $priceModePostUpdatePlugins
+     * @param \Spryker\Client\Price\PriceModeCache\PriceModeCacheManagerInterface $priceModeCacheManager
      */
-    public function __construct(PriceToQuoteClientInterface $quoteClient, PriceConfig $priceConfig, array $priceModePostUpdatePlugins)
-    {
+    public function __construct(
+        PriceToQuoteClientInterface $quoteClient,
+        PriceConfig $priceConfig,
+        array $priceModePostUpdatePlugins,
+        PriceModeCacheManagerInterface $priceModeCacheManager
+    ) {
         $this->quoteClient = $quoteClient;
         $this->priceConfig = $priceConfig;
         $this->priceModePostUpdatePlugins = $priceModePostUpdatePlugins;
+        $this->priceModeCacheManager = $priceModeCacheManager;
     }
 
     /**
@@ -60,6 +72,8 @@ class PriceModeSwitcher implements PriceModeSwitcherInterface
         $quoteTransfer->setPriceMode($priceMode);
         $this->quoteClient->setQuote($quoteTransfer);
         $this->executePriceModePostUpdatePlugins($priceMode);
+
+        $this->priceModeCacheManager->invalidatePriceModeCache();
     }
 
     /**

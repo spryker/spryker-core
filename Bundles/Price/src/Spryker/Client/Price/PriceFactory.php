@@ -8,6 +8,8 @@
 namespace Spryker\Client\Price;
 
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\Price\PriceModeCache\PriceModeCacheManager;
+use Spryker\Client\Price\PriceModeCache\PriceModeCacheManagerInterface;
 use Spryker\Client\Price\PriceModeResolver\PriceModeResolver;
 use Spryker\Client\Price\PriceModeSwitcher\PriceModeSwitcher;
 use Spryker\Client\Price\PriceModeSwitcher\PriceModeSwitcherInterface;
@@ -22,7 +24,7 @@ class PriceFactory extends AbstractFactory
      */
     public function createPriceModeResolver()
     {
-        return new PriceModeResolver($this->getQuoteClient(), $this->getConfig());
+        return new PriceModeResolver($this->getQuoteClient(), $this->getConfig(), $this->createPriceModeCacheManager());
     }
 
     /**
@@ -33,8 +35,17 @@ class PriceFactory extends AbstractFactory
         return new PriceModeSwitcher(
             $this->getQuoteClient(),
             $this->getConfig(),
-            $this->getPriceModePostUpdatePlugins()
+            $this->getPriceModePostUpdatePlugins(),
+            $this->createPriceModeCacheManager()
         );
+    }
+
+    /**
+     * @return \Spryker\Client\Price\PriceModeCache\PriceModeCacheManagerInterface
+     */
+    public function createPriceModeCacheManager(): PriceModeCacheManagerInterface
+    {
+        return new PriceModeCacheManager();
     }
 
     /**
