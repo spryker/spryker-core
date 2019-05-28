@@ -14,5 +14,5 @@ interface HtmlConverterInterface
      *
      * @return string
      */
-    public function replaceWidget(string $html): string;
+    public function convertHtmlToTwigExpression(string $html): string;
 }

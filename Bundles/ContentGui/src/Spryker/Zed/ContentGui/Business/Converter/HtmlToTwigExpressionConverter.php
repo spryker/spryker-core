@@ -17,33 +17,33 @@ class HtmlToTwigExpressionConverter implements HtmlConverterInterface
      *
      * @return string
      */
-    public function replaceWidget(string $html): string
+    public function convertHtmlToTwigExpression(string $html): string
+    {
+        $dom = $this->getParsedDocument($html);
+        $updatedDom = $this->getDomWithReplacements($dom);
+
+        return $this->getHtml($updatedDom);
+    }
+
+    /**
+     * @param string $html
+     *
+     * @return \DOMDocument
+     */
+    protected function getParsedDocument(string $html): DOMDocument
     {
         $dom = new DOMDocument();
         $dom->loadHTML($html, LIBXML_NOWARNING | LIBXML_NOERROR | LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
 
-        $replacements = $this->getDomReplacements($dom);
-
-        if (!$replacements) {
-            return $html;
-        }
-
-        foreach ($replacements as $replacement) {
-            [$twigExpression, $widget] = $replacement;
-            $widget->parentNode->replaceChild($twigExpression, $widget);
-        }
-
-        $html = $dom->saveHTML();
-
-        return $html;
+        return $dom;
     }
 
     /**
      * @param \DOMDocument $dom
      *
-     * @return array
+     * @return \DOMDocument
      */
-    protected function getDomReplacements(DOMDocument $dom): array
+    protected function getDomWithReplacements(DOMDocument $dom): DOMDocument
     {
         $replacements = [];
         $xpath = new DOMXPath($dom);
@@ -55,6 +55,25 @@ class HtmlToTwigExpressionConverter implements HtmlConverterInterface
             $replacements[] = [$twigExpression, $widget->parentNode];
         }
 
-        return $replacements;
+        if (!$replacements) {
+            return $dom;
+        }
+
+        foreach ($replacements as $replacement) {
+            [$twigExpression, $widget] = $replacement;
+            $widget->parentNode->replaceChild($twigExpression, $widget);
+        }
+
+        return $dom;
+    }
+
+    /**
+     * @param \DOMDocument $dom
+     *
+     * @return string
+     */
+    protected function getHtml(DOMDocument $dom): string
+    {
+        return $dom->saveHTML();
     }
 }

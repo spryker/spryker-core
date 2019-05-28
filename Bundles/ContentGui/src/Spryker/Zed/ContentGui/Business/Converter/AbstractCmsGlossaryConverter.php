@@ -38,7 +38,7 @@ abstract class AbstractCmsGlossaryConverter
      */
     protected function convertTranslationTwigExpressionToHtml(string $html): string
     {
-        return $this->twigExpressionToHtmlConverter->replaceTwigExpression($html);
+        return $this->twigExpressionToHtmlConverter->convertTwigExpressionToHtml($html);
     }
 
     /**
@@ -48,6 +48,6 @@ abstract class AbstractCmsGlossaryConverter
      */
     protected function convertTranslationHtmlToTwigExpression(string $html): string
     {
-        return $this->htmlToTwigExpressionConverter->replaceWidget($html);
+        return $this->htmlToTwigExpressionConverter->convertHtmlToTwigExpression($html);
     }
 }

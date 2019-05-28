@@ -58,7 +58,7 @@ class TwigExpressionToHtmlConverter implements TwigExpressionConverterInterface
      *
      * @return string
      */
-    public function replaceTwigExpression(string $html): string
+    public function convertTwigExpressionToHtml(string $html): string
     {
         foreach ($this->contentEditorPlugins as $contentEditorPlugin) {
             $html = $this->convertTwigExpressionsToHtml($html, $contentEditorPlugin);

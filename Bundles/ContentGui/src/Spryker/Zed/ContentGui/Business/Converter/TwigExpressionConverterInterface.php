@@ -14,5 +14,5 @@ interface TwigExpressionConverterInterface
      *
      * @return string
      */
-    public function replaceTwigExpression(string $html): string;
+    public function convertTwigExpressionToHtml(string $html): string;
 }
