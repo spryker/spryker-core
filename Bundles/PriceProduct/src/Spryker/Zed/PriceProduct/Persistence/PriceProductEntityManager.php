@@ -87,6 +87,7 @@ class PriceProductEntityManager extends AbstractEntityManager implements PricePr
             ->filterByFkCurrency($moneyValueTransfer->getCurrency()->getIdCurrency())
             ->filterByFkPriceProduct($priceProductTransfer->getIdPriceProduct())
             ->filterByFkStore($moneyValueTransfer->getFkStore())
+            ->find()
             ->delete();
     }
 
@@ -100,6 +101,21 @@ class PriceProductEntityManager extends AbstractEntityManager implements PricePr
         $this->getFactory()
             ->createPriceProductQuery()
             ->filterByIdPriceProduct($idPriceProduct)
+            ->find()
+            ->delete();
+    }
+
+    /**
+     * @param int $idPriceProductStore
+     *
+     * @return void
+     */
+    public function deletePriceProductDefaultsByPriceProductStoreId(int $idPriceProductStore): void
+    {
+        $this->getFactory()
+            ->createPriceProductDefaultQuery()
+            ->filterByFkPriceProductStore($idPriceProductStore)
+            ->find()
             ->delete();
     }
 }
