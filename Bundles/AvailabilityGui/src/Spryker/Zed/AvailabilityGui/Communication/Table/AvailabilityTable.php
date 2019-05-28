@@ -29,6 +29,8 @@ class AvailabilityTable extends AbstractTable
 
     public const IS_BUNDLE_PRODUCT = 'Is bundle product';
 
+    protected const NEVER_OUT_OF_STOCK_DEFAULT_VALUE = 'false';
+
     /**
      * @var int
      */
@@ -138,7 +140,7 @@ class AvailabilityTable extends AbstractTable
             $isBundleProduct = $this->isBundleProduct($productItem[AvailabilityQueryContainer::ID_PRODUCT]);
 
             $isNeverOutOfStock = $this->isNeverOutOfStock(
-                $productItem[AvailabilityQueryContainer::CONCRETE_NEVER_OUT_OF_STOCK_SET],
+                $productItem[AvailabilityQueryContainer::CONCRETE_NEVER_OUT_OF_STOCK_SET] ?? static::NEVER_OUT_OF_STOCK_DEFAULT_VALUE,
                 $isBundleProduct
             );
 

@@ -28,7 +28,7 @@ class VoucherCartCodePlugin extends AbstractPlugin implements CartCodePluginInte
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function addCandidate(QuoteTransfer $quoteTransfer, $code): QuoteTransfer
+    public function addCandidate(QuoteTransfer $quoteTransfer, string $code): QuoteTransfer
     {
         return $this->getFactory()
             ->createVoucherCartCode()
@@ -46,7 +46,7 @@ class VoucherCartCodePlugin extends AbstractPlugin implements CartCodePluginInte
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function removeCode(QuoteTransfer $quoteTransfer, $code): QuoteTransfer
+    public function removeCode(QuoteTransfer $quoteTransfer, string $code): QuoteTransfer
     {
         return $this->getFactory()
             ->createVoucherCartCode()
@@ -66,7 +66,7 @@ class VoucherCartCodePlugin extends AbstractPlugin implements CartCodePluginInte
      *
      * @return \Generated\Shared\Transfer\MessageTransfer|null
      */
-    public function getOperationResponseMessage(QuoteTransfer $quoteTransfer, $code): ?MessageTransfer
+    public function getOperationResponseMessage(QuoteTransfer $quoteTransfer, string $code): ?MessageTransfer
     {
         return $this->getFactory()
             ->createVoucherCartCode()
