@@ -67,14 +67,14 @@ class XmlJenkinsJobTemplateGenerator implements JenkinsJobTemplateGeneratorInter
      */
     protected function extendSchedulerJobTransferWithLogRotateValue(SchedulerJobTransfer $schedulerJobTransfer): SchedulerJobTransfer
     {
-        $schedulerPayload = $schedulerJobTransfer->getPayload();
+        $jobPayload = $schedulerJobTransfer->getPayload();
 
-        if (array_key_exists(static::LOG_ROTATE_DAYS_KEY, $schedulerPayload) && is_int($schedulerPayload[static::LOG_ROTATE_DAYS_KEY])) {
+        if (array_key_exists(static::LOG_ROTATE_DAYS_KEY, $jobPayload) && is_int($jobPayload[static::LOG_ROTATE_DAYS_KEY])) {
             return $schedulerJobTransfer;
         }
 
-        $schedulerPayload[static::LOG_ROTATE_DAYS_KEY] = $this->schedulerJenkinsConfig->getAmountOfDaysForLogFileRotation();
+        $jobPayload[static::LOG_ROTATE_DAYS_KEY] = $this->schedulerJenkinsConfig->getAmountOfDaysForLogFileRotation();
 
-        return $schedulerJobTransfer->setPayload($schedulerPayload);
+        return $schedulerJobTransfer->setPayload($jobPayload);
     }
 }

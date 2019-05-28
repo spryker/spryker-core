@@ -48,13 +48,12 @@ class CreateExecutor implements ExecutorInterface
     {
         $jobXmlTemplate = $this->jobTemplateGenerator->getJobTemplate($schedulerJobTransfer);
 
-        $response = $this->jenkinsApi->executePostRequest(
+        $schedulerResponseTransfer = $this->jenkinsApi->executePostRequest(
             $idScheduler,
             sprintf(static::CREATE_JOB_URL_TEMPLATE, $schedulerJobTransfer->getName()),
             $jobXmlTemplate
         );
 
-        return (new SchedulerResponseTransfer())
-            ->setStatus($response->getStatusCode() === 200);
+        return $schedulerResponseTransfer;
     }
 }

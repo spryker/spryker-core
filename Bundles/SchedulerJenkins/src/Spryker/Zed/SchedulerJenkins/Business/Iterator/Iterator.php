@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\SchedulerScheduleTransfer;
 use Spryker\Zed\SchedulerJenkins\Business\Executor\ExecutorInterface;
 use Spryker\Zed\SchedulerJenkins\Business\Reader\JenkinsJobReaderInterface;
 
-class Iterator extends AbstractIterator implements IteratorInterface
+class Iterator implements IteratorInterface
 {
     /**
      * @var \Spryker\Zed\SchedulerJenkins\Business\Reader\JenkinsJobReaderInterface
@@ -57,8 +57,7 @@ class Iterator extends AbstractIterator implements IteratorInterface
 
         foreach ($scheduleTransfer->getJobs() as $jobTransfer) {
             $executor = $this->getModel($jobTransfer, $existingJobNames);
-
-            $response = $this->execute($executor, $idScheduler, $jobTransfer);
+            $response = $executor->execute($idScheduler, $jobTransfer);
 
             if (!$response->getStatus()) {
                 return $response->setSchedule($scheduleTransfer);

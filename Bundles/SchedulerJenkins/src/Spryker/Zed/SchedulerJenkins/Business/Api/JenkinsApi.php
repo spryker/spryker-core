@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\SchedulerJenkins\Business\Api;
 
+use Generated\Shared\Transfer\SchedulerResponseTransfer;
+use GuzzleHttp\Exception\BadResponseException;
 use Psr\Http\Message\ResponseInterface;
 use Spryker\Shared\SchedulerJenkins\SchedulerJenkinsConfig as SharedSchedulerJenkinsConfig;
 use Spryker\Zed\SchedulerJenkins\Business\Api\Exception\JenkinsBaseUrlNotFound;
@@ -20,6 +22,8 @@ class JenkinsApi implements JenkinsApiInterface
     protected const HEADERS_KEY = 'headers';
     protected const BODY_KEY = 'body';
     protected const AUTH_KEY = 'auth';
+
+    protected const SUCCESS_STATUS_CODE = 200;
 
     /**
      * @var \Spryker\Zed\SchedulerJenkins\Dependency\Guzzle\SchedulerJenkinsToGuzzleInterface
@@ -62,15 +66,24 @@ class JenkinsApi implements JenkinsApiInterface
      * @param string $urlPath
      * @param string $xmlTemplate
      *
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return \Generated\Shared\Transfer\SchedulerResponseTransfer
      */
-    public function executePostRequest(string $schedulerId, string $urlPath, string $xmlTemplate = ''): ResponseInterface
+    public function executePostRequest(string $schedulerId, string $urlPath, string $xmlTemplate = ''): SchedulerResponseTransfer
     {
-        $requestUrl = $this->getJenkinsBaseUrlBySchedulerId($schedulerId, $urlPath);
-        $requestOptions = $this->getRequestOptions($schedulerId, $xmlTemplate);
-        $response = $this->client->post($requestUrl, $requestOptions);
+        try {
+            $requestUrl = $this->getJenkinsBaseUrlBySchedulerId($schedulerId, $urlPath);
+            $requestOptions = $this->getRequestOptions($schedulerId, $xmlTemplate);
+            $response = $this->client->post($requestUrl, $requestOptions);
+        } catch (BadResponseException $badResponseException) {
+            $exceptionMessage = $badResponseException->getResponse()->getBody()->getContents();
 
-        return $response;
+            return (new SchedulerResponseTransfer())
+                ->setMessage($exceptionMessage)
+                ->setStatus(false);
+        }
+
+        return (new SchedulerResponseTransfer())
+            ->setStatus($response->getStatusCode() === static::SUCCESS_STATUS_CODE);
     }
 
     /**

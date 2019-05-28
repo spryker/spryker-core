@@ -37,12 +37,9 @@ class EnableExecutor implements ExecutorInterface
      */
     public function execute(string $idScheduler, SchedulerJobTransfer $schedulerJobTransfer): SchedulerResponseTransfer
     {
-        $response = $this->jenkinsApi->executePostRequest(
+        return $this->jenkinsApi->executePostRequest(
             $idScheduler,
             sprintf(static::ENABLE_JOB_URL_TEMPLATE, $schedulerJobTransfer->getName())
         );
-
-        return (new SchedulerResponseTransfer())
-            ->setStatus($response->getStatusCode() === 200);
     }
 }
