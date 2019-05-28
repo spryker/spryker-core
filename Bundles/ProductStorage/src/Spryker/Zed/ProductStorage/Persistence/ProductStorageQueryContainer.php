@@ -56,6 +56,8 @@ class ProductStorageQueryContainer extends AbstractQueryContainer implements Pro
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $productAbstractIds
@@ -109,6 +111,8 @@ class ProductStorageQueryContainer extends AbstractQueryContainer implements Pro
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $productIds

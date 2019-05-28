@@ -23,6 +23,9 @@ interface ProductStorageQueryContainerInterface extends QueryContainerInterface
     public function queryProductAbstractByIds(array $productAbstractIds);
 
     /**
+     * Specification:
+     * - Returns a a query for the table `spy_product_abstract` filtered by product abstract ids.
+     *
      * @api
      *
      * @param array $productAbstractIds
@@ -41,6 +44,9 @@ interface ProductStorageQueryContainerInterface extends QueryContainerInterface
     public function queryProductConcreteByIds(array $productIds);
 
     /**
+     * Specification:
+     * - Returns a a query for the table `spy_product` filtered by product ids.
+     *
      * @api
      *
      * @param array $productIds
