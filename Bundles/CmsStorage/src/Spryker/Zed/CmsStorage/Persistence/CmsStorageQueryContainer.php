@@ -57,6 +57,8 @@ class CmsStorageQueryContainer extends AbstractQueryContainer implements CmsStor
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $cmsPageIds

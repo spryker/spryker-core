@@ -33,7 +33,7 @@ interface CmsBlockCategoryStorageQueryContainerInterface extends QueryContainerI
     /**
      * @api
      *
-     * @deprecated Use CmsBlockCategoryStorageQueryContainerInterface::queryCmsBlockCategoriesByCmsCategoryIds instead.
+     * @deprecated Use `\Spryker\Zed\CmsBlockCategoryStorage\Persistence\CmsBlockCategoryStorageQueryContainerInterface::queryCmsBlockCategoriesByCmsCategoryIds()` instead.
      *
      * @param int[] $cmsBlockCategoriesIds
      *
@@ -42,6 +42,9 @@ interface CmsBlockCategoryStorageQueryContainerInterface extends QueryContainerI
     public function queryCmsBlockCategoriesByIds(array $cmsBlockCategoriesIds): SpyCmsBlockCategoryConnectorQuery;
 
     /**
+     * Specification:
+     * - Returns a a query for the table `spy_cms_block_category_connector` filtered by cms categories ids.
+     *
      * @api
      *
      * @param int[] $cmsBlockCategoriesIds

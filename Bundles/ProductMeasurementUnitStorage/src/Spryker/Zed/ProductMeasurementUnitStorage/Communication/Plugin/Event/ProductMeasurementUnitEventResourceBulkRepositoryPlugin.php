@@ -22,6 +22,8 @@ use Spryker\Zed\ProductMeasurementUnit\Dependency\ProductMeasurementUnitEvents;
  */
 class ProductMeasurementUnitEventResourceBulkRepositoryPlugin extends AbstractPlugin implements EventResourceBulkRepositoryPluginInterface
 {
+    protected const FILTER_ORDER_DIRECTION = 'ASC';
+
     /**
      * {@inheritdoc}
      *
@@ -85,7 +87,7 @@ class ProductMeasurementUnitEventResourceBulkRepositoryPlugin extends AbstractPl
     {
         return (new FilterTransfer())
             ->setOrderBy(SpyProductMeasurementUnitTableMap::COL_ID_PRODUCT_MEASUREMENT_UNIT)
-            ->setOrderDirection('ASC')
+            ->setOrderDirection(static::FILTER_ORDER_DIRECTION)
             ->setOffset($offset)
             ->setLimit($limit);
     }

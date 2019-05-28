@@ -25,6 +25,8 @@ use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataBu
  */
 class PriceProductAbstractMerchantRelationSynchronizationDataBulkPlugin extends AbstractPlugin implements SynchronizationDataBulkRepositoryPluginInterface
 {
+    protected const FILTER_ORDER_DIRECTION = 'ASC';
+
     /**
      * {@inheritdoc}
      *
@@ -124,7 +126,7 @@ class PriceProductAbstractMerchantRelationSynchronizationDataBulkPlugin extends 
     {
         return (new FilterTransfer())
             ->setOrderBy(SpyPriceProductAbstractMerchantRelationshipStorageTableMap::COL_ID_PRICE_PRODUCT_ABSTRACT_MERCHANT_RELATIONSHIP_STORAGE)
-            ->setOrderDirection('ASC')
+            ->setOrderDirection(static::FILTER_ORDER_DIRECTION)
             ->setOffset($offset)
             ->setLimit($limit);
     }

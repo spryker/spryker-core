@@ -22,6 +22,8 @@ use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataBu
  */
 class ProductConcreteMeasurementUnitSynchronizationDataBulkPlugin extends AbstractPlugin implements SynchronizationDataBulkRepositoryPluginInterface
 {
+    protected const FILTER_ORDER_DIRECTION = 'ASC';
+
     /**
      * {@inheritdoc}
      *
@@ -121,7 +123,7 @@ class ProductConcreteMeasurementUnitSynchronizationDataBulkPlugin extends Abstra
     {
         return (new FilterTransfer())
             ->setOrderBy(SpyProductConcreteMeasurementUnitStorageTableMap::COL_ID_PRODUCT_CONCRETE_MEASUREMENT_UNIT_STORAGE)
-            ->setOrderDirection('ASC')
+            ->setOrderDirection(static::FILTER_ORDER_DIRECTION)
             ->setOffset($offset)
             ->setLimit($limit);
     }

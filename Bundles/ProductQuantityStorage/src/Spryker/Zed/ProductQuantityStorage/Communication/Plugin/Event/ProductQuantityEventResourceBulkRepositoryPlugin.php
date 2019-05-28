@@ -22,6 +22,8 @@ use Spryker\Zed\ProductQuantity\Dependency\ProductQuantityEvents;
  */
 class ProductQuantityEventResourceBulkRepositoryPlugin extends AbstractPlugin implements EventResourceBulkRepositoryPluginInterface
 {
+    protected const FILTER_ORDER_DIRECTION = 'ASC';
+
     /**
      * {@inheritdoc}
      *
@@ -85,7 +87,7 @@ class ProductQuantityEventResourceBulkRepositoryPlugin extends AbstractPlugin im
     {
         return (new FilterTransfer())
             ->setOrderBy(SpyProductQuantityTableMap::COL_ID_PRODUCT_QUANTITY)
-            ->setOrderDirection('ASC')
+            ->setOrderDirection(static::FILTER_ORDER_DIRECTION)
             ->setOffset($offset)
             ->setLimit($limit);
     }
