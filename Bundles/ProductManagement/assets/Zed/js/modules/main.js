@@ -63,7 +63,7 @@ $(document).ready(function() {
             .replace(/__image_set_name__/g, imageSetIndex)
             .replace(/__name__/g, imageCollectionIndex);
 
-        $(event.target).parent().find('.image-collection-container').append($(newOptionFormHTML));
+        imageSet.find('.image-collection-container').append($(newOptionFormHTML));
     }
 
     /**
