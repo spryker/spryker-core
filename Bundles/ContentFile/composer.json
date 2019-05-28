@@ -1,5 +1,6 @@
 {
   "name": "spryker/content-file",
+  "type": "library",
   "description": "ContentFile module",
   "license": "proprietary",
   "require": {
@@ -14,6 +15,11 @@
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "SprykerTest\\": "tests/SprykerTest/"
     }
   },
   "minimum-stability": "dev",
