@@ -24,6 +24,10 @@ class CommentRepository extends AbstractRepository implements CommentRepositoryI
      */
     public function findCommentThread(CommentRequestTransfer $commentRequestTransfer): ?CommentThreadTransfer
     {
+        $commentRequestTransfer
+            ->requireOwnerId()
+            ->requireOwnerType();
+
         $commentThreadQuery = $this->getFactory()
             ->getCommentThreadPropelQuery()
             ->filterByOwnerId($commentRequestTransfer->getOwnerId())

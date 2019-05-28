@@ -30,9 +30,7 @@ class CommentFacade extends AbstractFacade implements CommentFacadeInterface
      */
     public function findCommentThread(CommentRequestTransfer $commentRequestTransfer): ?CommentThreadTransfer
     {
-        return $this->getFactory()
-            ->createCommentReader()
-            ->findCommentThread($commentRequestTransfer);
+        return $this->getRepository()->findCommentThread($commentRequestTransfer);
     }
 
     /**
