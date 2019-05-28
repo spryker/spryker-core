@@ -41,7 +41,7 @@
         <property name="unitTaxAmountFullAggregation" type="int" />
         <property name="sumTaxAmountFullAggregation" type="int" />
         <property name="refundableAmount" type="int" />
-        <property name="canceledAmount" type="int" />
+        <property name="canceledAmount" type="float" />
         <property name="sumSubtotalAggregation" type="int" />
         <property name="unitSubtotalAggregation" type="int" />
         <property name="unitProductOptionPriceAggregation" type="int" />
@@ -124,7 +124,7 @@
         <property name="displayName" type="string"/>
         <property name="description" type="string"/>
         <property name="voucherCode" type="string"/>
-        <property name="quantity" type="int"/>
+        <property name="quantity" type="float"/>
     </transfer>
 
 </transfers>

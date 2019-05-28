@@ -198,7 +198,7 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function changeItemQuantity($sku, $groupKey = null, $quantity = 1.0)
+    public function changeItemQuantity($sku, $groupKey = null, float $quantity = 1.0)
     {
         $persistentCartChangeTransfer = $this->createPersistentCartChangeQuantityTransfer();
         $itemTransfer = new ItemTransfer();

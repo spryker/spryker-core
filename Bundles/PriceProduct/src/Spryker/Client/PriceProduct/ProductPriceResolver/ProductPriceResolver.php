@@ -13,9 +13,8 @@ use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
-use Spryker\Client\PriceProduct\Dependency\Client\PriceProductToCurrencyClientInterface;
-use Spryker\Client\PriceProduct\Dependency\Client\PriceProductToPriceClientInterface;
-use Spryker\Client\PriceProduct\Dependency\Client\PriceProductToQuoteClientInterface;
+use Spryker\Client\PriceProduct\DataReader\CurrentDataReaderInterface;
+use Spryker\Client\PriceProduct\Dependency\Service\PriceProductToUtilPriceServiceInterface;
 use Spryker\Client\PriceProduct\PriceProductConfig;
 use Spryker\Service\PriceProduct\PriceProductServiceInterface;
 use Spryker\Shared\PriceProduct\PriceProductConfig as SharedPriceProductConfig;
@@ -25,24 +24,9 @@ class ProductPriceResolver implements ProductPriceResolverInterface
     protected const PRICE_KEY_SEPARATOR = '-';
 
     /**
-     * @var \Spryker\Client\PriceProduct\Dependency\Client\PriceProductToPriceClientInterface
-     */
-    protected $priceClient;
-
-    /**
-     * @var \Spryker\Client\PriceProduct\Dependency\Client\PriceProductToCurrencyClientInterface
-     */
-    protected $currencyClient;
-
-    /**
      * @var \Spryker\Client\PriceProduct\PriceProductConfig
      */
     protected $priceProductConfig;
-
-    /**
-     * @var \Spryker\Client\PriceProduct\Dependency\Client\PriceProductToQuoteClientInterface
-     */
-    protected $quoteClient;
 
     /**
      * @var \Spryker\Service\PriceProduct\PriceProductServiceInterface
@@ -50,24 +34,31 @@ class ProductPriceResolver implements ProductPriceResolverInterface
     protected $priceProductService;
 
     /**
-     * @param \Spryker\Client\PriceProduct\Dependency\Client\PriceProductToPriceClientInterface $priceClient
-     * @param \Spryker\Client\PriceProduct\Dependency\Client\PriceProductToCurrencyClientInterface $currencyClient
+     * @var \Spryker\Client\PriceProduct\DataReader\CurrentDataReaderInterface
+     */
+    protected $currentDataReader;
+
+    /**
+     * @var \Spryker\Client\PriceProduct\Dependency\Service\PriceProductToUtilPriceServiceInterface
+     */
+    protected $utilPriceService;
+
+    /**
      * @param \Spryker\Client\PriceProduct\PriceProductConfig $priceProductConfig
-     * @param \Spryker\Client\PriceProduct\Dependency\Client\PriceProductToQuoteClientInterface $quoteClient
      * @param \Spryker\Service\PriceProduct\PriceProductServiceInterface $priceProductService
+     * @param \Spryker\Client\PriceProduct\DataReader\CurrentDataReaderInterface $currentDataReader
+     * @param \Spryker\Client\PriceProduct\Dependency\Service\PriceProductToUtilPriceServiceInterface $utilPriceService
      */
     public function __construct(
-        PriceProductToPriceClientInterface $priceClient,
-        PriceProductToCurrencyClientInterface $currencyClient,
         PriceProductConfig $priceProductConfig,
-        PriceProductToQuoteClientInterface $quoteClient,
-        PriceProductServiceInterface $priceProductService
+        PriceProductServiceInterface $priceProductService,
+        CurrentDataReaderInterface $currentDataReader,
+        PriceProductToUtilPriceServiceInterface $utilPriceService
     ) {
         $this->priceProductConfig = $priceProductConfig;
-        $this->priceClient = $priceClient;
-        $this->currencyClient = $currencyClient;
-        $this->quoteClient = $quoteClient;
         $this->priceProductService = $priceProductService;
+        $this->currentDataReader = $currentDataReader;
+        $this->utilPriceService = $utilPriceService;
     }
 
     /**
@@ -177,7 +168,17 @@ class ProductPriceResolver implements ProductPriceResolverInterface
             ->setCurrency($priceProductFilter->getCurrency())
             ->setQuantity($priceProductFilter->getQuantity())
             ->setPriceMode($priceMode)
-            ->setSumPrice($price * $priceProductFilter->getQuantity());
+            ->setSumPrice($this->roundPrice($price * $priceProductFilter->getQuantity()));
+    }
+
+    /**
+     * @param float $price
+     *
+     * @return int
+     */
+    protected function roundPrice(float $price): int
+    {
+        return $this->utilPriceService->roundPrice($price);
     }
 
     /**
@@ -188,10 +189,10 @@ class ProductPriceResolver implements ProductPriceResolverInterface
     protected function buildPriceProductFilterWithCurrentValues(
         ?PriceProductFilterTransfer $priceProductFilterTransfer = null
     ): PriceProductFilterTransfer {
-        $currencyTransfer = $this->currencyClient->getCurrent();
-        $priceMode = $this->priceClient->getCurrentPriceMode();
+        $currencyTransfer = $this->currentDataReader->getCurrentCurrency();
+        $priceMode = $this->currentDataReader->getCurrentPriceMode();
         $priceTypeName = $this->priceProductConfig->getPriceTypeDefaultName();
-        $quote = $this->quoteClient->getQuote();
+        $quote = $this->currentDataReader->getCurrentQuote();
 
         $builtPriceProductFilterTransfer = new PriceProductFilterTransfer();
 

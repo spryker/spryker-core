@@ -182,7 +182,7 @@ class SessionQuoteStorageStrategyPlugin extends AbstractPlugin implements QuoteS
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function changeItemQuantity($sku, $groupKey = null, $quantity = 1.0)
+    public function changeItemQuantity($sku, $groupKey = null, float $quantity = 1.0)
     {
         if ($quantity == 0) {
             return $this->removeItem($sku, $groupKey);

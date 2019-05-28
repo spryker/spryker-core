@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 class ProductStorageToProductConcreteTransferDataMapper implements ProductStorageToProductConcreteTransferDataMapperInterface
 {
     protected const ID_PRODUCT_ABSTRACT = 'id_product_abstract';
-    protected const NAME = 'name';
 
     /**
      * @var \Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductConcreteExpanderPluginInterface[]
@@ -36,7 +35,7 @@ class ProductStorageToProductConcreteTransferDataMapper implements ProductStorag
     public function mapProductStorageDataToProductConcreteTransfer(array $productConcreteStorageData): ProductConcreteTransfer
     {
         $productConcreteTransfer = (new ProductConcreteTransfer())->fromArray($productConcreteStorageData, true);
-        $localizedAttributesTransfer = (new LocalizedAttributesTransfer())->setName($productConcreteStorageData[static::NAME]);
+        $localizedAttributesTransfer = (new LocalizedAttributesTransfer())->fromArray($productConcreteStorageData, true);
 
         $productConcreteTransfer
             ->setFkProductAbstract($productConcreteStorageData[static::ID_PRODUCT_ABSTRACT])

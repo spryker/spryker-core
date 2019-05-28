@@ -147,7 +147,7 @@
         <column name="name" type="VARCHAR" size="255" required="true"/>
         <column name="sku" type="VARCHAR" size="255" required="true"/>
         <column name="gross_price" type="INTEGER" required="true" description="/price for one unit including tax, without shipping, coupons/"/>
-        <column name="canceled_amount" type="INTEGER" required="false" default="0"/>
+        <column name="canceled_amount" type="DOUBLE" required="false" default="0"/>
         <column name="tax_rate" type="DECIMAL" size="8" scale="2" required="false"/>
         <column name="quantity" type="DOUBLE" unsigned="true" default="1" required="true" description="/Quantity ordered for item/"/>
         <column name="group_key" type="VARCHAR" size="255" required="false" description=""/>

@@ -8,9 +8,12 @@
 namespace Spryker\Client\PriceProduct;
 
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\PriceProduct\DataReader\CurrentDataReader;
+use Spryker\Client\PriceProduct\DataReader\CurrentDataReaderInterface;
 use Spryker\Client\PriceProduct\Dependency\Client\PriceProductToCurrencyClientInterface;
 use Spryker\Client\PriceProduct\Dependency\Client\PriceProductToPriceClientInterface;
 use Spryker\Client\PriceProduct\Dependency\Client\PriceProductToQuoteClientInterface;
+use Spryker\Client\PriceProduct\Dependency\Service\PriceProductToUtilPriceServiceInterface;
 use Spryker\Client\PriceProduct\ProductPriceResolver\ProductPriceResolver;
 use Spryker\Service\PriceProduct\PriceProductServiceInterface;
 
@@ -25,11 +28,22 @@ class PriceProductFactory extends AbstractFactory
     public function createProductPriceResolver()
     {
         return new ProductPriceResolver(
+            $this->getConfig(),
+            $this->getPriceProductService(),
+            $this->createCurrentDataReader(),
+            $this->getUtilPriceService()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\PriceProduct\DataReader\CurrentDataReaderInterface
+     */
+    public function createCurrentDataReader(): CurrentDataReaderInterface
+    {
+        return new CurrentDataReader(
             $this->getPriceClient(),
             $this->getCurrencyClient(),
-            $this->getConfig(),
-            $this->getQuoteClient(),
-            $this->getPriceProductService()
+            $this->getQuoteClient()
         );
     }
 
@@ -74,5 +88,13 @@ class PriceProductFactory extends AbstractFactory
         $config = parent::getConfig();
 
         return $config;
+    }
+
+    /**
+     * @return \Spryker\Client\PriceProduct\Dependency\Service\PriceProductToUtilPriceServiceInterface
+     */
+    public function getUtilPriceService(): PriceProductToUtilPriceServiceInterface
+    {
+        return $this->getProvidedDependency(PriceProductDependencyProvider::SERVICE_UTIL_PRICE);
     }
 }

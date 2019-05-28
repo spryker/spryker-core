@@ -14,7 +14,7 @@ use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
+use Symfony\Component\Validator\Constraints\GreaterThan;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
@@ -85,7 +85,7 @@ class ConditionsForm extends AbstractType
             'label' => $label,
             'constraints' => [
                 new NotBlank(),
-                new GreaterThanOrEqual(0),
+                new GreaterThan(0),
             ],
             'required' => true,
         ]);

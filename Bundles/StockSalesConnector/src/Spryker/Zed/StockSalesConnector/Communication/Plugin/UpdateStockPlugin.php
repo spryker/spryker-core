@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\StockProductTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
+ * @deprecated Use appropriate \Spryker\Zed\Stock\Business\StockFacade methods instead.
  * @method \Spryker\Zed\StockSalesConnector\Communication\StockSalesConnectorCommunicationFactory getFactory()
  */
 class UpdateStockPlugin extends AbstractPlugin
@@ -19,8 +20,6 @@ class UpdateStockPlugin extends AbstractPlugin
 
     /**
      * @api
-     *
-     * @deprecated not used
      *
      * @param string $sku
      * @param string $stockType
@@ -36,8 +35,6 @@ class UpdateStockPlugin extends AbstractPlugin
     /**
      * @api
      *
-     * @deprecated not used
-     *
      * @param string $sku
      * @param string $stockType
      * @param int $decrementBy
@@ -51,8 +48,6 @@ class UpdateStockPlugin extends AbstractPlugin
 
     /**
      * @api
-     *
-     * @deprecated not used
      *
      * @param \Generated\Shared\Transfer\StockProductTransfer $transferStockProduct
      *

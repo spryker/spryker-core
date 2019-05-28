@@ -41,7 +41,7 @@
         <property name="sku" type="string" />
         <property name="productOptions" type="ProductOption[]" singular="productOption" />
         <property name="refundableAmount" type="int"/>
-        <property name="canceledAmount" type="int"/>
+        <property name="canceledAmount" type="float"/>
     </transfer>
 
     <transfer name="Quote">

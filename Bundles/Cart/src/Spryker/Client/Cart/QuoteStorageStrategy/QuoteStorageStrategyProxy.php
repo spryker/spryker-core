@@ -142,7 +142,7 @@ class QuoteStorageStrategyProxy implements QuoteStorageStrategyProxyInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function changeItemQuantity($sku, $groupKey = null, $quantity = 1.0): QuoteTransfer
+    public function changeItemQuantity($sku, $groupKey = null, float $quantity = 1.0): QuoteTransfer
     {
         if ($this->isQuoteLocked()) {
             $this->addPermissionFailedMessage();
