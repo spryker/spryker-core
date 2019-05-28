@@ -27,7 +27,7 @@ class UrlRepository extends AbstractRepository implements UrlRepositoryInterface
             ->createUrlQuery()
             ->setIgnoreCase(true)
             ->filterByUrl($urlTransfer->getUrl())
-            ->_or()
+            ->_and()
             ->filterByIdUrl($urlTransfer->getIdUrl())
             ->findOne();
 
@@ -48,8 +48,9 @@ class UrlRepository extends AbstractRepository implements UrlRepositoryInterface
     {
         return $this->getFactory()
             ->createUrlQuery()
+            ->setIgnoreCase(true)
             ->filterByUrl($urlTransfer->getUrl())
-            ->_or()
+            ->_and()
             ->filterByIdUrl($urlTransfer->getIdUrl())
             ->_if($ignoreRedirects)
                 ->filterByFkResourceRedirect(null, Criteria::ISNULL)

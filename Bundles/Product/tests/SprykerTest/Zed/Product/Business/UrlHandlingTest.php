@@ -204,7 +204,7 @@ class UrlHandlingTest extends FacadeTestAbstract
         foreach ($productUrlTransfer->getUrls() as $localizedUrlTransfer) {
             $urlTransfer = new UrlTransfer();
             $urlTransfer->setUrl($localizedUrlTransfer->getUrl());
-            $urlTransfer = $this->findUrlCaseInsensitive($urlTransfer);
+            $urlTransfer = $this->urlFacade->findUrlCaseInsensitive($urlTransfer);
 
             $this->tester->assertTouchDeleted(UrlConfig::RESOURCE_TYPE_URL, $urlTransfer->getIdUrl());
         }
@@ -227,26 +227,5 @@ class UrlHandlingTest extends FacadeTestAbstract
 
         $this->assertArrayHasKey($expectedUrl->getLocale()->getLocaleName(), $urls);
         $this->assertSame($expectedUrl->getUrl(), $urls[$expectedUrl->getLocale()->getLocaleName()]);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
-     *
-     * @return \Generated\Shared\Transfer\UrlTransfer|null
-     */
-    protected function findUrlCaseInsensitive(UrlTransfer $urlTransfer): ?UrlTransfer
-    {
-        $urlEntity = (new SpyUrlQuery())
-            ->setIgnoreCase(true)
-            ->filterByUrl($urlTransfer->getUrl())
-            ->_or()
-            ->filterByIdUrl($urlTransfer->getIdUrl())
-            ->findOne();
-
-        if ($urlEntity === null) {
-            return null;
-        }
-
-        return (new UrlTransfer())->fromArray($urlEntity->toArray());
     }
 }
