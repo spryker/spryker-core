@@ -21,6 +21,7 @@
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/company": "*",
+    "spryker/company-business-unit": "*",
     "spryker/customer": "*",
     "spryker/propel": "*",
     "spryker/testify": "*"
