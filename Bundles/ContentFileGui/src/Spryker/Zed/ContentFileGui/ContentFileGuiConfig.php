@@ -20,4 +20,20 @@ class ContentFileGuiConfig extends AbstractBundleConfig
      * Should be more than in max count of list files
      */
     public const MAX_NUMBER_FILES_IN_FILE_LIST = 30;
+
+    /**
+     * @return array
+     */
+    public function getContentWidgetTemplates(): array
+    {
+        return $this->getSharedConfig()->getContentWidgetTemplates();
+    }
+
+    /**
+     * @return string
+     */
+    public function getTwigFunctionName(): string
+    {
+        return $this->getSharedConfig()->getTwigFunctionName();
+    }
 }

@@ -9,6 +9,8 @@ namespace Spryker\Zed\ContentFileGui\Communication;
 
 use Orm\Zed\FileManager\Persistence\SpyFileQuery;
 use Spryker\Zed\ContentFileGui\Communication\Form\Constraints\ContentFileListConstraint;
+use Spryker\Zed\ContentFileGui\Communication\Mapper\ContentFileGuiEditorConfigurationMapper;
+use Spryker\Zed\ContentFileGui\Communication\Mapper\ContentFileGuiEditorConfigurationMapperInterface;
 use Spryker\Zed\ContentFileGui\Communication\Table\ContentFileListSelectedTable;
 use Spryker\Zed\ContentFileGui\Communication\Table\ContentFileListViewTable;
 use Spryker\Zed\ContentFileGui\ContentFileGuiDependencyProvider;
@@ -49,6 +51,14 @@ class ContentFileGuiCommunicationFactory extends AbstractCommunicationFactory
             $fileIds,
             $identifierSuffix
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ContentFileGui\Communication\Mapper\ContentFileGuiEditorConfigurationMapperInterface
+     */
+    public function createContentFileGuiEditorConfigurationMapper(): ContentFileGuiEditorConfigurationMapperInterface
+    {
+        return new ContentFileGuiEditorConfigurationMapper($this->getConfig());
     }
 
     /**
