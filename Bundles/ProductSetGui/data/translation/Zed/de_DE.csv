@@ -38,3 +38,6 @@ URL,URL
 View,Ansicht
 Weight,Gewicht
 "Weight defines sorting order. Product Sets with higher numbers listed first.","Das Gewicht bestimmt die Anordnung. Produktsets mit höheren Nummern werden zuerst gelistet."
+"Delete image","Lösche Bild"
+"Image Set","Bildmenge"
+"Delete image set","Bilderset löschen"

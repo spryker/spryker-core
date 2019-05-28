@@ -21,7 +21,9 @@
     "spryker/event": "*",
     "spryker/propel": "*",
     "spryker/testify": "*",
-    "spryker/url-storage": "*"
+    "spryker/url-storage": "*",
+    "spryker/product": "*",
+    "spryker/locale": "*"
   },
   "suggest": {
     "spryker/event": "If you want to use Event plugins, minimum required version: 2.1.0",
