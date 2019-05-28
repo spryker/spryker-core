@@ -172,11 +172,11 @@ class ContentGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addTranslatorFacade(Container $container): Container
     {
-        $container[static::FACADE_TRANSLATOR] = function (Container $container) {
+        $container->set(static::FACADE_TRANSLATOR, function (Container $container) {
             return new ContentGuiToTranslatorFacadeBridge(
                 $container->getLocator()->translator()->facade()
             );
-        };
+        });
 
         return $container;
     }

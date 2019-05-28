@@ -178,9 +178,9 @@ class CmsGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCmsGlossaryAfterFindPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_CMS_GLOSSARY_AFTER_FIND] = function () {
+        $container->set(static::PLUGINS_CMS_GLOSSARY_AFTER_FIND, function () {
             return $this->getCmsGlossaryAfterFindPlugins();
-        };
+        });
 
         return $container;
     }
@@ -200,9 +200,9 @@ class CmsGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCmsGlossaryBeforeSavePlugins(Container $container): Container
     {
-        $container[static::PLUGINS_CMS_GLOSSARY_BEFORE_SAVE] = function () {
+        $container->set(static::PLUGINS_CMS_GLOSSARY_BEFORE_SAVE, function () {
             return $this->getCmsGlossaryBeforeSavePlugins();
-        };
+        });
 
         return $container;
     }
