@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\RestCompanyUserAccessTokensAttributesTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\CompanyUserAuthRestApi\CompanyUserAuthRestApiConfig;
 use Spryker\Glue\CompanyUserAuthRestApi\Dependency\Client\CompanyUserAuthRestApiToOauthClientInterface;
-use Spryker\Glue\CompanyUserAuthRestApi\Dependency\Client\CompanyUserAuthRestApiToOauthCompanyUserClientInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -28,27 +27,19 @@ class CompanyUserAccessTokenReader implements CompanyUserAccessTokenReaderInterf
     protected $oauthClient;
 
     /**
-     * @var \Spryker\Glue\CompanyUserAuthRestApi\Dependency\Client\CompanyUserAuthRestApiToOauthCompanyUserClientInterface
-     */
-    protected $oauthCompanyUserClient;
-
-    /**
      * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
      */
     protected $restResourceBuilder;
 
     /**
      * @param \Spryker\Glue\CompanyUserAuthRestApi\Dependency\Client\CompanyUserAuthRestApiToOauthClientInterface $oauthClient
-     * @param \Spryker\Glue\CompanyUserAuthRestApi\Dependency\Client\CompanyUserAuthRestApiToOauthCompanyUserClientInterface $oauthCompanyUserClient
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      */
     public function __construct(
         CompanyUserAuthRestApiToOauthClientInterface $oauthClient,
-        CompanyUserAuthRestApiToOauthCompanyUserClientInterface $oauthCompanyUserClient,
         RestResourceBuilderInterface $restResourceBuilder
     ) {
         $this->oauthClient = $oauthClient;
-        $this->oauthCompanyUserClient = $oauthCompanyUserClient;
         $this->restResourceBuilder = $restResourceBuilder;
     }
 
@@ -85,10 +76,8 @@ class CompanyUserAccessTokenReader implements CompanyUserAccessTokenReaderInterf
     ): OauthRequestTransfer {
         $oauthRequestTransfer = (new OauthRequestTransfer())
             ->setIdCompanyUser($restCompanyUserAccessTokensAttributesTransfer->getIdCompanyUser())
-            ->setCustomerReference($restRequest->getUser()->getNaturalIdentifier())
-            ->setGrantType(CompanyUserAuthRestApiConfig::CLIENT_GRANT_USER)
-            ->setClientId($this->oauthCompanyUserClient->getClientId())
-            ->setClientSecret($this->oauthCompanyUserClient->getClientSecret());
+            ->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier())
+            ->setGrantType(CompanyUserAuthRestApiConfig::CLIENT_GRANT_USER);
 
         return $oauthRequestTransfer;
     }
