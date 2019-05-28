@@ -18,7 +18,7 @@ interface SchedulerJenkinsConstants
      *
      * @api
      */
-    public const JENKINS_CONFIGURATION = 'JENKINS_SCHEDULER:JENKINS_CONFIGURATION';
+    public const JENKINS_CONFIGURATION = 'SCHEDULER_JENKINS:JENKINS_CONFIGURATION';
 
     /**
      * Specification:
@@ -26,7 +26,7 @@ interface SchedulerJenkinsConstants
      *
      * @api
      */
-    public const JENKINS_CSRF_PROTECTION_ENABLED = 'JENKINS_SCHEDULER:JENKINS_CSRF_PROTECTION_ENABLED';
+    public const JENKINS_CSRF_PROTECTION_ENABLED = 'SCHEDULER_JENKINS:JENKINS_CSRF_PROTECTION_ENABLED';
 
     /**
      * Specification:
@@ -34,7 +34,7 @@ interface SchedulerJenkinsConstants
      *
      * @api
      */
-    public const JENKINS_TEMPLATE_PATH = 'JENKINS_SCHEDULER:JENKINS_TEMPLATE_PATH';
+    public const JENKINS_TEMPLATE_PATH = 'SCHEDULER_JENKINS:JENKINS_TEMPLATE_PATH';
 
     /**
      * Specification:
@@ -42,5 +42,5 @@ interface SchedulerJenkinsConstants
      *
      * @api
      */
-    public const JENKINS_DEFAULT_AMOUNT_OF_DAYS_FOR_LOGFILE_ROTATION = 'JENKINS_SCHEDULER:JENKINS_DEFAULT_AMOUNT_OF_DAYS_FOR_LOGFILE_ROTATION';
+    public const JENKINS_DEFAULT_AMOUNT_OF_DAYS_FOR_LOGFILE_ROTATION = 'SCHEDULER_JENKINSs:JENKINS_DEFAULT_AMOUNT_OF_DAYS_FOR_LOGFILE_ROTATION';
 }
