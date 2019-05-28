@@ -153,6 +153,7 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::PLUGINS_RESERVATION_EXPORT] = function (Container $container) {
             return $this->getReservationExportPlugins();
         };
+
         return $container;
     }
 
@@ -174,6 +175,7 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::FACADE_STORE] = function (Container $container) {
             return new OmsToStoreFacadeBridge($container->getLocator()->store()->facade());
         };
+
         return $container;
     }
 }

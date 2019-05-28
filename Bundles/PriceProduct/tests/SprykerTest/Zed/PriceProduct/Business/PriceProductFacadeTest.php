@@ -760,6 +760,7 @@ class PriceProductFacadeTest extends Unit
         if (!$currencyIsoCode) {
             return $this->createCurrencyFacade()->getDefaultCurrencyForCurrentStore();
         }
+
         return $this->createCurrencyFacade()->fromIsoCode($currencyIsoCode);
     }
 

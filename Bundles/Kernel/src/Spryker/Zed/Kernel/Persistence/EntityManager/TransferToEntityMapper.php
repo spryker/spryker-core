@@ -91,6 +91,7 @@ class TransferToEntityMapper implements TransferToEntityMapperInterface
 
             return static::$setterCache[$relationName];
         }
+
         return null;
     }
 
@@ -120,6 +121,7 @@ class TransferToEntityMapper implements TransferToEntityMapperInterface
     protected function getTableMap(ActiveRecordInterface $entity)
     {
         $tableNameClass = $entity::TABLE_MAP;
+
         return $tableNameClass::getTableMap();
     }
 

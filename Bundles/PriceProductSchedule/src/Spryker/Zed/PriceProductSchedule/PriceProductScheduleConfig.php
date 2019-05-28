@@ -26,7 +26,7 @@ class PriceProductScheduleConfig extends AbstractBundleConfig
     protected const APPLY_BATCH_SIZE = 1000;
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getFallbackPriceTypeList(): array
     {
