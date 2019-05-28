@@ -9,13 +9,62 @@ namespace Spryker\Zed\Comment\Persistence\Propel\Mapper;
 
 use ArrayObject;
 use Generated\Shared\Transfer\CommentTagTransfer;
+use Generated\Shared\Transfer\CommentThreadTransfer;
 use Generated\Shared\Transfer\CommentTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Orm\Zed\Comment\Persistence\Base\SpyCommentThread;
 use Orm\Zed\Comment\Persistence\SpyComment;
 use Orm\Zed\Comment\Persistence\SpyCommentTag;
 
 class CommentMapper
 {
+    /**
+     * @param \Generated\Shared\Transfer\CommentThreadTransfer $commentThreadTransfer
+     * @param \Orm\Zed\Comment\Persistence\SpyCommentThread $commentThreadEntity
+     *
+     * @return \Orm\Zed\Comment\Persistence\SpyCommentThread
+     */
+    public function mapCommentThreadTransferToCommentThreadEntity(
+        CommentThreadTransfer $commentThreadTransfer,
+        SpyCommentThread $commentThreadEntity
+    ): SpyCommentThread {
+        $commentThreadEntity->fromArray($commentThreadTransfer->modifiedToArray());
+
+        return $commentThreadEntity;
+    }
+
+    /**
+     * @param \Orm\Zed\Comment\Persistence\SpyCommentThread $commentThreadEntity
+     * @param \Generated\Shared\Transfer\CommentThreadTransfer $commentThreadTransfer
+     *
+     * @return \Generated\Shared\Transfer\CommentThreadTransfer
+     */
+    public function mapCommentThreadEntityToCommentThreadTransfer(
+        SpyCommentThread $commentThreadEntity,
+        CommentThreadTransfer $commentThreadTransfer
+    ): CommentThreadTransfer {
+        $commentThreadTransfer = $commentThreadTransfer->fromArray($commentThreadEntity->toArray(), true);
+        $commentThreadTransfer->setComments($this->mapCommentThreadEntityToCommentTransfers($commentThreadEntity));
+
+        return $commentThreadTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\Comment\Persistence\SpyCommentThread $commentEntity
+     *
+     * @return \Generated\Shared\Transfer\CommentTransfer[]|\ArrayObject
+     */
+    protected function mapCommentThreadEntityToCommentTransfers(SpyCommentThread $commentEntity): ArrayObject
+    {
+        $commentTransfers = [];
+
+        foreach ($commentEntity->getSpyComments() as $commentEntity) {
+            $commentTransfers[] = $this->mapCommentEntityToCommentTransfer($commentEntity, new CommentTransfer());
+        }
+
+        return new ArrayObject($commentTransfers);
+    }
+
     /**
      * @param \Generated\Shared\Transfer\CommentTransfer $commentTransfer
      * @param \Orm\Zed\Comment\Persistence\SpyComment $commentEntity

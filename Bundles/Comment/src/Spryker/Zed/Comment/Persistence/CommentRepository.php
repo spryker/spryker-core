@@ -9,7 +9,7 @@ namespace Spryker\Zed\Comment\Persistence;
 
 use Generated\Shared\Transfer\CommentRequestTransfer;
 use Generated\Shared\Transfer\CommentThreadTransfer;
-use Orm\Zed\Comment\Persistence\SpyCommentThreadQuery;
+use Generated\Shared\Transfer\CommentTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -18,6 +18,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class CommentRepository extends AbstractRepository implements CommentRepositoryInterface
 {
     /**
+     * @module Customer
+     *
      * @param \Generated\Shared\Transfer\CommentRequestTransfer $commentRequestTransfer
      *
      * @return \Generated\Shared\Transfer\CommentThreadTransfer|null
@@ -28,7 +30,7 @@ class CommentRepository extends AbstractRepository implements CommentRepositoryI
             ->requireOwnerId()
             ->requireOwnerType();
 
-        $commentThreadQuery = $this->getFactory()
+        $commentThreadEntity = $this->getFactory()
             ->getCommentThreadPropelQuery()
             ->filterByOwnerId($commentRequestTransfer->getOwnerId())
             ->filterByOwnerType($commentRequestTransfer->getOwnerType())
@@ -36,37 +38,37 @@ class CommentRepository extends AbstractRepository implements CommentRepositoryI
             ->useSpyCommentQuery()
                 ->joinWithSpyCustomer()
                 ->leftJoinWithSpyCommentCommentTag()
-            ->endUse();
-
-        $commentThreadQuery = $this->setCommentThreadFilters($commentThreadQuery, $commentRequestTransfer);
-        $commentThreadEntity = $commentThreadQuery->find()->getFirst();
+            ->endUse()
+            ->find()
+            ->getFirst();
 
         if (!$commentThreadEntity) {
             return null;
         }
 
         return $this->getFactory()
-            ->createCommentThreadMapper()
+            ->createCommentMapper()
             ->mapCommentThreadEntityToCommentThreadTransfer($commentThreadEntity, new CommentThreadTransfer());
     }
 
     /**
-     * @param \Orm\Zed\Comment\Persistence\SpyCommentThreadQuery $commentThreadQuery
-     * @param \Generated\Shared\Transfer\CommentRequestTransfer $commentRequestTransfer
+     * @param string $uuid
      *
-     * @return \Orm\Zed\Comment\Persistence\SpyCommentThreadQuery
+     * @return \Generated\Shared\Transfer\CommentTransfer|null
      */
-    protected function setCommentThreadFilters(
-        SpyCommentThreadQuery $commentThreadQuery,
-        CommentRequestTransfer $commentRequestTransfer
-    ): SpyCommentThreadQuery {
-        if ($commentRequestTransfer->getComment() && $commentRequestTransfer->getComment()->getUuid()) {
-            $commentThreadQuery
-                ->useSpyCommentQuery()
-                ->filterByUuid($commentRequestTransfer->getComment()->getUuid())
-                ->endUse();
+    public function findCommentByUuid(string $uuid): ?CommentTransfer
+    {
+        $commentEntity = $this->getFactory()
+            ->getCommentPropelQuery()
+            ->filterByUuid($uuid)
+            ->findOne();
+
+        if (!$commentEntity) {
+            return null;
         }
 
-        return $commentThreadQuery;
+        return $this->getFactory()
+            ->createCommentMapper()
+            ->mapCommentEntityToCommentTransfer($commentEntity, new CommentTransfer());
     }
 }

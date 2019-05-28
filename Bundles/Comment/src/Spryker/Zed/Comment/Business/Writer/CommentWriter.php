@@ -10,7 +10,6 @@ namespace Spryker\Zed\Comment\Business\Writer;
 use Generated\Shared\Transfer\CommentRequestTransfer;
 use Generated\Shared\Transfer\CommentThreadResponseTransfer;
 use Generated\Shared\Transfer\CommentThreadTransfer;
-use Generated\Shared\Transfer\CommentTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Spryker\Zed\Comment\Persistence\CommentEntityManagerInterface;
 use Spryker\Zed\Comment\Persistence\CommentRepositoryInterface;
@@ -21,7 +20,7 @@ class CommentWriter implements CommentWriterInterface
     use TransactionTrait;
 
     protected const GLOSSARY_KEY_COMMENT_THREAD_NOT_FOUND = 'comment.validation.error.comment_thread_not_found';
-    protected const GLOSSARY_KEY_COMMENT_IN_THREAD_NOT_FOUND = 'comment.validation.error.comment_in_thread_not_found';
+    protected const GLOSSARY_KEY_COMMENT_NOT_FOUND = 'comment.validation.error.comment_not_found';
 
     /**
      * @var \Spryker\Zed\Comment\Persistence\CommentEntityManagerInterface
@@ -52,6 +51,14 @@ class CommentWriter implements CommentWriterInterface
      */
     public function addComment(CommentRequestTransfer $commentRequestTransfer): CommentThreadResponseTransfer
     {
+        $commentRequestTransfer
+            ->requireOwnerId()
+            ->requireOwnerType()
+            ->requireComment()
+            ->getComment()
+                ->requireMessage()
+                ->requireCustomer();
+
         return $this->getTransactionHandler()->handleTransaction(function () use ($commentRequestTransfer) {
             return $this->executeAddCommentTransaction($commentRequestTransfer);
         });
@@ -64,6 +71,14 @@ class CommentWriter implements CommentWriterInterface
      */
     public function updateComment(CommentRequestTransfer $commentRequestTransfer): CommentThreadResponseTransfer
     {
+        $commentRequestTransfer
+            ->requireOwnerId()
+            ->requireOwnerType()
+            ->requireComment()
+            ->getComment()
+                ->requireUuid()
+                ->requireMessage();
+
         return $this->getTransactionHandler()->handleTransaction(function () use ($commentRequestTransfer) {
             return $this->executeUpdateCommentTransaction($commentRequestTransfer);
         });
@@ -76,13 +91,12 @@ class CommentWriter implements CommentWriterInterface
      */
     protected function executeAddCommentTransaction(CommentRequestTransfer $commentRequestTransfer): CommentThreadResponseTransfer
     {
-        $commentThreadTransfer = $this->commentRepository->findCommentThread($commentRequestTransfer);
+        $commentThreadTransfer = $this->getCommentThread($commentRequestTransfer);
 
-        if (!$commentThreadTransfer) {
-            $commentThreadTransfer = $this->createCommentThreadTransfer($commentRequestTransfer);
-        }
+        $commentTransfer = $commentRequestTransfer->getComment();
+        $commentTransfer->setFkCommentThread($commentThreadTransfer->getIdCommentThread());
 
-        $commentTransfer = $this->createCommentTransfer($commentRequestTransfer->getComment(), $commentThreadTransfer);
+        $commentTransfer = $this->commentEntityManager->createComment($commentTransfer);
         $commentThreadTransfer->addComment($commentTransfer);
 
         return (new CommentThreadResponseTransfer())
@@ -97,17 +111,18 @@ class CommentWriter implements CommentWriterInterface
      */
     protected function executeUpdateCommentTransaction(CommentRequestTransfer $commentRequestTransfer): CommentThreadResponseTransfer
     {
-        $commentThreadTransfer = $this->commentRepository->findCommentThread($commentRequestTransfer);
+        $commentTransfer = $this->commentRepository->findCommentByUuid($commentRequestTransfer->getComment()->getUuid());
 
-        if (!$commentThreadTransfer) {
-            return $this->getErrorResponse(static::GLOSSARY_KEY_COMMENT_THREAD_NOT_FOUND);
+        if (!$commentTransfer) {
+            return $this->createErrorResponse(static::GLOSSARY_KEY_COMMENT_NOT_FOUND);
         }
 
-        $this->updateCommentTransfer($commentRequestTransfer->getComment(), $commentThreadTransfer);
+        $commentTransfer->setMessage($commentRequestTransfer->getComment()->getMessage());
+        $this->commentEntityManager->updateComment($commentTransfer);
 
         return (new CommentThreadResponseTransfer())
             ->setIsSuccessful(true)
-            ->setCommentThread($commentThreadTransfer);
+            ->setCommentThread($this->commentRepository->findCommentThread($commentRequestTransfer));
     }
 
     /**
@@ -115,11 +130,13 @@ class CommentWriter implements CommentWriterInterface
      *
      * @return \Generated\Shared\Transfer\CommentThreadTransfer
      */
-    protected function createCommentThreadTransfer(CommentRequestTransfer $commentRequestTransfer): CommentThreadTransfer
+    protected function getCommentThread(CommentRequestTransfer $commentRequestTransfer): CommentThreadTransfer
     {
-        $commentRequestTransfer
-            ->requireOwnerId()
-            ->requireOwnerType();
+        $commentThreadTransfer = $this->commentRepository->findCommentThread($commentRequestTransfer);
+
+        if ($commentThreadTransfer) {
+            return $commentThreadTransfer;
+        }
 
         $commentThreadTransfer = (new CommentThreadTransfer())
             ->setOwnerId($commentRequestTransfer->getOwnerId())
@@ -129,56 +146,11 @@ class CommentWriter implements CommentWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CommentTransfer $commentTransfer
-     * @param \Generated\Shared\Transfer\CommentThreadTransfer $commentThreadTransfer
-     *
-     * @return \Generated\Shared\Transfer\CommentTransfer
-     */
-    protected function createCommentTransfer(
-        CommentTransfer $commentTransfer,
-        CommentThreadTransfer $commentThreadTransfer
-    ): CommentTransfer {
-        $commentThreadTransfer->requireIdCommentThread();
-        $commentTransfer
-            ->requireMessage()
-            ->requireCustomer();
-
-        $commentTransfer->setFkCommentThread($commentThreadTransfer->getIdCommentThread());
-
-        return $this->commentEntityManager->createComment($commentTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CommentTransfer $newCommentTransfer
-     * @param \Generated\Shared\Transfer\CommentThreadTransfer $commentThreadTransfer
-     *
-     * @return \Generated\Shared\Transfer\CommentTransfer
-     */
-    protected function updateCommentTransfer(
-        CommentTransfer $newCommentTransfer,
-        CommentThreadTransfer $commentThreadTransfer
-    ): CommentTransfer {
-        foreach ($commentThreadTransfer->getComments() as $commentTransfer) {
-            if ($commentTransfer->getUuid() !== $newCommentTransfer->getUuid()) {
-                continue;
-            }
-
-            if ($commentTransfer->getMessage() === $newCommentTransfer->getMessage()) {
-                return $commentTransfer;
-            }
-
-            return $this->commentEntityManager->updateComment($newCommentTransfer);
-        }
-
-        return $newCommentTransfer;
-    }
-
-    /**
      * @param string $message
      *
      * @return \Generated\Shared\Transfer\CommentThreadResponseTransfer
      */
-    protected function getErrorResponse(string $message): CommentThreadResponseTransfer
+    protected function createErrorResponse(string $message): CommentThreadResponseTransfer
     {
         $messageTransfer = (new MessageTransfer())
             ->setValue($message);

@@ -26,7 +26,7 @@ class CommentEntityManager extends AbstractEntityManager implements CommentEntit
     public function createCommentThread(CommentThreadTransfer $commentThreadTransfer): CommentThreadTransfer
     {
         $commentThreadEntity = $this->getFactory()
-            ->createCommentThreadMapper()
+            ->createCommentMapper()
             ->mapCommentThreadTransferToCommentThreadEntity($commentThreadTransfer, new SpyCommentThread());
 
         $commentThreadEntity->save();

@@ -9,6 +9,7 @@ namespace Spryker\Zed\Comment\Persistence;
 
 use Generated\Shared\Transfer\CommentRequestTransfer;
 use Generated\Shared\Transfer\CommentThreadTransfer;
+use Generated\Shared\Transfer\CommentTransfer;
 
 interface CommentRepositoryInterface
 {
@@ -18,4 +19,11 @@ interface CommentRepositoryInterface
      * @return \Generated\Shared\Transfer\CommentThreadTransfer|null
      */
     public function findCommentThread(CommentRequestTransfer $commentRequestTransfer): ?CommentThreadTransfer;
+
+    /**
+     * @param string $uuid
+     *
+     * @return \Generated\Shared\Transfer\CommentTransfer|null
+     */
+    public function findCommentByUuid(string $uuid): ?CommentTransfer;
 }
