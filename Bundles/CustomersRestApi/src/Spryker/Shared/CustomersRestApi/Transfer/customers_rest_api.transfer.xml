@@ -96,4 +96,8 @@
         <property name="id" type="string" />
     </transfer>
 
+    <transfer name="CompanyUser">
+        <property name="customer" type="Customer" />
+    </transfer>
+
 </transfers>
