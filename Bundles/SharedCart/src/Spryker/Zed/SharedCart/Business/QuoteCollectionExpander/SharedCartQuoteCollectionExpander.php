@@ -57,6 +57,10 @@ class SharedCartQuoteCollectionExpander implements SharedCartQuoteCollectionExpa
         QuoteCollectionTransfer $quoteCollectionTransfer,
         QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer
     ): QuoteCollectionTransfer {
+        if (!$quoteCriteriaFilterTransfer->getIdCompanyUser() || !$quoteCriteriaFilterTransfer->getIdStore()) {
+            return $quoteCollectionTransfer;
+        }
+
         $sharedQuoteCriteriaFilterTransfer = (new SharedQuoteCriteriaFilterTransfer())
             ->fromArray($quoteCriteriaFilterTransfer->toArray(), true);
 
