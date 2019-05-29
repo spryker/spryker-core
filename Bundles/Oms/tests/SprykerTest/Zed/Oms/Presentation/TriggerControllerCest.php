@@ -43,9 +43,9 @@ class TriggerControllerCest
      */
     public function _before(OmsPresentationTester $i)
     {
-        $i->configureTestStateMachine([static::OMS_ACTIVE_PROCESS]);
         $this->omsFacade = $i->getOmsFacade();
         $this->salesFacade = $i->getSalesFacade();
+        $i->configureTestStateMachine([static::OMS_ACTIVE_PROCESS]);
 
         $productTransfer = $i->haveProduct();
 
@@ -67,6 +67,7 @@ class TriggerControllerCest
     }
 
     /**
+     * @group her
      * @return void
      */
     public function testFirst(OmsPresentationTester $i)
