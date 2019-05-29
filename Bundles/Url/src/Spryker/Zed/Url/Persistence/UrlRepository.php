@@ -23,13 +23,17 @@ class UrlRepository extends AbstractRepository implements UrlRepositoryInterface
      */
     public function findUrlCaseInsensitive(UrlTransfer $urlTransfer): ?UrlTransfer
     {
-        $urlEntity = $this->getFactory()
+        $urlQuery = $this->getFactory()
             ->createUrlQuery()
-            ->setIgnoreCase(true)
-            ->filterByUrl($urlTransfer->getUrl())
-            ->_and()
-            ->filterByIdUrl($urlTransfer->getIdUrl())
-            ->findOne();
+            ->setIgnoreCase(true);
+
+        if ($urlTransfer->getUrl()) {
+            $urlQuery->filterByUrl($urlTransfer->getUrl());
+        } else {
+            $urlQuery->filterByIdUrl($urlTransfer->getIdUrl());
+        }
+
+        $urlEntity = $urlQuery->findOne();
 
         if ($urlEntity === null) {
             return null;
@@ -46,15 +50,19 @@ class UrlRepository extends AbstractRepository implements UrlRepositoryInterface
      */
     public function hasUrlCaseInsensitive(UrlTransfer $urlTransfer, bool $ignoreRedirects): bool
     {
-        return $this->getFactory()
+        $urlQuery = $this->getFactory()
             ->createUrlQuery()
             ->setIgnoreCase(true)
-            ->filterByUrl($urlTransfer->getUrl())
-            ->_and()
-            ->filterByIdUrl($urlTransfer->getIdUrl())
             ->_if($ignoreRedirects)
                 ->filterByFkResourceRedirect(null, Criteria::ISNULL)
-            ->_endif()
-            ->exists();
+            ->_endif();
+
+        if ($urlTransfer->getUrl()) {
+            $urlQuery->filterByUrl($urlTransfer->getUrl());
+        } else {
+            $urlQuery->filterByIdUrl($urlTransfer->getIdUrl());
+        }
+
+        return $urlQuery->exists();
     }
 }
