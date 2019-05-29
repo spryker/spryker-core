@@ -45,26 +45,36 @@ class QuoteDiscountMaxUsageValidator implements QuoteDiscountValidatorInterface
             return true;
         }
 
-        if ($this->hasVouchersExceedingUsageLimitByCodes($voucherDiscounts)) {
-            $message = (new MessageTransfer())
-                ->setValue(VoucherValidator::REASON_VOUCHER_CODE_LIMIT_REACHED);
-            $this->addError($message, static::ERROR_VOUCHER_CODE_LIMIT_REACHED, $checkoutResponseTransfer);
-
-            return false;
+        $voucherCodesExceedingUsageLimit = $this->findVoucherCodesExceedingUsageLimit($voucherDiscounts);
+        foreach ($voucherCodesExceedingUsageLimit as $voucherCode) {
+            $this->addError(
+                $this->createVoucherCodeLimitReachedMessageTransfer(),
+                static::ERROR_VOUCHER_CODE_LIMIT_REACHED,
+                $checkoutResponseTransfer
+            );
         }
 
-        return true;
+        return $voucherCodesExceedingUsageLimit === [];
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\MessageTransfer
+     */
+    protected function createVoucherCodeLimitReachedMessageTransfer(): MessageTransfer
+    {
+        return (new MessageTransfer())
+            ->setValue(VoucherValidator::REASON_VOUCHER_CODE_LIMIT_REACHED);
     }
 
     /**
      * @param \Generated\Shared\Transfer\DiscountTransfer[]|\ArrayObject $voucherDiscounts
      *
-     * @return bool
+     * @return string[]
      */
-    protected function hasVouchersExceedingUsageLimitByCodes(ArrayObject $voucherDiscounts): bool
+    protected function findVoucherCodesExceedingUsageLimit(ArrayObject $voucherDiscounts): array
     {
-        return (bool)$this->discountRepository
-            ->getCountOfVouchersExceedingUsageLimitByCodes(
+        return $this->discountRepository
+            ->findVoucherCodesExceedingUsageLimit(
                 $this->getVoucherCodes($voucherDiscounts)
             );
     }
