@@ -14,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\LessThanOrEqual;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
@@ -32,6 +33,8 @@ class ProductImageFormType extends AbstractType
     public const FIELD_FK_IMAGE_SET_ID = 'fk_image_set_id';
 
     public const OPTION_IMAGE_PREVIEW_LARGE_URL = 'option_image_preview_large_url';
+
+    public const MAX_SORT_ORDER_VALUE = 2147483647; // 32 bit integer
 
     /**
      * @uses \Spryker\Zed\Gui\Communication\Form\Type\ImageType::OPTION_IMAGE_WIDTH
@@ -179,7 +182,13 @@ class ProductImageFormType extends AbstractType
      */
     protected function addSortOrderField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_SORT_ORDER, NumberType::class);
+        $builder->add(static::FIELD_SORT_ORDER, NumberType::class, [
+            'constraints' => [
+                new LessThanOrEqual([
+                    'value' => static::MAX_SORT_ORDER_VALUE,
+                ]),
+            ],
+        ]);
 
         return $this;
     }
