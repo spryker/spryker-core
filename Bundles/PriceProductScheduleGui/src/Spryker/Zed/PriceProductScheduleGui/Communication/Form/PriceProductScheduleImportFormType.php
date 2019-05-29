@@ -78,6 +78,9 @@ class PriceProductScheduleImportFormType extends AbstractType
                     new NotBlank(),
                     new Length(['max' => static::FIELD_PRICE_PRODUCT_SCHEDULE_NAME_MAX_LENGTH]),
                 ],
+                'attr' => [
+                    'placeholder' => 'Eg: Christmas sales, etc.',
+                ],
             ]
         );
 
