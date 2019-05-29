@@ -30,6 +30,7 @@ interface CommentFacadeInterface
      * - Creates comment thread if it does not exist in Persistence yet.
      * - Expects CommentTransfer with CustomerTransfer and message.
      * - Generates comment thread UUID when it is missing.
+     * - Generates missing tags in Persistence.
      * - Persists provided comment for the comment thread.
      * - Returns with error message(s) in case of error.
      *
@@ -45,6 +46,7 @@ interface CommentFacadeInterface
      * Specification:
      * - Updates the provided comment by comment UUID in Persistence.
      * - Expects CommentTransfer with CustomerTransfer and message.
+     * - Generates missing tags if Persistence.
      * - Returns with error message(s) in case of error.
      *
      * @api
@@ -58,6 +60,7 @@ interface CommentFacadeInterface
     /**
      * Specification:
      * - Removes the provided comment by comment UUID in Persistence.
+     * - Removes assigned tags in Persistence.
      * - Returns with error message(s) in case of error.
      *
      * @api

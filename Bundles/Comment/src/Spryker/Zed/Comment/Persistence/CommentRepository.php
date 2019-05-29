@@ -71,4 +71,18 @@ class CommentRepository extends AbstractRepository implements CommentRepositoryI
             ->createCommentMapper()
             ->mapCommentEntityToCommentTransfer($commentEntity, new CommentTransfer());
     }
+
+    /**
+     * @return \Generated\Shared\Transfer\CommentTagTransfer[]
+     */
+    public function getCommentTags(): array
+    {
+        $commentTagEntities = $this->getFactory()
+            ->getCommentTagPropelQuery()
+            ->find();
+
+        return $this->getFactory()
+            ->createCommentMapper()
+            ->mapCommentTagEntitiesToCommentTagTransfers($commentTagEntities);
+    }
 }

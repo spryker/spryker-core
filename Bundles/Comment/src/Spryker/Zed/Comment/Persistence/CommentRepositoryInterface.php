@@ -26,4 +26,9 @@ interface CommentRepositoryInterface
      * @return \Generated\Shared\Transfer\CommentTransfer|null
      */
     public function findCommentByUuid(string $uuid): ?CommentTransfer;
+
+    /**
+     * @return \Generated\Shared\Transfer\CommentTagTransfer[]
+     */
+    public function getCommentTags(): array;
 }

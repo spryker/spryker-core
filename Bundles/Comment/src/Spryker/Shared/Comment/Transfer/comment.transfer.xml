@@ -23,6 +23,7 @@
     </transfer>
 
     <transfer name="CommentTag">
+        <property name="idCommentTag" type="int"/>
         <property name="uuid" type="string"/>
         <property name="name" type="string"/>
     </transfer>

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Comment\Persistence;
 
+use Generated\Shared\Transfer\CommentTagTransfer;
 use Generated\Shared\Transfer\CommentThreadTransfer;
 use Generated\Shared\Transfer\CommentTransfer;
 
@@ -39,4 +40,18 @@ interface CommentEntityManagerInterface
      * @return void
      */
     public function removeComment(CommentTransfer $commentTransfer): void;
+
+    /**
+     * @param \Generated\Shared\Transfer\CommentTagTransfer $commentTagTransfer
+     *
+     * @return \Generated\Shared\Transfer\CommentTagTransfer
+     */
+    public function createCommentTag(CommentTagTransfer $commentTagTransfer): CommentTagTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CommentTransfer $commentTransfer
+     *
+     * @return \Generated\Shared\Transfer\CommentTransfer
+     */
+    public function addCommentTagsToComment(CommentTransfer $commentTransfer): CommentTransfer;
 }

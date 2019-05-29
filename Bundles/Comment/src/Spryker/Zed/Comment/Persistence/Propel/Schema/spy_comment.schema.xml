@@ -36,6 +36,7 @@
         <column name="uuid" required="false" type="VARCHAR" size="36"/>
         <column name="fk_customer" type="INTEGER"/>
         <column name="message" required="true" type="LONGVARCHAR"/>
+        <column name="is_deleted" defaultValue="false" type="BOOLEAN"/>
 
         <behavior name="uuid">
             <parameter name="key_columns" value="id_comment"/>
@@ -89,30 +90,22 @@
         <id-method-parameter value="id_comment_tag_pk_seq"/>
     </table>
 
-    <table name="spy_comment_comment_tag" idMethod="native" allowPkInsert="true" phpName="SpyCommentCommentTag">
-        <column name="id_comment_comment_tag" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
-        <column name="fk_comment" required="true" type="INTEGER"/>
-        <column name="fk_comment_tag" required="true" type="INTEGER"/>
-
-        <behavior name="timestampable"/>
-
-        <id-method-parameter value="id_comment_comment_tag_pk_seq"/>
+    <table name="spy_comment_comment_tag" isCrossRef="true">
+        <column name="fk_comment" type="INTEGER" primaryKey="true"/>
+        <column name="fk_comment_tag" type="INTEGER" primaryKey="true"/>
 
         <foreign-key name="spy_comment_comment_tag-fk_comment" foreignTable="spy_comment">
             <reference local="fk_comment" foreign="id_comment"/>
         </foreign-key>
 
-        <index name="index-spy_comment_comment_tag-fk_comment">
-            <index-column name="fk_comment"/>
-        </index>
-
         <foreign-key name="spy_comment_comment_tag-fk_comment_tag" foreignTable="spy_comment_tag">
             <reference local="fk_comment_tag" foreign="id_comment_tag"/>
         </foreign-key>
 
-        <index name="index-spy_comment_comment_tag-fk_comment_tag">
-            <index-column name="fk_comment_tag"/>
-        </index>
+        <unique name="spy_comment_comment-unique-fk_comment-fk_comment_tag">
+            <unique-column name="fk_comment"/>
+            <unique-column name="fk_comment_tag"/>
+        </unique>
     </table>
 
 </database>
