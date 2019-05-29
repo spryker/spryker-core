@@ -17,6 +17,11 @@ use Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductConcreteExpa
 class ProductConcreteTransferQuantityRestrictionExpanderPlugin extends AbstractPlugin implements ProductConcreteExpanderPluginInterface
 {
     /**
+     * {@inheritdoc}
+     * - Adds quantity restriction data.
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer

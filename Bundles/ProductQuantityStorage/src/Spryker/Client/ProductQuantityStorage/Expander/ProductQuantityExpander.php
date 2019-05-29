@@ -9,7 +9,6 @@ namespace Spryker\Client\ProductQuantityStorage\Expander;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
-use Generated\Shared\Transfer\QuantityRestrictionTransfer;
 use Spryker\Client\ProductQuantityStorage\Storage\ProductQuantityStorageReaderInterface;
 
 class ProductQuantityExpander implements ProductQuantityExpanderInterface
@@ -49,12 +48,16 @@ class ProductQuantityExpander implements ProductQuantityExpanderInterface
     public function expandProductConcreteTransferWithQuantityRestrictions(
         ProductConcreteTransfer $productConcreteTransfer
     ): ProductConcreteTransfer {
-        $quantityRestrictionTransfer = $this->prepareQuantityRestrictionTransferByProductConcreteId($productConcreteTransfer->getIdProductConcrete());
+        [
+            $quantityMin,
+            $quantityMax,
+            $quantityInterval,
+        ] = $this->prepareQuantityRestrictionDataByProductConcreteId($productConcreteTransfer->getIdProductConcrete());
 
         return $productConcreteTransfer
-            ->setMinQuantity($quantityRestrictionTransfer->getQuantityMin())
-            ->setMaxQuantity($quantityRestrictionTransfer->getQuantityMax())
-            ->setQuantityInterval($quantityRestrictionTransfer->getQuantityInterval());
+            ->setMinQuantity($quantityMin)
+            ->setMaxQuantity($quantityMax)
+            ->setQuantityInterval($quantityInterval);
     }
 
     /**
@@ -65,35 +68,38 @@ class ProductQuantityExpander implements ProductQuantityExpanderInterface
     public function expandProductViewTransferWithQuantityRestrictions(
         ProductViewTransfer $productViewTransfer
     ): ProductViewTransfer {
-        $quantityRestrictionTransfer = $this->prepareQuantityRestrictionTransferByProductConcreteId($productViewTransfer->getIdProductConcrete());
+        [
+            $quantityMin,
+            $quantityMax,
+            $quantityInterval,
+        ] = $this->prepareQuantityRestrictionDataByProductConcreteId($productViewTransfer->getIdProductConcrete());
 
         return $productViewTransfer
-            ->setQuantityMin($quantityRestrictionTransfer->getQuantityMin())
-            ->setQuantityMax($quantityRestrictionTransfer->getQuantityMax())
-            ->setQuantityInterval($quantityRestrictionTransfer->getQuantityInterval());
+            ->setQuantityMin($quantityMin)
+            ->setQuantityMax($quantityMax)
+            ->setQuantityInterval($quantityInterval);
     }
 
     /**
      * @param int $productConcreteId
      *
-     * @return \Generated\Shared\Transfer\QuantityRestrictionTransfer
+     * @return array
      */
-    protected function prepareQuantityRestrictionTransferByProductConcreteId(int $productConcreteId): QuantityRestrictionTransfer
+    protected function prepareQuantityRestrictionDataByProductConcreteId(int $productConcreteId): array
     {
-        $quantityRestrictionTransfer = (new QuantityRestrictionTransfer())
-            ->setQuantityMin(1)
-            ->setQuantityInterval(1);
+        $quantityMin = 1;
+        $quantityInterval = 1;
+        $quantityMax = null;
 
         $productQuantityStorageTransfer = $this->productQuantityStorageReader
             ->findProductQuantityStorage($productConcreteId);
 
         if ($productQuantityStorageTransfer !== null) {
-            $quantityRestrictionTransfer
-                ->setQuantityMin($productQuantityStorageTransfer->getQuantityMin())
-                ->setQuantityMax($productQuantityStorageTransfer->getQuantityMax())
-                ->setQuantityInterval($productQuantityStorageTransfer->getQuantityInterval());
+            $quantityMin = $productQuantityStorageTransfer->getQuantityMin() ?? 1;
+            $quantityMax = $productQuantityStorageTransfer->getQuantityMax();
+            $quantityInterval = $productQuantityStorageTransfer->getQuantityInterval() ?? 1;
         }
 
-        return $quantityRestrictionTransfer;
+        return [$quantityMin, $quantityMax, $quantityInterval];
     }
 }
