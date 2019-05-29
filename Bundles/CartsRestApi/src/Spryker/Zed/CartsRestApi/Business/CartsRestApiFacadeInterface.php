@@ -20,6 +20,7 @@ interface CartsRestApiFacadeInterface
      * Specification:
      * - Finds customer quote by uuid.
      * - uuid and customerReference must be set in the QuoteTransfer taken as parameter.
+     * - Checks user permission to read shared cart if QuoteTransfer.Customer.CompanyUserTransfer.idCompanyUser is set.
      *
      * @api
      *
@@ -48,6 +49,7 @@ interface CartsRestApiFacadeInterface
      * - Updates existing quote entity from QuoteTransfer.
      * - uuid and CustomerTransfer must be set in the QuoteTransfer.
      * - Reloads all items in cart.
+     * - Checks user permission to update shared cart if QuoteTransfer.Customer.CompanyUserTransfer.idCompanyUser is set.
      *
      * @api
      *
@@ -87,6 +89,7 @@ interface CartsRestApiFacadeInterface
      * Specification:
      * - Removes quote from DB.
      * - uuid and CustomerTransfer must be set in the QuoteTransfer.
+     * - Checks user permission to delete shared cart if QuoteTransfer.Customer.CompanyUserTransfer.idCompanyUser is set.
      *
      * @api
      *
@@ -100,6 +103,7 @@ interface CartsRestApiFacadeInterface
      * Specification:
      * - Updates cart item quantity.
      * - QuoteTransfer, customerReference, sku and quantity must be set in the RestCartItemsAttributesTransfer.
+     * - Checks user permission to update an item of shared cart if RestCartItemsAttributesTransfer.Customer.CompanyUserTransfer.idCompanyUser is set.
      *
      * @api
      *
@@ -113,6 +117,7 @@ interface CartsRestApiFacadeInterface
      * Specification:
      * - Adds an item to the cart.
      * - Quote and customerReference must be set in the RestCartItemsAttributesTransfer.
+     * - Checks user permission to add an item to shared cart if RestCartItemsAttributesTransfer.Customer.CompanyUserTransfer.idCompanyUser is set.
      *
      * @api
      *
@@ -126,6 +131,7 @@ interface CartsRestApiFacadeInterface
      * Specification:
      * - Removes item from cart.
      * - QuoteTransfer, customerReference, sku and quantity must be set in the RestCartItemsAttributesTransfer.
+     * - Checks user permission to delete an item from shared cart if RestCartItemsAttributesTransfer.Customer.CompanyUserTransfer.idCompanyUser is set.
      *
      * @api
      *
