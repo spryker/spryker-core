@@ -119,30 +119,11 @@ class Cronjobs
 
         include_once $this->getJobConfigPath();
 
-        if (empty($jobs)) {
+        if (count($jobs) === 0) {
             return [];
         }
 
-        foreach ($jobs as $i => $job) {
-            if (!empty($job['command'])) {
-                $command = $job['command'];
-                $commandExpl = explode(' ', $command);
-                $requestParts = ['module' => '', 'controller' => '', 'action' => ''];
-                foreach ($commandExpl as $part) {
-                    $segments = array_keys($requestParts);
-                    foreach ($segments as $segment) {
-                        if (strpos($part, $segment . '=') !== false) {
-                            $requestParts[$segment] = str_replace('--' . $segment . '=', '', $part);
-                        }
-                    }
-                }
-
-                $jobs[$i]['request'] = '/' . $requestParts['module'] . '/' . $requestParts['controller']
-                    . '/' . $requestParts['action'];
-
-                $jobs[$i]['id'] = null;
-            }
-        }
+        $jobs = $this->extendJobCommand($jobs);
 
         return $this->indexJobsByName($jobs, $roles);
     }
@@ -567,5 +548,36 @@ cd %s
         }
 
         return $httpHeader;
+    }
+
+    /**
+     * @param array $jobs
+     *
+     * @return array
+     */
+    protected function extendJobCommand(array $jobs): array
+    {
+        foreach ($jobs as $i => $job) {
+            if (!empty($job['command'])) {
+                $command = $job['command'];
+                $commandExpl = explode(' ', $command);
+                $requestParts = ['module' => '', 'controller' => '', 'action' => ''];
+                foreach ($commandExpl as $part) {
+                    $segments = array_keys($requestParts);
+                    foreach ($segments as $segment) {
+                        if (strpos($part, $segment . '=') !== false) {
+                            $requestParts[$segment] = str_replace('--' . $segment . '=', '', $part);
+                        }
+                    }
+                }
+
+                $jobs[$i]['request'] = '/' . $requestParts['module'] . '/' . $requestParts['controller']
+                    . '/' . $requestParts['action'];
+
+                $jobs[$i]['id'] = null;
+            }
+        }
+
+        return $jobs;
     }
 }
