@@ -181,16 +181,17 @@ class ContentGuiBusinessTester extends Actor
             $templateDisplayName = static::TEMPLATE_DISPLAY_NAME_TOP_TITLE;
         }
 
+        $contentGuiConfig = $this->getConfig();
         $html = strtr($editorContentWidgetTemplate, [
-            $this->getConfig()->getParameterId() => $contentTransfer->getIdContent(),
-            $this->getConfig()->getParameterType() => $contentTransfer->getContentTypeKey(),
-            $this->getConfig()->getParameterName() => $contentTransfer->getName(),
-            $this->getConfig()->getParameterTwigExpression() => $this->createTwigExpression($contentTransfer, $templateIdentifier),
-            $this->getConfig()->getParameterTemplate() => $templateIdentifier,
-            $this->getConfig()->getParameterTemplateDisplayName() => $templateDisplayName,
+            $contentGuiConfig->getParameterId() => $contentTransfer->getIdContent(),
+            $contentGuiConfig->getParameterType() => $contentTransfer->getContentTypeKey(),
+            $contentGuiConfig->getParameterName() => $contentTransfer->getName(),
+            $contentGuiConfig->getParameterTwigExpression() => $this->createTwigExpression($contentTransfer, $templateIdentifier),
+            $contentGuiConfig->getParameterTemplate() => $templateIdentifier,
+            $contentGuiConfig->getParameterTemplateDisplayName() => $templateDisplayName,
         ]);
 
-        return sprintf($this->getConfig()->getEditorContentWidgetWrapper(), $html);
+        return sprintf($contentGuiConfig->getEditorContentWidgetWrapper(), $html);
     }
 
     /**

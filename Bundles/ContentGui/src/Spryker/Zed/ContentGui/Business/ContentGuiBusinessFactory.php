@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ContentGui\Business;
 
+use DOMDocument;
 use Spryker\Zed\ContentGui\Business\Converter\CmsBlockGui\CmsBlockGuiGlossaryConverter;
 use Spryker\Zed\ContentGui\Business\Converter\CmsBlockGui\CmsBlockGuiGlossaryConverterInterface;
 use Spryker\Zed\ContentGui\Business\Converter\CmsGui\CmsGuiGlossaryConverter;
@@ -52,7 +53,9 @@ class ContentGuiBusinessFactory extends AbstractBusinessFactory
      */
     public function createHtmlToTwigExpressionConverter(): HtmlConverterInterface
     {
-        return new HtmlToTwigExpressionConverter();
+        return new HtmlToTwigExpressionConverter(
+            $this->createDomDocument()
+        );
     }
 
     /**
@@ -66,6 +69,14 @@ class ContentGuiBusinessFactory extends AbstractBusinessFactory
             $this->getTranslatorFacade(),
             $this->getContentEditorPlugins()
         );
+    }
+
+    /**
+     * @return \DOMDocument
+     */
+    public function createDomDocument(): DOMDocument
+    {
+        return new DOMDocument();
     }
 
     /**

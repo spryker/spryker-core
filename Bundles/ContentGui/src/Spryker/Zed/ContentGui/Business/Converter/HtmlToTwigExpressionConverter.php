@@ -8,10 +8,25 @@
 namespace Spryker\Zed\ContentGui\Business\Converter;
 
 use DOMDocument;
+use DOMDocumentFragment;
+use DOMNode;
 use DOMXPath;
 
 class HtmlToTwigExpressionConverter implements HtmlConverterInterface
 {
+    /**
+     * @var \DOMDocument
+     */
+    protected $domDocument;
+
+    /**
+     * @param \DOMDocument $domDocument
+     */
+    public function __construct(DOMDocument $domDocument)
+    {
+        $this->domDocument = $domDocument;
+    }
+
     /**
      * @param string $html
      *
@@ -19,61 +34,55 @@ class HtmlToTwigExpressionConverter implements HtmlConverterInterface
      */
     public function convertHtmlToTwigExpression(string $html): string
     {
-        $dom = $this->getParsedDocument($html);
-        $updatedDom = $this->getDomWithReplacements($dom);
-
-        return $this->getHtml($updatedDom);
-    }
-
-    /**
-     * @param string $html
-     *
-     * @return \DOMDocument
-     */
-    protected function getParsedDocument(string $html): DOMDocument
-    {
-        $dom = new DOMDocument();
-        $dom->loadHTML($html, LIBXML_NOWARNING | LIBXML_NOERROR | LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
-
-        return $dom;
-    }
-
-    /**
-     * @param \DOMDocument $dom
-     *
-     * @return \DOMDocument
-     */
-    protected function getDomWithReplacements(DOMDocument $dom): DOMDocument
-    {
-        $replacements = [];
-        $xpath = new DOMXPath($dom);
-        $widgets = $xpath->query('//*[@contenteditable="false"][@data-id][@data-twig-expression][@data-template][@data-type]');
-
-        foreach ($widgets as $widget) {
-            $twigExpression = $dom->createDocumentFragment();
-            $twigExpression->appendXML($widget->getAttribute('data-twig-expression'));
-            $replacements[] = [$twigExpression, $widget->parentNode];
-        }
+        $this->domDocument->loadHTML($html, LIBXML_NOWARNING | LIBXML_NOERROR | LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+        $replacements = $this->getReplacements();
 
         if (!$replacements) {
-            return $dom;
+            return $html;
         }
 
         foreach ($replacements as $replacement) {
-            [$twigExpression, $widget] = $replacement;
-            $widget->parentNode->replaceChild($twigExpression, $widget);
+            $parentNode = $replacement['oldNode']->parentNode;
+            $parentNode->replaceChild($replacement['newNode'], $replacement['oldNode']);
         }
 
-        return $dom;
+        return $this->domDocument->saveHTML();
     }
 
     /**
-     * @param \DOMDocument $dom
-     *
-     * @return string
+     * @return array
      */
-    protected function getHtml(DOMDocument $dom): string
+    protected function getReplacements(): array
     {
-        return $dom->saveHTML();
+        $replacements = [];
+        $domXpath = $this->createDOMXPath();
+        $widgets = $domXpath->query('//*[@contenteditable="false"][@data-id][@data-twig-expression][@data-template][@data-type]');
+
+        foreach ($widgets as $widget) {
+            $twigExpression = $this->domDocument->createDocumentFragment();
+            $twigExpression->appendXML($widget->getAttribute('data-twig-expression'));
+            $replacements[] = $this->addReplacement($twigExpression, $widget->parentNode);
+        }
+
+        return $replacements;
+    }
+
+    /**
+     * @param \DOMDocumentFragment $twigExpression
+     * @param \DOMNode $parentNode
+     *
+     * @return array
+     */
+    protected function addReplacement(DOMDocumentFragment $twigExpression, DOMNode $parentNode): array
+    {
+        return ['newNode' => $twigExpression, 'oldNode' => $parentNode];
+    }
+
+    /**
+     * @return \DOMXPath
+     */
+    protected function createDOMXPath(): DOMXPath
+    {
+        return new DOMXPath($this->domDocument);
     }
 }
