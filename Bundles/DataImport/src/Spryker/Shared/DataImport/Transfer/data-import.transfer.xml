@@ -30,7 +30,12 @@
         <property name="expectedImportableDataSetCount" type="int" />
         <property name="isReaderCountable" type="bool" />
         <property name="isSuccess" type="bool" />
+        <property name="messages" type="DataImporterReportMessage[]" singular="message" />
         <property name="dataImporterReports" type="DataImporterReport[]" singular="dataImporterReport" />
+    </transfer>
+
+    <transfer name="DataImporterReportMessage">
+        <property name="message" type="string" />
     </transfer>
 
     <transfer name="QueueDataImporterConfiguration">

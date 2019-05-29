@@ -67,7 +67,7 @@ class CustomersRestApiFactory extends AbstractFactory
             $this->createCustomerResourceMapper(),
             $this->createRestApiError(),
             $this->createRestApiValidator(),
-            $this->getCustomerPostRegisterPlugins()
+            $this->getCustomerPostCreatePlugins()
         );
     }
 
@@ -215,18 +215,18 @@ class CustomersRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\CustomersRestApiExtension\Dependency\Plugin\CustomerPostRegisterPluginInterface[]
-     */
-    public function getCustomerPostRegisterPlugins(): array
-    {
-        return $this->getProvidedDependency(CustomersRestApiDependencyProvider::PLUGINS_CUSTOMER_POST_REGISTER);
-    }
-
-    /**
      * @return \Spryker\Glue\CustomersRestApiExtension\Dependency\Plugin\CustomerExpanderPluginInterface[]
      */
     public function getCustomerExpanderPlugins(): array
     {
         return $this->getProvidedDependency(CustomersRestApiDependencyProvider::PLUGINS_CUSTOMER_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Glue\CustomersRestApiExtension\Dependency\Plugin\CustomerPostCreatePluginInterface[]
+     */
+    public function getCustomerPostCreatePlugins(): array
+    {
+        return $this->getProvidedDependency(CustomersRestApiDependencyProvider::PLUGINS_CUSTOMER_POST_CREATE);
     }
 }
