@@ -154,5 +154,15 @@ interface StockQueryContainerInterface extends QueryContainerInterface
      *
      * @return \Orm\Zed\Stock\Persistence\SpyStockProductQuery
      */
-    public function queryStockAmountByProducts(string $sku): SpyStockProductQuery;
+    public function queryProductStockSumBySku(string $sku): SpyStockProductQuery;
+
+    /**
+     * @api
+     *
+     * @param string $sku
+     * @param array $storeNames
+     *
+     * @return \Orm\Zed\Stock\Persistence\SpyStockProductQuery
+     */
+    public function queryProductStockSumBySkuAndStore(string $sku, array $storeNames): SpyStockProductQuery;
 }

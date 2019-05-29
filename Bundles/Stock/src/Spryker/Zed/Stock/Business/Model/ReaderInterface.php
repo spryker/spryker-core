@@ -156,5 +156,13 @@ interface ReaderInterface
      *
      * @return float
      */
-    public function getProductStockAmount(string $sku): float;
+    public function getProductStockSumBySku(string $sku): float;
+
+    /**
+     * @param string $sku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return float
+     */
+    public function getProductStockSumBySkuAndStore(string $sku, StoreTransfer $storeTransfer): float;
 }
