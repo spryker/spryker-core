@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Sales\Business\OrderItem;
 
 use ArrayObject;
+use Generated\Shared\Transfer\ItemTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Sales\Persistence\Propel\Mapper\SalesOrderItemMapperInterface;
 use Spryker\Zed\Sales\Persistence\SalesRepositoryInterface;
@@ -57,7 +58,9 @@ class SalesOrderItemReader implements SalesOrderItemReaderInterface
     {
         $salesOrderItemTransfers = new ArrayObject();
         foreach ($salesOrderItemEntities as $spySalesOrderItemEntity) {
-            $itemTransfer = $this->salesOrderItemMapper->mapSalesOrderItemEntityToItemTransfer($spySalesOrderItemEntity);
+            $itemTransfer = $this->salesOrderItemMapper
+                ->mapSalesOrderItemEntityToItemTransfer($spySalesOrderItemEntity, new ItemTransfer());
+
             $salesOrderItemTransfers->append($itemTransfer);
         }
 

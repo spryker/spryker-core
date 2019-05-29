@@ -14,41 +14,43 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 class SalesOrderItemMapper implements SalesOrderItemMapperInterface
 {
     /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $spySalesOrderItemEntity
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $salesOrderItemEntity
+     * @param \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer $salesOrderItemEntity
      *
      * @return \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer
      */
-    public function mapSpySalesOrderItemEntityToSalesOrderItemEntity(SpySalesOrderItem $spySalesOrderItemEntity): SpySalesOrderItemEntityTransfer
-    {
-        $salesOrderItemEntity = (new SpySalesOrderItemEntityTransfer())
-            ->fromArray($spySalesOrderItemEntity->toArray(), true);
-
-        return $salesOrderItemEntity;
+    public function mapSpySalesOrderItemEntityToSalesOrderItemEntity(
+        SpySalesOrderItem $salesOrderItemEntity,
+        SpySalesOrderItemEntityTransfer $salesOrderItemEntityTransfer
+    ): SpySalesOrderItemEntityTransfer {
+        return $salesOrderItemEntityTransfer->fromArray($salesOrderItemEntity->toArray(), true);
     }
 
     /**
      * @param \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer $salesOrderItemEntity
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $salesOrderItem
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem
      */
-    public function mapSalesOrderItemEntityToSpySalesOrderItemEntity(SpySalesOrderItemEntityTransfer $salesOrderItemEntity): SpySalesOrderItem
-    {
-        $spySalesOrderItemEntity = new SpySalesOrderItem();
-        $spySalesOrderItemEntity->fromArray($salesOrderItemEntity->toArray(true));
+    public function mapSalesOrderItemEntityToSpySalesOrderItemEntity(
+        SpySalesOrderItemEntityTransfer $salesOrderItemEntity,
+        SpySalesOrderItem $salesOrderItem
+    ): SpySalesOrderItem {
+        $salesOrderItem->fromArray($salesOrderItemEntity->toArray(true));
 
-        return $spySalesOrderItemEntity;
+        return $salesOrderItem;
     }
 
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $spySalesOrderItemEntity
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return \Generated\Shared\Transfer\ItemTransfer
      */
-    public function mapSalesOrderItemEntityToItemTransfer(SpySalesOrderItem $spySalesOrderItemEntity): ItemTransfer
-    {
-        $itemTransfer = new ItemTransfer();
-        $itemTransfer->fromArray($spySalesOrderItemEntity->toArray(), true);
-
-        return $itemTransfer;
+    public function mapSalesOrderItemEntityToItemTransfer(
+        SpySalesOrderItem $spySalesOrderItemEntity,
+        ItemTransfer $itemTransfer
+    ): ItemTransfer {
+        return $itemTransfer->fromArray($spySalesOrderItemEntity->toArray(), true);
     }
 }

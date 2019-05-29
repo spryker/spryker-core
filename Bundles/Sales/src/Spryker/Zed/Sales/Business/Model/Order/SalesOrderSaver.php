@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Generated\Shared\Transfer\SpySalesOrderEntityTransfer;
+use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
@@ -502,9 +503,12 @@ class SalesOrderSaver implements SalesOrderSaverInterface
      */
     protected function executeOrderItemExpanderPreSavePlugins(QuoteTransfer $quoteTransfer, ItemTransfer $itemTransfer, SpySalesOrderItem $spySalesOrderItemEntity): SpySalesOrderItem
     {
-        $salesOrderItemEntity = $this->salesOrderItemMapper->mapSpySalesOrderItemEntityToSalesOrderItemEntity($spySalesOrderItemEntity);
-        $salesOrderItemEntity = $this->salesOrderSaverPluginExecutor->executeOrderItemExpanderPreSavePlugins($quoteTransfer, $itemTransfer, $salesOrderItemEntity);
-        $spySalesOrderItemEntity = $this->salesOrderItemMapper->mapSalesOrderItemEntityToSpySalesOrderItemEntity($salesOrderItemEntity);
+        $salesOrderItemEntity = $this->salesOrderItemMapper
+            ->mapSpySalesOrderItemEntityToSalesOrderItemEntity($spySalesOrderItemEntity, new SpySalesOrderItemEntityTransfer());
+        $salesOrderItemEntity = $this->salesOrderSaverPluginExecutor
+            ->executeOrderItemExpanderPreSavePlugins($quoteTransfer, $itemTransfer, $salesOrderItemEntity);
+        $spySalesOrderItemEntity = $this->salesOrderItemMapper
+            ->mapSalesOrderItemEntityToSpySalesOrderItemEntity($salesOrderItemEntity, new SpySalesOrderItem());
 
         return $spySalesOrderItemEntity;
     }

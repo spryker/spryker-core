@@ -340,10 +340,6 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
      */
     public function findCustomerAddressByAddressData(AddressTransfer $addressTransfer): ?AddressTransfer
     {
-        /**
-         * @todo Add getting additional data from customer table.
-         * And set the fields: email, is_defaultshipping, is_default_billing.
-         */
         return $this->getFactory()
             ->createAddress()
             ->findCustomerAddressByAddressData($addressTransfer);
