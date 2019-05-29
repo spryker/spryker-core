@@ -24,7 +24,7 @@ class ModuleFinderFacade extends AbstractFacade implements ModuleFinderFacadeInt
      *
      * @param \Generated\Shared\Transfer\ModuleFilterTransfer|null $moduleFilterTransfer
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\ModuleTransfer[]
      */
     public function getProjectModules(?ModuleFilterTransfer $moduleFilterTransfer = null): array
     {

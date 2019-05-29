@@ -41,7 +41,7 @@ class ProjectModuleFinder implements ProjectModuleFinderInterface
     /**
      * @param \Generated\Shared\Transfer\ModuleFilterTransfer|null $moduleFilterTransfer
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\ModuleTransfer[]
      */
     public function getProjectModules(?ModuleFilterTransfer $moduleFilterTransfer = null): array
     {
