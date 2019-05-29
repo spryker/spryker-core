@@ -65,7 +65,7 @@ class SharedCartQuoteCollectionExpander implements SharedCartQuoteCollectionExpa
             ->fromArray($quoteCriteriaFilterTransfer->toArray(), true);
 
         $sharedQuoteCollectionTransfer = $this->quoteReader
-            ->findCustomerSharedQuoteCollectionBySharedQuoteCriteriaFilter($sharedQuoteCriteriaFilterTransfer);
+            ->findSharedQuoteCollectionBySharedQuoteCriteriaFilter($sharedQuoteCriteriaFilterTransfer);
 
         foreach ($sharedQuoteCollectionTransfer->getQuotes() as $quoteTransfer) {
             $quoteTransfer = $this->expandQuoteWithCustomerQuotePermissionGroup($quoteTransfer, $quoteCriteriaFilterTransfer);
