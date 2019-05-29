@@ -56,7 +56,7 @@ class CustomerMapper implements CustomerMapperInterface
         $addressTransfer = $addressTransfer->fromArray($customerAddressEntity->toArray(), true);
 
         $countryEntity = $customerAddressEntity->getCountry();
-        if($countryEntity === null) {
+        if ($countryEntity === null) {
             return $addressTransfer;
         }
 

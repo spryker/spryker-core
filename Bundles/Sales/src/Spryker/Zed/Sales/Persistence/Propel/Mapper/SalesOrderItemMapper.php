@@ -15,7 +15,7 @@ class SalesOrderItemMapper implements SalesOrderItemMapperInterface
 {
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $salesOrderItemEntity
-     * @param \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer $salesOrderItemEntity
+     * @param \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer $salesOrderItemEntityTransfer
      *
      * @return \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer
      */

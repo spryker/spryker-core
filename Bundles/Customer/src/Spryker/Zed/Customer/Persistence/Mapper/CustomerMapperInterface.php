@@ -24,6 +24,7 @@ interface CustomerMapperInterface
 
     /**
      * @deprecated Use mapCustomerAddressEntityToAddressTransfer() instead.
+     *
      * @param \Orm\Zed\Customer\Persistence\SpyCustomerAddress $customerAddressEntity
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
