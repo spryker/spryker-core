@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Comment\Business\Writer;
 
-use ArrayObject;
 use Generated\Shared\Transfer\CommentRequestTransfer;
 use Generated\Shared\Transfer\CommentResponseTransfer;
 use Generated\Shared\Transfer\CommentThreadTransfer;
@@ -130,9 +129,8 @@ class CommentWriter implements CommentWriterInterface
         $commentTransfer->setIdCommentThread($commentThreadTransfer->getIdCommentThread());
 
         $commentTransfer = $this->commentEntityManager->createComment($commentTransfer);
-        $commentTransfer = $this->commentEntityManager->addCommentTagsToComment(
-            $this->mapCommentTagsToComment($commentTransfer)
-        );
+
+        $this->createCommentTags($commentTransfer);
 
         return (new CommentResponseTransfer())
             ->setIsSuccessful(true)
@@ -158,7 +156,42 @@ class CommentWriter implements CommentWriterInterface
         $commentTransfer->setMessage($commentRequestTransfer->getComment()->getMessage());
         $commentTransfer = $this->commentEntityManager->updateComment($commentTransfer);
 
+        $this->updateCommentTags(
+            $commentTransfer,
+            $commentRequestTransfer->getComment()->getTags()->getArrayCopy()
+        );
+
         return $commentResponseTransfer->setComment($commentTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CommentTransfer $commentTransfer
+     * @param \Generated\Shared\Transfer\CommentTagTransfer[] $commentTagTransfers
+     *
+     * @return void
+     */
+    protected function updateCommentTags(CommentTransfer $commentTransfer, array $commentTagTransfers): void
+    {
+        $newCommentTagTransfers = [];
+        $oldCommentTagMap = $this->mapCommentTagsByName($commentTransfer->getTags()->getArrayCopy());
+        $commentTagMap = $this->mapCommentTagsByName($this->commentRepository->getCommentTags());
+
+        foreach ($commentTagTransfers as $commentTagTransfer) {
+            if (!isset($commentTagMap[$commentTagTransfer->getName()])) {
+                $commentTagTransfer = $this->commentEntityManager->createCommentTag($commentTagTransfer);
+                $commentTagMap[$commentTagTransfer->getName()] = $commentTagTransfer;
+            }
+
+            if (!isset($oldCommentTagMap[$commentTagTransfer->getName()])) {
+                $newCommentTagTransfers[] = $commentTagMap[$commentTagTransfer->getName()];
+                continue;
+            }
+
+            unset($oldCommentTagMap[$commentTagTransfer->getName()]);
+        }
+
+        $this->commentEntityManager->removeCommentTagsFromComment($oldCommentTagMap, $commentTransfer);
+        $this->commentEntityManager->addCommentTagsToComment($newCommentTagTransfers, $commentTransfer);
     }
 
     /**
@@ -206,12 +239,12 @@ class CommentWriter implements CommentWriterInterface
     /**
      * @param \Generated\Shared\Transfer\CommentTransfer $commentTransfer
      *
-     * @return \Generated\Shared\Transfer\CommentTransfer
+     * @return void
      */
-    protected function mapCommentTagsToComment(CommentTransfer $commentTransfer): CommentTransfer
+    protected function createCommentTags(CommentTransfer $commentTransfer): void
     {
-        $mappedCommentTagTransfers = new ArrayObject();
-        $commentTagMap = $this->mapCommentTags($this->commentRepository->getCommentTags());
+        $newCommentTagTransfers = [];
+        $commentTagMap = $this->mapCommentTagsByName($this->commentRepository->getCommentTags());
 
         foreach ($commentTransfer->getTags() as $commentTagTransfer) {
             if (!isset($commentTagMap[$commentTagTransfer->getName()])) {
@@ -219,12 +252,10 @@ class CommentWriter implements CommentWriterInterface
                 $commentTagMap[$commentTagTransfer->getName()] = $commentTagTransfer;
             }
 
-            $mappedCommentTagTransfers->append($commentTagMap[$commentTagTransfer->getName()]);
+            $newCommentTagTransfers[] = $commentTagMap[$commentTagTransfer->getName()];
         }
 
-        $commentTransfer->setTags($mappedCommentTagTransfers);
-
-        return $commentTransfer;
+        $this->commentEntityManager->addCommentTagsToComment($newCommentTagTransfers, $commentTransfer);
     }
 
     /**
@@ -232,7 +263,7 @@ class CommentWriter implements CommentWriterInterface
      *
      * @return \Generated\Shared\Transfer\CommentTagTransfer[]
      */
-    protected function mapCommentTags(array $commentTagTransfers): array
+    protected function mapCommentTagsByName(array $commentTagTransfers): array
     {
         $commentTagMap = [];
 

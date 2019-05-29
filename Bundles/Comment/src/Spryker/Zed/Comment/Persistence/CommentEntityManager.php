@@ -113,22 +113,25 @@ class CommentEntityManager extends AbstractEntityManager implements CommentEntit
     }
 
     /**
+     * @param \Generated\Shared\Transfer\CommentTagTransfer[] $commentTagTransfers
      * @param \Generated\Shared\Transfer\CommentTransfer $commentTransfer
      *
-     * @return \Generated\Shared\Transfer\CommentTransfer
+     * @return void
      */
-    public function addCommentTagsToComment(CommentTransfer $commentTransfer): CommentTransfer
+    public function addCommentTagsToComment(array $commentTagTransfers, CommentTransfer $commentTransfer): void
     {
+        $commentTransfer->requireIdComment();
+
         $commentCommentTagQuery = $this->getFactory()
             ->getCommentCommentTagPropelQuery();
 
-        foreach ($commentTransfer->getTags() as $commentTagTransfer) {
-            $commentTagEntity = $commentCommentTagQuery
+        foreach ($commentTagTransfers as $commentTagTransfer) {
+            $commentCommentTagEntity = $commentCommentTagQuery
                 ->filterByFkComment($commentTransfer->getIdComment())
                 ->filterByFkCommentTag($commentTagTransfer->getIdCommentTag())
                 ->findOne();
 
-            if ($commentTagEntity) {
+            if ($commentCommentTagEntity) {
                 continue;
             }
 
@@ -138,7 +141,32 @@ class CommentEntityManager extends AbstractEntityManager implements CommentEntit
 
             $commentCommentTagEntity->save();
         }
+    }
 
-        return $commentTransfer;
+    /**
+     * @param \Generated\Shared\Transfer\CommentTagTransfer[] $commentTagTransfers
+     * @param \Generated\Shared\Transfer\CommentTransfer $commentTransfer
+     *
+     * @return void
+     */
+    public function removeCommentTagsFromComment(array $commentTagTransfers, CommentTransfer $commentTransfer): void
+    {
+        $commentTransfer->requireIdComment();
+
+        $commentCommentTagQuery = $this->getFactory()
+            ->getCommentCommentTagPropelQuery();
+
+        foreach ($commentTagTransfers as $commentTagTransfer) {
+            $commentCommentTagEntity = $commentCommentTagQuery
+                ->filterByFkComment($commentTransfer->getIdComment())
+                ->filterByFkCommentTag($commentTagTransfer->getIdCommentTag())
+                ->findOne();
+
+            if (!$commentCommentTagEntity) {
+                continue;
+            }
+
+            $commentCommentTagEntity->delete();
+        }
     }
 }
