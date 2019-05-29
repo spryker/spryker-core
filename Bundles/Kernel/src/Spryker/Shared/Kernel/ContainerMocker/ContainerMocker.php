@@ -20,7 +20,7 @@ trait ContainerMocker
      */
     protected function overwriteForTesting(ContainerInterface $container)
     {
-        if (Config::get(KernelConstants::OVERWRITE_CONTAINER_FOR_TESTING, APPLICATION_ENV !== 'devtest')) {
+        if (!Config::get(KernelConstants::OVERWRITE_CONTAINER_FOR_TESTING, APPLICATION_ENV === 'devtest')) {
             return $container;
         }
 
