@@ -52,8 +52,7 @@ class CartPreviewActivatorStrategyPlugin extends AbstractPlugin implements Resou
         $resourceShareTransfer->requireResourceShareData();
         $resourceShareDataTransfer = $resourceShareTransfer->getResourceShareData();
 
-        if (!$resourceShareDataTransfer->getIdQuote()
-            || $resourceShareDataTransfer->getShareOption() !== PersistentCartShareConfig::SHARE_OPTION_PREVIEW
+        if ($resourceShareDataTransfer->getShareOption() !== PersistentCartShareConfig::SHARE_OPTION_PREVIEW
         ) {
             return false;
         }
