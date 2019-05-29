@@ -9,6 +9,7 @@ namespace Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\DataExp
 
 use Generated\Shared\Transfer\PriceProductExpandResultTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
+use Generated\Shared\Transfer\PriceTypeTransfer;
 use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToPriceProductFacadeInterface;
 
 class PriceProductTransferPriceTypeDataExpander extends PriceProductTransferAbstractDataExpander
@@ -19,6 +20,11 @@ class PriceProductTransferPriceTypeDataExpander extends PriceProductTransferAbst
      * @var \Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToPriceProductFacadeInterface
      */
     protected $priceProductFacade;
+
+    /**
+     * @var array
+     */
+    protected $priceTypeCache = [];
 
     /**
      * @param \Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToPriceProductFacadeInterface $priceProductFacade
@@ -39,9 +45,8 @@ class PriceProductTransferPriceTypeDataExpander extends PriceProductTransferAbst
     ): PriceProductExpandResultTransfer {
         $priceProductExpandResultTransfer = (new PriceProductExpandResultTransfer())
             ->setIsSuccess(false);
-        $priceTypeTransfer = $this->priceProductFacade->findPriceTypeByName(
-            $priceProductTransfer->getPriceTypeName()
-        );
+
+        $priceTypeTransfer = $this->findPriceTypeByName($priceProductTransfer->getPriceTypeName());
 
         if ($priceTypeTransfer === null) {
             $priceProductScheduleImportErrorTransfer = $this->createPriceProductScheduleListImportErrorTransfer(
@@ -63,5 +68,27 @@ class PriceProductTransferPriceTypeDataExpander extends PriceProductTransferAbst
         return $priceProductExpandResultTransfer
             ->setPriceProduct($priceProductTransfer)
             ->setIsSuccess(true);
+    }
+
+    /**
+     * @param string $priceTypeName
+     *
+     * @return \Generated\Shared\Transfer\PriceTypeTransfer|null
+     */
+    protected function findPriceTypeByName(string $priceTypeName): ?PriceTypeTransfer
+    {
+        if (isset($this->priceTypeCache[$priceTypeName])) {
+            return $this->priceTypeCache[$priceTypeName];
+        }
+
+        $priceTypeTransfer = $this->priceProductFacade->findPriceTypeByName($priceTypeName);
+
+        if ($priceTypeTransfer === null) {
+            return null;
+        }
+
+        $this->priceTypeCache[$priceTypeName] = $priceTypeTransfer;
+
+        return $this->priceTypeCache[$priceTypeName];
     }
 }

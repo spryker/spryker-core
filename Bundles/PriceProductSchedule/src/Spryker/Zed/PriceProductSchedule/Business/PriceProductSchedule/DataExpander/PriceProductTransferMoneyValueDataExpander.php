@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\DataExpander;
 
+use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\PriceProductExpandResultTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\PriceProductSchedule\Business\Currency\CurrencyFinderInterface;
 use Spryker\Zed\PriceProductSchedule\Business\Store\StoreFinderInterface;
 
@@ -26,6 +28,16 @@ class PriceProductTransferMoneyValueDataExpander extends PriceProductTransferAbs
      * @var \Spryker\Zed\PriceProductSchedule\Business\Currency\CurrencyFinderInterface
      */
     protected $priceProductScheduleCurrencyFinder;
+
+    /**
+     * @var array
+     */
+    protected $storeCache = [];
+
+    /**
+     * @var array
+     */
+    protected $currencyCache = [];
 
     /**
      * @param \Spryker\Zed\PriceProductSchedule\Business\Store\StoreFinderInterface $priceProductScheduleStoreFinder
@@ -50,8 +62,7 @@ class PriceProductTransferMoneyValueDataExpander extends PriceProductTransferAbs
         $priceProductExpandResultTransfer = (new PriceProductExpandResultTransfer())
             ->setIsSuccess(false);
 
-        $currencyTransfer = $this->priceProductScheduleCurrencyFinder
-            ->findCurrencyByIsoCode((string)$priceProductTransfer->getMoneyValue()->getCurrency()->getCode());
+        $currencyTransfer = $this->findCurrencyByCode((string)$priceProductTransfer->getMoneyValue()->getCurrency()->getCode());
 
         if ($currencyTransfer === null) {
             $priceProductScheduleImportErrorTransfer = $this->createPriceProductScheduleListImportErrorTransfer(
@@ -65,8 +76,7 @@ class PriceProductTransferMoneyValueDataExpander extends PriceProductTransferAbs
                 ->setError($priceProductScheduleImportErrorTransfer);
         }
 
-        $storeTransfer = $this->priceProductScheduleStoreFinder
-            ->findStoreByName((string)$priceProductTransfer->getMoneyValue()->getStore()->getName());
+        $storeTransfer = $this->findStoreByName((string)$priceProductTransfer->getMoneyValue()->getStore()->getName());
 
         if ($storeTransfer === null) {
             $priceProductScheduleImportErrorTransfer = $this->createPriceProductScheduleListImportErrorTransfer(
@@ -88,5 +98,50 @@ class PriceProductTransferMoneyValueDataExpander extends PriceProductTransferAbs
         return $priceProductExpandResultTransfer
             ->setPriceProduct($priceProductTransfer)
             ->setIsSuccess(true);
+    }
+
+    /**
+     * @param string $currencyCode
+     *
+     * @return \Generated\Shared\Transfer\CurrencyTransfer|null
+     */
+    protected function findCurrencyByCode(string $currencyCode): ?CurrencyTransfer
+    {
+        if (isset($this->currencyCache[$currencyCode])) {
+            return $this->currencyCache[$currencyCode];
+        }
+
+        $currencyTransfer = $this->priceProductScheduleCurrencyFinder
+            ->findCurrencyByIsoCode($currencyCode);
+
+        if ($currencyTransfer === null) {
+            return null;
+        }
+
+        $this->currencyCache[$currencyCode] = $currencyTransfer;
+
+        return $this->currencyCache[$currencyCode];
+    }
+
+    /**
+     * @param string $storeName
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer|null
+     */
+    protected function findStoreByName(string $storeName): ?StoreTransfer
+    {
+        if (isset($this->storeCache[$storeName])) {
+            return $this->storeCache[$storeName];
+        }
+
+        $storeTransfer = $this->priceProductScheduleStoreFinder->findStoreByName($storeName);
+
+        if ($storeTransfer === null) {
+            return null;
+        }
+
+        $this->storeCache[$storeName] = $storeTransfer;
+
+        return $this->storeCache[$storeName];
     }
 }
