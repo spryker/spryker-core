@@ -29,6 +29,7 @@ interface QuoteRequestClientInterface
      * - Generates unique reference number.
      * - Generates version for the "Request for Quote" entity.
      * - Generates version reference based on unique reference number and version number.
+     * - Sets field is_latest_version_visible to true.
      * - Maps Quote to CalculableObject and runs all calculator plugins before saving.
      * - Stores provided metadata.
      * - Stores provided quote.
@@ -63,6 +64,7 @@ interface QuoteRequestClientInterface
      * - Looks up one "Request for Quote" by provided quote request reference.
      * - Expects "Request for Quote" status to be "ready".
      * - Creates latest version from previous version.
+     * - Sets field is_latest_version_visible to true.
      * - Sets status to "draft".
      *
      * @api
@@ -110,7 +112,7 @@ interface QuoteRequestClientInterface
      * - Makes Zed request.
      * - Retrieves "Request for Quote" entities filtered by company user.
      * - Filters by quote request reference when provided.
-     * - Selects latestVersion based on latest version id.
+     * - Selects latest visible quote request version.
      *
      * @api
      *
@@ -221,7 +223,7 @@ interface QuoteRequestClientInterface
      * - Retrieves "Request for Quote" entity.
      * - Expects the quote request reference to be provided.
      * - Filters by quote request company user id when provided.
-     * - Selects latestVersion based on latest version id.
+     * - Selects latest visible quote request version.
      *
      * @api
      *
