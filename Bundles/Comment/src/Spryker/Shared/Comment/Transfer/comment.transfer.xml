@@ -13,7 +13,7 @@
 
     <transfer name="Comment">
         <property name="idComment" type="int"/>
-        <property name="fkCommentThread" type="int"/>
+        <property name="idCommentThread" type="int"/>
         <property name="uuid" type="string"/>
         <property name="customer" type="Customer"/>
         <property name="message" type="string"/>
@@ -33,8 +33,8 @@
         <property name="comment" type="Comment"/>
     </transfer>
 
-    <transfer name="CommentThreadResponse">
-        <property name="commentThread" type="CommentThread"/>
+    <transfer name="CommentResponse">
+        <property name="comment" type="Comment"/>
         <property name="isSuccessful" type="bool"/>
         <property name="messages" type="Message[]" singular="message"/>
     </transfer>

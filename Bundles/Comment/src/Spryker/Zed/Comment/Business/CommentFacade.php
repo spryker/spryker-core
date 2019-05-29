@@ -8,7 +8,7 @@
 namespace Spryker\Zed\Comment\Business;
 
 use Generated\Shared\Transfer\CommentRequestTransfer;
-use Generated\Shared\Transfer\CommentThreadResponseTransfer;
+use Generated\Shared\Transfer\CommentResponseTransfer;
 use Generated\Shared\Transfer\CommentThreadTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -40,9 +40,9 @@ class CommentFacade extends AbstractFacade implements CommentFacadeInterface
      *
      * @param \Generated\Shared\Transfer\CommentRequestTransfer $commentRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\CommentThreadResponseTransfer
+     * @return \Generated\Shared\Transfer\CommentResponseTransfer
      */
-    public function addComment(CommentRequestTransfer $commentRequestTransfer): CommentThreadResponseTransfer
+    public function addComment(CommentRequestTransfer $commentRequestTransfer): CommentResponseTransfer
     {
         return $this->getFactory()
             ->createCommentWriter()
@@ -56,9 +56,9 @@ class CommentFacade extends AbstractFacade implements CommentFacadeInterface
      *
      * @param \Generated\Shared\Transfer\CommentRequestTransfer $commentRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\CommentThreadResponseTransfer
+     * @return \Generated\Shared\Transfer\CommentResponseTransfer
      */
-    public function updateComment(CommentRequestTransfer $commentRequestTransfer): CommentThreadResponseTransfer
+    public function updateComment(CommentRequestTransfer $commentRequestTransfer): CommentResponseTransfer
     {
         return $this->getFactory()
             ->createCommentWriter()
@@ -72,9 +72,9 @@ class CommentFacade extends AbstractFacade implements CommentFacadeInterface
      *
      * @param \Generated\Shared\Transfer\CommentRequestTransfer $commentRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\CommentThreadResponseTransfer
+     * @return \Generated\Shared\Transfer\CommentResponseTransfer
      */
-    public function removeComment(CommentRequestTransfer $commentRequestTransfer): CommentThreadResponseTransfer
+    public function removeComment(CommentRequestTransfer $commentRequestTransfer): CommentResponseTransfer
     {
         // TODO: Implement removeComment() method.
     }

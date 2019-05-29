@@ -9,7 +9,7 @@ namespace SprykerTest\Shared\Comment\Helper;
 
 use Codeception\Module;
 use Generated\Shared\DataBuilder\CommentRequestBuilder;
-use Generated\Shared\Transfer\CommentThreadTransfer;
+use Generated\Shared\Transfer\CommentResponseTransfer;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class CommentHelper extends Module
@@ -19,12 +19,12 @@ class CommentHelper extends Module
     /**
      * @param array $seed
      *
-     * @return \Generated\Shared\Transfer\CommentThreadTransfer
+     * @return \Generated\Shared\Transfer\CommentResponseTransfer
      */
-    public function haveCommentThread(array $seed = []): CommentThreadTransfer
+    public function haveComment(array $seed = []): CommentResponseTransfer
     {
         $commentRequestTransfer = (new CommentRequestBuilder($seed))->build();
 
-        return $this->getLocator()->comment()->facade()->addComment($commentRequestTransfer)->getCommentThread();
+        return $this->getLocator()->comment()->facade()->addComment($commentRequestTransfer);
     }
 }

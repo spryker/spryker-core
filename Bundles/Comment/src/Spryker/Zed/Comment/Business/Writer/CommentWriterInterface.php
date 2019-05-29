@@ -8,21 +8,21 @@
 namespace Spryker\Zed\Comment\Business\Writer;
 
 use Generated\Shared\Transfer\CommentRequestTransfer;
-use Generated\Shared\Transfer\CommentThreadResponseTransfer;
+use Generated\Shared\Transfer\CommentResponseTransfer;
 
 interface CommentWriterInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CommentRequestTransfer $commentRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\CommentThreadResponseTransfer
+     * @return \Generated\Shared\Transfer\CommentResponseTransfer
      */
-    public function addComment(CommentRequestTransfer $commentRequestTransfer): CommentThreadResponseTransfer;
+    public function addComment(CommentRequestTransfer $commentRequestTransfer): CommentResponseTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\CommentRequestTransfer $commentRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\CommentThreadResponseTransfer
+     * @return \Generated\Shared\Transfer\CommentResponseTransfer
      */
-    public function updateComment(CommentRequestTransfer $commentRequestTransfer): CommentThreadResponseTransfer;
+    public function updateComment(CommentRequestTransfer $commentRequestTransfer): CommentResponseTransfer;
 }

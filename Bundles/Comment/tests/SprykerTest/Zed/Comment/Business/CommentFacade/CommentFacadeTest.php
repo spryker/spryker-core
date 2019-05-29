@@ -59,7 +59,7 @@ class CommentFacadeTest extends Unit
         $commentRequestTransfer = (new CommentRequestBuilder())->build()
             ->setComment($commentTransfer);
 
-        $this->tester->createCommentThread($commentRequestTransfer);
+        $this->tester->createComment($commentRequestTransfer);
 
         // Act
         $commentThreadTransfer = $this->tester->getFacade()->findCommentThread($commentRequestTransfer);
@@ -140,15 +140,10 @@ class CommentFacadeTest extends Unit
             ->setComment($commentTransfer);
 
         // Act
-        $commentThreadResponseTransfer = $this->tester->getFacade()->addComment($commentRequestTransfer);
-
-        /** @var \Generated\Shared\Transfer\CommentTransfer $storedCommentTransfer */
-        $storedCommentTransfer = $commentThreadResponseTransfer->getCommentThread()
-            ->getComments()
-            ->offsetGet(0);
+        $commentResponseTransfer = $this->tester->getFacade()->addComment($commentRequestTransfer);
+        $storedCommentTransfer = $commentResponseTransfer->getComment();
 
         // Assert
-        $this->assertCount(1, $commentThreadResponseTransfer->getCommentThread()->getComments());
         $this->assertEquals($commentTransfer->getMessage(), $storedCommentTransfer->getMessage());
         $this->assertEquals(
             $commentTransfer->getCustomer()->getIdCustomer(),
@@ -168,28 +163,31 @@ class CommentFacadeTest extends Unit
         $commentRequestTransfer = (new CommentRequestBuilder())->build()
             ->setComment($firstCommentTransfer);
 
-        $commentThreadTransfer = $this->tester->createCommentThread($commentRequestTransfer);
+        $this->tester->createComment($commentRequestTransfer);
 
         $secondCommentTransfer = (new CommentBuilder())->build()
             ->setCustomer($this->customerTransfer);
 
         $commentRequestTransfer = (new CommentRequestTransfer())
             ->setComment($secondCommentTransfer)
-            ->setOwnerId($commentThreadTransfer->getOwnerId())
-            ->setOwnerType($commentThreadTransfer->getOwnerType());
+            ->setOwnerId($commentRequestTransfer->getOwnerId())
+            ->setOwnerType($commentRequestTransfer->getOwnerType());
 
         // Act
-        $commentThreadResponseTransfer = $this->tester->getFacade()->addComment($commentRequestTransfer);
+        $this->tester->getFacade()->addComment($commentRequestTransfer);
+        $commentThreadTransfer = $this->tester
+            ->getFacade()
+            ->findCommentThread($commentRequestTransfer);
 
         // Assert
-        $this->assertCount(2, $commentThreadResponseTransfer->getCommentThread()->getComments());
+        $this->assertCount(2, $commentThreadTransfer->getComments());
         $this->assertEquals(
             $firstCommentTransfer->getMessage(),
-            $commentThreadResponseTransfer->getCommentThread()->getComments()->offsetGet(0)->getMessage()
+            $commentThreadTransfer->getComments()->offsetGet(0)->getMessage()
         );
         $this->assertEquals(
             $secondCommentTransfer->getMessage(),
-            $commentThreadResponseTransfer->getCommentThread()->getComments()->offsetGet(1)->getMessage()
+            $commentThreadTransfer->getComments()->offsetGet(1)->getMessage()
         );
     }
 
