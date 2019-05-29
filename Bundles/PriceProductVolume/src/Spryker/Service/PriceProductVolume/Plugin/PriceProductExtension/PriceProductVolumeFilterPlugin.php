@@ -26,18 +26,32 @@ class PriceProductVolumeFilterPlugin extends AbstractPlugin implements PriceProd
      */
     public function filter(array $priceProductTransfers, PriceProductFilterTransfer $priceProductFilterTransfer): array
     {
+        if ($priceProductFilterTransfer->getQuantity() === null) {
+            return $this->getFilteredPriceProductTransfers($priceProductTransfers);
+        }
+
         $minPriceProductTransfer = $this->getMinPrice(
             $priceProductTransfers,
             $priceProductFilterTransfer->getQuantity()
         );
 
         if ($minPriceProductTransfer == null) {
-            $priceProductTransfers = array_filter($priceProductTransfers, [$this, 'filterVolumePrices']);
-
-            return $priceProductTransfers;
+            return $this->getFilteredPriceProductTransfers($priceProductTransfers);
         }
 
         return [$minPriceProductTransfer];
+    }
+
+    /**
+     * @param array $priceProductTransfers
+     *
+     * @return array
+     */
+    protected function getFilteredPriceProductTransfers(array $priceProductTransfers): array
+    {
+        $priceProductTransfers = array_filter($priceProductTransfers, [$this, 'filterVolumePrices']);
+
+        return $priceProductTransfers;
     }
 
     /**
@@ -54,11 +68,11 @@ class PriceProductVolumeFilterPlugin extends AbstractPlugin implements PriceProd
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
-     * @param float|null $filterQuantity
+     * @param float $filterQuantity
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer|null
      */
-    protected function getMinPrice(array $priceProductTransfers, ?float $filterQuantity): ?PriceProductTransfer
+    protected function getMinPrice(array $priceProductTransfers, float $filterQuantity): ?PriceProductTransfer
     {
         $minPriceProductTransfer = null;
 
