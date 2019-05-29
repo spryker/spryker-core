@@ -8,8 +8,8 @@
 namespace Spryker\Zed\WebProfiler\Communication\Plugin\WebProfiler;
 
 use Spryker\Service\Container\ContainerInterface;
+use Spryker\Shared\WebProfilerExtension\Dependency\Plugin\WebProfilerDataCollectorPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\WebProfilerExtension\Dependency\Plugin\WebProfilerDataCollectorPluginInterface;
 use Symfony\Component\HttpKernel\DataCollector\AjaxDataCollector;
 use Symfony\Component\HttpKernel\DataCollector\DataCollectorInterface;
 

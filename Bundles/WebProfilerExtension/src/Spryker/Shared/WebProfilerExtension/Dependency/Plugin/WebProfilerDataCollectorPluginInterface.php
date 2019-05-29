@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\WebProfilerExtension\Dependency\Plugin;
+namespace Spryker\Shared\WebProfilerExtension\Dependency\Plugin;
 
 use Spryker\Service\Container\ContainerInterface;
 use Symfony\Component\HttpKernel\DataCollector\DataCollectorInterface;
