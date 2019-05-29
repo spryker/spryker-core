@@ -10,6 +10,7 @@
 "Row processed with success","Zeile erfolgreich verarbeitet"
 "Row n°","Reihe n°"
 "Error","Error"
+"Eg: Christmas sales, etc.","ZB: Weihnachtsverkauf etc."
 "Import your CSV file","Importieren Sie Ihre CSV-Datei"
 "Scheduled Prices","Geplante Preise"
 "%s header(s) is missing in uploaded csv file","%s header fehlen in der hochgeladenen CSV-Datei"
