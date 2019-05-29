@@ -19,6 +19,11 @@ class CurrencyFinder implements CurrencyFinderInterface
     protected $currencyFacade;
 
     /**
+     * @var array
+     */
+    protected $currencyCache = [];
+
+    /**
      * @param \Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToCurrencyFacadeInterface $currencyFacade
      */
     public function __construct(PriceProductScheduleToCurrencyFacadeInterface $currencyFacade)
@@ -33,8 +38,16 @@ class CurrencyFinder implements CurrencyFinderInterface
      */
     public function findCurrencyByIsoCode(string $isoCode): ?CurrencyTransfer
     {
+        if (isset($this->currencyCache[$isoCode])) {
+            return $this->currencyCache[$isoCode];
+        }
+
         try {
-            return $this->currencyFacade->fromIsoCode($isoCode);
+            $currencyTransfer = $this->currencyFacade->fromIsoCode($isoCode);
+
+            $this->currencyCache[$isoCode] = $currencyTransfer;
+
+            return $this->currencyCache[$isoCode];
         } catch (CurrencyNotFoundException $e) {
             return null;
         }

@@ -9,7 +9,7 @@ namespace Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\DataExp
 
 use Generated\Shared\Transfer\PriceProductExpandResultTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
-use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToProductFacadeInterface;
+use Spryker\Zed\PriceProductSchedule\Business\Product\ProductFinderInterface;
 
 class PriceProductTransferProductDataExpander extends PriceProductTransferAbstractDataExpander
 {
@@ -17,27 +17,17 @@ class PriceProductTransferProductDataExpander extends PriceProductTransferAbstra
     protected const ERROR_MESSAGE_PRODUCT_ABSTRACT_NOT_FOUND = 'Abstract product was not found by provided sku %s';
 
     /**
-     * @var \Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToProductFacadeInterface
+     * @var \Spryker\Zed\PriceProductSchedule\Business\Product\ProductFinderInterface
      */
-    protected $productFacade;
+    protected $productFinder;
 
     /**
-     * @var array
-     */
-    protected $productAbstractCache = [];
-
-    /**
-     * @var array
-     */
-    protected $productConcreteCache = [];
-
-    /**
-     * @param \Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToProductFacadeInterface $productFacade
+     * @param \Spryker\Zed\PriceProductSchedule\Business\Product\ProductFinderInterface $productFinder
      */
     public function __construct(
-        PriceProductScheduleToProductFacadeInterface $productFacade
+        ProductFinderInterface $productFinder
     ) {
-        $this->productFacade = $productFacade;
+        $this->productFinder = $productFinder;
     }
 
     /**
@@ -52,7 +42,8 @@ class PriceProductTransferProductDataExpander extends PriceProductTransferAbstra
             ->setIsSuccess(false);
 
         if ($priceProductTransfer->getSkuProductAbstract()) {
-            $productAbstractId = $this->findProductAbstractIdBySku($priceProductTransfer->getSkuProductAbstract());
+            $productAbstractId = $this->productFinder
+                ->findProductAbstractIdBySku($priceProductTransfer->getSkuProductAbstract());
 
             if ($productAbstractId === null) {
                 $priceProductScheduleImportErrorTransfer = $this->createPriceProductScheduleListImportErrorTransfer(
@@ -69,7 +60,8 @@ class PriceProductTransferProductDataExpander extends PriceProductTransferAbstra
         }
 
         if ($priceProductTransfer->getSkuProduct()) {
-            $productConcreteId = $this->findProductConcreteIdBySku($priceProductTransfer->getSkuProduct());
+            $productConcreteId = $this->productFinder
+                ->findProductConcreteIdBySku($priceProductTransfer->getSkuProduct());
 
             if ($productConcreteId === null) {
                 $priceProductScheduleImportErrorTransfer = $this->createPriceProductScheduleListImportErrorTransfer(
@@ -89,49 +81,5 @@ class PriceProductTransferProductDataExpander extends PriceProductTransferAbstra
         return $priceProductExpandResultTransfer
             ->setPriceProduct($priceProductTransfer)
             ->setIsSuccess(true);
-    }
-
-    /**
-     * @param string $sku
-     *
-     * @return int|null
-     */
-    protected function findProductAbstractIdBySku(string $sku): ?int
-    {
-        if (isset($this->productAbstractCache[$sku])) {
-            return $this->productAbstractCache[$sku];
-        }
-
-        $productAbstractId = $this->productFacade->findProductAbstractIdBySku($sku);
-
-        if ($productAbstractId === null) {
-            return null;
-        }
-
-        $this->productAbstractCache[$sku] = $productAbstractId;
-
-        return $this->productAbstractCache[$sku];
-    }
-
-    /**
-     * @param string $sku
-     *
-     * @return int|null
-     */
-    protected function findProductConcreteIdBySku(string $sku): ?int
-    {
-        if (isset($this->productConcreteCache[$sku])) {
-            return $this->productConcreteCache[$sku];
-        }
-
-        $productConcreteId = $this->productFacade->findProductConcreteIdBySku($sku);
-
-        if ($productConcreteId === null) {
-            return null;
-        }
-
-        $this->productConcreteCache[$sku] = $productConcreteId;
-
-        return $this->productConcreteCache[$sku];
     }
 }

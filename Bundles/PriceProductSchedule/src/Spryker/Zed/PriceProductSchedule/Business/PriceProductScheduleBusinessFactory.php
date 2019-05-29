@@ -38,6 +38,10 @@ use Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleList\PriceProd
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleList\PriceProductScheduleListImporterInterface;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleList\PriceProductScheduleListUpdater;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleList\PriceProductScheduleListUpdaterInterface;
+use Spryker\Zed\PriceProductSchedule\Business\PriceType\PriceTypeFinder;
+use Spryker\Zed\PriceProductSchedule\Business\PriceType\PriceTypeFinderInterface;
+use Spryker\Zed\PriceProductSchedule\Business\Product\ProductFinder;
+use Spryker\Zed\PriceProductSchedule\Business\Product\ProductFinderInterface;
 use Spryker\Zed\PriceProductSchedule\Business\Store\StoreFinder;
 use Spryker\Zed\PriceProductSchedule\Business\Store\StoreFinderInterface;
 use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToCurrencyFacadeInterface;
@@ -220,9 +224,7 @@ class PriceProductScheduleBusinessFactory extends AbstractBusinessFactory
      */
     public function createCurrencyFinder(): CurrencyFinderInterface
     {
-        return new CurrencyFinder(
-            $this->getCurrencyFacade()
-        );
+        return new CurrencyFinder($this->getCurrencyFacade());
     }
 
     /**
@@ -230,9 +232,23 @@ class PriceProductScheduleBusinessFactory extends AbstractBusinessFactory
      */
     public function createStoreFinder(): StoreFinderInterface
     {
-        return new StoreFinder(
-            $this->getStoreFacade()
-        );
+        return new StoreFinder($this->getStoreFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductSchedule\Business\PriceType\PriceTypeFinderInterface
+     */
+    public function createPriceTypeFinder(): PriceTypeFinderInterface
+    {
+        return new PriceTypeFinder($this->getPriceProductFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductSchedule\Business\Product\ProductFinderInterface
+     */
+    public function createProductFinder(): ProductFinderInterface
+    {
+        return new ProductFinder($this->getProductFacade());
     }
 
     /**
@@ -240,7 +256,7 @@ class PriceProductScheduleBusinessFactory extends AbstractBusinessFactory
      */
     public function createPriceProductTransferPriceTypeDataExpander(): PriceProductTransferPriceTypeDataExpander
     {
-        return new PriceProductTransferPriceTypeDataExpander($this->getPriceProductFacade());
+        return new PriceProductTransferPriceTypeDataExpander($this->createPriceTypeFinder());
     }
 
     /**
@@ -248,7 +264,7 @@ class PriceProductScheduleBusinessFactory extends AbstractBusinessFactory
      */
     public function createPriceProductTransferProductDataExpander(): PriceProductTransferProductDataExpander
     {
-        return new PriceProductTransferProductDataExpander($this->getProductFacade());
+        return new PriceProductTransferProductDataExpander($this->createProductFinder());
     }
 
     /**
