@@ -54,7 +54,7 @@ class StateMachineFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testTriggerForNewStateMachineItemWhenInitialProcessIsSuccessShouldNotifyHandlerStateChange()
+    public function testTriggerForNewStateMachineItemWhenInitialProcessIsSuccessShouldNotifyHandlerStateChange(): void
     {
         $processName = static::TEST_PROCESS_NAME;
         $identifier = 1985;
@@ -91,7 +91,7 @@ class StateMachineFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testTriggerEventForItemWithManualEventShouldMoveToNextStateWithManualEvent()
+    public function testTriggerEventForItemWithManualEventShouldMoveToNextStateWithManualEvent(): void
     {
         $processName = static::TEST_PROCESS_NAME;
         $identifier = 1985;
@@ -120,7 +120,7 @@ class StateMachineFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetProcessesShouldReturnListOfProcessesAddedToHandler()
+    public function testGetProcessesShouldReturnListOfProcessesAddedToHandler(): void
     {
         $processName = static::TEST_PROCESS_NAME;
 
@@ -143,7 +143,7 @@ class StateMachineFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetStateMachineProcessIdShouldReturnIdStoredInPersistence()
+    public function testGetStateMachineProcessIdShouldReturnIdStoredInPersistence(): void
     {
         $processName = static::TEST_PROCESS_NAME;
 
@@ -167,7 +167,7 @@ class StateMachineFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetManualEventsForStateMachineItemShouldReturnAllManualEventsForProvidedState()
+    public function testGetManualEventsForStateMachineItemShouldReturnAllManualEventsForProvidedState(): void
     {
         $processName = static::TEST_PROCESS_NAME;
         $identifier = 1985;
@@ -198,7 +198,7 @@ class StateMachineFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetManualEventForStateMachineItemsShouldReturnAllEventsForProvidedStates()
+    public function testGetManualEventForStateMachineItemsShouldReturnAllEventsForProvidedStates(): void
     {
         $processName = static::TEST_PROCESS_NAME;
         $firstItemIdentifier = 1985;
@@ -240,7 +240,7 @@ class StateMachineFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetProcessedStateMachineItemsShouldReturnItemsByProvidedStateIdsStoredInPersistence()
+    public function testGetProcessedStateMachineItemsShouldReturnItemsByProvidedStateIdsStoredInPersistence(): void
     {
         $processName = static::TEST_PROCESS_NAME;
         $firstItemIdentifier = 1985;
@@ -319,7 +319,7 @@ class StateMachineFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetProcessedStateMachineItemTransferShouldReturnItemTransfer()
+    public function testGetProcessedStateMachineItemTransferShouldReturnItemTransfer(): void
     {
         $processName = static::TEST_PROCESS_NAME;
         $firstItemIdentifier = 1985;
@@ -365,7 +365,7 @@ class StateMachineFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetStateHistoryByStateItemIdentifierShouldReturnAllHistoryForThatItem()
+    public function testGetStateHistoryByStateItemIdentifierShouldReturnAllHistoryForThatItem(): void
     {
         $processName = static::TEST_PROCESS_NAME;
         $identifier = 1985;
@@ -400,7 +400,7 @@ class StateMachineFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetItemsWithFlagShouldReturnListOfStateMachineItemsWithGivenFlag()
+    public function testGetItemsWithFlagShouldReturnListOfStateMachineItemsWithGivenFlag(): void
     {
         $processName = static::TEST_PROCESS_NAME;
         $identifier = 1985;
@@ -441,7 +441,7 @@ class StateMachineFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetItemsWithFlagShouldReturnSortedListOfStateMachineItemsWithGivenFlag()
+    public function testGetItemsWithFlagShouldReturnSortedListOfStateMachineItemsWithGivenFlag(): void
     {
         $processName = static::TEST_PROCESS_NAME;
         $identifier = 1985;
@@ -480,7 +480,7 @@ class StateMachineFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetItemsWithoutFlagShouldReturnListOfStateMachineItemsWithoutGivenFlag()
+    public function testGetItemsWithoutFlagShouldReturnListOfStateMachineItemsWithoutGivenFlag(): void
     {
         $processName = static::TEST_PROCESS_NAME;
         $identifier = 1985;
@@ -525,7 +525,7 @@ class StateMachineFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCheckConditionsShouldProcessStatesWithConditionAndWithoutEvent()
+    public function testCheckConditionsShouldProcessStatesWithConditionAndWithoutEvent(): void
     {
         $processName = static::TEST_PROCESS_NAME;
         $identifier = 1985;
@@ -555,7 +555,7 @@ class StateMachineFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCheckTimeoutsShouldMoveStatesWithExpiredTimeouts()
+    public function testCheckTimeoutsShouldMoveStatesWithExpiredTimeouts(): void
     {
         $processName = static::TEST_PROCESS_NAME;
         $identifier = 1985;
@@ -594,7 +594,7 @@ class StateMachineFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testClearLocksShouldEmptyDatabaseFromExpiredLocks()
+    public function testClearLocksShouldEmptyDatabaseFromExpiredLocks(): void
     {
         $identifier = '1985-07-01';
         $stateMachineHandler = new TestStateMachineHandler();
@@ -615,7 +615,7 @@ class StateMachineFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testLoopDoesNotCauseExceptions()
+    public function testLoopDoesNotCauseExceptions(): void
     {
         $processName = static::TEST_PROCESS_WITH_LOOP_NAME;
         $identifier = 1985;
@@ -645,7 +645,7 @@ class StateMachineFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testStateMachineExistsReturnsTrueWhenStateMachineHasHandler()
+    public function testStateMachineExistsReturnsTrueWhenStateMachineHasHandler(): void
     {
         // Assign
         $stateMachineHandler = new TestStateMachineHandler();
@@ -663,7 +663,7 @@ class StateMachineFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testStateMachineExistsReturnsFalseWhenStateMachineHasNoHandler()
+    public function testStateMachineExistsReturnsFalseWhenStateMachineHasNoHandler(): void
     {
         // Assign
         $stateMachineHandler = new TestStateMachineHandler();
