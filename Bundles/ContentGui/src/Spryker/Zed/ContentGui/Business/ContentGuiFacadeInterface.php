@@ -14,7 +14,7 @@ interface ContentGuiFacadeInterface
 {
     /**
      * Specification:
-     * - Converts html widgets to twig functions.
+     * - Converts html widgets to twig expressions.
      * - Returns CmsGlossaryTransfer with translations.
      *
      * @api
@@ -27,7 +27,7 @@ interface ContentGuiFacadeInterface
 
     /**
      * Specification:
-     * - Converts html widgets to twig functions.
+     * - Converts html widgets to twig expressions.
      * - Returns CmsBlockGlossaryTransfer with translations.
      *
      * @api
@@ -40,7 +40,7 @@ interface ContentGuiFacadeInterface
 
     /**
      * Specification:
-     * - Converts twig functions to html widgets.
+     * - Converts twig expressions to html widgets.
      * - Returns CmsGlossaryTransfer with translations.
      *
      * @api
@@ -53,7 +53,7 @@ interface ContentGuiFacadeInterface
 
     /**
      * Specification:
-     * - Converts twig functions to html widgets.
+     * - Converts twig expressions to html widgets.
      * - Returns CmsBlockGlossaryTransfer with translations.
      *
      * @api
