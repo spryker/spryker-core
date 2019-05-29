@@ -44,7 +44,7 @@ class SessionHandlerFactory extends SessionFactory
      */
     protected function getSessionLifetime(): int
     {
-        return $this->sessionLifeTime;
+        return (int)$this->sessionLifeTime;
     }
 
     /**
