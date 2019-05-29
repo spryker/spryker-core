@@ -15,6 +15,7 @@ use Spryker\Zed\OauthExtension\Dependency\Plugin\OauthScopeProviderPluginInterfa
 /**
  * @method \Spryker\Zed\OauthCompanyUser\Business\OauthCompanyUserFacadeInterface getFacade()
  * @method \Spryker\Zed\OauthCompanyUser\OauthCompanyUserConfig getConfig()
+ * @method \Spryker\Zed\OauthCompanyUser\Communication\OauthCompanyUserCommunicationFactory getFactory()
  */
 class CompanyUserOauthScopeProviderPlugin extends AbstractPlugin implements OauthScopeProviderPluginInterface
 {
@@ -33,15 +34,7 @@ class CompanyUserOauthScopeProviderPlugin extends AbstractPlugin implements Oaut
             return false;
         }
 
-        if (!$oauthScopeRequestTransfer->getClientId()) {
-            return false;
-        }
-
-        if ($oauthScopeRequestTransfer->getClientId() === $this->getConfig()->getClientId()) {
-            return true;
-        }
-
-        return false;
+        return true;
     }
 
     /**
