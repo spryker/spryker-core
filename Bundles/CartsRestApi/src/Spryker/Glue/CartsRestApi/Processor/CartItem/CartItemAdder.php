@@ -70,10 +70,7 @@ class CartItemAdder implements CartItemAdderInterface
         $restCartItemsAttributesTransfer->setQuoteUuid($this->findCartIdentifier($restRequest));
         $quoteResponseTransfer = $this->cartsRestApiClient->addItem($restCartItemsAttributesTransfer);
         if (!$quoteResponseTransfer->getIsSuccessful()) {
-            return $this->cartRestResponseBuilder->createFailedErrorResponse(
-                $quoteResponseTransfer->getErrors(),
-                $restRequest->getMetadata()->getLocale()
-            );
+            return $this->cartRestResponseBuilder->createFailedErrorResponse($quoteResponseTransfer->getErrors());
         }
 
         $restResource = $this->cartsResourceMapper->mapCartsResource(

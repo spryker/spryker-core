@@ -27,9 +27,8 @@ interface CartRestResponseBuilderInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteErrorTransfer[]|\ArrayObject $errors
-     * @param string $localeName
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createFailedErrorResponse(ArrayObject $errors, string $localeName): RestResponseInterface;
+    public function createFailedErrorResponse(ArrayObject $errors): RestResponseInterface;
 }

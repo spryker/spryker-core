@@ -88,6 +88,7 @@ class GuestQuoteItemAdder implements GuestQuoteItemAdderInterface
         );
 
         $customerQuotes = $customerQuoteCollection->getQuotes();
+        file_put_contents('vcv11.txt', print_r($customerQuotes, 1));
         if ($customerQuotes->count()) {
             $restCartItemsAttributesTransfer->setQuoteUuid($customerQuotes[0]->getUuid());
         }

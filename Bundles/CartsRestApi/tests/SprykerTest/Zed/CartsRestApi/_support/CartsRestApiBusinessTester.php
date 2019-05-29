@@ -7,13 +7,14 @@
 
 namespace SprykerTest\Zed\CartsRestApi;
 
-use ArrayObject;
 use Codeception\Actor;
+use Generated\Shared\DataBuilder\AssignGuestQuoteRequestBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\DataBuilder\QuoteCollectionBuilder;
 use Generated\Shared\DataBuilder\QuoteCriteriaFilterBuilder;
 use Generated\Shared\DataBuilder\QuoteResponseBuilder;
 use Generated\Shared\DataBuilder\RestCartItemsAttributesBuilder;
+use Generated\Shared\Transfer\AssignGuestQuoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
@@ -43,11 +44,13 @@ class CartsRestApiBusinessTester extends Actor
 
     public const TEST_CUSTOMER_REFERENCE = 'DE--666';
 
+    public const TEST_ANONYMOUS_CUSTOMER_REFERENCE = 'anonymous:DE--666';
+
     public const TEST_QUANTITY = '3';
 
     public const TEST_SKU = 'test-sku';
 
-    public const COLLECTION_DATA = [
+    public const COLLECTION_QUOTES = [
         [
             'id_quote' => 1,
             'name' => 'Shopping cart',
@@ -191,6 +194,52 @@ class CartsRestApiBusinessTester extends Actor
     }
 
     /**
+     * @return \Generated\Shared\Transfer\AssignGuestQuoteRequestTransfer
+     */
+    public function prepareAssignGuestQuoteRequestTransfer(): AssignGuestQuoteRequestTransfer
+    {
+        /** @var \Generated\Shared\Transfer\AssignGuestQuoteRequestTransfer $assignGuestQuoteRequestTransfer */
+        $assignGuestQuoteRequestTransfer = (new AssignGuestQuoteRequestBuilder(
+            [
+                'anonymousCustomerReference' => static::TEST_ANONYMOUS_CUSTOMER_REFERENCE,
+                'customerReference' => static::TEST_CUSTOMER_REFERENCE,
+            ]
+        ))->build();
+
+        return $assignGuestQuoteRequestTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\AssignGuestQuoteRequestTransfer
+     */
+    public function prepareAssignGuestQuoteRequestTransferWithoutCustomerReference(): AssignGuestQuoteRequestTransfer
+    {
+        /** @var \Generated\Shared\Transfer\AssignGuestQuoteRequestTransfer $assignGuestQuoteRequestTransfer */
+        $assignGuestQuoteRequestTransfer = (new AssignGuestQuoteRequestBuilder(
+            [
+                'anonymousCustomerReference' => static::TEST_ANONYMOUS_CUSTOMER_REFERENCE,
+            ]
+        ))->build();
+
+        return $assignGuestQuoteRequestTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\AssignGuestQuoteRequestTransfer
+     */
+    public function prepareAssignGuestQuoteRequestTransferWithoutAnonymousCustomerReference(): AssignGuestQuoteRequestTransfer
+    {
+        /** @var \Generated\Shared\Transfer\AssignGuestQuoteRequestTransfer $assignGuestQuoteRequestTransfer */
+        $assignGuestQuoteRequestTransfer = (new AssignGuestQuoteRequestBuilder(
+            [
+                'customerReference' => static::TEST_CUSTOMER_REFERENCE,
+            ]
+        ))->build();
+
+        return $assignGuestQuoteRequestTransfer;
+    }
+
+    /**
      * @return \Generated\Shared\Transfer\RestCartItemsAttributesTransfer
      */
     public function prepareRestCartItemsAttributesTransferWithoutSku(): RestCartItemsAttributesTransfer
@@ -262,10 +311,10 @@ class CartsRestApiBusinessTester extends Actor
      */
     public function prepareQuotesCollectionTransfer(): QuoteCollectionTransfer
     {
-        $quoteCollectionTransfer = (new QuoteCollectionTransfer())
-            ->setQuotes(
-                new ArrayObject(static::COLLECTION_DATA)
-            );
+        $quoteCollectionTransfer = new QuoteCollectionTransfer();
+        foreach (static::COLLECTION_QUOTES as $quote) {
+            $quoteCollectionTransfer->addQuote((new QuoteTransfer())->fromArray($quote));
+        }
 
         return $quoteCollectionTransfer;
     }

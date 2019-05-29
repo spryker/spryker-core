@@ -70,10 +70,7 @@ class CartUpdater implements CartUpdaterInterface
         $quoteResponseTransfer = $this->cartsRestApiClient->updateQuote($quoteTransfer);
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
-            return $this->cartRestResponseBuilder->createFailedErrorResponse(
-                $quoteResponseTransfer->getErrors(),
-                $restRequest->getMetadata()->getLocale()
-            );
+            return $this->cartRestResponseBuilder->createFailedErrorResponse($quoteResponseTransfer->getErrors());
         }
 
         $restResource = $this->cartsResourceMapper->mapCartsResource(
