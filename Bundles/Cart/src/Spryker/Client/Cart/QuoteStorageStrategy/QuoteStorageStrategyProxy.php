@@ -160,7 +160,7 @@ class QuoteStorageStrategyProxy implements QuoteStorageStrategyProxyInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function decreaseItemQuantity($sku, $groupKey = null, $quantity = 1.0): QuoteTransfer
+    public function decreaseItemQuantity($sku, $groupKey = null, float $quantity = 1.0): QuoteTransfer
     {
         if ($this->isQuoteLocked()) {
             $this->addPermissionFailedMessage();
@@ -178,7 +178,7 @@ class QuoteStorageStrategyProxy implements QuoteStorageStrategyProxyInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function increaseItemQuantity($sku, $groupKey = null, $quantity = 1.0): QuoteTransfer
+    public function increaseItemQuantity($sku, $groupKey = null, float $quantity = 1.0): QuoteTransfer
     {
         if ($this->isQuoteLocked()) {
             $this->addPermissionFailedMessage();

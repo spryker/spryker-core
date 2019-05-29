@@ -151,7 +151,7 @@ class CartHandler implements CartHandlerInterface
      *
      * @return \Generated\Shared\Transfer\ItemTransfer
      */
-    protected function createItemTransfer($sku, $quantity = 1.0)
+    protected function createItemTransfer($sku, float $quantity = 1.0)
     {
         return (new ItemTransfer())
             ->setSku($sku)

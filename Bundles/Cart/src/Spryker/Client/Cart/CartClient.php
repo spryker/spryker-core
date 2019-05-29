@@ -168,7 +168,7 @@ class CartClient extends AbstractClient implements CartClientInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function changeItemQuantity($sku, $groupKey = null, $quantity = 1.0)
+    public function changeItemQuantity($sku, $groupKey = null, float $quantity = 1.0)
     {
         return $this->getFactory()->createQuoteStorageStrategyProxy()->changeItemQuantity($sku, $groupKey, $quantity);
     }
@@ -184,7 +184,7 @@ class CartClient extends AbstractClient implements CartClientInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function decreaseItemQuantity($sku, $groupKey = null, $quantity = 1.0)
+    public function decreaseItemQuantity($sku, $groupKey = null, float $quantity = 1.0)
     {
         return $this->getFactory()->createQuoteStorageStrategyProxy()->decreaseItemQuantity($sku, $groupKey, $quantity);
     }
@@ -200,7 +200,7 @@ class CartClient extends AbstractClient implements CartClientInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function increaseItemQuantity($sku, $groupKey = null, $quantity = 1.0)
+    public function increaseItemQuantity($sku, $groupKey = null, float $quantity = 1.0)
     {
         return $this->getFactory()->createQuoteStorageStrategyProxy()->increaseItemQuantity($sku, $groupKey, $quantity);
     }

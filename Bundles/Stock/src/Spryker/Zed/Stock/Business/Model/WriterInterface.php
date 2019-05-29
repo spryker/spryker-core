@@ -34,7 +34,7 @@ interface WriterInterface
      *
      * @return void
      */
-    public function decrementStock($sku, $stockType, $decrementBy = 1.0);
+    public function decrementStock($sku, $stockType, float $decrementBy = 1.0);
 
     /**
      * @param string $sku
@@ -43,7 +43,7 @@ interface WriterInterface
      *
      * @return void
      */
-    public function incrementStock($sku, $stockType, $incrementBy = 1.0);
+    public function incrementStock($sku, $stockType, float $incrementBy = 1.0);
 
     /**
      * @param \Generated\Shared\Transfer\StockProductTransfer $transferStockProduct

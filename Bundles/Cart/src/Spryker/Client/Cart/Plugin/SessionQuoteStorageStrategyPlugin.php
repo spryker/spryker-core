@@ -219,7 +219,7 @@ class SessionQuoteStorageStrategyPlugin extends AbstractPlugin implements QuoteS
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function decreaseItemQuantity($sku, $groupKey = null, $quantity = 1.0)
+    public function decreaseItemQuantity($sku, $groupKey = null, float $quantity = 1.0)
     {
         $decreaseItemTransfer = $this->findItem($sku, $groupKey);
         if (!$decreaseItemTransfer) {
@@ -253,7 +253,7 @@ class SessionQuoteStorageStrategyPlugin extends AbstractPlugin implements QuoteS
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function increaseItemQuantity($sku, $groupKey = null, $quantity = 1.0)
+    public function increaseItemQuantity($sku, $groupKey = null, float $quantity = 1.0)
     {
         $increaseItemTransfer = $this->findItem($sku, $groupKey);
         if (!$increaseItemTransfer) {

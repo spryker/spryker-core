@@ -129,7 +129,7 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
      *
      * @return void
      */
-    public function decrementStockProduct($sku, $stockType, $decrementBy = 1.0)
+    public function decrementStockProduct($sku, $stockType, float $decrementBy = 1.0)
     {
         $this->getFactory()->createWriterModel()->decrementStock($sku, $stockType, $decrementBy);
     }
@@ -145,7 +145,7 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
      *
      * @return void
      */
-    public function incrementStockProduct($sku, $stockType, $incrementBy = 1.0)
+    public function incrementStockProduct($sku, $stockType, float $incrementBy = 1.0)
     {
         $this->getFactory()->createWriterModel()->incrementStock($sku, $stockType, $incrementBy);
     }

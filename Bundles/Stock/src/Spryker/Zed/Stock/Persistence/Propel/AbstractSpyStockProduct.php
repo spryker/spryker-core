@@ -25,7 +25,7 @@ abstract class AbstractSpyStockProduct extends BaseSpyStockProduct
      *
      * @return void
      */
-    public function decrement($amount = 1.0)
+    public function decrement(float $amount = 1.0)
     {
         $this->setQuantity($this->getQuantity() - $amount);
         $this->save();
@@ -36,7 +36,7 @@ abstract class AbstractSpyStockProduct extends BaseSpyStockProduct
      *
      * @return void
      */
-    public function increment($amount = 1.0)
+    public function increment(float $amount = 1.0)
     {
         $this->setQuantity($this->getQuantity() + $amount);
         $this->save();

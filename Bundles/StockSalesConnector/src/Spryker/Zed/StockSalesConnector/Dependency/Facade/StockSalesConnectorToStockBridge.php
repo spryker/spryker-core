@@ -41,7 +41,7 @@ class StockSalesConnectorToStockBridge implements StockSalesConnectorToStockInte
      *
      * @return void
      */
-    public function decrementStockProduct($sku, $stockType, $decrementBy = 1.0)
+    public function decrementStockProduct($sku, $stockType, float $decrementBy = 1.0)
     {
         $this->stockFacade->decrementStockProduct($sku, $stockType, $decrementBy);
     }
@@ -53,7 +53,7 @@ class StockSalesConnectorToStockBridge implements StockSalesConnectorToStockInte
      *
      * @return void
      */
-    public function incrementStockProduct($sku, $stockType, $incrementBy = 1.0)
+    public function incrementStockProduct($sku, $stockType, float $incrementBy = 1.0)
     {
         $this->stockFacade->incrementStockProduct($sku, $stockType, $incrementBy);
     }

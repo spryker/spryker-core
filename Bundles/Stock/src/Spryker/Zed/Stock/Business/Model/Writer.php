@@ -171,7 +171,7 @@ class Writer implements WriterInterface
      *
      * @return void
      */
-    public function decrementStock($sku, $stockType, $decrementBy = 1.0)
+    public function decrementStock($sku, $stockType, float $decrementBy = 1.0)
     {
         $this->getTransactionHandler()->handleTransaction(function () use ($sku, $stockType, $decrementBy) {
             $this->executeDecrementStockTransaction($sku, $stockType, $decrementBy);
@@ -185,7 +185,7 @@ class Writer implements WriterInterface
      *
      * @return void
      */
-    protected function executeDecrementStockTransaction($sku, $stockType, $decrementBy = 1.0)
+    protected function executeDecrementStockTransaction($sku, $stockType, float $decrementBy = 1.0)
     {
         $idProduct = $this->reader->getProductConcreteIdBySku($sku);
         $idStock = $this->reader->getStockTypeIdByName($stockType);
@@ -204,7 +204,7 @@ class Writer implements WriterInterface
      *
      * @return void
      */
-    public function incrementStock($sku, $stockType, $incrementBy = 1.0)
+    public function incrementStock($sku, $stockType, float $incrementBy = 1.0)
     {
         $this->getTransactionHandler()->handleTransaction(function () use ($sku, $stockType, $incrementBy) {
             $this->executeIncrementStockTransaction($sku, $stockType, $incrementBy);
@@ -218,7 +218,7 @@ class Writer implements WriterInterface
      *
      * @return void
      */
-    protected function executeIncrementStockTransaction($sku, $stockType, $incrementBy = 1.0)
+    protected function executeIncrementStockTransaction($sku, $stockType, float $incrementBy = 1.0)
     {
         $idProduct = $this->reader->getProductConcreteIdBySku($sku);
         $idStock = $this->reader->getStockTypeIdByName($stockType);
