@@ -22,7 +22,10 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class CompanyUsersRestApiRepository extends AbstractRepository implements CompanyUsersRestApiRepositoryInterface
 {
     /**
+     * @module Customer
+     * @module Company
      * @module CompanyUser
+     * @module CompanyBusinessUnit
      *
      * @param \Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer $companyUserCriteriaFilterTransfer
      *
