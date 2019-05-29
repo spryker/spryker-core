@@ -7,34 +7,44 @@
 
 namespace Spryker\Zed\Session\Business\Model;
 
-use Spryker\Shared\Config\Config;
 use Spryker\Shared\Session\Business\Model\SessionFactory as SharedSessionFactory;
 use Spryker\Shared\Session\Dependency\Service\SessionToMonitoringServiceInterface;
-use Spryker\Shared\Session\SessionConstants;
 
 class SessionFactory extends SharedSessionFactory
 {
+    /**
+     * @var int
+     */
+    protected $sessionLifeTime;
+
+    /**
+     * @var string
+     */
+    protected $environmentName;
+
     /**
      * @var \Spryker\Shared\Session\Dependency\Service\SessionToMonitoringServiceInterface
      */
     protected $monitoringService;
 
     /**
+     * @param int $sessionLifeTime
+     * @param string $environmentName
      * @param \Spryker\Shared\Session\Dependency\Service\SessionToMonitoringServiceInterface $monitoringService
      */
-    public function __construct(SessionToMonitoringServiceInterface $monitoringService)
+    public function __construct(int $sessionLifeTime, string $environmentName, SessionToMonitoringServiceInterface $monitoringService)
     {
+        $this->sessionLifeTime = $sessionLifeTime;
+        $this->environmentName = $environmentName;
         $this->monitoringService = $monitoringService;
     }
 
     /**
      * @return int
      */
-    public function getSessionLifetime()
+    public function getSessionLifetime(): int
     {
-        $lifetime = (int)Config::get(SessionConstants::ZED_SESSION_TIME_TO_LIVE);
-
-        return $lifetime;
+        return $this->sessionLifeTime;
     }
 
     /**
@@ -43,5 +53,13 @@ class SessionFactory extends SharedSessionFactory
     public function getMonitoringService(): SessionToMonitoringServiceInterface
     {
         return $this->monitoringService;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getEnvironmentName(): string
+    {
+        return $this->environmentName;
     }
 }

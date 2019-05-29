@@ -9,28 +9,34 @@ namespace Spryker\Yves\Session\Model;
 
 use Spryker\Shared\Session\Business\Model\SessionFactory;
 use Spryker\Shared\Session\Dependency\Service\SessionToMonitoringServiceInterface;
-use Spryker\Yves\Session\SessionConfig;
 
 class SessionHandlerFactory extends SessionFactory
 {
+    /**
+     * @var int
+     */
+    protected $sessionLifeTime;
+
+    /**
+     * @var string
+     */
+    protected $environmentName;
+
     /**
      * @var \Spryker\Shared\Session\Dependency\Service\SessionToMonitoringServiceInterface
      */
     protected $monitoringService;
 
     /**
-     * @var \Spryker\Yves\Session\SessionConfig
-     */
-    protected $sessionConfig;
-
-    /**
+     * @param int $sessionLifeTime
+     * @param string $environmentName
      * @param \Spryker\Shared\Session\Dependency\Service\SessionToMonitoringServiceInterface $monitoringService
-     * @param \Spryker\Yves\Session\SessionConfig $sessionConfig
      */
-    public function __construct(SessionToMonitoringServiceInterface $monitoringService, SessionConfig $sessionConfig)
+    public function __construct(int $sessionLifeTime, string $environmentName, SessionToMonitoringServiceInterface $monitoringService)
     {
+        $this->sessionLifeTime = $sessionLifeTime;
+        $this->environmentName = $environmentName;
         $this->monitoringService = $monitoringService;
-        $this->sessionConfig = $sessionConfig;
     }
 
     /**
@@ -38,15 +44,7 @@ class SessionHandlerFactory extends SessionFactory
      */
     protected function getSessionLifetime(): int
     {
-        return $this->sessionConfig->getSessionLifeTime();
-    }
-
-    /**
-     * @return string
-     */
-    protected function getEnvironmentName(): string
-    {
-        return $this->sessionConfig->getEnvironmentName();
+        return $this->sessionLifeTime;
     }
 
     /**
@@ -55,5 +53,13 @@ class SessionHandlerFactory extends SessionFactory
     public function getMonitoringService(): SessionToMonitoringServiceInterface
     {
         return $this->monitoringService;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getEnvironmentName(): string
+    {
+        return $this->environmentName;
     }
 }
