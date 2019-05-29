@@ -41,7 +41,7 @@ class PriceProductScheduleAbstractTable extends AbstractScheduledPriceTable
         $this->fkProductAbstract = $fkProductAbstract;
         $this->fkPriceType = $fkPriceType;
         $this->baseUrl = '/';
-        $this->defaultUrl = Url::generate('price-product-schedule-gui/index/table', [
+        $this->defaultUrl = Url::generate('price-product-schedule-gui/index/abstract-product-table', [
             IndexController::REQUEST_KEY_ID_PRODUCT_ABSTRACT => $fkProductAbstract,
             IndexController::REQUEST_KEY_ID_PRICE_TYPE => $fkPriceType,
         ])->build();

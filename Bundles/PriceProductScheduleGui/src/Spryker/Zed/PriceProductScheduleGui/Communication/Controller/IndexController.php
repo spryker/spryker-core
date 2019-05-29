@@ -25,7 +25,7 @@ class IndexController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function tableAction(Request $request): JsonResponse
+    public function abstractProductTableAction(Request $request): JsonResponse
     {
         $idProductAbstract = $request->query->get(static::REQUEST_KEY_ID_PRODUCT_ABSTRACT);
         $idPriceType = $request->query->get(static::REQUEST_KEY_ID_PRICE_TYPE);
@@ -42,7 +42,7 @@ class IndexController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function concreteTableAction(Request $request): JsonResponse
+    public function concreteProductTableAction(Request $request): JsonResponse
     {
         $idProductConcrete = $request->query->get(static::REQUEST_KEY_ID_PRODUCT_CONCRETE);
         $idPriceType = $request->query->get(static::REQUEST_KEY_ID_PRICE_TYPE);

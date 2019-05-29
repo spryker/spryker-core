@@ -41,7 +41,7 @@ class PriceProductScheduleConcreteTable extends AbstractScheduledPriceTable
         $this->fkProduct = $fkProduct;
         $this->fkPriceType = $fkPriceType;
         $this->baseUrl = '/';
-        $this->defaultUrl = Url::generate('price-product-schedule-gui/index/concrete-table', [
+        $this->defaultUrl = Url::generate('price-product-schedule-gui/index/concrete-product-table', [
             IndexController::REQUEST_KEY_ID_PRODUCT_CONCRETE => $fkProduct,
             IndexController::REQUEST_KEY_ID_PRICE_TYPE => $fkPriceType,
         ])->build();

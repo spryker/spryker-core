@@ -22,13 +22,14 @@ use Spryker\Zed\PriceProductScheduleGui\Communication\ViewExpander\AbstractProdu
 use Spryker\Zed\PriceProductScheduleGui\Communication\ViewExpander\AbstractProductViewExpanderInterface;
 use Spryker\Zed\PriceProductScheduleGui\Communication\ViewExpander\ConcreteProductViewExpander;
 use Spryker\Zed\PriceProductScheduleGui\Communication\ViewExpander\ConcreteProductViewExpanderInterface;
+use Spryker\Zed\PriceProductScheduleGui\Communication\ViewExpander\ViewExpanderTableFactoryInterface;
 use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToMoneyFacadeInterface;
 use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToPriceProductFacadeInterface;
 use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToStoreFacadeInterface;
 use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToTranslatorFacadeInterface;
 use Spryker\Zed\PriceProductScheduleGui\PriceProductScheduleGuiDependencyProvider;
 
-class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationFactory
+class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationFactory implements ViewExpanderTableFactoryInterface
 {
     /**
      * @return \Spryker\Zed\PriceProductScheduleGui\Communication\TabCreator\AbstractProductTabCreatorInterface
@@ -70,7 +71,7 @@ class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationF
         return new AbstractProductViewExpander(
             $this->getPriceProductFacade(),
             $this->getTranslatorFacade(),
-            $this->createRowFormatter()
+            $this
         );
     }
 
@@ -82,7 +83,7 @@ class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationF
         return new ConcreteProductViewExpander(
             $this->getPriceProductFacade(),
             $this->getTranslatorFacade(),
-            $this->createRowFormatter()
+            $this
         );
     }
 

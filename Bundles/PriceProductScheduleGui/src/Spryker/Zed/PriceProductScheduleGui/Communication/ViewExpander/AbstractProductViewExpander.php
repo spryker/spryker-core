@@ -10,7 +10,6 @@ namespace Spryker\Zed\PriceProductScheduleGui\Communication\ViewExpander;
 use Generated\Shared\Transfer\PriceTypeTransfer;
 use Generated\Shared\Transfer\TabItemTransfer;
 use Generated\Shared\Transfer\TabsViewTransfer;
-use Spryker\Zed\PriceProductScheduleGui\Communication\Formatter\RowFormatterInterface;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Table\PriceProductScheduleAbstractTable;
 use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToPriceProductFacadeInterface;
 use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToTranslatorFacadeInterface;
@@ -31,23 +30,23 @@ class AbstractProductViewExpander implements AbstractProductViewExpanderInterfac
     protected $translatorFacade;
 
     /**
-     * @var \Spryker\Zed\PriceProductScheduleGui\Communication\Formatter\RowFormatterInterface
+     * @var \Spryker\Zed\PriceProductScheduleGui\Communication\ViewExpander\ViewExpanderTableFactoryInterface
      */
-    protected $rowFormatter;
+    protected $viewExpanderTableFactory;
 
     /**
      * @param \Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToPriceProductFacadeInterface $priceProductFacade
      * @param \Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToTranslatorFacadeInterface $translatorFacade
-     * @param \Spryker\Zed\PriceProductScheduleGui\Communication\Formatter\RowFormatterInterface $rowFormatter
+     * @param \Spryker\Zed\PriceProductScheduleGui\Communication\ViewExpander\ViewExpanderTableFactoryInterface $viewExpanderTableFactory
      */
     public function __construct(
         PriceProductScheduleGuiToPriceProductFacadeInterface $priceProductFacade,
         PriceProductScheduleGuiToTranslatorFacadeInterface $translatorFacade,
-        RowFormatterInterface $rowFormatter
+        ViewExpanderTableFactoryInterface $viewExpanderTableFactory
     ) {
         $this->priceProductFacade = $priceProductFacade;
         $this->translatorFacade = $translatorFacade;
-        $this->rowFormatter = $rowFormatter;
+        $this->viewExpanderTableFactory = $viewExpanderTableFactory;
     }
 
     /**
@@ -57,23 +56,28 @@ class AbstractProductViewExpander implements AbstractProductViewExpanderInterfac
      */
     public function expandAbstractProductEditViewData(array $viewData): array
     {
-        $priceTypeTransfers = $this->priceProductFacade
-            ->getPriceTypeValues();
+        $priceTypeTransfers = $this->priceProductFacade->getPriceTypeValues();
+
         $priceTypeTabsViewTransfer = new TabsViewTransfer();
         $tablesByPriceType = [];
 
         foreach ($priceTypeTransfers as $priceTypeTransfer) {
             $priceTypeTabItemTransfer = $this->createPriceTypeTab($priceTypeTransfer);
             $priceTypeTabsViewTransfer->addTab($priceTypeTabItemTransfer);
-            $tablesByPriceType[$priceTypeTransfer->getName()] = $this->createTableByPriceType(
-                $viewData,
-                $priceTypeTransfer
-            )->render();
+
+            $priceProductScheduleAbstractTable = $this->viewExpanderTableFactory->createPriceProductScheduleAbstractTable(
+                $viewData['idProductAbstract'],
+                $priceTypeTransfer->getIdPriceType()
+            );
+
+            $tablesByPriceType = $this->addTableByPriceType(
+                $tablesByPriceType,
+                $priceTypeTransfer,
+                $priceProductScheduleAbstractTable
+            );
         }
 
-        if ($priceTypeTabsViewTransfer->getTabs()->count() > 0) {
-            $priceTypeTabsViewTransfer->setActiveTabName($priceTypeTabsViewTransfer->getTabs()[0]->getName());
-        }
+        $priceTypeTabsViewTransfer = $this->setActiveTabName($priceTypeTabsViewTransfer);
 
         $viewData['priceTypeTabs'] = $priceTypeTabsViewTransfer;
         $viewData['tablesByPriceType'] = $tablesByPriceType;
@@ -106,17 +110,36 @@ class AbstractProductViewExpander implements AbstractProductViewExpanderInterfac
     }
 
     /**
-     * @param array $viewData
-     * @param \Generated\Shared\Transfer\PriceTypeTransfer $priceTypeTransfer
+     * @param \Generated\Shared\Transfer\TabsViewTransfer $tabsViewTransfer
      *
-     * @return \Spryker\Zed\PriceProductScheduleGui\Communication\Table\PriceProductScheduleAbstractTable
+     * @return \Generated\Shared\Transfer\TabsViewTransfer $tabsViewTransfer
      */
-    protected function createTableByPriceType(array $viewData, PriceTypeTransfer $priceTypeTransfer): PriceProductScheduleAbstractTable
+    protected function setActiveTabName(TabsViewTransfer $tabsViewTransfer): TabsViewTransfer
     {
-        return new PriceProductScheduleAbstractTable(
-            $viewData['idProductAbstract'],
-            $priceTypeTransfer->getIdPriceType(),
-            $this->rowFormatter
-        );
+        if ($tabsViewTransfer->getTabs()->count() === 0) {
+            return $tabsViewTransfer;
+        }
+
+        $defaultActiveTabName = $tabsViewTransfer->getTabs()[0]->getName();
+        $tabsViewTransfer->setActiveTabName($defaultActiveTabName);
+
+        return $tabsViewTransfer;
+    }
+
+    /**
+     * @param array $tablesByPriceType
+     * @param \Generated\Shared\Transfer\PriceTypeTransfer $priceTypeTransfer
+     * @param \Spryker\Zed\PriceProductScheduleGui\Communication\Table\PriceProductScheduleAbstractTable $priceProductScheduleAbstractTable
+     *
+     * @return array
+     */
+    protected function addTableByPriceType(
+        array $tablesByPriceType,
+        PriceTypeTransfer $priceTypeTransfer,
+        PriceProductScheduleAbstractTable $priceProductScheduleAbstractTable
+    ): array {
+        $tablesByPriceType[$priceTypeTransfer->getName()] = $priceProductScheduleAbstractTable->render();
+
+        return $tablesByPriceType;
     }
 }
