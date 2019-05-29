@@ -172,13 +172,13 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
         iterable $salesShipmentMethods
     ): array {
         $shipmentMapper = $this->getFactory()->createShipmentMapper();
-        $shipmentMehtodTransfers = [];
+        $shipmentMethodTransfers = [];
 
         foreach ($salesShipmentMethods as $salesShipmentMethodEntity) {
-            $shipmentMehtodTransfers[] = $shipmentMapper->mapShipmentMethodEntityToShipmentMehtodTransfer(new ShipmentMethodTransfer(), $salesShipmentMethodEntity);
+            $shipmentMethodTransfers[] = $shipmentMapper->mapShipmentMethodEntityToShipmentMethodTransfer(new ShipmentMethodTransfer(), $salesShipmentMethodEntity);
         }
 
-        return $shipmentMehtodTransfers;
+        return $shipmentMethodTransfers;
     }
 
     /**

@@ -35,8 +35,8 @@
                 {% for expense in order.expenses %}
                     <div class="col-sm-12 row">
                         <div class="col-sm-10"><p>
-                             {% if expense.type == 'SHIPMENT_EXPENSE_TYPE' %}
-                                {{ 'Shipment' | trans }} - {{ expense.name }}
+                            {% if expense.type == 'SHIPMENT_EXPENSE_TYPE' %}
+                                {{ 'Shipment' | trans }} {{ expense.shipment.method.carrierName }} {{ expense.name }}
                              {% endif %}
 
                              {% if expense.type == 'THRESHOLD_EXPENSE_TYPE' %}

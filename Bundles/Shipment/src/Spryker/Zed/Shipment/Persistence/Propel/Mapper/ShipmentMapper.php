@@ -25,8 +25,10 @@ class ShipmentMapper implements ShipmentMapperInterface
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesShipment
      */
-    public function mapShipmentTransferToShipmentEntity(SpySalesShipment $salesShipmentEntity, ShipmentTransfer $shipmentTransfer): SpySalesShipment
-    {
+    public function mapShipmentTransferToShipmentEntity(
+        SpySalesShipment $salesShipmentEntity,
+        ShipmentTransfer $shipmentTransfer
+    ): SpySalesShipment {
         $salesShipmentEntity->fromArray($shipmentTransfer->modifiedToArray());
         $salesShipmentEntity->fromArray($shipmentTransfer->getMethod()->modifiedToArray());
         $salesShipmentEntity->setFkSalesOrderAddress($shipmentTransfer->getShippingAddress()->getIdSalesOrderAddress());
@@ -40,8 +42,10 @@ class ShipmentMapper implements ShipmentMapperInterface
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesShipment
      */
-    public function mapOrderTransferToShipmentEntity(SpySalesShipment $salesShipmentEntity, OrderTransfer $orderTransfer): SpySalesShipment
-    {
+    public function mapOrderTransferToShipmentEntity(
+        SpySalesShipment $salesShipmentEntity,
+        OrderTransfer $orderTransfer
+    ): SpySalesShipment {
         $salesShipmentEntity->setFkSalesOrder($orderTransfer->getIdSalesOrder());
 
         return $salesShipmentEntity;
@@ -53,8 +57,10 @@ class ShipmentMapper implements ShipmentMapperInterface
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesShipment
      */
-    public function mapExpenseTransferToShipmentEntity(SpySalesShipment $salesShipmentEntity, ?ExpenseTransfer $expenseTransfer = null): SpySalesShipment
-    {
+    public function mapExpenseTransferToShipmentEntity(
+        SpySalesShipment $salesShipmentEntity,
+        ?ExpenseTransfer $expenseTransfer = null
+    ): SpySalesShipment {
         if ($expenseTransfer !== null && $expenseTransfer->getIdSalesExpense() !== null) {
             $salesShipmentEntity->setFkSalesExpense($expenseTransfer->getIdSalesExpense());
         }
@@ -68,8 +74,10 @@ class ShipmentMapper implements ShipmentMapperInterface
      *
      * @return \Generated\Shared\Transfer\ShipmentTransfer
      */
-    public function mapShipmentEntityToShipmentTransfer(ShipmentTransfer $shipmentTransfer, SpySalesShipment $salesShipmentEntity): ShipmentTransfer
-    {
+    public function mapShipmentEntityToShipmentTransfer(
+        ShipmentTransfer $shipmentTransfer,
+        SpySalesShipment $salesShipmentEntity
+    ): ShipmentTransfer {
         $shipmentTransfer->fromArray($salesShipmentEntity->toArray(), true);
 
         return $shipmentTransfer;
@@ -77,23 +85,27 @@ class ShipmentMapper implements ShipmentMapperInterface
 
     /**
      * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
-     * @param \Orm\Zed\Shipment\Persistence\SpySalesShipment $salesShipment
+     * @param \Orm\Zed\Sales\Persistence\SpySalesShipment $salesShipment
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer
      */
-    public function mapShipmentEntityToShipmentMehtodTransfer(ShipmentMethodTransfer $shipmentMethodTransfer, SpySalesShipment $salesShipment): ShipmentMethodTransfer
-    {
+    public function mapShipmentEntityToShipmentMethodTransfer(
+        ShipmentMethodTransfer $shipmentMethodTransfer,
+        SpySalesShipment $salesShipment
+    ): ShipmentMethodTransfer {
         return $shipmentMethodTransfer->fromArray($salesShipment->toArray(), true);
     }
 
     /**
      * @param \Generated\Shared\Transfer\ShipmentCarrierTransfer $shipmentCarrierTransfer
-     * @param \Orm\Zed\Shipment\Persistence\SpySalesShipment $salesShipment
+     * @param \Orm\Zed\Sales\Persistence\SpySalesShipment $salesShipment
      *
      * @return \Generated\Shared\Transfer\ShipmentCarrierTransfer
      */
-    public function mapShipmentEntityToShipmentCarrierTransfer(ShipmentCarrierTransfer $shipmentCarrierTransfer, SpySalesShipment $salesShipment): ShipmentCarrierTransfer
-    {
+    public function mapShipmentEntityToShipmentCarrierTransfer(
+        ShipmentCarrierTransfer $shipmentCarrierTransfer,
+        SpySalesShipment $salesShipment
+    ): ShipmentCarrierTransfer {
         return $shipmentCarrierTransfer->setName($salesShipment->getCarrierName());
     }
 
@@ -103,8 +115,10 @@ class ShipmentMapper implements ShipmentMapperInterface
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
-    public function mapShipmentEntityToShippingAddressTransfer(AddressTransfer $addressTransfer, SpySalesShipment $salesShipment): AddressTransfer
-    {
+    public function mapShipmentEntityToShippingAddressTransfer(
+        AddressTransfer $addressTransfer,
+        SpySalesShipment $salesShipment
+    ): AddressTransfer {
         $addressEntity = $salesShipment->getSpySalesOrderAddress();
         if ($addressEntity !== null) {
             $addressTransfer->fromArray($addressEntity->toArray(), true);
@@ -124,11 +138,13 @@ class ShipmentMapper implements ShipmentMapperInterface
      *
      * @return \Generated\Shared\Transfer\ShipmentTransfer
      */
-    public function mapShipmentEntityToShipmentTransferWithDetails(ShipmentTransfer $shipmentTransfer, SpySalesShipment $salesShipmentEntity): ShipmentTransfer
-    {
+    public function mapShipmentEntityToShipmentTransferWithDetails(
+        ShipmentTransfer $shipmentTransfer,
+        SpySalesShipment $salesShipmentEntity
+    ): ShipmentTransfer {
         $shipmentTransfer = $this->mapShipmentEntityToShipmentTransfer($shipmentTransfer, $salesShipmentEntity);
         $addressTransfer = $this->mapShipmentEntityToShippingAddressTransfer(new AddressTransfer(), $salesShipmentEntity);
-        $methodTransfer = $this->mapShipmentEntityToShipmentMehtodTransfer(new ShipmentMethodTransfer(), $salesShipmentEntity);
+        $methodTransfer = $this->mapShipmentEntityToShipmentMethodTransfer(new ShipmentMethodTransfer(), $salesShipmentEntity);
         $carrierTransfer = $this->mapShipmentEntityToShipmentCarrierTransfer(new ShipmentCarrierTransfer(), $salesShipmentEntity);
 
         $shipmentTransfer->setShippingAddress($addressTransfer);
@@ -144,8 +160,10 @@ class ShipmentMapper implements ShipmentMapperInterface
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer
      */
-    public function mapShipmentMethodEntityToShipmentMehtodTransfer(ShipmentMethodTransfer $shipmentMethodTransfer, SpyShipmentMethod $salesShipmentMethod): ShipmentMethodTransfer
-    {
+    public function mapShipmentMethodEntityToShipmentMethodTransfer(
+        ShipmentMethodTransfer $shipmentMethodTransfer,
+        SpyShipmentMethod $salesShipmentMethod
+    ): ShipmentMethodTransfer {
         return $shipmentMethodTransfer->fromArray($salesShipmentMethod->toArray(), true);
     }
 
@@ -155,8 +173,10 @@ class ShipmentMapper implements ShipmentMapperInterface
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer
      */
-    public function mapShipmentTransferToShipmentMehtodTransfer(ShipmentMethodTransfer $shipmentMethodTransfer, ShipmentTransfer $shipmentTransfer): ShipmentMethodTransfer
-    {
+    public function mapShipmentTransferToShipmentMethodTransfer(
+        ShipmentMethodTransfer $shipmentMethodTransfer,
+        ShipmentTransfer $shipmentTransfer
+    ): ShipmentMethodTransfer {
         return $shipmentMethodTransfer->fromArray($shipmentTransfer->getMethod()->modifiedToArray(), true);
     }
 }

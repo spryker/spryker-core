@@ -24,7 +24,10 @@ interface ShipmentMapperInterface
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesShipment
      */
-    public function mapShipmentTransferToShipmentEntity(SpySalesShipment $salesShipmentEntity, ShipmentTransfer $shipmentTransfer): SpySalesShipment;
+    public function mapShipmentTransferToShipmentEntity(
+        SpySalesShipment $salesShipmentEntity,
+        ShipmentTransfer $shipmentTransfer
+    ): SpySalesShipment;
 
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesShipment $salesShipmentEntity
@@ -32,7 +35,10 @@ interface ShipmentMapperInterface
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesShipment
      */
-    public function mapOrderTransferToShipmentEntity(SpySalesShipment $salesShipmentEntity, OrderTransfer $orderTransfer): SpySalesShipment;
+    public function mapOrderTransferToShipmentEntity(
+        SpySalesShipment $salesShipmentEntity,
+        OrderTransfer $orderTransfer
+    ): SpySalesShipment;
 
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesShipment $salesShipmentEntity
@@ -40,7 +46,10 @@ interface ShipmentMapperInterface
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesShipment
      */
-    public function mapExpenseTransferToShipmentEntity(SpySalesShipment $salesShipmentEntity, ?ExpenseTransfer $expenseTransfer = null): SpySalesShipment;
+    public function mapExpenseTransferToShipmentEntity(
+        SpySalesShipment $salesShipmentEntity,
+        ?ExpenseTransfer $expenseTransfer = null
+    ): SpySalesShipment;
 
     /**
      * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
@@ -48,23 +57,32 @@ interface ShipmentMapperInterface
      *
      * @return \Generated\Shared\Transfer\ShipmentTransfer
      */
-    public function mapShipmentEntityToShipmentTransfer(ShipmentTransfer $shipmentTransfer, SpySalesShipment $salesShipmentEntity): ShipmentTransfer;
+    public function mapShipmentEntityToShipmentTransfer(
+        ShipmentTransfer $shipmentTransfer,
+        SpySalesShipment $salesShipmentEntity
+    ): ShipmentTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
-     * @param \Orm\Zed\Shipment\Persistence\SpySalesShipment $salesShipment
+     * @param \Orm\Zed\Sales\Persistence\SpySalesShipment $salesShipment
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer
      */
-    public function mapShipmentEntityToShipmentMehtodTransfer(ShipmentMethodTransfer $shipmentMethodTransfer, SpySalesShipment $salesShipment): ShipmentMethodTransfer;
+    public function mapShipmentEntityToShipmentMethodTransfer(
+        ShipmentMethodTransfer $shipmentMethodTransfer,
+        SpySalesShipment $salesShipment
+    ): ShipmentMethodTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ShipmentCarrierTransfer $shipmentCarrierTransfer
-     * @param \Orm\Zed\Shipment\Persistence\SpySalesShipment $salesShipment
+     * @param \Orm\Zed\Sales\Persistence\SpySalesShipment $salesShipment
      *
      * @return \Generated\Shared\Transfer\ShipmentCarrierTransfer
      */
-    public function mapShipmentEntityToShipmentCarrierTransfer(ShipmentCarrierTransfer $shipmentCarrierTransfer, SpySalesShipment $salesShipment): ShipmentCarrierTransfer;
+    public function mapShipmentEntityToShipmentCarrierTransfer(
+        ShipmentCarrierTransfer $shipmentCarrierTransfer,
+        SpySalesShipment $salesShipment
+    ): ShipmentCarrierTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
@@ -72,7 +90,10 @@ interface ShipmentMapperInterface
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
-    public function mapShipmentEntityToShippingAddressTransfer(AddressTransfer $addressTransfer, SpySalesShipment $salesShipment): AddressTransfer;
+    public function mapShipmentEntityToShippingAddressTransfer(
+        AddressTransfer $addressTransfer,
+        SpySalesShipment $salesShipment
+    ): AddressTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
@@ -80,7 +101,10 @@ interface ShipmentMapperInterface
      *
      * @return \Generated\Shared\Transfer\ShipmentTransfer
      */
-    public function mapShipmentEntityToShipmentTransferWithDetails(ShipmentTransfer $shipmentTransfer, SpySalesShipment $salesShipmentEntity): ShipmentTransfer;
+    public function mapShipmentEntityToShipmentTransferWithDetails(
+        ShipmentTransfer $shipmentTransfer,
+        SpySalesShipment $salesShipmentEntity
+    ): ShipmentTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
@@ -88,7 +112,10 @@ interface ShipmentMapperInterface
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer
      */
-    public function mapShipmentMethodEntityToShipmentMehtodTransfer(ShipmentMethodTransfer $shipmentMethodTransfer, SpyShipmentMethod $salesShipmentMethod): ShipmentMethodTransfer;
+    public function mapShipmentMethodEntityToShipmentMethodTransfer(
+        ShipmentMethodTransfer $shipmentMethodTransfer,
+        SpyShipmentMethod $salesShipmentMethod
+    ): ShipmentMethodTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
@@ -96,5 +123,8 @@ interface ShipmentMapperInterface
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer
      */
-    public function mapShipmentTransferToShipmentMehtodTransfer(ShipmentMethodTransfer $shipmentMethodTransfer, ShipmentTransfer $shipmentTransfer): ShipmentMethodTransfer;
+    public function mapShipmentTransferToShipmentMethodTransfer(
+        ShipmentMethodTransfer $shipmentMethodTransfer,
+        ShipmentTransfer $shipmentTransfer
+    ): ShipmentMethodTransfer;
 }
