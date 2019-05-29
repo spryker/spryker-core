@@ -17,6 +17,8 @@ use Spryker\Zed\PriceProductScheduleGui\Communication\Csv\PriceProductScheduleCs
 use Spryker\Zed\PriceProductScheduleGui\Communication\Form\PriceProductScheduleImportFormType;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Mapper\PriceProductScheduleImportMapper;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Mapper\PriceProductScheduleImportMapperInterface;
+use Spryker\Zed\PriceProductScheduleGui\Communication\Table\Formatter\TableFormatter;
+use Spryker\Zed\PriceProductScheduleGui\Communication\Table\Formatter\TableFormatterInterface;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Table\ImportErrorListTable;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Table\ImportSuccessListTable;
 use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToPriceProductScheduleFacadeInterface;
@@ -88,6 +90,14 @@ class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationF
         return new ImportErrorListTable(
             $priceProductScheduleListImportResponseTransfer
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductScheduleGui\Communication\Table\Formatter\TableFormatterInterface
+     */
+    public function createTableFormatter(): TableFormatterInterface
+    {
+        return new TableFormatter();
     }
 
     /**

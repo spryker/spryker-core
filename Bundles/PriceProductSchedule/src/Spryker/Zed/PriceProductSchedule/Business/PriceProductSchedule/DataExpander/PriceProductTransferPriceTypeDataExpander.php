@@ -18,15 +18,14 @@ class PriceProductTransferPriceTypeDataExpander extends PriceProductTransferAbst
     /**
      * @var \Spryker\Zed\PriceProductSchedule\Business\PriceType\PriceTypeFinderInterface
      */
-    protected $priceProductFinder;
+    protected $priceTypeFinder;
 
     /**
-     * @param \Spryker\Zed\PriceProductSchedule\Business\PriceType\PriceTypeFinderInterface $priceProductFinder
+     * @param \Spryker\Zed\PriceProductSchedule\Business\PriceType\PriceTypeFinderInterface $priceTypeFinder
      */
-    public function __construct(
-        PriceTypeFinderInterface $priceProductFinder
-    ) {
-        $this->priceProductFinder = $priceProductFinder;
+    public function __construct(PriceTypeFinderInterface $priceTypeFinder)
+    {
+        $this->priceTypeFinder = $priceTypeFinder;
     }
 
     /**
@@ -40,18 +39,16 @@ class PriceProductTransferPriceTypeDataExpander extends PriceProductTransferAbst
         $priceProductExpandResultTransfer = (new PriceProductExpandResultTransfer())
             ->setIsSuccess(false);
 
-        $priceTypeTransfer = $this->priceProductFinder->findPriceTypeByName($priceProductTransfer->getPriceTypeName());
+        $priceTypeTransfer = $this->priceTypeFinder
+            ->findPriceTypeByName($priceProductTransfer->getPriceTypeName());
 
         if ($priceTypeTransfer === null) {
-            $priceProductScheduleImportErrorTransfer = $this->createPriceProductScheduleListImportErrorTransfer(
+            return $this->createErrorPriceProductExpandResultTransfer(
                 sprintf(
                     static::ERROR_MESSAGE_PRICE_TYPE_NOT_FOUND,
                     $priceProductTransfer->getPriceTypeName()
                 )
             );
-
-            return $priceProductExpandResultTransfer
-                ->setError($priceProductScheduleImportErrorTransfer);
         }
 
         $priceProductTransfer

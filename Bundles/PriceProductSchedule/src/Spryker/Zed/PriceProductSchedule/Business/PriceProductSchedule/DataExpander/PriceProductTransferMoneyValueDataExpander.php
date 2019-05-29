@@ -14,6 +14,9 @@ use Spryker\Zed\PriceProductSchedule\Business\Store\StoreFinderInterface;
 
 class PriceProductTransferMoneyValueDataExpander extends PriceProductTransferAbstractDataExpander
 {
+    protected const ERROR_MESSAGE_CURRENCY_CODE_MISSING = 'Currency code data is missing';
+    protected const ERROR_MESSAGE_STORE_NAME_MISSING = 'Store name data is missing';
+
     protected const ERROR_MESSAGE_CURRENCY_NOT_FOUND = 'Currency was not found by provided iso code %s';
     protected const ERROR_MESSAGE_STORE_NOT_FOUND = 'Store was not found by provided name %s';
 
@@ -47,37 +50,36 @@ class PriceProductTransferMoneyValueDataExpander extends PriceProductTransferAbs
     public function expand(
         PriceProductTransfer $priceProductTransfer
     ): PriceProductExpandResultTransfer {
-        $priceProductExpandResultTransfer = (new PriceProductExpandResultTransfer())
-            ->setIsSuccess(false);
+        if ($priceProductTransfer->getMoneyValue()->getCurrency()->getCode() === null) {
+            return $this->createErrorPriceProductExpandResultTransfer(static::ERROR_MESSAGE_CURRENCY_CODE_MISSING);
+        }
 
         $currencyTransfer = $this->priceProductScheduleCurrencyFinder
-            ->findCurrencyByIsoCode((string)$priceProductTransfer->getMoneyValue()->getCurrency()->getCode());
+            ->findCurrencyByIsoCode($priceProductTransfer->getMoneyValue()->getCurrency()->getCode());
 
         if ($currencyTransfer === null) {
-            $priceProductScheduleImportErrorTransfer = $this->createPriceProductScheduleListImportErrorTransfer(
+            return $this->createErrorPriceProductExpandResultTransfer(
                 sprintf(
                     static::ERROR_MESSAGE_CURRENCY_NOT_FOUND,
                     $priceProductTransfer->getMoneyValue()->getCurrency()->getCode()
                 )
             );
+        }
 
-            return $priceProductExpandResultTransfer
-                ->setError($priceProductScheduleImportErrorTransfer);
+        if ($priceProductTransfer->getMoneyValue()->getStore()->getName() === null) {
+            return $this->createErrorPriceProductExpandResultTransfer(static::ERROR_MESSAGE_STORE_NAME_MISSING);
         }
 
         $storeTransfer = $this->priceProductScheduleStoreFinder
-            ->findStoreByName((string)$priceProductTransfer->getMoneyValue()->getStore()->getName());
+            ->findStoreByName($priceProductTransfer->getMoneyValue()->getStore()->getName());
 
         if ($storeTransfer === null) {
-            $priceProductScheduleImportErrorTransfer = $this->createPriceProductScheduleListImportErrorTransfer(
+            return $this->createErrorPriceProductExpandResultTransfer(
                 sprintf(
                     static::ERROR_MESSAGE_STORE_NOT_FOUND,
                     $priceProductTransfer->getMoneyValue()->getStore()->getName()
                 )
             );
-
-            return $priceProductExpandResultTransfer
-                ->setError($priceProductScheduleImportErrorTransfer);
         }
 
         $priceProductTransfer->getMoneyValue()
@@ -85,7 +87,7 @@ class PriceProductTransferMoneyValueDataExpander extends PriceProductTransferAbs
             ->setFkCurrency($currencyTransfer->getIdCurrency())
             ->setFkStore($storeTransfer->getIdStore());
 
-        return $priceProductExpandResultTransfer
+        return (new PriceProductExpandResultTransfer())
             ->setPriceProduct($priceProductTransfer)
             ->setIsSuccess(true);
     }

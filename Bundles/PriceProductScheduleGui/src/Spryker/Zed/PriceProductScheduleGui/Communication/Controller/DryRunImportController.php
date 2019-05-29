@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\PriceProductScheduleCsvValidationResultTransfer;
 use Generated\Shared\Transfer\PriceProductScheduledListImportRequestTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleListImportResponseTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleListTransfer;
-use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Form\PriceProductScheduleImportFormType;
 use Symfony\Component\Form\FormInterface;
@@ -57,8 +56,14 @@ class DryRunImportController extends AbstractController
 
         $errorTable = $this->getFactory()
             ->createImportErrorTable($priceProductScheduleListImportResponseTransfer);
-        $errorTableData = $this->getTableArrayFormat($errorTable);
-        $priceProductScheduleList = $priceProductScheduleListImportResponseTransfer->getPriceProductScheduleList();
+
+        $errorTableData = $this->getFactory()
+            ->createTableFormatter()
+            ->formatAbstractTableToArray($errorTable);
+
+        $priceProductScheduleList = $priceProductScheduleListImportResponseTransfer
+            ->getPriceProductScheduleList();
+
         $successTable = $this->getFactory()
             ->createImportSuccessListTable($priceProductScheduleList);
 
@@ -138,19 +143,6 @@ class DryRunImportController extends AbstractController
         return $this->getFactory()
             ->getPriceProductScheduleFacade()
             ->importPriceProductSchedules($priceProductScheduleListImportRequestTransfer);
-    }
-
-    /**
-     * @param \Spryker\Zed\Gui\Communication\Table\AbstractTable $table
-     *
-     * @return array
-     */
-    protected function getTableArrayFormat(AbstractTable $table)
-    {
-        $tableData = $table->fetchData();
-        $tableData['header'] = $table->getConfiguration()->getHeader();
-
-        return $tableData;
     }
 
     /**

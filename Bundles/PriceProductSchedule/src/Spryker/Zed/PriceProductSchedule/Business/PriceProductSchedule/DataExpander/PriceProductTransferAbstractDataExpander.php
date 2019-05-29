@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\DataExpander;
 
+use Generated\Shared\Transfer\PriceProductExpandResultTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleListImportErrorTransfer;
 
 abstract class PriceProductTransferAbstractDataExpander implements PriceProductTransferDataExpanderInterface
@@ -21,5 +22,22 @@ abstract class PriceProductTransferAbstractDataExpander implements PriceProductT
     ): PriceProductScheduleListImportErrorTransfer {
         return (new PriceProductScheduleListImportErrorTransfer())
             ->setMessage($errorMessage);
+    }
+
+    /**
+     * @param string $errorMessage
+     *
+     * @return \Generated\Shared\Transfer\PriceProductExpandResultTransfer
+     */
+    protected function createErrorPriceProductExpandResultTransfer(
+        string $errorMessage
+    ): PriceProductExpandResultTransfer {
+        $priceProductScheduleImportErrorTransfer = $this->createPriceProductScheduleListImportErrorTransfer(
+            $errorMessage
+        );
+
+        return (new PriceProductExpandResultTransfer())
+            ->setIsSuccess(false)
+            ->setError($priceProductScheduleImportErrorTransfer);
     }
 }

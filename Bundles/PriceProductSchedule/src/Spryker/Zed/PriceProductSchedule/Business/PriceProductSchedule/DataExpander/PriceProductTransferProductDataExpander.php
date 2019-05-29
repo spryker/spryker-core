@@ -46,15 +46,12 @@ class PriceProductTransferProductDataExpander extends PriceProductTransferAbstra
                 ->findProductAbstractIdBySku($priceProductTransfer->getSkuProductAbstract());
 
             if ($productAbstractId === null) {
-                $priceProductScheduleImportErrorTransfer = $this->createPriceProductScheduleListImportErrorTransfer(
+                return $this->createErrorPriceProductExpandResultTransfer(
                     sprintf(
                         static::ERROR_MESSAGE_PRODUCT_ABSTRACT_NOT_FOUND,
                         $priceProductTransfer->getSkuProductAbstract()
                     )
                 );
-
-                return $priceProductExpandResultTransfer
-                    ->setError($priceProductScheduleImportErrorTransfer);
             }
             $priceProductTransfer->setIdProductAbstract($productAbstractId);
         }
@@ -64,15 +61,12 @@ class PriceProductTransferProductDataExpander extends PriceProductTransferAbstra
                 ->findProductConcreteIdBySku($priceProductTransfer->getSkuProduct());
 
             if ($productConcreteId === null) {
-                $priceProductScheduleImportErrorTransfer = $this->createPriceProductScheduleListImportErrorTransfer(
+                return $this->createErrorPriceProductExpandResultTransfer(
                     sprintf(
                         static::ERROR_MESSAGE_PRODUCT_CONCRETE_NOT_FOUND,
                         $priceProductTransfer->getSkuProduct()
                     )
                 );
-
-                return $priceProductExpandResultTransfer
-                    ->setError($priceProductScheduleImportErrorTransfer);
             }
 
             $priceProductTransfer->setIdProduct($productConcreteId);
