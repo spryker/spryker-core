@@ -1,7 +1,7 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
 {% if widget_title is not defined %}
-    {% set widget_title = 'Import new scheduled prices' | trans %}
+    {% set widget_title = 'Scheduled Prices' | trans %}
 {% endif %}
 
 {% block head_title -%}
@@ -16,7 +16,7 @@
 
 {% block content %}
 
-    {% embed '@Gui/Partials/widget.twig' %}
+    {% embed '@Gui/Partials/widget.twig' with {widget_title: 'Import new scheduled prices' | trans} %}
 
         {% block widget_content %}
             <div class="row">
