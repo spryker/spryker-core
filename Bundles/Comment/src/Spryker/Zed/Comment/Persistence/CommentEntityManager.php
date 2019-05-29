@@ -72,4 +72,17 @@ class CommentEntityManager extends AbstractEntityManager implements CommentEntit
 
         return $commentTransfer;
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\CommentTransfer $commentTransfer
+     *
+     * @return void
+     */
+    public function removeComment(CommentTransfer $commentTransfer): void
+    {
+        $this->getFactory()
+            ->getCommentPropelQuery()
+            ->filterByUuid($commentTransfer->getUuid())
+            ->delete();
+    }
 }

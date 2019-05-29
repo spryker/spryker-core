@@ -32,4 +32,11 @@ interface CommentEntityManagerInterface
      * @return \Generated\Shared\Transfer\CommentTransfer
      */
     public function updateComment(CommentTransfer $commentTransfer): CommentTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CommentTransfer $commentTransfer
+     *
+     * @return void
+     */
+    public function removeComment(CommentTransfer $commentTransfer): void;
 }

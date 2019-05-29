@@ -76,6 +76,8 @@ class CommentFacade extends AbstractFacade implements CommentFacadeInterface
      */
     public function removeComment(CommentRequestTransfer $commentRequestTransfer): CommentResponseTransfer
     {
-        // TODO: Implement removeComment() method.
+        return $this->getFactory()
+            ->createCommentWriter()
+            ->removeComment($commentRequestTransfer);
     }
 }
