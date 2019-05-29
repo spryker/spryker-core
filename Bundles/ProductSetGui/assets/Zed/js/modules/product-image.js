@@ -33,6 +33,9 @@ $(document).ready(function() {
             .replace(/__image_set_name__/g, imageSetIndex)
             .replace(/__name__/g, imageCollectionIndex);
 
+        newOptionFormHTML = $($.parseHTML(newOptionFormHTML));
+        newOptionFormHTML.find('.sort-order-field').val(0);
+
         imageSet.find('.image-collection-container').append($(newOptionFormHTML));
     }
 

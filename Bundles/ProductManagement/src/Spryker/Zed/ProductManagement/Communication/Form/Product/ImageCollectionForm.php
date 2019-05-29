@@ -211,6 +211,9 @@ class ImageCollectionForm extends AbstractSubForm
                         'value' => static::MAX_SORT_ORDER_VALUE,
                     ]),
                 ],
+                'attr' => [
+                    'class' => 'sort-order-field',
+                ],
             ]);
 
         return $this;
