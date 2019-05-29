@@ -24,6 +24,32 @@ interface UtilQuantityServiceInterface
 
     /**
      * Specification:
+     * - compares two float quantities and return true if first one is greater or equql the second one.
+     *
+     * @api
+     *
+     * @param float $firstQuantity
+     * @param float $secondQuantity
+     *
+     * @return bool
+     */
+    public function isQuantityGreaterOrEqual(float $firstQuantity, float $secondQuantity): bool;
+
+    /**
+     * Specification:
+     * - compares two float quantities and return true if first one is less or equql the second one.
+     *
+     * @api
+     *
+     * @param float $firstQuantity
+     * @param float $secondQuantity
+     *
+     * @return bool
+     */
+    public function isQuantityLessOrEqual(float $firstQuantity, float $secondQuantity): bool;
+
+    /**
+     * Specification:
      * - get max precision of input quantities.
      * - sum quantities.
      * - rounds result with previously calculated precision.

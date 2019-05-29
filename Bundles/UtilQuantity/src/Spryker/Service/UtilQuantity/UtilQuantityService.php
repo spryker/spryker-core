@@ -70,6 +70,40 @@ class UtilQuantityService extends AbstractService implements UtilQuantityService
      *
      * @api
      *
+     * @param float $firstQuantity
+     * @param float $secondQuantity
+     *
+     * @return bool
+     */
+    public function isQuantityGreaterOrEqual(float $firstQuantity, float $secondQuantity): bool
+    {
+        return $this->getFactory()
+            ->createQuantityComparator()
+            ->isQuantityGreaterOrEqual($firstQuantity, $secondQuantity);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param float $firstQuantity
+     * @param float $secondQuantity
+     *
+     * @return bool
+     */
+    public function isQuantityLessOrEqual(float $firstQuantity, float $secondQuantity): bool
+    {
+        return $this->getFactory()
+            ->createQuantityComparator()
+            ->isQuantityLessOrEqual($firstQuantity, $secondQuantity);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param float $dividendQuantity
      * @param float $divisorQuantity
      * @param float $remainder

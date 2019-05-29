@@ -56,4 +56,26 @@ class QuantityComparator implements QuantityComparatorInterface
             $remainder
         );
     }
+
+    /**
+     * @param float $firstQuantity
+     * @param float $secondQuantity
+     *
+     * @return bool
+     */
+    public function isQuantityGreaterOrEqual(float $firstQuantity, float $secondQuantity): bool
+    {
+        return $firstQuantity - $secondQuantity > static::EPSILON || $this->isQuantityEqual($firstQuantity, $secondQuantity);
+    }
+
+    /**
+     * @param float $firstQuantity
+     * @param float $secondQuantity
+     *
+     * @return bool
+     */
+    public function isQuantityLessOrEqual(float $firstQuantity, float $secondQuantity): bool
+    {
+        return $secondQuantity - $firstQuantity > static::EPSILON || $this->isQuantityEqual($firstQuantity, $secondQuantity);
+    }
 }

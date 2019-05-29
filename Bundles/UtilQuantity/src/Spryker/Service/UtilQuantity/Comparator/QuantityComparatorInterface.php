@@ -25,4 +25,20 @@ interface QuantityComparatorInterface
      * @return bool
      */
     public function isQuantityModuloEqual(float $dividendQuantity, float $divisorQuantity, float $remainder): bool;
+
+    /**
+     * @param float $firstQuantity
+     * @param float $secondQuantity
+     *
+     * @return bool
+     */
+    public function isQuantityGreaterOrEqual(float $firstQuantity, float $secondQuantity): bool;
+
+    /**
+     * @param float $firstQuantity
+     * @param float $secondQuantity
+     *
+     * @return bool
+     */
+    public function isQuantityLessOrEqual(float $firstQuantity, float $secondQuantity): bool;
 }
