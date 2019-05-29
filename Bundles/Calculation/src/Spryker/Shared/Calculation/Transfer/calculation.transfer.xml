@@ -84,7 +84,7 @@
         <property name="sumTaxAmountFullAggregation" type="int" />
 
         <property name="refundableAmount" type="int" />
-        <property name="canceledAmount" type="float" />
+        <property name="canceledAmount" type="int" />
 
         <property name="sumSubtotalAggregation" type="int" />
         <property name="unitSubtotalAggregation" type="int" />
@@ -123,7 +123,7 @@
         <property name="unitPrice" type="int" />
         <property name="sumPrice" type="int" />
 
-        <property name="canceledAmount" type="float" />
+        <property name="canceledAmount" type="int" />
 
         <property name="unitDiscountAmountAggregation" type="int" />
         <property name="sumDiscountAmountAggregation" type="int" />

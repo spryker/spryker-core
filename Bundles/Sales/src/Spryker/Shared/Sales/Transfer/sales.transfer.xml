@@ -113,7 +113,7 @@
         <property name="calculatedDiscounts" type="CalculatedDiscount[]" singular="calculatedDiscount" />
         <property name="variety" type="string" />
         <property name="state" type="ItemState" />
-        <property name="canceledAmount" type="float"/>
+        <property name="canceledAmount" type="int"/>
         <property name="stateHistory" type="ItemState[]" />
         <property name="isOrdered" type="bool" />
     </transfer>
