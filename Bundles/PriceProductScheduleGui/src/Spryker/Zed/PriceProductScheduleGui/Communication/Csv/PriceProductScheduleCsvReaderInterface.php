@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\PriceProductScheduleGui\Communication\Importer;
+namespace Spryker\Zed\PriceProductScheduleGui\Communication\Csv;
 
 use Generated\Shared\Transfer\PriceProductScheduledListImportRequestTransfer;
 use Symfony\Component\HttpFoundation\File\UploadedFile;

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\PriceProductScheduleGui\Communication\Controller;
 
+use Generated\Shared\Transfer\PriceProductScheduleCsvValidationResultTransfer;
 use Generated\Shared\Transfer\PriceProductScheduledListImportRequestTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleListImportResponseTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleListTransfer;
@@ -41,6 +42,14 @@ class DryRunImportController extends AbstractController
             return $this->redirectResponse(static::URL_IMPORT_PAGE);
         }
 
+        $priceProductScheduleCsvValidationResultTransfer = $this->validatePriceProductScheduleImportForm($priceProductScheduleImportForm);
+
+        if ($priceProductScheduleCsvValidationResultTransfer->getIsSuccess() === false) {
+            $this->addErrorMessage($priceProductScheduleCsvValidationResultTransfer->getError());
+
+            return $this->redirectResponse(static::URL_IMPORT_PAGE);
+        }
+
         $priceProductScheduleListImportResponseTransfer = $this->handlePriceProductScheduleImportForm(
             $priceProductScheduleImportForm,
             $request
@@ -57,7 +66,8 @@ class DryRunImportController extends AbstractController
             'importForm' => $priceProductScheduleImportForm->createView(),
             'priceProductScheduleList' => $priceProductScheduleList,
             'errorTable' => $errorTableData,
-            'successTable' => $successTable->render(),
+            'renderSuccessTable' => empty($successTable->getData()) === true,
+            'successTableView' => $successTable->render(),
         ]);
     }
 
@@ -77,6 +87,23 @@ class DryRunImportController extends AbstractController
         return $this->jsonResponse(
             $successTable->fetchData()
         );
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormInterface $importForm
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleCsvValidationResultTransfer
+     */
+    protected function validatePriceProductScheduleImportForm(
+        FormInterface $importForm
+    ): PriceProductScheduleCsvValidationResultTransfer {
+        $importCsv = $importForm
+            ->get(PriceProductScheduleImportFormType::FIELD_FILE_UPLOAD)
+            ->getData();
+
+        return $this->getFactory()
+            ->createPriceProductScheduleCsvValidator()
+            ->validateCsvFile($importCsv);
     }
 
     /**

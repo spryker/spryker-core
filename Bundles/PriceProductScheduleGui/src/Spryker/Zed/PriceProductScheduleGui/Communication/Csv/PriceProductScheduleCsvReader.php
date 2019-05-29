@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\PriceProductScheduleGui\Communication\Importer;
+namespace Spryker\Zed\PriceProductScheduleGui\Communication\Csv;
 
 use Generated\Shared\Transfer\PriceProductScheduledListImportRequestTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleImportTransfer;
@@ -52,6 +52,10 @@ class PriceProductScheduleCsvReader implements PriceProductScheduleCsvReaderInte
         unset($importItems[0]);
 
         foreach ($importItems as $rowNumber => $importItem) {
+            if (empty(array_filter(array_filter($importItem)))) {
+                continue;
+            }
+
             $priceProductScheduleImportTransfer = $this->priceProductScheduleImportMapper
                 ->mapArrayToPriceProductScheduleTransfer(
                     array_combine($headers, $importItem),

@@ -10,9 +10,11 @@ namespace Spryker\Zed\PriceProductScheduleGui\Communication;
 use Generated\Shared\Transfer\PriceProductScheduleListImportResponseTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleListTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\PriceProductScheduleGui\Communication\Csv\PriceProductScheduleCsvReader;
+use Spryker\Zed\PriceProductScheduleGui\Communication\Csv\PriceProductScheduleCsvReaderInterface;
+use Spryker\Zed\PriceProductScheduleGui\Communication\Csv\PriceProductScheduleCsvValidator;
+use Spryker\Zed\PriceProductScheduleGui\Communication\Csv\PriceProductScheduleCsvValidatorInterface;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Form\PriceProductScheduleImportFormType;
-use Spryker\Zed\PriceProductScheduleGui\Communication\Importer\PriceProductScheduleCsvReader;
-use Spryker\Zed\PriceProductScheduleGui\Communication\Importer\PriceProductScheduleCsvReaderInterface;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Mapper\PriceProductScheduleImportMapper;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Mapper\PriceProductScheduleImportMapperInterface;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Table\ImportErrorListTable;
@@ -54,13 +56,24 @@ class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationF
     }
 
     /**
-     * @return \Spryker\Zed\PriceProductScheduleGui\Communication\Importer\PriceProductScheduleCsvReaderInterface
+     * @return \Spryker\Zed\PriceProductScheduleGui\Communication\Csv\PriceProductScheduleCsvReaderInterface
      */
     public function createPriceProductScheduleCsvReader(): PriceProductScheduleCsvReaderInterface
     {
         return new PriceProductScheduleCsvReader(
             $this->getUtilCsvService(),
             $this->createPriceProductScheduleImportMapper()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductScheduleGui\Communication\Csv\PriceProductScheduleCsvValidatorInterface
+     */
+    public function createPriceProductScheduleCsvValidator(): PriceProductScheduleCsvValidatorInterface
+    {
+        return new PriceProductScheduleCsvValidator(
+            $this->getUtilCsvService(),
+            $this->getConfig()
         );
     }
 
