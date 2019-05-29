@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\ProductImageStorage\Communication\Plugin\Event\Listene
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\EventEntityTransfer;
 use Generated\Shared\Transfer\ProductImageSetTransfer;
+use Orm\Zed\Product\Persistence\SpyProductLocalizedAttributesQuery;
 use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageSetTableMap;
 use Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImageQuery;
 use Orm\Zed\ProductImageStorage\Persistence\SpyProductAbstractImageStorageQuery;
@@ -459,8 +460,8 @@ class ProductImageStorageListenerTest extends Unit
             (new EventEntityTransfer())->setId($this->productConcreteTransfer->getIdProductConcrete()),
         ];
 
-        SpyProductImageSetToProductImageQuery::create()->findOneByFkProductImageSet(
-            $this->productImageSetTransfer->getIdProductImageSet()
+        SpyProductLocalizedAttributesQuery::create()->findOneByFkProduct(
+            $this->productConcreteTransfer->getIdProductConcrete()
         )->delete();
 
         // Act
@@ -606,8 +607,8 @@ class ProductImageStorageListenerTest extends Unit
             ]),
         ];
 
-        SpyProductImageSetToProductImageQuery::create()->findOneByFkProductImageSet(
-            $this->productImageSetTransfer->getIdProductImageSet()
+        SpyProductLocalizedAttributesQuery::create()->findOneByFkProduct(
+            $this->productConcreteTransfer->getIdProductConcrete()
         )->delete();
 
         // Act
