@@ -16,4 +16,12 @@ interface AvailabilityCartConnectorToUtilQuantityServiceInterface
      * @return float
      */
     public function sumQuantities(float $firstQuantity, float $secondQuantity): float;
+
+    /**
+     * @param float $firstQuantity
+     * @param float $secondQuantity
+     *
+     * @return bool
+     */
+    public function isQuantityLessOrEqual(float $firstQuantity, float $secondQuantity): bool;
 }

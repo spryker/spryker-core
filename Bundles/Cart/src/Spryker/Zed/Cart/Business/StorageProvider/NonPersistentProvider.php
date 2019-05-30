@@ -242,7 +242,7 @@ class NonPersistentProvider implements StorageProviderInterface
      */
     protected function isValidQuantity(ItemTransfer $itemTransfer)
     {
-        if ($itemTransfer->getQuantity() <= 0) {
+        if ($this->isQuantityLessOrEqual($itemTransfer->getQuantity(), 0)) {
             throw new InvalidQuantityExeption(
                 sprintf(
                     'Could not change the quantity of cart item "%s" to "%d".',
@@ -253,5 +253,16 @@ class NonPersistentProvider implements StorageProviderInterface
         }
 
         return true;
+    }
+
+    /**
+     * @param float $firstQuantity
+     * @param float $secondQuantity
+     *
+     * @return bool
+     */
+    protected function isQuantityLessOrEqual(float $firstQuantity, float $secondQuantity): bool
+    {
+        return $this->utilQuantityService->isQuantityLessOrEqual($firstQuantity, $secondQuantity);
     }
 }

@@ -133,7 +133,18 @@ class Sellable implements SellableInterface
 
         $realStock = $this->calculateStock($sku, $storeTransfer);
 
-        return ($realStock >= $quantity);
+        return $this->isQuantityGreaterOrEqual($realStock, $quantity);
+    }
+
+    /**
+     * @param float $firstQuantity
+     * @param float $secondQuantity
+     *
+     * @return bool
+     */
+    protected function isQuantityGreaterOrEqual(float $firstQuantity, float $secondQuantity): bool
+    {
+        return $this->utilQuantityService->isQuantityGreaterOrEqual($firstQuantity, $secondQuantity);
     }
 
     /**

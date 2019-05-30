@@ -19,6 +19,7 @@ use Spryker\Zed\Discount\Business\Persistence\DiscountEntityMapperInterface;
 use Spryker\Zed\Discount\Business\QueryString\SpecificationBuilderInterface;
 use Spryker\Zed\Discount\Business\Voucher\VoucherValidatorInterface;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToStoreFacadeInterface;
+use Spryker\Zed\Discount\Dependency\Service\DiscountToUtilQuantityServiceInterface;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 
 class Discount implements DiscountInterface
@@ -61,12 +62,18 @@ class Discount implements DiscountInterface
     protected $storeFacade;
 
     /**
+     * @var \Spryker\Zed\Discount\Dependency\Service\DiscountToUtilQuantityServiceInterface
+     */
+    protected $utilQuantityService;
+
+    /**
      * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Discount\Business\Calculator\CalculatorInterface $calculator
      * @param \Spryker\Zed\Discount\Business\QueryString\SpecificationBuilderInterface $decisionRuleBuilder
      * @param \Spryker\Zed\Discount\Business\Voucher\VoucherValidatorInterface $voucherValidator
      * @param \Spryker\Zed\Discount\Business\Persistence\DiscountEntityMapperInterface $discountEntityMapper
      * @param \Spryker\Zed\Discount\Dependency\Facade\DiscountToStoreFacadeInterface $storeFacade
+     * @param \Spryker\Zed\Discount\Dependency\Service\DiscountToUtilQuantityServiceInterface $utilQuantityService
      */
     public function __construct(
         DiscountQueryContainerInterface $queryContainer,
@@ -74,7 +81,8 @@ class Discount implements DiscountInterface
         SpecificationBuilderInterface $decisionRuleBuilder,
         VoucherValidatorInterface $voucherValidator,
         DiscountEntityMapperInterface $discountEntityMapper,
-        DiscountToStoreFacadeInterface $storeFacade
+        DiscountToStoreFacadeInterface $storeFacade,
+        DiscountToUtilQuantityServiceInterface $utilQuantityService
     ) {
         $this->queryContainer = $queryContainer;
         $this->calculator = $calculator;
@@ -82,6 +90,7 @@ class Discount implements DiscountInterface
         $this->voucherValidator = $voucherValidator;
         $this->discountEntityMapper = $discountEntityMapper;
         $this->storeFacade = $storeFacade;
+        $this->utilQuantityService = $utilQuantityService;
     }
 
     /**
@@ -291,8 +300,9 @@ class Discount implements DiscountInterface
                     continue;
                 }
 
-                $matchedProductQuantity += $itemTransfer->getQuantity();
-                if ($matchedProductQuantity >= $minimumItemAmount) {
+                $matchedProductQuantity = $this->sumQuantities($matchedProductQuantity, $itemTransfer->getQuantity());
+
+                if ($this->isQuantityGreaterOrEqual($matchedProductQuantity, $minimumItemAmount)) {
                     return true;
                 }
             }
@@ -301,6 +311,28 @@ class Discount implements DiscountInterface
         }
 
         return false;
+    }
+
+    /**
+     * @param float $firstQuantity
+     * @param float $secondQuantity
+     *
+     * @return float
+     */
+    protected function sumQuantities(float $firstQuantity, float $secondQuantity): float
+    {
+        return $this->utilQuantityService->sumQuantities($firstQuantity, $secondQuantity);
+    }
+
+    /**
+     * @param float $firstQuantity
+     * @param float $secondQusntity
+     *
+     * @return bool
+     */
+    protected function isQuantityGreaterOrEqual(float $firstQuantity, float $secondQusntity): bool
+    {
+        return $this->utilQuantityService->isQuantityGreaterOrEqual($firstQuantity, $secondQusntity);
     }
 
     /**

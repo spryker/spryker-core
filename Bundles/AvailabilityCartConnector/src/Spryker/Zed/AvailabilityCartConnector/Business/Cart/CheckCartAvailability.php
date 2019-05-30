@@ -141,11 +141,22 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
     protected function getTranslationKey($stock)
     {
         $translationKey = static::CART_PRE_CHECK_AVAILABILITY_FAILED;
-        if ($stock <= 0) {
+        if ($this->isQuantityLessOrEqual($stock, 0)) {
             $translationKey = static::CART_PRE_CHECK_AVAILABILITY_EMPTY;
         }
 
         return $translationKey;
+    }
+
+    /**
+     * @param float $firstQuantity
+     * @param float $secondQuantity
+     *
+     * @return bool
+     */
+    protected function isQuantityLessOrEqual(float $firstQuantity, float $secondQuantity): bool
+    {
+        return $this->utilQuantityService->isQuantityLessOrEqual($firstQuantity, $secondQuantity);
     }
 
     /**

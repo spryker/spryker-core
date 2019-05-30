@@ -597,7 +597,8 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
     {
         return new ItemFormHandler(
             $this->getCartFacade(),
-            $this->getMessengerFacade()
+            $this->getMessengerFacade(),
+            $this->getUtilQuantityService()
         );
     }
 

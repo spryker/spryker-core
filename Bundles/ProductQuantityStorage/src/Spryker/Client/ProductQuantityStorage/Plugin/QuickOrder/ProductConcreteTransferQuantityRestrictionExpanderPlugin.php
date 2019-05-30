@@ -16,6 +16,11 @@ use Spryker\Client\QuickOrderExtension\Dependency\Plugin\ProductConcreteExpander
 class ProductConcreteTransferQuantityRestrictionExpanderPlugin extends AbstractPlugin implements ProductConcreteExpanderPluginInterface
 {
     /**
+     * {@inheritdoc}
+     * - Expands collection of ProductConcreteTransfer with its relevant quantity restrictions data.
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
      *
      * @return array

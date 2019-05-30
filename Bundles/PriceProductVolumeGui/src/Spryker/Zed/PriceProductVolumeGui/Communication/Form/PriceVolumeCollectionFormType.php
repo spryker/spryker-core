@@ -163,6 +163,8 @@ class PriceVolumeCollectionFormType extends AbstractType
                 return;
             }
 
+            $utilQuantityService = $this->getFactory()->getUtilQuantityService();
+
             if ($priceProductVolumeItemTransfer->getQuantity() === null) {
                 $context
                     ->buildViolation('Quantity should not be empty.')
@@ -170,7 +172,7 @@ class PriceVolumeCollectionFormType extends AbstractType
                     ->addViolation();
             }
 
-            if ($priceProductVolumeItemTransfer->getQuantity() <= PriceVolumeFormType::MINIMUM_QUANTITY && $priceProductVolumeItemTransfer->getQuantity() !== null) {
+            if ($utilQuantityService->isQuantityLessOrEqual($priceProductVolumeItemTransfer->getQuantity(), PriceVolumeFormType::MINIMUM_QUANTITY) && $priceProductVolumeItemTransfer->getQuantity() !== null) {
                 $context
                     ->buildViolation('Quantity should be greater than 0.')
                     ->atPath(PriceVolumeFormType::FIELD_QUANTITY)

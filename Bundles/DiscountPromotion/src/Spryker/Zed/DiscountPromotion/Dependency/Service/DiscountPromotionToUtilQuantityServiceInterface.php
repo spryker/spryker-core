@@ -16,4 +16,12 @@ interface DiscountPromotionToUtilQuantityServiceInterface
      * @return bool
      */
     public function isQuantityEqual(float $firstQuantity, float $secondQuantity): bool;
+
+    /**
+     * @param float $firstQuantity
+     * @param float $secondQuantity
+     *
+     * @return bool
+     */
+    public function isQuantityLessOrEqual(float $firstQuantity, float $secondQuantity): bool;
 }

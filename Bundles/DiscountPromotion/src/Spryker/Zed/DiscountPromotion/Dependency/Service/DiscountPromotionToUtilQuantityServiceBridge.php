@@ -32,4 +32,15 @@ class DiscountPromotionToUtilQuantityServiceBridge implements DiscountPromotionT
     {
         return $this->utilQuantityService->isQuantityEqual($firstQuantity, $secondQuantity);
     }
+
+    /**
+     * @param float $firstQuantity
+     * @param float $secondQuantity
+     *
+     * @return bool
+     */
+    public function isQuantityLessOrEqual(float $firstQuantity, float $secondQuantity): bool
+    {
+        return $this->utilQuantityService->isQuantityLessOrEqual($firstQuantity, $secondQuantity);
+    }
 }

@@ -89,13 +89,24 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
      */
     protected function validateQuantityIsPositive(string $sku, float $quantity, CartPreCheckResponseTransfer $responseTransfer): bool
     {
-        if ($quantity <= 0) {
+        if ($this->isQuantityLessOrEqual($quantity, 0)) {
             $this->addViolation(static::ERROR_QUANTITY_INCORRECT, $sku, 0, $quantity, $responseTransfer);
 
             return false;
         }
 
         return true;
+    }
+
+    /**
+     * @param float $firstQuantity
+     * @param float $secondQuantity
+     *
+     * @return bool
+     */
+    protected function isQuantityLessOrEqual(float $firstQuantity, float $secondQuantity): bool
+    {
+        return $this->utilQuantityService->isQuantityLessOrEqual($firstQuantity, $secondQuantity);
     }
 
     /**

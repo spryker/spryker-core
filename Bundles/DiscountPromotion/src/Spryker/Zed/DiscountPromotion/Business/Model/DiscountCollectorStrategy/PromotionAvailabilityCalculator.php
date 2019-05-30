@@ -9,6 +9,7 @@ namespace Spryker\Zed\DiscountPromotion\Business\Model\DiscountCollectorStrategy
 
 use Spryker\Zed\DiscountPromotion\Dependency\Facade\DiscountPromotionToAvailabilityInterface;
 use Spryker\Zed\DiscountPromotion\Dependency\Facade\DiscountPromotionToLocaleInterface;
+use Spryker\Zed\DiscountPromotion\Dependency\Service\DiscountPromotionToUtilQuantityServiceInterface;
 
 class PromotionAvailabilityCalculator implements PromotionAvailabilityCalculatorInterface
 {
@@ -23,16 +24,24 @@ class PromotionAvailabilityCalculator implements PromotionAvailabilityCalculator
     protected $localeFacade;
 
     /**
+     * @var \Spryker\Zed\DiscountPromotion\Dependency\Service\DiscountPromotionToUtilQuantityServiceInterface
+     */
+    protected $utilQuantityService;
+
+    /**
      * @param \Spryker\Zed\DiscountPromotion\Dependency\Facade\DiscountPromotionToAvailabilityInterface $availabilityFacade
      * @param \Spryker\Zed\DiscountPromotion\Dependency\Facade\DiscountPromotionToLocaleInterface $localeFacade
+     * @param \Spryker\Zed\DiscountPromotion\Dependency\Service\DiscountPromotionToUtilQuantityServiceInterface $utilQuantityService
      */
     public function __construct(
         DiscountPromotionToAvailabilityInterface $availabilityFacade,
-        DiscountPromotionToLocaleInterface $localeFacade
+        DiscountPromotionToLocaleInterface $localeFacade,
+        DiscountPromotionToUtilQuantityServiceInterface $utilQuantityService
     ) {
 
         $this->availabilityFacade = $availabilityFacade;
         $this->localeFacade = $localeFacade;
+        $this->utilQuantityService = $utilQuantityService;
     }
 
     /**
@@ -50,7 +59,7 @@ class PromotionAvailabilityCalculator implements PromotionAvailabilityCalculator
         }
         $availability = $productAbstractAvailabilityTransfer->getAvailability();
 
-        if ($availability <= 0) {
+        if ($this->isQuantityLessOrEqual($availability, 0)) {
             return 0.0;
         }
 
@@ -59,6 +68,17 @@ class PromotionAvailabilityCalculator implements PromotionAvailabilityCalculator
         }
 
         return $maxQuantity;
+    }
+
+    /**
+     * @param float $firstQuantity
+     * @param float $secondQuantity
+     *
+     * @return bool
+     */
+    protected function isQuantityLessOrEqual(float $firstQuantity, float $secondQuantity): bool
+    {
+        return $this->utilQuantityService->isQuantityLessOrEqual($firstQuantity, $secondQuantity);
     }
 
     /**

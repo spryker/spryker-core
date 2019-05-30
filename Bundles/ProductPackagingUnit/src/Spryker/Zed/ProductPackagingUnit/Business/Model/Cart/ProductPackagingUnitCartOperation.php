@@ -95,7 +95,7 @@ class ProductPackagingUnitCartOperation implements ProductPackagingUnitCartOpera
                 );
                 $newAmount = $this->subtractQuantities($currentItemTransfer->getAmount(), $itemTransfer->getAmount());
 
-                if ($newQuantity <= 0 || $newAmount <= 0) {
+                if ($this->isQuantityLessOrEqual($newQuantity, 0) || $this->isQuantityLessOrEqual($newAmount, 0)) {
                     $quoteTransfer->getItems()->offsetUnset($itemIndex);
                     break;
                 }
@@ -107,6 +107,17 @@ class ProductPackagingUnitCartOperation implements ProductPackagingUnitCartOpera
         }
 
         return $quoteTransfer;
+    }
+
+    /**
+     * @param float $firstQuantity
+     * @param float $secondQuantity
+     *
+     * @return bool
+     */
+    protected function isQuantityLessOrEqual(float $firstQuantity, float $secondQuantity): bool
+    {
+        return $this->utilQuantityService->isQuantityLessOrEqual($firstQuantity, $secondQuantity);
     }
 
     /**

@@ -15,6 +15,11 @@ class ProductQuantityConfig extends AbstractSharedConfig
     protected const DEFAULT_INTERVAL = 1.0;
 
     /**
+     * Specification:
+     * - gets minimum quantity restriction if not provided for product.
+     *
+     * @api
+     *
      * @return float
      */
     public function getDefaultMinimumQuantity(): float
@@ -23,6 +28,11 @@ class ProductQuantityConfig extends AbstractSharedConfig
     }
 
     /**
+     * Specification:
+     * - gets interval quantity restriction if not provided for product.
+     *
+     * @api
+     *
      * @return float
      */
     public function getDefaultInterval(): float

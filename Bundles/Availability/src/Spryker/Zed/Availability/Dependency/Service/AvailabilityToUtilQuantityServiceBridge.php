@@ -54,4 +54,15 @@ class AvailabilityToUtilQuantityServiceBridge implements AvailabilityToUtilQuant
     {
         return $this->utilQuantityService->isQuantityEqual($firstQuantity, $secondQuantity);
     }
+
+    /**
+     * @param float $firstQuantity
+     * @param float $secondQuantity
+     *
+     * @return bool
+     */
+    public function isQuantityGreaterOrEqual(float $firstQuantity, float $secondQuantity): bool
+    {
+        return $this->utilQuantityService->isQuantityGreaterOrEqual($firstQuantity, $secondQuantity);
+    }
 }

@@ -13,6 +13,9 @@ use Spryker\Service\Kernel\AbstractPlugin;
 use Spryker\Service\PriceProductExtension\Dependency\Plugin\PriceProductFilterPluginInterface;
 use Spryker\Shared\PriceProductStorage\PriceProductStorageConstants;
 
+/**
+ * @method \Spryker\Service\PriceProductVolume\PriceProductVolumeServiceFactory getFactory()
+ */
 class PriceProductVolumeFilterPlugin extends AbstractPlugin implements PriceProductFilterPluginInterface
 {
     /**
@@ -75,13 +78,14 @@ class PriceProductVolumeFilterPlugin extends AbstractPlugin implements PriceProd
     protected function getMinPrice(array $priceProductTransfers, float $filterQuantity): ?PriceProductTransfer
     {
         $minPriceProductTransfer = null;
+        $utilQuantityService = $this->getFactory()->getUtilQuantityService();
 
         foreach ($priceProductTransfers as $priceProductTransfer) {
             if (!$priceProductTransfer->getVolumeQuantity()) {
                 continue;
             }
 
-            if ($priceProductTransfer->getVolumeQuantity() <= $filterQuantity) {
+            if ($utilQuantityService->isQuantityLessOrEqual($priceProductTransfer->getVolumeQuantity(), $filterQuantity)) {
                 if ($minPriceProductTransfer == null) {
                     $minPriceProductTransfer = $priceProductTransfer;
 

@@ -41,4 +41,12 @@ interface ProductPackagingUnitToUtilQuantityServiceInterface
      * @return bool
      */
     public function isQuantityModuloEqual(float $dividentQuantity, float $divisorQuantity, float $remainder): bool;
+
+    /**
+     * @param float $firstQuantity
+     * @param float $secondQuantity
+     *
+     * @return bool
+     */
+    public function isQuantityLessOrEqual(float $firstQuantity, float $secondQuantity): bool;
 }

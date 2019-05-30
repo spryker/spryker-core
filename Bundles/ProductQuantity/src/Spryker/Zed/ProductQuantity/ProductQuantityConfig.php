@@ -15,6 +15,10 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class ProductQuantityConfig extends AbstractBundleConfig
 {
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @return float
      */
     public function getDefaultMinimumQuantity(): float
@@ -23,6 +27,10 @@ class ProductQuantityConfig extends AbstractBundleConfig
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @return float
      */
     public function getDefaultInterval(): float

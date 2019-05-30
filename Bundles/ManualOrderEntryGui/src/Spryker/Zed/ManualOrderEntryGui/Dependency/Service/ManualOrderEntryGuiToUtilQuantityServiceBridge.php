@@ -32,4 +32,15 @@ class ManualOrderEntryGuiToUtilQuantityServiceBridge implements ManualOrderEntry
     {
         return $this->utilQuantityService->sumQuantities($firstQuantity, $secondQuantity);
     }
+
+    /**
+     * @param float $firstQuantity
+     * @param float $secondQuantity
+     *
+     * @return bool
+     */
+    public function isQuantityLessOrEqual(float $firstQuantity, float $secondQuantity): bool
+    {
+        return $this->utilQuantityService->isQuantityLessOrEqual($firstQuantity, $secondQuantity);
+    }
 }

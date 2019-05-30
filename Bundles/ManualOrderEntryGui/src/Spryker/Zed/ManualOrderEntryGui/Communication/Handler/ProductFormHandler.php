@@ -129,6 +129,17 @@ class ProductFormHandler implements FormHandlerInterface
     }
 
     /**
+     * @param float $firstQuantity
+     * @param float $secondQuantity
+     *
+     * @return bool
+     */
+    protected function isQuantityLessOrEqual(float $firstQuantity, float $secondQuantity): bool
+    {
+        return $this->utilQuantityService->isQuantityLessOrEqual($firstQuantity, $secondQuantity);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ItemTransfer $newProduct
      * @param array $addedSkus
      *
@@ -137,7 +148,7 @@ class ProductFormHandler implements FormHandlerInterface
     protected function isProductInvalid(ItemTransfer $newProduct, array $addedSkus): bool
     {
         return $newProduct->getSku() === ''
-            || $newProduct->getQuantity() <= 0
+            || $this->isQuantityLessOrEqual($newProduct->getQuantity(), 0)
             || in_array($newProduct->getSku(), $addedSkus)
             || !$this->productFacade->hasProductConcrete($newProduct->getSku());
     }

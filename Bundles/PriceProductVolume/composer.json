@@ -12,7 +12,8 @@
     "spryker/price-product-storage": "^3.0.0",
     "spryker/price-product-storage-extension": "^1.1.0",
     "spryker/product-storage": "^1.1.0",
-    "spryker/util-encoding": "^2.0.0"
+    "spryker/util-encoding": "^2.0.0",
+    "spryker/util-quantity": "^1.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

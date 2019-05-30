@@ -42,7 +42,8 @@ class DiscountPromotionBusinessFactory extends AbstractBusinessFactory
     {
         return new PromotionAvailabilityCalculator(
             $this->getAvailabilityFacade(),
-            $this->getLocaleFacade()
+            $this->getLocaleFacade(),
+            $this->getUtilQuantityService()
         );
     }
 
