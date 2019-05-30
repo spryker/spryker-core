@@ -139,13 +139,13 @@ class ShareCartByUuidActivatorStrategy implements ShareCartByUuidActivatorStrate
      */
     protected function isProvidedCompanyUserResourceShareOwner(ResourceShareRequestTransfer $resourceShareRequestTransfer): bool
     {
-        $ownerIdCompanyUser = $resourceShareRequestTransfer->getResourceShare()
+        $ownerCompanyUserId = $resourceShareRequestTransfer->getResourceShare()
             ->getResourceShareData()
-            ->getOwnerIdCompanyUser();
+            ->getOwnerCompanyUserId();
 
         $customerTransfer = $resourceShareRequestTransfer->getCustomer();
 
-        return $customerTransfer->getCompanyUserTransfer()->getIdCompanyUser() === $ownerIdCompanyUser;
+        return $customerTransfer->getCompanyUserTransfer()->getIdCompanyUser() === $ownerCompanyUserId;
     }
 
     /**
@@ -161,8 +161,8 @@ class ShareCartByUuidActivatorStrategy implements ShareCartByUuidActivatorStrate
         $resourceShareTransfer = $resourceShareRequestTransfer->getResourceShare();
         $resourceShareDataTransfer = $resourceShareTransfer->getResourceShareData();
 
-        $ownerIdCompanyBusinessUnit = $resourceShareDataTransfer->getOwnerIdCompanyBusinessUnit();
-        if (!$ownerIdCompanyBusinessUnit || $ownerIdCompanyBusinessUnit !== $companyUserTransfer->getFkCompanyBusinessUnit()) {
+        $ownerCompanyBusinessUnitId = $resourceShareDataTransfer->getOwnerCompanyBusinessUnitId();
+        if (!$ownerCompanyBusinessUnitId || $ownerCompanyBusinessUnitId !== $companyUserTransfer->getFkCompanyBusinessUnit()) {
             return false;
         }
 

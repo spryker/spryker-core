@@ -90,8 +90,8 @@
     <transfer name="ResourceShareData">
         <property name="shareOption" type="string" />
         <property name="idQuote" type="int" />
-        <property name="ownerIdCompanyUser" type="int" />
-        <property name="ownerIdCompanyBusinessUnit" type="int" />
+        <property name="ownerCompanyUserId" type="int" />
+        <property name="ownerCompanyBusinessUnitId" type="int" />
     </transfer>
 
     <transfer name="ResourceShareRequest">
