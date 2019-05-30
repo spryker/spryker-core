@@ -8,8 +8,8 @@
 namespace Spryker\Zed\ContentGui\Business\Converter;
 
 use DOMDocument;
-use DOMDocumentFragment;
 use DOMNode;
+use DOMText;
 use DOMXPath;
 
 class HtmlToTwigExpressionConverter implements HtmlConverterInterface
@@ -34,7 +34,8 @@ class HtmlToTwigExpressionConverter implements HtmlConverterInterface
      */
     public function convertHtmlToTwigExpression(string $html): string
     {
-        $this->domDocument->loadHTML($html, LIBXML_NOWARNING | LIBXML_NOERROR | LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+        // Libxml requires a root node and <html> is treating the first element, so libxml finds as the root node.
+        $this->domDocument->loadHTML("<html>$html</html>", LIBXML_NOWARNING | LIBXML_NOERROR | LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
         $replacements = $this->getReplacements();
 
         if (!$replacements) {
@@ -43,10 +44,13 @@ class HtmlToTwigExpressionConverter implements HtmlConverterInterface
 
         foreach ($replacements as $replacement) {
             $parentNode = $replacement['oldNode']->parentNode;
-            $parentNode->replaceChild($replacement['newNode'], $replacement['oldNode']);
+            $parentNode->insertBefore($replacement['newNode'], $replacement['oldNode']);
+            $parentNode->removeChild($replacement['oldNode']);
         }
 
-        return $this->domDocument->saveHTML();
+        $html = str_replace(['<html>', '</html>'], '', $this->domDocument->saveHTML());
+
+        return $html;
     }
 
     /**
@@ -59,8 +63,7 @@ class HtmlToTwigExpressionConverter implements HtmlConverterInterface
         $widgets = $domXpath->query('//*[@contenteditable="false"][@data-id][@data-twig-expression][@data-template][@data-type]');
 
         foreach ($widgets as $widget) {
-            $twigExpression = $this->domDocument->createDocumentFragment();
-            $twigExpression->appendXML($widget->getAttribute('data-twig-expression'));
+            $twigExpression = $this->domDocument->createTextNode($widget->getAttribute('data-twig-expression'));
             $replacements[] = $this->addReplacement($twigExpression, $widget->parentNode);
         }
 
@@ -68,14 +71,14 @@ class HtmlToTwigExpressionConverter implements HtmlConverterInterface
     }
 
     /**
-     * @param \DOMDocumentFragment $twigExpression
+     * @param \DOMText $twigExpression
      * @param \DOMNode $parentNode
      *
-     * @return array
+     * @return \DOMNode[]
      */
-    protected function addReplacement(DOMDocumentFragment $twigExpression, DOMNode $parentNode): array
+    protected function addReplacement(DOMText $twigExpression, DOMNode $parentNode): array
     {
-        return ['newNode' => $twigExpression, 'oldNode' => $parentNode];
+        return ['oldNode' => $parentNode, 'newNode' => $twigExpression];
     }
 
     /**

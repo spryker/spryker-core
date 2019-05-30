@@ -92,7 +92,7 @@ class TwigExpressionToHtmlConverter implements TwigExpressionConverterInterface
      */
     protected function findTwigExpressions(string $html, string $twigFunctionTemplate): ?array
     {
-        // Example: {{ content_banner(%ID%, '%TEMPLATE%') }} -> {{ content_banner(.+) }}
+        // Example: {{ content_banner(%ID%, '%TEMPLATE%') }} -> {{ content_banner(.+?) }}
         $twigExpressionPattern = preg_replace('/\(.+\)/', '\(.+?\)', $twigFunctionTemplate);
         preg_match_all('/' . $twigExpressionPattern . '/', $html, $twigExpressions);
 
