@@ -14,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\LessThanOrEqual;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -36,6 +37,7 @@ class ImageCollectionForm extends AbstractSubForm
     public const OPTION_IMAGE_PREVIEW_LARGE_URL = 'option_image_preview_large_url';
 
     public const MAX_SORT_ORDER_VALUE = 2147483647; // 32 bit integer
+    public const MIN_SORT_ORDER_VALUE = 0;
     public const DEFAULT_SORT_ORDER_VALUE = 0;
 
     /**
@@ -160,7 +162,7 @@ class ImageCollectionForm extends AbstractSubForm
         $builder
             ->add(self::FIELD_IMAGE_SMALL, TextType::class, [
                 'required' => true,
-                'label' => 'Small',
+                'label' => 'Small Image URL',
                 'constraints' => [
                     new NotBlank(),
                     new Length([
@@ -184,7 +186,7 @@ class ImageCollectionForm extends AbstractSubForm
         $builder
             ->add(self::FIELD_IMAGE_LARGE, TextType::class, [
                 'required' => true,
-                'label' => 'Large',
+                'label' => 'Large Image URL',
                 'constraints' => [
                     new NotBlank(),
                     new Length([
@@ -210,6 +212,9 @@ class ImageCollectionForm extends AbstractSubForm
                 'constraints' => [
                     new LessThanOrEqual([
                         'value' => static::MAX_SORT_ORDER_VALUE,
+                    ]),
+                    new GreaterThanOrEqual([
+                        'value' => static::MIN_SORT_ORDER_VALUE,
                     ]),
                 ],
                 'attr' => [
