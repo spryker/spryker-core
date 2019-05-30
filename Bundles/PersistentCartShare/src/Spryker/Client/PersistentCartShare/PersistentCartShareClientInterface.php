@@ -23,11 +23,11 @@ interface PersistentCartShareClientInterface
      *
      * @api
      *
-     * @param string $resourceShareUuid
+     * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function getQuoteByResourceShareUuid(string $resourceShareUuid): QuoteResponseTransfer;
+    public function getPreviewQuoteResourceShare(ResourceShareRequestTransfer $resourceShareRequestTransfer): QuoteResponseTransfer;
 
     /**
      * Specification:

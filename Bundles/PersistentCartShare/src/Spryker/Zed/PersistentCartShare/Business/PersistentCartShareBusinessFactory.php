@@ -8,8 +8,8 @@
 namespace Spryker\Zed\PersistentCartShare\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\PersistentCartShare\Business\Quote\QuoteReader;
-use Spryker\Zed\PersistentCartShare\Business\Quote\QuoteReaderInterface;
+use Spryker\Zed\PersistentCartShare\Business\Reader\QuoteReader;
+use Spryker\Zed\PersistentCartShare\Business\Reader\QuoteReaderInterface;
 use Spryker\Zed\PersistentCartShare\Dependency\Facade\PersistentCartShareToQuoteFacadeInterface;
 use Spryker\Zed\PersistentCartShare\Dependency\Facade\PersistentCartShareToResourceShareFacadeInterface;
 use Spryker\Zed\PersistentCartShare\PersistentCartShareDependencyProvider;
@@ -20,7 +20,7 @@ use Spryker\Zed\PersistentCartShare\PersistentCartShareDependencyProvider;
 class PersistentCartShareBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\PersistentCartShare\Business\Quote\QuoteReaderInterface
+     * @return \Spryker\Zed\PersistentCartShare\Business\Reader\QuoteReaderInterface
      */
     public function createQuoteReader(): QuoteReaderInterface
     {

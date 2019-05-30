@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\PersistentCartShare\Business\Quote;
+namespace Spryker\Zed\PersistentCartShare\Business\Reader;
 
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\ResourceShareRequestTransfer;
@@ -17,5 +17,5 @@ interface QuoteReaderInterface
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function getQuoteByResourceShareUuid(ResourceShareRequestTransfer $resourceShareRequestTransfer): QuoteResponseTransfer;
+    public function getPreviewQuoteResourceShare(ResourceShareRequestTransfer $resourceShareRequestTransfer): QuoteResponseTransfer;
 }

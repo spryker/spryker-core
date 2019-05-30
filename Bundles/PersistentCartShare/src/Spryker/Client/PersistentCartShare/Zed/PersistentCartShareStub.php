@@ -31,10 +31,10 @@ class PersistentCartShareStub implements PersistentCartShareStubInterface
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function getQuoteByResourceShareUuid(ResourceShareRequestTransfer $resourceShareRequestTransfer): QuoteResponseTransfer
+    public function getPreviewQuoteResourceShare(ResourceShareRequestTransfer $resourceShareRequestTransfer): QuoteResponseTransfer
     {
         /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
-        $quoteResponseTransfer = $this->zedRequestClient->call('/persistent-cart-share/gateway/get-quote-by-resource-share-uuid', $resourceShareRequestTransfer);
+        $quoteResponseTransfer = $this->zedRequestClient->call('/persistent-cart-share/gateway/get-preview-quote-resource-share', $resourceShareRequestTransfer);
 
         return $quoteResponseTransfer;
     }

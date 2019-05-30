@@ -8,13 +8,14 @@
 namespace Spryker\Client\PersistentCartShare\Quote;
 
 use Generated\Shared\Transfer\QuoteResponseTransfer;
+use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 
 interface QuoteReaderInterface
 {
     /**
-     * @param string $resourceShareUuid
+     * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function getQuoteByResourceShareUuid(string $resourceShareUuid): QuoteResponseTransfer;
+    public function getPreviewQuoteResourceShare(ResourceShareRequestTransfer $resourceShareRequestTransfer): QuoteResponseTransfer;
 }
