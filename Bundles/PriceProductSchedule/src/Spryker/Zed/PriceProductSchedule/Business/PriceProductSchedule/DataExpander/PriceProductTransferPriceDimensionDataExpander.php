@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Zed\PriceProductSchedule\PriceProductScheduleConfig;
 
-class PriceProductTransferPriceDimensionDataExpander extends PriceProductTransferAbstractDataExpander
+class PriceProductTransferPriceDimensionDataExpander implements PriceProductTransferDataExpanderInterface
 {
     /**
      * @var \Spryker\Zed\PriceProductSchedule\PriceProductScheduleConfig

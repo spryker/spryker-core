@@ -8,8 +8,6 @@
 namespace Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleList;
 
 use Generated\Shared\Transfer\PriceProductScheduledListImportRequestTransfer;
-use Generated\Shared\Transfer\PriceProductScheduleImportTransfer;
-use Generated\Shared\Transfer\PriceProductScheduleListImportErrorTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleListImportResponseTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleMapperInterface;
@@ -69,9 +67,8 @@ class PriceProductScheduleListImporter implements PriceProductScheduleListImport
             ->setIsSuccess(false);
 
         foreach ($priceProductScheduledListImportRequest->getItems() as $priceProductScheduleImportTransfer) {
-            $priceProductScheduleListImportError = $this->priceProductScheduleValidator->validatePriceProductScheduleImportTransfer(
-                $priceProductScheduleImportTransfer
-            );
+            $priceProductScheduleListImportError = $this->priceProductScheduleValidator
+                ->validatePriceProductScheduleImportTransfer($priceProductScheduleImportTransfer);
 
             if ($priceProductScheduleListImportError !== null) {
                 $priceProductScheduledListImportResponse->addError($priceProductScheduleListImportError);
@@ -87,12 +84,7 @@ class PriceProductScheduleListImporter implements PriceProductScheduleListImport
 
             $priceProductScheduleTransfer = $this->expandPriceProductTransfer($priceProductScheduleTransfer);
 
-            if ($priceProductScheduledListImportResponse->getErrors()->count() > 0) {
-                continue;
-            }
-
             $priceProductScheduleTransfer
-                ->setPriceProduct($priceProductScheduleTransfer->getPriceProduct())
                 ->setPriceProductScheduleList($priceProductScheduledListImportRequest->getPriceProductScheduleList());
 
             $this->priceProductScheduleEntityManager->savePriceProductSchedule($priceProductScheduleTransfer);
@@ -102,21 +94,6 @@ class PriceProductScheduleListImporter implements PriceProductScheduleListImport
         }
 
         return $priceProductScheduledListImportResponse;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer
-     * @param string $errorMessage
-     *
-     * @return \Generated\Shared\Transfer\PriceProductScheduleListImportErrorTransfer
-     */
-    protected function createPriceProductScheduleListImportErrorTransfer(
-        PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer,
-        string $errorMessage
-    ): PriceProductScheduleListImportErrorTransfer {
-        return (new PriceProductScheduleListImportErrorTransfer())
-            ->setPriceProductScheduleImport($priceProductScheduleImportTransfer)
-            ->setMessage($errorMessage);
     }
 
     /**

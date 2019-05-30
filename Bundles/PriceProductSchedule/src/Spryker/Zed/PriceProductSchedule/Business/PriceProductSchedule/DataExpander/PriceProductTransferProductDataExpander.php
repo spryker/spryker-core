@@ -10,11 +10,8 @@ namespace Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\DataExp
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Zed\PriceProductSchedule\Business\Product\ProductFinderInterface;
 
-class PriceProductTransferProductDataExpander extends PriceProductTransferAbstractDataExpander
+class PriceProductTransferProductDataExpander implements PriceProductTransferDataExpanderInterface
 {
-    protected const ERROR_MESSAGE_PRODUCT_CONCRETE_NOT_FOUND = 'Concrete product was not found by provided sku %s';
-    protected const ERROR_MESSAGE_PRODUCT_ABSTRACT_NOT_FOUND = 'Abstract product was not found by provided sku %s';
-
     /**
      * @var \Spryker\Zed\PriceProductSchedule\Business\Product\ProductFinderInterface
      */
