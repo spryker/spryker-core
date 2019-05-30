@@ -557,4 +557,12 @@ class DevelopmentConfig extends AbstractBundleConfig
     {
         return static::INTERNAL_PACKAGE_DIRECTORIES;
     }
+
+    /**
+     * @return array
+     */
+    public function getCodeceptionConfigurationFiles(): array
+    {
+        return [];
+    }
 }

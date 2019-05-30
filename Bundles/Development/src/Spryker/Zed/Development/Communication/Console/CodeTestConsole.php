@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Development\Communication\Console;
 
 use Spryker\Zed\Kernel\Communication\Console\Console;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -24,6 +25,7 @@ class CodeTestConsole extends Console
     public const OPTION_INITIALIZE = 'initialize';
     public const OPTION_GROUP = 'group';
     public const OPTION_TYPE_EXCLUDE = 'exclude';
+    public const ARGUMENT_TYPE = 'type';
 
     /**
      * @return void
@@ -32,15 +34,18 @@ class CodeTestConsole extends Console
     {
         parent::configure();
 
+        $testType = $this->getTestTypeByCommandName();
         $this
-            ->setName(static::COMMAND_NAME)
+            ->setName($this->buildCommandName($testType))
             ->setHelp('<info>' . static::COMMAND_NAME . ' -h</info>')
-            ->setDescription('Run codecept tests for project or core');
+            ->setDescription($this->buildCommandDescription($testType));
 
         $this->addOption(static::OPTION_MODULE, 'm', InputOption::VALUE_OPTIONAL, 'Name of core module to run tests for (or "all")');
         $this->addOption(static::OPTION_GROUP, 'g', InputOption::VALUE_OPTIONAL, 'Groups of tests to be executed (multiple values allowed, comma separated)');
         $this->addOption(static::OPTION_TYPE_EXCLUDE, 'x', InputOption::VALUE_OPTIONAL, 'Types of tests to be skipped (e.g. Presentation; multiple values allowed, comma separated)');
         $this->addOption(static::OPTION_INITIALIZE, 'i', InputOption::VALUE_NONE, 'Initialize test suite by (re)generating required test classes');
+
+        $this->addTestTypeArgument($testType);
     }
 
     /**
@@ -64,6 +69,86 @@ class CodeTestConsole extends Console
             $this->warning('Make sure you ran `codecept build` already.');
         }
 
-        $this->getFacade()->runTest($module, $this->input->getOptions());
+        $this->getFacade()->runTest(
+            $module,
+            $this->buildTestConfig($input)
+        );
+    }
+
+    /**
+     * @return string|null
+     */
+    protected function getTestTypeByCommandName(): ?string
+    {
+        $commandName = $this->getName();
+
+        if ($commandName === static::COMMAND_NAME) {
+            return null;
+        }
+
+        $commandNameParts = explode(':', $commandName);
+
+        return array_pop($commandNameParts);
+    }
+
+    /**
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     *
+     * @return array
+     */
+    protected function buildTestConfig(InputInterface $input): array
+    {
+        $options = $input->getOptions();
+        $testType = $this->getTestTypeByCommandName();
+
+        if ($input->hasArgument(static::ARGUMENT_TYPE)) {
+            $testType = $input->getArgument(static::ARGUMENT_TYPE) ?? $testType;
+        }
+
+        if ($testType !== null) {
+            $options[static::ARGUMENT_TYPE] = $testType;
+        }
+
+        return $options;
+    }
+
+    /**
+     * @param string|null $testType
+     *
+     * @return string
+     */
+    protected function buildCommandName(?string $testType): string
+    {
+        return $testType
+            ? static::COMMAND_NAME . ':' . $testType
+            : static::COMMAND_NAME;
+    }
+
+    /**
+     * @param string|null $testType
+     *
+     * @return void
+     */
+    protected function addTestTypeArgument(?string $testType): void
+    {
+        if ($testType) {
+            return;
+        }
+
+        $this->addArgument(self::ARGUMENT_TYPE, InputArgument::OPTIONAL);
+    }
+
+    /**
+     * @param string|null $testType
+     *
+     * @return string
+     */
+    protected function buildCommandDescription(?string $testType): string
+    {
+        if (!$testType) {
+            return 'Run codecept tests for project or core';
+        }
+
+        return sprintf('Run codecept %s tests for project or core', $testType);
     }
 }
