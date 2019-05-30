@@ -43,9 +43,8 @@ class HtmlToTwigExpressionConverter implements HtmlConverterInterface
         }
 
         $this->replaceNodes($replaceableNodes);
-        $html = str_replace(['<html>', '</html>'], '', $this->domDocument->saveHTML());
 
-        return $html;
+        return str_replace(['<html>', '</html>'], '', $this->domDocument->saveHTML());
     }
 
     /**

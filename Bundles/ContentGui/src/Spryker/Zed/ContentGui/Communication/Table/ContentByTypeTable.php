@@ -102,12 +102,12 @@ class ContentByTypeTable extends AbstractTable
         $this->contentQuery->filterByContentTypeKey($this->contentType);
 
         if ($this->idContent) {
-            $orderCondition = sprintf(
-                '(CASE WHEN %s = %d THEN 1 END)',
-                SpyContentTableMap::COL_ID_CONTENT,
-                $this->idContent
-            );
-            $this->contentQuery->addAscendingOrderByColumn($orderCondition);
+            $selectedId = sprintf('(CASE WHEN %s = %d THEN 1 END)', SpyContentTableMap::COL_ID_CONTENT, $this->idContent);
+
+            $this->contentQuery
+                ->withColumn($selectedId, 'selectedId')
+                ->orderBy('selectedId')
+                ->orderBy(SpyContentTableMap::COL_ID_CONTENT);
         }
 
         $contentItems = $this->runQuery($this->contentQuery, $config);

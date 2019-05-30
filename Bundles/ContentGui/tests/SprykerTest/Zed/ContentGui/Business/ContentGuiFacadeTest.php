@@ -202,16 +202,11 @@ class ContentGuiFacadeTest extends Unit
     protected function assertCmsBlockGlossaryResults(string $expectedResult, CmsBlockGlossaryTransfer $cmsBlockGlossaryTransfer): void
     {
         // Assert
+        $this->assertNotEmpty($cmsBlockGlossaryTransfer->getGlossaryPlaceholders());
+        $this->assertNotEmpty($cmsBlockGlossaryTransfer->getGlossaryPlaceholders()->offsetGet(0)->getTranslations());
         $translation = $cmsBlockGlossaryTransfer->getGlossaryPlaceholders()->offsetGet(0)->getTranslations()->offsetGet(0)->getTranslation();
-        $this->assertTrue(isset($translation));
-
-        foreach ($cmsBlockGlossaryTransfer->getGlossaryPlaceholders() as $cmsBlockGlossaryPlaceholderTransfer) {
-            foreach ($cmsBlockGlossaryPlaceholderTransfer->getTranslations() as $cmsPlaceholderTranslationTransfer) {
-                $translation = $cmsPlaceholderTranslationTransfer->getTranslation();
-                $this->assertIsString($translation);
-                $this->assertEquals($expectedResult, $translation);
-            }
-        }
+        $this->assertIsString($translation);
+        $this->assertEquals($expectedResult, $translation);
     }
 
     /**
@@ -240,15 +235,10 @@ class ContentGuiFacadeTest extends Unit
     protected function assertCmsGlossaryResults(string $expectedResult, CmsGlossaryTransfer $cmsGlossaryTransfer): void
     {
         // Assert
+        $this->assertNotEmpty($cmsGlossaryTransfer->getGlossaryAttributes());
+        $this->assertNotEmpty($cmsGlossaryTransfer->getGlossaryAttributes()->offsetGet(0)->getTranslations());
         $translation = $cmsGlossaryTransfer->getGlossaryAttributes()->offsetGet(0)->getTranslations()->offsetGet(0)->getTranslation();
-        $this->assertTrue(isset($translation));
-
-        foreach ($cmsGlossaryTransfer->getGlossaryAttributes() as $cmsGlossaryAttributesTransfer) {
-            foreach ($cmsGlossaryAttributesTransfer->getTranslations() as $cmsPlaceholderTranslationTransfer) {
-                $translation = $cmsPlaceholderTranslationTransfer->getTranslation();
-                $this->assertIsString($translation);
-                $this->assertEquals($expectedResult, $translation);
-            }
-        }
+        $this->assertIsString($translation);
+        $this->assertEquals($expectedResult, $translation);
     }
 }
