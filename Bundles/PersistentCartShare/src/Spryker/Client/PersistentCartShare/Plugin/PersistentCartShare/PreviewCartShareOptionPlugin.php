@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\PersistentCartShare\Plugin;
+namespace Spryker\Client\PersistentCartShare\Plugin\PersistentCartShare;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
@@ -30,7 +30,7 @@ class PreviewCartShareOptionPlugin extends AbstractPlugin implements CartShareOp
 
     /**
      * {@inheritdoc}
-     * - Returns true, since preview share option is available for all customers, including guests.
+     * - Returns true, since preview share option is available for all customers by default.
      *
      * @api
      *
