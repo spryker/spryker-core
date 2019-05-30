@@ -15,6 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\LessThanOrEqual;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -36,7 +37,9 @@ class ImageCollectionForm extends AbstractType
     public const IMAGE_URL_MAX_LENGTH = 2048;
     public const IMAGE_PREVIEW_WIDTH = 150;
 
-    public const MAX_SORT_ORDER_VALUE = 2147483647; // 32 bit integer
+    protected const MAX_SORT_ORDER_VALUE = 2147483647; // 32 bit integer
+    protected const MIN_SORT_ORDER_VALUE = 0;
+    protected const DEFAULT_SORT_ORDER_VALUE = 0;
 
     /**
      * @uses \Spryker\Zed\Gui\Communication\Form\Type\ImageType::OPTION_IMAGE_WIDTH
@@ -181,7 +184,15 @@ class ImageCollectionForm extends AbstractType
     {
         $builder->add(static::FIELD_SORT_ORDER, NumberType::class, [
             'constraints' => [
-                new LessThanOrEqual(static::MAX_SORT_ORDER_VALUE),
+                new LessThanOrEqual([
+                    'value' => static::MAX_SORT_ORDER_VALUE,
+                ]),
+                new GreaterThanOrEqual([
+                    'value' => static::MIN_SORT_ORDER_VALUE,
+                ]),
+            ],
+            'attr' => [
+                'data-sort-order' => static::DEFAULT_SORT_ORDER_VALUE,
             ],
         ]);
 
