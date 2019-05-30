@@ -23,8 +23,8 @@
                         <visible>0</visible>
                     </price-product-schedule-dry-run-import>
                     <price-product-schedule-publish>
-                        <label>Publish</label>
-                        <title>Publish</title>
+                        <label>Import</label>
+                        <title>Import</title>
                         <bundle>price-product-schedule-gui</bundle>
                         <controller>publish</controller>
                         <action>index</action>

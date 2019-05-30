@@ -14,6 +14,8 @@ use Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleRepositoryI
 
 class PriceProductScheduleListFinder implements PriceProductScheduleListFinderInterface
 {
+    protected const ERROR_MESSAGE_PRICE_PRODUCT_SCHEDULE_LIST_NOT_FOUND = 'Price product schedule list was not found by provided id %s';
+
     /**
      * @var \Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleRepositoryInterface
      */
@@ -45,13 +47,12 @@ class PriceProductScheduleListFinder implements PriceProductScheduleListFinderIn
             $error = (new PriceProductScheduleListErrorTransfer())
                 ->setMessage(
                     sprintf(
-                        'Price Product Schedule List want\'t found by given id: %s',
+                        static::ERROR_MESSAGE_PRICE_PRODUCT_SCHEDULE_LIST_NOT_FOUND,
                         $priceProductScheduleListRequestTransfer->getIdPriceProductScheduleList()
                     )
                 );
-            $priceProductScheduleListResponseTransfer->addError($error);
 
-            return $priceProductScheduleListResponseTransfer;
+            return $priceProductScheduleListResponseTransfer->addError($error);
         }
 
         return $priceProductScheduleListResponseTransfer

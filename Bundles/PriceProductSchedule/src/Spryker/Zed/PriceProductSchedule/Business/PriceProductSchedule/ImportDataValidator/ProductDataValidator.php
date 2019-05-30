@@ -95,12 +95,7 @@ class ProductDataValidator extends AbstractImportDataValidator
     protected function isProductAbstractDataValid(
         PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer
     ): bool {
-        if ($priceProductScheduleImportTransfer->getSkuProductAbstract() === null
-            && $priceProductScheduleImportTransfer->getSkuProduct() === null) {
-            return false;
-        }
-
-        if ($priceProductScheduleImportTransfer->getSkuProductAbstract()) {
+        if ($priceProductScheduleImportTransfer->getSkuProductAbstract() !== null) {
             $productAbstractId = $this->productFinder
                 ->findProductAbstractIdBySku($priceProductScheduleImportTransfer->getSkuProductAbstract());
 
@@ -120,12 +115,7 @@ class ProductDataValidator extends AbstractImportDataValidator
     protected function isProductConcreteDataValid(
         PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer
     ): bool {
-        if ($priceProductScheduleImportTransfer->getSkuProductAbstract() === null
-            && $priceProductScheduleImportTransfer->getSkuProduct() === null) {
-            return false;
-        }
-
-        if ($priceProductScheduleImportTransfer->getSkuProduct()) {
+        if ($priceProductScheduleImportTransfer->getSkuProduct() !== null) {
             $productConcreteId = $this->productFinder
                 ->findProductConcreteIdBySku($priceProductScheduleImportTransfer->getSkuProduct());
 

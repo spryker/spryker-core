@@ -164,7 +164,7 @@ class PriceProductScheduleBusinessFactory extends AbstractBusinessFactory
     {
         return new PriceProductScheduleListImporter(
             $this->getEntityManager(),
-            $this->createPriceProductScheduleValidator(),
+            $this->createPriceProductScheduleImportValidator(),
             $this->createPriceProductScheduleMapper(),
             $this->getPriceProductTransferDataExpanderList()
         );
@@ -173,7 +173,7 @@ class PriceProductScheduleBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleImportValidatorInterface
      */
-    public function createPriceProductScheduleValidator(): PriceProductScheduleImportValidatorInterface
+    public function createPriceProductScheduleImportValidator(): PriceProductScheduleImportValidatorInterface
     {
         return new PriceProductScheduleImportValidator($this->createPriceProductScheduleImportDataValidatorList());
     }
