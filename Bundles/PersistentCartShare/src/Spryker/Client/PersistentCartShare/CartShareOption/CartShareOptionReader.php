@@ -36,7 +36,7 @@ class CartShareOptionReader implements CartShareOptionReaderInterface
             if (!$cartShareOptionPlugin->isApplicable($customerTransfer)) {
                 continue;
             }
-            $cartShareOptions[$cartShareOptionPlugin->getShareOptionGroup()][] = $cartShareOptionPlugin->getKey();
+            $cartShareOptions[$cartShareOptionPlugin->getShareOptionGroup()][] = $cartShareOptionPlugin->getShareOptionKey();
         }
 
         return $cartShareOptions;

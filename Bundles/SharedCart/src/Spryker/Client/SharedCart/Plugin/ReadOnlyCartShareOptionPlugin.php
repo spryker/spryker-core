@@ -24,7 +24,7 @@ class ReadOnlyCartShareOptionPlugin extends AbstractPlugin implements CartShareO
      *
      * @return string
      */
-    public function getKey(): string
+    public function getShareOptionKey(): string
     {
         return SharedSharedCartConfig::PERMISSION_GROUP_READ_ONLY;
     }

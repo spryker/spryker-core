@@ -23,7 +23,7 @@ class PreviewCartShareOptionPlugin extends AbstractPlugin implements CartShareOp
      *
      * @return string
      */
-    public function getKey(): string
+    public function getShareOptionKey(): string
     {
         return static::KEY_PREVIEW;
     }

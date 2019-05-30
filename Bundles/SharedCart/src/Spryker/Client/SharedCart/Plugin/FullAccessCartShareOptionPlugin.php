@@ -21,7 +21,7 @@ class FullAccessCartShareOptionPlugin extends AbstractPlugin implements CartShar
      *
      * @return string
      */
-    public function getKey(): string
+    public function getShareOptionKey(): string
     {
         return SharedSharedCartConfig::PERMISSION_GROUP_FULL_ACCESS;
     }
