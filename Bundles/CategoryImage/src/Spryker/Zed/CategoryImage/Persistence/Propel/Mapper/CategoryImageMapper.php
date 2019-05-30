@@ -96,6 +96,9 @@ class CategoryImageMapper implements CategoryImageMapperInterface
 
         $categoryImageSetToCategoryImageEntity = $this->getCategoryImageSetToCategoryImageEntity($categoryImageSetEntity, $categoryImageEntity);
         $categoryImageTransfer->setSortOrder($categoryImageSetToCategoryImageEntity->getSortOrder());
+        $categoryImageTransfer->setIdCategoryImageSetToCategoryImage(
+            $categoryImageSetToCategoryImageEntity->getIdCategoryImageSetToCategoryImage()
+        );
 
         return $categoryImageTransfer;
     }
