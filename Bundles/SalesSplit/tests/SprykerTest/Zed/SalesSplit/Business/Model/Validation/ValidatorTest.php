@@ -14,6 +14,7 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderItemOption;
 use Propel\Runtime\Collection\Collection;
 use Spryker\Zed\SalesSplit\Business\Model\Validation\Messages;
 use Spryker\Zed\SalesSplit\Business\Model\Validation\Validator;
+use Spryker\Zed\SalesSplit\Dependency\Service\SalesSplitToUtilQuantityServiceBridge;
 
 /**
  * Auto-generated group annotations
@@ -28,6 +29,11 @@ use Spryker\Zed\SalesSplit\Business\Model\Validation\Validator;
  */
 class ValidatorTest extends Unit
 {
+    /**
+     * @var \SprykerTest\Zed\SalesSplit\SalesSplitBusinessTester
+     */
+    protected $tester;
+
     /**
      * @dataProvider invalidQuantityProvider
      *
@@ -154,7 +160,11 @@ class ValidatorTest extends Unit
      */
     protected function getValidator()
     {
-        return new Validator();
+        $utilQuantityService = new SalesSplitToUtilQuantityServiceBridge(
+            $this->tester->getLocator()->utilQuantity()->service()
+        );
+
+        return new Validator($utilQuantityService);
     }
 
     /**
