@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\SchedulerFilterTransfer;
 use Generated\Shared\Transfer\SchedulerJobTransfer;
 use Generated\Shared\Transfer\SchedulerScheduleTransfer;
 use Spryker\Zed\Scheduler\Business\PhpScheduleReader\Filter\JobsFilterInterface;
-use Spryker\Zed\Scheduler\Dependency\Store\SchedulerToStoreInterface;
 
 class PhpScheduleMapper implements PhpScheduleMapperInterface
 {
@@ -20,7 +19,7 @@ class PhpScheduleMapper implements PhpScheduleMapperInterface
     protected const KEY_COMMAND = 'command';
     protected const KEY_SCHEDULE = 'schedule';
     protected const KEY_STORES = 'stores';
-    protected const KEY_LOG_ROTATE_DAYS = 'logrotate_days';
+    protected const KEY_ROLE = 'role';
 
     /**
      * @var \Spryker\Zed\Scheduler\Business\PhpScheduleReader\Filter\JobsFilterInterface
@@ -28,75 +27,55 @@ class PhpScheduleMapper implements PhpScheduleMapperInterface
     protected $jobsFilter;
 
     /**
-     * @var \Spryker\Zed\Scheduler\Dependency\Store\SchedulerToStoreInterface
-     */
-    protected $store;
-
-    /**
      * @param \Spryker\Zed\Scheduler\Business\PhpScheduleReader\Filter\JobsFilterInterface $jobsFilter
-     * @param \Spryker\Zed\Scheduler\Dependency\Store\SchedulerToStoreInterface $store
      */
-    public function __construct(JobsFilterInterface $jobsFilter, SchedulerToStoreInterface $store)
+    public function __construct(JobsFilterInterface $jobsFilter)
     {
         $this->jobsFilter = $jobsFilter;
-        $this->store = $store;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SchedulerFilterTransfer $schedulerFilterTransfer
+     * @param \Generated\Shared\Transfer\SchedulerFilterTransfer $filterTransfer
      * @param \Generated\Shared\Transfer\SchedulerScheduleTransfer $scheduleTransfer
      * @param array $jobs
      *
      * @return \Generated\Shared\Transfer\SchedulerScheduleTransfer
      */
     public function mapScheduleFromArray(
-        SchedulerFilterTransfer $schedulerFilterTransfer,
+        SchedulerFilterTransfer $filterTransfer,
         SchedulerScheduleTransfer $scheduleTransfer,
         array $jobs
     ): SchedulerScheduleTransfer {
 
-        $currentStoreName = $this->store->getStoreName();
-        $filteredJobs = $this->jobsFilter->filterJobsByName($schedulerFilterTransfer, $jobs);
+        $filterTransfer->requireStore();
 
-        foreach ($filteredJobs as $filteredJob) {
-            $jobStores = $this->mapStoreNamesFromArray($filteredJob) ?: [$currentStoreName];
+        $storeName = $filterTransfer->getStore();
+        $filteredJobs = $this->jobsFilter->filterJobs($filterTransfer, $jobs);
 
-            if (in_array($currentStoreName, $jobStores, true)) {
-                $scheduleTransfer
-                    ->addJob($this->mapJobFromArray($filteredJob, $currentStoreName));
-            }
+        foreach ($filteredJobs as $job) {
+            $jobTransfer =  new SchedulerJobTransfer();
+            $jobTransfer = $this->mapJobFromArrayBasedOnStore($jobTransfer, $job, $storeName);
+            $scheduleTransfer->addJob($jobTransfer);
         }
-
-        $scheduleTransfer
-            ->setStore($currentStoreName);
 
         return $scheduleTransfer;
     }
 
     /**
+     * @param \Generated\Shared\Transfer\SchedulerJobTransfer $jobTransfer
      * @param array $job
-     *
-     * @return array
-     */
-    protected function mapStoreNamesFromArray(array $job): array
-    {
-        return array_key_exists(static::KEY_STORES, $job) ? (array)$job[static::KEY_STORES] : [];
-    }
-
-    /**
-     * @param array $job
-     * @param string $currentStoreName
+     * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\SchedulerJobTransfer
      */
-    protected function mapJobFromArray(array $job, string $currentStoreName): SchedulerJobTransfer
+    protected function mapJobFromArrayBasedOnStore(SchedulerJobTransfer $jobTransfer, array $job, string $storeName): SchedulerJobTransfer
     {
-        return (new SchedulerJobTransfer())
-            ->setName(sprintf('%s__%s', $currentStoreName, $job[static::KEY_NAME] ?? ''))
+        return $jobTransfer
+            ->setName($this->getJobName($job, $storeName))
             ->setCommand($job[static::KEY_COMMAND] ?? '')
             ->setEnable($job[static::KEY_ENABLE] ?? false)
             ->setSchedule($job[static::KEY_SCHEDULE] ?? '')
-            ->setStore($currentStoreName)
+            ->setStore($storeName)
             ->setPayload($this->mapPayloadFromArray($job));
     }
 
@@ -107,13 +86,24 @@ class PhpScheduleMapper implements PhpScheduleMapperInterface
      */
     protected function mapPayloadFromArray(array $job): array
     {
-        return array_intersect_key($job, [
+        return array_diff_key($job, [
             static::KEY_NAME => '',
             static::KEY_ENABLE => '',
             static::KEY_COMMAND => '',
             static::KEY_SCHEDULE => '',
             static::KEY_STORES => '',
-            static::KEY_LOG_ROTATE_DAYS => '',
+            static::KEY_ROLE => '',
         ]);
+    }
+
+    /**
+     * @param array $job
+     * @param string $currentStoreName
+     *
+     * @return string
+     */
+    protected function getJobName(array $job, string $currentStoreName): string
+    {
+        return sprintf('%s__%s', $currentStoreName, $job[static::KEY_NAME] ?? '');
     }
 }

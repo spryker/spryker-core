@@ -13,12 +13,13 @@ use Generated\Shared\Transfer\SchedulerScheduleTransfer;
 interface PhpScheduleReaderInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\SchedulerFilterTransfer $schedulerFilterTransfer
+     * @param \Generated\Shared\Transfer\SchedulerFilterTransfer $filterTransfer
      * @param \Generated\Shared\Transfer\SchedulerScheduleTransfer $scheduleTransfer
-     *
-     * @throws \Spryker\Zed\Scheduler\Business\Exception\FileIsNotAccessibleException
      *
      * @return \Generated\Shared\Transfer\SchedulerScheduleTransfer
      */
-    public function readSchedule(SchedulerFilterTransfer $schedulerFilterTransfer, SchedulerScheduleTransfer $scheduleTransfer): SchedulerScheduleTransfer;
+    public function readSchedule(
+        SchedulerFilterTransfer $filterTransfer,
+        SchedulerScheduleTransfer $scheduleTransfer
+    ): SchedulerScheduleTransfer;
 }

@@ -24,15 +24,15 @@ class PhpScheduleReaderPlugin extends AbstractPlugin implements ScheduleReaderPl
      *
      * @api
      *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\SchedulerFilterTransfer $schedulerFilterTransfer
+     * @param \Generated\Shared\Transfer\SchedulerFilterTransfer $filterTransfer
      * @param \Generated\Shared\Transfer\SchedulerScheduleTransfer $scheduleTransfer
      *
      * @return \Generated\Shared\Transfer\SchedulerScheduleTransfer
      */
-    public function readSchedule(SchedulerFilterTransfer $schedulerFilterTransfer, SchedulerScheduleTransfer $scheduleTransfer): SchedulerScheduleTransfer
-    {
-        return $this->getFacade()->readScheduleFromPhpSource($schedulerFilterTransfer, $scheduleTransfer);
+    public function readSchedule(
+        SchedulerFilterTransfer $filterTransfer,
+        SchedulerScheduleTransfer $scheduleTransfer
+    ): SchedulerScheduleTransfer {
+        return $this->getFacade()->readScheduleFromPhpSource($filterTransfer, $scheduleTransfer);
     }
 }

@@ -13,9 +13,9 @@ use Generated\Shared\Transfer\SchedulerResponseCollectionTransfer;
 interface SchedulerCommandInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\SchedulerFilterTransfer $schedulerFilterTransfer
+     * @param \Generated\Shared\Transfer\SchedulerFilterTransfer $filterTransfer
      *
      * @return \Generated\Shared\Transfer\SchedulerResponseCollectionTransfer
      */
-    public function execute(SchedulerFilterTransfer $schedulerFilterTransfer): SchedulerResponseCollectionTransfer;
+    public function execute(SchedulerFilterTransfer $filterTransfer): SchedulerResponseCollectionTransfer;
 }

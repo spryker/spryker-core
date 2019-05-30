@@ -79,8 +79,7 @@ class SchedulerJenkinsDependencyProvider extends AbstractBundleDependencyProvide
         $pimplePlugin = new Pimple();
         /** @var \Twig\Environment $twig */
         $twig = $pimplePlugin->getApplication()['twig'];
-        $twig
-            ->setCache(false);
+        $twig->setCache(false);
 
         return $twig;
     }

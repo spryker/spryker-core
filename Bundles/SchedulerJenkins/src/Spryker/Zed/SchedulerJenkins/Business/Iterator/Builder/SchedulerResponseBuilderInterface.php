@@ -7,21 +7,34 @@
 
 namespace Spryker\Zed\SchedulerJenkins\Business\Iterator\Builder;
 
+use Generated\Shared\Transfer\SchedulerResponseTransfer;
 use Generated\Shared\Transfer\SchedulerScheduleTransfer;
 
 interface SchedulerResponseBuilderInterface
 {
     /**
+     * @return \Generated\Shared\Transfer\SchedulerResponseTransfer
+     */
+    public function build(): SchedulerResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\SchedulerScheduleTransfer $scheduleTransfer
+     *
+     * @return static
+     */
+    public function withSchedule(SchedulerScheduleTransfer $scheduleTransfer);
+
+    /**
      * @param bool $status
      *
-     * @return $this
+     * @return static
      */
     public function withStatus(bool $status);
 
     /**
-     * @param \Generated\Shared\Transfer\SchedulerScheduleTransfer $schedulerTransfer
+     * @param string $message
      *
-     * @return $this
+     * @return static
      */
-    public function withScheduler(SchedulerScheduleTransfer $schedulerTransfer);
+    public function withMessage(string $message);
 }

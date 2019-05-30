@@ -5,12 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Scheduler\Dependency\Store;
+namespace Spryker\Zed\Scheduler\Business\PhpScheduleReader\Exception;
 
-interface SchedulerToStoreInterface
+use Exception;
+
+class FileIsNotAccessibleException extends Exception
 {
-    /**
-     * @return string
-     */
-    public function getStoreName(): string;
 }

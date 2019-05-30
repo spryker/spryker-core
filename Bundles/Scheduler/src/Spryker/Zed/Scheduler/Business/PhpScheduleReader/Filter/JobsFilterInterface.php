@@ -12,10 +12,10 @@ use Generated\Shared\Transfer\SchedulerFilterTransfer;
 interface JobsFilterInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\SchedulerFilterTransfer $schedulerFilterTransfer
+     * @param \Generated\Shared\Transfer\SchedulerFilterTransfer $filterTransfer
      * @param array $jobs
      *
      * @return array $jobs
      */
-    public function filterJobsByName(SchedulerFilterTransfer $schedulerFilterTransfer, array $jobs): array;
+    public function filterJobs(SchedulerFilterTransfer $filterTransfer, array $jobs): array;
 }

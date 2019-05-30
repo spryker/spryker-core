@@ -23,7 +23,7 @@ interface SchedulerJenkinsFacadeInterface
      *
      * @return \Generated\Shared\Transfer\SchedulerResponseTransfer
      */
-    public function setupSchedulerJenkins(SchedulerScheduleTransfer $scheduleTransfer): SchedulerResponseTransfer;
+    public function setupJenkins(SchedulerScheduleTransfer $scheduleTransfer): SchedulerResponseTransfer;
 
     /**
      * Specification:
@@ -36,7 +36,7 @@ interface SchedulerJenkinsFacadeInterface
      *
      * @return \Generated\Shared\Transfer\SchedulerResponseTransfer
      */
-    public function cleanSchedulerJenkins(SchedulerScheduleTransfer $scheduleTransfer): SchedulerResponseTransfer;
+    public function cleanJenkins(SchedulerScheduleTransfer $scheduleTransfer): SchedulerResponseTransfer;
 
     /**
      * Specification:
@@ -49,7 +49,7 @@ interface SchedulerJenkinsFacadeInterface
      *
      * @return \Generated\Shared\Transfer\SchedulerResponseTransfer
      */
-    public function suspendSchedulerJenkins(SchedulerScheduleTransfer $scheduleTransfer): SchedulerResponseTransfer;
+    public function suspendJenkins(SchedulerScheduleTransfer $scheduleTransfer): SchedulerResponseTransfer;
 
     /**
      * Specification:
@@ -62,5 +62,5 @@ interface SchedulerJenkinsFacadeInterface
      *
      * @return \Generated\Shared\Transfer\SchedulerResponseTransfer
      */
-    public function resumeSchedulerJenkins(SchedulerScheduleTransfer $scheduleTransfer): SchedulerResponseTransfer;
+    public function resumeJenkins(SchedulerScheduleTransfer $scheduleTransfer): SchedulerResponseTransfer;
 }

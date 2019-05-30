@@ -43,16 +43,16 @@ class XmlJenkinsJobTemplateGenerator implements JenkinsJobTemplateGeneratorInter
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SchedulerJobTransfer $schedulerJobTransfer
+     * @param \Generated\Shared\Transfer\SchedulerJobTransfer $jobTransfer
      *
      * @return string
      */
-    public function getJobTemplate(SchedulerJobTransfer $schedulerJobTransfer): string
+    public function generateJobTemplate(SchedulerJobTransfer $jobTransfer): string
     {
-        $schedulerJobTransfer = $this->extendSchedulerJobTransferWithLogRotateValue($schedulerJobTransfer);
+        $jobTransfer = $this->extendSchedulerJobTransferWithLogRotateValue($jobTransfer);
 
         $xmlTemplate = $this->twig->render($this->schedulerJenkinsConfig->getJenkinsTemplatePath(), [
-            static::JOB_TEMPLATE_KEY => $schedulerJobTransfer->toArray(),
+            static::JOB_TEMPLATE_KEY => $jobTransfer->toArray(),
             static::WORKING_DIR_TEMPLATE_KEY => APPLICATION_ROOT_DIR,
             static::ENVIRONMENT_TEMPLATE_KEY => Environment::getInstance()->getEnvironment(),
         ]);
@@ -61,20 +61,20 @@ class XmlJenkinsJobTemplateGenerator implements JenkinsJobTemplateGeneratorInter
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SchedulerJobTransfer $schedulerJobTransfer
+     * @param \Generated\Shared\Transfer\SchedulerJobTransfer $jobTransfer
      *
      * @return \Generated\Shared\Transfer\SchedulerJobTransfer
      */
-    protected function extendSchedulerJobTransferWithLogRotateValue(SchedulerJobTransfer $schedulerJobTransfer): SchedulerJobTransfer
+    protected function extendSchedulerJobTransferWithLogRotateValue(SchedulerJobTransfer $jobTransfer): SchedulerJobTransfer
     {
-        $jobPayload = $schedulerJobTransfer->getPayload();
+        $jobPayload = $jobTransfer->getPayload();
 
         if (array_key_exists(static::LOG_ROTATE_DAYS_KEY, $jobPayload) && is_int($jobPayload[static::LOG_ROTATE_DAYS_KEY])) {
-            return $schedulerJobTransfer;
+            return $jobTransfer;
         }
 
         $jobPayload[static::LOG_ROTATE_DAYS_KEY] = $this->schedulerJenkinsConfig->getAmountOfDaysForLogFileRotation();
 
-        return $schedulerJobTransfer->setPayload($jobPayload);
+        return $jobTransfer->setPayload($jobPayload);
     }
 }

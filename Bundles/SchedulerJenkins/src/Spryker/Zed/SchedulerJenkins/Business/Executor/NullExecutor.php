@@ -7,20 +7,37 @@
 
 namespace Spryker\Zed\SchedulerJenkins\Business\Executor;
 
+use Generated\Shared\Transfer\SchedulerJenkinsResponseTransfer;
 use Generated\Shared\Transfer\SchedulerJobTransfer;
-use Generated\Shared\Transfer\SchedulerResponseTransfer;
+use Spryker\Zed\SchedulerJenkins\Business\Api\Builder\JenkinsResponseBuilderInterface;
 
 class NullExecutor implements ExecutorInterface
 {
     /**
-     * @param string $idScheduler
-     * @param \Generated\Shared\Transfer\SchedulerJobTransfer $schedulerJobTransfer
-     *
-     * @return \Generated\Shared\Transfer\SchedulerResponseTransfer
+     * @var \Spryker\Zed\SchedulerJenkins\Business\Api\Builder\JenkinsResponseBuilderInterface
      */
-    public function execute(string $idScheduler, SchedulerJobTransfer $schedulerJobTransfer): SchedulerResponseTransfer
+    protected $responseBuilder;
+
+    /**
+     * NullExecutor constructor.
+     *
+     * @param \Spryker\Zed\SchedulerJenkins\Business\Api\Builder\JenkinsResponseBuilderInterface $responseBuilder
+     */
+    public function __construct(JenkinsResponseBuilderInterface $responseBuilder)
     {
-        return (new SchedulerResponseTransfer())
-           ->setStatus(true);
+        $this->responseBuilder = $responseBuilder;
+    }
+
+    /**
+     * @param string $idScheduler
+     * @param \Generated\Shared\Transfer\SchedulerJobTransfer $jobTransfer
+     *
+     * @return \Generated\Shared\Transfer\SchedulerJenkinsResponseTransfer
+     */
+    public function execute(string $idScheduler, SchedulerJobTransfer $jobTransfer): SchedulerJenkinsResponseTransfer
+    {
+        return $this->responseBuilder
+            ->withStatus(true)
+            ->build();
     }
 }

@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\SchedulerJenkins\Business\Api;
+namespace Spryker\Zed\SchedulerJenkins\Business\Api\Configuration;
 
-interface JenkinsConfigurationReaderInterface
+interface ConfigurationProviderInterface
 {
     /**
      * @param string $schedulerId
@@ -20,9 +20,14 @@ interface JenkinsConfigurationReaderInterface
      * @param string $schedulerId
      * @param string $urlPath
      *
-     * @throws \Spryker\Zed\SchedulerJenkins\Business\Api\Exception\JenkinsBaseUrlNotFound
+     * @throws \Spryker\Zed\SchedulerJenkins\Business\Api\Exception\WrongJenkinsConfiguration
      *
      * @return string
      */
     public function getJenkinsBaseUrlBySchedulerId(string $schedulerId, string $urlPath): string;
+
+    /**
+     * @return bool
+     */
+    public function isJenkinsCsrfProtectionEnabled(): bool;
 }

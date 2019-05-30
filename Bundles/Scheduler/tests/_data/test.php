@@ -6,7 +6,8 @@ $jobs[] = [
     'command' => 'test',
     'schedule' => '*/10 * * * *',
     'enable' => false,
-    'run_on_non_production' => true,
+    'payload1' => true,
+    'payload2' => false,
     'stores' => ['DE', 'AT'],
 ];
 
@@ -16,6 +17,7 @@ $jobs[] = [
     'command' => 'test1',
     'schedule' => '0 6 * * *',
     'enable' => true,
-    'run_on_non_production' => true,
+    'payload1' => true,
+    'payload2' => false,
     'stores' => ['DE', 'AT', 'US'],
 ];

@@ -7,44 +7,44 @@
 
 namespace Spryker\Zed\SchedulerJenkins\Business\Api\Builder;
 
-use Generated\Shared\Transfer\JenkinsResponseTransfer;
+use Generated\Shared\Transfer\SchedulerJenkinsResponseTransfer;
 
 class JenkinsResponseBuilder implements JenkinsResponseBuilderInterface
 {
     /**
      * @var bool
      */
-    protected $status;
+    protected $status = false;
 
     /**
      * @var string
      */
-    protected $message;
+    protected $message = '';
 
     /**
      * @var string
      */
-    protected $payload;
+    protected $payload = '';
 
     /**
-     * @return \Generated\Shared\Transfer\JenkinsResponseTransfer
+     * @return \Generated\Shared\Transfer\SchedulerJenkinsResponseTransfer
      */
-    public function build(): JenkinsResponseTransfer
+    public function build(): SchedulerJenkinsResponseTransfer
     {
-        $schedulerResponseTransfer = new JenkinsResponseTransfer();
+        $responseTransfer = new SchedulerJenkinsResponseTransfer();
 
-        $schedulerResponseTransfer
+        $responseTransfer
             ->setStatus($this->status)
             ->setMessage($this->message)
             ->setPayload($this->payload);
 
-        return $schedulerResponseTransfer;
+        return $responseTransfer;
     }
 
     /**
      * @param bool $status
      *
-     * @return $this
+     * @return static
      */
     public function withStatus(bool $status)
     {
@@ -56,7 +56,7 @@ class JenkinsResponseBuilder implements JenkinsResponseBuilderInterface
     /**
      * @param string $message
      *
-     * @return $this
+     * @return static
      */
     public function withMessage(string $message)
     {
@@ -68,7 +68,7 @@ class JenkinsResponseBuilder implements JenkinsResponseBuilderInterface
     /**
      * @param string $payload
      *
-     * @return $this
+     * @return static
      */
     public function withPayload(string $payload)
     {

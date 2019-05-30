@@ -10,10 +10,10 @@ namespace Spryker\Zed\SchedulerJenkins\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\SchedulerJenkins\Business\Api\Builder\JenkinsResponseBuilder;
 use Spryker\Zed\SchedulerJenkins\Business\Api\Builder\JenkinsResponseBuilderInterface;
+use Spryker\Zed\SchedulerJenkins\Business\Api\Configuration\ConfigurationProvider;
+use Spryker\Zed\SchedulerJenkins\Business\Api\Configuration\ConfigurationProviderInterface;
 use Spryker\Zed\SchedulerJenkins\Business\Api\JenkinsApi;
 use Spryker\Zed\SchedulerJenkins\Business\Api\JenkinsApiInterface;
-use Spryker\Zed\SchedulerJenkins\Business\Api\JenkinsConfigurationReader;
-use Spryker\Zed\SchedulerJenkins\Business\Api\JenkinsConfigurationReaderInterface;
 use Spryker\Zed\SchedulerJenkins\Business\Executor\CreateExecutor;
 use Spryker\Zed\SchedulerJenkins\Business\Executor\DeleteExecutor;
 use Spryker\Zed\SchedulerJenkins\Business\Executor\DisableExecutor;
@@ -25,8 +25,8 @@ use Spryker\Zed\SchedulerJenkins\Business\Iterator\Builder\SchedulerResponseBuil
 use Spryker\Zed\SchedulerJenkins\Business\Iterator\Builder\SchedulerResponseBuilderInterface;
 use Spryker\Zed\SchedulerJenkins\Business\Iterator\Iterator;
 use Spryker\Zed\SchedulerJenkins\Business\Iterator\IteratorInterface;
-use Spryker\Zed\SchedulerJenkins\Business\Reader\JenkinsJobReader;
-use Spryker\Zed\SchedulerJenkins\Business\Reader\JenkinsJobReaderInterface;
+use Spryker\Zed\SchedulerJenkins\Business\Iterator\Strategy\ExecutionStrategyBuilder;
+use Spryker\Zed\SchedulerJenkins\Business\Iterator\Strategy\ExecutionStrategyBuilderInterface;
 use Spryker\Zed\SchedulerJenkins\Business\TemplateGenerator\JenkinsJobTemplateGeneratorInterface;
 use Spryker\Zed\SchedulerJenkins\Business\TemplateGenerator\XmlJenkinsJobTemplateGenerator;
 use Spryker\Zed\SchedulerJenkins\Dependency\Guzzle\SchedulerJenkinsToGuzzleInterface;
@@ -46,7 +46,6 @@ class SchedulerJenkinsBusinessFactory extends AbstractBusinessFactory
     {
         return new JenkinsApi(
             $this->getGuzzleClient(),
-            $this->getConfig(),
             $this->createJenkinsResponseBuilder(),
             $this->createJenkinsApiConfigurationReader()
         );
@@ -58,9 +57,11 @@ class SchedulerJenkinsBusinessFactory extends AbstractBusinessFactory
     public function createSchedulerJenkinsSetup(): IteratorInterface
     {
         return new Iterator(
-            $this->createJenkinsJobReader(),
-            $this->createUpdateExecutor(),
-            $this->createCreateExecutor()
+            $this->createExecutionStrategyBuilder(
+                $this->createUpdateExecutor(),
+                $this->createCreateExecutor()
+            ),
+            $this->createSchedulerResponseBuilder()
         );
     }
 
@@ -70,9 +71,11 @@ class SchedulerJenkinsBusinessFactory extends AbstractBusinessFactory
     public function createSchedulerJenkinsClean(): IteratorInterface
     {
         return new Iterator(
-            $this->createJenkinsJobReader(),
-            $this->createDeleteExecutor(),
-            $this->createNullExecutor()
+            $this->createExecutionStrategyBuilder(
+                $this->createDeleteExecutor(),
+                $this->createNullExecutor()
+            ),
+            $this->createSchedulerResponseBuilder()
         );
     }
 
@@ -82,9 +85,12 @@ class SchedulerJenkinsBusinessFactory extends AbstractBusinessFactory
     public function createSchedulerJenkinsEnable(): IteratorInterface
     {
         return new Iterator(
-            $this->createJenkinsJobReader(),
-            $this->createEnableExecutor(),
-            $this->createNullExecutor()
+            $this->createExecutionStrategyBuilder(
+                $this->createEnableExecutor(),
+                $this->createNullExecutor()
+            ),
+            $this->createSchedulerResponseBuilder()
+
         );
     }
 
@@ -94,21 +100,29 @@ class SchedulerJenkinsBusinessFactory extends AbstractBusinessFactory
     public function createSchedulerJenkinsDisable(): IteratorInterface
     {
         return new Iterator(
-            $this->createJenkinsJobReader(),
-            $this->createDisableExecutor(),
-            $this->createNullExecutor()
+            $this->createExecutionStrategyBuilder(
+                $this->createDisableExecutor(),
+                $this->createNullExecutor()
+            ),
+            $this->createSchedulerResponseBuilder()
         );
     }
 
     /**
-     * @return \Spryker\Zed\SchedulerJenkins\Business\Reader\JenkinsJobReaderInterface
+     * @param \Spryker\Zed\SchedulerJenkins\Business\Executor\ExecutorInterface $executorForExistingJob
+     * @param \Spryker\Zed\SchedulerJenkins\Business\Executor\ExecutorInterface $executorForAbsentJob
+     *
+     * @return \Spryker\Zed\SchedulerJenkins\Business\Iterator\Strategy\ExecutionStrategyBuilderInterface
      */
-    public function createJenkinsJobReader(): JenkinsJobReaderInterface
-    {
-        return new JenkinsJobReader(
+    public function createExecutionStrategyBuilder(
+        ExecutorInterface $executorForExistingJob,
+        ExecutorInterface $executorForAbsentJob
+    ): ExecutionStrategyBuilderInterface {
+        return new ExecutionStrategyBuilder(
             $this->createJenkinsApi(),
             $this->getUtilEncodingService(),
-            $this->getConfig()
+            $executorForExistingJob,
+            $executorForAbsentJob
         );
     }
 
@@ -180,7 +194,9 @@ class SchedulerJenkinsBusinessFactory extends AbstractBusinessFactory
      */
     public function createNullExecutor(): ExecutorInterface
     {
-        return new NullExecutor();
+        return new NullExecutor(
+            $this->createJenkinsResponseBuilder()
+        );
     }
 
     /**
@@ -200,11 +216,11 @@ class SchedulerJenkinsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\SchedulerJenkins\Business\Api\JenkinsConfigurationReaderInterface
+     * @return \Spryker\Zed\SchedulerJenkins\Business\Api\Configuration\ConfigurationProviderInterface
      */
-    public function createJenkinsApiConfigurationReader(): JenkinsConfigurationReaderInterface
+    public function createJenkinsApiConfigurationReader(): ConfigurationProviderInterface
     {
-        return new JenkinsConfigurationReader(
+        return new ConfigurationProvider(
             $this->getConfig()
         );
     }

@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\SchedulerJenkins\Business\Executor;
 
+use Generated\Shared\Transfer\SchedulerJenkinsResponseTransfer;
 use Generated\Shared\Transfer\SchedulerJobTransfer;
-use Generated\Shared\Transfer\SchedulerResponseTransfer;
 use Spryker\Zed\SchedulerJenkins\Business\Api\JenkinsApiInterface;
 
 class DeleteExecutor implements ExecutorInterface
@@ -31,15 +31,15 @@ class DeleteExecutor implements ExecutorInterface
 
     /**
      * @param string $idScheduler
-     * @param \Generated\Shared\Transfer\SchedulerJobTransfer $schedulerJobTransfer
+     * @param \Generated\Shared\Transfer\SchedulerJobTransfer $jobTransfer
      *
-     * @return \Generated\Shared\Transfer\SchedulerResponseTransfer
+     * @return \Generated\Shared\Transfer\SchedulerJenkinsResponseTransfer
      */
-    public function execute(string $idScheduler, SchedulerJobTransfer $schedulerJobTransfer): SchedulerResponseTransfer
+    public function execute(string $idScheduler, SchedulerJobTransfer $jobTransfer): SchedulerJenkinsResponseTransfer
     {
         return $this->jenkinsApi->executePostRequest(
             $idScheduler,
-            sprintf(static::DELETE_JOB_URL_TEMPLATE, $schedulerJobTransfer->getName())
+            sprintf(static::DELETE_JOB_URL_TEMPLATE, $jobTransfer->getName())
         );
     }
 }

@@ -9,7 +9,7 @@ namespace Spryker\Zed\Scheduler\Business\PhpScheduleReader;
 
 use Generated\Shared\Transfer\SchedulerFilterTransfer;
 use Generated\Shared\Transfer\SchedulerScheduleTransfer;
-use Spryker\Zed\Scheduler\Business\Exception\FileIsNotAccessibleException;
+use Spryker\Zed\Scheduler\Business\PhpScheduleReader\Exception\FileIsNotAccessibleException;
 use Spryker\Zed\Scheduler\Business\PhpScheduleReader\Mapper\PhpScheduleMapperInterface;
 use Spryker\Zed\Scheduler\SchedulerConfig;
 
@@ -38,13 +38,15 @@ class PhpScheduleReader implements PhpScheduleReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SchedulerFilterTransfer $schedulerFilterTransfer
+     * @param \Generated\Shared\Transfer\SchedulerFilterTransfer $filterTransfer
      * @param \Generated\Shared\Transfer\SchedulerScheduleTransfer $scheduleTransfer
      *
      * @return \Generated\Shared\Transfer\SchedulerScheduleTransfer
      */
-    public function readSchedule(SchedulerFilterTransfer $schedulerFilterTransfer, SchedulerScheduleTransfer $scheduleTransfer): SchedulerScheduleTransfer
-    {
+    public function readSchedule(
+        SchedulerFilterTransfer $filterTransfer,
+        SchedulerScheduleTransfer $scheduleTransfer
+    ): SchedulerScheduleTransfer {
         $sourceFileName = $this->schedulerConfig->getPhpSchedulerReaderPath($scheduleTransfer->getIdScheduler());
 
         $this->assertSourceFileName($sourceFileName);
@@ -53,20 +55,20 @@ class PhpScheduleReader implements PhpScheduleReaderInterface
 
         include_once $sourceFileName;
 
-        return $this->mapper->mapScheduleFromArray($schedulerFilterTransfer, $scheduleTransfer, $jobs);
+        return $this->mapper->mapScheduleFromArray($filterTransfer, $scheduleTransfer, $jobs);
     }
 
     /**
      * @param string $sourceFileName
      *
-     * @throws \Spryker\Zed\Scheduler\Business\Exception\FileIsNotAccessibleException
+     * @throws \Spryker\Zed\Scheduler\Business\PhpScheduleReader\Exception\FileIsNotAccessibleException
      *
      * @return void
      */
     protected function assertSourceFileName(string $sourceFileName): void
     {
         if (!file_exists($sourceFileName) || !is_readable($sourceFileName)) {
-            throw new FileIsNotAccessibleException();
+            throw new FileIsNotAccessibleException(sprintf('Required file `%s` is not accessible.', $sourceFileName));
         }
     }
 }

@@ -5,10 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\SchedulerJenkins\Business\Api\Exception;
+namespace Spryker\Zed\Scheduler\Business\Command\Exception;
 
-use Exception;
+use \Exception;
 
-class JenkinsBaseUrlNotFound extends Exception
+class SchedulerNotAllowedException extends Exception
 {
 }

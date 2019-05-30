@@ -16,7 +16,7 @@ use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Scheduler\Business\Command\Filter\SchedulerFilter;
 use Spryker\Zed\Scheduler\Business\Command\Filter\SchedulerFilterInterface;
 use Spryker\Zed\Scheduler\Business\Command\SchedulerSetupCommand;
-use Spryker\Zed\Scheduler\Business\PhpScheduleReader\Filter\JobsFilter;
+use Spryker\Zed\Scheduler\Business\PhpScheduleReader\Filter\JobsFilterByName;
 use Spryker\Zed\Scheduler\Business\PhpScheduleReader\Mapper\PhpScheduleMapper;
 use Spryker\Zed\Scheduler\Business\PhpScheduleReader\Mapper\PhpScheduleMapperInterface;
 use Spryker\Zed\Scheduler\Business\PhpScheduleReader\PhpScheduleReader;
@@ -48,9 +48,9 @@ class SchedulerFacadeTest extends Unit
      */
     public function testSchedulerConfigurationReaderWithoutReadersForTheCurrentStore(): void
     {
-        $schedulerFilterTransfer = $this->createSchedulerFilterTransfer();
-        $schedulerTransfer = $this->createSchedulerSchedulerTransfer();
-        $scheduleTransfer = $this->getSchedulerFacade()->readScheduleFromPhpSource($schedulerFilterTransfer, $schedulerTransfer);
+        $filterTransfer = $this->createSchedulerFilterTransfer();
+        $scheduleTransfer = $this->createSchedulerSchedulerTransfer();
+        $scheduleTransfer = $this->getSchedulerFacade()->readScheduleFromPhpSource($filterTransfer, $scheduleTransfer);
 
         $this->assertInstanceOf(SchedulerScheduleTransfer::class, $scheduleTransfer);
         $this->assertSame(2, $scheduleTransfer->getJobs()->count());
@@ -65,13 +65,13 @@ class SchedulerFacadeTest extends Unit
      */
     public function testSchedulerSetup(): void
     {
-        $schedulerFilterTransfer = $this->createSchedulerFilterTransfer();
-        $schedulerResponseCollectionTransfer = $this->getSchedulerFacade()->setup($schedulerFilterTransfer);
+        $filterTransfer = $this->createSchedulerFilterTransfer();
+        $responseCollectionTransfer = $this->getSchedulerFacade()->setup($filterTransfer);
 
-        $this->assertNotEmpty($schedulerResponseCollectionTransfer->getResponses());
+        $this->assertNotEmpty($responseCollectionTransfer->getResponses());
 
-        foreach ($schedulerResponseCollectionTransfer->getResponses() as $schedulerResponseTransfer) {
-            $this->assertEquals(static::TEST_SCHEDULER, $schedulerResponseTransfer->getSchedule()->getIdScheduler());
+        foreach ($responseCollectionTransfer->getResponses() as $responseTransfer) {
+            $this->assertEquals(static::TEST_SCHEDULER, $responseTransfer->getSchedule()->getIdScheduler());
         }
     }
 
@@ -80,13 +80,13 @@ class SchedulerFacadeTest extends Unit
      */
     public function testSchedulerClean(): void
     {
-        $schedulerFilterTransfer = $this->createSchedulerFilterTransfer();
-        $schedulerResponseCollectionTransfer = $this->getSchedulerFacade()->clean($schedulerFilterTransfer);
+        $filterTransfer = $this->createSchedulerFilterTransfer();
+        $responseCollectionTransfer = $this->getSchedulerFacade()->clean($filterTransfer);
 
-        $this->assertNotEmpty($schedulerResponseCollectionTransfer->getResponses());
+        $this->assertNotEmpty($responseCollectionTransfer->getResponses());
 
-        foreach ($schedulerResponseCollectionTransfer->getResponses() as $schedulerResponseTransfer) {
-            $this->assertEquals(static::TEST_SCHEDULER, $schedulerResponseTransfer->getSchedule()->getIdScheduler());
+        foreach ($responseCollectionTransfer->getResponses() as $responseTransfer) {
+            $this->assertEquals(static::TEST_SCHEDULER, $responseTransfer->getSchedule()->getIdScheduler());
         }
     }
 
@@ -95,13 +95,13 @@ class SchedulerFacadeTest extends Unit
      */
     public function testSchedulerResume(): void
     {
-        $schedulerFilterTransfer = $this->createSchedulerFilterTransfer();
-        $schedulerResponseCollectionTransfer = $this->getSchedulerFacade()->resume($schedulerFilterTransfer);
+        $filterTransfer = $this->createSchedulerFilterTransfer();
+        $responseCollectionTransfer = $this->getSchedulerFacade()->resume($filterTransfer);
 
-        $this->assertNotEmpty($schedulerResponseCollectionTransfer->getResponses());
+        $this->assertNotEmpty($responseCollectionTransfer->getResponses());
 
-        foreach ($schedulerResponseCollectionTransfer->getResponses() as $schedulerResponseTransfer) {
-            $this->assertEquals(static::TEST_SCHEDULER, $schedulerResponseTransfer->getSchedule()->getIdScheduler());
+        foreach ($responseCollectionTransfer->getResponses() as $responseTransfer) {
+            $this->assertEquals(static::TEST_SCHEDULER, $responseTransfer->getSchedule()->getIdScheduler());
         }
     }
 
@@ -110,13 +110,13 @@ class SchedulerFacadeTest extends Unit
      */
     public function testSchedulerSuspend(): void
     {
-        $schedulerRequestTransfer = $this->createSchedulerFilterTransfer();
-        $schedulerResponseCollectionTransfer = $this->getSchedulerFacade()->suspend($schedulerRequestTransfer);
+        $requestTransfer = $this->createSchedulerFilterTransfer();
+        $responseCollectionTransfer = $this->getSchedulerFacade()->suspend($requestTransfer);
 
-        $this->assertNotEmpty($schedulerResponseCollectionTransfer->getResponses());
+        $this->assertNotEmpty($responseCollectionTransfer->getResponses());
 
-        foreach ($schedulerResponseCollectionTransfer->getResponses() as $schedulerResponseTransfer) {
-            $this->assertEquals(static::TEST_SCHEDULER, $schedulerResponseTransfer->getSchedule()->getIdScheduler());
+        foreach ($responseCollectionTransfer->getResponses() as $responseTransfer) {
+            $this->assertEquals(static::TEST_SCHEDULER, $responseTransfer->getSchedule()->getIdScheduler());
         }
     }
 
@@ -202,7 +202,7 @@ class SchedulerFacadeTest extends Unit
     protected function createPhpSchedulerMapperInstance(): PhpScheduleMapperInterface
     {
         return new PhpScheduleMapper(
-            new JobsFilter(),
+            new JobsFilterByName(),
             new SchedulerToStoreBridge(Store::getInstance())
         );
     }

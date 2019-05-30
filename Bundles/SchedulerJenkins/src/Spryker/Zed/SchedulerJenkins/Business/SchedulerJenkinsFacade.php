@@ -25,7 +25,7 @@ class SchedulerJenkinsFacade extends AbstractFacade implements SchedulerJenkinsF
      *
      * @return \Generated\Shared\Transfer\SchedulerResponseTransfer
      */
-    public function setupSchedulerJenkins(SchedulerScheduleTransfer $scheduleTransfer): SchedulerResponseTransfer
+    public function setupJenkins(SchedulerScheduleTransfer $scheduleTransfer): SchedulerResponseTransfer
     {
         return $this->getFactory()
             ->createSchedulerJenkinsSetup()
@@ -41,7 +41,7 @@ class SchedulerJenkinsFacade extends AbstractFacade implements SchedulerJenkinsF
      *
      * @return \Generated\Shared\Transfer\SchedulerResponseTransfer
      */
-    public function cleanSchedulerJenkins(SchedulerScheduleTransfer $scheduleTransfer): SchedulerResponseTransfer
+    public function cleanJenkins(SchedulerScheduleTransfer $scheduleTransfer): SchedulerResponseTransfer
     {
         return $this->getFactory()
             ->createSchedulerJenkinsClean()
@@ -57,7 +57,7 @@ class SchedulerJenkinsFacade extends AbstractFacade implements SchedulerJenkinsF
      *
      * @return \Generated\Shared\Transfer\SchedulerResponseTransfer
      */
-    public function suspendSchedulerJenkins(SchedulerScheduleTransfer $scheduleTransfer): SchedulerResponseTransfer
+    public function suspendJenkins(SchedulerScheduleTransfer $scheduleTransfer): SchedulerResponseTransfer
     {
         return $this->getFactory()
             ->createSchedulerJenkinsDisable()
@@ -73,7 +73,7 @@ class SchedulerJenkinsFacade extends AbstractFacade implements SchedulerJenkinsF
      *
      * @return \Generated\Shared\Transfer\SchedulerResponseTransfer
      */
-    public function resumeSchedulerJenkins(SchedulerScheduleTransfer $scheduleTransfer): SchedulerResponseTransfer
+    public function resumeJenkins(SchedulerScheduleTransfer $scheduleTransfer): SchedulerResponseTransfer
     {
         return $this->getFactory()
             ->createSchedulerJenkinsEnable()

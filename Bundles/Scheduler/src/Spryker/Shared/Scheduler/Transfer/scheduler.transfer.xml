@@ -15,12 +15,13 @@
     <transfer name="SchedulerSchedule">
         <property name="idScheduler" type="string" />
         <property name="jobs" type="SchedulerJob[]" singular="job" />
-        <property name="store" type="string"/>
     </transfer>
 
     <transfer name="SchedulerFilter">
         <property name="schedulers" type="string[]" />
         <property name="jobs" type="string[]" />
+        <property name="roles" type="string[]" />
+        <property name="store" type="string" />
     </transfer>
 
     <transfer name="SchedulerRequest">

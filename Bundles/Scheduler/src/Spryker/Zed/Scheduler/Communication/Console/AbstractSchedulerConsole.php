@@ -24,22 +24,24 @@ class AbstractSchedulerConsole extends Console
     protected const OUTPUT_ERROR_MESSAGE = 'ERROR';
 
     /**
-     * @param \Generated\Shared\Transfer\SchedulerResponseCollectionTransfer $schedulerResponseCollectionTransfer
+     * @param \Generated\Shared\Transfer\SchedulerResponseCollectionTransfer $responseCollectionTransfer
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
      * @return void
      */
     protected function outputCommandResponse(
-        SchedulerResponseCollectionTransfer $schedulerResponseCollectionTransfer,
+        SchedulerResponseCollectionTransfer $responseCollectionTransfer,
         OutputInterface $output
     ): void {
-        foreach ($schedulerResponseCollectionTransfer->getResponses() as $schedulerResponseTransfer) {
-            $status = $schedulerResponseTransfer->getStatus();
+        foreach ($responseCollectionTransfer->getResponses() as $responseTransfer) {
+            $status = $responseTransfer->getStatus();
             $outputColor = $status ? static::OUTPUT_SUCCESS_COLOR : static::OUTPUT_ERROR_COLOR;
-            $output->writeln(sprintf("<fg=$outputColor;options=bold>Scheduler Name: %s</>", $schedulerResponseTransfer->getSchedule()->getIdScheduler()));
-            $output->writeln(sprintf("<fg=$outputColor;options=bold>Scheduler Status: %s</>", $status ? static::OUTPUT_SUCCESS_MESSAGE : static::OUTPUT_ERROR_MESSAGE));
-            if ($schedulerResponseTransfer->getMessage() !== null) {
-                $output->writeln($schedulerResponseTransfer->getMessage());
+            $output->writeln(sprintf("<fg=$outputColor;options=bold>Scheduler Name: %s</>",
+                $responseTransfer->getSchedule()->getIdScheduler()));
+            $output->writeln(sprintf("<fg=$outputColor;options=bold>Scheduler Status: %s</>",
+                $status ? static::OUTPUT_SUCCESS_MESSAGE : static::OUTPUT_ERROR_MESSAGE));
+            if ($responseTransfer->getMessage() !== null) {
+                $output->writeln($responseTransfer->getMessage());
             }
         }
     }

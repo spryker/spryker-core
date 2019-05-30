@@ -12,33 +12,57 @@ use Generated\Shared\Transfer\SchedulerFilterTransfer;
 class SchedulerFilterBuilder implements SchedulerFilterBuilderInterface
 {
     /**
-     * @var array
+     * @var string[]
+     */
+    protected $roles = [];
+
+    /**
+     * @var string[]
      */
     protected $schedulerIds = [];
 
     /**
-     * @var array
+     * @var string[]
      */
     protected $jobNames = [];
+
+    /**
+     * @var string
+     */
+    protected $store = '';
 
     /**
      * @return \Generated\Shared\Transfer\SchedulerFilterTransfer
      */
     public function build(): SchedulerFilterTransfer
     {
-        $schedulerFilterTransfer = new SchedulerFilterTransfer();
+        $filterTransfer = new SchedulerFilterTransfer();
 
-        $schedulerFilterTransfer
+        $filterTransfer
+            ->setRoles($this->roles)
             ->setSchedulers($this->schedulerIds)
-            ->setJobs($this->jobNames);
+            ->setJobs($this->jobNames)
+            ->setStore($this->store);
 
-        return $schedulerFilterTransfer;
+        return $filterTransfer;
     }
 
     /**
-     * @param array $schedulerIds
+     * @param string[] $roles
      *
-     * @return $this
+     * @return static
+     */
+    public function withRoles(array $roles)
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
+    /**
+     * @param string[] $schedulerIds
+     *
+     * @return static
      */
     public function withSchedulerIds(array $schedulerIds)
     {
@@ -48,13 +72,25 @@ class SchedulerFilterBuilder implements SchedulerFilterBuilderInterface
     }
 
     /**
-     * @param array $jobNames
+     * @param string[] $jobNames
      *
-     * @return $this
+     * @return static
      */
     public function withJobNames(array $jobNames)
     {
         $this->jobNames = $jobNames;
+
+        return $this;
+    }
+
+    /**
+     * @param string $store
+     *
+     * @return static
+     */
+    public function withStore(string $store)
+    {
+        $this->store = $store;
 
         return $this;
     }

@@ -17,16 +17,30 @@ interface SchedulerFilterBuilderInterface
     public function build(): SchedulerFilterTransfer;
 
     /**
+     * @param array $roles
+     *
+     * @return static
+     */
+    public function withRoles(array $roles);
+
+    /**
      * @param array $schedulerIds
      *
-     * @return $this
+     * @return static
      */
     public function withSchedulerIds(array $schedulerIds);
 
     /**
      * @param array $jobNames
      *
-     * @return $this
+     * @return static
      */
     public function withJobNames(array $jobNames);
+
+    /**
+     * @param string $store
+     *
+     * @return static
+     */
+    public function withStore(string $store);
 }

@@ -22,89 +22,69 @@ abstract class AbstractSchedulerCommand implements SchedulerCommandInterface
     protected $schedulerReaderPlugins;
 
     /**
-     * @var \Spryker\Zed\SchedulerExtension\Dependency\Plugin\SchedulerAdapterPluginInterface[]
-     */
-    protected $schedulerAdapterPlugins;
-
-    /**
      * @var \Spryker\Zed\Scheduler\Business\Command\Filter\SchedulerFilterInterface
      */
     protected $schedulerFilter;
 
     /**
      * @param \Spryker\Zed\SchedulerExtension\Dependency\Plugin\ScheduleReaderPluginInterface[] $schedulerReaderPlugins
-     * @param \Spryker\Zed\SchedulerExtension\Dependency\Plugin\SchedulerAdapterPluginInterface[] $schedulerAdapterPlugins
      * @param \Spryker\Zed\Scheduler\Business\Command\Filter\SchedulerFilterInterface $schedulerFilter
      */
     public function __construct(
         array $schedulerReaderPlugins,
-        array $schedulerAdapterPlugins,
         SchedulerFilterInterface $schedulerFilter
     ) {
         $this->schedulerReaderPlugins = $schedulerReaderPlugins;
-        $this->schedulerAdapterPlugins = $schedulerAdapterPlugins;
         $this->schedulerFilter = $schedulerFilter;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SchedulerFilterTransfer $schedulerFilterTransfer
+     * @param \Generated\Shared\Transfer\SchedulerFilterTransfer $filterTransfer
      *
      * @return \Generated\Shared\Transfer\SchedulerResponseCollectionTransfer
      */
-    public function execute(SchedulerFilterTransfer $schedulerFilterTransfer): SchedulerResponseCollectionTransfer
+    public function execute(SchedulerFilterTransfer $filterTransfer): SchedulerResponseCollectionTransfer
     {
-        $schedulerResponseCollectionTransfer = $this->createSchedulerResponseCollectionTransfer();
-        $allowedSchedulerIds = $this->schedulerFilter->filterSchedulers($schedulerFilterTransfer, array_keys($this->schedulerAdapterPlugins));
+        $responseCollectionTransfer = $this->createSchedulerResponseCollectionTransfer();
+        $schedulerAdapters = $this->schedulerFilter->getFilteredSchedulerAdapters($filterTransfer);
 
-        foreach ($allowedSchedulerIds as $idScheduler) {
-            $schedulerAdapterPlugin = $this->getSchedulerAdapterPluginByIdScheduler($idScheduler);
-            $scheduleTransfer = $this->executeScheduleReaderPlugins($idScheduler, $schedulerFilterTransfer);
-            $schedulerResponseTransfer = $this->executeCommand($schedulerAdapterPlugin, $scheduleTransfer);
+        foreach ($schedulerAdapters as $idScheduler => $schedulerAdapterPlugin) {
+            $scheduleTransfer = $this->executeScheduleReaderPlugins($idScheduler, $filterTransfer);
+            $responseTransfer = $this->executeCommand($schedulerAdapterPlugin, $scheduleTransfer);
 
-            $schedulerResponseCollectionTransfer
-                ->addResponse($schedulerResponseTransfer);
+            $responseCollectionTransfer->addResponse($responseTransfer);
         }
 
-        return $schedulerResponseCollectionTransfer;
-    }
-
-    /**
-     * @param string $idScheduler
-     *
-     * @return \Spryker\Zed\SchedulerExtension\Dependency\Plugin\SchedulerAdapterPluginInterface
-     */
-    protected function getSchedulerAdapterPluginByIdScheduler(string $idScheduler): SchedulerAdapterPluginInterface
-    {
-        return $this->schedulerAdapterPlugins[$idScheduler];
+        return $responseCollectionTransfer;
     }
 
     /**
      * @param \Spryker\Zed\SchedulerExtension\Dependency\Plugin\SchedulerAdapterPluginInterface $schedulerAdapterPlugin
-     * @param \Generated\Shared\Transfer\SchedulerScheduleTransfer $schedulerScheduleTransfer
+     * @param \Generated\Shared\Transfer\SchedulerScheduleTransfer $scheduleTransfer
      *
      * @return \Generated\Shared\Transfer\SchedulerResponseTransfer
      */
     abstract protected function executeCommand(
         SchedulerAdapterPluginInterface $schedulerAdapterPlugin,
-        SchedulerScheduleTransfer $schedulerScheduleTransfer
+        SchedulerScheduleTransfer $scheduleTransfer
     ): SchedulerResponseTransfer;
 
     /**
      * @param string $idScheduler
-     * @param \Generated\Shared\Transfer\SchedulerFilterTransfer $schedulerFilterTransfer
+     * @param \Generated\Shared\Transfer\SchedulerFilterTransfer $filterTransfer
      *
      * @return \Generated\Shared\Transfer\SchedulerScheduleTransfer
      */
     protected function executeScheduleReaderPlugins(
         string $idScheduler,
-        SchedulerFilterTransfer $schedulerFilterTransfer
+        SchedulerFilterTransfer $filterTransfer
     ): SchedulerScheduleTransfer {
 
         $scheduleTransfer = (new SchedulerScheduleTransfer())
             ->setIdScheduler($idScheduler);
 
         foreach ($this->schedulerReaderPlugins as $schedulerReaderPlugin) {
-            $scheduleTransfer = $schedulerReaderPlugin->readSchedule($schedulerFilterTransfer, $scheduleTransfer);
+            $scheduleTransfer = $schedulerReaderPlugin->readSchedule($filterTransfer, $scheduleTransfer);
         }
 
         return $scheduleTransfer;

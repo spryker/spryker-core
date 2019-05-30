@@ -13,14 +13,14 @@ use Generated\Shared\Transfer\SchedulerScheduleTransfer;
 interface PhpScheduleMapperInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\SchedulerFilterTransfer $schedulerFilterTransfer
+     * @param \Generated\Shared\Transfer\SchedulerFilterTransfer $filterTransfer
      * @param \Generated\Shared\Transfer\SchedulerScheduleTransfer $scheduleTransfer
      * @param array $jobs
      *
      * @return \Generated\Shared\Transfer\SchedulerScheduleTransfer
      */
     public function mapScheduleFromArray(
-        SchedulerFilterTransfer $schedulerFilterTransfer,
+        SchedulerFilterTransfer $filterTransfer,
         SchedulerScheduleTransfer $scheduleTransfer,
         array $jobs
     ): SchedulerScheduleTransfer;

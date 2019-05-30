@@ -15,13 +15,15 @@ use Spryker\Zed\Scheduler\Business\Command\SchedulerCommandInterface;
 use Spryker\Zed\Scheduler\Business\Command\SchedulerResumeCommand;
 use Spryker\Zed\Scheduler\Business\Command\SchedulerSetupCommand;
 use Spryker\Zed\Scheduler\Business\Command\SchedulerSuspendCommand;
-use Spryker\Zed\Scheduler\Business\PhpScheduleReader\Filter\JobsFilter;
+use Spryker\Zed\Scheduler\Business\PhpScheduleReader\Filter\ChainableJobsFilterInterface;
+use Spryker\Zed\Scheduler\Business\PhpScheduleReader\Filter\JobsFilterByName;
+use Spryker\Zed\Scheduler\Business\PhpScheduleReader\Filter\JobsFilterByRole;
+use Spryker\Zed\Scheduler\Business\PhpScheduleReader\Filter\JobsFilterByStore;
 use Spryker\Zed\Scheduler\Business\PhpScheduleReader\Filter\JobsFilterInterface;
 use Spryker\Zed\Scheduler\Business\PhpScheduleReader\Mapper\PhpScheduleMapper;
 use Spryker\Zed\Scheduler\Business\PhpScheduleReader\Mapper\PhpScheduleMapperInterface;
 use Spryker\Zed\Scheduler\Business\PhpScheduleReader\PhpScheduleReader;
 use Spryker\Zed\Scheduler\Business\PhpScheduleReader\PhpScheduleReaderInterface;
-use Spryker\Zed\Scheduler\Dependency\Store\SchedulerToStoreInterface;
 use Spryker\Zed\Scheduler\SchedulerDependencyProvider;
 
 /**
@@ -36,7 +38,6 @@ class SchedulerBusinessFactory extends AbstractBusinessFactory
     {
         return new SchedulerSetupCommand(
             $this->getScheduleReaderPlugins(),
-            $this->getSchedulerAdapterPlugins(),
             $this->createSchedulerFilter()
         );
     }
@@ -48,7 +49,6 @@ class SchedulerBusinessFactory extends AbstractBusinessFactory
     {
         return new SchedulerCleanCommand(
             $this->getScheduleReaderPlugins(),
-            $this->getSchedulerAdapterPlugins(),
             $this->createSchedulerFilter()
         );
     }
@@ -60,7 +60,6 @@ class SchedulerBusinessFactory extends AbstractBusinessFactory
     {
         return new SchedulerSuspendCommand(
             $this->getScheduleReaderPlugins(),
-            $this->getSchedulerAdapterPlugins(),
             $this->createSchedulerFilter()
         );
     }
@@ -72,7 +71,6 @@ class SchedulerBusinessFactory extends AbstractBusinessFactory
     {
         return new SchedulerResumeCommand(
             $this->getScheduleReaderPlugins(),
-            $this->getSchedulerAdapterPlugins(),
             $this->createSchedulerFilter()
         );
     }
@@ -94,8 +92,7 @@ class SchedulerBusinessFactory extends AbstractBusinessFactory
     public function createPhpSchedulerMapper(): PhpScheduleMapperInterface
     {
         return new PhpScheduleMapper(
-            $this->createJobsFilter(),
-            $this->getStore()
+            $this->createJobsFilter()
         );
     }
 
@@ -104,7 +101,41 @@ class SchedulerBusinessFactory extends AbstractBusinessFactory
      */
     public function createJobsFilter(): JobsFilterInterface
     {
-        return new JobsFilter();
+        $jobsFilterByName = $this->createJobsFilterByName();
+        $jobsFilterByStore = $this->createJobsFilterByStore();
+        $jobsFilterByRole = $this->createJobsFilterByRole();
+
+        return $jobsFilterByName->setNextFilter(
+            $jobsFilterByStore->setNextFilter(
+                $jobsFilterByRole
+            )
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Scheduler\Business\PhpScheduleReader\Filter\ChainableJobsFilterInterface
+     */
+    public function createJobsFilterByName(): ChainableJobsFilterInterface
+    {
+        return new JobsFilterByName();
+    }
+
+    /**
+     * @return \Spryker\Zed\Scheduler\Business\PhpScheduleReader\Filter\ChainableJobsFilterInterface
+     */
+    public function createJobsFilterByStore(): ChainableJobsFilterInterface
+    {
+        return new JobsFilterByStore();
+    }
+
+    /**
+     * @return \Spryker\Zed\Scheduler\Business\PhpScheduleReader\Filter\ChainableJobsFilterInterface
+     */
+    public function createJobsFilterByRole(): ChainableJobsFilterInterface
+    {
+        return new JobsFilterByRole(
+            $this->getConfig()
+        );
     }
 
     /**
@@ -113,7 +144,8 @@ class SchedulerBusinessFactory extends AbstractBusinessFactory
     public function createSchedulerFilter(): SchedulerFilterInterface
     {
         return new SchedulerFilter(
-            $this->getConfig()
+            $this->getConfig(),
+            $this->getSchedulerAdapterPlugins()
         );
     }
 
@@ -131,13 +163,5 @@ class SchedulerBusinessFactory extends AbstractBusinessFactory
     public function getSchedulerAdapterPlugins(): array
     {
         return $this->getProvidedDependency(SchedulerDependencyProvider::PLUGINS_SCHEDULER_ADAPTER);
-    }
-
-    /**
-     * @return \Spryker\Zed\Scheduler\Dependency\Store\SchedulerToStoreInterface
-     */
-    public function getStore(): SchedulerToStoreInterface
-    {
-        return $this->getProvidedDependency(SchedulerDependencyProvider::STORE);
     }
 }

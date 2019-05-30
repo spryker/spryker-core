@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\SchedulerJenkins\Business\Api;
 
-use Generated\Shared\Transfer\JenkinsResponseTransfer;
+use Generated\Shared\Transfer\SchedulerJenkinsResponseTransfer;
 
 interface JenkinsApiInterface
 {
@@ -15,20 +15,16 @@ interface JenkinsApiInterface
      * @param string $schedulerId
      * @param string $urlPath
      *
-     * @throws \Spryker\Zed\SchedulerJenkins\Business\Api\Exception\JenkinsBaseUrlNotFound
-     *
-     * @return \Generated\Shared\Transfer\JenkinsResponseTransfer
+     * @return \Generated\Shared\Transfer\SchedulerJenkinsResponseTransfer
      */
-    public function executeGetRequest(string $schedulerId, string $urlPath): JenkinsResponseTransfer;
+    public function executeGetRequest(string $schedulerId, string $urlPath): SchedulerJenkinsResponseTransfer;
 
     /**
      * @param string $schedulerId
      * @param string $urlPath
      * @param string $body
      *
-     * @throws \Spryker\Zed\SchedulerJenkins\Business\Api\Exception\JenkinsBaseUrlNotFound
-     *
-     * @return \Generated\Shared\Transfer\JenkinsResponseTransfer
+     * @return \Generated\Shared\Transfer\SchedulerJenkinsResponseTransfer
      */
-    public function executePostRequest(string $schedulerId, string $urlPath, string $body = ''): JenkinsResponseTransfer;
+    public function executePostRequest(string $schedulerId, string $urlPath, string $body = ''): SchedulerJenkinsResponseTransfer;
 }

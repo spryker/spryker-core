@@ -13,14 +13,19 @@ use Generated\Shared\Transfer\SchedulerScheduleTransfer;
 class SchedulerResponseBuilder implements SchedulerResponseBuilderInterface
 {
     /**
-     * @var bool
-     */
-    protected $status;
-
-    /**
      * @var \Generated\Shared\Transfer\SchedulerScheduleTransfer
      */
     protected $schedulerTransfer;
+
+    /**
+     * @var bool
+     */
+    protected $status = false;
+
+    /**
+     * @var string
+     */
+    protected $message = '';
 
     /**
      * @return \Generated\Shared\Transfer\SchedulerResponseTransfer
@@ -30,16 +35,29 @@ class SchedulerResponseBuilder implements SchedulerResponseBuilderInterface
         $schedulerResponseTransfer = new SchedulerResponseTransfer();
 
         $schedulerResponseTransfer
-            ->setSchedule($this->schedulerTransfer)
-            ->setStatus($this->status);
+            ->setSchedule($this->schedulerTransfer ?? new SchedulerScheduleTransfer())
+            ->setStatus($this->status)
+            ->setStatus($this->message);
 
         return $schedulerResponseTransfer;
     }
 
     /**
+     * @param \Generated\Shared\Transfer\SchedulerScheduleTransfer $scheduleTransfer
+     *
+     * @return static
+     */
+    public function withSchedule(SchedulerScheduleTransfer $scheduleTransfer)
+    {
+        $this->schedulerTransfer = $scheduleTransfer;
+
+        return $this;
+    }
+
+    /**
      * @param bool $status
      *
-     * @return $this
+     * @return static
      */
     public function withStatus(bool $status)
     {
@@ -49,13 +67,13 @@ class SchedulerResponseBuilder implements SchedulerResponseBuilderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SchedulerScheduleTransfer $schedulerTransfer
+     * @param string $message
      *
-     * @return $this
+     * @return static
      */
-    public function withScheduler(SchedulerScheduleTransfer $schedulerTransfer)
+    public function withMessage(string $message)
     {
-        $this->schedulerTransfer = $schedulerTransfer;
+        $this->message = $message;
 
         return $this;
     }

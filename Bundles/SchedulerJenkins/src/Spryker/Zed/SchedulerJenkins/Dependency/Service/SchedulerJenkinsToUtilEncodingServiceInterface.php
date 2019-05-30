@@ -15,7 +15,7 @@ interface SchedulerJenkinsToUtilEncodingServiceInterface
      * @param int|null $depth
      * @param int|null $options
      *
-     * @return array
+     * @return mixed|null
      */
     public function decodeJson(string $jsonValue, bool $assoc = false, ?int $depth = null, ?int $options = null): array;
 }

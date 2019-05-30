@@ -34,7 +34,6 @@
                     export APPLICATION_STORE={{ job.store }}
                     cd {{ workingDir }}
                 {% endblock setup -%}
-
                 {%- block command %}
                     {{ job.command }}
                 {% endblock command -%}

@@ -7,33 +7,33 @@
 
 namespace Spryker\Zed\SchedulerJenkins\Business\Api\Builder;
 
-use Generated\Shared\Transfer\JenkinsResponseTransfer;
+use Generated\Shared\Transfer\SchedulerJenkinsResponseTransfer;
 
 interface JenkinsResponseBuilderInterface
 {
     /**
-     * @return \Generated\Shared\Transfer\JenkinsResponseTransfer
+     * @return \Generated\Shared\Transfer\SchedulerJenkinsResponseTransfer
      */
-    public function build(): JenkinsResponseTransfer;
+    public function build(): SchedulerJenkinsResponseTransfer;
 
     /**
      * @param bool $status
      *
-     * @return $this
+     * @return static
      */
     public function withStatus(bool $status);
 
     /**
      * @param string $message
      *
-     * @return $this
+     * @return static
      */
     public function withMessage(string $message);
 
     /**
      * @param string $payload
      *
-     * @return $this
+     * @return static
      */
     public function withPayload(string $payload);
 }

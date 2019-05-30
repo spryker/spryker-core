@@ -7,11 +7,11 @@
 
 namespace Spryker\Zed\SchedulerJenkins\Business\Api;
 
-use Generated\Shared\Transfer\JenkinsResponseTransfer;
+use Generated\Shared\Transfer\SchedulerJenkinsResponseTransfer;
 use GuzzleHttp\Exception\BadResponseException;
 use Spryker\Zed\SchedulerJenkins\Business\Api\Builder\JenkinsResponseBuilderInterface;
+use Spryker\Zed\SchedulerJenkins\Business\Api\Configuration\ConfigurationProviderInterface;
 use Spryker\Zed\SchedulerJenkins\Dependency\Guzzle\SchedulerJenkinsToGuzzleInterface;
-use Spryker\Zed\SchedulerJenkins\SchedulerJenkinsConfig;
 
 class JenkinsApi implements JenkinsApiInterface
 {
@@ -32,34 +32,26 @@ class JenkinsApi implements JenkinsApiInterface
     protected $client;
 
     /**
-     * @var \Spryker\Zed\SchedulerJenkins\SchedulerJenkinsConfig
-     */
-    protected $schedulerJenkinsConfig;
-
-    /**
      * @var \Spryker\Zed\SchedulerJenkins\Business\Api\Builder\JenkinsResponseBuilderInterface
      */
     protected $jenkinsResponseBuilder;
 
     /**
-     * @var \Spryker\Zed\SchedulerJenkins\Business\Api\JenkinsConfigurationReaderInterface
+     * @var \Spryker\Zed\SchedulerJenkins\Business\Api\Configuration\ConfigurationProviderInterface
      */
     protected $jenkinsConfigurationReader;
 
     /**
      * @param \Spryker\Zed\SchedulerJenkins\Dependency\Guzzle\SchedulerJenkinsToGuzzleInterface $client
-     * @param \Spryker\Zed\SchedulerJenkins\SchedulerJenkinsConfig $schedulerJenkinsConfig
      * @param \Spryker\Zed\SchedulerJenkins\Business\Api\Builder\JenkinsResponseBuilderInterface $jenkinsResponseBuilder
-     * @param \Spryker\Zed\SchedulerJenkins\Business\Api\JenkinsConfigurationReaderInterface $jenkinsConfigurationReader
+     * @param \Spryker\Zed\SchedulerJenkins\Business\Api\Configuration\ConfigurationProviderInterface $jenkinsConfigurationReader
      */
     public function __construct(
         SchedulerJenkinsToGuzzleInterface $client,
-        SchedulerJenkinsConfig $schedulerJenkinsConfig,
         JenkinsResponseBuilderInterface $jenkinsResponseBuilder,
-        JenkinsConfigurationReaderInterface $jenkinsConfigurationReader
+        ConfigurationProviderInterface $jenkinsConfigurationReader
     ) {
         $this->client = $client;
-        $this->schedulerJenkinsConfig = $schedulerJenkinsConfig;
         $this->jenkinsResponseBuilder = $jenkinsResponseBuilder;
         $this->jenkinsConfigurationReader = $jenkinsConfigurationReader;
     }
@@ -68,9 +60,9 @@ class JenkinsApi implements JenkinsApiInterface
      * @param string $idScheduler
      * @param string $urlPath
      *
-     * @return \Generated\Shared\Transfer\JenkinsResponseTransfer
+     * @return \Generated\Shared\Transfer\SchedulerJenkinsResponseTransfer
      */
-    public function executeGetRequest(string $idScheduler, string $urlPath): JenkinsResponseTransfer
+    public function executeGetRequest(string $idScheduler, string $urlPath): SchedulerJenkinsResponseTransfer
     {
         return $this->executeRequest(static::REQUEST_GET_METHOD, $idScheduler, $urlPath);
     }
@@ -80,9 +72,9 @@ class JenkinsApi implements JenkinsApiInterface
      * @param string $urlPath
      * @param string $body
      *
-     * @return \Generated\Shared\Transfer\JenkinsResponseTransfer
+     * @return \Generated\Shared\Transfer\SchedulerJenkinsResponseTransfer
      */
-    public function executePostRequest(string $idScheduler, string $urlPath, string $body = ''): JenkinsResponseTransfer
+    public function executePostRequest(string $idScheduler, string $urlPath, string $body = ''): SchedulerJenkinsResponseTransfer
     {
         return $this->executeRequest(static::REQUEST_POST_METHOD, $idScheduler, $urlPath);
     }
@@ -93,19 +85,21 @@ class JenkinsApi implements JenkinsApiInterface
      * @param string $urlPath
      * @param string $body
      *
-     * @return \Generated\Shared\Transfer\JenkinsResponseTransfer
+     * @return \Generated\Shared\Transfer\SchedulerJenkinsResponseTransfer
      */
-    protected function executeRequest(string $method, string $idScheduler, string $urlPath, string $body = ''): JenkinsResponseTransfer
-    {
+    protected function executeRequest(
+        string $method,
+        string $idScheduler,
+        string $urlPath,
+        string $body = ''
+    ): SchedulerJenkinsResponseTransfer {
         try {
             $baseUrl = $this->jenkinsConfigurationReader->getJenkinsBaseUrlBySchedulerId($idScheduler, $urlPath);
             $requestOptions = $this->getRequestOptions($idScheduler, $body);
             $response = $this->client->request($method, $baseUrl, $requestOptions);
         } catch (BadResponseException $badResponseException) {
-            $exceptionMessage = $badResponseException->getResponse()->getBody()->getContents();
-
             return $this->jenkinsResponseBuilder
-                ->withMessage($exceptionMessage)
+                ->withMessage($badResponseException->getMessage())
                 ->withStatus(false)
                 ->build();
         }
@@ -148,7 +142,7 @@ class JenkinsApi implements JenkinsApiInterface
             ];
         }
 
-        if ($this->schedulerJenkinsConfig->isJenkinsCsrfProtectionEnabled()) {
+        if ($this->jenkinsConfigurationReader->isJenkinsCsrfProtectionEnabled()) {
             $httpHeader[] = $this->client->request(static::REQUEST_GET_METHOD, static::JENKINS_URL_API_CSRF_TOKEN);
         }
 

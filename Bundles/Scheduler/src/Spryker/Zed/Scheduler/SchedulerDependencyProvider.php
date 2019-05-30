@@ -7,10 +7,8 @@
 
 namespace Spryker\Zed\Scheduler;
 
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\Scheduler\Dependency\Store\SchedulerToStoreBridge;
 
 /**
  * @method \Spryker\Zed\Scheduler\SchedulerConfig getConfig()
@@ -20,8 +18,6 @@ class SchedulerDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_SCHEDULE_READER = 'SCHEDULER::PLUGINS_SCHEDULE_READER';
     public const PLUGINS_SCHEDULER_ADAPTER = 'SCHEDULER::PLUGINS_SCHEDULER_ADAPTER';
 
-    public const STORE = 'STORE';
-
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -29,23 +25,8 @@ class SchedulerDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container): Container
     {
-        $container = $this->addStore($container);
         $container = $this->addReaderPlugins($container);
         $container = $this->addAdapterPlugins($container);
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    public function addStore(Container $container): Container
-    {
-        $container->set(static::STORE, function (Container $container) {
-            return new SchedulerToStoreBridge(Store::getInstance());
-        });
 
         return $container;
     }

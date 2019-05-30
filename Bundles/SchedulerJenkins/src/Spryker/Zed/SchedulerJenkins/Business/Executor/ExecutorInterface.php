@@ -7,18 +7,16 @@
 
 namespace Spryker\Zed\SchedulerJenkins\Business\Executor;
 
+use Generated\Shared\Transfer\SchedulerJenkinsResponseTransfer;
 use Generated\Shared\Transfer\SchedulerJobTransfer;
-use Generated\Shared\Transfer\SchedulerResponseTransfer;
 
 interface ExecutorInterface
 {
     /**
      * @param string $idScheduler
-     * @param \Generated\Shared\Transfer\SchedulerJobTransfer $schedulerJobTransfer
+     * @param \Generated\Shared\Transfer\SchedulerJobTransfer $jobTransfer
      *
-     * @throws \Spryker\Zed\SchedulerJenkins\Business\Api\Exception\JenkinsBaseUrlNotFound
-     *
-     * @return \Generated\Shared\Transfer\SchedulerResponseTransfer
+     * @return \Generated\Shared\Transfer\SchedulerJenkinsResponseTransfer
      */
-    public function execute(string $idScheduler, SchedulerJobTransfer $schedulerJobTransfer): SchedulerResponseTransfer;
+    public function execute(string $idScheduler, SchedulerJobTransfer $jobTransfer): SchedulerJenkinsResponseTransfer;
 }

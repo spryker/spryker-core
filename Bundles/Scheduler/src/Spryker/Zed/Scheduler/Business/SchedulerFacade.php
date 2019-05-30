@@ -22,32 +22,34 @@ class SchedulerFacade extends AbstractFacade implements SchedulerFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\SchedulerFilterTransfer $schedulerFilterTransfer
+     * @param \Generated\Shared\Transfer\SchedulerFilterTransfer $filterTransfer
      * @param \Generated\Shared\Transfer\SchedulerScheduleTransfer $scheduleTransfer
      *
      * @return \Generated\Shared\Transfer\SchedulerScheduleTransfer
      */
-    public function readScheduleFromPhpSource(SchedulerFilterTransfer $schedulerFilterTransfer, SchedulerScheduleTransfer $scheduleTransfer): SchedulerScheduleTransfer
-    {
+    public function readScheduleFromPhpSource(
+        SchedulerFilterTransfer $filterTransfer,
+        SchedulerScheduleTransfer $scheduleTransfer
+    ): SchedulerScheduleTransfer {
         return $this->getFactory()
             ->createPhpSchedulerReader()
-            ->readSchedule($schedulerFilterTransfer, $scheduleTransfer);
+            ->readSchedule($filterTransfer, $scheduleTransfer);
     }
 
     /**
      * {@inheritdoc}
-     *
+     *ф
      * @api
      *
-     * @param \Generated\Shared\Transfer\SchedulerFilterTransfer $schedulerFilterTransfer
+     * @param \Generated\Shared\Transfer\SchedulerFilterTransfer $filterTransfer
      *
      * @return \Generated\Shared\Transfer\SchedulerResponseCollectionTransfer
      */
-    public function setup(SchedulerFilterTransfer $schedulerFilterTransfer): SchedulerResponseCollectionTransfer
+    public function setup(SchedulerFilterTransfer $filterTransfer): SchedulerResponseCollectionTransfer
     {
         return $this->getFactory()
             ->createSchedulerSetup()
-            ->execute($schedulerFilterTransfer);
+            ->execute($filterTransfer);
     }
 
     /**
@@ -55,15 +57,15 @@ class SchedulerFacade extends AbstractFacade implements SchedulerFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\SchedulerFilterTransfer $schedulerFilterTransfer
+     * @param \Generated\Shared\Transfer\SchedulerFilterTransfer $filterTransfer
      *
      * @return \Generated\Shared\Transfer\SchedulerResponseCollectionTransfer
      */
-    public function clean(SchedulerFilterTransfer $schedulerFilterTransfer): SchedulerResponseCollectionTransfer
+    public function clean(SchedulerFilterTransfer $filterTransfer): SchedulerResponseCollectionTransfer
     {
         return $this->getFactory()
             ->createSchedulerClean()
-            ->execute($schedulerFilterTransfer);
+            ->execute($filterTransfer);
     }
 
     /**
@@ -71,15 +73,15 @@ class SchedulerFacade extends AbstractFacade implements SchedulerFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\SchedulerFilterTransfer $schedulerFilterTransfer
+     * @param \Generated\Shared\Transfer\SchedulerFilterTransfer $filterTransfer
      *
      * @return \Generated\Shared\Transfer\SchedulerResponseCollectionTransfer
      */
-    public function resume(SchedulerFilterTransfer $schedulerFilterTransfer): SchedulerResponseCollectionTransfer
+    public function resume(SchedulerFilterTransfer $filterTransfer): SchedulerResponseCollectionTransfer
     {
         return $this->getFactory()
             ->createSchedulerResume()
-            ->execute($schedulerFilterTransfer);
+            ->execute($filterTransfer);
     }
 
     /**
@@ -87,14 +89,14 @@ class SchedulerFacade extends AbstractFacade implements SchedulerFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\SchedulerFilterTransfer $schedulerFilterTransfer
+     * @param \Generated\Shared\Transfer\SchedulerFilterTransfer $filterTransfer
      *
      * @return \Generated\Shared\Transfer\SchedulerResponseCollectionTransfer
      */
-    public function suspend(SchedulerFilterTransfer $schedulerFilterTransfer): SchedulerResponseCollectionTransfer
+    public function suspend(SchedulerFilterTransfer $filterTransfer): SchedulerResponseCollectionTransfer
     {
         return $this->getFactory()
             ->createSchedulerSuspend()
-            ->execute($schedulerFilterTransfer);
+            ->execute($filterTransfer);
     }
 }

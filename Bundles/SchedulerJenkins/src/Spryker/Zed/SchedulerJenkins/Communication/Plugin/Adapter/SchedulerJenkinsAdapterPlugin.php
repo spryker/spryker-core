@@ -29,7 +29,7 @@ class SchedulerJenkinsAdapterPlugin extends AbstractPlugin implements SchedulerA
      */
     public function setup(SchedulerScheduleTransfer $scheduleTransfer): SchedulerResponseTransfer
     {
-        return $this->getFacade()->setupSchedulerJenkins($scheduleTransfer);
+        return $this->getFacade()->setupJenkins($scheduleTransfer);
     }
 
     /**
@@ -43,7 +43,7 @@ class SchedulerJenkinsAdapterPlugin extends AbstractPlugin implements SchedulerA
      */
     public function clean(SchedulerScheduleTransfer $scheduleTransfer): SchedulerResponseTransfer
     {
-        return $this->getFacade()->cleanSchedulerJenkins($scheduleTransfer);
+        return $this->getFacade()->cleanJenkins($scheduleTransfer);
     }
 
     /**
@@ -57,7 +57,7 @@ class SchedulerJenkinsAdapterPlugin extends AbstractPlugin implements SchedulerA
      */
     public function suspend(SchedulerScheduleTransfer $scheduleTransfer): SchedulerResponseTransfer
     {
-        return $this->getFacade()->suspendSchedulerJenkins($scheduleTransfer);
+        return $this->getFacade()->suspendJenkins($scheduleTransfer);
     }
 
     /**
@@ -71,6 +71,6 @@ class SchedulerJenkinsAdapterPlugin extends AbstractPlugin implements SchedulerA
      */
     public function resume(SchedulerScheduleTransfer $scheduleTransfer): SchedulerResponseTransfer
     {
-        return $this->getFacade()->resumeSchedulerJenkins($scheduleTransfer);
+        return $this->getFacade()->resumeJenkins($scheduleTransfer);
     }
 }

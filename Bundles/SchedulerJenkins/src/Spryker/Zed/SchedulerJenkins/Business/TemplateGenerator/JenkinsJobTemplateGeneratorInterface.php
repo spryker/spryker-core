@@ -12,9 +12,9 @@ use Generated\Shared\Transfer\SchedulerJobTransfer;
 interface JenkinsJobTemplateGeneratorInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\SchedulerJobTransfer $schedulerJobTransfer
+     * @param \Generated\Shared\Transfer\SchedulerJobTransfer $jobTransfer
      *
      * @return string
      */
-    public function getJobTemplate(SchedulerJobTransfer $schedulerJobTransfer): string;
+    public function generateJobTemplate(SchedulerJobTransfer $jobTransfer): string;
 }

@@ -12,10 +12,9 @@ use Generated\Shared\Transfer\SchedulerFilterTransfer;
 interface SchedulerFilterInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\SchedulerFilterTransfer $schedulerFilterTransfer
-     * @param string[] $allSchedulerKeys
+     * @param \Generated\Shared\Transfer\SchedulerFilterTransfer $filterTransfer
      *
-     * @return array
+     * @return \Spryker\Zed\SchedulerExtension\Dependency\Plugin\SchedulerAdapterPluginInterface[]
      */
-    public function filterSchedulers(SchedulerFilterTransfer $schedulerFilterTransfer, array $allSchedulerKeys): array;
+    public function getFilteredSchedulerAdapters(SchedulerFilterTransfer $filterTransfer): array;
 }

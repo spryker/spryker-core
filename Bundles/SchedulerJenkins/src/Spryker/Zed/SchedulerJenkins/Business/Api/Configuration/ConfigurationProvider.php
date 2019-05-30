@@ -5,13 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\SchedulerJenkins\Business\Api;
+namespace Spryker\Zed\SchedulerJenkins\Business\Api\Configuration;
 
 use Spryker\Shared\SchedulerJenkins\SchedulerJenkinsConfig as SharedSchedulerJenkinsConfig;
-use Spryker\Zed\SchedulerJenkins\Business\Api\Exception\JenkinsBaseUrlNotFound;
+use Spryker\Zed\SchedulerJenkins\Business\Api\Exception\WrongJenkinsConfiguration;
 use Spryker\Zed\SchedulerJenkins\SchedulerJenkinsConfig;
 
-class JenkinsConfigurationReader implements JenkinsConfigurationReaderInterface
+class ConfigurationProvider implements ConfigurationProviderInterface
 {
     /**
      * @var \Spryker\Zed\SchedulerJenkins\SchedulerJenkinsConfig
@@ -21,9 +21,8 @@ class JenkinsConfigurationReader implements JenkinsConfigurationReaderInterface
     /**
      * @param \Spryker\Zed\SchedulerJenkins\SchedulerJenkinsConfig $schedulerJenkinsConfig
      */
-    public function __construct(
-        SchedulerJenkinsConfig $schedulerJenkinsConfig
-    ) {
+    public function __construct(SchedulerJenkinsConfig $schedulerJenkinsConfig)
+    {
         $this->schedulerJenkinsConfig = $schedulerJenkinsConfig;
     }
 
@@ -36,7 +35,8 @@ class JenkinsConfigurationReader implements JenkinsConfigurationReaderInterface
     {
         $schedulerJenkinsConfiguration = $this->getJenkinsConfigurationBySchedulerId($schedulerId);
 
-        if (!isset($schedulerJenkinsConfiguration[SharedSchedulerJenkinsConfig::SCHEDULER_JENKINS_CREDENTIALS])) {
+        if (!array_key_exists(SharedSchedulerJenkinsConfig::SCHEDULER_JENKINS_CREDENTIALS,
+            $schedulerJenkinsConfiguration)) {
             return [];
         }
 
@@ -47,7 +47,7 @@ class JenkinsConfigurationReader implements JenkinsConfigurationReaderInterface
      * @param string $schedulerId
      * @param string $urlPath
      *
-     * @throws \Spryker\Zed\SchedulerJenkins\Business\Api\Exception\JenkinsBaseUrlNotFound
+     * @throws \Spryker\Zed\SchedulerJenkins\Business\Api\Exception\WrongJenkinsConfiguration
      *
      * @return string
      */
@@ -55,11 +55,20 @@ class JenkinsConfigurationReader implements JenkinsConfigurationReaderInterface
     {
         $schedulerJenkinsConfiguration = $this->getJenkinsConfigurationBySchedulerId($schedulerId);
 
-        if (!isset($schedulerJenkinsConfiguration[SharedSchedulerJenkinsConfig::SCHEDULER_JENKINS_BASE_URL])) {
-            throw new JenkinsBaseUrlNotFound();
+        if (!array_key_exists(SharedSchedulerJenkinsConfig::SCHEDULER_JENKINS_BASE_URL,
+            $schedulerJenkinsConfiguration)) {
+            throw new WrongJenkinsConfiguration('');
         }
 
         return $schedulerJenkinsConfiguration[SharedSchedulerJenkinsConfig::SCHEDULER_JENKINS_BASE_URL] . $urlPath;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isJenkinsCsrfProtectionEnabled(): bool
+    {
+        return $this->schedulerJenkinsConfig->isJenkinsCsrfProtectionEnabled();
     }
 
     /**
@@ -70,6 +79,10 @@ class JenkinsConfigurationReader implements JenkinsConfigurationReaderInterface
     protected function getJenkinsConfigurationBySchedulerId(string $schedulerId): array
     {
         $schedulerJenkinsConfiguration = $this->schedulerJenkinsConfig->getJenkinsConfiguration();
+
+        if (!is_array($schedulerJenkinsConfiguration)) {
+            return [];
+        }
 
         return $schedulerJenkinsConfiguration[$schedulerId];
     }

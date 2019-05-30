@@ -12,6 +12,10 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class SchedulerConfig extends AbstractBundleConfig
 {
+    public const ROLE_ADMIN = 'admin';
+    public const ROLE_REPORTING = 'reporting';
+    public const ROLE_EMPTY = 'empty';
+
     /**
      * Specification:
      * - Returns the path to PHP file to retrieve schedule for particular scheduler
@@ -31,6 +35,26 @@ class SchedulerConfig extends AbstractBundleConfig
             'cronjobs',
             $idScheduler . '.php',
         ]);
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getRoles(): array
+    {
+        return [
+            static::ROLE_ADMIN,
+            static::ROLE_REPORTING,
+            static::ROLE_EMPTY,
+        ];
+    }
+
+    /**
+     * @return string
+     */
+    public function getDefaultRole(): string
+    {
+        return static::ROLE_ADMIN;
     }
 
     /**

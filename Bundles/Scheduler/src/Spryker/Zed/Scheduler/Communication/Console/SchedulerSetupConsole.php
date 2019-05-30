@@ -25,6 +25,10 @@ class SchedulerSetupConsole extends AbstractSchedulerConsole
     public const COMMAND_NAME = 'scheduler:setup';
     public const DESCRIPTION = 'Sets up scheduler cron jobs.';
 
+    protected const ROLES_OPTION = 'roles';
+    protected const ROLES_OPTION_SHORTCUT = 'r';
+    protected const ROLES_OPTION_DESCRIPTION = 'Job roles to include.';
+
     protected const SCHEDULERS_OPTION = 'schedulers';
     protected const SCHEDULERS_OPTION_SHORTCUT = 's';
     protected const SCHEDULERS_OPTION_DESCRIPTION = 'Schedulers that will be executed on this host.';
@@ -36,6 +40,14 @@ class SchedulerSetupConsole extends AbstractSchedulerConsole
     {
         $this->setName(self::COMMAND_NAME);
         $this->setDescription(self::DESCRIPTION);
+
+        $this->addOption(
+            static::ROLES_OPTION,
+            static::ROLES_OPTION_SHORTCUT,
+            InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY,
+            static::ROLES_OPTION_DESCRIPTION,
+            []
+        );
 
         $this->addOption(
             static::SCHEDULERS_OPTION,
@@ -56,16 +68,19 @@ class SchedulerSetupConsole extends AbstractSchedulerConsole
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $roles = $input->getOption(static::ROLES_OPTION);
         $schedulers = $input->getOption(static::SCHEDULERS_OPTION);
 
-        $schedulerFilterTransfer = $this->getFactory()
+        $filterTransfer = $this->getFactory()
             ->createSchedulerFilterBuilder()
-                ->withSchedulerIds($schedulers)
+            ->withRoles($roles)
+            ->withStore(APPLICATION_STORE)
+            ->withSchedulerIds($schedulers)
             ->build();
 
-        $schedulerResponseCollectionTransfer = $this->getFacade()->setup($schedulerFilterTransfer);
+        $responseCollectionTransfer = $this->getFacade()->setup($filterTransfer);
 
-        $this->outputCommandResponse($schedulerResponseCollectionTransfer, $output);
+        $this->outputCommandResponse($responseCollectionTransfer, $output);
 
         return static::CODE_SUCCESS;
     }

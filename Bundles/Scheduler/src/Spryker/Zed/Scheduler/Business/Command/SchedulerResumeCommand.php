@@ -15,14 +15,14 @@ class SchedulerResumeCommand extends AbstractSchedulerCommand
 {
     /**
      * @param \Spryker\Zed\SchedulerExtension\Dependency\Plugin\SchedulerAdapterPluginInterface $schedulerAdapterPlugin
-     * @param \Generated\Shared\Transfer\SchedulerScheduleTransfer $schedulerScheduleTransfer
+     * @param \Generated\Shared\Transfer\SchedulerScheduleTransfer $scheduleTransfer
      *
      * @return \Generated\Shared\Transfer\SchedulerResponseTransfer
      */
     protected function executeCommand(
         SchedulerAdapterPluginInterface $schedulerAdapterPlugin,
-        SchedulerScheduleTransfer $schedulerScheduleTransfer
+        SchedulerScheduleTransfer $scheduleTransfer
     ): SchedulerResponseTransfer {
-        return $schedulerAdapterPlugin->resume($schedulerScheduleTransfer);
+        return $schedulerAdapterPlugin->resume($scheduleTransfer);
     }
 }
