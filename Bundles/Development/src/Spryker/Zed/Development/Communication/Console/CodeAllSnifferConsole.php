@@ -68,14 +68,14 @@ class CodeAllSnifferConsole extends Console
     }
 
     /**
-     * @param string $string
+     * @param string $command
      *
      * @return \Symfony\Component\Process\Process
      */
-    protected function createProcess(string $string): Process
+    protected function createProcess(string $command): Process
     {
         return new Process(
-            $string,
+            $command,
             null,
             null,
             4800,
