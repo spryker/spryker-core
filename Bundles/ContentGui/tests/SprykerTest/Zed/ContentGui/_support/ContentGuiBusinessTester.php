@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\ContentGui;
 
 use Codeception\Actor;
+use Codeception\Scenario;
 use Generated\Shared\Transfer\ContentTransfer;
 use Generated\Shared\Transfer\LocalizedContentTransfer;
 use Spryker\Zed\ContentGui\ContentGuiConfig;
@@ -40,6 +41,27 @@ class ContentGuiBusinessTester extends Actor
     protected const TWIG_FUNCTION_TEMPLATE_BANNER = '{{ content_banner(%d, \'%s\') }}';
     protected const TWIG_FUNCTION_TEMPLATE_PRODUCT_ABSTRACT_LIST = '{{ content_product_abstract_list(%d, \'%s\') }}';
     protected const TYPE_ABSTRACT_PRODUCT_LIST = 'Abstract Product List';
+
+    /**
+     * @var \Generated\Shared\Transfer\ContentTransfer
+     */
+    protected $bannerContentTransfer;
+
+    /**
+     * @var \Generated\Shared\Transfer\ContentTransfer
+     */
+    protected $abstractProductListContentTransfer;
+
+    /**
+     * @param \Codeception\Scenario $scenario
+     */
+    public function __construct(Scenario $scenario)
+    {
+        parent::__construct($scenario);
+
+        $this->bannerContentTransfer = $this->createBannerContentItem();
+        $this->abstractProductListContentTransfer = $this->createAbstractProductListContentItem();
+    }
 
     /**
      * @return \Generated\Shared\Transfer\ContentTransfer
@@ -82,94 +104,147 @@ class ContentGuiBusinessTester extends Actor
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ContentTransfer $bannerContentTransfer
      * @param bool $addLineBreak
      *
      * @return string
      */
-    public function getOneTwigExpressionInString(ContentTransfer $bannerContentTransfer, bool $addLineBreak = false): string
+    public function getOneTwigExpression(bool $addLineBreak = false): string
     {
-        return $this->createTwigExpression($bannerContentTransfer, static::TEMPLATE_IDENTIFIER_DEFAULT)
+        return $this->createTwigExpression($this->bannerContentTransfer, static::TEMPLATE_IDENTIFIER_DEFAULT)
             . ($addLineBreak ? "\n" : '');
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ContentTransfer $bannerContentTransfer
      * @param bool $addLineBreak
      *
      * @return string
      */
-    public function getTwoSameTwigExpressionsInString(ContentTransfer $bannerContentTransfer, bool $addLineBreak = false): string
+    public function getTwoSameTwigExpressions(bool $addLineBreak = false): string
     {
-        return $this->createTwigExpression($bannerContentTransfer, static::TEMPLATE_IDENTIFIER_DEFAULT)
-            . $this->createTwigExpression($bannerContentTransfer, static::TEMPLATE_IDENTIFIER_DEFAULT)
+        return $this->createTwigExpression($this->bannerContentTransfer, static::TEMPLATE_IDENTIFIER_DEFAULT)
+            . $this->createTwigExpression($this->bannerContentTransfer, static::TEMPLATE_IDENTIFIER_DEFAULT)
             . ($addLineBreak ? "\n" : '');
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ContentTransfer $bannerContentTransfer
-     * @param \Generated\Shared\Transfer\ContentTransfer $abstractProductListContentTransfer
      * @param bool $addLineBreak
      *
      * @return string
      */
-    public function getTwoDifferentTwigExpressionInString(
-        ContentTransfer $bannerContentTransfer,
-        ContentTransfer $abstractProductListContentTransfer,
-        bool $addLineBreak = false
-    ): string {
-        return $this->createTwigExpression($bannerContentTransfer, static::TEMPLATE_IDENTIFIER_DEFAULT)
-            . $this->createTwigExpression($abstractProductListContentTransfer, static::TEMPLATE_IDENTIFIER_TOP_TITLE)
+    public function getTwoSameTwigExpressionsWithInvalidHtml(bool $addLineBreak = false): string
+    {
+        return $this->createTwigExpression($this->bannerContentTransfer, static::TEMPLATE_IDENTIFIER_DEFAULT)
+            . '<p>' . $this->createTwigExpression($this->bannerContentTransfer, static::TEMPLATE_IDENTIFIER_DEFAULT)
+            . ($addLineBreak ? "\n" : '');
+    }
+
+    /**
+     * @param bool $addLineBreak
+     *
+     * @return string
+     */
+    public function getTwoDifferentTwigExpression(bool $addLineBreak = false): string
+    {
+        return $this->createTwigExpression($this->bannerContentTransfer, static::TEMPLATE_IDENTIFIER_DEFAULT)
+            . $this->createTwigExpression($this->abstractProductListContentTransfer, static::TEMPLATE_IDENTIFIER_TOP_TITLE)
             . ($addLineBreak ? "\n" : '');
     }
 
     /**
      * @return string
      */
-    public function getStringWithoutTwigExpressionsAndWidgets(): string
+    public function getInvalidContentItemTwigExpression(): string
+    {
+        return "{{ content_banner(0, 'test') }}";
+    }
+
+    /**
+     * @return string
+     */
+    public function getEmptyString(): string
     {
         return '';
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ContentTransfer $bannerContentTransfer
-     *
      * @return string
      */
-    public function getOneHtmlWidgetInString(ContentTransfer $bannerContentTransfer): string
+    public function getWrongHtml(): string
     {
-        return $this->createWidget($bannerContentTransfer);
+        return '<p></p><div>';
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ContentTransfer $bannerContentTransfer
-     *
      * @return string
      */
-    public function getTwoSameHtmlWidgetsInString(ContentTransfer $bannerContentTransfer): string
+    public function getStringWithPartOfTwigExpression(): string
     {
-        return $this->createWidget($bannerContentTransfer)
-            . $this->createWidget($bannerContentTransfer);
+        return '{{ content_banner jjust text';
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ContentTransfer $bannerContentTransfer
-     * @param \Generated\Shared\Transfer\ContentTransfer $abstractProductListContentTransfer
+     * @param bool $wrapper
      *
      * @return string
      */
-    public function getTwoDifferentHtmlWidgetsInString(ContentTransfer $bannerContentTransfer, ContentTransfer $abstractProductListContentTransfer): string
+    public function getOneHtmlWidget($wrapper = false): string
     {
-        return $this->createWidget($bannerContentTransfer)
-            . $this->createWidget($abstractProductListContentTransfer);
+        return $this->createWidget($this->bannerContentTransfer, $wrapper);
+    }
+
+    /**
+     * @param bool $wrapper
+     *
+     * @return string
+     */
+    public function getTwoSameHtmlWidgets(bool $wrapper = false): string
+    {
+        return $this->createWidget($this->bannerContentTransfer, $wrapper)
+            . $this->createWidget($this->bannerContentTransfer, $wrapper);
+    }
+
+    /**
+     * @param bool $wrapper
+     *
+     * @return string
+     */
+    public function getTwoSameHtmlWidgetsWithInvalidHtml(bool $wrapper = false): string
+    {
+        return $this->createWidget($this->bannerContentTransfer, $wrapper)
+            . '<p>' . $this->createWidget($this->bannerContentTransfer, $wrapper);
+    }
+
+    /**
+     * @param bool $wrapper
+     *
+     * @return string
+     */
+    public function getTwoDifferentHtmlWidgets(bool $wrapper = false): string
+    {
+        return $this->createWidget($this->bannerContentTransfer, $wrapper)
+            . $this->createWidget($this->abstractProductListContentTransfer, $wrapper);
+    }
+
+    /**
+     * @return string
+     */
+    public function getInvalidHtmlWidget(): string
+    {
+        return '<span class="content-item-editor js-content-item-editor" '
+                . 'contenteditable="false" '
+                . 'data-type="' . $this->bannerContentTransfer->getContentTypeKey() . '" '
+                . 'data-id="' . $this->bannerContentTransfer->getIdContent() . '" '
+                . 'data-template="default" '
+                . 'data-twig-expression="' . $this->createTwigExpression($this->bannerContentTransfer, 'default') . '">';
     }
 
     /**
      * @param \Generated\Shared\Transfer\ContentTransfer $contentTransfer
+     * @param bool $wrapper
      *
      * @return string
      */
-    protected function createWidget(ContentTransfer $contentTransfer): string
+    protected function createWidget(ContentTransfer $contentTransfer, bool $wrapper = false): string
     {
         $editorContentWidgetTemplate = $this->getConfig()->getEditorContentWidgetTemplate();
 
@@ -191,7 +266,7 @@ class ContentGuiBusinessTester extends Actor
             $contentGuiConfig->getParameterTemplateDisplayName() => $templateDisplayName,
         ]);
 
-        return sprintf($contentGuiConfig->getEditorContentWidgetWrapper(), $html);
+        return $wrapper ? sprintf($contentGuiConfig->getEditorContentWidgetWrapper(), $html) : $html;
     }
 
     /**

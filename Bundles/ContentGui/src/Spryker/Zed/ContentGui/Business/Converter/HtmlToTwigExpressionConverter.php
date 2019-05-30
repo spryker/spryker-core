@@ -42,10 +42,19 @@ class HtmlToTwigExpressionConverter implements HtmlConverterInterface
             return $html;
         }
 
-        foreach ($replacements as $replacement) {
-            $parentNode = $replacement['oldNode']->parentNode;
-            $parentNode->insertBefore($replacement['newNode'], $replacement['oldNode']);
-            $parentNode->removeChild($replacement['oldNode']);
+        foreach ($replacements as $key => $replacement) {
+            if ($replacement['oldNode']->parentNode->tagName === 'html') {
+                $this->replaceElementsWithoutWrappers($replacement);
+                continue;
+            }
+
+            $parentNode = $replacement['oldNode']->parentNode->parentNode;
+            $parentNode->insertBefore($replacement['newNode'], $replacement['oldNode']->parentNode);
+            $nextKey = $key + 1;
+
+            if (!isset($replacements[$nextKey]['oldNode']) || !$replacements[$nextKey]['oldNode']->parentNode->isSameNode($replacement['oldNode']->parentNode)) {
+                $parentNode->removeChild($replacement['oldNode']->parentNode);
+            }
         }
 
         $html = str_replace(['<html>', '</html>'], '', $this->domDocument->saveHTML());
@@ -64,21 +73,21 @@ class HtmlToTwigExpressionConverter implements HtmlConverterInterface
 
         foreach ($widgets as $widget) {
             $twigExpression = $this->domDocument->createTextNode($widget->getAttribute('data-twig-expression'));
-            $replacements[] = $this->addReplacement($twigExpression, $widget->parentNode);
+            $replacements[] = $this->addReplacement($twigExpression, $widget);
         }
 
-        return $replacements;
+        return array_reverse($replacements);
     }
 
     /**
      * @param \DOMText $twigExpression
-     * @param \DOMNode $parentNode
+     * @param \DOMNode $oldNode
      *
      * @return \DOMNode[]
      */
-    protected function addReplacement(DOMText $twigExpression, DOMNode $parentNode): array
+    protected function addReplacement(DOMText $twigExpression, DOMNode $oldNode): array
     {
-        return ['oldNode' => $parentNode, 'newNode' => $twigExpression];
+        return ['oldNode' => $oldNode, 'newNode' => $twigExpression];
     }
 
     /**
@@ -87,5 +96,20 @@ class HtmlToTwigExpressionConverter implements HtmlConverterInterface
     protected function createDOMXPath(): DOMXPath
     {
         return new DOMXPath($this->domDocument);
+    }
+
+    /**
+     * @param array $replacement
+     *
+     * @return void
+     */
+    protected function replaceElementsWithoutWrappers(array $replacement): void
+    {
+        $parentNode = $replacement['oldNode']->parentNode;
+        $p = $this->domDocument->createElement('p');
+        $parentNode->insertBefore($p, $replacement['oldNode']);
+        $p->appendChild($replacement['oldNode']);
+        $parentNode->insertBefore($replacement['newNode'], $p);
+        $parentNode->removeChild($p);
     }
 }

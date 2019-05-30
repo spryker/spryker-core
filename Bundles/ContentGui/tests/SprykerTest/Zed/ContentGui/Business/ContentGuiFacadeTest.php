@@ -36,24 +36,11 @@ class ContentGuiFacadeTest extends Unit
     protected $tester;
 
     /**
-     * @var \Generated\Shared\Transfer\ContentTransfer
-     */
-    protected $bannerContentTransfer;
-
-    /**
-     * @var \Generated\Shared\Transfer\ContentTransfer
-     */
-    protected $abstractProductListContentTransfer;
-
-    /**
      * @return void
      */
     public function setUp(): void
     {
         parent::setUp();
-
-        $this->bannerContentTransfer = $this->tester->createBannerContentItem();
-        $this->abstractProductListContentTransfer = $this->tester->createAbstractProductListContentItem();
 
         $this->tester->setDependency(ContentGuiDependencyProvider::PLUGINS_CONTENT_EDITOR, [
             new ContentBannerContentGuiEditorPluginMock(),
@@ -62,374 +49,131 @@ class ContentGuiFacadeTest extends Unit
     }
 
     /**
-     * @return void
-     */
-    public function testConvertOneCmsGlossaryTwigExpressionToHtml(): void
-    {
-        // Arrange
-        $inputString = $this->tester->getOneTwigExpressionInString($this->bannerContentTransfer);
-        $expectedResult = $this->tester->getOneHtmlWidgetInString($this->bannerContentTransfer);
-
-        // Act
-        $cmsGlossaryTransfer = $this->runConvertCmsGlossaryTwigExpressionToHtml($inputString);
-
-        // Assert
-        $this->assertCmsGlossaryResult($cmsGlossaryTransfer, $expectedResult);
-    }
-
-    /**
-     * @return void
-     */
-    public function testConvertTwoSameCmsGlossaryTwigExpressionsToHtml(): void
-    {
-        // Arrange
-        $inputString = $this->tester->getTwoSameTwigExpressionsInString($this->bannerContentTransfer);
-        $expectedResult = $this->tester->getTwoSameHtmlWidgetsInString($this->bannerContentTransfer);
-
-        // Act
-        $cmsGlossaryTransfer = $this->runConvertCmsGlossaryTwigExpressionToHtml($inputString);
-
-        // Assert
-        $this->assertCmsGlossaryResult($cmsGlossaryTransfer, $expectedResult);
-    }
-
-    /**
-     * @return void
-     */
-    public function testConvertTwoDifferentCmsGlossaryTwigExpressionsToHtml(): void
-    {
-        // Arrange
-        $inputString = $this->tester->getTwoDifferentTwigExpressionInString(
-            $this->bannerContentTransfer,
-            $this->abstractProductListContentTransfer
-        );
-        $expectedResult = $this->tester->getTwoDifferentHtmlWidgetsInString(
-            $this->bannerContentTransfer,
-            $this->abstractProductListContentTransfer
-        );
-
-        // Act
-        $cmsGlossaryTransfer = $this->runConvertCmsGlossaryTwigExpressionToHtml($inputString);
-
-        // Assert
-        $this->assertCmsGlossaryResult($cmsGlossaryTransfer, $expectedResult);
-    }
-
-    /**
-     * @return void
-     */
-    public function testConvertCmsGlossaryTwigExpressionToHtmlWithoutElements(): void
-    {
-        // Arrange
-        $inputString = $this->tester->getStringWithoutTwigExpressionsAndWidgets();
-        $expectedResult = $this->tester->getStringWithoutTwigExpressionsAndWidgets();
-
-        // Act
-        $cmsGlossaryTransfer = $this->runConvertCmsGlossaryTwigExpressionToHtml($inputString);
-
-        // Assert
-        $this->assertCmsGlossaryResult($cmsGlossaryTransfer, $expectedResult);
-    }
-
-    /**
-     * @return void
-     */
-    public function testConvertOneCmsGlossaryHtmlToTwigExpression(): void
-    {
-        // Arrange
-        $inputString = $this->tester->getOneHtmlWidgetInString($this->bannerContentTransfer);
-        $expectedResult = $this->tester->getOneTwigExpressionInString($this->bannerContentTransfer, true);
-
-        // Act
-        $cmsGlossaryTransfer = $this->runConvertCmsGlossaryHtmlToTwigExpression($inputString);
-
-        // Assert
-        $this->assertCmsGlossaryResult($cmsGlossaryTransfer, $expectedResult);
-    }
-
-    /**
-     * @return void
-     */
-    public function testConvertTwoSameCmsGlossaryHtmlToTwigExpression(): void
-    {
-        // Arrange
-        $inputString = $this->tester->getTwoSameHtmlWidgetsInString($this->bannerContentTransfer);
-        $expectedResult = $this->tester->getTwoSameTwigExpressionsInString($this->bannerContentTransfer, true);
-
-        // Act
-        $cmsGlossaryTransfer = $this->runConvertCmsGlossaryHtmlToTwigExpression($inputString);
-
-        // Assert
-        $this->assertCmsGlossaryResult($cmsGlossaryTransfer, $expectedResult);
-    }
-
-    /**
-     * @return void
-     */
-    public function testConvertTwoDifferentCmsGlossaryHtmlToTwigExpression(): void
-    {
-        // Arrange
-        $inputString = $this->tester->getTwoDifferentHtmlWidgetsInString(
-            $this->bannerContentTransfer,
-            $this->abstractProductListContentTransfer
-        );
-        $expectedResult = $this->tester->getTwoDifferentTwigExpressionInString(
-            $this->bannerContentTransfer,
-            $this->abstractProductListContentTransfer,
-            true
-        );
-
-        // Act
-        $cmsGlossaryTransfer = $this->runConvertCmsGlossaryHtmlToTwigExpression($inputString);
-
-        // Assert
-        $this->assertCmsGlossaryResult($cmsGlossaryTransfer, $expectedResult);
-    }
-
-    /**
-     * @return void
-     */
-    public function testConvertCmsGlossaryHtmlToTwigExpressionWithoutElements(): void
-    {
-        // Arrange
-        $inputString = $this->tester->getStringWithoutTwigExpressionsAndWidgets();
-        $expectedResult = $this->tester->getStringWithoutTwigExpressionsAndWidgets();
-
-        // Act
-        $cmsGlossaryTransfer = $this->runConvertCmsGlossaryHtmlToTwigExpression($inputString);
-
-        // Assert
-        $this->assertCmsGlossaryResult($cmsGlossaryTransfer, $expectedResult);
-    }
-
-    /**
-     * @return void
-     */
-    public function testConvertOneCmsBlockGlossaryTwigExpressionToHtml(): void
-    {
-        // Arrange
-        $inputString = $this->tester->getOneTwigExpressionInString($this->bannerContentTransfer);
-        $expectedResult = $this->tester->getOneHtmlWidgetInString($this->bannerContentTransfer);
-
-        // Act
-        $cmsBlockGlossaryTransfer = $this->runConvertCmsBlockGlossaryTwigExpressionToHtml($inputString);
-
-        // Assert
-        $this->assertCmsBlockGlossaryResult($cmsBlockGlossaryTransfer, $expectedResult);
-    }
-
-    /**
-     * @return void
-     */
-    public function testConvertTwoSameCmsBlockGlossaryTwigExpressionsToHtml(): void
-    {
-        // Arrange
-        $inputString = $this->tester->getTwoSameTwigExpressionsInString($this->bannerContentTransfer);
-        $expectedResult = $this->tester->getTwoSameHtmlWidgetsInString($this->bannerContentTransfer);
-
-        // Act
-        $cmsBlockGlossaryTransfer = $this->runConvertCmsBlockGlossaryTwigExpressionToHtml($inputString);
-
-        // Assert
-        $this->assertCmsBlockGlossaryResult($cmsBlockGlossaryTransfer, $expectedResult);
-    }
-
-    /**
-     * @return void
-     */
-    public function testConvertTwoDifferentCmsBlockGlossaryTwigExpressionsToHtml(): void
-    {
-        // Arrange
-        $inputString = $this->tester->getTwoDifferentTwigExpressionInString(
-            $this->bannerContentTransfer,
-            $this->abstractProductListContentTransfer
-        );
-        $expectedResult = $this->tester->getTwoDifferentHtmlWidgetsInString(
-            $this->bannerContentTransfer,
-            $this->abstractProductListContentTransfer
-        );
-
-        // Act
-        $cmsBlockGlossaryTransfer = $this->runConvertCmsBlockGlossaryTwigExpressionToHtml($inputString);
-
-        // Assert
-        $this->assertCmsBlockGlossaryResult($cmsBlockGlossaryTransfer, $expectedResult);
-    }
-
-    /**
-     * @return void
-     */
-    public function testConvertCmsBlockGlossaryTwigExpressionToHtmlWithoutElements(): void
-    {
-        // Arrange
-        $inputString = $this->tester->getStringWithoutTwigExpressionsAndWidgets();
-        $expectedResult = $this->tester->getStringWithoutTwigExpressionsAndWidgets();
-
-        // Act
-        $cmsBlockGlossaryTransfer = $this->runConvertCmsBlockGlossaryTwigExpressionToHtml($inputString);
-
-        // Assert
-        $this->assertCmsBlockGlossaryResult($cmsBlockGlossaryTransfer, $expectedResult);
-    }
-
-    /**
-     * @return void
-     */
-    public function testConvertOneCmsBlockGlossaryHtmlToTwigExpression(): void
-    {
-        // Arrange
-        $inputString = $this->tester->getOneHtmlWidgetInString($this->bannerContentTransfer);
-        $expectedResult = $this->tester->getOneTwigExpressionInString($this->bannerContentTransfer, true);
-
-        // Act
-        $cmsBlockGlossaryTransfer = $this->runConvertCmsBlockGlossaryHtmlToTwigExpression($inputString);
-
-        // Assert
-        $this->assertCmsBlockGlossaryResult($cmsBlockGlossaryTransfer, $expectedResult);
-    }
-
-    /**
-     * @return void
-     */
-    public function testConvertTwoSameCmsBlockGlossaryHtmlToTwigExpressions(): void
-    {
-        // Arrange
-        $inputString = $this->tester->getTwoSameHtmlWidgetsInString($this->bannerContentTransfer);
-        $expectedResult = $this->tester->getTwoSameTwigExpressionsInString($this->bannerContentTransfer, true);
-
-        // Act
-        $cmsBlockGlossaryTransfer = $this->runConvertCmsBlockGlossaryHtmlToTwigExpression($inputString);
-
-        // Assert
-        $this->assertCmsBlockGlossaryResult($cmsBlockGlossaryTransfer, $expectedResult);
-    }
-
-    /**
-     * @return void
-     */
-    public function testConvertTwoDifferentCmsBlockGlossaryHtmlToTwigExpressions(): void
-    {
-        // Arrange
-        $inputString = $this->tester->getTwoDifferentHtmlWidgetsInString(
-            $this->bannerContentTransfer,
-            $this->abstractProductListContentTransfer
-        );
-        $expectedResult = $this->tester->getTwoDifferentTwigExpressionInString(
-            $this->bannerContentTransfer,
-            $this->abstractProductListContentTransfer,
-            true
-        );
-
-        // Act
-        $cmsBlockGlossaryTransfer = $this->runConvertCmsBlockGlossaryHtmlToTwigExpression($inputString);
-
-        // Assert
-        $this->assertCmsBlockGlossaryResult($cmsBlockGlossaryTransfer, $expectedResult);
-    }
-
-    /**
-     * @return void
-     */
-    public function testConvertCmsBlockGlossaryHtmlToTwigExpressionWithoutElements(): void
-    {
-        // Arrange
-        $inputString = $this->tester->getStringWithoutTwigExpressionsAndWidgets();
-        $expectedResult = $this->tester->getStringWithoutTwigExpressionsAndWidgets();
-
-        // Act
-        $cmsBlockGlossaryTransfer = $this->runConvertCmsBlockGlossaryHtmlToTwigExpression($inputString);
-
-        // Assert
-        $this->assertCmsBlockGlossaryResult($cmsBlockGlossaryTransfer, $expectedResult);
-    }
-
-    /**
-     * @param string $inputString
+     * @dataProvider getContent
      *
-     * @return \Generated\Shared\Transfer\CmsGlossaryTransfer
-     */
-    protected function runConvertCmsGlossaryTwigExpressionToHtml(string $inputString): CmsGlossaryTransfer
-    {
-        $cmsGlossaryTransfer = $this->createCmsGlossaryTransfer($inputString);
-
-        return $this->tester->getFacade()
-            ->convertCmsGlossaryTwigExpressionToHtml($cmsGlossaryTransfer);
-    }
-
-    /**
-     * @param string $inputString
-     *
-     * @return \Generated\Shared\Transfer\CmsGlossaryTransfer
-     */
-    protected function runConvertCmsGlossaryHtmlToTwigExpression(string $inputString): CmsGlossaryTransfer
-    {
-        $cmsGlossaryTransfer = $this->createCmsGlossaryTransfer($inputString);
-
-        return $this->tester->getFacade()
-            ->convertCmsGlossaryHtmlToTwigExpression($cmsGlossaryTransfer);
-    }
-
-    /**
-     * @param string $actualString
-     *
-     * @return \Generated\Shared\Transfer\CmsGlossaryTransfer
-     */
-    protected function createCmsGlossaryTransfer(string $actualString): CmsGlossaryTransfer
-    {
-        $cmsPlaceholderTranslationTransfer = (new CmsPlaceholderTranslationTransfer())
-            ->setTranslation($actualString);
-
-        $cmsGlossaryAttributesTransfer = (new CmsGlossaryAttributesTransfer())
-            ->addTranslation($cmsPlaceholderTranslationTransfer);
-
-        return (new CmsGlossaryTransfer())
-            ->addGlossaryAttribute($cmsGlossaryAttributesTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CmsGlossaryTransfer $cmsGlossaryTransfer
-     * @param string $expectedResult
+     * @param string $inputContentMethod
+     * @param string $expectedContentMethod
      *
      * @return void
      */
-    protected function assertCmsGlossaryResult(CmsGlossaryTransfer $cmsGlossaryTransfer, string $expectedResult): void
+    public function testCmsBlockGlossaryHtmlToTwigExpression(string $inputContentMethod, string $expectedContentMethod): void
     {
-        // Assert
-        $this->assertInstanceOf(CmsGlossaryTransfer::class, $cmsGlossaryTransfer);
+        // Arrange
+        $inputString = $this->tester->{$inputContentMethod}();
+        $expectedResult = $this->tester->{$expectedContentMethod}(true);
 
-        foreach ($cmsGlossaryTransfer->getGlossaryAttributes() as $cmsGlossaryAttributesTransfer) {
-            foreach ($cmsGlossaryAttributesTransfer->getTranslations() as $cmsPlaceholderTranslationTransfer) {
-                $translation = $cmsPlaceholderTranslationTransfer->getTranslation();
-                $this->assertIsString($translation);
-                $this->assertEquals($expectedResult, $translation);
-            }
+        // It's necessary because DOMDocument returns valid HTML after converting
+        if ($expectedContentMethod === 'getTwoSameTwigExpressionsWithInvalidHtml') {
+            $expectedResult = str_replace('<p>', '', $expectedResult);
         }
+
+        $cmsBlockGlossaryTransfer = $this->createCmsBlockGlossaryTransfer($inputString);
+
+        // Act
+        $cmsBlockGlossaryTransfer = $this->tester->getFacade()->convertCmsBlockGlossaryHtmlToTwigExpression($cmsBlockGlossaryTransfer);
+
+        // Assert
+        $this->assertCmsBlockGlossaryResults($expectedResult, $cmsBlockGlossaryTransfer);
     }
 
     /**
-     * @param string $inputString
+     * @dataProvider getContent
      *
-     * @return \Generated\Shared\Transfer\CmsBlockGlossaryTransfer
+     * @param string $expectedContentMethod
+     * @param string $inputContentMethod
+     *
+     * @return void
      */
-    protected function runConvertCmsBlockGlossaryTwigExpressionToHtml(string $inputString): CmsBlockGlossaryTransfer
+    public function testCmsBlockGlossaryTwigExpressionToHtml(string $expectedContentMethod, string $inputContentMethod): void
     {
+        // This method only for test conversion html to twig expression
+        if ($expectedContentMethod === 'getInvalidHtmlWidget') {
+            return;
+        }
+
+        // Arrange
+        $inputString = $this->tester->{$inputContentMethod}();
+        $expectedResult = $this->tester->{$expectedContentMethod}(true);
         $cmsBlockGlossaryTransfer = $this->createCmsBlockGlossaryTransfer($inputString);
 
-        return $this->tester->getFacade()
-            ->convertCmsBlockGlossaryTwigExpressionToHtml($cmsBlockGlossaryTransfer);
+        // Act
+        $cmsBlockGlossaryTransfer = $this->tester->getFacade()->convertCmsBlockGlossaryTwigExpressionToHtml($cmsBlockGlossaryTransfer);
+
+        // Assert
+        $this->assertCmsBlockGlossaryResults($expectedResult, $cmsBlockGlossaryTransfer);
     }
 
     /**
-     * @param string $inputString
+     * @dataProvider getContent
      *
-     * @return \Generated\Shared\Transfer\CmsBlockGlossaryTransfer
+     * @param string $inputContentMethod
+     * @param string $expectedContentMethod
+     *
+     * @return void
      */
-    protected function runConvertCmsBlockGlossaryHtmlToTwigExpression(string $inputString): CmsBlockGlossaryTransfer
+    public function testCmsGlossaryHtmlToTwigExpression(string $inputContentMethod, string $expectedContentMethod): void
     {
-        $cmsBlockGlossaryTransfer = $this->createCmsBlockGlossaryTransfer($inputString);
+        // Arrange
+        $inputString = $this->tester->{$inputContentMethod}();
+        $expectedResult = $this->tester->{$expectedContentMethod}(true);
 
-        return $this->tester->getFacade()
-            ->convertCmsBlockGlossaryHtmlToTwigExpression($cmsBlockGlossaryTransfer);
+        // It's necessary because DOMDocument returns valid HTML after converting
+        if ($expectedContentMethod === 'getTwoSameTwigExpressionsWithInvalidHtml') {
+            $expectedResult = str_replace('<p>', '', $expectedResult);
+        }
+
+        $cmsGlossaryTransfer = $this->createCmsGlossaryTransfer($inputString);
+
+        // Act
+        $cmsGlossaryTransfer = $this->tester->getFacade()->convertCmsGlossaryHtmlToTwigExpression($cmsGlossaryTransfer);
+
+        // Assert
+        $this->assertCmsGlossaryResults($expectedResult, $cmsGlossaryTransfer);
+    }
+
+    /**
+     * @dataProvider getContent
+     *
+     * @param string $expectedContentMethod
+     * @param string $inputContentMethod
+     *
+     * @return void
+     */
+    public function testCmsGlossaryTwigExpressionToHtml(string $expectedContentMethod, string $inputContentMethod): void
+    {
+        // This method only for test conversion html to twig expression
+        if ($expectedContentMethod === 'getInvalidHtmlWidget') {
+            return;
+        }
+
+        // Arrange
+        $inputString = $this->tester->{$inputContentMethod}();
+        $expectedResult = $this->tester->{$expectedContentMethod}(true);
+        $cmsGlossaryTransfer = $this->createCmsGlossaryTransfer($inputString);
+
+        // Act
+        $cmsGlossaryTransfer = $this->tester->getFacade()->convertCmsGlossaryTwigExpressionToHtml($cmsGlossaryTransfer);
+
+        // Assert
+        $this->assertCmsGlossaryResults($expectedResult, $cmsGlossaryTransfer);
+    }
+
+    /**
+     * @return array
+     */
+    public function getContent(): array
+    {
+        return [
+            'one element without html' => ['getOneHtmlWidget', 'getOneTwigExpression'],
+            'two of the same elements without html' => ['getTwoSameHtmlWidgets', 'getTwoSameTwigExpressions'],
+            'two different elements without html' => ['getTwoDifferentHtmlWidgets', 'getTwoDifferentTwigExpression'],
+            'empty string' => ['getEmptyString', 'getEmptyString'],
+            'wrong html' => ['getWrongHtml', 'getWrongHtml'],
+            'one element with invalid content item' => ['getInvalidContentItemTwigExpression', 'getInvalidContentItemTwigExpression'],
+            'two of the same elements with invalid HTML' => ['getTwoSameHtmlWidgetsWithInvalidHtml', 'getTwoSameTwigExpressionsWithInvalidHtml'],
+            'just text with part of twig expression' => ['getStringWithPartOfTwigExpression', 'getStringWithPartOfTwigExpression'],
+            'invalid html widget' => ['getInvalidHtmlWidget', 'getOneTwigExpression'],
+        ];
     }
 
     /**
@@ -450,18 +194,52 @@ class ContentGuiFacadeTest extends Unit
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CmsBlockGlossaryTransfer $cmsBlockGlossaryTransfer
      * @param string $expectedResult
+     * @param \Generated\Shared\Transfer\CmsBlockGlossaryTransfer $cmsBlockGlossaryTransfer
      *
      * @return void
      */
-    protected function assertCmsBlockGlossaryResult(CmsBlockGlossaryTransfer $cmsBlockGlossaryTransfer, string $expectedResult): void
+    protected function assertCmsBlockGlossaryResults(string $expectedResult, CmsBlockGlossaryTransfer $cmsBlockGlossaryTransfer): void
     {
-        $this->assertInstanceOf(CmsBlockGlossaryTransfer::class, $cmsBlockGlossaryTransfer);
-
+        // Assert
         foreach ($cmsBlockGlossaryTransfer->getGlossaryPlaceholders() as $cmsBlockGlossaryPlaceholderTransfer) {
-            foreach ($cmsBlockGlossaryPlaceholderTransfer->getTranslations() as $cmsBlockGlossaryPlaceholderTranslationTransfer) {
-                $translation = $cmsBlockGlossaryPlaceholderTranslationTransfer->getTranslation();
+            foreach ($cmsBlockGlossaryPlaceholderTransfer->getTranslations() as $cmsPlaceholderTranslationTransfer) {
+                $translation = $cmsPlaceholderTranslationTransfer->getTranslation();
+                $this->assertIsString($translation);
+                $this->assertEquals($expectedResult, $translation);
+            }
+        }
+    }
+
+    /**
+     * @param string $actualString
+     *
+     * @return \Generated\Shared\Transfer\CmsGlossaryTransfer
+     */
+    protected function createCmsGlossaryTransfer(string $actualString): CmsGlossaryTransfer
+    {
+        $cmsPlaceholderTranslationTransfer = (new CmsPlaceholderTranslationTransfer())
+            ->setTranslation($actualString);
+
+        $cmsGlossaryAttributesTransfer = (new CmsGlossaryAttributesTransfer())
+            ->addTranslation($cmsPlaceholderTranslationTransfer);
+
+        return (new CmsGlossaryTransfer())
+            ->addGlossaryAttribute($cmsGlossaryAttributesTransfer);
+    }
+
+    /**
+     * @param string $expectedResult
+     * @param \Generated\Shared\Transfer\CmsGlossaryTransfer $cmsGlossaryTransfer
+     *
+     * @return void
+     */
+    protected function assertCmsGlossaryResults(string $expectedResult, CmsGlossaryTransfer $cmsGlossaryTransfer): void
+    {
+        // Assert
+        foreach ($cmsGlossaryTransfer->getGlossaryAttributes() as $cmsGlossaryAttributesTransfer) {
+            foreach ($cmsGlossaryAttributesTransfer->getTranslations() as $cmsPlaceholderTranslationTransfer) {
+                $translation = $cmsPlaceholderTranslationTransfer->getTranslation();
                 $this->assertIsString($translation);
                 $this->assertEquals($expectedResult, $translation);
             }

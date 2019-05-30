@@ -17,7 +17,6 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 class ContentByTypeTable extends AbstractTable
 {
     protected const FIELD_ACTION_CONTENT_ITEM = '<input type="radio" %s  data-content-item-type="%s" data-content-item-name="%s" name="content-item" value="%s"/>';
-    protected const ORDER_CONDITION = '(CASE WHEN %s = %d THEN 1 END)';
 
     /**
      * @var string
@@ -104,7 +103,7 @@ class ContentByTypeTable extends AbstractTable
 
         if ($this->idContent) {
             $orderCondition = sprintf(
-                static::ORDER_CONDITION,
+                '(CASE WHEN %s = %d THEN 1 END)',
                 SpyContentTableMap::COL_ID_CONTENT,
                 $this->idContent
             );
