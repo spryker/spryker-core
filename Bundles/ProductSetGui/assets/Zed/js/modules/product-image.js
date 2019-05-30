@@ -33,10 +33,7 @@ $(document).ready(function() {
             .replace(/__image_set_name__/g, imageSetIndex)
             .replace(/__name__/g, imageCollectionIndex);
 
-        newOptionFormHTML = $($.parseHTML(newOptionFormHTML));
-
-        var sortOrderField = newOptionFormHTML.find('[data-sort-order]');
-        sortOrderField.val(sortOrderField.data('sort-order'));
+        newOptionFormHTML = setSortOrderFieldValue(newOptionFormHTML);
 
         imageSet.find('.image-collection-container').append($(newOptionFormHTML));
     }
@@ -64,12 +61,21 @@ $(document).ready(function() {
             .replace(/__image_set_name__/g, imageSetIndex)
             .replace(/__name__/g, 0);
 
+        imageCollectionPrototype = setSortOrderFieldValue(imageCollectionPrototype);
+
+        imageSet.find('.image-collection-container').append($(imageCollectionPrototype));
+    }
+
+    /**
+     * @param imageCollectionPrototype
+     */
+    function setSortOrderFieldValue(imageCollectionPrototype) {
         imageCollectionPrototype = $($.parseHTML(imageCollectionPrototype));
 
         var sortOrderField = imageCollectionPrototype.find('[data-sort-order]');
         sortOrderField.val(sortOrderField.data('sort-order'));
 
-        imageSet.find('.image-collection-container').append($(imageCollectionPrototype));
+        return imageCollectionPrototype;
     }
 
     /**
