@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\PersistentCartShare\CartShareOption;
 
-use Spryker\Client\PersistentCartShare\Dependency\Client\PersistentCartShareToCustomerClientInterface;
+use Generated\Shared\Transfer\CustomerTransfer;
 
 class CartShareOptionReader implements CartShareOptionReaderInterface
 {
@@ -17,28 +17,20 @@ class CartShareOptionReader implements CartShareOptionReaderInterface
     protected $cartShareOptionPlugins;
 
     /**
-     * @var \Spryker\Client\PersistentCartShare\Dependency\Client\PersistentCartShareToCustomerClientInterface
-     */
-    protected $customerClient;
-
-    /**
      * @param \Spryker\Client\PersistentCartShareExtension\Dependency\Plugin\CartShareOptionPluginInterface[] $cartShareOptionPlugins
-     * @param \Spryker\Client\PersistentCartShare\Dependency\Client\PersistentCartShareToCustomerClientInterface $customerClient
      */
-    public function __construct(
-        array $cartShareOptionPlugins,
-        PersistentCartShareToCustomerClientInterface $customerClient
-    ) {
+    public function __construct(array $cartShareOptionPlugins)
+    {
         $this->cartShareOptionPlugins = $cartShareOptionPlugins;
-        $this->customerClient = $customerClient;
     }
 
     /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer|null $customerTransfer
+     *
      * @return string[][]
      */
-    public function getCartShareOptions(): array
+    public function getCartShareOptions(?CustomerTransfer $customerTransfer): array
     {
-        $customerTransfer = $this->customerClient->getCustomer();
         $cartShareOptions = [];
         foreach ($this->cartShareOptionPlugins as $cartShareOptionPlugin) {
             if (!$cartShareOptionPlugin->isApplicable($customerTransfer)) {
