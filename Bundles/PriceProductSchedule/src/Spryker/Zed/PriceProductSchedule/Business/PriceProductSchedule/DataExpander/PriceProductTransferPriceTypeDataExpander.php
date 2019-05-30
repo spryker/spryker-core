@@ -7,50 +7,36 @@
 
 namespace Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\DataExpander;
 
-use Generated\Shared\Transfer\PriceProductScheduleImportTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
-use Spryker\Zed\PriceProductSchedule\Business\Exception\PriceProductScheduleListImportException;
-use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToPriceProductFacadeInterface;
+use Spryker\Zed\PriceProductSchedule\Business\PriceType\PriceTypeFinderInterface;
 
 class PriceProductTransferPriceTypeDataExpander implements PriceProductTransferDataExpanderInterface
 {
     /**
-     * @var \Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToPriceProductFacadeInterface
+     * @var \Spryker\Zed\PriceProductSchedule\Business\PriceType\PriceTypeFinderInterface
      */
-    protected $priceProductFacade;
+    protected $priceTypeFinder;
 
     /**
-     * @param \Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToPriceProductFacadeInterface $priceProductFacade
+     * @param \Spryker\Zed\PriceProductSchedule\Business\PriceType\PriceTypeFinderInterface $priceTypeFinder
      */
-    public function __construct(
-        PriceProductScheduleToPriceProductFacadeInterface $priceProductFacade
-    ) {
-        $this->priceProductFacade = $priceProductFacade;
+    public function __construct(PriceTypeFinderInterface $priceTypeFinder)
+    {
+        $this->priceTypeFinder = $priceTypeFinder;
     }
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
-     * @param \Generated\Shared\Transfer\PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer
-     *
-     * @throws \Spryker\Zed\PriceProductSchedule\Business\Exception\PriceProductScheduleListImportException
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer
      */
-    public function expand(
-        PriceProductTransfer $priceProductTransfer,
-        PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer
-    ): PriceProductTransfer {
-        $priceTypeTransfer = $this->priceProductFacade->findPriceTypeByName(
-            $priceProductScheduleImportTransfer->getPriceTypeName()
-        );
+    public function expand(PriceProductTransfer $priceProductTransfer): PriceProductTransfer
+    {
+        $priceTypeTransfer = $this->priceTypeFinder
+            ->findPriceTypeByName($priceProductTransfer->getPriceTypeName());
 
         if ($priceTypeTransfer === null) {
-            throw new PriceProductScheduleListImportException(
-                sprintf(
-                    'Price type was not found by provided sku %s',
-                    $priceProductScheduleImportTransfer->getPriceTypeName()
-                )
-            );
+            return $priceProductTransfer;
         }
 
         return $priceProductTransfer

@@ -32,11 +32,11 @@ interface PriceProductScheduleFacadeInterface
      * Specification:
      * - Deletes scheduled prices that has been ended earlier than the days provided as parameter.
      *
+     * @api
+     *
      * @param int $daysRetained
      *
      * @return void
-     * @api
-     *
      */
     public function cleanAppliedScheduledPrices(int $daysRetained): void;
 

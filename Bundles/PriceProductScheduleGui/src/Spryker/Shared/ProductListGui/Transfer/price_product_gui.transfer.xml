@@ -26,4 +26,9 @@
         <property name="items" type="PriceProductScheduleImport[]" singular="item"/>
     </transfer>
 
+    <transfer name="PriceProductScheduleCsvValidationResult">
+        <property name="error" type="string" singular="error"/>
+        <property name="isSuccess" type="bool"/>
+    </transfer>
+
 </transfers>

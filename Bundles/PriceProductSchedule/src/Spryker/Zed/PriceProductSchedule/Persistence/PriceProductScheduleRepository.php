@@ -160,6 +160,11 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
     }
 
     /**
+     * @module Currency
+     * @module PriceProduct
+     * @module Store
+     * @module Product
+     *
      * @param \Generated\Shared\Transfer\PriceProductScheduleCriteriaFilterTransfer $priceProductScheduleCriteriaFilterTransfer
      *
      * @return int
@@ -171,15 +176,15 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
             ->createPriceProductScheduleQuery()
             ->joinWithCurrency()
             ->useCurrencyQuery()
-            ->filterByCode($priceProductScheduleCriteriaFilterTransfer->getCurrencyCode())
+                ->filterByCode($priceProductScheduleCriteriaFilterTransfer->getCurrencyCode())
             ->endUse()
             ->joinWithPriceType()
             ->usePriceTypeQuery()
-            ->filterByName($priceProductScheduleCriteriaFilterTransfer->getPriceTypeName())
+                ->filterByName($priceProductScheduleCriteriaFilterTransfer->getPriceTypeName())
             ->endUse()
             ->joinWithStore()
             ->useStoreQuery()
-            ->filterByName($priceProductScheduleCriteriaFilterTransfer->getStoreName())
+                ->filterByName($priceProductScheduleCriteriaFilterTransfer->getStoreName())
             ->endUse()
             ->joinWithPriceProductScheduleList()
             ->filterByNetPrice($priceProductScheduleCriteriaFilterTransfer->getNetAmount())
@@ -191,7 +196,7 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
             $query
                 ->joinWithProductAbstract()
                 ->useProductAbstractQuery()
-                ->filterBySku($priceProductScheduleCriteriaFilterTransfer->getSkuProductAbstract())
+                    ->filterBySku($priceProductScheduleCriteriaFilterTransfer->getSkuProductAbstract())
                 ->endUse();
         }
 
@@ -199,7 +204,7 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
             $query
                 ->joinWithProduct()
                 ->useProductQuery()
-                ->filterBySku($priceProductScheduleCriteriaFilterTransfer->getSkuProduct())
+                    ->filterBySku($priceProductScheduleCriteriaFilterTransfer->getSkuProduct())
                 ->endUse();
         }
 
@@ -243,7 +248,7 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
                 )
             )
             ->usePriceProductScheduleListQuery()
-            ->filterByIsActive(true)
+                ->filterByIsActive(true)
             ->endUse()
             ->filterByFkStore($storeTransfer->getIdStore())
             ->where(sprintf('%s <= now()', SpyPriceProductScheduleTableMap::COL_ACTIVE_FROM))

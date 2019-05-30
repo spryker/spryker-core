@@ -14,14 +14,12 @@ interface PriceProductScheduleMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer
-     * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductTransfer
-     *
-     * @throws \Spryker\Zed\PriceProductSchedule\Business\Exception\PriceProductScheduleListImportException
+     * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer
      */
     public function mapPriceProductScheduleImportTransferToPriceProductScheduleTransfer(
         PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer,
-        PriceProductScheduleTransfer $priceProductTransfer
+        PriceProductScheduleTransfer $priceProductScheduleTransfer
     ): PriceProductScheduleTransfer;
 }

@@ -12,13 +12,14 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Required;
 
 /**
  * @method \Spryker\Zed\PriceProductScheduleGui\Communication\PriceProductScheduleGuiCommunicationFactory getFactory()
- * @method \Spryker\Zed\PriceProductScheduleGui\Persistence\PriceProductScheduleGuiRepositoryInterface getRepository()
+ * @method \Spryker\Zed\PriceProductScheduleGui\PriceProductScheduleGuiConfig getConfig()
  */
 class PriceProductScheduleImportFormType extends AbstractType
 {
@@ -78,6 +79,9 @@ class PriceProductScheduleImportFormType extends AbstractType
                     new NotBlank(),
                     new Length(['max' => static::FIELD_PRICE_PRODUCT_SCHEDULE_NAME_MAX_LENGTH]),
                 ],
+                'attr' => [
+                    'placeholder' => 'Eg: Christmas sales, etc.',
+                ],
             ]
         );
 
@@ -93,9 +97,16 @@ class PriceProductScheduleImportFormType extends AbstractType
     {
         $builder->add(static::FIELD_FILE_UPLOAD, FileType::class, [
             'label' => 'Select your CSV file',
+            'attr' => [
+                'accept' => 'text/csv, text/plain',
+            ],
             'constraints' => [
                 new Required(),
                 new NotBlank(),
+                new File([
+                    'mimeTypes' => ['text/csv', 'text/plain'],
+                    'maxSize' => $this->getConfig()->getMaxFileSize(),
+                ]),
             ],
         ]);
 

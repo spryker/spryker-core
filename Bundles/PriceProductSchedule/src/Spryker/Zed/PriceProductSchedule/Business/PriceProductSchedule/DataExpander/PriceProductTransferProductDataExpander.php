@@ -7,72 +7,48 @@
 
 namespace Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\DataExpander;
 
-use Generated\Shared\Transfer\PriceProductScheduleImportTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
-use Spryker\Zed\PriceProductSchedule\Business\Exception\PriceProductScheduleListImportException;
-use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToProductFacadeInterface;
+use Spryker\Zed\PriceProductSchedule\Business\Product\ProductFinderInterface;
 
 class PriceProductTransferProductDataExpander implements PriceProductTransferDataExpanderInterface
 {
     /**
-     * @var \Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToProductFacadeInterface
+     * @var \Spryker\Zed\PriceProductSchedule\Business\Product\ProductFinderInterface
      */
-    protected $productFacade;
+    protected $productFinder;
 
     /**
-     * @param \Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToProductFacadeInterface $productFacade
+     * @param \Spryker\Zed\PriceProductSchedule\Business\Product\ProductFinderInterface $productFinder
      */
     public function __construct(
-        PriceProductScheduleToProductFacadeInterface $productFacade
+        ProductFinderInterface $productFinder
     ) {
-        $this->productFacade = $productFacade;
+        $this->productFinder = $productFinder;
     }
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
-     * @param \Generated\Shared\Transfer\PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer
-     *
-     * @throws \Spryker\Zed\PriceProductSchedule\Business\Exception\PriceProductScheduleListImportException
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer
      */
-    public function expand(
-        PriceProductTransfer $priceProductTransfer,
-        PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer
-    ): PriceProductTransfer {
-        if ($priceProductScheduleImportTransfer->getSkuProductAbstract()) {
-            $productAbstractId = $this->productFacade->findProductAbstractIdBySku(
-                $priceProductScheduleImportTransfer->getSkuProductAbstract()
-            );
+    public function expand(PriceProductTransfer $priceProductTransfer): PriceProductTransfer
+    {
+        if ($priceProductTransfer->getSkuProductAbstract()) {
+            $productAbstractId = $this->productFinder
+                ->findProductAbstractIdBySku($priceProductTransfer->getSkuProductAbstract());
 
-            if ($productAbstractId === null) {
-                throw new PriceProductScheduleListImportException(
-                    sprintf(
-                        'Abstract product was not found by provided sku %s',
-                        $priceProductScheduleImportTransfer->getSkuProductAbstract()
-                    )
-                );
+            if ($productAbstractId !== null) {
+                $priceProductTransfer->setIdProductAbstract($productAbstractId);
             }
-            $priceProductTransfer->setIdProductAbstract($productAbstractId);
-            $priceProductTransfer->setSkuProductAbstract($priceProductScheduleImportTransfer->getSkuProductAbstract());
         }
 
-        if ($priceProductScheduleImportTransfer->getSkuProduct()) {
-            $productConcreteId = $this->productFacade->findProductConcreteIdBySku(
-                $priceProductScheduleImportTransfer->getSkuProduct()
-            );
+        if ($priceProductTransfer->getSkuProduct()) {
+            $productConcreteId = $this->productFinder
+                ->findProductConcreteIdBySku($priceProductTransfer->getSkuProduct());
 
-            if ($productConcreteId === null) {
-                throw new PriceProductScheduleListImportException(
-                    sprintf(
-                        'Concrete product was not found by provided sku %s',
-                        $priceProductScheduleImportTransfer->getSkuProduct()
-                    )
-                );
+            if ($productConcreteId !== null) {
+                $priceProductTransfer->setIdProduct($productConcreteId);
             }
-
-            $priceProductTransfer->setIdProduct($productConcreteId);
-            $priceProductTransfer->setSkuProduct($priceProductScheduleImportTransfer->getSkuProduct());
         }
 
         return $priceProductTransfer;

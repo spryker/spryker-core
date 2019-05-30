@@ -5,16 +5,15 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\PriceProductScheduleGui\Communication\Importer;
+namespace Spryker\Zed\PriceProductScheduleGui\Communication\Csv;
 
 use Generated\Shared\Transfer\PriceProductScheduledListImportRequestTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleImportTransfer;
-use Spryker\Zed\PriceProductScheduleGui\Communication\Mapper\Map\PriceProductScheduleImportMapInterface;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Mapper\PriceProductScheduleImportMapperInterface;
 use Spryker\Zed\PriceProductScheduleGui\Dependency\Service\PriceProductScheduleGuiToUtilCsvServiceInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-class PriceProductScheduleImporter implements PriceProductScheduleImporterInterface
+class PriceProductScheduleCsvReader implements PriceProductScheduleCsvReaderInterface
 {
     /**
      * @var \Spryker\Zed\PriceProductScheduleGui\Dependency\Service\PriceProductScheduleGuiToUtilCsvServiceInterface
@@ -44,7 +43,7 @@ class PriceProductScheduleImporter implements PriceProductScheduleImporterInterf
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduledListImportRequestTransfer
      */
-    public function importPriceProductScheduleImportTransfersFromCsvFile(
+    public function readPriceProductScheduleImportTransfersFromCsvFile(
         UploadedFile $importCsv,
         PriceProductScheduledListImportRequestTransfer $productScheduledListImportRequestTransfer
     ): PriceProductScheduledListImportRequestTransfer {
@@ -52,19 +51,32 @@ class PriceProductScheduleImporter implements PriceProductScheduleImporterInterf
         $headers = current($importItems);
         unset($importItems[0]);
 
-        foreach ($importItems as $rowNumber => $importItem) {
+        foreach ($importItems as $rowNumber => $rowData) {
+            if ($this->isRowDataEmpty($rowData)) {
+                continue;
+            }
+
             $priceProductScheduleImportTransfer = $this->priceProductScheduleImportMapper
-                ->mapArrayToPriceProductScheduleTransfer(
-                    array_combine($headers, $importItem),
-                    new PriceProductScheduleImportTransfer(),
-                    PriceProductScheduleImportMapInterface::MAP
+                ->mapPriceProductScheduleRowToPriceProductScheduleImportTransfer(
+                    array_combine($headers, $rowData),
+                    new PriceProductScheduleImportTransfer()
                 );
 
-            $priceProductScheduleImportTransfer->setRowNumber($rowNumber);
+            $priceProductScheduleImportTransfer->getMetaData()->setIdentifier($rowNumber);
 
             $productScheduledListImportRequestTransfer->addItem($priceProductScheduleImportTransfer);
         }
 
         return $productScheduledListImportRequestTransfer;
+    }
+
+    /**
+     * @param array $rowData
+     *
+     * @return bool
+     */
+    protected function isRowDataEmpty(array $rowData): bool
+    {
+        return empty(array_filter(array_filter($rowData)));
     }
 }

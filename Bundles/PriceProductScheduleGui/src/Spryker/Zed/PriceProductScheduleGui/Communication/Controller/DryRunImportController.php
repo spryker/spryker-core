@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\PriceProductScheduleGui\Communication\Controller;
 
+use Generated\Shared\Transfer\PriceProductScheduleCsvValidationResultTransfer;
 use Generated\Shared\Transfer\PriceProductScheduledListImportRequestTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleListImportResponseTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleListTransfer;
-use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Form\PriceProductScheduleImportFormType;
 use Symfony\Component\Form\FormInterface;
@@ -18,11 +18,10 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\PriceProductScheduleGui\Communication\PriceProductScheduleGuiCommunicationFactory getFactory()
- * @method \Spryker\Zed\PriceProductScheduleGui\Persistence\PriceProductScheduleGuiRepositoryInterface getRepository()
  */
 class DryRunImportController extends AbstractController
 {
-    public const URL_IMPORT_PAGE = 'price-product-schedule-gui/import';
+    public const URL_IMPORT_PAGE = '/price-product-schedule-gui/import';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -41,22 +40,38 @@ class DryRunImportController extends AbstractController
             return $this->redirectResponse(static::URL_IMPORT_PAGE);
         }
 
+        $priceProductScheduleCsvValidationResultTransfer = $this->validatePriceProductScheduleImportForm($priceProductScheduleImportForm);
+
+        if ($priceProductScheduleCsvValidationResultTransfer->getIsSuccess() === false) {
+            $this->addErrorMessage($priceProductScheduleCsvValidationResultTransfer->getError());
+
+            return $this->redirectResponse(static::URL_IMPORT_PAGE);
+        }
+
         $priceProductScheduleListImportResponseTransfer = $this->handlePriceProductScheduleImportForm(
-            $priceProductScheduleImportForm
+            $priceProductScheduleImportForm,
+            $request
         );
 
         $errorTable = $this->getFactory()
             ->createImportErrorTable($priceProductScheduleListImportResponseTransfer);
-        $errorTableData = $this->getTableArrayFormat($errorTable);
+
+        $errorTableData = $this->getFactory()
+            ->createTableFormatter()
+            ->formatAbstractTableToArray($errorTable);
+
+        $priceProductScheduleList = $priceProductScheduleListImportResponseTransfer
+            ->getPriceProductScheduleList();
 
         $successTable = $this->getFactory()
-            ->createImportSuccessListTable($priceProductScheduleListImportResponseTransfer->getPriceProductScheduleList());
+            ->createImportSuccessListTable($priceProductScheduleList);
 
         return $this->viewResponse([
             'importForm' => $priceProductScheduleImportForm->createView(),
-            'priceProductScheduleList' => $priceProductScheduleListImportResponseTransfer->getPriceProductScheduleList(),
+            'priceProductScheduleList' => $priceProductScheduleList,
             'errorTable' => $errorTableData,
-            'successTable' => $successTable->render(),
+            'renderSuccessTable' => $successTable->getData() !== null,
+            'successTableView' => $successTable->render(),
         ]);
     }
 
@@ -81,44 +96,77 @@ class DryRunImportController extends AbstractController
     /**
      * @param \Symfony\Component\Form\FormInterface $importForm
      *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleCsvValidationResultTransfer
+     */
+    protected function validatePriceProductScheduleImportForm(
+        FormInterface $importForm
+    ): PriceProductScheduleCsvValidationResultTransfer {
+        $importCsv = $importForm
+            ->get(PriceProductScheduleImportFormType::FIELD_FILE_UPLOAD)
+            ->getData();
+
+        return $this->getFactory()
+            ->createPriceProductScheduleCsvValidator()
+            ->validateCsvFile($importCsv);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormInterface $importForm
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
      * @return \Generated\Shared\Transfer\PriceProductScheduleListImportResponseTransfer
      */
     protected function handlePriceProductScheduleImportForm(
-        FormInterface $importForm
+        FormInterface $importForm,
+        Request $request
     ): PriceProductScheduleListImportResponseTransfer {
         $priceProductScheduleName = $importForm
             ->get(PriceProductScheduleImportFormType::FIELD_PRICE_PRODUCT_SCHEDULE_NAME)
             ->getData();
 
-        $priceProductScheduleListImportRequestTransfer = (new PriceProductScheduledListImportRequestTransfer())
-            ->setPriceProductScheduleList(
-                (new PriceProductScheduleListTransfer())->setName($priceProductScheduleName)
-            );
-
         $importCsv = $importForm
             ->get(PriceProductScheduleImportFormType::FIELD_FILE_UPLOAD)
             ->getData();
 
+        $priceProductScheduledList = $this->getPriceProductScheduleListTransfer($request, $priceProductScheduleName);
+        $priceProductScheduleListImportRequestTransfer = (new PriceProductScheduledListImportRequestTransfer())
+            ->setPriceProductScheduleList($priceProductScheduledList);
+
         $priceProductScheduleListImportRequestTransfer = $this->getFactory()
-            ->createPriceProductScheduleImporter()
-            ->importPriceProductScheduleImportTransfersFromCsvFile(
+            ->createPriceProductScheduleCsvReader()
+            ->readPriceProductScheduleImportTransfersFromCsvFile(
                 $importCsv,
                 $priceProductScheduleListImportRequestTransfer
             );
 
-        return $this->getFactory()->getPriceProductScheduleFacade()->importPriceProductSchedules($priceProductScheduleListImportRequestTransfer);
+        return $this->getFactory()
+            ->getPriceProductScheduleFacade()
+            ->importPriceProductSchedules($priceProductScheduleListImportRequestTransfer);
     }
 
     /**
-     * @param \Spryker\Zed\Gui\Communication\Table\AbstractTable $table
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param string $priceProductScheduleName
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\PriceProductScheduleListTransfer
      */
-    protected function getTableArrayFormat(AbstractTable $table)
-    {
-        $tableData = $table->fetchData();
-        $tableData['header'] = $table->getConfiguration()->getHeader();
+    protected function getPriceProductScheduleListTransfer(
+        Request $request,
+        string $priceProductScheduleName
+    ): PriceProductScheduleListTransfer {
+        if ($request->query->has(PriceProductScheduleListTransfer::ID_PRICE_PRODUCT_SCHEDULE_LIST)) {
+            $idPriceProductScheduleList = $request->query->getInt(PriceProductScheduleListTransfer::ID_PRICE_PRODUCT_SCHEDULE_LIST);
 
-        return $tableData;
+            return (new PriceProductScheduleListTransfer())
+                ->setIdPriceProductScheduleList($idPriceProductScheduleList);
+        }
+
+        $priceProductScheduledListResponse = $this->getFactory()
+            ->getPriceProductScheduleFacade()
+            ->createPriceProductScheduleList(
+                (new PriceProductScheduleListTransfer())->setName($priceProductScheduleName)
+            );
+
+        return $priceProductScheduledListResponse->getPriceProductScheduleList();
     }
 }

@@ -1,7 +1,7 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
 {% if widget_title is not defined %}
-    {% set widget_title = 'Import new scheduled prices' | trans %}
+    {% set widget_title = 'Scheduled Prices' | trans %}
 {% endif %}
 
 {% block head_title -%}
@@ -19,16 +19,22 @@
     {% embed '@Gui/Partials/widget.twig' with {widget_title: 'Import new scheduled prices' | trans} %}
 
         {% block widget_content %}
-            <a href="#">{{ 'Learn about file format on our documentation' | trans }}</a>
-            <br>
-            {{ form_start(importForm, {'action': url('/price-product-schedule-gui/dry-run-import')}) }}
+            <div class="row">
+                <div class="col-xs-12 col-md-6 col-lg-3">
+                    <div class="m-b-sm">
+                        <a href="#">{{ 'Learn about file format on our documentation' | trans }}</a>
+                    </div>
 
-            {{ form_row(importForm.priceProductScheduleName) }}
-            {{ form_row(importForm.fileUpload) }}
+                    {{ form_start(importForm, {'action': url('/price-product-schedule-gui/dry-run-import')}) }}
 
-            <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Import' | trans }}"/>
+                    {{ form_row(importForm.priceProductScheduleName) }}
+                    {{ form_row(importForm.fileUpload) }}
 
-            {{ form_end(importForm) }}
+                    <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Import your CSV file' | trans }}"/>
+
+                    {{ form_end(importForm) }}
+                </div>
+            </div>
         {% endblock %}
 
     {% endembed %}

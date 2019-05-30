@@ -36,7 +36,20 @@ class PriceProductScheduleGuiToPriceProductScheduleFacadeBridge implements Price
     public function importPriceProductSchedules(
         PriceProductScheduledListImportRequestTransfer $priceProductScheduledListImportRequest
     ): PriceProductScheduleListImportResponseTransfer {
-        return $this->priceProductScheduleFacade->importPriceProductSchedules($priceProductScheduledListImportRequest);
+        return $this->priceProductScheduleFacade->importPriceProductSchedules(
+            $priceProductScheduledListImportRequest
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductScheduleListTransfer $priceProductScheduleListTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleListResponseTransfer
+     */
+    public function createPriceProductScheduleList(
+        PriceProductScheduleListTransfer $priceProductScheduleListTransfer
+    ): PriceProductScheduleListResponseTransfer {
+        return $this->priceProductScheduleFacade->createPriceProductScheduleList($priceProductScheduleListTransfer);
     }
 
     /**
