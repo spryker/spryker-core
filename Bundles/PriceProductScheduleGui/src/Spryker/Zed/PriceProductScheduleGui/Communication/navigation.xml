@@ -14,8 +14,8 @@
                 <icon>fa-angle-double-right</icon>
                 <pages>
                     <price-product-schedule-dry-run-import>
-                        <label>Dry Run Import</label>
-                        <title>Dry Run Import</title>
+                        <label>Import</label>
+                        <title>Import</title>
                         <bundle>price-product-schedule-gui</bundle>
                         <controller>dry-run-import</controller>
                         <action>index</action>
