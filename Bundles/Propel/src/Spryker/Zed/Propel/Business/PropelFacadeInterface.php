@@ -140,10 +140,10 @@ interface PropelFacadeInterface
     public function dropDatabase();
 
     /**
-     * @api
-     *
      * Specification:
      * - Exports database backup for configured driver to `$backupPath`.
+     *
+     * @api
      *
      * @deprecated Will be removed without replacement.
      *
@@ -154,10 +154,10 @@ interface PropelFacadeInterface
     public function exportDatabase($backupPath);
 
     /**
-     * @api
-     *
      * Specification:
      * - Imports database backup for configured driver from `$backupPath`.
+     *
+     * @api
      *
      * @deprecated Will be removed without replacement.
      *

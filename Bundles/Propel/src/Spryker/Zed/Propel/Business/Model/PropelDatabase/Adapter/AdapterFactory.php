@@ -123,7 +123,7 @@ class AdapterFactory implements AdapterFactoryInterface
     /**
      * @return \Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\DropDatabaseTablesInterface
      */
-    protected function createDropPostgreSqlDatabaseTablesCommand(): DropDatabaseTablesInterface
+    public function createDropPostgreSqlDatabaseTablesCommand(): DropDatabaseTablesInterface
     {
         return new DropPostgreSqlDatabaseTables();
     }
@@ -131,7 +131,7 @@ class AdapterFactory implements AdapterFactoryInterface
     /**
      * @return \Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\DropDatabaseTablesInterface
      */
-    protected function createDropMySqlDatabaseTablesCommand(): DropDatabaseTablesInterface
+    public function createDropMySqlDatabaseTablesCommand(): DropDatabaseTablesInterface
     {
         return new DropMySqlDatabaseTables();
     }

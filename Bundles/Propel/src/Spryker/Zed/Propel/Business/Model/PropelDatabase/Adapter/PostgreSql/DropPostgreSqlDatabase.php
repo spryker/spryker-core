@@ -20,35 +20,19 @@ class DropPostgreSqlDatabase implements DropDatabaseInterface
     protected const SHELL_CHARACTERS_PATTERN = '/\$|`/i';
 
     /**
-     * @return bool
+     * @return void
      */
     public function dropDatabase()
     {
-        if (!$this->databaseExists()) {
-            return true;
-        }
-
         $this->closeOpenConnections();
 
-        if ($this->useSudo()) {
-            return $this->runSudoDropCommand();
-        }
-
-        return $this->runDropCommandRemote();
+        $this->runDropCommand();
     }
 
     /**
      * @return bool
      */
-    protected function runSudoDropCommand()
-    {
-        return $this->runProcess($this->getSudoDropCommand());
-    }
-
-    /**
-     * @return bool
-     */
-    protected function runDropCommandRemote()
+    protected function runDropCommand()
     {
         return $this->runProcess($this->getDropCommand());
     }
@@ -61,23 +45,6 @@ class DropPostgreSqlDatabase implements DropDatabaseInterface
         $pdoConnection = $this->createPdoConnection();
         $pdoConnection->exec($this->getCloseOpenedConnectionsQuery());
         $pdoConnection = null;
-    }
-
-    /**
-     * @throws \RuntimeException
-     *
-     * @return string
-     */
-    protected function getPostgresVersion()
-    {
-        $process = $this->getProcess('psql --version | awk \'{print $3}\' | cut -f1,2 -d\'.\'');
-        $process->run();
-
-        if (!$process->isSuccessful()) {
-            throw new RuntimeException($process->getErrorOutput());
-        }
-
-        return trim($process->getOutput(), "\n");
     }
 
     /**
@@ -127,8 +94,6 @@ class DropPostgreSqlDatabase implements DropDatabaseInterface
      */
     protected function runProcess($command)
     {
-        $this->exportPostgresPassword();
-
         $process = $this->getProcess($command);
         $process->run(null, $this->getEnvironmentVariables());
 
@@ -139,17 +104,6 @@ class DropPostgreSqlDatabase implements DropDatabaseInterface
         $returnValue = (int)$process->getOutput();
 
         return (bool)$returnValue;
-    }
-
-    /**
-     * @return void
-     */
-    protected function exportPostgresPassword()
-    {
-        putenv(sprintf(
-            'PGPASSWORD=%s',
-            $this->getConfigValue(PropelConstants::ZED_DB_PASSWORD)
-        ));
     }
 
     /**
@@ -200,8 +154,7 @@ class DropPostgreSqlDatabase implements DropDatabaseInterface
         return sprintf('
             SELECT pg_terminate_backend(pg_stat_activity.pid)
                 FROM pg_stat_activity
-                WHERE pg_stat_activity.datname = \'%s\'
-                    AND pid <> pg_backend_pid();
+                WHERE pg_stat_activity.datname = \'%s\';
         ', $this->getConfigValue(PropelConstants::ZED_DB_DATABASE));
     }
 
@@ -221,24 +174,6 @@ class DropPostgreSqlDatabase implements DropDatabaseInterface
             $this->getConfigValue(PropelConstants::ZED_DB_USERNAME),
             $this->getConfigValue(PropelConstants::ZED_DB_PASSWORD)
         );
-    }
-
-    /**
-     * @return bool
-     */
-    protected function databaseExists(): bool
-    {
-        $pdoConnection = $this->createPdoConnection();
-
-        $checkDbExistsQuery = sprintf(
-            'SELECT 1 from pg_database where datname = \'%s\';',
-            $this->getConfigValue(PropelConstants::ZED_DB_DATABASE)
-        );
-        $result = $pdoConnection->query($checkDbExistsQuery)->fetchAll();
-
-        $pdoConnection = null;
-
-        return !empty($result);
     }
 
     /**
