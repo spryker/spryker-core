@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\PriceProductScheduleGui\Communication\Mapper;
 
+use Generated\Shared\Transfer\PriceProductScheduleImportMetaDataTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleImportTransfer;
 use Spryker\Zed\PriceProductScheduleGui\PriceProductScheduleGuiConfig;
 
@@ -32,7 +33,7 @@ class PriceProductScheduleImportMapper implements PriceProductScheduleImportMapp
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduleImportTransfer
      */
-    public function mapArrayToPriceProductScheduleTransfer(
+    public function mapPriceProductScheduleRowToPriceProductScheduleImportTransfer(
         array $importData,
         PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer
     ): PriceProductScheduleImportTransfer {
@@ -43,6 +44,8 @@ class PriceProductScheduleImportMapper implements PriceProductScheduleImportMapp
             $preparedImportData[$fieldsMap[$key]] = empty($value) ? null : $value;
         }
 
-        return $priceProductScheduleImportTransfer->fromArray($preparedImportData);
+        return $priceProductScheduleImportTransfer
+            ->fromArray($preparedImportData)
+            ->setMetaData(new PriceProductScheduleImportMetaDataTransfer());
     }
 }

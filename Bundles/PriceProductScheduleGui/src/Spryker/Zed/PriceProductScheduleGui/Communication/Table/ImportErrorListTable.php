@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\PriceProductScheduleGui\Communication\Table;
 
-use Generated\Shared\Transfer\PriceProductScheduleImportTransfer;
+use Generated\Shared\Transfer\PriceProductScheduleImportMetaDataTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleListImportErrorTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleListImportResponseTransfer;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
@@ -39,7 +39,7 @@ class ImportErrorListTable extends AbstractTable
         $this->disableSearch();
 
         $config->setHeader([
-            PriceProductScheduleImportTransfer::ROW_NUMBER => 'Row n°',
+            PriceProductScheduleImportMetaDataTransfer::IDENTIFIER => 'Row n°',
             PriceProductScheduleListImportErrorTransfer::MESSAGE => 'Error',
         ]);
 
@@ -57,7 +57,7 @@ class ImportErrorListTable extends AbstractTable
 
         foreach ($this->priceProductScheduleListImportResponseTransfer->getErrors() as $priceProductScheduleListImportErrorTransfer) {
             $data[] = [
-                PriceProductScheduleImportTransfer::ROW_NUMBER => $priceProductScheduleListImportErrorTransfer->getPriceProductScheduleImport()->getRowNumber(),
+                PriceProductScheduleImportMetaDataTransfer::IDENTIFIER => $priceProductScheduleListImportErrorTransfer->getPriceProductScheduleImport()->getMetaData()->getIdentifier(),
                 PriceProductScheduleListImportErrorTransfer::MESSAGE => $priceProductScheduleListImportErrorTransfer->getMessage(),
             ];
         }

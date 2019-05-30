@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\DataExpander;
 
-use Generated\Shared\Transfer\PriceProductExpandResultTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Zed\PriceProductSchedule\Business\PriceType\PriceTypeFinderInterface;
 
@@ -31,33 +30,20 @@ class PriceProductTransferPriceTypeDataExpander extends PriceProductTransferAbst
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductExpandResultTransfer
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
      */
-    public function expand(
-        PriceProductTransfer $priceProductTransfer
-    ): PriceProductExpandResultTransfer {
-        $priceProductExpandResultTransfer = (new PriceProductExpandResultTransfer())
-            ->setIsSuccess(false);
-
+    public function expand(PriceProductTransfer $priceProductTransfer): PriceProductTransfer
+    {
         $priceTypeTransfer = $this->priceTypeFinder
             ->findPriceTypeByName($priceProductTransfer->getPriceTypeName());
 
         if ($priceTypeTransfer === null) {
-            return $this->createErrorPriceProductExpandResultTransfer(
-                sprintf(
-                    static::ERROR_MESSAGE_PRICE_TYPE_NOT_FOUND,
-                    $priceProductTransfer->getPriceTypeName()
-                )
-            );
+            return $priceProductTransfer;
         }
 
-        $priceProductTransfer
+        return $priceProductTransfer
             ->setFkPriceType($priceTypeTransfer->getIdPriceType())
             ->setPriceTypeName($priceTypeTransfer->getName())
             ->setPriceType($priceTypeTransfer);
-
-        return $priceProductExpandResultTransfer
-            ->setPriceProduct($priceProductTransfer)
-            ->setIsSuccess(true);
     }
 }

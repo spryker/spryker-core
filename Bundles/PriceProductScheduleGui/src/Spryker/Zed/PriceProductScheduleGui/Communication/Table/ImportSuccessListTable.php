@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\PriceProductScheduleListTransfer;
 use Orm\Zed\Currency\Persistence\Map\SpyCurrencyTableMap;
 use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceTypeTableMap;
 use Orm\Zed\PriceProductSchedule\Persistence\Map\SpyPriceProductScheduleTableMap;
+use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\Store\Persistence\Map\SpyStoreTableMap;
@@ -18,15 +19,14 @@ use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
-use Spryker\Zed\PriceProductScheduleGui\Persistence\PriceProductScheduleGuiRepositoryInterface;
 use Spryker\Zed\PriceProductScheduleGui\PriceProductScheduleGuiConfig;
 
 class ImportSuccessListTable extends AbstractTable
 {
     /**
-     * @var \Spryker\Zed\PriceProductScheduleGui\Persistence\PriceProductScheduleGuiRepositoryInterface
+     * @var \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery
      */
-    protected $priceProductScheduleGuiRepository;
+    protected $priceProductScheduleQuery;
 
     /**
      * @var \Generated\Shared\Transfer\PriceProductScheduleListTransfer
@@ -39,16 +39,16 @@ class ImportSuccessListTable extends AbstractTable
     protected $priceProductScheduleGuiConfig;
 
     /**
-     * @param \Spryker\Zed\PriceProductScheduleGui\Persistence\PriceProductScheduleGuiRepositoryInterface $priceProductScheduleGuiRepository
+     * @param \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery $priceProductScheduleQuery
      * @param \Generated\Shared\Transfer\PriceProductScheduleListTransfer $priceProductScheduleListTransfer
      * @param \Spryker\Zed\PriceProductScheduleGui\PriceProductScheduleGuiConfig $priceProductScheduleGuiConfig
      */
     public function __construct(
-        PriceProductScheduleGuiRepositoryInterface $priceProductScheduleGuiRepository,
+        SpyPriceProductScheduleQuery $priceProductScheduleQuery,
         PriceProductScheduleListTransfer $priceProductScheduleListTransfer,
         PriceProductScheduleGuiConfig $priceProductScheduleGuiConfig
     ) {
-        $this->priceProductScheduleGuiRepository = $priceProductScheduleGuiRepository;
+        $this->priceProductScheduleQuery = $priceProductScheduleQuery;
         $this->priceProductScheduleListTransfer = $priceProductScheduleListTransfer;
         $this->priceProductScheduleGuiConfig = $priceProductScheduleGuiConfig;
     }
@@ -122,8 +122,12 @@ class ImportSuccessListTable extends AbstractTable
      */
     protected function prepareQuery(): ModelCriteria
     {
-        return $this->priceProductScheduleGuiRepository
-            ->getPriceProductScheduleQuery()
+        return $this->priceProductScheduleQuery
+            ->joinWithCurrency()
+            ->joinWithStore()
+            ->joinWithPriceType()
+            ->leftJoinWithProduct()
+            ->leftJoinWithProductAbstract()
             ->filterByFkPriceProductScheduleList($this->priceProductScheduleListTransfer->getIdPriceProductScheduleList())
             ->withColumn(SpyProductAbstractTableMap::COL_SKU, $this->priceProductScheduleGuiConfig->getAbstractSkuKey())
             ->withColumn(SpyProductTableMap::COL_SKU, $this->priceProductScheduleGuiConfig->getConcreteSkuKey())

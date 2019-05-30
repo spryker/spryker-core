@@ -109,7 +109,6 @@
         <property name="activeTo" type="string"/>
         <property name="netAmount" type="int"/>
         <property name="grossAmount" type="int"/>
-        <property name="rowNumber" type="int"/>
     </transfer>
 
     <transfer name="PriceProductScheduleImportMetaData">

@@ -24,6 +24,8 @@ class PriceProductScheduleGuiConfig extends AbstractBundleConfig
     protected const KEY_FROM_INCLUDED = 'from_included';
     protected const KEY_TO_INCLUDED = 'to_included';
 
+    protected const FILE_MAX_SIZE = '50M';
+
     /**
      * @return array
      */
@@ -130,5 +132,13 @@ class PriceProductScheduleGuiConfig extends AbstractBundleConfig
     public function getToIncludedKey(): string
     {
         return static::KEY_TO_INCLUDED;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMaxFileSize(): string
+    {
+        return static::FILE_MAX_SIZE;
     }
 }

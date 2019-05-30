@@ -17,7 +17,7 @@ interface PriceProductScheduleImportMapperInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduleImportTransfer
      */
-    public function mapArrayToPriceProductScheduleTransfer(
+    public function mapPriceProductScheduleRowToPriceProductScheduleImportTransfer(
         array $importData,
         PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer
     ): PriceProductScheduleImportTransfer;

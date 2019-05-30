@@ -51,22 +51,32 @@ class PriceProductScheduleCsvReader implements PriceProductScheduleCsvReaderInte
         $headers = current($importItems);
         unset($importItems[0]);
 
-        foreach ($importItems as $rowNumber => $importItem) {
-            if (empty(array_filter(array_filter($importItem)))) {
+        foreach ($importItems as $rowNumber => $rowData) {
+            if ($this->isRowDataEmpty($rowData)) {
                 continue;
             }
 
             $priceProductScheduleImportTransfer = $this->priceProductScheduleImportMapper
-                ->mapArrayToPriceProductScheduleTransfer(
-                    array_combine($headers, $importItem),
+                ->mapPriceProductScheduleRowToPriceProductScheduleImportTransfer(
+                    array_combine($headers, $rowData),
                     new PriceProductScheduleImportTransfer()
                 );
 
-            $priceProductScheduleImportTransfer->setRowNumber($rowNumber);
+            $priceProductScheduleImportTransfer->getMetaData()->setIdentifier($rowNumber);
 
             $productScheduledListImportRequestTransfer->addItem($priceProductScheduleImportTransfer);
         }
 
         return $productScheduledListImportRequestTransfer;
+    }
+
+    /**
+     * @param array $rowData
+     *
+     * @return bool
+     */
+    protected function isRowDataEmpty(array $rowData): bool
+    {
+        return empty(array_filter(array_filter($rowData)));
     }
 }

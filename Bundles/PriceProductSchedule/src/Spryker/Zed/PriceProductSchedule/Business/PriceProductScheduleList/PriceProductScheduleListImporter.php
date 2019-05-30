@@ -85,11 +85,7 @@ class PriceProductScheduleListImporter implements PriceProductScheduleListImport
                     new PriceProductScheduleTransfer()
                 );
 
-            $this->expandPriceProductTransfer(
-                $priceProductScheduleTransfer,
-                $priceProductScheduleImportTransfer,
-                $priceProductScheduledListImportResponse
-            );
+            $priceProductScheduleTransfer = $this->expandPriceProductTransfer($priceProductScheduleTransfer);
 
             if ($priceProductScheduledListImportResponse->getErrors()->count() > 0) {
                 continue;
@@ -125,30 +121,18 @@ class PriceProductScheduleListImporter implements PriceProductScheduleListImport
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
-     * @param \Generated\Shared\Transfer\PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer
-     * @param \Generated\Shared\Transfer\PriceProductScheduleListImportResponseTransfer $priceProductScheduledListImportResponse
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer
      */
     protected function expandPriceProductTransfer(
-        PriceProductScheduleTransfer $priceProductScheduleTransfer,
-        PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer,
-        PriceProductScheduleListImportResponseTransfer $priceProductScheduledListImportResponse
-    ): void {
+        PriceProductScheduleTransfer $priceProductScheduleTransfer
+    ): PriceProductScheduleTransfer {
         $priceProductTransfer = $priceProductScheduleTransfer->getPriceProduct();
 
         foreach ($this->dataExpanderList as $dataExpander) {
-            $priceProductExpandResultTransfer = $dataExpander->expand($priceProductTransfer);
-
-            if ($priceProductExpandResultTransfer->getIsSuccess() === false) {
-                $priceProductScheduledListImportResponse
-                    ->addError($priceProductExpandResultTransfer
-                        ->getError()
-                        ->setPriceProductScheduleImport($priceProductScheduleImportTransfer));
-                break;
-            }
-
-            $priceProductTransfer = $priceProductExpandResultTransfer->getPriceProduct();
+            $priceProductTransfer = $dataExpander->expand($priceProductTransfer);
         }
+
+        return $priceProductScheduleTransfer;
     }
 }

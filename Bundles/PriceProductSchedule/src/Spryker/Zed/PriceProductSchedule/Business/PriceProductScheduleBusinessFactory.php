@@ -167,7 +167,11 @@ class PriceProductScheduleBusinessFactory extends AbstractBusinessFactory
     {
         return new PriceProductScheduleValidator(
             $this->getRepository(),
-            $this->createPriceProductScheduleImportMapper()
+            $this->createPriceProductScheduleImportMapper(),
+            $this->createStoreFinder(),
+            $this->createCurrencyFinder(),
+            $this->createPriceTypeFinder(),
+            $this->createProductFinder()
         );
     }
 
