@@ -36,21 +36,22 @@ class HtmlToTwigExpressionConverter implements HtmlConverterInterface
     {
         // Libxml requires a root node and <html> is treating the first element, so libxml finds as the root node.
         $this->domDocument->loadHTML("<html>$html</html>", LIBXML_NOWARNING | LIBXML_NOERROR | LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
-        $replacements = $this->getReplacements();
+        $replaceableNodes = $this->getReplaceableNodes();
 
-        if (!$replacements) {
+        if (!$replaceableNodes) {
             return $html;
         }
 
-        $this->replaceHtmlToTwigExpressions($replacements);
+        $this->replaceNodes($replaceableNodes);
+        $html = str_replace(['<html>', '</html>'], '', $this->domDocument->saveHTML());
 
-        return $this->getHtml();
+        return $html;
     }
 
     /**
      * @return array
      */
-    protected function getReplacements(): array
+    protected function getReplaceableNodes(): array
     {
         $replacements = [];
         $domXpath = $this->createDOMXPath();
@@ -99,13 +100,13 @@ class HtmlToTwigExpressionConverter implements HtmlConverterInterface
     }
 
     /**
-     * @param array $replacements
+     * @param array $replaceableNodes
      *
      * @return void
      */
-    protected function replaceHtmlToTwigExpressions(array $replacements): void
+    protected function replaceNodes(array $replaceableNodes): void
     {
-        foreach ($replacements as $key => $replacement) {
+        foreach ($replaceableNodes as $key => $replacement) {
             if ($replacement['oldNode']->parentNode->tagName === 'html') {
                 $this->replaceElementsWithoutWrappers($replacement);
                 continue;
@@ -115,17 +116,9 @@ class HtmlToTwigExpressionConverter implements HtmlConverterInterface
             $parentNode->insertBefore($replacement['newNode'], $replacement['oldNode']->parentNode);
             $nextKey = $key + 1;
 
-            if (!isset($replacements[$nextKey]['oldNode']) || !$replacements[$nextKey]['oldNode']->parentNode->isSameNode($replacement['oldNode']->parentNode)) {
+            if (!isset($replaceableNodes[$nextKey]['oldNode']) || !$replaceableNodes[$nextKey]['oldNode']->parentNode->isSameNode($replacement['oldNode']->parentNode)) {
                 $parentNode->removeChild($replacement['oldNode']->parentNode);
             }
         }
-    }
-
-    /**
-     * @return string
-     */
-    protected function getHtml(): string
-    {
-        return str_replace(['<html>', '</html>'], '', $this->domDocument->saveHTML());
     }
 }

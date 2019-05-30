@@ -202,6 +202,9 @@ class ContentGuiFacadeTest extends Unit
     protected function assertCmsBlockGlossaryResults(string $expectedResult, CmsBlockGlossaryTransfer $cmsBlockGlossaryTransfer): void
     {
         // Assert
+        $translation = $cmsBlockGlossaryTransfer->getGlossaryPlaceholders()->offsetGet(0)->getTranslations()->offsetGet(0)->getTranslation();
+        $this->assertTrue(isset($translation));
+
         foreach ($cmsBlockGlossaryTransfer->getGlossaryPlaceholders() as $cmsBlockGlossaryPlaceholderTransfer) {
             foreach ($cmsBlockGlossaryPlaceholderTransfer->getTranslations() as $cmsPlaceholderTranslationTransfer) {
                 $translation = $cmsPlaceholderTranslationTransfer->getTranslation();
@@ -237,6 +240,9 @@ class ContentGuiFacadeTest extends Unit
     protected function assertCmsGlossaryResults(string $expectedResult, CmsGlossaryTransfer $cmsGlossaryTransfer): void
     {
         // Assert
+        $translation = $cmsGlossaryTransfer->getGlossaryAttributes()->offsetGet(0)->getTranslations()->offsetGet(0)->getTranslation();
+        $this->assertTrue(isset($translation));
+
         foreach ($cmsGlossaryTransfer->getGlossaryAttributes() as $cmsGlossaryAttributesTransfer) {
             foreach ($cmsGlossaryAttributesTransfer->getTranslations() as $cmsPlaceholderTranslationTransfer) {
                 $translation = $cmsPlaceholderTranslationTransfer->getTranslation();

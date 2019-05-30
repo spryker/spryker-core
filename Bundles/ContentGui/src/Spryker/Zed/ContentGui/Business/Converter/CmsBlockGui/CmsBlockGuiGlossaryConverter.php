@@ -19,9 +19,11 @@ class CmsBlockGuiGlossaryConverter extends AbstractCmsGlossaryConverter implemen
      */
     public function convertTwigExpressionToHtml(CmsBlockGlossaryTransfer $cmsBlockGlossaryTransfer): CmsBlockGlossaryTransfer
     {
+        $cmsBlockGlossaryTransfer->requireGlossaryPlaceholders();
         $cmsBlockGlossaryPlaceholderTransfers = $cmsBlockGlossaryTransfer->getGlossaryPlaceholders();
 
         foreach ($cmsBlockGlossaryPlaceholderTransfers as $cmsBlockGlossaryPlaceholderTransfer) {
+            $cmsBlockGlossaryPlaceholderTransfer->requireTranslations();
             $cmsBlockGlossaryPlaceholderTranslationTransfers = $cmsBlockGlossaryPlaceholderTransfer->getTranslations();
 
             foreach ($cmsBlockGlossaryPlaceholderTranslationTransfers as $cmsBlockGlossaryPlaceholderTranslationTransfer) {
@@ -48,9 +50,11 @@ class CmsBlockGuiGlossaryConverter extends AbstractCmsGlossaryConverter implemen
      */
     public function convertHtmlToTwigExpression(CmsBlockGlossaryTransfer $cmsBlockGlossaryTransfer): CmsBlockGlossaryTransfer
     {
+        $cmsBlockGlossaryTransfer->requireGlossaryPlaceholders();
         $cmsBlockGlossaryPlaceholderTransfers = $cmsBlockGlossaryTransfer->getGlossaryPlaceholders();
 
         foreach ($cmsBlockGlossaryPlaceholderTransfers as $cmsBlockGlossaryPlaceholderTransfer) {
+            $cmsBlockGlossaryPlaceholderTransfer->requireTranslations();
             $cmsBlockGlossaryPlaceholderTranslationTransfers = $cmsBlockGlossaryPlaceholderTransfer->getTranslations();
 
             foreach ($cmsBlockGlossaryPlaceholderTranslationTransfers as $cmsBlockGlossaryPlaceholderTranslationTransfer) {
