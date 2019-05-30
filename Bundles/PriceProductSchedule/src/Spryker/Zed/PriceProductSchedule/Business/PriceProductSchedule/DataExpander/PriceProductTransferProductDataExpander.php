@@ -7,9 +7,8 @@
 
 namespace Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\DataExpander;
 
-use Generated\Shared\Transfer\PriceProductExpandResultTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
-use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToProductFacadeInterface;
+use Spryker\Zed\PriceProductSchedule\Business\Product\ProductFinderInterface;
 
 class PriceProductTransferProductDataExpander extends PriceProductTransferAbstractDataExpander
 {
@@ -17,71 +16,44 @@ class PriceProductTransferProductDataExpander extends PriceProductTransferAbstra
     protected const ERROR_MESSAGE_PRODUCT_ABSTRACT_NOT_FOUND = 'Abstract product was not found by provided sku %s';
 
     /**
-     * @var \Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToProductFacadeInterface
+     * @var \Spryker\Zed\PriceProductSchedule\Business\Product\ProductFinderInterface
      */
-    protected $productFacade;
+    protected $productFinder;
 
     /**
-     * @param \Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToProductFacadeInterface $productFacade
+     * @param \Spryker\Zed\PriceProductSchedule\Business\Product\ProductFinderInterface $productFinder
      */
     public function __construct(
-        PriceProductScheduleToProductFacadeInterface $productFacade
+        ProductFinderInterface $productFinder
     ) {
-        $this->productFacade = $productFacade;
+        $this->productFinder = $productFinder;
     }
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductExpandResultTransfer
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
      */
-    public function expand(
-        PriceProductTransfer $priceProductTransfer
-    ): PriceProductExpandResultTransfer {
-        $priceProductExpandResultTransfer = (new PriceProductExpandResultTransfer())
-            ->setIsSuccess(false);
-
+    public function expand(PriceProductTransfer $priceProductTransfer): PriceProductTransfer
+    {
         if ($priceProductTransfer->getSkuProductAbstract()) {
-            $productAbstractId = $this->productFacade->findProductAbstractIdBySku(
-                $priceProductTransfer->getSkuProductAbstract()
-            );
+            $productAbstractId = $this->productFinder
+                ->findProductAbstractIdBySku($priceProductTransfer->getSkuProductAbstract());
 
-            if ($productAbstractId === null) {
-                $priceProductScheduleImportErrorTransfer = $this->createPriceProductScheduleListImportErrorTransfer(
-                    sprintf(
-                        static::ERROR_MESSAGE_PRODUCT_ABSTRACT_NOT_FOUND,
-                        $priceProductTransfer->getSkuProductAbstract()
-                    )
-                );
-
-                return $priceProductExpandResultTransfer
-                    ->setError($priceProductScheduleImportErrorTransfer);
+            if ($productAbstractId !== null) {
+                $priceProductTransfer->setIdProductAbstract($productAbstractId);
             }
-            $priceProductTransfer->setIdProductAbstract($productAbstractId);
         }
 
         if ($priceProductTransfer->getSkuProduct()) {
-            $productConcreteId = $this->productFacade->findProductConcreteIdBySku(
-                $priceProductTransfer->getSkuProduct()
-            );
+            $productConcreteId = $this->productFinder
+                ->findProductConcreteIdBySku($priceProductTransfer->getSkuProduct());
 
-            if ($productConcreteId === null) {
-                $priceProductScheduleImportErrorTransfer = $this->createPriceProductScheduleListImportErrorTransfer(
-                    sprintf(
-                        static::ERROR_MESSAGE_PRODUCT_CONCRETE_NOT_FOUND,
-                        $priceProductTransfer->getSkuProduct()
-                    )
-                );
-
-                return $priceProductExpandResultTransfer
-                    ->setError($priceProductScheduleImportErrorTransfer);
+            if ($productConcreteId !== null) {
+                $priceProductTransfer->setIdProduct($productConcreteId);
             }
-
-            $priceProductTransfer->setIdProduct($productConcreteId);
         }
 
-        return $priceProductExpandResultTransfer
-            ->setPriceProduct($priceProductTransfer)
-            ->setIsSuccess(true);
+        return $priceProductTransfer;
     }
 }

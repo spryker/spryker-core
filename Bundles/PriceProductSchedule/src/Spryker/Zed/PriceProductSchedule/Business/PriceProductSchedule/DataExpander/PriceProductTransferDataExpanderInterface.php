@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\DataExpander;
 
-use Generated\Shared\Transfer\PriceProductExpandResultTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 
 interface PriceProductTransferDataExpanderInterface
@@ -15,9 +14,9 @@ interface PriceProductTransferDataExpanderInterface
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductExpandResultTransfer
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
      */
     public function expand(
         PriceProductTransfer $priceProductTransfer
-    ): PriceProductExpandResultTransfer;
+    ): PriceProductTransfer;
 }

@@ -30,8 +30,6 @@ interface PriceProductScheduleRepositoryInterface
     /**
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @throws \Spryker\Zed\PriceProductSchedule\Persistence\Exception\NotSupportedDbEngineException
-     *
      * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
      */
     public function findPriceProductSchedulesToEnableByStore(StoreTransfer $storeTransfer): array;

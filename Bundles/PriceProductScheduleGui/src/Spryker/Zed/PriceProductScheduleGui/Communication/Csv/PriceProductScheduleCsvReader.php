@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\PriceProductScheduleGui\Communication\Importer;
+namespace Spryker\Zed\PriceProductScheduleGui\Communication\Csv;
 
 use Generated\Shared\Transfer\PriceProductScheduledListImportRequestTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleImportTransfer;
@@ -51,19 +51,32 @@ class PriceProductScheduleCsvReader implements PriceProductScheduleCsvReaderInte
         $headers = current($importItems);
         unset($importItems[0]);
 
-        foreach ($importItems as $importItem) {
+        foreach ($importItems as $rowNumber => $rowData) {
+            if ($this->isRowDataEmpty($rowData)) {
+                continue;
+            }
+
             $priceProductScheduleImportTransfer = $this->priceProductScheduleImportMapper
-                ->mapArrayToPriceProductScheduleTransfer(
-                    array_combine($headers, $importItem),
+                ->mapPriceProductScheduleRowToPriceProductScheduleImportTransfer(
+                    array_combine($headers, $rowData),
                     new PriceProductScheduleImportTransfer()
                 );
 
-            $priceProductScheduleImportTransfer->setGrossAmount((int)$priceProductScheduleImportTransfer->getGrossAmount());
-            $priceProductScheduleImportTransfer->setNetAmount((int)$priceProductScheduleImportTransfer->getNetAmount());
+            $priceProductScheduleImportTransfer->getMetaData()->setIdentifier($rowNumber);
 
             $productScheduledListImportRequestTransfer->addItem($priceProductScheduleImportTransfer);
         }
 
         return $productScheduledListImportRequestTransfer;
+    }
+
+    /**
+     * @param array $rowData
+     *
+     * @return bool
+     */
+    protected function isRowDataEmpty(array $rowData): bool
+    {
+        return empty(array_filter(array_filter($rowData)));
     }
 }

@@ -12,9 +12,9 @@ use Generated\Shared\Transfer\StoreTransfer;
 interface StoreFinderInterface
 {
     /**
-     * @param string $name
+     * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\StoreTransfer|null
      */
-    public function findStoreByName(string $name): ?StoreTransfer;
+    public function findStoreByName(string $storeName): ?StoreTransfer;
 }

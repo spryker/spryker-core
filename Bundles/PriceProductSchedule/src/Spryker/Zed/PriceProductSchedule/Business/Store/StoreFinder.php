@@ -19,6 +19,11 @@ class StoreFinder implements StoreFinderInterface
     protected $storeFacade;
 
     /**
+     * @var array
+     */
+    protected $storeCache = [];
+
+    /**
      * @param \Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToStoreFacadeInterface $storeFacade
      */
     public function __construct(PriceProductScheduleToStoreFacadeInterface $storeFacade)
@@ -27,14 +32,22 @@ class StoreFinder implements StoreFinderInterface
     }
 
     /**
-     * @param string $name
+     * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\StoreTransfer|null
      */
-    public function findStoreByName(string $name): ?StoreTransfer
+    public function findStoreByName(string $storeName): ?StoreTransfer
     {
+        if (isset($this->storeCache[$storeName])) {
+            return $this->storeCache[$storeName];
+        }
+
         try {
-            return $this->storeFacade->getStoreByName($name);
+            $storeTransfer = $this->storeFacade->getStoreByName($storeName);
+
+            $this->storeCache[$storeName] = $storeTransfer;
+
+            return $this->storeCache[$storeName];
         } catch (StoreNotFoundException $e) {
             return null;
         }

@@ -136,7 +136,10 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
     public function findPriceProductSchedulesToEnableByStore(StoreTransfer $storeTransfer): array
     {
         $currentDatabaseEngineName = $this->propelFacade->getCurrentDatabaseEngine();
-        $priceProductScheduleFilteredByMinResultSubQuery = $this->createPriceProductScheduleFilteredByMinResultSubQuery($storeTransfer, $currentDatabaseEngineName);
+        $priceProductScheduleFilteredByMinResultSubQuery = $this->createPriceProductScheduleFilteredByMinResultSubQuery(
+            $storeTransfer,
+            $currentDatabaseEngineName
+        );
 
         $priceProductScheduleEntities = $this->getFactory()
             ->createPriceProductScheduleQuery()
@@ -260,7 +263,10 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
         StoreTransfer $storeTransfer,
         string $currentDatabaseEngineName
     ): SpyPriceProductScheduleQuery {
-        $priceProductScheduleConcatenatedSubQuery = $this->createPriceProductScheduleConcatenatedSubQuery($storeTransfer, $currentDatabaseEngineName);
+        $priceProductScheduleConcatenatedSubQuery = $this->createPriceProductScheduleConcatenatedSubQuery(
+            $storeTransfer,
+            $currentDatabaseEngineName
+        );
 
         return $this->getFactory()
             ->createPriceProductScheduleQuery()

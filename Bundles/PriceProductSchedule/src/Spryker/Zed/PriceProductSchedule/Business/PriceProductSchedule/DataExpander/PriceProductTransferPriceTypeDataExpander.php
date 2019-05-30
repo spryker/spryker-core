@@ -7,61 +7,43 @@
 
 namespace Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\DataExpander;
 
-use Generated\Shared\Transfer\PriceProductExpandResultTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
-use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToPriceProductFacadeInterface;
+use Spryker\Zed\PriceProductSchedule\Business\PriceType\PriceTypeFinderInterface;
 
 class PriceProductTransferPriceTypeDataExpander extends PriceProductTransferAbstractDataExpander
 {
     protected const ERROR_MESSAGE_PRICE_TYPE_NOT_FOUND = 'Price type was not found by provided sku %s';
 
     /**
-     * @var \Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToPriceProductFacadeInterface
+     * @var \Spryker\Zed\PriceProductSchedule\Business\PriceType\PriceTypeFinderInterface
      */
-    protected $priceProductFacade;
+    protected $priceTypeFinder;
 
     /**
-     * @param \Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToPriceProductFacadeInterface $priceProductFacade
+     * @param \Spryker\Zed\PriceProductSchedule\Business\PriceType\PriceTypeFinderInterface $priceTypeFinder
      */
-    public function __construct(
-        PriceProductScheduleToPriceProductFacadeInterface $priceProductFacade
-    ) {
-        $this->priceProductFacade = $priceProductFacade;
+    public function __construct(PriceTypeFinderInterface $priceTypeFinder)
+    {
+        $this->priceTypeFinder = $priceTypeFinder;
     }
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductExpandResultTransfer
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
      */
-    public function expand(
-        PriceProductTransfer $priceProductTransfer
-    ): PriceProductExpandResultTransfer {
-        $priceProductExpandResultTransfer = (new PriceProductExpandResultTransfer())
-            ->setIsSuccess(false);
-        $priceTypeTransfer = $this->priceProductFacade->findPriceTypeByName(
-            $priceProductTransfer->getPriceTypeName()
-        );
+    public function expand(PriceProductTransfer $priceProductTransfer): PriceProductTransfer
+    {
+        $priceTypeTransfer = $this->priceTypeFinder
+            ->findPriceTypeByName($priceProductTransfer->getPriceTypeName());
 
         if ($priceTypeTransfer === null) {
-            $priceProductScheduleImportErrorTransfer = $this->createPriceProductScheduleListImportErrorTransfer(
-                sprintf(
-                    static::ERROR_MESSAGE_PRICE_TYPE_NOT_FOUND,
-                    $priceProductTransfer->getPriceTypeName()
-                )
-            );
-
-            return $priceProductExpandResultTransfer
-                ->setError($priceProductScheduleImportErrorTransfer);
+            return $priceProductTransfer;
         }
 
-        $priceProductTransfer
+        return $priceProductTransfer
             ->setFkPriceType($priceTypeTransfer->getIdPriceType())
             ->setPriceTypeName($priceTypeTransfer->getName())
             ->setPriceType($priceTypeTransfer);
-
-        return $priceProductExpandResultTransfer
-            ->setPriceProduct($priceProductTransfer)
-            ->setIsSuccess(true);
     }
 }
