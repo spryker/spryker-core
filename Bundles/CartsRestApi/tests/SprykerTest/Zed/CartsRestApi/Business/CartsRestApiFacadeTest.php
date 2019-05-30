@@ -653,11 +653,7 @@ class CartsRestApiFacadeTest extends Unit
 
         $cartsRestApiBusinessFactoryMock
             ->method('getStoreFacade')
-            ->willReturn(
-                new CartsRestApiToStoreFacadeBridge(
-                    $storeFacadeMock
-                )
-            );
+            ->willReturn(new CartsRestApiToStoreFacadeBridge($storeFacadeMock));
 
         return $cartsRestApiBusinessFactoryMock;
     }

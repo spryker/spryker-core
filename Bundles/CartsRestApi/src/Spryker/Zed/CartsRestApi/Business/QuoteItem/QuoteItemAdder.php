@@ -91,7 +91,7 @@ class QuoteItemAdder implements QuoteItemAdderInterface
                     ->setErrorIdentifier(CartsRestApiSharedConfig::ERROR_IDENTIFIER_UNAUTHORIZED_CART_ACTION));
         }
 
-        $persistentCartChangeTransfer = $this->createPersistentCartChangeTransfer(
+        $persistentCartChangeTransfer = $this->createCartChangeTransfer(
             $quoteResponseTransfer->getQuoteTransfer(),
             $restCartItemsAttributesTransfer
         );
@@ -116,14 +116,14 @@ class QuoteItemAdder implements QuoteItemAdderInterface
         QuoteTransfer $quoteTransfer,
         RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
     ): CartChangeTransfer {
-        $customerTransfer = $restCartItemsAttributesTransfer->getCustomer() ?? new CustomerTransfer();
-        $customerTransfer->setCustomerReference($restCartItemsAttributesTransfer->getCustomerReference());
+        $quoteTransfer
+            ->setCustomer((new CustomerTransfer())
+                ->setCustomerReference($restCartItemsAttributesTransfer->getCustomerReference()));
 
         return (new CartChangeTransfer())
             ->setQuote($quoteTransfer)
             ->addItem((new ItemTransfer())
                 ->setSku($restCartItemsAttributesTransfer->getSku())
-                ->setQuantity($restCartItemsAttributesTransfer->getQuantity()))
-            ->setCustomer($customerTransfer);
+                ->setQuantity($restCartItemsAttributesTransfer->getQuantity()));
     }
 }

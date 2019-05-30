@@ -15,6 +15,7 @@ use Generated\Shared\DataBuilder\QuoteCriteriaFilterBuilder;
 use Generated\Shared\DataBuilder\QuoteResponseBuilder;
 use Generated\Shared\DataBuilder\RestCartItemsAttributesBuilder;
 use Generated\Shared\Transfer\AssignGuestQuoteRequestTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
@@ -173,6 +174,9 @@ class CartsRestApiBusinessTester extends Actor
                 'quantity' => static::TEST_QUANTITY,
             ]
         ))->build();
+
+        $restCartItemsAttributesTransfer
+            ->setCustomer((new CustomerTransfer())->setCustomerReference($restCartItemsAttributesTransfer->getCustomerReference()));
 
         return $restCartItemsAttributesTransfer;
     }

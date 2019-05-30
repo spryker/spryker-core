@@ -62,6 +62,9 @@ class QuoteDeleter implements QuoteDeleterInterface
             return $quoteResponseTransfer;
         }
 
+        $originalQuoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
+        $originalQuoteIsDefault = $originalQuoteTransfer->getIsDefault();
+
         $quoteTransfer->setIdQuote($quoteResponseTransfer->getQuoteTransfer()->getIdQuote());
 
         if (!$this->quotePermissionChecker->checkQuoteWritePermission($quoteTransfer)) {
