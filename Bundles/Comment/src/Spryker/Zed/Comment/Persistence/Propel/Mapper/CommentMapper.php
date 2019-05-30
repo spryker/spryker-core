@@ -77,21 +77,20 @@ class CommentMapper
         CommentThreadTransfer $commentThreadTransfer
     ): CommentThreadTransfer {
         $commentThreadTransfer = $commentThreadTransfer->fromArray($commentThreadEntity->toArray(), true);
-        $commentThreadTransfer->setComments(new ArrayObject($this->mapCommentThreadEntityToCommentTransfers($commentThreadEntity)));
 
         return $commentThreadTransfer;
     }
 
     /**
-     * @param \Orm\Zed\Comment\Persistence\SpyCommentThread $commentEntity
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Comment\Persistence\SpyComment[] $commentEntities
      *
      * @return \Generated\Shared\Transfer\CommentTransfer[]
      */
-    protected function mapCommentThreadEntityToCommentTransfers(SpyCommentThread $commentEntity): array
+    public function mapCommentEntitiesToCommentTransfers(ObjectCollection $commentEntities): array
     {
         $commentTransfers = [];
 
-        foreach ($commentEntity->getSpyComments() as $commentEntity) {
+        foreach ($commentEntities as $commentEntity) {
             $commentTransfers[] = $this->mapCommentEntityToCommentTransfer($commentEntity, new CommentTransfer());
         }
 
@@ -130,6 +129,7 @@ class CommentMapper
         $commentTransfer = $commentTransfer->fromArray($commentEntity->toArray(), true);
 
         $commentTransfer
+            ->setIdCommentThread($commentEntity->getFkCommentThread())
             ->setCustomer($this->mapCustomerEntityToCustomerTransfer($commentEntity->getSpyCustomer(), new CustomerTransfer()))
             ->setTags(new ArrayObject($this->mapCommentEntityToCommentTagTransfers($commentEntity)));
 
@@ -158,7 +158,7 @@ class CommentMapper
     {
         $commentTagTransfers = [];
 
-        foreach ($commentEntity->getSpyCommentCommentTags() as $commentCommentTagEntity) {
+        foreach ($commentEntity->getSpyCommentToCommentTags() as $commentCommentTagEntity) {
             $commentTagTransfers[] = $this->mapCommentTagEntityToCommentTagTransfer($commentCommentTagEntity->getSpyCommentTag(), new CommentTagTransfer());
         }
 

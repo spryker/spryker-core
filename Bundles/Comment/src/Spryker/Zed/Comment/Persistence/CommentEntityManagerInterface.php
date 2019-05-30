@@ -42,25 +42,23 @@ interface CommentEntityManagerInterface
     public function removeComment(CommentTransfer $commentTransfer): void;
 
     /**
+     * @param \Generated\Shared\Transfer\CommentTransfer $commentTransfer
+     *
+     * @return void
+     */
+    public function addCommentTagsToComment(CommentTransfer $commentTransfer): void;
+
+    /**
+     * @param \Generated\Shared\Transfer\CommentTransfer $commentTransfer
+     *
+     * @return void
+     */
+    public function removeCommentTagsFromComment(CommentTransfer $commentTransfer): void;
+
+    /**
      * @param \Generated\Shared\Transfer\CommentTagTransfer $commentTagTransfer
      *
      * @return \Generated\Shared\Transfer\CommentTagTransfer
      */
     public function createCommentTag(CommentTagTransfer $commentTagTransfer): CommentTagTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\CommentTagTransfer[] $commentTagTransfers
-     * @param \Generated\Shared\Transfer\CommentTransfer $commentTransfer
-     *
-     * @return void
-     */
-    public function addCommentTagsToComment(array $commentTagTransfers, CommentTransfer $commentTransfer): void;
-
-    /**
-     * @param \Generated\Shared\Transfer\CommentTagTransfer[] $commentTagTransfers
-     * @param \Generated\Shared\Transfer\CommentTransfer $commentTransfer
-     *
-     * @return void
-     */
-    public function removeCommentTagsFromComment(array $commentTagTransfers, CommentTransfer $commentTransfer): void;
 }

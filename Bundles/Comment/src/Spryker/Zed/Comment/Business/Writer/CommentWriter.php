@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Comment\Business\Writer;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CommentRequestTransfer;
 use Generated\Shared\Transfer\CommentResponseTransfer;
 use Generated\Shared\Transfer\CommentThreadTransfer;
@@ -20,7 +21,6 @@ class CommentWriter implements CommentWriterInterface
 {
     use TransactionTrait;
 
-    protected const GLOSSARY_KEY_COMMENT_THREAD_NOT_FOUND = 'comment.validation.error.comment_thread_not_found';
     protected const GLOSSARY_KEY_COMMENT_NOT_FOUND = 'comment.validation.error.comment_not_found';
     protected const GLOSSARY_KEY_COMMENT_ACCESS_DENIED = 'comment.validation.error.access_denied';
 
@@ -102,18 +102,9 @@ class CommentWriter implements CommentWriterInterface
                 ->getCustomer()
                     ->requireIdCustomer();
 
-        $commentTransfer = $this->commentRepository
-            ->findCommentByUuid($commentRequestTransfer->getComment()->getUuid());
-
-        $commentResponseTransfer = $this->validateComment($commentRequestTransfer, $commentTransfer);
-
-        if (!$commentResponseTransfer->getIsSuccessful()) {
-            return $commentResponseTransfer;
-        }
-
-        $this->commentEntityManager->removeComment($commentTransfer);
-
-        return $commentResponseTransfer->setComment($commentTransfer);
+        return $this->getTransactionHandler()->handleTransaction(function () use ($commentRequestTransfer) {
+            return $this->executeRemoveCommentTransaction($commentRequestTransfer);
+        });
     }
 
     /**
@@ -130,7 +121,9 @@ class CommentWriter implements CommentWriterInterface
 
         $commentTransfer = $this->commentEntityManager->createComment($commentTransfer);
 
-        $this->createCommentTags($commentTransfer);
+        if ($commentTransfer->getTags()->count()) {
+            $commentTransfer = $this->createCommentTags($commentTransfer);
+        }
 
         return (new CommentResponseTransfer())
             ->setIsSuccessful(true)
@@ -153,45 +146,38 @@ class CommentWriter implements CommentWriterInterface
             return $commentResponseTransfer;
         }
 
-        $commentTransfer->setMessage($commentRequestTransfer->getComment()->getMessage());
-        $commentTransfer = $this->commentEntityManager->updateComment($commentTransfer);
+        $commentTransfer
+            ->setMessage($commentRequestTransfer->getComment()->getMessage())
+            ->setTags($commentRequestTransfer->getComment()->getTags());
 
-        $this->updateCommentTags(
-            $commentTransfer,
-            $commentRequestTransfer->getComment()->getTags()->getArrayCopy()
-        );
+        $commentTransfer = $this->commentEntityManager->updateComment($commentTransfer);
+        $commentTransfer = $this->createCommentTags($commentTransfer);
 
         return $commentResponseTransfer->setComment($commentTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CommentTransfer $commentTransfer
-     * @param \Generated\Shared\Transfer\CommentTagTransfer[] $commentTagTransfers
+     * @param \Generated\Shared\Transfer\CommentRequestTransfer $commentRequestTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\CommentResponseTransfer
      */
-    protected function updateCommentTags(CommentTransfer $commentTransfer, array $commentTagTransfers): void
+    protected function executeRemoveCommentTransaction(CommentRequestTransfer $commentRequestTransfer): CommentResponseTransfer
     {
-        $newCommentTagTransfers = [];
-        $oldCommentTagMap = $this->mapCommentTagsByName($commentTransfer->getTags()->getArrayCopy());
-        $commentTagMap = $this->mapCommentTagsByName($this->commentRepository->getCommentTags());
+        $commentTransfer = $this->commentRepository
+            ->findCommentByUuid($commentRequestTransfer->getComment()->getUuid());
 
-        foreach ($commentTagTransfers as $commentTagTransfer) {
-            if (!isset($commentTagMap[$commentTagTransfer->getName()])) {
-                $commentTagTransfer = $this->commentEntityManager->createCommentTag($commentTagTransfer);
-                $commentTagMap[$commentTagTransfer->getName()] = $commentTagTransfer;
-            }
+        $commentResponseTransfer = $this->validateComment($commentRequestTransfer, $commentTransfer);
 
-            if (!isset($oldCommentTagMap[$commentTagTransfer->getName()])) {
-                $newCommentTagTransfers[] = $commentTagMap[$commentTagTransfer->getName()];
-                continue;
-            }
-
-            unset($oldCommentTagMap[$commentTagTransfer->getName()]);
+        if (!$commentResponseTransfer->getIsSuccessful()) {
+            return $commentResponseTransfer;
         }
 
-        $this->commentEntityManager->removeCommentTagsFromComment($oldCommentTagMap, $commentTransfer);
-        $this->commentEntityManager->addCommentTagsToComment($newCommentTagTransfers, $commentTransfer);
+        $commentTransfer->setTags(new ArrayObject());
+        $this->commentEntityManager->removeCommentTagsFromComment($commentTransfer);
+
+        $this->commentEntityManager->removeComment($commentTransfer);
+
+        return $commentResponseTransfer->setComment($commentTransfer);
     }
 
     /**
@@ -239,23 +225,27 @@ class CommentWriter implements CommentWriterInterface
     /**
      * @param \Generated\Shared\Transfer\CommentTransfer $commentTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\CommentTransfer
      */
-    protected function createCommentTags(CommentTransfer $commentTransfer): void
+    protected function createCommentTags(CommentTransfer $commentTransfer): CommentTransfer
     {
-        $newCommentTagTransfers = [];
+        $expandedCommentTagTransfers = [];
         $commentTagMap = $this->mapCommentTagsByName($this->commentRepository->getCommentTags());
 
         foreach ($commentTransfer->getTags() as $commentTagTransfer) {
             if (!isset($commentTagMap[$commentTagTransfer->getName()])) {
-                $commentTagTransfer = $this->commentEntityManager->createCommentTag($commentTagTransfer);
-                $commentTagMap[$commentTagTransfer->getName()] = $commentTagTransfer;
+                $commentTagMap[$commentTagTransfer->getName()] = $this->commentEntityManager->createCommentTag($commentTagTransfer);
             }
 
-            $newCommentTagTransfers[] = $commentTagMap[$commentTagTransfer->getName()];
+            $expandedCommentTagTransfers[] = $commentTagMap[$commentTagTransfer->getName()];
         }
 
-        $this->commentEntityManager->addCommentTagsToComment($newCommentTagTransfers, $commentTransfer);
+        $commentTransfer->setTags(new ArrayObject($expandedCommentTagTransfers));
+
+        $this->commentEntityManager->addCommentTagsToComment($commentTransfer);
+        $this->commentEntityManager->removeCommentTagsFromComment($commentTransfer);
+
+        return $commentTransfer;
     }
 
     /**

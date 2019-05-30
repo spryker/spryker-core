@@ -5,7 +5,7 @@
 
     <transfer name="CommentRequest">
         <property name="ownerId" type="int" dataBuilderRule="numberBetween(100, 9999)" />
-        <property name="ownerType" type="string" dataBuilderRule="slug" />
+        <property name="ownerType" type="string" dataBuilderRule="unique()->word" />
     </transfer>
 
     <transfer name="Comment">
@@ -13,7 +13,7 @@
     </transfer>
 
     <transfer name="CommentTag">
-        <property name="name" type="string" dataBuilderRule="slug" />
+        <property name="name" type="string" dataBuilderRule="unique()->word" />
     </transfer>
 
 </transfers>

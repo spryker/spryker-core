@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Comment\Persistence\Propel;
 
-use Orm\Zed\Comment\Persistence\Base\SpyCommentCommentTagQuery as BaseSpyCommentCommentTagQuery;
+use Orm\Zed\Comment\Persistence\Base\SpyCommentToCommentTagQuery as BaseSpyCommentToCommentTagQuery;
 
-abstract class AbstractSpyCommentCommentTagQuery extends BaseSpyCommentCommentTagQuery
+abstract class AbstractSpyCommentToCommentTagQuery extends BaseSpyCommentToCommentTagQuery
 {
 }

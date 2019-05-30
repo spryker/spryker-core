@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\Comment\Persistence;
 
-use Orm\Zed\Comment\Persistence\SpyCommentCommentTagQuery;
 use Orm\Zed\Comment\Persistence\SpyCommentQuery;
 use Orm\Zed\Comment\Persistence\SpyCommentTagQuery;
 use Orm\Zed\Comment\Persistence\SpyCommentThreadQuery;
+use Orm\Zed\Comment\Persistence\SpyCommentToCommentTagQuery;
 use Spryker\Zed\Comment\Persistence\Propel\Mapper\CommentMapper;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
@@ -38,11 +38,11 @@ class CommentPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Orm\Zed\Comment\Persistence\SpyCommentCommentTagQuery
+     * @return \Orm\Zed\Comment\Persistence\SpyCommentToCommentTagQuery
      */
-    public function getCommentCommentTagPropelQuery(): SpyCommentCommentTagQuery
+    public function getCommentToCommentTagPropelQuery(): SpyCommentToCommentTagQuery
     {
-        return SpyCommentCommentTagQuery::create();
+        return SpyCommentToCommentTagQuery::create();
     }
 
     /**
