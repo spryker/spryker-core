@@ -31,7 +31,8 @@ class ResourceShareFactory extends AbstractFactory
     {
         return new ResourceShareActivator(
             $this->createZedResourceShareStub(),
-            $this->getResourceShareActivatorStrategyPlugins()
+            $this->getBeforeZedResourceShareActivatorStrategyPlugins(),
+            $this->getAfterZedResourceShareActivatorStrategyPlugins()
         );
     }
 
@@ -46,8 +47,16 @@ class ResourceShareFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\ResourceShareExtension\Dependency\Plugin\ResourceShareActivatorStrategyPluginInterface[]
      */
-    public function getResourceShareActivatorStrategyPlugins(): array
+    public function getAfterZedResourceShareActivatorStrategyPlugins(): array
     {
-        return $this->getProvidedDependency(ResourceShareDependencyProvider::PLUGINS_RESOURCE_SHARE_ACTIVATOR_STRATEGY);
+        return $this->getProvidedDependency(ResourceShareDependencyProvider::PLUGINS_AFTER_ZED_RESOURCE_SHARE_ACTIVATOR_STRATEGY);
+    }
+
+    /**
+     * @return \Spryker\Client\ResourceShareExtension\Dependency\Plugin\ResourceShareActivatorStrategyPluginInterface[]
+     */
+    public function getBeforeZedResourceShareActivatorStrategyPlugins()
+    {
+        return $this->getProvidedDependency(ResourceShareDependencyProvider::PLUGINS_BEFORE_ZED_RESOURCE_SHARE_ACTIVATOR_STRATEGY);
     }
 }

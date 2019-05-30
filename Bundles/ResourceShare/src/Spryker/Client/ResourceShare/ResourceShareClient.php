@@ -47,4 +47,20 @@ class ResourceShareClient extends AbstractClient implements ResourceShareClientI
             ->createResourceShareActivator()
             ->activateResourceShare($resourceShareRequestTransfer);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
+     */
+    public function getResourceShareByUuid(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer
+    {
+        return $this->getFactory()
+            ->createZedResourceShareStub()
+            ->getResourceShareByUuid($resourceShareRequestTransfer);
+    }
 }

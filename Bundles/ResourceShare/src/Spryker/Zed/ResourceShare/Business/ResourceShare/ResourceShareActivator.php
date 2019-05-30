@@ -9,7 +9,6 @@ namespace Spryker\Zed\ResourceShare\Business\ResourceShare;
 
 use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
-use Spryker\Zed\ResourceShare\Business\Exception\ResourceShareActivatorStrategyNotFoundException;
 
 class ResourceShareActivator implements ResourceShareActivatorInterface
 {
@@ -43,13 +42,6 @@ class ResourceShareActivator implements ResourceShareActivatorInterface
     public function activateResourceShare(
         ResourceShareRequestTransfer $resourceShareRequestTransfer
     ): ResourceShareResponseTransfer {
-        $resourceShareResponseTransfer = $this->resourceShareReader->getResourceShareByUuid($resourceShareRequestTransfer);
-        if (!$resourceShareResponseTransfer->getIsSuccessful()) {
-            return $resourceShareResponseTransfer;
-        }
-
-        $resourceShareRequestTransfer->setResourceShare($resourceShareResponseTransfer->getResourceShare());
-
         return $this->executeResourceShareActivatorStrategyPlugins(
             $resourceShareRequestTransfer
         );
@@ -58,23 +50,23 @@ class ResourceShareActivator implements ResourceShareActivatorInterface
     /**
      * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
      *
-     * @throws \Spryker\Zed\ResourceShare\Business\Exception\ResourceShareActivatorStrategyNotFoundException
-     *
      * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
      */
     protected function executeResourceShareActivatorStrategyPlugins(
         ResourceShareRequestTransfer $resourceShareRequestTransfer
     ): ResourceShareResponseTransfer {
+        $resourceShareResponseTransfer = (new ResourceShareResponseTransfer())
+            ->setIsSuccessful(true);
+
         foreach ($this->resourceShareActivatorStrategyPlugins as $resourceShareActivatorStrategyPlugin) {
             if (!$resourceShareActivatorStrategyPlugin->isApplicable($resourceShareRequestTransfer)) {
                 continue;
             }
 
-            return $resourceShareActivatorStrategyPlugin->execute($resourceShareRequestTransfer);
+            $resourceShareResponseTransfer = $resourceShareActivatorStrategyPlugin->execute($resourceShareRequestTransfer);
+            break;
         }
 
-        throw new ResourceShareActivatorStrategyNotFoundException(
-            'Resource share activator strategy was not found.'
-        );
+        return $resourceShareResponseTransfer;
     }
 }

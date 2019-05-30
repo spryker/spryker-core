@@ -42,4 +42,18 @@ interface ResourceShareClientInterface
      * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
      */
     public function activateResourceShare(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer;
+
+    /**
+     * Specification:
+     * - Retrieves the share resource by the provided UUID.
+     * - Returns "isSuccess=true" on success and error message otherwise.
+     * - Applies corresponding data expander strategy using `ResourceShareResourceDataExpanderStrategyPluginInterface` stack.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
+     */
+    public function getResourceShareByUuid(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer;
 }
