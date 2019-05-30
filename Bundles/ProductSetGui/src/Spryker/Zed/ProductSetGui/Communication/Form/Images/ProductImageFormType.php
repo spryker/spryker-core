@@ -35,8 +35,9 @@ class ProductImageFormType extends AbstractType
 
     public const OPTION_IMAGE_PREVIEW_LARGE_URL = 'option_image_preview_large_url';
 
-    public const MAX_SORT_ORDER_VALUE = 2147483647; // 32 bit integer
-    public const MIN_SORT_ORDER_VALUE = 0;
+    protected const MAX_SORT_ORDER_VALUE = 2147483647; // 32 bit integer
+    protected const MIN_SORT_ORDER_VALUE = 0;
+    protected const DEFAULT_SORT_ORDER_VALUE = 0;
 
     /**
      * @uses \Spryker\Zed\Gui\Communication\Form\Type\ImageType::OPTION_IMAGE_WIDTH
@@ -192,6 +193,9 @@ class ProductImageFormType extends AbstractType
                 new GreaterThanOrEqual([
                     'value' => static::MIN_SORT_ORDER_VALUE,
                 ]),
+            ],
+            'attr' => [
+                'data-sort-order' => static::DEFAULT_SORT_ORDER_VALUE,
             ],
         ]);
 
