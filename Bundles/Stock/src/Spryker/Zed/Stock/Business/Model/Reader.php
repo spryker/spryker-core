@@ -473,13 +473,13 @@ class Reader implements ReaderInterface
     public function getProductStockSumBySku(string $sku): float
     {
         /**
-         * @var float $stockAmount
+         * @var string $stockAmount
          */
-        $stockAmount = (float)$this->queryContainer
+        $stockAmount = $this->queryContainer
             ->queryProductStockSumBySku($sku)
             ->findOne();
 
-        return $stockAmount;
+        return (float)$stockAmount;
     }
 
     /**
@@ -493,13 +493,13 @@ class Reader implements ReaderInterface
         $storeNames = $this->getStoreWarehouses($storeTransfer->getName());
 
         /**
-         * @var float $stockAmount
+         * @var string $stockAmount
          */
-        $stockAmount = (float)$this->queryContainer
+        $stockAmount = $this->queryContainer
             ->queryProductStockSumBySkuAndStore($sku, $storeNames)
             ->findOne();
 
-        return $stockAmount;
+        return (float)$stockAmount;
     }
 
     /**
