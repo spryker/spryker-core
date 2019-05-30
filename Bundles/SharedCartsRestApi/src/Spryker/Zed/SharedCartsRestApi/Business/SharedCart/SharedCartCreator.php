@@ -8,6 +8,9 @@
 namespace Spryker\Zed\SharedCartsRestApi\Business\SharedCart;
 
 use Generated\Shared\Transfer\QuoteCompanyUserTransfer;
+use Generated\Shared\Transfer\QuotePermissionGroupResponseTransfer;
+use Generated\Shared\Transfer\QuotePermissionGroupTransfer;
+use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShareCartRequestTransfer;
 use Generated\Shared\Transfer\ShareCartResponseTransfer;
@@ -57,26 +60,46 @@ class SharedCartCreator implements SharedCartCreatorInterface
      */
     public function create(ShareCartRequestTransfer $shareCartRequestTransfer): ShareCartResponseTransfer
     {
-        $shareCartRequestTransfer->requireQuoteUuid()
-            ->requireShareDetails();
+        $shareCartRequestTransfer->requireQuoteUuid()->requireShareDetails();
         $shareCartResponseTransfer = (new ShareCartResponseTransfer())->setIsSuccessful(false);
 
         $quoteResponseTransfer = $this->quoteFacade->findQuoteByUuid(
             (new QuoteTransfer())->setUuid($shareCartRequestTransfer->getQuoteUuid())
         );
-        if (!$quoteResponseTransfer->getIsSuccessful()) {
-            return $shareCartResponseTransfer->setErrorIdentifier(SharedSharedCartsRestApiConfig::ERROR_IDENTIFIER_QUOTE_NOT_FOUND);
-        }
+
+        /** @var \Generated\Shared\Transfer\ShareDetailTransfer $shareDetailTransfer */
+        $shareDetailTransfer = $shareCartRequestTransfer->getShareDetails()->offsetGet(0);
+        $quotePermissionGroupResponseTransfer = $this->sharedCartFacade->findQuotePermissionGroupById(
+            (new QuotePermissionGroupTransfer())
+                ->setIdQuotePermissionGroup($shareDetailTransfer->getQuotePermissionGroup()->getIdQuotePermissionGroup())
+        );
 
         $quoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
-        if (!$this->canManageQuoteSharing($quoteTransfer, $shareCartRequestTransfer)) {
-            return $shareCartResponseTransfer->setErrorIdentifier(SharedSharedCartsRestApiConfig::ERROR_IDENTIFIER_ACTION_FORBIDDEN);
+
+        $errorIdentifier = $this->checkPrerequisites(
+            $quoteResponseTransfer,
+            $quotePermissionGroupResponseTransfer,
+            $quoteTransfer,
+            $shareCartRequestTransfer
+        );
+        if ($errorIdentifier) {
+            return $shareCartResponseTransfer->setErrorIdentifier($errorIdentifier);
         }
 
         $quoteCompanyUserTransfer = $this->createQuoteCompanyUserTransfer(
             $quoteTransfer->getIdQuote(),
-            $shareCartRequestTransfer->getShareDetails()->offsetGet(0)
+            $shareDetailTransfer
         );
+
+        $shareDetailCollectionTransfer = $this->sharedCartFacade->getShareDetailCollectionByShareDetailCriteria(
+            $this->createShareDetailCriteriaFilterTransfer($quoteTransfer, $quoteCompanyUserTransfer)
+        );
+
+        if ($shareDetailCollectionTransfer->getShareDetails()->count()) {
+            return $shareCartResponseTransfer->setErrorIdentifier(SharedSharedCartsRestApiConfig::ERROR_IDENTIFIER_FAILED_TO_SHARE_CART);
+        }
+
+        $quoteCompanyUserTransfer = $this->sharedCartsRestApiEntityManager->saveQuoteCompanyUser($quoteCompanyUserTransfer);
 
         $shareDetailCollectionTransfer = $this->sharedCartFacade->getShareDetailCollectionByShareDetailCriteria(
             $this->createShareDetailCriteriaFilterTransfer($quoteTransfer, $quoteCompanyUserTransfer)
@@ -87,6 +110,33 @@ class SharedCartCreator implements SharedCartCreatorInterface
 
         return $shareCartResponseTransfer->setShareDetails($shareDetailCollectionTransfer->getShareDetails())
             ->setIsSuccessful(true);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
+     * @param \Generated\Shared\Transfer\QuotePermissionGroupResponseTransfer $quotePermissionGroupResponseTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ShareCartRequestTransfer $shareCartRequestTransfer
+     *
+     * @return string|null
+     */
+    protected function checkPrerequisites(
+        QuoteResponseTransfer $quoteResponseTransfer,
+        QuotePermissionGroupResponseTransfer $quotePermissionGroupResponseTransfer,
+        QuoteTransfer $quoteTransfer,
+        ShareCartRequestTransfer $shareCartRequestTransfer
+    ): ?string {
+        if (!$quoteResponseTransfer->getIsSuccessful()) {
+            return SharedSharedCartsRestApiConfig::ERROR_IDENTIFIER_QUOTE_NOT_FOUND;
+        }
+        if (!$quotePermissionGroupResponseTransfer->getIsSuccessful()) {
+            return SharedSharedCartsRestApiConfig::ERROR_IDENTIFIER_QUOTE_PERMISSION_GROUP_NOT_FOUND;
+        }
+        if (!$this->canManageQuoteSharing($quoteTransfer, $shareCartRequestTransfer)) {
+            return SharedSharedCartsRestApiConfig::ERROR_IDENTIFIER_ACTION_FORBIDDEN;
+        }
+
+        return null;
     }
 
     /**
@@ -113,7 +163,7 @@ class SharedCartCreator implements SharedCartCreatorInterface
             ->setFkCompanyUser($shareDetailTransfer->getIdCompanyUser())
             ->setFkQuotePermissionGroup($shareDetailTransfer->getQuotePermissionGroup()->getIdQuotePermissionGroup());
 
-        return $this->sharedCartsRestApiEntityManager->saveQuoteCompanyUser($quoteCompanyUserTransfer);
+        return $quoteCompanyUserTransfer;
     }
 
     /**

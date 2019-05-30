@@ -25,6 +25,10 @@ class SharedCartsRestApiConfig extends AbstractBundleConfig
      */
     public const RESPONSE_CODE_CART_NOT_FOUND = '101';
     /**
+     * @uses \Spryker\Glue\CartPermissionGroupsRestApi\CartPermissionGroupsRestApiConfig::RESPONSE_CODE_CART_PERMISSION_GROUP_NOT_FOUND
+     */
+    public const RESPONSE_CODE_CART_PERMISSION_GROUP_NOT_FOUND = '2501';
+    /**
      * @uses \Spryker\Glue\CartsRestApi\CartsRestApiConfig::RESPONSE_CODE_CART_ID_MISSING
      */
     public const RESPONSE_CODE_CART_ID_MISSING = '104';
@@ -42,6 +46,10 @@ class SharedCartsRestApiConfig extends AbstractBundleConfig
      * @uses \Spryker\Glue\CartsRestApi\CartsRestApiConfig::EXCEPTION_MESSAGE_CART_WITH_ID_NOT_FOUND
      */
     public const EXCEPTION_MESSAGE_CART_WITH_ID_NOT_FOUND = 'Cart with given uuid not found.';
+    /**
+     * @uses \Spryker\Glue\CartPermissionGroupsRestApi\CartPermissionGroupsRestApiConfig::RESPONSE_DETAIL_CART_PERMISSION_GROUP_NOT_FOUND
+     */
+    public const RESPONSE_DETAIL_CART_PERMISSION_GROUP_NOT_FOUND = 'Cart permission group not found.';
     /**
      * @uses \Spryker\Glue\CartsRestApi\CartsRestApiConfig::EXCEPTION_MESSAGE_CART_ID_MISSING
      */
@@ -81,6 +89,11 @@ class SharedCartsRestApiConfig extends AbstractBundleConfig
                 RestErrorMessageTransfer::CODE => static::RESPONSE_CODE_FAILED_TO_SHARE_CART,
                 RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
                 RestErrorMessageTransfer::DETAIL => static::RESPONSE_DETAIL_FAILED_TO_SHARE_CART,
+            ],
+            SharedSharedCartsRestApiConfig::ERROR_IDENTIFIER_QUOTE_PERMISSION_GROUP_NOT_FOUND => [
+                RestErrorMessageTransfer::CODE => static::RESPONSE_CODE_CART_PERMISSION_GROUP_NOT_FOUND,
+                RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
+                RestErrorMessageTransfer::DETAIL => static::RESPONSE_DETAIL_CART_PERMISSION_GROUP_NOT_FOUND,
             ],
         ];
     }
