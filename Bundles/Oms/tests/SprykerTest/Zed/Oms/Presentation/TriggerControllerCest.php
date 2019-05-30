@@ -1,12 +1,15 @@
 <?php
 
-namespace SprykerTest\Zed\Oms\Presentation;
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
+namespace SprykerTest\Zed\Oms\Presentation;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use SprykerTest\Zed\Oms\OmsPresentationTester;
 use SprykerTest\Zed\Oms\PageObject\OrderDetailPage;
-use SprykerTest\Zed\Oms\OmsCommunicationTester;
 
 /**
  * Auto-generated group annotations
@@ -20,11 +23,6 @@ use SprykerTest\Zed\Oms\OmsCommunicationTester;
 class TriggerControllerCest
 {
     protected const OMS_ACTIVE_PROCESS = 'Test01';
-
-    /**
-     * @var \Spryker\Zed\Oms\Business\OmsFacadeInterface
-     */
-    protected $omsFacade;
 
     /**
      * @var \Spryker\Zed\Sales\Business\SalesFacadeInterface
@@ -43,16 +41,15 @@ class TriggerControllerCest
      */
     public function _before(OmsPresentationTester $i)
     {
-        $this->omsFacade = $i->getOmsFacade();
         $this->salesFacade = $i->getSalesFacade();
-        $i->configureTestStateMachine([static::OMS_ACTIVE_PROCESS]);
 
         $productTransfer = $i->haveProduct();
-
 
         $this->orderTransfer = $i->haveOrderTransfer([
             'unitPrice' => 100,
             'sumPrice' => 100,
+            'unitPriceToPayAggregation' => 100,
+            'unitDiscountAmountFullAggregation' => 0,
             'amountSku' => $productTransfer->getSku(),
             'amount' => 5,
             'totals' => [
@@ -62,12 +59,13 @@ class TriggerControllerCest
                 'grand_total' => 500,
                 'price_to_pay' => 500,
                 'net_total' => 500,
-            ]
+            ],
         ], static::OMS_ACTIVE_PROCESS);
     }
 
     /**
-     * @group her
+     * @param \SprykerTest\Zed\Oms\OmsPresentationTester $i
+     *
      * @return void
      */
     public function testFirst(OmsPresentationTester $i)
@@ -84,11 +82,13 @@ class TriggerControllerCest
 
         $i->makeScreenshot();
 
-//        $i->submitForm('//*[@id="items"]/div[2]/div/div/div[2]/table/tbody[1]/tr/td[8]/form', []);
-//
-//        $latestItemTransfer = $this->getItemLatestData();
-//
-//        $i->assertNotEquals($initialState, $latestItemTransfer->getState()->getName());
+        $i->submitForm('//*[@id="items"]/div[2]/div/div/div[2]/table/tbody[1]/tr/td[8]/form', []);
+
+        $latestItemTransfer = $this->getItemLatestData();
+
+        $i->see($latestItemTransfer->getState()->getName());
+
+        $i->assertNotEquals($initialState, $latestItemTransfer->getState()->getName());
     }
 
     /**

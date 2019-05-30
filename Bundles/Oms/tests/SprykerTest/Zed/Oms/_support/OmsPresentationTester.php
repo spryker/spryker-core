@@ -1,6 +1,13 @@
 <?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace SprykerTest\Zed\Oms;
 
+use Codeception\Actor;
 use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Oms\Business\OmsFacadeInterface;
 use Spryker\Zed\Sales\Business\SalesFacadeInterface;
@@ -19,8 +26,8 @@ use Spryker\Zed\Sales\Business\SalesFacadeInterface;
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
  *
  * @SuppressWarnings(PHPMD)
-*/
-class OmsPresentationTester extends \Codeception\Actor
+ */
+class OmsPresentationTester extends Actor
 {
     use _generated\OmsPresentationTesterActions;
 

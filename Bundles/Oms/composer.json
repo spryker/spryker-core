@@ -20,8 +20,13 @@
   "require-dev": {
     "spryker/application": "*",
     "spryker/checkout": "*",
+    "spryker/config": "*",
+    "spryker/glossary": "*",
+    "spryker/product": "*",
     "spryker/propel": "*",
-    "spryker/testify": "*"
+    "spryker/silex": "*",
+    "spryker/testify": "*",
+    "spryker/zed-navigation": "*"
   },
   "suggest": {
     "spryker/checkout": "If you want to use Checkout plugins."
