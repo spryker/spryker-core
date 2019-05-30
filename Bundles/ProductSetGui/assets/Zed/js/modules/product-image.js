@@ -34,7 +34,9 @@ $(document).ready(function() {
             .replace(/__name__/g, imageCollectionIndex);
 
         newOptionFormHTML = $($.parseHTML(newOptionFormHTML));
-        newOptionFormHTML.find('.sort-order-field').val(0);
+
+        var sortOrderField = newOptionFormHTML.find('[data-sort-order]');
+        sortOrderField.val(sortOrderField.data('sort-order'));
 
         imageSet.find('.image-collection-container').append($(newOptionFormHTML));
     }
@@ -61,6 +63,11 @@ $(document).ready(function() {
             .data('imageCollectionPrototype')
             .replace(/__image_set_name__/g, imageSetIndex)
             .replace(/__name__/g, 0);
+
+        imageCollectionPrototype = $($.parseHTML(imageCollectionPrototype));
+
+        var sortOrderField = imageCollectionPrototype.find('[data-sort-order]');
+        sortOrderField.val(sortOrderField.data('sort-order'));
 
         imageSet.find('.image-collection-container').append($(imageCollectionPrototype));
     }
