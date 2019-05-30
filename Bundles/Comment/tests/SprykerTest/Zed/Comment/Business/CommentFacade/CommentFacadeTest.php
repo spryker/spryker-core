@@ -638,13 +638,14 @@ class CommentFacadeTest extends Unit
     {
         // Arrange
         $commentTransfer = (new CommentBuilder())->build()
-            ->setCustomer($this->customerTransfer);
+            ->setCustomer($this->customerTransfer)
+            ->addCommentTag((new CommentTagBuilder())->build());
 
         $commentRequestTransfer = (new CommentRequestBuilder())->build()
             ->setComment($commentTransfer);
 
         $commentTransfer = $this->tester->createComment($commentRequestTransfer)->getComment();
-        $commentTransfer->setMessage(static::FAKE_COMMENT_MESSAGE);
+        $commentRequestTransfer->setComment($commentTransfer);
 
         // Act
         $commentResponseTransfer = $this->tester->getFacade()->removeComment($commentRequestTransfer);
