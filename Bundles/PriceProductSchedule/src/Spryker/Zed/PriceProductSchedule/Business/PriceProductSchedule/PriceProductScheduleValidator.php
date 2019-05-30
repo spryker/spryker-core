@@ -31,6 +31,7 @@ class PriceProductScheduleValidator implements PriceProductScheduleValidatorInte
 
     protected const ERROR_MESSAGE_PRODUCT_CONCRETE_NOT_FOUND = 'Concrete product was not found by provided sku %s';
     protected const ERROR_MESSAGE_PRODUCT_ABSTRACT_NOT_FOUND = 'Abstract product was not found by provided sku %s';
+    protected const ERROR_MESSAGE_SKU_NOT_VALID = 'One Product Abstract Sku or Product Concrete Sku must be provided.';
 
     /**
      * @var \Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleRepositoryInterface
@@ -125,6 +126,23 @@ class PriceProductScheduleValidator implements PriceProductScheduleValidatorInte
                     static::ERROR_MESSAGE_STORE_NOT_FOUND,
                     $priceProductScheduleImportTransfer->getStoreName()
                 )
+            );
+        }
+
+        if ($this->isPriceTypeValid($priceProductScheduleImportTransfer) === false) {
+            return $this->createPriceProductScheduleListImportErrorTransfer(
+                $priceProductScheduleImportTransfer,
+                sprintf(
+                    static::ERROR_MESSAGE_PRICE_TYPE_NOT_FOUND,
+                    $priceProductScheduleImportTransfer->getPriceTypeName()
+                )
+            );
+        }
+
+        if ($this->isProductSkuUniqueField($priceProductScheduleImportTransfer) === false) {
+            return $this->createPriceProductScheduleListImportErrorTransfer(
+                $priceProductScheduleImportTransfer,
+                static::ERROR_MESSAGE_SKU_NOT_VALID
             );
         }
 
@@ -234,6 +252,45 @@ class PriceProductScheduleValidator implements PriceProductScheduleValidatorInte
             ->findStoreByName($priceProductScheduleImportTransfer->getStoreName());
 
         if ($storeTransfer === null) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer
+     *
+     * @return bool
+     */
+    protected function isPriceTypeValid(PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer): bool
+    {
+        if ($priceProductScheduleImportTransfer->getPriceTypeName() === null) {
+            return false;
+        }
+
+        $priceTypeTransfer = $this->priceTypeFinder
+            ->findPriceTypeByName($priceProductScheduleImportTransfer->getPriceTypeName());
+
+        if ($priceTypeTransfer === null) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer
+     *
+     * @return bool
+     */
+    protected function isProductSkuUniqueField(
+        PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer
+    ): bool {
+        $isBothSkuMissing = $priceProductScheduleImportTransfer->getSkuProductAbstract() === null && $priceProductScheduleImportTransfer->getSkuProduct() === null;
+        $isBothSkuProvided = $priceProductScheduleImportTransfer->getSkuProductAbstract() !== null && $priceProductScheduleImportTransfer->getSkuProduct() !== null;
+
+        if ($isBothSkuMissing || $isBothSkuProvided) {
             return false;
         }
 
