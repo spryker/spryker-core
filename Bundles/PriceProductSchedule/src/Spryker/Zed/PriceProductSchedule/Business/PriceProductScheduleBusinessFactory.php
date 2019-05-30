@@ -18,6 +18,14 @@ use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\DataExpander\
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\DataExpander\PriceProductTransferPriceDimensionDataExpander;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\DataExpander\PriceProductTransferPriceTypeDataExpander;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\DataExpander\PriceProductTransferProductDataExpander;
+use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\ImportDataValidator\CurrencyDataValidator;
+use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\ImportDataValidator\DateDataValidator;
+use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\ImportDataValidator\PriceDataValidator;
+use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\ImportDataValidator\PriceProductScheduleImportDataValidatorInterface;
+use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\ImportDataValidator\PriceTypeDataValidator;
+use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\ImportDataValidator\ProductDataValidator;
+use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\ImportDataValidator\StoreDataValidator;
+use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\ImportDataValidator\UniqueDataValidator;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleApplier;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleApplierInterface;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleCleaner;
@@ -26,10 +34,10 @@ use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductS
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleDisablerInterface;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleImportMapper;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleImportMapperInterface;
+use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleImportValidator;
+use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleImportValidatorInterface;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleMapper;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleMapperInterface;
-use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleValidator;
-use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleValidatorInterface;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleWriter;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleWriterInterface;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleList\PriceProductScheduleListCreator;
@@ -163,18 +171,11 @@ class PriceProductScheduleBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleValidatorInterface
+     * @return \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleImportValidatorInterface
      */
-    public function createPriceProductScheduleValidator(): PriceProductScheduleValidatorInterface
+    public function createPriceProductScheduleValidator(): PriceProductScheduleImportValidatorInterface
     {
-        return new PriceProductScheduleValidator(
-            $this->getRepository(),
-            $this->createPriceProductScheduleImportMapper(),
-            $this->createStoreFinder(),
-            $this->createCurrencyFinder(),
-            $this->createPriceTypeFinder(),
-            $this->createProductFinder()
-        );
+        return new PriceProductScheduleImportValidator($this->createPriceProductScheduleImportDataValidatorList());
     }
 
     /**
@@ -281,6 +282,78 @@ class PriceProductScheduleBusinessFactory extends AbstractBusinessFactory
         return new PriceProductScheduleListFinder(
             $this->getRepository()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\ImportDataValidator\PriceProductScheduleImportDataValidatorInterface
+     */
+    public function createCurrencyDataValidator(): PriceProductScheduleImportDataValidatorInterface
+    {
+        return new CurrencyDataValidator($this->createCurrencyFinder());
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\ImportDataValidator\PriceProductScheduleImportDataValidatorInterface
+     */
+    public function createDateDataValidator(): PriceProductScheduleImportDataValidatorInterface
+    {
+        return new DateDataValidator();
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\ImportDataValidator\PriceProductScheduleImportDataValidatorInterface
+     */
+    public function createPriceDataValidator(): PriceProductScheduleImportDataValidatorInterface
+    {
+        return new PriceDataValidator();
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\ImportDataValidator\PriceProductScheduleImportDataValidatorInterface
+     */
+    public function createPriceTypeDataValidator(): PriceProductScheduleImportDataValidatorInterface
+    {
+        return new PriceTypeDataValidator($this->createPriceTypeFinder());
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\ImportDataValidator\PriceProductScheduleImportDataValidatorInterface
+     */
+    public function createProductDataValidator(): PriceProductScheduleImportDataValidatorInterface
+    {
+        return new ProductDataValidator($this->createProductFinder());
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\ImportDataValidator\PriceProductScheduleImportDataValidatorInterface
+     */
+    public function createStoreDataValidator(): PriceProductScheduleImportDataValidatorInterface
+    {
+        return new StoreDataValidator($this->createStoreFinder());
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\ImportDataValidator\PriceProductScheduleImportDataValidatorInterface
+     */
+    public function createUniqueDataValidator(): PriceProductScheduleImportDataValidatorInterface
+    {
+        return new UniqueDataValidator($this->getRepository(), $this->createPriceProductScheduleImportMapper());
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\ImportDataValidator\PriceProductScheduleImportDataValidatorInterface[]
+     */
+    public function createPriceProductScheduleImportDataValidatorList(): array
+    {
+        return [
+            $this->createCurrencyDataValidator(),
+            $this->createDateDataValidator(),
+            $this->createPriceDataValidator(),
+            $this->createPriceTypeDataValidator(),
+            $this->createProductDataValidator(),
+            $this->createStoreDataValidator(),
+            $this->createUniqueDataValidator(),
+        ];
     }
 
     /**
