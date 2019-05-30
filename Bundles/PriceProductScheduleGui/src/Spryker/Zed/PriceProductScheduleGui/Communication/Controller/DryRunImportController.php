@@ -66,11 +66,13 @@ class DryRunImportController extends AbstractController
         $successTable = $this->getFactory()
             ->createImportSuccessListTable($priceProductScheduleList);
 
+        $successTable->fetchData();
+
         return $this->viewResponse([
             'importForm' => $priceProductScheduleImportForm->createView(),
             'priceProductScheduleList' => $priceProductScheduleList,
             'errorTable' => $errorTableData,
-            'renderSuccessTable' => $successTable->fetchData() !== null,
+            'renderSuccessTable' => empty($successTable->getData()) !== true,
             'successTableView' => $successTable->render(),
         ]);
     }
