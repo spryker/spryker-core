@@ -13,6 +13,8 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Store\Business\Model\Configuration\StoreConfigurationProvider;
 use Spryker\Zed\Store\Business\Model\StoreMapper;
 use Spryker\Zed\Store\Business\Model\StoreReader;
+use Spryker\Zed\Store\Business\Model\StoreValidator;
+use Spryker\Zed\Store\Business\Model\StoreValidatorInterface;
 use Spryker\Zed\Store\StoreDependencyProvider;
 
 /**
@@ -33,6 +35,14 @@ class StoreBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->createStoreMapper()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Store\Business\Model\StoreValidatorInterface
+     */
+    public function createStoreValidator(): StoreValidatorInterface
+    {
+        return new StoreValidator($this->createStoreReader());
     }
 
     /**
