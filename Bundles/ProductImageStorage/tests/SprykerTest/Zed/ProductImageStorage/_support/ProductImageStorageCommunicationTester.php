@@ -49,19 +49,4 @@ class ProductImageStorageCommunicationTester extends Actor
 
         return false;
     }
-
-    /**
-     * @param int $sortOrder
-     *
-     * @return \Generated\Shared\Transfer\ProductImageTransfer
-     */
-    public function createProductImageTransferWithSortOrder(int $sortOrder): ProductImageTransfer
-    {
-        /** @var \Generated\Shared\Transfer\ProductImageTransfer $productImageTransfer */
-        $productImageTransfer = (new ProductImageBuilder())
-            ->seed([ProductImageTransfer::SORT_ORDER => $sortOrder])
-            ->build();
-
-        return $productImageTransfer;
-    }
 }
