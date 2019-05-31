@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\SharedCart\Plugin\ResourceShare;
 
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
@@ -41,11 +42,13 @@ class SwitchDefaultCartResourceShareActivatorStrategyPlugin extends AbstractPlug
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\CustomerTransfer|null $customerTransfer
+     *
      * @return bool
      */
-    public function isLoginRequired(): bool
+    public function isLoginRequired(?CustomerTransfer $customerTransfer): bool
     {
-        return true;
+        return $customerTransfer === null;
     }
 
     /**

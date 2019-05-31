@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SharedCart\Communication\Plugin\ResourceShare;
 
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
 use Spryker\Shared\SharedCart\SharedCartConfig;
@@ -44,11 +45,13 @@ class SharedCartByUuidActivatorStrategyPlugin extends AbstractPlugin implements 
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\CustomerTransfer|null $customerTransfer
+     *
      * @return bool
      */
-    public function isLoginRequired(): bool
+    public function isLoginRequired(?CustomerTransfer $customerTransfer): bool
     {
-        return true;
+        return $customerTransfer === null;
     }
 
     /**

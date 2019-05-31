@@ -5,30 +5,33 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\PersistentCartShare\Plugin\ResourceShare;
+namespace Spryker\Client\SharedCart\Plugin\ResourceShare;
 
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\ResourceShareExtension\Dependency\Plugin\ResourceShareActivatorStrategyPluginInterface;
-use Spryker\Shared\PersistentCartShare\PersistentCartShareConfig;
+use Spryker\Shared\SharedCart\SharedCartConfig as SharedCartSharedConfig;
 
 /**
- * @method \Spryker\Zed\PersistentCartShare\Business\PersistentCartShareFacade getFacade()
- * @method \Spryker\Zed\PersistentCartShare\PersistentCartShareConfig getConfig()
+ * @method \Spryker\Client\SharedCart\SharedCartClient getClient()
+ * @method \Spryker\Client\SharedCart\SharedCartFactory getFactory()
  */
-class QuoteFallbackActivatorStrategyPlugin extends AbstractPlugin implements ResourceShareActivatorStrategyPluginInterface
+class InternalShareIsLoginRequiredResourceShareActivatorStrategyPlugin extends AbstractPlugin implements ResourceShareActivatorStrategyPluginInterface
 {
     /**
      * {@inheritdoc}
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\CustomerTransfer|null $customerTransfer
+     *
      * @return bool
      */
-    public function isLoginRequired(): bool
+    public function isLoginRequired(?CustomerTransfer $customerTransfer): bool
     {
-        return false;
+        return $customerTransfer === null;
     }
 
     /**
@@ -45,18 +48,14 @@ class QuoteFallbackActivatorStrategyPlugin extends AbstractPlugin implements Res
     public function isApplicable(ResourceShareRequestTransfer $resourceShareRequestTransfer): bool
     {
         $resourceShareTransfer = $resourceShareRequestTransfer->getResourceShare();
-        if ($resourceShareTransfer->getResourceType() !== PersistentCartShareConfig::RESOURCE_TYPE_QUOTE) {
+        if ($resourceShareTransfer->getResourceType() !== SharedCartSharedConfig::RESOURCE_TYPE_QUOTE) {
             return false;
         }
 
         $resourceShareTransfer->requireResourceShareData();
         $resourceShareDataTransfer = $resourceShareTransfer->getResourceShareData();
 
-        if (!$resourceShareDataTransfer->getIdQuote()) {
-            return false;
-        }
-
-        return true;
+        return in_array($resourceShareDataTransfer->getShareOption(), [SharedCartSharedConfig::PERMISSION_GROUP_READ_ONLY, SharedCartSharedConfig::PERMISSION_GROUP_FULL_ACCESS], true);
     }
 
     /**

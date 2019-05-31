@@ -66,7 +66,7 @@ class ResourceShareActivator implements ResourceShareActivatorInterface
         }
 
         $clientAfterZedResourceShareResponseTransfer = $this->executeResourceShareActivatorStrategyPlugins(
-            $this->beforeZedResourceShareActivatorStrategyPlugins,
+            $this->afterZedResourceShareActivatorStrategyPlugins,
             $resourceShareRequestTransfer
         );
 
@@ -76,11 +76,7 @@ class ResourceShareActivator implements ResourceShareActivatorInterface
 
         return (new ResourceShareResponseTransfer())
             ->setIsSuccessful(true)
-            ->setIsLoginRequired(
-                $clientBeforeZedResourceShareResponseTransfer->getIsLoginRequired()
-                || $zedResourceShareResponseTransfer->getIsLoginRequired()
-                || $clientAfterZedResourceShareResponseTransfer->getIsLoginRequired()
-            )
+            ->setIsLoginRequired(false)
             ->setMessages(
                 $this->mergeResponseMessages(
                     $clientBeforeZedResourceShareResponseTransfer->getMessages(),
@@ -135,6 +131,12 @@ class ResourceShareActivator implements ResourceShareActivatorInterface
         foreach ($resourceShareActivatorStrategyPlugins as $resourceShareActivatorStrategyPlugin) {
             if (!$resourceShareActivatorStrategyPlugin->isApplicable($resourceShareRequestTransfer)) {
                 continue;
+            }
+
+            if ($resourceShareActivatorStrategyPlugin->isLoginRequired($resourceShareRequestTransfer->getCustomer())) {
+                return $resourceShareResponseTransfer
+                    ->setIsLoginRequired(true)
+                    ->setIsSuccessful(false);
             }
 
             $resourceShareResponseTransfer = $resourceShareActivatorStrategyPlugin->execute($resourceShareRequestTransfer);

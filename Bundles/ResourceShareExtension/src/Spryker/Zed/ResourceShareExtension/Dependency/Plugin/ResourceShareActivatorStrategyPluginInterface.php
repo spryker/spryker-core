@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ResourceShareExtension\Dependency\Plugin;
 
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
 
@@ -32,9 +33,11 @@ interface ResourceShareActivatorStrategyPluginInterface
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\CustomerTransfer|null $customerTransfer
+     *
      * @return bool
      */
-    public function isLoginRequired(): bool;
+    public function isLoginRequired(?CustomerTransfer $customerTransfer): bool;
 
     /**
      * Specification:
