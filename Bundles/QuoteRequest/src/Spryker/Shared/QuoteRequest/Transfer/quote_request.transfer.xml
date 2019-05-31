@@ -35,7 +35,7 @@
         <property name="companyUser" type="CompanyUser" />
         <property name="quoteRequestReference" type="string" />
         <property name="status" type="string" />
-        <property name="isLatestVersionHidden" type="bool" />
+        <property name="isLatestVersionVisible" type="bool" />
         <property name="validUntil" type="string" />
         <property name="latestVersion" type="QuoteRequestVersion" />
         <property name="latestVisibleVersion" type="QuoteRequestVersion" />

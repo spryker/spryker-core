@@ -13,6 +13,19 @@ use Generated\Shared\Transfer\RestCompanyBusinessUnitAttributesTransfer;
 class CompanyBusinessUnitMapper implements CompanyBusinessUnitMapperInterface
 {
     /**
+     * @var \Spryker\Glue\CompanyBusinessUnitsRestApiExtension\Dependency\Plugin\CompanyBusinessUnitMapperPluginInterface[]
+     */
+    protected $companyBusinessUnitMapperPlugins;
+
+    /**
+     * @param \Spryker\Glue\CompanyBusinessUnitsRestApiExtension\Dependency\Plugin\CompanyBusinessUnitMapperPluginInterface[] $companyBusinessUnitMapperPlugins
+     */
+    public function __construct(array $companyBusinessUnitMapperPlugins)
+    {
+        $this->companyBusinessUnitMapperPlugins = $companyBusinessUnitMapperPlugins;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
      * @param \Generated\Shared\Transfer\RestCompanyBusinessUnitAttributesTransfer $restCompanyBusinessUnitAttributesTransfer
      *
@@ -22,6 +35,31 @@ class CompanyBusinessUnitMapper implements CompanyBusinessUnitMapperInterface
         CompanyBusinessUnitTransfer $companyBusinessUnitTransfer,
         RestCompanyBusinessUnitAttributesTransfer $restCompanyBusinessUnitAttributesTransfer
     ): RestCompanyBusinessUnitAttributesTransfer {
-        return $restCompanyBusinessUnitAttributesTransfer->fromArray($companyBusinessUnitTransfer->toArray(), true);
+        $restCompanyBusinessUnitAttributesTransfer->fromArray($companyBusinessUnitTransfer->toArray(), true);
+
+        return $this->executeCompanyBusinessUnitMapperPlugins(
+            $companyBusinessUnitTransfer,
+            $restCompanyBusinessUnitAttributesTransfer
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+     * @param \Generated\Shared\Transfer\RestCompanyBusinessUnitAttributesTransfer $restCompanyBusinessUnitAttributesTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestCompanyBusinessUnitAttributesTransfer
+     */
+    protected function executeCompanyBusinessUnitMapperPlugins(
+        CompanyBusinessUnitTransfer $companyBusinessUnitTransfer,
+        RestCompanyBusinessUnitAttributesTransfer $restCompanyBusinessUnitAttributesTransfer
+    ): RestCompanyBusinessUnitAttributesTransfer {
+        foreach ($this->companyBusinessUnitMapperPlugins as $companyBusinessUnitMapperPlugin) {
+            $restCompanyBusinessUnitAttributesTransfer = $companyBusinessUnitMapperPlugin->mapCompanyBusinessUnitTransferToRestCompanyBusinessUnitAttributesTransfer(
+                $companyBusinessUnitTransfer,
+                $restCompanyBusinessUnitAttributesTransfer
+            );
+        }
+
+        return $restCompanyBusinessUnitAttributesTransfer;
     }
 }

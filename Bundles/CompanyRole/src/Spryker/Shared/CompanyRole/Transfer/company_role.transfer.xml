@@ -22,6 +22,15 @@
         <property name="isDefault" type="bool"/>
         <property name="permissionCollection" type="PermissionCollection"/>
         <property name="companyUserCollection" type="CompanyUserCollection"/>
+        <property name="company" type="Company"/>
+    </transfer>
+
+    <transfer name="Company">
+        <property name="idCompany" type="int"/>
+        <property name="name" type="string"/>
+        <property name="isActive" type="bool"/>
+        <property name="status" type="string"/>
+        <property name="storeRelation" type="StoreRelation"/>
     </transfer>
 
     <transfer name="CompanyUserCollection">

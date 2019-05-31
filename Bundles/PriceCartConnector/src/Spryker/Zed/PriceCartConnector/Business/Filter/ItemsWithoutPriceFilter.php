@@ -152,6 +152,7 @@ class ItemsWithoutPriceFilter implements ItemFilterInterface
         if (!$quoteTransfer->getPriceMode()) {
             return $this->priceFacade->getDefaultPriceMode();
         }
+
         return $quoteTransfer->getPriceMode();
     }
 

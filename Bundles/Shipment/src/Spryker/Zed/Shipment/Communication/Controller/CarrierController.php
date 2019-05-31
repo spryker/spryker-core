@@ -46,6 +46,7 @@ class CarrierController extends AbstractController
                 ->createCarrier($carrierTransfer);
 
             $this->addSuccessMessage(static::MESSAGE_CARRIER_CREATE_SUCCESS);
+
             return $this->redirectResponse('/shipment');
         }
 

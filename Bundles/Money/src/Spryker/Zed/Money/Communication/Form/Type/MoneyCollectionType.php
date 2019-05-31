@@ -85,6 +85,7 @@ class MoneyCollectionType extends AbstractCollectionType
             $event->setData(
                 $moneyCollectionInitialDataProvider->getInitialData()
             );
+
             return;
         }
 
@@ -135,6 +136,7 @@ class MoneyCollectionType extends AbstractCollectionType
         if ($options['entry_type'] === TextType::class) {
             $options['entry_type'] = MoneyType::class;
         }
+
         return $options;
     }
 }

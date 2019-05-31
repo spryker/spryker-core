@@ -308,6 +308,7 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
         $quoteTransfer->setCustomer($this->getFactory()->getCustomerClient()->getCustomer());
         $quoteResponseTransfer = $this->getZedStub()->validateQuote($quoteTransfer);
         $this->updateQuote($quoteResponseTransfer);
+
         return $quoteResponseTransfer;
     }
 
@@ -335,6 +336,7 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
 
         $quoteResponseTransfer = $this->getZedStub()->updateAndReloadQuote($quoteUpdateRequestTransfer);
         $this->updateQuote($quoteResponseTransfer);
+
         return $quoteResponseTransfer;
     }
 

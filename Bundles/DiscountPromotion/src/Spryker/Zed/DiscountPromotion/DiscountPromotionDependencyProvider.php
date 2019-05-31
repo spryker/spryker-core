@@ -46,6 +46,7 @@ class DiscountPromotionDependencyProvider extends AbstractBundleDependencyProvid
         $container[static::FACADE_PRODUCT] = function (Container $container) {
             return new DiscountPromotionToProductBridge($container->getLocator()->product()->facade());
         };
+
         return $container;
     }
 
@@ -59,6 +60,7 @@ class DiscountPromotionDependencyProvider extends AbstractBundleDependencyProvid
         $container[static::FACADE_AVAILABILITY] = function (Container $container) {
             return new DiscountPromotionToAvailabilityBridge($container->getLocator()->availability()->facade());
         };
+
         return $container;
     }
 
@@ -72,6 +74,7 @@ class DiscountPromotionDependencyProvider extends AbstractBundleDependencyProvid
         $container[static::FACADE_LOCALE] = function (Container $container) {
             return new DiscountPromotionToLocaleBridge($container->getLocator()->locale()->facade());
         };
+
         return $container;
     }
 }
