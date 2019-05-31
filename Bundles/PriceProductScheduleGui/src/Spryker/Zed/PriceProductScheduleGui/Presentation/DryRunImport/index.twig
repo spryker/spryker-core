@@ -69,7 +69,7 @@
 
         {% block widget_content %}
             {% if errorTable.data is not empty %}
-                {% include '@Gui/Table/table.twig' with {table: errorTable} %}
+                {% include '@Gui/Table/table.twig' with {table: errorTable, id: 'scheduled-prices-errors-form'} %}
             {% else %}
                 <div>
                     {{ 'Your file does not contain any errors.' | trans }}
@@ -92,4 +92,9 @@
         {% endblock %}
 
     {% endembed %}
+{% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+    <script src="/assets/js/spryker-zed-price-product-schedule-gui-main.js"></script>
 {% endblock %}
