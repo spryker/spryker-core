@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\PriceProductScheduleListImportErrorTransfer;
 
 class PriceDataValidator extends AbstractImportDataValidator
 {
-    protected const ERROR_MESSAGE_GROSS_AND_NET_VALUE = 'Gross and Net Amount must be integer.';
+    protected const ERROR_MESSAGE_GROSS_AND_NET_VALUE = 'Gross and Net Amount must be a positive integer.';
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer
@@ -42,6 +42,8 @@ class PriceDataValidator extends AbstractImportDataValidator
         return is_numeric($priceProductScheduleImportTransfer->getGrossAmount())
             && is_numeric($priceProductScheduleImportTransfer->getNetAmount())
             && !is_float($priceProductScheduleImportTransfer->getGrossAmount())
-            && !is_float($priceProductScheduleImportTransfer->getNetAmount());
+            && !is_float($priceProductScheduleImportTransfer->getNetAmount())
+            && $priceProductScheduleImportTransfer->getGrossAmount() > 0
+            && $priceProductScheduleImportTransfer->getNetAmount() > 0;
     }
 }
