@@ -94,7 +94,7 @@ class CartsRestApiFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCreateQuoteWillCreateQuote(): void
+    public function testQuoteWillBeCreatedSuccessfully(): void
     {
         /** @var \Spryker\Zed\CartsRestApi\Business\CartsRestApiFacade $cartsRestApiFacade */
         $cartsRestApiFacade = $this->tester->getFacade();
@@ -112,7 +112,7 @@ class CartsRestApiFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCreateQuoteWillNotCreateQuoteWithoutCustomer(): void
+    public function testQuoteWillNotBeCreatedWithoutCustomer(): void
     {
         /** @var \Spryker\Zed\CartsRestApi\Business\CartsRestApiFacade $cartsRestApiFacade */
         $cartsRestApiFacade = $this->tester->getFacade();
@@ -143,7 +143,7 @@ class CartsRestApiFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateQuoteWilUpdateQuote(): void
+    public function testQuoteWillBeUpdatedSuccessfully(): void
     {
         /** @var \Spryker\Zed\CartsRestApi\Business\CartsRestApiFacade $cartsRestApiFacade */
         $cartsRestApiFacade = $this->tester->getFacade();
@@ -161,7 +161,7 @@ class CartsRestApiFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateQuoteWillNotAllowUpdateQuoteWithoutUuid(): void
+    public function testQuoteWillNotBeUpdatedWithoutUuid(): void
     {
         /** @var \Spryker\Zed\CartsRestApi\Business\CartsRestApiFacade $cartsRestApiFacade */
         $cartsRestApiFacade = $this->tester->getFacade();
@@ -175,7 +175,7 @@ class CartsRestApiFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateQuoteWillNotAllowUpdateQuoteWithoutCustomer(): void
+    public function testQuoteWillNotBeUpdatedWithoutCustomer(): void
     {
         /** @var \Spryker\Zed\CartsRestApi\Business\CartsRestApiFacade $cartsRestApiFacade */
         $cartsRestApiFacade = $this->tester->getFacade();
@@ -189,7 +189,7 @@ class CartsRestApiFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testDeleteQuoteWillDeleteQuote(): void
+    public function testQuoteWillBeDeleteSuccessfully(): void
     {
         /** @var \Spryker\Zed\CartsRestApi\Business\CartsRestApiFacade $cartsRestApiFacade */
         $cartsRestApiFacade = $this->tester->getFacade();
@@ -207,7 +207,7 @@ class CartsRestApiFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testDeleteQuoteWillNotAllowDeleteQuoteWithoutCustomer(): void
+    public function testQuoteWillNotBeDeleteWithoutCustomer(): void
     {
         /** @var \Spryker\Zed\CartsRestApi\Business\CartsRestApiFacade $cartsRestApiFacade */
         $cartsRestApiFacade = $this->tester->getFacade();
@@ -221,7 +221,7 @@ class CartsRestApiFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testDeleteQuoteWillNotAllowDeleteQuoteWithoutUuid(): void
+    public function testQuoteWillNotBeDeleteWithoutUuid(): void
     {
         /** @var \Spryker\Zed\CartsRestApi\Business\CartsRestApiFacade $cartsRestApiFacade */
         $cartsRestApiFacade = $this->tester->getFacade();
@@ -235,7 +235,7 @@ class CartsRestApiFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testAddItemWillAddItem(): void
+    public function testItemWillBeAddedSuccessfully(): void
     {
         /** @var \Spryker\Zed\CartsRestApi\Business\CartsRestApiFacade $cartsRestApiFacade */
         $cartsRestApiFacade = $this->tester->getFacade();
@@ -252,7 +252,7 @@ class CartsRestApiFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testAddItemWillNotAllowAddItemWithoutCustomerReference(): void
+    public function testItemWillNotBeAddedWithoutCustomerReference(): void
     {
         /** @var \Spryker\Zed\CartsRestApi\Business\CartsRestApiFacade $cartsRestApiFacade */
         $cartsRestApiFacade = $this->tester->getFacade();
@@ -266,7 +266,7 @@ class CartsRestApiFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testAddItemWillNotAllowAddItemWithoutSku(): void
+    public function testItemWillNotBeAddedWithoutSku(): void
     {
         /** @var \Spryker\Zed\CartsRestApi\Business\CartsRestApiFacade $cartsRestApiFacade */
         $cartsRestApiFacade = $this->tester->getFacade();
@@ -280,7 +280,7 @@ class CartsRestApiFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testAddItemWillNotAllowAddItemWithoutUuid(): void
+    public function testItemWillNotBeAddedWithoutUuid(): void
     {
         /** @var \Spryker\Zed\CartsRestApi\Business\CartsRestApiFacade $cartsRestApiFacade */
         $cartsRestApiFacade = $this->tester->getFacade();
@@ -294,7 +294,7 @@ class CartsRestApiFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testAddItemWillNotAllowAddItemWithoutQuantity(): void
+    public function testItemWillNotBeAddedWithoutQuantity(): void
     {
         /** @var \Spryker\Zed\CartsRestApi\Business\CartsRestApiFacade $cartsRestApiFacade */
         $cartsRestApiFacade = $this->tester->getFacade();
@@ -308,7 +308,7 @@ class CartsRestApiFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateItemWillUpdateItem(): void
+    public function testItemWillBeUpdatedSuccessfully(): void
     {
         /** @var \Spryker\Zed\CartsRestApi\Business\CartsRestApiFacade $cartsRestApiFacade */
         $cartsRestApiFacade = $this->tester->getFacade();
@@ -325,7 +325,7 @@ class CartsRestApiFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateItemWillNotAllowUpdateItemWithoutCustomerReference(): void
+    public function testItemWillNotBeUpdatedWithoutCustomerReference(): void
     {
         /** @var \Spryker\Zed\CartsRestApi\Business\CartsRestApiFacade $cartsRestApiFacade */
         $cartsRestApiFacade = $this->tester->getFacade();
@@ -339,7 +339,7 @@ class CartsRestApiFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateItemWillNotAllowUpdateItemWithoutSku(): void
+    public function testItemWillNotBeUpdatedWithoutSku(): void
     {
         /** @var \Spryker\Zed\CartsRestApi\Business\CartsRestApiFacade $cartsRestApiFacade */
         $cartsRestApiFacade = $this->tester->getFacade();
@@ -353,7 +353,7 @@ class CartsRestApiFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateItemWillNotAllowUpdateItemWithoutUuid(): void
+    public function testItemWillNotBeUpdatedWithoutUuid(): void
     {
         /** @var \Spryker\Zed\CartsRestApi\Business\CartsRestApiFacade $cartsRestApiFacade */
         $cartsRestApiFacade = $this->tester->getFacade();
@@ -367,7 +367,7 @@ class CartsRestApiFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateItemWillNotAllowUpdateItemWithoutQuantity(): void
+    public function testItemWillNotBeUpdatedWithoutQuantity(): void
     {
         /** @var \Spryker\Zed\CartsRestApi\Business\CartsRestApiFacade $cartsRestApiFacade */
         $cartsRestApiFacade = $this->tester->getFacade();
@@ -381,7 +381,7 @@ class CartsRestApiFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testDeleteItemWillDeleteItem(): void
+    public function testItemWillBeDeletedSuccessfully(): void
     {
         /** @var \Spryker\Zed\CartsRestApi\Business\CartsRestApiFacade $cartsRestApiFacade */
         $cartsRestApiFacade = $this->tester->getFacade();
@@ -398,7 +398,7 @@ class CartsRestApiFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testDeleteItemWillNotAllowDeleteItemWithoutCustomerReference(): void
+    public function testItemWillNotBeDeletedWithoutCustomerReference(): void
     {
         /** @var \Spryker\Zed\CartsRestApi\Business\CartsRestApiFacade $cartsRestApiFacade */
         $cartsRestApiFacade = $this->tester->getFacade();
@@ -412,7 +412,7 @@ class CartsRestApiFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testDeleteItemWillNotAllowDeleteItemWithoutSku(): void
+    public function testItemWillNotBeDeletedWithoutSku(): void
     {
         /** @var \Spryker\Zed\CartsRestApi\Business\CartsRestApiFacade $cartsRestApiFacade */
         $cartsRestApiFacade = $this->tester->getFacade();
@@ -426,7 +426,7 @@ class CartsRestApiFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testDeleteItemWillNotAllowDeleteItemWithoutUuid(): void
+    public function testItemWillNotBeDeletedWithoutUuid(): void
     {
         /** @var \Spryker\Zed\CartsRestApi\Business\CartsRestApiFacade $cartsRestApiFacade */
         $cartsRestApiFacade = $this->tester->getFacade();
@@ -440,7 +440,7 @@ class CartsRestApiFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testAddItemToGuestCartWillAddItemToGuest(): void
+    public function testItemWillBeAddedToGuestCartSuccessfully(): void
     {
         /** @var \Spryker\Zed\CartsRestApi\Business\CartsRestApiFacade $cartsRestApiFacade */
         $cartsRestApiFacade = $this->tester->getFacade();
@@ -457,7 +457,7 @@ class CartsRestApiFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testAddItemToGuestCartWillNotAllowAddItemToGuestCartWithoutSku(): void
+    public function testItemWillNotBeAddedToGuestCartWithoutSku(): void
     {
         /** @var \Spryker\Zed\CartsRestApi\Business\CartsRestApiFacade $cartsRestApiFacade */
         $cartsRestApiFacade = $this->tester->getFacade();
@@ -471,7 +471,7 @@ class CartsRestApiFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testAddItemToGuestCartWillNotAllowAddItemToGuestCartWithoutCustomerReference(): void
+    public function testItemWillNotBeAddedToGuestCartWithoutCustomerReference(): void
     {
         /** @var \Spryker\Zed\CartsRestApi\Business\CartsRestApiFacade $cartsRestApiFacade */
         $cartsRestApiFacade = $this->tester->getFacade();
@@ -485,7 +485,7 @@ class CartsRestApiFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testAssignGuestCartToRegisteredCustomerWillAssignGuestCartToRegisteredCustomer(): void
+    public function testGuestCartWillBeAssignedToRegisteredCustomerSuccessfully(): void
     {
         /** @var \Spryker\Zed\CartsRestApi\Business\CartsRestApiFacade $cartsRestApiFacade */
         $cartsRestApiFacade = $this->tester->getFacade();
@@ -502,7 +502,7 @@ class CartsRestApiFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testAssignGuestCartToRegisteredCustomerWillNotAllowAssignWithoutCustomerReference(): void
+    public function testGuestCartWillNotBeAssignedToRegisteredCustomerWithoutCustomerReference(): void
     {
         /** @var \Spryker\Zed\CartsRestApi\Business\CartsRestApiFacade $cartsRestApiFacade */
         $cartsRestApiFacade = $this->tester->getFacade();
@@ -516,7 +516,7 @@ class CartsRestApiFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testAssignGuestCartToRegisteredCustomerWillNotAllowAssignWithoutAnonymousCustomerReference(): void
+    public function testGuestCartWillNotBeAssignedToRegisteredCustomerWithoutAnonymousCustomerReference(): void
     {
         /** @var \Spryker\Zed\CartsRestApi\Business\CartsRestApiFacade $cartsRestApiFacade */
         $cartsRestApiFacade = $this->tester->getFacade();
