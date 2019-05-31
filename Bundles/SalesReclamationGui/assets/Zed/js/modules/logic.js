@@ -18,6 +18,28 @@ function getSelectedItems(idOrderItem) {
     return selectedItems;
 }
 
+/**
+ * @deprecated not used any more
+ */
+function createTriggerUrl(idOrder, idReclamation, eventName) {
+    var url = '/oms/trigger/trigger-event-for-order';
+    var parameters = {
+        event: eventName,
+        'id-sales-order': idOrder,
+        redirect: '/sales-reclamation-gui/detail?id-reclamation=' + idReclamation
+    };
+
+    parameters.items = getSelectedItems();
+
+    if (!isSpecificItemsSelected(parameters)) {
+        parameters = expandParametersWithClaimedOrderItems(parameters);
+    }
+
+    var finalUrl = url + '?' + $.param(parameters);
+
+    return decodeURIComponent(finalUrl);
+}
+
 function isSpecificItemsSelected(parameters) {
     return parameters.items.length > 0;
 }
@@ -28,6 +50,24 @@ function expandParametersWithClaimedOrderItems(parameters) {
     });
 
     return parameters;
+}
+
+/**
+ * @deprecated not used any more
+ */
+function createTriggerItemUrl(idOrder, idOrderItem, idReclamation, eventName) {
+    var url = '/oms/trigger/trigger-event-for-order-items';
+    var parameters = {
+        event: eventName,
+        'id-sales-order-item': idOrderItem,
+        redirect: '/sales-reclamation-gui/detail?id-reclamation=' + idReclamation
+    };
+
+    parameters.items = getSelectedItems();
+
+    var finalUrl = url + '?' + $.param(parameters);
+
+    return decodeURIComponent(finalUrl);
 }
 
 function disableTrigger($item) {
