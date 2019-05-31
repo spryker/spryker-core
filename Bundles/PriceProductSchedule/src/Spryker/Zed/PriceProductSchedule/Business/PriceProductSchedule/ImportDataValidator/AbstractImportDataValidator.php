@@ -10,7 +10,7 @@ namespace Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\ImportD
 use Generated\Shared\Transfer\PriceProductScheduleImportTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleListImportErrorTransfer;
 
-abstract class AbstractImportDataValidator implements PriceProductScheduleImportDataValidatorInterface
+abstract class AbstractImportDataValidator implements ImportDataValidatorInterface
 {
     /**
      * @param \Generated\Shared\Transfer\PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer

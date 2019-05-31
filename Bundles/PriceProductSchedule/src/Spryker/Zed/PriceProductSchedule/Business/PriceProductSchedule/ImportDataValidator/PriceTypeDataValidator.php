@@ -64,10 +64,6 @@ class PriceTypeDataValidator extends AbstractImportDataValidator
         $priceTypeTransfer = $this->priceTypeFinder
             ->findPriceTypeByName($priceProductScheduleImportTransfer->getPriceTypeName());
 
-        if ($priceTypeTransfer === null) {
-            return false;
-        }
-
-        return true;
+        return $priceTypeTransfer !== null;
     }
 }

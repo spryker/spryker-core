@@ -54,8 +54,8 @@ class PriceDataValidator extends AbstractImportDataValidator
     protected function isNetPriceValid(PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer): bool
     {
         return $priceProductScheduleImportTransfer->getNetAmount() === null
-            || is_numeric($priceProductScheduleImportTransfer->getNetAmount())
-            && !is_float($priceProductScheduleImportTransfer->getNetAmount())
-            && $priceProductScheduleImportTransfer->getNetAmount() > 0;
+            || (is_numeric($priceProductScheduleImportTransfer->getNetAmount())
+                && !is_float($priceProductScheduleImportTransfer->getNetAmount())
+                && $priceProductScheduleImportTransfer->getNetAmount() > 0);
     }
 }

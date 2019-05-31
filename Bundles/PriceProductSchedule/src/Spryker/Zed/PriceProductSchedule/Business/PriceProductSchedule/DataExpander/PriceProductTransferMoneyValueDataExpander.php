@@ -16,23 +16,23 @@ class PriceProductTransferMoneyValueDataExpander implements PriceProductTransfer
     /**
      * @var \Spryker\Zed\PriceProductSchedule\Business\Store\StoreFinderInterface
      */
-    protected $priceProductScheduleStoreFinder;
+    protected $storeFinder;
 
     /**
      * @var \Spryker\Zed\PriceProductSchedule\Business\Currency\CurrencyFinderInterface
      */
-    protected $priceProductScheduleCurrencyFinder;
+    protected $currencyFinder;
 
     /**
-     * @param \Spryker\Zed\PriceProductSchedule\Business\Store\StoreFinderInterface $priceProductScheduleStoreFinder
-     * @param \Spryker\Zed\PriceProductSchedule\Business\Currency\CurrencyFinderInterface $priceProductScheduleCurrencyFinder
+     * @param \Spryker\Zed\PriceProductSchedule\Business\Store\StoreFinderInterface $storeFinder
+     * @param \Spryker\Zed\PriceProductSchedule\Business\Currency\CurrencyFinderInterface $currencyFinder
      */
     public function __construct(
-        StoreFinderInterface $priceProductScheduleStoreFinder,
-        CurrencyFinderInterface $priceProductScheduleCurrencyFinder
+        StoreFinderInterface $storeFinder,
+        CurrencyFinderInterface $currencyFinder
     ) {
-        $this->priceProductScheduleStoreFinder = $priceProductScheduleStoreFinder;
-        $this->priceProductScheduleCurrencyFinder = $priceProductScheduleCurrencyFinder;
+        $this->storeFinder = $storeFinder;
+        $this->currencyFinder = $currencyFinder;
     }
 
     /**
@@ -42,20 +42,28 @@ class PriceProductTransferMoneyValueDataExpander implements PriceProductTransfer
      */
     public function expand(PriceProductTransfer $priceProductTransfer): PriceProductTransfer
     {
-        $currencyTransfer = $this->priceProductScheduleCurrencyFinder
-            ->findCurrencyByIsoCode($priceProductTransfer->getMoneyValue()->getCurrency()->getCode());
+        $priceProductTransfer->requireMoneyValue();
+
+        $moneyValue = $priceProductTransfer->getMoneyValue();
+
+        $moneyValue->requireCurrency();
+
+        $currencyTransfer = $this->currencyFinder
+            ->findCurrencyByIsoCode($moneyValue->getCurrency()->getCode());
 
         if ($currencyTransfer !== null) {
-            $priceProductTransfer->getMoneyValue()
+            $moneyValue
                 ->setCurrency($currencyTransfer)
                 ->setFkCurrency($currencyTransfer->getIdCurrency());
         }
 
-        $storeTransfer = $this->priceProductScheduleStoreFinder
-            ->findStoreByName($priceProductTransfer->getMoneyValue()->getStore()->getName());
+        $moneyValue->requireStore();
+
+        $storeTransfer = $this->storeFinder
+            ->findStoreByName($moneyValue->getStore()->getName());
 
         if ($storeTransfer !== null) {
-            $priceProductTransfer->getMoneyValue()
+            $moneyValue
                 ->setFkStore($storeTransfer->getIdStore());
         }
 

@@ -64,10 +64,6 @@ class CurrencyDataValidator extends AbstractImportDataValidator
         $currencyTransfer = $this->currencyFinder
             ->findCurrencyByIsoCode($priceProductScheduleImportTransfer->getCurrencyCode());
 
-        if ($currencyTransfer === null) {
-            return false;
-        }
-
-        return true;
+        return $currencyTransfer !== null;
     }
 }

@@ -69,7 +69,10 @@ interface PriceProductScheduleFacadeInterface
 
     /**
      * Specification:
-     * - Imports price product schedules.
+     * - Validates import data.
+     * - Adds validation errors to response transfer.
+     * - Expands with relevant price product data.
+     * - Saves price product schedules.
      *
      * @api
      *
@@ -83,7 +86,7 @@ interface PriceProductScheduleFacadeInterface
 
     /**
      * Specification:
-     * - Finds price product schedule list by field from request transfer.
+     * - Finds price product schedule list by idPriceProductScheduleList.
      *
      * @api
      *

@@ -13,12 +13,12 @@ use Generated\Shared\Transfer\PriceProductScheduleListImportErrorTransfer;
 class PriceProductScheduleImportValidator implements PriceProductScheduleImportValidatorInterface
 {
     /**
-     * @var \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\ImportDataValidator\PriceProductScheduleImportDataValidatorInterface[]
+     * @var \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\ImportDataValidator\ImportDataValidatorInterface[]
      */
     protected $dataValidatorList;
 
     /**
-     * @param \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\ImportDataValidator\PriceProductScheduleImportDataValidatorInterface[] $dataValidatorList
+     * @param \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\ImportDataValidator\ImportDataValidatorInterface[] $dataValidatorList
      */
     public function __construct(array $dataValidatorList = [])
     {

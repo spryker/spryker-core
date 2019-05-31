@@ -39,7 +39,7 @@ class ProductDataValidator extends AbstractImportDataValidator
     public function validatePriceProductScheduleImportTransfer(
         PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer
     ): ?PriceProductScheduleListImportErrorTransfer {
-        if ($this->isProductSkuUniqueField($priceProductScheduleImportTransfer) === false) {
+        if ($this->isSkuFieldUnique($priceProductScheduleImportTransfer) === false) {
             return $this->createPriceProductScheduleListImportErrorTransfer(
                 $priceProductScheduleImportTransfer,
                 static::ERROR_MESSAGE_SKU_NOT_VALID
@@ -74,17 +74,13 @@ class ProductDataValidator extends AbstractImportDataValidator
      *
      * @return bool
      */
-    protected function isProductSkuUniqueField(
+    protected function isSkuFieldUnique(
         PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer
     ): bool {
         $isBothSkuMissing = $priceProductScheduleImportTransfer->getSkuProductAbstract() === null && $priceProductScheduleImportTransfer->getSkuProduct() === null;
         $isBothSkuProvided = $priceProductScheduleImportTransfer->getSkuProductAbstract() !== null && $priceProductScheduleImportTransfer->getSkuProduct() !== null;
 
-        if ($isBothSkuMissing || $isBothSkuProvided) {
-            return false;
-        }
-
-        return true;
+        return ($isBothSkuMissing || $isBothSkuProvided) === false;
     }
 
     /**

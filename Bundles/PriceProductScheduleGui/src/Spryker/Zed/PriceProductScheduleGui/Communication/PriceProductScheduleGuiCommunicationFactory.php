@@ -109,8 +109,8 @@ class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationF
         PriceProductScheduleListTransfer $priceProductScheduleListTransfer
     ): ImportSuccessListTable {
         return new ImportSuccessListTable(
-            $this->getPriceProductScheduleQuery(),
             $priceProductScheduleListTransfer,
+            $this->getPriceProductScheduleQuery(),
             $this->getConfig()
         );
     }

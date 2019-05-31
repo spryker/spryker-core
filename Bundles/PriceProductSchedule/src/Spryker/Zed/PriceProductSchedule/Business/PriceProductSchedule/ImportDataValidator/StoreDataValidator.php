@@ -63,10 +63,6 @@ class StoreDataValidator extends AbstractImportDataValidator
         $storeTransfer = $this->storeFinder
             ->findStoreByName($priceProductScheduleImportTransfer->getStoreName());
 
-        if ($storeTransfer === null) {
-            return false;
-        }
-
-        return true;
+        return $storeTransfer !== null;
     }
 }

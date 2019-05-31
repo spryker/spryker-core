@@ -48,33 +48,7 @@ class DryRunImportController extends AbstractController
             return $this->redirectResponse(static::URL_IMPORT_PAGE);
         }
 
-        $priceProductScheduleListImportResponseTransfer = $this->handlePriceProductScheduleImportForm(
-            $priceProductScheduleImportForm,
-            $request
-        );
-
-        $errorTable = $this->getFactory()
-            ->createImportErrorTable($priceProductScheduleListImportResponseTransfer);
-
-        $errorTableData = $this->getFactory()
-            ->createTableFormatter()
-            ->formatAbstractTableToArray($errorTable);
-
-        $priceProductScheduleList = $priceProductScheduleListImportResponseTransfer
-            ->getPriceProductScheduleList();
-
-        $successTable = $this->getFactory()
-            ->createImportSuccessListTable($priceProductScheduleList);
-
-        $successTable->fetchData();
-
-        return $this->viewResponse([
-            'importForm' => $priceProductScheduleImportForm->createView(),
-            'priceProductScheduleList' => $priceProductScheduleList,
-            'errorTable' => $errorTableData,
-            'renderSuccessTable' => empty($successTable->getData()) !== true,
-            'successTableView' => $successTable->render(),
-        ]);
+        return $this->prepareIndexData($request, $priceProductScheduleImportForm);
     }
 
     /**
@@ -170,5 +144,42 @@ class DryRunImportController extends AbstractController
             );
 
         return $priceProductScheduledListResponse->getPriceProductScheduleList();
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Symfony\Component\Form\FormInterface $priceProductScheduleImportForm
+     *
+     * @return array
+     */
+    protected function prepareIndexData(Request $request, FormInterface $priceProductScheduleImportForm): array
+    {
+        $priceProductScheduleListImportResponseTransfer = $this->handlePriceProductScheduleImportForm(
+            $priceProductScheduleImportForm,
+            $request
+        );
+
+        $errorTable = $this->getFactory()
+            ->createImportErrorTable($priceProductScheduleListImportResponseTransfer);
+
+        $errorTableData = $this->getFactory()
+            ->createTableFormatter()
+            ->formatAbstractTableToArray($errorTable);
+
+        $priceProductScheduleList = $priceProductScheduleListImportResponseTransfer
+            ->getPriceProductScheduleList();
+
+        $successTable = $this->getFactory()
+            ->createImportSuccessListTable($priceProductScheduleList);
+
+        $successTable->fetchData();
+
+        return $this->viewResponse([
+            'importForm' => $priceProductScheduleImportForm->createView(),
+            'priceProductScheduleList' => $priceProductScheduleList,
+            'errorTable' => $errorTableData,
+            'renderSuccessTable' => empty($successTable->getData()) !== true,
+            'successTableView' => $successTable->render(),
+        ]);
     }
 }

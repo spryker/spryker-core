@@ -79,9 +79,9 @@ class PriceProductScheduleGuiDependencyProvider extends AbstractBundleDependency
      */
     protected function addPriceProductScheduleQuery(Container $container): Container
     {
-        $container[static::PROPEL_QUERY_PRICE_PRODUCT_SCHEDULE] = function () {
+        $container->set(static::PROPEL_QUERY_PRICE_PRODUCT_SCHEDULE, function () {
             return SpyPriceProductScheduleQuery::create();
-        };
+        });
 
         return $container;
     }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\PriceProductScheduleGui\Communication\Controller;
 
+use ArrayObject;
 use Generated\Shared\Transfer\PriceProductScheduleListTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,14 +27,16 @@ class PublishController extends AbstractController
     public function indexAction(Request $request)
     {
         $priceProductScheduleListTransfer = (new PriceProductScheduleListTransfer())
-            ->setIdPriceProductScheduleList($request->query->getInt(PriceProductScheduleListTransfer::ID_PRICE_PRODUCT_SCHEDULE_LIST));
+            ->setIdPriceProductScheduleList(
+                $request->query->getInt(PriceProductScheduleListTransfer::ID_PRICE_PRODUCT_SCHEDULE_LIST)
+            );
 
-        $priceProductScheduleListResponseTransfer = $this->getFactory()->getPriceProductScheduleFacade()->findPriceProductScheduleList($priceProductScheduleListTransfer);
+        $priceProductScheduleListResponseTransfer = $this->getFactory()
+            ->getPriceProductScheduleFacade()
+            ->findPriceProductScheduleList($priceProductScheduleListTransfer);
 
         if ($priceProductScheduleListResponseTransfer->getIsSuccess() === false) {
-            foreach ($priceProductScheduleListResponseTransfer->getErrors() as $priceProductScheduleListErrorTransfer) {
-                $this->addErrorMessage($priceProductScheduleListErrorTransfer->getMessage());
-            }
+            $this->addErrorMessages($priceProductScheduleListResponseTransfer->getErrors());
 
             return $this->redirectResponse(static::URL_IMPORT_PAGE);
         }
@@ -41,8 +44,22 @@ class PublishController extends AbstractController
         $priceProductScheduleListTransfer = $priceProductScheduleListResponseTransfer->getPriceProductScheduleList();
         $priceProductScheduleListTransfer->setIsActive(true);
 
-        $this->getFactory()->getPriceProductScheduleFacade()->updatePriceProductScheduleList($priceProductScheduleListTransfer);
+        $this->getFactory()
+            ->getPriceProductScheduleFacade()
+            ->updatePriceProductScheduleList($priceProductScheduleListTransfer);
 
         return $this->viewResponse();
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductScheduleListErrorTransfer[] $priceProductScheduleListErrorTransfers
+     *
+     * @return void
+     */
+    protected function addErrorMessages(ArrayObject $priceProductScheduleListErrorTransfers): void
+    {
+        foreach ($priceProductScheduleListErrorTransfers as $priceProductScheduleListErrorTransfer) {
+            $this->addErrorMessage($priceProductScheduleListErrorTransfer->getMessage());
+        }
     }
 }
