@@ -74,13 +74,6 @@ class ImportSuccessListTable extends AbstractTable
         $config->setSearchable([
             SpyProductAbstractTableMap::COL_SKU,
             SpyProductTableMap::COL_SKU,
-            SpyCurrencyTableMap::COL_CODE,
-            SpyStoreTableMap::COL_NAME,
-            SpyPriceTypeTableMap::COL_NAME,
-            SpyPriceProductScheduleTableMap::COL_ACTIVE_FROM,
-            SpyPriceProductScheduleTableMap::COL_ACTIVE_TO,
-            SpyPriceProductScheduleTableMap::COL_NET_PRICE,
-            SpyPriceProductScheduleTableMap::COL_GROSS_PRICE,
         ]);
 
         return $config;
