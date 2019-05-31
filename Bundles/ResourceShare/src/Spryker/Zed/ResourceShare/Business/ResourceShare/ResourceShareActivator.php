@@ -64,12 +64,6 @@ class ResourceShareActivator implements ResourceShareActivatorInterface
                 continue;
             }
 
-            if ($resourceShareActivatorStrategyPlugin->isLoginRequired($resourceShareRequestTransfer->getCustomer())) {
-                return $resourceShareResponseTransfer
-                    ->setIsLoginRequired(true)
-                    ->setIsSuccessful(false);
-            }
-
             $resourceShareResponseTransfer = $resourceShareActivatorStrategyPlugin->execute($resourceShareRequestTransfer);
             break;
         }
