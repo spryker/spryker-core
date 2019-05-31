@@ -113,7 +113,7 @@ class OmsHelper extends Module
     public function configureTestStateMachine(array $activeProcesses, $xmlFolder = null)
     {
         if (!$xmlFolder) {
-            $xmlFolder = realpath(__DIR__ . '/../../../../../_data/state-machine/.');
+            $xmlFolder = realpath(__DIR__ . '/../../../../../_data/state-machine/');
         }
 
         $this->setConfig(OmsConstants::PROCESS_LOCATION, $xmlFolder);

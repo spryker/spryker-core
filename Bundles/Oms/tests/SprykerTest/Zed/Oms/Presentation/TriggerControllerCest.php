@@ -23,6 +23,7 @@ use SprykerTest\Zed\Oms\PageObject\OrderDetailPage;
 class TriggerControllerCest
 {
     protected const OMS_ACTIVE_PROCESS = 'Test01';
+    protected const XPATH_CHANGE_STATUS_FORM = '//*[@id="items"]/div[2]/div/div/div[2]/table/tbody[1]/tr/td[8]/form';
 
     /**
      * @var \Spryker\Zed\Sales\Business\SalesFacadeInterface
@@ -68,7 +69,7 @@ class TriggerControllerCest
      *
      * @return void
      */
-    public function testFirst(OmsPresentationTester $i)
+    public function testOrderStatusShouldBeChangedAfterFormSubmit(OmsPresentationTester $i)
     {
         $i->amZed();
         $i->amLoggedInUser();
@@ -82,7 +83,7 @@ class TriggerControllerCest
 
         $i->makeScreenshot();
 
-        $i->submitForm('//*[@id="items"]/div[2]/div/div/div[2]/table/tbody[1]/tr/td[8]/form', []);
+        $i->submitForm(static::XPATH_CHANGE_STATUS_FORM, []);
 
         $latestItemTransfer = $this->getItemLatestData();
 

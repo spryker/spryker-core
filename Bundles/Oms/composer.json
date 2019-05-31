@@ -21,10 +21,8 @@
     "spryker/application": "*",
     "spryker/checkout": "*",
     "spryker/config": "*",
-    "spryker/glossary": "*",
     "spryker/product": "*",
     "spryker/propel": "*",
-    "spryker/silex": "*",
     "spryker/testify": "*",
     "spryker/zed-navigation": "*"
   },
