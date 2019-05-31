@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\PriceProductScheduleGui\Communication\Controller;
 
-use Generated\Shared\Transfer\PriceProductScheduleListRequestTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleListTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,10 +25,10 @@ class PublishController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $priceProductScheduleListRequestTransfer = (new PriceProductScheduleListRequestTransfer())
+        $priceProductScheduleListTransfer = (new PriceProductScheduleListTransfer())
             ->setIdPriceProductScheduleList($request->query->getInt(PriceProductScheduleListTransfer::ID_PRICE_PRODUCT_SCHEDULE_LIST));
 
-        $priceProductScheduleListResponseTransfer = $this->getFactory()->getPriceProductScheduleFacade()->findPriceProductScheduleList($priceProductScheduleListRequestTransfer);
+        $priceProductScheduleListResponseTransfer = $this->getFactory()->getPriceProductScheduleFacade()->findPriceProductScheduleList($priceProductScheduleListTransfer);
 
         if ($priceProductScheduleListResponseTransfer->getIsSuccess() === false) {
             foreach ($priceProductScheduleListResponseTransfer->getErrors() as $priceProductScheduleListErrorTransfer) {

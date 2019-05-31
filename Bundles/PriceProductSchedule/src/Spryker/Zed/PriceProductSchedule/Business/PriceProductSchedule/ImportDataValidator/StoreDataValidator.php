@@ -18,14 +18,14 @@ class StoreDataValidator extends AbstractImportDataValidator
     /**
      * @var \Spryker\Zed\PriceProductSchedule\Business\Store\StoreFinderInterface
      */
-    protected $priceProductScheduleStoreFinder;
+    protected $storeFinder;
 
     /**
-     * @param \Spryker\Zed\PriceProductSchedule\Business\Store\StoreFinderInterface $priceProductScheduleStoreFinder
+     * @param \Spryker\Zed\PriceProductSchedule\Business\Store\StoreFinderInterface $storeFinder
      */
-    public function __construct(StoreFinderInterface $priceProductScheduleStoreFinder)
+    public function __construct(StoreFinderInterface $storeFinder)
     {
-        $this->priceProductScheduleStoreFinder = $priceProductScheduleStoreFinder;
+        $this->storeFinder = $storeFinder;
     }
 
     /**
@@ -60,7 +60,7 @@ class StoreDataValidator extends AbstractImportDataValidator
             return false;
         }
 
-        $storeTransfer = $this->priceProductScheduleStoreFinder
+        $storeTransfer = $this->storeFinder
             ->findStoreByName($priceProductScheduleImportTransfer->getStoreName());
 
         if ($storeTransfer === null) {

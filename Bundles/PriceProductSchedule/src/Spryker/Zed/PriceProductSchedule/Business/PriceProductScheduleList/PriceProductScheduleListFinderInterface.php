@@ -7,17 +7,17 @@
 
 namespace Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleList;
 
-use Generated\Shared\Transfer\PriceProductScheduleListRequestTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleListResponseTransfer;
+use Generated\Shared\Transfer\PriceProductScheduleListTransfer;
 
 interface PriceProductScheduleListFinderInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\PriceProductScheduleListRequestTransfer $priceProductScheduleListRequestTransfer
+     * @param \Generated\Shared\Transfer\PriceProductScheduleListTransfer $requestedPriceProductScheduleListTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduleListResponseTransfer
      */
     public function findPriceProductScheduleList(
-        PriceProductScheduleListRequestTransfer $priceProductScheduleListRequestTransfer
+        PriceProductScheduleListTransfer $requestedPriceProductScheduleListTransfer
     ): PriceProductScheduleListResponseTransfer;
 }

@@ -9,7 +9,6 @@ namespace Spryker\Zed\PriceProductScheduleGui\Dependency\Facade;
 
 use Generated\Shared\Transfer\PriceProductScheduledListImportRequestTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleListImportResponseTransfer;
-use Generated\Shared\Transfer\PriceProductScheduleListRequestTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleListResponseTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleListTransfer;
 
@@ -64,13 +63,13 @@ class PriceProductScheduleGuiToPriceProductScheduleFacadeBridge implements Price
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductScheduleListRequestTransfer $priceProductScheduleListRequestTransfer
+     * @param \Generated\Shared\Transfer\PriceProductScheduleListTransfer $priceProductScheduleListTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduleListResponseTransfer
      */
     public function findPriceProductScheduleList(
-        PriceProductScheduleListRequestTransfer $priceProductScheduleListRequestTransfer
+        PriceProductScheduleListTransfer $priceProductScheduleListTransfer
     ): PriceProductScheduleListResponseTransfer {
-        return $this->priceProductScheduleFacade->findPriceProductScheduleList($priceProductScheduleListRequestTransfer);
+        return $this->priceProductScheduleFacade->findPriceProductScheduleList($priceProductScheduleListTransfer);
     }
 }

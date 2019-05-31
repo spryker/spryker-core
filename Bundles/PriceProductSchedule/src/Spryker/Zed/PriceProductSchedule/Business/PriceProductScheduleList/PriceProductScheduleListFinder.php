@@ -8,8 +8,8 @@
 namespace Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleList;
 
 use Generated\Shared\Transfer\PriceProductScheduleListErrorTransfer;
-use Generated\Shared\Transfer\PriceProductScheduleListRequestTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleListResponseTransfer;
+use Generated\Shared\Transfer\PriceProductScheduleListTransfer;
 use Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleRepositoryInterface;
 
 class PriceProductScheduleListFinder implements PriceProductScheduleListFinderInterface
@@ -31,24 +31,25 @@ class PriceProductScheduleListFinder implements PriceProductScheduleListFinderIn
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductScheduleListRequestTransfer $priceProductScheduleListRequestTransfer
+     * @param \Generated\Shared\Transfer\PriceProductScheduleListTransfer $requestedPriceProductScheduleListTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduleListResponseTransfer
      */
     public function findPriceProductScheduleList(
-        PriceProductScheduleListRequestTransfer $priceProductScheduleListRequestTransfer
+        PriceProductScheduleListTransfer $requestedPriceProductScheduleListTransfer
     ): PriceProductScheduleListResponseTransfer {
         $priceProductScheduleListResponseTransfer = (new PriceProductScheduleListResponseTransfer())
             ->setIsSuccess(false);
 
-        $priceProductScheduleListTransfer = $this->priceProductScheduleRepository->findPriceProductScheduleListById($priceProductScheduleListRequestTransfer);
+        $priceProductScheduleListTransfer = $this->priceProductScheduleRepository
+            ->findPriceProductScheduleListById($requestedPriceProductScheduleListTransfer);
 
         if ($priceProductScheduleListTransfer === null) {
             $error = (new PriceProductScheduleListErrorTransfer())
                 ->setMessage(
                     sprintf(
                         static::ERROR_MESSAGE_PRICE_PRODUCT_SCHEDULE_LIST_NOT_FOUND,
-                        $priceProductScheduleListRequestTransfer->getIdPriceProductScheduleList()
+                        $requestedPriceProductScheduleListTransfer->getIdPriceProductScheduleList()
                     )
                 );
 

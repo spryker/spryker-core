@@ -9,7 +9,6 @@ namespace Spryker\Zed\PriceProductSchedule\Persistence;
 
 use DateTime;
 use Generated\Shared\Transfer\PriceProductScheduleCriteriaFilterTransfer;
-use Generated\Shared\Transfer\PriceProductScheduleListRequestTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleListTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
@@ -312,16 +311,16 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductScheduleListRequestTransfer $priceProductScheduleListRequestTransfer
+     * @param \Generated\Shared\Transfer\PriceProductScheduleListTransfer $priceProductScheduleListTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduleListTransfer|null
      */
     public function findPriceProductScheduleListById(
-        PriceProductScheduleListRequestTransfer $priceProductScheduleListRequestTransfer
+        PriceProductScheduleListTransfer $priceProductScheduleListTransfer
     ): ?PriceProductScheduleListTransfer {
         $priceProductScheduleListEntity = $this->getFactory()
             ->createPriceProductScheduleListQuery()
-            ->filterByIdPriceProductScheduleList($priceProductScheduleListRequestTransfer->getIdPriceProductScheduleList())
+            ->filterByIdPriceProductScheduleList($priceProductScheduleListTransfer->getIdPriceProductScheduleList())
             ->findOne();
 
         if ($priceProductScheduleListEntity === null) {

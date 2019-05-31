@@ -20,7 +20,7 @@ class PriceProductScheduleImportValidator implements PriceProductScheduleImportV
     /**
      * @param \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\ImportDataValidator\PriceProductScheduleImportDataValidatorInterface[] $dataValidatorList
      */
-    public function __construct(array $dataValidatorList)
+    public function __construct(array $dataValidatorList = [])
     {
         $this->dataValidatorList = $dataValidatorList;
     }

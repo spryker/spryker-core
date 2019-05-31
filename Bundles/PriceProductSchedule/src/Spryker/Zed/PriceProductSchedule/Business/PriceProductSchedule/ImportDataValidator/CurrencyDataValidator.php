@@ -18,15 +18,15 @@ class CurrencyDataValidator extends AbstractImportDataValidator
     /**
      * @var \Spryker\Zed\PriceProductSchedule\Business\Currency\CurrencyFinderInterface
      */
-    protected $priceProductScheduleCurrencyFinder;
+    protected $currencyFinder;
 
     /**
-     * @param \Spryker\Zed\PriceProductSchedule\Business\Currency\CurrencyFinderInterface $priceProductScheduleCurrencyFinder
+     * @param \Spryker\Zed\PriceProductSchedule\Business\Currency\CurrencyFinderInterface $currencyFinder
      */
     public function __construct(
-        CurrencyFinderInterface $priceProductScheduleCurrencyFinder
+        CurrencyFinderInterface $currencyFinder
     ) {
-        $this->priceProductScheduleCurrencyFinder = $priceProductScheduleCurrencyFinder;
+        $this->currencyFinder = $currencyFinder;
     }
 
     /**
@@ -61,7 +61,7 @@ class CurrencyDataValidator extends AbstractImportDataValidator
             return false;
         }
 
-        $currencyTransfer = $this->priceProductScheduleCurrencyFinder
+        $currencyTransfer = $this->currencyFinder
             ->findCurrencyByIsoCode($priceProductScheduleImportTransfer->getCurrencyCode());
 
         if ($currencyTransfer === null) {
