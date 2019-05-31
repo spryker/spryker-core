@@ -7,7 +7,7 @@
 
                 <div>
                     {% for orderOmsTriggerForm in orderOmsTriggerFormCollection %}
-                        {% include '@Gui/Form/oms_trigger_form.twig' with {
+                        {% include '@Oms/Form/oms_trigger_form.twig' with {
                             form: orderOmsTriggerForm
                         } only %}
                     {% endfor %}

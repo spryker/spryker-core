@@ -81,7 +81,7 @@
 <td>
     {% if orderItemsOmsTriggerFormCollection[orderItem.IdSalesOrderItem] | length > 0 %}
         {% for orderItemOmsTriggerForm in orderItemsOmsTriggerFormCollection[orderItem.IdSalesOrderItem] %}
-            {% include '@Gui/Form/oms_trigger_form.twig' with {
+            {% include '@Oms/Form/oms_trigger_form.twig' with {
                 form: orderItemOmsTriggerForm
             } only %}
         {% endfor %}
