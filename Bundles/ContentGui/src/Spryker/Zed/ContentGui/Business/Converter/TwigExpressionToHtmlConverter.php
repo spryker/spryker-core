@@ -60,6 +60,10 @@ class TwigExpressionToHtmlConverter implements TwigExpressionConverterInterface
      */
     public function convertTwigExpressionToHtml(string $html): string
     {
+        if (mb_substr_count($html, '{{ content_') > 10000) {
+            return $html;
+        }
+
         foreach ($this->contentEditorPlugins as $contentEditorPlugin) {
             $html = $this->convertTwigExpressionsToHtml($html, $contentEditorPlugin);
         }

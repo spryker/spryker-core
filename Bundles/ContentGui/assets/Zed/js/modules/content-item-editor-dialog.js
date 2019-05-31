@@ -87,6 +87,12 @@ var ContentItemDialog = function(
 
                     this.$ui.hideDialog(this.$dialog);
                     this.context.invoke('editor.restoreRange');
+
+                    if ($('span[data-twig-expression*="{{ content_"]').length > 10000) {
+                        alert('Widget not added, limit exceeded, maximum number of widgets 10000');
+                        return;
+                    }
+
                     this.addItemInEditor(elementForInsert);
                 }
 

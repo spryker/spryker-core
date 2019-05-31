@@ -34,6 +34,10 @@ class HtmlToTwigExpressionConverter implements HtmlConverterInterface
      */
     public function convertHtmlToTwigExpression(string $html): string
     {
+        if (mb_substr_count($html, 'data-twig-expression') > 10000) {
+            return $html;
+        }
+
         // Libxml requires a root node and <html> is treating the first element, so libxml finds as the root node.
         $this->domDocument->loadHTML("<html>$html</html>", LIBXML_NOWARNING | LIBXML_NOERROR | LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
         $replaceableNodes = $this->getReplaceableNodes();
