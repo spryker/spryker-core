@@ -22,7 +22,8 @@ class PriceDataValidator extends AbstractImportDataValidator
     public function validatePriceProductScheduleImportTransfer(
         PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer
     ): ?PriceProductScheduleListImportErrorTransfer {
-        if ($this->isPricesValid($priceProductScheduleImportTransfer) === false) {
+        if ($this->isGrossPriceValid($priceProductScheduleImportTransfer) === false
+            || $this->isNetPriceValid($priceProductScheduleImportTransfer) === false) {
             return $this->createPriceProductScheduleListImportErrorTransfer(
                 $priceProductScheduleImportTransfer,
                 static::ERROR_MESSAGE_GROSS_AND_NET_VALUE
@@ -37,13 +38,24 @@ class PriceDataValidator extends AbstractImportDataValidator
      *
      * @return bool
      */
-    protected function isPricesValid(PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer): bool
+    protected function isGrossPriceValid(PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer): bool
     {
-        return is_numeric($priceProductScheduleImportTransfer->getGrossAmount())
-            && is_numeric($priceProductScheduleImportTransfer->getNetAmount())
-            && !is_float($priceProductScheduleImportTransfer->getGrossAmount())
+        return $priceProductScheduleImportTransfer->getGrossAmount() === null
+            || (is_numeric($priceProductScheduleImportTransfer->getGrossAmount())
+                && !is_float($priceProductScheduleImportTransfer->getGrossAmount())
+                && $priceProductScheduleImportTransfer->getGrossAmount() > 0);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer
+     *
+     * @return bool
+     */
+    protected function isNetPriceValid(PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer): bool
+    {
+        return $priceProductScheduleImportTransfer->getNetAmount() === null
+            || is_numeric($priceProductScheduleImportTransfer->getNetAmount())
             && !is_float($priceProductScheduleImportTransfer->getNetAmount())
-            && $priceProductScheduleImportTransfer->getGrossAmount() > 0
             && $priceProductScheduleImportTransfer->getNetAmount() > 0;
     }
 }
