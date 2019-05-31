@@ -51,72 +51,84 @@ class ResourceShareActivator implements ResourceShareActivatorInterface
      */
     public function activateResourceShare(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer
     {
-        $clientBeforeZedResourceShareResponseTransfer = $this->executeResourceShareActivatorStrategyPlugins(
+        $resourceShareResponseTransfer = $this->executeBeforeZedClientActivatros($resourceShareRequestTransfer);
+        if (!$resourceShareResponseTransfer->getIsSuccessful()) {
+            return $resourceShareResponseTransfer;
+        }
+
+        $resourceShareResponseTransfer = $this->executeZedCallResourceShareActivators(
+            $resourceShareRequestTransfer->setResourceShare($resourceShareResponseTransfer->getResourceShare()),
+            $resourceShareResponseTransfer->getMessages()
+        );
+        if (!$resourceShareResponseTransfer->getIsSuccessful()) {
+            return $resourceShareResponseTransfer;
+        }
+
+        return $this->executeAfterZedClientActivators(
+            $resourceShareRequestTransfer->setResourceShare($resourceShareResponseTransfer->getResourceShare()),
+            $resourceShareResponseTransfer->getMessages()
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
+     */
+    protected function executeBeforeZedClientActivatros(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer
+    {
+        $resourceShareResponseTransfer = $this->executeResourceShareActivatorStrategyPlugins(
             $this->beforeZedResourceShareActivatorStrategyPlugins,
             $resourceShareRequestTransfer
         );
 
-        if (!$clientBeforeZedResourceShareResponseTransfer->getIsSuccessful()) {
-            return $clientBeforeZedResourceShareResponseTransfer;
-        }
+        return $resourceShareResponseTransfer;
+    }
 
-        $zedResourceShareResponseTransfer = $this->zedResourceShareStub->activateResourceShare($resourceShareRequestTransfer);
-        if (!$zedResourceShareResponseTransfer->getIsSuccessful()) {
-            return $zedResourceShareResponseTransfer;
-        }
+    /**
+     * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
+     * @param \ArrayObject $messageTransfers
+     *
+     * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
+     */
+    protected function executeZedCallResourceShareActivators(ResourceShareRequestTransfer $resourceShareRequestTransfer, ArrayObject $messageTransfers): ResourceShareResponseTransfer
+    {
+        $resourceShareResponseTransfer = $this->zedResourceShareStub->activateResourceShare($resourceShareRequestTransfer);
+        $resourceShareResponseTransfer->setMessages(
+            $this->mergeResponseMessages(
+                $messageTransfers,
+                $resourceShareResponseTransfer->getMessages()
+            )
+        );
 
-        $clientAfterZedResourceShareResponseTransfer = $this->executeResourceShareActivatorStrategyPlugins(
+        return $resourceShareResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
+     * @param \ArrayObject $messageTransfers
+     *
+     * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
+     */
+    protected function executeAfterZedClientActivators(ResourceShareRequestTransfer $resourceShareRequestTransfer, ArrayObject $messageTransfers): ResourceShareResponseTransfer
+    {
+        $resourceShareResponseTransfer = $this->executeResourceShareActivatorStrategyPlugins(
             $this->afterZedResourceShareActivatorStrategyPlugins,
             $resourceShareRequestTransfer
         );
 
-        if (!$clientAfterZedResourceShareResponseTransfer->getIsSuccessful()) {
-            return $clientAfterZedResourceShareResponseTransfer;
-        }
+        $resourceShareResponseTransfer->setMessages(
+            $this->mergeResponseMessages(
+                $messageTransfers,
+                $resourceShareResponseTransfer->getMessages()
+            )
+        );
 
-        return (new ResourceShareResponseTransfer())
-            ->setIsSuccessful(true)
-            ->setIsLoginRequired(false)
-            ->setMessages(
-                $this->mergeResponseMessages(
-                    $clientBeforeZedResourceShareResponseTransfer->getMessages(),
-                    $zedResourceShareResponseTransfer->getMessages(),
-                    $clientAfterZedResourceShareResponseTransfer->getMessages()
-                )
-            );
+        return $resourceShareResponseTransfer;
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\MessageTransfer[] $clientBeforeZedResponseMessageTransfers
-     * @param \ArrayObject|\Generated\Shared\Transfer\MessageTransfer[] $zedResponseMessageTransfers
-     * @param \ArrayObject|\Generated\Shared\Transfer\MessageTransfer[] $clientAfterZedResponseMessageTransfers
-     *
-     * @return \ArrayObject|\Generated\Shared\Transfer\MessageTransfer[]
-     */
-    protected function mergeResponseMessages(
-        ArrayObject $clientBeforeZedResponseMessageTransfers,
-        ArrayObject $zedResponseMessageTransfers,
-        ArrayObject $clientAfterZedResponseMessageTransfers
-    ): ArrayObject {
-        $responseMessageTransfers = new ArrayObject();
-
-        foreach ($clientBeforeZedResponseMessageTransfers as $messageTransfer) {
-            $responseMessageTransfers->append($messageTransfer);
-        }
-
-        foreach ($zedResponseMessageTransfers as $messageTransfer) {
-            $responseMessageTransfers->append($messageTransfer);
-        }
-
-        foreach ($clientAfterZedResponseMessageTransfers as $messageTransfer) {
-            $responseMessageTransfers->append($messageTransfer);
-        }
-
-        return $responseMessageTransfers;
-    }
-
-    /**
-     * @param \Spryker\Client\ResourceShareExtension\Dependency\Plugin\ResourceShareActivatorStrategyPluginInterface[] $resourceShareActivatorStrategyPlugins
+     * @param \Spryker\Client\ResourceShareExtension\Dependency\Plugin\ResourceShareClientActivatorStrategyPluginInterface[] $resourceShareActivatorStrategyPlugins
      * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
@@ -126,6 +138,7 @@ class ResourceShareActivator implements ResourceShareActivatorInterface
         ResourceShareRequestTransfer $resourceShareRequestTransfer
     ): ResourceShareResponseTransfer {
         $resourceShareResponseTransfer = (new ResourceShareResponseTransfer())
+            ->setResourceShare($resourceShareRequestTransfer->getResourceShare())
             ->setIsSuccessful(true);
 
         foreach ($resourceShareActivatorStrategyPlugins as $resourceShareActivatorStrategyPlugin) {
@@ -144,5 +157,22 @@ class ResourceShareActivator implements ResourceShareActivatorInterface
         }
 
         return $resourceShareResponseTransfer;
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\MessageTransfer[] $targetMessageTransfers
+     * @param \ArrayObject|\Generated\Shared\Transfer\MessageTransfer[] $messageTransfers
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\MessageTransfer[]
+     */
+    protected function mergeResponseMessages(
+        ArrayObject $targetMessageTransfers,
+        ArrayObject $messageTransfers
+    ): ArrayObject {
+        foreach ($messageTransfers as $messageTransfer) {
+            $targetMessageTransfers->append($messageTransfer);
+        }
+
+        return $targetMessageTransfers;
     }
 }
