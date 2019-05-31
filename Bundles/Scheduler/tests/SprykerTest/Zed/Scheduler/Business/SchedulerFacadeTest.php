@@ -12,20 +12,12 @@ use Generated\Shared\Transfer\SchedulerFilterTransfer;
 use Generated\Shared\Transfer\SchedulerJobTransfer;
 use Generated\Shared\Transfer\SchedulerResponseTransfer;
 use Generated\Shared\Transfer\SchedulerScheduleTransfer;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Scheduler\Business\Command\Filter\SchedulerFilter;
 use Spryker\Zed\Scheduler\Business\Command\Filter\SchedulerFilterInterface;
-use Spryker\Zed\Scheduler\Business\Command\SchedulerSetupCommand;
-use Spryker\Zed\Scheduler\Business\PhpScheduleReader\Filter\JobsFilterByName;
-use Spryker\Zed\Scheduler\Business\PhpScheduleReader\Mapper\PhpScheduleMapper;
-use Spryker\Zed\Scheduler\Business\PhpScheduleReader\Mapper\PhpScheduleMapperInterface;
-use Spryker\Zed\Scheduler\Business\PhpScheduleReader\PhpScheduleReader;
-use Spryker\Zed\Scheduler\Business\PhpScheduleReader\PhpScheduleReaderInterface;
 use Spryker\Zed\Scheduler\Business\SchedulerBusinessFactory;
 use Spryker\Zed\Scheduler\Business\SchedulerFacade;
 use Spryker\Zed\Scheduler\Business\SchedulerFacadeInterface;
 use Spryker\Zed\Scheduler\Communication\Plugin\Scheduler\PhpScheduleReaderPlugin;
-use Spryker\Zed\Scheduler\Dependency\Store\SchedulerToStoreBridge;
 use Spryker\Zed\Scheduler\SchedulerConfig;
 use Spryker\Zed\SchedulerExtension\Dependency\Plugin\SchedulerAdapterPluginInterface;
 
@@ -53,7 +45,8 @@ class SchedulerFacadeTest extends Unit
         $scheduleTransfer = $this->getSchedulerFacade()->readScheduleFromPhpSource($filterTransfer, $scheduleTransfer);
 
         $this->assertInstanceOf(SchedulerScheduleTransfer::class, $scheduleTransfer);
-        $this->assertSame(2, $scheduleTransfer->getJobs()->count());
+
+        $this->assertSame(1, $scheduleTransfer->getJobs()->count());
 
         foreach ($scheduleTransfer->getJobs() as $jobTransfer) {
             $this->assertContains(APPLICATION_STORE, $jobTransfer->getName());
@@ -135,7 +128,9 @@ class SchedulerFacadeTest extends Unit
     protected function createSchedulerFilterTransfer(): SchedulerFilterTransfer
     {
         return (new SchedulerFilterTransfer())
-                ->setSchedulers([static::TEST_SCHEDULER]);
+                ->setSchedulers([static::TEST_SCHEDULER])
+                ->setStore('DE')
+                ->setRoles(['admin']);
     }
 
     /**
@@ -157,9 +152,7 @@ class SchedulerFacadeTest extends Unit
                 'getSchedulerAdapterPlugins',
                 'getScheduleReaderPlugins',
                 'getConfig',
-                'createPhpSchedulerMapper',
                 'createSchedulerFilter',
-                'createSchedulerSetup',
             ])
             ->getMock();
 
@@ -172,10 +165,6 @@ class SchedulerFacadeTest extends Unit
             ->willReturn($this->getSchedulerReaderPlugins());
 
         $schedulerBusinessFactoryMock
-            ->method('createPhpSchedulerMapper')
-            ->willReturn($this->createPhpSchedulerMapperInstance());
-
-        $schedulerBusinessFactoryMock
             ->method('getConfig')
             ->willReturn($this->getSchedulerConfigMock());
 
@@ -183,28 +172,7 @@ class SchedulerFacadeTest extends Unit
             ->method('createSchedulerFilter')
             ->willReturn($this->getSchedulerFilter());
 
-        $schedulerBusinessFactoryMock
-            ->method('createSchedulerSetup')
-            ->willReturn(
-                new SchedulerSetupCommand(
-                    $this->getSchedulerReaderPlugins(),
-                    $this->getSchedulerAdapterPlugins(),
-                    $this->getSchedulerFilter()
-                )
-            );
-
         return $schedulerBusinessFactoryMock;
-    }
-
-    /**
-     * @return \Spryker\Zed\Scheduler\Business\PhpScheduleReader\Mapper\PhpScheduleMapperInterface
-     */
-    protected function createPhpSchedulerMapperInstance(): PhpScheduleMapperInterface
-    {
-        return new PhpScheduleMapper(
-            new JobsFilterByName(),
-            new SchedulerToStoreBridge(Store::getInstance())
-        );
     }
 
     /**
@@ -263,7 +231,8 @@ class SchedulerFacadeTest extends Unit
     {
         return (new SchedulerScheduleTransfer())
             ->addJob((new SchedulerJobTransfer())->setName('DE_test')->setStore('DE'))
-            ->addJob((new SchedulerJobTransfer())->setName('DE_test1')->setStore('DE'));
+            ->addJob((new SchedulerJobTransfer())->setName('DE_test1')->setStore('DE'))
+            ->addJob((new SchedulerJobTransfer())->setName('DE_test1')->setStore('AT'));
     }
 
     /**
@@ -272,18 +241,8 @@ class SchedulerFacadeTest extends Unit
     protected function getSchedulerFilter(): SchedulerFilterInterface
     {
         return new SchedulerFilter(
-            $this->getSchedulerConfigMock()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\Scheduler\Business\PhpScheduleReader\PhpScheduleReaderInterface
-     */
-    protected function getPhpSchedulerReader(): PhpScheduleReaderInterface
-    {
-        return new PhpScheduleReader(
-            $this->createPhpSchedulerMapperInstance(),
-            $this->getSchedulerConfigMock()
+            $this->getSchedulerConfigMock(),
+            $this->getSchedulerAdapterPlugins()
         );
     }
 

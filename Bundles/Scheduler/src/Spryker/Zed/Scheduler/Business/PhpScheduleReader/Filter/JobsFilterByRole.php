@@ -67,9 +67,11 @@ class JobsFilterByRole extends AbstractJobsFilter implements ChainableJobsFilter
     /**
      * @param array $roles
      *
+     * @throws \Spryker\Zed\Scheduler\Business\PhpScheduleReader\Exception\RoleNotAllowedException
+     *
      * @return void
      */
-    protected function assertRoles(array $roles)
+    protected function assertRoles(array $roles): void
     {
         foreach ($roles as $role) {
             if (!in_array($role, $this->roles, true)) {

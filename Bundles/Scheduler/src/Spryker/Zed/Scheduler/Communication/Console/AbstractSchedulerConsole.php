@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Scheduler\Communication\Console;
 
 use Generated\Shared\Transfer\SchedulerResponseCollectionTransfer;
+use Generated\Shared\Transfer\SchedulerResponseTransfer;
 use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -36,13 +37,33 @@ class AbstractSchedulerConsole extends Console
         foreach ($responseCollectionTransfer->getResponses() as $responseTransfer) {
             $status = $responseTransfer->getStatus();
             $outputColor = $status ? static::OUTPUT_SUCCESS_COLOR : static::OUTPUT_ERROR_COLOR;
-            $output->writeln(sprintf("<fg=$outputColor;options=bold>Scheduler Name: %s</>",
-                $responseTransfer->getSchedule()->getIdScheduler()));
-            $output->writeln(sprintf("<fg=$outputColor;options=bold>Scheduler Status: %s</>",
-                $status ? static::OUTPUT_SUCCESS_MESSAGE : static::OUTPUT_ERROR_MESSAGE));
-            if ($responseTransfer->getMessage() !== null) {
+            $output->writeln(sprintf(
+                "Scheduler Name: <fg=$outputColor;options=bold>%s</>",
+                $responseTransfer->getSchedule()->getIdScheduler()
+            ));
+            $output->writeln(sprintf(
+                "Scheduler Status: <fg=$outputColor;options=bold>%s</>",
+                $status ? static::OUTPUT_SUCCESS_MESSAGE : static::OUTPUT_ERROR_MESSAGE
+            ));
+            if ($output->getVerbosity() >= OutputInterface::VERBOSITY_VERBOSE) {
+                $this->outputJobResponse($responseTransfer, $output);
+            }
+            if ($status === false) {
                 $output->writeln($responseTransfer->getMessage());
             }
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SchedulerResponseTransfer $responseTransfer
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     *
+     * @return void
+     */
+    protected function outputJobResponse(SchedulerResponseTransfer $responseTransfer, OutputInterface $output): void
+    {
+        foreach ($responseTransfer->getSchedule()->getJobs() as $jobTransfer) {
+            $output->writeln(' - ' . $jobTransfer->getName());
         }
     }
 }

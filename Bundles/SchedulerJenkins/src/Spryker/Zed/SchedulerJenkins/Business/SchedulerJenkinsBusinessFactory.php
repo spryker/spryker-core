@@ -90,7 +90,6 @@ class SchedulerJenkinsBusinessFactory extends AbstractBusinessFactory
                 $this->createNullExecutor()
             ),
             $this->createSchedulerResponseBuilder()
-
         );
     }
 

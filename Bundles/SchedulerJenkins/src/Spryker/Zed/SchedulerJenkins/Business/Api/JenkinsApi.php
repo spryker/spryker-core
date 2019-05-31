@@ -76,7 +76,7 @@ class JenkinsApi implements JenkinsApiInterface
      */
     public function executePostRequest(string $idScheduler, string $urlPath, string $body = ''): SchedulerJenkinsResponseTransfer
     {
-        return $this->executeRequest(static::REQUEST_POST_METHOD, $idScheduler, $urlPath);
+        return $this->executeRequest(static::REQUEST_POST_METHOD, $idScheduler, $urlPath, $body);
     }
 
     /**

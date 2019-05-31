@@ -53,7 +53,7 @@ class PhpScheduleMapper implements PhpScheduleMapperInterface
         $filteredJobs = $this->jobsFilter->filterJobs($filterTransfer, $jobs);
 
         foreach ($filteredJobs as $job) {
-            $jobTransfer =  new SchedulerJobTransfer();
+            $jobTransfer = new SchedulerJobTransfer();
             $jobTransfer = $this->mapJobFromArrayBasedOnStore($jobTransfer, $job, $storeName);
             $scheduleTransfer->addJob($jobTransfer);
         }

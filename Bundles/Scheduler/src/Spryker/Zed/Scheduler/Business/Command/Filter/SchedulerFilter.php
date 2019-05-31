@@ -41,7 +41,7 @@ class SchedulerFilter implements SchedulerFilterInterface
     public function getFilteredSchedulerAdapters(SchedulerFilterTransfer $filterTransfer): array
     {
         $enabledSchedulers = $this->schedulerConfig->getEnabledSchedulers();
-        $filteredSchedulers =  $filterTransfer->getSchedulers() ?: $enabledSchedulers;
+        $filteredSchedulers = $filterTransfer->getSchedulers() ?: $enabledSchedulers;
 
         $this->assertConfiguredSchedulers($enabledSchedulers);
         $this->assertFilteredSchedulers($filteredSchedulers);
@@ -56,7 +56,9 @@ class SchedulerFilter implements SchedulerFilterInterface
     /**
      * @param array $enabledSchedulers
      *
-     * @throws \Exception
+     * @throws \Spryker\Zed\Scheduler\Business\Command\Exception\SchedulerNotAllowedException
+     *
+     * @return void
      */
     protected function assertConfiguredSchedulers(array $enabledSchedulers): void
     {
@@ -73,7 +75,9 @@ class SchedulerFilter implements SchedulerFilterInterface
     /**
      * @param array $filteredSchedulers
      *
-     * @throws \Exception
+     * @throws \Spryker\Zed\Scheduler\Business\Command\Exception\SchedulerNotAllowedException
+     *
+     * @return void
      */
     protected function assertFilteredSchedulers(array $filteredSchedulers): void
     {

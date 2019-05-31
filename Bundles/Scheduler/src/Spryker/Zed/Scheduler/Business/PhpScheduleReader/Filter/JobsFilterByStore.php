@@ -48,5 +48,4 @@ class JobsFilterByStore extends AbstractJobsFilter implements ChainableJobsFilte
     {
         return array_key_exists(static::KEY_STORES, $job) ? (array)$job[static::KEY_STORES] : [];
     }
-
 }

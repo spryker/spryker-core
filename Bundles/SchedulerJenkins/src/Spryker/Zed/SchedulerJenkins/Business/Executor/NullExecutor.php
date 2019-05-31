@@ -19,8 +19,6 @@ class NullExecutor implements ExecutorInterface
     protected $responseBuilder;
 
     /**
-     * NullExecutor constructor.
-     *
      * @param \Spryker\Zed\SchedulerJenkins\Business\Api\Builder\JenkinsResponseBuilderInterface $responseBuilder
      */
     public function __construct(JenkinsResponseBuilderInterface $responseBuilder)

@@ -61,6 +61,7 @@ class Iterator implements IteratorInterface
 
         return $this->responseBuilder
             ->withSchedule($scheduleTransfer)
+            ->withStatus(true)
             ->build();
     }
 }

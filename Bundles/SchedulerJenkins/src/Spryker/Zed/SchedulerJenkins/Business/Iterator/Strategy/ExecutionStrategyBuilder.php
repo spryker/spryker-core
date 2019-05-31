@@ -63,16 +63,14 @@ class ExecutionStrategyBuilder implements ExecutionStrategyBuilderInterface
      */
     public function buildExecutionStrategy(string $idScheduler): ExecutionStrategyInterface
     {
-        $response = $this->jenkinsApi->executeGetRequest($idScheduler, static::JENKINS_API_JOBS_URL);
-        $jobs = $this->utilEncodingService->decodeJson($response->getPayload(), true);
+        $jobs = $this->getJobs($idScheduler);
+        $executionStrategy = new ExecutionStrategy($this->executorForExistingJob, $this->executorForAbsentJob);
 
-        $jobChecker = new ExecutionStrategy($this->executorForExistingJob, $this->executorForAbsentJob);
-
-        if (is_array($jobs)) {
-            return $jobChecker;
+        if (!is_array($jobs)) {
+            return $executionStrategy;
         }
 
-        return $this->mapJobCheckerFromArray($jobChecker, $jobs[static::KEY_JOBS] ?? []);
+        return $this->mapJobCheckerFromArray($executionStrategy, $jobs[static::KEY_JOBS] ?? []);
     }
 
     /**
@@ -90,5 +88,18 @@ class ExecutionStrategyBuilder implements ExecutionStrategyBuilderInterface
         }
 
         return $jobChecker;
+    }
+
+    /**
+     * @param string $idScheduler
+     *
+     * @return mixed|null
+     */
+    protected function getJobs(string $idScheduler)
+    {
+        $response = $this->jenkinsApi->executeGetRequest($idScheduler, static::JENKINS_API_JOBS_URL);
+        $jobs = $this->utilEncodingService->decodeJson($response->getPayload(), true);
+
+        return $jobs;
     }
 }

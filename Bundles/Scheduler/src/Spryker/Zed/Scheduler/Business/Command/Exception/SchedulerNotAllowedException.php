@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Scheduler\Business\Command\Exception;
 
-use \Exception;
+use Exception;
 
 class SchedulerNotAllowedException extends Exception
 {

@@ -23,9 +23,9 @@ class SchedulerResponseBuilder implements SchedulerResponseBuilderInterface
     protected $status = false;
 
     /**
-     * @var string
+     * @var null
      */
-    protected $message = '';
+    protected $message = null;
 
     /**
      * @return \Generated\Shared\Transfer\SchedulerResponseTransfer
@@ -37,7 +37,7 @@ class SchedulerResponseBuilder implements SchedulerResponseBuilderInterface
         $schedulerResponseTransfer
             ->setSchedule($this->schedulerTransfer ?? new SchedulerScheduleTransfer())
             ->setStatus($this->status)
-            ->setStatus($this->message);
+            ->setMessage($this->message);
 
         return $schedulerResponseTransfer;
     }

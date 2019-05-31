@@ -8,16 +8,17 @@
 namespace SprykerTest\Zed\SchedulerJenkins\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\SchedulerJenkinsResponseTransfer;
 use Generated\Shared\Transfer\SchedulerJobTransfer;
 use Generated\Shared\Transfer\SchedulerResponseTransfer;
 use Generated\Shared\Transfer\SchedulerScheduleTransfer;
-use GuzzleHttp\Psr7\Response;
+use Spryker\Service\UtilEncoding\UtilEncodingService;
 use Spryker\Zed\SchedulerJenkins\Business\Api\JenkinsApi;
-use Spryker\Zed\SchedulerJenkins\Business\Resolver\ResolverBuilder;
 use Spryker\Zed\SchedulerJenkins\Business\SchedulerJenkinsBusinessFactory;
 use Spryker\Zed\SchedulerJenkins\Business\SchedulerJenkinsFacade;
 use Spryker\Zed\SchedulerJenkins\Business\SchedulerJenkinsFacadeInterface;
 use Spryker\Zed\SchedulerJenkins\Business\TemplateGenerator\XmlJenkinsJobTemplateGenerator;
+use Spryker\Zed\SchedulerJenkins\Dependency\Service\SchedulerJenkinsToUtilEncodingServiceBridge;
 
 /**
  * Auto-generated group annotations
@@ -105,8 +106,7 @@ class SchedulerJenkinsFacadeTest extends Unit
                     ->setSchedule('* * * * *')
                     ->setPayload([])
             )
-            ->setIdScheduler('test')
-            ->setStore('DE');
+            ->setIdScheduler('test');
     }
 
     /**
@@ -126,16 +126,12 @@ class SchedulerJenkinsFacadeTest extends Unit
         $schedulerJenkinsBusinessFactoryMock = $this->getMockBuilder(SchedulerJenkinsBusinessFactory::class)
             ->setMethods(
                 [
-                    'createJenkinsJobReader',
                     'createXmkJenkinsJobTemplateGenerator',
                     'createJenkinsApi',
+                    'getUtilEncodingService',
                 ]
             )
             ->getMock();
-
-        $schedulerJenkinsBusinessFactoryMock
-            ->method('createJenkinsJobReader')
-            ->willReturn($this->getJenkinsJobReaderMock());
 
         $schedulerJenkinsBusinessFactoryMock
             ->method('createXmkJenkinsJobTemplateGenerator')
@@ -144,6 +140,10 @@ class SchedulerJenkinsFacadeTest extends Unit
         $schedulerJenkinsBusinessFactoryMock
             ->method('createJenkinsApi')
             ->willReturn($this->createJenkinsApiMock());
+
+        $schedulerJenkinsBusinessFactoryMock
+            ->method('getUtilEncodingService')
+            ->willReturn($this->createUtilEncodingServiceBridge());
 
         return $schedulerJenkinsBusinessFactoryMock;
     }
@@ -163,29 +163,25 @@ class SchedulerJenkinsFacadeTest extends Unit
 
         $jenkinsApiMock
             ->method('executeGetRequest')
-            ->willReturn(new Response());
+            ->willReturn((new SchedulerJenkinsResponseTransfer())
+                    ->setPayload('{"jobs" : [{"name":"DE__test"},{"name":"DE__test1"}]}')
+                    ->setStatus(true));
 
         $jenkinsApiMock
             ->method('executePostRequest')
-            ->willReturn(new Response());
+            ->willReturn((new SchedulerJenkinsResponseTransfer())->setStatus(true));
 
         return $jenkinsApiMock;
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\SchedulerJenkins\Business\Iterator\Strategy\ExecutionStrategyBuilderInterface
+     * @return \Spryker\Zed\SchedulerJenkins\Dependency\Service\SchedulerJenkinsToUtilEncodingServiceBridge
      */
-    protected function getJenkinsJobReaderMock()
+    protected function createUtilEncodingServiceBridge(): SchedulerJenkinsToUtilEncodingServiceBridge
     {
-        $schedulerJenkinsJobReaderMock = $this->getMockBuilder(ResolverBuilder::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $schedulerJenkinsJobReaderMock
-            ->method('getExistingJobs')
-            ->willReturn($this->getExistingJobs());
-
-        return $schedulerJenkinsJobReaderMock;
+        return new SchedulerJenkinsToUtilEncodingServiceBridge(
+            new UtilEncodingService()
+        );
     }
 
     /**
@@ -198,17 +194,9 @@ class SchedulerJenkinsFacadeTest extends Unit
             ->getMock();
 
         $schedulerJenkinsJobXmlTemplateGeneratorMock
-            ->method('getJobTemplate')
+            ->method('generateJobTemplate')
             ->willReturn('');
 
         return $schedulerJenkinsJobXmlTemplateGeneratorMock;
-    }
-
-    /**
-     * @return string[]
-     */
-    protected function getExistingJobs(): array
-    {
-        return ['DE__test', 'DE__test1'];
     }
 }

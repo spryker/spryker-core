@@ -30,7 +30,7 @@ class SchedulerJenkinsToUtilEncodingServiceBridge implements SchedulerJenkinsToU
      *
      * @return mixed|null
      */
-    public function decodeJson(string $jsonValue, bool $assoc = false, ?int $depth = null, ?int $options = null): array
+    public function decodeJson(string $jsonValue, bool $assoc = false, ?int $depth = null, ?int $options = null)
     {
         return $this->utilEncodingService->decodeJson($jsonValue, $assoc, $depth, $options);
     }
