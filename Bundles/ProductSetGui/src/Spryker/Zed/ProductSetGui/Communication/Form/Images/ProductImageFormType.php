@@ -187,6 +187,7 @@ class ProductImageFormType extends AbstractType
     {
         $builder->add(static::FIELD_SORT_ORDER, NumberType::class, [
             'constraints' => [
+                new NotBlank(),
                 new LessThanOrEqual([
                     'value' => static::MAX_SORT_ORDER_VALUE,
                 ]),
