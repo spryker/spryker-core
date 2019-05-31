@@ -98,4 +98,21 @@ class PriceProductScheduleFacade extends AbstractFacade implements PriceProductS
             ->createPriceProductScheduleListImporter()
             ->importPriceProductSchedules($priceProductScheduledListImportRequest);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PriceProductScheduleListTransfer $priceProductScheduleListTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleListResponseTransfer
+     */
+    public function findPriceProductScheduleList(
+        PriceProductScheduleListTransfer $priceProductScheduleListTransfer
+    ): PriceProductScheduleListResponseTransfer {
+        return $this->getFactory()
+            ->createPriceProductScheduleListFinder()
+            ->findPriceProductScheduleList($priceProductScheduleListTransfer);
+    }
 }

@@ -135,12 +135,6 @@
         <property name="priceProductScheduleList" type="PriceProductScheduleList"/>
     </transfer>
 
-    <transfer name="PriceProductExpandResult">
-        <property name="priceProduct" type="PriceProduct"/>
-        <property name="error" type="PriceProductScheduleListImportError" singular="error"/>
-        <property name="isSuccess" type="bool"/>
-    </transfer>
-
     <transfer name="PriceProductScheduleListResponse">
         <property name="priceProductScheduleList" type="PriceProductScheduleList"/>
         <property name="errors" type="PriceProductScheduleListError[]" singular="error"/>

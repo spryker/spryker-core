@@ -31,4 +31,22 @@ interface PriceProductScheduleGuiToPriceProductScheduleFacadeInterface
     public function createPriceProductScheduleList(
         PriceProductScheduleListTransfer $priceProductScheduleListTransfer
     ): PriceProductScheduleListResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductScheduleListTransfer $priceProductScheduleListTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleListResponseTransfer
+     */
+    public function updatePriceProductScheduleList(
+        PriceProductScheduleListTransfer $priceProductScheduleListTransfer
+    ): PriceProductScheduleListResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductScheduleListTransfer $priceProductScheduleListTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleListResponseTransfer
+     */
+    public function findPriceProductScheduleList(
+        PriceProductScheduleListTransfer $priceProductScheduleListTransfer
+    ): PriceProductScheduleListResponseTransfer;
 }

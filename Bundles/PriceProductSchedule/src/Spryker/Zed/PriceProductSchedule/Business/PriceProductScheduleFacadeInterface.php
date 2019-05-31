@@ -49,7 +49,9 @@ interface PriceProductScheduleFacadeInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduleListResponseTransfer
      */
-    public function createPriceProductScheduleList(PriceProductScheduleListTransfer $priceProductScheduleListTransfer): PriceProductScheduleListResponseTransfer;
+    public function createPriceProductScheduleList(
+        PriceProductScheduleListTransfer $priceProductScheduleListTransfer
+    ): PriceProductScheduleListResponseTransfer;
 
     /**
      * Specification:
@@ -61,11 +63,16 @@ interface PriceProductScheduleFacadeInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduleListResponseTransfer
      */
-    public function updatePriceProductScheduleList(PriceProductScheduleListTransfer $priceProductScheduleListTransfer): PriceProductScheduleListResponseTransfer;
+    public function updatePriceProductScheduleList(
+        PriceProductScheduleListTransfer $priceProductScheduleListTransfer
+    ): PriceProductScheduleListResponseTransfer;
 
     /**
      * Specification:
-     * - Imports price product schedules.
+     * - Validates import data.
+     * - Adds validation errors to response transfer.
+     * - Expands with relevant price product data.
+     * - Saves price product schedules.
      *
      * @api
      *
@@ -76,4 +83,18 @@ interface PriceProductScheduleFacadeInterface
     public function importPriceProductSchedules(
         PriceProductScheduledListImportRequestTransfer $priceProductScheduledListImportRequest
     ): PriceProductScheduleListImportResponseTransfer;
+
+    /**
+     * Specification:
+     * - Finds price product schedule list by idPriceProductScheduleList.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PriceProductScheduleListTransfer $priceProductScheduleListTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleListResponseTransfer
+     */
+    public function findPriceProductScheduleList(
+        PriceProductScheduleListTransfer $priceProductScheduleListTransfer
+    ): PriceProductScheduleListResponseTransfer;
 }
