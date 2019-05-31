@@ -94,6 +94,21 @@ class CartsRestApiFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testQuoteCollectionWillBeRetrievedNonEmpty(): void
+    {
+        /** @var \Spryker\Zed\CartsRestApi\Business\CartsRestApiFacade $cartsRestApiFacade */
+        $cartsRestApiFacade = $this->tester->getFacade();
+        $cartsRestApiFacade->setFactory($this->getMockCartsRestApiBusinessFactory());
+
+        $quoteCriteriaFilterTransfer = $this->tester->prepareQuoteCriteriaFilterTransfer();
+        $quoteCollectionTransfer = $cartsRestApiFacade->getQuoteCollection($quoteCriteriaFilterTransfer);
+
+        $this->assertNotEmpty($quoteCollectionTransfer->getQuotes());
+    }
+
+    /**
+     * @return void
+     */
     public function testQuoteWillBeCreatedSuccessfully(): void
     {
         /** @var \Spryker\Zed\CartsRestApi\Business\CartsRestApiFacade $cartsRestApiFacade */
