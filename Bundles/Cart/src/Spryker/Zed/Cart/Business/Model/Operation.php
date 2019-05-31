@@ -157,7 +157,7 @@ class Operation implements OperationInterface
             $currentCartChangeTransfer->setQuote($quoteTransfer);
             $currentCartChangeTransfer->setItems($itemsCollection);
 
-            $quoteTransfer = $this->add($currentCartChangeTransfer);
+            $quoteTransfer = $this->addToQuote($cartChangeTransfer)->getQuoteTransfer();
         }
 
         return $quoteTransfer;

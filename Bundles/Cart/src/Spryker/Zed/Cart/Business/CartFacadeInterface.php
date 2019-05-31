@@ -55,6 +55,8 @@ interface CartFacadeInterface
      *
      * @api
      *
+     * @deprecated Use addToQuote() instead.
+     *
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer

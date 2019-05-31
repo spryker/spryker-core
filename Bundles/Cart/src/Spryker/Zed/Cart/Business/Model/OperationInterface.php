@@ -21,6 +21,8 @@ interface OperationInterface
     public function addValid(CartChangeTransfer $cartChangeTransfer): QuoteTransfer;
 
     /**
+     * @deprecated Use addToQuote() instead.
+     *
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
