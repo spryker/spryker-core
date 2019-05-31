@@ -13,6 +13,8 @@ use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Shared\ContentBanner\ContentBannerConfig;
 
 /**
+ * @deprecated Will be removed without replacement.
+ *
  * @method \Spryker\Client\ContentBanner\ContentBannerClient getClient()
  */
 class BannerTermExecutorPlugin extends AbstractPlugin implements ContentTermExecutorPluginInterface

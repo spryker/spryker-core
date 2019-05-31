@@ -10,6 +10,8 @@ namespace Spryker\Zed\ShoppingListProductOptionConnector\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ShoppingListProductOptionConnector\Business\Mapper\CartItemToShoppingListItemMapper;
 use Spryker\Zed\ShoppingListProductOptionConnector\Business\Mapper\CartItemToShoppingListItemMapperInterface;
+use Spryker\Zed\ShoppingListProductOptionConnector\Business\ProductOption\ProductOptionValuesRemover;
+use Spryker\Zed\ShoppingListProductOptionConnector\Business\ProductOption\ProductOptionValuesRemoverInterface;
 use Spryker\Zed\ShoppingListProductOptionConnector\Business\ShoppingListItem\ShoppingListItemExpander;
 use Spryker\Zed\ShoppingListProductOptionConnector\Business\ShoppingListItem\ShoppingListItemExpanderInterface;
 use Spryker\Zed\ShoppingListProductOptionConnector\Business\ShoppingListProductOption\ShoppingListProductOptionReader;
@@ -72,5 +74,15 @@ class ShoppingListProductOptionConnectorBusinessFactory extends AbstractBusiness
     public function getProductOptionFacade(): ShoppingListProductOptionConnectorToProductOptionFacadeInterface
     {
         return $this->getProvidedDependency(ShoppingListProductOptionConnectorDependencyProvider::FACADE_PRODUCT_OPTION);
+    }
+
+    /**
+     * @return \Spryker\Zed\ShoppingListProductOptionConnector\Business\ProductOption\ProductOptionValuesRemoverInterface
+     */
+    public function createProductOptionValuesRemover(): ProductOptionValuesRemoverInterface
+    {
+        return new ProductOptionValuesRemover(
+            $this->getEntityManager()
+        );
     }
 }

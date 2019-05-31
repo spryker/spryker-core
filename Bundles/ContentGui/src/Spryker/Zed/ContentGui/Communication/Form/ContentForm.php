@@ -10,6 +10,7 @@ namespace Spryker\Zed\ContentGui\Communication\Form;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -19,6 +20,7 @@ use Symfony\Component\Validator\Constraints\Required;
 
 /**
  * @method \Spryker\Zed\ContentGui\Communication\ContentGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ContentGui\ContentGuiConfig getConfig()
  */
 class ContentForm extends AbstractType
 {
@@ -28,8 +30,8 @@ class ContentForm extends AbstractType
     public const FIELD_CONTENT_TYPE_KEY = 'content_type_key';
     public const FIELD_LOCALES = 'localizedContents';
 
-    public const PLACEHOLDER_NAME = 'Name';
-    public const PLACEHOLDER_DESCRIPTION = 'Description';
+    public const LABEL_NAME = 'Name';
+    public const LABEL_DESCRIPTION = 'Description';
 
     public const OPTION_AVAILABLE_LOCALES = 'OPTION_AVAILABLE_LOCALES';
     public const OPTION_CONTENT_ITEM_FORM_PLUGIN = 'OPTION_CONTENT_ITEM_FORM_PLUGIN';
@@ -71,11 +73,13 @@ class ContentForm extends AbstractType
     protected function addNameField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_NAME, TextType::class, [
-            'attr' => [
-                'placeholder' => static::PLACEHOLDER_NAME,
-            ],
-            'label' => false,
-            'constraints' => $this->getFieldDefaultConstraints(),
+            'label' => static::LABEL_NAME,
+            'constraints' => array_merge(
+                $this->getFieldDefaultConstraints(),
+                [
+                    new Length(['max' => 255]),
+                ]
+            ),
         ]);
 
         return $this;
@@ -88,12 +92,14 @@ class ContentForm extends AbstractType
      */
     protected function addDescriptionField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_DESCRIPTION, TextType::class, [
-            'attr' => [
-                'placeholder' => static::PLACEHOLDER_DESCRIPTION,
-            ],
-            'label' => false,
-            'constraints' => $this->getFieldDefaultConstraints(),
+        $builder->add(static::FIELD_DESCRIPTION, TextareaType::class, [
+            'label' => static::LABEL_DESCRIPTION,
+            'constraints' => array_merge(
+                $this->getFieldDefaultConstraints(),
+                [
+                    new Length(['max' => 1024]),
+                ]
+            ),
         ]);
 
         return $this;
@@ -154,10 +160,9 @@ class ContentForm extends AbstractType
     protected function getFieldDefaultConstraints(): array
     {
         return [
-            new NotBlank(),
-            new Required(),
-            new Length(['max' => 255]),
-        ];
+                new NotBlank(),
+                new Required(),
+            ];
     }
 
     /**

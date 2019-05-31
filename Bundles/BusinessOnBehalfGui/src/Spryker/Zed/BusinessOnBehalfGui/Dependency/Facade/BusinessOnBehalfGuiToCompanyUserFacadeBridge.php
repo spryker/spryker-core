@@ -65,4 +65,14 @@ class BusinessOnBehalfGuiToCompanyUserFacadeBridge implements BusinessOnBehalfGu
     {
         return $this->companyUserFacade->create($companyUserTransfer);
     }
+
+    /**
+     * @param int $idCompanyUser
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
+     */
+    public function findCompanyUserById(int $idCompanyUser): ?CompanyUserTransfer
+    {
+        return $this->companyUserFacade->findCompanyUserById($idCompanyUser);
+    }
 }

@@ -255,6 +255,7 @@ class AttributeLoader implements AttributeLoaderInterface
                 $productConcreteTransfer->getIdProductConcrete()
             ));
         }
+
         return $productEntity;
     }
 }

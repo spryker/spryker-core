@@ -183,7 +183,7 @@ $command</command>";
     }
 
     /**
-     * @return bool|array
+     * @return string[]|false
      */
     protected function getRoles()
     {
@@ -197,11 +197,11 @@ $command</command>";
         ];
 
         $options = getopt($shortopts, $longopts);
-        if (array_key_exists('role', $options)) {
-            return explode(',', $options['role']);
-        } else {
+        if (!array_key_exists('role', $options)) {
             return false;
         }
+
+        return explode(',', $options['role']);
     }
 
     /**

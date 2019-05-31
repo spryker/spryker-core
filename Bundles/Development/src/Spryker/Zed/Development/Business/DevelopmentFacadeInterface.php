@@ -180,7 +180,7 @@ interface DevelopmentFacadeInterface
     /**
      * @api
      *
-     * @return bool
+     * @return array
      */
     public function getAdjacencyMatrixData();
 

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ShoppingListProductOptionConnector\Business;
 
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ProductOptionGroupTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -81,5 +82,21 @@ class ShoppingListProductOptionConnectorFacade extends AbstractFacade implements
         return $this->getFactory()
             ->createCartItemToShoppingListItemMapper()
             ->map($itemTransfer, $shoppingListItemTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductOptionGroupTransfer $productOptionGroupTransfer
+     *
+     * @return void
+     */
+    public function deleteShoppingListItemProductOptionsByRemovedProductOptionValues(ProductOptionGroupTransfer $productOptionGroupTransfer): void
+    {
+        $this->getFactory()
+            ->createProductOptionValuesRemover()
+            ->deleteShoppingListItemProductOptionsByRemovedProductOptionValues($productOptionGroupTransfer);
     }
 }

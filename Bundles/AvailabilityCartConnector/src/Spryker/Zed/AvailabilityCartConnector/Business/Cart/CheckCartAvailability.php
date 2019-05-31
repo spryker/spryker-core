@@ -121,6 +121,7 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
         if ($stock <= 0) {
             $translationKey = static::CART_PRE_CHECK_AVAILABILITY_EMPTY;
         }
+
         return $translationKey;
     }
 
@@ -171,6 +172,7 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
         if ($storeTransfer) {
             $this->availabilityFacade->calculateStockForProductWithStore($itemTransfer->getSku(), $storeTransfer);
         }
+
         return $this->availabilityFacade->calculateStockForProduct($itemTransfer->getSku());
     }
 }

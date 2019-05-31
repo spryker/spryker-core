@@ -56,6 +56,7 @@ class TotalQuantityDecisionRule implements DecisionRuleInterface
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             $totalQuantity += $itemTransfer->getQuantity();
         }
+
         return $totalQuantity;
     }
 }

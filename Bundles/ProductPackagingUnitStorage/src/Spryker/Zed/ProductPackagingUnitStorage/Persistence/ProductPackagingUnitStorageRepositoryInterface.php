@@ -7,12 +7,14 @@
 
 namespace Spryker\Zed\ProductPackagingUnitStorage\Persistence;
 
+use Generated\Shared\Transfer\FilterTransfer;
+
 interface ProductPackagingUnitStorageRepositoryInterface
 {
     /**
      * @param int[] $productAbstractIds
      *
-     * @return \Orm\Zed\ProductPackagingUnitStorage\Persistence\SpyProductAbstractPackagingStorage[]
+     * @return \Generated\Shared\Transfer\SpyProductAbstractPackagingStorageEntityTransfer[]
      */
     public function findProductAbstractPackagingStorageEntitiesByProductAbstractIds(array $productAbstractIds): array;
 
@@ -24,7 +26,7 @@ interface ProductPackagingUnitStorageRepositoryInterface
     public function findPackagingProductsByProductAbstractId(int $idProductAbstract): array;
 
     /**
-     * @return \Orm\Zed\ProductPackagingUnitStorage\Persistence\SpyProductAbstractPackagingStorage[]
+     * @return \Generated\Shared\Transfer\SpyProductAbstractPackagingStorageEntityTransfer[]
      */
     public function findAllProductAbstractPackagingStorageEntities(): array;
 
@@ -32,4 +34,12 @@ interface ProductPackagingUnitStorageRepositoryInterface
      * @return int[]
      */
     public function findProductAbstractIdsWithProductPackagingUnit(): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $productAbstractIds
+     *
+     * @return \Generated\Shared\Transfer\SpyProductAbstractPackagingStorageEntityTransfer[]
+     */
+    public function findFilteredProductAbstractPackagingUnitStorages(FilterTransfer $filterTransfer, array $productAbstractIds = []): array;
 }

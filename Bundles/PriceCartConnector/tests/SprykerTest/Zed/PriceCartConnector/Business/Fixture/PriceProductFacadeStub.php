@@ -45,6 +45,7 @@ class PriceProductFacadeStub extends PriceProductFacade
         if (!isset($this->prices[$priceFilterTransfer->getSku()])) {
             return null;
         }
+
         return $this->prices[$priceFilterTransfer->getSku()];
     }
 
