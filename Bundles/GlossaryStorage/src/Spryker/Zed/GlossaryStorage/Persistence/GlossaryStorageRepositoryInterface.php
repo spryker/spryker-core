@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\GlossaryStorage\Persistence;
 
+use Generated\Shared\Transfer\FilterTransfer;
+
 interface GlossaryStorageRepositoryInterface
 {
     /**
@@ -15,4 +17,12 @@ interface GlossaryStorageRepositoryInterface
      * @return \Generated\Shared\Transfer\SpyGlossaryStorageEntityTransfer[]
      */
     public function findGlossaryStorageEntityTransfer(array $glossaryKeyIds): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param array $ids
+     *
+     * @return \Generated\Shared\Transfer\SpyGlossaryStorageEntityTransfer[]
+     */
+    public function findFilteredGlossaryStorageEntities(FilterTransfer $filterTransfer, array $ids);
 }

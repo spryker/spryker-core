@@ -14,9 +14,9 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \Spryker\Zed\GlossaryStorage\GlossaryStorageConfig getConfig()
- * @method \Spryker\Zed\GlossaryStorage\Persistence\GlossaryStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\GlossaryStorage\Persistence\GlossaryStorageEntityManagerInterface getEntityManager()
  * @method \Spryker\Zed\GlossaryStorage\Persistence\GlossaryStorageRepositoryInterface getRepository()
+ * @method \Spryker\Zed\GlossaryStorage\Persistence\GlossaryStorageQueryContainerInterface getQueryContainer()
  */
 class GlossaryStoragePersistenceFactory extends AbstractPersistenceFactory
 {
@@ -29,6 +29,9 @@ class GlossaryStoragePersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
+     * @deprecated This will be removed without replacement, please check
+     * `\Spryker\Zed\GlossaryStorage\Dependency\Facade\GlossaryStorageToGlossaryFacadeInterface::findGlossaryTranslationEntityTransfer()`.
+     *
      * @return \Spryker\Zed\GlossaryStorage\Dependency\QueryContainer\GlossaryStorageToGlossaryQueryContainerInterface
      */
     public function getGlossaryQueryContainer()

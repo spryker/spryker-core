@@ -123,7 +123,7 @@ class GlossaryTranslationStorageWriter implements GlossaryTranslationStorageWrit
         $mappedGlossaryStorageEntityTransfers = $this->mapGlossaryStorageEntityTransferByGlossaryIdAndLocale($glossaryStorageEntityTransfers);
 
         [$glossaryStorageInactiveEntityTransfer, $glossaryTranslationEntityTransfers] = $this
-            ->filterInactiveAndEmptyLocalizedStorageEntities(
+            ->filterInactiveAndEmptyLocalizedStorageEntityTransfers(
                 $glossaryTranslationEntityTransfers,
                 $mappedGlossaryStorageEntityTransfers
             );
@@ -142,7 +142,7 @@ class GlossaryTranslationStorageWriter implements GlossaryTranslationStorageWrit
      *
      * @return array
      */
-    protected function filterInactiveAndEmptyLocalizedStorageEntities(array $glossaryTranslationEntityTransfers, array $mappedGlossaryStorageEntityTransfers): array
+    protected function filterInactiveAndEmptyLocalizedStorageEntityTransfers(array $glossaryTranslationEntityTransfers, array $mappedGlossaryStorageEntityTransfers): array
     {
         $glossaryStorageEntityTransfers = [];
         foreach ($glossaryTranslationEntityTransfers as $id => $glossaryTranslationEntityTransfer) {
