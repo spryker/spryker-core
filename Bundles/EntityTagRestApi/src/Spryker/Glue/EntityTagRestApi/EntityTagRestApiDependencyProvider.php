@@ -8,13 +8,14 @@
 namespace Spryker\Glue\EntityTagRestApi;
 
 use Spryker\Glue\EntityTagRestApi\Dependency\Client\EntityTagRestApiToEntityTagClientBridge;
-use Spryker\Glue\EntityTagRestApi\Dependency\Client\EntityTagRestApiToStorageClientBridge;
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
 
+/**
+ * @method \Spryker\Glue\EntityTagRestApi\EntityTagRestApiConfig getConfig()
+ */
 class EntityTagRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const CLIENT_STORAGE = 'CLIENT_STORAGE';
     public const CLIENT_ENTITY_TAG = 'CLIENT_ENTITY_TAG';
 
     /**
@@ -25,24 +26,7 @@ class EntityTagRestApiDependencyProvider extends AbstractBundleDependencyProvide
     public function provideDependencies(Container $container): Container
     {
         $container = parent::provideDependencies($container);
-        $container = $this->addStorageClient($container);
         $container = $this->addEntityTagClient($container);
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Glue\Kernel\Container $container
-     *
-     * @return \Spryker\Glue\Kernel\Container
-     */
-    protected function addStorageClient(Container $container): Container
-    {
-        $container[static::CLIENT_STORAGE] = function (Container $container) {
-            return new EntityTagRestApiToStorageClientBridge(
-                $container->getLocator()->storage()->client()
-            );
-        };
 
         return $container;
     }

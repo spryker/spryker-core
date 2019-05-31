@@ -7,10 +7,10 @@
 
 namespace Spryker\Client\EntityTag;
 
+use Spryker\Client\EntityTag\Dependency\Client\EntityTagToStorageClientBridge;
 use Spryker\Client\EntityTag\Dependency\Service\EntityTagToUtilEncodingServiceBridge;
 use Spryker\Client\EntityTag\Dependency\Service\EntityTagToUtilTextServiceBridge;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
-use Spryker\Client\EntityTag\Dependency\Client\EntityTagToStorageClientBridge;
 use Spryker\Client\Kernel\Container;
 
 class EntityTagDependencyProvider extends AbstractDependencyProvider

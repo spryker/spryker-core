@@ -7,7 +7,6 @@
 
 namespace Spryker\Glue\EntityTagRestApi\Dependency\Client;
 
-
 interface EntityTagRestApiToEntityTagClientInterface
 {
     /**
@@ -26,12 +25,4 @@ interface EntityTagRestApiToEntityTagClientInterface
      * @return string|null
      */
     public function read(string $resourceName, string $resourceId): ?string;
-
-    /**
-     * @param string $resourceName
-     * @param string $resourceId
-     *
-     * @return string
-     */
-    public function generateKey(string $resourceName, string $resourceId): string;
 }

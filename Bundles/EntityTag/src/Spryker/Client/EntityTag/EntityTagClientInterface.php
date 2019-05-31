@@ -10,14 +10,11 @@ namespace Spryker\Client\EntityTag;
 interface EntityTagClientInterface
 {
     /**
-     * @param string $resourceName
-     * @param string $resourceId
+     * Specification:
+     * - Reads from key-value storage.
      *
-     * @return string
-     */
-    public function generateKey(string $resourceName, string $resourceId): string;
-
-    /**
+     * @api
+     *
      * @param string $resourceName
      * @param string $resourceId
      *
@@ -26,6 +23,13 @@ interface EntityTagClientInterface
     public function read(string $resourceName, string $resourceId): ?string;
 
     /**
+     * Specification:
+     * - Converts $resourceAttributes array to string.
+     * - Generate hash for $resourceAttributes.
+     * - Writes to key-value storage.
+     *
+     * @api
+     *
      * @param string $resourceName
      * @param string $resourceId
      * @param array $resourceAttributes

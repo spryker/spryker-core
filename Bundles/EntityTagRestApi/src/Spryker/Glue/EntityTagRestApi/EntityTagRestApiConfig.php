@@ -7,7 +7,6 @@
 
 namespace Spryker\Glue\EntityTagRestApi;
 
-use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\Kernel\AbstractBundleConfig;
 
 class EntityTagRestApiConfig extends AbstractBundleConfig
@@ -17,10 +16,8 @@ class EntityTagRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_CODE_PRECONDITION_REQUIRED = '005';
     public const RESPONSE_CODE_PRECONDITION_FAILED = '006';
 
-
     public const RESPONSE_DETAIL_PRECONDITION_REQUIRED = 'Precondition required';
     public const RESPONSE_DETAIL_PRECONDITION_FAILED = 'Precondition failed';
-
 
     /**
      * @return string[]

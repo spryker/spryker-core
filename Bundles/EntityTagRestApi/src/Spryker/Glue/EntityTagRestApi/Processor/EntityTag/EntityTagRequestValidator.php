@@ -67,7 +67,7 @@ class EntityTagRequestValidator implements EntityTagRequestValidatorInterface
             $restRequest->getResource()->getId()
         );
 
-        if ($entityTag !== $httpRequest->headers->get(static::HEADER_IF_MATCH)) {
+        if ($entityTag === null || $entityTag !== $httpRequest->headers->get(static::HEADER_IF_MATCH)) {
             return $restErrorCollectionTransfer->addRestError(
                 $this->createPreconditionFailedError()
             );

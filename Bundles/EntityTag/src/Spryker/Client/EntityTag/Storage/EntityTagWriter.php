@@ -11,7 +11,6 @@ use Spryker\Client\EntityTag\Dependency\Client\EntityTagToStorageClientInterface
 use Spryker\Client\EntityTag\Dependency\Service\EntityTagToUtilEncodingServiceInterface;
 use Spryker\Client\EntityTag\Dependency\Service\EntityTagToUtilTextServiceInterface;
 use Spryker\Service\UtilText\Model\Hash;
-use Spryker\Service\UtilText\UtilTextService;
 
 class EntityTagWriter implements EntityTagWriterInterface
 {
@@ -46,8 +45,7 @@ class EntityTagWriter implements EntityTagWriterInterface
         EntityTagToStorageClientInterface $storageClient,
         EntityTagToUtilTextServiceInterface $utilTextService,
         EntityTagToUtilEncodingServiceInterface $utilEncodingService
-    )
-    {
+    ) {
         $this->entityTagKeyGenerator = $entityTagKeyGenerator;
         $this->storageClient = $storageClient;
         $this->utilTextService = $utilTextService;

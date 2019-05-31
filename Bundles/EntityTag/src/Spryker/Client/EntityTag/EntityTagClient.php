@@ -15,17 +15,10 @@ use Spryker\Client\Kernel\AbstractClient;
 class EntityTagClient extends AbstractClient implements EntityTagClientInterface
 {
     /**
-     * @param string $resourceName
-     * @param string $resourceId
+     * {@inheritdoc}
      *
-     * @return string
-     */
-    public function generateKey(string $resourceName, string $resourceId): string
-    {
-        return $this->getFactory()->createEntityTagKeyGenerator()->generate($resourceName, $resourceId);
-    }
-
-    /**
+     * @api
+     *
      * @param string $resourceName
      * @param string $resourceId
      *
@@ -37,6 +30,10 @@ class EntityTagClient extends AbstractClient implements EntityTagClientInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param string $resourceName
      * @param string $resourceId
      * @param array $resourceAttributes
