@@ -110,25 +110,11 @@ class EditController extends AddController
             'productFormEditTabs' => $this->getFactory()->createProductFormEditTabs()->createView(),
         ];
 
-        $viewData = $this->expandEditAbstractProductViewData($viewData);
+        $viewData = $this->getFactory()
+            ->createAbstractProductEditViewExpanderPluginExecutor()
+            ->expandEditAbstractProductViewData($viewData);
 
         return $this->viewResponse($viewData);
-    }
-
-    /**
-     * @param array $viewData
-     *
-     * @return array
-     */
-    protected function expandEditAbstractProductViewData(array $viewData): array
-    {
-        $viewExpanderPlugins = $this->getFactory()
-            ->getAbstractProductEditViewExpanderPlugins();
-        foreach ($viewExpanderPlugins as $viewExpanderPlugin) {
-            $viewData = $viewExpanderPlugin->expand($viewData);
-        }
-
-        return $viewData;
     }
 
     /**
@@ -223,26 +209,11 @@ class EditController extends AddController
             'type' => $type,
         ];
 
-        $viewData = $this->expandEditVariantViewData($viewData);
+        $viewData = $this->getFactory()
+            ->createProductConcreteEditViewExpanderPluginExecutor()
+            ->expandEditVariantViewData($viewData);
 
         return $this->viewResponse($viewData);
-    }
-
-    /**
-     * @param array $viewData
-     *
-     * @return array
-     */
-    protected function expandEditVariantViewData(array $viewData): array
-    {
-        $viewExpanderPlugins = $this->getFactory()
-            ->getProductConcreteEditViewExpanderPlugins();
-
-        foreach ($viewExpanderPlugins as $viewExpanderPlugin) {
-            $viewData = $viewExpanderPlugin->expand($viewData);
-        }
-
-        return $viewData;
     }
 
     /**

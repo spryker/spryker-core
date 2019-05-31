@@ -25,6 +25,10 @@ use Spryker\Zed\ProductManagement\Communication\Helper\ProductConcreteSuperAttri
 use Spryker\Zed\ProductManagement\Communication\Helper\ProductStockHelper;
 use Spryker\Zed\ProductManagement\Communication\Helper\ProductTypeHelper;
 use Spryker\Zed\ProductManagement\Communication\Helper\ProductValidity\ProductValidityActivityMessenger;
+use Spryker\Zed\ProductManagement\Communication\PluginExecutor\AbstractProductEditEditViewExpanderPluginExecutor;
+use Spryker\Zed\ProductManagement\Communication\PluginExecutor\AbstractProductEditViewExpanderPluginExecutorInterface;
+use Spryker\Zed\ProductManagement\Communication\PluginExecutor\ProductConcreteEditEditViewExpanderPluginExecutor;
+use Spryker\Zed\ProductManagement\Communication\PluginExecutor\ProductConcreteEditViewExpanderPluginExecutorInterface;
 use Spryker\Zed\ProductManagement\Communication\Table\BundledProductTable;
 use Spryker\Zed\ProductManagement\Communication\Table\ProductGroupTable;
 use Spryker\Zed\ProductManagement\Communication\Table\ProductTable;
@@ -637,6 +641,26 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     public function getProductCategoryFacade(): ProductManagementToProductCategoryInterface
     {
         return $this->getProvidedDependency(ProductManagementDependencyProvider::FACADE_PRODUCT_CATEGORY);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductManagement\Communication\PluginExecutor\AbstractProductEditViewExpanderPluginExecutorInterface
+     */
+    public function createAbstractProductEditViewExpanderPluginExecutor(): AbstractProductEditViewExpanderPluginExecutorInterface
+    {
+        return new AbstractProductEditEditViewExpanderPluginExecutor(
+            $this->getAbstractProductEditViewExpanderPlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductManagement\Communication\PluginExecutor\ProductConcreteEditViewExpanderPluginExecutorInterface
+     */
+    public function createProductConcreteEditViewExpanderPluginExecutor(): ProductConcreteEditViewExpanderPluginExecutorInterface
+    {
+        return new ProductConcreteEditEditViewExpanderPluginExecutor(
+            $this->getProductConcreteEditViewExpanderPlugins()
+        );
     }
 
     /**
