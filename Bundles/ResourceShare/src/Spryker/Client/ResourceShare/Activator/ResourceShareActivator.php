@@ -20,19 +20,19 @@ class ResourceShareActivator implements ResourceShareActivatorInterface
     protected $zedResourceShareStub;
 
     /**
-     * @var \Spryker\Client\ResourceShareExtension\Dependency\Plugin\ResourceShareActivatorStrategyPluginInterface[]
+     * @var \Spryker\Client\ResourceShareExtension\Dependency\Plugin\ResourceShareClientActivatorStrategyPluginInterface[]
      */
     protected $beforeZedResourceShareActivatorStrategyPlugins;
 
     /**
-     * @var array|\Spryker\Client\ResourceShareExtension\Dependency\Plugin\ResourceShareActivatorStrategyPluginInterface[]
+     * @var array|\Spryker\Client\ResourceShareExtension\Dependency\Plugin\ResourceShareClientActivatorStrategyPluginInterface[]
      */
     protected $afterZedResourceShareActivatorStrategyPlugins;
 
     /**
      * @param \Spryker\Client\ResourceShare\Zed\ResourceShareStubInterface $zedResourceShareStub
-     * @param \Spryker\Client\ResourceShareExtension\Dependency\Plugin\ResourceShareActivatorStrategyPluginInterface[] $beforeZedResourceShareActivatorStrategyPlugins
-     * @param \Spryker\Client\ResourceShareExtension\Dependency\Plugin\ResourceShareActivatorStrategyPluginInterface[] $afterZedResourceShareActivatorStrategyPlugins
+     * @param \Spryker\Client\ResourceShareExtension\Dependency\Plugin\ResourceShareClientActivatorStrategyPluginInterface[] $beforeZedResourceShareActivatorStrategyPlugins
+     * @param \Spryker\Client\ResourceShareExtension\Dependency\Plugin\ResourceShareClientActivatorStrategyPluginInterface[] $afterZedResourceShareActivatorStrategyPlugins
      */
     public function __construct(
         ResourceShareStubInterface $zedResourceShareStub,

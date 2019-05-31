@@ -18,13 +18,13 @@ class ResourceShareActivator implements ResourceShareActivatorInterface
     protected $resourceShareReader;
 
     /**
-     * @var \Spryker\Zed\ResourceShareExtension\Dependency\Plugin\ResourceShareActivatorStrategyPluginInterface[]
+     * @var \Spryker\Zed\ResourceShareExtension\Dependency\Plugin\ResourceShareZedActivatorStrategyPluginInterface[]
      */
     protected $resourceShareActivatorStrategyPlugins;
 
     /**
      * @param \Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareReaderInterface $resourceShareReader
-     * @param \Spryker\Zed\ResourceShareExtension\Dependency\Plugin\ResourceShareActivatorStrategyPluginInterface[] $resourceShareActivatorStrategyPlugins
+     * @param \Spryker\Zed\ResourceShareExtension\Dependency\Plugin\ResourceShareZedActivatorStrategyPluginInterface[] $resourceShareActivatorStrategyPlugins
      */
     public function __construct(
         ResourceShareReaderInterface $resourceShareReader,
@@ -56,7 +56,8 @@ class ResourceShareActivator implements ResourceShareActivatorInterface
         ResourceShareRequestTransfer $resourceShareRequestTransfer
     ): ResourceShareResponseTransfer {
         $resourceShareResponseTransfer = (new ResourceShareResponseTransfer())
-            ->setIsSuccessful(true);
+            ->setIsSuccessful(true)
+            ->setResourceShare($resourceShareRequestTransfer->getResourceShare());
 
         foreach ($this->resourceShareActivatorStrategyPlugins as $resourceShareActivatorStrategyPlugin) {
             if (!$resourceShareActivatorStrategyPlugin->isApplicable($resourceShareRequestTransfer)) {

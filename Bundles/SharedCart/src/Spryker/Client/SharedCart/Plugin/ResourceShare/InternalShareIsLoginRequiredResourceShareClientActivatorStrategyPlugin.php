@@ -11,14 +11,13 @@ use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
-use Spryker\Client\ResourceShareExtension\Dependency\Plugin\ResourceShareActivatorStrategyPluginInterface;
-use Spryker\Shared\SharedCart\SharedCartConfig as SharedCartSharedConfig;
+use Spryker\Client\ResourceShareExtension\Dependency\Plugin\ResourceShareClientActivatorStrategyPluginInterface;
 
 /**
  * @method \Spryker\Client\SharedCart\SharedCartClient getClient()
  * @method \Spryker\Client\SharedCart\SharedCartFactory getFactory()
  */
-class InternalShareIsLoginRequiredResourceShareActivatorStrategyPlugin extends AbstractPlugin implements ResourceShareActivatorStrategyPluginInterface
+class InternalShareIsLoginRequiredResourceShareClientActivatorStrategyPlugin extends AbstractPlugin implements ResourceShareClientActivatorStrategyPluginInterface
 {
     /**
      * {@inheritdoc}

@@ -16,8 +16,8 @@ use Generated\Shared\Transfer\ResourceShareResponseTransfer;
 use Generated\Shared\Transfer\ResourceShareTransfer;
 use Orm\Zed\ResourceShare\Persistence\SpyResourceShare;
 use Spryker\Zed\ResourceShare\ResourceShareDependencyProvider;
-use Spryker\Zed\ResourceShareExtension\Dependency\Plugin\ResourceShareActivatorStrategyPluginInterface;
 use Spryker\Zed\ResourceShareExtension\Dependency\Plugin\ResourceShareResourceDataExpanderStrategyPluginInterface;
+use Spryker\Zed\ResourceShareExtension\Dependency\Plugin\ResourceShareZedActivatorStrategyPluginInterface;
 
 /**
  * Auto-generated group annotations
@@ -361,12 +361,12 @@ class ResourceShareFacadeTest extends Test
     }
 
     /**
-     * @param \Spryker\Zed\ResourceShareExtension\Dependency\Plugin\ResourceShareActivatorStrategyPluginInterface $resourceShareActivatorStrategyPlugin
+     * @param \Spryker\Zed\ResourceShareExtension\Dependency\Plugin\ResourceShareZedActivatorStrategyPluginInterface $resourceShareActivatorStrategyPlugin
      *
      * @return void
      */
     protected function registerResourceShareActivatorStrategyPlugin(
-        ResourceShareActivatorStrategyPluginInterface $resourceShareActivatorStrategyPlugin
+        ResourceShareZedActivatorStrategyPluginInterface $resourceShareActivatorStrategyPlugin
     ): void {
         $this->tester->setDependency(ResourceShareDependencyProvider::PLUGINS_RESOURCE_SHARE_ACTIVATOR_STRATEGY, [
             $resourceShareActivatorStrategyPlugin,
@@ -396,11 +396,11 @@ class ResourceShareFacadeTest extends Test
     }
 
     /**
-     * @return \Spryker\Zed\ResourceShareExtension\Dependency\Plugin\ResourceShareActivatorStrategyPluginInterface|\PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Zed\ResourceShareExtension\Dependency\Plugin\ResourceShareZedActivatorStrategyPluginInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     protected function createResourceShareActivatorStrategyPluginMock()
     {
-        return $this->createMock(ResourceShareActivatorStrategyPluginInterface::class);
+        return $this->createMock(ResourceShareZedActivatorStrategyPluginInterface::class);
     }
 
     /**

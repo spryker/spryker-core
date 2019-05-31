@@ -29,11 +29,10 @@ interface ResourceShareFacadeInterface
 
     /**
      * Specification:
-     * - Returns with "isSuccess=false" and error message if resource is not found by provided uuid.
-     * - Returns with "isLoginRequired=true" when strategy expects logged in customer.
-     * - Returns with "isSuccess=true" on success or with error messages otherwise.
-     * - Applies corresponding activator strategy using `ResourceShareActivatorStrategyPluginInterface` stack.
-     * - Applies corresponding data expander strategy using `ResourceShareResourceDataExpanderStrategyPluginInterface` stack.
+     * - Returns with "isSuccess=true" on success with success messages.
+     * - Returns with "isSuccess=false" and error messages if there was an activation error.
+     * - Applies corresponding activator strategy using `ResourceShareZedActivatorStrategyPluginInterface` plugin stack.
+     * - Applies corresponding data expander strategy using `ResourceShareResourceDataExpanderStrategyPluginInterface` plugin stack.
      *
      * @api
      *
