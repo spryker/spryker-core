@@ -17,6 +17,8 @@ use Spryker\Shared\SharedCart\SharedCartConfig as SharedSharedCartConfig;
  */
 class ReadOnlyCartShareOptionPlugin extends AbstractPlugin implements CartShareOptionPluginInterface
 {
+    protected const SHARE_OPTION_GROUP_INTERNAL = 'internal';
+
     /**
      * {@inheritdoc}
      *
@@ -60,6 +62,6 @@ class ReadOnlyCartShareOptionPlugin extends AbstractPlugin implements CartShareO
      */
     public function getShareOptionGroup(): string
     {
-        return SharedSharedCartConfig::SHARE_OPTION_GROUP_INTERNAL;
+        return static::SHARE_OPTION_GROUP_INTERNAL;
     }
 }

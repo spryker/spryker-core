@@ -18,6 +18,10 @@ use Spryker\Client\ResourceShareExtension\Dependency\Plugin\ResourceShareClientA
  */
 class SwitchDefaultCartResourceShareClientActivatorStrategyPlugin extends AbstractPlugin implements ResourceShareClientActivatorStrategyPluginInterface
 {
+    protected const RESOURCE_TYPE_QUOTE = 'quote';
+    protected const PERMISSION_GROUP_READ_ONLY = 'READ_ONLY';
+    protected const PERMISSION_GROUP_FULL_ACCESS = 'FULL_ACCESS';
+
     /**
      * {@inheritdoc}
      * - Switches default cart for provided Quote and company user.
@@ -70,13 +74,13 @@ class SwitchDefaultCartResourceShareClientActivatorStrategyPlugin extends Abstra
 
         $resourceShareTransfer = $resourceShareRequestTransfer->getResourceShare();
         $resourceShareTransfer->requireResourceType();
-        if ($resourceShareTransfer->getResourceType() !== SharedCartConfig::RESOURCE_TYPE_QUOTE) {
+        if ($resourceShareTransfer->getResourceType() !== static::RESOURCE_TYPE_QUOTE) {
             return false;
         }
 
         $resourceShareTransfer->requireResourceShareData();
         $resourceShareDataTransfer = $resourceShareTransfer->getResourceShareData();
 
-        return in_array($resourceShareDataTransfer->getShareOption(), [SharedCartConfig::PERMISSION_GROUP_READ_ONLY, SharedCartConfig::PERMISSION_GROUP_FULL_ACCESS], true);
+        return in_array($resourceShareDataTransfer->getShareOption(), [static::PERMISSION_GROUP_READ_ONLY, static::PERMISSION_GROUP_FULL_ACCESS], true);
     }
 }
