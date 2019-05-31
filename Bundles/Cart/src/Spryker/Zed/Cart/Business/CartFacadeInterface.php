@@ -68,14 +68,14 @@ interface CartFacadeInterface
      *
      * Specification:
      *  - Does nothing if cart is locked.
-     *  - Run cart pre check plugins
-     *  - For each new item run the item expander plugins (requires a SKU for each new item)
-     *  - Add new item(s) to quote (requires, but not limited, a quantity > 0 for each new item)
-     *  - Group items in quote (-> ItemGrouper)
-     *  - Recalculate quote (-> Calculation)
-     *  - Add success message to messenger (-> Messenger)
-     *  - Return QuoteResponse with updated quote if quote is not locked.
-     *  - Adds messenger error message and returns QuoteResponse with unchanged QuoteTransfer and errors.
+     *  - Runs cart pre check plugins.
+     *  - For each new item runs the item expander plugins (requires a SKU for each new item).
+     *  - Adds new item(s) to quote (requires, but not limited, a quantity > 0 for each new item).
+     *  - Groups items in quote (-> ItemGrouper).
+     *  - Recalculates quote (-> Calculation).
+     *  - Adds success message to messenger (-> Messenger).
+     *  - Returns QuoteResponse with updated quote if quote is not locked.
+     *  - In case of error adds messenger error message and returns QuoteResponse with unchanged QuoteTransfer and errors.
      *
      * @api
      *

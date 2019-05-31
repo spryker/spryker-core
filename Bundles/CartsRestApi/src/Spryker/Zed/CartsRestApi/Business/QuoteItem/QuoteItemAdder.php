@@ -91,12 +91,12 @@ class QuoteItemAdder implements QuoteItemAdderInterface
                     ->setErrorIdentifier(CartsRestApiSharedConfig::ERROR_IDENTIFIER_UNAUTHORIZED_CART_ACTION));
         }
 
-        $persistentCartChangeTransfer = $this->createCartChangeTransfer(
+        $cartChangeTransfer = $this->createCartChangeTransfer(
             $quoteResponseTransfer->getQuoteTransfer(),
             $restCartItemsAttributesTransfer
         );
 
-        $quoteResponseTransfer = $this->cartFacade->addToQuote($persistentCartChangeTransfer);
+        $quoteResponseTransfer = $this->cartFacade->addToQuote($cartChangeTransfer);
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             $quoteResponseTransfer
                 ->addError((new QuoteErrorTransfer())

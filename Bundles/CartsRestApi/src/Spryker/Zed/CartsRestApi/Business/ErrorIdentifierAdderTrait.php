@@ -20,15 +20,15 @@ trait ErrorIdentifierAdderTrait
     protected function addErrorIdentifiersToQuoteResponseErrors(
         QuoteResponseTransfer $quoteResponseTransfer
     ): QuoteResponseTransfer {
-        $quoteErrors = $quoteResponseTransfer->getErrors();
-        if (!$quoteErrors->count()) {
+        $quoteErrorTransfers = $quoteResponseTransfer->getErrors();
+        if (!$quoteErrorTransfers->count()) {
             return $quoteResponseTransfer;
         }
 
-        foreach ($quoteErrors as $quoteError) {
-            $errorIdentifier = CartsRestApiConfig::getErrorToErrorIdentifierMapping()[$quoteError->getMessage()];
-            if ($quoteError->getMessage() && $errorIdentifier) {
-                $quoteError->setErrorIdentifier($errorIdentifier);
+        foreach ($quoteErrorTransfers as $quoteErrorTransfer) {
+            $errorIdentifier = CartsRestApiConfig::getErrorToErrorIdentifierMapping()[$quoteErrorTransfer->getMessage()];
+            if ($quoteErrorTransfer->getMessage() && $errorIdentifier) {
+                $quoteErrorTransfer->setErrorIdentifier($errorIdentifier);
             }
         }
 

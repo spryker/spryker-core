@@ -43,11 +43,11 @@ class CartsRestApiConfig extends AbstractBundleConfig
     public static function getErrorToErrorIdentifierMapping(): array
     {
         return [
-            self::MESSAGE_STORE_DATA_IS_MISSING => CartsRestApiSharedConfig::ERROR_IDENTIFIER_STORE_DATA_IS_MISSING,
-            self::MESSAGE_CURRENCY_DATA_IS_MISSING => CartsRestApiSharedConfig::ERROR_IDENTIFIER_CURRENCY_DATA_IS_MISSING,
-            self::MESSAGE_CURRENCY_DATA_IS_INCORRECT => CartsRestApiSharedConfig::ERROR_IDENTIFIER_CURRENCY_DATA_IS_INCORRECT,
-            self::MESSAGE_PRICE_MODE_DATA_IS_MISSING => CartsRestApiSharedConfig::ERROR_IDENTIFIER_PRICE_MODE_DATA_IS_MISSING,
-            self::MESSAGE_PRICE_MODE_DATA_IS_INCORRECT => CartsRestApiSharedConfig::ERROR_IDENTIFIER_PRICE_MODE_DATA_IS_INCORRECT,
+            static::MESSAGE_STORE_DATA_IS_MISSING => CartsRestApiSharedConfig::ERROR_IDENTIFIER_STORE_DATA_IS_MISSING,
+            static::MESSAGE_CURRENCY_DATA_IS_MISSING => CartsRestApiSharedConfig::ERROR_IDENTIFIER_CURRENCY_DATA_IS_MISSING,
+            static::MESSAGE_CURRENCY_DATA_IS_INCORRECT => CartsRestApiSharedConfig::ERROR_IDENTIFIER_CURRENCY_DATA_IS_INCORRECT,
+            static::MESSAGE_PRICE_MODE_DATA_IS_MISSING => CartsRestApiSharedConfig::ERROR_IDENTIFIER_PRICE_MODE_DATA_IS_MISSING,
+            static::MESSAGE_PRICE_MODE_DATA_IS_INCORRECT => CartsRestApiSharedConfig::ERROR_IDENTIFIER_PRICE_MODE_DATA_IS_INCORRECT,
         ];
     }
 }
