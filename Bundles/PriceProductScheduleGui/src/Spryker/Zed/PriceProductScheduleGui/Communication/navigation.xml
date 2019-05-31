@@ -22,6 +22,15 @@
                         <icon>fa-angle-double-right</icon>
                         <visible>0</visible>
                     </price-product-schedule-dry-run-import>
+                    <price-product-schedule-publish>
+                        <label>Import</label>
+                        <title>Import</title>
+                        <bundle>price-product-schedule-gui</bundle>
+                        <controller>publish</controller>
+                        <action>index</action>
+                        <icon>fa-angle-double-right</icon>
+                        <visible>0</visible>
+                    </price-product-schedule-publish>
                 </pages>
             </price-product-schedule>
         </pages>

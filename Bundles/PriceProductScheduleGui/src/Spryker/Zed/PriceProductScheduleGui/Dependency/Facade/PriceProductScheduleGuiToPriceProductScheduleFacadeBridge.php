@@ -50,4 +50,26 @@ class PriceProductScheduleGuiToPriceProductScheduleFacadeBridge implements Price
     ): PriceProductScheduleListResponseTransfer {
         return $this->priceProductScheduleFacade->createPriceProductScheduleList($priceProductScheduleListTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductScheduleListTransfer $priceProductScheduleListTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleListResponseTransfer
+     */
+    public function updatePriceProductScheduleList(
+        PriceProductScheduleListTransfer $priceProductScheduleListTransfer
+    ): PriceProductScheduleListResponseTransfer {
+        return $this->priceProductScheduleFacade->updatePriceProductScheduleList($priceProductScheduleListTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductScheduleListTransfer $priceProductScheduleListTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleListResponseTransfer
+     */
+    public function findPriceProductScheduleList(
+        PriceProductScheduleListTransfer $priceProductScheduleListTransfer
+    ): PriceProductScheduleListResponseTransfer {
+        return $this->priceProductScheduleFacade->findPriceProductScheduleList($priceProductScheduleListTransfer);
+    }
 }

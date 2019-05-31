@@ -39,13 +39,13 @@ class ImportSuccessListTable extends AbstractTable
     protected $priceProductScheduleGuiConfig;
 
     /**
-     * @param \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery $priceProductScheduleQuery
      * @param \Generated\Shared\Transfer\PriceProductScheduleListTransfer $priceProductScheduleListTransfer
+     * @param \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery $priceProductScheduleQuery
      * @param \Spryker\Zed\PriceProductScheduleGui\PriceProductScheduleGuiConfig $priceProductScheduleGuiConfig
      */
     public function __construct(
-        SpyPriceProductScheduleQuery $priceProductScheduleQuery,
         PriceProductScheduleListTransfer $priceProductScheduleListTransfer,
+        SpyPriceProductScheduleQuery $priceProductScheduleQuery,
         PriceProductScheduleGuiConfig $priceProductScheduleGuiConfig
     ) {
         $this->priceProductScheduleQuery = $priceProductScheduleQuery;
@@ -106,7 +106,7 @@ class ImportSuccessListTable extends AbstractTable
      *
      * @return array
      */
-    protected function mapPriceProductScheduleCollection(ObjectCollection $priceProductScheduleCollection)
+    protected function mapPriceProductScheduleCollection(ObjectCollection $priceProductScheduleCollection): array
     {
         $priceProductScheduleList = [];
 

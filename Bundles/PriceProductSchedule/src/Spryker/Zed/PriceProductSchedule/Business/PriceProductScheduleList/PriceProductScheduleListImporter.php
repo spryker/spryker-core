@@ -10,8 +10,8 @@ namespace Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleList;
 use Generated\Shared\Transfer\PriceProductScheduledListImportRequestTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleListImportResponseTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
+use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleImportValidatorInterface;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleMapperInterface;
-use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleValidatorInterface;
 use Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleEntityManagerInterface;
 
 class PriceProductScheduleListImporter implements PriceProductScheduleListImporterInterface
@@ -22,7 +22,7 @@ class PriceProductScheduleListImporter implements PriceProductScheduleListImport
     protected $priceProductScheduleEntityManager;
 
     /**
-     * @var \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleValidatorInterface
+     * @var \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleImportValidatorInterface
      */
     protected $priceProductScheduleValidator;
 
@@ -38,13 +38,13 @@ class PriceProductScheduleListImporter implements PriceProductScheduleListImport
 
     /**
      * @param \Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleEntityManagerInterface $priceProductScheduleEntityManager
-     * @param \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleValidatorInterface $priceProductScheduleValidator
+     * @param \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleImportValidatorInterface $priceProductScheduleValidator
      * @param \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleMapperInterface $priceProductScheduleMapper
      * @param \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\DataExpander\PriceProductTransferDataExpanderInterface[] $dataExpanderList
      */
     public function __construct(
         PriceProductScheduleEntityManagerInterface $priceProductScheduleEntityManager,
-        PriceProductScheduleValidatorInterface $priceProductScheduleValidator,
+        PriceProductScheduleImportValidatorInterface $priceProductScheduleValidator,
         PriceProductScheduleMapperInterface $priceProductScheduleMapper,
         array $dataExpanderList
     ) {
