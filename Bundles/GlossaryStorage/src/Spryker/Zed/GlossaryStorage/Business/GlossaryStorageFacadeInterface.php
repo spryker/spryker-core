@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\GlossaryStorage\Business;
 
+use Generated\Shared\Transfer\FilterTransfer;
+
 interface GlossaryStorageFacadeInterface
 {
     /**
@@ -80,4 +82,16 @@ interface GlossaryStorageFacadeInterface
      * @return void
      */
     public function writeGlossaryStorageCollectionByGlossaryTranslationEvents(array $eventTransfers);
+
+    /**
+     * Specification
+     * - Retrieves a collection of glossary key entity transfer according to provided offset and limit.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Generated\Shared\Transfer\SpyGlossaryKeyEntityTransfer[]
+     */
+    public function findFilteredGlossaryKeyEntityTransfers(FilterTransfer $filterTransfer);
 }

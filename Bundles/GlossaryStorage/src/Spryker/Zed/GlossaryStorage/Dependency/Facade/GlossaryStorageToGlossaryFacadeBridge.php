@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\GlossaryStorage\Dependency\Facade;
 
+use Generated\Shared\Transfer\FilterTransfer;
+
 class GlossaryStorageToGlossaryFacadeBridge implements GlossaryStorageToGlossaryFacadeInterface
 {
     /**
@@ -30,5 +32,15 @@ class GlossaryStorageToGlossaryFacadeBridge implements GlossaryStorageToGlossary
     public function findGlossaryTranslationEntityTransfer(array $glossaryKeyIds): array
     {
         return $this->glossaryFacade->findGlossaryTranslationEntityTransfer($glossaryKeyIds);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Generated\Shared\Transfer\SpyGlossaryKeyEntityTransfer[]
+     */
+    public function findFilteredGlossaryKeyEntityTransfers(FilterTransfer $filterTransfer)
+    {
+        return $this->glossaryFacade->findFilteredGlossaryKeyEntityTransfers($filterTransfer);
     }
 }

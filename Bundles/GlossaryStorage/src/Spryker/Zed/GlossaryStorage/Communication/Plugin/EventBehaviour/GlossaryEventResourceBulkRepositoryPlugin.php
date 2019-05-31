@@ -7,20 +7,20 @@
 
 namespace Spryker\Zed\GlossaryStorage\Communication\Plugin\EventBehaviour;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryKeyTableMap;
-use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Shared\GlossaryStorage\GlossaryStorageConfig;
-use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceQueryContainerPluginInterface;
+use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceBulkRepositoryPluginInterface;
 use Spryker\Zed\Glossary\Dependency\GlossaryEvents;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\GlossaryStorage\Persistence\GlossaryStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\GlossaryStorage\Business\GlossaryStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\GlossaryStorage\Communication\GlossaryStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\GlossaryStorage\GlossaryStorageConfig getConfig()
+ * @method \Spryker\Zed\GlossaryStorage\Persistence\GlossaryStorageQueryContainerInterface getQueryContainer()
  */
-class GlossaryEventResourceQueryContainerPlugin extends AbstractPlugin implements EventResourceQueryContainerPluginInterface
+class GlossaryEventResourceBulkRepositoryPlugin extends AbstractPlugin implements EventResourceBulkRepositoryPluginInterface
 {
     /**
      * {@inheritdoc}
@@ -35,23 +35,21 @@ class GlossaryEventResourceQueryContainerPlugin extends AbstractPlugin implement
     }
 
     /**
-     * {@inheritdoc}
+     * Specification:
+     *  - Returns an array of transfers accordingly to specified offset and limit.
      *
      * @api
      *
-     * @param int[] $ids
+     * @param int $offset
+     * @param int $limit
      *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria|null
+     * @return \Generated\Shared\Transfer\SpyGlossaryKeyEntityTransfer[]
      */
-    public function queryData(array $ids = []): ?ModelCriteria
+    public function getData(int $offset, int $limit): array
     {
-        $query = $this->getQueryContainer()->queryGlossaryKeysByIds($ids);
+        $filterTransfer = $this->createFilterTransfer($offset, $limit);
 
-        if (empty($ids)) {
-            $query->clear();
-        }
-
-        return $query;
+        return $this->getFacade()->findFilteredGlossaryKeyEntityTransfers($filterTransfer);
     }
 
     /**
@@ -76,5 +74,18 @@ class GlossaryEventResourceQueryContainerPlugin extends AbstractPlugin implement
     public function getIdColumnName(): ?string
     {
         return SpyGlossaryKeyTableMap::COL_ID_GLOSSARY_KEY;
+    }
+
+    /**
+     * @param int $offset
+     * @param int $limit
+     *
+     * @return \Generated\Shared\Transfer\FilterTransfer
+     */
+    protected function createFilterTransfer(int $offset, int $limit): FilterTransfer
+    {
+        return (new FilterTransfer())
+            ->setOffset($offset)
+            ->setLimit($limit);
     }
 }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Glossary\Persistence;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
@@ -31,6 +32,20 @@ class GlossaryRepository extends AbstractRepository implements GlossaryRepositor
             ->leftJoinWithGlossaryKey()
                 ->joinWithLocale()
                 ->addAnd('fk_glossary_key', $glossaryKeyIds, Criteria::IN);
+
+        return $this->buildQueryFromCriteria($query)->find();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Generated\Shared\Transfer\SpyGlossaryKeyEntityTransfer[]
+     */
+    public function findFilteredGlossaryKeyEntityTransfers(FilterTransfer $filterTransfer)
+    {
+        $query = $this->getFactory()->createGlossaryKeyQuery()
+            ->setLimit($filterTransfer->getLimit())
+            ->setOffset($filterTransfer->getOffset());
 
         return $this->buildQueryFromCriteria($query)->find();
     }

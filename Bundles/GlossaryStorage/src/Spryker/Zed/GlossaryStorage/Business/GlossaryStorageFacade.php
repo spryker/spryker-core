@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\GlossaryStorage\Business;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -84,5 +85,19 @@ class GlossaryStorageFacade extends AbstractFacade implements GlossaryStorageFac
     public function writeGlossaryStorageCollectionByGlossaryTranslationEvents(array $eventTransfers)
     {
         $this->getFactory()->createGlossaryTranslationStorageWriter()->writeGlossaryStorageCollectionByGlossaryTranslationEvents($eventTransfers);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Generated\Shared\Transfer\SpyGlossaryKeyEntityTransfer[]
+     */
+    public function findFilteredGlossaryKeyEntityTransfers(FilterTransfer $filterTransfer)
+    {
+        return $this->getFactory()->getGlossaryFacade()->findFilteredGlossaryKeyEntityTransfers($filterTransfer);
     }
 }
