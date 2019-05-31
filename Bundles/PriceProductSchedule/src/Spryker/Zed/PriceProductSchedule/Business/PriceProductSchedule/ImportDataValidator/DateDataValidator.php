@@ -41,6 +41,11 @@ class DateDataValidator extends AbstractImportDataValidator
      */
     protected function isDatesValid(PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer): bool
     {
+        if ($priceProductScheduleImportTransfer->getActiveFrom() === null
+            || $priceProductScheduleImportTransfer->getActiveTo() === null) {
+            return false;
+        }
+
         try {
             $activeFrom = new DateTime($priceProductScheduleImportTransfer->getActiveFrom());
             $activeTo = new DateTime($priceProductScheduleImportTransfer->getActiveTo());
