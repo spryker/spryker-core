@@ -7,6 +7,18 @@
 
 namespace Spryker\Glue\EntityTagRestApi\Processor\EntityTag;
 
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
+use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
+use Symfony\Component\HttpFoundation\Response;
+
 interface EntityTagResponseHeaderFormatterInterface
 {
+    /**
+     * @param \Symfony\Component\HttpFoundation\Response $httpResponse
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function format(Response $httpResponse, RestResponseInterface $restResponse, RestRequestInterface $restRequest): Response;
 }

@@ -65,11 +65,11 @@ class EntityTagWriter implements EntityTagWriterInterface
     {
         $entityTagKey = $this->entityTagKeyGenerator->generate($resourceName, $resourceId);
         $entityTagValue = $this->utilTextService->hashValue(
-            Hash::MD5,
-            $this->utilEncodingService->encodeJson($resourceAttributes)
+            $this->utilEncodingService->encodeJson($resourceAttributes),
+            Hash::MD5
         );
         $this->storageClient->set($entityTagKey, $entityTagValue);
 
-        return $entityTagKey;
+        return $entityTagValue;
     }
 }

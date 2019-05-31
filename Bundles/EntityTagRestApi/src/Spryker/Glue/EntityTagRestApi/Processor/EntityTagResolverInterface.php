@@ -7,6 +7,14 @@
 
 namespace Spryker\Glue\EntityTagRestApi\Processor;
 
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
+
 interface EntityTagResolverInterface
 {
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $restResource
+     *
+     * @return string|null
+     */
+    public function resolve(RestResourceInterface $restResource): ?string;
 }

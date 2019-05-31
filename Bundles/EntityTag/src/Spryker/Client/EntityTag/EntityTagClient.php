@@ -41,9 +41,9 @@ class EntityTagClient extends AbstractClient implements EntityTagClientInterface
      * @param string $resourceId
      * @param array $resourceAttributes
      *
-     * @return string|null
+     * @return string
      */
-    public function write(string $resourceName, string $resourceId, array $resourceAttributes): ?string
+    public function write(string $resourceName, string $resourceId, array $resourceAttributes): string
     {
         return $this->getFactory()->createEntityTagWriter()->write($resourceName, $resourceId, $resourceAttributes);
     }

@@ -7,10 +7,41 @@
 
 namespace Spryker\Glue\EntityTagRestApi\Processor;
 
+use Spryker\Glue\EntityTagRestApi\Dependency\Client\EntityTagRestApiToEntityTagClientInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 
 class EntityTagResolver implements EntityTagResolverInterface
 {
+    /**
+     * @var \Spryker\Glue\EntityTagRestApi\Processor\EntityTagCheckerInterface
+     */
+    protected $entityTagChecker;
+
+    /**
+     * @var \Spryker\Glue\EntityTagRestApi\Dependency\Client\EntityTagRestApiToEntityTagClientInterface
+     */
+    protected $entityTagClient;
+
+    /**
+     * @var \Spryker\Glue\EntityTagRestApi\Processor\EntityTagWriterInterface
+     */
+    protected $entityTagWriter;
+
+    /**
+     * @param \Spryker\Glue\EntityTagRestApi\Processor\EntityTagCheckerInterface $entityTagChecker
+     * @param \Spryker\Glue\EntityTagRestApi\Dependency\Client\EntityTagRestApiToEntityTagClientInterface $entityTagClient
+     * @param \Spryker\Glue\EntityTagRestApi\Processor\EntityTagWriterInterface $entityTagWriter
+     */
+    public function __construct(
+        EntityTagCheckerInterface $entityTagChecker,
+        EntityTagRestApiToEntityTagClientInterface $entityTagClient,
+        EntityTagWriterInterface $entityTagWriter
+    ) {
+        $this->entityTagChecker = $entityTagChecker;
+        $this->entityTagClient = $entityTagClient;
+        $this->entityTagWriter = $entityTagWriter;
+    }
+
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $restResource
      *
@@ -18,12 +49,16 @@ class EntityTagResolver implements EntityTagResolverInterface
      */
     public function resolve(RestResourceInterface $restResource): ?string
     {
-        /*
-uses EntityTagChecker to check that resource required entity tag generation and storing
-try to get hash from storage
-write to storage if not found
-return hash
-         * */
+        if (!$this->entityTagChecker->isEntityTagRequired($restResource)) {
+            return null;
+        }
 
+        $entityTag = $this->entityTagClient->read($restResource->getType(), $restResource->getId());
+
+        if ($entityTag) {
+            return $entityTag;
+        }
+
+        return $this->entityTagWriter->write($restResource);
     }
 }

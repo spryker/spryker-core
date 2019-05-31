@@ -26,6 +26,29 @@ class EntityTagRestApiToEntityTagClientBridge implements EntityTagRestApiToEntit
     /**
      * @param string $resourceName
      * @param string $resourceId
+     * @param array $resourceAttributes
+     *
+     * @return string
+     */
+    public function write(string $resourceName, string $resourceId, array $resourceAttributes): string
+    {
+        return $this->entityTagClient->write($resourceName, $resourceId, $resourceAttributes);
+    }
+
+    /**
+     * @param string $resourceName
+     * @param string $resourceId
+     *
+     * @return string|null
+     */
+    public function read(string $resourceName, string $resourceId): ?string
+    {
+        return $this->entityTagClient->read($resourceName, $resourceId);
+    }
+
+    /**
+     * @param string $resourceName
+     * @param string $resourceId
      *
      * @return string
      */

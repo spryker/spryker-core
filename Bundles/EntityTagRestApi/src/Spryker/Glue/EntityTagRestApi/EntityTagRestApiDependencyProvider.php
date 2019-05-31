@@ -18,9 +18,23 @@ class EntityTagRestApiDependencyProvider extends AbstractBundleDependencyProvide
     public const CLIENT_ENTITY_TAG = 'CLIENT_ENTITY_TAG';
 
     /**
-     * @param \Spryker\Client\Kernel\Container $container
+     * @param \Spryker\Glue\Kernel\Container $container
      *
-     * @return \Spryker\Client\Kernel\Container
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    public function provideDependencies(Container $container): Container
+    {
+        $container = parent::provideDependencies($container);
+        $container = $this->addStorageClient($container);
+        $container = $this->addEntityTagClient($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
      */
     protected function addStorageClient(Container $container): Container
     {
@@ -34,9 +48,9 @@ class EntityTagRestApiDependencyProvider extends AbstractBundleDependencyProvide
     }
 
     /**
-     * @param \Spryker\Client\Kernel\Container $container
+     * @param \Spryker\Glue\Kernel\Container $container
      *
-     * @return \Spryker\Client\Kernel\Container
+     * @return \Spryker\Glue\Kernel\Container
      */
     protected function addEntityTagClient(Container $container): Container
     {

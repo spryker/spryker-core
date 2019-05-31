@@ -13,6 +13,23 @@ interface EntityTagRestApiToEntityTagClientInterface
     /**
      * @param string $resourceName
      * @param string $resourceId
+     * @param array $resourceAttributes
+     *
+     * @return string
+     */
+    public function write(string $resourceName, string $resourceId, array $resourceAttributes): string;
+
+    /**
+     * @param string $resourceName
+     * @param string $resourceId
+     *
+     * @return string|null
+     */
+    public function read(string $resourceName, string $resourceId): ?string;
+
+    /**
+     * @param string $resourceName
+     * @param string $resourceId
      *
      * @return string
      */

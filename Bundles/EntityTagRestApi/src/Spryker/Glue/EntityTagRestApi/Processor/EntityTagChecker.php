@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\EntityTagRestApi\Processor;
 
+use Spryker\Glue\EntityTagRestApi\EntityTagRestApiConfig;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 
 class EntityTagChecker implements EntityTagCheckerInterface
@@ -15,6 +16,14 @@ class EntityTagChecker implements EntityTagCheckerInterface
      * @var \Spryker\Glue\EntityTagRestApi\EntityTagRestApiConfig
      */
     protected $entityTagRestApiConfig;
+
+    /**
+     * @param \Spryker\Glue\EntityTagRestApi\EntityTagRestApiConfig $entityTagRestApiConfig
+     */
+    public function __construct(EntityTagRestApiConfig $entityTagRestApiConfig)
+    {
+        $this->entityTagRestApiConfig = $entityTagRestApiConfig;
+    }
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $restResource

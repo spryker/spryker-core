@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\EntityTag;
 
+use Spryker\Client\EntityTag\Dependency\Service\EntityTagToUtilEncodingServiceBridge;
+use Spryker\Client\EntityTag\Dependency\Service\EntityTagToUtilTextServiceBridge;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\EntityTag\Dependency\Client\EntityTagToStorageClientBridge;
 use Spryker\Client\Kernel\Container;
@@ -14,6 +16,23 @@ use Spryker\Client\Kernel\Container;
 class EntityTagDependencyProvider extends AbstractDependencyProvider
 {
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';
+    public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+    public const SERVICE_UTIL_TEXT = 'SERVICE_UTIL_TEXT';
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    public function provideServiceLayerDependencies(Container $container): Container
+    {
+        $container = parent::provideServiceLayerDependencies($container);
+        $container = $this->addStorageClient($container);
+        $container = $this->addUtilEncodingService($container);
+        $container = $this->addUtilTextService($container);
+
+        return $container;
+    }
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -25,6 +44,38 @@ class EntityTagDependencyProvider extends AbstractDependencyProvider
         $container[static::CLIENT_STORAGE] = function (Container $container) {
             return new EntityTagToStorageClientBridge(
                 $container->getLocator()->storage()->client()
+            );
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addUtilEncodingService(Container $container): Container
+    {
+        $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
+            return new EntityTagToUtilEncodingServiceBridge(
+                $container->getLocator()->utilEncoding()->service()
+            );
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addUtilTextService(Container $container): Container
+    {
+        $container[static::SERVICE_UTIL_TEXT] = function (Container $container) {
+            return new EntityTagToUtilTextServiceBridge(
+                $container->getLocator()->utilText()->service()
             );
         };
 
