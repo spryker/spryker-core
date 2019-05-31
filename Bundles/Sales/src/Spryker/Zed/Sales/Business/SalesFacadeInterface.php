@@ -150,7 +150,8 @@ interface SalesFacadeInterface
     /**
      * Specification:
      *  - Returns a transfer with the filtered list of orders for the given customer.
-     *  - Sets the total number of orders for the customer to the pagination transfer.
+     *  - customerReference must be set in the OrderListTransfer
+     *  - Updates the total number of orders for the customer to the pagination transfer.
      *
      * @api
      *
