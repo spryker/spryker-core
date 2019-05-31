@@ -54,6 +54,15 @@ function createTriggerItemUrl(idOrder, idOrderItem, eventName) {
     return decodeURIComponent(finalUrl);
 }
 
+/**
+ * @deprecated not used any more
+ */
+function disableTrigger($item) {
+    $item
+        .prop('disabled', true)
+        .addClass('disabled');
+}
+
 $(document).ready(function () {
     $('.trigger-event').click(function (e) {
         e.preventDefault();
