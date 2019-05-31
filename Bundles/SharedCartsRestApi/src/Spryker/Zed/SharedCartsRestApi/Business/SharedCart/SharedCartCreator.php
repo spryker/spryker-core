@@ -8,9 +8,7 @@
 namespace Spryker\Zed\SharedCartsRestApi\Business\SharedCart;
 
 use Generated\Shared\Transfer\QuoteCompanyUserTransfer;
-use Generated\Shared\Transfer\QuotePermissionGroupResponseTransfer;
 use Generated\Shared\Transfer\QuotePermissionGroupTransfer;
-use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShareCartRequestTransfer;
 use Generated\Shared\Transfer\ShareCartResponseTransfer;
@@ -66,24 +64,27 @@ class SharedCartCreator implements SharedCartCreatorInterface
         $quoteResponseTransfer = $this->quoteFacade->findQuoteByUuid(
             (new QuoteTransfer())->setUuid($shareCartRequestTransfer->getQuoteUuid())
         );
+        if (!$quoteResponseTransfer->getIsSuccessful()) {
+            return $shareCartResponseTransfer->setErrorIdentifier(SharedSharedCartsRestApiConfig::ERROR_IDENTIFIER_QUOTE_NOT_FOUND);
+        }
 
         /** @var \Generated\Shared\Transfer\ShareDetailTransfer $shareDetailTransfer */
         $shareDetailTransfer = $shareCartRequestTransfer->getShareDetails()->offsetGet(0);
+        if (!$shareDetailTransfer->getQuotePermissionGroup()) {
+            return $shareCartResponseTransfer->setErrorIdentifier(SharedSharedCartsRestApiConfig::ERROR_IDENTIFIER_QUOTE_PERMISSION_GROUP_NOT_FOUND);
+        }
         $quotePermissionGroupResponseTransfer = $this->sharedCartFacade->findQuotePermissionGroupById(
             (new QuotePermissionGroupTransfer())
                 ->setIdQuotePermissionGroup($shareDetailTransfer->getQuotePermissionGroup()->getIdQuotePermissionGroup())
         );
+        if (!$quotePermissionGroupResponseTransfer->getIsSuccessful()) {
+            return $shareCartResponseTransfer->setErrorIdentifier(SharedSharedCartsRestApiConfig::ERROR_IDENTIFIER_QUOTE_PERMISSION_GROUP_NOT_FOUND);
+        }
 
         $quoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
 
-        $errorIdentifier = $this->checkPrerequisites(
-            $quoteResponseTransfer,
-            $quotePermissionGroupResponseTransfer,
-            $quoteTransfer,
-            $shareCartRequestTransfer
-        );
-        if ($errorIdentifier) {
-            return $shareCartResponseTransfer->setErrorIdentifier($errorIdentifier);
+        if (!$this->canManageQuoteSharing($quoteTransfer, $shareCartRequestTransfer)) {
+            return $shareCartResponseTransfer->setErrorIdentifier(SharedSharedCartsRestApiConfig::ERROR_IDENTIFIER_ACTION_FORBIDDEN);
         }
 
         $quoteCompanyUserTransfer = $this->createQuoteCompanyUserTransfer(
@@ -110,33 +111,6 @@ class SharedCartCreator implements SharedCartCreatorInterface
 
         return $shareCartResponseTransfer->setShareDetails($shareDetailCollectionTransfer->getShareDetails())
             ->setIsSuccessful(true);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
-     * @param \Generated\Shared\Transfer\QuotePermissionGroupResponseTransfer $quotePermissionGroupResponseTransfer
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\ShareCartRequestTransfer $shareCartRequestTransfer
-     *
-     * @return string|null
-     */
-    protected function checkPrerequisites(
-        QuoteResponseTransfer $quoteResponseTransfer,
-        QuotePermissionGroupResponseTransfer $quotePermissionGroupResponseTransfer,
-        QuoteTransfer $quoteTransfer,
-        ShareCartRequestTransfer $shareCartRequestTransfer
-    ): ?string {
-        if (!$quoteResponseTransfer->getIsSuccessful()) {
-            return SharedSharedCartsRestApiConfig::ERROR_IDENTIFIER_QUOTE_NOT_FOUND;
-        }
-        if (!$quotePermissionGroupResponseTransfer->getIsSuccessful()) {
-            return SharedSharedCartsRestApiConfig::ERROR_IDENTIFIER_QUOTE_PERMISSION_GROUP_NOT_FOUND;
-        }
-        if (!$this->canManageQuoteSharing($quoteTransfer, $shareCartRequestTransfer)) {
-            return SharedSharedCartsRestApiConfig::ERROR_IDENTIFIER_ACTION_FORBIDDEN;
-        }
-
-        return null;
     }
 
     /**
