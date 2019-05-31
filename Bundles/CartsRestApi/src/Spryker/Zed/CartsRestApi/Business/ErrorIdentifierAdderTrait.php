@@ -26,10 +26,9 @@ trait ErrorIdentifierAdderTrait
         }
 
         foreach ($quoteErrorTransfers as $quoteErrorTransfer) {
-            if (!empty(CartsRestApiConfig::getErrorToErrorIdentifierMapping()[$quoteErrorTransfer->getMessage()])) {
-                $quoteErrorTransfer->setErrorIdentifier(
-                    CartsRestApiConfig::getErrorToErrorIdentifierMapping()[$quoteErrorTransfer->getMessage()]
-                );
+            $errorIdentifier = CartsRestApiConfig::getErrorToErrorIdentifierMapping()[$quoteErrorTransfer->getMessage()] ?? null;
+            if ($errorIdentifier) {
+                $quoteErrorTransfer->setErrorIdentifier($errorIdentifier);
             }
         }
 
