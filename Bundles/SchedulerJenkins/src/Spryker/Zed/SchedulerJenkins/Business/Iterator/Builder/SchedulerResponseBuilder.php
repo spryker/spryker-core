@@ -23,9 +23,9 @@ class SchedulerResponseBuilder implements SchedulerResponseBuilderInterface
     protected $status = false;
 
     /**
-     * @var null
+     * @var string
      */
-    protected $message = null;
+    protected $message = '';
 
     /**
      * @return \Generated\Shared\Transfer\SchedulerResponseTransfer
