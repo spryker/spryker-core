@@ -78,7 +78,7 @@ class CartsRestApiConfig extends AbstractBundleConfig
         return [
             CartsRestApiSharedConfig::ERROR_IDENTIFIER_CART_NOT_FOUND => [
                 RestErrorMessageTransfer::CODE => self::RESPONSE_CODE_CART_NOT_FOUND,
-                RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
+                RestErrorMessageTransfer::STATUS => Response::HTTP_NOT_FOUND,
                 RestErrorMessageTransfer::DETAIL => self::EXCEPTION_MESSAGE_CART_WITH_ID_NOT_FOUND,
             ],
             CartsRestApiSharedConfig::ERROR_IDENTIFIER_FAILED_CREATING_CART => [
@@ -93,7 +93,7 @@ class CartsRestApiConfig extends AbstractBundleConfig
             ],
             CartsRestApiSharedConfig::ERROR_IDENTIFIER_ITEM_NOT_FOUND => [
                 RestErrorMessageTransfer::CODE => self::RESPONSE_CODE_ITEM_NOT_FOUND,
-                RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
+                RestErrorMessageTransfer::STATUS => Response::HTTP_NOT_FOUND,
                 RestErrorMessageTransfer::DETAIL => self::EXCEPTION_MESSAGE_CART_ITEM_NOT_FOUND,
             ],
             CartsRestApiSharedConfig::ERROR_IDENTIFIER_FAILED_DELETING_CART => [
