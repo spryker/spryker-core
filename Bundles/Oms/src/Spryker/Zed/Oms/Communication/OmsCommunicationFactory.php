@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Oms\Communication;
 
-use Spryker\Zed\Gui\Communication\Form\OmsTriggerForm;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\Oms\Communication\Form\OmsTriggerForm;
 use Spryker\Zed\Oms\Communication\Table\TransitionLogTable;
 use Symfony\Component\Form\FormInterface;
 

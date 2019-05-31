@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Gui\Communication\Form\DataProvider;
+namespace Spryker\Zed\Oms\Communication\Form\DataProvider;
 
 use Spryker\Service\UtilText\Model\Url\Url;
 

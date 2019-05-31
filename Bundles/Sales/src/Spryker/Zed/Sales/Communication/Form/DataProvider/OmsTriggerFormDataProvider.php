@@ -9,8 +9,8 @@ namespace Spryker\Zed\Sales\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Spryker\Zed\Gui\Communication\Form\DataProvider\AbstractOmsTriggerFormDataProvider;
-use Spryker\Zed\Gui\Communication\Form\OmsTriggerForm;
+use Spryker\Zed\Oms\Communication\Form\DataProvider\AbstractOmsTriggerFormDataProvider;
+use Spryker\Zed\Oms\Communication\Form\OmsTriggerForm;
 
 class OmsTriggerFormDataProvider extends AbstractOmsTriggerFormDataProvider
 {
