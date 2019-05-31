@@ -5,19 +5,18 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Comment\Business;
+namespace Spryker\Client\Comment;
 
 use Generated\Shared\Transfer\CommentRequestTransfer;
 use Generated\Shared\Transfer\CommentResponseTransfer;
 use Generated\Shared\Transfer\CommentThreadTransfer;
-use Spryker\Zed\Kernel\Business\AbstractFacade;
+use Spryker\Client\Comment\Zed\CommentStubInterface;
+use Spryker\Client\Kernel\AbstractClient;
 
 /**
- * @method \Spryker\Zed\Comment\Business\CommentBusinessFactory getFactory()
- * @method \Spryker\Zed\Comment\Persistence\CommentEntityManagerInterface getEntityManager()
- * @method \Spryker\Zed\Comment\Persistence\CommentRepositoryInterface getRepository()
+ * @method \Spryker\Client\Comment\CommentFactory getFactory()
  */
-class CommentFacade extends AbstractFacade implements CommentFacadeInterface
+class CommentClient extends AbstractClient implements CommentClientInterface
 {
     /**
      * {@inheritdoc}
@@ -30,9 +29,7 @@ class CommentFacade extends AbstractFacade implements CommentFacadeInterface
      */
     public function findCommentThread(CommentRequestTransfer $commentRequestTransfer): ?CommentThreadTransfer
     {
-        return $this->getFactory()
-            ->createCommentReader()
-            ->findCommentThread($commentRequestTransfer);
+        return $this->getZedStub()->findCommentThread($commentRequestTransfer);
     }
 
     /**
@@ -46,9 +43,7 @@ class CommentFacade extends AbstractFacade implements CommentFacadeInterface
      */
     public function addComment(CommentRequestTransfer $commentRequestTransfer): CommentResponseTransfer
     {
-        return $this->getFactory()
-            ->createCommentWriter()
-            ->addComment($commentRequestTransfer);
+        return $this->getZedStub()->addComment($commentRequestTransfer);
     }
 
     /**
@@ -62,9 +57,7 @@ class CommentFacade extends AbstractFacade implements CommentFacadeInterface
      */
     public function updateComment(CommentRequestTransfer $commentRequestTransfer): CommentResponseTransfer
     {
-        return $this->getFactory()
-            ->createCommentWriter()
-            ->updateComment($commentRequestTransfer);
+        return $this->getZedStub()->updateComment($commentRequestTransfer);
     }
 
     /**
@@ -78,9 +71,7 @@ class CommentFacade extends AbstractFacade implements CommentFacadeInterface
      */
     public function updateCommentTags(CommentRequestTransfer $commentRequestTransfer): CommentResponseTransfer
     {
-        return $this->getFactory()
-            ->createCommentWriter()
-            ->updateCommentTags($commentRequestTransfer);
+        return $this->getZedStub()->updateCommentTags($commentRequestTransfer);
     }
 
     /**
@@ -94,8 +85,14 @@ class CommentFacade extends AbstractFacade implements CommentFacadeInterface
      */
     public function removeComment(CommentRequestTransfer $commentRequestTransfer): CommentResponseTransfer
     {
-        return $this->getFactory()
-            ->createCommentWriter()
-            ->removeComment($commentRequestTransfer);
+        return $this->getZedStub()->removeComment($commentRequestTransfer);
+    }
+
+    /**
+     * @return \Spryker\Client\Comment\Zed\CommentStubInterface
+     */
+    protected function getZedStub(): CommentStubInterface
+    {
+        return $this->getFactory()->createCommentStub();
     }
 }

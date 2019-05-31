@@ -35,8 +35,9 @@
         <column name="fk_comment_thread" required="true" type="INTEGER"/>
         <column name="uuid" required="false" type="VARCHAR" size="36"/>
         <column name="fk_customer" type="INTEGER"/>
-        <column name="message" required="true" type="LONGVARCHAR"/>
+        <column name="message" required="true" type="VARCHAR" size="5000"/>
         <column name="is_deleted" defaultValue="false" type="BOOLEAN"/>
+        <column name="is_updated" defaultValue="false" type="BOOLEAN"/>
 
         <behavior name="uuid">
             <parameter name="key_columns" value="id_comment"/>

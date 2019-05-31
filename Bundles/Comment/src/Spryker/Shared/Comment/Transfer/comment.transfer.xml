@@ -18,6 +18,7 @@
         <property name="customer" type="Customer"/>
         <property name="message" type="string"/>
         <property name="tags" type="CommentTag[]" singular="commentTag"/>
+        <property name="isUpdated" type="bool"/>
         <property name="createdAt" type="string"/>
         <property name="updatedAt" type="string"/>
     </transfer>
@@ -42,6 +43,10 @@
 
     <transfer name="Message">
         <property name="value" type="string"/>
+    </transfer>
+
+    <transfer name="Quote">
+        <property name="commentThread" type="CommentThread"/>
     </transfer>
 
 </transfers>

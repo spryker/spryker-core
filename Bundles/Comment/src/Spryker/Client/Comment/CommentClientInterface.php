@@ -5,16 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Comment\Business;
+namespace Spryker\Client\Comment;
 
 use Generated\Shared\Transfer\CommentRequestTransfer;
 use Generated\Shared\Transfer\CommentResponseTransfer;
 use Generated\Shared\Transfer\CommentThreadTransfer;
 
-interface CommentFacadeInterface
+interface CommentClientInterface
 {
     /**
      * Specification:
+     * - Makes Zed request.
      * - Retrieves a comment thread using the provided owner type and owner ID if found.
      *
      * @api
@@ -27,6 +28,7 @@ interface CommentFacadeInterface
 
     /**
      * Specification:
+     * - Makes Zed request.
      * - Creates comment thread if it does not exist in Persistence yet.
      * - Expects CommentTransfer with CustomerTransfer and message.
      * - Generates comment thread UUID when it is missing.
@@ -44,6 +46,7 @@ interface CommentFacadeInterface
 
     /**
      * Specification:
+     * - Makes Zed request.
      * - Updates the provided comment by comment UUID in Persistence.
      * - Expects CommentTransfer with CustomerTransfer and message.
      * - Generates missing tags if Persistence.
@@ -59,6 +62,7 @@ interface CommentFacadeInterface
 
     /**
      * Specification:
+     * - Makes Zed request.
      * - Updates the provided comment tags by comment UUID in Persistence.
      * - Expects CommentTransfer with CustomerTransfer.
      * - Generates missing tags if Persistence.
@@ -74,6 +78,7 @@ interface CommentFacadeInterface
 
     /**
      * Specification:
+     * - Makes Zed request.
      * - Removes the provided comment by comment UUID in Persistence.
      * - Removes assigned tags in Persistence.
      * - Returns with error message(s) in case of error.

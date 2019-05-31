@@ -31,5 +31,12 @@ interface CommentWriterInterface
      *
      * @return \Generated\Shared\Transfer\CommentResponseTransfer
      */
+    public function updateCommentTags(CommentRequestTransfer $commentRequestTransfer): CommentResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CommentRequestTransfer $commentRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\CommentResponseTransfer
+     */
     public function removeComment(CommentRequestTransfer $commentRequestTransfer): CommentResponseTransfer;
 }

@@ -43,6 +43,11 @@ class CommentFacadeTest extends Unit
     protected const GLOSSARY_KEY_COMMENT_ACCESS_DENIED = 'comment.validation.error.access_denied';
 
     /**
+     * @uses \Spryker\Zed\Comment\Business\Writer\CommentWriter::GLOSSARY_KEY_COMMENT_EMPTY_MESSAGE
+     */
+    protected const GLOSSARY_KEY_COMMENT_EMPTY_MESSAGE = 'comment.validation.error.empty_message';
+
+    /**
      * @var \SprykerTest\Zed\Comment\CommentBusinessTester
      */
     protected $tester;
@@ -160,6 +165,7 @@ class CommentFacadeTest extends Unit
 
         // Assert
         $this->assertEquals($commentTransfer->getMessage(), $storedCommentTransfer->getMessage());
+        $this->assertFalse($storedCommentTransfer->getIsUpdated());
         $this->assertEquals(
             $commentTransfer->getCustomer()->getIdCustomer(),
             $storedCommentTransfer->getCustomer()->getIdCustomer()
@@ -352,9 +358,12 @@ class CommentFacadeTest extends Unit
 
         // Assert
         $this->assertCount(2, $storedCommentTransfer->getTags());
+        $this->assertFalse($storedCommentTransfer->getIsUpdated());
     }
 
     /**
+     * @group her
+     *
      * @return void
      */
     public function testUpdateCommentUpdatesExistingComment(): void
@@ -371,11 +380,18 @@ class CommentFacadeTest extends Unit
 
         // Act
         $commentResponseTransfer = $this->tester->getFacade()->updateComment($commentRequestTransfer);
-        $storedCommentTransfer = $commentResponseTransfer->getComment();
+        $commentThreadTransfer = $this->tester
+            ->getFacade()
+            ->findCommentThread($commentRequestTransfer);
+
+        /** @var \Generated\Shared\Transfer\CommentTransfer $storedCommentTransfer */
+        $storedCommentTransfer = $commentThreadTransfer->getComments()->offsetGet(0);
 
         // Assert
         $this->assertTrue($commentResponseTransfer->getIsSuccessful());
+        $this->assertTrue($commentResponseTransfer->getComment()->getIsUpdated());
         $this->assertEquals($commentTransfer->getMessage(), $storedCommentTransfer->getMessage());
+        $this->assertTrue($storedCommentTransfer->getIsUpdated());
     }
 
     /**
@@ -634,6 +650,32 @@ class CommentFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testUpdateCommentTryToUpdateCommentWithEmptyMessage(): void
+    {
+        // Arrange
+        $commentTransfer = (new CommentBuilder())->build()
+            ->setCustomer($this->customerTransfer);
+
+        $commentRequestTransfer = (new CommentRequestBuilder())->build()
+            ->setComment($commentTransfer);
+
+        $commentTransfer = $this->tester->createComment($commentRequestTransfer)->getComment();
+        $commentTransfer->setMessage('');
+
+        // Act
+        $commentResponseTransfer = $this->tester->getFacade()->updateComment($commentRequestTransfer);
+
+        // Assert
+        $this->assertFalse($commentResponseTransfer->getIsSuccessful());
+        $this->assertEquals(
+            static::GLOSSARY_KEY_COMMENT_EMPTY_MESSAGE,
+            $commentResponseTransfer->getMessages()[0]->getValue()
+        );
+    }
+
+    /**
+     * @return void
+     */
     public function testRemoveCommentRemovesExistingComment(): void
     {
         // Arrange
@@ -773,6 +815,117 @@ class CommentFacadeTest extends Unit
         $this->assertEquals(
             static::GLOSSARY_KEY_COMMENT_ACCESS_DENIED,
             $commentResponseTransfer->getMessages()[0]->getValue()
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateCommentTagsRemovesCommentTagsFromComment(): void
+    {
+        // Arrange
+        $firstCommentTagTransfer = (new CommentTagBuilder())->build();
+        $secondCommentTagTransfer = (new CommentTagBuilder())->build();
+
+        $commentTransfer = (new CommentBuilder())->build()
+            ->setCustomer($this->customerTransfer)
+            ->addCommentTag($firstCommentTagTransfer)
+            ->addCommentTag($secondCommentTagTransfer);
+
+        $commentRequestTransfer = (new CommentRequestBuilder())->build()
+            ->setComment($commentTransfer);
+
+        $commentTransfer = $this->tester->createComment($commentRequestTransfer)->getComment();
+        $commentTransfer->setTags(new ArrayObject());
+
+        // Act
+        $commentResponseTransfer = $this->tester->getFacade()->updateCommentTags($commentRequestTransfer);
+        $commentThreadTransfer = $this->tester
+            ->getFacade()
+            ->findCommentThread($commentRequestTransfer);
+
+        /** @var \Generated\Shared\Transfer\CommentTransfer $storedCommentTransfer */
+        $storedCommentTransfer = $commentThreadTransfer->getComments()->offsetGet(0);
+
+        // Assert
+        $this->assertTrue($commentResponseTransfer->getIsSuccessful());
+        $this->assertCount(0, $storedCommentTransfer->getTags());
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateCommentUpdatesCommentTagsByOwnerCustomer(): void
+    {
+        // Arrange
+        $firstCommentTagTransfer = (new CommentTagBuilder())->build();
+        $secondCommentTagTransfer = (new CommentTagBuilder())->build();
+
+        $commentTransfer = (new CommentBuilder())->build()
+            ->setCustomer($this->customerTransfer)
+            ->addCommentTag($firstCommentTagTransfer);
+
+        $commentRequestTransfer = (new CommentRequestBuilder())->build()
+            ->setComment($commentTransfer);
+
+        $commentTransfer = $this->tester->createComment($commentRequestTransfer)->getComment();
+        $commentTransfer->setTags(new ArrayObject())
+            ->addCommentTag($secondCommentTagTransfer);
+
+        // Act
+        $commentResponseTransfer = $this->tester->getFacade()->updateCommentTags($commentRequestTransfer);
+        $commentThreadTransfer = $this->tester
+            ->getFacade()
+            ->findCommentThread($commentRequestTransfer);
+
+        /** @var \Generated\Shared\Transfer\CommentTransfer $storedCommentTransfer */
+        $storedCommentTransfer = $commentThreadTransfer->getComments()->offsetGet(0);
+
+        // Assert
+        $this->assertTrue($commentResponseTransfer->getIsSuccessful());
+        $this->assertCount(1, $storedCommentTransfer->getTags());
+        $this->assertEquals(
+            $secondCommentTagTransfer->getName(),
+            $storedCommentTransfer->getTags()->offsetGet(0)->getName()
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateCommentUpdatesCommentTagsByAnotherCustomer(): void
+    {
+        // Arrange
+        $firstCommentTagTransfer = (new CommentTagBuilder())->build();
+        $secondCommentTagTransfer = (new CommentTagBuilder())->build();
+
+        $commentTransfer = (new CommentBuilder())->build()
+            ->setCustomer($this->customerTransfer)
+            ->addCommentTag($firstCommentTagTransfer);
+
+        $commentRequestTransfer = (new CommentRequestBuilder())->build()
+            ->setComment($commentTransfer);
+
+        $commentTransfer = $this->tester->createComment($commentRequestTransfer)->getComment();
+        $commentTransfer->setTags(new ArrayObject())
+            ->setCustomer($this->tester->haveCustomer())
+            ->addCommentTag($secondCommentTagTransfer);
+
+        // Act
+        $commentResponseTransfer = $this->tester->getFacade()->updateCommentTags($commentRequestTransfer);
+        $commentThreadTransfer = $this->tester
+            ->getFacade()
+            ->findCommentThread($commentRequestTransfer);
+
+        /** @var \Generated\Shared\Transfer\CommentTransfer $storedCommentTransfer */
+        $storedCommentTransfer = $commentThreadTransfer->getComments()->offsetGet(0);
+
+        // Assert
+        $this->assertTrue($commentResponseTransfer->getIsSuccessful());
+        $this->assertCount(1, $storedCommentTransfer->getTags());
+        $this->assertEquals(
+            $secondCommentTagTransfer->getName(),
+            $storedCommentTransfer->getTags()->offsetGet(0)->getName()
         );
     }
 }
