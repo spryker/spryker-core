@@ -84,7 +84,7 @@ class ShareCartByUuidActivatorStrategy implements ShareCartByUuidActivatorStrate
 
         $shareDetailTransfer = $this->findShareDetail($resourceShareRequestTransfer);
         if ($shareDetailTransfer) {
-            return $this->resourceShareQuoteCompanyUserWriter->updateCartShareForProvidedCompanyUser($resourceShareRequestTransfer, $shareDetailTransfer);
+            return $this->resourceShareQuoteCompanyUserWriter->updateCartShareForCompanyUser($resourceShareRequestTransfer, $shareDetailTransfer);
         }
 
         return $this->createCartShareForProvidedCompanyUser($resourceShareRequestTransfer);
@@ -111,7 +111,7 @@ class ShareCartByUuidActivatorStrategy implements ShareCartByUuidActivatorStrate
                 );
         }
 
-        return $this->resourceShareQuoteCompanyUserWriter->createCartShareForProvidedCompanyUser($resourceShareRequestTransfer);
+        return $this->resourceShareQuoteCompanyUserWriter->createCartShareForCompanyUser($resourceShareRequestTransfer);
     }
 
     /**

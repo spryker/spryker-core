@@ -36,7 +36,7 @@ class SwitchDefaultCartResourceShareClientActivatorStrategyPlugin extends Abstra
      */
     public function execute(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer
     {
-        return $this->getClient()->applySwitchDefaultCartResourceShareActivatorStrategy($resourceShareRequestTransfer);
+        return $this->getClient()->switchDefaultCartByResourceShare($resourceShareRequestTransfer);
     }
 
     /**
@@ -67,11 +67,6 @@ class SwitchDefaultCartResourceShareClientActivatorStrategyPlugin extends Abstra
      */
     public function isApplicable(ResourceShareRequestTransfer $resourceShareRequestTransfer): bool
     {
-        $customerTransfer = $resourceShareRequestTransfer->getCustomer();
-        if (!$customerTransfer || !$customerTransfer->getCompanyUserTransfer()) {
-            return false;
-        }
-
         $resourceShareTransfer = $resourceShareRequestTransfer->getResourceShare();
         $resourceShareTransfer->requireResourceType();
         if ($resourceShareTransfer->getResourceType() !== static::RESOURCE_TYPE_QUOTE) {

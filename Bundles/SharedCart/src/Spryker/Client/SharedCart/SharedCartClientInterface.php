@@ -151,5 +151,5 @@ interface SharedCartClientInterface
      *
      * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
      */
-    public function applySwitchDefaultCartResourceShareActivatorStrategy(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer;
+    public function switchDefaultCartByResourceShare(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer;
 }

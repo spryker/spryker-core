@@ -14,7 +14,7 @@ use Generated\Shared\Transfer\ResourceShareResponseTransfer;
 use Generated\Shared\Transfer\ResourceShareTransfer;
 use Spryker\Client\SharedCart\Dependency\Client\SharedCartToMultiCartClientInterface;
 
-class SwitchDefaultCartResourceShareActivatorStrategy implements SwitchDefaultCartResourceShareActivatorStrategyInterface
+class SwitchDefaultCartByResourceShare implements SwitchDefaultCartByResourceShareInterface
 {
     protected const GLOSSARY_KEY_QUOTE_IS_NOT_AVAILABLE = 'persistent_cart_share.error.quote_is_not_available';
 
@@ -36,7 +36,7 @@ class SwitchDefaultCartResourceShareActivatorStrategy implements SwitchDefaultCa
      *
      * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
      */
-    public function applySwitchDefaultCartResourceShareActivatorStrategy(
+    public function switchDefaultCartByResourceShare(
         ResourceShareRequestTransfer $resourceShareRequestTransfer
     ): ResourceShareResponseTransfer {
         $resourceShareDataTransfer = $resourceShareRequestTransfer

@@ -60,7 +60,7 @@ class ResourceShareQuoteCompanyUserWriter implements ResourceShareQuoteCompanyUs
      *
      * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
      */
-    public function createCartShareForProvidedCompanyUser(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer
+    public function createCartShareForCompanyUser(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer
     {
         $shareOption = $resourceShareRequestTransfer->getResourceShare()
             ->getResourceShareData()
@@ -96,7 +96,7 @@ class ResourceShareQuoteCompanyUserWriter implements ResourceShareQuoteCompanyUs
      *
      * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
      */
-    public function updateCartShareForProvidedCompanyUser(
+    public function updateCartShareForCompanyUser(
         ResourceShareRequestTransfer $resourceShareRequestTransfer,
         ShareDetailTransfer $shareDetailTransfer
     ): ResourceShareResponseTransfer {
