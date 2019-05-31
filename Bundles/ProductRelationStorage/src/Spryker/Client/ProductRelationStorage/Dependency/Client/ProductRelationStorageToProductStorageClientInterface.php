@@ -16,4 +16,12 @@ interface ProductRelationStorageToProductStorageClientInterface
      * @return array
      */
     public function getProductAbstractStorageData($idProductAbstract, $localeName);
+
+    /**
+     * @param int[] $productAbstractIds
+     * @param string $localeName
+     *
+     * @return array
+     */
+    public function findBulkProductAbstractStorageDataByProductAbstractIdsAndLocaleName(array $productAbstractIds, string $localeName): array;
 }

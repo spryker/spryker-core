@@ -58,6 +58,47 @@ class ProductAbstractRestrictionReader implements ProductAbstractRestrictionRead
     }
 
     /**
+     * @param int[] $productAbstractIds
+     *
+     * @return int[]
+     */
+    public function filterRestrictedAbstractProducts(array $productAbstractIds): array
+    {
+        $customer = $this->customerClient->getCustomer();
+        if (!$customer) {
+            return $productAbstractIds;
+        }
+
+        $customerProductListCollectionTransfer = $customer->getCustomerProductListCollection();
+        if (!$customerProductListCollectionTransfer) {
+            return $productAbstractIds;
+        }
+
+        $customerWhitelistIds = $customer->getCustomerProductListCollection()->getWhitelistIds() ?: [];
+        $customerBlacklistIds = $customer->getCustomerProductListCollection()->getBlacklistIds() ?: [];
+
+        if (!$customerBlacklistIds && !$customerWhitelistIds) {
+            return $productAbstractIds;
+        }
+
+        $productListProductAbstractStorageTransfers = $this
+            ->productListProductAbstractStorageReader
+            ->findProductAbstractProductListStorageTransfersByProductAbstractIds($productAbstractIds);
+
+        foreach ($productListProductAbstractStorageTransfers as $productListProductAbstractStorageTransfer) {
+            $isProductInBlacklist = count(array_intersect($productListProductAbstractStorageTransfer->getIdBlacklists(), $customerBlacklistIds));
+            $isProductInWhitelist = count(array_intersect($productListProductAbstractStorageTransfer->getIdWhitelists(), $customerWhitelistIds));
+
+            if ($isProductInBlacklist || (count($customerWhitelistIds) && !$isProductInWhitelist)) {
+                $key = array_search($productListProductAbstractStorageTransfer->getIdProductAbstract(), $productAbstractIds);
+                unset($productAbstractIds[$key]);
+            }
+        }
+
+        return array_values($productAbstractIds);
+    }
+
+    /**
      * @param int $idProductAbstract
      * @param int[] $customerWhitelistIds
      * @param int[] $customerBlacklistIds

@@ -59,4 +59,28 @@ interface ProductListStorageClientInterface
      * @return bool
      */
     public function isProductConcreteRestricted(int $idProduct): bool;
+
+    /**
+     * Specification:
+     * - Filters restricted abstract products ids.
+     *
+     * @api
+     *
+     * @param int[] $productAbstractIds
+     *
+     * @return int[]
+     */
+    public function filterRestrictedAbstractProducts(array $productAbstractIds): array;
+
+    /**
+     * Specification:
+     * - Filters restricted concrete products ids.
+     *
+     * @api
+     *
+     * @param int[] $productConcreteIds
+     *
+     * @return int[]
+     */
+    public function filterRestrictedConcreteProducts(array $productConcreteIds): array;
 }

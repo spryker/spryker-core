@@ -259,4 +259,57 @@ class ProductStorageClient extends AbstractClient implements ProductStorageClien
             ->createProductConcreteStorageReader()
             ->findProductConcreteStorageDataByMappingForCurrentLocale($mappingType, $identifier);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int[] $productAbstractIds
+     * @param string $localeName
+     *
+     * @return array
+     */
+    public function findBulkProductAbstractStorageDataByProductAbstractIdsAndLocaleName(array $productAbstractIds, string $localeName): array
+    {
+        return $this->getFactory()
+            ->createProductAbstractStorageReader()
+            ->findBulkProductAbstractStorageDataByProductAbstractIdsAndLocaleName($productAbstractIds, $localeName);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int[] $productAbstractIds
+     * @param string $localeName
+     * @param array $selectedAttributes
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
+     */
+    public function findProductAbstractViewTransfers(array $productAbstractIds, string $localeName, array $selectedAttributes = []): array
+    {
+        return $this->getFactory()
+            ->createProductAbstractViewTransferFinder()
+            ->findProductViewTransfers($productAbstractIds, $localeName, $selectedAttributes);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int[] $productConcreteIds
+     * @param string $localeName
+     * @param array $selectedAttributes
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
+     */
+    public function findProductConcreteViewTransfers(array $productConcreteIds, string $localeName, array $selectedAttributes = []): array
+    {
+        return $this->getFactory()
+            ->createProductConcreteViewTransferFinder()
+            ->findProductViewTransfers($productConcreteIds, $localeName, $selectedAttributes);
+    }
 }

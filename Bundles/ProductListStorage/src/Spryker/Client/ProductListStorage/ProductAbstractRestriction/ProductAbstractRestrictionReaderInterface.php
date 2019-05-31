@@ -15,4 +15,11 @@ interface ProductAbstractRestrictionReaderInterface
      * @return bool
      */
     public function isProductAbstractRestricted(int $idProductAbstract): bool;
+
+    /**
+     * @param int[] $productAbstractIds
+     *
+     * @return int[]
+     */
+    public function filterRestrictedAbstractProducts(array $productAbstractIds): array;
 }

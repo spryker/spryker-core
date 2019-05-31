@@ -13,6 +13,7 @@ use Spryker\Client\Kernel\Locator;
 use Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToLocaleInterface;
 use Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToStorageClientInterface;
 use Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToSynchronizationServiceInterface;
+use Spryker\Client\ProductStorage\Exception\NotFoundProductConcreteDataCacheException;
 use Spryker\Client\ProductStorage\ProductStorageConfig;
 use Spryker\Shared\ProductStorage\ProductStorageConstants;
 use Zend\Filter\FilterChain;
@@ -21,6 +22,8 @@ use Zend\Filter\Word\CamelCaseToUnderscore;
 
 class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterface
 {
+    protected const KEY_ID_PRODUCT_CONCRETE = 'id_product_concrete';
+
     /**
      * @var \Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToSynchronizationServiceInterface
      */
@@ -42,25 +45,38 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
     protected $productConcreteRestrictionPlugins;
 
     /**
+     * @var \Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductConcreteRestrictionFilterPluginInterface[]
+     */
+    protected $productConcreteRestrictionFilterPlugins;
+
+    /**
+     * @var array
+     */
+    protected static $productsConcreteDataCache = [];
+
+    /**
      * @param \Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToStorageClientInterface $storageClient
      * @param \Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToSynchronizationServiceInterface $synchronizationService
      * @param \Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToLocaleInterface $localeClient
      * @param \Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductConcreteRestrictionPluginInterface[] $productConcreteRestrictionPlugins
+     * @param \Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductConcreteRestrictionFilterPluginInterface[] $productConcreteRestrictionFilterPlugins
      */
     public function __construct(
         ProductStorageToStorageClientInterface $storageClient,
         ProductStorageToSynchronizationServiceInterface $synchronizationService,
         ProductStorageToLocaleInterface $localeClient,
-        array $productConcreteRestrictionPlugins = []
+        array $productConcreteRestrictionPlugins = [],
+        array $productConcreteRestrictionFilterPlugins = []
     ) {
         $this->storageClient = $storageClient;
         $this->synchronizationService = $synchronizationService;
         $this->localeClient = $localeClient;
         $this->productConcreteRestrictionPlugins = $productConcreteRestrictionPlugins;
+        $this->productConcreteRestrictionFilterPlugins = $productConcreteRestrictionFilterPlugins;
     }
 
     /**
-     * @deprecated Use findProductConcreteStorageData($idProductConcrete, $localeName): ?array
+     * @deprecated Use `\Spryker\Client\ProductStorage\Storage\ProductConcreteStorageReader::findProductConcreteStorageData()` instead.
      *
      * @param int $idProductConcrete
      * @param string $localeName
@@ -80,7 +96,25 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
      */
     public function findProductConcreteStorageData($idProductConcrete, $localeName): ?array
     {
-        if (!$idProductConcrete || $this->isProductConcreteRestricted($idProductConcrete)) {
+        if ($this->hasProductConcreteDataCacheByIdProductConcreteAndLocaleName($idProductConcrete, $localeName)) {
+            return $this->getProductConcreteDataCacheByIdProductConcreteAndLocaleName($idProductConcrete, $localeName);
+        }
+
+        $productConcreteData = $this->findStorageData($idProductConcrete, $localeName);
+        $this->cacheProductConcreteDataByIdProductConcreteAndLocaleName($idProductConcrete, $localeName, $productConcreteData);
+
+        return $productConcreteData;
+    }
+
+    /**
+     * @param int $idProductConcrete
+     * @param string $localeName
+     *
+     * @return array|null
+     */
+    protected function findStorageData(int $idProductConcrete, string $localeName): ?array
+    {
+        if ($this->isProductConcreteRestricted($idProductConcrete)) {
             return null;
         }
 
@@ -231,5 +265,166 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
         return $this->synchronizationService
             ->getStorageKeyBuilder(ProductStorageConstants::PRODUCT_CONCRETE_RESOURCE_NAME)
             ->generateKey($synchronizationDataTransfer);
+    }
+
+    /**
+     * @param int $idProductConcrete
+     * @param string $localeName
+     *
+     * @throws \Spryker\Client\ProductStorage\Exception\NotFoundProductConcreteDataCacheException
+     *
+     * @return array
+     */
+    protected function getProductConcreteDataCacheByIdProductConcreteAndLocaleName(int $idProductConcrete, string $localeName): array
+    {
+        if (!$this->hasProductConcreteDataCacheByIdProductConcreteAndLocaleName($idProductConcrete, $localeName)) {
+            throw new NotFoundProductConcreteDataCacheException();
+        }
+
+        return static::$productsConcreteDataCache[$idProductConcrete][$localeName];
+    }
+
+    /**
+     * @param int $idProductConcrete
+     * @param string $localeName
+     *
+     * @return bool
+     */
+    protected function hasProductConcreteDataCacheByIdProductConcreteAndLocaleName(int $idProductConcrete, string $localeName): bool
+    {
+        return isset(static::$productsConcreteDataCache[$idProductConcrete][$localeName]);
+    }
+
+    /**
+     * @param int $idProductConcrete
+     * @param string $localeName
+     * @param array|null $productData
+     *
+     * @return void
+     */
+    protected function cacheProductConcreteDataByIdProductConcreteAndLocaleName(int $idProductConcrete, string $localeName, ?array $productData): void
+    {
+        static::$productsConcreteDataCache[$idProductConcrete][$localeName] = $productData;
+    }
+
+    /**
+     * @param int[] $productConcreteIds
+     * @param string $localeName
+     *
+     * @return array
+     */
+    protected function getProductConcreteDataCacheByProductConcreteIdsAndLocaleName(array $productConcreteIds, string $localeName): array
+    {
+        $cachedProductConcreteData = [];
+        foreach ($productConcreteIds as $idProductConcrete) {
+            if ($this->hasProductConcreteDataCacheByIdProductConcreteAndLocaleName($idProductConcrete, $localeName)) {
+                $cachedProductConcreteData[$idProductConcrete] = $this->getProductConcreteDataCacheByIdProductConcreteAndLocaleName($idProductConcrete, $localeName);
+            }
+        }
+
+        return $cachedProductConcreteData;
+    }
+
+    /**
+     * @param int[] $productConcreteIds
+     * @param string $localeName
+     *
+     * @return array
+     */
+    public function findBulkProductConcreteStorageDataByProductConcreteIdsAndLocaleName(array $productConcreteIds, string $localeName): array
+    {
+        $cachedProductConcreteData = $this->getProductConcreteDataCacheByProductConcreteIdsAndLocaleName($productConcreteIds, $localeName);
+
+        $ids = array_diff($productConcreteIds, array_keys($cachedProductConcreteData));
+        $ids = $this->filterRestrictedProductConcreteIds($ids);
+
+        $result = $this->findBulkProductConcreteStorageData($ids, $localeName);
+        foreach ($result as $idProductConcrete => $productData) {
+            $this->cacheProductConcreteDataByIdProductConcreteAndLocaleName($idProductConcrete, $localeName, $productData);
+        }
+
+        return array_merge($cachedProductConcreteData, $result);
+    }
+
+    /**
+     * @param array $productConcreteIds
+     * @param string $localeName
+     *
+     * @return array
+     */
+    protected function findBulkProductConcreteStorageData(array $productConcreteIds, string $localeName): array
+    {
+        if (ProductStorageConfig::isCollectorCompatibilityMode()) {
+            return $this->findBulkProductConcreteStorageDataForCollectorCompatibilityMode($productConcreteIds, $localeName);
+        }
+
+        //@todo check if it can add some boost if we generate keys in bulk
+        $storageKeys = [];
+        foreach ($productConcreteIds as $idProductConcrete) {
+            $storageKeys[] = $this->getStorageKey((string)$idProductConcrete, $localeName);
+        }
+
+        $productStorageData = $this->storageClient->getMulti($storageKeys);
+
+        $productConcreteStorageData = [];
+        foreach ($productStorageData as $data) {
+            $data = json_decode($data, true);
+            $productConcreteStorageData[$data[static::KEY_ID_PRODUCT_CONCRETE]] = $data;
+        }
+
+        return $productConcreteStorageData;
+    }
+
+    /**
+     * @todo fetching can be done in bulk
+     *
+     * @param int[] $productConcreteIds
+     * @param string $localeName
+     *
+     * @return array
+     */
+    protected function findBulkProductConcreteStorageDataForCollectorCompatibilityMode(array $productConcreteIds, string $localeName): array
+    {
+        $clientLocatorClassName = Locator::class;
+        /** @var \Spryker\Client\Product\ProductClientInterface $productClient */
+        $productClient = $clientLocatorClassName::getInstance()->product()->client();
+
+        $collectorData = [];
+        foreach ($productConcreteIds as $idProductConcrete) {
+            $productConcreteData = $productClient->getProductConcreteByIdAndLocale($idProductConcrete, $localeName);
+
+            unset($productConcreteData['prices'], $productConcreteData['imageSets']);
+            $productConcreteData = $this->changeKeys($productConcreteData);
+
+            $collectorData[$productConcreteData[static::KEY_ID_PRODUCT_CONCRETE]] = $productConcreteData;
+        }
+
+        return $collectorData;
+    }
+
+    /**
+     * @param int[] $productConcreteIds
+     *
+     * @return int[]
+     */
+    protected function filterRestrictedProductConcreteIds(array $productConcreteIds): array
+    {
+        //This was added for BC reason (if no bulk plugins was added)
+        if (!$this->productConcreteRestrictionFilterPlugins) {
+            $filteredIds = [];
+            foreach ($productConcreteIds as $idProductConcrete) {
+                if (!$this->isProductConcreteRestricted($idProductConcrete)) {
+                    $filteredIds[] = $idProductConcrete;
+                }
+            }
+
+            return $filteredIds;
+        }
+
+        foreach ($this->productConcreteRestrictionFilterPlugins as $productConcreteRestrictionFilterPlugin) {
+            $productConcreteIds = $productConcreteRestrictionFilterPlugin->filter($productConcreteIds);
+        }
+
+        return $productConcreteIds;
     }
 }

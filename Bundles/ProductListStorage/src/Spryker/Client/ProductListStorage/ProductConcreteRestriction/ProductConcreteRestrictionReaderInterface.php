@@ -15,4 +15,11 @@ interface ProductConcreteRestrictionReaderInterface
      * @return bool
      */
     public function isProductConcreteRestricted(int $idProduct): bool;
+
+    /**
+     * @param int[] $productConcreteIds
+     *
+     * @return int[]
+     */
+    public function filterRestrictedConcreteProducts(array $productConcreteIds): array;
 }

@@ -22,6 +22,12 @@ use Zend\Filter\Word\CamelCaseToUnderscore;
 
 class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterface
 {
+    protected const KEY_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+    protected const KEY_PRICES = 'prices';
+    protected const KEY_CATEGORIES = 'categories';
+    protected const KEY_IMAGE_SETS = 'imageSets';
+    protected const KEY_ATTRIBUTE_MAP = 'attribute_map';
+
     /**
      * @var \Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToStorageClientInterface
      */
@@ -43,6 +49,11 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
     protected $productAbstractRestrictionPlugins;
 
     /**
+     * @var \Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductAbstractRestrictionFilterPluginInterface[]
+     */
+    protected $productAbstractRestrictionFilterPlugins;
+
+    /**
      * @var \Spryker\Client\ProductStorage\Filter\ProductAbstractAttributeMapRestrictionFilterInterface
      */
     protected $productAbstractVariantsRestrictionFilter;
@@ -58,23 +69,26 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
      * @param \Spryker\Shared\Kernel\Store $store
      * @param \Spryker\Client\ProductStorage\Filter\ProductAbstractAttributeMapRestrictionFilterInterface $productAbstractVariantsRestrictionFilter
      * @param \Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductAbstractRestrictionPluginInterface[] $productAbstractRestrictionPlugins
+     * @param \Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductAbstractRestrictionFilterPluginInterface[] $productAbstractRestrictionFilterPlugins
      */
     public function __construct(
         ProductStorageToStorageClientInterface $storageClient,
         ProductStorageToSynchronizationServiceInterface $synchronizationService,
         Store $store,
         ProductAbstractAttributeMapRestrictionFilterInterface $productAbstractVariantsRestrictionFilter,
-        array $productAbstractRestrictionPlugins = []
+        array $productAbstractRestrictionPlugins = [],
+        array $productAbstractRestrictionFilterPlugins = []
     ) {
         $this->storageClient = $storageClient;
         $this->synchronizationService = $synchronizationService;
         $this->store = $store;
         $this->productAbstractVariantsRestrictionFilter = $productAbstractVariantsRestrictionFilter;
         $this->productAbstractRestrictionPlugins = $productAbstractRestrictionPlugins;
+        $this->productAbstractRestrictionFilterPlugins = $productAbstractRestrictionFilterPlugins;
     }
 
     /**
-     * @deprecated Use findProductAbstractStorageData(int $idProductAbstract, string $localeName): ?array
+     * @deprecated Use `\Spryker\Client\ProductStorage\Storage\ProductAbstractStorageReader::findProductAbstractStorageData()` instead.
      *
      * @param int $idProductAbstract
      * @param string $localeName
@@ -261,5 +275,135 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
     protected function cacheProductAbstractDataByIdProductAbstractAndLocaleName(int $idProductAbstract, string $localeName, ?array $productData): void
     {
         static::$productsAbstractDataCache[$idProductAbstract][$localeName] = $productData;
+    }
+
+    /**
+     * @param int[] $productAbstractIds
+     * @param string $localeName
+     *
+     * @return array
+     */
+    protected function getProductAbstractDataCacheByProductAbstractIdsAndLocaleName(array $productAbstractIds, string $localeName): array
+    {
+        $cachedProductAbstractData = [];
+        foreach ($productAbstractIds as $idProductAbstract) {
+            if ($this->hasProductAbstractDataCacheByIdProductAbstractAndLocaleName($idProductAbstract, $localeName)) {
+                $cachedProductAbstractData[$idProductAbstract] = $this->getProductAbstractDataCacheByIdProductAbstractAndLocaleName($idProductAbstract, $localeName);
+            }
+        }
+
+        return $cachedProductAbstractData;
+    }
+
+    /**
+     * @param int[] $productAbstractIds
+     * @param string $localeName
+     *
+     * @return array
+     */
+    public function findBulkProductAbstractStorageDataByProductAbstractIdsAndLocaleName(array $productAbstractIds, string $localeName): array
+    {
+        $cachedProductAbstractData = $this->getProductAbstractDataCacheByProductAbstractIdsAndLocaleName($productAbstractIds, $localeName);
+
+        $ids = array_diff($productAbstractIds, array_keys($cachedProductAbstractData));
+        $ids = $this->filterRestrictedProductAbstractIds($ids);
+
+        $result = $this->findBulkProductAbstractStorageData($ids, $localeName);
+        foreach ($result as $idProductAbstract => $productData) {
+            $this->cacheProductAbstractDataByIdProductAbstractAndLocaleName($idProductAbstract, $localeName, $productData);
+        }
+
+        return array_merge($cachedProductAbstractData, $result);
+    }
+
+    /**
+     * @param array $productAbstractIds
+     * @param string $localeName
+     *
+     * @return array
+     */
+    protected function findBulkProductAbstractStorageData(array $productAbstractIds, string $localeName): array
+    {
+        if (ProductStorageConfig::isCollectorCompatibilityMode()) {
+            return $this->findBulkProductAbstractStorageDataForCollectorCompatibilityMode($productAbstractIds, $localeName);
+        }
+
+        //@todo check if it can add some boost if we generate keys in bulk
+        $storageKeys = [];
+        foreach ($productAbstractIds as $idProductAbstract) {
+            $storageKeys[] = $this->getStorageKey((string)$idProductAbstract, $localeName);
+        }
+
+        $productStorageData = $this->storageClient->getMulti($storageKeys);
+
+        //@todo check if filtering can be done in bulk too
+        $productAbstractStorageData = [];
+        foreach ($productStorageData as $data) {
+            $data = json_decode($data, true);
+            $filteredProductData = $this->productAbstractVariantsRestrictionFilter
+                ->filterAbstractProductVariantsData($data);
+
+            $productAbstractStorageData[$filteredProductData[static::KEY_ID_PRODUCT_ABSTRACT]] = $filteredProductData;
+        }
+
+        return $productAbstractStorageData;
+    }
+
+    /**
+     * @todo fetching can be done in bulk
+     *
+     * @param int[] $productAbstractIds
+     * @param string $localeName
+     *
+     * @return array
+     */
+    protected function findBulkProductAbstractStorageDataForCollectorCompatibilityMode(array $productAbstractIds, string $localeName): array
+    {
+        $clientLocatorClassName = Locator::class;
+        /** @var \Spryker\Client\Product\ProductClientInterface $productClient */
+        $productClient = $clientLocatorClassName::getInstance()->product()->client();
+
+        $collectorData = [];
+        foreach ($productAbstractIds as $idProductAbstract) {
+            $productAbstractData = $productClient->getProductAbstractFromStorageByIdForCurrentLocale($idProductAbstract);
+
+            unset($productAbstractData[static::KEY_PRICES], $productAbstractData[static::KEY_CATEGORIES], $productAbstractData[static::KEY_IMAGE_SETS]);
+            $productAbstractData = $this->changeKeys($productAbstractData);
+
+            $attributeMap = $productClient->getAttributeMapByIdAndLocale($idProductAbstract, $localeName);
+            $attributeMap = $this->changeKeys($attributeMap);
+
+            $productAbstractData[static::KEY_ATTRIBUTE_MAP] = $attributeMap;
+
+            $collectorData[$productAbstractData[static::KEY_ID_PRODUCT_ABSTRACT]] = $productAbstractData;
+        }
+
+        return $collectorData;
+    }
+
+    /**
+     * @param int[] $productAbstractIds
+     *
+     * @return int[]
+     */
+    protected function filterRestrictedProductAbstractIds(array $productAbstractIds): array
+    {
+        //This was added for BC reason (if no bulk plugins was added)
+        if (!$this->productAbstractRestrictionFilterPlugins) {
+            $filteredIds = [];
+            foreach ($productAbstractIds as $idProductAbstract) {
+                if (!$this->isProductAbstractRestricted($idProductAbstract)) {
+                    $filteredIds[] = $idProductAbstract;
+                }
+            }
+
+            return $filteredIds;
+        }
+
+        foreach ($this->productAbstractRestrictionFilterPlugins as $productAbstractRestrictionFilterPlugin) {
+            $productAbstractIds = $productAbstractRestrictionFilterPlugin->filter($productAbstractIds);
+        }
+
+        return $productAbstractIds;
     }
 }

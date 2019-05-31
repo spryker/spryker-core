@@ -78,4 +78,25 @@ class ProductListProductConcreteStorageReader implements ProductListProductConcr
     {
         return (new ProductConcreteProductListStorageTransfer())->fromArray($productConcreteProductListStorageData, true);
     }
+
+    /**
+     * @param int[] $productConcreteIds
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteProductListStorageTransfer[]
+     */
+    public function findProductConcreteProductListStorageTransfersByProductConcreteIds(array $productConcreteIds): array
+    {
+        $keys = [];
+        foreach ($productConcreteIds as $idProductConcrete) {
+            $keys[] = $this->generateKey($idProductConcrete);
+        }
+        $productConcreteProductListStorageData = $this->storageClient->getMulti($keys);
+
+        $productConcreteProductListStorageTransfers = [];
+        foreach ($productConcreteProductListStorageData as $data) {
+            $productConcreteProductListStorageTransfers[] = $this->mapProductConcreteProductListStorage(json_decode($data, true));
+        }
+
+        return $productConcreteProductListStorageTransfers;
+    }
 }

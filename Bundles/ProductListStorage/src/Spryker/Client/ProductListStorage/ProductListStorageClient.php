@@ -79,4 +79,36 @@ class ProductListStorageClient extends AbstractClient implements ProductListStor
             ->createProductConcreteRestrictionReader()
             ->isProductConcreteRestricted($idProduct);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int[] $productAbstractIds
+     *
+     * @return int[]
+     */
+    public function filterRestrictedAbstractProducts(array $productAbstractIds): array
+    {
+        return $this->getFactory()
+            ->createProductAbstractRestrictionReader()
+            ->filterRestrictedAbstractProducts($productAbstractIds);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int[] $productConcreteIds
+     *
+     * @return int[]
+     */
+    public function filterRestrictedConcreteProducts(array $productConcreteIds): array
+    {
+        return $this->getFactory()
+            ->createProductConcreteRestrictionReader()
+            ->filterRestrictedConcreteProducts($productConcreteIds);
+    }
 }

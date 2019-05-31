@@ -204,17 +204,13 @@ class ProductAlternativeMapper implements ProductAlternativeMapperInterface
     protected function findConcreteProductIdsByAbstractProductIds(array $abstractProductIds, string $localeName): array
     {
         $productConcreteIds = [];
-        foreach ($abstractProductIds as $idProductAbstract) {
-            $productAbstractStorageData = $this->productStorageClient
-                ->findProductAbstractStorageData($idProductAbstract, $localeName);
+        $productAbstractStorageData = $this->productStorageClient->findBulkProductAbstractStorageDataByProductAbstractIdsAndLocaleName($abstractProductIds, $localeName);
 
-            if (empty($productAbstractStorageData)) {
-                continue;
-            }
-
+        //@todo check if it can be done without cycle
+        foreach ($productAbstractStorageData as $data) {
             $productConcreteIds = array_merge(
                 $productConcreteIds,
-                $productAbstractStorageData[ProductAlternativeStorageConfig::RESOURCE_TYPE_ATTRIBUTE_MAP][static::PRODUCT_CONCRETE_IDS] ?? []
+                $data[ProductAlternativeStorageConfig::RESOURCE_TYPE_ATTRIBUTE_MAP][static::PRODUCT_CONCRETE_IDS] ?? []
             );
         }
 

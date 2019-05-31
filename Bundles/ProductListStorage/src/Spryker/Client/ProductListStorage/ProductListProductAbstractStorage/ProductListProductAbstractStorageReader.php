@@ -78,4 +78,25 @@ class ProductListProductAbstractStorageReader implements ProductListProductAbstr
     {
         return (new ProductAbstractProductListStorageTransfer())->fromArray($productAbstractProductListStorageData, true);
     }
+
+    /**
+     * @param int[] $productAbstractIds
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractProductListStorageTransfer[]
+     */
+    public function findProductAbstractProductListStorageTransfersByProductAbstractIds(array $productAbstractIds): array
+    {
+        $keys = [];
+        foreach ($productAbstractIds as $idProductAbstract) {
+            $keys[] = $this->generateKey($idProductAbstract);
+        }
+        $productAbstractProductListStorageData = $this->storageClient->getMulti($keys);
+
+        $productAbstractProductListStorageTransfers = [];
+        foreach ($productAbstractProductListStorageData as $data) {
+            $productAbstractProductListStorageTransfers[] = $this->mapProductAbstractProductListStorage(json_decode($data, true));
+        }
+
+        return $productAbstractProductListStorageTransfers;
+    }
 }
