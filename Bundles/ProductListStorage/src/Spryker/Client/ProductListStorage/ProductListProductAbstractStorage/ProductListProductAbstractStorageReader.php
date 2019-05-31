@@ -86,11 +86,11 @@ class ProductListProductAbstractStorageReader implements ProductListProductAbstr
      */
     public function findProductAbstractProductListStorageTransfersByProductAbstractIds(array $productAbstractIds): array
     {
-        $keys = [];
+        $productAbstractProductListStorageKeys = [];
         foreach ($productAbstractIds as $idProductAbstract) {
-            $keys[] = $this->generateKey($idProductAbstract);
+            $productAbstractProductListStorageKeys[] = $this->generateKey($idProductAbstract);
         }
-        $productAbstractProductListStorageData = $this->storageClient->getMulti($keys);
+        $productAbstractProductListStorageData = $this->storageClient->getMulti($productAbstractProductListStorageKeys);
 
         $productAbstractProductListStorageTransfers = [];
         foreach ($productAbstractProductListStorageData as $data) {

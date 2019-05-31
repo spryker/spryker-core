@@ -62,7 +62,7 @@ interface ProductListStorageClientInterface
 
     /**
      * Specification:
-     * - Filters restricted abstract products ids.
+     * - Filters array of abstract product ids and remove product ids that are restricted.
      *
      * @api
      *
@@ -74,7 +74,7 @@ interface ProductListStorageClientInterface
 
     /**
      * Specification:
-     * - Filters restricted concrete products ids.
+     * - Filters array of concrete product ids and remove product ids that are restricted.
      *
      * @api
      *

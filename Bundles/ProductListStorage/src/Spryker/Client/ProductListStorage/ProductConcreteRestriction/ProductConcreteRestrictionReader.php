@@ -157,16 +157,21 @@ class ProductConcreteRestrictionReader implements ProductConcreteRestrictionRead
         $customerWhitelistIds = $customer->getCustomerProductListCollection()->getWhitelistIds() ?: [];
         $customerBlacklistIds = $customer->getCustomerProductListCollection()->getBlacklistIds() ?: [];
 
+        if (!$customerBlacklistIds && !$customerWhitelistIds) {
+            return $productConcreteIds;
+        }
+
         $productConcreteProductListTransfers = $this->productListProductConcreteStorageReader
             ->findProductConcreteProductListStorageTransfersByProductConcreteIds($productConcreteIds);
 
         foreach ($productConcreteProductListTransfers as $productConcreteProductListStorageTransfer) {
-            $isProductInBlacklist = count(array_intersect($productConcreteProductListStorageTransfer->getIdBlacklists(), $customerBlacklistIds));
-            $isProductInWhitelist = count(array_intersect($productConcreteProductListStorageTransfer->getIdWhitelists(), $customerWhitelistIds));
-
-            if ($isProductInBlacklist || (count($customerWhitelistIds) && !$isProductInWhitelist)) {
+            if ($this->isProductConcreteRestrictedInBlacklist($productConcreteProductListStorageTransfer, $customerBlacklistIds)
+                || $this->isProductConcreteRestrictedInWhitelist($productConcreteProductListStorageTransfer, $customerWhitelistIds)
+            ) {
                 $key = array_search($productConcreteProductListStorageTransfer->getIdProductConcrete(), $productConcreteIds);
-                unset($productConcreteIds[$key]);
+                if ($key !== false) {
+                    unset($productConcreteIds[$key]);
+                }
             }
         }
 

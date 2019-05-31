@@ -23,6 +23,8 @@ use Zend\Filter\Word\CamelCaseToUnderscore;
 class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterface
 {
     protected const KEY_ID_PRODUCT_CONCRETE = 'id_product_concrete';
+    protected const KEY_PRICES = 'prices';
+    protected const KEY_IMAGE_SETS = 'imageSets';
 
     /**
      * @var \Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToSynchronizationServiceInterface
@@ -338,12 +340,9 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
         $ids = array_diff($productConcreteIds, array_keys($cachedProductConcreteData));
         $ids = $this->filterRestrictedProductConcreteIds($ids);
 
-        $result = $this->findBulkProductConcreteStorageData($ids, $localeName);
-        foreach ($result as $idProductConcrete => $productData) {
-            $this->cacheProductConcreteDataByIdProductConcreteAndLocaleName($idProductConcrete, $localeName, $productData);
-        }
+        $productConcreteStorageData = $this->findBulkProductConcreteStorageData($ids, $localeName);
 
-        return array_merge($cachedProductConcreteData, $result);
+        return array_merge($cachedProductConcreteData, $productConcreteStorageData);
     }
 
     /**
@@ -358,18 +357,42 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
             return $this->findBulkProductConcreteStorageDataForCollectorCompatibilityMode($productConcreteIds, $localeName);
         }
 
-        //@todo check if it can add some boost if we generate keys in bulk
+        $productStorageData = $this->storageClient->getMulti($this->generateStorageKeys($productConcreteIds, $localeName));
+
+        return $this->mapBulkProductConcreteStorageData($productStorageData, $localeName);
+    }
+
+    /**
+     * @param int[] $productConcreteIds
+     * @param string $localeName
+     *
+     * @return string[]
+     */
+    protected function generateStorageKeys(array $productConcreteIds, string $localeName): array
+    {
         $storageKeys = [];
         foreach ($productConcreteIds as $idProductConcrete) {
             $storageKeys[] = $this->getStorageKey((string)$idProductConcrete, $localeName);
         }
 
-        $productStorageData = $this->storageClient->getMulti($storageKeys);
+        return $storageKeys;
+    }
 
+    /**
+     * @param array $productStorageData
+     * @param string $localeName
+     *
+     * @return array
+     */
+    protected function mapBulkProductConcreteStorageData(array $productStorageData, string $localeName): array
+    {
         $productConcreteStorageData = [];
         foreach ($productStorageData as $data) {
             $data = json_decode($data, true);
-            $productConcreteStorageData[$data[static::KEY_ID_PRODUCT_CONCRETE]] = $data;
+            $idProductConcrete = $data[static::KEY_ID_PRODUCT_CONCRETE];
+            $productConcreteStorageData[$idProductConcrete] = $data;
+
+            $this->cacheProductConcreteDataByIdProductConcreteAndLocaleName($idProductConcrete, $localeName, $data);
         }
 
         return $productConcreteStorageData;
@@ -393,7 +416,7 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
         foreach ($productConcreteIds as $idProductConcrete) {
             $productConcreteData = $productClient->getProductConcreteByIdAndLocale($idProductConcrete, $localeName);
 
-            unset($productConcreteData['prices'], $productConcreteData['imageSets']);
+            unset($productConcreteData[static::KEY_PRICES], $productConcreteData[static::KEY_IMAGE_SETS]);
             $productConcreteData = $this->changeKeys($productConcreteData);
 
             $collectorData[$productConcreteData[static::KEY_ID_PRODUCT_CONCRETE]] = $productConcreteData;
@@ -409,7 +432,7 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
      */
     protected function filterRestrictedProductConcreteIds(array $productConcreteIds): array
     {
-        //This was added for BC reason (if no bulk plugins was added)
+        //This was added for BC reason (if no bulk plugins were added)
         if (!$this->productConcreteRestrictionFilterPlugins) {
             $filteredIds = [];
             foreach ($productConcreteIds as $idProductConcrete) {

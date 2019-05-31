@@ -303,17 +303,14 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
      */
     public function findBulkProductAbstractStorageDataByProductAbstractIdsAndLocaleName(array $productAbstractIds, string $localeName): array
     {
-        $cachedProductAbstractData = $this->getProductAbstractDataCacheByProductAbstractIdsAndLocaleName($productAbstractIds, $localeName);
+        $cachedProductAbstractStorageData = $this->getProductAbstractDataCacheByProductAbstractIdsAndLocaleName($productAbstractIds, $localeName);
 
-        $ids = array_diff($productAbstractIds, array_keys($cachedProductAbstractData));
+        $ids = array_diff($productAbstractIds, array_keys($cachedProductAbstractStorageData));
         $ids = $this->filterRestrictedProductAbstractIds($ids);
 
-        $result = $this->findBulkProductAbstractStorageData($ids, $localeName);
-        foreach ($result as $idProductAbstract => $productData) {
-            $this->cacheProductAbstractDataByIdProductAbstractAndLocaleName($idProductAbstract, $localeName, $productData);
-        }
+        $productAbstractStorageData = $this->findBulkProductAbstractStorageData($ids, $localeName);
 
-        return array_merge($cachedProductAbstractData, $result);
+        return array_merge($cachedProductAbstractStorageData, $productAbstractStorageData);
     }
 
     /**
@@ -328,30 +325,50 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
             return $this->findBulkProductAbstractStorageDataForCollectorCompatibilityMode($productAbstractIds, $localeName);
         }
 
-        //@todo check if it can add some boost if we generate keys in bulk
+        $productStorageData = $this->storageClient->getMulti($this->generateStorageKeys($productAbstractIds, $localeName));
+
+        return $this->mapBulkProductStorageData($productStorageData, $localeName);
+    }
+
+    /**
+     * @param int[] $productAbstractIds
+     * @param string $localeName
+     *
+     * @return string[]
+     */
+    protected function generateStorageKeys(array $productAbstractIds, string $localeName): array
+    {
         $storageKeys = [];
         foreach ($productAbstractIds as $idProductAbstract) {
             $storageKeys[] = $this->getStorageKey((string)$idProductAbstract, $localeName);
         }
 
-        $productStorageData = $this->storageClient->getMulti($storageKeys);
+        return $storageKeys;
+    }
 
-        //@todo check if filtering can be done in bulk too
+    /**
+     * @param array $productStorageData
+     * @param string $localeName
+     *
+     * @return array
+     */
+    protected function mapBulkProductStorageData(array $productStorageData, string $localeName): array
+    {
         $productAbstractStorageData = [];
         foreach ($productStorageData as $data) {
             $data = json_decode($data, true);
             $filteredProductData = $this->productAbstractVariantsRestrictionFilter
                 ->filterAbstractProductVariantsData($data);
+            $idProductAbstract = $filteredProductData[static::KEY_ID_PRODUCT_ABSTRACT];
+            $productAbstractStorageData[$idProductAbstract] = $filteredProductData;
 
-            $productAbstractStorageData[$filteredProductData[static::KEY_ID_PRODUCT_ABSTRACT]] = $filteredProductData;
+            $this->cacheProductAbstractDataByIdProductAbstractAndLocaleName($idProductAbstract, $localeName, $filteredProductData);
         }
 
-        return $productAbstractStorageData;
+        return $productStorageData;
     }
 
     /**
-     * @todo fetching can be done in bulk
-     *
      * @param int[] $productAbstractIds
      * @param string $localeName
      *

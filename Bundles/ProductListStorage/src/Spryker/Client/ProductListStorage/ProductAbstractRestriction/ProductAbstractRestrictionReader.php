@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\ProductListStorage\ProductAbstractRestriction;
 
+use Generated\Shared\Transfer\ProductAbstractProductListStorageTransfer;
 use Spryker\Client\ProductListStorage\Dependency\Client\ProductListStorageToCustomerClientInterface;
 use Spryker\Client\ProductListStorage\ProductListProductAbstractStorage\ProductListProductAbstractStorageReaderInterface;
 
@@ -86,12 +87,13 @@ class ProductAbstractRestrictionReader implements ProductAbstractRestrictionRead
             ->findProductAbstractProductListStorageTransfersByProductAbstractIds($productAbstractIds);
 
         foreach ($productListProductAbstractStorageTransfers as $productListProductAbstractStorageTransfer) {
-            $isProductInBlacklist = count(array_intersect($productListProductAbstractStorageTransfer->getIdBlacklists(), $customerBlacklistIds));
-            $isProductInWhitelist = count(array_intersect($productListProductAbstractStorageTransfer->getIdWhitelists(), $customerWhitelistIds));
-
-            if ($isProductInBlacklist || (count($customerWhitelistIds) && !$isProductInWhitelist)) {
+            if ($this->isProductAbstractRestrictedInBlacklist($productListProductAbstractStorageTransfer, $customerBlacklistIds)
+                || $this->isProductAbstractRestrictedInWhitelist($productListProductAbstractStorageTransfer, $customerWhitelistIds)
+            ) {
                 $key = array_search($productListProductAbstractStorageTransfer->getIdProductAbstract(), $productAbstractIds);
-                unset($productAbstractIds[$key]);
+                if ($key !== false) {
+                    unset($productAbstractIds[$key]);
+                }
             }
         }
 
@@ -124,5 +126,39 @@ class ProductAbstractRestrictionReader implements ProductAbstractRestrictionRead
         }
 
         return (bool)count($customerWhitelistIds);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractProductListStorageTransfer $productAbstractProductListStorageTransfer
+     * @param int[] $customerWhitelistIds
+     *
+     * @return bool
+     */
+    protected function isProductAbstractRestrictedInWhitelist(
+        ProductAbstractProductListStorageTransfer $productAbstractProductListStorageTransfer,
+        array $customerWhitelistIds
+    ): bool {
+        if (empty($customerWhitelistIds)) {
+            return false;
+        }
+
+        return empty(array_intersect($productAbstractProductListStorageTransfer->getIdWhitelists(), $customerWhitelistIds));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractProductListStorageTransfer $productAbstractProductListStorageTransfer
+     * @param int[] $customerBlacklistIds
+     *
+     * @return bool
+     */
+    protected function isProductAbstractRestrictedInBlacklist(
+        ProductAbstractProductListStorageTransfer $productAbstractProductListStorageTransfer,
+        array $customerBlacklistIds
+    ): bool {
+        if (empty($customerBlacklistIds)) {
+            return false;
+        }
+
+        return !empty(array_intersect($productAbstractProductListStorageTransfer->getIdBlacklists(), $customerBlacklistIds));
     }
 }

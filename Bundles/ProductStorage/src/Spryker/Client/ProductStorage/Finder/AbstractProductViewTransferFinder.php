@@ -15,7 +15,7 @@ use Spryker\Client\ProductStorage\ProductStorageConfig;
 
 abstract class AbstractProductViewTransferFinder implements ProductViewTransferFinderInterface
 {
-    protected const ERROR_MESSAGE_PRODUCT_VIEW_TRANSFER_NOT_FOUND_IN_CACHE = 'There is no ProductViewTransfer in cache with provided product abstract id and local name';
+    protected const ERROR_MESSAGE_PRODUCT_VIEW_TRANSFER_NOT_FOUND_IN_CACHE = 'There is no ProductViewTransfer in cache with provided product id and local name';
     protected const KEY_ID_PRODUCT = null;
     protected const ERROR_MESSAGE_PRODUCT_ID_KEY_NOT_SPECIFIED = 'You should specify product id key in the implementation';
 
@@ -60,7 +60,7 @@ abstract class AbstractProductViewTransferFinder implements ProductViewTransferF
         }
 
         $productViewTransfer = $this->productStorageDataMapper
-            ->mapProductStorageData($localeName, $data, $this->findProductSelectedAttributes($data, $selectedAttributes));
+            ->mapProductStorageData($localeName, $data, $selectedAttributes);
         $this->cacheProductViewTransfer($productViewTransfer, $localeName);
 
         return $productViewTransfer;
@@ -78,21 +78,36 @@ abstract class AbstractProductViewTransferFinder implements ProductViewTransferF
         $cachedProductViewTransfers = $this->getProductViewTransfersFromCache($productIds, $localeName);
 
         $ids = array_diff($productIds, array_keys($cachedProductViewTransfers));
-
-        $productViewTransfers = [];
         $productData = $this->findBulkProductStorageData($ids, $localeName);
+        $productViewTransfers = $this->mapProductData($productData, $localeName, $selectedAttributes);
+
+        return array_merge($cachedProductViewTransfers, $productViewTransfers);
+    }
+
+    /**
+     * @param array $productData
+     * @param string $localeName
+     * @param array $selectedAttributes
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
+     */
+    protected function mapProductData(array $productData, string $localeName, array $selectedAttributes = []): array
+    {
+        $productViewTransfers = [];
         foreach ($productData as $data) {
             if (!isset($data[ProductStorageConfig::RESOURCE_TYPE_ATTRIBUTE_MAP])) {
                 $data[ProductStorageConfig::RESOURCE_TYPE_ATTRIBUTE_MAP] = [];
             }
 
-            $productViewTransfer = $this->productStorageDataMapper->mapProductStorageData($localeName, $data, $selectedAttributes);
+            $productViewTransfer = $this
+                ->productStorageDataMapper
+                ->mapProductStorageData($localeName, $data, $this->findProductSelectedAttributes($data, $selectedAttributes));
             $this->cacheProductViewTransfer($productViewTransfer, $localeName);
 
             $productViewTransfers[$this->getProductId($productViewTransfer)] = $productViewTransfer;
         }
 
-        return array_merge($cachedProductViewTransfers, $productViewTransfers);
+        return $productViewTransfers;
     }
 
     /**
