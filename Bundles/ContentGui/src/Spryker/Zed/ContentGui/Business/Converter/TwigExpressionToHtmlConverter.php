@@ -60,7 +60,7 @@ class TwigExpressionToHtmlConverter implements TwigExpressionConverterInterface
      */
     public function convertTwigExpressionToHtml(string $html): string
     {
-        if (mb_substr_count($html, '{{ content_') > 10000) {
+        if (mb_substr_count($html, '{{ content_') > $this->contentGuiConfig->getMaxWidgetNumber()) {
             return $html;
         }
 

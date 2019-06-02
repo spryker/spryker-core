@@ -27,7 +27,8 @@ var ContentItemEditor = function(options) {
             this.title,
             this.dialogContentUrl,
             this.insertButtonTitle,
-            this.editorContentWidgetTemplate
+            this.editorContentWidgetTemplate,
+            this.maxWidgetNumber,
         );
         new ContentItemPopover();
     };

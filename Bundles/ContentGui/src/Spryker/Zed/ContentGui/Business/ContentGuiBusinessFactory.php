@@ -54,7 +54,8 @@ class ContentGuiBusinessFactory extends AbstractBusinessFactory
     public function createHtmlToTwigExpressionConverter(): HtmlConverterInterface
     {
         return new HtmlToTwigExpressionConverter(
-            $this->createDomDocument()
+            $this->createDomDocument(),
+            $this->getConfig()
         );
     }
 

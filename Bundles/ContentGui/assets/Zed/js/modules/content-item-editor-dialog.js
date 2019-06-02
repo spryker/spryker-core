@@ -9,7 +9,8 @@ var ContentItemDialog = function(
     dialogTitle,
     dialogContentUrl,
     insertButtonTitle,
-    widgetHtmlTemplate
+    widgetHtmlTemplate,
+    maxWidgetNumber
 ) {
     $.extend($.summernote.plugins, {
         'contentItemDialog': function (context) {
@@ -88,8 +89,8 @@ var ContentItemDialog = function(
                     this.$ui.hideDialog(this.$dialog);
                     this.context.invoke('editor.restoreRange');
 
-                    if ($('span[data-twig-expression*="{{ content_"]').length > 10000) {
-                        alert('Widget not added, limit exceeded, maximum number of widgets 10000');
+                    if ($('span[data-twig-expression*="{{ content_"]').length > maxWidgetNumber) {
+                        alert('Limit exceeded, maximum number of widgets ' + maxWidgetNumber);
                         return;
                     }
 

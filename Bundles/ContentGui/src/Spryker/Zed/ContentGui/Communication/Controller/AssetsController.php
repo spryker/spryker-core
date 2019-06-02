@@ -22,10 +22,12 @@ class AssetsController extends AbstractController
     {
         $editorContentTypes = $this->getFactory()->createContentEditorPluginsResolver()->getContentTypes();
         $editorContentWidgetTemplate = $this->getFactory()->getConfig()->getEditorContentWidgetTemplate();
+        $maxWidgetNumber = $this->getFactory()->getConfig()->getMaxWidgetNumber();
 
         return $this->viewResponse([
             'editorContentTypes' => $editorContentTypes,
             'editorContentWidgetTemplate' => $editorContentWidgetTemplate,
+            'maxWidgetNumber' => $maxWidgetNumber,
         ]);
     }
 }

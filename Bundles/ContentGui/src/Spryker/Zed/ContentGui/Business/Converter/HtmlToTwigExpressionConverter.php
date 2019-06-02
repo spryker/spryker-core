@@ -11,6 +11,7 @@ use DOMDocument;
 use DOMNode;
 use DOMText;
 use DOMXPath;
+use Spryker\Zed\ContentGui\ContentGuiConfig;
 
 class HtmlToTwigExpressionConverter implements HtmlConverterInterface
 {
@@ -20,11 +21,18 @@ class HtmlToTwigExpressionConverter implements HtmlConverterInterface
     protected $domDocument;
 
     /**
-     * @param \DOMDocument $domDocument
+     * @var \Spryker\Zed\ContentGui\ContentGuiConfig
      */
-    public function __construct(DOMDocument $domDocument)
+    protected $contentGuiConfig;
+
+    /**
+     * @param \DOMDocument $domDocument
+     * @param \Spryker\Zed\ContentGui\ContentGuiConfig $contentGuiConfig
+     */
+    public function __construct(DOMDocument $domDocument, ContentGuiConfig $contentGuiConfig)
     {
         $this->domDocument = $domDocument;
+        $this->contentGuiConfig = $contentGuiConfig;
     }
 
     /**
@@ -34,7 +42,7 @@ class HtmlToTwigExpressionConverter implements HtmlConverterInterface
      */
     public function convertHtmlToTwigExpression(string $html): string
     {
-        if (mb_substr_count($html, 'data-twig-expression') > 10000) {
+        if (mb_substr_count($html, 'data-twig-expression') > $this->contentGuiConfig->getMaxWidgetNumber()) {
             return $html;
         }
 

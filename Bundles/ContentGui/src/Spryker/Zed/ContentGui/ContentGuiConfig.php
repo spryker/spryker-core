@@ -18,6 +18,7 @@ class ContentGuiConfig extends AbstractBundleConfig
     protected const PARAMETER_NAME = '%NAME%';
     protected const PARAMETER_TEMPLATE_DISPLAY_NAME = '%TEMPLATE_DISPLAY_NAME%';
     protected const EDITOR_CONTENT_WIDGET_WRAPPER = '<p>%s</p>';
+    protected const MAX_WIDGET_NUMBER = 10000;
 
     /**
      * @return string
@@ -88,5 +89,13 @@ class ContentGuiConfig extends AbstractBundleConfig
     public function getEditorContentWidgetWrapper(): string
     {
         return static::EDITOR_CONTENT_WIDGET_WRAPPER;
+    }
+
+    /**
+     * @return int
+     */
+    public function getMaxWidgetNumber(): int
+    {
+        return static::MAX_WIDGET_NUMBER;
     }
 }
