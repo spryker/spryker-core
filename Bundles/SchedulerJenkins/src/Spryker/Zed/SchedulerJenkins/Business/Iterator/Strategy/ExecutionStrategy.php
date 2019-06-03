@@ -23,7 +23,7 @@ class ExecutionStrategy implements ExecutionStrategyInterface
     protected $executorForAbsentJob;
 
     /**
-     * @var string[]
+     * @var array
      */
     protected $jobNames = [];
 
@@ -46,7 +46,7 @@ class ExecutionStrategy implements ExecutionStrategyInterface
      */
     public function addJobName(string $jobName)
     {
-        $this->jobNames[$jobName] = '';
+        $this->jobNames[$jobName] = true;
 
         return $this;
     }
