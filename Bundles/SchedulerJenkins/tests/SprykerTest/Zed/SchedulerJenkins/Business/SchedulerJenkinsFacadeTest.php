@@ -42,7 +42,7 @@ class SchedulerJenkinsFacadeTest extends Unit
 
         $this->assertInstanceOf(SchedulerResponseTransfer::class, $responseTransfer);
         $this->assertTrue($responseTransfer->getStatus());
-        $this->assertNull($responseTransfer->getMessage());
+        $this->assertEmpty($responseTransfer->getMessage());
     }
 
     /**
@@ -55,7 +55,7 @@ class SchedulerJenkinsFacadeTest extends Unit
 
         $this->assertInstanceOf(SchedulerResponseTransfer::class, $responseTransfer);
         $this->assertTrue($responseTransfer->getStatus());
-        $this->assertNull($responseTransfer->getMessage());
+        $this->assertEmpty($responseTransfer->getMessage());
     }
 
     /**
@@ -68,7 +68,7 @@ class SchedulerJenkinsFacadeTest extends Unit
 
         $this->assertInstanceOf(SchedulerResponseTransfer::class, $responseTransfer);
         $this->assertTrue($responseTransfer->getStatus());
-        $this->assertNull($responseTransfer->getMessage());
+        $this->assertEmpty($responseTransfer->getMessage());
     }
 
     /**
@@ -81,7 +81,7 @@ class SchedulerJenkinsFacadeTest extends Unit
 
         $this->assertInstanceOf(SchedulerResponseTransfer::class, $responseTransfer);
         $this->assertTrue($responseTransfer->getStatus());
-        $this->assertNull($responseTransfer->getMessage());
+        $this->assertEmpty($responseTransfer->getMessage());
     }
 
     /**

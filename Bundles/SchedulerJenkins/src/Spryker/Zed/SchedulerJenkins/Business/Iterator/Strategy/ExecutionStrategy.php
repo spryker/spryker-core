@@ -44,9 +44,9 @@ class ExecutionStrategy implements ExecutionStrategyInterface
      *
      * @return static
      */
-    public function addJobName(string $jobName): self
+    public function addJobName(string $jobName)
     {
-        $this->jobNames[$jobName] = true;
+        $this->jobNames[$jobName] = '';
 
         return $this;
     }
