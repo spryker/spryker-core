@@ -8,6 +8,8 @@
 namespace Spryker\Zed\Url\Persistence;
 
 use Generated\Shared\Transfer\UrlTransfer;
+use Orm\Zed\Url\Persistence\SpyUrlQuery;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -51,9 +53,9 @@ class UrlRepository extends AbstractRepository implements UrlRepositoryInterface
     /**
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
-     * @return \Orm\Zed\Url\Persistence\SpyUrlQuery|\Propel\Runtime\ActiveQuery\Criteria
+     * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
      */
-    protected function prepareUrlCaseInsensitiveQuery(UrlTransfer $urlTransfer)
+    protected function prepareUrlCaseInsensitiveQuery(UrlTransfer $urlTransfer): SpyUrlQuery
     {
         $urlQuery = $this->getFactory()
             ->createUrlQuery()
