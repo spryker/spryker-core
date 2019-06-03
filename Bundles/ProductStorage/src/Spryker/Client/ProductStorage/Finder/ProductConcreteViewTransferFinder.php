@@ -54,7 +54,9 @@ class ProductConcreteViewTransferFinder extends AbstractProductViewTransferFinde
      */
     protected function findBulkProductStorageData(array $productIds, string $localeName): array
     {
-        return $this->productConcreteStorage->findBulkProductConcreteStorageDataByProductConcreteIdsAndLocaleName($productIds, $localeName);
+        return $this
+            ->productConcreteStorage
+            ->findBulkProductConcreteStorageDataByProductConcreteIdsAndLocaleName($productIds, $localeName);
     }
 
     /**

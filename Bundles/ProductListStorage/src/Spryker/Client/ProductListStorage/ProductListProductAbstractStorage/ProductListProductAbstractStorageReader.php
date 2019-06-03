@@ -86,12 +86,34 @@ class ProductListProductAbstractStorageReader implements ProductListProductAbstr
      */
     public function findProductAbstractProductListStorageTransfersByProductAbstractIds(array $productAbstractIds): array
     {
+        $productAbstractProductListStorageKeys = $this->generateProductAbstractProductListStorageKeys($productAbstractIds);
+        $productAbstractProductListStorageData = $this->storageClient->getMulti($productAbstractProductListStorageKeys);
+
+        return $this->mapProductAbstractProductListTransfers($productAbstractProductListStorageData);
+    }
+
+    /**
+     * @param int[] $productAbstractIds
+     *
+     * @return string[]
+     */
+    protected function generateProductAbstractProductListStorageKeys(array $productAbstractIds): array
+    {
         $productAbstractProductListStorageKeys = [];
         foreach ($productAbstractIds as $idProductAbstract) {
             $productAbstractProductListStorageKeys[] = $this->generateKey($idProductAbstract);
         }
-        $productAbstractProductListStorageData = $this->storageClient->getMulti($productAbstractProductListStorageKeys);
 
+        return $productAbstractProductListStorageKeys;
+    }
+
+    /**
+     * @param array $productAbstractProductListStorageData
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractProductListStorageTransfer[]
+     */
+    protected function mapProductAbstractProductListTransfers(array $productAbstractProductListStorageData): array
+    {
         $productAbstractProductListStorageTransfers = [];
         foreach ($productAbstractProductListStorageData as $data) {
             $productAbstractProductListStorageTransfers[] = $this->mapProductAbstractProductListStorage(json_decode($data, true));

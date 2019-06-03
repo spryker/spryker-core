@@ -305,10 +305,13 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
     {
         $cachedProductAbstractStorageData = $this->getProductAbstractDataCacheByProductAbstractIdsAndLocaleName($productAbstractIds, $localeName);
 
-        $ids = array_diff($productAbstractIds, array_keys($cachedProductAbstractStorageData));
-        $ids = $this->filterRestrictedProductAbstractIds($ids);
+        $productAbstractIds = array_diff($productAbstractIds, array_keys($cachedProductAbstractStorageData));
+        $productAbstractIds = $this->filterRestrictedProductAbstractIds($productAbstractIds);
+        if (!$productAbstractIds) {
+            return $cachedProductAbstractStorageData;
+        }
 
-        $productAbstractStorageData = $this->findBulkProductAbstractStorageData($ids, $localeName);
+        $productAbstractStorageData = $this->findBulkProductAbstractStorageData($productAbstractIds, $localeName);
 
         return array_merge($cachedProductAbstractStorageData, $productAbstractStorageData);
     }
@@ -405,6 +408,10 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
      */
     protected function filterRestrictedProductAbstractIds(array $productAbstractIds): array
     {
+        if (!$productAbstractIds) {
+            return [];
+        }
+
         //This was added for BC reason (if no bulk plugins was added)
         if (!$this->productAbstractRestrictionFilterPlugins) {
             $filteredIds = [];

@@ -54,7 +54,9 @@ class ProductAbstractViewTransferFinder extends AbstractProductViewTransferFinde
      */
     protected function findBulkProductStorageData(array $productIds, string $localeName): array
     {
-        return $this->productAbstractStorageReader->findBulkProductAbstractStorageDataByProductAbstractIdsAndLocaleName($productIds, $localeName);
+        return $this
+            ->productAbstractStorageReader
+            ->findBulkProductAbstractStorageDataByProductAbstractIdsAndLocaleName($productIds, $localeName);
     }
 
     /**

@@ -15,7 +15,7 @@ use Spryker\Client\ProductStorage\ProductStorageConfig;
 
 abstract class AbstractProductViewTransferFinder implements ProductViewTransferFinderInterface
 {
-    protected const ERROR_MESSAGE_PRODUCT_VIEW_TRANSFER_NOT_FOUND_IN_CACHE = 'There is no ProductViewTransfer in cache with provided product id and local name';
+    protected const ERROR_MESSAGE_PRODUCT_VIEW_TRANSFER_NOT_FOUND_IN_CACHE = 'There is no `ProductViewTransfer` in a cache with provided product id and local name';
     protected const KEY_ID_PRODUCT = null;
     protected const ERROR_MESSAGE_PRODUCT_ID_KEY_NOT_SPECIFIED = 'You should specify product id key in the implementation';
 
@@ -77,8 +77,12 @@ abstract class AbstractProductViewTransferFinder implements ProductViewTransferF
     {
         $cachedProductViewTransfers = $this->getProductViewTransfersFromCache($productIds, $localeName);
 
-        $ids = array_diff($productIds, array_keys($cachedProductViewTransfers));
-        $productData = $this->findBulkProductStorageData($ids, $localeName);
+        $productIds = array_diff($productIds, array_keys($cachedProductViewTransfers));
+        if (!$productIds) {
+            return $cachedProductViewTransfers;
+        }
+
+        $productData = $this->findBulkProductStorageData($productIds, $localeName);
         $productViewTransfers = $this->mapProductData($productData, $localeName, $selectedAttributes);
 
         return array_merge($cachedProductViewTransfers, $productViewTransfers);

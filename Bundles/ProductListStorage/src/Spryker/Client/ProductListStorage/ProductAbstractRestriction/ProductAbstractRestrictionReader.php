@@ -90,14 +90,27 @@ class ProductAbstractRestrictionReader implements ProductAbstractRestrictionRead
             if ($this->isProductAbstractRestrictedInBlacklist($productListProductAbstractStorageTransfer, $customerBlacklistIds)
                 || $this->isProductAbstractRestrictedInWhitelist($productListProductAbstractStorageTransfer, $customerWhitelistIds)
             ) {
-                $key = array_search($productListProductAbstractStorageTransfer->getIdProductAbstract(), $productAbstractIds);
-                if ($key !== false) {
-                    unset($productAbstractIds[$key]);
-                }
+                $productAbstractIds = $this->removeIdProductAbstractFromList($productListProductAbstractStorageTransfer->getIdProductAbstract(), $productAbstractIds);
             }
         }
 
         return array_values($productAbstractIds);
+    }
+
+    /**
+     * @param int $idProductAbstract
+     * @param int[] $productAbstractIds
+     *
+     * @return int[]
+     */
+    protected function removeIdProductAbstractFromList(int $idProductAbstract, array $productAbstractIds): array
+    {
+        $key = array_search($idProductAbstract, $productAbstractIds);
+        if ($key !== false) {
+            unset($productAbstractIds[$key]);
+        }
+
+        return $productAbstractIds;
     }
 
     /**

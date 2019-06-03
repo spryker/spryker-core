@@ -337,10 +337,13 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
     {
         $cachedProductConcreteData = $this->getProductConcreteDataCacheByProductConcreteIdsAndLocaleName($productConcreteIds, $localeName);
 
-        $ids = array_diff($productConcreteIds, array_keys($cachedProductConcreteData));
-        $ids = $this->filterRestrictedProductConcreteIds($ids);
+        $productConcreteIds = array_diff($productConcreteIds, array_keys($cachedProductConcreteData));
+        $productConcreteIds = $this->filterRestrictedProductConcreteIds($productConcreteIds);
+        if (!$productConcreteIds) {
+            return $cachedProductConcreteData;
+        }
 
-        $productConcreteStorageData = $this->findBulkProductConcreteStorageData($ids, $localeName);
+        $productConcreteStorageData = $this->findBulkProductConcreteStorageData($productConcreteIds, $localeName);
 
         return array_merge($cachedProductConcreteData, $productConcreteStorageData);
     }
@@ -432,6 +435,10 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
      */
     protected function filterRestrictedProductConcreteIds(array $productConcreteIds): array
     {
+        if (!$productConcreteIds) {
+            return [];
+        }
+
         //This was added for BC reason (if no bulk plugins were added)
         if (!$this->productConcreteRestrictionFilterPlugins) {
             $filteredIds = [];
