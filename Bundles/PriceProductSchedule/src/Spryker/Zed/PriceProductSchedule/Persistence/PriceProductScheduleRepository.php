@@ -145,8 +145,11 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
             ->leftJoinWithProduct()
             ->leftJoinWithProductAbstract()
             ->filterByIsCurrent(false)
+            ->filterByFkStore($storeTransfer->getIdStore())
             ->where($this->getFilterByConcatenatedProductIdExpression())
             ->where($this->getFilterByConcatenatedResultExpression($currentDatabaseEngineName))
+            ->where(sprintf('%s <= now()', SpyPriceProductScheduleTableMap::COL_ACTIVE_FROM))
+            ->where(sprintf('%s >= now()', SpyPriceProductScheduleTableMap::COL_ACTIVE_TO))
             ->find()
             ->getData();
 
