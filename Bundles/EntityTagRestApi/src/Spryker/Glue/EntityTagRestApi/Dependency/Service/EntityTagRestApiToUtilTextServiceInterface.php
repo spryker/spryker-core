@@ -7,7 +7,6 @@
 
 namespace Spryker\Glue\EntityTagRestApi\Dependency\Service;
 
-
 interface EntityTagRestApiToUtilTextServiceInterface
 {
     /**

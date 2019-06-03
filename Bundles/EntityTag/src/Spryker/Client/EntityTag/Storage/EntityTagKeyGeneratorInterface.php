@@ -6,7 +6,6 @@
  */
 namespace Spryker\Client\EntityTag\Storage;
 
-
 interface EntityTagKeyGeneratorInterface
 {
     /**

@@ -15,7 +15,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class EntityTagResponseHeaderFormatter implements EntityTagResponseHeaderFormatterInterface
 {
-    protected const HEADER_E_TAG = 'Etag';
+    protected const HEADER_E_TAG = 'ETag';
+
     /**
      * @var \Spryker\Glue\EntityTagRestApi\Processor\EntityTagResolverInterface
      */

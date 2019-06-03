@@ -9,5 +9,11 @@ namespace Spryker\Client\EntityTag\Storage;
 
 interface EntityTagReaderInterface
 {
+    /**
+     * @param string $resourceName
+     * @param string $resourceId
+     *
+     * @return string|null
+     */
     public function read(string $resourceName, string $resourceId): ?string;
 }

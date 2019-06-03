@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\EntityTag\Dependency\Service;
 
-
 class EntityTagToUtilTextServiceBridge implements EntityTagToUtilTextServiceInterface
 {
     /**

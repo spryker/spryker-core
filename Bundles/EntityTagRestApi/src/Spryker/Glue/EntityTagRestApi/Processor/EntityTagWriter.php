@@ -32,7 +32,6 @@ class EntityTagWriter implements EntityTagWriterInterface
         $this->entityTagClient = $entityTagClient;
     }
 
-
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $restResource
      *
