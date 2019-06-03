@@ -13,8 +13,9 @@ interface ContentProductSetClientInterface
 {
     /**
      * Specification:
-     * - Finds content item in the key-value storage.
-     * - Resolves content type and executes data.
+     * - Finds content item in the key-value storage by content ID and locale name.
+     * - Gets stored term for found content item.
+     * - Executes stored term with found content item to get a content product set type.
      *
      * @api
      *

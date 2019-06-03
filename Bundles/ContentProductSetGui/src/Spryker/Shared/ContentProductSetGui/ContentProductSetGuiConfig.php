@@ -36,9 +36,9 @@ class ContentProductSetGuiConfig extends AbstractSharedConfig
     protected const WIDGET_TEMPLATE_IDENTIFIER_DEFAULT = 'default';
 
     /**
-     * @uses \Spryker\Shared\ContentProductSet\ContentProductSetConfig::WIDGET_TEMPLATE_DISPLAY_NAME_DEFAULT
+     * Content item product set default template name
      */
-    protected const WIDGET_TEMPLATE_DISPLAY_NAME_DEFAULT = 'content_product_set.template.default';
+    protected const WIDGET_TEMPLATE_DISPLAY_NAME_DEFAULT = 'content_product_set_gui.template.default';
 
     /**
      * @uses \Spryker\Shared\ContentProductSet\ContentProductSetConfig::WIDGET_TEMPLATE_IDENTIFIER_CART_BUTTON_BOTTOM
@@ -46,9 +46,9 @@ class ContentProductSetGuiConfig extends AbstractSharedConfig
     protected const WIDGET_TEMPLATE_IDENTIFIER_CART_BUTTON_BOTTOM = 'cart-button-btm';
 
     /**
-     * @uses \Spryker\Shared\ContentProductSet\ContentProductSetConfig::WIDGET_TEMPLATE_DISPLAY_NAME_CART_BUTTON_BOTTOM
+     * Content item product set cart-button-btm template name
      */
-    protected const WIDGET_TEMPLATE_DISPLAY_NAME_CART_BUTTON_BOTTOM = 'content_product_set.template.cart-button-btm';
+    protected const WIDGET_TEMPLATE_DISPLAY_NAME_CART_BUTTON_BOTTOM = 'content_product_set_gui.template.cart-button-btm';
 
     /**
      * @return string[]

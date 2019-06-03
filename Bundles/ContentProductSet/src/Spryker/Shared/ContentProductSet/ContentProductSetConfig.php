@@ -32,17 +32,7 @@ class ContentProductSetConfig extends AbstractSharedConfig
     public const WIDGET_TEMPLATE_IDENTIFIER_DEFAULT = 'default';
 
     /**
-     * Content item product set default template name
-     */
-    public const WIDGET_TEMPLATE_DISPLAY_NAME_DEFAULT = 'content_product_set.template.default';
-
-    /**
      * Content item product set cart-button-btm template identifier
      */
     public const WIDGET_TEMPLATE_IDENTIFIER_CART_BUTTON_BOTTOM = 'cart-button-btm';
-
-    /**
-     * Content item product set cart-button-btm template name
-     */
-    public const WIDGET_TEMPLATE_DISPLAY_NAME_TOP_TITLE = 'content_product_set.template.cart-button-btm';
 }
