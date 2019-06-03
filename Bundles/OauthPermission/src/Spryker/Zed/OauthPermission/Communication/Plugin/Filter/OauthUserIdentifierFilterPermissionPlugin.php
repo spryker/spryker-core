@@ -19,7 +19,8 @@ class OauthUserIdentifierFilterPermissionPlugin extends AbstractPlugin implement
 {
     /**
      * {@inheritdoc}
-     * - TODO: add spec and use facade
+     * - Filters user identifier array to remove configured in
+     * \Spryker\Zed\OauthPermission\OauthPermissionConfig::getOauthUserIdentifierFilterKeys() keys.
      *
      * @api
      *

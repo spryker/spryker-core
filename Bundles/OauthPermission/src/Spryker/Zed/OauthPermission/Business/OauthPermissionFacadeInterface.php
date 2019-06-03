@@ -48,7 +48,8 @@ interface OauthPermissionFacadeInterface
 
     /**
      * Specification:
-     * - TODO:
+     * - Filters user identifier array to remove configured in
+     * \Spryker\Zed\OauthPermission\OauthPermissionConfig::getOauthUserIdentifierFilterKeys() keys.
      *
      * @api
      *
