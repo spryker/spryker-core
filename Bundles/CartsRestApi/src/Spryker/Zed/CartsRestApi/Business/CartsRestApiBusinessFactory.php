@@ -186,7 +186,7 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
      */
     public function createQuotePermissionChecker(): QuotePermissionCheckerInterface
     {
-        return new QuotePermissionChecker();
+        return new QuotePermissionChecker($this->getConfig());
     }
 
     /**

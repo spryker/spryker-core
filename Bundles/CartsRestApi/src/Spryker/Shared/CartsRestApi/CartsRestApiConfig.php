@@ -30,4 +30,17 @@ class CartsRestApiConfig extends AbstractBundleConfig
     public const ERROR_IDENTIFIER_CURRENCY_DATA_IS_INCORRECT = 'ERROR_IDENTIFIER_CURRENCY_DATA_IS_INCORRECT';
     public const ERROR_IDENTIFIER_PRICE_MODE_DATA_IS_MISSING = 'ERROR_IDENTIFIER_PRICE_MODE_DATA_IS_MISSING';
     public const ERROR_IDENTIFIER_PRICE_MODE_DATA_IS_INCORRECT = 'ERROR_IDENTIFIER_PRICE_MODE_DATA_IS_INCORRECT';
+
+    /**
+     * @uses \Spryker\Shared\PersistentCart\PersistentCartConfig::PERSISTENT_CART_ANONYMOUS_PREFIX
+     */
+    protected const PERSISTENT_CART_ANONYMOUS_PREFIX = 'anonymous:';
+
+    /**
+     * @return string
+     */
+    public function getPersistentCartAnonymousPrefix(): string
+    {
+        return static::PERSISTENT_CART_ANONYMOUS_PREFIX;
+    }
 }

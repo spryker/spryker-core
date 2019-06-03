@@ -8,11 +8,17 @@
 namespace Spryker\Zed\CartsRestApi\Business\PermissionChecker;
 
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Zed\CartsRestApi\CartsRestApiConfig;
 use Spryker\Zed\Kernel\PermissionAwareTrait;
 
 class QuotePermissionChecker implements QuotePermissionCheckerInterface
 {
     use PermissionAwareTrait;
+
+    /**
+     * @var \Spryker\Zed\CartsRestApi\CartsRestApiConfig
+     */
+    protected $config;
 
     /**
      * @uses \Spryker\Client\SharedCart\Plugin\ReadSharedCartPermissionPlugin::KEY
@@ -23,6 +29,14 @@ class QuotePermissionChecker implements QuotePermissionCheckerInterface
      * @uses \Spryker\Client\SharedCart\Plugin\WriteSharedCartPermissionPlugin::KEY
      */
     protected const PERMISSION_PLUGIN_KEY_WRITE_SHARED_CART = 'WriteSharedCartPermissionPlugin';
+
+    /**
+     * @param \Spryker\Zed\CartsRestApi\CartsRestApiConfig $config
+     */
+    public function __construct(CartsRestApiConfig $config)
+    {
+        $this->config = $config;
+    }
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -53,6 +67,11 @@ class QuotePermissionChecker implements QuotePermissionCheckerInterface
     protected function checkQuotePermission(QuoteTransfer $quoteTransfer, string $permissionPluginKey): bool
     {
         $quoteTransfer->requireIdQuote();
+
+        $customerReference = $quoteTransfer->getCustomerReference();
+        if (strpos($customerReference, $this->config->getAnonymousPrefix()) !== false) {
+            return true;
+        }
 
         if (!$quoteTransfer->getCustomer()) {
             return false;
