@@ -52,10 +52,11 @@ class UrlRepository extends AbstractRepository implements UrlRepositoryInterface
     {
         $urlQuery = $this->getFactory()
             ->createUrlQuery()
-            ->setIgnoreCase(true)
-            ->_if($ignoreRedirects)
-                ->filterByFkResourceRedirect(null, Criteria::ISNULL)
-            ->_endif();
+            ->setIgnoreCase(true);
+
+        if ($ignoreRedirects) {
+            $urlQuery->filterByFkResourceRedirect(null, Criteria::ISNULL);
+        }
 
         if ($urlTransfer->getUrl()) {
             $urlQuery->filterByUrl($urlTransfer->getUrl());
