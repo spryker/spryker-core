@@ -13,9 +13,10 @@ use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\PermissionTransfer;
 use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Shared\PermissionExtension\Dependency\Plugin\PermissionPluginInterface;
-use Spryker\Zed\Oauth\OauthConfig;
+use Spryker\Zed\Kernel\AbstractBundleConfig;
 use Spryker\Zed\OauthPermission\Business\OauthPermissionBusinessFactory;
 use Spryker\Zed\OauthPermission\Business\OauthPermissionFacadeInterface;
+use Spryker\Zed\OauthPermission\OauthPermissionConfig;
 use Spryker\Zed\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInterface;
 
 /**
@@ -42,28 +43,28 @@ class OauthPermissionFacadeTest extends Unit
     /**
      * @return void
      */
-//    public function testExpandCustomerIdentifierWillExpandCustomerDataWithCorrectPermissionsData(): void
-//    {
-//        //Assign
-//        $this->tester->preparePermissionStorageDependency($this->createPermissionStoragePluginStub());
-//        $companyUserTransfer = $this->tester->haveCompanyUserWithPermissions($this->createPermissionPluginMock());
-//        $customerIdentifierTransfer = (new CustomerIdentifierTransfer())
-//            ->setIdCompanyUser($companyUserTransfer->getUuid());
-//
-//        //Act
-//        $customerIdentifierTransfer = $this->getOauthPermissionFacade()->expandCustomerIdentifierWithPermissions(
-//            $customerIdentifierTransfer,
-//            $companyUserTransfer->getCustomer()
-//        );
-//
-//        //Assert
-//        $this->assertNotNull($customerIdentifierTransfer->getPermissions());
-//        $this->assertCount(1, $customerIdentifierTransfer->getPermissions()->getPermissions());
-//        $this->assertEquals(
-//            static::PERMISSION_PLUGIN_KEY,
-//            $customerIdentifierTransfer->getPermissions()->getPermissions()->offsetGet(0)->getKey()
-//        );
-//    }
+    public function testExpandCustomerIdentifierWillExpandCustomerDataWithCorrectPermissionsData(): void
+    {
+        //Assign
+        $this->tester->preparePermissionStorageDependency($this->createPermissionStoragePluginStub());
+        $companyUserTransfer = $this->tester->haveCompanyUserWithPermissions($this->createPermissionPluginMock());
+        $customerIdentifierTransfer = (new CustomerIdentifierTransfer())
+            ->setIdCompanyUser($companyUserTransfer->getUuid());
+
+        //Act
+        $customerIdentifierTransfer = $this->getOauthPermissionFacade()->expandCustomerIdentifierWithPermissions(
+            $customerIdentifierTransfer,
+            $companyUserTransfer->getCustomer()
+        );
+
+        //Assert
+        $this->assertNotNull($customerIdentifierTransfer->getPermissions());
+        $this->assertCount(1, $customerIdentifierTransfer->getPermissions()->getPermissions());
+        $this->assertEquals(
+            static::PERMISSION_PLUGIN_KEY,
+            $customerIdentifierTransfer->getPermissions()->getPermissions()->offsetGet(0)->getKey()
+        );
+    }
 
     /**
      * @return void
@@ -73,18 +74,18 @@ class OauthPermissionFacadeTest extends Unit
         //Assign
         $userIdentifier = $this->getUserIdentifierArray();
 
-        $configMock = $this->createMock(OauthConfig::class)
-            ->method('getOauthUserIdentifierFilterKeys')
-            ->willReturn($this->getOauthUserIdentifierFilterKeysMock());
+        $configMock = $this->createOauthPermissionConfigMock();
 
-        $factory = new OauthPermissionBusinessFactory();
-        $factory->setConfig($configMock);
+        $oauthPermissionBusinessFactory = new OauthPermissionBusinessFactory();
+        $oauthPermissionBusinessFactory->setConfig($configMock);
+        $oauthPermissionFacade = $this->getOauthPermissionFacade();
+        $oauthPermissionFacade->setFactory($oauthPermissionBusinessFactory);
 
         //Act
-        $userIdentifier = $this->getOauthPermissionFacade()->filterOauthUserIdentifier($userIdentifier);
+        $userIdentifier = $oauthPermissionFacade->filterOauthUserIdentifier($userIdentifier);
 
         //Assert
-        $this->assertSame($this->getOauthUserIdentifierFilterKeysMock(), $userIdentifier);
+        $this->assertSame($this->getUserIdentifierFilteredArray(), $userIdentifier);
     }
 
     /**
@@ -131,6 +132,20 @@ class OauthPermissionFacadeTest extends Unit
     protected function getOauthPermissionFacade(): OauthPermissionFacadeInterface
     {
         return $this->tester->getFacade();
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Kernel\AbstractBundleConfig|\Spryker\Zed\OauthPermission\OauthPermissionConfig
+     */
+    protected function createOauthPermissionConfigMock(): AbstractBundleConfig
+    {
+        $mock = $this->getMockBuilder(OauthPermissionConfig::class)
+            ->setMethods(['getOauthUserIdentifierFilterKeys'])
+            ->getMock();
+        $mock->method('getOauthUserIdentifierFilterKeys')
+            ->willReturn($this->getOauthUserIdentifierFilterKeysMock());
+
+        return $mock;
     }
 
     /**
