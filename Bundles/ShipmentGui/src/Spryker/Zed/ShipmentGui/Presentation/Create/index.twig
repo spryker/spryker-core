@@ -39,6 +39,9 @@
                         <th>{{ 'Current shipment' | trans }}</th>
                     </thead>
                     <tbody>
+                    {% set shipmentNumberList = {} %}
+                    {% set shipmentNumber = 0 %}
+
                     {% for item in form.items %}
                         {% set itemData = item.vars.data %}
                         <tr>
@@ -80,7 +83,16 @@
                                 {% endif %}
                             </td>
                             <td>
-                                {{ itemData.shipment.carrier.name ~ ' - ' ~ itemData.shipment.method.name }}
+                                {% set key = 'key_' ~ itemData.shipment.idSalesShipment %}
+
+                                {% if shipmentNumberList[key] is not defined %}
+                                    {% set shipmentNumber = shipmentNumber + 1 %}
+                                    {% set value = shipmentNumber %}
+                                    {% set data = {(key):value} %}
+                                    {% set shipmentNumberList = shipmentNumberList|merge(data) %}
+                                {% endif %}
+
+                                {{ 'Shipment n°'|trans }} {{ shipmentNumberList[key]}}
                             </td>
                         </tr>
                     {% endfor %}
