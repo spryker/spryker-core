@@ -47,10 +47,11 @@ class SalesOrderItemReader implements SalesOrderItemReaderInterface
     protected function hydrateSalesOrderItemTransfersFromPersistence(ObjectCollection $salesOrderItemEntities): ArrayObject
     {
         $salesOrderItemTransfers = new ArrayObject();
+
         foreach ($salesOrderItemEntities as $itemEntity) {
-            $itemTransfer = new ItemTransfer();
-            $itemTransfer->fromArray($itemEntity->toArray(), true);
-            $itemTransfer->setShipment($itemEntity->getShipment());
+            $itemTransfer = (new ItemTransfer())
+                ->fromArray($itemEntity->toArray(), true);
+
             $salesOrderItemTransfers->append($itemTransfer);
         }
 
