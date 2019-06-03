@@ -13,6 +13,8 @@ use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\PermissionTransfer;
 use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Shared\PermissionExtension\Dependency\Plugin\PermissionPluginInterface;
+use Spryker\Zed\Oauth\OauthConfig;
+use Spryker\Zed\OauthPermission\Business\OauthPermissionBusinessFactory;
 use Spryker\Zed\OauthPermission\Business\OauthPermissionFacadeInterface;
 use Spryker\Zed\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInterface;
 
@@ -30,6 +32,8 @@ class OauthPermissionFacadeTest extends Unit
 {
     protected const PERMISSION_PLUGIN_KEY = 'TestPermissionPlugin';
 
+    protected const KEY_PERMISSIONS = 'permissions';
+
     /**
      * @var \SprykerTest\Zed\OauthPermission\OauthPermissionBusinessTester
      */
@@ -38,27 +42,49 @@ class OauthPermissionFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testExpandCustomerIdentifierWillExpandCustomerDataWithCorrectPermissionsData(): void
+//    public function testExpandCustomerIdentifierWillExpandCustomerDataWithCorrectPermissionsData(): void
+//    {
+//        //Assign
+//        $this->tester->preparePermissionStorageDependency($this->createPermissionStoragePluginStub());
+//        $companyUserTransfer = $this->tester->haveCompanyUserWithPermissions($this->createPermissionPluginMock());
+//        $customerIdentifierTransfer = (new CustomerIdentifierTransfer())
+//            ->setIdCompanyUser($companyUserTransfer->getUuid());
+//
+//        //Act
+//        $customerIdentifierTransfer = $this->getOauthPermissionFacade()->expandCustomerIdentifierWithPermissions(
+//            $customerIdentifierTransfer,
+//            $companyUserTransfer->getCustomer()
+//        );
+//
+//        //Assert
+//        $this->assertNotNull($customerIdentifierTransfer->getPermissions());
+//        $this->assertCount(1, $customerIdentifierTransfer->getPermissions()->getPermissions());
+//        $this->assertEquals(
+//            static::PERMISSION_PLUGIN_KEY,
+//            $customerIdentifierTransfer->getPermissions()->getPermissions()->offsetGet(0)->getKey()
+//        );
+//    }
+
+    /**
+     * @return void
+     */
+    public function testFilterOauthUserIdentifierWillFilterOutConfiguredKeys(): void
     {
         //Assign
-        $this->tester->preparePermissionStorageDependency($this->createPermissionStoragePluginStub());
-        $companyUserTransfer = $this->tester->haveCompanyUserWithPermissions($this->createPermissionPluginMock());
-        $customerIdentifierTransfer = (new CustomerIdentifierTransfer())
-            ->setIdCompanyUser($companyUserTransfer->getUuid());
+        $userIdentifier = $this->getUserIdentifierArray();
+
+        $configMock = $this->createMock(OauthConfig::class)
+            ->method('getOauthUserIdentifierFilterKeys')
+            ->willReturn($this->getOauthUserIdentifierFilterKeysMock());
+
+        $factory = new OauthPermissionBusinessFactory();
+        $factory->setConfig($configMock);
 
         //Act
-        $customerIdentifierTransfer = $this->getOauthPermissionFacade()->expandCustomerIdentifierWithPermissions(
-            $customerIdentifierTransfer,
-            $companyUserTransfer->getCustomer()
-        );
+        $userIdentifier = $this->getOauthPermissionFacade()->filterOauthUserIdentifier($userIdentifier);
 
         //Assert
-        $this->assertNotNull($customerIdentifierTransfer->getPermissions());
-        $this->assertCount(1, $customerIdentifierTransfer->getPermissions()->getPermissions());
-        $this->assertEquals(
-            static::PERMISSION_PLUGIN_KEY,
-            $customerIdentifierTransfer->getPermissions()->getPermissions()->offsetGet(0)->getKey()
-        );
+        $this->assertSame($this->getOauthUserIdentifierFilterKeysMock(), $userIdentifier);
     }
 
     /**
@@ -105,5 +131,42 @@ class OauthPermissionFacadeTest extends Unit
     protected function getOauthPermissionFacade(): OauthPermissionFacadeInterface
     {
         return $this->tester->getFacade();
+    }
+
+    /**
+     * @return array
+     */
+    protected function getUserIdentifierArray(): array
+    {
+        return [
+            'id_company_user' => '94d58692-c117-5466-8b9f-2ba32dd87c43',
+            'customer_reference' => 'DE--1',
+            'id_customer' => 1,
+            'permissions' => [
+                static::PERMISSION_PLUGIN_KEY,
+            ],
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    protected function getUserIdentifierFilteredArray(): array
+    {
+        return [
+            'id_company_user' => '94d58692-c117-5466-8b9f-2ba32dd87c43',
+            'customer_reference' => 'DE--1',
+            'id_customer' => 1,
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    protected function getOauthUserIdentifierFilterKeysMock(): array
+    {
+        return [
+            static::KEY_PERMISSIONS,
+        ];
     }
 }
