@@ -38,11 +38,11 @@ class ProductQuantityStorageClient extends AbstractClient implements ProductQuan
      * @api
      *
      * @param int $idProduct
-     * @param int $quantity
+     * @param float $quantity
      *
-     * @return int
+     * @return float
      */
-    public function getNearestQuantity(int $idProduct, int $quantity): int
+    public function getNearestQuantity(int $idProduct, float $quantity): float
     {
         return $this->getFactory()
             ->createProductQuantityResolver()

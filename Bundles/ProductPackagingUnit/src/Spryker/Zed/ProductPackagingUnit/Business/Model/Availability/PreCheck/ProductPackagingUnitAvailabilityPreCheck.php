@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductPackagingUnit\Business\Model\Availability\PreCheck;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToAvailabilityFacadeInterface;
+use Spryker\Zed\ProductPackagingUnit\Dependency\Service\ProductPackagingUnitToUtilQuantityServiceInterface;
 use Traversable;
 
 abstract class ProductPackagingUnitAvailabilityPreCheck
@@ -20,12 +21,20 @@ abstract class ProductPackagingUnitAvailabilityPreCheck
     protected $availabilityFacade;
 
     /**
+     * @var \Spryker\Zed\ProductPackagingUnit\Dependency\Service\ProductPackagingUnitToUtilQuantityServiceInterface
+     */
+    protected $utilQuantityService;
+
+    /**
      * @param \Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToAvailabilityFacadeInterface $availabilityFacade
+     * @param \Spryker\Zed\ProductPackagingUnit\Dependency\Service\ProductPackagingUnitToUtilQuantityServiceInterface $utilQuantityService
      */
     public function __construct(
-        ProductPackagingUnitToAvailabilityFacadeInterface $availabilityFacade
+        ProductPackagingUnitToAvailabilityFacadeInterface $availabilityFacade,
+        ProductPackagingUnitToUtilQuantityServiceInterface $utilQuantityService
     ) {
         $this->availabilityFacade = $availabilityFacade;
+        $this->utilQuantityService = $utilQuantityService;
     }
 
     /**
@@ -51,15 +60,15 @@ abstract class ProductPackagingUnitAvailabilityPreCheck
      * @param \Traversable|\Generated\Shared\Transfer\ItemTransfer[] $items
      * @param string $leadProductSku
      *
-     * @return int
+     * @return float
      */
-    protected function getAccumulatedQuantityForLeadProduct(Traversable $items, string $leadProductSku): int
+    protected function getAccumulatedQuantityForLeadProduct(Traversable $items, string $leadProductSku): float
     {
         $quantity = 0;
 
         foreach ($items as $item) {
             if ($leadProductSku === $item->getSku()) { // Lead product is in cart as an individual item
-                $quantity += $item->getQuantity();
+                $quantity = $this->sumQuantities($quantity, $item->getQuantity());
                 continue;
             }
 
@@ -68,7 +77,7 @@ abstract class ProductPackagingUnitAvailabilityPreCheck
             }
 
             if ($item->getAmountLeadProduct()->getProduct()->getSku() === $leadProductSku) { // Item in cart has the searched lead product
-                $quantity += $item->getAmount();
+                $quantity = $this->sumQuantities($quantity, $item->getAmount());
             }
         }
 
@@ -76,13 +85,24 @@ abstract class ProductPackagingUnitAvailabilityPreCheck
     }
 
     /**
+     * @param float $firstQuantity
+     * @param float $secondQuantity
+     *
+     * @return float
+     */
+    protected function sumQuantities(float $firstQuantity, float $secondQuantity): float
+    {
+        return $this->utilQuantityService->sumQuantities($firstQuantity, $secondQuantity);
+    }
+
+    /**
      * @param string $sku
-     * @param int $quantity
+     * @param float $quantity
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return bool
      */
-    protected function isProductSellableForStore(string $sku, int $quantity, StoreTransfer $storeTransfer): bool
+    protected function isProductSellableForStore(string $sku, float $quantity, StoreTransfer $storeTransfer): bool
     {
         return $this->availabilityFacade
             ->isProductSellableForStore($sku, $quantity, $storeTransfer);

@@ -15,6 +15,8 @@ use Spryker\Zed\Offer\Dependency\Facade\OfferToCustomerFacadeBridge;
 use Spryker\Zed\Offer\Dependency\Facade\OfferToMessengerFacadeBridge;
 use Spryker\Zed\Offer\Dependency\Facade\OfferToSalesFacadeBridge;
 use Spryker\Zed\Offer\Dependency\Service\OfferToUtilEncodingServiceBridge;
+use Spryker\Zed\Offer\Dependency\Service\OfferToUtilPriceServiceBridge;
+use Spryker\Zed\Offer\Dependency\Service\OfferToUtilQuantityServiceBridge;
 
 /**
  * @method \Spryker\Zed\Offer\OfferConfig getConfig()
@@ -26,6 +28,8 @@ class OfferDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_MESSENGER = 'FACADE_MESSENGER';
     public const FACADE_CUSTOMER = 'FACADE_CUSTOMER';
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+    public const SERVICE_UTIL_PRICE = 'SERVICE_UTIL_PRICE';
+    public const SERVICE_UTIL_QUANTITY = 'SERVICE_UTIL_QUANTITY';
     public const PLUGINS_OFFER_HYDRATOR = 'PLUGINS_OFFER_HYDRATOR';
     public const PLUGINS_OFFER_DO_UPDATE = 'PLUGINS_OFFER_DO_UPDATE';
 
@@ -43,6 +47,8 @@ class OfferDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addOfferHydratorPlugins($container);
         $container = $this->addOfferDoUpdatePlugins($container);
         $container = $this->addCartFacade($container);
+        $container = $this->addUtilPriceService($container);
+        $container = $this->addUtilQuantityService($container);
 
         return $container;
     }
@@ -68,6 +74,38 @@ class OfferDependencyProvider extends AbstractBundleDependencyProvider
     public function providePersistenceLayerDependencies(Container $container)
     {
         $container = $this->addServiceUtilEncoding($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUtilPriceService(Container $container): Container
+    {
+        $container[static::SERVICE_UTIL_PRICE] = function (Container $container) {
+            return new OfferToUtilPriceServiceBridge(
+                $container->getLocator()->utilPrice()->service()
+            );
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUtilQuantityService(Container $container): Container
+    {
+        $container[static::SERVICE_UTIL_QUANTITY] = function (Container $container) {
+            return new OfferToUtilQuantityServiceBridge(
+                $container->getLocator()->utilQuantity()->service()
+            );
+        };
 
         return $container;
     }
