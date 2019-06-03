@@ -25,10 +25,10 @@ class PersistentCartShareFacade extends AbstractFacade implements PersistentCart
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function getQuoteByResourceShareUuid(ResourceShareRequestTransfer $resourceShareRequestTransfer): QuoteResponseTransfer
+    public function getPreviewQuoteResourceShare(ResourceShareRequestTransfer $resourceShareRequestTransfer): QuoteResponseTransfer
     {
         return $this->getFactory()
             ->createQuoteReader()
-            ->getQuoteByResourceShareUuid($resourceShareRequestTransfer);
+            ->getPreviewQuoteResourceShare($resourceShareRequestTransfer);
     }
 }

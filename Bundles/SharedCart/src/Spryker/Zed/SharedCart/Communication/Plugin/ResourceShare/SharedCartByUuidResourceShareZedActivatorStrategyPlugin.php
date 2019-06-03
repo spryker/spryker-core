@@ -9,17 +9,20 @@ namespace Spryker\Zed\SharedCart\Communication\Plugin\ResourceShare;
 
 use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
-use Spryker\Shared\SharedCart\SharedCartConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\ResourceShareExtension\Dependency\Plugin\ResourceShareActivatorStrategyPluginInterface;
+use Spryker\Zed\ResourceShareExtension\Dependency\Plugin\ResourceShareZedActivatorStrategyPluginInterface;
 
 /**
  * @method \Spryker\Zed\SharedCart\Business\SharedCartFacadeInterface getFacade()
  * @method \Spryker\Zed\SharedCart\SharedCartConfig getConfig()
  * @method \Spryker\Zed\SharedCart\Communication\SharedCartCommunicationFactory getFactory()
  */
-class SharedCartByUuidActivatorStrategyPlugin extends AbstractPlugin implements ResourceShareActivatorStrategyPluginInterface
+class SharedCartByUuidResourceShareZedActivatorStrategyPlugin extends AbstractPlugin implements ResourceShareZedActivatorStrategyPluginInterface
 {
+    protected const RESOURCE_TYPE_QUOTE = 'quote';
+    protected const PERMISSION_GROUP_READ_ONLY = 'READ_ONLY';
+    protected const PERMISSION_GROUP_FULL_ACCESS = 'FULL_ACCESS';
+
     /**
      * {@inheritdoc}
      * - Creates cart share for provided Quote and provided company user within the same business unit.
@@ -36,19 +39,6 @@ class SharedCartByUuidActivatorStrategyPlugin extends AbstractPlugin implements 
     public function execute(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer
     {
         return $this->getFacade()->applyShareCartByUuidActivatorStrategy($resourceShareRequestTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     * - Returns true, since the customer must be logged-in to apply activator strategy.
-     *
-     * @api
-     *
-     * @return bool
-     */
-    public function isLoginRequired(): bool
-    {
-        return true;
     }
 
     /**
@@ -71,13 +61,13 @@ class SharedCartByUuidActivatorStrategyPlugin extends AbstractPlugin implements 
 
         $resourceShareTransfer = $resourceShareRequestTransfer->getResourceShare();
         $resourceShareTransfer->requireResourceType();
-        if ($resourceShareTransfer->getResourceType() !== SharedCartConfig::RESOURCE_TYPE_QUOTE) {
+        if ($resourceShareTransfer->getResourceType() !== static::RESOURCE_TYPE_QUOTE) {
             return false;
         }
 
         $resourceShareTransfer->requireResourceShareData();
         $resourceShareDataTransfer = $resourceShareTransfer->getResourceShareData();
 
-        return in_array($resourceShareDataTransfer->getShareOption(), [SharedCartConfig::PERMISSION_GROUP_READ_ONLY, SharedCartConfig::PERMISSION_GROUP_FULL_ACCESS], true);
+        return in_array($resourceShareDataTransfer->getShareOption(), [static::PERMISSION_GROUP_READ_ONLY, static::PERMISSION_GROUP_FULL_ACCESS], true);
     }
 }

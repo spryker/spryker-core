@@ -25,4 +25,11 @@ interface ResourceShareStubInterface
      * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
      */
     public function activateResourceShare(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
+     */
+    public function getResourceShareByUuid(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer;
 }

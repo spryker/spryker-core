@@ -19,8 +19,8 @@ use Spryker\Client\SharedCart\Dependency\Client\SharedCartToMultiCartClientInter
 use Spryker\Client\SharedCart\Dependency\Client\SharedCartToPersistentCartClientInterface;
 use Spryker\Client\SharedCart\Permission\PermissionResolver;
 use Spryker\Client\SharedCart\Permission\PermissionResolverInterface;
-use Spryker\Client\SharedCart\ResourceShare\SwitchDefaultCartResourceShareActivatorStrategy;
-use Spryker\Client\SharedCart\ResourceShare\SwitchDefaultCartResourceShareActivatorStrategyInterface;
+use Spryker\Client\SharedCart\ResourceShare\SwitchDefaultCartByResourceShare;
+use Spryker\Client\SharedCart\ResourceShare\SwitchDefaultCartByResourceShareInterface;
 use Spryker\Client\SharedCart\Zed\SharedCartStub;
 use Spryker\Client\SharedCart\Zed\SharedCartStubInterface;
 use Spryker\Client\ZedRequest\ZedRequestClientInterface;
@@ -60,11 +60,11 @@ class SharedCartFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\SharedCart\ResourceShare\SwitchDefaultCartResourceShareActivatorStrategyInterface
+     * @return \Spryker\Client\SharedCart\ResourceShare\SwitchDefaultCartByResourceShareInterface
      */
-    public function createSwitchDefaultCartResourceShareActivatorStrategy(): SwitchDefaultCartResourceShareActivatorStrategyInterface
+    public function createSwitchDefaultCartByResourceShare(): SwitchDefaultCartByResourceShareInterface
     {
-        return new SwitchDefaultCartResourceShareActivatorStrategy(
+        return new SwitchDefaultCartByResourceShare(
             $this->getMultiCartClient()
         );
     }

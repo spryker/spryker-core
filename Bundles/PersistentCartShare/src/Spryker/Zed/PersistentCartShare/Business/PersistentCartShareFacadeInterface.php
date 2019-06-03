@@ -28,5 +28,5 @@ interface PersistentCartShareFacadeInterface
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function getQuoteByResourceShareUuid(ResourceShareRequestTransfer $resourceShareRequestTransfer): QuoteResponseTransfer;
+    public function getPreviewQuoteResourceShare(ResourceShareRequestTransfer $resourceShareRequestTransfer): QuoteResponseTransfer;
 }

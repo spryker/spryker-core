@@ -7,17 +7,21 @@
 
 namespace Spryker\Client\SharedCart\Plugin\ResourceShare;
 
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
-use Spryker\Client\ResourceShareExtension\Dependency\Plugin\ResourceShareActivatorStrategyPluginInterface;
-use Spryker\Shared\SharedCart\SharedCartConfig;
+use Spryker\Client\ResourceShareExtension\Dependency\Plugin\ResourceShareClientActivatorStrategyPluginInterface;
 
 /**
  * @method \Spryker\Client\SharedCart\SharedCartClientInterface getClient()
  */
-class SwitchDefaultCartResourceShareActivatorStrategyPlugin extends AbstractPlugin implements ResourceShareActivatorStrategyPluginInterface
+class SwitchDefaultCartResourceShareClientActivatorStrategyPlugin extends AbstractPlugin implements ResourceShareClientActivatorStrategyPluginInterface
 {
+    protected const RESOURCE_TYPE_QUOTE = 'quote';
+    protected const PERMISSION_GROUP_READ_ONLY = 'READ_ONLY';
+    protected const PERMISSION_GROUP_FULL_ACCESS = 'FULL_ACCESS';
+
     /**
      * {@inheritdoc}
      * - Switches default cart for provided Quote and company user.
@@ -32,7 +36,7 @@ class SwitchDefaultCartResourceShareActivatorStrategyPlugin extends AbstractPlug
      */
     public function execute(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer
     {
-        return $this->getClient()->applySwitchDefaultCartResourceShareActivatorStrategy($resourceShareRequestTransfer);
+        return $this->getClient()->switchDefaultCartByResourceShare($resourceShareRequestTransfer);
     }
 
     /**
@@ -41,11 +45,13 @@ class SwitchDefaultCartResourceShareActivatorStrategyPlugin extends AbstractPlug
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\CustomerTransfer|null $customerTransfer
+     *
      * @return bool
      */
-    public function isLoginRequired(): bool
+    public function isLoginRequired(?CustomerTransfer $customerTransfer): bool
     {
-        return true;
+        return $customerTransfer === null;
     }
 
     /**
@@ -61,20 +67,15 @@ class SwitchDefaultCartResourceShareActivatorStrategyPlugin extends AbstractPlug
      */
     public function isApplicable(ResourceShareRequestTransfer $resourceShareRequestTransfer): bool
     {
-        $customerTransfer = $resourceShareRequestTransfer->getCustomer();
-        if (!$customerTransfer || !$customerTransfer->getCompanyUserTransfer()) {
-            return false;
-        }
-
         $resourceShareTransfer = $resourceShareRequestTransfer->getResourceShare();
         $resourceShareTransfer->requireResourceType();
-        if ($resourceShareTransfer->getResourceType() !== SharedCartConfig::RESOURCE_TYPE_QUOTE) {
+        if ($resourceShareTransfer->getResourceType() !== static::RESOURCE_TYPE_QUOTE) {
             return false;
         }
 
         $resourceShareTransfer->requireResourceShareData();
         $resourceShareDataTransfer = $resourceShareTransfer->getResourceShareData();
 
-        return in_array($resourceShareDataTransfer->getShareOption(), [SharedCartConfig::PERMISSION_GROUP_READ_ONLY, SharedCartConfig::PERMISSION_GROUP_FULL_ACCESS], true);
+        return in_array($resourceShareDataTransfer->getShareOption(), [static::PERMISSION_GROUP_READ_ONLY, static::PERMISSION_GROUP_FULL_ACCESS], true);
     }
 }

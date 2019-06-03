@@ -19,7 +19,7 @@ interface CartShareOptionPluginInterface
      *
      * @return string
      */
-    public function getKey(): string;
+    public function getShareOptionKey(): string;
 
     /**
      * Specification:

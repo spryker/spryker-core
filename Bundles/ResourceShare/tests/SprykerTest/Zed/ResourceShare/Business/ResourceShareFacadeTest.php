@@ -10,14 +10,13 @@ namespace SprykerTest\Zed\ResourceShare\Business;
 use Codeception\TestCase\Test;
 use DateTime;
 use Generated\Shared\DataBuilder\ResourceShareBuilder;
-use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
 use Generated\Shared\Transfer\ResourceShareTransfer;
 use Orm\Zed\ResourceShare\Persistence\SpyResourceShare;
 use Spryker\Zed\ResourceShare\ResourceShareDependencyProvider;
-use Spryker\Zed\ResourceShareExtension\Dependency\Plugin\ResourceShareActivatorStrategyPluginInterface;
 use Spryker\Zed\ResourceShareExtension\Dependency\Plugin\ResourceShareResourceDataExpanderStrategyPluginInterface;
+use Spryker\Zed\ResourceShareExtension\Dependency\Plugin\ResourceShareZedActivatorStrategyPluginInterface;
 
 /**
  * Auto-generated group annotations
@@ -202,86 +201,6 @@ class ResourceShareFacadeTest extends Test
     /**
      * @return void
      */
-    public function testActivateResourceShareShouldAddErrorMessageWhenResourceIsNotFoundByUuid(): void
-    {
-        // Arrange
-        $customerTransfer = (new CustomerTransfer())
-            ->setCustomerReference(static::VALUE_CUSTOMER_REFERENCE);
-
-        $resourceShareTransfer = (new ResourceShareTransfer())
-            ->setUuid(static::VALUE_RESOURCE_SHARE_UUID);
-
-        $resourceShareRequestTransfer = (new ResourceShareRequestTransfer())
-            ->setResourceShare($resourceShareTransfer)
-            ->setCustomer($customerTransfer);
-
-        // Act
-        $resourceShareResponseTransfer = $this->getFacade()->activateResourceShare($resourceShareRequestTransfer);
-
-        // Assert
-        $this->assertFalse($resourceShareResponseTransfer->getIsSuccessful());
-        $this->assertTrue($this->hasResourceShareResponseTransferErrorMessage(
-            $resourceShareResponseTransfer,
-            static::GLOSSARY_KEY_RESOURCE_IS_NOT_FOUND_BY_PROVIDED_UUID
-        ));
-    }
-
-    /**
-     * @return void
-     */
-    public function testActivateResourceShareShouldExecuteStrategyPluginsWhenTheyDoNotRequireCustomerToBeLoggedIn(): void
-    {
-        // Arrange
-        $resourceShareTransfer = $this->tester->haveResourceShare();
-
-        $resourceShareActivatorStrategyPluginMock = $this->createResourceShareActivatorStrategyPluginMock();
-        $resourceShareActivatorStrategyPluginMock->method('isApplicable')->willReturn(true);
-        $resourceShareActivatorStrategyPluginMock->method('isLoginRequired')->willReturn(false);
-        $resourceShareActivatorStrategyPluginMock->expects($this->once())->method('execute')->willReturn(
-            (new ResourceShareResponseTransfer())->setIsSuccessful(true)
-        );
-
-        $this->registerResourceShareActivatorStrategyPlugin($resourceShareActivatorStrategyPluginMock);
-
-        $resourceShareTransfer = (new ResourceShareTransfer())
-            ->setUuid($resourceShareTransfer->getUuid());
-
-        $resourceShareRequestTransfer = (new ResourceShareRequestTransfer())
-            ->setResourceShare($resourceShareTransfer)
-            ->setCustomer(null);
-
-        // Act
-        $resourceShareResponseTransfer = $this->getFacade()->activateResourceShare($resourceShareRequestTransfer);
-
-        // Assert
-        $this->assertTrue($resourceShareResponseTransfer->getIsSuccessful());
-        $this->assertNull($resourceShareResponseTransfer->getIsLoginRequired());
-    }
-
-    /**
-     * @return void
-     */
-    public function testActivateResourceShareWillNotActivateExpiredResourceShare(): void
-    {
-        // Arrange
-        $resourceShareTransfer = $this->createExpiredResourceShare();
-
-        // Act
-        $resourceShareResponseTransfer = $this->getFacade()->activateResourceShare(
-            (new ResourceShareRequestTransfer())->setResourceShare($resourceShareTransfer)
-        );
-
-        // Assert
-        $this->assertFalse($resourceShareResponseTransfer->getIsSuccessful());
-        $this->assertTrue($this->hasResourceShareResponseTransferErrorMessage(
-            $resourceShareResponseTransfer,
-            static::GLOSSARY_KEY_RESOURCE_SHARE_IS_EXPIRED
-        ));
-    }
-
-    /**
-     * @return void
-     */
     public function testGetResourceShareByUuidShouldAddErrorMessageWhenResourceIsNotFound(): void
     {
         // Arrange
@@ -361,12 +280,12 @@ class ResourceShareFacadeTest extends Test
     }
 
     /**
-     * @param \Spryker\Zed\ResourceShareExtension\Dependency\Plugin\ResourceShareActivatorStrategyPluginInterface $resourceShareActivatorStrategyPlugin
+     * @param \Spryker\Zed\ResourceShareExtension\Dependency\Plugin\ResourceShareZedActivatorStrategyPluginInterface $resourceShareActivatorStrategyPlugin
      *
      * @return void
      */
     protected function registerResourceShareActivatorStrategyPlugin(
-        ResourceShareActivatorStrategyPluginInterface $resourceShareActivatorStrategyPlugin
+        ResourceShareZedActivatorStrategyPluginInterface $resourceShareActivatorStrategyPlugin
     ): void {
         $this->tester->setDependency(ResourceShareDependencyProvider::PLUGINS_RESOURCE_SHARE_ACTIVATOR_STRATEGY, [
             $resourceShareActivatorStrategyPlugin,
@@ -396,11 +315,11 @@ class ResourceShareFacadeTest extends Test
     }
 
     /**
-     * @return \Spryker\Zed\ResourceShareExtension\Dependency\Plugin\ResourceShareActivatorStrategyPluginInterface|\PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Zed\ResourceShareExtension\Dependency\Plugin\ResourceShareZedActivatorStrategyPluginInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     protected function createResourceShareActivatorStrategyPluginMock()
     {
-        return $this->createMock(ResourceShareActivatorStrategyPluginInterface::class);
+        return $this->createMock(ResourceShareZedActivatorStrategyPluginInterface::class);
     }
 
     /**

@@ -10,12 +10,12 @@ namespace Spryker\Client\SharedCart\ResourceShare;
 use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
 
-interface SwitchDefaultCartResourceShareActivatorStrategyInterface
+interface SwitchDefaultCartByResourceShareInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
      */
-    public function applySwitchDefaultCartResourceShareActivatorStrategy(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer;
+    public function switchDefaultCartByResourceShare(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer;
 }

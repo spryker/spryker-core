@@ -7,7 +7,9 @@
 
 namespace Spryker\Client\PersistentCartShare;
 
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
+use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
 
 interface PersistentCartShareClientInterface
@@ -21,11 +23,11 @@ interface PersistentCartShareClientInterface
      *
      * @api
      *
-     * @param string $resourceShareUuid
+     * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function getQuoteByResourceShareUuid(string $resourceShareUuid): QuoteResponseTransfer;
+    public function getPreviewQuoteResourceShare(ResourceShareRequestTransfer $resourceShareRequestTransfer): QuoteResponseTransfer;
 
     /**
      * Specification:
@@ -33,9 +35,11 @@ interface PersistentCartShareClientInterface
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\CustomerTransfer|null $customerTransfer
+     *
      * @return string[][]
      */
-    public function getCartShareOptions(): array;
+    public function getCartShareOptions(?CustomerTransfer $customerTransfer): array;
 
     /**
      * Specification:
@@ -45,10 +49,9 @@ interface PersistentCartShareClientInterface
      *
      * @api
      *
-     * @param int $idQuote
-     * @param string $shareOption
+     * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
      */
-    public function generateCartResourceShare(int $idQuote, string $shareOption): ResourceShareResponseTransfer;
+    public function generateCartResourceShare(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer;
 }

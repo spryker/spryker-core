@@ -14,6 +14,8 @@ use Spryker\Shared\SharedCart\SharedCartConfig as SharedSharedCartConfig;
 
 class FullAccessCartShareOptionPlugin extends AbstractPlugin implements CartShareOptionPluginInterface
 {
+    protected const SHARE_OPTION_GROUP_INTERNAL = 'internal';
+
     /**
      * {@inheritdoc}
      *
@@ -21,7 +23,7 @@ class FullAccessCartShareOptionPlugin extends AbstractPlugin implements CartShar
      *
      * @return string
      */
-    public function getKey(): string
+    public function getShareOptionKey(): string
     {
         return SharedSharedCartConfig::PERMISSION_GROUP_FULL_ACCESS;
     }
@@ -57,6 +59,6 @@ class FullAccessCartShareOptionPlugin extends AbstractPlugin implements CartShar
      */
     public function getShareOptionGroup(): string
     {
-        return SharedSharedCartConfig::SHARE_OPTION_GROUP_INTERNAL;
+        return static::SHARE_OPTION_GROUP_INTERNAL;
     }
 }

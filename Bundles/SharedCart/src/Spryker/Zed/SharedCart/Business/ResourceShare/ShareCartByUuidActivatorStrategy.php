@@ -84,7 +84,7 @@ class ShareCartByUuidActivatorStrategy implements ShareCartByUuidActivatorStrate
 
         $shareDetailTransfer = $this->findShareDetail($resourceShareRequestTransfer);
         if ($shareDetailTransfer) {
-            return $this->resourceShareQuoteCompanyUserWriter->updateCartShareForProvidedCompanyUser($resourceShareRequestTransfer, $shareDetailTransfer);
+            return $this->resourceShareQuoteCompanyUserWriter->updateCartShareForCompanyUser($resourceShareRequestTransfer, $shareDetailTransfer);
         }
 
         return $this->createCartShareForProvidedCompanyUser($resourceShareRequestTransfer);
@@ -111,7 +111,7 @@ class ShareCartByUuidActivatorStrategy implements ShareCartByUuidActivatorStrate
                 );
         }
 
-        return $this->resourceShareQuoteCompanyUserWriter->createCartShareForProvidedCompanyUser($resourceShareRequestTransfer);
+        return $this->resourceShareQuoteCompanyUserWriter->createCartShareForCompanyUser($resourceShareRequestTransfer);
     }
 
     /**
@@ -139,13 +139,13 @@ class ShareCartByUuidActivatorStrategy implements ShareCartByUuidActivatorStrate
      */
     protected function isProvidedCompanyUserResourceShareOwner(ResourceShareRequestTransfer $resourceShareRequestTransfer): bool
     {
-        $ownerIdCompanyUser = $resourceShareRequestTransfer->getResourceShare()
+        $ownerCompanyUserId = $resourceShareRequestTransfer->getResourceShare()
             ->getResourceShareData()
-            ->getOwnerIdCompanyUser();
+            ->getOwnerCompanyUserId();
 
         $customerTransfer = $resourceShareRequestTransfer->getCustomer();
 
-        return $customerTransfer->getCompanyUserTransfer()->getIdCompanyUser() === $ownerIdCompanyUser;
+        return $customerTransfer->getCompanyUserTransfer()->getIdCompanyUser() === $ownerCompanyUserId;
     }
 
     /**
@@ -161,8 +161,8 @@ class ShareCartByUuidActivatorStrategy implements ShareCartByUuidActivatorStrate
         $resourceShareTransfer = $resourceShareRequestTransfer->getResourceShare();
         $resourceShareDataTransfer = $resourceShareTransfer->getResourceShareData();
 
-        $ownerIdCompanyBusinessUnit = $resourceShareDataTransfer->getOwnerIdCompanyBusinessUnit();
-        if (!$ownerIdCompanyBusinessUnit || $ownerIdCompanyBusinessUnit !== $companyUserTransfer->getFkCompanyBusinessUnit()) {
+        $ownerCompanyBusinessUnitId = $resourceShareDataTransfer->getOwnerCompanyBusinessUnitId();
+        if (!$ownerCompanyBusinessUnitId || $ownerCompanyBusinessUnitId !== $companyUserTransfer->getFkCompanyBusinessUnit()) {
             return false;
         }
 

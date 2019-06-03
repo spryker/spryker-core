@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ResourceShareExtension\Dependency\Plugin;
+namespace Spryker\Shared\ResourceShareExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
@@ -25,16 +25,6 @@ interface ResourceShareActivatorStrategyPluginInterface
      * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
      */
     public function execute(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer;
-
-    /**
-     * Specification:
-     * - Determines if strategy plugin requires the customer to be logged in.
-     *
-     * @api
-     *
-     * @return bool
-     */
-    public function isLoginRequired(): bool;
 
     /**
      * Specification:

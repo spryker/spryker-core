@@ -173,10 +173,10 @@ class SharedCartClient extends AbstractClient implements SharedCartClientInterfa
      *
      * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
      */
-    public function applySwitchDefaultCartResourceShareActivatorStrategy(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer
+    public function switchDefaultCartByResourceShare(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer
     {
         return $this->getFactory()
-            ->createSwitchDefaultCartResourceShareActivatorStrategy()
-            ->applySwitchDefaultCartResourceShareActivatorStrategy($resourceShareRequestTransfer);
+            ->createSwitchDefaultCartByResourceShare()
+            ->switchDefaultCartByResourceShare($resourceShareRequestTransfer);
     }
 }

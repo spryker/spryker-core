@@ -52,4 +52,17 @@ class ResourceShareStub extends AbstractStub implements ResourceShareStubInterfa
 
         return $resourceShareResponseTransfer;
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
+     */
+    public function getResourceShareByUuid(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer
+    {
+        /** @var \Generated\Shared\Transfer\ResourceShareResponseTransfer $resourceShareResponseTransfer */
+        $resourceShareResponseTransfer = $this->zedRequestClient->call('/resource-share/gateway/get-resource-share-by-uuid', $resourceShareRequestTransfer);
+
+        return $resourceShareResponseTransfer;
+    }
 }

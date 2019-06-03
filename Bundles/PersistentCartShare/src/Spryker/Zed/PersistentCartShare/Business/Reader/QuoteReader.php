@@ -5,13 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\PersistentCartShare\Business\Quote;
+namespace Spryker\Zed\PersistentCartShare\Business\Reader;
 
 use ArrayObject;
 use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
+use Generated\Shared\Transfer\ResourceShareTransfer;
 use Spryker\Shared\PersistentCartShare\PersistentCartShareConfig;
 use Spryker\Zed\PersistentCartShare\Dependency\Facade\PersistentCartShareToQuoteFacadeInterface;
 use Spryker\Zed\PersistentCartShare\Dependency\Facade\PersistentCartShareToResourceShareFacadeInterface;
@@ -48,61 +49,38 @@ class QuoteReader implements QuoteReaderInterface
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function getQuoteByResourceShareUuid(ResourceShareRequestTransfer $resourceShareRequestTransfer): QuoteResponseTransfer
+    public function getPreviewQuoteResourceShare(ResourceShareRequestTransfer $resourceShareRequestTransfer): QuoteResponseTransfer
     {
         $resourceShareResponseTransfer = $this->resourceShareFacade->getResourceShareByUuid($resourceShareRequestTransfer);
 
-        $quoteResponseTransfer = $this->validateResourceShareResponse($resourceShareResponseTransfer);
-        if (!$quoteResponseTransfer->getIsSuccessful()) {
-            return $quoteResponseTransfer;
+        $quoteResponseTransferWithErrors = $this->validateResourceShareResponse($resourceShareResponseTransfer);
+        if ($quoteResponseTransferWithErrors) {
+            return $quoteResponseTransferWithErrors;
         }
 
-        $resourceShareTransfer = $resourceShareResponseTransfer->getResourceShare();
-        $resourceShareDataTransfer = $resourceShareTransfer->getResourceShareData();
-
-        $quoteResponseTransfer = $this->quoteFacade->findQuoteById(
-            $resourceShareDataTransfer->requireIdQuote()
-                ->getIdQuote()
+        return $this->getQuoteByResourceShare(
+            $resourceShareResponseTransfer->getResourceShare()
         );
-
-        if (!$quoteResponseTransfer->getIsSuccessful()) {
-            return $this->createQuoteResponseTransferWithQuoteError(static::GLOSSARY_KEY_QUOTE_IS_NOT_AVAILABLE);
-        }
-
-        if ($this->quoteFacade->isQuoteLocked($quoteResponseTransfer->getQuoteTransfer())) {
-            return $this->createQuoteResponseTransferWithQuoteError(static::GLOSSARY_KEY_QUOTE_IS_NOT_AVAILABLE);
-        }
-
-        return $quoteResponseTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ResourceShareResponseTransfer $resourceShareResponseTransfer
+     * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    protected function validateResourceShareResponse(ResourceShareResponseTransfer $resourceShareResponseTransfer): QuoteResponseTransfer
+    protected function getQuoteByResourceShare(ResourceShareTransfer $resourceShareTransfer): QuoteResponseTransfer
     {
-        if (!$resourceShareResponseTransfer->getIsSuccessful()) {
-            return (new QuoteResponseTransfer())
-                ->setIsSuccessful(false)
-                ->setErrors(
-                    $this->mapResourceShareResponseMessagesToQuoteResponseTransferErrors($resourceShareResponseTransfer->getMessages())
-                );
-        }
+        $resourceShareTransfer->requireResourceShareData()
+            ->getResourceShareData()
+                ->requireIdQuote();
 
-        $resourceShareTransfer = $resourceShareResponseTransfer->getResourceShare();
-        if ($resourceShareTransfer->getResourceType() !== PersistentCartShareConfig::RESOURCE_TYPE_QUOTE) {
-            return $this->createQuoteResponseTransferWithQuoteError(static::GLOSSARY_KEY_RESOURCE_IS_NOT_AVAILABLE);
-        }
+        $quoteResponseTransfer = $this->quoteFacade->findQuoteById(
+            $resourceShareTransfer->getResourceShareData()->getIdQuote()
+        );
 
-        $resourceShareDataTransfer = $resourceShareTransfer->getResourceShareData();
-        if ($resourceShareDataTransfer->getShareOption() !== PersistentCartShareConfig::SHARE_OPTION_PREVIEW) {
-            return $this->createQuoteResponseTransferWithQuoteError(static::GLOSSARY_KEY_RESOURCE_IS_NOT_AVAILABLE);
-        }
+        $quoteResponseTransfer = $this->validateQuoteResponse($quoteResponseTransfer);
 
-        return (new QuoteResponseTransfer())
-            ->setIsSuccessful(true);
+        return $quoteResponseTransfer;
     }
 
     /**
@@ -138,5 +116,55 @@ class QuoteReader implements QuoteReaderInterface
         return (new QuoteResponseTransfer())
             ->setIsSuccessful(false)
             ->setErrors($quoteErrorTransfers);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ResourceShareResponseTransfer $resourceShareResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer|null
+     */
+    protected function validateResourceShareResponse(ResourceShareResponseTransfer $resourceShareResponseTransfer): ?QuoteResponseTransfer
+    {
+        if (!$resourceShareResponseTransfer->getIsSuccessful()) {
+            return (new QuoteResponseTransfer())
+                ->setIsSuccessful(false)
+                ->setErrors(
+                    $this->mapResourceShareResponseMessagesToQuoteResponseTransferErrors($resourceShareResponseTransfer->getMessages())
+                );
+        }
+        $resourceShareResponseTransfer->requireResourceShare();
+
+        $resourceShareTransfer = $resourceShareResponseTransfer->getResourceShare();
+
+        if ($resourceShareTransfer->getResourceType() !== PersistentCartShareConfig::RESOURCE_TYPE_QUOTE) {
+            return $this->createQuoteResponseTransferWithQuoteError(static::GLOSSARY_KEY_RESOURCE_IS_NOT_AVAILABLE);
+        }
+
+        $resourceShareDataTransfer = $resourceShareTransfer->getResourceShareData();
+        if ($resourceShareDataTransfer->getShareOption() !== PersistentCartShareConfig::SHARE_OPTION_PREVIEW) {
+            return $this->createQuoteResponseTransferWithQuoteError(static::GLOSSARY_KEY_RESOURCE_IS_NOT_AVAILABLE);
+        }
+
+        return null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    protected function validateQuoteResponse(QuoteResponseTransfer $quoteResponseTransfer): QuoteResponseTransfer
+    {
+        if (!$quoteResponseTransfer->getIsSuccessful()) {
+            return $this->createQuoteResponseTransferWithQuoteError(static::GLOSSARY_KEY_QUOTE_IS_NOT_AVAILABLE);
+        }
+
+        $quoteResponseTransfer->requireQuoteTransfer();
+
+        if ($this->quoteFacade->isQuoteLocked($quoteResponseTransfer->getQuoteTransfer())) {
+            return $this->createQuoteResponseTransferWithQuoteError(static::GLOSSARY_KEY_QUOTE_IS_NOT_AVAILABLE);
+        }
+
+        return $quoteResponseTransfer;
     }
 }

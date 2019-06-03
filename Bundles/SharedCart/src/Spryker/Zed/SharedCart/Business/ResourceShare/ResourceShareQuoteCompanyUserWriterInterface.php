@@ -18,7 +18,7 @@ interface ResourceShareQuoteCompanyUserWriterInterface
      *
      * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
      */
-    public function createCartShareForProvidedCompanyUser(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer;
+    public function createCartShareForCompanyUser(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
@@ -26,7 +26,7 @@ interface ResourceShareQuoteCompanyUserWriterInterface
      *
      * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
      */
-    public function updateCartShareForProvidedCompanyUser(
+    public function updateCartShareForCompanyUser(
         ResourceShareRequestTransfer $resourceShareRequestTransfer,
         ShareDetailTransfer $shareDetailTransfer
     ): ResourceShareResponseTransfer;

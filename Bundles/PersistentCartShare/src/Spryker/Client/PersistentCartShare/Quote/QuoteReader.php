@@ -9,7 +9,6 @@ namespace Spryker\Client\PersistentCartShare\Quote;
 
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\ResourceShareRequestTransfer;
-use Generated\Shared\Transfer\ResourceShareTransfer;
 use Spryker\Client\PersistentCartShare\Zed\PersistentCartShareStubInterface;
 
 class QuoteReader implements QuoteReaderInterface
@@ -28,18 +27,12 @@ class QuoteReader implements QuoteReaderInterface
     }
 
     /**
-     * @param string $resourceShareUuid
+     * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function getQuoteByResourceShareUuid(string $resourceShareUuid): QuoteResponseTransfer
+    public function getPreviewQuoteResourceShare(ResourceShareRequestTransfer $resourceShareRequestTransfer): QuoteResponseTransfer
     {
-        $resourceShareRequestTransfer = (new ResourceShareRequestTransfer())
-            ->setResourceShare(
-                (new ResourceShareTransfer())
-                    ->setUuid($resourceShareUuid)
-            );
-
-        return $this->zedPersistentCartShareStub->getQuoteByResourceShareUuid($resourceShareRequestTransfer);
+        return $this->zedPersistentCartShareStub->getPreviewQuoteResourceShare($resourceShareRequestTransfer);
     }
 }
