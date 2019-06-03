@@ -30,7 +30,7 @@ interface SalesSplitFacadeInterface
      * @api
      *
      * @param int $idSalesOrderItem
-     * @param int $quantity
+     * @param float $quantity
      *
      * @return \Generated\Shared\Transfer\ItemSplitResponseTransfer
      */
