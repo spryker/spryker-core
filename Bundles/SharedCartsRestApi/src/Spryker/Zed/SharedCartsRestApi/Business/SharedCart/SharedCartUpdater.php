@@ -8,6 +8,7 @@
 namespace Spryker\Zed\SharedCartsRestApi\Business\SharedCart;
 
 use Generated\Shared\Transfer\QuoteCompanyUserTransfer;
+use Generated\Shared\Transfer\QuotePermissionGroupTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShareCartRequestTransfer;
 use Generated\Shared\Transfer\ShareCartResponseTransfer;
@@ -49,6 +50,14 @@ class SharedCartUpdater implements SharedCartUpdaterInterface
         $shareCartResponseTransfer = (new ShareCartResponseTransfer())->setIsSuccessful(false);
         if (!$quoteCompanyUserTransfer) {
             return $shareCartResponseTransfer->setErrorIdentifier(SharedSharedCartsRestApiConfig::ERROR_IDENTIFIER_SHARED_CART_NOT_FOUND);
+        }
+
+        $quotePermissionGroupResponseTransfer = $this->sharedCartFacade->findQuotePermissionGroupById(
+            (new QuotePermissionGroupTransfer())
+                ->setIdQuotePermissionGroup($shareDetailTransfer->getQuotePermissionGroup()->getIdQuotePermissionGroup())
+        );
+        if (!$quotePermissionGroupResponseTransfer->getIsSuccessful()) {
+            return $shareCartResponseTransfer->setErrorIdentifier(SharedSharedCartsRestApiConfig::ERROR_IDENTIFIER_QUOTE_PERMISSION_GROUP_NOT_FOUND);
         }
 
         $quoteTransfer = $quoteCompanyUserTransfer->getQuote();

@@ -371,12 +371,13 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
             $shareDetailCriteriaFilterTransfer
         );
 
-        $quoteCompanyUserEntities = $quoteCompanyUserQuery
+        $quoteCompanyUserQuery
             ->joinWithSpyCompanyUser()
             ->useSpyCompanyUserQuery(null, Criteria::LEFT_JOIN)
                 ->joinWithCustomer()
-            ->endUse()
-            ->find();
+            ->endUse();
+
+        $quoteCompanyUserEntities = $quoteCompanyUserQuery->find();
 
         return $this->getFactory()
             ->createQuoteShareDetailMapper()
