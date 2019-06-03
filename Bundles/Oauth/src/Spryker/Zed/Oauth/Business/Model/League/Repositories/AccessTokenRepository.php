@@ -12,6 +12,7 @@ use League\OAuth2\Server\Entities\AccessTokenEntityInterface;
 use League\OAuth2\Server\Entities\ClientEntityInterface;
 use League\OAuth2\Server\Repositories\AccessTokenRepositoryInterface;
 use Spryker\Zed\Oauth\Business\Model\League\Entities\AccessTokenEntity;
+use Spryker\Zed\Oauth\Dependency\Service\OauthToUtilEncodingServiceInterface;
 use Spryker\Zed\Oauth\Persistence\OauthEntityManagerInterface;
 use Spryker\Zed\Oauth\Persistence\OauthRepositoryInterface;
 
@@ -28,6 +29,11 @@ class AccessTokenRepository implements AccessTokenRepositoryInterface
     protected $oauthEntityManager;
 
     /**
+     * @var \Spryker\Zed\Oauth\Dependency\Service\OauthToUtilEncodingServiceInterface
+     */
+    protected $utilEncodingService;
+
+    /**
      * @var \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthUserIdentifierFilterPluginInterface[]
      */
     protected $oauthUserIdentifierFilterPlugins;
@@ -35,18 +41,19 @@ class AccessTokenRepository implements AccessTokenRepositoryInterface
     /**
      * @param \Spryker\Zed\Oauth\Persistence\OauthRepositoryInterface $oauthRepository
      * @param \Spryker\Zed\Oauth\Persistence\OauthEntityManagerInterface $oauthEntityManager
+     * @param \Spryker\Zed\Oauth\Dependency\Service\OauthToUtilEncodingServiceInterface $utilEncodingService
      * @param \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthUserIdentifierFilterPluginInterface[] $oauthUserIdentifierFilterPlugins
      */
     public function __construct(
         OauthRepositoryInterface $oauthRepository,
         OauthEntityManagerInterface $oauthEntityManager,
+        OauthToUtilEncodingServiceInterface $utilEncodingService,
         array $oauthUserIdentifierFilterPlugins = []
     ) {
         $this->oauthRepository = $oauthRepository;
         $this->oauthEntityManager = $oauthEntityManager;
-        $this->oauthUserIdentifierFilterPlugins = [
-            new \Spryker\Zed\OauthPermission\Communication\Plugin\Filter\OauthUserIdentifierFilterPermissionPlugin(),
-        ];
+        $this->utilEncodingService = $utilEncodingService;
+        $this->oauthUserIdentifierFilterPlugins = $oauthUserIdentifierFilterPlugins;
     }
 
     /**
@@ -125,8 +132,7 @@ class AccessTokenRepository implements AccessTokenRepositoryInterface
      */
     protected function filterUserIdentifier(string $userIdentifier): string
     {
-        //TODO: use encode service
-        $decodedUserIdentifier = json_decode($userIdentifier, true);
+        $decodedUserIdentifier = $this->utilEncodingService->decodeJson($userIdentifier, true);
 
         if ($decodedUserIdentifier) {
             foreach ($this->oauthUserIdentifierFilterPlugins as $oauthUserIdentifierFilterPlugin) {
@@ -134,6 +140,6 @@ class AccessTokenRepository implements AccessTokenRepositoryInterface
             }
         }
 
-        return (string)json_encode($decodedUserIdentifier);
+        return (string)$this->utilEncodingService->encodeJson($decodedUserIdentifier);
     }
 }

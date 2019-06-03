@@ -45,4 +45,16 @@ interface OauthPermissionFacadeInterface
         CompanyUserIdentifierTransfer $companyUserIdentifierTransfer,
         CompanyUserTransfer $companyUserTransfer
     ): CompanyUserIdentifierTransfer;
+
+    /**
+     * Specification:
+     * - TODO:
+     *
+     * @api
+     *
+     * @param array $userIdentifier
+     *
+     * @return array
+     */
+    public function filterOauthUserIdentifier(array $userIdentifier): array;
 }

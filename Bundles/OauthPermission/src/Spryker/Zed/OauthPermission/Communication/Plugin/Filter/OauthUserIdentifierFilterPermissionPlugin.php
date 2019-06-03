@@ -7,10 +7,7 @@
 
 namespace Spryker\Zed\OauthPermission\Communication\Plugin\Filter;
 
-use Generated\Shared\Transfer\CompanyUserIdentifierTransfer;
-use Generated\Shared\Transfer\CompanyUserTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\OauthCompanyUserExtension\Dependency\Plugin\OauthCompanyUserIdentifierExpanderPluginInterface;
 use Spryker\Zed\OauthExtension\Dependency\Plugin\OauthUserIdentifierFilterPluginInterface;
 
 /**
@@ -20,11 +17,18 @@ use Spryker\Zed\OauthExtension\Dependency\Plugin\OauthUserIdentifierFilterPlugin
  */
 class OauthUserIdentifierFilterPermissionPlugin extends AbstractPlugin implements OauthUserIdentifierFilterPluginInterface
 {
+    /**
+     * {@inheritdoc}
+     * - TODO: add spec and use facade
+     *
+     * @api
+     *
+     * @param array $userIdentifier
+     *
+     * @return array
+     */
     public function filter(array $userIdentifier): array
     {
-        unset($userIdentifier['permissions']);
-
-        return $userIdentifier;
+        return $this->getFacade()->filterOauthUserIdentifier($userIdentifier);
     }
-
 }
