@@ -180,7 +180,7 @@ class UrlHandlingTest extends FacadeTestAbstract
         foreach ($productUrlTransfer->getUrls() as $localizedUrlTransfer) {
             $urlTransfer = new UrlTransfer();
             $urlTransfer->setUrl($localizedUrlTransfer->getUrl());
-            $urlTransfer = $this->findUrlCaseInsensitive($urlTransfer);
+            $urlTransfer = $this->urlFacade->findUrlCaseInsensitive($urlTransfer);
 
             $this->tester->assertTouchActive(UrlConfig::RESOURCE_TYPE_URL, $urlTransfer->getIdUrl());
         }
