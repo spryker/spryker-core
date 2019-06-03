@@ -81,8 +81,6 @@ class TriggerControllerCest
             sprintf(OrderDetailPage::URL_PATTERN, $this->orderTransfer->getIdSalesOrder())
         );
 
-        $i->makeScreenshot();
-
         $i->submitForm(static::XPATH_CHANGE_STATUS_FORM, []);
 
         $latestItemTransfer = $this->getItemLatestData();

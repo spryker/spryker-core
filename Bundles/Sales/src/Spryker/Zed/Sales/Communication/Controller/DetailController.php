@@ -54,6 +54,8 @@ class DetailController extends AbstractController
         $orderItemsOmsTriggerFormCollection = $this->getOrderItemsOmsTriggerFormCollection($orderTransfer, $eventsGroupedByItem);
 
         return array_merge([
+            'eventsGroupedByItem' => $eventsGroupedByItem,
+            'events' => $events,
             'distinctOrderStates' => $distinctOrderStates,
             'order' => $orderTransfer,
             'orderItemSplitFormCollection' => $orderItemSplitFormCollection,

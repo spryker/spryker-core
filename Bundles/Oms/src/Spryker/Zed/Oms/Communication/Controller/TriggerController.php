@@ -63,7 +63,7 @@ class TriggerController extends AbstractController
     }
 
     /**
-     * @deprecated use triggerEventForOrderAction instead
+     * @deprecated use submitTriggerEventForOrderAction instead
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
