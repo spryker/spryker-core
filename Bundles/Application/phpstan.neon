@@ -1,6 +1,9 @@
 parameters:
+    dynamicConstantNames:
+        - APPLICATION
+        - APPLICATION_ENV
+        - APPLICATION_STORE
     ignoreErrors:
         - '#Call to an undefined method .+ActiveRecordInterface::toArray\(\).#'
         - '#Call to an undefined method Silex\\Application::getTransferSession\(\).#'
         - '#Class Symfony\\Bridge\\Twig\\Form\\TwigRenderer not found.#'
-        - "#Strict comparison using === between '' and 'development' will always evaluate to false.#"

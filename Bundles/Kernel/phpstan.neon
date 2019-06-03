@@ -1,4 +1,9 @@
 parameters:
+    dynamicConstantNames:
+        - APPLICATION
+        - APPLICATION_ENV
+        - APPLICATION_STORE
+
     ignoreErrors:
         - '#Call to method .+ on an unknown class .+DialogHelper.#'
         - '#Call to an undefined method .+ActiveRecordInterface::save\(\)#'
@@ -10,4 +15,3 @@ parameters:
         - '#Call to function method\_exists\(\) with string and .+ will always evaluate to false\.#'
         - '#Parameter \#1 $var of function count expects array|Countable, object given#'
         - '#Parameter \#2 $default of method .+Console::ask\(\) expects string|null, bool given#'
-        - "#Strict comparison using === between '' and 'devtest' will always evaluate to false.#"
