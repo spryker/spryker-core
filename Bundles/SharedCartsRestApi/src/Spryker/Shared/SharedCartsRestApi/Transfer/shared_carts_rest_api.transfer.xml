@@ -12,6 +12,7 @@
         <property name="uuid" type="string"/>
         <property name="idCompanyUser" type="int" />
         <property name="quotePermissionGroup" type="QuotePermissionGroup"/>
+        <property name="companyUser" type="CompanyUser" />
     </transfer>
 
     <transfer name="ShareDetailCollection">
@@ -28,6 +29,10 @@
 
     <transfer name="QuotePermissionGroup">
         <property name="idQuotePermissionGroup" type="int"/>
+    </transfer>
+
+    <transfer name="CompanyUser">
+        <property name="uuid" type="string" />
     </transfer>
 
 </transfers>
