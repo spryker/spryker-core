@@ -8,6 +8,7 @@
 namespace Spryker\Glue\EntityTagRestApi\Processor\EntityTag;
 
 use Spryker\Glue\EntityTagRestApi\Processor\EntityTagResolverInterface;
+use Spryker\Glue\EntityTagRestApi\Processor\EntityTagWriterInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,11 +24,18 @@ class EntityTagResponseHeaderFormatter implements EntityTagResponseHeaderFormatt
     protected $entityTagResolver;
 
     /**
-     * @param \Spryker\Glue\EntityTagRestApi\Processor\EntityTagResolverInterface $entityTagResolver
+     * @var \Spryker\Glue\EntityTagRestApi\Processor\EntityTagWriterInterface
      */
-    public function __construct(EntityTagResolverInterface $entityTagResolver)
+    protected $entityTagWriter;
+
+    /**
+     * @param \Spryker\Glue\EntityTagRestApi\Processor\EntityTagResolverInterface $entityTagResolver
+     * @param \Spryker\Glue\EntityTagRestApi\Processor\EntityTagWriterInterface $entityTagWriter
+     */
+    public function __construct(EntityTagResolverInterface $entityTagResolver, EntityTagWriterInterface $entityTagWriter)
     {
         $this->entityTagResolver = $entityTagResolver;
+        $this->entityTagWriter = $entityTagWriter;
     }
 
     /**
@@ -46,7 +54,13 @@ class EntityTagResponseHeaderFormatter implements EntityTagResponseHeaderFormatt
             return $httpResponse;
         }
         $restResource = $restResponse->getResources()[0];
-        $entityTag = $this->entityTagResolver->resolve($restResource);
+
+        if ($this->isUpdateMethod($restRequest->getHttpRequest())) {
+            $entityTag = $this->entityTagWriter->write($restResource);
+        } else {
+            $entityTag = $this->entityTagResolver->resolve($restResource);
+        }
+
         if ($entityTag) {
             $httpResponse->headers->set(static::HEADER_E_TAG, $entityTag);
         }
@@ -62,5 +76,15 @@ class EntityTagResponseHeaderFormatter implements EntityTagResponseHeaderFormatt
     protected function isMethodApplicable(Request $request): bool
     {
         return $request->isMethod(Request::METHOD_GET) || $request->isMethod(Request::METHOD_POST) || $request->isMethod(Request::METHOD_PATCH);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return bool
+     */
+    protected function isUpdateMethod(Request $request): bool
+    {
+        return $request->isMethod(Request::METHOD_POST) || $request->isMethod(Request::METHOD_PATCH);
     }
 }

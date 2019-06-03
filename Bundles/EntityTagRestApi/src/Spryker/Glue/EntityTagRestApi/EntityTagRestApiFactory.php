@@ -64,7 +64,8 @@ class EntityTagRestApiFactory extends AbstractFactory
     public function createEntityTagResponseHeaderFormatter(): EntityTagResponseHeaderFormatterInterface
     {
         return new EntityTagResponseHeaderFormatter(
-            $this->createEntityTagResolver()
+            $this->createEntityTagResolver(),
+            $this->createEntityTagWriter()
         );
     }
 
