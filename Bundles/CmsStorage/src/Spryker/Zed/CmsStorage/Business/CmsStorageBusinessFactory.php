@@ -9,6 +9,7 @@ namespace Spryker\Zed\CmsStorage\Business;
 
 use Spryker\Zed\CmsStorage\Business\Storage\CmsPageStorageWriter;
 use Spryker\Zed\CmsStorage\CmsStorageDependencyProvider;
+use Spryker\Zed\CmsStorage\Dependency\Facade\CmsStorageToStoreFacadeInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -26,8 +27,8 @@ class CmsStorageBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->getCmsFacade(),
             $this->getContentWidgetDataExpanderPlugins(),
-            $this->getStore(),
-            $this->getConfig()->isSendingToQueue()
+            $this->getConfig()->isSendingToQueue(),
+            $this->getStoreFacade()
         );
     }
 
@@ -40,18 +41,18 @@ class CmsStorageBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\Store
-     */
-    protected function getStore()
-    {
-        return $this->getProvidedDependency(CmsStorageDependencyProvider::STORE);
-    }
-
-    /**
      * @return \Spryker\Zed\CmsExtension\Dependency\Plugin\CmsPageDataExpanderPluginInterface[]
      */
     protected function getContentWidgetDataExpanderPlugins()
     {
         return $this->getProvidedDependency(CmsStorageDependencyProvider::PLUGIN_CONTENT_WIDGET_DATA_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsStorage\Dependency\Facade\CmsStorageToStoreFacadeInterface
+     */
+    public function getStoreFacade(): CmsStorageToStoreFacadeInterface
+    {
+        return $this->getProvidedDependency(CmsStorageDependencyProvider::FACADE_STORE);
     }
 }

@@ -12,8 +12,8 @@ use Generated\Shared\Transfer\LocaleCmsPageDataTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Cms\Persistence\SpyCmsPage;
 use Orm\Zed\CmsStorage\Persistence\SpyCmsPageStorage;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\CmsStorage\Dependency\Facade\CmsStorageToCmsInterface;
+use Spryker\Zed\CmsStorage\Dependency\Facade\CmsStorageToStoreFacadeInterface;
 use Spryker\Zed\CmsStorage\Persistence\CmsStorageQueryContainerInterface;
 
 class CmsPageStorageWriter implements CmsPageStorageWriterInterface
@@ -39,9 +39,9 @@ class CmsPageStorageWriter implements CmsPageStorageWriterInterface
     protected $contentWidgetDataExpanderPlugins = [];
 
     /**
-     * @var \Spryker\Shared\Kernel\Store
+     * @var \Spryker\Zed\CmsStorage\Dependency\Facade\CmsStorageToStoreFacadeInterface
      */
-    protected $store;
+    protected $storeFacade;
 
     /**
      * @var bool
@@ -52,21 +52,21 @@ class CmsPageStorageWriter implements CmsPageStorageWriterInterface
      * @param \Spryker\Zed\CmsStorage\Persistence\CmsStorageQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\CmsStorage\Dependency\Facade\CmsStorageToCmsInterface $cmsFacade
      * @param \Spryker\Zed\CmsExtension\Dependency\Plugin\CmsPageDataExpanderPluginInterface[] $contentWidgetDataExpanderPlugins
-     * @param \Spryker\Shared\Kernel\Store $store
+     * @param \Spryker\Zed\CmsStorage\Dependency\Facade\CmsStorageToStoreFacadeInterface $storeFacade
      * @param bool $isSendingToQueue
      */
     public function __construct(
         CmsStorageQueryContainerInterface $queryContainer,
         CmsStorageToCmsInterface $cmsFacade,
         array $contentWidgetDataExpanderPlugins,
-        Store $store,
+        CmsStorageToStoreFacadeInterface $storeFacade,
         $isSendingToQueue
     ) {
         $this->queryContainer = $queryContainer;
         $this->cmsFacade = $cmsFacade;
         $this->contentWidgetDataExpanderPlugins = $contentWidgetDataExpanderPlugins;
-        $this->store = $store;
         $this->isSendingToQueue = $isSendingToQueue;
+        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -106,7 +106,15 @@ class CmsPageStorageWriter implements CmsPageStorageWriterInterface
             $cmsPageStorageEntities
         );
 
+        $storesWithSharedPersistence = $this->storeFacade->getCurrentStore()->getStoresWithSharedPersistence();
+        $storeName = $this->storeFacade->getCurrentStore()->getName();
+        $storeRelations = array_merge($storesWithSharedPersistence, [$storeName]);
+
         foreach ($pairedEntities as $pair) {
+            if (!in_array($pair[static::STORE_NAME], $storeRelations, true)) {
+                continue;
+            }
+
             $cmsPageEntity = $pair[static::CMS_PAGE_ENTITY];
             $cmsPageStorageEntity = $pair[static::CMS_PAGE_STORAGE_ENTITY];
 
@@ -281,7 +289,7 @@ class CmsPageStorageWriter implements CmsPageStorageWriterInterface
         array $cmsPageEntities,
         array $cmsPageStorageEntities
     ): array {
-        $localeNames = $this->store->getLocales();
+        $localeNames = $this->storeFacade->getCurrentStore()->getAvailableLocaleIsoCodes();
 
         $pairs = [];
 
