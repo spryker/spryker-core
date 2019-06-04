@@ -10,7 +10,7 @@ interface UtilTextServiceInterface
 {
     /**
      * Specification:
-     * - Generate slug based on value
+     * - Generate slug based on value.
      *
      * @api
      *
@@ -34,7 +34,7 @@ interface UtilTextServiceInterface
 
     /**
      * Specification:
-     * - Generates hash from value by specified algorithm
+     * - Generates hash from value by specified algorithm.
      *
      * @api
      *
