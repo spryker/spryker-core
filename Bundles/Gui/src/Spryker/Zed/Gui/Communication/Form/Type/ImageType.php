@@ -15,6 +15,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * @method \Spryker\Zed\Gui\Communication\GuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Gui\GuiConfig getConfig()
  */
 class ImageType extends AbstractType
 {

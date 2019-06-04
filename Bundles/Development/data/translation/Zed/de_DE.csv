@@ -30,8 +30,8 @@ Incoming,Incoming
 "Indirect Outgoing","Indirect Outgoing"
 "Indirect Stability","Indirect Stability"
 "List all used plugins","Alle verwendeten Plug-ins auflisten"
-module,Modul
 Module,Modul
+module,Modul
 "Module name",Modulname
 "Module overview",Modulübersicht
 Namespace,Namespace
@@ -49,7 +49,6 @@ require-dev,require-dev
 "show all used plugins","alle verwendeten Plug-ins anzeigen"
 "Simple Dependency Graph","Simple Dependency-Graph"
 "Spryker Stability","Spryker Stabilität"
-Stability,Stabilität
 Stability,Stabilität
 "Stability is calculated by ""incoming dependencies / ( incoming dependencies + outgoing dependencies )"" the result will be between 0 (stable) and 1 (unstable)","Stability is calculated by ""incoming dependencies / ( incoming dependencies + outgoing dependencies )"" the result will be between 0 (stable) and 1 (unstable)"
 "Stability of all core modules","Stabilität aller Kernmodule"

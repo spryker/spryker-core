@@ -130,6 +130,7 @@ class ShoppingListDataImportCommunicationTester extends Actor
     {
         $customerTransfer = $this->haveCustomer()
             ->fromArray($seeds, true);
+
         return $this->getCustomerFacade()->updateCustomer($customerTransfer);
     }
 

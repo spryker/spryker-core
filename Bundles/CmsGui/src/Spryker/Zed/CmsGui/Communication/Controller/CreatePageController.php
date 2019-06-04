@@ -61,6 +61,7 @@ class CreatePageController extends AbstractController
 
         if (!$pageForm->isValid()) {
             $this->addErrorMessage(static::ERROR_MESSAGE_INVALID_DATA_PROVIDED);
+
             return $result;
         }
 
@@ -70,6 +71,7 @@ class CreatePageController extends AbstractController
         }
 
         $this->addSuccessMessage(static::MESSAGE_PAGE_CREATE_SUCCESS);
+
         return $this->redirectResponse($redirectUrl);
     }
 

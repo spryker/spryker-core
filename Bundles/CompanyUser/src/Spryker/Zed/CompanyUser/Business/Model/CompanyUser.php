@@ -11,6 +11,7 @@ use ArrayObject;
 use Generated\Shared\Transfer\CompanyResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
+use Generated\Shared\Transfer\CompanyUserCriteriaTransfer;
 use Generated\Shared\Transfer\CompanyUserResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
@@ -209,6 +210,26 @@ class CompanyUser implements CompanyUserInterface
     }
 
     /**
+     * @param int[] $companyUserIds
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer[]
+     */
+    public function findActiveCompanyUsers(array $companyUserIds): array
+    {
+        return $this->companyUserRepository->findActiveCompanyUsersByIds($companyUserIds);
+    }
+
+    /**
+     * @param int[] $companyIds
+     *
+     * @return int[]
+     */
+    public function findActiveCompanyUserIdsByCompanyIds(array $companyIds): array
+    {
+        return $this->companyUserRepository->findActiveCompanyUserIdsByCompanyIds($companyIds);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\CompanyUserResponseTransfer $companyUserResponseTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
@@ -346,6 +367,22 @@ class CompanyUser implements CompanyUserInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
+     */
+    public function findActiveCompanyUserByUuid(CompanyUserTransfer $companyUserTransfer): ?CompanyUserTransfer
+    {
+        $companyUserTransfer->requireUuid();
+        $companyUserTransfer = $this->companyUserRepository->findActiveCompanyUserByUuid($companyUserTransfer->getUuid());
+        if ($companyUserTransfer !== null) {
+            return $this->companyUserPluginExecutor->executeHydrationPlugins($companyUserTransfer);
+        }
+
+        return null;
+    }
+
+    /**
      * @param \ArrayObject|\Generated\Shared\Transfer\ResponseMessageTransfer[] $messages
      * @param \Generated\Shared\Transfer\CompanyResponseTransfer $companyResponseTransfer
      *
@@ -440,5 +477,22 @@ class CompanyUser implements CompanyUserInterface
         }
 
         return null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserCriteriaTransfer $companyUserCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
+     */
+    public function getCompanyUserCollectionByCriteria(CompanyUserCriteriaTransfer $companyUserCriteriaTransfer): CompanyUserCollectionTransfer
+    {
+        $companyUserCollectionTransfer = $this->companyUserRepository
+            ->getCompanyUserCollectionByCriteria($companyUserCriteriaTransfer);
+
+        foreach ($companyUserCollectionTransfer->getCompanyUsers() as &$companyUserTransfer) {
+            $this->companyUserPluginExecutor->executeHydrationPlugins($companyUserTransfer);
+        }
+
+        return $companyUserCollectionTransfer;
     }
 }

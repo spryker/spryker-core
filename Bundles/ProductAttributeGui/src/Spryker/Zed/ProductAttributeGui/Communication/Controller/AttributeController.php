@@ -87,6 +87,7 @@ class AttributeController extends AbstractController
 
         if (!$attributeTransfer->getIdProductManagementAttribute()) {
             $this->addErrorMessage(static::MESSAGE_ATTRIBUTE_CREATE_ERROR);
+
             return $this->redirectResponse(sprintf(
                 '/product-attribute-gui/attribute/translate?id=%d',
                 $attributeTransfer->getIdProductManagementAttribute()
@@ -94,6 +95,7 @@ class AttributeController extends AbstractController
         }
 
         $this->addSuccessMessage(static::MESSAGE_ATTRIBUTE_CREATE_SUCCESS);
+
         return $this->redirectResponse(sprintf(
             '/product-attribute-gui/attribute/translate?id=%d',
             $attributeTransfer->getIdProductManagementAttribute()
@@ -136,6 +138,7 @@ class AttributeController extends AbstractController
             ->translateProductManagementAttribute($productManagementAttributeTransfer);
 
         $this->addSuccessMessage(static::MESSAGE_TRANSLATION_UPDATE_SUCCESS);
+
         return $this->redirectResponse(sprintf(
             '/product-attribute-gui/attribute/view?id=%d',
             $idProductManagementAttribute
@@ -192,6 +195,7 @@ class AttributeController extends AbstractController
             ->updateProductManagementAttribute($attributeTransfer);
 
         $this->addSuccessMessage(static::MESSAGE_ATTRIBUTE_UPDATE_SUCCESS);
+
         return $this->redirectResponse(sprintf(
             '/product-attribute-gui/attribute/translate?id=%d',
             $attributeTransfer->getIdProductManagementAttribute()

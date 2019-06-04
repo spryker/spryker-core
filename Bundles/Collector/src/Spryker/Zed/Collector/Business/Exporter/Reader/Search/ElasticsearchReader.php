@@ -44,7 +44,7 @@ class ElasticsearchReader implements ReaderInterface, ConfigurableSearchReaderIn
      * @param string $key
      * @param string $type
      *
-     * @return \Elastica\Document
+     * @return mixed
      */
     public function read($key, $type = '')
     {

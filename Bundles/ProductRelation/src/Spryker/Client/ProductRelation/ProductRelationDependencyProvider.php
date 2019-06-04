@@ -43,6 +43,7 @@ class ProductRelationDependencyProvider extends AbstractDependencyProvider
         $container[static::KV_STORAGE] = function (Container $container) {
             return new ProductRelationToStorageBridge($container->getLocator()->storage()->client());
         };
+
         return $container;
     }
 
@@ -56,6 +57,7 @@ class ProductRelationDependencyProvider extends AbstractDependencyProvider
         $container[static::CLIENT_LOCALE] = function (Container $container) {
             return new ProductRelationToLocaleBridge($container->getLocator()->locale()->client());
         };
+
         return $container;
     }
 
@@ -69,6 +71,7 @@ class ProductRelationDependencyProvider extends AbstractDependencyProvider
         $container[static::CLIENT_PRICE_PRODUCT] = function (Container $container) {
             return new ProductRelationToPriceProductBridge($container->getLocator()->priceProduct()->client());
         };
+
         return $container;
     }
 }

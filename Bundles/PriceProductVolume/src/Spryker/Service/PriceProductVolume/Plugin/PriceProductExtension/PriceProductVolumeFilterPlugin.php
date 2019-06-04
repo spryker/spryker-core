@@ -13,6 +13,9 @@ use Spryker\Service\Kernel\AbstractPlugin;
 use Spryker\Service\PriceProductExtension\Dependency\Plugin\PriceProductFilterPluginInterface;
 use Spryker\Shared\PriceProductStorage\PriceProductStorageConstants;
 
+/**
+ * @method \Spryker\Service\PriceProductVolume\PriceProductVolumeServiceFactory getFactory()
+ */
 class PriceProductVolumeFilterPlugin extends AbstractPlugin implements PriceProductFilterPluginInterface
 {
     /**
@@ -26,10 +29,8 @@ class PriceProductVolumeFilterPlugin extends AbstractPlugin implements PriceProd
      */
     public function filter(array $priceProductTransfers, PriceProductFilterTransfer $priceProductFilterTransfer): array
     {
-        if ($priceProductFilterTransfer->getQuantity() <= 1) {
-            $priceProductTransfers = array_filter($priceProductTransfers, [$this, 'filterVolumePrices']);
-
-            return $priceProductTransfers;
+        if ($priceProductFilterTransfer->getQuantity() === null) {
+            return $this->getFilteredPriceProductTransfers($priceProductTransfers);
         }
 
         $minPriceProductTransfer = $this->getMinPrice(
@@ -38,12 +39,22 @@ class PriceProductVolumeFilterPlugin extends AbstractPlugin implements PriceProd
         );
 
         if ($minPriceProductTransfer == null) {
-            $priceProductTransfers = array_filter($priceProductTransfers, [$this, 'filterVolumePrices']);
-
-            return $priceProductTransfers;
+            return $this->getFilteredPriceProductTransfers($priceProductTransfers);
         }
 
         return [$minPriceProductTransfer];
+    }
+
+    /**
+     * @param array $priceProductTransfers
+     *
+     * @return array
+     */
+    protected function getFilteredPriceProductTransfers(array $priceProductTransfers): array
+    {
+        $priceProductTransfers = array_filter($priceProductTransfers, [$this, 'filterVolumePrices']);
+
+        return $priceProductTransfers;
     }
 
     /**
@@ -60,20 +71,21 @@ class PriceProductVolumeFilterPlugin extends AbstractPlugin implements PriceProd
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
-     * @param int $filterQuantity
+     * @param float $filterQuantity
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer|null
      */
-    protected function getMinPrice(array $priceProductTransfers, int $filterQuantity): ?PriceProductTransfer
+    protected function getMinPrice(array $priceProductTransfers, float $filterQuantity): ?PriceProductTransfer
     {
         $minPriceProductTransfer = null;
+        $utilQuantityService = $this->getFactory()->getUtilQuantityService();
 
         foreach ($priceProductTransfers as $priceProductTransfer) {
             if (!$priceProductTransfer->getVolumeQuantity()) {
                 continue;
             }
 
-            if ($priceProductTransfer->getVolumeQuantity() <= $filterQuantity) {
+            if ($utilQuantityService->isQuantityLessOrEqual($priceProductTransfer->getVolumeQuantity(), $filterQuantity)) {
                 if ($minPriceProductTransfer == null) {
                     $minPriceProductTransfer = $priceProductTransfer;
 

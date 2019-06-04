@@ -39,7 +39,7 @@ class ProductBundleReaderTest extends Unit
         'idProductConcrete' => 1,
         'bundledProductSku' => 'sku-123',
         'fkBundledProduct' => 2,
-        'bundledProductQuantity' => 5,
+        'bundledProductQuantity' => 5.0,
         'idProductBundle' => 1,
     ];
 
@@ -96,7 +96,7 @@ class ProductBundleReaderTest extends Unit
      * @param \Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerInterface|null $productBundleToAvailabilityQueryContainerMock
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface|null $storeFacadeMock
      *
-     * @return \Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleReader|\PHPUnit\Framework\MockObject\MockObject
+     * @return \PHPUnit\Framework\MockObject\MockObject
      */
     protected function createProductBundleReader(
         ?ProductBundleQueryContainerInterface $productBundleQueryContainerMock = null,

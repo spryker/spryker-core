@@ -122,6 +122,40 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    public function setCustomerRawData(CustomerTransfer $customerTransfer): CustomerTransfer
+    {
+        $customerTransfer = $this->getFactory()
+            ->createSessionCustomerSession()
+            ->setCustomerRawData($customerTransfer);
+
+        return $customerTransfer;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null
+     */
+    public function findCustomerRawData(): ?CustomerTransfer
+    {
+        $customerTransfer = $this->getFactory()
+            ->createSessionCustomerSession()
+            ->findCustomerRawData();
+
+        return $customerTransfer;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
     public function getCustomer()
@@ -492,5 +526,21 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
         return $this->getFactory()
             ->createCustomerSecuredPattern()
             ->getCustomerSecuredPattern();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $accessToken
+     *
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
+     */
+    public function getCustomerByAccessToken(string $accessToken): CustomerResponseTransfer
+    {
+        return $this->getFactory()
+            ->createCustomerAccessTokenReader()
+            ->getCustomerByAccessToken($accessToken);
     }
 }

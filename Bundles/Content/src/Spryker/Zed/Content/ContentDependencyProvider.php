@@ -7,11 +7,41 @@
 
 namespace Spryker\Zed\Content;
 
+use Spryker\Zed\Content\Dependency\External\ContentToValidationAdapter;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
+use Spryker\Zed\Kernel\Container;
 
 /**
  * @method \Spryker\Zed\Content\ContentConfig getConfig()
  */
 class ContentDependencyProvider extends AbstractBundleDependencyProvider
 {
+    public const ADAPTER_VALIDATION = 'ADAPTER_VALIDATION';
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function provideBusinessLayerDependencies(Container $container): Container
+    {
+        $container = parent::provideBusinessLayerDependencies($container);
+        $container = $this->addValidationAdapter($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addValidationAdapter(Container $container): Container
+    {
+        $container[static::ADAPTER_VALIDATION] = function () {
+            return new ContentToValidationAdapter();
+        };
+
+        return $container;
+    }
 }

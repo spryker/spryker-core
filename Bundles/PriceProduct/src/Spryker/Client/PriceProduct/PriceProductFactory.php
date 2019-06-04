@@ -11,6 +11,9 @@ use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\PriceProduct\Dependency\Client\PriceProductToCurrencyClientInterface;
 use Spryker\Client\PriceProduct\Dependency\Client\PriceProductToPriceClientInterface;
 use Spryker\Client\PriceProduct\Dependency\Client\PriceProductToQuoteClientInterface;
+use Spryker\Client\PriceProduct\Dependency\Service\PriceProductToUtilPriceServiceInterface;
+use Spryker\Client\PriceProduct\PriceEnvironmentReader\PriceEnvironmentReader;
+use Spryker\Client\PriceProduct\PriceEnvironmentReader\PriceEnvironmentReaderInterface;
 use Spryker\Client\PriceProduct\ProductPriceResolver\ProductPriceResolver;
 use Spryker\Service\PriceProduct\PriceProductServiceInterface;
 
@@ -25,11 +28,22 @@ class PriceProductFactory extends AbstractFactory
     public function createProductPriceResolver()
     {
         return new ProductPriceResolver(
+            $this->getConfig(),
+            $this->getPriceProductService(),
+            $this->createPriceEnvironmentReader(),
+            $this->getUtilPriceService()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\PriceProduct\PriceEnvironmentReader\PriceEnvironmentReaderInterface
+     */
+    public function createPriceEnvironmentReader(): PriceEnvironmentReaderInterface
+    {
+        return new PriceEnvironmentReader(
             $this->getPriceClient(),
             $this->getCurrencyClient(),
-            $this->getConfig(),
-            $this->getQuoteClient(),
-            $this->getPriceProductService()
+            $this->getQuoteClient()
         );
     }
 
@@ -74,5 +88,13 @@ class PriceProductFactory extends AbstractFactory
         $config = parent::getConfig();
 
         return $config;
+    }
+
+    /**
+     * @return \Spryker\Client\PriceProduct\Dependency\Service\PriceProductToUtilPriceServiceInterface
+     */
+    public function getUtilPriceService(): PriceProductToUtilPriceServiceInterface
+    {
+        return $this->getProvidedDependency(PriceProductDependencyProvider::SERVICE_UTIL_PRICE);
     }
 }

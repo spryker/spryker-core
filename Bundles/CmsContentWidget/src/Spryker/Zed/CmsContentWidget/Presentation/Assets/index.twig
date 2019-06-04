@@ -1,0 +1,10 @@
+{% if isEditorButtonEnabled %}
+<script>
+    window.editorConfiguration = window.editorConfiguration || {};
+
+    window.editorConfiguration.cmsContentWidgetConfigData = {
+        dropdownItems: {{ cmsContentWidgetFunctions | json_encode | raw }},
+    };
+</script>
+<script src="/assets/js/spryker-zed-cms-content-widget-main.js"></script>
+{%  endif %}

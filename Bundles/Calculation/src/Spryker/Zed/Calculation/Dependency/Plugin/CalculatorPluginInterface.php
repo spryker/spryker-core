@@ -21,7 +21,7 @@ interface CalculatorPluginInterface
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return void
      */
     public function recalculate(QuoteTransfer $quoteTransfer);
 }

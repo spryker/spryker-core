@@ -11,10 +11,34 @@
 
     <transfer name="Company">
         <property name="uuid" type="string" />
+        <property name="idCompany" type="int" />
     </transfer>
 
     <transfer name="CompanyUser">
         <property name="company" type="Company" />
     </transfer>
-    
+
+    <transfer name="CompanyRole">
+        <property name="company" type="Company"/>
+    </transfer>
+
+    <transfer name="CompanyBusinessUnit">
+        <property name="company" type="Company"/>
+    </transfer>
+
+    <transfer name="CompanyResponse">
+        <property name="companyTransfer" type="Company"/>
+        <property name="isSuccessful" type="bool"/>
+    </transfer>
+
+    <transfer name="RestUser">
+        <property name="idCompany" type="int"/>
+    </transfer>
+
+    <transfer name="RestErrorMessage">
+        <property name="status" type="int" />
+        <property name="code" type="string" />
+        <property name="detail" type="string" />
+    </transfer>
+
 </transfers>

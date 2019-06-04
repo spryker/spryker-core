@@ -25,7 +25,8 @@ use Generated\Shared\Transfer\LocalizedContentTransfer;
 class ContentFacadeTest extends Test
 {
     private const NAME = 'New name';
-    private const PARAMENTERS = '{"sku"}';
+    private const PARAMETERS = '{"sku"}';
+    private const DESCRIPTION = 'Test description';
 
     /**
      * @var \SprykerTest\Zed\Content\ContentBusinessTester
@@ -70,7 +71,7 @@ class ContentFacadeTest extends Test
         $contentTransfer = $this->tester->haveContent();
 
         $contentTransfer->setName(static::NAME);
-        $contentTransfer->getLocalizedContents()[0]->setParameters(static::PARAMENTERS);
+        $contentTransfer->getLocalizedContents()[0]->setParameters(static::PARAMETERS);
 
         $this->getFacade()->update($contentTransfer);
 
@@ -81,6 +82,48 @@ class ContentFacadeTest extends Test
             $contentTransfer->getLocalizedContents()[0]->getParameters(),
             $updatedContentTransfer->getLocalizedContents()[0]->getParameters()
         );
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidateSuccess(): void
+    {
+        $contentTransfer = $this->tester->haveContent();
+        $contentTransfer->setName(static::NAME);
+        $contentTransfer->setDescription(static::DESCRIPTION);
+
+        $validationResponse = $this->getFacade()->validateContent($contentTransfer);
+
+        $this->assertTrue($validationResponse->getIsSuccess());
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidateFailsOnEmptyName(): void
+    {
+        $contentTransfer = $this->tester->haveContent();
+        $contentTransfer->setName('');
+        $contentTransfer->setDescription(static::DESCRIPTION);
+
+        $validationResponse = $this->getFacade()->validateContent($contentTransfer);
+
+        $this->assertFalse($validationResponse->getIsSuccess());
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidateFailsOnVeryLongDescription()
+    {
+        $contentTransfer = $this->tester->haveContent();
+        $contentTransfer->setName(static::NAME);
+        $contentTransfer->setDescription(str_repeat(static::DESCRIPTION, 100));
+
+        $validationResponse = $this->getFacade()->validateContent($contentTransfer);
+
+        $this->assertFalse($validationResponse->getIsSuccess());
     }
 
     /**
