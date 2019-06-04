@@ -17,7 +17,7 @@ class ProductListStorageConcreteRestrictionFilterPlugin extends AbstractPlugin i
 {
     /**
      * {@inheritdoc}
-     * - Filters concrete product ids based on white and black lists.
+     * - Filters concrete product ids based on white and blacklists.
      *
      * @api
      *

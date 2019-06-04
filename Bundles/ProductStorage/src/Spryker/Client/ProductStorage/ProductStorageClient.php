@@ -270,11 +270,11 @@ class ProductStorageClient extends AbstractClient implements ProductStorageClien
      *
      * @return array
      */
-    public function findBulkProductAbstractStorageDataByProductAbstractIdsAndLocaleName(array $productAbstractIds, string $localeName): array
+    public function getBulkProductAbstractStorageDataByProductAbstractIdsAndLocaleName(array $productAbstractIds, string $localeName): array
     {
         return $this->getFactory()
             ->createProductAbstractStorageReader()
-            ->findBulkProductAbstractStorageDataByProductAbstractIdsAndLocaleName($productAbstractIds, $localeName);
+            ->getBulkProductAbstractStorageDataByProductAbstractIdsAndLocaleName($productAbstractIds, $localeName);
     }
 
     /**
@@ -288,11 +288,11 @@ class ProductStorageClient extends AbstractClient implements ProductStorageClien
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer[]
      */
-    public function findProductAbstractViewTransfers(array $productAbstractIds, string $localeName, array $selectedAttributes = []): array
+    public function getProductAbstractViewTransfers(array $productAbstractIds, string $localeName, array $selectedAttributes = []): array
     {
         return $this->getFactory()
             ->createProductAbstractViewTransferFinder()
-            ->findProductViewTransfers($productAbstractIds, $localeName, $selectedAttributes);
+            ->getProductViewTransfers($productAbstractIds, $localeName, $selectedAttributes);
     }
 
     /**
@@ -306,10 +306,10 @@ class ProductStorageClient extends AbstractClient implements ProductStorageClien
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer[]
      */
-    public function findProductConcreteViewTransfers(array $productConcreteIds, string $localeName, array $selectedAttributes = []): array
+    public function getProductConcreteViewTransfers(array $productConcreteIds, string $localeName, array $selectedAttributes = []): array
     {
         return $this->getFactory()
             ->createProductConcreteViewTransferFinder()
-            ->findProductViewTransfers($productConcreteIds, $localeName, $selectedAttributes);
+            ->getProductViewTransfers($productConcreteIds, $localeName, $selectedAttributes);
     }
 }

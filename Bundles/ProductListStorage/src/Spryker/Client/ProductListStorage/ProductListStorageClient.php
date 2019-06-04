@@ -92,8 +92,8 @@ class ProductListStorageClient extends AbstractClient implements ProductListStor
     public function filterRestrictedAbstractProducts(array $productAbstractIds): array
     {
         return $this->getFactory()
-            ->createProductAbstractRestrictionReader()
-            ->filterRestrictedAbstractProducts($productAbstractIds);
+            ->createProductAbstractProductRestrictionFilter()
+            ->filterRestrictedProducts($productAbstractIds);
     }
 
     /**
@@ -108,7 +108,7 @@ class ProductListStorageClient extends AbstractClient implements ProductListStor
     public function filterRestrictedConcreteProducts(array $productConcreteIds): array
     {
         return $this->getFactory()
-            ->createProductConcreteRestrictionReader()
-            ->filterRestrictedConcreteProducts($productConcreteIds);
+            ->createProductConcreteProductRestrictionFilter()
+            ->filterRestrictedProducts($productConcreteIds);
     }
 }

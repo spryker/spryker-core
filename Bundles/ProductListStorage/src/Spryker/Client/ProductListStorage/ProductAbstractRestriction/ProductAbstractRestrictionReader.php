@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\ProductListStorage\ProductAbstractRestriction;
 
-use Generated\Shared\Transfer\ProductAbstractProductListStorageTransfer;
 use Spryker\Client\ProductListStorage\Dependency\Client\ProductListStorageToCustomerClientInterface;
 use Spryker\Client\ProductListStorage\ProductListProductAbstractStorage\ProductListProductAbstractStorageReaderInterface;
 
@@ -59,61 +58,6 @@ class ProductAbstractRestrictionReader implements ProductAbstractRestrictionRead
     }
 
     /**
-     * @param int[] $productAbstractIds
-     *
-     * @return int[]
-     */
-    public function filterRestrictedAbstractProducts(array $productAbstractIds): array
-    {
-        $customer = $this->customerClient->getCustomer();
-        if (!$customer) {
-            return $productAbstractIds;
-        }
-
-        $customerProductListCollectionTransfer = $customer->getCustomerProductListCollection();
-        if (!$customerProductListCollectionTransfer) {
-            return $productAbstractIds;
-        }
-
-        $customerWhitelistIds = $customer->getCustomerProductListCollection()->getWhitelistIds() ?: [];
-        $customerBlacklistIds = $customer->getCustomerProductListCollection()->getBlacklistIds() ?: [];
-
-        if (!$customerBlacklistIds && !$customerWhitelistIds) {
-            return $productAbstractIds;
-        }
-
-        $productListProductAbstractStorageTransfers = $this
-            ->productListProductAbstractStorageReader
-            ->findProductAbstractProductListStorageTransfersByProductAbstractIds($productAbstractIds);
-
-        foreach ($productListProductAbstractStorageTransfers as $productListProductAbstractStorageTransfer) {
-            if ($this->isProductAbstractRestrictedInBlacklist($productListProductAbstractStorageTransfer, $customerBlacklistIds)
-                || $this->isProductAbstractRestrictedInWhitelist($productListProductAbstractStorageTransfer, $customerWhitelistIds)
-            ) {
-                $productAbstractIds = $this->removeIdProductAbstractFromList($productListProductAbstractStorageTransfer->getIdProductAbstract(), $productAbstractIds);
-            }
-        }
-
-        return array_values($productAbstractIds);
-    }
-
-    /**
-     * @param int $idProductAbstract
-     * @param int[] $productAbstractIds
-     *
-     * @return int[]
-     */
-    protected function removeIdProductAbstractFromList(int $idProductAbstract, array $productAbstractIds): array
-    {
-        $key = array_search($idProductAbstract, $productAbstractIds);
-        if ($key !== false) {
-            unset($productAbstractIds[$key]);
-        }
-
-        return $productAbstractIds;
-    }
-
-    /**
      * @param int $idProductAbstract
      * @param int[] $customerWhitelistIds
      * @param int[] $customerBlacklistIds
@@ -139,39 +83,5 @@ class ProductAbstractRestrictionReader implements ProductAbstractRestrictionRead
         }
 
         return (bool)count($customerWhitelistIds);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductAbstractProductListStorageTransfer $productAbstractProductListStorageTransfer
-     * @param int[] $customerWhitelistIds
-     *
-     * @return bool
-     */
-    protected function isProductAbstractRestrictedInWhitelist(
-        ProductAbstractProductListStorageTransfer $productAbstractProductListStorageTransfer,
-        array $customerWhitelistIds
-    ): bool {
-        if (empty($customerWhitelistIds)) {
-            return false;
-        }
-
-        return empty(array_intersect($productAbstractProductListStorageTransfer->getIdWhitelists(), $customerWhitelistIds));
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductAbstractProductListStorageTransfer $productAbstractProductListStorageTransfer
-     * @param int[] $customerBlacklistIds
-     *
-     * @return bool
-     */
-    protected function isProductAbstractRestrictedInBlacklist(
-        ProductAbstractProductListStorageTransfer $productAbstractProductListStorageTransfer,
-        array $customerBlacklistIds
-    ): bool {
-        if (empty($customerBlacklistIds)) {
-            return false;
-        }
-
-        return !empty(array_intersect($productAbstractProductListStorageTransfer->getIdBlacklists(), $customerBlacklistIds));
     }
 }

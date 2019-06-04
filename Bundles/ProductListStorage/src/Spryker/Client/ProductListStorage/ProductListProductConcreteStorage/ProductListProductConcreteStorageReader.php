@@ -84,7 +84,7 @@ class ProductListProductConcreteStorageReader implements ProductListProductConcr
      *
      * @return \Generated\Shared\Transfer\ProductConcreteProductListStorageTransfer[]
      */
-    public function findProductConcreteProductListStorageTransfersByProductConcreteIds(array $productConcreteIds): array
+    public function getProductConcreteProductListStorageTransfersByProductConcreteIds(array $productConcreteIds): array
     {
         $productConcreteProductListStorageKeys = [];
         foreach ($productConcreteIds as $idProductConcrete) {

@@ -9,6 +9,6 @@ namespace Spryker\Client\ProductStorage\Exception;
 
 use Exception;
 
-class NotSpecifiedProductIdKeyException extends Exception
+class ProductViewTransferCacheNotFoundException extends Exception
 {
 }

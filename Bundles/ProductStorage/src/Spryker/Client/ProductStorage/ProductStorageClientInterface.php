@@ -230,16 +230,14 @@ interface ProductStorageClientInterface
      *
      * @return array
      */
-    public function findBulkProductAbstractStorageDataByProductAbstractIdsAndLocaleName(array $productAbstractIds, string $localeName): array;
+    public function getBulkProductAbstractStorageDataByProductAbstractIdsAndLocaleName(array $productAbstractIds, string $localeName): array;
 
     /**
      * Specification:
-     * - Retrieves a current Store specific ProductAbstract resources from Storage.
-     * - Filter restricted products.
+     * - Retrieves store specific ProductAbstract resources from Storage.
+     * - Filters restricted products.
      * - Maps raw product data to ProductViewTransfers for the current locale.
-     * - Based on the super attributes and the selected attributes of the product the result is abstract product.
      * - Executes a stack of `StorageProductExpanderPluginInterface` plugins that expand result.
-     * - Filter the restricted product variants (product concrete) in `attribute_map`.
      *
      * @api
      *
@@ -249,14 +247,13 @@ interface ProductStorageClientInterface
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer[]
      */
-    public function findProductAbstractViewTransfers(array $productAbstractIds, string $localeName, array $selectedAttributes = []): array;
+    public function getProductAbstractViewTransfers(array $productAbstractIds, string $localeName, array $selectedAttributes = []): array;
 
     /**
      * Specification:
-     * - Retrieves a current Store specific ProductConcrete resources from Storage.
+     * - Retrieves store specific ProductConcrete resources from Storage.
      * - Filters restricted concrete products.
      * - Maps raw product data to ProductViewTransfers for the current locale.
-     * - Based on the super attributes and the selected attributes of the product the result is concrete product.
      * - Executes a stack of `StorageProductExpanderPluginInterface` plugins that expand result.
      *
      * @api
@@ -267,5 +264,5 @@ interface ProductStorageClientInterface
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer[]
      */
-    public function findProductConcreteViewTransfers(array $productConcreteIds, string $localeName, array $selectedAttributes = []): array;
+    public function getProductConcreteViewTransfers(array $productConcreteIds, string $localeName, array $selectedAttributes = []): array;
 }

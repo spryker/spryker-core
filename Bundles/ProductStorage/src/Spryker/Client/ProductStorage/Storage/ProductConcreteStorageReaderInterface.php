@@ -64,5 +64,5 @@ interface ProductConcreteStorageReaderInterface
      *
      * @return array
      */
-    public function findBulkProductConcreteStorageDataByProductConcreteIdsAndLocaleName(array $productConcreteIds, string $localeName): array;
+    public function getBulkProductConcreteStorageDataByProductConcreteIdsAndLocaleName(array $productConcreteIds, string $localeName): array;
 }

@@ -52,11 +52,11 @@ class ProductConcreteViewTransferFinder extends AbstractProductViewTransferFinde
      *
      * @return array
      */
-    protected function findBulkProductStorageData(array $productIds, string $localeName): array
+    protected function getBulkProductStorageData(array $productIds, string $localeName): array
     {
         return $this
             ->productConcreteStorage
-            ->findBulkProductConcreteStorageDataByProductConcreteIdsAndLocaleName($productIds, $localeName);
+            ->getBulkProductConcreteStorageDataByProductConcreteIdsAndLocaleName($productIds, $localeName);
     }
 
     /**
@@ -67,5 +67,15 @@ class ProductConcreteViewTransferFinder extends AbstractProductViewTransferFinde
     protected function getProductId(ProductViewTransfer $productViewTransfer): int
     {
         return $productViewTransfer->getIdProductConcrete();
+    }
+
+    /**
+     * @param array $productData
+     *
+     * @return int
+     */
+    protected function getProductDataProductId(array $productData): int
+    {
+        return $productData[static::KEY_ID_PRODUCT];
     }
 }

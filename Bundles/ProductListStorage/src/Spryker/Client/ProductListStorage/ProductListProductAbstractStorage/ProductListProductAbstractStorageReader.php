@@ -84,7 +84,7 @@ class ProductListProductAbstractStorageReader implements ProductListProductAbstr
      *
      * @return \Generated\Shared\Transfer\ProductAbstractProductListStorageTransfer[]
      */
-    public function findProductAbstractProductListStorageTransfersByProductAbstractIds(array $productAbstractIds): array
+    public function getProductAbstractProductListStorageTransfersByProductAbstractIds(array $productAbstractIds): array
     {
         $productAbstractProductListStorageKeys = $this->generateProductAbstractProductListStorageKeys($productAbstractIds);
         $productAbstractProductListStorageData = $this->storageClient->getMulti($productAbstractProductListStorageKeys);

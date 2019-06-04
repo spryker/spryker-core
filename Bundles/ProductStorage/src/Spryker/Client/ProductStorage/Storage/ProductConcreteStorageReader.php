@@ -13,7 +13,7 @@ use Spryker\Client\Kernel\Locator;
 use Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToLocaleInterface;
 use Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToStorageClientInterface;
 use Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToSynchronizationServiceInterface;
-use Spryker\Client\ProductStorage\Exception\NotFoundProductConcreteDataCacheException;
+use Spryker\Client\ProductStorage\Exception\ProductConcreteDataCacheNotFoundException;
 use Spryker\Client\ProductStorage\ProductStorageConfig;
 use Spryker\Shared\ProductStorage\ProductStorageConstants;
 use Zend\Filter\FilterChain;
@@ -273,14 +273,14 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
      * @param int $idProductConcrete
      * @param string $localeName
      *
-     * @throws \Spryker\Client\ProductStorage\Exception\NotFoundProductConcreteDataCacheException
+     * @throws \Spryker\Client\ProductStorage\Exception\ProductConcreteDataCacheNotFoundException
      *
      * @return array
      */
     protected function getProductConcreteDataCacheByIdProductConcreteAndLocaleName(int $idProductConcrete, string $localeName): array
     {
         if (!$this->hasProductConcreteDataCacheByIdProductConcreteAndLocaleName($idProductConcrete, $localeName)) {
-            throw new NotFoundProductConcreteDataCacheException();
+            throw new ProductConcreteDataCacheNotFoundException();
         }
 
         return static::$productsConcreteDataCache[$idProductConcrete][$localeName];
@@ -333,7 +333,7 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
      *
      * @return array
      */
-    public function findBulkProductConcreteStorageDataByProductConcreteIdsAndLocaleName(array $productConcreteIds, string $localeName): array
+    public function getBulkProductConcreteStorageDataByProductConcreteIdsAndLocaleName(array $productConcreteIds, string $localeName): array
     {
         $cachedProductConcreteData = $this->getProductConcreteDataCacheByProductConcreteIdsAndLocaleName($productConcreteIds, $localeName);
 
@@ -343,7 +343,7 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
             return $cachedProductConcreteData;
         }
 
-        $productConcreteStorageData = $this->findBulkProductConcreteStorageData($productConcreteIds, $localeName);
+        $productConcreteStorageData = $this->getBulkProductConcreteStorageData($productConcreteIds, $localeName);
 
         return array_merge($cachedProductConcreteData, $productConcreteStorageData);
     }
@@ -354,15 +354,15 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
      *
      * @return array
      */
-    protected function findBulkProductConcreteStorageData(array $productConcreteIds, string $localeName): array
+    protected function getBulkProductConcreteStorageData(array $productConcreteIds, string $localeName): array
     {
         if (ProductStorageConfig::isCollectorCompatibilityMode()) {
-            return $this->findBulkProductConcreteStorageDataForCollectorCompatibilityMode($productConcreteIds, $localeName);
+            return $this->getBulkProductConcreteStorageDataForCollectorCompatibilityMode($productConcreteIds, $localeName);
         }
 
-        $productStorageData = $this->storageClient->getMulti($this->generateStorageKeys($productConcreteIds, $localeName));
+        $productStorageDataCollection = $this->storageClient->getMulti($this->generateStorageKeys($productConcreteIds, $localeName));
 
-        return $this->mapBulkProductConcreteStorageData($productStorageData, $localeName);
+        return $this->mapBulkProductConcreteStorageData($productStorageDataCollection, $localeName);
     }
 
     /**
@@ -382,20 +382,20 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
     }
 
     /**
-     * @param array $productStorageData
+     * @param array $productStorageDataCollection
      * @param string $localeName
      *
      * @return array
      */
-    protected function mapBulkProductConcreteStorageData(array $productStorageData, string $localeName): array
+    protected function mapBulkProductConcreteStorageData(array $productStorageDataCollection, string $localeName): array
     {
         $productConcreteStorageData = [];
-        foreach ($productStorageData as $data) {
-            $data = json_decode($data, true);
-            $idProductConcrete = $data[static::KEY_ID_PRODUCT_CONCRETE];
-            $productConcreteStorageData[$idProductConcrete] = $data;
+        foreach ($productStorageDataCollection as $productStorageData) {
+            $productStorageData = json_decode($productStorageData, true);
+            $idProductConcrete = $productStorageData[static::KEY_ID_PRODUCT_CONCRETE];
+            $productConcreteStorageData[$idProductConcrete] = $productStorageData;
 
-            $this->cacheProductConcreteDataByIdProductConcreteAndLocaleName($idProductConcrete, $localeName, $data);
+            $this->cacheProductConcreteDataByIdProductConcreteAndLocaleName($idProductConcrete, $localeName, $productStorageData);
         }
 
         return $productConcreteStorageData;
@@ -409,7 +409,7 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
      *
      * @return array
      */
-    protected function findBulkProductConcreteStorageDataForCollectorCompatibilityMode(array $productConcreteIds, string $localeName): array
+    protected function getBulkProductConcreteStorageDataForCollectorCompatibilityMode(array $productConcreteIds, string $localeName): array
     {
         $clientLocatorClassName = Locator::class;
         /** @var \Spryker\Client\Product\ProductClientInterface $productClient */

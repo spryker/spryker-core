@@ -8,16 +8,13 @@
 namespace Spryker\Client\ProductStorage\Finder;
 
 use Generated\Shared\Transfer\ProductViewTransfer;
-use Spryker\Client\ProductStorage\Exception\NotFoundProductViewTransferCacheException;
-use Spryker\Client\ProductStorage\Exception\NotSpecifiedProductIdKeyException;
+use Spryker\Client\ProductStorage\Exception\ProductViewTransferCacheNotFoundException;
 use Spryker\Client\ProductStorage\Mapper\ProductStorageDataMapperInterface;
 use Spryker\Client\ProductStorage\ProductStorageConfig;
 
 abstract class AbstractProductViewTransferFinder implements ProductViewTransferFinderInterface
 {
-    protected const ERROR_MESSAGE_PRODUCT_VIEW_TRANSFER_NOT_FOUND_IN_CACHE = 'There is no `ProductViewTransfer` in a cache with provided product id and local name';
-    protected const KEY_ID_PRODUCT = null;
-    protected const ERROR_MESSAGE_PRODUCT_ID_KEY_NOT_SPECIFIED = 'You should specify product id key in the implementation';
+    protected const ERROR_MESSAGE_PRODUCT_VIEW_TRANSFER_NOT_FOUND_IN_CACHE = 'There is no `ProductViewTransfer` in a cache with provided product id and local name.';
 
     /**
      * @var \Spryker\Client\ProductStorage\Mapper\ProductStorageDataMapperInterface
@@ -25,7 +22,7 @@ abstract class AbstractProductViewTransferFinder implements ProductViewTransferF
     protected $productStorageDataMapper;
 
     /**
-     * @var array Should be added to a not abstract class in order to have separate cache storage
+     * @var array
      */
     protected static $productViewTransfersCache = [];
 
@@ -50,17 +47,17 @@ abstract class AbstractProductViewTransferFinder implements ProductViewTransferF
             return $this->getProductViewTransferFromCache($idProduct, $localeName);
         }
 
-        $data = $this->findProductStorageData($idProduct, $localeName);
-        if ($data === null) {
+        $productStorageData = $this->findProductStorageData($idProduct, $localeName);
+        if ($productStorageData === null) {
             return null;
         }
 
-        if (!isset($data[ProductStorageConfig::RESOURCE_TYPE_ATTRIBUTE_MAP])) {
-            $data[ProductStorageConfig::RESOURCE_TYPE_ATTRIBUTE_MAP] = [];
+        if (!isset($productStorageData[ProductStorageConfig::RESOURCE_TYPE_ATTRIBUTE_MAP])) {
+            $productStorageData[ProductStorageConfig::RESOURCE_TYPE_ATTRIBUTE_MAP] = [];
         }
 
         $productViewTransfer = $this->productStorageDataMapper
-            ->mapProductStorageData($localeName, $data, $selectedAttributes);
+            ->mapProductStorageData($localeName, $productStorageData, $selectedAttributes);
         $this->cacheProductViewTransfer($productViewTransfer, $localeName);
 
         return $productViewTransfer;
@@ -73,7 +70,7 @@ abstract class AbstractProductViewTransferFinder implements ProductViewTransferF
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer[]
      */
-    public function findProductViewTransfers(array $productIds, string $localeName, array $selectedAttributes = []): array
+    public function getProductViewTransfers(array $productIds, string $localeName, array $selectedAttributes = []): array
     {
         $cachedProductViewTransfers = $this->getProductViewTransfersFromCache($productIds, $localeName);
 
@@ -82,30 +79,30 @@ abstract class AbstractProductViewTransferFinder implements ProductViewTransferF
             return $cachedProductViewTransfers;
         }
 
-        $productData = $this->findBulkProductStorageData($productIds, $localeName);
-        $productViewTransfers = $this->mapProductData($productData, $localeName, $selectedAttributes);
+        $productStorageDataCollection = $this->getBulkProductStorageData($productIds, $localeName);
+        $productViewTransfers = $this->mapProductData($productStorageDataCollection, $localeName, $selectedAttributes);
 
         return array_merge($cachedProductViewTransfers, $productViewTransfers);
     }
 
     /**
-     * @param array $productData
+     * @param array $productStorageDataCollection
      * @param string $localeName
      * @param array $selectedAttributes
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer[]
      */
-    protected function mapProductData(array $productData, string $localeName, array $selectedAttributes = []): array
+    protected function mapProductData(array $productStorageDataCollection, string $localeName, array $selectedAttributes = []): array
     {
         $productViewTransfers = [];
-        foreach ($productData as $data) {
-            if (!isset($data[ProductStorageConfig::RESOURCE_TYPE_ATTRIBUTE_MAP])) {
-                $data[ProductStorageConfig::RESOURCE_TYPE_ATTRIBUTE_MAP] = [];
+        foreach ($productStorageDataCollection as $productStorageData) {
+            if (!isset($productStorageData[ProductStorageConfig::RESOURCE_TYPE_ATTRIBUTE_MAP])) {
+                $productStorageData[ProductStorageConfig::RESOURCE_TYPE_ATTRIBUTE_MAP] = [];
             }
 
             $productViewTransfer = $this
                 ->productStorageDataMapper
-                ->mapProductStorageData($localeName, $data, $this->findProductSelectedAttributes($data, $selectedAttributes));
+                ->mapProductStorageData($localeName, $productStorageData, $this->getProductSelectedAttributes($productStorageData, $selectedAttributes));
             $this->cacheProductViewTransfer($productViewTransfer, $localeName);
 
             $productViewTransfers[$this->getProductId($productViewTransfer)] = $productViewTransfer;
@@ -129,14 +126,14 @@ abstract class AbstractProductViewTransferFinder implements ProductViewTransferF
      * @param int $idProduct
      * @param string $localeName
      *
-     * @throws \Spryker\Client\ProductStorage\Exception\NotFoundProductViewTransferCacheException
+     * @throws \Spryker\Client\ProductStorage\Exception\ProductViewTransferCacheNotFoundException
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer
      */
     protected function getProductViewTransferFromCache(int $idProduct, string $localeName): ProductViewTransfer
     {
         if (!$this->hasProductViewTransferCache($idProduct, $localeName)) {
-            throw new NotFoundProductViewTransferCacheException(static::ERROR_MESSAGE_PRODUCT_VIEW_TRANSFER_NOT_FOUND_IN_CACHE);
+            throw new ProductViewTransferCacheNotFoundException(static::ERROR_MESSAGE_PRODUCT_VIEW_TRANSFER_NOT_FOUND_IN_CACHE);
         }
 
         return static::$productViewTransfersCache[$idProduct][$localeName];
@@ -164,16 +161,11 @@ abstract class AbstractProductViewTransferFinder implements ProductViewTransferF
      * @param array $productData
      * @param array $selectedAttributes
      *
-     * @throws \Spryker\Client\ProductStorage\Exception\NotSpecifiedProductIdKeyException
-     *
      * @return array
      */
-    protected function findProductSelectedAttributes(array $productData, array $selectedAttributes): array
+    protected function getProductSelectedAttributes(array $productData, array $selectedAttributes): array
     {
-        if (!static::KEY_ID_PRODUCT) {
-            throw new NotSpecifiedProductIdKeyException(static::ERROR_MESSAGE_PRODUCT_ID_KEY_NOT_SPECIFIED);
-        }
-        return $selectedAttributes[$productData[static::KEY_ID_PRODUCT]] ?? [];
+        return $selectedAttributes[$this->getProductDataProductId($productData)] ?? [];
     }
 
     /**
@@ -195,6 +187,13 @@ abstract class AbstractProductViewTransferFinder implements ProductViewTransferF
     abstract protected function getProductId(ProductViewTransfer $productViewTransfer): int;
 
     /**
+     * @param array $productData
+     *
+     * @return int
+     */
+    abstract protected function getProductDataProductId(array $productData): int;
+
+    /**
      * @param int $idProduct
      * @param string $localeName
      *
@@ -208,5 +207,5 @@ abstract class AbstractProductViewTransferFinder implements ProductViewTransferF
      *
      * @return array
      */
-    abstract protected function findBulkProductStorageData(array $productIds, string $localeName): array;
+    abstract protected function getBulkProductStorageData(array $productIds, string $localeName): array;
 }
