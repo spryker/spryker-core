@@ -36,6 +36,7 @@ class EntityTagRequestValidator implements EntityTagRequestValidatorInterface
     /**
      * @param \Spryker\Glue\EntityTagsRestApi\Processor\EntityTagCheckerInterface $entityTagChecker
      * @param \Spryker\Glue\EntityTagsRestApi\Dependency\Client\EntityTagsRestApiToEntityTagClientInterface $entityTagClient
+     * @param \Spryker\Glue\EntityTagsRestApi\Processor\RestResponseBuilder\EntityTagRestResponseBuilderInterface $entityTagRestResponseBuilder
      */
     public function __construct(EntityTagCheckerInterface $entityTagChecker, EntityTagsRestApiToEntityTagClientInterface $entityTagClient, EntityTagRestResponseBuilderInterface $entityTagRestResponseBuilder)
     {
