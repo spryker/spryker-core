@@ -36,6 +36,7 @@ class CartsRestApiBusinessTester extends Actor
 {
     use _generated\CartsRestApiBusinessTesterActions;
 
+    public const TEST_ID_QUOTE = 67238;
     public const TEST_QUOTE_UUID = 'test-quote-uuid';
 
     public const TEST_CUSTOMER_REFERENCE = 'DE--666';
@@ -47,7 +48,7 @@ class CartsRestApiBusinessTester extends Actor
     {
         /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
         $quoteResponseTransfer = (new QuoteResponseBuilder(['isSuccessful' => true]))
-            ->withQuoteTransfer(['uuid' => static::TEST_QUOTE_UUID, 'customerReference' => static::TEST_CUSTOMER_REFERENCE])
+            ->withQuoteTransfer(['uuid' => static::TEST_QUOTE_UUID, 'customerReference' => static::TEST_CUSTOMER_REFERENCE, 'idQuote' => static::TEST_ID_QUOTE])
             ->build();
 
         return $quoteResponseTransfer;

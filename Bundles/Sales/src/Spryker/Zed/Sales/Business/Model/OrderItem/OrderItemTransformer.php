@@ -24,14 +24,20 @@ class OrderItemTransformer implements OrderItemTransformerInterface
         $transformedItemsCollection = new ItemCollectionTransfer();
 
         $quantity = $itemTransfer->getQuantity();
-        for ($i = 1; $quantity >= $i; $i++) {
+        while ($quantity > 0) {
             $transformedItemTransfer = new ItemTransfer();
             $transformedItemTransfer->fromArray($itemTransfer->toArray(), true);
-            $transformedItemTransfer->setQuantity(1);
+            $transformedItemTransfer->setQuantity(min($quantity, 1));
+            $quantity -= 1.0;
 
             $transformedProductOptions = new ArrayObject();
             foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
-                $transformedProductOptions->append($this->copyProductOptionTransfer($productOptionTransfer));
+                $transformedProductOptions->append(
+                    $this->copyProductOptionTransfer(
+                        $productOptionTransfer,
+                        $transformedItemTransfer
+                    )
+                );
             }
 
             $transformedItemTransfer->setProductOptions($transformedProductOptions);
@@ -43,16 +49,19 @@ class OrderItemTransformer implements OrderItemTransformerInterface
 
     /**
      * @param \Generated\Shared\Transfer\ProductOptionTransfer $productOptionTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $transformedItemTransfer
      *
      * @return \Generated\Shared\Transfer\ProductOptionTransfer
      */
-    protected function copyProductOptionTransfer(ProductOptionTransfer $productOptionTransfer): ProductOptionTransfer
-    {
+    protected function copyProductOptionTransfer(
+        ProductOptionTransfer $productOptionTransfer,
+        ItemTransfer $transformedItemTransfer
+    ): ProductOptionTransfer {
         $transformedProductOptionTransfer = new ProductOptionTransfer();
         $transformedProductOptionTransfer->fromArray($productOptionTransfer->toArray(), true);
 
         $transformedProductOptionTransfer
-            ->setQuantity(1)
+            ->setQuantity($transformedItemTransfer->getQuantity())
             ->setIdProductOptionValue(null);
 
         return $transformedProductOptionTransfer;
