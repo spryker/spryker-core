@@ -60,7 +60,7 @@ class ProductMeasurementUnitSynchronizationDataPlugin extends AbstractPlugin imp
         $synchronizationDataTransfers = [];
         $productMeasurementUnitTransfers = $this->getRepository()->findProductMeasurementUnitStorageEntities($ids);
 
-        if (empty($ids)) {
+        if ($ids === []) {
             $productMeasurementUnitTransfers = $this->getRepository()->findAllProductMeasurementUnitStorageEntities();
         }
 
