@@ -7,14 +7,10 @@
 
 namespace Spryker\Zed\Propel\Business\Model\PropelDatabase\Command;
 
-interface ImportDatabaseInterface
+interface DropDatabaseTablesInterface
 {
     /**
-     * @deprecated Will be removed without replacement.
-     *
-     * @param string $backupPath
-     *
      * @return void
      */
-    public function importDatabase($backupPath);
+    public function dropTables(): void;
 }
