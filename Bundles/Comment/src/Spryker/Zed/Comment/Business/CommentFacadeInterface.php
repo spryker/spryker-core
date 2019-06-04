@@ -27,11 +27,13 @@ interface CommentFacadeInterface
 
     /**
      * Specification:
+     * - Expects owner ID to be provided.
+     * - Expects owner type to be provided.
+     * - Expects comment message to be provided.
+     * - Expects id customer to be provided.
      * - Creates comment thread if it does not exist in Persistence yet.
-     * - Expects CommentTransfer with CustomerTransfer and message.
-     * - Generates comment thread UUID when it is missing.
-     * - Generates missing tags in Persistence.
      * - Persists provided comment for the comment thread.
+     * - Generates missing tags in Persistence.
      * - Returns with the up to date comment thread.
      * - Returns with error message(s) in case of error.
      *
@@ -45,8 +47,9 @@ interface CommentFacadeInterface
 
     /**
      * Specification:
+     * - Expects comment message to be provided.
+     * - Expects id customer to be provided.
      * - Updates the provided comment by comment UUID in Persistence.
-     * - Expects CommentTransfer with CustomerTransfer and message.
      * - Generates missing tags if Persistence.
      * - Returns with the up to date comment thread.
      * - Returns with error message(s) in case of error.
@@ -62,7 +65,6 @@ interface CommentFacadeInterface
     /**
      * Specification:
      * - Updates the provided comment tags by comment UUID in Persistence.
-     * - Expects CommentTransfer with CustomerTransfer.
      * - Generates missing tags if Persistence.
      * - Returns with the up to date comment thread.
      * - Returns with error message(s) in case of error.
@@ -77,6 +79,7 @@ interface CommentFacadeInterface
 
     /**
      * Specification:
+     * - Expects id customer to be provided.
      * - Removes the provided comment by comment UUID in Persistence.
      * - Removes assigned tags in Persistence.
      * - Returns with the up to date comment thread.

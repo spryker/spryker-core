@@ -70,7 +70,9 @@ class CommentWriter implements CommentWriterInterface
             ->requireComment()
             ->getComment()
                 ->requireMessage()
-                ->requireCustomer();
+                ->requireCustomer()
+                ->getCustomer()
+                    ->requireIdCustomer();
 
         return $this->getTransactionHandler()->handleTransaction(function () use ($commentRequestTransfer) {
             return $this->executeAddCommentTransaction($commentRequestTransfer);
@@ -108,8 +110,7 @@ class CommentWriter implements CommentWriterInterface
         $commentRequestTransfer
             ->requireComment()
             ->getComment()
-                ->requireUuid()
-                ->requireCustomer();
+                ->requireUuid();
 
         return $this->getTransactionHandler()->handleTransaction(function () use ($commentRequestTransfer) {
             return $this->executeUpdateCommentTagsTransaction($commentRequestTransfer);
