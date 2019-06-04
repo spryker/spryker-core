@@ -12,7 +12,6 @@ use Generated\Shared\DataBuilder\CompanyBuilder;
 use Generated\Shared\DataBuilder\StoreRelationBuilder;
 use Generated\Shared\Transfer\CompanyTransfer;
 use Orm\Zed\Company\Persistence\Map\SpyCompanyTableMap;
-use Spryker\Zed\Company\Persistence\CompanyRepository;
 
 /**
  * Auto-generated group annotations
@@ -35,10 +34,15 @@ class CompanyFacadeTest extends Test
     /**
      * @return void
      */
-    public function testGetCompanyByIdShouldReturnTransfer()
+    public function testGetCompanyByIdShouldReturnTransfer(): void
     {
+        // Arrange
         $companyTransfer = $this->tester->haveCompany(['is_active' => false]);
+
+        // Act
         $foundCompanyTransfer = $this->getFacade()->getCompanyById($companyTransfer);
+
+        // Assert
         $this->assertNotNull($foundCompanyTransfer->getIdCompany());
     }
 
@@ -47,13 +51,13 @@ class CompanyFacadeTest extends Test
      */
     public function testFindCompanyByIdReturnsTransfer(): void
     {
-        //Arrange
+        // Arrange
         $companyTransfer = $this->tester->haveCompany();
 
-        //Act
+        // Act
         $companyTransfer = $this->getFacade()->findCompanyById($companyTransfer->getIdCompany());
 
-        //Assert
+        // Assert
         $this->assertInstanceOf(CompanyTransfer::class, $companyTransfer);
         $this->assertNotNull($companyTransfer->getIdCompany());
     }
@@ -61,36 +65,54 @@ class CompanyFacadeTest extends Test
     /**
      * @return void
      */
-    public function testFindCompanyByIdReturnsNull(): void
+    public function testFindCompanyByIdReturnsNullWhenCompanyDoesNotExists(): void
     {
-        $companyTransfer = $this->getFacade()->findCompanyById(-1);
+        // Arrange
+        $idCompany = -1;
+
+        // Act
+        $companyTransfer = $this->getFacade()->findCompanyById($idCompany);
+
+        // Assert
         $this->assertNull($companyTransfer);
     }
 
     /**
      * @return void
      */
-    public function testCreateShouldPersistCompany()
+    public function testCreateShouldPersistCompany(): void
     {
+        // Arrange
         $companyTransfer = (new CompanyBuilder())->build();
-        $createdCompanyTransfer = $this->getFacade()->create($companyTransfer)->getCompanyTransfer();
 
+        // Act
+        $createdCompanyTransfer = $this->getFacade()->create($companyTransfer)
+            ->getCompanyTransfer();
+
+        // Assert
         $this->assertNotNull($createdCompanyTransfer->getIdCompany());
     }
 
     /**
      * @return void
      */
-    public function testUpdateShouldPersistCompanyChanges()
+    public function testUpdateShouldPersistCompanyChanges(): void
     {
-        $companyTransfer = (new CompanyBuilder(['is_active' => false]))->build();
+        // Arrange
+        $companyTransfer = $this->tester->haveCompany([
+            CompanyTransfer::IS_ACTIVE => false,
+            CompanyTransfer::STATUS => SpyCompanyTableMap::COL_STATUS_PENDING,
+        ]);
 
-        $companyTransfer->setIsActive(true);
-        $companyTransfer->setStatus(SpyCompanyTableMap::COL_STATUS_APPROVED);
-        $this->getFacade()->update($companyTransfer)->getCompanyTransfer();
-
+        // Act
+        $this->getFacade()->update(
+            $companyTransfer
+                ->setIsActive(true)
+                ->setStatus(SpyCompanyTableMap::COL_STATUS_APPROVED)
+        );
         $updatedCompanyTransfer = $this->tester->findCompanyById($companyTransfer->getIdCompany());
 
+        // Assert
         $this->assertEquals($companyTransfer->getIsActive(), $updatedCompanyTransfer->getIsActive());
         $this->assertEquals($companyTransfer->getStatus(), $updatedCompanyTransfer->getStatus());
     }
@@ -98,20 +120,26 @@ class CompanyFacadeTest extends Test
     /**
      * @return void
      */
-    public function testDeleteShouldRemoveCompanyFromStorage()
+    public function testDeleteShouldRemoveCompanyFromStorage(): void
     {
+        // Arrange
         $companyTransfer = $this->tester->haveCompany();
+
+        // Act
         $this->getFacade()->delete($companyTransfer);
+
+        // Assert
         $this->assertNull($this->tester->findCompanyById($companyTransfer->getIdCompany()));
     }
 
     /**
      * @return void
      */
-    public function testCreateOrUpdateCompanyShouldPersistStoreRelation()
+    public function testCreateCompanyShouldPersistStoreRelation(): void
     {
+        // Arrange
         $storeIds = [];
-        foreach ($this->getAllStores() as $store) {
+        foreach ($this->tester->getAllStores() as $store) {
             $storeIds[] = $store->getIdStore();
         }
         $seed = [
@@ -121,18 +149,33 @@ class CompanyFacadeTest extends Test
         $storeRelation = (new StoreRelationBuilder($seed))->build();
         $companyTransfer = (new CompanyBuilder(['is_active' => false]))->build();
         $companyTransfer->setStoreRelation($storeRelation);
+
+        // Act
         $companyTransfer = $this->getFacade()->create($companyTransfer)->getCompanyTransfer();
-        $relatesStores = (new CompanyRepository())->getRelatedStoresByCompanyId($companyTransfer->getIdCompany());
+        $relatesStores = $this->tester->getRelatedStoresByIdCompany($companyTransfer->getIdCompany());
+
+        // Assert
         $this->assertCount(count($storeIds), $relatesStores);
+    }
 
+    /**
+     * @return void
+     */
+    public function testUpdateCompanyShouldPersistStoreRelation(): void
+    {
+        // Arrange
         $seed = [
-            'idStores' => [$this->getCurrentStore()->getIdStore()],
+            'idStores' => [$this->tester->getCurrentStore()->getIdStore()],
         ];
-
+        $companyTransfer = $this->tester->haveCompany();
         $storeRelation = (new StoreRelationBuilder($seed))->build();
         $companyTransfer->setStoreRelation($storeRelation);
+
+        // Act
         $companyTransfer = $this->getFacade()->update($companyTransfer)->getCompanyTransfer();
-        $relatesStores = (new CompanyRepository())->getRelatedStoresByCompanyId($companyTransfer->getIdCompany());
+        $relatesStores = $this->tester->getRelatedStoresByIdCompany($companyTransfer->getIdCompany());
+
+        // Assert
         $this->assertCount(1, $relatesStores);
     }
 
@@ -141,25 +184,14 @@ class CompanyFacadeTest extends Test
      */
     public function testGetCompaniesReturnsNotEmptyCollection(): void
     {
+        // Arrange
         $this->tester->haveCompany();
+
+        // Act
         $companyTypesCollection = $this->getFacade()->getCompanies();
+
+        // Assert
         $this->assertGreaterThan(0, $companyTypesCollection->getCompanies()->count());
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\StoreTransfer
-     */
-    protected function getCurrentStore()
-    {
-        return $this->tester->getLocator()->store()->facade()->getCurrentStore();
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\StoreTransfer[]
-     */
-    protected function getAllStores()
-    {
-        return $this->tester->getLocator()->store()->facade()->getAllStores();
     }
 
     /**
