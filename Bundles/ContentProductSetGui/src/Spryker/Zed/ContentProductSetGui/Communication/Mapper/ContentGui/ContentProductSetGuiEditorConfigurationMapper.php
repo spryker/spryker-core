@@ -12,10 +12,6 @@ use Spryker\Zed\ContentProductSetGui\ContentProductSetGuiConfig;
 
 class ContentProductSetGuiEditorConfigurationMapper implements ContentProductSetGuiEditorConfigurationMapperInterface
 {
-    protected const PARAMETER_TWIG_FUNCTION_TEMPLATE_ID = '%ID%';
-    protected const PARAMETER_TWIG_FUNCTION_TEMPLATE = '%TEMPLATE%';
-    protected const PARAMETER_TWIG_FUNCTION_TEMPLATE_FORMAT = "{{ %s(%s, '%s') }}";
-
     /**
      * @var \Spryker\Zed\ContentProductSetGui\ContentProductSetGuiConfig
      */
@@ -50,11 +46,6 @@ class ContentProductSetGuiEditorConfigurationMapper implements ContentProductSet
      */
     public function getTwigFunctionTemplate(): string
     {
-        return sprintf(
-            static::PARAMETER_TWIG_FUNCTION_TEMPLATE_FORMAT,
-            $this->contentProductSetGuiConfig->getTwigFunctionName(),
-            static::PARAMETER_TWIG_FUNCTION_TEMPLATE_ID,
-            static::PARAMETER_TWIG_FUNCTION_TEMPLATE
-        );
+        return "{{ " . $this->contentProductSetGuiConfig->getTwigFunctionName() . "(%ID%, '%TEMPLATE%') }}";
     }
 }
