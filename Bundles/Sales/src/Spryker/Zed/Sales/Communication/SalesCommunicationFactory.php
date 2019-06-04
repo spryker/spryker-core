@@ -9,6 +9,8 @@ namespace Spryker\Zed\Sales\Communication;
 
 use ArrayObject;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\Sales\Business\Order\OrderMultipleItemLevelAddressesChecker;
+use Spryker\Zed\Sales\Business\Order\OrderMultipleItemLevelAddressesCheckerInterface;
 use Spryker\Zed\Sales\Communication\Form\AddressForm;
 use Spryker\Zed\Sales\Communication\Form\CommentForm;
 use Spryker\Zed\Sales\Communication\Form\CustomerForm;
@@ -246,5 +248,13 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
     public function getSalesTablePlugins()
     {
         return $this->getProvidedDependency(SalesDependencyProvider::UI_SALES_TABLE_PLUGINS);
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Business\Order\OrderMultipleItemLevelAddressesCheckerInterface
+     */
+    public function createOrderMultipleItemLevelAddressesChecker(): OrderMultipleItemLevelAddressesCheckerInterface
+    {
+        return new OrderMultipleItemLevelAddressesChecker();
     }
 }

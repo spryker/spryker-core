@@ -10,6 +10,7 @@ namespace Spryker\Zed\Customer\Persistence\Mapper;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CountryTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Orm\Zed\Country\Persistence\SpyCountry;
 use Orm\Zed\Customer\Persistence\SpyCustomerAddress;
 
 class CustomerMapper implements CustomerMapperInterface
@@ -31,21 +32,50 @@ class CustomerMapper implements CustomerMapperInterface
     }
 
     /**
+     * @deprecated Use mapCustomerAddressEntityToAddressTransfer() instead.
+     *
      * @param \Orm\Zed\Customer\Persistence\SpyCustomerAddress $customerAddressEntity
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
     public function mapCustomerAddressEntityToTransfer(SpyCustomerAddress $customerAddressEntity): AddressTransfer
     {
-        $addressTransfer = (new AddressTransfer())->fromArray($customerAddressEntity->toArray(), true);
+        return (new AddressTransfer())->fromArray($customerAddressEntity->toArray(), true);
+    }
+
+    /**
+     * @param \Orm\Zed\Customer\Persistence\SpyCustomerAddress $customerAddressEntity
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer
+     */
+    public function mapCustomerAddressEntityToAddressTransfer(
+        SpyCustomerAddress $customerAddressEntity,
+        AddressTransfer $addressTransfer
+    ): AddressTransfer {
+        $addressTransfer = $addressTransfer->fromArray($customerAddressEntity->toArray(), true);
 
         $countryEntity = $customerAddressEntity->getCountry();
-        if ($countryEntity !== null) {
-            $countryTransfer = (new CountryTransfer())->fromArray($countryEntity->toArray(), true);
-            $addressTransfer->setCountry($countryTransfer);
-            $addressTransfer->setIso2Code($countryTransfer->getIso2Code());
+        if ($countryEntity === null) {
+            return $addressTransfer;
         }
 
+        $countryTransfer = $this->mapCountryEntityToCountryTransfer($countryEntity, new CountryTransfer());
+
+        $addressTransfer->setCountry($countryTransfer);
+        $addressTransfer->setIso2Code($countryTransfer->getIso2Code());
+
         return $addressTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\Country\Persistence\SpyCountry $countryEntity
+     * @param \Generated\Shared\Transfer\CountryTransfer $countryTransfer
+     *
+     * @return \Generated\Shared\Transfer\CountryTransfer
+     */
+    public function mapCountryEntityToCountryTransfer(SpyCountry $countryEntity, CountryTransfer $countryTransfer): CountryTransfer
+    {
+        return $countryTransfer->fromArray($countryEntity->toArray(), true);
     }
 }

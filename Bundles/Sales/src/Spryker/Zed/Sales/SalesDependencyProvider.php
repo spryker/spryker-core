@@ -18,6 +18,7 @@ use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToSequenceNumberBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToUserBridge;
 use Spryker\Zed\Sales\Dependency\Service\SalesToShipmentServiceBridge;
+use Spryker\Zed\Sales\Dependency\Service\SalesToUtilPriceServiceBridge;
 use Spryker\Zed\Sales\Dependency\Service\SalesToUtilSanitizeBridge;
 
 /**
@@ -49,6 +50,8 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_LOCALE = 'LOCALE_FACADE';
     public const FACADE_CALCULATION = 'FACADE_CALCULATION';
 
+    public const SERVICE_UTIL_PRICE = 'SERVICE_UTIL_PRICE';
+
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -67,6 +70,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCustomerFacade($container);
         $container = $this->addOrderItemExpanderPreSavePlugins($container);
         $container = $this->addItemTransformerStrategyPlugins($container);
+        $container = $this->addUtilPriceService($container);
         $container = $this->addShipmentService($container);
 
         return $container;
@@ -102,6 +106,22 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::SERVICE_SHIPMENT] = function (Container $container) {
             return new SalesToShipmentServiceBridge(
                 $container->getLocator()->shipment()->service()
+            );
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUtilPriceService(Container $container): Container
+    {
+        $container[static::SERVICE_UTIL_PRICE] = function (Container $container) {
+            return new SalesToUtilPriceServiceBridge(
+                $container->getLocator()->utilPrice()->service()
             );
         };
 

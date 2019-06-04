@@ -38,7 +38,7 @@ class ShipmentGuiToSalesFacadeBridge implements ShipmentGuiToSalesFacadeInterfac
     /**
      * @param int $idSalesShipment
      *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem[]|\ArrayObject
+     * @return \Generated\Shared\Transfer\ItemTransfer[]|\ArrayObject
      */
     public function findSalesOrderItemsIdsBySalesShipmentId(int $idSalesShipment): ArrayObject
     {

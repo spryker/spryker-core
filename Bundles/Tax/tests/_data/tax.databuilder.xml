@@ -5,7 +5,7 @@
 
     <transfer name="TaxRate">
         <property name="name" dataBuilderRule="unique()->sentence(2)" />
-        <property name="rate" dataBuilderRule="randomFloat(2)" />
+        <property name="rate" dataBuilderRule="randomFloat(2, 1, 1000)" />
     </transfer>
 
     <transfer name="TaxSet">

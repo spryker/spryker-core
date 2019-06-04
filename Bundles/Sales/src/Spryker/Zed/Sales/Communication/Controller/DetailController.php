@@ -52,9 +52,10 @@ class DetailController extends AbstractController
         $groupedOrderItems = $this->getFacade()
             ->getUniqueOrderItems($orderTransfer->getItems())
             ->getItems();
-//        $groupedOrderItemsByShipment = $this->getFactory()
-//            ->getShipmentService()
-//            ->groupItemsByShipment($orderTransfer->getItems());
+
+        $hasOrderMultipleItemLevelAddresses = $this->getFactory()
+            ->createOrderMultipleItemLevelAddressesChecker()
+            ->hasMultipleItemLevelAddresses($orderTransfer);
 
         return array_merge([
             'eventsGroupedByItem' => $eventsGroupedByItem,
@@ -64,10 +65,7 @@ class DetailController extends AbstractController
             'orderItemSplitFormCollection' => $orderItemSplitFormCollection,
             'groupedOrderItems' => $groupedOrderItems,
             'groupedOrderItemsByShipment' => $orderTransfer->getShipmentGroups(),
-            /**
-             * @todo Refactor this
-             */
-            'isMultiShipmentEnabled' => defined('\Generated\Shared\Transfer\ItemTransfer::SHIPMENT'),
+            'hasOrderMultipleItemLevelAddresses' => $hasOrderMultipleItemLevelAddresses,
         ], $blockResponseData);
     }
 

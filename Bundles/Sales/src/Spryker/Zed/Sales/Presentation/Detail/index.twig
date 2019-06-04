@@ -22,7 +22,7 @@
         {% endif %}
     {% endfor %}
      {# @deprecated Addresses block exists for Backward Compatibility reasons only. #}
-    {%  if not isMultiShipmentEnabled %}
+    {%  if not hasOrderMultipleItemLevelAddresses %}
         <div id="address">{% include '@Sales/Detail/boxes/addresses.twig' %}</div>
     {% endif %}
     <div id="comments">{% include '@Sales/Detail/boxes/comments.twig' %}</div>
