@@ -106,8 +106,9 @@ class CmsPageStorageWriter implements CmsPageStorageWriterInterface
             $cmsPageStorageEntities
         );
 
-        $storesWithSharedPersistence = $this->storeFacade->getCurrentStore()->getStoresWithSharedPersistence();
-        $storeName = $this->storeFacade->getCurrentStore()->getName();
+        $storeTransfer = $this->storeFacade->getCurrentStore();
+        $storesWithSharedPersistence = $storeTransfer->getStoresWithSharedPersistence();
+        $storeName = $storeTransfer->getName();
         $storeRelations = array_merge($storesWithSharedPersistence, [$storeName]);
 
         foreach ($pairedEntities as $pair) {
