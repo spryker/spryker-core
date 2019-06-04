@@ -9,6 +9,7 @@ namespace Spryker\Glue\CartsRestApi\Processor\GuestCartItem;
 
 use Generated\Shared\Transfer\RestCartItemsAttributesTransfer;
 use Spryker\Client\CartsRestApi\CartsRestApiClientInterface;
+use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
 use Spryker\Glue\CartsRestApi\Processor\Mapper\CartItemsResourceMapperInterface;
 use Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface;
 use Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\GuestCartRestResponseBuilderInterface;
@@ -66,7 +67,7 @@ class GuestCartItemAdder implements GuestCartItemAdderInterface
         RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
     ): RestResponseInterface {
         $restCartItemsAttributesTransfer->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier());
-        $restCartItemsAttributesTransfer->setQuoteUuid($restRequest->getResource()->getId());
+        $restCartItemsAttributesTransfer->setQuoteUuid($this->findGuestCartIdentifier($restRequest));
         $quoteResponseTransfer = $this->cartsRestApiClient->addItemToGuestCart($restCartItemsAttributesTransfer);
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
@@ -74,5 +75,20 @@ class GuestCartItemAdder implements GuestCartItemAdderInterface
         }
 
         return $this->guestCartRestResponseBuilder->createGuestCartRestResponse($quoteResponseTransfer->getQuoteTransfer());
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return string|null
+     */
+    protected function findGuestCartIdentifier(RestRequestInterface $restRequest): ?string
+    {
+        $cartsResource = $restRequest->findParentResourceByType(CartsRestApiConfig::RESOURCE_GUEST_CARTS);
+        if ($cartsResource !== null) {
+            return $cartsResource->getId();
+        }
+
+        return null;
     }
 }
