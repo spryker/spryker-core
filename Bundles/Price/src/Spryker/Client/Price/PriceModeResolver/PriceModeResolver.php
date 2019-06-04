@@ -9,7 +9,7 @@ namespace Spryker\Client\Price\PriceModeResolver;
 
 use Spryker\Client\Price\Dependency\Client\PriceToQuoteClientInterface;
 use Spryker\Client\Price\PriceConfig;
-use Spryker\Client\Price\PriceModeCache\PriceModeCacheManagerInterface;
+use Spryker\Client\Price\PriceModeCache\PriceModeCacheInterface;
 
 class PriceModeResolver implements PriceModeResolverInterface
 {
@@ -24,28 +24,23 @@ class PriceModeResolver implements PriceModeResolverInterface
     protected $priceConfig;
 
     /**
-     * @var string|null
+     * @var \Spryker\Client\Price\PriceModeCache\PriceModeCacheInterface
      */
-    protected static $priceModeCache;
-
-    /**
-     * @var \Spryker\Client\Price\PriceModeCache\PriceModeCacheManagerInterface
-     */
-    protected $priceModeCacheManager;
+    protected $priceModeCache;
 
     /**
      * @param \Spryker\Client\Price\Dependency\Client\PriceToQuoteClientInterface $quoteClient
      * @param \Spryker\Client\Price\PriceConfig $priceConfig
-     * @param \Spryker\Client\Price\PriceModeCache\PriceModeCacheManagerInterface $priceModeCacheManager
+     * @param \Spryker\Client\Price\PriceModeCache\PriceModeCacheInterface $priceModeCache
      */
     public function __construct(
         PriceToQuoteClientInterface $quoteClient,
         PriceConfig $priceConfig,
-        PriceModeCacheManagerInterface $priceModeCacheManager
+        PriceModeCacheInterface $priceModeCache
     ) {
         $this->quoteClient = $quoteClient;
         $this->priceConfig = $priceConfig;
-        $this->priceModeCacheManager = $priceModeCacheManager;
+        $this->priceModeCache = $priceModeCache;
     }
 
     /**
@@ -53,15 +48,15 @@ class PriceModeResolver implements PriceModeResolverInterface
      */
     public function getCurrentPriceMode()
     {
-        if (!$this->priceModeCacheManager->hasPriceModeCache()) {
+        if (!$this->priceModeCache->isCached()) {
             $quoteTransfer = $this->quoteClient->getQuote();
 
             $priceMode = $quoteTransfer->getPriceMode() ?: $this->priceConfig->getDefaultPriceMode();
-            $this->priceModeCacheManager->cachePriceMode($priceMode);
+            $this->priceModeCache->cache($priceMode);
 
             return $priceMode;
         }
 
-        return $this->priceModeCacheManager->getPriceModeCache();
+        return $this->priceModeCache->get();
     }
 }

@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\Price\PriceModeCache;
 
-class PriceModeCacheManager implements PriceModeCacheManagerInterface
+class PriceModeCache implements PriceModeCacheInterface
 {
     /**
      * @var string|null
@@ -17,7 +17,7 @@ class PriceModeCacheManager implements PriceModeCacheManagerInterface
     /**
      * @return bool
      */
-    public function hasPriceModeCache(): bool
+    public function isCached(): bool
     {
         return (bool)static::$priceModeCache;
     }
@@ -25,7 +25,7 @@ class PriceModeCacheManager implements PriceModeCacheManagerInterface
     /**
      * @return string
      */
-    public function getPriceModeCache(): string
+    public function get(): string
     {
         return static::$priceModeCache;
     }
@@ -35,7 +35,7 @@ class PriceModeCacheManager implements PriceModeCacheManagerInterface
      *
      * @return void
      */
-    public function cachePriceMode(string $priceMode): void
+    public function cache(string $priceMode): void
     {
         static::$priceModeCache = $priceMode;
     }
@@ -43,7 +43,7 @@ class PriceModeCacheManager implements PriceModeCacheManagerInterface
     /**
      * @return void
      */
-    public function invalidatePriceModeCache(): void
+    public function invalidate(): void
     {
         static::$priceModeCache = null;
     }
