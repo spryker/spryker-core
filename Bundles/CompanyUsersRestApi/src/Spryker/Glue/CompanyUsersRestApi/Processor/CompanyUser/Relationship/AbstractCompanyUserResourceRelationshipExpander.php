@@ -9,15 +9,15 @@ namespace Spryker\Glue\CompanyUsersRestApi\Processor\CompanyUser\Relationship;
 
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\RestCompanyUserAttributesTransfer;
-use Spryker\Glue\CompanyUsersRestApi\Processor\CompanyUser\RestResponseBuilder\CompanyUserRestResponseBuilderInterface;
 use Spryker\Glue\CompanyUsersRestApi\Processor\Mapper\CompanyUserMapperInterface;
+use Spryker\Glue\CompanyUsersRestApi\Processor\RestResponseBuilder\CompanyUserRestResponseBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 abstract class AbstractCompanyUserResourceRelationshipExpander implements CompanyUserResourceRelationshipExpanderInterface
 {
     /**
-     * @var \Spryker\Glue\CompanyUsersRestApi\Processor\CompanyUser\RestResponseBuilder\CompanyUserRestResponseBuilderInterface
+     * @var \Spryker\Glue\CompanyUsersRestApi\Processor\RestResponseBuilder\CompanyUserRestResponseBuilderInterface
      */
     protected $companyUserResponseBuilder;
 
@@ -27,7 +27,7 @@ abstract class AbstractCompanyUserResourceRelationshipExpander implements Compan
     protected $companyUserMapper;
 
     /**
-     * @param \Spryker\Glue\CompanyUsersRestApi\Processor\CompanyUser\RestResponseBuilder\CompanyUserRestResponseBuilderInterface $companyUserRestResponseBuilder
+     * @param \Spryker\Glue\CompanyUsersRestApi\Processor\RestResponseBuilder\CompanyUserRestResponseBuilderInterface $companyUserRestResponseBuilder
      * @param \Spryker\Glue\CompanyUsersRestApi\Processor\Mapper\CompanyUserMapperInterface $companyUserMapper
      */
     public function __construct(
