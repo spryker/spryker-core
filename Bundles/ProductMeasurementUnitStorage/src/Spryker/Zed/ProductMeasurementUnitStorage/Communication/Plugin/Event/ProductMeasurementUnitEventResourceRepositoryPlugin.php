@@ -46,11 +46,11 @@ class ProductMeasurementUnitEventResourceRepositoryPlugin extends AbstractPlugin
      */
     public function getData(array $ids = []): array
     {
-        if (!empty($ids)) {
-            return $this->getFacade()->findProductMeasurementUnitTransfers($ids);
+        if ($ids === []) {
+            return $this->getFacade()->findAllProductMeasurementUnitTransfers();
         }
 
-        return $this->getFacade()->findAllProductMeasurementUnitTransfers();
+        return $this->getFacade()->findProductMeasurementUnitTransfers($ids);
     }
 
     /**

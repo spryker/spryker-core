@@ -47,11 +47,11 @@ class CmsPageEventResourceQueryContainerPlugin extends AbstractPlugin implements
     {
         $query = $this->getQueryContainer()->queryCmsPageVersionByIds($ids);
 
-        if (empty($ids)) {
+        if ($ids === []) {
             $query->clear();
         }
 
-        return $query;
+        return $query->orderBy($this->getIdColumnName());
     }
 
     /**

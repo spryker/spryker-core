@@ -46,11 +46,11 @@ class ProductConcreteMeasurementUnitEventResourceRepositoryPlugin extends Abstra
      */
     public function getData(array $ids = []): array
     {
-        if (!empty($ids)) {
-            return $this->getFacade()->getSalesUnitsByIds($ids);
+        if ($ids === []) {
+            return $this->getFacade()->getSalesUnits();
         }
 
-        return $this->getFacade()->getSalesUnits();
+        return $this->getFacade()->getSalesUnitsByIds($ids);
     }
 
     /**

@@ -47,11 +47,11 @@ class CmsBlockCategoryEventResourceQueryContainerPlugin extends AbstractPlugin i
     {
         $query = $this->getQueryContainer()->queryCmsBlockCategoriesByCmsCategoryIds($ids);
 
-        if (empty($ids)) {
+        if ($ids === []) {
             $query->clear();
         }
 
-        return $query;
+        return $query->orderBy($this->getIdColumnName());
     }
 
     /**

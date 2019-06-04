@@ -46,11 +46,11 @@ class ProductQuantityEventResourceRepositoryPlugin extends AbstractPlugin implem
      */
     public function getData(array $ids = []): array
     {
-        if (!empty($ids)) {
-            return $this->getFacade()->findProductQuantityByProductIdsTransfers($ids);
+        if ($ids === []) {
+            return $this->getFacade()->findProductQuantityTransfers();
         }
 
-        return $this->getFacade()->findProductQuantityTransfers();
+        return $this->getFacade()->findProductQuantityByProductIdsTransfers($ids);
     }
 
     /**

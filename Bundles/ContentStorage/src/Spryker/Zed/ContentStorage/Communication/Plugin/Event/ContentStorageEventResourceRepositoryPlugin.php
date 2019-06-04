@@ -44,11 +44,11 @@ class ContentStorageEventResourceRepositoryPlugin extends AbstractPlugin impleme
      */
     public function getData(array $ids = []): array
     {
-        if (!empty($ids)) {
-            return $this->getRepository()->findContentByContentIds($ids);
+        if ($ids === []) {
+            return $this->getRepository()->findAllContent();
         }
 
-        return $this->getRepository()->findAllContent();
+        return $this->getRepository()->findContentByContentIds($ids);
     }
 
     /**

@@ -47,11 +47,11 @@ class ProductAbstractLabelEventResourceQueryContainerPlugin extends AbstractPlug
     {
         $query = $this->getQueryContainer()->queryProductLabelProductAbstractByIds($ids);
 
-        if (empty($ids)) {
+        if ($ids === []) {
             $query->clear();
         }
 
-        return $query;
+        return $query->orderBy($this->getIdColumnName());
     }
 
     /**

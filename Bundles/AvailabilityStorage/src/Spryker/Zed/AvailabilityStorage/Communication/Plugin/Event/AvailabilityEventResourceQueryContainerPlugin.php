@@ -47,11 +47,11 @@ class AvailabilityEventResourceQueryContainerPlugin extends AbstractPlugin imple
     {
         $query = $this->getQueryContainer()->queryAvailabilityByAvailabilityAbstractIds($ids);
 
-        if (empty($ids)) {
+        if ($ids === []) {
             $query->clear();
         }
 
-        return $query;
+        return $query->orderBy($this->getIdColumnName());
     }
 
     /**

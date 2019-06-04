@@ -47,11 +47,11 @@ class CmsBlockProductEventResourceQueryContainerPlugin extends AbstractPlugin im
     {
         $query = $this->getQueryContainer()->queryCmsBlockProductsByIds($ids);
 
-        if (empty($ids)) {
+        if ($ids === []) {
             $query->clear();
         }
 
-        return $query;
+        return $query->orderBy($this->getIdColumnName());
     }
 
     /**

@@ -47,11 +47,11 @@ class ProductCategoryEventResourceQueryContainerPlugin extends AbstractPlugin im
     {
         $query = $this->getQueryContainer()->queryProductCategoryByIds($ids);
 
-        if (empty($ids)) {
+        if ($ids === []) {
             $query->clear();
         }
 
-        return $query;
+        return $query->orderBy($this->getIdColumnName());
     }
 
     /**
