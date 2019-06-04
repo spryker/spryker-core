@@ -191,7 +191,7 @@ class PersistentCartShareFacadeTest extends Test
 
         $resourceShareDataTransfer = (new ResourceShareDataTransfer())
             ->setIdQuote($quoteTransfer->getIdQuote())
-            ->setShareOption(PersistentCartShareConfig::SHARE_OPTION_PREVIEW)
+            ->setShareOption(PersistentCartShareConfig::SHARE_OPTION_KEY_PREVIEW)
             ->fromArray($resourceShareDataSeedData);
 
         $resourceShareDefaults = [

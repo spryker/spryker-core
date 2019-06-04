@@ -13,8 +13,11 @@ use Spryker\Client\PersistentCartShareExtension\Dependency\Plugin\CartShareOptio
 
 class PreviewCartShareOptionPlugin extends AbstractPlugin implements CartShareOptionPluginInterface
 {
-    protected const KEY_PREVIEW = 'PREVIEW';
-    protected const GROUP_EXTERNAL = 'external';
+    /**
+     * @uses \Spryker\Shared\PersistentCartShare\PersistentCartShareConfig::SHARE_OPTION_KEY_PREVIEW
+     */
+    protected const SHARE_OPTION_KEY_PREVIEW = 'PREVIEW';
+    protected const SHARE_OPTION_GROUP_EXTERNAL = 'external';
 
     /**
      * {@inheritdoc}
@@ -25,7 +28,7 @@ class PreviewCartShareOptionPlugin extends AbstractPlugin implements CartShareOp
      */
     public function getShareOptionKey(): string
     {
-        return static::KEY_PREVIEW;
+        return static::SHARE_OPTION_KEY_PREVIEW;
     }
 
     /**
@@ -52,6 +55,6 @@ class PreviewCartShareOptionPlugin extends AbstractPlugin implements CartShareOp
      */
     public function getShareOptionGroup(): string
     {
-        return static::GROUP_EXTERNAL;
+        return static::SHARE_OPTION_GROUP_EXTERNAL;
     }
 }

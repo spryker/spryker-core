@@ -141,7 +141,7 @@ class QuoteReader implements QuoteReaderInterface
         }
 
         $resourceShareDataTransfer = $resourceShareTransfer->getResourceShareData();
-        if ($resourceShareDataTransfer->getShareOption() !== PersistentCartShareConfig::SHARE_OPTION_PREVIEW) {
+        if ($resourceShareDataTransfer->getShareOption() !== PersistentCartShareConfig::SHARE_OPTION_KEY_PREVIEW) {
             return $this->createQuoteResponseTransferWithQuoteError(static::GLOSSARY_KEY_RESOURCE_IS_NOT_AVAILABLE);
         }
 

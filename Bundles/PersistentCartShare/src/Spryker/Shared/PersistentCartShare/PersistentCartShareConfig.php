@@ -13,5 +13,5 @@ class PersistentCartShareConfig extends AbstractSharedConfig
 {
     public const RESOURCE_TYPE_QUOTE = 'quote';
 
-    public const SHARE_OPTION_PREVIEW = 'PREVIEW';
+    public const SHARE_OPTION_KEY_PREVIEW = 'PREVIEW';
 }
