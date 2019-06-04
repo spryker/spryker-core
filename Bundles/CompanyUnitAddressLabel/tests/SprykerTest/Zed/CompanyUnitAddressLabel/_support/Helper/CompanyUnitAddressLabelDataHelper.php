@@ -8,11 +8,13 @@
 namespace SprykerTest\Zed\CompanyUnitAddressLabel\Helper;
 
 use Codeception\Module;
+use Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
-use Orm\Zed\CompanyUnitAddressLabel\Persistence\SpyCompanyUnitAddressLabelToCompanyUnitAddressQuery;
 use Spryker\Zed\CompanyUnitAddressLabel\Business\CompanyUnitAddressLabelFacadeInterface;
+use Spryker\Zed\CompanyUnitAddressLabel\Persistence\CompanyUnitAddressLabelRepository;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
+use SprykerTest\Zed\CompanyUnitAddress\Helper\CompanyUnitAddressDataHelper;
 
 class CompanyUnitAddressLabelDataHelper extends Module
 {
@@ -20,36 +22,45 @@ class CompanyUnitAddressLabelDataHelper extends Module
     use DataCleanupHelperTrait;
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
+     * @param array $seedData
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer
      */
-    public function haveCompanyUnitAddressLabelRelations(CompanyUnitAddressTransfer $companyUnitAddressTransfer): bool
+    public function haveCompanyUnitAddressLabelRelations(array $seedData = []): CompanyUnitAddressResponseTransfer
     {
-        $companyUnitAddressResponseTransfer = $this->getCompanyUnitAddressLabelFacade()->saveLabelToAddressRelations($companyUnitAddressTransfer);
+        if (!array_key_exists(CompanyUnitAddressTransfer::LABEL_COLLECTION, $seedData)) {
+            $seedData = array_merge($seedData, [
+                CompanyUnitAddressTransfer::LABEL_COLLECTION => (new CompanyUnitAddressLabelRepository())
+                    ->findCompanyUnitAddressLabels(),
+            ]);
+        }
+
+        $companyUnitAddressTransfer = $this->getCompanyUnitAddressHelper()->haveCompanyUnitAddress($seedData);
+        $companyUnitAddressResponseTransfer = $this->getFacade()->saveLabelToAddressRelations($companyUnitAddressTransfer);
 
         /** @var \SprykerTest\Shared\Testify\Helper\DataCleanupHelper $dataCleanupHelper */
         $dataCleanupHelper = $this->getDataCleanupHelper();
-        $dataCleanupHelper->_addCleanup(function () use ($companyUnitAddressResponseTransfer) {
-            foreach ($companyUnitAddressResponseTransfer->getCompanyUnitAddressTransfer()->getLabelCollection()->getLabels() as $companyUnitAddressLabel) {
-                (new SpyCompanyUnitAddressLabelToCompanyUnitAddressQuery())
-                    ->filterByFkCompanyUnitAddress($companyUnitAddressResponseTransfer->getCompanyUnitAddressTransfer()->getIdCompanyUnitAddress())
-                    ->filterByFkCompanyUnitAddressLabel($companyUnitAddressLabel->getIdCompanyUnitAddressLabel())
-                    ->delete();
-            }
+        $dataCleanupHelper->_addCleanup(function () use ($companyUnitAddressTransfer): void {
+            $companyUnitAddressTransfer->setLabelCollection();
+            $this->getFacade()->saveLabelToAddressRelations($companyUnitAddressTransfer);
         });
 
-        return (bool)$companyUnitAddressResponseTransfer->getIsSuccessful();
+        return $companyUnitAddressResponseTransfer;
     }
 
     /**
-     * @return \Spryker\Zed\CompanyUnitAddressLabel\Business\CompanyUnitAddressLabelFacadeInterface
+     * @return \Codeception\Module|\SprykerTest\Zed\Country\Helper\CountryDataHelper
      */
-    protected function getCompanyUnitAddressLabelFacade(): CompanyUnitAddressLabelFacadeInterface
+    protected function getCompanyUnitAddressHelper(): CompanyUnitAddressDataHelper
     {
-        /** @var \Spryker\Zed\CompanyUnitAddressLabel\Business\CompanyUnitAddressLabelFacadeInterface $companyUnitAddressLabelFacade */
-        $companyUnitAddressLabelFacade = $this->getLocator()->CompanyUnitAddressLabel()->facade();
+        return $this->getModule('\\' . CompanyUnitAddressDataHelper::class);
+    }
 
-        return $companyUnitAddressLabelFacade;
+    /**
+     * @return \Spryker\Zed\CompanyUnitAddressLabel\Business\CompanyUnitAddressLabelFacadeInterface|\Spryker\Zed\Kernel\Business\AbstractFacade
+     */
+    protected function getFacade(): CompanyUnitAddressLabelFacadeInterface
+    {
+        return $this->getLocator()->CompanyUnitAddressLabel()->facade();
     }
 }

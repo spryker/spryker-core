@@ -7,14 +7,10 @@
 
 namespace SprykerTest\Zed\CompanyUnitAddressLabel;
 
-use ArrayObject;
 use Codeception\Actor;
-use Generated\Shared\DataBuilder\CompanyUnitAddressLabelBuilder;
 use Generated\Shared\Transfer\CompanyUnitAddressLabelCollectionTransfer;
-use Generated\Shared\Transfer\SpyCompanyUnitAddressLabelEntityTransfer;
-use Orm\Zed\CompanyUnitAddressLabel\Persistence\SpyCompanyUnitAddressLabel;
-use Orm\Zed\CompanyUnitAddressLabel\Persistence\SpyCompanyUnitAddressLabelQuery;
-use Spryker\Zed\CompanyUnitAddressLabel\Business\CompanyUnitAddressLabelFacadeInterface;
+use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
+use Spryker\Zed\CompanyUnitAddressLabel\Persistence\CompanyUnitAddressLabelRepository;
 
 /**
  * Inherited Methods
@@ -40,54 +36,25 @@ class CompanyUnitAddressLabelBusinessTester extends Actor
     */
 
     /**
-     * @param array $labelsSeed
-     *
      * @return \Generated\Shared\Transfer\CompanyUnitAddressLabelCollectionTransfer
      */
-    public function buildCompanyUnitAddressLabelCollection(array $labelsSeed = []): CompanyUnitAddressLabelCollectionTransfer
+    public function getCompanyUnitAddressLabelCollection(): CompanyUnitAddressLabelCollectionTransfer
     {
-        $labelEntity = $this->buildCompanyUnitAddressLabelEntity($labelsSeed);
-
-        return (new CompanyUnitAddressLabelCollectionTransfer())
-            ->setLabels(
-                new ArrayObject(
-                    [
-                        (new SpyCompanyUnitAddressLabelEntityTransfer())
-                            ->setName($labelEntity->getName())
-                            ->setIdCompanyUnitAddressLabel($labelEntity->getIdCompanyUnitAddressLabel()),
-                    ]
-                )
-            );
+        return (new CompanyUnitAddressLabelRepository())
+            ->findCompanyUnitAddressLabels();
     }
 
     /**
-     * @param array $seed
+     * @param array $seedData
+     * @param array $companyBusinessUnitSeedData
      *
-     * @return \Orm\Zed\CompanyUnitAddressLabel\Persistence\SpyCompanyUnitAddressLabel
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer
      */
-    public function buildCompanyUnitAddressLabelEntity(array $seed = []): SpyCompanyUnitAddressLabel
+    public function getCompanyUnitAddressTransfer(array $seedData = [], array $companyBusinessUnitSeedData = []): CompanyUnitAddressTransfer
     {
-        $companyUnitAddressLabelBuilder = new CompanyUnitAddressLabelBuilder($seed);
-        /** @var \Generated\Shared\Transfer\CompanyUnitAddressLabelTransfer $companyUnitAddressLabelTransfer */
-        $companyUnitAddressLabelTransfer = $companyUnitAddressLabelBuilder->build();
+        $companyBusinessUnitWithCompany = $this->haveCompanyBusinessUnitWithCompany($companyBusinessUnitSeedData);
+        $seedData = array_merge($seedData, [CompanyUnitAddressTransfer::FK_COMPANY => $companyBusinessUnitWithCompany->getFkCompany()]);
 
-        $companyUnitAddressLabelQuery = new SpyCompanyUnitAddressLabelQuery();
-        $companyUnitAddressLabelEntity = $companyUnitAddressLabelQuery
-            ->filterByName($companyUnitAddressLabelTransfer->getName())
-            ->findOneOrCreate();
-
-        $companyUnitAddressLabelEntity->save();
-
-        return $companyUnitAddressLabelEntity;
-    }
-
-    /**
-     * @return \Spryker\Zed\CompanyUnitAddressLabel\Business\CompanyUnitAddressLabelFacadeInterface
-     */
-    public function getCompanyUnitAddressLabelFacade(): CompanyUnitAddressLabelFacadeInterface
-    {
-        /** @var \Spryker\Zed\CompanyUnitAddressLabel\Business\CompanyUnitAddressLabelFacadeInterface $companyUnitAddressLabelFacade */
-        $companyUnitAddressLabelFacade = $this->getFacade();
-        return $companyUnitAddressLabelFacade;
+        return $this->haveCompanyUnitAddress($seedData);
     }
 }
