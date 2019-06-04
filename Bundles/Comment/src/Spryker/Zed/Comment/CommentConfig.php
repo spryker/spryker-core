@@ -14,4 +14,5 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
  */
 class CommentConfig extends AbstractBundleConfig
 {
+    public const COMMENT_TAG_ATTACHED = 'attached';
 }
