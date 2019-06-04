@@ -24,6 +24,8 @@ class DevelopmentConfig extends AbstractBundleConfig
     protected const NAMESPACE_SPRYKER_SDK = 'SprykerSdk';
     protected const NAMESPACE_SPRYKER_MERCHANT_PORTAL = 'SprykerMerchantPortal';
 
+    protected const GROUP_SPRYKER_TEST = 'SprykerTest';
+
     public const APPLICATION_NAMESPACES = [
         'Orm',
     ];
@@ -564,5 +566,15 @@ class DevelopmentConfig extends AbstractBundleConfig
     public function getCodeceptionConfigurationFiles(): array
     {
         return [];
+    }
+
+    /**
+     * @return array
+     */
+    public function getDefaultInclusiveTestGroups(): array
+    {
+        return [
+            static::GROUP_SPRYKER_TEST,
+        ];
     }
 }

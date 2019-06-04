@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Development\Business\Codeception\Argument\Builder;
 
 use Spryker\Zed\Development\Business\Codeception\Argument\CodeceptionArguments;
+use SprykerTest\Shared\Testify\Helper\SuiteFilterHelper;
 
 class CodeceptionArgumentsBuilder implements CodeceptionArgumentsBuilderInterface
 {
@@ -15,6 +16,7 @@ class CodeceptionArgumentsBuilder implements CodeceptionArgumentsBuilderInterfac
     protected const OPTION_GROUP_INCLUDE = 'group';
     protected const OPTION_GROUP_EXCLUDE = 'exclude';
     protected const OPTION_VERBOSE = 'verbose';
+    protected const OPTION_MODULE = 'module';
 
     /**
      * @var string[]
@@ -22,10 +24,17 @@ class CodeceptionArgumentsBuilder implements CodeceptionArgumentsBuilderInterfac
     protected $codeceptionConfigurationFiles;
 
     /**
+     * @var string[]
+     */
+    protected $defaultInclusiveTestGroups;
+
+    /**
+     * @param array $defaultInclusiveTestGroups
      * @param array $codeceptionConfigurationFiles
      */
-    public function __construct(array $codeceptionConfigurationFiles)
+    public function __construct(array $defaultInclusiveTestGroups, array $codeceptionConfigurationFiles)
     {
+        $this->defaultInclusiveTestGroups = $defaultInclusiveTestGroups;
         $this->codeceptionConfigurationFiles = $codeceptionConfigurationFiles;
     }
 
@@ -39,6 +48,7 @@ class CodeceptionArgumentsBuilder implements CodeceptionArgumentsBuilderInterfac
         $codeceptionArguments = new CodeceptionArguments();
 
         $codeceptionArguments = $this->buildConfigPath($codeceptionArguments, $options);
+        $codeceptionArguments = $this->buildInclusiveGroups($codeceptionArguments, $options);
         $codeceptionArguments = $this->buildIncludeGroups($codeceptionArguments, $options);
         $codeceptionArguments = $this->buildExcludeGroups($codeceptionArguments, $options);
         $codeceptionArguments = $this->buildVerboseMode($codeceptionArguments, $options);
@@ -122,5 +132,64 @@ class CodeceptionArgumentsBuilder implements CodeceptionArgumentsBuilderInterfac
         }
 
         return $codeceptionArguments->addArgument('-v');
+    }
+
+    /**
+     * @param \Spryker\Zed\Development\Business\Codeception\Argument\CodeceptionArguments $codeceptionArguments
+     * @param array $options
+     *
+     * @return \Spryker\Zed\Development\Business\Codeception\Argument\CodeceptionArguments
+     */
+    protected function buildInclusiveGroups(CodeceptionArguments $codeceptionArguments, array $options): CodeceptionArguments
+    {
+        if (!$options[static::OPTION_MODULE]) {
+            return $codeceptionArguments;
+        }
+
+        $codeceptionArguments = $this->enableSuiteFilterExtension($codeceptionArguments);
+        $codeceptionArguments = $this->buildInlineExtensionConfig($codeceptionArguments, $options);
+
+        return $codeceptionArguments;
+    }
+
+    /**
+     * @param \Spryker\Zed\Development\Business\Codeception\Argument\CodeceptionArguments $codeceptionArguments
+     *
+     * @return \Spryker\Zed\Development\Business\Codeception\Argument\CodeceptionArguments
+     */
+    protected function enableSuiteFilterExtension(CodeceptionArguments $codeceptionArguments): CodeceptionArguments
+    {
+        return $codeceptionArguments->addArgument(
+            '--ext',
+            ['\\\\' . str_replace('\\', '\\\\', SuiteFilterHelper::class)]
+        );
+    }
+
+    /**
+     * @param \Spryker\Zed\Development\Business\Codeception\Argument\CodeceptionArguments $codeceptionArguments
+     * @param array $options
+     *
+     * @return \Spryker\Zed\Development\Business\Codeception\Argument\CodeceptionArguments
+     */
+    protected function buildInlineExtensionConfig(CodeceptionArguments $codeceptionArguments, array $options): CodeceptionArguments
+    {
+        $extensionInlineConfigTemplate = '"extensions: config: %s: inclusive: [%s]"';
+
+        $inclusiveGroups = $this->defaultInclusiveTestGroups;
+        $inclusiveGroups[] = $options[static::OPTION_MODULE];
+
+        $suiteFilterHelperClassName = '\\' . SuiteFilterHelper::class;
+        $inclusiveGroupsAsString = implode(',', $inclusiveGroups);
+
+        $extensionInlineConfig = sprintf(
+            $extensionInlineConfigTemplate,
+            $suiteFilterHelperClassName,
+            $inclusiveGroupsAsString
+        );
+
+        return $codeceptionArguments->addArgument(
+            '-o',
+            [$extensionInlineConfig]
+        );
     }
 }

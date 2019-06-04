@@ -14,6 +14,7 @@ use PHPUnit\Runner\Filter\ExcludeGroupFilterIterator;
 use PHPUnit\Runner\Filter\Factory;
 use PHPUnit\Runner\Filter\IncludeGroupFilterIterator;
 use ReflectionClass;
+use SprykerTest\Shared\Testify\Filter\InclusiveGroupFilterIterator;
 
 class SuiteFilterHelper extends Extension
 {
@@ -126,7 +127,7 @@ class SuiteFilterHelper extends Extension
 
         if (!empty($inclusiveGroups)) {
             $filterFactory->addFilter(
-                new ReflectionClass(IncludeGroupFilterIterator::class),
+                new ReflectionClass(InclusiveGroupFilterIterator::class),
                 $inclusiveGroups
             );
         }
