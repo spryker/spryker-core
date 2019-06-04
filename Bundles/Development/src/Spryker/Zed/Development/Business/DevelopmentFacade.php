@@ -463,6 +463,8 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
+     * @deprecated Use `\Spryker\Zed\ModuleFinder\Business\ModuleFinderFacade::getProjectModules()` instead.
+     *
      * {@inheritdoc}
      *
      * @api
@@ -477,6 +479,8 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
+     * @deprecated Use `\Spryker\Zed\ModuleFinder\Business\ModuleFinderFacade::getModules()` instead.
+     *
      * {@inheritdoc}
      *
      * @api
@@ -491,6 +495,8 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
+     * @deprecated Use `\Spryker\Zed\ModuleFinder\Business\ModuleFinderFacade::getPackages()` instead.
+     *
      * {@inheritdoc}
      *
      * @api

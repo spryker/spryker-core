@@ -17,7 +17,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Spryker\Zed\Kernel\RepositoryResolverAwareTrait;
 use Symfony\Component\Console\Command\Command as SymfonyCommand;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
-use Symfony\Component\Console\Helper\HelperInterface;
+use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Logger\ConsoleLogger;
@@ -444,7 +444,6 @@ class Console extends SymfonyCommand
      */
     public function ask($question, $default = null)
     {
-        /** @var \Symfony\Component\Console\Helper\QuestionHelper $questionHelper */
         $questionHelper = $this->getQuestionHelper();
         $question = new Question($question, $default);
 
@@ -460,7 +459,6 @@ class Console extends SymfonyCommand
      */
     public function select($question, array $options, $default)
     {
-        /** @var \Symfony\Component\Console\Helper\QuestionHelper $questionHelper */
         $questionHelper = $this->getQuestionHelper();
         $question = new ChoiceQuestion($question, $options, $default);
 
@@ -480,10 +478,13 @@ class Console extends SymfonyCommand
     }
 
     /**
-     * @return \Symfony\Component\Console\Helper\HelperInterface
+     * @return \Symfony\Component\Console\Helper\QuestionHelper
      */
-    protected function getQuestionHelper(): HelperInterface
+    protected function getQuestionHelper(): QuestionHelper
     {
-        return $this->getHelperSet()->get('question');
+        /** @var \Symfony\Component\Console\Helper\QuestionHelper $questionHelper */
+        $questionHelper = $this->getHelperSet()->get('question');
+
+        return $questionHelper;
     }
 }
