@@ -124,6 +124,7 @@ class PersistQuoteTest extends Unit
      */
     protected function providePersistFilteredQuoteData()
     {
+        /** @var \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer */
         $quoteTransfer = (new QuoteBuilder())->build();
         $expectedQuoteTransfer = clone $quoteTransfer;
 

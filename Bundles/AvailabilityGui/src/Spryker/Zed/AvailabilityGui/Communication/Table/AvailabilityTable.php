@@ -29,6 +29,8 @@ class AvailabilityTable extends AbstractTable
 
     public const IS_BUNDLE_PRODUCT = 'Is bundle product';
 
+    protected const NEVER_OUT_OF_STOCK_DEFAULT_VALUE = 'false';
+
     /**
      * @var int
      */
@@ -138,7 +140,7 @@ class AvailabilityTable extends AbstractTable
             $isBundleProduct = $this->isBundleProduct($productItem[AvailabilityQueryContainer::ID_PRODUCT]);
 
             $isNeverOutOfStock = $this->isNeverOutOfStock(
-                $productItem[AvailabilityQueryContainer::CONCRETE_NEVER_OUT_OF_STOCK_SET],
+                $productItem[AvailabilityQueryContainer::CONCRETE_NEVER_OUT_OF_STOCK_SET] ?? static::NEVER_OUT_OF_STOCK_DEFAULT_VALUE,
                 $isBundleProduct
             );
 
@@ -175,11 +177,11 @@ class AvailabilityTable extends AbstractTable
     /**
      * @param array $productItem
      *
-     * @return int
+     * @return float
      */
     protected function calculateReservation(array $productItem)
     {
-        $quantity = (int)$productItem[AvailabilityQueryContainer::RESERVATION_QUANTITY];
+        $quantity = $productItem[AvailabilityQueryContainer::RESERVATION_QUANTITY];
         $quantity += $this->omsFacade->getReservationsFromOtherStores($productItem[AvailabilityQueryContainer::CONCRETE_SKU], $this->storeTransfer);
 
         return $quantity;

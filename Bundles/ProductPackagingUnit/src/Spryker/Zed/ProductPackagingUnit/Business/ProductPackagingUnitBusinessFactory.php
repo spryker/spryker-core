@@ -68,6 +68,8 @@ use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToPro
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToProductMeasurementUnitFacadeInterface;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToSalesQuantityFacadeInterface;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToStoreFacadeInterface;
+use Spryker\Zed\ProductPackagingUnit\Dependency\Service\ProductPackagingUnitToUtilPriceServiceInterface;
+use Spryker\Zed\ProductPackagingUnit\Dependency\Service\ProductPackagingUnitToUtilQuantityServiceInterface;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Service\ProductPackagingUnitToUtilTextServiceInterface;
 use Spryker\Zed\ProductPackagingUnit\ProductPackagingUnitDependencyProvider;
 
@@ -185,7 +187,8 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductPackagingUnitCartPreCheck(
             $this->getAvailabilityFacade(),
-            $this->createProductPackagingUnitReader()
+            $this->createProductPackagingUnitReader(),
+            $this->getUtilQuantityService()
         );
     }
 
@@ -195,7 +198,8 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
     public function createProductPackagingUnitCheckoutPreCheck(): ProductPackagingUnitCheckoutPreCheckInterface
     {
         return new ProductPackagingUnitCheckoutPreCheck(
-            $this->getAvailabilityFacade()
+            $this->getAvailabilityFacade(),
+            $this->getUtilQuantityService()
         );
     }
 
@@ -204,7 +208,7 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductPackagingUnitCartOperation(): ProductPackagingUnitCartOperationInterface
     {
-        return new ProductPackagingUnitCartOperation();
+        return new ProductPackagingUnitCartOperation($this->getUtilQuantityService());
     }
 
     /**
@@ -319,7 +323,8 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
     {
         return new LeadProductReservationCalculator(
             $this->getOmsFacade(),
-            $this->getRepository()
+            $this->getRepository(),
+            $this->getUtilQuantityService()
         );
     }
 
@@ -329,7 +334,9 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
     public function createPriceChangeExpander(): PriceChangeExpanderInterface
     {
         return new PriceChangeExpander(
-            $this->createProductPackagingUnitReader()
+            $this->createProductPackagingUnitReader(),
+            $this->getUtilPriceService(),
+            $this->getUtilQuantityService()
         );
     }
 
@@ -355,7 +362,8 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
     public function createProductPackagingUnitAmountRestrictionValidator(): ProductPackagingUnitAmountRestrictionValidatorInterface
     {
         return new ProductPackagingUnitAmountRestrictionValidator(
-            $this->createProductPackagingUnitReader()
+            $this->createProductPackagingUnitReader(),
+            $this->getUtilQuantityService()
         );
     }
 
@@ -415,5 +423,21 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
         return new ProductPackagingUnitItemQuantityValidator(
             $this->getSalesQuantityFacade()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPackagingUnit\Dependency\Service\ProductPackagingUnitToUtilQuantityServiceInterface
+     */
+    public function getUtilQuantityService(): ProductPackagingUnitToUtilQuantityServiceInterface
+    {
+        return $this->getProvidedDependency(ProductPackagingUnitDependencyProvider::SERVICE_UTIL_QUANTITY);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPackagingUnit\Dependency\Service\ProductPackagingUnitToUtilPriceServiceInterface
+     */
+    public function getUtilPriceService(): ProductPackagingUnitToUtilPriceServiceInterface
+    {
+        return $this->getProvidedDependency(ProductPackagingUnitDependencyProvider::SERVICE_UTIL_PRICE);
     }
 }
