@@ -12,7 +12,7 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class PriceProductScheduleGuiConfig extends AbstractBundleConfig
 {
-    protected const KEY_ID_PRICE_PRODUCT_SCHEDULE = 'id_price_product_schedule';
+    protected const KEY_ID_PRICE_PRODUCT_SCHEDULE = 'ID';
 
     protected const KEY_ABSTRACT_SKU = 'abstract_sku';
     protected const KEY_CONCRETE_SKU = 'concrete_sku';
