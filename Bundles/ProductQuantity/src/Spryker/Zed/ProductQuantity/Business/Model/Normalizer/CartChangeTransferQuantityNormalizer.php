@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ProductQuantityTransfer;
 use Spryker\Service\ProductQuantity\ProductQuantityServiceInterface;
 use Spryker\Zed\ProductQuantity\Business\Model\ProductQuantityReaderInterface;
+use Spryker\Zed\ProductQuantity\Dependency\Service\ProductQuantityToUtilQuantityServiceInterface;
 
 class CartChangeTransferQuantityNormalizer implements CartChangeTransferQuantityNormalizerInterface
 {
@@ -39,13 +40,23 @@ class CartChangeTransferQuantityNormalizer implements CartChangeTransferQuantity
     protected $productQuantityService;
 
     /**
+     * @var \Spryker\Zed\ProductQuantity\Dependency\Service\ProductQuantityToUtilQuantityServiceInterface
+     */
+    protected $utilQuantityService;
+
+    /**
      * @param \Spryker\Zed\ProductQuantity\Business\Model\ProductQuantityReaderInterface $productQuantityReader
      * @param \Spryker\Service\ProductQuantity\ProductQuantityServiceInterface $productQuantityService
+     * @param \Spryker\Zed\ProductQuantity\Dependency\Service\ProductQuantityToUtilQuantityServiceInterface $utilQuantityService
      */
-    public function __construct(ProductQuantityReaderInterface $productQuantityReader, ProductQuantityServiceInterface $productQuantityService)
-    {
+    public function __construct(
+        ProductQuantityReaderInterface $productQuantityReader,
+        ProductQuantityServiceInterface $productQuantityService,
+        ProductQuantityToUtilQuantityServiceInterface $utilQuantityService
+    ) {
         $this->productQuantityReader = $productQuantityReader;
         $this->productQuantityService = $productQuantityService;
+        $this->utilQuantityService = $utilQuantityService;
     }
 
     /**
@@ -117,12 +128,12 @@ class CartChangeTransferQuantityNormalizer implements CartChangeTransferQuantity
     }
 
     /**
-     * @param int $quantity
+     * @param float $quantity
      * @param \Generated\Shared\Transfer\ProductQuantityTransfer $productQuantityTransfer
      *
      * @return bool
      */
-    protected function isItemTransferQuantityValid(int $quantity, ProductQuantityTransfer $productQuantityTransfer): bool
+    protected function isItemTransferQuantityValid(float $quantity, ProductQuantityTransfer $productQuantityTransfer): bool
     {
         $min = $productQuantityTransfer->getQuantityMin();
         $max = $productQuantityTransfer->getQuantityMax();
@@ -131,8 +142,9 @@ class CartChangeTransferQuantityNormalizer implements CartChangeTransferQuantity
         if ($quantity < $min) {
             return false;
         }
+        $quantityMinusMin = $this->subtractQuantity($quantity, $min);
 
-        if (($quantity - $min) % $interval !== 0) {
+        if (!$this->isQuantityModuloEqual($quantityMinusMin, $interval, 0)) {
             return false;
         }
 
@@ -141,6 +153,40 @@ class CartChangeTransferQuantityNormalizer implements CartChangeTransferQuantity
         }
 
         return true;
+    }
+
+    /**
+     * @param float $dividentQuantity
+     * @param float $divisorQuantity
+     * @param float $remainder
+     *
+     * @return bool
+     */
+    protected function isQuantityModuloEqual(float $dividentQuantity, float $divisorQuantity, float $remainder): bool
+    {
+        return $this->utilQuantityService->isQuantityModuloEqual($dividentQuantity, $divisorQuantity, $remainder);
+    }
+
+    /**
+     * @param float $firstQuantity
+     * @param float $secondQuantity
+     *
+     * @return float
+     */
+    protected function subtractQuantity(float $firstQuantity, float $secondQuantity): float
+    {
+        return $this->utilQuantityService->subtractQuantities($firstQuantity, $secondQuantity);
+    }
+
+    /**
+     * @param float $firstQuantity
+     * @param float $secondQuantity
+     *
+     * @return bool
+     */
+    protected function isQuantityEqual(float $firstQuantity, float $secondQuantity): bool
+    {
+        return $this->utilQuantityService->isQuantityEqual($firstQuantity, $secondQuantity);
     }
 
     /**
@@ -266,14 +312,14 @@ class CartChangeTransferQuantityNormalizer implements CartChangeTransferQuantity
 
     /**
      * @param \Generated\Shared\Transfer\ProductQuantityTransfer $productQuantityTransfer
-     * @param int $nearestQuantity
+     * @param float $nearestQuantity
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return \Generated\Shared\Transfer\ItemTransfer
      */
     protected function addNotificationMessage(
         ProductQuantityTransfer $productQuantityTransfer,
-        int $nearestQuantity,
+        float $nearestQuantity,
         ItemTransfer $itemTransfer
     ): ItemTransfer {
         $notificationMessage = $this->createNotificationMessage($productQuantityTransfer, $nearestQuantity, $itemTransfer->getQuantity());
@@ -287,12 +333,12 @@ class CartChangeTransferQuantityNormalizer implements CartChangeTransferQuantity
 
     /**
      * @param \Generated\Shared\Transfer\ProductQuantityTransfer $productQuantityTransfer
-     * @param int $nearestQuantity
-     * @param int $quantity
+     * @param float $nearestQuantity
+     * @param float $quantity
      *
      * @return \Generated\Shared\Transfer\MessageTransfer|null
      */
-    protected function createNotificationMessage(ProductQuantityTransfer $productQuantityTransfer, int $nearestQuantity, int $quantity): ?MessageTransfer
+    protected function createNotificationMessage(ProductQuantityTransfer $productQuantityTransfer, float $nearestQuantity, float $quantity): ?MessageTransfer
     {
         $min = $productQuantityTransfer->getQuantityMin();
         $max = $productQuantityTransfer->getQuantityMax();
@@ -306,7 +352,9 @@ class CartChangeTransferQuantityNormalizer implements CartChangeTransferQuantity
             );
         }
 
-        if (($quantity - $min) % $interval !== 0) {
+        $quantityMinusMin = $this->subtractQuantity($quantity, $min);
+
+        if (!$this->isQuantityModuloEqual($quantityMinusMin, $interval, 0)) {
             return $this->buildNotificationMessage(
                 static::MESSAGE_QUANTITY_INTERVAL_NOT_FULFILLED,
                 static::NOTIFICATION_MESSAGE_PARAM_STEP,
@@ -328,11 +376,11 @@ class CartChangeTransferQuantityNormalizer implements CartChangeTransferQuantity
     /**
      * @param string $notificationMessage
      * @param string $notificationParam
-     * @param int $nearestQuantity
+     * @param float $nearestQuantity
      *
      * @return \Generated\Shared\Transfer\MessageTransfer
      */
-    protected function buildNotificationMessage(string $notificationMessage, string $notificationParam, int $nearestQuantity): MessageTransfer
+    protected function buildNotificationMessage(string $notificationMessage, string $notificationParam, float $nearestQuantity): MessageTransfer
     {
         return (new MessageTransfer())
             ->setValue($notificationMessage)
