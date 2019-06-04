@@ -20,6 +20,7 @@ class CustomerConfig extends AbstractBundleConfig
         return [
             AddressTransfer::IS_DEFAULT_BILLING,
             AddressTransfer::IS_DEFAULT_SHIPPING,
+            AddressTransfer::ID_COMPANY_UNIT_ADDRESS,
         ];
     }
 }
