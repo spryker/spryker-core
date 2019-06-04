@@ -39,6 +39,7 @@ use Spryker\Zed\Oauth\Business\Model\OauthScopeReader;
 use Spryker\Zed\Oauth\Business\Model\OauthScopeReaderInterface;
 use Spryker\Zed\Oauth\Business\Model\OauthScopeWriter;
 use Spryker\Zed\Oauth\Business\Model\OauthScopeWriterInterface;
+use Spryker\Zed\Oauth\Dependency\Service\OauthToUtilEncodingServiceInterface;
 use Spryker\Zed\Oauth\OauthConfig;
 use Spryker\Zed\Oauth\OauthDependencyProvider;
 
@@ -146,8 +147,10 @@ class OauthBusinessFactory extends AbstractBusinessFactory
         return new RepositoryBuilder(
             $this->getRepository(),
             $this->getEntityManager(),
+            $this->getUtilEncodingService(),
             $this->getUserProviderPlugins(),
-            $this->getScopeProviderPlugins()
+            $this->getScopeProviderPlugins(),
+            $this->getOauthUserIdentifierFilterPlugins()
         );
     }
 
@@ -242,5 +245,21 @@ class OauthBusinessFactory extends AbstractBusinessFactory
     public function getGrantTypeConfigurationProviderPlugins(): array
     {
         return $this->getProvidedDependency(OauthDependencyProvider::PLUGINS_GRANT_TYPE_CONFIGURATION_PROVIDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthUserIdentifierFilterPluginInterface[]
+     */
+    public function getOauthUserIdentifierFilterPlugins(): array
+    {
+        return $this->getProvidedDependency(OauthDependencyProvider::PLUGINS_OAUTH_USER_IDENTIFIER_FILTER);
+    }
+
+    /**
+     * @return \Spryker\Zed\Oauth\Dependency\Service\OauthToUtilEncodingServiceInterface
+     */
+    public function getUtilEncodingService(): OauthToUtilEncodingServiceInterface
+    {
+        return $this->getProvidedDependency(OauthDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 }
