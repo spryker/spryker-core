@@ -9,7 +9,7 @@
     "spryker/gui": "^3.21.0",
     "spryker/kernel": "^3.33.0",
     "spryker/money": "^2.7.0",
-    "spryker/price-product": "^2.12.0",
+    "spryker/price-product": "^3.0.0",
     "spryker/price-product-schedule": "^0.1.0",
     "spryker/product-management-extension": "^1.3.0",
     "spryker/store": "^1.10.0",
