@@ -70,7 +70,8 @@ class PropelCommunicationFactory extends AbstractCommunicationFactory
     public function createPropelCommandRunner(): PropelCommandRunnerInterface
     {
         return new PropelCommandRunner(
-            $this->createPropelCommandInputBuilder()
+            $this->createPropelCommandInputBuilder(),
+            $this->createPropelCommandConfigurator()
         );
     }
 
@@ -97,11 +98,7 @@ class PropelCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createMigrationDiffCommand(): Command
     {
-        $command = new MigrationDiffCommand();
-
-        $this->createPropelCommandConfigurator()->configurePropelCommand($command);
-
-        return $command;
+        return new MigrationDiffCommand();
     }
 
     /**
@@ -109,11 +106,7 @@ class PropelCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createMigrationMigrateCommand(): Command
     {
-        $command = new MigrationMigrateCommand();
-
-        $this->createPropelCommandConfigurator()->configurePropelCommand($command);
-
-        return $command;
+        return new MigrationMigrateCommand();
     }
 
     /**
@@ -121,11 +114,7 @@ class PropelCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createMigrationStatusCommand(): Command
     {
-        $command = new MigrationStatusCommand();
-
-        $this->createPropelCommandConfigurator()->configurePropelCommand($command);
-
-        return $command;
+        return new MigrationStatusCommand();
     }
 
     /**
@@ -133,11 +122,7 @@ class PropelCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createModelBuildCommand(): Command
     {
-        $command = new ModelBuildCommand();
-
-        $this->createPropelCommandConfigurator()->configurePropelCommand($command);
-
-        return $command;
+        return new ModelBuildCommand();
     }
 
     /**
@@ -145,11 +130,7 @@ class PropelCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createSqlBuildCommand(): Command
     {
-        $command = new SqlBuildCommand();
-
-        $this->createPropelCommandConfigurator()->configurePropelCommand($command);
-
-        return $command;
+        return new SqlBuildCommand();
     }
 
     /**
@@ -157,10 +138,6 @@ class PropelCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createSqlInsertCommand(): Command
     {
-        $command = new SqlInsertCommand();
-
-        $this->createPropelCommandConfigurator()->configurePropelCommand($command);
-
-        return $command;
+        return new SqlInsertCommand();
     }
 }

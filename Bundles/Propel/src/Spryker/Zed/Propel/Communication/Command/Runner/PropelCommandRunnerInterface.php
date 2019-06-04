@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Propel\Communication\Command\Runner;
 
-use Symfony\Component\Console\Command\Command;
+use Spryker\Zed\PropelOrm\Communication\Generator\ConfigurablePropelCommandInterface;
 use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -21,7 +21,7 @@ interface PropelCommandRunnerInterface
      * @return int
      */
     public function runCommand(
-        Command $command,
+        ConfigurablePropelCommandInterface $command,
         InputDefinition $inputDefinition,
         OutputInterface $output
     ): int;

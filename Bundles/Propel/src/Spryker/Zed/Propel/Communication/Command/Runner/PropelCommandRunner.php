@@ -7,8 +7,9 @@
 
 namespace Spryker\Zed\Propel\Communication\Command\Runner;
 
+use Spryker\Zed\Propel\Communication\Command\Config\PropelCommandConfiguratorInterface;
 use Spryker\Zed\Propel\Communication\Command\Input\PropelCommandInputBuilderInterface;
-use Symfony\Component\Console\Command\Command;
+use Spryker\Zed\PropelOrm\Communication\Generator\ConfigurablePropelCommandInterface;
 use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -20,11 +21,20 @@ class PropelCommandRunner implements PropelCommandRunnerInterface
     protected $inputBuilder;
 
     /**
-     * @param \Spryker\Zed\Propel\Communication\Command\Input\PropelCommandInputBuilderInterface $inputBuilder
+     * @var \Spryker\Zed\Propel\Communication\Command\Config\PropelCommandConfiguratorInterface
      */
-    public function __construct(PropelCommandInputBuilderInterface $inputBuilder)
-    {
+    protected $propelCommandConfigurator;
+
+    /**
+     * @param \Spryker\Zed\Propel\Communication\Command\Input\PropelCommandInputBuilderInterface $inputBuilder
+     * @param \Spryker\Zed\Propel\Communication\Command\Config\PropelCommandConfiguratorInterface $propelCommandConfigurator
+     */
+    public function __construct(
+        PropelCommandInputBuilderInterface $inputBuilder,
+        PropelCommandConfiguratorInterface $propelCommandConfigurator
+    ) {
         $this->inputBuilder = $inputBuilder;
+        $this->propelCommandConfigurator = $propelCommandConfigurator;
     }
 
     /**
@@ -35,10 +45,15 @@ class PropelCommandRunner implements PropelCommandRunnerInterface
      * @return int
      */
     public function runCommand(
-        Command $command,
+        ConfigurablePropelCommandInterface $command,
         InputDefinition $inputDefinition,
         OutputInterface $output
     ): int {
+
+        if ($command instanceof ConfigurablePropelCommandInterface) {
+            $this->propelCommandConfigurator->configurePropelCommand($command);
+        }
+
         $input = $this->inputBuilder
             ->buildInput(
                 $inputDefinition,
