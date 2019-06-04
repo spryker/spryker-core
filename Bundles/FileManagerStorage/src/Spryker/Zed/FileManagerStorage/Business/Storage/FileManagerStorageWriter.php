@@ -172,14 +172,8 @@ class FileManagerStorageWriter implements FileManagerStorageWriterInterface
      */
     protected function updateDataSet(FileTransfer $fileTransfer, FileStorageTransfer $fileStorageTransfer, LocaleTransfer $localeTransfer)
     {
-        if ($fileTransfer->getFileName() !== $fileStorageTransfer->getFileName()) {
-            $this->entityManager->deleteFileStorage($fileStorageTransfer);
-            $this->createDataSet($fileTransfer, $localeTransfer);
-
-            return;
-        }
-
         $fileStorageDataTransfer = $this->mapToFileStorageDataTransfer($fileTransfer, $localeTransfer);
+        $fileStorageTransfer->setFileName($fileTransfer->getFileName());
         $fileStorageTransfer->setData($fileStorageDataTransfer);
         $this->entityManager->saveFileStorage($fileStorageTransfer);
     }

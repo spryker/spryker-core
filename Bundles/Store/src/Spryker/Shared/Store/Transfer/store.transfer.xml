@@ -25,4 +25,13 @@
         <property name="store" type="Store" />
     </transfer>
 
+    <transfer name="QuoteValidationResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="errors" type="QuoteError[]"/>
+    </transfer>
+
+    <transfer name="QuoteError">
+        <property name="message" type="string"/>
+    </transfer>
+
 </transfers>

@@ -9,27 +9,24 @@ namespace SprykerTest\Zed\Sales\Business;
 
 use Codeception\Test\Unit;
 use DateTime;
-use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\DataBuilder\AddressBuilder;
+use Generated\Shared\DataBuilder\CurrencyBuilder;
+use Generated\Shared\DataBuilder\CustomerBuilder;
+use Generated\Shared\DataBuilder\ExpenseBuilder;
+use Generated\Shared\DataBuilder\ItemBuilder;
+use Generated\Shared\DataBuilder\QuoteBuilder;
+use Generated\Shared\DataBuilder\TotalsBuilder;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
-use Generated\Shared\Transfer\CurrencyTransfer;
-use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
-use Generated\Shared\Transfer\ShipmentMethodTransfer;
-use Generated\Shared\Transfer\ShipmentTransfer;
-use Generated\Shared\Transfer\TaxTotalTransfer;
-use Generated\Shared\Transfer\TotalsTransfer;
-use Orm\Zed\Country\Persistence\SpyCountry;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderProcessQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddressQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Spryker\Shared\Kernel\Store;
-use Spryker\Shared\Price\PriceMode;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Locale\Persistence\LocaleQueryContainer;
 use Spryker\Zed\Oms\OmsConfig;
@@ -60,6 +57,11 @@ class SalesFacadeSaveOrderTest extends Unit
      * @var \Spryker\Zed\Sales\Business\SalesFacade
      */
     protected $salesFacade;
+
+    /**
+     * @var \SprykerTest\Zed\Sales\SalesBusinessTester
+     */
+    protected $tester;
 
     /**
      * @return void
@@ -130,18 +132,17 @@ class SalesFacadeSaveOrderTest extends Unit
      */
     public function testSaveOrderCreatesBillingAddressAndAssignsItToOrder()
     {
-        $salesOrderAddressQuery = SpySalesOrderAddressQuery::create()
-            ->filterByAddress1('address-1-1-test')
-            ->filterByFirstName('Max')
-            ->filterByLastName('Mustermann')
-            ->filterByZipCode('1337')
-            ->filterByCity('SpryHome');
-
         $quoteTransfer = $this->getValidBaseQuoteTransfer();
 
         $this->salesFacade->saveOrder($quoteTransfer, $this->getValidBaseResponseTransfer());
-
-        $addressEntity = $salesOrderAddressQuery->findOne();
+        $billingAddress = $quoteTransfer->getBillingAddress();
+        $addressEntity = SpySalesOrderAddressQuery::create()
+            ->filterByAddress1($billingAddress->getAddress1())
+            ->filterByFirstName($billingAddress->getFirstName())
+            ->filterByLastName($billingAddress->getLastName())
+            ->filterByZipCode($billingAddress->getZipCode())
+            ->filterByCity($billingAddress->getCity())
+            ->findOne();
 
         $this->assertNotNull($addressEntity);
         $this->assertSame($addressEntity->getIdSalesOrderAddress(), $quoteTransfer->getBillingAddress()
@@ -170,68 +171,69 @@ class SalesFacadeSaveOrderTest extends Unit
      */
     private function getValidBaseQuoteTransfer()
     {
-        $country = new SpyCountry();
-        $country->setIso2Code('ix');
-        $country->save();
+        $quoteTransfer = $this->createValidQuoteWithoutItems();
+        $quoteTransfer->addItem($this->createItemWithIntQuantity(1));
 
-        $quoteTransfer = new QuoteTransfer();
-        $currencyTransfer = new CurrencyTransfer();
-        $currencyTransfer->setCode('EUR');
-        $quoteTransfer->setCurrency($currencyTransfer);
+        return $quoteTransfer;
+    }
 
-        $quoteTransfer->setPriceMode(PriceMode::PRICE_MODE_GROSS);
-        $billingAddress = new AddressTransfer();
+    /**
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function createValidBaseQuoteWithFloatQuantity(): QuoteTransfer
+    {
+        $quoteTransfer = $this->createValidQuoteWithoutItems();
+        $quoteTransfer->addItem($this->createItemWithFloatQuantity(1.5));
 
-        $billingAddress->setIso2Code('ix')
-            ->setAddress1('address-1-1-test')
-            ->setFirstName('Max')
-            ->setLastName('Mustermann')
-            ->setZipCode('1337')
-            ->setCity('SpryHome');
+        return $quoteTransfer;
+    }
 
-        $shippingAddress = new AddressTransfer();
-        $shippingAddress->setIso2Code('ix')
-            ->setAddress1('address-1-2-test')
-            ->setFirstName('Max')
-            ->setLastName('Mustermann')
-            ->setZipCode('1337')
-            ->setCity('SpryHome');
+    /**
+     * @param int $quantity
+     * @param array $seed
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    protected function createItemWithIntQuantity(int $quantity, array $seed = []): ItemTransfer
+    {
+        $seed = array_merge([
+            ItemTransfer::QUANTITY => $quantity,
+        ], $seed);
 
-        $totals = new TotalsTransfer();
-        $totals->setGrandTotal(1337)
-            ->setSubtotal(337);
+        return (new ItemBuilder($seed))->build();
+    }
 
-        $totals->setTaxTotal((new TaxTotalTransfer())->setAmount(10));
+    /**
+     * @param float $quantity
+     * @param array $seed
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    protected function createItemWithFloatQuantity(float $quantity, array $seed = []): ItemTransfer
+    {
+        $seed = array_merge([
+            ItemTransfer::QUANTITY => $quantity,
+        ], $seed);
 
-        $quoteTransfer->setShippingAddress($shippingAddress)
-            ->setBillingAddress($billingAddress)
-            ->setTotals($totals);
+        return (new ItemBuilder($seed))->build();
+    }
 
-        $customerTransfer = new CustomerTransfer();
-        $customerTransfer->setEmail('max@mustermann.de');
-        $customerTransfer->setFirstName('Max');
-        $customerTransfer->setLastName('Mustermann');
-
+    /**
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function createValidQuoteWithoutItems(): QuoteTransfer
+    {
+        $totalsTransfer = (new TotalsBuilder())->build();
+        $quoteTransfer = (new QuoteBuilder())->build();
+        $quoteTransfer->setTotals($totalsTransfer);
+        $customerTransfer = (new CustomerBuilder())->build();
         $quoteTransfer->setCustomer($customerTransfer);
-
-        $shipmentTransfer = new ShipmentTransfer();
-        $shipmentTransfer->setMethod(new ShipmentMethodTransfer());
-        $quoteTransfer->setShipment($shipmentTransfer);
-
-        $itemTransfer = new ItemTransfer();
-        $itemTransfer
-            ->setUnitPrice(1)
-            ->setUnitGrossPrice(1)
-            ->setSumGrossPrice(1)
-            ->setQuantity(1)
-            ->setName('test-name')
-            ->setSku('sku-test');
-        $quoteTransfer->addItem($itemTransfer);
-
-        $paymentTransfer = new PaymentTransfer();
-        $paymentTransfer->setPaymentSelection('dummyPaymentInvoice');
-
-        $quoteTransfer->setPayment($paymentTransfer);
+        $currencyTransfer = (new CurrencyBuilder())->build();
+        $quoteTransfer->setCurrency($currencyTransfer);
+        $billingAddress = (new AddressBuilder())->build();
+        $shippingAddress = (new AddressBuilder())->build();
+        $quoteTransfer->setBillingAddress($billingAddress);
+        $quoteTransfer->setShippingAddress($shippingAddress);
 
         return $quoteTransfer;
     }
@@ -241,17 +243,17 @@ class SalesFacadeSaveOrderTest extends Unit
      */
     public function testSaveOrderCreatesShippingAddressAndAssignsItToOrder()
     {
-        $salesOrderAddressQuery = SpySalesOrderAddressQuery::create()
-            ->filterByAddress1('address-1-2-test')
-            ->filterByFirstName('Max')
-            ->filterByLastName('Mustermann')
-            ->filterByCity('SpryHome');
-
         $quoteTransfer = $this->getValidBaseQuoteTransfer();
 
         $this->salesFacade->saveOrder($quoteTransfer, $this->getValidBaseResponseTransfer());
+        $shippingAddress = $quoteTransfer->getShippingAddress();
 
-        $addressEntity = $salesOrderAddressQuery->findOne();
+        $addressEntity = SpySalesOrderAddressQuery::create()
+            ->filterByAddress1($shippingAddress->getAddress1())
+            ->filterByFirstName($shippingAddress->getFirstName())
+            ->filterByLastName($shippingAddress->getLastName())
+            ->filterByCity($shippingAddress->getCity())
+            ->findOne();
 
         $this->assertNotNull($addressEntity);
         $this->assertSame($addressEntity->getIdSalesOrderAddress(), $quoteTransfer->getShippingAddress()
@@ -285,9 +287,9 @@ class SalesFacadeSaveOrderTest extends Unit
         $orderEntity = $orderQuery->findOne();
         $this->assertNotNull($orderEntity);
 
-        $this->assertSame('max@mustermann.de', $orderEntity->getEmail());
-        $this->assertSame('Max', $orderEntity->getFirstName());
-        $this->assertSame('Mustermann', $orderEntity->getLastName());
+        $this->assertSame($quoteTransfer->getCustomer()->getEmail(), $orderEntity->getEmail());
+        $this->assertSame($quoteTransfer->getCustomer()->getFirstName(), $orderEntity->getFirstName());
+        $this->assertSame($quoteTransfer->getCustomer()->getLastName(), $orderEntity->getLastName());
     }
 
     /**
@@ -305,9 +307,9 @@ class SalesFacadeSaveOrderTest extends Unit
         $orderEntity = $orderQuery->findOne();
         $this->assertNotNull($orderEntity);
 
-        $this->assertSame('max@mustermann.de', $orderEntity->getEmail());
-        $this->assertSame('Max', $orderEntity->getFirstName());
-        $this->assertSame('Mustermann', $orderEntity->getLastName());
+        $this->assertSame($quoteTransfer->getCustomer()->getEmail(), $orderEntity->getEmail());
+        $this->assertSame($quoteTransfer->getCustomer()->getFirstName(), $orderEntity->getFirstName());
+        $this->assertSame($quoteTransfer->getCustomer()->getLastName(), $orderEntity->getLastName());
     }
 
     /**
@@ -316,7 +318,6 @@ class SalesFacadeSaveOrderTest extends Unit
     public function testSaveOrderWhenCustomerHaveCreatedAtSetShouldNotOverwriteOrderData()
     {
         $quoteTransfer = $this->getValidBaseQuoteTransfer();
-
         $customerCreatedAt = new DateTime('Yesterday');
         $quoteTransfer->getCustomer()->setCreatedAt($customerCreatedAt);
 
@@ -333,11 +334,16 @@ class SalesFacadeSaveOrderTest extends Unit
     }
 
     /**
+     * @dataProvider saveOrderCreatesAndFillsOrderItemsDataProvider
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $firstItem
+     * @param \Generated\Shared\Transfer\ItemTransfer $secondItem
+     *
      * @return void
      */
-    public function testSaveOrderCreatesAndFillsOrderItems()
+    public function testSaveOrderCreatesAndFillsOrderItems(QuoteTransfer $quoteTransfer, ItemTransfer $firstItem, ItemTransfer $secondItem)
     {
-        $quoteTransfer = $this->getValidBaseQuoteTransfer();
         $omsConfig = new OmsConfig();
 
         $initialState = SpyOmsOrderItemStateQuery::create()
@@ -347,32 +353,14 @@ class SalesFacadeSaveOrderTest extends Unit
 
         $this->assertNotNull($initialState->getIdOmsOrderItemState());
 
-        $item1 = new ItemTransfer();
-        $item1->setName('item-test-1')
-            ->setSku('sku1')
-            ->setUnitPrice(130)
-            ->setUnitGrossPrice(120)
-            ->setSumGrossPrice(120)
-            ->setQuantity(1)
-            ->setTaxRate(19);
-
-        $item2 = new ItemTransfer();
-        $item2->setName('item-test-2')
-            ->setSku('sku2')
-            ->setUnitPrice(130)
-            ->setUnitGrossPrice(130)
-            ->setSumGrossPrice(130)
-            ->setQuantity(1)
-            ->setTaxRate(19);
-
-        $quoteTransfer->addItem($item1);
-        $quoteTransfer->addItem($item2);
+        $quoteTransfer->addItem($firstItem);
+        $quoteTransfer->addItem($secondItem);
 
         $item1Query = SpySalesOrderItemQuery::create()
-            ->filterByName('item-test-1');
+            ->filterByName($firstItem->getName());
 
         $item2Query = SpySalesOrderItemQuery::create()
-            ->filterByName('item-test-2');
+            ->filterByName($secondItem->getName());
 
         $checkoutResponseTransfer = $this->getValidBaseResponseTransfer();
         $this->salesFacade->saveOrder($quoteTransfer, $checkoutResponseTransfer);
@@ -385,21 +373,72 @@ class SalesFacadeSaveOrderTest extends Unit
         $this->assertNotNull($item1Entity);
         $this->assertNotNull($item2Entity);
 
-        $this->assertSame($savedItems[1]->getIdSalesOrderItem(), $item1Entity->getIdSalesOrderItem());
-        $this->assertSame($item1->getName(), $item1Entity->getName());
+        $this->assertSame($savedItems[0]->getIdSalesOrderItem(), $item1Entity->getIdSalesOrderItem());
+        $this->assertSame($firstItem->getName(), $item1Entity->getName());
         $this->assertSame($checkoutResponseTransfer->getSaveOrder()->getIdSalesOrder(), $item1Entity->getFkSalesOrder());
         $this->assertSame($initialState->getIdOmsOrderItemState(), $item1Entity->getFkOmsOrderItemState());
-        $this->assertSame($item1->getSku(), $item1Entity->getSku());
-        $this->assertSame($savedItems[1]->getUnitGrossPrice(), $item1Entity->getGrossPrice());
-        $this->assertSame(1, $item1Entity->getQuantity());
+        $this->assertSame($firstItem->getSku(), $item1Entity->getSku());
+        $this->assertSame($savedItems[0]->getUnitGrossPrice(), $item1Entity->getGrossPrice());
+        $this->assertSame((float)$firstItem->getQuantity(), $item1Entity->getQuantity());
 
-        $this->assertSame($savedItems[2]->getIdSalesOrderItem(), $item2Entity->getIdSalesOrderItem());
-        $this->assertSame($item2->getName(), $item2Entity->getName());
+        $this->assertSame($savedItems[1]->getIdSalesOrderItem(), $item2Entity->getIdSalesOrderItem());
+        $this->assertSame($secondItem->getName(), $item2Entity->getName());
         $this->assertSame($checkoutResponseTransfer->getSaveOrder()->getIdSalesOrder(), $item2Entity->getFkSalesOrder());
         $this->assertSame($initialState->getIdOmsOrderItemState(), $item2Entity->getFkOmsOrderItemState());
-        $this->assertSame($item2->getSku(), $item2Entity->getSku());
-        $this->assertSame($savedItems[2]->getUnitGrossPrice(), $item2Entity->getGrossPrice());
-        $this->assertSame(1, $item2Entity->getQuantity());
+        $this->assertSame($secondItem->getSku(), $item2Entity->getSku());
+        $this->assertSame($savedItems[1]->getUnitGrossPrice(), $item2Entity->getGrossPrice());
+        $this->assertSame((float)$secondItem->getQuantity(), $item2Entity->getQuantity());
+    }
+
+    /**
+     * @return array
+     */
+    public function saveOrderCreatesAndFillsOrderItemsDataProvider(): array
+    {
+        return [
+            'int stock' => $this->getDataForSaveOrderCreatesAndFillsOrderItemsWithIntStock(),
+            'float stock' => $this->getDataForSaveOrderCreatesAndFillsOrderItemsWithFloatStock(),
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    protected function getDataForSaveOrderCreatesAndFillsOrderItemsWithIntStock(): array
+    {
+        return [
+            $this->createValidQuoteWithoutItems(),
+            $this->createItemWithIntQuantity(1, [
+                ItemTransfer::NAME => 'test 1',
+                ItemTransfer::UNIT_GROSS_PRICE => 120,
+                ItemTransfer::SUM_GROSS_PRICE => 120,
+            ]),
+            $this->createItemWithIntQuantity(1, [
+                ItemTransfer::NAME => 'test 2',
+                ItemTransfer::UNIT_GROSS_PRICE => 130,
+                ItemTransfer::SUM_GROSS_PRICE => 130,
+            ]),
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    protected function getDataForSaveOrderCreatesAndFillsOrderItemsWithFloatStock(): array
+    {
+        return [
+            $this->createValidQuoteWithoutItems(),
+            $this->createItemWithFloatQuantity(1.5, [
+                ItemTransfer::NAME => 'test 1',
+                ItemTransfer::UNIT_GROSS_PRICE => 120,
+                ItemTransfer::SUM_GROSS_PRICE => 120,
+            ]),
+            $this->createItemWithFloatQuantity(2.5, [
+                ItemTransfer::NAME => 'test 2',
+                ItemTransfer::UNIT_GROSS_PRICE => 130,
+                ItemTransfer::SUM_GROSS_PRICE => 130,
+            ]),
+        ];
     }
 
     /**
@@ -418,11 +457,11 @@ class SalesFacadeSaveOrderTest extends Unit
      */
     public function testCreateSalesExpenseSavesExpense(): void
     {
-        // Assign
         $quoteTransfer = $this->getValidBaseQuoteTransfer();
+        $expenseTransfer = $this->createExpenseTransfer();
+        // Assign
         $saveOrderTransfer = $this->createSaveOrderTransfer();
         $this->salesFacade->saveSalesOrder($quoteTransfer, $saveOrderTransfer);
-        $expenseTransfer = $this->createExpenseTransfer();
         $expenseTransfer->setFkSalesOrder($saveOrderTransfer->getIdSalesOrder());
 
         // Act
@@ -435,27 +474,19 @@ class SalesFacadeSaveOrderTest extends Unit
     }
 
     /**
-     * @param int $expensePrice
-     *
      * @return \Generated\Shared\Transfer\ExpenseTransfer
      */
-    protected function createExpenseTransfer(int $expensePrice = 100): ExpenseTransfer
+    protected function createExpenseTransfer(): ExpenseTransfer
     {
-        $expenseTransfer = (new ExpenseTransfer())
-            ->setName('test expense')
-            ->setType('EXPENSE_TYPE')
-            ->setUnitPrice($expensePrice)
-            ->setSumPrice($expensePrice)
-            ->setUnitPriceToPayAggregation($expensePrice)
-            ->setSumPriceToPayAggregation($expensePrice)
-            ->setTaxRate(19.1)
-            ->setQuantity(1)
-            ->setUnitGrossPrice(0)
-            ->setSumGrossPrice(0)
-            ->setUnitNetPrice($expensePrice)
-            ->setSumNetPrice($expensePrice);
+        return (new ExpenseBuilder())->seed([ExpenseTransfer::QUANTITY => 1])->seed()->build();
+    }
 
-        return $expenseTransfer;
+    /**
+     * @return \Generated\Shared\Transfer\ExpenseTransfer
+     */
+    protected function createExpenseTransferWithFloatQuantity(): ExpenseTransfer
+    {
+        return (new ExpenseBuilder())->seed([ExpenseTransfer::QUANTITY => 1.6])->seed()->build();
     }
 
     /**
