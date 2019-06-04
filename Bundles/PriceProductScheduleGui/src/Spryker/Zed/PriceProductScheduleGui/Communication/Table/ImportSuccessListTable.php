@@ -58,7 +58,7 @@ class ImportSuccessListTable extends AbstractTable
      *
      * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
-    protected function configure(TableConfiguration $config)
+    protected function configure(TableConfiguration $config): TableConfiguration
     {
         $fields = $this->getFieldsList();
 
@@ -87,7 +87,7 @@ class ImportSuccessListTable extends AbstractTable
      *
      * @return array
      */
-    protected function prepareData(TableConfiguration $config)
+    protected function prepareData(TableConfiguration $config): array
     {
         $query = $this->prepareQuery();
 
