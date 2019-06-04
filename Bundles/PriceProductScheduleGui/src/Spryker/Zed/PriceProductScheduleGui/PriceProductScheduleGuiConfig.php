@@ -12,6 +12,8 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class PriceProductScheduleGuiConfig extends AbstractBundleConfig
 {
+    protected const KEY_ID_PRICE_PRODUCT_SCHEDULE = 'id_price_product_schedule';
+
     protected const KEY_ABSTRACT_SKU = 'abstract_sku';
     protected const KEY_CONCRETE_SKU = 'concrete_sku';
     protected const KEY_STORE = 'store';
@@ -60,6 +62,22 @@ class PriceProductScheduleGuiConfig extends AbstractBundleConfig
             static::KEY_FROM_INCLUDED,
             static::KEY_TO_INCLUDED,
         ];
+    }
+
+    /**
+     * @return string
+     */
+    public function getDefaultSortFieldForSuccessTable(): string
+    {
+        return static::KEY_ID_PRICE_PRODUCT_SCHEDULE;
+    }
+
+    /**
+     * @return string
+     */
+    public function getIdPriceProductScheduleKey(): string
+    {
+        return static::KEY_ID_PRICE_PRODUCT_SCHEDULE;
     }
 
     /**

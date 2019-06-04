@@ -60,10 +60,13 @@ class ImportSuccessListTable extends AbstractTable
      */
     protected function configure(TableConfiguration $config)
     {
-        $fields = $this->priceProductScheduleGuiConfig->getFieldsList();
+        $fields = $this->getFieldsList();
+
         $config->setHeader(array_combine($fields, $fields));
 
         $config->setSortable($fields);
+
+        $config->setDefaultSortField($this->priceProductScheduleGuiConfig->getDefaultSortFieldForSuccessTable());
 
         $config->setUrl(sprintf(
             'table?%s=%d',
@@ -122,6 +125,7 @@ class ImportSuccessListTable extends AbstractTable
             ->leftJoinWithProduct()
             ->leftJoinWithProductAbstract()
             ->filterByFkPriceProductScheduleList($this->priceProductScheduleListTransfer->getIdPriceProductScheduleList())
+            ->withColumn(SpyPriceProductScheduleTableMap::COL_ID_PRICE_PRODUCT_SCHEDULE, $this->priceProductScheduleGuiConfig->getIdPriceProductScheduleKey())
             ->withColumn(SpyProductAbstractTableMap::COL_SKU, $this->priceProductScheduleGuiConfig->getAbstractSkuKey())
             ->withColumn(SpyProductTableMap::COL_SKU, $this->priceProductScheduleGuiConfig->getConcreteSkuKey())
             ->withColumn(SpyCurrencyTableMap::COL_CODE, $this->priceProductScheduleGuiConfig->getCurrencyKey())
@@ -131,5 +135,16 @@ class ImportSuccessListTable extends AbstractTable
             ->withColumn(SpyPriceProductScheduleTableMap::COL_ACTIVE_TO, $this->priceProductScheduleGuiConfig->getToIncludedKey())
             ->withColumn(SpyPriceProductScheduleTableMap::COL_NET_PRICE, $this->priceProductScheduleGuiConfig->getValueNetKey())
             ->withColumn(SpyPriceProductScheduleTableMap::COL_GROSS_PRICE, $this->priceProductScheduleGuiConfig->getValueGrossKey());
+    }
+
+    /**
+     * @return array
+     */
+    protected function getFieldsList(): array
+    {
+        $fields = $this->priceProductScheduleGuiConfig->getFieldsList();
+        array_unshift($fields, $this->priceProductScheduleGuiConfig->getIdPriceProductScheduleKey());
+
+        return $fields;
     }
 }
