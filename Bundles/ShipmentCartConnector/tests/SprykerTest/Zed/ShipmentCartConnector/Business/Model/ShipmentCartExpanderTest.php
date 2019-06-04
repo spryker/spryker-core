@@ -70,7 +70,7 @@ class ShipmentCartExpanderTest extends Test
         // Assert
         $this->assertSame(
             $cartChangeTransfer->getQuote()->getShipment()->getMethod()->getPrices(),
-            $actualCartChangeTransfer,
+            $actualCartChangeTransfer->getQuote()->getShipment()->getMethod()->getPrices(),
             'Shipment price should not have been changed.'
         );
     }
