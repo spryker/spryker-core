@@ -67,10 +67,6 @@ class MailHandlerTest extends Unit
             CompanyUserInvitationMailTypePlugin::MAIL_TYPE,
         ]);
         $this->tester->setDependency(MailDependencyProvider::MAIL_PROVIDER_COLLECTION, $mailProviderCollection);
-
-        /**
-         * @todo Set up dry run for email sender.
-         */
     }
 
     /**
