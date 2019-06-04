@@ -55,7 +55,7 @@ class ShipmentCartExpanderTest extends Test
     }
 
     /**
-     * @dataProvider updateShipmentPriceWithQuoteLevelShipment
+     * @dataProvider updateShipmentPriceWithQuoteLevelShipmentDataProvider
      *
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
@@ -69,8 +69,8 @@ class ShipmentCartExpanderTest extends Test
 
         // Assert
         $this->assertSame(
-            $cartChangeTransfer,
-            $actualCartChangeTransfer,
+            $cartChangeTransfer->getQuote()->getShipment()->getMethod()->getPrices(),
+            $actualCartChangeTransfer->getQuote()->getShipment()->getMethod()->getPrices(),
             'Shipment price should not have been changed.'
         );
     }
@@ -78,7 +78,7 @@ class ShipmentCartExpanderTest extends Test
     /**
      * @return array
      */
-    public function updateShipmentPriceWithQuoteLevelShipment(): array
+    public function updateShipmentPriceWithQuoteLevelShipmentDataProvider(): array
     {
         return [
             'quote has not shipment method; shipment price should not have been changed' => $this->getDataWithoutShipment(),

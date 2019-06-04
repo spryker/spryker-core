@@ -187,27 +187,31 @@ class CreateShipmentWithNewDataTest extends Test
     }
 
     /**
+     * @dataProvider createShipmentWithNewShippingAddressDataProvider
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
      * @return void
      */
-    public function testCreateShipmentWithNewShippingAddressShouldCreateNewSalesOrderAddress(): void
-    {
+    public function testCreateShipmentWithNewShippingAddressShouldCreateNewSalesOrderAddress(
+        QuoteTransfer $quoteTransfer,
+        ShipmentTransfer $shipmentTransfer,
+        ItemTransfer $itemTransfer
+    ): void {
         // Arrange
-        $quoteTransfer = $this->createQuoteTransfer();
         $saveOrderTransfer = $this->tester->haveOrderUsingPreparedQuoteTransfer($quoteTransfer, static::TEST_STATE_MACHINE_PROCESS_NAME);
-
-        $itemTransfer = $quoteTransfer->getItems()[0];
-        $oldIdSalesOrderAddress = $itemTransfer->getShipment()->getShippingAddress()->getIdSalesOrderAddress();
-
-        $shipmentTransfer = clone $itemTransfer
-            ->getShipment()
-            ->setMethod($this->tester->haveShipmentMethod($itemTransfer->getShipment()->getMethod()->toArray()))
-            ->setShippingAddress(
-                (new AddressBuilder())->build()
-            );
-
-        $shipmentGroupTransfer = (new ShipmentGroupTransfer())->setShipment($shipmentTransfer);
-
         $orderTransfer = $this->tester->getLocator()->sales()->facade()->getOrderByIdSalesOrder($saveOrderTransfer->getIdSalesOrder());
+
+        $itemTransfer = $orderTransfer->getItems()[0];
+        $idSalesOrderAddress = $itemTransfer->getShipment()->getShippingAddress()->getIdSalesOrderAddress();
+
+        $shipmentTransfer->setMethod($this->tester->haveShipmentMethod()->toArray());
+
+        $shipmentGroupTransfer = new ShipmentGroupTransfer();
+        $shipmentGroupTransfer->setShipment($shipmentTransfer);
+        $shipmentGroupTransfer->addItem($itemTransfer);
 
         // Act
         $shipmentGroupResponseTransfer = $this->tester->getFacade()->saveShipment($shipmentGroupTransfer, $orderTransfer);
@@ -220,29 +224,45 @@ class CreateShipmentWithNewDataTest extends Test
         // Assert
         $this->assertTrue($shipmentGroupResponseTransfer->getIsSuccessful(), 'Saving a new shipment should have been successful.');
         $this->assertNotNull($shipmentEntity->getFkSalesOrderAddress(), 'New sales shipment should have a sales order address.');
-        $this->assertNotEquals($oldIdSalesOrderAddress, $shipmentEntity->getFkSalesOrderAddress(), 'New sales shipment should have been a new sales order address assigned.');
+        $this->assertNotEquals($idSalesOrderAddress, $shipmentEntity->getFkSalesOrderAddress(), 'New sales shipment should have been a new sales order address assigned.');
     }
 
     /**
+     * @return array
+     */
+    public function createShipmentWithNewShippingAddressDataProvider(): array
+    {
+        return [
+            'save shipment with new shipment address' => $this->getDataWithNewShippingAddress(),
+        ];
+    }
+
+    /**
+     * @dataProvider createShipmentWithNewShippingAddressDataProvider
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
      * @return void
      */
-    public function testCreateShipmentWithNewShippingAddressShouldCreateNewSalesExpense(): void
+    public function testCreateShipmentWithNewShippingAddressShouldCreateNewSalesExpense(
+        QuoteTransfer $quoteTransfer,
+        ShipmentTransfer $shipmentTransfer,
+        ItemTransfer $itemTransfer
+    ): void
     {
         // Arrange
-        $quoteTransfer = $this->createQuoteTransfer();
         $saveOrderTransfer = $this->tester->haveOrderUsingPreparedQuoteTransfer($quoteTransfer, static::TEST_STATE_MACHINE_PROCESS_NAME);
-
-        $itemTransfer = $quoteTransfer->getItems()[0];
-
-        $shipmentTransfer = (new ShipmentBuilder())
-            ->withShippingAddress()
-            ->withMethod($this->tester->haveShipmentMethod()->toArray())
-            ->build();
-
-        $shipmentGroupTransfer = (new ShipmentGroupTransfer())->setShipment($shipmentTransfer);
-        $shipmentGroupTransfer->addItem($itemTransfer);
-
         $orderTransfer = $this->tester->getLocator()->sales()->facade()->getOrderByIdSalesOrder($saveOrderTransfer->getIdSalesOrder());
+
+        $itemTransfer = $orderTransfer->getItems()[0];
+
+        $shipmentTransfer->setMethod($this->tester->haveShipmentMethod()->toArray());
+
+        $shipmentGroupTransfer = new ShipmentGroupTransfer();
+        $shipmentGroupTransfer->setShipment($shipmentTransfer);
+        $shipmentGroupTransfer->addItem($itemTransfer);
 
         // Act
         $shipmentGroupResponseTransfer = $this->tester->getFacade()->saveShipment($shipmentGroupTransfer, $orderTransfer);
@@ -254,28 +274,27 @@ class CreateShipmentWithNewDataTest extends Test
 
         // Assert
         $this->assertTrue($shipmentGroupResponseTransfer->getIsSuccessful(), 'Saving a new shipment should have been successful.');
-        $this->assertNotNull($shipmentEntity->getFkSalesExpense(), 'ew sales shipment should have been a new sales expense assigned.');
+        $this->assertNotNull($shipmentEntity->getFkSalesExpense(), 'New sales shipment should have been a new sales expense assigned.');
         $this->assertEquals(0, $shipmentEntity->getExpense()->getPrice(), 'New shipments must have 0 price as expense.');
     }
 
     /**
+     * @dataProvider createShipmentWithNewShippingAddressDataProvider
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
      * @return void
      */
-    public function testCreateShipmentForAllItemsShouldKeepOldShipmentEmpty(): void
-    {
+    public function testCreateShipmentForAllItemsShouldKeepOldShipmentEmpty(
+        QuoteTransfer $quoteTransfer,
+        ShipmentTransfer $shipmentTransfer,
+        ItemTransfer $itemTransfer
+    ): void {
         // Arrange
-        $quoteTransfer = $this->createQuoteTransfer();
         $saveOrderTransfer = $this->tester->haveOrderUsingPreparedQuoteTransfer($quoteTransfer, static::TEST_STATE_MACHINE_PROCESS_NAME);
-
-        $oldShipmentTransfer = $shipmentTransfer = $this->tester->haveShipment(
-            $saveOrderTransfer->getIdSalesOrder(),
-            $saveOrderTransfer->getOrderItems()[0]->getShipment()->toArray()
-        );
-
-        $shipmentTransfer = (new ShipmentBuilder())
-            ->withShippingAddress()
-            ->withMethod($this->tester->haveShipmentMethod()->toArray())
-            ->build();
+        $oldShipmentTransfer = $saveOrderTransfer->getOrderItems()[0]->getShipment();
 
         $shipmentGroupTransfer = (new ShipmentGroupTransfer())
             ->setShipment($shipmentTransfer);
