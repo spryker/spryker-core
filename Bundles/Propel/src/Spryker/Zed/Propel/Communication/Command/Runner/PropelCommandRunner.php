@@ -10,6 +10,7 @@ namespace Spryker\Zed\Propel\Communication\Command\Runner;
 use Spryker\Zed\Propel\Communication\Command\Config\PropelCommandConfiguratorInterface;
 use Spryker\Zed\Propel\Communication\Command\Input\PropelCommandInputBuilderInterface;
 use Spryker\Zed\PropelOrm\Communication\Generator\ConfigurablePropelCommandInterface;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -45,7 +46,7 @@ class PropelCommandRunner implements PropelCommandRunnerInterface
      * @return int
      */
     public function runCommand(
-        ConfigurablePropelCommandInterface $command,
+        Command $command,
         InputDefinition $inputDefinition,
         OutputInterface $output
     ): int {
