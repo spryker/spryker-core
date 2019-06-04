@@ -7,15 +7,18 @@
 
 namespace Spryker\Zed\Propel\Communication\Console;
 
-use Spryker\Zed\PropelOrm\Communication\Generator\Command\MigrationStatusCommand;
+use Spryker\Zed\Kernel\Communication\Console\Console;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\Propel\Business\PropelFacadeInterface getFacade()
  * @method \Spryker\Zed\Propel\Communication\PropelCommunicationFactory getFactory()
  */
-class MigrationCheckConsole extends AbstractPropelCommandWrapper
+class MigrationCheckConsole extends Console
 {
     public const COMMAND_NAME = 'propel:migration:check';
+    public const COMMAND_DESCRIPTION = 'propel:migration:check';
     public const CODE_CHANGES = 3;
 
     /**
@@ -24,16 +27,31 @@ class MigrationCheckConsole extends AbstractPropelCommandWrapper
     protected function configure()
     {
         $this->setName(static::COMMAND_NAME);
-        $this->setDescription('Checks if migration needs to be executed. Scripts can use return code ' . static::CODE_SUCCESS . ' (all good) vs ' . static::CODE_CHANGES . ' (migration needed).');
+        $this->setDescription(static::COMMAND_DESCRIPTION);
 
         parent::configure();
     }
 
     /**
-     * @return string
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     *
+     * @return int
      */
-    public function getCommandClassName(): string
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        return MigrationStatusCommand::class;
+        $this->info($this->getDescription());
+
+        $command = $this->getFactory()
+            ->createPropelCommandBuilder()
+            ->buildCommand(
+                $this->getFactory()->createMigrationStatusCommand()
+            );
+
+        return $this->getFactory()->createPropelCommandRunner()->runCommand(
+            $command,
+            $this->getDefinition(),
+            $output
+        );
     }
 }

@@ -14,7 +14,7 @@ interface PropelCommandConfiguratorInterface
     /**
      * @param \Spryker\Zed\PropelOrm\Communication\Generator\ConfigurablePropelCommandInterface $configurablePropelCommand
      *
-     * @return \Spryker\Zed\PropelOrm\Communication\Generator\ConfigurablePropelCommandInterface
+     * @return void
      */
-    public function configurePropelCommand(ConfigurablePropelCommandInterface $configurablePropelCommand): ConfigurablePropelCommandInterface;
+    public function configurePropelCommand(ConfigurablePropelCommandInterface $configurablePropelCommand): void;
 }

@@ -27,28 +27,16 @@ class PropelCommandBuilder implements PropelCommandBuilderInterface
     }
 
     /**
-     * @param string $propelCommandClassName
+     * @param \Symfony\Component\Console\Command\Command $propelCommand
      *
      * @return \Symfony\Component\Console\Command\Command
      */
-    public function createCommand(string $propelCommandClassName): Command
+    public function buildCommand(Command $propelCommand): Command
     {
-        $command = $this->instantiateCommand($propelCommandClassName);
-
-        if ($command instanceof ConfigurablePropelCommandInterface) {
-            $this->propelCommandConfigurator->configurePropelCommand($command);
+        if ($propelCommand instanceof ConfigurablePropelCommandInterface) {
+            $this->propelCommandConfigurator->configurePropelCommand($propelCommand);
         }
 
-        return $command;
-    }
-
-    /**
-     * @param string $commandClassName
-     *
-     * @return \Symfony\Component\Console\Command\Command
-     */
-    protected function instantiateCommand(string $commandClassName): Command
-    {
-        return new $commandClassName();
+        return $propelCommand;
     }
 }

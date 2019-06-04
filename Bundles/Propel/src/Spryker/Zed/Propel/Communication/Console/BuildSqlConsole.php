@@ -7,15 +7,18 @@
 
 namespace Spryker\Zed\Propel\Communication\Console;
 
-use Spryker\Zed\PropelOrm\Communication\Generator\Command\SqlBuildCommand;
+use Spryker\Zed\Kernel\Communication\Console\Console;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\Propel\Business\PropelFacadeInterface getFacade()
  * @method \Spryker\Zed\Propel\Communication\PropelCommunicationFactory getFactory()
  */
-class BuildSqlConsole extends AbstractPropelCommandWrapper
+class BuildSqlConsole extends Console
 {
     public const COMMAND_NAME = 'propel:sql:build';
+    public const COMMAND_DESCRIPTION = 'Build SQL with Propel2';
 
     /**
      * @return void
@@ -23,16 +26,31 @@ class BuildSqlConsole extends AbstractPropelCommandWrapper
     protected function configure()
     {
         $this->setName(self::COMMAND_NAME);
-        $this->setDescription('Build SQL with Propel2');
+        $this->setDescription(static::COMMAND_DESCRIPTION);
 
         parent::configure();
     }
 
     /**
-     * @return string
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     *
+     * @return int
      */
-    public function getCommandClassName(): string
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        return SqlBuildCommand::class;
+        $this->info($this->getDescription());
+
+        $command = $this->getFactory()
+            ->createPropelCommandBuilder()
+            ->buildCommand(
+                $this->getFactory()->createSqlBuildCommand()
+            );
+
+        return $this->getFactory()->createPropelCommandRunner()->runCommand(
+            $command,
+            $this->getDefinition(),
+            $output
+        );
     }
 }

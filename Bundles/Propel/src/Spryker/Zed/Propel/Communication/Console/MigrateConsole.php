@@ -7,32 +7,50 @@
 
 namespace Spryker\Zed\Propel\Communication\Console;
 
-use Spryker\Zed\PropelOrm\Communication\Generator\Command\MigrationMigrateCommand;
+use Spryker\Zed\Kernel\Communication\Console\Console;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\Propel\Business\PropelFacadeInterface getFacade()
  * @method \Spryker\Zed\Propel\Communication\PropelCommunicationFactory getFactory()
  */
-class MigrateConsole extends AbstractPropelCommandWrapper
+class MigrateConsole extends Console
 {
     public const COMMAND_NAME = 'propel:migrate';
+    public const COMMAND_DESCRIPTION = 'Migrate database';
 
     /**
      * @return void
      */
     protected function configure()
     {
-        $this->setName(self::COMMAND_NAME);
-        $this->setDescription('Migrate database');
+        $this->setName(static::COMMAND_NAME);
+        $this->setDescription(static::COMMAND_DESCRIPTION);
 
         parent::configure();
     }
 
     /**
-     * @return string
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     *
+     * @return int
      */
-    public function getCommandClassName(): string
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        return MigrationMigrateCommand::class;
+        $this->info($this->getDescription());
+
+        $command = $this->getFactory()
+            ->createPropelCommandBuilder()
+            ->buildCommand(
+                $this->getFactory()->createMigrationMigrateCommand()
+            );
+
+        return $this->getFactory()->createPropelCommandRunner()->runCommand(
+            $command,
+            $this->getDefinition(),
+            $output
+        );
     }
 }

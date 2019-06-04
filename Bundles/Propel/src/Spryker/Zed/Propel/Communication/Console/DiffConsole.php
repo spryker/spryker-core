@@ -7,15 +7,18 @@
 
 namespace Spryker\Zed\Propel\Communication\Console;
 
-use Spryker\Zed\PropelOrm\Communication\Generator\Command\MigrationDiffCommand;
+use Spryker\Zed\Kernel\Communication\Console\Console;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\Propel\Business\PropelFacadeInterface getFacade()
  * @method \Spryker\Zed\Propel\Communication\PropelCommunicationFactory getFactory()
  */
-class DiffConsole extends AbstractPropelCommandWrapper
+class DiffConsole extends Console
 {
     public const COMMAND_NAME = 'propel:diff';
+    public const COMMAND_DESCRIPTION = 'Generate diff for Propel2';
 
     public const PROCESS_TIMEOUT = 300;
 
@@ -24,17 +27,32 @@ class DiffConsole extends AbstractPropelCommandWrapper
      */
     protected function configure()
     {
-        $this->setName(self::COMMAND_NAME);
-        $this->setDescription('Generate diff for Propel2');
+        $this->setName(static::COMMAND_NAME);
+        $this->setDescription(static::COMMAND_DESCRIPTION);
 
         parent::configure();
     }
 
     /**
-     * @return string
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     *
+     * @return int
      */
-    public function getCommandClassName(): string
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        return MigrationDiffCommand::class;
+        $this->info($this->getDescription());
+
+        $command = $this->getFactory()
+            ->createPropelCommandBuilder()
+            ->buildCommand(
+                $this->getFactory()->createMigrationDiffCommand()
+            );
+
+        return $this->getFactory()->createPropelCommandRunner()->runCommand(
+            $command,
+            $this->getDefinition(),
+            $output
+        );
     }
 }
