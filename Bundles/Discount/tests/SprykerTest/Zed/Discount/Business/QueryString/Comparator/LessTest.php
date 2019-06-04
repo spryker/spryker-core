@@ -26,6 +26,11 @@ use Spryker\Zed\Discount\Business\QueryString\Comparator\Less;
 class LessTest extends Unit
 {
     /**
+     * @var \SprykerTest\Zed\Discount\DiscountBusinessTester
+     */
+    protected $tester;
+
+    /**
      * @return void
      */
     public function testAcceptShouldReturnTrueWhenLessExpressionProvided()
@@ -41,33 +46,73 @@ class LessTest extends Unit
     }
 
     /**
+     * @dataProvider compareWhenValueLessThanClauseShouldReturnTrueProvider
+     *
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
+     * @param string $withValue
+     *
      * @return void
      */
-    public function testCompareWhenValueLessThanClauseShouldReturnTrue()
+    public function testCompareWhenValueLessThanClauseShouldReturnTrue(ClauseTransfer $clauseTransfer, string $withValue): void
     {
         $less = $this->createLess();
 
-        $clauseTransfer = new ClauseTransfer();
-        $clauseTransfer->setValue('2');
-
-        $isMatching = $less->compare($clauseTransfer, '1');
+        $isMatching = $less->compare($clauseTransfer, $withValue);
 
         $this->assertTrue($isMatching);
     }
 
     /**
+     * @return array
+     */
+    public function compareWhenValueLessThanClauseShouldReturnTrueProvider(): array
+    {
+        return [
+            'int stock' => $this->createClauseData('2', '1'),
+            'float stock' => $this->createClauseData('1.2', '1.1'),
+        ];
+    }
+
+    /**
+     * @param string $clauseValue
+     * @param string $withValue
+     *
+     * @return array
+     */
+    protected function createClauseData(string $clauseValue, string $withValue): array
+    {
+        $clauseTransfer = new ClauseTransfer();
+        $clauseTransfer->setValue($clauseValue);
+
+        return [$clauseTransfer, $withValue];
+    }
+
+    /**
+     * @dataProvider compareWhenValueNotLessThanClauseShouldReturnFalseProvider
+     *
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
+     * @param string $withValue
+     *
      * @return void
      */
-    public function testCompareWhenValueNotLessThanClauseShouldReturnFalse()
+    public function testCompareWhenValueNotLessThanClauseShouldReturnFalse(ClauseTransfer $clauseTransfer, string $withValue): void
     {
         $less = $this->createLess();
 
-        $clauseTransfer = new ClauseTransfer();
-        $clauseTransfer->setValue('1');
-
-        $isMatching = $less->compare($clauseTransfer, '2');
+        $isMatching = $less->compare($clauseTransfer, $withValue);
 
         $this->assertFalse($isMatching);
+    }
+
+    /**
+     * @return array
+     */
+    public function compareWhenValueNotLessThanClauseShouldReturnFalseProvider(): array
+    {
+        return [
+            'int stock' => $this->createClauseData('1', '2'),
+            'float stock' => $this->createClauseData('1.1', '1.2'),
+        ];
     }
 
     /**

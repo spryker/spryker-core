@@ -45,6 +45,7 @@ use Spryker\Zed\Sales\Business\StrategyResolver\OrderHydratorStrategyResolver;
 use Spryker\Zed\Sales\Business\StrategyResolver\OrderHydratorStrategyResolverInterface;
 use Spryker\Zed\Sales\Dependency\Service\SalesToShipmentServiceInterface;
 use Spryker\Zed\Sales\Persistence\Propel\Mapper\SalesOrderItemMapperInterface;
+use Spryker\Zed\Sales\Dependency\Service\SalesToUtilPriceServiceInterface;
 use Spryker\Zed\Sales\SalesDependencyProvider;
 
 /**
@@ -184,6 +185,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
         return new OrderHydrator(
             $this->getQueryContainer(),
             $this->getOmsFacade(),
+            $this->getUtilPriceService(),
             $this->getHydrateOrderPlugins()
         );
     }
@@ -354,6 +356,14 @@ class SalesBusinessFactory extends AbstractBusinessFactory
         return new ExpenseWriter(
             $this->getEntityManager()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Dependency\Service\SalesToUtilPriceServiceInterface
+     */
+    public function getUtilPriceService(): SalesToUtilPriceServiceInterface
+    {
+        return $this->getProvidedDependency(SalesDependencyProvider::SERVICE_UTIL_PRICE);
     }
 
     /**

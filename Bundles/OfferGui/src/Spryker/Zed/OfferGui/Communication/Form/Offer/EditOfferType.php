@@ -303,8 +303,9 @@ class EditOfferType extends AbstractType
             ],
             'constraints' => [
                 new Callback(function ($items, ExecutionContextInterface $context) {
+                    /** @var \Generated\Shared\Transfer\ItemTransfer[] $items */
                     foreach ($items as $itemTransfer) {
-                        if ($itemTransfer->getSku() && empty($itemTransfer->getQuantity())) {
+                        if ($itemTransfer->getSku() && !$itemTransfer->getQuantity()) {
                             $context->buildViolation('One of selected products contains invalid quantity')
                                 ->addViolation();
                             break;

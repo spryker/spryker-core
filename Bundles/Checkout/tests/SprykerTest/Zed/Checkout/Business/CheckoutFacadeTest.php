@@ -340,6 +340,16 @@ class CheckoutFacadeTest extends Unit
      */
     protected function getBaseQuoteTransfer(): QuoteTransfer
     {
+        $storeTransfer = (new StoreBuilder())->seed([
+            StoreTransfer::NAME => 'DE',
+        ])->build();
+        $currencyTransfer = (new CurrencyBuilder())->seed([
+            CurrencyTransfer::CODE => 'EUR',
+        ])->build();
+        $quoteTransfer = (new QuoteBuilder())->build();
+        $quoteTransfer->setStore($storeTransfer);
+        $quoteTransfer->setCurrency($currencyTransfer);
+
         $country = new SpyCountry();
         $country
             ->setIso2Code('xi')
@@ -397,40 +407,60 @@ class CheckoutFacadeTest extends Unit
         $shipmentBuilder = (new ShipmentBuilder())
             ->withShippingAddress($shippingAddressBuilder);
 
-        $itemBuilder1 = (new ItemBuilder([
-            ItemTransfer::NAME => 'Product1',
-            ItemTransfer::UNIT_PRICE => 4000,
-            ItemTransfer::SKU => 'OSB1337',
-            ItemTransfer::QUANTITY => 1,
-            ItemTransfer::UNIT_GROSS_PRICE => 3000,
-            ItemTransfer::SUM_GROSS_PRICE => 3000,
-        ]))->withShipment($shipmentBuilder);
+        $item1 = (new ItemBuilder())
+            ->seed([
+                ItemTransfer::UNIT_PRICE => 4000,
+                ItemTransfer::SKU => 'OSB1337',
+                ItemTransfer::QUANTITY => 1,
+                ItemTransfer::UNIT_GROSS_PRICE => 3000,
+                ItemTransfer::SUM_GROSS_PRICE => 3000,
+                ItemTransfer::NAME => 'Product1',
+            ])
+            ->withShipment($shipmentBuilder)
+            ->build();
 
-        $itemBuilder2 = (new ItemBuilder([
-            ItemTransfer::NAME => 'Product2',
-            ItemTransfer::UNIT_PRICE => 4000,
-            ItemTransfer::SKU => 'OSB1338',
-            ItemTransfer::QUANTITY => 1,
-            ItemTransfer::UNIT_GROSS_PRICE => 4000,
-            ItemTransfer::SUM_GROSS_PRICE => 4000,
-        ]))->withShipment($shipmentBuilder);
+        $item2 = (new ItemBuilder())
+            ->seed([
+                ItemTransfer::UNIT_PRICE => 4000,
+                ItemTransfer::SKU => 'OSB1338',
+                ItemTransfer::QUANTITY => 1,
+                ItemTransfer::UNIT_GROSS_PRICE => 4000,
+                ItemTransfer::SUM_GROSS_PRICE => 4000,
+                ItemTransfer::NAME => 'Product2',
+            ])
+            ->withShipment($shipmentBuilder)
+            ->build();
 
-        $customerBuilder = (new CustomerBuilder([
-            CustomerTransfer::EMAIL => 'max@mustermann.de',
+        $quoteTransfer->addItem($item1);
+        $quoteTransfer->addItem($item2);
+
+        $totals = (new TotalsBuilder())->seed([
+            TotalsTransfer::GRAND_TOTAL => 1000,
+            TotalsTransfer::SUBTOTAL => 500,
+        ])->build();
+
+        $quoteTransfer->setTotals($totals);
+
+        $billingAddress = (new AddressBuilder())->seed([
+            AddressTransfer::ISO2_CODE => 'xi',
+            AddressTransfer::EMAIL => 'max@mustermann.de',
+        ])->build();
+
+        $quoteTransfer->setBillingAddress($billingAddress);
+        $customerTransfer = (new CustomerBuilder())->seed([
             CustomerTransfer::IS_GUEST => false,
-        ]));
+            CustomerTransfer::EMAIL => $billingAddress->getEmail(),
+        ])->build();
 
-        $quoteTransfer = (new QuoteBuilder())
-            ->withStore((new StoreBuilder([StoreTransfer::NAME => 'DE'])))
-            ->withCurrency((new CurrencyBuilder([CurrencyTransfer::CODE => 'EUR'])))
-            ->withTotals((new TotalsBuilder([TotalsTransfer::GRAND_TOTAL => 1000, TotalsTransfer::SUBTOTAL => 500])))
-            ->withBillingAddress($shippingAddressBuilder)
-            ->withCustomer($customerBuilder)
-            ->withPayment((new PaymentBuilder([PaymentTransfer::PAYMENT_SELECTION => 'no_payment'])))
-            ->withItem($itemBuilder1)
-            ->withAnotherItem($itemBuilder2);
+        $quoteTransfer->setCustomer($customerTransfer);
 
-        return $quoteTransfer->build();
+        $paymentTransfer = (new PaymentBuilder())->seed([
+            PaymentTransfer::PAYMENT_SELECTION => 'no_payment',
+        ])->build();
+
+        $quoteTransfer->setPayment($paymentTransfer);
+
+        return $quoteTransfer;
     }
 
     /**

@@ -43,7 +43,7 @@ class ProcessManager implements ProcessManagerInterface
     public function triggerQueueProcess($command, $queue)
     {
         $process = $this->createProcess($command);
-        $process->mustRun();
+        $process->start();
 
         if ($process->isRunning()) {
             $queueProcessTransfer = $this->createQueueProcessTransfer($queue, $process->getPid());
