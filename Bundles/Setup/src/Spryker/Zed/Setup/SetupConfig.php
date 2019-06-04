@@ -30,6 +30,8 @@ class SetupConfig extends AbstractBundleConfig
     }
 
     /**
+     * @deprecated Will be removed with next major release.
+     *
      * @return string
      */
     public function getJenkinsUrl()
@@ -38,6 +40,8 @@ class SetupConfig extends AbstractBundleConfig
     }
 
     /**
+     * @deprecated Will be removed with next major release.
+     *
      * @return string
      */
     public function getJenkinsDirectory()
@@ -46,6 +50,8 @@ class SetupConfig extends AbstractBundleConfig
     }
 
     /**
+     * @deprecated Will be removed with next major release.
+     *
      * @return string
      */
     public function getJenkinsJobsDirectory()
@@ -94,6 +100,8 @@ class SetupConfig extends AbstractBundleConfig
     }
 
     /**
+     * @deprecated Will be removed with next major release.
+     *
      * Returns the path to the environment configuration of cronjob functionality.
      *
      * @return string
@@ -110,6 +118,8 @@ class SetupConfig extends AbstractBundleConfig
     }
 
     /**
+     * @deprecated Will be removed with next major release.
+     *
      * Returns the path to the cronjobs definition, their config and schedule.
      *
      * @return string
@@ -126,6 +136,8 @@ class SetupConfig extends AbstractBundleConfig
     }
 
     /**
+     * @deprecated Will be removed with next major release.
+     *
      * @return bool
      */
     public function isJenkinsCsrfProtectionEnabled(): bool
