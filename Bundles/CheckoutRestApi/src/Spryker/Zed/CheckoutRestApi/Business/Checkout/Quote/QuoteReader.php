@@ -39,8 +39,7 @@ class QuoteReader implements QuoteReaderInterface
             return null;
         }
 
-        $quoteTransfer = (new QuoteTransfer())
-            ->setUuid($restCheckoutRequestAttributesTransfer->getIdCart());
+        $quoteTransfer = $this->createQuoteTransfer($restCheckoutRequestAttributesTransfer);
 
         $quoteResponseTransfer = $this->cartsRestApiFacade->findQuoteByUuid($quoteTransfer);
 
@@ -58,6 +57,23 @@ class QuoteReader implements QuoteReaderInterface
             $customerTransfer = (new CustomerTransfer())->setCustomerReference($customerReference);
             $quoteTransfer->setCustomer($customerTransfer);
         }
+
+        return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function createQuoteTransfer(
+        RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
+    ): QuoteTransfer {
+        $customerTransfer = (new CustomerTransfer())->fromArray($restCheckoutRequestAttributesTransfer->getCustomer()->toArray(), true);
+
+        $quoteTransfer = (new QuoteTransfer())
+            ->setUuid($restCheckoutRequestAttributesTransfer->getIdCart())
+            ->setCustomer($customerTransfer);
 
         return $quoteTransfer;
     }
