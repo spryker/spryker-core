@@ -10,8 +10,6 @@ namespace Spryker\Zed\Propel\Communication;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\Propel\Communication\Command\Builder\PropelCommandBuilder;
-use Spryker\Zed\Propel\Communication\Command\Builder\PropelCommandBuilderInterface;
 use Spryker\Zed\Propel\Communication\Command\Config\PropelCommandConfigurator;
 use Spryker\Zed\Propel\Communication\Command\Config\PropelCommandConfiguratorInterface;
 use Spryker\Zed\Propel\Communication\Command\Input\PropelCommandInputBuilder;
@@ -77,22 +75,12 @@ class PropelCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\Propel\Communication\Command\Builder\PropelCommandBuilderInterface
-     */
-    public function createPropelCommandBuilder(): PropelCommandBuilderInterface
-    {
-        return new PropelCommandBuilder(
-            $this->createPropelCommandConfigurator()
-        );
-    }
-
-    /**
      * @return \Spryker\Zed\Propel\Communication\Command\Config\PropelCommandConfiguratorInterface
      */
     public function createPropelCommandConfigurator(): PropelCommandConfiguratorInterface
     {
         return new PropelCommandConfigurator(
-            $this->getConfig()->getPropelConfig()
+            $this->getConfig()
         );
     }
 
@@ -109,7 +97,11 @@ class PropelCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createMigrationDiffCommand(): Command
     {
-        return new MigrationDiffCommand();
+        $command = new MigrationDiffCommand();
+
+        $this->createPropelCommandConfigurator()->configurePropelCommand($command);
+
+        return $command;
     }
 
     /**
@@ -117,7 +109,11 @@ class PropelCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createMigrationMigrateCommand(): Command
     {
-        return new MigrationMigrateCommand();
+        $command = new MigrationMigrateCommand();
+
+        $this->createPropelCommandConfigurator()->configurePropelCommand($command);
+
+        return $command;
     }
 
     /**
@@ -125,7 +121,11 @@ class PropelCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createMigrationStatusCommand(): Command
     {
-        return new MigrationStatusCommand();
+        $command = new MigrationStatusCommand();
+
+        $this->createPropelCommandConfigurator()->configurePropelCommand($command);
+
+        return $command;
     }
 
     /**
@@ -133,7 +133,11 @@ class PropelCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createModelBuildCommand(): Command
     {
-        return new ModelBuildCommand();
+        $command = new ModelBuildCommand();
+
+        $this->createPropelCommandConfigurator()->configurePropelCommand($command);
+
+        return $command;
     }
 
     /**
@@ -141,7 +145,11 @@ class PropelCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createSqlBuildCommand(): Command
     {
-        return new SqlBuildCommand();
+        $command = new SqlBuildCommand();
+
+        $this->createPropelCommandConfigurator()->configurePropelCommand($command);
+
+        return $command;
     }
 
     /**
@@ -149,6 +157,10 @@ class PropelCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createSqlInsertCommand(): Command
     {
-        return new SqlInsertCommand();
+        $command = new SqlInsertCommand();
+
+        $this->createPropelCommandConfigurator()->configurePropelCommand($command);
+
+        return $command;
     }
 }

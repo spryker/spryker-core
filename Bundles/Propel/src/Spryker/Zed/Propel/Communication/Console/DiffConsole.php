@@ -43,11 +43,7 @@ class DiffConsole extends Console
     {
         $this->info($this->getDescription());
 
-        $command = $this->getFactory()
-            ->createPropelCommandBuilder()
-            ->buildCommand(
-                $this->getFactory()->createMigrationDiffCommand()
-            );
+        $command = $this->getFactory()->createMigrationDiffCommand();
 
         return $this->getFactory()->createPropelCommandRunner()->runCommand(
             $command,

@@ -41,11 +41,7 @@ class MigrateConsole extends Console
     {
         $this->info($this->getDescription());
 
-        $command = $this->getFactory()
-            ->createPropelCommandBuilder()
-            ->buildCommand(
-                $this->getFactory()->createMigrationMigrateCommand()
-            );
+        $command = $this->getFactory()->createMigrationMigrateCommand();
 
         return $this->getFactory()->createPropelCommandRunner()->runCommand(
             $command,

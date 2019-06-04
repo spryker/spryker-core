@@ -41,11 +41,7 @@ class BuildSqlConsole extends Console
     {
         $this->info($this->getDescription());
 
-        $command = $this->getFactory()
-            ->createPropelCommandBuilder()
-            ->buildCommand(
-                $this->getFactory()->createSqlBuildCommand()
-            );
+        $command = $this->getFactory()->createSqlBuildCommand();
 
         return $this->getFactory()->createPropelCommandRunner()->runCommand(
             $command,

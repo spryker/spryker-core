@@ -42,11 +42,7 @@ class MigrationCheckConsole extends Console
     {
         $this->info($this->getDescription());
 
-        $command = $this->getFactory()
-            ->createPropelCommandBuilder()
-            ->buildCommand(
-                $this->getFactory()->createMigrationStatusCommand()
-            );
+        $command = $this->getFactory()->createMigrationStatusCommand();
 
         return $this->getFactory()->createPropelCommandRunner()->runCommand(
             $command,

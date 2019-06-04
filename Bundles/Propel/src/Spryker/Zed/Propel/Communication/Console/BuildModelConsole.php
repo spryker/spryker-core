@@ -41,11 +41,7 @@ class BuildModelConsole extends Console
     {
         $this->info($this->getDescription());
 
-        $command = $this->getFactory()
-            ->createPropelCommandBuilder()
-            ->buildCommand(
-                $this->getFactory()->createModelBuildCommand()
-            );
+        $command = $this->getFactory()->createModelBuildCommand();
 
         return $this->getFactory()->createPropelCommandRunner()->runCommand(
             $command,

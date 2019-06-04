@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Propel\Communication\Console;
 
 use Spryker\Zed\Kernel\Communication\Console\Console;
-use Spryker\Zed\PropelOrm\Communication\Generator\Command\SqlInsertCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -42,24 +41,12 @@ class InsertSqlConsole extends Console
     {
         $this->info($this->getDescription());
 
-        $command = $this->getFactory()
-            ->createPropelCommandBuilder()
-            ->buildCommand(
-                $this->getFactory()->createSqlInsertCommand()
-            );
+        $command = $this->getFactory()->createSqlInsertCommand();
 
         return $this->getFactory()->createPropelCommandRunner()->runCommand(
             $command,
             $this->getDefinition(),
             $output
         );
-    }
-
-    /**
-     * @return string
-     */
-    public function getCommandClassName(): string
-    {
-        return SqlInsertCommand::class;
     }
 }
