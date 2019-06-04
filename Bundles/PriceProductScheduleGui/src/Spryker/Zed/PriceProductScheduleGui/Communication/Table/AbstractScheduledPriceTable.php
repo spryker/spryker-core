@@ -148,13 +148,17 @@ abstract class AbstractScheduledPriceTable extends AbstractTable
     }
 
     /**
-     * @param int $amount
+     * @param int|null $amount
      * @param \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductSchedule $priceProductScheduleEntity
      *
-     * @return string
+     * @return string|null
      */
-    protected function formatMoney(int $amount, SpyPriceProductSchedule $priceProductScheduleEntity): string
+    protected function formatMoney(?int $amount, SpyPriceProductSchedule $priceProductScheduleEntity): ?string
     {
+        if ($amount === null) {
+            return null;
+        }
+
         return $this->rowFormatter->formatMoney($amount, $priceProductScheduleEntity);
     }
 
