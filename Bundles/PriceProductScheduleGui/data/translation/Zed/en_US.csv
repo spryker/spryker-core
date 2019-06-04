@@ -25,3 +25,4 @@
 "If you want to retry your import with corrected data, use ""Import your csv file"" button.","If you want to retry your import with corrected data, use ""Import your csv file"" button."
 "Your file does not contain any errors.","Your file does not contain any errors."
 "No prices have been processed. You may have only errors inside your file or no prices were defined inside.","No prices have been processed. You may have only errors inside your file or no prices were defined inside."
+"Import will can take some time","Import will can take some time"
