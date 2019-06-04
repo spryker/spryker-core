@@ -44,6 +44,8 @@ interface PropelFacadeInterface
      *
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @return void
      */
     public function convertConfig();
