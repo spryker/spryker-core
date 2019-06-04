@@ -87,8 +87,7 @@
 
                                 {% if shipmentNumberList[key] is not defined %}
                                     {% set shipmentNumber = shipmentNumber + 1 %}
-                                    {% set value = shipmentNumber %}
-                                    {% set data = {(key):value} %}
+                                    {% set data = {(key):shipmentNumber} %}
                                     {% set shipmentNumberList = shipmentNumberList|merge(data) %}
                                 {% endif %}
 
