@@ -22,6 +22,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
  */
 class CommentEntityManager extends AbstractEntityManager implements CommentEntityManagerInterface
 {
+    protected const COLUMN_IS_DELETED = 'IsDeleted';
+
     /**
      * @param \Generated\Shared\Transfer\CommentThreadTransfer $commentThreadTransfer
      *
@@ -92,7 +94,7 @@ class CommentEntityManager extends AbstractEntityManager implements CommentEntit
         $this->getFactory()
             ->getCommentPropelQuery()
             ->filterByUuid($commentTransfer->getUuid())
-            ->update(['IsDeleted' => true]);
+            ->update([static::COLUMN_IS_DELETED => true]);
     }
 
     /**
