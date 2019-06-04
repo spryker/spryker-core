@@ -25,7 +25,7 @@ interface EntityTagClientInterface
     /**
      * Specification:
      * - Converts $resourceAttributes array to string.
-     * - Generate hash for $resourceAttributes.
+     * - Generates hash for $resourceAttributes.
      * - Writes to key-value storage.
      *
      * @api

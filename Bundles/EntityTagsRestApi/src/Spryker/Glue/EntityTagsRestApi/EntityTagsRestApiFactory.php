@@ -1,0 +1,101 @@
+<?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace Spryker\Glue\EntityTagsRestApi;
+
+use Spryker\Glue\EntityTagsRestApi\Dependency\Client\EntityTagsRestApiToEntityTagClientInterface;
+use Spryker\Glue\EntityTagsRestApi\Processor\EntityTag\EntityTagRequestValidator;
+use Spryker\Glue\EntityTagsRestApi\Processor\EntityTag\EntityTagRequestValidatorInterface;
+use Spryker\Glue\EntityTagsRestApi\Processor\EntityTag\EntityTagResponseHeaderFormatter;
+use Spryker\Glue\EntityTagsRestApi\Processor\EntityTag\EntityTagResponseHeaderFormatterInterface;
+use Spryker\Glue\EntityTagsRestApi\Processor\EntityTagChecker;
+use Spryker\Glue\EntityTagsRestApi\Processor\EntityTagCheckerInterface;
+use Spryker\Glue\EntityTagsRestApi\Processor\EntityTagResolver;
+use Spryker\Glue\EntityTagsRestApi\Processor\EntityTagResolverInterface;
+use Spryker\Glue\EntityTagsRestApi\Processor\EntityTagWriter;
+use Spryker\Glue\EntityTagsRestApi\Processor\EntityTagWriterInterface;
+use Spryker\Glue\EntityTagsRestApi\Processor\RestResponseBuilder\EntityTagRestResponseBuilder;
+use Spryker\Glue\EntityTagsRestApi\Processor\RestResponseBuilder\EntityTagRestResponseBuilderInterface;
+use Spryker\Glue\Kernel\AbstractFactory;
+
+/**
+ * @method \Spryker\Glue\EntityTagsRestApi\EntityTagsRestApiConfig getConfig()
+ */
+class EntityTagsRestApiFactory extends AbstractFactory
+{
+    /**
+     * @return \Spryker\Glue\EntityTagsRestApi\Processor\EntityTagCheckerInterface
+     */
+    public function createEntityTagChecker(): EntityTagCheckerInterface
+    {
+        return new EntityTagChecker(
+            $this->getConfig()
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\EntityTagsRestApi\Processor\EntityTagResolverInterface
+     */
+    public function createEntityTagResolver(): EntityTagResolverInterface
+    {
+        return new EntityTagResolver(
+            $this->createEntityTagChecker(),
+            $this->getEntityTagClient(),
+            $this->createEntityTagWriter()
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\EntityTagsRestApi\Processor\EntityTagWriterInterface
+     */
+    public function createEntityTagWriter(): EntityTagWriterInterface
+    {
+        return new EntityTagWriter(
+            $this->createEntityTagChecker(),
+            $this->getEntityTagClient()
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\EntityTagsRestApi\Processor\EntityTag\EntityTagResponseHeaderFormatterInterface
+     */
+    public function createEntityTagResponseHeaderFormatter(): EntityTagResponseHeaderFormatterInterface
+    {
+        return new EntityTagResponseHeaderFormatter(
+            $this->createEntityTagResolver(),
+            $this->createEntityTagWriter()
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\EntityTagsRestApi\Processor\EntityTag\EntityTagRequestValidatorInterface
+     */
+    public function createEntityTagRequestValidator(): EntityTagRequestValidatorInterface
+    {
+        return new EntityTagRequestValidator(
+            $this->createEntityTagChecker(),
+            $this->getEntityTagClient(),
+            $this->createEntityTagRestResponseBuilder()
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\EntityTagsRestApi\Dependency\Client\EntityTagsRestApiToEntityTagClientInterface
+     */
+    public function getEntityTagClient(): EntityTagsRestApiToEntityTagClientInterface
+    {
+        return $this->getProvidedDependency(EntityTagsRestApiDependencyProvider::CLIENT_ENTITY_TAG);
+    }
+
+    /**
+     * @return \Spryker\Glue\EntityTagsRestApi\Processor\RestResponseBuilder\EntityTagRestResponseBuilderInterface
+     */
+    public function createEntityTagRestResponseBuilder(): EntityTagRestResponseBuilderInterface
+    {
+        return new EntityTagRestResponseBuilder();
+    }
+}

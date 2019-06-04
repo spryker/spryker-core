@@ -16,6 +16,7 @@ use Spryker\Client\Kernel\Container;
 class EntityTagDependencyProvider extends AbstractDependencyProvider
 {
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';
+
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
     public const SERVICE_UTIL_TEXT = 'SERVICE_UTIL_TEXT';
 
