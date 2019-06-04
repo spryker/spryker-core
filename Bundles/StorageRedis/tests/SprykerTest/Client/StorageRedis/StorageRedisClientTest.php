@@ -150,7 +150,7 @@ class StorageRedisClientTest extends Unit
 
         $this->assertEquals(static::DUMMY_VALUE, $this->storageRedisClient->get(static::DUMMY_KEY));
 
-        sleep(1);
+        sleep(2);
 
         $this->assertEmpty($this->storageRedisClient->get(static::DUMMY_KEY));
     }
