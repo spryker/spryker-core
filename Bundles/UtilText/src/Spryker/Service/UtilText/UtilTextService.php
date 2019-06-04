@@ -50,7 +50,7 @@ class UtilTextService extends AbstractService implements UtilTextServiceInterfac
 
     /**
      * Specification:
-     * - Generates hash from value by specified algorithm
+     * - Generates hash from value by specified algorithm.
      *
      * @api
      *
