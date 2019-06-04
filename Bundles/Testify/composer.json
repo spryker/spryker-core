@@ -18,9 +18,9 @@
     "spryker/silex": "^2.0.0"
   },
   "require-dev": {
+    "site5/phantoman": "^2.0.1",
     "spryker/symfony": "^3.0.0",
-    "spryker/twig": "^3.0.0",
-    "site5/phantoman": "^2.0.1"
+    "spryker/twig": "^3.0.0"
   },
   "autoload": {
     "psr-4": {
