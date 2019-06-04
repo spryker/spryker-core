@@ -50,7 +50,6 @@ class PropelCommandRunner implements PropelCommandRunnerInterface
         InputDefinition $inputDefinition,
         OutputInterface $output
     ): int {
-
         if ($command instanceof ConfigurablePropelCommandInterface) {
             $this->propelCommandConfigurator->configurePropelCommand($command);
         }
