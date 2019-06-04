@@ -10,8 +10,6 @@ namespace SprykerTest\Zed\Propel\Communication\Command\Builder;
 use Codeception\Test\Unit;
 use Spryker\Zed\Propel\Communication\Command\Builder\PropelCommandBuilder;
 use Spryker\Zed\Propel\Communication\Command\Config\PropelCommandConfiguratorInterface;
-use Spryker\Zed\PropelOrm\Communication\Generator\Command\ModelBuildCommand;
-use Spryker\Zed\PropelOrm\Communication\Generator\Command\SqlBuildCommand;
 
 /**
  * Auto-generated group annotations
@@ -44,34 +42,10 @@ class PropelCommandBuilderTest extends Unit
     }
 
     /**
-     * @dataProvider propelCommandClassNameDataProvider
-     *
-     * @param string $propelCommandClassName
-     *
-     * @return void
-     */
-    public function testCreateCommand(string $propelCommandClassName): void
-    {
-        $command = $this->propelCommandBuilder->createCommand($propelCommandClassName);
-        $this->assertInstanceOf($propelCommandClassName, $command);
-    }
-
-    /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Propel\Communication\Command\Config\PropelCommandConfiguratorInterface
      */
     protected function getPropelCommandConfiguratorMock()
     {
         return $this->getMockBuilder(PropelCommandConfiguratorInterface::class)->getMock();
-    }
-
-    /**
-     * @return array
-     */
-    public function propelCommandClassNameDataProvider(): array
-    {
-        return [
-            [ModelBuildCommand::class],
-            [SqlBuildCommand::class],
-        ];
     }
 }
