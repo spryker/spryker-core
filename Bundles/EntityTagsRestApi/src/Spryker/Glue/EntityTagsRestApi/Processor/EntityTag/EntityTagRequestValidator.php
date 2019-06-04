@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\RestErrorCollectionTransfer;
 use Spryker\Glue\EntityTagsRestApi\Dependency\Client\EntityTagsRestApiToEntityTagClientInterface;
 use Spryker\Glue\EntityTagsRestApi\Processor\EntityTagCheckerInterface;
 use Spryker\Glue\EntityTagsRestApi\Processor\RestResponseBuilder\EntityTagRestResponseBuilderInterface;
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -54,11 +55,8 @@ class EntityTagRequestValidator implements EntityTagRequestValidatorInterface
     public function validate(Request $httpRequest, RestRequestInterface $restRequest): ?RestErrorCollectionTransfer
     {
         $restErrorCollectionTransfer = new RestErrorCollectionTransfer();
-        if (!$httpRequest->isMethod(Request::METHOD_PATCH)) {
-            return null;
-        }
 
-        if (!$this->entityTagChecker->isEntityTagRequired($restRequest->getResource())) {
+        if (!$this->checkPrecondition($httpRequest->getMethod(), $restRequest->getResource())) {
             return null;
         }
 
@@ -72,12 +70,34 @@ class EntityTagRequestValidator implements EntityTagRequestValidatorInterface
             $restRequest->getResource()->getId()
         );
 
-        if ($entityTag === null || $entityTag !== $httpRequest->headers->get(static::HEADER_IF_MATCH)) {
+        if ($this->compareEntityTags($httpRequest->headers->get(static::HEADER_IF_MATCH), $entityTag)) {
             return $restErrorCollectionTransfer->addRestError(
                 $this->entityTagRestResponseBuilder->createPreconditionFailedError()
             );
         }
 
         return null;
+    }
+
+    /**
+     * @param string $httpMethod
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $restResource
+     *
+     * @return bool
+     */
+    protected function checkPrecondition(string $httpMethod, RestResourceInterface $restResource): bool
+    {
+        return ($httpMethod === Request::METHOD_PATCH && $this->entityTagChecker->isEntityTagRequired($restResource));
+    }
+
+    /**
+     * @param string $entityTagFromRequest
+     * @param string $entityTagFromStorage
+     *
+     * @return bool
+     */
+    protected function compareEntityTags(string $entityTagFromRequest, string $entityTagFromStorage): bool
+    {
+        return ($entityTagFromStorage !== null && $entityTagFromStorage === $entityTagFromRequest);
     }
 }
