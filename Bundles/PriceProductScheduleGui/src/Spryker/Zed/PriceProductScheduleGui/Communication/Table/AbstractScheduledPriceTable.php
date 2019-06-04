@@ -224,20 +224,14 @@ abstract class AbstractScheduledPriceTable extends AbstractTable
     }
 
     /**
-     * @param mixed $moneyValue
+     * @param string $moneyValue
      *
      * @return string
      */
-    protected function normalizeMoneyValue($moneyValue): string
+    protected function normalizeMoneyValue(string $moneyValue): string
     {
-        if (!is_string($moneyValue)) {
-            $moneyValue = (string)$moneyValue;
-        }
+        $moneyValue = str_replace('.', '', $moneyValue);
 
-        if (filter_var($moneyValue, FILTER_VALIDATE_INT) !== false || mb_strlen($moneyValue) === 0) {
-            return $moneyValue;
-        }
-
-        return preg_replace(static::PRICE_NUMERIC_PATTERN, '', $moneyValue);
+        return str_replace(',', '', $moneyValue);
     }
 }
