@@ -32,13 +32,28 @@ class CommentReader implements CommentReaderInterface
      *
      * @return \Generated\Shared\Transfer\CommentThreadTransfer|null
      */
-    public function findCommentThread(CommentRequestTransfer $commentRequestTransfer): ?CommentThreadTransfer
+    public function findCommentThreadByOwner(CommentRequestTransfer $commentRequestTransfer): ?CommentThreadTransfer
     {
         $commentThreadTransfer = $this->commentRepository->findCommentThread($commentRequestTransfer);
 
         if (!$commentThreadTransfer) {
             return null;
         }
+
+        $commentTransfers = $this->commentRepository->findCommentsByCommentThread($commentThreadTransfer);
+        $commentThreadTransfer->setComments(new ArrayObject($commentTransfers));
+
+        return $commentThreadTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CommentThreadTransfer $commentThreadTransfer
+     *
+     * @return \Generated\Shared\Transfer\CommentThreadTransfer
+     */
+    public function getCommentThreadById(CommentThreadTransfer $commentThreadTransfer): CommentThreadTransfer
+    {
+        $commentThreadTransfer = $this->commentRepository->getCommentThreadById($commentThreadTransfer);
 
         $commentTransfers = $this->commentRepository->findCommentsByCommentThread($commentThreadTransfer);
         $commentThreadTransfer->setComments(new ArrayObject($commentTransfers));

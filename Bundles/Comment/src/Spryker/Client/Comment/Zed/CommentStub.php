@@ -8,8 +8,7 @@
 namespace Spryker\Client\Comment\Zed;
 
 use Generated\Shared\Transfer\CommentRequestTransfer;
-use Generated\Shared\Transfer\CommentResponseTransfer;
-use Generated\Shared\Transfer\CommentThreadTransfer;
+use Generated\Shared\Transfer\CommentThreadResponseTransfer;
 use Spryker\Client\Comment\Dependency\Client\CommentToZedRequestClientInterface;
 
 class CommentStub implements CommentStubInterface
@@ -30,80 +29,64 @@ class CommentStub implements CommentStubInterface
     /**
      * @param \Generated\Shared\Transfer\CommentRequestTransfer $commentRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\CommentThreadTransfer|null
+     * @return \Generated\Shared\Transfer\CommentThreadResponseTransfer
      */
-    public function findCommentThread(CommentRequestTransfer $commentRequestTransfer): ?CommentThreadTransfer
+    public function addComment(CommentRequestTransfer $commentRequestTransfer): CommentThreadResponseTransfer
     {
-        /** @var \Generated\Shared\Transfer\CommentThreadTransfer $commentThreadTransfer */
-        $commentThreadTransfer = $this->zedRequestClient->call(
-            '/comment/gateway/find-comment-thread',
-            $commentRequestTransfer
-        );
-
-        return $commentThreadTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CommentRequestTransfer $commentRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\CommentResponseTransfer
-     */
-    public function addComment(CommentRequestTransfer $commentRequestTransfer): CommentResponseTransfer
-    {
-        /** @var \Generated\Shared\Transfer\CommentResponseTransfer $commentResponseTransfer */
-        $commentResponseTransfer = $this->zedRequestClient->call(
+        /** @var \Generated\Shared\Transfer\CommentThreadResponseTransfer $commentThreadResponseTransfer */
+        $commentThreadResponseTransfer = $this->zedRequestClient->call(
             '/comment/gateway/add-comment',
             $commentRequestTransfer
         );
 
-        return $commentResponseTransfer;
+        return $commentThreadResponseTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\CommentRequestTransfer $commentRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\CommentResponseTransfer
+     * @return \Generated\Shared\Transfer\CommentThreadResponseTransfer
      */
-    public function updateComment(CommentRequestTransfer $commentRequestTransfer): CommentResponseTransfer
+    public function updateComment(CommentRequestTransfer $commentRequestTransfer): CommentThreadResponseTransfer
     {
-        /** @var \Generated\Shared\Transfer\CommentResponseTransfer $commentResponseTransfer */
-        $commentResponseTransfer = $this->zedRequestClient->call(
+        /** @var \Generated\Shared\Transfer\CommentThreadResponseTransfer $commentThreadResponseTransfer */
+        $commentThreadResponseTransfer = $this->zedRequestClient->call(
             '/comment/gateway/update-comment',
             $commentRequestTransfer
         );
 
-        return $commentResponseTransfer;
+        return $commentThreadResponseTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\CommentRequestTransfer $commentRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\CommentResponseTransfer
+     * @return \Generated\Shared\Transfer\CommentThreadResponseTransfer
      */
-    public function updateCommentTags(CommentRequestTransfer $commentRequestTransfer): CommentResponseTransfer
+    public function updateCommentTags(CommentRequestTransfer $commentRequestTransfer): CommentThreadResponseTransfer
     {
-        /** @var \Generated\Shared\Transfer\CommentResponseTransfer $commentResponseTransfer */
-        $commentResponseTransfer = $this->zedRequestClient->call(
+        /** @var \Generated\Shared\Transfer\CommentThreadResponseTransfer $commentThreadResponseTransfer */
+        $commentThreadResponseTransfer = $this->zedRequestClient->call(
             '/comment/gateway/update-comment-tags',
             $commentRequestTransfer
         );
 
-        return $commentResponseTransfer;
+        return $commentThreadResponseTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\CommentRequestTransfer $commentRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\CommentResponseTransfer
+     * @return \Generated\Shared\Transfer\CommentThreadResponseTransfer
      */
-    public function removeComment(CommentRequestTransfer $commentRequestTransfer): CommentResponseTransfer
+    public function removeComment(CommentRequestTransfer $commentRequestTransfer): CommentThreadResponseTransfer
     {
-        /** @var \Generated\Shared\Transfer\CommentResponseTransfer $commentResponseTransfer */
-        $commentResponseTransfer = $this->zedRequestClient->call(
+        /** @var \Generated\Shared\Transfer\CommentThreadResponseTransfer $commentThreadResponseTransfer */
+        $commentThreadResponseTransfer = $this->zedRequestClient->call(
             '/comment/gateway/remove-comment',
             $commentRequestTransfer
         );
 
-        return $commentResponseTransfer;
+        return $commentThreadResponseTransfer;
     }
 }

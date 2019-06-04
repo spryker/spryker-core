@@ -17,5 +17,12 @@ interface CommentReaderInterface
      *
      * @return \Generated\Shared\Transfer\CommentThreadTransfer|null
      */
-    public function findCommentThread(CommentRequestTransfer $commentRequestTransfer): ?CommentThreadTransfer;
+    public function findCommentThreadByOwner(CommentRequestTransfer $commentRequestTransfer): ?CommentThreadTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CommentThreadTransfer $commentThreadTransfer
+     *
+     * @return \Generated\Shared\Transfer\CommentThreadTransfer
+     */
+    public function getCommentThreadById(CommentThreadTransfer $commentThreadTransfer): CommentThreadTransfer;
 }

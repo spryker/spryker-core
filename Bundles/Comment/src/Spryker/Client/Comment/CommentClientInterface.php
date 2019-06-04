@@ -8,24 +8,10 @@
 namespace Spryker\Client\Comment;
 
 use Generated\Shared\Transfer\CommentRequestTransfer;
-use Generated\Shared\Transfer\CommentResponseTransfer;
-use Generated\Shared\Transfer\CommentThreadTransfer;
+use Generated\Shared\Transfer\CommentThreadResponseTransfer;
 
 interface CommentClientInterface
 {
-    /**
-     * Specification:
-     * - Makes Zed request.
-     * - Retrieves a comment thread using the provided owner type and owner ID if found.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CommentRequestTransfer $commentRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\CommentThreadTransfer|null
-     */
-    public function findCommentThread(CommentRequestTransfer $commentRequestTransfer): ?CommentThreadTransfer;
-
     /**
      * Specification:
      * - Makes Zed request.
@@ -40,9 +26,9 @@ interface CommentClientInterface
      *
      * @param \Generated\Shared\Transfer\CommentRequestTransfer $commentRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\CommentResponseTransfer
+     * @return \Generated\Shared\Transfer\CommentThreadResponseTransfer
      */
-    public function addComment(CommentRequestTransfer $commentRequestTransfer): CommentResponseTransfer;
+    public function addComment(CommentRequestTransfer $commentRequestTransfer): CommentThreadResponseTransfer;
 
     /**
      * Specification:
@@ -56,9 +42,9 @@ interface CommentClientInterface
      *
      * @param \Generated\Shared\Transfer\CommentRequestTransfer $commentRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\CommentResponseTransfer
+     * @return \Generated\Shared\Transfer\CommentThreadResponseTransfer
      */
-    public function updateComment(CommentRequestTransfer $commentRequestTransfer): CommentResponseTransfer;
+    public function updateComment(CommentRequestTransfer $commentRequestTransfer): CommentThreadResponseTransfer;
 
     /**
      * Specification:
@@ -72,9 +58,9 @@ interface CommentClientInterface
      *
      * @param \Generated\Shared\Transfer\CommentRequestTransfer $commentRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\CommentResponseTransfer
+     * @return \Generated\Shared\Transfer\CommentThreadResponseTransfer
      */
-    public function updateCommentTags(CommentRequestTransfer $commentRequestTransfer): CommentResponseTransfer;
+    public function updateCommentTags(CommentRequestTransfer $commentRequestTransfer): CommentThreadResponseTransfer;
 
     /**
      * Specification:
@@ -87,7 +73,7 @@ interface CommentClientInterface
      *
      * @param \Generated\Shared\Transfer\CommentRequestTransfer $commentRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\CommentResponseTransfer
+     * @return \Generated\Shared\Transfer\CommentThreadResponseTransfer
      */
-    public function removeComment(CommentRequestTransfer $commentRequestTransfer): CommentResponseTransfer;
+    public function removeComment(CommentRequestTransfer $commentRequestTransfer): CommentThreadResponseTransfer;
 }

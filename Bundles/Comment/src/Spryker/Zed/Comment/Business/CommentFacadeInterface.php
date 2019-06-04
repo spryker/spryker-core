@@ -8,7 +8,7 @@
 namespace Spryker\Zed\Comment\Business;
 
 use Generated\Shared\Transfer\CommentRequestTransfer;
-use Generated\Shared\Transfer\CommentResponseTransfer;
+use Generated\Shared\Transfer\CommentThreadResponseTransfer;
 use Generated\Shared\Transfer\CommentThreadTransfer;
 
 interface CommentFacadeInterface
@@ -23,7 +23,7 @@ interface CommentFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CommentThreadTransfer|null
      */
-    public function findCommentThread(CommentRequestTransfer $commentRequestTransfer): ?CommentThreadTransfer;
+    public function findCommentThreadByOwner(CommentRequestTransfer $commentRequestTransfer): ?CommentThreadTransfer;
 
     /**
      * Specification:
@@ -32,57 +32,61 @@ interface CommentFacadeInterface
      * - Generates comment thread UUID when it is missing.
      * - Generates missing tags in Persistence.
      * - Persists provided comment for the comment thread.
+     * - Returns with the up to date comment thread.
      * - Returns with error message(s) in case of error.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\CommentRequestTransfer $commentRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\CommentResponseTransfer
+     * @return \Generated\Shared\Transfer\CommentThreadResponseTransfer
      */
-    public function addComment(CommentRequestTransfer $commentRequestTransfer): CommentResponseTransfer;
+    public function addComment(CommentRequestTransfer $commentRequestTransfer): CommentThreadResponseTransfer;
 
     /**
      * Specification:
      * - Updates the provided comment by comment UUID in Persistence.
      * - Expects CommentTransfer with CustomerTransfer and message.
      * - Generates missing tags if Persistence.
+     * - Returns with the up to date comment thread.
      * - Returns with error message(s) in case of error.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\CommentRequestTransfer $commentRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\CommentResponseTransfer
+     * @return \Generated\Shared\Transfer\CommentThreadResponseTransfer
      */
-    public function updateComment(CommentRequestTransfer $commentRequestTransfer): CommentResponseTransfer;
+    public function updateComment(CommentRequestTransfer $commentRequestTransfer): CommentThreadResponseTransfer;
 
     /**
      * Specification:
      * - Updates the provided comment tags by comment UUID in Persistence.
      * - Expects CommentTransfer with CustomerTransfer.
      * - Generates missing tags if Persistence.
+     * - Returns with the up to date comment thread.
      * - Returns with error message(s) in case of error.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\CommentRequestTransfer $commentRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\CommentResponseTransfer
+     * @return \Generated\Shared\Transfer\CommentThreadResponseTransfer
      */
-    public function updateCommentTags(CommentRequestTransfer $commentRequestTransfer): CommentResponseTransfer;
+    public function updateCommentTags(CommentRequestTransfer $commentRequestTransfer): CommentThreadResponseTransfer;
 
     /**
      * Specification:
      * - Removes the provided comment by comment UUID in Persistence.
      * - Removes assigned tags in Persistence.
+     * - Returns with the up to date comment thread.
      * - Returns with error message(s) in case of error.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\CommentRequestTransfer $commentRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\CommentResponseTransfer
+     * @return \Generated\Shared\Transfer\CommentThreadResponseTransfer
      */
-    public function removeComment(CommentRequestTransfer $commentRequestTransfer): CommentResponseTransfer;
+    public function removeComment(CommentRequestTransfer $commentRequestTransfer): CommentThreadResponseTransfer;
 }

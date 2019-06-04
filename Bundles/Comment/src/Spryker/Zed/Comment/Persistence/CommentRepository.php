@@ -50,6 +50,25 @@ class CommentRepository extends AbstractRepository implements CommentRepositoryI
     /**
      * @param \Generated\Shared\Transfer\CommentThreadTransfer $commentThreadTransfer
      *
+     * @return \Generated\Shared\Transfer\CommentThreadTransfer
+     */
+    public function getCommentThreadById(CommentThreadTransfer $commentThreadTransfer): CommentThreadTransfer
+    {
+        $commentThreadTransfer->requireIdCommentThread();
+
+        $commentThreadEntity = $this->getFactory()
+            ->getCommentThreadPropelQuery()
+            ->filterByIdCommentThread($commentThreadTransfer->getIdCommentThread())
+            ->findOne();
+
+        return $this->getFactory()
+            ->createCommentMapper()
+            ->mapCommentThreadEntityToCommentThreadTransfer($commentThreadEntity, new CommentThreadTransfer());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CommentThreadTransfer $commentThreadTransfer
+     *
      * @return \Generated\Shared\Transfer\CommentTransfer[]
      */
     public function findCommentsByCommentThread(CommentThreadTransfer $commentThreadTransfer): array

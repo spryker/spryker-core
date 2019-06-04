@@ -27,7 +27,8 @@ class CommentBusinessFactory extends AbstractBusinessFactory
     {
         return new CommentWriter(
             $this->getEntityManager(),
-            $this->getRepository()
+            $this->getRepository(),
+            $this->createCommentReader()
         );
     }
 

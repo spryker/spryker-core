@@ -8,43 +8,35 @@
 namespace Spryker\Client\Comment\Zed;
 
 use Generated\Shared\Transfer\CommentRequestTransfer;
-use Generated\Shared\Transfer\CommentResponseTransfer;
-use Generated\Shared\Transfer\CommentThreadTransfer;
+use Generated\Shared\Transfer\CommentThreadResponseTransfer;
 
 interface CommentStubInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CommentRequestTransfer $commentRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\CommentThreadTransfer|null
+     * @return \Generated\Shared\Transfer\CommentThreadResponseTransfer
      */
-    public function findCommentThread(CommentRequestTransfer $commentRequestTransfer): ?CommentThreadTransfer;
+    public function addComment(CommentRequestTransfer $commentRequestTransfer): CommentThreadResponseTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\CommentRequestTransfer $commentRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\CommentResponseTransfer
+     * @return \Generated\Shared\Transfer\CommentThreadResponseTransfer
      */
-    public function addComment(CommentRequestTransfer $commentRequestTransfer): CommentResponseTransfer;
+    public function updateComment(CommentRequestTransfer $commentRequestTransfer): CommentThreadResponseTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\CommentRequestTransfer $commentRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\CommentResponseTransfer
+     * @return \Generated\Shared\Transfer\CommentThreadResponseTransfer
      */
-    public function updateComment(CommentRequestTransfer $commentRequestTransfer): CommentResponseTransfer;
+    public function updateCommentTags(CommentRequestTransfer $commentRequestTransfer): CommentThreadResponseTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\CommentRequestTransfer $commentRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\CommentResponseTransfer
+     * @return \Generated\Shared\Transfer\CommentThreadResponseTransfer
      */
-    public function updateCommentTags(CommentRequestTransfer $commentRequestTransfer): CommentResponseTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\CommentRequestTransfer $commentRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\CommentResponseTransfer
-     */
-    public function removeComment(CommentRequestTransfer $commentRequestTransfer): CommentResponseTransfer;
+    public function removeComment(CommentRequestTransfer $commentRequestTransfer): CommentThreadResponseTransfer;
 }

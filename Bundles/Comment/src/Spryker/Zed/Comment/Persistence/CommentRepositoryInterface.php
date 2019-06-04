@@ -23,6 +23,13 @@ interface CommentRepositoryInterface
     /**
      * @param \Generated\Shared\Transfer\CommentThreadTransfer $commentThreadTransfer
      *
+     * @return \Generated\Shared\Transfer\CommentThreadTransfer
+     */
+    public function getCommentThreadById(CommentThreadTransfer $commentThreadTransfer): CommentThreadTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CommentThreadTransfer $commentThreadTransfer
+     *
      * @return \Generated\Shared\Transfer\CommentTransfer[]
      */
     public function findCommentsByCommentThread(CommentThreadTransfer $commentThreadTransfer): array;

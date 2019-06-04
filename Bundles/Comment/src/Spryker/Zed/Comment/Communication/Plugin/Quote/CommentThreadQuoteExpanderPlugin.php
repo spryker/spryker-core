@@ -39,7 +39,7 @@ class CommentThreadQuoteExpanderPlugin extends AbstractPlugin implements QuoteEx
             ->setOwnerId($quoteTransfer->getIdQuote())
             ->setOwnerType(static::COMMENT_THREAD_OWNER_TYPE_QUOTE);
 
-        $quoteTransfer->setCommentThread($this->getFacade()->findCommentThread($commentRequestTransfer));
+        $quoteTransfer->setCommentThread($this->getFacade()->findCommentThreadByOwner($commentRequestTransfer));
 
         return $quoteTransfer;
     }

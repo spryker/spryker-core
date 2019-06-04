@@ -8,8 +8,7 @@
 namespace Spryker\Zed\Comment\Communication\Controller;
 
 use Generated\Shared\Transfer\CommentRequestTransfer;
-use Generated\Shared\Transfer\CommentResponseTransfer;
-use Generated\Shared\Transfer\CommentThreadTransfer;
+use Generated\Shared\Transfer\CommentThreadResponseTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
@@ -20,19 +19,9 @@ class GatewayController extends AbstractGatewayController
     /**
      * @param \Generated\Shared\Transfer\CommentRequestTransfer $commentRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\CommentThreadTransfer|null
+     * @return \Generated\Shared\Transfer\CommentThreadResponseTransfer
      */
-    public function findCommentThreadAction(CommentRequestTransfer $commentRequestTransfer): ?CommentThreadTransfer
-    {
-        return $this->getFacade()->findCommentThread($commentRequestTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CommentRequestTransfer $commentRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\CommentResponseTransfer
-     */
-    public function addCommentAction(CommentRequestTransfer $commentRequestTransfer): CommentResponseTransfer
+    public function addCommentAction(CommentRequestTransfer $commentRequestTransfer): CommentThreadResponseTransfer
     {
         return $this->getFacade()->addComment($commentRequestTransfer);
     }
@@ -40,9 +29,9 @@ class GatewayController extends AbstractGatewayController
     /**
      * @param \Generated\Shared\Transfer\CommentRequestTransfer $commentRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\CommentResponseTransfer
+     * @return \Generated\Shared\Transfer\CommentThreadResponseTransfer
      */
-    public function updateCommentAction(CommentRequestTransfer $commentRequestTransfer): CommentResponseTransfer
+    public function updateCommentAction(CommentRequestTransfer $commentRequestTransfer): CommentThreadResponseTransfer
     {
         return $this->getFacade()->updateComment($commentRequestTransfer);
     }
@@ -50,9 +39,9 @@ class GatewayController extends AbstractGatewayController
     /**
      * @param \Generated\Shared\Transfer\CommentRequestTransfer $commentRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\CommentResponseTransfer
+     * @return \Generated\Shared\Transfer\CommentThreadResponseTransfer
      */
-    public function updateCommentTagsAction(CommentRequestTransfer $commentRequestTransfer): CommentResponseTransfer
+    public function updateCommentTagsAction(CommentRequestTransfer $commentRequestTransfer): CommentThreadResponseTransfer
     {
         return $this->getFacade()->updateCommentTags($commentRequestTransfer);
     }
@@ -60,9 +49,9 @@ class GatewayController extends AbstractGatewayController
     /**
      * @param \Generated\Shared\Transfer\CommentRequestTransfer $commentRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\CommentResponseTransfer
+     * @return \Generated\Shared\Transfer\CommentThreadResponseTransfer
      */
-    public function removeCommentAction(CommentRequestTransfer $commentRequestTransfer): CommentResponseTransfer
+    public function removeCommentAction(CommentRequestTransfer $commentRequestTransfer): CommentThreadResponseTransfer
     {
         return $this->getFacade()->removeComment($commentRequestTransfer);
     }
