@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Setup\Business\Model;
 
 use ErrorException;
-use Spryker\Shared\Config\Environment;
 use Spryker\Zed\Setup\SetupConfig;
 
 class Cronjobs
@@ -120,26 +119,11 @@ class Cronjobs
 
         include_once $this->getJobConfigPath();
 
-        foreach ($jobs as $i => $job) {
-            if (!empty($job['command'])) {
-                $command = $job['command'];
-                $commandExpl = explode(' ', $command);
-                $requestParts = ['module' => '', 'controller' => '', 'action' => ''];
-                foreach ($commandExpl as $part) {
-                    $segments = array_keys($requestParts);
-                    foreach ($segments as $segment) {
-                        if (strpos($part, $segment . '=') !== false) {
-                            $requestParts[$segment] = str_replace('--' . $segment . '=', '', $part);
-                        }
-                    }
-                }
-
-                $jobs[$i]['request'] = '/' . $requestParts['module'] . '/' . $requestParts['controller']
-                    . '/' . $requestParts['action'];
-
-                $jobs[$i]['id'] = null;
-            }
+        if (count($jobs) === 0) {
+            return [];
         }
+
+        $jobs = $this->extendJobCommand($jobs);
 
         return $this->indexJobsByName($jobs, $roles);
     }
@@ -424,7 +408,7 @@ class Cronjobs
             return $schedule;
         }
 
-        if (Environment::isNotProduction()) {
+        if ($this->config->isSchedulerEnabled()) {
             // Non-production - don't run automatically via Jenkins
             return '';
         }
@@ -465,11 +449,10 @@ cd %s
 
         $cronjobsConfigPath = $this->config->getCronjobsConfigFilePath();
 
-        $environment = Environment::getInstance();
         $customBashCommand = '';
         $destination = APPLICATION_ROOT_DIR;
 
-        if ($environment->isNotDevelopment()) {
+        if ($this->config->isDeployVarsEnabled()) {
             $checkDeployFolderExistsBashCommand = '[ -f ' . APPLICATION_ROOT_DIR . '/deploy/vars ]';
             $sourceBashCommand = '. ' . APPLICATION_ROOT_DIR . '/deploy/vars';
 
@@ -480,7 +463,7 @@ cd %s
         return sprintf(
             $commandTemplate,
             $customBashCommand,
-            $environment->getEnvironment(),
+            $this->config->getEnvironmentName(),
             $store,
             $destination,
             $cronjobsConfigPath,
@@ -565,5 +548,36 @@ cd %s
         }
 
         return $httpHeader;
+    }
+
+    /**
+     * @param array $jobs
+     *
+     * @return array
+     */
+    protected function extendJobCommand(array $jobs): array
+    {
+        foreach ($jobs as $i => $job) {
+            if (!empty($job['command'])) {
+                $command = $job['command'];
+                $commandExpl = explode(' ', $command);
+                $requestParts = ['module' => '', 'controller' => '', 'action' => ''];
+                foreach ($commandExpl as $part) {
+                    $segments = array_keys($requestParts);
+                    foreach ($segments as $segment) {
+                        if (strpos($part, $segment . '=') !== false) {
+                            $requestParts[$segment] = str_replace('--' . $segment . '=', '', $part);
+                        }
+                    }
+                }
+
+                $jobs[$i]['request'] = '/' . $requestParts['module'] . '/' . $requestParts['controller']
+                    . '/' . $requestParts['action'];
+
+                $jobs[$i]['id'] = null;
+            }
+        }
+
+        return $jobs;
     }
 }

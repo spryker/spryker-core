@@ -59,4 +59,12 @@ class ApplicationConfig extends AbstractBundleConfig
     {
         return $this->get(ApplicationConstants::PROJECT_NAMESPACE);
     }
+
+    /**
+     * @return bool
+     */
+    public function isApplicationServiceDebugEnabled(): bool
+    {
+        return $this->get(ApplicationConstants::ENABLE_APPLICATION_SERVICE_DEBUG, APPLICATION_ENV === 'development');
+    }
 }

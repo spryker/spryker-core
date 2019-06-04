@@ -132,4 +132,20 @@ class SetupConfig extends AbstractBundleConfig
     {
         return $this->get(SetupConstants::JENKINS_CSRF_PROTECTION_ENABLED, false);
     }
+
+    /**
+     * @return bool
+     */
+    public function isSchedulerEnabled(): bool
+    {
+        return $this->get(SetupConstants::ENABLE_SCHEDULER, APPLICATION_ENV !== 'production');
+    }
+
+    /**
+     * @return bool
+     */
+    public function isDeployVarsEnabled(): bool
+    {
+        return $this->get(SetupConstants::ENABLE_DEPLOY_VARS, APPLICATION_ENV !== 'development');
+    }
 }

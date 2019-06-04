@@ -12,4 +12,5 @@ namespace Spryker\Shared\Api;
  */
 interface ApiConstants
 {
+    public const ENABLE_API_DEBUG = 'API:ENABLE_API_DEBUG';
 }

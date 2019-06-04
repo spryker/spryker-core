@@ -7,7 +7,8 @@
 
 namespace Spryker\Shared\Kernel\ClassResolver;
 
-use Spryker\Shared\Config\Environment;
+use Spryker\Shared\Config\Config;
+use Spryker\Shared\Kernel\KernelConstants;
 
 class ClassInfo
 {
@@ -50,7 +51,7 @@ class ClassInfo
 
         if ($this->isFullyQualifiedClassName($callerClass)) {
             $callerClassParts = explode('\\', ltrim($callerClass, '\\'));
-            if (Environment::isTesting()) {
+            if (Config::get(KernelConstants::ADJUST_TEST_NAMESPACE, APPLICATION_ENV === 'devtest')) {
                 $callerClassParts = $this->adjustTestNamespace($callerClassParts);
             }
         }

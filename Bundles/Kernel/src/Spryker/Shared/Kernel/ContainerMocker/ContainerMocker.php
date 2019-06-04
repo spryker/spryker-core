@@ -7,8 +7,9 @@
 
 namespace Spryker\Shared\Kernel\ContainerMocker;
 
-use Spryker\Shared\Config\Environment;
+use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\ContainerInterface;
+use Spryker\Shared\Kernel\KernelConstants;
 
 trait ContainerMocker
 {
@@ -19,7 +20,7 @@ trait ContainerMocker
      */
     protected function overwriteForTesting(ContainerInterface $container)
     {
-        if (Environment::isNotTesting()) {
+        if (!Config::get(KernelConstants::OVERWRITE_CONTAINER_FOR_TESTING, APPLICATION_ENV === 'devtest')) {
             return $container;
         }
 

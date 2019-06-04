@@ -1,4 +1,9 @@
 parameters:
+    dynamicConstantNames:
+        - APPLICATION
+        - APPLICATION_ENV
+        - APPLICATION_STORE
+
     ignoreErrors:
         - '#Call to method .+ on an unknown class .+DialogHelper.#'
         - '#Call to an undefined method .+ActiveRecordInterface::save\(\)#'

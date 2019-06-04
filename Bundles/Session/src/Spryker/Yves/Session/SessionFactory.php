@@ -91,7 +91,11 @@ class SessionFactory extends AbstractFactory
      */
     protected function createSessionHandlerFactory()
     {
-        return new SessionHandlerFactory($this->getConfig()->getSessionLifeTime(), $this->getMonitoringService());
+        return new SessionHandlerFactory(
+            $this->getConfig()->getSessionLifeTime(),
+            $this->getConfig()->getEnvironmentName(),
+            $this->getMonitoringService()
+        );
     }
 
     /**
