@@ -71,7 +71,7 @@ class ContentWriter implements ContentWriterInterface
      */
     protected function persistContentKey(ContentTransfer $contentTransfer): ContentTransfer
     {
-        if (!empty($contentTransfer->getKey())) {
+        if ($contentTransfer->getKey()) {
             return $contentTransfer;
         }
 
