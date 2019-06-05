@@ -15,8 +15,8 @@ use Spryker\Zed\TaxProductStorage\Business\TaxProductStorageUnpublisher\TaxProdu
 
 /**
  * @method \Spryker\Zed\TaxProductStorage\TaxProductStorageConfig getConfig()
- * @method \Spryker\Zed\TaxProductStorage\Persistence\TaxProductStorageRepository getRepository()
- * @method \Spryker\Zed\TaxProductStorage\Persistence\TaxProductStorageEntityManager getEntityManager()
+ * @method \Spryker\Zed\TaxProductStorage\Persistence\TaxProductStorageRepositoryInterface getRepository()
+ * @method \Spryker\Zed\TaxProductStorage\Persistence\TaxProductStorageEntityManagerInterface getEntityManager()
  */
 class TaxProductStorageBusinessFactory extends AbstractBusinessFactory
 {
