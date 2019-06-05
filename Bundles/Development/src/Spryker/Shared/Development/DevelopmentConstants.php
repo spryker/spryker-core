@@ -33,7 +33,4 @@ interface DevelopmentConstants
      * @api
      */
     public const DIRECTORY_PERMISSION = 'DEVELOPMENT:DIRECTORY_PERMISSION';
-
-    public const TYPE_TEST_ACCEPTANCE = 'acceptance';
-    public const TYPE_TEST_FUNCTIONAL = 'functional';
 }

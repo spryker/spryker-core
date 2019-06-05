@@ -563,14 +563,6 @@ class DevelopmentConfig extends AbstractBundleConfig
     /**
      * @return array
      */
-    public function getCodeceptionConfigurationFiles(): array
-    {
-        return [];
-    }
-
-    /**
-     * @return array
-     */
     public function getDefaultInclusiveTestGroups(): array
     {
         return [

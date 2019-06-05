@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Development\Communication\Console;
 
 use Spryker\Zed\Kernel\Communication\Console\Console;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -20,12 +19,16 @@ use Symfony\Component\Console\Output\OutputInterface;
 class CodeTestConsole extends Console
 {
     public const COMMAND_NAME = 'code:test';
+
     public const OPTION_MODULE = 'module';
     public const OPTION_MODULE_ALL = 'all';
     public const OPTION_INITIALIZE = 'initialize';
     public const OPTION_GROUP = 'group';
     public const OPTION_TYPE_EXCLUDE = 'exclude';
-    public const ARGUMENT_TYPE = 'type';
+
+    public const OPTION_CONFIG_PATH = 'config';
+
+    protected const CODECEPT_CONFIG_FILE_NAME = 'codeception.yml';
 
     /**
      * @return void
@@ -34,18 +37,15 @@ class CodeTestConsole extends Console
     {
         parent::configure();
 
-        $testType = $this->getTestTypeByCommandName();
         $this
-            ->setName($this->buildCommandName($testType))
+            ->setName(static::COMMAND_NAME)
             ->setHelp('<info>' . static::COMMAND_NAME . ' -h</info>')
-            ->setDescription($this->buildCommandDescription($testType));
+            ->setDescription('Run codecept tests for project or core');
 
         $this->addOption(static::OPTION_MODULE, 'm', InputOption::VALUE_OPTIONAL, 'Name of core module to run tests for (or "all")');
         $this->addOption(static::OPTION_GROUP, 'g', InputOption::VALUE_OPTIONAL, 'Groups of tests to be executed (multiple values allowed, comma separated)');
         $this->addOption(static::OPTION_TYPE_EXCLUDE, 'x', InputOption::VALUE_OPTIONAL, 'Types of tests to be skipped (e.g. Presentation; multiple values allowed, comma separated)');
         $this->addOption(static::OPTION_INITIALIZE, 'i', InputOption::VALUE_NONE, 'Initialize test suite by (re)generating required test classes');
-
-        $this->addTestTypeArgument($testType);
     }
 
     /**
@@ -71,24 +71,8 @@ class CodeTestConsole extends Console
 
         $this->getFacade()->runTest(
             $module,
-            $this->buildTestConfig($input)
+            $this->extendOptions($input)
         );
-    }
-
-    /**
-     * @return string|null
-     */
-    protected function getTestTypeByCommandName(): ?string
-    {
-        $commandName = $this->getName();
-
-        if ($commandName === static::COMMAND_NAME) {
-            return null;
-        }
-
-        $commandNameParts = explode(':', $commandName);
-
-        return array_pop($commandNameParts);
     }
 
     /**
@@ -96,59 +80,20 @@ class CodeTestConsole extends Console
      *
      * @return array
      */
-    protected function buildTestConfig(InputInterface $input): array
+    protected function extendOptions(InputInterface $input): array
     {
         $options = $input->getOptions();
-        $testType = $this->getTestTypeByCommandName();
 
-        if ($input->hasArgument(static::ARGUMENT_TYPE)) {
-            $testType = $input->getArgument(static::ARGUMENT_TYPE) ?? $testType;
-        }
-
-        if ($testType !== null) {
-            $options[static::ARGUMENT_TYPE] = $testType;
-        }
+        $options[static::OPTION_CONFIG_PATH] = $this->getCodeceptionConfigPath();
 
         return $options;
     }
 
     /**
-     * @param string|null $testType
-     *
      * @return string
      */
-    protected function buildCommandName(?string $testType): string
+    protected function getCodeceptionConfigPath(): string
     {
-        return $testType
-            ? static::COMMAND_NAME . ':' . $testType
-            : static::COMMAND_NAME;
-    }
-
-    /**
-     * @param string|null $testType
-     *
-     * @return void
-     */
-    protected function addTestTypeArgument(?string $testType): void
-    {
-        if ($testType) {
-            return;
-        }
-
-        $this->addArgument(self::ARGUMENT_TYPE, InputArgument::OPTIONAL);
-    }
-
-    /**
-     * @param string|null $testType
-     *
-     * @return string
-     */
-    protected function buildCommandDescription(?string $testType): string
-    {
-        if (!$testType) {
-            return 'Run codecept tests for project or core';
-        }
-
-        return sprintf('Run codecept %s tests for project or core', $testType);
+        return APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . static::CODECEPT_CONFIG_FILE_NAME;
     }
 }

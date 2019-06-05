@@ -12,7 +12,10 @@ use SprykerTest\Shared\Testify\Helper\SuiteFilterHelper;
 
 class CodeceptionArgumentsBuilder implements CodeceptionArgumentsBuilderInterface
 {
-    protected const ARGUMENT_TYPE = 'type';
+    /**
+     * @see \Spryker\Zed\Development\Communication\Console\CodeTestConsole::OPTION_CONFIG_PATH
+     */
+    protected const OPTION_CONFIG_PATH = 'config';
     protected const OPTION_GROUP_INCLUDE = 'group';
     protected const OPTION_GROUP_EXCLUDE = 'exclude';
     protected const OPTION_VERBOSE = 'verbose';
@@ -21,21 +24,14 @@ class CodeceptionArgumentsBuilder implements CodeceptionArgumentsBuilderInterfac
     /**
      * @var string[]
      */
-    protected $codeceptionConfigurationFiles;
-
-    /**
-     * @var string[]
-     */
     protected $defaultInclusiveTestGroups;
 
     /**
      * @param array $defaultInclusiveTestGroups
-     * @param array $codeceptionConfigurationFiles
      */
-    public function __construct(array $defaultInclusiveTestGroups, array $codeceptionConfigurationFiles)
+    public function __construct(array $defaultInclusiveTestGroups)
     {
         $this->defaultInclusiveTestGroups = $defaultInclusiveTestGroups;
-        $this->codeceptionConfigurationFiles = $codeceptionConfigurationFiles;
     }
 
     /**
@@ -64,23 +60,11 @@ class CodeceptionArgumentsBuilder implements CodeceptionArgumentsBuilderInterfac
      */
     protected function buildConfigPath(CodeceptionArguments $codeceptionArguments, array $options): CodeceptionArguments
     {
-        if (!array_key_exists(static::ARGUMENT_TYPE, $options)) {
+        if (!array_key_exists(static::OPTION_CONFIG_PATH, $options)) {
             return $codeceptionArguments;
         }
 
-        $testType = $options[static::ARGUMENT_TYPE];
-
-        if (!array_key_exists($testType, $this->codeceptionConfigurationFiles)) {
-            return $codeceptionArguments;
-        }
-
-        $filePath = $this->codeceptionConfigurationFiles[$testType];
-
-        if ($filePath[0] !== DIRECTORY_SEPARATOR) {
-            $filePath = APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . $filePath;
-        }
-
-        return $codeceptionArguments->addArgument('-c', [$filePath]);
+        return $codeceptionArguments->addArgument('-c', [$options[static::OPTION_CONFIG_PATH]]);
     }
 
     /**
