@@ -144,7 +144,7 @@ class ContentFacadeTest extends Test
     /**
      * @return void
      */
-    public function testValidateFailsOnWrongFormattedKey(): void
+    public function testValidateFailsOnIncorrectlyFormattedKey(): void
     {
         $contentTransfer = new ContentTransfer();
         $contentTransfer->setName(static::NAME);

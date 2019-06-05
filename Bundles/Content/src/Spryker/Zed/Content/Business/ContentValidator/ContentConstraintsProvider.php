@@ -59,7 +59,7 @@ class ContentConstraintsProvider implements ContentConstraintsProviderInterface
         return [
             new NotBlank(),
             new Required(),
-            new Length(['max' => 128]),
+            new Length(['max' => 255]),
             new Regex([
                'pattern' => '/^[a-z0-9\-]+$/',
             ]),
