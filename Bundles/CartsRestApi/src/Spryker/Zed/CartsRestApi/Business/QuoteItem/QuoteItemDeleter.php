@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\PersistentCartChangeTransfer;
 use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCartItemsAttributesTransfer;
 use Spryker\Shared\CartsRestApi\CartsRestApiConfig as CartsRestApiSharedConfig;
 use Spryker\Zed\CartsRestApi\Business\PermissionChecker\QuotePermissionCheckerInterface;
@@ -95,12 +96,10 @@ class QuoteItemDeleter implements QuoteItemDeleterInterface
                     ->setErrorIdentifier(CartsRestApiSharedConfig::ERROR_IDENTIFIER_UNAUTHORIZED_CART_ACTION));
         }
 
-        $persistentCartChangeTransfer = (new PersistentCartChangeTransfer())
-            ->setIdQuote($quoteResponseTransfer->getQuoteTransfer()->getIdQuote())
-            ->addItem((new ItemTransfer())
-                ->setSku($cartItemRequestTransfer->getSku())
-                ->setQuantity($cartItemRequestTransfer->getQuantity()))
-            ->setCustomer($cartItemRequestTransfer->getCustomer());
+        $persistentCartChangeTransfer = $this->createPersistentCartChangeTransfer(
+            $quoteResponseTransfer->getQuoteTransfer(),
+            $cartItemRequestTransfer
+        );
 
         $quoteResponseTransfer = $this->persistentCartFacade->remove($persistentCartChangeTransfer);
         if (!$quoteResponseTransfer->getIsSuccessful()) {
@@ -110,5 +109,23 @@ class QuoteItemDeleter implements QuoteItemDeleterInterface
         }
 
         return $quoteResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CartItemRequestTransfer $cartItemRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\PersistentCartChangeTransfer
+     */
+    protected function createPersistentCartChangeTransfer(
+        QuoteTransfer $quoteTransfer,
+        CartItemRequestTransfer $cartItemRequestTransfer
+    ): PersistentCartChangeTransfer {
+        return (new PersistentCartChangeTransfer())
+            ->setIdQuote($quoteTransfer->getIdQuote())
+            ->addItem((new ItemTransfer())
+                ->setSku($cartItemRequestTransfer->getSku())
+                ->setQuantity($cartItemRequestTransfer->getQuantity()))
+            ->setCustomer($cartItemRequestTransfer->getCustomer());
     }
 }
