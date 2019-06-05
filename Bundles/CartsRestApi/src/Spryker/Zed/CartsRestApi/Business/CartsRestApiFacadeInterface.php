@@ -20,7 +20,7 @@ interface CartsRestApiFacadeInterface
     /**
      * Specification:
      * - Finds customer quote by uuid.
-     * - uuid must be set in the QuoteTransfer taken as parameter.
+     * - uuid and customerReference must be set in the QuoteTransfer taken as parameter.
      * - Checks user permission to read shared cart if QuoteTransfer.Customer.CompanyUserTransfer.idCompanyUser is set.
      *
      * @api

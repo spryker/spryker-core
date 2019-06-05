@@ -78,6 +78,21 @@ class CartsRestApiFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testCartsFacadeWillNotFindQuoteByUuidWithoutCustomerReference(): void
+    {
+        /** @var \Spryker\Zed\CartsRestApi\Business\CartsRestApiFacade $cartsRestApiFacade */
+        $cartsRestApiFacade = $this->tester->getFacade();
+        $cartsRestApiFacade->setFactory($this->getMockCartsRestApiBusinessFactory());
+
+        $quoteTransfer = $this->tester->prepareQuoteTransferWithoutCustomerReference();
+
+        $this->expectException(RequiredTransferPropertyException::class);
+        $cartsRestApiFacade->findQuoteByUuid($quoteTransfer);
+    }
+
+    /**
+     * @return void
+     */
     public function testGetQuoteCollectionWillReturnCollectionOfQuotes(): void
     {
         /** @var \Spryker\Zed\CartsRestApi\Business\CartsRestApiFacade $cartsRestApiFacade */
