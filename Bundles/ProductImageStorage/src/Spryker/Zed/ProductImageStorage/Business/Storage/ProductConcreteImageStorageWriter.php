@@ -256,39 +256,47 @@ class ProductConcreteImageStorageWriter implements ProductConcreteImageStorageWr
     {
         $productLocalizedAttributes = $this->repository->getProductLocalizedAttributesWithProductByIdProductIn($productIds);
         $productFks = array_column($productLocalizedAttributes, SpyProductLocalizedAttributesTableMap::COL_FK_PRODUCT);
-        $productImageSets = $this->repository->getProductImageSetsByFkProductIn($productFks);
-        $productImageSetsIndexedByFkProduct = $this->indexImageSetsByProduct($productImageSets);
+        $productImageSetsBulk = $this->indexImageSetsByProductAndLocale(
+            $this->repository->getProductImageSetsByFkProductIn($productFks)
+        );
+        $productDefaultImageSetsBulk = $this->indexImageSetsByProductId(
+            $this->repository->getDefaultConcreteProductImageSetsByFkProductIn($productFks)
+        );
 
         $imageSets = [];
         foreach ($productLocalizedAttributes as $productLocalizedAttribute) {
             $idProduct = $productLocalizedAttribute[SpyProductLocalizedAttributesTableMap::COL_FK_PRODUCT];
             $colIdProductAttributes = $productLocalizedAttribute[SpyProductLocalizedAttributesTableMap::COL_ID_PRODUCT_ATTRIBUTES];
+            $colFkLocale = $productLocalizedAttribute[SpyProductLocalizedAttributesTableMap::COL_FK_LOCALE];
 
-            $imageSets[$idProduct][$colIdProductAttributes] = $this->getImageSetForLocalizedAttribute(
-                $productLocalizedAttribute,
-                $productImageSetsIndexedByFkProduct
-            );
+            if (isset($productImageSetsBulk[$idProduct][$colFkLocale])) {
+                $imageSets[$idProduct][$colIdProductAttributes] = $this->getImageSet(
+                    $productImageSetsBulk[$idProduct][$colFkLocale]
+                );
+
+                continue;
+            }
+
+            if (isset($productDefaultImageSetsBulk[$idProduct])) {
+                $imageSets[$idProduct][$colIdProductAttributes] = $this->getImageSet(
+                    $productDefaultImageSetsBulk[$idProduct]
+                );
+            }
         }
 
         return $imageSets;
     }
 
     /**
-     * @param array $productLocalizedAttribute
-     * @param array $productImageSetsIndexedByFkProduct
+     * @param array $productImageSets
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\SpyProductImageSetEntityTransfer[]
      */
-    protected function getImageSetForLocalizedAttribute(
-        array $productLocalizedAttribute,
-        array &$productImageSetsIndexedByFkProduct
-    ): ArrayObject {
+    protected function getImageSet(array $productImageSets): ArrayObject
+    {
         $imageSet = new ArrayObject();
 
-        $colFkProduct = $productLocalizedAttribute[SpyProductLocalizedAttributesTableMap::COL_FK_PRODUCT];
-        $colFkLocale = $productLocalizedAttribute[SpyProductLocalizedAttributesTableMap::COL_FK_LOCALE];
-
-        foreach ($productImageSetsIndexedByFkProduct[$colFkProduct][$colFkLocale] ?? [] as $item) {
+        foreach ($productImageSets as $item) {
             $imageSet->append($item);
         }
 
@@ -303,13 +311,31 @@ class ProductConcreteImageStorageWriter implements ProductConcreteImageStorageWr
      *
      * @return array
      */
-    protected function indexImageSetsByProduct(array $productImageSets): array
+    protected function indexImageSetsByProductAndLocale(array $productImageSets): array
     {
         $productImageSetsIndexedByFkProduct = [];
 
         foreach ($productImageSets as $productImageSet) {
             if ($productImageSet->getFkProduct()) {
                 $productImageSetsIndexedByFkProduct[$productImageSet->getFkProduct()][$productImageSet->getFkLocale()][] = $productImageSet;
+            }
+        }
+
+        return $productImageSetsIndexedByFkProduct;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SpyProductImageSetEntityTransfer[] $productImageSets
+     *
+     * @return array
+     */
+    protected function indexImageSetsByProductId(array $productImageSets): array
+    {
+        $productImageSetsIndexedByFkProduct = [];
+
+        foreach ($productImageSets as $productImageSet) {
+            if ($productImageSet->getFkProduct()) {
+                $productImageSetsIndexedByFkProduct[$productImageSet->getFkProduct()][] = $productImageSet;
             }
         }
 
