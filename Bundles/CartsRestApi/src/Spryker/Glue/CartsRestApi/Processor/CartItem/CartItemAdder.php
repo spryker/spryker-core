@@ -76,15 +76,7 @@ class CartItemAdder implements CartItemAdderInterface
         RestRequestInterface $restRequest,
         RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
     ): RestResponseInterface {
-        $customerTransfer = (new CustomerTransfer())
-            ->setIdCustomer($restRequest->getRestUser()->getSurrogateIdentifier())
-            ->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier());
-        $customerTransfer = $this->executeCustomerExpanderPlugins($customerTransfer, $restRequest);
-        $cartItemRequestTransfer = (new CartItemRequestTransfer())
-            ->setQuoteUuid($this->findCartIdentifier($restRequest))
-            ->setQuantity($restCartItemsAttributesTransfer->getQuantity())
-            ->setSku($restCartItemsAttributesTransfer->getSku())
-            ->setCustomer($customerTransfer);
+        $cartItemRequestTransfer = $this->createCartItemRequestTransfer($restRequest, $restCartItemsAttributesTransfer);
 
         $quoteResponseTransfer = $this->cartsRestApiClient->addToCart($cartItemRequestTransfer);
         if (!$quoteResponseTransfer->getIsSuccessful()) {
@@ -127,5 +119,27 @@ class CartItemAdder implements CartItemAdderInterface
         }
 
         return $customerTransfer;
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartItemRequestTransfer
+     */
+    protected function createCartItemRequestTransfer(
+        RestRequestInterface $restRequest,
+        RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
+    ): CartItemRequestTransfer {
+        $customerTransfer = (new CustomerTransfer())
+            ->setIdCustomer($restRequest->getRestUser()->getSurrogateIdentifier())
+            ->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier());
+        $customerTransfer = $this->executeCustomerExpanderPlugins($customerTransfer, $restRequest);
+
+        return (new CartItemRequestTransfer())
+            ->setQuoteUuid($this->findCartIdentifier($restRequest))
+            ->setQuantity($restCartItemsAttributesTransfer->getQuantity())
+            ->setSku($restCartItemsAttributesTransfer->getSku())
+            ->setCustomer($customerTransfer);
     }
 }

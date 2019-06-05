@@ -24,7 +24,6 @@ interface QuoteItemUpdaterInterface
 
     /**
      * @param \Generated\Shared\Transfer\CartItemRequestTransfer $cartItemRequestTransfer
-     *     *
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */

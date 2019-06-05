@@ -64,18 +64,7 @@ class CartItemDeleter implements CartItemDeleterInterface
      */
     public function deleteItem(RestRequestInterface $restRequest): RestResponseInterface
     {
-        $uuidQuote = $this->findCartIdentifier($restRequest);
-        $itemIdentifier = $restRequest->getResource()->getId();
-        $customerTransfer = (new CustomerTransfer())
-            ->setIdCustomer($restRequest->getRestUser()->getSurrogateIdentifier())
-            ->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier());
-
-        $customerTransfer = $this->executeCustomerExpanderPlugins($customerTransfer, $restRequest);
-
-        $cartItemRequestTransfer = (new CartItemRequestTransfer())
-            ->setQuoteUuid($uuidQuote)
-            ->setSku($itemIdentifier)
-            ->setCustomer($customerTransfer);
+        $cartItemRequestTransfer = $this->createCartItemRequestTransfer($restRequest);
 
         $quoteResponseTransfer = $this->cartsRestApiClient->removeItem($cartItemRequestTransfer);
         if (!$quoteResponseTransfer->getIsSuccessful()) {
@@ -131,5 +120,25 @@ class CartItemDeleter implements CartItemDeleterInterface
         }
 
         return $customerTransfer;
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Generated\Shared\Transfer\CartItemRequestTransfer
+     */
+    protected function createCartItemRequestTransfer(RestRequestInterface $restRequest): CartItemRequestTransfer
+    {
+        $uuidQuote = $this->findCartIdentifier($restRequest);
+        $itemIdentifier = $restRequest->getResource()->getId();
+        $customerTransfer = (new CustomerTransfer())
+            ->setIdCustomer($restRequest->getRestUser()->getSurrogateIdentifier())
+            ->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier());
+        $customerTransfer = $this->executeCustomerExpanderPlugins($customerTransfer, $restRequest);
+
+        return (new CartItemRequestTransfer())
+            ->setQuoteUuid($uuidQuote)
+            ->setSku($itemIdentifier)
+            ->setCustomer($customerTransfer);
     }
 }

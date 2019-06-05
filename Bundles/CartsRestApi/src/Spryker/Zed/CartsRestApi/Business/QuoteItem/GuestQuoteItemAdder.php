@@ -80,6 +80,7 @@ class GuestQuoteItemAdder implements GuestQuoteItemAdderInterface
     {
         $restCartItemsAttributesTransfer
             ->requireSku()
+            ->requireQuantity()
             ->requireCustomerReference();
 
         $cartItemRequestTransfer = (new CartItemRequestTransfer())
@@ -97,6 +98,7 @@ class GuestQuoteItemAdder implements GuestQuoteItemAdderInterface
     {
         $cartItemRequestTransfer
             ->requireSku()
+            ->requireQuantity()
             ->requireCustomer();
 
         $cartItemRequestTransfer->getCustomer()->requireCustomerReference();
@@ -142,6 +144,8 @@ class GuestQuoteItemAdder implements GuestQuoteItemAdderInterface
      */
     protected function createGuestQuote(CartItemRequestTransfer $cartItemRequestTransfer): QuoteResponseTransfer
     {
+        $cartItemRequestTransfer->requireQuoteUuid();
+
         $quoteTransfer = $this->createQuoteTransfer();
         $quoteTransfer
             ->setCustomer((new CustomerTransfer())

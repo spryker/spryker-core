@@ -193,7 +193,7 @@ interface CartsRestApiFacadeInterface
     /**
      * Specification:
      * - Adds an item to the guest cart.
-     * - sku and customerReference must be set in the RestCartItemsAttributesTransfer.
+     * - sku, quantity and customerReference must be set in the RestCartItemsAttributesTransfer.
      *
      * @api
      *
@@ -209,7 +209,7 @@ interface CartsRestApiFacadeInterface
 
   * Specification:
   * - Adds an item to the guest cart.
-  * - sku and CustomerTransfer.customerReference must be set in the CartItemRequestTransfer.
+  * - sku, quantity and CustomerTransfer.customerReference must be set in the CartItemRequestTransfer.
   *
   * @api
   *

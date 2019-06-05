@@ -140,7 +140,7 @@ interface CartsRestApiClientInterface
     /**
      * Specification:
      * - Removes item from cart.
-     * - quoteUuid, customerReference, sku and quantity must be set in the RestCartItemsAttributesTransfer.
+     * - quoteUuid, customerReference, sku must be set in the RestCartItemsAttributesTransfer.
      *
      * @api
      *
@@ -155,7 +155,7 @@ interface CartsRestApiClientInterface
     /**
      * Specification:
      * - Removes item from cart.
-     * - quoteUuid, CustomerTransfer.customerReference, sku and quantity must be set in the CartItemRequestTransfer.
+     * - quoteUuid, CustomerTransfer.customerReference, sku must be set in the CartItemRequestTransfer.
      *
      * @api
      *
@@ -168,7 +168,7 @@ interface CartsRestApiClientInterface
     /**
      * Specification:
      * - Adds an item to the cart of guest user.
-     * - sku and customerReference must be set in the RestCartItemsAttributesTransfer.
+     * - sku, quantity and customerReference must be set in the RestCartItemsAttributesTransfer.
      *
      * @api
      *
@@ -183,7 +183,7 @@ interface CartsRestApiClientInterface
     /**
      * Specification:
      * - Adds an item to the cart of guest user.
-     * - sku and CustomerTransfer.customerReference must be set in the CartItemRequestTransfer.
+     * - sku, quantity and CustomerTransfer.customerReference must be set in the CartItemRequestTransfer.
      *
      * @api
      *
