@@ -8,7 +8,6 @@
 namespace SprykerTest\Zed\CartsRestApi\Business;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
@@ -41,11 +40,6 @@ class CartsRestApiFacadeTest extends Unit
      * @var \SprykerTest\Zed\CartsRestApi\CartsRestApiBusinessTester
      */
     protected $tester;
-
-    /**
-     * @uses \Spryker\Shared\PersistentCart\PersistentCartConfig::PERSISTENT_CART_ANONYMOUS_PREFIX
-     */
-    protected const PERSISTENT_CART_ANONYMOUS_PREFIX = 'anonymous:';
 
     /**
      * @return void
@@ -106,8 +100,6 @@ class CartsRestApiFacadeTest extends Unit
         $cartsRestApiFacade->setFactory($this->getMockCartsRestApiBusinessFactory());
 
         $quoteTransfer = $this->tester->prepareQuoteTransfer();
-        $quoteTransfer->setCustomer((new CustomerTransfer())->setCustomerReference($quoteTransfer->getCustomerReference()));
-
         $quoteResponseTransfer = $cartsRestApiFacade->createQuote($quoteTransfer);
 
         $this->assertInstanceOf(QuoteResponseTransfer::class, $quoteResponseTransfer);
@@ -123,7 +115,7 @@ class CartsRestApiFacadeTest extends Unit
         $cartsRestApiFacade = $this->tester->getFacade();
         $cartsRestApiFacade->setFactory($this->getMockCartsRestApiBusinessFactory());
 
-        $quoteTransfer = $this->tester->prepareQuoteTransfer();
+        $quoteTransfer = $this->tester->prepareQuoteTransferWithoutCustomer();
         $this->expectException(RequiredTransferPropertyException::class);
         $cartsRestApiFacade->createQuote($quoteTransfer);
     }
@@ -155,8 +147,6 @@ class CartsRestApiFacadeTest extends Unit
         $cartsRestApiFacade->setFactory($this->getMockCartsRestApiBusinessFactory());
 
         $quoteTransfer = $this->tester->prepareQuoteTransfer();
-        $quoteTransfer->setCustomer((new CustomerTransfer())->setCustomerReference($quoteTransfer->getCustomerReference()));
-
         $quoteResponseTransfer = $cartsRestApiFacade->updateQuote($quoteTransfer);
 
         $this->assertInstanceOf(QuoteResponseTransfer::class, $quoteResponseTransfer);
@@ -186,7 +176,7 @@ class CartsRestApiFacadeTest extends Unit
         $cartsRestApiFacade = $this->tester->getFacade();
         $cartsRestApiFacade->setFactory($this->getMockCartsRestApiBusinessFactory());
 
-        $quoteTransfer = $this->tester->prepareQuoteTransfer();
+        $quoteTransfer = $this->tester->prepareQuoteTransferWithoutCustomer();
         $this->expectException(RequiredTransferPropertyException::class);
         $cartsRestApiFacade->updateQuote($quoteTransfer);
     }
@@ -201,8 +191,6 @@ class CartsRestApiFacadeTest extends Unit
         $cartsRestApiFacade->setFactory($this->getMockCartsRestApiBusinessFactory());
 
         $quoteTransfer = $this->tester->prepareQuoteTransfer();
-        $quoteTransfer->setCustomer((new CustomerTransfer())->setCustomerReference($quoteTransfer->getCustomerReference()));
-
         $quoteResponseTransfer = $cartsRestApiFacade->deleteQuote($quoteTransfer);
 
         $this->assertInstanceOf(QuoteResponseTransfer::class, $quoteResponseTransfer);
@@ -218,7 +206,7 @@ class CartsRestApiFacadeTest extends Unit
         $cartsRestApiFacade = $this->tester->getFacade();
         $cartsRestApiFacade->setFactory($this->getMockCartsRestApiBusinessFactory());
 
-        $quoteTransfer = $this->tester->prepareQuoteTransfer();
+        $quoteTransfer = $this->tester->prepareQuoteTransferWithoutCustomer();
         $this->expectException(RequiredTransferPropertyException::class);
         $cartsRestApiFacade->deleteQuote($quoteTransfer);
     }

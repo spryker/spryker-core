@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\PersistentCartChangeQuantityTransfer;
 use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCartItemsAttributesTransfer;
 use Spryker\Shared\CartsRestApi\CartsRestApiConfig as CartsRestApiSharedConfig;
 use Spryker\Zed\CartsRestApi\Business\PermissionChecker\QuotePermissionCheckerInterface;
@@ -97,12 +98,10 @@ class QuoteItemUpdater implements QuoteItemUpdaterInterface
                     ->setErrorIdentifier(CartsRestApiSharedConfig::ERROR_IDENTIFIER_UNAUTHORIZED_CART_ACTION));
         }
 
-        $persistentCartChangeQuantityTransfer = (new PersistentCartChangeQuantityTransfer())
-            ->setIdQuote($quoteResponseTransfer->getQuoteTransfer()->getIdQuote())
-            ->setItem((new ItemTransfer())
-                ->setSku($cartItemRequestTransfer->getSku())
-                ->setQuantity($cartItemRequestTransfer->getQuantity()))
-            ->setCustomer($cartItemRequestTransfer->getCustomer());
+        $persistentCartChangeQuantityTransfer = $this->createPersistentCartChangeQuantityTransfer(
+            $quoteResponseTransfer->getQuoteTransfer(),
+            $cartItemRequestTransfer
+        );
 
         $quoteResponseTransfer = $this->persistentCartFacade->changeItemQuantity($persistentCartChangeQuantityTransfer);
 
@@ -113,5 +112,23 @@ class QuoteItemUpdater implements QuoteItemUpdaterInterface
         }
 
         return $quoteResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CartItemRequestTransfer $cartItemRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\PersistentCartChangeQuantityTransfer
+     */
+    protected function createPersistentCartChangeQuantityTransfer(
+        QuoteTransfer $quoteTransfer,
+        CartItemRequestTransfer $cartItemRequestTransfer
+    ): PersistentCartChangeQuantityTransfer {
+        return (new PersistentCartChangeQuantityTransfer())
+            ->setIdQuote($quoteTransfer->getIdQuote())
+            ->setItem((new ItemTransfer())
+                ->setSku($cartItemRequestTransfer->getSku())
+                ->setQuantity($cartItemRequestTransfer->getQuantity()))
+            ->setCustomer($cartItemRequestTransfer->getCustomer());
     }
 }

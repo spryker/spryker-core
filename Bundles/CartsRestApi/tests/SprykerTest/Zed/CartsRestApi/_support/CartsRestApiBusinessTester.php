@@ -140,7 +140,29 @@ class CartsRestApiBusinessTester extends Actor
     public function prepareQuoteTransfer(): QuoteTransfer
     {
         /** @var \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer */
-        $quoteTransfer = (new QuoteBuilder(['uuid' => static::TEST_QUOTE_UUID, 'customerReference' => static::TEST_CUSTOMER_REFERENCE]))->build();
+        $quoteTransfer = (new QuoteBuilder(
+            [
+                'uuid' => static::TEST_QUOTE_UUID,
+                'customerReference' => static::TEST_CUSTOMER_REFERENCE,
+                'customer' => (new CustomerTransfer())->setCustomerReference(static::TEST_CUSTOMER_REFERENCE),
+            ]
+        ))->build();
+
+        return $quoteTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function prepareQuoteTransferWithoutCustomer(): QuoteTransfer
+    {
+        /** @var \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer */
+        $quoteTransfer = (new QuoteBuilder(
+            [
+                'uuid' => static::TEST_QUOTE_UUID,
+                'customerReference' => static::TEST_CUSTOMER_REFERENCE,
+            ]
+        ))->build();
 
         return $quoteTransfer;
     }
