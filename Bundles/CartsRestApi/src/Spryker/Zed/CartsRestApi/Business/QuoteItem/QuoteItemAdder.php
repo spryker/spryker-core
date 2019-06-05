@@ -114,14 +114,10 @@ class QuoteItemAdder implements QuoteItemAdderInterface
                     ->setErrorIdentifier(CartsRestApiSharedConfig::ERROR_IDENTIFIER_UNAUTHORIZED_CART_ACTION));
         }
 
-        $quoteTransfer = $quoteResponseTransfer->getQuoteTransfer()
-            ->setCustomer((new CustomerTransfer())
-                ->setCustomerReference($cartItemRequestTransfer->getCustomer()->getCustomerReference()));
-        $cartChangeTransfer = (new CartChangeTransfer())
-            ->setQuote($quoteTransfer)
-            ->addItem((new ItemTransfer())
-                ->setSku($cartItemRequestTransfer->getSku())
-                ->setQuantity($cartItemRequestTransfer->getQuantity()));
+        $cartChangeTransfer = $this->createCartChangeTransfer(
+            $quoteResponseTransfer->getQuoteTransfer(),
+            $cartItemRequestTransfer
+        );
 
         $quoteResponseTransfer = $this->cartFacade->addToQuote($cartChangeTransfer);
         if (!$quoteResponseTransfer->getIsSuccessful()) {
@@ -131,5 +127,26 @@ class QuoteItemAdder implements QuoteItemAdderInterface
         }
 
         return $quoteResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CartItemRequestTransfer $cartItemRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    protected function createCartChangeTransfer(
+        QuoteTransfer $quoteTransfer,
+        CartItemRequestTransfer $cartItemRequestTransfer
+    ): CartChangeTransfer {
+        $quoteTransfer
+            ->setCustomer((new CustomerTransfer())
+                ->setCustomerReference($cartItemRequestTransfer->getCustomer()->getCustomerReference()));
+
+        return (new CartChangeTransfer())
+            ->setQuote($quoteTransfer)
+            ->addItem((new ItemTransfer())
+                ->setSku($cartItemRequestTransfer->getSku())
+                ->setQuantity($cartItemRequestTransfer->getQuantity()));
     }
 }
