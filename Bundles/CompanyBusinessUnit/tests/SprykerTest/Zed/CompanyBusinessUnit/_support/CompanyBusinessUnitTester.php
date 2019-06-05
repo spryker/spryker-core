@@ -8,6 +8,8 @@
 namespace SprykerTest\Zed\CompanyBusinessUnit;
 
 use Codeception\Actor;
+use Generated\Shared\DataBuilder\CompanyBusinessUnitBuilder;
+use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 
 /**
  * Inherited Methods
@@ -32,4 +34,21 @@ class CompanyBusinessUnitTester extends Actor
    /**
     * Define custom actions here
     */
+
+    /**
+     * @param array $seedData
+     *
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer
+     */
+    public function getCompanyBusinessUnitTransfer(array $seedData = []): CompanyBusinessUnitTransfer
+    {
+        if (!isset($seedData['fkCompany'])) {
+            $seedData['fkCompany'] = $this->haveCompany()->getIdCompany();
+        }
+
+        $companyBusinessUnitTransfer = (new CompanyBusinessUnitBuilder($seedData))->build();
+        $companyBusinessUnitTransfer->setIdCompanyBusinessUnit(null);
+
+        return $companyBusinessUnitTransfer;
+    }
 }

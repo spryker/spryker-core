@@ -37,7 +37,7 @@ class CompanyBusinessUnitGuiFacadeTest extends Unit
     public function testFindCompanyBusinessUnitNameFindCompanyBusinessUnitNameByIdCompanyUser(): void
     {
         // Arrange
-        $businessUnitTransfer = $this->tester->haveCompanyBusinessUnitWithCompany();
+        $businessUnitTransfer = $this->tester->haveCompanyBusinessUnit();
         $customerTransfer = $this->tester->haveCustomer();
         $companyUserTransfer = $this->tester->haveCompanyUser([
             CompanyUserTransfer::CUSTOMER => $customerTransfer,

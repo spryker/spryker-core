@@ -79,7 +79,7 @@ class CompanyBusinessUnitTreeBuilderTest extends Unit
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -92,13 +92,14 @@ class CompanyBusinessUnitTreeBuilderTest extends Unit
      */
     public function testTreeBuilderCanBuildCorrectTree(): void
     {
+        // Arrange
         $companyBusinessUnitTreeBuilder = new ReflectionMethod(
             '\Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitTreeBuilder\CompanyBusinessUnitTreeBuilder',
             'buildTree'
         );
-
         $companyBusinessUnitTreeBuilder->setAccessible(true);
 
+        // Act
         /** @var \Generated\Shared\Transfer\CompanyBusinessUnitTreeNodeTransfer[]|\ArrayObject $companyBusinessUnitTreeNodes */
         $companyBusinessUnitTree = $companyBusinessUnitTreeBuilder->invoke(
             new CompanyBusinessUnitTreeBuilder($this->repositoryMock),
@@ -106,8 +107,9 @@ class CompanyBusinessUnitTreeBuilderTest extends Unit
             null,
             0
         );
-
         $companyBusinessUnitTreeMappedToArray = $this->mapTreeToArray($companyBusinessUnitTree);
+
+        // Assert
         $this->assertEquals($this->companyBusinessUnitTreeArray, $companyBusinessUnitTreeMappedToArray);
     }
 
