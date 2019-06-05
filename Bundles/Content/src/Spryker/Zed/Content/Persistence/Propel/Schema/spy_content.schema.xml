@@ -7,7 +7,7 @@
         <column name="description" required="false" type="LONGVARCHAR" />
         <column name="content_term_key" required="true" type="VARCHAR" size="255"/>
         <column name="content_type_key" required="true" type="VARCHAR" size="255"/>
-        <column name="key" type="VARCHAR" size="255" description="Identifier for existing entities. It should never be changed."/>
+        <column name="key" required="true" type="VARCHAR" size="255" description="Identifier for existing entities. It should never be changed."/>
         <unique name="spy_content-key">
             <unique-column name="key"/>
         </unique>

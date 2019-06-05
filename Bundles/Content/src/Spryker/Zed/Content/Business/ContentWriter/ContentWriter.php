@@ -8,7 +8,7 @@
 namespace Spryker\Zed\Content\Business\ContentWriter;
 
 use Generated\Shared\Transfer\ContentTransfer;
-use Spryker\Zed\Content\Dependency\Service\ContentToUtilUuidGeneratorServiceInterface;
+use Spryker\Zed\Content\Business\KeyProvider\ContentKeyProviderInterface;
 use Spryker\Zed\Content\Persistence\ContentEntityManagerInterface;
 
 class ContentWriter implements ContentWriterInterface
@@ -19,20 +19,20 @@ class ContentWriter implements ContentWriterInterface
     protected $contentEntityManager;
 
     /**
-     * @var \Spryker\Zed\Content\Dependency\Service\ContentToUtilUuidGeneratorServiceInterface
+     * @var \Spryker\Zed\Content\Business\KeyProvider\ContentKeyProviderInterface
      */
-    protected $utilUuidGeneratorService;
+    protected $contentKeyProvider;
 
     /**
      * @param \Spryker\Zed\Content\Persistence\ContentEntityManagerInterface $contentEntityManager
-     * @param \Spryker\Zed\Content\Dependency\Service\ContentToUtilUuidGeneratorServiceInterface $utilUuidGeneratorService
+     * @param \Spryker\Zed\Content\Business\KeyProvider\ContentKeyProviderInterface $contentKeyProvider
      */
     public function __construct(
         ContentEntityManagerInterface $contentEntityManager,
-        ContentToUtilUuidGeneratorServiceInterface $utilUuidGeneratorService
+        ContentKeyProviderInterface $contentKeyProvider
     ) {
         $this->contentEntityManager = $contentEntityManager;
-        $this->utilUuidGeneratorService = $utilUuidGeneratorService;
+        $this->contentKeyProvider = $contentKeyProvider;
     }
 
     /**
@@ -46,9 +46,12 @@ class ContentWriter implements ContentWriterInterface
             ->requireContentTypeKey()
             ->requireContentTermKey()
             ->requireLocalizedContents();
-        $contentTransfer = $this->contentEntityManager->saveContent($contentTransfer);
 
-        return $this->persistContentKey($contentTransfer);
+        if (!$contentTransfer->getKey()) {
+            $contentTransfer->setKey($this->contentKeyProvider->generateContentKey());
+        }
+
+        return $this->contentEntityManager->saveContent($contentTransfer);
     }
 
     /**
@@ -59,24 +62,9 @@ class ContentWriter implements ContentWriterInterface
     public function update(ContentTransfer $contentTransfer): ContentTransfer
     {
         $contentTransfer->requireIdContent();
-        $contentTransfer = $this->contentEntityManager->saveContent($contentTransfer);
-
-        return $this->persistContentKey($contentTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ContentTransfer $contentTransfer
-     *
-     * @return \Generated\Shared\Transfer\ContentTransfer
-     */
-    protected function persistContentKey(ContentTransfer $contentTransfer): ContentTransfer
-    {
-        if ($contentTransfer->getKey()) {
-            return $contentTransfer;
-        }
 
         $contentTransfer->setKey(
-            $this->utilUuidGeneratorService->generateUuid5FromObjectId((string)$contentTransfer->getIdContent())
+            $this->contentKeyProvider->getContentKeyByIdContent($contentTransfer->getIdContent())
         );
 
         return $this->contentEntityManager->saveContent($contentTransfer);

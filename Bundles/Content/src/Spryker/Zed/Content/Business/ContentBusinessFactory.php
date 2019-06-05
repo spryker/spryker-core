@@ -15,6 +15,8 @@ use Spryker\Zed\Content\Business\ContentValidator\ContentValidator;
 use Spryker\Zed\Content\Business\ContentValidator\ContentValidatorInterface;
 use Spryker\Zed\Content\Business\ContentWriter\ContentWriter;
 use Spryker\Zed\Content\Business\ContentWriter\ContentWriterInterface;
+use Spryker\Zed\Content\Business\KeyProvider\ContentKeyProvider;
+use Spryker\Zed\Content\Business\KeyProvider\ContentKeyProviderInterface;
 use Spryker\Zed\Content\ContentDependencyProvider;
 use Spryker\Zed\Content\Dependency\External\ContentToValidationAdapterInterface;
 use Spryker\Zed\Content\Dependency\Service\ContentToUtilUuidGeneratorServiceInterface;
@@ -34,7 +36,7 @@ class ContentBusinessFactory extends AbstractBusinessFactory
     {
         return new ContentWriter(
             $this->getEntityManager(),
-            $this->getUtilUuidGeneratorService()
+            $this->createContentKeyProvider()
         );
     }
 
@@ -65,6 +67,17 @@ class ContentBusinessFactory extends AbstractBusinessFactory
     public function createContentConstraintsProvider(): ContentConstraintsProviderInterface
     {
         return new ContentConstraintsProvider();
+    }
+
+    /**
+     * @return \Spryker\Zed\Content\Business\KeyProvider\ContentKeyProviderInterface
+     */
+    public function createContentKeyProvider(): ContentKeyProviderInterface
+    {
+        return new ContentKeyProvider(
+            $this->getUtilUuidGeneratorService(),
+            $this->getRepository()
+        );
     }
 
     /**

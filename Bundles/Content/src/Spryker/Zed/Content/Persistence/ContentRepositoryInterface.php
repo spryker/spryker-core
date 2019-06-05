@@ -30,4 +30,14 @@ interface ContentRepositoryInterface
      * @return \Generated\Shared\Transfer\ContentTransfer|null
      */
     public function findContentByKey(string $contentKey): ?ContentTransfer;
+
+    /**
+     * Specification:
+     * - Checks whether such content key already exists.
+     *
+     * @param string $key
+     *
+     * @return bool
+     */
+    public function hasKey(string $key): bool;
 }

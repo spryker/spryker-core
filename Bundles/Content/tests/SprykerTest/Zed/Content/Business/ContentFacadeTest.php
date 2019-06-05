@@ -79,6 +79,26 @@ class ContentFacadeTest extends Test
     /**
      * @return void
      */
+    public function testCreateContentWithProvidedKeyHasSameKey(): void
+    {
+        $contentTransfer = (new ContentBuilder(
+            [
+                ContentTransfer::LOCALIZED_CONTENTS => [
+                    [
+                        LocalizedContentTransfer::PARAMETERS => '{}',
+                    ],
+                ],
+                ContentTransfer::KEY => static::KEY,
+            ]
+        ))->build();
+        $createdContentTransfer = $this->tester->getFacade()->create($contentTransfer);
+
+        $this->assertEquals($createdContentTransfer->getKey(), static::KEY);
+    }
+
+    /**
+     * @return void
+     */
     public function testCreateContentWithEmptyKeyGeneratesKey(): void
     {
         $contentTransfer = (new ContentBuilder(
