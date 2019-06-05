@@ -50,7 +50,7 @@
         <property name="sumGrossPrice" type="int" />
         <property name="name" type="string" />
         <property name="taxRate" type="float" />
-        <property name="quantity" type="int" />
+        <property name="quantity" type="float" />
 
         <property name="unitNetPrice" type="int" />
         <property name="sumNetPrice" type="int" />
