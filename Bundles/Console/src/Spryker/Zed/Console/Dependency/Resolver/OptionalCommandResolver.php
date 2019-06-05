@@ -31,7 +31,9 @@ class OptionalCommandResolver implements OptionalCommandResolverInterface
         $this->callback = $callback;
     }
 
-    /**s
+    /**
+     * s
+     *
      * @return bool
      */
     public function isResolvable(): bool
@@ -40,7 +42,7 @@ class OptionalCommandResolver implements OptionalCommandResolverInterface
     }
 
     /**
-     * @return \Spryker\Install\Stage\Section\Command\Command
+     * @return \Symfony\Component\Console\Command\Command
      */
     public function resolve(): Command
     {

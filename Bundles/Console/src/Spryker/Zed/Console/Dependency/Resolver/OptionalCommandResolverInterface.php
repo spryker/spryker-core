@@ -11,13 +11,13 @@ use Symfony\Component\Console\Command\Command;
 
 interface OptionalCommandResolverInterface
 {
-    /**s
+    /**
      * @return bool
      */
     public function isResolvable(): bool;
 
     /**
-     * @return \Spryker\Install\Stage\Section\Command\Command
+     * @return \Symfony\Component\Console\Command\Command
      */
     public function resolve(): Command;
 }

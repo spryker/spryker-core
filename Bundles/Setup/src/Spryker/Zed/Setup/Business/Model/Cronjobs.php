@@ -173,10 +173,12 @@ class Cronjobs
         $jobs = $this->getJenkinsApiResponse(self::JENKINS_API_JOBS_URL);
         $jobs = json_decode($jobs, true);
 
-        if (!empty($jobs['jobs'])) {
-            foreach ($jobs['jobs'] as $job) {
-                $jobsNames[] = $job['name'];
-            }
+        if (count($jobs['jobs']) === 0) {
+            return $jobsNames;
+        }
+
+        foreach ($jobs['jobs'] as $job) {
+            $jobsNames[] = $job['name'];
         }
 
         return $jobsNames;
@@ -194,7 +196,7 @@ class Cronjobs
         $output = '';
         $existingJobs = $this->getExistingJobs();
 
-        if (empty($existingJobs)) {
+        if (count($existingJobs) === 0) {
             return $output;
         }
 
@@ -558,24 +560,25 @@ cd %s
     protected function extendJobCommand(array $jobs): array
     {
         foreach ($jobs as $i => $job) {
-            if (!empty($job['command'])) {
-                $command = $job['command'];
-                $commandExpl = explode(' ', $command);
-                $requestParts = ['module' => '', 'controller' => '', 'action' => ''];
-                foreach ($commandExpl as $part) {
-                    $segments = array_keys($requestParts);
-                    foreach ($segments as $segment) {
-                        if (strpos($part, $segment . '=') !== false) {
-                            $requestParts[$segment] = str_replace('--' . $segment . '=', '', $part);
-                        }
+            if (count($job['command']) === 0) {
+                continue;
+            }
+            $command = $job['command'];
+            $commandExpl = explode(' ', $command);
+            $requestParts = ['module' => '', 'controller' => '', 'action' => ''];
+            foreach ($commandExpl as $part) {
+                $segments = array_keys($requestParts);
+                foreach ($segments as $segment) {
+                    if (strpos($part, $segment . '=') !== false) {
+                        $requestParts[$segment] = str_replace('--' . $segment . '=', '', $part);
                     }
                 }
-
-                $jobs[$i]['request'] = '/' . $requestParts['module'] . '/' . $requestParts['controller']
-                    . '/' . $requestParts['action'];
-
-                $jobs[$i]['id'] = null;
             }
+
+            $jobs[$i]['request'] = '/' . $requestParts['module'] . '/' . $requestParts['controller']
+                . '/' . $requestParts['action'];
+
+            $jobs[$i]['id'] = null;
         }
 
         return $jobs;
