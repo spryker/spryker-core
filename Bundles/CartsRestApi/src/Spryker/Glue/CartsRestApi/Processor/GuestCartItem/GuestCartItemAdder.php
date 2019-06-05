@@ -70,6 +70,7 @@ class GuestCartItemAdder implements GuestCartItemAdderInterface
     ): RestResponseInterface {
         $cartItemRequestTransfer = (new CartItemRequestTransfer())
             ->setQuoteUuid($this->findGuestCartIdentifier($restRequest))
+            ->setSku($restCartItemsAttributesTransfer->getSku())
             ->setQuantity($restCartItemsAttributesTransfer->getQuantity())
             ->setCustomer((new CustomerTransfer())->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier()));
 
