@@ -44,6 +44,9 @@ class ShipmentReader implements ShipmentReaderInterface
      */
     public function findShipmentById(int $idSalesShipment): ?ShipmentTransfer
     {
+        /**
+         * @todo Refactor this.
+         */
         $shipmentEntity = $this->queryContainer
             ->querySalesShipmentById($idSalesShipment)
             ->find()

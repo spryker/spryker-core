@@ -9,8 +9,6 @@ namespace Spryker\Zed\Sales\Communication;
 
 use ArrayObject;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\Sales\Business\Order\OrderMultipleItemLevelAddressesChecker;
-use Spryker\Zed\Sales\Business\Order\OrderMultipleItemLevelAddressesCheckerInterface;
 use Spryker\Zed\Sales\Communication\Form\AddressForm;
 use Spryker\Zed\Sales\Communication\Form\CommentForm;
 use Spryker\Zed\Sales\Communication\Form\CustomerForm;
@@ -20,7 +18,6 @@ use Spryker\Zed\Sales\Communication\Form\DataProvider\CustomerFormDataProvider;
 use Spryker\Zed\Sales\Communication\Table\CustomerOrdersTable;
 use Spryker\Zed\Sales\Communication\Table\OrdersTable;
 use Spryker\Zed\Sales\Communication\Table\OrdersTableQueryBuilder;
-use Spryker\Zed\Sales\Dependency\Service\SalesToShipmentServiceInterface;
 use Spryker\Zed\Sales\SalesDependencyProvider;
 use Spryker\Zed\SalesSplit\Communication\Form\DataProvider\OrderItemSplitDataProvider;
 use Spryker\Zed\SalesSplit\Communication\Form\OrderItemSplitForm;
@@ -227,14 +224,6 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\Sales\Dependency\Service\SalesToShipmentServiceInterface
-     */
-    public function getShipmentService(): SalesToShipmentServiceInterface
-    {
-        return $this->getProvidedDependency(SalesDependencyProvider::SERVICE_SHIPMENT);
-    }
-
-    /**
      * @return array
      */
     public function getSalesDetailExternalBlocksUrls()
@@ -248,13 +237,5 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
     public function getSalesTablePlugins()
     {
         return $this->getProvidedDependency(SalesDependencyProvider::UI_SALES_TABLE_PLUGINS);
-    }
-
-    /**
-     * @return \Spryker\Zed\Sales\Business\Order\OrderMultipleItemLevelAddressesCheckerInterface
-     */
-    public function createOrderMultipleItemLevelAddressesChecker(): OrderMultipleItemLevelAddressesCheckerInterface
-    {
-        return new OrderMultipleItemLevelAddressesChecker();
     }
 }

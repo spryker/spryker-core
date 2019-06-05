@@ -327,9 +327,9 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
      *
      * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
-     * @return \Generated\Shared\Transfer\ItemCollectionTransfer
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
-    public function getUniqueOrderItems(iterable $itemTransfers): ItemCollectionTransfer
+    public function getUniqueOrderItems(iterable $itemTransfers): array
     {
         return $this->getFactory()
             ->createSalesOrderItemGrouper()

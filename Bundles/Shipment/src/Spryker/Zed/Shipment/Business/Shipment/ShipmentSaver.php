@@ -15,32 +15,29 @@ use Generated\Shared\Transfer\ShipmentGroupResponseTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Shared\Shipment\ShipmentConstants;
-use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 use Spryker\Zed\Shipment\Business\Checkout\MultiShipmentOrderSaverInterface;
-use Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentMethodExtenderInterface;
+use Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentMethodExpanderInterface;
 
 class ShipmentSaver implements ShipmentSaverInterface
 {
-    use DatabaseTransactionHandlerTrait;
-
     /**
      * @var \Spryker\Zed\Shipment\Business\Checkout\MultiShipmentOrderSaverInterface
      */
     protected $shipmentOrderSaver;
 
     /**
-     * @var \Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentMethodExtenderInterface
+     * @var \Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentMethodExpanderInterface
      */
-    protected $shipmentMethodExtender;
+    protected $shipmentMethodExpander;
 
     /**
      * @param \Spryker\Zed\Shipment\Business\Checkout\MultiShipmentOrderSaverInterface $shipmentOrderSaver
-     * @param \Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentMethodExtenderInterface $shipmentMethodExtender
+     * @param \Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentMethodExpanderInterface $shipmentMethodExpander
      */
-    public function __construct(MultiShipmentOrderSaverInterface $shipmentOrderSaver, ShipmentMethodExtenderInterface $shipmentMethodExtender)
+    public function __construct(MultiShipmentOrderSaverInterface $shipmentOrderSaver, ShipmentMethodExpanderInterface $shipmentMethodExpander)
     {
         $this->shipmentOrderSaver = $shipmentOrderSaver;
-        $this->shipmentMethodExtender = $shipmentMethodExtender;
+        $this->shipmentMethodExpander = $shipmentMethodExpander;
     }
 
     /**
@@ -52,7 +49,7 @@ class ShipmentSaver implements ShipmentSaverInterface
     public function saveShipment(ShipmentGroupTransfer $shipmentGroupTransfer, OrderTransfer $orderTransfer): ShipmentGroupResponseTransfer
     {
         $saveOrderTransfer = $this->buildSaveOrderTransfer($orderTransfer);
-        $shipmentGroupTransfer = $this->updateShipmentMethodForShipmentGroup($shipmentGroupTransfer, $orderTransfer);
+        $shipmentGroupTransfer = $this->setShipmentMethod($shipmentGroupTransfer, $orderTransfer);
         $expenseTransfer = $this->createShippingExpenseTransfer($shipmentGroupTransfer->getShipment(), $orderTransfer);
         $orderTransfer = $this->addShippingExpenseToOrderExpenses($expenseTransfer, $orderTransfer);
 
@@ -194,12 +191,12 @@ class ShipmentSaver implements ShipmentSaverInterface
      *
      * @return \Generated\Shared\Transfer\ShipmentGroupTransfer
      */
-    protected function updateShipmentMethodForShipmentGroup(ShipmentGroupTransfer $shipmentGroupTransfer, OrderTransfer $orderTransfer): ShipmentGroupTransfer
+    protected function setShipmentMethod(ShipmentGroupTransfer $shipmentGroupTransfer, OrderTransfer $orderTransfer): ShipmentGroupTransfer
     {
         $shipmentMethodTransfer = $shipmentGroupTransfer->getShipment()->getMethod();
         $shipmentGroupTransfer
             ->getShipment()
-            ->setMethod($this->shipmentMethodExtender->extendShipmentMethodTransfer($shipmentMethodTransfer, $orderTransfer));
+            ->setMethod($this->shipmentMethodExpander->expand($shipmentMethodTransfer, $orderTransfer));
 
         return $shipmentGroupTransfer;
     }

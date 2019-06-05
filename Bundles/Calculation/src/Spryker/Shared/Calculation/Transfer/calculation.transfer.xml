@@ -109,8 +109,6 @@
 
         <property name="isOrdered" type="bool" />
         <!--property name="quantity" type="float"/> The module can work regardless of the type of the quantity, but would be BC breaking if we'd define it to either int or float. -->
-
-        <property name="shipment" type="Shipment" />
     </transfer>
 
     <transfer name="ProductOption">

@@ -65,14 +65,4 @@ class ShipmentToSalesFacadeBridge implements ShipmentToSalesFacadeInterface
     {
         return $this->salesFacade->findOrderAddressByIdOrderAddress($idSalesOrderAddress);
     }
-
-    /**
-     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
-     *
-     * @return \Generated\Shared\Transfer\ItemCollectionTransfer
-     */
-    public function getUniqueOrderItems(iterable $itemTransfers): ItemCollectionTransfer
-    {
-        return $this->salesFacade->getUniqueOrderItems($itemTransfers);
-    }
 }

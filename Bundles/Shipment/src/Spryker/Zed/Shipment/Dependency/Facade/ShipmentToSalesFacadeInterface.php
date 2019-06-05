@@ -40,11 +40,4 @@ interface ShipmentToSalesFacadeInterface
      * @return \Generated\Shared\Transfer\AddressTransfer|null
      */
     public function findOrderAddressByIdOrderAddress(int $idSalesOrderAddress): ?AddressTransfer;
-
-    /**
-     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
-     *
-     * @return \Generated\Shared\Transfer\ItemCollectionTransfer
-     */
-    public function getUniqueOrderItems(iterable $itemTransfers): ItemCollectionTransfer;
 }
