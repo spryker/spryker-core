@@ -5,8 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Console\Dependency\Resolver;
+namespace Spryker\Zed\Console\Communication\Resolver;
 
+use Spryker\Zed\Kernel\Container;
 use Symfony\Component\Console\Command\Command;
 
 interface OptionalCommandResolverInterface
@@ -17,7 +18,9 @@ interface OptionalCommandResolverInterface
     public function isResolvable(): bool;
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
      * @return \Symfony\Component\Console\Command\Command
      */
-    public function resolve(): Command;
+    public function resolve(Container $container): Command;
 }

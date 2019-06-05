@@ -50,7 +50,7 @@ class ConsoleDependencyProvider extends AbstractBundleDependencyProvider
 
             foreach ($this->getOptionalConsoleResolvers($container) as $resolver) {
                 if ($resolver->isResolvable()) {
-                    $commands[] = $resolver->resolve();
+                    $commands[] = $resolver->resolve($container);
                 }
             }
 
@@ -73,9 +73,9 @@ class ConsoleDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return \Spryker\Zed\Console\Dependency\Resolver\OptionalCommandResolverInterface[]
+     * @return \Spryker\Zed\Console\Communication\Resolver\OptionalCommandResolverInterface[]
      */
-    protected function getOptionalConsoleResolvers(Container $container)
+    protected function getOptionalConsoleResolvers(Container $container): array
     {
         return [];
     }
