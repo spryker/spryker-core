@@ -68,11 +68,31 @@ class ContentFacadeTest extends Test
                         LocalizedContentTransfer::PARAMETERS => '{}',
                     ],
                 ],
+                ContentTransfer::KEY => static::KEY,
             ]
         ))->build();
         $createdContentTransfer = $this->tester->getFacade()->create($contentTransfer);
 
         $this->assertNotNull($createdContentTransfer->getIdContent());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreateContentWithEmptyKeyGeneratesKey(): void
+    {
+        $contentTransfer = (new ContentBuilder(
+            [
+                ContentTransfer::LOCALIZED_CONTENTS => [
+                    [
+                        LocalizedContentTransfer::PARAMETERS => '{}',
+                    ],
+                ],
+            ]
+        ))->build();
+        $createdContentTransfer = $this->tester->getFacade()->create($contentTransfer);
+
+        $this->assertNotNull($createdContentTransfer->getKey());
     }
 
     /**
