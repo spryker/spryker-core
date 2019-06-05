@@ -57,8 +57,9 @@ class ContentKeyProvider implements ContentKeyProviderInterface
             }
 
             $candidate = $this->utilUuidGeneratorService->generateUuid5FromObjectId(
-                sprintf("%s-%d", microtime(true), ++$index)
+                sprintf("%s-%d", microtime(true), $index)
             );
+            $index = $index + 1;
         } while ($this->contentRepository->hasKey($candidate));
 
         return $candidate;
