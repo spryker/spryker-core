@@ -41,9 +41,9 @@ class ContentDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addValidationAdapter(Container $container): Container
     {
-        $container[static::ADAPTER_VALIDATION] = function () {
+        $container->set(static::ADAPTER_VALIDATION, function () {
             return new ContentToValidationAdapter();
-        };
+        });
 
         return $container;
     }
