@@ -71,10 +71,9 @@ class QuoteReader implements QuoteReaderInterface
     ): QuoteTransfer {
         $customerTransfer = (new CustomerTransfer())->fromArray($restCheckoutRequestAttributesTransfer->getCustomer()->toArray(), true);
 
-        $quoteTransfer = (new QuoteTransfer())
+        return (new QuoteTransfer())
             ->setUuid($restCheckoutRequestAttributesTransfer->getIdCart())
+            ->setCustomerReference($restCheckoutRequestAttributesTransfer->getCustomer()->getCustomerReference())
             ->setCustomer($customerTransfer);
-
-        return $quoteTransfer;
     }
 }

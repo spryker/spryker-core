@@ -89,7 +89,7 @@ class GuestCartItemAdder implements GuestCartItemAdderInterface
     protected function findGuestCartIdentifier(RestRequestInterface $restRequest): ?string
     {
         $cartsResource = $restRequest->findParentResourceByType(CartsRestApiConfig::RESOURCE_GUEST_CARTS);
-        if ($cartsResource !== null) {
+        if ($cartsResource) {
             return $cartsResource->getId();
         }
 

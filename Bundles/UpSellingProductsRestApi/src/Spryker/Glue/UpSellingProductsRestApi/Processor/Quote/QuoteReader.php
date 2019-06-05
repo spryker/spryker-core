@@ -36,10 +36,8 @@ class QuoteReader implements QuoteReaderInterface
      */
     public function findQuoteByUuid(string $uuid, RestRequestInterface $restRequest): ?QuoteTransfer
     {
-        $customerTransfer = $this->createCustomerTransfer($restRequest->getRestUser());
-        $quoteTransfer = (new QuoteTransfer())
-            ->setUuid($uuid)
-            ->setCustomer($customerTransfer);
+        $quoteTransfer = $this->createQuoteTransfer($uuid, $restRequest->getRestUser());
+
         $quoteResponseTransfer = $this->cartsRestApiClient->findQuoteByUuid($quoteTransfer);
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
@@ -50,17 +48,24 @@ class QuoteReader implements QuoteReaderInterface
     }
 
     /**
+     * @param string $uuid
      * @param \Generated\Shared\Transfer\RestUserTransfer $restUserTransfer
      *
-     * @return \Generated\Shared\Transfer\CustomerTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function createCustomerTransfer(
+    protected function createQuoteTransfer(
+        string $uuid,
         RestUserTransfer $restUserTransfer
-    ): CustomerTransfer {
+    ): QuoteTransfer {
+        $customerReference = $restUserTransfer->getNaturalIdentifier();
+
         $customerTransfer = (new CustomerTransfer())
-            ->setCustomerReference($restUserTransfer->getNaturalIdentifier())
+            ->setCustomerReference($customerReference)
             ->setIdCustomer($restUserTransfer->getSurrogateIdentifier());
 
-        return $customerTransfer;
+        return (new QuoteTransfer())
+            ->setUuid($uuid)
+            ->setCustomerReference($customerReference)
+            ->setCustomer($customerTransfer);
     }
 }
