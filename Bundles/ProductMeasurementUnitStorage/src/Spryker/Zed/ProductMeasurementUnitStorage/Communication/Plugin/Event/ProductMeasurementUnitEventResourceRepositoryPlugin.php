@@ -49,6 +49,7 @@ class ProductMeasurementUnitEventResourceRepositoryPlugin extends AbstractPlugin
         if (!empty($ids)) {
             return $this->getFacade()->findProductMeasurementUnitTransfers($ids);
         }
+
         return $this->getFacade()->findAllProductMeasurementUnitTransfers();
     }
 

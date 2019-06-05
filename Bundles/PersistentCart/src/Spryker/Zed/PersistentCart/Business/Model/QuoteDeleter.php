@@ -66,6 +66,7 @@ class QuoteDeleter implements QuoteDeleterInterface
             $quoteResponseTransfer->setIsSuccessful(false);
             $quoteResponseTransfer->setQuoteTransfer($quoteTransfer);
             $quoteResponseTransfer->setCustomer($quoteTransfer->getCustomer());
+
             return $this->quoteResponseExpander->expand($quoteResponseTransfer);
         }
         $quoteResponseTransfer = $this->quoteResponseExpander->expand($this->quoteFacade->deleteQuote($quoteTransfer));

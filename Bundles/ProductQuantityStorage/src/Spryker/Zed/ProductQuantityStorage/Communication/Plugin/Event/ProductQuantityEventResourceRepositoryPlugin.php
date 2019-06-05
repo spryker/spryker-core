@@ -49,6 +49,7 @@ class ProductQuantityEventResourceRepositoryPlugin extends AbstractPlugin implem
         if (!empty($ids)) {
             return $this->getFacade()->findProductQuantityByProductIdsTransfers($ids);
         }
+
         return $this->getFacade()->findProductQuantityTransfers();
     }
 

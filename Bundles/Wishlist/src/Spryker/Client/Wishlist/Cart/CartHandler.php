@@ -147,11 +147,11 @@ class CartHandler implements CartHandlerInterface
 
     /**
      * @param string $sku
-     * @param int $quantity
+     * @param float $quantity
      *
      * @return \Generated\Shared\Transfer\ItemTransfer
      */
-    protected function createItemTransfer($sku, $quantity = 1)
+    protected function createItemTransfer($sku, float $quantity = 1.0)
     {
         return (new ItemTransfer())
             ->setSku($sku)
@@ -173,6 +173,7 @@ class CartHandler implements CartHandlerInterface
         foreach ($quoteTransfer->getBundleItems() as $itemTransfer) {
             $skuIndex[$itemTransfer->getSku()] = true;
         }
+
         return $skuIndex;
     }
 }

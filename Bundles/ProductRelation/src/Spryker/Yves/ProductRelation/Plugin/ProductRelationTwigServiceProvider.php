@@ -61,6 +61,7 @@ class ProductRelationTwigServiceProvider extends AbstractPlugin implements Servi
 
             if ($productRelationDataProvider === null) {
                 $this->getLogger()->warning(sprintf('Product relation "%s" data provider not found.', $type));
+
                 return '';
             }
 

@@ -72,6 +72,7 @@ class SubRequestHandlerTest extends WebTestCase
 
         $callback = function () use ($app) {
             $subRequestHandler = new SubRequestHandler($app);
+
             return $subRequestHandler->handleSubRequest(new Request(), self::URL_SUB_REQUEST);
         };
 

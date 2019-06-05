@@ -184,6 +184,7 @@ class RestResource implements RestResourceInterface
     public function setPayload(?AbstractTransfer $payload)
     {
         $this->payload = $payload;
+
         return $this;
     }
 
@@ -230,6 +231,7 @@ class RestResource implements RestResourceInterface
                 ];
             }
         }
+
         return $relationships;
     }
 

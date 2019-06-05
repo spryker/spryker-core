@@ -23,9 +23,9 @@ interface QuoteRequestAgentClientInterface
      * - Generates unique reference number.
      * - Generates version for the "Request for Quote" entity.
      * - Generates version reference based on unique reference number and version number.
+     * - Sets field is_latest_version_visible to false.
      * - Stores empty metadata.
      * - Stores empty quote.
-     * - Sets hidden visibility for latest version.
      *
      * @api
      *
@@ -58,6 +58,7 @@ interface QuoteRequestAgentClientInterface
      * - Looks up one "Request for Quote" by provided quote request reference.
      * - Expects "Request for Quote" status to be "waiting", "ready", "draft".
      * - Creates latest version from previous version.
+     * - Sets field is_latest_version_visible to false.
      * - Sets status to "in-progress".
      *
      * @api
@@ -90,7 +91,7 @@ interface QuoteRequestAgentClientInterface
      * - Expects quote request reference to be provided.
      * - Retrieves "Request for Quote" entity filtered by reference.
      * - Expects "Request for Quote" status to be "draft", "in-progress".
-     * - Updates field is_latest_version_hidden to false.
+     * - Updates field is_latest_version_visible to true.
      * - Changes status to "ready".
      *
      * @api

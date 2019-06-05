@@ -260,6 +260,7 @@ class SubscriptionRequestHandler implements SubscriptionRequestHandlerInterface
         }
 
         $this->subscriptionManager->subscribe($newsletterSubscriberTransfer, $newsletterTypeTransfer);
+
         return $this->createSubscriptionResultTransfer($newsletterTypeTransfer, true);
     }
 

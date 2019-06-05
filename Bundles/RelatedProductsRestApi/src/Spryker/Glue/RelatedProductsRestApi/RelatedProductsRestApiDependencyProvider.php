@@ -83,6 +83,7 @@ class RelatedProductsRestApiDependencyProvider extends AbstractBundleDependencyP
                 $container->getLocator()->productsRestApi()->resource()
             );
         };
+
         return $container;
     }
 }
