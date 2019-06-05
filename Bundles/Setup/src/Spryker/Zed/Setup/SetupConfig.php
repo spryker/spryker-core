@@ -138,7 +138,7 @@ class SetupConfig extends AbstractBundleConfig
      */
     public function isSchedulerEnabled(): bool
     {
-        return $this->get(SetupConstants::ENABLE_SCHEDULER, APPLICATION_ENV !== 'production');
+        return $this->get(SetupConstants::ENABLE_SCHEDULER, $this->getEnvironmentName() !== 'production');
     }
 
     /**
@@ -146,6 +146,6 @@ class SetupConfig extends AbstractBundleConfig
      */
     public function isDeployVarsEnabled(): bool
     {
-        return $this->get(SetupConstants::ENABLE_DEPLOY_VARS, APPLICATION_ENV !== 'development');
+        return $this->get(SetupConstants::ENABLE_DEPLOY_VARS, $this->getEnvironmentName() !== 'development');
     }
 }

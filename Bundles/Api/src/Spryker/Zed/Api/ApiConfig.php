@@ -168,6 +168,6 @@ class ApiConfig extends AbstractBundleConfig
      */
     public function isApiDebugEnabled(): bool
     {
-        return $this->get(ApiConstants::ENABLE_API_DEBUG, APPLICATION_ENV === 'development');
+        return $this->get(ApiConstants::ENABLE_API_DEBUG, $this->getEnvironmentName() === 'development');
     }
 }

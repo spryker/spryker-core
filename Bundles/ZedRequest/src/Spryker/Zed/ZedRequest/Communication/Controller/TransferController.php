@@ -29,7 +29,7 @@ class TransferController extends AbstractController
      */
     public function repeatAction(Request $request)
     {
-        if (APPLICATION_ENV !== 'development') {
+        if ($this->getFactory()->getConfig()->isRepeatEnabled() === false) {
             throw new NotAllowedActionException('This action is allowed only for development environment.');
         }
 
