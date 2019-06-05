@@ -253,6 +253,40 @@ class CartsRestApiBusinessTester extends Actor
     }
 
     /**
+     * @return \Generated\Shared\Transfer\CartItemRequestTransfer
+     */
+    public function prepareCartItemRequestTransferWithoutUuid(): CartItemRequestTransfer
+    {
+        /** @var \Generated\Shared\Transfer\CartItemRequestTransfer $cartItemRequestTransfer */
+        $cartItemRequestTransfer = (new CartItemRequestBuilder(
+            [
+                'sku' => static::TEST_SKU,
+                'customer' => (new CustomerTransfer())->setCustomerReference(static::TEST_CUSTOMER_REFERENCE),
+                'quantity' => static::TEST_QUANTITY,
+            ]
+        ))->build();
+
+        return $cartItemRequestTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CartItemRequestTransfer
+     */
+    public function prepareCartItemRequestTransferWithoutSku(): CartItemRequestTransfer
+    {
+        /** @var \Generated\Shared\Transfer\CartItemRequestTransfer $cartItemRequestTransfer */
+        $cartItemRequestTransfer = (new CartItemRequestBuilder(
+            [
+                'quoteUuid' => static::TEST_QUOTE_UUID,
+                'customer' => (new CustomerTransfer())->setCustomerReference(static::TEST_CUSTOMER_REFERENCE),
+                'quantity' => static::TEST_QUANTITY,
+            ]
+        ))->build();
+
+        return $cartItemRequestTransfer;
+    }
+
+    /**
      * @return \Generated\Shared\Transfer\AssignGuestQuoteRequestTransfer
      */
     public function prepareAssignGuestQuoteRequestTransfer(): AssignGuestQuoteRequestTransfer
