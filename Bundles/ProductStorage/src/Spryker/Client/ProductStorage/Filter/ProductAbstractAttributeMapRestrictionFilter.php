@@ -75,13 +75,9 @@ class ProductAbstractAttributeMapRestrictionFilter implements ProductAbstractAtt
      */
     protected function getRestrictedProductConcreteIds(array $productConcreteIds): array
     {
-        return array_reduce($productConcreteIds, function (array $restrictedProductConcreteIds, int $productConcreteId) {
-            if ($this->productConcreteStorageReader->isProductConcreteRestricted($productConcreteId)) {
-                $restrictedProductConcreteIds[] = $productConcreteId;
-            }
+        $nonRestrictedConcreteIds = $this->productConcreteStorageReader->filterRestrictedProductConcreteIds($productConcreteIds);
 
-            return $restrictedProductConcreteIds;
-        }, []);
+        return array_diff($productConcreteIds, $nonRestrictedConcreteIds);
     }
 
     /**

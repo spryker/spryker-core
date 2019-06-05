@@ -433,7 +433,7 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
      *
      * @return int[]
      */
-    protected function filterRestrictedProductConcreteIds(array $productConcreteIds): array
+    public function filterRestrictedProductConcreteIds(array $productConcreteIds): array
     {
         if (!$productConcreteIds) {
             return [];
