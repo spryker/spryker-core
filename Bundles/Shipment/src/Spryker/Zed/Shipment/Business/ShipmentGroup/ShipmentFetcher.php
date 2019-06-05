@@ -86,7 +86,7 @@ class ShipmentFetcher implements ShipmentFetcherInterface
     {
         $idStore = $this->storeFacade->getCurrentStore()->getIdStore();
 
-        $idCurrenyIsoCode = $this->currencyFacade
+        $idCurrencyIsoCode = $this->currencyFacade
             ->fromIsoCode($currencyIsoCode)
             ->getIdCurrency();
 
@@ -97,7 +97,7 @@ class ShipmentFetcher implements ShipmentFetcherInterface
             ->queryMethodPriceByShipmentMethodAndStoreCurrency(
                 $shipmentMethodTransfer->getIdShipmentMethod(),
                 $idStore,
-                $idCurrenyIsoCode
+                $idCurrencyIsoCode
             )
             ->findOne();
 

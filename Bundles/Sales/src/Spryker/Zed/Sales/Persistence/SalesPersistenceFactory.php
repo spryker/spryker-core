@@ -93,12 +93,4 @@ class SalesPersistenceFactory extends AbstractPersistenceFactory
     {
         return new SalesOrderAddressMapper();
     }
-
-    /**
-     * @return \Orm\Zed\Sales\Persistence\SpySalesShipmentQuery
-     */
-    public function createSpySalesShipmentQuery(): SpySalesShipmentQuery
-    {
-        return SpySalesShipmentQuery::create();
-    }
 }

@@ -19,6 +19,7 @@ use Spryker\Zed\Sales\Dependency\Facade\SalesToSequenceNumberBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToUserBridge;
 use Spryker\Zed\Sales\Dependency\Service\SalesToShipmentServiceBridge;
 use Spryker\Zed\Sales\Dependency\Service\SalesToUtilPriceServiceBridge;
+use Spryker\Zed\Sales\Dependency\Service\SalesToUtilQuantityServiceBridge;
 use Spryker\Zed\Sales\Dependency\Service\SalesToUtilSanitizeBridge;
 
 /**
@@ -34,7 +35,6 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_MONEY = 'FACADE_MONEY';
     public const FACADE_CUSTOMER = 'FACADE_CUSTOMER';
     public const QUERY_CONTAINER_LOCALE = 'QUERY_CONTAINER_LOCALE';
-    public const SERVICE_SHIPMENT = 'SERVICE_SHIPMENT';
     public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
     public const STORE = 'STORE';
 
@@ -51,6 +51,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_CALCULATION = 'FACADE_CALCULATION';
 
     public const SERVICE_UTIL_PRICE = 'SERVICE_UTIL_PRICE';
+    public const SERVICE_UTIL_QUANTITY = 'SERVICE_UTIL_QUANTITY';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -71,7 +72,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addOrderItemExpanderPreSavePlugins($container);
         $container = $this->addItemTransformerStrategyPlugins($container);
         $container = $this->addUtilPriceService($container);
-        $container = $this->addShipmentService($container);
+        $container = $this->addUtiQuantityService($container);
 
         return $container;
     }
@@ -91,7 +92,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addUtilSanitizeService($container);
         $container = $this->addCustomerFacade($container);
         $container = $this->addSalesTablePlugins($container);
-        $container = $this->addShipmentService($container);
+        $container = $this->addUtiQuantityService($container);
 
         return $container;
     }
@@ -101,13 +102,13 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addShipmentService(Container $container): Container
+    protected function addUtiQuantityService(Container $container): Container
     {
-        $container[static::SERVICE_SHIPMENT] = function (Container $container) {
-            return new SalesToShipmentServiceBridge(
-                $container->getLocator()->shipment()->service()
+        $container->set(static::SERVICE_UTIL_QUANTITY, function (Container $container) {
+            return new SalesToUtilQuantityServiceBridge(
+                $container->getLocator()->utilQuantity()->service()
             );
-        };
+        });
 
         return $container;
     }

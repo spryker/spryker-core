@@ -265,20 +265,4 @@ class ShipmentQueryContainer extends AbstractQueryContainer implements ShipmentQ
     {
         return $this->queryActiveMethods()->filterByIdShipmentMethod($idShipmentMethod);
     }
-
-    /**
-     * @api
-     *
-     * @param int $idSalesShipment
-     *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
-     */
-    public function querySalesOrderItemsByIdSalesShipment(int $idSalesShipment): SpySalesOrderItemQuery
-    {
-        $query = $this->getFactory()
-            ->createSalesOrderItemQuery()
-            ->filterByFkSalesShipment($idSalesShipment);
-
-        return $query;
-    }
 }

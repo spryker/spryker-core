@@ -30,8 +30,8 @@ use Spryker\Zed\Shipment\Business\Shipment\ShipmentSaver;
 use Spryker\Zed\Shipment\Business\Shipment\ShipmentSaverInterface;
 use Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentFetcher;
 use Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentFetcherInterface;
-use Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentMethodExtender;
-use Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentMethodExtenderInterface;
+use Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentMethodExpander;
+use Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentMethodExpanderInterface;
 use Spryker\Zed\Shipment\Business\ShipmentMethod\MethodReader;
 use Spryker\Zed\Shipment\Business\ShipmentMethod\MethodReaderInterface;
 use Spryker\Zed\Shipment\Business\ShipmentMethod\MethodWriter;
@@ -363,11 +363,11 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentMethodExtenderInterface
+     * @return \Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentMethodExpanderInterface
      */
-    public function createShipmentMethodExtender(): ShipmentMethodExtenderInterface
+    public function createShipmentMethodExpander(): ShipmentMethodExpanderInterface
     {
-        return new ShipmentMethodExtender(
+        return new ShipmentMethodExpander(
             $this->createShipmentFetcher()
         );
     }
@@ -390,7 +390,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     {
         return new ShipmentSaver(
             $this->createCheckoutMultiShipmentOrderSaver(),
-            $this->createShipmentMethodExtender()
+            $this->createShipmentMethodExpander()
         );
     }
 }

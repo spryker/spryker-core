@@ -277,7 +277,7 @@ class ShipmentOrderSaver implements ShipmentOrderSaverInterface
         ShipmentMethodTransfer $shipmentMethodTransfer,
         SpySalesShipment $shipmentEntity
     ): SpySalesShipment {
-        $shipmentEntity->fromArray($shipmentMethodTransfer->toArray());
+        $shipmentEntity->fromArray($shipmentMethodTransfer->modifiedToArray());
 
         return $shipmentEntity;
     }
@@ -286,14 +286,12 @@ class ShipmentOrderSaver implements ShipmentOrderSaverInterface
      * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
+     * @return void
      */
-    protected function updateFkShipmentForOrderItems(iterable $itemTransfers, ShipmentTransfer $shipmentTransfer): ArrayObject
+    protected function updateFkShipmentForOrderItems(iterable $itemTransfers, ShipmentTransfer $shipmentTransfer): void
     {
         foreach ($itemTransfers as $itemTransfer) {
             $this->entityManager->updateFkShipmentForOrderItem($itemTransfer, $shipmentTransfer);
         }
-
-        return $itemTransfers;
     }
 }

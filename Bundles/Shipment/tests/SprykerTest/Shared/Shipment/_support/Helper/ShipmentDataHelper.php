@@ -11,10 +11,13 @@ use Codeception\Module;
 use Generated\Shared\DataBuilder\ShipmentBuilder;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesShipment;
+use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface;
+use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class ShipmentDataHelper extends Module
 {
+    use DataCleanupHelperTrait;
     use LocatorHelperTrait;
 
     /**
@@ -27,6 +30,16 @@ class ShipmentDataHelper extends Module
     {
         $shipmentTransfer = (new ShipmentBuilder($overrideShipment))->build();
         $shipmentTransfer->setIdSalesShipment($this->saveShipment($shipmentTransfer, $idSalesOrder));
+
+        $this->debug(sprintf(
+            'Inserted Sales shipment: %d for sales order: %d',
+            $shipmentTransfer->getIdSalesShipment(),
+            $idSalesOrder
+        ));
+
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($shipmentTransfer) {
+            $this->cleanupSalesShipment($shipmentTransfer->getIdSalesShipment());
+        });
 
         return $shipmentTransfer;
     }
@@ -45,5 +58,27 @@ class ShipmentDataHelper extends Module
         $shipmentEntity->save();
 
         return $shipmentEntity->getIdSalesShipment();
+    }
+
+    /**
+     * @return ShipmentQueryContainerInterface
+     */
+    protected function getShipmentQuery(): ShipmentQueryContainerInterface
+    {
+        return $this->getLocator()->shipment()->queryContainer();
+    }
+
+    /**
+     * @param int $idSalesShipment
+     *
+     * @return void
+     */
+    protected function cleanupSalesShipment(int $idSalesShipment): void
+    {
+        $this->debug(sprintf('Deleting Sales shipment: %d', $idSalesShipment));
+
+        $this->getShipmentQuery()
+            ->querySalesShipmentById($idSalesShipment)
+            ->delete();
     }
 }

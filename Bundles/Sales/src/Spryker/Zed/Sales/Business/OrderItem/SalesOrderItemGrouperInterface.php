@@ -7,14 +7,12 @@
 
 namespace Spryker\Zed\Sales\Business\OrderItem;
 
-use Generated\Shared\Transfer\ItemCollectionTransfer;
-
 interface SalesOrderItemGrouperInterface
 {
     /**
      * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
-     * @return \Generated\Shared\Transfer\ItemCollectionTransfer
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
-    public function getUniqueOrderItems(iterable $itemTransfers): ItemCollectionTransfer;
+    public function getUniqueOrderItems(iterable $itemTransfers): array;
 }

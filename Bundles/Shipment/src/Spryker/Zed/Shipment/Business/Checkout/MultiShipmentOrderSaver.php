@@ -147,13 +147,14 @@ class MultiShipmentOrderSaver implements MultiShipmentOrderSaverInterface
 
         $shipmentTransfer = $this->saveSalesOrderAddress($shipmentTransfer);
 
-        $shipmentTransfer = $this->entityManager->createOrderShipment(
+        $shipmentTransfer = $this->entityManager->createSalesShipment(
             $shipmentTransfer,
             $orderTransfer,
             $expenseTransfer
         );
 
-        $itemTransfers = $this->updateFkShipmentForOrderItems($shipmentGroupTransfer->getItems(), $shipmentTransfer);
+        $itemTransfers = $shipmentGroupTransfer->getItems();
+        $this->updateFkShipmentForOrderItems($itemTransfers, $shipmentTransfer);
         $shipmentGroupTransfer->setItems($itemTransfers);
 
         return $shipmentGroupTransfer;
@@ -256,15 +257,13 @@ class MultiShipmentOrderSaver implements MultiShipmentOrderSaverInterface
      * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
+     * @return void
      */
-    protected function updateFkShipmentForOrderItems(iterable $itemTransfers, ShipmentTransfer $shipmentTransfer): ArrayObject
+    protected function updateFkShipmentForOrderItems(iterable $itemTransfers, ShipmentTransfer $shipmentTransfer): void
     {
         foreach ($itemTransfers as $itemTransfer) {
             $this->entityManager->updateFkShipmentForOrderItem($itemTransfer, $shipmentTransfer);
         }
-
-        return $itemTransfers;
     }
 
     /**

@@ -18,22 +18,22 @@ class BundleConfigMock
 
     /**
      * @param \Spryker\Shared\Kernel\AbstractBundleConfig $bundleConfig
-     * @param string|null $className
+     *
+     * @return void
      */
-    public function addBundleConfigMock(AbstractBundleConfig $bundleConfig, string $className = null)
+    public function addBundleConfigMock(AbstractBundleConfig $bundleConfig)
     {
-        static::$bundleConfigMocks[$this->getBundleConfigMockKey($bundleConfig, $className)] = $bundleConfig;
+        static::$bundleConfigMocks[get_class(($bundleConfig))] = $bundleConfig;
     }
 
     /**
      * @param \Spryker\Shared\Kernel\AbstractBundleConfig $bundleConfig
-     * @param string|null $className
      *
      * @return bool
      */
-    public function hasBundleConfigMock(AbstractBundleConfig $bundleConfig, string $className = null)
+    public function hasBundleConfigMock(AbstractBundleConfig $bundleConfig)
     {
-        if (isset(static::$bundleConfigMocks[$this->getBundleConfigMockKey($bundleConfig, $className)])) {
+        if (isset(static::$bundleConfigMocks[get_class(($bundleConfig))])) {
             return true;
         }
 
@@ -42,13 +42,12 @@ class BundleConfigMock
 
     /**
      * @param \Spryker\Shared\Kernel\AbstractBundleConfig $bundleConfig
-     * @param string|null $className
      *
      * @return \Spryker\Shared\Kernel\AbstractBundleConfig
      */
-    public function getBundleConfigMock(AbstractBundleConfig $bundleConfig, string $className = null)
+    public function getBundleConfigMock(AbstractBundleConfig $bundleConfig)
     {
-        return static::$bundleConfigMocks[$this->getBundleConfigMockKey($bundleConfig, $className)];
+        return static::$bundleConfigMocks[get_class(($bundleConfig))];
     }
 
     /**
@@ -57,16 +56,5 @@ class BundleConfigMock
     public function reset()
     {
         static::$bundleConfigMocks = [];
-    }
-
-    /**
-     * @param \Spryker\Shared\Kernel\AbstractBundleConfig $bundleConfig
-     * @param string|null $className
-     *
-     * @return string
-     */
-    protected function getBundleConfigMockKey(AbstractBundleConfig $bundleConfig, string $className = null): string
-    {
-        return ($className ?: get_class($bundleConfig));
     }
 }

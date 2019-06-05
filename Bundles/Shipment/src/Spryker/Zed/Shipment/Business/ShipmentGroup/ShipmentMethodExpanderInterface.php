@@ -10,7 +10,7 @@ namespace Spryker\Zed\Shipment\Business\ShipmentGroup;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 
-interface ShipmentMethodExtenderInterface
+interface ShipmentMethodExpanderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
@@ -18,5 +18,5 @@ interface ShipmentMethodExtenderInterface
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer
      */
-    public function extendShipmentMethodTransfer(ShipmentMethodTransfer $shipmentMethodTransfer, OrderTransfer $orderTransfer): ShipmentMethodTransfer;
+    public function expand(ShipmentMethodTransfer $shipmentMethodTransfer, OrderTransfer $orderTransfer): ShipmentMethodTransfer;
 }

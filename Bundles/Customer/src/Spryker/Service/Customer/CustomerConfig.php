@@ -18,6 +18,8 @@ class CustomerConfig extends AbstractBundleConfig
     public function getAddressKeyGenerationExcludedFields(): array
     {
         return [
+            AddressTransfer::ID_CUSTOMER_ADDRESS,
+            AddressTransfer::ID_SALES_ORDER_ADDRESS,
             AddressTransfer::IS_DEFAULT_BILLING,
             AddressTransfer::IS_DEFAULT_SHIPPING,
         ];

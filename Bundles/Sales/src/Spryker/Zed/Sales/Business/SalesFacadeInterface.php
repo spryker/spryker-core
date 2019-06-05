@@ -268,9 +268,9 @@ interface SalesFacadeInterface
      *
      * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
-     * @return \Generated\Shared\Transfer\ItemCollectionTransfer
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
-    public function getUniqueOrderItems(iterable $itemTransfers): ItemCollectionTransfer;
+    public function getUniqueOrderItems(iterable $itemTransfers): array;
 
     /**
      * Specification:
@@ -285,8 +285,6 @@ interface SalesFacadeInterface
     public function findOrderAddressByIdOrderAddress(int $idSalesOrderAddress): ?AddressTransfer;
 
     /**
-     * @todo: Should be refactored to return transfer objects collection.
-     *
      * Specification:
      * - Returns sales order items by salesShipmentId or null.
      *

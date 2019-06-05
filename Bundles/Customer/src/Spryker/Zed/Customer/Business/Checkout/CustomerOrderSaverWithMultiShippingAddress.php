@@ -26,7 +26,9 @@ class CustomerOrderSaverWithMultiShippingAddress extends CustomerOrderSaver
     protected $customerRepository;
 
     /**
-     * @var \Generated\Shared\Transfer\AddressTransfer[]
+     * Keys are unique strings generated using address data. Values don't matter.
+     *
+     * @var bool[]
      */
     protected $existingAddresses = [];
 
@@ -67,25 +69,20 @@ class CustomerOrderSaverWithMultiShippingAddress extends CustomerOrderSaver
 
         $this->existingAddresses = [];
 
-        $billingAddressTransfer = $quoteTransfer->getBillingAddress();
-        $this->processCustomerAddress(
-            $this->getCustomerAddress($billingAddressTransfer, $customer),
-            $customer
-        );
+        $this->processNewUniqueCustomerAddress($quoteTransfer->getBillingAddress(), $customer);
+
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if ($itemTransfer->getIsAddressSavingSkipped() === true) {
-                return;
+            if ($itemTransfer->getIsAddressSavingSkipped()) {
+                continue;
             }
 
             $itemTransfer->requireShipment();
-
             $addressTransfer = $itemTransfer->getShipment()->getShippingAddress();
-            $addressTransfer = $this->getCustomerAddress($addressTransfer, $customer);
+
+            $addressTransfer = $this->processNewUniqueCustomerAddress($addressTransfer, $customer);
 
             $itemTransfer->getShipment()->setShippingAddress($addressTransfer);
-
-            $this->processCustomerAddress($addressTransfer, $customer);
         }
     }
 
@@ -95,18 +92,38 @@ class CustomerOrderSaverWithMultiShippingAddress extends CustomerOrderSaver
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
-    protected function getCustomerAddress(AddressTransfer $addressTransfer, CustomerTransfer $customer): AddressTransfer
+    protected function processNewUniqueCustomerAddress(AddressTransfer $addressTransfer, CustomerTransfer $customer): AddressTransfer
     {
+        if ($addressTransfer->getIdCustomerAddress() !== null
+            || $this->checkNewAddressIsAlreadyPersist($addressTransfer)
+        ) {
+            return $addressTransfer;
+        }
+
         if ($addressTransfer->getFkCustomer() === null) {
             $addressTransfer->setFkCustomer($customer->getIdCustomer());
         }
 
+        $this->processCustomerAddress($addressTransfer, $customer);
+
+        return $addressTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
+     * @return bool
+     */
+    protected function checkNewAddressIsAlreadyPersist(AddressTransfer $addressTransfer): bool
+    {
         $key = $this->customerService->getUniqueAddressKey($addressTransfer);
-        if (!isset($this->existingAddresses[$key])) {
-            $customerAddressTransfer = $this->customerRepository->findAddressByAddressData($addressTransfer);
-            $this->existingAddresses[$key] = $customerAddressTransfer ?: $addressTransfer;
+        if (isset($this->existingAddresses[$key])) {
+            return true;
         }
 
-        return $this->existingAddresses[$key];
+        $customerAddressTransfer = $this->customerRepository->findAddressByAddressData($addressTransfer);
+        $this->existingAddresses[$key] = true;
+
+        return $customerAddressTransfer !== null;
     }
 }

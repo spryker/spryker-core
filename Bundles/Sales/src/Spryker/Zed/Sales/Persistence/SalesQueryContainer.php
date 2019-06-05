@@ -337,22 +337,4 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
             ->groupBySku()
             ->orderByCount();
     }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
-     *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesShipmentQuery
-     */
-    public function queryShipmentByTransfer(ShipmentTransfer $shipmentTransfer): SpySalesShipmentQuery
-    {
-        return $this
-            ->getFactory()
-            ->createSpySalesShipmentQuery()
-            ->filterByRequestedDeliveryDate($shipmentTransfer->getRequestedDeliveryDate())
-            ->filterByFkSalesOrderAddress($shipmentTransfer->getShippingAddress()->getIdSalesOrderAddress());
-    }
 }

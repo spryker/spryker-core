@@ -39,6 +39,9 @@ class DetailController extends AbstractController
             return $this->redirectResponse(Url::generate('/sales')->build());
         }
 
+        /**
+         * @todo Change here. Test with an old orders.
+         */
         $distinctOrderStates = $this->getFacade()->getDistinctOrderStates($idSalesOrder);
         $events = $this->getFactory()->getOmsFacade()->getDistinctManualEventsByIdSalesOrder($idSalesOrder);
         $eventsGroupedByItem = $this->getFactory()->getOmsFacade()->getManualEventsByIdSalesOrder($idSalesOrder);
@@ -50,12 +53,7 @@ class DetailController extends AbstractController
         }
 
         $groupedOrderItems = $this->getFacade()
-            ->getUniqueOrderItems($orderTransfer->getItems())
-            ->getItems();
-
-        $hasOrderMultipleItemLevelAddresses = $this->getFactory()
-            ->createOrderMultipleItemLevelAddressesChecker()
-            ->hasMultipleItemLevelAddresses($orderTransfer);
+            ->getUniqueOrderItems($orderTransfer->getItems());
 
         return array_merge([
             'eventsGroupedByItem' => $eventsGroupedByItem,
@@ -65,7 +63,6 @@ class DetailController extends AbstractController
             'orderItemSplitFormCollection' => $orderItemSplitFormCollection,
             'groupedOrderItems' => $groupedOrderItems,
             'groupedOrderItemsByShipment' => $orderTransfer->getShipmentGroups(),
-            'hasOrderMultipleItemLevelAddresses' => $hasOrderMultipleItemLevelAddresses,
         ], $blockResponseData);
     }
 

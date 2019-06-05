@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentPriceTransfer;
 use Spryker\Shared\Shipment\ShipmentConstants;
 
-class ShipmentMethodExtender implements ShipmentMethodExtenderInterface
+class ShipmentMethodExpander implements ShipmentMethodExpanderInterface
 {
     /**
      * @var \Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentFetcherInterface
@@ -33,7 +33,7 @@ class ShipmentMethodExtender implements ShipmentMethodExtenderInterface
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer
      */
-    public function extendShipmentMethodTransfer(ShipmentMethodTransfer $shipmentMethodTransfer, OrderTransfer $orderTransfer): ShipmentMethodTransfer
+    public function expand(ShipmentMethodTransfer $shipmentMethodTransfer, OrderTransfer $orderTransfer): ShipmentMethodTransfer
     {
         $newShipmentTransfer = $this->shipmentFetcher
             ->findActiveShipmentMethodWithPricesAndCarrierById($shipmentMethodTransfer->getIdShipmentMethod());

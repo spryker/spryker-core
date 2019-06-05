@@ -7,46 +7,62 @@
 
 namespace Spryker\Zed\Sales\Business\OrderItem;
 
-use ArrayObject;
-use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Spryker\Zed\Sales\Dependency\Service\SalesToUtilQuantityServiceInterface;
 
 class SalesOrderItemGrouper implements SalesOrderItemGrouperInterface
 {
     /**
-     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
-     *
-     * @return \Generated\Shared\Transfer\ItemCollectionTransfer
+     * @var \Spryker\Zed\Sales\Dependency\Service\SalesToUtilQuantityServiceInterface
      */
-    public function getUniqueOrderItems(iterable $itemTransfers): ItemCollectionTransfer
+    protected $utilQuantityService;
+
+    /**
+     * @param \Spryker\Zed\Sales\Dependency\Service\SalesToUtilQuantityServiceInterface $utilQuantityService
+     */
+    public function __construct(SalesToUtilQuantityServiceInterface $utilQuantityService)
     {
-        $calculatedOrderLines = new ArrayObject();
-        foreach ($itemTransfers as $itemTransfer) {
-            $itemTransfer->requireGroupKey();
-            $key = $itemTransfer->getGroupKey();
-            if (!isset($calculatedOrderLines[$key])) {
-                $calculatedOrderLines[$key] = $itemTransfer;
-                continue;
-            }
-
-            $calculatedOrderLines[$key] = $this->changeQuantityOfUniqueItem($calculatedOrderLines[$key], $itemTransfer);
-        }
-
-        return (new ItemCollectionTransfer())
-            ->setItems($calculatedOrderLines);
+        $this->utilQuantityService = $utilQuantityService;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $calculatedItem
+     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function getUniqueOrderItems(iterable $itemTransfers): array
+    {
+        $calculatedOrderItems = [];
+        foreach ($itemTransfers as $itemTransfer) {
+            $itemTransfer->requireGroupKey();
+            $key = $itemTransfer->getGroupKey();
+            if (!isset($calculatedOrderItems[$key])) {
+                $calculatedOrderItems[$key] = $itemTransfer;
+                continue;
+            }
+
+            $calculatedOrderItems[$key] = $this->setQuantityAndPriceOfUniqueOrderItem($calculatedOrderItems[$key], $itemTransfer);
+        }
+
+        return $calculatedOrderItems;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $calculatedOrderItem
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return \Generated\Shared\Transfer\ItemTransfer
      */
-    protected function changeQuantityOfUniqueItem(ItemTransfer $calculatedItem, ItemTransfer $itemTransfer): ItemTransfer
+    protected function setQuantityAndPriceOfUniqueOrderItem(ItemTransfer $calculatedOrderItem, ItemTransfer $itemTransfer): ItemTransfer
     {
-        $calculatedItem->setQuantity($calculatedItem->getQuantity() + $itemTransfer->getQuantity());
-        $calculatedItem->setSumPrice($calculatedItem->getSumPrice() + $itemTransfer->getSumPrice());
+        $newQuantity = $this->utilQuantityService->sumQuantities(
+            $calculatedOrderItem->getQuantity(),
+            $itemTransfer->getQuantity()
+        );
 
-        return $calculatedItem;
+        $calculatedOrderItem->setQuantity($newQuantity);
+        $calculatedOrderItem->setSumPrice($calculatedOrderItem->getSumPrice() + $itemTransfer->getSumPrice());
+
+        return $calculatedOrderItem;
     }
 }

@@ -28,10 +28,12 @@ use Spryker\Zed\Sales\Business\Model\Order\OrderReferenceGenerator;
 use Spryker\Zed\Sales\Business\Model\Order\OrderRepositoryReader;
 use Spryker\Zed\Sales\Business\Model\Order\OrderUpdater;
 use Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaver;
+use Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaverInterface;
 use Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaverPluginExecutor;
 use Spryker\Zed\Sales\Business\Model\OrderItem\OrderItemTransformer;
 use Spryker\Zed\Sales\Business\Model\OrderItem\OrderItemTransformerInterface;
 use Spryker\Zed\Sales\Business\Model\OrderItem\SalesOrderItemMapper as ModelSalesOrderItemMapper;
+use Spryker\Zed\Sales\Dependency\Service\SalesToUtilQuantityServiceInterface;
 use Spryker\Zed\Sales\Persistence\Propel\Mapper\SalesOrderItemMapper;
 use Spryker\Zed\Sales\Business\Order\OrderHydrator as OrderHydratorWithMultiShippingAddress;
 use Spryker\Zed\Sales\Business\Order\OrderHydratorInterface;
@@ -103,7 +105,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaverInterface
      */
-    public function createSalesOrderSaver()
+    public function createSalesOrderSaver(): SalesOrderSaverInterface
     {
         return new SalesOrderSaver(
             $this->getCountryFacade(),
@@ -198,6 +200,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
         return new OrderHydratorWithMultiShippingAddress(
             $this->getQueryContainer(),
             $this->getOmsFacade(),
+            $this->getUtilPriceService(),
             $this->createSalesOrderItemGrouper(),
             $this->getHydrateOrderPlugins()
         );
@@ -387,14 +390,6 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Sales\Dependency\Service\SalesToShipmentServiceInterface
-     */
-    protected function getShipmentService(): SalesToShipmentServiceInterface
-    {
-        return $this->getProvidedDependency(SalesDependencyProvider::SERVICE_SHIPMENT);
-    }
-
-    /**
      * @return \Spryker\Zed\Sales\Business\OrderItem\SalesOrderItemGrouperInterface
      */
     public function createSalesOrderItemGrouper(): SalesOrderItemGrouperInterface
@@ -429,5 +424,13 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     public function createSalesOrderItemMapper(): SalesOrderItemMapperInterface
     {
         return new SalesOrderItemMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Dependency\Service\SalesToUtilQuantityServiceInterface
+     */
+    protected function getUtilQuantityService(): SalesToUtilQuantityServiceInterface
+    {
+        return $this->getProvidedDependency(SalesDependencyProvider::SERVICE_SHIPMENT);
     }
 }
