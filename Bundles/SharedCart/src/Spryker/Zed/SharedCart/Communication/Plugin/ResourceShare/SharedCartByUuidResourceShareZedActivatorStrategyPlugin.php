@@ -23,7 +23,15 @@ class SharedCartByUuidResourceShareZedActivatorStrategyPlugin extends AbstractPl
      * @uses \Spryker\Shared\PersistentCartShare\PersistentCartShareConfig::RESOURCE_TYPE_QUOTE
      */
     protected const RESOURCE_TYPE_QUOTE = 'quote';
+
+    /**
+     * @uses SharedCartConfig::PERMISSION_GROUP_READ_ONLY
+     */
     protected const PERMISSION_GROUP_READ_ONLY = 'READ_ONLY';
+
+    /**
+     * @uses SharedCartConfig::PERMISSION_GROUP_FULL_ACCESS
+     */
     protected const PERMISSION_GROUP_FULL_ACCESS = 'FULL_ACCESS';
 
     /**

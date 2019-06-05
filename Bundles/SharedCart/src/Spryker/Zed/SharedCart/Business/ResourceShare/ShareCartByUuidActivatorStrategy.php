@@ -57,7 +57,8 @@ class ShareCartByUuidActivatorStrategy implements ShareCartByUuidActivatorStrate
     public function applyShareCartByUuidActivatorStrategy(
         ResourceShareRequestTransfer $resourceShareRequestTransfer
     ): ResourceShareResponseTransfer {
-        $resourceShareRequestTransfer->requireCustomer()
+        $resourceShareRequestTransfer
+            ->requireCustomer()
             ->requireResourceShare();
 
         if ($this->isProvidedCompanyUserResourceShareOwner($resourceShareRequestTransfer)) {
@@ -97,7 +98,8 @@ class ShareCartByUuidActivatorStrategy implements ShareCartByUuidActivatorStrate
      */
     protected function createCartShareForProvidedCompanyUser(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer
     {
-        $idQuote = $resourceShareRequestTransfer->getResourceShare()
+        $idQuote = $resourceShareRequestTransfer
+            ->getResourceShare()
             ->getResourceShareData()
             ->getIdQuote();
 
@@ -121,11 +123,13 @@ class ShareCartByUuidActivatorStrategy implements ShareCartByUuidActivatorStrate
      */
     protected function findShareDetail(ResourceShareRequestTransfer $resourceShareRequestTransfer): ?ShareDetailTransfer
     {
-        $idCompanyUser = $resourceShareRequestTransfer->getCustomer()
+        $idCompanyUser = $resourceShareRequestTransfer
+            ->getCustomer()
             ->getCompanyUserTransfer()
             ->getIdCompanyUser();
 
-        $idQuote = $resourceShareRequestTransfer->getResourceShare()
+        $idQuote = $resourceShareRequestTransfer
+            ->getResourceShare()
             ->getResourceShareData()
             ->getIdQuote();
 
@@ -139,7 +143,8 @@ class ShareCartByUuidActivatorStrategy implements ShareCartByUuidActivatorStrate
      */
     protected function isProvidedCompanyUserResourceShareOwner(ResourceShareRequestTransfer $resourceShareRequestTransfer): bool
     {
-        $ownerCompanyUserId = $resourceShareRequestTransfer->getResourceShare()
+        $ownerCompanyUserId = $resourceShareRequestTransfer
+            ->getResourceShare()
             ->getResourceShareData()
             ->getOwnerCompanyUserId();
 
@@ -177,7 +182,8 @@ class ShareCartByUuidActivatorStrategy implements ShareCartByUuidActivatorStrate
     protected function isSharedCartLocked(ResourceShareRequestTransfer $resourceShareRequestTransfer): bool
     {
         $quoteResponseTransfer = $this->quoteFacade->findQuoteById(
-            $resourceShareRequestTransfer->getResourceShare()
+            $resourceShareRequestTransfer
+                ->getResourceShare()
                 ->getResourceShareData()
                 ->getIdQuote()
         );
