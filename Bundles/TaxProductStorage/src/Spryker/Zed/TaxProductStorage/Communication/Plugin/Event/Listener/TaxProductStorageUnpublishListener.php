@@ -13,7 +13,7 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
  * @method \Spryker\Zed\TaxProductStorage\Communication\TaxProductStorageCommunicationFactory getFactory()
- * @method \Spryker\Zed\TaxProductStorage\Business\TaxProductStorageFacade getFacade()
+ * @method \Spryker\Zed\TaxProductStorage\Business\TaxProductStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\TaxProductStorage\TaxProductStorageConfig getConfig()
  */
 class TaxProductStorageUnpublishListener extends AbstractPlugin implements EventBulkHandlerInterface
