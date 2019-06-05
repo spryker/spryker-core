@@ -7,12 +7,19 @@
 
 namespace Spryker\Zed\Messenger\Business\Model;
 
+use Spryker\Zed\Translator\Communication\Plugin\Messenger\TranslationPlugin;
+
 class BaseMessageTray
 {
     /**
      * @var \Spryker\Zed\MessengerExtension\Dependency\Plugin\TranslationPluginInterface[]
      */
     protected $translationPlugins;
+
+    /**
+     * @var \Spryker\Zed\Translator\Communication\Plugin\Messenger\TranslationPlugin
+     */
+    protected $baseTranslationPlugin;
 
     /**
      * @param \Spryker\Zed\MessengerExtension\Dependency\Plugin\TranslationPluginInterface[] $translationPlugins
@@ -34,12 +41,14 @@ class BaseMessageTray
             if ($translationPlugin->hasKey($keyName)) {
                 return $translationPlugin->translate($keyName, $data);
             }
+
+            if ($translationPlugin instanceof TranslationPlugin) {
+                $this->baseTranslationPlugin = $translationPlugin;
+            }
         }
 
-        if ($this->translationPlugins) {
-            $translationPlugin = end($this->translationPlugins);
-
-            return $translationPlugin->translate($keyName, $data);
+        if ($this->baseTranslationPlugin !== null) {
+            return $this->baseTranslationPlugin->translate($keyName, $data);
         }
 
         return $keyName;
