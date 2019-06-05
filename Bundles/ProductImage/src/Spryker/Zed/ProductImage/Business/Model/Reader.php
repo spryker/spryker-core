@@ -88,6 +88,12 @@ class Reader implements ReaderInterface
             ->queryLocalizedConcreteProductImageSets($idProduct, $idLocale)
             ->find();
 
+        if (!count($imageCollection)) {
+            $imageCollection = $this->productImageContainer
+                ->queryDefaultConcreteProductImageSets($idProduct)
+                ->find();
+        }
+
         return $this->transferMapper->mapProductImageSetCollection($imageCollection);
     }
 
