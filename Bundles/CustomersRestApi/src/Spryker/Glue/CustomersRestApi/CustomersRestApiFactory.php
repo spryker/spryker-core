@@ -31,6 +31,10 @@ use Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomerResourceMapper;
 use Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomerResourceMapperInterface;
 use Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomerRestorePasswordResourceMapper;
 use Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomerRestorePasswordResourceMapperInterface;
+use Spryker\Glue\CustomersRestApi\Processor\Relationship\CustomerByCompanyUserResourceRelationshipExpander;
+use Spryker\Glue\CustomersRestApi\Processor\Relationship\CustomerResourceRelationshipExpanderInterface;
+use Spryker\Glue\CustomersRestApi\Processor\RestResponseBuilder\CustomerRestResponseBuilder;
+use Spryker\Glue\CustomersRestApi\Processor\RestResponseBuilder\CustomerRestResponseBuilderInterface;
 use Spryker\Glue\CustomersRestApi\Processor\Session\SessionCreator;
 use Spryker\Glue\CustomersRestApi\Processor\Session\SessionCreatorInterface;
 use Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiError;
@@ -138,6 +142,17 @@ class CustomersRestApiFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Glue\CustomersRestApi\Processor\Relationship\CustomerResourceRelationshipExpanderInterface
+     */
+    public function createCustomerByCompanyUserResourceRelationshipExpander(): CustomerResourceRelationshipExpanderInterface
+    {
+        return new CustomerByCompanyUserResourceRelationshipExpander(
+            $this->createCustomerRestResponseBuilder(),
+            $this->createCustomerResourceMapper()
+        );
+    }
+
+    /**
      * @return \Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomerForgottenPasswordResourceMapperInterface
      */
     public function createCustomerForgottenPasswordResourceMapper(): CustomerForgottenPasswordResourceMapperInterface
@@ -193,6 +208,16 @@ class CustomersRestApiFactory extends AbstractFactory
         return new SessionCreator(
             $this->getCustomerClient(),
             $this->getCustomerExpanderPlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\CustomersRestApi\Processor\RestResponseBuilder\CustomerRestResponseBuilderInterface
+     */
+    public function createCustomerRestResponseBuilder(): CustomerRestResponseBuilderInterface
+    {
+        return new CustomerRestResponseBuilder(
+            $this->getResourceBuilder()
         );
     }
 
