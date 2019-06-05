@@ -43,6 +43,11 @@ class CartsRestApiFacadeTest extends Unit
     protected $tester;
 
     /**
+     * @uses \Spryker\Shared\PersistentCart\PersistentCartConfig::PERSISTENT_CART_ANONYMOUS_PREFIX
+     */
+    protected const PERSISTENT_CART_ANONYMOUS_PREFIX = 'anonymous:';
+
+    /**
      * @return void
      */
     public function testCartsFacadeWillFindQuoteByUuid(): void
@@ -59,21 +64,6 @@ class CartsRestApiFacadeTest extends Unit
         $this->assertInstanceOf(QuoteTransfer::class, $actualQuoteResponseTransfer->getQuoteTransfer());
         $this->assertEquals($quoteTransfer->getCustomerReference(), $actualQuoteResponseTransfer->getQuoteTransfer()->getCustomerReference());
         $this->assertEquals($quoteTransfer->getUuid(), $actualQuoteResponseTransfer->getQuoteTransfer()->getUuid());
-    }
-
-    /**
-     * @return void
-     */
-    public function testCartsFacadeWillNotFindQuoteByUuidWithoutCustomerReference(): void
-    {
-        /** @var \Spryker\Zed\CartsRestApi\Business\CartsRestApiFacade $cartsRestApiFacade */
-        $cartsRestApiFacade = $this->tester->getFacade();
-        $cartsRestApiFacade->setFactory($this->getMockCartsRestApiBusinessFactory());
-
-        $quoteTransfer = $this->tester->prepareQuoteTransferWithoutCustomerReference();
-
-        $this->expectException(RequiredTransferPropertyException::class);
-        $cartsRestApiFacade->findQuoteByUuid($quoteTransfer);
     }
 
     /**
@@ -540,6 +530,122 @@ class CartsRestApiFacadeTest extends Unit
         $assignGuestQuoteRequestTransfer = $this->tester->prepareAssignGuestQuoteRequestTransferWithoutAnonymousCustomerReference();
         $this->expectException(RequiredTransferPropertyException::class);
         $cartsRestApiFacade->assignGuestCartToRegisteredCustomer($assignGuestQuoteRequestTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateItemQuantityWillUpdateItemQuantity(): void
+    {
+        /** @var \Spryker\Zed\CartsRestApi\Business\CartsRestApiFacade $cartsRestApiFacade */
+        $cartsRestApiFacade = $this->tester->getFacade();
+        $cartsRestApiFacade->setFactory($this->getMockCartsRestApiBusinessFactory());
+
+        $cartItemRequestTransfer = $this->tester->prepareCartItemRequestTransferWithQuantity();
+        $quoteResponseTransfer = $cartsRestApiFacade->updateItemQuantity($cartItemRequestTransfer);
+
+        $this->assertInstanceOf(QuoteResponseTransfer::class, $quoteResponseTransfer);
+        $this->assertTrue($quoteResponseTransfer->getIsSuccessful());
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateItemQuantityWillNotAllowUpdateItemQuantityWithoutCustomer(): void
+    {
+        /** @var \Spryker\Zed\CartsRestApi\Business\CartsRestApiFacade $cartsRestApiFacade */
+        $cartsRestApiFacade = $this->tester->getFacade();
+        $cartsRestApiFacade->setFactory($this->getMockCartsRestApiBusinessFactory());
+
+        $cartItemRequestTransfer = $this->tester->prepareCartItemRequestTransferWithoutCustomer();
+        $this->expectException(RequiredTransferPropertyException::class);
+        $cartsRestApiFacade->updateItemQuantity($cartItemRequestTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateItemQuantityWillNotAllowUpdateItemQuantityWithoutQuantity(): void
+    {
+        /** @var \Spryker\Zed\CartsRestApi\Business\CartsRestApiFacade $cartsRestApiFacade */
+        $cartsRestApiFacade = $this->tester->getFacade();
+        $cartsRestApiFacade->setFactory($this->getMockCartsRestApiBusinessFactory());
+
+        $cartItemRequestTransfer = $this->tester->prepareCartItemRequestTransferWithoutQuantity();
+        $this->expectException(RequiredTransferPropertyException::class);
+        $cartsRestApiFacade->updateItemQuantity($cartItemRequestTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testAddToCartWillAddItemToCart(): void
+    {
+        /** @var \Spryker\Zed\CartsRestApi\Business\CartsRestApiFacade $cartsRestApiFacade */
+        $cartsRestApiFacade = $this->tester->getFacade();
+        $cartsRestApiFacade->setFactory($this->getMockCartsRestApiBusinessFactory());
+
+        $cartItemRequestTransfer = $this->tester->prepareCartItemRequestTransferWithQuantity();
+        $quoteResponseTransfer = $cartsRestApiFacade->addToCart($cartItemRequestTransfer);
+
+        $this->assertInstanceOf(QuoteResponseTransfer::class, $quoteResponseTransfer);
+        $this->assertTrue($quoteResponseTransfer->getIsSuccessful());
+    }
+
+    /**
+     * @return void
+     */
+    public function testAddToCartWillNotAllowAddItemWithoutCustomerReference(): void
+    {
+        /** @var \Spryker\Zed\CartsRestApi\Business\CartsRestApiFacade $cartsRestApiFacade */
+        $cartsRestApiFacade = $this->tester->getFacade();
+        $cartsRestApiFacade->setFactory($this->getMockCartsRestApiBusinessFactory());
+
+        $restCartItemsAttributesTransfer = $this->tester->prepareRestCartItemsAttributesTransferWithoutCustomerReference();
+        $this->expectException(RequiredTransferPropertyException::class);
+        $cartsRestApiFacade->addToCart($restCartItemsAttributesTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testAddToCartWillNotAllowAddItemWithoutSku(): void
+    {
+        /** @var \Spryker\Zed\CartsRestApi\Business\CartsRestApiFacade $cartsRestApiFacade */
+        $cartsRestApiFacade = $this->tester->getFacade();
+        $cartsRestApiFacade->setFactory($this->getMockCartsRestApiBusinessFactory());
+
+        $restCartItemsAttributesTransfer = $this->tester->prepareRestCartItemsAttributesTransferWithoutSku();
+        $this->expectException(RequiredTransferPropertyException::class);
+        $cartsRestApiFacade->addToCart($restCartItemsAttributesTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testAddToCartWillNotAllowAddItemWithoutUuid(): void
+    {
+        /** @var \Spryker\Zed\CartsRestApi\Business\CartsRestApiFacade $cartsRestApiFacade */
+        $cartsRestApiFacade = $this->tester->getFacade();
+        $cartsRestApiFacade->setFactory($this->getMockCartsRestApiBusinessFactory());
+
+        $restCartItemsAttributesTransfer = $this->tester->prepareRestCartItemsAttributesTransferWithoutUuid();
+        $this->expectException(RequiredTransferPropertyException::class);
+        $cartsRestApiFacade->addToCart($restCartItemsAttributesTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testAddToCartWillNotAllowAddItemWithoutQuantity(): void
+    {
+        /** @var \Spryker\Zed\CartsRestApi\Business\CartsRestApiFacade $cartsRestApiFacade */
+        $cartsRestApiFacade = $this->tester->getFacade();
+        $cartsRestApiFacade->setFactory($this->getMockCartsRestApiBusinessFactory());
+
+        $restCartItemsAttributesTransfer = $this->tester->prepareRestCartItemsAttributesTransferWithoutQuantity();
+        $this->expectException(RequiredTransferPropertyException::class);
+        $cartsRestApiFacade->addToCart($restCartItemsAttributesTransfer);
     }
 
     /**

@@ -7,12 +7,15 @@
 
 namespace Spryker\Zed\CartsRestApi\Business\QuoteItem\Mapper;
 
+use Generated\Shared\Transfer\CartItemRequestTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCartItemsAttributesTransfer;
 
 interface QuoteItemMapperInterface
 {
     /**
+     * @deprecated Use mapCartItemsRequestTransferToQuoteTransfer() instead.
+     *
      * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -20,6 +23,17 @@ interface QuoteItemMapperInterface
      */
     public function mapRestCartItemsAttributesTransferToQuoteTransfer(
         RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer,
+        QuoteTransfer $quoteTransfer
+    ): QuoteTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CartItemRequestTransfer $cartItemRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function mapCartItemsRequestTransferToQuoteTransfer(
+        CartItemRequestTransfer $cartItemRequestTransfer,
         QuoteTransfer $quoteTransfer
     ): QuoteTransfer;
 }

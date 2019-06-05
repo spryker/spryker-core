@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\CartsRestApi\Processor\CartItem;
 
+use Generated\Shared\Transfer\CartItemRequestTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\RestCartItemsAttributesTransfer;
 use Spryker\Client\CartsRestApi\CartsRestApiClientInterface;
@@ -76,14 +77,16 @@ class CartItemAdder implements CartItemAdderInterface
         RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
     ): RestResponseInterface {
         $customerTransfer = (new CustomerTransfer())
-            ->setIdCustomer($restRequest->getRestUser()->getSurrogateIdentifier());
+            ->setIdCustomer($restRequest->getRestUser()->getSurrogateIdentifier())
+            ->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier());
         $customerTransfer = $this->executeCustomerExpanderPlugins($customerTransfer, $restRequest);
-        $restCartItemsAttributesTransfer
-            ->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier())
+        $cartItemRequestTransfer = (new CartItemRequestTransfer())
             ->setQuoteUuid($this->findCartIdentifier($restRequest))
+            ->setQuantity($restCartItemsAttributesTransfer->getQuantity())
+            ->setSku($restCartItemsAttributesTransfer->getSku())
             ->setCustomer($customerTransfer);
 
-        $quoteResponseTransfer = $this->cartsRestApiClient->addItem($restCartItemsAttributesTransfer);
+        $quoteResponseTransfer = $this->cartsRestApiClient->addToCart($cartItemRequestTransfer);
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $this->cartRestResponseBuilder->createFailedErrorResponse($quoteResponseTransfer->getErrors());
         }

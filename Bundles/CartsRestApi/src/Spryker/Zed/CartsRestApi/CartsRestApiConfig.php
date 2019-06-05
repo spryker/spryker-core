@@ -10,9 +10,6 @@ namespace Spryker\Zed\CartsRestApi;
 use Spryker\Shared\CartsRestApi\CartsRestApiConfig as CartsRestApiSharedConfig;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
-/**
- * @method \Spryker\Shared\CartsRestApi\CartsRestApiConfig getSharedConfig()
- */
 class CartsRestApiConfig extends AbstractBundleConfig
 {
     /**
@@ -52,13 +49,5 @@ class CartsRestApiConfig extends AbstractBundleConfig
             static::MESSAGE_PRICE_MODE_DATA_IS_MISSING => CartsRestApiSharedConfig::ERROR_IDENTIFIER_PRICE_MODE_DATA_IS_MISSING,
             static::MESSAGE_PRICE_MODE_DATA_IS_INCORRECT => CartsRestApiSharedConfig::ERROR_IDENTIFIER_PRICE_MODE_DATA_IS_INCORRECT,
         ];
-    }
-
-    /**
-     * @return string
-     */
-    public function getAnonymousPrefix()
-    {
-        return $this->getSharedConfig()->getPersistentCartAnonymousPrefix();
     }
 }

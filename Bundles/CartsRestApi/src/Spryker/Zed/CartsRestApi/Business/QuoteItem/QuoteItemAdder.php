@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CartsRestApi\Business\QuoteItem;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\CartItemRequestTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteErrorTransfer;
@@ -61,6 +62,8 @@ class QuoteItemAdder implements QuoteItemAdderInterface
     }
 
     /**
+     * @deprecated Use addToCart() instead.
+     *
      * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
@@ -73,13 +76,33 @@ class QuoteItemAdder implements QuoteItemAdderInterface
             ->requireQuantity()
             ->requireQuoteUuid();
 
-        $quoteResponseTransfer = $this->quoteReader->findQuoteByUuid(
-            $this->quoteItemMapper->mapRestCartItemsAttributesTransferToQuoteTransfer(
-                $restCartItemsAttributesTransfer,
-                new QuoteTransfer()
-            )
+        $cartItemRequestTransfer = (new CartItemRequestTransfer())
+            ->fromArray($restCartItemsAttributesTransfer->toArray(), true);
+
+        return $this->addToCart($cartItemRequestTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartItemRequestTransfer $cartItemRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function addToCart(CartItemRequestTransfer $cartItemRequestTransfer): QuoteResponseTransfer
+    {
+        $cartItemRequestTransfer
+            ->requireCustomer()
+            ->requireSku()
+            ->requireQuantity()
+            ->requireQuoteUuid();
+
+        $cartItemRequestTransfer->getCustomer()->requireCustomerReference();
+
+        $quoteTransfer = $this->quoteItemMapper->mapCartItemsRequestTransferToQuoteTransfer(
+            $cartItemRequestTransfer,
+            new QuoteTransfer()
         );
 
+        $quoteResponseTransfer = $this->quoteReader->findQuoteByUuid($quoteTransfer);
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $quoteResponseTransfer;
         }
@@ -91,10 +114,14 @@ class QuoteItemAdder implements QuoteItemAdderInterface
                     ->setErrorIdentifier(CartsRestApiSharedConfig::ERROR_IDENTIFIER_UNAUTHORIZED_CART_ACTION));
         }
 
-        $cartChangeTransfer = $this->createCartChangeTransfer(
-            $quoteResponseTransfer->getQuoteTransfer(),
-            $restCartItemsAttributesTransfer
-        );
+        $quoteTransfer = $quoteResponseTransfer->getQuoteTransfer()
+            ->setCustomer((new CustomerTransfer())
+                ->setCustomerReference($cartItemRequestTransfer->getCustomer()->getCustomerReference()));
+        $cartChangeTransfer = (new CartChangeTransfer())
+            ->setQuote($quoteTransfer)
+            ->addItem((new ItemTransfer())
+                ->setSku($cartItemRequestTransfer->getSku())
+                ->setQuantity($cartItemRequestTransfer->getQuantity()));
 
         $quoteResponseTransfer = $this->cartFacade->addToQuote($cartChangeTransfer);
         if (!$quoteResponseTransfer->getIsSuccessful()) {
@@ -104,26 +131,5 @@ class QuoteItemAdder implements QuoteItemAdderInterface
         }
 
         return $quoteResponseTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
-     *
-     * @return \Generated\Shared\Transfer\CartChangeTransfer
-     */
-    protected function createCartChangeTransfer(
-        QuoteTransfer $quoteTransfer,
-        RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
-    ): CartChangeTransfer {
-        $quoteTransfer
-            ->setCustomer((new CustomerTransfer())
-                ->setCustomerReference($restCartItemsAttributesTransfer->getCustomerReference()));
-
-        return (new CartChangeTransfer())
-            ->setQuote($quoteTransfer)
-            ->addItem((new ItemTransfer())
-                ->setSku($restCartItemsAttributesTransfer->getSku())
-                ->setQuantity($restCartItemsAttributesTransfer->getQuantity()));
     }
 }

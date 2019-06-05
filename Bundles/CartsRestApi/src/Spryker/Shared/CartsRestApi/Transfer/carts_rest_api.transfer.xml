@@ -95,6 +95,13 @@
         <property name="customerReference" type="string" />
     </transfer>
 
+    <transfer name="CartItemRequest">
+        <property name="sku" type="string" />
+        <property name="quantity" type="int" />
+        <property name="quoteUuid" type="string" />
+        <property name="customer" type="Customer" />
+    </transfer>
+
     <transfer name="QuoteError">
         <property name="message" type="string"/>
         <property name="errorIdentifier" type="string"/>

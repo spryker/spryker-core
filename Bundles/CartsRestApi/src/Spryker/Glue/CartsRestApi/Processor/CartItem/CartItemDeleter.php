@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\CartsRestApi\Processor\CartItem;
 
+use Generated\Shared\Transfer\CartItemRequestTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\RestCartItemsAttributesTransfer;
 use Spryker\Client\CartsRestApi\CartsRestApiClientInterface;
@@ -65,18 +66,18 @@ class CartItemDeleter implements CartItemDeleterInterface
     {
         $uuidQuote = $this->findCartIdentifier($restRequest);
         $itemIdentifier = $restRequest->getResource()->getId();
+        $customerTransfer = (new CustomerTransfer())
+            ->setIdCustomer($restRequest->getRestUser()->getSurrogateIdentifier())
+            ->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier());
 
-        $restCartItemsAttributesTransfer = $this->createRestCartItemsAttributesTransfer(
-            $itemIdentifier,
-            $restRequest,
-            $uuidQuote
-        );
-
-        $customerTransfer = (new CustomerTransfer())->setIdCustomer($restRequest->getRestUser()->getSurrogateIdentifier());
         $customerTransfer = $this->executeCustomerExpanderPlugins($customerTransfer, $restRequest);
-        $restCartItemsAttributesTransfer->setCustomer($customerTransfer);
 
-        $quoteResponseTransfer = $this->cartsRestApiClient->deleteItem($restCartItemsAttributesTransfer);
+        $cartItemRequestTransfer = (new CartItemRequestTransfer())
+            ->setQuoteUuid($uuidQuote)
+            ->setSku($itemIdentifier)
+            ->setCustomer($customerTransfer);
+
+        $quoteResponseTransfer = $this->cartsRestApiClient->removeItem($cartItemRequestTransfer);
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $this->cartRestResponseBuilder->createFailedErrorResponse($quoteResponseTransfer->getErrors());
         }

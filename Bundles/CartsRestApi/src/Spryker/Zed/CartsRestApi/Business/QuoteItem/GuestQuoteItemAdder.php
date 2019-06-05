@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CartsRestApi\Business\QuoteItem;
 
+use Generated\Shared\Transfer\CartItemRequestTransfer;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
@@ -69,6 +70,8 @@ class GuestQuoteItemAdder implements GuestQuoteItemAdderInterface
     }
 
     /**
+     * @deprecated addToGuestCart() instead.
+     *
      * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
@@ -79,43 +82,70 @@ class GuestQuoteItemAdder implements GuestQuoteItemAdderInterface
             ->requireSku()
             ->requireCustomerReference();
 
-        if (!$restCartItemsAttributesTransfer->getQuoteUuid()) {
-            return $this->createGuestQuote($restCartItemsAttributesTransfer);
+        $cartItemRequestTransfer = (new CartItemRequestTransfer())
+            ->fromArray($restCartItemsAttributesTransfer->toArray(), true);
+
+        return $this->addToGuestCart($cartItemRequestTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartItemRequestTransfer $cartItemRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function addToGuestCart(CartItemRequestTransfer $cartItemRequestTransfer): QuoteResponseTransfer
+    {
+        $cartItemRequestTransfer
+            ->requireSku()
+            ->requireCustomer();
+
+        $cartItemRequestTransfer->getCustomer()->requireCustomerReference();
+
+        if (!$cartItemRequestTransfer->getQuoteUuid()) {
+            return $this->createGuestQuote($cartItemRequestTransfer);
         }
 
         $customerQuoteCollection = $this->quoteReader->getQuoteCollection(
-            (new QuoteCriteriaFilterTransfer())->setCustomerReference($restCartItemsAttributesTransfer->getCustomerReference())
+            (new QuoteCriteriaFilterTransfer())
+                ->setCustomerReference($cartItemRequestTransfer->getCustomer()->getCustomerReference())
         );
 
         $customerQuotes = $customerQuoteCollection->getQuotes();
-        if ($customerQuotes->count()) {
-            $restCartItemsAttributesTransfer->setQuoteUuid($customerQuotes[0]->getUuid());
+
+        if (!$customerQuotes->count() && !$cartItemRequestTransfer->getQuoteUuid()) {
+            return $this->createGuestQuote($cartItemRequestTransfer);
         }
 
-        $quoteResponseTransfer = $this->quoteReader->findQuoteByUuid(
-            $this->quoteItemMapper->mapRestCartItemsAttributesTransferToQuoteTransfer(
-                $restCartItemsAttributesTransfer,
-                new QuoteTransfer()
-            )
+        if ($customerQuotes->count()) {
+            $cartItemRequestTransfer->setQuoteUuid($customerQuotes[0]->getUuid());
+        }
+
+        $quoteTransfer = $this->quoteItemMapper->mapCartItemsRequestTransferToQuoteTransfer(
+            $cartItemRequestTransfer,
+            new QuoteTransfer()
         );
+
+        $quoteResponseTransfer = $this->quoteReader->findQuoteByUuid($quoteTransfer);
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $quoteResponseTransfer;
         }
 
-        $restCartItemsAttributesTransfer->setQuoteUuid($quoteResponseTransfer->getQuoteTransfer()->getUuid());
+        $cartItemRequestTransfer->setQuoteUuid($quoteResponseTransfer->getQuoteTransfer()->getUuid());
 
-        return $this->addItem($restCartItemsAttributesTransfer);
+        return $this->addItem($cartItemRequestTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
+     * @param \Generated\Shared\Transfer\CartItemRequestTransfer $cartItemRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    protected function createGuestQuote(RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer): QuoteResponseTransfer
+    protected function createGuestQuote(CartItemRequestTransfer $cartItemRequestTransfer): QuoteResponseTransfer
     {
         $quoteTransfer = $this->createQuoteTransfer();
-        $quoteTransfer->setCustomer((new CustomerTransfer())->setCustomerReference($restCartItemsAttributesTransfer->getCustomerReference()));
+        $quoteTransfer
+            ->setCustomer((new CustomerTransfer())
+                ->setCustomerReference($cartItemRequestTransfer->getCustomer()->getCustomerReference()));
 
         $quoteResponseTransfer = $this->quoteCreator->createQuote($quoteTransfer);
 
@@ -123,20 +153,20 @@ class GuestQuoteItemAdder implements GuestQuoteItemAdderInterface
             return $quoteResponseTransfer;
         }
 
-        $restCartItemsAttributesTransfer->setQuoteUuid($quoteResponseTransfer->getQuoteTransfer()->getUuid());
+        $cartItemRequestTransfer->setQuoteUuid($quoteResponseTransfer->getQuoteTransfer()->getUuid());
 
-        return $this->addItem($restCartItemsAttributesTransfer);
+        return $this->addItem($cartItemRequestTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
+     * @param \Generated\Shared\Transfer\CartItemRequestTransfer $cartItemRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    protected function addItem(RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer): QuoteResponseTransfer
+    protected function addItem(CartItemRequestTransfer $cartItemRequestTransfer): QuoteResponseTransfer
     {
         $quoteResponseTransfer = $this->quoteItemAdder
-            ->add($restCartItemsAttributesTransfer);
+            ->addToCart($cartItemRequestTransfer);
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             $quoteResponseTransfer
