@@ -81,7 +81,7 @@ class ModuleFinder implements ModuleFinderInterface
     protected function addStandaloneModulesToCollection(array $moduleTransferCollection, ?ModuleFilterTransfer $moduleFilterTransfer = null): array
     {
         foreach ($this->getStandaloneModuleFinder() as $directoryInfo) {
-            if (in_array($this->camelCase($directoryInfo->getFilename()), $this->config->getInternalNamespacesList(), true)) {
+            if (in_array($this->camelCase($directoryInfo->getFilename()), $this->config->getInternalOrganizations(), true)) {
                 continue;
             }
             $moduleTransfer = $this->getModuleTransfer($directoryInfo);
@@ -177,9 +177,7 @@ class ModuleFinder implements ModuleFinderInterface
      */
     protected function getModuleDirectories(): array
     {
-        $pathToInternalNamespace = $this->config->getPathsToInternalNamespace();
-
-        return array_values(array_filter($pathToInternalNamespace, 'is_dir'));
+        return $this->config->getPathsToInternalOrganizations();
     }
 
     /**

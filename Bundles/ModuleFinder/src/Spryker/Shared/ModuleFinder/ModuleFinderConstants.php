@@ -12,8 +12,4 @@ namespace Spryker\Shared\ModuleFinder;
  */
 interface ModuleFinderConstants
 {
-    /**
-     * @see \Spryker\Shared\Kernel\KernelConstants::SPRYKER_ROOT
-     */
-    public const SPRYKER_ROOT = 'SPRYKER_ROOT';
 }

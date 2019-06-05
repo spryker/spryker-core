@@ -37,7 +37,7 @@ class PackageFinder implements PackageFinderInterface
         $packageTransferCollection = [];
 
         foreach ($this->getPackageFinder() as $directoryInfo) {
-            if (in_array($directoryInfo->getFilename(), $this->config->getInternalPackageDirectories())) {
+            if (in_array($directoryInfo->getFilename(), $this->config->getInternalPackagePathFragments())) {
                 continue;
             }
             $packageTransfer = $this->getPackageTransfer($directoryInfo);
