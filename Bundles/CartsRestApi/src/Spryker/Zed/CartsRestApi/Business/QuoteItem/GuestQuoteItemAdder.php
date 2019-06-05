@@ -144,8 +144,6 @@ class GuestQuoteItemAdder implements GuestQuoteItemAdderInterface
      */
     protected function createGuestQuote(CartItemRequestTransfer $cartItemRequestTransfer): QuoteResponseTransfer
     {
-        $cartItemRequestTransfer->requireQuoteUuid();
-
         $quoteTransfer = $this->createQuoteTransfer();
         $quoteTransfer
             ->setCustomer((new CustomerTransfer())
