@@ -121,10 +121,10 @@ class OrderHydrator extends OrderHydratorWithoutMultiShipping
      */
     protected function setUniqueOrderItems(OrderTransfer $orderTransfer): OrderTransfer
     {
-        $uniqueOrderItemCollectionTransfer = $this->orderItemGrouper->getUniqueOrderItems($orderTransfer->getItems());
+        $uniqueOrderItemCollection = $this->orderItemGrouper->getUniqueOrderItems($orderTransfer->getItems());
 
         $orderItemsWithNumericIndexes = new ArrayObject();
-        foreach ($uniqueOrderItemCollectionTransfer->getItems() as $itemTransfer) {
+        foreach ($uniqueOrderItemCollection as $itemTransfer) {
             $orderItemsWithNumericIndexes[] = $itemTransfer;
         }
 
