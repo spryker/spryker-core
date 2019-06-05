@@ -66,7 +66,7 @@ class OmsFacadeSumReservedItemsTest extends Unit
         $storeTransfer = (new StoreTransfer())->setName(static::DE_STORE_NAME);
         $reservationQuantity = $omsFacade->getOmsReservedProductQuantityForSku(self::ORDER_ITEM_SKU, $storeTransfer);
 
-        $this->assertSame(50, $reservationQuantity);
+        $this->assertSame(50.0, $reservationQuantity);
     }
 
     /**
@@ -173,7 +173,7 @@ class OmsFacadeSumReservedItemsTest extends Unit
     {
         $salesOrderItem = new SpySalesOrderItem();
         $salesOrderItem->setGrossPrice(150);
-        $salesOrderItem->setQuantity(50);
+        $salesOrderItem->setQuantity(50.0);
         $salesOrderItem->setSku(self::ORDER_ITEM_SKU);
         $salesOrderItem->setName('test1');
         $salesOrderItem->setTaxRate(12);
