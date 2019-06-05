@@ -21,7 +21,7 @@
         <property name="name" type="string" />
         <property name="taxRate" type="float" />
         <property name="calculatedDiscounts" type="CalculatedDiscount[]" singular="calculatedDiscount" />
-        <property name="quantity" type="int" />
+        <property name="quantity" type="float" />
 
         <property name="unitNetPrice" type="int" />
         <property name="sumNetPrice" type="int" />
@@ -108,8 +108,7 @@
         <property name="taxAmountAfterCancellation" type="int" />
 
         <property name="isOrdered" type="bool" />
-
-        <property name="shipment" type="Shipment" />
+        <!--property name="quantity" type="float"/> The module can work regardless of the type of the quantity, but would be BC breaking if we'd define it to either int or float. -->
     </transfer>
 
     <transfer name="ProductOption">
@@ -149,6 +148,7 @@
         <property name="sumAmount" type="int" />
         <property name="unitGrossAmount" type="int"/>
         <property name="sumGrossAmount" type="int"/>
+        <!--property name="quantity" type="float"/> The module can work regardless of the type of the quantity, but would be BC breaking if we'd define it to either int or float. -->
     </transfer>
 
     <transfer name="Shipment">
@@ -162,4 +162,3 @@
     </transfer>
 
 </transfers>
-

@@ -85,7 +85,9 @@ class CustomerRepository extends AbstractRepository implements CustomerRepositor
             return null;
         }
 
-        return $addressTransfer->fromArray($addressEntity->toArray(), true);
+        return $this->getFactory()
+            ->createCustomerMapper()
+            ->mapCustomerAddressEntityToAddressTransfer($addressEntity, new AddressTransfer());
     }
 
     /**
@@ -179,6 +181,6 @@ class CustomerRepository extends AbstractRepository implements CustomerRepositor
 
         return $this->getFactory()
             ->createCustomerMapper()
-            ->mapCustomerAddressEntityToTransfer($customerAddressEntity);
+            ->mapCustomerAddressEntityToAddressTransfer($customerAddressEntity, new AddressTransfer());
     }
 }

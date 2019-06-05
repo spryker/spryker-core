@@ -19,6 +19,7 @@ use Spryker\Zed\Sales\Business\Exception\InvalidSalesOrderException;
 use Spryker\Zed\Sales\Business\Model\Order\OrderHydrator as OrderHydratorWithoutMultiShipping;
 use Spryker\Zed\Sales\Business\OrderItem\SalesOrderItemGrouperInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
+use Spryker\Zed\Sales\Dependency\Service\SalesToUtilPriceServiceInterface;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
 class OrderHydrator extends OrderHydratorWithoutMultiShipping
@@ -31,16 +32,18 @@ class OrderHydrator extends OrderHydratorWithoutMultiShipping
     /**
      * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface $omsFacade
+     * @param \Spryker\Zed\Sales\Dependency\Service\SalesToUtilPriceServiceInterface $utilPriceService
      * @param \Spryker\Zed\Sales\Business\OrderItem\SalesOrderItemGrouperInterface $orderItemGrouper
      * @param \Spryker\Zed\Sales\Dependency\Plugin\HydrateOrderPluginInterface[] $hydrateOrderPlugins
      */
     public function __construct(
         SalesQueryContainerInterface $queryContainer,
         SalesToOmsInterface $omsFacade,
+        SalesToUtilPriceServiceInterface $utilPriceService,
         SalesOrderItemGrouperInterface $orderItemGrouper,
         array $hydrateOrderPlugins = []
     ) {
-        parent::__construct($queryContainer, $omsFacade, $hydrateOrderPlugins);
+        parent::__construct($queryContainer, $omsFacade, $utilPriceService, $hydrateOrderPlugins);
 
         $this->orderItemGrouper = $orderItemGrouper;
     }

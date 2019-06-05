@@ -21,8 +21,6 @@ class SalesConfig extends AbstractBundleConfig
     public const PARAM_CUSTOMER_REFERENCE = 'customer-reference';
     public const TEST_CUSTOMER_FIRST_NAME = 'test order';
 
-    protected const PROPERTY_NAME_SHIPMENT_TRANSFER = 'shipment';
-
     /**
      * Separator for the sequence number
      *

@@ -31,8 +31,7 @@ class ShipmentService extends AbstractService implements ShipmentServiceInterfac
     }
 
     /**
-     * Specification:
-     * - Returns hash based on shipping address, shipment method and requested delivery date.
+     * {@inheritdoc}
      *
      * @api
      *

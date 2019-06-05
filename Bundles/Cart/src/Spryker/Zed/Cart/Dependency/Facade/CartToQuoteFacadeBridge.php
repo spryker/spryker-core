@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Cart\Dependency\Facade;
 
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\QuoteValidationResponseTransfer;
 
 class CartToQuoteFacadeBridge implements CartToQuoteFacadeInterface
 {
@@ -42,5 +43,15 @@ class CartToQuoteFacadeBridge implements CartToQuoteFacadeInterface
     public function unlockQuote(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         return $this->quoteFacade->unlockQuote($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteValidationResponseTransfer
+     */
+    public function validateQuote(QuoteTransfer $quoteTransfer): QuoteValidationResponseTransfer
+    {
+        return $this->quoteFacade->validateQuote($quoteTransfer);
     }
 }

@@ -182,13 +182,4 @@ interface SalesQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
     public function queryCountUniqueProductsForOrder($idSalesOrder);
-
-    /**
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
-     *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesShipmentQuery
-     */
-    public function queryShipmentByTransfer(ShipmentTransfer $shipmentTransfer): SpySalesShipmentQuery;
 }

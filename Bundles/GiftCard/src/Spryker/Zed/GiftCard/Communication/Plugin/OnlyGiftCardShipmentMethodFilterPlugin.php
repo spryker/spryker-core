@@ -30,7 +30,6 @@ class OnlyGiftCardShipmentMethodFilterPlugin extends AbstractPlugin implements S
      */
     public function filterShipmentMethods(ArrayObject $shipmentMethods, QuoteTransfer $quoteTransfer)
     {
-        return $this->getFacade()
-            ->filterShipmentMethods($shipmentMethods, $quoteTransfer);
+        return $this->getFacade()->filterShipmentMethods($shipmentMethods, $quoteTransfer);
     }
 }

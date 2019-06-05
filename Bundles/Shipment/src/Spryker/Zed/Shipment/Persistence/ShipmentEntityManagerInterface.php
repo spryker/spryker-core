@@ -24,7 +24,7 @@ interface ShipmentEntityManagerInterface
      *
      * @return \Generated\Shared\Transfer\ShipmentTransfer
      */
-    public function createOrderShipment(
+    public function createSalesShipment(
         ShipmentTransfer $shipmentTransfer,
         OrderTransfer $orderTransfer,
         ?ExpenseTransfer $expenseTransfer = null
@@ -34,7 +34,7 @@ interface ShipmentEntityManagerInterface
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer
+     * @return void
      */
-    public function updateFkShipmentForOrderItem(ItemTransfer $itemTransfer, ShipmentTransfer $shipmentTransfer): ItemTransfer;
+    public function updateFkShipmentForOrderItem(ItemTransfer $itemTransfer, ShipmentTransfer $shipmentTransfer): void ;
 }

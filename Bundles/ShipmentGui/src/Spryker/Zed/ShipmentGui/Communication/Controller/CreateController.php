@@ -22,6 +22,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CreateController extends AbstractController
 {
+    public const PARAM_ID_SALES_ORDER = 'id-sales-order';
+
     protected const REDIRECT_URL_DEFAULT = '/sales/detail';
 
     protected const MESSAGE_SHIPMENT_CREATE_SUCCESS = 'Shipment has been successfully created.';
@@ -33,7 +35,7 @@ class CreateController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $idSalesOrder = $request->query->get(SalesConfig::PARAM_ID_SALES_ORDER);
+        $idSalesOrder = $request->query->get(static::PARAM_ID_SALES_ORDER);
 
         $dataProvider = $this->getFactory()->createShipmentFormCreateDataProvider();
 

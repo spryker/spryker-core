@@ -27,6 +27,7 @@ use Spryker\Zed\ProductOption\Business\OptionGroup\TranslationSaver;
 use Spryker\Zed\ProductOption\Business\PlaceOrder\ProductOptionOrderSaver;
 use Spryker\Zed\ProductOption\Business\StrategyResolver\TaxRateCalculatorStrategyResolver;
 use Spryker\Zed\ProductOption\Business\StrategyResolver\TaxRateCalculatorStrategyResolverInterface;
+use Spryker\Zed\ProductOption\Dependency\Service\ProductOptionToUtilPriceServiceInterface;
 use Spryker\Zed\ProductOption\ProductOptionDependencyProvider;
 
 /**
@@ -154,7 +155,7 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductOptionOrderHydrate()
     {
-        return new ProductOptionOrderHydrate($this->getQueryContainer());
+        return new ProductOptionOrderHydrate($this->getQueryContainer(), $this->getUtilPriceService());
     }
 
     /**
@@ -263,6 +264,14 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
             $this->getStoreFacade(),
             $this->getPriceFacade()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOption\Dependency\Service\ProductOptionToUtilPriceServiceInterface
+     */
+    public function getUtilPriceService(): ProductOptionToUtilPriceServiceInterface
+    {
+        return $this->getProvidedDependency(ProductOptionDependencyProvider::SERVICE_UTIL_PRICE);
     }
 
     /**

@@ -51,9 +51,9 @@ class PriceProductScheduleToPriceProductFacadeBridge implements PriceProductSche
      *
      * @return void
      */
-    public function removePriceProductStore(PriceProductTransfer $priceProductTransfer): void
+    public function removePriceProductDefaultForPriceProduct(PriceProductTransfer $priceProductTransfer): void
     {
-        $this->priceProductFacade->removePriceProductStore($priceProductTransfer);
+        $this->priceProductFacade->removePriceProductDefaultForPriceProduct($priceProductTransfer);
     }
 
     /**

@@ -49,11 +49,6 @@ class PriceProductScheduleApplyTest extends Unit
     protected $currencyFacade;
 
     /**
-     * @var \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery
-     */
-    protected $spyPriceProductScheduleQuery;
-
-    /**
      * @var \Spryker\Zed\Store\Business\StoreFacadeInterface
      */
     protected $storeFacade;
@@ -69,7 +64,6 @@ class PriceProductScheduleApplyTest extends Unit
 
         $this->priceProductScheduleFacade = $this->tester->getFacade();
         $this->currencyFacade = $this->tester->getLocator()->currency()->facade();
-        $this->spyPriceProductScheduleQuery = $this->tester->getPriceProductScheduleQuery();
         $this->storeFacade = $this->tester->getLocator()->store()->facade();
     }
 
@@ -139,7 +133,7 @@ class PriceProductScheduleApplyTest extends Unit
         $this->priceProductScheduleFacade->applyScheduledPrices();
 
         // Assert
-        $priceProductScheduleEntities = $this->spyPriceProductScheduleQuery->find();
+        $priceProductScheduleEntities = $this->tester->getPriceProductScheduleQuery()->find();
 
         foreach ($priceProductScheduleEntities as $priceProductScheduleEntity) {
             $this->assertTrue(
@@ -152,6 +146,96 @@ class PriceProductScheduleApplyTest extends Unit
                 )
             );
         }
+    }
+
+    /**
+     * @param array $priceProductScheduleTestData
+     *
+     * @return void
+     */
+    public function testPriceProductScheduleWithBiggerPricesAndLowerDateRangeShouldApply(): void
+    {
+        // Assign
+        $productAbstractTransfer = $this->tester->haveProductAbstract();
+        $currencyId = $this->tester->haveCurrency();
+        $storeTransfer = $this->storeFacade->getCurrentStore();
+        $priceType = $this->tester->havePriceType();
+
+        $priceProductScheduleForApplyData = [
+            PriceProductScheduleTransfer::PRICE_PRODUCT => [
+                PriceProductTransfer::ID_PRODUCT_ABSTRACT => $productAbstractTransfer->getIdProductAbstract(),
+                PriceProductTransfer::PRICE_TYPE => [
+                    PriceTypeTransfer::NAME => $priceType->getName(),
+                    PriceTypeTransfer::ID_PRICE_TYPE => $priceType->getIdPriceType(),
+                ],
+                PriceProductTransfer::MONEY_VALUE => [
+                    MoneyValueTransfer::FK_STORE => $storeTransfer->getIdStore(),
+                    MoneyValueTransfer::FK_CURRENCY => $currencyId,
+                    MoneyValueTransfer::GROSS_AMOUNT => 250000,
+                    MoneyValueTransfer::NET_AMOUNT => 150000,
+                ],
+            ],
+            PriceProductScheduleTransfer::ACTIVE_FROM => (new DateTime('-10 min')),
+            PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('+10 min')),
+        ];
+
+        $priceProductScheduleForApplyTransfer = $this->tester->havePriceProductSchedule($priceProductScheduleForApplyData);
+
+        $priceProductScheduleNotApplyData = [
+            PriceProductScheduleTransfer::PRICE_PRODUCT => [
+                PriceProductTransfer::ID_PRODUCT_ABSTRACT => $productAbstractTransfer->getIdProductAbstract(),
+                PriceProductTransfer::PRICE_TYPE => [
+                    PriceTypeTransfer::NAME => $priceType->getName(),
+                    PriceTypeTransfer::ID_PRICE_TYPE => $priceType->getIdPriceType(),
+                ],
+                PriceProductTransfer::MONEY_VALUE => [
+                    MoneyValueTransfer::FK_STORE => $storeTransfer->getIdStore(),
+                    MoneyValueTransfer::FK_CURRENCY => $currencyId,
+                    MoneyValueTransfer::GROSS_AMOUNT => 2500,
+                    MoneyValueTransfer::NET_AMOUNT => 1500,
+                ],
+            ],
+            PriceProductScheduleTransfer::ACTIVE_FROM => (new DateTime('-15 min')),
+            PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('+15 min')),
+        ];
+
+        $priceProductScheduleNotApplyTransfer = $this->tester->havePriceProductSchedule($priceProductScheduleNotApplyData);
+
+        // Act
+        $this->priceProductScheduleFacade->applyScheduledPrices();
+
+        // Assert
+        $appliedPriceProductScheduleEntity = $this->tester->getPriceProductScheduleQuery()->findOneByIdPriceProductSchedule(
+            $priceProductScheduleForApplyTransfer->getIdPriceProductSchedule()
+        );
+
+        $this->assertTrue(
+            $appliedPriceProductScheduleEntity->isCurrent(),
+            sprintf(
+                'Scheduled price with id: #%s, active from: %s, active to: %s, gross price: %s, net price: %s should have been set as current.',
+                $appliedPriceProductScheduleEntity->getIdPriceProductSchedule(),
+                $appliedPriceProductScheduleEntity->getActiveFrom()->format('d-m-Y'),
+                $appliedPriceProductScheduleEntity->getActiveTo()->format('d-m-Y'),
+                $appliedPriceProductScheduleEntity->getGrossPrice(),
+                $appliedPriceProductScheduleEntity->getNetPrice()
+            )
+        );
+
+        $notAppliedPriceProductScheduleEntity = $this->tester->getPriceProductScheduleQuery()->findOneByIdPriceProductSchedule(
+            $priceProductScheduleNotApplyTransfer->getIdPriceProductSchedule()
+        );
+
+        $this->assertFalse(
+            $notAppliedPriceProductScheduleEntity->isCurrent(),
+            sprintf(
+                'Scheduled price with id: #%s, active from: %s, active to: %s, gross price: %s, net price: %s should have not been set as current.',
+                $notAppliedPriceProductScheduleEntity->getIdPriceProductSchedule(),
+                $notAppliedPriceProductScheduleEntity->getActiveFrom()->format('d-m-Y'),
+                $notAppliedPriceProductScheduleEntity->getActiveTo()->format('d-m-Y'),
+                $notAppliedPriceProductScheduleEntity->getGrossPrice(),
+                $notAppliedPriceProductScheduleEntity->getNetPrice()
+            )
+        );
     }
 
     /**
@@ -179,7 +263,7 @@ class PriceProductScheduleApplyTest extends Unit
         $this->priceProductScheduleFacade->applyScheduledPrices();
 
         // Assert
-        $priceProductScheduleEntities = $this->spyPriceProductScheduleQuery->find();
+        $priceProductScheduleEntities = $this->tester->getPriceProductScheduleQuery()->find();
 
         foreach ($priceProductScheduleEntities as $priceProductScheduleEntity) {
             $this->assertTrue(
@@ -219,7 +303,7 @@ class PriceProductScheduleApplyTest extends Unit
         $this->priceProductScheduleFacade->applyScheduledPrices();
 
         // Assert
-        $priceProductScheduleEntities = $this->spyPriceProductScheduleQuery->find();
+        $priceProductScheduleEntities = $this->tester->getPriceProductScheduleQuery()->find();
 
         foreach ($priceProductScheduleEntities as $priceProductScheduleEntity) {
             $this->assertTrue(
@@ -262,7 +346,7 @@ class PriceProductScheduleApplyTest extends Unit
         $this->priceProductScheduleFacade->applyScheduledPrices();
 
         // Assert
-        $priceProductScheduleEntities = $this->spyPriceProductScheduleQuery->find();
+        $priceProductScheduleEntities = $this->tester->getPriceProductScheduleQuery()->find();
 
         foreach ($priceProductScheduleEntities as $priceProductScheduleEntity) {
             $this->assertTrue(
@@ -308,7 +392,7 @@ class PriceProductScheduleApplyTest extends Unit
         $this->priceProductScheduleFacade->applyScheduledPrices();
 
         // Assert
-        $priceProductScheduleEntity = $this->spyPriceProductScheduleQuery->findOneByIdPriceProductSchedule($priceProductScheduleTransfer->getIdPriceProductSchedule());
+        $priceProductScheduleEntity = $this->tester->getPriceProductScheduleQuery()->findOneByIdPriceProductSchedule($priceProductScheduleTransfer->getIdPriceProductSchedule());
         $this->assertFalse(
             $priceProductScheduleEntity->isCurrent(),
             'Scheduled price for other store should not have been set as current.'
