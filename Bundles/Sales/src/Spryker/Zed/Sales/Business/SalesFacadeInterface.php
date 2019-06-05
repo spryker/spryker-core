@@ -285,8 +285,6 @@ interface SalesFacadeInterface
     public function findOrderAddressByIdOrderAddress(int $idSalesOrderAddress): ?AddressTransfer;
 
     /**
-     * @todo: Should be refactored to return transfer objects collection.
-     *
      * Specification:
      * - Returns sales order items by salesShipmentId or null.
      *
