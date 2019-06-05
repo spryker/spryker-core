@@ -96,6 +96,7 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
             ->useCustomerQuery()
                 ->filterByCustomerReference($customerReference)
             ->endUse()
+            ->joinWithCustomer()
             ->useCompanyQuery()
                 ->filterByIsActive(true)
             ->endUse()
