@@ -19,6 +19,9 @@ use Spryker\Zed\ResourceShareExtension\Dependency\Plugin\ResourceShareZedActivat
  */
 class SharedCartByUuidResourceShareZedActivatorStrategyPlugin extends AbstractPlugin implements ResourceShareZedActivatorStrategyPluginInterface
 {
+    /**
+     * @uses \Spryker\Shared\PersistentCartShare\PersistentCartShareConfig::RESOURCE_TYPE_QUOTE
+     */
     protected const RESOURCE_TYPE_QUOTE = 'quote';
     protected const PERMISSION_GROUP_READ_ONLY = 'READ_ONLY';
     protected const PERMISSION_GROUP_FULL_ACCESS = 'FULL_ACCESS';

@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\SharedCart\Plugin;
+namespace Spryker\Client\SharedCart\Plugin\PersistentCartShare;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;

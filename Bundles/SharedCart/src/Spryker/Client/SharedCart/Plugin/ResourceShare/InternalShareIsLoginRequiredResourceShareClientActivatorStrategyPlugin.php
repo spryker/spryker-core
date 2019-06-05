@@ -19,6 +19,9 @@ use Spryker\Client\ResourceShareExtension\Dependency\Plugin\ResourceShareClientA
  */
 class InternalShareIsLoginRequiredResourceShareClientActivatorStrategyPlugin extends AbstractPlugin implements ResourceShareClientActivatorStrategyPluginInterface
 {
+    /**
+     * @uses \Spryker\Shared\PersistentCartShare\PersistentCartShareConfig::RESOURCE_TYPE_QUOTE
+     */
     protected const RESOURCE_TYPE_QUOTE = 'quote';
     protected const PERMISSION_GROUP_READ_ONLY = 'READ_ONLY';
     protected const PERMISSION_GROUP_FULL_ACCESS = 'FULL_ACCESS';
