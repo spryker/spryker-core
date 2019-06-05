@@ -112,7 +112,7 @@ class GuestQuoteItemAdder implements GuestQuoteItemAdderInterface
 
         $customerQuotes = $customerQuoteCollection->getQuotes();
 
-        if (!$customerQuotes->count() && !$cartItemRequestTransfer->getQuoteUuid()) {
+        if (!$customerQuotes->count()) {
             return $this->createGuestQuote($cartItemRequestTransfer);
         }
 
