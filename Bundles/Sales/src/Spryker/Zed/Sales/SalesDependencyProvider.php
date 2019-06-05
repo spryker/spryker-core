@@ -17,7 +17,6 @@ use Spryker\Zed\Sales\Dependency\Facade\SalesToMoneyBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToSequenceNumberBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToUserBridge;
-use Spryker\Zed\Sales\Dependency\Service\SalesToShipmentServiceBridge;
 use Spryker\Zed\Sales\Dependency\Service\SalesToUtilPriceServiceBridge;
 use Spryker\Zed\Sales\Dependency\Service\SalesToUtilQuantityServiceBridge;
 use Spryker\Zed\Sales\Dependency\Service\SalesToUtilSanitizeBridge;
