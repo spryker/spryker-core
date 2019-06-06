@@ -8,9 +8,9 @@
 namespace Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\ImportDataValidator;
 
 use DateTime;
+use Exception;
 use Generated\Shared\Transfer\PriceProductScheduleImportTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleListImportErrorTransfer;
-use Throwable;
 
 class DateDataValidator extends AbstractImportDataValidator
 {
@@ -24,14 +24,14 @@ class DateDataValidator extends AbstractImportDataValidator
     public function validatePriceProductScheduleImportTransfer(
         PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer
     ): ?PriceProductScheduleListImportErrorTransfer {
-        if ($this->isDatesValid($priceProductScheduleImportTransfer) === false) {
-            return $this->createPriceProductScheduleListImportErrorTransfer(
-                $priceProductScheduleImportTransfer,
-                static::ERROR_MESSAGE_ACTIVE_FROM_AND_ACTIVE_TO
-            );
+        if ($this->isDatesValid($priceProductScheduleImportTransfer) === true) {
+            return null;
         }
 
-        return null;
+        return $this->createPriceProductScheduleListImportErrorTransfer(
+            $priceProductScheduleImportTransfer,
+            static::ERROR_MESSAGE_ACTIVE_FROM_AND_ACTIVE_TO
+        );
     }
 
     /**
@@ -47,12 +47,22 @@ class DateDataValidator extends AbstractImportDataValidator
         }
 
         try {
-            $activeFrom = new DateTime($priceProductScheduleImportTransfer->getActiveFrom());
-            $activeTo = new DateTime($priceProductScheduleImportTransfer->getActiveTo());
+            $activeFrom = $this->convertDateStringToDateTime($priceProductScheduleImportTransfer->getActiveFrom());
+            $activeTo = $this->convertDateStringToDateTime($priceProductScheduleImportTransfer->getActiveTo());
 
             return $activeTo > $activeFrom;
-        } catch (Throwable $e) {
+        } catch (Exception $e) {
             return false;
         }
+    }
+
+    /**
+     * @param string $date
+     *
+     * @return \DateTime
+     */
+    protected function convertDateStringToDateTime(string $date): DateTime
+    {
+        return new DateTime($date);
     }
 }

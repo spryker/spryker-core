@@ -22,7 +22,15 @@ class PriceProductScheduleImportMapper implements PriceProductScheduleImportMapp
         PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer,
         PriceProductScheduleCriteriaFilterTransfer $priceProductScheduleCriteriaFilterTransfer
     ): PriceProductScheduleCriteriaFilterTransfer {
-        return (new PriceProductScheduleCriteriaFilterTransfer())
+        return $this->createPriceProductScheduleCriteriaFilterTransfer()
             ->fromArray($priceProductScheduleImportTransfer->toArray(), true);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\PriceProductScheduleCriteriaFilterTransfer
+     */
+    protected function createPriceProductScheduleCriteriaFilterTransfer(): PriceProductScheduleCriteriaFilterTransfer
+    {
+        return new PriceProductScheduleCriteriaFilterTransfer();
     }
 }

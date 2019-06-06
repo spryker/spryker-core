@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\DataExpander;
 
+use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Zed\PriceProductSchedule\Business\Currency\CurrencyFinderInterface;
 use Spryker\Zed\PriceProductSchedule\Business\Store\StoreFinderInterface;
@@ -43,11 +44,22 @@ class PriceProductTransferMoneyValueDataExpander implements PriceProductTransfer
     public function expand(PriceProductTransfer $priceProductTransfer): PriceProductTransfer
     {
         $priceProductTransfer->requireMoneyValue();
-
         $moneyValue = $priceProductTransfer->getMoneyValue();
 
-        $moneyValue->requireCurrency();
+        $this->expandMoneyValueTransferWithCurrencyData($moneyValue);
+        $this->expandMoneyValueTransferWithStoreData($moneyValue);
 
+        return $priceProductTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MoneyValueTransfer $moneyValue
+     *
+     * @return \Generated\Shared\Transfer\MoneyValueTransfer
+     */
+    protected function expandMoneyValueTransferWithCurrencyData(MoneyValueTransfer $moneyValue): MoneyValueTransfer
+    {
+        $moneyValue->requireCurrency();
         $currencyTransfer = $this->currencyFinder
             ->findCurrencyByIsoCode($moneyValue->getCurrency()->getCode());
 
@@ -57,16 +69,24 @@ class PriceProductTransferMoneyValueDataExpander implements PriceProductTransfer
                 ->setFkCurrency($currencyTransfer->getIdCurrency());
         }
 
-        $moneyValue->requireStore();
+        return $moneyValue;
+    }
 
+    /**
+     * @param \Generated\Shared\Transfer\MoneyValueTransfer $moneyValue
+     *
+     * @return \Generated\Shared\Transfer\MoneyValueTransfer
+     */
+    protected function expandMoneyValueTransferWithStoreData(MoneyValueTransfer $moneyValue): MoneyValueTransfer
+    {
+        $moneyValue->requireStore();
         $storeTransfer = $this->storeFinder
             ->findStoreByName($moneyValue->getStore()->getName());
 
         if ($storeTransfer !== null) {
-            $moneyValue
-                ->setFkStore($storeTransfer->getIdStore());
+            $moneyValue->setFkStore($storeTransfer->getIdStore());
         }
 
-        return $priceProductTransfer;
+        return $moneyValue;
     }
 }

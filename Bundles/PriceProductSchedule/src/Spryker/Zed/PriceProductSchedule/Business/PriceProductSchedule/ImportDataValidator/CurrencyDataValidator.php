@@ -37,17 +37,17 @@ class CurrencyDataValidator extends AbstractImportDataValidator
     public function validatePriceProductScheduleImportTransfer(
         PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer
     ): ?PriceProductScheduleListImportErrorTransfer {
-        if ($this->isCurrencyValid($priceProductScheduleImportTransfer) === false) {
-            return $this->createPriceProductScheduleListImportErrorTransfer(
-                $priceProductScheduleImportTransfer,
-                sprintf(
-                    static::ERROR_MESSAGE_CURRENCY_NOT_FOUND,
-                    $priceProductScheduleImportTransfer->getCurrencyCode()
-                )
-            );
+        if ($this->isCurrencyValid($priceProductScheduleImportTransfer) === true) {
+            return null;
         }
 
-        return null;
+        return $this->createPriceProductScheduleListImportErrorTransfer(
+            $priceProductScheduleImportTransfer,
+            sprintf(
+                static::ERROR_MESSAGE_CURRENCY_NOT_FOUND,
+                $priceProductScheduleImportTransfer->getCurrencyCode()
+            )
+        );
     }
 
     /**

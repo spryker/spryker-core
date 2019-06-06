@@ -34,23 +34,40 @@ class PriceProductTransferProductDataExpander implements PriceProductTransferDat
     public function expand(PriceProductTransfer $priceProductTransfer): PriceProductTransfer
     {
         if ($priceProductTransfer->getSkuProductAbstract()) {
-            $productAbstractId = $this->productFinder
-                ->findProductAbstractIdBySku($priceProductTransfer->getSkuProductAbstract());
-
-            if ($productAbstractId !== null) {
-                $priceProductTransfer->setIdProductAbstract($productAbstractId);
-            }
+            return $this->expandPriceProductWithAbstractProductId($priceProductTransfer);
         }
 
         if ($priceProductTransfer->getSkuProduct()) {
-            $productConcreteId = $this->productFinder
-                ->findProductConcreteIdBySku($priceProductTransfer->getSkuProduct());
-
-            if ($productConcreteId !== null) {
-                $priceProductTransfer->setIdProduct($productConcreteId);
-            }
+            return $this->expandPriceProductWithProductId($priceProductTransfer);
         }
 
         return $priceProductTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
+     */
+    protected function expandPriceProductWithAbstractProductId(
+        PriceProductTransfer $priceProductTransfer
+    ): PriceProductTransfer {
+        $productAbstractId = $this->productFinder
+            ->findProductAbstractIdBySku($priceProductTransfer->getSkuProductAbstract());
+
+        return $priceProductTransfer->setIdProductAbstract($productAbstractId);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
+     */
+    protected function expandPriceProductWithProductId(PriceProductTransfer $priceProductTransfer): PriceProductTransfer
+    {
+        $productConcreteId = $this->productFinder
+            ->findProductConcreteIdBySku($priceProductTransfer->getSkuProduct());
+
+        return $priceProductTransfer->setIdProduct($productConcreteId);
     }
 }

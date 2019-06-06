@@ -9,6 +9,7 @@ namespace Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleList;
 
 use Generated\Shared\Transfer\PriceProductScheduledListImportRequestTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleListImportResponseTransfer;
+use Generated\Shared\Transfer\PriceProductScheduleListTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleImportValidatorInterface;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleMapperInterface;
@@ -62,9 +63,9 @@ class PriceProductScheduleListImporter implements PriceProductScheduleListImport
     public function importPriceProductSchedules(
         PriceProductScheduledListImportRequestTransfer $priceProductScheduledListImportRequest
     ): PriceProductScheduleListImportResponseTransfer {
-        $priceProductScheduledListImportResponse = (new PriceProductScheduleListImportResponseTransfer())
-            ->setPriceProductScheduleList($priceProductScheduledListImportRequest->getPriceProductScheduleList())
-            ->setIsSuccess(false);
+        $priceProductScheduledListImportResponse = $this->createPriceProductScheduleListImportResponseTransfer(
+            $priceProductScheduledListImportRequest->getPriceProductScheduleList()
+        );
 
         foreach ($priceProductScheduledListImportRequest->getItems() as $priceProductScheduleImportTransfer) {
             $priceProductScheduleListImportError = $this->priceProductScheduleValidator
@@ -111,5 +112,18 @@ class PriceProductScheduleListImporter implements PriceProductScheduleListImport
         }
 
         return $priceProductScheduleTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductScheduleListTransfer $priceProductScheduleListTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleListImportResponseTransfer
+     */
+    protected function createPriceProductScheduleListImportResponseTransfer(
+        PriceProductScheduleListTransfer $priceProductScheduleListTransfer
+    ): PriceProductScheduleListImportResponseTransfer {
+        return (new PriceProductScheduleListImportResponseTransfer())
+            ->setPriceProductScheduleList($priceProductScheduleListTransfer)
+            ->setIsSuccess(false);
     }
 }

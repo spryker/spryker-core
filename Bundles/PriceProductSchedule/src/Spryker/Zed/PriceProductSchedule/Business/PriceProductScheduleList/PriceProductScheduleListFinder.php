@@ -45,13 +45,12 @@ class PriceProductScheduleListFinder implements PriceProductScheduleListFinderIn
             ->findPriceProductScheduleListById($requestedPriceProductScheduleListTransfer);
 
         if ($priceProductScheduleListTransfer === null) {
-            $error = (new PriceProductScheduleListErrorTransfer())
-                ->setMessage(
-                    sprintf(
-                        static::ERROR_MESSAGE_PRICE_PRODUCT_SCHEDULE_LIST_NOT_FOUND,
-                        $requestedPriceProductScheduleListTransfer->getIdPriceProductScheduleList()
-                    )
-                );
+            $error = $this->createPriceProductScheduleListErrorTransfer(
+                sprintf(
+                    static::ERROR_MESSAGE_PRICE_PRODUCT_SCHEDULE_LIST_NOT_FOUND,
+                    $requestedPriceProductScheduleListTransfer->getIdPriceProductScheduleList()
+                )
+            );
 
             return $priceProductScheduleListResponseTransfer->addError($error);
         }
@@ -59,5 +58,15 @@ class PriceProductScheduleListFinder implements PriceProductScheduleListFinderIn
         return $priceProductScheduleListResponseTransfer
             ->setIsSuccess(true)
             ->setPriceProductScheduleList($priceProductScheduleListTransfer);
+    }
+
+    /**
+     * @param string $message
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleListErrorTransfer
+     */
+    protected function createPriceProductScheduleListErrorTransfer(string $message): PriceProductScheduleListErrorTransfer
+    {
+        return (new PriceProductScheduleListErrorTransfer())->setMessage($message);
     }
 }

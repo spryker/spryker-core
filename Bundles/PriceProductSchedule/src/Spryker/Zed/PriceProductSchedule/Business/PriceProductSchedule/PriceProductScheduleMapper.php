@@ -28,7 +28,7 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
     ): PriceProductScheduleTransfer {
         $priceProductTransfer = $this->mapPriceProductScheduleImportTransferToPriceProductTransfer(
             $priceProductScheduleImportTransfer,
-            new PriceProductTransfer()
+            $this->createPriceProductTransfer()
         );
 
         return $priceProductScheduleTransfer
@@ -46,14 +46,14 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
         PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer,
         PriceProductTransfer $priceProductTransfer
     ): PriceProductTransfer {
+        $moneyValueTransfer = $this->mapMoneyValueTransferFromPriceProductScheduleImportTransfer(
+            $priceProductScheduleImportTransfer,
+            $this->createMoneyValueTransfer()
+        );
+
         return $priceProductTransfer
             ->fromArray($priceProductScheduleImportTransfer->toArray(), true)
-            ->setMoneyValue(
-                $this->mapMoneyValueTransferFromPriceProductScheduleImportTransfer(
-                    $priceProductScheduleImportTransfer,
-                    new MoneyValueTransfer()
-                )
-            );
+            ->setMoneyValue($moneyValueTransfer);
     }
 
     /**
@@ -66,13 +66,49 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
         PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer,
         MoneyValueTransfer $moneyValueTransfer
     ): MoneyValueTransfer {
-        $currencyTransfer = (new CurrencyTransfer())->setCode($priceProductScheduleImportTransfer->getCurrencyCode());
-        $storeTransfer = (new StoreTransfer())->setName($priceProductScheduleImportTransfer->getStoreName());
+        $currencyTransfer = $this->createCurrencyTransfer($priceProductScheduleImportTransfer->getCurrencyCode());
+        $storeTransfer = $this->createStoreTransfer($priceProductScheduleImportTransfer->getStoreName());
 
         return $moneyValueTransfer
             ->setCurrency($currencyTransfer)
             ->setStore($storeTransfer)
             ->setNetAmount($priceProductScheduleImportTransfer->getNetAmount())
             ->setGrossAmount($priceProductScheduleImportTransfer->getGrossAmount());
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
+     */
+    protected function createPriceProductTransfer(): PriceProductTransfer
+    {
+        return new PriceProductTransfer();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\MoneyValueTransfer
+     */
+    protected function createMoneyValueTransfer(): MoneyValueTransfer
+    {
+        return new MoneyValueTransfer();
+    }
+
+    /**
+     * @param string $code
+     *
+     * @return \Generated\Shared\Transfer\CurrencyTransfer
+     */
+    protected function createCurrencyTransfer(string $code): CurrencyTransfer
+    {
+        return (new CurrencyTransfer())->setCode($code);
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer
+     */
+    protected function createStoreTransfer(string $name): StoreTransfer
+    {
+        return (new StoreTransfer())->setName($name);
     }
 }

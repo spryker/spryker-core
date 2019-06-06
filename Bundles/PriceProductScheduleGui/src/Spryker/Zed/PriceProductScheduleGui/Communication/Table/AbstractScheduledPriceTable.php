@@ -70,7 +70,6 @@ abstract class AbstractScheduledPriceTable extends AbstractTable
             static::COL_GROSS_PRICE => 'Gross price',
             static::COL_ACTIVE_FROM => 'Start from (included)',
             static::COL_ACTIVE_TO => 'Finish at (included)',
-//            static::COL_ACTIONS => 'Actions',
         ]);
 
         $config->setSearchable([
@@ -86,10 +85,6 @@ abstract class AbstractScheduledPriceTable extends AbstractTable
             static::COL_ACTIVE_FROM,
             static::COL_ACTIVE_TO,
         ]);
-
-//        $config->setRawColumns([
-//            static::COL_ACTIONS,
-//        ]);
 
         return $config;
     }
@@ -132,7 +127,6 @@ abstract class AbstractScheduledPriceTable extends AbstractTable
             static::COL_CURRENCY => $priceProductScheduleEntity->getCurrency()->getCode(),
             static::COL_ACTIVE_FROM => $this->formatDateTime($priceProductScheduleEntity->getActiveFrom(), $priceProductScheduleEntity->getFkStore()),
             static::COL_ACTIVE_TO => $this->formatDateTime($priceProductScheduleEntity->getActiveTo(), $priceProductScheduleEntity->getFkStore()),
-//            static::COL_ACTIONS => implode(' ', $this->createActionColumn($priceProductScheduleEntity)),
         ];
     }
 

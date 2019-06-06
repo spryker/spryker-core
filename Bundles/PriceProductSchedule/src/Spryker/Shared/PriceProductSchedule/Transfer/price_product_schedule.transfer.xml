@@ -30,60 +30,6 @@
         <property name="limit" type="int"/>
     </transfer>
 
-    <transfer name="PriceProduct">
-        <property name="idPriceProduct" type="int"/>
-        <property name="isActive" type="string"/>
-        <property name="priceTypeName" type="string"/>
-        <property name="idProduct" type="int"/>
-        <property name="skuProduct" type="string"/>
-        <property name="idProductAbstract" type="int"/>
-        <property name="skuProductAbstract" type="string"/>
-        <property name="fkPriceType" type="int"/>
-        <property name="priceType" type="PriceType"/>
-        <property name="moneyValue" type="MoneyValue"/>
-        <property name="priceDimension" type="PriceProductDimension"/>
-    </transfer>
-
-    <transfer name="MoneyValue">
-        <property name="priceData" type="string"/>
-        <property name="fkCurrency" type="int"/>
-        <property name="fkStore" type="int"/>
-        <property name="currency" type="Currency"/>
-        <property name="netAmount" type="int"/>
-        <property name="grossAmount" type="int"/>
-        <property name="store" type="Store"/>
-    </transfer>
-
-    <transfer name="Store">
-        <property name="idStore" type="int"/>
-        <property name="name" type="string"/>
-        <property name="selectedCurrencyIsoCode" type="string"/>
-        <property name="defaultCurrencyIsoCode" type="string"/>
-        <property name="availableCurrencyIsoCodes" type="array" singular="availableCurrencyIsoCode"/>
-        <property name="availableLocaleIsoCodes" type="array" singular="availableLocaleCode"/>
-        <property name="queuePools" type="array"/>
-        <property name="storesWithSharedPersistence" type="array" singular="storeWithSharedPersistence"/>
-        <property name="countries" type="array" singular="country"/>
-        <property name="timezone" type="string"/>
-    </transfer>
-
-    <transfer name="Currency">
-        <property name="idCurrency" type="int"/>
-        <property name="code" type="string"/>
-    </transfer>
-
-    <transfer name="PriceProductDimension">
-        <property name="type" type="string"/>
-        <property name="name" type="string"/>
-        <property name="idPriceProductDefault" type="int"/>
-    </transfer>
-
-    <transfer name="PriceType">
-        <property name="idPriceType" type="int"/>
-        <property name="name" type="string"/>
-        <property name="priceModeConfiguration" type="string"/>
-    </transfer>
-
     <transfer name="PriceProductScheduleList">
         <property name="idPriceProductScheduleList" type="int"/>
         <property name="name" type="string"/>
@@ -92,10 +38,6 @@
         <property name="updatedAt" type="string"/>
         <property name="fkUser" type="int"/>
         <property name="user" type="User"/>
-    </transfer>
-
-    <transfer name="User">
-        <property name="idUser" type="int"/>
     </transfer>
 
     <transfer name="PriceProductScheduleImport">
@@ -141,4 +83,7 @@
         <property name="isSuccess" type="bool"/>
     </transfer>
 
+    <transfer name="MoneyValue">
+        <property name="store" type="Store"/>
+    </transfer>
 </transfers>

@@ -41,9 +41,7 @@ class PriceDataValidator extends AbstractImportDataValidator
     protected function isGrossPriceValid(PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer): bool
     {
         return $priceProductScheduleImportTransfer->getGrossAmount() === null
-            || (is_numeric($priceProductScheduleImportTransfer->getGrossAmount())
-                && !is_float($priceProductScheduleImportTransfer->getGrossAmount())
-                && $priceProductScheduleImportTransfer->getGrossAmount() > 0);
+            || $this->isPriceFormatValid($priceProductScheduleImportTransfer->getGrossAmount());
     }
 
     /**
@@ -54,8 +52,18 @@ class PriceDataValidator extends AbstractImportDataValidator
     protected function isNetPriceValid(PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer): bool
     {
         return $priceProductScheduleImportTransfer->getNetAmount() === null
-            || (is_numeric($priceProductScheduleImportTransfer->getNetAmount())
-                && !is_float($priceProductScheduleImportTransfer->getNetAmount())
-                && $priceProductScheduleImportTransfer->getNetAmount() > 0);
+            || $this->isPriceFormatValid($priceProductScheduleImportTransfer->getNetAmount());
+    }
+
+    /**
+     * @param mixed $price
+     *
+     * @return bool
+     */
+    protected function isPriceFormatValid($price): bool
+    {
+        return (is_numeric($price)
+            && strpos($price, '.') === false
+            && $price > 0);
     }
 }

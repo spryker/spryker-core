@@ -47,11 +47,11 @@ class PriceProductScheduleCsvReader implements PriceProductScheduleCsvReaderInte
         UploadedFile $importCsv,
         PriceProductScheduledListImportRequestTransfer $productScheduledListImportRequestTransfer
     ): PriceProductScheduledListImportRequestTransfer {
-        $importItems = $this->csvService->readUploadedFile($importCsv);
-        $headers = current($importItems);
-        unset($importItems[0]);
+        $importData = $this->csvService->readUploadedFile($importCsv);
+        $headers = current($importData);
+        $importData = $this->removeHeadersFromImportData($importData);
 
-        foreach ($importItems as $rowNumber => $rowData) {
+        foreach ($importData as $rowNumber => $rowData) {
             if ($this->isRowDataEmpty($rowData)) {
                 continue;
             }
@@ -77,6 +77,30 @@ class PriceProductScheduleCsvReader implements PriceProductScheduleCsvReaderInte
      */
     protected function isRowDataEmpty(array $rowData): bool
     {
-        return empty(array_filter(array_filter($rowData)));
+        $clearedRowData = $this->clearRowDataFromEmptyValues($rowData);
+
+        return empty($clearedRowData);
+    }
+
+    /**
+     * @param array $rowData
+     *
+     * @return array
+     */
+    protected function clearRowDataFromEmptyValues(array $rowData): array
+    {
+        return array_filter($rowData);
+    }
+
+    /**
+     * @param array $importData
+     *
+     * @return array
+     */
+    protected function removeHeadersFromImportData(array $importData): array
+    {
+        unset($importData[0]);
+
+        return $importData;
     }
 }
