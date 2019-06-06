@@ -93,9 +93,11 @@ class CartRestResponseBuilder implements CartRestResponseBuilderInterface
         if ($errorIdentifier) {
             $errorIdentifierMapping = $this->config->getErrorIdentifierToRestErrorMapping()[$quoteErrorTransfer->getErrorIdentifier()];
             $restErrorMessageTransfer->fromArray($errorIdentifierMapping, true);
+
+            return $restErrorMessageTransfer;
         }
 
-        if (!$errorIdentifier && $quoteErrorTransfer->getMessage()) {
+        if ($quoteErrorTransfer->getMessage()) {
             return $this->createErrorMessageTransfer($quoteErrorTransfer);
         }
 
