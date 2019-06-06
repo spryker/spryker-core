@@ -5,32 +5,31 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\PriceProductScheduleGui\Communication\Csv;
+namespace Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule;
 
 use Generated\Shared\Transfer\PriceProductScheduledListImportRequestTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleImportTransfer;
-use Spryker\Zed\PriceProductScheduleGui\Communication\Mapper\PriceProductScheduleImportMapperInterface;
-use Spryker\Zed\PriceProductScheduleGui\Dependency\Service\PriceProductScheduleGuiToUtilCsvServiceInterface;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Spryker\Zed\PriceProductSchedule\Dependency\Service\PriceProductScheduleToUtilCsvServiceInterface;
+use Spryker\Zed\PriceProductScheduleGui\Communication\File\UploadedFile;
 
 class PriceProductScheduleCsvReader implements PriceProductScheduleCsvReaderInterface
 {
     /**
-     * @var \Spryker\Zed\PriceProductScheduleGui\Dependency\Service\PriceProductScheduleGuiToUtilCsvServiceInterface
+     * @var \Spryker\Zed\PriceProductSchedule\Dependency\Service\PriceProductScheduleToUtilCsvServiceInterface
      */
     protected $csvService;
 
     /**
-     * @var \Spryker\Zed\PriceProductScheduleGui\Communication\Mapper\PriceProductScheduleImportMapperInterface
+     * @var \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleImportMapperInterface
      */
     protected $priceProductScheduleImportMapper;
 
     /**
-     * @param \Spryker\Zed\PriceProductScheduleGui\Dependency\Service\PriceProductScheduleGuiToUtilCsvServiceInterface $csvService
-     * @param \Spryker\Zed\PriceProductScheduleGui\Communication\Mapper\PriceProductScheduleImportMapperInterface $priceProductScheduleImportMapper
+     * @param \Spryker\Zed\PriceProductSchedule\Dependency\Service\PriceProductScheduleToUtilCsvServiceInterface $csvService
+     * @param \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleImportMapperInterface $priceProductScheduleImportMapper
      */
     public function __construct(
-        PriceProductScheduleGuiToUtilCsvServiceInterface $csvService,
+        PriceProductScheduleToUtilCsvServiceInterface $csvService,
         PriceProductScheduleImportMapperInterface $priceProductScheduleImportMapper
     ) {
         $this->csvService = $csvService;
@@ -38,7 +37,7 @@ class PriceProductScheduleCsvReader implements PriceProductScheduleCsvReaderInte
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\File\UploadedFile $importCsv
+     * @param \Spryker\Zed\PriceProductScheduleGui\Communication\File\UploadedFile $importCsv
      * @param \Generated\Shared\Transfer\PriceProductScheduledListImportRequestTransfer $productScheduledListImportRequestTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduledListImportRequestTransfer
@@ -61,7 +60,7 @@ class PriceProductScheduleCsvReader implements PriceProductScheduleCsvReaderInte
                     array_combine($headers, $rowData),
                     new PriceProductScheduleImportTransfer()
                 );
-
+            $priceProductScheduleImportTransfer->requireMetaData();
             $priceProductScheduleImportTransfer->getMetaData()->setIdentifier($rowNumber);
 
             $productScheduledListImportRequestTransfer->addItem($priceProductScheduleImportTransfer);

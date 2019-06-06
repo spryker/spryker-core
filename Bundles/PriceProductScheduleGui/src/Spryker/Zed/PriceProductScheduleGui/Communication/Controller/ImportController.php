@@ -8,7 +8,6 @@
 namespace Spryker\Zed\PriceProductScheduleGui\Communication\Controller;
 
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\PriceProductScheduleGui\Communication\PriceProductScheduleGuiCommunicationFactory getFactory()
@@ -16,11 +15,9 @@ use Symfony\Component\HttpFoundation\Request;
 class ImportController extends AbstractController
 {
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function indexAction(Request $request)
+    public function indexAction()
     {
         $priceProductScheduleImportForm = $this
             ->getFactory()

@@ -7,10 +7,12 @@
 
 namespace Spryker\Zed\PriceProductScheduleGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\PriceProductScheduleCsvValidationResultTransfer;
 use Generated\Shared\Transfer\PriceProductScheduledListImportRequestTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleListImportResponseTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleListResponseTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleListTransfer;
+use Spryker\Zed\PriceProductScheduleGui\Communication\File\UploadedFile;
 
 class PriceProductScheduleGuiToPriceProductScheduleFacadeBridge implements PriceProductScheduleGuiToPriceProductScheduleFacadeInterface
 {
@@ -71,5 +73,31 @@ class PriceProductScheduleGuiToPriceProductScheduleFacadeBridge implements Price
         PriceProductScheduleListTransfer $priceProductScheduleListTransfer
     ): PriceProductScheduleListResponseTransfer {
         return $this->priceProductScheduleFacade->findPriceProductScheduleList($priceProductScheduleListTransfer);
+    }
+
+    /**
+     * @param \Spryker\Zed\PriceProductScheduleGui\Communication\File\UploadedFile $importCsv
+     * @param \Generated\Shared\Transfer\PriceProductScheduledListImportRequestTransfer $productScheduledListImportRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduledListImportRequestTransfer
+     */
+    public function readPriceProductScheduleImportTransfersFromCsvFile(
+        UploadedFile $importCsv,
+        PriceProductScheduledListImportRequestTransfer $productScheduledListImportRequestTransfer
+    ): PriceProductScheduledListImportRequestTransfer {
+        return $this->priceProductScheduleFacade->readPriceProductScheduleImportTransfersFromCsvFile(
+            $importCsv,
+            $productScheduledListImportRequestTransfer
+        );
+    }
+
+    /**
+     * @param \Spryker\Zed\PriceProductScheduleGui\Communication\File\UploadedFile $importCsv
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleCsvValidationResultTransfer
+     */
+    public function validateCsvFile(UploadedFile $importCsv): PriceProductScheduleCsvValidationResultTransfer
+    {
+        return $this->priceProductScheduleFacade->validateCsvFile($importCsv);
     }
 }

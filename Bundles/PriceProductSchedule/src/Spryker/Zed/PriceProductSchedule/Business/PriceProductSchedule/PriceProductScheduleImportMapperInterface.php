@@ -22,4 +22,15 @@ interface PriceProductScheduleImportMapperInterface
         PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer,
         PriceProductScheduleCriteriaFilterTransfer $priceProductScheduleCriteriaFilterTransfer
     ): PriceProductScheduleCriteriaFilterTransfer;
+
+    /**
+     * @param array $importData
+     * @param \Generated\Shared\Transfer\PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleImportTransfer
+     */
+    public function mapPriceProductScheduleRowToPriceProductScheduleImportTransfer(
+        array $importData,
+        PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer
+    ): PriceProductScheduleImportTransfer;
 }

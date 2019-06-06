@@ -86,4 +86,17 @@
     <transfer name="MoneyValue">
         <property name="store" type="Store"/>
     </transfer>
+
+    <transfer name="FileUpload">
+        <property name="realPath" type="string" />
+        <property name="clientOriginalName" type="string" />
+        <property name="mimeTypeName" type="string" />
+        <property name="clientOriginalExtension" type="string" />
+        <property name="size" type="int" />
+    </transfer>
+
+    <transfer name="PriceProductScheduleCsvValidationResult">
+        <property name="error" type="string" singular="error"/>
+        <property name="isSuccess" type="bool"/>
+    </transfer>
 </transfers>

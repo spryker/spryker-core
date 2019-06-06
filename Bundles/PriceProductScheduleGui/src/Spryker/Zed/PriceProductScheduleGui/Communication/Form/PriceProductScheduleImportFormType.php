@@ -8,9 +8,12 @@
 namespace Spryker\Zed\PriceProductScheduleGui\Communication\Form;
 
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Spryker\Zed\PriceProductScheduleGui\Communication\File\UploadedFile;
+use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\HttpFoundation\File\UploadedFile as SymfonyUploadedFile;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Constraints\Length;
@@ -98,18 +101,48 @@ class PriceProductScheduleImportFormType extends AbstractType
         $builder->add(static::FIELD_FILE_UPLOAD, FileType::class, [
             'label' => 'Select your CSV file',
             'attr' => [
-                'accept' => 'text/csv, text/plain',
+                'accept' => implode(', ', $this->getConfig()->getFileMimeTypes()),
             ],
             'constraints' => [
-                new Required(),
-                new NotBlank(),
                 new File([
-                    'mimeTypes' => ['text/csv', 'text/plain'],
+                    'mimeTypes' => $this->getConfig()->getFileMimeTypes(),
                     'maxSize' => $this->getConfig()->getMaxFileSize(),
                 ]),
             ],
+            'required' => true,
         ]);
 
+        $builder->get(static::FIELD_FILE_UPLOAD)
+            ->addModelTransformer(
+                new CallbackTransformer(
+                    function ($data) {
+                        return $data;
+                    },
+                    function (?SymfonyUploadedFile $uploadedFile = null) {
+                        if ($uploadedFile === null) {
+                            return $uploadedFile;
+                        }
+
+                        return $this->mapSymfonyUploadedFileToUploadedFile($uploadedFile);
+                    }
+                )
+            );
+
         return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\File\UploadedFile $uploadedFile
+     *
+     * @return \Spryker\Zed\PriceProductScheduleGui\Communication\File\UploadedFile
+     */
+    protected function mapSymfonyUploadedFileToUploadedFile(SymfonyUploadedFile $uploadedFile): UploadedFile
+    {
+        return new UploadedFile(
+            $uploadedFile->getRealPath(),
+            $uploadedFile->getClientOriginalName(),
+            $uploadedFile->getClientMimeType(),
+            $uploadedFile->getSize()
+        );
     }
 }

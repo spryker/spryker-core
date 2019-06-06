@@ -11,17 +11,11 @@ use Generated\Shared\Transfer\PriceProductScheduleListImportResponseTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleListTransfer;
 use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\PriceProductScheduleGui\Communication\Csv\PriceProductScheduleCsvReader;
-use Spryker\Zed\PriceProductScheduleGui\Communication\Csv\PriceProductScheduleCsvReaderInterface;
-use Spryker\Zed\PriceProductScheduleGui\Communication\Csv\PriceProductScheduleCsvValidator;
-use Spryker\Zed\PriceProductScheduleGui\Communication\Csv\PriceProductScheduleCsvValidatorInterface;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Form\PriceProductScheduleImportFormType;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Formatter\RowFormatter;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Formatter\RowFormatterInterface;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Mapper\CurrencyMapper;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Mapper\CurrencyMapperInterface;
-use Spryker\Zed\PriceProductScheduleGui\Communication\Mapper\PriceProductScheduleImportMapper;
-use Spryker\Zed\PriceProductScheduleGui\Communication\Mapper\PriceProductScheduleImportMapperInterface;
 use Spryker\Zed\PriceProductScheduleGui\Communication\TabCreator\AbstractProductTabCreator;
 use Spryker\Zed\PriceProductScheduleGui\Communication\TabCreator\AbstractProductTabCreatorInterface;
 use Spryker\Zed\PriceProductScheduleGui\Communication\TabCreator\ConcreteProductTabCreator;
@@ -42,7 +36,6 @@ use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGu
 use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToPriceProductScheduleFacadeInterface;
 use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToStoreFacadeInterface;
 use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToTranslatorFacadeInterface;
-use Spryker\Zed\PriceProductScheduleGui\Dependency\Service\PriceProductScheduleGuiToUtilCsvServiceInterface;
 use Spryker\Zed\PriceProductScheduleGui\PriceProductScheduleGuiDependencyProvider;
 use Symfony\Component\Form\FormInterface;
 
@@ -157,36 +150,6 @@ class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationF
     }
 
     /**
-     * @return \Spryker\Zed\PriceProductScheduleGui\Communication\Mapper\PriceProductScheduleImportMapperInterface
-     */
-    public function createPriceProductScheduleImportMapper(): PriceProductScheduleImportMapperInterface
-    {
-        return new PriceProductScheduleImportMapper($this->getConfig());
-    }
-
-    /**
-     * @return \Spryker\Zed\PriceProductScheduleGui\Communication\Csv\PriceProductScheduleCsvReaderInterface
-     */
-    public function createPriceProductScheduleCsvReader(): PriceProductScheduleCsvReaderInterface
-    {
-        return new PriceProductScheduleCsvReader(
-            $this->getUtilCsvService(),
-            $this->createPriceProductScheduleImportMapper()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\PriceProductScheduleGui\Communication\Csv\PriceProductScheduleCsvValidatorInterface
-     */
-    public function createPriceProductScheduleCsvValidator(): PriceProductScheduleCsvValidatorInterface
-    {
-        return new PriceProductScheduleCsvValidator(
-            $this->getUtilCsvService(),
-            $this->getConfig()
-        );
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\PriceProductScheduleListImportResponseTransfer $priceProductScheduleListImportResponseTransfer
      *
      * @return \Spryker\Zed\PriceProductScheduleGui\Communication\Table\ImportErrorListTable
@@ -260,14 +223,6 @@ class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationF
     public function getPriceProductScheduleFacade(): PriceProductScheduleGuiToPriceProductScheduleFacadeInterface
     {
         return $this->getProvidedDependency(PriceProductScheduleGuiDependencyProvider::FACADE_PRICE_PRODUCT_SCHEDULE);
-    }
-
-    /**
-     * @return \Spryker\Zed\PriceProductScheduleGui\Dependency\Service\PriceProductScheduleGuiToUtilCsvServiceInterface
-     */
-    public function getUtilCsvService(): PriceProductScheduleGuiToUtilCsvServiceInterface
-    {
-        return $this->getProvidedDependency(PriceProductScheduleGuiDependencyProvider::SERVICE_UTIL_CSV);
     }
 
     /**

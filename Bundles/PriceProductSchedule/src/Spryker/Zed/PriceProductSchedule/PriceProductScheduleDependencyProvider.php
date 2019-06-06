@@ -14,6 +14,7 @@ use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToPri
 use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToProductFacadeBridge;
 use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToPropelFacadeBridge;
 use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToStoreFacadeBridge;
+use Spryker\Zed\PriceProductSchedule\Dependency\Service\PriceProductScheduleToUtilCsvServiceBridge;
 
 /**
  * @method \Spryker\Zed\PriceProductSchedule\PriceProductScheduleConfig getConfig()
@@ -26,6 +27,8 @@ class PriceProductScheduleDependencyProvider extends AbstractBundleDependencyPro
     public const FACADE_CURRENCY = 'FACADE_CURRENCY';
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
 
+    public const SERVICE_UTIL_CSV = 'SERVICE_UTIL_CSV';
+
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -37,6 +40,7 @@ class PriceProductScheduleDependencyProvider extends AbstractBundleDependencyPro
         $container = $this->addStoreFacade($container);
         $container = $this->addProductFacade($container);
         $container = $this->addCurrencyFacade($container);
+        $container = $this->addUtilCsvService($container);
 
         return $container;
     }
@@ -127,6 +131,22 @@ class PriceProductScheduleDependencyProvider extends AbstractBundleDependencyPro
         $container->set(static::FACADE_CURRENCY, function (Container $container) {
             return new PriceProductScheduleToCurrencyFacadeBridge(
                 $container->getLocator()->currency()->facade()
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUtilCsvService(Container $container): Container
+    {
+        $container->set(static::SERVICE_UTIL_CSV, function (Container $container) {
+            return new PriceProductScheduleToUtilCsvServiceBridge(
+                $container->getLocator()->utilCsv()->service()
             );
         });
 

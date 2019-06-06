@@ -7,44 +7,59 @@
 
 namespace Spryker\Zed\PriceProductScheduleGui;
 
-use Generated\Shared\Transfer\PriceProductScheduleImportTransfer;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class PriceProductScheduleGuiConfig extends AbstractBundleConfig
 {
-    protected const KEY_ID_PRICE_PRODUCT_SCHEDULE = 'ID';
-
+    /**
+     * @see \Spryker\Zed\PriceProductSchedule\PriceProductScheduleConfig::KEY_ABSTRACT_SKU
+     */
     protected const KEY_ABSTRACT_SKU = 'abstract_sku';
-    protected const KEY_CONCRETE_SKU = 'concrete_sku';
-    protected const KEY_STORE = 'store';
-    protected const KEY_CURRENCY = 'currency';
-    protected const KEY_PRICE_TYPE = 'price_type';
-
-    protected const KEY_VALUE_NET = 'value_net';
-    protected const KEY_VALUE_GROSS = 'value_gross';
-
-    protected const KEY_FROM_INCLUDED = 'from_included';
-    protected const KEY_TO_INCLUDED = 'to_included';
-
-    protected const FILE_MAX_SIZE = '50M';
 
     /**
-     * @return array
+     * @see \Spryker\Zed\PriceProductSchedule\PriceProductScheduleConfig::KEY_CONCRETE_SKU
      */
-    public function getImportFileToTransferFieldsMap(): array
-    {
-        return [
-            static::KEY_ABSTRACT_SKU => PriceProductScheduleImportTransfer::SKU_PRODUCT_ABSTRACT,
-            static::KEY_CONCRETE_SKU => PriceProductScheduleImportTransfer::SKU_PRODUCT,
-            static::KEY_STORE => PriceProductScheduleImportTransfer::STORE_NAME,
-            static::KEY_CURRENCY => PriceProductScheduleImportTransfer::CURRENCY_CODE,
-            static::KEY_PRICE_TYPE => PriceProductScheduleImportTransfer::PRICE_TYPE_NAME,
-            static::KEY_VALUE_NET => PriceProductScheduleImportTransfer::NET_AMOUNT,
-            static::KEY_VALUE_GROSS => PriceProductScheduleImportTransfer::GROSS_AMOUNT,
-            static::KEY_FROM_INCLUDED => PriceProductScheduleImportTransfer::ACTIVE_FROM,
-            static::KEY_TO_INCLUDED => PriceProductScheduleImportTransfer::ACTIVE_TO,
-        ];
-    }
+    protected const KEY_CONCRETE_SKU = 'concrete_sku';
+
+    /**
+     * @see \Spryker\Zed\PriceProductSchedule\PriceProductScheduleConfig::KEY_STORE
+     */
+    protected const KEY_STORE = 'store';
+
+    /**
+     * @see \Spryker\Zed\PriceProductSchedule\PriceProductScheduleConfig::KEY_CURRENCY
+     */
+    protected const KEY_CURRENCY = 'currency';
+
+    /**
+     * @see \Spryker\Zed\PriceProductSchedule\PriceProductScheduleConfig::KEY_PRICE_TYPE
+     */
+    protected const KEY_PRICE_TYPE = 'price_type';
+
+    /**
+     * @see \Spryker\Zed\PriceProductSchedule\PriceProductScheduleConfig::KEY_VALUE_NET
+     */
+    protected const KEY_VALUE_NET = 'value_net';
+
+    /**
+     * @see \Spryker\Zed\PriceProductSchedule\PriceProductScheduleConfig::KEY_VALUE_GROSS
+     */
+    protected const KEY_VALUE_GROSS = 'value_gross';
+
+    /**
+     * @see \Spryker\Zed\PriceProductSchedule\PriceProductScheduleConfig::KEY_FROM_INCLUDED
+     */
+    protected const KEY_FROM_INCLUDED = 'from_included';
+
+    /**
+     * @see \Spryker\Zed\PriceProductSchedule\PriceProductScheduleConfig::KEY_TO_INCLUDED
+     */
+    protected const KEY_TO_INCLUDED = 'to_included';
+
+    protected const KEY_ID_PRICE_PRODUCT_SCHEDULE = 'ID';
+
+    protected const FILE_MAX_SIZE = '50M';
+    protected const FILE_MIME_TYPES = ['text/csv', 'text/plain'];
 
     /**
      * @return string[]
@@ -52,6 +67,7 @@ class PriceProductScheduleGuiConfig extends AbstractBundleConfig
     public function getFieldsList(): array
     {
         return [
+            static::KEY_ID_PRICE_PRODUCT_SCHEDULE,
             static::KEY_ABSTRACT_SKU,
             static::KEY_CONCRETE_SKU,
             static::KEY_STORE,
@@ -158,5 +174,13 @@ class PriceProductScheduleGuiConfig extends AbstractBundleConfig
     public function getMaxFileSize(): string
     {
         return static::FILE_MAX_SIZE;
+    }
+
+    /**
+     * @return array
+     */
+    public function getFileMimeTypes(): array
+    {
+        return static::FILE_MIME_TYPES;
     }
 }

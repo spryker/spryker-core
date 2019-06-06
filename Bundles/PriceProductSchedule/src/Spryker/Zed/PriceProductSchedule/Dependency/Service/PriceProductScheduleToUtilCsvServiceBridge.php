@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\PriceProductScheduleGui\Dependency\Service;
+namespace Spryker\Zed\PriceProductSchedule\Dependency\Service;
 
-use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Spryker\Zed\PriceProductScheduleGui\Communication\File\UploadedFile;
 
-class PriceProductScheduleGuiToUtilCsvServiceBridge implements PriceProductScheduleGuiToUtilCsvServiceInterface
+class PriceProductScheduleToUtilCsvServiceBridge implements PriceProductScheduleToUtilCsvServiceInterface
 {
     /**
      * @var \Spryker\Service\UtilCsv\UtilCsvServiceInterface
@@ -25,12 +25,12 @@ class PriceProductScheduleGuiToUtilCsvServiceBridge implements PriceProductSched
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\File\UploadedFile $file
+     * @param \Spryker\Zed\PriceProductScheduleGui\Communication\File\UploadedFile $fileUploadTransfer
      *
      * @return array
      */
-    public function readUploadedFile(UploadedFile $file): array
+    public function readUploadedFile(UploadedFile $fileUploadTransfer): array
     {
-        return $this->utilCsvService->readUploadedFile($file);
+        return $this->utilCsvService->readUploadedFile($fileUploadTransfer);
     }
 }

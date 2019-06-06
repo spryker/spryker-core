@@ -7,10 +7,12 @@
 
 namespace Spryker\Zed\PriceProductSchedule\Business;
 
+use Generated\Shared\Transfer\PriceProductScheduleCsvValidationResultTransfer;
 use Generated\Shared\Transfer\PriceProductScheduledListImportRequestTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleListImportResponseTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleListResponseTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleListTransfer;
+use Spryker\Zed\PriceProductScheduleGui\Communication\File\UploadedFile;
 
 interface PriceProductScheduleFacadeInterface
 {
@@ -97,4 +99,22 @@ interface PriceProductScheduleFacadeInterface
     public function findPriceProductScheduleList(
         PriceProductScheduleListTransfer $priceProductScheduleListTransfer
     ): PriceProductScheduleListResponseTransfer;
+
+    /**
+     * @param \Spryker\Zed\PriceProductScheduleGui\Communication\File\UploadedFile $importCsv
+     * @param \Generated\Shared\Transfer\PriceProductScheduledListImportRequestTransfer $productScheduledListImportRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduledListImportRequestTransfer
+     */
+    public function readPriceProductScheduleImportTransfersFromCsvFile(
+        UploadedFile $importCsv,
+        PriceProductScheduledListImportRequestTransfer $productScheduledListImportRequestTransfer
+    ): PriceProductScheduledListImportRequestTransfer;
+
+    /**
+     * @param \Spryker\Zed\PriceProductScheduleGui\Communication\File\UploadedFile $importCsv
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleCsvValidationResultTransfer
+     */
+    public function validateCsvFile(UploadedFile $importCsv): PriceProductScheduleCsvValidationResultTransfer;
 }

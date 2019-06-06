@@ -5,40 +5,41 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\PriceProductScheduleGui\Communication\Csv;
+namespace Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule;
 
 use Generated\Shared\Transfer\PriceProductScheduleCsvValidationResultTransfer;
-use Spryker\Zed\PriceProductScheduleGui\Dependency\Service\PriceProductScheduleGuiToUtilCsvServiceInterface;
-use Spryker\Zed\PriceProductScheduleGui\PriceProductScheduleGuiConfig;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Spryker\Zed\PriceProductSchedule\Dependency\Service\PriceProductScheduleToUtilCsvServiceInterface;
+use Spryker\Zed\PriceProductSchedule\PriceProductScheduleConfig;
+use Spryker\Zed\PriceProductScheduleGui\Communication\File\UploadedFile;
 
 class PriceProductScheduleCsvValidator implements PriceProductScheduleCsvValidatorInterface
 {
     protected const ERROR_HEADERS_MISSING = '%s header(s) is missing in uploaded csv file';
+
     /**
-     * @var \Spryker\Zed\PriceProductScheduleGui\Dependency\Service\PriceProductScheduleGuiToUtilCsvServiceInterface
+     * @var \Spryker\Zed\PriceProductSchedule\Dependency\Service\PriceProductScheduleToUtilCsvServiceInterface
      */
     protected $csvService;
 
     /**
-     * @var \Spryker\Zed\PriceProductScheduleGui\PriceProductScheduleGuiConfig
+     * @var \Spryker\Zed\PriceProductSchedule\PriceProductScheduleConfig
      */
-    protected $priceProductScheduleGuiConfig;
+    protected $priceProductScheduleConfig;
 
     /**
-     * @param \Spryker\Zed\PriceProductScheduleGui\Dependency\Service\PriceProductScheduleGuiToUtilCsvServiceInterface $csvService
-     * @param \Spryker\Zed\PriceProductScheduleGui\PriceProductScheduleGuiConfig $priceProductScheduleGuiConfig
+     * @param \Spryker\Zed\PriceProductSchedule\Dependency\Service\PriceProductScheduleToUtilCsvServiceInterface $csvService
+     * @param \Spryker\Zed\PriceProductSchedule\PriceProductScheduleConfig $priceProductScheduleConfig
      */
     public function __construct(
-        PriceProductScheduleGuiToUtilCsvServiceInterface $csvService,
-        PriceProductScheduleGuiConfig $priceProductScheduleGuiConfig
+        PriceProductScheduleToUtilCsvServiceInterface $csvService,
+        PriceProductScheduleConfig $priceProductScheduleConfig
     ) {
         $this->csvService = $csvService;
-        $this->priceProductScheduleGuiConfig = $priceProductScheduleGuiConfig;
+        $this->priceProductScheduleConfig = $priceProductScheduleConfig;
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\File\UploadedFile $importCsv
+     * @param \Spryker\Zed\PriceProductScheduleGui\Communication\File\UploadedFile $importCsv
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduleCsvValidationResultTransfer
      */
@@ -49,7 +50,7 @@ class PriceProductScheduleCsvValidator implements PriceProductScheduleCsvValidat
         $importItems = $this->csvService->readUploadedFile($importCsv);
         $headers = current($importItems);
 
-        $expectedHeaders = $this->priceProductScheduleGuiConfig->getFieldsList();
+        $expectedHeaders = $this->priceProductScheduleConfig->getFieldsList();
 
         $missedHeaders = array_diff($expectedHeaders, $headers);
 

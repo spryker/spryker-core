@@ -60,7 +60,7 @@ class ImportSuccessListTable extends AbstractTable
      */
     protected function configure(TableConfiguration $config): TableConfiguration
     {
-        $fields = $this->getFieldsList();
+        $fields = $this->priceProductScheduleGuiConfig->getFieldsList();
 
         $config->setHeader(array_combine($fields, $fields));
 
@@ -135,16 +135,5 @@ class ImportSuccessListTable extends AbstractTable
             ->withColumn(SpyPriceProductScheduleTableMap::COL_ACTIVE_TO, $this->priceProductScheduleGuiConfig->getToIncludedKey())
             ->withColumn(SpyPriceProductScheduleTableMap::COL_NET_PRICE, $this->priceProductScheduleGuiConfig->getValueNetKey())
             ->withColumn(SpyPriceProductScheduleTableMap::COL_GROSS_PRICE, $this->priceProductScheduleGuiConfig->getValueGrossKey());
-    }
-
-    /**
-     * @return array
-     */
-    protected function getFieldsList(): array
-    {
-        $fields = $this->priceProductScheduleGuiConfig->getFieldsList();
-        array_unshift($fields, $this->priceProductScheduleGuiConfig->getIdPriceProductScheduleKey());
-
-        return $fields;
     }
 }

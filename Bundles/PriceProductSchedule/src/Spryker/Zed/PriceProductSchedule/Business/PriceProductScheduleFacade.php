@@ -7,11 +7,13 @@
 
 namespace Spryker\Zed\PriceProductSchedule\Business;
 
+use Generated\Shared\Transfer\PriceProductScheduleCsvValidationResultTransfer;
 use Generated\Shared\Transfer\PriceProductScheduledListImportRequestTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleListImportResponseTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleListResponseTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleListTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
+use Spryker\Zed\PriceProductScheduleGui\Communication\File\UploadedFile;
 
 /**
  * @method \Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleBusinessFactory getFactory()
@@ -114,5 +116,32 @@ class PriceProductScheduleFacade extends AbstractFacade implements PriceProductS
         return $this->getFactory()
             ->createPriceProductScheduleListFinder()
             ->findPriceProductScheduleList($priceProductScheduleListTransfer);
+    }
+
+    /**
+     * @param \Spryker\Zed\PriceProductScheduleGui\Communication\File\UploadedFile $importCsv
+     * @param \Generated\Shared\Transfer\PriceProductScheduledListImportRequestTransfer $productScheduledListImportRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduledListImportRequestTransfer
+     */
+    public function readPriceProductScheduleImportTransfersFromCsvFile(
+        UploadedFile $importCsv,
+        PriceProductScheduledListImportRequestTransfer $productScheduledListImportRequestTransfer
+    ): PriceProductScheduledListImportRequestTransfer {
+        return $this->getFactory()
+            ->createPriceProductScheduleCsvReader()
+            ->readPriceProductScheduleImportTransfersFromCsvFile($importCsv, $productScheduledListImportRequestTransfer);
+    }
+
+    /**
+     * @param \Spryker\Zed\PriceProductScheduleGui\Communication\File\UploadedFile $importCsv
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleCsvValidationResultTransfer
+     */
+    public function validateCsvFile(UploadedFile $importCsv): PriceProductScheduleCsvValidationResultTransfer
+    {
+        return $this->getFactory()
+            ->createPriceProductScheduleCsvValidator()
+            ->validateCsvFile($importCsv);
     }
 }

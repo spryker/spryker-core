@@ -5,15 +5,15 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\PriceProductScheduleGui\Communication\Csv;
+namespace Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule;
 
 use Generated\Shared\Transfer\PriceProductScheduleCsvValidationResultTransfer;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Spryker\Zed\PriceProductScheduleGui\Communication\File\UploadedFile;
 
 interface PriceProductScheduleCsvValidatorInterface
 {
     /**
-     * @param \Symfony\Component\HttpFoundation\File\UploadedFile $importCsv
+     * @param \Spryker\Zed\PriceProductScheduleGui\Communication\File\UploadedFile $importCsv
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduleCsvValidationResultTransfer
      */

@@ -83,7 +83,7 @@ class DryRunImportController extends AbstractController
             ->getData();
 
         return $this->getFactory()
-            ->createPriceProductScheduleCsvValidator()
+            ->getPriceProductScheduleFacade()
             ->validateCsvFile($importCsv);
     }
 
@@ -110,7 +110,7 @@ class DryRunImportController extends AbstractController
             ->setPriceProductScheduleList($priceProductScheduledList);
 
         $priceProductScheduleListImportRequestTransfer = $this->getFactory()
-            ->createPriceProductScheduleCsvReader()
+            ->getPriceProductScheduleFacade()
             ->readPriceProductScheduleImportTransfersFromCsvFile(
                 $importCsv,
                 $priceProductScheduleListImportRequestTransfer

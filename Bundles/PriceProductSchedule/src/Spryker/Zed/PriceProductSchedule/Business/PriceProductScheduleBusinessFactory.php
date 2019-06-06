@@ -31,6 +31,10 @@ use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductS
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleApplierInterface;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleCleaner;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleCleanerInterface;
+use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleCsvReader;
+use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleCsvReaderInterface;
+use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleCsvValidator;
+use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleCsvValidatorInterface;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleDisabler;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleDisablerInterface;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleImportMapper;
@@ -59,6 +63,7 @@ use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToCur
 use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToPriceProductFacadeInterface;
 use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToProductFacadeInterface;
 use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToStoreFacadeInterface;
+use Spryker\Zed\PriceProductSchedule\Dependency\Service\PriceProductScheduleToUtilCsvServiceInterface;
 use Spryker\Zed\PriceProductSchedule\PriceProductScheduleDependencyProvider;
 
 /**
@@ -192,7 +197,7 @@ class PriceProductScheduleBusinessFactory extends AbstractBusinessFactory
      */
     public function createPriceProductScheduleImportMapper(): PriceProductScheduleImportMapperInterface
     {
-        return new PriceProductScheduleImportMapper();
+        return new PriceProductScheduleImportMapper($this->getConfig());
     }
 
     /**
@@ -361,6 +366,28 @@ class PriceProductScheduleBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleCsvReaderInterface
+     */
+    public function createPriceProductScheduleCsvReader(): PriceProductScheduleCsvReaderInterface
+    {
+        return new PriceProductScheduleCsvReader(
+            $this->getUtilCsvService(),
+            $this->createPriceProductScheduleImportMapper()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleCsvValidatorInterface
+     */
+    public function createPriceProductScheduleCsvValidator(): PriceProductScheduleCsvValidatorInterface
+    {
+        return new PriceProductScheduleCsvValidator(
+            $this->getUtilCsvService(),
+            $this->getConfig()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToPriceProductFacadeInterface
      */
     public function getPriceProductFacade(): PriceProductScheduleToPriceProductFacadeInterface
@@ -390,5 +417,13 @@ class PriceProductScheduleBusinessFactory extends AbstractBusinessFactory
     public function getCurrencyFacade(): PriceProductScheduleToCurrencyFacadeInterface
     {
         return $this->getProvidedDependency(PriceProductScheduleDependencyProvider::FACADE_CURRENCY);
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductSchedule\Dependency\Service\PriceProductScheduleToUtilCsvServiceInterface
+     */
+    public function getUtilCsvService(): PriceProductScheduleToUtilCsvServiceInterface
+    {
+        return $this->getProvidedDependency(PriceProductScheduleDependencyProvider::SERVICE_UTIL_CSV);
     }
 }
