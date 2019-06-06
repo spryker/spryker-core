@@ -39,6 +39,7 @@ class RuntimeLoaderTwigPlugin implements TwigPluginInterface
 
             return new HttpKernelRuntime($fragmentHandler);
         };
+
         $factoryRuntimeLoader = new FactoryRuntimeLoader([HttpKernelRuntime::class => $httpKernelRuntime]);
         $twig->addRuntimeLoader($factoryRuntimeLoader);
 
