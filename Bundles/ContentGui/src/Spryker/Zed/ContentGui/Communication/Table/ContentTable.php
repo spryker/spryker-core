@@ -48,6 +48,7 @@ class ContentTable extends AbstractTable
 
         $config->setSortable([
             ContentTableConstants::COL_ID_CONTENT,
+            ContentTableConstants::COL_KEY,
             ContentTableConstants::COL_NAME,
             ContentTableConstants::COL_CONTENT_TYPE_KEY,
             ContentTableConstants::COL_CREATED_AT,
@@ -60,6 +61,7 @@ class ContentTable extends AbstractTable
 
         $config->setSearchable([
             ContentTableConstants::COL_ID_CONTENT,
+            ContentTableConstants::COL_KEY,
             ContentTableConstants::COL_NAME,
             ContentTableConstants::COL_DESCRIPTION,
             ContentTableConstants::COL_CONTENT_TYPE_KEY,
@@ -79,6 +81,7 @@ class ContentTable extends AbstractTable
     {
         $header = [
             ContentTableConstants::COL_ID_CONTENT => 'Content Item ID',
+            ContentTableConstants::COL_KEY => 'Key',
             ContentTableConstants::COL_NAME => 'Name',
             ContentTableConstants::COL_DESCRIPTION => 'Description',
             ContentTableConstants::COL_CONTENT_TYPE_KEY => 'Content Type',
@@ -105,6 +108,7 @@ class ContentTable extends AbstractTable
         foreach ($contents as $key => $content) {
             $results[] = [
                 ContentTableConstants::COL_ID_CONTENT => $content[SpyContentTableMap::COL_ID_CONTENT],
+                ContentTableConstants::COL_KEY => $content[SpyContentTableMap::COL_KEY],
                 ContentTableConstants::COL_NAME => $content[SpyContentTableMap::COL_NAME],
                 ContentTableConstants::COL_DESCRIPTION => $content[SpyContentTableMap::COL_DESCRIPTION],
                 ContentTableConstants::COL_CONTENT_TYPE_KEY => $this->buildContentTypeLabel($content[SpyContentTableMap::COL_CONTENT_TYPE_KEY]),
