@@ -12,10 +12,10 @@ use Spryker\Zed\TaxStorage\Dependency\Facade\TaxSetStorageToEventBehaviorFacadeI
 use Spryker\Zed\TaxStorage\TaxStorageDependencyProvider;
 
 /**
- * @method \Spryker\Zed\TaxStorage\Persistence\TaxStorageEntityManager getEntityManager()
- * @method \Spryker\Zed\TaxStorage\Persistence\TaxStorageRepository getRepository()
+ * @method \Spryker\Zed\TaxStorage\Persistence\TaxStorageEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\TaxStorage\Persistence\TaxStorageRepositoryInterface getRepository()
  * @method \Spryker\Zed\TaxStorage\TaxStorageConfig getConfig()
- * @method \Spryker\Zed\TaxStorage\Business\TaxStorageFacade getFacade()
+ * @method \Spryker\Zed\TaxStorage\Business\TaxStorageFacadeInterface getFacade()
  */
 class TaxStorageCommunicationFactory extends AbstractCommunicationFactory
 {

@@ -13,7 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Regex;
+use Symfony\Component\Validator\Constraints\Type;
 
 /**
  * @method \Spryker\Zed\SalesSplit\Business\SalesSplitFacadeInterface getFacade()
@@ -77,9 +77,9 @@ class OrderItemSplitForm extends AbstractType
                 new NotBlank([
                     'message' => self::VALIDATION_MESSAGE_QUANTITY,
                 ]),
-                new Regex([
-                    'pattern' => '/^\d+$/',
-                    'message' => self::VALIDATE_MESSAGE_NUMERIC,
+                new Type([
+                    'type' => 'numeric',
+                    'message' => static::VALIDATE_MESSAGE_NUMERIC,
                 ]),
             ],
         ]);

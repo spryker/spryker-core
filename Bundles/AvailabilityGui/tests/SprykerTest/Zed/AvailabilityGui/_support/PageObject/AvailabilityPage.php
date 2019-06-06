@@ -10,8 +10,6 @@ namespace SprykerTest\Zed\AvailabilityGui\PageObject;
 class AvailabilityPage
 {
     public const AVAILABILITY_ID = 107;
-    public const AVAILABILITY_SKU = '828188-1';
-    public const AVAILABILITY_ABSTRACT_PRODUCT_ID = 107;
     public const AVAILABILITY_ID_STORE = 1;
 
     public const AVAILABILITY_LIST_URL = '/availability-gui';
