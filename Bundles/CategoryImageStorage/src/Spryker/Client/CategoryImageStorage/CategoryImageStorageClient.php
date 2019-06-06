@@ -21,7 +21,7 @@ class CategoryImageStorageClient extends AbstractClient implements CategoryImage
      *
      * @api
      *
-     * @deprecated Use `findCategoryImageStorageItem()` instead.
+     * @deprecated Use `findCategoryImageStorageItemData()` instead.
      *
      * @param int $idCategory
      * @param string $localeName

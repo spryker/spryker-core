@@ -33,4 +33,10 @@
         <property name="imageSets" singular="imageSet" type="CategoryImageSet[]"/>
     </transfer>
 
+    <transfer name="Locale">
+        <property name="idLocale" type="int"/>
+        <property name="localeName" type="string"/>
+        <property name="isActive" type="bool"/>
+    </transfer>
+
 </transfers>
