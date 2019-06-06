@@ -12,7 +12,7 @@ coverage:
     whitelist: { include: ['../../../../src/*'] }
 
 suites:
-    Business:
+    Communication:
         path: Communication
         class_name: GlossaryStorageCommunicationTester
         modules:
@@ -24,3 +24,15 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\DependencyHelper
                 - \SprykerTest\Shared\Propel\Helper\ConnectionHelper
                 - \SprykerTest\Shared\Glossary\Helper\TranslationHelper
+    Business:
+        path: Business
+        class_name: GlossaryStorageFacadeTester
+        modules:
+            enabled:
+            - Asserts
+            - \SprykerTest\Shared\Testify\Helper\Environment
+            - \SprykerTest\Shared\Testify\Helper\ConfigHelper
+            - \SprykerTest\Shared\Testify\Helper\LocatorHelper
+            - \SprykerTest\Shared\Propel\Helper\ConnectionHelper
+            - \SprykerTest\Shared\Testify\Helper\DependencyHelper
+            - \SprykerTest\Shared\Glossary\Helper\TranslationHelper

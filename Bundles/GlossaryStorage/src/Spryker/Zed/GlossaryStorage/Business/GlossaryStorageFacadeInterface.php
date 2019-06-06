@@ -67,7 +67,7 @@ interface GlossaryStorageFacadeInterface
      *
      * @return void
      */
-    public function deleteGlossaryStorageCollectionGlossaryKeyByGlossaryKeyEvents(array $eventTransfers);
+    public function deleteGlossaryStorageCollectionByGlossaryKeyEvents(array $eventTransfers);
 
     /**
      * Specification:

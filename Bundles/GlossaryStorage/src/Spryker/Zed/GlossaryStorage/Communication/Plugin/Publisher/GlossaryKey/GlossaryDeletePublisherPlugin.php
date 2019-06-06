@@ -30,6 +30,6 @@ class GlossaryDeletePublisherPlugin extends AbstractPlugin implements PublisherP
      */
     public function handleBulk(array $eventTransfers, $eventName)
     {
-        $this->getFacade()->deleteGlossaryStorageCollectionGlossaryKeyByGlossaryKeyEvents($eventTransfers);
+        $this->getFacade()->deleteGlossaryStorageCollectionByGlossaryKeyEvents($eventTransfers);
     }
 }

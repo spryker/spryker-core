@@ -32,13 +32,14 @@ class GlossaryStorageEntityManager extends AbstractEntityManager implements Glos
             ->filterByLocale($glossaryStorageEntityTransfer->getLocale())
             ->findOneOrCreate();
 
+        $glossaryStorage = $this->getFactory()
+            ->createGlossaryStorageMapper()
+            ->hydrateSpyGlossaryStorageEntity($glossaryStorage, $glossaryStorageEntityTransfer);
+
         $glossaryStorage->setIsSendingToQueue($isSendingToQueue);
         $glossaryStorage->setData($data);
 
-        $this->getFactory()
-            ->createGlossaryStorageMapper()
-            ->hydrateSpyGlossaryStorageEntity($glossaryStorage, $glossaryStorageEntityTransfer)
-            ->save();
+        $glossaryStorage->save();
     }
 
     /**
