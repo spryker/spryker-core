@@ -62,7 +62,6 @@ class ContentBannerConstraintsProvider implements ContentBannerConstraintsProvid
             new Required(),
             new NotBlank(),
             new Length(['max' => 1028]),
-            new Url(),
         ];
     }
 
@@ -75,7 +74,6 @@ class ContentBannerConstraintsProvider implements ContentBannerConstraintsProvid
             new Required(),
             new NotBlank(),
             new Length(['max' => 1028]),
-            new Url(),
         ];
     }
 
