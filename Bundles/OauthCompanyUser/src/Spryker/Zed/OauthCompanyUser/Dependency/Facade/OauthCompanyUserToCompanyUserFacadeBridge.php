@@ -33,4 +33,14 @@ class OauthCompanyUserToCompanyUserFacadeBridge implements OauthCompanyUserToCom
     {
         return $this->companyUserFacade->findActiveCompanyUserByUuid($companyUserTransfer);
     }
+
+    /**
+     * @param int[] $companyUserIds
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer[]
+     */
+    public function findActiveCompanyUsersByIds(array $companyUserIds): array
+    {
+        return $this->companyUserFacade->findActiveCompanyUsersByIds($companyUserIds);
+    }
 }

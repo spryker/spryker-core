@@ -13,7 +13,7 @@ use Spryker\Zed\UserExtension\Dependency\Plugin\UserTransferExpanderPluginInterf
 
 /**
  * @method \Spryker\Zed\UserLocale\Communication\UserLocaleCommunicationFactory getFactory()
- * @method \Spryker\Zed\UserLocale\Business\UserLocaleFacade getFacade()
+ * @method \Spryker\Zed\UserLocale\Business\UserLocaleFacadeInterface getFacade()
  * @method \Spryker\Zed\UserLocale\UserLocaleConfig getConfig()
  */
 class UserLocaleTransferExpanderPlugin extends AbstractPlugin implements UserTransferExpanderPluginInterface

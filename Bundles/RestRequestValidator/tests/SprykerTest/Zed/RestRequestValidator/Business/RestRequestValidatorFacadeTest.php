@@ -277,6 +277,7 @@ class RestRequestValidatorFacadeTest extends Unit
                 unlink($dir . DIRECTORY_SEPARATOR . $file);
             }
         }
+
         return rmdir($dir);
     }
 }

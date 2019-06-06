@@ -273,6 +273,7 @@ class CmsPageFormType extends AbstractType
                 if ($cmsPageTransfer->getValidFrom()) {
                     $context->addViolation('This field should be selected if "Valid from" is filled.');
                 }
+
                 return;
             }
 

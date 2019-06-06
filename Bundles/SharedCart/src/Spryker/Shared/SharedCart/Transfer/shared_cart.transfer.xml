@@ -51,6 +51,7 @@
 
     <transfer name="Quote">
         <property name="shareDetails" type="ShareDetail[]" singular="shareDetail"/>
+        <property name="quotePermissionGroup" type="QuotePermissionGroup"/>
     </transfer>
 
     <transfer name="QuoteUpdateRequestAttributes">

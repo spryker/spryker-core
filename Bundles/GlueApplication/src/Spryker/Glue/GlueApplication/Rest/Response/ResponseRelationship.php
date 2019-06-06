@@ -120,6 +120,7 @@ class ResponseRelationship implements ResponseRelationshipInterface
         }
 
         $includes = $restRequest->getInclude();
+
         return ($includes && isset($includes[$resourceType])) || (!$includes && !$restRequest->getExcludeRelationship());
     }
 
@@ -157,6 +158,7 @@ class ResponseRelationship implements ResponseRelationshipInterface
         ?string $parentResourceId = null
     ): bool {
         $resourceIndex = $resourceType . $parentResourceId;
+
         return !isset($this->alreadyLoadedResources[$resourceIndex]) && $restRequest->getExcludeRelationship() === false;
     }
 }
