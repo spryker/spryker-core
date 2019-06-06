@@ -138,9 +138,6 @@ class QuoteItemAdder implements QuoteItemAdderInterface
         QuoteTransfer $quoteTransfer,
         CartItemRequestTransfer $cartItemRequestTransfer
     ): CartChangeTransfer {
-        $quoteTransfer
-            ->setCustomer($cartItemRequestTransfer->getCustomer());
-
         return (new CartChangeTransfer())
             ->setQuote($quoteTransfer)
             ->addItem((new ItemTransfer())

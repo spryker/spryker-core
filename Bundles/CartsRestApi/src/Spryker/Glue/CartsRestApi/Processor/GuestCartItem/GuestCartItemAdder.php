@@ -68,12 +68,7 @@ class GuestCartItemAdder implements GuestCartItemAdderInterface
         RestRequestInterface $restRequest,
         RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
     ): RestResponseInterface {
-        $cartItemRequestTransfer = (new CartItemRequestTransfer())
-            ->setQuoteUuid($this->findGuestCartIdentifier($restRequest))
-            ->setSku($restCartItemsAttributesTransfer->getSku())
-            ->setQuantity($restCartItemsAttributesTransfer->getQuantity())
-            ->setCustomer((new CustomerTransfer())->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier()));
-
+        $cartItemRequestTransfer = $this->createCartItemRequestTransfer($restRequest, $restCartItemsAttributesTransfer);
         $quoteResponseTransfer = $this->cartsRestApiClient->addToGuestCart($cartItemRequestTransfer);
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
@@ -96,5 +91,22 @@ class GuestCartItemAdder implements GuestCartItemAdderInterface
         }
 
         return null;
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartItemRequestTransfer
+     */
+    protected function createCartItemRequestTransfer(
+        RestRequestInterface $restRequest,
+        RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
+    ): CartItemRequestTransfer {
+        return (new CartItemRequestTransfer())
+            ->setQuoteUuid($this->findGuestCartIdentifier($restRequest))
+            ->setSku($restCartItemsAttributesTransfer->getSku())
+            ->setQuantity($restCartItemsAttributesTransfer->getQuantity())
+            ->setCustomer((new CustomerTransfer())->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier()));
     }
 }
