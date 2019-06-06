@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductQuantity\Business;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
+use Generated\Shared\Transfer\FilterTransfer;
 
 interface ProductQuantityFacadeInterface
 {
@@ -84,4 +85,16 @@ interface ProductQuantityFacadeInterface
      * @return bool
      */
     public function hasCartChangeTransferNormalizableItems(CartChangeTransfer $cartChangeTransfer, array $normalizableFields): bool;
+
+    /**
+     * Specification:
+     * - Retrieves product quantity transfers according to given offset and limit.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]
+     */
+    public function findFilteredProductQuantityTransfers(FilterTransfer $filterTransfer): array;
 }

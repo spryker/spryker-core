@@ -14,7 +14,6 @@ use Spryker\Client\QuoteApproval\Dependency\Client\QuoteApprovalToZedRequestClie
 class QuoteApprovalDependencyProvider extends AbstractDependencyProvider
 {
     public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
-    public const CLIENT_PERMISSION = 'CLIENT_PERMISSION';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container

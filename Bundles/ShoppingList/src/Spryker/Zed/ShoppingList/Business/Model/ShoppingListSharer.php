@@ -195,6 +195,7 @@ class ShoppingListSharer implements ShoppingListSharerInterface
 
         if (!$shoppingListCompanyUserTransfer->getIdShoppingListPermissionGroup()) {
             $this->shoppingListEntityManager->deleteShoppingListCompanyUser($shoppingListCompanyUserTransfer);
+
             return;
         }
 
@@ -243,6 +244,7 @@ class ShoppingListSharer implements ShoppingListSharerInterface
         if (!$shoppingListCompanyBusinessUnitTransfer->getIdShoppingListPermissionGroup()) {
             $this->shoppingListEntityManager->deleteCompanyBusinessUnitBlacklistByBusinessUnitId($shoppingListCompanyBusinessUnitTransfer->getIdCompanyBusinessUnit());
             $this->shoppingListEntityManager->deleteShoppingListCompanyBusinessUnit($shoppingListCompanyBusinessUnitTransfer);
+
             return;
         }
 

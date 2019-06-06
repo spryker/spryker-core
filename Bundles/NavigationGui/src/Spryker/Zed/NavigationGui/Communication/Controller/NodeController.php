@@ -120,6 +120,7 @@ class NodeController extends AbstractController
                 static::PARAM_ID_NAVIGATION_NODE => $idNavigationNode,
                 static::PARAM_ID_SELECTED_TREE_NODE => $idNavigationNode,
             ];
+
             return $this->redirectResponse(Url::generate('/navigation-gui/node/update', $queryParams)->build());
         }
 

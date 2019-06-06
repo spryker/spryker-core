@@ -329,6 +329,7 @@ class TriggerTest extends StateMachineMocks
                     return $stateMachineItems;
                 }
             );
+
         return $stateMachinePersistenceMock;
     }
 

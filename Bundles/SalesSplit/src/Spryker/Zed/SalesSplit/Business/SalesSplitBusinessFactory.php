@@ -11,6 +11,7 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\SalesSplit\Business\Model\Calculator;
 use Spryker\Zed\SalesSplit\Business\Model\OrderItemSplit;
 use Spryker\Zed\SalesSplit\Business\Model\Validation\Validator;
+use Spryker\Zed\SalesSplit\Dependency\Service\SalesSplitToUtilQuantityServiceInterface;
 use Spryker\Zed\SalesSplit\SalesSplitDependencyProvider;
 
 /**
@@ -35,7 +36,7 @@ class SalesSplitBusinessFactory extends AbstractBusinessFactory
      */
     protected function createSplitValidator()
     {
-        return new Validator();
+        return new Validator($this->getUtilQuantityService());
     }
 
     /**
@@ -52,5 +53,13 @@ class SalesSplitBusinessFactory extends AbstractBusinessFactory
     protected function getSalesQueryContainer()
     {
         return $this->getProvidedDependency(SalesSplitDependencyProvider::SALES_QUERY_CONTAINER);
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesSplit\Dependency\Service\SalesSplitToUtilQuantityServiceInterface
+     */
+    public function getUtilQuantityService(): SalesSplitToUtilQuantityServiceInterface
+    {
+        return $this->getProvidedDependency(SalesSplitDependencyProvider::SERVICE_UTIL_QUANTITY);
     }
 }

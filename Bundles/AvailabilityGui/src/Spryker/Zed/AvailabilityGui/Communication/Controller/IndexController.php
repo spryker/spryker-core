@@ -274,6 +274,7 @@ class IndexController extends AbstractController
         if (!$idStore) {
             $idStore = $this->getFactory()->getStoreFacade()->getCurrentStore()->getIdStore();
         }
+
         return $this->castId($idStore);
     }
 }
