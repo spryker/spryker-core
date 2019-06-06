@@ -22,6 +22,7 @@ class CustomerConfig extends AbstractBundleConfig
             AddressTransfer::ID_SALES_ORDER_ADDRESS,
             AddressTransfer::IS_DEFAULT_BILLING,
             AddressTransfer::IS_DEFAULT_SHIPPING,
+            AddressTransfer::ID_COMPANY_UNIT_ADDRESS,
         ];
     }
 }
