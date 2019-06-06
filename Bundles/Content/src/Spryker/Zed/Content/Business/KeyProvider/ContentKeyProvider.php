@@ -92,7 +92,7 @@ class ContentKeyProvider implements ContentKeyProviderInterface
      *
      * @return bool
      */
-    private function isCandidateSuitable(string $candidate): bool
+    protected function isCandidateSuitable(string $candidate): bool
     {
         return $this->contentRepository->hasKey($candidate);
     }
