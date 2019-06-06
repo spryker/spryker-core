@@ -142,6 +142,7 @@ class CartReader implements CartReaderInterface
         $quoteCollectionTransfer = $this->cartsRestApiClient->getQuoteCollection(
             (new QuoteCriteriaFilterTransfer())
                 ->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier())
+                ->setIdCompanyUser($restRequest->getRestUser()->getIdCompanyUser())
         );
 
         return $quoteCollectionTransfer;
