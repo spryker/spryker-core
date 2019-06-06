@@ -65,6 +65,7 @@ class CartItemDeleter implements CartItemDeleterInterface
     {
         $uuidQuote = $this->findCartIdentifier($restRequest);
         $itemIdentifier = $restRequest->getResource()->getId();
+        $customerReference = $restRequest->getRestUser()->getNaturalIdentifier();
 
         $restCartItemsAttributesTransfer = $this->createRestCartItemsAttributesTransfer(
             $itemIdentifier,
@@ -72,9 +73,13 @@ class CartItemDeleter implements CartItemDeleterInterface
             $uuidQuote
         );
 
-        $customerTransfer = (new CustomerTransfer())->setIdCustomer($restRequest->getRestUser()->getSurrogateIdentifier());
+        $customerTransfer = (new CustomerTransfer())
+            ->setIdCustomer($restRequest->getRestUser()->getSurrogateIdentifier())
+            ->setCustomerReference($customerReference);
         $customerTransfer = $this->executeCustomerExpanderPlugins($customerTransfer, $restRequest);
-        $restCartItemsAttributesTransfer->setCustomer($customerTransfer);
+        $restCartItemsAttributesTransfer
+            ->setCustomerReference($customerReference)
+            ->setCustomer($customerTransfer);
 
         $quoteResponseTransfer = $this->cartsRestApiClient->deleteItem($restCartItemsAttributesTransfer);
         if (!$quoteResponseTransfer->getIsSuccessful()) {
