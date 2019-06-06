@@ -292,37 +292,17 @@ class ProductConcreteImageStorageWriter implements ProductConcreteImageStorageWr
             $colFkLocale = $productLocalizedAttribute[SpyProductLocalizedAttributesTableMap::COL_FK_LOCALE];
 
             if (isset($productImageSetsBulk[$idProduct][$colFkLocale])) {
-                $imageSets[$idProduct][$colIdProductAttributes] = $this->getImageSet(
-                    $productImageSetsBulk[$idProduct][$colFkLocale]
-                );
+                $imageSets[$idProduct][$colIdProductAttributes] = new ArrayObject($productImageSetsBulk[$idProduct][$colFkLocale]);
 
                 continue;
             }
 
             if (isset($productDefaultImageSetsBulk[$idProduct])) {
-                $imageSets[$idProduct][$colIdProductAttributes] = $this->getImageSet(
-                    $productDefaultImageSetsBulk[$idProduct]
-                );
+                $imageSets[$idProduct][$colIdProductAttributes] = new ArrayObject($productDefaultImageSetsBulk[$idProduct]);
             }
         }
 
         return $imageSets;
-    }
-
-    /**
-     * @param array $productImageSets
-     *
-     * @return \ArrayObject|\Generated\Shared\Transfer\SpyProductImageSetEntityTransfer[]
-     */
-    protected function getImageSet(array $productImageSets): ArrayObject
-    {
-        $imageSet = new ArrayObject();
-
-        foreach ($productImageSets as $item) {
-            $imageSet->append($item);
-        }
-
-        return $imageSet;
     }
 
     /**
