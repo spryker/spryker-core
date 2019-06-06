@@ -41,12 +41,4 @@ class ContentStorageFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(ContentStorageDependencyProvider::SERVICE_SYNCHRONIZATION);
     }
-
-    /**
-     * @return \Spryker\Client\ContentStorageExtension\Dependency\Plugin\ContentTermExecutorPluginInterface[]
-     */
-    public function getContentPlugins(): array
-    {
-        return $this->getProvidedDependency(ContentStorageDependencyProvider::PLUGINS_CONTENT_ITEM);
-    }
 }
