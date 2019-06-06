@@ -19,14 +19,14 @@ class ContentProductContentGuiEditorConfigurationMapper implements ContentProduc
     /**
      * @var \Spryker\Zed\ContentProductGui\ContentProductGuiConfig
      */
-    protected $config;
+    protected $contentProductGuiConfig;
 
     /**
-     * @param \Spryker\Zed\ContentProductGui\ContentProductGuiConfig $config
+     * @param \Spryker\Zed\ContentProductGui\ContentProductGuiConfig $contentProductGuiConfig
      */
-    public function __construct(ContentProductGuiConfig $config)
+    public function __construct(ContentProductGuiConfig $contentProductGuiConfig)
     {
-        $this->config = $config;
+        $this->contentProductGuiConfig = $contentProductGuiConfig;
     }
 
     /**
@@ -36,7 +36,7 @@ class ContentProductContentGuiEditorConfigurationMapper implements ContentProduc
     {
         $templates = [];
 
-        foreach ($this->config->getContentWidgetTemplates() as $templateIdentifier => $templateName) {
+        foreach ($this->contentProductGuiConfig->getContentWidgetTemplates() as $templateIdentifier => $templateName) {
             $templates[] = (new ContentWidgetTemplateTransfer())
                 ->setIdentifier($templateIdentifier)
                 ->setName($templateName);
@@ -50,11 +50,6 @@ class ContentProductContentGuiEditorConfigurationMapper implements ContentProduc
      */
     public function getTwigFunctionTemplate(): string
     {
-        return sprintf(
-            static::PARAMETER_TWIG_FUNCTION_TEMPLATE_FORMAT,
-            $this->config->getTwigFunctionName(),
-            static::PARAMETER_TWIG_FUNCTION_TEMPLATE_KEY,
-            static::PARAMETER_TWIG_FUNCTION_TEMPLATE
-        );
+        return "{{ " . $this->contentProductGuiConfig->getTwigFunctionName() . "('%KEY%', '%TEMPLATE%') }}";
     }
 }
