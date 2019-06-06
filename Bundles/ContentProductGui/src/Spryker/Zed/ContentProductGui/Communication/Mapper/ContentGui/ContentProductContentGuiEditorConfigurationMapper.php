@@ -12,9 +12,9 @@ use Spryker\Zed\ContentProductGui\ContentProductGuiConfig;
 
 class ContentProductContentGuiEditorConfigurationMapper implements ContentProductContentGuiEditorConfigurationMapperInterface
 {
-    protected const PARAMETER_TWIG_FUNCTION_TEMPLATE_ID = '%ID%';
+    protected const PARAMETER_TWIG_FUNCTION_TEMPLATE_KEY = '%KEY%';
     protected const PARAMETER_TWIG_FUNCTION_TEMPLATE = '%TEMPLATE%';
-    protected const PARAMETER_TWIG_FUNCTION_TEMPLATE_FORMAT = "{{ %s(%s, '%s') }}";
+    protected const PARAMETER_TWIG_FUNCTION_TEMPLATE_FORMAT = "{{ %s('%s', '%s') }}";
 
     /**
      * @var \Spryker\Zed\ContentProductGui\ContentProductGuiConfig
@@ -53,7 +53,7 @@ class ContentProductContentGuiEditorConfigurationMapper implements ContentProduc
         return sprintf(
             static::PARAMETER_TWIG_FUNCTION_TEMPLATE_FORMAT,
             $this->config->getTwigFunctionName(),
-            static::PARAMETER_TWIG_FUNCTION_TEMPLATE_ID,
+            static::PARAMETER_TWIG_FUNCTION_TEMPLATE_KEY,
             static::PARAMETER_TWIG_FUNCTION_TEMPLATE
         );
     }
