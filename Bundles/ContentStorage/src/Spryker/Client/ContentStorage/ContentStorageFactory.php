@@ -11,8 +11,6 @@ use Spryker\Client\ContentStorage\ContentStorage\ContentStorageReader;
 use Spryker\Client\ContentStorage\ContentStorage\ContentStorageReaderInterface;
 use Spryker\Client\ContentStorage\Dependency\Client\ContentStorageToStorageClientInterface;
 use Spryker\Client\ContentStorage\Dependency\Service\ContentStorageToSynchronizationServiceInterface;
-use Spryker\Client\ContentStorage\Resolver\ContentResolver;
-use Spryker\Client\ContentStorage\Resolver\ContentResolverInterface;
 use Spryker\Client\Kernel\AbstractFactory;
 
 class ContentStorageFactory extends AbstractFactory
@@ -24,17 +22,8 @@ class ContentStorageFactory extends AbstractFactory
     {
         return new ContentStorageReader(
             $this->getStorageClient(),
-            $this->getSynchronizationService(),
-            $this->createContentResolver()
+            $this->getSynchronizationService()
         );
-    }
-
-    /**
-     * @return \Spryker\Client\ContentStorage\Resolver\ContentResolverInterface
-     */
-    public function createContentResolver(): ContentResolverInterface
-    {
-        return new ContentResolver($this->getContentPlugins());
     }
 
     /**
