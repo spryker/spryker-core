@@ -58,7 +58,7 @@ class CompanyUnitAddressDataHelper extends Module
     }
 
     /**
-     * @return \Spryker\Zed\CompanyUnitAddress\Business\CompanyUnitAddressFacadeInterface
+     * @return \Spryker\Zed\CompanyUnitAddress\Business\CompanyUnitAddressFacadeInterface|\Spryker\Zed\Kernel\Business\AbstractFacade
      */
     protected function getCompanyUnitAddressFacade()
     {

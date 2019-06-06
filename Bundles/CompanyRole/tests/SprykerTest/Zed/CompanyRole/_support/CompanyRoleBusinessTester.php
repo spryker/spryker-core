@@ -16,7 +16,6 @@ use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Spryker\Shared\CompanyUser\Plugin\AddCompanyUserPermissionPlugin;
 use Spryker\Shared\PermissionExtension\Dependency\Plugin\PermissionPluginInterface;
 use Spryker\Zed\CompanyRole\Communication\Plugin\PermissionStoragePlugin;
-use Spryker\Zed\Permission\PermissionDependencyProvider;
 use Spryker\Zed\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInterface;
 
 /**
