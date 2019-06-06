@@ -12,12 +12,26 @@ use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductStorageTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
+use Spryker\Client\PriceProductStorage\Dependency\Service\PriceProductStorageToPriceProductServiceInterface;
 use Spryker\Shared\PriceProductStorage\PriceProductStorageConfig;
 use Spryker\Shared\PriceProductStorage\PriceProductStorageConstants;
 
 class PriceProductMapper implements PriceProductMapperInterface
 {
     protected const INDEX_SEPARATOR = '-';
+
+    /**
+     * @var \Spryker\Client\PriceProductStorage\Dependency\Service\PriceProductStorageToPriceProductServiceInterface
+     */
+    protected $priceProductService;
+
+    /**
+     * @param \Spryker\Client\PriceProductStorage\Dependency\Service\PriceProductStorageToPriceProductServiceInterface $priceProductService
+     */
+    public function __construct(PriceProductStorageToPriceProductServiceInterface $priceProductService)
+    {
+        $this->priceProductService = $priceProductService;
+    }
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductStorageTransfer $priceProductStorageTransfer
@@ -54,6 +68,9 @@ class PriceProductMapper implements PriceProductMapperInterface
             }
             foreach ($prices[$priceMode] as $priceAttribute => $priceValue) {
                 $priceProductTransfer = $this->findProductTransferInCollection($currencyCode, $priceAttribute, $priceProductTransfers);
+
+                $priceProductTransfer->setGroupKey($this->priceProductService->buildPriceProductGroupKey($priceProductTransfer))
+                    ->setIsMergeable(true);
 
                 if ($priceMode === PriceProductStorageConfig::PRICE_GROSS_MODE) {
                     $priceProductTransfer->getMoneyValue()->setGrossAmount($priceValue);

@@ -79,12 +79,70 @@ class ProductConcreteImageStorageWriter implements ProductConcreteImageStorageWr
      */
     public function unpublish(array $productIds)
     {
-        $spyProductConcreteImageStorageEntities = $this->findProductConcreteImageStorageEntitiesByProductConcreteIds($productIds);
-        foreach ($spyProductConcreteImageStorageEntities as $spyProductConcreteImageStorageLocalizedEntities) {
-            foreach ($spyProductConcreteImageStorageLocalizedEntities as $spyProductConcreteImageStorageLocalizedEntity) {
-                $spyProductConcreteImageStorageLocalizedEntity->delete();
+        $productConcreteLocalizedEntities = $this->findProductConcreteLocalizedEntities($productIds);
+        $productConcreteImageStorageEntities = $this->findProductConcreteImageStorageEntitiesByProductConcreteIds($productIds);
+        $productConcreteImageSetsBulk = $this->generateProductConcreteImageSets($productIds);
+
+        $this->deleteProductConcreteImageStorageEntities(
+            $productConcreteImageStorageEntities,
+            $productConcreteLocalizedEntities
+        );
+
+        $this->storeData(
+            $productConcreteLocalizedEntities,
+            $productConcreteImageStorageEntities,
+            $productConcreteImageSetsBulk
+        );
+    }
+
+    /**
+     * @param \Orm\Zed\ProductImageStorage\Persistence\SpyProductConcreteImageStorage[][] $productConcreteImageStorageEntities
+     * @param \Orm\Zed\Product\Persistence\SpyProductLocalizedAttributes[] $productConcreteLocalizedEntities
+     *
+     * @return void
+     */
+    protected function deleteProductConcreteImageStorageEntities(
+        array $productConcreteImageStorageEntities,
+        array $productConcreteLocalizedEntities
+    ): void {
+        foreach ($productConcreteImageStorageEntities as $productConcreteImageStorageEntitiesForProduct) {
+            foreach ($productConcreteImageStorageEntitiesForProduct as $productConcreteImageStorageEntity) {
+                $productConcreteLocalizedEntity = $this->findProductConcreteLocalizedEntityByProductIdAndLocale(
+                    $productConcreteImageStorageEntity->getFkProduct(),
+                    $productConcreteImageStorageEntity->getLocale(),
+                    $productConcreteLocalizedEntities
+                );
+
+                if ($productConcreteLocalizedEntity) {
+                    continue;
+                }
+
+                $productConcreteImageStorageEntity->delete();
             }
         }
+    }
+
+    /**
+     * @param int $idProduct
+     * @param string $localeName
+     * @param \Orm\Zed\Product\Persistence\SpyProductLocalizedAttributes[] $productConcreteLocalizedEntities
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductLocalizedAttributes|null
+     */
+    protected function findProductConcreteLocalizedEntityByProductIdAndLocale(
+        int $idProduct,
+        string $localeName,
+        array $productConcreteLocalizedEntities
+    ): ?SpyProductLocalizedAttributes {
+        foreach ($productConcreteLocalizedEntities as $productConcreteLocalizedEntity) {
+            if ($productConcreteLocalizedEntity->getFkProduct() === $idProduct &&
+                $productConcreteLocalizedEntity->getLocale()->getLocaleName() === $localeName
+            ) {
+                return $productConcreteLocalizedEntity;
+            }
+        }
+
+        return null;
     }
 
     /**
@@ -271,7 +329,7 @@ class ProductConcreteImageStorageWriter implements ProductConcreteImageStorageWr
     /**
      * @param array $productConcreteIds
      *
-     * @return \Orm\Zed\ProductStorage\Persistence\SpyProductConcreteStorage[][]
+     * @return \Orm\Zed\ProductImageStorage\Persistence\SpyProductConcreteImageStorage[][]
      */
     protected function findProductConcreteImageStorageEntitiesByProductConcreteIds(array $productConcreteIds)
     {

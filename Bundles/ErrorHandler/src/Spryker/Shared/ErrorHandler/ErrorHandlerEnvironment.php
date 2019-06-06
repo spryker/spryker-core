@@ -65,8 +65,7 @@ class ErrorHandlerEnvironment
                 throw $exception;
             }
 
-            $errorLogger = new ErrorLogger();
-            $errorLogger->log($exception);
+            ErrorLogger::getInstance()->log($exception);
         };
 
         set_error_handler($errorHandler, $errorLevel);

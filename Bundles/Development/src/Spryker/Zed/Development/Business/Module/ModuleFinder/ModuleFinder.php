@@ -20,6 +20,9 @@ use Zend\Filter\StringToLower;
 use Zend\Filter\Word\CamelCaseToDash;
 use Zend\Filter\Word\DashToCamelCase;
 
+/**
+ * @deprecated Use `spryker/module-finder` instead.
+ */
 class ModuleFinder implements ModuleFinderInterface
 {
     /**
@@ -81,7 +84,7 @@ class ModuleFinder implements ModuleFinderInterface
     protected function addStandaloneModulesToCollection(array $moduleTransferCollection, ?ModuleFilterTransfer $moduleFilterTransfer = null): array
     {
         foreach ($this->getStandaloneModuleFinder() as $directoryInfo) {
-            if (in_array($directoryInfo->getFilename(), ['spryker', 'spryker-shop'])) {
+            if (in_array($this->camelCase($directoryInfo->getFilename()), $this->config->getInternalNamespacesList(), true)) {
                 continue;
             }
             $moduleTransfer = $this->getModuleTransfer($directoryInfo);
@@ -154,6 +157,10 @@ class ModuleFinder implements ModuleFinderInterface
     {
         foreach ($this->getModuleFinder() as $directoryInfo) {
             $moduleTransfer = $this->getModuleTransfer($directoryInfo);
+
+            if (!$this->isModule($moduleTransfer)) {
+                continue;
+            }
             $moduleTransferCollection = $this->addModuleToCollection($moduleTransfer, $moduleTransferCollection, $moduleFilterTransfer);
         }
 
@@ -173,11 +180,9 @@ class ModuleFinder implements ModuleFinderInterface
      */
     protected function getModuleDirectories(): array
     {
-        return array_filter([
-            $this->config->getPathToCore(),
-            $this->config->getPathToShop(),
-            $this->config->getPathToEco(),
-        ], 'is_dir');
+        $pathToInternalNamespace = $this->config->getPathsToInternalNamespace();
+
+        return array_values(array_filter($pathToInternalNamespace, 'is_dir'));
     }
 
     /**
@@ -332,6 +337,9 @@ class ModuleFinder implements ModuleFinderInterface
     protected function getComposerJsonAsArray(string $path): array
     {
         $pathToComposerJson = sprintf('%s/composer.json', $path);
+        if (!is_file($pathToComposerJson)) {
+            return [];
+        }
         $fileContent = file_get_contents($pathToComposerJson);
         $composerJsonAsArray = json_decode($fileContent, true);
 

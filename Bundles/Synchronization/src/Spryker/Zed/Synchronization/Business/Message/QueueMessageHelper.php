@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Synchronization\Business\Message;
 
 use Generated\Shared\Transfer\QueueReceiveMessageTransfer;
+use Spryker\Shared\Synchronization\SynchronizationConfig;
 use Spryker\Zed\Synchronization\Dependency\Service\SynchronizationToUtilEncodingServiceInterface;
 
 class QueueMessageHelper implements QueueMessageHelperInterface
@@ -38,6 +39,7 @@ class QueueMessageHelper implements QueueMessageHelperInterface
         $queueMessageTransfer->setAcknowledge(false);
         $queueMessageTransfer->setReject(true);
         $queueMessageTransfer->setHasError(true);
+        $queueMessageTransfer->setRoutingKey(SynchronizationConfig::MESSAGE_ROUTING_KEY_ERROR);
 
         return $queueMessageTransfer;
     }
@@ -52,7 +54,7 @@ class QueueMessageHelper implements QueueMessageHelperInterface
     {
         $queueMessageBody = $this->decodeJson($queueMessageTransfer->getQueueMessage()->getBody(), true);
         $queueMessageBody['errorMessage'] = $errorMessage;
-        $queueMessageTransfer->getQueueMessage()->setBody($this->utilEncodingService->encodeJson($queueMessageBody));
+        $queueMessageTransfer->getQueueMessage()->setBody($this->encodeJson($queueMessageBody));
     }
 
     /**
@@ -66,5 +68,17 @@ class QueueMessageHelper implements QueueMessageHelperInterface
     public function decodeJson($jsonValue, $assoc = false, $depth = null, $options = null)
     {
         return $this->utilEncodingService->decodeJson($jsonValue, $assoc, $depth, $options);
+    }
+
+    /**
+     * @param array $value
+     * @param int|null $options
+     * @param int|null $depth
+     *
+     * @return string
+     */
+    public function encodeJson(array $value, ?int $options = null, ?int $depth = null): string
+    {
+        return $this->utilEncodingService->encodeJson($value, $options, $depth);
     }
 }

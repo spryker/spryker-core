@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -12,6 +13,8 @@ use Spryker\Shared\GlueApplication\GlueApplicationConstants;
 
 class GlueApplicationConfig extends AbstractBundleConfig
 {
+    public const COLLECTION_IDENTIFIER_CURRENT_USER = 'mine';
+
     /**
      * Specification:
      *  - Domain name of glue application to build API links.
@@ -60,5 +63,16 @@ class GlueApplicationConfig extends AbstractBundleConfig
             RequestConstantsInterface::HEADER_ACCEPT_LANGUAGE,
             RequestConstantsInterface::HEADER_AUTHORIZATION,
         ];
+    }
+
+    /**
+     * Specification:
+     *  - Indicates whether all relationships should be included in response by default.
+     *
+     * @return bool
+     */
+    public function isEagerRelationshipsLoadingEnabled(): bool
+    {
+        return true;
     }
 }

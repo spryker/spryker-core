@@ -241,7 +241,7 @@ abstract class AbstractDataBuilder
                 call_user_func([$transfer, 'set' . $name], $nestedTransfer);
                 continue;
             }
-            throw new DependencyNotDefinedException(sprintf('Dependency "%s" not defined in "%s"', $name, get_class($this)));
+            throw new DependencyNotDefinedException(sprintf('Dependency "%s" not defined in "%s"', $name, static::class));
         }
     }
 

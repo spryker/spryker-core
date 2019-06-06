@@ -20,6 +20,9 @@ use Spryker\Yves\Kernel\Locator;
 use Spryker\Zed\Kernel\Locator as KernelLocator;
 use Spryker\Zed\Propel\Communication\Plugin\ServiceProvider\PropelServiceProvider;
 
+/**
+ * @deprecated Please switch to `Spryker\Zed\Testify\Bootstrap\ZedBootstrap`.
+ */
 class SystemUnderTestBootstrap
 {
     public const APPLICATION_ZED = 'Zed';
@@ -58,7 +61,7 @@ class SystemUnderTestBootstrap
     /**
      * @param string $application
      *
-     * @return \Spryker\Shared\Kernel\Communication\Application
+     * @return \Spryker\Shared\Application\Application
      */
     public function bootstrap($application = self::APPLICATION_ZED)
     {
@@ -105,7 +108,7 @@ class SystemUnderTestBootstrap
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\Communication\Application
+     * @return \Spryker\Shared\Application\Application
      */
     protected function bootstrapZed()
     {
@@ -122,7 +125,7 @@ class SystemUnderTestBootstrap
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\Communication\Application
+     * @return \Spryker\Shared\Application\Application
      */
     protected function bootstrapYves()
     {

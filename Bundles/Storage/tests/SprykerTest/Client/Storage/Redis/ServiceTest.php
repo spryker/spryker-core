@@ -26,6 +26,11 @@ use Symfony\Component\HttpFoundation\Request;
 class ServiceTest extends Unit
 {
     /**
+     * @var \SprykerTest\Client\Storage\StorageClientTester
+     */
+    protected $tester;
+
+    /**
      * @var array
      */
     protected $fixtures = [
@@ -53,7 +58,7 @@ class ServiceTest extends Unit
     protected $redisService;
 
     /**
-     * @var \Predis\ClientInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Predis\ClientInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $clientMock;
 
@@ -271,5 +276,77 @@ class ServiceTest extends Unit
         $request = new Request([], [], [], [], [], $_SERVER);
 
         return $request;
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetMultiShouldReturnDataInTheSameOrderAsInput()
+    {
+        // Arrange
+        $bufferedData = [
+            'a' => 'A',
+            'b' => 'B',
+            'c' => 'C',
+            'd' => 'D',
+        ];
+        $input = [
+            'z',
+            'c',
+            'b',
+            'd',
+        ];
+        $expectedResult = [
+            'kv:z' => '_Z',
+            'kv:c' => 'C',
+            'kv:b' => 'B',
+            'kv:d' => 'D',
+        ];
+
+        $storageClient = $this->getStorageClientMock();
+        $this->tester->setProtectedProperty($storageClient, 'bufferedValues', $bufferedData);
+
+        // Act
+        $actualResult = $storageClient->getMulti($input);
+
+        // Assert
+        $this->assertEquals($expectedResult, $actualResult);
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject
+     */
+    public function getStorageClientMock()
+    {
+        StorageClient::$cachedKeys = [];
+
+        $getMultiFunctionStub = function ($keys) {
+            $result = [];
+            foreach ($keys as $key) {
+                $result['kv:' . $key] = '_' . strtoupper($key);
+            }
+
+            return $result;
+        };
+
+        $redisService = $this->getMockBuilder(Service::class)
+            ->disableOriginalConstructor()
+            ->setMethods(['getMulti', '__destruct'])
+            ->getMock();
+        $redisService
+            ->method('getMulti')
+            ->willReturnCallback($getMultiFunctionStub);
+        $redisService
+            ->method('__destruct')
+            ->willReturn(true);
+
+        $storageClient = $this->getMockBuilder(StorageClient::class)
+            ->setMethods(['loadCacheKeysAndValues', 'getService'])
+            ->getMock();
+        $storageClient
+            ->method('getService')
+            ->willReturn($redisService);
+
+        return $storageClient;
     }
 }

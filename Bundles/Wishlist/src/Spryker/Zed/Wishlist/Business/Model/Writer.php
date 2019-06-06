@@ -164,7 +164,7 @@ class Writer implements WriterInterface
     {
         $wishlistResponseTransfer = new WishlistResponseTransfer();
 
-        if (!$this->checkWishlistUniqueName($wishlistTransfer)) {
+        if (!$this->checkWishlistUniqueNameWhenUpdating($wishlistTransfer)) {
             return $wishlistResponseTransfer
                 ->setIsSuccess(false)
                 ->addError(static::ERROR_MESSAGE_NAME_ALREADY_EXISTS);
@@ -441,6 +441,7 @@ class Writer implements WriterInterface
 
         $query = $this->queryContainer->queryWishlist()
             ->filterByName($wishlistTransfer->getName())
+            ->filterByFkCustomer($wishlistTransfer->getFkCustomer())
             ->filterByIdWishlist($wishlistTransfer->getIdWishlist(), Criteria::NOT_EQUAL);
 
         $this->assertWishlistIsUnique($query, $wishlistTransfer);
@@ -496,6 +497,7 @@ class Writer implements WriterInterface
 
         $query = $this->queryContainer->queryWishlist()
             ->filterByName($wishlistTransfer->getName())
+            ->filterByFkCustomer($wishlistTransfer->getFkCustomer())
             ->filterByIdWishlist($wishlistTransfer->getIdWishlist(), Criteria::NOT_EQUAL);
 
         return $query->count() === 0;

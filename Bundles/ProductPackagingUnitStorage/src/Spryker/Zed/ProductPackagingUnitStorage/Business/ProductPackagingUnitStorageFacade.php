@@ -63,4 +63,20 @@ class ProductPackagingUnitStorageFacade extends AbstractFacade implements Produc
             ->getProductPackagingUnitFacade()
             ->findProductAbstractIdsByProductPackagingUnitTypeIds($productPackagingUnitTypeIds);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int[] $productAbstractIds
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractPackagingStorageTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
+     */
+    public function getProductAbstractPackagingStorageTransfersByProductAbstractIds(array $productAbstractIds): array
+    {
+        return $this->getFactory()
+            ->createProductPackagingStorageReader()
+            ->getProductAbstractPackagingStorageTransfer($productAbstractIds);
+    }
 }

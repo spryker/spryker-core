@@ -21,11 +21,15 @@ use Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundleImageCart
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundlePreReloadUpdater;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\CartNote\QuoteBundleItemsFinder;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\CartNote\QuoteBundleItemsFinderInterface;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\CartPriceCheck\ProductBundleCartPriceChecker;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\CartPriceCheck\ProductBundleCartPriceCheckerInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Checkout\ProductBundleOrderSaver;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\PersistentCart\ChangeRequestExpander;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\PersistentCart\ChangeRequestExpanderInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\PersistentCart\QuoteItemFinder;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\PersistentCart\QuoteItemFinderInterface;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\PreCheck\ProductBundleCartActiveCheck;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\PreCheck\ProductBundleCartActiveCheckInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleReader;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleWriter;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Quote\QuoteItemsGrouper;
@@ -36,11 +40,13 @@ use Spryker\Zed\ProductBundle\Business\ProductBundle\Sales\ProductBundlesSalesOr
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Stock\ProductBundleStockHandler;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Stock\ProductBundleStockHandlerInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Stock\ProductBundleStockWriter;
+use Spryker\Zed\ProductBundle\Dependency\Service\ProductBundleToUtilQuantityServiceInterface;
 use Spryker\Zed\ProductBundle\ProductBundleDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductBundle\ProductBundleConfig getConfig()
  * @method \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductBundle\Persistence\ProductBundleRepositoryInterface getRepository()
  */
 class ProductBundleBusinessFactory extends AbstractBusinessFactory
 {
@@ -78,7 +84,8 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
             $this->getPriceProductFacade(),
             $this->getProductFacade(),
             $this->getLocaleFacade(),
-            $this->getPriceFacade()
+            $this->getPriceFacade(),
+            $this->getUtilQuantityService()
         );
     }
 
@@ -145,7 +152,29 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->getAvailabilityQueryContainer(),
             $this->getStoreFacade(),
-            $this->getConfig()
+            $this->getConfig(),
+            $this->getUtilQuantityService()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductBundle\Business\ProductBundle\PreCheck\ProductBundleCartActiveCheckInterface
+     */
+    public function createProductBundleCartActiveCheck(): ProductBundleCartActiveCheckInterface
+    {
+        return new ProductBundleCartActiveCheck(
+            $this->getRepository()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductBundle\Business\ProductBundle\CartPriceCheck\ProductBundleCartPriceCheckerInterface
+     */
+    public function createProductBundleCartPricePreCheck(): ProductBundleCartPriceCheckerInterface
+    {
+        return new ProductBundleCartPriceChecker(
+            $this->getRepository(),
+            $this->getPriceProductFacade()
         );
     }
 
@@ -158,7 +187,8 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
             $this->getAvailabilityFacade(),
             $this->getQueryContainer(),
             $this->getStoreFacade(),
-            $this->getConfig()
+            $this->getConfig(),
+            $this->getUtilQuantityService()
         );
     }
 
@@ -171,7 +201,8 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
             $this->getAvailabilityQueryContainer(),
             $this->getAvailabilityFacade(),
             $this->getQueryContainer(),
-            $this->getStoreFacade()
+            $this->getStoreFacade(),
+            $this->getUtilQuantityService()
         );
     }
 
@@ -195,7 +226,8 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->getStockQueryContainer(),
             $this->createProductBundleAvailabilityHandler(),
-            $this->getStoreFacade()
+            $this->getStoreFacade(),
+            $this->getUtilQuantityService()
         );
     }
 
@@ -231,7 +263,7 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
      */
     public function createChangeRequestExpander(): ChangeRequestExpanderInterface
     {
-        return new ChangeRequestExpander();
+        return new ChangeRequestExpander($this->getUtilQuantityService());
     }
 
     /**
@@ -239,7 +271,7 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
      */
     public function createQuoteItemFinder(): QuoteItemFinderInterface
     {
-        return new QuoteItemFinder();
+        return new QuoteItemFinder($this->getUtilQuantityService());
     }
 
     /**
@@ -263,7 +295,7 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
      */
     public function createQuoteItemsGrouper(): QuoteItemsGrouperInterface
     {
-        return new QuoteItemsGrouper();
+        return new QuoteItemsGrouper($this->getUtilQuantityService());
     }
 
     /**
@@ -360,5 +392,13 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
     protected function getMessengerFacade()
     {
         return $this->getProvidedDependency(ProductBundleDependencyProvider::FACADE_MESSENGER);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductBundle\Dependency\Service\ProductBundleToUtilQuantityServiceInterface
+     */
+    protected function getUtilQuantityService(): ProductBundleToUtilQuantityServiceInterface
+    {
+        return $this->getProvidedDependency(ProductBundleDependencyProvider::SERVICE_UTIL_QUANTITY);
     }
 }

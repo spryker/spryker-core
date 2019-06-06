@@ -1,5 +1,0 @@
-parameters:
-    ignoreErrors:
-    - '#.+ has invalid typehint type Symfony\\Component\\OptionsResolver\\OptionsResolverInterface.#'
-    - '#.+ has invalid typehint type Spryker\\Zed\\SalesAggregator\\Business\\SalesAggregatorFacadeInterface.+#'
-    - '#Property .+ has unknown class .+#'

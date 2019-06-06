@@ -28,6 +28,6 @@ class SetupCommunicationFactoryTest extends Unit
     {
         $communicationFactory = new SetupCommunicationFactory();
 
-        $this->assertInternalType('array', $communicationFactory->getSetupInstallCommandNames());
+        $this->assertIsArray($communicationFactory->getSetupInstallCommandNames());
     }
 }

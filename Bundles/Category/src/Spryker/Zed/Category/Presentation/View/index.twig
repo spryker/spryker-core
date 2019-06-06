@@ -9,7 +9,7 @@
 {% block action %}
     {{ viewActionButton('/product-category/assign?id-category='~category.idCategory, 'Assign products' | trans) }}
     {{ editActionButton('/category/edit?id-category='~category.idCategory, 'Edit' | trans) }}
-    {{ backActionButton('/category/root', 'List of categories' | trans) }}
+    {% include ['@CategoryGui/_partials/back-button.twig', '@Category/_partials/back-button.twig'] %}
 {% endblock %}
 
 {% block content %}

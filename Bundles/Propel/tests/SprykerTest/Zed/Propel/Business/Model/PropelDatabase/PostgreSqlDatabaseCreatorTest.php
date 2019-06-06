@@ -61,7 +61,7 @@ class PostgreSqlDatabaseCreatorTest extends Unit
     /**
      * @param array $methods
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Propel\Business\Model\PropelDatabase\PostgreSqlDatabaseCreator
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Propel\Business\Model\PropelDatabase\PostgreSqlDatabaseCreator
      */
     protected function getPostgreSqlDatabaseCreatorMock(array $methods = [])
     {

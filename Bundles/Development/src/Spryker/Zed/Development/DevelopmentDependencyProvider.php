@@ -8,19 +8,21 @@
 namespace Spryker\Zed\Development;
 
 use Nette\DI\Config\Loader;
+use Spryker\Zed\Development\Dependency\Facade\DevelopmentToModuleFinderFacadeBridge;
 use Spryker\Zed\Graph\Communication\Plugin\GraphPlugin;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
-use Twig_Environment;
-use Twig_Loader_Filesystem;
+use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
 
 /**
  * @method \Spryker\Zed\Development\DevelopmentConfig getConfig()
  */
 class DevelopmentDependencyProvider extends AbstractBundleDependencyProvider
 {
+    public const FACADE_MODULE_FINDER = 'module finder facade';
     public const PLUGIN_GRAPH = 'graph plugin';
     public const FINDER = 'finder';
     public const FILESYSTEM = 'filesystem';
@@ -59,6 +61,8 @@ class DevelopmentDependencyProvider extends AbstractBundleDependencyProvider
             return $this->createTwigLoaderFilesystem();
         };
 
+        $container = $this->addModuleFinderFacade($container);
+
         return $container;
     }
 
@@ -95,18 +99,36 @@ class DevelopmentDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Twig_Environment
+     * @return \Twig\Environment
      */
     protected function createTwigEnvironment()
     {
-        return new Twig_Environment($this->createTwigLoaderFilesystem());
+        return new Environment($this->createTwigLoaderFilesystem());
     }
 
     /**
-     * @return \Twig_Loader_Filesystem
+     * @return \Twig\Loader\FilesystemLoader
      */
     protected function createTwigLoaderFilesystem()
     {
-        return new Twig_Loader_Filesystem();
+        return new FilesystemLoader();
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addModuleFinderFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_MODULE_FINDER, function (Container $container) {
+            $developmentToModuleFinderFacadeBridge = new DevelopmentToModuleFinderFacadeBridge(
+                $container->getLocator()->moduleFinder()->facade()
+            );
+
+            return $developmentToModuleFinderFacadeBridge;
+        });
+
+        return $container;
     }
 }

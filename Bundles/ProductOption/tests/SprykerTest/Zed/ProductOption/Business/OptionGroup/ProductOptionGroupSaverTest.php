@@ -128,7 +128,7 @@ class ProductOptionGroupSaverTest extends MockProvider
      * @param \Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValueSaverInterface|null $productOptionValueSaverMock
      * @param \Spryker\Zed\ProductOption\Business\OptionGroup\AbstractProductOptionSaverInterface|null $abstractProductOptionSaver
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionGroupSaver
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionGroupSaver
      */
     protected function createProductOptionGroupSaver(
         ?ProductOptionQueryContainerInterface $productOptionContainerMock = null,
@@ -165,6 +165,7 @@ class ProductOptionGroupSaverTest extends MockProvider
                 $translationSaverMock,
                 $abstractProductOptionSaver,
                 $productOptionValueSaverMock,
+                [],
             ])
             ->setMethods([
                 'getProductAbstractBySku',
@@ -176,7 +177,7 @@ class ProductOptionGroupSaverTest extends MockProvider
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup
      */
     protected function createProductOptionGroupEntityMock()
     {

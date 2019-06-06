@@ -96,7 +96,7 @@ class SessionHandlerRedisLocking implements SessionHandlerInterface
         if (!$this->locker->lock($this->keyGenerator->generateSessionKey($sessionId))) {
             throw new LockCouldNotBeAcquiredException(sprintf(
                 '%s could not acquire access to the session %s',
-                get_class($this),
+                static::class,
                 $sessionId
             ));
         }

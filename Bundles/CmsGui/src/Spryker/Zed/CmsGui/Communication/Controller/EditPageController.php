@@ -49,7 +49,7 @@ class EditPageController extends AbstractController
         $cmsPageTransfer = $cmsPageFormTypeDataProvider->getData($idCmsPage);
 
         if ($cmsPageTransfer === null) {
-            $this->addErrorMessage(sprintf('Cms page with id %s doesn\'t exist', $idCmsPage));
+            $this->addErrorMessage("'Cms page with id %s doesn't exist'", ["%s" => $idCmsPage]);
 
             return $this->redirectResponse($this->getFactory()->getConfig()->getDefaultRedirectUrl());
         }
@@ -63,6 +63,7 @@ class EditPageController extends AbstractController
 
             if ($isUpdated) {
                 $redirectUrl = $this->createEditPageUrl($idCmsPage);
+
                 return $this->redirectResponse($redirectUrl);
             }
         }
@@ -80,6 +81,7 @@ class EditPageController extends AbstractController
             ->findCmsPageById($idCmsPage);
 
         $pageTabs = $this->getFactory()->createPageTabs();
+
         return [
             'pageTabs' => $pageTabs->createView(),
             'pageForm' => $pageForm->createView(),
@@ -113,6 +115,7 @@ class EditPageController extends AbstractController
         }
 
         $this->addErrorMessage(static::ERROR_MESSAGE_INVALID_DATA_PROVIDED);
+
         return false;
     }
 

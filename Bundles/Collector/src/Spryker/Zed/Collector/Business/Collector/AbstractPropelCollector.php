@@ -47,7 +47,7 @@ abstract class AbstractPropelCollector extends AbstractDatabaseCollector
         if (!($this->queryBuilder instanceof AbstractPropelCollectorQuery)) {
             throw new DependencyException(sprintf(
                 'queryBuilder does not implement AbstractPropelCollectorQuery in %s',
-                get_class($this)
+                static::class
             ));
         }
     }

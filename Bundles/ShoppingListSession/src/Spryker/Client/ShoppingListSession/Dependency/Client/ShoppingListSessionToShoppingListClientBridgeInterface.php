@@ -15,4 +15,9 @@ interface ShoppingListSessionToShoppingListClientBridgeInterface
      * @return \Generated\Shared\Transfer\ShoppingListCollectionTransfer
      */
     public function getCustomerShoppingListCollection(): ShoppingListCollectionTransfer;
+
+    /**
+     * @return void
+     */
+    public function updateCustomerPermission(): void;
 }

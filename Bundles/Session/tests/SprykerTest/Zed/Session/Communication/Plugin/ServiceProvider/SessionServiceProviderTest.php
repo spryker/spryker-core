@@ -54,7 +54,7 @@ class SessionServiceProviderTest extends Unit
         $sessionServiceProvider->register($application);
 
         $this->assertArrayHasKey('session.storage.options', $application);
-        $this->assertInternalType('array', $application['session.storage.options']);
+        $this->assertIsArray($application['session.storage.options']);
     }
 
     /**
@@ -71,7 +71,7 @@ class SessionServiceProviderTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Session\Communication\Plugin\ServiceProvider\SessionServiceProvider
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Session\Communication\Plugin\ServiceProvider\SessionServiceProvider
      */
     protected function getSessionServiceProviderMock()
     {
@@ -85,7 +85,7 @@ class SessionServiceProviderTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Client\Session\SessionClientInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\Session\SessionClientInterface
      */
     protected function getSessionClientMock()
     {

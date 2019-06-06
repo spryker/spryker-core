@@ -37,6 +37,7 @@ class YvesHstsServiceProvider extends AbstractHstsServiceProvider implements Ser
         if (Config::hasKey(ApplicationConstants::YVES_HTTP_STRICT_TRANSPORT_SECURITY_CONFIG)) {
             $config = Config::get(ApplicationConstants::YVES_HTTP_STRICT_TRANSPORT_SECURITY_CONFIG);
         }
+
         return $config;
     }
 }

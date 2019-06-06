@@ -52,7 +52,7 @@ class QueueDumpConsoleTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Queue\Communication\Console\QueueDumpConsole
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Queue\Communication\Console\QueueDumpConsole
      */
     protected function getQueueDumpConsoleMock()
     {
@@ -66,7 +66,7 @@ class QueueDumpConsoleTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Kernel\Business\AbstractFacade
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Kernel\Business\AbstractFacade
      */
     protected function getFacadeMock()
     {

@@ -19,6 +19,8 @@ class CustomerController extends AbstractController
 {
     protected const MESSAGE_SUCCESS_COMPANY_USER_CREATE = 'Customer has been attached to business unit.';
     protected const MESSAGE_ERROR_COMPANY_USER_CREATE = 'Customer has not been attached to business unit.';
+    protected const MESSAGE_COMPANY_NOT_FOUND = 'Company not found.';
+    protected const MESSAGE_CUSTOMER_NOT_FOUND = 'Customer not found.';
 
     protected const URL_REDIRECT_COMPANY_USER_PAGE = '/company-user-gui/list-company-user';
 
@@ -38,6 +40,18 @@ class CustomerController extends AbstractController
         $form = $this->getFactory()
             ->getCustomerBusinessUnitAttachForm($idCustomer, $idCompany)
             ->handleRequest($request);
+
+        if (!$form->getData()->getFkCompany()) {
+            $this->addErrorMessage(static::MESSAGE_COMPANY_NOT_FOUND);
+
+            return $this->redirectResponse(static::URL_REDIRECT_COMPANY_USER_PAGE);
+        }
+
+        if (!$form->getData()->getFkCustomer()) {
+            $this->addErrorMessage(static::MESSAGE_CUSTOMER_NOT_FOUND);
+
+            return $this->redirectResponse(static::URL_REDIRECT_COMPANY_USER_PAGE);
+        }
 
         if ($form->isSubmitted() && $form->isValid()) {
             return $this->handleAttachCustomerActionIfFormIsSubmitted($form);
@@ -81,6 +95,7 @@ class CustomerController extends AbstractController
     {
         if (count($errorMessageTransfers) === 0) {
             $this->addErrorMessage(static::MESSAGE_ERROR_COMPANY_USER_CREATE);
+
             return;
         }
 

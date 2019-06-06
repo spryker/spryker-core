@@ -1,0 +1,28 @@
+{% extends '@Application/Layout/layout.twig' %}
+
+{% block section_title %}
+    {{ 'Overview of reclamation:' | trans }} {{ reclamation.idSalesReclamation }}
+{% endblock %}
+
+{% block action %}
+    {{ backActionButton('/sales-reclamation-gui', 'Back to Reclamatinos' | trans) }}
+{% endblock %}
+
+{% block content %}
+    <div id="items">
+        {% include '@SalesReclamationGui/Detail/boxes/items.twig' with {
+            'reclamation': reclamation,
+        } %}
+    </div>
+
+{% endblock %}
+
+{% block head_css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/assets/css/spryker-zed-sales-reclamation-gui-main.css">
+{% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+    <script src="/assets/js/spryker-zed-sales-reclamation-gui-main.js" />
+{% endblock %}

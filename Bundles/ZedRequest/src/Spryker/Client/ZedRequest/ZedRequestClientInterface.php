@@ -64,10 +64,55 @@ interface ZedRequestClientInterface
      *  - Writes error message to flash bag.
      *  - Writes success message to flash bag.
      *  - Writes informational message to flash bag.
+     * This behavior is different from addResponseMessagesToMessenger(). Method inspects only the last Zed request.
      *
      * @api
      *
      * @return void
      */
     public function addFlashMessagesFromLastZedRequest();
+
+    /**
+     * Specification:
+     * - Returns an array of MessageTransfers containing info messages for all zed responses.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     */
+    public function getResponsesInfoMessages(): array;
+
+    /**
+     * Specification:
+     * - Returns an array of MessageTransfers containing error messages for all zed responses.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     */
+    public function getResponsesErrorMessages(): array;
+
+    /**
+     * Specification:
+     * - Returns an array of MessageTransfers containing success messages for all zed responses
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     */
+    public function getResponsesSuccessMessages(): array;
+
+    /**
+     * Specification:
+     *  - Get messages from all previous Zed requests in this Yves request cycle and put them to session in next order:
+     *  - Writes error messages to flash bag.
+     *  - Writes success messages to flash bag.
+     *  - Writes informationals message to flash bag.
+     * This behavior is different from addFlashMessagesFromLastZedRequest which only inspects the most recent Zed request.
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function addResponseMessagesToMessenger(): void;
 }

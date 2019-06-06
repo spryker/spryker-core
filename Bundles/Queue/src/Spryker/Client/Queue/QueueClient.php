@@ -99,11 +99,11 @@ class QueueClient extends AbstractClient implements QueueClientInterface
      *
      * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer $queueReceiveMessageTransfer
      *
-     * @return bool
+     * @return void
      */
     public function acknowledge(QueueReceiveMessageTransfer $queueReceiveMessageTransfer)
     {
-        return $this->getFactory()->createQueueProxy()->acknowledge($queueReceiveMessageTransfer);
+        $this->getFactory()->createQueueProxy()->acknowledge($queueReceiveMessageTransfer);
     }
 
     /**
@@ -113,11 +113,11 @@ class QueueClient extends AbstractClient implements QueueClientInterface
      *
      * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer $queueReceiveMessageTransfer
      *
-     * @return bool
+     * @return void
      */
     public function reject(QueueReceiveMessageTransfer $queueReceiveMessageTransfer)
     {
-        return $this->getFactory()->createQueueProxy()->reject($queueReceiveMessageTransfer);
+        $this->getFactory()->createQueueProxy()->reject($queueReceiveMessageTransfer);
     }
 
     /**

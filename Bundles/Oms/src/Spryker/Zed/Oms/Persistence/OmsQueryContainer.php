@@ -13,6 +13,7 @@ use Orm\Zed\Oms\Persistence\Map\SpyOmsProductReservationTableMap;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsTransitionLogTableMap;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderItemTableMap;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
@@ -28,6 +29,8 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     public const STORE = 'store';
     public const ID_OMS_PRODUCT_RESERVATION_STORE = 'idOmsProductReservationStore';
     public const LAST_UPDATE = 'lastUpdate';
+    public const ITEMS_COUNT = 'itemsCount';
+    public const DATE_WINDOW = 'dateWindow';
 
     /**
      * @api
@@ -35,7 +38,7 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
      * @param array $states
      * @param string $processName
      *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria|\Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
     public function querySalesOrderItemsByState(array $states, $processName)
     {
@@ -82,7 +85,7 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
      *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
      *
-     * @return \Orm\Zed\Oms\Persistence\SpyOmsTransitionLogQuery
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria|\Orm\Zed\Oms\Persistence\SpyOmsTransitionLogQuery
      */
     public function queryLogForOrder(SpySalesOrder $order)
     {
@@ -118,7 +121,7 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
      *
      * @param \DateTime $now
      *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria|\Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
     public function querySalesOrderItemsWithExpiredTimeouts(DateTime $now)
     {
@@ -137,7 +140,7 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
      * @param string $sku
      * @param bool $returnTest
      *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
     public function sumProductQuantitiesForAllSalesOrderItemsBySku(array $states, $sku, $returnTest = true)
     {
@@ -283,6 +286,8 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     /**
      * @api
      *
+     * @deprecated Use `queryGroupedMatrixOrderItems()` instead
+     *
      * @param array $processIds
      * @param array $stateBlacklist
      *
@@ -294,6 +299,45 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
             ->getSalesQueryContainer()
             ->querySalesOrderItem()
             ->filterByFkOmsOrderProcess($processIds, Criteria::IN);
+
+        if ($stateBlacklist) {
+            $query->filterByFkOmsOrderItemState($stateBlacklist, Criteria::NOT_IN);
+        }
+
+        return $query;
+    }
+
+    /**
+     * @api
+     *
+     * @param int[] $processIds
+     * @param int[] $stateBlacklist
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
+     */
+    public function queryGroupedMatrixOrderItems(array $processIds, array $stateBlacklist): SpySalesOrderItemQuery
+    {
+        $query = $this->getFactory()
+            ->getSalesQueryContainer()
+            ->querySalesOrderItem()
+            ->withColumn("COUNT(*)", static::ITEMS_COUNT)
+            ->withColumn(sprintf(
+                "(CASE WHEN %s > '%s' THEN 'day' WHEN %s > '%s' THEN 'week' ELSE 'other' END)",
+                SpySalesOrderItemTableMap::COL_LAST_STATE_CHANGE,
+                (new DateTime('-1 day'))->format('Y-m-d H:i:s'),
+                SpySalesOrderItemTableMap::COL_LAST_STATE_CHANGE,
+                (new DateTime('-7 day'))->format('Y-m-d H:i:s')
+            ), static::DATE_WINDOW)
+            ->select([
+                SpySalesOrderItemTableMap::COL_FK_OMS_ORDER_ITEM_STATE,
+                SpySalesOrderItemTableMap::COL_FK_OMS_ORDER_PROCESS,
+                static::ITEMS_COUNT,
+                static::DATE_WINDOW,
+            ])
+            ->filterByFkOmsOrderProcess($processIds, Criteria::IN)
+            ->groupBy(SpySalesOrderItemTableMap::COL_FK_OMS_ORDER_ITEM_STATE)
+            ->groupBy(SpySalesOrderItemTableMap::COL_FK_OMS_ORDER_PROCESS)
+            ->groupBy(static::DATE_WINDOW);
 
         if ($stateBlacklist) {
             $query->filterByFkOmsOrderItemState($stateBlacklist, Criteria::NOT_IN);
@@ -406,7 +450,7 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     /**
      * @api
      *
-     * @return \Orm\Zed\Oms\Persistence\SpyOmsProductReservationStoreQuery
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria|\Orm\Zed\Oms\Persistence\SpyOmsProductReservationStoreQuery
      */
     public function queryMaxReservationChangeVersion()
     {
@@ -428,10 +472,11 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
      * @param int $lastExportedVersion
      * @param int $maxVisibleVersion
      *
-     * @return \Orm\Zed\Oms\Persistence\SpyOmsProductReservationQuery
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsProductReservationChangeVersionQuery
      */
     public function queryReservationChangeVersion($lastExportedVersion, $maxVisibleVersion)
     {
+        /** @var \Orm\Zed\Oms\Persistence\SpyOmsProductReservationChangeVersionQuery $query */
         $query = $this->getFactory()
             ->createOmsProductReservationQuery()
             ->addJoin(

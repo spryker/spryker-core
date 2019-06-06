@@ -5,15 +5,16 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/availability": "^5.0.3 || ^6.0.0",
-    "spryker/cart-extension": "^1.0.0 || ^2.0.0",
-    "spryker/discount": "^4.5.0 || ^5.0.0 || ^6.0.0 || ^7.0.0",
+    "spryker/availability": "^7.0.0",
+    "spryker/cart-extension": "^3.0.0",
+    "spryker/discount": "^8.0.0",
     "spryker/kernel": "^3.0.0",
     "spryker/locale": "^3.0.0",
     "spryker/persistent-cart-extension": "^1.0.0",
     "spryker/product": "^5.0.0 || ^6.0.0",
     "spryker/propel-orm": "^1.0.0",
-    "spryker/symfony": "^3.0.0"
+    "spryker/symfony": "^3.0.0",
+    "spryker/util-quantity": "^1.0.0"
   },
   "require-dev": {
     "spryker/calculation": "*",

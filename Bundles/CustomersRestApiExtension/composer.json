@@ -8,7 +8,11 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/glue-application": "*",
     "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/glue-application": "If you want to use plugins with glue application."
   },
   "autoload": {
     "psr-4": {

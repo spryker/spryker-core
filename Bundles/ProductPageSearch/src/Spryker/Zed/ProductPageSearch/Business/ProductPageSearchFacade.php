@@ -102,6 +102,22 @@ class ProductPageSearchFacade extends AbstractFacade implements ProductPageSearc
      *
      * @api
      *
+     * @param array $productAbstractStoreMap Keys are product abstract IDs, values are store IDs.
+     *
+     * @return void
+     */
+    public function unpublishProductConcretePageSearches(array $productAbstractStoreMap): void
+    {
+        $this->getFactory()
+            ->createProductConcretePageSearchUnpublisher()
+            ->unpublishByAbstractProductsAndStores($productAbstractStoreMap);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param int[] $productIds
      *
      * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
@@ -111,5 +127,19 @@ class ProductPageSearchFacade extends AbstractFacade implements ProductPageSearc
         return $this->getFactory()
             ->createProductConcretePageSearchReader()
             ->getProductConcretePageSearchTransfersByProductIds($productIds);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function publishProductConcretePageSearchesByProductAbstractIds(array $productAbstractIds): void
+    {
+        $this->getFactory()
+            ->createProductConcretePageSearchPublisher()
+            ->publishProductConcretePageSearchesByProductAbstractIds($productAbstractIds);
     }
 }

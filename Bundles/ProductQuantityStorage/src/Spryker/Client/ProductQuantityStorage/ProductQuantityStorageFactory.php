@@ -9,14 +9,21 @@ namespace Spryker\Client\ProductQuantityStorage;
 
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\ProductQuantityStorage\Dependency\Client\ProductQuantityStorageToStorageClientInterface;
+use Spryker\Client\ProductQuantityStorage\Dependency\Service\ProductQuantityStorageToProductQuantityServiceInterface;
 use Spryker\Client\ProductQuantityStorage\Dependency\Service\ProductQuantityStorageToSynchronizationServiceInterface;
+use Spryker\Client\ProductQuantityStorage\Dependency\Service\ProductQuantityStorageToUtilQuantityServiceInterface;
+use Spryker\Client\ProductQuantityStorage\Expander\ProductQuantityExpander;
+use Spryker\Client\ProductQuantityStorage\Expander\ProductQuantityExpanderInterface;
 use Spryker\Client\ProductQuantityStorage\Resolver\ProductQuantityResolver;
 use Spryker\Client\ProductQuantityStorage\Resolver\ProductQuantityResolverInterface;
-use Spryker\Client\ProductQuantityStorage\Rounder\ProductQuantityRounder;
-use Spryker\Client\ProductQuantityStorage\Rounder\ProductQuantityRounderInterface;
 use Spryker\Client\ProductQuantityStorage\Storage\ProductQuantityStorageReader;
 use Spryker\Client\ProductQuantityStorage\Storage\ProductQuantityStorageReaderInterface;
+use Spryker\Client\ProductQuantityStorage\Validator\ProductQuantityItemValidator;
+use Spryker\Client\ProductQuantityStorage\Validator\ProductQuantityItemValidatorInterface;
 
+/**
+ * @method \Spryker\Client\ProductQuantityStorage\ProductQuantityStorageConfig getConfig()
+ */
 class ProductQuantityStorageFactory extends AbstractFactory
 {
     /**
@@ -28,6 +35,26 @@ class ProductQuantityStorageFactory extends AbstractFactory
             $this->getStorage(),
             $this->getSynchronizationService()
         );
+    }
+
+    /**
+     * @return \Spryker\Client\ProductQuantityStorage\Validator\ProductQuantityItemValidatorInterface
+     */
+    public function createProductQuantityItemTransferValidator(): ProductQuantityItemValidatorInterface
+    {
+        return new ProductQuantityItemValidator(
+            $this->createProductQuantityStorageReader(),
+            $this->createProductQuantityResolver(),
+            $this->getUtilQuantityService()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\ProductQuantityStorage\Expander\ProductQuantityExpanderInterface
+     */
+    public function createProductQuantityExpander(): ProductQuantityExpanderInterface
+    {
+        return new ProductQuantityExpander($this->createProductQuantityStorageReader());
     }
 
     /**
@@ -53,15 +80,23 @@ class ProductQuantityStorageFactory extends AbstractFactory
     {
         return new ProductQuantityResolver(
             $this->createProductQuantityStorageReader(),
-            $this->createProductQuantityRounder()
+            $this->getProductQuantityService()
         );
     }
 
     /**
-     * @return \Spryker\Client\ProductQuantityStorage\Rounder\ProductQuantityRounderInterface
+     * @return \Spryker\Client\ProductQuantityStorage\Dependency\Service\ProductQuantityStorageToProductQuantityServiceInterface
      */
-    public function createProductQuantityRounder(): ProductQuantityRounderInterface
+    public function getProductQuantityService(): ProductQuantityStorageToProductQuantityServiceInterface
     {
-        return new ProductQuantityRounder();
+        return $this->getProvidedDependency(ProductQuantityStorageDependencyProvider::SERVICE_PRODUCT_QUANTITY);
+    }
+
+    /**
+     * @return \Spryker\Client\ProductQuantityStorage\Dependency\Service\ProductQuantityStorageToUtilQuantityServiceInterface
+     */
+    public function getUtilQuantityService(): ProductQuantityStorageToUtilQuantityServiceInterface
+    {
+        return $this->getProvidedDependency(ProductQuantityStorageDependencyProvider::SERVICE_UTIL_QUANTITY);
     }
 }

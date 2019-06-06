@@ -11,10 +11,12 @@ use Spryker\Zed\Event\Dependency\EventCollectionInterface;
 use Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Product\Dependency\ProductEvents;
+use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductAbstractStoreProductConcretePageSearchPublishListener;
+use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductAbstractStoreProductConcretePageSearchUnpublishListener;
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductConcretePageSearchProductListener;
 
 /**
- * @method \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacade getFacade()
+ * @method \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductPageSearch\Communication\ProductPageSearchCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductPageSearch\ProductPageSearchConfig getConfig()
  * @method \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainerInterface getQueryContainer()
@@ -36,6 +38,10 @@ class ProductConcretePageSearchProductEventSubscriber extends AbstractPlugin imp
 
         $this->addProductConcretePageProductConcretePublishSearchListener($eventCollection);
         $this->addProductConcretePageProductConcreteUnpublishSearchListener($eventCollection);
+
+        $this->addProductConcretePageSearchCreateProductAbstractStoreListener($eventCollection);
+        $this->addProductConcretePageSearchUpdateProductAbstractStoreListener($eventCollection);
+        $this->addProductConcretePageSearchDeleteProductAbstractStoreListener($eventCollection);
 
         return $eventCollection;
     }
@@ -88,5 +94,44 @@ class ProductConcretePageSearchProductEventSubscriber extends AbstractPlugin imp
     protected function addProductConcretePageProductConcreteUnpublishSearchListener(EventCollectionInterface $eventCollection): void
     {
         $eventCollection->addListenerQueued(ProductEvents::PRODUCT_CONCRETE_UNPUBLISH, new ProductConcretePageSearchProductListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addProductConcretePageSearchCreateProductAbstractStoreListener(EventCollectionInterface $eventCollection): void
+    {
+        $eventCollection->addListenerQueued(
+            ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_STORE_CREATE,
+            new ProductAbstractStoreProductConcretePageSearchPublishListener()
+        );
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addProductConcretePageSearchUpdateProductAbstractStoreListener(EventCollectionInterface $eventCollection): void
+    {
+        $eventCollection->addListenerQueued(
+            ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_STORE_UPDATE,
+            new ProductAbstractStoreProductConcretePageSearchPublishListener()
+        );
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addProductConcretePageSearchDeleteProductAbstractStoreListener(EventCollectionInterface $eventCollection): void
+    {
+        $eventCollection->addListenerQueued(
+            ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_STORE_DELETE,
+            new ProductAbstractStoreProductConcretePageSearchUnpublishListener()
+        );
     }
 }

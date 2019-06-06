@@ -46,7 +46,7 @@ class ApplicationYvesTester extends Actor
         $application = new Application();
         $application->register(new SslServiceProvider());
 
-        $application->get('/foo', function () use ($controllerResponse) {
+        $application['controllers']->get('/foo', function () use ($controllerResponse) {
             return $controllerResponse;
         });
 

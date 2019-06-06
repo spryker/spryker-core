@@ -17,10 +17,13 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Spryker\Zed\Kernel\RepositoryResolverAwareTrait;
 use Symfony\Component\Console\Command\Command as SymfonyCommand;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
+use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Logger\ConsoleLogger;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\ChoiceQuestion;
+use Symfony\Component\Console\Question\Question;
 
 /**
  * @method \Symfony\Component\Console\Application getApplication()
@@ -43,14 +46,14 @@ class Console extends SymfonyCommand
     protected $output;
 
     /**
-     * @var \Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory
-     */
-    private $factory;
-
-    /**
-     * @var \Spryker\Zed\Kernel\Business\AbstractFacade
+     * @var \Spryker\Zed\Kernel\Business\AbstractFacade|null
      */
     private $facade;
+
+    /**
+     * @var \Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory|null
+     */
+    private $factory;
 
     /**
      * @var \Spryker\Zed\Kernel\Container
@@ -146,11 +149,13 @@ class Console extends SymfonyCommand
     /**
      * @param \Spryker\Zed\Kernel\Business\AbstractFacade $facade
      *
-     * @return void
+     * @return $this
      */
     public function setFacade(AbstractFacade $facade)
     {
         $this->facade = $facade;
+
+        return $this;
     }
 
     /**
@@ -158,7 +163,11 @@ class Console extends SymfonyCommand
      */
     protected function getFacade()
     {
-        return $this->resolveFacade();
+        if ($this->facade === null) {
+            $this->facade = $this->resolveFacade();
+        }
+
+        return $this->facade;
     }
 
     /**
@@ -403,7 +412,7 @@ class Console extends SymfonyCommand
      *
      * @param \Symfony\Component\Console\Output\OutputInterface $output An Output instance
      * @param string $question The question to ask
-     * @param bool $default The default answer if the user enters nothing
+     * @param string|bool|null $default The default answer if the user enters nothing
      *
      * @throws \RuntimeException
      *
@@ -413,7 +422,7 @@ class Console extends SymfonyCommand
     {
         $answer = 'z';
         while ($answer && !in_array(strtolower($answer[0]), ['y', 'n', 'a'])) {
-            $answer = $this->ask($question, $default);
+            $answer = $this->ask($question);
         }
 
         if (strtolower($answer[0]) === 'a') {
@@ -435,10 +444,10 @@ class Console extends SymfonyCommand
      */
     public function ask($question, $default = null)
     {
-        /** @var \Symfony\Component\Console\Helper\DialogHelper $dialog */
-        $dialog = $this->getHelperSet()->get('dialog');
+        $questionHelper = $this->getQuestionHelper();
+        $question = new Question($question, $default);
 
-        return $dialog->ask($this->output, $question, $default);
+        return $questionHelper->ask($this->input, $this->output, $question);
     }
 
     /**
@@ -450,16 +459,10 @@ class Console extends SymfonyCommand
      */
     public function select($question, array $options, $default)
     {
-        /** @var \Symfony\Component\Console\Helper\DialogHelper $dialog */
-        $dialog = $this->getHelperSet()->get('dialog');
-        $selected = $dialog->select(
-            $this->output,
-            $question,
-            $options,
-            $default
-        );
+        $questionHelper = $this->getQuestionHelper();
+        $question = new ChoiceQuestion($question, $options, $default);
 
-        return $options[$selected];
+        return $questionHelper->ask($this->input, $this->output, $question);
     }
 
     /**
@@ -472,5 +475,16 @@ class Console extends SymfonyCommand
         $width = $this->getApplication()->getTerminalDimensions()[0];
         $width = ($width) ?: 200;
         $this->info(str_repeat('-', $width), $wrapInInfoTags);
+    }
+
+    /**
+     * @return \Symfony\Component\Console\Helper\QuestionHelper
+     */
+    protected function getQuestionHelper(): QuestionHelper
+    {
+        /** @var \Symfony\Component\Console\Helper\QuestionHelper $questionHelper */
+        $questionHelper = $this->getHelperSet()->get('question');
+
+        return $questionHelper;
     }
 }

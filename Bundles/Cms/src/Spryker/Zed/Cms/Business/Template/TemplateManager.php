@@ -55,7 +55,7 @@ class TemplateManager implements TemplateManagerInterface
      *
      * @return \Generated\Shared\Transfer\CmsTemplateTransfer
      */
-    public function createTemplate($name, $path)
+    public function createTemplate(string $name, string $path): CmsTemplateTransfer
     {
         $this->checkTemplatePathDoesNotExist($path);
 
@@ -75,7 +75,7 @@ class TemplateManager implements TemplateManagerInterface
      *
      * @return void
      */
-    protected function checkTemplatePathDoesNotExist($path)
+    protected function checkTemplatePathDoesNotExist(string $path): void
     {
         if ($this->hasTemplatePath($path)) {
             throw new TemplateExistsException(
@@ -92,7 +92,7 @@ class TemplateManager implements TemplateManagerInterface
      *
      * @return bool
      */
-    public function hasTemplatePath($path)
+    public function hasTemplatePath(string $path): bool
     {
         $templateCount = $this->cmsQueryContainer->queryTemplateByPath($path)->count();
 
@@ -104,7 +104,7 @@ class TemplateManager implements TemplateManagerInterface
      *
      * @return bool
      */
-    public function hasTemplateId($id)
+    public function hasTemplateId(int $id): bool
     {
         $templateCount = $this->cmsQueryContainer->queryTemplateById($id)->count();
 
@@ -116,7 +116,7 @@ class TemplateManager implements TemplateManagerInterface
      *
      * @return \Generated\Shared\Transfer\CmsTemplateTransfer
      */
-    protected function convertTemplateEntityToTransfer(SpyCmsTemplate $template)
+    protected function convertTemplateEntityToTransfer(SpyCmsTemplate $template): CmsTemplateTransfer
     {
         $transferTemplate = new CmsTemplateTransfer();
         $transferTemplate->fromArray($template->toArray());
@@ -129,7 +129,7 @@ class TemplateManager implements TemplateManagerInterface
      *
      * @return \Generated\Shared\Transfer\CmsTemplateTransfer
      */
-    public function saveTemplate(CmsTemplateTransfer $cmsTemplate)
+    public function saveTemplate(CmsTemplateTransfer $cmsTemplate): CmsTemplateTransfer
     {
         if ($cmsTemplate->getIdCmsTemplate() === null) {
             return $this->createTemplateFromTransfer($cmsTemplate);
@@ -143,7 +143,7 @@ class TemplateManager implements TemplateManagerInterface
      *
      * @return \Generated\Shared\Transfer\CmsTemplateTransfer
      */
-    protected function createTemplateFromTransfer(CmsTemplateTransfer $cmsTemplate)
+    protected function createTemplateFromTransfer(CmsTemplateTransfer $cmsTemplate): CmsTemplateTransfer
     {
         $this->checkTemplatePathDoesNotExist($cmsTemplate->getTemplatePath());
         $templateEntity = new SpyCmsTemplate();
@@ -161,7 +161,7 @@ class TemplateManager implements TemplateManagerInterface
      *
      * @return \Generated\Shared\Transfer\CmsTemplateTransfer
      */
-    protected function updateTemplateFromTransfer(CmsTemplateTransfer $cmsTemplate)
+    protected function updateTemplateFromTransfer(CmsTemplateTransfer $cmsTemplate): CmsTemplateTransfer
     {
         $templateEntity = $this->getTemplateEntityById($cmsTemplate->getIdCmsTemplate());
         $templateEntity->fromArray($cmsTemplate->toArray());
@@ -184,7 +184,7 @@ class TemplateManager implements TemplateManagerInterface
      *
      * @return \Generated\Shared\Transfer\CmsTemplateTransfer
      */
-    public function getTemplateById($idTemplate)
+    public function getTemplateById(int $idTemplate): CmsTemplateTransfer
     {
         $templateEntity = $this->getTemplateEntityById($idTemplate);
 
@@ -198,7 +198,7 @@ class TemplateManager implements TemplateManagerInterface
      *
      * @return \Generated\Shared\Transfer\CmsTemplateTransfer
      */
-    public function getTemplateByPath($path)
+    public function getTemplateByPath(string $path): CmsTemplateTransfer
     {
         $templateEntity = $this->cmsQueryContainer->queryTemplateByPath($path)->findOne();
         if (!$templateEntity) {
@@ -220,7 +220,7 @@ class TemplateManager implements TemplateManagerInterface
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsTemplate
      */
-    protected function getTemplateEntityById($idTemplate)
+    protected function getTemplateEntityById(int $idTemplate): SpyCmsTemplate
     {
         $templateEntity = $this->cmsQueryContainer->queryTemplateById($idTemplate)->findOne();
         if (!$templateEntity) {
@@ -240,7 +240,7 @@ class TemplateManager implements TemplateManagerInterface
      *
      * @return bool
      */
-    public function syncTemplate($cmsTemplateFolderPath)
+    public function syncTemplate(string $cmsTemplateFolderPath): bool
     {
         $templateFolders = $this->config->getTemplateRealPaths($cmsTemplateFolderPath);
         $isSynced = false;
@@ -263,7 +263,7 @@ class TemplateManager implements TemplateManagerInterface
      *
      * @return void
      */
-    public function checkTemplateFileExists($path)
+    public function checkTemplateFileExists(string $path): void
     {
         if (!$this->isTemplateFileExists($path)) {
             throw new TemplateFileNotFoundException(
@@ -277,7 +277,7 @@ class TemplateManager implements TemplateManagerInterface
      *
      * @return bool
      */
-    protected function isTemplateFileExists($realPath)
+    protected function isTemplateFileExists(string $realPath): bool
     {
         $realPaths = $this->config->getTemplateRealPaths($realPath);
 
@@ -296,7 +296,7 @@ class TemplateManager implements TemplateManagerInterface
      *
      * @return bool
      */
-    protected function findTwigFileAndCreateTemplate($cmsTemplateFolderPath, $folder)
+    protected function findTwigFileAndCreateTemplate(string $cmsTemplateFolderPath, string $folder): bool
     {
         $isTemplateCreated = false;
         $this->finder->in($folder)
@@ -322,7 +322,7 @@ class TemplateManager implements TemplateManagerInterface
      *
      * @return bool
      */
-    protected function fileExists($templateFile)
+    protected function fileExists(string $templateFile): bool
     {
         return file_exists($templateFile);
     }

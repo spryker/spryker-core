@@ -33,6 +33,7 @@ use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
 use Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaProviderFactory;
 use Spryker\Zed\Discount\Business\Voucher\VoucherValidator;
 use Spryker\Zed\Discount\Dependency\Plugin\DiscountRuleWithValueOptionsPluginInterface;
+use Spryker\Zed\Discount\Dependency\Service\DiscountToUtilPriceServiceBridge;
 use Spryker\Zed\Discount\DiscountDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -949,7 +950,7 @@ class DiscountFacadeTest extends Unit
 
     /**
      * @param string $dependencyType
-     * @param \PHPUnit_Framework_MockObject_MockObject $discountRulePluginMock
+     * @param \PHPUnit\Framework\MockObject\MockObject $discountRulePluginMock
      *
      * @return \Spryker\Zed\Discount\Business\DiscountFacadeInterface|\Spryker\Zed\Kernel\Business\AbstractFacade
      */
@@ -963,6 +964,11 @@ class DiscountFacadeTest extends Unit
                 $discountRulePluginMock,
             ];
         };
+        $container[DiscountDependencyProvider::SERVICE_UTIL_PRICE] = function () {
+            return new DiscountToUtilPriceServiceBridge(
+                $this->tester->getLocator()->utilPrice()->service()
+            );
+        };
         $factory->setContainer($container);
         $discountFacade->setFactory($factory);
 
@@ -970,7 +976,7 @@ class DiscountFacadeTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject
+     * @return \PHPUnit\Framework\MockObject\MockObject
      */
     protected function createDiscountRuleWithValueOptionsPluginMock()
     {

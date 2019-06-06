@@ -8,8 +8,10 @@
 namespace Spryker\Zed\CmsBlockStorage\Communication\Plugin\Event\Subscriber;
 
 use Spryker\Zed\CmsBlock\Dependency\CmsBlockEvents;
-use Spryker\Zed\CmsBlockStorage\Communication\Plugin\Event\Listener\CmsBlockGlossaryKeyMappingBlockStorageListener;
-use Spryker\Zed\CmsBlockStorage\Communication\Plugin\Event\Listener\CmsBlockStorageListener;
+use Spryker\Zed\CmsBlockStorage\Communication\Plugin\Event\Listener\CmsBlockGlossaryKeyMappingBlockStoragePublishListener;
+use Spryker\Zed\CmsBlockStorage\Communication\Plugin\Event\Listener\CmsBlockGlossaryKeyMappingBlockStorageUnpublishListener;
+use Spryker\Zed\CmsBlockStorage\Communication\Plugin\Event\Listener\CmsBlockStoragePublishListener;
+use Spryker\Zed\CmsBlockStorage\Communication\Plugin\Event\Listener\CmsBlockStorageUnpublishListener;
 use Spryker\Zed\CmsBlockStorage\Communication\Plugin\Event\Listener\CmsBlockStoreStorageListener;
 use Spryker\Zed\Event\Dependency\EventCollectionInterface;
 use Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface;
@@ -53,7 +55,7 @@ class CmsBlockStorageEventSubscriber extends AbstractPlugin implements EventSubs
      */
     protected function addCmsBlockPublishStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CmsBlockEvents::CMS_BLOCK_PUBLISH, new CmsBlockStorageListener());
+        $eventCollection->addListenerQueued(CmsBlockEvents::CMS_BLOCK_PUBLISH, new CmsBlockStoragePublishListener());
     }
 
     /**
@@ -63,7 +65,7 @@ class CmsBlockStorageEventSubscriber extends AbstractPlugin implements EventSubs
      */
     protected function addCmsBlockUnpublishStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CmsBlockEvents::CMS_BLOCK_UNPUBLISH, new CmsBlockStorageListener());
+        $eventCollection->addListenerQueued(CmsBlockEvents::CMS_BLOCK_UNPUBLISH, new CmsBlockStorageUnpublishListener());
     }
 
     /**
@@ -73,7 +75,7 @@ class CmsBlockStorageEventSubscriber extends AbstractPlugin implements EventSubs
      */
     protected function addCmsBlockUpdateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CmsBlockEvents::ENTITY_SPY_CMS_BLOCK_UPDATE, new CmsBlockStorageListener());
+        $eventCollection->addListenerQueued(CmsBlockEvents::ENTITY_SPY_CMS_BLOCK_UPDATE, new CmsBlockStoragePublishListener());
     }
 
     /**
@@ -83,7 +85,7 @@ class CmsBlockStorageEventSubscriber extends AbstractPlugin implements EventSubs
      */
     protected function addCmsBlockDeleteStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CmsBlockEvents::ENTITY_SPY_CMS_BLOCK_DELETE, new CmsBlockStorageListener());
+        $eventCollection->addListenerQueued(CmsBlockEvents::ENTITY_SPY_CMS_BLOCK_DELETE, new CmsBlockStorageUnpublishListener());
     }
 
     /**
@@ -93,7 +95,7 @@ class CmsBlockStorageEventSubscriber extends AbstractPlugin implements EventSubs
      */
     protected function addCmsBlockGlossaryKeyMappingBlockCreateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CmsBlockEvents::ENTITY_SPY_CMS_BLOCK_GLOSSARY_KEY_MAPPING_CREATE, new CmsBlockGlossaryKeyMappingBlockStorageListener());
+        $eventCollection->addListenerQueued(CmsBlockEvents::ENTITY_SPY_CMS_BLOCK_GLOSSARY_KEY_MAPPING_CREATE, new CmsBlockGlossaryKeyMappingBlockStoragePublishListener());
     }
 
     /**
@@ -103,7 +105,7 @@ class CmsBlockStorageEventSubscriber extends AbstractPlugin implements EventSubs
      */
     protected function addCmsBlockGlossaryKeyMappingBlockUpdateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CmsBlockEvents::ENTITY_SPY_CMS_BLOCK_GLOSSARY_KEY_MAPPING_UPDATE, new CmsBlockGlossaryKeyMappingBlockStorageListener());
+        $eventCollection->addListenerQueued(CmsBlockEvents::ENTITY_SPY_CMS_BLOCK_GLOSSARY_KEY_MAPPING_UPDATE, new CmsBlockGlossaryKeyMappingBlockStoragePublishListener());
     }
 
     /**
@@ -113,7 +115,7 @@ class CmsBlockStorageEventSubscriber extends AbstractPlugin implements EventSubs
      */
     protected function addCmsBlockGlossaryKeyMappingBlockDeleteStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CmsBlockEvents::ENTITY_SPY_CMS_BLOCK_GLOSSARY_KEY_MAPPING_DELETE, new CmsBlockGlossaryKeyMappingBlockStorageListener());
+        $eventCollection->addListenerQueued(CmsBlockEvents::ENTITY_SPY_CMS_BLOCK_GLOSSARY_KEY_MAPPING_DELETE, new CmsBlockGlossaryKeyMappingBlockStorageUnpublishListener());
     }
 
     /**

@@ -12,10 +12,12 @@ use Generated\Shared\Transfer\CmsPageAttributesTransfer;
 use Generated\Shared\Transfer\CmsPageTransfer;
 use Generated\Shared\Transfer\CmsTemplateTransfer;
 use Generated\Shared\Transfer\CmsVersionDataTransfer;
+use Generated\Shared\Transfer\CmsVersionTransfer;
 use Generated\Shared\Transfer\LocaleCmsPageDataTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageKeyMappingTransfer;
 use Generated\Shared\Transfer\PageTransfer;
+use Generated\Shared\Transfer\UrlTransfer;
 
 interface CmsFacadeInterface
 {
@@ -29,7 +31,7 @@ interface CmsFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CmsTemplateTransfer
      */
-    public function createTemplate($name, $path);
+    public function createTemplate(string $name, string $path): CmsTemplateTransfer;
 
     /**
      * @api
@@ -40,7 +42,7 @@ interface CmsFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CmsTemplateTransfer
      */
-    public function getTemplate($path);
+    public function getTemplate(string $path): CmsTemplateTransfer;
 
     /**
      * @api
@@ -49,7 +51,7 @@ interface CmsFacadeInterface
      *
      * @return bool
      */
-    public function hasTemplate($path);
+    public function hasTemplate(string $path): bool;
 
     /**
      * @api
@@ -60,7 +62,7 @@ interface CmsFacadeInterface
      *
      * @return \Generated\Shared\Transfer\PageTransfer
      */
-    public function savePage(PageTransfer $pageTransfer);
+    public function savePage(PageTransfer $pageTransfer): PageTransfer;
 
     /**
      * @api
@@ -69,7 +71,7 @@ interface CmsFacadeInterface
      *
      * @return \Generated\Shared\Transfer\PageKeyMappingTransfer
      */
-    public function savePageKeyMapping(PageKeyMappingTransfer $pageKeyMappingTransfer);
+    public function savePageKeyMapping(PageKeyMappingTransfer $pageKeyMappingTransfer): PageKeyMappingTransfer;
 
     /**
      * @api
@@ -79,7 +81,7 @@ interface CmsFacadeInterface
      *
      * @return \Generated\Shared\Transfer\PageKeyMappingTransfer
      */
-    public function savePageKeyMappingAndTouch(PageKeyMappingTransfer $pageKeyMappingTransfer, ?LocaleTransfer $localeTransfer = null);
+    public function savePageKeyMappingAndTouch(PageKeyMappingTransfer $pageKeyMappingTransfer, ?LocaleTransfer $localeTransfer = null): PageKeyMappingTransfer;
 
     /**
      * @api
@@ -89,7 +91,7 @@ interface CmsFacadeInterface
      *
      * @return bool
      */
-    public function hasPagePlaceholderMapping($idPage, $placeholder);
+    public function hasPagePlaceholderMapping(int $idPage, string $placeholder): bool;
 
     /**
      * @api
@@ -101,7 +103,7 @@ interface CmsFacadeInterface
      *
      * @return \Generated\Shared\Transfer\PageKeyMappingTransfer
      */
-    public function getPagePlaceholderMapping($idPage, $placeholder);
+    public function getPagePlaceholderMapping(int $idPage, string $placeholder): PageKeyMappingTransfer;
 
     /**
      * @api
@@ -110,7 +112,7 @@ interface CmsFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CmsTemplateTransfer
      */
-    public function saveTemplate(CmsTemplateTransfer $cmsTemplateTransfer);
+    public function saveTemplate(CmsTemplateTransfer $cmsTemplateTransfer): CmsTemplateTransfer;
 
     /**
      * @api
@@ -124,7 +126,7 @@ interface CmsFacadeInterface
      *
      * @return string
      */
-    public function translatePlaceholder($idPage, $placeholder, array $data = []);
+    public function translatePlaceholder(int $idPage, string $placeholder, array $data = []): string;
 
     /**
      * @api
@@ -137,7 +139,7 @@ interface CmsFacadeInterface
      *
      * @return \Generated\Shared\Transfer\PageKeyMappingTransfer
      */
-    public function addPlaceholderText(PageTransfer $pageTransfer, $placeholder, $value, ?LocaleTransfer $localeTransfer = null, $autoGlossaryKeyIncrement = true);
+    public function addPlaceholderText(PageTransfer $pageTransfer, string $placeholder, string $value, ?LocaleTransfer $localeTransfer = null, bool $autoGlossaryKeyIncrement = true): PageKeyMappingTransfer;
 
     /**
      * @api
@@ -151,7 +153,7 @@ interface CmsFacadeInterface
      *
      * @return bool
      */
-    public function deletePageKeyMapping(PageTransfer $pageTransfer, $placeholder);
+    public function deletePageKeyMapping(PageTransfer $pageTransfer, string $placeholder): bool;
 
     /**
      * @api
@@ -161,7 +163,7 @@ interface CmsFacadeInterface
      *
      * @return void
      */
-    public function touchPageActive(PageTransfer $pageTransfer, ?LocaleTransfer $localeTransfer = null);
+    public function touchPageActive(PageTransfer $pageTransfer, ?LocaleTransfer $localeTransfer = null): void;
 
     /**
      * @api
@@ -170,7 +172,7 @@ interface CmsFacadeInterface
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
-    public function savePageUrlAndTouch(PageTransfer $pageTransfer);
+    public function savePageUrlAndTouch(PageTransfer $pageTransfer): UrlTransfer;
 
     /**
      * @api
@@ -179,7 +181,7 @@ interface CmsFacadeInterface
      *
      * @return bool
      */
-    public function deleteGlossaryKeysByIdPage($idPage);
+    public function deleteGlossaryKeysByIdPage(int $idPage): bool;
 
     /**
      * @api
@@ -188,7 +190,7 @@ interface CmsFacadeInterface
      *
      * @return bool
      */
-    public function syncTemplate($cmsTemplateFolderPath);
+    public function syncTemplate(string $cmsTemplateFolderPath): bool;
 
     /**
      * @api
@@ -198,7 +200,7 @@ interface CmsFacadeInterface
      *
      * @return string
      */
-    public function generateGlossaryKeyName($templateName, $placeholder);
+    public function generateGlossaryKeyName(string $templateName, string $placeholder): string;
 
     /**
      * Specification:
@@ -211,7 +213,7 @@ interface CmsFacadeInterface
      *
      * @return void
      */
-    public function deletePageById($idCmsPage);
+    public function deletePageById(int $idCmsPage): void;
 
     /**
      * Specification:
@@ -223,7 +225,7 @@ interface CmsFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CmsGlossaryTransfer|null
      */
-    public function findPageGlossaryAttributes($idCmsPage);
+    public function findPageGlossaryAttributes(int $idCmsPage): ?CmsGlossaryTransfer;
 
     /**
      * Specification:
@@ -235,7 +237,7 @@ interface CmsFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CmsGlossaryTransfer
      */
-    public function saveCmsGlossary(CmsGlossaryTransfer $cmsGlossaryTransfer);
+    public function saveCmsGlossary(CmsGlossaryTransfer $cmsGlossaryTransfer): CmsGlossaryTransfer;
 
     /**
      * Specification:
@@ -248,7 +250,7 @@ interface CmsFacadeInterface
      *
      * @return int
      */
-    public function createPage(CmsPageTransfer $cmsPageTransfer);
+    public function createPage(CmsPageTransfer $cmsPageTransfer): int;
 
     /**
      * Specification:
@@ -263,7 +265,7 @@ interface CmsFacadeInterface
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
-    public function createPageUrlWithLocale($pageTransfer, $url, LocaleTransfer $localeTransfer);
+    public function createPageUrlWithLocale(PageTransfer $pageTransfer, string $url, LocaleTransfer $localeTransfer): UrlTransfer;
 
     /**
      * Specification:
@@ -275,7 +277,7 @@ interface CmsFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CmsPageTransfer|null
      */
-    public function findCmsPageById($idCmsPage);
+    public function findCmsPageById(int $idCmsPage): ?CmsPageTransfer;
 
     /**
      * Specification:
@@ -288,7 +290,7 @@ interface CmsFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CmsPageTransfer
      */
-    public function updatePage(CmsPageTransfer $cmsPageTransfer);
+    public function updatePage(CmsPageTransfer $cmsPageTransfer): CmsPageTransfer;
 
     /**
      * Specification:
@@ -301,7 +303,7 @@ interface CmsFacadeInterface
      *
      * @return void
      */
-    public function activatePage($idCmsPage);
+    public function activatePage(int $idCmsPage): void;
 
     /**
      * Specification:
@@ -314,7 +316,7 @@ interface CmsFacadeInterface
      *
      * @return void
      */
-    public function deactivatePage($idCmsPage);
+    public function deactivatePage(int $idCmsPage): void;
 
     /**
      * Specification:
@@ -326,7 +328,7 @@ interface CmsFacadeInterface
      *
      * @return string
      */
-    public function getPageUrlPrefix(CmsPageAttributesTransfer $cmsPageAttributesTransfer);
+    public function getPageUrlPrefix(CmsPageAttributesTransfer $cmsPageAttributesTransfer): string;
 
     /**
      * Specification:
@@ -338,7 +340,7 @@ interface CmsFacadeInterface
      *
      * @return string
      */
-    public function buildPageUrl(CmsPageAttributesTransfer $cmsPageAttributesTransfer);
+    public function buildPageUrl(CmsPageAttributesTransfer $cmsPageAttributesTransfer): string;
 
     /**
      * Specification:
@@ -356,7 +358,7 @@ interface CmsFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CmsVersionTransfer
      */
-    public function publishWithVersion($idCmsPage, $versionName = null);
+    public function publishWithVersion(int $idCmsPage, ?string $versionName = null): CmsVersionTransfer;
 
     /**
      * Specification:
@@ -368,7 +370,7 @@ interface CmsFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CmsVersionDataTransfer
      */
-    public function getCmsVersionData($idCmsPage);
+    public function getCmsVersionData(int $idCmsPage): CmsVersionDataTransfer;
 
     /**
      * Specification:
@@ -380,7 +382,7 @@ interface CmsFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CmsVersionDataTransfer
      */
-    public function extractCmsVersionDataTransfer($cmsPageData);
+    public function extractCmsVersionDataTransfer(string $cmsPageData): CmsVersionDataTransfer;
 
     /**
      * Specification:
@@ -393,7 +395,7 @@ interface CmsFacadeInterface
      *
      * @return \Generated\Shared\Transfer\LocaleCmsPageDataTransfer
      */
-    public function extractLocaleCmsPageDataTransfer(CmsVersionDataTransfer $cmsVersionDataTransfer, LocaleTransfer $localeTransfer);
+    public function extractLocaleCmsPageDataTransfer(CmsVersionDataTransfer $cmsVersionDataTransfer, LocaleTransfer $localeTransfer): LocaleCmsPageDataTransfer;
 
     /**
      * Specification:
@@ -407,7 +409,7 @@ interface CmsFacadeInterface
      *
      * @return array
      */
-    public function calculateFlattenedLocaleCmsPageData(LocaleCmsPageDataTransfer $localeCmsPageDataTransfer, LocaleTransfer $localeTransfer);
+    public function calculateFlattenedLocaleCmsPageData(LocaleCmsPageDataTransfer $localeCmsPageDataTransfer, LocaleTransfer $localeTransfer): array;
 
     /**
      * Specification:
@@ -424,7 +426,7 @@ interface CmsFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CmsVersionTransfer
      */
-    public function rollback($idCmsPage, $version);
+    public function rollback(int $idCmsPage, int $version): CmsVersionTransfer;
 
     /**
      * Specification:
@@ -438,7 +440,7 @@ interface CmsFacadeInterface
      *
      * @return void
      */
-    public function revert($idCmsPage);
+    public function revert(int $idCmsPage): void;
 
     /**
      * Specification:
@@ -450,7 +452,7 @@ interface CmsFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CmsVersionTransfer|null
      */
-    public function findLatestCmsVersionByIdCmsPage($idCmsPage);
+    public function findLatestCmsVersionByIdCmsPage(int $idCmsPage): ?CmsVersionTransfer;
 
     /**
      * Specification:
@@ -462,7 +464,7 @@ interface CmsFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CmsVersionTransfer[]
      */
-    public function findAllCmsVersionByIdCmsPage($idCmsPage);
+    public function findAllCmsVersionByIdCmsPage(int $idCmsPage): array;
 
     /**
      * Specification:
@@ -475,5 +477,5 @@ interface CmsFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CmsVersionTransfer|null
      */
-    public function findCmsVersionByIdCmsPageAndVersion($idCmsPage, $version);
+    public function findCmsVersionByIdCmsPageAndVersion(int $idCmsPage, int $version): ?CmsVersionTransfer;
 }

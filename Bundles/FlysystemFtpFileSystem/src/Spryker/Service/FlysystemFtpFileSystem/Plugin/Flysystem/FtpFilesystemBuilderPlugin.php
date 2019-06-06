@@ -23,7 +23,7 @@ class FtpFilesystemBuilderPlugin extends AbstractPlugin implements FlysystemFile
      */
     public function acceptType($type)
     {
-        return $type === get_class($this);
+        return $type === static::class;
     }
 
     /**

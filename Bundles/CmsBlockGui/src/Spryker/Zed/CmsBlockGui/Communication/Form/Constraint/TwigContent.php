@@ -14,12 +14,12 @@ class TwigContent extends SymfonyConstraint
     public const OPTION_TWIG_ENVIRONMENT = 'twigEnvironment';
 
     /**
-     * @var \Twig_Environment
+     * @var \Twig\Environment
      */
     protected $twigEnvironment;
 
     /**
-     * @return \Twig_Environment
+     * @return \Twig\Environment
      */
     public function getTwigEnvironment()
     {

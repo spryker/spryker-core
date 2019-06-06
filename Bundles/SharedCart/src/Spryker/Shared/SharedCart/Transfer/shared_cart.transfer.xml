@@ -16,6 +16,15 @@
         <property name="filter" type="Filter"/>
     </transfer>
 
+    <transfer name="SharedQuoteCriteriaFilter">
+        <property name="idCompanyUser" type="int"/>
+        <property name="idStore" type="int" />
+    </transfer>
+
+    <transfer name="QuoteCriteriaFilter">
+        <property name="quoteIds" type="int[]"/>
+    </transfer>
+
     <transfer name="QuotePermissionGroupResponse">
         <property name="quotePermissionGroups" type="QuotePermissionGroup[]" singular="quotePermissionGroup"/>
         <property name="isSuccessful" type="bool"/>
@@ -31,6 +40,7 @@
     <transfer name="ShareDetail">
         <property name="idQuoteCompanyUser" type="int"/>
         <property name="idCompanyUser" type="int"/>
+        <property name="companyUser" type="CompanyUser"/>
         <property name="customerName" type="string"/>
         <property name="quotePermissionGroup" type="QuotePermissionGroup"/>
     </transfer>
@@ -42,6 +52,7 @@
 
     <transfer name="Quote">
         <property name="shareDetails" type="ShareDetail[]" singular="shareDetail"/>
+        <property name="quotePermissionGroup" type="QuotePermissionGroup"/>
     </transfer>
 
     <transfer name="QuoteUpdateRequestAttributes">
@@ -53,6 +64,19 @@
         <property name="idCompanyUser" type="int"/>
         <property name="idQuotePermissionGroup" type="int" deprecated="Use shareDetails param instead"/>
         <property name="shareDetails" type="ShareDetail[]" singular="shareDetail"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="idStore" type="int" />
+    </transfer>
+
+    <transfer name="Customer">
+        <property name="companyUserTransfer" type="CompanyUser"/>
+        <property name="customerReference" type="string" />
+    </transfer>
+
+    <transfer name="CompanyUser">
+        <property name="idCompanyUser" type="int"/>
     </transfer>
 
 </transfers>

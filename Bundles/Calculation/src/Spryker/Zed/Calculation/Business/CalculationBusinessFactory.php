@@ -37,6 +37,7 @@ use Spryker\Zed\Calculation\Business\Model\CheckoutGrandTotalPreCondition;
 use Spryker\Zed\Calculation\Business\Model\Executor\OrderCalculatorExecutor;
 use Spryker\Zed\Calculation\Business\Model\Executor\QuoteCalculatorExecutor;
 use Spryker\Zed\Calculation\CalculationDependencyProvider;
+use Spryker\Zed\Calculation\Dependency\Service\CalculationToUtilPriceServiceInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -49,7 +50,10 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
      */
     public function createQuoteCalculatorExecutor()
     {
-        return new QuoteCalculatorExecutor($this->getProvidedQuoteCalculatorPluginStack());
+        return new QuoteCalculatorExecutor(
+            $this->getProvidedQuoteCalculatorPluginStack(),
+            $this->getQuotePostRecalculatePlugins()
+        );
     }
 
     /**
@@ -106,7 +110,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
      */
     protected function createSumNetPriceCalculator()
     {
-        return new SumNetPriceCalculator();
+        return new SumNetPriceCalculator($this->getUtilPriceService());
     }
 
     /**
@@ -132,7 +136,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
      */
     protected function createSumGrossPriceCalculator()
     {
-        return new SumGrossPriceCalculator();
+        return new SumGrossPriceCalculator($this->getUtilPriceService());
     }
 
     /**
@@ -148,7 +152,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
      */
     public function createDiscountAmountAggregator()
     {
-        return new DiscountAmountAggregatorForGrossAmount();
+        return new DiscountAmountAggregatorForGrossAmount($this->getUtilPriceService());
     }
 
     /**
@@ -156,7 +160,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
      */
     public function createDiscountAmountAggregatorForGenericAmount()
     {
-        return new DiscountAmountAggregator();
+        return new DiscountAmountAggregator($this->getUtilPriceService());
     }
 
     /**
@@ -328,10 +332,26 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\CalculationExtension\Dependency\Plugin\QuotePostRecalculatePluginStrategyInterface[]
+     */
+    public function getQuotePostRecalculatePlugins(): array
+    {
+        return $this->getProvidedDependency(CalculationDependencyProvider::PLUGINS_QUOTE_POST_RECALCULATE);
+    }
+
+    /**
      * @return \Spryker\Zed\Calculation\Dependency\Service\CalculationToUtilTextInterface
      */
     public function getUtilTextService()
     {
         return $this->getProvidedDependency(CalculationDependencyProvider::SERVICE_UTIL_TEXT);
+    }
+
+    /**
+     * @return \Spryker\Zed\Calculation\Dependency\Service\CalculationToUtilPriceServiceInterface
+     */
+    public function getUtilPriceService(): CalculationToUtilPriceServiceInterface
+    {
+        return $this->getProvidedDependency(CalculationDependencyProvider::SERVICE_UTIL_PRICE);
     }
 }

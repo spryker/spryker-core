@@ -40,7 +40,7 @@ class RefundPluginTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\DummyPayment\Business\DummyPaymentFacadeInterface|\Spryker\Zed\Kernel\Business\AbstractFacade
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\DummyPayment\Business\DummyPaymentFacadeInterface|\Spryker\Zed\Kernel\Business\AbstractFacade
      */
     protected function getDummyPaymentFacadeMock()
     {

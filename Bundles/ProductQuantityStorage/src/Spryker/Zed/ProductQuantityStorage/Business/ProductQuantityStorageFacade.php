@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductQuantityStorage\Business;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -56,5 +57,19 @@ class ProductQuantityStorageFacade extends AbstractFacade implements ProductQuan
     public function findProductQuantityByProductIdsTransfers(array $productIds): array
     {
         return $this->getFactory()->getProductQuantityFacade()->findProductQuantityTransfersByProductIds($productIds);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
+     */
+    public function findFilteredProductQuantityTransfers(FilterTransfer $filterTransfer): array
+    {
+        return $this->getFactory()->getProductQuantityFacade()->findFilteredProductQuantityTransfers($filterTransfer);
     }
 }

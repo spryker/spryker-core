@@ -47,6 +47,7 @@ interface MerchantRelationshipFacadeInterface
     /**
      * Specification:
      * - Removes related business units by assigneeCompanyBusinessUnitCollection.
+     * - Executes pre-delete plugin stack MerchantRelationshipPreDeletePluginInterface.
      * - Finds a merchant relationship record by ID in DB.
      * - Removes the merchant relationship record.
      *

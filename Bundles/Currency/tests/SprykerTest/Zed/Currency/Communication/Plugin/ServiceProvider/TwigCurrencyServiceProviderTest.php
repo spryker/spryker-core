@@ -11,8 +11,8 @@ use Codeception\Test\Unit;
 use Spryker\Shared\Kernel\Communication\Application;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Currency\Communication\Plugin\ServiceProvider\TwigCurrencyServiceProvider;
-use Twig_Environment;
-use Twig_Loader_Filesystem;
+use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
 
 /**
  * Auto-generated group annotations
@@ -109,7 +109,7 @@ class TwigCurrencyServiceProviderTest extends Unit
         if (!static::$application) {
             $application = new Application();
             $application['twig'] = function () {
-                return new Twig_Environment(new Twig_Loader_Filesystem());
+                return new Environment(new FilesystemLoader());
             };
 
             static::$application = $application;
@@ -119,7 +119,7 @@ class TwigCurrencyServiceProviderTest extends Unit
     }
 
     /**
-     * @return bool|\Twig_Function
+     * @return bool|\Twig\TwigFunction
      */
     protected function getCurrentCurrencyTwigFunction()
     {

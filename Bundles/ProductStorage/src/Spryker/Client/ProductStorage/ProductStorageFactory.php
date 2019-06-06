@@ -10,8 +10,13 @@ namespace Spryker\Client\ProductStorage;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\ProductStorage\Filter\ProductAbstractAttributeMapRestrictionFilter;
 use Spryker\Client\ProductStorage\Filter\ProductAbstractAttributeMapRestrictionFilterInterface;
+use Spryker\Client\ProductStorage\Finder\ProductAbstractViewTransferFinder;
+use Spryker\Client\ProductStorage\Finder\ProductConcreteViewTransferFinder;
+use Spryker\Client\ProductStorage\Finder\ProductViewTransferFinderInterface;
 use Spryker\Client\ProductStorage\Mapper\ProductAbstractStorageDataMapper;
 use Spryker\Client\ProductStorage\Mapper\ProductStorageDataMapper;
+use Spryker\Client\ProductStorage\Mapper\ProductStorageToProductConcreteTransferDataMapper;
+use Spryker\Client\ProductStorage\Mapper\ProductStorageToProductConcreteTransferDataMapperInterface;
 use Spryker\Client\ProductStorage\Mapper\ProductVariantExpander;
 use Spryker\Client\ProductStorage\Storage\ProductAbstractStorageReader;
 use Spryker\Client\ProductStorage\Storage\ProductConcreteStorageReader;
@@ -56,6 +61,17 @@ class ProductStorageFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Client\ProductStorage\Finder\ProductViewTransferFinderInterface
+     */
+    public function createProductConcreteViewTransferFinder(): ProductViewTransferFinderInterface
+    {
+        return new ProductConcreteViewTransferFinder(
+            $this->createProductConcreteStorageReader(),
+            $this->createProductStorageDataMapper()
+        );
+    }
+
+    /**
      * @return \Spryker\Client\ProductStorage\Storage\ProductAbstractStorageReaderInterface
      */
     public function createProductAbstractStorageReader()
@@ -66,6 +82,17 @@ class ProductStorageFactory extends AbstractFactory
             $this->getStore(),
             $this->createProductAbstractAttributeMapRestrictionFilter(),
             $this->getProductAbstractRestrictionPlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\ProductStorage\Finder\ProductViewTransferFinderInterface
+     */
+    public function createProductAbstractViewTransferFinder(): ProductViewTransferFinderInterface
+    {
+        return new ProductAbstractViewTransferFinder(
+            $this->createProductAbstractStorageReader(),
+            $this->createProductStorageDataMapper()
         );
     }
 
@@ -110,6 +137,14 @@ class ProductStorageFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Client\ProductStorage\Mapper\ProductStorageToProductConcreteTransferDataMapperInterface
+     */
+    public function createProductStorageToProductConcreteTransferDataMapper(): ProductStorageToProductConcreteTransferDataMapperInterface
+    {
+        return new ProductStorageToProductConcreteTransferDataMapper($this->getProductConcreteExpanderPlugins());
+    }
+
+    /**
      * @return \Spryker\Client\ProductStorage\Dependency\Plugin\ProductViewExpanderPluginInterface[]
      */
     protected function getStorageProductExpanderPlugins()
@@ -139,5 +174,13 @@ class ProductStorageFactory extends AbstractFactory
     public function getProductConcreteRestrictionPlugins(): array
     {
         return $this->getProvidedDependency(ProductStorageDependencyProvider::PLUGINS_PRODUCT_CONCRETE_RESTRICTION);
+    }
+
+    /**
+     * @return \Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductConcreteExpanderPluginInterface[]
+     */
+    public function getProductConcreteExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductStorageDependencyProvider::PLUGINS_PRODUCT_CONCRETE_EXPANDER);
     }
 }

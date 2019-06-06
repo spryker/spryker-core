@@ -46,9 +46,9 @@ class DeleteController extends AbstractController
                 ->getNavigationFacade()
                 ->deleteNavigation($navigationTransfer);
 
-            $this->addSuccessMessage(sprintf('Navigation element %d was deleted successfully.', $idNavigation));
+            $this->addSuccessMessage('Navigation element %d was deleted successfully.', ['%d' => $idNavigation]);
         } else {
-            $this->addErrorMessage(sprintf('Navigation element %d was not found.', $idNavigation));
+            $this->addErrorMessage('Navigation element %d was not found.', ['%d' => $idNavigation]);
         }
 
         return $this->redirectResponse('/navigation-gui');

@@ -31,7 +31,7 @@ class UpdateController extends AbstractController
         $navigationFormData = $navigationFormDataProvider->getData($idNavigation);
 
         if ($navigationFormData === null) {
-            $this->addErrorMessage(sprintf('Navigation with id %s doesn\'t exist', $idNavigation));
+            $this->addErrorMessage("Navigation with id %s doesn't exist", ['%s' => $idNavigation]);
 
             return $this->redirectResponse($this->getFactory()->getConfig()->getDefaultRedirectUrl());
         }
@@ -49,7 +49,7 @@ class UpdateController extends AbstractController
                 ->getNavigationFacade()
                 ->updateNavigation($navigationTransfer);
 
-            $this->addSuccessMessage(sprintf('Navigation element %d was updated successfully.', $idNavigation));
+            $this->addSuccessMessage('Navigation element %d was updated successfully.', ['%d' => $idNavigation]);
 
             return $this->redirectResponse('/navigation-gui');
         }

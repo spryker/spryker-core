@@ -74,6 +74,6 @@ class SetupConfigTest extends Unit
      */
     public function testGetSetupInstallCommandNamesMustReturnArray()
     {
-        $this->assertInternalType('array', $this->getConfig()->getSetupInstallCommandNames());
+        $this->assertIsArray($this->getConfig()->getSetupInstallCommandNames());
     }
 }

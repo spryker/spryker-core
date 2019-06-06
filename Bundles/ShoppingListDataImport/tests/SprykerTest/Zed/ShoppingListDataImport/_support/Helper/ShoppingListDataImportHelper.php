@@ -18,6 +18,10 @@ use Propel\Runtime\Map\RelationMap;
 class ShoppingListDataImportHelper extends Module
 {
     /**
+     * @see \SprykerTest\Shared\Testify\Helper\TableRelationsCleanupHelper::ensureDatabaseTableIsEmpty()
+     *
+     * @deprecated Use TableRelationsCleanupHelper::ensureDatabaseTableIsEmpty() instead
+     *
      * @return void
      */
     public function ensureShoppingListDatabaseTableIsEmpty(): void
@@ -118,6 +122,10 @@ class ShoppingListDataImportHelper extends Module
     }
 
     /**
+     * @see \SprykerTest\Shared\Testify\Helper\TableRelationsCleanupHelper::ensureDatabaseTableIsEmpty()
+     *
+     * @deprecated Use TableRelationsCleanupHelper::ensureDatabaseTableIsEmpty() instead
+     *
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param array $processedEntities
      *

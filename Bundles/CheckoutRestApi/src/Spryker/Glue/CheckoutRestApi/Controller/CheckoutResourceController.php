@@ -39,7 +39,8 @@ class CheckoutResourceController extends AbstractController
      *              "400": "Bad Response.",
      *              "422": "Unprocessable entity."
      *          },
-     *          "responseAttributesClassName": "\\Generated\\Shared\\Transfer\\RestCheckoutResponseAttributesTransfer"
+     *          "responseAttributesClassName": "\\Generated\\Shared\\Transfer\\RestCheckoutResponseAttributesTransfer",
+     *          "isIdNullable": true
      *     }
      * })
      *
@@ -55,5 +56,15 @@ class CheckoutResourceController extends AbstractController
         return $this->getFactory()
             ->createCheckoutProcessor()
             ->placeOrder($restRequest, $restCheckoutRequestAttributesTransfer);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function getAction(RestRequestInterface $restRequest): RestResponseInterface
+    {
+        return $this->getFactory()->getResourceBuilder()->createRestResponse();
     }
 }

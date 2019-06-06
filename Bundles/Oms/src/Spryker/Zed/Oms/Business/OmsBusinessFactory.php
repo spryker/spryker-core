@@ -31,11 +31,13 @@ use Spryker\Zed\Oms\Business\Util\OrderItemMatrix;
 use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 use Spryker\Zed\Oms\Business\Util\Reservation;
 use Spryker\Zed\Oms\Business\Util\TransitionLog;
+use Spryker\Zed\Oms\Dependency\Service\OmsToUtilQuantityServiceInterface;
 use Spryker\Zed\Oms\OmsDependencyProvider;
 
 /**
  * @method \Spryker\Zed\Oms\OmsConfig getConfig()
  * @method \Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Oms\Persistence\OmsRepositoryInterface getRepository()
  */
 class OmsBusinessFactory extends AbstractBusinessFactory
 {
@@ -201,7 +203,8 @@ class OmsBusinessFactory extends AbstractBusinessFactory
         return new OrderItemMatrix(
             $this->getQueryContainer(),
             $this->getConfig(),
-            $this->getUtilSanitizeService()
+            $this->getUtilSanitizeService(),
+            $this->getRepository()
         );
     }
 
@@ -225,7 +228,8 @@ class OmsBusinessFactory extends AbstractBusinessFactory
             $this->createActiveProcessFetcher(),
             $this->getQueryContainer(),
             $this->getReservationHandlerPlugins(),
-            $this->getStoreFacade()
+            $this->getStoreFacade(),
+            $this->getUtilQuantityService()
         );
     }
 
@@ -349,5 +353,13 @@ class OmsBusinessFactory extends AbstractBusinessFactory
         return new OrderStateMachineFlagReader(
             $this->createOrderStateMachineBuilder()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Oms\Dependency\Service\OmsToUtilQuantityServiceInterface
+     */
+    public function getUtilQuantityService(): OmsToUtilQuantityServiceInterface
+    {
+        return $this->getProvidedDependency(OmsDependencyProvider::SERVICE_UTIL_QUANTITY);
     }
 }

@@ -12,14 +12,14 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class SalesQuantityConfig extends AbstractBundleConfig
 {
     /**
-     * @const int|null Controls the threshold for quantity which above the quantity should not be splitted. Null value inactivates the threshold.
+     * @const float|null Controls the threshold for quantity which above the quantity should not be splitted. Null value inactivates the threshold.
      */
     protected const ITEM_NONSPLIT_QUANTITY_THRESHOLD = null;
 
     /**
-     * @return int|null
+     * @return float|null
      */
-    public function findItemQuantityThreshold(): ?int
+    public function findItemQuantityThreshold(): ?float
     {
         return static::ITEM_NONSPLIT_QUANTITY_THRESHOLD;
     }

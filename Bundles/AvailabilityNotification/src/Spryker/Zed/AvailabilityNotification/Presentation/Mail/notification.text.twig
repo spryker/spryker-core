@@ -1,0 +1,12 @@
+{{ 'availability_notification_subscription.mail.notification.head'|trans({'%name%': mail.availabilityNotificationSubscriptionMailData.productName}) }}
+{{ 'availability_notification_subscription.mail.notification.body'|trans({'%name%': mail.availabilityNotificationSubscriptionMailData.productName}) }}
+
+{{ mail.availabilityNotificationSubscriptionMailData.productName }}
+
+{% for name, value in mail.availabilityNotificationSubscriptionMailData.productConcrete.attributes if name %}
+    {{ ('product.attribute.' ~ name) | trans }}: {{ value }}
+{% endfor %}
+
+{{ mail.availabilityNotificationSubscriptionMailData.productAttributes.price ?? '' }}
+
+{{ 'availability_notification_subscription.mail.footer'|trans({'%link%': mail.availabilityNotificationSubscriptionMailData.availabilityUnsubscriptionLink})|raw }}

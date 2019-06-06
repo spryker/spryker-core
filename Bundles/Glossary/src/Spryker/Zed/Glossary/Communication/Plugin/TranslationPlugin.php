@@ -8,7 +8,7 @@
 namespace Spryker\Zed\Glossary\Communication\Plugin;
 
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\Messenger\Dependency\Plugin\TranslationPluginInterface;
+use Spryker\Zed\MessengerExtension\Dependency\Plugin\TranslationPluginInterface;
 
 /**
  * @method \Spryker\Zed\Glossary\Business\GlossaryFacadeInterface getFacade()
