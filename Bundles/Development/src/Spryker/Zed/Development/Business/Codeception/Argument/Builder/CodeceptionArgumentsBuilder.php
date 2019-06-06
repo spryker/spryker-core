@@ -27,7 +27,7 @@ class CodeceptionArgumentsBuilder implements CodeceptionArgumentsBuilderInterfac
     protected $defaultInclusiveTestGroups;
 
     /**
-     * @param array $defaultInclusiveTestGroups
+     * @param string[] $defaultInclusiveTestGroups
      */
     public function __construct(array $defaultInclusiveTestGroups)
     {
