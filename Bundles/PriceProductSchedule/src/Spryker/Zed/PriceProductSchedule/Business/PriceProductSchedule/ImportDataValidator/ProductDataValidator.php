@@ -13,8 +13,8 @@ use Spryker\Zed\PriceProductSchedule\Business\Product\ProductFinderInterface;
 
 class ProductDataValidator extends AbstractImportDataValidator
 {
-    protected const ERROR_MESSAGE_PRODUCT_CONCRETE_NOT_FOUND = 'Concrete product was not found by provided sku %s';
-    protected const ERROR_MESSAGE_PRODUCT_ABSTRACT_NOT_FOUND = 'Abstract product was not found by provided sku %s';
+    protected const ERROR_MESSAGE_PRODUCT_CONCRETE_NOT_FOUND = 'Concrete product was not found by provided sku %s.';
+    protected const ERROR_MESSAGE_PRODUCT_ABSTRACT_NOT_FOUND = 'Abstract product was not found by provided sku %s.';
     protected const ERROR_MESSAGE_SKU_NOT_VALID = 'One Product Abstract Sku or Product Concrete Sku must be provided.';
 
     /**
@@ -49,20 +49,16 @@ class ProductDataValidator extends AbstractImportDataValidator
         if ($this->isProductAbstractDataValid($priceProductScheduleImportTransfer) === false) {
             return $this->createPriceProductScheduleListImportErrorTransfer(
                 $priceProductScheduleImportTransfer,
-                sprintf(
-                    static::ERROR_MESSAGE_PRODUCT_ABSTRACT_NOT_FOUND,
-                    $priceProductScheduleImportTransfer->getSkuProductAbstract()
-                )
+                static::ERROR_MESSAGE_PRODUCT_ABSTRACT_NOT_FOUND,
+                [$priceProductScheduleImportTransfer->getSkuProductAbstract()]
             );
         }
 
         if ($this->isProductConcreteDataValid($priceProductScheduleImportTransfer) === false) {
             return $this->createPriceProductScheduleListImportErrorTransfer(
                 $priceProductScheduleImportTransfer,
-                sprintf(
-                    static::ERROR_MESSAGE_PRODUCT_CONCRETE_NOT_FOUND,
-                    $priceProductScheduleImportTransfer->getSkuProduct()
-                )
+                static::ERROR_MESSAGE_PRODUCT_CONCRETE_NOT_FOUND,
+                [$priceProductScheduleImportTransfer->getSkuProduct()]
             );
         }
 

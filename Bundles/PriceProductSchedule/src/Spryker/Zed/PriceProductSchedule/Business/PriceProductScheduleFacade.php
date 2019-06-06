@@ -119,29 +119,40 @@ class PriceProductScheduleFacade extends AbstractFacade implements PriceProductS
     }
 
     /**
-     * @param \Spryker\Zed\PriceProductScheduleGui\Communication\File\UploadedFile $importCsv
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Spryker\Zed\PriceProductScheduleGui\Communication\File\UploadedFile $uploadedFile
      * @param \Generated\Shared\Transfer\PriceProductScheduledListImportRequestTransfer $productScheduledListImportRequestTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduledListImportRequestTransfer
      */
     public function readPriceProductScheduleImportTransfersFromCsvFile(
-        UploadedFile $importCsv,
+        UploadedFile $uploadedFile,
         PriceProductScheduledListImportRequestTransfer $productScheduledListImportRequestTransfer
     ): PriceProductScheduledListImportRequestTransfer {
         return $this->getFactory()
             ->createPriceProductScheduleCsvReader()
-            ->readPriceProductScheduleImportTransfersFromCsvFile($importCsv, $productScheduledListImportRequestTransfer);
+            ->readPriceProductScheduleImportTransfersFromCsvFile(
+                $uploadedFile,
+                $productScheduledListImportRequestTransfer
+            );
     }
 
     /**
-     * @param \Spryker\Zed\PriceProductScheduleGui\Communication\File\UploadedFile $importCsv
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Spryker\Zed\PriceProductScheduleGui\Communication\File\UploadedFile $uploadedFile
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduleCsvValidationResultTransfer
      */
-    public function validateCsvFile(UploadedFile $importCsv): PriceProductScheduleCsvValidationResultTransfer
+    public function validateCsvFile(UploadedFile $uploadedFile): PriceProductScheduleCsvValidationResultTransfer
     {
         return $this->getFactory()
             ->createPriceProductScheduleCsvValidator()
-            ->validateCsvFile($importCsv);
+            ->validateCsvFile($uploadedFile);
     }
 }

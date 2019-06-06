@@ -12,21 +12,33 @@ use Generated\Shared\Transfer\PriceProductScheduleListImportErrorTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleListImportResponseTransfer;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
+use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToTranslatorFacadeInterface;
 
 class ImportErrorListTable extends AbstractTable
 {
+    protected const HEADER_ROW_NUMBER = 'Row n°';
+    protected const HEADER_ERROR = 'Error';
+
     /**
      * @var \Generated\Shared\Transfer\PriceProductScheduleListImportResponseTransfer
      */
     protected $priceProductScheduleListImportResponseTransfer;
 
     /**
+     * @var \Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToTranslatorFacadeInterface
+     */
+    protected $translatorFacade;
+
+    /**
      * @param \Generated\Shared\Transfer\PriceProductScheduleListImportResponseTransfer $priceProductScheduleListImportResponseTransfer
+     * @param \Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToTranslatorFacadeInterface $translatorFacade
      */
     public function __construct(
-        PriceProductScheduleListImportResponseTransfer $priceProductScheduleListImportResponseTransfer
+        PriceProductScheduleListImportResponseTransfer $priceProductScheduleListImportResponseTransfer,
+        PriceProductScheduleGuiToTranslatorFacadeInterface $translatorFacade
     ) {
         $this->priceProductScheduleListImportResponseTransfer = $priceProductScheduleListImportResponseTransfer;
+        $this->translatorFacade = $translatorFacade;
     }
 
     /**
@@ -39,8 +51,8 @@ class ImportErrorListTable extends AbstractTable
         $this->disableSearch();
 
         $config->setHeader([
-            PriceProductScheduleImportMetaDataTransfer::IDENTIFIER => 'Row n°',
-            PriceProductScheduleListImportErrorTransfer::MESSAGE => 'Error',
+            PriceProductScheduleImportMetaDataTransfer::IDENTIFIER => $this->trans(static::HEADER_ROW_NUMBER),
+            PriceProductScheduleListImportErrorTransfer::MESSAGE => $this->trans(static::HEADER_ERROR),
         ]);
 
         return $config;
@@ -58,10 +70,22 @@ class ImportErrorListTable extends AbstractTable
         foreach ($this->priceProductScheduleListImportResponseTransfer->getErrors() as $priceProductScheduleListImportErrorTransfer) {
             $data[] = [
                 PriceProductScheduleImportMetaDataTransfer::IDENTIFIER => $priceProductScheduleListImportErrorTransfer->getPriceProductScheduleImport()->getMetaData()->getIdentifier(),
-                PriceProductScheduleListImportErrorTransfer::MESSAGE => $priceProductScheduleListImportErrorTransfer->getMessage(),
+                PriceProductScheduleListImportErrorTransfer::MESSAGE => $this->trans($priceProductScheduleListImportErrorTransfer->getMessage(),
+                    $priceProductScheduleListImportErrorTransfer->getParameters()),
             ];
         }
 
         return $data;
+    }
+
+    /**
+     * @param string $id
+     * @param array $params
+     *
+     * @return string
+     */
+    protected function trans(string $id, array $params = []): string
+    {
+        return $this->translatorFacade->trans($id, $params);
     }
 }

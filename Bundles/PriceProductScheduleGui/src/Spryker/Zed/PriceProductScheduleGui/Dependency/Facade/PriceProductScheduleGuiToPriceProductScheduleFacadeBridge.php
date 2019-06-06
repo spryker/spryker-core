@@ -76,28 +76,28 @@ class PriceProductScheduleGuiToPriceProductScheduleFacadeBridge implements Price
     }
 
     /**
-     * @param \Spryker\Zed\PriceProductScheduleGui\Communication\File\UploadedFile $importCsv
+     * @param \Spryker\Zed\PriceProductScheduleGui\Communication\File\UploadedFile $uploadedFile
      * @param \Generated\Shared\Transfer\PriceProductScheduledListImportRequestTransfer $productScheduledListImportRequestTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduledListImportRequestTransfer
      */
     public function readPriceProductScheduleImportTransfersFromCsvFile(
-        UploadedFile $importCsv,
+        UploadedFile $uploadedFile,
         PriceProductScheduledListImportRequestTransfer $productScheduledListImportRequestTransfer
     ): PriceProductScheduledListImportRequestTransfer {
         return $this->priceProductScheduleFacade->readPriceProductScheduleImportTransfersFromCsvFile(
-            $importCsv,
+            $uploadedFile,
             $productScheduledListImportRequestTransfer
         );
     }
 
     /**
-     * @param \Spryker\Zed\PriceProductScheduleGui\Communication\File\UploadedFile $importCsv
+     * @param \Spryker\Zed\PriceProductScheduleGui\Communication\File\UploadedFile $uploadedFile
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduleCsvValidationResultTransfer
      */
-    public function validateCsvFile(UploadedFile $importCsv): PriceProductScheduleCsvValidationResultTransfer
+    public function validateCsvFile(UploadedFile $uploadedFile): PriceProductScheduleCsvValidationResultTransfer
     {
-        return $this->priceProductScheduleFacade->validateCsvFile($importCsv);
+        return $this->priceProductScheduleFacade->validateCsvFile($uploadedFile);
     }
 }

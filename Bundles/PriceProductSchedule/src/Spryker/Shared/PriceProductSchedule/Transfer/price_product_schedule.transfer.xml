@@ -65,6 +65,7 @@
     <transfer name="PriceProductScheduleListImportError">
         <property name="priceProductScheduleImport" type="PriceProductScheduleImport"/>
         <property name="message" type="string"/>
+        <property name="parameters" type="string[]"/>
     </transfer>
 
     <transfer name="PriceProductScheduleListError">
@@ -85,14 +86,6 @@
 
     <transfer name="MoneyValue">
         <property name="store" type="Store"/>
-    </transfer>
-
-    <transfer name="FileUpload">
-        <property name="realPath" type="string" />
-        <property name="clientOriginalName" type="string" />
-        <property name="mimeTypeName" type="string" />
-        <property name="clientOriginalExtension" type="string" />
-        <property name="size" type="int" />
     </transfer>
 
     <transfer name="PriceProductScheduleCsvValidationResult">

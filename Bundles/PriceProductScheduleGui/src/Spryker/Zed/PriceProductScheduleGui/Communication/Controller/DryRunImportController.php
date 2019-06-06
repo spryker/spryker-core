@@ -78,13 +78,13 @@ class DryRunImportController extends AbstractController
     protected function validatePriceProductScheduleImportForm(
         FormInterface $importForm
     ): PriceProductScheduleCsvValidationResultTransfer {
-        $importCsv = $importForm
+        $uploadedFile = $importForm
             ->get(PriceProductScheduleImportFormType::FIELD_FILE_UPLOAD)
             ->getData();
 
         return $this->getFactory()
             ->getPriceProductScheduleFacade()
-            ->validateCsvFile($importCsv);
+            ->validateCsvFile($uploadedFile);
     }
 
     /**
@@ -101,7 +101,7 @@ class DryRunImportController extends AbstractController
             ->get(PriceProductScheduleImportFormType::FIELD_PRICE_PRODUCT_SCHEDULE_NAME)
             ->getData();
 
-        $importCsv = $importForm
+        $uploadedFile = $importForm
             ->get(PriceProductScheduleImportFormType::FIELD_FILE_UPLOAD)
             ->getData();
 
@@ -112,7 +112,7 @@ class DryRunImportController extends AbstractController
         $priceProductScheduleListImportRequestTransfer = $this->getFactory()
             ->getPriceProductScheduleFacade()
             ->readPriceProductScheduleImportTransfersFromCsvFile(
-                $importCsv,
+                $uploadedFile,
                 $priceProductScheduleListImportRequestTransfer
             );
 

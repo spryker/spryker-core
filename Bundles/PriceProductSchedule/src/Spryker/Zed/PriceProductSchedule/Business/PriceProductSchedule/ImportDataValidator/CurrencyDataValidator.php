@@ -13,7 +13,7 @@ use Spryker\Zed\PriceProductSchedule\Business\Currency\CurrencyFinderInterface;
 
 class CurrencyDataValidator extends AbstractImportDataValidator
 {
-    protected const ERROR_MESSAGE_CURRENCY_NOT_FOUND = 'Currency was not found by provided iso code %s';
+    protected const ERROR_MESSAGE_CURRENCY_NOT_FOUND = 'Currency was not found by provided iso code %s.';
 
     /**
      * @var \Spryker\Zed\PriceProductSchedule\Business\Currency\CurrencyFinderInterface
@@ -43,10 +43,8 @@ class CurrencyDataValidator extends AbstractImportDataValidator
 
         return $this->createPriceProductScheduleListImportErrorTransfer(
             $priceProductScheduleImportTransfer,
-            sprintf(
-                static::ERROR_MESSAGE_CURRENCY_NOT_FOUND,
-                $priceProductScheduleImportTransfer->getCurrencyCode()
-            )
+            static::ERROR_MESSAGE_CURRENCY_NOT_FOUND,
+            [$priceProductScheduleImportTransfer->getCurrencyCode()]
         );
     }
 

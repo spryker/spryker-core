@@ -37,16 +37,16 @@ class PriceProductScheduleCsvReader implements PriceProductScheduleCsvReaderInte
     }
 
     /**
-     * @param \Spryker\Zed\PriceProductScheduleGui\Communication\File\UploadedFile $importCsv
+     * @param \Spryker\Zed\PriceProductScheduleGui\Communication\File\UploadedFile $uploadedFile
      * @param \Generated\Shared\Transfer\PriceProductScheduledListImportRequestTransfer $productScheduledListImportRequestTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduledListImportRequestTransfer
      */
     public function readPriceProductScheduleImportTransfersFromCsvFile(
-        UploadedFile $importCsv,
+        UploadedFile $uploadedFile,
         PriceProductScheduledListImportRequestTransfer $productScheduledListImportRequestTransfer
     ): PriceProductScheduledListImportRequestTransfer {
-        $importData = $this->csvService->readUploadedFile($importCsv);
+        $importData = $this->csvService->readUploadedFile($uploadedFile);
         $headers = current($importData);
         $importData = $this->removeHeadersFromImportData($importData);
 

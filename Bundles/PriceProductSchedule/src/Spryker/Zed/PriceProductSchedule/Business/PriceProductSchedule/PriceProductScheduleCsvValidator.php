@@ -39,15 +39,15 @@ class PriceProductScheduleCsvValidator implements PriceProductScheduleCsvValidat
     }
 
     /**
-     * @param \Spryker\Zed\PriceProductScheduleGui\Communication\File\UploadedFile $importCsv
+     * @param \Spryker\Zed\PriceProductScheduleGui\Communication\File\UploadedFile $uploadedFile
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduleCsvValidationResultTransfer
      */
-    public function validateCsvFile(UploadedFile $importCsv): PriceProductScheduleCsvValidationResultTransfer
+    public function validateCsvFile(UploadedFile $uploadedFile): PriceProductScheduleCsvValidationResultTransfer
     {
         $priceProductScheduleCsvValidationResultTransfer = (new PriceProductScheduleCsvValidationResultTransfer())
             ->setIsSuccess(false);
-        $importItems = $this->csvService->readUploadedFile($importCsv);
+        $importItems = $this->csvService->readUploadedFile($uploadedFile);
         $headers = current($importItems);
 
         $expectedHeaders = $this->priceProductScheduleConfig->getFieldsList();

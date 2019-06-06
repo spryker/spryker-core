@@ -13,13 +13,13 @@ use Spryker\Zed\PriceProductScheduleGui\Communication\File\UploadedFile;
 interface PriceProductScheduleCsvReaderInterface
 {
     /**
-     * @param \Spryker\Zed\PriceProductScheduleGui\Communication\File\UploadedFile $importCsv
+     * @param \Spryker\Zed\PriceProductScheduleGui\Communication\File\UploadedFile $uploadedFile
      * @param \Generated\Shared\Transfer\PriceProductScheduledListImportRequestTransfer $productScheduledListImportRequestTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduledListImportRequestTransfer
      */
     public function readPriceProductScheduleImportTransfersFromCsvFile(
-        UploadedFile $importCsv,
+        UploadedFile $uploadedFile,
         PriceProductScheduledListImportRequestTransfer $productScheduledListImportRequestTransfer
     ): PriceProductScheduledListImportRequestTransfer;
 }

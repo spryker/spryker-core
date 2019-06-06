@@ -13,7 +13,7 @@ use Spryker\Zed\PriceProductSchedule\Business\PriceType\PriceTypeFinderInterface
 
 class PriceTypeDataValidator extends AbstractImportDataValidator
 {
-    protected const ERROR_MESSAGE_PRICE_TYPE_NOT_FOUND = 'Price type was not found by provided sku %s';
+    protected const ERROR_MESSAGE_PRICE_TYPE_NOT_FOUND = 'Price type was not found by provided sku %s.';
 
     /**
      * @var \Spryker\Zed\PriceProductSchedule\Business\PriceType\PriceTypeFinderInterface
@@ -40,10 +40,8 @@ class PriceTypeDataValidator extends AbstractImportDataValidator
         if ($this->isPriceTypeValid($priceProductScheduleImportTransfer) === false) {
             return $this->createPriceProductScheduleListImportErrorTransfer(
                 $priceProductScheduleImportTransfer,
-                sprintf(
-                    static::ERROR_MESSAGE_PRICE_TYPE_NOT_FOUND,
-                    $priceProductScheduleImportTransfer->getPriceTypeName()
-                )
+                static::ERROR_MESSAGE_PRICE_TYPE_NOT_FOUND,
+                [$priceProductScheduleImportTransfer->getPriceTypeName()]
             );
         }
 

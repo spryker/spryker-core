@@ -106,8 +106,10 @@ class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationF
      *
      * @return \Spryker\Zed\PriceProductScheduleGui\Communication\Table\PriceProductScheduleAbstractTable
      */
-    public function createPriceProductScheduleAbstractTable(int $idProductAbstract, int $idPriceType): PriceProductScheduleAbstractTable
-    {
+    public function createPriceProductScheduleAbstractTable(
+        int $idProductAbstract,
+        int $idPriceType
+    ): PriceProductScheduleAbstractTable {
         return new PriceProductScheduleAbstractTable(
             $idProductAbstract,
             $idPriceType,
@@ -122,8 +124,10 @@ class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationF
      *
      * @return \Spryker\Zed\PriceProductScheduleGui\Communication\Table\PriceProductScheduleConcreteTable
      */
-    public function createPriceProductScheduleConcreteTable(int $idProductConcrete, int $idPriceType): PriceProductScheduleConcreteTable
-    {
+    public function createPriceProductScheduleConcreteTable(
+        int $idProductConcrete,
+        int $idPriceType
+    ): PriceProductScheduleConcreteTable {
         return new PriceProductScheduleConcreteTable(
             $idProductConcrete,
             $idPriceType,
@@ -158,7 +162,8 @@ class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationF
         PriceProductScheduleListImportResponseTransfer $priceProductScheduleListImportResponseTransfer
     ): ImportErrorListTable {
         return new ImportErrorListTable(
-            $priceProductScheduleListImportResponseTransfer
+            $priceProductScheduleListImportResponseTransfer,
+            $this->getTranslatorFacade()
         );
     }
 

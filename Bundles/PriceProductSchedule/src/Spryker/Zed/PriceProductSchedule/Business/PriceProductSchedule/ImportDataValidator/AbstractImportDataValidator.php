@@ -15,15 +15,18 @@ abstract class AbstractImportDataValidator implements ImportDataValidatorInterfa
     /**
      * @param \Generated\Shared\Transfer\PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer
      * @param string $errorMessage
+     * @param array $parameters
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduleListImportErrorTransfer
      */
     protected function createPriceProductScheduleListImportErrorTransfer(
         PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer,
-        string $errorMessage
+        string $errorMessage,
+        array $parameters = []
     ): PriceProductScheduleListImportErrorTransfer {
         return (new PriceProductScheduleListImportErrorTransfer())
             ->setPriceProductScheduleImport($priceProductScheduleImportTransfer)
-            ->setMessage($errorMessage);
+            ->setMessage($errorMessage)
+            ->setParameters($parameters);
     }
 }

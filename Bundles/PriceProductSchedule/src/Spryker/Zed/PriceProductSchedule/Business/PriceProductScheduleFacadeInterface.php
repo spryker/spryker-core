@@ -101,20 +101,32 @@ interface PriceProductScheduleFacadeInterface
     ): PriceProductScheduleListResponseTransfer;
 
     /**
-     * @param \Spryker\Zed\PriceProductScheduleGui\Communication\File\UploadedFile $importCsv
+     * Specification:
+     * - Reads uploaded file.
+     * - Maps rows from the file to the transfers.
+     *
+     * @api
+     *
+     * @param \Spryker\Zed\PriceProductScheduleGui\Communication\File\UploadedFile $uploadedFile
      * @param \Generated\Shared\Transfer\PriceProductScheduledListImportRequestTransfer $productScheduledListImportRequestTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduledListImportRequestTransfer
      */
     public function readPriceProductScheduleImportTransfersFromCsvFile(
-        UploadedFile $importCsv,
+        UploadedFile $uploadedFile,
         PriceProductScheduledListImportRequestTransfer $productScheduledListImportRequestTransfer
     ): PriceProductScheduledListImportRequestTransfer;
 
     /**
-     * @param \Spryker\Zed\PriceProductScheduleGui\Communication\File\UploadedFile $importCsv
+     * Specification:
+     * - Reads uploaded file.
+     * - Validates data from the file.
+     *
+     * @api
+     *
+     * @param \Spryker\Zed\PriceProductScheduleGui\Communication\File\UploadedFile $uploadedFile
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduleCsvValidationResultTransfer
      */
-    public function validateCsvFile(UploadedFile $importCsv): PriceProductScheduleCsvValidationResultTransfer;
+    public function validateCsvFile(UploadedFile $uploadedFile): PriceProductScheduleCsvValidationResultTransfer;
 }
