@@ -13,10 +13,10 @@
 
     <transfer name="RestCartItemsAttributes">
         <property name="sku" type="string" restRequestParameter="required" />
-        <property name="quantity" type="int" restRequestParameter="required" />
+        <property name="quantity" type="float" restRequestParameter="required" />
         <property name="groupKey" type="string" />
         <property name="abstractSku" type="string" />
-        <property name="amount" type="int" />
+        <property name="amount" type="float" />
         <property name="calculations" type="RestCartItemCalculations" />
         <property name="quoteUuid" type="string" deprecated="Will be removed with next major" />
         <property name="customerReference" type="string" deprecated="Will be removed with next major" />
@@ -129,6 +129,7 @@
     <transfer name="QuoteCriteriaFilter">
         <property name="customerReference" type="string"/>
         <property name="idStore" type="int"/>
+        <property name="idCompanyUser" type="int"/>
     </transfer>
 
 </transfers>

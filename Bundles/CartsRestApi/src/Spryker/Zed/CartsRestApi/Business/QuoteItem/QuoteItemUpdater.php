@@ -91,6 +91,10 @@ class QuoteItemUpdater implements QuoteItemUpdaterInterface
             return $quoteResponseTransfer;
         }
 
+        if (!$quoteResponseTransfer->getIsSuccessful()) {
+            return $quoteResponseTransfer;
+        }
+
         if (!$this->quotePermissionChecker->checkQuoteWritePermission($quoteResponseTransfer->getQuoteTransfer())) {
             return $quoteResponseTransfer
                 ->setIsSuccessful(false)
