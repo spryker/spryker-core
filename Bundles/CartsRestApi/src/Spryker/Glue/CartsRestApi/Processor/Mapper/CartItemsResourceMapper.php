@@ -10,19 +10,20 @@ namespace Spryker\Glue\CartsRestApi\Processor\Mapper;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\RestCartItemCalculationsTransfer;
 use Generated\Shared\Transfer\RestCartItemsAttributesTransfer;
+use Generated\Shared\Transfer\RestItemsAttributesTransfer;
 
 class CartItemsResourceMapper implements CartItemsResourceMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
-     * @return \Generated\Shared\Transfer\RestCartItemsAttributesTransfer
+     * @return \Generated\Shared\Transfer\RestItemsAttributesTransfer
      */
-    public function mapCartItemAttributes(ItemTransfer $itemTransfer): RestCartItemsAttributesTransfer
+    public function mapCartItemAttributes(ItemTransfer $itemTransfer): RestItemsAttributesTransfer
     {
         $itemData = $itemTransfer->toArray();
 
-        $restCartItemsAttributesResponseTransfer = (new RestCartItemsAttributesTransfer())
+        $restCartItemsAttributesResponseTransfer = (new RestItemsAttributesTransfer())
             ->fromArray($itemData, true);
 
         $calculationsTransfer = (new RestCartItemCalculationsTransfer())->fromArray($itemData, true);
