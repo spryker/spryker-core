@@ -20,6 +20,7 @@ use Orm\Zed\ProductImage\Persistence\SpyProductImageQuery;
 use Orm\Zed\ProductImage\Persistence\SpyProductImageSet;
 use Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery;
 use Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImage;
+use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\ProductImage\Business\ProductImageFacade;
 use Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainer;
 
@@ -122,6 +123,7 @@ class ProductImageFacadeTest extends Unit
     public const CONCRETE_SKU_2 = 'concrete-sku-2';
     public const ID_LOCALE_DE = 46;
     public const ID_LOCALE_EN = 66;
+    public const LOCALE_DE_DE = 'de_DE';
 
     /**
      * @return void
@@ -416,6 +418,70 @@ class ProductImageFacadeTest extends Unit
         foreach ($productImageCollection as $productImageTransfer) {
             $this->assertTrue($productImageTransfer->getIdProductImageSetToProductImage() > $idProductImageSetToProductImage);
             $idProductImageSetToProductImage = $productImageTransfer->getIdProductImageSetToProductImage();
+        }
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductImagesSetCollectionByProductIdForCurrentLocale(): void
+    {
+        $productImageSetCollection = $this->productImageFacade->getProductImagesSetCollectionByProductIdForCurrentLocale(
+            $this->productConcreteEntity->getIdProduct()
+        );
+
+        $this->assertNotEmpty($productImageSetCollection);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductImagesSetCollectionByProductIdForCurrentLocaleReturnsProductImagesSetWithProperLocale(): void
+    {
+        // Arrange
+        $this->tester->createProductImageSet(
+            static::SET_NAME_DE,
+            null,
+            $this->productConcreteEntity->getIdProduct(),
+            static::ID_LOCALE_DE
+        );
+
+        Store::getInstance()->setCurrentLocale(static::LOCALE_DE_DE);
+
+        // Act
+        $productImageSetCollection = $this->productImageFacade->getProductImagesSetCollectionByProductIdForCurrentLocale(
+            $this->productConcreteEntity->getIdProduct()
+        );
+
+        // Assign
+        foreach ($productImageSetCollection as $productImageSetTransfer) {
+            static::assertTrue($productImageSetTransfer->getLocale()->getLocaleName() === static::LOCALE_DE_DE);
+        }
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductImagesSetCollectionByProductIdForCurrentLocaleReturnsDefaultProductImagesSets(): void
+    {
+        // Arrange
+        $this->tester->createProductImageSet(
+            static::SET_NAME_EN,
+            null,
+            $this->productConcreteEntity->getIdProduct(),
+            static::ID_LOCALE_EN
+        );
+
+        Store::getInstance()->setCurrentLocale(static::LOCALE_DE_DE);
+
+        // Act
+        $productImageSetCollection = $this->productImageFacade->getProductImagesSetCollectionByProductIdForCurrentLocale(
+            $this->productConcreteEntity->getIdProduct()
+        );
+
+        // Assign
+        foreach ($productImageSetCollection as $productImageSetTransfer) {
+            static::assertNull($productImageSetTransfer->getLocale());
         }
     }
 
