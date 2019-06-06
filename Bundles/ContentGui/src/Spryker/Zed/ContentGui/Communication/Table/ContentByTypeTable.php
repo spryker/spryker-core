@@ -31,21 +31,21 @@ class ContentByTypeTable extends AbstractTable
     /**
      * @var string|null
      */
-    protected $contentItemKey;
+    protected $contentKey;
 
     /**
      * @param string $contentType
      * @param \Orm\Zed\Content\Persistence\SpyContentQuery $contentQuery
-     * @param string|null $contentItemKey
+     * @param string|null $contentKey
      */
     public function __construct(
         string $contentType,
         SpyContentQuery $contentQuery,
-        ?string $contentItemKey = null
+        ?string $contentKey = null
     ) {
         $this->contentType = $contentType;
         $this->contentQuery = $contentQuery;
-        $this->contentItemKey = $contentItemKey;
+        $this->contentKey = $contentKey;
     }
 
     /**
@@ -135,14 +135,14 @@ class ContentByTypeTable extends AbstractTable
 
     /**
      * @param int $key
-     * @param string $contentItemKey
+     * @param string $contentKey
      *
      * @return bool
      */
-    protected function isCheckedItem(int $key, string $contentItemKey): bool
+    protected function isCheckedItem(int $key, string $contentKey): bool
     {
-        if ($this->contentItemKey) {
-            return $this->contentItemKey === $contentItemKey;
+        if ($this->contentKey) {
+            return $this->contentKey === $contentKey;
         }
 
         return $key === 0;
