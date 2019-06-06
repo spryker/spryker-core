@@ -59,7 +59,8 @@ class ProductImageReaderTest extends Unit
 
         $this->reader = new Reader(
             $this->queryContainer,
-            $this->transferGenerator
+            $this->transferGenerator,
+            new ProductImageToLocaleBridge($this->localeFacade)
         );
     }
 
