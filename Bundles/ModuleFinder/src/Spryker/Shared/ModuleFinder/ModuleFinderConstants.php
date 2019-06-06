@@ -5,10 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Yves\StepEngine\Dependencx\Step\Fixtures;
+namespace Spryker\Shared\ModuleFinder;
 
-use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
-
-class TestTransfer extends AbstractTransfer
+/**
+ * Declares global environment configuration keys. Do not use it for other class constants.
+ */
+interface ModuleFinderConstants
 {
 }
