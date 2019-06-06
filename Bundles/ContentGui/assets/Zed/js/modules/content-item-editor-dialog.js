@@ -58,18 +58,18 @@ var ContentItemDialog = function(dialogTitle, dialogContentUrl, insertButtonTitl
             this.addContent = function () {
                 var $titleHeader = this.$dialog.find('.ibox-title h5');
                 var $templateHeader = this.$dialog.find('.template-title');
-                var chosenId = this.$dialog.find('table input:checked').val();
+                var chosenKey = this.$dialog.find('table input:checked').val();
                 var $choseIdErrorSelector = this.$dialog.find('.content-errors .item');
                 var isTemplateListExists = this.$dialog.find('.template-list').length;
                 var chosenTemplate = this.$dialog.find('.template-list input:checked').val();
                 var $chooseTemplateErrorSelector = this.$dialog.find('.content-errors .template');
                 var twigTemplate = this.$dialog.find('input[name=twigFunctionTemplate]').val();
-                var readyToInsert = chosenId !== undefined && (!isTemplateListExists || isTemplateListExists && chosenTemplate);
+                var readyToInsert = chosenKey !== undefined && (!isTemplateListExists || isTemplateListExists && chosenTemplate);
 
                 if (readyToInsert) {
                     var builtText = twigTemplate.replace(/%\w+%/g, function (param) {
                         return {
-                            '%ID%': chosenId,
+                            '%ID%': chosenKey,
                             '%TEMPLATE%': chosenTemplate
                         }[param];
                     });
@@ -79,7 +79,7 @@ var ContentItemDialog = function(dialogTitle, dialogContentUrl, insertButtonTitl
                     return;
                 }
 
-                if (!chosenId) {
+                if (!chosenKey) {
                     this.showError($choseIdErrorSelector, $titleHeader)
                 }
 
