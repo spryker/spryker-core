@@ -279,4 +279,16 @@ interface ProductOptionFacadeInterface
      * @return bool
      */
     public function checkProductOptionGroupExistenceByProductOptionValueId(int $idProductOptionValue): bool;
+
+    /**
+     * Specification:
+     * - Retrieves the product option group statuses for provided product abstract IDs.
+     *
+     * @api
+     *
+     * @param int[] $productAbstractIds
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractOptionGroupStatusTransfer[]
+     */
+    public function getProductAbstractOptionGroupStatusesByProductAbstractIds(array $productAbstractIds): array;
 }
