@@ -394,7 +394,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
      */
     public function createSalesOrderItemGrouper(): SalesOrderItemGrouperInterface
     {
-        return new SalesOrderItemGrouper();
+        return new SalesOrderItemGrouper($this->getUtilQuantityService());
     }
 
     /**
@@ -431,6 +431,6 @@ class SalesBusinessFactory extends AbstractBusinessFactory
      */
     protected function getUtilQuantityService(): SalesToUtilQuantityServiceInterface
     {
-        return $this->getProvidedDependency(SalesDependencyProvider::SERVICE_SHIPMENT);
+        return $this->getProvidedDependency(SalesDependencyProvider::SERVICE_UTIL_QUANTITY);
     }
 }

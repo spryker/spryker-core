@@ -169,7 +169,7 @@ class ShipmentCartExpanderTest extends Test
     /**
      * @return array
      */
-    protected function getDataWithItemLevelShipmentAndQuteCurrencyIsNotSameAsShipmentMethodCurrency(): array
+    protected function getDataWithItemLevelShipmentAndQuoteCurrencyIsNotSameAsShipmentMethodCurrency(): array
     {
         $shipmentBuilder1 = (new ShipmentBuilder())
             ->withMethod(

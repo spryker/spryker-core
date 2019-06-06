@@ -11,6 +11,8 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
+ * @deprecated Not used anymore and obsolete.
+ *
  * @method \Spryker\Zed\Shipment\Business\ShipmentFacadeInterface getFacade()
  * @method \Spryker\Zed\Shipment\Communication\ShipmentCommunicationFactory getFactory()
  * @method \Spryker\Zed\Shipment\ShipmentConfig getConfig()
@@ -30,17 +32,5 @@ class CheckoutAvailableShipmentMethodsPlugin extends AbstractPlugin
     public function getAvailableMethods(QuoteTransfer $quoteTransfer)
     {
         return $this->getFacade()->getAvailableMethods($quoteTransfer);
-    }
-
-    /**
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
-     */
-    public function getAvailableMethodsByShipment(QuoteTransfer $quoteTransfer)
-    {
-        return $this->getFacade()->getAvailableMethodsByShipment($quoteTransfer);
     }
 }
