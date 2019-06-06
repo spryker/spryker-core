@@ -36,7 +36,7 @@ class ContentBannerGuiConfig extends AbstractSharedConfig
     protected const WIDGET_TEMPLATE_IDENTIFIER_DEFAULT = 'default';
 
     /**
-     * @uses \Spryker\Shared\ContentBanner\ContentBannerConfig::WIDGET_TEMPLATE_DISPLAY_NAME_DEFAULT
+     * Content item banner default template name
      */
     protected const WIDGET_TEMPLATE_DISPLAY_NAME_DEFAULT = 'content_banner.template.default';
 
@@ -46,7 +46,7 @@ class ContentBannerGuiConfig extends AbstractSharedConfig
     protected const WIDGET_TEMPLATE_IDENTIFIER_TOP_TITLE = 'top-title';
 
     /**
-     * @uses \Spryker\Shared\ContentBanner\ContentBannerConfig::WIDGET_TEMPLATE_DISPLAY_NAME_TOP_TITLE
+     * Content item banner top-title template name
      */
     protected const WIDGET_TEMPLATE_DISPLAY_NAME_TOP_TITLE = 'content_banner.template.top-title';
 
