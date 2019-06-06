@@ -52,8 +52,10 @@ class CompanyUnitAddressLabelBusinessTester extends Actor
      */
     public function getCompanyUnitAddressTransfer(array $seedData = [], array $companyBusinessUnitSeedData = []): CompanyUnitAddressTransfer
     {
-        $companyBusinessUnitWithCompany = $this->haveCompanyBusinessUnitWithCompany($companyBusinessUnitSeedData);
-        $seedData = array_merge($seedData, [CompanyUnitAddressTransfer::FK_COMPANY => $companyBusinessUnitWithCompany->getFkCompany()]);
+        $companyBusinessUnitWithCompany = $this->haveCompanyBusinessUnit($companyBusinessUnitSeedData);
+        $seedData = array_merge($seedData, [
+            CompanyUnitAddressTransfer::FK_COMPANY => $companyBusinessUnitWithCompany->getFkCompany(),
+        ]);
 
         return $this->haveCompanyUnitAddress($seedData);
     }
