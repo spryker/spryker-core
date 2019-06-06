@@ -23,3 +23,9 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\LocatorHelper
                 - \SprykerTest\Shared\Testify\Helper\DependencyHelper
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
+                - \SprykerTest\Shared\Product\Helper\ProductDataHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDataHelper
+                - \SprykerTest\Shared\ProductBundle\ProductBundleDataHelper
+                - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
+                - \SprykerTest\Shared\Availability\Helper\AvailabilityDataHelper
+                - \SprykerTest\Shared\Stock\Helper\StockDataHelper

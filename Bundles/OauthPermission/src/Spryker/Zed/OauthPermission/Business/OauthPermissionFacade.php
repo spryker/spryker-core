@@ -55,4 +55,20 @@ class OauthPermissionFacade extends AbstractFacade implements OauthPermissionFac
             ->createCompanyUserIdentifierExpander()
             ->expandCompanyUserIdentifier($companyUserIdentifierTransfer, $companyUserTransfer);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param array $userIdentifier
+     *
+     * @return array
+     */
+    public function filterOauthUserIdentifier(array $userIdentifier): array
+    {
+        return $this->getFactory()
+            ->createOauthUserIdentifierFilter()
+            ->filter($userIdentifier);
+    }
 }
