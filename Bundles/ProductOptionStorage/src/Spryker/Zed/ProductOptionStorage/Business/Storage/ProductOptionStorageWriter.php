@@ -86,10 +86,13 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
         }
 
         $productAbstractOptionStorageEntities = $this->findProductStorageOptionEntitiesByProductAbstractIds($productAbstractIds);
-        $productAbstractIdsWithInactiveGroups = $this->getProductAbstractIdsWithInactiveGroups($productAbstractIds);
+        $productAbstractIdsWithDeactivatedGroups = $this->getProductAbstractIdsWithDeactivatedGroups($productAbstractIds);
 
-        if ($this->isAllProductOptionGroupsDisabled($productAbstractOptionStorageEntities, $productAbstractIdsWithInactiveGroups)) {
-            $this->deleteStorageData($productAbstractOptionStorageEntities);
+        if ($productAbstractIdsWithDeactivatedGroups) {
+            $this->deleteProductAbstractOptionStorageEntitiesWithDeactivatedGroups(
+                $productAbstractOptionStorageEntities,
+                $productAbstractIdsWithDeactivatedGroups
+            );
         }
 
         $this->storeData($productAbstractOptionStorageEntities, $productOptions);
@@ -110,15 +113,43 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
 
     /**
      * @param array $productAbstractOptionStorageEntities
-     * @param array $productAbstractIdsWithInactiveGroups
+     * @param int[] $productAbstractIdsWithDeactivatedGroups
      *
-     * @return bool
+     * @return void
      */
-    protected function isAllProductOptionGroupsDisabled(array $productAbstractOptionStorageEntities, array $productAbstractIdsWithInactiveGroups): bool
-    {
-        $productAbstractOptionStorageEntitiesIds = array_keys($productAbstractOptionStorageEntities);
+    protected function deleteProductAbstractOptionStorageEntitiesWithDeactivatedGroups(
+        array $productAbstractOptionStorageEntities,
+        array $productAbstractIdsWithDeactivatedGroups
+    ): void {
+        $deletableProductAbstractOptionStorageEntitiesByProductAbstractIds = $this->filterProductAbstractOptionStorageEntitiesByProductAbstractIds(
+            $productAbstractOptionStorageEntities,
+            $productAbstractIdsWithDeactivatedGroups
+        );
 
-        return !count(array_diff($productAbstractOptionStorageEntitiesIds, $productAbstractIdsWithInactiveGroups));
+        foreach ($deletableProductAbstractOptionStorageEntitiesByProductAbstractIds as $productAbstractOptionStorageEntity) {
+            $productAbstractOptionStorageEntity->delete();
+        }
+    }
+
+    /**
+     * @param array $productAbstractOptionStorageEntities
+     * @param int[] $productAbstractIds
+     *
+     * @return \Orm\Zed\ProductOptionStorage\Persistence\SpyProductAbstractOptionStorage[]
+     */
+    protected function filterProductAbstractOptionStorageEntitiesByProductAbstractIds(array $productAbstractOptionStorageEntities, array $productAbstractIds): array
+    {
+        $filteredProductAbstractOptionStorageEntities = [];
+
+        foreach ($productAbstractOptionStorageEntities as $productAbstractOptionStorageEntityArray) {
+            foreach ($productAbstractOptionStorageEntityArray as $storeName => $productAbstractOptionStorageEntity) {
+                if (in_array($productAbstractOptionStorageEntity->getFkProductAbstract(), $productAbstractIds, true)) {
+                    $filteredProductAbstractOptionStorageEntities[] = $productAbstractOptionStorageEntity;
+                }
+            }
+        }
+
+        return $filteredProductAbstractOptionStorageEntities;
     }
 
     /**
@@ -126,7 +157,7 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
      *
      * @return int[]
      */
-    protected function getProductAbstractIdsWithInactiveGroups(array $productAbstractIds): array
+    protected function getProductAbstractIdsWithDeactivatedGroups(array $productAbstractIds): array
     {
         $productOptionGroupStatuses = $this->productOptionStorageReader->getProductOptionGroupStatusesByProductAbstractIds($productAbstractIds);
 
