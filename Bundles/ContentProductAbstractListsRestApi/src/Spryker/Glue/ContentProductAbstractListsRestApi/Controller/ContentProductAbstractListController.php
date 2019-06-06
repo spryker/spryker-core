@@ -27,8 +27,9 @@ class ContentProductAbstractListController extends AbstractController
      *              "in": "header"
      *          }],
      *          "responses": {
-     *              "403": "Unauthorized request.",
-     *              "404": "Content item not found."
+     *              "400": "Content key is missing.",
+     *              "404": "Content item not found.",
+     *              "422": "Content type is invalid."
      *          }
      *     }
      * })
