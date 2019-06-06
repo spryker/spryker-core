@@ -551,6 +551,8 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
+     * @deprecated Use `spryker/module-finder` instead.
+     *
      * @return string[]
      */
     public function getInternalPackageDirectories(): array

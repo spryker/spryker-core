@@ -125,10 +125,26 @@ class PropelConfigConverterJsonTest extends Unit
     {
         $this->assertFalse(file_exists($this->fixtureDirectory . self::FILE_NAME));
 
-        $propelConfigConverterJsonMock = $this->getMockBuilder(PropelConfigConverterJson::class)->setMethods(['writeToFile'])->setConstructorArgs([$this->getTestConfiguration()])->getMock();
-        $propelConfigConverterJsonMock->expects($this->once())->method('writeToFile');
+        $propelConfigConverterJsonMock = $this->getPropelConfigConvertJsonMock();
 
         $this->expectException(ConfigFileNotCreatedException::class);
         $propelConfigConverterJsonMock->convertConfig();
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Propel\Business\Model\PropelConfigConverterInterface
+     */
+    protected function getPropelConfigConvertJsonMock()
+    {
+        $propelConfigConverterJsonMock = $this->getMockBuilder(PropelConfigConverterJson::class)
+            ->setMethods(['writeToFile'])
+            ->setConstructorArgs([$this->getTestConfiguration()])
+            ->getMock();
+
+        $propelConfigConverterJsonMock
+            ->expects($this->once())
+            ->method('writeToFile');
+
+        return $propelConfigConverterJsonMock;
     }
 }
