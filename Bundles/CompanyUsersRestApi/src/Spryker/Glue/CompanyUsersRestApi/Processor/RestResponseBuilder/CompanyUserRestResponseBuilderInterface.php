@@ -9,6 +9,8 @@ namespace Spryker\Glue\CompanyUsersRestApi\Processor\RestResponseBuilder;
 
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
+use Generated\Shared\Transfer\RestCompanyUserAttributesTransfer;
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 
 interface CompanyUserRestResponseBuilderInterface
@@ -34,6 +36,19 @@ interface CompanyUserRestResponseBuilderInterface
         int $totalItems = 0,
         int $limit = 0
     ): RestResponseInterface;
+
+    /**
+     * @param string $companyUserUuid
+     * @param \Generated\Shared\Transfer\RestCompanyUserAttributesTransfer $restCompanyUserAttributesTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     */
+    public function createCompanyUsersRestResource(
+        string $companyUserUuid,
+        RestCompanyUserAttributesTransfer $restCompanyUserAttributesTransfer,
+        CompanyUserTransfer $companyUserTransfer
+    ): RestResourceInterface;
 
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface

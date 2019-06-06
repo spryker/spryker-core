@@ -76,7 +76,9 @@ class VaultWriter implements VaultWriterInterface
             ->setDataType($dataType);
 
         if ($this->vaultRepository->findVaultDepositByDataTypeAndKey($vaultDepositTransfer->getDataType(), $vaultDepositTransfer->getDataKey())) {
-            return $this->vaultEntityManager->updateVaultDeposit($vaultDepositTransfer);
+             $this->vaultEntityManager->updateVaultDeposit($vaultDepositTransfer);
+
+             return true;
         }
 
         return $this->vaultEntityManager->createVaultDeposit($vaultDepositTransfer);

@@ -5,10 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Yves\StepEngine\Dependencx\Step\Fixtures;
+namespace Spryker\Zed\SharedCartsRestApi;
 
-use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
+use Spryker\Zed\Kernel\AbstractBundleConfig;
 
-class TestTransfer extends AbstractTransfer
+class SharedCartsRestApiConfig extends AbstractBundleConfig
 {
 }

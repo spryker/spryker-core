@@ -79,25 +79,26 @@ class GuestQuoteItemAdder implements GuestQuoteItemAdderInterface
             ->requireSku()
             ->requireCustomerReference();
 
-        if (!$restCartItemsAttributesTransfer->getQuoteUuid()) {
-            return $this->createGuestQuote($restCartItemsAttributesTransfer);
-        }
-
         $customerQuoteCollection = $this->quoteReader->getQuoteCollection(
             (new QuoteCriteriaFilterTransfer())->setCustomerReference($restCartItemsAttributesTransfer->getCustomerReference())
         );
 
         $customerQuotes = $customerQuoteCollection->getQuotes();
+
+        if (!$customerQuotes->count() && !$restCartItemsAttributesTransfer->getQuoteUuid()) {
+            return $this->createGuestQuote($restCartItemsAttributesTransfer);
+        }
+
         if ($customerQuotes->count()) {
             $restCartItemsAttributesTransfer->setQuoteUuid($customerQuotes[0]->getUuid());
         }
 
-        $quoteResponseTransfer = $this->quoteReader->findQuoteByUuid(
-            $this->quoteItemMapper->mapRestCartItemsAttributesTransferToQuoteTransfer(
-                $restCartItemsAttributesTransfer,
-                new QuoteTransfer()
-            )
+        $quoteTransfer = $this->quoteItemMapper->mapRestCartItemsAttributesTransferToQuoteTransfer(
+            $restCartItemsAttributesTransfer,
+            new QuoteTransfer()
         );
+
+        $quoteResponseTransfer = $this->quoteReader->findQuoteByUuid($quoteTransfer);
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $quoteResponseTransfer;
         }
