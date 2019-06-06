@@ -189,7 +189,7 @@ class QuoteUpdater implements QuoteUpdaterInterface
             ->updateQuote($this->quoteMapper->mapQuoteTransferToQuoteUpdateRequestTransfer($quoteTransfer, new QuoteUpdateRequestTransfer()));
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
-            $quoteResponseTransfer = $this->addErrorIdentifiersToQuoteResponseErrors($quoteResponseTransfer);
+            return $this->addErrorIdentifiersToQuoteResponseErrors($quoteResponseTransfer);
         }
 
         return $quoteResponseTransfer;
