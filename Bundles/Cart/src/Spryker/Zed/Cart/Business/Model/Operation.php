@@ -302,10 +302,12 @@ class Operation implements OperationInterface
     protected function addQuoteErrorsToQuoteResponse(QuoteResponseTransfer $quoteResponseTransfer): QuoteResponseTransfer
     {
         $errorMessages = $this->messengerFacade->getStoredMessages()->getErrorMessages();
-        if (count($errorMessages)) {
-            foreach ($errorMessages as $errorMessage) {
-                $quoteResponseTransfer->addError((new QuoteErrorTransfer())->setMessage($errorMessage));
-            }
+        if (!count($errorMessages)) {
+            return $quoteResponseTransfer;
+        }
+
+        foreach ($errorMessages as $errorMessage) {
+            $quoteResponseTransfer->addError((new QuoteErrorTransfer())->setMessage($errorMessage));
         }
 
         return $quoteResponseTransfer;
