@@ -64,9 +64,8 @@ interface CartFacadeInterface
     public function add(CartChangeTransfer $cartChangeTransfer);
 
     /**
-     *  Adds item(s) to the quote. Each item gets additional information (e.g. price).
-     *
      * Specification:
+     *  - Adds item(s) to the quote. Each item gets additional information (e.g. price).
      *  - Does nothing if cart is locked.
      *  - Runs cart pre check plugins.
      *  - For each new item runs the item expander plugins (requires a SKU for each new item).
