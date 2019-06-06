@@ -10,7 +10,7 @@ namespace Spryker\Zed\Development\Business\Codeception\Argument;
 class CodeceptionArguments
 {
     /**
-     * @var array
+     * @var string[]
      */
     protected $arguments = [];
 
@@ -48,7 +48,7 @@ class CodeceptionArguments
      */
     public function asString(): string
     {
-        if (empty($this->arguments)) {
+        if (count($this->arguments) === 0) {
             return '';
         }
 

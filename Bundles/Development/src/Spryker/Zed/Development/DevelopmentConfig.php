@@ -561,7 +561,7 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getDefaultInclusiveTestGroups(): array
     {

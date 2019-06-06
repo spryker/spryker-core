@@ -106,12 +106,14 @@ class SuiteFilterHelper extends Extension
     {
         $exclusiveGroups = $this->getExclusiveGroups();
 
-        if (!empty($exclusiveGroups)) {
-            $filterFactory->addFilter(
-                new ReflectionClass(ExcludeGroupFilterIterator::class),
-                $exclusiveGroups
-            );
+        if (count($exclusiveGroups) === 0) {
+            return $filterFactory;
         }
+
+        $filterFactory->addFilter(
+            new ReflectionClass(ExcludeGroupFilterIterator::class),
+            $exclusiveGroups
+        );
 
         return $filterFactory;
     }
@@ -125,12 +127,14 @@ class SuiteFilterHelper extends Extension
     {
         $inclusiveGroups = $this->getInclusiveGroups();
 
-        if (!empty($inclusiveGroups)) {
-            $filterFactory->addFilter(
-                new ReflectionClass(InclusiveGroupFilterIterator::class),
-                $inclusiveGroups
-            );
+        if (count($inclusiveGroups) === 0) {
+            return $filterFactory;
         }
+
+        $filterFactory->addFilter(
+            new ReflectionClass(InclusiveGroupFilterIterator::class),
+            $inclusiveGroups
+        );
 
         return $filterFactory;
     }
@@ -144,12 +148,14 @@ class SuiteFilterHelper extends Extension
     {
         $groupsFormConfig = $this->getIncludeGroups();
 
-        if (!empty($groupsFormConfig)) {
-            $filterFactory->addFilter(
-                new ReflectionClass(IncludeGroupFilterIterator::class),
-                $groupsFormConfig
-            );
+        if (count($groupsFormConfig) === 0) {
+            return $filterFactory;
         }
+
+        $filterFactory->addFilter(
+            new ReflectionClass(IncludeGroupFilterIterator::class),
+            $groupsFormConfig
+        );
 
         return $filterFactory;
     }
@@ -163,12 +169,14 @@ class SuiteFilterHelper extends Extension
     {
         $groupsFormConfig = $this->getExcludeGroups();
 
-        if (!empty($groupsFormConfig)) {
-            $filterFactory->addFilter(
-                new ReflectionClass(ExcludeGroupFilterIterator::class),
-                $groupsFormConfig
-            );
+        if (count($groupsFormConfig) === 0) {
+            return $filterFactory;
         }
+
+        $filterFactory->addFilter(
+            new ReflectionClass(ExcludeGroupFilterIterator::class),
+            $groupsFormConfig
+        );
 
         return $filterFactory;
     }

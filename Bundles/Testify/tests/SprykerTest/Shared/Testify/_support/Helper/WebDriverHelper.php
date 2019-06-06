@@ -21,6 +21,10 @@ class WebDriverHelper extends Phantoman
     protected const KEY_PORT = 'port';
     protected const KEY_BROWSER = 'browser';
 
+    protected const DEFAULT_HOST = '0.0.0.0';
+    protected const DEFAULT_PORT = 4444;
+    protected const DEFAULT_BROWSER = 'chrome';
+
     /**
      * @var array
      */
@@ -37,7 +41,7 @@ class WebDriverHelper extends Phantoman
     public function suiteInit(SuiteEvent $e): void
     {
         if (!$this->isRemoteEnabled()) {
-            parent::suiteInit($e); //todo: refactoring
+            parent::suiteInit($e);
         }
     }
 
@@ -62,9 +66,9 @@ class WebDriverHelper extends Phantoman
     {
         $webdriverConfig = [];
 
-        $webdriverConfig[static::KEY_HOST] = $this->config[static::KEY_HOST] ?? '0.0.0.0';
-        $webdriverConfig[static::KEY_PORT] = $this->config[static::KEY_PORT] ?? 4444;
-        $webdriverConfig[static::KEY_BROWSER] = $this->config[static::KEY_BROWSER] ?? 'chrome';
+        $webdriverConfig[static::KEY_HOST] = $this->config[static::KEY_HOST] ?? static::DEFAULT_HOST;
+        $webdriverConfig[static::KEY_PORT] = $this->config[static::KEY_PORT] ?? static::DEFAULT_PORT;
+        $webdriverConfig[static::KEY_BROWSER] = $this->config[static::KEY_BROWSER] ?? static::DEFAULT_BROWSER;
 
         return $webdriverConfig;
     }

@@ -226,9 +226,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
         return new CodeTester(
             $this->getConfig()->getPathToRoot(),
             $this->getConfig()->getPathToCore(),
-            $this->createConfigArgumentCollectionBuilder(
-                $this->getConfig()->getDefaultInclusiveTestGroups()
-            )
+            $this->createConfigArgumentCollectionBuilder()
         );
     }
 
@@ -1957,12 +1955,12 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param array $defaultIncludeTestGroups
-     *
      * @return \Spryker\Zed\Development\Business\Codeception\Argument\Builder\CodeceptionArgumentsBuilderInterface
      */
-    public function createConfigArgumentCollectionBuilder(array $defaultIncludeTestGroups): CodeceptionArgumentsBuilderInterface
+    public function createConfigArgumentCollectionBuilder(): CodeceptionArgumentsBuilderInterface
     {
-        return new CodeceptionArgumentsBuilder($defaultIncludeTestGroups);
+        return new CodeceptionArgumentsBuilder(
+            $this->getConfig()->getDefaultInclusiveTestGroups()
+        );
     }
 }

@@ -63,11 +63,11 @@ class InclusiveGroupFilterIterator extends RecursiveFilterIterator
             array_flip($inclusiveGroups)
         );
 
-        if (count($suiteGroups) !== count($inclusiveGroups)) {
-            return [];
+        if (array_diff_key(array_flip($inclusiveGroups), $suiteGroups) === []) {
+            return $suiteGroups;
         }
 
-        return $suiteGroups;
+        return [];
     }
 
     /**
