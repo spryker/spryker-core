@@ -122,7 +122,7 @@ class CompanyRoleFacadeTest extends Test
         $companyTransfer = $this->tester->haveCompany();
         $existingCompanyRole = $this->tester->haveCompanyRole([
             CompanyRoleTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
-            CompanyRoleTransfer::NAME => self::TEST_NAME,
+            CompanyRoleTransfer::NAME => static::TEST_NAME,
         ]);
         $companyRoleTransfer = $this->tester->haveCompanyRole([
             CompanyRoleTransfer::ID_COMPANY_ROLE => $existingCompanyRole->getIdCompanyRole(),
@@ -133,7 +133,7 @@ class CompanyRoleFacadeTest extends Test
         $resultCompanyRoleTransfer = $this->getFacade()->getCompanyRoleById($companyRoleTransfer);
 
         // Assert
-        $this->assertEquals(self::TEST_NAME, $resultCompanyRoleTransfer->getName());
+        $this->assertEquals(static::TEST_NAME, $resultCompanyRoleTransfer->getName());
     }
 
     /**
