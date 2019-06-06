@@ -18,7 +18,6 @@ use Spryker\Zed\Kernel\RepositoryResolverAwareTrait;
 use Symfony\Component\Console\Command\Command as SymfonyCommand;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Symfony\Component\Console\Helper\HelperInterface;
-use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Logger\ConsoleLogger;
@@ -454,7 +453,6 @@ class Console extends SymfonyCommand
     {
         $terminal = new Terminal();
         $width = $terminal->getWidth();
-        $width = ($width) ?: 200;
 
         return $width;
     }
