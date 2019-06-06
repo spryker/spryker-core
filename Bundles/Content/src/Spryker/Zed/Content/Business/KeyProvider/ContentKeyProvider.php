@@ -17,8 +17,8 @@ use Spryker\Zed\Content\Persistence\ContentRepositoryInterface;
  */
 class ContentKeyProvider implements ContentKeyProviderInterface
 {
-    protected const KEY_GENERATOR_STEPS_LIMIT = 10;
-    protected const ERROR_CONTENT_KEY_NOT_CREATED = 'Cannot create content key: reached limit of the generation operations.';
+    protected const KEY_GENERATOR_ITERATION_LIMIT = 10;
+    protected const ERROR_CONTENT_KEY_NOT_CREATED = 'Cannot create content key: maximum iterations threshold met.';
 
     /**
      * @var \Spryker\Zed\Content\Dependency\Service\ContentToUtilUuidGeneratorServiceInterface
@@ -52,15 +52,13 @@ class ContentKeyProvider implements ContentKeyProviderInterface
         $index = 0;
 
         do {
-            if ($index >= static::KEY_GENERATOR_STEPS_LIMIT) {
+            if ($index >= static::KEY_GENERATOR_ITERATION_LIMIT) {
                 throw new ContentKeyNotCreatedException(static::ERROR_CONTENT_KEY_NOT_CREATED);
             }
 
-            $candidate = $this->utilUuidGeneratorService->generateUuid5FromObjectId(
-                sprintf("%s-%d", microtime(true), $index)
-            );
+            $candidate = $this->suggestCandidate($index);
             $index = $index + 1;
-        } while ($this->contentRepository->hasKey($candidate));
+        } while ($this->isCandidateSuitable($candidate));
 
         return $candidate;
     }
@@ -75,5 +73,27 @@ class ContentKeyProvider implements ContentKeyProviderInterface
         $contentTransfer = $this->contentRepository->findContentById($idContent);
 
         return $contentTransfer->getKey();
+    }
+
+    /**
+     * @param int $index
+     *
+     * @return string
+     */
+    protected function suggestCandidate(int $index): string
+    {
+        return $this->utilUuidGeneratorService->generateUuid5FromObjectId(
+            sprintf("%s-%d", microtime(true), $index)
+        );
+    }
+
+    /**
+     * @param string $candidate
+     *
+     * @return bool
+     */
+    private function isCandidateSuitable(string $candidate): bool
+    {
+        return $this->contentRepository->hasKey($candidate);
     }
 }
