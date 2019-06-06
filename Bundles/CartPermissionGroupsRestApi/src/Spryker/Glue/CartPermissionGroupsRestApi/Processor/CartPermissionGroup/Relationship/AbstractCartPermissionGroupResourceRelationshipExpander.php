@@ -41,9 +41,8 @@ abstract class AbstractCartPermissionGroupResourceRelationshipExpander implement
                 continue;
             }
 
-            $cartPermissionGroupRestResource = $this->createCartPermissionGroupRestResource(
-                $quotePermissionGroupTransfer
-            );
+            $cartPermissionGroupRestResource = $this->cartPermissionGroupResponseBuilder
+                ->createCartPermissionGroupsResource($quotePermissionGroupTransfer);
 
             $resource->addRelationship($cartPermissionGroupRestResource);
         }
@@ -55,16 +54,4 @@ abstract class AbstractCartPermissionGroupResourceRelationshipExpander implement
      * @return \Generated\Shared\Transfer\QuotePermissionGroupTransfer|null
      */
     abstract protected function findQuotePermissionGroupTransferInPayload(RestResourceInterface $resource): ?QuotePermissionGroupTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\QuotePermissionGroupTransfer $quotePermissionGroupTransfer
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
-     */
-    protected function createCartPermissionGroupRestResource(
-        QuotePermissionGroupTransfer $quotePermissionGroupTransfer
-    ): RestResourceInterface {
-        return $this->cartPermissionGroupResponseBuilder
-            ->createCartPermissionGroupsResource($quotePermissionGroupTransfer);
-    }
 }
