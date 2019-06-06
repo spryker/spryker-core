@@ -12,10 +12,6 @@ use Spryker\Zed\ContentProductGui\ContentProductGuiConfig;
 
 class ContentProductContentGuiEditorConfigurationMapper implements ContentProductContentGuiEditorConfigurationMapperInterface
 {
-    protected const PARAMETER_TWIG_FUNCTION_TEMPLATE_KEY = '%KEY%';
-    protected const PARAMETER_TWIG_FUNCTION_TEMPLATE = '%TEMPLATE%';
-    protected const PARAMETER_TWIG_FUNCTION_TEMPLATE_FORMAT = "{{ %s('%s', '%s') }}";
-
     /**
      * @var \Spryker\Zed\ContentProductGui\ContentProductGuiConfig
      */
