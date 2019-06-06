@@ -14,6 +14,7 @@ use Silex\Provider\ValidatorServiceProvider;
 use Spryker\Shared\Application\ServiceProvider\HeadersSecurityServiceProvider;
 use Spryker\Shared\Config\Environment;
 use Spryker\Shared\ErrorHandler\Plugin\ServiceProvider\WhoopsErrorHandlerServiceProvider;
+use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\ApplicationTwigServiceProvider;
 use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\HeaderServiceProvider;
 use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\MvcRoutingServiceProvider;
 use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\RequestServiceProvider;
@@ -24,6 +25,8 @@ use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\SubRequestServi
 use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\TranslationServiceProvider;
 use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\TwigGlobalVariablesServiceProvider;
 use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\UrlGeneratorServiceProvider;
+use Spryker\Zed\Application\Communication\Plugin\Twig\AssetsUrlFunction;
+use Spryker\Zed\Application\Communication\Plugin\Twig\UrlFunction;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -39,6 +42,8 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
     public const INTERNAL_CALL_SERVICE_PROVIDER_WITH_AUTHENTICATION = 'INTERNAL_CALL_SERVICE_PROVIDER_WITH_AUTHENTICATION';
     public const PLUGINS_APPLICATION = 'PLUGINS_APPLICATION';
     public const ENVIRONMENT = 'ENVIRONMENT';
+    public const APPLICATION_TWIG_FUNCTIONS = 'APPLICATION_TWIG_FUNCTIONS';
+    public const APPLICATION_TWIG_FILTERS = 'APPLICATION_TWIG_FILTERS';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -65,6 +70,8 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addInternalCallServiceProvidersWithAuthentication($container);
         $container = $this->addApplicationPlugins($container);
         $container = $this->addEnvironment($container);
+        $container = $this->addApplicationTwigFunctions($container);
+        $container = $this->addApplicationTwigFilters($container);
 
         return $container;
     }
@@ -78,6 +85,7 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
     {
         $providers = [
             new TwigGlobalVariablesServiceProvider(),
+            new ApplicationTwigServiceProvider(),
             new RequestServiceProvider(),
             new SslServiceProvider(),
             new ServiceControllerServiceProvider(),
@@ -212,6 +220,34 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addApplicationTwigFunctions(Container $container): Container
+    {
+        $container->set(static::APPLICATION_TWIG_FUNCTIONS, function () {
+            return $this->getApplicationTwigFunctions();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addApplicationTwigFilters(Container $container): Container
+    {
+        $container->set(static::APPLICATION_TWIG_FILTERS, function () {
+            return $this->getApplicationTwigFilters();
+        });
+
+        return $container;
+    }
+
+    /**
      * @return \Spryker\Shared\Config\Environment
      */
     protected function getEnvironment(): Environment
@@ -245,6 +281,25 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Silex\ServiceProviderInterface[]
      */
     protected function getInternalCallServiceProvidersWithAuthentication(Container $container)
+    {
+        return [];
+    }
+
+    /**
+     * @return \Twig\TwigFunction[]
+     */
+    protected function getApplicationTwigFunctions(): array
+    {
+        return [
+            new UrlFunction(),
+            new AssetsUrlFunction(),
+        ];
+    }
+
+    /**
+     * @return \Twig\TwigFilter[]
+     */
+    protected function getApplicationTwigFilters(): array
     {
         return [];
     }

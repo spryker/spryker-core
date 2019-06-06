@@ -31,6 +31,8 @@ class ApplicationTwigPlugin extends AbstractPlugin implements TwigPluginInterfac
     public function extend(Environment $twig, ContainerInterface $container): Environment
     {
         $twig = $this->addTwigGlobalVariables($twig);
+        $twig = $this->addApplicationTwigFunctions($twig);
+        $twig = $this->addApplicationTwigFilters($twig);
 
         return $twig;
     }
@@ -51,6 +53,34 @@ class ApplicationTwigPlugin extends AbstractPlugin implements TwigPluginInterfac
 
         foreach ($vars as $name => $value) {
             $twig->addGlobal($name, $value);
+        }
+
+        return $twig;
+    }
+
+    /**
+     * @param \Twig\Environment $twig
+     *
+     * @return \Twig\Environment
+     */
+    protected function addApplicationTwigFunctions(Environment $twig): Environment
+    {
+        foreach ($this->getFactory()->getApplicationTwigFunctions() as $function) {
+            $twig->addFunction($function);
+        }
+
+        return $twig;
+    }
+
+    /**
+     * @param \Twig\Environment $twig
+     *
+     * @return \Twig\Environment
+     */
+    protected function addApplicationTwigFilters(Environment $twig): Environment
+    {
+        foreach ($this->getFactory()->getApplicationTwigFilters() as $filter) {
+            $twig->addFilter($filter);
         }
 
         return $twig;

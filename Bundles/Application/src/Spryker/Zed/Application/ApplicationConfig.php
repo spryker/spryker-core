@@ -21,6 +21,22 @@ class ApplicationConfig extends AbstractBundleConfig
     }
 
     /**
+     * @return string
+     */
+    public function getYvesHostName(): string
+    {
+        return $this->get(ApplicationConstants::HOST_YVES);
+    }
+
+    /**
+     * @return string
+     */
+    public function getAssetsPath(): string
+    {
+        return $this->get(ApplicationConstants::ASSETS_PATH, '/assets/');
+    }
+
+    /**
      * @return bool
      */
     public function isSslEnabled()

@@ -42,6 +42,22 @@ class ApplicationCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @return \Twig\TwigFunction[]
+     */
+    public function getApplicationTwigFunctions(): array
+    {
+        return $this->getProvidedDependency(ApplicationDependencyProvider::APPLICATION_TWIG_FUNCTIONS);
+    }
+
+    /**
+     * @return \Twig\TwigFilter[]
+     */
+    public function getApplicationTwigFilters(): array
+    {
+        return $this->getProvidedDependency(ApplicationDependencyProvider::APPLICATION_TWIG_FILTERS);
+    }
+
+    /**
      * @return \Spryker\Shared\Config\Environment
      */
     public function getEnvironment(): Environment
