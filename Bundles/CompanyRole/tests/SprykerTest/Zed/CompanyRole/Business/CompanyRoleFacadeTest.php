@@ -9,13 +9,11 @@ namespace SprykerTest\Zed\CompanyRole\Business;
 
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\CompanyResponseTransfer;
-use Generated\Shared\Transfer\CompanyRoleCollectionTransfer;
+use Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
-use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Spryker\Shared\CompanyUser\Plugin\AddCompanyUserPermissionPlugin;
 use Spryker\Zed\CompanyRole\Communication\Plugin\PermissionStoragePlugin;
-use Spryker\Zed\Permission\PermissionDependencyProvider;
 
 /**
  * Auto-generated group annotations
@@ -29,6 +27,9 @@ use Spryker\Zed\Permission\PermissionDependencyProvider;
  */
 class CompanyRoleFacadeTest extends Test
 {
+    protected const CONFIGURATION = ['testKey' => 'testValue'];
+    protected const TEST_NAME = 'Test Name';
+
     /**
      * @var \SprykerTest\Zed\CompanyRole\CompanyRoleBusinessTester
      */
@@ -61,38 +62,11 @@ class CompanyRoleFacadeTest extends Test
     public function testGetCompanyUserIdsByPermissionKeyReturnsCorrectData(): void
     {
         //Assign
-        $this->tester->setDependency(PermissionDependencyProvider::PLUGINS_PERMISSION, [
-            new AddCompanyUserPermissionPlugin(),
-        ]);
-        $this->tester->preparePermissionStorageDependency(new PermissionStoragePlugin());
-
-        $permissionFacade = $this->tester->getLocator()->permission()->facade();
-        $permissionFacade->syncPermissionPlugins();
-
-        $permissionCollectionTransfer = (new PermissionCollectionTransfer())
-            ->addPermission($permissionFacade->findPermissionByKey(AddCompanyUserPermissionPlugin::KEY));
-
-        $companyWithPermissionTransfer = $this->tester->haveCompany();
-        $companyRoleWithPermissionTransfer = $this->tester->haveCompanyRole([
-            CompanyRoleTransfer::FK_COMPANY => $companyWithPermissionTransfer->getIdCompany(),
-            CompanyRoleTransfer::PERMISSION_COLLECTION => $permissionCollectionTransfer,
-        ]);
-
-        $companyRoleCollection = (new CompanyRoleCollectionTransfer())
-            ->addRole($companyRoleWithPermissionTransfer);
-
         $this->tester->haveCompanyUser([
             CompanyUserTransfer::CUSTOMER => $this->tester->haveCustomer(),
             CompanyUserTransfer::FK_COMPANY => $this->tester->haveCompany()->getIdCompany(),
         ]);
-
-        $companyUserWithPermissionTransfer = $this->tester->haveCompanyUser([
-            CompanyUserTransfer::CUSTOMER => $this->tester->haveCustomer(),
-            CompanyUserTransfer::FK_COMPANY => $companyWithPermissionTransfer->getIdCompany(),
-            CompanyUserTransfer::COMPANY_ROLE_COLLECTION => $companyRoleCollection,
-        ]);
-
-        $this->tester->assignCompanyRolesToCompanyUser($companyUserWithPermissionTransfer);
+        $companyUserWithPermissionTransfer = $this->tester->getCompanyUserWithPermission();
 
         //Act
         $companyUserIds = $this->getFacade()->getCompanyUserIdsByPermissionKey(AddCompanyUserPermissionPlugin::KEY);
@@ -108,7 +82,7 @@ class CompanyRoleFacadeTest extends Test
     {
         // Prepare
         $companyTransfer = $this->tester->haveCompany();
-        $companyRoleTransfer = $this->tester->haveCompanyRole([
+        $companyRoleTransfer = $this->tester->getCompanyRoleTransfer([
             CompanyRoleTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
         ]);
 
@@ -148,7 +122,7 @@ class CompanyRoleFacadeTest extends Test
         $companyTransfer = $this->tester->haveCompany();
         $existingCompanyRole = $this->tester->haveCompanyRole([
             CompanyRoleTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
-            CompanyRoleTransfer::NAME => 'Updated Name',
+            CompanyRoleTransfer::NAME => self::TEST_NAME,
         ]);
         $companyRoleTransfer = $this->tester->haveCompanyRole([
             CompanyRoleTransfer::ID_COMPANY_ROLE => $existingCompanyRole->getIdCompanyRole(),
@@ -159,7 +133,7 @@ class CompanyRoleFacadeTest extends Test
         $resultCompanyRoleTransfer = $this->getFacade()->getCompanyRoleById($companyRoleTransfer);
 
         // Assert
-        $this->assertEquals('Updated Name', $resultCompanyRoleTransfer->getName());
+        $this->assertEquals(self::TEST_NAME, $resultCompanyRoleTransfer->getName());
     }
 
     /**
@@ -169,15 +143,15 @@ class CompanyRoleFacadeTest extends Test
     {
         // Prepare
         $companyTransfer = $this->tester->haveCompany();
-        $companyResponseTransfer = $this->tester->haveCompanyRole([
+        $companyRoleTransfer = $this->tester->haveCompanyRole([
             CompanyRoleTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
         ]);
 
         // Action
-        $companyResponseTransfer = $this->getFacade()->delete($companyResponseTransfer);
+        $companyRoleResponseTransfer = $this->getFacade()->delete($companyRoleTransfer);
 
         // Assert
-        $this->assertTrue($companyResponseTransfer->getIsSuccessful());
+        $this->assertTrue($companyRoleResponseTransfer->getIsSuccessful());
     }
 
     /**
@@ -187,7 +161,7 @@ class CompanyRoleFacadeTest extends Test
     {
         // Prepare
         $companyTransfer = $this->tester->haveCompany();
-        $companyRoleTransfer = $this->tester->haveCompanyRole([
+        $this->tester->haveCompanyRole([
             CompanyRoleTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
             CompanyRoleTransfer::IS_DEFAULT => false,
         ]);
@@ -248,14 +222,129 @@ class CompanyRoleFacadeTest extends Test
     public function testFindCompanyRoleByIdShouldReturnNullIfCompanyRoleDoesNotExist(): void
     {
         // Prepare
-        $companyRoleFacade = $this->getFacade();
         $notExistingCompanyRole = (new CompanyRoleTransfer())->setIdCompanyRole(-1);
 
         // Action
-        $resultCompanyRole = $companyRoleFacade->findCompanyRoleById($notExistingCompanyRole);
+        $resultCompanyRole = $this->getFacade()->findCompanyRoleById($notExistingCompanyRole);
 
         // Assert
         $this->assertNull($resultCompanyRole);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindCompanyRolesShouldReturnCollection(): void
+    {
+        // Arrange
+        $this->tester->getCompanyRoleWithPermission();
+
+        // Act
+        $companyRoleCollectionTransfer = $this->getFacade()->findCompanyRoles();
+
+        // Assert
+        $this->assertGreaterThan(0, $companyRoleCollectionTransfer->getRoles()->count());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetCompanyRoleCollectionShouldReturnCollectionByIdCompanyCriteria(): void
+    {
+        // Arrange
+        $companyRoleTransfer = $this->tester->getCompanyRoleWithPermission();
+        $criteriaFilterTransfer = (new CompanyRoleCriteriaFilterTransfer())
+            ->setIdCompany($companyRoleTransfer->getFkCompany());
+
+        // Act
+        $companyRoleCollectionTransfer = $this->getFacade()->getCompanyRoleCollection($criteriaFilterTransfer);
+
+        // Assert
+        $this->assertGreaterThan(0, $companyRoleCollectionTransfer->getRoles()->count());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetCompanyRoleCollectionShouldReturnCollectionByIdCompanyUserCriteria(): void
+    {
+        // Arrange
+        $companyUserWithPermissionTransfer = $this->tester->getCompanyUserWithPermission();
+        $criteriaFilterTransfer = (new CompanyRoleCriteriaFilterTransfer())
+            ->setIdCompanyUser($companyUserWithPermissionTransfer->getIdCompanyUser());
+
+        // Act
+        $companyRoleCollectionTransfer = $this->getFacade()->getCompanyRoleCollection($criteriaFilterTransfer);
+
+        // Assert
+        $this->assertGreaterThan(0, $companyRoleCollectionTransfer->getRoles()->count());
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindCompanyRolePermissionsShouldReturnCollection(): void
+    {
+        // Arrange
+        $companyRoleTransfer = $this->tester->getCompanyRoleWithPermission();
+
+        // Act
+        $permissionCollectionTransfer = $this->getFacade()->findCompanyRolePermissions($companyRoleTransfer->getIdCompanyRole());
+
+        // Assert
+        $this->assertGreaterThan(0, $permissionCollectionTransfer->getPermissions()->count());
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindPermissionsByIdCompanyUserShouldReturnCollection(): void
+    {
+        // Arrange
+        $companyUserWithPermissionTransfer = $this->tester->getCompanyUserWithPermission();
+
+        // Act
+        $permissionCollectionTransfer = $this->getFacade()->findPermissionsByIdCompanyUser($companyUserWithPermissionTransfer->getIdCompanyUser());
+
+        // Assert
+        $this->assertGreaterThan(0, $permissionCollectionTransfer->getPermissions()->count());
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateCompanyRolePermissionShouldPersistNewConfiguration(): void
+    {
+        // Arrange
+        $companyRoleTransfer = $this->tester->getCompanyRoleWithPermission();
+        $idPermission = $companyRoleTransfer->getPermissionCollection()->getPermissions()->offsetGet(0)->getIdPermission();
+        $idCompanyRole = $companyRoleTransfer->getIdCompanyRole();
+        $permissionTransfer = $this->getFacade()->findPermissionByIdCompanyRoleByIdPermission($idCompanyRole, $idPermission);
+
+        // Act
+        $permissionTransfer->setConfiguration(static::CONFIGURATION);
+        $this->getFacade()->updateCompanyRolePermission($permissionTransfer);
+
+        // Assert
+        $permissionTransferUpdated = $this->getFacade()->findPermissionByIdCompanyRoleByIdPermission($idCompanyRole, $idPermission);
+        $this->assertEquals(static::CONFIGURATION, $permissionTransferUpdated->getConfiguration());
+    }
+
+    /**
+     * @return void
+     */
+    public function testHydrateCompanyUserShouldReturnHydratedCompanyUser(): void
+    {
+        // Arrange
+        $companyUserWithPermissionTransfer = $this->tester->getCompanyUserWithPermission();
+        $companyUserTransfer = (new CompanyUserTransfer())
+            ->setIdCompanyUser($companyUserWithPermissionTransfer->getIdCompanyUser());
+
+        // Act
+        $companyUserTransferHydrated = $this->getFacade()->hydrateCompanyUser($companyUserTransfer);
+
+        // Assert
+        $this->assertNotNull($companyUserTransferHydrated->getCompanyRoleCollection());
     }
 
     /**
