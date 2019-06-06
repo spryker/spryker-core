@@ -33,6 +33,14 @@ class ShoppingListToZedRequestClientBridge implements ShoppingListToZedRequestCl
     }
 
     /**
+     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     */
+    public function getResponsesErrorMessages(): array
+    {
+        return $this->zedRequestClient->getResponsesErrorMessages();
+    }
+
+    /**
      * @param string $url
      * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $object
      * @param array|int|null $requestOptions
@@ -50,5 +58,13 @@ class ShoppingListToZedRequestClientBridge implements ShoppingListToZedRequestCl
     public function addFlashMessagesFromLastZedRequest()
     {
         $this->zedRequestClient->addFlashMessagesFromLastZedRequest();
+    }
+
+    /**
+     * @return void
+     */
+    public function addResponseMessagesToMessenger()
+    {
+        $this->zedRequestClient->addResponseMessagesToMessenger();
     }
 }

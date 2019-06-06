@@ -7,15 +7,13 @@
 
 namespace Spryker\Zed\Availability\Business\Model;
 
-use Generated\Shared\Transfer\ShoppingListItemTransfer;
-use Generated\Shared\Transfer\ShoppingListPreAddItemCheckResponseTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 
 interface SellableInterface
 {
     /**
      * @param string $sku
-     * @param int $quantity
+     * @param float $quantity
      *
      * @return bool
      */
@@ -24,13 +22,13 @@ interface SellableInterface
     /**
      * @param string $sku
      *
-     * @return int
+     * @return float
      */
     public function calculateStockForProduct($sku);
 
     /**
      * @param string $sku
-     * @param int $quantity
+     * @param float $quantity
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return bool
@@ -48,16 +46,7 @@ interface SellableInterface
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return int
+     * @return float
      */
     public function calculateStockForProductWithStore($sku, StoreTransfer $storeTransfer);
-
-    /**
-     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShoppingListPreAddItemCheckResponseTransfer
-     */
-    public function checkShoppingListItemProductIsAvailable(
-        ShoppingListItemTransfer $shoppingListItemTransfer
-    ): ShoppingListPreAddItemCheckResponseTransfer;
 }

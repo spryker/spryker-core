@@ -10,8 +10,6 @@ namespace Spryker\Zed\Availability\Business;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\ShoppingListItemTransfer;
-use Generated\Shared\Transfer\ShoppingListPreAddItemCheckResponseTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -25,10 +23,10 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
      *
      * @api
      *
-     * @deprecated use isProductSellableForStore() instead
+     * @deprecated Use isProductSellableForStore() instead.
      *
      * @param string $sku
-     * @param int $quantity
+     * @param float $quantity
      *
      * @return bool
      */
@@ -45,7 +43,7 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
      * @api
      *
      * @param string $sku
-     * @param int $quantity
+     * @param float $quantity
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return bool
@@ -78,11 +76,11 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
      *
      * @api
      *
-     * @deprecated use calculateStockForProductWithStore() instead
+     * @deprecated Use calculateStockForProductWithStore() instead.
      *
      * @param string $sku
      *
-     * @return int
+     * @return float
      */
     public function calculateStockForProduct($sku)
     {
@@ -98,30 +96,13 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
      *
      * @param string $sku
      *
-     * @return int
+     * @return float
      */
     public function calculateStockForProductWithStore($sku, StoreTransfer $storeTransfer)
     {
         return $this->getFactory()
             ->createSellableModel()
             ->calculateStockForProductWithStore($sku, $storeTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShoppingListPreAddItemCheckResponseTransfer
-     */
-    public function checkShoppingListItemProductIsAvailable(
-        ShoppingListItemTransfer $shoppingListItemTransfer
-    ): ShoppingListPreAddItemCheckResponseTransfer {
-        return $this->getFactory()
-            ->createSellableModel()
-            ->checkShoppingListItemProductIsAvailable($shoppingListItemTransfer);
     }
 
     /**
@@ -148,6 +129,8 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
      *
      * @api
      *
+     * @deprecated Use updateAvailabilityForStore() instead.
+     *
      * @param string $sku
      *
      * @return void
@@ -163,8 +146,6 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
      * {@inheritdoc}
      *
      * @api
-     *
-     * @deprecated use updateAvailabilityForStore instead
      *
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
@@ -251,10 +232,10 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
      *
      * @api
      *
-     * @deprecated use saveProductAvailabilityForStore instead
+     * @deprecated Use saveProductAvailabilityForStore() instead.
      *
      * @param string $sku
-     * @param int $quantity
+     * @param float $quantity
      *
      * @return int
      */
@@ -271,7 +252,7 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
      * @api
      *
      * @param string $sku
-     * @param int $quantity
+     * @param float $quantity
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return int

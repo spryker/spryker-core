@@ -12,8 +12,6 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductAttributeKeyTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\RawProductAttributesTransfer;
-use Generated\Shared\Transfer\ShoppingListItemTransfer;
-use Generated\Shared\Transfer\ShoppingListPreAddItemCheckResponseTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -314,6 +312,22 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
         return $this->getFactory()
             ->createProductConcreteManager()
             ->getProductConcrete($concreteSku);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $productConcreteSku
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function getRawProductConcreteBySku(string $productConcreteSku): ProductConcreteTransfer
+    {
+        return $this->getFactory()
+            ->createProductConcreteManager()
+            ->getRawProductConcreteBySku($productConcreteSku);
     }
 
     /**
@@ -711,7 +725,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      * @param array $attributeCollection
      *
-     * @return array|\Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
     public function generateVariants(ProductAbstractTransfer $productAbstractTransfer, array $attributeCollection)
     {
@@ -750,23 +764,6 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
         return $this->getFactory()
             ->createProductConcreteStatusChecker()
             ->isActive($productConcreteTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShoppingListPreAddItemCheckResponseTransfer
-     */
-    public function checkShoppingListItemProductIsActive(
-        ShoppingListItemTransfer $shoppingListItemTransfer
-    ): ShoppingListPreAddItemCheckResponseTransfer {
-        return $this->getFactory()
-            ->createProductConcreteStatusChecker()
-            ->checkShoppingListItemProductIsActive($shoppingListItemTransfer);
     }
 
     /**
@@ -948,7 +945,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      *
      * @param string[] $skus
      *
-     * @return array
+     * @return int[]
      */
     public function getProductConcreteIdsByConcreteSkus(array $skus): array
     {
@@ -1003,5 +1000,20 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     {
         return $this->getRepository()
             ->getProductConcreteTransfersByProductIds($productIds);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int[] $productAbstractIds
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function getProductConcreteTransfersByProductAbstractIds(array $productAbstractIds): array
+    {
+        return $this->getRepository()
+            ->getProductConcreteTransfersByProductAbstractIds($productAbstractIds);
     }
 }

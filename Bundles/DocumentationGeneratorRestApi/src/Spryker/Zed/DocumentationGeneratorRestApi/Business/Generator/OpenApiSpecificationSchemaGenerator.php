@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator;
 
+use Generated\Shared\Transfer\AnnotationTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Generated\Shared\Transfer\SchemaDataTransfer;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
@@ -119,21 +120,23 @@ class OpenApiSpecificationSchemaGenerator implements SchemaGeneratorInterface
 
     /**
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
-     * @param string|null $transferClassName
+     * @param \Generated\Shared\Transfer\AnnotationTransfer|null $annotationTransfer
      *
      * @return string
      */
-    public function addResponseResourceSchemaForPlugin(ResourceRoutePluginInterface $plugin, ?string $transferClassName = null): string
+    public function addResponseResourceSchemaForPlugin(ResourceRoutePluginInterface $plugin, ?AnnotationTransfer $annotationTransfer = null): string
     {
-        $transferClassName = $this->resolveTransferClassNameForPlugin($plugin, $transferClassName);
+
+        $transferClassName = $this->resolveTransferClassNameForPlugin($plugin, $annotationTransfer);
         $resourceRelationships = $this->resourceRelationshipPluginAnalyzer->getResourceRelationshipsForResourceRoutePlugin($plugin);
 
         $responseSchemaName = $this->resourceTransferAnalyzer->createResponseResourceSchemaNameFromTransferClassName($transferClassName);
         $responseDataSchemaName = $this->resourceTransferAnalyzer->createResponseResourceDataSchemaNameFromTransferClassName($transferClassName);
         $responseAttributesSchemaName = $this->resourceTransferAnalyzer->createResponseAttributesSchemaNameFromTransferClassName($transferClassName);
 
+        $isIdNullable = $annotationTransfer ? (bool)$annotationTransfer->getIsIdNullable() : false;
         $this->addSchemaData($this->schemaBuilder->createResponseBaseSchema($responseSchemaName, $responseDataSchemaName));
-        $this->addSchemaData($this->schemaBuilder->createResponseDataSchema($responseDataSchemaName, $responseAttributesSchemaName));
+        $this->addSchemaData($this->schemaBuilder->createResponseDataSchema($responseDataSchemaName, $responseAttributesSchemaName, $isIdNullable));
         $this->addResponseDataAttributesSchemaFromTransfer(new $transferClassName(), $responseAttributesSchemaName);
         if ($resourceRelationships) {
             $this->addRelationshipSchemas($responseDataSchemaName, $resourceRelationships, $transferClassName);
@@ -144,21 +147,22 @@ class OpenApiSpecificationSchemaGenerator implements SchemaGeneratorInterface
 
     /**
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
-     * @param string|null $transferClassName
+     * @param \Generated\Shared\Transfer\AnnotationTransfer|null $annotationTransfer
      *
      * @return string
      */
-    public function addResponseCollectionSchemaForPlugin(ResourceRoutePluginInterface $plugin, ?string $transferClassName = null): string
+    public function addResponseCollectionSchemaForPlugin(ResourceRoutePluginInterface $plugin, ?AnnotationTransfer $annotationTransfer = null): string
     {
-        $transferClassName = $this->resolveTransferClassNameForPlugin($plugin, $transferClassName);
+        $transferClassName = $this->resolveTransferClassNameForPlugin($plugin, $annotationTransfer);
         $resourceRelationships = $this->resourceRelationshipPluginAnalyzer->getResourceRelationshipsForResourceRoutePlugin($plugin);
 
         $responseSchemaName = $this->resourceTransferAnalyzer->createResponseCollectionSchemaNameFromTransferClassName($transferClassName);
         $responseDataSchemaName = $this->resourceTransferAnalyzer->createResponseCollectionDataSchemaNameFromTransferClassName($transferClassName);
         $responseAttributesSchemaName = $this->resourceTransferAnalyzer->createResponseAttributesSchemaNameFromTransferClassName($transferClassName);
 
+        $isIdNullable = $annotationTransfer ? (bool)$annotationTransfer->getIsIdNullable() : false;
         $this->addSchemaData($this->schemaBuilder->createCollectionResponseBaseSchema($responseSchemaName, $responseDataSchemaName));
-        $this->addSchemaData($this->schemaBuilder->createResponseDataSchema($responseDataSchemaName, $responseAttributesSchemaName));
+        $this->addSchemaData($this->schemaBuilder->createResponseDataSchema($responseDataSchemaName, $responseAttributesSchemaName, $isIdNullable));
         $this->addResponseDataAttributesSchemaFromTransfer(new $transferClassName(), $responseAttributesSchemaName);
         if ($resourceRelationships) {
             $this->addRelationshipSchemas($responseDataSchemaName, $resourceRelationships, $transferClassName);
@@ -295,13 +299,15 @@ class OpenApiSpecificationSchemaGenerator implements SchemaGeneratorInterface
 
     /**
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
-     * @param string|null $transferClassName
+     * @param \Generated\Shared\Transfer\AnnotationTransfer|null $annotationTransfer
      *
      * @return string
      */
-    protected function resolveTransferClassNameForPlugin(ResourceRoutePluginInterface $plugin, ?string $transferClassName = null): string
+    protected function resolveTransferClassNameForPlugin(ResourceRoutePluginInterface $plugin, ?AnnotationTransfer $annotationTransfer = null): string
     {
-        $transferClassName = $transferClassName ?? $plugin->getResourceAttributesClassName();
+        $transferClassName = $annotationTransfer && $annotationTransfer->getResponseAttributesClassName()
+            ? $annotationTransfer->getResponseAttributesClassName()
+            : $plugin->getResourceAttributesClassName();
         $this->validatePluginTransfer($plugin, $transferClassName);
 
         return $transferClassName;

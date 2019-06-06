@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListPermissionGroupCollectionTransfer;
-use Generated\Shared\Transfer\ShoppingListResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 
 interface ShoppingListReaderInterface
@@ -65,11 +64,4 @@ interface ShoppingListReaderInterface
      * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
      */
     public function findCompanyUserPermissions(int $idCompanyUser): PermissionCollectionTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
-     */
-    public function findShoppingListByUuid(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer;
 }

@@ -10,8 +10,6 @@ namespace Spryker\Zed\Availability\Business;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\ShoppingListItemTransfer;
-use Generated\Shared\Transfer\ShoppingListPreAddItemCheckResponseTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 
 interface AvailabilityFacadeInterface
@@ -25,7 +23,7 @@ interface AvailabilityFacadeInterface
      * @api
      *
      * @param string $sku
-     * @param int $quantity
+     * @param float $quantity
      *
      * @return bool
      */
@@ -40,7 +38,7 @@ interface AvailabilityFacadeInterface
      * @api
      *
      * @param string $sku
-     * @param int $quantity
+     * @param float $quantity
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return bool
@@ -69,7 +67,7 @@ interface AvailabilityFacadeInterface
      *
      * @param string $sku
      *
-     * @return int
+     * @return float
      */
     public function calculateStockForProduct($sku);
 
@@ -84,21 +82,9 @@ interface AvailabilityFacadeInterface
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return int
+     * @return float
      */
     public function calculateStockForProductWithStore($sku, StoreTransfer $storeTransfer);
-
-    /**
-     * Specification:
-     *  - Checks if product in shopping list item is available.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShoppingListPreAddItemCheckResponseTransfer
-     */
-    public function checkShoppingListItemProductIsAvailable(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListPreAddItemCheckResponseTransfer;
 
     /**
      * Specification:
@@ -211,7 +197,7 @@ interface AvailabilityFacadeInterface
      * @api
      *
      * @param string $sku
-     * @param int $quantity
+     * @param float $quantity
      *
      * @return int
      */
@@ -226,7 +212,7 @@ interface AvailabilityFacadeInterface
      * @api
      *
      * @param string $sku
-     * @param int $quantity
+     * @param float $quantity
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return int

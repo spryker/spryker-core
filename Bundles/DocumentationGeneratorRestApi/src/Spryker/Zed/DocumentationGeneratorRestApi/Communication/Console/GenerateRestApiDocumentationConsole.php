@@ -40,7 +40,7 @@ class GenerateRestApiDocumentationConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        if (Environment::isProduction()) {
+        if (Environment::isNotDevelopment()) {
             $this->error('This command intended to be used in development environment only!');
 
             return static::CODE_ERROR;

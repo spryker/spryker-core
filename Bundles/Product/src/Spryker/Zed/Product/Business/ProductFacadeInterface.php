@@ -12,8 +12,6 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductAttributeKeyTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\RawProductAttributesTransfer;
-use Generated\Shared\Transfer\ShoppingListItemTransfer;
-use Generated\Shared\Transfer\ShoppingListPreAddItemCheckResponseTransfer;
 
 interface ProductFacadeInterface
 {
@@ -280,6 +278,20 @@ interface ProductFacadeInterface
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function getProductConcrete($concreteSku);
+
+    /**
+     * Specification:
+     * - Returns concrete product with attributes and localized attributes.
+     * - Throws exception if the concrete product is not found.
+     * - Triggers `ProductEvents::PRODUCT_CONCRETE_READ` event but doesn't trigger READ plugins.
+     *
+     * @api
+     *
+     * @param string $productConcreteSku
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function getRawProductConcreteBySku(string $productConcreteSku): ProductConcreteTransfer;
 
     /**
      * Specification:
@@ -659,20 +671,6 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     *  - Checks if product in shopping list item is activate.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShoppingListPreAddItemCheckResponseTransfer
-     */
-    public function checkShoppingListItemProductIsActive(
-        ShoppingListItemTransfer $shoppingListItemTransfer
-    ): ShoppingListPreAddItemCheckResponseTransfer;
-
-    /**
-     * Specification:
      * - Returns the attribute keys of the abstract product and its concrete products.
      * - Includes localized abstract product and concrete products attribute keys when $localeTransfer is provided.
      *
@@ -821,7 +819,7 @@ interface ProductFacadeInterface
      *
      * @param string[] $skus
      *
-     * @return array
+     * @return int[]
      */
     public function getProductConcreteIdsByConcreteSkus(array $skus): array;
 
@@ -867,4 +865,16 @@ interface ProductFacadeInterface
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
     public function getProductConcreteTransfersByProductIds(array $productIds): array;
+
+    /**
+     * Specification:
+     * - Returns concrete product transfers by product abstract ids.
+     *
+     * @api
+     *
+     * @param int[] $productAbstractIds
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function getProductConcreteTransfersByProductAbstractIds(array $productAbstractIds): array;
 }

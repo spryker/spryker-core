@@ -10,16 +10,12 @@ namespace SprykerTest\Shared\ShoppingList\Helper;
 use Codeception\Module;
 use Generated\Shared\DataBuilder\ShoppingListBuilder;
 use Generated\Shared\DataBuilder\ShoppingListItemBuilder;
-use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer;
-use Generated\Shared\Transfer\ShoppingListShareRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use Orm\Zed\Permission\Persistence\SpyPermissionQuery;
 use Orm\Zed\ShoppingList\Persistence\SpyShoppingListPermissionGroup;
 use Orm\Zed\ShoppingList\Persistence\SpyShoppingListPermissionGroupToPermission;
-use Spryker\Shared\ShoppingList\ShoppingListConfig;
-use Spryker\Zed\ShoppingList\Communication\Plugin\ReadShoppingListPermissionPlugin;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class ShoppingListHelper extends Module
@@ -33,22 +29,9 @@ class ShoppingListHelper extends Module
      */
     public function haveShoppingList(array $seed = []): ShoppingListTransfer
     {
-        $shoppingListTransfer = $this->buildShoppingList($seed);
-
-        return $this->getLocator()->shoppingList()->facade()->createShoppingList($shoppingListTransfer)->getShoppingList();
-    }
-
-    /**
-     * @param array $seed
-     *
-     * @return \Generated\Shared\Transfer\ShoppingListTransfer
-     */
-    public function buildShoppingList(array $seed = []): ShoppingListTransfer
-    {
-        /** @var \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer */
         $shoppingListTransfer = (new ShoppingListBuilder($seed))->build();
 
-        return $shoppingListTransfer;
+        return $this->getLocator()->shoppingList()->facade()->createShoppingList($shoppingListTransfer)->getShoppingList();
     }
 
     /**
@@ -58,10 +41,7 @@ class ShoppingListHelper extends Module
      */
     public function buildShoppingListItem(array $seed = []): ShoppingListItemTransfer
     {
-        /** @var \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer */
-        $shoppingListItemTransfer = (new ShoppingListItemBuilder($seed))->build();
-
-        return $shoppingListItemTransfer;
+        return (new ShoppingListItemBuilder($seed))->build();
     }
 
     /**
@@ -71,9 +51,9 @@ class ShoppingListHelper extends Module
      */
     public function haveShoppingListItem(array $seed = []): ShoppingListItemTransfer
     {
-        return $this->getLocator()->shoppingList()->facade()->addShoppingListItem(
+        return $this->getLocator()->shoppingList()->facade()->addItem(
             $this->buildShoppingListItem($seed)
-        )->getShoppingListItem();
+        );
     }
 
     /**
@@ -105,34 +85,5 @@ class ShoppingListHelper extends Module
         $shoppingListPermissionGroupTransfer->fromArray($shoppingListPermissionGroupEntity->toArray(), true);
 
         return $shoppingListPermissionGroupTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $guestCustomer
-     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShoppingListTransfer
-     */
-    public function haveReadOnlyAccessToSharedShoppingList(
-        CustomerTransfer $guestCustomer,
-        ShoppingListTransfer $shoppingListTransfer
-    ): ShoppingListTransfer {
-
-        $permissionGroupTransfer = $this->haveShoppingListPermissionGroup(
-            ShoppingListConfig::PERMISSION_GROUP_READ_ONLY,
-            [
-                ReadShoppingListPermissionPlugin::KEY,
-            ]
-        );
-
-        $shoppingListShareRequestTransfer = (new ShoppingListShareRequestTransfer())
-            ->setIdCompanyUser($guestCustomer->getCompanyUserTransfer()->getIdCompanyUser())
-            ->setShoppingListOwnerId($shoppingListTransfer->getIdCompanyUser())
-            ->setIdShoppingList($shoppingListTransfer->getIdShoppingList())
-            ->setIdShoppingListPermissionGroup($permissionGroupTransfer->getIdShoppingListPermissionGroup());
-
-        $this->getLocator()->shoppingList()->facade()->shareShoppingListWithCompanyUser($shoppingListShareRequestTransfer);
-
-        return $shoppingListTransfer;
     }
 }

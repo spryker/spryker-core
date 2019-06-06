@@ -41,7 +41,7 @@ class ShoppingListEntityManager extends AbstractEntityManager implements Shoppin
             ->mapTransferToEntity($shoppingListTransfer, $shoppingListEntity);
 
         $shoppingListEntity->save();
-        $shoppingListTransfer->fromArray($shoppingListEntity->toArray(), true);
+        $shoppingListTransfer->setIdShoppingList($shoppingListEntity->getIdShoppingList());
 
         return $shoppingListTransfer;
     }
@@ -109,7 +109,7 @@ class ShoppingListEntityManager extends AbstractEntityManager implements Shoppin
             ->mapTransferToEntity($shoppingListItemTransfer, new SpyShoppingListItem());
 
         $shoppingListItemEntity->save();
-        $shoppingListItemTransfer->fromArray($shoppingListItemEntity->toArray(), true);
+        $shoppingListItemTransfer->setIdShoppingListItem($shoppingListItemEntity->getIdShoppingListItem());
 
         return $shoppingListItemTransfer;
     }
@@ -201,6 +201,7 @@ class ShoppingListEntityManager extends AbstractEntityManager implements Shoppin
 
         if ($shoppingListCompanyBusinessUnitEntity !== null) {
             $this->updateShoppingListCompanyBusinessUnit($shoppingListCompanyBusinessUnitTransfer, $shoppingListCompanyBusinessUnitEntity);
+
             return;
         }
 
@@ -222,6 +223,7 @@ class ShoppingListEntityManager extends AbstractEntityManager implements Shoppin
 
         if ($shoppingListCompanyUserEntity !== null) {
             $this->updateShoppingListCompanyUser($shoppingListCompanyUserTransfer, $shoppingListCompanyUserEntity);
+
             return;
         }
 

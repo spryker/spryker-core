@@ -71,11 +71,11 @@ class GatewayController extends AbstractGatewayController
     /**
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
-     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
+     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
      */
-    public function addItemAction(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemResponseTransfer
+    public function addItemAction(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
     {
-        return $this->getFacade()->addShoppingListItem($shoppingListItemTransfer);
+        return $this->getFacade()->addItem($shoppingListItemTransfer);
     }
 
     /**
@@ -151,11 +151,11 @@ class GatewayController extends AbstractGatewayController
     /**
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
-     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
+     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
      */
-    public function updateShoppingListItemAction(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemResponseTransfer
+    public function updateShoppingListItemAction(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
     {
-        return $this->getFacade()->updateShoppingListItemById($shoppingListItemTransfer);
+        return $this->getFacade()->updateShoppingListItem($shoppingListItemTransfer);
     }
 
     /**

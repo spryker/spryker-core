@@ -13,26 +13,26 @@ class CompanyUsersRestApiConfig extends AbstractBundleConfig
 {
     public const RESOURCE_COMPANY_USERS = 'company-users';
     public const CONTROLLER_RESOURCE_COMPANY_USERS = 'company-users-resource';
-
     public const RESOURCE_COMPANY_USERS_GET_ACTION_NAME = 'get';
 
-    public const RESPONSE_HEADERS_MISSING_COMPANY_USER_CODE = '1401';
-    public const RESPONSE_HEADERS_MISSING_COMPANY_USER = self::X_COMPANY_USER_ID_HEADER_KEY . ' header is missing.';
-    public const RESPONSE_CODE_RESOURCE_NOT_IMPLEMENTED = '1402';
-    public const RESPONSE_DETAIL_RESOURCE_NOT_IMPLEMENTED = 'Resource is not implemented.';
-
-    public const X_COMPANY_USER_ID_HEADER_KEY = 'X-Company-User-Id';
+    /**
+     * @uses \Spryker\Glue\CompanyBusinessUnitsRestApi\CompanyBusinessUnitsRestApiConfig::RESOURCE_COMPANY_BUSINESS_UNITS
+     */
+    public const RESOURCE_COMPANY_BUSINESS_UNITS = 'company-business-units';
 
     /**
-     * @type string[]
+     * @uses \Spryker\Glue\CompanyRolesRestApi\CompanyRolesRestApiConfig::RESOURCE_COMPANY_ROLES
      */
-    protected const COMPANY_USER_RESOURCES = [];
+    public const RESOURCE_COMPANY_ROLES = 'company-roles';
+
+    public const RESPONSE_CODE_COMPANY_USER_NOT_SELECTED = '1403';
+    public const RESPONSE_DETAIL_COMPANY_USER_NOT_SELECTED = 'Current company user is not set. You need to select the current company user with /company-user-access-tokens in order to access the resource collection.';
+
+    public const RESPONSE_CODE_COMPANY_USER_NOT_FOUND = '1404';
+    public const RESPONSE_DETAIL_COMPANY_USER_NOT_FOUND = 'Company user not found';
 
     /**
-     * @return string[]
+     * @uses \Spryker\Glue\GlueApplication\GlueApplicationConfig::COLLECTION_IDENTIFIER_CURRENT_USER
      */
-    public function getCompanyUserResources(): array
-    {
-        return static::COMPANY_USER_RESOURCES;
-    }
+    public const COLLECTION_IDENTIFIER_CURRENT_USER = 'mine';
 }

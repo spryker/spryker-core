@@ -87,50 +87,11 @@ interface ShoppingListClientInterface
      * Specification:
      *  - Makes Zed request.
      *  - Hydrates ShoppingListItem with provided optional params.
-     *  - Adds item to shopping list.
-     *  - Updates customer permissions.
-     *  - Get messages from zed request and put them to session.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
-     * @param array $params
-     *
-     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
-     */
-    public function addShoppingListItem(
-        ShoppingListItemTransfer $shoppingListItemTransfer,
-        array $params = []
-    ): ShoppingListItemResponseTransfer;
-
-    /**
-     * Specification:
-     *  - Makes Zed request.
-     *  - Updates shopping list item.
-     *  - Updates customer permissions.
-     *  - Get messages from Zed request and put them to session.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
-     */
-    public function updateShoppingListItemById(
-        ShoppingListItemTransfer $shoppingListItemTransfer
-    ): ShoppingListItemResponseTransfer;
-
-    /**
-     * Specification:
-     *  - Makes Zed request.
-     *  - Hydrates ShoppingListItem with provided optional params.
      *  - Add item to shopping list.
      *  - Updates customer permissions.
      *  - Get messages from zed request and put them to session.
      *
      * @api
-     *
-     * @deprecated Use ShoppingListClientInterface::addShoppingListItem instead. Will be removed with next major release.
      *
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      * @param array $params
@@ -272,8 +233,6 @@ interface ShoppingListClientInterface
      *
      * @api
      *
-     * @deprecated Use ShoppingListClientInterface::updateShoppingListItemById instead. Will be removed with next major release.
-     *
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
@@ -348,4 +307,29 @@ interface ShoppingListClientInterface
      * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer
      */
     public function dismissShoppingListSharing(ShoppingListDismissRequestTransfer $shoppingListDismissRequest): ShoppingListShareResponseTransfer;
+
+    /**
+     * Specification:
+     *  - Gets customer from session.
+     *  - Makes Zed request. Gets customer by email.
+     *  - Updates customer in session.
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function updateCustomerPermission(): void;
+
+    /**
+     * Specification:
+     * - Requires ProductViewTransfer::CurrentProductPrice.
+     * - Returns calculated subtotal.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductViewTransfer[] $shoppingListItemProductViews
+     *
+     * @return int
+     */
+    public function calculateShoppingListSubtotal(array $shoppingListItemProductViews): int;
 }

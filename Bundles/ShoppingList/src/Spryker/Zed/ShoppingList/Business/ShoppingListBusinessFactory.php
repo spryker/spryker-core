@@ -26,17 +26,13 @@ use Spryker\Zed\ShoppingList\Business\ShoppingList\ShoppingListShareDeleter;
 use Spryker\Zed\ShoppingList\Business\ShoppingList\ShoppingListShareDeleterInterface;
 use Spryker\Zed\ShoppingList\Business\ShoppingListItem\ShoppingListItemPluginExecutor;
 use Spryker\Zed\ShoppingList\Business\ShoppingListItem\ShoppingListItemPluginExecutorInterface;
-use Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemAddOperationValidator;
-use Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemBulkOperationValidatorInterface;
-use Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemDeleteOperationValidator;
-use Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemOperationValidatorInterface;
-use Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemUpdateOperationValidator;
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToCompanyUserFacadeInterface;
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToEventFacadeInterface;
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToMessengerFacadeInterface;
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToPermissionFacadeInterface;
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToPersistentCartFacadeInterface;
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToProductFacadeInterface;
+use Spryker\Zed\ShoppingList\Dependency\Service\ShoppingListToUtilQuantityServiceInterface;
 use Spryker\Zed\ShoppingList\ShoppingListDependencyProvider;
 
 /**
@@ -95,11 +91,12 @@ class ShoppingListBusinessFactory extends AbstractBusinessFactory
     {
         return new ShoppingListItemOperation(
             $this->getEntityManager(),
+            $this->getProductFacade(),
             $this->getRepository(),
-            $this->createShoppingListAddOperationValidator(),
-            $this->createShoppingListUpdateOperationValidator(),
-            $this->createShoppingListDeleteOperationValidator(),
-            $this->createShoppingListItemPluginExecutor()
+            $this->createShoppingListResolver(),
+            $this->getMessengerFacade(),
+            $this->createShoppingListItemPluginExecutor(),
+            $this->getUtilQuantityService()
         );
     }
 
@@ -140,44 +137,6 @@ class ShoppingListBusinessFactory extends AbstractBusinessFactory
         return new ShoppingListSharer(
             $this->getEntityManager(),
             $this->getRepository()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemBulkOperationValidatorInterface
-     */
-    public function createShoppingListAddOperationValidator(): ShoppingListItemBulkOperationValidatorInterface
-    {
-        return new ShoppingListItemAddOperationValidator(
-            $this->getProductFacade(),
-            $this->getRepository(),
-            $this->getMessengerFacade(),
-            $this->createShoppingListResolver(),
-            $this->createShoppingListItemPluginExecutor()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemOperationValidatorInterface
-     */
-    public function createShoppingListUpdateOperationValidator(): ShoppingListItemOperationValidatorInterface
-    {
-        return new ShoppingListItemUpdateOperationValidator(
-            $this->getProductFacade(),
-            $this->getRepository(),
-            $this->getMessengerFacade()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemOperationValidatorInterface
-     */
-    public function createShoppingListDeleteOperationValidator(): ShoppingListItemOperationValidatorInterface
-    {
-        return new ShoppingListItemDeleteOperationValidator(
-            $this->getProductFacade(),
-            $this->getRepository(),
-            $this->getMessengerFacade()
         );
     }
 
@@ -296,5 +255,13 @@ class ShoppingListBusinessFactory extends AbstractBusinessFactory
     public function getItemToShoppingListItemMapperPlugins(): array
     {
         return $this->getProvidedDependency(ShoppingListDependencyProvider::PLUGINS_ITEM_TO_SHOPPING_LIST_ITEM_MAPPER);
+    }
+
+    /**
+     * @return \Spryker\Zed\ShoppingList\Dependency\Service\ShoppingListToUtilQuantityServiceInterface
+     */
+    public function getUtilQuantityService(): ShoppingListToUtilQuantityServiceInterface
+    {
+        return $this->getProvidedDependency(ShoppingListDependencyProvider::SERVICE_UTIL_QUANTITY);
     }
 }

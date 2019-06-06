@@ -19,12 +19,12 @@
         <property name="productName" type="string" />
         <property name="reservationQuantity" type="int" />
         <property name="sku" type="string" />
-        <property name="stockQuantity" type="int" />
+        <property name="stockQuantity" type="float" />
         <property name="isNeverOutOfStock" type="bool" />
     </transfer>
 
     <transfer name="ProductConcreteAvailability">
-        <property name="availability" type="int" />
+        <property name="availability" type="float" />
         <property name="isNeverOutOfStock" type="bool" />
     </transfer>
 
@@ -34,6 +34,11 @@
 
     <transfer name="Quote">
         <property name="store" type="Store" />
+    </transfer>
+
+    <transfer name="AvailabilityNotificationData">
+        <property name="sku" type="string"/>
+        <property name="store" type="Store"/>
     </transfer>
 
 </transfers>
