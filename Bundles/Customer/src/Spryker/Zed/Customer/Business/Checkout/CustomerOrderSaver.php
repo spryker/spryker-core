@@ -76,6 +76,7 @@ class CustomerOrderSaver implements CustomerOrderSaverInterface
             return;
         }
 
+        $quoteTransfer->requireShippingAddress();
         $this->processCustomerAddress($quoteTransfer->getShippingAddress(), $customer);
 
         if ($quoteTransfer->getBillingSameAsShipping() !== true) {
@@ -91,6 +92,10 @@ class CustomerOrderSaver implements CustomerOrderSaverInterface
      */
     protected function processCustomerAddress(AddressTransfer $addressTransfer, CustomerTransfer $customerTransfer)
     {
+        if ($addressTransfer->getIdCompanyUnitAddress() !== null) {
+            return;
+        }
+
         $addressTransfer->setFkCustomer($customerTransfer->getIdCustomer());
         if (!$addressTransfer->getIdCustomerAddress()) {
             $this->address->createAddressAndUpdateCustomerDefaultAddresses($addressTransfer);
