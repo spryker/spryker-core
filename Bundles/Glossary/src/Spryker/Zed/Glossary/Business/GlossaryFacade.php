@@ -400,10 +400,10 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
      *
      * @return array
      */
-    public function findTranslationsByGlossaryKeyAndLocales(string $glossaryKey, array $localeTransfers): array
+    public function getTranslationsByGlossaryKeyAndLocales(string $glossaryKey, array $localeTransfers): array
     {
         return $this->getFactory()
             ->createTranslationReader()
-            ->findTranslationsByGlossaryKeyAndLocaleTransfers($glossaryKey, $localeTransfers);
+            ->getTranslationsByGlossaryKeyAndLocaleTransfers($glossaryKey, $localeTransfers);
     }
 }

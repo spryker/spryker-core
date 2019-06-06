@@ -12,5 +12,5 @@ interface LocaleReaderInterface
     /**
      * @return \Generated\Shared\Transfer\LocaleTransfer[]
      */
-    public function findAvailableLocaleCollection(): array;
+    public function getAvailableLocaleCollection(): array;
 }

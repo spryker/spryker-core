@@ -15,5 +15,5 @@ interface GlossaryRepositoryInterface
      *
      * @return array
      */
-    public function findTranslationsByGlossaryKeyAndLocaleIsoCodes(string $keyName, array $localeIsoCodes): array;
+    public function getTranslationsByGlossaryKeyAndLocaleIsoCodes(string $keyName, array $localeIsoCodes): array;
 }

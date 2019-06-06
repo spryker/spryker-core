@@ -35,13 +35,13 @@ class TranslationReader implements TranslationReaderInterface
      *
      * @return array
      */
-    public function findTranslationsByGlossaryKeyAndLocaleTransfers(string $glossaryKey, array $localeTransfers): array
+    public function getTranslationsByGlossaryKeyAndLocaleTransfers(string $glossaryKey, array $localeTransfers): array
     {
         if (!$localeTransfers) {
             return [];
         }
 
-        return $this->glossaryRepository->findTranslationsByGlossaryKeyAndLocaleIsoCodes($glossaryKey, $this->getLocaleIsoCodes($localeTransfers));
+        return $this->glossaryRepository->getTranslationsByGlossaryKeyAndLocaleIsoCodes($glossaryKey, $this->getLocaleIsoCodes($localeTransfers));
     }
 
     /**

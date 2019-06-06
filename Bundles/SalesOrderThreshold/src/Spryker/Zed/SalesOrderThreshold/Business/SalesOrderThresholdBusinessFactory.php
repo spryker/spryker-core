@@ -20,7 +20,7 @@ use Spryker\Zed\SalesOrderThreshold\Business\HardThresholdCheck\HardThresholdChe
 use Spryker\Zed\SalesOrderThreshold\Business\HardThresholdCheck\HardThresholdCheckerInterface;
 use Spryker\Zed\SalesOrderThreshold\Business\Installer\SalesOrderThresholdTypeInstaller;
 use Spryker\Zed\SalesOrderThreshold\Business\Installer\SalesOrderThresholdTypeInstallerInterface;
-use Spryker\Zed\SalesOrderThreshold\Business\SalesOrderThreshold\SalesOrderThresholdReader;
+use Spryker\Zed\SalesOrderThreshold\Business\SalesOrderThreshold\Reader\SalesOrderThresholdReader;
 use Spryker\Zed\SalesOrderThreshold\Business\SalesOrderThreshold\SalesOrderThresholdReaderInterface;
 use Spryker\Zed\SalesOrderThreshold\Business\SalesOrderThreshold\SalesOrderThresholdWriter;
 use Spryker\Zed\SalesOrderThreshold\Business\SalesOrderThreshold\SalesOrderThresholdWriterInterface;
@@ -32,6 +32,8 @@ use Spryker\Zed\SalesOrderThreshold\Business\TaxRateReader\TaxRateReader;
 use Spryker\Zed\SalesOrderThreshold\Business\TaxRateReader\TaxRateReaderInterface;
 use Spryker\Zed\SalesOrderThreshold\Business\ThresholdMessenger\ThresholdMessenger;
 use Spryker\Zed\SalesOrderThreshold\Business\ThresholdMessenger\ThresholdMessengerInterface;
+use Spryker\Zed\SalesOrderThreshold\Business\Translation\Hydrator\SalesOrderThresholdTranslationHydrator;
+use Spryker\Zed\SalesOrderThreshold\Business\Translation\Hydrator\SalesOrderThresholdTranslationHydratorInterface;
 use Spryker\Zed\SalesOrderThreshold\Business\Translation\SalesOrderThresholdGlossaryKeyGenerator;
 use Spryker\Zed\SalesOrderThreshold\Business\Translation\SalesOrderThresholdGlossaryKeyGeneratorInterface;
 use Spryker\Zed\SalesOrderThreshold\Business\Translation\SalesOrderThresholdTranslationReader;
@@ -83,7 +85,7 @@ class SalesOrderThresholdBusinessFactory extends AbstractBusinessFactory
     {
         return new SalesOrderThresholdReader(
             $this->getRepository(),
-            $this->createSalesOrderThresholdTranslationReader()
+            $this->createSalesOrderThresholdTranslationHydrator()
         );
     }
 
@@ -116,7 +118,7 @@ class SalesOrderThresholdBusinessFactory extends AbstractBusinessFactory
     {
         return new SalesOrderThresholdTranslationReader(
             $this->getGlossaryFacade(),
-            $this->getLocaleFacade()
+            $this->getStoreFacade()
         );
     }
 
@@ -216,6 +218,14 @@ class SalesOrderThresholdBusinessFactory extends AbstractBusinessFactory
             $this->getTaxFacade(),
             $this->getRepository()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesOrderThreshold\Business\Translation\Hydrator\SalesOrderThresholdTranslationHydratorInterface
+     */
+    public function createSalesOrderThresholdTranslationHydrator(): SalesOrderThresholdTranslationHydratorInterface
+    {
+        return new SalesOrderThresholdTranslationHydrator($this->getGlossaryFacade(), $this->getLocaleFacade());
     }
 
     /**

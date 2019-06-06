@@ -15,5 +15,5 @@ interface TranslationReaderInterface
      *
      * @return array
      */
-    public function findTranslationsByGlossaryKeyAndLocaleTransfers(string $glossaryKey, array $localeTransfers): array;
+    public function getTranslationsByGlossaryKeyAndLocaleTransfers(string $glossaryKey, array $localeTransfers): array;
 }

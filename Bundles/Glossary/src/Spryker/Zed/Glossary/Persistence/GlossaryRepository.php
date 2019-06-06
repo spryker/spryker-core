@@ -22,7 +22,7 @@ class GlossaryRepository extends AbstractRepository implements GlossaryRepositor
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer[]
      */
-    public function findTranslationsByGlossaryKeyAndLocaleIsoCodes(string $glossaryKey, array $localeIsoCodes): array
+    public function getTranslationsByGlossaryKeyAndLocaleIsoCodes(string $glossaryKey, array $localeIsoCodes): array
     {
         $glossaryTranslationEntities = $this->getFactory()->createGlossaryTranslationQuery()
             ->useGlossaryKeyQuery()

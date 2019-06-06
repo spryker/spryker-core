@@ -35,11 +35,11 @@ class LocaleReader implements LocaleReaderInterface
     /**
      * @return \Generated\Shared\Transfer\LocaleTransfer[]
      */
-    public function findAvailableLocaleCollection(): array
+    public function getAvailableLocaleCollection(): array
     {
         $availableLocales = $this->store->getLocales();
 
-        $localeTransfers = $this->localeRepository->findLocaleByLocaleNames($availableLocales);
+        $localeTransfers = $this->localeRepository->getLocaleByLocaleNames($availableLocales);
 
         return $this->indexLocaleTransfersByLocalename($localeTransfers);
     }

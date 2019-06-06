@@ -21,7 +21,7 @@ class LocaleRepository extends AbstractRepository implements LocaleRepositoryInt
      *
      * @return \Generated\Shared\Transfer\LocaleTransfer[]
      */
-    public function findLocaleByLocaleNames(array $localeNames): array
+    public function getLocaleByLocaleNames(array $localeNames): array
     {
         $localeEntities = $this->getFactory()->createLocaleQuery()
             ->filterByLocaleName_In($localeNames)

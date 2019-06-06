@@ -34,6 +34,11 @@ class GlossaryFacadeTest extends Unit
     private $locales = [];
 
     /**
+     * @var \SprykerTest\Zed\Glossary\GlossaryBusinessTester
+     */
+    protected $tester;
+
+    /**
      * @return void
      */
     public function setUp()
@@ -148,13 +153,14 @@ class GlossaryFacadeTest extends Unit
         $glossaryFacade = $this->getGlossaryFacade();
         $localeFacade = $this->getLocaleFacade();
         $localeTransfers = $localeFacade->getLocaleCollection();
-        $glossaryFacade->getOrCreateKey(static::GLOSSARY_KEY);
+        $seedData = ['glossaryKey' => static::GLOSSARY_KEY];
         foreach ($localeTransfers as $localeTransfer) {
-            $glossaryFacade->createTranslation(static::GLOSSARY_KEY, $localeTransfer, static::TRANSLATION);
+            $seedData['locales'][$localeTransfer->getLocaleName()] = static::TRANSLATION;
         }
+        $this->tester->haveTranslation($seedData);
 
         //Act
-        $translations = $glossaryFacade->findTranslationsByGlossaryKeyAndLocales(static::GLOSSARY_KEY, $localeTransfers);
+        $translations = $glossaryFacade->getTranslationsByGlossaryKeyAndLocales(static::GLOSSARY_KEY, $localeTransfers);
 
         //Assert
         $this->assertCount(count($localeTransfers), $translations);

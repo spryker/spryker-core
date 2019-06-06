@@ -14,5 +14,5 @@ interface LocaleRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\LocaleTransfer[]
      */
-    public function findLocaleByLocaleNames(array $localeNames): array;
+    public function getLocaleByLocaleNames(array $localeNames): array;
 }

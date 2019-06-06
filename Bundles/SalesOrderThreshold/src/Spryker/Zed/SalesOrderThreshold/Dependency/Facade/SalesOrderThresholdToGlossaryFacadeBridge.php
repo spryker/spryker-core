@@ -74,8 +74,8 @@ class SalesOrderThresholdToGlossaryFacadeBridge implements SalesOrderThresholdTo
      *
      * @return array
      */
-    public function findTranslationsByGlossaryKeyAndLocales(string $glossaryKey, array $localeTransfers): array
+    public function getTranslationsByGlossaryKeyAndLocales(string $glossaryKey, array $localeTransfers): array
     {
-        return $this->glossaryFacade->findTranslationsByGlossaryKeyAndLocales($glossaryKey, $localeTransfers);
+        return $this->glossaryFacade->getTranslationsByGlossaryKeyAndLocales($glossaryKey, $localeTransfers);
     }
 }

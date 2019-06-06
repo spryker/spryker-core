@@ -5,16 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\SalesOrderThreshold\Business\SalesOrderThreshold;
+namespace Spryker\Zed\SalesOrderThreshold\Business\SalesOrderThreshold\Reader;
 
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
-use Spryker\Zed\SalesOrderThreshold\Business\Translation\SalesOrderThresholdTranslationReaderInterface;
+use Spryker\Zed\SalesOrderThreshold\Business\SalesOrderThreshold\SalesOrderThresholdReaderInterface;
+use Spryker\Zed\SalesOrderThreshold\Business\Translation\Hydrator\SalesOrderThresholdTranslationHydratorInterface;
 use Spryker\Zed\SalesOrderThreshold\Persistence\SalesOrderThresholdRepositoryInterface;
 
-/**
- * @deprecated Use `Spryker\Zed\SalesOrderThreshold\Business\SalesOrderThreshold\Reader\SalesOrderThresholdReader` instead.
- */
 class SalesOrderThresholdReader implements SalesOrderThresholdReaderInterface
 {
     /**
@@ -23,20 +21,20 @@ class SalesOrderThresholdReader implements SalesOrderThresholdReaderInterface
     protected $salesOrderThresholdRepository;
 
     /**
-     * @var \Spryker\Zed\SalesOrderThreshold\Business\Translation\SalesOrderThresholdTranslationReaderInterface
+     * @var \Spryker\Zed\SalesOrderThreshold\Business\Translation\Hydrator\SalesOrderThresholdTranslationHydratorInterface
      */
-    protected $translationReader;
+    protected $translationHydrator;
 
     /**
      * @param \Spryker\Zed\SalesOrderThreshold\Persistence\SalesOrderThresholdRepositoryInterface $salesOrderThresholdRepository
-     * @param \Spryker\Zed\SalesOrderThreshold\Business\Translation\SalesOrderThresholdTranslationReaderInterface $translationReader
+     * @param \Spryker\Zed\SalesOrderThreshold\Business\Translation\Hydrator\SalesOrderThresholdTranslationHydratorInterface $translationHydrator
      */
     public function __construct(
         SalesOrderThresholdRepositoryInterface $salesOrderThresholdRepository,
-        SalesOrderThresholdTranslationReaderInterface $translationReader
+        SalesOrderThresholdTranslationHydratorInterface $translationHydrator
     ) {
         $this->salesOrderThresholdRepository = $salesOrderThresholdRepository;
-        $this->translationReader = $translationReader;
+        $this->translationHydrator = $translationHydrator;
     }
 
     /**
@@ -56,7 +54,7 @@ class SalesOrderThresholdReader implements SalesOrderThresholdReaderInterface
             );
 
         foreach ($salesOrderThresholdTransfers as $salesOrderThresholdTransfer) {
-            $this->translationReader->hydrateLocalizedMessages($salesOrderThresholdTransfer);
+            $this->translationHydrator->hydrateLocalizedMessages($salesOrderThresholdTransfer);
         }
 
         return $salesOrderThresholdTransfers;

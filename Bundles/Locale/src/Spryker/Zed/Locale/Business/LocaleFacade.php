@@ -195,9 +195,9 @@ class LocaleFacade extends AbstractFacade implements LocaleFacadeInterface
      */
     public function getLocaleCollection()
     {
-        $localeManager = $this->getFactory()->createLocaleReader();
+        $localeReader = $this->getFactory()->createLocaleReader();
 
-        return $localeManager->findAvailableLocaleCollection();
+        return $localeReader->getAvailableLocaleCollection();
     }
 
     /**
