@@ -69,7 +69,7 @@ var ContentItemDialog = function(dialogTitle, dialogContentUrl, insertButtonTitl
                 if (readyToInsert) {
                     var builtText = twigTemplate.replace(/%\w+%/g, function (param) {
                         return {
-                            '%ID%': chosenKey,
+                            '%KEY%': chosenKey,
                             '%TEMPLATE%': chosenTemplate
                         }[param];
                     });
