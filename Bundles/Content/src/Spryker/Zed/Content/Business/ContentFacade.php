@@ -53,6 +53,8 @@ class ContentFacade extends AbstractFacade implements ContentFacadeInterface
      *
      * @param \Generated\Shared\Transfer\ContentTransfer $contentTransfer
      *
+     * @throws \Spryker\Zed\Content\Business\Exception\ContentKeyNotCreatedException
+     *
      * @return \Generated\Shared\Transfer\ContentTransfer
      */
     public function create(ContentTransfer $contentTransfer): ContentTransfer

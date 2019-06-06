@@ -54,4 +54,19 @@ class ContentRepository extends AbstractRepository implements ContentRepositoryI
 
         return $this->getFactory()->createContentMapper()->mapContentEntityToTransfer($contentEntity);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @param string $key
+     *
+     * @return bool
+     */
+    public function hasKey(string $key): bool
+    {
+        return $this->getFactory()
+            ->createContentQuery()
+            ->filterByKey($key)
+            ->exists();
+    }
 }
