@@ -25,6 +25,7 @@ suites:
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
                 - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
                 - \SprykerTest\Shared\Customer\Helper\CustomerDataHelper
+                - \SprykerTest\Shared\Quote\Helper\PersistentQuoteHelper
                 - \SprykerTest\Shared\Comment\Helper\CommentHelper
                 - \SprykerTest\Zed\CommentDataImport\Helper\CommentDataImportHelper
                 - \SprykerTest\Shared\Testify\Helper\TableRelationsCleanupHelper

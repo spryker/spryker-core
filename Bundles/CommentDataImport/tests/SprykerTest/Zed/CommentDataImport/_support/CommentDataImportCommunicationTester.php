@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\CommentDataImport;
 
 use Codeception\Actor;
+use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Orm\Zed\Comment\Persistence\Base\SpyCommentTagQuery;
 use Orm\Zed\Comment\Persistence\SpyCommentQuery;
 use Orm\Zed\Comment\Persistence\SpyCommentThreadQuery;
@@ -42,6 +43,34 @@ class CommentDataImportCommunicationTester extends Actor
         $this->ensureDatabaseTableIsEmpty($this->getCommentTagQuery());
         $this->ensureDatabaseTableIsEmpty($this->getCommentQuery());
         $this->ensureDatabaseTableIsEmpty($this->getCommentThreadQuery());
+    }
+
+    /**
+     * @param array $seeds
+     *
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
+     */
+    public function createCustomer(array $seeds = []): CustomerResponseTransfer
+    {
+        $customerTransfer = $this->haveCustomer()
+            ->fromArray($seeds, true);
+
+        return $this->getLocator()->customer()->facade()->updateCustomer($customerTransfer);
+    }
+
+    /**
+     * @param string $reference
+     *
+     * @return void
+     */
+    public function ensureCustomerWithReferenceDoesNotExist(string $reference): void
+    {
+        $customerFacade = $this->getLocator()->customer()->facade();
+        $customerTransfer = $customerFacade->findByReference($reference);
+
+        if ($customerTransfer) {
+            $customerFacade->deleteCustomer($customerTransfer);
+        }
     }
 
     /**
