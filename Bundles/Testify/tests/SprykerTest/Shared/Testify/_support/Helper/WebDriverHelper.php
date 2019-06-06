@@ -26,7 +26,7 @@ class WebDriverHelper extends Phantoman
     protected const DEFAULT_BROWSER = 'chrome';
 
     /**
-     * @var array
+     * @var string[]
      */
     public static $events = [
         Events::SUITE_INIT => 'suiteInit',

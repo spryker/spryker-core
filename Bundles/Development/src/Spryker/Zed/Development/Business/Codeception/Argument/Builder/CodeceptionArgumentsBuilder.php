@@ -43,11 +43,11 @@ class CodeceptionArgumentsBuilder implements CodeceptionArgumentsBuilderInterfac
     {
         $codeceptionArguments = new CodeceptionArguments();
 
-        $codeceptionArguments = $this->buildConfigPath($codeceptionArguments, $options);
+        $codeceptionArguments = $this->addConfigPath($codeceptionArguments, $options);
         $codeceptionArguments = $this->buildInclusiveGroups($codeceptionArguments, $options);
         $codeceptionArguments = $this->buildIncludeGroups($codeceptionArguments, $options);
         $codeceptionArguments = $this->buildExcludeGroups($codeceptionArguments, $options);
-        $codeceptionArguments = $this->buildVerboseMode($codeceptionArguments, $options);
+        $codeceptionArguments = $this->addVerboseMode($codeceptionArguments, $options);
 
         return $codeceptionArguments;
     }
@@ -58,7 +58,7 @@ class CodeceptionArgumentsBuilder implements CodeceptionArgumentsBuilderInterfac
      *
      * @return \Spryker\Zed\Development\Business\Codeception\Argument\CodeceptionArguments
      */
-    protected function buildConfigPath(CodeceptionArguments $codeceptionArguments, array $options): CodeceptionArguments
+    protected function addConfigPath(CodeceptionArguments $codeceptionArguments, array $options): CodeceptionArguments
     {
         if (!array_key_exists(static::OPTION_CONFIG_PATH, $options)) {
             return $codeceptionArguments;
@@ -109,7 +109,7 @@ class CodeceptionArgumentsBuilder implements CodeceptionArgumentsBuilderInterfac
      *
      * @return \Spryker\Zed\Development\Business\Codeception\Argument\CodeceptionArguments
      */
-    protected function buildVerboseMode(CodeceptionArguments $codeceptionArguments, array $options): CodeceptionArguments
+    protected function addVerboseMode(CodeceptionArguments $codeceptionArguments, array $options): CodeceptionArguments
     {
         if (!(bool)$options[static::OPTION_VERBOSE]) {
             return $codeceptionArguments;
