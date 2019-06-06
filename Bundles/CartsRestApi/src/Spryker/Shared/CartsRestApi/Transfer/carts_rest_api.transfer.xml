@@ -25,7 +25,7 @@
 
     <transfer name="RestItemsAttributes">
         <property name="sku" type="string" restRequestParameter="required" />
-        <property name="quantity" type="int" restRequestParameter="required" />
+        <property name="quantity" type="float" restRequestParameter="required" />
         <property name="groupKey" type="string" />
         <property name="abstractSku" type="string" />
         <property name="amount" type="int" />
@@ -106,7 +106,7 @@
 
     <transfer name="CartItemRequest">
         <property name="sku" type="string" />
-        <property name="quantity" type="int" />
+        <property name="quantity" type="float" />
         <property name="quoteUuid" type="string" />
         <property name="customer" type="Customer" />
     </transfer>
