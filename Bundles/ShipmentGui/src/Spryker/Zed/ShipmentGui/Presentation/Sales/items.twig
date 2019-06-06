@@ -4,7 +4,8 @@
             <div class="col-sm-9">
                 <h5>{{ 'Order Items' | trans }}</h5>
             </div>
-            {% if groupedOrderItemsByShipment | length > 1 %}
+
+            {% if order.items | length > 1 %}
                 <div class="col-sm-3 text-right">
                     {% include '@ShipmentGui/Create/_partials/create-shipment-link.twig' ignore missing %}
                 </div>
