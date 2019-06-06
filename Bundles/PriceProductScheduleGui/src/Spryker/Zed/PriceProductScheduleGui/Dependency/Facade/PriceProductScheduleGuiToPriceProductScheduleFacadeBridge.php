@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\PriceProductScheduledListImportRequestTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleListImportResponseTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleListResponseTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleListTransfer;
-use Spryker\Zed\PriceProductScheduleGui\Communication\File\UploadedFile;
+use Spryker\Zed\PriceProductSchedule\Communication\File\UploadedFile;
 
 class PriceProductScheduleGuiToPriceProductScheduleFacadeBridge implements PriceProductScheduleGuiToPriceProductScheduleFacadeInterface
 {
@@ -76,7 +76,7 @@ class PriceProductScheduleGuiToPriceProductScheduleFacadeBridge implements Price
     }
 
     /**
-     * @param \Spryker\Zed\PriceProductScheduleGui\Communication\File\UploadedFile $uploadedFile
+     * @param \Spryker\Zed\PriceProductSchedule\Communication\File\UploadedFile $uploadedFile
      * @param \Generated\Shared\Transfer\PriceProductScheduledListImportRequestTransfer $productScheduledListImportRequestTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduledListImportRequestTransfer
@@ -92,7 +92,7 @@ class PriceProductScheduleGuiToPriceProductScheduleFacadeBridge implements Price
     }
 
     /**
-     * @param \Spryker\Zed\PriceProductScheduleGui\Communication\File\UploadedFile $uploadedFile
+     * @param \Spryker\Zed\PriceProductSchedule\Communication\File\UploadedFile $uploadedFile
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduleCsvValidationResultTransfer
      */

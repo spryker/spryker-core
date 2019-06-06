@@ -8,12 +8,12 @@
 namespace Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule;
 
 use Generated\Shared\Transfer\PriceProductScheduleCsvValidationResultTransfer;
-use Spryker\Zed\PriceProductScheduleGui\Communication\File\UploadedFile;
+use Spryker\Zed\PriceProductSchedule\Communication\File\UploadedFile;
 
 interface PriceProductScheduleCsvValidatorInterface
 {
     /**
-     * @param \Spryker\Zed\PriceProductScheduleGui\Communication\File\UploadedFile $uploadedFile
+     * @param \Spryker\Zed\PriceProductSchedule\Communication\File\UploadedFile $uploadedFile
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduleCsvValidationResultTransfer
      */

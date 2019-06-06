@@ -8,9 +8,9 @@
 namespace Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule;
 
 use Generated\Shared\Transfer\PriceProductScheduleCsvValidationResultTransfer;
+use Spryker\Zed\PriceProductSchedule\Communication\File\UploadedFile;
 use Spryker\Zed\PriceProductSchedule\Dependency\Service\PriceProductScheduleToUtilCsvServiceInterface;
 use Spryker\Zed\PriceProductSchedule\PriceProductScheduleConfig;
-use Spryker\Zed\PriceProductScheduleGui\Communication\File\UploadedFile;
 
 class PriceProductScheduleCsvValidator implements PriceProductScheduleCsvValidatorInterface
 {
@@ -39,7 +39,7 @@ class PriceProductScheduleCsvValidator implements PriceProductScheduleCsvValidat
     }
 
     /**
-     * @param \Spryker\Zed\PriceProductScheduleGui\Communication\File\UploadedFile $uploadedFile
+     * @param \Spryker\Zed\PriceProductSchedule\Communication\File\UploadedFile $uploadedFile
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduleCsvValidationResultTransfer
      */

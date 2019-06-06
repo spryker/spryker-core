@@ -8,7 +8,7 @@
 namespace Spryker\Zed\PriceProductScheduleGui\Communication\Form;
 
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
-use Spryker\Zed\PriceProductScheduleGui\Communication\File\UploadedFile;
+use Spryker\Zed\PriceProductSchedule\Communication\File\UploadedFile;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -134,7 +134,7 @@ class PriceProductScheduleImportFormType extends AbstractType
     /**
      * @param \Symfony\Component\HttpFoundation\File\UploadedFile $uploadedFile
      *
-     * @return \Spryker\Zed\PriceProductScheduleGui\Communication\File\UploadedFile
+     * @return \Spryker\Zed\PriceProductSchedule\Communication\File\UploadedFile
      */
     protected function mapSymfonyUploadedFileToUploadedFile(SymfonyUploadedFile $uploadedFile): UploadedFile
     {

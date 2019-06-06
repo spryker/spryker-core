@@ -9,8 +9,8 @@ namespace Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule;
 
 use Generated\Shared\Transfer\PriceProductScheduledListImportRequestTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleImportTransfer;
+use Spryker\Zed\PriceProductSchedule\Communication\File\UploadedFile;
 use Spryker\Zed\PriceProductSchedule\Dependency\Service\PriceProductScheduleToUtilCsvServiceInterface;
-use Spryker\Zed\PriceProductScheduleGui\Communication\File\UploadedFile;
 
 class PriceProductScheduleCsvReader implements PriceProductScheduleCsvReaderInterface
 {
@@ -37,7 +37,7 @@ class PriceProductScheduleCsvReader implements PriceProductScheduleCsvReaderInte
     }
 
     /**
-     * @param \Spryker\Zed\PriceProductScheduleGui\Communication\File\UploadedFile $uploadedFile
+     * @param \Spryker\Zed\PriceProductSchedule\Communication\File\UploadedFile $uploadedFile
      * @param \Generated\Shared\Transfer\PriceProductScheduledListImportRequestTransfer $productScheduledListImportRequestTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduledListImportRequestTransfer

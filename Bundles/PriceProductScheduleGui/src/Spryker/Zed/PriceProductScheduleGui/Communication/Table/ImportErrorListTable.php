@@ -70,8 +70,10 @@ class ImportErrorListTable extends AbstractTable
         foreach ($this->priceProductScheduleListImportResponseTransfer->getErrors() as $priceProductScheduleListImportErrorTransfer) {
             $data[] = [
                 PriceProductScheduleImportMetaDataTransfer::IDENTIFIER => $priceProductScheduleListImportErrorTransfer->getPriceProductScheduleImport()->getMetaData()->getIdentifier(),
-                PriceProductScheduleListImportErrorTransfer::MESSAGE => $this->trans($priceProductScheduleListImportErrorTransfer->getMessage(),
-                    $priceProductScheduleListImportErrorTransfer->getParameters()),
+                PriceProductScheduleListImportErrorTransfer::MESSAGE => $this->trans(
+                    $priceProductScheduleListImportErrorTransfer->getMessage(),
+                    $priceProductScheduleListImportErrorTransfer->getParameters()
+                ),
             ];
         }
 

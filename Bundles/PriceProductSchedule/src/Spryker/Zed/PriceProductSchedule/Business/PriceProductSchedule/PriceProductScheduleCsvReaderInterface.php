@@ -8,12 +8,12 @@
 namespace Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule;
 
 use Generated\Shared\Transfer\PriceProductScheduledListImportRequestTransfer;
-use Spryker\Zed\PriceProductScheduleGui\Communication\File\UploadedFile;
+use Spryker\Zed\PriceProductSchedule\Communication\File\UploadedFile;
 
 interface PriceProductScheduleCsvReaderInterface
 {
     /**
-     * @param \Spryker\Zed\PriceProductScheduleGui\Communication\File\UploadedFile $uploadedFile
+     * @param \Spryker\Zed\PriceProductSchedule\Communication\File\UploadedFile $uploadedFile
      * @param \Generated\Shared\Transfer\PriceProductScheduledListImportRequestTransfer $productScheduledListImportRequestTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduledListImportRequestTransfer

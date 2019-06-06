@@ -7,12 +7,12 @@
 
 namespace Spryker\Zed\PriceProductSchedule\Dependency\Service;
 
-use Spryker\Zed\PriceProductScheduleGui\Communication\File\UploadedFile;
+use Spryker\Zed\PriceProductSchedule\Communication\File\UploadedFile;
 
 interface PriceProductScheduleToUtilCsvServiceInterface
 {
     /**
-     * @param \Spryker\Zed\PriceProductScheduleGui\Communication\File\UploadedFile $fileUploadTransfer
+     * @param \Spryker\Zed\PriceProductSchedule\Communication\File\UploadedFile $fileUploadTransfer
      *
      * @return array
      */

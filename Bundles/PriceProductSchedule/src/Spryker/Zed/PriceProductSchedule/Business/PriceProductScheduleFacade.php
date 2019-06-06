@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\PriceProductScheduleListImportResponseTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleListResponseTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleListTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
-use Spryker\Zed\PriceProductScheduleGui\Communication\File\UploadedFile;
+use Spryker\Zed\PriceProductSchedule\Communication\File\UploadedFile;
 
 /**
  * @method \Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleBusinessFactory getFactory()
@@ -123,7 +123,7 @@ class PriceProductScheduleFacade extends AbstractFacade implements PriceProductS
      *
      * @api
      *
-     * @param \Spryker\Zed\PriceProductScheduleGui\Communication\File\UploadedFile $uploadedFile
+     * @param \Spryker\Zed\PriceProductSchedule\Communication\File\UploadedFile $uploadedFile
      * @param \Generated\Shared\Transfer\PriceProductScheduledListImportRequestTransfer $productScheduledListImportRequestTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduledListImportRequestTransfer
@@ -145,7 +145,7 @@ class PriceProductScheduleFacade extends AbstractFacade implements PriceProductS
      *
      * @api
      *
-     * @param \Spryker\Zed\PriceProductScheduleGui\Communication\File\UploadedFile $uploadedFile
+     * @param \Spryker\Zed\PriceProductSchedule\Communication\File\UploadedFile $uploadedFile
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduleCsvValidationResultTransfer
      */
