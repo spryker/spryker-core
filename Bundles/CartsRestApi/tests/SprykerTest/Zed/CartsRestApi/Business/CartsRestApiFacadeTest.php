@@ -768,6 +768,7 @@ class CartsRestApiFacadeTest extends Unit
                 'getCartFacade',
                 'getPersistentCartFacade',
                 'getQuoteCreatorPlugin',
+                'getQuoteCollectionExpanderPlugins',
             ]
         );
 
