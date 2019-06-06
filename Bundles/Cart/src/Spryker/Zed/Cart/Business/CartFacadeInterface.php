@@ -55,11 +55,34 @@ interface CartFacadeInterface
      *
      * @api
      *
+     * @deprecated Use addToQuote() instead.
+     *
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function add(CartChangeTransfer $cartChangeTransfer);
+
+    /**
+     * Specification:
+     *  - Adds item(s) to the quote. Each item gets additional information (e.g. price).
+     *  - Does nothing if cart is locked.
+     *  - Runs cart pre check plugins.
+     *  - For each new item runs the item expander plugins (requires a SKU for each new item).
+     *  - Adds new item(s) to quote (requires, but not limited, a quantity > 0 for each new item).
+     *  - Groups items in quote (-> ItemGrouper).
+     *  - Recalculates quote (-> Calculation).
+     *  - Adds success message to messenger (-> Messenger).
+     *  - Returns QuoteResponse with updated quote if quote is not locked.
+     *  - In case of error adds messenger error message and returns QuoteResponse with unchanged QuoteTransfer and errors.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function addToQuote(CartChangeTransfer $cartChangeTransfer): QuoteResponseTransfer;
 
     /**
      * Specification:

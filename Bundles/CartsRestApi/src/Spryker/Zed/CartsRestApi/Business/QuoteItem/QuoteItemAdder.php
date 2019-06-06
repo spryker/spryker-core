@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\CartsRestApi\Business\QuoteItem;
 
+use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\PersistentCartChangeTransfer;
 use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -18,14 +18,14 @@ use Spryker\Shared\CartsRestApi\CartsRestApiConfig as CartsRestApiSharedConfig;
 use Spryker\Zed\CartsRestApi\Business\PermissionChecker\QuotePermissionCheckerInterface;
 use Spryker\Zed\CartsRestApi\Business\Quote\QuoteReaderInterface;
 use Spryker\Zed\CartsRestApi\Business\QuoteItem\Mapper\QuoteItemMapperInterface;
-use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToPersistentCartFacadeInterface;
+use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToCartFacadeInterface;
 
 class QuoteItemAdder implements QuoteItemAdderInterface
 {
     /**
-     * @var \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToPersistentCartFacadeInterface
+     * @var \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToCartFacadeInterface
      */
-    protected $persistentCartFacade;
+    protected $cartFacade;
 
     /**
      * @var \Spryker\Zed\CartsRestApi\Business\Quote\QuoteReaderInterface
@@ -43,18 +43,18 @@ class QuoteItemAdder implements QuoteItemAdderInterface
     protected $quotePermissionChecker;
 
     /**
-     * @param \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToPersistentCartFacadeInterface $persistentCartFacade
+     * @param \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToCartFacadeInterface $cartFacade
      * @param \Spryker\Zed\CartsRestApi\Business\Quote\QuoteReaderInterface $quoteReader
      * @param \Spryker\Zed\CartsRestApi\Business\QuoteItem\Mapper\QuoteItemMapperInterface $quoteItemMapper
      * @param \Spryker\Zed\CartsRestApi\Business\PermissionChecker\QuotePermissionCheckerInterface $quotePermissionChecker
      */
     public function __construct(
-        CartsRestApiToPersistentCartFacadeInterface $persistentCartFacade,
+        CartsRestApiToCartFacadeInterface $cartFacade,
         QuoteReaderInterface $quoteReader,
         QuoteItemMapperInterface $quoteItemMapper,
         QuotePermissionCheckerInterface $quotePermissionChecker
     ) {
-        $this->persistentCartFacade = $persistentCartFacade;
+        $this->cartFacade = $cartFacade;
         $this->quoteReader = $quoteReader;
         $this->quoteItemMapper = $quoteItemMapper;
         $this->quotePermissionChecker = $quotePermissionChecker;
@@ -70,6 +70,7 @@ class QuoteItemAdder implements QuoteItemAdderInterface
         $restCartItemsAttributesTransfer
             ->requireCustomerReference()
             ->requireSku()
+            ->requireQuantity()
             ->requireQuoteUuid();
 
         $quoteResponseTransfer = $this->quoteReader->findQuoteByUuid(
@@ -90,12 +91,12 @@ class QuoteItemAdder implements QuoteItemAdderInterface
                     ->setErrorIdentifier(CartsRestApiSharedConfig::ERROR_IDENTIFIER_UNAUTHORIZED_CART_ACTION));
         }
 
-        $persistentCartChangeTransfer = $this->createPersistentCartChangeTransfer(
+        $cartChangeTransfer = $this->createCartChangeTransfer(
             $quoteResponseTransfer->getQuoteTransfer(),
             $restCartItemsAttributesTransfer
         );
 
-        $quoteResponseTransfer = $this->persistentCartFacade->add($persistentCartChangeTransfer);
+        $quoteResponseTransfer = $this->cartFacade->addToQuote($cartChangeTransfer);
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             $quoteResponseTransfer
                 ->addError((new QuoteErrorTransfer())
@@ -109,20 +110,20 @@ class QuoteItemAdder implements QuoteItemAdderInterface
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
      *
-     * @return \Generated\Shared\Transfer\PersistentCartChangeTransfer
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    protected function createPersistentCartChangeTransfer(
+    protected function createCartChangeTransfer(
         QuoteTransfer $quoteTransfer,
         RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
-    ): PersistentCartChangeTransfer {
-        $customerTransfer = $restCartItemsAttributesTransfer->getCustomer() ?? new CustomerTransfer();
-        $customerTransfer->setCustomerReference($restCartItemsAttributesTransfer->getCustomerReference());
+    ): CartChangeTransfer {
+        $quoteTransfer
+            ->setCustomer((new CustomerTransfer())
+                ->setCustomerReference($restCartItemsAttributesTransfer->getCustomerReference()));
 
-        return (new PersistentCartChangeTransfer())
-            ->setIdQuote($quoteTransfer->getIdQuote())
+        return (new CartChangeTransfer())
+            ->setQuote($quoteTransfer)
             ->addItem((new ItemTransfer())
                 ->setSku($restCartItemsAttributesTransfer->getSku())
-                ->setQuantity($restCartItemsAttributesTransfer->getQuantity()))
-            ->setCustomer($customerTransfer);
+                ->setQuantity($restCartItemsAttributesTransfer->getQuantity()));
     }
 }

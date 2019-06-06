@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\CartsRestApi\Dependency\Facade;
 
+use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 class CartsRestApiToCartFacadeBridge implements CartsRestApiToCartFacadeInterface
@@ -32,5 +34,15 @@ class CartsRestApiToCartFacadeBridge implements CartsRestApiToCartFacadeInterfac
     public function reloadItems(QuoteTransfer $quoteTransfer)
     {
         return $this->cartFacade->reloadItems($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function addToQuote(CartChangeTransfer $cartChangeTransfer): QuoteResponseTransfer
+    {
+        return $this->cartFacade->addToQuote($cartChangeTransfer);
     }
 }

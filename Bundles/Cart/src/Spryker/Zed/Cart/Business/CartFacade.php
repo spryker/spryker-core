@@ -35,6 +35,8 @@ class CartFacade extends AbstractFacade implements CartFacadeInterface
      *
      * @api
      *
+     * @deprecated Use addToQuote() instead.
+     *
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
@@ -42,6 +44,20 @@ class CartFacade extends AbstractFacade implements CartFacadeInterface
     public function add(CartChangeTransfer $cartChangeTransfer)
     {
         return $this->getFactory()->createCartOperation()->add($cartChangeTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function addToQuote(CartChangeTransfer $cartChangeTransfer): QuoteResponseTransfer
+    {
+        return $this->getFactory()->createCartOperation()->addToQuote($cartChangeTransfer);
     }
 
     /**

@@ -8,14 +8,19 @@
 namespace SprykerTest\Zed\CartsRestApi;
 
 use Codeception\Actor;
+use Generated\Shared\DataBuilder\AssignGuestQuoteRequestBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\DataBuilder\QuoteCollectionBuilder;
 use Generated\Shared\DataBuilder\QuoteCriteriaFilterBuilder;
 use Generated\Shared\DataBuilder\QuoteResponseBuilder;
+use Generated\Shared\DataBuilder\RestCartItemsAttributesBuilder;
+use Generated\Shared\Transfer\AssignGuestQuoteRequestTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\RestCartItemsAttributesTransfer;
 
 /**
  * Inherited Methods
@@ -40,6 +45,45 @@ class CartsRestApiBusinessTester extends Actor
     public const TEST_QUOTE_UUID = 'test-quote-uuid';
 
     public const TEST_CUSTOMER_REFERENCE = 'DE--666';
+
+    public const TEST_ANONYMOUS_CUSTOMER_REFERENCE = 'anonymous:DE--666';
+
+    public const TEST_QUANTITY = '3';
+
+    public const TEST_SKU = 'test-sku';
+
+    public const COLLECTION_QUOTES = [
+        [
+            'id_quote' => 1,
+            'name' => 'Shopping cart',
+            'store' => 'DE',
+            'priceMode' => 'GROSS_MODE',
+            'currency' => 'EUR',
+            'customerReference' => 'tester-de',
+            'uuid' => '7fd5cc11-87ff-55e2-b413-7e07f9640404',
+
+        ],
+        [
+            'id_quote' => 2,
+            'name' => 'test quote two',
+            'store' => 'DE',
+            'priceMode' => 'GROSS_MODE',
+            'currency' => 'EUR',
+            'customerReference' => 'tester-de',
+            'uuid' => '22b43a18-e46c-55bf-bc00-65f4dee0727a',
+        ],
+    ];
+
+    /**
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function prepareQuoteResponseTransfer(): QuoteResponseTransfer
+    {
+        /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
+        $quoteResponseTransfer = (new QuoteResponseBuilder(['isSuccessful' => true]))->build();
+
+        return $quoteResponseTransfer;
+    }
 
     /**
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
@@ -100,6 +144,141 @@ class CartsRestApiBusinessTester extends Actor
     }
 
     /**
+     * @return \Generated\Shared\Transfer\RestCartItemsAttributesTransfer
+     */
+    public function prepareRestCartItemsAttributesTransferWithoutQuantity(): RestCartItemsAttributesTransfer
+    {
+        /** @var \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer */
+        $restCartItemsAttributesTransfer = (new RestCartItemsAttributesBuilder(
+            [
+                'quoteUuid' => static::TEST_QUOTE_UUID,
+                'customerReference' => static::TEST_CUSTOMER_REFERENCE,
+                'sku' => static::TEST_SKU,
+            ]
+        ))->build();
+
+        return $restCartItemsAttributesTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\RestCartItemsAttributesTransfer
+     */
+    public function prepareRestCartItemsAttributesTransferWithQuantity(): RestCartItemsAttributesTransfer
+    {
+        /** @var \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer */
+        $restCartItemsAttributesTransfer = (new RestCartItemsAttributesBuilder(
+            [
+                'quoteUuid' => static::TEST_QUOTE_UUID,
+                'customerReference' => static::TEST_CUSTOMER_REFERENCE,
+                'sku' => static::TEST_SKU,
+                'quantity' => static::TEST_QUANTITY,
+            ]
+        ))->build();
+
+        $restCartItemsAttributesTransfer
+            ->setCustomer((new CustomerTransfer())->setCustomerReference($restCartItemsAttributesTransfer->getCustomerReference()));
+
+        return $restCartItemsAttributesTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\RestCartItemsAttributesTransfer
+     */
+    public function prepareRestCartItemsAttributesTransferWithoutCustomerReference(): RestCartItemsAttributesTransfer
+    {
+        /** @var \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer */
+        $restCartItemsAttributesTransfer = (new RestCartItemsAttributesBuilder(
+            [
+                'quoteUuid' => static::TEST_QUOTE_UUID,
+                'sku' => static::TEST_SKU,
+                'quantity' => static::TEST_QUANTITY,
+            ]
+        ))->build();
+
+        return $restCartItemsAttributesTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\AssignGuestQuoteRequestTransfer
+     */
+    public function prepareAssignGuestQuoteRequestTransfer(): AssignGuestQuoteRequestTransfer
+    {
+        /** @var \Generated\Shared\Transfer\AssignGuestQuoteRequestTransfer $assignGuestQuoteRequestTransfer */
+        $assignGuestQuoteRequestTransfer = (new AssignGuestQuoteRequestBuilder(
+            [
+                'anonymousCustomerReference' => static::TEST_ANONYMOUS_CUSTOMER_REFERENCE,
+                'customerReference' => static::TEST_CUSTOMER_REFERENCE,
+            ]
+        ))->build();
+
+        return $assignGuestQuoteRequestTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\AssignGuestQuoteRequestTransfer
+     */
+    public function prepareAssignGuestQuoteRequestTransferWithoutCustomerReference(): AssignGuestQuoteRequestTransfer
+    {
+        /** @var \Generated\Shared\Transfer\AssignGuestQuoteRequestTransfer $assignGuestQuoteRequestTransfer */
+        $assignGuestQuoteRequestTransfer = (new AssignGuestQuoteRequestBuilder(
+            [
+                'anonymousCustomerReference' => static::TEST_ANONYMOUS_CUSTOMER_REFERENCE,
+            ]
+        ))->build();
+
+        return $assignGuestQuoteRequestTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\AssignGuestQuoteRequestTransfer
+     */
+    public function prepareAssignGuestQuoteRequestTransferWithoutAnonymousCustomerReference(): AssignGuestQuoteRequestTransfer
+    {
+        /** @var \Generated\Shared\Transfer\AssignGuestQuoteRequestTransfer $assignGuestQuoteRequestTransfer */
+        $assignGuestQuoteRequestTransfer = (new AssignGuestQuoteRequestBuilder(
+            [
+                'customerReference' => static::TEST_CUSTOMER_REFERENCE,
+            ]
+        ))->build();
+
+        return $assignGuestQuoteRequestTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\RestCartItemsAttributesTransfer
+     */
+    public function prepareRestCartItemsAttributesTransferWithoutSku(): RestCartItemsAttributesTransfer
+    {
+        /** @var \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer */
+        $restCartItemsAttributesTransfer = (new RestCartItemsAttributesBuilder(
+            [
+                'quoteUuid' => static::TEST_QUOTE_UUID,
+                'customerReference' => static::TEST_CUSTOMER_REFERENCE,
+                'quantity' => static::TEST_QUANTITY,
+            ]
+        ))->build();
+
+        return $restCartItemsAttributesTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\RestCartItemsAttributesTransfer
+     */
+    public function prepareRestCartItemsAttributesTransferWithoutUuid(): RestCartItemsAttributesTransfer
+    {
+        /** @var \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer */
+        $restCartItemsAttributesTransfer = (new RestCartItemsAttributesBuilder(
+            [
+                'sku' => static::TEST_SKU,
+                'customerReference' => static::TEST_CUSTOMER_REFERENCE,
+                'quantity' => static::TEST_QUANTITY,
+            ]
+        ))->build();
+
+        return $restCartItemsAttributesTransfer;
+    }
+
+    /**
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function prepareQuoteTransferWithoutCustomerReference(): QuoteTransfer
@@ -128,6 +307,19 @@ class CartsRestApiBusinessTester extends Actor
     {
         /** @var \Generated\Shared\Transfer\QuoteCollectionTransfer $quoteCollectionTransfer */
         $quoteCollectionTransfer = (new QuoteCollectionBuilder())->build();
+
+        return $quoteCollectionTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
+     */
+    public function prepareQuotesCollectionTransfer(): QuoteCollectionTransfer
+    {
+        $quoteCollectionTransfer = new QuoteCollectionTransfer();
+        foreach (static::COLLECTION_QUOTES as $quote) {
+            $quoteCollectionTransfer->addQuote((new QuoteTransfer())->fromArray($quote));
+        }
 
         return $quoteCollectionTransfer;
     }

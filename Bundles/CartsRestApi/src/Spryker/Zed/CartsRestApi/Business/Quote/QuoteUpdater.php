@@ -16,6 +16,7 @@ use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\QuoteUpdateRequestTransfer;
 use Spryker\Shared\CartsRestApi\CartsRestApiConfig as CartsRestApiSharedConfig;
+use Spryker\Zed\CartsRestApi\Business\ErrorIdentifierAdderTrait;
 use Spryker\Zed\CartsRestApi\Business\PermissionChecker\QuotePermissionCheckerInterface;
 use Spryker\Zed\CartsRestApi\Business\Quote\Mapper\QuoteMapperInterface;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToCartFacadeInterface;
@@ -23,6 +24,8 @@ use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToPersistentCartFacad
 
 class QuoteUpdater implements QuoteUpdaterInterface
 {
+    use ErrorIdentifierAdderTrait;
+
     /**
      * @var \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToPersistentCartFacadeInterface
      */
@@ -80,7 +83,6 @@ class QuoteUpdater implements QuoteUpdaterInterface
         $quoteTransfer->requireUuid();
 
         $quoteResponseTransfer = $this->quoteReader->findQuoteByUuid($quoteTransfer);
-
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $quoteResponseTransfer;
         }
@@ -183,7 +185,13 @@ class QuoteUpdater implements QuoteUpdaterInterface
      */
     protected function performUpdatingQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
-        return $this->persistentCartFacade
+        $quoteResponseTransfer = $this->persistentCartFacade
             ->updateQuote($this->quoteMapper->mapQuoteTransferToQuoteUpdateRequestTransfer($quoteTransfer, new QuoteUpdateRequestTransfer()));
+
+        if (!$quoteResponseTransfer->getIsSuccessful()) {
+            return $this->addErrorIdentifiersToQuoteResponseErrors($quoteResponseTransfer);
+        }
+
+        return $quoteResponseTransfer;
     }
 }
