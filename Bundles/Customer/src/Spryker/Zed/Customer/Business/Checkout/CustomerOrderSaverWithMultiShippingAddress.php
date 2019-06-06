@@ -69,8 +69,8 @@ class CustomerOrderSaverWithMultiShippingAddress extends CustomerOrderSaver
 
         $this->existingAddresses = [];
 
-        $this->processNewUniqueCustomerAddress($quoteTransfer->getBillingAddress(), $customer);
-
+        $billingAddressTransfer = $this->processNewUniqueCustomerAddress($quoteTransfer->getBillingAddress(), $customer);
+        $quoteTransfer->setBillingAddress($billingAddressTransfer);
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             if ($itemTransfer->getIsAddressSavingSkipped()) {

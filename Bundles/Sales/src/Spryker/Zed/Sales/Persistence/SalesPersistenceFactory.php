@@ -13,7 +13,6 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderAddressQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderCommentQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
-use Orm\Zed\Sales\Persistence\SpySalesShipmentQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\Sales\Persistence\Propel\Mapper\SalesExpenseMapper;
 use Spryker\Zed\Sales\Persistence\Propel\Mapper\SalesExpenseMapperInterface;

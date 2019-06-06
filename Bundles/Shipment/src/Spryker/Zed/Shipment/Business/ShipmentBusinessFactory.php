@@ -40,7 +40,6 @@ use Spryker\Zed\Shipment\Business\StrategyResolver\OrderSaverStrategyResolver;
 use Spryker\Zed\Shipment\Business\StrategyResolver\OrderSaverStrategyResolverInterface;
 use Spryker\Zed\Shipment\Business\StrategyResolver\TaxRateCalculatorStrategyResolver;
 use Spryker\Zed\Shipment\Business\StrategyResolver\TaxRateCalculatorStrategyResolverInterface;
-use Spryker\Zed\Shipment\Business\Transfer\TransferBuilder;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCustomerInterface;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToSalesFacadeInterface;
 use Spryker\Zed\Shipment\ShipmentDependencyProvider;
@@ -114,16 +113,6 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
         return new MethodWriter(
             $this->getQueryContainer(),
             $this->createMethodPrice()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\Shipment\Business\Transfer\TransferBuilder
-     */
-    public function createTransferBuilder(): TransferBuilder
-    {
-        return new TransferBuilder(
-            $this->createMethodReader()
         );
     }
 

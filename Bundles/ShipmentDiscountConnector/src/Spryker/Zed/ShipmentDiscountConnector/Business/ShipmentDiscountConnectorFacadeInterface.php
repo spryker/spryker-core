@@ -76,7 +76,7 @@ interface ShipmentDiscountConnectorFacadeInterface
 
     /**
      * Specification:
-     * - Compare chosen the quote level (BC) or item level shipment carrier with a carrier in condition.
+     * - Compare the shipment carrier selected in the quote level (BC) or item level with the shipment carrier in condition.
      *
      * @api
      *
@@ -90,7 +90,7 @@ interface ShipmentDiscountConnectorFacadeInterface
 
     /**
      * Specification:
-     * - Compare chosen by the quote level (BC) or item level shipment method with a method in condition.
+     * - Compare the shipment method selected in the quote level (BC) or item level with the shipment method in condition.
      *
      * @api
      *
@@ -104,7 +104,7 @@ interface ShipmentDiscountConnectorFacadeInterface
 
     /**
      * Specification:
-     * - Compare chosen by the quote level (BC) or item level shipment carrier with a shipment price in condition.
+     * - Compare the shipment price selected in the quote level (BC) or item level with the shipment price in condition.
      *
      * @api
      *
