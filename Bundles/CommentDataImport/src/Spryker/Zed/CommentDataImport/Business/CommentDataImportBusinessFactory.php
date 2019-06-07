@@ -10,6 +10,8 @@ namespace Spryker\Zed\CommentDataImport\Business;
 use Spryker\Zed\CommentDataImport\Business\CommentDataImportStep\CommentWriterStep;
 use Spryker\Zed\CommentDataImport\Business\CommentDataImportStep\CustomerReferenceToIdCustomerStep;
 use Spryker\Zed\CommentDataImport\Business\CommentDataImportStep\QuoteOwnerKeyToCommentThreadOwnerIdStep;
+use Spryker\Zed\CommentDataImport\CommentDataImportDependencyProvider;
+use Spryker\Zed\CommentDataImport\Dependency\Service\CommentDataImportToUtilEncodingServiceInterface;
 use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
 use Spryker\Zed\DataImport\Business\Model\DataImporterInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
@@ -44,7 +46,7 @@ class CommentDataImportBusinessFactory extends DataImportBusinessFactory
      */
     public function createCommentWriterStep(): DataImportStepInterface
     {
-        return new CommentWriterStep();
+        return new CommentWriterStep($this->getUtilEncodingService());
     }
 
     /**
@@ -61,5 +63,13 @@ class CommentDataImportBusinessFactory extends DataImportBusinessFactory
     public function createCustomerReferenceToIdCustomerStep(): DataImportStepInterface
     {
         return new CustomerReferenceToIdCustomerStep();
+    }
+
+    /**
+     * @return \Spryker\Zed\CommentDataImport\Dependency\Service\CommentDataImportToUtilEncodingServiceInterface
+     */
+    public function getUtilEncodingService(): CommentDataImportToUtilEncodingServiceInterface
+    {
+        return $this->getProvidedDependency(CommentDataImportDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 }

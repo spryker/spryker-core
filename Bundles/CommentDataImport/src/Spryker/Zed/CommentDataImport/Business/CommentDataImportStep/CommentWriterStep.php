@@ -13,12 +13,26 @@ use Orm\Zed\Comment\Persistence\SpyCommentQuery;
 use Orm\Zed\Comment\Persistence\SpyCommentThreadQuery;
 use Orm\Zed\Comment\Persistence\SpyCommentToCommentTagQuery;
 use Spryker\Zed\CommentDataImport\Business\DataSet\CommentDataSetInterface;
+use Spryker\Zed\CommentDataImport\Dependency\Service\CommentDataImportToUtilEncodingServiceInterface;
 use Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
 class CommentWriterStep implements DataImportStepInterface
 {
+    /**
+     * @var \Spryker\Zed\CommentDataImport\Dependency\Service\CommentDataImportToUtilEncodingServiceInterface
+     */
+    protected $utilEncodingService;
+
+    /**
+     * @param \Spryker\Zed\CommentDataImport\Dependency\Service\CommentDataImportToUtilEncodingServiceInterface $utilEncodingService
+     */
+    public function __construct(CommentDataImportToUtilEncodingServiceInterface $utilEncodingService)
+    {
+        $this->utilEncodingService = $utilEncodingService;
+    }
+
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
@@ -52,35 +66,48 @@ class CommentWriterStep implements DataImportStepInterface
 
         $commentEntity->save();
 
-        $this->saveCommentTags($dataSet, $commentEntity);
+        $commentTagIds = $this->saveCommentTags($dataSet);
+
+        if ($commentTagIds) {
+            $this->saveCommentToCommentTags($commentTagIds, $commentEntity);
+        }
     }
 
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
-     * @param \Orm\Zed\Comment\Persistence\SpyComment $commentEntity
      *
-     * @return void
+     * @return int[]
      */
-    protected function saveCommentTags(DataSetInterface $dataSet, SpyComment $commentEntity): void
+    protected function saveCommentTags(DataSetInterface $dataSet): array
     {
-        $idCommentTags = [];
-        $tags = json_decode($dataSet[CommentDataSetInterface::COLUMN_TAGS]);
+        $commentTagIds = [];
+        $decodedTags = $this->utilEncodingService->decodeJson($dataSet[CommentDataSetInterface::COLUMN_TAGS]);
 
-        if (!$tags) {
-            return;
+        if (!$decodedTags) {
+            return $commentTagIds;
         }
 
-        foreach ($tags as $tag) {
+        foreach ($decodedTags as $tag) {
             $commentTagEntity = $this->createCommentTagQuery()
                 ->filterByName($tag)
                 ->findOneOrCreate();
 
             $commentTagEntity->save();
-
-            $idCommentTags[] = $commentTagEntity->getIdCommentTag();
+            $commentTagIds[] = $commentTagEntity->getIdCommentTag();
         }
 
-        foreach ($idCommentTags as $idCommentTag) {
+        return $commentTagIds;
+    }
+
+    /**
+     * @param array $commentTagIds
+     * @param \Orm\Zed\Comment\Persistence\SpyComment $commentEntity
+     *
+     * @return void
+     */
+    protected function saveCommentToCommentTags(array $commentTagIds, SpyComment $commentEntity): void
+    {
+        foreach ($commentTagIds as $idCommentTag) {
             $commentToCommentTagEntity = $this->createCommentToCommentTagQuery()
                 ->filterByFkComment($commentEntity->getIdComment())
                 ->filterByFkCommentTag($idCommentTag)

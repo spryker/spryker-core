@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/comment-data-import.svg)](https://travis-ci.org/spryker/comment-data-import)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/comment-data-import/badge.svg)](https://coveralls.io/github/spryker/comment-data-import)
 
-DataImport for Quote Requests.
+DataImport for Comments.
 
 ## Installation
 
