@@ -376,7 +376,8 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     {
         return new ShipmentReader(
             $this->getSalesFacade(),
-            $this->getRepository()
+            $this->getRepository(),
+            $this->createShipmentMapper()
         );
     }
 

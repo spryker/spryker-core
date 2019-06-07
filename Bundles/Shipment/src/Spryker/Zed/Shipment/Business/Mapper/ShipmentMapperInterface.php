@@ -9,6 +9,7 @@ namespace Spryker\Zed\Shipment\Business\Mapper;
 
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
+use Generated\Shared\Transfer\ShipmentTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesExpense;
 use Orm\Zed\Sales\Persistence\SpySalesShipment;
 
@@ -35,4 +36,26 @@ interface ShipmentMapperInterface
         ShipmentMethodTransfer $shipmentMethodTransfer,
         SpySalesShipment $shipmentEntity
     ): SpySalesShipment;
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesShipment $shipmentEntity
+     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesShipment
+     */
+    public function mapShipmentEntityToShipmentMethodTransfer(
+        SpySalesShipment $shipmentEntity,
+        ShipmentMethodTransfer $shipmentMethodTransfer
+    ): ShipmentMethodTransfer;
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesShipment $shipmentEntity
+     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentTransfer
+     */
+    public function mapShipmentEntityToShipmentTransfer(
+        SpySalesShipment $shipmentEntity,
+        ShipmentTransfer $shipmentTransfer
+    ): ShipmentTransfer;
 }
