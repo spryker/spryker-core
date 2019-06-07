@@ -10,7 +10,6 @@ namespace Spryker\Zed\Router;
 use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Shared\Router\RouterConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
-use Spryker\Zed\Router\Business\UrlMatcher\RedirectableUrlMatcher;
 
 class RouterConfig extends AbstractBundleConfig
 {
@@ -21,8 +20,6 @@ class RouterConfig extends AbstractBundleConfig
     {
         return [
             'cache_dir' => $this->getCachePathIfCacheEnabled(),
-            'matcher_class' => RedirectableUrlMatcher::class,
-            'matcher_base_class' => RedirectableUrlMatcher::class,
         ];
     }
 
@@ -43,7 +40,7 @@ class RouterConfig extends AbstractBundleConfig
     protected function getCachePathIfCacheEnabled(): ?string
     {
         if ($this->get(RouterConstants::IS_CACHE_ENABLED, true)) {
-            $defaultCachePath = APPLICATION_ROOT_DIR . '/data/' . APPLICATION_STORE . '/cache/' . APPLICATION . '/routing';
+            $defaultCachePath = APPLICATION_ROOT_DIR . '/data/' . APPLICATION_STORE . '/cache/Zed/routing';
 
             return $this->get(RouterConstants::CACHE_PATH, $defaultCachePath);
         }
