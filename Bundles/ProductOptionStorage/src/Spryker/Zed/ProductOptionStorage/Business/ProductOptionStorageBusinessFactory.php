@@ -11,19 +11,21 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductOptionStorage\Business\Storage\ProductOptionStorageReader;
 use Spryker\Zed\ProductOptionStorage\Business\Storage\ProductOptionStorageReaderInterface;
 use Spryker\Zed\ProductOptionStorage\Business\Storage\ProductOptionStorageWriter;
+use Spryker\Zed\ProductOptionStorage\Business\Storage\ProductOptionStorageWriterInterface;
+use Spryker\Zed\ProductOptionStorage\Dependency\Facade\ProductOptionStorageToProductOptionFacadeInterface;
+use Spryker\Zed\ProductOptionStorage\Dependency\Facade\ProductOptionStorageToStoreFacadeInterface;
 use Spryker\Zed\ProductOptionStorage\ProductOptionStorageDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductOptionStorage\ProductOptionStorageConfig getConfig()
  * @method \Spryker\Zed\ProductOptionStorage\Persistence\ProductOptionStorageQueryContainerInterface getQueryContainer()
- * @method \Spryker\Zed\ProductOptionStorage\Persistence\ProductOptionStorageRepositoryInterface getRepository()
  */
 class ProductOptionStorageBusinessFactory extends AbstractBusinessFactory
 {
     /**
      * @return \Spryker\Zed\ProductOptionStorage\Business\Storage\ProductOptionStorageWriterInterface
      */
-    public function createProductOptionStorageWriter()
+    public function createProductOptionStorageWriter(): ProductOptionStorageWriterInterface
     {
         return new ProductOptionStorageWriter(
             $this->createProductOptionStorageReader(),
@@ -40,14 +42,14 @@ class ProductOptionStorageBusinessFactory extends AbstractBusinessFactory
     public function createProductOptionStorageReader(): ProductOptionStorageReaderInterface
     {
         return new ProductOptionStorageReader(
-            $this->getRepository()
+            $this->getProductOptionFacade()
         );
     }
 
     /**
      * @return \Spryker\Zed\ProductOptionStorage\Dependency\Facade\ProductOptionStorageToProductOptionFacadeInterface
      */
-    protected function getProductOptionFacade()
+    public function getProductOptionFacade(): ProductOptionStorageToProductOptionFacadeInterface
     {
         return $this->getProvidedDependency(ProductOptionStorageDependencyProvider::FACADE_PRODUCT_OPTION);
     }
@@ -55,7 +57,7 @@ class ProductOptionStorageBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ProductOptionStorage\Dependency\Facade\ProductOptionStorageToStoreFacadeInterface
      */
-    protected function getStoreFacade()
+    public function getStoreFacade(): ProductOptionStorageToStoreFacadeInterface
     {
         return $this->getProvidedDependency(ProductOptionStorageDependencyProvider::FACADE_STORE);
     }

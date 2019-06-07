@@ -15,9 +15,16 @@
         <property name="name" type="string" />
         <property name="productOptionValues" singular="productOptionValue" type="ProductOptionValueStorage[]" />
     </transfer>
+
     <transfer name="ProductAbstractOptionStorage">
         <property name="idProductAbstract" type="int" />
         <property name="productOptionGroups" singular="productOptionGroup" type="ProductOptionGroupStorage[]" />
+    </transfer>
+
+    <transfer name="ProductAbstractOptionGroupStatus">
+        <property name="idProductAbstract" type="int" />
+        <property name="isActive" type="bool" />
+        <property name="productOptionGroupName" type="string" />
     </transfer>
 
 </transfers>

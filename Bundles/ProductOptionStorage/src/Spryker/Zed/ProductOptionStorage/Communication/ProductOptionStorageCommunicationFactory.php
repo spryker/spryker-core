@@ -14,7 +14,6 @@ use Spryker\Zed\ProductOptionStorage\ProductOptionStorageDependencyProvider;
  * @method \Spryker\Zed\ProductOptionStorage\Persistence\ProductOptionStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductOptionStorage\ProductOptionStorageConfig getConfig()
  * @method \Spryker\Zed\ProductOptionStorage\Business\ProductOptionStorageFacadeInterface getFacade()
- * @method \Spryker\Zed\ProductOptionStorage\Persistence\ProductOptionStorageRepositoryInterface getRepository()
  */
 class ProductOptionStorageCommunicationFactory extends AbstractCommunicationFactory
 {

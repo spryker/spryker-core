@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\ProductOptionStorage\Business\Storage;
 
-use Orm\Zed\ProductOption\Persistence\Map\SpyProductAbstractProductOptionGroupTableMap;
-use Orm\Zed\ProductOption\Persistence\Map\SpyProductOptionGroupTableMap;
 use Spryker\Zed\ProductOptionStorage\Dependency\Facade\ProductOptionStorageToProductOptionFacadeInterface;
 
 class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
@@ -33,29 +31,28 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
      */
     public function getProductOptionGroupStatusesByProductAbstractIds(array $productAbstractIds): array
     {
-        $productOptionGroupStatuses = $this->productOptionFacade->getProductAbstractOptionGroupStatusesByProductAbstractIds(
+        $productAbstractOptionGroupStatusTransfers = $this->productOptionFacade->getProductAbstractOptionGroupStatusesByProductAbstractIds(
             $productAbstractIds
         );
 
-        return $this->getIndexedProductOptionGroupStatuses($productOptionGroupStatuses);
+        return $this->getIndexedProductAbstractOptionGroupStatuses($productAbstractOptionGroupStatusTransfers);
     }
 
     /**
-     * @param array $productOptionGroupStatuses
+     * @param \Generated\Shared\Transfer\ProductAbstractOptionGroupStatusTransfer[] $productAbstractOptionGroupStatusTransfers
      *
      * @return array [[fkProductAbstract => [productOptionGroupName => productOptionGroupStatus]]]
      */
-    protected function getIndexedProductOptionGroupStatuses(array $productOptionGroupStatuses): array
+    protected function getIndexedProductAbstractOptionGroupStatuses(array $productAbstractOptionGroupStatusTransfers): array
     {
-        $indexedProductOptionGroupStatuses = [];
+        $indexedProductAbstractOptionGroupStatuses = [];
+        foreach ($productAbstractOptionGroupStatusTransfers as $productAbstractOptionGroupStatusTransfer) {
+            $idProductAbstract = $productAbstractOptionGroupStatusTransfer->getIdProductAbstract();
+            $productOptionGroupName = $productAbstractOptionGroupStatusTransfer->getProductOptionGroupName();
 
-        foreach ($productOptionGroupStatuses as $productOptionGroupStatus) {
-            $idProductAbstract = $productOptionGroupStatus[SpyProductAbstractProductOptionGroupTableMap::COL_FK_PRODUCT_ABSTRACT];
-            $productOptionGroupName = $productOptionGroupStatus[SpyProductOptionGroupTableMap::COL_NAME];
-
-            $indexedProductOptionGroupStatuses[$idProductAbstract][$productOptionGroupName] = $productOptionGroupStatus[SpyProductOptionGroupTableMap::COL_ACTIVE];
+            $indexedProductAbstractOptionGroupStatuses[$idProductAbstract][$productOptionGroupName] = $productAbstractOptionGroupStatusTransfer->getIsActive();
         }
 
-        return $indexedProductOptionGroupStatuses;
+        return $indexedProductAbstractOptionGroupStatuses;
     }
 }
