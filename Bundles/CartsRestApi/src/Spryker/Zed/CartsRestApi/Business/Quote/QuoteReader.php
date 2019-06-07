@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\CartsRestApi\CartsRestApiConfig as CartsRestApiSharedConfig;
-use Spryker\Zed\CartsRestApi\Business\Quote\Mapper\QuoteMapperInterface;
+use Spryker\Zed\CartsRestApi\Business\PermissionChecker\QuotePermissionCheckerInterface;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToQuoteFacadeInterface;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToStoreFacadeInterface;
 
@@ -30,23 +30,31 @@ class QuoteReader implements QuoteReaderInterface
     protected $storeFacade;
 
     /**
-     * @var \Spryker\Zed\CartsRestApi\Business\Quote\Mapper\QuoteMapperInterface
+     * @var \Spryker\Zed\CartsRestApi\Business\PermissionChecker\QuotePermissionCheckerInterface
      */
-    protected $quoteMapper;
+    protected $quotePermissionChecker;
+
+    /**
+     * @var \Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionExpanderPluginInterface[]
+     */
+    protected $quoteCollectionExpanderPlugins;
 
     /**
      * @param \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToQuoteFacadeInterface $quoteFacade
      * @param \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToStoreFacadeInterface $storeFacade
-     * @param \Spryker\Zed\CartsRestApi\Business\Quote\Mapper\QuoteMapperInterface $quoteMapper
+     * @param \Spryker\Zed\CartsRestApi\Business\PermissionChecker\QuotePermissionCheckerInterface $quotePermissionChecker
+     * @param \Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionExpanderPluginInterface[] $quoteCollectionExpanderPlugins
      */
     public function __construct(
         CartsRestApiToQuoteFacadeInterface $quoteFacade,
         CartsRestApiToStoreFacadeInterface $storeFacade,
-        QuoteMapperInterface $quoteMapper
+        QuotePermissionCheckerInterface $quotePermissionChecker,
+        array $quoteCollectionExpanderPlugins
     ) {
         $this->quoteFacade = $quoteFacade;
         $this->storeFacade = $storeFacade;
-        $this->quoteMapper = $quoteMapper;
+        $this->quotePermissionChecker = $quotePermissionChecker;
+        $this->quoteCollectionExpanderPlugins = $quoteCollectionExpanderPlugins;
     }
 
     /**
@@ -61,12 +69,18 @@ class QuoteReader implements QuoteReaderInterface
 
         $quoteResponseTransfer = $this->quoteFacade->findQuoteByUuid($quoteTransfer);
 
-        if (!$quoteResponseTransfer->getIsSuccessful()
-            || $quoteTransfer->getCustomerReference() !== $quoteResponseTransfer->getQuoteTransfer()->getCustomerReference()
-        ) {
-            $quoteResponseTransfer
+        if (!$quoteResponseTransfer->getIsSuccessful()) {
+            return $quoteResponseTransfer
                 ->setIsSuccessful(false)
                 ->addError((new QuoteErrorTransfer())->setErrorIdentifier(CartsRestApiSharedConfig::ERROR_IDENTIFIER_CART_NOT_FOUND));
+        }
+        $quoteResponseTransfer->getQuoteTransfer()->setCustomer($quoteTransfer->getCustomer());
+
+        if (!$this->quotePermissionChecker->checkQuoteReadPermission($quoteResponseTransfer->getQuoteTransfer())) {
+            return $quoteResponseTransfer
+                ->setIsSuccessful(false)
+                ->addError((new QuoteErrorTransfer())
+                    ->setErrorIdentifier(CartsRestApiSharedConfig::ERROR_IDENTIFIER_CART_NOT_FOUND));
         }
 
         return $quoteResponseTransfer;
@@ -82,6 +96,31 @@ class QuoteReader implements QuoteReaderInterface
         $storeTransfer = $this->storeFacade->getCurrentStore();
         $quoteCriteriaFilterTransfer->setIdStore($storeTransfer->getIdStore());
 
-        return $this->quoteFacade->getQuoteCollection($quoteCriteriaFilterTransfer);
+        $quoteCollectionTransfer = $this->quoteFacade->getQuoteCollection($quoteCriteriaFilterTransfer);
+
+        return $this->executeQuoteCollectionExpanderPlugins(
+            $quoteCriteriaFilterTransfer,
+            $quoteCollectionTransfer
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\QuoteCollectionTransfer $quoteCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
+     */
+    protected function executeQuoteCollectionExpanderPlugins(
+        QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer,
+        QuoteCollectionTransfer $quoteCollectionTransfer
+    ): QuoteCollectionTransfer {
+        foreach ($this->quoteCollectionExpanderPlugins as $quoteCollectionExpanderPlugin) {
+            $quoteCollectionTransfer = $quoteCollectionExpanderPlugin->expandQuoteCollection(
+                $quoteCollectionTransfer,
+                $quoteCriteriaFilterTransfer
+            );
+        }
+
+        return $quoteCollectionTransfer;
     }
 }

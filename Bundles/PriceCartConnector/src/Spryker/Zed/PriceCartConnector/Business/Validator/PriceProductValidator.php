@@ -16,10 +16,16 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartConnectorToCurrencyFacadeInterface;
 use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceInterface;
 use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceProductInterface;
+use Spryker\Zed\PriceCartConnector\PriceCartConnectorConfig;
 
 class PriceProductValidator implements PriceProductValidatorInterface
 {
     public const CART_PRE_CHECK_PRICE_FAILED_TRANSLATION_KEY = 'cart.pre.check.price.failed';
+    public const CART_PRE_CHECK_MIN_PRICE_RESTRICTION_FAILED_KEY = 'cart.pre.check.min_price.failed';
+
+    protected const MESSAGE_GLOSSARY_KEY_PRICE = '%price%';
+    protected const MESSAGE_GLOSSARY_KEY_CURRENCY_ISO_CODE = '%currencyIsoCode%';
+
     /**
      * @var \Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceProductInterface
      */
@@ -31,6 +37,11 @@ class PriceProductValidator implements PriceProductValidatorInterface
     protected $priceFacade;
 
     /**
+     * @var \Spryker\Zed\PriceCartConnector\PriceCartConnectorConfig
+     */
+    protected $config;
+
+    /**
      * @var \Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartConnectorToCurrencyFacadeInterface
      */
     protected $currencyFacade;
@@ -38,15 +49,18 @@ class PriceProductValidator implements PriceProductValidatorInterface
     /**
      * @param \Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceProductInterface $priceProductFacade
      * @param \Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceInterface $priceFacade
+     * @param \Spryker\Zed\PriceCartConnector\PriceCartConnectorConfig $config
      * @param \Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartConnectorToCurrencyFacadeInterface $currencyFacade
      */
     public function __construct(
         PriceCartToPriceProductInterface $priceProductFacade,
         PriceCartToPriceInterface $priceFacade,
+        PriceCartConnectorConfig $config,
         PriceCartConnectorToCurrencyFacadeInterface $currencyFacade
     ) {
         $this->priceProductFacade = $priceProductFacade;
         $this->priceFacade = $priceFacade;
+        $this->config = $config;
         $this->currencyFacade = $currencyFacade;
     }
 
@@ -64,7 +78,17 @@ class PriceProductValidator implements PriceProductValidatorInterface
             $priceProductFilterTransfer = $this->createPriceProductFilter($itemTransfer, $cartChangeTransfer->getQuote());
 
             if ($this->priceProductFacade->hasValidPriceFor($priceProductFilterTransfer)) {
-                continue;
+                $cartPreCheckResponseTransfer = $this->checkMinPriceRestriction(
+                    $cartPreCheckResponseTransfer,
+                    $itemTransfer,
+                    $priceProductFilterTransfer
+                );
+
+                if ($cartPreCheckResponseTransfer->getIsSuccess()) {
+                    continue;
+                }
+
+                return $cartPreCheckResponseTransfer;
             }
 
             return $cartPreCheckResponseTransfer
@@ -73,6 +97,45 @@ class PriceProductValidator implements PriceProductValidatorInterface
         }
 
         return $cartPreCheckResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartPreCheckResponseTransfer $cartPreCheckResponseTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
+     */
+    protected function checkMinPriceRestriction(
+        CartPreCheckResponseTransfer $cartPreCheckResponseTransfer,
+        ItemTransfer $itemTransfer,
+        PriceProductFilterTransfer $priceProductFilterTransfer
+    ): CartPreCheckResponseTransfer {
+        $price = $this->priceProductFacade->findPriceBySku($itemTransfer->getSku(), $priceProductFilterTransfer->getPriceTypeName());
+        $sumPrice = $itemTransfer->getQuantity() * $price;
+
+        if ($sumPrice < $this->config->getMinPriceRestriction()) {
+            return $cartPreCheckResponseTransfer
+                ->setIsSuccess(false)
+                ->addMessage($this->createMessageMinPriceRestriction($priceProductFilterTransfer->getCurrencyIsoCode()));
+        }
+
+        return $cartPreCheckResponseTransfer;
+    }
+
+    /**
+     * @param string $currencyIsoCode
+     *
+     * @return \Generated\Shared\Transfer\MessageTransfer
+     */
+    protected function createMessageMinPriceRestriction(string $currencyIsoCode): MessageTransfer
+    {
+        return (new MessageTransfer())
+            ->setValue(static::CART_PRE_CHECK_MIN_PRICE_RESTRICTION_FAILED_KEY)
+            ->setParameters([
+                static::MESSAGE_GLOSSARY_KEY_PRICE => $this->config->getMinPriceRestriction(),
+                static::MESSAGE_GLOSSARY_KEY_CURRENCY_ISO_CODE => $currencyIsoCode,
+            ]);
     }
 
     /**

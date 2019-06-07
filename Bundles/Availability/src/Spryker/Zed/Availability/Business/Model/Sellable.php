@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface;
+use Spryker\Zed\Availability\Dependency\Service\AvailabilityToUtilQuantityServiceInterface;
 
 class Sellable implements SellableInterface
 {
@@ -30,23 +31,31 @@ class Sellable implements SellableInterface
     protected $storeFacade;
 
     /**
+     * @var \Spryker\Zed\Availability\Dependency\Service\AvailabilityToUtilQuantityServiceInterface
+     */
+    protected $utilQuantityService;
+
+    /**
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsInterface $omsFacade
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface $stockFacade
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface $storeFacade
+     * @param \Spryker\Zed\Availability\Dependency\Service\AvailabilityToUtilQuantityServiceInterface $utilQuantityService
      */
     public function __construct(
         AvailabilityToOmsInterface $omsFacade,
         AvailabilityToStockInterface $stockFacade,
-        AvailabilityToStoreFacadeInterface $storeFacade
+        AvailabilityToStoreFacadeInterface $storeFacade,
+        AvailabilityToUtilQuantityServiceInterface $utilQuantityService
     ) {
         $this->omsFacade = $omsFacade;
         $this->stockFacade = $stockFacade;
         $this->storeFacade = $storeFacade;
+        $this->utilQuantityService = $utilQuantityService;
     }
 
     /**
      * @param string $sku
-     * @param int $quantity
+     * @param float $quantity
      *
      * @return bool
      */
@@ -60,7 +69,7 @@ class Sellable implements SellableInterface
     /**
      * @param string $sku
      *
-     * @return int
+     * @return float
      */
     public function calculateStockForProduct($sku)
     {
@@ -71,7 +80,7 @@ class Sellable implements SellableInterface
 
     /**
      * @param string $sku
-     * @param int $quantity
+     * @param float $quantity
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return bool
@@ -95,14 +104,14 @@ class Sellable implements SellableInterface
 
         $storeTransfer = $this->storeFacade->getCurrentStore();
 
-        return $this->calculateIsProductSellable($stockProductTransfers[0]->getSku(), 1, $storeTransfer);
+        return $this->calculateIsProductSellable($stockProductTransfers[0]->getSku(), 1.0, $storeTransfer);
     }
 
     /**
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return int
+     * @return float
      */
     public function calculateStockForProductWithStore($sku, StoreTransfer $storeTransfer)
     {
@@ -111,7 +120,7 @@ class Sellable implements SellableInterface
 
     /**
      * @param string $sku
-     * @param int $quantity
+     * @param float $quantity
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return bool
@@ -121,22 +130,45 @@ class Sellable implements SellableInterface
         if ($this->stockFacade->isNeverOutOfStockForStore($sku, $storeTransfer)) {
             return true;
         }
+
         $realStock = $this->calculateStock($sku, $storeTransfer);
 
-        return ($realStock >= $quantity);
+        return $this->isQuantityGreaterOrEqual($realStock, $quantity);
+    }
+
+    /**
+     * @param float $firstQuantity
+     * @param float $secondQuantity
+     *
+     * @return bool
+     */
+    protected function isQuantityGreaterOrEqual(float $firstQuantity, float $secondQuantity): bool
+    {
+        return $this->utilQuantityService->isQuantityGreaterOrEqual($firstQuantity, $secondQuantity);
     }
 
     /**
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return int
+     * @return float
      */
     protected function calculateStock($sku, StoreTransfer $storeTransfer)
     {
         $physicalItems = $this->stockFacade->calculateProductStockForStore($sku, $storeTransfer);
         $reservedItems = $this->omsFacade->getOmsReservedProductQuantityForSku($sku, $storeTransfer);
 
-        return $physicalItems - $reservedItems;
+        return $this->subtractQuantities($physicalItems, $reservedItems);
+    }
+
+    /**
+     * @param float $firstQuantity
+     * @param float $secondQuantity
+     *
+     * @return float
+     */
+    protected function subtractQuantities(float $firstQuantity, float $secondQuantity): float
+    {
+        return $this->utilQuantityService->subtractQuantities($firstQuantity, $secondQuantity);
     }
 }

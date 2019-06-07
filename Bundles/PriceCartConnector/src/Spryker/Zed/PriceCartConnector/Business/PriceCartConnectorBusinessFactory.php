@@ -43,6 +43,7 @@ class PriceCartConnectorBusinessFactory extends AbstractBusinessFactory
         return new PriceProductValidator(
             $this->getPriceProductFacade(),
             $this->getPriceFacade(),
+            $this->getConfig(),
             $this->getCurrencyFacade()
         );
     }
