@@ -9,21 +9,21 @@ namespace Spryker\Zed\ProductOptionStorage\Business\Storage;
 
 use Orm\Zed\ProductOption\Persistence\Map\SpyProductAbstractProductOptionGroupTableMap;
 use Orm\Zed\ProductOption\Persistence\Map\SpyProductOptionGroupTableMap;
-use Spryker\Zed\ProductOptionStorage\Persistence\ProductOptionStorageRepositoryInterface;
+use Spryker\Zed\ProductOptionStorage\Dependency\Facade\ProductOptionStorageToProductOptionFacadeInterface;
 
 class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
 {
     /**
-     * @var \Spryker\Zed\ProductOptionStorage\Persistence\ProductOptionStorageRepositoryInterface
+     * @var \Spryker\Zed\ProductOptionStorage\Dependency\Facade\ProductOptionStorageToProductOptionFacadeInterface
      */
-    protected $productOptionStorageRepository;
+    protected $productOptionFacade;
 
     /**
-     * @param \Spryker\Zed\ProductOptionStorage\Persistence\ProductOptionStorageRepositoryInterface $productOptionStorageRepository
+     * @param \Spryker\Zed\ProductOptionStorage\Dependency\Facade\ProductOptionStorageToProductOptionFacadeInterface $productOptionFacade
      */
-    public function __construct(ProductOptionStorageRepositoryInterface $productOptionStorageRepository)
+    public function __construct(ProductOptionStorageToProductOptionFacadeInterface $productOptionFacade)
     {
-        $this->productOptionStorageRepository = $productOptionStorageRepository;
+        $this->productOptionFacade = $productOptionFacade;
     }
 
     /**
@@ -33,7 +33,7 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
      */
     public function getProductOptionGroupStatusesByProductAbstractIds(array $productAbstractIds): array
     {
-        $productOptionGroupStatuses = $this->productOptionStorageRepository->getProductOptionGroupStatusesByProductAbstractIds(
+        $productOptionGroupStatuses = $this->productOptionFacade->getProductAbstractOptionGroupStatusesByProductAbstractIds(
             $productAbstractIds
         );
 
