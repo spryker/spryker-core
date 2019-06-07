@@ -12,7 +12,7 @@ interface ProductOptionStorageReaderInterface
     /**
      * @param int[] $productAbstractIds
      *
-     * @return array
+     * @return int[]
      */
-    public function getProductOptionGroupStatusesByProductAbstractIds(array $productAbstractIds): array;
+    public function getProductAbstractIdsWithDeactivatedGroups(array $productAbstractIds): array;
 }

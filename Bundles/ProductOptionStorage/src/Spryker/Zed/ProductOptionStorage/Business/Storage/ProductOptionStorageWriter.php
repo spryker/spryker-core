@@ -86,7 +86,7 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
         }
 
         $productAbstractOptionStorageEntities = $this->findProductStorageOptionEntitiesByProductAbstractIds($productAbstractIds);
-        $productAbstractIdsWithDeactivatedGroups = $this->getProductAbstractIdsWithDeactivatedGroups($productAbstractIds);
+        $productAbstractIdsWithDeactivatedGroups = $this->productOptionStorageReader->getProductAbstractIdsWithDeactivatedGroups($productAbstractIds);
 
         if ($productAbstractIdsWithDeactivatedGroups) {
             $this->deleteProductAbstractOptionStorageEntitiesWithDeactivatedGroups(
@@ -153,35 +153,6 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
     }
 
     /**
-     * @param array $productAbstractIds
-     *
-     * @return int[]
-     */
-    protected function getProductAbstractIdsWithDeactivatedGroups(array $productAbstractIds): array
-    {
-        $productOptionGroupStatuses = $this->productOptionStorageReader->getProductOptionGroupStatusesByProductAbstractIds($productAbstractIds);
-
-        return $this->filterProductAbstractIdsWithInactiveGroups($productOptionGroupStatuses);
-    }
-
-    /**
-     * @param array $productOptionGroupStatuses
-     *
-     * @return int[]
-     */
-    protected function filterProductAbstractIdsWithInactiveGroups(array $productOptionGroupStatuses): array
-    {
-        $productAbstractIds = [];
-        foreach ($productOptionGroupStatuses as $idProductAbstract => $productOptionGroupStatus) {
-            if (!in_array(true, $productOptionGroupStatus, true)) {
-                $productAbstractIds[] = $idProductAbstract;
-            }
-        }
-
-        return $productAbstractIds;
-    }
-
-    /**
      * @param array $productAbstractOptionStorageEntities
      *
      * @return void
@@ -201,7 +172,7 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
      *
      * @return void
      */
-    protected function storeData(array $spyProductAbstractOptionStorageEntities, array $productAbstractWithOptions)
+    protected function storeData(array $spyProductAbstractOptionStorageEntities, array $productAbstractWithOptions): void
     {
         foreach ($productAbstractWithOptions as $idProductAbstract => $productOption) {
             if (isset($spyProductAbstractOptionStorageEntities[$idProductAbstract])) {
@@ -223,7 +194,7 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
      *
      * @return void
      */
-    protected function storeDataSet($idProductAbstract, array $productOptions, array $productAbstractOptionStorageEntities = [])
+    protected function storeDataSet($idProductAbstract, array $productOptions, array $productAbstractOptionStorageEntities = []): void
     {
         $storePrices = [];
         foreach ($this->stores as $store) {
@@ -256,31 +227,31 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
     }
 
     /**
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
-     * @return \Orm\Zed\ProductOption\Persistence\SpyProductAbstractProductOptionGroup[]
+     * @return array
      */
-    protected function findProductOptionAbstractEntities(array $productAbstractIds)
+    protected function findProductOptionAbstractEntities(array $productAbstractIds): array
     {
         return $this->queryContainer->queryProductOptionsByProductAbstractIds($productAbstractIds)->find()->getData();
     }
 
     /**
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return array
      */
-    protected function findProductAbstractLocalizedEntities(array $productAbstractIds)
+    protected function findProductAbstractLocalizedEntities(array $productAbstractIds): array
     {
         return $this->queryContainer->queryProductAbstractLocalizedByIds($productAbstractIds)->find()->getData();
     }
 
     /**
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return array
      */
-    protected function findProductStorageOptionEntitiesByProductAbstractIds(array $productAbstractIds)
+    protected function findProductStorageOptionEntitiesByProductAbstractIds(array $productAbstractIds): array
     {
         $productAbstractOptionStorageEntities = $this->queryContainer->queryProductAbstractOptionStorageByIds($productAbstractIds)->find();
         $productAbstractOptionStorageEntitiesByIdAndStore = [];
@@ -295,9 +266,9 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
      * @param array $productOptions
      * @param int $idStore
      *
-     * @return array|\ArrayObject
+     * @return \ArrayObject|\Generated\Shared\Transfer\ProductOptionGroupStorageTransfer[]
      */
-    protected function getProductOptionGroupStorageTransfers(array $productOptions, $idStore)
+    protected function getProductOptionGroupStorageTransfers(array $productOptions, $idStore): ArrayObject
     {
         $productOptionGroupStorageTransfers = new ArrayObject();
         foreach ($productOptions as $productOption) {
@@ -329,7 +300,7 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
      *
      * @return array
      */
-    protected function getPrices(array $prices, $idStore)
+    protected function getPrices(array $prices, $idStore): array
     {
         $moneyValueCollection = $this->transformPriceEntityCollectionToMoneyValueTransferCollection($prices);
         $moneyValueCollectionWithSpecificStore = new ArrayObject();
@@ -349,9 +320,9 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
     /**
      * @param array $prices
      *
-     * @return \ArrayObject
+     * @return \ArrayObject|\Generated\Shared\Transfer\MoneyValueTransfer[]
      */
-    protected function transformPriceEntityCollectionToMoneyValueTransferCollection(array $prices)
+    protected function transformPriceEntityCollectionToMoneyValueTransferCollection(array $prices): ArrayObject
     {
         $moneyValueCollection = new ArrayObject();
         foreach ($prices as $price) {

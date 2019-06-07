@@ -27,24 +27,33 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
     /**
      * @param int[] $productAbstractIds
      *
-     * @return array
+     * @return int[]
      */
-    public function getProductOptionGroupStatusesByProductAbstractIds(array $productAbstractIds): array
+    public function getProductAbstractIdsWithDeactivatedGroups(array $productAbstractIds): array
+    {
+        $productOptionGroupStatuses = $this->getIndexedProductAbstractOptionGroupStatusesByProductAbstractIds($productAbstractIds);
+
+        $productAbstractIds = [];
+        foreach ($productOptionGroupStatuses as $idProductAbstract => $productOptionGroupStatus) {
+            if (!in_array(true, $productOptionGroupStatus, true)) {
+                $productAbstractIds[] = $idProductAbstract;
+            }
+        }
+
+        return $productAbstractIds;
+    }
+
+    /**
+     * @param int[] $productAbstractIds
+     *
+     * @return array [[fkProductAbstract => [productOptionGroupName => productOptionGroupStatus]]]
+     */
+    protected function getIndexedProductAbstractOptionGroupStatusesByProductAbstractIds(array $productAbstractIds): array
     {
         $productAbstractOptionGroupStatusTransfers = $this->productOptionFacade->getProductAbstractOptionGroupStatusesByProductAbstractIds(
             $productAbstractIds
         );
 
-        return $this->getIndexedProductAbstractOptionGroupStatuses($productAbstractOptionGroupStatusTransfers);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductAbstractOptionGroupStatusTransfer[] $productAbstractOptionGroupStatusTransfers
-     *
-     * @return array [[fkProductAbstract => [productOptionGroupName => productOptionGroupStatus]]]
-     */
-    protected function getIndexedProductAbstractOptionGroupStatuses(array $productAbstractOptionGroupStatusTransfers): array
-    {
         $indexedProductAbstractOptionGroupStatuses = [];
         foreach ($productAbstractOptionGroupStatusTransfers as $productAbstractOptionGroupStatusTransfer) {
             $idProductAbstract = $productAbstractOptionGroupStatusTransfer->getIdProductAbstract();
