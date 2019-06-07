@@ -25,9 +25,14 @@ use Spryker\Shared\ContentStorage\ContentStorageConfig;
 class ContentStorageClientTest extends Unit
 {
     /**
-     * @var int
+     * @var string
      */
     public const CONTENT_ITEM_KEY = '1';
+
+    /**
+     * @var string
+     */
+    public const CONTENT_ITEM_ID = 0;
 
     /**
      * @var int
@@ -48,6 +53,7 @@ class ContentStorageClientTest extends Unit
         $content = [
             ContentStorageConfig::TERM_KEY => 'KEY',
             ContentStorageConfig::CONTENT_KEY => ['CONTENT'],
+            ContentStorageConfig::ID_CONTENT => static::CONTENT_ITEM_ID,
         ];
         $this->setStorageReturn($content);
 
