@@ -9,7 +9,6 @@ namespace Spryker\Zed\Messenger\Business\Model;
 
 interface MessageTranslatorInterface
 {
-
     /**
      * @param string $keyName
      * @param array $data

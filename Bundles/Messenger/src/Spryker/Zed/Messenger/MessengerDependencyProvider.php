@@ -59,11 +59,11 @@ class MessengerDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @deprecated See \Spryker\Zed\Messenger\MessengerDependencyProvider::addTranslationPlugins
+     *
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
-     * @deprecated See \Spryker\Zed\Messenger\MessengerDependencyProvider::addTranslationPlugins
-     *
      */
     protected function addTranslationPlugin(Container $container)
     {
