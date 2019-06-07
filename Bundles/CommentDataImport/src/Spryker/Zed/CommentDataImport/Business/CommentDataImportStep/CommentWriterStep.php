@@ -10,6 +10,7 @@ namespace Spryker\Zed\CommentDataImport\Business\CommentDataImportStep;
 use Orm\Zed\Comment\Persistence\Base\SpyCommentTagQuery;
 use Orm\Zed\Comment\Persistence\SpyComment;
 use Orm\Zed\Comment\Persistence\SpyCommentQuery;
+use Orm\Zed\Comment\Persistence\SpyCommentThread;
 use Orm\Zed\Comment\Persistence\SpyCommentThreadQuery;
 use Orm\Zed\Comment\Persistence\SpyCommentToCommentTagQuery;
 use Spryker\Zed\CommentDataImport\Business\DataSet\CommentDataSetInterface;
@@ -48,12 +49,7 @@ class CommentWriterStep implements DataImportStepInterface
             );
         }
 
-        $commentThreadEntity = $this->createCommentThreadQuery()
-            ->filterByOwnerType($dataSet[CommentDataSetInterface::COLUMN_OWNER_TYPE])
-            ->filterByOwnerId($dataSet[CommentDataSetInterface::COMMENT_THREAD_OWNER_ID])
-            ->findOneOrCreate();
-
-        $commentThreadEntity->save();
+        $commentThreadEntity = $this->saveCommentThread($dataSet);
 
         $commentEntity = $this->createCommentQuery()
             ->filterByKey($dataSet[CommentDataSetInterface::COLUMN_MESSAGE_KEY])
@@ -71,6 +67,23 @@ class CommentWriterStep implements DataImportStepInterface
         if ($commentTagIds) {
             $this->saveCommentToCommentTags($commentTagIds, $commentEntity);
         }
+    }
+
+    /**
+     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
+     *
+     * @return \Orm\Zed\Comment\Persistence\SpyCommentThread
+     */
+    protected function saveCommentThread(DataSetInterface $dataSet): SpyCommentThread
+    {
+        $commentThreadEntity = $this->createCommentThreadQuery()
+            ->filterByOwnerType($dataSet[CommentDataSetInterface::COLUMN_OWNER_TYPE])
+            ->filterByOwnerId($dataSet[CommentDataSetInterface::COMMENT_THREAD_OWNER_ID])
+            ->findOneOrCreate();
+
+        $commentThreadEntity->save();
+
+        return $commentThreadEntity;
     }
 
     /**
