@@ -65,8 +65,11 @@ class CartReader implements CartReaderInterface
      */
     public function readByIdentifier(string $uuidCart, RestRequestInterface $restRequest): RestResponseInterface
     {
+        $customerReference = $restRequest->getRestUser()->getNaturalIdentifier();
+
         $quoteTransfer = (new QuoteTransfer())
-            ->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier())
+            ->setCustomerReference($customerReference)
+            ->setCustomer((new CustomerTransfer())->setCustomerReference($customerReference))
             ->setUuid($uuidCart);
 
         $quoteResponseTransfer = $this->cartsRestApiClient->findQuoteByUuid($quoteTransfer);
@@ -139,6 +142,7 @@ class CartReader implements CartReaderInterface
         $quoteCollectionTransfer = $this->cartsRestApiClient->getQuoteCollection(
             (new QuoteCriteriaFilterTransfer())
                 ->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier())
+                ->setIdCompanyUser($restRequest->getRestUser()->getIdCompanyUser())
         );
 
         return $quoteCollectionTransfer;
