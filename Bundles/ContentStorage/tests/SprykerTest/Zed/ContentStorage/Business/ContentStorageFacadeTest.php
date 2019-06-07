@@ -54,7 +54,6 @@ class ContentStorageFacadeTest extends Unit
     {
         $data = [
             ContentTransfer::CONTENT_TERM_KEY => 'test-term',
-            ContentTransfer::ID_CONTENT => 1,
             ContentTransfer::LOCALIZED_CONTENTS => [
                 [
                     LocalizedContentTransfer::PARAMETERS => '["M23222", "M23232"]',
