@@ -12,6 +12,8 @@ use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderItemTableMap;
+use Orm\Zed\Sales\Persistence\SpySalesShipmentQuery;
+use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
 use Orm\Zed\Tax\Persistence\Map\SpyTaxRateTableMap;
 use Orm\Zed\Tax\Persistence\Map\SpyTaxSetTableMap;
 use Spryker\Shared\Tax\TaxConstants;
@@ -128,6 +130,36 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
         }
 
         return $this->hydrateShipmentMethodTransfersFromShipmentMethodEntities($salesShipmentMethods);
+    }
+
+    /**
+     * @param int $idSalesShipment
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesShipmentQuery
+     */
+    public function querySalesShipmentById(int $idSalesShipment): SpySalesShipmentQuery
+    {
+        return $this->getFactory()
+            ->createSalesShipmentQuery()
+            ->filterByIdSalesShipment($idSalesShipment);
+    }
+
+    /**
+     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
+     */
+    public function queryMethodsWithMethodPricesAndCarrier(): SpyShipmentMethodQuery
+    {
+        return $this->queryMethods()
+            ->joinWithShipmentMethodPrice()
+            ->leftJoinWithShipmentCarrier();
+    }
+
+    /**
+     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
+     */
+    public function queryMethods(): SpyShipmentMethodQuery
+    {
+        return $this->getFactory()->createShipmentMethodQuery();
     }
 
     /**

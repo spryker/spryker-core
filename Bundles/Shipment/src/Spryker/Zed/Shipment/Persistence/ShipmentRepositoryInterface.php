@@ -10,6 +10,8 @@ namespace Spryker\Zed\Shipment\Persistence;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
+use Orm\Zed\Sales\Persistence\SpySalesShipmentQuery;
+use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
 
 interface ShipmentRepositoryInterface
 {
@@ -48,4 +50,16 @@ interface ShipmentRepositoryInterface
      * @return int[][]
      */
     public function getItemIdsGroupedByShipmentIds(OrderTransfer $orderTransfer): array;
+
+    /**
+     * @param int $idSalesShipment
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesShipmentQuery
+     */
+    public function querySalesShipmentById(int $idSalesShipment): SpySalesShipmentQuery;
+
+    /**
+     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
+     */
+    public function queryMethodsWithMethodPricesAndCarrier(): SpyShipmentMethodQuery;
 }

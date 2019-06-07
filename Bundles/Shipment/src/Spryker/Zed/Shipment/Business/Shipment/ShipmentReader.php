@@ -11,30 +11,30 @@ use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesShipment;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToSalesFacadeInterface;
-use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface;
+use Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface;
 
 class ShipmentReader implements ShipmentReaderInterface
 {
-    /**
-     * @var \Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface
-     */
-    protected $queryContainer;
-
     /**
      * @var \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToSalesFacadeInterface
      */
     protected $salesFacade;
 
     /**
-     * @param \Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface $queryContainer
+     * @var \Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface
+     */
+    protected $shipmentRepository;
+
+    /**
      * @param \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToSalesFacadeInterface $salesFacade
+     * @param \Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface $shipmentRepository
      */
     public function __construct(
-        ShipmentQueryContainerInterface $queryContainer,
-        ShipmentToSalesFacadeInterface $salesFacade
+        ShipmentToSalesFacadeInterface $salesFacade,
+        ShipmentRepositoryInterface $shipmentRepository
     ) {
-        $this->queryContainer = $queryContainer;
         $this->salesFacade = $salesFacade;
+        $this->shipmentRepository = $shipmentRepository;
     }
 
     /**
@@ -47,7 +47,7 @@ class ShipmentReader implements ShipmentReaderInterface
         /**
          * @todo Refactor this.
          */
-        $shipmentEntity = $this->queryContainer
+        $shipmentEntity = $this->shipmentRepository
             ->querySalesShipmentById($idSalesShipment)
             ->find()
             ->getFirst();
@@ -68,8 +68,10 @@ class ShipmentReader implements ShipmentReaderInterface
      *
      * @return \Generated\Shared\Transfer\ShipmentTransfer
      */
-    protected function mapShipmentEntityToShipmentTransfer(SpySalesShipment $shipmentEntity, ShipmentTransfer $shipmentTransfer): ShipmentTransfer
-    {
+    protected function mapShipmentEntityToShipmentTransfer(
+        SpySalesShipment $shipmentEntity,
+        ShipmentTransfer $shipmentTransfer
+    ): ShipmentTransfer {
         $shipmentTransfer->fromArray($shipmentEntity->toArray(), true);
 
         $shipmentTransfer->setShippingAddress(
@@ -91,7 +93,7 @@ class ShipmentReader implements ShipmentReaderInterface
     protected function getShipmentMethodTransferByName(string $shipmentMethodName): ShipmentMethodTransfer
     {
         $shipmentMethodTransfer = new ShipmentMethodTransfer();
-        $shipmentMethodEntity = $this->queryContainer
+        $shipmentMethodEntity = $this->shipmentRepository
             ->queryMethodsWithMethodPricesAndCarrier()
             ->filterByName($shipmentMethodName)
             ->find()

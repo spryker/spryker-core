@@ -375,8 +375,8 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     public function createShipmentReader(): ShipmentReaderInterface
     {
         return new ShipmentReader(
-            $this->getQueryContainer(),
-            $this->getSalesFacade()
+            $this->getSalesFacade(),
+            $this->getRepository()
         );
     }
 
