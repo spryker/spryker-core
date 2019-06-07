@@ -39,7 +39,7 @@ class ProductBundleReaderTest extends Unit
         'idProductConcrete' => 1,
         'bundledProductSku' => 'sku-123',
         'fkBundledProduct' => 2,
-        'bundledProductQuantity' => 5,
+        'bundledProductQuantity' => 5.0,
         'idProductBundle' => 1,
     ];
 

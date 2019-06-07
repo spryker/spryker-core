@@ -28,9 +28,9 @@ class AvailabilityOfferConnectorToAvailabilityFacadeBridge implements Availabili
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return int
+     * @return float
      */
-    public function calculateStockForProductWithStore($sku, StoreTransfer $storeTransfer): int
+    public function calculateStockForProductWithStore($sku, StoreTransfer $storeTransfer): float
     {
         return $this->availabilityFacade->calculateStockForProductWithStore($sku, $storeTransfer);
     }
