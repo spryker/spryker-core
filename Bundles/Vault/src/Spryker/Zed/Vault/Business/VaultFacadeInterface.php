@@ -14,7 +14,7 @@ interface VaultFacadeInterface
      * - Generates initial vector for encryption.
      * - Generates cipher text using AES-XXX.
      * - Stores cipher text and initial vector in Persistence.
-     * - Throws exception if encryption key is not pre-configured for "dataType".
+     * - Throws exception if encryption key is not pre-configured.
      *
      * Example:
      * store('product-abstract-secret', 'SKU-001', 'actual product secret')
@@ -32,7 +32,7 @@ interface VaultFacadeInterface
     /**
      * Specification:
      * - Retrieves decrypted data, returns null if nothing found.
-     * - Throws exception if encryption key is not pre-configured for "dataType".
+     * - Throws exception if encryption key is not pre-configured.
      *
      * Example:
      * retrieve('product-abstract-secret', 'SKU-001'): 'actual product secret'
