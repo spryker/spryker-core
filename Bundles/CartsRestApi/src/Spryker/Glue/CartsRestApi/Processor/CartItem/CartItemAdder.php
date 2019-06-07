@@ -99,7 +99,7 @@ class CartItemAdder implements CartItemAdderInterface
     protected function findCartIdentifier(RestRequestInterface $restRequest): ?string
     {
         $cartsResource = $restRequest->findParentResourceByType(CartsRestApiConfig::RESOURCE_CARTS);
-        if ($cartsResource !== null) {
+        if ($cartsResource) {
             return $cartsResource->getId();
         }
 
