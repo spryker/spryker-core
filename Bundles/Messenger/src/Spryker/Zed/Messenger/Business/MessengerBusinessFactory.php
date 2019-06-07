@@ -39,7 +39,7 @@ class MessengerBusinessFactory extends AbstractBusinessFactory
      */
     public function createInMemoryMessageTray()
     {
-        return new InMemoryMessageTray($this->createBaseMessageTranslator());
+        return new InMemoryMessageTray($this->createMessageTranslator());
     }
 
     /**
@@ -47,13 +47,13 @@ class MessengerBusinessFactory extends AbstractBusinessFactory
      */
     public function createSessionMessageTray()
     {
-        return new SessionMessageTray($this->createBaseMessageTranslator(), $this->getSession());
+        return new SessionMessageTray($this->createMessageTranslator(), $this->getSession());
     }
 
     /**
      * @return \Spryker\Zed\Messenger\Business\Model\MessageTranslatorInterface
      */
-    public function createBaseMessageTranslator(): MessageTranslatorInterface
+    public function createMessageTranslator(): MessageTranslatorInterface
     {
         return new MessageTranslator($this->getSymfonyTranslator(), $this->getTranslationPlugins());
     }
