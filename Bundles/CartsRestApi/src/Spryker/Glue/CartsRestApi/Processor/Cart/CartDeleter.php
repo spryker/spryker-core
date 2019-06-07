@@ -62,15 +62,7 @@ class CartDeleter implements CartDeleterInterface
      */
     public function delete(RestRequestInterface $restRequest): RestResponseInterface
     {
-        $restUserTransfer = $restRequest->getRestUser();
-        $customerTransfer = (new CustomerTransfer())
-            ->setIdCustomer($restUserTransfer->getSurrogateIdentifier())
-            ->setCustomerReference($restUserTransfer->getNaturalIdentifier());
-        $customerTransfer = $this->executeCustomerExpanderPlugins($customerTransfer, $restRequest);
-        $quoteTransfer = (new QuoteTransfer())
-            ->setCustomerReference($restUserTransfer->getNaturalIdentifier())
-            ->setCustomer($customerTransfer)
-            ->setUuid($restRequest->getResource()->getId());
+        $quoteTransfer = $this->createQuoteTransfer($restRequest);
 
         $quoteResponseTransfer = $this->cartsRestApiClient->deleteQuote($quoteTransfer);
         if (!$quoteResponseTransfer->getIsSuccessful()) {
@@ -93,5 +85,25 @@ class CartDeleter implements CartDeleterInterface
         }
 
         return $customerTransfer;
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function createQuoteTransfer(RestRequestInterface $restRequest): QuoteTransfer
+    {
+        $restUserTransfer = $restRequest->getRestUser();
+
+        $customerTransfer = (new CustomerTransfer())
+            ->setIdCustomer($restUserTransfer->getSurrogateIdentifier())
+            ->setCustomerReference($restUserTransfer->getNaturalIdentifier());
+        $customerTransfer = $this->executeCustomerExpanderPlugins($customerTransfer, $restRequest);
+
+        return (new QuoteTransfer())
+            ->setCustomerReference($restUserTransfer->getNaturalIdentifier())
+            ->setCustomer($customerTransfer)
+            ->setUuid($restRequest->getResource()->getId());
     }
 }

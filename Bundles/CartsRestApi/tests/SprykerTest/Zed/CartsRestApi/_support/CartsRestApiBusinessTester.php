@@ -9,12 +9,14 @@ namespace SprykerTest\Zed\CartsRestApi;
 
 use Codeception\Actor;
 use Generated\Shared\DataBuilder\AssignGuestQuoteRequestBuilder;
+use Generated\Shared\DataBuilder\CartItemRequestBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\DataBuilder\QuoteCollectionBuilder;
 use Generated\Shared\DataBuilder\QuoteCriteriaFilterBuilder;
 use Generated\Shared\DataBuilder\QuoteResponseBuilder;
 use Generated\Shared\DataBuilder\RestCartItemsAttributesBuilder;
 use Generated\Shared\Transfer\AssignGuestQuoteRequestTransfer;
+use Generated\Shared\Transfer\CartItemRequestTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
@@ -138,7 +140,29 @@ class CartsRestApiBusinessTester extends Actor
     public function prepareQuoteTransfer(): QuoteTransfer
     {
         /** @var \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer */
-        $quoteTransfer = (new QuoteBuilder(['uuid' => static::TEST_QUOTE_UUID, 'customerReference' => static::TEST_CUSTOMER_REFERENCE]))->build();
+        $quoteTransfer = (new QuoteBuilder(
+            [
+                'uuid' => static::TEST_QUOTE_UUID,
+                'customerReference' => static::TEST_CUSTOMER_REFERENCE,
+                'customer' => (new CustomerTransfer())->setCustomerReference(static::TEST_CUSTOMER_REFERENCE),
+            ]
+        ))->build();
+
+        return $quoteTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function prepareQuoteTransferWithoutCustomer(): QuoteTransfer
+    {
+        /** @var \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer */
+        $quoteTransfer = (new QuoteBuilder(
+            [
+                'uuid' => static::TEST_QUOTE_UUID,
+                'customerReference' => static::TEST_CUSTOMER_REFERENCE,
+            ]
+        ))->build();
 
         return $quoteTransfer;
     }
@@ -196,6 +220,92 @@ class CartsRestApiBusinessTester extends Actor
         ))->build();
 
         return $restCartItemsAttributesTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CartItemRequestTransfer
+     */
+    public function prepareCartItemRequestTransferWithQuantity(): CartItemRequestTransfer
+    {
+        /** @var \Generated\Shared\Transfer\CartItemRequestTransfer $cartItemRequestTransfer */
+        $cartItemRequestTransfer = (new CartItemRequestBuilder(
+            [
+                'quoteUuid' => static::TEST_QUOTE_UUID,
+                'quantity' => static::TEST_QUANTITY,
+                'customer' => (new CustomerTransfer())->setCustomerReference(static::TEST_CUSTOMER_REFERENCE),
+                'sku' => static::TEST_SKU,
+            ]
+        ))->build();
+
+        return $cartItemRequestTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CartItemRequestTransfer
+     */
+    public function prepareCartItemRequestTransferWithoutCustomer(): CartItemRequestTransfer
+    {
+        /** @var \Generated\Shared\Transfer\CartItemRequestTransfer $cartItemRequestTransfer */
+        $cartItemRequestTransfer = (new CartItemRequestBuilder(
+            [
+                'quoteUuid' => static::TEST_QUOTE_UUID,
+                'quantity' => static::TEST_QUANTITY,
+                'sku' => static::TEST_SKU,
+            ]
+        ))->build();
+
+        return $cartItemRequestTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CartItemRequestTransfer
+     */
+    public function prepareCartItemRequestTransferWithoutQuantity(): CartItemRequestTransfer
+    {
+        /** @var \Generated\Shared\Transfer\CartItemRequestTransfer $cartItemRequestTransfer */
+        $cartItemRequestTransfer = (new CartItemRequestBuilder(
+            [
+                'quoteUuid' => static::TEST_QUOTE_UUID,
+                'customer' => (new CustomerTransfer())->setCustomerReference(static::TEST_CUSTOMER_REFERENCE),
+                'sku' => static::TEST_SKU,
+            ]
+        ))->build();
+
+        return $cartItemRequestTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CartItemRequestTransfer
+     */
+    public function prepareCartItemRequestTransferWithoutUuid(): CartItemRequestTransfer
+    {
+        /** @var \Generated\Shared\Transfer\CartItemRequestTransfer $cartItemRequestTransfer */
+        $cartItemRequestTransfer = (new CartItemRequestBuilder(
+            [
+                'sku' => static::TEST_SKU,
+                'customer' => (new CustomerTransfer())->setCustomerReference(static::TEST_CUSTOMER_REFERENCE),
+                'quantity' => static::TEST_QUANTITY,
+            ]
+        ))->build();
+
+        return $cartItemRequestTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CartItemRequestTransfer
+     */
+    public function prepareCartItemRequestTransferWithoutSku(): CartItemRequestTransfer
+    {
+        /** @var \Generated\Shared\Transfer\CartItemRequestTransfer $cartItemRequestTransfer */
+        $cartItemRequestTransfer = (new CartItemRequestBuilder(
+            [
+                'quoteUuid' => static::TEST_QUOTE_UUID,
+                'customer' => (new CustomerTransfer())->setCustomerReference(static::TEST_CUSTOMER_REFERENCE),
+                'quantity' => static::TEST_QUANTITY,
+            ]
+        ))->build();
+
+        return $cartItemRequestTransfer;
     }
 
     /**
