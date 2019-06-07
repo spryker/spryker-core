@@ -13,7 +13,7 @@ use Spryker\Zed\PriceProductSchedule\Business\Store\StoreFinderInterface;
 
 class StoreDataValidator extends AbstractImportDataValidator
 {
-    protected const ERROR_MESSAGE_STORE_NOT_FOUND = 'Store was not found by provided name %s.';
+    protected const ERROR_MESSAGE_STORE_NOT_FOUND = 'Store was not found by provided name %name%.';
 
     /**
      * @var \Spryker\Zed\PriceProductSchedule\Business\Store\StoreFinderInterface
@@ -40,7 +40,7 @@ class StoreDataValidator extends AbstractImportDataValidator
             return $this->createPriceProductScheduleListImportErrorTransfer(
                 $priceProductScheduleImportTransfer,
                 static::ERROR_MESSAGE_STORE_NOT_FOUND,
-                [$priceProductScheduleImportTransfer->getStoreName()]
+                ['%name%' => $priceProductScheduleImportTransfer->getStoreName()]
             );
         }
 
