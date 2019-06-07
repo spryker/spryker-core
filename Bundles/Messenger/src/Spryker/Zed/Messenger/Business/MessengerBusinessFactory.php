@@ -10,8 +10,11 @@ namespace Spryker\Zed\Messenger\Business;
 use Spryker\Shared\Messenger\MessengerConfig;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Messenger\Business\Model\InMemoryMessageTray;
+use Spryker\Zed\Messenger\Business\Model\MessageTranslator;
+use Spryker\Zed\Messenger\Business\Model\MessageTranslatorInterface;
 use Spryker\Zed\Messenger\Business\Model\SessionMessageTray;
 use Spryker\Zed\Messenger\MessengerDependencyProvider;
+use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * @method \Spryker\Zed\Messenger\MessengerConfig getConfig()
@@ -48,6 +51,14 @@ class MessengerBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Messenger\Business\Model\MessageTranslatorInterface
+     */
+    public function createBaseMessageTranslator(): MessageTranslatorInterface
+    {
+        return new MessageTranslator($this->getSymfonyTranslator(), $this->getTranslationPlugins());
+    }
+
+    /**
      * @return \Symfony\Component\HttpFoundation\Session\SessionInterface
      */
     public function getSession()
@@ -56,9 +67,9 @@ class MessengerBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Messenger\Dependency\Plugin\TranslationPluginInterface
      * @deprecated See \Spryker\Zed\Messenger\Business\MessengerBusinessFactory::getTranslationPlugins
      *
-     * @return \Spryker\Zed\Messenger\Dependency\Plugin\TranslationPluginInterface
      */
     public function getTranslationPlugin()
     {
@@ -74,5 +85,13 @@ class MessengerBusinessFactory extends AbstractBusinessFactory
             [$this->getTranslationPlugin()],
             $this->getProvidedDependency(MessengerDependencyProvider::PLUGINS_TRANSLATION)
         );
+    }
+
+    /**
+     * @return \Symfony\Component\Translation\TranslatorInterface
+     */
+    public function getSymfonyTranslator(): TranslatorInterface
+    {
+        return $this->getProvidedDependency(MessengerDependencyProvider::SYMFONY_TRANSLATOR);
     }
 }

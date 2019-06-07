@@ -7,18 +7,27 @@
 
 namespace Spryker\Zed\Messenger\Business\Model;
 
-class BaseMessageTray
+use Symfony\Component\Translation\TranslatorInterface;
+
+class MessageTranslator implements MessageTranslatorInterface
 {
+    /**
+     * @var \Symfony\Component\Translation\TranslatorInterface
+     */
+    protected $symfonyTranslator;
+
     /**
      * @var \Spryker\Zed\MessengerExtension\Dependency\Plugin\TranslationPluginInterface[]
      */
     protected $translationPlugins;
 
     /**
+     * @param \Symfony\Component\Translation\TranslatorInterface $symfonyTranslator
      * @param \Spryker\Zed\MessengerExtension\Dependency\Plugin\TranslationPluginInterface[] $translationPlugins
      */
-    public function __construct(array $translationPlugins)
+    public function __construct(TranslatorInterface $symfonyTranslator, array $translationPlugins)
     {
+        $this->symfonyTranslator = $symfonyTranslator;
         $this->translationPlugins = $translationPlugins;
     }
 
@@ -28,7 +37,7 @@ class BaseMessageTray
      *
      * @return string
      */
-    protected function translate($keyName, array $data = []): string
+    public function translate($keyName, array $data = []): string
     {
         foreach ($this->translationPlugins as $translationPlugin) {
             if ($translationPlugin->hasKey($keyName)) {
@@ -36,12 +45,6 @@ class BaseMessageTray
             }
         }
 
-        if ($this->translationPlugins) {
-            $translationPlugin = end($this->translationPlugins);
-
-            return $translationPlugin->translate($keyName, $data);
-        }
-
-        return $keyName;
+        return $this->symfonyTranslator->trans($keyName, $data);
     }
 }

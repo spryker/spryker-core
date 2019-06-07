@@ -11,13 +11,18 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Messenger\Communication\Plugin\TranslationPlugin;
+use Symfony\Component\Translation\Translator;
 
 /**
  * @method \Spryker\Zed\Messenger\MessengerConfig getConfig()
  */
 class MessengerDependencyProvider extends AbstractBundleDependencyProvider
 {
+    protected const DUMMY_LOCALE = '';
+
     public const SESSION = 'session';
+    public const SYMFONY_TRANSLATOR = 'SYMFONY_TRANSLATOR';
+
     /**
      * @deprecated See \Spryker\Zed\Messenger\MessengerDependencyProvider::PLUGINS_TRANSLATION
      */
@@ -34,6 +39,7 @@ class MessengerDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addSession($container);
         $container = $this->addTranslationPlugin($container);
         $container = $this->addTranslationPlugins($container);
+        $container = $this->addSymfonyTranslator($container);
 
         return $container;
     }
@@ -53,11 +59,11 @@ class MessengerDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @deprecated See \Spryker\Zed\Messenger\MessengerDependencyProvider::addTranslationPlugins
-     *
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
+     * @deprecated See \Spryker\Zed\Messenger\MessengerDependencyProvider::addTranslationPlugins
+     *
      */
     protected function addTranslationPlugin(Container $container)
     {
@@ -88,5 +94,19 @@ class MessengerDependencyProvider extends AbstractBundleDependencyProvider
     protected function getTranslationPlugins(): array
     {
         return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addSymfonyTranslator(Container $container): Container
+    {
+        $container->set(static::SYMFONY_TRANSLATOR, function () {
+            return new Translator(static::DUMMY_LOCALE);
+        });
+
+        return $container;
     }
 }
