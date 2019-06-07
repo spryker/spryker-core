@@ -18,7 +18,7 @@ class ContentBannersResourceController extends AbstractController
 {
     /**
      * @Glue({
-     *     "getResourceById": {
+     *     "getResourceByKey": {
      *          "summary": [
      *              "Retrieve content banner item data."
      *          ],
@@ -27,7 +27,7 @@ class ContentBannersResourceController extends AbstractController
      *              "in": "header"
      *          }],
      *          "responses": {
-     *              "400": "Content id is missing.",
+     *              "400": "Content key is missing.",
      *              "404": "Content not found.",
      *              "422": "Content type is invalid."
      *          }
