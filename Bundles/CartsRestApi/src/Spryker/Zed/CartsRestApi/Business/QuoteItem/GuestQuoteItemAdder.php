@@ -11,11 +11,9 @@ use Generated\Shared\Transfer\CartItemRequestTransfer;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
-use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCartItemsAttributesTransfer;
-use Spryker\Shared\CartsRestApi\CartsRestApiConfig as CartsRestApiSharedConfig;
 use Spryker\Zed\CartsRestApi\Business\Quote\QuoteCreatorInterface;
 use Spryker\Zed\CartsRestApi\Business\Quote\QuoteReaderInterface;
 use Spryker\Zed\CartsRestApi\Business\QuoteItem\Mapper\QuoteItemMapperInterface;
@@ -167,16 +165,7 @@ class GuestQuoteItemAdder implements GuestQuoteItemAdderInterface
      */
     protected function addItem(CartItemRequestTransfer $cartItemRequestTransfer): QuoteResponseTransfer
     {
-        $quoteResponseTransfer = $this->quoteItemAdder
-            ->addToCart($cartItemRequestTransfer);
-
-        if (!$quoteResponseTransfer->getIsSuccessful()) {
-            $quoteResponseTransfer
-                ->addError((new QuoteErrorTransfer())
-                    ->setErrorIdentifier(CartsRestApiSharedConfig::ERROR_IDENTIFIER_FAILED_ADDING_CART_ITEM));
-        }
-
-        return $quoteResponseTransfer;
+        return $this->quoteItemAdder->addToCart($cartItemRequestTransfer);
     }
 
     /**
