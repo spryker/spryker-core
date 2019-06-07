@@ -282,7 +282,8 @@ interface ProductOptionFacadeInterface
 
     /**
      * Specification:
-     * - Retrieves the product option group statuses for provided product abstract IDs.
+     * - Retrieves product option group name and status for all abstract products by provided IDs.
+     * - Returns ProductAbstractOptionGroupStatusTransfer[] array with 'idProductAbstract', 'isActive' and 'productOptionGroupName' values.
      *
      * @api
      *
