@@ -13,11 +13,6 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class CartsRestApiConfig extends AbstractBundleConfig
 {
     /**
-     * @uses \Spryker\Zed\Quote\Business\Validator\QuoteValidator::MESSAGE_STORE_DATA_IS_MISSING
-     */
-    protected const MESSAGE_STORE_DATA_IS_MISSING = 'quote.validation.error.store_is_missing';
-
-    /**
      * @uses \Spryker\Zed\Currency\Business\Validator\QuoteValidator::MESSAGE_CURRENCY_DATA_IS_MISSING
      */
     protected const MESSAGE_CURRENCY_DATA_IS_MISSING = 'quote.validation.error.currency_is_missing';
@@ -43,7 +38,6 @@ class CartsRestApiConfig extends AbstractBundleConfig
     public static function getErrorToErrorIdentifierMapping(): array
     {
         return [
-            static::MESSAGE_STORE_DATA_IS_MISSING => CartsRestApiSharedConfig::ERROR_IDENTIFIER_STORE_DATA_IS_MISSING,
             static::MESSAGE_CURRENCY_DATA_IS_MISSING => CartsRestApiSharedConfig::ERROR_IDENTIFIER_CURRENCY_DATA_IS_MISSING,
             static::MESSAGE_CURRENCY_DATA_IS_INCORRECT => CartsRestApiSharedConfig::ERROR_IDENTIFIER_CURRENCY_DATA_IS_INCORRECT,
             static::MESSAGE_PRICE_MODE_DATA_IS_MISSING => CartsRestApiSharedConfig::ERROR_IDENTIFIER_PRICE_MODE_DATA_IS_MISSING,

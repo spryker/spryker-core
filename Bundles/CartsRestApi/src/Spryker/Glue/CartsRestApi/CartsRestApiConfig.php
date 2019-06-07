@@ -38,11 +38,10 @@ class CartsRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_CODE_FAILED_ADDING_CART_ITEM = '113';
     public const RESPONSE_CODE_FAILED_UPDATING_CART_ITEM = '114';
     public const RESPONSE_CODE_UNAUTHORIZED_CART_ACTION = '115';
-    public const RESPONSE_CODE_STORE_DATA_IS_MISSING = '116';
-    public const RESPONSE_CODE_CURRENCY_DATA_IS_MISSING = '117';
-    public const RESPONSE_CODE_CURRENCY_DATA_IS_INCORRECT = '118';
-    public const RESPONSE_CODE_PRICE_MODE_DATA_IS_MISSING = '119';
-    public const RESPONSE_CODE_PRICE_MODE_DATA_IS_INCORRECT = '120';
+    public const RESPONSE_CODE_CURRENCY_DATA_IS_MISSING = '116';
+    public const RESPONSE_CODE_CURRENCY_DATA_IS_INCORRECT = '117';
+    public const RESPONSE_CODE_PRICE_MODE_DATA_IS_MISSING = '118';
+    public const RESPONSE_CODE_PRICE_MODE_DATA_IS_INCORRECT = '119';
 
     public const EXCEPTION_MESSAGE_CART_ID_MISSING = 'Cart uuid is missing.';
     public const EXCEPTION_MESSAGE_CART_ITEM_NOT_FOUND = 'Item with the given group key not found in the cart.';
@@ -57,7 +56,6 @@ class CartsRestApiConfig extends AbstractBundleConfig
     public const EXCEPTION_MESSAGE_FAILED_ADDING_CART_ITEM = 'Cart item could not be added.';
     public const EXCEPTION_MESSAGE_FAILED_UPDATING_CART_ITEM = 'Cart item could not be updated.';
     public const EXCEPTION_MESSAGE_UNAUTHORIZED_CART_ACTION = 'Unauthorized cart action.';
-    public const EXCEPTION_MESSAGE_STORE_DATA_IS_MISSING = 'Store is missing.';
     public const EXCEPTION_MESSAGE_CURRENCY_DATA_IS_MISSING = 'Currency is missing.';
     public const EXCEPTION_MESSAGE_CURRENCY_DATA_IS_INCORRECT = 'Currency is incorrect.';
     public const EXCEPTION_MESSAGE_PRICE_MODE_DATA_IS_MISSING = 'Price mode is missing.';
@@ -155,11 +153,6 @@ class CartsRestApiConfig extends AbstractBundleConfig
                 RestErrorMessageTransfer::CODE => static::RESPONSE_CODE_PRICE_MODE_DATA_IS_MISSING,
                 RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
                 RestErrorMessageTransfer::DETAIL => static::EXCEPTION_MESSAGE_PRICE_MODE_DATA_IS_MISSING,
-            ],
-            CartsRestApiSharedConfig::ERROR_IDENTIFIER_STORE_DATA_IS_MISSING => [
-                RestErrorMessageTransfer::CODE => static::RESPONSE_CODE_STORE_DATA_IS_MISSING,
-                RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
-                RestErrorMessageTransfer::DETAIL => static::EXCEPTION_MESSAGE_STORE_DATA_IS_MISSING,
             ],
         ];
     }
