@@ -168,7 +168,9 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
             $this->getSalesQueryContainer(),
             $this->getEntityManager(),
             $this->getSalesFacade(),
-            $this->getCustomerFacade()
+            $this->getCustomerFacade(),
+            $this->createExpanseSanitizer(),
+            $this->createShipmentMapper()
         );
     }
 

@@ -18,7 +18,7 @@ class ShipmentMapper implements ShipmentMapperInterface
      * @param \Generated\Shared\Transfer\ExpenseTransfer $sanitizedExpenseTransfer
      * @param \Orm\Zed\Sales\Persistence\SpySalesExpense $salesOrderExpenseEntity
      *
-     * @return void
+     * @return \Orm\Zed\Sales\Persistence\SpySalesExpense
      */
     public function mapOrderSalesExpenseEntityToExpenseTransfer(
         ExpenseTransfer $sanitizedExpenseTransfer,
