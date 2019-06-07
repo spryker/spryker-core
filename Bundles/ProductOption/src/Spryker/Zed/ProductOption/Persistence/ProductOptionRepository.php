@@ -8,6 +8,8 @@
 namespace Spryker\Zed\ProductOption\Persistence;
 
 use Generated\Shared\Transfer\ProductAbstractOptionGroupStatusTransfer;
+use Orm\Zed\ProductOption\Persistence\Map\SpyProductAbstractProductOptionGroupTableMap;
+use Orm\Zed\ProductOption\Persistence\Map\SpyProductOptionGroupTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -31,6 +33,9 @@ class ProductOptionRepository extends AbstractRepository implements ProductOptio
                 ProductAbstractOptionGroupStatusTransfer::IS_ACTIVE,
                 ProductAbstractOptionGroupStatusTransfer::PRODUCT_OPTION_NAME,
             ])
+            ->withColumn(SpyProductAbstractProductOptionGroupTableMap::COL_FK_PRODUCT_ABSTRACT, ProductAbstractOptionGroupStatusTransfer::ID_PRODUCT_ABSTRACT)
+            ->withColumn(SpyProductOptionGroupTableMap::COL_ACTIVE, ProductAbstractOptionGroupStatusTransfer::IS_ACTIVE)
+            ->withColumn(SpyProductOptionGroupTableMap::COL_NAME, ProductAbstractOptionGroupStatusTransfer::PRODUCT_OPTION_NAME)
             ->find()
             ->toArray();
 
