@@ -55,7 +55,7 @@ class ShipmentMapper implements ShipmentMapperInterface
      * @param \Orm\Zed\Sales\Persistence\SpySalesShipment $shipmentEntity
      * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
      *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesShipment
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer
      */
     public function mapShipmentEntityToShipmentMethodTransfer(
         SpySalesShipment $shipmentEntity,
