@@ -8,25 +8,15 @@
 namespace Spryker\Zed\ManualOrderEntryGui\Dependency\Facade;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\ShipmentGroupCollectionTransfer;
 
 interface ManualOrderEntryGuiToShipmentFacadeInterface
 {
     /**
-     * @deprecated Use getAvailableMethodsByShipment() instead.
-     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer
      */
     public function getAvailableMethods(QuoteTransfer $quoteTransfer);
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShipmentGroupCollectionTransfer
-     */
-    public function getAvailableMethodsByShipment(QuoteTransfer $quoteTransfer): ShipmentGroupCollectionTransfer;
 
     /**
      * @param int $idShipmentMethod
