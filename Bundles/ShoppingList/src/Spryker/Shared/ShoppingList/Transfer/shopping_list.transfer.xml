@@ -38,7 +38,7 @@
         <property name="idShoppingListItem" type="int" />
         <property name="fkShoppingList" type="int" />
         <property name="customerReference" type="string"/>
-        <property name="quantity" type="int"/>
+        <property name="quantity" type="float"/>
         <property name="sku" type="string" />
         <property name="idProduct" type="int" />
         <property name="idProductAbstract" type="int" />
@@ -79,7 +79,7 @@
 
     <transfer name="ShoppingListAddToCartRequest">
         <property name="sku" type="string" />
-        <property name="quantity" type="int" />
+        <property name="quantity" type="float" />
         <property name="idShoppingListItem" type="int" deprecated="use shoppingListItem->idShoppingListItem instead" />
         <property name="shoppingListItem" type="ShoppingListItem" />
     </transfer>
