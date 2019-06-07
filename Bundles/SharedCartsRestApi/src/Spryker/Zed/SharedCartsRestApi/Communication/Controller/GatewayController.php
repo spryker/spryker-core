@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\SharedCartsRestApi\Communication\Controller;
 
+use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShareCartRequestTransfer;
 use Generated\Shared\Transfer\ShareCartResponseTransfer;
+use Generated\Shared\Transfer\ShareDetailCollectionTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
@@ -16,6 +18,16 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
  */
 class GatewayController extends AbstractGatewayController
 {
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShareDetailCollectionTransfer
+     */
+    public function getSharedCartsByCartUuidAction(QuoteTransfer $quoteTransfer): ShareDetailCollectionTransfer
+    {
+        return $this->getFacade()->getSharedCartsByCartUuid($quoteTransfer);
+    }
+
     /**
      * @param \Generated\Shared\Transfer\ShareCartRequestTransfer $shareCartRequestTransfer
      *

@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\SharedCartsRestApi\Processor\Mapper;
+namespace Spryker\Glue\SharedCartsRestApi\Processor\SharedCart\Mapper;
 
 use Generated\Shared\Transfer\RestSharedCartsAttributesTransfer;
 use Generated\Shared\Transfer\ShareDetailTransfer;
 
-class SharedCartMapper implements SharedCartMapperInterface
+interface SharedCartMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ShareDetailTransfer $shareDetailTransfer
@@ -21,14 +21,5 @@ class SharedCartMapper implements SharedCartMapperInterface
     public function mapShareDetailTransferToRestSharedCartsAttributesTransfer(
         ShareDetailTransfer $shareDetailTransfer,
         RestSharedCartsAttributesTransfer $restSharedCartsAttributesTransfer
-    ): RestSharedCartsAttributesTransfer {
-        return $restSharedCartsAttributesTransfer
-            ->fromArray($shareDetailTransfer->toArray(), true)
-            ->setIdCompanyUser(
-                $shareDetailTransfer->getCompanyUser()->getUuid()
-            )
-            ->setIdCartPermissionGroup(
-                $shareDetailTransfer->getQuotePermissionGroup()->getIdQuotePermissionGroup()
-            );
-    }
+    ): RestSharedCartsAttributesTransfer;
 }

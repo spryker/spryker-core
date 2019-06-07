@@ -7,8 +7,7 @@
 
 namespace SprykerTest\Zed\SharedCartsRestApi\Business;
 
-use ArrayObject;
-use Codeception\Test\Unit;
+use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\QuoteCompanyUserTransfer;
 use Generated\Shared\Transfer\QuotePermissionGroupTransfer;
@@ -17,7 +16,11 @@ use Generated\Shared\Transfer\ShareCartRequestTransfer;
 use Generated\Shared\Transfer\ShareDetailTransfer;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Shared\SharedCartsRestApi\SharedCartsRestApiConfig;
+use Spryker\Zed\Permission\PermissionDependencyProvider;
 use Spryker\Zed\SharedCart\Business\SharedCartFacadeInterface;
+use Spryker\Zed\SharedCart\Communication\Plugin\QuotePermissionStoragePlugin;
+use Spryker\Zed\SharedCart\Communication\Plugin\ReadSharedCartPermissionPlugin;
+use Spryker\Zed\SharedCart\Communication\Plugin\WriteSharedCartPermissionPlugin;
 
 /**
  * Auto-generated group annotations
@@ -30,7 +33,7 @@ use Spryker\Zed\SharedCart\Business\SharedCartFacadeInterface;
  * @group SharedCartsRestApiFacadeTest
  * Add your own group annotations below this line
  */
-class SharedCartsRestApiFacadeTest extends Unit
+class SharedCartsRestApiFacadeTest extends Test
 {
     protected const QUOTE_PERMISSION_GROUP_READ_ONLY = 'READ_ONLY';
     protected const QUOTE_PERMISSION_GROUP_FULL_ACCESS = 'FULL_ACCESS';
@@ -55,7 +58,22 @@ class SharedCartsRestApiFacadeTest extends Unit
     /**
      * @var \Generated\Shared\Transfer\CompanyUserTransfer
      */
+    protected $ownerCompanyUserTransfer;
+
+    /**
+     * @var \Generated\Shared\Transfer\CompanyUserTransfer
+     */
+    protected $otherCompanyUserTransfer;
+
+    /**
+     * @var \Generated\Shared\Transfer\CompanyUserTransfer
+     */
     protected $companyUserTransfer;
+
+    /**
+     * @var \Generated\Shared\Transfer\SpyQuoteCompanyUserEntityTransfer
+     */
+    protected $quoteCompanyUserEntityTransfer;
 
     /**
      * @var \Generated\Shared\Transfer\SpyQuotePermissionGroupEntityTransfer
@@ -68,7 +86,7 @@ class SharedCartsRestApiFacadeTest extends Unit
     protected function setUp(): void
     {
         parent::setUp();
-
+        
         $this->readOnlyQuotePermissionGroup = $this->tester->haveQuotePermissionGroup(static::QUOTE_PERMISSION_GROUP_READ_ONLY, [
             static::READ_SHARED_CART_PERMISSION_PLUGIN_KEY,
         ]);
@@ -86,7 +104,66 @@ class SharedCartsRestApiFacadeTest extends Unit
             CompanyUserTransfer::CUSTOMER => $otherCustomerTransfer,
             CompanyUserTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
         ]);
+
+        $this->tester->setDependency(PermissionDependencyProvider::PLUGINS_PERMISSION_STORAGE, [
+            new QuotePermissionStoragePlugin(),
+        ]);
+
+        $this->tester->setDependency(PermissionDependencyProvider::PLUGINS_PERMISSION, [
+            new ReadSharedCartPermissionPlugin(),
+            new WriteSharedCartPermissionPlugin(),
+        ]);
+
+        $this->tester->getLocator()->permission()->facade()->syncPermissionPlugins();
     }
+
+    /**
+     * @return void
+     */
+    public function testGetSharedCartsByCartUuidShouldReturnShareData(): void
+    {
+        // Assign
+        /** @var \Spryker\Zed\SharedCartsRestApi\Business\SharedCartsRestApiFacadeInterface $sharedCartsRestApiFacade */
+        $sharedCartsRestApiFacade = $this->tester->getFacade();
+        $readOnlyPermissionGroup = $this->tester->haveQuotePermissionGroup('READ_ONLY', [
+            ReadSharedCartPermissionPlugin::KEY,
+        ]);
+
+        $companyTransfer = $this->tester->haveCompany();
+
+        $ownerCustomerTransfer = $this->tester->haveCustomer();
+        $this->ownerCompanyUserTransfer = $this->tester->haveCompanyUser([
+            CompanyUserTransfer::CUSTOMER => $ownerCustomerTransfer,
+            CompanyUserTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
+        ]);
+
+        $otherCustomerTransfer = $this->tester->haveCustomer();
+        $this->otherCompanyUserTransfer = $this->tester->haveCompanyUser([
+            CompanyUserTransfer::CUSTOMER => $otherCustomerTransfer,
+            CompanyUserTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
+        ]);
+
+        $quoteTransfer = $this->tester->havePersistentQuote([
+            QuoteTransfer::CUSTOMER => $ownerCustomerTransfer,
+        ]);
+
+        $this->quoteCompanyUserEntityTransfer = $this->tester->haveQuoteCompanyUser(
+            $this->otherCompanyUserTransfer,
+            $quoteTransfer,
+            $readOnlyPermissionGroup
+        );
+
+        // Act
+        $shareDetailCollectionTransfer = $sharedCartsRestApiFacade->getSharedCartsByCartUuid($quoteTransfer);
+
+        // Assert
+        $this->assertCount(1, $shareDetailCollectionTransfer->getShareDetails());
+        $shareDetailTransfer = $shareDetailCollectionTransfer->getShareDetails()[0];
+
+        $this->assertEquals($this->otherCompanyUserTransfer->getIdCompanyUser(), $shareDetailTransfer->getIdCompanyUser());
+        $this->assertEquals($readOnlyPermissionGroup->getIdQuotePermissionGroup(), $shareDetailTransfer->getQuotePermissionGroup()->getIdQuotePermissionGroup());
+    }
+
 
     /**
      * @return void

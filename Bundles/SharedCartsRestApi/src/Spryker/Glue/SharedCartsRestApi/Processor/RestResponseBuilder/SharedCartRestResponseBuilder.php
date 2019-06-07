@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\ShareDetailTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
-use Spryker\Glue\SharedCartsRestApi\Processor\Mapper\SharedCartMapperInterface;
+use Spryker\Glue\SharedCartsRestApi\Processor\SharedCart\Mapper\SharedCartMapperInterface;
 use Spryker\Glue\SharedCartsRestApi\SharedCartsRestApiConfig;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -25,7 +25,7 @@ class SharedCartRestResponseBuilder implements SharedCartRestResponseBuilderInte
     protected $restResourceBuilder;
 
     /**
-     * @var \Spryker\Glue\SharedCartsRestApi\Processor\Mapper\SharedCartMapperInterface
+     * @var \Spryker\Glue\SharedCartsRestApi\Processor\SharedCart\Mapper\SharedCartMapperInterface
      */
     protected $sharedCartMapper;
 
@@ -36,7 +36,7 @@ class SharedCartRestResponseBuilder implements SharedCartRestResponseBuilderInte
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
-     * @param \Spryker\Glue\SharedCartsRestApi\Processor\Mapper\SharedCartMapperInterface $sharedCartMapper
+     * @param \Spryker\Glue\SharedCartsRestApi\Processor\SharedCart\Mapper\SharedCartMapperInterface $sharedCartMapper
      * @param \Spryker\Glue\SharedCartsRestApi\SharedCartsRestApiConfig $sharedCartsRestApiConfig
      */
     public function __construct(

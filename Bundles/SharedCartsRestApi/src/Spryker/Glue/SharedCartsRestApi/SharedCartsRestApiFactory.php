@@ -9,10 +9,12 @@ namespace Spryker\Glue\SharedCartsRestApi;
 
 use Spryker\Glue\Kernel\AbstractFactory;
 use Spryker\Glue\SharedCartsRestApi\Dependency\Client\SharedCartsRestApiToCompanyUserStorageClientInterface;
-use Spryker\Glue\SharedCartsRestApi\Processor\Mapper\SharedCartMapper;
-use Spryker\Glue\SharedCartsRestApi\Processor\Mapper\SharedCartMapperInterface;
 use Spryker\Glue\SharedCartsRestApi\Processor\RestResponseBuilder\SharedCartRestResponseBuilder;
 use Spryker\Glue\SharedCartsRestApi\Processor\RestResponseBuilder\SharedCartRestResponseBuilderInterface;
+use Spryker\Glue\SharedCartsRestApi\Processor\SharedCart\Mapper\SharedCartMapper;
+use Spryker\Glue\SharedCartsRestApi\Processor\SharedCart\Mapper\SharedCartMapperInterface;
+use Spryker\Glue\SharedCartsRestApi\Processor\SharedCart\Relationship\SharedCartByCartIdExpander;
+use Spryker\Glue\SharedCartsRestApi\Processor\SharedCart\Relationship\SharedCartByCartIdExpanderInterface;
 use Spryker\Glue\SharedCartsRestApi\Processor\SharedCart\SharedCartCreator;
 use Spryker\Glue\SharedCartsRestApi\Processor\SharedCart\SharedCartCreatorInterface;
 use Spryker\Glue\SharedCartsRestApi\Processor\SharedCart\SharedCartDeleter;
@@ -22,10 +24,20 @@ use Spryker\Glue\SharedCartsRestApi\Processor\SharedCart\SharedCartUpdaterInterf
 
 /**
  * @method \Spryker\Client\SharedCartsRestApi\SharedCartsRestApiClientInterface getClient()
- * @method \Spryker\Glue\SharedCartsRestApi\SharedCartsRestApiConfig getConfig()
  */
 class SharedCartsRestApiFactory extends AbstractFactory
 {
+    /**
+     * @return \Spryker\Glue\SharedCartsRestApi\Processor\SharedCart\Relationship\SharedCartByCartIdExpanderInterface
+     */
+    public function createSharedCartByCartIdExpander(): SharedCartByCartIdExpanderInterface
+    {
+        return new SharedCartByCartIdExpander(
+            $this->getClient(),
+            $this->createSharedCartMapper(),
+            $this->getResourceBuilder()
+        );
+    }
     /**
      * @return \Spryker\Glue\SharedCartsRestApi\Processor\SharedCart\SharedCartCreatorInterface
      */
@@ -73,7 +85,7 @@ class SharedCartsRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\SharedCartsRestApi\Processor\Mapper\SharedCartMapperInterface
+     * @return \Spryker\Glue\SharedCartsRestApi\Processor\SharedCart\Mapper\SharedCartMapperInterface
      */
     public function createSharedCartMapper(): SharedCartMapperInterface
     {

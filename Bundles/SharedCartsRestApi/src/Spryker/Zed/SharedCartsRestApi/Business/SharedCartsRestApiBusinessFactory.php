@@ -12,6 +12,8 @@ use Spryker\Zed\SharedCartsRestApi\Business\SharedCart\SharedCartCreator;
 use Spryker\Zed\SharedCartsRestApi\Business\SharedCart\SharedCartCreatorInterface;
 use Spryker\Zed\SharedCartsRestApi\Business\SharedCart\SharedCartDeleter;
 use Spryker\Zed\SharedCartsRestApi\Business\SharedCart\SharedCartDeleterInterface;
+use Spryker\Zed\SharedCartsRestApi\Business\SharedCart\SharedCartReader;
+use Spryker\Zed\SharedCartsRestApi\Business\SharedCart\SharedCartReaderInterface;
 use Spryker\Zed\SharedCartsRestApi\Business\SharedCart\SharedCartUpdater;
 use Spryker\Zed\SharedCartsRestApi\Business\SharedCart\SharedCartUpdaterInterface;
 use Spryker\Zed\SharedCartsRestApi\Dependency\Facade\SharedCartsRestApiToQuoteFacadeInterface;
@@ -24,6 +26,17 @@ use Spryker\Zed\SharedCartsRestApi\SharedCartsRestApiDependencyProvider;
  */
 class SharedCartsRestApiBusinessFactory extends AbstractBusinessFactory
 {
+    /**
+     * @return \Spryker\Zed\SharedCartsRestApi\Business\SharedCart\SharedCartReaderInterface
+     */
+    public function createSharedCartReader(): SharedCartReaderInterface
+    {
+        return new SharedCartReader(
+            $this->getQuoteFacade(),
+            $this->getSharedCartFacade()
+        );
+    }
+    
     /**
      * @return \Spryker\Zed\SharedCartsRestApi\Business\SharedCart\SharedCartCreatorInterface
      */

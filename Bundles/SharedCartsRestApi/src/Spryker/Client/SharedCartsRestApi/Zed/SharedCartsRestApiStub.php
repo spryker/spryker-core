@@ -7,8 +7,10 @@
 
 namespace Spryker\Client\SharedCartsRestApi\Zed;
 
+use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShareCartRequestTransfer;
 use Generated\Shared\Transfer\ShareCartResponseTransfer;
+use Generated\Shared\Transfer\ShareDetailCollectionTransfer;
 use Spryker\Client\SharedCartsRestApi\Dependency\Client\SharedCartsRestApiToZedRequestClientInterface;
 
 class SharedCartsRestApiStub implements SharedCartsRestApiStubInterface
@@ -24,6 +26,22 @@ class SharedCartsRestApiStub implements SharedCartsRestApiStubInterface
     public function __construct(SharedCartsRestApiToZedRequestClientInterface $zedRequestClient)
     {
         $this->zedRequestClient = $zedRequestClient;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShareDetailCollectionTransfer
+     */
+    public function getSharedCartsByCartUuid(QuoteTransfer $quoteTransfer): ShareDetailCollectionTransfer
+    {
+        /** @var \Generated\Shared\Transfer\ShareDetailCollectionTransfer $shareDetailCollectionTransfer */
+        $shareDetailCollectionTransfer = $this->zedRequestClient->call(
+            '/shared-carts-rest-api/gateway/get-shared-carts-by-cart-uuid',
+            $quoteTransfer
+        );
+
+        return $shareDetailCollectionTransfer;
     }
 
     /**

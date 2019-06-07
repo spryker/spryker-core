@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\SharedCartsRestApi\Business;
 
+use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShareCartRequestTransfer;
 use Generated\Shared\Transfer\ShareCartResponseTransfer;
+use Generated\Shared\Transfer\ShareDetailCollectionTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -17,6 +19,22 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class SharedCartsRestApiFacade extends AbstractFacade implements SharedCartsRestApiFacadeInterface
 {
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShareDetailCollectionTransfer
+     */
+    public function getSharedCartsByCartUuid(QuoteTransfer $quoteTransfer): ShareDetailCollectionTransfer
+    {
+        return $this->getFactory()
+            ->createSharedCartReader()
+            ->getSharedCartsByCartUuid($quoteTransfer);
+    }
+
     /**
      * {@inheritdoc}
      *
