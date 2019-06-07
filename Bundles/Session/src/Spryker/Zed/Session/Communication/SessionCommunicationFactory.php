@@ -94,8 +94,8 @@ class SessionCommunicationFactory extends AbstractCommunicationFactory
     {
         return new SessionHandlerFactory(
             $this->getConfig()->getSessionLifeTime(),
-            $this->getConfig()->getEnvironmentName(),
-            $this->getMonitoringService()
+            $this->getMonitoringService(),
+            $this->getConfig()->getEnvironmentName()
         );
     }
 

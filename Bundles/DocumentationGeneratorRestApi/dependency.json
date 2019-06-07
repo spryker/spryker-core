@@ -1,6 +1,5 @@
 {
   "include": {
-    "Transfer": "Transfer provides attributes meta-data.",
-    "Config": "Required by module"
+    "Transfer": "Transfer provides attributes meta-data."
   }
 }

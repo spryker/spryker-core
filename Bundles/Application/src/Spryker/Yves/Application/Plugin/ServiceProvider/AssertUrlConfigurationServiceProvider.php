@@ -15,6 +15,8 @@ use Spryker\Yves\Kernel\AbstractPlugin;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
+ * @deprecated Will be removed without replacement.
+ *
  * @method \Spryker\Yves\Application\ApplicationConfig getConfig()
  */
 class AssertUrlConfigurationServiceProvider extends AbstractPlugin implements ServiceProviderInterface

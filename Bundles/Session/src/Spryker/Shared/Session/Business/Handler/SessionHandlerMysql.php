@@ -29,14 +29,14 @@ class SessionHandlerMysql implements SessionHandlerInterface
     protected $host;
 
     /**
-     * @var string
+     * @var string|null
      */
-    protected $user;
+    protected $user = null;
 
     /**
-     * @var string
+     * @var string|null
      */
-    protected $password;
+    protected $password = null;
 
     /**
      * @var string
@@ -46,7 +46,7 @@ class SessionHandlerMysql implements SessionHandlerInterface
     /**
      * @var int
      */
-    protected $lifetime;
+    protected $lifetime = 600;
 
     /**
      * @var int
@@ -65,13 +65,13 @@ class SessionHandlerMysql implements SessionHandlerInterface
 
     /**
      * @param \Spryker\Shared\Session\Dependency\Service\SessionToMonitoringServiceInterface $monitoringService
-     * @param string $environmentName
      * @param array $hosts
      * @param string|null $user
      * @param string|null $password
      * @param int $lifetime
+     * @param string $environmentName
      */
-    public function __construct(SessionToMonitoringServiceInterface $monitoringService, $environmentName, $hosts = ['127.0.0.1:3306'], $user = null, $password = null, $lifetime = 600)
+    public function __construct(SessionToMonitoringServiceInterface $monitoringService, $hosts, $user, $password, $lifetime, $environmentName)
     {
         $host = $hosts[0];
         if (strpos($host, ':')) {
@@ -81,11 +81,11 @@ class SessionHandlerMysql implements SessionHandlerInterface
         }
 
         $this->monitoringService = $monitoringService;
-        $this->environmentName = $environmentName;
         $this->host = $host;
         $this->user = $user;
         $this->password = $password;
         $this->lifetime = $lifetime;
+        $this->environmentName = $environmentName;
 
         $databaseName = 'shared_data';
         $dsn = 'mysql:host=' . $this->host . ';port=' . $this->port . ';dbname=' . $databaseName;

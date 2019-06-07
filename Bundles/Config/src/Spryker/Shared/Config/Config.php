@@ -148,14 +148,14 @@ class Config
     }
 
     /**
-     * @param string|null $environment
+     * @param string|null $environmentName
      *
      * @return void
      */
-    public static function init($environment = null)
+    public static function init($environmentName = null): void
     {
         $config = new ArrayObject();
-        $environment = $environment ?? static::getEnvironmentName();
+        $environmentName = $environmentName ?? static::getEnvironmentName();
         $storeName = Store::getInstance()->getStoreName();
 
         /*
@@ -166,7 +166,7 @@ class Config
         /*
          * e.g. config_default-production.php
          */
-        static::buildConfig('default-' . $environment, $config);
+        static::buildConfig('default-' . $environmentName, $config);
 
         /*
          * e.g. config_default_DE.php
@@ -176,7 +176,7 @@ class Config
         /*
          * e.g. config_default-production_DE.php
          */
-        static::buildConfig('default-' . $environment . '_' . $storeName, $config);
+        static::buildConfig('default-' . $environmentName . '_' . $storeName, $config);
 
         /*
          * e.g. config_local_test.php

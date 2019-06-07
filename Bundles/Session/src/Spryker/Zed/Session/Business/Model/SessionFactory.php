@@ -18,25 +18,25 @@ class SessionFactory extends SharedSessionFactory
     protected $sessionLifeTime;
 
     /**
-     * @var string
-     */
-    protected $environmentName;
-
-    /**
      * @var \Spryker\Shared\Session\Dependency\Service\SessionToMonitoringServiceInterface
      */
     protected $monitoringService;
 
     /**
-     * @param int $sessionLifeTime
-     * @param string $environmentName
-     * @param \Spryker\Shared\Session\Dependency\Service\SessionToMonitoringServiceInterface $monitoringService
+     * @var string
      */
-    public function __construct(int $sessionLifeTime, string $environmentName, SessionToMonitoringServiceInterface $monitoringService)
+    protected $environmentName;
+
+    /**
+     * @param int $sessionLifeTime
+     * @param \Spryker\Shared\Session\Dependency\Service\SessionToMonitoringServiceInterface $monitoringService
+     * @param string $environmentName
+     */
+    public function __construct(int $sessionLifeTime, SessionToMonitoringServiceInterface $monitoringService, string $environmentName)
     {
         $this->sessionLifeTime = $sessionLifeTime;
-        $this->environmentName = $environmentName;
         $this->monitoringService = $monitoringService;
+        $this->environmentName = $environmentName;
     }
 
     /**

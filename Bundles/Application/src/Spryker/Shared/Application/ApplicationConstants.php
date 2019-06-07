@@ -337,6 +337,4 @@ interface ApplicationConstants
     public const HOST_SSL_STATIC_MEDIA = 'HOST_SSL_STATIC_MEDIA';
 
     public const FORM_FACTORY = 'FORM_FACTORY';
-
-    public const ENABLE_APPLICATION_SERVICE_DEBUG = "APPLICATION:ENABLE_APPLICATION_SERVICE_DEBUG";
 }

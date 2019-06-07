@@ -25,6 +25,10 @@ class WhoopsErrorHandlerServiceProvider implements ServiceProviderInterface
      */
     public function register(Application $app)
     {
+        if (Config::get(ErrorHandlerConstants::ENABLE_PRETTY_ERROR_HANDLER, Config::getEnvironmentName() === 'development')) {
+            return;
+        }
+
         $whoops = new Run();
         $whoops->pushHandler($this->getPrettyPageHandler());
         $whoops->pushHandler($this->getErrorLoggerCallbackHandler());

@@ -12,5 +12,11 @@ namespace Spryker\Shared\Api;
  */
 interface ApiConstants
 {
+    /**
+     * Specification:
+     * - Extends response with request parameters and stacktrace.
+     *
+     * @api
+     */
     public const ENABLE_API_DEBUG = 'API:ENABLE_API_DEBUG';
 }
