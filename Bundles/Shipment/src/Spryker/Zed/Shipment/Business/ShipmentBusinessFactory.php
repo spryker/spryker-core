@@ -14,6 +14,8 @@ use Spryker\Zed\Shipment\Business\Calculator\ShipmentTaxRateCalculator as Shipme
 use Spryker\Zed\Shipment\Business\Checkout\MultiShipmentOrderSaver;
 use Spryker\Zed\Shipment\Business\Checkout\MultiShipmentOrderSaverInterface;
 use Spryker\Zed\Shipment\Business\Checkout\ShipmentOrderSaver as CheckoutShipmentOrderSaver;
+use Spryker\Zed\Shipment\Business\Mapper\ShipmentMapper;
+use Spryker\Zed\Shipment\Business\Mapper\ShipmentMapperInterface;
 use Spryker\Zed\Shipment\Business\Model\Carrier;
 use Spryker\Zed\Shipment\Business\Model\Method;
 use Spryker\Zed\Shipment\Business\Model\MethodPrice;
@@ -22,6 +24,8 @@ use Spryker\Zed\Shipment\Business\Model\ShipmentOrderHydrate;
 use Spryker\Zed\Shipment\Business\Model\ShipmentOrderSaver;
 use Spryker\Zed\Shipment\Business\Model\ShipmentTaxRateCalculator;
 use Spryker\Zed\Shipment\Business\Model\Transformer\ShipmentMethodTransformer;
+use Spryker\Zed\Shipment\Business\Sanitizer\ExpenseSanitizer;
+use Spryker\Zed\Shipment\Business\Sanitizer\ExpenseSanitizerInterface;
 use Spryker\Zed\Shipment\Business\Shipment\ShipmentOrderHydrate as MultipleShipmentOrderHydrate;
 use Spryker\Zed\Shipment\Business\Shipment\ShipmentOrderHydrateInterface;
 use Spryker\Zed\Shipment\Business\Shipment\ShipmentReader;
@@ -179,7 +183,9 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
             $this->getSalesQueryContainer(),
             $this->getEntityManager(),
             $this->getSalesFacade(),
-            $this->getCustomerFacade()
+            $this->getCustomerFacade(),
+            $this->createExpanseSanitizer(),
+            $this->createShipmentMapper()
         );
     }
 
@@ -381,5 +387,21 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
             $this->createCheckoutMultiShipmentOrderSaver(),
             $this->createShipmentMethodExpander()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Shipment\Business\Sanitizer\ExpenseSanitizerInterface
+     */
+    public function createExpanseSanitizer(): ExpenseSanitizerInterface
+    {
+        return new ExpenseSanitizer();
+    }
+
+    /**
+     * @return \Spryker\Zed\Shipment\Business\Mapper\ShipmentMapper
+     */
+    public function createShipmentMapper(): ShipmentMapperInterface
+    {
+        return new ShipmentMapper();
     }
 }
