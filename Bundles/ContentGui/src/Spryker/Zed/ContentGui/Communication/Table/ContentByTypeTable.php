@@ -64,7 +64,7 @@ class ContentByTypeTable extends AbstractTable
         ]);
 
         $config->addRawColumn(ContentTableConstants::COL_ACTIONS);
-        $config->setDefaultSortField(ContentTableConstants::COL_KEY, TableConfiguration::SORT_DESC);
+        $config->setDefaultSortField(ContentTableConstants::COL_NAME, TableConfiguration::SORT_ASC);
         $config->setSearchable([
             ContentTableConstants::COL_KEY,
             ContentTableConstants::COL_NAME,
@@ -83,7 +83,7 @@ class ContentByTypeTable extends AbstractTable
     {
         $header = [
             ContentTableConstants::COL_ACTIONS => '',
-            ContentTableConstants::COL_KEY => 'KEY',
+            ContentTableConstants::COL_KEY => 'Content Item Key',
             ContentTableConstants::COL_NAME => 'Name',
         ];
 
