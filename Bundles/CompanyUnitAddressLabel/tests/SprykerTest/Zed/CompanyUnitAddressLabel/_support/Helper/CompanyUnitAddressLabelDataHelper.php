@@ -8,8 +8,11 @@
 namespace SprykerTest\Zed\CompanyUnitAddressLabel\Helper;
 
 use Codeception\Module;
+use Generated\Shared\DataBuilder\CompanyUnitAddressLabelBuilder;
+use Generated\Shared\Transfer\CompanyUnitAddressLabelTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
+use Orm\Zed\CompanyUnitAddressLabel\Persistence\SpyCompanyUnitAddressLabelQuery;
 use Spryker\Zed\CompanyUnitAddressLabel\Business\CompanyUnitAddressLabelFacadeInterface;
 use Spryker\Zed\CompanyUnitAddressLabel\Persistence\CompanyUnitAddressLabelRepository;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
@@ -20,6 +23,25 @@ class CompanyUnitAddressLabelDataHelper extends Module
 {
     use LocatorHelperTrait;
     use DataCleanupHelperTrait;
+
+    /**
+     * @param array $seed
+     *
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressLabelTransfer
+     */
+    public function haveCompanyUnitAddressLabel(array $seed = []): CompanyUnitAddressLabelTransfer
+    {
+        $companyUnitAddressLabelTransfer = (new CompanyUnitAddressLabelBuilder($seed))->build();
+
+        $companyUnitAddressLabelEntity = (new SpyCompanyUnitAddressLabelQuery())
+            ->filterByName($companyUnitAddressLabelTransfer->getName())
+            ->findOneOrCreate();
+        $companyUnitAddressLabelEntity->save();
+
+        $companyUnitAddressLabelTransfer->fromArray($companyUnitAddressLabelEntity->toArray(), true);
+
+        return $companyUnitAddressLabelTransfer;
+    }
 
     /**
      * @param array $seedData
