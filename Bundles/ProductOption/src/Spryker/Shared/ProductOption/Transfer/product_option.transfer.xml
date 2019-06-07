@@ -162,7 +162,7 @@
     <transfer name="ProductAbstractOptionGroupStatus">
         <property name="idProductAbstract" type="int" />
         <property name="isActive" type="bool" />
-        <property name="productOptionName" type="string" />
+        <property name="productOptionGroupName" type="string" />
     </transfer>
 
 </transfers>

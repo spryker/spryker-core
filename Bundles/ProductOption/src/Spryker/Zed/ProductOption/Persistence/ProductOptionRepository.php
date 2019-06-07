@@ -31,11 +31,11 @@ class ProductOptionRepository extends AbstractRepository implements ProductOptio
             ->select([
                 ProductAbstractOptionGroupStatusTransfer::ID_PRODUCT_ABSTRACT,
                 ProductAbstractOptionGroupStatusTransfer::IS_ACTIVE,
-                ProductAbstractOptionGroupStatusTransfer::PRODUCT_OPTION_NAME,
+                ProductAbstractOptionGroupStatusTransfer::PRODUCT_OPTION_GROUP_NAME,
             ])
             ->withColumn(SpyProductAbstractProductOptionGroupTableMap::COL_FK_PRODUCT_ABSTRACT, ProductAbstractOptionGroupStatusTransfer::ID_PRODUCT_ABSTRACT)
             ->withColumn(SpyProductOptionGroupTableMap::COL_ACTIVE, ProductAbstractOptionGroupStatusTransfer::IS_ACTIVE)
-            ->withColumn(SpyProductOptionGroupTableMap::COL_NAME, ProductAbstractOptionGroupStatusTransfer::PRODUCT_OPTION_NAME)
+            ->withColumn(SpyProductOptionGroupTableMap::COL_NAME, ProductAbstractOptionGroupStatusTransfer::PRODUCT_OPTION_GROUP_NAME)
             ->find()
             ->toArray();
 
