@@ -39,7 +39,7 @@ class CategoryImageStorageReader implements CategoryImageStorageReaderInterface
     }
 
     /**
-     * @deprecated Use `findCategoryImageStorageItemData()` instead.
+     * @deprecated Use `Spryker\Client\CategoryImageStorage\Storage\CategoryImageStorageReader::findCategoryImageStorageItemData()` instead.
      *
      * @param int $idCategory
      * @param string $localeName
@@ -76,7 +76,7 @@ class CategoryImageStorageReader implements CategoryImageStorageReaderInterface
     }
 
     /**
-     * @deprecated Use `mapToCategoryImageStorageItemData()` instead.
+     * @deprecated Use `Spryker\Client\CategoryImageStorage\Storage\CategoryImageStorageReader::mapToCategoryImageStorageItemData()` instead.
      *
      * @param array $categoryImageStorageData
      *

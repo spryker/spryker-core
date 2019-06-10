@@ -21,7 +21,7 @@ class CategoryImageStorageClient extends AbstractClient implements CategoryImage
      *
      * @api
      *
-     * @deprecated Use `findCategoryImageStorageItemData()` instead.
+     * @deprecated Use `Spryker\Client\CategoryImageStorage\CategoryImageStorageClient::findCategoryImageStorageItemData()` instead.
      *
      * @param int $idCategory
      * @param string $localeName

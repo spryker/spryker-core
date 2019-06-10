@@ -18,7 +18,7 @@ interface CategoryImageStorageClientInterface
      *
      * @api
      *
-     * @deprecated Use `findCategoryImageStorageItem()` instead.
+     * @deprecated Use `Spryker\Client\CategoryImageStorage\CategoryImageStorageClientInterface::findCategoryImageStorageItem()` instead.
      *
      * @param int $idCategory
      * @param string $localeName

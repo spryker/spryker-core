@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CategoryImageSetTransfer;
 use Generated\Shared\Transfer\CategoryImageStorageItemTransfer;
 use Orm\Zed\CategoryImage\Persistence\Map\SpyCategoryImageSetTableMap;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
+use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -52,15 +53,7 @@ class CategoryImageStorageRepository extends AbstractRepository implements Categ
             ->filterByFkCategory_In($categoryIds)
             ->find();
 
-        $categoryImageSetTransfers = [];
-
-        foreach ($categoryImageSetEntities as $categoryImageSetEntity) {
-            $categoryImageSetTransfers[] = $this->getFactory()
-                ->createCategoryImageStorageMapper()
-                ->mapCategoryImageSetEntityToCategoryImageSetTransfer($categoryImageSetEntity, new CategoryImageSetTransfer());
-        }
-
-        return $categoryImageSetTransfers;
+        return $this->mapCategoryImageSetEntityToCategoryImageSetTransfer($categoryImageSetEntities);
     }
 
     /**
@@ -75,18 +68,7 @@ class CategoryImageStorageRepository extends AbstractRepository implements Categ
             ->filterByFkCategory_In($categoryIds)
             ->find();
 
-        $categoryImageStorageItemTransfers = [];
-
-        foreach ($categoryImageStorageEntities as $categoryImageStorageEntity) {
-            $categoryImageStorageItemTransfers[] = $this->getFactory()
-                ->createCategoryImageStorageMapper()
-                ->mapCategoryImageStorageEntityToCategoryImageStorageItemTransfer(
-                    $categoryImageStorageEntity,
-                    new CategoryImageStorageItemTransfer()
-                );
-        }
-
-        return $categoryImageStorageItemTransfers;
+        return $this->mapCategoryImageStorageEntityToCategoryImageStorageItemTransfer($categoryImageStorageEntities);
     }
 
     /**
@@ -104,5 +86,47 @@ class CategoryImageStorageRepository extends AbstractRepository implements Categ
             ->select([static::FK_CATEGORY])
             ->addAnd(SpyCategoryImageSetTableMap::COL_FK_CATEGORY, null, ModelCriteria::NOT_EQUAL)
             ->find();
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection $categoryImageSetEntities
+     *
+     * @return \Generated\Shared\Transfer\CategoryImageSetTransfer[]
+     */
+    protected function mapCategoryImageSetEntityToCategoryImageSetTransfer(ObjectCollection $categoryImageSetEntities): array
+    {
+        $categoryImageSetTransfers = [];
+
+        foreach ($categoryImageSetEntities as $categoryImageSetEntity) {
+            $categoryImageSetTransfers[] = $this->getFactory()
+                ->createCategoryImageStorageMapper()
+                ->mapCategoryImageSetEntityToCategoryImageSetTransfer(
+                    $categoryImageSetEntity,
+                    new CategoryImageSetTransfer()
+                );
+        }
+
+        return $categoryImageSetTransfers;
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection $categoryImageStorageEntities
+     *
+     * @return \Generated\Shared\Transfer\CategoryImageStorageItemTransfer[]
+     */
+    protected function mapCategoryImageStorageEntityToCategoryImageStorageItemTransfer(ObjectCollection $categoryImageStorageEntities): array
+    {
+        $categoryImageStorageItemTransfers = [];
+
+        foreach ($categoryImageStorageEntities as $categoryImageStorageEntity) {
+            $categoryImageStorageItemTransfers[] = $this->getFactory()
+                ->createCategoryImageStorageMapper()
+                ->mapCategoryImageStorageEntityToCategoryImageStorageItemTransfer(
+                    $categoryImageStorageEntity,
+                    new CategoryImageStorageItemTransfer()
+                );
+        }
+
+        return $categoryImageStorageItemTransfers;
     }
 }

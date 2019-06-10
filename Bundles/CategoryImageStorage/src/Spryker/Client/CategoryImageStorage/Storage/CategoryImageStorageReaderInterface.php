@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\CategoryImageStorageItemDataTransfer;
 interface CategoryImageStorageReaderInterface
 {
     /**
-     * @deprecated Use `findCategoryImageStorageItemData()` instead.
+     * @deprecated Use `Spryker\Client\CategoryImageStorage\Storage\CategoryImageStorageReaderInterface::findCategoryImageStorageItemData()` instead.
      *
      * @param int $idCategory
      * @param string $localeName
