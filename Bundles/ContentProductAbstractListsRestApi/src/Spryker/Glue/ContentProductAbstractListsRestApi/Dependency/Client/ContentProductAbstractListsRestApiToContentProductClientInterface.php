@@ -12,10 +12,10 @@ use Generated\Shared\Transfer\ContentProductAbstractListTypeTransfer;
 interface ContentProductAbstractListsRestApiToContentProductClientInterface
 {
     /**
-     * @param int $idContent
+     * @param string $contentKey
      * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\ContentProductAbstractListTypeTransfer|null
      */
-    public function executeProductAbstractListTypeById(int $idContent, string $localeName): ?ContentProductAbstractListTypeTransfer;
+    public function executeProductAbstractListTypeByKey(string $contentKey, string $localeName): ?ContentProductAbstractListTypeTransfer;
 }

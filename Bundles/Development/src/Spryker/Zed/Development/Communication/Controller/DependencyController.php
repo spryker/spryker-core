@@ -28,10 +28,8 @@ class DependencyController extends AbstractController
      */
     public function indexAction()
     {
-        $bundles = $this->getFacade()->getAllModules();
-
         return $this->viewResponse([
-            'bundles' => $bundles,
+            'modules' => $this->getFacade()->getModules(),
         ]);
     }
 

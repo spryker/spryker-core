@@ -26,8 +26,11 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_PERSISTENT_CART = 'FACADE_PERSISTENT_CART';
     public const FACADE_CART = 'FACADE_CART';
     public const FACADE_STORE = 'FACADE_STORE';
+
     public const PROPEL_QUERY_QUOTE = 'PROPEL_QUERY_QUOTE';
+
     public const PLUGIN_QUOTE_CREATOR = 'PLUGIN_QUOTE_CREATOR';
+    public const PLUGINS_QUOTE_COLLECTION_EXPANDER = 'PLUGINS_QUOTE_COLLECTION_EXPANDER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -42,6 +45,7 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCartFacade($container);
         $container = $this->addStoreFacade($container);
         $container = $this->addQuoteCreatorPlugin($container);
+        $container = $this->addQuoteCollectionExpanderPlugins($container);
 
         return $container;
     }
@@ -149,5 +153,27 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
     protected function getQuoteCreatorPlugin(): QuoteCreatorPluginInterface
     {
         return new QuoteCreatorPlugin();
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addQuoteCollectionExpanderPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_QUOTE_COLLECTION_EXPANDER] = function () {
+            return $this->getQuoteCollectionExpanderPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionExpanderPluginInterface[]
+     */
+    protected function getQuoteCollectionExpanderPlugins(): array
+    {
+        return [];
     }
 }

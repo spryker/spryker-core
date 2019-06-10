@@ -34,16 +34,16 @@ class ContentBannerTypeMapper implements ContentBannerTypeMapperInterface
     }
 
     /**
-     * @param int $idContent
+     * @param string $contentKey
      * @param string $localeName
      *
      * @throws \Spryker\Client\ContentBanner\Exception\MissingBannerTermException
      *
      * @return \Generated\Shared\Transfer\ContentBannerTypeTransfer|null
      */
-    public function executeBannerTypeById(int $idContent, string $localeName): ?ContentBannerTypeTransfer
+    public function executeBannerTypeByKey(string $contentKey, string $localeName): ?ContentBannerTypeTransfer
     {
-        $contentTypeContextTransfer = $this->contentStorageClient->findContentTypeContext($idContent, $localeName);
+        $contentTypeContextTransfer = $this->contentStorageClient->findContentTypeContextByKey($contentKey, $localeName);
 
         if (!$contentTypeContextTransfer) {
             return null;

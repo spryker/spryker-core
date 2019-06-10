@@ -41,7 +41,8 @@ class CheckContentDataStep implements DataImportStepInterface
     {
         $contentTransfer = (new ContentTransfer())
             ->setName($dataSet[ContentTransfer::NAME])
-            ->setDescription($dataSet[ContentTransfer::DESCRIPTION]);
+            ->setDescription($dataSet[ContentTransfer::DESCRIPTION])
+            ->setKey($dataSet[ContentTransfer::KEY]);
 
         $validationResult = $this->contentFacade->validateContent($contentTransfer);
 

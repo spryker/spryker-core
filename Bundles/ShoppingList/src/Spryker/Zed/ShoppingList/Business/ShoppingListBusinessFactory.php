@@ -32,6 +32,7 @@ use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToMessengerFacadeInte
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToPermissionFacadeInterface;
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToPersistentCartFacadeInterface;
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToProductFacadeInterface;
+use Spryker\Zed\ShoppingList\Dependency\Service\ShoppingListToUtilQuantityServiceInterface;
 use Spryker\Zed\ShoppingList\ShoppingListDependencyProvider;
 
 /**
@@ -94,7 +95,8 @@ class ShoppingListBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->createShoppingListResolver(),
             $this->getMessengerFacade(),
-            $this->createShoppingListItemPluginExecutor()
+            $this->createShoppingListItemPluginExecutor(),
+            $this->getUtilQuantityService()
         );
     }
 
@@ -253,5 +255,13 @@ class ShoppingListBusinessFactory extends AbstractBusinessFactory
     public function getItemToShoppingListItemMapperPlugins(): array
     {
         return $this->getProvidedDependency(ShoppingListDependencyProvider::PLUGINS_ITEM_TO_SHOPPING_LIST_ITEM_MAPPER);
+    }
+
+    /**
+     * @return \Spryker\Zed\ShoppingList\Dependency\Service\ShoppingListToUtilQuantityServiceInterface
+     */
+    public function getUtilQuantityService(): ShoppingListToUtilQuantityServiceInterface
+    {
+        return $this->getProvidedDependency(ShoppingListDependencyProvider::SERVICE_UTIL_QUANTITY);
     }
 }
