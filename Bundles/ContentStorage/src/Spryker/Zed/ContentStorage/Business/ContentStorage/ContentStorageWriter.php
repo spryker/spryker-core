@@ -115,8 +115,10 @@ class ContentStorageWriter implements ContentStorageWriterInterface
             }
 
             $contentStorageTransfer->setFkContent($contentTransfer->getIdContent())
+                ->setContentKey($contentTransfer->getKey())
                 ->setLocale($availableLocale->getLocaleName())
                 ->setData($this->utilEncodingService->encodeJson([
+                    ContentStorageConfig::ID_CONTENT => $contentTransfer->getIdContent(),
                     ContentStorageConfig::TERM_KEY => $contentTransfer->getContentTermKey(),
                     ContentStorageConfig::CONTENT_KEY => $this->utilEncodingService->decodeJson($localizedContentTransfer->getParameters(), true),
                 ]));

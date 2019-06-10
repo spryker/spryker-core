@@ -12,12 +12,12 @@ use Generated\Shared\Transfer\ContentBannerTypeTransfer;
 interface ContentBannerTypeMapperInterface
 {
     /**
-     * @param int $idContent
+     * @param string $contentKey
      * @param string $localeName
      *
      * @throws \Spryker\Client\ContentBanner\Exception\MissingBannerTermException
      *
      * @return \Generated\Shared\Transfer\ContentBannerTypeTransfer|null
      */
-    public function executeBannerTypeById(int $idContent, string $localeName): ?ContentBannerTypeTransfer;
+    public function executeBannerTypeByKey(string $contentKey, string $localeName): ?ContentBannerTypeTransfer;
 }
