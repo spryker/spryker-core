@@ -37,7 +37,7 @@ class MessageTranslator implements MessageTranslatorInterface
      *
      * @return string
      */
-    public function translate($keyName, array $data = []): string
+    public function translate(string $keyName, array $data = []): string
     {
         foreach ($this->translationPlugins as $translationPlugin) {
             if ($translationPlugin->hasKey($keyName)) {
