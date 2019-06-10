@@ -14,10 +14,10 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * @method \Spryker\Zed\SetupFrontend\Business\SetupFrontendFacadeInterface getFacade()
  */
-class YvesBuildFrontendConsole extends Console
+class YvesPrepareConfigFrontendConsole extends Console
 {
-    public const COMMAND_NAME = 'frontend:yves:build';
-    public const DESCRIPTION = 'This command will build Yves frontend.';
+    public const COMMAND_NAME = 'frontend:yves:prepare-config';
+    public const DESCRIPTION = 'This command will generate configuration for Yves frontend building.';
 
     /**
      * @return void
@@ -38,9 +38,9 @@ class YvesBuildFrontendConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $this->info('Build Yves frontend');
+        $this->info('Generate configuration for Yves frontend building.');
 
-        if ($this->getFacade()->buildYvesFrontend($this->getMessenger())) {
+        if ($this->getFacade()->generateYvesAssetsBuildConfig($this->getMessenger())) {
             return static::CODE_SUCCESS;
         }
 

@@ -7,13 +7,23 @@
 
 namespace Spryker\Zed\SetupFrontend\Business;
 
+use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\SetupFrontend\Business\Model\Builder\Builder;
+use Spryker\Zed\SetupFrontend\Business\Model\Builder\BuilderInterface;
 use Spryker\Zed\SetupFrontend\Business\Model\Cleaner\Cleaner;
+use Spryker\Zed\SetupFrontend\Business\Model\Cleaner\CleanerInterface;
+use Spryker\Zed\SetupFrontend\Business\Model\Cleaner\YvesAssetsCleaner;
+use Spryker\Zed\SetupFrontend\Business\Model\Generator\YvesAssetsBuildConfigGenerator;
+use Spryker\Zed\SetupFrontend\Business\Model\Generator\YvesAssetsBuildConfigGeneratorInterface;
 use Spryker\Zed\SetupFrontend\Business\Model\Installer\DependencyInstaller;
 use Spryker\Zed\SetupFrontend\Business\Model\Installer\PathFinder\InstallPathFinder;
 use Spryker\Zed\SetupFrontend\Business\Model\Installer\ProjectInstaller;
 use Spryker\Zed\SetupFrontend\Business\Model\PackageManager\NodeInstaller;
+use Spryker\Zed\SetupFrontend\Business\Model\Resolver\BuilderCommandResolver;
+use Spryker\Zed\SetupFrontend\Business\Model\Resolver\BuilderCommandResolverInterface;
+use Spryker\Zed\SetupFrontend\Dependency\Service\SetupFrontendToUtilEncodingServiceInterface;
+use Spryker\Zed\SetupFrontend\SetupFrontendDependencyProvider;
 
 /**
  * @method \Spryker\Zed\SetupFrontend\SetupFrontendConfig getConfig()
@@ -47,9 +57,12 @@ class SetupFrontendBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\SetupFrontend\Business\Model\Cleaner\CleanerInterface
      */
-    public function createYvesAssetsCleaner()
+    public function createYvesAssetsCleaner(): CleanerInterface
     {
-        return new Cleaner($this->getConfig()->getYvesAssetsDirectories());
+        return new YvesAssetsCleaner(
+            $this->getConfig(),
+            $this->getStore()
+        );
     }
 
     /**
@@ -74,9 +87,20 @@ class SetupFrontendBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\SetupFrontend\Business\Model\Builder\BuilderInterface
      */
-    public function createYvesBuilder()
+    public function createYvesBuilder(): BuilderInterface
     {
-        return new Builder($this->getConfig()->getYvesBuildCommand());
+        return new Builder($this->createBuilderCommandResolver()->getYvesBuildCommand());
+    }
+
+    /**
+     * @return \Spryker\Zed\SetupFrontend\Business\Model\Resolver\BuilderCommandResolverInterface
+     */
+    public function createBuilderCommandResolver(): BuilderCommandResolverInterface
+    {
+        return new BuilderCommandResolver(
+            $this->getConfig(),
+            $this->getStore()
+        );
     }
 
     /**
@@ -94,7 +118,7 @@ class SetupFrontendBusinessFactory extends AbstractBusinessFactory
     {
         return new DependencyInstaller(
             $this->createZedInstallerPathFinder(),
-            $this->getConfig()->getYvesInstallCommand()
+            $this->getConfig()->getZedInstallCommand()
         );
     }
 
@@ -112,5 +136,42 @@ class SetupFrontendBusinessFactory extends AbstractBusinessFactory
     public function createZedBuilder()
     {
         return new Builder($this->getConfig()->getZedBuildCommand());
+    }
+
+    /**
+     * @return \Spryker\Zed\SetupFrontend\Business\Model\Generator\YvesAssetsBuildConfigGeneratorInterface
+     */
+    public function createYvesAssetsBuildConfigGenerator(): YvesAssetsBuildConfigGeneratorInterface
+    {
+        return new YvesAssetsBuildConfigGenerator(
+            $this->getConfig(),
+            $this->getUtilEncodingService(),
+            $this->getStore(),
+            $this->getYvesFrontendStoreConfigExpanderPlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Shared\Kernel\Store
+     */
+    public function getStore(): Store
+    {
+        return $this->getProvidedDependency(SetupFrontendDependencyProvider::STORE);
+    }
+
+    /**
+     * @return \Spryker\Zed\SetupFrontend\Dependency\Service\SetupFrontendToUtilEncodingServiceInterface
+     */
+    public function getUtilEncodingService(): SetupFrontendToUtilEncodingServiceInterface
+    {
+        return $this->getProvidedDependency(SetupFrontendDependencyProvider::SERVICE_UTIL_ENCODING);
+    }
+
+    /**
+     * @return \Spryker\Zed\SetupFrontendExtension\Dependency\YvesFrontendStoreConfigExpanderPluginInterface[]
+     */
+    public function getYvesFrontendStoreConfigExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(SetupFrontendDependencyProvider::PLUGINS_YVES_FRONTEND_STORE_CONFIG_EXPANDER);
     }
 }
