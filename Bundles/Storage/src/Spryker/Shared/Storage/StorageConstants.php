@@ -43,4 +43,12 @@ interface StorageConstants
      * @api
      */
     public const STORAGE_PREDIS_CLIENT_OPTIONS = 'STORAGE_PREDIS_CLIENT_OPTIONS';
+
+    /**
+     * Specification:
+     * - Enables/disables storage caching.
+     *
+     * @api
+     */
+    public const STORAGE_CACHE_ENABLED = 'STORAGE:STORAGE_CACHE_ENABLED';
 }

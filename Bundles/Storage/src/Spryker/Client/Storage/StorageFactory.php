@@ -9,6 +9,11 @@ namespace Spryker\Client\Storage;
 
 use Predis\Client;
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\Storage\Cache\Key\CacheKeyStrategyInterface;
+use Spryker\Client\Storage\Cache\Key\CacheKeyStrategyProviderInterface;
+use Spryker\Client\Storage\Cache\Key\ConfigCacheKeyStrategyProvider;
+use Spryker\Client\Storage\Cache\Key\EmptyCacheKeyStrategy;
+use Spryker\Client\Storage\Cache\Key\RequestCacheKeyStrategy;
 use Spryker\Client\Storage\Cache\StorageCacheStrategyFactory;
 use Spryker\Client\Storage\Dependency\Client\StorageToLocaleClientInterface;
 use Spryker\Client\Storage\Dependency\Client\StorageToStoreClientInterface;
@@ -121,6 +126,50 @@ class StorageFactory extends AbstractFactory
         return $this
             ->createStorageClientStrategyFactory()
             ->createStorageCacheStrategy($storageCacheStrategy);
+    }
+
+    /**
+     * @return \Spryker\Client\Storage\Cache\Key\CacheKeyStrategyProviderInterface
+     */
+    public function createCacheKeyGenerationStrategyProvider(): CacheKeyStrategyProviderInterface
+    {
+        return new ConfigCacheKeyStrategyProvider(
+            $this->createCacheKeyGenerationStrategyStack(),
+            $this->getStorageClientConfig()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\Storage\Cache\Key\CacheKeyStrategyInterface[]
+     */
+    public function createCacheKeyGenerationStrategyStack(): array
+    {
+        return [
+            $this->createRequestCacheKeyGenerationStrategy(),
+            $this->createEmptyCacheKeyGenerationStrategy(),
+        ];
+    }
+
+    /**
+     * @return \Spryker\Client\Storage\Cache\Key\CacheKeyStrategyInterface
+     */
+    public function createRequestCacheKeyGenerationStrategy(): CacheKeyStrategyInterface
+    {
+        return new RequestCacheKeyStrategy(
+            $this->getStoreClient(),
+            $this->getLocaleClient(),
+            $this->getStorageClientConfig()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\Storage\Cache\Key\CacheKeyStrategyInterface
+     */
+    public function createEmptyCacheKeyGenerationStrategy(): CacheKeyStrategyInterface
+    {
+        return new EmptyCacheKeyStrategy(
+            $this->getStorageClientConfig()
+        );
     }
 
     /**

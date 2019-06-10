@@ -8,6 +8,7 @@
 namespace Spryker\Client\Storage;
 
 use Spryker\Client\Kernel\AbstractClient;
+use Spryker\Client\Storage\Cache\Key\CacheKeyStrategyInterface;
 use Spryker\Client\Storage\Redis\Service;
 use Spryker\Shared\Storage\StorageConstants;
 use Symfony\Component\HttpFoundation\Request;
@@ -439,99 +440,19 @@ class StorageClient extends AbstractClient implements StorageClientInterface
      *
      * @return string
      */
-    protected static function generateCacheKey(?Request $request = null)
+    protected static function generateCacheKey(?Request $request = null): string
     {
-        if ($request) {
-            $requestUri = $request->getRequestUri();
-            $serverName = $request->server->get('SERVER_NAME');
-            $getParameters = $request->query->all();
-        } else {
-            $requestUri = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : null;
-            $serverName = isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : null;
-            $getParameters = $_GET;
-        }
-
-        if ($requestUri === null || $serverName === null) {
-            return '';
-        }
-
-        $urlSegments = strtok($requestUri, '?');
-
-        $getParametersKey = static::generateGetParametersKey($getParameters);
-        $cacheKey = static::assembleCacheKey($urlSegments, $getParametersKey);
-
-        return $cacheKey;
+        return static::getCacheKeyGenerationStrategy()->generateCacheKey($request);
     }
 
     /**
-     * @param array $getParameters
-     *
-     * @return string
+     * @return \Spryker\Client\Storage\Cache\Key\CacheKeyStrategyInterface
      */
-    protected static function generateGetParametersKey(array $getParameters): string
-    {
-        $allowedGetParametersConfig = static::getAllowedGetParametersConfig();
-        if (count($allowedGetParametersConfig) === 0) {
-            return '';
-        }
-
-        $allowedGetParameters = array_intersect_key($getParameters, array_flip($allowedGetParametersConfig));
-        if (count($allowedGetParameters) === 0) {
-            return '';
-        }
-
-        ksort($allowedGetParameters);
-
-        return '?' . http_build_query($allowedGetParameters);
-    }
-
-    /**
-     * @param string $urlSegments
-     * @param string $getParametersKey
-     *
-     * @return string
-     */
-    protected static function assembleCacheKey($urlSegments, $getParametersKey): string
-    {
-        $cacheKey = strtolower(
-            static::getStoreName() . self::KEY_NAME_SEPARATOR .
-            static::getCurrentLocale() . self::KEY_NAME_SEPARATOR .
-            self::KEY_NAME_PREFIX . self::KEY_NAME_SEPARATOR .
-            $urlSegments . $getParametersKey
-        );
-
-        return $cacheKey;
-    }
-
-    /**
-     * @return string[]
-     */
-    protected static function getAllowedGetParametersConfig(): array
+    protected static function getCacheKeyGenerationStrategy(): CacheKeyStrategyInterface
     {
         return (new static())->getFactory()
-            ->getStorageClientConfig()
-            ->getAllowedGetParametersList();
-    }
-
-    /**
-     * @return string
-     */
-    protected static function getStoreName(): string
-    {
-        return (new static())->getFactory()
-            ->getStoreClient()
-            ->getCurrentStore()
-            ->getName();
-    }
-
-    /**
-     * @return string
-     */
-    protected static function getCurrentLocale(): string
-    {
-        return (new static())->getFactory()
-            ->getLocaleClient()
-            ->getCurrentLocale();
+            ->createCacheKeyGenerationStrategyProvider()
+            ->provideCacheKeyGenerationStrategy();
     }
 
     /**

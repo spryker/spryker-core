@@ -8,7 +8,11 @@
 namespace Spryker\Client\Storage;
 
 use Spryker\Client\Kernel\AbstractBundleConfig;
+use Spryker\Shared\Storage\StorageConstants;
 
+/**
+ * @method \Spryker\Shared\Storage\StorageConfig getSharedConfig()
+ */
 class StorageConfig extends AbstractBundleConfig
 {
     /**
@@ -37,5 +41,37 @@ class StorageConfig extends AbstractBundleConfig
     public function getAllowedGetParametersList(): array
     {
         return [];
+    }
+
+    /**
+     * @return bool
+     */
+    public function isStorageCachingEnabled(): bool
+    {
+        return $this->get(StorageConstants::STORAGE_CACHE_ENABLED, true);
+    }
+
+    /**
+     * @return string
+     */
+    public function getRequestCacheKeyGenerationStrategy(): string
+    {
+        return $this->getSharedConfig()->getRequestCacheKeyGenerationStrategy();
+    }
+
+    /**
+     * @return string
+     */
+    public function getEmptyCacheKeyGenerationStrategy(): string
+    {
+        return $this->getSharedConfig()->getEmptyCacheKeyGenerationStrategy();
+    }
+
+    /**
+     * @return string
+     */
+    public function getDefaultCacheKeyGenerationStrategy(): string
+    {
+        return $this->getRequestCacheKeyGenerationStrategy();
     }
 }
