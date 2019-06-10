@@ -36,7 +36,7 @@ class SharedCartsRestApiBusinessFactory extends AbstractBusinessFactory
             $this->getSharedCartFacade()
         );
     }
-    
+
     /**
      * @return \Spryker\Zed\SharedCartsRestApi\Business\SharedCart\SharedCartCreatorInterface
      */

@@ -7,6 +7,7 @@
 
 namespace SprykerTest\Zed\SharedCartsRestApi\Business;
 
+use ArrayObject;
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\QuoteCompanyUserTransfer;
@@ -86,7 +87,7 @@ class SharedCartsRestApiFacadeTest extends Test
     protected function setUp(): void
     {
         parent::setUp();
-        
+
         $this->readOnlyQuotePermissionGroup = $this->tester->haveQuotePermissionGroup(static::QUOTE_PERMISSION_GROUP_READ_ONLY, [
             static::READ_SHARED_CART_PERMISSION_PLUGIN_KEY,
         ]);
@@ -163,7 +164,6 @@ class SharedCartsRestApiFacadeTest extends Test
         $this->assertEquals($this->otherCompanyUserTransfer->getIdCompanyUser(), $shareDetailTransfer->getIdCompanyUser());
         $this->assertEquals($readOnlyPermissionGroup->getIdQuotePermissionGroup(), $shareDetailTransfer->getQuotePermissionGroup()->getIdQuotePermissionGroup());
     }
-
 
     /**
      * @return void
