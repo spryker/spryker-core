@@ -7,25 +7,10 @@
 
 namespace Spryker\Client\ContentBanner;
 
-use Generated\Shared\Transfer\ContentBannerTransfer;
 use Generated\Shared\Transfer\ContentBannerTypeTransfer;
 
 interface ContentBannerClientInterface
 {
-    /**
-     * Specification:
-     * - Executes the ContentBannerTerm.
-     *
-     * @api
-     *
-     * @deprecated Will be removed without replacement.
-     *
-     * @param \Generated\Shared\Transfer\ContentBannerTransfer $contentBannerTransfer
-     *
-     * @return array
-     */
-    public function execute(ContentBannerTransfer $contentBannerTransfer): array;
-
     /**
      * Specification:
      * - Fetches Banner by ID.
@@ -33,12 +18,12 @@ interface ContentBannerClientInterface
      *
      * @api
      *
-     * @param int $idContent
+     * @param string $contentKey
      * @param string $localeName
      *
      * @throws \Spryker\Client\ContentBanner\Exception\MissingBannerTermException
      *
      * @return \Generated\Shared\Transfer\ContentBannerTypeTransfer|null
      */
-    public function executeBannerTypeById(int $idContent, string $localeName): ?ContentBannerTypeTransfer;
+    public function executeBannerTypeByKey(string $contentKey, string $localeName): ?ContentBannerTypeTransfer;
 }

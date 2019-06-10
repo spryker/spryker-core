@@ -4,9 +4,9 @@
 "Updated","Updated"
 "Add Content Item","Add Content Item"
 "Back to Content Items","Back to Content Items"
-Cancel,Cancel
+"Cancel","Cancel"
 "Create Content Item","Create Content Item"
-Default,Default
+"Default","Default"
 "Edit Content Item","Edit Content Item"
 "List of Content Items","List of Content Items"
 "Content Item","Content Item"
@@ -18,4 +18,5 @@ Default,Default
 "Default","Default"
 "Overview of Content Items","Overview of Content Items"
 "Overwrite default by specifying a different list per specific locale","Overwrite default by specifying a different list per specific locale"
-Save,Save
+"Save","Save"
+"Content Item Key","Content Item Key"

@@ -58,7 +58,8 @@ class TaxStorageMapper
 
         foreach ($spyTaxSetStorages as $spyTaxSetStorage) {
             $synchronizationDataTransfer = new SynchronizationDataTransfer();
-            $data = json_encode($spyTaxSetStorage->getData());
+            /** @var string $data */
+            $data = $spyTaxSetStorage->getData();
             $synchronizationDataTransfer->setData($data);
             $synchronizationDataTransfer->setKey($spyTaxSetStorage->getKey());
             $synchronizationDataTransfers[] = $synchronizationDataTransfer;
