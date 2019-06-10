@@ -29,20 +29,10 @@ class ContentProductConfig extends AbstractSharedConfig
     /**
      * Content item abstract product list default template identifier
      */
-    protected const WIDGET_TEMPLATE_IDENTIFIER_DEFAULT = 'default';
-
-    /**
-     * Content item abstract product list default template name
-     */
-    protected const WIDGET_TEMPLATE_DISPLAY_NAME_DEFAULT = 'content_product_abstract_list.template.default';
+    public const WIDGET_TEMPLATE_IDENTIFIER_DEFAULT = 'default';
 
     /**
      * Content item abstract product list top-title template identifier
      */
-    protected const WIDGET_TEMPLATE_IDENTIFIER_TOP_TITLE = 'top-title';
-
-    /**
-     * Content item abstract product list top-title template name
-     */
-    protected const WIDGET_TEMPLATE_DISPLAY_NAME_TOP_TITLE = 'content_product_abstract_list.template.top-title';
+    public const WIDGET_TEMPLATE_IDENTIFIER_TOP_TITLE = 'top-title';
 }

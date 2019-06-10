@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\CartsRestApi\Business;
 
+use Spryker\Zed\CartsRestApi\Business\PermissionChecker\QuotePermissionChecker;
+use Spryker\Zed\CartsRestApi\Business\PermissionChecker\QuotePermissionCheckerInterface;
 use Spryker\Zed\CartsRestApi\Business\Quote\Mapper\QuoteMapper;
 use Spryker\Zed\CartsRestApi\Business\Quote\Mapper\QuoteMapperInterface;
 use Spryker\Zed\CartsRestApi\Business\Quote\QuoteCreator;
@@ -65,7 +67,8 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
         return new QuoteReader(
             $this->getQuoteFacade(),
             $this->getStoreFacade(),
-            $this->createQuoteMapper()
+            $this->createQuotePermissionChecker(),
+            $this->getQuoteCollectionExpanderPlugins()
         );
     }
 
@@ -76,7 +79,6 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
     {
         return new QuoteCreator(
             $this->getQuoteCreatorPlugins(),
-            $this->createQuoteMapper(),
             $this->getStoreFacade()
         );
     }
@@ -100,7 +102,7 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
         return new QuoteDeleter(
             $this->getPersistentCartFacade(),
             $this->createQuoteReader(),
-            $this->createQuoteMapper()
+            $this->createQuotePermissionChecker()
         );
     }
 
@@ -113,7 +115,8 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
             $this->getPersistentCartFacade(),
             $this->getCartFacade(),
             $this->createQuoteReader(),
-            $this->createQuoteMapper()
+            $this->createQuoteMapper(),
+            $this->createQuotePermissionChecker()
         );
     }
 
@@ -125,7 +128,8 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
         return new QuoteItemAdder(
             $this->getPersistentCartFacade(),
             $this->createQuoteReader(),
-            $this->createQuoteItemMapper()
+            $this->createQuoteItemMapper(),
+            $this->createQuotePermissionChecker()
         );
     }
 
@@ -161,7 +165,8 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
     {
         return new QuoteItemDeleter(
             $this->getPersistentCartFacade(),
-            $this->createQuoteItemReader()
+            $this->createQuoteItemReader(),
+            $this->createQuotePermissionChecker()
         );
     }
 
@@ -172,8 +177,17 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
     {
         return new QuoteItemUpdater(
             $this->getPersistentCartFacade(),
-            $this->createQuoteItemReader()
+            $this->createQuoteItemReader(),
+            $this->createQuotePermissionChecker()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\CartsRestApi\Business\PermissionChecker\QuotePermissionCheckerInterface
+     */
+    public function createQuotePermissionChecker(): QuotePermissionCheckerInterface
+    {
+        return new QuotePermissionChecker();
     }
 
     /**
@@ -230,5 +244,13 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
     public function getQuoteCreatorPlugins(): QuoteCreatorPluginInterface
     {
         return $this->getProvidedDependency(CartsRestApiDependencyProvider::PLUGIN_QUOTE_CREATOR);
+    }
+
+    /**
+     * @return \Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionExpanderPluginInterface[]
+     */
+    protected function getQuoteCollectionExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(CartsRestApiDependencyProvider::PLUGINS_QUOTE_COLLECTION_EXPANDER);
     }
 }

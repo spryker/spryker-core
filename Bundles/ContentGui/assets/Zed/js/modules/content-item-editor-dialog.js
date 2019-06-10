@@ -64,16 +64,16 @@ var ContentItemDialog = function(
                 var $titleHeader = this.$dialog.find('.ibox-title h5');
                 var $templateHeader = this.$dialog.find('.template-title');
                 var checkedContentItem = this.$dialog.find('table input:checked');
-                var chosenId = checkedContentItem.val();
                 var chosenType = checkedContentItem.data('content-item-type');
                 var chosenName = checkedContentItem.data('content-item-name');
+                var chosenKey = this.$dialog.find('table input:checked').val();
                 var $choseIdErrorSelector = this.$dialog.find('.content-errors .item');
                 var isTemplateListExists = this.$dialog.find('.template-list').length;
                 var chosenTemplate = this.$dialog.find('.template-list input:checked').data('template');
                 var chosenTemplateIdentifier = this.$dialog.find('.template-list input:checked').val();
                 var $chooseTemplateErrorSelector = this.$dialog.find('.content-errors .template');
                 var twigTemplate = this.$dialog.find('input[name=twigFunctionTemplate]').val();
-                var readyToInsert = chosenId !== undefined && (!isTemplateListExists || isTemplateListExists && chosenTemplate);
+                var readyToInsert = chosenKey !== undefined && (!isTemplateListExists || isTemplateListExists && chosenTemplate);
 
                 if (readyToInsert) {
                     var elementForInsert = this.getNewDomElement(
@@ -86,6 +86,14 @@ var ContentItemDialog = function(
                         widgetHtmlTemplate
                     );
 
+                    var builtText = twigTemplate.replace(/%\w+%/g, function (param) {
+                        return {
+                            '%KEY%': chosenKey,
+                            '%TEMPLATE%': chosenTemplate
+                        }[param];
+                    });
+                    this.context.invoke('editor.restoreRange');
+                    this.context.invoke('editor.insertText', builtText);
                     this.$ui.hideDialog(this.$dialog);
                     this.context.invoke('editor.restoreRange');
 
@@ -94,10 +102,11 @@ var ContentItemDialog = function(
                         return;
                     }
 
+                if (!chosenKey) {
                     this.addItemInEditor(elementForInsert);
                 }
 
-                if (!chosenId) {
+                if (!chosenKey) {
                     this.showError($choseIdErrorSelector, $titleHeader)
                 }
 

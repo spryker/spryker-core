@@ -7,12 +7,9 @@
 
 namespace Spryker\Zed\Propel\Communication\Console;
 
-use Spryker\Shared\Config\Config;
-use Spryker\Shared\Propel\PropelConstants;
 use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Process\Process;
 
 /**
  * @method \Spryker\Zed\Propel\Business\PropelFacadeInterface getFacade()
@@ -21,14 +18,15 @@ use Symfony\Component\Process\Process;
 class InsertSqlConsole extends Console
 {
     public const COMMAND_NAME = 'propel:sql:insert';
+    public const COMMAND_DESCRIPTION = 'Insert generated SQL into database';
 
     /**
      * @return void
      */
     protected function configure()
     {
-        $this->setName(self::COMMAND_NAME);
-        $this->setDescription('Insert generated SQL into database');
+        $this->setName(static::COMMAND_NAME);
+        $this->setDescription(static::COMMAND_DESCRIPTION);
 
         parent::configure();
     }
@@ -39,17 +37,16 @@ class InsertSqlConsole extends Console
      *
      * @return int
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $this->info('Insert SQL');
+        $this->info($this->getDescription());
 
-        $config = Config::get(PropelConstants::PROPEL);
-        $command = 'vendor/bin/propel sql:insert --config-dir ' . $config['paths']['phpConfDir'];
+        $command = $this->getFactory()->createSqlInsertCommand();
 
-        $process = new Process($command, APPLICATION_ROOT_DIR);
-
-        return $process->run(function ($type, $buffer) {
-            echo $buffer;
-        });
+        return $this->getFactory()->createPropelCommandRunner()->runCommand(
+            $command,
+            $this->getDefinition(),
+            $output
+        );
     }
 }

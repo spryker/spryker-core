@@ -12,7 +12,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ShoppingListItemBeforeDeletePluginInterface;
 
 /**
- * @method \Spryker\Zed\ShoppingListNote\Business\ShoppingListNoteFacade getFacade()
+ * @method \Spryker\Zed\ShoppingListNote\Business\ShoppingListNoteFacadeInterface getFacade()
  * @method \Spryker\Zed\ShoppingListNote\ShoppingListNoteConfig getConfig()
  */
 class ShoppingListItemNoteBeforeDeletePlugin extends AbstractPlugin implements ShoppingListItemBeforeDeletePluginInterface

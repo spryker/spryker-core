@@ -48,12 +48,13 @@ class EditContentController extends AbstractController
             )
             ->handleRequest($request);
 
+        /** @var \Generated\Shared\Transfer\ContentTransfer $data */
+        $contentFormData = $contentForm->getData();
+
         if ($contentForm->isSubmitted() && $contentForm->isValid()) {
-            /** @var \Generated\Shared\Transfer\ContentTransfer $contentTransfer */
-            $contentTransfer = $contentForm->getData();
             $this->getFactory()
                 ->getContentFacade()
-                ->update($contentTransfer);
+                ->update($contentFormData);
 
             $this->addSuccessMessage(static::MESSAGE_SUCCESS_CONTENT_UPDATE);
 
@@ -67,8 +68,8 @@ class EditContentController extends AbstractController
             'contentTabs' => $contentTabs->createView(),
             'contentForm' => $contentForm->createView(),
             'backButton' => static::URL_REDIRECT_CONTENT_LIST_PAGE,
-            'contentId' => $idContent,
-            'contentName' => $contentTransfer->getContentTermKey(),
+            'contentKey' => $contentFormData->getKey(),
+            'contentName' => $this->getFactory()->createContentResolver()->getContentPlugin($termKey)->getTermKey(),
         ]);
     }
 }

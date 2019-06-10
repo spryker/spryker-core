@@ -22,8 +22,12 @@ interface CustomerResourceMapperInterface
 
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\RestCustomersResponseAttributesTransfer $restCustomersResponseAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\RestCustomersResponseAttributesTransfer
      */
-    public function mapCustomerTransferToRestCustomersResponseAttributesTransfer(CustomerTransfer $customerTransfer): RestCustomersResponseAttributesTransfer;
+    public function mapCustomerTransferToRestCustomersResponseAttributesTransfer(
+        CustomerTransfer $customerTransfer,
+        RestCustomersResponseAttributesTransfer $restCustomersResponseAttributesTransfer
+    ): RestCustomersResponseAttributesTransfer;
 }

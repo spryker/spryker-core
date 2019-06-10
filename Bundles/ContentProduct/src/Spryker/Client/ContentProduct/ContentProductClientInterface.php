@@ -13,15 +13,16 @@ interface ContentProductClientInterface
 {
     /**
      * Specification:
-     * - Finds content item in the key-value storage.
-     * - Resolves content type and executes data.
+     * - Finds content item in the key-value storage by content key and locale name.
+     * - Gets stored term for found content item.
+     * - Executes stored term with found content item to get a content product abstract list type.
      *
      * @api
      *
-     * @param int $idContent
+     * @param string $contentKey
      * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\ContentProductAbstractListTypeTransfer|null
      */
-    public function executeProductAbstractListTypeById(int $idContent, string $localeName): ?ContentProductAbstractListTypeTransfer;
+    public function executeProductAbstractListTypeByKey(string $contentKey, string $localeName): ?ContentProductAbstractListTypeTransfer;
 }

@@ -17,6 +17,7 @@ use Spryker\Zed\Oauth\Business\Model\League\Repositories\ClientRepository;
 use Spryker\Zed\Oauth\Business\Model\League\Repositories\RefreshTokenRepository;
 use Spryker\Zed\Oauth\Business\Model\League\Repositories\ScopeRepository;
 use Spryker\Zed\Oauth\Business\Model\League\Repositories\UserRepository;
+use Spryker\Zed\Oauth\Dependency\Service\OauthToUtilEncodingServiceInterface;
 use Spryker\Zed\Oauth\Persistence\OauthEntityManagerInterface;
 use Spryker\Zed\Oauth\Persistence\OauthRepositoryInterface;
 
@@ -33,6 +34,11 @@ class RepositoryBuilder implements RepositoryBuilderInterface
     protected $oauthEntityManager;
 
     /**
+     * @var \Spryker\Zed\Oauth\Dependency\Service\OauthToUtilEncodingServiceInterface
+     */
+    protected $utilEncodingService;
+
+    /**
      * @var \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthUserProviderPluginInterface[]
      */
     protected $userProviderPlugins;
@@ -43,21 +49,32 @@ class RepositoryBuilder implements RepositoryBuilderInterface
     protected $scopeProviderPlugins;
 
     /**
+     * @var \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthUserIdentifierFilterPluginInterface[]
+     */
+    protected $oauthUserIdentifierFilterPlugins;
+
+    /**
      * @param \Spryker\Zed\Oauth\Persistence\OauthRepositoryInterface $oauthRepository
      * @param \Spryker\Zed\Oauth\Persistence\OauthEntityManagerInterface $oauthEntityManager
+     * @param \Spryker\Zed\Oauth\Dependency\Service\OauthToUtilEncodingServiceInterface $utilEncodingService
      * @param array $userProviderPlugins
      * @param \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthScopeProviderPluginInterface[] $scopeProviderPlugins
+     * @param \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthUserIdentifierFilterPluginInterface[] $oauthUserIdentifierFilterPlugins
      */
     public function __construct(
         OauthRepositoryInterface $oauthRepository,
         OauthEntityManagerInterface $oauthEntityManager,
+        OauthToUtilEncodingServiceInterface $utilEncodingService,
         array $userProviderPlugins = [],
-        array $scopeProviderPlugins = []
+        array $scopeProviderPlugins = [],
+        array $oauthUserIdentifierFilterPlugins = []
     ) {
         $this->oauthRepository = $oauthRepository;
         $this->oauthEntityManager = $oauthEntityManager;
+        $this->utilEncodingService = $utilEncodingService;
         $this->userProviderPlugins = $userProviderPlugins;
         $this->scopeProviderPlugins = $scopeProviderPlugins;
+        $this->oauthUserIdentifierFilterPlugins = $oauthUserIdentifierFilterPlugins;
     }
 
     /**
@@ -81,7 +98,12 @@ class RepositoryBuilder implements RepositoryBuilderInterface
      */
     public function createAccessTokenRepository(): AccessTokenRepositoryInterface
     {
-        return new AccessTokenRepository($this->oauthRepository, $this->oauthEntityManager);
+        return new AccessTokenRepository(
+            $this->oauthRepository,
+            $this->oauthEntityManager,
+            $this->utilEncodingService,
+            $this->oauthUserIdentifierFilterPlugins
+        );
     }
 
     /**

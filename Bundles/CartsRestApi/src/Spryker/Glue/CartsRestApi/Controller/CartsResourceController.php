@@ -68,6 +68,7 @@ class CartsResourceController extends AbstractController
      *              "in": "header"
      *          }],
      *          "responses": {
+     *              "403": "Unauthorized cart action.",
      *              "422": "Customer already has a cart."
      *          }
      *     }
@@ -95,6 +96,7 @@ class CartsResourceController extends AbstractController
      *          }],
      *          "responses": {
      *              "400": "Cart id is missing.",
+     *              "403": "Unauthorized cart action.",
      *              "404": "Cart not found.",
      *              "422": "Cart could not be deleted."
      *          }
@@ -122,6 +124,7 @@ class CartsResourceController extends AbstractController
      *          }],
      *          "responses": {
      *              "400": "Cart id is missing.",
+     *              "403": "Unauthorized cart action.",
      *              "404": "Cart with given uuid not found."
      *          }
      *     }
