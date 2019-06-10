@@ -3,7 +3,6 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-'use strict';
-
-require('../sass/main.scss');
-require('./modules/category-image');
+.image-collection:last-child .image-collection-delimiter {
+    display: none;
+}
