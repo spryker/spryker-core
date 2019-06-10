@@ -32,6 +32,7 @@
         <property name="store" type="string" />
         <property name="currencyIsoCode" type="string" />
         <property name="shipmentGroups" type="ShipmentGroup[]" singular="shipmentGroup"/>
+        <property name="isMultiShipment" type="bool"/>
     </transfer>
 
     <transfer name="Quote">
