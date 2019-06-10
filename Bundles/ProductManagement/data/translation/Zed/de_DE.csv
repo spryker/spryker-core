@@ -72,3 +72,6 @@ Type,Typ
 Variants,Varianten
 "View Product Abstract","Abstraktes Produkt anzeigen"
 "View Product Concrete","Konkretes Produkt anzeigen"
+"Delete image","Lösche Bild"
+"Image Set","Bildmenge"
+"Delete image set","Bilderset löschen"
