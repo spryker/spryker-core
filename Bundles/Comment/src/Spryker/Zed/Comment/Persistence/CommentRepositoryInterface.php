@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Comment\Persistence;
 
+use Generated\Shared\Transfer\CommentFilterTransfer;
 use Generated\Shared\Transfer\CommentRequestTransfer;
 use Generated\Shared\Transfer\CommentThreadTransfer;
 use Generated\Shared\Transfer\CommentTransfer;
@@ -45,4 +46,11 @@ interface CommentRepositoryInterface
      * @return \Generated\Shared\Transfer\CommentTagTransfer[]
      */
     public function getCommentTags(): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\CommentFilterTransfer $commentFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\CommentTransfer[]
+     */
+    public function getCommentsByFilter(CommentFilterTransfer $commentFilterTransfer): array;
 }

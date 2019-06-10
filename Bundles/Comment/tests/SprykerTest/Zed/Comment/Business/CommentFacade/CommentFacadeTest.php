@@ -10,8 +10,10 @@ namespace SprykerTest\Zed\Comment\Business\CommentFacade;
 use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\CommentBuilder;
+use Generated\Shared\DataBuilder\CommentFilterBuilder;
 use Generated\Shared\DataBuilder\CommentRequestBuilder;
 use Generated\Shared\DataBuilder\CommentTagBuilder;
+use Generated\Shared\Transfer\CommentFilterTransfer;
 use Generated\Shared\Transfer\CommentRequestTransfer;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 
@@ -46,6 +48,11 @@ class CommentFacadeTest extends Unit
      * @uses \Spryker\Zed\Comment\Business\Writer\CommentWriter::GLOSSARY_KEY_COMMENT_EMPTY_MESSAGE
      */
     protected const GLOSSARY_KEY_COMMENT_EMPTY_MESSAGE = 'comment.validation.error.empty_message';
+
+    /**
+     * @uses \Spryker\Zed\Comment\Business\Writer\CommentWriter::GLOSSARY_KEY_COMMENT_THREAD_ALREADY_EXISTS
+     */
+    protected const GLOSSARY_KEY_COMMENT_THREAD_ALREADY_EXISTS = 'comment.validation.error.comment_thread_already_exists';
 
     /**
      * @var \SprykerTest\Zed\Comment\CommentBusinessTester
@@ -966,6 +973,226 @@ class CommentFacadeTest extends Unit
         $this->assertCount(1, $storedCommentTransfer->getTags());
         $this->assertEquals(
             $secondCommentTagTransfer->getName(),
+            $storedCommentTransfer->getTags()->offsetGet(0)->getName()
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testDuplicateCommentThreadCopyExistingCommentThreadToNewOne(): void
+    {
+        // Arrange
+        $firstCommentTransfer = (new CommentBuilder())->build()->setCustomer($this->customerTransfer);
+        $secondCommentTransfer = (new CommentBuilder())->build()->setCustomer($this->customerTransfer);
+
+        $commentRequestTransfer = (new CommentRequestBuilder())->build()
+            ->setComment($firstCommentTransfer);
+
+        $this->tester->createComment($commentRequestTransfer);
+
+        $commentRequestTransfer->setComment($secondCommentTransfer);
+        $this->tester->getFacade()->addComment($commentRequestTransfer);
+
+        $commentFilterTransfer = (new CommentFilterTransfer())
+            ->setOwnerId($commentRequestTransfer->getOwnerId())
+            ->setOwnerType($commentRequestTransfer->getOwnerType());
+
+        $newCommentRequestTransfer = (new CommentRequestBuilder())->build();
+
+        // Act
+        $commentThreadResponseTransfer = $this->tester->getFacade()
+            ->duplicateCommentThread($commentFilterTransfer, $newCommentRequestTransfer);
+
+        $commentThreadTransfer = $this->tester
+            ->getFacade()
+            ->findCommentThreadByOwner($newCommentRequestTransfer);
+
+        // Assert
+        $this->assertTrue($commentThreadResponseTransfer->getIsSuccessful());
+        $this->assertCount(2, $commentThreadTransfer->getComments());
+    }
+
+    /**
+     * @return void
+     */
+    public function testDuplicateCommentThreadCopyExistingCommentThreadFilteredByCommentTag(): void
+    {
+        // Arrange
+        $commentTagTransfer = (new CommentTagBuilder())->build();
+
+        $firstCommentTransfer = (new CommentBuilder())->build()
+            ->setCustomer($this->customerTransfer)
+            ->addCommentTag($commentTagTransfer);
+
+        $secondCommentTransfer = (new CommentBuilder())->build()->setCustomer($this->customerTransfer);
+        $commentRequestTransfer = (new CommentRequestBuilder())->build()->setComment($firstCommentTransfer);
+
+        $this->tester->createComment($commentRequestTransfer);
+
+        $commentRequestTransfer->setComment($secondCommentTransfer);
+        $this->tester->getFacade()->addComment($commentRequestTransfer);
+
+        $commentFilterTransfer = (new CommentFilterTransfer())
+            ->setOwnerId($commentRequestTransfer->getOwnerId())
+            ->setOwnerType($commentRequestTransfer->getOwnerType())
+            ->setTags([$commentTagTransfer->getName()]);
+
+        $newCommentRequestTransfer = (new CommentRequestBuilder())->build();
+
+        // Act
+        $commentThreadResponseTransfer = $this->tester->getFacade()
+            ->duplicateCommentThread($commentFilterTransfer, $newCommentRequestTransfer);
+
+        $commentThreadTransfer = $this->tester
+            ->getFacade()
+            ->findCommentThreadByOwner($newCommentRequestTransfer);
+
+        /** @var \Generated\Shared\Transfer\CommentTransfer $storedCommentTransfer */
+        $storedCommentTransfer = $commentThreadTransfer->getComments()->offsetGet(0);
+
+        // Assert
+        $this->assertTrue($commentThreadResponseTransfer->getIsSuccessful());
+        $this->assertCount(1, $commentThreadTransfer->getComments());
+        $this->assertEquals($firstCommentTransfer->getMessage(), $storedCommentTransfer->getMessage());
+    }
+
+    /**
+     * @return void
+     */
+    public function testDuplicateCommentThreadThrowsExceptionWithEmptyFilterOwnerId(): void
+    {
+        // Arrange
+        $commentRequestTransfer = (new CommentRequestBuilder())->build();
+        $commentFilterTransfer = (new CommentFilterBuilder())->build()
+            ->setOwnerId(null);
+
+        // Assert
+        $this->expectException(RequiredTransferPropertyException::class);
+
+        // Act
+        $this->tester->getFacade()->duplicateCommentThread($commentFilterTransfer, $commentRequestTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testDuplicateCommentThreadThrowsExceptionWithEmptyFilterOwnerType(): void
+    {
+        // Arrange
+        $commentRequestTransfer = (new CommentRequestBuilder())->build();
+        $commentFilterTransfer = (new CommentFilterBuilder())->build()
+            ->setOwnerType(null);
+
+        // Assert
+        $this->expectException(RequiredTransferPropertyException::class);
+
+        // Act
+        $this->tester->getFacade()->duplicateCommentThread($commentFilterTransfer, $commentRequestTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testDuplicateCommentThreadThrowsExceptionWithEmptyOwnerId(): void
+    {
+        // Arrange
+        $commentFilterTransfer = (new CommentFilterBuilder())->build();
+        $commentRequestTransfer = (new CommentRequestBuilder())->build()
+            ->setOwnerId(null);
+
+        // Assert
+        $this->expectException(RequiredTransferPropertyException::class);
+
+        // Act
+        $this->tester->getFacade()->duplicateCommentThread($commentFilterTransfer, $commentRequestTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testDuplicateCommentThreadThrowsExceptionWithEmptyOwnerType(): void
+    {
+        // Arrange
+        $commentFilterTransfer = (new CommentFilterBuilder())->build();
+        $commentRequestTransfer = (new CommentRequestBuilder())->build()
+            ->setOwnerType(null);
+
+        // Assert
+        $this->expectException(RequiredTransferPropertyException::class);
+
+        // Act
+        $this->tester->getFacade()->duplicateCommentThread($commentFilterTransfer, $commentRequestTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testDuplicateCommentThreadCopyThreadToExistingCommentThread(): void
+    {
+        // Arrange
+        $firstCommentTransfer = (new CommentBuilder())->build()->setCustomer($this->customerTransfer);
+        $secondCommentTransfer = (new CommentBuilder())->build()->setCustomer($this->customerTransfer);
+
+        $firstCommentRequestTransfer = (new CommentRequestBuilder())->build()->setComment($firstCommentTransfer);
+        $secondCommentRequestTransfer = (new CommentRequestBuilder())->build()->setComment($secondCommentTransfer);
+
+        $this->tester->createComment($firstCommentRequestTransfer);
+        $this->tester->createComment($secondCommentRequestTransfer);
+
+        $commentFilterTransfer = (new CommentFilterTransfer())
+            ->setOwnerId($secondCommentRequestTransfer->getOwnerId())
+            ->setOwnerType($secondCommentRequestTransfer->getOwnerType());
+
+        // Act
+        $commentThreadResponseTransfer = $this->tester->getFacade()
+            ->duplicateCommentThread($commentFilterTransfer, $secondCommentRequestTransfer);
+
+        // Assert
+        $this->assertFalse($commentThreadResponseTransfer->getIsSuccessful());
+        $this->assertEquals(
+            static::GLOSSARY_KEY_COMMENT_THREAD_ALREADY_EXISTS,
+            $commentThreadResponseTransfer->getMessages()[0]->getValue()
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testDuplicateCommentThreadCopyCommentsWithTagToNewOne(): void
+    {
+        // Arrange
+        $commentTransfer = (new CommentBuilder())->build()
+            ->setCustomer($this->customerTransfer)
+            ->addCommentTag((new CommentTagBuilder())->build());
+
+        $commentRequestTransfer = (new CommentRequestBuilder())->build()
+            ->setComment($commentTransfer);
+
+        $this->tester->createComment($commentRequestTransfer);
+
+        $commentFilterTransfer = (new CommentFilterTransfer())
+            ->setOwnerId($commentRequestTransfer->getOwnerId())
+            ->setOwnerType($commentRequestTransfer->getOwnerType());
+
+        $newCommentRequestTransfer = (new CommentRequestBuilder())->build();
+
+        // Act
+        $commentThreadResponseTransfer = $this->tester->getFacade()
+            ->duplicateCommentThread($commentFilterTransfer, $newCommentRequestTransfer);
+
+        $commentThreadTransfer = $this->tester
+            ->getFacade()
+            ->findCommentThreadByOwner($newCommentRequestTransfer);
+
+        /** @var \Generated\Shared\Transfer\CommentTransfer $storedCommentTransfer */
+        $storedCommentTransfer = $commentThreadTransfer->getComments()->offsetGet(0);
+
+        // Assert
+        $this->assertTrue($commentThreadResponseTransfer->getIsSuccessful());
+        $this->assertCount(1, $commentThreadTransfer->getComments());
+        $this->assertEquals(
+            $commentTransfer->getTags()->offsetGet(0)->getName(),
             $storedCommentTransfer->getTags()->offsetGet(0)->getName()
         );
     }

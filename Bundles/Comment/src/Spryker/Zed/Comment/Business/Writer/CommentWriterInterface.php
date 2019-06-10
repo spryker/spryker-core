@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Comment\Business\Writer;
 
+use Generated\Shared\Transfer\CommentFilterTransfer;
 use Generated\Shared\Transfer\CommentRequestTransfer;
 use Generated\Shared\Transfer\CommentThreadResponseTransfer;
 
@@ -39,4 +40,12 @@ interface CommentWriterInterface
      * @return \Generated\Shared\Transfer\CommentThreadResponseTransfer
      */
     public function removeComment(CommentRequestTransfer $commentRequestTransfer): CommentThreadResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CommentFilterTransfer $commentFilterTransfer
+     * @param \Generated\Shared\Transfer\CommentRequestTransfer $commentRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\CommentThreadResponseTransfer
+     */
+    public function duplicateCommentThread(CommentFilterTransfer $commentFilterTransfer, CommentRequestTransfer $commentRequestTransfer): CommentThreadResponseTransfer;
 }

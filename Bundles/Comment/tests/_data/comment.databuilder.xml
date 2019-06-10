@@ -8,6 +8,11 @@
         <property name="ownerType" type="string" dataBuilderRule="unique()->word" />
     </transfer>
 
+    <transfer name="CommentFilter">
+        <property name="ownerId" type="int" dataBuilderRule="numberBetween(100, 9999)" />
+        <property name="ownerType" type="string" dataBuilderRule="unique()->word" />
+    </transfer>
+
     <transfer name="Comment">
         <property name="message" type="string" dataBuilderRule="sentence(5)" />
     </transfer>

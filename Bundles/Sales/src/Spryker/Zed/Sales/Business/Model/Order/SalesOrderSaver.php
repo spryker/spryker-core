@@ -117,26 +117,27 @@ class SalesOrderSaver implements SalesOrderSaverInterface
     {
         $this->assertOrderRequirements($quoteTransfer);
 
-        $salesOrderEntity = $this->handleDatabaseTransaction(function () use ($quoteTransfer) {
-            return $this->saveOrderSalesTransaction($quoteTransfer);
+        $this->handleDatabaseTransaction(function () use ($quoteTransfer, $saveOrderTransfer) {
+            $this->saveOrderSalesTransaction($quoteTransfer, $saveOrderTransfer);
         });
-
-        $this->hydrateSaveOrderTransfer($saveOrderTransfer, $quoteTransfer, $salesOrderEntity);
     }
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
      *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrder
+     * @return void
      */
-    protected function saveOrderSalesTransaction(QuoteTransfer $quoteTransfer)
+    protected function saveOrderSalesTransaction(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): void
     {
         $salesOrderEntity = $this->saveOrderEntity($quoteTransfer);
 
         $this->saveOrderTotals($quoteTransfer, $salesOrderEntity->getIdSalesOrder());
         $this->saveOrderItems($quoteTransfer, $salesOrderEntity);
 
-        return $salesOrderEntity;
+        $this->hydrateSaveOrderTransfer($saveOrderTransfer, $quoteTransfer, $salesOrderEntity);
+
+        // TODO: stack postSave plugins
     }
 
     /**
