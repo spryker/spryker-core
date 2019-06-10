@@ -165,7 +165,7 @@ class DiscountAmountAggregator implements CalculatorInterface
             $this->sanitizeCalculatedDiscountSumPrices($calculatedDiscountTransfer);
             $this->setCalculatedDiscounts($calculatedDiscountTransfer);
 
-            $discountAmount = $calculatedDiscountTransfer->getSumAmount();
+            $discountAmount = $calculatedDiscountTransfer->getUnitAmount();
 
             $itemSumDiscountAmountAggregation += $discountAmount;
         }
