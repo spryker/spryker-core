@@ -7,7 +7,7 @@
 
 namespace Spryker\Glue\SharedCartsRestApi\Processor\SharedCart;
 
-use Generated\Shared\Transfer\CompanyUserStorageTransfer;
+use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\QuotePermissionGroupTransfer;
 use Generated\Shared\Transfer\RestSharedCartsAttributesTransfer;
 use Generated\Shared\Transfer\ShareCartRequestTransfer;
@@ -15,23 +15,15 @@ use Generated\Shared\Transfer\ShareDetailTransfer;
 use Spryker\Client\SharedCartsRestApi\SharedCartsRestApiClientInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Spryker\Glue\SharedCartsRestApi\Dependency\Client\SharedCartsRestApiToCompanyUserStorageClientInterface;
 use Spryker\Glue\SharedCartsRestApi\Processor\RestResponseBuilder\SharedCartRestResponseBuilderInterface;
 use Spryker\Glue\SharedCartsRestApi\SharedCartsRestApiConfig;
 
 class SharedCartCreator implements SharedCartCreatorInterface
 {
-    protected const MAPPING_TYPE_UUID = 'uuid';
-
     /**
      * @var \Spryker\Client\SharedCartsRestApi\SharedCartsRestApiClientInterface
      */
     protected $sharedCartsRestApiClient;
-
-    /**
-     * @var \Spryker\Glue\SharedCartsRestApi\Dependency\Client\SharedCartsRestApiToCompanyUserStorageClientInterface
-     */
-    protected $companyUserStorageClient;
 
     /**
      * @var \Spryker\Glue\SharedCartsRestApi\Processor\RestResponseBuilder\SharedCartRestResponseBuilderInterface
@@ -39,18 +31,23 @@ class SharedCartCreator implements SharedCartCreatorInterface
     protected $sharedCartRestResponseBuilder;
 
     /**
+     * @var \Spryker\Glue\SharedCartsRestApiExtension\Dependency\Plugin\CompanyUserProviderPluginInterface[]
+     */
+    protected $companyUserProviderPlugins;
+
+    /**
      * @param \Spryker\Client\SharedCartsRestApi\SharedCartsRestApiClientInterface $sharedCartsRestApiClient
-     * @param \Spryker\Glue\SharedCartsRestApi\Dependency\Client\SharedCartsRestApiToCompanyUserStorageClientInterface $companyUserStorageClient
      * @param \Spryker\Glue\SharedCartsRestApi\Processor\RestResponseBuilder\SharedCartRestResponseBuilderInterface $sharedCartRestResponseBuilder
+     * @param \Spryker\Glue\SharedCartsRestApiExtension\Dependency\Plugin\CompanyUserProviderPluginInterface[] $companyUserProviderPlugins
      */
     public function __construct(
         SharedCartsRestApiClientInterface $sharedCartsRestApiClient,
-        SharedCartsRestApiToCompanyUserStorageClientInterface $companyUserStorageClient,
-        SharedCartRestResponseBuilderInterface $sharedCartRestResponseBuilder
+        SharedCartRestResponseBuilderInterface $sharedCartRestResponseBuilder,
+        array $companyUserProviderPlugins
     ) {
         $this->sharedCartsRestApiClient = $sharedCartsRestApiClient;
-        $this->companyUserStorageClient = $companyUserStorageClient;
         $this->sharedCartRestResponseBuilder = $sharedCartRestResponseBuilder;
+        $this->companyUserProviderPlugins = $companyUserProviderPlugins;
     }
 
     /**
@@ -68,22 +65,19 @@ class SharedCartCreator implements SharedCartCreatorInterface
             return $this->sharedCartRestResponseBuilder->createCartIdMissingErrorResponse();
         }
 
-        $companyUserStorageTransfer = $this->companyUserStorageClient->findCompanyUserByMapping(
-            static::MAPPING_TYPE_UUID,
-            $restSharedCartsAttributesTransfer->getIdCompanyUser()
-        );
-        if (!$companyUserStorageTransfer) {
+        $companyUserTransfer = $this->provideCompanyUser($restSharedCartsAttributesTransfer);
+        if (!$companyUserTransfer->getIdCompanyUser()) {
             return $this->sharedCartRestResponseBuilder->createCompanyUserNotFoundErrorResponse();
         }
 
-        if (!$this->canManageQuoteSharing($restRequest, $companyUserStorageTransfer)) {
+        if (!$this->canManageQuoteSharing($restRequest, $companyUserTransfer)) {
             return $this->sharedCartRestResponseBuilder->createSharingForbiddenErrorResponse();
         }
 
         $shareCartRequestTransfer = $this->createShareCartRequestTransfer(
             $cartsResource->getId(),
             $restRequest->getRestUser()->getNaturalIdentifier(),
-            $companyUserStorageTransfer->getIdCompanyUser(),
+            $companyUserTransfer->getIdCompanyUser(),
             $restSharedCartsAttributesTransfer->getIdCartPermissionGroup()
         );
 
@@ -100,14 +94,31 @@ class SharedCartCreator implements SharedCartCreatorInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\RestSharedCartsAttributesTransfer $restSharedCartsAttributesTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer
+     */
+    protected function provideCompanyUser(RestSharedCartsAttributesTransfer $restSharedCartsAttributesTransfer): CompanyUserTransfer
+    {
+        $companyUserTransfer = (new CompanyUserTransfer())
+            ->setUuid($restSharedCartsAttributesTransfer->getIdCompanyUser());
+
+        foreach ($this->companyUserProviderPlugins as $companyUserProviderPlugin) {
+            $companyUserTransfer = $companyUserProviderPlugin->provideCompanyUser($companyUserTransfer);
+        }
+
+        return $companyUserTransfer;
+    }
+
+    /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param \Generated\Shared\Transfer\CompanyUserStorageTransfer $companyUserStorageTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
      * @return bool
      */
-    protected function canManageQuoteSharing(RestRequestInterface $restRequest, CompanyUserStorageTransfer $companyUserStorageTransfer): bool
+    protected function canManageQuoteSharing(RestRequestInterface $restRequest, CompanyUserTransfer $companyUserTransfer): bool
     {
-        return $companyUserStorageTransfer->getIdCompany() === $restRequest->getRestUser()->getIdCompany();
+        return $companyUserTransfer->getFkCompany() === $restRequest->getRestUser()->getIdCompany();
     }
 
     /**

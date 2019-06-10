@@ -9,14 +9,13 @@ namespace Spryker\Glue\SharedCartsRestApi;
 
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
-use Spryker\Glue\SharedCartsRestApi\Dependency\Client\SharedCartsRestApiToCompanyUserStorageClientBridge;
 
 /**
  * @method \Spryker\Glue\SharedCartsRestApi\SharedCartsRestApiConfig getConfig()
  */
 class SharedCartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const CLIENT_COMPANY_USER_STORAGE = 'CLIENT_COMPANY_USER_STORAGE';
+    public const PLUGINS_COMPANY_USER_PROVIDER = 'PLUGINS_COMPANY_USER_PROVIDER';
 
     /**
      * @param \Spryker\Glue\Kernel\Container $container
@@ -26,7 +25,7 @@ class SharedCartsRestApiDependencyProvider extends AbstractBundleDependencyProvi
     public function provideDependencies(Container $container): Container
     {
         $container = parent::provideDependencies($container);
-        $container = $this->addCompanyUserStorageClient($container);
+        $container = $this->addCompanyUserProviderPlugins($container);
 
         return $container;
     }
@@ -36,14 +35,20 @@ class SharedCartsRestApiDependencyProvider extends AbstractBundleDependencyProvi
      *
      * @return \Spryker\Glue\Kernel\Container
      */
-    protected function addCompanyUserStorageClient(Container $container): Container
+    protected function addCompanyUserProviderPlugins(Container $container): Container
     {
-        $container[static::CLIENT_COMPANY_USER_STORAGE] = function (Container $container) {
-            return new SharedCartsRestApiToCompanyUserStorageClientBridge(
-                $container->getLocator()->companyUserStorage()->client()
-            );
+        $container[static::PLUGINS_COMPANY_USER_PROVIDER] = function (Container $container) {
+            return $this->getCompanyUserProviderPlugins();
         };
 
         return $container;
+    }
+
+    /**
+     * @return \Spryker\Glue\SharedCartsRestApiExtension\Dependency\Plugin\CompanyUserProviderPluginInterface[]
+     */
+    protected function getCompanyUserProviderPlugins(): array
+    {
+        return [];
     }
 }

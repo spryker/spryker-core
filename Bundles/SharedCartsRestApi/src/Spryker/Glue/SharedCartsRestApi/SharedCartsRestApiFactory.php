@@ -8,7 +8,6 @@
 namespace Spryker\Glue\SharedCartsRestApi;
 
 use Spryker\Glue\Kernel\AbstractFactory;
-use Spryker\Glue\SharedCartsRestApi\Dependency\Client\SharedCartsRestApiToCompanyUserStorageClientInterface;
 use Spryker\Glue\SharedCartsRestApi\Processor\RestResponseBuilder\SharedCartRestResponseBuilder;
 use Spryker\Glue\SharedCartsRestApi\Processor\RestResponseBuilder\SharedCartRestResponseBuilderInterface;
 use Spryker\Glue\SharedCartsRestApi\Processor\SharedCart\Mapper\SharedCartMapper;
@@ -24,6 +23,7 @@ use Spryker\Glue\SharedCartsRestApi\Processor\SharedCart\SharedCartUpdaterInterf
 
 /**
  * @method \Spryker\Client\SharedCartsRestApi\SharedCartsRestApiClientInterface getClient()
+ * @method \Spryker\Glue\SharedCartsRestApi\SharedCartsRestApiConfig getConfig()
  */
 class SharedCartsRestApiFactory extends AbstractFactory
 {
@@ -38,6 +38,7 @@ class SharedCartsRestApiFactory extends AbstractFactory
             $this->getResourceBuilder()
         );
     }
+
     /**
      * @return \Spryker\Glue\SharedCartsRestApi\Processor\SharedCart\SharedCartCreatorInterface
      */
@@ -45,8 +46,8 @@ class SharedCartsRestApiFactory extends AbstractFactory
     {
         return new SharedCartCreator(
             $this->getClient(),
-            $this->getCompanyUserStorageClient(),
-            $this->createSharedCartRestResponseBuilder()
+            $this->createSharedCartRestResponseBuilder(),
+            $this->getCompanyUserProviderPlugins()
         );
     }
 
@@ -93,10 +94,10 @@ class SharedCartsRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\SharedCartsRestApi\Dependency\Client\SharedCartsRestApiToCompanyUserStorageClientInterface
+     * @return \Spryker\Glue\SharedCartsRestApiExtension\Dependency\Plugin\CompanyUserProviderPluginInterface[]
      */
-    public function getCompanyUserStorageClient(): SharedCartsRestApiToCompanyUserStorageClientInterface
+    public function getCompanyUserProviderPlugins(): array
     {
-        return $this->getProvidedDependency(SharedCartsRestApiDependencyProvider::CLIENT_COMPANY_USER_STORAGE);
+        return $this->getProvidedDependency(SharedCartsRestApiDependencyProvider::PLUGINS_COMPANY_USER_PROVIDER);
     }
 }
