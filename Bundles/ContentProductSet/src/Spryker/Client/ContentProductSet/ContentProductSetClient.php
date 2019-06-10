@@ -20,15 +20,15 @@ class ContentProductSetClient extends AbstractClient implements ContentProductSe
      *
      * @api
      *
-     * @param int $idContent
+     * @param string $contentKey
      * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\ContentProductSetTypeTransfer|null
      */
-    public function executeProductSetTypeById(int $idContent, string $localeName): ?ContentProductSetTypeTransfer
+    public function executeProductSetTypeByKey(string $contentKey, string $localeName): ?ContentProductSetTypeTransfer
     {
         return $this->getFactory()
             ->createContentProductSetTypeMapper()
-            ->executeProductSetTypeById($idContent, $localeName);
+            ->executeProductSetTypeByKey($contentKey, $localeName);
     }
 }
