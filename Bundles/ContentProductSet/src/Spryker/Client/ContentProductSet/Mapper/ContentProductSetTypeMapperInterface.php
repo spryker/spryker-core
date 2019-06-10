@@ -12,10 +12,10 @@ use Generated\Shared\Transfer\ContentProductSetTypeTransfer;
 interface ContentProductSetTypeMapperInterface
 {
     /**
-     * @param int $idContent
+     * @param string $contentKey
      * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\ContentProductSetTypeTransfer|null
      */
-    public function executeProductSetTypeById(int $idContent, string $localeName): ?ContentProductSetTypeTransfer;
+    public function executeProductSetTypeByKey(string $contentKey, string $localeName): ?ContentProductSetTypeTransfer;
 }

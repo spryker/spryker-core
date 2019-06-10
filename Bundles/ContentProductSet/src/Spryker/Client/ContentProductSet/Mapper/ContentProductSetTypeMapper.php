@@ -34,16 +34,16 @@ class ContentProductSetTypeMapper implements ContentProductSetTypeMapperInterfac
     }
 
     /**
-     * @param int $idContent
+     * @param string $contentKey
      * @param string $localeName
      *
      * @throws \Spryker\Client\ContentProductSet\Exception\InvalidProductSetTermException
      *
      * @return \Generated\Shared\Transfer\ContentProductSetTypeTransfer|null
      */
-    public function executeProductSetTypeById(int $idContent, string $localeName): ?ContentProductSetTypeTransfer
+    public function executeProductSetTypeByKey(string $contentKey, string $localeName): ?ContentProductSetTypeTransfer
     {
-        $contentTypeContextTransfer = $this->contentStorageClient->findContentTypeContext($idContent, $localeName);
+        $contentTypeContextTransfer = $this->contentStorageClient->findContentTypeContextByKey($contentKey, $localeName);
 
         if (!$contentTypeContextTransfer) {
             return null;
