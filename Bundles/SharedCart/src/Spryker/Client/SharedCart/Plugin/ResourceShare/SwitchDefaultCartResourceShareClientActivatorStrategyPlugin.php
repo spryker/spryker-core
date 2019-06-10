@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\SharedCart\Plugin\ResourceShare;
 
-use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
@@ -40,21 +39,6 @@ class SwitchDefaultCartResourceShareClientActivatorStrategyPlugin extends Abstra
     public function execute(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer
     {
         return $this->getClient()->switchDefaultCartByResourceShare($resourceShareRequestTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     * - Returns 'true', as activator strategy expects the customer to be logged in.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CustomerTransfer|null $customerTransfer
-     *
-     * @return bool
-     */
-    public function isLoginRequired(?CustomerTransfer $customerTransfer): bool
-    {
-        return $customerTransfer === null;
     }
 
     /**

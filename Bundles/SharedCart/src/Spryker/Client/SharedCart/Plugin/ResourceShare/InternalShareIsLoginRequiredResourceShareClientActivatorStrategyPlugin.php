@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\SharedCart\Plugin\ResourceShare;
 
-use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
@@ -25,20 +24,6 @@ class InternalShareIsLoginRequiredResourceShareClientActivatorStrategyPlugin ext
     protected const RESOURCE_TYPE_QUOTE = 'quote';
     protected const PERMISSION_GROUP_READ_ONLY = 'READ_ONLY';
     protected const PERMISSION_GROUP_FULL_ACCESS = 'FULL_ACCESS';
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CustomerTransfer|null $customerTransfer
-     *
-     * @return bool
-     */
-    public function isLoginRequired(?CustomerTransfer $customerTransfer): bool
-    {
-        return $customerTransfer === null;
-    }
 
     /**
      * {@inheritdoc}
@@ -66,8 +51,9 @@ class InternalShareIsLoginRequiredResourceShareClientActivatorStrategyPlugin ext
 
     /**
      * {@inheritdoc}
-     * - Does nothing, as no additional actions required for cart preview.
-     * - Returns ResourceShareResponseTransfer with isSuccessful=true and provided ResourceShare.
+     * - Returns ResourceShareResponseTransfer with provided ResourceShare.
+     * - Returns isSuccessful=true and isLoginRequired=false if customer property is set.
+     * - Returns isSuccessful=false and isLoginRequired=true otherwise.
      *
      * @api
      *
@@ -77,8 +63,11 @@ class InternalShareIsLoginRequiredResourceShareClientActivatorStrategyPlugin ext
      */
     public function execute(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer
     {
+        $isLoginRequired = ($resourceShareRequestTransfer->getCustomer() === null);
+
         return (new ResourceShareResponseTransfer())
-            ->setIsSuccessful(true)
+            ->setIsLoginRequired($isLoginRequired)
+            ->setIsSuccessful(!$isLoginRequired)
             ->setResourceShare($resourceShareRequestTransfer->getResourceShare());
     }
 }

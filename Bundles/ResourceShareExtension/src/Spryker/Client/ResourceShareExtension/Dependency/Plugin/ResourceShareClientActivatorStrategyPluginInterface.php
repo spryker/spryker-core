@@ -7,20 +7,34 @@
 
 namespace Spryker\Client\ResourceShareExtension\Dependency\Plugin;
 
-use Generated\Shared\Transfer\CustomerTransfer;
-use Spryker\Shared\ResourceShareExtension\Dependency\Plugin\ResourceShareActivatorStrategyPluginInterface;
+use Generated\Shared\Transfer\ResourceShareRequestTransfer;
+use Generated\Shared\Transfer\ResourceShareResponseTransfer;
 
-interface ResourceShareClientActivatorStrategyPluginInterface extends ResourceShareActivatorStrategyPluginInterface
+interface ResourceShareClientActivatorStrategyPluginInterface
 {
     /**
      * Specification:
-     * - Determines if strategy plugin requires the customer to be logged in.
+     * - Executes additional actions, based on resource data and resource type values.
+     * - Returns ResourceShareResponseTransfer with 'isSuccessful=true' and resource share details on success.
+     * - Returns ResourceShareResponseTransfer with 'isSuccessful=false' and error messages otherwise.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CustomerTransfer|null $customerTransfer
+     * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
+     */
+    public function execute(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer;
+
+    /**
+     * Specification:
+     * - Checks if strategy plugin is applicable, based on resource data and provided customer.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
      *
      * @return bool
      */
-    public function isLoginRequired(?CustomerTransfer $customerTransfer): bool;
+    public function isApplicable(ResourceShareRequestTransfer $resourceShareRequestTransfer): bool;
 }
