@@ -70,6 +70,10 @@ class ShipmentTaxRateCalculator implements CalculatorInterface
         $shipmentGroups = $this->shipmentService->groupItemsByShipment($quoteTransfer->getItems());
 
         foreach ($shipmentGroups as $shipmentGroupTransfer) {
+            if ($shipmentGroupTransfer->getShipment() === null || $shipmentGroupTransfer->getShipment()->getMethod() === null) {
+                continue;
+            }
+
             $taxSetTransfer = $this->getTaxSetEffectiveRate($shipmentGroupTransfer->getShipment());
 
             $shipmentGroupTransfer = $this->setTaxRateForShipmentGroupItems($shipmentGroupTransfer, $taxSetTransfer);
