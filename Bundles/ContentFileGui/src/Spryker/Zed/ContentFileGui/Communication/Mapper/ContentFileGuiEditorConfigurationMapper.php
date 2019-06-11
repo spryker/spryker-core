@@ -12,10 +12,6 @@ use Spryker\Zed\ContentFileGui\ContentFileGuiConfig;
 
 class ContentFileGuiEditorConfigurationMapper implements ContentFileGuiEditorConfigurationMapperInterface
 {
-    protected const PARAMETER_TWIG_FUNCTION_TEMPLATE_ID = '%ID%';
-    protected const PARAMETER_TWIG_FUNCTION_TEMPLATE = '%TEMPLATE%';
-    protected const PARAMETER_TWIG_FUNCTION_TEMPLATE_FORMAT = "{{ %s(%s, '%s') }}";
-
     /**
      * @var \Spryker\Zed\ContentFileGui\ContentFileGuiConfig
      */
@@ -50,11 +46,6 @@ class ContentFileGuiEditorConfigurationMapper implements ContentFileGuiEditorCon
      */
     public function getTwigFunctionTemplate(): string
     {
-        return sprintf(
-            static::PARAMETER_TWIG_FUNCTION_TEMPLATE_FORMAT,
-            $this->contentFileGuiConfig->getTwigFunctionName(),
-            static::PARAMETER_TWIG_FUNCTION_TEMPLATE_ID,
-            static::PARAMETER_TWIG_FUNCTION_TEMPLATE
-        );
+        return '{{ ' . $this->contentFileGuiConfig->getTwigFunctionName() . "('%KEY%', '%TEMPLATE%') }}";
     }
 }

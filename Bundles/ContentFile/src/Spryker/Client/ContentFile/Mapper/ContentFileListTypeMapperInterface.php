@@ -12,12 +12,12 @@ use Generated\Shared\Transfer\ContentFileListTypeTransfer;
 interface ContentFileListTypeMapperInterface
 {
     /**
-     * @param int $idContent
+     * @param string $contentKey
      * @param string $localeName
      *
      * @throws \Spryker\Client\ContentFile\Exception\InvalidFileListTermException
      *
      * @return \Generated\Shared\Transfer\ContentFileListTypeTransfer|null
      */
-    public function executeFileListTypeById(int $idContent, string $localeName): ?ContentFileListTypeTransfer;
+    public function executeFileListTypeByKey(string $contentKey, string $localeName): ?ContentFileListTypeTransfer;
 }
