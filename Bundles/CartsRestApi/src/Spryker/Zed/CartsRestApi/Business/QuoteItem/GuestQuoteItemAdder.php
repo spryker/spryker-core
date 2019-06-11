@@ -68,7 +68,7 @@ class GuestQuoteItemAdder implements GuestQuoteItemAdderInterface
     }
 
     /**
-     * @deprecated addToGuestCart() instead.
+     * @deprecated Use addToGuestCart() instead.
      *
      * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
      *
@@ -78,7 +78,6 @@ class GuestQuoteItemAdder implements GuestQuoteItemAdderInterface
     {
         $restCartItemsAttributesTransfer
             ->requireSku()
-            ->requireQuantity()
             ->requireCustomerReference();
 
         $cartItemRequestTransfer = (new CartItemRequestTransfer())
@@ -96,7 +95,6 @@ class GuestQuoteItemAdder implements GuestQuoteItemAdderInterface
     {
         $cartItemRequestTransfer
             ->requireSku()
-            ->requireQuantity()
             ->requireCustomer();
 
         $cartItemRequestTransfer->getCustomer()->requireCustomerReference();
@@ -116,17 +114,7 @@ class GuestQuoteItemAdder implements GuestQuoteItemAdderInterface
             $cartItemRequestTransfer->setQuoteUuid($customerQuotes[0]->getUuid());
         }
 
-        $quoteTransfer = $this->quoteItemMapper->mapCartItemsRequestTransferToQuoteTransfer(
-            $cartItemRequestTransfer,
-            new QuoteTransfer()
-        );
-
-        $quoteResponseTransfer = $this->quoteReader->findQuoteByUuid($quoteTransfer);
-        if (!$quoteResponseTransfer->getIsSuccessful()) {
-            return $quoteResponseTransfer;
-        }
-
-        $cartItemRequestTransfer->setQuoteUuid($quoteResponseTransfer->getQuoteTransfer()->getUuid());
+        $cartItemRequestTransfer->setQuoteUuid($customerQuotes[0]->getUuid());
 
         return $this->addItem($cartItemRequestTransfer);
     }
@@ -139,9 +127,11 @@ class GuestQuoteItemAdder implements GuestQuoteItemAdderInterface
     protected function createGuestQuote(CartItemRequestTransfer $cartItemRequestTransfer): QuoteResponseTransfer
     {
         $quoteTransfer = $this->createQuoteTransfer();
-        $quoteTransfer
-            ->setCustomer((new CustomerTransfer())
-                ->setCustomerReference($cartItemRequestTransfer->getCustomer()->getCustomerReference()));
+
+        $customerTransfer = (new CustomerTransfer())
+            ->setCustomerReference($cartItemRequestTransfer->getCustomer()->getCustomerReference());
+
+        $quoteTransfer->setCustomer($customerTransfer);
 
         $quoteResponseTransfer = $this->quoteCreator->createQuote($quoteTransfer);
 

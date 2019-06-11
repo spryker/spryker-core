@@ -157,22 +157,20 @@ class Operation implements OperationInterface
             $currentCartChangeTransfer->setQuote($quoteTransfer);
             $currentCartChangeTransfer->setItems($itemsCollection);
 
-            $quoteTransfer = $this->addToQuote($cartChangeTransfer)->getQuoteTransfer();
+            $quoteTransfer = $this->addToCart($cartChangeTransfer)->getQuoteTransfer();
         }
 
         return $quoteTransfer;
     }
 
     /**
-     * @deprecated Use addToQuote() instead.
-     *
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function add(CartChangeTransfer $cartChangeTransfer)
     {
-        return $this->addToQuote($cartChangeTransfer)->getQuoteTransfer();
+        return $this->addToCart($cartChangeTransfer)->getQuoteTransfer();
     }
 
     /**
@@ -180,7 +178,7 @@ class Operation implements OperationInterface
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function addToQuote(CartChangeTransfer $cartChangeTransfer): QuoteResponseTransfer
+    public function addToCart(CartChangeTransfer $cartChangeTransfer): QuoteResponseTransfer
     {
         $cartChangeTransfer->requireQuote();
         $quoteResponseTransfer = (new QuoteResponseTransfer())->setIsSuccessful(false);

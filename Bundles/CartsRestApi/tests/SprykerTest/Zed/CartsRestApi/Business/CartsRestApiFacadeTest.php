@@ -641,13 +641,13 @@ class CartsRestApiFacadeTest extends Unit
             CartFacade::class,
             [
                 'reloadItems',
-                'addToQuote',
+                'addToCart',
             ]
         );
 
         $cartFacadeMock->method('reloadItems')
             ->willReturn($this->tester->prepareQuoteTransfer());
-        $cartFacadeMock->method('addToQuote')
+        $cartFacadeMock->method('addToCart')
             ->willReturn($this->tester->prepareQuoteResponseTransfer());
         $cartsRestApiBusinessFactoryMock->method('getCartFacade')
             ->willReturn((new CartsRestApiToCartFacadeBridge($cartFacadeMock)));

@@ -62,8 +62,7 @@ class QuoteItemUpdater implements QuoteItemUpdaterInterface
         $restCartItemsAttributesTransfer
             ->requireQuoteUuid()
             ->requireSku()
-            ->requireCustomerReference()
-            ->requireQuantity();
+            ->requireCustomerReference();
 
         $cartItemRequestTransfer = (new CartItemRequestTransfer())
             ->fromArray($restCartItemsAttributesTransfer->toArray(), true);

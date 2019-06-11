@@ -25,5 +25,5 @@ interface CartsRestApiToCartFacadeInterface
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function addToQuote(CartChangeTransfer $cartChangeTransfer): QuoteResponseTransfer;
+    public function addToCart(CartChangeTransfer $cartChangeTransfer): QuoteResponseTransfer;
 }

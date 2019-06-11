@@ -225,7 +225,7 @@ class CartsRestApiFacade extends AbstractFacade implements CartsRestApiFacadeInt
      *
      * @api
      *
-     * @deprecated Usr addToGuestCart() instead.
+     * @deprecated Use addToGuestCart() instead.
      *
      * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
      *

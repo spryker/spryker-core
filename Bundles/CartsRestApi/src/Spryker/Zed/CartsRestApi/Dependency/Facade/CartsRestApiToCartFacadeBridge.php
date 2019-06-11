@@ -41,8 +41,8 @@ class CartsRestApiToCartFacadeBridge implements CartsRestApiToCartFacadeInterfac
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function addToQuote(CartChangeTransfer $cartChangeTransfer): QuoteResponseTransfer
+    public function addToCart(CartChangeTransfer $cartChangeTransfer): QuoteResponseTransfer
     {
-        return $this->cartFacade->addToQuote($cartChangeTransfer);
+        return $this->cartFacade->addToCart($cartChangeTransfer);
     }
 }

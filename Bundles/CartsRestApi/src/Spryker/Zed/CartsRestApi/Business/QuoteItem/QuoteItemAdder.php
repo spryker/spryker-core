@@ -72,7 +72,6 @@ class QuoteItemAdder implements QuoteItemAdderInterface
         $restCartItemsAttributesTransfer
             ->requireCustomerReference()
             ->requireSku()
-            ->requireQuantity()
             ->requireQuoteUuid();
 
         $cartItemRequestTransfer = (new CartItemRequestTransfer())
@@ -118,7 +117,7 @@ class QuoteItemAdder implements QuoteItemAdderInterface
             $cartItemRequestTransfer
         );
 
-        $quoteResponseTransfer = $this->cartFacade->addToQuote($cartChangeTransfer);
+        $quoteResponseTransfer = $this->cartFacade->addToCart($cartChangeTransfer);
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             $quoteResponseTransfer
                 ->addError((new QuoteErrorTransfer())

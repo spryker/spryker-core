@@ -168,7 +168,7 @@ interface CartsRestApiFacadeInterface
      *
      * @api
      *
-     * @deprecated Usr removeItem() instead.
+     * @deprecated Use removeItem() instead.
      *
      * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
      *
@@ -197,7 +197,7 @@ interface CartsRestApiFacadeInterface
      *
      * @api
      *
-     * @deprecated Usr addToGuestCart() instead.
+     * @deprecated Use addToGuestCart() instead.
      *
      * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
      *
