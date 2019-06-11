@@ -16,7 +16,7 @@ use Spryker\Client\ResourceShareExtension\Dependency\Plugin\ResourceShareClientA
  * @method \Spryker\Client\SharedCart\SharedCartClient getClient()
  * @method \Spryker\Client\SharedCart\SharedCartFactory getFactory()
  */
-class InternalShareIsLoginRequiredResourceShareClientActivatorStrategyPlugin extends AbstractPlugin implements ResourceShareClientActivatorStrategyPluginInterface
+class CartShareLoginRequiredResourceShareClientActivatorStrategyPlugin extends AbstractPlugin implements ResourceShareClientActivatorStrategyPluginInterface
 {
     /**
      * @uses \Spryker\Shared\PersistentCartShare\PersistentCartShareConfig::RESOURCE_TYPE_QUOTE
