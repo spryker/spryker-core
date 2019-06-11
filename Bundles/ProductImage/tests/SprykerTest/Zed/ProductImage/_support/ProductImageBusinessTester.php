@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\ProductImage;
 
 use Codeception\Actor;
+use Orm\Zed\ProductImage\Persistence\SpyProductImageSet;
 
 /**
  * Inherited Methods
@@ -31,4 +32,23 @@ class ProductImageBusinessTester extends Actor
    /**
     * Define custom actions here
     */
+
+    /**
+     * @param string $name
+     * @param int|null $fkProductAbstract
+     * @param int|null $fkProduct
+     * @param int|null $fkLocale
+     *
+     * @return void
+     */
+    public function createProductImageSet(string $name, ?int $fkProductAbstract, ?int $fkProduct, ?int $fkLocale): void
+    {
+        $imageSetConcrete = new SpyProductImageSet();
+        $imageSetConcrete
+           ->setName($name)
+           ->setFkProductAbstract($fkProductAbstract)
+           ->setFkProduct($fkProduct)
+           ->setFkLocale($fkLocale)
+           ->save();
+    }
 }
