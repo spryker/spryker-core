@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ContentBannerGui;
 
-use Spryker\Zed\ContentBannerGui\Dependency\Facade\ContentBannerGuiToContentBannerBridge;
+use Spryker\Zed\ContentBannerGui\Dependency\Facade\ContentBannerGuiToContentBannerFacadeFacadeBridge;
 use Spryker\Zed\ContentBannerGui\Dependency\Service\ContentBannerGuiToUtilEncodingBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
@@ -41,7 +41,7 @@ class ContentBannerGuiDependencyProvider extends AbstractBundleDependencyProvide
     protected function addContentBannerFacade(Container $container): Container
     {
         $container[static::FACADE_CONTENT_BANNER] = function (Container $container) {
-            return new ContentBannerGuiToContentBannerBridge($container->getLocator()->contentBanner()->facade());
+            return new ContentBannerGuiToContentBannerFacadeFacadeBridge($container->getLocator()->contentBanner()->facade());
         };
 
         return $container;

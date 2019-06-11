@@ -10,7 +10,7 @@ namespace Spryker\Zed\ContentBannerGui\Dependency\Facade;
 use Generated\Shared\Transfer\ContentBannerTermTransfer;
 use Generated\Shared\Transfer\ContentValidationResponseTransfer;
 
-class ContentBannerGuiToContentBannerBridge implements ContentBannerGuiToContentBannerInterface
+class ContentBannerGuiToContentBannerFacadeFacadeBridge implements ContentBannerGuiToContentBannerFacadeInterface
 {
     /**
      * @var \Spryker\Zed\ContentBanner\Business\ContentBannerFacadeInterface

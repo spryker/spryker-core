@@ -10,7 +10,7 @@ namespace Spryker\Zed\ContentBannerGui\Dependency\Facade;
 use Generated\Shared\Transfer\ContentBannerTermTransfer;
 use Generated\Shared\Transfer\ContentValidationResponseTransfer;
 
-interface ContentBannerGuiToContentBannerInterface
+interface ContentBannerGuiToContentBannerFacadeInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ContentBannerTermTransfer $contentBannerTermTransfer
