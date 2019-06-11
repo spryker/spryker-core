@@ -14,6 +14,8 @@ use Spryker\Zed\SetupFrontend\SetupFrontendConfig;
 
 class YvesAssetsBuildConfigGenerator implements YvesAssetsBuildConfigGeneratorInterface
 {
+    protected const YVES_ASSETS_CONFIG_STORE_NAME_KEY = 'name';
+
     /**
      * @var \Spryker\Zed\SetupFrontend\SetupFrontendConfig
      */
@@ -80,7 +82,7 @@ class YvesAssetsBuildConfigGenerator implements YvesAssetsBuildConfigGeneratorIn
             $storeConfigData = $configData[$storeKey];
         }
 
-        $storeConfigData[SetupFrontendConfig::YVES_ASSETS_CONFIG_STORE_NAME_KEY] = $storeName;
+        $storeConfigData[static::YVES_ASSETS_CONFIG_STORE_NAME_KEY] = $storeName;
 
         $storeConfigData = $this->executeExpandYvesFrontendConfigDataPlugins($storeConfigData);
 

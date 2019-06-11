@@ -1,7 +1,7 @@
 # SetupFrontendExtension Module
 [![Build Status](https://travis-ci.org/spryker/setup-frontend-extension.svg)](https://travis-ci.org/spryker/setup-frontend-extension)
 
-{{ADD DESCRIPTION HERE}}
+Provides extension points for SetupFrontend module.
 
 ## Installation
 

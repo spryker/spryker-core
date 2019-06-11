@@ -11,7 +11,7 @@ interface YvesFrontendStoreConfigExpanderPluginInterface
 {
     /**
      * Specification:
-     * -
+     * - Executed on update config for Yves frontend builder.
      *
      * @api
      *

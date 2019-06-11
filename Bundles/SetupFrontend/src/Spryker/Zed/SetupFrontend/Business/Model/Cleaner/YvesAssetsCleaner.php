@@ -13,6 +13,8 @@ use Symfony\Component\Filesystem\Filesystem;
 
 class YvesAssetsCleaner implements CleanerInterface
 {
+    protected const STORE_KEY = '%store%';
+
     /**
      * @var \Spryker\Zed\SetupFrontend\SetupFrontendConfig
      */
@@ -61,7 +63,7 @@ class YvesAssetsCleaner implements CleanerInterface
 
         foreach ($this->setupFrontendConfig->getYvesAssetsDirectories() as $directoryPattern) {
             $directories = str_replace(
-                '%store%',
+                static::STORE_KEY,
                 strtolower($this->store->getStoreName()),
                 $directoryPattern
             );

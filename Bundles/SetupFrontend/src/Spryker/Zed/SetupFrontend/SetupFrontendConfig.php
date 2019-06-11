@@ -13,8 +13,6 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class SetupFrontendConfig extends AbstractBundleConfig
 {
-    public const YVES_ASSETS_CONFIG_STORE_NAME_KEY = 'name';
-
     /**
      * @return array
      */

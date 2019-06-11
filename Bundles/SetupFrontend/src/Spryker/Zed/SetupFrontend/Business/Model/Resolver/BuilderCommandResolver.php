@@ -12,6 +12,8 @@ use Spryker\Zed\SetupFrontend\SetupFrontendConfig;
 
 class BuilderCommandResolver implements BuilderCommandResolverInterface
 {
+    protected const STORE_KEY = '%store%';
+
     /**
      * @var \Spryker\Zed\SetupFrontend\SetupFrontendConfig
      */
@@ -40,7 +42,7 @@ class BuilderCommandResolver implements BuilderCommandResolverInterface
     public function getYvesBuildCommand(): string
     {
         return str_replace(
-            '%store%',
+            static::STORE_KEY,
             strtolower($this->store->getStoreName()),
             $this->setupFrontendConfig->getYvesBuildCommand()
         );
