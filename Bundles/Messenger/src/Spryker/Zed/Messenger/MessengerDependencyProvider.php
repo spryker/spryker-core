@@ -18,8 +18,6 @@ use Spryker\Zed\Messenger\Communication\Plugin\TranslationPlugin;
 class MessengerDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const SESSION = 'session';
-    public const SYMFONY_TRANSLATOR = 'SYMFONY_TRANSLATOR';
-
     /**
      * @deprecated See \Spryker\Zed\Messenger\MessengerDependencyProvider::PLUGINS_TRANSLATION
      */
