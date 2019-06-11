@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CategoryImageStorage;
 
+use Spryker\Shared\CategoryImageStorage\CategoryImageStorageConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class CategoryImageStorageConfig extends AbstractBundleConfig
@@ -17,5 +18,13 @@ class CategoryImageStorageConfig extends AbstractBundleConfig
     public function getProductImageSynchronizationPoolName(): ?string
     {
         return null;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isSendingToQueue(): bool
+    {
+        return $this->get(CategoryImageStorageConstants::STORAGE_SYNC_ENABLED, true);
     }
 }

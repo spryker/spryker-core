@@ -57,7 +57,7 @@ class ProductPageSearchConstants
      *
      * @api
      *
-     * @see \Spryker\Shared\Synchronization\SynchronizationConstants::SEARCH_SYNC_ENABLED
+     * @uses \Spryker\Shared\Synchronization\SynchronizationConstants::SEARCH_SYNC_ENABLED
      */
     public const SEARCH_SYNC_ENABLED = 'SYNCHRONIZATION:SEARCH_SYNC_ENABLED';
 }

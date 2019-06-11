@@ -11,6 +11,8 @@ use Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSetQuery;
 use Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSetToCategoryImageQuery;
 use Orm\Zed\CategoryImageStorage\Persistence\SpyCategoryImageStorageQuery;
 use Spryker\Zed\CategoryImageStorage\CategoryImageStorageDependencyProvider;
+use Spryker\Zed\CategoryImageStorage\Persistence\Mapper\CategoryImageStorageMapper;
+use Spryker\Zed\CategoryImageStorage\Persistence\Mapper\CategoryImageStorageMapperInterface;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
@@ -26,6 +28,14 @@ class CategoryImageStoragePersistenceFactory extends AbstractPersistenceFactory
     public function getQueryCategoryImageSetToCategoryImage(): SpyCategoryImageSetToCategoryImageQuery
     {
         return $this->getProvidedDependency(CategoryImageStorageDependencyProvider::PROPEL_QUERY_CATEGORY_IMAGE_SET_TO_CATEGORY_IMAGE);
+    }
+
+    /**
+     * @return \Spryker\Zed\CategoryImageStorage\Persistence\Mapper\CategoryImageStorageMapperInterface
+     */
+    public function createCategoryImageStorageMapper(): CategoryImageStorageMapperInterface
+    {
+        return new CategoryImageStorageMapper();
     }
 
     /**
