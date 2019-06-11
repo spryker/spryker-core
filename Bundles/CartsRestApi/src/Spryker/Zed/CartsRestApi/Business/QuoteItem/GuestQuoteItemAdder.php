@@ -99,12 +99,12 @@ class GuestQuoteItemAdder implements GuestQuoteItemAdderInterface
 
         $cartItemRequestTransfer->getCustomer()->requireCustomerReference();
 
-        $customerQuoteCollection = $this->quoteReader->getQuoteCollection(
+        $guestQuoteCollection = $this->quoteReader->getQuoteCollection(
             (new QuoteCriteriaFilterTransfer())
                 ->setCustomerReference($cartItemRequestTransfer->getCustomer()->getCustomerReference())
         );
 
-        $customerQuotes = $customerQuoteCollection->getQuotes();
+        $customerQuotes = $guestQuoteCollection->getQuotes();
 
         if (!$customerQuotes->count()) {
             return $this->createGuestQuote($cartItemRequestTransfer);
