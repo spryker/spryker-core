@@ -17,4 +17,11 @@ interface ResourceShareEntityManagerInterface
      * @return \Generated\Shared\Transfer\ResourceShareTransfer
      */
     public function createResourceShare(ResourceShareTransfer $resourceShareTransfer): ResourceShareTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
+     *
+     * @return \Generated\Shared\Transfer\ResourceShareTransfer
+     */
+    public function buildResourceShare(ResourceShareTransfer $resourceShareTransfer): ResourceShareTransfer;
 }

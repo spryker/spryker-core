@@ -34,4 +34,20 @@ class ResourceShareEntityManager extends AbstractEntityManager implements Resour
 
         return $resourceShareTransfer;
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function buildResourceShare(ResourceShareTransfer $resourceShareTransfer): ResourceShareTransfer
+    {
+        $resourceShareEntity = $this->getFactory()
+            ->createResourceShareMapper()
+            ->mapResourceShareTransferToResourceShareEntity($resourceShareTransfer);
+
+        $resourceShareEntity->updateUuid();
+
+        return $resourceShareTransfer
+            ->setIdResourceShare($resourceShareEntity->getIdResourceShare())
+            ->setUuid($resourceShareEntity->getUuid());
+    }
 }

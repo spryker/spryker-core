@@ -60,7 +60,7 @@ class ResourceShareWriter implements ResourceShareWriterInterface
             return $resourceShareResponseTransfer;
         }
 
-        return $this->createResourceShare($resourceShareTransfer);
+        return $this->findOrCreateResourceShare($resourceShareTransfer);
     }
 
     /**
@@ -68,12 +68,27 @@ class ResourceShareWriter implements ResourceShareWriterInterface
      *
      * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
      */
-    protected function createResourceShare(ResourceShareTransfer $resourceShareTransfer): ResourceShareResponseTransfer
+    protected function findOrCreateResourceShare(ResourceShareTransfer $resourceShareTransfer): ResourceShareResponseTransfer
     {
-        $resourceShareTransfer = $this->resourceShareEntityManager->createResourceShare($resourceShareTransfer);
+        $resourceShare = $this->findExistingResourceShare($resourceShareTransfer);
+        if ($resourceShare === null) {
+            $resourceShare = $this->resourceShareEntityManager->createResourceShare($resourceShareTransfer);
+        }
 
         return (new ResourceShareResponseTransfer())
             ->setIsSuccessful(true)
-            ->setResourceShare($resourceShareTransfer);
+            ->setResourceShare($resourceShare);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
+     *
+     * @return \Generated\Shared\Transfer\ResourceShareTransfer|null
+     */
+    protected function findExistingResourceShare(ResourceShareTransfer $resourceShareTransfer): ?ResourceShareTransfer
+    {
+        return $this->resourceShareRepository->findResourceShareByUuid(
+            $this->resourceShareEntityManager->buildResourceShare($resourceShareTransfer)->getUuid()
+        );
     }
 }
