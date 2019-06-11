@@ -77,16 +77,9 @@ class CategoryImageStorageMapper implements CategoryImageStorageMapperInterface
             );
         }
 
-        $categoryImageTransfers = [];
-
-        foreach ($categoryImageSetEntity->getSpyCategoryImageSetToCategoryImages() as $categoryImageSetToCategoryImageEntity) {
-            $categoryImageTransfers[] = $this->mapCategoryImageEntityToCategoryImageTransfer(
-                $categoryImageSetToCategoryImageEntity,
-                new CategoryImageTransfer()
-            );
-        }
-
-        $categoryImageSetTransfer->setCategoryImages(new ArrayObject($categoryImageTransfers));
+        $categoryImageSetTransfer->setCategoryImages(
+            $this->getCategoryImageTransfersFromCategoryImageSetEntity($categoryImageSetEntity)
+        );
 
         return $categoryImageSetTransfer;
     }
@@ -110,5 +103,24 @@ class CategoryImageStorageMapper implements CategoryImageStorageMapperInterface
         );
 
         return $categoryImageTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSet $categoryImageSetEntity
+     *
+     * @return \ArrayObject
+     */
+    protected function getCategoryImageTransfersFromCategoryImageSetEntity(SpyCategoryImageSet $categoryImageSetEntity): ArrayObject
+    {
+        $categoryImageTransfers = [];
+
+        foreach ($categoryImageSetEntity->getSpyCategoryImageSetToCategoryImages() as $categoryImageSetToCategoryImageEntity) {
+            $categoryImageTransfers[] = $this->mapCategoryImageEntityToCategoryImageTransfer(
+                $categoryImageSetToCategoryImageEntity,
+                new CategoryImageTransfer()
+            );
+        }
+
+        return new ArrayObject($categoryImageTransfers);
     }
 }

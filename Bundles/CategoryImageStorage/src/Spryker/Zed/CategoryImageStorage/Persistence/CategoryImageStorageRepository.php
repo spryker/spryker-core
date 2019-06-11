@@ -96,14 +96,13 @@ class CategoryImageStorageRepository extends AbstractRepository implements Categ
     protected function mapCategoryImageSetEntityToCategoryImageSetTransfer(ObjectCollection $categoryImageSetEntities): array
     {
         $categoryImageSetTransfers = [];
+        $categoryImageStorageMapper = $this->getFactory()->createCategoryImageStorageMapper();
 
         foreach ($categoryImageSetEntities as $categoryImageSetEntity) {
-            $categoryImageSetTransfers[] = $this->getFactory()
-                ->createCategoryImageStorageMapper()
-                ->mapCategoryImageSetEntityToCategoryImageSetTransfer(
-                    $categoryImageSetEntity,
-                    new CategoryImageSetTransfer()
-                );
+            $categoryImageSetTransfers[] = $categoryImageStorageMapper->mapCategoryImageSetEntityToCategoryImageSetTransfer(
+                $categoryImageSetEntity,
+                new CategoryImageSetTransfer()
+            );
         }
 
         return $categoryImageSetTransfers;
@@ -117,14 +116,13 @@ class CategoryImageStorageRepository extends AbstractRepository implements Categ
     protected function mapCategoryImageStorageEntityToCategoryImageStorageItemTransfer(ObjectCollection $categoryImageStorageEntities): array
     {
         $categoryImageStorageItemTransfers = [];
+        $categoryImageStorageMapper = $this->getFactory()->createCategoryImageStorageMapper();
 
         foreach ($categoryImageStorageEntities as $categoryImageStorageEntity) {
-            $categoryImageStorageItemTransfers[] = $this->getFactory()
-                ->createCategoryImageStorageMapper()
-                ->mapCategoryImageStorageEntityToCategoryImageStorageItemTransfer(
-                    $categoryImageStorageEntity,
-                    new CategoryImageStorageItemTransfer()
-                );
+            $categoryImageStorageItemTransfers[] = $categoryImageStorageMapper->mapCategoryImageStorageEntityToCategoryImageStorageItemTransfer(
+                $categoryImageStorageEntity,
+                new CategoryImageStorageItemTransfer()
+            );
         }
 
         return $categoryImageStorageItemTransfers;
