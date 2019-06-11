@@ -8,6 +8,7 @@
 namespace Spryker\Service\UtilQuantity\Comparator;
 
 use Spryker\Service\UtilQuantity\Calculator\PrecisionCalculatorInterface;
+use Spryker\Service\UtilQuantity\Converter\QuantityConverterInterface;
 
 class QuantityComparator implements QuantityComparatorInterface
 {
@@ -19,11 +20,20 @@ class QuantityComparator implements QuantityComparatorInterface
     protected $precisionCalculator;
 
     /**
-     * @param \Spryker\Service\UtilQuantity\Calculator\PrecisionCalculatorInterface $precisionCalculator
+     * @var \Spryker\Service\UtilQuantity\Converter\QuantityConverterInterface
      */
-    public function __construct(PrecisionCalculatorInterface $precisionCalculator)
-    {
+    protected $quantityConverter;
+
+    /**
+     * @param \Spryker\Service\UtilQuantity\Calculator\PrecisionCalculatorInterface $precisionCalculator
+     * @param \Spryker\Service\UtilQuantity\Converter\QuantityConverterInterface $quantityConverter
+     */
+    public function __construct(
+        PrecisionCalculatorInterface $precisionCalculator,
+        QuantityConverterInterface $quantityConverter
+    ) {
         $this->precisionCalculator = $precisionCalculator;
+        $this->quantityConverter = $quantityConverter;
     }
 
     /**
@@ -48,24 +58,13 @@ class QuantityComparator implements QuantityComparatorInterface
     {
         $maxPrecision = $this->precisionCalculator->getMaxPrecision($dividendQuantity, $divisorQuantity);
 
-        $intDividendQuantity = $this->convertToInt($dividendQuantity, $maxPrecision);
-        $intDivisorQuantity = $this->convertToInt($divisorQuantity, $maxPrecision);
+        $intDividendQuantity = $this->quantityConverter->convertToInt($dividendQuantity, $maxPrecision);
+        $intDivisorQuantity = $this->quantityConverter->convertToInt($divisorQuantity, $maxPrecision);
 
         return $this->isQuantityEqual(
             $intDividendQuantity % $intDivisorQuantity,
             $remainder
         );
-    }
-
-    /**
-     * @param float $value
-     * @param int $precision
-     *
-     * @return int
-     */
-    protected function convertToInt(float $value, int $precision): int
-    {
-        return (int)round($value * pow(10, $precision));
     }
 
     /**
