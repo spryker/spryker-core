@@ -15,6 +15,8 @@ use Spryker\Zed\CartsRestApi\Business\Quote\QuoteCreator;
 use Spryker\Zed\CartsRestApi\Business\Quote\QuoteCreatorInterface;
 use Spryker\Zed\CartsRestApi\Business\Quote\QuoteDeleter;
 use Spryker\Zed\CartsRestApi\Business\Quote\QuoteDeleterInterface;
+use Spryker\Zed\CartsRestApi\Business\Quote\QuoteErrorIdentifierAdder;
+use Spryker\Zed\CartsRestApi\Business\Quote\QuoteErrorIdentifierAdderInterface;
 use Spryker\Zed\CartsRestApi\Business\Quote\QuoteReader;
 use Spryker\Zed\CartsRestApi\Business\Quote\QuoteReaderInterface;
 use Spryker\Zed\CartsRestApi\Business\Quote\QuoteUpdater;
@@ -79,7 +81,8 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
     {
         return new QuoteCreator(
             $this->getQuoteCreatorPlugin(),
-            $this->getStoreFacade()
+            $this->getStoreFacade(),
+            $this->createQuoteErrorIdentifierAdder()
         );
     }
 
@@ -116,7 +119,8 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
             $this->getCartFacade(),
             $this->createQuoteReader(),
             $this->createQuoteMapper(),
-            $this->createQuotePermissionChecker()
+            $this->createQuotePermissionChecker(),
+            $this->createQuoteErrorIdentifierAdder()
         );
     }
 
@@ -180,6 +184,14 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
             $this->createQuoteItemReader(),
             $this->createQuotePermissionChecker()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\CartsRestApi\Business\Quote\QuoteErrorIdentifierAdderInterface
+     */
+    public function createQuoteErrorIdentifierAdder(): QuoteErrorIdentifierAdderInterface
+    {
+        return new QuoteErrorIdentifierAdder();
     }
 
     /**

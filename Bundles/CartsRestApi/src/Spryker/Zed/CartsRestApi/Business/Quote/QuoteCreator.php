@@ -11,14 +11,11 @@ use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\CartsRestApi\CartsRestApiConfig as CartsRestApiSharedConfig;
-use Spryker\Zed\CartsRestApi\Business\ErrorIdentifierAdderTrait;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToStoreFacadeInterface;
 use Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteCreatorPluginInterface;
 
 class QuoteCreator implements QuoteCreatorInterface
 {
-    use ErrorIdentifierAdderTrait;
-
     /**
      * @var \Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteCreatorPluginInterface
      */
@@ -30,15 +27,23 @@ class QuoteCreator implements QuoteCreatorInterface
     protected $storeFacade;
 
     /**
+     * @var \Spryker\Zed\CartsRestApi\Business\Quote\QuoteErrorIdentifierAdderInterface
+     */
+    protected $quoteErrorIdentifierAdder;
+
+    /**
      * @param \Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteCreatorPluginInterface $quoteCreatorPlugin
      * @param \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToStoreFacadeInterface $storeFacade
+     * @param \Spryker\Zed\CartsRestApi\Business\Quote\QuoteErrorIdentifierAdderInterface $quoteErrorIdentifierAdder
      */
     public function __construct(
         QuoteCreatorPluginInterface $quoteCreatorPlugin,
-        CartsRestApiToStoreFacadeInterface $storeFacade
+        CartsRestApiToStoreFacadeInterface $storeFacade,
+        QuoteErrorIdentifierAdderInterface $quoteErrorIdentifierAdder
     ) {
         $this->quoteCreatorPlugin = $quoteCreatorPlugin;
         $this->storeFacade = $storeFacade;
+        $this->quoteErrorIdentifierAdder = $quoteErrorIdentifierAdder;
     }
 
     /**
@@ -59,7 +64,7 @@ class QuoteCreator implements QuoteCreatorInterface
 
         $quoteResponseTransfer = $this->quoteCreatorPlugin->createQuote($quoteTransfer);
         if (!$quoteResponseTransfer->getIsSuccessful()) {
-            $quoteResponseTransfer = $this->addErrorIdentifiersToQuoteResponseErrors($quoteResponseTransfer);
+            $quoteResponseTransfer = $this->quoteErrorIdentifierAdder->addErrorIdentifiersToQuoteResponseErrors($quoteResponseTransfer);
             $quoteResponseTransfer
                 ->addError((new QuoteErrorTransfer())
                     ->setErrorIdentifier(CartsRestApiSharedConfig::ERROR_IDENTIFIER_FAILED_CREATING_CART));

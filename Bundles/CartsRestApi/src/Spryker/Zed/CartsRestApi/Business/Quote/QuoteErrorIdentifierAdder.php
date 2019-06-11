@@ -5,21 +5,20 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CartsRestApi\Business;
+namespace Spryker\Zed\CartsRestApi\Business\Quote;
 
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Spryker\Zed\CartsRestApi\CartsRestApiConfig;
 
-trait ErrorIdentifierAdderTrait
+class QuoteErrorIdentifierAdder implements QuoteErrorIdentifierAdderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    protected function addErrorIdentifiersToQuoteResponseErrors(
-        QuoteResponseTransfer $quoteResponseTransfer
-    ): QuoteResponseTransfer {
+    public function addErrorIdentifiersToQuoteResponseErrors(QuoteResponseTransfer $quoteResponseTransfer): QuoteResponseTransfer
+    {
         $quoteErrorTransfers = $quoteResponseTransfer->getErrors();
         if (!$quoteErrorTransfers->count()) {
             return $quoteResponseTransfer;
