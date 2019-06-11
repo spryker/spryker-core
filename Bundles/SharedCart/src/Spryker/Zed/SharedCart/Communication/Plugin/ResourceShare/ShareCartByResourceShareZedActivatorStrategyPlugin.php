@@ -17,7 +17,7 @@ use Spryker\Zed\ResourceShareExtension\Dependency\Plugin\ResourceShareZedActivat
  * @method \Spryker\Zed\SharedCart\SharedCartConfig getConfig()
  * @method \Spryker\Zed\SharedCart\Communication\SharedCartCommunicationFactory getFactory()
  */
-class SharedCartByUuidResourceShareZedActivatorStrategyPlugin extends AbstractPlugin implements ResourceShareZedActivatorStrategyPluginInterface
+class ShareCartByResourceShareZedActivatorStrategyPlugin extends AbstractPlugin implements ResourceShareZedActivatorStrategyPluginInterface
 {
     /**
      * @uses \Spryker\Shared\PersistentCartShare\PersistentCartShareConfig::RESOURCE_TYPE_QUOTE
