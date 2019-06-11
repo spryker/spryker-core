@@ -7,18 +7,18 @@
 
 namespace Spryker\Glue\EntityTagsRestApi\Processor\EntityTag;
 
+use Spryker\Glue\EntityTagsRestApi\Processor\EntityTagCheckerInterface;
 use Spryker\Glue\EntityTagsRestApi\Processor\EntityTagResolverInterface;
 use Spryker\Glue\EntityTagsRestApi\Processor\EntityTagWriterInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
+use Spryker\Glue\GlueApplication\Rest\RequestConstantsInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class EntityTagResponseHeaderFormatter implements EntityTagResponseHeaderFormatterInterface
 {
-    protected const HEADER_E_TAG = 'ETag';
-
     /**
      * @var \Spryker\Glue\EntityTagsRestApi\Processor\EntityTagResolverInterface
      */
@@ -30,11 +30,21 @@ class EntityTagResponseHeaderFormatter implements EntityTagResponseHeaderFormatt
     protected $entityTagWriter;
 
     /**
+     * @var \Spryker\Glue\EntityTagsRestApi\Processor\EntityTagCheckerInterface
+     */
+    protected $entityTagChecker;
+
+    /**
+     * @param \Spryker\Glue\EntityTagsRestApi\Processor\EntityTagCheckerInterface $entityTagChecker
      * @param \Spryker\Glue\EntityTagsRestApi\Processor\EntityTagResolverInterface $entityTagResolver
      * @param \Spryker\Glue\EntityTagsRestApi\Processor\EntityTagWriterInterface $entityTagWriter
      */
-    public function __construct(EntityTagResolverInterface $entityTagResolver, EntityTagWriterInterface $entityTagWriter)
-    {
+    public function __construct(
+        EntityTagCheckerInterface $entityTagChecker,
+        EntityTagResolverInterface $entityTagResolver,
+        EntityTagWriterInterface $entityTagWriter
+    ) {
+        $this->entityTagChecker = $entityTagChecker;
         $this->entityTagResolver = $entityTagResolver;
         $this->entityTagWriter = $entityTagWriter;
     }
@@ -48,7 +58,7 @@ class EntityTagResponseHeaderFormatter implements EntityTagResponseHeaderFormatt
      */
     public function format(Response $httpResponse, RestResponseInterface $restResponse, RestRequestInterface $restRequest): Response
     {
-        if (!$this->isMethodApplicable($restRequest->getHttpRequest())) {
+        if (!$this->entityTagChecker->isMethodApplicableForAddingEntityTagHeader($restRequest->getHttpRequest()->getMethod())) {
             return $httpResponse;
         }
         if (count($restResponse->getResources()) !== 1) {
@@ -61,23 +71,10 @@ class EntityTagResponseHeaderFormatter implements EntityTagResponseHeaderFormatt
         );
 
         if ($entityTag) {
-            $httpResponse->headers->set(static::HEADER_E_TAG, $entityTag);
+            $httpResponse->headers->set(RequestConstantsInterface::HEADER_E_TAG, $entityTag);
         }
 
         return $httpResponse;
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return bool
-     */
-    protected function isMethodApplicable(Request $request): bool
-    {
-        return ($request->isMethod(Request::METHOD_GET)
-            || $request->isMethod(Request::METHOD_POST)
-            || $request->isMethod(Request::METHOD_PATCH)
-        );
     }
 
     /**

@@ -32,9 +32,7 @@ class EntityTagsRestApiFactory extends AbstractFactory
      */
     public function createEntityTagChecker(): EntityTagCheckerInterface
     {
-        return new EntityTagChecker(
-            $this->getConfig()
-        );
+        return new EntityTagChecker($this->getConfig());
     }
 
     /**
@@ -66,6 +64,7 @@ class EntityTagsRestApiFactory extends AbstractFactory
     public function createEntityTagResponseHeaderFormatter(): EntityTagResponseHeaderFormatterInterface
     {
         return new EntityTagResponseHeaderFormatter(
+            $this->createEntityTagChecker(),
             $this->createEntityTagResolver(),
             $this->createEntityTagWriter()
         );
@@ -84,18 +83,18 @@ class EntityTagsRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\EntityTagsRestApi\Dependency\Client\EntityTagsRestApiToEntityTagClientInterface
-     */
-    public function getEntityTagClient(): EntityTagsRestApiToEntityTagClientInterface
-    {
-        return $this->getProvidedDependency(EntityTagsRestApiDependencyProvider::CLIENT_ENTITY_TAG);
-    }
-
-    /**
      * @return \Spryker\Glue\EntityTagsRestApi\Processor\RestResponseBuilder\EntityTagRestResponseBuilderInterface
      */
     public function createEntityTagRestResponseBuilder(): EntityTagRestResponseBuilderInterface
     {
         return new EntityTagRestResponseBuilder();
+    }
+
+    /**
+     * @return \Spryker\Glue\EntityTagsRestApi\Dependency\Client\EntityTagsRestApiToEntityTagClientInterface
+     */
+    public function getEntityTagClient(): EntityTagsRestApiToEntityTagClientInterface
+    {
+        return $this->getProvidedDependency(EntityTagsRestApiDependencyProvider::CLIENT_ENTITY_TAG);
     }
 }

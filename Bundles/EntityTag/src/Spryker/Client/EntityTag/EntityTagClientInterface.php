@@ -11,6 +11,7 @@ interface EntityTagClientInterface
 {
     /**
      * Specification:
+     * - Generates storage key.
      * - Reads from key-value storage.
      *
      * @api
@@ -25,6 +26,7 @@ interface EntityTagClientInterface
     /**
      * Specification:
      * - Converts $resourceAttributes array to string.
+     * - Generates storage key.
      * - Generates hash for $resourceAttributes.
      * - Writes to key-value storage.
      *

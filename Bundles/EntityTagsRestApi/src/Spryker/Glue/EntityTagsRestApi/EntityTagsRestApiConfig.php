@@ -11,8 +11,6 @@ use Spryker\Glue\Kernel\AbstractBundleConfig;
 
 class EntityTagsRestApiConfig extends AbstractBundleConfig
 {
-    protected const RESOURCES_ENTITY_TAG_REQUIRED = [];
-
     public const RESPONSE_CODE_PRECONDITION_REQUIRED = '005';
     public const RESPONSE_CODE_PRECONDITION_FAILED = '006';
 
@@ -24,6 +22,6 @@ class EntityTagsRestApiConfig extends AbstractBundleConfig
      */
     public function getEntityTagRequiredResources(): array
     {
-        return static::RESOURCES_ENTITY_TAG_REQUIRED;
+        return [];
     }
 }

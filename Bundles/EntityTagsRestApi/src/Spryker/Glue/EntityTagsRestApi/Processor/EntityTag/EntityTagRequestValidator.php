@@ -11,14 +11,12 @@ use Generated\Shared\Transfer\RestErrorCollectionTransfer;
 use Spryker\Glue\EntityTagsRestApi\Dependency\Client\EntityTagsRestApiToEntityTagClientInterface;
 use Spryker\Glue\EntityTagsRestApi\Processor\EntityTagCheckerInterface;
 use Spryker\Glue\EntityTagsRestApi\Processor\RestResponseBuilder\EntityTagRestResponseBuilderInterface;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
+use Spryker\Glue\GlueApplication\Rest\RequestConstantsInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class EntityTagRequestValidator implements EntityTagRequestValidatorInterface
 {
-    protected const HEADER_IF_MATCH = 'If-Match';
-
     /**
      * @var \Spryker\Glue\EntityTagsRestApi\Processor\EntityTagCheckerInterface
      */
@@ -39,8 +37,11 @@ class EntityTagRequestValidator implements EntityTagRequestValidatorInterface
      * @param \Spryker\Glue\EntityTagsRestApi\Dependency\Client\EntityTagsRestApiToEntityTagClientInterface $entityTagClient
      * @param \Spryker\Glue\EntityTagsRestApi\Processor\RestResponseBuilder\EntityTagRestResponseBuilderInterface $entityTagRestResponseBuilder
      */
-    public function __construct(EntityTagCheckerInterface $entityTagChecker, EntityTagsRestApiToEntityTagClientInterface $entityTagClient, EntityTagRestResponseBuilderInterface $entityTagRestResponseBuilder)
-    {
+    public function __construct(
+        EntityTagCheckerInterface $entityTagChecker,
+        EntityTagsRestApiToEntityTagClientInterface $entityTagClient,
+        EntityTagRestResponseBuilderInterface $entityTagRestResponseBuilder
+    ) {
         $this->entityTagChecker = $entityTagChecker;
         $this->entityTagClient = $entityTagClient;
         $this->entityTagRestResponseBuilder = $entityTagRestResponseBuilder;
@@ -56,11 +57,11 @@ class EntityTagRequestValidator implements EntityTagRequestValidatorInterface
     {
         $restErrorCollectionTransfer = new RestErrorCollectionTransfer();
 
-        if (!$this->checkPrecondition($httpRequest->getMethod(), $restRequest->getResource())) {
+        if (!$this->entityTagChecker->isEntityTagValidationNeeded($httpRequest->getMethod(), $restRequest->getResource())) {
             return null;
         }
 
-        if (!$httpRequest->headers->has(static::HEADER_IF_MATCH)) {
+        if (!$httpRequest->headers->has(RequestConstantsInterface::HEADER_IF_MATCH)) {
             return $restErrorCollectionTransfer->addRestError(
                 $this->entityTagRestResponseBuilder->createPreconditionRequiredError()
             );
@@ -70,24 +71,13 @@ class EntityTagRequestValidator implements EntityTagRequestValidatorInterface
             $restRequest->getResource()->getId()
         );
 
-        if (!$this->compareEntityTags($httpRequest->headers->get(static::HEADER_IF_MATCH), $entityTag)) {
+        if (!$this->compareEntityTags($httpRequest->headers->get(RequestConstantsInterface::HEADER_IF_MATCH), $entityTag)) {
             return $restErrorCollectionTransfer->addRestError(
                 $this->entityTagRestResponseBuilder->createPreconditionFailedError()
             );
         }
 
         return null;
-    }
-
-    /**
-     * @param string $httpMethod
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $restResource
-     *
-     * @return bool
-     */
-    protected function checkPrecondition(string $httpMethod, RestResourceInterface $restResource): bool
-    {
-        return ($httpMethod === Request::METHOD_PATCH && $this->entityTagChecker->isEntityTagRequired($restResource));
     }
 
     /**

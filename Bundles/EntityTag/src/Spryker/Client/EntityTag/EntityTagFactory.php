@@ -8,6 +8,7 @@
 namespace Spryker\Client\EntityTag;
 
 use Spryker\Client\EntityTag\Dependency\Client\EntityTagToStorageClientInterface;
+use Spryker\Client\EntityTag\Dependency\Service\EntityTagToSynchronizationServiceInterface;
 use Spryker\Client\EntityTag\Dependency\Service\EntityTagToUtilEncodingServiceInterface;
 use Spryker\Client\EntityTag\Dependency\Service\EntityTagToUtilTextServiceInterface;
 use Spryker\Client\EntityTag\Storage\EntityTagKeyGenerator;
@@ -18,6 +19,9 @@ use Spryker\Client\EntityTag\Storage\EntityTagWriter;
 use Spryker\Client\EntityTag\Storage\EntityTagWriterInterface;
 use Spryker\Client\Kernel\AbstractFactory;
 
+/**
+ * @method \Spryker\Client\EntityTag\EntityTagConfig getConfig()
+ */
 class EntityTagFactory extends AbstractFactory
 {
     /**
@@ -36,7 +40,9 @@ class EntityTagFactory extends AbstractFactory
      */
     public function createEntityTagKeyGenerator(): EntityTagKeyGeneratorInterface
     {
-        return new EntityTagKeyGenerator();
+        return new EntityTagKeyGenerator(
+            $this->getSynchronizationService()
+        );
     }
 
     /**
@@ -74,5 +80,13 @@ class EntityTagFactory extends AbstractFactory
     public function getUtilTextService(): EntityTagToUtilTextServiceInterface
     {
         return $this->getProvidedDependency(EntityTagDependencyProvider::SERVICE_UTIL_TEXT);
+    }
+
+    /**
+     * @return \Spryker\Client\EntityTag\Dependency\Service\EntityTagToSynchronizationServiceInterface
+     */
+    public function getSynchronizationService(): EntityTagToSynchronizationServiceInterface
+    {
+        return $this->getProvidedDependency(EntityTagDependencyProvider::SERVICE_SYNCHRONIZATION);
     }
 }

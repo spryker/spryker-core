@@ -9,6 +9,7 @@ namespace Spryker\Glue\EntityTagsRestApi\Processor;
 
 use Spryker\Glue\EntityTagsRestApi\EntityTagsRestApiConfig;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 class EntityTagChecker implements EntityTagCheckerInterface
 {
@@ -33,5 +34,30 @@ class EntityTagChecker implements EntityTagCheckerInterface
     public function isEntityTagRequired(RestResourceInterface $restResource): bool
     {
         return in_array($restResource->getType(), $this->entityTagsRestApiConfig->getEntityTagRequiredResources());
+    }
+
+    /**
+     * @param string $httpMethod
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $restResource
+     *
+     * @return bool
+     */
+    public function isEntityTagValidationNeeded(string $httpMethod, RestResourceInterface $restResource): bool
+    {
+        return ($httpMethod === Request::METHOD_PATCH && $this->isEntityTagRequired($restResource));
+    }
+
+    /**
+     * @param string $httpMethod
+     *
+     * @return bool
+     */
+    public function isMethodApplicableForAddingEntityTagHeader(string $httpMethod): bool
+    {
+        return in_array($httpMethod, [
+            Request::METHOD_GET,
+            Request::METHOD_POST,
+            Request::METHOD_PATCH,
+        ]);
     }
 }

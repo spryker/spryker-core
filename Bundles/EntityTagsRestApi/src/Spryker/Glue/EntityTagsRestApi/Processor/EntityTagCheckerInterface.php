@@ -17,4 +17,19 @@ interface EntityTagCheckerInterface
      * @return bool
      */
     public function isEntityTagRequired(RestResourceInterface $restResource): bool;
+
+    /**
+     * @param string $httpMethod
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $restResource
+     *
+     * @return bool
+     */
+    public function isEntityTagValidationNeeded(string $httpMethod, RestResourceInterface $restResource): bool;
+
+    /**
+     * @param string $httpMethod
+     *
+     * @return bool
+     */
+    public function isMethodApplicableForAddingEntityTagHeader(string $httpMethod): bool;
 }
