@@ -8,16 +8,14 @@
 namespace SprykerTest\Zed\CompanyUnitAddressLabel\Helper;
 
 use Codeception\Module;
+use Generated\Shared\DataBuilder\CompanyUnitAddressBuilder;
 use Generated\Shared\DataBuilder\CompanyUnitAddressLabelBuilder;
 use Generated\Shared\Transfer\CompanyUnitAddressLabelTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer;
-use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 use Orm\Zed\CompanyUnitAddressLabel\Persistence\SpyCompanyUnitAddressLabelQuery;
 use Spryker\Zed\CompanyUnitAddressLabel\Business\CompanyUnitAddressLabelFacadeInterface;
-use Spryker\Zed\CompanyUnitAddressLabel\Persistence\CompanyUnitAddressLabelRepository;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
-use SprykerTest\Zed\CompanyUnitAddress\Helper\CompanyUnitAddressDataHelper;
 
 class CompanyUnitAddressLabelDataHelper extends Module
 {
@@ -50,32 +48,21 @@ class CompanyUnitAddressLabelDataHelper extends Module
      */
     public function haveCompanyUnitAddressLabelRelations(array $seedData = []): CompanyUnitAddressResponseTransfer
     {
-        if (!array_key_exists(CompanyUnitAddressTransfer::LABEL_COLLECTION, $seedData)) {
-            $seedData = array_merge($seedData, [
-                CompanyUnitAddressTransfer::LABEL_COLLECTION => (new CompanyUnitAddressLabelRepository())
-                    ->findCompanyUnitAddressLabels(),
-            ]);
-        }
+        $companyUnitAddressTransfer = (new CompanyUnitAddressBuilder($seedData))->build();
+        $companyUnitAddressTransfer->requireIdCompanyUnitAddress();
 
-        $companyUnitAddressTransfer = $this->getCompanyUnitAddressHelper()->haveCompanyUnitAddress($seedData);
-        $companyUnitAddressResponseTransfer = $this->getFacade()->saveLabelToAddressRelations($companyUnitAddressTransfer);
+        $companyUnitAddressResponseTransfer = $this->getFacade()
+            ->saveLabelToAddressRelations($companyUnitAddressTransfer);
 
         /** @var \SprykerTest\Shared\Testify\Helper\DataCleanupHelper $dataCleanupHelper */
         $dataCleanupHelper = $this->getDataCleanupHelper();
         $dataCleanupHelper->_addCleanup(function () use ($companyUnitAddressTransfer): void {
             $companyUnitAddressTransfer->setLabelCollection();
-            $this->getFacade()->saveLabelToAddressRelations($companyUnitAddressTransfer);
+            $this->getFacade()
+                ->saveLabelToAddressRelations($companyUnitAddressTransfer);
         });
 
         return $companyUnitAddressResponseTransfer;
-    }
-
-    /**
-     * @return \Codeception\Module|\SprykerTest\Zed\Country\Helper\CountryDataHelper
-     */
-    protected function getCompanyUnitAddressHelper(): CompanyUnitAddressDataHelper
-    {
-        return $this->getModule('\\' . CompanyUnitAddressDataHelper::class);
     }
 
     /**

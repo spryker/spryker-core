@@ -33,12 +33,13 @@ class CompanyUnitAddressLabelFacadeTest extends Unit
     public function testSaveLabelToAddressRelationsStoresDataToTheDatabase(): void
     {
         // Arrange
-        $companyUnitAddressLabelCollectionTransfer = $this->tester->getCompanyUnitAddressLabelCollection();
-        $companyUnitAddressTransfer = $this->tester->getCompanyUnitAddressTransfer();
+        $companyUnitAddressLabelCollectionTransfer = $this->tester->createCompanyUnitAddressLabelCollection();
+        $companyUnitAddressTransfer = $this->tester->createCompanyUnitAddressTransfer();
         $companyUnitAddressTransfer->setLabelCollection($companyUnitAddressLabelCollectionTransfer);
 
         // Act
-        $companyUnitAddressResponseTransfer = $this->getFacade()->saveLabelToAddressRelations($companyUnitAddressTransfer);
+        $companyUnitAddressResponseTransfer = $this->tester->getFacade()
+            ->saveLabelToAddressRelations($companyUnitAddressTransfer);
 
         // Assert
         $this->assertTrue($companyUnitAddressResponseTransfer->getIsSuccessful());
@@ -51,14 +52,15 @@ class CompanyUnitAddressLabelFacadeTest extends Unit
     public function testSaveLabelToAddressRelationsRemovesRedundantRelations(): void
     {
         // Arrange
-        $companyUnitAddressTransferRedundant = $this->tester->haveCompanyUnitAddressLabelRelations()
+        $companyUnitAddressTransferRedundant = $this->tester->createCompanyUnitAddressLabelRelations()
             ->getCompanyUnitAddressTransfer();
 
         $companyUnitAddressTransfer = clone $companyUnitAddressTransferRedundant;
-        $companyUnitAddressTransfer->setLabelCollection($this->tester->getCompanyUnitAddressLabelCollection());
+        $companyUnitAddressTransfer->setLabelCollection($this->tester->createCompanyUnitAddressLabelCollection());
 
         // Act
-        $companyUnitAddressResponseTransfer = $this->getFacade()->saveLabelToAddressRelations($companyUnitAddressTransfer);
+        $companyUnitAddressResponseTransfer = $this->tester->getFacade()
+            ->saveLabelToAddressRelations($companyUnitAddressTransfer);
 
         // Assert
         $this->assertTrue($companyUnitAddressResponseTransfer->getIsSuccessful());
@@ -71,11 +73,12 @@ class CompanyUnitAddressLabelFacadeTest extends Unit
     public function testHydrateCompanyUnitAddressWithLabelCollectionHydratesTransfer(): void
     {
         // Arrange
-        $companyUnitAddressTransfer = $this->tester->haveCompanyUnitAddressLabelRelations()
+        $companyUnitAddressTransfer = $this->tester->createCompanyUnitAddressLabelRelations()
             ->getCompanyUnitAddressTransfer();
 
         // Act
-        $companyUnitAddressTransferHidrated = $this->getFacade()->hydrateCompanyUnitAddressWithLabelCollection($companyUnitAddressTransfer);
+        $companyUnitAddressTransferHidrated = $this->tester->getFacade()
+            ->hydrateCompanyUnitAddressWithLabelCollection($companyUnitAddressTransfer);
 
         // Assert
         $this->assertNotNull($companyUnitAddressTransferHidrated->getLabelCollection());
@@ -88,11 +91,12 @@ class CompanyUnitAddressLabelFacadeTest extends Unit
     public function testGetCompanyUnitAddressLabelsByAddressReturnsCollectionWhenRelationExists(): void
     {
         // Arrange
-        $companyUnitAddressTransfer = $this->tester->haveCompanyUnitAddressLabelRelations()
+        $companyUnitAddressTransfer = $this->tester->createCompanyUnitAddressLabelRelations()
             ->getCompanyUnitAddressTransfer();
 
         // Act
-        $companyUnitAddressLabelCollectionTransfer = $this->getFacade()->getCompanyUnitAddressLabelsByAddress($companyUnitAddressTransfer->getIdCompanyUnitAddress());
+        $companyUnitAddressLabelCollectionTransfer = $this->tester->getFacade()
+            ->getCompanyUnitAddressLabelsByAddress($companyUnitAddressTransfer->getIdCompanyUnitAddress());
 
         // Assert
         $this->assertNotEmpty($companyUnitAddressLabelCollectionTransfer->getLabels());
@@ -104,10 +108,11 @@ class CompanyUnitAddressLabelFacadeTest extends Unit
     public function testGetCompanyUnitAddressLabelsByAddressReturnsEmptyCollectionWhenRelationDoesNotExists(): void
     {
         // Arrange
-        $companyUnitAddressTransfer = $this->tester->getCompanyUnitAddressTransfer();
+        $companyUnitAddressTransfer = $this->tester->createCompanyUnitAddressTransfer();
 
         // Act
-        $companyUnitAddressLabelCollectionTransfer = $this->getFacade()->getCompanyUnitAddressLabelsByAddress($companyUnitAddressTransfer->getIdCompanyUnitAddress());
+        $companyUnitAddressLabelCollectionTransfer = $this->tester->getFacade()
+            ->getCompanyUnitAddressLabelsByAddress($companyUnitAddressTransfer->getIdCompanyUnitAddress());
 
         // Assert
         $this->assertEmpty($companyUnitAddressLabelCollectionTransfer->getLabels());
@@ -125,7 +130,8 @@ class CompanyUnitAddressLabelFacadeTest extends Unit
             $originalCompanyUnitAddressIds[] = $label->getIdCompanyUnitAddressLabel();
         }
 
-        $companyUnitAddressLabelCollectionTransfer = $this->getFacade()->getCompanyUnitAddressLabelsByAddress($companyUnitAddressTransfer->getIdCompanyUnitAddress());
+        $companyUnitAddressLabelCollectionTransfer = $this->tester->getFacade()
+            ->getCompanyUnitAddressLabelsByAddress($companyUnitAddressTransfer->getIdCompanyUnitAddress());
 
         $storedCompanyUnitAddressIds = [];
         foreach ($companyUnitAddressLabelCollectionTransfer->getLabels() as $companyUnitAddressLabelTransfer) {
@@ -148,7 +154,8 @@ class CompanyUnitAddressLabelFacadeTest extends Unit
             $originalCompanyUnitAddressLabelIds[] = $label->getIdCompanyUnitAddressLabel();
         }
 
-        $companyUnitAddressLabelCollectionTransfer = $this->getFacade()->getCompanyUnitAddressLabelsByAddress($companyUnitAddressTransfer->getIdCompanyUnitAddress());
+        $companyUnitAddressLabelCollectionTransfer = $this->tester->getFacade()
+            ->getCompanyUnitAddressLabelsByAddress($companyUnitAddressTransfer->getIdCompanyUnitAddress());
 
         $companyUnitAddressLabelIds = [];
         foreach ($companyUnitAddressLabelCollectionTransfer->getLabels() as $companyUnitAddressLabelTransfer) {
@@ -157,13 +164,5 @@ class CompanyUnitAddressLabelFacadeTest extends Unit
 
         // Assert
         $this->assertNotContains($originalCompanyUnitAddressLabelIds, $companyUnitAddressLabelIds);
-    }
-
-    /**
-     * @return \Spryker\Zed\CompanyUnitAddressLabel\Business\CompanyUnitAddressLabelFacadeInterface|\Spryker\Zed\Kernel\Business\AbstractFacade
-     */
-    protected function getFacade()
-    {
-        return $this->tester->getFacade();
     }
 }

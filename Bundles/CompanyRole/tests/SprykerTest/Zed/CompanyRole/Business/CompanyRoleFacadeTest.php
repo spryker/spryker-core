@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\CompanyRole\Business;
 
 use Codeception\TestCase\Test;
+use Generated\Shared\DataBuilder\CompanyRoleBuilder;
 use Generated\Shared\Transfer\CompanyResponseTransfer;
 use Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyRoleTransfer;
@@ -66,7 +67,7 @@ class CompanyRoleFacadeTest extends Test
             CompanyUserTransfer::CUSTOMER => $this->tester->haveCustomer(),
             CompanyUserTransfer::FK_COMPANY => $this->tester->haveCompany()->getIdCompany(),
         ]);
-        $companyUserWithPermissionTransfer = $this->tester->getCompanyUserWithPermission();
+        $companyUserWithPermissionTransfer = $this->tester->createCompanyUserWithPermission();
 
         //Act
         $companyUserIds = $this->getFacade()->getCompanyUserIdsByPermissionKey(AddCompanyUserPermissionPlugin::KEY);
@@ -82,9 +83,9 @@ class CompanyRoleFacadeTest extends Test
     {
         // Prepare
         $companyTransfer = $this->tester->haveCompany();
-        $companyRoleTransfer = $this->tester->getCompanyRoleTransfer([
+        $companyRoleTransfer = (new CompanyRoleBuilder([
             CompanyRoleTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
-        ]);
+        ]))->build();
 
         // Action
         $companyRoleResponseTransfer = $this->getFacade()->create($companyRoleTransfer);
@@ -237,7 +238,7 @@ class CompanyRoleFacadeTest extends Test
     public function testFindCompanyRolesShouldReturnCollection(): void
     {
         // Arrange
-        $this->tester->getCompanyRoleWithPermission();
+        $this->tester->createCompanyRoleWithPermission();
 
         // Act
         $companyRoleCollectionTransfer = $this->getFacade()->findCompanyRoles();
@@ -252,7 +253,7 @@ class CompanyRoleFacadeTest extends Test
     public function testGetCompanyRoleCollectionShouldReturnCollectionByIdCompanyCriteria(): void
     {
         // Arrange
-        $companyRoleTransfer = $this->tester->getCompanyRoleWithPermission();
+        $companyRoleTransfer = $this->tester->createCompanyRoleWithPermission();
         $criteriaFilterTransfer = (new CompanyRoleCriteriaFilterTransfer())
             ->setIdCompany($companyRoleTransfer->getFkCompany());
 
@@ -269,7 +270,7 @@ class CompanyRoleFacadeTest extends Test
     public function testGetCompanyRoleCollectionShouldReturnCollectionByIdCompanyUserCriteria(): void
     {
         // Arrange
-        $companyUserWithPermissionTransfer = $this->tester->getCompanyUserWithPermission();
+        $companyUserWithPermissionTransfer = $this->tester->createCompanyUserWithPermission();
         $criteriaFilterTransfer = (new CompanyRoleCriteriaFilterTransfer())
             ->setIdCompanyUser($companyUserWithPermissionTransfer->getIdCompanyUser());
 
@@ -286,7 +287,7 @@ class CompanyRoleFacadeTest extends Test
     public function testFindCompanyRolePermissionsShouldReturnCollection(): void
     {
         // Arrange
-        $companyRoleTransfer = $this->tester->getCompanyRoleWithPermission();
+        $companyRoleTransfer = $this->tester->createCompanyRoleWithPermission();
 
         // Act
         $permissionCollectionTransfer = $this->getFacade()->findCompanyRolePermissions($companyRoleTransfer->getIdCompanyRole());
@@ -301,7 +302,7 @@ class CompanyRoleFacadeTest extends Test
     public function testFindPermissionsByIdCompanyUserShouldReturnCollection(): void
     {
         // Arrange
-        $companyUserWithPermissionTransfer = $this->tester->getCompanyUserWithPermission();
+        $companyUserWithPermissionTransfer = $this->tester->createCompanyUserWithPermission();
 
         // Act
         $permissionCollectionTransfer = $this->getFacade()->findPermissionsByIdCompanyUser($companyUserWithPermissionTransfer->getIdCompanyUser());
@@ -316,7 +317,7 @@ class CompanyRoleFacadeTest extends Test
     public function testUpdateCompanyRolePermissionShouldPersistNewConfiguration(): void
     {
         // Arrange
-        $companyRoleTransfer = $this->tester->getCompanyRoleWithPermission();
+        $companyRoleTransfer = $this->tester->createCompanyRoleWithPermission();
         $idPermission = $companyRoleTransfer->getPermissionCollection()->getPermissions()->offsetGet(0)->getIdPermission();
         $idCompanyRole = $companyRoleTransfer->getIdCompanyRole();
         $permissionTransfer = $this->getFacade()->findPermissionByIdCompanyRoleByIdPermission($idCompanyRole, $idPermission);
@@ -336,7 +337,7 @@ class CompanyRoleFacadeTest extends Test
     public function testHydrateCompanyUserShouldReturnHydratedCompanyUser(): void
     {
         // Arrange
-        $companyUserWithPermissionTransfer = $this->tester->getCompanyUserWithPermission();
+        $companyUserWithPermissionTransfer = $this->tester->createCompanyUserWithPermission();
         $companyUserTransfer = (new CompanyUserTransfer())
             ->setIdCompanyUser($companyUserWithPermissionTransfer->getIdCompanyUser());
 

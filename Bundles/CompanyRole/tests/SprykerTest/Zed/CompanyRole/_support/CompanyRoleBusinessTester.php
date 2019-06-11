@@ -8,15 +8,12 @@
 namespace SprykerTest\Zed\CompanyRole;
 
 use Codeception\Actor;
-use Generated\Shared\DataBuilder\CompanyRoleBuilder;
 use Generated\Shared\Transfer\CompanyRoleCollectionTransfer;
 use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Spryker\Shared\CompanyUser\Plugin\AddCompanyUserPermissionPlugin;
-use Spryker\Shared\PermissionExtension\Dependency\Plugin\PermissionPluginInterface;
 use Spryker\Zed\CompanyRole\Communication\Plugin\PermissionStoragePlugin;
-use Spryker\Zed\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInterface;
 
 /**
  * Inherited Methods
@@ -42,60 +39,24 @@ class CompanyRoleBusinessTester extends Actor
     */
 
     /**
-     * @param array $companyRole
-     *
-     * @return \Generated\Shared\Transfer\CompanyRoleTransfer
-     */
-    public function getCompanyRoleTransfer(array $companyRole = []): CompanyRoleTransfer
-    {
-        return (new CompanyRoleBuilder($companyRole))->build();
-    }
-
-    /**
      * @param array $seedData
      *
      * @return \Generated\Shared\Transfer\CompanyRoleTransfer
      */
-    public function getCompanyRoleWithPermission(array $seedData = []): CompanyRoleTransfer
+    public function createCompanyRoleWithPermission(array $seedData = []): CompanyRoleTransfer
     {
-        if (!array_key_exists(CompanyRoleTransfer::FK_COMPANY, $seedData)) {
+        if (!isset($seedData[CompanyRoleTransfer::FK_COMPANY])) {
             $companyTransfer = $this->haveCompany();
-            $seedData = array_merge($seedData, [
-                CompanyRoleTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
-            ]);
+            $seedData[CompanyRoleTransfer::FK_COMPANY] = $companyTransfer->getIdCompany();
         }
 
-        if (!array_key_exists(CompanyRoleTransfer::PERMISSION_COLLECTION, $seedData)) {
-            $permissionCollectionTransfer = $this->getPermissionCollectionTransfer();
-
-            $seedData = array_merge($seedData, [
-                CompanyRoleTransfer::PERMISSION_COLLECTION => $permissionCollectionTransfer,
-            ]);
+        if (!isset($seedData[CompanyRoleTransfer::PERMISSION_COLLECTION])) {
+            $this->preparePermissionStorageDependency(new PermissionStoragePlugin());
+            $seedData[CompanyRoleTransfer::PERMISSION_COLLECTION] = (new PermissionCollectionTransfer())
+                ->addPermission($this->havePermission(new AddCompanyUserPermissionPlugin()));
         }
 
         return $this->haveCompanyRole($seedData);
-    }
-
-    /**
-     * @param \Spryker\Shared\PermissionExtension\Dependency\Plugin\PermissionPluginInterface|null $permissionPlugin
-     * @param \Spryker\Zed\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInterface|null $permissionStoragePlugin
-     *
-     * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
-     */
-    public function getPermissionCollectionTransfer(?PermissionPluginInterface $permissionPlugin = null, ?PermissionStoragePluginInterface $permissionStoragePlugin = null): PermissionCollectionTransfer
-    {
-        if (!$permissionPlugin) {
-            $permissionPlugin = new AddCompanyUserPermissionPlugin();
-        }
-
-        if (!$permissionStoragePlugin) {
-            $permissionStoragePlugin = new PermissionStoragePlugin();
-        }
-
-        $this->preparePermissionStorageDependency($permissionStoragePlugin);
-
-        return (new PermissionCollectionTransfer())
-            ->addPermission($this->havePermission($permissionPlugin));
     }
 
     /**
@@ -103,20 +64,18 @@ class CompanyRoleBusinessTester extends Actor
      *
      * @return \Generated\Shared\Transfer\CompanyUserTransfer
      */
-    public function getCompanyUserWithPermission(array $seedData = []): CompanyUserTransfer
+    public function createCompanyUserWithPermission(array $seedData = []): CompanyUserTransfer
     {
         $companyTransfer = $this->haveCompany();
-        $companyRoleWithPermissionTransfer = $this->getCompanyRoleWithPermission([
+        $companyRoleWithPermissionTransfer = $this->createCompanyRoleWithPermission([
             CompanyRoleTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
         ]);
         $companyRoleCollection = (new CompanyRoleCollectionTransfer())
             ->addRole($companyRoleWithPermissionTransfer);
 
-        $seedData = array_merge($seedData, [
-            CompanyUserTransfer::CUSTOMER => $this->haveCustomer(),
-            CompanyUserTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
-            CompanyUserTransfer::COMPANY_ROLE_COLLECTION => $companyRoleCollection,
-        ]);
+        $seedData[CompanyUserTransfer::CUSTOMER] = $this->haveCustomer();
+        $seedData[CompanyUserTransfer::FK_COMPANY] = $companyTransfer->getIdCompany();
+        $seedData[CompanyUserTransfer::COMPANY_ROLE_COLLECTION] = $companyRoleCollection;
 
         $companyUserWithPermissionTransfer = $this->haveCompanyUser($seedData);
         $this->assignCompanyRolesToCompanyUser($companyUserWithPermissionTransfer);

@@ -37,11 +37,11 @@ class CustomerDataHelper extends Module
             ->withShippingAddress()
             ->build();
 
-        $this->ensureCustomerWithReferenceDoesNotExist($customerTransfer->getCustomerReference());
+        $this->ensureCustomerWithReferenceDoesNotExist($customerTransfer);
 
         $customerResponseTransfer = $this->getCustomerFacade()->registerCustomer($customerTransfer);
 
-        $this->getDataCleanupHelper()->_addCleanup(function () use ($customerResponseTransfer): void {
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($customerResponseTransfer) {
             $this->getCustomerFacade()
                 ->deleteCustomer($customerResponseTransfer->getCustomerTransfer());
         });
@@ -50,17 +50,17 @@ class CustomerDataHelper extends Module
     }
 
     /**
-     * @param string|null $reference
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return void
      */
-    protected function ensureCustomerWithReferenceDoesNotExist(?string $reference): void
+    protected function ensureCustomerWithReferenceDoesNotExist(CustomerTransfer $customerTransfer): void
     {
-        if (!$reference) {
+        if (!$customerTransfer->getCustomerReference()) {
             return;
         }
 
-        $customerTransfer = $this->getCustomerFacade()->findByReference($reference);
+        $customerTransfer = $this->getCustomerFacade()->findByReference($customerTransfer->getCustomerReference());
 
         if ($customerTransfer) {
             $this->getCustomerFacade()->deleteCustomer($customerTransfer);

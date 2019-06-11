@@ -8,7 +8,9 @@
 namespace SprykerTest\Zed\CompanyUnitAddressLabel;
 
 use Codeception\Actor;
+use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressLabelCollectionTransfer;
+use Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 use Spryker\Zed\CompanyUnitAddressLabel\Persistence\CompanyUnitAddressLabelRepository;
 
@@ -38,7 +40,7 @@ class CompanyUnitAddressLabelBusinessTester extends Actor
     /**
      * @return \Generated\Shared\Transfer\CompanyUnitAddressLabelCollectionTransfer
      */
-    public function getCompanyUnitAddressLabelCollection(): CompanyUnitAddressLabelCollectionTransfer
+    public function createCompanyUnitAddressLabelCollection(): CompanyUnitAddressLabelCollectionTransfer
     {
         return (new CompanyUnitAddressLabelRepository())
             ->findCompanyUnitAddressLabels();
@@ -50,13 +52,33 @@ class CompanyUnitAddressLabelBusinessTester extends Actor
      *
      * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer
      */
-    public function getCompanyUnitAddressTransfer(array $seedData = [], array $companyBusinessUnitSeedData = []): CompanyUnitAddressTransfer
+    public function createCompanyUnitAddressTransfer(array $seedData = [], array $companyBusinessUnitSeedData = []): CompanyUnitAddressTransfer
     {
-        $companyBusinessUnitWithCompany = $this->haveCompanyBusinessUnit($companyBusinessUnitSeedData);
-        $seedData = array_merge($seedData, [
-            CompanyUnitAddressTransfer::FK_COMPANY => $companyBusinessUnitWithCompany->getFkCompany(),
-        ]);
+        if (!isset($companyBusinessUnitSeedData[CompanyBusinessUnitTransfer::FK_COMPANY])) {
+            $companyBusinessUnitSeedData[CompanyBusinessUnitTransfer::FK_COMPANY] = $this->haveCompany()->getIdCompany();
+        }
+
+        $seedData[CompanyUnitAddressTransfer::FK_COMPANY] = $this->haveCompanyBusinessUnit($companyBusinessUnitSeedData)->getFkCompany();
 
         return $this->haveCompanyUnitAddress($seedData);
+    }
+
+    /**
+     * @param array $seedData
+     *
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer
+     */
+    public function createCompanyUnitAddressLabelRelations(array $seedData = []): CompanyUnitAddressResponseTransfer
+    {
+        if (!array_key_exists(CompanyUnitAddressTransfer::LABEL_COLLECTION, $seedData)) {
+            $seedData = array_merge($seedData, [
+                CompanyUnitAddressTransfer::LABEL_COLLECTION => (new CompanyUnitAddressLabelRepository())
+                    ->findCompanyUnitAddressLabels(),
+            ]);
+        }
+
+        return $this->haveCompanyUnitAddressLabelRelations(
+            $this->haveCompanyUnitAddress($seedData)->toArray(true, true)
+        );
     }
 }

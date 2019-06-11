@@ -38,25 +38,20 @@ class CompanyUnitAddressBusinessTester extends Actor
      *
      * @return \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer
      */
-    public function getCompanyUnitAddressCollection(array $seedData = []): CompanyUnitAddressCollectionTransfer
+    public function createCompanyUnitAddressCollection(array $seedData = []): CompanyUnitAddressCollectionTransfer
     {
         return (new CompanyUnitAddressCollectionTransfer())
             ->addCompanyUnitAddress($this->haveCompanyUnitAddress($seedData));
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer|null $companyUnitAddressCollectionTransfer
+     * @param \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer $companyUnitAddressCollectionTransfer
      *
      * @return int[]
      */
-    public function extractAddressIdsFromCollection(?CompanyUnitAddressCollectionTransfer $companyUnitAddressCollectionTransfer): array
+    public function extractAddressIdsFromCollection(CompanyUnitAddressCollectionTransfer $companyUnitAddressCollectionTransfer): array
     {
         $companyUnitAddressIds = [];
-
-        if (!$companyUnitAddressCollectionTransfer) {
-            return $companyUnitAddressIds;
-        }
-
         foreach ($companyUnitAddressCollectionTransfer->getCompanyUnitAddresses() as $companyUnitAddressTransfer) {
             $companyUnitAddressIds[] = $companyUnitAddressTransfer->getIdCompanyUnitAddress();
         }

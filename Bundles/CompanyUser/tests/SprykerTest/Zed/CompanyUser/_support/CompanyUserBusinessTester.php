@@ -10,7 +10,6 @@ namespace SprykerTest\Zed\CompanyUser;
 use Codeception\Actor;
 use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
-use Orm\Zed\Company\Persistence\Map\SpyCompanyTableMap;
 
 /**
  * Inherited Methods
@@ -29,6 +28,8 @@ use Orm\Zed\Company\Persistence\Map\SpyCompanyTableMap;
  */
 class CompanyUserBusinessTester extends Actor
 {
+    protected const STATUS_APPROVED = 'approved';
+
     use _generated\CompanyUserBusinessTesterActions;
 
    /**
@@ -47,17 +48,17 @@ class CompanyUserBusinessTester extends Actor
         ],
         array $companySeedData = [
             CompanyTransfer::IS_ACTIVE => true,
-            CompanyTransfer::STATUS => SpyCompanyTableMap::COL_STATUS_APPROVED,
+            CompanyTransfer::STATUS => self::STATUS_APPROVED,
         ]
     ): CompanyUserTransfer {
-        if (!array_key_exists(CompanyUserTransfer::CUSTOMER, $seedData)) {
+        if (!isset($seedData[CompanyUserTransfer::CUSTOMER])) {
             $customerTransfer = $this->haveCustomer();
-            $seedData = array_merge($seedData, [CompanyUserTransfer::CUSTOMER => $customerTransfer]);
+            $seedData[CompanyUserTransfer::CUSTOMER] = $customerTransfer;
         }
 
-        if (!array_key_exists(CompanyUserTransfer::FK_COMPANY, $seedData)) {
+        if (!isset($seedData[CompanyUserTransfer::FK_COMPANY])) {
             $companyTransfer = $this->haveCompany($companySeedData);
-            $seedData = array_merge($seedData, [CompanyUserTransfer::FK_COMPANY => $companyTransfer->getIdCompany()]);
+            $seedData[CompanyUserTransfer::FK_COMPANY] = $companyTransfer->getIdCompany();
         }
 
         return $this->haveCompanyUser($seedData);

@@ -36,7 +36,7 @@ class CompanyHelper extends Module
      */
     public function haveActiveCompany(array $seedData = []): CompanyTransfer
     {
-        $seedData = array_merge($seedData, [CompanyTransfer::IS_ACTIVE => true]);
+        $seedData[CompanyTransfer::IS_ACTIVE] = true;
 
         return $this->haveCompany($seedData);
     }
@@ -48,7 +48,7 @@ class CompanyHelper extends Module
      */
     public function haveInactiveCompany(array $seedData = []): CompanyTransfer
     {
-        $seedData = array_merge($seedData, [CompanyTransfer::IS_ACTIVE => false]);
+        $seedData[CompanyTransfer::IS_ACTIVE] = false;
 
         return $this->haveCompany($seedData);
     }

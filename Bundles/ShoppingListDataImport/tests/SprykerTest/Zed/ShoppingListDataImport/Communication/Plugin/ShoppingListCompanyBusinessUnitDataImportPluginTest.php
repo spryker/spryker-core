@@ -74,6 +74,7 @@ class ShoppingListCompanyBusinessUnitDataImportPluginTest extends Unit
 
         $this->tester->ensureShoppingListCompanyBusinessUnitDatabaseTableIsEmpty();
         $companyBusinessUnitTransfer = $this->tester->haveCompanyBusinessUnit([
+            CompanyBusinessUnitTransfer::FK_COMPANY => $this->tester->haveCompany()->getIdCompany(),
             CompanyBusinessUnitTransfer::KEY => static::TEST_COMPANY_BUSINESS_UNIT_KEY,
         ]);
 

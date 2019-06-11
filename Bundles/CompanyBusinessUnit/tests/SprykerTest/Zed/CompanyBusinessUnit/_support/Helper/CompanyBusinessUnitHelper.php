@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery;
 use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitFacadeInterface;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
-use SprykerTest\Zed\Company\Helper\CompanyHelper;
 
 class CompanyBusinessUnitHelper extends Module
 {
@@ -26,10 +25,6 @@ class CompanyBusinessUnitHelper extends Module
      */
     public function haveCompanyBusinessUnit(array $seedData = []): CompanyBusinessUnitTransfer
     {
-        if (!isset($seedData['fkCompany'])) {
-            $seedData['fkCompany'] = $this->getCompanyHelper()->haveCompany()->getIdCompany();
-        }
-
         $companyBusinessUnitTransfer = (new CompanyBusinessUnitBuilder($seedData))->build();
         $companyBusinessUnitTransfer->setIdCompanyBusinessUnit(null);
 
@@ -55,14 +50,15 @@ class CompanyBusinessUnitHelper extends Module
      */
     protected function ensureCompanyBusinessUnitWithKeyDoesNotExist(string $key): void
     {
-        SpyCompanyBusinessUnitQuery::create()->filterByKey($key)->delete();
+        $companyBusinessUnitQuery = $this->getCompanyBusinessUnitQuery();
+        $companyBusinessUnitQuery->filterByKey($key)->delete();
     }
 
     /**
-     * @return \Codeception\Module|\SprykerTest\Zed\Company\Helper\CompanyHelper
+     * @return \Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery
      */
-    protected function getCompanyHelper(): CompanyHelper
+    protected function getCompanyBusinessUnitQuery(): SpyCompanyBusinessUnitQuery
     {
-        return $this->getModule('\\' . CompanyHelper::class);
+        return SpyCompanyBusinessUnitQuery::create();
     }
 }

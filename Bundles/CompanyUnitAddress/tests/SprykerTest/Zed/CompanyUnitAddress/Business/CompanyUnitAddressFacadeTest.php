@@ -26,6 +26,7 @@ use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 class CompanyUnitAddressFacadeTest extends Test
 {
     protected const TEST_ADDRESS = 'TEST ADDRESS';
+
     /**
      * @var \SprykerTest\Zed\CompanyUnitAddress\CompanyUnitAddressBusinessTester
      */
@@ -40,7 +41,8 @@ class CompanyUnitAddressFacadeTest extends Test
         $companyUnitAddressTransfer = (new CompanyUnitAddressBuilder())->build();
 
         // Act
-        $companyUnitAddressTransfer = $this->getFacade()->create($companyUnitAddressTransfer)
+        $companyUnitAddressTransfer = $this->tester->getFacade()
+            ->create($companyUnitAddressTransfer)
             ->getCompanyUnitAddressTransfer();
 
         // Assert
@@ -57,8 +59,10 @@ class CompanyUnitAddressFacadeTest extends Test
         $companyUnitAddressTransfer->setAddress1(static::TEST_ADDRESS);
 
         // Act
-        $companyUnitAddressResponseTransfer = $this->getFacade()->update($companyUnitAddressTransfer);
-        $companyUnitAddressTransferLoaded = $this->getFacade()->findCompanyUnitAddressById($companyUnitAddressTransfer->getIdCompanyUnitAddress());
+        $companyUnitAddressResponseTransfer = $this->tester->getFacade()
+            ->update($companyUnitAddressTransfer);
+        $companyUnitAddressTransferLoaded = $this->tester->getFacade()
+            ->findCompanyUnitAddressById($companyUnitAddressTransfer->getIdCompanyUnitAddress());
 
         // Assert
         $this->assertTrue($companyUnitAddressResponseTransfer->getIsSuccessful());
@@ -74,10 +78,14 @@ class CompanyUnitAddressFacadeTest extends Test
         $companyUnitAddressTransfer = $this->tester->haveCompanyUnitAddress();
 
         // Act
-        $this->getFacade()->delete($companyUnitAddressTransfer);
+        $this->tester->getFacade()
+            ->delete($companyUnitAddressTransfer);
 
         // Assert
-        $this->assertNull($this->getFacade()->findCompanyUnitAddressById($companyUnitAddressTransfer->getIdCompanyUnitAddress()));
+        $this->assertNull(
+            $this->tester->getFacade()
+                ->findCompanyUnitAddressById($companyUnitAddressTransfer->getIdCompanyUnitAddress())
+        );
     }
 
     /**
@@ -87,19 +95,22 @@ class CompanyUnitAddressFacadeTest extends Test
     {
         // Arrange
         $companyBusinessUnitTransfer = $this->tester->haveCompanyBusinessUnit([
-            CompanyBusinessUnitTransfer::ADDRESS_COLLECTION => $this->tester->getCompanyUnitAddressCollection(),
+            CompanyBusinessUnitTransfer::FK_COMPANY => $this->tester->haveCompany()->getIdCompany(),
+            CompanyBusinessUnitTransfer::ADDRESS_COLLECTION => $this->tester->createCompanyUnitAddressCollection(),
         ]);
-        $companyUnitAddressCollectionTransfer = $this->tester->getCompanyUnitAddressCollection();
+        $companyUnitAddressCollectionTransfer = $this->tester->createCompanyUnitAddressCollection();
         $companyUnitAddressIdsNew = $this->tester->extractAddressIdsFromCollection($companyUnitAddressCollectionTransfer);
         $companyBusinessUnitTransfer->setAddressCollection($companyUnitAddressCollectionTransfer);
 
         // Act
-        $this->getFacade()->saveCompanyBusinessUnitAddresses($companyBusinessUnitTransfer);
+        $this->tester->getFacade()
+            ->saveCompanyBusinessUnitAddresses($companyBusinessUnitTransfer);
 
-        $companyUnitAddressCollectionTransfer = $this->getFacade()->getCompanyUnitAddressCollection(
-            (new CompanyUnitAddressCriteriaFilterTransfer())
-                ->setIdCompanyBusinessUnit($companyBusinessUnitTransfer->getIdCompanyBusinessUnit())
-        );
+        $companyUnitAddressCollectionTransfer = $this->tester->getFacade()
+            ->getCompanyUnitAddressCollection(
+                (new CompanyUnitAddressCriteriaFilterTransfer())
+                    ->setIdCompanyBusinessUnit($companyBusinessUnitTransfer->getIdCompanyBusinessUnit())
+            );
         $companyUnitAddressIdsActual = $this->tester->extractAddressIdsFromCollection($companyUnitAddressCollectionTransfer);
 
         // Assert
@@ -115,7 +126,8 @@ class CompanyUnitAddressFacadeTest extends Test
         $companyUnitAddressTransfer = $this->tester->haveCompanyUnitAddress();
 
         // Act
-        $companyUnitAddressTransferLoaded = $this->getFacade()->getCompanyUnitAddressById($companyUnitAddressTransfer);
+        $companyUnitAddressTransferLoaded = $this->tester->getFacade()
+            ->getCompanyUnitAddressById($companyUnitAddressTransfer);
 
         // Assert
         $this->assertNotNull($companyUnitAddressTransferLoaded);
@@ -133,7 +145,8 @@ class CompanyUnitAddressFacadeTest extends Test
         $this->expectException(RequiredTransferPropertyException::class);
 
         // Act
-        $this->getFacade()->getCompanyUnitAddressById($companyUnitAddressTransfer);
+        $this->tester->getFacade()
+            ->getCompanyUnitAddressById($companyUnitAddressTransfer);
     }
 
     /**
@@ -145,7 +158,8 @@ class CompanyUnitAddressFacadeTest extends Test
         $companyUnitAddressTransfer = $this->tester->haveCompanyUnitAddress();
 
         // Act
-        $companyUnitAddressTransferLoaded = $this->getFacade()->findCompanyUnitAddressById($companyUnitAddressTransfer->getIdCompanyUnitAddress());
+        $companyUnitAddressTransferLoaded = $this->tester->getFacade()
+            ->findCompanyUnitAddressById($companyUnitAddressTransfer->getIdCompanyUnitAddress());
 
         // Assert
         $this->assertNotNull($companyUnitAddressTransferLoaded);
@@ -160,7 +174,8 @@ class CompanyUnitAddressFacadeTest extends Test
         $idCompanyUnitAddress = 0;
 
         // Act
-        $companyUnitAddressTransferLoaded = $this->getFacade()->findCompanyUnitAddressById($idCompanyUnitAddress);
+        $companyUnitAddressTransferLoaded = $this->tester->getFacade()
+            ->findCompanyUnitAddressById($idCompanyUnitAddress);
 
         // Assert
         $this->assertNull($companyUnitAddressTransferLoaded);
@@ -173,15 +188,18 @@ class CompanyUnitAddressFacadeTest extends Test
     {
         // Arrange
         $companyBusinessUnitTransfer = $this->tester->haveCompanyBusinessUnit([
-            CompanyBusinessUnitTransfer::ADDRESS_COLLECTION => $this->tester->getCompanyUnitAddressCollection(),
+            CompanyBusinessUnitTransfer::FK_COMPANY => $this->tester->haveCompany()->getIdCompany(),
+            CompanyBusinessUnitTransfer::ADDRESS_COLLECTION => $this->tester->createCompanyUnitAddressCollection(),
         ]);
-        $this->getFacade()->saveCompanyBusinessUnitAddresses($companyBusinessUnitTransfer);
+        $this->tester->getFacade()
+            ->saveCompanyBusinessUnitAddresses($companyBusinessUnitTransfer);
 
         // Act
-        $companyUnitAddressCollectionTransfer = $this->getFacade()->getCompanyUnitAddressCollection(
-            (new CompanyUnitAddressCriteriaFilterTransfer())
-                ->setIdCompanyBusinessUnit($companyBusinessUnitTransfer->getIdCompanyBusinessUnit())
-        );
+        $companyUnitAddressCollectionTransfer = $this->tester->getFacade()
+            ->getCompanyUnitAddressCollection(
+                (new CompanyUnitAddressCriteriaFilterTransfer())
+                    ->setIdCompanyBusinessUnit($companyBusinessUnitTransfer->getIdCompanyBusinessUnit())
+            );
 
         // Assert
         $this->assertGreaterThan(0, $companyUnitAddressCollectionTransfer->getCompanyUnitAddresses()->count());
@@ -193,23 +211,18 @@ class CompanyUnitAddressFacadeTest extends Test
     public function testGetCompanyUnitAddressCollectionReturnsEmptyCollectionWhenNotAssigned(): void
     {
         // Arrange
-        $companyBusinessUnitTransfer = $this->tester->haveCompanyBusinessUnit();
+        $companyBusinessUnitTransfer = $this->tester->haveCompanyBusinessUnit([
+            CompanyBusinessUnitTransfer::FK_COMPANY => $this->tester->haveCompany()->getIdCompany(),
+        ]);
 
         // Act
-        $companyUnitAddressCollectionTransfer = $this->getFacade()->getCompanyUnitAddressCollection(
-            (new CompanyUnitAddressCriteriaFilterTransfer())
-                ->setIdCompanyBusinessUnit($companyBusinessUnitTransfer->getIdCompanyBusinessUnit())
-        );
+        $companyUnitAddressCollectionTransfer = $this->tester->getFacade()
+            ->getCompanyUnitAddressCollection(
+                (new CompanyUnitAddressCriteriaFilterTransfer())
+                    ->setIdCompanyBusinessUnit($companyBusinessUnitTransfer->getIdCompanyBusinessUnit())
+            );
 
         // Assert
         $this->assertEquals(0, $companyUnitAddressCollectionTransfer->getCompanyUnitAddresses()->count());
-    }
-
-    /**
-     * @return \Spryker\Zed\CompanyUnitAddress\Business\CompanyUnitAddressFacade|\Spryker\Zed\Kernel\Business\AbstractFacade
-     */
-    protected function getFacade()
-    {
-        return $this->tester->getFacade();
     }
 }

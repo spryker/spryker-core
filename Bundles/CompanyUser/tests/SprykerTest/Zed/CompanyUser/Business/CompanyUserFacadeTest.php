@@ -14,6 +14,7 @@ use Generated\Shared\DataBuilder\CompanyUserBuilder;
 use Generated\Shared\DataBuilder\CompanyUserCriteriaFilterBuilder;
 use Generated\Shared\DataBuilder\CustomerBuilder;
 use Generated\Shared\Transfer\CompanyTransfer;
+use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUserCriteriaTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 
@@ -46,11 +47,13 @@ class CompanyUserFacadeTest extends Test
         ]))->withCustomer()->build();
 
         // Act
-        $companyUserResponseTransfer = $this->getFacade()->create($companyUserTransfer);
-        $foundCompanyUserTransfer = $this->getFacade()->getCompanyUserById(
-            $companyUserResponseTransfer->getCompanyUser()
-                ->getIdCompanyUser()
-        );
+        $companyUserResponseTransfer = $this->tester->getFacade()
+            ->create($companyUserTransfer);
+        $foundCompanyUserTransfer = $this->tester->getFacade()
+            ->getCompanyUserById(
+                $companyUserResponseTransfer->getCompanyUser()
+                    ->getIdCompanyUser()
+            );
 
         // Assert
         $this->assertNotNull($foundCompanyUserTransfer->getIdCompanyUser());
@@ -68,12 +71,14 @@ class CompanyUserFacadeTest extends Test
         $companyResponseTransfer = (new CompanyResponseBuilder(['company_transfer' => $companyTransfer]))->build();
 
         // Act
-        $companyResponseTransfer = $this->getFacade()->createInitialCompanyUser($companyResponseTransfer);
-        $foundCompanyUserTransfer = $this->getFacade()->getCompanyUserById(
-            $companyResponseTransfer->getCompanyTransfer()
-                ->getInitialUserTransfer()
-                ->getIdCompanyUser()
-        );
+        $companyResponseTransfer = $this->tester->getFacade()
+            ->createInitialCompanyUser($companyResponseTransfer);
+        $foundCompanyUserTransfer = $this->tester->getFacade()
+            ->getCompanyUserById(
+                $companyResponseTransfer->getCompanyTransfer()
+                    ->getInitialUserTransfer()
+                    ->getIdCompanyUser()
+            );
 
         // Assert
         $this->assertNotNull($foundCompanyUserTransfer->getIdCompanyUser());
@@ -90,7 +95,8 @@ class CompanyUserFacadeTest extends Test
             ->setFirstName('TESTER');
 
         // Act
-        $companyUserResponseTransfer = $this->getFacade()->update($companyUserTransfer);
+        $companyUserResponseTransfer = $this->tester->getFacade()
+            ->update($companyUserTransfer);
 
         // Assert
         $this->assertSame('TESTER', $companyUserResponseTransfer->getCompanyUser()->getCustomer()->getFirstName());
@@ -106,10 +112,14 @@ class CompanyUserFacadeTest extends Test
         $idCompanyUser = $companyUserTransfer->getIdCompanyUser();
 
         // Act
-        $this->getFacade()->delete($companyUserTransfer);
+        $this->tester->getFacade()
+            ->delete($companyUserTransfer);
 
         // Assert
-        $this->assertNull($this->getFacade()->findCompanyUserById($idCompanyUser));
+        $this->assertNull(
+            $this->tester->getFacade()
+                ->findCompanyUserById($idCompanyUser)
+        );
     }
 
     /**
@@ -123,7 +133,8 @@ class CompanyUserFacadeTest extends Test
         $customerTransfer->setIdCustomer($companyUserTransfer->getFkCustomer());
 
         // Act
-        $companyUserTransfer = $this->getFacade()->findCompanyUserByCustomerId($customerTransfer);
+        $companyUserTransfer = $this->tester->getFacade()
+            ->findCompanyUserByCustomerId($customerTransfer);
 
         // Assert
         $this->assertNotNull($companyUserTransfer);
@@ -139,7 +150,8 @@ class CompanyUserFacadeTest extends Test
         $customerTransfer->setIdCustomer(0);
 
         // Act
-        $companyUserTransfer = $this->getFacade()->findCompanyUserByCustomerId($customerTransfer);
+        $companyUserTransfer = $this->tester->getFacade()
+            ->findCompanyUserByCustomerId($customerTransfer);
 
         // Assert
         $this->assertNull($companyUserTransfer);
@@ -156,7 +168,8 @@ class CompanyUserFacadeTest extends Test
         $customerTransfer->setIdCustomer($companyUserTransfer->getFkCustomer());
 
         // Act
-        $companyUserTransfer = $this->getFacade()->findActiveCompanyUserByCustomerId($customerTransfer);
+        $companyUserTransfer = $this->tester->getFacade()
+            ->findActiveCompanyUserByCustomerId($customerTransfer);
 
         // Assert
         $this->assertNotNull($companyUserTransfer);
@@ -173,7 +186,8 @@ class CompanyUserFacadeTest extends Test
         $customerTransfer->setIdCustomer($companyUserTransfer->getFkCustomer());
 
         // Act
-        $companyUserTransfer = $this->getFacade()->findActiveCompanyUserByCustomerId($customerTransfer);
+        $companyUserTransfer = $this->tester->getFacade()
+            ->findActiveCompanyUserByCustomerId($customerTransfer);
 
         // Assert
         $this->assertNull($companyUserTransfer);
@@ -190,7 +204,8 @@ class CompanyUserFacadeTest extends Test
         $customerTransfer->setIdCustomer($companyUserTransfer->getFkCustomer());
 
         // Act
-        $companyUserTransfer = $this->getFacade()->findActiveCompanyUserByCustomerId($customerTransfer);
+        $companyUserTransfer = $this->tester->getFacade()
+            ->findActiveCompanyUserByCustomerId($customerTransfer);
 
         // Assert
         $this->assertNull($companyUserTransfer);
@@ -204,11 +219,12 @@ class CompanyUserFacadeTest extends Test
         // Assign
         $companyUserTransfer = $this->tester->getCompanyUserTransfer();
         $companyUserCriteriaFilterTransfer = (new CompanyUserCriteriaFilterBuilder([
-            'id_company' => $companyUserTransfer->getFkCompany(),
+            CompanyUserCriteriaFilterTransfer::ID_COMPANY => $companyUserTransfer->getFkCompany(),
         ]))->build();
 
         // Act
-        $companyUserCollectionTransfer = $this->getFacade()->getCompanyUserCollection($companyUserCriteriaFilterTransfer);
+        $companyUserCollectionTransfer = $this->tester->getFacade()
+            ->getCompanyUserCollection($companyUserCriteriaFilterTransfer);
 
         // Assert
         $this->assertCount(1, $companyUserCollectionTransfer->getCompanyUsers());
@@ -226,11 +242,12 @@ class CompanyUserFacadeTest extends Test
             CompanyUserTransfer::CUSTOMER => $customerTransfer,
         ]);
         $companyUserCriteriaFilterTransfer = (new CompanyUserCriteriaFilterBuilder([
-            'id_company' => $companyUserTransfer->getFkCompany(),
+            CompanyUserCriteriaFilterTransfer::ID_COMPANY => $companyUserTransfer->getFkCompany(),
         ]))->build();
 
         // Act
-        $companyUserCollectionTransfer = $this->getFacade()->getCompanyUserCollection($companyUserCriteriaFilterTransfer);
+        $companyUserCollectionTransfer = $this->tester->getFacade()
+            ->getCompanyUserCollection($companyUserCriteriaFilterTransfer);
 
         // Assert
         $this->assertCount(0, $companyUserCollectionTransfer->getCompanyUsers());
@@ -245,7 +262,7 @@ class CompanyUserFacadeTest extends Test
         $companyUserTransfer = $this->tester->getCompanyUserTransfer();
 
         // Act
-        $companyUserCollectionTransfer = $this->getFacade()
+        $companyUserCollectionTransfer = $this->tester->getFacade()
             ->getActiveCompanyUsersByCustomerReference($companyUserTransfer->getCustomer());
 
         // Assert
@@ -262,7 +279,8 @@ class CompanyUserFacadeTest extends Test
         $customerTransfer = $companyUserTransfer->getCustomer();
 
         // Act
-        $companyUserCollectionTransfer = $this->getFacade()->getActiveCompanyUsersByCustomerReference($customerTransfer);
+        $companyUserCollectionTransfer = $this->tester->getFacade()
+            ->getActiveCompanyUsersByCustomerReference($customerTransfer);
 
         // Assert
         $this->assertCount(0, $companyUserCollectionTransfer->getCompanyUsers());
@@ -277,7 +295,8 @@ class CompanyUserFacadeTest extends Test
         $companyUserTransfer = $this->tester->getCompanyUserTransfer();
 
         // Act
-        $foundCompanyUserTransfer = $this->getFacade()->getCompanyUserById($companyUserTransfer->getIdCompanyUser());
+        $foundCompanyUserTransfer = $this->tester->getFacade()
+            ->getCompanyUserById($companyUserTransfer->getIdCompanyUser());
 
         // Assert
         $this->assertNotNull($foundCompanyUserTransfer->getIdCompanyUser());
@@ -290,7 +309,7 @@ class CompanyUserFacadeTest extends Test
     {
         // Assign
         $initialCompanyUserId = null;
-        $companyTransfer = $this->tester->haveCompany(['is_active' => true]);
+        $companyTransfer = $this->tester->haveCompany([CompanyTransfer::IS_ACTIVE => true]);
 
         for ($i = 0; $i < 5; $i++) {
             $companyUserTransfer = $this->tester->getCompanyUserTransfer([
@@ -303,7 +322,8 @@ class CompanyUserFacadeTest extends Test
         }
 
         // Act
-        $companyUserTransfer = $this->getFacade()->findInitialCompanyUserByCompanyId($companyTransfer->getIdCompany());
+        $companyUserTransfer = $this->tester->getFacade()
+            ->findInitialCompanyUserByCompanyId($companyTransfer->getIdCompany());
 
         // Assert
         $this->assertSame($initialCompanyUserId, $companyUserTransfer->getIdCompanyUser());
@@ -327,7 +347,8 @@ class CompanyUserFacadeTest extends Test
         );
 
         //Act
-        $actualCompanyUserAmount = $this->getFacade()->countActiveCompanyUsersByIdCustomer($customerTransfer);
+        $actualCompanyUserAmount = $this->tester->getFacade()
+            ->countActiveCompanyUsersByIdCustomer($customerTransfer);
 
         //Assert
         $this->tester->assertEquals($expectedCount, $actualCompanyUserAmount);
@@ -342,7 +363,7 @@ class CompanyUserFacadeTest extends Test
         $companyUserTransfer = $this->tester->getCompanyUserTransfer([CompanyUserTransfer::IS_ACTIVE => false]);
 
         // Act
-        $companyUserResponseTransfer = $this->getFacade()
+        $companyUserResponseTransfer = $this->tester->getFacade()
             ->enableCompanyUser($companyUserTransfer);
 
         // Assert
@@ -358,7 +379,7 @@ class CompanyUserFacadeTest extends Test
         $companyUserTransfer = $this->tester->getCompanyUserTransfer();
 
         // Act
-        $companyUserResponseTransfer = $this->getFacade()
+        $companyUserResponseTransfer = $this->tester->getFacade()
             ->enableCompanyUser($companyUserTransfer);
 
         // Assert
@@ -374,7 +395,7 @@ class CompanyUserFacadeTest extends Test
         $companyUserTransfer = $this->tester->getCompanyUserTransfer();
 
         // Act
-        $companyUserResponseTransfer = $this->getFacade()
+        $companyUserResponseTransfer = $this->tester->getFacade()
             ->disableCompanyUser($companyUserTransfer);
 
         // Assert
@@ -390,7 +411,7 @@ class CompanyUserFacadeTest extends Test
         $companyUserTransfer = $this->tester->getCompanyUserTransfer([CompanyUserTransfer::IS_ACTIVE => false]);
 
         // Act
-        $companyUserResponseTransfer = $this->getFacade()
+        $companyUserResponseTransfer = $this->tester->getFacade()
             ->disableCompanyUser($companyUserTransfer);
 
         // Assert
@@ -411,7 +432,8 @@ class CompanyUserFacadeTest extends Test
         ];
 
         //Act
-        $activeCompanyUsers = $this->getFacade()->findActiveCompanyUsersByIds($companyUserIds);
+        $activeCompanyUsers = $this->tester->getFacade()
+            ->findActiveCompanyUsersByIds($companyUserIds);
 
         //Assert
         $this->assertCount(1, $activeCompanyUsers);
@@ -432,7 +454,8 @@ class CompanyUserFacadeTest extends Test
         ];
 
         //Act
-        $activeCompanyUsers = $this->getFacade()->findActiveCompanyUserIdsByCompanyIds($companyIds);
+        $activeCompanyUsers = $this->tester->getFacade()
+            ->findActiveCompanyUserIdsByCompanyIds($companyIds);
 
         //Assert
         $this->assertCount(1, $activeCompanyUsers);
@@ -452,10 +475,14 @@ class CompanyUserFacadeTest extends Test
         $idCompanyUser = $companyUserTransfer->getIdCompanyUser();
 
         // Act
-        $this->getFacade()->deleteCompanyUser($companyUserTransfer);
+        $this->tester->getFacade()
+            ->deleteCompanyUser($companyUserTransfer);
 
         // Assert
-        $this->assertNull($this->getFacade()->findCompanyUserById($idCompanyUser));
+        $this->assertNull(
+            $this->tester->getFacade()
+                ->findCompanyUserById($idCompanyUser)
+        );
         $this->assertSame($customerTransfer, $this->tester->getLocator()->customer()->facade()->getCustomer($customerTransfer));
     }
 
@@ -468,7 +495,8 @@ class CompanyUserFacadeTest extends Test
         $companyUserTransfer = $this->tester->getCompanyUserTransfer();
 
         // Act
-        $foundCompanyUserTransfer = $this->getFacade()->findCompanyUserById($companyUserTransfer->getIdCompanyUser());
+        $foundCompanyUserTransfer = $this->tester->getFacade()
+            ->findCompanyUserById($companyUserTransfer->getIdCompanyUser());
 
         // Assert
         $this->assertNotNull($foundCompanyUserTransfer->getIdCompanyUser());
@@ -486,7 +514,7 @@ class CompanyUserFacadeTest extends Test
             ->setPattern($companyUserTransfer->getCustomer()->getEmail());
 
         // Act
-        $foundCompanyUserTransfer = $this->getFacade()
+        $foundCompanyUserTransfer = $this->tester->getFacade()
             ->getCompanyUserCollectionByCriteria($companyUserCriteriaTransfer)
             ->getCompanyUsers()
             ->offsetGet(0);
@@ -507,7 +535,7 @@ class CompanyUserFacadeTest extends Test
             ->setPattern($companyUserTransfer->getCustomer()->getFirstName());
 
         // Act
-        $foundCompanyUserTransfer = $this->getFacade()
+        $foundCompanyUserTransfer = $this->tester->getFacade()
             ->getCompanyUserCollectionByCriteria($companyUserCriteriaTransfer)
             ->getCompanyUsers()
             ->offsetGet(0);
@@ -528,20 +556,12 @@ class CompanyUserFacadeTest extends Test
             ->setPattern($companyUserTransfer->getCustomer()->getLastName());
 
         // Act
-        $foundCompanyUserTransfer = $this->getFacade()
+        $foundCompanyUserTransfer = $this->tester->getFacade()
             ->getCompanyUserCollectionByCriteria($companyUserCriteriaTransfer)
             ->getCompanyUsers()
             ->offsetGet(0);
 
         // Assert
         $this->assertEquals($companyUserTransfer->getIdCompanyUser(), $foundCompanyUserTransfer->getIdCompanyUser());
-    }
-
-    /**
-     * @return \Spryker\Zed\CompanyUser\Business\CompanyUserFacadeInterface|\Spryker\Zed\Kernel\Business\AbstractFacade
-     */
-    protected function getFacade()
-    {
-        return $this->tester->getFacade();
     }
 }

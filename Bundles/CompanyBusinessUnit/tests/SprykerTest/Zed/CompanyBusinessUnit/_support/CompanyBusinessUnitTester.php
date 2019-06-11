@@ -40,12 +40,8 @@ class CompanyBusinessUnitTester extends Actor
      *
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer
      */
-    public function getCompanyBusinessUnitTransfer(array $seedData = []): CompanyBusinessUnitTransfer
+    public function buildCompanyBusinessUnitTransfer(array $seedData = []): CompanyBusinessUnitTransfer
     {
-        if (!isset($seedData['fkCompany'])) {
-            $seedData['fkCompany'] = $this->haveCompany()->getIdCompany();
-        }
-
         $companyBusinessUnitTransfer = (new CompanyBusinessUnitBuilder($seedData))->build();
         $companyBusinessUnitTransfer->setIdCompanyBusinessUnit(null);
 

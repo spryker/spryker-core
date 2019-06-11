@@ -56,7 +56,7 @@ class CompanySupplierFacadeTest extends Test
     public function testGetCompanyTypesReturnsNotEmptyCollection(): void
     {
         // Act
-        $companyTypesCollection = $this->getFacade()->getCompanyTypes();
+        $companyTypesCollection = $this->tester->getFacade()->getCompanyTypes();
 
         // Assert
         $this->assertGreaterThan(0, $companyTypesCollection->getCompanyTypes()->count());
@@ -68,7 +68,7 @@ class CompanySupplierFacadeTest extends Test
     public function testGetAllSuppliersReturnsCompanySuppliers(): void
     {
         // Act
-        $supplierCompanies = $this->getFacade()->getAllSuppliers();
+        $supplierCompanies = $this->tester->getFacade()->getAllSuppliers();
 
         // Assert
         $this->assertSame(static::COMPANY_TYPE_SUPPLIER, $supplierCompanies->getSuppliers()[0]->getCompanyType()->getName());
@@ -83,10 +83,10 @@ class CompanySupplierFacadeTest extends Test
         $productConcreteTransfer = $this->productConcrete;
 
         // Act
-        $this->getFacade()->saveCompanySupplierRelationsForProductConcrete(
+        $this->tester->getFacade()->saveCompanySupplierRelationsForProductConcrete(
             $productConcreteTransfer
         );
-        $CompanySupplierProductRelations = $this->getFacade()->getSuppliersByIdProduct($productConcreteTransfer->getIdProductConcrete());
+        $CompanySupplierProductRelations = $this->tester->getFacade()->getSuppliersByIdProduct($productConcreteTransfer->getIdProductConcrete());
 
         // Assert
         $this->assertGreaterThan(0, $CompanySupplierProductRelations->getSuppliers()->count());
@@ -114,13 +114,5 @@ class CompanySupplierFacadeTest extends Test
         ]);
         $productConcrete->setCompanySuppliers($companySuppliers);
         $this->productConcrete = $productConcrete;
-    }
-
-    /**
-     * @return \Spryker\Zed\CompanySupplier\Business\CompanySupplierFacade|\Spryker\Zed\Kernel\Business\AbstractFacade
-     */
-    protected function getFacade()
-    {
-        return $this->tester->getFacade();
     }
 }

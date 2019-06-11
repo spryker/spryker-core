@@ -80,6 +80,7 @@ class MerchantRelationshipFacadeTest extends Unit
     {
         // Prepare
         $companyBusinessUnitTransfer = $this->tester->haveCompanyBusinessUnit([
+            CompanyBusinessUnitTransfer::FK_COMPANY => $this->tester->haveCompany()->getIdCompany(),
             CompanyBusinessUnitTransfer::KEY => 'unit-owner',
         ]);
         $merchantTransfer = $this->tester->haveMerchant();
@@ -131,7 +132,9 @@ class MerchantRelationshipFacadeTest extends Unit
         $idMerchantRelationship = $merchantRelationship->getIdMerchantRelationship();
 
         $newMerchant = $this->tester->haveMerchant();
-        $newCompanyBusinessUnit = $this->tester->haveCompanyBusinessUnit();
+        $newCompanyBusinessUnit = $this->tester->haveCompanyBusinessUnit([
+            CompanyBusinessUnitTransfer::FK_COMPANY => $this->tester->haveCompany()->getIdCompany(),
+        ]);
         $newKey = 'mr-test-1';
 
         $merchantRelationship
@@ -228,7 +231,14 @@ class MerchantRelationshipFacadeTest extends Unit
     ): MerchantRelationshipTransfer {
         $merchant = $this->tester->haveMerchant();
 
-        $companyBusinessUnitSeed = $companyBusinessUnitOwnerKey ? ['key' => $companyBusinessUnitOwnerKey] : [];
+        $companyBusinessUnitSeed = [
+            CompanyBusinessUnitTransfer::FK_COMPANY => $this->tester->haveCompany()->getIdCompany(),
+        ];
+
+        if ($companyBusinessUnitOwnerKey) {
+            $companyBusinessUnitSeed[CompanyBusinessUnitTransfer::KEY] = $companyBusinessUnitOwnerKey;
+        }
+
         $companyBusinessUnitOwner = $this->tester->haveCompanyBusinessUnit($companyBusinessUnitSeed);
 
         $assigneeCompanyBusinessUnitCollectionTransfer = new CompanyBusinessUnitCollectionTransfer();
@@ -239,7 +249,10 @@ class MerchantRelationshipFacadeTest extends Unit
                     continue;
                 }
 
-                $companyBusinessUnit = $this->tester->haveCompanyBusinessUnit(['key' => $businessUnitKey]);
+                $companyBusinessUnit = $this->tester->haveCompanyBusinessUnit([
+                    CompanyBusinessUnitTransfer::FK_COMPANY => $this->tester->haveCompany()->getIdCompany(),
+                    CompanyBusinessUnitTransfer::KEY => $businessUnitKey,
+                ]);
                 $assigneeCompanyBusinessUnitCollectionTransfer->addCompanyBusinessUnit($companyBusinessUnit);
             }
         }
