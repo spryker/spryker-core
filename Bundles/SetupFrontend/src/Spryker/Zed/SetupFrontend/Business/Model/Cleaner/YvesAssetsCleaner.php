@@ -62,7 +62,7 @@ class YvesAssetsCleaner implements CleanerInterface
         $directories = [];
 
         foreach ($this->setupFrontendConfig->getYvesAssetsDirectories() as $directoryPattern) {
-            $directories = str_replace(
+            $directories[] = str_replace(
                 static::STORE_KEY,
                 strtolower($this->store->getStoreName()),
                 $directoryPattern
