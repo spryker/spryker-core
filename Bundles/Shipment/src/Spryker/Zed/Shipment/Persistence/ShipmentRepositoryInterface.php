@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesShipmentQuery;
+use Orm\Zed\Shipment\Persistence\SpyShipmentMethodPriceQuery;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
 
 interface ShipmentRepositoryInterface
@@ -62,4 +63,27 @@ interface ShipmentRepositoryInterface
      * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
      */
     public function queryMethodsWithMethodPricesAndCarrier(): SpyShipmentMethodQuery;
+
+    /**
+     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
+     */
+    public function queryActiveMethodsWithMethodPricesAndCarrier(): SpyShipmentMethodQuery;
+
+    /**
+     * @param int $idShipmentMethod
+     * @param int $idStore
+     * @param int $idCurrency
+     *
+     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodPriceQuery
+     */
+    public function queryMethodPriceByShipmentMethodAndStoreCurrency(
+        int $idShipmentMethod,
+        int $idStore,
+        int $idCurrency
+    ): SpyShipmentMethodPriceQuery;
+
+    /**
+     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodPriceQuery
+     */
+    public function queryMethodPrices(): SpyShipmentMethodPriceQuery;
 }

@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\ShipmentTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderItemTableMap;
 use Orm\Zed\Sales\Persistence\SpySalesShipmentQuery;
+use Orm\Zed\Shipment\Persistence\SpyShipmentMethodPriceQuery;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
 use Orm\Zed\Tax\Persistence\Map\SpyTaxRateTableMap;
 use Orm\Zed\Tax\Persistence\Map\SpyTaxSetTableMap;
@@ -160,6 +161,42 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
     public function queryMethods(): SpyShipmentMethodQuery
     {
         return $this->getFactory()->createShipmentMethodQuery();
+    }
+
+    /**
+     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
+     */
+    public function queryActiveMethodsWithMethodPricesAndCarrier(): SpyShipmentMethodQuery
+    {
+        return $this
+            ->queryMethodsWithMethodPricesAndCarrier()
+            ->filterByIsActive(true);
+    }
+
+    /**
+     * @param int $idShipmentMethod
+     * @param int $idStore
+     * @param int $idCurrency
+     *
+     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodPriceQuery
+     */
+    public function queryMethodPriceByShipmentMethodAndStoreCurrency(
+        int $idShipmentMethod,
+        int $idStore,
+        int $idCurrency
+    ): SpyShipmentMethodPriceQuery {
+        return $this->queryMethodPrices()
+            ->filterByFkShipmentMethod($idShipmentMethod)
+            ->filterByFkStore($idStore)
+            ->filterByFkCurrency($idCurrency);
+    }
+
+    /**
+     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodPriceQuery
+     */
+    public function queryMethodPrices(): SpyShipmentMethodPriceQuery
+    {
+        return $this->getFactory()->createShipmentMethodPriceQuery();
     }
 
     /**

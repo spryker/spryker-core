@@ -36,6 +36,12 @@ use Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentFetcher;
 use Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentFetcherInterface;
 use Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentMethodExpander;
 use Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentMethodExpanderInterface;
+use Spryker\Zed\Shipment\Business\ShipmentMethod\MethodAvailabilityChecker;
+use Spryker\Zed\Shipment\Business\ShipmentMethod\MethodAvailabilityCheckerInterface;
+use Spryker\Zed\Shipment\Business\ShipmentMethod\MethodDeliveryTimeReader;
+use Spryker\Zed\Shipment\Business\ShipmentMethod\MethodDeliveryTimeReaderInterface;
+use Spryker\Zed\Shipment\Business\ShipmentMethod\MethodPriceReader;
+use Spryker\Zed\Shipment\Business\ShipmentMethod\MethodPriceReaderInterface;
 use Spryker\Zed\Shipment\Business\ShipmentMethod\MethodReader;
 use Spryker\Zed\Shipment\Business\ShipmentMethod\MethodReaderInterface;
 use Spryker\Zed\Shipment\Business\ShipmentMethod\MethodWriter;
@@ -105,7 +111,11 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
             $this->getStoreFacade(),
             $this->getShipmentService(),
             $this->getPlugins(),
-            $this->getMethodFilterPlugins()
+            $this->getMethodFilterPlugins(),
+            $this->getRepository(),
+            $this->createShipmentMethodAvailabilityChecker(),
+            $this->createShipmentMethodPrice(),
+            $this->createShipmentMethodDeliveryTime()
         );
     }
 
@@ -401,10 +411,63 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Shipment\Business\Mapper\ShipmentMapper
+     * @return \Spryker\Zed\Shipment\Business\Mapper\ShipmentMapperInterface
      */
     public function createShipmentMapper(): ShipmentMapperInterface
     {
         return new ShipmentMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\Shipment\Business\ShipmentMethod\MethodAvailabilityCheckerInterface
+     */
+    public function createShipmentMethodAvailabilityChecker(): MethodAvailabilityCheckerInterface
+    {
+        return new MethodAvailabilityChecker($this->getAvailabilityPluginsService());
+    }
+
+    /**
+     * @return \Spryker\Zed\Shipment\Business\ShipmentMethod\MethodPriceReaderInterface
+     */
+    public function createShipmentMethodPrice(): MethodPriceReaderInterface
+    {
+        return new MethodPriceReader(
+            $this->getPricePlugins(),
+            $this->getStoreFacade(),
+            $this->getRepository(),
+            $this->getCurrencyFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Shipment\Business\ShipmentMethod\MethodDeliveryTimeReaderInterface
+     */
+    public function createShipmentMethodDeliveryTime(): MethodDeliveryTimeReaderInterface
+    {
+        return new MethodDeliveryTimeReader($this->getDeliveryTimePlugins());
+    }
+
+    /**
+     * @return \Spryker\Zed\ShipmentExtension\Communication\Plugin\ShipmentMethodAvailabilityPluginInterface[]|\Spryker\Zed\Shipment\Communication\Plugin\ShipmentMethodAvailabilityPluginInterface[]
+     */
+    public function getAvailabilityPluginsService(): array
+    {
+        return $this->getProvidedDependency(ShipmentDependencyProvider::AVAILABILITY_PLUGINS);
+    }
+
+    /**
+     * @return \Spryker\Zed\ShipmentExtension\Communication\Plugin\ShipmentMethodPricePluginInterface[]
+     */
+    public function getPricePlugins(): array
+    {
+        return $this->getProvidedDependency(ShipmentDependencyProvider::PRICE_PLUGINS);
+    }
+
+    /**
+     * @return \Spryker\Zed\ShipmentExtension\Communication\Plugin\ShipmentMethodDeliveryTimePluginInterface[]|\Spryker\Zed\Shipment\Communication\Plugin\ShipmentMethodDeliveryTimePluginInterface[]
+     */
+    public function getDeliveryTimePlugins(): array
+    {
+        return $this->getProvidedDependency(ShipmentDependencyProvider::DELIVERY_TIME_PLUGINS);
     }
 }

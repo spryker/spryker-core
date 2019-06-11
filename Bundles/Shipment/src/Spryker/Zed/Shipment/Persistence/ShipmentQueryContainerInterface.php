@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Shipment\Persistence;
 
-use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Orm\Zed\Sales\Persistence\SpySalesShipmentQuery;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 

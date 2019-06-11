@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Shipment\Persistence;
 
-use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Orm\Zed\Sales\Persistence\SpySalesShipmentQuery;
 use Orm\Zed\Tax\Persistence\Map\SpyTaxRateTableMap;
 use Orm\Zed\Tax\Persistence\Map\SpyTaxSetTableMap;
