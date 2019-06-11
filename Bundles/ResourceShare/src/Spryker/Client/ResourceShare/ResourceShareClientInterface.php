@@ -47,7 +47,6 @@ interface ResourceShareClientInterface
      * Specification:
      * - Retrieves the share resource by the provided UUID.
      * - Returns "isSuccess=true" on success and error message otherwise.
-     * - Applies corresponding data expander strategy using `ResourceShareResourceDataExpanderStrategyPluginInterface` stack.
      *
      * @api
      *

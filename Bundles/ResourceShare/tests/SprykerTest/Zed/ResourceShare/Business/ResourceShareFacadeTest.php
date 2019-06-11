@@ -15,7 +15,6 @@ use Generated\Shared\Transfer\ResourceShareResponseTransfer;
 use Generated\Shared\Transfer\ResourceShareTransfer;
 use Orm\Zed\ResourceShare\Persistence\SpyResourceShare;
 use Spryker\Zed\ResourceShare\ResourceShareDependencyProvider;
-use Spryker\Zed\ResourceShareExtension\Dependency\Plugin\ResourceShareResourceDataExpanderStrategyPluginInterface;
 use Spryker\Zed\ResourceShareExtension\Dependency\Plugin\ResourceShareZedActivatorStrategyPluginInterface;
 
 /**
@@ -320,14 +319,6 @@ class ResourceShareFacadeTest extends Test
     protected function createResourceShareActivatorStrategyPluginMock()
     {
         return $this->createMock(ResourceShareZedActivatorStrategyPluginInterface::class);
-    }
-
-    /**
-     * @return \Spryker\Zed\ResourceShareExtension\Dependency\Plugin\ResourceShareResourceDataExpanderStrategyPluginInterface|\PHPUnit\Framework\MockObject\MockObject
-     */
-    protected function createResourceShareResourceDataExpanderStrategyPluginMock()
-    {
-        return $this->createMock(ResourceShareResourceDataExpanderStrategyPluginInterface::class);
     }
 
     /**

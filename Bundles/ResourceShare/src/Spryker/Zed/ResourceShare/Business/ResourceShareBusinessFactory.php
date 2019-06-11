@@ -32,8 +32,7 @@ class ResourceShareBusinessFactory extends AbstractBusinessFactory
     {
         return new ResourceShareReader(
             $this->getRepository(),
-            $this->createResourceShareValidator(),
-            $this->getResourceShareResourceDataExpanderStrategyPlugins()
+            $this->createResourceShareValidator()
         );
     }
 
@@ -74,13 +73,5 @@ class ResourceShareBusinessFactory extends AbstractBusinessFactory
     public function getResourceShareActivatorStrategyPlugins(): array
     {
         return $this->getProvidedDependency(ResourceShareDependencyProvider::PLUGINS_RESOURCE_SHARE_ACTIVATOR_STRATEGY);
-    }
-
-    /**
-     * @return \Spryker\Zed\ResourceShareExtension\Dependency\Plugin\ResourceShareResourceDataExpanderStrategyPluginInterface[]
-     */
-    public function getResourceShareResourceDataExpanderStrategyPlugins(): array
-    {
-        return $this->getProvidedDependency(ResourceShareDependencyProvider::PLUGINS_RESOURCE_SHARE_RESOURCE_DATA_EXPANDER_STRATEGY);
     }
 }

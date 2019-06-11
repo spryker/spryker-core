@@ -32,7 +32,6 @@ interface ResourceShareFacadeInterface
      * - Returns with "isSuccess=true" on success with success messages.
      * - Returns with "isSuccess=false" and error messages if there was an activation error.
      * - Applies corresponding activator strategy using `ResourceShareZedActivatorStrategyPluginInterface` plugin stack.
-     * - Applies corresponding data expander strategy using `ResourceShareResourceDataExpanderStrategyPluginInterface` plugin stack.
      *
      * @api
      *
@@ -46,7 +45,6 @@ interface ResourceShareFacadeInterface
      * Specification:
      * - Retrieves the share resource by the provided UUID.
      * - Returns "isSuccess=true" on success and error message otherwise.
-     * - Applies corresponding data expander strategy using `ResourceShareResourceDataExpanderStrategyPluginInterface` stack.
      *
      * @api
      *
