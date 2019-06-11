@@ -31,12 +31,12 @@ use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 class SharedCartFacadeTest extends Test
 {
     /**
-     * @uses \Spryker\Zed\SharedCart\Business\ResourceShare\ShareCartByUuidActivatorStrategy::GLOSSARY_KEY_CART_ACCESS_DENIED
+     * @uses \Spryker\Zed\SharedCart\Business\ResourceShare\ResourceShareQuoteShare::GLOSSARY_KEY_CART_ACCESS_DENIED
      */
     protected const GLOSSARY_KEY_CART_ACCESS_DENIED = 'shared_cart.resource_share.strategy.error.cart_access_denied';
 
     /**
-     * @uses \Spryker\Zed\SharedCart\Business\ResourceShare\ShareCartByUuidActivatorStrategy::GLOSSARY_KEY_UNABLE_TO_SHARE_CART
+     * @uses \Spryker\Zed\SharedCart\Business\ResourceShare\ResourceShareQuoteShare::GLOSSARY_KEY_UNABLE_TO_SHARE_CART
      */
     protected const GLOSSARY_KEY_UNABLE_TO_SHARE_CART = 'shared_cart.resource_share.strategy.error.unable_to_share_cart';
 
@@ -73,7 +73,7 @@ class SharedCartFacadeTest extends Test
     /**
      * @return void
      */
-    public function testApplyShareCartByUuidActivatorStrategyShouldThrowExceptionWhenRequiredCustomerPropertyIsMissingInResourceShareRequestTransfer(): void
+    public function testShareCartByResourceShareRequestShouldThrowExceptionWhenRequiredCustomerPropertyIsMissingInResourceShareRequestTransfer(): void
     {
         // Arrange
         $resourceShareRequestTransfer = (new ResourceShareRequestTransfer())
@@ -84,13 +84,13 @@ class SharedCartFacadeTest extends Test
         $this->expectException(RequiredTransferPropertyException::class);
 
         // Act
-        $this->getFacade()->applyShareCartByUuidActivatorStrategy($resourceShareRequestTransfer);
+        $this->getFacade()->shareCartByResourceShareRequest($resourceShareRequestTransfer);
     }
 
     /**
      * @return void
      */
-    public function testApplyShareCartByUuidActivatorStrategyShouldThrowExceptionWhenRequiredResourceSharePropertyIsMissingInResourceShareRequestTransfer(): void
+    public function testShareCartByResourceShareRequestShouldThrowExceptionWhenRequiredResourceSharePropertyIsMissingInResourceShareRequestTransfer(): void
     {
         // Arrange
         $resourceShareRequestTransfer = (new ResourceShareRequestTransfer())
@@ -101,13 +101,13 @@ class SharedCartFacadeTest extends Test
         $this->expectException(RequiredTransferPropertyException::class);
 
         // Act
-        $this->getFacade()->applyShareCartByUuidActivatorStrategy($resourceShareRequestTransfer);
+        $this->getFacade()->shareCartByResourceShareRequest($resourceShareRequestTransfer);
     }
 
     /**
      * @return void
      */
-    public function testApplyShareCartByUuidActivatorStrategyShouldReturnErrorMessageWhenCompanyUserIsFromDifferentBusinessUnit(): void
+    public function testShareCartByResourceShareRequestShouldReturnErrorMessageWhenCompanyUserIsFromDifferentBusinessUnit(): void
     {
         // Arrange
         $firstCompanyUserTransfer = $this->createCompanyUserTransfer();
@@ -123,7 +123,7 @@ class SharedCartFacadeTest extends Test
             ->setResourceShare($resourceShareTransfer);
 
         // Act
-        $resourceShareResponseTransfer = $this->getFacade()->applyShareCartByUuidActivatorStrategy($resourceShareRequestTransfer);
+        $resourceShareResponseTransfer = $this->getFacade()->shareCartByResourceShareRequest($resourceShareRequestTransfer);
 
         // Assert
         $this->assertFalse($resourceShareResponseTransfer->getIsSuccessful());
@@ -136,7 +136,7 @@ class SharedCartFacadeTest extends Test
     /**
      * @return void
      */
-    public function testApplyShareCartByUuidActivatorStrategyShouldReturnErrorMessageWhenCompanyUserIsNotFoundByIdCompanyUser(): void
+    public function testShareCartByResourceShareRequestShouldReturnErrorMessageWhenCompanyUserIsNotFoundByIdCompanyUser(): void
     {
         // Arrange
         $firstCompanyUserTransfer = $this->createCompanyUserTransfer();
@@ -154,7 +154,7 @@ class SharedCartFacadeTest extends Test
             ->setResourceShare($resourceShareTransfer);
 
         // Act
-        $resourceShareResponseTransfer = $this->getFacade()->applyShareCartByUuidActivatorStrategy($resourceShareRequestTransfer);
+        $resourceShareResponseTransfer = $this->getFacade()->shareCartByResourceShareRequest($resourceShareRequestTransfer);
 
         // Assert
         $this->assertFalse($resourceShareResponseTransfer->getIsSuccessful());
@@ -167,7 +167,7 @@ class SharedCartFacadeTest extends Test
     /**
      * @return void
      */
-    public function testApplyShareCartByUuidActivatorStrategyShouldReturnErrorMessageWhenQuotePermissionGroupIsNotFoundByShareOption(): void
+    public function testShareCartByResourceShareRequestShouldReturnErrorMessageWhenQuotePermissionGroupIsNotFoundByShareOption(): void
     {
         // Arrange
         $firstCompanyUserTransfer = $this->createCompanyUserTransfer();
@@ -185,7 +185,7 @@ class SharedCartFacadeTest extends Test
             ->setResourceShare($resourceShareTransfer);
 
         // Act
-        $resourceShareResponseTransfer = $this->getFacade()->applyShareCartByUuidActivatorStrategy($resourceShareRequestTransfer);
+        $resourceShareResponseTransfer = $this->getFacade()->shareCartByResourceShareRequest($resourceShareRequestTransfer);
 
         // Assert
         $this->assertFalse($resourceShareResponseTransfer->getIsSuccessful());
@@ -198,7 +198,7 @@ class SharedCartFacadeTest extends Test
     /**
      * @return void
      */
-    public function testApplyShareCartByUuidActivatorStrategyShouldShareCartWithReadOnlyAccessWhenAllParametersAreCorrect(): void
+    public function testShareCartByResourceShareRequestShouldShareCartWithReadOnlyAccessWhenAllParametersAreCorrect(): void
     {
         // Arrange
         $firstCompanyUserTransfer = $this->createCompanyUserTransfer();
@@ -224,7 +224,7 @@ class SharedCartFacadeTest extends Test
             ->setResourceShare($resourceShareTransfer);
 
         // Act
-        $resourceShareResponseTransfer = $this->getFacade()->applyShareCartByUuidActivatorStrategy($resourceShareRequestTransfer);
+        $resourceShareResponseTransfer = $this->getFacade()->shareCartByResourceShareRequest($resourceShareRequestTransfer);
 
         // Assert
         $this->assertTrue($resourceShareResponseTransfer->getIsSuccessful());
@@ -234,7 +234,7 @@ class SharedCartFacadeTest extends Test
     /**
      * @return void
      */
-    public function testApplyShareCartByUuidActivatorStrategyShouldShareCartWithFullAccessWhenAllParametersAreCorrect(): void
+    public function testShareCartByResourceShareRequestShouldShareCartWithFullAccessWhenAllParametersAreCorrect(): void
     {
         // Arrange
         $firstCompanyUserTransfer = $this->createCompanyUserTransfer();
@@ -261,7 +261,7 @@ class SharedCartFacadeTest extends Test
             ->setResourceShare($resourceShareTransfer);
 
         // Act
-        $resourceShareResponseTransfer = $this->getFacade()->applyShareCartByUuidActivatorStrategy($resourceShareRequestTransfer);
+        $resourceShareResponseTransfer = $this->getFacade()->shareCartByResourceShareRequest($resourceShareRequestTransfer);
 
         // Assert
         $this->assertTrue($resourceShareResponseTransfer->getIsSuccessful());

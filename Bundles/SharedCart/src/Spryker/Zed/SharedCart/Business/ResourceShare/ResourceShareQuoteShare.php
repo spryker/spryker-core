@@ -14,7 +14,7 @@ use Generated\Shared\Transfer\ShareDetailTransfer;
 use Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToQuoteFacadeInterface;
 use Spryker\Zed\SharedCart\Persistence\SharedCartRepositoryInterface;
 
-class ShareCartByUuidActivatorStrategy implements ShareCartByUuidActivatorStrategyInterface
+class ResourceShareQuoteShare implements ResourceShareQuoteShareInterface
 {
     protected const GLOSSARY_KEY_CART_ACCESS_DENIED = 'shared_cart.resource_share.strategy.error.cart_access_denied';
     protected const GLOSSARY_KEY_QUOTE_IS_NOT_AVAILABLE = 'persistent_cart_share.error.quote_is_not_available';
@@ -54,7 +54,7 @@ class ShareCartByUuidActivatorStrategy implements ShareCartByUuidActivatorStrate
      *
      * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
      */
-    public function applyShareCartByUuidActivatorStrategy(
+    public function shareCartByResourceShareRequest(
         ResourceShareRequestTransfer $resourceShareRequestTransfer
     ): ResourceShareResponseTransfer {
         $resourceShareRequestTransfer

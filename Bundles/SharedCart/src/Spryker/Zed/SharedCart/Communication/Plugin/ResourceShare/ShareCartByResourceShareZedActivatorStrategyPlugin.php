@@ -49,7 +49,7 @@ class ShareCartByResourceShareZedActivatorStrategyPlugin extends AbstractPlugin 
      */
     public function execute(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer
     {
-        return $this->getFacade()->applyShareCartByUuidActivatorStrategy($resourceShareRequestTransfer);
+        return $this->getFacade()->shareCartByResourceShareRequest($resourceShareRequestTransfer);
     }
 
     /**

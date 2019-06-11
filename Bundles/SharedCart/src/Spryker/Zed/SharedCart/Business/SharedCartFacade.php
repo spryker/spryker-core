@@ -243,10 +243,10 @@ class SharedCartFacade extends AbstractFacade implements SharedCartFacadeInterfa
      *
      * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
      */
-    public function applyShareCartByUuidActivatorStrategy(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer
+    public function shareCartByResourceShareRequest(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer
     {
         return $this->getFactory()
-            ->createShareCartByUuidActivatorStrategy()
-            ->applyShareCartByUuidActivatorStrategy($resourceShareRequestTransfer);
+            ->createResourceShareQuoteShare()
+            ->shareCartByResourceShareRequest($resourceShareRequestTransfer);
     }
 }

@@ -203,5 +203,5 @@ interface SharedCartFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
      */
-    public function applyShareCartByUuidActivatorStrategy(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer;
+    public function shareCartByResourceShareRequest(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer;
 }
