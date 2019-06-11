@@ -108,7 +108,7 @@ class CategoryImageStorageMapper implements CategoryImageStorageMapperInterface
     /**
      * @param \Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSet $categoryImageSetEntity
      *
-     * @return \ArrayObject
+     * @return \Generated\Shared\Transfer\CategoryImageTransfer[]|\ArrayObject
      */
     protected function getCategoryImageTransfersFromCategoryImageSetEntity(SpyCategoryImageSet $categoryImageSetEntity): ArrayObject
     {
