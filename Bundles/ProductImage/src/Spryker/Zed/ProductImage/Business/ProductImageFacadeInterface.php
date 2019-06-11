@@ -193,4 +193,16 @@ interface ProductImageFacadeInterface
      * @return \Generated\Shared\Transfer\ProductImageSetTransfer|null
      */
     public function findProductImageSetById($idProductImageSet);
+
+    /**
+     * Specification:
+     * - Returns collection of ProductImageTransfers indexed by product ids.
+     *
+     * @api
+     *
+     * @param int[] $productIds
+     *
+     * @return \Generated\Shared\Transfer\ProductImageTransfer[][]
+     */
+    public function getDefaultProductImagesByProductIds(array $productIds): array;
 }

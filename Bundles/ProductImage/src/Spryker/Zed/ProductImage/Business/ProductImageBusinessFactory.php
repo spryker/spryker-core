@@ -17,6 +17,7 @@ use Spryker\Zed\ProductImage\ProductImageDependencyProvider;
 /**
  * @method \Spryker\Zed\ProductImage\ProductImageConfig getConfig()
  * @method \Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductImage\Persistence\ProductImageRepositoryInterface getRepository()
  */
 class ProductImageBusinessFactory extends AbstractBusinessFactory
 {
@@ -27,7 +28,9 @@ class ProductImageBusinessFactory extends AbstractBusinessFactory
     {
         return new Reader(
             $this->getQueryContainer(),
-            $this->createTransferGenerator()
+            $this->createTransferGenerator(),
+            $this->getRepository(),
+            $this->getLocaleFacade()
         );
     }
 

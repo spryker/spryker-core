@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\ProductImageCartConnector\Business\Expander;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
-use Spryker\Shared\ProductImageCartConnector\ProductImageCartConnectorConfig;
 use Spryker\Zed\ProductImageCartConnector\Dependency\Facade\ProductImageCartConnectorToProductImageInterface;
 
 class ProductImageExpander implements ProductImageExpanderInterface
@@ -35,8 +35,13 @@ class ProductImageExpander implements ProductImageExpanderInterface
      */
     public function expandItems(CartChangeTransfer $cartChangeTransfer)
     {
+        $productIds = array_map(function (ItemTransfer $itemTransfer) {
+            return $itemTransfer->getId();
+        }, $cartChangeTransfer->getItems()->getArrayCopy());
+        $productImages = $this->productImageFacade->getDefaultProductImagesByProductIds($productIds);
+
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
-            $this->expandItemsWithImages($itemTransfer);
+            $this->expandItemsWithImages($itemTransfer, $productImages);
         }
 
         return $cartChangeTransfer;
@@ -44,33 +49,16 @@ class ProductImageExpander implements ProductImageExpanderInterface
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ProductImageTransfer[][] $productImages
      *
      * @return void
      */
-    protected function expandItemsWithImages(ItemTransfer $itemTransfer)
+    protected function expandItemsWithImages(ItemTransfer $itemTransfer, array $productImages)
     {
-        $imageSets = $this->productImageFacade->getProductImagesSetCollectionByProductId($itemTransfer->getId());
-
-        if (!$imageSets) {
+        if (!isset($productImages[$itemTransfer->getId()])) {
             return;
         }
 
-        $itemTransfer->setImages($this->getProductImages($imageSets));
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductImageSetTransfer[] $imageSets
-     *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ProductImageTransfer[]
-     */
-    protected function getProductImages(array $imageSets)
-    {
-        foreach ($imageSets as $imageSet) {
-            if ($imageSet->getName() === ProductImageCartConnectorConfig::DEFAULT_IMAGE_SET_NAME) {
-                return $imageSet->getProductImages();
-            }
-        }
-
-        return $imageSets[0]->getProductImages();
+        $itemTransfer->setImages(new ArrayObject($productImages[$itemTransfer->getId()]));
     }
 }

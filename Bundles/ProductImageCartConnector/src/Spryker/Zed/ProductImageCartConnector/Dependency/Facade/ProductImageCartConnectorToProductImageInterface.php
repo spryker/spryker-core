@@ -15,4 +15,11 @@ interface ProductImageCartConnectorToProductImageInterface
      * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
      */
     public function getProductImagesSetCollectionByProductId($productId);
+
+    /**
+     * @param int[] $productIds
+     *
+     * @return \Generated\Shared\Transfer\ProductImageTransfer[][]
+     */
+    public function getDefaultProductImagesByProductIds(array $productIds): array;
 }

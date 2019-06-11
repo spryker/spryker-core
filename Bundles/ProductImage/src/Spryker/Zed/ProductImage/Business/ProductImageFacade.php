@@ -15,6 +15,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\ProductImage\Business\ProductImageBusinessFactory getFactory()
+ * @method \Spryker\Zed\ProductImage\Persistence\ProductImageRepositoryInterface getRepository()
  */
 class ProductImageFacade extends AbstractFacade implements ProductImageFacadeInterface
 {
@@ -260,5 +261,21 @@ class ProductImageFacade extends AbstractFacade implements ProductImageFacadeInt
         return $this->getFactory()
             ->createProductImageReader()
             ->findProductImagesSetCollectionById($idProductImageSet);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int[] $productIds
+     *
+     * @return \Generated\Shared\Transfer\ProductImageTransfer[][]
+     */
+    public function getDefaultProductImagesByProductIds(array $productIds): array
+    {
+        return $this->getFactory()
+            ->createProductImageReader()
+            ->getDefaultProductImagesByProductIds($productIds);
     }
 }
