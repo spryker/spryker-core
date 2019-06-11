@@ -15,6 +15,7 @@ interface SetupFrontendConstants
     /**
      * Specification:
      * - Sets the command to build Yves assets.
+     * - %store% will be replaced with current store.
      *
      * @api
      */

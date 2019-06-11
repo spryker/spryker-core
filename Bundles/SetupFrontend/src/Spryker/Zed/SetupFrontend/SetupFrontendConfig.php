@@ -34,6 +34,12 @@ class SetupFrontendConfig extends AbstractBundleConfig
     }
 
     /**
+     * Specification:
+     * - Yves public folder for assets.
+     * - %store% will be replaced with current store.
+     *
+     * @api
+     *
      * @return string[]
      */
     public function getYvesAssetsDirectories()
@@ -44,6 +50,11 @@ class SetupFrontendConfig extends AbstractBundleConfig
     }
 
     /**
+     * Specification:
+     * - Yves assets builder config file path.
+     *
+     * @api
+     *
      * @return string
      */
     public function getYvesFrontendConfigFilePath(): string
@@ -68,6 +79,11 @@ class SetupFrontendConfig extends AbstractBundleConfig
     }
 
     /**
+     * Specification:
+     * - Yves assets builder command.
+     *
+     * @api
+     *
      * @return string
      */
     public function getYvesBuildCommand()
