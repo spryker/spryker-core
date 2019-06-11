@@ -23,16 +23,16 @@ class AbstractProductEditEditViewExpanderPluginExecutor implements AbstractProdu
     }
 
     /**
-     * @param array $viewDara
+     * @param array $viewData
      *
      * @return array
      */
-    public function expandEditAbstractProductViewData(array $viewDara): array
+    public function expandEditAbstractProductViewData(array $viewData): array
     {
         foreach ($this->abstractProductEditViewExpanderPlugins as $plugin) {
-            $viewDara = $plugin->expand($viewDara);
+            $viewData = $plugin->expand($viewData);
         }
 
-        return $viewDara;
+        return $viewData;
     }
 }
