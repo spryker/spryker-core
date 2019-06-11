@@ -59,6 +59,18 @@ interface SetupFrontendFacadeInterface
 
     /**
      * Specification:
+     * - Generates Yves frontend builder configuration.
+     *
+     * @api
+     *
+     * @param \Psr\Log\LoggerInterface $logger
+     *
+     * @return bool
+     */
+    public function generateYvesAssetsBuildConfig(LoggerInterface $logger): bool;
+
+    /**
+     * Specification:
      * - Installs needed Yves dependencies.
      *
      * @api

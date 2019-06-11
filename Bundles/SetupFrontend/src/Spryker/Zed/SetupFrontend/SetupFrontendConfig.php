@@ -8,6 +8,7 @@
 namespace Spryker\Zed\SetupFrontend;
 
 use Spryker\Shared\Kernel\KernelConstants;
+use Spryker\Shared\SetupFrontend\SetupFrontendConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class SetupFrontendConfig extends AbstractBundleConfig
@@ -31,13 +32,32 @@ class SetupFrontendConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return array
+     * Specification:
+     * - Yves public folder for assets.
+     * - %store% will be replaced with current store.
+     *
+     * @api
+     *
+     * @return string[]
      */
     public function getYvesAssetsDirectories()
     {
         return [
             APPLICATION_ROOT_DIR . '/public/Yves/assets',
         ];
+    }
+
+    /**
+     * Specification:
+     * - Yves assets builder config file path.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getYvesFrontendConfigFilePath(): string
+    {
+        return APPLICATION_ROOT_DIR . '/frontend/config.json';
     }
 
     /**
@@ -57,11 +77,16 @@ class SetupFrontendConfig extends AbstractBundleConfig
     }
 
     /**
+     * Specification:
+     * - Yves assets builder command.
+     *
+     * @api
+     *
      * @return string
      */
     public function getYvesBuildCommand()
     {
-        return 'npm run yves';
+        return $this->get(SetupFrontendConstants::YVES_BUILD_COMMAND, 'npm run yves');
     }
 
     /**

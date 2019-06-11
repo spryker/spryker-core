@@ -204,4 +204,20 @@ class TwigConfig extends AbstractBundleConfig
             dirname($reflectedFormExtension->getFileName()) . '/../Resources/views/Form',
         ];
     }
+
+    /**
+     * @return string
+     */
+    public function getYvesThemeName(): string
+    {
+        return $this->getSharedConfig()->getYvesThemeName();
+    }
+
+    /**
+     * @return string
+     */
+    public function getYvesThemeNameDefault(): string
+    {
+        return $this->getSharedConfig()->getYvesThemeNameDefault();
+    }
 }

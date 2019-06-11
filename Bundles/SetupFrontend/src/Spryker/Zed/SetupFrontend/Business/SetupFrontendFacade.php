@@ -134,4 +134,18 @@ class SetupFrontendFacade extends AbstractFacade implements SetupFrontendFacadeI
     {
         return $this->getFactory()->createZedAssetsCleaner()->clean();
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Psr\Log\LoggerInterface $logger
+     *
+     * @return bool
+     */
+    public function generateYvesAssetsBuildConfig(LoggerInterface $logger): bool
+    {
+        return $this->getFactory()->createYvesAssetsBuildConfigGenerator()->generateYvesAssetsBuildConfig($logger);
+    }
 }
