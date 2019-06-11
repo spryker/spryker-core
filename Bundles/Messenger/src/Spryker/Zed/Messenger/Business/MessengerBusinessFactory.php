@@ -14,6 +14,7 @@ use Spryker\Zed\Messenger\Business\Model\MessageTranslator;
 use Spryker\Zed\Messenger\Business\Model\MessageTranslatorInterface;
 use Spryker\Zed\Messenger\Business\Model\SessionMessageTray;
 use Spryker\Zed\Messenger\MessengerDependencyProvider;
+use Symfony\Component\Translation\Translator;
 use Symfony\Component\Translation\TranslatorInterface;
 
 /**
@@ -21,6 +22,8 @@ use Symfony\Component\Translation\TranslatorInterface;
  */
 class MessengerBusinessFactory extends AbstractBusinessFactory
 {
+    protected const DUMMY_LOCALE = '';
+
     /**
      * @return \Spryker\Zed\Messenger\Business\Model\MessageTrayInterface
      */
@@ -55,7 +58,15 @@ class MessengerBusinessFactory extends AbstractBusinessFactory
      */
     public function createMessageTranslator(): MessageTranslatorInterface
     {
-        return new MessageTranslator($this->getTranslationPlugins(), $this->getSymfonyTranslator());
+        return new MessageTranslator($this->getTranslationPlugins(), $this->createSymfonyTranslator());
+    }
+
+    /**
+     * @return \Symfony\Component\Translation\TranslatorInterface
+     */
+    public function createSymfonyTranslator(): TranslatorInterface
+    {
+        return new Translator(static::DUMMY_LOCALE);
     }
 
     /**
@@ -85,13 +96,5 @@ class MessengerBusinessFactory extends AbstractBusinessFactory
             [$this->getTranslationPlugin()],
             $this->getProvidedDependency(MessengerDependencyProvider::PLUGINS_TRANSLATION)
         );
-    }
-
-    /**
-     * @return \Symfony\Component\Translation\TranslatorInterface
-     */
-    public function getSymfonyTranslator(): TranslatorInterface
-    {
-        return $this->getProvidedDependency(MessengerDependencyProvider::SYMFONY_TRANSLATOR);
     }
 }

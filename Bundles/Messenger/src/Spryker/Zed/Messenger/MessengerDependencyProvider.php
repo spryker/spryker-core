@@ -18,8 +18,6 @@ use Symfony\Component\Translation\Translator;
  */
 class MessengerDependencyProvider extends AbstractBundleDependencyProvider
 {
-    protected const DUMMY_LOCALE = '';
-
     public const SESSION = 'session';
     public const SYMFONY_TRANSLATOR = 'SYMFONY_TRANSLATOR';
 
