@@ -66,6 +66,7 @@ var ContentItemDialog = function(
                 var checkedContentItem = this.$dialog.find('table input:checked');
                 var chosenType = checkedContentItem.data('content-item-type');
                 var chosenName = checkedContentItem.data('content-item-name');
+                var chosenId = this.$dialog.find('table input:checked').data('id');
                 var chosenKey = this.$dialog.find('table input:checked').val();
                 var $choseIdErrorSelector = this.$dialog.find('.content-errors .item');
                 var isTemplateListExists = this.$dialog.find('.template-list').length;
@@ -76,33 +77,24 @@ var ContentItemDialog = function(
                 var readyToInsert = chosenKey !== undefined && (!isTemplateListExists || isTemplateListExists && chosenTemplate);
 
                 if (readyToInsert) {
+                    if ($('span[data-twig-expression*="{{ content_"]').length > maxWidgetNumber) {
+                        alert('Limit exceeded, maximum number of widgets ' + maxWidgetNumber);
+                        return;
+                    }
+
+                    this.context.invoke('editor.restoreRange');
+                    this.$ui.hideDialog(this.$dialog);
+
                     var elementForInsert = this.getNewDomElement(
                         twigTemplate,
                         chosenId,
+                        chosenKey,
                         chosenType,
                         chosenName,
                         chosenTemplate,
                         chosenTemplateIdentifier,
                         widgetHtmlTemplate
                     );
-
-                    var builtText = twigTemplate.replace(/%\w+%/g, function (param) {
-                        return {
-                            '%KEY%': chosenKey,
-                            '%TEMPLATE%': chosenTemplate
-                        }[param];
-                    });
-                    this.context.invoke('editor.restoreRange');
-                    this.context.invoke('editor.insertText', builtText);
-                    this.$ui.hideDialog(this.$dialog);
-                    this.context.invoke('editor.restoreRange');
-
-                    if ($('span[data-twig-expression*="{{ content_"]').length > maxWidgetNumber) {
-                        alert('Limit exceeded, maximum number of widgets ' + maxWidgetNumber);
-                        return;
-                    }
-
-                if (!chosenKey) {
                     this.addItemInEditor(elementForInsert);
                 }
 
@@ -145,6 +137,7 @@ var ContentItemDialog = function(
             this.getNewDomElement = function (
                 twigTemplate,
                 id,
+                key,
                 type,
                 contentName,
                 templateName,
@@ -153,7 +146,7 @@ var ContentItemDialog = function(
             ) {
                 var twigExpression = twigTemplate.replace(/%\w+%/g, function (param) {
                     return {
-                        '%ID%': id,
+                        '%KEY%': key,
                         '%TEMPLATE%': templateIdentifier
                     }[param];
                 });
@@ -161,6 +154,7 @@ var ContentItemDialog = function(
                 var builtTemplate = widgetHtmlTemplate.replace(/%\w+%/g, function (param) {
                     return {
                         '%TYPE%': type,
+                        '%KEY%': key,
                         '%ID%': id,
                         '%NAME%': contentName,
                         '%TEMPLATE_DISPLAY_NAME%': templateName,
@@ -216,8 +210,8 @@ var ContentItemDialog = function(
 
                 var urlParams = { type: dataset.type };
 
-                if (dataset.hasOwnProperty('id')) {
-                    urlParams.idContent = dataset.id;
+                if (dataset.hasOwnProperty('key')) {
+                    urlParams.contentKey = dataset.key;
                 }
 
                 if (dataset.hasOwnProperty('template')) {

@@ -35,6 +35,16 @@ class ContentGuiToContentFacadeBridge implements ContentGuiToContentFacadeInterf
     }
 
     /**
+     * @param string $contentKey
+     *
+     * @return \Generated\Shared\Transfer\ContentTransfer|null
+     */
+    public function findContentByKey(string $contentKey): ?ContentTransfer
+    {
+        return $this->contentFacade->findContentByKey($contentKey);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ContentTransfer $contentTransfer
      *
      * @return \Generated\Shared\Transfer\ContentTransfer

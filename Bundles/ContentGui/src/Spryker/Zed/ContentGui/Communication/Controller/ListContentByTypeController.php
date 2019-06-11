@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 class ListContentByTypeController extends AbstractController
 {
     public const PARAM_CONTENT_TYPE = 'type';
-    public const PARAM_CONTENT_ID = 'idContent';
+    public const PARAM_CONTENT_KEY = 'contentKey';
     public const PARAM_CONTENT_TEMPLATE = 'template';
 
     /**
@@ -29,9 +29,9 @@ class ListContentByTypeController extends AbstractController
     public function indexAction(Request $request): array
     {
         $contentType = $request->query->get(static::PARAM_CONTENT_TYPE);
-        $idContent = $request->query->get(static::PARAM_CONTENT_ID);
+        $contentKey = $request->query->get(static::PARAM_CONTENT_KEY);
         $selectedTemplateIdentifier = $request->query->get(static::PARAM_CONTENT_TEMPLATE);
-        $contentByTypeTable = $this->getFactory()->createContentByTypeTable($contentType, $idContent);
+        $contentByTypeTable = $this->getFactory()->createContentByTypeTable($contentType, $contentKey);
         $contentTypeTemplates = $this->getFactory()->createContentEditorPluginsResolver()->getTemplatesByType($contentType);
         $twigFunctionTemplate = $this->getFactory()->createContentEditorPluginsResolver()->getTwigFunctionTemplateByType($contentType);
 
@@ -53,8 +53,8 @@ class ListContentByTypeController extends AbstractController
     public function tableAction(Request $request): JsonResponse
     {
         $contentType = $request->query->get(static::PARAM_CONTENT_TYPE);
-        $idContent = $request->query->get(static::PARAM_CONTENT_ID);
-        $contentByTypeTable = $this->getFactory()->createContentByTypeTable($contentType, $idContent);
+        $contentKey = $request->query->get(static::PARAM_CONTENT_KEY);
+        $contentByTypeTable = $this->getFactory()->createContentByTypeTable($contentType, $contentKey);
 
         return $this->jsonResponse($contentByTypeTable->fetchData());
     }
