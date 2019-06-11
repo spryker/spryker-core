@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\PriceProductSchedule\Dependency\Facade;
+namespace Spryker\Zed\Currency\Persistence;
 
 use Generated\Shared\Transfer\CurrencyTransfer;
 
-interface PriceProductScheduleToCurrencyFacadeInterface
+interface CurrencyRepositoryInterface
 {
     /**
      * @param string $isoCode

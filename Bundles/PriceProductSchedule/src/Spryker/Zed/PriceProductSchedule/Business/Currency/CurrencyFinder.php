@@ -8,7 +8,6 @@
 namespace Spryker\Zed\PriceProductSchedule\Business\Currency;
 
 use Generated\Shared\Transfer\CurrencyTransfer;
-use Spryker\Zed\Currency\Business\Model\Exception\CurrencyNotFoundException;
 use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToCurrencyFacadeInterface;
 
 class CurrencyFinder implements CurrencyFinderInterface
@@ -42,14 +41,12 @@ class CurrencyFinder implements CurrencyFinderInterface
             return $this->currencyCache[$isoCode];
         }
 
-        try {
-            $currencyTransfer = $this->currencyFacade->fromIsoCode($isoCode);
+        $currencyTransfer = $this->currencyFacade->findCurrencyByIsoCode($isoCode);
 
+        if ($currencyTransfer !== null) {
             $this->currencyCache[$isoCode] = $currencyTransfer;
-
-            return $this->currencyCache[$isoCode];
-        } catch (CurrencyNotFoundException $e) {
-            return null;
         }
+
+        return $currencyTransfer;
     }
 }

@@ -9,7 +9,6 @@ namespace Spryker\Zed\PriceProductSchedule\Business\Store;
 
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToStoreFacadeInterface;
-use Spryker\Zed\Store\Business\Model\Exception\StoreNotFoundException;
 
 class StoreFinder implements StoreFinderInterface
 {
@@ -42,14 +41,12 @@ class StoreFinder implements StoreFinderInterface
             return $this->storeCache[$storeName];
         }
 
-        try {
-            $storeTransfer = $this->storeFacade->getStoreByName($storeName);
+        $storeTransfer = $this->storeFacade->findStoreByName($storeName);
 
+        if ($storeTransfer !== null) {
             $this->storeCache[$storeName] = $storeTransfer;
-
-            return $this->storeCache[$storeName];
-        } catch (StoreNotFoundException $e) {
-            return null;
         }
+
+        return $storeTransfer;
     }
 }

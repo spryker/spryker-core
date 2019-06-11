@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\PriceProductSchedule\Dependency\Facade;
 
+use Generated\Shared\Transfer\CurrencyTransfer;
+
 class PriceProductScheduleToCurrencyFacadeBridge implements PriceProductScheduleToCurrencyFacadeInterface
 {
     /**
@@ -25,10 +27,10 @@ class PriceProductScheduleToCurrencyFacadeBridge implements PriceProductSchedule
     /**
      * @param string $isoCode
      *
-     * @return \Generated\Shared\Transfer\CurrencyTransfer
+     * @return \Generated\Shared\Transfer\CurrencyTransfer|null
      */
-    public function fromIsoCode($isoCode)
+    public function findCurrencyByIsoCode(string $isoCode): ?CurrencyTransfer
     {
-        return $this->currencyFacade->fromIsoCode($isoCode);
+        return $this->currencyFacade->findCurrencyByIsoCode($isoCode);
     }
 }
