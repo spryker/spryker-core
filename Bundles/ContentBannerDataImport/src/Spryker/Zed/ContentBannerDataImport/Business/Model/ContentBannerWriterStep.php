@@ -22,6 +22,9 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
 class ContentBannerWriterStep extends PublishAwareStep implements DataImportStepInterface
 {
+    protected const ERROR_MESSAGE_EMPTY_KEY_FIELD = "Key field can't be empty.";
+    protected const ERROR_MESSAGE_REQUIRED_DEFAULT_LOCALE = "Default locale is required.";
+
     /**
      * @var \Spryker\Zed\ContentBannerDataImport\Dependency\Service\ContentBannerDataImportToUtilEncodingInterface
      */
@@ -65,7 +68,7 @@ class ContentBannerWriterStep extends PublishAwareStep implements DataImportStep
     protected function saveContentBanner(DataSetInterface $dataSet): SpyContent
     {
         if (!trim($dataSet[ContentBannerDataSetInterface::CONTENT_BANNER_KEY])) {
-            throw new InvalidDataException('Key field can\'t be empty.');
+            throw new InvalidDataException(static::ERROR_MESSAGE_EMPTY_KEY_FIELD);
         }
 
         $contentBannerEntity = SpyContentQuery::create()
@@ -116,7 +119,7 @@ class ContentBannerWriterStep extends PublishAwareStep implements DataImportStep
         }
 
         if (!$defaultLocaleIsPresent) {
-            throw new InvalidDataException('Default locale is absent');
+            throw new InvalidDataException(static::ERROR_MESSAGE_REQUIRED_DEFAULT_LOCALE);
         }
     }
 

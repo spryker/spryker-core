@@ -23,13 +23,13 @@ class NotEmptyValidator extends ConstraintValidator
      */
     public function validate($value, Constraint $constraint)
     {
-        $value = trim($value);
+        $trimmedValue = trim($value);
 
         if (!$constraint instanceof NotEmpty) {
             throw new UnexpectedTypeException($constraint, __NAMESPACE__ . '\NotEmpty');
         }
 
-        if (empty($value) && $value != '0') {
+        if (empty($trimmedValue) && $trimmedValue != '0') {
             $this->context->buildViolation($constraint->message)
                 ->setCode(NotEmpty::IS_EMPTY_ERROR)
                 ->addViolation();
