@@ -5,14 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Storage\Cache\Key;
+namespace Spryker\Client\Storage\Cache\CacheKey;
 
 use Spryker\Client\Storage\Dependency\Client\StorageToLocaleClientInterface;
 use Spryker\Client\Storage\Dependency\Client\StorageToStoreClientInterface;
 use Spryker\Client\Storage\StorageConfig;
 use Symfony\Component\HttpFoundation\Request;
 
-class RequestCacheKeyStrategy implements CacheKeyStrategyInterface
+class RequestCacheKeyGeneratorStrategy implements CacheKeyGeneratorStrategyInterface
 {
     protected const KEY_NAME_PREFIX = 'storage';
     protected const KEY_NAME_SEPARATOR = ':';
@@ -54,77 +54,81 @@ class RequestCacheKeyStrategy implements CacheKeyStrategyInterface
      */
     public function generateCacheKey(?Request $request = null): string
     {
-        if ($request) {
-            $requestUri = $request->getRequestUri();
-            $serverName = $request->server->get('SERVER_NAME');
-            $getParameters = $request->query->all();
-        } else {
-            $requestUri = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : null;
-            $serverName = isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : null;
-            $getParameters = $_GET;
-        }
+        $request = $this->prepareRequest($request);
+        $requestUri = $request->getRequestUri();
+        $serverName = $request->server->get('SERVER_NAME');
+        $queryStringParameters = $request->query->all();
 
-        if ($requestUri === null || $serverName === null) {
+        if (!$requestUri || !$serverName) {
             return '';
         }
 
         $urlSegments = strtok($requestUri, '?');
 
-        $getParametersKey = $this->generateGetParametersKey($getParameters);
-        $cacheKey = $this->assembleCacheKey($urlSegments, $getParametersKey);
+        $queryStringParametersFragment = $this->buildQueryStringParametersFragment($queryStringParameters);
+        $cacheKey = $this->buildCacheKey($urlSegments, $queryStringParametersFragment);
 
         return $cacheKey;
     }
 
     /**
-     * @return string
+     * @param \Symfony\Component\HttpFoundation\Request|null $request
+     *
+     * @return \Symfony\Component\HttpFoundation\Request
      */
-    public function getStrategyName(): string
+    protected function prepareRequest(?Request $request = null): Request
     {
-        return $this->config->getRequestCacheKeyGenerationStrategy();
+        return $request ?? Request::createFromGlobals();
     }
 
     /**
-     * @param array $getParameters
+     * @return bool
+     */
+    public function isApplicable(): bool
+    {
+        return $this->config->isStorageCachingEnabled();
+    }
+
+    /**
+     * @param string[] $queryStringParameters
      *
      * @return string
      */
-    protected function generateGetParametersKey(array $getParameters): string
+    protected function buildQueryStringParametersFragment(array $queryStringParameters): string
     {
-        $allowedGetParametersConfig = $this->config->getAllowedGetParametersList();
+        $allowedQueryStringParametersList = $this->config->getAllowedGetParametersList();
 
-        if (count($allowedGetParametersConfig) === 0) {
+        if (count($allowedQueryStringParametersList) === 0) {
             return '';
         }
 
-        $allowedGetParameters = array_intersect_key($getParameters, array_flip($allowedGetParametersConfig));
-        if (count($allowedGetParameters) === 0) {
+        $allowedQueryStringParameters = array_intersect_key($queryStringParameters, array_flip($allowedQueryStringParametersList));
+
+        if (count($allowedQueryStringParameters) === 0) {
             return '';
         }
 
-        ksort($allowedGetParameters);
+        ksort($allowedQueryStringParameters);
 
-        return '?' . http_build_query($allowedGetParameters);
+        return sprintf('?%s', http_build_query($allowedQueryStringParameters));
     }
 
     /**
      * @param string $urlSegments
-     * @param string $getParametersKey
+     * @param string $queryStringParametersKey
      *
      * @return string
      */
-    protected function assembleCacheKey($urlSegments, $getParametersKey): string
+    protected function buildCacheKey(string $urlSegments, string $queryStringParametersKey): string
     {
         $storeName = $this->storeClient->getCurrentStore()->getName();
         $locale = $this->localeClient->getCurrentLocale();
 
-        $cacheKey = strtolower(
-            $storeName . static::KEY_NAME_SEPARATOR .
-            $locale . static::KEY_NAME_SEPARATOR .
-            static::KEY_NAME_PREFIX . static::KEY_NAME_SEPARATOR .
-            $urlSegments . $getParametersKey
-        );
-
-        return $cacheKey;
+        return implode(static::KEY_NAME_SEPARATOR, [
+            $storeName,
+            $locale,
+            static::KEY_NAME_PREFIX,
+            sprintf('%s%s', $urlSegments, $queryStringParametersKey),
+        ]);
     }
 }

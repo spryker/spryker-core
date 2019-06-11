@@ -9,11 +9,11 @@ namespace Spryker\Client\Storage;
 
 use Predis\Client;
 use Spryker\Client\Kernel\AbstractFactory;
-use Spryker\Client\Storage\Cache\Key\CacheKeyStrategyInterface;
-use Spryker\Client\Storage\Cache\Key\CacheKeyStrategyProviderInterface;
-use Spryker\Client\Storage\Cache\Key\ConfigCacheKeyStrategyProvider;
-use Spryker\Client\Storage\Cache\Key\EmptyCacheKeyStrategy;
-use Spryker\Client\Storage\Cache\Key\RequestCacheKeyStrategy;
+use Spryker\Client\Storage\Cache\CacheKey\CacheKeyGenerator;
+use Spryker\Client\Storage\Cache\CacheKey\CacheKeyGeneratorInterface;
+use Spryker\Client\Storage\Cache\CacheKey\CacheKeyGeneratorStrategyInterface;
+use Spryker\Client\Storage\Cache\CacheKey\EmptyCacheKeyGeneratorStrategy;
+use Spryker\Client\Storage\Cache\CacheKey\RequestCacheKeyGeneratorStrategy;
 use Spryker\Client\Storage\Cache\StorageCacheStrategyFactory;
 use Spryker\Client\Storage\Dependency\Client\StorageToLocaleClientInterface;
 use Spryker\Client\Storage\Dependency\Client\StorageToStoreClientInterface;
@@ -129,33 +129,32 @@ class StorageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Storage\Cache\Key\CacheKeyStrategyProviderInterface
+     * @return \Spryker\Client\Storage\Cache\CacheKey\CacheKeyGeneratorInterface
      */
-    public function createCacheKeyGenerationStrategyProvider(): CacheKeyStrategyProviderInterface
+    public function createCacheKeyGenerator(): CacheKeyGeneratorInterface
     {
-        return new ConfigCacheKeyStrategyProvider(
-            $this->createCacheKeyGenerationStrategyStack(),
-            $this->getStorageClientConfig()
+        return new CacheKeyGenerator(
+            $this->getCacheKeyGeneratorStrategies()
         );
     }
 
     /**
-     * @return \Spryker\Client\Storage\Cache\Key\CacheKeyStrategyInterface[]
+     * @return \Spryker\Client\Storage\Cache\CacheKey\CacheKeyGeneratorStrategyInterface[]
      */
-    public function createCacheKeyGenerationStrategyStack(): array
+    public function getCacheKeyGeneratorStrategies(): array
     {
         return [
-            $this->createRequestCacheKeyGenerationStrategy(),
-            $this->createEmptyCacheKeyGenerationStrategy(),
+            $this->createRequestCacheKeyGeneratorStrategy(),
+            $this->createEmptyCacheKeyGeneratorStrategy(),
         ];
     }
 
     /**
-     * @return \Spryker\Client\Storage\Cache\Key\CacheKeyStrategyInterface
+     * @return \Spryker\Client\Storage\Cache\CacheKey\CacheKeyGeneratorStrategyInterface
      */
-    public function createRequestCacheKeyGenerationStrategy(): CacheKeyStrategyInterface
+    public function createRequestCacheKeyGeneratorStrategy(): CacheKeyGeneratorStrategyInterface
     {
-        return new RequestCacheKeyStrategy(
+        return new RequestCacheKeyGeneratorStrategy(
             $this->getStoreClient(),
             $this->getLocaleClient(),
             $this->getStorageClientConfig()
@@ -163,11 +162,11 @@ class StorageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Storage\Cache\Key\CacheKeyStrategyInterface
+     * @return \Spryker\Client\Storage\Cache\CacheKey\CacheKeyGeneratorStrategyInterface
      */
-    public function createEmptyCacheKeyGenerationStrategy(): CacheKeyStrategyInterface
+    public function createEmptyCacheKeyGeneratorStrategy(): CacheKeyGeneratorStrategyInterface
     {
-        return new EmptyCacheKeyStrategy(
+        return new EmptyCacheKeyGeneratorStrategy(
             $this->getStorageClientConfig()
         );
     }

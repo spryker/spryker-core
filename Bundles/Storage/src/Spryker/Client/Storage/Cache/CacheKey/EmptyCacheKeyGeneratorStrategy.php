@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Storage\Cache\Key;
+namespace Spryker\Client\Storage\Cache\CacheKey;
 
 use Spryker\Client\Storage\StorageConfig;
 use Symfony\Component\HttpFoundation\Request;
 
-class EmptyCacheKeyStrategy implements CacheKeyStrategyInterface
+class EmptyCacheKeyGeneratorStrategy implements CacheKeyGeneratorStrategyInterface
 {
     /**
      * @var \Spryker\Client\Storage\StorageConfig
@@ -36,10 +36,10 @@ class EmptyCacheKeyStrategy implements CacheKeyStrategyInterface
     }
 
     /**
-     * @return string
+     * @return bool
      */
-    public function getStrategyName(): string
+    public function isApplicable(): bool
     {
-        return $this->config->getEmptyCacheKeyGenerationStrategy();
+        return !$this->config->isStorageCachingEnabled();
     }
 }

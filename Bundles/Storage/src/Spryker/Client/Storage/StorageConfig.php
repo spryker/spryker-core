@@ -50,28 +50,4 @@ class StorageConfig extends AbstractBundleConfig
     {
         return $this->get(StorageConstants::STORAGE_CACHE_ENABLED, true);
     }
-
-    /**
-     * @return string
-     */
-    public function getRequestCacheKeyGenerationStrategy(): string
-    {
-        return $this->getSharedConfig()->getRequestCacheKeyGenerationStrategy();
-    }
-
-    /**
-     * @return string
-     */
-    public function getEmptyCacheKeyGenerationStrategy(): string
-    {
-        return $this->getSharedConfig()->getEmptyCacheKeyGenerationStrategy();
-    }
-
-    /**
-     * @return string
-     */
-    public function getDefaultCacheKeyGenerationStrategy(): string
-    {
-        return $this->getRequestCacheKeyGenerationStrategy();
-    }
 }

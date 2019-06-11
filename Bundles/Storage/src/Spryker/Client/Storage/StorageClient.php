@@ -8,7 +8,6 @@
 namespace Spryker\Client\Storage;
 
 use Spryker\Client\Kernel\AbstractClient;
-use Spryker\Client\Storage\Cache\Key\CacheKeyStrategyInterface;
 use Spryker\Client\Storage\Redis\Service;
 use Spryker\Shared\Storage\StorageConstants;
 use Symfony\Component\HttpFoundation\Request;
@@ -311,7 +310,8 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     protected function loadKeysFromCache()
     {
         self::$cachedKeys = [];
-        $cacheKey = self::generateCacheKey();
+        $cacheKey = $this->buildCacheKey();
+
         if (!$cacheKey) {
             return;
         }
@@ -393,7 +393,7 @@ class StorageClient extends AbstractClient implements StorageClientInterface
      */
     public function persistCacheForRequest(Request $request, $storageCacheStrategyName = StorageConstants::STORAGE_CACHE_STRATEGY_REPLACE)
     {
-        $cacheKey = static::generateCacheKey($request);
+        $cacheKey = $this->buildCacheKey($request);
 
         if ($cacheKey && is_array(self::$cachedKeys)) {
             $this->updateCache($storageCacheStrategyName, $cacheKey);
@@ -436,23 +436,27 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     }
 
     /**
+     * This method exists for BC reasons only and should be removed with next major release.
+     *
+     * @deprecated Use `Spryker\Client\Storage\StorageClient::buildCacheKey` instead.
+     *
      * @param \Symfony\Component\HttpFoundation\Request|null $request
      *
      * @return string
      */
     protected static function generateCacheKey(?Request $request = null): string
     {
-        return static::getCacheKeyGenerationStrategy()->generateCacheKey($request);
+        return (new static())->getFactory()->createCacheKeyGenerator()->generateCacheKey($request);
     }
 
     /**
-     * @return \Spryker\Client\Storage\Cache\Key\CacheKeyStrategyInterface
+     * @param \Symfony\Component\HttpFoundation\Request|null $request
+     *
+     * @return string
      */
-    protected static function getCacheKeyGenerationStrategy(): CacheKeyStrategyInterface
+    protected function buildCacheKey(?Request $request = null): string
     {
-        return (new static())->getFactory()
-            ->createCacheKeyGenerationStrategyProvider()
-            ->provideCacheKeyGenerationStrategy();
+        return $this->getFactory()->createCacheKeyGenerator()->generateCacheKey($request);
     }
 
     /**

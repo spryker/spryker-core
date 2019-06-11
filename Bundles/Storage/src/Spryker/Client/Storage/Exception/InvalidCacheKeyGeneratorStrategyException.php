@@ -9,6 +9,6 @@ namespace Spryker\Client\Storage\Exception;
 
 use Exception;
 
-class InvalidCacheKeyGenerationStrategyException extends Exception
+class InvalidCacheKeyGeneratorStrategyException extends Exception
 {
 }
