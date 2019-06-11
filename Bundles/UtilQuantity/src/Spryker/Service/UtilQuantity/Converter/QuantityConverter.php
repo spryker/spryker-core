@@ -9,6 +9,8 @@ namespace Spryker\Service\UtilQuantity\Converter;
 
 class QuantityConverter implements QuantityConverterInterface
 {
+    protected const EXPONENTIAL_BASE = 10;
+
     /**
      * @param float $value
      * @param int $precision
@@ -17,6 +19,6 @@ class QuantityConverter implements QuantityConverterInterface
      */
     public function convertToInt(float $value, int $precision): int
     {
-        return (int)round($value * pow(10, $precision));
+        return (int)round($value * pow(static::EXPONENTIAL_BASE, $precision));
     }
 }
