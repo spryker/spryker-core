@@ -117,13 +117,16 @@ $chat-box-background-color: #f0f0f0;
     background-color: #e7eaec;
     overflow: hidden;
     margin-bottom: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
-.grandtotal-row {
+.grandTotal-row {
     background-color: #e7eaec;
     overflow: hidden;
     margin-bottom: 10px;
     padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 img.product-image {
@@ -182,4 +185,8 @@ a.edit_billing_address {
 
 .trigger-order-event {
     margin-right: 5px;
+}
+
+dd {
+    margin-bottom: 5px;
 }

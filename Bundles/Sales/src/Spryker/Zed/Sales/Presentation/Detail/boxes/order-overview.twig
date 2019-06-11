@@ -1,91 +1,92 @@
 {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Order Overview' } %}
-
     {% block widget_content %}
+
         <div class="row">
             <div class="col-xs-12 col-md-6">
                 <div class="bottom-indent">
-                    <p><b>{{ 'Order Reference' | trans }}:</b> {{ order.orderReference }}</p>
-                    <p><b>{{ 'Order date' | trans }}:</b> {{ order.createdAt | formatDateTime }}</p>
-                    <p><b>{{ 'Unique Product Quantity' | trans }}:</b> {{ order.uniqueProductQuantity }}</p>
+                    <dl>
+                        <dt>{{ 'Order Reference' | trans }}</dt>
+                        <dd>{{ order.orderReference }}</dd>
+                        <dt>{{ 'Order date' | trans }}</dt>
+                        <dd>{{ order.createdAt | formatDateTime }}</dd>
+                        <dt>{{ 'Unique Product Quantity' | trans }}</dt>
+                        <dd>{{ order.uniqueProductQuantity }}</dd>
+                    </dl>
                 </div>
             </div>
 
             <div class="col-xs-12 col-md-6 bottom-indent">
                 <p><b>{{ 'Totals' | trans }}</b></p>
 
-                {% for orderItem in groupedOrderItems %}
-                    <div class="col-sm-12 row">
-                        <div class="col-sm-10"><p><b>{{ orderItem.name }} x {{ orderItem.quantity }}</b></p></div>
-                        <div class="col-sm-2">{{ orderItem.sumPrice | money(true, order.currencyIsoCode)  }}</div>
-                    </div>
+                <div class="row">
+                    {% for orderItem in groupedOrderItems %}
+                        <div class="col-sm-10"><p>{{ orderItem.name }} x {{ orderItem.quantity }}</p></div>
+                        <div class="col-sm-2">{{ orderItem.sumPrice | money(true, order.currencyIsoCode) }}</div>
 
-                    {% for orderItemOption in orderItem.productOptions %}
-                        <div class="col-sm-12 row">
-                            <div class="col-sm-10 pull-left"><p>+ <span class="label">{{ 'Option' | trans }}</span> {{ orderItemOption.value }}</p></div>
-                            <div class="col-sm-2">{{ orderItemOption.sumPrice | money(true, order.currencyIsoCode) }}</div>
-                        </div>
+                        {% for orderItemOption in orderItem.productOptions %}
+                            <div class="col-sm-12 row">
+                                <div class="col-sm-10"><p>+ <span class="label">{{ 'Option' | trans }}</span> {{ orderItemOption.value }}</p></div>
+                                <div class="col-sm-2">{{ orderItemOption.sumPrice | money(true, order.currencyIsoCode) }}</div>
+                            </div>
+                        {% endfor %}
                     {% endfor %}
-                {% endfor %}
+                </div>
 
-                <div class="col-sm-12 row subtotal-row">
+                <div class="row subtotal-row">
                     <div class="col-sm-10"><b>{{ 'Subtotal' | trans }}</b></div>
                     <div class="col-sm-2"><b>{{ order.totals.subtotal | money(true, order.currencyIsoCode) }}</b></div>
                 </div>
 
-                {% for expense in order.expenses %}
-                    <div class="col-sm-12 row">
-                        <div class="col-sm-10"><p>
-                            {% if expense.type == 'SHIPMENT_EXPENSE_TYPE' %}
-                                {{ 'Shipment' | trans }} {{ expense.shipment.method.carrierName ?? '' }} {{ expense.name }}
-                             {% endif %}
+                <div class="row">
+                    {% for expense in order.expenses %}
+                        <div class="col-sm-10">
+                            <p>
+                                {% if expense.type == 'SHIPMENT_EXPENSE_TYPE' %}
+                                    {{ 'Shipment' | trans }} {{ expense.shipment.method.carrierName ?? '' }} {{ expense.name }}
+                                {% endif %}
 
-                             {% if expense.type == 'THRESHOLD_EXPENSE_TYPE' %}
-                                {{ 'Surcharge' | trans }}
-                             {% endif %}</p>
+                                {% if expense.type == 'THRESHOLD_EXPENSE_TYPE' %}
+                                    {{ 'Surcharge' | trans }}
+                                {% endif %}
+                            </p>
                         </div>
                         <div class="col-sm-2"><p>{{ expense.sumPrice | money(true, order.currencyIsoCode) }}</p></div>
-                    </div>
-                {% endfor %}
+                    {% endfor %}
+                </div>
 
-                <div class="col-sm-12 row">
+                <div class="row">
                     <div class="col-sm-10"><p>{{ 'Discount' | trans }}</p></div>
                     <div class="col-sm-2"><p>{{ order.totals.discountTotal | default(0) | money(true, order.currencyIsoCode) }}</p></div>
                 </div>
 
-                <div class="col-sm-12 row">
+                <div class="row">
                     <div class="col-sm-10"><p>{{ 'Cancelled amount' | trans }}</p></div>
                     <div class="col-sm-2">{{ order.totals.canceledTotal | default(0) | money(true, order.currencyIsoCode) }}</div>
                 </div>
 
-                <div class="col-sm-12 row grandtotal-row">
-                    <div class="row">
-                        <div class="col-sm-10"><p><b>{{ 'GRAND TOTAL' | trans }}</b></p></div>
-                        <div class="col-sm-2"><p><b>{{ order.totals.grandTotal | money(true, order.currencyIsoCode) }}</b></p></div>
+                <div class="row">
+                    <div class="col-sm-12 grandTotal-row">
+                        <div class="row">
+                            <div class="col-sm-10"><p><b>{{ 'GRAND TOTAL' | trans }}</b></p></div>
+                            <div class="col-sm-2"><p><b>{{ order.totals.grandTotal | money(true, order.currencyIsoCode) }}</b></p></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-10"><p>{{ 'Total taxes' | trans }}</p></div>
+                            <div class="col-sm-2">{{ order.totals.taxTotal.amount | money(true, order.currencyIsoCode) }}</div>
+                        </div>
+                        <div class="row">
+                            {% for item in order.items %}
+                                <div class="col-sm-10"><p> - {{ 'Tax set' | trans }} {{ item.taxRate }}%</p></div>
+                                <div class="col-sm-2">{{ item.sumTaxAmount | money(true, order.currencyIsoCode) }}</div>
+                            {% endfor %}
+                        </div>
                     </div>
-                    <div class="row">
-                        <div class="col-sm-10"><p>{{ 'Total taxes' | trans }}</p></div>
-                        <div class="col-sm-2">{{ order.totals.taxTotal.amount | money(true, order.currencyIsoCode) }}</div>
-                    </div>
-                    <div class="row">
-                        {% for item in order.items %}
-                            <div class="col-sm-10"><p> - {{ 'Tax set' | trans }} {{ item.taxRate }}%</p></div>
-                            <div class="col-sm-2">{{ item.sumTaxAmount | money(true, order.currencyIsoCode) }}</div>
-                        {% endfor %}
-                    </div>
-                </div>
-
-                <div>
-                    <p><b>{{ 'Status' | trans }}:</b>
-                        {% for state in distinctOrderStates %}
-                            <span class="label label-info">{{ state }}</span>
-                        {% endfor %}
-                    </p>
                 </div>
             </div>
 
             <div class="col-md-12">
                 <div class="ibox-title">
-                    <h5>{{ 'Trigger all matching states of order inside this shipment' | trans }}</h5>
+                    <h5>{{ 'Trigger all matching states inside this order' | trans }}</h5>
                 </div>
                 <div class="ibox-content">
                     {% for event in events %}
