@@ -259,11 +259,19 @@ class ResponseBuilder implements ResponseBuilderInterface
             unset($data[RestResourceInterface::RESOURCE_RELATIONSHIPS]);
         }
 
-        if (count($restRequest->getInclude()) && array_key_exists(RestResourceInterface::RESOURCE_RELATIONSHIPS, $data)) {
+        if (!array_key_exists(RestResourceInterface::RESOURCE_RELATIONSHIPS, $data)) {
+            return $data;
+        }
+
+        if ($restRequest->getInclude()) {
             $data[RestResourceInterface::RESOURCE_RELATIONSHIPS] = array_intersect_key(
                 $data[RestResourceInterface::RESOURCE_RELATIONSHIPS],
                 $restRequest->getInclude()
             );
+        }
+
+        if (!$data[RestResourceInterface::RESOURCE_RELATIONSHIPS]) {
+            unset($data[RestResourceInterface::RESOURCE_RELATIONSHIPS]);
         }
 
         return $data;
