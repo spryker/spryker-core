@@ -297,9 +297,15 @@ class CommentWriter implements CommentWriterInterface
                 ->setCustomer($commentTransfer->getCustomer())
                 ->setIdCommentThread($commentThreadTransfer->getIdCommentThread())
                 ->setMessage($commentTransfer->getMessage())
-                ->setIsUpdated($commentTransfer->getIsUpdated());
+                ->setIsUpdated($commentTransfer->getIsUpdated())
+                ->setTags($commentTransfer->getTags());
 
             $newCommentTransfer = $this->commentEntityManager->createComment($newCommentTransfer);
+
+            if ($newCommentTransfer->getTags()->count()) {
+                $this->saveCommentTags($newCommentTransfer);
+            }
+
             $commentThreadTransfer->addComment($newCommentTransfer);
         }
 
