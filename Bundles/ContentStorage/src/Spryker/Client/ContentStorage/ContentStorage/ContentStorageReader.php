@@ -8,11 +8,9 @@
 namespace Spryker\Client\ContentStorage\ContentStorage;
 
 use Generated\Shared\Transfer\ContentTypeContextTransfer;
-use Generated\Shared\Transfer\ExecutedContentStorageTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\ContentStorage\Dependency\Client\ContentStorageToStorageClientInterface;
 use Spryker\Client\ContentStorage\Dependency\Service\ContentStorageToSynchronizationServiceInterface;
-use Spryker\Client\ContentStorage\Resolver\ContentResolverInterface;
 use Spryker\Shared\ContentStorage\ContentStorageConfig;
 
 class ContentStorageReader implements ContentStorageReaderInterface
@@ -28,57 +26,26 @@ class ContentStorageReader implements ContentStorageReaderInterface
     protected $synchronizationService;
 
     /**
-     * @var \Spryker\Client\ContentStorage\Resolver\ContentResolverInterface
-     */
-    protected $contentResolver;
-
-    /**
      * @param \Spryker\Client\ContentStorage\Dependency\Client\ContentStorageToStorageClientInterface $storageClient
      * @param \Spryker\Client\ContentStorage\Dependency\Service\ContentStorageToSynchronizationServiceInterface $synchronizationService
-     * @param \Spryker\Client\ContentStorage\Resolver\ContentResolverInterface $contentResolver
      */
     public function __construct(
         ContentStorageToStorageClientInterface $storageClient,
-        ContentStorageToSynchronizationServiceInterface $synchronizationService,
-        ContentResolverInterface $contentResolver
+        ContentStorageToSynchronizationServiceInterface $synchronizationService
     ) {
         $this->storageClient = $storageClient;
         $this->synchronizationService = $synchronizationService;
-        $this->contentResolver = $contentResolver;
     }
 
     /**
-     * @param int $idContent
-     * @param string $localeName
-     *
-     * @return \Generated\Shared\Transfer\ExecutedContentStorageTransfer|null
-     */
-    public function findContentById(int $idContent, string $localeName): ?ExecutedContentStorageTransfer
-    {
-        $storageKey = $this->generateKey((string)$idContent, $localeName);
-        $content = $this->storageClient->get($storageKey);
-
-        if (!$content) {
-            return null;
-        }
-
-        $contentExtractorPlugin = $this->contentResolver->getContentPlugin($content[ContentStorageConfig::TERM_KEY]);
-
-        return (new ExecutedContentStorageTransfer())
-            ->setIdContent($idContent)
-            ->setType($contentExtractorPlugin->getTypeKey())
-            ->setContent($contentExtractorPlugin->execute($content[ContentStorageConfig::CONTENT_KEY]));
-    }
-
-    /**
-     * @param int $idContent
+     * @param string $contentKey
      * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\ContentTypeContextTransfer|null
      */
-    public function findContentTypeContext(int $idContent, string $localeName): ?ContentTypeContextTransfer
+    public function findContentTypeContextByKey(string $contentKey, string $localeName): ?ContentTypeContextTransfer
     {
-        $storageKey = $this->generateKey((string)$idContent, $localeName);
+        $storageKey = $this->generateKey($contentKey, $localeName);
         $content = $this->storageClient->get($storageKey);
 
         if (!$content) {
@@ -86,7 +53,8 @@ class ContentStorageReader implements ContentStorageReaderInterface
         }
 
         return (new ContentTypeContextTransfer())
-            ->setIdContent($idContent)
+            ->setIdContent($content[ContentStorageConfig::ID_CONTENT])
+            ->setKey($contentKey)
             ->setTerm($content[ContentStorageConfig::TERM_KEY])
             ->setParameters($content[ContentStorageConfig::CONTENT_KEY]);
     }

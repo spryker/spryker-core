@@ -9,7 +9,8 @@
     {% endspaceless %}
 {%- endblock form_row %}
 
-{% block text_widget %}
+{% block email_widget %}
+    {%- set type = type|default('email') -%}
     <div class="form-group">
         <div class="input-group">
             <span class="input-group-addon"><i class="fa fa-envelope-o fa-inverse"></i></span>

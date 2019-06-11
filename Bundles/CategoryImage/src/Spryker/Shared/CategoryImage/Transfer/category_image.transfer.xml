@@ -13,6 +13,7 @@
 
     <transfer name="CategoryImage">
         <property name="idCategoryImage" type="int" />
+        <property name="idCategoryImageSetToCategoryImage" type="int" />
         <property name="sortOrder" type="int" />
         <property name="externalUrlSmall" type="string" />
         <property name="externalUrlLarge" type="string" />
