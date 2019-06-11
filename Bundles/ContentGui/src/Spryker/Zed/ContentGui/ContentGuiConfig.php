@@ -12,6 +12,7 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class ContentGuiConfig extends AbstractBundleConfig
 {
     protected const PARAMETER_ID = '%ID%';
+    protected const PARAMETER_KEY = '%KEY%';
     protected const PARAMETER_TYPE = '%TYPE%';
     protected const PARAMETER_TEMPLATE = '%TEMPLATE%';
     protected const PARAMETER_TWIG_EXPRESSION = '%TWIG_EXPRESSION%';
@@ -26,10 +27,11 @@ class ContentGuiConfig extends AbstractBundleConfig
     public function getEditorContentWidgetTemplate(): string
     {
         return '<span class="content-item-editor js-content-item-editor" contenteditable="false" '
-            . 'data-type="' . $this->getParameterType() . '" data-id="' . $this->getParameterId() . '" '
+            . 'data-type="' . $this->getParameterType() . '" data-key="' . $this->getParameterKey() . '" '
+            . 'data-id="' . $this->getParameterId() . '" '
             . 'data-template="' . $this->getParameterTemplate() . '" data-twig-expression="' . $this->getParameterTwigExpression() . '">'
                 . '<span>Content Item Type: <b>' . $this->getParameterType() . '</b></span>'
-                . '<span>Content Item ID#: <b>' . $this->getParameterId() . '</b></span>'
+                . '<span>Content Item Key#: <b>' . $this->getParameterKey() . '</b></span>'
                 . '<span>Name: <b>' . $this->getParameterName() . '</b></span>'
                 . '<span>Template: <b>' . $this->getParameterTemplateDisplayName() . '</b></span>'
             . '</span>';
@@ -41,6 +43,14 @@ class ContentGuiConfig extends AbstractBundleConfig
     public function getParameterId(): string
     {
         return static::PARAMETER_ID;
+    }
+
+    /**
+     * @return string
+     */
+    public function getParameterKey(): string
+    {
+        return static::PARAMETER_KEY;
     }
 
     /**

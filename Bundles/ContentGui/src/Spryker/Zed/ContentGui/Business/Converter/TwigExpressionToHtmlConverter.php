@@ -96,7 +96,7 @@ class TwigExpressionToHtmlConverter implements TwigExpressionConverterInterface
      */
     protected function findTwigExpressions(string $html, string $twigFunctionTemplate): ?array
     {
-        // Example: {{ content_banner(%ID%, '%TEMPLATE%') }} -> {{ content_banner(.+?) }}
+        // Example: {{ content_banner('%KEY%', '%TEMPLATE%') }} -> {{ content_banner(.+?) }}
         $twigExpressionPattern = preg_replace('/\(.+\)/', '\(.+?\)', $twigFunctionTemplate);
         preg_match_all('/' . $twigExpressionPattern . '/', $html, $twigExpressions);
 
@@ -157,6 +157,7 @@ class TwigExpressionToHtmlConverter implements TwigExpressionConverterInterface
 
         return strtr($this->contentGuiConfig->getEditorContentWidgetTemplate(), [
             $this->contentGuiConfig->getParameterId() => $contentTransfer->getIdContent(),
+            $this->contentGuiConfig->getParameterKey() => $contentTransfer->getKey(),
             $this->contentGuiConfig->getParameterType() => $contentTransfer->getContentTypeKey(),
             $this->contentGuiConfig->getParameterName() => $contentTransfer->getName(),
             $this->contentGuiConfig->getParameterTwigExpression() => $twigExpression,
@@ -172,14 +173,14 @@ class TwigExpressionToHtmlConverter implements TwigExpressionConverterInterface
      */
     protected function findContentItem(string $twigExpression): ?ContentTransfer
     {
-        preg_match('/\d+/', $twigExpression, $idContent);
+        preg_match("/'[\w+\-]+'/", $twigExpression, $contentKey);
 
-        if (!$idContent) {
+        if (!$contentKey) {
             return null;
         }
 
-        $idContent = (int)$idContent[0];
-        $contentTransfer = $this->contentFacade->findContentById($idContent);
+        $contentKey = trim($contentKey[0], "'");
+        $contentTransfer = $this->contentFacade->findContentByKey($contentKey);
 
         if (!$contentTransfer) {
             return null;
@@ -192,19 +193,19 @@ class TwigExpressionToHtmlConverter implements TwigExpressionConverterInterface
     }
 
     /**
-     * @param string $twigFunction
+     * @param string $twigExpression
      *
      * @return string|null
      */
-    protected function findTemplateIdentifier(string $twigFunction): ?string
+    protected function findTemplateIdentifier(string $twigExpression): ?string
     {
-        preg_match("/'[\w+\-]+'/", $twigFunction, $templateIdentifier);
+        preg_match_all("/'[\w+\-]+'/", $twigExpression, $templateIdentifier);
 
-        if (!$templateIdentifier) {
+        if (!isset($templateIdentifier[0][1])) {
             return null;
         }
 
-        return trim($templateIdentifier[0], "'");
+        return trim($templateIdentifier[0][1], "'");
     }
 
     /**
