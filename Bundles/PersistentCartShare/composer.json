@@ -5,16 +5,15 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/customer": "^7.0.0",
     "spryker/kernel": "^3.0.0",
     "spryker/persistent-cart-share-extension": "^1.0.0",
     "spryker/quote": "^2.0.0",
     "spryker/resource-share": "^1.0.0",
-    "spryker/resource-share-extension": "^1.0.0",
     "spryker/zed-request": "^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/customer": "*",
     "spryker/propel": "*",
     "spryker/testify": "*"
   },
