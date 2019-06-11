@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\SetupFrontend\Business\Model\Generator;
+namespace Spryker\Zed\SetupFrontend\Business\BuildConfigProvider;
 
 use Psr\Log\LoggerInterface;
 
-interface YvesAssetsBuildConfigGeneratorInterface
+interface YvesAssetsBuildConfigProviderInterface
 {
     /**
      * @param \Psr\Log\LoggerInterface $logger

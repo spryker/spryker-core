@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\SetupFrontend\Business\Model\Cleaner;
+namespace Spryker\Zed\SetupFrontend\Business\Cleaner;
 
-use Spryker\Shared\Kernel\Store;
+use Spryker\Zed\SetupFrontend\Business\Model\Cleaner\CleanerInterface;
 use Spryker\Zed\SetupFrontend\SetupFrontendConfig;
 use Symfony\Component\Filesystem\Filesystem;
 
@@ -21,20 +21,20 @@ class YvesAssetsCleaner implements CleanerInterface
     protected $setupFrontendConfig;
 
     /**
-     * @var \Spryker\Shared\Kernel\Store
+     * @var string
      */
-    protected $store;
+    protected $storeName;
 
     /**
      * @param \Spryker\Zed\SetupFrontend\SetupFrontendConfig $setupFrontendConfig
-     * @param \Spryker\Shared\Kernel\Store $store
+     * @param string $storeName
      */
     public function __construct(
         SetupFrontendConfig $setupFrontendConfig,
-        Store $store
+        string $storeName
     ) {
         $this->setupFrontendConfig = $setupFrontendConfig;
-        $this->store = $store;
+        $this->storeName = $storeName;
     }
 
     /**
@@ -64,7 +64,7 @@ class YvesAssetsCleaner implements CleanerInterface
         foreach ($this->setupFrontendConfig->getYvesAssetsDirectories() as $directoryPattern) {
             $directories[] = str_replace(
                 static::STORE_KEY,
-                strtolower($this->store->getStoreName()),
+                strtolower($this->storeName),
                 $directoryPattern
             );
         }

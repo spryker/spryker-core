@@ -146,6 +146,6 @@ class SetupFrontendFacade extends AbstractFacade implements SetupFrontendFacadeI
      */
     public function generateYvesAssetsBuildConfig(LoggerInterface $logger): bool
     {
-        return $this->getFactory()->createYvesAssetsBuildConfigGenerator()->generateYvesAssetsBuildConfig($logger);
+        return $this->getFactory()->createYvesAssetsBuildConfigProvider()->generateYvesAssetsBuildConfig($logger);
     }
 }

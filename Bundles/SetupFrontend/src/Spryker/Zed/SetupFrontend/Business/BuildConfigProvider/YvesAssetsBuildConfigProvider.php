@@ -5,14 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\SetupFrontend\Business\Model\Generator;
+namespace Spryker\Zed\SetupFrontend\Business\BuildConfigProvider;
 
 use Psr\Log\LoggerInterface;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\SetupFrontend\Dependency\Service\SetupFrontendToUtilEncodingServiceInterface;
 use Spryker\Zed\SetupFrontend\SetupFrontendConfig;
 
-class YvesAssetsBuildConfigGenerator implements YvesAssetsBuildConfigGeneratorInterface
+class YvesAssetsBuildConfigProvider implements YvesAssetsBuildConfigProviderInterface
 {
     protected const YVES_ASSETS_CONFIG_STORE_NAME_KEY = 'name';
 
@@ -22,9 +21,9 @@ class YvesAssetsBuildConfigGenerator implements YvesAssetsBuildConfigGeneratorIn
     protected $setupFrontendConfig;
 
     /**
-     * @var \Spryker\Shared\Kernel\Store
+     * @var string
      */
-    protected $store;
+    protected $storeName;
 
     /**
      * @var \Spryker\Zed\SetupFrontend\Dependency\Service\SetupFrontendToUtilEncodingServiceInterface
@@ -39,17 +38,17 @@ class YvesAssetsBuildConfigGenerator implements YvesAssetsBuildConfigGeneratorIn
     /**
      * @param \Spryker\Zed\SetupFrontend\SetupFrontendConfig $setupFrontendConfig
      * @param \Spryker\Zed\SetupFrontend\Dependency\Service\SetupFrontendToUtilEncodingServiceInterface $utilEncodingService
-     * @param \Spryker\Shared\Kernel\Store $store
+     * @param string $storeName
      * @param \Spryker\Zed\SetupFrontendExtension\Dependency\Plugin\YvesFrontendStoreConfigExpanderPluginInterface[] $yvesFrontendStoreConfigExpanderPlugins
      */
     public function __construct(
         SetupFrontendConfig $setupFrontendConfig,
         SetupFrontendToUtilEncodingServiceInterface $utilEncodingService,
-        Store $store,
+        string $storeName,
         array $yvesFrontendStoreConfigExpanderPlugins
     ) {
         $this->setupFrontendConfig = $setupFrontendConfig;
-        $this->store = $store;
+        $this->storeName = $storeName;
         $this->utilEncodingService = $utilEncodingService;
         $this->yvesFrontendStoreConfigExpanderPlugins = $yvesFrontendStoreConfigExpanderPlugins;
     }
@@ -76,13 +75,12 @@ class YvesAssetsBuildConfigGenerator implements YvesAssetsBuildConfigGeneratorIn
     protected function prepareConfigDataForCurrentStore(array $configData): array
     {
         $storeConfigData = [];
-        $storeName = $this->store->getStoreName();
-        $storeKey = strtolower($storeName);
+        $storeKey = strtolower($this->storeName);
         if (isset($configData[$storeKey])) {
             $storeConfigData = $configData[$storeKey];
         }
 
-        $storeConfigData[static::YVES_ASSETS_CONFIG_STORE_NAME_KEY] = $storeName;
+        $storeConfigData[static::YVES_ASSETS_CONFIG_STORE_NAME_KEY] = $this->storeName;
 
         $storeConfigData = $this->executeExpandYvesFrontendConfigDataPlugins($storeConfigData);
 

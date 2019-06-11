@@ -17,7 +17,7 @@ use Spryker\Zed\SetupFrontend\Dependency\Service\SetupFrontendToUtilEncodingServ
  */
 class SetupFrontendDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const STORE = 'STORE';
+    public const STORE_NAME = 'STORE_NAME';
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
     public const PLUGINS_YVES_FRONTEND_STORE_CONFIG_EXPANDER = 'PLUGINS_YVES_FRONTEND_STORE_CONFIG_EXPANDER';
 
@@ -30,7 +30,7 @@ class SetupFrontendDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = parent::provideBusinessLayerDependencies($container);
 
-        $container = $this->addStore($container);
+        $container = $this->addStoreName($container);
         $container = $this->addUtilEncodingService($container);
         $container = $this->addYvesFrontendStoreConfigExpanderPlugins($container);
 
@@ -42,10 +42,10 @@ class SetupFrontendDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addStore(Container $container): Container
+    protected function addStoreName(Container $container): Container
     {
-        $container->set(static::STORE, function () {
-            return Store::getInstance();
+        $container->set(static::STORE_NAME, function () {
+            return Store::getInstance()->getStoreName();
         });
 
         return $container;

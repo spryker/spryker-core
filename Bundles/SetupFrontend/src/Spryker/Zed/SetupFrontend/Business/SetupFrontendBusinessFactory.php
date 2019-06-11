@@ -7,15 +7,14 @@
 
 namespace Spryker\Zed\SetupFrontend\Business;
 
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\SetupFrontend\Business\BuildConfigProvider\YvesAssetsBuildConfigProvider;
+use Spryker\Zed\SetupFrontend\Business\BuildConfigProvider\YvesAssetsBuildConfigProviderInterface;
+use Spryker\Zed\SetupFrontend\Business\Cleaner\YvesAssetsCleaner;
 use Spryker\Zed\SetupFrontend\Business\Model\Builder\Builder;
 use Spryker\Zed\SetupFrontend\Business\Model\Builder\BuilderInterface;
 use Spryker\Zed\SetupFrontend\Business\Model\Cleaner\Cleaner;
 use Spryker\Zed\SetupFrontend\Business\Model\Cleaner\CleanerInterface;
-use Spryker\Zed\SetupFrontend\Business\Model\Cleaner\YvesAssetsCleaner;
-use Spryker\Zed\SetupFrontend\Business\Model\Generator\YvesAssetsBuildConfigGenerator;
-use Spryker\Zed\SetupFrontend\Business\Model\Generator\YvesAssetsBuildConfigGeneratorInterface;
 use Spryker\Zed\SetupFrontend\Business\Model\Installer\DependencyInstaller;
 use Spryker\Zed\SetupFrontend\Business\Model\Installer\PathFinder\InstallPathFinder;
 use Spryker\Zed\SetupFrontend\Business\Model\Installer\ProjectInstaller;
@@ -61,7 +60,7 @@ class SetupFrontendBusinessFactory extends AbstractBusinessFactory
     {
         return new YvesAssetsCleaner(
             $this->getConfig(),
-            $this->getStore()
+            $this->getStoreName()
         );
     }
 
@@ -99,7 +98,7 @@ class SetupFrontendBusinessFactory extends AbstractBusinessFactory
     {
         return new BuilderCommandResolver(
             $this->getConfig(),
-            $this->getStore()
+            $this->getStoreName()
         );
     }
 
@@ -139,24 +138,24 @@ class SetupFrontendBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\SetupFrontend\Business\Model\Generator\YvesAssetsBuildConfigGeneratorInterface
+     * @return \Spryker\Zed\SetupFrontend\Business\BuildConfigProvider\YvesAssetsBuildConfigProviderInterface
      */
-    public function createYvesAssetsBuildConfigGenerator(): YvesAssetsBuildConfigGeneratorInterface
+    public function createYvesAssetsBuildConfigProvider(): YvesAssetsBuildConfigProviderInterface
     {
-        return new YvesAssetsBuildConfigGenerator(
+        return new YvesAssetsBuildConfigProvider(
             $this->getConfig(),
             $this->getUtilEncodingService(),
-            $this->getStore(),
+            $this->getStoreName(),
             $this->getYvesFrontendStoreConfigExpanderPlugins()
         );
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\Store
+     * @return string
      */
-    public function getStore(): Store
+    public function getStoreName(): string
     {
-        return $this->getProvidedDependency(SetupFrontendDependencyProvider::STORE);
+        return $this->getProvidedDependency(SetupFrontendDependencyProvider::STORE_NAME);
     }
 
     /**

@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\SetupFrontend\Business\Model\Resolver;
 
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\SetupFrontend\SetupFrontendConfig;
 
 class BuilderCommandResolver implements BuilderCommandResolverInterface
@@ -20,20 +19,20 @@ class BuilderCommandResolver implements BuilderCommandResolverInterface
     protected $setupFrontendConfig;
 
     /**
-     * @var \Spryker\Shared\Kernel\Store
+     * @var string
      */
-    protected $store;
+    protected $storeName;
 
     /**
      * @param \Spryker\Zed\SetupFrontend\SetupFrontendConfig $setupFrontendConfig
-     * @param \Spryker\Shared\Kernel\Store $store
+     * @param string $storeName
      */
     public function __construct(
         SetupFrontendConfig $setupFrontendConfig,
-        Store $store
+        string $storeName
     ) {
         $this->setupFrontendConfig = $setupFrontendConfig;
-        $this->store = $store;
+        $this->storeName = $storeName;
     }
 
     /**
@@ -43,7 +42,7 @@ class BuilderCommandResolver implements BuilderCommandResolverInterface
     {
         return str_replace(
             static::STORE_KEY,
-            strtolower($this->store->getStoreName()),
+            strtolower($this->storeName),
             $this->setupFrontendConfig->getYvesBuildCommand()
         );
     }
