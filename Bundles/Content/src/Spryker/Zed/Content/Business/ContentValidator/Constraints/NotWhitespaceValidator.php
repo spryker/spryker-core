@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
-class NotEmptyValidator extends ConstraintValidator
+class NotWhitespaceValidator extends ConstraintValidator
 {
     /**
      * @param mixed $value
@@ -25,13 +25,13 @@ class NotEmptyValidator extends ConstraintValidator
     {
         $trimmedValue = trim($value);
 
-        if (!$constraint instanceof NotEmpty) {
+        if (!$constraint instanceof NotWhitespace) {
             throw new UnexpectedTypeException($constraint, __NAMESPACE__ . '\NotEmpty');
         }
 
         if (empty($trimmedValue) && $trimmedValue != '0') {
             $this->context->buildViolation($constraint->message)
-                ->setCode(NotEmpty::IS_EMPTY_ERROR)
+                ->setCode(NotWhitespace::IS_EMPTY_ERROR)
                 ->addViolation();
         }
     }

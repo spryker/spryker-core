@@ -9,7 +9,7 @@ namespace Spryker\Zed\Content\Business\ContentValidator\Constraints;
 
 use Symfony\Component\Validator\Constraint;
 
-class NotEmpty extends Constraint
+class NotWhitespace extends Constraint
 {
     public const IS_EMPTY_ERROR = 'is_empty_error';
 
