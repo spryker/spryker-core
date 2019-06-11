@@ -11,6 +11,7 @@ use Spryker\Glue\CartPermissionGroupsRestApi\Dependency\Client\CartPermissionGro
 use Spryker\Glue\CartPermissionGroupsRestApi\Processor\CartPermissionGroup\CartPermissionGroupReader;
 use Spryker\Glue\CartPermissionGroupsRestApi\Processor\CartPermissionGroup\CartPermissionGroupReaderInterface;
 use Spryker\Glue\CartPermissionGroupsRestApi\Processor\CartPermissionGroup\Relationship\CartPermissionGroupByQuoteResourceRelationshipExpander;
+use Spryker\Glue\CartPermissionGroupsRestApi\Processor\CartPermissionGroup\Relationship\CartPermissionGroupByShareDetailResourceRelationshipExpander;
 use Spryker\Glue\CartPermissionGroupsRestApi\Processor\CartPermissionGroup\Relationship\CartPermissionGroupResourceRelationshipExpanderInterface;
 use Spryker\Glue\CartPermissionGroupsRestApi\Processor\Mapper\CartPermissionGroupMapper;
 use Spryker\Glue\CartPermissionGroupsRestApi\Processor\Mapper\CartPermissionGroupMapperInterface;
@@ -56,6 +57,16 @@ class CartPermissionGroupsRestApiFactory extends AbstractFactory
     {
         return new CartPermissionGroupReader(
             $this->getSharedCartClient(),
+            $this->createCartPermissionGroupResponseBuilder()
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\CartPermissionGroupsRestApi\Processor\CartPermissionGroup\Relationship\CartPermissionGroupResourceRelationshipExpanderInterface
+     */
+    public function createCartPermissionGroupByShareDetailResourceRelationshipExpander(): CartPermissionGroupResourceRelationshipExpanderInterface
+    {
+        return new CartPermissionGroupByShareDetailResourceRelationshipExpander(
             $this->createCartPermissionGroupResponseBuilder()
         );
     }

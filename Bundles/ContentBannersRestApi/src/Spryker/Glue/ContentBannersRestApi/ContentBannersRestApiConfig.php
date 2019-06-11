@@ -17,8 +17,8 @@ class ContentBannersRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_CODE_CONTENT_NOT_FOUND = '2201';
     public const RESPONSE_DETAILS_CONTENT_NOT_FOUND = 'Content not found.';
 
-    public const RESPONSE_CODE_CONTENT_ID_IS_MISSING = '2202';
-    public const RESPONSE_DETAILS_CONTENT_ID_IS_MISSING = 'Content id is missing.';
+    public const RESPONSE_CODE_CONTENT_KEY_IS_MISSING = '2202';
+    public const RESPONSE_DETAILS_CONTENT_KEY_IS_MISSING = 'Content key is missing.';
 
     public const RESPONSE_CODE_CONTENT_TYPE_INVALID = '2203';
     public const RESPONSE_DETAILS_CONTENT_TYPE_INVALID = 'Content type is invalid.';
