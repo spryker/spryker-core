@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\PriceProductSchedule\Business\Facade;
 use ArrayObject;
 use Codeception\Test\Unit;
 use DateTime;
+use DateTimeInterface;
 use Generated\Shared\DataBuilder\PriceProductScheduleListBuilder;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
@@ -35,8 +36,6 @@ use Generated\Shared\Transfer\StoreTransfer;
  */
 class PriceProductScheduleImportTest extends Unit
 {
-    protected const FORMAT_DATE = 'Y/m/d';
-
     /**
      * @var \SprykerTest\Zed\PriceProductSchedule\PriceProductScheduleBusinessTester
      */
@@ -188,10 +187,10 @@ class PriceProductScheduleImportTest extends Unit
             ],
             PriceProductScheduleTransfer::ACTIVE_FROM => (new DateTime('-2 days'))
                 ->setTime(0, 0, 0, 0)
-                ->format(static::FORMAT_DATE),
+                ->format(DateTimeInterface::ISO8601),
             PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('+3 days'))
                 ->setTime(0, 0, 0, 0)
-                ->format(static::FORMAT_DATE),
+                ->format(DateTimeInterface::ISO8601),
         ]);
 
         return (new PriceProductScheduledListImportRequestTransfer())
@@ -226,10 +225,10 @@ class PriceProductScheduleImportTest extends Unit
                 PriceProductScheduleImportTransfer::NET_AMOUNT => 20000,
                 PriceProductScheduleImportTransfer::ACTIVE_FROM => (new DateTime('-2 days'))
                     ->setTime(0, 0, 0, 0)
-                    ->format(static::FORMAT_DATE),
+                    ->format(DateTimeInterface::ISO8601),
                 PriceProductScheduleImportTransfer::ACTIVE_TO => (new DateTime('+3 days'))
                     ->setTime(0, 0, 0, 0)
-                    ->format(static::FORMAT_DATE),
+                    ->format(DateTimeInterface::ISO8601),
             ]);
         }
 
@@ -321,10 +320,10 @@ class PriceProductScheduleImportTest extends Unit
                         PriceProductScheduleImportTransfer::STORE_NAME => 'AT',
                         PriceProductScheduleImportTransfer::ACTIVE_FROM => (new DateTime('-2 days'))
                             ->setTime(0, 0, 0, 0)
-                            ->format(static::FORMAT_DATE),
+                            ->format(DateTimeInterface::ISO8601),
                         PriceProductScheduleImportTransfer::ACTIVE_TO => (new DateTime('+3 days'))
                             ->setTime(0, 0, 0, 0)
-                            ->format(static::FORMAT_DATE),
+                            ->format(DateTimeInterface::ISO8601),
                         PriceProductScheduleImportTransfer::GROSS_AMOUNT => 25000,
                         PriceProductScheduleImportTransfer::NET_AMOUNT => 20000,
                     ],

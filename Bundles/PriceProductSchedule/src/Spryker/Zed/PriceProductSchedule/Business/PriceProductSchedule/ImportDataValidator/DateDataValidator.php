@@ -8,7 +8,7 @@
 namespace Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\ImportDataValidator;
 
 use DateTime;
-use Exception;
+use DateTimeInterface;
 use Generated\Shared\Transfer\PriceProductScheduleImportTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleListImportErrorTransfer;
 
@@ -41,28 +41,49 @@ class DateDataValidator extends AbstractImportDataValidator
      */
     protected function isDatesValid(PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer): bool
     {
-        if ($priceProductScheduleImportTransfer->getActiveFrom() === null
-            || $priceProductScheduleImportTransfer->getActiveTo() === null) {
+        if ($this->isDatesEmpty($priceProductScheduleImportTransfer)) {
             return false;
         }
 
-        try {
-            $activeFrom = $this->convertDateStringToDateTime($priceProductScheduleImportTransfer->getActiveFrom());
-            $activeTo = $this->convertDateStringToDateTime($priceProductScheduleImportTransfer->getActiveTo());
+        $activeFrom = $this->createDateTimeFromFormat($priceProductScheduleImportTransfer->getActiveFrom());
 
-            return $activeTo > $activeFrom;
-        } catch (Exception $e) {
+        if ($activeFrom === null) {
             return false;
         }
+
+        $activeTo = $this->createDateTimeFromFormat($priceProductScheduleImportTransfer->getActiveTo());
+
+        if ($activeTo === null) {
+            return false;
+        }
+
+        return $activeTo > $activeFrom;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer
+     *
+     * @return bool
+     */
+    protected function isDatesEmpty(PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer): bool
+    {
+        return $priceProductScheduleImportTransfer->getActiveFrom() === null
+            || $priceProductScheduleImportTransfer->getActiveTo() === null;
     }
 
     /**
      * @param string $date
      *
-     * @return \DateTime
+     * @return \DateTime|null
      */
-    protected function convertDateStringToDateTime(string $date): DateTime
+    protected function createDateTimeFromFormat(string $date): ?DateTime
     {
-        return new DateTime($date);
+        $dateTime = DateTime::createFromFormat(DateTimeInterface::ISO8601, $date);
+
+        if ($dateTime === false) {
+            return null;
+        }
+
+        return $dateTime;
     }
 }
