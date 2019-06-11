@@ -75,6 +75,11 @@ class SalesOrderSaver implements SalesOrderSaverInterface
     protected $salesOrderItemMapper;
 
     /**
+     * @var array|\Spryker\Zed\SalesExtension\Dependency\Plugin\OrderPostSavePluginInterface[]
+     */
+    protected $orderPostSavePlugins;
+
+    /**
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToCountryInterface $countryFacade
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface $omsFacade
      * @param \Spryker\Zed\Sales\Business\Model\Order\OrderReferenceGeneratorInterface $orderReferenceGenerator
@@ -84,6 +89,7 @@ class SalesOrderSaver implements SalesOrderSaverInterface
      * @param \Spryker\Zed\Sales\Dependency\Plugin\OrderExpanderPreSavePluginInterface[] $orderExpanderPreSavePlugins
      * @param \Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaverPluginExecutorInterface $salesOrderSaverPluginExecutor
      * @param \Spryker\Zed\Sales\Business\Model\OrderItem\SalesOrderItemMapperInterface $salesOrderItemMapper
+     * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderPostSavePluginInterface[] $orderPostSavePlugins
      */
     public function __construct(
         SalesToCountryInterface $countryFacade,
@@ -94,7 +100,8 @@ class SalesOrderSaver implements SalesOrderSaverInterface
         Store $store,
         $orderExpanderPreSavePlugins,
         SalesOrderSaverPluginExecutorInterface $salesOrderSaverPluginExecutor,
-        SalesOrderItemMapperInterface $salesOrderItemMapper
+        SalesOrderItemMapperInterface $salesOrderItemMapper,
+        array $orderPostSavePlugins
     ) {
         $this->countryFacade = $countryFacade;
         $this->omsFacade = $omsFacade;
@@ -105,6 +112,7 @@ class SalesOrderSaver implements SalesOrderSaverInterface
         $this->orderExpanderPreSavePlugins = $orderExpanderPreSavePlugins;
         $this->salesOrderSaverPluginExecutor = $salesOrderSaverPluginExecutor;
         $this->salesOrderItemMapper = $salesOrderItemMapper;
+        $this->orderPostSavePlugins = $orderPostSavePlugins;
     }
 
     /**
@@ -137,7 +145,22 @@ class SalesOrderSaver implements SalesOrderSaverInterface
 
         $this->hydrateSaveOrderTransfer($saveOrderTransfer, $quoteTransfer, $salesOrderEntity);
 
-        // TODO: stack postSave plugins
+        $this->executeOrderPostSavePlugins($saveOrderTransfer, $quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\SaveOrderTransfer
+     */
+    protected function executeOrderPostSavePlugins(SaveOrderTransfer $saveOrderTransfer, QuoteTransfer $quoteTransfer): SaveOrderTransfer
+    {
+        foreach ($this->orderPostSavePlugins as $orderPostSavePlugin) {
+            $saveOrderTransfer = $orderPostSavePlugin->execute($saveOrderTransfer, $quoteTransfer);
+        }
+
+        return $saveOrderTransfer;
     }
 
     /**

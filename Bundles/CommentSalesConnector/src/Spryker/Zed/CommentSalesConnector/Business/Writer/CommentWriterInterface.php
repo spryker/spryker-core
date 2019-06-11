@@ -5,23 +5,18 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\SalesExtension\Dependency\Plugin;
+namespace Spryker\Zed\CommentSalesConnector\Business\Writer;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 
-interface OrderPostSavePluginInterface
+interface CommentWriterInterface
 {
     /**
-     * Specification:
-     * - Executes plugins after an order is saved.
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\SaveOrderTransfer
+     * @return void
      */
-    public function execute(SaveOrderTransfer $saveOrderTransfer, QuoteTransfer $quoteTransfer): SaveOrderTransfer;
+    public function attachCommentThreadToOrder(SaveOrderTransfer $saveOrderTransfer, QuoteTransfer $quoteTransfer): void;
 }

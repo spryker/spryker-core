@@ -19,7 +19,7 @@ use Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteExpanderPluginInterface;
  */
 class CommentThreadQuoteExpanderPlugin extends AbstractPlugin implements QuoteExpanderPluginInterface
 {
-    protected const COMMENT_THREAD_OWNER_TYPE_QUOTE = 'quote';
+    protected const COMMENT_THREAD_QUOTE_OWNER_TYPE = 'quote';
 
     /**
      * {@inheritdoc}
@@ -37,7 +37,7 @@ class CommentThreadQuoteExpanderPlugin extends AbstractPlugin implements QuoteEx
 
         $commentRequestTransfer = (new CommentRequestTransfer())
             ->setOwnerId($quoteTransfer->getIdQuote())
-            ->setOwnerType(static::COMMENT_THREAD_OWNER_TYPE_QUOTE);
+            ->setOwnerType(static::COMMENT_THREAD_QUOTE_OWNER_TYPE);
 
         $quoteTransfer->setCommentThread($this->getFacade()->findCommentThreadByOwner($commentRequestTransfer));
 
