@@ -133,7 +133,7 @@ interface CartsRestApiFacadeInterface
     /**
      * Specification:
      * - Adds an item to the cart.
-     * - quoteUuid, customerReference, sku and quantity must be set in the RestCartItemsAttributesTransfer.
+     * - quoteUuid, customerReference, and sku must be set in the RestCartItemsAttributesTransfer.
      * - Checks user permission to add an item to shared cart if RestCartItemsAttributesTransfer.Customer.CompanyUserTransfer.idCompanyUser is set.
      *
      * @api
@@ -149,7 +149,7 @@ interface CartsRestApiFacadeInterface
     /**
      * Specification:
      * - Adds an item to the cart.
-     * - quoteUuid, CustomerTransfer.customerReference, sku and quantity must be set in the CartItemRequestTransfer.
+     * - quoteUuid, CustomerTransfer.customerReference and sku must be set in the CartItemRequestTransfer.
      * - Checks user permission to add an item to shared cart if RestCartItemsAttributesTransfer.Customer.CompanyUserTransfer.idCompanyUser is set.
      *
      * @api
