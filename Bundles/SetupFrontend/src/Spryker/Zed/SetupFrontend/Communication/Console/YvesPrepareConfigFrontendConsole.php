@@ -16,16 +16,16 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class YvesPrepareConfigFrontendConsole extends Console
 {
-    public const COMMAND_NAME = 'frontend:yves:prepare-config';
-    public const DESCRIPTION = 'This command will generate configuration for Yves frontend building.';
+    protected const COMMAND_NAME = 'frontend:yves:prepare-config';
+    protected const DESCRIPTION = 'This command will generate configuration for Yves frontend building.';
 
     /**
      * @return void
      */
     protected function configure(): void
     {
-        $this->setName(self::COMMAND_NAME);
-        $this->setDescription(self::DESCRIPTION);
+        $this->setName(static::COMMAND_NAME);
+        $this->setDescription(static::DESCRIPTION);
 
         parent::configure();
     }

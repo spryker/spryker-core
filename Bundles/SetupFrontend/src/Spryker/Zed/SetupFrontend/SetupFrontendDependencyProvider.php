@@ -28,6 +28,8 @@ class SetupFrontendDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container): Container
     {
+        $container = parent::provideBusinessLayerDependencies($container);
+
         $container = $this->addStore($container);
         $container = $this->addUtilEncodingService($container);
         $container = $this->addYvesFrontendStoreConfigExpanderPlugins($container);
@@ -80,7 +82,7 @@ class SetupFrontendDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\SetupFrontendExtension\Dependency\YvesFrontendStoreConfigExpanderPluginInterface[]
+     * @return \Spryker\Zed\SetupFrontendExtension\Dependency\Plugin\YvesFrontendStoreConfigExpanderPluginInterface[]
      */
     protected function getYvesFrontendStoreConfigExpanderPlugins(): array
     {

@@ -168,7 +168,7 @@ class SetupFrontendBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\SetupFrontendExtension\Dependency\YvesFrontendStoreConfigExpanderPluginInterface[]
+     * @return \Spryker\Zed\SetupFrontendExtension\Dependency\Plugin\YvesFrontendStoreConfigExpanderPluginInterface[]
      */
     public function getYvesFrontendStoreConfigExpanderPlugins(): array
     {

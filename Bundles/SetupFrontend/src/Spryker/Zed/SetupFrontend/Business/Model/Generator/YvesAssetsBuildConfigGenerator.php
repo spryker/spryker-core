@@ -32,7 +32,7 @@ class YvesAssetsBuildConfigGenerator implements YvesAssetsBuildConfigGeneratorIn
     protected $utilEncodingService;
 
     /**
-     * @var array|\Spryker\Zed\SetupFrontendExtension\Dependency\YvesFrontendStoreConfigExpanderPluginInterface[]
+     * @var array|\Spryker\Zed\SetupFrontendExtension\Dependency\Plugin\YvesFrontendStoreConfigExpanderPluginInterface[]
      */
     protected $yvesFrontendStoreConfigExpanderPlugins;
 
@@ -40,7 +40,7 @@ class YvesAssetsBuildConfigGenerator implements YvesAssetsBuildConfigGeneratorIn
      * @param \Spryker\Zed\SetupFrontend\SetupFrontendConfig $setupFrontendConfig
      * @param \Spryker\Zed\SetupFrontend\Dependency\Service\SetupFrontendToUtilEncodingServiceInterface $utilEncodingService
      * @param \Spryker\Shared\Kernel\Store $store
-     * @param \Spryker\Zed\SetupFrontendExtension\Dependency\YvesFrontendStoreConfigExpanderPluginInterface[] $yvesFrontendStoreConfigExpanderPlugins
+     * @param \Spryker\Zed\SetupFrontendExtension\Dependency\Plugin\YvesFrontendStoreConfigExpanderPluginInterface[] $yvesFrontendStoreConfigExpanderPlugins
      */
     public function __construct(
         SetupFrontendConfig $setupFrontendConfig,
@@ -125,14 +125,19 @@ class YvesAssetsBuildConfigGenerator implements YvesAssetsBuildConfigGeneratorIn
 
         $encodedConfigFileData = file_get_contents($configFileName);
 
+        if ($encodedConfigFileData === false) {
+            $logger->info(sprintf(
+                'Config file "%s" is not readable.',
+                $configFileName
+            ));
+
+            return [];
+        }
+
         $logger->info(sprintf(
             'Config file "%s" successfully loaded.',
             $configFileName
         ));
-
-        if (!$encodedConfigFileData) {
-            return [];
-        }
 
         return $this->utilEncodingService->decodeJson($encodedConfigFileData, true);
     }
@@ -153,15 +158,20 @@ class YvesAssetsBuildConfigGenerator implements YvesAssetsBuildConfigGeneratorIn
             $encodedConfigFileData
         );
 
-        if ($isFileUpdated) {
-            $logger->info(sprintf(
-                'Config file "%s" successfully stored.',
+        if ($isFileUpdated === false) {
+            $logger->error(sprintf(
+                'Config file "%s" is not available for update.',
                 $configFileName
             ));
 
-            return true;
+            return false;
         }
 
-        return false;
+        $logger->info(sprintf(
+            'Config file "%s" successfully stored.',
+            $configFileName
+        ));
+
+        return true;
     }
 }

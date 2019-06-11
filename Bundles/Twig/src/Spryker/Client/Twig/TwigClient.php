@@ -15,7 +15,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class TwigClient extends AbstractClient implements TwigClientInterface
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      *
      * @api
      *
@@ -29,7 +29,7 @@ class TwigClient extends AbstractClient implements TwigClientInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      *
      * @api
      *

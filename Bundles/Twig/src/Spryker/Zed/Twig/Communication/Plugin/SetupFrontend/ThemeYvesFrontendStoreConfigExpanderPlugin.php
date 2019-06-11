@@ -8,7 +8,7 @@
 namespace Spryker\Zed\Twig\Communication\Plugin\SetupFrontend;
 
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\SetupFrontendExtension\Dependency\YvesFrontendStoreConfigExpanderPluginInterface;
+use Spryker\Zed\SetupFrontendExtension\Dependency\Plugin\YvesFrontendStoreConfigExpanderPluginInterface;
 
 /**
  * @method \Spryker\Zed\Twig\Communication\TwigCommunicationFactory getFactory()
@@ -21,7 +21,7 @@ class ThemeYvesFrontendStoreConfigExpanderPlugin extends AbstractPlugin implemen
     protected const YVES_ASSETS_CONFIG_DEFAULT_THEME_KEY = 'defaultTheme';
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      * - Expands config data with current and default themes for current store.
      *
      * @api
