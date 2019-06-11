@@ -25,13 +25,13 @@ class ContentFileToContentStorageClientBridge implements ContentFileToContentSto
     }
 
     /**
-     * @param int $id
+     * @param string $contentKey
      * @param string $locale
      *
      * @return \Generated\Shared\Transfer\ContentTypeContextTransfer|null
      */
-    public function findContentTypeContext(int $id, string $locale): ?ContentTypeContextTransfer
+    public function findContentTypeContextByKey(string $contentKey, string $locale): ?ContentTypeContextTransfer
     {
-        return $this->contentStorageClient->findContentTypeContext($id, $locale);
+        return $this->contentStorageClient->findContentTypeContextByKey($contentKey, $locale);
     }
 }
