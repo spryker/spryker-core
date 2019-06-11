@@ -58,8 +58,8 @@ class QuantityComparator implements QuantityComparatorInterface
     {
         $maxPrecision = $this->precisionCalculator->getMaxPrecision($dividendQuantity, $divisorQuantity);
 
-        $intDividendQuantity = $this->quantityConverter->convertToInt($dividendQuantity, $maxPrecision);
-        $intDivisorQuantity = $this->quantityConverter->convertToInt($divisorQuantity, $maxPrecision);
+        $intDividendQuantity = $this->quantityConverter->convertWithExponentialBase($dividendQuantity, $maxPrecision);
+        $intDivisorQuantity = $this->quantityConverter->convertWithExponentialBase($divisorQuantity, $maxPrecision);
 
         return $this->isQuantityEqual(
             $intDividendQuantity % $intDivisorQuantity,

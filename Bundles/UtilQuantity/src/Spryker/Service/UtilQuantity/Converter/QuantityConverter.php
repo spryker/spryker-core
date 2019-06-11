@@ -17,7 +17,7 @@ class QuantityConverter implements QuantityConverterInterface
      *
      * @return int
      */
-    public function convertToInt(float $value, int $precision): int
+    public function convertWithExponentialBase(float $value, int $precision): int
     {
         return (int)round($value * pow(static::EXPONENTIAL_BASE, $precision));
     }

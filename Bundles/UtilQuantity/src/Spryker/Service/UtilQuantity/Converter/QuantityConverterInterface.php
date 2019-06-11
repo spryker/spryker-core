@@ -15,5 +15,5 @@ interface QuantityConverterInterface
      *
      * @return int
      */
-    public function convertToInt(float $value, int $precision): int;
+    public function convertWithExponentialBase(float $value, int $precision): int;
 }
