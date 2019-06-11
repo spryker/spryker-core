@@ -12,9 +12,14 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class StorageConfig extends AbstractBundleConfig
 {
+    /**
+     * @deprecated Use `Spryker\Zed\StorageRedis\StorageRedisConfig::DEFAULT_REDIS_DATABASE` instead.
+     */
     public const DEFAULT_REDIS_DATABASE = 0;
 
     /**
+     * @deprecated Use `Spryker\Zed\StorageRedis\StorageRedisConfig::getRedisPort()` instead.
+     *
      * @return int
      */
     public function getRedisPort()
@@ -23,6 +28,8 @@ class StorageConfig extends AbstractBundleConfig
     }
 
     /**
+     * @deprecated Use `Spryker\Zed\StorageRedis\StorageRedisConfig::getRdbDumpPath()` instead.
+     *
      * Specification:
      * - Returns the path where the rdb dump file should be copied to.
      *
