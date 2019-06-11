@@ -26,7 +26,7 @@ class NotWhitespaceValidator extends ConstraintValidator
         $trimmedValue = trim($value);
 
         if (!$constraint instanceof NotWhitespace) {
-            throw new UnexpectedTypeException($constraint, __NAMESPACE__ . '\NotEmpty');
+            throw new UnexpectedTypeException($constraint, __NAMESPACE__ . '\NotWhitespace');
         }
 
         if (empty($trimmedValue) && $trimmedValue != '0') {
