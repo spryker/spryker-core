@@ -33,21 +33,21 @@ class ContentItemQueryTest extends Unit
     public function testOrderContentItemsBySelectedItem(): void
     {
         // Arrange
-        $this->tester->createBannerContentItem();
-        $selectedContentItem = $this->tester->createBannerContentItem();
-        $this->tester->createBannerContentItem();
+        $this->tester->createBannerContentItem('br-test1');
+        $selectedContentItem = $this->tester->createBannerContentItem('br-test2');
+        $this->tester->createBannerContentItem('br-test3');
 
         // Act
         $contentQuery = SpyContentQuery::create();
-        $selectedId = sprintf('(CASE WHEN %s = %d THEN 1 END)', SpyContentTableMap::COL_ID_CONTENT, $selectedContentItem->getIdContent());
+        $selectedKey = sprintf("(CASE WHEN %s = '%s' THEN 1 END)", SpyContentTableMap::COL_KEY, $selectedContentItem->getKey());
 
         $result = $contentQuery->filterByContentTypeKey($selectedContentItem->getContentTypeKey())
-            ->withColumn($selectedId, 'selectedId')
-            ->orderBy('selectedId')
+            ->withColumn($selectedKey, 'selectedKey')
+            ->orderBy('selectedKey')
             ->orderBy(SpyContentTableMap::COL_ID_CONTENT)
             ->find();
 
         // Assert
-        $this->assertEquals($selectedContentItem->getIdContent(), $result->offsetGet(0)->getIdContent());
+        $this->assertEquals($selectedContentItem->getKey(), $result->offsetGet(0)->getKey());
     }
 }

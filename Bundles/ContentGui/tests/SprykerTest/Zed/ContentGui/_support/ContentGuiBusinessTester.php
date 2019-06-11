@@ -38,8 +38,8 @@ class ContentGuiBusinessTester extends Actor
     protected const TEMPLATE_IDENTIFIER_TOP_TITLE = 'top-title';
     protected const TEMPLATE_DISPLAY_NAME_DEFAULT = 'Default';
     protected const TEMPLATE_DISPLAY_NAME_TOP_TITLE = 'Top title';
-    protected const TWIG_FUNCTION_TEMPLATE_BANNER = '{{ content_banner(%d, \'%s\') }}';
-    protected const TWIG_FUNCTION_TEMPLATE_PRODUCT_ABSTRACT_LIST = '{{ content_product_abstract_list(%d, \'%s\') }}';
+    protected const TWIG_FUNCTION_TEMPLATE_BANNER = "{{ content_banner('%s', '%s') }}";
+    protected const TWIG_FUNCTION_TEMPLATE_PRODUCT_ABSTRACT_LIST = "{{ content_product_abstract_list('%s', '%s') }}";
     protected const TYPE_ABSTRACT_PRODUCT_LIST = 'Abstract Product List';
 
     /**
@@ -64,15 +64,18 @@ class ContentGuiBusinessTester extends Actor
     }
 
     /**
+     * @param string|null $key
+     *
      * @return \Generated\Shared\Transfer\ContentTransfer
      */
-    public function createBannerContentItem(): ContentTransfer
+    public function createBannerContentItem(?string $key = null): ContentTransfer
     {
         $data = [
             ContentTransfer::CONTENT_TERM_KEY => 'Banner',
             ContentTransfer::CONTENT_TYPE_KEY => 'Banner',
             ContentTransfer::DESCRIPTION => 'Test Banner',
             ContentTransfer::NAME => 'Test Banner',
+            ContentTransfer::KEY => $key ?? 'br-test',
             ContentTransfer::LOCALIZED_CONTENTS => [
                 [
                     LocalizedContentTransfer::PARAMETERS => '{}',
@@ -93,6 +96,7 @@ class ContentGuiBusinessTester extends Actor
             ContentTransfer::CONTENT_TYPE_KEY => 'Abstract Product List',
             ContentTransfer::DESCRIPTION => 'Test Product List',
             ContentTransfer::NAME => 'Test Product List',
+            ContentTransfer::KEY => 'apl-test',
             ContentTransfer::LOCALIZED_CONTENTS => [
                 [
                     LocalizedContentTransfer::PARAMETERS => '{}',
@@ -155,7 +159,7 @@ class ContentGuiBusinessTester extends Actor
      */
     public function getInvalidContentItemTwigExpression(): string
     {
-        return "{{ content_banner(0, 'test') }}";
+        return "{{ content_banner('test', 'test') }}";
     }
 
     /**
@@ -234,6 +238,7 @@ class ContentGuiBusinessTester extends Actor
                 . 'contenteditable="false" '
                 . 'data-type="' . $this->bannerContentTransfer->getContentTypeKey() . '" '
                 . 'data-id="' . $this->bannerContentTransfer->getIdContent() . '" '
+                . 'data-key="' . $this->bannerContentTransfer->getKey() . '" '
                 . 'data-template="default" '
                 . 'data-twig-expression="' . $this->createTwigExpression($this->bannerContentTransfer, 'default') . '">';
     }
@@ -259,6 +264,7 @@ class ContentGuiBusinessTester extends Actor
         $contentGuiConfig = $this->getConfig();
         $html = strtr($editorContentWidgetTemplate, [
             $contentGuiConfig->getParameterId() => $contentTransfer->getIdContent(),
+            $contentGuiConfig->getParameterKey() => $contentTransfer->getKey(),
             $contentGuiConfig->getParameterType() => $contentTransfer->getContentTypeKey(),
             $contentGuiConfig->getParameterName() => $contentTransfer->getName(),
             $contentGuiConfig->getParameterTwigExpression() => $this->createTwigExpression($contentTransfer, $templateIdentifier),
@@ -283,7 +289,7 @@ class ContentGuiBusinessTester extends Actor
             $twigFunctionTemplate = static::TWIG_FUNCTION_TEMPLATE_PRODUCT_ABSTRACT_LIST;
         }
 
-        return sprintf($twigFunctionTemplate, $contentTransfer->getIdContent(), $templateIdentifier);
+        return sprintf($twigFunctionTemplate, $contentTransfer->getKey(), $templateIdentifier);
     }
 
     /**
