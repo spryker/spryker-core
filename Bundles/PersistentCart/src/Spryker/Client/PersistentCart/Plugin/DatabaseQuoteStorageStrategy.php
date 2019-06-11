@@ -17,6 +17,7 @@ use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\QuoteUpdateRequestAttributesTransfer;
 use Generated\Shared\Transfer\QuoteUpdateRequestTransfer;
+use Spryker\Client\CartExtension\Dependency\Plugin\QuoteResetLockQuoteStorageStrategyPluginInterface;
 use Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Shared\Quote\QuoteConfig;
@@ -25,7 +26,7 @@ use Spryker\Shared\Quote\QuoteConfig;
  * @method \Spryker\Client\PersistentCart\PersistentCartFactory getFactory()
  * @method \Spryker\Client\PersistentCart\PersistentCartClientInterface getClient()
  */
-class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorageStrategyPluginInterface
+class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorageStrategyPluginInterface, QuoteResetLockQuoteStorageStrategyPluginInterface
 {
     /**
      * @return string
@@ -193,11 +194,11 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
      *
      * @param string $sku
      * @param string|null $groupKey
-     * @param int $quantity
+     * @param float $quantity
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function changeItemQuantity($sku, $groupKey = null, $quantity = 1)
+    public function changeItemQuantity($sku, $groupKey = null, float $quantity = 1.0)
     {
         $persistentCartChangeTransfer = $this->createPersistentCartChangeQuantityTransfer();
         $itemTransfer = new ItemTransfer();
@@ -222,11 +223,11 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
      *
      * @param string $sku
      * @param string|null $groupKey
-     * @param int $quantity
+     * @param float $quantity
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function decreaseItemQuantity($sku, $groupKey = null, $quantity = 1)
+    public function decreaseItemQuantity($sku, $groupKey = null, float $quantity = 1.0)
     {
         $persistentCartChangeTransfer = $this->createPersistentCartChangeQuantityTransfer();
         $itemTransfer = new ItemTransfer();
@@ -251,11 +252,11 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
      *
      * @param string $sku
      * @param string|null $groupKey
-     * @param int $quantity
+     * @param float $quantity
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function increaseItemQuantity($sku, $groupKey = null, $quantity = 1)
+    public function increaseItemQuantity($sku, $groupKey = null, float $quantity = 1.0)
     {
         $persistentCartChangeTransfer = $this->createPersistentCartChangeQuantityTransfer();
         $itemTransfer = new ItemTransfer();
@@ -307,6 +308,7 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
         $quoteTransfer->setCustomer($this->getFactory()->getCustomerClient()->getCustomer());
         $quoteResponseTransfer = $this->getZedStub()->validateQuote($quoteTransfer);
         $this->updateQuote($quoteResponseTransfer);
+
         return $quoteResponseTransfer;
     }
 
@@ -334,6 +336,31 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
 
         $quoteResponseTransfer = $this->getZedStub()->updateAndReloadQuote($quoteUpdateRequestTransfer);
         $this->updateQuote($quoteResponseTransfer);
+
+        return $quoteResponseTransfer;
+    }
+
+    /**
+     * Specification:
+     * - Makes zed request.
+     * - Loads customer quote from database.
+     * - Executes QuoteLockPreResetPluginInterface plugins before unlock.
+     * - Unlocks quote by setting `isLocked` transfer property to false.
+     * - Reloads all items in cart as new, it recreates all items transfer, reads new prices, options, bundles.
+     * - Save updated quote to database.
+     * - Stores quote in session internally after zed request.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function resetQuoteLock(): QuoteResponseTransfer
+    {
+        $quoteResponseTransfer = $this->getZedStub()
+            ->resetQuoteLock($this->getQuoteClient()->getQuote());
+
+        $this->getQuoteClient()->setQuote($quoteResponseTransfer->getQuoteTransfer());
+
         return $quoteResponseTransfer;
     }
 

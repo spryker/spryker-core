@@ -20,4 +20,19 @@ class ContentProductConfig extends AbstractSharedConfig
      * Content item abstract product list
      */
     public const CONTENT_TERM_PRODUCT_ABSTRACT_LIST = 'Abstract Product List';
+
+    /**
+     * Content item abstract product list function name
+     */
+    public const TWIG_FUNCTION_NAME = 'content_product_abstract_list';
+
+    /**
+     * Content item abstract product list default template identifier
+     */
+    public const WIDGET_TEMPLATE_IDENTIFIER_DEFAULT = 'default';
+
+    /**
+     * Content item abstract product list top-title template identifier
+     */
+    public const WIDGET_TEMPLATE_IDENTIFIER_TOP_TITLE = 'top-title';
 }

@@ -9,6 +9,8 @@ namespace Spryker\Zed\ContentProductGui\Communication;
 
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Spryker\Zed\ContentProductGui\Communication\Form\Constraints\ContentProductAbstractListConstraint;
+use Spryker\Zed\ContentProductGui\Communication\Mapper\ContentGui\ContentProductContentGuiEditorConfigurationMapper;
+use Spryker\Zed\ContentProductGui\Communication\Mapper\ContentGui\ContentProductContentGuiEditorConfigurationMapperInterface;
 use Spryker\Zed\ContentProductGui\Communication\Table\Builder\ProductAbstractTableColumnContentBuilder;
 use Spryker\Zed\ContentProductGui\Communication\Table\Builder\ProductAbstractTableColumnContentBuilderInterface;
 use Spryker\Zed\ContentProductGui\Communication\Table\ProductAbstractSelectedTable;
@@ -70,6 +72,14 @@ class ContentProductGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createProductAbstractTableColumnContentBuilder(): ProductAbstractTableColumnContentBuilderInterface
     {
         return new ProductAbstractTableColumnContentBuilder($this->getProductImageFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\ContentProductGui\Communication\Mapper\ContentGui\ContentProductContentGuiEditorConfigurationMapperInterface
+     */
+    public function createContentProductContentGuiEditorMapper(): ContentProductContentGuiEditorConfigurationMapperInterface
+    {
+        return new ContentProductContentGuiEditorConfigurationMapper($this->getConfig());
     }
 
     /**

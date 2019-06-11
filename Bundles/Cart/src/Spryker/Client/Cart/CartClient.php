@@ -164,11 +164,11 @@ class CartClient extends AbstractClient implements CartClientInterface
      *
      * @param string $sku
      * @param string|null $groupKey
-     * @param int $quantity
+     * @param float $quantity
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function changeItemQuantity($sku, $groupKey = null, $quantity = 1)
+    public function changeItemQuantity($sku, $groupKey = null, float $quantity = 1.0)
     {
         return $this->getFactory()->createQuoteStorageStrategyProxy()->changeItemQuantity($sku, $groupKey, $quantity);
     }
@@ -180,11 +180,11 @@ class CartClient extends AbstractClient implements CartClientInterface
      *
      * @param string $sku
      * @param string|null $groupKey
-     * @param int $quantity
+     * @param float $quantity
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function decreaseItemQuantity($sku, $groupKey = null, $quantity = 1)
+    public function decreaseItemQuantity($sku, $groupKey = null, float $quantity = 1.0)
     {
         return $this->getFactory()->createQuoteStorageStrategyProxy()->decreaseItemQuantity($sku, $groupKey, $quantity);
     }
@@ -196,11 +196,11 @@ class CartClient extends AbstractClient implements CartClientInterface
      *
      * @param string $sku
      * @param string|null $groupKey
-     * @param int $quantity
+     * @param float $quantity
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function increaseItemQuantity($sku, $groupKey = null, $quantity = 1)
+    public function increaseItemQuantity($sku, $groupKey = null, float $quantity = 1.0)
     {
         return $this->getFactory()->createQuoteStorageStrategyProxy()->increaseItemQuantity($sku, $groupKey, $quantity);
     }
@@ -227,6 +227,22 @@ class CartClient extends AbstractClient implements CartClientInterface
     public function validateQuote()
     {
         return $this->getFactory()->createQuoteStorageStrategyProxy()->validateQuote();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function validateSpecificQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    {
+        return $this->getFactory()
+            ->createZedStub()
+            ->validateQuote($quoteTransfer);
     }
 
     /**
@@ -292,5 +308,33 @@ class CartClient extends AbstractClient implements CartClientInterface
     public function findQuoteItem(QuoteTransfer $quoteTransfer, string $sku, ?string $groupKey = null): ?ItemTransfer
     {
         return $this->getFactory()->getQuoteItemFinderPlugin()->findItem($quoteTransfer, $sku, $groupKey);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function resetQuoteLock(): QuoteResponseTransfer
+    {
+        return $this->getFactory()->createQuoteStorageStrategyProxy()->resetQuoteLock();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function lockQuote(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        return $this->getFactory()
+            ->getQuoteClient()
+            ->lockQuote($quoteTransfer);
     }
 }

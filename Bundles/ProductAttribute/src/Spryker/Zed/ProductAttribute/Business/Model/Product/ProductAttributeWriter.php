@@ -166,6 +166,7 @@ class ProductAttributeWriter implements ProductAttributeWriterInterface
     protected function sanitizeString(string $string)
     {
         $result = trim($string);
+
         return $this->sanitizeService->escapeHtml($string);
     }
 

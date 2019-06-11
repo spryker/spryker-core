@@ -8,15 +8,20 @@
 namespace SprykerTest\Zed\Checkout\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\DataBuilder\AddressBuilder;
+use Generated\Shared\DataBuilder\CurrencyBuilder;
+use Generated\Shared\DataBuilder\CustomerBuilder;
+use Generated\Shared\DataBuilder\ItemBuilder;
+use Generated\Shared\DataBuilder\PaymentBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
+use Generated\Shared\DataBuilder\ShipmentBuilder;
+use Generated\Shared\DataBuilder\StoreBuilder;
+use Generated\Shared\DataBuilder\TotalsBuilder;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\ShipmentMethodTransfer;
-use Generated\Shared\Transfer\ShipmentTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
@@ -28,13 +33,9 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Orm\Zed\Stock\Persistence\SpyStock;
 use Orm\Zed\Stock\Persistence\SpyStockProduct;
 use Orm\Zed\Stock\Persistence\SpyStockQuery;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Availability\Communication\Plugin\ProductsAvailableCheckoutPreConditionPlugin;
-use Spryker\Zed\Checkout\Business\CheckoutBusinessFactory;
-use Spryker\Zed\Checkout\Business\CheckoutFacade;
 use Spryker\Zed\Checkout\CheckoutConfig;
 use Spryker\Zed\Checkout\CheckoutDependencyProvider;
-use Spryker\Zed\Checkout\Dependency\Facade\CheckoutToOmsFacadeBridge;
 use Spryker\Zed\Customer\Business\CustomerBusinessFactory;
 use Spryker\Zed\Customer\Business\CustomerFacade;
 use Spryker\Zed\Customer\Communication\Plugin\CustomerPreConditionCheckerPlugin;
@@ -42,18 +43,11 @@ use Spryker\Zed\Customer\Communication\Plugin\OrderCustomerSavePlugin;
 use Spryker\Zed\Customer\CustomerDependencyProvider;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToMailInterface;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\Locale\Persistence\LocaleQueryContainer;
-use Spryker\Zed\Oms\Business\OmsBusinessFactory;
-use Spryker\Zed\Oms\Business\OmsFacade;
 use Spryker\Zed\Oms\OmsConfig;
 use Spryker\Zed\Sales\Business\SalesBusinessFactory;
 use Spryker\Zed\Sales\Business\SalesFacade;
 use Spryker\Zed\Sales\Communication\Plugin\SalesOrderSaverPlugin;
-use Spryker\Zed\Sales\Dependency\Facade\SalesToCountryBridge;
-use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsBridge;
-use Spryker\Zed\Sales\Dependency\Facade\SalesToSequenceNumberBridge;
-use Spryker\Zed\Sales\SalesConfig;
-use Spryker\Zed\Sales\SalesDependencyProvider;
+use SprykerTest\Shared\Sales\Helper\Config\TesterSalesConfig;
 
 /**
  * Auto-generated group annotations
@@ -68,11 +62,6 @@ use Spryker\Zed\Sales\SalesDependencyProvider;
 class CheckoutFacadeTest extends Unit
 {
     /**
-     * @var \Spryker\Zed\Checkout\Business\CheckoutFacade
-     */
-    protected $checkoutFacade;
-
-    /**
      * @var \SprykerTest\Zed\Checkout\CheckoutBusinessTester
      */
     protected $tester;
@@ -84,10 +73,15 @@ class CheckoutFacadeTest extends Unit
     {
         parent::setUp();
 
-        $this->checkoutFacade = new CheckoutFacade();
+        $this->tester->setDependency(CheckoutDependencyProvider::CHECKOUT_PRE_CONDITIONS, [
+            new CustomerPreConditionCheckerPlugin(),
+            new ProductsAvailableCheckoutPreConditionPlugin(),
+        ]);
 
-        $factoryMock = $this->getFactory();
-        $this->checkoutFacade->setFactory($factoryMock);
+        $this->tester->setDependency(CheckoutDependencyProvider::CHECKOUT_ORDER_SAVERS, [
+            $this->createSalesOrderSaverPlugin(),
+            $this->createCustomerOrderSavePlugin(),
+        ]);
     }
 
     /**
@@ -108,7 +102,7 @@ class CheckoutFacadeTest extends Unit
             ->withBillingAddress()
             ->build();
 
-        $result = $this->checkoutFacade->placeOrder($quoteTransfer);
+        $result = $this->tester->getFacade()->placeOrder($quoteTransfer);
 
         $this->assertTrue($result->getIsSuccess());
     }
@@ -132,7 +126,7 @@ class CheckoutFacadeTest extends Unit
             ->withBillingAddress()
             ->build();
 
-        $result = $this->checkoutFacade->placeOrder($quoteTransfer);
+        $result = $this->tester->getFacade()->placeOrder($quoteTransfer);
 
         $this->assertFalse($result->getIsSuccess());
         $this->assertEquals(1, count($result->getErrors()));
@@ -160,7 +154,7 @@ class CheckoutFacadeTest extends Unit
             ->withBillingAddress()
             ->build();
 
-        $result = $this->checkoutFacade->placeOrder($quoteTransfer);
+        $result = $this->tester->getFacade()->placeOrder($quoteTransfer);
 
         $this->assertTrue($result->getIsSuccess());
         $this->assertEquals(0, count($result->getErrors()));
@@ -182,7 +176,7 @@ class CheckoutFacadeTest extends Unit
     {
         $quoteTransfer = $this->getBaseQuoteTransfer();
 
-        $result = $this->checkoutFacade->placeOrder($quoteTransfer);
+        $result = $this->tester->getFacade()->placeOrder($quoteTransfer);
 
         $this->assertTrue($result->getIsSuccess());
         $this->assertEquals(0, count($result->getErrors()));
@@ -202,7 +196,7 @@ class CheckoutFacadeTest extends Unit
         $quoteTransfer = $this->getBaseQuoteTransfer();
         $quoteTransfer->getCustomer()->setIsGuest(true);
 
-        $result = $this->checkoutFacade->placeOrder($quoteTransfer);
+        $result = $this->tester->getFacade()->placeOrder($quoteTransfer);
 
         $this->assertTrue($result->getIsSuccess());
         $this->assertEquals(0, count($result->getErrors()));
@@ -249,7 +243,7 @@ class CheckoutFacadeTest extends Unit
 
         $quoteTransfer->addItem($item);
 
-        $result = $this->checkoutFacade->placeOrder($quoteTransfer);
+        $result = $this->tester->getFacade()->placeOrder($quoteTransfer);
 
         $this->assertFalse($result->getIsSuccess());
         $this->assertEquals(1, count($result->getErrors()));
@@ -263,7 +257,7 @@ class CheckoutFacadeTest extends Unit
     {
         $quoteTransfer = $this->getBaseQuoteTransfer();
 
-        $this->checkoutFacade->placeOrder($quoteTransfer);
+        $this->tester->getFacade()->placeOrder($quoteTransfer);
 
         $orderItem1Query = SpySalesOrderItemQuery::create()
             ->filterBySku('OSB1337');
@@ -279,8 +273,8 @@ class CheckoutFacadeTest extends Unit
         $this->assertNotNull($orderItem1);
         $this->assertNotNull($orderItem2);
 
-        $this->assertNotEquals($omsConfig->getInitialStatus(), $orderItem1->getState()->getName());
-        $this->assertEquals('waiting for payment', $orderItem2->getState()->getName());
+        $this->assertEquals($omsConfig->getInitialStatus(), $orderItem1->getState()->getName());
+        $this->assertEquals($omsConfig->getInitialStatus(), $orderItem2->getState()->getName());
     }
 
     /**
@@ -288,12 +282,14 @@ class CheckoutFacadeTest extends Unit
      */
     protected function getBaseQuoteTransfer()
     {
-        $quoteTransfer = new QuoteTransfer();
-
-        $quoteTransfer->setStore((new StoreTransfer())->setName('DE'));
-
-        $currencyTransfer = new CurrencyTransfer();
-        $currencyTransfer->setCode('EUR');
+        $storeTransfer = (new StoreBuilder())->seed([
+            StoreTransfer::NAME => 'DE',
+        ])->build();
+        $currencyTransfer = (new CurrencyBuilder())->seed([
+            CurrencyTransfer::CODE => 'EUR',
+        ])->build();
+        $quoteTransfer = (new QuoteBuilder())->build();
+        $quoteTransfer->setStore($storeTransfer);
         $quoteTransfer->setCurrency($currencyTransfer);
 
         $country = new SpyCountry();
@@ -343,119 +339,73 @@ class CheckoutFacadeTest extends Unit
             ->setSpyProduct($productConcrete2)
             ->save();
 
-        $item1 = new ItemTransfer();
-        $item1
-            ->setUnitPrice(4000)
-            ->setSku('OSB1337')
-            ->setQuantity(1)
-            ->setUnitGrossPrice(3000)
-            ->setSumGrossPrice(3000)
-            ->setName('Product1');
+        $item1 = (new ItemBuilder())->seed([
+            ItemTransfer::UNIT_PRICE => 4000,
+            ItemTransfer::SKU => 'OSB1337',
+            ItemTransfer::QUANTITY => 1,
+            ItemTransfer::UNIT_GROSS_PRICE => 3000,
+            ItemTransfer::SUM_GROSS_PRICE => 3000,
+            ItemTransfer::NAME => 'Product1',
+        ])->build();
 
-        $item2 = new ItemTransfer();
-        $item2
-            ->setUnitPrice(4000)
-            ->setSku('OSB1338')
-            ->setQuantity(1)
-            ->setUnitGrossPrice(4000)
-            ->setSumGrossPrice(4000)
-            ->setName('Product2');
+        $item2 = (new ItemBuilder())->seed([
+            ItemTransfer::UNIT_PRICE => 4000,
+            ItemTransfer::SKU => 'OSB1338',
+            ItemTransfer::QUANTITY => 1,
+            ItemTransfer::UNIT_GROSS_PRICE => 4000,
+            ItemTransfer::SUM_GROSS_PRICE => 4000,
+            ItemTransfer::NAME => 'Product2',
+        ])->build();
 
         $quoteTransfer->addItem($item1);
         $quoteTransfer->addItem($item2);
 
-        $totals = new TotalsTransfer();
-        $totals
-            ->setGrandTotal(1000)
-            ->setSubtotal(500);
+        $totals = (new TotalsBuilder())->seed([
+            TotalsTransfer::GRAND_TOTAL => 1000,
+            TotalsTransfer::SUBTOTAL => 500,
+        ])->build();
 
         $quoteTransfer->setTotals($totals);
 
-        $billingAddress = new AddressTransfer();
-        $shippingAddress = new AddressTransfer();
-
-        $billingAddress
-            ->setIso2Code('xi')
-            ->setEmail('max@mustermann.de')
-            ->setFirstName('Max')
-            ->setLastName('Mustermann')
-            ->setAddress1('Straße')
-            ->setAddress2('82')
-            ->setZipCode('12345')
-            ->setCity('Entenhausen');
-        $shippingAddress
-            ->setIso2Code('xi')
-            ->setFirstName('Max')
-            ->setLastName('Mustermann')
-            ->setEmail('max@mustermann.de')
-            ->setAddress1('Straße')
-            ->setAddress2('84')
-            ->setZipCode('12346')
-            ->setCity('Entenhausen2');
+        $billingAddress = (new AddressBuilder())->seed([
+            AddressTransfer::ISO2_CODE => 'xi',
+            AddressTransfer::EMAIL => 'max@mustermann.de',
+        ])->build();
+        $shippingAddress = (new AddressBuilder())->seed([
+            AddressTransfer::ISO2_CODE => 'xi',
+            AddressTransfer::EMAIL => 'max@mustermann.de',
+        ])->build();
 
         $quoteTransfer->setBillingAddress($billingAddress);
         $quoteTransfer->setShippingAddress($shippingAddress);
-
-        $customerTransfer = new CustomerTransfer();
-
-        $customerTransfer
-            ->setIsGuest(false)
-            ->setEmail('max@mustermann.de');
+        $customerTransfer = (new CustomerBuilder())->seed([
+            CustomerTransfer::IS_GUEST => false,
+            CustomerTransfer::EMAIL => $billingAddress->getEmail(),
+        ])->build();
 
         $quoteTransfer->setCustomer($customerTransfer);
+        $shipmentTransfer = (new ShipmentBuilder())->withMethod()->build();
 
-        $shipment = new ShipmentTransfer();
-        $shipment->setMethod(new ShipmentMethodTransfer());
+        $quoteTransfer->setShipment($shipmentTransfer);
 
-        $quoteTransfer->setShipment($shipment);
+        $paymentTransfer = (new PaymentBuilder())->seed([
+            PaymentTransfer::PAYMENT_SELECTION => 'no_payment',
+        ])->build();
 
-        $paymentTransfer = new PaymentTransfer();
-        $paymentTransfer->setPaymentSelection('no_payment');
         $quoteTransfer->setPayment($paymentTransfer);
 
         return $quoteTransfer;
     }
 
     /**
-     * @return \Spryker\Zed\Kernel\Container
+     * @return \Spryker\Zed\Sales\Communication\Plugin\SalesOrderSaverPlugin
      */
-    protected function getContainer()
+    protected function createSalesOrderSaverPlugin()
     {
-        $container = new Container();
+        $salesOrderSaverPlugin = new SalesOrderSaverPlugin();
+        $salesOrderSaverPlugin->setFacade($this->createSalesFacadeMock());
 
-        $container[CheckoutDependencyProvider::FACADE_OMS] = function (Container $container) {
-            return new CheckoutToOmsFacadeBridge(new OmsFacade());
-        };
-
-        $container[CheckoutDependencyProvider::CHECKOUT_PRE_CONDITIONS] = function (Container $container) {
-            return [
-                new CustomerPreConditionCheckerPlugin(),
-                new ProductsAvailableCheckoutPreConditionPlugin(),
-            ];
-        };
-
-        $container[CheckoutDependencyProvider::CHECKOUT_ORDER_SAVERS] = function (Container $container) {
-            $salesOrderSaverPlugin = $this->createOrderSaverPlugin();
-            $customerOrderSavePlugin = $this->createCustomerOrderSavePlugin();
-
-            return [
-                $salesOrderSaverPlugin,
-                $customerOrderSavePlugin,
-            ];
-        };
-
-        $container[CheckoutDependencyProvider::CHECKOUT_POST_HOOKS] = function (Container $container) {
-            return [];
-        };
-
-        $container[CheckoutDependencyProvider::CHECKOUT_PRE_SAVE_HOOKS] = function (Container $container) {
-            return [];
-        };
-
-        $container[CustomerDependencyProvider::QUERY_CONTAINER_LOCALE] = new LocaleQueryContainer();
-        $container[CustomerDependencyProvider::STORE] = Store::getInstance();
-
-        return $container;
+        return $salesOrderSaverPlugin;
     }
 
     /**
@@ -481,75 +431,23 @@ class CheckoutFacadeTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\Checkout\Business\CheckoutBusinessFactory
+     * @param string $testStateMachineProcessName
+     *
+     * @return \Spryker\Zed\Sales\Business\SalesFacade
      */
-    protected function getFactory()
+    protected function createSalesFacadeMock($testStateMachineProcessName = 'Test01')
     {
-        $container = $this->getContainer();
+        $this->tester->configureTestStateMachine([$testStateMachineProcessName]);
 
-        $factory = new CheckoutBusinessFactory();
-        $factory->setContainer($container);
+        $salesConfig = new TesterSalesConfig();
+        $salesConfig->setStateMachineProcessName($testStateMachineProcessName);
 
-        return $factory;
-    }
-
-    /**
-     * @return \Spryker\Zed\Sales\Communication\Plugin\SalesOrderSaverPlugin
-     */
-    protected function createOrderSaverPlugin()
-    {
-        $salesOrderSaverPlugin = new SalesOrderSaverPlugin();
-        $salesBusinessFactoryMock = $this->createSalesBusinessFactoryMock();
+        $salesBusinessFactory = new SalesBusinessFactory();
+        $salesBusinessFactory->setConfig($salesConfig);
 
         $salesFacade = new SalesFacade();
-        $salesFacade->setFactory($salesBusinessFactoryMock);
+        $salesFacade->setFactory($salesBusinessFactory);
 
-        $salesOrderSaverPlugin->setFacade($salesFacade);
-
-        return $salesOrderSaverPlugin;
-    }
-
-    /**
-     * @return \Spryker\Zed\Sales\Business\SalesBusinessFactory|\PHPUnit\Framework\MockObject\MockObject
-     */
-    protected function createSalesBusinessFactoryMock()
-    {
-        $salesConfigMock = $this->getMockBuilder(SalesConfig::class)->setMethods(['determineProcessForOrderItem'])->getMock();
-        $salesConfigMock->method('determineProcessForOrderItem')->willReturn('Nopayment01');
-
-        $salesBusinessFactoryMock = $this->getMockBuilder(SalesBusinessFactory::class)->setMethods(['getConfig'])->getMock();
-        $salesBusinessFactoryMock->method('getConfig')->willReturn($salesConfigMock);
-
-        $container = new Container();
-        $container[SalesDependencyProvider::FACADE_COUNTRY] = function (Container $container) {
-            return new SalesToCountryBridge($container->getLocator()->country()->facade());
-        };
-        $container[SalesDependencyProvider::FACADE_OMS] = function (Container $container) {
-            $omsFacade = $container->getLocator()->oms()->facade();
-
-            $omsConfigMock = $this->getMockBuilder(OmsConfig::class)->setMethods(['getActiveProcesses'])->getMock();
-            $omsConfigMock->method('getActiveProcesses')->willReturn(['Nopayment01']);
-
-            $omsBusinessFactoryMock = $this->getMockBuilder(OmsBusinessFactory::class)->setMethods(['getConfig'])->getMock();
-            $omsBusinessFactoryMock->method('getConfig')->willReturn($omsConfigMock);
-
-            $omsFacade->setFactory($omsBusinessFactoryMock);
-
-            return new SalesToOmsBridge($omsFacade);
-        };
-        $container[SalesDependencyProvider::FACADE_SEQUENCE_NUMBER] = function (Container $container) {
-            return new SalesToSequenceNumberBridge($container->getLocator()->sequenceNumber()->facade());
-        };
-        $container[SalesDependencyProvider::QUERY_CONTAINER_LOCALE] = new LocaleQueryContainer();
-        $container[SalesDependencyProvider::STORE] = Store::getInstance();
-        $container[SalesDependencyProvider::ORDER_EXPANDER_PRE_SAVE_PLUGINS] = [];
-
-        $container[SalesDependencyProvider::ORDER_ITEM_EXPANDER_PRE_SAVE_PLUGINS] = function (Container $container) {
-            return [];
-        };
-
-        $salesBusinessFactoryMock->setContainer($container);
-
-        return $salesBusinessFactoryMock;
+        return $salesFacade;
     }
 }

@@ -7,55 +7,87 @@
 
 namespace Spryker\Glue\CartsRestApi\Processor\GuestCart;
 
+use Generated\Shared\Transfer\AssignGuestQuoteRequestTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Shared\Transfer\QuoteUpdateRequestAttributesTransfer;
-use Generated\Shared\Transfer\QuoteUpdateRequestTransfer;
-use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToPersistentCartClientInterface;
-use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToQuoteClientInterface;
+use Generated\Shared\Transfer\RestCartsAttributesTransfer;
+use Spryker\Client\CartsRestApi\CartsRestApiClientInterface;
+use Spryker\Glue\CartsRestApi\Processor\Cart\CartUpdaterInterface;
+use Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\GuestCartRestResponseBuilderInterface;
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
+use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 class GuestCartUpdater implements GuestCartUpdaterInterface
 {
     /**
-     * @var \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToQuoteClientInterface
+     * @var \Spryker\Glue\CartsRestApi\Processor\GuestCart\GuestCartReaderInterface
      */
-    protected $quoteClient;
+    protected $guestCartReader;
 
     /**
-     * @var \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToPersistentCartClientInterface
+     * @var \Spryker\Glue\CartsRestApi\Processor\Cart\CartUpdaterInterface
      */
-    protected $persistentCartClient;
+    protected $cartUpdater;
 
     /**
-     * @param \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToQuoteClientInterface $quoteClient
-     * @param \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToPersistentCartClientInterface $persistentCartClient
+     * @var \Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\GuestCartRestResponseBuilderInterface
+     */
+    protected $guestCartRestResponseBuilder;
+
+    /**
+     * @var \Spryker\Client\CartsRestApi\CartsRestApiClientInterface
+     */
+    protected $cartsRestApiClient;
+
+    /**
+     * @param \Spryker\Glue\CartsRestApi\Processor\GuestCart\GuestCartReaderInterface $guestCartReader
+     * @param \Spryker\Glue\CartsRestApi\Processor\Cart\CartUpdaterInterface $cartUpdater
+     * @param \Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\GuestCartRestResponseBuilderInterface $guestCartRestResponseBuilder
+     * @param \Spryker\Client\CartsRestApi\CartsRestApiClientInterface $cartsRestApiClient
      */
     public function __construct(
-        CartsRestApiToQuoteClientInterface $quoteClient,
-        CartsRestApiToPersistentCartClientInterface $persistentCartClient
+        GuestCartReaderInterface $guestCartReader,
+        CartUpdaterInterface $cartUpdater,
+        GuestCartRestResponseBuilderInterface $guestCartRestResponseBuilder,
+        CartsRestApiClientInterface $cartsRestApiClient
     ) {
-        $this->quoteClient = $quoteClient;
-        $this->persistentCartClient = $persistentCartClient;
+        $this->guestCartReader = $guestCartReader;
+        $this->cartUpdater = $cartUpdater;
+        $this->guestCartRestResponseBuilder = $guestCartRestResponseBuilder;
+        $this->cartsRestApiClient = $cartsRestApiClient;
     }
 
     /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param \Generated\Shared\Transfer\RestCartsAttributesTransfer $restCartsAttributesTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function updateQuote(
+        RestRequestInterface $restRequest,
+        RestCartsAttributesTransfer $restCartsAttributesTransfer
+    ): RestResponseInterface {
+        return $this->cartUpdater->update($restRequest, $restCartsAttributesTransfer);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    public function updateGuestCartCustomerReferenceOnRegistration(CustomerTransfer $customerTransfer): CustomerTransfer
-    {
-        $quoteTransfer = $this->quoteClient->getQuote();
-        if (!$quoteTransfer->getIdQuote()) {
+    public function updateGuestCartCustomerReferenceOnCreate(
+        RestRequestInterface $restRequest,
+        CustomerTransfer $customerTransfer
+    ): CustomerTransfer {
+        if (!$restRequest->getRestUser()) {
             return $customerTransfer;
         }
 
-        $quoteUpdateRequestAttributesTransfer = (new QuoteUpdateRequestAttributesTransfer())
+        $assignGuestQuoteRequestTransfer = (new AssignGuestQuoteRequestTransfer())
+            ->setAnonymousCustomerReference($restRequest->getRestUser()->getNaturalIdentifier())
             ->setCustomerReference($customerTransfer->getCustomerReference());
-        $quoteUpdateRequestTransfer = (new QuoteUpdateRequestTransfer())
-            ->setIdQuote($quoteTransfer->getIdQuote())
-            ->setCustomer($customerTransfer)
-            ->setQuoteUpdateRequestAttributes($quoteUpdateRequestAttributesTransfer);
-        $this->persistentCartClient->updateQuote($quoteUpdateRequestTransfer);
+
+        $this->cartsRestApiClient->assignGuestCartToRegisteredCustomer($assignGuestQuoteRequestTransfer);
 
         return $customerTransfer;
     }
