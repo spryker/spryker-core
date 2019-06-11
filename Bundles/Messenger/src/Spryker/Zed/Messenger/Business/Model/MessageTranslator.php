@@ -14,7 +14,7 @@ class MessageTranslator implements MessageTranslatorInterface
     /**
      * @var \Symfony\Component\Translation\TranslatorInterface
      */
-    protected $symfonyTranslator;
+    protected $fallbackTranslator;
 
     /**
      * @var \Spryker\Zed\MessengerExtension\Dependency\Plugin\TranslationPluginInterface[]
@@ -22,12 +22,12 @@ class MessageTranslator implements MessageTranslatorInterface
     protected $translationPlugins;
 
     /**
-     * @param \Symfony\Component\Translation\TranslatorInterface $symfonyTranslator
      * @param \Spryker\Zed\MessengerExtension\Dependency\Plugin\TranslationPluginInterface[] $translationPlugins
+     * @param \Symfony\Component\Translation\TranslatorInterface $fallbackTranslator
      */
-    public function __construct(TranslatorInterface $symfonyTranslator, array $translationPlugins)
+    public function __construct(array $translationPlugins, TranslatorInterface $fallbackTranslator)
     {
-        $this->symfonyTranslator = $symfonyTranslator;
+        $this->fallbackTranslator = $fallbackTranslator;
         $this->translationPlugins = $translationPlugins;
     }
 
@@ -45,6 +45,6 @@ class MessageTranslator implements MessageTranslatorInterface
             }
         }
 
-        return $this->symfonyTranslator->trans($keyName, $data);
+        return $this->fallbackTranslator->trans($keyName, $data);
     }
 }

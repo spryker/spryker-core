@@ -55,7 +55,7 @@ class MessengerBusinessFactory extends AbstractBusinessFactory
      */
     public function createMessageTranslator(): MessageTranslatorInterface
     {
-        return new MessageTranslator($this->getSymfonyTranslator(), $this->getTranslationPlugins());
+        return new MessageTranslator($this->getTranslationPlugins(), $this->getSymfonyTranslator());
     }
 
     /**
