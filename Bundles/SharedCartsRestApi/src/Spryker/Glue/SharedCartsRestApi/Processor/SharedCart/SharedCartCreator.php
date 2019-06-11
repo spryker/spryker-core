@@ -17,6 +17,7 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\SharedCartsRestApi\Processor\RestResponseBuilder\SharedCartRestResponseBuilderInterface;
 use Spryker\Glue\SharedCartsRestApi\SharedCartsRestApiConfig;
+use Spryker\Glue\SharedCartsRestApiExtension\Dependency\Plugin\CompanyUserProviderPluginInterface;
 
 class SharedCartCreator implements SharedCartCreatorInterface
 {
@@ -31,23 +32,23 @@ class SharedCartCreator implements SharedCartCreatorInterface
     protected $sharedCartRestResponseBuilder;
 
     /**
-     * @var \Spryker\Glue\SharedCartsRestApiExtension\Dependency\Plugin\CompanyUserProviderPluginInterface[]
+     * @var \Spryker\Glue\SharedCartsRestApiExtension\Dependency\Plugin\CompanyUserProviderPluginInterface
      */
-    protected $companyUserProviderPlugins;
+    protected $companyUserProviderPlugin;
 
     /**
      * @param \Spryker\Client\SharedCartsRestApi\SharedCartsRestApiClientInterface $sharedCartsRestApiClient
      * @param \Spryker\Glue\SharedCartsRestApi\Processor\RestResponseBuilder\SharedCartRestResponseBuilderInterface $sharedCartRestResponseBuilder
-     * @param \Spryker\Glue\SharedCartsRestApiExtension\Dependency\Plugin\CompanyUserProviderPluginInterface[] $companyUserProviderPlugins
+     * @param \Spryker\Glue\SharedCartsRestApiExtension\Dependency\Plugin\CompanyUserProviderPluginInterface $companyUserProviderPlugin
      */
     public function __construct(
         SharedCartsRestApiClientInterface $sharedCartsRestApiClient,
         SharedCartRestResponseBuilderInterface $sharedCartRestResponseBuilder,
-        array $companyUserProviderPlugins
+        CompanyUserProviderPluginInterface $companyUserProviderPlugin
     ) {
         $this->sharedCartsRestApiClient = $sharedCartsRestApiClient;
         $this->sharedCartRestResponseBuilder = $sharedCartRestResponseBuilder;
-        $this->companyUserProviderPlugins = $companyUserProviderPlugins;
+        $this->companyUserProviderPlugin = $companyUserProviderPlugin;
     }
 
     /**
@@ -103,11 +104,7 @@ class SharedCartCreator implements SharedCartCreatorInterface
         $companyUserTransfer = (new CompanyUserTransfer())
             ->setUuid($restSharedCartsAttributesTransfer->getIdCompanyUser());
 
-        foreach ($this->companyUserProviderPlugins as $companyUserProviderPlugin) {
-            $companyUserTransfer = $companyUserProviderPlugin->provideCompanyUser($companyUserTransfer);
-        }
-
-        return $companyUserTransfer;
+        return $this->companyUserProviderPlugin->provideCompanyUser($companyUserTransfer);
     }
 
     /**

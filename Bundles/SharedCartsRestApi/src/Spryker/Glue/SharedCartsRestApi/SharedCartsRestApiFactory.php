@@ -20,6 +20,7 @@ use Spryker\Glue\SharedCartsRestApi\Processor\SharedCart\SharedCartDeleter;
 use Spryker\Glue\SharedCartsRestApi\Processor\SharedCart\SharedCartDeleterInterface;
 use Spryker\Glue\SharedCartsRestApi\Processor\SharedCart\SharedCartUpdater;
 use Spryker\Glue\SharedCartsRestApi\Processor\SharedCart\SharedCartUpdaterInterface;
+use Spryker\Glue\SharedCartsRestApiExtension\Dependency\Plugin\CompanyUserProviderPluginInterface;
 
 /**
  * @method \Spryker\Client\SharedCartsRestApi\SharedCartsRestApiClientInterface getClient()
@@ -47,7 +48,7 @@ class SharedCartsRestApiFactory extends AbstractFactory
         return new SharedCartCreator(
             $this->getClient(),
             $this->createSharedCartRestResponseBuilder(),
-            $this->getCompanyUserProviderPlugins()
+            $this->getCompanyUserProviderPlugin()
         );
     }
 
@@ -94,10 +95,10 @@ class SharedCartsRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\SharedCartsRestApiExtension\Dependency\Plugin\CompanyUserProviderPluginInterface[]
+     * @return \Spryker\Glue\SharedCartsRestApiExtension\Dependency\Plugin\CompanyUserProviderPluginInterface
      */
-    public function getCompanyUserProviderPlugins(): array
+    public function getCompanyUserProviderPlugin(): CompanyUserProviderPluginInterface
     {
-        return $this->getProvidedDependency(SharedCartsRestApiDependencyProvider::PLUGINS_COMPANY_USER_PROVIDER);
+        return $this->getProvidedDependency(SharedCartsRestApiDependencyProvider::PLUGIN_COMPANY_USER_PROVIDER);
     }
 }
