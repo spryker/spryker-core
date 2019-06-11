@@ -212,8 +212,8 @@ interface SharedCartFacadeInterface
 
     /**
      * Specification:
-     *  - Returns the share details collection by provided criteria.
-     *  - Collection is filtered by quote id and/or by company user id.
+     *  - Returns the share details collection.
+     *  - Collection can be filtered by the provided filter transfer.
      *
      * @api
      *
@@ -230,7 +230,7 @@ interface SharedCartFacadeInterface
      *
      * @api
      *
-     * {@internal will work if uuid property is present in QuoteCompanyUserTransfer.}}
+     * {@internal will work if UUID field is provided.}
      *
      * @param \Generated\Shared\Transfer\QuoteCompanyUserTransfer $quoteCompanyUserTransfer
      *

@@ -46,6 +46,7 @@ class SharedCartDeleter implements SharedCartDeleterInterface
         );
 
         $shareCartResponseTransfer = (new ShareCartResponseTransfer())->setIsSuccessful(false);
+
         if (!$quoteCompanyUserTransfer) {
             return $shareCartResponseTransfer->setErrorIdentifier(SharedSharedCartsRestApiConfig::ERROR_IDENTIFIER_SHARED_CART_NOT_FOUND);
         }

@@ -81,16 +81,6 @@ class SharedCartsRestApiToSharedCartFacadeBridge implements SharedCartsRestApiTo
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShareCartRequestTransfer $shareCartRequestTransfer
-     *
-     * @return void
-     */
-    public function addQuoteCompanyUser(ShareCartRequestTransfer $shareCartRequestTransfer): void
-    {
-        $this->sharedCartFacade->addQuoteCompanyUser($shareCartRequestTransfer);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\ShareDetailCriteriaFilterTransfer $shareDetailCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\ShareDetailCollectionTransfer

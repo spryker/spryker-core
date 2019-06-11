@@ -53,13 +53,6 @@ interface SharedCartsRestApiToSharedCartFacadeInterface
     public function findQuoteCompanyUserByUuid(QuoteCompanyUserTransfer $quoteCompanyUserTransfer): ?QuoteCompanyUserTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\ShareCartRequestTransfer $shareCartRequestTransfer
-     *
-     * @return void
-     */
-    public function addQuoteCompanyUser(ShareCartRequestTransfer $shareCartRequestTransfer): void;
-
-    /**
      * @param \Generated\Shared\Transfer\ShareDetailCriteriaFilterTransfer $shareDetailCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\ShareDetailCollectionTransfer

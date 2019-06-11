@@ -31,7 +31,7 @@ interface SharedCartsRestApiFacadeInterface
      * Specification:
      *  - Shares a quote with company user.
      *  - Quote uuid and ShareDetailTransfer should be provided in ShareCartRequestTransfer.
-     *  - Company user id and quote permission group id should be provided in ShareDetailTransfer.
+     *  - Company user id and quote permission group should be provided in ShareDetailTransfer.
      *
      * @api
      *
