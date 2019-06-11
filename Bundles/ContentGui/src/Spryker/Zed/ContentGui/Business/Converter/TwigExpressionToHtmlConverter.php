@@ -173,13 +173,13 @@ class TwigExpressionToHtmlConverter implements TwigExpressionConverterInterface
      */
     protected function findContentItem(string $twigExpression): ?ContentTransfer
     {
-        preg_match("/'[\w+\-]+'/", $twigExpression, $contentKey);
+        preg_match("/'([\w\-]+)'/", $twigExpression, $twigExpressionParams);
 
-        if (!$contentKey) {
+        if (!isset($twigExpressionParams[1])) {
             return null;
         }
 
-        $contentKey = trim($contentKey[0], "'");
+        $contentKey = $twigExpressionParams[1];
         $contentTransfer = $this->contentFacade->findContentByKey($contentKey);
 
         if (!$contentTransfer) {
@@ -199,13 +199,9 @@ class TwigExpressionToHtmlConverter implements TwigExpressionConverterInterface
      */
     protected function findTemplateIdentifier(string $twigExpression): ?string
     {
-        preg_match_all("/'[\w+\-]+'/", $twigExpression, $templateIdentifier);
+        preg_match_all("/'([\w\-]+)'/", $twigExpression, $twigExpressionParams);
 
-        if (!isset($templateIdentifier[0][1])) {
-            return null;
-        }
-
-        return trim($templateIdentifier[0][1], "'");
+        return $twigExpressionParams[1][1] ?? null;
     }
 
     /**

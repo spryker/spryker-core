@@ -102,7 +102,7 @@ class ContentByTypeTable extends AbstractTable
         $this->contentQuery->filterByContentTypeKey($this->contentType);
 
         if ($this->contentKey) {
-            $selectedKey = sprintf("(CASE WHEN %s LIKE '%s' THEN 1 END)", SpyContentTableMap::COL_KEY, $this->contentKey);
+            $selectedKey = sprintf("(CASE WHEN %s = '%s' THEN 1 END)", SpyContentTableMap::COL_KEY, $this->contentKey);
 
             $this->contentQuery
                 ->withColumn($selectedKey, 'selectedKey')
