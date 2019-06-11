@@ -88,14 +88,7 @@ var ContentItemDialog = function(
                         widgetHtmlTemplate
                     );
 
-                    // var builtText = twigTemplate.replace(/%\w+%/g, function (param) {
-                    //     return {
-                    //         '%KEY%': chosenKey,
-                    //         '%TEMPLATE%': chosenTemplateIdentifier
-                    //     }[param];
-                    // });
                     this.context.invoke('editor.restoreRange');
-                    // this.context.invoke('editor.insertText', builtText);
                     this.$ui.hideDialog(this.$dialog);
                     this.context.invoke('editor.restoreRange');
 
