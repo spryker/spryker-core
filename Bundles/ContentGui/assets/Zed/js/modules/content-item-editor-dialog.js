@@ -77,6 +77,14 @@ var ContentItemDialog = function(
                 var readyToInsert = chosenKey !== undefined && (!isTemplateListExists || isTemplateListExists && chosenTemplate);
 
                 if (readyToInsert) {
+                    if ($('span[data-twig-expression*="{{ content_"]').length > maxWidgetNumber) {
+                        alert('Limit exceeded, maximum number of widgets ' + maxWidgetNumber);
+                        return;
+                    }
+
+                    this.context.invoke('editor.restoreRange');
+                    this.$ui.hideDialog(this.$dialog);
+
                     var elementForInsert = this.getNewDomElement(
                         twigTemplate,
                         chosenId,
@@ -87,16 +95,6 @@ var ContentItemDialog = function(
                         chosenTemplateIdentifier,
                         widgetHtmlTemplate
                     );
-
-                    this.context.invoke('editor.restoreRange');
-                    this.$ui.hideDialog(this.$dialog);
-                    this.context.invoke('editor.restoreRange');
-
-                    if ($('span[data-twig-expression*="{{ content_"]').length > maxWidgetNumber) {
-                        alert('Limit exceeded, maximum number of widgets ' + maxWidgetNumber);
-                        return;
-                    }
-
                     this.addItemInEditor(elementForInsert);
                 }
 
