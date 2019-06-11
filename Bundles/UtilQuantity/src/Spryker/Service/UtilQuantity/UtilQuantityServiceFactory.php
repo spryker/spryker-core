@@ -14,6 +14,8 @@ use Spryker\Service\UtilQuantity\Calculator\QuantityCalculator;
 use Spryker\Service\UtilQuantity\Calculator\QuantityCalculatorInterface;
 use Spryker\Service\UtilQuantity\Comparator\QuantityComparator;
 use Spryker\Service\UtilQuantity\Comparator\QuantityComparatorInterface;
+use Spryker\Service\UtilQuantity\Converter\QuantityConverter;
+use Spryker\Service\UtilQuantity\Converter\QuantityConverterInterface;
 
 class UtilQuantityServiceFactory extends AbstractServiceFactory
 {
@@ -30,7 +32,10 @@ class UtilQuantityServiceFactory extends AbstractServiceFactory
      */
     public function createQuantityComparator(): QuantityComparatorInterface
     {
-        return new QuantityComparator($this->createPrecisionCalculator());
+        return new QuantityComparator(
+            $this->createPrecisionCalculator(),
+            $this->createQuantityConverter()
+        );
     }
 
     /**
@@ -39,5 +44,13 @@ class UtilQuantityServiceFactory extends AbstractServiceFactory
     public function createPrecisionCalculator(): PrecisionCalculatorInterface
     {
         return new PrecisionCalculator();
+    }
+
+    /**
+     * @return \Spryker\Service\UtilQuantity\Converter\QuantityConverterInterface
+     */
+    public function createQuantityConverter(): QuantityConverterInterface
+    {
+        return new QuantityConverter();
     }
 }
