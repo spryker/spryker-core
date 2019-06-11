@@ -39,15 +39,17 @@ class ContentItemQueryTest extends Unit
 
         // Act
         $contentQuery = SpyContentQuery::create();
-        $selectedKey = sprintf("(CASE WHEN %s = '%s' THEN 1 END)", SpyContentTableMap::COL_KEY, $selectedContentItem->getKey());
+        $keyColumn = SpyContentTableMap::COL_KEY;
+        $selectedKey = sprintf("(CASE WHEN $keyColumn = '%s' THEN 0 ELSE 1 END)", $selectedContentItem->getKey());
 
         $result = $contentQuery->filterByContentTypeKey($selectedContentItem->getContentTypeKey())
             ->withColumn($selectedKey, 'selectedKey')
             ->orderBy('selectedKey')
             ->orderBy(SpyContentTableMap::COL_ID_CONTENT)
-            ->find();
+            ->findOne();
 
         // Assert
-        $this->assertEquals($selectedContentItem->getKey(), $result->offsetGet(0)->getKey());
+        $this->assertNotNull($result);
+        $this->assertEquals($selectedContentItem->getKey(), $result->getKey());
     }
 }
