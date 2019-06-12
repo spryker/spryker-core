@@ -22,7 +22,15 @@ class CartShareLoginRequiredResourceShareClientActivatorStrategyPlugin extends A
      * @uses \Spryker\Shared\PersistentCartShare\PersistentCartShareConfig::RESOURCE_TYPE_QUOTE
      */
     protected const RESOURCE_TYPE_QUOTE = 'quote';
+
+    /**
+     * @uses \Spryker\Shared\SharedCart\SharedCartConfig::PERMISSION_GROUP_READ_ONLY
+     */
     protected const PERMISSION_GROUP_READ_ONLY = 'READ_ONLY';
+
+    /**
+     * @uses \Spryker\Shared\SharedCart\SharedCartConfig::PERMISSION_GROUP_FULL_ACCESS
+     */
     protected const PERMISSION_GROUP_FULL_ACCESS = 'FULL_ACCESS';
 
     /**

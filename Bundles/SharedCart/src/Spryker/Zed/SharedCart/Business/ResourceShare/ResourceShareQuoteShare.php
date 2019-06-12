@@ -167,7 +167,11 @@ class ResourceShareQuoteShare implements ResourceShareQuoteShareInterface
         $resourceShareDataTransfer = $resourceShareTransfer->getResourceShareData();
 
         $ownerCompanyBusinessUnitId = $resourceShareDataTransfer->getOwnerCompanyBusinessUnitId();
-        if (!$ownerCompanyBusinessUnitId || $ownerCompanyBusinessUnitId !== $companyUserTransfer->getFkCompanyBusinessUnit()) {
+        if (!$ownerCompanyBusinessUnitId) {
+            return false;
+        }
+
+        if ($ownerCompanyBusinessUnitId !== $companyUserTransfer->getFkCompanyBusinessUnit()) {
             return false;
         }
 
