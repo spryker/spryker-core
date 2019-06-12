@@ -8,6 +8,7 @@
 namespace Spryker\Client\CartsRestApi;
 
 use Generated\Shared\Transfer\AssignGuestQuoteRequestTransfer;
+use Generated\Shared\Transfer\CartItemRequestTransfer;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
@@ -87,6 +88,8 @@ interface CartsRestApiClientInterface
      *
      * @api
      *
+     * @deprecated Use updateItemQuantity() instead.
+     *
      * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
@@ -95,10 +98,25 @@ interface CartsRestApiClientInterface
 
     /**
      * Specification:
-     * - Adds an item to the cart.
-     * - Quote and customerReference must be set in the RestCartItemsAttributesTransfer.
+     * - Updates item quantity in cart.
+     * - QuoteTransfer, CustomerTransfer.customerReference, sku and quantity must be set in the CartItemRequestTransfer.
      *
      * @api
+     *
+     * @param \Generated\Shared\Transfer\CartItemRequestTransfer $cartItemRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function updateItemQuantity(CartItemRequestTransfer $cartItemRequestTransfer): QuoteResponseTransfer;
+
+    /**
+     * Specification:
+     * - Adds an item to the cart.
+     * - quoteUuid, customerReference and sku must be set in the RestCartItemsAttributesTransfer.
+     *
+     * @api
+     *
+     * @deprecated Use addToCart() instead.
      *
      * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
      *
@@ -108,10 +126,25 @@ interface CartsRestApiClientInterface
 
     /**
      * Specification:
-     * - Removes item from cart.
-     * - QuoteTransfer, customerReference, sku and quantity must be set in the RestCartItemsAttributesTransfer.
+     * - Adds an item to the cart.
+     * - quoteUuid, CustomerTransfer.customerReference and sku must be set in the CartItemRequestTransfer.
      *
      * @api
+     *
+     * @param \Generated\Shared\Transfer\CartItemRequestTransfer $cartItemRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function addToCart(CartItemRequestTransfer $cartItemRequestTransfer): QuoteResponseTransfer;
+
+    /**
+     * Specification:
+     * - Removes item from cart.
+     * - quoteUuid, customerReference, sku must be set in the RestCartItemsAttributesTransfer.
+     *
+     * @api
+     *
+     * @deprecated Use removeItem() instead.
      *
      * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
      *
@@ -121,16 +154,44 @@ interface CartsRestApiClientInterface
 
     /**
      * Specification:
-     * - Adds an item to the cart of guest user.
-     * - sku and customerReference must be set in the RestCartItemsAttributesTransfer.
+     * - Removes item from cart.
+     * - quoteUuid, CustomerTransfer.customerReference, sku must be set in the CartItemRequestTransfer.
      *
      * @api
+     *
+     * @param \Generated\Shared\Transfer\CartItemRequestTransfer $cartItemRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function removeItem(CartItemRequestTransfer $cartItemRequestTransfer): QuoteResponseTransfer;
+
+    /**
+     * Specification:
+     * - Adds an item to the cart of guest user.
+     * - sku, quantity and customerReference must be set in the RestCartItemsAttributesTransfer.
+     *
+     * @api
+     *
+     * @deprecated Use addToGuestCart() instead.
      *
      * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function addItemToGuestCart(RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer): QuoteResponseTransfer;
+
+    /**
+     * Specification:
+     * - Adds an item to the cart of guest user.
+     * - sku, quantity and CustomerTransfer.customerReference must be set in the CartItemRequestTransfer.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartItemRequestTransfer $cartItemRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function addToGuestCart(CartItemRequestTransfer $cartItemRequestTransfer): QuoteResponseTransfer;
 
     /**
      * Specification:
