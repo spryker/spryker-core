@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ContentTransfer;
 use Spryker\Zed\ContentGui\ContentGuiConfig;
 use Spryker\Zed\ContentGui\Dependency\Facade\ContentGuiToContentFacadeInterface;
 use Spryker\Zed\ContentGui\Dependency\Facade\ContentGuiToTranslatorFacadeInterface;
-use Spryker\Zed\ContentGuiExtension\Dependency\Plugin\ContentGuiEditorPluginInterface;
 
 class TwigExpressionToHtmlConverter implements TwigExpressionConverterInterface
 {
@@ -65,27 +64,16 @@ class TwigExpressionToHtmlConverter implements TwigExpressionConverterInterface
         }
 
         foreach ($this->contentEditorPlugins as $contentEditorPlugin) {
-            $html = $this->convertTwigExpressionsToHtml($html, $contentEditorPlugin);
+            $twigExpressions = $this->findTwigExpressions($html, $contentEditorPlugin->getTwigFunctionTemplate());
+
+            if (!$twigExpressions) {
+                continue;
+            }
+
+            $html = $this->replaceTwigExpressions($html, $twigExpressions, $contentEditorPlugin->getTemplates());
         }
 
         return $html;
-    }
-
-    /**
-     * @param string $html
-     * @param \Spryker\Zed\ContentGuiExtension\Dependency\Plugin\ContentGuiEditorPluginInterface $contentEditorPlugin
-     *
-     * @return string
-     */
-    protected function convertTwigExpressionsToHtml(string $html, ContentGuiEditorPluginInterface $contentEditorPlugin): string
-    {
-        $twigExpressions = $this->findTwigExpressions($html, $contentEditorPlugin->getTwigFunctionTemplate());
-
-        if (!$twigExpressions) {
-            return $html;
-        }
-
-        return $this->replaceTwigExpressions($html, $twigExpressions, $contentEditorPlugin->getTemplates());
     }
 
     /**
