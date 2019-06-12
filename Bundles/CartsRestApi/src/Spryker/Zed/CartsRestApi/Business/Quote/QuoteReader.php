@@ -71,7 +71,6 @@ class QuoteReader implements QuoteReaderInterface
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $quoteResponseTransfer
-                ->setIsSuccessful(false)
                 ->addError((new QuoteErrorTransfer())->setErrorIdentifier(CartsRestApiSharedConfig::ERROR_IDENTIFIER_CART_NOT_FOUND));
         }
         $quoteResponseTransfer->getQuoteTransfer()->setCustomer($quoteTransfer->getCustomer());

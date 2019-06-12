@@ -1,4 +1,4 @@
-"Abstract Product List","Abstract Product List"
+"Abstract Product List","Abstrakte Produktliste"
 Actions,Actions
 "Add more products","Add more products"
 Delete,Delete
@@ -11,3 +11,5 @@ Selected,Selected
 SKU,SKU
 Status,Status
 Stores,Stores
+"content_product_abstract_list.template.default","Standard"
+"content_product_abstract_list.template.top-title","Titel oben"
