@@ -62,11 +62,9 @@ class UrlRepository extends AbstractRepository implements UrlRepositoryInterface
             ->setIgnoreCase(true);
 
         if ($urlTransfer->getUrl() !== null) {
-            $urlQuery->filterByUrl($urlTransfer->getUrl());
-        } else {
-            $urlQuery->filterByIdUrl($urlTransfer->getIdUrl());
+            return $urlQuery->filterByUrl($urlTransfer->getUrl());
         }
 
-        return $urlQuery;
+        return $urlQuery->filterByIdUrl($urlTransfer->getIdUrl());
     }
 }
