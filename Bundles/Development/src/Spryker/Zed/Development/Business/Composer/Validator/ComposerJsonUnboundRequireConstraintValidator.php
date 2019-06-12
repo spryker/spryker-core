@@ -27,6 +27,9 @@ class ComposerJsonUnboundRequireConstraintValidator implements ComposerJsonValid
         }
 
         foreach ($composerJsonArray[static::REQUIRE] as $packageName => $version) {
+            if (preg_match('/^ext-/', $packageName)) {
+                continue;
+            }
             if ($version === '*') {
                 $validationMessageTransfer = new ValidationMessageTransfer();
                 $validationMessageTransfer->setMessage(sprintf('Package "%s" has an unbound version constraint (*).', $packageName));

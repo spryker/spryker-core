@@ -38,7 +38,7 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
      * @param array $states
      * @param string $processName
      *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria|\Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
     public function querySalesOrderItemsByState(array $states, $processName)
     {
@@ -85,7 +85,7 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
      *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
      *
-     * @return \Orm\Zed\Oms\Persistence\SpyOmsTransitionLogQuery
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria|\Orm\Zed\Oms\Persistence\SpyOmsTransitionLogQuery
      */
     public function queryLogForOrder(SpySalesOrder $order)
     {
@@ -121,7 +121,7 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
      *
      * @param \DateTime $now
      *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria|\Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
     public function querySalesOrderItemsWithExpiredTimeouts(DateTime $now)
     {
@@ -140,7 +140,7 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
      * @param string $sku
      * @param bool $returnTest
      *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
     public function sumProductQuantitiesForAllSalesOrderItemsBySku(array $states, $sku, $returnTest = true)
     {
@@ -450,7 +450,7 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     /**
      * @api
      *
-     * @return \Orm\Zed\Oms\Persistence\SpyOmsProductReservationStoreQuery
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria|\Orm\Zed\Oms\Persistence\SpyOmsProductReservationStoreQuery
      */
     public function queryMaxReservationChangeVersion()
     {

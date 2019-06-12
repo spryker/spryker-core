@@ -29,7 +29,7 @@
         <property name="fkProductMeasurementBaseUnit" type="int" />
         <property name="productMeasurementBaseUnit" type="ProductMeasurementBaseUnit" />
         <property name="productMeasurementUnit" type="ProductMeasurementUnit" />
-        <property name="value" type="int" />
+        <property name="value" type="float" />
         <property name="storeRelation" type="StoreRelation" />
     </transfer>
 

@@ -11,8 +11,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\TaxStorage\Business\TaxStorageBusinessFactory getFactory()
- * @method \Spryker\Zed\TaxStorage\Persistence\TaxStorageEntityManager getEntityManager()
- * @method \Spryker\Zed\TaxStorage\Persistence\TaxStorageRepository getRepository()
+ * @method \Spryker\Zed\TaxStorage\Persistence\TaxStorageEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\TaxStorage\Persistence\TaxStorageRepositoryInterface getRepository()
  */
 class TaxStorageFacade extends AbstractFacade implements TaxStorageFacadeInterface
 {

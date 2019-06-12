@@ -41,7 +41,8 @@ class TaxProductStorageMapper
         $synchronizationDataTransfers = [];
 
         foreach ($taxProductStorageEntities as $taxProductStorageEntity) {
-            $data = json_encode($taxProductStorageEntity->getData());
+            /** @var string $data */
+            $data = $taxProductStorageEntity->getData();
             $synchronizationDataTransfers[] = (new SynchronizationDataTransfer())
                 ->setData($data)
                 ->setKey($taxProductStorageEntity->getKey());
