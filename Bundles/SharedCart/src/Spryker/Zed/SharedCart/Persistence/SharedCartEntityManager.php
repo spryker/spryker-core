@@ -198,20 +198,23 @@ class SharedCartEntityManager extends AbstractEntityManager implements SharedCar
     /**
      * @param \Generated\Shared\Transfer\ShareDetailTransfer $shareDetailTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\QuoteCompanyUserTransfer|null
      */
-    public function updateQuoteCompanyUserQuotePermissionGroup(ShareDetailTransfer $shareDetailTransfer): void
+    public function updateQuoteCompanyUserQuotePermissionGroup(ShareDetailTransfer $shareDetailTransfer): ?QuoteCompanyUserTransfer
     {
-        $quoteCompanyUser = $this->getFactory()
+        $quoteCompanyUserEntity = $this->getFactory()
             ->createQuoteCompanyUserQuery()
             ->filterByIdQuoteCompanyUser($shareDetailTransfer->getIdQuoteCompanyUser())
             ->findOne();
 
-        if (!$quoteCompanyUser) {
-            return;
+        if (!$quoteCompanyUserEntity) {
+            return null;
         }
 
-        $quoteCompanyUser->setFkQuotePermissionGroup($shareDetailTransfer->getQuotePermissionGroup()->getIdQuotePermissionGroup());
-        $quoteCompanyUser->save();
+        $quoteCompanyUserEntity->setFkQuotePermissionGroup($shareDetailTransfer->getQuotePermissionGroup()->getIdQuotePermissionGroup());
+        $quoteCompanyUserEntity->save();
+
+        return $this->getFactory()->createQuoteCompanyUserMapper()
+            ->mapQuoteCompanyUserEntityToQuoteCompanyUserTransfer($quoteCompanyUserEntity, new QuoteCompanyUserTransfer());
     }
 }

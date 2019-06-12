@@ -41,6 +41,7 @@ class SharedCartsRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_CODE_SHARE_CART_OUTSIDE_THE_COMPANY_FORBIDDEN = '2703';
     public const RESPONSE_CODE_SHARED_CART_ID_MISSING = '2704';
     public const RESPONSE_CODE_SHARED_CART_NOT_FOUND = '2705';
+    public const RESPONSE_CODE_FAILED_TO_SAVE_SHARED_CART = '2706';
 
     /**
      * @uses \Spryker\Glue\CartsRestApi\CartsRestApiConfig::EXCEPTION_MESSAGE_CART_WITH_ID_NOT_FOUND
@@ -63,6 +64,7 @@ class SharedCartsRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_DETAIL_SHARE_CART_OUTSIDE_THE_COMPANY_FORBIDDEN = 'Cart can be shared only with company users from same company.';
     public const RESPONSE_DETAIL_SHARED_CART_ID_MISSING = 'Shared cart id is missing.';
     public const RESPONSE_DETAIL_SHARED_CART_NOT_FOUND = 'Shared cart not found.';
+    public const RESPONSE_DETAIL_FAILED_TO_SAVE_SHARED_CART = 'Failed to save shared cart.';
 
     /**
      * @return array
@@ -89,6 +91,11 @@ class SharedCartsRestApiConfig extends AbstractBundleConfig
                 RestErrorMessageTransfer::CODE => static::RESPONSE_CODE_FAILED_TO_SHARE_CART,
                 RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
                 RestErrorMessageTransfer::DETAIL => static::RESPONSE_DETAIL_FAILED_TO_SHARE_CART,
+            ],
+            SharedSharedCartsRestApiConfig::ERROR_IDENTIFIER_FAILED_TO_SAVE_SHARED_CART => [
+                RestErrorMessageTransfer::CODE => static::RESPONSE_CODE_FAILED_TO_SAVE_SHARED_CART,
+                RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
+                RestErrorMessageTransfer::DETAIL => static::RESPONSE_DETAIL_FAILED_TO_SAVE_SHARED_CART,
             ],
             SharedSharedCartsRestApiConfig::ERROR_IDENTIFIER_QUOTE_PERMISSION_GROUP_NOT_FOUND => [
                 RestErrorMessageTransfer::CODE => static::RESPONSE_CODE_CART_PERMISSION_GROUP_NOT_FOUND,

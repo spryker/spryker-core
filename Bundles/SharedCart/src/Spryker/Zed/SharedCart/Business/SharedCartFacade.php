@@ -313,11 +313,11 @@ class SharedCartFacade extends AbstractFacade implements SharedCartFacadeInterfa
      *
      * @param \Generated\Shared\Transfer\ShareCartRequestTransfer $shareCartRequestTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ShareCartResponseTransfer
      */
-    public function updateQuoteCompanyUserPermissionGroup(ShareCartRequestTransfer $shareCartRequestTransfer): void
+    public function updateQuoteCompanyUserPermissionGroup(ShareCartRequestTransfer $shareCartRequestTransfer): ShareCartResponseTransfer
     {
-        $this->getFactory()
+        return $this->getFactory()
             ->createQuoteCompanyUserWriter()
             ->updateQuoteCompanyUserPermissionGroup($shareCartRequestTransfer);
     }

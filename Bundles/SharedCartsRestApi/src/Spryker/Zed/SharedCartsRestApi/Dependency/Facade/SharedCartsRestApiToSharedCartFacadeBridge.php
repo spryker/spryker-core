@@ -74,11 +74,11 @@ class SharedCartsRestApiToSharedCartFacadeBridge implements SharedCartsRestApiTo
     /**
      * @param \Generated\Shared\Transfer\ShareCartRequestTransfer $shareCartRequestTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ShareCartResponseTransfer
      */
-    public function updateQuoteCompanyUserPermissionGroup(ShareCartRequestTransfer $shareCartRequestTransfer): void
+    public function updateQuoteCompanyUserPermissionGroup(ShareCartRequestTransfer $shareCartRequestTransfer): ShareCartResponseTransfer
     {
-        $this->sharedCartFacade->updateQuoteCompanyUserPermissionGroup($shareCartRequestTransfer);
+        return $this->sharedCartFacade->updateQuoteCompanyUserPermissionGroup($shareCartRequestTransfer);
     }
 
     /**

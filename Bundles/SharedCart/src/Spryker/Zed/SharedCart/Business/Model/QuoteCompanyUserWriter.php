@@ -120,9 +120,9 @@ class QuoteCompanyUserWriter implements QuoteCompanyUserWriterInterface
     /**
      * @param \Generated\Shared\Transfer\ShareCartRequestTransfer $shareCartRequestTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ShareCartResponseTransfer
      */
-    public function updateQuoteCompanyUserPermissionGroup(ShareCartRequestTransfer $shareCartRequestTransfer): void
+    public function updateQuoteCompanyUserPermissionGroup(ShareCartRequestTransfer $shareCartRequestTransfer): ShareCartResponseTransfer
     {
         $shareCartRequestTransfer->requireShareDetails();
 
@@ -131,7 +131,19 @@ class QuoteCompanyUserWriter implements QuoteCompanyUserWriterInterface
         $shareDetailTransfer->requireIdQuoteCompanyUser()
             ->requireQuotePermissionGroup();
 
-        $this->sharedCartEntityManager->updateQuoteCompanyUserQuotePermissionGroup($shareDetailTransfer);
+        $quoteCompanyUserTransfer = $this->sharedCartEntityManager->updateQuoteCompanyUserQuotePermissionGroup($shareDetailTransfer);
+        if (!$quoteCompanyUserTransfer) {
+            return (new ShareCartResponseTransfer())->setIsSuccessful(false);
+        }
+
+        $shareDetailCriteriaFilterTransfer = (new ShareDetailCriteriaFilterTransfer())
+            ->setIdQuoteCompanyUser($quoteCompanyUserTransfer->getIdQuoteCompanyUser());
+
+        $shareDetailCollectionTransfer = $this->sharedCartRepository
+            ->getShareDetailCollectionByShareDetailCriteria($shareDetailCriteriaFilterTransfer);
+
+        return (new ShareCartResponseTransfer())->setIsSuccessful(true)
+            ->setShareDetails($shareDetailCollectionTransfer->getShareDetails());
     }
 
     /**

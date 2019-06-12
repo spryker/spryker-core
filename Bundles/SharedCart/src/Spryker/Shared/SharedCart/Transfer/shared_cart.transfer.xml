@@ -82,6 +82,7 @@
     <transfer name="ShareDetailCriteriaFilter">
         <property name="idQuote" type="int"/>
         <property name="idCompanyUser" type="int"/>
+        <property name="idQuoteCompanyUser" type="int"/>
     </transfer>
 
     <transfer name="QuoteCompanyUser">

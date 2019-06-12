@@ -69,16 +69,16 @@ class SharedCartUpdater implements SharedCartUpdaterInterface
 
         $shareDetailTransfer->setIdQuoteCompanyUser($quoteCompanyUserTransfer->getIdQuoteCompanyUser());
 
-        $this->sharedCartFacade->updateQuoteCompanyUserPermissionGroup(
+        $shareCartResponseTransfer = $this->sharedCartFacade->updateQuoteCompanyUserPermissionGroup(
             (new ShareCartRequestTransfer())->addShareDetail($shareDetailTransfer)
         );
 
-        $shareDetailCollectionTransfer = $this->sharedCartFacade->getShareDetailCollectionByShareDetailCriteria(
-            $this->createShareDetailCriteriaFilterTransfer($quoteTransfer, $quoteCompanyUserTransfer)
-        );
+        if (!$shareCartResponseTransfer->getIsSuccessful()) {
+            $shareCartResponseTransfer->setErrorIdentifier(SharedSharedCartsRestApiConfig::ERROR_IDENTIFIER_FAILED_TO_SAVE_SHARED_CART);
+        }
 
-        return $shareCartResponseTransfer->setShareDetails($shareDetailCollectionTransfer->getShareDetails())
-            ->setIsSuccessful(true);
+        return $shareCartResponseTransfer->setIsSuccessful(true)
+            ->setShareDetails($shareCartResponseTransfer->getShareDetails());
     }
 
     /**

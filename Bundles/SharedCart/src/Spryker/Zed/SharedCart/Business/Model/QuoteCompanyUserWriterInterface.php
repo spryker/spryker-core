@@ -44,9 +44,9 @@ interface QuoteCompanyUserWriterInterface
     /**
      * @param \Generated\Shared\Transfer\ShareCartRequestTransfer $shareCartRequestTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ShareCartResponseTransfer
      */
-    public function updateQuoteCompanyUserPermissionGroup(ShareCartRequestTransfer $shareCartRequestTransfer): void;
+    public function updateQuoteCompanyUserPermissionGroup(ShareCartRequestTransfer $shareCartRequestTransfer): ShareCartResponseTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ShareCartRequestTransfer $shareCartRequestTransfer

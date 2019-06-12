@@ -416,6 +416,9 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
         SpyQuoteCompanyUserQuery $quoteCompanyUserQuery,
         ShareDetailCriteriaFilterTransfer $shareDetailCriteriaFilterTransfer
     ): SpyQuoteCompanyUserQuery {
+        if ($shareDetailCriteriaFilterTransfer->getIdQuoteCompanyUser()) {
+            $quoteCompanyUserQuery->filterByIdQuoteCompanyUser($shareDetailCriteriaFilterTransfer->getIdQuoteCompanyUser());
+        }
         if ($shareDetailCriteriaFilterTransfer->getIdQuote()) {
             $quoteCompanyUserQuery->filterByFkQuote($shareDetailCriteriaFilterTransfer->getIdQuote());
         }
