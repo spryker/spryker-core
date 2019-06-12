@@ -36,7 +36,9 @@ class ResourceShareEntityManager extends AbstractEntityManager implements Resour
     }
 
     /**
-     * @inheritDoc
+     * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
+     *
+     * @return \Generated\Shared\Transfer\ResourceShareTransfer
      */
     public function buildResourceShare(ResourceShareTransfer $resourceShareTransfer): ResourceShareTransfer
     {
