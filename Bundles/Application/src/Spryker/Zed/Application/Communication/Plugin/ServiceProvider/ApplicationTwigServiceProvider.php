@@ -42,7 +42,7 @@ class ApplicationTwigServiceProvider extends AbstractPlugin implements ServicePr
      *
      * @return void
      */
-    protected function registerTwigFunctions(Environment $twig)
+    protected function registerTwigFunctions(Environment $twig): void
     {
         foreach ($this->getFactory()->getApplicationTwigFunctions() as $function) {
             $twig->addFunction($function);
@@ -54,7 +54,7 @@ class ApplicationTwigServiceProvider extends AbstractPlugin implements ServicePr
      *
      * @return void
      */
-    protected function registerTwigFilters(Environment $twig)
+    protected function registerTwigFilters(Environment $twig): void
     {
         foreach ($this->getFactory()->getApplicationTwigFilters() as $filter) {
             $twig->addFilter($filter);

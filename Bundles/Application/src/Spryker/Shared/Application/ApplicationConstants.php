@@ -230,7 +230,7 @@ interface ApplicationConstants
      *
      * @api
      */
-    public const ASSETS_PATH = 'ASSETS_PATH';
+    public const ASSETS_PATH = 'APPLICATION:ASSETS_PATH';
 
     /**
      * Zed host name / domain without scheme and port (e.g. zed.de.demoshop.local) (Required)
