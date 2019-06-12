@@ -11,20 +11,27 @@ use Generated\Shared\Transfer\FlashMessagesTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
-class SessionMessageTray extends BaseMessageTray implements MessageTrayInterface
+class SessionMessageTray implements MessageTrayInterface
 {
+    /**
+     * @var \Spryker\Zed\Messenger\Business\Model\MessageTranslatorInterface
+     */
+    protected $messageTranslator;
+
     /**
      * @var \Symfony\Component\HttpFoundation\Session\SessionInterface
      */
     protected $session;
 
     /**
+     * @param \Spryker\Zed\Messenger\Business\Model\MessageTranslatorInterface $messageTranslator
      * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
-     * @param \Spryker\Zed\MessengerExtension\Dependency\Plugin\TranslationPluginInterface[] $translationPlugins
      */
-    public function __construct(SessionInterface $session, array $translationPlugins)
-    {
-        parent::__construct($translationPlugins);
+    public function __construct(
+        MessageTranslatorInterface $messageTranslator,
+        SessionInterface $session
+    ) {
+        $this->messageTranslator = $messageTranslator;
         $this->session = $session;
     }
 
@@ -37,7 +44,7 @@ class SessionMessageTray extends BaseMessageTray implements MessageTrayInterface
     {
         $this->addToSession(
             MessageTrayInterface::FLASH_MESSAGES_SUCCESS,
-            $this->translate(
+            $this->messageTranslator->translate(
                 $message->getValue(),
                 $message->getParameters()
             )
@@ -53,7 +60,7 @@ class SessionMessageTray extends BaseMessageTray implements MessageTrayInterface
     {
         $this->addToSession(
             MessageTrayInterface::FLASH_MESSAGES_INFO,
-            $this->translate(
+            $this->messageTranslator->translate(
                 $message->getValue(),
                 $message->getParameters()
             )
@@ -69,7 +76,7 @@ class SessionMessageTray extends BaseMessageTray implements MessageTrayInterface
     {
         $this->addToSession(
             MessageTrayInterface::FLASH_MESSAGES_ERROR,
-            $this->translate(
+            $this->messageTranslator->translate(
                 $message->getValue(),
                 $message->getParameters()
             )

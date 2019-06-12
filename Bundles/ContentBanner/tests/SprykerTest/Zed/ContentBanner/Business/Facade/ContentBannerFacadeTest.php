@@ -64,22 +64,6 @@ class ContentBannerFacadeTest extends Test
     /**
      * @return void
      */
-    public function testValidateContentBannerWithInvalidClickUrlValidationFails(): void
-    {
-        $contentBannerTermTransfer = (new ContentBannerTermTransfer())
-            ->setTitle('Sample text')
-            ->setAltText('SampleTest')
-            ->setClickUrl('invalid url')
-            ->setImageUrl('http://image.url')
-            ->setSubtitle('subtitle text');
-        $validationResult = $this->tester->getFacade()->validateContentBannerTerm($contentBannerTermTransfer);
-
-        $this->assertFalse($validationResult->getIsSuccess());
-    }
-
-    /**
-     * @return void
-     */
     public function testValidateContentBannerWithEmptySubtitleValidationFails(): void
     {
         $contentBannerTermTransfer = (new ContentBannerTermTransfer())

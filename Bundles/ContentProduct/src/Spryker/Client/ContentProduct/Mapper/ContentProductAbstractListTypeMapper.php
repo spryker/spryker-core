@@ -34,16 +34,16 @@ class ContentProductAbstractListTypeMapper implements ContentProductAbstractList
     }
 
     /**
-     * @param int $idContent
+     * @param string $contentKey
      * @param string $localeName
      *
      * @throws \Spryker\Client\ContentProduct\Exception\InvalidProductAbstractListTermException
      *
      * @return \Generated\Shared\Transfer\ContentProductAbstractListTypeTransfer|null
      */
-    public function executeProductAbstractListTypeById(int $idContent, string $localeName): ?ContentProductAbstractListTypeTransfer
+    public function executeProductAbstractListTypeByKey(string $contentKey, string $localeName): ?ContentProductAbstractListTypeTransfer
     {
-        $contentTypeContextTransfer = $this->contentStorageClient->findContentTypeContext($idContent, $localeName);
+        $contentTypeContextTransfer = $this->contentStorageClient->findContentTypeContextByKey($contentKey, $localeName);
 
         if (!$contentTypeContextTransfer) {
             return null;
