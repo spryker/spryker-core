@@ -18,6 +18,7 @@ use Generated\Shared\Transfer\QuotePermissionGroupTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShareCartRequestTransfer;
+use Generated\Shared\Transfer\ShareCartResponseTransfer;
 use Generated\Shared\Transfer\ShareDetailCollectionTransfer;
 use Generated\Shared\Transfer\ShareDetailCriteriaFilterTransfer;
 
@@ -240,9 +241,25 @@ interface SharedCartFacadeInterface
 
     /**
      * Specification:
-     *  - Updates permission group for shared cart.
-     *  - Requires ShareDetailTransfer to be set in ShareCartRequestTransfer.
-     *  - Requires idQuoteCompanyUser and QuotePermissionGroupTransfer to be set in ShareDetailTransfer.
+     * - Shares cart to company user with permission group.
+     * - Requires ShareDetailTransfer to be set in ShareCartRequestTransfer.
+     * - Requires idQuote, idCompanyUser and QuotePermissionGroupTransfer to be set on ShareDetailTransfer.
+     * - Returns sharing details.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShareCartRequestTransfer $shareCartRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShareCartResponseTransfer
+     */
+    public function createQuoteCompanyUser(ShareCartRequestTransfer $shareCartRequestTransfer): ShareCartResponseTransfer;
+
+    /**
+     * Specification:
+     * - Updates permission group for shared cart.
+     * - Requires ShareDetailTransfer to be set in ShareCartRequestTransfer.
+     * - Requires idQuoteCompanyUser and QuotePermissionGroupTransfer to be set in ShareDetailTransfer.
+     * - Returns sharing details.
      *
      * @api
      *
@@ -254,9 +271,9 @@ interface SharedCartFacadeInterface
 
     /**
      * Specification:
-     *  - Removes sharing of the quote.
-     *  - Requires ShareDetailTransfer to be set in ShareCartRequestTransfer.
-     *  - Requires idQuoteCompanyUser to be set in ShareDetailTransfer.
+     * - Removes sharing of the quote.
+     * - Requires ShareDetailTransfer to be set in ShareCartRequestTransfer.
+     * - Requires idQuoteCompanyUser to be set in ShareDetailTransfer.
      *
      * @api
      *

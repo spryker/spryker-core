@@ -17,7 +17,6 @@ use Generated\Shared\Transfer\ShareDetailTransfer;
 use Spryker\Shared\SharedCartsRestApi\SharedCartsRestApiConfig as SharedSharedCartsRestApiConfig;
 use Spryker\Zed\SharedCartsRestApi\Dependency\Facade\SharedCartsRestApiToQuoteFacadeInterface;
 use Spryker\Zed\SharedCartsRestApi\Dependency\Facade\SharedCartsRestApiToSharedCartFacadeInterface;
-use Spryker\Zed\SharedCartsRestApi\Persistence\SharedCartsRestApiEntityManagerInterface;
 
 class SharedCartCreator implements SharedCartCreatorInterface
 {
@@ -32,23 +31,15 @@ class SharedCartCreator implements SharedCartCreatorInterface
     protected $sharedCartFacade;
 
     /**
-     * @var \Spryker\Zed\SharedCartsRestApi\Persistence\SharedCartsRestApiEntityManagerInterface
-     */
-    protected $sharedCartsRestApiEntityManager;
-
-    /**
      * @param \Spryker\Zed\SharedCartsRestApi\Dependency\Facade\SharedCartsRestApiToQuoteFacadeInterface $quoteFacade
      * @param \Spryker\Zed\SharedCartsRestApi\Dependency\Facade\SharedCartsRestApiToSharedCartFacadeInterface $sharedCartFacade
-     * @param \Spryker\Zed\SharedCartsRestApi\Persistence\SharedCartsRestApiEntityManagerInterface $sharedCartsRestApiEntityManager
      */
     public function __construct(
         SharedCartsRestApiToQuoteFacadeInterface $quoteFacade,
-        SharedCartsRestApiToSharedCartFacadeInterface $sharedCartFacade,
-        SharedCartsRestApiEntityManagerInterface $sharedCartsRestApiEntityManager
+        SharedCartsRestApiToSharedCartFacadeInterface $sharedCartFacade
     ) {
         $this->quoteFacade = $quoteFacade;
         $this->sharedCartFacade = $sharedCartFacade;
-        $this->sharedCartsRestApiEntityManager = $sharedCartsRestApiEntityManager;
     }
 
     /**
@@ -86,6 +77,7 @@ class SharedCartCreator implements SharedCartCreatorInterface
         }
 
         $quoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
+        $shareCartRequestTransfer->setIdQuote($quoteTransfer->getIdQuote());
 
         if (!$this->canManageQuoteSharing($quoteTransfer, $shareCartRequestTransfer)) {
             return $shareCartResponseTransfer->setErrorIdentifier(SharedSharedCartsRestApiConfig::ERROR_IDENTIFIER_ACTION_FORBIDDEN);
@@ -104,18 +96,13 @@ class SharedCartCreator implements SharedCartCreatorInterface
             return $shareCartResponseTransfer->setErrorIdentifier(SharedSharedCartsRestApiConfig::ERROR_IDENTIFIER_FAILED_TO_SHARE_CART);
         }
 
-        $quoteCompanyUserTransfer = $this->sharedCartsRestApiEntityManager->saveQuoteCompanyUser($quoteCompanyUserTransfer);
+        $shareCartResponseTransfer = $this->sharedCartFacade->createQuoteCompanyUser($shareCartRequestTransfer);
 
-        $shareDetailCollectionTransfer = $this->sharedCartFacade->getShareDetailCollectionByShareDetailCriteria(
-            $this->createShareDetailCriteriaFilterTransfer($quoteTransfer, $quoteCompanyUserTransfer)
-        );
-
-        if (!$shareDetailCollectionTransfer->getShareDetails()->count()) {
+        if (!$shareCartResponseTransfer->getIsSuccessful()) {
             return $shareCartResponseTransfer->setErrorIdentifier(SharedSharedCartsRestApiConfig::ERROR_IDENTIFIER_FAILED_TO_SHARE_CART);
         }
 
-        return $shareCartResponseTransfer->setShareDetails($shareDetailCollectionTransfer->getShareDetails())
-            ->setIsSuccessful(true);
+        return $shareCartResponseTransfer;
     }
 
     /**

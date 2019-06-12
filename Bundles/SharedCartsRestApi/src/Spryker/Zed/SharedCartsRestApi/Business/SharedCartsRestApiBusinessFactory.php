@@ -44,8 +44,7 @@ class SharedCartsRestApiBusinessFactory extends AbstractBusinessFactory
     {
         return new SharedCartCreator(
             $this->getQuoteFacade(),
-            $this->getSharedCartFacade(),
-            $this->getEntityManager()
+            $this->getSharedCartFacade()
         );
     }
 

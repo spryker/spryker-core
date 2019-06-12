@@ -8,6 +8,7 @@
 namespace Spryker\Zed\SharedCart\Persistence;
 
 use Generated\Shared\Transfer\PermissionTransfer;
+use Generated\Shared\Transfer\QuoteCompanyUserTransfer;
 use Generated\Shared\Transfer\QuotePermissionGroupTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShareDetailTransfer;
@@ -152,6 +153,29 @@ class SharedCartEntityManager extends AbstractEntityManager implements SharedCar
             ->createQuoteCompanyUserQuery()
             ->filterByFkCompanyUser($idCompanyUser)
             ->delete();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteCompanyUserTransfer $quoteCompanyUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteCompanyUserTransfer
+     */
+    public function createQuoteCompanyUser(QuoteCompanyUserTransfer $quoteCompanyUserTransfer): QuoteCompanyUserTransfer
+    {
+        $quoteCompanyUserEntity = $this->getFactory()
+            ->createQuoteCompanyUserQuery()
+            ->filterByFkCompanyUser($quoteCompanyUserTransfer->getFkCompanyUser())
+            ->filterByFkQuotePermissionGroup($quoteCompanyUserTransfer->getIdQuoteCompanyUser())
+            ->filterByFkQuote($quoteCompanyUserTransfer->getFkQuote())
+            ->findOneOrCreate();
+
+        $quoteCompanyUserEntity = $this->getFactory()->createQuoteCompanyUserMapper()
+            ->mapQuoteCompanyUserTransferToQuoteCompanyUserEntity($quoteCompanyUserTransfer, $quoteCompanyUserEntity);
+
+        $quoteCompanyUserEntity->save();
+
+        return $this->getFactory()->createQuoteCompanyUserMapper()
+            ->mapQuoteCompanyUserEntityToQuoteCompanyUserTransfer($quoteCompanyUserEntity, new QuoteCompanyUserTransfer());
     }
 
     /**

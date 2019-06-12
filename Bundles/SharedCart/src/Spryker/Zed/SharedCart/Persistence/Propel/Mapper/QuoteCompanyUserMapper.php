@@ -31,4 +31,19 @@ class QuoteCompanyUserMapper
 
         return $quoteCompanyUserTransfer;
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteCompanyUserTransfer $quoteCompanyUserTransfer
+     * @param \Orm\Zed\SharedCart\Persistence\SpyQuoteCompanyUser $spyQuoteCompanyUser
+     *
+     * @return \Orm\Zed\SharedCart\Persistence\SpyQuoteCompanyUser
+     */
+    public function mapQuoteCompanyUserTransferToQuoteCompanyUserEntity(
+        QuoteCompanyUserTransfer $quoteCompanyUserTransfer,
+        SpyQuoteCompanyUser $spyQuoteCompanyUser
+    ): SpyQuoteCompanyUser {
+        $spyQuoteCompanyUser->fromArray($quoteCompanyUserTransfer->toArray());
+
+        return $spyQuoteCompanyUser;
+    }
 }

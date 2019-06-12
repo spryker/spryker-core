@@ -83,6 +83,7 @@ class SharedCartCreator implements SharedCartCreatorInterface
         );
 
         $shareCartResponseTransfer = $this->sharedCartsRestApiClient->create($shareCartRequestTransfer);
+
         if (!$shareCartResponseTransfer->getIsSuccessful()) {
             return $this->sharedCartRestResponseBuilder->createErrorResponseFromErrorIdentifier(
                 $shareCartResponseTransfer->getErrorIdentifier()
