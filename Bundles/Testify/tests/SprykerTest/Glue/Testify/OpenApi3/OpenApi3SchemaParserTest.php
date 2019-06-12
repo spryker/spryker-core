@@ -33,6 +33,10 @@ class OpenApi3SchemaParserTest extends Unit
 
         $this->assertEquals('3.0.0', $document->openapi);
         $this->assertEquals('Swagger Petstore', $document->info->title);
+        $this->assertEquals('Swagger API Team', $document->info->contact->name);
+        $this->assertEquals('http://petstore.swagger.io/api', $document->servers[0]->url);
+
+
         $this->assertEquals(
             ['name'],
             $document->paths['/pets']->post->responses[200]->content['application/json']->schema->allOf[0]->required->toArray()
@@ -48,6 +52,10 @@ class OpenApi3SchemaParserTest extends Unit
         $this->assertEquals(
             'integer',
             $document->paths['/pets']->post->responses[200]->content['application/json']->schema->allOf[1]->properties['id']->type
+        );
+        $this->assertEquals(
+            'string',
+            $document->paths['/pets']->get->parameters['schema']->items->type
         );
     }
 }
