@@ -55,7 +55,7 @@ class SessionCreator implements SessionCreatorInterface
         $customerTransfer = $this->executeCustomerExpanderPlugins($restRequest, $customerTransfer);
 
         $this->customerClient
-            ->setCustomer($customerTransfer);
+            ->setCustomerRawData($customerTransfer);
     }
 
     /**

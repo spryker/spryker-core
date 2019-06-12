@@ -11,6 +11,7 @@ use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Storage\Dependency\Client\StorageToLocaleClientBridge;
 use Spryker\Client\Storage\Dependency\Client\StorageToStoreClientBridge;
+use Spryker\Client\StorageExtension\Dependency\Plugin\StoragePluginInterface;
 
 /**
  * @method \Spryker\Client\Storage\StorageConfig getConfig()
@@ -20,13 +21,14 @@ class StorageDependencyProvider extends AbstractDependencyProvider
     public const CLIENT_STORE = 'CLIENT_STORE';
     public const CLIENT_LOCALE = 'CLIENT_LOCALE';
     public const STORAGE_CLIENT = 'storage client';
+    public const PLUGIN_STORAGE = 'PLUGIN_STORAGE';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    public function provideServiceLayerDependencies(Container $container)
+    public function provideServiceLayerDependencies(Container $container): Container
     {
         $container = parent::provideServiceLayerDependencies($container);
 
@@ -42,6 +44,30 @@ class StorageDependencyProvider extends AbstractDependencyProvider
             return new StorageToLocaleClientBridge($container->getLocator()->locale()->client());
         };
 
+        $container = $this->addStoragePlugin($container);
+
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addStoragePlugin(Container $container): Container
+    {
+        $container->set(static::PLUGIN_STORAGE, function (Container $container) {
+            return $this->getStoragePlugin();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Client\StorageExtension\Dependency\Plugin\StoragePluginInterface|null
+     */
+    protected function getStoragePlugin(): ?StoragePluginInterface
+    {
+        return null;
     }
 }

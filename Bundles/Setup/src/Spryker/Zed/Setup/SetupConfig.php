@@ -62,6 +62,8 @@ class SetupConfig extends AbstractBundleConfig
     }
 
     /**
+     * @deprecated Will be removed without replacement. Use `vendor/bin/install` instead.
+     *
      * Please customize this stack on project level.
      *
      * @return array

@@ -33,15 +33,7 @@ class CustomerOauthScopeProviderPlugin extends AbstractPlugin implements OauthSc
             return false;
         }
 
-        if (!$oauthScopeRequestTransfer->getClientId()) {
-            return false;
-        }
-
-        if ($oauthScopeRequestTransfer->getClientId() === $this->getConfig()->getClientId()) {
-            return true;
-        }
-
-        return false;
+        return true;
     }
 
     /**
