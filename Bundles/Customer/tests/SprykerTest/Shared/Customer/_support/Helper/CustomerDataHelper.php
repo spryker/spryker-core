@@ -42,6 +42,9 @@ class CustomerDataHelper extends Module
         $customerResponseTransfer = $this->getCustomerFacade()->registerCustomer($customerTransfer);
 
         $this->getDataCleanupHelper()->_addCleanup(function () use ($customerResponseTransfer) {
+            if (!$customerResponseTransfer->getIsSuccess()) {
+                return;
+            }
             $this->getCustomerFacade()
                 ->deleteCustomer($customerResponseTransfer->getCustomerTransfer());
         });
