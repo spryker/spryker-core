@@ -8,13 +8,14 @@
 namespace Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\ImportDataValidator;
 
 use DateTime;
-use DateTimeInterface;
 use Generated\Shared\Transfer\PriceProductScheduleImportTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleListImportErrorTransfer;
 
 class DateDataValidator extends AbstractImportDataValidator
 {
     protected const ERROR_MESSAGE_ACTIVE_FROM_AND_ACTIVE_TO = 'Dates must be in right format and to date must be greater than from.';
+
+    protected const FORMAT_DATE = 'Y-m-d\TH:i:sO';
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer
@@ -78,7 +79,7 @@ class DateDataValidator extends AbstractImportDataValidator
      */
     protected function createDateTimeFromFormat(string $date): ?DateTime
     {
-        $dateTime = DateTime::createFromFormat(DateTimeInterface::ISO8601, $date);
+        $dateTime = DateTime::createFromFormat(static::FORMAT_DATE, $date);
 
         if ($dateTime === false) {
             return null;
