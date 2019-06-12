@@ -8,7 +8,8 @@
 namespace Spryker\Zed\Scheduler\Business\Command\Filter;
 
 use Generated\Shared\Transfer\SchedulerFilterTransfer;
-use Spryker\Zed\Scheduler\Business\Command\Exception\SchedulerNotAllowedException;
+use Spryker\Zed\Scheduler\Business\Command\Exception\SchedulerNotEnabledException;
+use Spryker\Zed\Scheduler\Business\Command\Exception\SchedulerNotRegisteredException;
 use Spryker\Zed\Scheduler\SchedulerConfig;
 
 class SchedulerFilter implements SchedulerFilterInterface
@@ -56,7 +57,7 @@ class SchedulerFilter implements SchedulerFilterInterface
     /**
      * @param array $enabledSchedulers
      *
-     * @throws \Spryker\Zed\Scheduler\Business\Command\Exception\SchedulerNotAllowedException
+     * @throws \Spryker\Zed\Scheduler\Business\Command\Exception\SchedulerNotRegisteredException
      *
      * @return void
      */
@@ -64,7 +65,7 @@ class SchedulerFilter implements SchedulerFilterInterface
     {
         foreach ($enabledSchedulers as $idScheduler) {
             if (!array_key_exists($idScheduler, $this->schedulerAdapterPlugins)) {
-                throw new SchedulerNotAllowedException(sprintf(
+                throw new SchedulerNotRegisteredException(sprintf(
                     'There is no adapter registered for `%s` defined in the configuration.',
                     $idScheduler
                 ));
@@ -75,7 +76,7 @@ class SchedulerFilter implements SchedulerFilterInterface
     /**
      * @param array $filteredSchedulers
      *
-     * @throws \Spryker\Zed\Scheduler\Business\Command\Exception\SchedulerNotAllowedException
+     * @throws \Spryker\Zed\Scheduler\Business\Command\Exception\SchedulerNotEnabledException
      *
      * @return void
      */
@@ -85,7 +86,7 @@ class SchedulerFilter implements SchedulerFilterInterface
 
         foreach ($filteredSchedulers as $idScheduler) {
             if (!in_array($idScheduler, $enabledSchedulers, true)) {
-                throw new SchedulerNotAllowedException(sprintf(
+                throw new SchedulerNotEnabledException(sprintf(
                     'There is no enabled scheduler for `%s` defined in the request.',
                     $idScheduler
                 ));

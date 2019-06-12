@@ -8,7 +8,7 @@
 namespace Spryker\Zed\SchedulerJenkins\Business\Api;
 
 use Generated\Shared\Transfer\SchedulerJenkinsResponseTransfer;
-use GuzzleHttp\Exception\BadResponseException;
+use RuntimeException;
 use Spryker\Zed\SchedulerJenkins\Business\Api\Builder\JenkinsResponseBuilderInterface;
 use Spryker\Zed\SchedulerJenkins\Business\Api\Configuration\ConfigurationProviderInterface;
 use Spryker\Zed\SchedulerJenkins\Dependency\Guzzle\SchedulerJenkinsToGuzzleInterface;
@@ -97,9 +97,9 @@ class JenkinsApi implements JenkinsApiInterface
             $baseUrl = $this->jenkinsConfigurationReader->getJenkinsBaseUrlBySchedulerId($idScheduler, $urlPath);
             $requestOptions = $this->getRequestOptions($idScheduler, $body);
             $response = $this->client->request($method, $baseUrl, $requestOptions);
-        } catch (BadResponseException $badResponseException) {
+        } catch (RuntimeException $runtimeException) {
             return $this->jenkinsResponseBuilder
-                ->withMessage($badResponseException->getMessage())
+                ->withMessage($runtimeException->getMessage())
                 ->withStatus(false)
                 ->build();
         }
