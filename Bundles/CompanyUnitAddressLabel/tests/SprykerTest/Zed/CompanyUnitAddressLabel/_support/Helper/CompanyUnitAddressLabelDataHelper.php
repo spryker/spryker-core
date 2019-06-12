@@ -51,14 +51,14 @@ class CompanyUnitAddressLabelDataHelper extends Module
         $companyUnitAddressTransfer = (new CompanyUnitAddressBuilder($seedData))->build();
         $companyUnitAddressTransfer->requireIdCompanyUnitAddress();
 
-        $companyUnitAddressResponseTransfer = $this->getFacade()
+        $companyUnitAddressResponseTransfer = $this->getCompanyUnitAddressLabelFacade()
             ->saveLabelToAddressRelations($companyUnitAddressTransfer);
 
         /** @var \SprykerTest\Shared\Testify\Helper\DataCleanupHelper $dataCleanupHelper */
         $dataCleanupHelper = $this->getDataCleanupHelper();
         $dataCleanupHelper->_addCleanup(function () use ($companyUnitAddressTransfer): void {
             $companyUnitAddressTransfer->setLabelCollection();
-            $this->getFacade()
+            $this->getCompanyUnitAddressLabelFacade()
                 ->saveLabelToAddressRelations($companyUnitAddressTransfer);
         });
 
@@ -68,7 +68,7 @@ class CompanyUnitAddressLabelDataHelper extends Module
     /**
      * @return \Spryker\Zed\CompanyUnitAddressLabel\Business\CompanyUnitAddressLabelFacadeInterface|\Spryker\Zed\Kernel\Business\AbstractFacade
      */
-    protected function getFacade(): CompanyUnitAddressLabelFacadeInterface
+    protected function getCompanyUnitAddressLabelFacade(): CompanyUnitAddressLabelFacadeInterface
     {
         return $this->getLocator()->CompanyUnitAddressLabel()->facade();
     }

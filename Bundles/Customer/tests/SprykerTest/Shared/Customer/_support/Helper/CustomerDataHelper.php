@@ -49,7 +49,7 @@ class CustomerDataHelper extends Module
                 ->deleteCustomer($customerResponseTransfer->getCustomerTransfer());
         });
 
-        return $customerTransfer;
+        return $customerResponseTransfer->getCustomerTransfer();
     }
 
     /**
@@ -63,10 +63,10 @@ class CustomerDataHelper extends Module
             return;
         }
 
-        $customerTransfer = $this->getCustomerFacade()->findByReference($customerTransfer->getCustomerReference());
+        $customerTransferFound = $this->getCustomerFacade()->findByReference($customerTransfer->getCustomerReference());
 
-        if ($customerTransfer) {
-            $this->getCustomerFacade()->deleteCustomer($customerTransfer);
+        if ($customerTransferFound) {
+            $this->getCustomerFacade()->deleteCustomer($customerTransferFound);
         }
     }
 

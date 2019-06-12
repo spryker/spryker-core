@@ -33,7 +33,7 @@ class CompanyUnitAddressLabelFacadeTest extends Unit
     public function testSaveLabelToAddressRelationsStoresDataToTheDatabase(): void
     {
         // Arrange
-        $companyUnitAddressLabelCollectionTransfer = $this->tester->createCompanyUnitAddressLabelCollection();
+        $companyUnitAddressLabelCollectionTransfer = $this->tester->getCompanyUnitAddressLabelCollection();
         $companyUnitAddressTransfer = $this->tester->createCompanyUnitAddressTransfer();
         $companyUnitAddressTransfer->setLabelCollection($companyUnitAddressLabelCollectionTransfer);
 
@@ -56,7 +56,7 @@ class CompanyUnitAddressLabelFacadeTest extends Unit
             ->getCompanyUnitAddressTransfer();
 
         $companyUnitAddressTransfer = clone $companyUnitAddressTransferRedundant;
-        $companyUnitAddressTransfer->setLabelCollection($this->tester->createCompanyUnitAddressLabelCollection());
+        $companyUnitAddressTransfer->setLabelCollection($this->tester->getCompanyUnitAddressLabelCollection());
 
         // Act
         $companyUnitAddressResponseTransfer = $this->tester->getFacade()
@@ -126,7 +126,7 @@ class CompanyUnitAddressLabelFacadeTest extends Unit
     protected function assertLabelsAreStored(CompanyUnitAddressTransfer $companyUnitAddressTransfer): void
     {
         $originalCompanyUnitAddressIds = [];
-        foreach ((array)$companyUnitAddressTransfer->getLabelCollection()->getLabels() as $label) {
+        foreach ($companyUnitAddressTransfer->getLabelCollection()->getLabels() as $label) {
             $originalCompanyUnitAddressIds[] = $label->getIdCompanyUnitAddressLabel();
         }
 

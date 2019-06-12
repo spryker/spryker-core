@@ -41,7 +41,7 @@ class CompanyUnitAddressLabelBusinessTester extends Actor
     /**
      * @return \Generated\Shared\Transfer\CompanyUnitAddressLabelCollectionTransfer
      */
-    public function createCompanyUnitAddressLabelCollection(): CompanyUnitAddressLabelCollectionTransfer
+    public function getCompanyUnitAddressLabelCollection(): CompanyUnitAddressLabelCollectionTransfer
     {
         return (new CompanyUnitAddressLabelRepository())
             ->findCompanyUnitAddressLabels();

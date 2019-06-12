@@ -95,10 +95,10 @@ class MerchantRelationshipBusinessTester extends Actor
      */
     public function assertMerchantRelationshipNotExists(int $idMerchantRelationship): void
     {
-        $query = $this->getMerchantRelationshipQuery()
+        $merchantRelationshipQuery = $this->getMerchantRelationshipQuery()
             ->filterByIdMerchantRelationship($idMerchantRelationship);
 
-        $this->assertSame(0, $query->count());
+        $this->assertSame(0, $merchantRelationshipQuery->count());
     }
 
     /**
@@ -116,10 +116,10 @@ class MerchantRelationshipBusinessTester extends Actor
      */
     public function assertMerchantRelationshipToCompanyBusinessUnitNotExists(int $idMerchantRelationship): void
     {
-        $query = $this->getMerchantRelationshipToCompanyBusinessUnitQuery()
+        $merchantRelationshipToCompanyBusinessUnitQuery = $this->getMerchantRelationshipToCompanyBusinessUnitQuery()
             ->filterByFkMerchantRelationship($idMerchantRelationship);
 
-        $this->assertSame(0, $query->count());
+        $this->assertSame(0, $merchantRelationshipToCompanyBusinessUnitQuery->count());
     }
 
     /**

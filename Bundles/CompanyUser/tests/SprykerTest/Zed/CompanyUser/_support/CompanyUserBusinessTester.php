@@ -43,7 +43,7 @@ class CompanyUserBusinessTester extends Actor
      *
      * @return \Generated\Shared\Transfer\CompanyUserTransfer
      */
-    public function getCompanyUserTransfer(
+    public function createCompanyUserTransfer(
         array $seedData = [
             CompanyUserTransfer::IS_ACTIVE => true,
         ],
