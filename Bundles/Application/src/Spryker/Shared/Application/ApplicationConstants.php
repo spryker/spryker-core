@@ -226,13 +226,6 @@ interface ApplicationConstants
     public const HOST_YVES = 'HOST_YVES';
 
     /**
-     * Yves assets relative path (e.g. /assets/)
-     *
-     * @api
-     */
-    public const ASSETS_PATH = 'APPLICATION:ASSETS_PATH';
-
-    /**
      * Zed host name / domain without scheme and port (e.g. zed.de.demoshop.local) (Required)
      *
      * @api

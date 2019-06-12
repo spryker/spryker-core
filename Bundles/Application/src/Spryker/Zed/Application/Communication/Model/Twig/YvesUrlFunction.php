@@ -5,20 +5,20 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Application\Communication\Plugin\Twig;
+namespace Spryker\Zed\Application\Communication\Model\Twig;
 
 use Spryker\Service\UtilText\Model\Url\Url;
+use Spryker\Shared\Twig\TwigFunction;
+use Spryker\Zed\Application\ApplicationConfig;
 
-class UrlFunction extends AbstractApplicationTwigFunction
+class YvesUrlFunction extends TwigFunction
 {
-    protected const ABSOLUTE_CUSTOM_OPTION = 'absolute';
-
     /**
      * @return string
      */
     protected function getFunctionName()
     {
-        return 'url';
+        return 'yves_url';
     }
 
     /**
@@ -40,11 +40,7 @@ class UrlFunction extends AbstractApplicationTwigFunction
      */
     protected function formatOptions(array $options): array
     {
-        if (isset($options[static::ABSOLUTE_CUSTOM_OPTION]) && $options[static::ABSOLUTE_CUSTOM_OPTION] === true) {
-            $options[Url::SCHEME] = $this->getScheme();
-            $options[Url::HOST] = $this->getHttpHost();
-            unset($options[static::ABSOLUTE_CUSTOM_OPTION]);
-        }
+        $options[Url::HOST] = isset($options[Url::HOST]) ? $options[Url::HOST] : $this->getYvesHttpHost();
 
         return $options;
     }
@@ -52,16 +48,16 @@ class UrlFunction extends AbstractApplicationTwigFunction
     /**
      * @return string
      */
-    protected function getScheme(): string
+    protected function getYvesHttpHost(): string
     {
-        return $this->getConfig()->isSslEnabled() ? 'https' : 'http';
+        return rtrim($this->getConfig()->getYvesHostName(), '/');
     }
 
     /**
-     * @return string
+     * @return \Spryker\Zed\Application\ApplicationConfig
      */
-    protected function getHttpHost(): string
+    protected function getConfig(): ApplicationConfig
     {
-        return rtrim($this->getConfig()->getYvesHostName(), '/');
+        return new ApplicationConfig();
     }
 }

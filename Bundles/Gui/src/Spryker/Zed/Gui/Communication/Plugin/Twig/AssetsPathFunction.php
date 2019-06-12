@@ -9,10 +9,6 @@ namespace Spryker\Zed\Gui\Communication\Plugin\Twig;
 
 use Spryker\Shared\Twig\TwigFunction;
 
-/**
- * @deprecated Use `Spryker\Zed\Application\Communication\Plugin\Twig\AssetsUrlFunction` instead.
- * You should also replace the twig function `assetsPath` with `assets_url`.
- */
 class AssetsPathFunction extends TwigFunction
 {
     /**

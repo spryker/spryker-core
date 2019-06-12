@@ -10,9 +10,6 @@ namespace Spryker\Zed\Gui\Communication\Plugin\Twig;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Shared\Twig\TwigFunction;
 
-/**
- * @deprecated Use `Spryker\Zed\Application\Communication\Plugin\Twig\UrlFunction` instead to optionally support absolute urls.
- */
 class UrlFunction extends TwigFunction
 {
     /**
