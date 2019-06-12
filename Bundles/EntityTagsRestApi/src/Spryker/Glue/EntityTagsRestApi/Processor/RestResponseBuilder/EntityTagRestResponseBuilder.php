@@ -19,8 +19,8 @@ class EntityTagRestResponseBuilder implements EntityTagRestResponseBuilderInterf
     public function createPreconditionRequiredError(): RestErrorMessageTransfer
     {
         return (new RestErrorMessageTransfer())
-            ->setCode(EntityTagsRestApiConfig::RESPONSE_CODE_PRECONDITION_REQUIRED)
-            ->setDetail(EntityTagsRestApiConfig::RESPONSE_DETAIL_PRECONDITION_REQUIRED)
+            ->setCode(EntityTagsRestApiConfig::RESPONSE_CODE_IF_MATCH_HEADER_MISSING)
+            ->setDetail(EntityTagsRestApiConfig::RESPONSE_DETAIL_IF_MATCH_HEADER_MISSING)
             ->setStatus(Response::HTTP_PRECONDITION_REQUIRED);
     }
 
@@ -30,8 +30,8 @@ class EntityTagRestResponseBuilder implements EntityTagRestResponseBuilderInterf
     public function createPreconditionFailedError(): RestErrorMessageTransfer
     {
         return (new RestErrorMessageTransfer())
-            ->setCode(EntityTagsRestApiConfig::RESPONSE_CODE_PRECONDITION_FAILED)
-            ->setDetail(EntityTagsRestApiConfig::RESPONSE_DETAIL_PRECONDITION_FAILED)
+            ->setCode(EntityTagsRestApiConfig::RESPONSE_CODE_IF_MATCH_HEADER_INVALID)
+            ->setDetail(EntityTagsRestApiConfig::RESPONSE_DETAIL_IF_MATCH_HEADER_INVALID)
             ->setStatus(Response::HTTP_PRECONDITION_FAILED);
     }
 }

@@ -20,7 +20,7 @@ class EntityTagFormatResponseHeadersPlugin extends AbstractPlugin implements For
 {
     /**
      * {@inheritdoc}
-     * - Adds ETag header to response.
+     * - Adds ETag header to response if applicable.
      *
      * @api
      *

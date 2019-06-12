@@ -40,7 +40,11 @@ class EntityTagWriter implements EntityTagWriterInterface
     public function write(RestResourceInterface $restResource): ?string
     {
         if ($this->entityTagChecker->isEntityTagRequired($restResource)) {
-            return $this->entityTagClient->write($restResource->getType(), $restResource->getId(), $restResource->getAttributes()->toArray());
+            return $this->entityTagClient->write(
+                $restResource->getType(),
+                $restResource->getId(),
+                $restResource->getAttributes()->toArray()
+            );
         }
 
         return null;

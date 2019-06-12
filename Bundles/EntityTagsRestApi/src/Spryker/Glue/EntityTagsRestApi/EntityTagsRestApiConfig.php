@@ -11,11 +11,11 @@ use Spryker\Glue\Kernel\AbstractBundleConfig;
 
 class EntityTagsRestApiConfig extends AbstractBundleConfig
 {
-    public const RESPONSE_CODE_PRECONDITION_REQUIRED = '005';
-    public const RESPONSE_CODE_PRECONDITION_FAILED = '006';
+    public const RESPONSE_CODE_IF_MATCH_HEADER_MISSING = '005';
+    public const RESPONSE_CODE_IF_MATCH_HEADER_INVALID = '006';
 
-    public const RESPONSE_DETAIL_PRECONDITION_REQUIRED = 'Precondition required';
-    public const RESPONSE_DETAIL_PRECONDITION_FAILED = 'Precondition failed';
+    public const RESPONSE_DETAIL_IF_MATCH_HEADER_MISSING = 'If-Match header is missing.';
+    public const RESPONSE_DETAIL_IF_MATCH_HEADER_INVALID = 'If-Match header value is invalid.';
 
     /**
      * @return string[]
