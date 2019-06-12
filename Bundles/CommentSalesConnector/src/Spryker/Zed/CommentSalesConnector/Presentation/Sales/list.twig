@@ -1,0 +1,20 @@
+{% embed '@Gui/Partials/widget.twig' with { widget_title: 'Comments to Cart' } %}
+
+    {% block widget_content %}
+
+        {% for comment in order.commentThread.comments %}
+            <div>
+                <p>{{ comment.customer.firstName }} {{ comment.customer.lastName }}</p>
+                <p class="text-secondary">
+                    {{ comment.createdAt | formatDateTime }}
+                    {% if comment.isUpdated %}
+                        ({{ 'edited' }})
+                    {% endif %}
+                </p>
+                <p>{{ comment.message }}</p>
+            </div>
+        {% endfor %}
+
+    {% endblock %}
+
+{% endembed %}
