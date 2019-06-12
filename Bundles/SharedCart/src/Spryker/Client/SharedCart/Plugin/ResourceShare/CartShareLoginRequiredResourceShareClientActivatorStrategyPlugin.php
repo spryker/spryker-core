@@ -27,7 +27,7 @@ class CartShareLoginRequiredResourceShareClientActivatorStrategyPlugin extends A
 
     /**
      * {@inheritdoc}
-     * - Returns 'true', when resource type is Quote.
+     * - Returns 'true', when resource type is Quote and share option is either "read only" or "full access".
      * - Returns 'false' otherwise.
      *
      * @api
