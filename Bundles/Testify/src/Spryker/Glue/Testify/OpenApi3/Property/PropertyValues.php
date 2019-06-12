@@ -29,7 +29,7 @@ class PropertyValues implements IteratorAggregate, ArrayAccess, Countable
     public function setValue(string $key, PropertyValueInterface $property): self
     {
         if ($this->offsetExists($key)) {
-            trigger_error(sprintf('Value is already set before: %s::%s', get_class($this), $key), E_USER_WARNING);
+            trigger_error(sprintf('Value is already set before: %s::%s', static::class, $key), E_USER_WARNING);
 
             return $this;
         }
@@ -82,7 +82,7 @@ class PropertyValues implements IteratorAggregate, ArrayAccess, Countable
      */
     public function offsetSet($offset, $value)
     {
-        trigger_error(sprintf('Trying to set readonly property: %s::%s', get_class($this), $offset), E_USER_WARNING);
+        trigger_error(sprintf('Trying to set readonly property: %s::%s', static::class, $offset), E_USER_WARNING);
     }
 
     /**
@@ -90,6 +90,6 @@ class PropertyValues implements IteratorAggregate, ArrayAccess, Countable
      */
     public function offsetUnset($offset)
     {
-        trigger_error(sprintf('Trying to unset readonly property: %s::%s', get_class($this), $offset), E_USER_WARNING);
+        trigger_error(sprintf('Trying to unset readonly property: %s::%s', static::class, $offset), E_USER_WARNING);
     }
 }

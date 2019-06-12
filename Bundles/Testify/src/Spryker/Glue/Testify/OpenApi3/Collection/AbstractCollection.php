@@ -110,7 +110,7 @@ abstract class AbstractCollection implements CollectionInterface, IteratorAggreg
     public function offsetGet($offset)
     {
         if (!$this->offsetExists($offset)) {
-            trigger_error(sprintf('Accessing non-existing offset: %s::%s', get_class($this), $offset), E_USER_WARNING);
+            trigger_error(sprintf('Accessing non-existing offset: %s::%s', static::class, $offset), E_USER_WARNING);
 
             $class = $this->getElementDefinition()->getType();
 
@@ -125,7 +125,7 @@ abstract class AbstractCollection implements CollectionInterface, IteratorAggreg
      */
     public function offsetSet($offset, $value)
     {
-        trigger_error(sprintf('Trying to set readonly property: %s::%s', get_class($this), $offset), E_USER_WARNING);
+        trigger_error(sprintf('Trying to set readonly property: %s::%s', static::class, $offset), E_USER_WARNING);
     }
 
     /**
@@ -133,7 +133,7 @@ abstract class AbstractCollection implements CollectionInterface, IteratorAggreg
      */
     public function offsetUnset($offset)
     {
-        trigger_error(sprintf('Trying to unset readonly property: %s::%s', get_class($this), $offset), E_USER_WARNING);
+        trigger_error(sprintf('Trying to unset readonly property: %s::%s', static::class, $offset), E_USER_WARNING);
     }
 
     /**

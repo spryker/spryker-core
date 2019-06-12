@@ -18,9 +18,9 @@ interface CollectionInterface extends SchemaFieldInterface
     public function getElementDefinition(): PropertyDefinition;
 
     /**
-     * @return \Spryker\Glue\Testify\OpenApi3\Collection\CollectionInterface
+     * @return $this
      */
-    public function export(): self;
+    public function export();
 
     /**
      * @return array

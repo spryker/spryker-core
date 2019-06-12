@@ -23,8 +23,8 @@ use Spryker\Glue\Testify\OpenApi3\Reference\ReferableInterface;
  * @property-read bool $deprecated
  * @property-read bool $allowEmptyValue
  * @property-read string $style
- * @property-read boolean $explode
- * @property-read boolean $allowReserved
+ * @property-read bool $explode
+ * @property-read bool $allowReserved
  * @property-read \Spryker\Glue\Testify\OpenApi3\Object\Schema $schema
  * @property-read mixed $example
  * @property-read \Spryker\Glue\Testify\OpenApi3\Object\Example[] $examples

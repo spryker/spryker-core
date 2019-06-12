@@ -71,7 +71,7 @@ abstract class AbstractObject implements ObjectInterface
             return new $class();
         }
 
-        trigger_error(sprintf('Getting unknown property: %s::%s', get_class($this), $name), E_USER_WARNING);
+        trigger_error(sprintf('Getting unknown property: %s::%s', static::class, $name), E_USER_WARNING);
 
         return null;
     }
@@ -84,7 +84,7 @@ abstract class AbstractObject implements ObjectInterface
      */
     public function __set($name, $value)
     {
-        trigger_error(sprintf('Trying to mutate readonly object: %s::%s', get_class($this), $name), E_USER_WARNING);
+        trigger_error(sprintf('Trying to mutate readonly object: %s::%s', static::class, $name), E_USER_WARNING);
     }
 
     /**

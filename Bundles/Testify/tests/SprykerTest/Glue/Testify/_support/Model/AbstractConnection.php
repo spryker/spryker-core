@@ -60,6 +60,7 @@ abstract class AbstractConnection implements Connection
     public function setRequestUrl(string $requestUrl): self
     {
         $this->requestUrl = $requestUrl;
+
         return $this;
     }
 
@@ -79,6 +80,7 @@ abstract class AbstractConnection implements Connection
     public function setRequestMethod(string $requestMethod): self
     {
         $this->requestMethod = strtolower($requestMethod);
+
         return $this;
     }
 
@@ -98,6 +100,7 @@ abstract class AbstractConnection implements Connection
     public function setRequestParameters(array $requestParameters): self
     {
         $this->requestParameters = $requestParameters;
+
         return $this;
     }
 
@@ -117,6 +120,7 @@ abstract class AbstractConnection implements Connection
     public function setRequestFiles(array $requestFiles): self
     {
         $this->requestFiles = $requestFiles;
+
         return $this;
     }
 
@@ -136,6 +140,7 @@ abstract class AbstractConnection implements Connection
     public function setResponseBody(string $responseBody): self
     {
         $this->responseBody = $responseBody;
+
         return $this;
     }
 
@@ -155,6 +160,7 @@ abstract class AbstractConnection implements Connection
     public function setResponseCode(int $responseCode): self
     {
         $this->responseCode = $responseCode;
+
         return $this;
     }
 
@@ -174,6 +180,7 @@ abstract class AbstractConnection implements Connection
     public function setResponseContentType(string $responseContentType): self
     {
         $this->responseContentType = $responseContentType;
+
         return $this;
     }
 }

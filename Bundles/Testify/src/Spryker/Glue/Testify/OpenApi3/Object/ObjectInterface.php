@@ -17,7 +17,7 @@ interface ObjectInterface extends SchemaFieldInterface
     public function getObjectSpecification(): ObjectSpecification;
 
     /**
-     * @return \Spryker\Glue\Testify\OpenApi3\Object\ObjectInterface
+     * @return $this
      */
-    public function export(): self;
+    public function export();
 }

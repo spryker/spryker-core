@@ -29,7 +29,7 @@ trait ModuleLocatorTrait
         $module = $this->findModule($className);
 
         if ($module === null) {
-            throw new ModuleException(__CLASS__, sprintf('The module requires %s', $className));
+            throw new ModuleException(self::class, sprintf('The module requires %s', $className));
         }
 
         return $module;

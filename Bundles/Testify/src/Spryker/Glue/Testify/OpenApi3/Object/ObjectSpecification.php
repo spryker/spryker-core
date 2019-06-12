@@ -29,7 +29,7 @@ class ObjectSpecification implements IteratorAggregate, ArrayAccess, Countable
     public function setProperty(string $key, PropertyDefinition $property): self
     {
         if ($this->offsetExists($key)) {
-            trigger_error(sprintf('Property is already added before: %s::%s', get_class($this), $key), E_USER_WARNING);
+            trigger_error(sprintf('Property is already added before: %s::%s', static::class, $key), E_USER_WARNING);
 
             return $this;
         }
@@ -78,7 +78,7 @@ class ObjectSpecification implements IteratorAggregate, ArrayAccess, Countable
      */
     public function offsetSet($offset, $value)
     {
-        trigger_error(sprintf('Trying to set readonly property: %s::%s', get_class($this), $offset), E_USER_WARNING);
+        trigger_error(sprintf('Trying to set readonly property: %s::%s', static::class, $offset), E_USER_WARNING);
     }
 
     /**
@@ -86,6 +86,6 @@ class ObjectSpecification implements IteratorAggregate, ArrayAccess, Countable
      */
     public function offsetUnset($offset)
     {
-        trigger_error(sprintf('Trying to unset readonly property: %s::%s', get_class($this), $offset), E_USER_WARNING);
+        trigger_error(sprintf('Trying to unset readonly property: %s::%s', static::class, $offset), E_USER_WARNING);
     }
 }

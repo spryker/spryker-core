@@ -22,6 +22,7 @@ class FixturesRunner extends Codecept
         $suiteManager->loadTests($test);
         mt_srand();
         $suiteManager->run($this->runner, $this->result, $this->options);
+
         return $this->result;
     }
 }

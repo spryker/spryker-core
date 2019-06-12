@@ -12,9 +12,9 @@ interface SchemaFieldInterface
     /**
      * @param mixed $content
      *
-     * @return \Spryker\Glue\Testify\OpenApi3\SchemaFieldInterface
+     * @return $this
      */
-    public function hydrate($content): self;
+    public function hydrate($content);
 
     /**
      * @return mixed
