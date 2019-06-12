@@ -54,10 +54,6 @@ class PhpScheduleMapper implements PhpScheduleMapperInterface
 
         foreach ($filteredJobs as $job) {
             $jobTransfer = $this->mapJobFromArrayBasedOnStore($job, $storeName);
-            $jobTransfer
-                ->requireCommand()
-                ->requireRepeatPattern();
-
             $scheduleTransfer->addJob($jobTransfer);
         }
 
