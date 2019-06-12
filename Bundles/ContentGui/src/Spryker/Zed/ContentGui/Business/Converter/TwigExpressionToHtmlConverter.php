@@ -189,7 +189,11 @@ class TwigExpressionToHtmlConverter implements TwigExpressionConverterInterface
     {
         preg_match_all("/'([\w\-]+)'/", $twigExpression, $twigExpressionParams);
 
-        return $twigExpressionParams[1][1] ?? null;
+        if (!isset($twigExpressionParams[1][1])) {
+            return null;
+        }
+
+        return $twigExpressionParams[1][1];
     }
 
     /**
