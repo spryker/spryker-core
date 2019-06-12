@@ -10,6 +10,9 @@ namespace SprykerTest\Zed\Scheduler\Communication\Plugin\ServiceProvider;
 use Codeception\Test\Unit;
 use Silex\Application;
 use Spryker\Zed\Scheduler\Communication\Plugin\ServiceProvider\SchedulerTwigServiceProvider;
+use Spryker\Zed\Scheduler\Communication\Twig\SchedulerTwigPlugin;
+use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
 
 /**
  * Auto-generated group annotations
@@ -27,10 +30,27 @@ class SchedulerTwigServiceProviderTest extends Unit
     /**
      * @return void
      */
-    public function testRegisterSchedulerGetEnvExtension(): void
+    public function testRegisterSchedulerGetEnvAddsExtensionToTwig(): void
+    {
+        $applicationMock = $this->getApplicationMock();
+        $schedulerTwigService = new SchedulerTwigServiceProvider();
+        $schedulerTwigService->register($applicationMock);
+
+        $twig = $applicationMock['twig'];
+
+        $this->assertTrue($twig->hasExtension(SchedulerTwigPlugin::class));
+    }
+
+    /**
+     * @return \Silex\Application
+     */
+    protected function getApplicationMock(): Application
     {
         $application = new Application();
-        $schedulerTwigService = new SchedulerTwigServiceProvider();
-        $schedulerTwigService->register($application);
+        $application['twig'] = function () {
+            return new Environment(new FilesystemLoader());
+        };
+
+        return $application;
     }
 }

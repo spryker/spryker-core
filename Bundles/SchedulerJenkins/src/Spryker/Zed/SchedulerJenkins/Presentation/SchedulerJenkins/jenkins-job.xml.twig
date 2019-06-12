@@ -20,7 +20,7 @@
     {% block triggers %}
     <triggers class='vector'>
         <hudson.triggers.TimerTrigger>
-            <spec>{{ job.schedule }}</spec>
+            <spec>{{ job.repeatPattern }}</spec>
         </hudson.triggers.TimerTrigger>
     </triggers>
     {% endblock triggers %}

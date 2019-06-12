@@ -30,7 +30,7 @@ class SetupConfig extends AbstractBundleConfig
     }
 
     /**
-     * @deprecated Will be removed with next major release.
+     * @deprecated Method will be removed without replacement.
      *
      * @return string
      */
@@ -40,7 +40,7 @@ class SetupConfig extends AbstractBundleConfig
     }
 
     /**
-     * @deprecated Will be removed with next major release.
+     * @deprecated Method will be removed without replacement.
      *
      * @return string
      */
@@ -50,7 +50,7 @@ class SetupConfig extends AbstractBundleConfig
     }
 
     /**
-     * @deprecated Will be removed with next major release.
+     * @deprecated Method will be removed without replacement.
      *
      * @return string
      */
@@ -100,7 +100,7 @@ class SetupConfig extends AbstractBundleConfig
     }
 
     /**
-     * @deprecated Will be removed with next major release.
+     * @deprecated Method will be removed without replacement.
      *
      * Returns the path to the environment configuration of cronjob functionality.
      *
@@ -118,7 +118,7 @@ class SetupConfig extends AbstractBundleConfig
     }
 
     /**
-     * @deprecated Will be removed with next major release.
+     * @deprecated Method will be removed without replacement.
      *
      * Returns the path to the cronjobs definition, their config and schedule.
      *
@@ -136,7 +136,7 @@ class SetupConfig extends AbstractBundleConfig
     }
 
     /**
-     * @deprecated Will be removed with next major release.
+     * @deprecated Method will be removed without replacement.
      *
      * @return bool
      */

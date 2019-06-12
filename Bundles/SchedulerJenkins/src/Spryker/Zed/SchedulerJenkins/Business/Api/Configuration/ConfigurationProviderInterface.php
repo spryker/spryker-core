@@ -20,7 +20,7 @@ interface ConfigurationProviderInterface
      * @param string $schedulerId
      * @param string $urlPath
      *
-     * @throws \Spryker\Zed\SchedulerJenkins\Business\Api\Exception\WrongJenkinsConfiguration
+     * @throws \Spryker\Zed\SchedulerJenkins\Business\Api\Exception\InvalidJenkinsConfiguration
      *
      * @return string
      */

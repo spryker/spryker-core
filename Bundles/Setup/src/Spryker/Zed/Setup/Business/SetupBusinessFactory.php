@@ -26,7 +26,7 @@ use Spryker\Zed\Setup\SetupDependencyProvider;
 class SetupBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @deprecated Will be removed with next major release.
+     * @deprecated Method will be removed without replacement.
      *
      * @return \Spryker\Zed\Setup\Business\Model\Cronjobs
      */

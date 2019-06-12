@@ -26,7 +26,7 @@ class SchedulerSuspendConsole extends AbstractSchedulerConsole
 
     protected const SCHEDULERS_OPTION = 'schedulers';
     protected const SCHEDULERS_OPTION_SHORTCUT = 's';
-    protected const SCHEDULERS_OPTION_DESCRIPTION = 'Schedulers that will be executed on this host.';
+    protected const SCHEDULERS_OPTION_DESCRIPTION = 'Schedulers that will be executed.';
 
     protected const JOBS_OPTION = 'jobs';
     protected const JOBS_OPTION_SHORTCUT = 'j';

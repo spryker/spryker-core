@@ -17,7 +17,7 @@ class SetupFacade extends AbstractFacade implements SetupFacadeInterface
     /**
      * @api
      *
-     * @deprecated Will be removed with next major release.
+     * @deprecated Method will be removed without replacement.
      *
      * @param array $roles
      *
@@ -31,7 +31,7 @@ class SetupFacade extends AbstractFacade implements SetupFacadeInterface
     /**
      * @api
      *
-     * @deprecated Will be removed with next major release.
+     * @deprecated Method will be removed without replacement.
      *
      * @return string
      */
@@ -43,7 +43,7 @@ class SetupFacade extends AbstractFacade implements SetupFacadeInterface
     /**
      * @api
      *
-     * @deprecated Will be removed with next major release.
+     * @deprecated Method will be removed without replacement.
      *
      * @return string
      */

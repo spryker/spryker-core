@@ -53,8 +53,11 @@ class PhpScheduleMapper implements PhpScheduleMapperInterface
         $filteredJobs = $this->jobsFilter->filterJobs($filterTransfer, $jobs);
 
         foreach ($filteredJobs as $job) {
-            $jobTransfer = new SchedulerJobTransfer();
-            $jobTransfer = $this->mapJobFromArrayBasedOnStore($jobTransfer, $job, $storeName);
+            $jobTransfer = $this->mapJobFromArrayBasedOnStore($job, $storeName);
+            $jobTransfer
+                ->requireCommand()
+                ->requireRepeatPattern();
+
             $scheduleTransfer->addJob($jobTransfer);
         }
 
@@ -62,19 +65,18 @@ class PhpScheduleMapper implements PhpScheduleMapperInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SchedulerJobTransfer $jobTransfer
      * @param array $job
      * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\SchedulerJobTransfer
      */
-    protected function mapJobFromArrayBasedOnStore(SchedulerJobTransfer $jobTransfer, array $job, string $storeName): SchedulerJobTransfer
+    protected function mapJobFromArrayBasedOnStore(array $job, string $storeName): SchedulerJobTransfer
     {
-        return $jobTransfer
+        return (new SchedulerJobTransfer())
             ->setName($this->getJobName($job, $storeName))
-            ->setCommand($job[static::KEY_COMMAND] ?? '')
+            ->setCommand($job[static::KEY_COMMAND] ?? null)
             ->setEnable($job[static::KEY_ENABLE] ?? false)
-            ->setSchedule($job[static::KEY_SCHEDULE] ?? '')
+            ->setRepeatPattern($job[static::KEY_SCHEDULE] ?? null)
             ->setStore($storeName)
             ->setPayload($this->mapPayloadFromArray($job));
     }

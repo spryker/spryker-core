@@ -8,7 +8,7 @@
 namespace Spryker\Zed\SchedulerJenkins\Business\Api\Configuration;
 
 use Spryker\Shared\SchedulerJenkins\SchedulerJenkinsConfig as SharedSchedulerJenkinsConfig;
-use Spryker\Zed\SchedulerJenkins\Business\Api\Exception\WrongJenkinsConfiguration;
+use Spryker\Zed\SchedulerJenkins\Business\Api\Exception\InvalidJenkinsConfiguration;
 use Spryker\Zed\SchedulerJenkins\SchedulerJenkinsConfig;
 
 class ConfigurationProvider implements ConfigurationProviderInterface
@@ -49,7 +49,7 @@ class ConfigurationProvider implements ConfigurationProviderInterface
      * @param string $schedulerId
      * @param string $urlPath
      *
-     * @throws \Spryker\Zed\SchedulerJenkins\Business\Api\Exception\WrongJenkinsConfiguration
+     * @throws \Spryker\Zed\SchedulerJenkins\Business\Api\Exception\InvalidJenkinsConfiguration
      *
      * @return string
      */
@@ -61,7 +61,7 @@ class ConfigurationProvider implements ConfigurationProviderInterface
             SharedSchedulerJenkinsConfig::SCHEDULER_JENKINS_BASE_URL,
             $schedulerJenkinsConfiguration
         )) {
-            throw new WrongJenkinsConfiguration('');
+            throw new InvalidJenkinsConfiguration('');
         }
 
         return $schedulerJenkinsConfiguration[SharedSchedulerJenkinsConfig::SCHEDULER_JENKINS_BASE_URL] . $urlPath;

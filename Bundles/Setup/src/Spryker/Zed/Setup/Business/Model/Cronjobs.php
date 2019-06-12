@@ -12,7 +12,7 @@ use Spryker\Shared\Config\Environment;
 use Spryker\Zed\Setup\SetupConfig;
 
 /**
- * @deprecated Use Scheduler module instead. Will be removed with next major release.
+ * @deprecated Use Scheduler module instead. Will be removed without replacement.
  */
 class Cronjobs
 {
@@ -123,7 +123,7 @@ class Cronjobs
 
         include_once $this->getJobConfigPath();
 
-        if (!empty($jobs)) {
+        if (count($jobs) === 0) {
             return $jobs;
         }
 

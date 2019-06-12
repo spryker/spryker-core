@@ -12,7 +12,7 @@ interface SetupFacadeInterface
     /**
      * @api
      *
-     * @deprecated Will be removed with next major release.
+     * @deprecated Method will be removed without replacement.
      *
      * @param array $roles
      *
@@ -23,7 +23,7 @@ interface SetupFacadeInterface
     /**
      * @api
      *
-     * @deprecated Will be removed with next major release.
+     * @deprecated Method will be removed without replacement.
      *
      * @return string
      */
@@ -32,7 +32,7 @@ interface SetupFacadeInterface
     /**
      * @api
      *
-     * @deprecated Will be removed with next major release.
+     * @deprecated Method will be removed without replacement.
      *
      * @return string
      */

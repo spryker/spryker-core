@@ -37,6 +37,8 @@ class DeleteExecutor implements ExecutorInterface
      */
     public function execute(string $idScheduler, SchedulerJobTransfer $jobTransfer): SchedulerJenkinsResponseTransfer
     {
+        $jobTransfer->requireName();
+
         return $this->jenkinsApi->executePostRequest(
             $idScheduler,
             sprintf(static::DELETE_JOB_URL_TEMPLATE, $jobTransfer->getName())

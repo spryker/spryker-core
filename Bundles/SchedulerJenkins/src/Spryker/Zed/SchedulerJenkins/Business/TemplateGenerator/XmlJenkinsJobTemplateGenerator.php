@@ -49,6 +49,12 @@ class XmlJenkinsJobTemplateGenerator implements JenkinsJobTemplateGeneratorInter
      */
     public function generateJobTemplate(SchedulerJobTransfer $jobTransfer): string
     {
+        $jobTransfer
+            ->requireName()
+            ->requireRepeatPattern()
+            ->requireCommand()
+            ->requireStore();
+
         $jobTransfer = $this->extendSchedulerJobTransferWithLogRotateValue($jobTransfer);
 
         $xmlTemplate = $this->twig->render($this->schedulerJenkinsConfig->getJenkinsTemplatePath(), [

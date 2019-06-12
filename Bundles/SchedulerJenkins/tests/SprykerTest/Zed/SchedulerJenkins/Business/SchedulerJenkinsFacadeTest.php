@@ -17,7 +17,6 @@ use Spryker\Zed\SchedulerJenkins\Business\Api\JenkinsApi;
 use Spryker\Zed\SchedulerJenkins\Business\SchedulerJenkinsBusinessFactory;
 use Spryker\Zed\SchedulerJenkins\Business\SchedulerJenkinsFacade;
 use Spryker\Zed\SchedulerJenkins\Business\SchedulerJenkinsFacadeInterface;
-use Spryker\Zed\SchedulerJenkins\Business\TemplateGenerator\XmlJenkinsJobTemplateGenerator;
 use Spryker\Zed\SchedulerJenkins\Dependency\Service\SchedulerJenkinsToUtilEncodingServiceBridge;
 
 /**
@@ -134,10 +133,6 @@ class SchedulerJenkinsFacadeTest extends Unit
             ->getMock();
 
         $schedulerJenkinsBusinessFactoryMock
-            ->method('createXmkJenkinsJobTemplateGenerator')
-            ->willReturn($this->getJenkinsJobXmlGeneratorMock());
-
-        $schedulerJenkinsBusinessFactoryMock
             ->method('createJenkinsApi')
             ->willReturn($this->createJenkinsApiMock());
 
@@ -182,21 +177,5 @@ class SchedulerJenkinsFacadeTest extends Unit
         return new SchedulerJenkinsToUtilEncodingServiceBridge(
             new UtilEncodingService()
         );
-    }
-
-    /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\SchedulerJenkins\Business\TemplateGenerator\JenkinsJobTemplateGeneratorInterface
-     */
-    protected function getJenkinsJobXmlGeneratorMock()
-    {
-        $schedulerJenkinsJobXmlTemplateGeneratorMock = $this->getMockBuilder(XmlJenkinsJobTemplateGenerator::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $schedulerJenkinsJobXmlTemplateGeneratorMock
-            ->method('generateJobTemplate')
-            ->willReturn('');
-
-        return $schedulerJenkinsJobXmlTemplateGeneratorMock;
     }
 }

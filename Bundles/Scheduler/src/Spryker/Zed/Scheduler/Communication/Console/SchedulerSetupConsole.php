@@ -31,7 +31,7 @@ class SchedulerSetupConsole extends AbstractSchedulerConsole
 
     protected const SCHEDULERS_OPTION = 'schedulers';
     protected const SCHEDULERS_OPTION_SHORTCUT = 's';
-    protected const SCHEDULERS_OPTION_DESCRIPTION = 'Schedulers that will be executed on this host.';
+    protected const SCHEDULERS_OPTION_DESCRIPTION = 'Schedulers that will be executed.';
 
     /**
      * @return void

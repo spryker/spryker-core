@@ -37,6 +37,8 @@ class DisableExecutor implements ExecutorInterface
      */
     public function execute(string $idScheduler, SchedulerJobTransfer $jobTransfer): SchedulerJenkinsResponseTransfer
     {
+        $jobTransfer->requireName();
+
         return $this->jenkinsApi->executePostRequest(
             $idScheduler,
             sprintf(static::DISABLE_JOB_URL_TEMPLATE, $jobTransfer->getName())

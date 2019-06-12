@@ -13,21 +13,21 @@ namespace Spryker\Shared\Setup;
 interface SetupConstants
 {
     /**
-     * @deprecated Will be removed with next major release.
+     * @deprecated Will be removed without replacement.
      *
      * @api
      */
     public const JENKINS_BASE_URL = 'JENKINS_BASE_URL';
 
     /**
-     * @deprecated Will be removed with next major release.
+     * @deprecated Will be removed without replacement.
      *
      * @api
      */
     public const JENKINS_DIRECTORY = 'JENKINS_DIRECTORY';
 
     /**
-     * @deprecated Will be removed with next major release.
+     * @deprecated Will be removed without replacement.
      *
      * @api
      */

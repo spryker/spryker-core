@@ -53,7 +53,7 @@ class PhpScheduleReader implements PhpScheduleReaderInterface
 
         $jobs = [];
 
-        include_once $sourceFileName;
+        include $sourceFileName;
 
         return $this->mapper->mapScheduleFromArray($filterTransfer, $scheduleTransfer, $jobs);
     }

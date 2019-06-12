@@ -6,8 +6,8 @@ $jobs[] = [
     'schedule' => '*/10 * * * *',
     'enable' => false,
     'role' => 'admin',
-    'payload1' => true,
-    'payload2' => false,
+    'customParameter1' => true,
+    'customParameter2' => false,
     'stores' => ['AT'],
 ];
 
@@ -17,8 +17,8 @@ $jobs[] = [
     'schedule' => '0 6 * * *',
     'enable' => true,
     'role' => 'empty',
-    'payload1' => true,
-    'payload2' => false,
+    'customParameter1' => true,
+    'customParameter2' => false,
     'stores' => ['DE', 'AT', 'US'],
 ];
 
@@ -28,8 +28,8 @@ $jobs[] = [
     'schedule' => '0 6 * * *',
     'enable' => true,
     'role' => 'empty',
-    'payload1' => true,
-    'payload2' => false,
+    'customParameter1' => true,
+    'customParameter2' => false,
     'stores' => ['DE', 'AT', 'US'],
 ];
 
@@ -39,8 +39,8 @@ $jobs[] = [
     'schedule' => '0 6 * * *',
     'enable' => true,
     'role' => 'admin',
-    'payload1' => true,
-    'payload2' => false,
+    'customParameter1' => true,
+    'customParameter2' => false,
     'stores' => [],
 ];
 
@@ -50,7 +50,7 @@ $jobs[] = [
     'schedule' => '0 6 * * *',
     'enable' => true,
     'role' => 'admin',
-    'payload1' => true,
-    'payload2' => false,
+    'customParameter1' => true,
+    'customParameter2' => false,
     'stores' => ['DE', 'AT', 'US'],
 ];
