@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductImageStorage\Persistence;
 
 use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
+use Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -54,6 +55,8 @@ class ProductImageStorageRepository extends AbstractRepository implements Produc
             ->endUse()
             ->filterByFkProduct_In($productFks);
 
+        $productImageSetsQuery = $this->sortProductImageSetToProductImageQuery($productImageSetsQuery);
+
         return $this->buildQueryFromCriteria($productImageSetsQuery)->find();
     }
 
@@ -72,6 +75,8 @@ class ProductImageStorageRepository extends AbstractRepository implements Produc
                 ->innerJoinWithSpyProductImage()
             ->endUse()
             ->filterByFkProductAbstract_In($productAbstractFks);
+
+        $productImageSetsQuery = $this->sortProductImageSetToProductImageQuery($productImageSetsQuery);
 
         return $this->buildQueryFromCriteria($productImageSetsQuery)->find();
     }
@@ -93,5 +98,21 @@ class ProductImageStorageRepository extends AbstractRepository implements Produc
             ->filterByFkLocale(null, Criteria::ISNULL);
 
         return $this->buildQueryFromCriteria($productImageSetsQuery)->find();
+    }
+
+    /**
+     * @param \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery $productImageSetToProductImageQuery
+     *
+     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery
+     */
+    protected function sortProductImageSetToProductImageQuery(
+        SpyProductImageSetQuery $productImageSetToProductImageQuery
+    ): SpyProductImageSetQuery {
+        $productImageSetToProductImageQuery->useSpyProductImageSetToProductImageQuery()
+                ->orderBySortOrder()
+                ->orderByIdProductImageSetToProductImage()
+            ->endUse();
+
+        return $productImageSetToProductImageQuery;
     }
 }

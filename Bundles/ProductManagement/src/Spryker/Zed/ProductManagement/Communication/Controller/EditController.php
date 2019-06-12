@@ -95,7 +95,7 @@ class EditController extends AddController
             ->getFactory()
             ->createVariantTable($idProductAbstract, $type);
 
-        return $this->viewResponse([
+        $viewData = [
             'form' => $form->createView(),
             'currentLocale' => $this->getFactory()->getLocaleFacade()->getCurrentLocale()->getLocaleName(),
             'currentProduct' => $productAbstractTransfer->toArray(),
@@ -108,7 +108,13 @@ class EditController extends AddController
             'idProductAbstract' => $idProductAbstract,
             'priceDimension' => $request->get(static::PARAM_PRICE_DIMENSION, []),
             'productFormEditTabs' => $this->getFactory()->createProductFormEditTabs()->createView(),
-        ]);
+        ];
+
+        $viewData = $this->getFactory()
+            ->createAbstractProductEditViewExpanderPluginExecutor()
+            ->expandEditAbstractProductViewData($viewData);
+
+        return $this->viewResponse($viewData);
     }
 
     /**
@@ -189,7 +195,7 @@ class EditController extends AddController
             }
         }
 
-        return $this->viewResponse([
+        $viewData = [
             'form' => $form->createView(),
             'currentLocale' => $this->getFactory()->getLocaleFacade()->getCurrentLocale()->getLocaleName(),
             'currentProduct' => $productTransfer->toArray(),
@@ -201,7 +207,13 @@ class EditController extends AddController
             'productConcreteFormEditTabs' => $this->getFactory()->createProductConcreteFormEditTabs()->createView(),
             'bundledProductTable' => $bundledProductTable->render(),
             'type' => $type,
-        ]);
+        ];
+
+        $viewData = $this->getFactory()
+            ->createProductConcreteEditViewExpanderPluginExecutor()
+            ->expandEditVariantViewData($viewData);
+
+        return $this->viewResponse($viewData);
     }
 
     /**
