@@ -8,7 +8,7 @@
 namespace Spryker\Shared\Config;
 
 /**
- * @deprecated Use `Factory::getConfig()->getEnvironmentName()` instead.
+ * @deprecated Will be removed without replacement.
  */
 class Environment
 {

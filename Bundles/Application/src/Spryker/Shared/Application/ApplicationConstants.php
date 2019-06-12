@@ -337,4 +337,20 @@ interface ApplicationConstants
     public const HOST_SSL_STATIC_MEDIA = 'HOST_SSL_STATIC_MEDIA';
 
     public const FORM_FACTORY = 'FORM_FACTORY';
+
+    /**
+     * Specification:
+     * - Enables application service debug.
+     *
+     * @api
+     */
+    public const ENABLE_APPLICATION_SERVICE_DEBUG = 'APPLICATION:ENABLE_APPLICATION_SERVICE_DEBUG';
+
+    /**
+     * Specification:
+     * - Defines environment name for twig.
+     *
+     * @api
+     */
+    public const TWIG_ENVIRONMENT_NAME = 'APPLICATION:TWIG_ENVIRONMENT_NAME';
 }

@@ -85,4 +85,12 @@ interface SessionConstants
      * @api
      */
     public const ZED_SESSION_PREDIS_CLIENT_OPTIONS = 'SESSION:ZED_SESSION_PREDIS_CLIENT_OPTIONS';
+
+    /**
+     * Specification:
+     * - Defines session environment name.
+     *
+     * @api
+     */
+    public const SESSION_ENVIRONMENT_NAME = 'SESSIONS:SESSION_ENVIRONMENT_NAME';
 }

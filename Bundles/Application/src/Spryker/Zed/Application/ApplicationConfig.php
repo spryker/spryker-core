@@ -59,4 +59,30 @@ class ApplicationConfig extends AbstractBundleConfig
     {
         return $this->get(ApplicationConstants::PROJECT_NAMESPACE);
     }
+
+    /**
+     * @return bool
+     */
+    public function isApplicationServiceDebugEnabled(): bool
+    {
+        return $this->get(ApplicationConstants::ENABLE_APPLICATION_SERVICE_DEBUG, $this->getApplicationServiceDebugDefaultValue());
+    }
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
+     * @return bool
+     */
+    protected function getApplicationServiceDebugDefaultValue(): bool
+    {
+        return APPLICATION_ENV === 'development';
+    }
+
+    /**
+     * @return string
+     */
+    public function getTwigEnvironmentName(): string
+    {
+        return $this->get(ApplicationConstants::TWIG_ENVIRONMENT_NAME, APPLICATION_ENV);
+    }
 }

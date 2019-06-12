@@ -38,7 +38,19 @@ interface KernelConstants
     public const DOMAIN_WHITELIST = 'KERNEL:DOMAIN_WHITELIST';
     public const STRICT_DOMAIN_REDIRECT = 'KERNEL:STRICT_DOMAIN_REDIRECT';
 
+    /**
+     * Specification:
+     * - Defines container for testing environment.
+     *
+     * @api
+     */
     public const OVERWRITE_CONTAINER_FOR_TESTING = 'KERNEL:OVERWRITE_CONTAINER_FOR_TESTING';
 
+    /**
+     * Specification:
+     * - Adjusts test namespaces.
+     *
+     * @api
+     */
     public const ADJUST_TEST_NAMESPACE = 'KERNEL:ADJUST_TEST_NAMESPACE';
 }

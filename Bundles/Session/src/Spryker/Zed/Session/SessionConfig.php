@@ -233,4 +233,22 @@ class SessionConfig extends AbstractBundleConfig
     {
         return $this->get(SessionConstants::ZED_SESSION_FILE_PATH);
     }
+
+    /**
+     * @return string
+     */
+    public function getSessionEnvironmentName(): string
+    {
+        return $this->get(SessionConstants::SESSION_ENVIRONMENT_NAME, $this->getSessionEnvironmentNameDefaultValue());
+    }
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
+     * @return string
+     */
+    protected function getSessionEnvironmentNameDefaultValue(): string
+    {
+        return APPLICATION_ENV;
+    }
 }

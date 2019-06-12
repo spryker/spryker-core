@@ -29,12 +29,4 @@ abstract class AbstractBundleConfig
     {
         return Config::getInstance();
     }
-
-    /**
-     * @return string
-     */
-    public function getEnvironmentName(): string
-    {
-        return $this->getConfig()->getEnvironmentName();
-    }
 }

@@ -45,16 +45,7 @@ class ConsoleDependencyProvider extends AbstractBundleDependencyProvider
     protected function addCommands(Container $container)
     {
         $container[self::COMMANDS] = function (Container $container) {
-
-            $commands = $this->getConsoleCommands($container);
-
-            foreach ($this->getOptionalConsoleResolvers($container) as $resolver) {
-                if ($resolver->isResolvable()) {
-                    $commands[] = $resolver->resolve($container);
-                }
-            }
-
-            return $commands;
+            return $this->getConsoleCommands($container);
         };
 
         return $container;
@@ -66,16 +57,6 @@ class ConsoleDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Symfony\Component\Console\Command\Command[]
      */
     protected function getConsoleCommands(Container $container)
-    {
-        return [];
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Console\Communication\Resolver\OptionalCommandResolverInterface[]
-     */
-    protected function getOptionalConsoleResolvers(Container $container): array
     {
         return [];
     }

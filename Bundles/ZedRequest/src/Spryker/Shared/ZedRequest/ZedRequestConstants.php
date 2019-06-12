@@ -41,8 +41,8 @@ interface ZedRequestConstants
 
     public const ZED_API_SSL_ENABLED = 'ZED_API_SSL_ENABLED';
 
-    public const ENABLE_REPEAT = 'ZED_REQUEST:ENABLE_REPEAT';
     public const SET_REPEAT_DATA = 'SET_REPEAT_DATA';
+
     public const YVES_REQUEST_REPEAT_DATA_PATH = 'YVES_REQUEST_REPEAT_DATA_PATH';
 
     /**
@@ -60,4 +60,12 @@ interface ZedRequestConstants
      * @api
      */
     public const DIRECTORY_PERMISSION = 'ZED_REQUEST:DIRECTORY_PERMISSION';
+
+    /**
+     * Specification:
+     * - Enables several Zed request.
+     *
+     * @api
+     */
+    public const ENABLE_REPEAT = 'ZED_REQUEST:ENABLE_REPEAT';
 }

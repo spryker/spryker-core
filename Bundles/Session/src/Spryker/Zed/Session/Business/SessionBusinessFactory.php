@@ -123,7 +123,7 @@ class SessionBusinessFactory extends AbstractBusinessFactory
         return new SessionFactory(
             $this->getConfig()->getSessionLifeTime(),
             $this->getMonitoringService(),
-            $this->getConfig()->getEnvironmentName()
+            $this->getConfig()->getSessionEnvironmentName()
         );
     }
 

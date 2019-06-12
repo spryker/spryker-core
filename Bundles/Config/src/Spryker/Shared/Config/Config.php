@@ -140,22 +140,14 @@ class Config
     }
 
     /**
-     * @return string
-     */
-    public static function getEnvironmentName(): string
-    {
-        return APPLICATION_ENV;
-    }
-
-    /**
      * @param string|null $environmentName
      *
      * @return void
      */
-    public static function init($environmentName = null): void
+    public static function init(?string $environmentName = null): void
     {
         $config = new ArrayObject();
-        $environmentName = $environmentName ?? static::getEnvironmentName();
+        $environmentName = $environmentName ?? APPLICATION_ENV;
         $storeName = Store::getInstance()->getStoreName();
 
         /*

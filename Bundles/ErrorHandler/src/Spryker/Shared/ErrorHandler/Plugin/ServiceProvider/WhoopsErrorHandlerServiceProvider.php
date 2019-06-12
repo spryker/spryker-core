@@ -25,7 +25,7 @@ class WhoopsErrorHandlerServiceProvider implements ServiceProviderInterface
      */
     public function register(Application $app)
     {
-        if (Config::get(ErrorHandlerConstants::ENABLE_PRETTY_ERROR_HANDLER, Config::getEnvironmentName() === 'development')) {
+        if (Config::get(ErrorHandlerConstants::ENABLE_PRETTY_ERROR_HANDLER, $this->getPrettyErrorHandlerDefaultValue())) {
             return;
         }
 
@@ -82,5 +82,15 @@ class WhoopsErrorHandlerServiceProvider implements ServiceProviderInterface
         return new CallbackHandler(function ($exception) {
             ErrorLogger::getInstance()->log($exception);
         });
+    }
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
+     * @return bool
+     */
+    protected function getPrettyErrorHandlerDefaultValue(): bool
+    {
+        return APPLICATION_ENV === 'development';
     }
 }
