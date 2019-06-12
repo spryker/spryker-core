@@ -14,8 +14,6 @@ use Spryker\Zed\Shipment\Business\Calculator\ShipmentTaxRateCalculator as Shipme
 use Spryker\Zed\Shipment\Business\Checkout\MultiShipmentOrderSaver;
 use Spryker\Zed\Shipment\Business\Checkout\MultiShipmentOrderSaverInterface;
 use Spryker\Zed\Shipment\Business\Checkout\ShipmentOrderSaver as CheckoutShipmentOrderSaver;
-use Spryker\Zed\Shipment\Business\Mapper\ShipmentMapper;
-use Spryker\Zed\Shipment\Business\Mapper\ShipmentMapperInterface;
 use Spryker\Zed\Shipment\Business\Model\Carrier;
 use Spryker\Zed\Shipment\Business\Model\Method;
 use Spryker\Zed\Shipment\Business\Model\MethodPrice;
@@ -114,8 +112,8 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
             $this->getMethodFilterPlugins(),
             $this->getRepository(),
             $this->createShipmentMethodAvailabilityChecker(),
-            $this->createShipmentMethodPrice(),
-            $this->createShipmentMethodDeliveryTime()
+            $this->createShipmentMethodPriceReader(),
+            $this->createShipmentMethodDeliveryTimeReader()
         );
     }
 
@@ -125,7 +123,8 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     public function createMethodWriter(): MethodWriterInterface
     {
         return new MethodWriter(
-            $this->getQueryContainer(),
+            $this->getRepository(),
+            $this->getEntityManager(),
             $this->createMethodPrice()
         );
     }
@@ -175,12 +174,9 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     public function createShipmentOrderSaver()
     {
         return new ShipmentOrderSaver(
-            $this->getSalesQueryContainer(),
             $this->getEntityManager(),
-            $this->getSalesFacade(),
-            $this->getCustomerFacade(),
             $this->createExpanseSanitizer(),
-            $this->createShipmentMapper()
+            $this->getRepository()
         );
     }
 
@@ -192,12 +188,9 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     public function createCheckoutShipmentOrderSaver()
     {
         return new CheckoutShipmentOrderSaver(
-            $this->getSalesQueryContainer(),
             $this->getEntityManager(),
-            $this->getSalesFacade(),
-            $this->getCustomerFacade(),
             $this->createExpanseSanitizer(),
-            $this->createShipmentMapper()
+            $this->getRepository()
         );
     }
 
@@ -386,8 +379,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     {
         return new ShipmentReader(
             $this->getSalesFacade(),
-            $this->getRepository(),
-            $this->createShipmentMapper()
+            $this->getRepository()
         );
     }
 
@@ -411,25 +403,17 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Shipment\Business\Mapper\ShipmentMapperInterface
-     */
-    public function createShipmentMapper(): ShipmentMapperInterface
-    {
-        return new ShipmentMapper();
-    }
-
-    /**
      * @return \Spryker\Zed\Shipment\Business\ShipmentMethod\MethodAvailabilityCheckerInterface
      */
     public function createShipmentMethodAvailabilityChecker(): MethodAvailabilityCheckerInterface
     {
-        return new MethodAvailabilityChecker($this->getAvailabilityPluginsService());
+        return new MethodAvailabilityChecker($this->getAvailabilityPlugins());
     }
 
     /**
      * @return \Spryker\Zed\Shipment\Business\ShipmentMethod\MethodPriceReaderInterface
      */
-    public function createShipmentMethodPrice(): MethodPriceReaderInterface
+    public function createShipmentMethodPriceReader(): MethodPriceReaderInterface
     {
         return new MethodPriceReader(
             $this->getPricePlugins(),
@@ -442,7 +426,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Shipment\Business\ShipmentMethod\MethodDeliveryTimeReaderInterface
      */
-    public function createShipmentMethodDeliveryTime(): MethodDeliveryTimeReaderInterface
+    public function createShipmentMethodDeliveryTimeReader(): MethodDeliveryTimeReaderInterface
     {
         return new MethodDeliveryTimeReader($this->getDeliveryTimePlugins());
     }
@@ -450,7 +434,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ShipmentExtension\Communication\Plugin\ShipmentMethodAvailabilityPluginInterface[]|\Spryker\Zed\Shipment\Communication\Plugin\ShipmentMethodAvailabilityPluginInterface[]
      */
-    public function getAvailabilityPluginsService(): array
+    public function getAvailabilityPlugins(): array
     {
         return $this->getProvidedDependency(ShipmentDependencyProvider::AVAILABILITY_PLUGINS);
     }

@@ -146,9 +146,9 @@ class ShipmentTaxRateCalculator implements CalculatorInterface
     }
 
     /**
-     * @return string
+     * @return float
      */
-    protected function getDefaultTaxRate(): string
+    protected function getDefaultTaxRate(): float
     {
         if ($this->defaultTaxRate === null) {
             $this->defaultTaxRate = $this->taxFacade->getDefaultTaxRate();

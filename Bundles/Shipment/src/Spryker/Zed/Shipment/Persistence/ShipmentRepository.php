@@ -7,12 +7,13 @@
 
 namespace Spryker\Zed\Shipment\Persistence;
 
+use ArrayObject;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
+use Generated\Shared\Transfer\ShipmentPriceTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderItemTableMap;
-use Orm\Zed\Sales\Persistence\SpySalesShipmentQuery;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodPriceQuery;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
 use Orm\Zed\Tax\Persistence\Map\SpyTaxRateTableMap;
@@ -134,43 +135,67 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
     }
 
     /**
-     * @param int $idSalesShipment
+     * @param string $shipmentMethodName
      *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesShipmentQuery
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
      */
-    public function querySalesShipmentById(int $idSalesShipment): SpySalesShipmentQuery
+    public function findShipmentMethodByName(string $shipmentMethodName): ?ShipmentMethodTransfer
     {
+        $salesShipmentMethodEntity = $this->queryMethodsWithMethodPricesAndCarrier()
+            ->filterByName($shipmentMethodName)
+            ->findOne();
+
+        if ($salesShipmentMethodEntity === null) {
+            return null;
+        }
+
         return $this->getFactory()
+            ->createShipmentMethodMapper()
+            ->mapShipmentMethodEntityToShipmentMethodTransfer($salesShipmentMethodEntity, new ShipmentMethodTransfer());
+    }
+
+    /**
+     * @param int $idShipmentMethod
+     *
+     * @return \Generated\Shared\Transfer\ShipmentTransfer|null
+     */
+    public function findShipmentById(int $idShipmentMethod): ?ShipmentTransfer
+    {
+        $salesShipmentEntity = $this->getFactory()
             ->createSalesShipmentQuery()
-            ->filterByIdSalesShipment($idSalesShipment);
+            ->filterByIdSalesShipment($idShipmentMethod)
+            ->findOne();
+
+        if ($salesShipmentEntity === null) {
+            return null;
+        }
+
+        return $this->getFactory()
+            ->createShipmentMapper()
+            ->mapShipmentEntityToShipmentTransfer($salesShipmentEntity, new ShipmentTransfer());
     }
 
     /**
-     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
+     * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentMethodTransfer[]
      */
-    public function queryMethodsWithMethodPricesAndCarrier(): SpyShipmentMethodQuery
+    public function getActiveShipmentMethods(): ArrayObject
     {
-        return $this->queryMethods()
-            ->joinWithShipmentMethodPrice()
-            ->leftJoinWithShipmentCarrier();
-    }
+        $shipmentMethodList = new ArrayObject();
+        $shipmentMethodEntities = $this->queryActiveMethodsWithMethodPricesAndCarrier()->find();
 
-    /**
-     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
-     */
-    public function queryMethods(): SpyShipmentMethodQuery
-    {
-        return $this->getFactory()->createShipmentMethodQuery();
-    }
+        if ($shipmentMethodEntities->count() === 0) {
+            return $shipmentMethodList;
+        }
 
-    /**
-     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
-     */
-    public function queryActiveMethodsWithMethodPricesAndCarrier(): SpyShipmentMethodQuery
-    {
-        return $this
-            ->queryMethodsWithMethodPricesAndCarrier()
-            ->filterByIsActive(true);
+        $shipmentMethodMapper = $this->getFactory()->createShipmentMethodMapper();
+        foreach ($shipmentMethodEntities as $shipmentMethodEntity) {
+            $shipmentMethodTransfer = $shipmentMethodMapper
+                    ->mapShipmentMethodEntityToShipmentMethodTransfer($shipmentMethodEntity, new ShipmentMethodTransfer());
+
+            $shipmentMethodList->append($shipmentMethodTransfer);
+        }
+
+        return $shipmentMethodList;
     }
 
     /**
@@ -178,25 +203,57 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
      * @param int $idStore
      * @param int $idCurrency
      *
-     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodPriceQuery
+     * @return \Generated\Shared\Transfer\ShipmentPriceTransfer|null
      */
-    public function queryMethodPriceByShipmentMethodAndStoreCurrency(
-        int $idShipmentMethod,
-        int $idStore,
-        int $idCurrency
-    ): SpyShipmentMethodPriceQuery {
-        return $this->queryMethodPrices()
-            ->filterByFkShipmentMethod($idShipmentMethod)
-            ->filterByFkStore($idStore)
-            ->filterByFkCurrency($idCurrency);
+    public function findShipmentMethodPrice(int $idShipmentMethod, int $idStore, int $idCurrency): ?ShipmentPriceTransfer
+    {
+        $shipmentMethodPriceEntity = $this->queryMethodPriceByShipmentMethodAndStoreCurrency(
+            $idShipmentMethod,
+            $idStore,
+            $idCurrency
+        )
+            ->findOne();
+
+        if ($shipmentMethodPriceEntity === null) {
+            return null;
+        }
+
+        return $this->getFactory()->createShipmentMethodMapper()
+            ->mapShipmentMethodPriceEntityToShipmentPriceTransfer($shipmentMethodPriceEntity, new ShipmentPriceTransfer());
     }
 
     /**
-     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodPriceQuery
+     * @param int $idShipmentMethod
+     *
+     * @return bool
      */
-    public function queryMethodPrices(): SpyShipmentMethodPriceQuery
+    public function hasShipmentMethodByIdShipmentMethod(int $idShipmentMethod): bool
     {
-        return $this->getFactory()->createShipmentMethodPriceQuery();
+        return $this->getFactory()
+            ->createShipmentMethodQuery()
+            ->filterByIdShipmentMethod($idShipmentMethod)
+            ->exists();
+    }
+
+    /**
+     * @param int $idSalesOrder
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer|null
+     */
+    public function findSalesOrderById(int $idSalesOrder): ?OrderTransfer
+    {
+        $salesOrderEntity = $this->getFactory()
+            ->createSalesOrderQuery()
+            ->filterByIdSalesOrder($idSalesOrder)
+            ->findOne();
+
+        if ($salesOrderEntity === null) {
+            return null;
+        }
+
+        return $this->getFactory()
+            ->createShipmentOrderMapper()
+            ->mapSalesOrderEntityToOrderTransfer($salesOrderEntity, new OrderTransfer());
     }
 
     /**
@@ -208,7 +265,17 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
     {
         $shipmentMethodNames = [];
         foreach ($shipmentTransfers as $shipmentTransfer) {
-            $shipmentMethodNames[$shipmentTransfer->getMethod()->getName()] = $shipmentTransfer->getMethod()->getName();
+            $shipmentMethodTransfer = $shipmentTransfer->getMethod();
+            if ($shipmentMethodTransfer === null) {
+                continue;
+            }
+
+            $shipmentMethodName = $shipmentMethodTransfer->getName();
+            if ($shipmentMethodName === '') {
+                continue;
+            }
+
+            $shipmentMethodNames[$shipmentMethodName] = $shipmentMethodName;
         }
 
         return $shipmentMethodNames;
@@ -271,5 +338,64 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
         }
 
         return $groupedResult;
+    }
+
+    /**
+     * @module Currency
+     *
+     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
+     */
+    protected function queryMethodsWithMethodPricesAndCarrier(): SpyShipmentMethodQuery
+    {
+        return $this->queryMethods()
+            ->joinWithShipmentMethodPrice()
+                ->useShipmentMethodPriceQuery()
+                    ->joinWithCurrency()
+                ->endUse()
+            ->leftJoinWithShipmentCarrier();
+    }
+
+    /**
+     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
+     */
+    protected function queryMethods(): SpyShipmentMethodQuery
+    {
+        return $this->getFactory()->createShipmentMethodQuery();
+    }
+
+    /**
+     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
+     */
+    protected function queryActiveMethodsWithMethodPricesAndCarrier(): SpyShipmentMethodQuery
+    {
+        return $this
+            ->queryMethodsWithMethodPricesAndCarrier()
+            ->filterByIsActive(true);
+    }
+
+    /**
+     * @param int $idShipmentMethod
+     * @param int $idStore
+     * @param int $idCurrency
+     *
+     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodPriceQuery
+     */
+    protected function queryMethodPriceByShipmentMethodAndStoreCurrency(
+        int $idShipmentMethod,
+        int $idStore,
+        int $idCurrency
+    ): SpyShipmentMethodPriceQuery {
+        return $this->queryMethodPrices()
+            ->filterByFkShipmentMethod($idShipmentMethod)
+            ->filterByFkStore($idStore)
+            ->filterByFkCurrency($idCurrency);
+    }
+
+    /**
+     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodPriceQuery
+     */
+    protected function queryMethodPrices(): SpyShipmentMethodPriceQuery
+    {
+        return $this->getFactory()->createShipmentMethodPriceQuery();
     }
 }

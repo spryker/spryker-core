@@ -9,8 +9,6 @@ namespace Spryker\Zed\Shipment\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CountryTransfer;
-use Generated\Shared\Transfer\ExpenseTransfer;
-use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ShipmentCarrierTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
@@ -20,63 +18,39 @@ use Orm\Zed\Shipment\Persistence\SpyShipmentMethod;
 class ShipmentMapper implements ShipmentMapperInterface
 {
     /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesShipment $salesShipmentEntity
      * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
+     * @param \Orm\Zed\Sales\Persistence\SpySalesShipment $salesShipmentEntity
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesShipment
      */
     public function mapShipmentTransferToShipmentEntity(
-        SpySalesShipment $salesShipmentEntity,
-        ShipmentTransfer $shipmentTransfer
+        ShipmentTransfer $shipmentTransfer,
+        SpySalesShipment $salesShipmentEntity
     ): SpySalesShipment {
         $salesShipmentEntity->fromArray($shipmentTransfer->modifiedToArray());
-        $salesShipmentEntity->fromArray($shipmentTransfer->getMethod()->modifiedToArray());
-        $salesShipmentEntity->setFkSalesOrderAddress($shipmentTransfer->getShippingAddress()->getIdSalesOrderAddress());
 
-        return $salesShipmentEntity;
-    }
+        $shipmentMethodTransfer = $shipmentTransfer->getMethod();
+        if ($shipmentMethodTransfer !== null) {
+            $salesShipmentEntity->fromArray($shipmentMethodTransfer->modifiedToArray());
+        }
 
-    /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesShipment $salesShipmentEntity
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesShipment
-     */
-    public function mapOrderTransferToShipmentEntity(
-        SpySalesShipment $salesShipmentEntity,
-        OrderTransfer $orderTransfer
-    ): SpySalesShipment {
-        $salesShipmentEntity->setFkSalesOrder($orderTransfer->getIdSalesOrder());
-
-        return $salesShipmentEntity;
-    }
-
-    /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesShipment $salesShipmentEntity
-     * @param \Generated\Shared\Transfer\ExpenseTransfer|null $expenseTransfer
-     *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesShipment
-     */
-    public function mapExpenseTransferToShipmentEntity(
-        SpySalesShipment $salesShipmentEntity,
-        ?ExpenseTransfer $expenseTransfer = null
-    ): SpySalesShipment {
-        if ($expenseTransfer !== null && $expenseTransfer->getIdSalesExpense() !== null) {
-            $salesShipmentEntity->setFkSalesExpense($expenseTransfer->getIdSalesExpense());
+        $shipmentAddressTransfer = $shipmentTransfer->getShippingAddress();
+        if ($shipmentAddressTransfer !== null) {
+            $salesShipmentEntity->setFkSalesOrderAddress($shipmentAddressTransfer->getIdSalesOrderAddress());
         }
 
         return $salesShipmentEntity;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
      * @param \Orm\Zed\Sales\Persistence\SpySalesShipment $salesShipmentEntity
+     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentTransfer
      */
     public function mapShipmentEntityToShipmentTransfer(
-        ShipmentTransfer $shipmentTransfer,
-        SpySalesShipment $salesShipmentEntity
+        SpySalesShipment $salesShipmentEntity,
+        ShipmentTransfer $shipmentTransfer
     ): ShipmentTransfer {
         $shipmentTransfer->fromArray($salesShipmentEntity->toArray(), true);
 
@@ -142,7 +116,7 @@ class ShipmentMapper implements ShipmentMapperInterface
         ShipmentTransfer $shipmentTransfer,
         SpySalesShipment $salesShipmentEntity
     ): ShipmentTransfer {
-        $shipmentTransfer = $this->mapShipmentEntityToShipmentTransfer($shipmentTransfer, $salesShipmentEntity);
+        $shipmentTransfer = $this->mapShipmentEntityToShipmentTransfer($salesShipmentEntity, $shipmentTransfer);
         $addressTransfer = $this->mapShipmentEntityToShippingAddressTransfer(new AddressTransfer(), $salesShipmentEntity);
         $methodTransfer = $this->mapShipmentEntityToShipmentMethodTransfer(new ShipmentMethodTransfer(), $salesShipmentEntity);
         $carrierTransfer = $this->mapShipmentEntityToShipmentCarrierTransfer(new ShipmentCarrierTransfer(), $salesShipmentEntity);

@@ -10,7 +10,7 @@ namespace Spryker\Zed\Shipment\Business\ShipmentMethod;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
-use Orm\Zed\Shipment\Persistence\SpyShipmentMethodPrice;
+use Generated\Shared\Transfer\ShipmentPriceTransfer;
 use Spryker\Shared\Shipment\ShipmentConstants;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCurrencyInterface;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToStoreInterface;
@@ -134,20 +134,17 @@ class MethodPriceReader implements MethodPriceReaderInterface
             return null;
         }
 
-        $idStore = $this->storeFacade->getCurrentStore()->getIdStore();
-        $shipmentMethodPriceEntity = $this->shipmentRepository
-            ->queryMethodPriceByShipmentMethodAndStoreCurrency(
-                $shipmentMethodTransfer->getIdShipmentMethod(),
-                $idStore,
-                $this->getIdCurrencyByIsoCode($currencyCode)
-            )
-            ->findOne();
+        $shipmentMethodPriceTransfer = $this->shipmentRepository->findShipmentMethodPrice(
+            $shipmentMethodTransfer->getIdShipmentMethod(),
+            $this->storeFacade->getCurrentStore()->getIdStore(),
+            $this->getIdCurrencyByIsoCode($currencyCode)
+        );
 
-        if ($shipmentMethodPriceEntity === null) {
+        if ($shipmentMethodPriceTransfer === null) {
             return null;
         }
 
-        return $this->getPriceByMode($quoteTransfer, $shipmentMethodPriceEntity);
+        return $this->getPriceByMode($quoteTransfer, $shipmentMethodPriceTransfer);
     }
 
     /**
@@ -178,14 +175,14 @@ class MethodPriceReader implements MethodPriceReaderInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethodPrice $shipmentMethodPriceEntity
+     * @param \Generated\Shared\Transfer\ShipmentPriceTransfer $shipmentMethodPriceTransfer
      *
      * @return int|null
      */
-    protected function getPriceByMode(QuoteTransfer $quoteTransfer, SpyShipmentMethodPrice $shipmentMethodPriceEntity): ?int
+    protected function getPriceByMode(QuoteTransfer $quoteTransfer, ShipmentPriceTransfer $shipmentMethodPriceTransfer): ?int
     {
         return $quoteTransfer->getPriceMode() === ShipmentConstants::PRICE_MODE_GROSS ?
-            $shipmentMethodPriceEntity->getDefaultGrossPrice() :
-            $shipmentMethodPriceEntity->getDefaultNetPrice();
+            $shipmentMethodPriceTransfer->getDefaultGrossPrice() :
+            $shipmentMethodPriceTransfer->getDefaultNetPrice();
     }
 }

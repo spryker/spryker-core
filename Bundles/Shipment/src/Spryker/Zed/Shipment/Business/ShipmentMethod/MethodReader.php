@@ -115,7 +115,7 @@ class MethodReader extends Method
      */
     protected function getShipmentGroupWithAvailableMethods(QuoteTransfer $quoteTransfer): ShipmentGroupCollectionTransfer
     {
-        $shipmentMethodTransfers = $this->getShipmentMethods();
+        $shipmentMethodTransfers = $this->shipmentRepository->getActiveShipmentMethods();
         $quoteShipmentGroupCollection = $this->getShipmentGroupCollection($quoteTransfer);
 
         $shipmentGroupCollection = new ArrayObject();
@@ -252,29 +252,5 @@ class MethodReader extends Method
         }
 
         return $shipmentMethodTransfer->setCurrencyIsoCode($currencyTransfer->getCode());
-    }
-
-    /**
-     * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentMethodTransfer[]
-     */
-    protected function getShipmentMethods(): ArrayObject
-    {
-        $shipmentMethodList = new ArrayObject();
-        $shipmentMethodEntities = $this->shipmentRepository
-            ->queryActiveMethodsWithMethodPricesAndCarrier()
-            ->find();
-
-        if ($shipmentMethodEntities->count() === 0) {
-            return $shipmentMethodList;
-        }
-
-        foreach ($shipmentMethodEntities as $shipmentMethodEntity) {
-            $shipmentMethodTransfer =
-                $this->methodTransformer->transformEntityToTransfer($shipmentMethodEntity);
-
-            $shipmentMethodList->append($shipmentMethodTransfer);
-        }
-
-        return $shipmentMethodList;
     }
 }

@@ -9,7 +9,6 @@ namespace Spryker\Zed\Shipment\Business\Shipment;
 
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
-use Spryker\Zed\Shipment\Business\Mapper\ShipmentMapperInterface;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToSalesFacadeInterface;
 use Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface;
 
@@ -26,23 +25,15 @@ class ShipmentReader implements ShipmentReaderInterface
     protected $shipmentRepository;
 
     /**
-     * @var \Spryker\Zed\Shipment\Business\Mapper\ShipmentMapperInterface
-     */
-    protected $shipmentMapper;
-
-    /**
      * @param \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToSalesFacadeInterface $salesFacade
      * @param \Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface $shipmentRepository
-     * @param \Spryker\Zed\Shipment\Business\Mapper\ShipmentMapperInterface $shipmentMapper
      */
     public function __construct(
         ShipmentToSalesFacadeInterface $salesFacade,
-        ShipmentRepositoryInterface $shipmentRepository,
-        ShipmentMapperInterface $shipmentMapper
+        ShipmentRepositoryInterface $shipmentRepository
     ) {
         $this->salesFacade = $salesFacade;
         $this->shipmentRepository = $shipmentRepository;
-        $this->shipmentMapper = $shipmentMapper;
     }
 
     /**
@@ -52,23 +43,25 @@ class ShipmentReader implements ShipmentReaderInterface
      */
     public function findShipmentById(int $idSalesShipment): ?ShipmentTransfer
     {
-        $shipmentEntity = $this->shipmentRepository
-            ->querySalesShipmentById($idSalesShipment)
-            ->find()
-            ->getFirst();
+        $shipmentTransfer = $this->shipmentRepository->findShipmentById($idSalesShipment);
 
-        if ($shipmentEntity === null) {
+        if ($shipmentTransfer === null) {
             return null;
         }
 
-        $shipmentTransfer = $this->shipmentMapper
-            ->mapShipmentEntityToShipmentTransfer($shipmentEntity, new ShipmentTransfer());
+        $shippingAddressTransfer = $shipmentTransfer->getShippingAddress();
+        if ($shippingAddressTransfer !== null) {
+            $shipmentAddressTransfer = $this->salesFacade
+                ->findOrderAddressByIdOrderAddress($shippingAddressTransfer->getIdSalesOrderAddress());
+            $shipmentTransfer->setShippingAddress($shipmentAddressTransfer);
+        }
 
-        $shipmentAddressTransfer = $this->salesFacade
-            ->findOrderAddressByIdOrderAddress($shipmentEntity->getFkSalesOrderAddress());
-        $shipmentTransfer->setShippingAddress($shipmentAddressTransfer);
+        $shipmentMethodTransfer = $shipmentTransfer->getMethod();
+        if ($shipmentMethodTransfer === null) {
+            return $shipmentTransfer;
+        }
 
-        $shipmentMethodTransfer = $this->getShipmentMethodTransferByName($shipmentEntity->getName());
+        $shipmentMethodTransfer = $this->getShipmentMethodTransferByName($shipmentMethodTransfer->getName());
         $shipmentTransfer->setMethod($shipmentMethodTransfer);
 
         return $shipmentTransfer;
@@ -77,17 +70,14 @@ class ShipmentReader implements ShipmentReaderInterface
     /**
      * @param string $shipmentMethodName
      *
-     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
      */
-    protected function getShipmentMethodTransferByName(string $shipmentMethodName): ShipmentMethodTransfer
+    protected function getShipmentMethodTransferByName(string $shipmentMethodName): ?ShipmentMethodTransfer
     {
-        $shipmentMethodEntity = $this->shipmentRepository
-            ->queryMethodsWithMethodPricesAndCarrier()
-            ->filterByName($shipmentMethodName)
-            ->find()
-            ->getFirst();
+        if ($shipmentMethodName === '') {
+            return null;
+        }
 
-        return $this->shipmentMapper
-            ->mapShipmentEntityToShipmentMethodTransfer($shipmentMethodEntity, new ShipmentMethodTransfer());
+        return $this->shipmentRepository->findShipmentMethodByName($shipmentMethodName);
     }
 }

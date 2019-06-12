@@ -7,12 +7,12 @@
 
 namespace Spryker\Zed\Shipment\Persistence;
 
+use ArrayObject;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
+use Generated\Shared\Transfer\ShipmentPriceTransfer;
+use Generated\Shared\Transfer\ShipmentTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
-use Orm\Zed\Sales\Persistence\SpySalesShipmentQuery;
-use Orm\Zed\Shipment\Persistence\SpyShipmentMethodPriceQuery;
-use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
 
 interface ShipmentRepositoryInterface
 {
@@ -53,37 +53,44 @@ interface ShipmentRepositoryInterface
     public function getItemIdsGroupedByShipmentIds(OrderTransfer $orderTransfer): array;
 
     /**
-     * @param int $idSalesShipment
+     * @param int $idShipmentMethod
      *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesShipmentQuery
+     * @return bool
      */
-    public function querySalesShipmentById(int $idSalesShipment): SpySalesShipmentQuery;
+    public function hasShipmentMethodByIdShipmentMethod(int $idShipmentMethod): bool;
 
     /**
-     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
+     * @param int $idSalesOrder
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer|null
      */
-    public function queryMethodsWithMethodPricesAndCarrier(): SpyShipmentMethodQuery;
+    public function findSalesOrderById(int $idSalesOrder): ?OrderTransfer;
 
     /**
-     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
+     * @param string $shipmentMethodName
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
      */
-    public function queryActiveMethodsWithMethodPricesAndCarrier(): SpyShipmentMethodQuery;
+    public function findShipmentMethodByName(string $shipmentMethodName): ?ShipmentMethodTransfer;
+
+    /**
+     * @param int $idShipmentMethod
+     *
+     * @return \Generated\Shared\Transfer\ShipmentTransfer|null
+     */
+    public function findShipmentById(int $idShipmentMethod): ?ShipmentTransfer;
+
+    /**
+     * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentMethodTransfer[]
+     */
+    public function getActiveShipmentMethods(): ArrayObject;
 
     /**
      * @param int $idShipmentMethod
      * @param int $idStore
      * @param int $idCurrency
      *
-     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodPriceQuery
+     * @return \Generated\Shared\Transfer\ShipmentPriceTransfer|null
      */
-    public function queryMethodPriceByShipmentMethodAndStoreCurrency(
-        int $idShipmentMethod,
-        int $idStore,
-        int $idCurrency
-    ): SpyShipmentMethodPriceQuery;
-
-    /**
-     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodPriceQuery
-     */
-    public function queryMethodPrices(): SpyShipmentMethodPriceQuery;
+    public function findShipmentMethodPrice(int $idShipmentMethod, int $idStore, int $idCurrency): ?ShipmentPriceTransfer;
 }

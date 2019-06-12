@@ -136,8 +136,11 @@ class MultiShipmentOrderSaver implements MultiShipmentOrderSaverInterface
         ShipmentGroupTransfer $shipmentGroupTransfer,
         SaveOrderTransfer $saveOrderTransfer
     ): ShipmentGroupTransfer {
-
         $shipmentTransfer = $shipmentGroupTransfer->getShipment();
+
+        if ($shipmentTransfer === null) {
+            return $shipmentGroupTransfer;
+        }
 
         $expenseTransfer = $this->findShipmentExpense($orderTransfer, $shipmentTransfer);
         if ($expenseTransfer !== null) {
@@ -146,7 +149,7 @@ class MultiShipmentOrderSaver implements MultiShipmentOrderSaverInterface
 
         $shipmentTransfer = $this->saveSalesOrderAddress($shipmentTransfer);
 
-        $shipmentTransfer = $this->entityManager->createSalesShipment(
+        $shipmentTransfer = $this->entityManager->saveSalesShipment(
             $shipmentTransfer,
             $orderTransfer,
             $expenseTransfer
