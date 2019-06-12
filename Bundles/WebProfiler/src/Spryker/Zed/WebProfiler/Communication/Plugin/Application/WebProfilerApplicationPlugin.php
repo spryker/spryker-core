@@ -96,7 +96,7 @@ class WebProfilerApplicationPlugin extends AbstractPlugin implements Application
         });
 
         $container->extend(RouterApplicationPlugin::SERVICE_CHAIN_ROUTER, function (ChainRouter $chainRouter, ContainerInterface $container) {
-            $chainRouter->add($this->getRouter($container));
+            $chainRouter->add($this->getRouter($container), 10);
 
             return $chainRouter;
         });
