@@ -44,7 +44,7 @@ class ShipmentMethodMapper implements ShipmentMethodMapperInterface
         ShipmentMethodTransfer $shipmentMethodTransfer
     ): ShipmentMethodTransfer {
         $shipmentMethodTransfer = $shipmentMethodTransfer->fromArray($salesShipmentMethodEntity->toArray(), true);
-        $shipmentMethodTransfer->setCarrierName($this->findShipmentCarrierName($salesShipmentMethodEntity));
+        $shipmentMethodTransfer->setCarrierName($salesShipmentMethodEntity->getShipmentCarrier()->getName());
         $shipmentMethodTransfer->setPrices($this->getPriceCollection($salesShipmentMethodEntity));
 
         return $shipmentMethodTransfer;
@@ -99,21 +99,6 @@ class ShipmentMethodMapper implements ShipmentMethodMapperInterface
         $moneyValueTransfer->setCurrency($currencyTransfer);
 
         return $moneyValueTransfer;
-    }
-
-    /**
-     * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethod $shipmentMethodEntity
-     *
-     * @return string|null
-     */
-    protected function findShipmentCarrierName(SpyShipmentMethod $shipmentMethodEntity)
-    {
-        $shipmentCarrierEntity = $shipmentMethodEntity->getShipmentCarrier();
-        if ($shipmentCarrierEntity === null) {
-            return null;
-        }
-
-        return $shipmentCarrierEntity->getName();
     }
 
     /**
