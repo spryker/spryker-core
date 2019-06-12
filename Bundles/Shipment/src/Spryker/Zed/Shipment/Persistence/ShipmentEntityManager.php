@@ -54,7 +54,7 @@ class ShipmentEntityManager extends AbstractEntityManager implements ShipmentEnt
             ->mapOrderTransferToShipmentEntity($orderTransfer, $salesShipmentEntity);
 
         if ($expenseTransfer !== null) {
-            $salesShipmentEntity = $this->getFactory()->createShipmentExpanseMapper()
+            $salesShipmentEntity = $this->getFactory()->createShipmentExpenseMapper()
                 ->mapExpenseTransferToShipmentEntity($expenseTransfer, $salesShipmentEntity);
         }
 
@@ -114,22 +114,22 @@ class ShipmentEntityManager extends AbstractEntityManager implements ShipmentEnt
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ExpenseTransfer $expanseTransfer
+     * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\ExpenseTransfer
      */
-    public function saveSalesExpense(ExpenseTransfer $expanseTransfer, OrderTransfer $orderTransfer): ExpenseTransfer
+    public function saveSalesExpense(ExpenseTransfer $expenseTransfer, OrderTransfer $orderTransfer): ExpenseTransfer
     {
-        $expanseMapper = $this->getFactory()->createShipmentExpanseMapper();
+        $expenseMapper = $this->getFactory()->createShipmentexpenseMapper();
 
-        $salesOrderExpenseEntity = $expanseMapper
-            ->mapExpenseTransferToOrderSalesExpenseEntity($expanseTransfer, new SpySalesExpense());
+        $salesOrderExpenseEntity = $expenseMapper
+            ->mapExpenseTransferToOrderSalesExpenseEntity($expenseTransfer, new SpySalesExpense());
 
         $salesOrderExpenseEntity->setFkSalesOrder($orderTransfer->getIdSalesOrder());
         $salesOrderExpenseEntity->save();
 
-        return $expanseMapper
+        return $expenseMapper
             ->mapOrderSalesExpenseEntityToExpenseTransfer($salesOrderExpenseEntity, new ExpenseTransfer());
     }
 }

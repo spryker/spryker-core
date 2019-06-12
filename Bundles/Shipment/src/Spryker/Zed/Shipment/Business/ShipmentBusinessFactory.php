@@ -175,7 +175,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     {
         return new ShipmentOrderSaver(
             $this->getEntityManager(),
-            $this->createExpanseSanitizer(),
+            $this->createExpenseSanitizer(),
             $this->getRepository()
         );
     }
@@ -189,7 +189,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     {
         return new CheckoutShipmentOrderSaver(
             $this->getEntityManager(),
-            $this->createExpanseSanitizer(),
+            $this->createExpenseSanitizer(),
             $this->getRepository()
         );
     }
@@ -397,7 +397,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Shipment\Business\Sanitizer\ExpenseSanitizerInterface
      */
-    public function createExpanseSanitizer(): ExpenseSanitizerInterface
+    public function createExpenseSanitizer(): ExpenseSanitizerInterface
     {
         return new ExpenseSanitizer();
     }
@@ -440,7 +440,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ShipmentExtension\Communication\Plugin\ShipmentMethodPricePluginInterface[]
+     * @return \Spryker\Zed\ShipmentExtension\Communication\Plugin\ShipmentMethodPricePluginInterface[]|\Spryker\Zed\Shipment\Communication\Plugin\ShipmentMethodPricePluginInterface[]
      */
     public function getPricePlugins(): array
     {

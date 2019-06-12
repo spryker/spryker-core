@@ -108,7 +108,6 @@ class ShipmentMethodMapper implements ShipmentMethodMapperInterface
      */
     protected function findShipmentCarrierName(SpyShipmentMethod $shipmentMethodEntity)
     {
-        /** @var \Orm\Zed\Shipment\Persistence\SpyShipmentCarrier|null $shipmentCarrierEntity */
         $shipmentCarrierEntity = $shipmentMethodEntity->getShipmentCarrier();
         if ($shipmentCarrierEntity === null) {
             return null;

@@ -13,7 +13,7 @@ use Spryker\Zed\Shipment\Persistence\ShipmentEntityManagerInterface;
 use Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface;
 
 /**
- * @method \Spryker\Zed\ShoppingList\Persistence\ShoppingListPersistenceFactory getFactory()
+ * @method \Spryker\Zed\Shipment\Persistence\ShipmentPersistenceFactory getFactory()
  */
 class MethodWriter implements MethodWriterInterface
 {
@@ -85,6 +85,7 @@ class MethodWriter implements MethodWriterInterface
         }
 
         $shipmentMethodTransfer = $this->shipmentEntityManager->saveSalesShipmentMethod($shipmentMethodTransfer);
+        $this->methodPrice->save($shipmentMethodTransfer);
 
         return true;
     }

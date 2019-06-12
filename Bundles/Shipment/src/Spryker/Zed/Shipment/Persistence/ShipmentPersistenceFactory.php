@@ -14,8 +14,8 @@ use Orm\Zed\Shipment\Persistence\SpyShipmentCarrierQuery;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodPriceQuery;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
-use Spryker\Zed\Shipment\Persistence\Propel\Mapper\ShipmentExpanseMapper;
-use Spryker\Zed\Shipment\Persistence\Propel\Mapper\ShipmentExpanseMapperInterface;
+use Spryker\Zed\Shipment\Persistence\Propel\Mapper\ShipmentExpenseMapper;
+use Spryker\Zed\Shipment\Persistence\Propel\Mapper\ShipmentExpenseMapperInterface;
 use Spryker\Zed\Shipment\Persistence\Propel\Mapper\ShipmentMapper;
 use Spryker\Zed\Shipment\Persistence\Propel\Mapper\ShipmentMapperInterface;
 use Spryker\Zed\Shipment\Persistence\Propel\Mapper\ShipmentMethodMapper;
@@ -106,11 +106,11 @@ class ShipmentPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Spryker\Zed\Shipment\Persistence\Propel\Mapper\ShipmentExpanseMapperInterface
+     * @return \Spryker\Zed\Shipment\Persistence\Propel\Mapper\ShipmentExpenseMapperInterface
      */
-    public function createShipmentExpanseMapper(): ShipmentExpanseMapperInterface
+    public function createShipmentExpenseMapper(): ShipmentExpenseMapperInterface
     {
-        return new ShipmentExpanseMapper();
+        return new ShipmentExpenseMapper();
     }
 
     /**

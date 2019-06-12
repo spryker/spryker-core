@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\ExpenseTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesExpense;
 use Orm\Zed\Sales\Persistence\SpySalesShipment;
 
-class ShipmentExpanseMapper implements ShipmentExpanseMapperInterface
+class ShipmentExpenseMapper implements ShipmentExpenseMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer

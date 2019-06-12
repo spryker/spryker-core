@@ -54,10 +54,10 @@ interface ShipmentEntityManagerInterface
     public function deleteMethodByIdMethod(int $idShipmentMethod): void;
 
     /**
-     * @param \Generated\Shared\Transfer\ExpenseTransfer $expanseTransfer
+     * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\ExpenseTransfer
      */
-    public function saveSalesExpense(ExpenseTransfer $expanseTransfer, OrderTransfer $orderTransfer): ExpenseTransfer;
+    public function saveSalesExpense(ExpenseTransfer $expenseTransfer, OrderTransfer $orderTransfer): ExpenseTransfer;
 }

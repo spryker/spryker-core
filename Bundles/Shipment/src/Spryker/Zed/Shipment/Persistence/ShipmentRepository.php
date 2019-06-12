@@ -368,8 +368,7 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
      */
     protected function queryActiveMethodsWithMethodPricesAndCarrier(): SpyShipmentMethodQuery
     {
-        return $this
-            ->queryMethodsWithMethodPricesAndCarrier()
+        return $this->queryMethodsWithMethodPricesAndCarrier()
             ->filterByIsActive(true);
     }
 
