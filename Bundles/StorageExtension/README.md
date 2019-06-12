@@ -1,6 +1,6 @@
 # StorageExtension Module
 
-StorageExtension module provides interfaces for extension of the Storage module.
+The module provides plugin interfaces for extending storage module functionality.
 
 ## Installation
 

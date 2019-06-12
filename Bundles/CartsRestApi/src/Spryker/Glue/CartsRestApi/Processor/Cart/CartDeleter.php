@@ -62,15 +62,9 @@ class CartDeleter implements CartDeleterInterface
      */
     public function delete(RestRequestInterface $restRequest): RestResponseInterface
     {
-        $restUserTransfer = $restRequest->getRestUser();
-        $customerTransfer = (new CustomerTransfer())
-            ->setIdCustomer($restUserTransfer->getSurrogateIdentifier())
-            ->setCustomerReference($restUserTransfer->getNaturalIdentifier());
-        $customerTransfer = $this->executeCustomerExpanderPlugins($customerTransfer, $restRequest);
-        $quoteTransfer = (new QuoteTransfer())
-            ->setCustomerReference($restUserTransfer->getNaturalIdentifier())
-            ->setCustomer($customerTransfer)
-            ->setUuid($restRequest->getResource()->getId());
+        $quoteTransfer = $this->cartsResourceMapper->mapRestRequestToQuoteTransfer($restRequest, new QuoteTransfer());
+        $customerTransfer = $this->executeCustomerExpanderPlugins($quoteTransfer->getCustomer(), $restRequest);
+        $quoteTransfer->setCustomer($customerTransfer);
 
         $quoteResponseTransfer = $this->cartsRestApiClient->deleteQuote($quoteTransfer);
         if (!$quoteResponseTransfer->getIsSuccessful()) {
