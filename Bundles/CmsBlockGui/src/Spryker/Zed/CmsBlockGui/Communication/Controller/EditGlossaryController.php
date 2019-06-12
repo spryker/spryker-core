@@ -26,7 +26,8 @@ class EditGlossaryController extends AbstractCmsBlockController
      */
     public function indexAction(Request $request)
     {
-        $cmsBlockTransfer = $this->findCmsBlockById($request);
+        $idCmsBlock = $request->query->get(static::URL_PARAM_ID_CMS_BLOCK);
+        $cmsBlockTransfer = $this->findCmsBlockById($idCmsBlock);
 
         if (!$cmsBlockTransfer) {
             $this->addErrorMessage(static::MESSAGE_CMS_BLOCK_INVALID_ID_ERROR);
@@ -50,7 +51,7 @@ class EditGlossaryController extends AbstractCmsBlockController
             'placeholderTabs' => $this->getPlaceholderTabs($idCmsBlock),
             'glossaryForm' => $glossaryForm->createView(),
             'availableLocales' => $this->getFactory()->getLocaleFacade()->getLocaleCollection(),
-            'cmsBlock' => $this->getFactory()->getCmsBlockFacade()->findCmsBlockById($idCmsBlock),
+            'cmsBlock' => $cmsBlockTransfer,
             'idCmsBlock' => $idCmsBlock,
         ]);
     }
