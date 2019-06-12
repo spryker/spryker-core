@@ -821,4 +821,21 @@ class ProductImageFacadeTest extends Unit
         $this->assertNotEmpty($productImageSetTransfer);
         $this->assertCount(0, $productImageSetTransfer->getProductImages());
     }
+
+    /**
+     * @return void
+     */
+    public function testGetDefaultProductImagesByProductIdsReturnsImages(): void
+    {
+        //Arrange
+        $productIds = [$this->productConcreteEntity->getIdProduct()];
+
+        //Act
+        $productImagesCollection = $this->productImageFacade->getDefaultProductImagesByProductIds($productIds);
+
+        //Assert
+        $this->assertCount(count($productIds), $productImagesCollection);
+        $this->assertEquals($productIds, array_keys($productImagesCollection));
+        $this->assertNotEmpty($productImagesCollection[$this->productConcreteEntity->getIdProduct()]);
+    }
 }

@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductImage\Persistence;
 
 use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Generated\Shared\Transfer\ProductImageTransfer;
+use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageSetTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -29,7 +30,9 @@ class ProductImageRepository extends AbstractRepository implements ProductImageR
         $productImageSetEntities = $this->getFactory()
             ->createProductImageSetQuery()
             ->filterByFkProduct_In($productIds)
-            ->filterByFkLocale($idLocale)
+            ->condition('isCurrentLocale', SpyProductImageSetTableMap::COL_FK_LOCALE . ' = ?', $idLocale)
+            ->condition('isLocaleNull', SpyProductImageSetTableMap::COL_FK_LOCALE . ' IS NULL')
+            ->combine(['isCurrentLocale', 'isLocaleNull'], Criteria::LOGICAL_OR)
             ->find();
 
         if ($productImageSetEntities->count() === 0) {
