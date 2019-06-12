@@ -168,6 +168,20 @@ class SharedCartsRestApiFacadeTest extends Test
     /**
      * @return void
      */
+    public function testGetSharedCartsByCartUuidShouldFailOnNoCartUuidProvided(): void
+    {
+        // Assign
+        $this->expectException(RequiredTransferPropertyException::class);
+        /** @var \Spryker\Zed\SharedCartsRestApi\Business\SharedCartsRestApiFacadeInterface $sharedCartsRestApiFacade */
+        $sharedCartsRestApiFacade = $this->tester->getFacade();
+
+        // Act
+        $sharedCartsRestApiFacade->getSharedCartsByCartUuid((new QuoteTransfer()));
+    }
+
+    /**
+     * @return void
+     */
     public function testCreateShouldCreateQuoteCompanyUser(): void
     {
         //Arrange
