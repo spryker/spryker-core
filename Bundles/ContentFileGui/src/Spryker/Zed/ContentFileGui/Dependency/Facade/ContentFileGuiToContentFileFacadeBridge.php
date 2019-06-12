@@ -10,7 +10,7 @@ namespace Spryker\Zed\ContentFileGui\Dependency\Facade;
 use Generated\Shared\Transfer\ContentFileListTermTransfer;
 use Generated\Shared\Transfer\ContentValidationResponseTransfer;
 
-class ContentFileGuiToContentFileFacadeFacadeBridge implements ContentFileGuiToContentFileFacadeInterface
+class ContentFileGuiToContentFileFacadeBridge implements ContentFileGuiToContentFileFacadeInterface
 {
     /**
      * @var \Spryker\Zed\ContentFile\Business\ContentFileFacadeInterface
