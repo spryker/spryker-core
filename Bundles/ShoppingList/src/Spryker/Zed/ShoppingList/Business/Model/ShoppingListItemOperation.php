@@ -329,10 +329,20 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
      */
     protected function deleteShoppingListItemTransaction(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemResponseTransfer
     {
+        $shoppingListItemCollectionTransfer = $this->shoppingListRepository->findShoppingListItemsByIds([
+            $shoppingListItemTransfer->getIdShoppingListItem(),
+        ]);
+
+        if (!$shoppingListItemCollectionTransfer->getItems()->count()) {
+            return (new ShoppingListItemResponseTransfer())
+                ->setIsSuccess(false);
+        }
+
         $this->pluginExecutor->executeBeforeDeletePlugins($shoppingListItemTransfer);
         $this->shoppingListEntityManager->deleteShoppingListItem($shoppingListItemTransfer->getIdShoppingListItem());
 
-        return (new ShoppingListItemResponseTransfer())->setIsSuccess(true);
+        return (new ShoppingListItemResponseTransfer())
+            ->setIsSuccess(true);
     }
 
     /**
