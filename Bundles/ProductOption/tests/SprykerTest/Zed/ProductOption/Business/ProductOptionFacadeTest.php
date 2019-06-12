@@ -82,7 +82,7 @@ class ProductOptionFacadeTest extends Unit
 
         // Assert
         $this->assertNotNull($productAbstractOptionGroupStatusTransfer);
-        $this->assertSame($productAbstractTransfer->getIdProductAbstract(), $productAbstractOptionGroupStatusTransfer->getIdProductAbstract());
+        $this->assertSame($productAbstractTransfer->getIdProductAbstract(), (int)$productAbstractOptionGroupStatusTransfer->getIdProductAbstract());
         $this->assertSame((bool)$productOptionGroupTransfer->getActive(), $productAbstractOptionGroupStatusTransfer->getIsActive());
         $this->assertSame($productOptionGroupTransfer->getName(), $productAbstractOptionGroupStatusTransfer->getProductOptionGroupName());
     }
