@@ -22,7 +22,7 @@ class EntityTagRestRequestValidatorPlugin extends AbstractPlugin implements Rest
      * {@inheritdoc}
      *  - Compares resource hash stored in key-value storage with 'If-Match' header from request.
      *  - Adds the 428 'Precondition required' error if a request does not contain the 'If-Match' header.
-     *  - Adds the 412 'Precondition failed' error if a request contains outdated 'If-Match' header.
+     *  - Adds the 412 'Precondition failed' error if a request contains invalid 'If-Match' header.
      *
      * @api
      *
