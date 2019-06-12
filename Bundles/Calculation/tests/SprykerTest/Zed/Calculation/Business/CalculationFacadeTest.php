@@ -277,24 +277,9 @@ class CalculationFacadeTest extends Unit
     public function calculateSumDiscountAmountShouldSumAllItemDiscountsDataProvider(): array
     {
         return [
-            'int stock' => $this->getDataForCalculateSumDiscountAmountShouldSumAllItemDiscounts(
-                2,
-                20,
-                80,
-                20
-            ),
-            'float stock' => $this->getDataForCalculateSumDiscountAmountShouldSumAllItemDiscounts(
-                1.33,
-                20,
-                80,
-                20
-            ),
-            'float stock small price' => $this->getDataForCalculateSumDiscountAmountShouldSumAllItemDiscounts(
-                1.13,
-                1,
-                4,
-                1
-            ),
+            'int stock' => $this->getDataForCalculateSumDiscountAmountShouldSumAllItemDiscounts(2, 20, 80, 20),
+            'float stock' => $this->getDataForCalculateSumDiscountAmountShouldSumAllItemDiscounts(1.33, 20, 80, 20),
+            'float stock small price' => $this->getDataForCalculateSumDiscountAmountShouldSumAllItemDiscounts(1.13, 1, 4, 1),
         ];
     }
 
