@@ -26,6 +26,7 @@ use Spryker\Zed\CompanyUnitAddressLabel\Persistence\CompanyUnitAddressLabelRepos
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method \Spryker\Zed\CompanyUnitAddressLabel\Business\CompanyUnitAddressLabelFacadeInterface getFacade()
  *
  * @SuppressWarnings(PHPMD)
  */

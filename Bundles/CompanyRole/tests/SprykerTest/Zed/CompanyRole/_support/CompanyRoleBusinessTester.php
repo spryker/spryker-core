@@ -27,6 +27,7 @@ use Spryker\Zed\CompanyRole\Communication\Plugin\PermissionStoragePlugin;
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method \Spryker\Zed\Kernel\Business\AbstractFacade|\Spryker\Zed\CompanyRole\Business\CompanyRoleFacadeInterface getFacade()
  *
  * @SuppressWarnings(PHPMD)
  */

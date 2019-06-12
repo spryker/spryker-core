@@ -22,6 +22,7 @@ use Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer;
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method \Spryker\Zed\CompanyUnitAddress\Business\CompanyUnitAddressFacadeInterface getFacade()
  *
  * @SuppressWarnings(PHPMD)
  */

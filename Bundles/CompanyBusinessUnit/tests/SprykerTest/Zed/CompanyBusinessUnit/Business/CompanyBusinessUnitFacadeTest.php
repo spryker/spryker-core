@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyUserResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
-use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitFacadeInterface;
 use TypeError;
 
 /**
@@ -29,6 +28,8 @@ use TypeError;
  */
 class CompanyBusinessUnitFacadeTest extends Test
 {
+    protected const TEST_NAME = 'TEST_NAME';
+
     /**
      * @var \SprykerTest\Zed\CompanyBusinessUnit\CompanyBusinessUnitTester
      */
@@ -45,12 +46,15 @@ class CompanyBusinessUnitFacadeTest extends Test
         ]);
 
         // Act
-        $companyBusinessUnitTransferCreated = $this->getFacade()
+        $companyBusinessUnitTransferCreated = $this->tester->getFacade()
             ->create($companyBusinessUnitTransfer)
             ->getCompanyBusinessUnitTransfer();
 
         // Assert
-        $this->assertNotNull($companyBusinessUnitTransferCreated->getIdCompanyBusinessUnit());
+        $this->assertNotNull(
+            $this->tester->getFacade()
+                ->findCompanyBusinessUnitById($companyBusinessUnitTransferCreated->getIdCompanyBusinessUnit())
+        );
     }
 
     /**
@@ -64,7 +68,8 @@ class CompanyBusinessUnitFacadeTest extends Test
         ]);
 
         // Act
-        $foundBusinessUnitTransfer = $this->getFacade()->getCompanyBusinessUnitById($companyBusinessUnitTransfer);
+        $foundBusinessUnitTransfer = $this->tester->getFacade()
+            ->getCompanyBusinessUnitById($companyBusinessUnitTransfer);
 
         // Assert
         $this->assertSame($companyBusinessUnitTransfer->getName(), $foundBusinessUnitTransfer->getName());
@@ -84,7 +89,8 @@ class CompanyBusinessUnitFacadeTest extends Test
         $this->expectException(TypeError::class);
 
         // Act
-        $this->getFacade()->getCompanyBusinessUnitById($companyBusinessUnitTransfer);
+        $this->tester->getFacade()
+            ->getCompanyBusinessUnitById($companyBusinessUnitTransfer);
     }
 
     /**
@@ -98,7 +104,7 @@ class CompanyBusinessUnitFacadeTest extends Test
         ]);
 
         // Act
-        $actualCompanyBusinessUnitTransfer = $this->getFacade()
+        $actualCompanyBusinessUnitTransfer = $this->tester->getFacade()
             ->findCompanyBusinessUnitById($companyBusinessUnitTransfer->getIdCompanyBusinessUnit());
 
         // Assert
@@ -114,7 +120,8 @@ class CompanyBusinessUnitFacadeTest extends Test
         $idCompanyBusinessUnit = -1;
 
         // Act
-        $companyBusinessUnitTransfer = $this->getFacade()->findCompanyBusinessUnitById($idCompanyBusinessUnit);
+        $companyBusinessUnitTransfer = $this->tester->getFacade()
+            ->findCompanyBusinessUnitById($idCompanyBusinessUnit);
 
         // Assert
         $this->assertNull($companyBusinessUnitTransfer);
@@ -137,7 +144,8 @@ class CompanyBusinessUnitFacadeTest extends Test
         $customerTransfer->setCompanyUserTransfer($companyUserTransfer);
 
         // Act
-        $companyBusinessUnitTreeNodeCollectionTransfer = $this->getFacade()->getCustomerCompanyBusinessUnitTree($customerTransfer);
+        $companyBusinessUnitTreeNodeCollectionTransfer = $this->tester->getFacade()
+            ->getCustomerCompanyBusinessUnitTree($customerTransfer);
 
         // Assert
         $this->assertEquals(1, count($companyBusinessUnitTreeNodeCollectionTransfer->getCompanyBusinessUnitTreeNodes()));
@@ -152,16 +160,19 @@ class CompanyBusinessUnitFacadeTest extends Test
         $companyBusinessUnitTransferOriginal = $this->tester->haveCompanyBusinessUnit([
             CompanyBusinessUnitTransfer::FK_COMPANY => $this->tester->haveCompany()->getIdCompany(),
         ]);
-        $companyBusinessUnitTransfer = clone $companyBusinessUnitTransferOriginal;
-        $companyBusinessUnitTransfer->setName($companyBusinessUnitTransfer->getName() . 'TEST');
+        $companyBusinessUnitTransfer = (new CompanyBusinessUnitTransfer())->fromArray($companyBusinessUnitTransferOriginal->toArray());
+        $companyBusinessUnitTransfer->setName(static::TEST_NAME);
 
         // Act
-        $updatedBusinessUnitTransfer = $this->getFacade()
-            ->update($companyBusinessUnitTransfer)
-            ->getCompanyBusinessUnitTransfer();
+        $companyBusinessUnitResponseTransfer = $this->tester->getFacade()
+            ->update($companyBusinessUnitTransfer);
+
+        $actualCompanyBusinessUnitTransfer = $this->tester->getFacade()
+            ->findCompanyBusinessUnitById($companyBusinessUnitTransferOriginal->getIdCompanyBusinessUnit());
 
         // Assert
-        $this->assertNotSame($companyBusinessUnitTransferOriginal->getName(), $updatedBusinessUnitTransfer->getName());
+        $this->assertTrue($companyBusinessUnitResponseTransfer->getIsSuccessful());
+        $this->assertEquals(static::TEST_NAME, $actualCompanyBusinessUnitTransfer->getName());
     }
 
     /**
@@ -175,10 +186,14 @@ class CompanyBusinessUnitFacadeTest extends Test
         ]);
 
         // Act
-        $this->getFacade()->delete($companyBusinessUnitTransfer);
+        $this->tester->getFacade()
+            ->delete($companyBusinessUnitTransfer);
 
         // Assert
-        $this->assertNull($this->getFacade()->findCompanyBusinessUnitById($companyBusinessUnitTransfer->getIdCompanyBusinessUnit()));
+        $this->assertNull(
+            $this->tester->getFacade()
+                ->findCompanyBusinessUnitById($companyBusinessUnitTransfer->getIdCompanyBusinessUnit())
+        );
     }
 
     /**
@@ -194,7 +209,8 @@ class CompanyBusinessUnitFacadeTest extends Test
         $companyUserResponseTransfer = (new CompanyUserResponseTransfer())->setCompanyUser($companyUserTransfer);
 
         // Act
-        $companyUserResponseTransfer = $this->getFacade()->assignDefaultBusinessUnitToCompanyUser($companyUserResponseTransfer);
+        $companyUserResponseTransfer = $this->tester->getFacade()
+            ->assignDefaultBusinessUnitToCompanyUser($companyUserResponseTransfer);
 
         // Assert
         $this->assertEquals(
@@ -219,7 +235,7 @@ class CompanyBusinessUnitFacadeTest extends Test
         ]);
 
         // Act
-        $loadedChildBusinessUnitTransfer = $this->getFacade()
+        $loadedChildBusinessUnitTransfer = $this->tester->getFacade()
             ->getCompanyBusinessUnitById($companyBusinessUnitTransferChild);
 
         // Assert
@@ -244,7 +260,8 @@ class CompanyBusinessUnitFacadeTest extends Test
         $businessUnitTransfer->setCompany($companyTransfer);
 
         // Act
-        $loadedChildBusinessUnitTransfer = $this->getFacade()->update($businessUnitTransfer)
+        $loadedChildBusinessUnitTransfer = $this->tester->getFacade()
+            ->update($businessUnitTransfer)
             ->getCompanyBusinessUnitTransfer();
 
         // Assert
@@ -274,8 +291,9 @@ class CompanyBusinessUnitFacadeTest extends Test
 
         // Act
         $companyBusinessUnitTransferChild->setFkParentCompanyBusinessUnit($companyBusinessUnitTransferParent->getIdCompanyBusinessUnit());
-        $this->getFacade()->update($companyBusinessUnitTransferChild);
-        $loadedChildBusinessUnitTransfer = $this->getFacade()
+        $this->tester->getFacade()
+            ->update($companyBusinessUnitTransferChild);
+        $loadedChildBusinessUnitTransfer = $this->tester->getFacade()
             ->getCompanyBusinessUnitById($companyBusinessUnitTransferChild);
 
         // Assert
@@ -303,8 +321,10 @@ class CompanyBusinessUnitFacadeTest extends Test
         ]);
 
         // Act
-        $this->getFacade()->update($companyBusinessUnitTransferChild);
-        $companyBusinessUnitTransferChildLoaded = $this->getFacade()
+        $this->tester->getFacade()
+            ->update($companyBusinessUnitTransferChild);
+        $companyBusinessUnitTransferChildLoaded = $this->tester
+            ->getFacade()
             ->getCompanyBusinessUnitById($companyBusinessUnitTransferChild);
 
         // Assert
@@ -335,8 +355,9 @@ class CompanyBusinessUnitFacadeTest extends Test
         $childBusinessUnitTransfer = $this->tester->haveCompanyBusinessUnit($seedData);
 
         // Act
-        $this->getFacade()->delete($businessUnitTransfer);
-        $loadedChildBusinessUnitTransfer = $this->getFacade()
+        $this->tester->getFacade()
+            ->delete($businessUnitTransfer);
+        $loadedChildBusinessUnitTransfer = $this->tester->getFacade()
             ->getCompanyBusinessUnitById($childBusinessUnitTransfer);
 
         // Assert
@@ -366,7 +387,7 @@ class CompanyBusinessUnitFacadeTest extends Test
         $companyUserTransfer->setIdCompanyUser(null);
 
         // Act
-        $existsCompanyUser = $this->getFacade()
+        $existsCompanyUser = $this->tester->getFacade()
             ->isUniqueCompanyUserByCustomer($companyUserTransfer);
 
         // Assert
@@ -392,7 +413,7 @@ class CompanyBusinessUnitFacadeTest extends Test
         ]);
 
         // Act
-        $existsCompanyUser = $this->getFacade()
+        $existsCompanyUser = $this->tester->getFacade()
             ->isUniqueCompanyUserByCustomer($companyUserTransfer);
 
         // Assert
@@ -412,7 +433,7 @@ class CompanyBusinessUnitFacadeTest extends Test
             ->setFkCustomer($customerTransfer->getIdCustomer());
 
         // Act
-        $existsCompanyUser = $this->getFacade()
+        $existsCompanyUser = $this->tester->getFacade()
             ->isUniqueCompanyUserByCustomer($notExistentCompanyUserTransfer);
 
         // Assert
@@ -434,7 +455,7 @@ class CompanyBusinessUnitFacadeTest extends Test
             ->setFkCompanyBusinessUnit($businessUnitTransfer->getFkCompany());
 
         // Act
-        $existsCompanyUser = $this->getFacade()
+        $existsCompanyUser = $this->tester->getFacade()
             ->isUniqueCompanyUserByCustomer($notExistentCompanyUserTransfer);
 
         // Assert
@@ -458,7 +479,7 @@ class CompanyBusinessUnitFacadeTest extends Test
             ->setFkCompanyBusinessUnit($businessUnitTransfer->getFkCompany());
 
         // Act
-        $existsCompanyUser = $this->getFacade()
+        $existsCompanyUser = $this->tester->getFacade()
             ->isUniqueCompanyUserByCustomer($notExistentCompanyUserTransfer);
 
         // Assert
@@ -479,18 +500,10 @@ class CompanyBusinessUnitFacadeTest extends Test
             ->setIdCompany($businessUnitTransfer->getFkCompany());
 
         // Act
-        $companyBusinessUnitCollection = $this->getFacade()
+        $companyBusinessUnitCollection = $this->tester->getFacade()
             ->getCompanyBusinessUnitCollection($companyBusinessUnitCriteriaFilterTransfer);
 
         // Assert
         $this->assertGreaterThan(0, $companyBusinessUnitCollection->getCompanyBusinessUnits()->count());
-    }
-
-    /**
-     * @return \Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitFacadeInterface
-     */
-    protected function getFacade(): CompanyBusinessUnitFacadeInterface
-    {
-        return $this->tester->getFacade();
     }
 }

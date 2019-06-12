@@ -56,7 +56,8 @@ class CompanySupplierFacadeTest extends Test
     public function testGetCompanyTypesReturnsNotEmptyCollection(): void
     {
         // Act
-        $companyTypesCollection = $this->tester->getFacade()->getCompanyTypes();
+        $companyTypesCollection = $this->tester->getFacade()
+            ->getCompanyTypes();
 
         // Assert
         $this->assertGreaterThan(0, $companyTypesCollection->getCompanyTypes()->count());
@@ -68,7 +69,8 @@ class CompanySupplierFacadeTest extends Test
     public function testGetAllSuppliersReturnsCompanySuppliers(): void
     {
         // Act
-        $supplierCompanies = $this->tester->getFacade()->getAllSuppliers();
+        $supplierCompanies = $this->tester->getFacade()
+            ->getAllSuppliers();
 
         // Assert
         $this->assertSame(static::COMPANY_TYPE_SUPPLIER, $supplierCompanies->getSuppliers()[0]->getCompanyType()->getName());
@@ -83,10 +85,12 @@ class CompanySupplierFacadeTest extends Test
         $productConcreteTransfer = $this->productConcrete;
 
         // Act
-        $this->tester->getFacade()->saveCompanySupplierRelationsForProductConcrete(
-            $productConcreteTransfer
-        );
-        $CompanySupplierProductRelations = $this->tester->getFacade()->getSuppliersByIdProduct($productConcreteTransfer->getIdProductConcrete());
+        $this->tester->getFacade()
+            ->saveCompanySupplierRelationsForProductConcrete(
+                $productConcreteTransfer
+            );
+        $CompanySupplierProductRelations = $this->tester->getFacade()
+            ->getSuppliersByIdProduct($productConcreteTransfer->getIdProductConcrete());
 
         // Assert
         $this->assertGreaterThan(0, $CompanySupplierProductRelations->getSuppliers()->count());
@@ -112,6 +116,7 @@ class CompanySupplierFacadeTest extends Test
         $companySuppliers = new ArrayObject([
             $this->companySupplier,
         ]);
+
         $productConcrete->setCompanySuppliers($companySuppliers);
         $this->productConcrete = $productConcrete;
     }

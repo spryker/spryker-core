@@ -23,6 +23,7 @@ use Generated\Shared\Transfer\CompanyUserTransfer;
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method \Spryker\Zed\CompanyUser\Business\CompanyUserFacadeInterface getFacade()
  *
  * @SuppressWarnings(PHPMD)
  */

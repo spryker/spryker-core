@@ -45,7 +45,8 @@ class CompanyFacadeTest extends Test
         ]);
 
         // Act
-        $foundCompanyTransfer = $this->getFacade()->getCompanyById($companyTransfer);
+        $foundCompanyTransfer = $this->tester->getFacade()
+            ->getCompanyById($companyTransfer);
 
         // Assert
         $this->assertNotNull($foundCompanyTransfer->getIdCompany());
@@ -60,7 +61,8 @@ class CompanyFacadeTest extends Test
         $companyTransfer = $this->tester->haveCompany();
 
         // Act
-        $companyTransfer = $this->getFacade()->findCompanyById($companyTransfer->getIdCompany());
+        $companyTransfer = $this->tester->getFacade()
+            ->findCompanyById($companyTransfer->getIdCompany());
 
         // Assert
         $this->assertInstanceOf(CompanyTransfer::class, $companyTransfer);
@@ -76,7 +78,8 @@ class CompanyFacadeTest extends Test
         $idCompany = -1;
 
         // Act
-        $companyTransfer = $this->getFacade()->findCompanyById($idCompany);
+        $companyTransfer = $this->tester->getFacade()
+            ->findCompanyById($idCompany);
 
         // Assert
         $this->assertNull($companyTransfer);
@@ -91,7 +94,8 @@ class CompanyFacadeTest extends Test
         $companyTransfer = (new CompanyBuilder())->build();
 
         // Act
-        $createdCompanyTransfer = $this->getFacade()->create($companyTransfer)
+        $createdCompanyTransfer = $this->tester->getFacade()
+            ->create($companyTransfer)
             ->getCompanyTransfer();
 
         // Assert
@@ -110,12 +114,12 @@ class CompanyFacadeTest extends Test
         ]);
 
         // Act
-        $this->getFacade()->update(
+        $this->tester->getFacade()->update(
             $companyTransfer
                 ->setIsActive(true)
                 ->setStatus(static::STATUS_APPROVED)
         );
-        $updatedCompanyTransfer = $this->getFacade()->findCompanyById($companyTransfer->getIdCompany());
+        $updatedCompanyTransfer = $this->tester->getFacade()->findCompanyById($companyTransfer->getIdCompany());
 
         // Assert
         $this->assertEquals($companyTransfer->getIsActive(), $updatedCompanyTransfer->getIsActive());
@@ -131,10 +135,11 @@ class CompanyFacadeTest extends Test
         $companyTransfer = $this->tester->haveCompany();
 
         // Act
-        $this->getFacade()->delete($companyTransfer);
+        $this->tester->getFacade()
+            ->delete($companyTransfer);
 
         // Assert
-        $this->assertNull($this->getFacade()->findCompanyById($companyTransfer->getIdCompany()));
+        $this->assertNull($this->tester->getFacade()->findCompanyById($companyTransfer->getIdCompany()));
     }
 
     /**
@@ -152,7 +157,8 @@ class CompanyFacadeTest extends Test
         $companyTransfer->setStoreRelation($storeRelation);
 
         // Act
-        $companyTransfer = $this->getFacade()->create($companyTransfer)->getCompanyTransfer();
+        $companyTransfer = $this->tester->getFacade()
+            ->create($companyTransfer)->getCompanyTransfer();
         $relatesStores = $this->tester->getRelatedStoresByIdCompany($companyTransfer->getIdCompany());
 
         // Assert
@@ -172,7 +178,8 @@ class CompanyFacadeTest extends Test
         $companyTransfer->setStoreRelation($storeRelation);
 
         // Act
-        $companyTransfer = $this->getFacade()->update($companyTransfer)->getCompanyTransfer();
+        $companyTransfer = $this->tester->getFacade()
+            ->update($companyTransfer)->getCompanyTransfer();
         $relatesStores = $this->tester->getRelatedStoresByIdCompany($companyTransfer->getIdCompany());
 
         // Assert
@@ -188,17 +195,10 @@ class CompanyFacadeTest extends Test
         $this->tester->haveCompany();
 
         // Act
-        $companyTypesCollection = $this->getFacade()->getCompanies();
+        $companyTypesCollection = $this->tester->getFacade()
+            ->getCompanies();
 
         // Assert
         $this->assertGreaterThan(0, $companyTypesCollection->getCompanies()->count());
-    }
-
-    /**
-     * @return \Spryker\Zed\Company\Business\CompanyFacadeInterface|\Spryker\Zed\Kernel\Business\AbstractFacade
-     */
-    protected function getFacade()
-    {
-        return $this->tester->getFacade();
     }
 }
