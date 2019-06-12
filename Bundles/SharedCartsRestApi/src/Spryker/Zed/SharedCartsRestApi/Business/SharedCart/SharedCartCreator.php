@@ -58,6 +58,8 @@ class SharedCartCreator implements SharedCartCreatorInterface
      */
     public function create(ShareCartRequestTransfer $shareCartRequestTransfer): ShareCartResponseTransfer
     {
+        $shareCartResponseTransfer = (new ShareCartResponseTransfer())->setIsSuccessful(false);
+
         $shareCartRequestTransfer->requireQuoteUuid()->requireShareDetails();
         /** @var \Generated\Shared\Transfer\ShareDetailTransfer $shareDetailTransfer */
         $shareDetailTransfer = $shareCartRequestTransfer->getShareDetails()->offsetGet(0);
@@ -65,8 +67,6 @@ class SharedCartCreator implements SharedCartCreatorInterface
             ->requireQuotePermissionGroup()
             ->getQuotePermissionGroup()
                 ->requireIdQuotePermissionGroup();
-
-        $shareCartResponseTransfer = (new ShareCartResponseTransfer())->setIsSuccessful(false);
 
         $quoteResponseTransfer = $this->quoteFacade->findQuoteByUuid(
             (new QuoteTransfer())->setUuid($shareCartRequestTransfer->getQuoteUuid())
