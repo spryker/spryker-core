@@ -1,7 +1,7 @@
 {
   "name": "spryker/storage-extension",
   "type": "library",
-  "description": "Storage Extension module",
+  "description": "StorageExtension module",
   "license": "proprietary",
   "require": {
     "php": ">=7.1"
