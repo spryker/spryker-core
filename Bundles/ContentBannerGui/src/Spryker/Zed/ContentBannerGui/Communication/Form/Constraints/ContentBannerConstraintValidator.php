@@ -33,10 +33,7 @@ class ContentBannerConstraintValidator extends ConstraintValidator
             ));
         }
 
-        $contentBannerTermTransfer = new ContentBannerTermTransfer();
-        if ($bannerData !== null) {
-            $contentBannerTermTransfer->fromArray($constraint->getUtilEncoding()->decodeJson($bannerData, true));
-        }
+        $contentBannerTermTransfer = $this->mapBannerDataToTransfer($bannerData, $constraint);
 
         $contentValidationResponseTransfer = $constraint
             ->getContentBannerFacade()
@@ -63,5 +60,23 @@ class ContentBannerConstraintValidator extends ConstraintValidator
                 ->atPath(sprintf('[%s]', $parameterMessageTransfer->getParameter()))
                 ->addViolation();
         }
+    }
+
+    /**
+     * @param string $bannerData
+     * @param \Symfony\Component\Validator\Constraint|\Spryker\Zed\ContentBannerGui\Communication\Form\Constraints\ContentBannerConstraint $constraint
+     *
+     * @return \Generated\Shared\Transfer\ContentBannerTermTransfer
+     */
+    protected function mapBannerDataToTransfer($bannerData, Constraint $constraint): ContentBannerTermTransfer
+    {
+        $contentBannerTermTransfer = new ContentBannerTermTransfer();
+
+        if ($bannerData !== null) {
+            $bannerData = $constraint->getUtilEncoding()->decodeJson($bannerData, true);
+            $contentBannerTermTransfer->fromArray($bannerData);
+        }
+
+        return $contentBannerTermTransfer;
     }
 }
