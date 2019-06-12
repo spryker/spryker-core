@@ -243,8 +243,6 @@ class SessionConfig extends AbstractBundleConfig
     }
 
     /**
-     * @deprecated Will be removed without replacement.
-     *
      * @return string
      */
     protected function getSessionEnvironmentNameDefaultValue(): string

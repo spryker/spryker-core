@@ -465,7 +465,7 @@ cd %s
         return sprintf(
             $commandTemplate,
             $customBashCommand,
-            $this->config->getEnvironmentName(),
+            APPLICATION_ENV,
             $store,
             $destination,
             $cronjobsConfigPath,
