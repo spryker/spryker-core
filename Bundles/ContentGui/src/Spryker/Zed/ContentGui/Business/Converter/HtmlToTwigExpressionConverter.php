@@ -11,10 +11,13 @@ use DOMDocument;
 use DOMNode;
 use DOMText;
 use DOMXPath;
+use Spryker\Zed\ContentGui\Business\Exception\HtmlConverterException;
 use Spryker\Zed\ContentGui\ContentGuiConfig;
 
 class HtmlToTwigExpressionConverter implements HtmlConverterInterface
 {
+    protected const ERROR_MESSAGE_MAX_WIDGET_NUMBER = 'Limit exceeded, maximum number of widgets %d';
+
     /**
      * @var \DOMDocument
      */
@@ -38,12 +41,14 @@ class HtmlToTwigExpressionConverter implements HtmlConverterInterface
     /**
      * @param string $html
      *
+     * @throws \Spryker\Zed\ContentGui\Business\Exception\HtmlConverterException
+     *
      * @return string
      */
     public function convertHtmlToTwigExpression(string $html): string
     {
         if (mb_substr_count($html, 'data-twig-expression') > $this->contentGuiConfig->getMaxWidgetNumber()) {
-            return $html;
+            throw new HtmlConverterException(sprintf(static::ERROR_MESSAGE_MAX_WIDGET_NUMBER, $this->contentGuiConfig->getMaxWidgetNumber()));
         }
 
         // Libxml requires a root node and <html> is treating the first element, so libxml finds as the root node.
