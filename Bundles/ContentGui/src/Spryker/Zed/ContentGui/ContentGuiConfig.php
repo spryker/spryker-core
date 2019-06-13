@@ -20,15 +20,7 @@ class ContentGuiConfig extends AbstractBundleConfig
     protected const PARAMETER_TEMPLATE_DISPLAY_NAME = '%TEMPLATE_DISPLAY_NAME%';
     protected const EDITOR_CONTENT_WIDGET_WRAPPER = '<p>%s</p>';
     protected const MAX_WIDGET_NUMBER = 10000;
-    protected const DOM_PATH_WIDGET_QUERY = '//*[@contenteditable="false"][@data-key][@data-twig-expression][@data-template][@data-type]';
-
-    /**
-     * @return string
-     */
-    public function getElementTagName(): string
-    {
-        return static::DOM_PATH_WIDGET_QUERY;
-    }
+    protected const DOM_PATH_WIDGET_QUERY = '//span[@contenteditable="false"][@data-key][@data-twig-expression][@data-template][@data-type]';
 
     /**
      * @return string
@@ -44,6 +36,14 @@ class ContentGuiConfig extends AbstractBundleConfig
                 . '<span>Name: <b>' . $this->getParameterName() . '</b></span>'
                 . '<span>Template: <b>' . $this->getParameterTemplateDisplayName() . '</b></span>'
             . '</span>';
+    }
+
+    /**
+     * @return string
+     */
+    public function getWidgetXpathQuery(): string
+    {
+        return static::DOM_PATH_WIDGET_QUERY;
     }
 
     /**
