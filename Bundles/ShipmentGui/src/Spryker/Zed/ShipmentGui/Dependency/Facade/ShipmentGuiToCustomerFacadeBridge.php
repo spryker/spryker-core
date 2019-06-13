@@ -45,4 +45,14 @@ class ShipmentGuiToCustomerFacadeBridge implements ShipmentGuiToCustomerFacadeIn
     {
         return $this->customerFacade->findCustomerAddressById($idCustomerAddress);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer|null
+     */
+    public function findCustomerAddressByAddressData(AddressTransfer $addressTransfer): ?AddressTransfer
+    {
+        return $this->customerFacade->findCustomerAddressByAddressData($addressTransfer);
+    }
 }

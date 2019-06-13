@@ -26,4 +26,11 @@ interface ShipmentGuiToCustomerFacadeInterface
      * @return \Generated\Shared\Transfer\AddressTransfer|null
      */
     public function findCustomerAddressById(int $idCustomerAddress): ?AddressTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer|null
+     */
+    public function findCustomerAddressByAddressData(AddressTransfer $addressTransfer): ?AddressTransfer;
 }
