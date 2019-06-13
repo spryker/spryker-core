@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\SchedulerJenkins\Business\Iterator\Strategy;
+namespace Spryker\Zed\SchedulerJenkins\Business\Processor\Strategy;
 
 use Spryker\Zed\SchedulerJenkins\Business\Api\JenkinsApiInterface;
 use Spryker\Zed\SchedulerJenkins\Business\Executor\ExecutorInterface;
@@ -59,7 +59,7 @@ class ExecutionStrategyBuilder implements ExecutionStrategyBuilderInterface
     /**
      * @param string $idScheduler
      *
-     * @return \Spryker\Zed\SchedulerJenkins\Business\Iterator\Strategy\ExecutionStrategyInterface
+     * @return \Spryker\Zed\SchedulerJenkins\Business\Processor\Strategy\ExecutionStrategyInterface
      */
     public function buildExecutionStrategy(string $idScheduler): ExecutionStrategyInterface
     {
@@ -74,10 +74,10 @@ class ExecutionStrategyBuilder implements ExecutionStrategyBuilderInterface
     }
 
     /**
-     * @param \Spryker\Zed\SchedulerJenkins\Business\Iterator\Strategy\ExecutionStrategy $jobChecker
+     * @param \Spryker\Zed\SchedulerJenkins\Business\Processor\Strategy\ExecutionStrategy $jobChecker
      * @param array $jobs
      *
-     * @return \Spryker\Zed\SchedulerJenkins\Business\Iterator\Strategy\ExecutionStrategy
+     * @return \Spryker\Zed\SchedulerJenkins\Business\Processor\Strategy\ExecutionStrategy
      */
     protected function mapJobCheckerFromArray(ExecutionStrategy $jobChecker, array $jobs): ExecutionStrategy
     {

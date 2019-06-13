@@ -5,28 +5,28 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\SchedulerJenkins\Business\Iterator;
+namespace Spryker\Zed\SchedulerJenkins\Business\Processor;
 
 use Generated\Shared\Transfer\SchedulerResponseTransfer;
 use Generated\Shared\Transfer\SchedulerScheduleTransfer;
-use Spryker\Zed\SchedulerJenkins\Business\Iterator\Builder\SchedulerResponseBuilderInterface;
-use Spryker\Zed\SchedulerJenkins\Business\Iterator\Strategy\ExecutionStrategyBuilderInterface;
+use Spryker\Zed\SchedulerJenkins\Business\Processor\Builder\SchedulerResponseBuilderInterface;
+use Spryker\Zed\SchedulerJenkins\Business\Processor\Strategy\ExecutionStrategyBuilderInterface;
 
-class SchedulerProcessor implements SchedulerProcessorInterface
+class ScheduleProcessor implements ScheduleProcessorInterface
 {
     /**
-     * @var \Spryker\Zed\SchedulerJenkins\Business\Iterator\Strategy\ExecutionStrategyBuilderInterface
+     * @var \Spryker\Zed\SchedulerJenkins\Business\Processor\Strategy\ExecutionStrategyBuilderInterface
      */
     protected $executionStrategyBuilder;
 
     /**
-     * @var \Spryker\Zed\SchedulerJenkins\Business\Iterator\Builder\SchedulerResponseBuilderInterface
+     * @var \Spryker\Zed\SchedulerJenkins\Business\Processor\Builder\SchedulerResponseBuilderInterface
      */
     protected $responseBuilder;
 
     /**
-     * @param \Spryker\Zed\SchedulerJenkins\Business\Iterator\Strategy\ExecutionStrategyBuilderInterface $jenkinsJobReader
-     * @param \Spryker\Zed\SchedulerJenkins\Business\Iterator\Builder\SchedulerResponseBuilderInterface $responseBuilder
+     * @param \Spryker\Zed\SchedulerJenkins\Business\Processor\Strategy\ExecutionStrategyBuilderInterface $jenkinsJobReader
+     * @param \Spryker\Zed\SchedulerJenkins\Business\Processor\Builder\SchedulerResponseBuilderInterface $responseBuilder
      */
     public function __construct(
         ExecutionStrategyBuilderInterface $jenkinsJobReader,
@@ -41,7 +41,7 @@ class SchedulerProcessor implements SchedulerProcessorInterface
      *
      * @return \Generated\Shared\Transfer\SchedulerResponseTransfer
      */
-    public function processScheduler(SchedulerScheduleTransfer $scheduleTransfer): SchedulerResponseTransfer
+    public function processSchedule(SchedulerScheduleTransfer $scheduleTransfer): SchedulerResponseTransfer
     {
         $idScheduler = $scheduleTransfer->getIdScheduler();
         $executionStrategy = $this->executionStrategyBuilder->buildExecutionStrategy($idScheduler);

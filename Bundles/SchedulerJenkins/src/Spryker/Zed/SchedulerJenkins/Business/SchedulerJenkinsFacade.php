@@ -29,7 +29,7 @@ class SchedulerJenkinsFacade extends AbstractFacade implements SchedulerJenkinsF
     {
         return $this->getFactory()
             ->createSchedulerJenkinsSetup()
-            ->processScheduler($scheduleTransfer);
+            ->processSchedule($scheduleTransfer);
     }
 
     /**
@@ -45,7 +45,7 @@ class SchedulerJenkinsFacade extends AbstractFacade implements SchedulerJenkinsF
     {
         return $this->getFactory()
             ->createSchedulerJenkinsClean()
-            ->processScheduler($scheduleTransfer);
+            ->processSchedule($scheduleTransfer);
     }
 
     /**
@@ -61,7 +61,7 @@ class SchedulerJenkinsFacade extends AbstractFacade implements SchedulerJenkinsF
     {
         return $this->getFactory()
             ->createSchedulerJenkinsDisable()
-            ->processScheduler($scheduleTransfer);
+            ->processSchedule($scheduleTransfer);
     }
 
     /**
@@ -77,6 +77,6 @@ class SchedulerJenkinsFacade extends AbstractFacade implements SchedulerJenkinsF
     {
         return $this->getFactory()
             ->createSchedulerJenkinsEnable()
-            ->processScheduler($scheduleTransfer);
+            ->processSchedule($scheduleTransfer);
     }
 }

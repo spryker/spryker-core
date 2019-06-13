@@ -5,14 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\SchedulerJenkins\Business\Iterator\Strategy;
+namespace Spryker\Zed\SchedulerJenkins\Business\Processor\Strategy;
 
 interface ExecutionStrategyBuilderInterface
 {
     /**
      * @param string $idScheduler
      *
-     * @return \Spryker\Zed\SchedulerJenkins\Business\Iterator\Strategy\ExecutionStrategyInterface
+     * @return \Spryker\Zed\SchedulerJenkins\Business\Processor\Strategy\ExecutionStrategyInterface
      */
     public function buildExecutionStrategy(string $idScheduler): ExecutionStrategyInterface;
 }
