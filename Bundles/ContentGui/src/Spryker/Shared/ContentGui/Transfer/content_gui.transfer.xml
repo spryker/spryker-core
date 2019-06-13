@@ -54,5 +54,11 @@
     <transfer name="CmsPlaceholderTranslation">
         <property name="translation" type="string" />
     </transfer>
+
+    <transfer name="TwigExpression">
+        <property name="content" type="Content" />
+        <property name="contentWidgetTemplate" type="ContentWidgetTemplate" />
+        <property name="twigExpression" type="string" />
+    </transfer>
 </transfers>
 

@@ -8,12 +8,17 @@
 namespace Spryker\Zed\ContentGui\Business\Converter;
 
 use Generated\Shared\Transfer\ContentTransfer;
+use Generated\Shared\Transfer\ContentWidgetTemplateTransfer;
+use Generated\Shared\Transfer\TwigExpressionTransfer;
+use Spryker\Zed\ContentGui\Business\Exception\HtmlConverterException;
 use Spryker\Zed\ContentGui\ContentGuiConfig;
 use Spryker\Zed\ContentGui\Dependency\Facade\ContentGuiToContentFacadeInterface;
 use Spryker\Zed\ContentGui\Dependency\Facade\ContentGuiToTranslatorFacadeInterface;
 
 class TwigExpressionToHtmlConverter implements TwigExpressionConverterInterface
 {
+    protected const ERROR_MESSAGE_MAX_WIDGET_NUMBER = 'Limit exceeded, maximum number of widgets %d';
+
     /**
      * @var \Spryker\Zed\ContentGui\Dependency\Facade\ContentGuiToContentFacadeInterface
      */
@@ -59,115 +64,106 @@ class TwigExpressionToHtmlConverter implements TwigExpressionConverterInterface
      */
     public function convertTwigExpressionToHtml(string $html): string
     {
+        $this->assureMaxWidgetNumbersIsNotExceeded($html);
+
+        $twigExpressionTransfers = $this->findTwigExpressions($html);
+
+        return $this->replaceTwigExpressions($html, $twigExpressionTransfers);
+    }
+
+    /**
+     * @param string $html
+     *
+     * @throws \Spryker\Zed\ContentGui\Business\Exception\HtmlConverterException
+     *
+     * @return void
+     */
+    protected function assureMaxWidgetNumbersIsNotExceeded(string $html): void
+    {
         if (mb_substr_count($html, '{{ content_') > $this->contentGuiConfig->getMaxWidgetNumber()) {
-            return $html;
+            throw new HtmlConverterException(sprintf(static::ERROR_MESSAGE_MAX_WIDGET_NUMBER, $this->contentGuiConfig->getMaxWidgetNumber()));
         }
+    }
+
+    /**
+     * @param string $html
+     *
+     * @return array
+     */
+    protected function findTwigExpressions(string $html): array
+    {
+        $twigExpressionTransfers = [];
 
         foreach ($this->contentEditorPlugins as $contentEditorPlugin) {
-            $twigExpressions = $this->findTwigExpressions($html, $contentEditorPlugin->getTwigFunctionTemplate());
+            // Example: {{ content_banner('%KEY%', '%TEMPLATE%') }} -> {{ content_banner('([\w-]+)', '([\w-]+)') }}
+            $twigExpressionPattern = preg_replace(
+                "/\('%KEY%', '%TEMPLATE%'\)/",
+                "\('([\w-]+)', '([\w-]+)'\)",
+                $contentEditorPlugin->getTwigFunctionTemplate()
+            );
 
-            if (!$twigExpressions) {
+            preg_match_all('/' . $twigExpressionPattern . '/', $html, $twigExpressionMatches);
+
+            if (!$twigExpressionMatches[0]) {
+                return $twigExpressionTransfers;
+            }
+
+            $twigExpressionTransfers = $this->mapTwigExpressionsToTransfers(
+                $twigExpressionMatches,
+                $contentEditorPlugin->getTemplates(),
+                $twigExpressionTransfers
+            );
+        }
+
+        return $twigExpressionTransfers;
+    }
+
+    /**
+     * @param array $twigExpressionMatches
+     * @param array $contentWidgetTemplateTransfers
+     * @param array $twigExpressionTransfers
+     *
+     * @return array
+     */
+    protected function mapTwigExpressionsToTransfers(
+        array $twigExpressionMatches,
+        array $contentWidgetTemplateTransfers,
+        array $twigExpressionTransfers
+    ): array {
+        foreach ($twigExpressionMatches[0] as $key => $twigExpressionMatch) {
+            if (!isset($twigExpressionMatches[1][$key])) {
                 continue;
             }
 
-            $html = $this->replaceTwigExpressions($html, $twigExpressions, $contentEditorPlugin->getTemplates());
-        }
-
-        return $html;
-    }
-
-    /**
-     * @param string $html
-     * @param string $twigFunctionTemplate
-     *
-     * @return array|null
-     */
-    protected function findTwigExpressions(string $html, string $twigFunctionTemplate): ?array
-    {
-        // Example: {{ content_banner('%KEY%', '%TEMPLATE%') }} -> {{ content_banner(.+?) }}
-        $twigExpressionPattern = preg_replace('/\(.+\)/', '\(.+?\)', $twigFunctionTemplate);
-        preg_match_all('/' . $twigExpressionPattern . '/', $html, $twigExpressions);
-
-        if (!$twigExpressions[0]) {
-            return null;
-        }
-
-        return $twigExpressions[0];
-    }
-
-    /**
-     * @param string $html
-     * @param string[] $twigExpressions
-     * @param \Generated\Shared\Transfer\ContentWidgetTemplateTransfer[] $contentWidgetTemplateTransfers
-     *
-     * @return string
-     */
-    protected function replaceTwigExpressions(string $html, array $twigExpressions, array $contentWidgetTemplateTransfers): string
-    {
-        $twigExpressionReplacements = [];
-
-        foreach ($twigExpressions as $twigExpression) {
-            if (isset($twigExpressionReplacements[$twigExpression])) {
+            $contentKey = $twigExpressionMatches[1][$key];
+            $contentTransfer = $this->findContentItemByKey($contentKey);
+            if (!$contentTransfer) {
                 continue;
             }
 
-            $editorContentWidget = $this->getEditorContentWidgetByTwigExpression($twigExpression, $contentWidgetTemplateTransfers);
-            if (!$editorContentWidget) {
-                continue;
+            $contentWidgetTemplateTransfer = new ContentWidgetTemplateTransfer();
+            if (isset($twigExpressionMatches[2][$key])) {
+                $templateIdentifier = $twigExpressionMatches[2][$key];
+                $contentWidgetTemplateTransfer = $this->getContentWidgetTemplateByIdentifier($templateIdentifier, $contentWidgetTemplateTransfers);
             }
 
-            $twigExpressionReplacements[$twigExpression] = sprintf($this->contentGuiConfig->getEditorContentWidgetWrapper(), $editorContentWidget);
+            $twigExpressionTransfers[] =
+                (new TwigExpressionTransfer())
+                    ->setContent($contentTransfer)
+                    ->setContentWidgetTemplate($contentWidgetTemplateTransfer)
+                    ->setTwigExpression($twigExpressionMatch);
         }
 
-        return strtr($html, $twigExpressionReplacements);
+        return $twigExpressionTransfers;
     }
 
     /**
-     * @param string $twigExpression
-     * @param \Generated\Shared\Transfer\ContentWidgetTemplateTransfer[] $contentWidgetTemplateTransfers
-     *
-     * @return string|null
-     */
-    protected function getEditorContentWidgetByTwigExpression(string $twigExpression, array $contentWidgetTemplateTransfers): ?string
-    {
-        $contentTransfer = $this->findContentItem($twigExpression);
-
-        if (!$contentTransfer) {
-            return null;
-        }
-
-        $templateIdentifier = $this->findTemplateIdentifier($twigExpression);
-        $templateDisplayName = '';
-
-        if ($templateIdentifier) {
-            $templateDisplayName = $this->getTemplateDisplayNameByIdentifier($templateIdentifier, $contentWidgetTemplateTransfers);
-        }
-
-        return strtr($this->contentGuiConfig->getEditorContentWidgetTemplate(), [
-            $this->contentGuiConfig->getParameterId() => $contentTransfer->getIdContent(),
-            $this->contentGuiConfig->getParameterKey() => $contentTransfer->getKey(),
-            $this->contentGuiConfig->getParameterType() => $contentTransfer->getContentTypeKey(),
-            $this->contentGuiConfig->getParameterName() => $contentTransfer->getName(),
-            $this->contentGuiConfig->getParameterTwigExpression() => $twigExpression,
-            $this->contentGuiConfig->getParameterTemplate() => $templateIdentifier,
-            $this->contentGuiConfig->getParameterTemplateDisplayName() => $templateDisplayName,
-        ]);
-    }
-
-    /**
-     * @param string $twigExpression
+     * @param string $contentKey
      *
      * @return \Generated\Shared\Transfer\ContentTransfer|null
      */
-    protected function findContentItem(string $twigExpression): ?ContentTransfer
+    protected function findContentItemByKey(string $contentKey): ?ContentTransfer
     {
-        preg_match("/'([\w\-]+)'/", $twigExpression, $twigExpressionParams);
-
-        if (!isset($twigExpressionParams[1])) {
-            return null;
-        }
-
-        $contentKey = $twigExpressionParams[1];
         $contentTransfer = $this->contentFacade->findContentByKey($contentKey);
 
         if (!$contentTransfer) {
@@ -181,35 +177,70 @@ class TwigExpressionToHtmlConverter implements TwigExpressionConverterInterface
     }
 
     /**
-     * @param string $twigExpression
-     *
-     * @return string|null
-     */
-    protected function findTemplateIdentifier(string $twigExpression): ?string
-    {
-        preg_match_all("/'([\w\-]+)'/", $twigExpression, $twigExpressionParams);
-
-        if (!isset($twigExpressionParams[1][1])) {
-            return null;
-        }
-
-        return $twigExpressionParams[1][1];
-    }
-
-    /**
      * @param string $templateIdentifier
-     * @param \Generated\Shared\Transfer\ContentWidgetTemplateTransfer[] $contentWidgetTemplateTransfers
+     * @param array $contentWidgetTemplateTransfers
      *
-     * @return string
+     * @return \Generated\Shared\Transfer\ContentWidgetTemplateTransfer
      */
-    protected function getTemplateDisplayNameByIdentifier(string $templateIdentifier, array $contentWidgetTemplateTransfers): string
-    {
+    protected function getContentWidgetTemplateByIdentifier(
+        string $templateIdentifier,
+        array $contentWidgetTemplateTransfers
+    ): ContentWidgetTemplateTransfer {
         foreach ($contentWidgetTemplateTransfers as $contentWidgetTemplateTransfer) {
             if ($contentWidgetTemplateTransfer->getIdentifier() === $templateIdentifier) {
-                return $this->translatorFacade->trans($contentWidgetTemplateTransfer->getName());
+                return $contentWidgetTemplateTransfer->setName(
+                    $this->translatorFacade->trans($contentWidgetTemplateTransfer->getName())
+                );
             }
         }
 
-        return '';
+        return (new ContentWidgetTemplateTransfer())
+            ->setName($templateIdentifier)
+            ->setIdentifier($templateIdentifier);
+    }
+
+    /**
+     * @param string $html
+     * @param array $twigExpressionTransfers
+     *
+     * @return string
+     */
+    protected function replaceTwigExpressions(string $html, array $twigExpressionTransfers): string
+    {
+        if (!$twigExpressionTransfers) {
+            return $html;
+        }
+
+        $replacements = [];
+
+        foreach ($twigExpressionTransfers as $twigExpressionTransfer) {
+            if (isset($replacements[$twigExpressionTransfer->getTwigExpression()])) {
+                continue;
+            }
+
+            $replacements[$twigExpressionTransfer->getTwigExpression()] = $this->getWidgetByTwigExpression($twigExpressionTransfer);
+        }
+
+        return strtr($html, $replacements);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\TwigExpressionTransfer $twigExpressionTransfer
+     *
+     * @return string
+     */
+    protected function getWidgetByTwigExpression(TwigExpressionTransfer $twigExpressionTransfer): string
+    {
+        $editorContentWidget = strtr($this->contentGuiConfig->getEditorContentWidgetTemplate(), [
+            $this->contentGuiConfig->getParameterId() => $twigExpressionTransfer->getContent()->getIdContent(),
+            $this->contentGuiConfig->getParameterKey() => $twigExpressionTransfer->getContent()->getKey(),
+            $this->contentGuiConfig->getParameterType() => $twigExpressionTransfer->getContent()->getContentTypeKey(),
+            $this->contentGuiConfig->getParameterName() => $twigExpressionTransfer->getContent()->getName(),
+            $this->contentGuiConfig->getParameterTwigExpression() => $twigExpressionTransfer->getTwigExpression(),
+            $this->contentGuiConfig->getParameterTemplate() => $twigExpressionTransfer->getContentWidgetTemplate()->getIdentifier(),
+            $this->contentGuiConfig->getParameterTemplateDisplayName() => $twigExpressionTransfer->getContentWidgetTemplate()->getName(),
+        ]);
+
+        return sprintf($this->contentGuiConfig->getEditorContentWidgetWrapper(), $editorContentWidget);
     }
 }
