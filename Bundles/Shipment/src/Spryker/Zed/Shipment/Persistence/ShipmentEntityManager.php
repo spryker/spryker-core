@@ -121,7 +121,7 @@ class ShipmentEntityManager extends AbstractEntityManager implements ShipmentEnt
      */
     public function saveSalesExpense(ExpenseTransfer $expenseTransfer, OrderTransfer $orderTransfer): ExpenseTransfer
     {
-        $expenseMapper = $this->getFactory()->createShipmentexpenseMapper();
+        $expenseMapper = $this->getFactory()->createShipmentExpenseMapper();
 
         $salesOrderExpenseEntity = $expenseMapper
             ->mapExpenseTransferToOrderSalesExpenseEntity($expenseTransfer, new SpySalesExpense());

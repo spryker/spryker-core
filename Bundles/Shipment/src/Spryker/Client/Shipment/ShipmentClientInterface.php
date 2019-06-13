@@ -25,12 +25,12 @@ interface ShipmentClientInterface
 
     /**
      * Specification:
-     * - Retrieves active shipment methods for every shipment group in QuoteTransfer.
-     * - Calculates shipment method delivery time using its assigned ShipmentMethodDeliveryTimePluginInterface plugin.
+     * - Retrieves active shipment methods for every shipment in all shipment groups of the QuoteTransfer.
+     * - Calculates shipment method delivery time using ShipmentMethodDeliveryTimePluginInterface plugin.
      * - Selects shipment method price for the provided currency and current store.
-     * - Overrides shipment method price using its assigned ShipmentMethodPricePluginInterface plugin if there is any.
+     * - Overrides shipment method price using ShipmentMethodPricePluginInterface plugin.
      * - Excludes shipment methods which do not have a valid price as a result.
-     * - Excludes shipment methods which do not fulfill their assigned ShipmentMethodAvailabilityPluginInterface plugin requirements.
+     * - Excludes shipment methods which do not fulfill ShipmentMethodAvailabilityPluginInterface plugin requirements.
      *
      * @api
      *
