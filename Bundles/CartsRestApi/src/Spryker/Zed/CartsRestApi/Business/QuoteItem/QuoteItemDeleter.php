@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\CartsRestApi\Business\QuoteItem;
 
-use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\CartItemRequestTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\PersistentCartChangeTransfer;
 use Generated\Shared\Transfer\QuoteErrorTransfer;
@@ -51,6 +51,8 @@ class QuoteItemDeleter implements QuoteItemDeleterInterface
     }
 
     /**
+     * @deprecated Use removeItem() instead.
+     *
      * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
@@ -62,8 +64,27 @@ class QuoteItemDeleter implements QuoteItemDeleterInterface
             ->requireCustomerReference()
             ->requireSku();
 
-        $quoteResponseTransfer = $this->quoteItemReader->readQuoteItem($restCartItemsAttributesTransfer);
+        $cartItemRequestTransfer = (new CartItemRequestTransfer())
+            ->fromArray($restCartItemsAttributesTransfer->toArray(), true);
 
+        return $this->removeItem($cartItemRequestTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartItemRequestTransfer $cartItemRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function removeItem(CartItemRequestTransfer $cartItemRequestTransfer): QuoteResponseTransfer
+    {
+        $cartItemRequestTransfer
+            ->requireQuoteUuid()
+            ->requireCustomer()
+            ->requireSku();
+
+        $cartItemRequestTransfer->getCustomer()->requireCustomerReference();
+
+        $quoteResponseTransfer = $this->quoteItemReader->readItem($cartItemRequestTransfer);
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $quoteResponseTransfer;
         }
@@ -77,7 +98,7 @@ class QuoteItemDeleter implements QuoteItemDeleterInterface
 
         $persistentCartChangeTransfer = $this->createPersistentCartChangeTransfer(
             $quoteResponseTransfer->getQuoteTransfer(),
-            $restCartItemsAttributesTransfer
+            $cartItemRequestTransfer
         );
 
         $quoteResponseTransfer = $this->persistentCartFacade->remove($persistentCartChangeTransfer);
@@ -92,22 +113,19 @@ class QuoteItemDeleter implements QuoteItemDeleterInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
+     * @param \Generated\Shared\Transfer\CartItemRequestTransfer $cartItemRequestTransfer
      *
      * @return \Generated\Shared\Transfer\PersistentCartChangeTransfer
      */
     protected function createPersistentCartChangeTransfer(
         QuoteTransfer $quoteTransfer,
-        RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
+        CartItemRequestTransfer $cartItemRequestTransfer
     ): PersistentCartChangeTransfer {
-        $customerTransfer = $restCartItemsAttributesTransfer->getCustomer() ?? new CustomerTransfer();
-        $customerTransfer->setCustomerReference($restCartItemsAttributesTransfer->getCustomerReference());
-
         return (new PersistentCartChangeTransfer())
             ->setIdQuote($quoteTransfer->getIdQuote())
             ->addItem((new ItemTransfer())
-                ->setSku($restCartItemsAttributesTransfer->getSku())
-                ->setQuantity($restCartItemsAttributesTransfer->getQuantity()))
-            ->setCustomer($customerTransfer);
+                ->setSku($cartItemRequestTransfer->getSku())
+                ->setQuantity($cartItemRequestTransfer->getQuantity()))
+            ->setCustomer($cartItemRequestTransfer->getCustomer());
     }
 }
