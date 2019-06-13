@@ -13,7 +13,7 @@ use Spryker\Zed\SetupFrontend\SetupFrontendConfig;
 
 class YvesAssetsBuildConfigProvider implements YvesAssetsBuildConfigProviderInterface
 {
-    protected const YVES_ASSETS_CONFIG_STORE_NAME_KEY = 'name';
+    protected const YVES_ASSETS_CONFIG_STORE_KEY = 'storeKey';
 
     /**
      * @var \Spryker\Zed\SetupFrontend\SetupFrontendConfig
@@ -75,16 +75,15 @@ class YvesAssetsBuildConfigProvider implements YvesAssetsBuildConfigProviderInte
     protected function prepareConfigDataForCurrentStore(array $configData): array
     {
         $storeConfigData = [];
-        $storeKey = strtolower($this->storeName);
-        if (isset($configData[$storeKey])) {
-            $storeConfigData = $configData[$storeKey];
+        if (isset($configData[$this->storeName])) {
+            $storeConfigData = $configData[$this->storeName];
         }
 
-        $storeConfigData[static::YVES_ASSETS_CONFIG_STORE_NAME_KEY] = $this->storeName;
+        $storeConfigData[static::YVES_ASSETS_CONFIG_STORE_KEY] = strtolower($this->storeName);
 
         $storeConfigData = $this->executeExpandYvesFrontendConfigDataPlugins($storeConfigData);
 
-        $configData[$storeKey] = $storeConfigData;
+        $configData[$this->storeName] = $storeConfigData;
 
         return $configData;
     }
