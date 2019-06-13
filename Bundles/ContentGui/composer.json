@@ -4,8 +4,8 @@
   "description": "ContentGui module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
     "ext-libxml": "*",
+    "php": ">=7.1",
     "spryker/cms-block-gui-extension": "^1.0.0",
     "spryker/cms-gui-extension": "^1.0.0",
     "spryker/content": "^2.0.0",
