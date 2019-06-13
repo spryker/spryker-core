@@ -147,7 +147,7 @@ class CommentRepository extends AbstractRepository implements CommentRepositoryI
 
         $commentQuery = $this->getFactory()
             ->getCommentPropelQuery()
-            ->useSpyCommentThreadQuery(null, Criteria::LEFT_JOIN)
+            ->useSpyCommentThreadQuery()
                 ->filterByOwnerType($commentFilterTransfer->getOwnerType())
                 ->filterByOwnerId($commentFilterTransfer->getOwnerId())
             ->endUse()

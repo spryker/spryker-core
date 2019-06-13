@@ -14,7 +14,7 @@ interface OrderPostSavePluginInterface
 {
     /**
      * Specification:
-     * - Executes plugins after an order is saved.
+     * - This plugin executes after order saving.
      *
      * @api
      *

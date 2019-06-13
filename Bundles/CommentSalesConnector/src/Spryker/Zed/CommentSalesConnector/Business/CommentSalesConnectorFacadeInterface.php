@@ -32,7 +32,7 @@ interface CommentSalesConnectorFacadeInterface
 
     /**
      * Specification:
-     *  - Retrieves CommentThread by `sales_order` owner type.
+     *  - Retrieves CommentThread by order.
      *
      * @api
      *
