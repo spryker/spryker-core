@@ -98,6 +98,11 @@ class ExecutionStrategyBuilder implements ExecutionStrategyBuilderInterface
     protected function getJobs(string $idScheduler)
     {
         $response = $this->jenkinsApi->executeGetRequest($idScheduler, static::JENKINS_API_JOBS_URL);
+
+        if ($response->getStatus() === false) {
+            return null;
+        }
+
         $jobs = $this->utilEncodingService->decodeJson($response->getPayload(), true);
 
         return $jobs;

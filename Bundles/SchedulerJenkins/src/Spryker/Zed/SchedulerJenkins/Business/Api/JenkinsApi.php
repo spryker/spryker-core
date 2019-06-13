@@ -193,8 +193,10 @@ class JenkinsApi implements JenkinsApiInterface
         $jenkinsAuthCredentials = $this->jenkinsConfigurationReader->getJenkinsAuthCredentials($idScheduler);
 
         if (count($jenkinsAuthCredentials) === 0) {
-            $requestOptions[static::AUTH_KEY] = $jenkinsAuthCredentials;
+            return $requestOptions;
         }
+
+        $requestOptions[static::AUTH_KEY] = $jenkinsAuthCredentials;
 
         return $requestOptions;
     }
