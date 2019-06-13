@@ -23,7 +23,7 @@
         <property name="roles" type="string[]" singular="role"/>
         <property name="store" type="string" />
     </transfer>
-s
+
     <transfer name="SchedulerRequest">
         <property name="schedule" type="SchedulerSchedule" />
         <property name="filter" type="SchedulerFilter" />

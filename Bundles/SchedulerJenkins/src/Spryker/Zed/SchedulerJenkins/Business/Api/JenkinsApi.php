@@ -114,13 +114,26 @@ class JenkinsApi implements JenkinsApiInterface
             $requestOptions = $this->getRequestOptions($idScheduler);
             $response = $this->client->send($request, $requestOptions);
         } catch (RuntimeException $runtimeException) {
-            return $this->createSchedulerJenkinsResponseTransfer($runtimeException->getMessage(), false);
+            return $this->createSchedulerJenkinsErrorResponseTransfer($runtimeException->getMessage(), false);
         }
 
-        $message = $response->getBody()->getContents();
+        $payload = $response->getBody()->getContents();
         $status = $response->getStatusCode() === static::SUCCESS_STATUS_CODE;
 
-        return $this->createSchedulerJenkinsResponseTransfer($message, $status);
+        return $this->createSchedulerJenkinsSuccessResponseTransfer($payload, $status);
+    }
+
+    /**
+     * @param string $payload
+     * @param bool $status
+     *
+     * @return \Generated\Shared\Transfer\SchedulerJenkinsResponseTransfer
+     */
+    protected function createSchedulerJenkinsSuccessResponseTransfer(string $payload, bool $status): SchedulerJenkinsResponseTransfer
+    {
+        return (new SchedulerJenkinsResponseTransfer())
+            ->setPayload($payload)
+            ->setStatus($status);
     }
 
     /**
@@ -129,7 +142,7 @@ class JenkinsApi implements JenkinsApiInterface
      *
      * @return \Generated\Shared\Transfer\SchedulerJenkinsResponseTransfer
      */
-    protected function createSchedulerJenkinsResponseTransfer(string $message, bool $status): SchedulerJenkinsResponseTransfer
+    protected function createSchedulerJenkinsErrorResponseTransfer(string $message, bool $status): SchedulerJenkinsResponseTransfer
     {
         return (new SchedulerJenkinsResponseTransfer())
             ->setMessage($message)
