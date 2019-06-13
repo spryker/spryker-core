@@ -24,12 +24,13 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\DependencyHelper
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
                 - \SprykerTest\Zed\Content\Helper\ContentHelper
-    Persistence:
-        path: Persistence
+    Communication:
+        path: Communication
         class_name: ContentGuiBusinessTester
         modules:
             enabled:
                 - Asserts
+                - \SprykerTest\Shared\Testify\Helper\Environment
                 - \SprykerTest\Shared\Testify\Helper\LocatorHelper
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
                 - \SprykerTest\Zed\Content\Helper\ContentHelper

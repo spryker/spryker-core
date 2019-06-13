@@ -5,18 +5,18 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\ContentGui\Persistence;
+namespace SprykerTest\Zed\ContentGui\Communication;
 
 use Codeception\Test\Unit;
-use Orm\Zed\Content\Persistence\Map\SpyContentTableMap;
 use Orm\Zed\Content\Persistence\SpyContentQuery;
+use Spryker\Zed\ContentGui\Communication\Table\ContentTableConstants;
 
 /**
  * Auto-generated group annotations
  * @group SprykerTest
  * @group Zed
  * @group ContentGui
- * @group Persistence
+ * @group Communication
  * @group ContentItemQueryTest
  * Add your own group annotations below this line
  */
@@ -39,17 +39,11 @@ class ContentItemQueryTest extends Unit
 
         // Act
         $contentQuery = SpyContentQuery::create();
-        $keyColumn = SpyContentTableMap::COL_KEY;
-        $selectedKey = sprintf("(CASE WHEN $keyColumn = '%s' THEN 0 ELSE 1 END)", $selectedContentItem->getKey());
-
-        $result = $contentQuery->filterByContentTypeKey($selectedContentItem->getContentTypeKey())
-            ->withColumn($selectedKey, 'selectedKey')
-            ->orderBy('selectedKey')
-            ->orderBy(SpyContentTableMap::COL_ID_CONTENT)
-            ->findOne();
+        $tableMock = new ContentByTypeTableMock('Banner', $contentQuery, $selectedContentItem->getKey());
+        $result = $tableMock->fetchData();
 
         // Assert
-        $this->assertNotNull($result);
-        $this->assertEquals($selectedContentItem->getKey(), $result->getKey());
+        $this->assertNotEmpty($result);
+        $this->assertEquals($selectedContentItem->getKey(), $result[0][ContentTableConstants::COL_KEY]);
     }
 }
