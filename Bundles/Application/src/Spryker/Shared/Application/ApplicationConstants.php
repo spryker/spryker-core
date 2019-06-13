@@ -340,14 +340,6 @@ interface ApplicationConstants
 
     /**
      * Specification:
-     * - Enables application service debug.
-     *
-     * @api
-     */
-    public const ENABLE_APPLICATION_SERVICE_DEBUG = 'APPLICATION:ENABLE_APPLICATION_SERVICE_DEBUG';
-
-    /**
-     * Specification:
      * - Defines environment name for twig.
      *
      * @api

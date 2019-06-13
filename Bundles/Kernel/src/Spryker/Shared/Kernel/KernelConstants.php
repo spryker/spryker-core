@@ -40,7 +40,7 @@ interface KernelConstants
 
     /**
      * Specification:
-     * - Defines container for testing environment.
+     * - Defines the mode when a dependency container is overridden for testing needs.
      *
      * @api
      */
@@ -48,7 +48,7 @@ interface KernelConstants
 
     /**
      * Specification:
-     * - Adjusts test namespaces.
+     * - Defines the mode when namespaces are adjusted by removing Test prefix.
      *
      * @api
      */

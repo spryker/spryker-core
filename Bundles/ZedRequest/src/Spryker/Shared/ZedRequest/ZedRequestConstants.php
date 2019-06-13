@@ -63,7 +63,7 @@ interface ZedRequestConstants
 
     /**
      * Specification:
-     * - Enables several Zed request.
+     * - Enables the mode when a request to Zed can be repeated with the same data for debugging/testing needs.
      *
      * @api
      */

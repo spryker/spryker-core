@@ -14,7 +14,7 @@ interface ApiConstants
 {
     /**
      * Specification:
-     * - Extends response with request parameters and stacktrace.
+     * - Enables the mode when API response is extended with request parameters and stacktrace.
      *
      * @api
      */
