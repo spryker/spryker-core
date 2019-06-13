@@ -8,10 +8,33 @@
 namespace Spryker\Zed\ContentGui\Business\Converter\CmsBlockGui;
 
 use Generated\Shared\Transfer\CmsBlockGlossaryTransfer;
-use Spryker\Zed\ContentGui\Business\Converter\AbstractCmsGlossaryConverter;
+use Spryker\Zed\ContentGui\Business\Converter\HtmlConverterInterface;
+use Spryker\Zed\ContentGui\Business\Converter\TwigExpressionConverterInterface;
 
-class CmsBlockGuiGlossaryConverter extends AbstractCmsGlossaryConverter implements CmsBlockGuiGlossaryConverterInterface
+class CmsBlockGuiGlossaryConverter implements CmsBlockGuiGlossaryConverterInterface
 {
+    /**
+     * @var \Spryker\Zed\ContentGui\Business\Converter\HtmlConverterInterface
+     */
+    protected $htmlToTwigExpressionConverter;
+
+    /**
+     * @var \Spryker\Zed\ContentGui\Business\Converter\TwigExpressionConverterInterface
+     */
+    protected $twigExpressionToHtmlConverter;
+
+    /**
+     * @param \Spryker\Zed\ContentGui\Business\Converter\HtmlConverterInterface $htmlToTwigExpressionConverter
+     * @param \Spryker\Zed\ContentGui\Business\Converter\TwigExpressionConverterInterface $twigExpressionToHtmlConverter
+     */
+    public function __construct(
+        HtmlConverterInterface $htmlToTwigExpressionConverter,
+        TwigExpressionConverterInterface $twigExpressionToHtmlConverter
+    ) {
+        $this->htmlToTwigExpressionConverter = $htmlToTwigExpressionConverter;
+        $this->twigExpressionToHtmlConverter = $twigExpressionToHtmlConverter;
+    }
+
     /**
      * @param \Generated\Shared\Transfer\CmsBlockGlossaryTransfer $cmsBlockGlossaryTransfer
      *
@@ -33,7 +56,7 @@ class CmsBlockGuiGlossaryConverter extends AbstractCmsGlossaryConverter implemen
                     continue;
                 }
 
-                $cmsBlockGlossaryPlaceholderTranslation = $this->convertTranslationTwigExpressionToHtml($cmsBlockGlossaryPlaceholderTranslation);
+                $cmsBlockGlossaryPlaceholderTranslation = $this->twigExpressionToHtmlConverter->convertTwigExpressionToHtml($cmsBlockGlossaryPlaceholderTranslation);
                 $cmsBlockGlossaryPlaceholderTranslationTransfer->setTranslation($cmsBlockGlossaryPlaceholderTranslation);
             }
 
@@ -64,7 +87,7 @@ class CmsBlockGuiGlossaryConverter extends AbstractCmsGlossaryConverter implemen
                     continue;
                 }
 
-                $cmsBlockGlossaryPlaceholderTranslation = $this->convertTranslationHtmlToTwigExpression($cmsBlockGlossaryPlaceholderTranslation);
+                $cmsBlockGlossaryPlaceholderTranslation = $this->htmlToTwigExpressionConverter->convertHtmlToTwigExpression($cmsBlockGlossaryPlaceholderTranslation);
                 $cmsBlockGlossaryPlaceholderTranslationTransfer->setTranslation($cmsBlockGlossaryPlaceholderTranslation);
             }
 

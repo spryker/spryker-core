@@ -102,13 +102,7 @@ class ContentByTypeTable extends AbstractTable
         $this->contentQuery->filterByContentTypeKey($this->contentType);
 
         if ($this->contentKey) {
-            $keyColumn = SpyContentTableMap::COL_KEY;
-            $selectedKey = sprintf("(CASE WHEN $keyColumn = '%s' THEN 0 ELSE 1 END)", $this->contentKey);
-
-            $this->contentQuery
-                ->withColumn($selectedKey, 'selectedKey')
-                ->orderBy('selectedKey')
-                ->orderBy(SpyContentTableMap::COL_ID_CONTENT);
+            $this->addOrderBySelectedKey();
         }
 
         $contentItems = $this->runQuery($this->contentQuery, $config);
@@ -125,6 +119,20 @@ class ContentByTypeTable extends AbstractTable
         }
 
         return $results;
+    }
+
+    /**
+     * @return void
+     */
+    protected function addOrderBySelectedKey(): void
+    {
+        $keyColumn = SpyContentTableMap::COL_KEY;
+        $selectedKeyColumn = sprintf("(CASE WHEN $keyColumn = '%s' THEN 0 ELSE 1 END)", $this->contentKey);
+
+        $this->contentQuery
+            ->withColumn($selectedKeyColumn, 'selectedKey')
+            ->orderBy('selectedKey')
+            ->orderBy(SpyContentTableMap::COL_ID_CONTENT);
     }
 
     /**
