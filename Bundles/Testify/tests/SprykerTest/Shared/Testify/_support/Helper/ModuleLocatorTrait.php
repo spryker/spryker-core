@@ -9,7 +9,7 @@ namespace SprykerTest\Shared\Testify\Helper;
 
 use Codeception\Exception\ModuleException;
 use Codeception\Module;
-//TODO: Remove
+
 trait ModuleLocatorTrait
 {
     /**
