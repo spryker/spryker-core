@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\SchedulerScheduleTransfer;
 class SchedulerResponseBuilder implements SchedulerResponseBuilderInterface
 {
     /**
-     * @var \Generated\Shared\Transfer\SchedulerScheduleTransfer
+     * @var \Generated\Shared\Transfer\SchedulerScheduleTransfer|null
      */
     protected $schedulerTransfer;
 

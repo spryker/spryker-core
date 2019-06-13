@@ -23,8 +23,8 @@ use Spryker\Zed\SchedulerJenkins\Business\Executor\NullExecutor;
 use Spryker\Zed\SchedulerJenkins\Business\Executor\UpdateExecutor;
 use Spryker\Zed\SchedulerJenkins\Business\Iterator\Builder\SchedulerResponseBuilder;
 use Spryker\Zed\SchedulerJenkins\Business\Iterator\Builder\SchedulerResponseBuilderInterface;
-use Spryker\Zed\SchedulerJenkins\Business\Iterator\Iterator;
-use Spryker\Zed\SchedulerJenkins\Business\Iterator\IteratorInterface;
+use Spryker\Zed\SchedulerJenkins\Business\Iterator\SchedulerProcessor;
+use Spryker\Zed\SchedulerJenkins\Business\Iterator\SchedulerProcessorInterface;
 use Spryker\Zed\SchedulerJenkins\Business\Iterator\Strategy\ExecutionStrategyBuilder;
 use Spryker\Zed\SchedulerJenkins\Business\Iterator\Strategy\ExecutionStrategyBuilderInterface;
 use Spryker\Zed\SchedulerJenkins\Business\TemplateGenerator\JenkinsJobTemplateGeneratorInterface;
@@ -52,11 +52,11 @@ class SchedulerJenkinsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\SchedulerJenkins\Business\Iterator\IteratorInterface
+     * @return \Spryker\Zed\SchedulerJenkins\Business\Iterator\SchedulerProcessorInterface
      */
-    public function createSchedulerJenkinsSetup(): IteratorInterface
+    public function createSchedulerJenkinsSetup(): SchedulerProcessorInterface
     {
-        return new Iterator(
+        return new SchedulerProcessor(
             $this->createExecutionStrategyBuilder(
                 $this->createUpdateExecutor(),
                 $this->createCreateExecutor()
@@ -66,11 +66,11 @@ class SchedulerJenkinsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\SchedulerJenkins\Business\Iterator\IteratorInterface
+     * @return \Spryker\Zed\SchedulerJenkins\Business\Iterator\SchedulerProcessorInterface
      */
-    public function createSchedulerJenkinsClean(): IteratorInterface
+    public function createSchedulerJenkinsClean(): SchedulerProcessorInterface
     {
-        return new Iterator(
+        return new SchedulerProcessor(
             $this->createExecutionStrategyBuilder(
                 $this->createDeleteExecutor(),
                 $this->createNullExecutor()
@@ -80,11 +80,11 @@ class SchedulerJenkinsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\SchedulerJenkins\Business\Iterator\IteratorInterface
+     * @return \Spryker\Zed\SchedulerJenkins\Business\Iterator\SchedulerProcessorInterface
      */
-    public function createSchedulerJenkinsEnable(): IteratorInterface
+    public function createSchedulerJenkinsEnable(): SchedulerProcessorInterface
     {
-        return new Iterator(
+        return new SchedulerProcessor(
             $this->createExecutionStrategyBuilder(
                 $this->createEnableExecutor(),
                 $this->createNullExecutor()
@@ -94,11 +94,11 @@ class SchedulerJenkinsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\SchedulerJenkins\Business\Iterator\IteratorInterface
+     * @return \Spryker\Zed\SchedulerJenkins\Business\Iterator\SchedulerProcessorInterface
      */
-    public function createSchedulerJenkinsDisable(): IteratorInterface
+    public function createSchedulerJenkinsDisable(): SchedulerProcessorInterface
     {
-        return new Iterator(
+        return new SchedulerProcessor(
             $this->createExecutionStrategyBuilder(
                 $this->createDisableExecutor(),
                 $this->createNullExecutor()

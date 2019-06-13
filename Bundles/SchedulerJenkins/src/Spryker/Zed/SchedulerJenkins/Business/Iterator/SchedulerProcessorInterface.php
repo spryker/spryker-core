@@ -10,12 +10,12 @@ namespace Spryker\Zed\SchedulerJenkins\Business\Iterator;
 use Generated\Shared\Transfer\SchedulerResponseTransfer;
 use Generated\Shared\Transfer\SchedulerScheduleTransfer;
 
-interface IteratorInterface
+interface SchedulerProcessorInterface
 {
     /**
      * @param \Generated\Shared\Transfer\SchedulerScheduleTransfer $scheduleTransfer
      *
      * @return \Generated\Shared\Transfer\SchedulerResponseTransfer
      */
-    public function iterate(SchedulerScheduleTransfer $scheduleTransfer): SchedulerResponseTransfer;
+    public function processScheduler(SchedulerScheduleTransfer $scheduleTransfer): SchedulerResponseTransfer;
 }

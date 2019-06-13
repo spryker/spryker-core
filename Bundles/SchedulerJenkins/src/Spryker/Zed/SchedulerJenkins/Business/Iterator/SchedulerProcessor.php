@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\SchedulerScheduleTransfer;
 use Spryker\Zed\SchedulerJenkins\Business\Iterator\Builder\SchedulerResponseBuilderInterface;
 use Spryker\Zed\SchedulerJenkins\Business\Iterator\Strategy\ExecutionStrategyBuilderInterface;
 
-class Iterator implements IteratorInterface
+class SchedulerProcessor implements SchedulerProcessorInterface
 {
     /**
      * @var \Spryker\Zed\SchedulerJenkins\Business\Iterator\Strategy\ExecutionStrategyBuilderInterface
@@ -41,7 +41,7 @@ class Iterator implements IteratorInterface
      *
      * @return \Generated\Shared\Transfer\SchedulerResponseTransfer
      */
-    public function iterate(SchedulerScheduleTransfer $scheduleTransfer): SchedulerResponseTransfer
+    public function processScheduler(SchedulerScheduleTransfer $scheduleTransfer): SchedulerResponseTransfer
     {
         $idScheduler = $scheduleTransfer->getIdScheduler();
         $executionStrategy = $this->executionStrategyBuilder->buildExecutionStrategy($idScheduler);

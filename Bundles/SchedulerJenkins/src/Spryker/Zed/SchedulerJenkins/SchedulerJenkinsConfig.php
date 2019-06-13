@@ -39,7 +39,7 @@ class SchedulerJenkinsConfig extends AbstractBundleConfig
      */
     public function isJenkinsCsrfProtectionEnabled(): bool
     {
-        return $this->get(SchedulerJenkinsConstants::JENKINS_CSRF_PROTECTION_ENABLED, false);
+        return $this->get(SchedulerJenkinsConstants::JENKINS_CSRF_PROTECTION_ENABLED, true);
     }
 
     /**
