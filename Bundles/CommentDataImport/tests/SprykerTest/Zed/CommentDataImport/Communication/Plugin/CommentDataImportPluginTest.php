@@ -166,6 +166,38 @@ class CommentDataImportPluginTest extends Unit
     /**
      * @return void
      */
+    public function testImportThrowsExceptionWhenEmptyCommentMessage(): void
+    {
+        // Arrange
+        $this->tester->ensureCustomerWithReferenceDoesNotExist(static::TEST_COMMENT_CUSTOMER_REFERENCE);
+        $customerTransfer = $this->tester->createCustomer([
+            CustomerTransfer::CUSTOMER_REFERENCE => static::TEST_COMMENT_CUSTOMER_REFERENCE,
+        ])->getCustomerTransfer();
+
+        $this->tester->havePersistentQuote([
+            QuoteTransfer::CUSTOMER => $customerTransfer,
+            QuoteTransfer::KEY => static::TEST_COMMENT_QUOTE_KEY,
+        ]);
+
+        $dataImporterReaderConfigurationTransfer = (new DataImporterReaderConfigurationTransfer())
+            ->setFileName(codecept_data_dir() . 'import/comment_empty_message.csv');
+
+        $dataImportConfigurationTransfer = (new DataImporterConfigurationTransfer())
+            ->setReaderConfiguration($dataImporterReaderConfigurationTransfer)
+            ->setThrowException(true);
+
+        // Assert
+        $this->expectException(DataImportException::class);
+        $this->expectExceptionMessage(sprintf('The comment message should not be empty.'));
+
+        // Act
+        $commentDataImportPlugin = new CommentDataImportPlugin();
+        $commentDataImportPlugin->import($dataImportConfigurationTransfer);
+    }
+
+    /**
+     * @return void
+     */
     public function testGetImportTypeReturnsTypeOfImporter(): void
     {
         // Act

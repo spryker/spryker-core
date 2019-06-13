@@ -10,6 +10,7 @@ namespace Spryker\Zed\CommentDataImport\Business;
 use Spryker\Zed\CommentDataImport\Business\CommentDataImportStep\CommentWriterStep;
 use Spryker\Zed\CommentDataImport\Business\CommentDataImportStep\CustomerReferenceToIdCustomerStep;
 use Spryker\Zed\CommentDataImport\Business\CommentDataImportStep\QuoteOwnerKeyToCommentThreadOwnerIdStep;
+use Spryker\Zed\CommentDataImport\Business\CommentDataImportStep\TrimCommentMessageStep;
 use Spryker\Zed\CommentDataImport\CommentDataImportDependencyProvider;
 use Spryker\Zed\CommentDataImport\Dependency\Service\CommentDataImportToUtilEncodingServiceInterface;
 use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
@@ -32,6 +33,7 @@ class CommentDataImportBusinessFactory extends DataImportBusinessFactory
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
         $dataSetStepBroker
+            ->addStep($this->createTrimCommentMessageStep())
             ->addStep($this->createCustomerReferenceToIdCustomerStep())
             ->addStep($this->createQuoteOwnerKeyToCommentThreadOwnerIdStep())
             ->addStep($this->createCommentWriterStep());
@@ -63,6 +65,14 @@ class CommentDataImportBusinessFactory extends DataImportBusinessFactory
     public function createCustomerReferenceToIdCustomerStep(): DataImportStepInterface
     {
         return new CustomerReferenceToIdCustomerStep();
+    }
+
+    /**
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
+     */
+    public function createTrimCommentMessageStep(): DataImportStepInterface
+    {
+        return new TrimCommentMessageStep();
     }
 
     /**
