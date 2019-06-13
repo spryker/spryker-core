@@ -72,6 +72,14 @@ class RequestCacheKeyGeneratorStrategy implements CacheKeyGeneratorStrategyInter
     }
 
     /**
+     * @return bool
+     */
+    public function isApplicable(): bool
+    {
+        return $this->config->isStorageCachingEnabled();
+    }
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Request|null $request
      *
      * @return \Symfony\Component\HttpFoundation\Request
@@ -79,14 +87,6 @@ class RequestCacheKeyGeneratorStrategy implements CacheKeyGeneratorStrategyInter
     protected function prepareRequest(?Request $request = null): Request
     {
         return $request ?? Request::createFromGlobals();
-    }
-
-    /**
-     * @return bool
-     */
-    public function isApplicable(): bool
-    {
-        return $this->config->isStorageCachingEnabled();
     }
 
     /**

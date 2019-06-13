@@ -8,11 +8,7 @@
 namespace SprykerTest\Client\Storage\Cache\CacheKey;
 
 use Codeception\Test\Unit;
-use Spryker\Client\Kernel\Container;
-use Spryker\Client\Storage\Dependency\Client\StorageToLocaleClientBridge;
-use Spryker\Client\Storage\Dependency\Client\StorageToStoreClientBridge;
 use Spryker\Client\Storage\StorageConfig;
-use Spryker\Client\Storage\StorageDependencyProvider;
 use Spryker\Client\Storage\StorageFactory;
 use Spryker\Shared\Kernel\Store;
 use Symfony\Component\HttpFoundation\ParameterBag;
@@ -53,9 +49,6 @@ class RequestCacheKeyGeneratorStrategyTest extends Unit
     protected function setUp(): void
     {
         parent::setUp();
-
-        $this->setupDependencies();
-
         $this->requestCacheKeyGeneratorStrategy = $this->createStorageFactory()->createRequestCacheKeyGeneratorStrategy();
     }
 
@@ -179,10 +172,18 @@ class RequestCacheKeyGeneratorStrategyTest extends Unit
     protected function buildCacheKeyPrefix(): string
     {
         return implode(static::KEY_NAME_SEPARATOR, [
-            Store::getInstance()->getStoreName(),
-            Store::getInstance()->getCurrentLocale(),
+            $this->getStore()->getStoreName(),
+            $this->getStore()->getCurrentLocale(),
             static::KEY_NAME_PREFIX,
         ]);
+    }
+
+    /**
+     * @return \Spryker\Shared\Kernel\Store
+     */
+    protected function getStore(): Store
+    {
+        return Store::getInstance();
     }
 
     /**
@@ -207,23 +208,5 @@ class RequestCacheKeyGeneratorStrategyTest extends Unit
         $storageConfigMock->method('getAllowedGetParametersList')->willReturn($this->allowedQueryStringParameters);
 
         return $storageConfigMock;
-    }
-
-    /**
-     * @return void
-     */
-    protected function setupDependencies(): void
-    {
-        $this->tester->setDependency(StorageDependencyProvider::CLIENT_LOCALE, function (Container $container) {
-            return new StorageToLocaleClientBridge(
-                $container->getLocator()->locale()->client()
-            );
-        });
-
-        $this->tester->setDependency(StorageDependencyProvider::CLIENT_STORE, function (Container $container) {
-            return new StorageToStoreClientBridge(
-                $container->getLocator()->store()->client()
-            );
-        });
     }
 }

@@ -11,6 +11,7 @@ use Codeception\Test\Unit;
 use Predis\ClientInterface;
 use Spryker\Client\Storage\Redis\Service;
 use Spryker\Client\Storage\StorageClient;
+use Spryker\Shared\Config\Config;
 use Spryker\Shared\Storage\StorageConstants;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -25,6 +26,31 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ServiceTest extends Unit
 {
+    /**
+     * @uses \Spryker\Shared\StorageRedis\StorageRedisConstants::STORAGE_REDIS_PROTOCOL
+     */
+    protected const REDIS_PROTOCOL = 'STORAGE_REDIS:STORAGE_REDIS_PROTOCOL';
+
+    /**
+     * @uses \Spryker\Shared\StorageRedis\StorageRedisConstants::STORAGE_REDIS_HOST
+     */
+    protected const REDIS_HOST = 'STORAGE_REDIS:STORAGE_REDIS_HOST';
+
+    /**
+     * @uses \Spryker\Shared\StorageRedis\StorageRedisConstants::STORAGE_REDIS_PORT
+     */
+    protected const REDIS_PORT = 'STORAGE_REDIS:STORAGE_REDIS_PORT';
+
+    /**
+     * @uses \Spryker\Shared\StorageRedis\StorageRedisConstants::STORAGE_REDIS_DATABASE
+     */
+    protected const REDIS_DATABASE = 'STORAGE_REDIS:STORAGE_REDIS_DATABASE';
+
+    /**
+     * @uses \Spryker\Shared\StorageRedis\StorageRedisConstants::STORAGE_REDIS_PASSWORD
+     */
+    protected const REDIS_PASSWORD = 'STORAGE_REDIS:STORAGE_REDIS_PASSWORD';
+
     /**
      * @var \SprykerTest\Client\Storage\StorageClientTester
      */
@@ -69,6 +95,7 @@ class ServiceTest extends Unit
     {
         parent::setUp();
         $this->setupServerVariable();
+        $this->setupConfig();
     }
 
     /**
@@ -130,6 +157,10 @@ class ServiceTest extends Unit
      */
     public function testGet()
     {
+        if (!Config::get(StorageConstants::STORAGE_CACHE_ENABLED, true)) {
+            $this->markTestSkipped('Cache is disabled.');
+        }
+
         $key = 'key';
         $value = 'value';
 
@@ -144,6 +175,10 @@ class ServiceTest extends Unit
      */
     public function testGetMultiCached()
     {
+        if (!Config::get(StorageConstants::STORAGE_CACHE_ENABLED, true)) {
+            $this->markTestSkipped('Cache is disabled.');
+        }
+
         $storageClient = new StorageClient();
         $storageClient->setMulti($this->fixtures['multi']);
 
@@ -176,6 +211,10 @@ class ServiceTest extends Unit
      */
     public function testGetMultiReplaceStrategy()
     {
+        if (!Config::get(StorageConstants::STORAGE_CACHE_ENABLED, true)) {
+            $this->markTestSkipped('Cache is disabled.');
+        }
+
         $this->testMultiKeyStrategy(
             StorageConstants::STORAGE_CACHE_STRATEGY_REPLACE,
             $this->fixtures['multi'],
@@ -188,6 +227,10 @@ class ServiceTest extends Unit
      */
     public function testGetMultiIncrementalStrategy()
     {
+        if (!Config::get(StorageConstants::STORAGE_CACHE_ENABLED, true)) {
+            $this->markTestSkipped('Cache is disabled.');
+        }
+
         $this->testMultiKeyStrategy(
             StorageConstants::STORAGE_CACHE_STRATEGY_INCREMENTAL,
             $this->fixtures['multi'],
@@ -200,6 +243,10 @@ class ServiceTest extends Unit
      */
     public function testGetSingleReplaceStrategy()
     {
+        if (!Config::get(StorageConstants::STORAGE_CACHE_ENABLED, true)) {
+            $this->markTestSkipped('Cache is disabled.');
+        }
+
         $this->testSingleKeyStrategy(
             StorageConstants::STORAGE_CACHE_STRATEGY_INCREMENTAL,
             'test.replace.key',
@@ -212,6 +259,10 @@ class ServiceTest extends Unit
      */
     public function testGetSingleIncrementalStrategy()
     {
+        if (!Config::get(StorageConstants::STORAGE_CACHE_ENABLED, true)) {
+            $this->markTestSkipped('Cache is disabled.');
+        }
+
         $this->testSingleKeyStrategy(
             StorageConstants::STORAGE_CACHE_STRATEGY_INCREMENTAL,
             'test.incremental.key',
@@ -348,5 +399,17 @@ class ServiceTest extends Unit
             ->willReturn($redisService);
 
         return $storageClient;
+    }
+
+    /**
+     * @return void
+     */
+    protected function setupConfig(): void
+    {
+        $this->tester->setConfig(StorageConstants::STORAGE_REDIS_PROTOCOL, Config::get(static::REDIS_PROTOCOL, 'tcp'));
+        $this->tester->setConfig(StorageConstants::STORAGE_REDIS_PORT, Config::get(static::REDIS_PORT, 10009));
+        $this->tester->setConfig(StorageConstants::STORAGE_REDIS_HOST, Config::get(static::REDIS_HOST, '127.0.0.1'));
+        $this->tester->setConfig(StorageConstants::STORAGE_REDIS_DATABASE, Config::get(static::REDIS_DATABASE, 3));
+        $this->tester->setConfig(StorageConstants::STORAGE_REDIS_PASSWORD, Config::get(static::REDIS_PASSWORD, false));
     }
 }

@@ -438,7 +438,7 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     /**
      * This method exists for BC reasons only and should be removed with next major release.
      *
-     * @deprecated Use `Spryker\Client\Storage\StorageClient::buildCacheKey` instead.
+     * @deprecated Use `Spryker\Client\Storage\StorageClient::buildCacheKey()` instead.
      *
      * @param \Symfony\Component\HttpFoundation\Request|null $request
      *
