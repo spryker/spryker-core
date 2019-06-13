@@ -55,6 +55,7 @@ class SetupFrontendConfig extends AbstractBundleConfig
     {
         return [
             $this->getYvesInstallerDirectoryPattern(),
+            APPLICATION_ROOT_DIR . '/src/Pyz/Yves/*/assets/Yves',
         ];
     }
 
@@ -99,6 +100,7 @@ class SetupFrontendConfig extends AbstractBundleConfig
     {
         return [
             $this->getZedInstallerDirectoryPattern(),
+            APPLICATION_ROOT_DIR . '/src/*/Zed/*/assets/Zed',
         ];
     }
 
