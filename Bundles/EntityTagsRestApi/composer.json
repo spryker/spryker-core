@@ -1,14 +1,15 @@
 {
   "name": "spryker/entity-tags-rest-api",
+  "type": "library",
   "description": "EntityTagsRestApi module",
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/kernel": "^3.0.0",
-    "spryker/symfony": "^3.0.0",
     "spryker/entity-tag": "^1.0.0",
     "spryker/glue-application": "^1.19.0",
-    "spryker/glue-application-extension": "^1.2.0"
+    "spryker/glue-application-extension": "^1.2.0",
+    "spryker/kernel": "^3.0.0",
+    "spryker/symfony": "^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

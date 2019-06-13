@@ -1,5 +1,6 @@
 {
   "name": "spryker/entity-tag",
+  "type": "library",
   "description": "EntityTag module",
   "license": "proprietary",
   "require": {
