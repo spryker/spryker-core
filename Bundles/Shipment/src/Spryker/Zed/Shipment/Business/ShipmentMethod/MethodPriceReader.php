@@ -15,12 +15,12 @@ use Spryker\Shared\Shipment\ShipmentConstants;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCurrencyInterface;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToStoreInterface;
 use Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface;
-use Spryker\Zed\ShipmentExtension\Communication\Plugin\ShipmentMethodPricePluginInterface;
+use Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodPricePluginInterface;
 
 class MethodPriceReader implements MethodPriceReaderInterface
 {
     /**
-     * @var \Spryker\Zed\ShipmentExtension\Communication\Plugin\ShipmentMethodPricePluginInterface[]
+     * @var \Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodPricePluginInterface[]
      */
     protected $shipmentMethodPricePlugins;
 
@@ -45,7 +45,7 @@ class MethodPriceReader implements MethodPriceReaderInterface
     protected static $idCurrencyCache = [];
 
     /**
-     * @param \Spryker\Zed\ShipmentExtension\Communication\Plugin\ShipmentMethodPricePluginInterface[] $shipmentMethodPricePlugins
+     * @param \Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodPricePluginInterface[] $shipmentMethodPricePlugins
      * @param \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToStoreInterface $storeFacade
      * @param \Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface $shipmentRepository
      * @param \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCurrencyInterface $currencyFacade
@@ -166,7 +166,7 @@ class MethodPriceReader implements MethodPriceReaderInterface
     /**
      * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
      *
-     * @return \Spryker\Zed\ShipmentExtension\Communication\Plugin\ShipmentMethodPricePluginInterface|\Spryker\Zed\Shipment\Communication\Plugin\ShipmentMethodPricePluginInterface
+     * @return \Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodPricePluginInterface|\Spryker\Zed\Shipment\Communication\Plugin\ShipmentMethodPricePluginInterface
      */
     protected function getPricePlugin(ShipmentMethodTransfer $shipmentMethodTransfer)
     {

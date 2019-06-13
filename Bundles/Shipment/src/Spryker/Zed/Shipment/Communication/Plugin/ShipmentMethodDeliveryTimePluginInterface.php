@@ -10,7 +10,7 @@ namespace Spryker\Zed\Shipment\Communication\Plugin;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 /**
- * @deprecated Use \Spryker\Zed\ShipmentExtension\Communication\Plugin\ShipmentMethodDeliveryTimePluginInterface instead.
+ * @deprecated Use \Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodDeliveryTimePluginInterface instead.
  */
 interface ShipmentMethodDeliveryTimePluginInterface
 {

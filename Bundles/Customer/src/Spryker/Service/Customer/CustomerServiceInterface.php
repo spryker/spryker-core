@@ -22,17 +22,4 @@ interface CustomerServiceInterface
      * @return string
      */
     public function getUniqueAddressKey(AddressTransfer $addressTransfer): string;
-
-    /**
-     * Specification:
-     * - Checks if address transfer data is empty.
-     * - Checks id customer address and the first name and the last name are not set.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\AddressTransfer|null $addressTransfer
-     *
-     * @return bool
-     */
-    public function isAddressEmpty(?AddressTransfer $addressTransfer = null): bool;
 }

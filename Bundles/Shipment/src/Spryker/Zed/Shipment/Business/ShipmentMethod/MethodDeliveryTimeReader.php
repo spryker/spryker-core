@@ -10,17 +10,17 @@ namespace Spryker\Zed\Shipment\Business\ShipmentMethod;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
-use Spryker\Zed\ShipmentExtension\Communication\Plugin\ShipmentMethodAvailabilityPluginInterface;
+use Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodAvailabilityPluginInterface;
 
 class MethodDeliveryTimeReader implements MethodDeliveryTimeReaderInterface
 {
     /**
-     * @var \Spryker\Zed\ShipmentExtension\Communication\Plugin\ShipmentMethodDeliveryTimePluginInterface[]
+     * @var \Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodDeliveryTimePluginInterface[]
      */
     protected $shipmentMethodDeliveryTimePlugins;
 
     /**
-     * @param \Spryker\Zed\ShipmentExtension\Communication\Plugin\ShipmentMethodDeliveryTimePluginInterface[] $shipmentMethodDeliveryTimePlugins
+     * @param \Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodDeliveryTimePluginInterface[] $shipmentMethodDeliveryTimePlugins
      */
     public function __construct(array $shipmentMethodDeliveryTimePlugins)
     {
@@ -67,7 +67,7 @@ class MethodDeliveryTimeReader implements MethodDeliveryTimeReaderInterface
     /**
      * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
      *
-     * @return \Spryker\Zed\ShipmentExtension\Communication\Plugin\ShipmentMethodDeliveryTimePluginInterface|\Spryker\Zed\Shipment\Communication\Plugin\ShipmentMethodDeliveryTimePluginInterface
+     * @return \Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodDeliveryTimePluginInterface|\Spryker\Zed\Shipment\Communication\Plugin\ShipmentMethodDeliveryTimePluginInterface
      */
     protected function getDeliveryTimePlugin(ShipmentMethodTransfer $shipmentMethodTransfer)
     {

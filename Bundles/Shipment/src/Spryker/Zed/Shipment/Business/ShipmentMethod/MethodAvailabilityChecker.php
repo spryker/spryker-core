@@ -10,17 +10,17 @@ namespace Spryker\Zed\Shipment\Business\ShipmentMethod;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
-use Spryker\Zed\ShipmentExtension\Communication\Plugin\ShipmentMethodAvailabilityPluginInterface;
+use Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodAvailabilityPluginInterface;
 
 class MethodAvailabilityChecker implements MethodAvailabilityCheckerInterface
 {
     /**
-     * @var \Spryker\Zed\ShipmentExtension\Communication\Plugin\ShipmentMethodAvailabilityPluginInterface[]
+     * @var \Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodAvailabilityPluginInterface[]
      */
     protected $shipmentMethodAvailabilityPlugins;
 
     /**
-     * @param \Spryker\Zed\ShipmentExtension\Communication\Plugin\ShipmentMethodAvailabilityPluginInterface[] $shipmentMethodAvailabilityPlugins
+     * @param \Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodAvailabilityPluginInterface[] $shipmentMethodAvailabilityPlugins
      */
     public function __construct(array $shipmentMethodAvailabilityPlugins)
     {
@@ -65,7 +65,7 @@ class MethodAvailabilityChecker implements MethodAvailabilityCheckerInterface
     /**
      * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
      *
-     * @return \Spryker\Zed\ShipmentExtension\Communication\Plugin\ShipmentMethodAvailabilityPluginInterface|\Spryker\Zed\Shipment\Communication\Plugin\ShipmentMethodAvailabilityPluginInterface
+     * @return \Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodAvailabilityPluginInterface|\Spryker\Zed\Shipment\Communication\Plugin\ShipmentMethodAvailabilityPluginInterface
      */
     protected function getAvailabilityPlugin(ShipmentMethodTransfer $shipmentMethodTransfer)
     {
