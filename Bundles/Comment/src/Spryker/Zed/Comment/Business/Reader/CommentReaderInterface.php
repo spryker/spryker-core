@@ -22,7 +22,7 @@ interface CommentReaderInterface
     /**
      * @param \Generated\Shared\Transfer\CommentThreadTransfer $commentThreadTransfer
      *
-     * @return \Generated\Shared\Transfer\CommentThreadTransfer
+     * @return \Generated\Shared\Transfer\CommentThreadTransfer|null
      */
-    public function getCommentThreadById(CommentThreadTransfer $commentThreadTransfer): CommentThreadTransfer;
+    public function findCommentThreadById(CommentThreadTransfer $commentThreadTransfer): ?CommentThreadTransfer;
 }

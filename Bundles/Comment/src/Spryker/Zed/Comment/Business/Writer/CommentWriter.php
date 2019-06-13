@@ -389,7 +389,7 @@ class CommentWriter implements CommentWriterInterface
     protected function saveCommentTags(CommentTransfer $commentTransfer): CommentTransfer
     {
         $expandedCommentTagTransfers = [];
-        $commentTagMap = $this->mapCommentTagsByName($this->commentRepository->getCommentTags());
+        $commentTagMap = $this->mapCommentTagsByName($this->commentRepository->getAllCommentTags());
 
         foreach ($commentTransfer->getTags() as $commentTagTransfer) {
             if (!isset($commentTagMap[$commentTagTransfer->getName()])) {
@@ -433,7 +433,7 @@ class CommentWriter implements CommentWriterInterface
         $commentThreadTransfer = (new CommentThreadTransfer())
             ->setIdCommentThread($commentTransfer->getIdCommentThread());
 
-        $commentThreadTransfer = $this->commentReader->getCommentThreadById($commentThreadTransfer);
+        $commentThreadTransfer = $this->commentReader->findCommentThreadById($commentThreadTransfer);
 
         return (new CommentThreadResponseTransfer())
             ->setIsSuccessful(true)

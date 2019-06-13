@@ -51,9 +51,9 @@ class CommentRepository extends AbstractRepository implements CommentRepositoryI
     /**
      * @param \Generated\Shared\Transfer\CommentThreadTransfer $commentThreadTransfer
      *
-     * @return \Generated\Shared\Transfer\CommentThreadTransfer
+     * @return \Generated\Shared\Transfer\CommentThreadTransfer|null
      */
-    public function getCommentThreadById(CommentThreadTransfer $commentThreadTransfer): CommentThreadTransfer
+    public function findCommentThreadById(CommentThreadTransfer $commentThreadTransfer): ?CommentThreadTransfer
     {
         $commentThreadTransfer->requireIdCommentThread();
 
@@ -61,6 +61,10 @@ class CommentRepository extends AbstractRepository implements CommentRepositoryI
             ->getCommentThreadPropelQuery()
             ->filterByIdCommentThread($commentThreadTransfer->getIdCommentThread())
             ->findOne();
+
+        if (!$commentThreadEntity) {
+            return null;
+        }
 
         return $this->getFactory()
             ->createCommentMapper()
@@ -117,7 +121,7 @@ class CommentRepository extends AbstractRepository implements CommentRepositoryI
     /**
      * @return \Generated\Shared\Transfer\CommentTagTransfer[]
      */
-    public function getCommentTags(): array
+    public function getAllCommentTags(): array
     {
         $commentTagEntities = $this->getFactory()
             ->getCommentTagPropelQuery()

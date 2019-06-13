@@ -24,9 +24,9 @@ interface CommentRepositoryInterface
     /**
      * @param \Generated\Shared\Transfer\CommentThreadTransfer $commentThreadTransfer
      *
-     * @return \Generated\Shared\Transfer\CommentThreadTransfer
+     * @return \Generated\Shared\Transfer\CommentThreadTransfer|null
      */
-    public function getCommentThreadById(CommentThreadTransfer $commentThreadTransfer): CommentThreadTransfer;
+    public function findCommentThreadById(CommentThreadTransfer $commentThreadTransfer): ?CommentThreadTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\CommentThreadTransfer $commentThreadTransfer
@@ -45,7 +45,7 @@ interface CommentRepositoryInterface
     /**
      * @return \Generated\Shared\Transfer\CommentTagTransfer[]
      */
-    public function getCommentTags(): array;
+    public function getAllCommentTags(): array;
 
     /**
      * @param \Generated\Shared\Transfer\CommentFilterTransfer $commentFilterTransfer

@@ -9,6 +9,7 @@ namespace Spryker\Zed\Comment\Communication\Plugin\Quote;
 
 use Generated\Shared\Transfer\CommentRequestTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Zed\Comment\CommentConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteExpanderPluginInterface;
 
@@ -37,7 +38,7 @@ class CommentThreadQuoteExpanderPlugin extends AbstractPlugin implements QuoteEx
 
         $commentRequestTransfer = (new CommentRequestTransfer())
             ->setOwnerId($quoteTransfer->getIdQuote())
-            ->setOwnerType(static::COMMENT_THREAD_QUOTE_OWNER_TYPE);
+            ->setOwnerType(CommentConfig::COMMENT_THREAD_QUOTE_OWNER_TYPE);
 
         $quoteTransfer->setCommentThread($this->getFacade()->findCommentThreadByOwner($commentRequestTransfer));
 
