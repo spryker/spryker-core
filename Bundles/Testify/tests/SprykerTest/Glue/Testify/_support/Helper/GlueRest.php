@@ -10,18 +10,12 @@ namespace SprykerTest\Glue\Testify\Helper;
 use Codeception\Exception\ModuleException;
 use Codeception\Module\REST;
 use Codeception\Util\HttpCode;
-use Generated\Shared\Transfer\CompanyTransfer;
-use Generated\Shared\Transfer\CompanyUserTransfer;
-use Generated\Shared\Transfer\CustomerTransfer;
 use JsonPath\JsonObject;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Testify\TestifyConstants;
 use SprykerTest\Glue\Testify\Model\Connection;
 use SprykerTest\Glue\Testify\Model\JsonConnection;
-use SprykerTest\Shared\CompanyUser\Helper\CompanyUserHelper;
-use SprykerTest\Shared\Customer\Helper\CustomerDataHelper;
 use SprykerTest\Shared\Testify\Helper\ModuleLocatorTrait;
-use SprykerTest\Zed\Company\Helper\CompanyHelper;
 
 class GlueRest extends REST implements LastConnectionProviderInterface
 {
@@ -83,171 +77,6 @@ class GlueRest extends REST implements LastConnectionProviderInterface
     }
 
     /**
-     * TODO: Move if needed
-     *
-     * Publishes access token
-     *
-     * @part json
-     *
-     * @param array $glueToken
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return \Generated\Shared\Transfer\CustomerTransfer
-     */
-//    public function amAuthorizedGlueUser(array $glueToken, CustomerTransfer $customerTransfer): CustomerTransfer
-//    {
-//        $this->haveHttpHeader('Authorization', sprintf('%s %s', $glueToken['tokenType'], $glueToken['accessToken']));
-//
-//        return $customerTransfer;
-//    }
-
-    /**
-     * TODO: Move to CompanyUsersRestApi module
-     * Publishes access token
-     *
-     * @part json
-     *
-     * @param array $glueToken
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return \Generated\Shared\Transfer\CustomerTransfer
-     */
-//    public function amAuthorizedGlueCompanyUser(array $glueToken, CustomerTransfer $customerTransfer): CustomerTransfer
-//    {
-//        $this->haveHttpHeader('X-Company-User-Id', $customerTransfer->getCompanyUserTransfer()->getUuid());
-//        $this->haveHttpHeader('Authorization', sprintf('%s %s', $glueToken['tokenType'], $glueToken['accessToken']));
-//
-//        return $customerTransfer;
-//    }
-
-    /**
-     * TODO: Move to Customer module
-     * @part json
-     *
-     * @param string $withEmail
-     * @param string $withPassword
-     *
-     * @return \Generated\Shared\Transfer\CustomerTransfer
-     */
-//    public function amUser(string $withEmail = '', string $withPassword = ''): CustomerTransfer
-//    {
-//        $withEmail = $withEmail ?: sprintf('%s@test.local.com', uniqid('glue-', true));
-//
-//        return $this->customerProvider
-//            ? $this->customerProvider->haveCustomer([
-//                CustomerTransfer::FIRST_NAME => 'John',
-//                CustomerTransfer::LAST_NAME => 'Doe',
-//                CustomerTransfer::EMAIL => $withEmail,
-//                CustomerTransfer::PASSWORD => $withPassword ?: static::DEFAULT_PASSWORD,
-//                CustomerTransfer::NEW_PASSWORD => $withPassword ?: static::DEFAULT_PASSWORD,
-//            ])
-//            : $this->haveCustomerByApi($withEmail, $withPassword);
-//    }
-
-    /**
-     * TODO: Move to CompanyUser module if not exists
-     *
-     * Creates company, company user and customer
-     *
-     * @part json
-     *
-     * @throws \Codeception\Exception\ModuleException
-     *
-     * @return \Generated\Shared\Transfer\CustomerTransfer
-     */
-//    public function amCompanyUser(): CustomerTransfer
-//    {
-//        if ($this->companyProvider === null) {
-//            throw new ModuleException('GlueRest', 'The module requires CompanyHelper');
-//        }
-//
-//        $company = uniqid('c-', true);
-//        $companyTransfer = $this->companyProvider->haveCompany([
-//            CompanyTransfer::KEY => $company,
-//        ]);
-//
-//        return $this->amCompanyUserInCompany($companyTransfer->getIdCompany());
-//    }
-
-    /**
-     * TODO: Move to CompanyUser module if not exists
-     *
-     * Creates company user and customer
-     *
-     * @part json
-     *
-     * @param int $idCompany
-     *
-     * @throws \Codeception\Exception\ModuleException
-     *
-     * @return \Generated\Shared\Transfer\CustomerTransfer
-     */
-//    public function amCompanyUserInCompany(int $idCompany): CustomerTransfer
-//    {
-//        if ($this->companyUserProvider === null) {
-//            throw new ModuleException('GlueRest', 'The module requires CompanyUserHelper');
-//        }
-//
-//        $companyUserUuid = uniqid('cu-', true);
-//
-//        $customerTransfer = $this->amUser();
-//
-//        $companyUserTransfer = $this->companyUserProvider->haveCompanyUser([
-//            CompanyUserTransfer::KEY => $companyUserUuid,
-//            CompanyUserTransfer::UUID => $companyUserUuid,
-//            CompanyUserTransfer::FK_COMPANY => $idCompany,
-//            CompanyUserTransfer::CUSTOMER => $customerTransfer,
-//        ]);
-//
-//        $customerTransfer->setCompanyUserTransfer($companyUserTransfer);
-//
-//        return $this->removeCyclicLinksInCustomerTransfer($customerTransfer);
-//    }
-
-    /**
-     * TODO: Move to CustomersRestApi module
-     *
-     * @part json
-     *
-     * @param string $withEmail
-     * @param string $withPassword
-     *
-     * @return \Generated\Shared\Transfer\CustomerTransfer
-     */
-//    public function haveCustomerByApi(string $withEmail, string $withPassword = ''): CustomerTransfer
-//    {
-//        $customerTransfer = (new CustomerTransfer())
-//            ->setFirstName('John')
-//            ->setLastName('Doe')
-//            ->setSalutation('Mr')
-//            ->setEmail($withEmail)
-//            ->setNewPassword($withPassword ?: static::DEFAULT_PASSWORD);
-//
-//        $this->sendPOST('customers', [
-//            'data' => [
-//                'type' => 'customers',
-//                'attributes' => [
-//                    'salutation' => $customerTransfer->getSalutation(),
-//                    'firstName' => $customerTransfer->getFirstName(),
-//                    'lastName' => $customerTransfer->getLastName(),
-//                    'email' => $customerTransfer->getEmail(),
-//                    'password' => $customerTransfer->getNewPassword(),
-//                    'confirmPassword' => $customerTransfer->getNewPassword(),
-//                    'acceptedTerms' => true,
-//                ],
-//            ],
-//        ]);
-//
-//        $this->seeResponseCodeIs(HttpCode::CREATED);
-//
-//        $customerTransfer->setIdCustomer(
-//            $this->grabDataFromResponseByJsonPath('$.data.id')[0]
-//        );
-//
-//        return $customerTransfer;
-//    }
-
-    /**
      * @part json
      * @part xml
      *
@@ -291,32 +120,6 @@ class GlueRest extends REST implements LastConnectionProviderInterface
     {
         return (new JsonObject($this->connectionModule->_getResponseContent()))->get($jsonPath);
     }
-
-    /**
-     * TODO: Move to AuthRestApi module
-     *
-     * @part json
-     *
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return array ["tokenType" => string, "expiresIn" => int, "accessToken" => string, "refreshToken" => string]
-     */
-//    public function haveAuthorizationToGlue(CustomerTransfer $customerTransfer): array
-//    {
-//        $this->sendPOST('access-tokens', [
-//            'data' => [
-//                'type' => 'access-tokens',
-//                'attributes' => [
-//                    'username' => $customerTransfer->getEmail(),
-//                    'password' => $customerTransfer->getNewPassword() ?: static::DEFAULT_PASSWORD,
-//                ],
-//            ],
-//        ]);
-//
-//        $this->seeResponseCodeIs(HttpCode::CREATED);
-//
-//        return $this->grabDataFromResponseByJsonPath('$.data.attributes')[0];
-//    }
 
     /**
      * @part json
@@ -592,20 +395,6 @@ class GlueRest extends REST implements LastConnectionProviderInterface
             )
         );
     }
-
-    /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return \Generated\Shared\Transfer\CustomerTransfer
-     */
-//    protected function removeCyclicLinksInCustomerTransfer(CustomerTransfer $customerTransfer): CustomerTransfer
-//    {
-//        if ($customerTransfer->getCompanyUserTransfer()) {
-//            $customerTransfer->getCompanyUserTransfer()->setCustomer();
-//        }
-//
-//        return $customerTransfer;
-//    }
 
     /**
      * @inheritdoc

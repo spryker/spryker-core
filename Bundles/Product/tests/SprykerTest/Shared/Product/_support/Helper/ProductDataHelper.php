@@ -80,6 +80,26 @@ class ProductDataHelper extends Module
     }
 
     /**
+     * @param array $productAbstractOverride
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
+     */
+    public function haveProductAbstractWithoutCleanup(array $productAbstractOverride = [])
+    {
+        $productAbstractTransfer = (new ProductAbstractBuilder($productAbstractOverride))->build();
+
+        $productFacade = $this->getProductFacade();
+        $abstractProductId = $productFacade->createProductAbstract($productAbstractTransfer);
+
+        $this->debug(sprintf(
+            'Inserted AbstractProduct: %d',
+            $abstractProductId
+        ));
+
+        return $productAbstractTransfer;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      * @param \Generated\Shared\Transfer\LocalizedAttributesTransfer[] $localizedAttributes
      *
