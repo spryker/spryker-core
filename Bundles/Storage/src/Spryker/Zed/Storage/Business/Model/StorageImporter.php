@@ -9,6 +9,9 @@ namespace Spryker\Zed\Storage\Business\Model;
 
 use Symfony\Component\Process\Process;
 
+/**
+ * @deprecated Use `Spryker\Zed\Redis\Business\Import\RedisImporter` instead.
+ */
 class StorageImporter implements StorageImporterInterface
 {
     /**

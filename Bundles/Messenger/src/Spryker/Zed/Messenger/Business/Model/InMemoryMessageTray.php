@@ -10,12 +10,25 @@ namespace Spryker\Zed\Messenger\Business\Model;
 use Generated\Shared\Transfer\FlashMessagesTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 
-class InMemoryMessageTray extends BaseMessageTray implements MessageTrayInterface
+class InMemoryMessageTray implements MessageTrayInterface
 {
+    /**
+     * @var \Spryker\Zed\Messenger\Business\Model\MessageTranslatorInterface
+     */
+    protected $messageTranslator;
+
     /**
      * @var \Generated\Shared\Transfer\FlashMessagesTransfer|null
      */
     protected static $messages;
+
+    /**
+     * @param \Spryker\Zed\Messenger\Business\Model\MessageTranslatorInterface $messageTranslator
+     */
+    public function __construct(MessageTranslatorInterface $messageTranslator)
+    {
+        $this->messageTranslator = $messageTranslator;
+    }
 
     /**
      * @param \Generated\Shared\Transfer\MessageTransfer $message
@@ -25,7 +38,7 @@ class InMemoryMessageTray extends BaseMessageTray implements MessageTrayInterfac
     public function addSuccessMessage(MessageTransfer $message)
     {
         self::getFlashMessagesTransfer()->addSuccessMessage(
-            $this->translate(
+            $this->messageTranslator->translate(
                 $message->getValue(),
                 $message->getParameters()
             )
@@ -40,7 +53,7 @@ class InMemoryMessageTray extends BaseMessageTray implements MessageTrayInterfac
     public function addInfoMessage(MessageTransfer $message)
     {
         self::getFlashMessagesTransfer()->addInfoMessage(
-            $this->translate(
+            $this->messageTranslator->translate(
                 $message->getValue(),
                 $message->getParameters()
             )
@@ -55,7 +68,7 @@ class InMemoryMessageTray extends BaseMessageTray implements MessageTrayInterfac
     public function addErrorMessage(MessageTransfer $message)
     {
         self::getFlashMessagesTransfer()->addErrorMessage(
-            $this->translate(
+            $this->messageTranslator->translate(
                 $message->getValue(),
                 $message->getParameters()
             )
