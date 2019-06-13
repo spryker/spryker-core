@@ -46,6 +46,6 @@ class ContentBannerContentGuiEditorPluginMock implements ContentGuiEditorPluginI
      */
     public function getTwigFunctionTemplate(): string
     {
-        return '{{ content_banner(%ID%, \'%TEMPLATE%\') }}';
+        return "{{ content_banner('%KEY%', '%TEMPLATE%') }}";
     }
 }

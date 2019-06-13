@@ -46,6 +46,6 @@ class ContentProductContentGuiEditorPluginMock implements ContentGuiEditorPlugin
      */
     public function getTwigFunctionTemplate(): string
     {
-        return '{{ content_product_abstract_list(%ID%, \'%TEMPLATE%\') }}';
+        return "{{ content_product_abstract_list('%KEY%', '%TEMPLATE%') }}";
     }
 }

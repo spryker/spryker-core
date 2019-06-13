@@ -41,15 +41,11 @@ class HtmlToTwigExpressionConverter implements HtmlConverterInterface
     /**
      * @param string $html
      *
-     * @throws \Spryker\Zed\ContentGui\Business\Exception\HtmlConverterException
-     *
      * @return string
      */
     public function convertHtmlToTwigExpression(string $html): string
     {
-        if (mb_substr_count($html, 'data-twig-expression') > $this->contentGuiConfig->getMaxWidgetNumber()) {
-            throw new HtmlConverterException(sprintf(static::ERROR_MESSAGE_MAX_WIDGET_NUMBER, $this->contentGuiConfig->getMaxWidgetNumber()));
-        }
+        $this->assureMaxWidgetNumberIsNotExceeded($html);
 
         // Libxml requires a root node and <html> is treating the first element, so libxml finds as the root node.
         $this->domDocument->loadHTML("<html>$html</html>", LIBXML_NOWARNING | LIBXML_NOERROR | LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
@@ -135,6 +131,20 @@ class HtmlToTwigExpressionConverter implements HtmlConverterInterface
             if (!isset($replaceableNodes[$nextKey]['oldNode']) || !$replaceableNodes[$nextKey]['oldNode']->parentNode->isSameNode($replacement['oldNode']->parentNode)) {
                 $parentNode->removeChild($replacement['oldNode']->parentNode);
             }
+        }
+    }
+
+    /**
+     * @param string $html
+     *
+     * @throws \Spryker\Zed\ContentGui\Business\Exception\HtmlConverterException
+     *
+     * @return void
+     */
+    protected function assureMaxWidgetNumberIsNotExceeded(string $html): void
+    {
+        if (mb_substr_count($html, 'data-twig-expression') > $this->contentGuiConfig->getMaxWidgetNumber()) {
+            throw new HtmlConverterException(sprintf(static::ERROR_MESSAGE_MAX_WIDGET_NUMBER, $this->contentGuiConfig->getMaxWidgetNumber()));
         }
     }
 }
