@@ -15,9 +15,42 @@ use Generated\Shared\Transfer\CustomerTransfer;
 use Orm\Zed\Comment\Persistence\Base\SpyCommentThread;
 use Orm\Zed\Comment\Persistence\SpyComment;
 use Orm\Zed\Comment\Persistence\SpyCommentTag;
+use Orm\Zed\Customer\Persistence\SpyCustomer;
+use Propel\Runtime\Collection\ObjectCollection;
 
 class CommentMapper
 {
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Comment\Persistence\SpyCommentTag[] $commentTagEntities
+     *
+     * @return \Generated\Shared\Transfer\CommentTagTransfer[]
+     */
+    public function mapCommentTagEntitiesToCommentTagTransfers(ObjectCollection $commentTagEntities): array
+    {
+        $commentTagTransfers = [];
+
+        foreach ($commentTagEntities as $commentTagEntity) {
+            $commentTagTransfers[] = $this->mapCommentTagEntityToCommentTagTransfer($commentTagEntity, new CommentTagTransfer());
+        }
+
+        return $commentTagTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CommentTagTransfer $commentTagTransfer
+     * @param \Orm\Zed\Comment\Persistence\SpyCommentTag $commentTagEntity
+     *
+     * @return \Orm\Zed\Comment\Persistence\SpyCommentTag
+     */
+    public function mapCommentTagTransferToCommentTagEntity(
+        CommentTagTransfer $commentTagTransfer,
+        SpyCommentTag $commentTagEntity
+    ): SpyCommentTag {
+        $commentTagEntity->fromArray($commentTagTransfer->modifiedToArray());
+
+        return $commentTagEntity;
+    }
+
     /**
      * @param \Generated\Shared\Transfer\CommentThreadTransfer $commentThreadTransfer
      * @param \Orm\Zed\Comment\Persistence\SpyCommentThread $commentThreadEntity
@@ -44,25 +77,24 @@ class CommentMapper
         CommentThreadTransfer $commentThreadTransfer
     ): CommentThreadTransfer {
         $commentThreadTransfer = $commentThreadTransfer->fromArray($commentThreadEntity->toArray(), true);
-        $commentThreadTransfer->setComments($this->mapCommentThreadEntityToCommentTransfers($commentThreadEntity));
 
         return $commentThreadTransfer;
     }
 
     /**
-     * @param \Orm\Zed\Comment\Persistence\SpyCommentThread $commentEntity
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Comment\Persistence\SpyComment[] $commentEntities
      *
-     * @return \Generated\Shared\Transfer\CommentTransfer[]|\ArrayObject
+     * @return \Generated\Shared\Transfer\CommentTransfer[]
      */
-    protected function mapCommentThreadEntityToCommentTransfers(SpyCommentThread $commentEntity): ArrayObject
+    public function mapCommentEntitiesToCommentTransfers(ObjectCollection $commentEntities): array
     {
         $commentTransfers = [];
 
-        foreach ($commentEntity->getSpyComments() as $commentEntity) {
+        foreach ($commentEntities as $commentEntity) {
             $commentTransfers[] = $this->mapCommentEntityToCommentTransfer($commentEntity, new CommentTransfer());
         }
 
-        return new ArrayObject($commentTransfers);
+        return $commentTransfers;
     }
 
     /**
@@ -97,21 +129,22 @@ class CommentMapper
         $commentTransfer = $commentTransfer->fromArray($commentEntity->toArray(), true);
 
         $commentTransfer
-            ->setCustomer($this->mapCommentEntityToCustomerTransfer($commentEntity))
-            ->setTags($this->mapCommentEntityToCommentTagTransfers($commentEntity));
+            ->setIdCommentThread($commentEntity->getFkCommentThread())
+            ->setCustomer($this->mapCustomerEntityToCustomerTransfer($commentEntity->getSpyCustomer(), new CustomerTransfer()))
+            ->setTags(new ArrayObject($this->mapCommentEntityToCommentTagTransfers($commentEntity)));
 
         return $commentTransfer;
     }
 
     /**
-     * @param \Orm\Zed\Comment\Persistence\SpyComment $commentEntity
+     * @param \Orm\Zed\Customer\Persistence\SpyCustomer $customerEntity
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    protected function mapCommentEntityToCustomerTransfer(SpyComment $commentEntity): CustomerTransfer
+    protected function mapCustomerEntityToCustomerTransfer(SpyCustomer $customerEntity, CustomerTransfer $customerTransfer): CustomerTransfer
     {
-        $customerTransfer = (new CustomerTransfer())
-            ->fromArray($commentEntity->getSpyCustomer()->toArray(), true);
+        $customerTransfer = $customerTransfer->fromArray($customerEntity->toArray(), true);
 
         return $customerTransfer;
     }
@@ -119,28 +152,30 @@ class CommentMapper
     /**
      * @param \Orm\Zed\Comment\Persistence\SpyComment $commentEntity
      *
-     * @return \Generated\Shared\Transfer\CommentTagTransfer[]|\ArrayObject
+     * @return \Generated\Shared\Transfer\CommentTagTransfer[]
      */
-    protected function mapCommentEntityToCommentTagTransfers(SpyComment $commentEntity): ArrayObject
+    protected function mapCommentEntityToCommentTagTransfers(SpyComment $commentEntity): array
     {
         $commentTagTransfers = [];
 
-        foreach ($commentEntity->getSpyCommentCommentTags() as $commentCommentTagEntity) {
-            $commentTagTransfers[] = $this->mapCommentEntityToCommentTagTransfer($commentCommentTagEntity->getSpyCommentTag());
+        foreach ($commentEntity->getSpyCommentToCommentTags() as $commentCommentTagEntity) {
+            $commentTagTransfers[] = $this->mapCommentTagEntityToCommentTagTransfer($commentCommentTagEntity->getSpyCommentTag(), new CommentTagTransfer());
         }
 
-        return new ArrayObject($commentTagTransfers);
+        return $commentTagTransfers;
     }
 
     /**
      * @param \Orm\Zed\Comment\Persistence\SpyCommentTag $commentTagEntity
+     * @param \Generated\Shared\Transfer\CommentTagTransfer $commentTagTransfer
      *
      * @return \Generated\Shared\Transfer\CommentTagTransfer
      */
-    protected function mapCommentEntityToCommentTagTransfer(SpyCommentTag $commentTagEntity): CommentTagTransfer
-    {
-        $commentTagTransfer = (new CommentTagTransfer())
-            ->fromArray($commentTagEntity->toArray(), true);
+    protected function mapCommentTagEntityToCommentTagTransfer(
+        SpyCommentTag $commentTagEntity,
+        CommentTagTransfer $commentTagTransfer
+    ): CommentTagTransfer {
+        $commentTagTransfer = $commentTagTransfer->fromArray($commentTagEntity->toArray(), true);
 
         return $commentTagTransfer;
     }

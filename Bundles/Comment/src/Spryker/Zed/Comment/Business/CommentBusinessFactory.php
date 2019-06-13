@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Comment\Business;
 
+use Spryker\Zed\Comment\Business\Reader\CommentReader;
+use Spryker\Zed\Comment\Business\Reader\CommentReaderInterface;
 use Spryker\Zed\Comment\Business\Writer\CommentWriter;
 use Spryker\Zed\Comment\Business\Writer\CommentWriterInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
@@ -25,6 +27,17 @@ class CommentBusinessFactory extends AbstractBusinessFactory
     {
         return new CommentWriter(
             $this->getEntityManager(),
+            $this->getRepository(),
+            $this->createCommentReader()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Comment\Business\Reader\CommentReaderInterface
+     */
+    public function createCommentReader(): CommentReaderInterface
+    {
+        return new CommentReader(
             $this->getRepository()
         );
     }

@@ -7,10 +7,14 @@
 
 namespace Spryker\Zed\Comment\Persistence;
 
+use Generated\Shared\Transfer\CommentTagTransfer;
 use Generated\Shared\Transfer\CommentThreadTransfer;
 use Generated\Shared\Transfer\CommentTransfer;
 use Orm\Zed\Comment\Persistence\SpyComment;
+use Orm\Zed\Comment\Persistence\SpyCommentTag;
 use Orm\Zed\Comment\Persistence\SpyCommentThread;
+use Orm\Zed\Comment\Persistence\SpyCommentToCommentTag;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -18,6 +22,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
  */
 class CommentEntityManager extends AbstractEntityManager implements CommentEntityManagerInterface
 {
+    protected const COLUMN_IS_DELETED = 'IsDeleted';
+
     /**
      * @param \Generated\Shared\Transfer\CommentThreadTransfer $commentThreadTransfer
      *
@@ -47,7 +53,10 @@ class CommentEntityManager extends AbstractEntityManager implements CommentEntit
             ->mapCommentTransferToCommentEntity($commentTransfer, new SpyComment());
 
         $commentEntity->save();
-        $commentTransfer->setIdComment($commentEntity->getIdComment());
+
+        $commentTransfer
+            ->setIdComment($commentEntity->getIdComment())
+            ->setUuid($commentEntity->getUuid());
 
         return $commentTransfer;
     }
@@ -80,9 +89,83 @@ class CommentEntityManager extends AbstractEntityManager implements CommentEntit
      */
     public function removeComment(CommentTransfer $commentTransfer): void
     {
+        $commentTransfer->requireUuid();
+
         $this->getFactory()
             ->getCommentPropelQuery()
             ->filterByUuid($commentTransfer->getUuid())
+            ->update([static::COLUMN_IS_DELETED => true]);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CommentTransfer $commentTransfer
+     *
+     * @return void
+     */
+    public function addCommentTagsToComment(CommentTransfer $commentTransfer): void
+    {
+        $commentTransfer->requireIdComment();
+
+        foreach ($commentTransfer->getTags() as $commentTagTransfer) {
+            $assignedCommentTagIds[] = $commentTagTransfer->getIdCommentTag();
+
+            $commentCommentTagEntity = $this->getFactory()
+                ->getCommentToCommentTagPropelQuery()
+                ->filterByFkComment($commentTransfer->getIdComment())
+                ->filterByFkCommentTag($commentTagTransfer->getIdCommentTag())
+                ->findOne();
+
+            if ($commentCommentTagEntity) {
+                continue;
+            }
+
+            $commentCommentTagEntity = (new SpyCommentToCommentTag())
+                ->setFkCommentTag($commentTagTransfer->getIdCommentTag())
+                ->setFkComment($commentTransfer->getIdComment());
+
+            $commentCommentTagEntity->save();
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CommentTransfer $commentTransfer
+     *
+     * @return void
+     */
+    public function removeCommentTagsFromComment(CommentTransfer $commentTransfer): void
+    {
+        $commentTransfer->requireIdComment();
+
+        $assignedCommentTagIds = [];
+
+        foreach ($commentTransfer->getTags() as $commentTagTransfer) {
+            $assignedCommentTagIds[] = $commentTagTransfer->getIdCommentTag();
+        }
+
+        $this->getFactory()
+            ->getCommentToCommentTagPropelQuery()
+            ->filterByFkComment($commentTransfer->getIdComment())
+            ->filterByFkCommentTag($assignedCommentTagIds, Criteria::NOT_IN)
             ->delete();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CommentTagTransfer $commentTagTransfer
+     *
+     * @return \Generated\Shared\Transfer\CommentTagTransfer
+     */
+    public function createCommentTag(CommentTagTransfer $commentTagTransfer): CommentTagTransfer
+    {
+        $commentTagEntity = $this->getFactory()
+            ->createCommentMapper()
+            ->mapCommentTagTransferToCommentTagEntity($commentTagTransfer, new SpyCommentTag());
+
+        $commentTagEntity->save();
+
+        $commentTagTransfer
+            ->setIdCommentTag($commentTagEntity->getIdCommentTag())
+            ->setUuid($commentTagEntity->getUuid());
+
+        return $commentTagTransfer;
     }
 }

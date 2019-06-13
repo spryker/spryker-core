@@ -18,11 +18,13 @@
         <property name="customer" type="Customer"/>
         <property name="message" type="string"/>
         <property name="tags" type="CommentTag[]" singular="commentTag"/>
+        <property name="isUpdated" type="bool"/>
         <property name="createdAt" type="string"/>
         <property name="updatedAt" type="string"/>
     </transfer>
 
     <transfer name="CommentTag">
+        <property name="idCommentTag" type="int"/>
         <property name="uuid" type="string"/>
         <property name="name" type="string"/>
     </transfer>
@@ -33,14 +35,18 @@
         <property name="comment" type="Comment"/>
     </transfer>
 
-    <transfer name="CommentResponse">
-        <property name="comment" type="Comment"/>
+    <transfer name="CommentThreadResponse">
+        <property name="commentThread" type="CommentThread"/>
         <property name="isSuccessful" type="bool"/>
         <property name="messages" type="Message[]" singular="message"/>
     </transfer>
 
     <transfer name="Message">
         <property name="value" type="string"/>
+    </transfer>
+
+    <transfer name="Quote">
+        <property name="commentThread" type="CommentThread"/>
     </transfer>
 
 </transfers>

@@ -9,7 +9,7 @@ namespace SprykerTest\Zed\Comment;
 
 use Codeception\Actor;
 use Generated\Shared\Transfer\CommentRequestTransfer;
-use Generated\Shared\Transfer\CommentResponseTransfer;
+use Generated\Shared\Transfer\CommentThreadResponseTransfer;
 
 /**
  * Inherited Methods
@@ -34,9 +34,9 @@ class CommentBusinessTester extends Actor
     /**
      * @param \Generated\Shared\Transfer\CommentRequestTransfer $commentRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\CommentResponseTransfer
+     * @return \Generated\Shared\Transfer\CommentThreadResponseTransfer
      */
-    public function createComment(CommentRequestTransfer $commentRequestTransfer): CommentResponseTransfer
+    public function createComment(CommentRequestTransfer $commentRequestTransfer): CommentThreadResponseTransfer
     {
         return $this->haveComment([
             CommentRequestTransfer::OWNER_ID => $commentRequestTransfer->getOwnerId(),
