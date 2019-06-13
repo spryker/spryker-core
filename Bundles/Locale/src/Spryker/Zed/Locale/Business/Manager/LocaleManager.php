@@ -172,6 +172,8 @@ class LocaleManager
     }
 
     /**
+     * @deprecated Use `Spryker\Zed\Locale\Business\Reader\LocaleReaderInterface::findAvailableLocaleCollection()` method instead.
+     *
      * @return \Generated\Shared\Transfer\LocaleTransfer[]
      */
     public function getLocaleCollection()
@@ -188,8 +190,6 @@ class LocaleManager
     }
 
     /**
-     * @api
-     *
      * @return array
      */
     public function getAvailableLocales()

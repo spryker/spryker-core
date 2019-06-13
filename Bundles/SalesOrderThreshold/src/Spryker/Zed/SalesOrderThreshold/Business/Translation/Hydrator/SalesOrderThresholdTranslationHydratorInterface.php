@@ -5,14 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\SalesOrderThreshold\Business\Translation;
+namespace Spryker\Zed\SalesOrderThreshold\Business\Translation\Hydrator;
 
 use Generated\Shared\Transfer\SalesOrderThresholdTransfer;
 
-/**
- * @deprecated Use `Spryker\Zed\SalesOrderThreshold\Business\Translation\Hydrator\SalesOrderThresholdTranslationHydratorInterface` instead.
- */
-interface SalesOrderThresholdTranslationReaderInterface
+interface SalesOrderThresholdTranslationHydratorInterface
 {
     /**
      * @param \Generated\Shared\Transfer\SalesOrderThresholdTransfer $salesOrderThresholdTransfer

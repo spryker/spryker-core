@@ -7,15 +7,10 @@
 
 namespace Spryker\Zed\SalesOrderThreshold\Dependency\Facade;
 
-/**
- * @deprecated Will be removed without replacement.
- */
-interface SalesOrderThresholdToStoreFacadeInterface
+interface SalesOrderThresholdToLocaleFacadeInterface
 {
     /**
-     * @param string $storeName
-     *
-     * @return \Generated\Shared\Transfer\StoreTransfer
+     * @return \Generated\Shared\Transfer\LocaleTransfer[]
      */
-    public function getStoreByName($storeName);
+    public function getLocaleCollection();
 }
