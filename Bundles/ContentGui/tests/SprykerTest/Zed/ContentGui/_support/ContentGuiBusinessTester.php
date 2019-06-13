@@ -75,7 +75,7 @@ class ContentGuiBusinessTester extends Actor
             ContentTransfer::CONTENT_TYPE_KEY => 'Banner',
             ContentTransfer::DESCRIPTION => 'Test Banner',
             ContentTransfer::NAME => 'Test Banner',
-            ContentTransfer::KEY => $key ?? 'br-test',
+            ContentTransfer::KEY => $key ?: 'br-test',
             ContentTransfer::LOCALIZED_CONTENTS => [
                 [
                     LocalizedContentTransfer::PARAMETERS => '{}',
