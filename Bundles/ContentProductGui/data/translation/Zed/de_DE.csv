@@ -12,4 +12,5 @@ SKU,SKU
 Status,Status
 Stores,Stores
 "content_product_abstract_list.template.default","Standard"
+"content_product_abstract_list.template.bottom-title","Titel unten"
 "content_product_abstract_list.template.top-title","Titel oben"
