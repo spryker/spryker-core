@@ -19,6 +19,7 @@ use Symfony\Component\Validator\Constraint;
 
 /**
  * @method \Spryker\Zed\ContentProductSetGui\Communication\ContentProductSetGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ContentProductSetGui\ContentProductSetGuiConfig getConfig()
  */
 class ProductSetContentTermForm extends AbstractType
 {
@@ -100,7 +101,7 @@ class ProductSetContentTermForm extends AbstractType
             'label' => false,
         ])->get(static::FIELD_ID_PRODUCT_SET)->addEventListener(
             FormEvents::PRE_SUBMIT,
-            function (FormEvent $event) {
+            function (FormEvent $event): void {
                 if (!$event->getData()) {
                     return;
                 }
