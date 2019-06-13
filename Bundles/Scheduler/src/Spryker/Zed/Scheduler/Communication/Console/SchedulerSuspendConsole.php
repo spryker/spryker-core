@@ -79,15 +79,8 @@ class SchedulerSuspendConsole extends AbstractSchedulerConsole
         $schedulers = $input->getOption(static::SCHEDULERS_OPTION);
         $jobNames = $input->getOption(static::JOBS_OPTION);
 
-        $filterTransfer = $this->getFactory()
-            ->createSchedulerFilterBuilder()
-            ->withRoles($roles)
-            ->withStore(APPLICATION_STORE)
-            ->withSchedulerIds($schedulers)
-            ->withJobNames($jobNames)
-            ->build();
-
-        $responseCollectionTransfer = $this->getFacade()->suspend($filterTransfer);
+        $schedulerFilterTransfer = $this->createSchedulerFilterTransfer($roles, $schedulers, $jobNames);
+        $responseCollectionTransfer = $this->getFacade()->suspend($schedulerFilterTransfer);
 
         $this->outputCommandResponse($responseCollectionTransfer, $output);
 

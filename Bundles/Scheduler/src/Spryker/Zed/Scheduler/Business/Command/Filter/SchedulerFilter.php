@@ -37,7 +37,7 @@ class SchedulerFilter implements SchedulerFilterInterface
     /**
      * @param \Generated\Shared\Transfer\SchedulerFilterTransfer $filterTransfer
      *
-     * @return array
+     * @return \Spryker\Zed\SchedulerExtension\Dependency\Plugin\SchedulerAdapterPluginInterface[]
      */
     public function getFilteredSchedulerAdapters(SchedulerFilterTransfer $filterTransfer): array
     {

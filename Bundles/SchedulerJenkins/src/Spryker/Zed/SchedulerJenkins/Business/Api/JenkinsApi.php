@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\SchedulerJenkinsResponseTransfer;
 use GuzzleHttp\Psr7\Request as Psr7Request;
 use Psr\Http\Message\RequestInterface;
 use RuntimeException;
-use Spryker\Zed\SchedulerJenkins\Business\Api\Builder\JenkinsResponseBuilderInterface;
 use Spryker\Zed\SchedulerJenkins\Business\Api\Configuration\ConfigurationProviderInterface;
 use Spryker\Zed\SchedulerJenkins\Dependency\Guzzle\SchedulerJenkinsToGuzzleInterface;
 
@@ -35,27 +34,19 @@ class JenkinsApi implements JenkinsApiInterface
     protected $client;
 
     /**
-     * @var \Spryker\Zed\SchedulerJenkins\Business\Api\Builder\JenkinsResponseBuilderInterface
-     */
-    protected $jenkinsResponseBuilder;
-
-    /**
      * @var \Spryker\Zed\SchedulerJenkins\Business\Api\Configuration\ConfigurationProviderInterface
      */
     protected $jenkinsConfigurationReader;
 
     /**
      * @param \Spryker\Zed\SchedulerJenkins\Dependency\Guzzle\SchedulerJenkinsToGuzzleInterface $client
-     * @param \Spryker\Zed\SchedulerJenkins\Business\Api\Builder\JenkinsResponseBuilderInterface $jenkinsResponseBuilder
      * @param \Spryker\Zed\SchedulerJenkins\Business\Api\Configuration\ConfigurationProviderInterface $jenkinsConfigurationReader
      */
     public function __construct(
         SchedulerJenkinsToGuzzleInterface $client,
-        JenkinsResponseBuilderInterface $jenkinsResponseBuilder,
         ConfigurationProviderInterface $jenkinsConfigurationReader
     ) {
         $this->client = $client;
-        $this->jenkinsResponseBuilder = $jenkinsResponseBuilder;
         $this->jenkinsConfigurationReader = $jenkinsConfigurationReader;
     }
 
@@ -123,16 +114,26 @@ class JenkinsApi implements JenkinsApiInterface
             $requestOptions = $this->getRequestOptions($idScheduler);
             $response = $this->client->send($request, $requestOptions);
         } catch (RuntimeException $runtimeException) {
-            return $this->jenkinsResponseBuilder
-                ->withMessage($runtimeException->getMessage())
-                ->withStatus(false)
-                ->build();
+            return $this->createSchedulerJenkinsResponseTransfer($runtimeException->getMessage(), false);
         }
 
-        return $this->jenkinsResponseBuilder
-            ->withPayload($response->getBody()->getContents())
-            ->withStatus($response->getStatusCode() === static::SUCCESS_STATUS_CODE)
-            ->build();
+        $message = $response->getBody()->getContents();
+        $status = $response->getStatusCode() === static::SUCCESS_STATUS_CODE;
+
+        return $this->createSchedulerJenkinsResponseTransfer($message, $status);
+    }
+
+    /**
+     * @param string $message
+     * @param bool $status
+     *
+     * @return \Generated\Shared\Transfer\SchedulerJenkinsResponseTransfer
+     */
+    protected function createSchedulerJenkinsResponseTransfer(string $message, bool $status): SchedulerJenkinsResponseTransfer
+    {
+        return (new SchedulerJenkinsResponseTransfer())
+            ->setMessage($message)
+            ->setStatus($status);
     }
 
     /**

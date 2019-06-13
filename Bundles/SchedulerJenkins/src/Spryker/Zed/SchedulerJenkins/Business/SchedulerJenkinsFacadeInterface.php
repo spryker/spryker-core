@@ -14,8 +14,7 @@ interface SchedulerJenkinsFacadeInterface
 {
     /**
      * Specification:
-     * - Set ups Jenkins schedulers jobs for the current store.
-     * - Set ups Jenkins scheduler jobs by scheduler id for the current store.
+     * - Setup jobs for the Jenkins scheduler according the given schedule.
      *
      * @api
      *
@@ -27,8 +26,7 @@ interface SchedulerJenkinsFacadeInterface
 
     /**
      * Specification:
-     * - Cleans Jenkins schedulers jobs for the current store.
-     * - Cleans Jenkins scheduler jobs by scheduler id for the current store.
+     * - Cleans jobs for the Jenkins scheduler according the given schedule.
      *
      * @api
      *
@@ -40,8 +38,7 @@ interface SchedulerJenkinsFacadeInterface
 
     /**
      * Specification:
-     * - Suspends all Jenkins jobs for the current store..
-     * - Suspends selected jobs by name for the current store..
+     * - Suspends jobs for the Jenkins scheduler according the given schedule.s
      *
      * @api
      *
@@ -53,8 +50,7 @@ interface SchedulerJenkinsFacadeInterface
 
     /**
      * Specification:
-     * - Resumes all Jenkins jobs for the current store.
-     * - Resumes selected jobs by name for the current store.
+     * - Resumes jobs for the Jenkins scheduler according the given schedule.
      *
      * @api
      *

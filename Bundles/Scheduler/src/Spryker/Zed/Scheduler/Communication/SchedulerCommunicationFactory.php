@@ -8,8 +8,6 @@
 namespace Spryker\Zed\Scheduler\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\Scheduler\Communication\Builder\SchedulerFilterBuilder;
-use Spryker\Zed\Scheduler\Communication\Builder\SchedulerFilterBuilderInterface;
 
 /**
  * @method \Spryker\Zed\Scheduler\SchedulerConfig getConfig()
@@ -17,11 +15,4 @@ use Spryker\Zed\Scheduler\Communication\Builder\SchedulerFilterBuilderInterface;
  */
 class SchedulerCommunicationFactory extends AbstractCommunicationFactory
 {
-    /**
-     * @return \Spryker\Zed\Scheduler\Communication\Builder\SchedulerFilterBuilderInterface
-     */
-    public function createSchedulerFilterBuilder(): SchedulerFilterBuilderInterface
-    {
-        return new SchedulerFilterBuilder();
-    }
 }

@@ -79,15 +79,8 @@ class SchedulerResumeConsole extends AbstractSchedulerConsole
         $schedulers = $input->getOption(static::SCHEDULERS_OPTION);
         $jobNames = $input->getOption(static::JOBS_OPTION);
 
-        $filterTransfer = $this->getFactory()
-            ->createSchedulerFilterBuilder()
-            ->withRoles($roles)
-            ->withStore(APPLICATION_STORE)
-            ->withSchedulerIds($schedulers)
-            ->withJobNames($jobNames)
-            ->build();
-
-        $responseCollectionTransfer = $this->getFacade()->resume($filterTransfer);
+        $schedulerFilterTransfer = $this->createSchedulerFilterTransfer($roles, $schedulers, $jobNames);
+        $responseCollectionTransfer = $this->getFacade()->resume($schedulerFilterTransfer);
 
         $this->outputCommandResponse($responseCollectionTransfer, $output);
 

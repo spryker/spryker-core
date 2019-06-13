@@ -15,6 +15,7 @@ interface ScheduleReaderPluginInterface
     /**
      * Specification:
      * - Reads jobs definitions for particular scheduler.
+     * - Performs filtration according given filter.
      * - Extend the given schedule with jobs definitions that have been read.
      *
      * @api

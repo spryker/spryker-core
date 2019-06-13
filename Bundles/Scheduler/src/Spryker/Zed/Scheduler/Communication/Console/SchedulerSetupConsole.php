@@ -71,14 +71,8 @@ class SchedulerSetupConsole extends AbstractSchedulerConsole
         $roles = $input->getOption(static::ROLES_OPTION);
         $schedulers = $input->getOption(static::SCHEDULERS_OPTION);
 
-        $filterTransfer = $this->getFactory()
-            ->createSchedulerFilterBuilder()
-            ->withRoles($roles)
-            ->withStore(APPLICATION_STORE)
-            ->withSchedulerIds($schedulers)
-            ->build();
-
-        $responseCollectionTransfer = $this->getFacade()->setup($filterTransfer);
+        $schedulerFilterTransfer = $this->createSchedulerFilterTransfer($roles, $schedulers);
+        $responseCollectionTransfer = $this->getFacade()->setup($schedulerFilterTransfer);
 
         $this->outputCommandResponse($responseCollectionTransfer, $output);
 

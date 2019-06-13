@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Scheduler\Communication\Console;
 
+use Generated\Shared\Transfer\SchedulerFilterTransfer;
 use Generated\Shared\Transfer\SchedulerResponseCollectionTransfer;
 use Generated\Shared\Transfer\SchedulerResponseTransfer;
 use Spryker\Zed\Kernel\Communication\Console\Console;
@@ -65,5 +66,21 @@ class AbstractSchedulerConsole extends Console
         foreach ($responseTransfer->getSchedule()->getJobs() as $jobTransfer) {
             $output->writeln(' - ' . $jobTransfer->getName());
         }
+    }
+
+    /**
+     * @param string[] $roles
+     * @param string[] $schedulers
+     * @param string[] $jobNames
+     *
+     * @return \Generated\Shared\Transfer\SchedulerFilterTransfer
+     */
+    protected function createSchedulerFilterTransfer(array $roles, array $schedulers, array $jobNames = []): SchedulerFilterTransfer
+    {
+        return (new SchedulerFilterTransfer())
+            ->setRoles($roles)
+            ->setSchedulers($schedulers)
+            ->setJobs($jobNames)
+            ->setStore(APPLICATION_STORE);
     }
 }

@@ -15,7 +15,9 @@ interface SchedulerFacadeInterface
 {
     /**
      * Specification:
-     * - Reads schedule for particular scheduler and for the current store from PHP source.
+     * - Read jobs from PHP source for the scheduler defined in the given schedule.
+     * - Perform jobs filtration according the given filter.
+     * - Extends the given Schedule with the jobs after filtration.
      *
      * @api
      *
@@ -31,7 +33,7 @@ interface SchedulerFacadeInterface
 
     /**
      * Specification:
-     * - Sets up jobs for given schedulers and for the current store.
+     * - Sets up jobs for all enabled schedulers according given filter.
      *
      * @api
      *
@@ -43,7 +45,7 @@ interface SchedulerFacadeInterface
 
     /**
      * Specification:
-     * - Cleans jobs for given schedulers and for the current store.
+     * - Cleans jobs for all enabled schedulers according given filter.s
      *
      * @api
      *
@@ -55,8 +57,7 @@ interface SchedulerFacadeInterface
 
     /**
      * Specification:
-     * - Resumes all scheduler(s) jobs for the current store.
-     * - Resumes scheduler jobs by provided job name(s) if defined.
+     * - Resumes jobs for all enabled schedulers according given filter.
      *
      * @api
      *
@@ -68,8 +69,7 @@ interface SchedulerFacadeInterface
 
     /**
      * Specification:
-     * - Suspends all scheduler(s) jobs for the current store.
-     * - Suspends scheduler jobs by provided job name(s) if defined.
+     * - Suspends jobs for all enabled schedulers according given filter.
      *
      * @api
      *

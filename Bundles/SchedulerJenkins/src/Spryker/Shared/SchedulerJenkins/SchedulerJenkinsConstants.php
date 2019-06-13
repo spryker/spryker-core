@@ -14,7 +14,14 @@ interface SchedulerJenkinsConstants
 {
     /**
      * Specification:
-     * - Gets jenkins configuration.
+     * - Defines configuration per each scheduler by name, following the structure:
+     * [
+     *     'schedulerId' => [
+     *         SchedulerJenkinsConfig::SCHEDULER_JENKINS_BASE_URL => 'http://localhost:10007/',
+     *         SharedSchedulerJenkinsConfig::SCHEDULER_JENKINS_CREDENTIALS => ['username', 'password']
+     *     ],
+     * ...
+     * ]
      *
      * @api
      */
@@ -22,7 +29,7 @@ interface SchedulerJenkinsConstants
 
     /**
      * Specification:
-     * - Sets jenkins csrf protection.
+     * - Defines if CSRF protection is enabled for Jenkins API calls.
      *
      * @api
      */
@@ -30,7 +37,7 @@ interface SchedulerJenkinsConstants
 
     /**
      * Specification:
-     * - Defines the path to jenkins xml template.
+     * - Defines the path to Twig XML template for Jenkins API.
      *
      * @api
      */
@@ -38,7 +45,7 @@ interface SchedulerJenkinsConstants
 
     /**
      * Specification:
-     * - Sets amount of day for log file rotation.
+     * - Defines Jenkins logs rotation in days.
      *
      * @api
      */

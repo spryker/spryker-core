@@ -18,12 +18,12 @@
     </transfer>
 
     <transfer name="SchedulerFilter">
-        <property name="schedulers" type="string[]" />
-        <property name="jobs" type="string[]" />
-        <property name="roles" type="string[]" />
+        <property name="schedulers" type="string[]" singular="scheduler"/>
+        <property name="jobs" type="string[]" singular="job"/>
+        <property name="roles" type="string[]" singular="role"/>
         <property name="store" type="string" />
     </transfer>
-
+s
     <transfer name="SchedulerRequest">
         <property name="schedule" type="SchedulerSchedule" />
         <property name="filter" type="SchedulerFilter" />

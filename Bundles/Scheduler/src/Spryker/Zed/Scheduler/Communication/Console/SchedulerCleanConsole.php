@@ -66,14 +66,8 @@ class SchedulerCleanConsole extends AbstractSchedulerConsole
         $roles = $input->getOption(static::ROLES_OPTION);
         $schedulers = $input->getOption(static::SCHEDULERS_OPTION);
 
-        $filterTransfer = $this->getFactory()
-            ->createSchedulerFilterBuilder()
-            ->withRoles($roles)
-            ->withStore(APPLICATION_STORE)
-            ->withSchedulerIds($schedulers)
-            ->build();
-
-        $responseCollectionTransfer = $this->getFacade()->clean($filterTransfer);
+        $schedulerFilterTransfer = $this->createSchedulerFilterTransfer($roles, $schedulers);
+        $responseCollectionTransfer = $this->getFacade()->clean($schedulerFilterTransfer);
 
         $this->outputCommandResponse($responseCollectionTransfer, $output);
 

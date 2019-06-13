@@ -8,8 +8,6 @@
 namespace Spryker\Zed\SchedulerJenkins\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\SchedulerJenkins\Business\Api\Builder\JenkinsResponseBuilder;
-use Spryker\Zed\SchedulerJenkins\Business\Api\Builder\JenkinsResponseBuilderInterface;
 use Spryker\Zed\SchedulerJenkins\Business\Api\Configuration\ConfigurationProvider;
 use Spryker\Zed\SchedulerJenkins\Business\Api\Configuration\ConfigurationProviderInterface;
 use Spryker\Zed\SchedulerJenkins\Business\Api\JenkinsApi;
@@ -46,7 +44,6 @@ class SchedulerJenkinsBusinessFactory extends AbstractBusinessFactory
     {
         return new JenkinsApi(
             $this->getGuzzleClient(),
-            $this->createJenkinsResponseBuilder(),
             $this->createJenkinsApiConfigurationReader()
         );
     }
@@ -193,9 +190,7 @@ class SchedulerJenkinsBusinessFactory extends AbstractBusinessFactory
      */
     public function createNullExecutor(): ExecutorInterface
     {
-        return new NullExecutor(
-            $this->createJenkinsResponseBuilder()
-        );
+        return new NullExecutor();
     }
 
     /**
@@ -204,14 +199,6 @@ class SchedulerJenkinsBusinessFactory extends AbstractBusinessFactory
     public function createSchedulerResponseBuilder(): SchedulerResponseBuilderInterface
     {
         return new SchedulerResponseBuilder();
-    }
-
-    /**
-     * @return \Spryker\Zed\SchedulerJenkins\Business\Api\Builder\JenkinsResponseBuilderInterface
-     */
-    public function createJenkinsResponseBuilder(): JenkinsResponseBuilderInterface
-    {
-        return new JenkinsResponseBuilder();
     }
 
     /**

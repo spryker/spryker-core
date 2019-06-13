@@ -14,7 +14,7 @@ interface SchedulerAdapterPluginInterface
 {
     /**
      * Specification:
-     * - Cleans scheduler(s) job(s) for the current store.
+     * - Sets up jobs for the scheduler according the given schedule.
      *
      * @api
      *
@@ -26,7 +26,7 @@ interface SchedulerAdapterPluginInterface
 
     /**
      * Specification:
-     * - Cleans scheduler(s) job(s) for the current store.
+     * - Cleans jobs for the scheduler according the given schedule.
      *
      * @api
      *
@@ -38,8 +38,7 @@ interface SchedulerAdapterPluginInterface
 
     /**
      * Specification:
-     * - Suspends all jobs for the current store.
-     * - Suspends jobs by name for the current store.
+     * - Suspends jobs for the scheduler according the given schedule.
      *
      * @api
      *
@@ -51,8 +50,7 @@ interface SchedulerAdapterPluginInterface
 
     /**
      * Specification:
-     * - Resumes all jobs for the current store.
-     * - Resumes jobs by name for the current store.
+     * - Resumes jobs for the scheduler according the given schedule.
      *
      * @api
      *
