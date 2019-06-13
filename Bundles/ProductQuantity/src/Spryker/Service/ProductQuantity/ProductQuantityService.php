@@ -47,8 +47,7 @@ class ProductQuantityService extends AbstractService implements ProductQuantityS
     }
 
     /**
-     * Specification:
-     * - Reads default quantity interval value from config.
+     * {@inheritdoc}
      *
      * @api
      *
