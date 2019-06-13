@@ -284,13 +284,12 @@ class CommentWriter implements CommentWriterInterface
         CommentFilterTransfer $commentFilterTransfer,
         CommentRequestTransfer $commentRequestTransfer
     ): CommentThreadResponseTransfer {
-        $commentTransfers = $this->commentRepository->getCommentsByFilter($commentFilterTransfer);
-
         if ($this->commentRepository->findCommentThread($commentRequestTransfer)) {
             return $this->createErrorResponse(static::GLOSSARY_KEY_COMMENT_THREAD_ALREADY_EXISTS);
         }
 
         $commentThreadTransfer = $this->createCommentThread($commentRequestTransfer);
+        $commentTransfers = $this->commentRepository->getCommentsByFilter($commentFilterTransfer);
 
         foreach ($commentTransfers as $commentTransfer) {
             $newCommentTransfer = (new CommentTransfer())
