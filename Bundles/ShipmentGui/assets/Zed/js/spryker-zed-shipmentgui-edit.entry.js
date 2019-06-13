@@ -22,9 +22,10 @@ $(document).ready(function() {
 
         if (!selectedOption) {
             target.show();
-        } else {
-            target.hide();
+            return;
         }
+
+        target.hide();
     }
 
     toggleEditForm();
