@@ -81,7 +81,7 @@ class ProductPackagingStorageReader implements ProductPackagingStorageReaderInte
     /**
      * @param int[] $productAbstractIds
      *
-     * @return \Orm\Zed\ProductPackagingUnitStorage\Persistence\SpyProductAbstractPackagingStorage[]
+     * @return \Generated\Shared\Transfer\SpyProductAbstractPackagingStorageEntityTransfer[]
      */
     public function getProductAbstractPackagingStorageEntities(array $productAbstractIds): array
     {
@@ -251,7 +251,7 @@ class ProductPackagingStorageReader implements ProductPackagingStorageReaderInte
     ): void {
 
         $productConcretePackagingStorageTransfer
-            ->setDefaultAmount($productPackagingUnitAmountEntityTransfer->getDefaultAmount())
+            ->setDefaultAmount((float)$productPackagingUnitAmountEntityTransfer->getDefaultAmount())
             ->setIsVariable($productPackagingUnitAmountEntityTransfer->getIsVariable());
 
         if ($productPackagingUnitAmountEntityTransfer->getIsVariable()) {
@@ -260,9 +260,9 @@ class ProductPackagingStorageReader implements ProductPackagingStorageReaderInte
             $amountMax = $productPackagingUnitAmountEntityTransfer->getAmountMax();
 
             $productConcretePackagingStorageTransfer
-                ->setAmountMin($amountMin)
-                ->setAmountMax($amountMax)
-                ->setAmountInterval($amountInterval);
+                ->setAmountMin((float)$amountMin)
+                ->setAmountMax((float)$amountMax)
+                ->setAmountInterval((float)$amountInterval);
         }
     }
 

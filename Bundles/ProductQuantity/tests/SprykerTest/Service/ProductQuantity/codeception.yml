@@ -14,3 +14,13 @@ coverage:
 suites:
     Service:
         path: .
+        class_name: ProductQuantityServiceTester
+        modules:
+          enabled:
+            - Asserts
+            - \SprykerTest\Shared\Testify\Helper\Environment
+            - \SprykerTest\Shared\Testify\Helper\ConfigHelper
+            - \SprykerTest\Shared\Testify\Helper\LocatorHelper
+            - \SprykerTest\Shared\Testify\Helper\DependencyHelper
+            - \SprykerTest\Shared\Propel\Helper\TransactionHelper
+            - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper

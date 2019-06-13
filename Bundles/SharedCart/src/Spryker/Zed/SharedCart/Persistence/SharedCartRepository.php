@@ -10,6 +10,7 @@ namespace Spryker\Zed\SharedCart\Persistence;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\PermissionTransfer;
 use Generated\Shared\Transfer\QuotePermissionGroupCriteriaFilterTransfer;
+use Generated\Shared\Transfer\QuotePermissionGroupTransfer;
 use Generated\Shared\Transfer\ShareDetailCollectionTransfer;
 use Generated\Shared\Transfer\SharedQuoteCriteriaFilterTransfer;
 use Orm\Zed\CompanyUser\Persistence\Map\SpyCompanyUserTableMap;
@@ -134,6 +135,7 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
             ->endUse()
             ->joinWithCustomer()
             ->joinWithSpyQuoteCompanyUser();
+
         return $this->buildQueryFromCriteria($companyUserQuery)->find();
     }
 
@@ -275,6 +277,7 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
         foreach ($quotePermissionGroupEntityTransferList as $quotePermissionGroupEntityTransfer) {
             $quotePermissionGroupTransferList[] = $mapper->mapQuotePermissionGroup($quotePermissionGroupEntityTransfer);
         }
+
         return $quotePermissionGroupTransferList;
     }
 
@@ -327,5 +330,28 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
         return $this->getFactory()
             ->createQuoteShareDetailMapper()
             ->mapShareDetailCollection($quoteCompanyUserEntities, $this->findQuotePermissionGroupList(new QuotePermissionGroupCriteriaFilterTransfer()));
+    }
+
+    /**
+     * @param int $idQuotePermissionGroup
+     *
+     * @return \Generated\Shared\Transfer\QuotePermissionGroupTransfer|null
+     */
+    public function findQuotePermissionGroupById(int $idQuotePermissionGroup): ?QuotePermissionGroupTransfer
+    {
+        $quotePermissionGroupEntity = $this->getFactory()
+            ->createQuotePermissionGroupQuery()
+            ->findOneByIdQuotePermissionGroup($idQuotePermissionGroup);
+
+        if (!$quotePermissionGroupEntity) {
+            return null;
+        }
+
+        return $this->getFactory()
+            ->createQuotePermissionGroupMapper()
+            ->mapQuotePermissionGroupEntityToQuotePermissionGroupTransfer(
+                $quotePermissionGroupEntity,
+                new QuotePermissionGroupTransfer()
+            );
     }
 }

@@ -45,7 +45,6 @@ n/a,n/a
 "Note: The SKU is not editable after saving anymore.","Note: The SKU is not editable after saving anymore."
 "Note: The SKU prefix, just like the SKUs of your product variants, are not editable after saving anymore.","Note: The SKU prefix, just like the SKUs of your product variants, are not editable after saving anymore."
 "Price & Tax","Price & Tax"
-"Price & Tax","Price & Tax"
 "Price & Taxes","Price & Taxes"
 "Product bundle does not have variants!","Product bundle does not have variants!"
 "Product Group ID","Product Group ID"
@@ -67,12 +66,12 @@ Small,Small
 "Tax Set","Tax Set"
 "The product [%s] does not exist.","The product [%s] does not exist."
 "The product [%s] was saved successfully.","The product [%s] was saved successfully."
-"The product [%s] was saved successfully.","The product [%s] was saved successfully."
-"The product [%s] you are trying to edit, does not exist.","The product [%s] you are trying to edit, does not exist."
 "The product [%s] you are trying to edit, does not exist.","The product [%s] you are trying to edit, does not exist."
 "There is no super attribute defined. <a href=""%url%"">Define super attributes</a> in order to be able to create variants.","There is no super attribute defined. <a href=""%url%"">Define super attributes</a> in order to be able to create variants."
 Type,Type
 Variants,Variants
-Variants,Variants
 "View Product Abstract","View Product Abstract"
 "View Product Concrete","View Product Concrete"
+"Delete image","Delete image"
+"Image Set","Image Set"
+"Delete image set","Delete image set"

@@ -15,6 +15,8 @@ use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Cart\Dependency\Client\CartToMessengerClientInterface;
 use Spryker\Client\Cart\Dependency\Client\CartToQuoteInterface;
+use Spryker\Client\Cart\Exception\QuoteStorageStrategyPluginNotFound;
+use Spryker\Client\CartExtension\Dependency\Plugin\QuoteResetLockQuoteStorageStrategyPluginInterface;
 use Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface;
 
 class QuoteStorageStrategyProxy implements QuoteStorageStrategyProxyInterface
@@ -136,11 +138,11 @@ class QuoteStorageStrategyProxy implements QuoteStorageStrategyProxyInterface
     /**
      * @param string $sku
      * @param string|null $groupKey
-     * @param int $quantity
+     * @param float $quantity
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function changeItemQuantity($sku, $groupKey = null, $quantity = 1): QuoteTransfer
+    public function changeItemQuantity($sku, $groupKey = null, float $quantity = 1.0): QuoteTransfer
     {
         if ($this->isQuoteLocked()) {
             $this->addPermissionFailedMessage();
@@ -154,11 +156,11 @@ class QuoteStorageStrategyProxy implements QuoteStorageStrategyProxyInterface
     /**
      * @param string $sku
      * @param string|null $groupKey
-     * @param int $quantity
+     * @param float $quantity
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function decreaseItemQuantity($sku, $groupKey = null, $quantity = 1): QuoteTransfer
+    public function decreaseItemQuantity($sku, $groupKey = null, float $quantity = 1.0): QuoteTransfer
     {
         if ($this->isQuoteLocked()) {
             $this->addPermissionFailedMessage();
@@ -172,11 +174,11 @@ class QuoteStorageStrategyProxy implements QuoteStorageStrategyProxyInterface
     /**
      * @param string $sku
      * @param string|null $groupKey
-     * @param int $quantity
+     * @param float $quantity
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function increaseItemQuantity($sku, $groupKey = null, $quantity = 1): QuoteTransfer
+    public function increaseItemQuantity($sku, $groupKey = null, float $quantity = 1.0): QuoteTransfer
     {
         if ($this->isQuoteLocked()) {
             $this->addPermissionFailedMessage();
@@ -223,6 +225,22 @@ class QuoteStorageStrategyProxy implements QuoteStorageStrategyProxyInterface
         }
 
         return $this->quoteStorageStrategy->setQuoteCurrency($currencyTransfer);
+    }
+
+    /**
+     * @throws \Spryker\Client\Cart\Exception\QuoteStorageStrategyPluginNotFound
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function resetQuoteLock(): QuoteResponseTransfer
+    {
+        if (!$this->quoteStorageStrategy instanceof QuoteResetLockQuoteStorageStrategyPluginInterface) {
+            throw new QuoteStorageStrategyPluginNotFound(
+                'Quote storage strategy should implement QuoteResetLockQuoteStorageStrategyPluginInterface in order to use `resetQuoteLock` functionality.'
+            );
+        }
+
+        return $this->quoteStorageStrategy->resetQuoteLock();
     }
 
     /**

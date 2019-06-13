@@ -153,15 +153,15 @@ class OmsFacadeTest extends Unit
         $omsFacade = $this->createOmsFacade();
         $storeTransfer = (new StoreTransfer())->setIdStore(1)->setName('DE');
         $productSku = 'xxx';
-        $reservationQuantity = 10;
+        $reservationQuantity = 10.0;
 
         // Action
-        $this->createOmsFacade()->saveReservation($productSku, $storeTransfer, $reservationQuantity);
+        $omsFacade->saveReservation($productSku, $storeTransfer, $reservationQuantity);
 
         // Assert
         $this->assertEquals(
             $reservationQuantity,
-            $this->createOmsFacade()->getOmsReservedProductQuantityForSku($productSku, $storeTransfer)
+            $omsFacade->getOmsReservedProductQuantityForSku($productSku, $storeTransfer)
         );
     }
 

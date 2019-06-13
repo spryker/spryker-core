@@ -55,10 +55,12 @@ class SessionStorage implements StorageInterface
      * @param string $formName
      * @param string $token
      *
-     * @return void
+     * @return string
      */
     public function setToken($formName, $token)
     {
         $this->session->set($this->keyPrefix . $formName, $token);
+
+        return $token;
     }
 }

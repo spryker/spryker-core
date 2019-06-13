@@ -88,6 +88,7 @@ class ProductCategoryFilterController extends AbstractController
                 );
         }
 
+        /** @var \Generated\Shared\Transfer\ProductCategoryFilterItemTransfer[]|null $productCategoryFilters */
         $productCategoryFilters = $productCategoryFilterTransfer->getFilters();
         $nonSearchFilters = $this->getNonSearchFilters(
             ($productCategoryFilters !== null) ? (array)$productCategoryFilters : [],

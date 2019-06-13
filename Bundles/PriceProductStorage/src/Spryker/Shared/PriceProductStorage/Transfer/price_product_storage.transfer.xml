@@ -14,9 +14,10 @@
     </transfer>
 
     <transfer name="ProductView">
-        <property name="quantity" type="int" />
+        <property name="quantity" type="float" />
         <property name="price" type="int"/>
         <property name="prices" type="array"/>
+        <property name="currentProductPrice" type="CurrentProductPrice" />
     </transfer>
 
     <transfer name="MoneyValue">
@@ -26,13 +27,13 @@
     <transfer name="PriceProductFilter">
         <property name="idProduct" type="int" />
         <property name="idProductAbstract" type="int" />
-        <property name="quantity" type="int" />
+        <property name="quantity" type="float" />
     </transfer>
 
     <transfer name="Item">
         <property name="id" type="int" />
         <property name="idProductAbstract" type="int" />
-        <property name="quantity" type="int" />
+        <property name="quantity" type="float" />
     </transfer>
 
     <transfer name="CurrentProductPrice">

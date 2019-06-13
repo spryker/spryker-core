@@ -20,4 +20,19 @@ class ContentBannerConfig extends AbstractSharedConfig
      * Content item banner
      */
     public const CONTENT_TERM_BANNER = 'Banner';
+
+    /**
+     * Content item banner function name
+     */
+    public const TWIG_FUNCTION_NAME = 'content_banner';
+
+    /**
+     * Content item banner default template identifier
+     */
+    public const WIDGET_TEMPLATE_IDENTIFIER_DEFAULT = 'default';
+
+    /**
+     * Content item banner top-title template identifier
+     */
+    public const WIDGET_TEMPLATE_IDENTIFIER_TOP_TITLE = 'top-title';
 }

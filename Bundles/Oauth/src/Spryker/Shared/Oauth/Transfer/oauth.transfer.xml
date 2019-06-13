@@ -74,4 +74,23 @@
         <property name="isConfidential" type="bool" />
     </transfer>
 
+    <transfer name="OauthGrantTypeConfiguration">
+        <property name="identifier" type="string" />
+        <property name="fullyQualifiedClassName" type="string" />
+    </transfer>
+
+    <transfer name="OauthAccessTokenData">
+        <property name="oauthAccessTokenId" type="string" />
+        <property name="oauthClientId" type="string" />
+        <property name="oauthScopes" type="array" />
+        <property name="oauthUserId" type="string" />
+    </transfer>
+
+    <transfer name="JwtToken">
+        <property name="headers" type="array" />
+        <property name="claims" type="array" />
+        <property name="signature" type="string" />
+        <property name="payload" type="array" />
+    </transfer>
+
 </transfers>

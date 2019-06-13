@@ -60,7 +60,7 @@ interface ProductCategoryQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
-     * @param string $term
+     * @param string|null $term
      * @param int $idCategory
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
@@ -71,7 +71,7 @@ interface ProductCategoryQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
-     * @param string $term
+     * @param string|null $term
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery

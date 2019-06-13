@@ -171,12 +171,14 @@ class RequestFormatter implements RequestFormatterInterface
 
         if (!$queryParameters[RequestConstantsInterface::QUERY_INCLUDE]) {
             $requestBuilder->setExcludeRelationship(true);
+
             return;
         }
 
         $includes = explode(',', trim($queryParameters[RequestConstantsInterface::QUERY_INCLUDE]));
         if (count($includes) === 0) {
             $requestBuilder->setExcludeRelationship(true);
+
             return;
         }
 

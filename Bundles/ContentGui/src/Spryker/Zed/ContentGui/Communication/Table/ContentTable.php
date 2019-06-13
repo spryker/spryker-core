@@ -21,11 +21,20 @@ class ContentTable extends AbstractTable
     private $contentQuery;
 
     /**
-     * @param \Orm\Zed\Content\Persistence\SpyContentQuery $contentQuery
+     * @var string[]
      */
-    public function __construct(SpyContentQuery $contentQuery)
-    {
+    private $contentTypeKeyCache = [];
+
+    /**
+     * @param \Orm\Zed\Content\Persistence\SpyContentQuery $contentQuery
+     * @param \Spryker\Zed\ContentGuiExtension\Dependency\Plugin\ContentPluginInterface[] $contentPlugins
+     */
+    public function __construct(
+        SpyContentQuery $contentQuery,
+        array $contentPlugins
+    ) {
         $this->contentQuery = $contentQuery;
+        $this->contentTypeKeyCache = $this->populateContentTypeKeyCache($contentPlugins);
     }
 
     /**
@@ -38,7 +47,7 @@ class ContentTable extends AbstractTable
         $config = $this->setHeader($config);
 
         $config->setSortable([
-            ContentTableConstants::COL_ID_CONTENT,
+            ContentTableConstants::COL_KEY,
             ContentTableConstants::COL_NAME,
             ContentTableConstants::COL_CONTENT_TYPE_KEY,
             ContentTableConstants::COL_CREATED_AT,
@@ -47,10 +56,10 @@ class ContentTable extends AbstractTable
 
         $config->addRawColumn(ContentTableConstants::COL_ACTIONS);
         $config->addRawColumn(ContentTableConstants::COL_CONTENT_TYPE_KEY);
-        $config->setDefaultSortField(ContentTableConstants::COL_ID_CONTENT, TableConfiguration::SORT_DESC);
+        $config->setDefaultSortField(ContentTableConstants::COL_NAME, TableConfiguration::SORT_ASC);
 
         $config->setSearchable([
-            ContentTableConstants::COL_ID_CONTENT,
+            ContentTableConstants::COL_KEY,
             ContentTableConstants::COL_NAME,
             ContentTableConstants::COL_DESCRIPTION,
             ContentTableConstants::COL_CONTENT_TYPE_KEY,
@@ -69,7 +78,7 @@ class ContentTable extends AbstractTable
     protected function setHeader(TableConfiguration $config): TableConfiguration
     {
         $header = [
-            ContentTableConstants::COL_ID_CONTENT => 'Content Item ID',
+            ContentTableConstants::COL_KEY => 'Content Item Key',
             ContentTableConstants::COL_NAME => 'Name',
             ContentTableConstants::COL_DESCRIPTION => 'Description',
             ContentTableConstants::COL_CONTENT_TYPE_KEY => 'Content Type',
@@ -95,7 +104,7 @@ class ContentTable extends AbstractTable
 
         foreach ($contents as $key => $content) {
             $results[] = [
-                ContentTableConstants::COL_ID_CONTENT => $content[SpyContentTableMap::COL_ID_CONTENT],
+                ContentTableConstants::COL_KEY => $content[SpyContentTableMap::COL_KEY],
                 ContentTableConstants::COL_NAME => $content[SpyContentTableMap::COL_NAME],
                 ContentTableConstants::COL_DESCRIPTION => $content[SpyContentTableMap::COL_DESCRIPTION],
                 ContentTableConstants::COL_CONTENT_TYPE_KEY => $this->buildContentTypeLabel($content[SpyContentTableMap::COL_CONTENT_TYPE_KEY]),
@@ -115,6 +124,10 @@ class ContentTable extends AbstractTable
      */
     protected function buildLinks(array $content): string
     {
+        if (!$this->isContentTypeEnabled($content[ContentTableConstants::COL_CONTENT_TYPE_KEY])) {
+            return '';
+        }
+
         $buttons = [];
 
         $urlParams = [
@@ -128,6 +141,31 @@ class ContentTable extends AbstractTable
         );
 
         return implode(' ', $buttons);
+    }
+
+    /**
+     * @param \Spryker\Zed\ContentGuiExtension\Dependency\Plugin\ContentPluginInterface[] $contentPlugins
+     *
+     * @return array
+     */
+    protected function populateContentTypeKeyCache(array $contentPlugins): array
+    {
+        $contentTypeKeyCache = [];
+        foreach ($contentPlugins as $contentPlugin) {
+            $contentTypeKeyCache[] = $contentPlugin->getTypeKey();
+        }
+
+        return array_unique($contentTypeKeyCache);
+    }
+
+    /**
+     * @param string $contentTypeKey
+     *
+     * @return bool
+     */
+    protected function isContentTypeEnabled(string $contentTypeKey): bool
+    {
+        return in_array($contentTypeKey, $this->contentTypeKeyCache, true);
     }
 
     /**

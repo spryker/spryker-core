@@ -43,6 +43,7 @@ class OrderTaxTotalCalculator implements CalculatorInterface
             $itemTransfer->requireSumTaxAmountFullAggregation();
             $totalTaxAmount += $itemTransfer->getSumTaxAmountFullAggregation() - $itemTransfer->getTaxAmountAfterCancellation();
         }
+
         return $totalTaxAmount;
     }
 
@@ -58,6 +59,7 @@ class OrderTaxTotalCalculator implements CalculatorInterface
             $expenseTransfer->requireSumTaxAmount();
             $totalTaxAmount += $expenseTransfer->getSumTaxAmount() - $expenseTransfer->getTaxAmountAfterCancellation();
         }
+
         return $totalTaxAmount;
     }
 }

@@ -21,6 +21,7 @@ class ExportSynchronizedDataConsole extends Console
     public const COMMAND_NAME = 'sync:data';
     public const DESCRIPTION = 'Exports synchronized data into queues';
     public const RESOURCE = 'resource';
+    public const OPTION_IDS = 'ids';
 
     /**
      * @return void
@@ -28,6 +29,8 @@ class ExportSynchronizedDataConsole extends Console
     protected function configure(): void
     {
         $this->addArgument(static::RESOURCE, InputArgument::OPTIONAL, 'Defines which resource(s) should be exported, if there is more than one, use comma to separate them. 
+        If not, full export will be executed.');
+        $this->addArgument(static::OPTION_IDS, InputArgument::OPTIONAL, 'Defines ids for entities which should be exported, if there is more than one, use comma to separate them. 
         If not, full export will be executed.');
 
         $this->setName(static::COMMAND_NAME)
@@ -39,17 +42,28 @@ class ExportSynchronizedDataConsole extends Console
      * @param \Symfony\Component\Console\Input\InputInterface $input
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
-     * @return void
+     * @return int|null
      */
-    protected function execute(InputInterface $input, OutputInterface $output): void
+    protected function execute(InputInterface $input, OutputInterface $output)
     {
         $resources = [];
+        $ids = [];
+
         if ($input->getArgument(static::RESOURCE)) {
             $resourceString = $input->getArgument(static::RESOURCE);
             $resources = explode(',', $resourceString);
         }
 
-        $this->getFacade()->executeResolvedPluginsBySources($resources);
+        if ($input->getArgument(static::OPTION_IDS)) {
+            $resourceString = $input->getArgument(static::OPTION_IDS);
+            $ids = explode(',', $resourceString);
+
+            $ids = array_map(function ($id) {
+                return (int)$id;
+            }, $ids);
+        }
+
+        $this->getFacade()->executeResolvedPluginsBySourcesWithIds($resources, $ids);
     }
 
     /**

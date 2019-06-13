@@ -1,5 +1,7 @@
 namespace: ContentBanner
 actor: Tester
+include:
+    - tests/SprykerTest/Zed/ContentBanner
 paths:
     tests: tests
     log: tests/_output

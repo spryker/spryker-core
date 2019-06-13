@@ -5,6 +5,7 @@
 
     <transfer name="Content">
         <property name="idContent" type="int" />
+        <property name="key" type="string" />
         <property name="name" type="string" />
         <property name="description" type="string" />
         <property name="contentTermKey" type="string" />
@@ -18,6 +19,20 @@
         <property name="fkLocale" type="int" />
         <property name="fkContent" type="int" />
         <property name="parameters" type="string" />
+    </transfer>
+
+    <transfer name="ContentValidationResponse">
+        <property name="isSuccess" type="bool" />
+        <property name="parameterMessages" type="ContentParameterMessage[]" />
+    </transfer>
+
+    <transfer name="ContentParameterMessage">
+        <property name="parameter" type="string" />
+        <property name="messages" type="Message[]" singular="message" />
+    </transfer>
+
+    <transfer name="Message">
+        <property name="value" type="string"/>
     </transfer>
 
 </transfers>
