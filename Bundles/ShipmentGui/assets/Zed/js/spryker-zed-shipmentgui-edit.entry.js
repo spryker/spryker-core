@@ -6,7 +6,7 @@
 'use strict';
 
 $(document).ready(function() {
-    $('#shipment_form_create_requested_delivery_date').datepicker({
+    $('#shipment_form_edit_requested_delivery_date').datepicker({
         dateFormat: 'yy-mm-dd',
         changeMonth: true,
         numberOfMonths: 3,

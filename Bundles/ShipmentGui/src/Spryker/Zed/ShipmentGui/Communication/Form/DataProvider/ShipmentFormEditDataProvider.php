@@ -79,7 +79,7 @@ class ShipmentFormEditDataProvider extends BaseShipmentFormDataProvider
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer|null $shipmentMethodTransferTransfer
+     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer|null $shipmentMethodTransfer
      *
      * @return int|null
      */
