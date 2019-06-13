@@ -2,18 +2,22 @@
 
     {% block widget_content %}
 
-        {% for comment in order.commentThread.comments %}
-            <div>
-                <p>{{ comment.customer.firstName }} {{ comment.customer.lastName }}</p>
-                <p class="text-secondary">
-                    {{ comment.createdAt | formatDateTime }}
-                    {% if comment.isUpdated %}
-                        ({{ 'edited' }})
-                    {% endif %}
-                </p>
-                <p>{{ comment.message }}</p>
-            </div>
-        {% endfor %}
+        <div class="comment-wrapper">
+            {% for comment in order.commentThread.comments %}
+                <div class="comment-box">
+                    <p class="comment-title">
+                        {{ comment.customer.firstName }} {{ comment.customer.lastName }} @
+                        <span>
+                            {{ comment.createdAt | formatDateTime }}
+                            {% if comment.isUpdated %}
+                                ({{ 'edited' }})
+                            {% endif %}
+                        </span>
+                    </p>
+                    <span>{{ comment.message }}</span>
+                </div>
+            {% endfor %}
+        </div>
 
     {% endblock %}
 

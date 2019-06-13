@@ -217,3 +217,23 @@ body.mini-navbar .navbar-default .nav > li > .nav-second-level li a {
 }
 /* .. Tabs */
 
+/* Comments */
+.comment-wrapper {
+    max-height: 300px;
+    overflow-y: scroll;
+}
+
+.comment-box {
+    padding: 16px;
+    margin-bottom: 16px;
+    background-color: #f3f3f4;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+.comment-title {
+    font-weight: 600;
+}
+/* .. Comments */
