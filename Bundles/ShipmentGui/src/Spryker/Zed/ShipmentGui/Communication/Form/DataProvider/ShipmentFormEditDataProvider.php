@@ -83,13 +83,13 @@ class ShipmentFormEditDataProvider extends BaseShipmentFormDataProvider
      *
      * @return int|null
      */
-    protected function getShipmentMethodId(?ShipmentMethodTransfer $shipmentMethodTransferTransfer = null): ?int
+    protected function getShipmentMethodId(?ShipmentMethodTransfer $shipmentMethodTransfer = null): ?int
     {
-        if ($shipmentMethodTransferTransfer === null) {
+        if ($shipmentMethodTransfer === null) {
             return null;
         }
 
-        return $shipmentMethodTransferTransfer->getIdShipmentMethod();
+        return $shipmentMethodTransfer->getIdShipmentMethod();
     }
 
     /**
