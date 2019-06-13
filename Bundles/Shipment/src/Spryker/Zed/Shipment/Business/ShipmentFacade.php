@@ -338,7 +338,7 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ShipmentTransfer|null
      */
-    public function findShipmentTransferById(int $idSalesShipment): ?ShipmentTransfer
+    public function findShipmentById(int $idSalesShipment): ?ShipmentTransfer
     {
         return $this->getFactory()
             ->createShipmentReader()
