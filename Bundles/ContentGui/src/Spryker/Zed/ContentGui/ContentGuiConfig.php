@@ -25,14 +25,6 @@ class ContentGuiConfig extends AbstractBundleConfig
     /**
      * @return string
      */
-    public function getElementTagName(): string
-    {
-        return static::DOM_PATH_WIDGET_QUERY;
-    }
-
-    /**
-     * @return string
-     */
     public function getEditorContentWidgetTemplate(): string
     {
         return '<span class="content-item-editor js-content-item-editor" contenteditable="false" '
@@ -44,6 +36,14 @@ class ContentGuiConfig extends AbstractBundleConfig
                 . '<span>Name: <b>' . $this->getParameterName() . '</b></span>'
                 . '<span>Template: <b>' . $this->getParameterTemplateDisplayName() . '</b></span>'
             . '</span>';
+    }
+
+    /**
+     * @return string
+     */
+    public function getWidgetXpathQuery(): string
+    {
+        return static::DOM_PATH_WIDGET_QUERY;
     }
 
     /**
