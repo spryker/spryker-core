@@ -10,4 +10,5 @@
 "Clear locale","Clear locale"
 "Product Set","Product Set"
 "content_product_set_gui.template.default","Default"
-"content_product_set_gui.template.cart-button-btm","Cart Button Bottom"
+"content_product_set_gui.template.cart-button-top","Add all to Cart Button Top"
+"content_product_set_gui.template.cart-button-btm","Add all to Cart Button Bottom"
