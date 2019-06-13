@@ -239,14 +239,6 @@ class SessionConfig extends AbstractBundleConfig
      */
     public function getSessionEnvironmentName(): string
     {
-        return $this->get(SessionConstants::SESSION_ENVIRONMENT_NAME, $this->getSessionEnvironmentNameDefaultValue());
-    }
-
-    /**
-     * @return string
-     */
-    protected function getSessionEnvironmentNameDefaultValue(): string
-    {
-        return APPLICATION_ENV;
+        return $this->get(SessionConstants::SESSION_ENVIRONMENT_NAME, APPLICATION_ENV);
     }
 }

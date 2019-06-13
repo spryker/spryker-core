@@ -29,14 +29,14 @@ class SessionHandlerMysql implements SessionHandlerInterface
     protected $host;
 
     /**
-     * @var string|null
+     * @var string
      */
-    protected $user = null;
+    protected $user;
 
     /**
-     * @var string|null
+     * @var string
      */
-    protected $password = null;
+    protected $password;
 
     /**
      * @var string
@@ -46,12 +46,12 @@ class SessionHandlerMysql implements SessionHandlerInterface
     /**
      * @var int
      */
-    protected $lifetime = 600;
+    protected $lifetime;
 
     /**
      * @var int
      */
-    protected $port = 3306;
+    protected $port;
 
     /**
      * @var \Spryker\Shared\Session\Dependency\Service\SessionToMonitoringServiceInterface

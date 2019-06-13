@@ -68,6 +68,8 @@ class ZedRequestConfig extends AbstractBundleConfig
     }
 
     /**
+     * @deprecated Method will be removed without replacement.
+     *
      * @return bool
      */
     protected function getEnableRepeatDefaultValue(): bool
