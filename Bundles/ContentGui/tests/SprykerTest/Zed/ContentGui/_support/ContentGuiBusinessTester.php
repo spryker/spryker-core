@@ -191,7 +191,7 @@ class ContentGuiBusinessTester extends Actor
      *
      * @return string
      */
-    public function getOneHtmlWidget($wrapper = false): string
+    public function getOneHtmlWidget(bool $wrapper = false): string
     {
         return $this->createWidget($this->bannerContentTransfer, $wrapper);
     }

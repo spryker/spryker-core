@@ -8,31 +8,31 @@
 namespace Spryker\Zed\ContentGui\Business\Converter\CmsBlockGui;
 
 use Generated\Shared\Transfer\CmsBlockGlossaryTransfer;
-use Spryker\Zed\ContentGui\Business\Converter\HtmlConverterInterface;
-use Spryker\Zed\ContentGui\Business\Converter\TwigExpressionConverterInterface;
+use Spryker\Zed\ContentGui\Business\Converter\HtmlToTwigExpressionsConverterInterface;
+use Spryker\Zed\ContentGui\Business\Converter\TwigExpressionsToHtmlConverterInterface;
 
 class CmsBlockGuiGlossaryConverter implements CmsBlockGuiGlossaryConverterInterface
 {
     /**
-     * @var \Spryker\Zed\ContentGui\Business\Converter\HtmlConverterInterface
+     * @var \Spryker\Zed\ContentGui\Business\Converter\HtmlToTwigExpressionsConverterInterface
      */
-    protected $htmlToTwigExpressionConverter;
+    protected $htmlToTwigExpressionsConverter;
 
     /**
-     * @var \Spryker\Zed\ContentGui\Business\Converter\TwigExpressionConverterInterface
+     * @var \Spryker\Zed\ContentGui\Business\Converter\TwigExpressionsToHtmlConverterInterface
      */
-    protected $twigExpressionToHtmlConverter;
+    protected $twigExpressionsToHtmlConverter;
 
     /**
-     * @param \Spryker\Zed\ContentGui\Business\Converter\HtmlConverterInterface $htmlToTwigExpressionConverter
-     * @param \Spryker\Zed\ContentGui\Business\Converter\TwigExpressionConverterInterface $twigExpressionToHtmlConverter
+     * @param \Spryker\Zed\ContentGui\Business\Converter\HtmlToTwigExpressionsConverterInterface $htmlToTwigExpressionConverter
+     * @param \Spryker\Zed\ContentGui\Business\Converter\TwigExpressionsToHtmlConverterInterface $twigExpressionToHtmlConverter
      */
     public function __construct(
-        HtmlConverterInterface $htmlToTwigExpressionConverter,
-        TwigExpressionConverterInterface $twigExpressionToHtmlConverter
+        HtmlToTwigExpressionsConverterInterface $htmlToTwigExpressionConverter,
+        TwigExpressionsToHtmlConverterInterface $twigExpressionToHtmlConverter
     ) {
-        $this->htmlToTwigExpressionConverter = $htmlToTwigExpressionConverter;
-        $this->twigExpressionToHtmlConverter = $twigExpressionToHtmlConverter;
+        $this->htmlToTwigExpressionsConverter = $htmlToTwigExpressionConverter;
+        $this->twigExpressionsToHtmlConverter = $twigExpressionToHtmlConverter;
     }
 
     /**
@@ -40,7 +40,7 @@ class CmsBlockGuiGlossaryConverter implements CmsBlockGuiGlossaryConverterInterf
      *
      * @return \Generated\Shared\Transfer\CmsBlockGlossaryTransfer
      */
-    public function convertTwigExpressionToHtml(CmsBlockGlossaryTransfer $cmsBlockGlossaryTransfer): CmsBlockGlossaryTransfer
+    public function convertTwigExpressionsToHtml(CmsBlockGlossaryTransfer $cmsBlockGlossaryTransfer): CmsBlockGlossaryTransfer
     {
         $cmsBlockGlossaryTransfer->requireGlossaryPlaceholders();
         $cmsBlockGlossaryPlaceholderTransfers = $cmsBlockGlossaryTransfer->getGlossaryPlaceholders();
@@ -56,7 +56,7 @@ class CmsBlockGuiGlossaryConverter implements CmsBlockGuiGlossaryConverterInterf
                     continue;
                 }
 
-                $cmsBlockGlossaryPlaceholderTranslation = $this->twigExpressionToHtmlConverter->convertTwigExpressionToHtml($cmsBlockGlossaryPlaceholderTranslation);
+                $cmsBlockGlossaryPlaceholderTranslation = $this->twigExpressionsToHtmlConverter->convert($cmsBlockGlossaryPlaceholderTranslation);
                 $cmsBlockGlossaryPlaceholderTranslationTransfer->setTranslation($cmsBlockGlossaryPlaceholderTranslation);
             }
 
@@ -71,7 +71,7 @@ class CmsBlockGuiGlossaryConverter implements CmsBlockGuiGlossaryConverterInterf
      *
      * @return \Generated\Shared\Transfer\CmsBlockGlossaryTransfer
      */
-    public function convertHtmlToTwigExpression(CmsBlockGlossaryTransfer $cmsBlockGlossaryTransfer): CmsBlockGlossaryTransfer
+    public function convertHtmlToTwigExpressions(CmsBlockGlossaryTransfer $cmsBlockGlossaryTransfer): CmsBlockGlossaryTransfer
     {
         $cmsBlockGlossaryTransfer->requireGlossaryPlaceholders();
         $cmsBlockGlossaryPlaceholderTransfers = $cmsBlockGlossaryTransfer->getGlossaryPlaceholders();
@@ -87,7 +87,7 @@ class CmsBlockGuiGlossaryConverter implements CmsBlockGuiGlossaryConverterInterf
                     continue;
                 }
 
-                $cmsBlockGlossaryPlaceholderTranslation = $this->htmlToTwigExpressionConverter->convertHtmlToTwigExpression($cmsBlockGlossaryPlaceholderTranslation);
+                $cmsBlockGlossaryPlaceholderTranslation = $this->htmlToTwigExpressionsConverter->convert($cmsBlockGlossaryPlaceholderTranslation);
                 $cmsBlockGlossaryPlaceholderTranslationTransfer->setTranslation($cmsBlockGlossaryPlaceholderTranslation);
             }
 

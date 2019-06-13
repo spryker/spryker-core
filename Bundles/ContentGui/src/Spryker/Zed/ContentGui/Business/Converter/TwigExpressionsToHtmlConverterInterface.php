@@ -7,12 +7,12 @@
 
 namespace Spryker\Zed\ContentGui\Business\Converter;
 
-interface TwigExpressionConverterInterface
+interface TwigExpressionsToHtmlConverterInterface
 {
     /**
-     * @param string $html
+     * @param string $htmlWithTwigExpressions
      *
      * @return string
      */
-    public function convertTwigExpressionToHtml(string $html): string;
+    public function convert(string $htmlWithTwigExpressions): string;
 }

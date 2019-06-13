@@ -16,7 +16,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\ContentGui\Communication\ContentGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\ContentGui\ContentGuiConfig getConfig()
  */
-class TwigExpressionToHtmlCmsBlockGlossaryAfterFindPlugin extends AbstractPlugin implements CmsBlockGlossaryAfterFindPluginInterface
+class TwigExpressionsToHtmlCmsBlockGlossaryAfterFindPlugin extends AbstractPlugin implements CmsBlockGlossaryAfterFindPluginInterface
 {
     /**
      * {@inheritDoc}
@@ -31,6 +31,6 @@ class TwigExpressionToHtmlCmsBlockGlossaryAfterFindPlugin extends AbstractPlugin
      */
     public function execute(CmsBlockGlossaryTransfer $cmsBlockGlossaryTransfer): CmsBlockGlossaryTransfer
     {
-        return $this->getFacade()->convertCmsBlockGlossaryTwigExpressionToHtml($cmsBlockGlossaryTransfer);
+        return $this->getFacade()->convertCmsBlockGlossaryTwigExpressionsToHtml($cmsBlockGlossaryTransfer);
     }
 }

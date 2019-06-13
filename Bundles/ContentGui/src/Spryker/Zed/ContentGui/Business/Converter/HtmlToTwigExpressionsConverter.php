@@ -14,7 +14,7 @@ use DOMXPath;
 use Spryker\Zed\ContentGui\Business\Exception\HtmlConverterException;
 use Spryker\Zed\ContentGui\ContentGuiConfig;
 
-class HtmlToTwigExpressionConverter implements HtmlConverterInterface
+class HtmlToTwigExpressionsConverter implements HtmlToTwigExpressionsConverterInterface
 {
     protected const ERROR_MESSAGE_MAX_WIDGET_NUMBER = 'Limit exceeded, maximum number of widgets %d';
 
@@ -43,7 +43,7 @@ class HtmlToTwigExpressionConverter implements HtmlConverterInterface
      *
      * @return string
      */
-    public function convertHtmlToTwigExpression(string $html): string
+    public function convert(string $html): string
     {
         $this->assureMaxWidgetNumberIsNotExceeded($html);
 

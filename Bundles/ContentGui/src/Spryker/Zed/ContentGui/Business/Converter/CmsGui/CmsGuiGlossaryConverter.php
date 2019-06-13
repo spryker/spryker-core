@@ -8,31 +8,31 @@
 namespace Spryker\Zed\ContentGui\Business\Converter\CmsGui;
 
 use Generated\Shared\Transfer\CmsGlossaryTransfer;
-use Spryker\Zed\ContentGui\Business\Converter\HtmlConverterInterface;
-use Spryker\Zed\ContentGui\Business\Converter\TwigExpressionConverterInterface;
+use Spryker\Zed\ContentGui\Business\Converter\HtmlToTwigExpressionsConverterInterface;
+use Spryker\Zed\ContentGui\Business\Converter\TwigExpressionsToHtmlConverterInterface;
 
 class CmsGuiGlossaryConverter implements CmsGuiGlossaryConverterInterface
 {
     /**
-     * @var \Spryker\Zed\ContentGui\Business\Converter\HtmlConverterInterface
+     * @var \Spryker\Zed\ContentGui\Business\Converter\HtmlToTwigExpressionsConverterInterface
      */
-    protected $htmlToTwigExpressionConverter;
+    protected $htmlToTwigExpressionsConverter;
 
     /**
-     * @var \Spryker\Zed\ContentGui\Business\Converter\TwigExpressionConverterInterface
+     * @var \Spryker\Zed\ContentGui\Business\Converter\TwigExpressionsToHtmlConverterInterface
      */
-    protected $twigExpressionToHtmlConverter;
+    protected $twigExpressionsToHtmlConverter;
 
     /**
-     * @param \Spryker\Zed\ContentGui\Business\Converter\HtmlConverterInterface $htmlToTwigExpressionConverter
-     * @param \Spryker\Zed\ContentGui\Business\Converter\TwigExpressionConverterInterface $twigExpressionToHtmlConverter
+     * @param \Spryker\Zed\ContentGui\Business\Converter\HtmlToTwigExpressionsConverterInterface $htmlToTwigExpressionConverter
+     * @param \Spryker\Zed\ContentGui\Business\Converter\TwigExpressionsToHtmlConverterInterface $twigExpressionToHtmlConverter
      */
     public function __construct(
-        HtmlConverterInterface $htmlToTwigExpressionConverter,
-        TwigExpressionConverterInterface $twigExpressionToHtmlConverter
+        HtmlToTwigExpressionsConverterInterface $htmlToTwigExpressionConverter,
+        TwigExpressionsToHtmlConverterInterface $twigExpressionToHtmlConverter
     ) {
-        $this->htmlToTwigExpressionConverter = $htmlToTwigExpressionConverter;
-        $this->twigExpressionToHtmlConverter = $twigExpressionToHtmlConverter;
+        $this->htmlToTwigExpressionsConverter = $htmlToTwigExpressionConverter;
+        $this->twigExpressionsToHtmlConverter = $twigExpressionToHtmlConverter;
     }
 
     /**
@@ -40,7 +40,7 @@ class CmsGuiGlossaryConverter implements CmsGuiGlossaryConverterInterface
      *
      * @return \Generated\Shared\Transfer\CmsGlossaryTransfer
      */
-    public function convertTwigExpressionToHtml(CmsGlossaryTransfer $cmsGlossaryTransfer): CmsGlossaryTransfer
+    public function convertTwigExpressionsToHtml(CmsGlossaryTransfer $cmsGlossaryTransfer): CmsGlossaryTransfer
     {
         $cmsGlossaryTransfer->requireGlossaryAttributes();
         $cmsGlossaryAttributesTransfers = $cmsGlossaryTransfer->getGlossaryAttributes();
@@ -56,7 +56,7 @@ class CmsGuiGlossaryConverter implements CmsGuiGlossaryConverterInterface
                     continue;
                 }
 
-                $cmsPlaceholderTranslation = $this->twigExpressionToHtmlConverter->convertTwigExpressionToHtml($cmsPlaceholderTranslation);
+                $cmsPlaceholderTranslation = $this->twigExpressionsToHtmlConverter->convert($cmsPlaceholderTranslation);
                 $cmsPlaceholderTranslationTransfer->setTranslation($cmsPlaceholderTranslation);
             }
 
@@ -71,7 +71,7 @@ class CmsGuiGlossaryConverter implements CmsGuiGlossaryConverterInterface
      *
      * @return \Generated\Shared\Transfer\CmsGlossaryTransfer
      */
-    public function convertHtmlToTwigExpression(CmsGlossaryTransfer $cmsGlossaryTransfer): CmsGlossaryTransfer
+    public function convertHtmlToTwigExpressions(CmsGlossaryTransfer $cmsGlossaryTransfer): CmsGlossaryTransfer
     {
         $cmsGlossaryTransfer->requireGlossaryAttributes();
         $cmsGlossaryAttributesTransfers = $cmsGlossaryTransfer->getGlossaryAttributes();
@@ -87,7 +87,7 @@ class CmsGuiGlossaryConverter implements CmsGuiGlossaryConverterInterface
                     continue;
                 }
 
-                $cmsPlaceholderTranslation = $this->htmlToTwigExpressionConverter->convertHtmlToTwigExpression($cmsPlaceholderTranslation);
+                $cmsPlaceholderTranslation = $this->htmlToTwigExpressionsConverter->convert($cmsPlaceholderTranslation);
                 $cmsPlaceholderTranslationTransfer->setTranslation($cmsPlaceholderTranslation);
             }
 

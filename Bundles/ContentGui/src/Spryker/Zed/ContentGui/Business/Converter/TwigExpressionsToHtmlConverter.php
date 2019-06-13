@@ -15,7 +15,7 @@ use Spryker\Zed\ContentGui\ContentGuiConfig;
 use Spryker\Zed\ContentGui\Dependency\Facade\ContentGuiToContentFacadeInterface;
 use Spryker\Zed\ContentGui\Dependency\Facade\ContentGuiToTranslatorFacadeInterface;
 
-class TwigExpressionToHtmlConverter implements TwigExpressionConverterInterface
+class TwigExpressionsToHtmlConverter implements TwigExpressionsToHtmlConverterInterface
 {
     protected const ERROR_MESSAGE_MAX_WIDGET_NUMBER = 'Limit exceeded, maximum number of widgets %d';
 
@@ -58,17 +58,17 @@ class TwigExpressionToHtmlConverter implements TwigExpressionConverterInterface
     }
 
     /**
-     * @param string $html
+     * @param string $htmlWithTwigExpressions
      *
      * @return string
      */
-    public function convertTwigExpressionToHtml(string $html): string
+    public function convert(string $htmlWithTwigExpressions): string
     {
-        $this->assureMaxWidgetNumbersIsNotExceeded($html);
+        $this->assureMaxWidgetNumbersIsNotExceeded($htmlWithTwigExpressions);
 
-        $twigExpressionTransfers = $this->findTwigExpressions($html);
+        $twigExpressionTransfers = $this->findTwigExpressions($htmlWithTwigExpressions);
 
-        return $this->replaceTwigExpressions($html, $twigExpressionTransfers);
+        return $this->replaceTwigExpressions($htmlWithTwigExpressions, $twigExpressionTransfers);
     }
 
     /**

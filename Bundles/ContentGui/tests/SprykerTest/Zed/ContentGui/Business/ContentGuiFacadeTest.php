@@ -70,7 +70,7 @@ class ContentGuiFacadeTest extends Unit
         $cmsBlockGlossaryTransfer = $this->createCmsBlockGlossaryTransfer($inputString);
 
         // Act
-        $cmsBlockGlossaryTransfer = $this->tester->getFacade()->convertCmsBlockGlossaryHtmlToTwigExpression($cmsBlockGlossaryTransfer);
+        $cmsBlockGlossaryTransfer = $this->tester->getFacade()->convertCmsBlockGlossaryHtmlToTwigExpressions($cmsBlockGlossaryTransfer);
 
         // Assert
         $this->assertCmsBlockGlossaryResults($expectedResult, $cmsBlockGlossaryTransfer);
@@ -97,7 +97,7 @@ class ContentGuiFacadeTest extends Unit
         $cmsBlockGlossaryTransfer = $this->createCmsBlockGlossaryTransfer($inputString);
 
         // Act
-        $cmsBlockGlossaryTransfer = $this->tester->getFacade()->convertCmsBlockGlossaryTwigExpressionToHtml($cmsBlockGlossaryTransfer);
+        $cmsBlockGlossaryTransfer = $this->tester->getFacade()->convertCmsBlockGlossaryTwigExpressionsToHtml($cmsBlockGlossaryTransfer);
 
         // Assert
         $this->assertCmsBlockGlossaryResults($expectedResult, $cmsBlockGlossaryTransfer);
@@ -125,7 +125,7 @@ class ContentGuiFacadeTest extends Unit
         $cmsGlossaryTransfer = $this->createCmsGlossaryTransfer($inputString);
 
         // Act
-        $cmsGlossaryTransfer = $this->tester->getFacade()->convertCmsGlossaryHtmlToTwigExpression($cmsGlossaryTransfer);
+        $cmsGlossaryTransfer = $this->tester->getFacade()->convertCmsGlossaryHtmlToTwigExpressions($cmsGlossaryTransfer);
 
         // Assert
         $this->assertCmsGlossaryResults($expectedResult, $cmsGlossaryTransfer);
@@ -152,7 +152,7 @@ class ContentGuiFacadeTest extends Unit
         $cmsGlossaryTransfer = $this->createCmsGlossaryTransfer($inputString);
 
         // Act
-        $cmsGlossaryTransfer = $this->tester->getFacade()->convertCmsGlossaryTwigExpressionToHtml($cmsGlossaryTransfer);
+        $cmsGlossaryTransfer = $this->tester->getFacade()->convertCmsGlossaryTwigExpressionsToHtml($cmsGlossaryTransfer);
 
         // Assert
         $this->assertCmsGlossaryResults($expectedResult, $cmsGlossaryTransfer);

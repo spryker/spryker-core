@@ -12,10 +12,10 @@ use Spryker\Zed\ContentGui\Business\Converter\CmsBlockGui\CmsBlockGuiGlossaryCon
 use Spryker\Zed\ContentGui\Business\Converter\CmsBlockGui\CmsBlockGuiGlossaryConverterInterface;
 use Spryker\Zed\ContentGui\Business\Converter\CmsGui\CmsGuiGlossaryConverter;
 use Spryker\Zed\ContentGui\Business\Converter\CmsGui\CmsGuiGlossaryConverterInterface;
-use Spryker\Zed\ContentGui\Business\Converter\HtmlConverterInterface;
-use Spryker\Zed\ContentGui\Business\Converter\HtmlToTwigExpressionConverter;
-use Spryker\Zed\ContentGui\Business\Converter\TwigExpressionConverterInterface;
-use Spryker\Zed\ContentGui\Business\Converter\TwigExpressionToHtmlConverter;
+use Spryker\Zed\ContentGui\Business\Converter\HtmlToTwigExpressionsConverter;
+use Spryker\Zed\ContentGui\Business\Converter\HtmlToTwigExpressionsConverterInterface;
+use Spryker\Zed\ContentGui\Business\Converter\TwigExpressionsToHtmlConverter;
+use Spryker\Zed\ContentGui\Business\Converter\TwigExpressionsToHtmlConverterInterface;
 use Spryker\Zed\ContentGui\ContentGuiDependencyProvider;
 use Spryker\Zed\ContentGui\Dependency\Facade\ContentGuiToContentFacadeInterface;
 use Spryker\Zed\ContentGui\Dependency\Facade\ContentGuiToTranslatorFacadeInterface;
@@ -49,22 +49,22 @@ class ContentGuiBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ContentGui\Business\Converter\HtmlConverterInterface
+     * @return \Spryker\Zed\ContentGui\Business\Converter\HtmlToTwigExpressionsConverterInterface
      */
-    public function createHtmlToTwigExpressionConverter(): HtmlConverterInterface
+    public function createHtmlToTwigExpressionConverter(): HtmlToTwigExpressionsConverterInterface
     {
-        return new HtmlToTwigExpressionConverter(
+        return new HtmlToTwigExpressionsConverter(
             $this->createDomDocument(),
             $this->getConfig()
         );
     }
 
     /**
-     * @return \Spryker\Zed\ContentGui\Business\Converter\TwigExpressionConverterInterface
+     * @return \Spryker\Zed\ContentGui\Business\Converter\TwigExpressionsToHtmlConverterInterface
      */
-    public function createTwigExpressionToHtmlConverter(): TwigExpressionConverterInterface
+    public function createTwigExpressionToHtmlConverter(): TwigExpressionsToHtmlConverterInterface
     {
-        return new TwigExpressionToHtmlConverter(
+        return new TwigExpressionsToHtmlConverter(
             $this->getContentFacade(),
             $this->getConfig(),
             $this->getTranslatorFacade(),
