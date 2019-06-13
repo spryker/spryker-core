@@ -45,8 +45,9 @@ class SingleQuoteCreator implements SingleQuoteCreatorInterface
      */
     public function createSingleQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
+        $customerReference = $quoteTransfer->getCustomerReference() ?? $quoteTransfer->getCustomer()->getCustomerReference();
         $quoteCriteriaFilterTransfer = (new QuoteCriteriaFilterTransfer())
-            ->setCustomerReference($quoteTransfer->getCustomer()->getCustomerReference());
+            ->setCustomerReference($customerReference);
 
         $quoteCollectionTransfer = $this->quoteReader->getQuoteCollection($quoteCriteriaFilterTransfer);
         if ($quoteCollectionTransfer->getQuotes()->count()) {
