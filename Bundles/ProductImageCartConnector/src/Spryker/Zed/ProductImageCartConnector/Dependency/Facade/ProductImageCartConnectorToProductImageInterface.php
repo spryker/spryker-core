@@ -22,4 +22,11 @@ interface ProductImageCartConnectorToProductImageInterface
      * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
      */
     public function getProductImagesSetCollectionByProductIdForCurrentLocale(int $idProduct): array;
+
+    /**
+     * @param int[] $productIds
+     *
+     * @return \Generated\Shared\Transfer\ProductImageTransfer[][]
+     */
+    public function getDefaultProductImagesByProductIds(array $productIds): array;
 }
