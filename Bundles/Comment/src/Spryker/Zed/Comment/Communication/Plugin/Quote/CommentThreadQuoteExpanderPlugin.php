@@ -20,8 +20,6 @@ use Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteExpanderPluginInterface;
  */
 class CommentThreadQuoteExpanderPlugin extends AbstractPlugin implements QuoteExpanderPluginInterface
 {
-    protected const COMMENT_THREAD_QUOTE_OWNER_TYPE = 'quote';
-
     /**
      * {@inheritdoc}
      * - Expands quote transfer with CommentThread.

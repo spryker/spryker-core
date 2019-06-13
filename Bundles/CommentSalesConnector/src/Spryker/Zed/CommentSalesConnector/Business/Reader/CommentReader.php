@@ -10,12 +10,11 @@ namespace Spryker\Zed\CommentSalesConnector\Business\Reader;
 use Generated\Shared\Transfer\CommentRequestTransfer;
 use Generated\Shared\Transfer\CommentThreadTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Spryker\Zed\CommentSalesConnector\CommentSalesConnectorConfig;
 use Spryker\Zed\CommentSalesConnector\Dependency\Facade\CommentSalesConnectorToCommentFacadeInterface;
 
 class CommentReader implements CommentReaderInterface
 {
-    protected const COMMENT_THREAD_SALES_ORDER_OWNER_TYPE = 'sales_order';
-
     /**
      * @var \Spryker\Zed\CommentSalesConnector\Dependency\Facade\CommentSalesConnectorToCommentFacadeInterface
      */
@@ -40,7 +39,7 @@ class CommentReader implements CommentReaderInterface
 
         $commentRequestTransfer = (new CommentRequestTransfer())
             ->setOwnerId($orderTransfer->getIdSalesOrder())
-            ->setOwnerType(static::COMMENT_THREAD_SALES_ORDER_OWNER_TYPE);
+            ->setOwnerType(CommentSalesConnectorConfig::COMMENT_THREAD_SALES_ORDER_OWNER_TYPE);
 
         return $this->commentFacade->findCommentThreadByOwner($commentRequestTransfer);
     }

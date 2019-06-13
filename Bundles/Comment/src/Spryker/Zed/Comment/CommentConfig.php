@@ -17,4 +17,5 @@ class CommentConfig extends AbstractBundleConfig
     public const COMMENT_TAG_ATTACHED = 'attached';
 
     public const COMMENT_THREAD_QUOTE_OWNER_TYPE = 'quote';
+    public const COMMENT_THREAD_SALES_ORDER_OWNER_TYPE = 'sales_order';
 }

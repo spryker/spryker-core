@@ -1,4 +1,4 @@
-{% embed '@Gui/Partials/widget.twig' with { widget_title: 'Comments to Cart' } %}
+{% embed '@Gui/Partials/widget.twig' with { widget_title: 'Comments to Cart' | trans } %}
 
     {% block widget_content %}
 
@@ -10,7 +10,7 @@
                         <span>
                             {{ comment.createdAt | formatDateTime }}
                             {% if comment.isUpdated %}
-                                ({{ 'edited' }})
+                                ({{ 'edited' | trans }})
                             {% endif %}
                         </span>
                     </p>

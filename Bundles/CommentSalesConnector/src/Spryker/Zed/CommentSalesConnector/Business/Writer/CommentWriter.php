@@ -11,17 +11,11 @@ use Generated\Shared\Transfer\CommentFilterTransfer;
 use Generated\Shared\Transfer\CommentRequestTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
+use Spryker\Zed\CommentSalesConnector\CommentSalesConnectorConfig;
 use Spryker\Zed\CommentSalesConnector\Dependency\Facade\CommentSalesConnectorToCommentFacadeInterface;
 
 class CommentWriter implements CommentWriterInterface
 {
-    /**
-     * @uses \Spryker\Zed\Comment\CommentConfig::COMMENT_TAG_ATTACHED
-     */
-    protected const COMMENT_TAG_ATTACHED = 'attached';
-
-    protected const COMMENT_THREAD_SALES_ORDER_OWNER_TYPE = 'sales_order';
-
     /**
      * @var \Spryker\Zed\CommentSalesConnector\Dependency\Facade\CommentSalesConnectorToCommentFacadeInterface
      */
@@ -54,11 +48,11 @@ class CommentWriter implements CommentWriterInterface
         $commentFilterTransfer = (new CommentFilterTransfer())
             ->setOwnerId($quoteTransfer->getCommentThread()->getOwnerId())
             ->setOwnerType($quoteTransfer->getCommentThread()->getOwnerType())
-            ->setTags([static::COMMENT_TAG_ATTACHED]);
+            ->setTags([CommentSalesConnectorConfig::COMMENT_TAG_ATTACHED]);
 
         $commentRequestTransfer = (new CommentRequestTransfer())
             ->setOwnerId($saveOrderTransfer->getIdSalesOrder())
-            ->setOwnerType(static::COMMENT_THREAD_SALES_ORDER_OWNER_TYPE);
+            ->setOwnerType(CommentSalesConnectorConfig::COMMENT_THREAD_SALES_ORDER_OWNER_TYPE);
 
         $this->commentFacade->duplicateCommentThread($commentFilterTransfer, $commentRequestTransfer);
     }

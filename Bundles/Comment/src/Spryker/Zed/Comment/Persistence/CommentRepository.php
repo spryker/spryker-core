@@ -20,8 +20,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class CommentRepository extends AbstractRepository implements CommentRepositoryInterface
 {
     /**
-     * @module Customer
-     *
      * @param \Generated\Shared\Transfer\CommentRequestTransfer $commentRequestTransfer
      *
      * @return \Generated\Shared\Transfer\CommentThreadTransfer|null
@@ -72,6 +70,8 @@ class CommentRepository extends AbstractRepository implements CommentRepositoryI
     }
 
     /**
+     * @module Customer
+     *
      * @param \Generated\Shared\Transfer\CommentThreadTransfer $commentThreadTransfer
      *
      * @return \Generated\Shared\Transfer\CommentTransfer[]
@@ -133,6 +133,8 @@ class CommentRepository extends AbstractRepository implements CommentRepositoryI
     }
 
     /**
+     * @module Customer
+     *
      * @param \Generated\Shared\Transfer\CommentFilterTransfer $commentFilterTransfer
      *
      * @return \Generated\Shared\Transfer\CommentTransfer[]
@@ -152,12 +154,14 @@ class CommentRepository extends AbstractRepository implements CommentRepositoryI
             ->filterByIsDeleted(false)
             ->joinWithSpyCustomer()
             ->leftJoinWithSpyCommentToCommentTag()
+            ->useSpyCommentToCommentTagQuery(null, Criteria::LEFT_JOIN)
+                ->leftJoinWithSpyCommentTag()
+            ->endUse()
             ->orderByIdComment();
 
         if ($commentFilterTransfer->getTags()) {
             $commentQuery
                 ->useSpyCommentToCommentTagQuery(null, Criteria::LEFT_JOIN)
-                    ->leftJoinWithSpyCommentTag()
                     ->useSpyCommentTagQuery(null, Criteria::LEFT_JOIN)
                         ->filterByName_In($commentFilterTransfer->getTags())
                     ->endUse()

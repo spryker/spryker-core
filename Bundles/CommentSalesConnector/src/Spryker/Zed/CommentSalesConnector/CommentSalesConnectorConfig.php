@@ -11,4 +11,13 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class CommentSalesConnectorConfig extends AbstractBundleConfig
 {
+    /**
+     * @uses \Spryker\Zed\Comment\CommentConfig::COMMENT_TAG_ATTACHED
+     */
+    public const COMMENT_TAG_ATTACHED = 'attached';
+
+    /**
+     * @uses \Spryker\Zed\Comment\CommentConfig::COMMENT_THREAD_SALES_ORDER_OWNER_TYPE
+     */
+    public const COMMENT_THREAD_SALES_ORDER_OWNER_TYPE = 'sales_order';
 }
