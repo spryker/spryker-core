@@ -71,7 +71,7 @@ class HtmlToTwigExpressionConverter implements HtmlConverterInterface
     {
         $replacements = [];
         $domXpath = $this->createDOMXPath();
-        $widgets = $domXpath->query('//*[@contenteditable="false"][@data-key][@data-twig-expression][@data-template][@data-type]');
+        $widgets = $domXpath->query($this->contentGuiConfig->getDomPathWidgetQuery());
 
         foreach ($widgets as $widget) {
             $twigExpression = $this->domDocument->createTextNode($widget->getAttribute('data-twig-expression'));
