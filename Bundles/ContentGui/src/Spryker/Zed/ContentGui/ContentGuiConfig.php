@@ -25,7 +25,7 @@ class ContentGuiConfig extends AbstractBundleConfig
     /**
      * @return string
      */
-    public function getDomPathWidgetQuery(): string
+    public function getElementTagName(): string
     {
         return static::DOM_PATH_WIDGET_QUERY;
     }
