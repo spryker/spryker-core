@@ -31,14 +31,24 @@ class ContentBannerGuiConfig extends AbstractSharedConfig
     protected const TWIG_FUNCTION_NAME = 'content_banner';
 
     /**
-     * @uses \Spryker\Shared\ContentBanner\ContentBannerConfig::WIDGET_TEMPLATE_IDENTIFIER_DEFAULT
+     * @deprecated Use `\Spryker\Shared\ContentBannerGui\ContentBannerGuiConfig::WIDGET_TEMPLATE_IDENTIFIER_BOTTOM_TITLE` instead.
      */
     protected const WIDGET_TEMPLATE_IDENTIFIER_DEFAULT = 'default';
 
     /**
-     * Content item banner default template name
+     * @uses \Spryker\Shared\ContentBanner\ContentBannerConfig::WIDGET_TEMPLATE_IDENTIFIER_BOTTOM_TITLE
+     */
+    protected const WIDGET_TEMPLATE_IDENTIFIER_BOTTOM_TITLE = 'bottom-title';
+
+    /**
+     * @deprecated Use `\Spryker\Shared\ContentBannerGui\ContentBannerGuiConfig::WIDGET_TEMPLATE_DISPLAY_BOTTOM_TITLE` instead.
      */
     protected const WIDGET_TEMPLATE_DISPLAY_NAME_DEFAULT = 'content_banner.template.default';
+
+    /**
+     * Content item banner bottom-title template name
+     */
+    protected const WIDGET_TEMPLATE_DISPLAY_BOTTOM_TITLE = 'content_banner.template.bottom-title';
 
     /**
      * @uses \Spryker\Shared\ContentBanner\ContentBannerConfig::WIDGET_TEMPLATE_IDENTIFIER_TOP_TITLE
@@ -56,7 +66,7 @@ class ContentBannerGuiConfig extends AbstractSharedConfig
     public function getContentWidgetTemplates(): array
     {
         return [
-            static::WIDGET_TEMPLATE_IDENTIFIER_DEFAULT => static::WIDGET_TEMPLATE_DISPLAY_NAME_DEFAULT,
+            static::WIDGET_TEMPLATE_IDENTIFIER_BOTTOM_TITLE => static::WIDGET_TEMPLATE_DISPLAY_BOTTOM_TITLE,
             static::WIDGET_TEMPLATE_IDENTIFIER_TOP_TITLE => static::WIDGET_TEMPLATE_DISPLAY_NAME_TOP_TITLE,
         ];
     }
