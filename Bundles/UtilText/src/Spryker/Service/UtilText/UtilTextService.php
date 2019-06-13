@@ -16,7 +16,7 @@ class UtilTextService extends AbstractService implements UtilTextServiceInterfac
 {
     /**
      * Specification:
-     * - Generate slug based on value
+     * - Generate slug based on value.
      *
      * @api
      *
@@ -33,7 +33,7 @@ class UtilTextService extends AbstractService implements UtilTextServiceInterfac
 
     /**
      * Specification:
-     * - Generates random string for given length value
+     * - Generates random string for given length value.
      *
      * @api
      *
@@ -50,7 +50,7 @@ class UtilTextService extends AbstractService implements UtilTextServiceInterfac
 
     /**
      * Specification:
-     * - Generates hash from value by specified algorithm
+     * - Generates hash from value by specified algorithm.
      *
      * @api
      *
