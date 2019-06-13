@@ -94,7 +94,7 @@ class SchedulerJenkinsFacadeTest extends Unit
                     ->setName('DE__test')
                     ->setStore('DE')
                     ->setEnable(true)
-                    ->setSchedule('* * * * *')
+                    ->setRepeatPattern('* * * * *')
                     ->setPayload([])
             )
             ->addJob(
@@ -102,7 +102,7 @@ class SchedulerJenkinsFacadeTest extends Unit
                     ->setName('DE__test1')
                     ->setStore('DE')
                     ->setEnable(true)
-                    ->setSchedule('* * * * *')
+                    ->setRepeatPattern('* * * * *')
                     ->setPayload([])
             )
             ->setIdScheduler('test');
