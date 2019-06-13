@@ -45,4 +45,19 @@ class ProductQuantityService extends AbstractService implements ProductQuantityS
             ->createConfigReader()
             ->getDefaultMinimumQuantity();
     }
+
+    /**
+     * Specification:
+     * - Reads default quantity interval value from config.
+     *
+     * @api
+     *
+     * @return float
+     */
+    public function getDefaultInterval(): float
+    {
+        return $this->getFactory()
+            ->createConfigReader()
+            ->getDefaultInterval();
+    }
 }
