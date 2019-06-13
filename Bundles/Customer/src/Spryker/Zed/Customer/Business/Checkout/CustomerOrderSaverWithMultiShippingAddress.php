@@ -33,7 +33,7 @@ class CustomerOrderSaverWithMultiShippingAddress extends CustomerOrderSaver
     protected $existingAddresses = [];
 
     /**
-     * @var \Spryker\Service\Customer\CustomerService
+     * @var \Spryker\Service\Customer\CustomerServiceInterface
      */
     protected $customerService;
 
@@ -69,8 +69,9 @@ class CustomerOrderSaverWithMultiShippingAddress extends CustomerOrderSaver
 
         $this->existingAddresses = [];
 
-        $this->processNewUniqueCustomerAddress($quoteTransfer->getBillingAddress(), $customer);
-
+        $quoteTransfer->requireBillingAddress();
+        $billingAddress = $this->processNewUniqueCustomerAddress($quoteTransfer->getBillingAddress(), $customer);
+        $quoteTransfer->setBillingAddress($billingAddress);
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             if ($itemTransfer->getIsAddressSavingSkipped()) {
@@ -78,7 +79,10 @@ class CustomerOrderSaverWithMultiShippingAddress extends CustomerOrderSaver
             }
 
             $itemTransfer->requireShipment();
-            $addressTransfer = $itemTransfer->getShipment()->getShippingAddress();
+            $shipmentTransfer = $itemTransfer->getShipment();
+
+            $shipmentTransfer->requireShippingAddress();
+            $addressTransfer = $shipmentTransfer->getShippingAddress();
 
             $addressTransfer = $this->processNewUniqueCustomerAddress($addressTransfer, $customer);
 
@@ -94,9 +98,7 @@ class CustomerOrderSaverWithMultiShippingAddress extends CustomerOrderSaver
      */
     protected function processNewUniqueCustomerAddress(AddressTransfer $addressTransfer, CustomerTransfer $customer): AddressTransfer
     {
-        if ($addressTransfer->getIdCustomerAddress() !== null
-            || $this->checkNewAddressIsAlreadyPersist($addressTransfer)
-        ) {
+        if ($this->isAddressForSave($addressTransfer)) {
             return $addressTransfer;
         }
 
@@ -125,5 +127,17 @@ class CustomerOrderSaverWithMultiShippingAddress extends CustomerOrderSaver
         $this->existingAddresses[$key] = true;
 
         return $customerAddressTransfer !== null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
+     * @return bool
+     */
+    protected function isAddressForSave(AddressTransfer $addressTransfer): bool
+    {
+        return $addressTransfer->getIdCompanyUnitAddress() !== null
+            || $addressTransfer->getIdCustomerAddress() !== null
+            || $this->checkNewAddressIsAlreadyPersist($addressTransfer);
     }
 }
