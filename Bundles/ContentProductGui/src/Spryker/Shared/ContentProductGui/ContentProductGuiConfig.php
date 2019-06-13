@@ -31,16 +31,6 @@ class ContentProductGuiConfig extends AbstractSharedConfig
     protected const TWIG_FUNCTION_NAME = 'content_product_abstract_list';
 
     /**
-     * @deprecated Use `\Spryker\Shared\ContentProductGui\ContentProductGuiConfig::WIDGET_TEMPLATE_IDENTIFIER_BOTTOM_TITLE` instead.
-     */
-    protected const WIDGET_TEMPLATE_IDENTIFIER_DEFAULT = 'default';
-
-    /**
-     * @deprecated Use `\Spryker\Shared\ContentProductGui\ContentProductGuiConfig::WIDGET_TEMPLATE_DISPLAY_NAME_BOTTOM_TITLE` instead.
-     */
-    protected const WIDGET_TEMPLATE_DISPLAY_NAME_DEFAULT = 'content_product_abstract_list.template.default';
-
-    /**
      * @uses \Spryker\Shared\ContentProduct\ContentProductConfig::WIDGET_TEMPLATE_IDENTIFIER_BOTTOM_TITLE
      */
     protected const WIDGET_TEMPLATE_IDENTIFIER_BOTTOM_TITLE = 'bottom-title';

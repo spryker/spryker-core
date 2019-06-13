@@ -31,16 +31,6 @@ class ContentProductSetGuiConfig extends AbstractSharedConfig
     protected const TWIG_FUNCTION_NAME = 'content_product_set';
 
     /**
-     * @deprecated Use `\Spryker\Shared\ContentProductSetGui\ContentProductSetGuiConfig::WIDGET_TEMPLATE_IDENTIFIER_CART_BUTTON_TOP` instead.
-     */
-    protected const WIDGET_TEMPLATE_IDENTIFIER_DEFAULT = 'default';
-
-    /**
-     * @deprecated Use `\Spryker\Shared\ContentProductSetGui\ContentProductSetGuiConfig::WIDGET_TEMPLATE_DISPLAY_NAME_CART_BUTTON_TOP` instead.
-     */
-    protected const WIDGET_TEMPLATE_DISPLAY_NAME_DEFAULT = 'content_product_set_gui.template.default';
-
-    /**
      * @uses \Spryker\Shared\ContentProductSet\ContentProductSetConfig::WIDGET_TEMPLATE_IDENTIFIER_CART_BUTTON_TOP
      */
     protected const WIDGET_TEMPLATE_IDENTIFIER_CART_BUTTON_TOP = 'cart-button-top';
