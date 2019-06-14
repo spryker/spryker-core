@@ -47,7 +47,7 @@ interface ReaderInterface
     /**
      * @param string $sku
      *
-     * @return \Orm\Zed\Stock\Persistence\SpyStockProduct[]
+     * @return \Orm\Zed\Stock\Persistence\SpyStockProduct[]|\Traversable
      */
     public function getStocksProduct($sku);
 
@@ -55,7 +55,7 @@ interface ReaderInterface
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return \Orm\Zed\Stock\Persistence\SpyStockProduct[]
+     * @return \Orm\Zed\Stock\Persistence\SpyStockProduct[]|\Traversable
      */
     public function findProductStocksForStore($sku, StoreTransfer $storeTransfer);
 
@@ -150,4 +150,19 @@ interface ReaderInterface
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function expandProductConcreteWithStocks(ProductConcreteTransfer $productConcreteTransfer);
+
+    /**
+     * @param string $sku
+     *
+     * @return float
+     */
+    public function getProductStockSumBySku(string $sku): float;
+
+    /**
+     * @param string $sku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return float
+     */
+    public function getProductStockSumBySkuAndStore(string $sku, StoreTransfer $storeTransfer): float;
 }

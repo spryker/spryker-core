@@ -95,7 +95,7 @@ class AbstractProductOptionSaverTest extends MockProvider
      * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTouchFacadeInterface|null $touchFacadeMock
      * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToEventFacadeInterface|null $eventFacadeMock
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductOption\Business\OptionGroup\AbstractProductOptionSaverInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductOption\Business\OptionGroup\AbstractProductOptionSaverInterface
      */
     protected function createAbstractProductOptionSaver(
         ?ProductOptionQueryContainerInterface $productOptionContainerMock = null,
@@ -128,7 +128,7 @@ class AbstractProductOptionSaverTest extends MockProvider
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup
      */
     protected function createProductOptionGroupEntityMock()
     {

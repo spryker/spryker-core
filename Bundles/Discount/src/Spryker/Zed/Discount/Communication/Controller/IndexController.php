@@ -77,7 +77,7 @@ class IndexController extends AbstractController
             ->getData($idDiscount);
 
         if ($discountConfiguratorTransfer === null) {
-            $this->addErrorMessage(sprintf('Discount with id %s doesn\'t exist', $idDiscount));
+            $this->addErrorMessage("Discount with id %s doesn't exist", ['%s' => $idDiscount]);
 
             return $this->redirectResponse($this->getFactory()->getConfig()->getDefaultRedirectUrl());
         }
@@ -148,7 +148,7 @@ class IndexController extends AbstractController
             ->getData($idDiscount);
 
         if ($discountConfiguratorTransfer === null) {
-            $this->addErrorMessage(sprintf('Discount with id %s doesn\'t exist', $idDiscount));
+            $this->addErrorMessage("Discount with id %s doesn't exist", ['%s' => $idDiscount]);
 
             return $this->redirectResponse($this->getFactory()->getConfig()->getDefaultRedirectUrl());
         }
@@ -346,6 +346,7 @@ class IndexController extends AbstractController
                 $discountConfiguratorTransfer->getDiscountGeneral()->getIdDiscount()
             )->render();
         }
+
         return $voucherCodesTable;
     }
 

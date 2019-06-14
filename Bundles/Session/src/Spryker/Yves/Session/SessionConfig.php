@@ -94,6 +94,24 @@ class SessionConfig extends AbstractBundleConfig
     }
 
     /**
+     * @deprecated Use `Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerProviderPluginInterface` instead.
+     *
+     * @return array|string
+     */
+    public function getSessionHandlerRedisConnectionParameters()
+    {
+        $connectionConfiguration = $this->get(SessionConstants::YVES_SESSION_PREDIS_CLIENT_CONFIGURATION, []);
+
+        if ($connectionConfiguration) {
+            return $connectionConfiguration;
+        }
+
+        return $this->getSessionHandlerRedisDataSourceName();
+    }
+
+    /**
+     * @deprecated Use `Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerProviderPluginInterface` instead.
+     *
      * @return string
      */
     public function getSessionHandlerRedisDataSourceName()
@@ -108,6 +126,18 @@ class SessionConfig extends AbstractBundleConfig
     }
 
     /**
+     * @deprecated Use `Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerProviderPluginInterface` instead.
+     *
+     * @return array
+     */
+    public function getSessionHandlerRedisConnectionOptions(): array
+    {
+        return $this->get(SessionConstants::YVES_SESSION_PREDIS_CLIENT_OPTIONS, []);
+    }
+
+    /**
+     * @deprecated Use `Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerProviderPluginInterface` instead.
+     *
      * @param string $protocol
      * @param string $host
      * @param int $port
@@ -140,6 +170,8 @@ class SessionConfig extends AbstractBundleConfig
     }
 
     /**
+     * @deprecated Use `Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerProviderPluginInterface` instead.
+     *
      * @param string $protocol
      *
      * @return string
@@ -150,6 +182,8 @@ class SessionConfig extends AbstractBundleConfig
     }
 
     /**
+     * @deprecated Use `Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerProviderPluginInterface` instead.
+     *
      * @param string $protocol
      *
      * @return string
@@ -160,6 +194,8 @@ class SessionConfig extends AbstractBundleConfig
     }
 
     /**
+     * @deprecated Use `Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerProviderPluginInterface` instead.
+     *
      * @return string
      */
     public function getSessionHandlerFileSavePath()

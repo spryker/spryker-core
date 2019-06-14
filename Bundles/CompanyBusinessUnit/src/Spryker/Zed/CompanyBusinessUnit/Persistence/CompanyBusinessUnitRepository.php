@@ -10,8 +10,10 @@ namespace Spryker\Zed\CompanyBusinessUnit\Persistence;
 use Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
+use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Util\PropelModelPager;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -27,6 +29,8 @@ class CompanyBusinessUnitRepository extends AbstractRepository implements Compan
      * @see \Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap::COL_CUSTOMER_REFERENCE
      */
     protected const COL_CUSTOMER_REFERENCE = 'spy_customer.customer_reference';
+
+    protected const COL_FK_CUSTOMER = 'fk_customer';
 
     /**
      * @param int $idCompanyBusinessUnit
@@ -146,6 +150,50 @@ class CompanyBusinessUnitRepository extends AbstractRepository implements Compan
     }
 
     /**
+     * @param int $idCompanyBusinessUnit
+     *
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer|null
+     */
+    public function findCompanyBusinessUnitById(int $idCompanyBusinessUnit): ?CompanyBusinessUnitTransfer
+    {
+        $companyBusinessUnitQuery = $this->getSpyCompanyBusinessUnitQuery()
+            ->filterByIdCompanyBusinessUnit($idCompanyBusinessUnit);
+
+        $companyBusinessUnitEntity = $companyBusinessUnitQuery->findOne();
+
+        if (!$companyBusinessUnitEntity) {
+            return null;
+        }
+
+        return $this->getFactory()
+            ->createCompanyBusinessUnitMapper()
+            ->mapCompanyBusinessUnitEntityToCompanyBusinessUnitTransfer($companyBusinessUnitEntity, new CompanyBusinessUnitTransfer());
+    }
+
+    /**
+     * @param string $companyBusinessUnitUuid
+     *
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer|null
+     */
+    public function findCompanyBusinessUnitByUuid(string $companyBusinessUnitUuid): ?CompanyBusinessUnitTransfer
+    {
+        $companyBusinessUnitEntity = $this->getSpyCompanyBusinessUnitQuery()
+            ->filterByUuid($companyBusinessUnitUuid)
+            ->findOne();
+
+        if (!$companyBusinessUnitEntity) {
+            return null;
+        }
+
+        return $this->getFactory()
+            ->createCompanyBusinessUnitMapper()
+            ->mapCompanyBusinessUnitEntityToCompanyBusinessUnitTransfer(
+                $companyBusinessUnitEntity,
+                new CompanyBusinessUnitTransfer()
+            );
+    }
+
+    /**
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param \Generated\Shared\Transfer\PaginationTransfer|null $paginationTransfer
      *
@@ -212,5 +260,36 @@ class CompanyBusinessUnitRepository extends AbstractRepository implements Compan
         if ($criteriaFilterTransfer->getCompanyBusinessUnitIds()) {
             $companyBusinessUnitQuery->filterByIdCompanyBusinessUnit_In($criteriaFilterTransfer->getCompanyBusinessUnitIds());
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return bool
+     */
+    public function hasCompanyUserByCustomer(CompanyUserTransfer $companyUserTransfer): bool
+    {
+        $companyUserTransfer
+            ->requireFkCompanyBusinessUnit()
+            ->requireFkCustomer();
+
+        $companyUserQuery = $this->getFactory()
+            ->createCompanyBusinessUnitQuery()
+            ->useCompanyUserQuery();
+
+        if (!$companyUserQuery->getTableMap()->hasColumn(static::COL_FK_CUSTOMER)) {
+            return false;
+        }
+
+        if ($companyUserTransfer->getIdCompanyUser()) {
+            $companyUserQuery
+                ->filterByIdCompanyUser($companyUserTransfer->getIdCompanyUser(), Criteria::NOT_EQUAL);
+        }
+
+        return $companyUserQuery
+            ->filterByFkCustomer($companyUserTransfer->getFkCustomer())
+            ->endUse()
+            ->filterByIdCompanyBusinessUnit($companyUserTransfer->getFkCompanyBusinessUnit())
+            ->exists();
     }
 }

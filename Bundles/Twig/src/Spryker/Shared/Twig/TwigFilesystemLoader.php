@@ -8,11 +8,11 @@
 namespace Spryker\Shared\Twig;
 
 use Spryker\Shared\Twig\Cache\CacheInterface;
+use Spryker\Shared\Twig\Loader\FilesystemLoaderInterface;
 use Spryker\Shared\Twig\TemplateNameExtractor\TemplateNameExtractorInterface;
-use Twig_Error_Loader;
-use Twig_LoaderInterface;
+use Twig\Error\LoaderError;
 
-class TwigFilesystemLoader implements Twig_LoaderInterface
+class TwigFilesystemLoader implements FilesystemLoaderInterface
 {
     /**
      * @var array
@@ -43,10 +43,11 @@ class TwigFilesystemLoader implements Twig_LoaderInterface
 
     /**
      * @param string $path
+     * @param string $namespace
      *
      * @return $this
      */
-    public function addPath($path)
+    public function addPath($path, $namespace = '__main__')
     {
         $this->paths[] = rtrim($path, '/\\');
 
@@ -137,7 +138,7 @@ class TwigFilesystemLoader implements Twig_LoaderInterface
      * @param string $bundle
      * @param string $templateName
      *
-     * @throws \Twig_Error_Loader
+     * @throws \Twig\Error\LoaderError
      *
      * @return string
      */
@@ -155,20 +156,20 @@ class TwigFilesystemLoader implements Twig_LoaderInterface
 
         $this->cache->set($name, false);
 
-        throw new Twig_Error_Loader(sprintf('Unable to find template "%s" (looked into: %s).', $templateName, implode(', ', $paths)));
+        throw new LoaderError(sprintf('Unable to find template "%s" (looked into: %s).', $templateName, implode(', ', $paths)));
     }
 
     /**
      * @param string $name
      *
-     * @throws \Twig_Error_Loader
+     * @throws \Twig\Error\LoaderError
      *
      * @return string
      */
     protected function returnFromCache($name)
     {
         if ($this->cache->get($name) === false) {
-            throw new Twig_Error_Loader(sprintf('Unable to find template "%s" (cached).', $name));
+            throw new LoaderError(sprintf('Unable to find template "%s" (cached).', $name));
         }
 
         return $this->cache->get($name);
@@ -177,7 +178,7 @@ class TwigFilesystemLoader implements Twig_LoaderInterface
     /**
      * @param string $name
      *
-     * @throws \Twig_Error_Loader
+     * @throws \Twig\Error\LoaderError
      *
      * @return void
      */
@@ -189,7 +190,7 @@ class TwigFilesystemLoader implements Twig_LoaderInterface
         if ($firstSeparatorPosition === false) {
             $this->cache->set($name, false);
 
-            throw new Twig_Error_Loader(sprintf('Malformed bundle template name "%s" (expecting "@Bundle/template_name").', $name));
+            throw new LoaderError(sprintf('Malformed bundle template name "%s" (expecting "@Bundle/template_name").', $name));
         }
     }
 

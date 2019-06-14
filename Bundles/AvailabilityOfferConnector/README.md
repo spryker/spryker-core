@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/availability-offer-connector.svg)](https://travis-ci.org/spryker/availability-offer-connector)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/availability-offer-connector/badge.svg)](https://coveralls.io/github/spryker/availability-offer-connector)
 
-{{ADD DESCRIPTION HERE}}
+AvailabilityOfferConnector module.
 
 ## Installation
 

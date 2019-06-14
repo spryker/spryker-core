@@ -64,10 +64,9 @@ class QuoteDiscountMaxUsageValidator implements QuoteDiscountValidatorInterface
     protected function hasVouchersExceedingUsageLimitByCodes(ArrayObject $voucherDiscounts): bool
     {
         return (bool)$this->discountRepository
-            ->findVouchersExceedingUsageLimitByCodes(
+            ->getCountOfVouchersExceedingUsageLimitByCodes(
                 $this->getVoucherCodes($voucherDiscounts)
-            )
-            ->count();
+            );
     }
 
     /**

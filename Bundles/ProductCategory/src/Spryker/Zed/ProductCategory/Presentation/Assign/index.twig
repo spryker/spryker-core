@@ -14,8 +14,15 @@
 {% endblock %}
 
 {% block content %}
+    {% embed '@Gui/Partials/widget.twig' %}
 
-    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Assign products to category' | trans } %}
+        {% block widget_title %}
+            {% if categoryPath is defined and categoryPath is not null %}
+                <h5>{{ 'Assign products to category'  | trans }}: <strong>{{ categoryPath }}</strong></h5>
+            {% else %}
+                <h5>{{ 'Assign products to category'  | trans }}</h5>
+            {% endif %}
+        {% endblock %}
 
         {% block widget_content %}
 
@@ -28,8 +35,8 @@
 
             <div class="tabs-container">
                 <ul class="nav nav-tabs">
-                    <li class="active"><a data-toggle="tab" href="#tab-1">Select products to assign</a></li>
-                    <li class=""><a data-toggle="tab" href="#tab-2" id="assigned-tab-label">Products to be assigned</a></li>
+                    <li class="active"><a data-toggle="tab" href="#tab-1">{{ 'Select products to assign' | trans }}</a></li>
+                    <li class=""><a data-toggle="tab" href="#tab-2" id="assigned-tab-label">{{ 'Products to be assigned' | trans }}</a></li>
                 </ul>
                 <div class="tab-content">
                     <div id="tab-1" class="tab-pane active">
@@ -37,7 +44,7 @@
                             {{ productsTable | raw }}
 
                             <div class="prcat-select-all">
-                                <a href="#" class="btn btn-primary ">Select All</a>
+                                <a href="#" class="btn btn-primary ">{{ 'Select All' | trans }}</a>
                             </div>
                         </div>
                     </div>
@@ -66,8 +73,8 @@
 
             <div class="tabs-container">
                 <ul class="nav nav-tabs">
-                    <li class="active"><a data-toggle="tab" href="#tab-11">Products in this category</a></li>
-                    <li class=""><a data-toggle="tab" href="#tab-21" id="deassigned-tab-label">Products to be deassigned</a></li>
+                    <li class="active"><a data-toggle="tab" href="#tab-11">{{ 'Products in this category' | trans }}</a></li>
+                    <li class=""><a data-toggle="tab" href="#tab-21" id="deassigned-tab-label">{{ 'Products to be deassigned' | trans }}</a></li>
                 </ul>
                 <div class="tab-content">
                     <div id="tab-11" class="tab-pane active">
@@ -75,7 +82,7 @@
                             {{ productCategoriesTable | raw }}
 
                             <div class="prcat-deselect-all">
-                                <a href="#" class="btn btn-primary ">Deselect All</a>
+                                <a href="#" class="btn btn-primary ">{{ 'Deselect All' | trans }}</a>
                             </div>
                         </div>
                     </div>

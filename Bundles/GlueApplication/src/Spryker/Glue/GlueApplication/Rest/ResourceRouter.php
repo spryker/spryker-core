@@ -192,6 +192,7 @@ class ResourceRouter implements ResourceRouterInterface
                 RequestConstantsInterface::ATTRIBUTE_IS_PROTECTED => $route[RequestConstantsInterface::ATTRIBUTE_CONFIGURATION]['is_protected'],
             ]
         );
+
         return $routeParams;
     }
 

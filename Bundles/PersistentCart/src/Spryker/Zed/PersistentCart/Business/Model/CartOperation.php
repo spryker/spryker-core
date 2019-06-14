@@ -13,6 +13,8 @@ use Generated\Shared\Transfer\PersistentCartChangeQuantityTransfer;
 use Generated\Shared\Transfer\PersistentCartChangeTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToQuoteFacadeInterface;
+use Spryker\Zed\PersistentCart\Dependency\Service\PersistentCartToUtilQuantityServiceInterface;
 use Spryker\Zed\PersistentCartExtension\Dependency\Plugin\QuoteItemFinderPluginInterface;
 
 class CartOperation implements CartOperationInterface
@@ -38,21 +40,37 @@ class CartOperation implements CartOperationInterface
     protected $quoteItemOperation;
 
     /**
+     * @var \Spryker\Zed\PersistentCart\Dependency\Service\PersistentCartToUtilQuantityServiceInterface
+     */
+    protected $utilQuantityService;
+
+    /**
+     * @var \Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToQuoteFacadeInterface
+     */
+    protected $quoteFacade;
+
+    /**
      * @param \Spryker\Zed\PersistentCartExtension\Dependency\Plugin\QuoteItemFinderPluginInterface $itemFinderPlugin
      * @param \Spryker\Zed\PersistentCart\Business\Model\QuoteResponseExpanderInterface $quoteResponseExpander
      * @param \Spryker\Zed\PersistentCart\Business\Model\QuoteResolverInterface $quoteResolver
      * @param \Spryker\Zed\PersistentCart\Business\Model\QuoteItemOperationInterface $quoteItemOperations
+     * @param \Spryker\Zed\PersistentCart\Dependency\Service\PersistentCartToUtilQuantityServiceInterface $utilQuantityService
+     * @param \Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToQuoteFacadeInterface $quoteFacade
      */
     public function __construct(
         QuoteItemFinderPluginInterface $itemFinderPlugin,
         QuoteResponseExpanderInterface $quoteResponseExpander,
         QuoteResolverInterface $quoteResolver,
-        QuoteItemOperationInterface $quoteItemOperations
+        QuoteItemOperationInterface $quoteItemOperations,
+        PersistentCartToUtilQuantityServiceInterface $utilQuantityService,
+        PersistentCartToQuoteFacadeInterface $quoteFacade
     ) {
         $this->quoteResponseExpander = $quoteResponseExpander;
         $this->itemFinderPlugin = $itemFinderPlugin;
         $this->quoteResolver = $quoteResolver;
         $this->quoteItemOperation = $quoteItemOperations;
+        $this->utilQuantityService = $utilQuantityService;
+        $this->quoteFacade = $quoteFacade;
     }
 
     /**
@@ -122,6 +140,17 @@ class CartOperation implements CartOperationInterface
     }
 
     /**
+     * @param float $firstQuantity
+     * @param float $secondQuantity
+     *
+     * @return bool
+     */
+    protected function isQuantityEqual(float $firstQuantity, float $secondQuantity): bool
+    {
+        return $this->utilQuantityService->isQuantityEqual($firstQuantity, $secondQuantity);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\PersistentCartChangeQuantityTransfer $persistentCartChangeQuantityTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
@@ -146,12 +175,13 @@ class CartOperation implements CartOperationInterface
 
             return $quoteResponseTransfer;
         }
-        if ($itemTransfer->getQuantity() === 0) {
+        if ($this->isQuantityEqual($itemTransfer->getQuantity(), 0)) {
             return $this->quoteItemOperation->removeItems([$quoteItemTransfer], $quoteTransfer);
         }
 
-        $delta = abs($quoteItemTransfer->getQuantity() - $itemTransfer->getQuantity());
-        if ($delta === 0) {
+        $delta = abs($this->subtractQuantities($quoteItemTransfer->getQuantity(), $itemTransfer->getQuantity()));
+
+        if ($this->isQuantityEqual($delta, 0)) {
             $quoteResponseTransfer = new QuoteResponseTransfer();
             $quoteResponseTransfer->setQuoteTransfer($quoteTransfer);
             $quoteResponseTransfer->setIsSuccessful(false);
@@ -265,6 +295,11 @@ class CartOperation implements CartOperationInterface
             return $quoteResponseTransfer;
         }
         $customerQuoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
+
+        if ($this->quoteFacade->isQuoteLocked($customerQuoteTransfer)) {
+            return $this->quoteResponseExpander->expand($quoteResponseTransfer);
+        }
+
         $quoteTransfer->fromArray($customerQuoteTransfer->modifiedToArray(), true);
 
         return $this->quoteItemOperation->validate($quoteTransfer);
@@ -295,5 +330,16 @@ class CartOperation implements CartOperationInterface
         $quoteResponseTransfer->setIsSuccessful(false);
 
         return $this->quoteResponseExpander->expand($quoteResponseTransfer);
+    }
+
+    /**
+     * @param float $firstQuantity
+     * @param float $secondQuantity
+     *
+     * @return float
+     */
+    protected function subtractQuantities(float $firstQuantity, float $secondQuantity): float
+    {
+        return $this->utilQuantityService->subtractQuantities($firstQuantity, $secondQuantity);
     }
 }

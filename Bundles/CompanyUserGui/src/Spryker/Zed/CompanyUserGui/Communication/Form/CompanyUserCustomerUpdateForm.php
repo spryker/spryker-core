@@ -17,7 +17,7 @@ class CompanyUserCustomerUpdateForm extends CompanyUserCustomerForm
      *
      * @return $this
      */
-    protected function addEmailField(FormBuilderInterface $builder): CompanyUserCustomerForm
+    protected function addEmailField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_EMAIL, EmailType::class, [
             'label' => 'Email',
@@ -33,7 +33,7 @@ class CompanyUserCustomerUpdateForm extends CompanyUserCustomerForm
      *
      * @return $this
      */
-    protected function addSendPasswordField(FormBuilderInterface $builder): CompanyUserCustomerForm
+    protected function addSendPasswordField(FormBuilderInterface $builder)
     {
         return $this;
     }

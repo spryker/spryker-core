@@ -48,7 +48,7 @@ class GeneratedTransferDirectoryTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Symfony\Component\Filesystem\Filesystem
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Symfony\Component\Filesystem\Filesystem
      */
     protected function getFileSystemMock()
     {
@@ -58,7 +58,7 @@ class GeneratedTransferDirectoryTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Symfony\Component\Finder\Finder
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Symfony\Component\Finder\Finder
      */
     protected function getFinderMock()
     {

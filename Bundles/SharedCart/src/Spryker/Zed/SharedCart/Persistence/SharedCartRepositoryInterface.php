@@ -8,8 +8,12 @@
 namespace Spryker\Zed\SharedCart\Persistence;
 
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
+use Generated\Shared\Transfer\QuoteCompanyUserTransfer;
 use Generated\Shared\Transfer\QuotePermissionGroupCriteriaFilterTransfer;
+use Generated\Shared\Transfer\QuotePermissionGroupTransfer;
 use Generated\Shared\Transfer\ShareDetailCollectionTransfer;
+use Generated\Shared\Transfer\ShareDetailCriteriaFilterTransfer;
+use Generated\Shared\Transfer\SharedQuoteCriteriaFilterTransfer;
 
 interface SharedCartRepositoryInterface
 {
@@ -28,11 +32,11 @@ interface SharedCartRepositoryInterface
     public function findPermissionsByCustomer(string $customerReference): PermissionCollectionTransfer;
 
     /**
-     * @param int $idCompanyUser
+     * @param \Generated\Shared\Transfer\SharedQuoteCriteriaFilterTransfer $sharedQuoteCriteriaFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\SpyQuoteEntityTransfer[]
+     * @return int[]
      */
-    public function findQuotesByIdCompanyUser(int $idCompanyUser): array;
+    public function getIsDefaultFlagForSharedCartsBySharedQuoteCriteriaFilter(SharedQuoteCriteriaFilterTransfer $sharedQuoteCriteriaFilterTransfer): array;
 
     /**
      * @param string $customerReference
@@ -83,4 +87,25 @@ interface SharedCartRepositoryInterface
      * @return \Generated\Shared\Transfer\ShareDetailCollectionTransfer
      */
     public function findShareDetailsByQuoteId(int $idQuote): ShareDetailCollectionTransfer;
+
+    /**
+     * @param int $idQuotePermissionGroup
+     *
+     * @return \Generated\Shared\Transfer\QuotePermissionGroupTransfer|null
+     */
+    public function findQuotePermissionGroupById(int $idQuotePermissionGroup): ?QuotePermissionGroupTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ShareDetailCriteriaFilterTransfer $shareDetailCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShareDetailCollectionTransfer
+     */
+    public function getShareDetailCollectionByShareDetailCriteria(ShareDetailCriteriaFilterTransfer $shareDetailCriteriaFilterTransfer): ShareDetailCollectionTransfer;
+
+    /**
+     * @param string $quoteCompanyUserUuid
+     *
+     * @return \Generated\Shared\Transfer\QuoteCompanyUserTransfer|null
+     */
+    public function findQuoteCompanyUserByUuid(string $quoteCompanyUserUuid): ?QuoteCompanyUserTransfer;
 }

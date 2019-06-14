@@ -9,6 +9,7 @@ namespace Spryker\Zed\Oms\Persistence;
 
 use DateTime;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface OmsQueryContainerInterface extends QueryContainerInterface
@@ -67,7 +68,7 @@ interface OmsQueryContainerInterface extends QueryContainerInterface
      * @param string $sku
      * @param bool $returnTest
      *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
     public function sumProductQuantitiesForAllSalesOrderItemsBySku(array $states, $sku, $returnTest = true);
 
@@ -140,12 +141,24 @@ interface OmsQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
+     * @deprecated Use `queryGroupedMatrixOrderItems()` instead
+     *
      * @param array $processIds
      * @param array $stateBlacklist
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
     public function queryMatrixOrderItems(array $processIds, array $stateBlacklist);
+
+    /**
+     * @api
+     *
+     * @param int[] $processIds
+     * @param int[] $stateBlacklist
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
+     */
+    public function queryGroupedMatrixOrderItems(array $processIds, array $stateBlacklist): SpySalesOrderItemQuery;
 
     /**
      * @api

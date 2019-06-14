@@ -46,7 +46,7 @@ class RepeaterTest extends Test
     {
         $repeater = new Repeater();
 
-        $this->assertInternalType('array', $repeater->getRepeatData());
-        $this->assertInternalType('array', $repeater->getRepeatData($this->tester->getBundleControllerAction()));
+        $this->assertIsArray($repeater->getRepeatData());
+        $this->assertIsArray($repeater->getRepeatData($this->tester->getBundleControllerAction()));
     }
 }

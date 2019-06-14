@@ -57,6 +57,7 @@ class EditBlockController extends AbstractCmsBlockController
 
             if ($isUpdated) {
                 $redirectUrl = $this->createEditCmsBlockUrl($cmsBlockTransfer->getIdCmsBlock());
+
                 return $this->redirectResponse($redirectUrl);
             }
         }

@@ -67,7 +67,7 @@ class CustomerLoginQuoteSync implements CustomerLoginQuoteSyncInterface
         }
 
         $quoteTransfer = $this->quoteClient->getQuote();
-        if ($quoteTransfer->getCustomer()) {
+        if ($quoteTransfer->getCustomer() || $quoteTransfer->getCustomerReference()) {
             return;
         }
 

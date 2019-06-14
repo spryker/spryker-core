@@ -23,6 +23,8 @@ use Spryker\Zed\Product\Dependency\ProductEvents;
  */
 class ProductConcretePageSearchEventResourceRepositoryPlugin extends AbstractPlugin implements EventResourceRepositoryPluginInterface
 {
+    protected const COLUMN_ID_PRODUCT_CONCRETE = 'spy_product.id_product_concrete';
+
     /**
      * {@inheritdoc}
      *
@@ -77,7 +79,7 @@ class ProductConcretePageSearchEventResourceRepositoryPlugin extends AbstractPlu
      */
     public function getIdColumnName(): ?string
     {
-        return SpyProductTableMap::COL_ID_PRODUCT;
+        return static::COLUMN_ID_PRODUCT_CONCRETE;
     }
 
     /**

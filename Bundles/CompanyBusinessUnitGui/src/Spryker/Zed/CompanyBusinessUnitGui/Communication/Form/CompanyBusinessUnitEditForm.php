@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\CompanyBusinessUnitGui\Communication\Form;
 
-use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
@@ -19,9 +18,9 @@ class CompanyBusinessUnitEditForm extends CompanyBusinessUnitForm
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $choices
      *
-     * @return \Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\CompanyBusinessUnitForm
+     * @return $this
      */
-    protected function addCompanyField(FormBuilderInterface $builder, array $choices): CompanyBusinessUnitForm
+    protected function addCompanyField(FormBuilderInterface $builder, array $choices)
     {
         return $this;
     }
@@ -31,7 +30,7 @@ class CompanyBusinessUnitEditForm extends CompanyBusinessUnitForm
      *
      * @return $this
      */
-    protected function addPluginForms(FormBuilderInterface $builder): AbstractType
+    protected function addPluginForms(FormBuilderInterface $builder)
     {
         foreach ($this->getFactory()->getCompanyBusinessUnitEditFormPlugins() as $formPlugin) {
             $formPlugin->buildForm($builder);

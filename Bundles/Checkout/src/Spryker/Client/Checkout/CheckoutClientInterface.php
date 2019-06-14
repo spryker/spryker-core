@@ -8,10 +8,14 @@
 namespace Spryker\Client\Checkout;
 
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\QuoteValidationResponseTransfer;
 
 interface CheckoutClientInterface
 {
     /**
+     * Specification:
+     * - Places the order.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -19,4 +23,17 @@ interface CheckoutClientInterface
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
     public function placeOrder(QuoteTransfer $quoteTransfer);
+
+    /**
+     * Specification:
+     * - Validates quote using `CheckoutPreCheckPluginInterface` plugins.
+     * - Considers quote valid for checkout if no plugin returns with `isSuccessful=false`.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteValidationResponseTransfer
+     */
+    public function isQuoteApplicableForCheckout(QuoteTransfer $quoteTransfer): QuoteValidationResponseTransfer;
 }

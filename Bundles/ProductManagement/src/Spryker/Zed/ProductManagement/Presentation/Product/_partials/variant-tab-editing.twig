@@ -1,8 +1,8 @@
 <div class="well">
     {% filter trans|raw %}
-        <h3>Product variants</h3>
-        <p>Below are the product variants listed. Each variant may be edited independent from the others.</p>
-        <p><i>Note: Deactivated product variants are not available in the shop anymore.</i></p>
+        <h3>{{ 'Product variants' | trans }}</h3>
+        <p>{{ 'Below are the product variants listed. Each variant may be edited independent from the others.' | trans }}</p>
+        <p><i>{{ 'Note: Deactivated product variants are not available in the shop anymore.' | trans }}</i></p>
     {% endfilter %}
 </div>
 

@@ -17,12 +17,32 @@ use Spryker\Glue\Kernel\Controller\AbstractController;
 class CompanyUsersResourceController extends AbstractController
 {
     /**
+     * @Glue({
+     *     "getResourceById": {
+     *          "summary": [
+     *              "Retrieves a company user by id."
+     *          ],
+     *          "responses": {
+     *              "501": "Not implemented."
+     *          }
+     *     },
+     *     "getCollection": {
+     *          "summary": [
+     *              "Retrieves list of company users."
+     *          ]
+     *     }
+     * })
+     *
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function getAction(RestRequestInterface $restRequest): RestResponseInterface
     {
-        return $this->getFactory()->createCompanyUserReader()->getCompanyUsersByCustomerReference($restRequest);
+        if (!$restRequest->getResource()->getId()) {
+            return $this->getFactory()->createCompanyUserReader()->getCompanyUserCollection($restRequest);
+        }
+
+        return $this->getFactory()->createCompanyUserReader()->getCompanyUserByResourceId($restRequest);
     }
 }

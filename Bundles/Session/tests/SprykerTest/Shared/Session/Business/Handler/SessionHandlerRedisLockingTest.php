@@ -56,7 +56,7 @@ class SessionHandlerRedisLockingTest extends Unit
     /**
      * @param string|null $returnValue
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Predis\Client
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Predis\Client
      */
     private function getRedisClientMock($returnValue)
     {
@@ -74,7 +74,7 @@ class SessionHandlerRedisLockingTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\Session\Business\Handler\Lock\Redis\RedisSpinLockLocker
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\Session\Business\Handler\Lock\Redis\RedisSpinLockLocker
      */
     private function getRedisSpinLockLockerMock()
     {

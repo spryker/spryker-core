@@ -38,17 +38,17 @@ class CompanyBusinessUnitWriterTest extends Test
     protected $companyBusinessUnitWriter;
 
     /**
-     * @var \Spryker\Zed\CompanyBusinessUnit\Persistence\CompanyBusinessUnitRepositoryInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Spryker\Zed\CompanyBusinessUnit\Persistence\CompanyBusinessUnitRepositoryInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $repositoryMock;
 
     /**
-     * @var \Spryker\Zed\CompanyBusinessUnit\Persistence\CompanyBusinessUnitEntityManagerInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Spryker\Zed\CompanyBusinessUnit\Persistence\CompanyBusinessUnitEntityManagerInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $entityManagerMock;
 
     /**
-     * @var \Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitPluginExecutor\CompanyBusinessUnitPluginExecutorInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitPluginExecutor\CompanyBusinessUnitPluginExecutorInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $companyBusinessUnitPluginExecutorMock;
 

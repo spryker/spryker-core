@@ -242,6 +242,7 @@ class AbstractProductFormDataProvider
     protected function getProductImagesForAbstractProduct($idProductAbstract)
     {
         $imageSetTransferCollection = $this->productImageFacade->getProductImagesSetCollectionByProductAbstractId($idProductAbstract);
+
         return $this->getProductImageSetCollection($imageSetTransferCollection);
     }
 
@@ -253,6 +254,7 @@ class AbstractProductFormDataProvider
     protected function getProductImagesForConcreteProduct($idProduct)
     {
         $imageSetTransferCollection = $this->productImageFacade->getProductImagesSetCollectionByProductId($idProduct);
+
         return $this->getProductImageSetCollection($imageSetTransferCollection);
     }
 
@@ -761,6 +763,7 @@ class AbstractProductFormDataProvider
         }
 
         $transfer = $this->attributeTransferCollection->get($keyToLocalize);
+
         return $transfer->getKey();
     }
 

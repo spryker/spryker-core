@@ -17,4 +17,11 @@ interface BusinessOnBehalfGuiToCompanyFacadeInterface
      * @return \Generated\Shared\Transfer\CompanyTransfer
      */
     public function getCompanyById(CompanyTransfer $companyTransfer): CompanyTransfer;
+
+    /**
+     * @param int $idCompany
+     *
+     * @return \Generated\Shared\Transfer\CompanyTransfer|null
+     */
+    public function findCompanyById(int $idCompany): ?CompanyTransfer;
 }

@@ -39,7 +39,7 @@ class MethodController extends AbstractController
             $shipmentMethodTransfer = $form->getData();
             $this->getFacade()->createMethod($shipmentMethodTransfer);
 
-            $this->addSuccessMessage(sprintf(static::MESSAGE_CREATE_SUCCESS, $shipmentMethodTransfer->getName()));
+            $this->addSuccessMessage(static::MESSAGE_CREATE_SUCCESS, ['%s' => $shipmentMethodTransfer->getName()]);
 
             return $this->redirectResponse('/shipment');
         }
@@ -70,7 +70,7 @@ class MethodController extends AbstractController
 
                 $this->getFacade()
                     ->updateMethod($shipmentMethodTransfer);
-                $this->addSuccessMessage(sprintf(static::MESSAGE_UPDATE_SUCCESS, $shipmentMethodTransfer->getName()));
+                $this->addSuccessMessage(static::MESSAGE_UPDATE_SUCCESS, ['%s' => $shipmentMethodTransfer->getName()]);
 
                 return $this->redirectResponse('/shipment');
             }

@@ -26,16 +26,25 @@ class EditController extends ProductListAbstractController
     public function indexAction(Request $request)
     {
         $productListAggregateForm = $this->createProductListAggregateForm($request);
-        $productListTransfer = $this->handleProductListAggregateForm(
+        $productListTransfer = $this->findProductListTransfer(
             $request,
             $productListAggregateForm
         );
 
-        if ($productListTransfer) {
-            $this->addSuccessMessage(sprintf(
-                static::MESSAGE_PRODUCT_LIST_UPDATE_SUCCESS,
-                $productListTransfer->getTitle()
-            ));
+        if ($productListTransfer === null) {
+            return $this->viewResponse($this->executeEditAction($request, $productListAggregateForm));
+        }
+
+        $productListResponseTransfer = $this->getFactory()
+            ->getProductListFacade()
+            ->updateProductList($productListTransfer);
+
+        $this->addMessagesFromProductListResponseTransfer($productListResponseTransfer);
+
+        if ($productListResponseTransfer->getIsSuccessful()) {
+            $this->addSuccessMessage(static::MESSAGE_PRODUCT_LIST_UPDATE_SUCCESS, [
+                '%s' => $productListTransfer->getTitle(),
+            ]);
         }
 
         return $this->viewResponse($this->executeEditAction($request, $productListAggregateForm));

@@ -114,6 +114,7 @@ class CmsPageTable extends AbstractTable
     protected function buildUrlList(array $item)
     {
         $cmsUrls = $this->extractUrls($item);
+
         return implode('<br />', $cmsUrls);
     }
 
@@ -291,7 +292,7 @@ class CmsPageTable extends AbstractTable
                 $this->createEditPageButtonItem($item),
                 $this->createEditGlossaryButtonItem($item),
             ],
-            'Edit ',
+            'Edit',
             [
                 'class' => 'btn-edit',
                 'icon' => 'fa-pencil-square-o',
@@ -389,10 +390,10 @@ class CmsPageTable extends AbstractTable
     protected function getActiveStatusLabel($item)
     {
         if (!$item[CmsPageTableConstants::COL_IS_ACTIVE]) {
-            return '<span class="label label-danger">Inactive</span>';
+            return $this->generateLabel('Inactive', 'label-danger');
         }
 
-        return '<span class="label label-info">Active</span>';
+        return $this->generateLabel('Active', 'label-info');
     }
 
     /**
@@ -406,13 +407,13 @@ class CmsPageTable extends AbstractTable
             return $this->getActiveStatusLabel($item);
         }
 
-        return '<span class="label label-default">Unpublished</span>';
+        return $this->generateLabel('Unpublished', 'label-default');
     }
 
     /**
      * @param array $item
      *
-     * @return array
+     * @return string[]
      */
     protected function extractUrls(array $item)
     {
@@ -499,6 +500,7 @@ class CmsPageTable extends AbstractTable
     protected function mapResults(array $item, $urlPrefix)
     {
         $actions = implode(' ', $this->buildLinks($item, $urlPrefix));
+
         return [
             CmsPageTableConstants::COL_ID_CMS_PAGE => $item[CmsPageTableConstants::COL_ID_CMS_PAGE],
             CmsPageTableConstants::COL_NAME => $this->buildCmsPageName($item),

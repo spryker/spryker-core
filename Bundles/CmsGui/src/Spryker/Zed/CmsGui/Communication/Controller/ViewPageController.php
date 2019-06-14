@@ -35,7 +35,7 @@ class ViewPageController extends AbstractController
         $cmsLocalizedPageEntity = $this->getFactory()->getCmsQueryContainer()->queryCmsPageLocalizedAttributesByFkPage($idCmsPage)->findOne();
 
         if ($cmsVersionTransfer === null) {
-            $this->addErrorMessage(sprintf('Cms page with id %s doesn\'t exist', $idCmsPage));
+            $this->addErrorMessage("Cms page with id %s doesn't exist", ['%s' => $idCmsPage]);
 
             return $this->redirectResponse($this->getFactory()->getConfig()->getDefaultRedirectUrl());
         }

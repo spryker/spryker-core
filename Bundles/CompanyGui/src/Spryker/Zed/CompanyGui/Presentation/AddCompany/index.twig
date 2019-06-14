@@ -2,8 +2,8 @@
 
 {% set widget_title = 'Create Company' %}
 
-{% block head_title widget_title %}
-{% block section_title widget_title %}
+{% block head_title widget_title | trans %}
+{% block section_title widget_title | trans %}
 
 {% block action %}
     {{ backActionButton(url('/company-gui/list-company'), 'Back to Companies' | trans) }}

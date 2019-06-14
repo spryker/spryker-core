@@ -1,7 +1,7 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
 {% set page_title = 'Re-sort child-categories' %}
-{% block section_title %}{{ page_title }}{% endblock %}
+{% block section_title %}{{ page_title | trans }}{% endblock %}
 
 {% block action %}
     {% include ['@CategoryGui/_partials/back-button.twig', '@Category/_partials/back-button.twig'] %}

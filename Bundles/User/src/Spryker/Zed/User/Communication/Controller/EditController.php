@@ -133,7 +133,6 @@ class EditController extends AbstractController
 
         return $this->viewResponse([
             'userForm' => $userForm->createView(),
-            'idUser' => $idUser,
         ]);
     }
 
@@ -197,6 +196,43 @@ class EditController extends AbstractController
         $this->addErrorMessage(static::MESSAGE_USER_DEACTIVATE_ERROR);
 
         return $this->redirectResponse(static::USER_LISTING_URL);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function confirmDeleteAction(Request $request)
+    {
+        $idUser = $this->castId($request->query->get(static::PARAM_ID_USER));
+
+        if (!$idUser) {
+            $this->addErrorMessage(static::MESSAGE_ID_USER_EXTRACT_ERROR);
+
+            return $this->redirectResponse(static::USER_LISTING_URL);
+        }
+
+        if ($this->isCurrentUser($idUser)) {
+            $this->addErrorMessage(static::MESSAGE_USER_DELETE_ERROR);
+
+            return $this->redirectResponse(static::USER_LISTING_URL);
+        }
+
+        $userTransfer = $this->getFacade()->findUserById($idUser);
+
+        if (!$userTransfer) {
+            $this->addErrorMessage(static::MESSAGE_USER_NOT_FOUND);
+
+            return $this->redirectResponse(static::USER_LISTING_URL);
+        }
+
+        $userDeleteConfirmForm = $this->getFactory()->getUserDeleteConfirmForm();
+
+        return $this->viewResponse([
+            'userDeleteConfirmForm' => $userDeleteConfirmForm->createView(),
+            'user' => $userTransfer,
+        ]);
     }
 
     /**

@@ -49,8 +49,9 @@ class RateController extends AbstractController
             } else {
                 $taxRateTransfer = $this->getFacade()->createTaxRate($taxRateTransfer);
                 if ($taxRateTransfer->getIdTaxRate()) {
-                    $this->addSuccessMessage(sprintf('Tax rate %d was created successfully.', $taxRateTransfer->getIdTaxRate()));
+                    $this->addSuccessMessage('Tax rate %d was created successfully.', ['%d' => $taxRateTransfer->getIdTaxRate()]);
                     $redirectUrl = Url::generate('/tax/rate/edit', [static::PARAM_URL_ID_TAX_RATE => $taxRateTransfer->getIdTaxRate()])->build();
+
                     return $this->redirectResponse($redirectUrl);
                 }
             }
@@ -74,7 +75,7 @@ class RateController extends AbstractController
         $taxRateTransfer = $taxRateFormDataProvider->getData($idTaxRate);
 
         if ($taxRateTransfer === null) {
-            $this->addErrorMessage(sprintf('Tax rate with id %s doesn\'t exist', $idTaxRate));
+            $this->addErrorMessage("Tax rate with id %s doesn't exist", ["%s" => $idTaxRate]);
 
             return $this->redirectResponse(static::REDIRECT_URL_DEFAULT);
         }
@@ -99,7 +100,7 @@ class RateController extends AbstractController
             } else {
                 $rowsAffected = $this->getFacade()->updateTaxRate($taxRateTransfer);
                 if ($rowsAffected > 0) {
-                    $this->addSuccessMessage(sprintf('Tax rate %d was updated successfully.', $idTaxRate));
+                    $this->addSuccessMessage('Tax rate %d was updated successfully.', ['%d' => $idTaxRate]);
                 }
             }
         }
@@ -122,7 +123,7 @@ class RateController extends AbstractController
         $taxRateTransfer = $this->getFacade()->findTaxRate($idTaxRate);
 
         if ($taxRateTransfer === null) {
-            $this->addErrorMessage(sprintf('Tax rate with id %s doesn\'t exist', $idTaxRate));
+            $this->addErrorMessage("Tax rate with id %s doesn't exist", ['%s' => $idTaxRate]);
 
             return $this->redirectResponse(static::REDIRECT_URL_DEFAULT);
         }
@@ -145,6 +146,7 @@ class RateController extends AbstractController
         $url = Url::generate('/tax/delete-rate', [
             static::PARAM_URL_ID_TAX_RATE => $idTaxSet,
         ])->build();
+
         return $this->redirectResponse($url, 301);
     }
 

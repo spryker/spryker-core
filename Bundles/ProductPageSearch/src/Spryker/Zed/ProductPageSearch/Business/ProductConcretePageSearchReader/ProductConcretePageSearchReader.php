@@ -65,4 +65,14 @@ class ProductConcretePageSearchReader implements ProductConcretePageSearchReader
 
         return $groupedProductConcretePageSearchTransfers;
     }
+
+    /**
+     * @param array $productAbstractStoreMap Keys are product abstract IDs, values are store IDs.
+     *
+     * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
+     */
+    public function getProductConcretePageSearchTransfersByProductAbstractStoreMap(array $productAbstractStoreMap): array
+    {
+        return $this->repository->getProductConcretePageSearchTransfersByProductAbstractStoreMap($productAbstractStoreMap);
+    }
 }

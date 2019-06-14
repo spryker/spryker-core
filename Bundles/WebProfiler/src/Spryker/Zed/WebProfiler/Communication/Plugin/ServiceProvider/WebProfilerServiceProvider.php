@@ -54,7 +54,7 @@ class WebProfilerServiceProvider extends AbstractPlugin implements ServiceProvid
     /**
      * @param \Silex\Application $app
      *
-     * @return void
+     * @return \Silex\ControllerCollection|null
      */
     public function connect(Application $app)
     {

@@ -9,6 +9,7 @@ namespace Spryker\Zed\SharedCart\Business\Model;
 
 use Generated\Shared\Transfer\QuotePermissionGroupCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuotePermissionGroupResponseTransfer;
+use Generated\Shared\Transfer\QuotePermissionGroupTransfer;
 use Spryker\Zed\SharedCart\Persistence\SharedCartRepositoryInterface;
 
 class QuotePermissionGroupReader implements QuotePermissionGroupReaderInterface
@@ -41,5 +42,26 @@ class QuotePermissionGroupReader implements QuotePermissionGroupReaderInterface
         }
 
         return $quotePermissionGroupResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuotePermissionGroupTransfer $quotePermissionGroupTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuotePermissionGroupResponseTransfer
+     */
+    public function findQuotePermissionGroupById(QuotePermissionGroupTransfer $quotePermissionGroupTransfer): QuotePermissionGroupResponseTransfer
+    {
+        $quotePermissionGroupTransfer->requireIdQuotePermissionGroup();
+
+        $quotePermissionGroupResponseTransfer = new QuotePermissionGroupResponseTransfer();
+        $quotePermissionGroupResponseTransfer->setIsSuccessful(false);
+
+        $quotePermissionGroupTransfer = $this->sharedCartRepository->findQuotePermissionGroupById($quotePermissionGroupTransfer->getIdQuotePermissionGroup());
+        if (!$quotePermissionGroupTransfer) {
+            return $quotePermissionGroupResponseTransfer;
+        }
+
+        return $quotePermissionGroupResponseTransfer->addQuotePermissionGroup($quotePermissionGroupTransfer)
+            ->setIsSuccessful(true);
     }
 }

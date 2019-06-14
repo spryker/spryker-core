@@ -22,8 +22,6 @@ use SprykerTest\Zed\ProductManagement\ProductManagementPresentationTester;
 class ProductManagementProductEditCest
 {
     /**
-     * @skip Fix me
-     *
      * @param \SprykerTest\Zed\ProductManagement\ProductManagementPresentationTester $i
      *
      * @return void
@@ -33,14 +31,15 @@ class ProductManagementProductEditCest
         $i->registerProductManagementStoreRelationFormTypePlugin();
         $i->registerMoneyCollectionFormTypePlugin();
 
-        $i->listDataTable(ProductManagementProductListPage::URL . '/index/table');
+        $i->amOnPage(ProductManagementProductListPage::URL);
+
+        $i->waitForElementVisible('.dataTables_scrollBody');
+
         $i->clickDataTableEditButton();
         $i->seeBreadcrumbNavigation('Dashboard / Products / Products / Edit Product');
     }
 
     /**
-     * @skip Fix me
-     *
      * @param \SprykerTest\Zed\ProductManagement\ProductManagementPresentationTester $i
      *
      * @return void
@@ -50,10 +49,18 @@ class ProductManagementProductEditCest
         $i->registerProductManagementStoreRelationFormTypePlugin();
         $i->registerMoneyCollectionFormTypePlugin();
 
-        $i->listDataTable(ProductManagementProductListPage::URL . '/index/table');
+        $i->amOnPage(ProductManagementProductListPage::URL);
+
+        $i->waitForElementVisible('.dataTables_scrollBody');
+
         $i->clickDataTableEditButton();
         $i->seeBreadcrumbNavigation('Dashboard / Products / Products / Edit Product');
         $i->click('Save');
-        $i->seeResponseCodeIs(200);
+
+        $i->waitForJS('return document.readyState == "complete"');
+
+        $alertText = $i->grabTextFrom('.alert-success');
+
+        $i->assertNotEmpty($alertText);
     }
 }

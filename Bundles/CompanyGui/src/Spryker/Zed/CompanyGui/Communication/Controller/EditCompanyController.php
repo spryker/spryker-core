@@ -27,6 +27,7 @@ class EditCompanyController extends AbstractController
     public const MESSAGE_COMPANY_DENY_SUCCESS = 'Company has been denied.';
     protected const MESSAGE_COMPANY_UPDATE_SUCCESS = 'Company has been updated.';
     protected const MESSAGE_COMPANY_UPDATE_ERROR = 'Company has not been updated.';
+    protected const MESSAGE_COMPANY_NOT_FOUND = 'Company not found.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -39,6 +40,14 @@ class EditCompanyController extends AbstractController
         $redirectUrl = $request->get(static::URL_PARAM_REDIRECT_URL, static::REDIRECT_URL_DEFAULT);
 
         $dataProvider = $this->getFactory()->createCompanyFormDataProvider();
+        $formData = $dataProvider->getData($idCompany);
+
+        if (!$formData->getIdCompany()) {
+            $this->addErrorMessage(static::MESSAGE_COMPANY_NOT_FOUND);
+
+            return $this->redirectResponse(static::REDIRECT_URL_DEFAULT);
+        }
+
         $form = $this->getFactory()
             ->getCompanyForm(
                 $dataProvider->getData($idCompany),

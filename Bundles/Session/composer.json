@@ -6,9 +6,10 @@
   "require": {
     "php": ">=7.1",
     "spryker/config": "^3.0.0",
-    "spryker/kernel": "^3.0.0",
+    "spryker/kernel": "^3.33.0",
     "spryker/monitoring": "^1.0.0 || ^2.0.0",
     "spryker/redis": "^2.0.0",
+    "spryker/session-extension": "^1.0.0",
     "spryker/silex": "^2.0.0",
     "spryker/symfony": "^3.0.0"
   },

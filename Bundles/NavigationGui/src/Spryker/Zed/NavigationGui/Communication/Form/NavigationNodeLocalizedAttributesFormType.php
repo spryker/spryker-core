@@ -335,7 +335,7 @@ class NavigationNodeLocalizedAttributesFormType extends AbstractType
         $urlTransfer = new UrlTransfer();
         $urlTransfer->setIdUrl($idUrl);
 
-        return $this->getFactory()->getUrlFacade()->findUrl($urlTransfer);
+        return $this->getFactory()->getUrlFacade()->findUrlCaseInsensitive($urlTransfer);
     }
 
     /**
@@ -348,7 +348,7 @@ class NavigationNodeLocalizedAttributesFormType extends AbstractType
         $urlTransfer = new UrlTransfer();
         $urlTransfer->setUrl($url);
 
-        return $this->getFactory()->getUrlFacade()->findUrl($urlTransfer);
+        return $this->getFactory()->getUrlFacade()->findUrlCaseInsensitive($urlTransfer);
     }
 
     /**

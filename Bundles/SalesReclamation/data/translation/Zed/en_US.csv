@@ -1,0 +1,37 @@
+"Back to Orders","Back to Orders"
+"Back to Reclamatinos","Back to Reclamatinos"
+"Can not create reclamation","Can not create reclamation"
+"Canceled amount","Canceled amount"
+"Create connected order","Create connected order"
+"Create reclamation","Create reclamation"
+Created,Created
+Discount,Discount
+"GRAND TOTAL","Grand Total"
+"Included tax amount","Included tax amount"
+"Item total","Item Total"
+"List of Reclamations","List of Reclamations"
+"No order items provided","No order items provided"
+"No reclamation with given id %s","No reclamation with given id %s"
+Option,Option
+Order,Order
+"Order id","Order id"
+"OrderItem with id %s not belong to order %s","Order item with id %s does not belong to the order %s"
+"Overview of reclamation:","Overview of reclamation:"
+"Overview of reclamations","Overview of reclamations"
+Product,Product
+"Reclamation id:%s for order %s sucessfully created","Reclamation id:%s for order %s sucessfully created"
+"Reclamation item refunded","Reclamation item refunded"
+"Reclamation item with id %s not exists","Reclamation item with id %s not exists"
+"Reclamation state","Reclamation state"
+"Reclamation with id %s closed","Reclamation with id %s closed"
+"Reclamation with id %s not exists","Reclamation with id %s not exists"
+"Reclamation with id %s not own this item %s","Reclamation with id %s not own this item %s"
+Shipment,Shipment
+"Show less","Show less"
+"Show more","Show more"
+Sku,SKU
+State,State
+"Sub total","Sub Total"
+Total,Total
+"Unit Price","Unit Price"
+"Variant Details","Variant Details"

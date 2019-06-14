@@ -359,7 +359,7 @@ class HttpMethodProcessor implements HttpMethodProcessorInterface
         }
 
         return $this->createPathSchemaDataTransfer(
-            $this->schemaGenerator->addResponseResourceSchemaForPlugin($plugin, $annotationTransfer->getResponseAttributesClassName())
+            $this->schemaGenerator->addResponseResourceSchemaForPlugin($plugin, $annotationTransfer)
         );
     }
 
@@ -382,7 +382,7 @@ class HttpMethodProcessor implements HttpMethodProcessorInterface
         }
 
         return $this->createPathSchemaDataTransfer(
-            $this->schemaGenerator->addResponseCollectionSchemaForPlugin($plugin, $annotationTransfer->getResponseAttributesClassName())
+            $this->schemaGenerator->addResponseCollectionSchemaForPlugin($plugin, $annotationTransfer)
         );
     }
 

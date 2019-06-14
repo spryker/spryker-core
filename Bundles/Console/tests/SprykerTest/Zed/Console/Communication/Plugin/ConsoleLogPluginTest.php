@@ -37,7 +37,7 @@ class ConsoleLogPluginTest extends Unit
     {
         $consoleLogPlugin = new ConsoleLogPlugin();
 
-        $this->assertInternalType('array', $consoleLogPlugin->getSubscribedEvents());
+        $this->assertIsArray($consoleLogPlugin->getSubscribedEvents());
     }
 
     /**
@@ -83,7 +83,7 @@ class ConsoleLogPluginTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Psr\Log\LoggerInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Psr\Log\LoggerInterface
      */
     protected function getLoggerMock()
     {
@@ -95,7 +95,7 @@ class ConsoleLogPluginTest extends Unit
     /**
      * @param \Psr\Log\LoggerInterface $loggerMock
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Console\Communication\Plugin\ConsoleLogPlugin
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Console\Communication\Plugin\ConsoleLogPlugin
      */
     protected function getConsoleLogPluginMock(LoggerInterface $loggerMock)
     {

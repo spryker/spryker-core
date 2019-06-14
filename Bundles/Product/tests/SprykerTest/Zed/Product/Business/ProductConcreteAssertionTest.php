@@ -30,7 +30,7 @@ class ProductConcreteAssertionTest extends Unit
     public const ID_PRODUCT_CONCRETE = 1;
 
     /**
-     * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $productQueryContainer;
 

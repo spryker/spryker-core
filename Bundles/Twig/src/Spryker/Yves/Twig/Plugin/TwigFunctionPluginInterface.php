@@ -14,7 +14,7 @@ interface TwigFunctionPluginInterface
     /**
      * @param \Silex\Application $application
      *
-     * @return \Twig_SimpleFunction[]
+     * @return \Twig\TwigFunction[]
      */
     public function getFunctions(Application $application);
 }

@@ -2,7 +2,7 @@
     <div class="ibox-title">
         <a class="collapse-link">
             <h5>
-                <span class="fa fa-question-circle" aria-hidden="true"></span> Examples
+                <span class="fa fa-question-circle" aria-hidden="true"></span> {{ 'Examples' | trans }}
             </h5>
             <div class="ibox-tools">
                 <i class="fa fa-chevron-up"></i>
@@ -12,13 +12,13 @@
     <div class="ibox-content" style="display: none;">
         <table class="table table-striped table-bordered">
             <tr>
-                <th>Field</th>
-                <th>Operation</th>
-                <th>Value</th>
-                <th>Explanation</th>
+                <th>{{ 'Field' | trans }}</th>
+                <th>{{ 'Operation' | trans }}</th>
+                <th>{{ 'Value' | trans }}</th>
+                <th>{{ 'Explanation' | trans }}</th>
             </tr>
             <tr>
-                <td>sku</td><td>equal</td><td>SKU-1</td><td>Matches elements with the exact same SKU: "SKU-1"</td>
+                <td>sku</td><td>equal</td><td>SKU-1</td><td>{{ 'Matches elements with the exact same SKU: "SKU-1"' | trans }}</td>
             </tr>
             <tr>
                 <td>attribute.width</td><td>equal</td><td>*</td><td>Matches all elements which have a "width" attribute defined, but with any "width" value</td>

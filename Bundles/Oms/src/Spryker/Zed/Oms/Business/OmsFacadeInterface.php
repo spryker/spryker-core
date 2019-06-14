@@ -257,7 +257,7 @@ interface OmsFacadeInterface
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
      * @param array $logContext
      *
-     * @return \Orm\Zed\Oms\Persistence\SpyOmsTransitionLog[]
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsTransitionLog[]|\Propel\Runtime\Collection\ObjectCollection
      */
     public function getLogForOrder(SpySalesOrder $order, array $logContext = []);
 
@@ -283,7 +283,7 @@ interface OmsFacadeInterface
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
-     * @return int
+     * @return float
      */
     public function sumReservedProductQuantitiesForSku($sku, ?StoreTransfer $storeTransfer = null);
 
@@ -296,7 +296,7 @@ interface OmsFacadeInterface
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return int
+     * @return float
      */
     public function getOmsReservedProductQuantityForSku($sku, StoreTransfer $storeTransfer);
 
@@ -444,7 +444,7 @@ interface OmsFacadeInterface
      *
      * @param int $idSalesOrder
      *
-     * @return \Spryker\Zed\Oms\Business\Process\EventInterface[]
+     * @return string[][]
      */
     public function getManualEventsByIdSalesOrder($idSalesOrder);
 
@@ -457,7 +457,7 @@ interface OmsFacadeInterface
      *
      * @param int $idSalesOrder
      *
-     * @return array
+     * @return string[]
      */
     public function getDistinctManualEventsByIdSalesOrder($idSalesOrder);
 
@@ -576,11 +576,11 @@ interface OmsFacadeInterface
      *
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     * @param int $reservationQuantity
+     * @param float $reservationQuantity
      *
      * @return void
      */
-    public function saveReservation(string $sku, StoreTransfer $storeTransfer, int $reservationQuantity): void;
+    public function saveReservation(string $sku, StoreTransfer $storeTransfer, float $reservationQuantity): void;
 
     /**
      * Specification:

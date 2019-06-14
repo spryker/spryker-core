@@ -137,7 +137,7 @@ class CodeStyleSnifferTest extends Unit
      * @param string $expectedPathToRunCommandWith
      * @param array $options
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Development\Business\CodeStyleSniffer\CodeStyleSniffer
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Development\Business\CodeStyleSniffer\CodeStyleSniffer
      */
     protected function getCodeStyleSnifferMock($expectedPathToRunCommandWith, array $options)
     {

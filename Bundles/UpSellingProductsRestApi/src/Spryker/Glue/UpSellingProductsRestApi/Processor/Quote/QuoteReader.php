@@ -7,7 +7,9 @@
 
 namespace Spryker\Glue\UpSellingProductsRestApi\Processor\Quote;
 
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\RestUserTransfer;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\UpSellingProductsRestApi\Dependency\Client\UpSellingProductsRestApiToCartsRestApiClientInterface;
 
@@ -34,18 +36,36 @@ class QuoteReader implements QuoteReaderInterface
      */
     public function findQuoteByUuid(string $uuid, RestRequestInterface $restRequest): ?QuoteTransfer
     {
-        $quoteTransfer = (new QuoteTransfer())->setUuid($uuid);
+        $quoteTransfer = $this->createQuoteTransfer($uuid, $restRequest->getRestUser());
+
         $quoteResponseTransfer = $this->cartsRestApiClient->findQuoteByUuid($quoteTransfer);
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return null;
         }
 
-        $customerReference = $restRequest->getUser()->getNaturalIdentifier();
-        if ($quoteResponseTransfer->getQuoteTransfer()->getCustomerReference() !== $customerReference) {
-            return null;
-        }
-
         return $quoteResponseTransfer->getQuoteTransfer();
+    }
+
+    /**
+     * @param string $uuid
+     * @param \Generated\Shared\Transfer\RestUserTransfer $restUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function createQuoteTransfer(
+        string $uuid,
+        RestUserTransfer $restUserTransfer
+    ): QuoteTransfer {
+        $customerReference = $restUserTransfer->getNaturalIdentifier();
+
+        $customerTransfer = (new CustomerTransfer())
+            ->setCustomerReference($customerReference)
+            ->setIdCustomer($restUserTransfer->getSurrogateIdentifier());
+
+        return (new QuoteTransfer())
+            ->setUuid($uuid)
+            ->setCustomerReference($customerReference)
+            ->setCustomer($customerTransfer);
     }
 }
