@@ -7,9 +7,7 @@
 
 namespace Spryker\Glue\EntityTagsRestApi\Processor\EntityTag;
 
-use Spryker\Glue\EntityTagsRestApi\Processor\EntityTagCheckerInterface;
-use Spryker\Glue\EntityTagsRestApi\Processor\EntityTagResolverInterface;
-use Spryker\Glue\EntityTagsRestApi\Processor\EntityTagWriterInterface;
+use Spryker\Glue\EntityTagsRestApi\Dependency\Client\EntityTagsRestApiToEntityTagClientInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -20,33 +18,33 @@ use Symfony\Component\HttpFoundation\Response;
 class EntityTagResponseHeaderFormatter implements EntityTagResponseHeaderFormatterInterface
 {
     /**
-     * @var \Spryker\Glue\EntityTagsRestApi\Processor\EntityTagResolverInterface
+     * @var \Spryker\Glue\EntityTagsRestApi\Processor\EntityTag\EntityTagResolverInterface
      */
     protected $entityTagResolver;
 
     /**
-     * @var \Spryker\Glue\EntityTagsRestApi\Processor\EntityTagWriterInterface
-     */
-    protected $entityTagWriter;
-
-    /**
-     * @var \Spryker\Glue\EntityTagsRestApi\Processor\EntityTagCheckerInterface
+     * @var \Spryker\Glue\EntityTagsRestApi\Processor\EntityTag\EntityTagCheckerInterface
      */
     protected $entityTagChecker;
 
     /**
-     * @param \Spryker\Glue\EntityTagsRestApi\Processor\EntityTagCheckerInterface $entityTagChecker
-     * @param \Spryker\Glue\EntityTagsRestApi\Processor\EntityTagResolverInterface $entityTagResolver
-     * @param \Spryker\Glue\EntityTagsRestApi\Processor\EntityTagWriterInterface $entityTagWriter
+     * @var \Spryker\Glue\EntityTagsRestApi\Dependency\Client\EntityTagsRestApiToEntityTagClientInterface
+     */
+    protected $entityTagClient;
+
+    /**
+     * @param \Spryker\Glue\EntityTagsRestApi\Processor\EntityTag\EntityTagCheckerInterface $entityTagChecker
+     * @param \Spryker\Glue\EntityTagsRestApi\Processor\EntityTag\EntityTagResolverInterface $entityTagResolver
+     * @param \Spryker\Glue\EntityTagsRestApi\Dependency\Client\EntityTagsRestApiToEntityTagClientInterface $entityTagClient
      */
     public function __construct(
         EntityTagCheckerInterface $entityTagChecker,
         EntityTagResolverInterface $entityTagResolver,
-        EntityTagWriterInterface $entityTagWriter
+        EntityTagsRestApiToEntityTagClientInterface $entityTagClient
     ) {
         $this->entityTagChecker = $entityTagChecker;
         $this->entityTagResolver = $entityTagResolver;
-        $this->entityTagWriter = $entityTagWriter;
+        $this->entityTagClient = $entityTagClient;
     }
 
     /**
@@ -58,15 +56,21 @@ class EntityTagResponseHeaderFormatter implements EntityTagResponseHeaderFormatt
      */
     public function format(Response $httpResponse, RestResponseInterface $restResponse, RestRequestInterface $restRequest): Response
     {
-        if (!$this->entityTagChecker->isMethodApplicableForAddingEntityTagHeader($restRequest->getHttpRequest()->getMethod())) {
-            return $httpResponse;
-        }
         if (count($restResponse->getResources()) !== 1) {
             return $httpResponse;
         }
 
+        $resource = $restResponse->getResources()[0];
+
+        if (!$this->entityTagChecker->isMethodApplicableForAddingEntityTagHeader(
+            $restRequest->getHttpRequest()->getMethod(),
+            $resource->getType()
+        )) {
+            return $httpResponse;
+        }
+
         $entityTag = $this->getResourceHash(
-            $restResponse->getResources()[0],
+            $resource,
             $restRequest->getHttpRequest()->getMethod()
         );
 
@@ -89,6 +93,10 @@ class EntityTagResponseHeaderFormatter implements EntityTagResponseHeaderFormatt
             return $this->entityTagResolver->resolve($restResource);
         }
 
-        return $this->entityTagWriter->write($restResource);
+        return $this->entityTagClient->write(
+            $restResource->getType(),
+            $restResource->getId(),
+            $restResource->getAttributes()->toArray()
+        );
     }
 }

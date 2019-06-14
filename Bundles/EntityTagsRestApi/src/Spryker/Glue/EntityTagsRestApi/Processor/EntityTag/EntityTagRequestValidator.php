@@ -9,7 +9,6 @@ namespace Spryker\Glue\EntityTagsRestApi\Processor\EntityTag;
 
 use Generated\Shared\Transfer\RestErrorCollectionTransfer;
 use Spryker\Glue\EntityTagsRestApi\Dependency\Client\EntityTagsRestApiToEntityTagClientInterface;
-use Spryker\Glue\EntityTagsRestApi\Processor\EntityTagCheckerInterface;
 use Spryker\Glue\EntityTagsRestApi\Processor\RestResponseBuilder\EntityTagRestResponseBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\GlueApplication\Rest\RequestConstantsInterface;
@@ -18,7 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 class EntityTagRequestValidator implements EntityTagRequestValidatorInterface
 {
     /**
-     * @var \Spryker\Glue\EntityTagsRestApi\Processor\EntityTagCheckerInterface
+     * @var \Spryker\Glue\EntityTagsRestApi\Processor\EntityTag\EntityTagCheckerInterface
      */
     protected $entityTagChecker;
 
@@ -33,7 +32,7 @@ class EntityTagRequestValidator implements EntityTagRequestValidatorInterface
     protected $entityTagRestResponseBuilder;
 
     /**
-     * @param \Spryker\Glue\EntityTagsRestApi\Processor\EntityTagCheckerInterface $entityTagChecker
+     * @param \Spryker\Glue\EntityTagsRestApi\Processor\EntityTag\EntityTagCheckerInterface $entityTagChecker
      * @param \Spryker\Glue\EntityTagsRestApi\Dependency\Client\EntityTagsRestApiToEntityTagClientInterface $entityTagClient
      * @param \Spryker\Glue\EntityTagsRestApi\Processor\RestResponseBuilder\EntityTagRestResponseBuilderInterface $entityTagRestResponseBuilder
      */
@@ -57,7 +56,7 @@ class EntityTagRequestValidator implements EntityTagRequestValidatorInterface
     {
         $restErrorCollectionTransfer = new RestErrorCollectionTransfer();
 
-        if (!$this->entityTagChecker->isEntityTagValidationNeeded($httpRequest->getMethod(), $restRequest->getResource())) {
+        if (!$this->entityTagChecker->isEntityTagValidationNeeded($httpRequest->getMethod(), $restRequest->getResource()->getType())) {
             return null;
         }
 
@@ -66,6 +65,7 @@ class EntityTagRequestValidator implements EntityTagRequestValidatorInterface
                 $this->entityTagRestResponseBuilder->createPreconditionRequiredError()
             );
         }
+
         $entityTag = $this->entityTagClient->read(
             $restRequest->getResource()->getType(),
             $restRequest->getResource()->getId()

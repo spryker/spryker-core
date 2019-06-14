@@ -5,16 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\EntityTagsRestApi\Processor;
+namespace Spryker\Glue\EntityTagsRestApi\Processor\EntityTag;
 
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 
-interface EntityTagWriterInterface
+interface EntityTagResolverInterface
 {
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $restResource
      *
      * @return string|null
      */
-    public function write(RestResourceInterface $restResource): ?string;
+    public function resolve(RestResourceInterface $restResource): ?string;
 }

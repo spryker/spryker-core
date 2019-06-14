@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\EntityTagsRestApi\Processor;
+namespace Spryker\Glue\EntityTagsRestApi\Processor\EntityTag;
 
 use Spryker\Glue\EntityTagsRestApi\Dependency\Client\EntityTagsRestApiToEntityTagClientInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
@@ -13,7 +13,7 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 class EntityTagResolver implements EntityTagResolverInterface
 {
     /**
-     * @var \Spryker\Glue\EntityTagsRestApi\Processor\EntityTagCheckerInterface
+     * @var \Spryker\Glue\EntityTagsRestApi\Processor\EntityTag\EntityTagCheckerInterface
      */
     protected $entityTagChecker;
 
@@ -23,23 +23,15 @@ class EntityTagResolver implements EntityTagResolverInterface
     protected $entityTagClient;
 
     /**
-     * @var \Spryker\Glue\EntityTagsRestApi\Processor\EntityTagWriterInterface
-     */
-    protected $entityTagWriter;
-
-    /**
-     * @param \Spryker\Glue\EntityTagsRestApi\Processor\EntityTagCheckerInterface $entityTagChecker
+     * @param \Spryker\Glue\EntityTagsRestApi\Processor\EntityTag\EntityTagCheckerInterface $entityTagChecker
      * @param \Spryker\Glue\EntityTagsRestApi\Dependency\Client\EntityTagsRestApiToEntityTagClientInterface $entityTagClient
-     * @param \Spryker\Glue\EntityTagsRestApi\Processor\EntityTagWriterInterface $entityTagWriter
      */
     public function __construct(
         EntityTagCheckerInterface $entityTagChecker,
-        EntityTagsRestApiToEntityTagClientInterface $entityTagClient,
-        EntityTagWriterInterface $entityTagWriter
+        EntityTagsRestApiToEntityTagClientInterface $entityTagClient
     ) {
         $this->entityTagChecker = $entityTagChecker;
         $this->entityTagClient = $entityTagClient;
-        $this->entityTagWriter = $entityTagWriter;
     }
 
     /**
@@ -49,16 +41,16 @@ class EntityTagResolver implements EntityTagResolverInterface
      */
     public function resolve(RestResourceInterface $restResource): ?string
     {
-        if (!$this->entityTagChecker->isEntityTagRequired($restResource)) {
-            return null;
-        }
-
         $entityTag = $this->entityTagClient->read($restResource->getType(), $restResource->getId());
 
         if ($entityTag) {
             return $entityTag;
         }
 
-        return $this->entityTagWriter->write($restResource);
+        return $this->entityTagClient->write(
+            $restResource->getType(),
+            $restResource->getId(),
+            $restResource->getAttributes()->toArray()
+        );
     }
 }

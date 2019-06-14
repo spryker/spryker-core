@@ -8,16 +8,14 @@
 namespace Spryker\Glue\EntityTagsRestApi;
 
 use Spryker\Glue\EntityTagsRestApi\Dependency\Client\EntityTagsRestApiToEntityTagClientInterface;
+use Spryker\Glue\EntityTagsRestApi\Processor\EntityTag\EntityTagChecker;
+use Spryker\Glue\EntityTagsRestApi\Processor\EntityTag\EntityTagCheckerInterface;
 use Spryker\Glue\EntityTagsRestApi\Processor\EntityTag\EntityTagRequestValidator;
 use Spryker\Glue\EntityTagsRestApi\Processor\EntityTag\EntityTagRequestValidatorInterface;
+use Spryker\Glue\EntityTagsRestApi\Processor\EntityTag\EntityTagResolver;
+use Spryker\Glue\EntityTagsRestApi\Processor\EntityTag\EntityTagResolverInterface;
 use Spryker\Glue\EntityTagsRestApi\Processor\EntityTag\EntityTagResponseHeaderFormatter;
 use Spryker\Glue\EntityTagsRestApi\Processor\EntityTag\EntityTagResponseHeaderFormatterInterface;
-use Spryker\Glue\EntityTagsRestApi\Processor\EntityTagChecker;
-use Spryker\Glue\EntityTagsRestApi\Processor\EntityTagCheckerInterface;
-use Spryker\Glue\EntityTagsRestApi\Processor\EntityTagResolver;
-use Spryker\Glue\EntityTagsRestApi\Processor\EntityTagResolverInterface;
-use Spryker\Glue\EntityTagsRestApi\Processor\EntityTagWriter;
-use Spryker\Glue\EntityTagsRestApi\Processor\EntityTagWriterInterface;
 use Spryker\Glue\EntityTagsRestApi\Processor\RestResponseBuilder\EntityTagRestResponseBuilder;
 use Spryker\Glue\EntityTagsRestApi\Processor\RestResponseBuilder\EntityTagRestResponseBuilderInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
@@ -28,7 +26,7 @@ use Spryker\Glue\Kernel\AbstractFactory;
 class EntityTagsRestApiFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Glue\EntityTagsRestApi\Processor\EntityTagCheckerInterface
+     * @return \Spryker\Glue\EntityTagsRestApi\Processor\EntityTag\EntityTagCheckerInterface
      */
     public function createEntityTagChecker(): EntityTagCheckerInterface
     {
@@ -36,23 +34,11 @@ class EntityTagsRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\EntityTagsRestApi\Processor\EntityTagResolverInterface
+     * @return \Spryker\Glue\EntityTagsRestApi\Processor\EntityTag\EntityTagResolverInterface
      */
     public function createEntityTagResolver(): EntityTagResolverInterface
     {
         return new EntityTagResolver(
-            $this->createEntityTagChecker(),
-            $this->getEntityTagClient(),
-            $this->createEntityTagWriter()
-        );
-    }
-
-    /**
-     * @return \Spryker\Glue\EntityTagsRestApi\Processor\EntityTagWriterInterface
-     */
-    public function createEntityTagWriter(): EntityTagWriterInterface
-    {
-        return new EntityTagWriter(
             $this->createEntityTagChecker(),
             $this->getEntityTagClient()
         );
@@ -66,7 +52,7 @@ class EntityTagsRestApiFactory extends AbstractFactory
         return new EntityTagResponseHeaderFormatter(
             $this->createEntityTagChecker(),
             $this->createEntityTagResolver(),
-            $this->createEntityTagWriter()
+            $this->getEntityTagClient()
         );
     }
 

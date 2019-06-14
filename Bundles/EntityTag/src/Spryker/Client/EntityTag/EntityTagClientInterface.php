@@ -26,8 +26,8 @@ interface EntityTagClientInterface
     /**
      * Specification:
      * - Generates storage key.
-     * - Encodes $resourceAttributes array to json string.
-     * - Generates hash for $resourceAttributes.
+     * - Encodes resource attributes to json string.
+     * - Generates hash for resource attributes.
      * - Writes to key-value storage.
      *
      * @api
