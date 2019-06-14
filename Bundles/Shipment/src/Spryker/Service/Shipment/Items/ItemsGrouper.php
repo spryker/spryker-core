@@ -38,7 +38,7 @@ class ItemsGrouper implements ItemsGrouperInterface
      */
     public function groupByShipment(iterable $itemTransfers): ArrayObject
     {
-        $shipmentGroupTransfers = new ArrayObject();
+        $shipmentGroupTransfers = [];
 
         foreach ($itemTransfers as $itemTransfer) {
             $this->assertRequiredShipment($itemTransfer);
@@ -53,7 +53,7 @@ class ItemsGrouper implements ItemsGrouperInterface
             $shipmentGroupTransfers[$key]->addItem($itemTransfer);
         }
 
-        return $shipmentGroupTransfers;
+        return new ArrayObject(array_values($shipmentGroupTransfers));
     }
 
     /**
