@@ -21,4 +21,11 @@ use Orm\Zed\ResourceShare\Persistence\Base\SpyResourceShare as BaseSpyResourceSh
  */
 class AbstractSpyResourceShare extends BaseSpyResourceShare
 {
+    /**
+     * @return void
+     */
+    public function updateUuid(): void
+    {
+        $this->updateUuidBeforeUpdate();
+    }
 }
