@@ -8,6 +8,8 @@
 namespace Spryker\Zed\SharedCartsRestApi\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\SharedCartsRestApi\Business\QuotePermissionGroup\QuotePermissionGroupReader;
+use Spryker\Zed\SharedCartsRestApi\Business\QuotePermissionGroup\QuotePermissionGroupReaderInterface;
 use Spryker\Zed\SharedCartsRestApi\Business\SharedCart\SharedCartReader;
 use Spryker\Zed\SharedCartsRestApi\Business\SharedCart\SharedCartReaderInterface;
 use Spryker\Zed\SharedCartsRestApi\Dependency\Facade\SharedCartsRestApiToQuoteFacadeInterface;
@@ -28,6 +30,14 @@ class SharedCartsRestApiBusinessFactory extends AbstractBusinessFactory
             $this->getQuoteFacade(),
             $this->getSharedCartFacade()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\SharedCartsRestApi\Business\QuotePermissionGroup\QuotePermissionGroupReaderInterface
+     */
+    public function createQuotePermissionGroupReader(): QuotePermissionGroupReaderInterface
+    {
+        return new QuotePermissionGroupReader($this->getSharedCartFacade());
     }
 
     /**

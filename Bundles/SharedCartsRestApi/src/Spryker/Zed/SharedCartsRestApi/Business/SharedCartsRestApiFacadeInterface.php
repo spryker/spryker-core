@@ -24,4 +24,16 @@ interface SharedCartsRestApiFacadeInterface
      * @return \Generated\Shared\Transfer\ShareDetailCollectionTransfer
      */
     public function getSharedCartsByCartUuid(QuoteTransfer $quoteTransfer): ShareDetailCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Expands QuoteTransfer with QuotePermissionGroupTransfer if applicable.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function expandQuoteWithQuotePermissionGroup(QuoteTransfer $quoteTransfer): QuoteTransfer;
 }

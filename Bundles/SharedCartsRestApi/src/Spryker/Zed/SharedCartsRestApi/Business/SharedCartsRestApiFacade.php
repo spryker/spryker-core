@@ -31,4 +31,20 @@ class SharedCartsRestApiFacade extends AbstractFacade implements SharedCartsRest
             ->createSharedCartReader()
             ->getSharedCartsByCartUuid($quoteTransfer);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function expandQuoteWithQuotePermissionGroup(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        return $this->getFactory()
+            ->createQuotePermissionGroupReader()
+            ->expandQuoteWithQuotePermissionGroup($quoteTransfer);
+    }
 }
