@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ContentFileGui\Communication\Plugin\ContentGui;
 
-use Generated\Shared\Transfer\ContentFileListTermTransfer;
 use Spryker\Shared\ContentFileGui\ContentFileGuiConfig;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 use Spryker\Zed\ContentFileGui\Communication\Form\FileListContentTermForm;
@@ -67,15 +66,8 @@ class FileListFormPlugin extends AbstractPlugin implements ContentPluginInterfac
      */
     public function getTransferObject(?array $params = null): TransferInterface
     {
-        $contentFileListTermTransfer = new ContentFileListTermTransfer();
-
-        if ($params) {
-            $contentFileListTermTransfer->fromArray($params);
-            $contentFileListTermTransfer->setFileIds(
-                array_values($contentFileListTermTransfer->getFileIds())
-            );
-        }
-
-        return $contentFileListTermTransfer;
+        return $this->getFactory()
+            ->createContentFileListGuiFormDataMapper()
+            ->mapDataToContentFileListTermTransfer($params);
     }
 }

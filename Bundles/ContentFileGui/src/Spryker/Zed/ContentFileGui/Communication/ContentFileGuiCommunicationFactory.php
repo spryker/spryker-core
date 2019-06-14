@@ -11,6 +11,8 @@ use Orm\Zed\FileManager\Persistence\SpyFileQuery;
 use Spryker\Zed\ContentFileGui\Communication\Form\Constraints\ContentFileListConstraint;
 use Spryker\Zed\ContentFileGui\Communication\Mapper\ContentFileGuiEditorConfigurationMapper;
 use Spryker\Zed\ContentFileGui\Communication\Mapper\ContentFileGuiEditorConfigurationMapperInterface;
+use Spryker\Zed\ContentFileGui\Communication\Mapper\ContentFileListGuiFormDataMapper;
+use Spryker\Zed\ContentFileGui\Communication\Mapper\ContentFileListGuiFormDataMapperInterface;
 use Spryker\Zed\ContentFileGui\Communication\Table\ContentFileListSelectedTable;
 use Spryker\Zed\ContentFileGui\Communication\Table\ContentFileListViewTable;
 use Spryker\Zed\ContentFileGui\ContentFileGuiDependencyProvider;
@@ -67,6 +69,14 @@ class ContentFileGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createContentFileListConstraint(): ContentFileListConstraint
     {
         return new ContentFileListConstraint($this->getContentFileFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\ContentFileGui\Communication\Mapper\ContentFileListGuiFormDataMapperInterface
+     */
+    public function createContentFileListGuiFormDataMapper(): ContentFileListGuiFormDataMapperInterface
+    {
+        return new ContentFileListGuiFormDataMapper();
     }
 
     /**
