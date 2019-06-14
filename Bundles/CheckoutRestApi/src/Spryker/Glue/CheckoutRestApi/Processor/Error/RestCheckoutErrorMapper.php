@@ -87,7 +87,7 @@ class RestCheckoutErrorMapper implements RestCheckoutErrorMapperInterface
         $errorIdentifierMapping = $this->getErrorIdentifierMapping($restCheckoutErrorTransfer);
 
         if ($errorIdentifierMapping) {
-            $errorData = array_merge($errorIdentifierMapping, array_filter($errorData));
+            $errorData = array_merge($errorData, $errorIdentifierMapping);
         }
 
         return $restErrorMessageTransfer->fromArray($errorData, true);
