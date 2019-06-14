@@ -82,6 +82,7 @@ interface SalesFacadeInterface
      * - Sets "is test" flag
      * - Updates checkout response with saved order data
      * - Sets initial state for state machine
+     * - Executes `OrderPostSavePluginInterface` stack of plugins.
      *
      * @api
      *

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Comment\Persistence;
 
+use Generated\Shared\Transfer\CommentFilterTransfer;
 use Generated\Shared\Transfer\CommentRequestTransfer;
 use Generated\Shared\Transfer\CommentThreadTransfer;
 use Generated\Shared\Transfer\CommentTransfer;
@@ -19,8 +20,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class CommentRepository extends AbstractRepository implements CommentRepositoryInterface
 {
     /**
-     * @module Customer
-     *
      * @param \Generated\Shared\Transfer\CommentRequestTransfer $commentRequestTransfer
      *
      * @return \Generated\Shared\Transfer\CommentThreadTransfer|null
@@ -71,6 +70,8 @@ class CommentRepository extends AbstractRepository implements CommentRepositoryI
     }
 
     /**
+     * @module Customer
+     *
      * @param \Generated\Shared\Transfer\CommentThreadTransfer $commentThreadTransfer
      *
      * @return \Generated\Shared\Transfer\CommentTransfer[]
@@ -129,5 +130,46 @@ class CommentRepository extends AbstractRepository implements CommentRepositoryI
         return $this->getFactory()
             ->createCommentMapper()
             ->mapCommentTagEntitiesToCommentTagTransfers($commentTagEntities);
+    }
+
+    /**
+     * @module Customer
+     *
+     * @param \Generated\Shared\Transfer\CommentFilterTransfer $commentFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\CommentTransfer[]
+     */
+    public function getCommentsByFilter(CommentFilterTransfer $commentFilterTransfer): array
+    {
+        $commentFilterTransfer
+            ->requireOwnerId()
+            ->requireOwnerType();
+
+        $commentQuery = $this->getFactory()
+            ->getCommentPropelQuery()
+            ->useSpyCommentThreadQuery()
+                ->filterByOwnerType($commentFilterTransfer->getOwnerType())
+                ->filterByOwnerId($commentFilterTransfer->getOwnerId())
+            ->endUse()
+            ->filterByIsDeleted(false)
+            ->joinWithSpyCustomer()
+            ->leftJoinWithSpyCommentToCommentTag()
+            ->useSpyCommentToCommentTagQuery(null, Criteria::LEFT_JOIN)
+                ->leftJoinWithSpyCommentTag()
+            ->endUse()
+            ->orderByIdComment();
+
+        if ($commentFilterTransfer->getTags()) {
+            $commentQuery
+                ->useSpyCommentToCommentTagQuery(null, Criteria::LEFT_JOIN)
+                    ->useSpyCommentTagQuery(null, Criteria::LEFT_JOIN)
+                        ->filterByName_In($commentFilterTransfer->getTags())
+                    ->endUse()
+                ->endUse();
+        }
+
+        return $this->getFactory()
+            ->createCommentMapper()
+            ->mapCommentEntitiesToCommentTransfers($commentQuery->find());
     }
 }

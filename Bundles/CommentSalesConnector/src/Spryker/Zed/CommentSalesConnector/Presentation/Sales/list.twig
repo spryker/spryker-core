@@ -1,0 +1,24 @@
+{% embed '@Gui/Partials/widget.twig' with { widget_title: 'Comments to Order' | trans } %}
+
+    {% block widget_content %}
+
+        <div class="comment-wrapper">
+            {% for comment in order.commentThread.comments %}
+                <div class="comment-box">
+                    <p class="comment-title">
+                        {{ comment.customer.firstName }} {{ comment.customer.lastName }} @
+                        <span>
+                            {{ comment.createdAt | formatDateTime }}
+                            {% if comment.isUpdated %}
+                                ({{ 'edited' | trans }})
+                            {% endif %}
+                        </span>
+                    </p>
+                    <span>{{ comment.message }}</span>
+                </div>
+            {% endfor %}
+        </div>
+
+    {% endblock %}
+
+{% endembed %}

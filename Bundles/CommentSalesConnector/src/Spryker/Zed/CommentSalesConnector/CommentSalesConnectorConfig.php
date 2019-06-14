@@ -5,17 +5,19 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Comment;
+namespace Spryker\Zed\CommentSalesConnector;
 
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
-/**
- * @method \Spryker\Shared\Comment\CommentConfig getSharedConfig()
- */
-class CommentConfig extends AbstractBundleConfig
+class CommentSalesConnectorConfig extends AbstractBundleConfig
 {
+    /**
+     * @uses \Spryker\Zed\Comment\CommentConfig::COMMENT_TAG_ATTACHED
+     */
     public const COMMENT_TAG_ATTACHED = 'attached';
 
-    public const COMMENT_THREAD_QUOTE_OWNER_TYPE = 'quote';
+    /**
+     * @uses \Spryker\Zed\Comment\CommentConfig::COMMENT_THREAD_SALES_ORDER_OWNER_TYPE
+     */
     public const COMMENT_THREAD_SALES_ORDER_OWNER_TYPE = 'sales_order';
 }

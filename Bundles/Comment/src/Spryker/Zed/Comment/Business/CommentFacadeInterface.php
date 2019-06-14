@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Comment\Business;
 
+use Generated\Shared\Transfer\CommentFilterTransfer;
 use Generated\Shared\Transfer\CommentRequestTransfer;
 use Generated\Shared\Transfer\CommentThreadResponseTransfer;
 use Generated\Shared\Transfer\CommentThreadTransfer;
@@ -92,4 +93,21 @@ interface CommentFacadeInterface
      * @return \Generated\Shared\Transfer\CommentThreadResponseTransfer
      */
     public function removeComment(CommentRequestTransfer $commentRequestTransfer): CommentThreadResponseTransfer;
+
+    /**
+     * Specification:
+     * - Expects owner id and type to be provided.
+     * - Creates and returns a copy of the provided comment thread.
+     * - Keeps only those comments which match the provided CommentFilter criteria.
+     * - Returns with the up to date comment thread.
+     * - Returns with error message(s) in case of error.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CommentFilterTransfer $commentFilterTransfer
+     * @param \Generated\Shared\Transfer\CommentRequestTransfer $commentRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\CommentThreadResponseTransfer
+     */
+    public function duplicateCommentThread(CommentFilterTransfer $commentFilterTransfer, CommentRequestTransfer $commentRequestTransfer): CommentThreadResponseTransfer;
 }

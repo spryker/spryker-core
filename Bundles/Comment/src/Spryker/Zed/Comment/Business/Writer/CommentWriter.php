@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Comment\Business\Writer;
 
 use ArrayObject;
+use Generated\Shared\Transfer\CommentFilterTransfer;
 use Generated\Shared\Transfer\CommentRequestTransfer;
 use Generated\Shared\Transfer\CommentThreadResponseTransfer;
 use Generated\Shared\Transfer\CommentThreadTransfer;
@@ -26,6 +27,7 @@ class CommentWriter implements CommentWriterInterface
     protected const GLOSSARY_KEY_COMMENT_THREAD_NOT_FOUND = 'comment.validation.error.comment_thread_not_found';
     protected const GLOSSARY_KEY_COMMENT_ACCESS_DENIED = 'comment.validation.error.access_denied';
     protected const GLOSSARY_KEY_COMMENT_EMPTY_MESSAGE = 'comment.validation.error.empty_message';
+    protected const GLOSSARY_KEY_COMMENT_THREAD_ALREADY_EXISTS = 'comment.validation.error.comment_thread_already_exists';
 
     /**
      * @var \Spryker\Zed\Comment\Persistence\CommentEntityManagerInterface
@@ -134,6 +136,27 @@ class CommentWriter implements CommentWriterInterface
 
         return $this->getTransactionHandler()->handleTransaction(function () use ($commentRequestTransfer) {
             return $this->executeRemoveCommentTransaction($commentRequestTransfer);
+        });
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CommentFilterTransfer $commentFilterTransfer
+     * @param \Generated\Shared\Transfer\CommentRequestTransfer $commentRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\CommentThreadResponseTransfer
+     */
+    public function duplicateCommentThread(CommentFilterTransfer $commentFilterTransfer, CommentRequestTransfer $commentRequestTransfer): CommentThreadResponseTransfer
+    {
+        $commentFilterTransfer
+            ->requireOwnerId()
+            ->requireOwnerType();
+
+        $commentRequestTransfer
+            ->requireOwnerId()
+            ->requireOwnerType();
+
+        return $this->getTransactionHandler()->handleTransaction(function () use ($commentFilterTransfer, $commentRequestTransfer) {
+            return $this->executeDuplicateCommentThreadTransaction($commentFilterTransfer, $commentRequestTransfer);
         });
     }
 
@@ -252,6 +275,45 @@ class CommentWriter implements CommentWriterInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\CommentFilterTransfer $commentFilterTransfer
+     * @param \Generated\Shared\Transfer\CommentRequestTransfer $commentRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\CommentThreadResponseTransfer
+     */
+    public function executeDuplicateCommentThreadTransaction(
+        CommentFilterTransfer $commentFilterTransfer,
+        CommentRequestTransfer $commentRequestTransfer
+    ): CommentThreadResponseTransfer {
+        if ($this->commentRepository->findCommentThread($commentRequestTransfer)) {
+            return $this->createErrorResponse(static::GLOSSARY_KEY_COMMENT_THREAD_ALREADY_EXISTS);
+        }
+
+        $commentThreadTransfer = $this->createCommentThread($commentRequestTransfer);
+        $commentTransfers = $this->commentRepository->getCommentsByFilter($commentFilterTransfer);
+
+        foreach ($commentTransfers as $commentTransfer) {
+            $newCommentTransfer = (new CommentTransfer())
+                ->setCustomer($commentTransfer->getCustomer())
+                ->setIdCommentThread($commentThreadTransfer->getIdCommentThread())
+                ->setMessage($commentTransfer->getMessage())
+                ->setIsUpdated($commentTransfer->getIsUpdated())
+                ->setTags($commentTransfer->getTags());
+
+            $newCommentTransfer = $this->commentEntityManager->createComment($newCommentTransfer);
+
+            if ($newCommentTransfer->getTags()->count()) {
+                $this->saveCommentTags($newCommentTransfer);
+            }
+
+            $commentThreadTransfer->addComment($newCommentTransfer);
+        }
+
+        return (new CommentThreadResponseTransfer())
+            ->setIsSuccessful(true)
+            ->setCommentThread($commentThreadTransfer);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\CommentRequestTransfer $commentRequestTransfer
      *
      * @return \Generated\Shared\Transfer\CommentThreadTransfer
@@ -264,6 +326,16 @@ class CommentWriter implements CommentWriterInterface
             return $commentThreadTransfer;
         }
 
+        return $this->createCommentThread($commentRequestTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CommentRequestTransfer $commentRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\CommentThreadTransfer
+     */
+    protected function createCommentThread(CommentRequestTransfer $commentRequestTransfer): CommentThreadTransfer
+    {
         $commentThreadTransfer = (new CommentThreadTransfer())
             ->setOwnerId($commentRequestTransfer->getOwnerId())
             ->setOwnerType($commentRequestTransfer->getOwnerType());
