@@ -49,13 +49,10 @@ class Storage implements StorageInterface
     {
         $metaData = [];
 
-        $allKeys = $this->storageClient->getAllKeys();
+        $allKeys = $this->storageClient->getKeys('kv:*.timestamp');
         foreach ($allKeys as $key) {
             $key = str_replace('kv:', '', $key);
-
-            if (strpos($key, '.timestamp') !== false) {
-                $metaData[$key] = $this->storageClient->get($key);
-            }
+            $metaData[$key] = $this->storageClient->get($key);
         }
 
         return $metaData;
