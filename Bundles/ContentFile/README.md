@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/content-file.svg)](https://travis-ci.org/spryker/content-file)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/content-file/badge.svg)](https://coveralls.io/github/spryker/content-file)
 
-ContentFile provides validation, client for file.
+ContentFile provides plugins for file list.
 
 ## Installation
 
