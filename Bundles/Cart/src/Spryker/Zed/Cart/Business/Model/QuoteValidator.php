@@ -60,29 +60,29 @@ class QuoteValidator implements QuoteValidatorInterface
      */
     public function validate(QuoteTransfer $quoteTransfer)
     {
-        $quoteValidationResponseTransfer = new QuoteResponseTransfer();
-        $quoteValidationResponseTransfer
+        $quoteResponseTransfer = new QuoteResponseTransfer();
+        $quoteResponseTransfer
             ->setQuoteTransfer($quoteTransfer)
             ->setIsSuccessful(false);
 
         if ($this->quoteFacade->isQuoteLocked($quoteTransfer)) {
-            $quoteValidationResponseTransfer->setIsSuccessful(true);
+            $quoteResponseTransfer->setIsSuccessful(true);
 
-            return $quoteValidationResponseTransfer;
+            return $quoteResponseTransfer;
         }
 
         if (!count($quoteTransfer->getItems())) {
-            return $quoteValidationResponseTransfer;
+            return $quoteResponseTransfer;
         }
 
         $originalQuoteTransfer = clone $quoteTransfer;
         $quoteTransfer = $this->operation->reloadItems($quoteTransfer);
         $this->changeNote->checkChanges($quoteTransfer, $originalQuoteTransfer);
 
-        $quoteValidationResponseTransfer = $this->addErrorsToQuoteResponse($quoteValidationResponseTransfer);
-        $quoteValidationResponseTransfer->setQuoteTransfer($quoteTransfer);
+        $quoteResponseTransfer = $this->addErrorsToQuoteResponse($quoteResponseTransfer);
+        $quoteResponseTransfer->setQuoteTransfer($quoteTransfer);
 
-        return $quoteValidationResponseTransfer;
+        return $quoteResponseTransfer;
     }
 
     /**
