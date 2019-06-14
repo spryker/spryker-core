@@ -250,8 +250,7 @@ class CreateShipmentWithNewDataTest extends Test
         QuoteTransfer $quoteTransfer,
         ShipmentTransfer $shipmentTransfer,
         ItemTransfer $itemTransfer
-    ): void
-    {
+    ): void {
         // Arrange
         $saveOrderTransfer = $this->tester->haveOrderUsingPreparedQuoteTransfer($quoteTransfer, static::TEST_STATE_MACHINE_PROCESS_NAME);
         $orderTransfer = $this->tester->getLocator()->sales()->facade()->getOrderByIdSalesOrder($saveOrderTransfer->getIdSalesOrder());

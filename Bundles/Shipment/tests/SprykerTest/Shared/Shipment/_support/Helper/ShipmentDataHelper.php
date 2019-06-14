@@ -61,7 +61,7 @@ class ShipmentDataHelper extends Module
     }
 
     /**
-     * @return ShipmentQueryContainerInterface
+     * @return \Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface
      */
     protected function getShipmentQuery(): ShipmentQueryContainerInterface
     {

@@ -33,8 +33,6 @@ use Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaverPluginExecutor;
 use Spryker\Zed\Sales\Business\Model\OrderItem\OrderItemTransformer;
 use Spryker\Zed\Sales\Business\Model\OrderItem\OrderItemTransformerInterface;
 use Spryker\Zed\Sales\Business\Model\OrderItem\SalesOrderItemMapper as ModelSalesOrderItemMapper;
-use Spryker\Zed\Sales\Dependency\Service\SalesToUtilQuantityServiceInterface;
-use Spryker\Zed\Sales\Persistence\Propel\Mapper\SalesOrderItemMapper;
 use Spryker\Zed\Sales\Business\Order\OrderHydrator as OrderHydratorWithMultiShippingAddress;
 use Spryker\Zed\Sales\Business\Order\OrderHydratorInterface;
 use Spryker\Zed\Sales\Business\Order\OrderReader as OrderReaderWithMultiShippingAddress;
@@ -45,9 +43,10 @@ use Spryker\Zed\Sales\Business\OrderItem\SalesOrderItemReader;
 use Spryker\Zed\Sales\Business\OrderItem\SalesOrderItemReaderInterface;
 use Spryker\Zed\Sales\Business\StrategyResolver\OrderHydratorStrategyResolver;
 use Spryker\Zed\Sales\Business\StrategyResolver\OrderHydratorStrategyResolverInterface;
-use Spryker\Zed\Sales\Dependency\Service\SalesToShipmentServiceInterface;
-use Spryker\Zed\Sales\Persistence\Propel\Mapper\SalesOrderItemMapperInterface;
 use Spryker\Zed\Sales\Dependency\Service\SalesToUtilPriceServiceInterface;
+use Spryker\Zed\Sales\Dependency\Service\SalesToUtilQuantityServiceInterface;
+use Spryker\Zed\Sales\Persistence\Propel\Mapper\SalesOrderItemMapper;
+use Spryker\Zed\Sales\Persistence\Propel\Mapper\SalesOrderItemMapperInterface;
 use Spryker\Zed\Sales\SalesDependencyProvider;
 
 /**

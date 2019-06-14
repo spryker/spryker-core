@@ -19,7 +19,6 @@ interface ShipmentCartConnectorFacadeInterface
      *  - Changes shipment method and shipment expenses based on current currency for quote level (BC)
      * or item level shipments.
      *
-     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer

@@ -36,5 +36,5 @@ interface ShipmentEntityManagerInterface
      *
      * @return void
      */
-    public function updateFkShipmentForOrderItem(ItemTransfer $itemTransfer, ShipmentTransfer $shipmentTransfer): void ;
+    public function updateFkShipmentForOrderItem(ItemTransfer $itemTransfer, ShipmentTransfer $shipmentTransfer): void;
 }
