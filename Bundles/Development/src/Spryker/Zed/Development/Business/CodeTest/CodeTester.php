@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Development\Business\CodeTest;
 
 use ErrorException;
+use Spryker\Zed\Development\Business\Codeception\Argument\Builder\CodeceptionArgumentsBuilderInterface;
 use Symfony\Component\Process\Process;
 use Zend\Filter\Word\UnderscoreToCamelCase;
 
@@ -32,13 +33,23 @@ class CodeTester
     protected $pathToBundles;
 
     /**
+     * @var \Spryker\Zed\Development\Business\Codeception\Argument\Builder\CodeceptionArgumentsBuilderInterface
+     */
+    protected $argumentBuilder;
+
+    /**
      * @param string $applicationRoot
      * @param string $pathToBundles
+     * @param \Spryker\Zed\Development\Business\Codeception\Argument\Builder\CodeceptionArgumentsBuilderInterface $argumentBuilder
      */
-    public function __construct($applicationRoot, $pathToBundles)
-    {
+    public function __construct(
+        string $applicationRoot,
+        string $pathToBundles,
+        CodeceptionArgumentsBuilderInterface $argumentBuilder
+    ) {
         $this->applicationRoot = $applicationRoot;
         $this->pathToBundles = $pathToBundles;
+        $this->argumentBuilder = $argumentBuilder;
     }
 
     /**
@@ -111,41 +122,38 @@ class CodeTester
      */
     protected function runTestCommand($path, array $options)
     {
-        $pathToFiles = rtrim($path, DIRECTORY_SEPARATOR);
-        $config = '';
-
-        if ($pathToFiles) {
-            $config .= ' -c ' . $pathToFiles;
-        }
-
-        if ($options[static::OPTION_GROUP]) {
-            $config .= ' -g ' . $options[static::OPTION_GROUP];
-        }
-
-        if ($options[static::OPTION_TYPE_EXCLUDE]) {
-            $config .= ' -x ' . $options[static::OPTION_TYPE_EXCLUDE];
-        }
-
-        if ($options[static::OPTION_VERBOSE]) {
-            $config .= ' -v';
-        }
+        $commandArguments = $this->argumentBuilder
+            ->build($options)
+            ->asString();
 
         if ($options[static::OPTION_INITIALIZE]) {
-            $command = 'vendor/bin/codecept build';
-            $process = new Process($command, $this->applicationRoot, null, null, 4800);
-            $process->run(function ($type, $buffer) use ($options) {
-                if ($options[static::OPTION_VERBOSE]) {
-                    echo $buffer;
-                }
-            });
+            $this->initializeTestCommand($options);
+
             echo 'Test classes generated.';
         }
 
-        $command = 'vendor/bin/codecept run' . $config;
+        $command = 'vendor/bin/codecept run' . $commandArguments;
 
         $process = new Process($command, $this->applicationRoot, null, null, 4800);
         $process->run(function ($type, $buffer) {
             echo $buffer;
+        });
+    }
+
+    /**
+     * @param array $options
+     *
+     * @return void
+     */
+    protected function initializeTestCommand(array $options): void
+    {
+        $command = 'vendor/bin/codecept build';
+
+        $process = new Process($command, $this->applicationRoot, null, null, 4800);
+        $process->run(function ($type, $buffer) use ($options) {
+            if ($options[static::OPTION_VERBOSE]) {
+                echo $buffer;
+            }
         });
     }
 }

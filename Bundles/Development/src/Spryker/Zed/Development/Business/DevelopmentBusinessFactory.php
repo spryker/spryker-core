@@ -13,6 +13,8 @@ use Spryker\Zed\Development\Business\ArchitectureSniffer\ArchitectureSniffer;
 use Spryker\Zed\Development\Business\ArchitectureSniffer\ArchitectureSnifferInterface;
 use Spryker\Zed\Development\Business\CodeBuilder\Bridge\BridgeBuilder;
 use Spryker\Zed\Development\Business\CodeBuilder\Module\ModuleBuilder;
+use Spryker\Zed\Development\Business\Codeception\Argument\Builder\CodeceptionArgumentsBuilder;
+use Spryker\Zed\Development\Business\Codeception\Argument\Builder\CodeceptionArgumentsBuilderInterface;
 use Spryker\Zed\Development\Business\CodeStyleSniffer\CodeStyleSniffer;
 use Spryker\Zed\Development\Business\CodeStyleSniffer\Config\CodeStyleSnifferConfiguration;
 use Spryker\Zed\Development\Business\CodeStyleSniffer\Config\CodeStyleSnifferConfigurationInterface;
@@ -224,7 +226,8 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     {
         return new CodeTester(
             $this->getConfig()->getPathToRoot(),
-            $this->getConfig()->getPathToCore()
+            $this->getConfig()->getPathToCore(),
+            $this->createConfigArgumentCollectionBuilder()
         );
     }
 
@@ -1966,5 +1969,15 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     public function getModuleFinderFacade(): DevelopmentToModuleFinderFacadeInterface
     {
         return $this->getProvidedDependency(DevelopmentDependencyProvider::FACADE_MODULE_FINDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\Codeception\Argument\Builder\CodeceptionArgumentsBuilderInterface
+     */
+    public function createConfigArgumentCollectionBuilder(): CodeceptionArgumentsBuilderInterface
+    {
+        return new CodeceptionArgumentsBuilder(
+            $this->getConfig()->getDefaultInclusiveTestGroups()
+        );
     }
 }
