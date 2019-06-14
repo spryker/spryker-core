@@ -30,6 +30,8 @@ use Generated\Shared\Transfer\ShareDetailTransfer;
  * @method \Spryker\Zed\SharedCartsRestApi\Business\SharedCartsRestApiFacadeInterface getFacade()
  *
  * @SuppressWarnings(PHPMD)
+ *
+ * @method \Spryker\Zed\SharedCartsRestApi\Business\SharedCartsRestApiFacade getFacade()
  */
 class SharedCartsRestApiFacadeTester extends Actor
 {

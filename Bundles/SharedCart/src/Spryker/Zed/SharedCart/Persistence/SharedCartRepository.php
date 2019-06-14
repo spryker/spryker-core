@@ -9,14 +9,17 @@ namespace Spryker\Zed\SharedCart\Persistence;
 
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\PermissionTransfer;
+use Generated\Shared\Transfer\QuoteCompanyUserTransfer;
 use Generated\Shared\Transfer\QuotePermissionGroupCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuotePermissionGroupTransfer;
 use Generated\Shared\Transfer\ShareDetailCollectionTransfer;
+use Generated\Shared\Transfer\ShareDetailCriteriaFilterTransfer;
 use Generated\Shared\Transfer\SharedQuoteCriteriaFilterTransfer;
 use Orm\Zed\CompanyUser\Persistence\Map\SpyCompanyUserTableMap;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Orm\Zed\Quote\Persistence\Map\SpyQuoteTableMap;
 use Orm\Zed\SharedCart\Persistence\Map\SpyQuoteCompanyUserTableMap;
+use Orm\Zed\SharedCart\Persistence\SpyQuoteCompanyUserQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\Join;
 use Spryker\Shared\SharedCart\SharedCartConfig;
@@ -353,5 +356,76 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
                 $quotePermissionGroupEntity,
                 new QuotePermissionGroupTransfer()
             );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShareDetailCriteriaFilterTransfer $shareDetailCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShareDetailCollectionTransfer
+     */
+    public function getShareDetailCollectionByShareDetailCriteria(ShareDetailCriteriaFilterTransfer $shareDetailCriteriaFilterTransfer): ShareDetailCollectionTransfer
+    {
+        $quoteCompanyUserQuery = $this->getFactory()->createQuoteCompanyUserQuery();
+        $quoteCompanyUserQuery = $this->applySharedDetailCriteriaFiltersToQuoteCompanyUserQuery(
+            $quoteCompanyUserQuery,
+            $shareDetailCriteriaFilterTransfer
+        );
+
+        $quoteCompanyUserQuery
+            ->joinWithSpyCompanyUser()
+            ->useSpyCompanyUserQuery(null, Criteria::LEFT_JOIN)
+                ->joinWithCustomer()
+            ->endUse();
+
+        $quoteCompanyUserEntities = $quoteCompanyUserQuery->find();
+
+        return $this->getFactory()
+            ->createQuoteShareDetailMapper()
+            ->mapShareDetailCollection($quoteCompanyUserEntities, $this->findQuotePermissionGroupList(new QuotePermissionGroupCriteriaFilterTransfer()));
+    }
+
+    /**
+     * @param string $quoteCompanyUserUuid
+     *
+     * @return \Generated\Shared\Transfer\QuoteCompanyUserTransfer|null
+     */
+    public function findQuoteCompanyUserByUuid(string $quoteCompanyUserUuid): ?QuoteCompanyUserTransfer
+    {
+        $quoteCompanyUser = $this->getFactory()
+            ->createQuoteCompanyUserQuery()
+            ->joinWithSpyQuote()
+            ->filterByUuid($quoteCompanyUserUuid)
+            ->findOne();
+
+        if (!$quoteCompanyUser) {
+            return null;
+        }
+
+        return $this->getFactory()
+            ->createQuoteCompanyUserMapper()
+            ->mapQuoteCompanyUserEntityToQuoteCompanyUserTransfer($quoteCompanyUser, new QuoteCompanyUserTransfer());
+    }
+
+    /**
+     * @param \Orm\Zed\SharedCart\Persistence\SpyQuoteCompanyUserQuery $quoteCompanyUserQuery
+     * @param \Generated\Shared\Transfer\ShareDetailCriteriaFilterTransfer $shareDetailCriteriaFilterTransfer
+     *
+     * @return \Orm\Zed\SharedCart\Persistence\SpyQuoteCompanyUserQuery
+     */
+    protected function applySharedDetailCriteriaFiltersToQuoteCompanyUserQuery(
+        SpyQuoteCompanyUserQuery $quoteCompanyUserQuery,
+        ShareDetailCriteriaFilterTransfer $shareDetailCriteriaFilterTransfer
+    ): SpyQuoteCompanyUserQuery {
+        if ($shareDetailCriteriaFilterTransfer->getIdQuoteCompanyUser()) {
+            $quoteCompanyUserQuery->filterByIdQuoteCompanyUser($shareDetailCriteriaFilterTransfer->getIdQuoteCompanyUser());
+        }
+        if ($shareDetailCriteriaFilterTransfer->getIdQuote()) {
+            $quoteCompanyUserQuery->filterByFkQuote($shareDetailCriteriaFilterTransfer->getIdQuote());
+        }
+        if ($shareDetailCriteriaFilterTransfer->getIdCompanyUser()) {
+            $quoteCompanyUserQuery->filterByFkCompanyUser($shareDetailCriteriaFilterTransfer->getIdCompanyUser());
+        }
+
+        return $quoteCompanyUserQuery;
     }
 }
