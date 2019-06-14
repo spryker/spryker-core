@@ -180,6 +180,9 @@ class SalesHelper extends Module
         if ($salesOrderItemEntity->getQuantity() === null) {
             $salesOrderItemEntity->setQuantity(1);
         }
+        if ($salesOrderItemEntity->getGroupKey() === null) {
+            $salesOrderItemEntity->setGroupKey('key');
+        }
 
         $omsOrderItemStateEntity = $this->getOrderItemState($salesOrderItem);
         $salesOrderItemEntity->setFkOmsOrderItemState($omsOrderItemStateEntity->getIdOmsOrderItemState());
