@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Cart\Business\Model;
 
+use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Cart\Dependency\Facade\CartToMessengerInterface;
@@ -78,21 +79,30 @@ class QuoteValidator implements QuoteValidatorInterface
         $quoteTransfer = $this->operation->reloadItems($quoteTransfer);
         $this->changeNote->checkChanges($quoteTransfer, $originalQuoteTransfer);
 
-        $quoteValidationResponseTransfer
-            ->setIsSuccessful($this->checkErrorMessages())
-            ->setQuoteTransfer($quoteTransfer);
+        $quoteResponseTransfer = $this->addErrorsToQuoteResponse($quoteValidationResponseTransfer);
+        $quoteResponseTransfer->setQuoteTransfer($quoteTransfer);
 
         return $quoteValidationResponseTransfer;
     }
 
     /**
-     * @return bool
+     * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    protected function checkErrorMessages()
+    protected function addErrorsToQuoteResponse(QuoteResponseTransfer $quoteResponseTransfer): QuoteResponseTransfer
     {
         /** @var \Generated\Shared\Transfer\FlashMessagesTransfer|null $storedMessages */
         $storedMessages = $this->messengerFacade->getStoredMessages();
 
-        return !$storedMessages || count($storedMessages->getErrorMessages()) === 0;
+        if (!$storedMessages || count($storedMessages->getErrorMessages()) === 0) {
+            return $quoteResponseTransfer->setIsSuccessful(true);
+        }
+
+        foreach ($storedMessages->getErrorMessages() as $errorMessage) {
+            $quoteResponseTransfer->addError((new QuoteErrorTransfer())->setMessage($errorMessage));
+        }
+
+        return $quoteResponseTransfer;
     }
 }
