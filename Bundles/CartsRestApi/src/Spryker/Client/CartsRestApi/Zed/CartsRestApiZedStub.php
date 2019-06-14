@@ -8,6 +8,7 @@
 namespace Spryker\Client\CartsRestApi\Zed;
 
 use Generated\Shared\Transfer\AssignGuestQuoteRequestTransfer;
+use Generated\Shared\Transfer\CartItemRequestTransfer;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
@@ -97,6 +98,8 @@ class CartsRestApiZedStub implements CartsRestApiZedStubInterface
     }
 
     /**
+     * @deprecated Use updateItemQuantity() instead.
+     *
      * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
@@ -110,6 +113,21 @@ class CartsRestApiZedStub implements CartsRestApiZedStubInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\CartItemRequestTransfer $cartItemRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function updateItemQuantity(CartItemRequestTransfer $cartItemRequestTransfer): QuoteResponseTransfer
+    {
+        /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
+        $quoteResponseTransfer = $this->zedRequestClient->call('/carts-rest-api/gateway/update-item-quantity', $cartItemRequestTransfer);
+
+        return $quoteResponseTransfer;
+    }
+
+    /**
+     * @deprecated Use addToCart() instead.
+     *
      * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
@@ -123,6 +141,21 @@ class CartsRestApiZedStub implements CartsRestApiZedStubInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\CartItemRequestTransfer $cartItemRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function addToCart(CartItemRequestTransfer $cartItemRequestTransfer): QuoteResponseTransfer
+    {
+        /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
+        $quoteResponseTransfer = $this->zedRequestClient->call('/carts-rest-api/gateway/add-to-cart', $cartItemRequestTransfer);
+
+        return $quoteResponseTransfer;
+    }
+
+    /**
+     * @deprecated Use removeItem() instead.
+     *
      * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
@@ -136,6 +169,19 @@ class CartsRestApiZedStub implements CartsRestApiZedStubInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\CartItemRequestTransfer $cartItemRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function removeItem(CartItemRequestTransfer $cartItemRequestTransfer): QuoteResponseTransfer
+    {
+        /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
+        $quoteResponseTransfer = $this->zedRequestClient->call('/carts-rest-api/gateway/remove-item', $cartItemRequestTransfer);
+
+        return $quoteResponseTransfer;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
@@ -144,6 +190,19 @@ class CartsRestApiZedStub implements CartsRestApiZedStubInterface
     {
         /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
         $quoteResponseTransfer = $this->zedRequestClient->call('/carts-rest-api/gateway/add-item-to-guest-cart', $restCartItemsAttributesTransfer);
+
+        return $quoteResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartItemRequestTransfer $cartItemRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function addToGuestCart(CartItemRequestTransfer $cartItemRequestTransfer): QuoteResponseTransfer
+    {
+        /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
+        $quoteResponseTransfer = $this->zedRequestClient->call('/carts-rest-api/gateway/add-to-guest-cart', $cartItemRequestTransfer);
 
         return $quoteResponseTransfer;
     }
