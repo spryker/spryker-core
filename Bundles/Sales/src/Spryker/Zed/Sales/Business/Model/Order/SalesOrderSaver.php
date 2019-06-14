@@ -75,7 +75,7 @@ class SalesOrderSaver implements SalesOrderSaverInterface
     protected $salesOrderItemMapper;
 
     /**
-     * @var array|\Spryker\Zed\SalesExtension\Dependency\Plugin\OrderPostSavePluginInterface[]
+     * @var \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderPostSavePluginInterface[]
      */
     protected $orderPostSavePlugins;
 
