@@ -85,7 +85,7 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
             return [];
         }
 
-        return $this->hydrateShipmentTransfersFromShipmentEntities($salesOrderShipments);
+        return $this->mapShipmentEntityCollectionToShipmentTransferCollection($salesOrderShipments);
     }
 
     /**
@@ -143,7 +143,8 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
     {
         $salesShipmentMethodEntity = $this->queryMethodsWithMethodPricesAndCarrier()
             ->filterByName($shipmentMethodName)
-            ->findOne();
+            ->find()
+            ->getFirst();
 
         if ($salesShipmentMethodEntity === null) {
             return null;
@@ -163,6 +164,7 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
     {
         $salesShipmentEntity = $this->getFactory()
             ->createSalesShipmentQuery()
+            ->leftJoinWithSpySalesOrderAddress()
             ->filterByIdSalesShipment($idShipmentMethod)
             ->findOne();
 
@@ -172,7 +174,7 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
 
         return $this->getFactory()
             ->createShipmentMapper()
-            ->mapShipmentEntityToShipmentTransfer($salesShipmentEntity, new ShipmentTransfer());
+            ->mapShipmentEntityToShipmentTransferWithDetails($salesShipmentEntity, new ShipmentTransfer());
     }
 
     /**
@@ -286,14 +288,14 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
      *
      * @return \Generated\Shared\Transfer\ShipmentTransfer[]
      */
-    protected function hydrateShipmentTransfersFromShipmentEntities(
-        iterable $salesOrderShipments
-    ): array {
+    protected function mapShipmentEntityCollectionToShipmentTransferCollection(iterable $salesOrderShipments): array
+    {
         $shipmentMapper = $this->getFactory()->createShipmentMapper();
         $shipmentTransfers = [];
 
         foreach ($salesOrderShipments as $salesShipmentEntity) {
-            $shipmentTransfers[] = $shipmentMapper->mapShipmentEntityToShipmentTransferWithDetails(new ShipmentTransfer(), $salesShipmentEntity);
+            $shipmentTransfers[] = $shipmentMapper
+                ->mapShipmentEntityToShipmentTransferWithDetails($salesShipmentEntity, new ShipmentTransfer());
         }
 
         return $shipmentTransfers;

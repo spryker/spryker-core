@@ -107,14 +107,14 @@ class ShipmentMapper implements ShipmentMapperInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
      * @param \Orm\Zed\Sales\Persistence\SpySalesShipment $salesShipmentEntity
+     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentTransfer
      */
     public function mapShipmentEntityToShipmentTransferWithDetails(
-        ShipmentTransfer $shipmentTransfer,
-        SpySalesShipment $salesShipmentEntity
+        SpySalesShipment $salesShipmentEntity,
+        ShipmentTransfer $shipmentTransfer
     ): ShipmentTransfer {
         $shipmentTransfer = $this->mapShipmentEntityToShipmentTransfer($salesShipmentEntity, $shipmentTransfer);
         $addressTransfer = $this->mapShipmentEntityToShippingAddressTransfer(new AddressTransfer(), $salesShipmentEntity);

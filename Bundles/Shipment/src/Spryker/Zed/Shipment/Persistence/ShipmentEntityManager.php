@@ -60,7 +60,7 @@ class ShipmentEntityManager extends AbstractEntityManager implements ShipmentEnt
 
         $salesShipmentEntity->save();
 
-        return $shipmentEntityMapper->mapShipmentEntityToShipmentTransfer($salesShipmentEntity, $shipmentTransfer);
+        return $shipmentEntityMapper->mapShipmentEntityToShipmentTransferWithDetails($salesShipmentEntity, $shipmentTransfer);
     }
 
     /**

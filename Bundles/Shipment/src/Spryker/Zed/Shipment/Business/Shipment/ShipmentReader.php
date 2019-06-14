@@ -44,7 +44,6 @@ class ShipmentReader implements ShipmentReaderInterface
     public function findShipmentById(int $idSalesShipment): ?ShipmentTransfer
     {
         $shipmentTransfer = $this->shipmentRepository->findShipmentById($idSalesShipment);
-
         if ($shipmentTransfer === null) {
             return null;
         }
