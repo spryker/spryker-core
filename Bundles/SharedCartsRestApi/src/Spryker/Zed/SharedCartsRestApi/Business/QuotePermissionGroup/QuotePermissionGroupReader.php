@@ -32,9 +32,7 @@ class QuotePermissionGroupReader implements QuotePermissionGroupReaderInterface
      */
     public function expandQuoteWithQuotePermissionGroup(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        if ($quoteTransfer->getCustomerReference() === $quoteTransfer->getCustomer()->getCustomerReference()
-            || !$quoteTransfer->getCustomer()->getCompanyUserTransfer()
-            || !$quoteTransfer->getCustomer()->getCompanyUserTransfer()->getIdCompanyUser()) {
+        if (!$this->isQuoteExpandable($quoteTransfer)) {
             return $quoteTransfer;
         }
 
@@ -48,5 +46,17 @@ class QuotePermissionGroupReader implements QuotePermissionGroupReaderInterface
         }
 
         return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function isQuoteExpandable(QuoteTransfer $quoteTransfer): bool
+    {
+        return $quoteTransfer->getCustomerReference() !== $quoteTransfer->getCustomer()->getCustomerReference()
+            && $quoteTransfer->getCustomer()->getCompanyUserTransfer()
+            && $quoteTransfer->getCustomer()->getCompanyUserTransfer()->getIdCompanyUser();
     }
 }

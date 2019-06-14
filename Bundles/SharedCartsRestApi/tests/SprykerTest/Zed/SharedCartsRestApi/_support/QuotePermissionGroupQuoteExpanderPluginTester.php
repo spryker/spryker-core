@@ -8,6 +8,15 @@
 namespace SprykerTest\Zed\SharedCartsRestApi;
 
 use Codeception\Actor;
+use Generated\Shared\Transfer\CompanyTransfer;
+use Generated\Shared\Transfer\CompanyUserTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SpyQuotePermissionGroupEntityTransfer;
+use Spryker\Zed\Permission\PermissionDependencyProvider;
+use Spryker\Zed\SharedCart\Communication\Plugin\QuotePermissionStoragePlugin;
+use Spryker\Zed\SharedCart\Communication\Plugin\ReadSharedCartPermissionPlugin;
+use Spryker\Zed\SharedCart\Communication\Plugin\WriteSharedCartPermissionPlugin;
 
 /**
  * Inherited Methods
@@ -28,7 +37,62 @@ class QuotePermissionGroupQuoteExpanderPluginTester extends Actor
 {
     use _generated\QuotePermissionGroupQuoteExpanderPluginTesterActions;
 
-   /**
-    * Define custom actions here
-    */
+    /**
+     * @return void
+     */
+    public function setPermissionDependencies(): void
+    {
+        $this->setDependency(PermissionDependencyProvider::PLUGINS_PERMISSION_STORAGE, [
+            new QuotePermissionStoragePlugin(),
+        ]);
+
+        $this->setDependency(PermissionDependencyProvider::PLUGINS_PERMISSION, [
+            new ReadSharedCartPermissionPlugin(),
+            new WriteSharedCartPermissionPlugin(),
+        ]);
+
+        $this->getLocator()->permission()->facade()->syncPermissionPlugins();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    public function haveCustomerWithCompanyUser(CompanyTransfer $companyTransfer): CustomerTransfer
+    {
+        $customerTransfer = $this->haveCustomer();
+        $companyUserTransfer = $this->haveCompanyUser([
+            CompanyUserTransfer::CUSTOMER => $customerTransfer,
+            CompanyUserTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
+        ]);
+        $customerTransfer->setCompanyUserTransfer($companyUserTransfer);
+
+        return $customerTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $ownerCustomerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $otherCustomerTransfer
+     * @param \Generated\Shared\Transfer\SpyQuotePermissionGroupEntityTransfer $quotePermissionGroupEntityTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function haveSharedQuote(
+        CustomerTransfer $ownerCustomerTransfer,
+        CustomerTransfer $otherCustomerTransfer,
+        SpyQuotePermissionGroupEntityTransfer $quotePermissionGroupEntityTransfer
+    ): QuoteTransfer {
+        $quoteTransfer = $this->havePersistentQuote([
+            QuoteTransfer::CUSTOMER => $ownerCustomerTransfer,
+        ]);
+
+        $this->haveQuoteCompanyUser(
+            $otherCustomerTransfer->getCompanyUserTransfer(),
+            $quoteTransfer,
+            $quotePermissionGroupEntityTransfer
+        );
+
+        return $quoteTransfer;
+    }
 }

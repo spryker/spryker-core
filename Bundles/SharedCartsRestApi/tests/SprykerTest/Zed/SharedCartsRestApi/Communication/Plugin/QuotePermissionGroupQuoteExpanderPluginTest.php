@@ -8,12 +8,7 @@
 namespace SprykerTest\Zed\SharedCartsRestApi\Communication\Plugin;
 
 use Codeception\TestCase\Test;
-use Generated\Shared\Transfer\CompanyUserTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\Permission\PermissionDependencyProvider;
-use Spryker\Zed\SharedCart\Communication\Plugin\QuotePermissionStoragePlugin;
 use Spryker\Zed\SharedCart\Communication\Plugin\ReadSharedCartPermissionPlugin;
-use Spryker\Zed\SharedCart\Communication\Plugin\WriteSharedCartPermissionPlugin;
 use Spryker\Zed\SharedCartsRestApi\Communication\Plugin\CartsRestApi\QuotePermissionGroupQuoteExpanderPlugin;
 
 /**
@@ -30,7 +25,7 @@ use Spryker\Zed\SharedCartsRestApi\Communication\Plugin\CartsRestApi\QuotePermis
 class QuotePermissionGroupQuoteExpanderPluginTest extends Test
 {
     /**
-     * @var \SprykerTest\Zed\SharedCartsRestApi\SharedCartsRestApiFacadeTester
+     * @var \SprykerTest\Zed\SharedCartsRestApi\QuotePermissionGroupQuoteExpanderPluginTester
      */
     protected $tester;
 
@@ -81,16 +76,7 @@ class QuotePermissionGroupQuoteExpanderPluginTest extends Test
     {
         parent::setUp();
 
-        $this->tester->setDependency(PermissionDependencyProvider::PLUGINS_PERMISSION_STORAGE, [
-            new QuotePermissionStoragePlugin(),
-        ]);
-
-        $this->tester->setDependency(PermissionDependencyProvider::PLUGINS_PERMISSION, [
-            new ReadSharedCartPermissionPlugin(),
-            new WriteSharedCartPermissionPlugin(),
-        ]);
-
-        $this->tester->getLocator()->permission()->facade()->syncPermissionPlugins();
+        $this->tester->setPermissionDependencies();
 
         $this->quotePermissionGroupQuoteExpanderPlugin = new QuotePermissionGroupQuoteExpanderPlugin();
 
@@ -100,27 +86,13 @@ class QuotePermissionGroupQuoteExpanderPluginTest extends Test
 
         $companyTransfer = $this->tester->haveCompany();
 
-        $this->ownerCustomerTransfer = $this->tester->haveCustomer();
-        $this->ownerCompanyUserTransfer = $this->tester->haveCompanyUser([
-            CompanyUserTransfer::CUSTOMER => $this->ownerCustomerTransfer,
-            CompanyUserTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
-        ]);
-        $this->ownerCustomerTransfer->setCompanyUserTransfer($this->ownerCompanyUserTransfer);
+        $this->ownerCustomerTransfer = $this->tester->haveCustomerWithCompanyUser($companyTransfer);
 
-        $this->otherCustomerTransfer = $this->tester->haveCustomer();
-        $this->otherCompanyUserTransfer = $this->tester->haveCompanyUser([
-            CompanyUserTransfer::CUSTOMER => $this->otherCustomerTransfer,
-            CompanyUserTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
-        ]);
-        $this->otherCustomerTransfer->setCompanyUserTransfer($this->otherCompanyUserTransfer);
+        $this->otherCustomerTransfer = $this->tester->haveCustomerWithCompanyUser($companyTransfer);
 
-        $this->quoteTransfer = $this->tester->havePersistentQuote([
-            QuoteTransfer::CUSTOMER => $this->ownerCustomerTransfer,
-        ]);
-
-        $this->quoteCompanyUserEntityTransfer = $this->tester->haveQuoteCompanyUser(
-            $this->otherCompanyUserTransfer,
-            $this->quoteTransfer,
+        $this->quoteTransfer = $this->tester->haveSharedQuote(
+            $this->ownerCustomerTransfer,
+            $this->otherCustomerTransfer,
             $this->quotePermissionGroupEntityTransfer
         );
     }
