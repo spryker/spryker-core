@@ -15,19 +15,19 @@ interface RestRequestValidatorToFinderAdapterInterface extends IteratorAggregate
     /**
      * @param array $dirs
      *
-     * @return \Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToFinderAdapterInterface
+     * @return $this
      */
-    public function in(array $dirs): self;
+    public function in(array $dirs);
 
     /**
      * @param string $pattern
      *
-     * @return \Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToFinderAdapterInterface
+     * @return $this
      */
-    public function name(string $pattern): self;
+    public function name(string $pattern);
 
     /**
-     * @return \Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToFinderAdapterInterface
+     * @return $this
      */
-    public function reset(): self;
+    public function reset();
 }

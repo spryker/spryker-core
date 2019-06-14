@@ -15,6 +15,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \Spryker\Zed\Log\Communication\LogCommunicationFactory getFactory()
  * @method \Spryker\Zed\Log\Business\LogFacadeInterface getFacade()
+ * @method \Spryker\Zed\Log\LogConfig getConfig()
  */
 class QueueHandlerPlugin extends AbstractPlugin implements LogHandlerPluginInterface
 {

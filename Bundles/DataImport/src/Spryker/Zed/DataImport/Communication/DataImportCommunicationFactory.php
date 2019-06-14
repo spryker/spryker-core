@@ -11,6 +11,7 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
  * @method \Spryker\Zed\DataImport\DataImportConfig getConfig()
+ * @method \Spryker\Zed\DataImport\Business\DataImportFacadeInterface getFacade()
  */
 class DataImportCommunicationFactory extends AbstractCommunicationFactory
 {

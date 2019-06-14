@@ -7,9 +7,12 @@
 
 namespace SprykerTest\Shared\Product\Helper;
 
+use ArrayObject;
 use Codeception\Module;
 use Generated\Shared\DataBuilder\ProductAbstractBuilder;
 use Generated\Shared\DataBuilder\ProductConcreteBuilder;
+use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
@@ -77,6 +80,36 @@ class ProductDataHelper extends Module
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param \Generated\Shared\Transfer\LocalizedAttributesTransfer[] $localizedAttributes
+     *
+     * @return void
+     */
+    public function addLocalizedAttributesToProductAbstract(ProductAbstractTransfer $productAbstractTransfer, array $localizedAttributes): void
+    {
+        $productAbstractTransfer->setLocalizedAttributes(
+            new ArrayObject($localizedAttributes)
+        );
+
+        $this->getProductFacade()->saveProductAbstract($productAbstractTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\LocalizedAttributesTransfer[] $localizedAttributes
+     *
+     * @return void
+     */
+    public function addLocalizedAttributesToProductConcrete(ProductConcreteTransfer $productConcreteTransfer, array $localizedAttributes): void
+    {
+        $productConcreteTransfer->setLocalizedAttributes(
+            new ArrayObject($localizedAttributes)
+        );
+
+        $this->getProductFacade()->saveProductConcrete($productConcreteTransfer);
+    }
+
+    /**
      * @return \Spryker\Zed\Product\Business\ProductFacadeInterface
      */
     private function getProductFacade()
@@ -85,7 +118,7 @@ class ProductDataHelper extends Module
     }
 
     /**
-     * @return \Spryker\Zed\Product\Persistence\ProductQueryContainer
+     * @return \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
      */
     private function getProductQuery()
     {

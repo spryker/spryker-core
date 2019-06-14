@@ -12,6 +12,9 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Tax\Dependency\Facade\TaxToCountryBridge;
 
+/**
+ * @method \Spryker\Zed\Tax\TaxConfig getConfig()
+ */
 class TaxDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const STORE_CONFIG = 'store config';

@@ -73,6 +73,6 @@ class CartDeleteChecker implements CartDeleteCheckerInterface
      */
     protected function isQuoteOwner(QuoteTransfer $quoteTransfer, CustomerTransfer $customerTransfer): bool
     {
-        return strcmp($customerTransfer->getCustomerReference(), $quoteTransfer->getCustomerReference()) === 0;
+        return $customerTransfer->getCustomerReference() === $quoteTransfer->getCustomerReference();
     }
 }

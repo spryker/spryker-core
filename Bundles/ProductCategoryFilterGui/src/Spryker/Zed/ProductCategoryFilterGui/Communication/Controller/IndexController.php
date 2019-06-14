@@ -11,6 +11,7 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 
 /**
  * @method \Spryker\Zed\ProductCategoryFilterGui\Communication\ProductCategoryFilterGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductCategoryFilterGui\Persistence\ProductCategoryFilterGuiQueryContainerInterface getQueryContainer()
  */
 class IndexController extends AbstractController
 {
@@ -22,6 +23,7 @@ class IndexController extends AbstractController
         $rootCategoriesTable = $this
             ->getFactory()
             ->createCategoryRootNodeTable($this->getCurrentLocale()->getIdLocale());
+
         return $this->viewResponse([
             'RootCategoriesTable' => $rootCategoriesTable->render(),
         ]);

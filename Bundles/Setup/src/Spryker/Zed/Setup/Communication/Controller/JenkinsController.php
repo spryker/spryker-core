@@ -15,6 +15,8 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 
 /**
  * @deprecated Will be removed in 1.0.0.
+ * @method \Spryker\Zed\Setup\Business\SetupFacadeInterface getFacade()
+ * @method \Spryker\Zed\Setup\Communication\SetupCommunicationFactory getFactory()
  */
 class JenkinsController extends AbstractController
 {
@@ -181,7 +183,7 @@ $command</command>";
     }
 
     /**
-     * @return bool|array
+     * @return string[]|false
      */
     protected function getRoles()
     {
@@ -195,11 +197,11 @@ $command</command>";
         ];
 
         $options = getopt($shortopts, $longopts);
-        if (array_key_exists('role', $options)) {
-            return explode(',', $options['role']);
-        } else {
+        if (!array_key_exists('role', $options)) {
             return false;
         }
+
+        return explode(',', $options['role']);
     }
 
     /**

@@ -13,6 +13,9 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\SalesStatistics\SalesStatisticsConfig getConfig()
+ */
 class SalesStatisticsDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const PROPEL_SALES_ORDER_QUERY = 'SALES_ORDER_QUERY';

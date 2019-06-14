@@ -13,6 +13,9 @@ use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToMessengerFacadeB
 use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceBridge;
 use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceProductBridge;
 
+/**
+ * @method \Spryker\Zed\PriceCartConnector\PriceCartConnectorConfig getConfig()
+ */
 class PriceCartConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_PRICE_PRODUCT = 'price product facade';
@@ -43,6 +46,7 @@ class PriceCartConnectorDependencyProvider extends AbstractBundleDependencyProvi
         $container[static::FACADE_PRICE_PRODUCT] = function (Container $container) {
             return new PriceCartToPriceProductBridge($container->getLocator()->priceProduct()->facade());
         };
+
         return $container;
     }
 
@@ -56,6 +60,7 @@ class PriceCartConnectorDependencyProvider extends AbstractBundleDependencyProvi
         $container[static::FACADE_PRICE] = function (Container $container) {
             return new PriceCartToPriceBridge($container->getLocator()->price()->facade());
         };
+
         return $container;
     }
 

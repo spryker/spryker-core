@@ -12,11 +12,14 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ProductCategory\Communication\Form\AssignForm;
 use Spryker\Zed\ProductCategory\Communication\Table\ProductCategoryTable;
 use Spryker\Zed\ProductCategory\Communication\Table\ProductTable;
+use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCategoryBridge;
 use Spryker\Zed\ProductCategory\ProductCategoryDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductCategory\ProductCategoryConfig getConfig()
+ * @method \Spryker\Zed\ProductCategory\Persistence\ProductCategoryRepositoryInterface getRepository()
+ * @method \Spryker\Zed\ProductCategory\Business\ProductCategoryFacadeInterface getFacade()
  */
 class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
 {
@@ -83,5 +86,13 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
     public function createAssignForm(array $data)
     {
         return $this->getFormFactory()->create(AssignForm::class, $data, []);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCategoryBridge
+     */
+    public function getCategoryFacade(): ProductCategoryToCategoryBridge
+    {
+        return $this->getProvidedDependency(ProductCategoryDependencyProvider::FACADE_CATEGORY);
     }
 }

@@ -20,17 +20,13 @@ use Spryker\Zed\ZedNavigation\Communication\Console\BuildNavigationConsole;
 class SetupConfig extends AbstractBundleConfig
 {
     /**
+     * @deprecated Use `getCronjobsDefinitionFilePath()` instead.
+     *
      * @return string
      */
-    public function getPathForJobsPHP()
+    public function getPathForJobsPHP(): string
     {
-        return implode(DIRECTORY_SEPARATOR, [
-            APPLICATION_ROOT_DIR,
-            'config',
-            'Zed',
-            'cronjobs',
-            'jobs.php',
-        ]);
+        return $this->getCronjobsDefinitionFilePath();
     }
 
     /**
@@ -66,6 +62,8 @@ class SetupConfig extends AbstractBundleConfig
     }
 
     /**
+     * @deprecated Will be removed without replacement. Use `vendor/bin/install` instead.
+     *
      * Please customize this stack on project level.
      *
      * @return array
@@ -95,5 +93,45 @@ class SetupConfig extends AbstractBundleConfig
             BuildNavigationConsole::COMMAND_NAME,
             SearchConsole::COMMAND_NAME,
         ];
+    }
+
+    /**
+     * Returns the path to the environment configuration of cronjob functionality.
+     *
+     * @return string
+     */
+    public function getCronjobsConfigFilePath(): string
+    {
+        return implode(DIRECTORY_SEPARATOR, [
+            APPLICATION_ROOT_DIR,
+            'config',
+            'Zed',
+            'cronjobs',
+            'cron.conf',
+        ]);
+    }
+
+    /**
+     * Returns the path to the cronjobs definition, their config and schedule.
+     *
+     * @return string
+     */
+    public function getCronjobsDefinitionFilePath(): string
+    {
+        return implode(DIRECTORY_SEPARATOR, [
+            APPLICATION_ROOT_DIR,
+            'config',
+            'Zed',
+            'cronjobs',
+            'jobs.php',
+        ]);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isJenkinsCsrfProtectionEnabled(): bool
+    {
+        return $this->get(SetupConstants::JENKINS_CSRF_PROTECTION_ENABLED, false);
     }
 }

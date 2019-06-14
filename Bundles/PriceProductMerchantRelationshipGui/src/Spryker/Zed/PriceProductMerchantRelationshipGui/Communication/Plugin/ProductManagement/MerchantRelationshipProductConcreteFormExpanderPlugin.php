@@ -15,6 +15,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 /**
  * @method \Spryker\Zed\PriceProductMerchantRelationshipGui\Communication\PriceProductMerchantRelationshipGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\PriceProductMerchantRelationshipGui\PriceProductMerchantRelationshipGuiConfig getConfig()
  */
 class MerchantRelationshipProductConcreteFormExpanderPlugin extends AbstractPlugin implements ProductConcreteFormExpanderPluginInterface
 {

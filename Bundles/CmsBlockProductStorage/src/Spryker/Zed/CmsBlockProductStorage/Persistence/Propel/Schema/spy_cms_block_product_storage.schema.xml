@@ -5,7 +5,7 @@
           namespace="Orm\Zed\CmsBlockProductStorage\Persistence"
           package="src.Orm.Zed.CmsBlockProductStorage.Persistence">
 
-    <table name="spy_cms_block_product_storage">
+    <table name="spy_cms_block_product_storage" identifierQuoting="true">
         <column name="id_cms_block_product_storage" type="BIGINT" autoIncrement="true" primaryKey="true"/>
         <column name="fk_product_abstract" type="INTEGER" required="true"/>
         <index name="spy_cms_block_product_storage-fk_product_abstract">

@@ -13,6 +13,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \Spryker\Zed\CartsRestApi\CartsRestApiConfig getConfig()
+ * @method \Spryker\Zed\CartsRestApi\Persistence\CartsRestApiEntityManagerInterface getEntityManager()
  */
 class CartsRestApiPersistenceFactory extends AbstractPersistenceFactory
 {

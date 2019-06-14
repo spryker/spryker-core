@@ -17,6 +17,9 @@ use Spryker\Zed\CmsPageSearch\Dependency\Service\CmsPageSearchToUtilEncodingBrid
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\CmsPageSearch\CmsPageSearchConfig getConfig()
+ */
 class CmsPageSearchDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const QUERY_CONTAINER_CMS_PAGE = 'QUERY_CONTAINER_CMS_PAGE';

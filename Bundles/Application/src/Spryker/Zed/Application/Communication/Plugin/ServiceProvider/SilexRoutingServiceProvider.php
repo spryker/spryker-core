@@ -10,6 +10,7 @@ namespace Spryker\Zed\Application\Communication\Plugin\ServiceProvider;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Shared\Application\Business\Routing\SilexRouter;
+use Symfony\Cmf\Component\Routing\ChainRouter;
 
 class SilexRoutingServiceProvider implements ServiceProviderInterface
 {
@@ -20,7 +21,6 @@ class SilexRoutingServiceProvider implements ServiceProviderInterface
      */
     public function boot(Application $app)
     {
-        $app->addRouter(new SilexRouter($app));
     }
 
     /**
@@ -30,5 +30,12 @@ class SilexRoutingServiceProvider implements ServiceProviderInterface
      */
     public function register(Application $app)
     {
+        $app['routers'] = $app->share(
+            $app->extend('routers', function (ChainRouter $chainRouter) use ($app) {
+                $chainRouter->add(new SilexRouter($app));
+
+                return $chainRouter;
+            })
+        );
     }
 }

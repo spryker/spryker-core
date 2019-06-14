@@ -15,7 +15,7 @@
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/propel": "*",
-    "spryker/testify": "*"
+    "spryker/testify": "^3.7.0"
   },
   "autoload": {
     "psr-4": {

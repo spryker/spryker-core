@@ -12,6 +12,9 @@ use Spryker\Glue\Kernel\Container;
 use Spryker\Glue\ProductLabelsRestApi\Dependency\Client\ProductLabelsRestApiToProductLabelStorageClientBridge;
 use Spryker\Glue\ProductLabelsRestApi\Dependency\Client\ProductLabelsRestApiToProductStorageClientBridge;
 
+/**
+ * @method \Spryker\Glue\ProductLabelsRestApi\ProductLabelsRestApiConfig getConfig()
+ */
 class ProductLabelsRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';

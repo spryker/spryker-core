@@ -15,6 +15,9 @@ use Spryker\Zed\ZedRequest\Dependency\Facade\NullMessenger;
 use Spryker\Zed\ZedRequest\Dependency\Facade\ZedRequestToMessengerBridge;
 use Spryker\Zed\ZedRequest\Dependency\Facade\ZedRequestToStoreBridge;
 
+/**
+ * @method \Spryker\Zed\ZedRequest\ZedRequestConfig getConfig()
+ */
 class ZedRequestDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_MESSENGER = 'messenger facade';

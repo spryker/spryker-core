@@ -41,6 +41,14 @@ endpoint_three:
     floatField:
     - Regex:
         pattern: '/\d*/'
+    nestedField:
+      - Collection:
+          fields:
+            test:
+              - Regex:
+                  pattern: '/\d{15}/'
+            test_email:
+              - Email
   patch:
     booleanField:
     - IsFalse

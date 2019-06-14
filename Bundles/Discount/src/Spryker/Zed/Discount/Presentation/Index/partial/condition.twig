@@ -1,15 +1,20 @@
 <h3>{{ 'Define when to apply the discount' | trans }}</h3>
-<hr />
+<hr/>
 
-{{ form_row(discountForm.discountCondition) }}
+<div class="form-group">
+    <div id="builder_condition"
+         class="query-builder-container {% if discountForm.discountCondition.decision_rule_query_string.vars.errors|length > 0 %}has-error{% endif %}">
+        {{ form_errors(discountForm.discountCondition.decision_rule_query_string) }}
+    </div>
 
-<div id="builder_condition" class="query-builder-container {% if discountForm.discountCondition.decision_rule_query_string.vars.errors|length > 0 %}has-error{% endif %}">
-    {{ form_errors(discountForm.discountCondition.decision_rule_query_string) }}
+    <button type="button" class="btn btn-sm btn-success" id="btn-condition-get"
+            data-label-plain-query="{{ 'Plain query' | trans }}"
+            data-label-query-builder="{{ 'Query builder' | trans }}">
+        {{ 'Plain query' | trans }}
+    </button>
 </div>
 
-<button type="button" class="btn btn-sm btn-success" id="btn-condition-get" data-label-plain-query="{{ 'Plain query' | trans }}" data-label-query-builder="{{ 'Query builder' | trans }}">
-    {{  'Plain query' | trans }}
-</button>
+{{ form_row(discountForm.discountCondition) }}
 
 {% import "@Discount/Index/partial/_plugin_types_macro.twig" as form_macro %}
 {{ form_macro.render_plugin_types(discountForm.discountCondition) }}

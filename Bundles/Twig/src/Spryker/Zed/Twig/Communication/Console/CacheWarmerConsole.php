@@ -13,6 +13,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\Twig\Business\TwigFacadeInterface getFacade()
+ * @method \Spryker\Zed\Twig\Communication\TwigCommunicationFactory getFactory()
  */
 class CacheWarmerConsole extends Console
 {

@@ -17,6 +17,7 @@ use Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataExpanderInter
  * @method \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductPageSearch\Communication\ProductPageSearchCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductPageSearch\ProductPageSearchConfig getConfig()
  */
 class ProductImagePageDataExpanderPlugin extends AbstractPlugin implements ProductPageDataExpanderInterface
 {
@@ -35,7 +36,7 @@ class ProductImagePageDataExpanderPlugin extends AbstractPlugin implements Produ
     }
 
     /**
-     * @param int $idImageSet
+     * @param int|null $idImageSet
      *
      * @return array
      */

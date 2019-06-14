@@ -27,6 +27,7 @@ use Symfony\Component\Validator\Constraints\Url;
 /**
  * @method \Spryker\Zed\NavigationGui\Communication\NavigationGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\NavigationGui\Persistence\NavigationGuiQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\NavigationGui\NavigationGuiConfig getConfig()
  */
 class NavigationNodeLocalizedAttributesFormType extends AbstractType
 {
@@ -334,7 +335,7 @@ class NavigationNodeLocalizedAttributesFormType extends AbstractType
         $urlTransfer = new UrlTransfer();
         $urlTransfer->setIdUrl($idUrl);
 
-        return $this->getFactory()->getUrlFacade()->findUrl($urlTransfer);
+        return $this->getFactory()->getUrlFacade()->findUrlCaseInsensitive($urlTransfer);
     }
 
     /**
@@ -347,7 +348,7 @@ class NavigationNodeLocalizedAttributesFormType extends AbstractType
         $urlTransfer = new UrlTransfer();
         $urlTransfer->setUrl($url);
 
-        return $this->getFactory()->getUrlFacade()->findUrl($urlTransfer);
+        return $this->getFactory()->getUrlFacade()->findUrlCaseInsensitive($urlTransfer);
     }
 
     /**

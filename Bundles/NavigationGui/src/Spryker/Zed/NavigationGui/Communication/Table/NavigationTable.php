@@ -170,9 +170,9 @@ class NavigationTable extends AbstractTable
     protected function getStatus(SpyNavigation $navigationEntity)
     {
         if ($navigationEntity->getIsActive()) {
-            return '<span class="label label-info">Active</span>';
+            return $this->generateLabel('Active', 'label-info');
         }
 
-        return '<span class="label label-danger">Inactive</span>';
+        return $this->generateLabel('Inactive', 'label-danger');
     }
 }

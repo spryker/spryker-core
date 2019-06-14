@@ -12,6 +12,9 @@ use Spryker\Yves\CmsContentWidgetProductSearchConnector\Dependency\Client\CmsCon
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 
+/**
+ * @method \Spryker\Yves\CmsContentWidgetProductSearchConnector\CmsContentWidgetProductSearchConnectorConfig getConfig()
+ */
 class CmsContentWidgetProductSearchConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_PRODUCT = 'PRODUCT CLIENT';
@@ -42,6 +45,7 @@ class CmsContentWidgetProductSearchConnectorDependencyProvider extends AbstractB
                 $container->getLocator()->product()->client()
             );
         };
+
         return $container;
     }
 
@@ -57,6 +61,7 @@ class CmsContentWidgetProductSearchConnectorDependencyProvider extends AbstractB
                 $container->getLocator()->search()->client()
             );
         };
+
         return $container;
     }
 }

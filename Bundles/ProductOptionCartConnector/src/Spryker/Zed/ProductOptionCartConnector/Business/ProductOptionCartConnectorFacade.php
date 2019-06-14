@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductOptionCartConnector\Business;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -78,5 +79,21 @@ class ProductOptionCartConnectorFacade extends AbstractFacade implements Product
         return $this->getFactory()
             ->createProductOptionValuePriceValidator()
             ->validateProductOptionValuePrices($cartChangeTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
+     */
+    public function checkProductOptionExistence(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer
+    {
+        return $this->getFactory()
+            ->createProductOptionValidator()
+            ->checkProductOptionExistence($cartChangeTransfer);
     }
 }

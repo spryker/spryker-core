@@ -15,6 +15,7 @@ use Spryker\Zed\ProductMeasurementUnitDataImport\ProductMeasurementUnitDataImpor
 
 /**
  * @method \Spryker\Zed\ProductMeasurementUnitDataImport\Business\ProductMeasurementUnitDataImportFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductMeasurementUnitDataImport\ProductMeasurementUnitDataImportConfig getConfig()
  */
 class ProductMeasurementBaseUnitDataImportPlugin extends AbstractPlugin implements DataImportPluginInterface
 {

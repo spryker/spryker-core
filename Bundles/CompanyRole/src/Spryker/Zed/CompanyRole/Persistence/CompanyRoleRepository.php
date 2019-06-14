@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\PermissionTransfer;
+use Orm\Zed\CompanyRole\Persistence\Map\SpyCompanyRoleToCompanyUserTableMap;
 use Orm\Zed\CompanyRole\Persistence\SpyCompanyRole;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -187,6 +188,28 @@ class CompanyRoleRepository extends AbstractRepository implements CompanyRoleRep
     }
 
     /**
+     * @module Permission
+     *
+     * @param string $permissionKey
+     *
+     * @return int[]
+     */
+    public function getCompanyUserIdsByPermissionKey(string $permissionKey): array
+    {
+        return $this->getFactory()
+            ->createCompanyRoleQuery()
+            ->joinSpyCompanyRoleToCompanyUser()
+            ->useSpyCompanyRoleToPermissionQuery()
+                ->usePermissionQuery()
+                   ->filterByKey($permissionKey)
+                ->endUse()
+            ->endUse()
+            ->select([SpyCompanyRoleToCompanyUserTableMap::COL_FK_COMPANY_USER])
+            ->find()
+            ->toArray();
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer $companyRoleCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyRoleCollectionTransfer
@@ -310,6 +333,13 @@ class CompanyRoleRepository extends AbstractRepository implements CompanyRoleRep
                 $companyRoleTransfer
             );
 
+        $companyRoleTransfer = $this->getFactory()
+            ->createCompanyRoleCompanyMapper()
+            ->mapCompanyFromCompanyRoleEntityToCompanyRoleTransfer(
+                $spyCompanyRole,
+                $companyRoleTransfer
+            );
+
         return $companyRoleTransfer;
     }
 
@@ -362,5 +392,48 @@ class CompanyRoleRepository extends AbstractRepository implements CompanyRoleRep
             ->findOne();
 
         return ($spyCompanyRoleToCompanyUser !== null);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyRoleTransfer|null
+     */
+    public function findCompanyRoleById(CompanyRoleTransfer $companyRoleTransfer): ?CompanyRoleTransfer
+    {
+        $companyRoleTransfer->requireIdCompanyRole();
+
+        $companyRoleEntity = $this->getFactory()
+            ->createCompanyRoleQuery()
+            ->filterByIdCompanyRole($companyRoleTransfer->getIdCompanyRole())
+            ->findOne();
+
+        if (!$companyRoleEntity) {
+            return null;
+        }
+
+        return $this->prepareCompanyRoleTransfer($companyRoleEntity);
+    }
+
+    /**
+     * @module Company
+     *
+     * @param string $companyRoleUuid
+     *
+     * @return \Generated\Shared\Transfer\CompanyRoleTransfer|null
+     */
+    public function findCompanyRoleByUuid(string $companyRoleUuid): ?CompanyRoleTransfer
+    {
+        $companyRoleEntity = $this->getFactory()
+            ->createCompanyRoleQuery()
+            ->joinCompany()
+            ->filterByUuid($companyRoleUuid)
+            ->findOne();
+
+        if (!$companyRoleEntity) {
+            return null;
+        }
+
+        return $this->prepareCompanyRoleTransfer($companyRoleEntity);
     }
 }

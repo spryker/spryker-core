@@ -15,6 +15,7 @@ use Spryker\Zed\MerchantRelationshipSalesOrderThresholdDataImport\MerchantRelati
 
 /**
  * @method \Spryker\Zed\MerchantRelationshipSalesOrderThresholdDataImport\Business\MerchantRelationshipSalesOrderThresholdDataImportFacadeInterface getFacade()
+ * @method \Spryker\Zed\MerchantRelationshipSalesOrderThresholdDataImport\MerchantRelationshipSalesOrderThresholdDataImportConfig getConfig()
  */
 class MerchantRelationshipSalesOrderThresholdDataImportPlugin extends AbstractPlugin implements DataImportPluginInterface
 {

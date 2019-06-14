@@ -13,6 +13,9 @@ use Spryker\Zed\CategoryNavigationConnector\Dependency\QueryContainer\CategoryNa
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\CategoryNavigationConnector\CategoryNavigationConnectorConfig getConfig()
+ */
 class CategoryNavigationConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_NAVIGATION = 'FACADE_NAVIGATION';

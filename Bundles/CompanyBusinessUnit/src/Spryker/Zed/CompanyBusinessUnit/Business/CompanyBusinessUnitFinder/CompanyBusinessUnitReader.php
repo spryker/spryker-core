@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitFinder;
 
+use Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer;
+use Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer;
+use Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitPluginExecutor\CompanyBusinessUnitPluginExecutorInterface;
 use Spryker\Zed\CompanyBusinessUnit\Persistence\CompanyBusinessUnitRepositoryInterface;
@@ -46,5 +49,50 @@ class CompanyBusinessUnitReader implements CompanyBusinessUnitReaderInterface
         $companyBusinessUnitTransfer = $this->companyBusinessUnitPluginExecutor->executeTransferExpanderPlugins($companyBusinessUnitTransfer);
 
         return $companyBusinessUnitTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer $companyBusinessUnitCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer
+     */
+    public function getCompanyBusinessUnitCollection(CompanyBusinessUnitCriteriaFilterTransfer $companyBusinessUnitCriteriaFilterTransfer): CompanyBusinessUnitCollectionTransfer
+    {
+        $companyBusinessUnitCollectionTransfer = $this->companyBusinessUnitRepository
+            ->getCompanyBusinessUnitCollection($companyBusinessUnitCriteriaFilterTransfer);
+
+        foreach ($companyBusinessUnitCollectionTransfer->getCompanyBusinessUnits() as $companyBusinessUnitTransferIndex => $companyBusinessUnitTransfer) {
+            $companyBusinessUnitCollectionTransfer->getCompanyBusinessUnits()->offsetSet(
+                $companyBusinessUnitTransferIndex,
+                $this->companyBusinessUnitPluginExecutor->executeTransferExpanderPlugins($companyBusinessUnitTransfer)
+            );
+        }
+
+        return $companyBusinessUnitCollectionTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer
+     */
+    public function findCompanyBusinessUnitByUuid(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): CompanyBusinessUnitResponseTransfer
+    {
+        $companyBusinessUnitTransfer->requireUuid();
+
+        $companyBusinessUnitTransfer = $this->companyBusinessUnitRepository->findCompanyBusinessUnitByUuid(
+            $companyBusinessUnitTransfer->getUuid()
+        );
+
+        $companyBusinessUnitResponseTransfer = new CompanyBusinessUnitResponseTransfer();
+        if (!$companyBusinessUnitTransfer) {
+            return $companyBusinessUnitResponseTransfer->setIsSuccessful(false);
+        }
+
+        $companyBusinessUnitTransfer = $this->companyBusinessUnitPluginExecutor->executeTransferExpanderPlugins($companyBusinessUnitTransfer);
+
+        return $companyBusinessUnitResponseTransfer
+            ->setIsSuccessful(true)
+            ->setCompanyBusinessUnitTransfer($companyBusinessUnitTransfer);
     }
 }

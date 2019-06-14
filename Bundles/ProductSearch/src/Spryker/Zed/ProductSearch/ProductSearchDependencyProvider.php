@@ -16,6 +16,9 @@ use Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToLocaleBridge;
 use Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToProductBridge;
 use Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToTouchBridge;
 
+/**
+ * @method \Spryker\Zed\ProductSearch\ProductSearchConfig getConfig()
+ */
 class ProductSearchDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_PRODUCT = 'product facade';

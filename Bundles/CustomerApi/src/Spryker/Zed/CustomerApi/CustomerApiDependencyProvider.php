@@ -13,6 +13,9 @@ use Spryker\Zed\CustomerApi\Dependency\QueryContainer\CustomerApiToApiQueryBuild
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\CustomerApi\CustomerApiConfig getConfig()
+ */
 class CustomerApiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const SERVICE_DATE_FORMATTER = 'SERVICE_DATE_FORMATTER';
@@ -104,6 +107,7 @@ class CustomerApiDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::FACADE_CUSTOMER] = function (Container $container) {
             return new CustomerApiToCustomerBridge($container->getLocator()->customer()->facade());
         };
+
         return $container;
     }
 }

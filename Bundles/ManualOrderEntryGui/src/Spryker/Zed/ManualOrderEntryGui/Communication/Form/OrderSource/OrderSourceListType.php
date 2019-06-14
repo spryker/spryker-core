@@ -16,6 +16,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * @method \Spryker\Zed\ManualOrderEntryGui\Communication\ManualOrderEntryGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ManualOrderEntryGui\ManualOrderEntryGuiConfig getConfig()
  */
 class OrderSourceListType extends AbstractType
 {
@@ -56,7 +57,7 @@ class OrderSourceListType extends AbstractType
      *
      * @return $this
      */
-    protected function addOrderSourceField(FormBuilderInterface $builder, array $orderSourceList): self
+    protected function addOrderSourceField(FormBuilderInterface $builder, array $orderSourceList)
     {
         $builder->add(static::FIELD_ORDER_SOURCE, Select2ComboBoxType::class, [
             'property_path' => QuoteTransfer::ORDER_SOURCE . '.' . OrderSourceTransfer::ID_ORDER_SOURCE,

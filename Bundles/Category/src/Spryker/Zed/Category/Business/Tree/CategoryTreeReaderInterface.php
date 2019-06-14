@@ -15,7 +15,7 @@ interface CategoryTreeReaderInterface
      * @param int $idNode
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNode[]
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNode[]|\Propel\Runtime\Collection\ObjectCollection
      */
     public function getChildren($idNode, LocaleTransfer $locale);
 
@@ -150,7 +150,7 @@ interface CategoryTreeReaderInterface
     /**
      * @param int $idCategory
      *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNode[]
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNode[]|\Propel\Runtime\Collection\ObjectCollection
      */
     public function getAllNodesByIdCategory($idCategory);
 
@@ -159,7 +159,7 @@ interface CategoryTreeReaderInterface
      *
      * @param int $idCategory
      *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNode[]
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNode[]|\Propel\Runtime\Collection\ObjectCollection
      */
     public function getMainNodesByIdCategory($idCategory);
 
@@ -168,7 +168,7 @@ interface CategoryTreeReaderInterface
      *
      * @param int $idCategory
      *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNode[]
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNode[]|\Propel\Runtime\Collection\ObjectCollection
      */
     public function getNotMainNodesByIdCategory($idCategory);
 
@@ -178,12 +178,12 @@ interface CategoryTreeReaderInterface
      * @param int $idParentNode
      * @param int $idLocale
      *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNode[]
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNode[]|\Propel\Runtime\Collection\ObjectCollection
      */
     public function getCategoryNodesWithOrder($idParentNode, $idLocale);
 
     /**
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNode[]
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNode[]|\Propel\Runtime\Collection\ObjectCollection
      */
     public function getRootNodes();
 

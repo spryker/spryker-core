@@ -16,6 +16,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * @method \Spryker\Zed\Development\Business\DevelopmentFacadeInterface getFacade()
  * @method \Spryker\Zed\Development\Communication\DevelopmentCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Development\DevelopmentConfig getConfig()
  */
 class BundlesFormType extends AbstractType
 {

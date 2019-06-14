@@ -7,84 +7,99 @@
 
 namespace Spryker\Zed\PriceProductMerchantRelationshipStorage\Business\Model;
 
-use Generated\Shared\Transfer\MerchantRelationshipTransfer;
-use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer;
-use Spryker\Shared\PriceProductMerchantRelationshipStorage\PriceProductMerchantRelationshipStorageConstants;
-use Spryker\Zed\PriceProductMerchantRelationshipStorage\Dependency\Facade\PriceProductMerchantRelationshipStorageToPriceProductFacadeInterface;
-use Spryker\Zed\PriceProductMerchantRelationshipStorage\Dependency\Facade\PriceProductMerchantRelationshipStorageToStoreFacadeInterface;
 use Spryker\Zed\PriceProductMerchantRelationshipStorage\PriceProductMerchantRelationshipStorageConfig;
 
 class PriceGrouper implements PriceGrouperInterface
 {
-    /**
-     * @var \Spryker\Zed\PriceProductMerchantRelationshipStorage\Dependency\Facade\PriceProductMerchantRelationshipStorageToPriceProductFacadeInterface
-     */
-    protected $priceProductFacade;
+    protected const PRICES = 'prices';
 
     /**
-     * @var \Spryker\Zed\PriceProductMerchantRelationshipStorage\Dependency\Facade\PriceProductMerchantRelationshipStorageToStoreFacadeInterface
+     * @param \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer $priceProductMerchantRelationshipStorageTransfer
+     * @param array $existingPricesData
+     *
+     * @return \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer
      */
-    protected $storeFacade;
+    public function groupPricesData(
+        PriceProductMerchantRelationshipStorageTransfer $priceProductMerchantRelationshipStorageTransfer,
+        array $existingPricesData = []
+    ): PriceProductMerchantRelationshipStorageTransfer {
+        $groupedPrices = $this->groupPrices($priceProductMerchantRelationshipStorageTransfer);
 
-    /**
-     * @var \Spryker\Zed\PriceProductMerchantRelationshipStorage\PriceProductMerchantRelationshipStorageConfig
-     */
-    protected $config;
+        if (isset($existingPricesData[static::PRICES])) {
+            $groupedPrices = array_replace_recursive($existingPricesData[static::PRICES], $groupedPrices);
+        }
 
-    /**
-     * @param \Spryker\Zed\PriceProductMerchantRelationshipStorage\Dependency\Facade\PriceProductMerchantRelationshipStorageToPriceProductFacadeInterface $priceProductFacade
-     * @param \Spryker\Zed\PriceProductMerchantRelationshipStorage\Dependency\Facade\PriceProductMerchantRelationshipStorageToStoreFacadeInterface $storeFacade
-     * @param \Spryker\Zed\PriceProductMerchantRelationshipStorage\PriceProductMerchantRelationshipStorageConfig $config
-     */
-    public function __construct(
-        PriceProductMerchantRelationshipStorageToPriceProductFacadeInterface $priceProductFacade,
-        PriceProductMerchantRelationshipStorageToStoreFacadeInterface $storeFacade,
-        PriceProductMerchantRelationshipStorageConfig $config
-    ) {
-        $this->priceProductFacade = $priceProductFacade;
-        $this->storeFacade = $storeFacade;
-        $this->config = $config;
+        $groupedPrices = $this->filterPriceData($groupedPrices, PriceProductMerchantRelationshipStorageConfig::PRICE_DATA);
+
+        return $priceProductMerchantRelationshipStorageTransfer->setPrices(
+            $this->formatData($groupedPrices)
+        );
     }
 
     /**
-     * @param array $products
-     * @param string $productPrimaryIdentifier
-     * @param string $productSkuIdentifier
+     * @param \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer $priceProductMerchantRelationshipStorageTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer[]
+     * @return array
      */
-    public function getGroupedPrices(array $products, string $productPrimaryIdentifier, string $productSkuIdentifier): array
-    {
-        $priceProductDimensionTransfer = (new PriceProductDimensionTransfer())
-            ->setType($this->config->getPriceDimensionMerchantRelationship());
-
+    protected function groupPrices(
+        PriceProductMerchantRelationshipStorageTransfer $priceProductMerchantRelationshipStorageTransfer
+    ): array {
         $groupedPrices = [];
-        foreach ($products as $product) {
-            $idStore = $product[PriceProductMerchantRelationshipStorageConstants::COL_PRICE_PRODUCT_STORE_FK_STORE];
-            $idProduct = $product[$productPrimaryIdentifier];
-            $idMerchantRelationship = $product[PriceProductMerchantRelationshipStorageConstants::COL_FK_MERCHANT_RELATIONSHIP];
-            $idCompanyBusinessUnit = $product[MerchantRelationshipTransfer::FK_COMPANY_BUSINESS_UNIT];
-
-            if (!$idMerchantRelationship || !$idProduct) {
-                continue;
+        foreach ($priceProductMerchantRelationshipStorageTransfer->getUngroupedPrices() as $priceTransfer) {
+            if ($priceTransfer->getGrossPrice() || $priceTransfer->getNetPrice()) {
+                $groupedPrices[$priceTransfer->getIdMerchantRelationship()][$priceTransfer->getCurrencyCode()][PriceProductMerchantRelationshipStorageConfig::PRICE_DATA] = $priceTransfer->getPriceData();
             }
 
-            $priceProductDimensionTransfer->setIdMerchantRelationship($idMerchantRelationship);
-            $storeTransfer = $this->storeFacade->getStoreById($idStore);
-            $prices = $this->priceProductFacade->findPricesBySkuGroupedForCurrentStore(
-                $product[$productSkuIdentifier],
-                $priceProductDimensionTransfer
-            );
-
-            $groupedPrices[] = (new PriceProductMerchantRelationshipStorageTransfer())
-                ->setStoreName($storeTransfer->getName())
-                ->setIdCompanyBusinessUnit($idCompanyBusinessUnit)
-                ->setIdMerchantRelationship($idMerchantRelationship)
-                ->setIdProduct($idProduct)
-                ->setPrices($prices);
+            $groupedPrices[$priceTransfer->getIdMerchantRelationship()][$priceTransfer->getCurrencyCode()][PriceProductMerchantRelationshipStorageConfig::PRICE_MODE_GROSS][$priceTransfer->getPriceType()] = $priceTransfer->getGrossPrice();
+            $groupedPrices[$priceTransfer->getIdMerchantRelationship()][$priceTransfer->getCurrencyCode()][PriceProductMerchantRelationshipStorageConfig::PRICE_MODE_NET][$priceTransfer->getPriceType()] = $priceTransfer->getNetPrice();
         }
 
         return $groupedPrices;
+    }
+
+    /**
+     * @param array $priceData
+     * @param string $excludeKey
+     *
+     * @return array
+     */
+    protected function filterPriceData(array $priceData, string $excludeKey): array
+    {
+        $priceData = array_filter($priceData, function ($v, $k) use ($excludeKey) {
+            if ($k === $excludeKey) {
+                return true;
+            }
+
+            return !empty($v);
+        }, ARRAY_FILTER_USE_BOTH);
+
+        foreach ($priceData as $key => &$value) {
+            if (is_array($value)) {
+                $value = $this->filterPriceData($value, $excludeKey);
+
+                if (empty($value) || $value === [$excludeKey => null]) {
+                    unset($priceData[$key]);
+                }
+            }
+        }
+
+        return $priceData;
+    }
+
+    /**
+     * @param array $prices
+     *
+     * @return array
+     */
+    protected function formatData(array $prices): array
+    {
+        if (!empty($prices)) {
+            return [
+                static::PRICES => $prices,
+            ];
+        }
+
+        return [];
     }
 }

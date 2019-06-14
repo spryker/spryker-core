@@ -18,6 +18,9 @@ use Symfony\Component\Validator\Constraints\Collection;
 
 class RestRequestValidatorConstraintResolver implements RestRequestValidatorConstraintResolverInterface
 {
+    protected const FIELDS = 'fields';
+    protected const CONSTRAINTS = 'constraints';
+
     /**
      * @var \Spryker\Glue\RestRequestValidator\Processor\Validator\Configuration\RestRequestValidatorConfigReaderInterface
      */
@@ -62,7 +65,7 @@ class RestRequestValidatorConstraintResolver implements RestRequestValidatorCons
         }
 
         $constraints = $this->constraintCollectionAdapter->createCollection(
-            ['fields' => $initializedConstraintCollection] + $this->getConstraintCollectionOptions()
+            [static::FIELDS => $initializedConstraintCollection] + $this->getConstraintCollectionOptions()
         );
 
         return $constraints;
@@ -117,9 +120,13 @@ class RestRequestValidatorConstraintResolver implements RestRequestValidatorCons
     {
         return function (array $validatorConfig): Constraint {
             $shortClassName = key($validatorConfig);
-            $parameters = reset($validatorConfig);
+            $parameters = $this->getParameters($validatorConfig);
 
             $className = $this->resolveConstraintClassName($shortClassName);
+
+            if ($parameters !== null) {
+                $parameters = reset($parameters);
+            }
 
             return new $className($parameters);
         };
@@ -149,5 +156,68 @@ class RestRequestValidatorConstraintResolver implements RestRequestValidatorCons
     protected function getConstraintCollectionOptions(): array
     {
         return $this->config->getConstraintCollectionOptions();
+    }
+
+    /**
+     * @param array|null $constraintParameters
+     *
+     * @return array|null
+     */
+    protected function getParameters(?array $constraintParameters = null): ?array
+    {
+        if (!reset($constraintParameters)) {
+            return null;
+        }
+
+        foreach ($constraintParameters as $constraintName => $constraintParameter) {
+            if (!$constraintParameter) {
+                continue;
+            }
+
+            $constraintParameters[$constraintName] = $constraintParameter = $this->processFieldsParameter($constraintParameter);
+            $constraintParameters[$constraintName] = $constraintParameter = $this->processConstraintsParameter($constraintParameter);
+        }
+
+        return $constraintParameters;
+    }
+
+    /**
+     * @param array|null $constraintParameters
+     *
+     * @return array|null
+     */
+    protected function processFieldsParameter(?array $constraintParameters): ?array
+    {
+        if (!isset($constraintParameters[static::FIELDS])) {
+            return $constraintParameters;
+        }
+
+        foreach ($constraintParameters[static::FIELDS] as $fieldName => $validators) {
+            if ($validators === null) {
+                continue;
+            }
+            $constraintParameters[static::FIELDS][$fieldName] = $this->mapFieldConstrains($validators);
+        }
+
+        return $constraintParameters + $this->getConstraintCollectionOptions();
+    }
+
+    /**
+     * @param array|null $constraintParameters
+     *
+     * @return array|null
+     */
+    protected function processConstraintsParameter(?array $constraintParameters): ?array
+    {
+        if (!isset($constraintParameters[static::CONSTRAINTS])) {
+            return $constraintParameters;
+        }
+        $validators = $constraintParameters[static::CONSTRAINTS];
+
+        if ($validators !== null) {
+            $constraintParameters[static::CONSTRAINTS] = $this->mapFieldConstrains($validators);
+        }
+
+        return $constraintParameters;
     }
 }

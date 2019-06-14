@@ -4,6 +4,7 @@
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
+
 namespace Spryker\Zed\Cms\Business\Mapping;
 
 use Generated\Shared\Transfer\CmsGlossaryTransfer;
@@ -15,12 +16,12 @@ interface CmsGlossarySaverInterface
      *
      * @return \Generated\Shared\Transfer\CmsGlossaryTransfer
      */
-    public function saveCmsGlossary(CmsGlossaryTransfer $cmsGlossaryTransfer);
+    public function saveCmsGlossary(CmsGlossaryTransfer $cmsGlossaryTransfer): CmsGlossaryTransfer;
 
     /**
      * @param int $idCmsPage
      *
      * @return void
      */
-    public function deleteCmsGlossary($idCmsPage);
+    public function deleteCmsGlossary(int $idCmsPage): void;
 }

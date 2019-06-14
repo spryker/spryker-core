@@ -9,6 +9,9 @@ namespace Spryker\Zed\CompanyMailConnector\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
+/**
+ * @method \Spryker\Zed\CompanyMailConnector\Business\CompanyMailConnectorFacadeInterface getFacade()
+ */
 class CompanyMailConnectorCommunicationFactory extends AbstractCommunicationFactory
 {
 }

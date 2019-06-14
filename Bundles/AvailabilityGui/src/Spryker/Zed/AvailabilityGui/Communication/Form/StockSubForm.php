@@ -13,11 +13,12 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
-use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Constraints\Required;
+use Symfony\Component\Validator\Constraints\Type;
 
 /**
  * @method \Spryker\Zed\AvailabilityGui\Communication\AvailabilityGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\AvailabilityGui\AvailabilityGuiConfig getConfig()
  */
 class StockSubForm extends AbstractType
 {
@@ -49,7 +50,7 @@ class StockSubForm extends AbstractType
             'label' => 'Quantity',
             'constraints' => [
                 new Required(),
-                new Regex(['pattern' => '/[\d]+/']),
+                new Type('numeric'),
             ],
         ]);
 

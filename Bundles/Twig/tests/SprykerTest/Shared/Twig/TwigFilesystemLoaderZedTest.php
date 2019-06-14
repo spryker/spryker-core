@@ -86,7 +86,7 @@ class TwigFilesystemLoaderZedTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\Twig\TwigFilesystemLoader
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\Twig\TwigFilesystemLoader
      */
     protected function getFilesystemLoaderForSplitBundleConverterTest()
     {

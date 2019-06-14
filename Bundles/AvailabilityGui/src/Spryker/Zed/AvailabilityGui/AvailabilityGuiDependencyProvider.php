@@ -14,9 +14,13 @@ use Spryker\Zed\AvailabilityGui\Dependency\Facade\AvailabilityGuiToStockBridge;
 use Spryker\Zed\AvailabilityGui\Dependency\Facade\AvailabilityToStoreFacadeBridge;
 use Spryker\Zed\AvailabilityGui\Dependency\QueryContainer\AvailabilityGuiToAvailabilityQueryContainerBridge;
 use Spryker\Zed\AvailabilityGui\Dependency\QueryContainer\AvailabilityGuiToProductBundleQueryContainerBridge;
+use Spryker\Zed\AvailabilityGui\Dependency\Service\AvailabilityGuiToUtilQuantityServiceBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\AvailabilityGui\AvailabilityGuiConfig getConfig()
+ */
 class AvailabilityGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_LOCALE = 'locale facade';
@@ -27,6 +31,8 @@ class AvailabilityGuiDependencyProvider extends AbstractBundleDependencyProvider
 
     public const QUERY_CONTAINER_AVAILABILITY = 'availability query container';
     public const QUERY_CONTAINER_PRODUCT_BUNDLE = 'product bundle query container';
+
+    public const SERVICE_UTIL_QUANTITY = 'SERVICE_UTIL_QUANTITY';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -52,6 +58,23 @@ class AvailabilityGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addQueryContainerProductBundle($container);
         $container = $this->addStoreFacade($container);
         $container = $this->addOmsFacade($container);
+        $container = $this->addUtilQuantityService($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUtilQuantityService(Container $container): Container
+    {
+        $container[static::SERVICE_UTIL_QUANTITY] = function (Container $container) {
+            return new AvailabilityGuiToUtilQuantityServiceBridge(
+                $container->getLocator()->utilQuantity()->service()
+            );
+        };
 
         return $container;
     }
@@ -80,6 +103,7 @@ class AvailabilityGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::QUERY_CONTAINER_PRODUCT_BUNDLE] = function (Container $container) {
             return new AvailabilityGuiToProductBundleQueryContainerBridge($container->getLocator()->productBundle()->queryContainer());
         };
+
         return $container;
     }
 
@@ -93,6 +117,7 @@ class AvailabilityGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::QUERY_CONTAINER_AVAILABILITY] = function (Container $container) {
             return new AvailabilityGuiToAvailabilityQueryContainerBridge($container->getLocator()->availability()->queryContainer());
         };
+
         return $container;
     }
 
@@ -106,6 +131,7 @@ class AvailabilityGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::FACADE_AVAILABILITY] = function (Container $container) {
             return new AvailabilityGuiToAvailabilityBridge($container->getLocator()->availability()->facade());
         };
+
         return $container;
     }
 
@@ -119,6 +145,7 @@ class AvailabilityGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::FACADE_STOCK] = function (Container $container) {
             return new AvailabilityGuiToStockBridge($container->getLocator()->stock()->facade());
         };
+
         return $container;
     }
 
@@ -132,6 +159,7 @@ class AvailabilityGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::FACADE_LOCALE] = function (Container $container) {
             return new AvailabilityGuiToLocaleBridge($container->getLocator()->locale()->facade());
         };
+
         return $container;
     }
 
@@ -145,6 +173,7 @@ class AvailabilityGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::FACADE_OMS] = function (Container $container) {
             return new AvailabilityGuiToOmsFacadeBridge($container->getLocator()->oms()->facade());
         };
+
         return $container;
     }
 }

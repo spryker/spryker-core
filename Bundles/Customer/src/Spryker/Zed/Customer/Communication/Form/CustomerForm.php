@@ -28,6 +28,9 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 /**
  * @method \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Customer\Communication\CustomerCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Customer\CustomerConfig getConfig()
+ * @method \Spryker\Zed\Customer\Persistence\CustomerRepositoryInterface getRepository()
+ * @method \Spryker\Zed\Customer\Business\CustomerFacadeInterface getFacade()
  */
 class CustomerForm extends AbstractType
 {
@@ -298,6 +301,7 @@ class CustomerForm extends AbstractType
             new NotBlank(),
             new Required(),
             new Email(),
+            new Length(['max' => 100]),
         ];
 
         $customerQuery = $this->getQueryContainer()->queryCustomers();

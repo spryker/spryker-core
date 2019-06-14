@@ -11,6 +11,9 @@ use Spryker\Zed\Checkout\Dependency\Facade\CheckoutToOmsFacadeBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\Checkout\CheckoutConfig getConfig()
+ */
 class CheckoutDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CHECKOUT_PRE_CONDITIONS = 'checkout_pre_conditions';
@@ -64,7 +67,7 @@ class CheckoutDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface[]
+     * @return \Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutPreConditionPluginInterface[]
      */
     protected function getCheckoutPreConditions(Container $container)
     {

@@ -13,6 +13,7 @@ use Spryker\Zed\ZedRequest\ZedRequestDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ZedRequest\ZedRequestConfig getConfig()
+ * @method \Spryker\Zed\ZedRequest\Business\ZedRequestFacadeInterface getFacade()
  */
 class ZedRequestCommunicationFactory extends AbstractCommunicationFactory
 {

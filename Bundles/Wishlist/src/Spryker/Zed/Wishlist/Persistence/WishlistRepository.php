@@ -9,6 +9,7 @@ namespace Spryker\Zed\Wishlist\Persistence;
 
 use Generated\Shared\Transfer\WishlistCollectionTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
+use Orm\Zed\Wishlist\Persistence\Map\SpyWishlistItemTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -31,7 +32,10 @@ class WishlistRepository extends AbstractRepository implements WishlistRepositor
                 ->filterByCustomerReference($customerReference)
             ->endUse()
             ->useSpyWishlistItemQuery(null, Criteria::LEFT_JOIN)
-                ->withColumn('COUNT(*)', WishlistTransfer::NUMBER_OF_ITEMS)
+                ->withColumn(
+                    sprintf('COUNT(%s)', SpyWishlistItemTableMap::COL_ID_WISHLIST_ITEM),
+                    WishlistTransfer::NUMBER_OF_ITEMS
+                )
                 ->groupByFkWishlist()
             ->endUse()
             ->find();

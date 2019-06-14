@@ -14,6 +14,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\CompanyDataImport\Business\CompanyDataImportFacadeInterface getFacade()
+ * @method \Spryker\Zed\CompanyDataImport\CompanyDataImportConfig getConfig()
  */
 class CompanyDataImportPlugin extends AbstractPlugin implements DataImportPluginInterface
 {

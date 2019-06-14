@@ -16,6 +16,7 @@ use Spryker\Zed\ProductCategory\Persistence\Mapper\CategoryMapperInterface;
 /**
  * @method \Spryker\Zed\ProductCategory\ProductCategoryConfig getConfig()
  * @method \Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductCategory\Persistence\ProductCategoryRepositoryInterface getRepository()
  */
 class ProductCategoryPersistenceFactory extends AbstractPersistenceFactory
 {

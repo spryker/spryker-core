@@ -16,6 +16,8 @@ class GlossaryConfig extends AbstractBundleConfig
      */
     public const RESOURCE_TYPE_TRANSLATION = 'translation';
 
+    protected const REDIRECT_URL_DEFAULT = '/glossary';
+
     /**
      * @return array
      */
@@ -27,5 +29,13 @@ class GlossaryConfig extends AbstractBundleConfig
         );
 
         return $paths;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDefaultRedirectUrl(): string
+    {
+        return static::REDIRECT_URL_DEFAULT;
     }
 }

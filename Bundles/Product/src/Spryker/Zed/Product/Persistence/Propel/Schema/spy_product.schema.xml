@@ -28,7 +28,7 @@
         <foreign-key name="spy_product_abstract_localized_attributes-fk_locale" foreignTable="spy_locale" phpName="Locale">
             <reference local="fk_locale" foreign="id_locale"/>
         </foreign-key>
-        <unique name="spy_product_abstract_localized_attributes-unique-fk_product_abstract">
+        <unique name="spy_product_abstract_localized_attributes-unique-fk_pa">
             <unique-column name="fk_product_abstract"/>
             <unique-column name="fk_locale"/>
         </unique>

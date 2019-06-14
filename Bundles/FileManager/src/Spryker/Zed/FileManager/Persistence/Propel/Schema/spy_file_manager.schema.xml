@@ -86,7 +86,7 @@
             <reference foreign="id_locale" local="fk_locale"/>
         </foreign-key>
 
-        <unique name="spy_file_directory_localized_attributes-unique-fk_file_directory-fk_locale">
+        <unique name="spy_file_directory_localized_attributes-unique-fk_fd-fk_locale">
             <unique-column name="fk_file_directory"/>
             <unique-column name="fk_locale"/>
         </unique>

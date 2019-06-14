@@ -13,6 +13,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \Spryker\Zed\ShoppingList\Business\ShoppingListFacadeInterface getFacade()
  * @method \Spryker\Zed\ShoppingList\Communication\ShoppingListCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ShoppingList\ShoppingListConfig getConfig()
  */
 class ShoppingListPermissionsInstallerPlugin extends AbstractPlugin implements InstallerPluginInterface
 {

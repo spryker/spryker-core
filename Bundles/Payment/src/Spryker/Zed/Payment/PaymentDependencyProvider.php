@@ -12,6 +12,9 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginCollection;
 use Spryker\Zed\Payment\Dependency\Plugin\Sales\PaymentHydratorPluginCollection;
 
+/**
+ * @method \Spryker\Zed\Payment\PaymentConfig getConfig()
+ */
 class PaymentDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CHECKOUT_PLUGINS = 'checkout plugins';

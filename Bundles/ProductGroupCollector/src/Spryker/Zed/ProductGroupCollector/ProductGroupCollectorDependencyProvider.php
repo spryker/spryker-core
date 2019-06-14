@@ -11,6 +11,9 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductGroupCollector\Dependency\Facade\ProductGroupCollectorToCollectorBridge;
 
+/**
+ * @method \Spryker\Zed\ProductGroupCollector\ProductGroupCollectorConfig getConfig()
+ */
 class ProductGroupCollectorDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_COLLECTOR = 'FACADE_COLLECTOR';

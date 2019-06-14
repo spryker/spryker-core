@@ -9,6 +9,9 @@ namespace Spryker\Zed\MultiCartDataImport;
 
 use Spryker\Zed\DataImport\DataImportDependencyProvider;
 
+/**
+ * @method \Spryker\Zed\MultiCartDataImport\MultiCartDataImportConfig getConfig()
+ */
 class MultiCartDataImportDependencyProvider extends DataImportDependencyProvider
 {
 }

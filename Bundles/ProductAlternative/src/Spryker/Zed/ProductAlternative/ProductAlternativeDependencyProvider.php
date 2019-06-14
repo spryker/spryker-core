@@ -14,6 +14,9 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductAlternative\Dependency\Facade\ProductAlternativeToLocaleFacadeBridge;
 use Spryker\Zed\ProductAlternative\Dependency\Facade\ProductAlternativeToProductFacadeBridge;
 
+/**
+ * @method \Spryker\Zed\ProductAlternative\ProductAlternativeConfig getConfig()
+ */
 class ProductAlternativeDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_LOCALE = 'FACADE_LOCALE';

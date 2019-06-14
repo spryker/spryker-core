@@ -26,4 +26,11 @@ interface CustomerReaderInterface
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
     public function findCustomer(RestRequestInterface $restRequest): CustomerResponseTransfer;
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
+     */
+    public function getCurrentCustomer(RestRequestInterface $restRequest): CustomerResponseTransfer;
 }

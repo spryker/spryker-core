@@ -12,7 +12,15 @@ require('es6-promise/auto');
 // external dependencies
 require('jquery');
 require('jquery-migrate/dist/jquery-migrate.min');
-require('jquery-ui');
+require('jquery-ui/ui/core');
+require('jquery-ui/ui/effect');
+require('jquery-ui/ui/effects/effect-highlight');
+require('jquery-ui/ui/widget');
+require('jquery-ui/ui/widgets/datepicker');
+require('jquery-ui/ui/widgets/autocomplete');
+require('jquery-ui/ui/widgets/button');
+require('jquery-ui/ui/widgets/sortable');
+require('jquery-ui/ui/widgets/tooltip');
 require('bootstrap-sass');
 require('metismenu');
 require('pace');
@@ -34,4 +42,3 @@ require('../../../Inspinia/inspinia');
 // spryker customization
 require('../../sass/main.scss');
 require('./legacy/fixHeight');
-require('./init');

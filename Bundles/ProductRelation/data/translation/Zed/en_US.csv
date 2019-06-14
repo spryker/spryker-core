@@ -1,0 +1,34 @@
+"Abstract product name","Abstract product name"
+"Abstract product name:","Abstract product name:"
+Activate,Activate
+"Add Product Relations","Add Product Relations"
+"Assign related products","Assign related products"
+"Create relation","Create relation"
+Deactivate,Deactivate
+Edit,Edit
+"Edit Product Relations","Edit Product Relations"
+"Failed to delete relation.","Failed to delete relation."
+"Is active:","Is active:"
+"List Product relations","List of product relations"
+"Number of products","Number of products"
+"Please select product from the list below","Please select product from the list below"
+"Product relation successfully created","Product relation successfully created"
+"Product relation successfully modified","Product relation successfully modified"
+"Product relation with id ""%d"" not found.","Product relation with id ""%d"" not found."
+"Related products","Related products"
+related-products,"Related products"
+"Relation successfully activated.","Relation successfully activated."
+"Relation successfully deactivated.","Relation successfully deactivated."
+"Relation successfully deleted.","Relation successfully deleted."
+"Relation type","Relation type"
+"Relation type:","Relation type:"
+Save,Save
+Select,select
+"Select product","Select product"
+"Selected product","Selected product"
+"Selected product already has ""%s"" relation type.","Selected product already has ""%s"" relation type."
+Sku:,Sku:
+up-selling,Upselling
+"Update regularly: When you have this selected, this product relation will be updated automatically on regular basis according to the relation's conditions.","Update regularly: When you have this selected, this product relation will be updated automatically on regular basis according to the relation's conditions."
+"View in Shop","View in Shop"
+"View relations","View relations"

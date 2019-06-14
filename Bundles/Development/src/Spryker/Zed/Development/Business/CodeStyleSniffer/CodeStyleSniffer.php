@@ -8,6 +8,8 @@
 namespace Spryker\Zed\Development\Business\CodeStyleSniffer;
 
 use RuntimeException;
+use Spryker\Zed\Development\Business\CodeStyleSniffer\Config\CodeStyleSnifferConfigurationInterface;
+use Spryker\Zed\Development\Business\CodeStyleSniffer\Config\CodeStyleSnifferConfigurationLoaderInterface;
 use Spryker\Zed\Development\Business\Exception\CodeStyleSniffer\PathDoesNotExistException;
 use Spryker\Zed\Development\DevelopmentConfig;
 use Symfony\Component\Process\Process;
@@ -19,13 +21,7 @@ class CodeStyleSniffer
 {
     protected const CODE_SUCCESS = 0;
 
-    protected const OPTION_FIX = 'fix';
-    protected const OPTION_PRINT_DIFF_REPORT = 'report-diff';
-    protected const OPTION_DRY_RUN = 'dry-run';
-    protected const OPTION_QUIET = 'quiet';
-    protected const OPTION_EXPLAIN = 'explain';
-    protected const OPTION_SNIFFS = 'sniffs';
-    protected const OPTION_VERBOSE = 'verbose';
+    protected const OPTION_IGNORE = 'ignore';
 
     protected const APPLICATION_NAMESPACES = ['Orm'];
     protected const APPLICATION_LAYERS = ['Zed', 'Client', 'Yves', 'Service', 'Shared'];
@@ -39,11 +35,18 @@ class CodeStyleSniffer
     protected $config;
 
     /**
-     * @param \Spryker\Zed\Development\DevelopmentConfig $config
+     * @var \Spryker\Zed\Development\Business\CodeStyleSniffer\Config\CodeStyleSnifferConfigurationLoaderInterface
      */
-    public function __construct(DevelopmentConfig $config)
+    protected $codeStyleSnifferConfigurationLoader;
+
+    /**
+     * @param \Spryker\Zed\Development\DevelopmentConfig $config
+     * @param \Spryker\Zed\Development\Business\CodeStyleSniffer\Config\CodeStyleSnifferConfigurationLoaderInterface $codeStyleSnifferConfigurationLoader
+     */
+    public function __construct(DevelopmentConfig $config, CodeStyleSnifferConfigurationLoaderInterface $codeStyleSnifferConfigurationLoader)
     {
         $this->config = $config;
+        $this->codeStyleSnifferConfigurationLoader = $codeStyleSnifferConfigurationLoader;
     }
 
     /**
@@ -61,13 +64,14 @@ class CodeStyleSniffer
 
         $pathOption = isset($options['path']) ? $options['path'] : null;
         $defaults = [
-            'ignore' => $namespace || $pathOption ? '' : 'vendor/',
+           static::OPTION_IGNORE => $namespace || $pathOption ? null : 'vendor/',
         ];
         $options += $defaults;
 
         $path = $this->resolvePath($module, $namespace, $pathOption);
+        $codeStyleSnifferConfiguration = $this->codeStyleSnifferConfigurationLoader->load($options, $path);
 
-        return $this->runSnifferCommand($path, $options);
+        return $this->runSnifferCommand($path, $codeStyleSnifferConfiguration);
     }
 
     /**
@@ -112,15 +116,13 @@ class CodeStyleSniffer
             throw new RuntimeException('Path suffix option is not possible for "all".');
         }
 
-        if ($namespace === static::NAMESPACE_SPRYKER_SHOP) {
-            $corePath = $this->config->getPathToShop();
-        } elseif ($namespace === static::NAMESPACE_SPRYKER) {
-            $corePath = $this->config->getPathToCore();
-        } else {
+        $pathToInternalNamespace = $this->config->getPathToInternalNamespace($namespace);
+
+        if (!$pathToInternalNamespace) {
             throw new RuntimeException('Namespace invalid: ' . $namespace);
         }
 
-        return $corePath;
+        return $pathToInternalNamespace;
     }
 
     /**
@@ -157,12 +159,9 @@ class CodeStyleSniffer
      */
     protected function getCorePath($module, $namespace, $pathSuffix = null)
     {
-        if ($namespace === static::NAMESPACE_SPRYKER && is_dir($this->config->getPathToCore() . $module)) {
-            return $this->buildPath($this->config->getPathToCore() . $module . DIRECTORY_SEPARATOR, $pathSuffix);
-        }
-
-        if ($namespace === static::NAMESPACE_SPRYKER_SHOP && is_dir($this->config->getPathToShop() . $module)) {
-            return $this->buildPath($this->config->getPathToShop() . $module . DIRECTORY_SEPARATOR, $pathSuffix);
+        $pathToInternalNamespace = $this->config->getPathToInternalNamespace($namespace);
+        if ($pathToInternalNamespace && is_dir($pathToInternalNamespace . $module)) {
+            return $this->buildPath($pathToInternalNamespace . $module . DIRECTORY_SEPARATOR, $pathSuffix);
         }
 
         $vendor = $this->normalizeName($namespace);
@@ -214,42 +213,55 @@ class CodeStyleSniffer
 
     /**
      * @param string $path
-     * @param array $options
+     * @param \Spryker\Zed\Development\Business\CodeStyleSniffer\Config\CodeStyleSnifferConfigurationInterface $codeStyleSnifferConfiguration
      *
      * @return int Exit code
      */
-    protected function runSnifferCommand($path, array $options)
+    protected function runSnifferCommand($path, CodeStyleSnifferConfigurationInterface $codeStyleSnifferConfiguration)
     {
-        $pathToFiles = rtrim($path, DIRECTORY_SEPARATOR);
+        $processConfig = ' --standard=' . $codeStyleSnifferConfiguration->getCodingStandard();
 
-        $config = ' --standard=' . $this->config->getCodingStandard();
-        if ($options[static::OPTION_VERBOSE]) {
-            $config .= ' -v';
-        }
-        if (!$options[static::OPTION_QUIET]) {
-            $config .= ' -p'; // Progress
+        if ($codeStyleSnifferConfiguration->isVerbose()) {
+            $processConfig .= ' -v';
         }
 
-        if ($options[static::OPTION_EXPLAIN]) {
-            $config .= ' -e';
+        if (!$codeStyleSnifferConfiguration->isQuiet()) {
+            $processConfig .= ' -p';
         }
 
-        if ($options[static::OPTION_SNIFFS]) {
-            $config .= ' --sniffs=' . $options[static::OPTION_SNIFFS];
+        if ($codeStyleSnifferConfiguration->isExplaining()) {
+            $processConfig .= ' -e';
         }
 
-        if ($options['ignore']) {
-            $config .= ' --ignore=' . $options['ignore'];
+        $optionSniffs = $codeStyleSnifferConfiguration->getSpecificSniffs();
+
+        if ($optionSniffs) {
+            $processConfig .= ' --sniffs=' . $optionSniffs;
         }
 
-        if ($options[static::OPTION_VERBOSE] && !$options[static::OPTION_FIX]) {
-            $config .= ' -s';
+        $optionIgnore = $codeStyleSnifferConfiguration->getIgnoredPaths();
+
+        if ($optionIgnore) {
+            $processConfig .= ' --ignore=' . $optionIgnore;
         }
 
-        $command = $options[static::OPTION_FIX] ? 'phpcbf' : 'phpcs';
-        $command = 'vendor/bin/' . $command . ' ' . $pathToFiles . $config;
+        $optionVerbose = $codeStyleSnifferConfiguration->isVerbose();
+        $optionFix = $codeStyleSnifferConfiguration->isFixing();
 
-        if (!empty($options[static::OPTION_DRY_RUN])) {
+        if ($optionVerbose && !$optionFix) {
+            $processConfig .= ' -s';
+        }
+
+        $command = sprintf(
+            'vendor/bin/%s %s%s',
+            $optionFix ? 'phpcbf' : 'phpcs',
+            $path,
+            $processConfig
+        );
+
+        $optionDryRun = $codeStyleSnifferConfiguration->isDryRun();
+
+        if ($optionDryRun) {
             echo $command . PHP_EOL;
 
             return static::CODE_SUCCESS;

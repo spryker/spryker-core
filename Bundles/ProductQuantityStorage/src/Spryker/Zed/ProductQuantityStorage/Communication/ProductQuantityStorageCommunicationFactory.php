@@ -13,6 +13,9 @@ use Spryker\Zed\ProductQuantityStorage\ProductQuantityStorageDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductQuantityStorage\ProductQuantityStorageConfig getConfig()
+ * @method \Spryker\Zed\ProductQuantityStorage\Persistence\ProductQuantityStorageEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\ProductQuantityStorage\Persistence\ProductQuantityStorageRepositoryInterface getRepository()
+ * @method \Spryker\Zed\ProductQuantityStorage\Business\ProductQuantityStorageFacadeInterface getFacade()
  */
 class ProductQuantityStorageCommunicationFactory extends AbstractCommunicationFactory
 {

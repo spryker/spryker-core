@@ -13,6 +13,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \Spryker\Zed\CustomerAccess\Business\CustomerAccessFacadeInterface getFacade()
  * @method \Spryker\Zed\CustomerAccess\Communication\CustomerAccessCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CustomerAccess\CustomerAccessConfig getConfig()
  */
 class CustomerAccessInstallerPlugin extends AbstractPlugin implements InstallerPluginInterface
 {

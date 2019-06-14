@@ -17,7 +17,7 @@ use Spryker\Zed\Cms\Business\Exception\MappingAmbiguousException;
 use Spryker\Zed\Cms\Business\Exception\MissingGlossaryKeyMappingException;
 use Spryker\Zed\Cms\Business\Page\PageManagerInterface;
 use Spryker\Zed\Cms\Business\Template\TemplateManagerInterface;
-use Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryInterface;
+use Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryFacadeInterface;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
 
 class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
@@ -25,7 +25,7 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
     public const GENERATED_GLOSSARY_KEY_PREFIX = 'generated.cms';
 
     /**
-     * @var \Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryInterface
+     * @var \Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryFacadeInterface
      */
     protected $glossaryFacade;
 
@@ -50,14 +50,14 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
     protected $connection;
 
     /**
-     * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryInterface $glossaryFacade
+     * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryFacadeInterface $glossaryFacade
      * @param \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface $cmsQueryContainer
      * @param \Spryker\Zed\Cms\Business\Template\TemplateManagerInterface $templateManager
      * @param \Spryker\Zed\Cms\Business\Page\PageManagerInterface $pageManager
      * @param \Propel\Runtime\Connection\ConnectionInterface $connection
      */
     public function __construct(
-        CmsToGlossaryInterface $glossaryFacade,
+        CmsToGlossaryFacadeInterface $glossaryFacade,
         CmsQueryContainerInterface $cmsQueryContainer,
         TemplateManagerInterface $templateManager,
         PageManagerInterface $pageManager,
@@ -77,7 +77,7 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
      *
      * @return string
      */
-    public function translatePlaceholder($idPage, $placeholder, array $data = [])
+    public function translatePlaceholder(int $idPage, string $placeholder, array $data = []): string
     {
         $glossaryKeyMapping = $this->getPagePlaceholderMapping($idPage, $placeholder);
 
@@ -92,7 +92,7 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
      *
      * @return \Generated\Shared\Transfer\PageKeyMappingTransfer
      */
-    public function getPagePlaceholderMapping($idPage, $placeholder)
+    public function getPagePlaceholderMapping(int $idPage, string $placeholder): PageKeyMappingTransfer
     {
         $glossaryKeyMappingEntity = $this->cmsQueryContainer->queryGlossaryKeyMapping($idPage, $placeholder)
             ->findOne();
@@ -109,7 +109,7 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
      *
      * @return \Generated\Shared\Transfer\PageKeyMappingTransfer
      */
-    public function savePageKeyMapping(PageKeyMappingTransfer $pageKeyMappingTransfer)
+    public function savePageKeyMapping(PageKeyMappingTransfer $pageKeyMappingTransfer): PageKeyMappingTransfer
     {
         if ($pageKeyMappingTransfer->getIdCmsGlossaryKeyMapping() === null) {
             return $this->createPageKeyMapping($pageKeyMappingTransfer);
@@ -124,7 +124,7 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
      *
      * @return \Generated\Shared\Transfer\PageKeyMappingTransfer
      */
-    public function savePageKeyMappingAndTouch(PageKeyMappingTransfer $pageKeyMappingTransfer, ?LocaleTransfer $localeTransfer = null)
+    public function savePageKeyMappingAndTouch(PageKeyMappingTransfer $pageKeyMappingTransfer, ?LocaleTransfer $localeTransfer = null): PageKeyMappingTransfer
     {
         $savedPageKeyMappingTransfer = $this->savePageKeyMapping($pageKeyMappingTransfer);
 
@@ -139,7 +139,7 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
      *
      * @return \Generated\Shared\Transfer\PageKeyMappingTransfer
      */
-    protected function createPageKeyMapping(PageKeyMappingTransfer $pageKeyMapping)
+    protected function createPageKeyMapping(PageKeyMappingTransfer $pageKeyMapping): PageKeyMappingTransfer
     {
         $this->checkPagePlaceholderNotAmbiguous($pageKeyMapping->getFkPage(), $pageKeyMapping->getPlaceholder());
 
@@ -157,7 +157,7 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
      *
      * @return \Generated\Shared\Transfer\PageKeyMappingTransfer
      */
-    protected function updatePageKeyMapping(PageKeyMappingTransfer $pageKeyMapping)
+    protected function updatePageKeyMapping(PageKeyMappingTransfer $pageKeyMapping): PageKeyMappingTransfer
     {
         $mappingEntity = $this->getGlossaryKeyMappingById($pageKeyMapping->getIdCmsGlossaryKeyMapping());
         $mappingEntity->fromArray($pageKeyMapping->toArray());
@@ -186,7 +186,7 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
      *
      * @return void
      */
-    protected function checkPagePlaceholderNotAmbiguous($idPage, $placeholder)
+    protected function checkPagePlaceholderNotAmbiguous(int $idPage, string $placeholder): void
     {
         if ($this->hasPagePlaceholderMapping($idPage, $placeholder)) {
             throw new MappingAmbiguousException(sprintf('Tried to create an ambiguous mapping for placeholder %s on page %s', $placeholder, $idPage));
@@ -199,7 +199,7 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
      *
      * @return bool
      */
-    public function hasPagePlaceholderMapping($idPage, $placeholder)
+    public function hasPagePlaceholderMapping(int $idPage, string $placeholder): bool
     {
         $mappingCount = $this->cmsQueryContainer->queryGlossaryKeyMapping($idPage, $placeholder)
             ->count();
@@ -214,7 +214,7 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMapping
      */
-    protected function getGlossaryKeyMappingById($idMapping)
+    protected function getGlossaryKeyMappingById(int $idMapping): SpyCmsGlossaryKeyMapping
     {
         $mappingEntity = $this->cmsQueryContainer->queryGlossaryKeyMappingById($idMapping)
             ->findOne();
@@ -234,7 +234,7 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
      *
      * @return \Generated\Shared\Transfer\PageKeyMappingTransfer
      */
-    public function addPlaceholderText(PageTransfer $pageTransfer, $placeholder, $value, ?LocaleTransfer $localeTransfer = null, $autoGlossaryKeyIncrement = true)
+    public function addPlaceholderText(PageTransfer $pageTransfer, string $placeholder, string $value, ?LocaleTransfer $localeTransfer = null, bool $autoGlossaryKeyIncrement = true): PageKeyMappingTransfer
     {
         $template = $this->templateManager->getTemplateById($pageTransfer->getFkTemplate());
 
@@ -261,7 +261,7 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
      *
      * @return string
      */
-    public function generateGlossaryKeyName($templateName, $placeholder, $autoIncrement = true)
+    public function generateGlossaryKeyName(string $templateName, string $placeholder, bool $autoIncrement = true): string
     {
         $keyName = self::GENERATED_GLOSSARY_KEY_PREFIX . '.';
         $keyName .= str_replace([' ', '.'], '-', $templateName) . '.';
@@ -284,7 +284,7 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
      *
      * @return bool
      */
-    public function deletePageKeyMapping(PageTransfer $pageTransfer, $placeholder)
+    public function deletePageKeyMapping(PageTransfer $pageTransfer, string $placeholder): bool
     {
         $mappingQuery = $this->cmsQueryContainer->queryGlossaryKeyMapping($pageTransfer->getIdCmsPage(), $placeholder);
         $mappingQuery->delete();
@@ -297,7 +297,7 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
      *
      * @return bool
      */
-    public function deleteGlossaryKeysByIdPage($idPage)
+    public function deleteGlossaryKeysByIdPage(int $idPage): bool
     {
         $mappedGlossaries = $this->cmsQueryContainer->queryGlossaryKeyMappingsByPageId($idPage)
             ->find();
@@ -316,7 +316,7 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
      *
      * @return \Generated\Shared\Transfer\PageKeyMappingTransfer
      */
-    protected function convertMappingEntityToTransfer(SpyCmsGlossaryKeyMapping $mappingEntity)
+    protected function convertMappingEntityToTransfer(SpyCmsGlossaryKeyMapping $mappingEntity): PageKeyMappingTransfer
     {
         $mappingTransfer = new PageKeyMappingTransfer();
         $mappingTransfer->fromArray($mappingEntity->toArray(), true);
@@ -331,7 +331,7 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
      *
      * @return void
      */
-    protected function createGlossaryTranslation($keyName, $value, ?LocaleTransfer $localeTransfer = null)
+    protected function createGlossaryTranslation(string $keyName, string $value, ?LocaleTransfer $localeTransfer = null): void
     {
         if ($localeTransfer !== null) {
             $this->glossaryFacade->createAndTouchTranslation($keyName, $localeTransfer, $value);
@@ -347,7 +347,7 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
      *
      * @return \Generated\Shared\Transfer\PageKeyMappingTransfer
      */
-    protected function createPageKeyMappingTransfer(PageTransfer $page, $placeholder, $idKey)
+    protected function createPageKeyMappingTransfer(PageTransfer $page, string $placeholder, int $idKey): PageKeyMappingTransfer
     {
         $pageKeyMapping = new PageKeyMappingTransfer();
         $pageKeyMapping->setFkGlossaryKey($idKey);
@@ -366,7 +366,7 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
      *
      * @return \Generated\Shared\Transfer\PageKeyMappingTransfer
      */
-    protected function createGlossaryPageKeyMapping(PageTransfer $page, $placeholder, $keyName, $value, ?LocaleTransfer $localeTransfer = null)
+    protected function createGlossaryPageKeyMapping(PageTransfer $page, string $placeholder, string $keyName, string $value, ?LocaleTransfer $localeTransfer = null): PageKeyMappingTransfer
     {
         $idKey = $this->glossaryFacade->getOrCreateKey($keyName);
         $this->createGlossaryTranslation($keyName, $value, $localeTransfer);

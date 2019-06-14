@@ -16,6 +16,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\Propel\Business\PropelFacadeInterface getFacade()
+ * @method \Spryker\Zed\Propel\Communication\PropelCommunicationFactory getFactory()
  */
 class PostgresqlCompatibilityConsole extends Console
 {
@@ -44,6 +45,7 @@ class PostgresqlCompatibilityConsole extends Console
     {
         if (Config::get(PropelConstants::ZED_DB_ENGINE) !== Config::get(PropelConstants::ZED_DB_ENGINE_PGSQL)) {
             $this->info('This command doesn\'t support chosen DB engine');
+
             return null;
         }
 

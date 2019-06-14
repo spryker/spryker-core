@@ -10,9 +10,9 @@ namespace Spryker\Client\ProductSetStorage\Mapper;
 interface ProductSetStorageMapperInterface
 {
     /**
-     * @param array $ProductSetStorageStorageData
+     * @param array $productSetStorageStorageData
      *
      * @return \Generated\Shared\Transfer\ProductSetDataStorageTransfer
      */
-    public function mapDataToTransfer(array $ProductSetStorageStorageData);
+    public function mapDataToTransfer(array $productSetStorageStorageData);
 }

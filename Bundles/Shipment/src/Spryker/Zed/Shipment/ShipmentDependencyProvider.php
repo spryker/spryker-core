@@ -16,6 +16,9 @@ use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToStoreBridge;
 use Spryker\Zed\Shipment\Dependency\ShipmentToTaxBridge;
 use Spryker\Zed\Shipment\Exception\MissingMoneyCollectionFormTypePluginException;
 
+/**
+ * @method \Spryker\Zed\Shipment\ShipmentConfig getConfig()
+ */
 class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const PLUGINS = 'PLUGINS';

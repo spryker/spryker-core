@@ -17,6 +17,8 @@ use Spryker\Zed\ProductMeasurementUnitStorage\Persistence\Propel\Mapper\ProductM
 
 /**
  * @method \Spryker\Zed\ProductMeasurementUnitStorage\ProductMeasurementUnitStorageConfig getConfig()
+ * @method \Spryker\Zed\ProductMeasurementUnitStorage\Persistence\ProductMeasurementUnitStorageEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\ProductMeasurementUnitStorage\Persistence\ProductMeasurementUnitStorageRepositoryInterface getRepository()
  */
 class ProductMeasurementUnitStoragePersistenceFactory extends AbstractPersistenceFactory
 {

@@ -13,8 +13,8 @@ use Generated\Shared\Transfer\MoneyTransfer;
 use Silex\Application;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Yves\Money\Plugin\ServiceProvider\TwigMoneyServiceProvider;
-use Twig_Environment;
-use Twig_Loader_Filesystem;
+use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
 
 /**
  * Auto-generated group annotations
@@ -36,7 +36,7 @@ class TwigMoneyServiceProviderTest extends Unit
         $moneyServiceProvider = new TwigMoneyServiceProvider();
         $application = new Application();
         $application['twig'] = function () {
-            return new Twig_Environment(new Twig_Loader_Filesystem());
+            return new Environment(new FilesystemLoader());
         };
 
         $moneyServiceProvider->register($application);
@@ -67,11 +67,11 @@ class TwigMoneyServiceProviderTest extends Unit
         $moneyServiceProvider = new TwigMoneyServiceProvider();
         $application = new Application();
         $application['twig'] = function () {
-            return new Twig_Environment(new Twig_Loader_Filesystem());
+            return new Environment(new FilesystemLoader());
         };
         $moneyServiceProvider->register($application);
 
-        /** @var \Twig_Environment $twig */
+        /** @var \Twig\Environment $twig */
         $twig = $application['twig'];
         $filter = $twig->getFilter('money');
 
@@ -111,7 +111,7 @@ class TwigMoneyServiceProviderTest extends Unit
     protected function createDeMoneyTransfer()
     {
         $moneyTransfer = new MoneyTransfer();
-        $moneyTransfer->setAmount(1000);
+        $moneyTransfer->setAmount('1000');
         $currencyTransfer = new CurrencyTransfer();
         $currencyTransfer->setCode('EUR');
         $moneyTransfer->setCurrency($currencyTransfer);
@@ -125,7 +125,7 @@ class TwigMoneyServiceProviderTest extends Unit
     protected function createJpyMoneyTransfer()
     {
         $moneyTransfer = new MoneyTransfer();
-        $moneyTransfer->setAmount(1000);
+        $moneyTransfer->setAmount('1000');
         $currencyTransfer = new CurrencyTransfer();
         $currencyTransfer->setCode('JPY');
         $moneyTransfer->setCurrency($currencyTransfer);

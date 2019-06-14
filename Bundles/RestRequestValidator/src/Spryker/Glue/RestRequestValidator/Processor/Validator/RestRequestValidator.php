@@ -17,10 +17,14 @@ use Spryker\Glue\RestRequestValidator\RestRequestValidatorConfig;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\Constraints\Collection;
+use Symfony\Component\Validator\ConstraintViolationInterface;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 
 class RestRequestValidator implements RestRequestValidatorInterface
 {
+    protected const ERROR_DETAIL_REPLACED_SYMBOLS = ['][', '[', ']'];
+    protected const ERROR_DETAIL_REPLACING_SYMBOLS = ['.', '', ''];
+
     /**
      * @var \Spryker\Glue\RestRequestValidator\Processor\Validator\Constraint\RestRequestValidatorConstraintResolverInterface
      */
@@ -80,14 +84,12 @@ class RestRequestValidator implements RestRequestValidatorInterface
     protected function validateRequest(RestRequestInterface $restRequest, Collection $constraintCollection): ?RestErrorCollectionTransfer
     {
         $validator = $this->validationAdapter->createValidator();
-        if (!$restRequest->getAttributesDataFromRequest()) {
+        $attributesDataFromRequest = $restRequest->getAttributesDataFromRequest();
+        if (!isset($attributesDataFromRequest)) {
             return null;
         }
 
-        $violations = $validator->validate(
-            $restRequest->getAttributesDataFromRequest(),
-            $constraintCollection
-        );
+        $violations = $validator->validate($attributesDataFromRequest, $constraintCollection);
 
         if (!$violations->count()) {
             return null;
@@ -108,8 +110,8 @@ class RestRequestValidator implements RestRequestValidatorInterface
             $restErrorCollection->addRestError(
                 (new RestErrorMessageTransfer())
                     ->setCode(RestRequestValidatorConfig::RESPONSE_CODE_REQUEST_INVALID)
-                    ->setStatus(Response::HTTP_BAD_REQUEST)
-                    ->setDetail($validationError->getPropertyPath() . ' => ' . $validationError->getMessage())
+                    ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
+                    ->setDetail($this->getFormattedErrorMessage($validationError))
             );
         }
 
@@ -124,5 +126,19 @@ class RestRequestValidator implements RestRequestValidatorInterface
     protected function isRequestRequireValidation(RestRequestInterface $restRequest): bool
     {
         return in_array($restRequest->getMetadata()->getMethod(), $this->config->getHttpMethodsThatRequireValidation());
+    }
+
+    /**
+     * @param \Symfony\Component\Validator\ConstraintViolationInterface $validationError
+     *
+     * @return string
+     */
+    protected function getFormattedErrorMessage(ConstraintViolationInterface $validationError): string
+    {
+        return str_replace(
+            static::ERROR_DETAIL_REPLACED_SYMBOLS,
+            static::ERROR_DETAIL_REPLACING_SYMBOLS,
+            $validationError->getPropertyPath()
+        ) . ' => ' . $validationError->getMessage();
     }
 }

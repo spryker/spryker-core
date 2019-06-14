@@ -14,6 +14,7 @@
     "spryker/merchant": "^1.0.0",
     "spryker/merchant-relationship": "^1.0.0",
     "spryker/merchant-relationship-sales-order-threshold": "^1.0.0",
+    "spryker/merchant-relationship-sales-order-threshold-gui-extension": "^1.1.0",
     "spryker/money": "^2.1.0",
     "spryker/sales-order-threshold": "^1.0.0",
     "spryker/store": "^1.2.0",

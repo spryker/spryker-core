@@ -16,6 +16,7 @@ use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Availability\Persistence\AvailabilityQueryContainer;
 use Spryker\Zed\AvailabilityGui\Dependency\Facade\AvailabilityGuiToOmsFacadeInterface;
+use Spryker\Zed\AvailabilityGui\Dependency\Service\AvailabilityGuiToUtilQuantityServiceInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
@@ -45,18 +46,26 @@ class AvailabilityAbstractTable extends AbstractTable
     protected $omsFacade;
 
     /**
+     * @var \Spryker\Zed\AvailabilityGui\Dependency\Service\AvailabilityGuiToUtilQuantityServiceInterface
+     */
+    protected $utilQuantityService;
+
+    /**
      * @param \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $queryProductAbstractAvailabilityGui
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param \Spryker\Zed\AvailabilityGui\Dependency\Facade\AvailabilityGuiToOmsFacadeInterface $omsFacade
+     * @param \Spryker\Zed\AvailabilityGui\Dependency\Service\AvailabilityGuiToUtilQuantityServiceInterface $utilQuantityService
      */
     public function __construct(
         SpyProductAbstractQuery $queryProductAbstractAvailabilityGui,
         StoreTransfer $storeTransfer,
-        AvailabilityGuiToOmsFacadeInterface $omsFacade
+        AvailabilityGuiToOmsFacadeInterface $omsFacade,
+        AvailabilityGuiToUtilQuantityServiceInterface $utilQuantityService
     ) {
         $this->queryProductAbstractAvailability = $queryProductAbstractAvailabilityGui;
         $this->storeTransfer = $storeTransfer;
         $this->omsFacade = $omsFacade;
+        $this->utilQuantityService = $utilQuantityService;
     }
 
     /**
@@ -121,7 +130,7 @@ class AvailabilityAbstractTable extends AbstractTable
         foreach ($queryResult as $productAbstractEntity) {
             $haveBundledProducts = $this->haveBundledProducts($productAbstractEntity);
 
-            $isNeverOutOfStock = $this->isNeverOutOfStock($productAbstractEntity, $haveBundledProducts);
+            $isNeverOutOfStock = $this->isNeverOutOfStock($productAbstractEntity);
 
             $result[] = [
                 SpyProductAbstractTableMap::COL_SKU => $this->getProductEditPageLink($productAbstractEntity->getSku(), $productAbstractEntity->getIdProductAbstract()),
@@ -140,15 +149,11 @@ class AvailabilityAbstractTable extends AbstractTable
 
     /**
      * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
-     * @param bool $isBundleProduct
      *
      * @return bool
      */
-    protected function isNeverOutOfStock(SpyProductAbstract $productAbstractEntity, bool $isBundleProduct): bool
+    protected function isNeverOutOfStock(SpyProductAbstract $productAbstractEntity): bool
     {
-        if ($isBundleProduct && strpos($productAbstractEntity->getConcreteNeverOutOfStockSet(), 'false') !== false) {
-            return false;
-        }
         return strpos($productAbstractEntity->getConcreteNeverOutOfStockSet(), 'true') !== false;
     }
 
@@ -170,7 +175,7 @@ class AvailabilityAbstractTable extends AbstractTable
     }
 
     /**
-     * @param int $quantity
+     * @param float $quantity
      * @param bool $isNeverOutOfStock
      *
      * @return string
@@ -178,9 +183,10 @@ class AvailabilityAbstractTable extends AbstractTable
     protected function getAvailabilityLabel($quantity, $isNeverOutOfStock)
     {
         if ($quantity > 0 || $isNeverOutOfStock) {
-            return '<span class="label label-info">' . static::AVAILABLE . '</span>';
+            return $this->generateLabel(static::AVAILABLE, 'label-info');
         }
-        return '<span class="label">' . static::NOT_AVAILABLE . '</span>';
+
+        return $this->generateLabel(static::NOT_AVAILABLE, '');
     }
 
     /**
@@ -197,6 +203,7 @@ class AvailabilityAbstractTable extends AbstractTable
                 static::URL_PARAM_ID_STORE => $this->storeTransfer->getIdStore(),
             ]
         );
+
         return $this->generateViewButton($viewTaxSetUrl, 'View');
     }
 
@@ -219,7 +226,7 @@ class AvailabilityAbstractTable extends AbstractTable
     /**
      * @param string $reservationQuantity
      *
-     * @return int
+     * @return float
      */
     protected function calculateReservation($reservationQuantity)
     {
@@ -232,7 +239,7 @@ class AvailabilityAbstractTable extends AbstractTable
     /**
      * @param array $reservationItems
      *
-     * @return int
+     * @return float
      */
     protected function getReservationUniqueValue($reservationItems)
     {
@@ -245,10 +252,24 @@ class AvailabilityAbstractTable extends AbstractTable
 
             [$sku, $quantity] = $itemParts;
 
-            $reservation += (int)$quantity;
-            $reservation += $this->omsFacade->getReservationsFromOtherStores($sku, $this->storeTransfer);
+            $reservation = $this->sumQuantities($reservation, (float)$quantity);
+            $reservation = $this->sumQuantities(
+                $reservation,
+                $this->omsFacade->getReservationsFromOtherStores($sku, $this->storeTransfer)
+            );
         }
 
         return $reservation;
+    }
+
+    /**
+     * @param float $firstQuantity
+     * @param float $secondQuantity
+     *
+     * @return float
+     */
+    protected function sumQuantities(float $firstQuantity, float $secondQuantity): float
+    {
+        return $this->utilQuantityService->sumQuantities($firstQuantity, $secondQuantity);
     }
 }

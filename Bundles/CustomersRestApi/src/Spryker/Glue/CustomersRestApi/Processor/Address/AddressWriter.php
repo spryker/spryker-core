@@ -18,6 +18,7 @@ use Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiErrorInterface;
 use Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiValidatorInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
@@ -95,31 +96,9 @@ class AddressWriter implements AddressWriterInterface
         $addressTransfer->setFkCustomer((int)$restRequest->getUser()->getSurrogateIdentifier());
 
         $customerTransfer = $this->customerClient->createAddressAndUpdateCustomerDefaultAddresses($addressTransfer);
-        $addressesTransfer = $customerTransfer->getAddresses();
+        $lastAddedAddress = $this->getLastAddedAddress($customerTransfer->getAddresses());
 
-        if (!$addressesTransfer->getAddresses()->count()) {
-            return $this->restApiError->addAddressNotSavedError($restResponse);
-        }
-
-        $restAddressAttributesTransfer = $this
-            ->addressesResourceMapper
-            ->mapAddressTransferToRestAddressAttributesTransfer(
-                $addressesTransfer->getAddresses()[$addressesTransfer->getAddresses()->count() - 1],
-                $customerTransfer
-            );
-
-        $restResource = $this->restResourceBuilder->createRestResource(
-            CustomersRestApiConfig::RESOURCE_ADDRESSES,
-            $addressTransfer->getUuid(),
-            $restAddressAttributesTransfer
-        );
-
-        $restResource->addLink(
-            RestLinkInterface::LINK_SELF,
-            $this->createSelfLink($customerTransfer, $addressTransfer)
-        );
-
-        $restResponse->addResource($restResource);
+        $restResponse->addResource($this->getAddressResource($lastAddedAddress, $customerTransfer));
 
         return $restResponse;
     }
@@ -151,28 +130,9 @@ class AddressWriter implements AddressWriterInterface
         $addressTransfer->fromArray($addressAttributesTransfer->modifiedToArray(), true);
 
         $customerTransfer = $this->customerClient->updateAddressAndCustomerDefaultAddresses($addressTransfer);
+        $modifiedAddressTransfer = $this->getModifiedAddress($addressTransfer, $customerTransfer);
 
-        $restAddressAttributesTransfer = $this
-            ->addressesResourceMapper
-            ->mapAddressTransferToRestAddressAttributesTransfer(
-                $this->getAddressByUuid($customerTransfer->getAddresses(), $restRequest->getResource()->getId()),
-                $customerTransfer
-            );
-
-        $restResource = $this->restResourceBuilder->createRestResource(
-            CustomersRestApiConfig::RESOURCE_ADDRESSES,
-            $addressTransfer->getUuid(),
-            $restAddressAttributesTransfer
-        );
-
-        $restResource->addLink(
-            RestLinkInterface::LINK_SELF,
-            $this->createSelfLink($customerTransfer, $addressTransfer)
-        );
-
-        $restResponse->addResource($restResource);
-
-        return $restResponse;
+        return $restResponse->addResource($this->getAddressResource($modifiedAddressTransfer, $customerTransfer));
     }
 
     /**
@@ -201,6 +161,69 @@ class AddressWriter implements AddressWriterInterface
         $this->customerClient->deleteAddress($addressTransfer);
 
         return $restResponse;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressesTransfer $addressesTransfer
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer|mixed
+     */
+    protected function getLastAddedAddress(AddressesTransfer $addressesTransfer)
+    {
+        $lastAddedAddress = new AddressTransfer();
+        foreach ($addressesTransfer->getAddresses() as $addressTransfer) {
+            if ($addressTransfer->getIdCustomerAddress() > $lastAddedAddress->getIdCustomerAddress()) {
+                $lastAddedAddress = $addressTransfer;
+            }
+        }
+
+        return $lastAddedAddress;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $modifiedAddressTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer
+     */
+    protected function getModifiedAddress(
+        AddressTransfer $modifiedAddressTransfer,
+        CustomerTransfer $customerTransfer
+    ): AddressTransfer {
+        foreach ($customerTransfer->getAddresses()->getAddresses() as $addressTransfer) {
+            if ($addressTransfer->getIdCustomerAddress() === $modifiedAddressTransfer->getIdCustomerAddress()) {
+                return $addressTransfer;
+            }
+        }
+
+        return $modifiedAddressTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     */
+    protected function getAddressResource(AddressTransfer $addressTransfer, CustomerTransfer $customerTransfer): RestResourceInterface
+    {
+        $restAddressAttributesTransfer = $this
+            ->addressesResourceMapper
+            ->mapAddressTransferToRestAddressAttributesTransfer(
+                $addressTransfer,
+                $customerTransfer
+            );
+
+        $restResource = $this->restResourceBuilder->createRestResource(
+            CustomersRestApiConfig::RESOURCE_ADDRESSES,
+            $addressTransfer->getUuid(),
+            $restAddressAttributesTransfer
+        )->addLink(
+            RestLinkInterface::LINK_SELF,
+            $this->createSelfLink($customerTransfer, $addressTransfer)
+        );
+
+        return $restResource;
     }
 
     /**

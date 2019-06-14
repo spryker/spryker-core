@@ -16,6 +16,7 @@ use Spryker\Zed\TaxProductConnector\Persistence\Propel\Mapper\TaxSetMapperInterf
 /**
  * @method \Spryker\Zed\TaxProductConnector\TaxProductConnectorConfig getConfig()
  * @method \Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorRepositoryInterface getRepository()
  */
 class TaxProductConnectorPersistenceFactory extends AbstractPersistenceFactory
 {

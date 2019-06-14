@@ -7,7 +7,7 @@ MerchantRelationshipProductListGui is a user interface module to manage product 
 ## Installation
 
 ```
-composer require spryker/product-list-gui
+composer require spryker/merchant-relationship-product-list-gui
 ```
 
 ## Documentation

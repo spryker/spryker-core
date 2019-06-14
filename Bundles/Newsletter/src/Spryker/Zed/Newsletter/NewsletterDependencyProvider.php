@@ -13,6 +13,9 @@ use Spryker\Zed\Newsletter\Dependency\Facade\NewsletterToGlossaryBridge;
 use Spryker\Zed\Newsletter\Dependency\Facade\NewsletterToMailBridge;
 use Spryker\Zed\Newsletter\Dependency\Service\NewsletterToUtilValidateServiceBridge;
 
+/**
+ * @method \Spryker\Zed\Newsletter\NewsletterConfig getConfig()
+ */
 class NewsletterDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_MAIL = 'mail facade';

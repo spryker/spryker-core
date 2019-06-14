@@ -5,49 +5,38 @@
 
 'use strict';
 
-require('ZedGui');
 require('../../scss/main.scss');
 
-var softThresholdStrategyToggle = function() {
-    var softStrategy = $('input[name="threshold[softStrategy]"]:checked').val();
-    var softValueBlock = $('#threshold_softThreshold').parents('.form-group');
-    var softFixedFeeBlock = $('#threshold_softFixedFee').parents('.form-group');
-    var softFlexibleFeeBlock = $('#threshold_softFlexibleFee').parents('.form-group');
+var thresholdStrategyToggle = function(thresholdGroup) {
+    var strategyKey = $('input[name="merchant-relationship-threshold[' + thresholdGroup + 'Threshold][strategy]"]:checked').val();
 
-    switch (softStrategy) {
-        case 'soft-minimum-threshold':
-            softValueBlock.removeClass('hidden');
-            softFixedFeeBlock.addClass('hidden');
-            softFlexibleFeeBlock.addClass('hidden');
-
-            break;
-        case 'soft-minimum-threshold-fixed-fee':
-            softValueBlock.removeClass('hidden');
-            softFixedFeeBlock.removeClass('hidden');
-            softFlexibleFeeBlock.addClass('hidden');
-
-            break;
-        case 'soft-minimum-threshold-flexible-fee':
-            softValueBlock.removeClass('hidden');
-            softFixedFeeBlock.addClass('hidden');
-            softFlexibleFeeBlock.removeClass('hidden');
-
-            break;
-
-        default:
-            softValueBlock.addClass('hidden');
-            softFixedFeeBlock.addClass('hidden');
-            softFlexibleFeeBlock.addClass('hidden');
-    }
+    $('.threshold-key-' + strategyKey).removeClass('hidden');
+    $('.threshold_group_' + thresholdGroup + ':not(.threshold-key-'+ strategyKey +')').addClass('hidden');
 };
 
 $(document).ready(function () {
-    softThresholdStrategyToggle();
-    $('input[name="threshold[softStrategy]"]').click(softThresholdStrategyToggle);
+    thresholdStrategyToggle('hard');
+    thresholdStrategyToggle('soft');
 
-    $('#threshold_storeCurrency').change(function() {
-        var idMerchantRelationship = $('#threshold_idMerchantRelationship').val();
+    $('input[name="merchant-relationship-threshold[hardThreshold][strategy]"]').click(function () {
+        thresholdStrategyToggle('hard');
+    });
+
+    $('input[name="merchant-relationship-threshold[softThreshold][strategy]"]').click(function() {
+        thresholdStrategyToggle('soft');
+    });
+
+    if ($('input[name="merchant-relationship-threshold[hardThreshold][strategy]"][value!=""]').length === 1) {
+        $('input[name="merchant-relationship-threshold[hardThreshold][strategy]"]').parents('.form-group').addClass('hidden');
+    }
+
+    if ($('input[name="merchant-relationship-threshold[softThreshold][strategy]"][value!=""]').length === 1) {
+        $('input[name="merchant-relationship-threshold[softThreshold][strategy]"]').parents('.form-group').addClass('hidden');
+    }
+
+    $('#merchant-relationship-threshold_storeCurrency').change(function() {
+        var idMerchantRelationship = $('#merchant-relationship-threshold_idMerchantRelationship').val();
         window.location.href = '/merchant-relationship-sales-order-threshold-gui/edit?id-merchant-relationship=' + idMerchantRelationship
-            +'&store_currency='+$(this).val();
+            + '&store_currency='+$(this).val();
     })
 });

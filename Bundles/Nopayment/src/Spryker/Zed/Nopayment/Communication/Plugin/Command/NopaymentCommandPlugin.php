@@ -15,6 +15,8 @@ use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandByOrderInterface;
 /**
  * @method \Spryker\Zed\Nopayment\Communication\NopaymentCommunicationFactory getFactory()
  * @method \Spryker\Zed\Nopayment\Business\NopaymentFacadeInterface getFacade()
+ * @method \Spryker\Zed\Nopayment\NopaymentConfig getConfig()
+ * @method \Spryker\Zed\Nopayment\Persistence\NopaymentQueryContainerInterface getQueryContainer()
  */
 class NopaymentCommandPlugin extends AbstractPlugin implements CommandByOrderInterface
 {

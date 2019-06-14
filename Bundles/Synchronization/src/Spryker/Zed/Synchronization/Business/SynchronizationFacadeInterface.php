@@ -102,9 +102,31 @@ interface SynchronizationFacadeInterface
     /**
      * @api
      *
+     * @deprecated Use SynchronizationFacadeInterface::executeResolvedPluginsBySourcesWithIds() instead.
+     *
      * @param string[] $resources
      *
      * @return void
      */
     public function executeResolvedPluginsBySources(array $resources);
+
+    /**
+     * @api
+     *
+     * @param string[] $resources
+     * @param int[] $ids
+     *
+     * @return void
+     */
+    public function executeResolvedPluginsBySourcesWithIds(array $resources, array $ids);
+
+    /**
+     * Specification:
+     *  - Returns sorted resource names list from plugins configured in SynchronizationDependencyProvider::getSynchronizationDataPlugins().
+     *
+     * @api
+     *
+     * @return string[]
+     */
+    public function getAvailableResourceNames(): array;
 }

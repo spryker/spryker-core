@@ -9,9 +9,24 @@ namespace Spryker\Zed\Product\Persistence;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\SpyProductEntityTransfer;
 
 interface ProductRepositoryInterface
 {
+    /**
+     * @param string $productConcreteSku
+     *
+     * @return \Generated\Shared\Transfer\SpyProductEntityTransfer|null
+     */
+    public function findProductConcreteBySku(string $productConcreteSku): ?SpyProductEntityTransfer;
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return \Generated\Shared\Transfer\SpyProductEntityTransfer|null
+     */
+    public function findProductConcreteById(int $idProductConcrete): ?SpyProductEntityTransfer;
+
     /**
      * @param string $search
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
@@ -54,7 +69,7 @@ interface ProductRepositoryInterface
     /**
      * @param string[] $skus
      *
-     * @return array
+     * @return int[]
      */
     public function getProductConcreteIdsByConcreteSkus(array $skus): array;
 
@@ -64,4 +79,18 @@ interface ProductRepositoryInterface
      * @return array
      */
     public function getProductConcreteSkusByConcreteIds(array $productIds): array;
+
+    /**
+     * @param int[] $productIds
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function getProductConcreteTransfersByProductIds(array $productIds): array;
+
+    /**
+     * @param int[] $productAbstractIds
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function getProductConcreteTransfersByProductAbstractIds(array $productAbstractIds): array;
 }

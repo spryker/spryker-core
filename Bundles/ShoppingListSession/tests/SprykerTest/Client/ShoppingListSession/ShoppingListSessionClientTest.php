@@ -154,7 +154,7 @@ class ShoppingListSessionClientTest extends Unit
     private function getShoppingListClientMock(ShoppingListCollectionTransfer $shoppingListCollectionTransfer): ShoppingListSessionToShoppingListClientBridgeInterface
     {
         $shoppingListClientMock = $this->getMockBuilder(ShoppingListSessionToShoppingListClientBridgeInterface::class)
-            ->setMethods(['getCustomerShoppingListCollection'])
+            ->setMethods(['getCustomerShoppingListCollection', 'updateCustomerPermission'])
             ->disableOriginalConstructor()
             ->getMock();
 

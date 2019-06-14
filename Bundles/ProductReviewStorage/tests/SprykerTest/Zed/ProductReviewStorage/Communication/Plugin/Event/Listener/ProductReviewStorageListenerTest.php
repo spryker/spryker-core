@@ -8,12 +8,12 @@
 namespace SprykerTest\Zed\ProductReviewStorage\Communication\Plugin\Event\Listener;
 
 use Codeception\Test\Unit;
+use Generated\Shared\DataBuilder\ProductReviewBuilder;
 use Generated\Shared\Transfer\EventEntityTransfer;
+use Generated\Shared\Transfer\ProductReviewTransfer;
 use Orm\Zed\ProductReview\Persistence\Map\SpyProductReviewTableMap;
 use Orm\Zed\ProductReviewStorage\Persistence\SpyProductAbstractReviewStorageQuery;
-use PHPUnit\Framework\SkippedTestError;
-use Spryker\Shared\Config\Config;
-use Spryker\Shared\PropelQueryBuilder\PropelQueryBuilderConstants;
+use Spryker\Zed\ProductReview\Business\ProductReviewFacadeInterface;
 use Spryker\Zed\ProductReview\Dependency\ProductReviewEvents;
 use Spryker\Zed\ProductReviewStorage\Business\ProductReviewStorageBusinessFactory;
 use Spryker\Zed\ProductReviewStorage\Business\ProductReviewStorageFacade;
@@ -36,16 +36,32 @@ use SprykerTest\Zed\ProductReviewStorage\ProductReviewStorageConfigMock;
 class ProductReviewStorageListenerTest extends Unit
 {
     /**
-     * @throws \PHPUnit\Framework\SkippedTestError
-     *
+     * @var \SprykerTest\Zed\ProductReviewStorage\ProductReviewStorageCommunicationTester
+     */
+    protected $tester;
+
+    /**
+     * @var \Generated\Shared\Transfer\ProductReviewTransfer
+     */
+    protected $productReviewTransfer;
+
+    /**
      * @return void
      */
     protected function setUp()
     {
-        $dbEngine = Config::get(PropelQueryBuilderConstants::ZED_DB_ENGINE);
-        if ($dbEngine !== 'pgsql') {
-            throw new SkippedTestError('Warning: no PostgreSQL is detected');
-        }
+        parent::setUp();
+
+        $productReviewTransfer = $this->tester->haveProductReview([ProductReviewTransfer::STATUS => SpyProductReviewTableMap::COL_STATUS_APPROVED]);
+        $productReviewTransfer = $this->getProductReviewFacade()->createProductReview($productReviewTransfer);
+
+        $productReviewTransferToUpdate = (new ProductReviewBuilder([
+            ProductReviewTransfer::ID_PRODUCT_REVIEW => $productReviewTransfer->getIdProductReview(),
+            ProductReviewTransfer::STATUS => SpyProductReviewTableMap::COL_STATUS_APPROVED,
+        ]))->build();
+
+        // Act
+        $this->productReviewTransfer = $this->getProductReviewFacade()->updateProductReviewStatus($productReviewTransferToUpdate);
     }
 
     /**
@@ -53,14 +69,14 @@ class ProductReviewStorageListenerTest extends Unit
      */
     public function testProductReviewPublishStorageListenerStoreData()
     {
-        SpyProductAbstractReviewStorageQuery::create()->filterByFkProductAbstract(86)->delete();
+        SpyProductAbstractReviewStorageQuery::create()->filterByFkProductAbstract($this->productReviewTransfer->getFkProductAbstract())->delete();
         $beforeCount = SpyProductAbstractReviewStorageQuery::create()->count();
 
         $productReviewPublishStorageListener = new ProductReviewPublishStorageListener();
         $productReviewPublishStorageListener->setFacade($this->getProductReviewStorageFacade());
 
         $eventTransfers = [
-            (new EventEntityTransfer())->setId(86),
+            (new EventEntityTransfer())->setId($this->productReviewTransfer->getFkProductAbstract()),
         ];
         $productReviewPublishStorageListener->handleBulk($eventTransfers, ProductReviewEvents::PRODUCT_ABSTRACT_REVIEW_PUBLISH);
 
@@ -73,7 +89,7 @@ class ProductReviewStorageListenerTest extends Unit
      */
     public function testProductReviewStorageListenerStoreData()
     {
-        SpyProductAbstractReviewStorageQuery::create()->filterByFkProductAbstract(86)->delete();
+        SpyProductAbstractReviewStorageQuery::create()->filterByFkProductAbstract($this->productReviewTransfer->getFkProductAbstract())->delete();
         $beforeCount = SpyProductAbstractReviewStorageQuery::create()->count();
 
         $productReviewStorageListener = new ProductReviewStorageListener();
@@ -81,7 +97,7 @@ class ProductReviewStorageListenerTest extends Unit
 
         $eventTransfers = [
             (new EventEntityTransfer())->setForeignKeys([
-                SpyProductReviewTableMap::COL_FK_PRODUCT_ABSTRACT => 86,
+                SpyProductReviewTableMap::COL_FK_PRODUCT_ABSTRACT => $this->productReviewTransfer->getFkProductAbstract(),
             ]),
         ];
         $productReviewStorageListener->handleBulk($eventTransfers, ProductReviewEvents::ENTITY_SPY_PRODUCT_REVIEW_CREATE);
@@ -112,10 +128,18 @@ class ProductReviewStorageListenerTest extends Unit
     protected function assertProductReviewStorage($beforeCount)
     {
         $productSetStorageCount = SpyProductAbstractReviewStorageQuery::create()->count();
-        $this->assertSame($beforeCount + 1, $productSetStorageCount);
-        $spyProductReviewStorage = SpyProductAbstractReviewStorageQuery::create()->orderByIdProductAbstractReviewStorage()->filterByFkProductAbstract(86)->findOne();
+        $this->assertGreaterThan($beforeCount, $productSetStorageCount);
+        $spyProductReviewStorage = SpyProductAbstractReviewStorageQuery::create()->orderByIdProductAbstractReviewStorage()->filterByFkProductAbstract($this->productReviewTransfer->getFkProductAbstract())->findOne();
         $this->assertNotNull($spyProductReviewStorage);
         $data = $spyProductReviewStorage->getData();
-        $this->assertSame(4, $data['review_count']);
+        $this->assertSame(1, (int)$data['review_count']);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductReview\Business\ProductReviewFacadeInterface
+     */
+    protected function getProductReviewFacade(): ProductReviewFacadeInterface
+    {
+        return $this->tester->getLocator()->productReview()->facade();
     }
 }

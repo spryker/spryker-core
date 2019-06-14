@@ -1,0 +1,34 @@
+"Abstract product name","Name des abstrakten Produktes"
+"Abstract product name:","Abstrakter Produktname:"
+Activate,Aktivieren
+"Add Product Relations","Produktrelationen hinzufügen"
+"Assign related products","Ähnliche Produkte zuweisen"
+"Create relation","Beziehung erstellen"
+Deactivate,Deaktivieren
+Edit,Bearbeiten
+"Edit Product Relations","Produktrelationen bearbeiten"
+"Failed to delete relation.","Relation konnte nicht gelöscht werden."
+"Is active:","Ist aktiv:"
+"List Product relations","Liste der Produktbeziehungen"
+"Number of products","Anzahl der Produkte"
+"Please select product from the list below","Bitte wählen Sie ein Produkt aus der untenstehenden Liste aus"
+"Product relation successfully created","Produktbeziehung erfolgreich erstellt"
+"Product relation successfully modified","Produktbeziehung erfolgreich geändert"
+"Product relation with id ""%d"" not found.","Produktbeziehung mit der ID ""%d"" nicht gefunden"
+"Related products","Ähnliche Produkte"
+related-products,"Ähnliche Produkte"
+"Relation successfully activated.","Beziehung erfolgreich aktiviert."
+"Relation successfully deactivated.","Beziehung erfolgreich deaktiviert."
+"Relation successfully deleted.","Beziehung erfolgreich gelöscht."
+"Relation type",Beziehungsart
+"Relation type:",Relationsart:
+Save,Speichern
+Select,select
+"Select product","Produkt auswählen"
+"Selected product","Ausgewähltes Produkt"
+"Selected product already has ""%s"" relation type.","Das ausgewählte Produkt hat bereits Beziehungsart ""%s""."
+Sku:,Sku:
+up-selling,Upselling
+"Update regularly: When you have this selected, this product relation will be updated automatically on regular basis according to the relation's conditions.","Regelmäßig aktualisieren: Wenn dies eingestellt ist, wird diese Produktbeziehung gemäß der Beziehungsbedingungen regelmäßig automatisch aktualisiert."
+"View in Shop","Im Shop ansehen"
+"View relations","Beziehungen ansehen"

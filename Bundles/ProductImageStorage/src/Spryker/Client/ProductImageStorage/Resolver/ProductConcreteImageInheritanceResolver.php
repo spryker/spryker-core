@@ -47,7 +47,7 @@ class ProductConcreteImageInheritanceResolver implements ProductConcreteImageInh
         $productImageStorageTransfer = $this->productConcreteImageStorageReader
             ->findProductImageConcreteStorageTransfer($idProductConcrete, $locale);
 
-        if ($productImageStorageTransfer === null) {
+        if ($productImageStorageTransfer === null || $productImageStorageTransfer->getImageSets()->count() === 0) {
             $productImageStorageTransfer = $this->productAbstractImageStorageReader
                 ->findProductImageAbstractStorageTransfer($idProductAbstract, $locale);
         }

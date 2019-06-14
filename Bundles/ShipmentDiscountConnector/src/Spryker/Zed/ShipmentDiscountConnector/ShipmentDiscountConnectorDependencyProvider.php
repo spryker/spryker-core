@@ -13,6 +13,9 @@ use Spryker\Zed\ShipmentDiscountConnector\Dependency\Facade\ShipmentDiscountConn
 use Spryker\Zed\ShipmentDiscountConnector\Dependency\Facade\ShipmentDiscountConnectorToMoneyBridge;
 use Spryker\Zed\ShipmentDiscountConnector\Dependency\Facade\ShipmentDiscountConnectorToShipmentBridge;
 
+/**
+ * @method \Spryker\Zed\ShipmentDiscountConnector\ShipmentDiscountConnectorConfig getConfig()
+ */
 class ShipmentDiscountConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_SHIPMENT = 'FACADE_SHIPMENT';

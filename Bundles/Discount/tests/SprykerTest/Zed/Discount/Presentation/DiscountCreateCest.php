@@ -7,7 +7,6 @@
 
 namespace SprykerTest\Zed\Discount\Presentation;
 
-use Codeception\Scenario;
 use SprykerTest\Zed\Discount\DiscountPresentationTester;
 use SprykerTest\Zed\Discount\PageObject\DiscountCreatePage;
 
@@ -25,14 +24,11 @@ class DiscountCreateCest
     /**
      * @param \SprykerTest\Zed\Discount\DiscountPresentationTester $i
      * @param \SprykerTest\Zed\Discount\PageObject\DiscountCreatePage $createPage
-     * @param \Codeception\Scenario $scenario
      *
      * @return void
      */
-    public function createExclusiveDiscount(DiscountPresentationTester $i, DiscountCreatePage $createPage, Scenario $scenario)
+    public function createExclusiveDiscount(DiscountPresentationTester $i, DiscountCreatePage $createPage)
     {
-        $scenario->skip("Skipping test until fail reason is clarified.");
-
         $createPage->createDiscount(DiscountCreatePage::DISCOUNT_VALID_EXCLUSIVE);
         $i->see($createPage::MESSAGE_SUCCESSFUL_ALERT_CREATION);
     }
@@ -40,14 +36,11 @@ class DiscountCreateCest
     /**
      * @param \SprykerTest\Zed\Discount\DiscountPresentationTester $i
      * @param \SprykerTest\Zed\Discount\PageObject\DiscountCreatePage $createPage
-     * @param \Codeception\Scenario $scenario
      *
      * @return void
      */
-    public function createNotExclusiveDiscount(DiscountPresentationTester $i, DiscountCreatePage $createPage, Scenario $scenario)
+    public function createNotExclusiveDiscount(DiscountPresentationTester $i, DiscountCreatePage $createPage)
     {
-        $scenario->skip("Skipping test until fail reason is clarified.");
-
         $createPage->createDiscount(DiscountCreatePage::DISCOUNT_VALID_NOT_EXCLUSIVE);
         $i->see($createPage::MESSAGE_SUCCESSFUL_ALERT_CREATION);
     }
@@ -63,11 +56,11 @@ class DiscountCreateCest
         $createPage->createDiscount(DiscountCreatePage::EMPTY_DISCOUNT, ['name' => null]);
         $i->dontSee($createPage::MESSAGE_SUCCESSFUL_ALERT_CREATION);
         $i->seeInCurrentUrl($createPage::URL);
-        $createPage->tab('General information');
+        $createPage->tab('tab-content-general');
         $i->seeElement($createPage::CURRENT_TAB_ERROR);
         $i->see('This value should not be blank');
         $i->see('Name', '.has-error');
-        $createPage->tab('Discount calculation');
+        $createPage->tab('tab-content-discount');
         $i->seeElement($createPage::CURRENT_TAB_ERROR);
         $i->see('This value should not be blank');
     }

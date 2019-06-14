@@ -17,6 +17,7 @@ use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInt
 /**
  * @method \Spryker\Zed\ProductListSearch\Business\ProductListSearchFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductListSearch\Communication\ProductListSearchCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductListSearch\ProductListSearchConfig getConfig()
  */
 class ProductListMapExpanderPlugin extends AbstractPlugin implements ProductPageMapExpanderInterface
 {

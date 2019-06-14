@@ -15,6 +15,8 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \Spryker\Zed\Customer\Business\CustomerFacadeInterface getFacade()
  * @method \Spryker\Zed\Customer\Communication\CustomerCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Customer\Persistence\CustomerRepositoryInterface getRepository()
  */
 class AddController extends AbstractController
 {
@@ -54,10 +56,12 @@ class AddController extends AbstractController
 
             if (!$customerResponseTransfer->getIsSuccess()) {
                 $this->addErrorMessage(static::MESSAGE_CUSTOMER_CREATE_ERROR);
+
                 return $this->redirectResponse($baseRedirectUrl);
             }
 
             $this->addSuccessMessage(static::MESSAGE_CUSTOMER_CREATE_SUCCESS);
+
             return $this->redirectResponse($this->getSuccessRedirectUrl($baseRedirectUrl, $customerTransfer));
         }
 

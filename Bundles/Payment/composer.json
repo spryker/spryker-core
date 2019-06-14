@@ -7,19 +7,21 @@
     "php": ">=7.1",
     "spryker/kernel": "^3.0.0",
     "spryker/propel-orm": "^1.0.0",
-    "spryker/sales": "^8.0.0",
+    "spryker/sales": "^8.0.0 || ^9.0.0",
     "spryker/symfony": "^3.0.0",
     "spryker/zed-request": "^3.0.0"
   },
   "require-dev": {
     "spryker/calculation": "*",
     "spryker/checkout": "*",
+    "spryker/installer": "*",
     "spryker/propel": "*",
     "spryker/testify": "*"
   },
   "suggest": {
     "spryker/calculation": "To correctly calculate multiple payment methods",
-    "spryker/checkout": "If you want to use Checkout plugins."
+    "spryker/checkout": "If you want to use Checkout plugins.",
+    "spryker/installer": "If you want to use Installer plugins: ^4.0.0."
   },
   "autoload": {
     "psr-4": {

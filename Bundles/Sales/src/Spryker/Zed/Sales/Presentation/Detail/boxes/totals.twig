@@ -59,7 +59,14 @@
                     </tr>
                     {% for expense in order.expenses %}
                         <tr>
-                            <td>{{ 'Shipment' | trans }} -  {{ expense.name }}</td>
+                            <td>
+                                {% if expense.type == 'SHIPMENT_EXPENSE_TYPE' %}
+                                    {{ 'Shipment' | trans }} - {{ expense.name }}
+                                {% endif %}
+                                {% if expense.type == 'THRESHOLD_EXPENSE_TYPE' %}
+                                    {{ 'Surcharge' | trans }}
+                                {% endif %}
+                            </td>
                             <td></td>
                             <td class="text-right">{{ expense.sumPrice | money(true, order.currencyIsoCode)  }}</td>
                             <td></td>

@@ -12,6 +12,9 @@ use Spryker\Zed\Kernel\Container;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 
+/**
+ * @method \Spryker\Zed\Transfer\TransferConfig getConfig()
+ */
 class TransferDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const SYMFONY_FILE_SYSTEM = 'symfony_file_system';

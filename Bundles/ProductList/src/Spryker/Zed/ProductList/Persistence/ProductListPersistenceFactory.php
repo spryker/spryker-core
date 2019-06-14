@@ -13,11 +13,12 @@ use Orm\Zed\ProductList\Persistence\SpyProductListProductConcreteQuery;
 use Orm\Zed\ProductList\Persistence\SpyProductListQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\ProductList\Persistence\Mapper\ProductListMapper;
-use Spryker\Zed\ProductList\Persistence\Mapper\ProductListMapperInterface;
 use Spryker\Zed\ProductList\ProductListDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductList\ProductListConfig getConfig()
+ * @method \Spryker\Zed\ProductList\Persistence\ProductListEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\ProductList\Persistence\ProductListRepositoryInterface getRepository()
  */
 class ProductListPersistenceFactory extends AbstractPersistenceFactory
 {
@@ -54,9 +55,9 @@ class ProductListPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductList\Persistence\Mapper\ProductListMapperInterface
+     * @return \Spryker\Zed\ProductList\Persistence\Mapper\ProductListMapper
      */
-    public function createProductListMapper(): ProductListMapperInterface
+    public function createProductListMapper(): ProductListMapper
     {
         return new ProductListMapper();
     }

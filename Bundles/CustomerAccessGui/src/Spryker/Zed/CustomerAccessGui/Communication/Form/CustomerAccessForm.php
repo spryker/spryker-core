@@ -16,6 +16,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * @method \Spryker\Zed\CustomerAccessGui\Communication\CustomerAccessGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CustomerAccessGui\CustomerAccessGuiConfig getConfig()
  */
 class CustomerAccessForm extends AbstractType
 {
@@ -50,7 +51,7 @@ class CustomerAccessForm extends AbstractType
      *
      * @return $this
      */
-    protected function addContentTypeAccess(FormBuilderInterface $builder, array $options): self
+    protected function addContentTypeAccess(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_CONTENT_TYPE_ACCESS, ChoiceType::class, [
             'expanded' => true,

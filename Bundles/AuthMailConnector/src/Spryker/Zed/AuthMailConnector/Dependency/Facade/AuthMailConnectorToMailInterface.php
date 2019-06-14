@@ -16,5 +16,5 @@ interface AuthMailConnectorToMailInterface
      *
      * @return void
      */
-    public function sendMail(MailTransfer $mailTransfer);
+    public function handleMail(MailTransfer $mailTransfer);
 }

@@ -12,6 +12,9 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\UrlCollector\Dependency\Facade\UrlCollectorToCollectorFacadeBridge;
 use Spryker\Zed\UrlCollector\Dependency\QueryContainer\UrlCollectorToUrlQueryContainerBridge;
 
+/**
+ * @method \Spryker\Zed\UrlCollector\UrlCollectorConfig getConfig()
+ */
 class UrlCollectorDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_COLLECTOR = 'FACADE_COLLECTOR';

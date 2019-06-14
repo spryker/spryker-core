@@ -14,9 +14,13 @@ use Orm\Zed\ProductList\Persistence\SpyProductListProductConcreteQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductListSearch\Dependency\Facade\ProductListSearchToEventBehaviorFacadeBridge;
+use Spryker\Zed\ProductListSearch\Dependency\Facade\ProductListSearchToProductCategoryFacadeBridge;
 use Spryker\Zed\ProductListSearch\Dependency\Facade\ProductListSearchToProductListFacadeBridge;
 use Spryker\Zed\ProductListSearch\Dependency\Facade\ProductListSearchToProductPageSearchFacadeBridge;
 
+/**
+ * @method \Spryker\Zed\ProductListSearch\ProductListSearchConfig getConfig()
+ */
 class ProductListSearchDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const PROPEL_PRODUCT_QUERY = 'PROPEL_PRODUCT_QUERY';
@@ -27,6 +31,20 @@ class ProductListSearchDependencyProvider extends AbstractBundleDependencyProvid
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
     public const FACADE_PRODUCT_PAGE_SEARCH = 'FACADE_PRODUCT_PAGE_SEARCH';
     public const FACADE_PRODUCT_LIST = 'FACADE_PRODUCT_LIST';
+    public const FACADE_PRODUCT_CATEGORY = 'FACADE_PRODUCT_CATEGORY';
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function provideBusinessLayerDependencies(Container $container): Container
+    {
+        $container = parent::provideBusinessLayerDependencies($container);
+        $container = $this->addProductListFacade($container);
+
+        return $container;
+    }
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -39,6 +57,7 @@ class ProductListSearchDependencyProvider extends AbstractBundleDependencyProvid
         $container = $this->addEventBehaviorFacade($container);
         $container = $this->addProductPageSearchFacade($container);
         $container = $this->addProductListFacade($container);
+        $container = $this->addProductCategoryFacade($container);
 
         return $container;
     }
@@ -97,6 +116,20 @@ class ProductListSearchDependencyProvider extends AbstractBundleDependencyProvid
         $container[static::FACADE_PRODUCT_LIST] = function (Container $container) {
             return new ProductListSearchToProductListFacadeBridge($container->getLocator()->productList()->facade());
         };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductCategoryFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_PRODUCT_CATEGORY, function (Container $container) {
+            return new ProductListSearchToProductCategoryFacadeBridge($container->getLocator()->productCategory()->facade());
+        });
 
         return $container;
     }

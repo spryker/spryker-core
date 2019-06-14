@@ -10,6 +10,9 @@ namespace Spryker\Zed\Console;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\Console\ConsoleConfig getConfig()
+ */
 class ConsoleDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const COMMANDS = 'commands';

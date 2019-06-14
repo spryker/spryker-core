@@ -29,14 +29,20 @@ class AbstractKvProviderTest extends Unit
         $abstractKvProviderMock = $this->getAbstractKvProviderMock();
         $config = $abstractKvProviderMock->getConfigByKvName(AbstractKvProvider::KV_ADAPTER_REDIS);
 
-        $this->assertInternalType('array', $config);
+        $this->assertIsArray($config);
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\Storage\Provider\AbstractKvProvider
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\Storage\Provider\AbstractKvProvider
      */
     protected function getAbstractKvProviderMock()
     {
-        return $this->getMockBuilder(AbstractKvProvider::class)->getMockForAbstractClass();
+        $abstractKvProviderMock = $this->getMockBuilder(AbstractKvProvider::class)
+            ->setMethods(['getConnectionParameters'])
+            ->getMockForAbstractClass();
+        $abstractKvProviderMock->method('getConnectionParameters')
+            ->willReturn([]);
+
+        return $abstractKvProviderMock;
     }
 }

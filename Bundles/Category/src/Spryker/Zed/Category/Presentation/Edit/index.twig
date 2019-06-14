@@ -9,7 +9,7 @@
 {% block action %}
     {{ viewActionButton('/product-category/assign?id-category='~idCategory, 'Assign products' | trans) }}
     {{ viewActionButton('/category/view?id-category='~idCategory, 'View' | trans) }}
-    {{ backActionButton('/category/root', 'List of categories' | trans) }}
+    {% include ['@CategoryGui/_partials/back-button.twig', '@Category/_partials/back-button.twig'] %}
 {% endblock %}
 
 {% block content %}
@@ -19,26 +19,12 @@
 
             {{ form_start(categoryForm) }}
                 {% do categoryForm.localized_attributes.setRendered %}
-                {{ form_widget(categoryForm) }}
-                <hr />
-                <p><strong>{{ 'Translations' | trans }}</strong></p>
-
-                {% for localizedAttributes in categoryForm.localized_attributes %}
-                    {% set localeName = localizedAttributes.vars.value.locale.localeName %}
-                    {% set collapsed = (currentLocale != localeName) %}
-
-                    {% embed '@Gui/Partials/localized-ibox.twig' with {
-                        localeName: localeName,
-                        collapsed: collapsed
-                    } %}
-                        {% block content %}
-                            {{ form_widget(localizedAttributes) }}
-                        {% endblock %}
-                    {% endembed %}
-                {% endfor %}
+                {{ tabs(categoryFormTabs, {
+                    'categoryForm': categoryForm,
+                    'currentLocale': currentLocale
+                }) }}
 
                 <hr />
-                <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Save' | trans }}"/>
             {{ form_end(categoryForm) }}
 
         {% endblock %}

@@ -14,11 +14,14 @@ use Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery;
 use Orm\Zed\Product\Persistence\SpyProductLocalizedAttributesQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
+use Spryker\Zed\Product\Persistence\Mapper\ProductMapper;
+use Spryker\Zed\Product\Persistence\Mapper\ProductMapperInterface;
 use Spryker\Zed\Product\ProductDependencyProvider;
 
 /**
  * @method \Spryker\Zed\Product\ProductConfig getConfig()
  * @method \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Product\Persistence\ProductRepositoryInterface getRepository()
  */
 class ProductPersistenceFactory extends AbstractPersistenceFactory
 {
@@ -76,5 +79,13 @@ class ProductPersistenceFactory extends AbstractPersistenceFactory
     public function createProductAbstractStoreQuery()
     {
         return SpyProductAbstractStoreQuery::create();
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Persistence\Mapper\ProductMapperInterface
+     */
+    public function createProductMapper(): ProductMapperInterface
+    {
+        return new ProductMapper();
     }
 }

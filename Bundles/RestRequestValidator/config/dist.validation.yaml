@@ -2,7 +2,7 @@ access-tokens:
   post:
     username:
       - NotBlank
-      - EmailConstraint
+      - Email
       - Regex:
         pattern: '/^\w+/'
     password:

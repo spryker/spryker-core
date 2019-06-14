@@ -46,7 +46,7 @@ class DependencyProviderResolverTest extends AbstractResolverTest
     /**
      * @param array $methods
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Glue\Kernel\ClassResolver\DependencyProvider\DependencyProviderResolver
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Glue\Kernel\ClassResolver\DependencyProvider\DependencyProviderResolver
      */
     protected function getResolverMock(array $methods)
     {

@@ -14,6 +14,7 @@ use Spryker\Zed\Sales\Dependency\Plugin\OrderExpanderPreSavePluginInterface;
 
 /**
  * @method \Spryker\Zed\ManualOrderEntry\Business\ManualOrderEntryFacadeInterface getFacade()
+ * @method \Spryker\Zed\ManualOrderEntry\ManualOrderEntryConfig getConfig()
  */
 class OrderSourceExpanderPreSavePlugin extends AbstractPlugin implements OrderExpanderPreSavePluginInterface
 {

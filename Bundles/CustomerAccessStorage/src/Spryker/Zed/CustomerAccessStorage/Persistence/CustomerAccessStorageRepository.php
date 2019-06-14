@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CustomerAccessStorage\Persistence;
 
 use Generated\Shared\Transfer\CustomerAccessTransfer;
+use Generated\Shared\Transfer\FilterTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -27,5 +28,35 @@ class CustomerAccessStorageRepository extends AbstractRepository implements Cust
         return $this->getFactory()
             ->createCustomerAccessStorageMapper()
             ->fillCustomerAccessTransferFromEntities($unauthenticatedCustomerAccess);
+    }
+
+    /**
+     * @return \Orm\Zed\CustomerAccessStorage\Persistence\SpyUnauthenticatedCustomerAccessStorage[]
+     */
+    public function findAllCustomerAccessStorageEntities(): array
+    {
+        $entities = $this->getFactory()
+            ->createCustomerAccessStorageQuery()
+            ->find();
+
+        return $entities->getArrayCopy();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param array $customerAccessStorageEntityIds
+     *
+     * @return \Generated\Shared\Transfer\SpyUnauthenticatedCustomerAccessStorageEntityTransfer[]
+     */
+    public function findFilteredCustomerAccessStorageEntities(FilterTransfer $filterTransfer, array $customerAccessStorageEntityIds = []): array
+    {
+        $query = $this->getFactory()
+            ->createCustomerAccessStorageQuery();
+
+        if ($customerAccessStorageEntityIds) {
+            $query->filterByIdUnauthenticatedCustomerAccessStorage_In($customerAccessStorageEntityIds);
+        }
+
+        return $this->buildQueryFromCriteria($query, $filterTransfer)->find();
     }
 }

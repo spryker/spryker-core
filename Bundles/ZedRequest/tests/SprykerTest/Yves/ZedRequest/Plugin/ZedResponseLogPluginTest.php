@@ -31,7 +31,7 @@ class ZedResponseLogPluginTest extends Unit
     {
         $zedResponseLogPlugin = new ZedResponseLogPlugin();
 
-        $this->assertInternalType('string', $zedResponseLogPlugin->getName());
+        $this->assertIsString($zedResponseLogPlugin->getName());
     }
 
     /**
@@ -41,7 +41,7 @@ class ZedResponseLogPluginTest extends Unit
     {
         $zedResponseLogPlugin = new ZedResponseLogPlugin();
 
-        $this->assertInternalType('callable', $zedResponseLogPlugin->getCallable());
+        $this->assertIsCallable($zedResponseLogPlugin->getCallable());
     }
 
     /**
@@ -63,7 +63,7 @@ class ZedResponseLogPluginTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Psr\Log\LoggerInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Psr\Log\LoggerInterface
      */
     protected function getLoggerMock()
     {
@@ -75,7 +75,7 @@ class ZedResponseLogPluginTest extends Unit
     /**
      * @param \Psr\Log\LoggerInterface $loggerMock
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Yves\ZedRequest\Plugin\ZedResponseLogPlugin
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Yves\ZedRequest\Plugin\ZedResponseLogPlugin
      */
     protected function getZedResponseLogPluginMock(LoggerInterface $loggerMock)
     {

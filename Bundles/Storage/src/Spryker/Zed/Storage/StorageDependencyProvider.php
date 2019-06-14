@@ -10,6 +10,9 @@ namespace Spryker\Zed\Storage;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\Storage\StorageConfig getConfig()
+ */
 class StorageDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_STORAGE = 'storage client';

@@ -77,7 +77,7 @@ class ItemsWithoutPriceFilter implements ItemFilterInterface
     {
         $priceProductFilterTransfer = $this->createPriceProductFilter($itemTransfer, $quoteTransfer);
 
-        return $this->priceProductFacade->findPriceProductFor($priceProductFilterTransfer) !== null;
+        return $this->priceProductFacade->hasValidPriceFor($priceProductFilterTransfer);
     }
 
     /**
@@ -152,6 +152,7 @@ class ItemsWithoutPriceFilter implements ItemFilterInterface
         if (!$quoteTransfer->getPriceMode()) {
             return $this->priceFacade->getDefaultPriceMode();
         }
+
         return $quoteTransfer->getPriceMode();
     }
 

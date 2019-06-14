@@ -1,0 +1,212 @@
+customers:
+  post:
+    email:
+      - NotBlank
+      - Email
+    salutation:
+      - NotBlank
+    firstName:
+      - NotBlank
+      - Length:
+          max: 100
+    lastName:
+      - NotBlank
+      - Length:
+          max: 100
+    password:
+      - NotBlank
+      - Length:
+          min: 7
+          max: 72
+    confirmPassword:
+      - NotBlank
+      - Length:
+          min: 7
+          max: 72
+    acceptedTerms:
+      - IsTrue
+  patch:
+    email:
+    - Optional:
+        constraints:
+        - NotBlank
+        - Email
+    salutation:
+    - Optional:
+        constraints:
+        - NotBlank
+    firstName:
+    - Optional:
+        constraints:
+        - NotBlank
+        - Length:
+            max: 100
+    lastName:
+    - Optional:
+        constraints:
+        - NotBlank
+        - Length:
+            max: 100
+    dateOfBirth:
+    - Optional:
+        constraints:
+        - Date
+
+addresses:
+  post:
+    salutation:
+    - NotBlank
+    firstName:
+      - NotBlank
+      - Length:
+          max: 100
+    lastName:
+      - NotBlank
+      - Length:
+          max: 100
+    address1:
+      - NotBlank
+      - Length:
+          max: 255
+    address2:
+      - NotBlank
+      - Length:
+          max: 255
+    address3:
+    - Optional:
+        constraints:
+        - Length:
+            max: 255
+    zipCode:
+      - NotBlank
+      - Length:
+          max: 15
+    city:
+      - NotBlank
+      - Length:
+          min: 3
+          max: 255
+    phone:
+    - Optional:
+        constraints:
+        - Length:
+            max: 255
+    iso2Code:
+      - NotBlank
+      - Length:
+          max: 2
+    isDefaultShipping:
+    - Type:
+        type: bool
+    isDefaultBilling:
+    - Type:
+        type: bool
+  patch:
+    salutation:
+    - Optional:
+        constraints:
+        - NotBlank
+    firstName:
+    - Optional:
+        constraints:
+        - NotBlank
+        - Length:
+            max: 100
+    lastName:
+    - Optional:
+        constraints:
+        - NotBlank
+        - Length:
+            max: 100
+    address1:
+    - Optional:
+        constraints:
+        - NotBlank
+        - Length:
+            max: 255
+    address2:
+    - Optional:
+        constraints:
+        - NotBlank
+        - Length:
+            max: 255
+    address3:
+    - Optional:
+        constraints:
+        - Length:
+            max: 255
+    zipCode:
+    - Optional:
+        constraints:
+        - NotBlank
+        - Length:
+            max: 15
+    city:
+    - Optional:
+        constraints:
+        - NotBlank
+        - Length:
+            min: 3
+            max: 255
+    phone:
+    - Optional:
+        constraints:
+        - Length:
+            max: 255
+    iso2Code:
+    - Optional:
+        constraints:
+        - NotBlank
+        - Length:
+            max: 2
+    isDefaultShipping:
+    - Optional:
+        constraints:
+        - Type:
+            type: bool
+    isDefaultBilling:
+    - Optional:
+        constraints:
+        - Type:
+            type: bool
+
+customer-password:
+  patch:
+    password:
+      - NotBlank
+      - Length:
+          min: 7
+          max: 72
+    newPassword:
+      - NotBlank
+      - Length:
+          min: 7
+          max: 72
+    confirmPassword:
+      - NotBlank
+      - Length:
+          min: 7
+          max: 72
+
+customer-forgotten-password:
+  post:
+    email:
+      - NotBlank
+      - Email
+      - Length:
+          max: 255
+
+customer-restore-password:
+  patch:
+    restorePasswordKey:
+      - NotBlank
+    password:
+      - NotBlank
+      - Length:
+          min: 7
+          max: 72
+    confirmPassword:
+      - NotBlank
+      - Length:
+          min: 7
+          max: 72

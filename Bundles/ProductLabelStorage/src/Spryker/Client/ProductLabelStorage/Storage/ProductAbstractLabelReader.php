@@ -9,9 +9,12 @@ namespace Spryker\Client\ProductLabelStorage\Storage;
 
 use Generated\Shared\Transfer\ProductAbstractLabelStorageTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
+use Spryker\Client\Kernel\Locator;
 use Spryker\Client\ProductLabelStorage\Dependency\Client\ProductLabelStorageToStorageClientInterface;
 use Spryker\Client\ProductLabelStorage\Dependency\Service\ProductLabelStorageToSynchronizationServiceInterface;
-use Spryker\Shared\ProductLabelStorage\ProductLabelStorageConfig;
+use Spryker\Client\ProductLabelStorage\ProductLabelStorageConfig;
+use Spryker\Shared\Kernel\Store;
+use Spryker\Shared\ProductLabelStorage\ProductLabelStorageConfig as SharedProductLabelStorageConfig;
 
 class ProductAbstractLabelReader implements ProductAbstractLabelReaderInterface
 {
@@ -69,12 +72,25 @@ class ProductAbstractLabelReader implements ProductAbstractLabelReaderInterface
      */
     protected function findIdsProductLabelByIdAbstractProduct($idProductAbstract)
     {
+        if (ProductLabelStorageConfig::isCollectorCompatibilityMode()) {
+            $clientLocatorClassName = Locator::class;
+            /** @var \Spryker\Client\ProductLabel\ProductLabelClientInterface $productLabelClient */
+            $productLabelClient = $clientLocatorClassName::getInstance()->productLabel()->client();
+            $collectorData = $productLabelClient->findLabelsByIdProductAbstract($idProductAbstract, Store::getInstance()->getCurrentLocale());
+
+            $labelIds = [];
+            foreach ($collectorData as $storageProductLabelTransfer) {
+                $labelIds[] = $storageProductLabelTransfer->getIdProductLabel();
+            }
+
+            return $labelIds;
+        }
         $synchronizationDataTransfer = new SynchronizationDataTransfer();
         $synchronizationDataTransfer
             ->setReference($idProductAbstract);
 
         $storageKey = $this->synchronizationService
-            ->getStorageKeyBuilder(ProductLabelStorageConfig::PRODUCT_ABSTRACT_LABEL_RESOURCE_NAME)
+            ->getStorageKeyBuilder(SharedProductLabelStorageConfig::PRODUCT_ABSTRACT_LABEL_RESOURCE_NAME)
             ->generateKey($synchronizationDataTransfer);
 
         $storageData = $this->storageClient->get($storageKey);

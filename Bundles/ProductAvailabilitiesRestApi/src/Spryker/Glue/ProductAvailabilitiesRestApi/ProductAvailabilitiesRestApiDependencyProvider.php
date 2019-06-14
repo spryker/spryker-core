@@ -11,6 +11,9 @@ use Spryker\Glue\Kernel\Container;
 use Spryker\Glue\ProductAvailabilitiesRestApi\Dependency\Client\ProductAvailabilitiesRestApiToAvailabilityStorageClientBridge;
 use Spryker\Glue\ProductAvailabilitiesRestApi\Dependency\Client\ProductAvailabilitiesRestApiToProductStorageClientBridge;
 
+/**
+ * @method \Spryker\Glue\ProductAvailabilitiesRestApi\ProductAvailabilitiesRestApiConfig getConfig()
+ */
 class ProductAvailabilitiesRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_AVAILABILITY_STORAGE = 'CLIENT_AVAILABILITY_STORAGE';

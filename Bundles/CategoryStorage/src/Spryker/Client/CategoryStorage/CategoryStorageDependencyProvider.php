@@ -12,6 +12,9 @@ use Spryker\Client\CategoryStorage\Dependency\Service\CategoryStorageToSynchroni
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 
+/**
+ * @method \Spryker\Client\CategoryStorage\CategoryStorageConfig getConfig()
+ */
 class CategoryStorageDependencyProvider extends AbstractDependencyProvider
 {
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';

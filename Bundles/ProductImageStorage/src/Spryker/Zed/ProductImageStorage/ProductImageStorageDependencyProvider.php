@@ -16,6 +16,9 @@ use Spryker\Zed\ProductImageStorage\Dependency\Facade\ProductImageStorageToProdu
 use Spryker\Zed\ProductImageStorage\Dependency\QueryContainer\ProductImageStorageToProductImageQueryContainerBridge;
 use Spryker\Zed\ProductImageStorage\Dependency\QueryContainer\ProductImageStorageToProductQueryContainerBridge;
 
+/**
+ * @method \Spryker\Zed\ProductImageStorage\ProductImageStorageConfig getConfig()
+ */
 class ProductImageStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_PRODUCT_IMAGE = 'FACADE_PRODUCT_IMAGE';

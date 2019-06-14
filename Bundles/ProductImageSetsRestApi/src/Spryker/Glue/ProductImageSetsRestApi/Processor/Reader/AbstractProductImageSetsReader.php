@@ -120,7 +120,7 @@ class AbstractProductImageSetsReader implements AbstractProductImageSetsReaderIn
             ->findProductImageAbstractStorageTransfer($abstractProductTransfer->getIdProductAbstract(), $restRequest->getMetadata()->getLocale());
 
         if (!$productImageAbstractStorageTransfer) {
-            return null;
+            $productImageAbstractStorageTransfer = new ProductAbstractImageStorageTransfer();
         }
 
         return $this->buildProductImageSetsResource($sku, $productImageAbstractStorageTransfer);

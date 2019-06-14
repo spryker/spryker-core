@@ -40,7 +40,7 @@
         <property name="sku" type="string" />
         <property name="unitGrossPrice" type="int" />
         <property name="sumGrossPrice" type="int" />
-        <property name="quantity" type="int" />
+        <property name="quantity" type="float" />
     </transfer>
 
     <transfer name="Address">
@@ -75,6 +75,15 @@
         <property name="billingSameAsShipping" type="bool"/>
         <property name="customer" type="Customer" />
         <property name="orderReference" type="string" />
+    </transfer>
+
+    <transfer name="QuoteValidationResponse">
+        <property name="isSuccessful" type="bool" />
+        <property name="messages" type="Message[]"  singular="message" />
+    </transfer>
+
+    <transfer name="Message">
+        <property name="value" type="string"/>
     </transfer>
 
 </transfers>

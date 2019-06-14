@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use InvalidArgumentException;
 use Spryker\Zed\Twig\Communication\Plugin\AbstractTwigExtensionPlugin;
 use Symfony\Component\Translation\TranslatorInterface;
-use Twig_SimpleFilter;
+use Twig\TwigFilter;
 
 /**
  * @method \Spryker\Zed\Glossary\Business\GlossaryFacadeInterface getFacade()
@@ -47,8 +47,8 @@ class TwigTranslatorPlugin extends AbstractTwigExtensionPlugin implements Transl
     public function getFilters()
     {
         return [
-            new Twig_SimpleFilter('trans', [$this, 'trans']),
-            new Twig_SimpleFilter('transchoice', [$this, 'transchoice']),
+            new TwigFilter('trans', [$this, 'trans']),
+            new TwigFilter('transchoice', [$this, 'transchoice']),
         ];
     }
 
@@ -108,6 +108,7 @@ class TwigTranslatorPlugin extends AbstractTwigExtensionPlugin implements Transl
             if (!$this->getFacade()->hasTranslation($ids[0], $localeTransfer)) {
                 return $ids[0];
             }
+
             return $this->getFacade()->translate($ids[0], $parameters, $localeTransfer);
         }
 

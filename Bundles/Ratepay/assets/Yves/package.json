@@ -1,8 +1,0 @@
-{
-  "private": true,
-  "name": "spryker-yves-ratepay",
-  "version": "1.0.0",
-  "dependencies": {
-    "jquery": "~2.2.0 || ~3.3.1"
-  }
-}

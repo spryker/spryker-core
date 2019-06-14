@@ -42,6 +42,7 @@ class ArrayToArrayObjectTransformer implements DataTransformerInterface
         if ($value) {
             return (array)$value;
         }
+
         return [];
     }
 

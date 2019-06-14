@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ProductPageSearchTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainer;
 use Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataExpanderInterface;
+use Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainer;
 
 /**
  * @deprecated Use \Spryker\Zed\ProductPageSearch\Communication\Plugin\PageDataExpander\ProductCategoryPageDataLoaderExpanderPlugin instead.
@@ -19,6 +20,7 @@ use Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataExpanderInter
  * @method \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductPageSearch\Communication\ProductPageSearchCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductPageSearch\ProductPageSearchConfig getConfig()
  */
 class ProductCategoryPageDataExpanderPlugin extends AbstractPlugin implements ProductPageDataExpanderInterface
 {
@@ -42,20 +44,19 @@ class ProductCategoryPageDataExpanderPlugin extends AbstractPlugin implements Pr
      *
      * @return void
      */
-    public function expandProductPageData(array $productData, ProductPageSearchTransfer $productAbstractPageSearchTransfer)
+    public function expandProductPageData(array $productData, ProductPageSearchTransfer $productAbstractPageSearchTransfer): void
     {
         $allParentCategoryIds = [];
-        $localeTransfer = (new LocaleTransfer())
-            ->setIdLocale($productData['Locale']['id_locale']);
         foreach ($productAbstractPageSearchTransfer->getCategoryNodeIds() as $idCategory) {
             $allParentCategoryIds = array_merge(
                 $allParentCategoryIds,
-                $this->getAllParents($idCategory, $localeTransfer)
+                $this->getAllParents($idCategory)
             );
         }
 
         $allParentCategoryIds = array_values(array_unique($allParentCategoryIds));
         $productAbstractPageSearchTransfer->setAllParentCategoryIds($allParentCategoryIds);
+        $localeTransfer = (new LocaleTransfer())->setIdLocale($productData['Locale']['id_locale']);
 
         $this->setCategoryNames(
             $allParentCategoryIds,
@@ -67,48 +68,45 @@ class ProductCategoryPageDataExpanderPlugin extends AbstractPlugin implements Pr
         $this->setSorting(
             $allParentCategoryIds,
             $productData['fk_product_abstract'],
-            $localeTransfer,
             $productAbstractPageSearchTransfer
         );
     }
 
     /**
      * @param int $idCategoryNode
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return array
      */
-    protected function getAllParents($idCategoryNode, LocaleTransfer $localeTransfer)
+    protected function getAllParents($idCategoryNode): array
     {
         if (static::$categoryTree === null) {
-            $this->loadTree($localeTransfer);
+            $this->loadTree();
         }
 
         return static::$categoryTree[$idCategoryNode];
     }
 
     /**
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
      * @return void
      */
-    protected function loadTree(LocaleTransfer $localeTransfer)
+    protected function loadTree(): void
     {
         static::$categoryTree = [];
 
-        $categoryNodes = $this->getFactory()->getCategoryQueryContainer()
-            ->queryCategoryNode($localeTransfer->getIdLocale())
+        $categoryNodes = $this->getFactory()
+            ->getCategoryQueryContainer()
+            ->queryAllCategoryNodes()
             ->find();
 
         foreach ($categoryNodes as $categoryNodeEntity) {
-            $pathData = $this->getFactory()->getCategoryQueryContainer()
-                ->queryPath($categoryNodeEntity->getIdCategoryNode(), $localeTransfer->getIdLocale(), false)
+            $pathData = $this->getQueryContainer()
+                ->queryCategoryNodeFullPath($categoryNodeEntity->getIdCategoryNode())
                 ->find();
 
             static::$categoryTree[$categoryNodeEntity->getIdCategoryNode()] = [];
 
             foreach ($pathData as $path) {
-                $idCategory = (int)$path['id_category_node'];
+                $idCategory = (int)$path[ProductPageSearchQueryContainer::VIRT_COLUMN_ID_CATEGORY_NODE];
                 if (!in_array($idCategory, static::$categoryTree[$categoryNodeEntity->getIdCategoryNode()])) {
                     static::$categoryTree[$categoryNodeEntity->getIdCategoryNode()][] = $idCategory;
                 }
@@ -193,7 +191,6 @@ class ProductCategoryPageDataExpanderPlugin extends AbstractPlugin implements Pr
     /**
      * @param array $directParentCategories
      * @param int $idProductAbstract
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param \Generated\Shared\Transfer\ProductPageSearchTransfer $productAbstractPageSearchTransfer
      *
      * @return void
@@ -201,7 +198,6 @@ class ProductCategoryPageDataExpanderPlugin extends AbstractPlugin implements Pr
     protected function setSorting(
         array $directParentCategories,
         $idProductAbstract,
-        LocaleTransfer $localeTransfer,
         ProductPageSearchTransfer $productAbstractPageSearchTransfer
     ) {
         $maxProductOrder = (pow(2, 31) - 1);
@@ -218,7 +214,7 @@ class ProductCategoryPageDataExpanderPlugin extends AbstractPlugin implements Pr
 
             $productOrder = (int)$productCategoryEntity->getProductOrder() ?: $maxProductOrder;
             $sortedCategories[$idCategoryNode]['product_order'] = $productOrder;
-            $allNodeParents = $this->getAllParents($idCategoryNode, $localeTransfer);
+            $allNodeParents = $this->getAllParents($idCategoryNode);
             $sortedCategories[$idCategoryNode]['all_node_parents'] = $allNodeParents;
         }
         $productAbstractPageSearchTransfer->setSortedCategories($sortedCategories);

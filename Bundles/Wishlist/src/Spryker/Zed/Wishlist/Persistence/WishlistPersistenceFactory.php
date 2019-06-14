@@ -17,6 +17,7 @@ use Spryker\Zed\Wishlist\Persistence\Mapper\WishlistMapperInterface;
 /**
  * @method \Spryker\Zed\Wishlist\WishlistConfig getConfig()
  * @method \Spryker\Zed\Wishlist\Persistence\WishlistQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Wishlist\Persistence\WishlistRepositoryInterface getRepository()
  */
 class WishlistPersistenceFactory extends AbstractPersistenceFactory
 {

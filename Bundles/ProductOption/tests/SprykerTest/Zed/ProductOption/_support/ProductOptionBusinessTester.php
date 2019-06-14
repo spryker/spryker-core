@@ -169,7 +169,7 @@ class ProductOptionBusinessTester extends Actor
     }
 
     /**
-     * @param \Spryker\Zed\Store\Business\StoreFacade|\PHPUnit_Framework_MockObject_MockObject $storeFacade
+     * @param \Spryker\Zed\Store\Business\StoreFacade|\PHPUnit\Framework\MockObject\MockObject $storeFacade
      *
      * @return void
      */
@@ -182,7 +182,7 @@ class ProductOptionBusinessTester extends Actor
     }
 
     /**
-     * @param \Spryker\Zed\Currency\Business\CurrencyFacade|\PHPUnit_Framework_MockObject_MockObject $currencyFacade
+     * @param \Spryker\Zed\Currency\Business\CurrencyFacade|\PHPUnit\Framework\MockObject\MockObject $currencyFacade
      *
      * @return void
      */

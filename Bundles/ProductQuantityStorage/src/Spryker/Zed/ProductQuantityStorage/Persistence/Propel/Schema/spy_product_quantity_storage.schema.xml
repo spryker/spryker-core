@@ -5,7 +5,7 @@
           namespace="Orm\Zed\ProductQuantityStorage\Persistence"
           package="src.Orm.Zed.ProductQuantityStorage.Persistence">
 
-    <table name="spy_product_quantity_storage">
+    <table name="spy_product_quantity_storage" identifierQuoting="true">
         <column name="id_product_quantity_storage" type="integer" autoIncrement="true" primaryKey="true"/>
         <column name="fk_product" type="integer" required="true"/>
         <column name="data" type="LONGVARCHAR" required="false"/>

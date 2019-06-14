@@ -8,8 +8,10 @@
 namespace Spryker\Glue\ProductPricesRestApi\Processor\Mapper;
 
 use Generated\Shared\Transfer\CurrentProductPriceTransfer;
+use Generated\Shared\Transfer\RestCurrencyTransfer;
 use Generated\Shared\Transfer\RestProductPriceAttributesTransfer;
 use Generated\Shared\Transfer\RestProductPricesAttributesTransfer;
+use Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToCurrencyClientInterface;
 use Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToPriceClientInterface;
 
 class ProductPricesMapper implements ProductPricesMapperInterface
@@ -20,12 +22,20 @@ class ProductPricesMapper implements ProductPricesMapperInterface
     protected $priceClient;
 
     /**
+     * @var \Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToCurrencyClientInterface
+     */
+    protected $currencyClient;
+
+    /**
      * @param \Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToPriceClientInterface $priceClient
+     * @param \Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToCurrencyClientInterface $currencyClient
      */
     public function __construct(
-        ProductPricesRestApiToPriceClientInterface $priceClient
+        ProductPricesRestApiToPriceClientInterface $priceClient,
+        ProductPricesRestApiToCurrencyClientInterface $currencyClient
     ) {
         $this->priceClient = $priceClient;
+        $this->currencyClient = $currencyClient;
     }
 
     /**
@@ -40,17 +50,45 @@ class ProductPricesMapper implements ProductPricesMapperInterface
         $productPricesRestAttributesTransfer = (new RestProductPricesAttributesTransfer())
             ->setPrice($currentProductPriceTransfer->getPrice());
         foreach ($currentProductPriceTransfer->getPrices() as $priceType => $amount) {
-            $restProductPriceAttributesTransfer = (new RestProductPriceAttributesTransfer())
-                ->setPriceTypeName($priceType);
-            if ($this->priceClient->getCurrentPriceMode() === $this->priceClient->getGrossPriceModeIdentifier()) {
-                $restProductPriceAttributesTransfer->setGrossAmount($amount);
-            }
-            if ($this->priceClient->getCurrentPriceMode() === $this->priceClient->getNetPriceModeIdentifier()) {
-                $restProductPriceAttributesTransfer->setNetAmount($amount);
-            }
+            $restProductPriceAttributesTransfer = $this->getRestProductPriceAttributesTransfer($priceType, $amount);
             $productPricesRestAttributesTransfer->addPrice($restProductPriceAttributesTransfer);
         }
 
         return $productPricesRestAttributesTransfer;
+    }
+
+    /**
+     * @param string $priceType
+     * @param int $amount
+     *
+     * @return \Generated\Shared\Transfer\RestProductPriceAttributesTransfer
+     */
+    protected function getRestProductPriceAttributesTransfer(string $priceType, int $amount): RestProductPriceAttributesTransfer
+    {
+        $restProductPriceAttributesTransfer = new RestProductPriceAttributesTransfer();
+
+        $restProductPriceAttributesTransfer->setPriceTypeName($priceType);
+        $restProductPriceAttributesTransfer->setCurrency($this->getRestCurrencyTransfer());
+        if ($this->priceClient->getCurrentPriceMode() === $this->priceClient->getGrossPriceModeIdentifier()) {
+            $restProductPriceAttributesTransfer->setGrossAmount($amount);
+
+            return $restProductPriceAttributesTransfer;
+        }
+        if ($this->priceClient->getCurrentPriceMode() === $this->priceClient->getNetPriceModeIdentifier()) {
+            $restProductPriceAttributesTransfer->setNetAmount($amount);
+
+            return $restProductPriceAttributesTransfer;
+        }
+
+        return $restProductPriceAttributesTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\RestCurrencyTransfer
+     */
+    protected function getRestCurrencyTransfer(): RestCurrencyTransfer
+    {
+        return (new RestCurrencyTransfer())
+            ->fromArray($this->currencyClient->getCurrent()->toArray(), true);
     }
 }

@@ -11,6 +11,9 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Navigation\Dependency\Facade\NavigationToTouchBridge;
 
+/**
+ * @method \Spryker\Zed\Navigation\NavigationConfig getConfig()
+ */
 class NavigationDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_TOUCH = 'FACADE_TOUCH';

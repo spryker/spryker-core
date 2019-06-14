@@ -10,18 +10,22 @@ namespace SprykerTest\Zed\ProductDiscontinuedDataImport\Helper;
 use Codeception\Module;
 use Orm\Zed\ProductDiscontinued\Persistence\SpyProductDiscontinuedNoteQuery;
 use Orm\Zed\ProductDiscontinued\Persistence\SpyProductDiscontinuedQuery;
+use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 
 class ProductDiscontinuedDataImportHelper extends Module
 {
+    use DataCleanupHelperTrait;
+
     /**
      * @return void
      */
     public function ensureDatabaseTableIsEmpty(): void
     {
-        $this->getProductDiscontinuedNoteQuery()
-            ->deleteAll();
-        $this->getProductDiscontinuedQuery()
-            ->deleteAll();
+        $this->deleteProductDiscountedData();
+
+        $this->getDataCleanupHelper()->_addCleanup(function () {
+            $this->deleteProductDiscountedData();
+        });
     }
 
     /**
@@ -50,5 +54,16 @@ class ProductDiscontinuedDataImportHelper extends Module
     protected function getProductDiscontinuedNoteQuery(): SpyProductDiscontinuedNoteQuery
     {
         return SpyProductDiscontinuedNoteQuery::create();
+    }
+
+    /**
+     * @return void
+     */
+    protected function deleteProductDiscountedData(): void
+    {
+        $this->getProductDiscontinuedNoteQuery()
+            ->deleteAll();
+        $this->getProductDiscontinuedQuery()
+            ->deleteAll();
     }
 }

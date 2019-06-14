@@ -25,6 +25,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  * @method \Spryker\Zed\Glossary\Business\GlossaryFacadeInterface getFacade()
  * @method \Spryker\Zed\Glossary\Communication\GlossaryCommunicationFactory getFactory()
  * @method \Spryker\Zed\Glossary\Persistence\GlossaryQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Glossary\GlossaryConfig getConfig()
  */
 class TranslationForm extends AbstractType
 {
@@ -96,7 +97,6 @@ class TranslationForm extends AbstractType
             'constraints' => $this->getFieldDefaultConstraints(),
             'entry_options' => [
                 'attr' => [
-                    'class' => 'html-editor',
                     'rows' => 10,
                 ],
             ],

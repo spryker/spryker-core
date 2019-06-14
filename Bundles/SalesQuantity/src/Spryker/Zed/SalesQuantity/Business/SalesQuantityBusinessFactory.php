@@ -14,10 +14,13 @@ use Spryker\Zed\SalesQuantity\Business\Discount\DiscountableItem\DiscountableIte
 use Spryker\Zed\SalesQuantity\Business\Order\Item\ItemQuantityValidator;
 use Spryker\Zed\SalesQuantity\Business\Order\Item\ItemTransformer;
 use Spryker\Zed\SalesQuantity\Business\Order\Item\ItemTransformerInterface;
+use Spryker\Zed\SalesQuantity\Dependency\Service\SalesQuantityToUtilPriceServiceInterface;
+use Spryker\Zed\SalesQuantity\Dependency\Service\SalesQuantityToUtilQuantityServiceInterface;
 use Spryker\Zed\SalesQuantity\SalesQuantityDependencyProvider;
 
 /**
  * @method \Spryker\Zed\SalesQuantity\SalesQuantityConfig getConfig()
+ * @method \Spryker\Zed\SalesQuantity\Persistence\SalesQuantityRepositoryInterface getRepository()
  */
 class SalesQuantityBusinessFactory extends AbstractBusinessFactory
 {
@@ -35,11 +38,13 @@ class SalesQuantityBusinessFactory extends AbstractBusinessFactory
     public function createItemExpander()
     {
         return new ItemExpander(
-            $this->getProductFacade()
+            $this->getRepository()
         );
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Zed\SalesQuantity\Dependency\Facade\SalesQuantityToProductFacadeInterface
      */
     public function getProductFacade()
@@ -52,7 +57,7 @@ class SalesQuantityBusinessFactory extends AbstractBusinessFactory
      */
     public function createDiscountableItemTransformer(): DiscountableItemTransformerInterface
     {
-        return new DiscountableItemTransformer();
+        return new DiscountableItemTransformer($this->getUtilPriceService());
     }
 
     /**
@@ -60,6 +65,25 @@ class SalesQuantityBusinessFactory extends AbstractBusinessFactory
      */
     public function createItemQuantityValidator()
     {
-        return new ItemQuantityValidator($this->getConfig());
+        return new ItemQuantityValidator(
+            $this->getConfig(),
+            $this->getUtilQuantityService()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesQuantity\Dependency\Service\SalesQuantityToUtilPriceServiceInterface
+     */
+    public function getUtilPriceService(): SalesQuantityToUtilPriceServiceInterface
+    {
+        return $this->getProvidedDependency(SalesQuantityDependencyProvider::SERVICE_UTIL_PRICE);
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesQuantity\Dependency\Service\SalesQuantityToUtilQuantityServiceInterface
+     */
+    public function getUtilQuantityService(): SalesQuantityToUtilQuantityServiceInterface
+    {
+        return $this->getProvidedDependency(SalesQuantityDependencyProvider::SERVICE_UTIL_QUANTITY);
     }
 }

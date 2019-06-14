@@ -1,0 +1,27 @@
+Activate,Activate
+"Add a Cms block","Add a CMS block"
+"Add a Cms page","Add a CMS page"
+"Add CMS Block","Add CMS Block"
+"Add CMS Page","Add CMS Page"
+"Add CMS Redirect","Add CMS Redirect"
+"Back to CMS","Back to CMS"
+"CMS blocks","CMS Blocks"
+Deactivate,Deactivate
+"Delete CMS Block","Delete CMS Block"
+"Delete CMS Page","Delete CMS Page"
+"Edit a Cms Block","Edit a Cms Block"
+"Edit a Cms page","Edit a Cms page"
+"From Url","From Url"
+"ID redirect URL is not set.","ID redirect URL is not set."
+Loading...,Loading...
+"New template(s) detected and added to the template list.","New template(s) detected and added to the template list."
+"Redirect status code","Redirect status code"
+"Redirect was created successfully.","Redirect was created successfully."
+"Redirect was deleted successfully.","Redirect was deleted successfully."
+"Redirect was updated successfully.","Redirect was updated successfully."
+Redirects,Redirects
+Save,Save
+"Save All","Save All"
+"To Url","To Url"
+"URL is already used.","URL is already used."
+"URL must start with a slash","URL must start with a slash"

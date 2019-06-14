@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductListGui\Communication\Table\PluginExecutor;
 
+use Generated\Shared\Transfer\QueryCriteriaTransfer;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 interface ProductListTablePluginExecutorInterface
@@ -24,6 +25,13 @@ interface ProductListTablePluginExecutorInterface
      * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
     public function executeTableConfigExpanderPlugins(TableConfiguration $config): TableConfiguration;
+
+    /**
+     * @param \Generated\Shared\Transfer\QueryCriteriaTransfer $queryCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\QueryCriteriaTransfer
+     */
+    public function executeTableQueryCriteriaExpanderPlugins(QueryCriteriaTransfer $queryCriteriaTransfer): QueryCriteriaTransfer;
 
     /**
      * @return array

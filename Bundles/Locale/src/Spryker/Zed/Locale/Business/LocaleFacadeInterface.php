@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Locale\Business;
 
+use Generated\Shared\Transfer\LocaleTransfer;
+
 interface LocaleFacadeInterface
 {
     /**
@@ -146,4 +148,16 @@ interface LocaleFacadeInterface
      * @return \Generated\Shared\Transfer\LocaleTransfer[]
      */
     public function getLocaleCollection();
+
+    /**
+     * Specification:
+     * - Sets current locale;
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Generated\Shared\Transfer\LocaleTransfer
+     */
+    public function setCurrentLocale(LocaleTransfer $localeTransfer): LocaleTransfer;
 }

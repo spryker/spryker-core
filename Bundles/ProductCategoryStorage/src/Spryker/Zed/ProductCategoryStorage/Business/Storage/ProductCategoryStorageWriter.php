@@ -199,14 +199,14 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
      *
      * @return array
      */
-    protected function generateProductCategoryLocalizedData(SpyProductCategory $productCategory, $idLocale)
+    protected function generateProductCategoryLocalizedData(SpyProductCategory $productCategory, int $idLocale)
     {
         $productCategoryCollection = [];
         foreach ($productCategory->getSpyCategory()->getNodes() as $node) {
             $pathTokens = [];
             $categoryPaths = $this->loadAllParents($node->getIdCategoryNode());
             foreach ($categoryPaths as $idCategoryNode => $categoryPath) {
-                if ($categoryPath['fk_locale'] === $idLocale) {
+                if ((int)$categoryPath['fk_locale'] === $idLocale) {
                     $pathTokens[] = $categoryPath;
                 }
             }

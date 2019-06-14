@@ -17,6 +17,7 @@ use Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataExpanderInter
  *
  * @method \Spryker\Zed\ProductListSearch\Communication\ProductListSearchCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductListSearch\Business\ProductListSearchFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductListSearch\ProductListSearchConfig getConfig()
  */
 class ProductListDataExpanderPlugin extends AbstractPlugin implements ProductPageDataExpanderInterface
 {

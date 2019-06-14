@@ -10,6 +10,11 @@ namespace Spryker\Zed\Payment\Communication\Controller;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * @method \Spryker\Zed\Payment\Persistence\PaymentQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Payment\Business\PaymentFacadeInterface getFacade()
+ * @method \Spryker\Zed\Payment\Persistence\PaymentRepositoryInterface getRepository()
+ */
 class SalesController extends AbstractController
 {
     /**
@@ -20,6 +25,7 @@ class SalesController extends AbstractController
     public function listAction(Request $request)
     {
         $orderTransfer = $request->request->get('orderTransfer');
+
         return [
             'payments' => $orderTransfer->getPayments(),
             'order' => $orderTransfer,

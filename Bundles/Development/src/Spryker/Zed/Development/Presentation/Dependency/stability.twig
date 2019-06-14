@@ -7,18 +7,18 @@
             {% set sum = 0 %}
             <div class="spy-layout sparse">
                 <p>
-                    Stability is calculated by "incoming dependencies / ( incoming dependencies + outgoing dependencies )" the result will be between 0 (stable) and 1 (unstable)
+                    {{ 'Stability is calculated by "incoming dependencies / ( incoming dependencies + outgoing dependencies )" the result will be between 0 (stable) and 1 (unstable)' | trans }}
                 </p>
                 <table class="table table-striped spy-grid">
                     <tr>
-                        <th style="width: 50%;">Module</th>
-                        <th style="text-align:right">Incoming</th>
-                        <th style="text-align:right">Outgoing</th>
-                        <th style="text-align:right">Stability</th>
-                        <th style="text-align:right">Indirect Incoming</th>
-                        <th style="text-align:right">Indirect Outgoing</th>
-                        <th style="text-align:right">Indirect Stability</th>
-                        <th style="text-align:right">Spryker Stability</th>
+                        <th style="width: 50%;">{{ 'Module' | trans }}</th>
+                        <th style="text-align:right">{{ 'Incoming' | trans }}</th>
+                        <th style="text-align:right">{{ 'Outgoing' | trans }}</th>
+                        <th style="text-align:right">{{ 'Stability' | trans }}</th>
+                        <th style="text-align:right">{{ 'Indirect Incoming' | trans }}</th>
+                        <th style="text-align:right">{{ 'Indirect Outgoing' | trans }}</th>
+                        <th style="text-align:right">{{ 'Indirect Stability' | trans }}</th>
+                        <th style="text-align:right">{{ 'Spryker Stability' | trans }}</th>
                     </tr>
                     {% for bundle, info in bundles %}
                         {% set sum = sum + info.indirectOut | length %}
@@ -36,7 +36,7 @@
                         </tr>
                     {% endfor %}
                 </table>
-                <p>SUM {{ sum }}</p>
+                <p>{{ 'SUM' | trans }} {{ sum }}</p>
             </div>
         {% endblock %}
     {% endembed %}

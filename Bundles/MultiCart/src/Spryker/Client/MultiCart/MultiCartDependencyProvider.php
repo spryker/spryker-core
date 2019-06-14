@@ -17,6 +17,9 @@ use Spryker\Client\MultiCart\Dependency\Client\MultiCartToSessionClientBridge;
 use Spryker\Client\MultiCart\Dependency\Client\MultiCartToZedRequestClientBridge;
 use Spryker\Client\MultiCart\Dependency\Service\MultiCartToUtilDateTimeServiceBridge;
 
+/**
+ * @method \Spryker\Client\MultiCart\MultiCartConfig getConfig()
+ */
 class MultiCartDependencyProvider extends AbstractDependencyProvider
 {
     public const CLIENT_MESSENGER = 'CLIENT_MESSENGER';

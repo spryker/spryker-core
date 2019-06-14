@@ -13,6 +13,9 @@ use Spryker\Zed\NavigationGui\Dependency\Facade\NavigationGuiToLocaleBridge;
 use Spryker\Zed\NavigationGui\Dependency\Facade\NavigationGuiToNavigationBridge;
 use Spryker\Zed\NavigationGui\Dependency\Facade\NavigationGuiToUrlBridge;
 
+/**
+ * @method \Spryker\Zed\NavigationGui\NavigationGuiConfig getConfig()
+ */
 class NavigationGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_NAVIGATION = 'FACADE_NAVIGATION';

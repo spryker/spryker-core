@@ -18,6 +18,9 @@ use Spryker\Zed\ProductRelation\Dependency\QueryContainer\ProductRelationToProdu
 use Spryker\Zed\ProductRelation\Dependency\QueryContainer\ProductRelationToPropelQueryBuilderBridge;
 use Spryker\Zed\ProductRelation\Dependency\Service\ProductRelationToUtilEncodingBridge;
 
+/**
+ * @method \Spryker\Zed\ProductRelation\ProductRelationConfig getConfig()
+ */
 class ProductRelationDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_LOCALE = 'locale facade';

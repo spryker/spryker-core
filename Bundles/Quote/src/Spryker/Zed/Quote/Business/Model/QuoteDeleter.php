@@ -148,7 +148,7 @@ class QuoteDeleter implements QuoteDeleterInterface
      */
     protected function isDeleteAllowed(QuoteTransfer $quoteTransfer, CustomerTransfer $customerTransfer): bool
     {
-        return strcmp($quoteTransfer->getCustomerReference(), $customerTransfer->getCustomerReference()) === 0
+        return $quoteTransfer->getCustomerReference() === $customerTransfer->getCustomerReference()
             || ($customerTransfer->getCompanyUserTransfer()
                 && $this->can('WriteSharedCartPermissionPlugin', $customerTransfer->getCompanyUserTransfer()->getIdCompanyUser(), $quoteTransfer->getIdQuote())
             );

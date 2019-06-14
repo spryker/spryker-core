@@ -14,6 +14,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\ProductCategory\Business\ProductCategoryBusinessFactory getFactory()
+ * @method \Spryker\Zed\ProductCategory\Persistence\ProductCategoryRepositoryInterface getRepository()
  */
 class ProductCategoryFacade extends AbstractFacade implements ProductCategoryFacadeInterface
 {
@@ -150,5 +151,20 @@ class ProductCategoryFacade extends AbstractFacade implements ProductCategoryFac
         return $this->getFactory()
             ->createCategoryReader()
             ->getCategoryTransferCollectionByIdProductAbstract($idProductAbstract, $localeTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int[] $categoryIds
+     *
+     * @return int[]
+     */
+    public function getProductConcreteIdsByCategoryIds(array $categoryIds): array
+    {
+        return $this->getRepository()
+            ->getProductConcreteIdsByCategoryIds($categoryIds);
     }
 }

@@ -8,6 +8,7 @@
 namespace Spryker\Client\PriceProductStorage;
 
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\PriceProductStorage\Dependency\Service\PriceProductStorageToPriceProductServiceInterface;
 use Spryker\Client\PriceProductStorage\Expander\ProductViewPriceExpander;
 use Spryker\Client\PriceProductStorage\Storage\PriceAbstractStorageReader;
 use Spryker\Client\PriceProductStorage\Storage\PriceConcreteResolver;
@@ -16,6 +17,8 @@ use Spryker\Client\PriceProductStorage\Storage\PriceConcreteStorageReader;
 use Spryker\Client\PriceProductStorage\Storage\PriceProductMapper;
 use Spryker\Client\PriceProductStorage\Storage\PriceProductMapperInterface;
 use Spryker\Client\PriceProductStorage\Storage\PriceProductStorageKeyGenerator;
+use Spryker\Client\PriceProductStorage\Validator\PriceProductItemValidator;
+use Spryker\Client\PriceProductStorage\Validator\PriceProductItemValidatorInterface;
 
 class PriceProductStorageFactory extends AbstractFactory
 {
@@ -27,7 +30,8 @@ class PriceProductStorageFactory extends AbstractFactory
         return new ProductViewPriceExpander(
             $this->createPriceAbstractStorageReader(),
             $this->createPriceConcreteStorageReader(),
-            $this->getPriceProductClient()
+            $this->getPriceProductClient(),
+            $this->getPriceProductService()
         );
     }
 
@@ -66,7 +70,19 @@ class PriceProductStorageFactory extends AbstractFactory
     {
         return new PriceConcreteResolver(
             $this->createPriceAbstractStorageReader(),
-            $this->createPriceConcreteStorageReader()
+            $this->createPriceConcreteStorageReader(),
+            $this->getPriceProductService(),
+            $this->getPriceProductClient()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\PriceProductStorage\Validator\PriceProductItemValidatorInterface
+     */
+    public function createPriceProductItemValidator(): PriceProductItemValidatorInterface
+    {
+        return new PriceProductItemValidator(
+            $this->createPriceConcreteResolver()
         );
     }
 
@@ -79,7 +95,7 @@ class PriceProductStorageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToPriceProductInterface
+     * @return \Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToPriceProductClientInterface
      */
     public function getPriceProductClient()
     {
@@ -111,6 +127,14 @@ class PriceProductStorageFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Client\PriceProductStorage\Dependency\Service\PriceProductStorageToPriceProductServiceInterface
+     */
+    public function getPriceProductService(): PriceProductStorageToPriceProductServiceInterface
+    {
+        return $this->getProvidedDependency(PriceProductStorageDependencyProvider::SERVICE_PRICE_PRODUCT);
+    }
+
+    /**
      * @return \Spryker\Client\PriceProductStorageExtension\Dependency\Plugin\PriceProductStoragePriceDimensionPluginInterface[]
      */
     public function getPriceDimensionPlugins(): array
@@ -123,7 +147,9 @@ class PriceProductStorageFactory extends AbstractFactory
      */
     public function createPriceProductMapper(): PriceProductMapperInterface
     {
-        return new PriceProductMapper();
+        return new PriceProductMapper(
+            $this->getPriceProductService()
+        );
     }
 
     /**

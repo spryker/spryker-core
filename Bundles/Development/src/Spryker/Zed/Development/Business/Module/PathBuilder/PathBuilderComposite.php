@@ -14,14 +14,14 @@ class PathBuilderComposite implements PathBuilderInterface
     /**
      * @var \Spryker\Zed\Development\Business\Module\PathBuilder\PathBuilderInterface[]
      */
-    protected $pathBuilder;
+    protected $pathBuilders;
 
     /**
-     * @param \Spryker\Zed\Development\Business\Module\PathBuilder\PathBuilderInterface[] $pathBuilder
+     * @param \Spryker\Zed\Development\Business\Module\PathBuilder\PathBuilderInterface[] $pathBuilders
      */
-    public function __construct(array $pathBuilder)
+    public function __construct(array $pathBuilders)
     {
-        $this->pathBuilder = $pathBuilder;
+        $this->pathBuilders = $pathBuilders;
     }
 
     /**
@@ -32,7 +32,7 @@ class PathBuilderComposite implements PathBuilderInterface
     public function buildPaths(ModuleTransfer $moduleTransfer): array
     {
         $moduleFilePaths = [];
-        foreach ($this->pathBuilder as $pathBuilder) {
+        foreach ($this->pathBuilders as $pathBuilder) {
             if (!$pathBuilder->accept($moduleTransfer)) {
                 continue;
             }

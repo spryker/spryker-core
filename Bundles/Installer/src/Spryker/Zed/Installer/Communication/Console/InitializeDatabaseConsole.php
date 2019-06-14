@@ -14,6 +14,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\Installer\Business\InstallerFacadeInterface getFacade()
+ * @method \Spryker\Zed\Installer\Communication\InstallerCommunicationFactory getFactory()
  */
 class InitializeDatabaseConsole extends Console
 {
@@ -71,6 +72,7 @@ class InitializeDatabaseConsole extends Console
     protected function getPluginNameFromClass($className)
     {
         $pattern = '#^.+?\\\.+?\\\(.+?)\\\.+$#i';
+
         return preg_replace($pattern, '${1}', $className);
     }
 }

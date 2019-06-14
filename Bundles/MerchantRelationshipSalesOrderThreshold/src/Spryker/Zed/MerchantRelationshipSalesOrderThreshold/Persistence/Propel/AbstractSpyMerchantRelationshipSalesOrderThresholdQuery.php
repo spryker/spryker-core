@@ -28,7 +28,7 @@ abstract class AbstractSpyMerchantRelationshipSalesOrderThresholdQuery extends B
      *
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return $this|\Orm\Zed\ProductOption\Persistence\SpyProductOptionValuePriceQuery|\Propel\Runtime\ActiveQuery\Criteria
+     * @return $this
      */
     public function filterByStoreTransfer(StoreTransfer $storeTransfer)
     {
@@ -46,7 +46,7 @@ abstract class AbstractSpyMerchantRelationshipSalesOrderThresholdQuery extends B
      *
      * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
      *
-     * @return $this|\Orm\Zed\ProductOption\Persistence\SpyProductOptionValuePriceQuery|\Propel\Runtime\ActiveQuery\Criteria
+     * @return $this
      */
     public function filterByCurrencyTransfer(CurrencyTransfer $currencyTransfer)
     {

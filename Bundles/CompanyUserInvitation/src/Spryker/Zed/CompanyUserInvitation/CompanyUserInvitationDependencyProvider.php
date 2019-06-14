@@ -14,6 +14,9 @@ use Spryker\Zed\CompanyUserInvitation\Dependency\Service\CompanyUserInvitationTo
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\CompanyUserInvitation\CompanyUserInvitationConfig getConfig()
+ */
 class CompanyUserInvitationDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_COMPANY_USER = 'FACADE_COMPANY_USER';

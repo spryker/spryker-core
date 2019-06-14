@@ -21,6 +21,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * @method \Spryker\Zed\PriceProductVolumeGui\Communication\PriceProductVolumeGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\PriceProductVolumeGui\PriceProductVolumeGuiConfig getConfig()
  */
 class PriceVolumeCollectionFormType extends AbstractType
 {
@@ -71,7 +72,7 @@ class PriceVolumeCollectionFormType extends AbstractType
      *
      * @return $this
      */
-    protected function addVolumesField(FormBuilderInterface $builder, array $options): self
+    protected function addVolumesField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_VOLUMES, CollectionType::class, [
             'entry_type' => PriceVolumeFormType::class,
@@ -95,7 +96,7 @@ class PriceVolumeCollectionFormType extends AbstractType
      *
      * @return $this
      */
-    protected function addNetPriceField(FormBuilderInterface $builder, array $options): self
+    protected function addNetPriceField(FormBuilderInterface $builder, array $options)
     {
         $this->addPriceField($builder, $options, static::FIELD_NET_PRICE);
 
@@ -108,7 +109,7 @@ class PriceVolumeCollectionFormType extends AbstractType
      *
      * @return $this
      */
-    protected function addGrossPriceField(FormBuilderInterface $builder, array $options): self
+    protected function addGrossPriceField(FormBuilderInterface $builder, array $options)
     {
         $this->addPriceField($builder, $options, static::FIELD_GROSS_PRICE);
 
@@ -122,7 +123,7 @@ class PriceVolumeCollectionFormType extends AbstractType
      *
      * @return $this
      */
-    protected function addPriceField(FormBuilderInterface $builder, array $options, string $name): self
+    protected function addPriceField(FormBuilderInterface $builder, array $options, string $name)
     {
         $builder->add($name, MoneyType::class, [
             'label' => false,
@@ -162,6 +163,8 @@ class PriceVolumeCollectionFormType extends AbstractType
                 return;
             }
 
+            $utilQuantityService = $this->getFactory()->getUtilQuantityService();
+
             if ($priceProductVolumeItemTransfer->getQuantity() === null) {
                 $context
                     ->buildViolation('Quantity should not be empty.')
@@ -169,9 +172,9 @@ class PriceVolumeCollectionFormType extends AbstractType
                     ->addViolation();
             }
 
-            if ($priceProductVolumeItemTransfer->getQuantity() <= PriceVolumeFormType::MINIMUM_QUANTITY && $priceProductVolumeItemTransfer->getQuantity() !== null) {
+            if ($utilQuantityService->isQuantityLessOrEqual($priceProductVolumeItemTransfer->getQuantity(), PriceVolumeFormType::MINIMUM_QUANTITY) && $priceProductVolumeItemTransfer->getQuantity() !== null) {
                 $context
-                    ->buildViolation('Quantity should be greater than 1.')
+                    ->buildViolation('Quantity should be greater than 0.')
                     ->atPath(PriceVolumeFormType::FIELD_QUANTITY)
                     ->addViolation();
             }
@@ -179,7 +182,7 @@ class PriceVolumeCollectionFormType extends AbstractType
             if ($priceProductVolumeItemTransfer->getNetPrice() === null && $priceProductVolumeItemTransfer->getGrossPrice() === null) {
                 if ($priceProductVolumeItemTransfer->getQuantity() > PriceVolumeFormType::MINIMUM_QUANTITY) {
                     $context
-                        ->buildViolation(sprintf('Set up net or gross price for "quantity": %d.', $priceProductVolumeItemTransfer->getQuantity()))
+                        ->buildViolation(sprintf('Set up net or gross price for "quantity": %s.', $priceProductVolumeItemTransfer->getQuantity()))
                         ->atPath(PriceVolumeFormType::FIELD_QUANTITY)
                         ->addViolation();
                 }
@@ -188,9 +191,11 @@ class PriceVolumeCollectionFormType extends AbstractType
             foreach ($savedPriceProductVolumeItemTransfers as $savedPriceProductVolumeItemTransfer) {
                 if ($priceProductVolumeItemTransfer->getQuantity() === $savedPriceProductVolumeItemTransfer->getQuantity()) {
                     $context
-                        ->buildViolation(sprintf('Quantity "%d" already exists.', $priceProductVolumeItemTransfer->getQuantity()))
+                        ->buildViolation(sprintf('Quantity "%s" already exists.', $priceProductVolumeItemTransfer->getQuantity()))
                         ->atPath(PriceVolumeFormType::FIELD_QUANTITY)
                         ->addViolation();
+
+                    break;
                 }
             }
 

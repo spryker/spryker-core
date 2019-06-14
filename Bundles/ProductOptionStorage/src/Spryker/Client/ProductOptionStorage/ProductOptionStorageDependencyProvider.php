@@ -15,6 +15,9 @@ use Spryker\Client\ProductOptionStorage\Dependency\Client\ProductOptionStorageTo
 use Spryker\Client\ProductOptionStorage\Dependency\Service\ProductOptionStorageToSynchronizationServiceBridge;
 use Spryker\Shared\Kernel\Store;
 
+/**
+ * @method \Spryker\Client\ProductOptionStorage\ProductOptionStorageConfig getConfig()
+ */
 class ProductOptionStorageDependencyProvider extends AbstractDependencyProvider
 {
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';

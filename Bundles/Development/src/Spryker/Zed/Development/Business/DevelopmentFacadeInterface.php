@@ -180,7 +180,7 @@ interface DevelopmentFacadeInterface
     /**
      * @api
      *
-     * @return bool
+     * @return array
      */
     public function getAdjacencyMatrixData();
 
@@ -201,12 +201,14 @@ interface DevelopmentFacadeInterface
     /**
      * @api
      *
-     * @param array $modules
+     * @internal
+     *
+     * @param \Generated\Shared\Transfer\ModuleTransfer[] $modules
      * @param bool $dryRun
      *
      * @return array
      */
-    public function updateComposerJsonInModules(array $modules, $dryRun = false);
+    public function updateComposerJsonInModules(array $modules, $dryRun = false): array;
 
     /**
      * @api

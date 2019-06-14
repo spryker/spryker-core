@@ -12,6 +12,7 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
  * @method \Spryker\Zed\CmsContentWidget\CmsContentWidgetConfig getConfig()
+ * @method \Spryker\Zed\CmsContentWidget\Business\CmsContentWidgetFacadeInterface getFacade()
  */
 class CmsContentWidgetCommunicationFactory extends AbstractCommunicationFactory
 {

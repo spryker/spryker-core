@@ -8,7 +8,7 @@
 namespace Spryker\Zed\SalesOrderThresholdGui\Communication\Controller;
 
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
-use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\SettingsForm;
+use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\SettingsType;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -29,7 +29,7 @@ class SettingsController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $idTaxSet = (int)$form->getData()[SettingsForm::FIELD_TAX_SET];
+            $idTaxSet = (int)$form->getData()[SettingsType::FIELD_TAX_SET];
             $this->getFactory()
                 ->getSalesOrderThresholdFacade()
                 ->saveSalesOrderThresholdTaxSet($idTaxSet);

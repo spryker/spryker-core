@@ -15,6 +15,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\ProductManagement\Communication\ProductManagementCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductManagement\Business\ProductManagementFacadeInterface getFacade()
  */
 class AddVariantController extends AbstractController
 {
@@ -39,7 +41,7 @@ class AddVariantController extends AbstractController
             ->findProductAbstractById($idProductAbstract);
 
         if (!$productAbstractTransfer) {
-            $this->addErrorMessage(sprintf('The product [%s] does not exist.', $idProductAbstract));
+            $this->addErrorMessage('The product [%s] does not exist.', ['%s' => $idProductAbstract]);
 
             return new RedirectResponse('/product-management');
         }
@@ -75,10 +77,9 @@ class AddVariantController extends AbstractController
                 ->getProductFacade()
                 ->touchProductConcrete($productConcreteTransfer->getIdProductConcrete());
 
-            $this->addSuccessMessage(sprintf(
-                'The product [%s] was saved successfully.',
-                $productConcreteTransfer->getSku()
-            ));
+            $this->addSuccessMessage('The product [%s] was saved successfully.', [
+                '%s' => $productConcreteTransfer->getSku(),
+            ]);
 
             return $this->createRedirectResponseAfterAdd($productConcreteTransfer->getIdProductConcrete(), $type, $request);
         }

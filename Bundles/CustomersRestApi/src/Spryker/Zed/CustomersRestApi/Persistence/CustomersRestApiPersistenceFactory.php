@@ -13,6 +13,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \Spryker\Zed\CustomersRestApi\CustomersRestApiConfig getConfig()
+ * @method \Spryker\Zed\CustomersRestApi\Persistence\CustomersRestApiEntityManagerInterface getEntityManager()
  */
 class CustomersRestApiPersistenceFactory extends AbstractPersistenceFactory
 {

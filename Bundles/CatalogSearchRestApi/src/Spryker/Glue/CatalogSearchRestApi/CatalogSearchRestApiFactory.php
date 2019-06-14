@@ -7,6 +7,7 @@
 namespace Spryker\Glue\CatalogSearchRestApi;
 
 use Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToCatalogClientInterface;
+use Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToCurrencyClientInterface;
 use Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToGlossaryStorageClientInterface;
 use Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToPriceClientInterface;
 use Spryker\Glue\CatalogSearchRestApi\Processor\Catalog\CatalogSearchReader;
@@ -18,7 +19,6 @@ use Spryker\Glue\CatalogSearchRestApi\Processor\Mapper\CatalogSearchSuggestionsR
 use Spryker\Glue\CatalogSearchRestApi\Processor\Translation\CatalogSearchTranslationExpander;
 use Spryker\Glue\CatalogSearchRestApi\Processor\Translation\CatalogSearchTranslationExpanderInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
-use Spryker\Shared\Kernel\Store;
 
 class CatalogSearchRestApiFactory extends AbstractFactory
 {
@@ -27,7 +27,9 @@ class CatalogSearchRestApiFactory extends AbstractFactory
      */
     public function createCatalogSearchResourceMapper(): CatalogSearchResourceMapperInterface
     {
-        return new CatalogSearchResourceMapper();
+        return new CatalogSearchResourceMapper(
+            $this->getCurrencyClient()
+        );
     }
 
     /**
@@ -49,7 +51,6 @@ class CatalogSearchRestApiFactory extends AbstractFactory
             $this->getResourceBuilder(),
             $this->createCatalogSearchResourceMapper(),
             $this->createCatalogSearchSuggestionsResourceMapper(),
-            $this->getStore(),
             $this->createCatalogSearchTranslationExpander()
         );
     }
@@ -71,14 +72,6 @@ class CatalogSearchRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\Store
-     */
-    public function getStore(): Store
-    {
-        return $this->getProvidedDependency(CatalogSearchRestApiDependencyProvider::STORE);
-    }
-
-    /**
      * @return \Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToPriceClientInterface
      */
     protected function getPriceClient(): CatalogSearchRestApiToPriceClientInterface
@@ -92,5 +85,13 @@ class CatalogSearchRestApiFactory extends AbstractFactory
     public function getGlossaryStorageClient(): CatalogSearchRestApiToGlossaryStorageClientInterface
     {
         return $this->getProvidedDependency(CatalogSearchRestApiDependencyProvider::CLIENT_GLOSSARY_STORAGE);
+    }
+
+    /**
+     * @return \Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToCurrencyClientInterface
+     */
+    protected function getCurrencyClient(): CatalogSearchRestApiToCurrencyClientInterface
+    {
+        return $this->getProvidedDependency(CatalogSearchRestApiDependencyProvider::CLIENT_CURRENCY);
     }
 }

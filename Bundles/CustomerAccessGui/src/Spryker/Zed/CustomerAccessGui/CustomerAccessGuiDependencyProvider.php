@@ -11,6 +11,9 @@ use Spryker\Zed\CustomerAccessGui\Dependency\Facade\CustomerAccessGuiToCustomerA
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\CustomerAccessGui\CustomerAccessGuiConfig getConfig()
+ */
 class CustomerAccessGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_CUSTOMER_ACCESS = 'FACADE_CUSTOMER_ACCESS';

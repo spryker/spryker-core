@@ -45,7 +45,13 @@ class StoreCurrencyFinder implements StoreCurrencyFinderInterface
     public function getCurrencyTransferFromRequestParam(?string $storeCurrencyRequestParam): CurrencyTransfer
     {
         if (!$storeCurrencyRequestParam) {
-            return $this->currencyFacade->getCurrent();
+            $currencyTransfer = $this->currencyFacade->getCurrent();
+
+            if ($currencyTransfer->getIdCurrency() !== null) {
+                return $currencyTransfer;
+            }
+
+            return $this->currencyFacade->fromIsoCode($currencyTransfer->getCode());
         }
 
         [$_, $currencyCode] = explode(

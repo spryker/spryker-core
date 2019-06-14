@@ -16,6 +16,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\Queue\Business\QueueFacadeInterface getFacade()
+ * @method \Spryker\Zed\Queue\Persistence\QueueQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Queue\Communication\QueueCommunicationFactory getFactory()
  */
 class QueueTaskConsole extends Console
 {

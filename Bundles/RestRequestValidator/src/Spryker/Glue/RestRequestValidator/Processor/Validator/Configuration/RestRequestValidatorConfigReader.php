@@ -13,7 +13,6 @@ use Spryker\Glue\RestRequestValidator\Dependency\External\RestRequestValidatorTo
 use Spryker\Glue\RestRequestValidator\Dependency\External\RestRequestValidatorToYamlAdapterInterface;
 use Spryker\Glue\RestRequestValidator\Processor\Exception\CacheFileNotFoundException;
 use Spryker\Glue\RestRequestValidator\RestRequestValidatorConfig;
-use function sprintf;
 
 class RestRequestValidatorConfigReader implements RestRequestValidatorConfigReaderInterface
 {

@@ -11,6 +11,9 @@ use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\ZedRequest\Dependency\Client\ZedRequestToMessengerClientBridge;
 
+/**
+ * @method \Spryker\Client\ZedRequest\ZedRequestConfig getConfig()
+ */
 class ZedRequestDependencyProvider extends AbstractDependencyProvider
 {
     public const SERVICE_NETWORK = 'util network service';

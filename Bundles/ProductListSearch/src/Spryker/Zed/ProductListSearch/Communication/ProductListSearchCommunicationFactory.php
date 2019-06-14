@@ -15,6 +15,8 @@ use Spryker\Zed\ProductListSearch\ProductListSearchDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductListSearch\ProductListSearchConfig getConfig()
+ * @method \Spryker\Zed\ProductListSearch\Persistence\ProductListSearchRepositoryInterface getRepository()
+ * @method \Spryker\Zed\ProductListSearch\Business\ProductListSearchFacadeInterface getFacade()
  */
 class ProductListSearchCommunicationFactory extends AbstractCommunicationFactory
 {
@@ -40,5 +42,13 @@ class ProductListSearchCommunicationFactory extends AbstractCommunicationFactory
     public function getProductListFacade(): ProductListSearchToProductListFacadeInterface
     {
         return $this->getProvidedDependency(ProductListSearchDependencyProvider::FACADE_PRODUCT_LIST);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductListSearch\Dependency\Facade\ProductListSearchToProductCategoryFacadeInterface
+     */
+    public function getProductCategoryFacade()
+    {
+        return $this->getProvidedDependency(ProductListSearchDependencyProvider::FACADE_PRODUCT_CATEGORY);
     }
 }

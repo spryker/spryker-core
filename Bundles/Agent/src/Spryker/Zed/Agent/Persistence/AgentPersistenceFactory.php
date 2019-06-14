@@ -14,6 +14,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \Spryker\Zed\Agent\AgentConfig getConfig()
+ * @method \Spryker\Zed\Agent\Persistence\AgentRepositoryInterface getRepository()
  */
 class AgentPersistenceFactory extends AbstractPersistenceFactory
 {

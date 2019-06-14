@@ -42,6 +42,9 @@ class SearchPreferencesDataProvider
             ->querySearchPreferencesTable()
             ->filterByIdProductAttributeKey($idProductAttributeKey)
             ->findOne();
+        if ($productAttributeKeyEntity === null) {
+            return [];
+        }
 
         return [
             SearchPreferencesForm::FIELD_ID_PRODUCT_ATTRIBUTE_KEY => $idProductAttributeKey,

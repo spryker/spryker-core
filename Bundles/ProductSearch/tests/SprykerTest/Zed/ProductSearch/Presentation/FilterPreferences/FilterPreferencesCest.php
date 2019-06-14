@@ -7,7 +7,6 @@
 
 namespace SprykerTest\Zed\ProductSearch\Presentation\FilterPreferences;
 
-use Codeception\Scenario;
 use SprykerTest\Zed\ProductSearch\PageObject\FilterPreferencesPage;
 use SprykerTest\Zed\ProductSearch\ProductSearchPresentationTester;
 
@@ -36,22 +35,17 @@ class FilterPreferencesCest
 
     /**
      * @param \SprykerTest\Zed\ProductSearch\ProductSearchPresentationTester $i
-     * @param \Codeception\Scenario $scenario
      *
      * @return void
      */
-    public function createEditAndRemoveFilter(ProductSearchPresentationTester $i, Scenario $scenario)
+    public function createEditAndRemoveFilter(ProductSearchPresentationTester $i)
     {
-        $scenario->skip("Skipping test until fail reason is clarified.");
-
         $id = $i->createFilter('foooooo_' . rand(1, 1000));
         $i->updateFilter($id);
         $i->deleteFilter($id);
     }
 
     /**
-     * @skip Drag & drop functionality is not working, need to recheck later with upcoming codeception related fixes
-     *
      * @param \SprykerTest\Zed\ProductSearch\ProductSearchPresentationTester $i
      *
      * @return void
@@ -84,14 +78,11 @@ class FilterPreferencesCest
 
     /**
      * @param \SprykerTest\Zed\ProductSearch\ProductSearchPresentationTester $i
-     * @param \Codeception\Scenario $scenario
      *
      * @return void
      */
-    public function synchronizeFilterPreferences(ProductSearchPresentationTester $i, Scenario $scenario)
+    public function synchronizeFilterPreferences(ProductSearchPresentationTester $i)
     {
-        $scenario->skip("Skipping test until fail reason is clarified.");
-
         $i->createFilter('foooooo_' . rand(1, 1000));
 
         $i->amOnPage(FilterPreferencesPage::URL_LIST);

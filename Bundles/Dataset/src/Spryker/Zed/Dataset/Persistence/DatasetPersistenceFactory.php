@@ -18,6 +18,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \Spryker\Zed\Dataset\DatasetConfig getConfig()
+ * @method \Spryker\Zed\Dataset\Persistence\DatasetEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\Dataset\Persistence\DatasetRepositoryInterface getRepository()
  */
 class DatasetPersistenceFactory extends AbstractPersistenceFactory
 {

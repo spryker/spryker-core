@@ -235,7 +235,7 @@ class VoucherEngineTest extends Unit
     }
 
     /**
-     * @param \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Discount\DiscountConfig $discountConfigMock
+     * @param \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Discount\DiscountConfig $discountConfigMock
      *
      * @return void
      */
@@ -269,7 +269,7 @@ class VoucherEngineTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Discount\DiscountConfig
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Discount\DiscountConfig
      */
     protected function createDiscountConfigMock()
     {
@@ -277,7 +277,7 @@ class VoucherEngineTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface
      */
     protected function createDiscountQueryContainerMock()
     {
@@ -285,7 +285,7 @@ class VoucherEngineTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Orm\Zed\Discount\Persistence\SpyDiscountVoucher
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Orm\Zed\Discount\Persistence\SpyDiscountVoucher
      */
     protected function createDiscountVoucherEntityMock()
     {
@@ -293,7 +293,7 @@ class VoucherEngineTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Orm\Zed\Discount\Persistence\SpyDiscountVoucherQuery
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Orm\Zed\Discount\Persistence\SpyDiscountVoucherQuery
      */
     protected function createDiscountVoucherQueryMock()
     {
@@ -308,7 +308,7 @@ class VoucherEngineTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Propel\Runtime\Connection\ConnectionInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Propel\Runtime\Connection\ConnectionInterface
      */
     protected function createConnectionMock()
     {

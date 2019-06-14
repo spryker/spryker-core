@@ -20,8 +20,8 @@ use Generated\Shared\Transfer\UrlTransfer;
 use Spryker\Zed\Cms\Business\CmsFacade;
 use Spryker\Zed\Cms\Business\Page\LocaleCmsPageDataExpander;
 use Spryker\Zed\Cms\CmsDependencyProvider;
-use Spryker\Zed\Cms\Dependency\Plugin\CmsPageDataExpanderPluginInterface;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainer;
+use Spryker\Zed\CmsExtension\Dependency\Plugin\CmsPageDataExpanderPluginInterface;
 use Spryker\Zed\Glossary\Business\GlossaryBusinessFactory;
 use Spryker\Zed\Glossary\Business\GlossaryFacade;
 use Spryker\Zed\Glossary\GlossaryDependencyProvider;
@@ -399,7 +399,7 @@ class CmsFacadeTest extends Unit
         $this->tester->setDependency(CmsDependencyProvider::PLUGINS_CMS_PAGE_DATA_EXPANDER, [$expanderPlugin]);
 
         // Assert
-        $expanderPlugin->expects($this->once())->method('expand');
+        $expanderPlugin->expects($this->once())->method('expand')->willReturn([]);
 
         // Act
         $this->cmsFacade->calculateFlattenedLocaleCmsPageData($input, new LocaleTransfer());

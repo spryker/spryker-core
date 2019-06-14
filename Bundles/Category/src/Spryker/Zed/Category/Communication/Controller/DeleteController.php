@@ -18,6 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
  * @method \Spryker\Zed\Category\Communication\CategoryCommunicationFactory getFactory()
  * @method \Spryker\Zed\Category\Business\CategoryFacadeInterface getFacade()
  * @method \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Category\Persistence\CategoryRepositoryInterface getRepository()
  */
 class DeleteController extends AbstractController
 {
@@ -41,7 +42,7 @@ class DeleteController extends AbstractController
                 ->getFacade()
                 ->delete($data['fk_category']);
 
-            return $this->redirectResponse('/category/root');
+            return $this->redirectResponse($this->getFactory()->getConfig()->getDefaultRedirectUrl());
         }
 
         return $this->viewResponse([

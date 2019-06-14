@@ -18,6 +18,7 @@ use Spryker\Zed\ProductSet\Dependency\ProductSetEvents;
  * @method \Spryker\Zed\ProductSetStorage\Persistence\ProductSetStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductSetStorage\Business\ProductSetStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductSetStorage\Communication\ProductSetStorageCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductSetStorage\ProductSetStorageConfig getConfig()
  */
 class ProductSetEventResourceQueryContainerPlugin extends AbstractPlugin implements EventResourceQueryContainerPluginInterface
 {

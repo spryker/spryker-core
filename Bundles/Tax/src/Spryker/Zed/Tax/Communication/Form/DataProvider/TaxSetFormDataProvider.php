@@ -34,11 +34,17 @@ class TaxSetFormDataProvider
     }
 
     /**
+     * @param int|null $idTaxSet
+     *
      * @return \Generated\Shared\Transfer\TaxSetTransfer|null
      */
-    public function getData()
+    public function getData(?int $idTaxSet = null)
     {
-        return $this->taxSetTransfer;
+        if ($idTaxSet === null) {
+            return $this->taxSetTransfer;
+        }
+
+        return $this->taxFacade->findTaxSet($idTaxSet);
     }
 
     /**

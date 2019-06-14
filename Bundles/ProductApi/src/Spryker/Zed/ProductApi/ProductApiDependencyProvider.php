@@ -13,6 +13,9 @@ use Spryker\Zed\ProductApi\Dependency\Facade\ProductApiToProductBridge;
 use Spryker\Zed\ProductApi\Dependency\QueryContainer\ProductApiToApiBridge;
 use Spryker\Zed\ProductApi\Dependency\QueryContainer\ProductApiToApiQueryBuilderBridge;
 
+/**
+ * @method \Spryker\Zed\ProductApi\ProductApiConfig getConfig()
+ */
 class ProductApiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const SERVICE_DATE_FORMATTER = 'SERVICE_DATE_FORMATTER';
@@ -103,6 +106,7 @@ class ProductApiDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::SERVICE_DATE_FORMATTER] = function (Container $container) {
             return $container->getLocator()->utilDateTime()->service();
         };
+
         return $container;
     }
 
@@ -116,6 +120,7 @@ class ProductApiDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::FACADE_PRODUCT] = function (Container $container) {
             return new ProductApiToProductBridge($container->getLocator()->product()->facade());
         };
+
         return $container;
     }
 }

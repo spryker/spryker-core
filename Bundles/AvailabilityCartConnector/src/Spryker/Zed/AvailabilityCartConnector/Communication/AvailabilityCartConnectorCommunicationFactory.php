@@ -9,6 +9,9 @@ namespace Spryker\Zed\AvailabilityCartConnector\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
+/**
+ * @method \Spryker\Zed\AvailabilityCartConnector\Business\AvailabilityCartConnectorFacadeInterface getFacade()
+ */
 class AvailabilityCartConnectorCommunicationFactory extends AbstractCommunicationFactory
 {
 }

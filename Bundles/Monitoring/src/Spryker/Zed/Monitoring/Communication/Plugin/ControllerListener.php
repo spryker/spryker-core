@@ -19,6 +19,7 @@ use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
  * @method \Spryker\Zed\Monitoring\Communication\MonitoringCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Monitoring\MonitoringConfig getConfig()
  */
 class ControllerListener extends AbstractPlugin implements EventSubscriberInterface
 {

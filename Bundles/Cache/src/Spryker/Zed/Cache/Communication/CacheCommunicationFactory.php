@@ -11,6 +11,7 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
  * @method \Spryker\Zed\Cache\CacheConfig getConfig()
+ * @method \Spryker\Zed\Cache\Business\CacheFacadeInterface getFacade()
  */
 class CacheCommunicationFactory extends AbstractCommunicationFactory
 {

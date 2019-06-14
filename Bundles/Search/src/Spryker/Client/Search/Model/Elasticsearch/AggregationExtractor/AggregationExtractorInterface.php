@@ -7,10 +7,6 @@
 
 namespace Spryker\Client\Search\Model\Elasticsearch\AggregationExtractor;
 
-/**
- * Class AbstractAggregationExtractor
- */
-
 interface AggregationExtractorInterface
 {
     /**

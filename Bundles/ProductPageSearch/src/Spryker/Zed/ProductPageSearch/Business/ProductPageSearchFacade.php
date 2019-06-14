@@ -11,6 +11,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchBusinessFactory getFactory()
+ * @method \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchRepositoryInterface getRepository()
  */
 class ProductPageSearchFacade extends AbstractFacade implements ProductPageSearchFacadeInterface
 {
@@ -61,5 +63,83 @@ class ProductPageSearchFacade extends AbstractFacade implements ProductPageSearc
         $this->getFactory()
             ->createProductAbstractPagePublisher()
             ->unpublish($productAbstractIds);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int[] $productIds
+     *
+     * @return void
+     */
+    public function publishProductConcretes(array $productIds): void
+    {
+        $this->getFactory()
+            ->createProductConcretePageSearchPublisher()
+            ->publish($productIds);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int[] $productIds
+     *
+     * @return void
+     */
+    public function unpublishProductConcretes(array $productIds): void
+    {
+        $this->getFactory()
+            ->createProductConcretePageSearchPublisher()
+            ->unpublish($productIds);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param array $productAbstractStoreMap Keys are product abstract IDs, values are store IDs.
+     *
+     * @return void
+     */
+    public function unpublishProductConcretePageSearches(array $productAbstractStoreMap): void
+    {
+        $this->getFactory()
+            ->createProductConcretePageSearchUnpublisher()
+            ->unpublishByAbstractProductsAndStores($productAbstractStoreMap);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int[] $productIds
+     *
+     * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
+     */
+    public function getProductConcretePageSearchTransfersByProductIds(array $productIds): array
+    {
+        return $this->getFactory()
+            ->createProductConcretePageSearchReader()
+            ->getProductConcretePageSearchTransfersByProductIds($productIds);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function publishProductConcretePageSearchesByProductAbstractIds(array $productAbstractIds): void
+    {
+        $this->getFactory()
+            ->createProductConcretePageSearchPublisher()
+            ->publishProductConcretePageSearchesByProductAbstractIds($productAbstractIds);
     }
 }

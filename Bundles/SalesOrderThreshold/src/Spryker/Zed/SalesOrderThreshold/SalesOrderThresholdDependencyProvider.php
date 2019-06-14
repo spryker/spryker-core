@@ -16,6 +16,9 @@ use Spryker\Zed\SalesOrderThreshold\Dependency\Facade\SalesOrderThresholdToSales
 use Spryker\Zed\SalesOrderThreshold\Dependency\Facade\SalesOrderThresholdToStoreFacadeBridge;
 use Spryker\Zed\SalesOrderThreshold\Dependency\Facade\SalesOrderThresholdToTaxFacadeBridge;
 
+/**
+ * @method \Spryker\Zed\SalesOrderThreshold\SalesOrderThresholdConfig getConfig()
+ */
 class SalesOrderThresholdDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const SALES_ORDER_THRESHOLD_DATA_SOURCE_STRATEGIES = 'SALES_ORDER_THRESHOLD_DATA_SOURCE_STRATEGIES';

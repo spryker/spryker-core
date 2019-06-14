@@ -11,6 +11,9 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
  * @method \Spryker\Zed\CustomerAccess\CustomerAccessConfig getConfig()
+ * @method \Spryker\Zed\CustomerAccess\Persistence\CustomerAccessEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\CustomerAccess\Persistence\CustomerAccessRepositoryInterface getRepository()
+ * @method \Spryker\Zed\CustomerAccess\Business\CustomerAccessFacadeInterface getFacade()
  */
 class CustomerAccessCommunicationFactory extends AbstractCommunicationFactory
 {

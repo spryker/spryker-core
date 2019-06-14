@@ -14,6 +14,9 @@ use Spryker\Zed\AvailabilityStorage\Dependency\QueryContainer\AvailabilityStorag
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\AvailabilityStorage\AvailabilityStorageConfig getConfig()
+ */
 class AvailabilityStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const QUERY_CONTAINER_AVAILABILITY = 'QUERY_CONTAINER_AVAILABILITY';

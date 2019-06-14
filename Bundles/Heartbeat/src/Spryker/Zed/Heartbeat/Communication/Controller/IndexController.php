@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @method \Spryker\Zed\Heartbeat\Business\HeartbeatFacadeInterface getFacade()
+ * @method \Spryker\Zed\Heartbeat\Communication\HeartbeatCommunicationFactory getFactory()
  */
 class IndexController extends AbstractController
 {

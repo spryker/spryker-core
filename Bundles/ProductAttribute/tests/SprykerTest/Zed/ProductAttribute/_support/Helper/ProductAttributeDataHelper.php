@@ -10,13 +10,20 @@ namespace SprykerTest\Zed\ProductAttribute\Helper;
 use Codeception\Module;
 use Generated\Shared\DataBuilder\LocalizedProductManagementAttributeKeyBuilder;
 use Generated\Shared\DataBuilder\ProductManagementAttributeBuilder;
+use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Orm\Zed\Product\Persistence\SpyProductAttributeKey;
 use Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttribute;
+use Spryker\Zed\Locale\Business\LocaleFacadeInterface;
+use Spryker\Zed\Product\Business\ProductFacadeInterface;
+use Spryker\Zed\ProductAttribute\ProductAttributeConfig;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
+use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class ProductAttributeDataHelper extends Module
 {
     use DataCleanupHelperTrait;
+    use LocatorHelperTrait;
 
     /**
      * @param array $seedData
@@ -83,5 +90,74 @@ class ProductAttributeDataHelper extends Module
         });
 
         return $productManagementAttributeEntity;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\LocalizedAttributesTransfer[]
+     */
+    public function generateLocalizedAttributes(): array
+    {
+        $results = [];
+        $data = $this->getSampleLocalizedProductAttributeValues();
+        unset($data[ProductAttributeConfig::DEFAULT_LOCALE]);
+
+        foreach ($data as $localizedData) {
+            $localeTransfer = $this->getLocaleTransfer();
+
+            $localizedAttributeTransfer = new LocalizedAttributesTransfer();
+            $localizedAttributeTransfer->setAttributes($localizedData);
+            $localizedAttributeTransfer->setLocale($localeTransfer);
+            $localizedAttributeTransfer->setName('product-' . rand(1, 1000));
+
+            $results[] = $localizedAttributeTransfer;
+        }
+
+        return $results;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getSampleLocalizedProductAttributeValues(): array
+    {
+        $localeTransfer = $this->getLocaleTransfer();
+
+        $result = [
+            '_' => [
+                'foo' => 'Foo Value',
+                'bar' => '20 units',
+            ],
+            $localeTransfer->getLocaleName() => [
+                'foo' => 'Foo Value DE',
+            ],
+        ];
+
+        ksort($result);
+
+        return $result;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\LocaleTransfer
+     */
+    protected function getLocaleTransfer(): LocaleTransfer
+    {
+        return $this->getLocaleFacade()->getCurrentLocale();
+    }
+
+    /**
+     * @return \Spryker\Zed\Locale\Business\LocaleFacadeInterface
+     */
+    protected function getLocaleFacade(): LocaleFacadeInterface
+    {
+        return $this->getLocator()->locale()->facade();
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Business\ProductFacadeInterface
+     */
+    public function getProductFacade(): ProductFacadeInterface
+    {
+        return $this->getLocator()->product()->facade();
     }
 }

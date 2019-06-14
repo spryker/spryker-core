@@ -14,6 +14,9 @@ use Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToStorageClien
 use Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToSynchronizationServiceBridge;
 use Spryker\Shared\Kernel\Store;
 
+/**
+ * @method \Spryker\Client\ProductStorage\ProductStorageConfig getConfig()
+ */
 class ProductStorageDependencyProvider extends AbstractDependencyProvider
 {
     public const CLIENT_LOCALE = 'CLIENT_LOCALE';
@@ -23,6 +26,7 @@ class ProductStorageDependencyProvider extends AbstractDependencyProvider
     public const PLUGIN_PRODUCT_VIEW_EXPANDERS = 'PLUGIN_STORAGE_PRODUCT_EXPANDERS';
     public const PLUGINS_PRODUCT_ABSTRACT_RESTRICTION = 'PLUGINS_PRODUCT_ABSTRACT_RESTRICTION';
     public const PLUGINS_PRODUCT_CONCRETE_RESTRICTION = 'PLUGINS_PRODUCT_CONCRETE_RESTRICTION';
+    public const PLUGINS_PRODUCT_CONCRETE_EXPANDER = 'PLUGINS_PRODUCT_CONCRETE_EXPANDER';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -38,6 +42,7 @@ class ProductStorageDependencyProvider extends AbstractDependencyProvider
         $container = $this->addProductViewExpanderPlugins($container);
         $container = $this->addProductAbstractRestrictionPlugins($container);
         $container = $this->addProductConcreteRestrictionPlugins($container);
+        $container = $this->addProductConcreteExpanderPlugins($container);
 
         return $container;
     }
@@ -141,6 +146,20 @@ class ProductStorageDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addProductConcreteExpanderPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_PRODUCT_CONCRETE_EXPANDER] = function () {
+            return $this->getProductConcreteExpanderPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
      * @return \Spryker\Client\ProductStorage\Dependency\Plugin\ProductViewExpanderPluginInterface[]
      */
     protected function getProductViewExpanderPlugins()
@@ -160,6 +179,14 @@ class ProductStorageDependencyProvider extends AbstractDependencyProvider
      * @return \Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductConcreteRestrictionPluginInterface[]
      */
     protected function getProductConcreteRestrictionPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductConcreteExpanderPluginInterface[]
+     */
+    protected function getProductConcreteExpanderPlugins(): array
     {
         return [];
     }

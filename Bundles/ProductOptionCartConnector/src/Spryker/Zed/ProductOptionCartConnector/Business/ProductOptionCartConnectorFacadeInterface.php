@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductOptionCartConnector\Business;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 interface ProductOptionCartConnectorFacadeInterface
@@ -65,4 +66,17 @@ interface ProductOptionCartConnectorFacadeInterface
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
     public function validateProductOptionValuePrices(CartChangeTransfer $cartChangeTransfer);
+
+    /**
+     * Specification:
+     *  - Checks if product options of items in CartChangeTransfer exists.
+     *  - If not terminates cart operation and write error messages.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
+     */
+    public function checkProductOptionExistence(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer;
 }

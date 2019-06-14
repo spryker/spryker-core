@@ -17,6 +17,7 @@ use Spryker\Zed\ProductDiscontinuedStorage\Dependency\Facade\ProductDiscontinued
 use Spryker\Zed\ProductDiscontinuedStorage\Dependency\Facade\ProductDiscontinuedStorageToProductDiscontinuedFacadeInterface;
 use Spryker\Zed\ProductDiscontinuedStorage\Persistence\ProductDiscontinuedStorageEntityManagerInterface;
 use Spryker\Zed\ProductDiscontinuedStorage\Persistence\ProductDiscontinuedStorageRepositoryInterface;
+use Spryker\Zed\ProductDiscontinuedStorage\ProductDiscontinuedStorageConfig;
 
 class ProductDiscontinuedPublisher implements ProductDiscontinuedPublisherInterface
 {
@@ -41,21 +42,29 @@ class ProductDiscontinuedPublisher implements ProductDiscontinuedPublisherInterf
     protected $localeFacade;
 
     /**
+     * @var \Spryker\Zed\ProductDiscontinuedStorage\ProductDiscontinuedStorageConfig
+     */
+    protected $productDiscontinuedStorageConfig;
+
+    /**
      * @param \Spryker\Zed\ProductDiscontinuedStorage\Persistence\ProductDiscontinuedStorageEntityManagerInterface $productDiscontinuedStorageEntityManager
      * @param \Spryker\Zed\ProductDiscontinuedStorage\Persistence\ProductDiscontinuedStorageRepositoryInterface $productDiscontinuedStorageRepository
      * @param \Spryker\Zed\ProductDiscontinuedStorage\Dependency\Facade\ProductDiscontinuedStorageToProductDiscontinuedFacadeInterface $productDiscontinuedFacade
      * @param \Spryker\Zed\ProductDiscontinuedStorage\Dependency\Facade\ProductDiscontinuedStorageToLocaleFacadeInterface $localeFacade
+     * @param \Spryker\Zed\ProductDiscontinuedStorage\ProductDiscontinuedStorageConfig $productDiscontinuedStorageConfig
      */
     public function __construct(
         ProductDiscontinuedStorageEntityManagerInterface $productDiscontinuedStorageEntityManager,
         ProductDiscontinuedStorageRepositoryInterface $productDiscontinuedStorageRepository,
         ProductDiscontinuedStorageToProductDiscontinuedFacadeInterface $productDiscontinuedFacade,
-        ProductDiscontinuedStorageToLocaleFacadeInterface $localeFacade
+        ProductDiscontinuedStorageToLocaleFacadeInterface $localeFacade,
+        ProductDiscontinuedStorageConfig $productDiscontinuedStorageConfig
     ) {
         $this->productDiscontinuedStorageEntityManager = $productDiscontinuedStorageEntityManager;
         $this->productDiscontinuedStorageRepository = $productDiscontinuedStorageRepository;
         $this->productDiscontinuedFacade = $productDiscontinuedFacade;
         $this->localeFacade = $localeFacade;
+        $this->productDiscontinuedStorageConfig = $productDiscontinuedStorageConfig;
     }
 
     /**
@@ -138,6 +147,7 @@ class ProductDiscontinuedPublisher implements ProductDiscontinuedPublisherInterf
                 $this->mapToProductDiscontinuedStorageTransfer($productDiscontinuedTransfer, $localeTransfer)->toArray()
             );
 
+        $productDiscontinuedStorage->setIsSendingToQueue($this->productDiscontinuedStorageConfig->isSendingToQueue());
         $this->productDiscontinuedStorageEntityManager->saveProductDiscontinuedStorageEntity($productDiscontinuedStorage);
     }
 
@@ -207,7 +217,7 @@ class ProductDiscontinuedPublisher implements ProductDiscontinuedPublisherInterf
     ): string {
         foreach ($productDiscontinuedTransfer->getProductDiscontinuedNotes() as $discontinuedNoteTransfer) {
             if ($discontinuedNoteTransfer->getFkLocale() === $localeTransfer->getIdLocale()) {
-                return $discontinuedNoteTransfer->getNote();
+                return $discontinuedNoteTransfer->getNote() ?? '';
             }
         }
 

@@ -17,6 +17,9 @@ use Spryker\Zed\ProductSetPageSearch\Dependency\QueryContainer\ProductSetPageSea
 use Spryker\Zed\ProductSetPageSearch\Dependency\QueryContainer\ProductSetPageSearchToProductSetQueryContainerBridge;
 use Spryker\Zed\ProductSetPageSearch\Dependency\Service\ProductSetPageSearchToUtilEncodingBridge;
 
+/**
+ * @method \Spryker\Zed\ProductSetPageSearch\ProductSetPageSearchConfig getConfig()
+ */
 class ProductSetPageSearchDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const QUERY_CONTAINER_PRODUCT_IMAGE = 'QUERY_CONTAINER_PRODUCT_IMAGE';

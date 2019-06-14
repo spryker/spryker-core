@@ -16,6 +16,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * @method \Spryker\Zed\CmsGui\Communication\CmsGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CmsGui\CmsGuiConfig getConfig()
  */
 class CmsGlossaryTranslationFormType extends AbstractType
 {
@@ -84,6 +85,7 @@ class CmsGlossaryTranslationFormType extends AbstractType
             'label' => 'Content',
             'attr' => [
                 'class' => 'html-editor',
+                'data-editor-config' => 'cms',
             ],
             'required' => false,
             'constraints' => [

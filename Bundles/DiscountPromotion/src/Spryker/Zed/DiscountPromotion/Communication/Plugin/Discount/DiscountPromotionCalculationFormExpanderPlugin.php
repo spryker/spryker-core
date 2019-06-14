@@ -17,6 +17,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 /**
  * @method \Spryker\Zed\DiscountPromotion\Business\DiscountPromotionFacadeInterface getFacade()
  * @method \Spryker\Zed\DiscountPromotion\Communication\DiscountPromotionCommunicationFactory getFactory()
+ * @method \Spryker\Zed\DiscountPromotion\DiscountPromotionConfig getConfig()
+ * @method \Spryker\Zed\DiscountPromotion\Persistence\DiscountPromotionQueryContainerInterface getQueryContainer()
  */
 class DiscountPromotionCalculationFormExpanderPlugin extends AbstractPlugin implements DiscountFormExpanderPluginInterface
 {

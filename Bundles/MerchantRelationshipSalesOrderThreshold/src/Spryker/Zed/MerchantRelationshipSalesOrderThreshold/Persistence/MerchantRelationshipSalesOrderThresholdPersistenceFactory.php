@@ -14,6 +14,8 @@ use Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Persistence\Propel\Mappe
 
 /**
  * @method \Spryker\Zed\MerchantRelationshipSalesOrderThreshold\MerchantRelationshipSalesOrderThresholdConfig getConfig()
+ * @method \Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Persistence\MerchantRelationshipSalesOrderThresholdEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Persistence\MerchantRelationshipSalesOrderThresholdRepositoryInterface getRepository()
  */
 class MerchantRelationshipSalesOrderThresholdPersistenceFactory extends AbstractPersistenceFactory
 {

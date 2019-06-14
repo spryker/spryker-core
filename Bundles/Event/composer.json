@@ -10,7 +10,7 @@
     "spryker/log": "^3.0.0",
     "spryker/monolog": "^2.0.0",
     "spryker/queue": "^1.1.0",
-    "spryker/util-encoding": "^2.0.0"
+    "spryker/util-encoding": "^2.1.0"
   },
   "require-dev": {
     "spryker/propel": "^3.0.0",

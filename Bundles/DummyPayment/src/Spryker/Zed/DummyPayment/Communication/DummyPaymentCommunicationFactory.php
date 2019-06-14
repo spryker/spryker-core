@@ -13,6 +13,7 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
  * @method \Spryker\Zed\DummyPayment\DummyPaymentConfig getConfig()
+ * @method \Spryker\Zed\DummyPayment\Business\DummyPaymentFacadeInterface getFacade()
  */
 class DummyPaymentCommunicationFactory extends AbstractCommunicationFactory
 {

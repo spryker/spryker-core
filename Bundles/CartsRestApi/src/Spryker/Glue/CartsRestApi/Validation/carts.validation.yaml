@@ -1,0 +1,40 @@
+carts:
+  post:
+    priceMode:
+      - NotBlank
+    currency:
+      - NotBlank
+    store:
+      - NotBlank
+
+items:
+  post:
+    sku:
+      - NotBlank
+    quantity:
+      - NotBlank
+      - Type:
+          type: numeric
+      - GreaterThan:
+          value: 0
+  patch:
+    quantity:
+      - NotBlank
+      - Type:
+          type: numeric
+
+guest-cart-items:
+  post:
+    sku:
+      - NotBlank
+    quantity:
+      - NotBlank
+      - Type:
+          type: numeric
+      - GreaterThan:
+          value: 0
+  patch:
+    quantity:
+      - NotBlank
+      - Type:
+          type: numeric

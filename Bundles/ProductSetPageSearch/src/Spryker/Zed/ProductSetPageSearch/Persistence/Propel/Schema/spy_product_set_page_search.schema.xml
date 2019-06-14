@@ -5,7 +5,7 @@
           namespace="Orm\Zed\ProductSetPageSearch\Persistence"
           package="src.Orm.Zed.ProductSetPageSearch.Persistence">
 
-    <table name="spy_product_set_page_search">
+    <table name="spy_product_set_page_search" identifierQuoting="true">
         <column name="id_product_set_page_search" type="BIGINT" autoIncrement="true" primaryKey="true"/>
         <column name="fk_product_set" type="INTEGER" required="true"/>
         <!-- 'structured_data' column contains the result from database query while 'data' column contains mapped data for the search engine -->

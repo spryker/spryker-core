@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUserResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ResponseMessageTransfer;
 use Spryker\Client\Kernel\PermissionAwareTrait;
 use Spryker\Client\ZedRequest\ZedRequestClient;
@@ -155,5 +156,21 @@ class CompanyUserStub implements CompanyUserStubInterface
         );
 
         return $companyUserResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
+     */
+    public function getActiveCompanyUsersByCustomerReference(CustomerTransfer $customerTransfer): CompanyUserCollectionTransfer
+    {
+        /** @var \Generated\Shared\Transfer\CompanyUserCollectionTransfer $companyUserCollectionTransfer */
+        $companyUserCollectionTransfer = $this->zedRequestClient->call(
+            '/company-user/gateway/get-active-company-users-by-customer-reference',
+            $customerTransfer
+        );
+
+        return $companyUserCollectionTransfer;
     }
 }

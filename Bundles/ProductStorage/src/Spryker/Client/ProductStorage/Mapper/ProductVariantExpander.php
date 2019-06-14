@@ -171,6 +171,7 @@ class ProductVariantExpander implements ProductVariantExpanderInterface
         $productConcreteIds = $productViewTransfer->getAttributeMap()->getProductConcreteIds();
         $idProductConcrete = array_shift($productConcreteIds);
         $productConcreteStorageData = $this->productConcreteStorageReader->findProductConcreteStorageData($idProductConcrete, $locale);
+        $productViewTransfer->getAttributeMap()->setSuperAttributes([]);
 
         if (!$productConcreteStorageData) {
             return $productViewTransfer;

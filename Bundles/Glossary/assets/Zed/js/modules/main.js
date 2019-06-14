@@ -5,9 +5,7 @@
 
 'use strict';
 
-require('ZedGui');
 require('./legacy/logic');
-
 
 $(document).ready( function () {
     $('[name=translation]').on('submit', function() {

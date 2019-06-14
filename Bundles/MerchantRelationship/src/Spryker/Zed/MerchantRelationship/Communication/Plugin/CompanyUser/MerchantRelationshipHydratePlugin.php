@@ -15,6 +15,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\MerchantRelationship\Persistence\MerchantRelationshipRepositoryInterface getRepository()
  * @method \Spryker\Zed\MerchantRelationship\Business\MerchantRelationshipFacadeInterface getFacade()
  * @method \Spryker\Zed\MerchantRelationship\Communication\MerchantRelationshipCommunicationFactory getFactory()
+ * @method \Spryker\Zed\MerchantRelationship\MerchantRelationshipConfig getConfig()
  */
 class MerchantRelationshipHydratePlugin extends AbstractPlugin implements CompanyUserHydrationPluginInterface
 {

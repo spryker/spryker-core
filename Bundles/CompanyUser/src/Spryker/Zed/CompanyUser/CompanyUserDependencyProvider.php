@@ -11,6 +11,9 @@ use Spryker\Zed\CompanyUser\Dependency\Facade\CompanyUserToCustomerFacadeBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\CompanyUser\CompanyUserConfig getConfig()
+ */
 class CompanyUserDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_CUSTOMER = 'FACADE_CUSTOMER';
@@ -20,6 +23,7 @@ class CompanyUserDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_COMPANY_USER_POST_CREATE = 'PLUGINS_COMPANY_USER_POST_CREATE';
     public const PLUGINS_COMPANY_USER_HYDRATE = 'PLUGINS_COMPANY_USER_HYDRATE';
     public const PLUGINS_COMPANY_USER_PRE_DELETE = 'PLUGINS_COMPANY_USER_PRE_DELETE';
+    public const PLUGINS_COMPANY_USER_SAVE_PRE_CHECK = 'PLUGINS_COMPANY_USER_SAVE_PRE_CHECK';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -34,6 +38,7 @@ class CompanyUserDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCompanyUserPostCreatePlugins($container);
         $container = $this->addCompanyUserHydrationPlugins($container);
         $container = $this->addCompanyUserPreDeletePlugins($container);
+        $container = $this->addCompanyUserSavePreCheckPlugins($container);
         $container = $this->addCustomerFacade($container);
 
         return $container;
@@ -124,6 +129,20 @@ class CompanyUserDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCompanyUserSavePreCheckPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_COMPANY_USER_SAVE_PRE_CHECK] = function () {
+            return $this->getCompanyUserSavePreCheckPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
      * @return \Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserPreSavePluginInterface[]
      */
     protected function getCompanyUserPreSavePlugins(): array
@@ -159,6 +178,14 @@ class CompanyUserDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserPreDeletePluginInterface[]
      */
     protected function getCompanyUserPreDeletePlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserSavePreCheckPluginInterface[]
+     */
+    protected function getCompanyUserSavePreCheckPlugins(): array
     {
         return [];
     }

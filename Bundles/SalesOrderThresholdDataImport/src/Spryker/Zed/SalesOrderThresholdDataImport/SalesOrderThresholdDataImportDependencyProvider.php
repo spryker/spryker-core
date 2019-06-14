@@ -13,6 +13,9 @@ use Spryker\Zed\SalesOrderThresholdDataImport\Dependency\Facade\SalesOrderThresh
 use Spryker\Zed\SalesOrderThresholdDataImport\Dependency\Facade\SalesOrderThresholdDataImportToSalesOrderThresholdFacadeBridge;
 use Spryker\Zed\SalesOrderThresholdDataImport\Dependency\Facade\SalesOrderThresholdDataImportToStoreFacadeBridge;
 
+/**
+ * @method \Spryker\Zed\SalesOrderThresholdDataImport\SalesOrderThresholdDataImportConfig getConfig()
+ */
 class SalesOrderThresholdDataImportDependencyProvider extends DataImportDependencyProvider
 {
     public const FACADE_SALES_ORDER_THRESHOLD = 'FACADE_SALES_ORDER_THRESHOLD';

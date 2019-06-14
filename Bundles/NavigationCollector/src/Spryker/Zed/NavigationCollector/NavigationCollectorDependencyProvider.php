@@ -12,6 +12,9 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\NavigationCollector\Dependency\Facade\NavigationCollectorToCollectorBridge;
 use Spryker\Zed\NavigationCollector\Dependency\Facade\NavigationCollectorToNavigationBridge;
 
+/**
+ * @method \Spryker\Zed\NavigationCollector\NavigationCollectorConfig getConfig()
+ */
 class NavigationCollectorDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_COLLECTOR = 'FACADE_COLLECTOR';

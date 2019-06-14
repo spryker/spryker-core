@@ -142,7 +142,6 @@ class PriceProductConcreteWriter extends BaseProductPriceWriter implements Price
         $priceProductTransfer->setIdProduct($idProductConcrete);
         $priceProductTransfer->setIdProductAbstract($productConcreteTransfer->getFkProductAbstract());
         $priceProductTransfer = $this->priceProductStoreWriter->persistPriceProductStore($priceProductTransfer);
-        $priceProductTransfer = $this->executePriceDimensionConcreteSaverPlugins($priceProductTransfer);
 
         return $priceProductTransfer;
     }
@@ -171,6 +170,7 @@ class PriceProductConcreteWriter extends BaseProductPriceWriter implements Price
             if ($priceDimensionConcreteSaverPlugin->getDimensionName() !== $priceDimensionType) {
                 continue;
             }
+
             return $priceDimensionConcreteSaverPlugin->savePrice($priceProductTransfer);
         }
 

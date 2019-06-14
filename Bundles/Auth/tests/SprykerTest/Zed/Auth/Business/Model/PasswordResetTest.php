@@ -53,7 +53,7 @@ class PasswordResetTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\Auth\Dependency\Facade\AuthToUserBridge|\PHPUnit_Framework_MockObject_MockObject
+     * @return \Spryker\Zed\Auth\Dependency\Facade\AuthToUserBridge|\PHPUnit\Framework\MockObject\MockObject
      */
     protected function createFacadeUser()
     {
@@ -67,7 +67,7 @@ class PasswordResetTest extends Unit
      * @param \Spryker\Zed\Auth\Dependency\Facade\AuthToUserBridge $userFacade
      * @param \Spryker\Zed\Auth\AuthConfig $authConfig
      *
-     * @return \Spryker\Zed\Auth\Business\Model\PasswordReset|\PHPUnit_Framework_MockObject_MockObject
+     * @return \Spryker\Zed\Auth\Business\Model\PasswordReset|\PHPUnit\Framework\MockObject\MockObject
      */
     protected function createPasswordReset($authQueryContainer, $userFacade, $authConfig)
     {

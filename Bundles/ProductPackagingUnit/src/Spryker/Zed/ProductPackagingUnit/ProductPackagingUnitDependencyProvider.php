@@ -18,8 +18,13 @@ use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToPro
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToProductMeasurementUnitFacadeBridge;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToSalesQuantityFacadeBridge;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToStoreFacadeBridge;
+use Spryker\Zed\ProductPackagingUnit\Dependency\Service\ProductPackagingUnitToUtilPriceServiceBridge;
+use Spryker\Zed\ProductPackagingUnit\Dependency\Service\ProductPackagingUnitToUtilQuantityServiceBridge;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Service\ProductPackagingUnitToUtilTextServiceBridge;
 
+/**
+ * @method \Spryker\Zed\ProductPackagingUnit\ProductPackagingUnitConfig getConfig()
+ */
 class ProductPackagingUnitDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_LOCALE = 'FACADE_LOCALE';
@@ -33,6 +38,8 @@ class ProductPackagingUnitDependencyProvider extends AbstractBundleDependencyPro
 
     public const PROPEL_QUERY_SALES_ORDER_ITEM = 'PROPEL_QUERY_SALES_ORDER_ITEM';
 
+    public const SERVICE_UTIL_QUANTITY = 'SERVICE_UTIL_QUANTITY';
+    public const SERVICE_UTIL_PRICE = 'SERVICE_UTIL_PRICE';
     public const SERVICE_UTIL_TEXT = 'SERVICE_UTIL_TEXT';
 
     /**
@@ -54,6 +61,8 @@ class ProductPackagingUnitDependencyProvider extends AbstractBundleDependencyPro
         $container = $this->addSalesQuantityFacade($container);
 
         $container = $this->addUtilTextService($container);
+        $container = $this->addUtilQuantityService($container);
+        $container = $this->addUtilPriceService($container);
 
         return $container;
     }
@@ -68,6 +77,38 @@ class ProductPackagingUnitDependencyProvider extends AbstractBundleDependencyPro
         $container = parent::providePersistenceLayerDependencies($container);
 
         $container = $this->addSalesOrderItemPropelQuery($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUtilQuantityService(Container $container): Container
+    {
+        $container[static::SERVICE_UTIL_QUANTITY] = function (Container $container) {
+            return new ProductPackagingUnitToUtilQuantityServiceBridge(
+                $container->getLocator()->utilQuantity()->service()
+            );
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUtilPriceService(Container $container): Container
+    {
+        $container[static::SERVICE_UTIL_PRICE] = function (Container $container) {
+            return new ProductPackagingUnitToUtilPriceServiceBridge(
+                $container->getLocator()->utilPrice()->service()
+            );
+        };
 
         return $container;
     }

@@ -12,6 +12,9 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductLabel\Dependency\Facade\ProductLabelToProductBridge;
 use Spryker\Zed\ProductLabel\Dependency\Facade\ProductLabelToTouchBridge;
 
+/**
+ * @method \Spryker\Zed\ProductLabel\ProductLabelConfig getConfig()
+ */
 class ProductLabelDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_TOUCH = 'FACADE_TOUCH';

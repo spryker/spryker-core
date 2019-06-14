@@ -15,6 +15,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\Development\Business\DevelopmentFacadeInterface getFacade()
+ * @method \Spryker\Zed\Development\Communication\DevelopmentCommunicationFactory getFactory()
  */
 class ModuleBridgeCreateConsole extends Console
 {
@@ -48,7 +49,7 @@ class ModuleBridgeCreateConsole extends Console
      * @param \Symfony\Component\Console\Input\InputInterface $input
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
-     * @return void
+     * @return int|null
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
@@ -61,5 +62,7 @@ class ModuleBridgeCreateConsole extends Console
         $this->info($message);
 
         $this->getFacade()->createBridge($module, $toModule, $methods);
+
+        return null;
     }
 }

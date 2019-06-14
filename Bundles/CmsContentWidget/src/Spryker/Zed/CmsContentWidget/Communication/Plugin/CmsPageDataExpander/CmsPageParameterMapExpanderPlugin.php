@@ -8,12 +8,13 @@
 namespace Spryker\Zed\CmsContentWidget\Communication\Plugin\CmsPageDataExpander;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Zed\Cms\Dependency\Plugin\CmsPageDataExpanderPluginInterface;
+use Spryker\Zed\CmsExtension\Dependency\Plugin\CmsPageDataExpanderPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\CmsContentWidget\Business\CmsContentWidgetFacadeInterface getFacade()
  * @method \Spryker\Zed\CmsContentWidget\Communication\CmsContentWidgetCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CmsContentWidget\CmsContentWidgetConfig getConfig()
  */
 class CmsPageParameterMapExpanderPlugin extends AbstractPlugin implements CmsPageDataExpanderPluginInterface
 {

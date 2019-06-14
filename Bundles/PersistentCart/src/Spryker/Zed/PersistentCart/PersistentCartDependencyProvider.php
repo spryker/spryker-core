@@ -13,17 +13,24 @@ use Spryker\Zed\PersistentCart\Communication\Plugin\SimpleProductQuoteItemFinder
 use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToCartFacadeBridge;
 use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToMessengerFacadeBridge;
 use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToQuoteFacadeBridge;
+use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToStoreFacadeBridge;
+use Spryker\Zed\PersistentCart\Dependency\Service\PersistentCartToUtilQuantityServiceBridge;
 use Spryker\Zed\PersistentCartExtension\Dependency\Plugin\QuoteItemFinderPluginInterface;
 
+/**
+ * @method \Spryker\Zed\PersistentCart\PersistentCartConfig getConfig()
+ */
 class PersistentCartDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_CART = 'FACADE_CART';
     public const FACADE_MESSENGER = 'FACADE_MESSENGER';
     public const FACADE_QUOTE = 'FACADE_QUOTE';
+    public const FACADE_STORE = 'FACADE_STORE';
     public const PLUGIN_QUOTE_ITEM_FINDER = 'PLUGIN_QUOTE_ITEM_FINDER';
     public const PLUGINS_QUOTE_RESPONSE_EXPANDER = 'PLUGINS_QUOTE_RESPONSE_EXPANDER';
     public const PLUGINS_REMOVE_ITEMS_REQUEST_EXPANDER = 'PLUGINS_REMOVE_ITEMS_REQUEST_EXPANDER';
     public const PLUGINS_CART_ADD_ITEM_STRATEGY = 'PLUGINS_CART_ADD_ITEM_STRATEGY';
+    public const SERVICE_UTIL_QUANTITY = 'SERVICE_UTIL_QUANTITY';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -38,9 +45,24 @@ class PersistentCartDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addMessengerFacade($container);
         $container = $this->addQuoteItemFinderPlugin($container);
         $container = $this->addQuoteFacade($container);
+        $container = $this->addStoreFacade($container);
         $container = $this->addQuoteResponseExpanderPlugins($container);
         $container = $this->addRemoveItemsRequestExpanderPlugins($container);
         $container = $this->addCartAddItemStrategyPlugins($container);
+        $container = $this->addUtilQuantityService($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function provideCommunicationLayerDependencies(Container $container): Container
+    {
+        $container = parent::provideCommunicationLayerDependencies($container);
+        $container = $this->addQuoteFacade($container);
 
         return $container;
     }
@@ -68,6 +90,20 @@ class PersistentCartDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::FACADE_CART] = function (Container $container) {
             return new PersistentCartToCartFacadeBridge($container->getLocator()->cart()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addStoreFacade(Container $container): Container
+    {
+        $container[static::FACADE_STORE] = function (Container $container) {
+            return new PersistentCartToStoreFacadeBridge($container->getLocator()->store()->facade());
         };
 
         return $container;
@@ -138,6 +174,22 @@ class PersistentCartDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::PLUGINS_CART_ADD_ITEM_STRATEGY] = function (Container $container) {
             return $this->getCartAddItemStrategyPlugins($container);
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function addUtilQuantityService(Container $container): Container
+    {
+        $container[static::SERVICE_UTIL_QUANTITY] = function (Container $container) {
+            return new PersistentCartToUtilQuantityServiceBridge(
+                $container->getLocator()->utilQuantity()->service()
+            );
         };
 
         return $container;

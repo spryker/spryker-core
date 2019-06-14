@@ -13,6 +13,9 @@ use Spryker\Zed\ProductCustomerPermission\Dependency\Facade\ProductCustomerPermi
 use Spryker\Zed\ProductCustomerPermission\Dependency\Facade\ProductCustomerPermissionToProductFacadeBridge;
 use Spryker\Zed\ProductCustomerPermission\Dependency\Facade\ProductCustomerPermissionToTouchFacadeBridge;
 
+/**
+ * @method \Spryker\Zed\ProductCustomerPermission\ProductCustomerPermissionConfig getConfig()
+ */
 class ProductCustomerPermissionDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_GLOSSARY = 'FACADE_GLOSSARY';

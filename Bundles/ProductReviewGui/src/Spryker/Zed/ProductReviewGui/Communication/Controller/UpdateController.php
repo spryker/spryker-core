@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\ProductReviewGui\Communication\ProductReviewGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductReviewGui\Persistence\ProductReviewGuiQueryContainerInterface getQueryContainer()
  */
 class UpdateController extends AbstractController
 {
@@ -38,10 +39,7 @@ class UpdateController extends AbstractController
             ->getProductReviewFacade()
             ->updateProductReviewStatus($productReviewTransfer);
 
-        $this->addSuccessMessage(sprintf(
-            'Product Review #%d has been approved.',
-            $idProductReview
-        ));
+        $this->addSuccessMessage('Product Review #%d has been approved.', ['%d' => $idProductReview]);
 
         return $this->redirectResponse(
             Url::generate('/product-review-gui')->build()
@@ -66,10 +64,7 @@ class UpdateController extends AbstractController
             ->getProductReviewFacade()
             ->updateProductReviewStatus($productReviewTransfer);
 
-        $this->addSuccessMessage(sprintf(
-            'Product Review #%d has been rejected.',
-            $idProductReview
-        ));
+        $this->addSuccessMessage('Product Review #%d has been rejected.', ['%d' => $idProductReview]);
 
         return $this->redirectResponse(
             Url::generate('/product-review-gui')->build()

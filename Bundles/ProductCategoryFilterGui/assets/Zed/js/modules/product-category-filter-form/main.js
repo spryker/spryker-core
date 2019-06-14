@@ -5,7 +5,6 @@
 
 'use strict';
 
-require('ZedGui');
 var filters = require('./filters');
 var idCategory = $('#idCategory').val();
 var addButton = $('#addButton');

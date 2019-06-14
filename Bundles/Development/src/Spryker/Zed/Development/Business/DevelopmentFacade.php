@@ -95,12 +95,14 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     /**
      * @api
      *
-     * @param array $modules
+     * @internal
+     *
+     * @param \Generated\Shared\Transfer\ModuleTransfer[] $modules
      * @param bool $dryRun
      *
      * @return array
      */
-    public function updateComposerJsonInModules(array $modules, $dryRun = false)
+    public function updateComposerJsonInModules(array $modules, $dryRun = false): array
     {
         return $this->getFactory()->createComposerJsonUpdater()->update($modules, $dryRun);
     }
@@ -137,6 +139,10 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @deprecated Please use `getModules()` instead.
+     *
      * @api
      *
      * @return array
@@ -147,6 +153,8 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @deprecated Use `getAllModules()` instead.
@@ -471,7 +479,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      */
     public function getProjectModules(?ModuleFilterTransfer $moduleFilterTransfer = null): array
     {
-        return $this->getFactory()->createProjectModuleFinder()->getProjectModules($moduleFilterTransfer);
+        return $this->getFactory()->getModuleFinderFacade()->getProjectModules($moduleFilterTransfer);
     }
 
     /**
@@ -485,7 +493,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      */
     public function getModules(?ModuleFilterTransfer $moduleFilterTransfer = null): array
     {
-        return $this->getFactory()->createModuleFinder()->getModules($moduleFilterTransfer);
+        return $this->getFactory()->getModuleFinderFacade()->getModules($moduleFilterTransfer);
     }
 
     /**
@@ -499,7 +507,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      */
     public function getPackages(): array
     {
-        return $this->getFactory()->createPackageFinder()->getPackages();
+        return $this->getFactory()->getModuleFinderFacade()->getPackages();
     }
 
     /**

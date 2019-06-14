@@ -11,6 +11,9 @@ use Spryker\Zed\Auth\Dependency\Facade\AuthToUserBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\Auth\AuthConfig getConfig()
+ */
 class AuthDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_USER = 'facade user';

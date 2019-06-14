@@ -11,6 +11,9 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\PropelQueryBuilder\Dependency\Service\PropelQueryBuilderToUtilEncodingBridge;
 
+/**
+ * @method \Spryker\Zed\PropelQueryBuilder\PropelQueryBuilderConfig getConfig()
+ */
 class PropelQueryBuilderDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
@@ -40,6 +43,7 @@ class PropelQueryBuilderDependencyProvider extends AbstractBundleDependencyProvi
         $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
             return new PropelQueryBuilderToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());
         };
+
         return $container;
     }
 }

@@ -11,6 +11,7 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
  * @method \Spryker\Zed\ProductCustomerPermissionCollector\ProductCustomerPermissionCollectorConfig getConfig()
+ * @method \Spryker\Zed\ProductCustomerPermissionCollector\Business\ProductCustomerPermissionCollectorFacadeInterface getFacade()
  */
 class ProductCustomerPermissionCollectorCommunicationFactory extends AbstractCommunicationFactory
 {

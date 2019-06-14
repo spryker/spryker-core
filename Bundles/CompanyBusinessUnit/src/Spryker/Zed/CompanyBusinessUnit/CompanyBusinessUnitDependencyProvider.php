@@ -10,6 +10,9 @@ namespace Spryker\Zed\CompanyBusinessUnit;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\CompanyBusinessUnit\CompanyBusinessUnitConfig getConfig()
+ */
 class CompanyBusinessUnitDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const PLUGINS_COMPANY_BUSINESS_UNIT_POST_SAVE = 'PLUGINS_COMPANY_BUSINESS_UNIT_POST_SAVE';

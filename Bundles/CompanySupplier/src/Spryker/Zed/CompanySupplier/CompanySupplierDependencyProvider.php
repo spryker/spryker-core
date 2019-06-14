@@ -11,6 +11,9 @@ use Orm\Zed\Company\Persistence\SpyCompanyQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\CompanySupplier\CompanySupplierConfig getConfig()
+ */
 class CompanySupplierDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const PROPEL_QUERY_COMPANY = 'PROPEL_QUERY_COMPANY';

@@ -74,13 +74,12 @@ class CompanyBusinessUnitFormDataProvider
     protected function findCompanyBusinessUnitTransfer(?int $idCompanyBusinessUnit = null): CompanyBusinessUnitTransfer
     {
         $companyBusinessUnitTransfer = new CompanyBusinessUnitTransfer();
+
         if (!$idCompanyBusinessUnit) {
             return $companyBusinessUnitTransfer;
         }
 
-        return $this->companyBusinessUnitFacade->getCompanyBusinessUnitById(
-            $companyBusinessUnitTransfer->setIdCompanyBusinessUnit($idCompanyBusinessUnit)
-        );
+        return $this->companyBusinessUnitFacade->findCompanyBusinessUnitById($idCompanyBusinessUnit) ?? $companyBusinessUnitTransfer;
     }
 
     /**

@@ -12,6 +12,8 @@ use Generated\Shared\Transfer\UrlStorageResourceMapTransfer;
 use Generated\Shared\Transfer\UrlStorageTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\UrlStorage\Dependency\Plugin\UrlStorageResourceMapperPluginInterface;
+use Spryker\Client\UrlStorage\UrlStorageConfig;
+use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\UrlStorage\UrlStorageConstants;
 
 /**
@@ -45,6 +47,16 @@ class UrlStorageRedirectMapperPlugin extends AbstractPlugin implements UrlStorag
      */
     protected function generateKey($idRedirectUrl)
     {
+        if (UrlStorageConfig::isCollectorCompatibilityMode()) {
+            $collectorDataKey = sprintf(
+                '%s.%s.resource.redirect.%s',
+                strtolower(Store::getInstance()->getStoreName()),
+                strtolower(Store::getInstance()->getCurrentLocale()),
+                $idRedirectUrl
+            );
+
+            return $collectorDataKey;
+        }
         $synchronizationDataTransfer = new SynchronizationDataTransfer();
         $synchronizationDataTransfer->setReference($idRedirectUrl);
 

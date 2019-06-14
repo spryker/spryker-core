@@ -12,6 +12,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\Country\Business\CountryBusinessFactory getFactory()
+ * @method \Spryker\Zed\Country\Persistence\CountryRepositoryInterface getRepository()
  */
 class CountryFacade extends AbstractFacade implements CountryFacadeInterface
 {

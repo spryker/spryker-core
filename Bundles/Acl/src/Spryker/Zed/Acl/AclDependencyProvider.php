@@ -11,6 +11,9 @@ use Spryker\Zed\Acl\Dependency\Facade\AclToUserBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\Acl\AclConfig getConfig()
+ */
 class AclDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_USER = 'user facade';

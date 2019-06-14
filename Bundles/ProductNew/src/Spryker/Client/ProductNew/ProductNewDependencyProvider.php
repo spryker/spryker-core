@@ -14,6 +14,9 @@ use Spryker\Client\ProductNew\Dependency\Client\ProductNewToSearchClientBridge;
 use Spryker\Client\ProductNew\Plugin\Elasticsearch\Query\NewProductsQueryPlugin;
 use Spryker\Shared\Kernel\Store;
 
+/**
+ * @method \Spryker\Client\ProductNew\ProductNewConfig getConfig()
+ */
 class ProductNewDependencyProvider extends AbstractDependencyProvider
 {
     public const CLIENT_SEARCH = 'CLIENT_SEARCH';

@@ -14,6 +14,8 @@ use Spryker\Zed\Merchant\Persistence\Propel\Mapper\MerchantMapperInterface;
 
 /**
  * @method \Spryker\Zed\Merchant\MerchantConfig getConfig()
+ * @method \Spryker\Zed\Merchant\Persistence\MerchantEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\Merchant\Persistence\MerchantRepositoryInterface getRepository()
  */
 class MerchantPersistenceFactory extends AbstractPersistenceFactory
 {

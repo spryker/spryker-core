@@ -11,6 +11,9 @@ use Spryker\Zed\GiftCardBalance\Dependency\Facade\GiftCardBalanceToMoneyFacadeBr
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\GiftCardBalance\GiftCardBalanceConfig getConfig()
+ */
 class GiftCardBalanceDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_MONEY = 'FACADE_MONEY';

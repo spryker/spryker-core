@@ -9,6 +9,9 @@ namespace Spryker\Zed\CompanySupplierDataImport;
 
 use Spryker\Zed\DataImport\DataImportDependencyProvider;
 
+/**
+ * @method \Spryker\Zed\CompanySupplierDataImport\CompanySupplierDataImportConfig getConfig()
+ */
 class CompanySupplierDataImportDependencyProvider extends DataImportDependencyProvider
 {
 }

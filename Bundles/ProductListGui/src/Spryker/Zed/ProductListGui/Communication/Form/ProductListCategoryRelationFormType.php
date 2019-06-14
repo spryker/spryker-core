@@ -14,6 +14,10 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * @method \Spryker\Zed\ProductListGui\ProductListGuiConfig getConfig()
+ * @method \Spryker\Zed\ProductListGui\Communication\ProductListGuiCommunicationFactory getFactory()
+ */
 class ProductListCategoryRelationFormType extends AbstractType
 {
     public const FIELD_ID_PRODUCT_LIST = ProductListCategoryRelationTransfer::ID_PRODUCT_LIST;
@@ -62,7 +66,7 @@ class ProductListCategoryRelationFormType extends AbstractType
      *
      * @return $this
      */
-    protected function addIdProductListField(FormBuilderInterface $builder): self
+    protected function addIdProductListField(FormBuilderInterface $builder)
     {
         $builder->add(
             static::FIELD_ID_PRODUCT_LIST,
@@ -78,7 +82,7 @@ class ProductListCategoryRelationFormType extends AbstractType
      *
      * @return $this
      */
-    protected function addCategoryIdsField(FormBuilderInterface $builder, array $options): self
+    protected function addCategoryIdsField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_CATEGORY_IDS, Select2ComboBoxType::class, [
             'label' => 'Categories',

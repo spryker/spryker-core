@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductDiscontinuedStorage\Persistence;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -25,10 +26,21 @@ class ProductDiscontinuedStorageRepository extends AbstractRepository implements
             return [];
         }
 
+        return $this->getFactory()
+            ->createProductDiscontinuedStoragePropelQuery()
+            ->filterByFkProductDiscontinued_In($productDiscontinuedIds)
+            ->find()
+            ->getArrayCopy();
+    }
+
+    /**
+     * @return \Orm\Zed\ProductDiscontinuedStorage\Persistence\SpyProductDiscontinuedStorage[]
+     */
+    public function findAllProductDiscontinuedStorageEntities(): array
+    {
         /** @var \Orm\Zed\ProductDiscontinuedStorage\Persistence\SpyProductDiscontinuedStorage[]|\Propel\Runtime\Collection\ObjectCollection $productDiscontinuedStorageEntities */
         $productDiscontinuedStorageEntities = $this->getFactory()
             ->createProductDiscontinuedStoragePropelQuery()
-            ->filterByFkProductDiscontinued_In($productDiscontinuedIds)
             ->find();
 
         if (!$productDiscontinuedStorageEntities->count()) {
@@ -36,5 +48,23 @@ class ProductDiscontinuedStorageRepository extends AbstractRepository implements
         }
 
         return $productDiscontinuedStorageEntities->getArrayCopy();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $productDiscontinuedStorageEntitityIds
+     *
+     * @return \Generated\Shared\Transfer\SpyProductDiscontinuedStorageEntityTransfer[]
+     */
+    public function findFilteredProductDiscontinuedStorageEntities(FilterTransfer $filterTransfer, array $productDiscontinuedStorageEntitityIds = []): array
+    {
+        $query = $this->getFactory()
+            ->createProductDiscontinuedStoragePropelQuery();
+
+        if ($productDiscontinuedStorageEntitityIds) {
+            $query->filterByIdProductDiscontinuedStorage_In($productDiscontinuedStorageEntitityIds);
+        }
+
+        return $this->buildQueryFromCriteria($query, $filterTransfer)->find();
     }
 }

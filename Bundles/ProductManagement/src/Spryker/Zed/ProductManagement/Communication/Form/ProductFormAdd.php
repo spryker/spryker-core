@@ -42,6 +42,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  * @method \Spryker\Zed\ProductManagement\Business\ProductManagementFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductManagement\Communication\ProductManagementCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductManagement\ProductManagementConfig getConfig()
  */
 class ProductFormAdd extends AbstractType
 {
@@ -541,6 +542,7 @@ class ProductFormAdd extends AbstractType
                 new NotBlank(),
             ],
         ]);
+
         return $this;
     }
 
@@ -697,12 +699,14 @@ class ProductFormAdd extends AbstractType
                 if ($value !== null) {
                     $value = new DateTime($value);
                 }
+
                 return $value;
             },
             function ($value) {
                 if ($value instanceof DateTime) {
                     $value = $value->format('Y-m-d H:i:s');
                 }
+
                 return $value;
             }
         );
@@ -725,7 +729,7 @@ class ProductFormAdd extends AbstractType
      *
      * @return $this
      */
-    protected function executeProductAbstractFormExpanderPlugins(FormBuilderInterface $builder, array $options): self
+    protected function executeProductAbstractFormExpanderPlugins(FormBuilderInterface $builder, array $options)
     {
         foreach ($this->getFactory()->getProductAbstractFormExpanderPlugins() as $formExpanderPlugin) {
             $builder = $formExpanderPlugin->expand($builder, $options);

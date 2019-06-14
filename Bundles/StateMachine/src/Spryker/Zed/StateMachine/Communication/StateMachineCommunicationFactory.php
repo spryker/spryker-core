@@ -13,6 +13,7 @@ use Spryker\Zed\StateMachine\StateMachineDependencyProvider;
 /**
  * @method \Spryker\Zed\StateMachine\StateMachineConfig getConfig()
  * @method \Spryker\Zed\StateMachine\Persistence\StateMachineQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\StateMachine\Business\StateMachineFacadeInterface getFacade()
  */
 class StateMachineCommunicationFactory extends AbstractCommunicationFactory
 {

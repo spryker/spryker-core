@@ -23,7 +23,7 @@ class Aws3v3FilesystemBuilderPlugin extends AbstractPlugin implements FlysystemF
      */
     public function acceptType($type)
     {
-        return $type === get_class($this);
+        return $type === static::class;
     }
 
     /**

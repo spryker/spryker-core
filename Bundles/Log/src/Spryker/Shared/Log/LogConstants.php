@@ -175,4 +175,37 @@ interface LogConstants
      * @api
      */
     public const LOG_ERROR_QUEUE_NAME = 'LOG:LOG_ERROR_QUEUE_NAME';
+
+    /**
+     * Specification:
+     * - Class name of the class which implements LoggerConfigInterface. E.g. SprykerLoggerConfig::class
+     *
+     * @api
+     */
+    public const LOGGER_CONFIG_GLUE = 'LOG:LOGGER_CONFIG_GLUE';
+
+    /**
+     * Specification:
+     * - Channel name of Glue logger.
+     *
+     * @api
+     */
+    public const LOGGER_CHANNEL_GLUE = 'LOG:LOGGER_CHANNEL_GLUE';
+
+    /**
+     * Specification:
+     * - Absolute path to the log file which should be used be the stream handler. E.g. /var/www/data/logs/spryker.log
+     * - If set logs will be written to the specified file.
+     *
+     * @api
+     */
+    public const LOG_FILE_PATH_GLUE = 'LOG_FILE_PATH_GLUE';
+
+    /**
+     * Specification:
+     * - Absolute path to the log file which should be used be the stream handler for exceptions. E.g. /var/www/data/logs/spryker.log
+     *
+     * @api
+     */
+    public const EXCEPTION_LOG_FILE_PATH_GLUE = 'LOG:EXCEPTION_LOG_FILE_PATH_GLUE';
 }

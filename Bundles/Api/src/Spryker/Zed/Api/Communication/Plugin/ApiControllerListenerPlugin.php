@@ -22,6 +22,8 @@ use Throwable;
 /**
  * @method \Spryker\Zed\Api\Communication\ApiCommunicationFactory getFactory()
  * @method \Spryker\Zed\Api\Business\ApiFacadeInterface getFacade()
+ * @method \Spryker\Zed\Api\ApiConfig getConfig()
+ * @method \Spryker\Zed\Api\Persistence\ApiQueryContainerInterface getQueryContainer()
  */
 class ApiControllerListenerPlugin extends AbstractPlugin implements ApiControllerListenerInterface
 {
@@ -70,6 +72,7 @@ class ApiControllerListenerPlugin extends AbstractPlugin implements ApiControlle
             $this->logResponse($responseTransfer);
 
             $responseObject = new Response();
+
             return $this->transformToResponse($requestTransfer, $responseTransfer, $responseObject);
         };
 

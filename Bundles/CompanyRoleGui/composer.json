@@ -5,8 +5,9 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
+    "spryker/business-on-behalf-gui-extension": "^1.0.0",
     "spryker/company": "^1.1.0",
-    "spryker/company-role": "^1.0.0",
+    "spryker/company-role": "^1.4.0",
     "spryker/company-user-gui-extension": "^1.0.0",
     "spryker/glossary": "^3.0.0",
     "spryker/gui": "^3.13.0",

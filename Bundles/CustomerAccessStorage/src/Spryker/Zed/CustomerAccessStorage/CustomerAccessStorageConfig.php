@@ -18,4 +18,12 @@ class CustomerAccessStorageConfig extends AbstractBundleConfig
     {
         return true;
     }
+
+    /**
+     * @return string|null
+     */
+    public function getSynchronizationPoolName(): ?string
+    {
+        return null;
+    }
 }

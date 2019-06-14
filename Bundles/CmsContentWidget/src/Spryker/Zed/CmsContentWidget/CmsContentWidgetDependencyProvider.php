@@ -12,6 +12,9 @@ use Spryker\Zed\CmsContentWidget\Dependency\Service\CmsContentWidgetToUtilEncodi
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\CmsContentWidget\CmsContentWidgetConfig getConfig()
+ */
 class CmsContentWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const PLUGINS_CMS_CONTENT_WIDGET_PARAMETER_MAPPERS = 'CMS CONTENT WIDGET PARAMETER MAPPER';

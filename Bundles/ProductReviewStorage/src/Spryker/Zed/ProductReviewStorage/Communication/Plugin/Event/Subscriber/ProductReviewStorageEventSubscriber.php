@@ -17,6 +17,8 @@ use Spryker\Zed\ProductReviewStorage\Communication\Plugin\Event\Listener\Product
 /**
  * @method \Spryker\Zed\ProductReviewStorage\Communication\ProductReviewStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductReviewStorage\Business\ProductReviewStorageFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductReviewStorage\ProductReviewStorageConfig getConfig()
+ * @method \Spryker\Zed\ProductReviewStorage\Persistence\ProductReviewStorageQueryContainerInterface getQueryContainer()
  */
 class ProductReviewStorageEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {

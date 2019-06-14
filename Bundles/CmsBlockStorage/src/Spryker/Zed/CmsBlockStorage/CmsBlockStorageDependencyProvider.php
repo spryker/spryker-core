@@ -13,6 +13,9 @@ use Spryker\Zed\CmsBlockStorage\Dependency\Service\CmsBlockStorageToUtilSanitize
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\CmsBlockStorage\CmsBlockStorageConfig getConfig()
+ */
 class CmsBlockStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';

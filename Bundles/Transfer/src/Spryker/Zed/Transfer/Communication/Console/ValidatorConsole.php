@@ -14,6 +14,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\Transfer\Business\TransferFacadeInterface getFacade()
+ * @method \Spryker\Zed\Transfer\Communication\TransferCommunicationFactory getFactory()
  */
 class ValidatorConsole extends Console
 {
@@ -46,6 +47,7 @@ class ValidatorConsole extends Console
         $messenger = $this->getMessenger();
 
         $result = $this->getFacade()->validateTransferObjects($messenger, $this->input->getOptions());
+
         return $result ? static::CODE_SUCCESS : static::CODE_ERROR;
     }
 }

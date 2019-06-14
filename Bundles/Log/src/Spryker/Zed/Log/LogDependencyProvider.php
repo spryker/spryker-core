@@ -11,6 +11,9 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Symfony\Component\Filesystem\Filesystem;
 
+/**
+ * @method \Spryker\Zed\Log\LogConfig getConfig()
+ */
 class LogDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_QUEUE = 'queue client';

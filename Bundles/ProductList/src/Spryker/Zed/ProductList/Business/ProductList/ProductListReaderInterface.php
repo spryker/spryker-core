@@ -75,4 +75,11 @@ interface ProductListReaderInterface
      * @return int[]
      */
     public function getProductAbstractIdsByProductListIds(array $productListIds): array;
+
+    /**
+     * @param int[] $productListIds
+     *
+     * @return int[]
+     */
+    public function getProductConcreteIdsByProductListIds(array $productListIds): array;
 }

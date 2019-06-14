@@ -7,10 +7,10 @@
         {% block widget_content %}
 
             <p>
-               Error levels to report: {{ errorLevel | raw }}
+               {{ 'Error levels to report:' | trans }} {{ errorLevel | raw }}
             </p>
             <p>
-               Error levels to log only: {{ errorLevelLogOnly | raw }}
+               {{ 'Error levels to log only:' | trans }} {{ errorLevelLogOnly | raw }}
             </p>
         {% endblock %}
 

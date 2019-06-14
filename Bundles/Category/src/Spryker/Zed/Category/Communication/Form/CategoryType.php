@@ -27,6 +27,8 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  * @method \Spryker\Zed\Category\Business\CategoryFacadeInterface getFacade()
  * @method \Spryker\Zed\Category\Communication\CategoryCommunicationFactory getFactory()
  * @method \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Category\CategoryConfig getConfig()
+ * @method \Spryker\Zed\Category\Persistence\CategoryRepositoryInterface getRepository()
  */
 class CategoryType extends AbstractType
 {
@@ -43,7 +45,6 @@ class CategoryType extends AbstractType
     public const FIELD_PARENT_CATEGORY_NODE = 'parent_category_node';
     public const FIELD_EXTRA_PARENTS = 'extra_parents';
     public const FIELD_TEMPLATE = 'fk_category_template';
-
     public const FIELD_LOCALIZED_ATTRIBUTES = 'localized_attributes';
 
     /**

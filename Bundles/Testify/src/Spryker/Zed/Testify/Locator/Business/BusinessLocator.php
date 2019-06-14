@@ -29,7 +29,7 @@ class BusinessLocator extends AbstractLocator
 
         $bundleProxy = new BundleProxy($this);
         $bundleProxy
-            ->setLocator($locators);
+            ->setLocators($locators);
 
         return $bundleProxy;
     }

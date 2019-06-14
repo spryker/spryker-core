@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductListGui\Communication\Table\PluginExecutor;
 
+use Generated\Shared\Transfer\QueryCriteriaTransfer;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class ProductListTablePluginExecutor implements ProductListTablePluginExecutorInterface
@@ -22,6 +23,11 @@ class ProductListTablePluginExecutor implements ProductListTablePluginExecutorIn
     protected $productListTableConfigExpanderPlugins;
 
     /**
+     * @var \Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTableQueryCriteriaExpanderPluginInterface[]
+     */
+    protected $productListTableQueryExpanderPlugins;
+
+    /**
      * @var array|\Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTableDataExpanderPluginInterface[]
      */
     protected $productListTableDataExpanderPlugins;
@@ -34,17 +40,20 @@ class ProductListTablePluginExecutor implements ProductListTablePluginExecutorIn
     /**
      * @param \Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTableActionExpanderPluginInterface[] $productListTableActionExpanderPlugins
      * @param \Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTableConfigExpanderPluginInterface[] $productListTableConfigExpanderPlugins
+     * @param \Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTableQueryCriteriaExpanderPluginInterface[] $productListTableQueryExpanderPlugins
      * @param \Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTableDataExpanderPluginInterface[] $productListTableDataExpanderPlugins
      * @param \Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTableHeaderExpanderPluginInterface[] $productListTableHeaderExpanderPlugins
      */
     public function __construct(
         array $productListTableActionExpanderPlugins,
         array $productListTableConfigExpanderPlugins,
+        array $productListTableQueryExpanderPlugins,
         array $productListTableDataExpanderPlugins,
         array $productListTableHeaderExpanderPlugins
     ) {
         $this->productListTableActionExpanderPlugins = $productListTableActionExpanderPlugins;
         $this->productListTableConfigExpanderPlugins = $productListTableConfigExpanderPlugins;
+        $this->productListTableQueryExpanderPlugins = $productListTableQueryExpanderPlugins;
         $this->productListTableDataExpanderPlugins = $productListTableDataExpanderPlugins;
         $this->productListTableHeaderExpanderPlugins = $productListTableHeaderExpanderPlugins;
     }
@@ -76,6 +85,20 @@ class ProductListTablePluginExecutor implements ProductListTablePluginExecutorIn
         }
 
         return $config;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QueryCriteriaTransfer $queryCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\QueryCriteriaTransfer
+     */
+    public function executeTableQueryCriteriaExpanderPlugins(QueryCriteriaTransfer $queryCriteriaTransfer): QueryCriteriaTransfer
+    {
+        foreach ($this->productListTableQueryExpanderPlugins as $productListTableQueryExpanderPlugin) {
+            $queryCriteriaTransfer = $productListTableQueryExpanderPlugin->expandProductListQueryCriteria($queryCriteriaTransfer);
+        }
+
+        return $queryCriteriaTransfer;
     }
 
     /**

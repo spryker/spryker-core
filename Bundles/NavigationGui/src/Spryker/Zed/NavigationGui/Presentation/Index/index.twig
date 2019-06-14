@@ -1,7 +1,7 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
 {% set widget_title = 'Navigation' %}
-{% block section_title 'Overview of Navigation Elements' %}
+{% block section_title 'Overview of Navigation Elements' | trans %}
 
 {% block action %}
     {{ createActionButton('/navigation-gui/create', 'Create Navigation Element' | trans) }}

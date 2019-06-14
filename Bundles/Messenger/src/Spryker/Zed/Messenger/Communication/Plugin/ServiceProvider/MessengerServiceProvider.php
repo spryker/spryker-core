@@ -13,6 +13,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\Messenger\Business\MessengerFacadeInterface getFacade()
+ * @method \Spryker\Zed\Messenger\MessengerConfig getConfig()
  */
 class MessengerServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {

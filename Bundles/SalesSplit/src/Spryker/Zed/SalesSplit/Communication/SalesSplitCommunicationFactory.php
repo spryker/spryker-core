@@ -14,6 +14,7 @@ use Spryker\Zed\SalesSplit\Communication\Form\OrderItemSplitForm;
 
 /**
  * @method \Spryker\Zed\SalesSplit\SalesSplitConfig getConfig()
+ * @method \Spryker\Zed\SalesSplit\Business\SalesSplitFacadeInterface getFacade()
  */
 class SalesSplitCommunicationFactory extends AbstractCommunicationFactory
 {

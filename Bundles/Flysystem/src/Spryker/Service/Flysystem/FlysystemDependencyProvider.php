@@ -10,6 +10,9 @@ namespace Spryker\Service\Flysystem;
 use Spryker\Service\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Service\Kernel\Container;
 
+/**
+ * @method \Spryker\Service\Flysystem\FlysystemConfig getConfig()
+ */
 class FlysystemDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const PLUGIN_COLLECTION_FLYSYSTEM = 'flysystem plugin collection';

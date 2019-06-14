@@ -24,7 +24,7 @@ trait ContainerMocker
         }
 
         $containerGlobals = new ContainerGlobals();
-        $containerMocks = $containerGlobals->getContainerGlobals(get_class($this));
+        $containerMocks = $containerGlobals->getContainerGlobals(static::class);
         if (count($containerMocks) === 0) {
             return $container;
         }

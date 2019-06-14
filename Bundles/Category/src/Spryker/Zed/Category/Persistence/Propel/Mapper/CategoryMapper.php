@@ -31,6 +31,22 @@ class CategoryMapper implements CategoryMapperInterface
     }
 
     /**
+     * @param \Orm\Zed\Category\Persistence\SpyCategory $spyCategory
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryTransfer
+     */
+    public function mapCategoryWithRelations(SpyCategory $spyCategory, CategoryTransfer $categoryTransfer): CategoryTransfer
+    {
+        $categoryTransfer = $this->mapCategory($spyCategory, $categoryTransfer);
+        $categoryTransfer = $this->mapCategoryNodes($spyCategory, $categoryTransfer);
+        $categoryTransfer = $this->mapParentCategoryNodes($spyCategory, $categoryTransfer);
+        $categoryTransfer = $this->mapLocalizedAttributes($spyCategory, $categoryTransfer);
+
+        return $categoryTransfer;
+    }
+
+    /**
      * @param \Orm\Zed\Category\Persistence\SpyCategoryNode $spyCategoryNode
      * @param \Generated\Shared\Transfer\NodeTransfer $nodeTransfer
      *
@@ -51,7 +67,7 @@ class CategoryMapper implements CategoryMapperInterface
     {
         foreach ($categoryEntities as $categoryEntity) {
             $categoryTransfer = $this->mapCategory($categoryEntity, new CategoryTransfer());
-            $this->mapLocalizedAttributes($categoryEntity, $categoryTransfer);
+            $categoryTransfer = $this->mapLocalizedAttributes($categoryEntity, $categoryTransfer);
 
             foreach ($categoryTransfer->getLocalizedAttributes() as $localizedAttribute) {
                 $categoryTransfer->fromArray($localizedAttribute->toArray(), true);
@@ -85,9 +101,54 @@ class CategoryMapper implements CategoryMapperInterface
      * @param \Orm\Zed\Category\Persistence\SpyCategory $categoryEntity
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\CategoryTransfer
      */
-    protected function mapLocalizedAttributes(SpyCategory $categoryEntity, CategoryTransfer $categoryTransfer): void
+    protected function mapCategoryNodes(SpyCategory $categoryEntity, CategoryTransfer $categoryTransfer): CategoryTransfer
+    {
+        foreach ($categoryEntity->getNodes() as $categoryNodeEntity) {
+            if (!$categoryNodeEntity->isMain()) {
+                continue;
+            }
+            $categoryTransfer->setCategoryNode($this->mapCategoryNode($categoryNodeEntity, new NodeTransfer()));
+        }
+
+        return $categoryTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\Category\Persistence\SpyCategory $categoryEntity
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryTransfer
+     */
+    protected function mapParentCategoryNodes(SpyCategory $categoryEntity, CategoryTransfer $categoryTransfer): CategoryTransfer
+    {
+        foreach ($categoryEntity->getNodes() as $categoryNodeEntity) {
+            $parentCategoryNodeEntity = $categoryNodeEntity->getParentCategoryNode();
+
+            if ($parentCategoryNodeEntity == null) {
+                continue;
+            }
+
+            if ($categoryNodeEntity->isMain()) {
+                $categoryTransfer->setParentCategoryNode($this->mapCategoryNode($parentCategoryNodeEntity, new NodeTransfer()));
+
+                continue;
+            }
+
+            $categoryTransfer->addExtraParent($this->mapCategoryNode($parentCategoryNodeEntity, new NodeTransfer()));
+        }
+
+        return $categoryTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\Category\Persistence\SpyCategory $categoryEntity
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryTransfer
+     */
+    protected function mapLocalizedAttributes(SpyCategory $categoryEntity, CategoryTransfer $categoryTransfer): CategoryTransfer
     {
         foreach ($categoryEntity->getAttributes() as $attribute) {
             $localeTransfer = new LocaleTransfer();
@@ -99,5 +160,7 @@ class CategoryMapper implements CategoryMapperInterface
 
             $categoryTransfer->addLocalizedAttributes($categoryLocalizedAttributesTransfer);
         }
+
+        return $categoryTransfer;
     }
 }

@@ -9,12 +9,15 @@ namespace Spryker\Zed\ProductList\Business;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
+use Generated\Shared\Transfer\ProductListResponseTransfer;
 use Generated\Shared\Transfer\ProductListTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\ProductList\Business\ProductListBusinessFactory getFactory()
+ * @method \Spryker\Zed\ProductList\Persistence\ProductListEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\ProductList\Persistence\ProductListRepositoryInterface getRepository()
  */
 class ProductListFacade extends AbstractFacade implements ProductListFacadeInterface
 {
@@ -22,6 +25,8 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
      * {@inheritdoc}
      *
      * @api
+     *
+     * @deprecated Use createProductList() or updateProductList() instead.
      *
      * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
      *
@@ -32,6 +37,38 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
         return $this->getFactory()
             ->createProductListWriter()
             ->saveProductList($productListTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductListResponseTransfer
+     */
+    public function createProductList(ProductListTransfer $productListTransfer): ProductListResponseTransfer
+    {
+        return $this->getFactory()
+            ->createProductListWriter()
+            ->createProductList($productListTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductListResponseTransfer
+     */
+    public function updateProductList(ProductListTransfer $productListTransfer): ProductListResponseTransfer
+    {
+        return $this->getFactory()
+            ->createProductListWriter()
+            ->updateProductList($productListTransfer);
     }
 
     /**
@@ -254,5 +291,21 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
         return $this->getFactory()
             ->createRestrictedItemsFilter()
             ->filterRestrictedItems($quoteTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int[] $productListIds
+     *
+     * @return int[]
+     */
+    public function getProductConcreteIdsByProductListIds(array $productListIds): array
+    {
+        return $this->getFactory()
+            ->createProductListReader()
+            ->getProductConcreteIdsByProductListIds($productListIds);
     }
 }

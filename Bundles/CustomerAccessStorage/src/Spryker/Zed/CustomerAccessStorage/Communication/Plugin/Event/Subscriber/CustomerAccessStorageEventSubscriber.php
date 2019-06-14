@@ -16,6 +16,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \Spryker\Zed\CustomerAccessStorage\Business\CustomerAccessStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\CustomerAccessStorage\Communication\CustomerAccessStorageCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CustomerAccessStorage\CustomerAccessStorageConfig getConfig()
  */
 class CustomerAccessStorageEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {

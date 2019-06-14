@@ -1,7 +1,7 @@
 {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Categories' } %}
     {% block widget_content %}
         {% if categories is empty %}
-            <p>{{ 'No categories found.' }}</p>
+            <p>{{ 'No categories found.' | trans }}</p>
         {% endif %}
         <ul>
         {% for category in categories %}
