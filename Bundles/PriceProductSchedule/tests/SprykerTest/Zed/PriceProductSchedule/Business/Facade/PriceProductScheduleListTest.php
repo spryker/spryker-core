@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\PriceProductSchedule\Business\Facade;
 
 use Codeception\Test\Unit;
 use DateTime;
+use Generated\Shared\DataBuilder\PriceProductScheduleListBuilder;
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleListTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
@@ -39,11 +40,6 @@ class PriceProductScheduleListTest extends Unit
     protected $priceProductScheduleFacade;
 
     /**
-     * @var \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery
-     */
-    protected $spyPriceProductScheduleQuery;
-
-    /**
      * @var \Spryker\Zed\Store\Business\StoreFacadeInterface
      */
     protected $storeFacade;
@@ -58,7 +54,6 @@ class PriceProductScheduleListTest extends Unit
         $this->tester->ensureDatabaseTableIsEmpty();
 
         $this->priceProductScheduleFacade = $this->tester->getFacade();
-        $this->spyPriceProductScheduleQuery = $this->tester->getPriceProductScheduleQuery();
         $this->storeFacade = $this->tester->getLocator()->store()->facade();
     }
 
@@ -99,10 +94,126 @@ class PriceProductScheduleListTest extends Unit
         $this->priceProductScheduleFacade->applyScheduledPrices();
 
         // Assert
-        $priceProductScheduleEntity = $this->spyPriceProductScheduleQuery->findOneByIdPriceProductSchedule($priceProductScheduleTransfer->getIdPriceProductSchedule());
+        $priceProductScheduleEntity = $this->tester->getPriceProductScheduleQuery()->findOneByIdPriceProductSchedule($priceProductScheduleTransfer->getIdPriceProductSchedule());
         $this->assertFalse(
             $priceProductScheduleEntity->isCurrent(),
             'Scheduled price with not active price product schedule list should not have been set as current.'
         );
+    }
+
+    /**
+     * @dataProvider createPriceProductScheduleListDataProvider
+     *
+     * @param array $priceProductScheduleListData
+     *
+     * @return void
+     */
+    public function testCreatePriceProductScheduleList(array $priceProductScheduleListData): void
+    {
+        // Assign
+        $priceProductScheduleListTransfer = (new PriceProductScheduleListBuilder($priceProductScheduleListData))
+            ->build();
+
+        // Act
+        $priceProductScheduleListResponseTransfer = $this->priceProductScheduleFacade
+            ->createPriceProductScheduleList($priceProductScheduleListTransfer);
+
+        // Assert
+        $this->assertTrue(
+            $priceProductScheduleListResponseTransfer->getIsSuccess(),
+            'Price Product Schedule list should be created.'
+        );
+    }
+
+    /**
+     * @dataProvider createPriceProductScheduleListDataProvider
+     *
+     * @param array $priceProductScheduleListData
+     *
+     * @return void
+     */
+    public function testUpdatePriceProductScheduleList(array $priceProductScheduleListData): void
+    {
+        // Assign
+        $priceProductScheduleListTransfer = $this->tester->havePriceProductScheduleList();
+
+        if (isset($priceProductScheduleListData[PriceProductScheduleListTransfer::FK_USER])) {
+            $priceProductScheduleListTransfer->setFkUser(
+                $priceProductScheduleListData[PriceProductScheduleListTransfer::FK_USER]
+            );
+        }
+
+        if (isset($priceProductScheduleListData[PriceProductScheduleListTransfer::NAME])) {
+            $priceProductScheduleListTransfer->setName(
+                $priceProductScheduleListData[PriceProductScheduleListTransfer::NAME]
+            );
+        }
+
+        if (isset($priceProductScheduleListData[PriceProductScheduleListTransfer::IS_ACTIVE])) {
+            $priceProductScheduleListTransfer->setIsActive(
+                $priceProductScheduleListData[PriceProductScheduleListTransfer::IS_ACTIVE]
+            );
+        }
+
+        // Act
+        $priceProductScheduleListResponseTransfer = $this->priceProductScheduleFacade
+            ->updatePriceProductScheduleList($priceProductScheduleListTransfer);
+
+        // Assert
+        $this->assertTrue(
+            $priceProductScheduleListResponseTransfer->getIsSuccess(),
+            'Price Product Schedule list should be updated.'
+        );
+
+        $this->assertEquals(
+            $priceProductScheduleListResponseTransfer->getPriceProductScheduleList(),
+            $priceProductScheduleListTransfer,
+            'Values must be updated'
+        );
+    }
+
+    /**
+     * @return array
+     */
+    public function createPriceProductScheduleListDataProvider(): array
+    {
+        return [
+            'price product schedule lists should be created' => [
+                [
+                    [
+                        PriceProductScheduleListTransfer::IS_ACTIVE => true,
+                        PriceProductScheduleListTransfer::NAME => 'FOO',
+                        PriceProductScheduleListTransfer::FK_USER => 1,
+                    ],
+                    [
+                        PriceProductScheduleListTransfer::IS_ACTIVE => false,
+                        PriceProductScheduleListTransfer::NAME => 'TEST',
+                        PriceProductScheduleListTransfer::FK_USER => 1,
+                    ],
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function updatePriceProductScheduleListDataProvider(): array
+    {
+        return [
+            'price product schedule lists should be updated' => [
+                [
+                    [
+                        PriceProductScheduleListTransfer::IS_ACTIVE => false,
+                    ],
+                    [
+                        PriceProductScheduleListTransfer::NAME => 'FOO',
+                    ],
+                    [
+                        PriceProductScheduleListTransfer::FK_USER => 2,
+                    ],
+                ],
+            ],
+        ];
     }
 }

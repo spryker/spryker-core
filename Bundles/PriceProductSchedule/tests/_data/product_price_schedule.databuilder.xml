@@ -8,6 +8,7 @@
     </transfer>
 
     <transfer name="PriceProductScheduleList">
+        <property name="fk_user" type="string" dataBuilderRule="=1"/>
         <property name="isActive" type="bool" dataBuilderRule="=true"/>
         <property name="name" type="string" dataBuilderRule="unique()->sentence(5)"/>
     </transfer>
@@ -17,6 +18,11 @@
     </transfer>
 
     <transfer name="MoneyValue">
+        <property name="netAmount" type="int" dataBuilderRule="numberBetween(1000, 10000)"/>
+        <property name="grossAmount" type="int" dataBuilderRule="numberBetween(1000, 10000)"/>
+    </transfer>
+
+    <transfer name="PriceProductScheduleImport">
         <property name="netAmount" type="int" dataBuilderRule="numberBetween(1000, 10000)"/>
         <property name="grossAmount" type="int" dataBuilderRule="numberBetween(1000, 10000)"/>
     </transfer>
