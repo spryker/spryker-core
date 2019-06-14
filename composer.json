@@ -30,5 +30,9 @@
   ],
   "scripts": {
     "cs-check": "vendor/bin/phpcs Bundles --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml -p"
+  },
+  "replace": {
+    "spryker/silex": "*",
+    "spryker/zend": "*"   
   }
 }
