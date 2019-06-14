@@ -30,13 +30,14 @@ var ItemListContentItem = function(options)
             var currentTabId = item.getAttribute('id');
             var isOpenTab = tabId.substring(1) === currentTabId;
 
-            if (isOpenTab) {
-                $(item).show();
-                $(tabId).find(self.$assignedTables).DataTable().columns.adjust().draw();
-                $(tabId).find(self.$itemsTables).DataTable().columns.adjust().draw();
-            } else {
+            if (!isOpenTab) {
                 $(item).hide();
+                return;
             }
+
+            $(item).show();
+            $(tabId).find(self.$assignedTables).DataTable().columns.adjust().draw();
+            $(tabId).find(self.$itemsTables).DataTable().columns.adjust().draw();
         });
 
     };
