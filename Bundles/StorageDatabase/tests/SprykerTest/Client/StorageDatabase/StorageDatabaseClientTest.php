@@ -42,7 +42,7 @@ class StorageDatabaseClientTest extends Unit
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -155,6 +155,8 @@ class StorageDatabaseClientTest extends Unit
     protected function findResultByKeyIncluded(array $results, string $searchKey): ?array
     {
         foreach ($results as $result) {
+            $result = json_decode($result, true);
+
             if (is_array($result) && array_key_exists($searchKey, $result)) {
                 return $result;
             }

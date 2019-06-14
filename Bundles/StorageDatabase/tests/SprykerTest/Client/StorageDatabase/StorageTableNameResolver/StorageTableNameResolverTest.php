@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Client\StorageDatabase;
+namespace SprykerTest\Client\StorageDatabase\StorageTableNameResolver;
 
 use Codeception\Test\Unit;
 use Spryker\Client\StorageDatabase\StorageDatabaseFactory;
@@ -15,15 +15,16 @@ use Spryker\Client\StorageDatabase\StorageDatabaseFactory;
  * @group SprykerTest
  * @group Client
  * @group StorageDatabase
- * @group ResourceKeyToTableNameResolverTest
+ * @group StorageTableNameResolver
+ * @group StorageTableNameResolverTest
  * Add your own group annotations below this line
  */
-class ResourceKeyToTableNameResolverTest extends Unit
+class StorageTableNameResolverTest extends Unit
 {
     /**
-     * @var \Spryker\Client\StorageDatabase\ResourceToTableMapper\ResourceKeyToTableNameResolverInterface
+     * @var \Spryker\Client\StorageDatabase\StorageTableNameResolver\StorageTableNameResolverInterface
      */
-    private $resourceToTableResolver;
+    protected $storageTableNameResolver;
 
     /**
      * @return void
@@ -31,8 +32,7 @@ class ResourceKeyToTableNameResolverTest extends Unit
     protected function setUp()
     {
         parent::setUp();
-
-        $this->resourceToTableResolver = (new StorageDatabaseFactory())->createResourceKeyToTableNameResolver();
+        $this->setupStorageTableNameResolver();
     }
 
     /**
@@ -46,7 +46,7 @@ class ResourceKeyToTableNameResolverTest extends Unit
      */
     public function testTableNamesAreResolvedCorrectly(string $resourcePrefix, string $tableName, bool $isCorrect): void
     {
-        $resolvedTableName = $this->resourceToTableResolver->resolve($resourcePrefix);
+        $resolvedTableName = $this->storageTableNameResolver->resolveByResourceKey($resourcePrefix);
         $this->assertEquals($isCorrect, $resolvedTableName === $tableName);
     }
 
@@ -65,5 +65,13 @@ class ResourceKeyToTableNameResolverTest extends Unit
             'concrete product list correct mapping' => ['product_concrete_product_lists', 'spy_product_concrete_product_list_storage', true],
             'availability incorrect mapping' => ['availability', 'spy_availabilities_storage', false],
         ];
+    }
+
+    /**
+     * @return void
+     */
+    protected function setupStorageTableNameResolver(): void
+    {
+        $this->storageTableNameResolver = (new StorageDatabaseFactory())->createStorageTableNameResolver();
     }
 }
