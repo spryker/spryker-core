@@ -30,7 +30,6 @@ class MaintenanceController extends AbstractController
         return $this->viewResponse(
             [
                 'totalCount' => $count,
-                'metaData' => $count,
             ]
         );
     }
