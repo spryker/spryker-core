@@ -86,6 +86,7 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
         foreach ($itemTransfers as $itemTransfer) {
             $result[] = $this->getShippingCountryIso2CodeByItem($itemTransfer);
         }
+
         return array_unique($result);
     }
 
@@ -100,6 +101,7 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
         foreach ($itemTransfers as $itemTransfer) {
             $result[] = $itemTransfer->getIdProductAbstract();
         }
+
         return array_unique($result);
     }
 
@@ -118,6 +120,7 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
 
             $mappedResult[$idProductAbstract][$iso2Code] = $maxTaxRate;
         }
+
         return $mappedResult;
     }
 
@@ -150,7 +153,7 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
     /**
      * @return float
      */
-    protected function getDefaultTaxRate(): string
+    protected function getDefaultTaxRate(): float
     {
         if ($this->defaultTaxRate === null) {
             $this->defaultTaxRate = $this->taxFacade->getDefaultTaxRate();
@@ -166,8 +169,11 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
      *
      * @return float
      */
-    protected function getEffectiveTaxRate(array $mappedTaxRates, int $idProductAbstract, string $countryIso2Code): float
-    {
+    protected function getEffectiveTaxRate(
+        array $mappedTaxRates,
+        int $idProductAbstract,
+        string $countryIso2Code
+    ): float {
         $taxRate = $mappedTaxRates[$idProductAbstract][$countryIso2Code] ??
             $mappedTaxRates[$idProductAbstract][TaxConstants::TAX_EXEMPT_PLACEHOLDER] ??
             $this->getDefaultTaxRate();
