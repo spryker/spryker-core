@@ -17,7 +17,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\ContentFileGui\Communication\ContentFileGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\ContentFileGui\ContentFileGuiConfig getConfig()
  */
-class FileListFormPlugin extends AbstractPlugin implements ContentPluginInterface
+class ContentFileListFormPlugin extends AbstractPlugin implements ContentPluginInterface
 {
     /**
      * {@inheritdoc}
