@@ -64,7 +64,8 @@ class ShipmentOrderHydrate implements ShipmentOrderHydrateInterface
             return $orderTransfer;
         }
 
-        if ($this->isMultiShipmentOrder($shipmentTransfers, $orderTransfer) === true) {
+        $orderTransfer->setIsMultiShipment($this->isMultiShipmentOrder($shipmentTransfers, $orderTransfer));
+        if ($orderTransfer->getIsMultiShipment() === true) {
             $orderTransfer = $this->hydrateMultiShipmentMethodToOrderTransfer($shipmentTransfers, $orderTransfer);
         } else {
             $orderTransfer = $this->hydrateShipmentMethodToOrderTransfer($shipmentTransfers, $orderTransfer);
