@@ -13,6 +13,7 @@ use Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductConcreteForm
 
 /**
  * @method \Spryker\Zed\PriceProductScheduleGui\Communication\PriceProductScheduleGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\PriceProductScheduleGui\PriceProductScheduleGuiConfig getConfig()
  */
 class ScheduledPriceProductConcreteFormEditTabsExpanderPlugin extends AbstractPlugin implements ProductConcreteFormEditTabsExpanderPluginInterface
 {
