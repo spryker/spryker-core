@@ -34,7 +34,7 @@ class RestRequestUpdater implements RestRequestUpdaterInterface
      */
     public function updateRestRequestWithAnonymousCustomerId(RestRequestInterface $restRequest): void
     {
-        if ($restRequest->getUser()) {
+        if ($restRequest->getRestUser()) {
             return;
         }
 

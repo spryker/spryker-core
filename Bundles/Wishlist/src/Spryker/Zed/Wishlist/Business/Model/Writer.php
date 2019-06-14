@@ -164,7 +164,7 @@ class Writer implements WriterInterface
     {
         $wishlistResponseTransfer = new WishlistResponseTransfer();
 
-        if (!$this->checkWishlistUniqueName($wishlistTransfer)) {
+        if (!$this->checkWishlistUniqueNameWhenUpdating($wishlistTransfer)) {
             return $wishlistResponseTransfer
                 ->setIsSuccess(false)
                 ->addError(static::ERROR_MESSAGE_NAME_ALREADY_EXISTS);

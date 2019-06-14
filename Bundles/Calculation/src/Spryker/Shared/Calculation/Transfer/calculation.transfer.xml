@@ -108,6 +108,7 @@
         <property name="taxAmountAfterCancellation" type="int" />
 
         <property name="isOrdered" type="bool" />
+        <!--property name="quantity" type="float"/> The module can work regardless of the type of the quantity, but would be BC breaking if we'd define it to either int or float. -->
     </transfer>
 
     <transfer name="ProductOption">
@@ -147,7 +148,7 @@
         <property name="sumAmount" type="int" />
         <property name="unitGrossAmount" type="int"/>
         <property name="sumGrossAmount" type="int"/>
+        <!--property name="quantity" type="float"/> The module can work regardless of the type of the quantity, but would be BC breaking if we'd define it to either int or float. -->
     </transfer>
 
 </transfers>
-

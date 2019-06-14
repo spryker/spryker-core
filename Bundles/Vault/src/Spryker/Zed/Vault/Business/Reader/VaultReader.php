@@ -54,7 +54,7 @@ class VaultReader implements VaultReaderInterface
         $vaultDepositTransfer = $this->vaultRepository->findVaultDepositByDataTypeAndKey($dataType, $dataKey);
 
         if (!$vaultDepositTransfer) {
-            return $vaultDepositTransfer;
+            return null;
         }
 
         return $this->utilEncryptionService->decryptOpenSsl(

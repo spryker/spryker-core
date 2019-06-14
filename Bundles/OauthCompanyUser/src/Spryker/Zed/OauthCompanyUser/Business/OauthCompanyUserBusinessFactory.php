@@ -10,11 +10,16 @@ namespace Spryker\Zed\OauthCompanyUser\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\OauthCompanyUser\Business\CompanyUser\CompanyUserProvider;
 use Spryker\Zed\OauthCompanyUser\Business\CompanyUser\CompanyUserProviderInterface;
+use Spryker\Zed\OauthCompanyUser\Business\Creator\CompanyUserAccessTokenCreator;
+use Spryker\Zed\OauthCompanyUser\Business\Creator\CompanyUserAccessTokenCreatorInterface;
 use Spryker\Zed\OauthCompanyUser\Business\Installer\OauthScopeInstaller;
 use Spryker\Zed\OauthCompanyUser\Business\Installer\OauthScopeInstallerInterface;
+use Spryker\Zed\OauthCompanyUser\Business\Reader\CompanyUserAccessTokenReader;
+use Spryker\Zed\OauthCompanyUser\Business\Reader\CompanyUserAccessTokenReaderInterface;
 use Spryker\Zed\OauthCompanyUser\Business\Scope\ScopeProvider;
 use Spryker\Zed\OauthCompanyUser\Business\Scope\ScopeProviderInterface;
 use Spryker\Zed\OauthCompanyUser\Dependency\Facade\OauthCompanyUserToCompanyUserFacadeInterface;
+use Spryker\Zed\OauthCompanyUser\Dependency\Facade\OauthCompanyUserToCustomerFacadeInterface;
 use Spryker\Zed\OauthCompanyUser\Dependency\Facade\OauthCompanyUserToOauthFacadeInterface;
 use Spryker\Zed\OauthCompanyUser\Dependency\Service\OauthCompanyUserToUtilEncodingServiceInterface;
 use Spryker\Zed\OauthCompanyUser\OauthCompanyUserDependencyProvider;
@@ -40,6 +45,30 @@ class OauthCompanyUserBusinessFactory extends AbstractBusinessFactory
         return new OauthScopeInstaller(
             $this->getOauthFacade(),
             $this->getConfig()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\OauthCompanyUser\Business\Creator\CompanyUserAccessTokenCreatorInterface
+     */
+    public function createCompanyUserAccessTokenCreator(): CompanyUserAccessTokenCreatorInterface
+    {
+        return new CompanyUserAccessTokenCreator(
+            $this->getOauthFacade(),
+            $this->getCustomerOauthRequestMapperPlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\OauthCompanyUser\Business\Reader\CompanyUserAccessTokenReaderInterface
+     */
+    public function createCompanyUserAccessTokenReader(): CompanyUserAccessTokenReaderInterface
+    {
+        return new CompanyUserAccessTokenReader(
+            $this->getOauthFacade(),
+            $this->getUtilEncodingService(),
+            $this->getCustomerFacade(),
+            $this->getCustomerExpanderPlugins()
         );
     }
 
@@ -80,10 +109,34 @@ class OauthCompanyUserBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\OauthCompanyUser\Dependency\Facade\OauthCompanyUserToCustomerFacadeInterface
+     */
+    public function getCustomerFacade(): OauthCompanyUserToCustomerFacadeInterface
+    {
+        return $this->getProvidedDependency(OauthCompanyUserDependencyProvider::FACADE_CUSTOMER);
+    }
+
+    /**
      * @return \Spryker\Zed\OauthCompanyUserExtension\Dependency\Plugin\OauthCompanyUserIdentifierExpanderPluginInterface[]
      */
     public function getOauthCompanyUserIdentifierExpanderPlugins(): array
     {
         return $this->getProvidedDependency(OauthCompanyUserDependencyProvider::PLUGINS_OAUTH_COMPANY_USER_IDENTIFIER_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\OauthCompanyUserExtension\Dependency\Plugin\CustomerOauthRequestMapperPluginInterface[]
+     */
+    public function getCustomerOauthRequestMapperPlugins(): array
+    {
+        return $this->getProvidedDependency(OauthCompanyUserDependencyProvider::PLUGINS_CUSTOMER_OAUTH_REQUEST_MAPPER);
+    }
+
+    /**
+     * @return \Spryker\Zed\OauthCompanyUserExtension\Dependency\Plugin\CustomerExpanderPluginInterface[]
+     */
+    public function getCustomerExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(OauthCompanyUserDependencyProvider::PLUGINS_CUSTOMER_EXPANDER);
     }
 }

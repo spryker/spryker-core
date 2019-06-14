@@ -68,7 +68,7 @@ interface OmsQueryContainerInterface extends QueryContainerInterface
      * @param string $sku
      * @param bool $returnTest
      *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
     public function sumProductQuantitiesForAllSalesOrderItemsBySku(array $states, $sku, $returnTest = true);
 

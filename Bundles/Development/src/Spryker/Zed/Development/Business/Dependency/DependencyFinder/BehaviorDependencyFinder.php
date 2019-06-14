@@ -9,7 +9,7 @@ namespace Spryker\Zed\Development\Business\Dependency\DependencyFinder;
 
 use Spryker\Zed\Development\Business\Dependency\DependencyContainer\DependencyContainerInterface;
 use Spryker\Zed\Development\Business\Dependency\DependencyFinder\Context\DependencyFinderContextInterface;
-use Spryker\Zed\Development\Business\Module\ModuleFinder\ModuleFinderInterface;
+use Spryker\Zed\Development\Dependency\Facade\DevelopmentToModuleFinderFacadeInterface;
 use Zend\Filter\FilterChain;
 use Zend\Filter\Word\DashToCamelCase;
 
@@ -23,16 +23,16 @@ class BehaviorDependencyFinder implements DependencyFinderInterface
     protected $filter;
 
     /**
-     * @var \Spryker\Zed\Development\Business\Module\ModuleFinder\ModuleFinderInterface
+     * @var \Spryker\Zed\Development\Dependency\Facade\DevelopmentToModuleFinderFacadeInterface
      */
-    protected $moduleFinder;
+    protected $moduleFinderFacade;
 
     /**
-     * @param \Spryker\Zed\Development\Business\Module\ModuleFinder\ModuleFinderInterface $moduleFinder
+     * @param \Spryker\Zed\Development\Dependency\Facade\DevelopmentToModuleFinderFacadeInterface $moduleFinderFacade
      */
-    public function __construct(ModuleFinderInterface $moduleFinder)
+    public function __construct(DevelopmentToModuleFinderFacadeInterface $moduleFinderFacade)
     {
-        $this->moduleFinder = $moduleFinder;
+        $this->moduleFinderFacade = $moduleFinderFacade;
     }
 
     /**
@@ -113,7 +113,7 @@ class BehaviorDependencyFinder implements DependencyFinderInterface
      */
     protected function isModule(string $moduleName): bool
     {
-        $moduleTransferCollection = $this->moduleFinder->getModules();
+        $moduleTransferCollection = $this->moduleFinderFacade->getModules();
 
         return isset($moduleTransferCollection['Spryker.' . $moduleName]);
     }

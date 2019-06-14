@@ -40,6 +40,7 @@
     <transfer name="ShareDetail">
         <property name="idQuoteCompanyUser" type="int"/>
         <property name="idCompanyUser" type="int"/>
+        <property name="companyUser" type="CompanyUser"/>
         <property name="customerName" type="string"/>
         <property name="quotePermissionGroup" type="QuotePermissionGroup"/>
     </transfer>
@@ -51,6 +52,7 @@
 
     <transfer name="Quote">
         <property name="shareDetails" type="ShareDetail[]" singular="shareDetail"/>
+        <property name="quotePermissionGroup" type="QuotePermissionGroup"/>
     </transfer>
 
     <transfer name="QuoteUpdateRequestAttributes">
