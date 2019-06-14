@@ -105,7 +105,7 @@ class TwigExpressionsToHtmlConverter implements TwigExpressionsToHtmlConverterIn
             preg_match_all('/' . $twigExpressionPattern . '/', $html, $twigExpressionMatches);
 
             if (!$twigExpressionMatches[0]) {
-                return $twigExpressionTransfers;
+                continue;
             }
 
             $twigExpressionTransfers = $this->mapTwigExpressionsToTransfers(
