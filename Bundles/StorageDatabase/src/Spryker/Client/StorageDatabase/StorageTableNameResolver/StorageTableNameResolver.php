@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\StorageDatabase\ResourceToTableMapper;
+namespace Spryker\Client\StorageDatabase\StorageTableNameResolver;
 
 use Spryker\Client\StorageDatabase\Exception\InvalidRecourseToTableMappingConfigurationException;
 use Spryker\Client\StorageDatabase\StorageDatabaseConfig;
 
-class ResourceKeyToTableNameResolver implements ResourceKeyToTableNameResolverInterface
+class StorageTableNameResolver implements StorageTableNameResolverInterface
 {
     protected const MESSAGE_INVALID_RESOURCE_TO_TABLE_CONFIGURATION_MAPPING_EXCEPTION = 'Invalid resource to table mapping configuration.';
 
@@ -32,11 +32,11 @@ class ResourceKeyToTableNameResolver implements ResourceKeyToTableNameResolverIn
      *
      * @return string
      */
-    public function resolve(string $resourceKey): string
+    public function resolveByResourceKey(string $resourceKey): string
     {
-        $resourcePrefix = $this->getResourcePrefixFromKey($resourceKey);
+        $resourceName = $this->getResourceNameFromKey($resourceKey);
 
-        return $this->getStorageTableNameByResourcePrefix($resourcePrefix);
+        return $this->getStorageTableNameByResourceName($resourceName);
     }
 
     /**
@@ -44,7 +44,7 @@ class ResourceKeyToTableNameResolver implements ResourceKeyToTableNameResolverIn
      *
      * @return string
      */
-    protected function getResourcePrefixFromKey(string $resourceKey): string
+    protected function getResourceNameFromKey(string $resourceKey): string
     {
         [$resourceName] = explode(':', $resourceKey);
 
@@ -52,21 +52,21 @@ class ResourceKeyToTableNameResolver implements ResourceKeyToTableNameResolverIn
     }
 
     /**
-     * @param string $resourcePrefix
+     * @param string $resourceName
      *
      * @throws \Spryker\Client\StorageDatabase\Exception\InvalidRecourseToTableMappingConfigurationException
      *
      * @return string
      */
-    protected function getStorageTableNameByResourcePrefix(string $resourcePrefix): string
+    protected function getStorageTableNameByResourceName(string $resourceName): string
     {
-        $resourcePrefixToTableMapping = $this->config->getResourcePrefixToStorageTableMapping();
+        $resourcePrefixToTableMapping = $this->config->getResourceNameToStorageTableMap();
 
-        if (!array_key_exists($resourcePrefix, $resourcePrefixToTableMapping)) {
-            return $this->buildStorageTableName($resourcePrefix);
+        if (!array_key_exists($resourceName, $resourcePrefixToTableMapping)) {
+            return $this->buildStorageTableName($resourceName);
         }
 
-        $storageTableNameParts = $resourcePrefixToTableMapping[$resourcePrefix];
+        $storageTableNameParts = $resourcePrefixToTableMapping[$resourceName];
         $storageTablePrefix = $storageTableNameParts[StorageDatabaseConfig::KEY_STORAGE_TABLE_PREFIX] ?? '';
         $storageTableSuffix = $storageTableNameParts[StorageDatabaseConfig::KEY_STORAGE_TABLE_SUFFIX] ?? '';
         $storageTableName = $storageTableNameParts[StorageDatabaseConfig::KEY_STORAGE_TABLE_NAME] ?? '';

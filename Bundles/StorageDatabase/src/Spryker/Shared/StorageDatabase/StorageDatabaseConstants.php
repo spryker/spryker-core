@@ -67,20 +67,4 @@ interface StorageDatabaseConstants
      * @api
      */
     public const DB_DEBUG = 'STORAGE_DATABASE:DB_DEBUG';
-
-    /**
-     * Specification:
-     * - MySql database engine.
-     *
-     * @api
-     */
-    public const DB_ENGINE_MYSQL = 'STORAGE_DATABASE:DB_ENGINE_MYSQL';
-
-    /**
-     * Specification:
-     * - Postgres database engine.
-     *
-     * @api
-     */
-    public const DB_ENGINE_PGSQL = 'STORAGE_DATABASE:DB_ENGINE_PGSQL';
 }

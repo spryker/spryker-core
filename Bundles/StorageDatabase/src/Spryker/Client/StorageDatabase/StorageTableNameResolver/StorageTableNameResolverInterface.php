@@ -5,14 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\StorageDatabase\ResourceToTableMapper;
+namespace Spryker\Client\StorageDatabase\StorageTableNameResolver;
 
-interface ResourceKeyToTableNameResolverInterface
+interface StorageTableNameResolverInterface
 {
     /**
      * @param string $resourceKey
      *
      * @return string
      */
-    public function resolve(string $resourceKey): string;
+    public function resolveByResourceKey(string $resourceKey): string;
 }

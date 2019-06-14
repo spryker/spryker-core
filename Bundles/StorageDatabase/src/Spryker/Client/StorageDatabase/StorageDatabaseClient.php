@@ -8,7 +8,7 @@
 namespace Spryker\Client\StorageDatabase;
 
 use Spryker\Client\Kernel\AbstractClient;
-use Spryker\Client\StorageDatabase\Database\StorageDatabaseInterface;
+use Spryker\Client\StorageDatabase\Storage\StorageDatabaseInterface;
 
 /**
  * @method \Spryker\Client\StorageDatabase\StorageDatabaseFactory getFactory()
@@ -16,7 +16,7 @@ use Spryker\Client\StorageDatabase\Database\StorageDatabaseInterface;
 class StorageDatabaseClient extends AbstractClient implements StorageDatabaseClientInterface
 {
     /**
-     * @var \Spryker\Client\StorageDatabase\Database\StorageDatabaseInterface
+     * @var \Spryker\Client\StorageDatabase\Storage\StorageDatabaseInterface
      */
     protected static $storageDatabaseService;
 
@@ -87,7 +87,7 @@ class StorageDatabaseClient extends AbstractClient implements StorageDatabaseCli
     }
 
     /**
-     * @return \Spryker\Client\StorageDatabase\Database\StorageDatabaseInterface
+     * @return \Spryker\Client\StorageDatabase\Storage\StorageDatabaseInterface
      */
     protected function getStorageDatabaseService(): StorageDatabaseInterface
     {

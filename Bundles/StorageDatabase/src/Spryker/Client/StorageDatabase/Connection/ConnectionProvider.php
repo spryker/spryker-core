@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\StorageDatabase\ConnectionProvider;
+namespace Spryker\Client\StorageDatabase\Connection;
 
 use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Connection\ConnectionManagerSingle;
@@ -20,11 +20,10 @@ use Throwable;
 class ConnectionProvider implements ConnectionProviderInterface
 {
     protected const CONNECTION_NAME = 'storage connection';
-
-    protected const MESSAGE_INVALID_CONNECTION_CONFIGURATION_EXCEPTION = 'Connection configuration is invalid';
+    protected const MESSAGE_INVALID_CONNECTION_CONFIGURATION_EXCEPTION = 'Connection configuration is invalid.';
 
     /**
-     * @var \Propel\Runtime\Connection\ConnectionWrapper|null
+     * @var \Propel\Runtime\Connection\ConnectionInterface|null
      */
     protected static $connection;
 
@@ -63,7 +62,7 @@ class ConnectionProvider implements ConnectionProviderInterface
         $manager->setName(static::CONNECTION_NAME);
 
         $serviceContainer = $this->getServiceContainer();
-        $serviceContainer->setAdapterClass(static::CONNECTION_NAME, $this->config->getDatabaseEngine());
+        $serviceContainer->setAdapterClass(static::CONNECTION_NAME, $this->config->getDbEngineName());
         $serviceContainer->setConnectionManager(static::CONNECTION_NAME, $manager);
         $serviceContainer->setDefaultDatasource(static::CONNECTION_NAME);
 
@@ -86,7 +85,7 @@ class ConnectionProvider implements ConnectionProviderInterface
      *
      * @return void
      */
-    private function setupConnection(): void
+    protected function setupConnection(): void
     {
         try {
             static::$connection = Propel::getConnection(static::CONNECTION_NAME, ServiceContainerInterface::CONNECTION_READ);
@@ -104,7 +103,7 @@ class ConnectionProvider implements ConnectionProviderInterface
      *
      * @return array
      */
-    private function getPropelConfig(): array
+    protected function getPropelConfig(): array
     {
         $config = $this->config->getConnectionConfigForCurrentEngine();
 

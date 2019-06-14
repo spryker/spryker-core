@@ -10,19 +10,16 @@ namespace Spryker\Client\StorageDatabase;
 use Spryker\Client\Kernel\AbstractBundleConfig;
 use Spryker\Shared\StorageDatabase\StorageDatabaseConstants;
 
+/**
+ * @method \Spryker\Shared\StorageDatabase\StorageDatabaseConfig getSharedConfig()
+ */
 class StorageDatabaseConfig extends AbstractBundleConfig
 {
-    /**
-     * @uses \Spryker\Zed\Propel\PropelConfig::DB_ENGINE_PGSQL
-     */
-    protected const DB_ENGINE_PGSQL = 'pgsql';
+    protected const FIELD_DATA = 'data';
+    protected const FIELD_KEY = 'key';
+    protected const FIELD_ALIAS_KEYS = 'alias_keys';
 
-    /**
-     * @uses \Spryker\Zed\Propel\PropelConfig::DB_ENGINE_MYSQL
-     */
-    protected const DB_ENGINE_MYSQL = 'mysql';
-
-    protected const RESOURCE_PREFIX_TO_STORAGE_TABLE_MAPPING = [
+    protected const RESOURCE_PREFIX_TO_STORAGE_TABLE_MAP = [
         'translation' => [
             self::KEY_STORAGE_TABLE_NAME => 'glossary',
         ],
@@ -50,18 +47,10 @@ class StorageDatabaseConfig extends AbstractBundleConfig
      */
     public function getConnectionConfigForCurrentEngine(): array
     {
-        $dbEngine = $this->getDatabaseEngine();
+        $dbEngine = $this->getDbEngineName();
         $connectionData = $this->getConnectionConfigData();
 
         return $connectionData[$dbEngine] ?? [];
-    }
-
-    /**
-     * @return string
-     */
-    public function getDatabaseEngine(): string
-    {
-        return $this->get(StorageDatabaseConstants::DB_ENGINE, '');
     }
 
     /**
@@ -73,11 +62,11 @@ class StorageDatabaseConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return string[]
+     * @return string[][]
      */
-    public function getResourcePrefixToStorageTableMapping(): array
+    public function getResourceNameToStorageTableMap(): array
     {
-        return static::RESOURCE_PREFIX_TO_STORAGE_TABLE_MAPPING;
+        return static::RESOURCE_PREFIX_TO_STORAGE_TABLE_MAP;
     }
 
     /**
@@ -105,20 +94,47 @@ class StorageDatabaseConfig extends AbstractBundleConfig
     }
 
     /**
+     * @return bool
+     */
+    public function isPostgresSqlDbEngine(): bool
+    {
+        return $this->getDbEngineName() === $this->getSharedConfig()->getPostgreSqlDbEngineName();
+    }
+
+    /**
+     * @return bool
+     */
+    public function isMySqlDbEngine(): bool
+    {
+        return $this->getDbEngineName() === $this->getSharedConfig()->getMySqlDbEngineName();
+    }
+
+    /**
+     * @return string
+     */
+    public function getDbEngineName(): string
+    {
+        return $this->get(StorageDatabaseConstants::DB_ENGINE, '');
+    }
+
+    /**
      * @return array
      */
     protected function getConnectionConfigData(): array
     {
+        $postgreSqlDbEngineName = $this->getSharedConfig()->getPostgreSqlDbEngineName();
+        $mySqlDbEngineName = $this->getSharedConfig()->getMySqlDbEngineName();
+
         return [
-            static::DB_ENGINE_PGSQL => [
-                'adapter' => static::DB_ENGINE_PGSQL,
+            $postgreSqlDbEngineName => [
+                'adapter' => $postgreSqlDbEngineName,
                 'dsn' => $this->getDsn(),
                 'user' => $this->get(StorageDatabaseConstants::DB_USERNAME),
                 'password' => $this->get(StorageDatabaseConstants::DB_PASSWORD),
                 'settings' => [],
             ],
-            static::DB_ENGINE_MYSQL => [
-                'adapter' => static::DB_ENGINE_MYSQL,
+            $mySqlDbEngineName => [
+                'adapter' => $mySqlDbEngineName,
                 'dsn' => $this->getDsn(),
                 'user' => $this->get(StorageDatabaseConstants::DB_USERNAME),
                 'password' => $this->get(StorageDatabaseConstants::DB_PASSWORD),

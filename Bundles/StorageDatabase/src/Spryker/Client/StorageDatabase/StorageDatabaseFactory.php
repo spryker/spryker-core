@@ -8,12 +8,15 @@
 namespace Spryker\Client\StorageDatabase;
 
 use Spryker\Client\Kernel\AbstractFactory;
-use Spryker\Client\StorageDatabase\ConnectionProvider\ConnectionProvider;
-use Spryker\Client\StorageDatabase\ConnectionProvider\ConnectionProviderInterface;
-use Spryker\Client\StorageDatabase\Database\StorageDatabase;
-use Spryker\Client\StorageDatabase\Database\StorageDatabaseInterface;
-use Spryker\Client\StorageDatabase\ResourceToTableMapper\ResourceKeyToTableNameResolver;
-use Spryker\Client\StorageDatabase\ResourceToTableMapper\ResourceKeyToTableNameResolverInterface;
+use Spryker\Client\StorageDatabase\Connection\ConnectionProvider;
+use Spryker\Client\StorageDatabase\Connection\ConnectionProviderInterface;
+use Spryker\Client\StorageDatabase\Storage\Reader\AbstractStorageReader;
+use Spryker\Client\StorageDatabase\Storage\Reader\StorageReaderFactory;
+use Spryker\Client\StorageDatabase\Storage\Reader\StorageReaderFactoryInterface;
+use Spryker\Client\StorageDatabase\Storage\StorageDatabase;
+use Spryker\Client\StorageDatabase\Storage\StorageDatabaseInterface;
+use Spryker\Client\StorageDatabase\StorageTableNameResolver\StorageTableNameResolver;
+use Spryker\Client\StorageDatabase\StorageTableNameResolver\StorageTableNameResolverInterface;
 
 /**
  * @method \Spryker\Client\StorageDatabase\StorageDatabaseConfig getConfig()
@@ -21,7 +24,7 @@ use Spryker\Client\StorageDatabase\ResourceToTableMapper\ResourceKeyToTableNameR
 class StorageDatabaseFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Client\StorageDatabase\ConnectionProvider\ConnectionProviderInterface
+     * @return \Spryker\Client\StorageDatabase\Connection\ConnectionProviderInterface
      */
     public function createConnectionProvider(): ConnectionProviderInterface
     {
@@ -31,22 +34,41 @@ class StorageDatabaseFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\StorageDatabase\Database\StorageDatabaseInterface
+     * @return \Spryker\Client\StorageDatabase\Storage\StorageDatabaseInterface
      */
     public function createStorageDatabaseService(): StorageDatabaseInterface
     {
         return new StorageDatabase(
-            $this->createConnectionProvider(),
-            $this->createResourceKeyToTableNameResolver()
+            $this->createStorageReader()
         );
     }
 
     /**
-     * @return \Spryker\Client\StorageDatabase\ResourceToTableMapper\ResourceKeyToTableNameResolverInterface
+     * @return \Spryker\Client\StorageDatabase\StorageTableNameResolver\StorageTableNameResolverInterface
      */
-    public function createResourceKeyToTableNameResolver(): ResourceKeyToTableNameResolverInterface
+    public function createStorageTableNameResolver(): StorageTableNameResolverInterface
     {
-        return new ResourceKeyToTableNameResolver(
+        return new StorageTableNameResolver(
+            $this->getConfig()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\StorageDatabase\Storage\Reader\AbstractStorageReader
+     */
+    public function createStorageReader(): AbstractStorageReader
+    {
+        return $this->createStorageReaderFactory()->createStorageReader();
+    }
+
+    /**
+     * @return \Spryker\Client\StorageDatabase\Storage\Reader\StorageReaderFactoryInterface
+     */
+    public function createStorageReaderFactory(): StorageReaderFactoryInterface
+    {
+        return new StorageReaderFactory(
+            $this->createConnectionProvider(),
+            $this->createStorageTableNameResolver(),
             $this->getConfig()
         );
     }
