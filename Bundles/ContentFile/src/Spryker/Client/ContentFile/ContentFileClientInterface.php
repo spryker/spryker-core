@@ -13,8 +13,8 @@ interface ContentFileClientInterface
 {
     /**
      * Specification:
-     * - Finds content item in the key-value storage.
-     * - Resolves content type and executes data.
+     * - Finds content item in by contentKey from.
+     * - Executes a FileListType's contentTerm into a ContentFileListType.
      *
      * @api
      *

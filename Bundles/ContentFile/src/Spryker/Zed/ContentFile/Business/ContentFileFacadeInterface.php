@@ -15,7 +15,7 @@ interface ContentFileFacadeInterface
     /**
      * Specification:
      * - Validates data in ContentFileListTermTransfer.
-     * - Returns ContentValidationResponseTransfer with success status and error messages if validation failed.
+     * - Returns ContentValidationResponseTransfer with a success status, or error messages if validation failed.
      *
      * @api
      *
