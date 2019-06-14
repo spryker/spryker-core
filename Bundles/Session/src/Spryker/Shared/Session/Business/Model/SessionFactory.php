@@ -61,7 +61,7 @@ abstract class SessionFactory
         $lifetime = $this->getSessionLifetime();
         $environmentName = $this->getEnvironmentName();
 
-        $handler = new SessionHandlerMysql($this->getMonitoringService(), $environmentName, $hosts, $user, $password, $lifetime);
+        $handler = new SessionHandlerMysql($this->getMonitoringService(), $hosts, $user, $password, $lifetime, $environmentName);
         $this->setSessionSaveHandler($handler);
 
         return $handler;
@@ -212,7 +212,7 @@ abstract class SessionFactory
     /**
      * @return int
      */
-    abstract protected function getSessionLifetime(): int;
+    abstract protected function getSessionLifetime();
 
     /**
      * @return string

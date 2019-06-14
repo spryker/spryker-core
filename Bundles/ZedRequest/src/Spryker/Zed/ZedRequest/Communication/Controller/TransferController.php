@@ -30,7 +30,7 @@ class TransferController extends AbstractController
     public function repeatAction(Request $request)
     {
         if ($this->getFactory()->getConfig()->isRepeatEnabled() === false) {
-            throw new NotAllowedActionException('This action is allowed only for development environment.');
+            throw new NotAllowedActionException('This action is not allowed to execute repeated Zed requests.');
         }
 
         $repeatData = $this->getFacade()->getRepeatData($request->query->get('mvc', null));

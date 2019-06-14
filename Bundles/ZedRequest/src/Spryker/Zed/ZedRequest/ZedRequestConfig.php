@@ -64,7 +64,7 @@ class ZedRequestConfig extends AbstractBundleConfig
      */
     public function isRepeatEnabled(): bool
     {
-        return $this->get(ZedRequestConstants::ENABLE_REPEAT, APPLICATION_ENV === 'development');
+        return $this->get(ZedRequestConstants::ENABLE_REPEAT, $this->getEnableRepeatDefaultValue());
     }
 
     /**

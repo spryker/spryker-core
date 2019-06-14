@@ -145,8 +145,8 @@ class SessionBusinessFactory extends AbstractBusinessFactory
     protected function createSessionHandlerFactory()
     {
         return new SessionFactory(
-            $this->getConfig()->getSessionLifeTime(),
             $this->getMonitoringService(),
+            $this->getConfig()->getSessionLifeTime(),
             $this->getConfig()->getSessionEnvironmentName()
         );
     }
