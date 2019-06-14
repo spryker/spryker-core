@@ -158,6 +158,22 @@ class StorageRedisPlugin extends AbstractPlugin implements StoragePluginInterfac
      *
      * @api
      *
+     * @param string $pattern
+     * @param int $count
+     * @param int|null $cursor
+     *
+     * @return array [string, string[]]
+     */
+    public function scanKeys(string $pattern, int $count, ?int $cursor = 0): array
+    {
+        return $this->getClient()->scanKeys($pattern, $count, $cursor);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @return void
      */
     public function resetAccessStats(): void

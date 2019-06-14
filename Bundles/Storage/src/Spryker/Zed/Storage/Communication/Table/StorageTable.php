@@ -15,7 +15,10 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class StorageTable extends AbstractTable
 {
-    public const ACTIONS = 'Actions';
+    protected const KV_PREFIX = 'kv:';
+    protected const MATCH_ALL = '*';
+    protected const DEFAULT_PAGE_LENGTH = 3000;
+    protected const VALUE_LENGTH_LIMIT = 120;
 
     /**
      * @var \Spryker\Client\Storage\StorageClientInterface
@@ -23,11 +26,17 @@ class StorageTable extends AbstractTable
     protected $storageClient;
 
     /**
+     * @var \Spryker\Service\UtilSanitize\UtilSanitizeServiceInterface
+     */
+    protected $utilSanitizeService;
+
+    /**
      * @param \Spryker\Client\Storage\StorageClientInterface $storageClient
      */
     public function __construct(StorageClientInterface $storageClient)
     {
         $this->storageClient = $storageClient;
+        $this->utilSanitizeService = new UtilSanitizeService();
     }
 
     /**
@@ -43,6 +52,7 @@ class StorageTable extends AbstractTable
         ];
 
         $config->setHeader($headers);
+        $config->setPaging(false);
         $config->setUrl('list-ajax');
 
         $config->setRawColumns(['key']);
@@ -57,36 +67,54 @@ class StorageTable extends AbstractTable
      */
     protected function prepareData(TableConfiguration $config)
     {
-        $keys = $this->storageClient->getAllKeys();
-
-        sort($keys);
-
-        $result = [];
-
-        foreach ($keys as $i => $key) {
-            $keys[$i] = str_replace('kv:', '', $key);
-        }
+        [$_cursor, $keys] = $this->storageClient->scanKeys($this->getSearchTerm(), static::DEFAULT_PAGE_LENGTH);
+        $keys = array_map(function (string $key) {
+            return str_replace(static::KV_PREFIX, '', $key);
+        }, $keys);
 
         $values = $this->storageClient->getMulti($keys);
 
         $fixedValues = [];
         foreach ($values as $i => $value) {
-            $i = str_replace('kv:', '', $i);
+            $i = str_replace(static::KV_PREFIX, '', $i);
             $fixedValues[$i] = $value;
         }
         $values = $fixedValues;
 
+        $result = [];
         foreach ($values as $key => $value) {
-            $url = Url::generate('/storage/maintenance/key', ['key' => $key]);
-            $utilSanitizeService = new UtilSanitizeService();
             $result[] = [
-                'key' => '<a href="' . $url . '">' . $utilSanitizeService->escapeHtml($key) . '</a>',
-                'value' => substr($value, 0, 200),
+                'key' => '<a href="' . $this->createKeyUrl($key) . '">' . $this->utilSanitizeService->escapeHtml($key) . '</a>',
+                'value' => mb_substr($value, 0, static::VALUE_LENGTH_LIMIT) . '....',
             ];
         }
+        $result = array_slice($result, 0, static::DEFAULT_PAGE_LENGTH);
 
-        $this->setTotal(count($result));
+        $this->setTotal($this->storageClient->getCountItems());
+        $this->setFiltered(count($result));
 
         return $result;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSearchTerm(): string
+    {
+        if (parent::getSearchTerm() == null || parent::getSearchTerm()['value'] === '') {
+            return static::MATCH_ALL;
+        }
+
+        return parent::getSearchTerm()['value'];
+    }
+
+    /**
+     * @param string $key
+     *
+     * @return string
+     */
+    protected function createKeyUrl(string $key): string
+    {
+        return Url::generate('/storage/maintenance/key', ['key' => $key]);
     }
 }

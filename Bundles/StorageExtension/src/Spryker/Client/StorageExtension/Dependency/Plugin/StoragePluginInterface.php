@@ -131,6 +131,21 @@ interface StoragePluginInterface
 
     /**
      * Specification:
+     * - Returns an array with the current cursor and the keys.
+     * - The keys are filtered by PATTERN, scan the key up to COUNT, starting from CURSOR.
+     *
+     * @api
+     *
+     * @param string $pattern
+     * @param int $count
+     * @param int|null $cursor
+     *
+     * @return array [string, string[]]
+     */
+    public function scanKeys(string $pattern, int $count, ?int $cursor = 0): array;
+
+    /**
+     * Specification:
      * - Resets access statistics.
      *
      * @api

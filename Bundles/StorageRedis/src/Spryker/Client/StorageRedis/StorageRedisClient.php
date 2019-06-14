@@ -155,6 +155,22 @@ class StorageRedisClient extends AbstractClient implements StorageRedisClientInt
      *
      * @api
      *
+     * @param string $pattern
+     * @param int $count
+     * @param int $cursor
+     *
+     * @return array [string, string[]]
+     */
+    public function scanKeys(string $pattern, int $count, int $cursor): array
+    {
+        return $this->getFactory()->createStorageRedisWrapper()->scanKeys($pattern, $count, $cursor);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @return void
      */
     public function resetAccessStats(): void
@@ -184,6 +200,18 @@ class StorageRedisClient extends AbstractClient implements StorageRedisClientInt
     public function getCountItems(): int
     {
         return $this->getFactory()->createStorageRedisWrapper()->getCountItems();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return int
+     */
+    public function getDbSize(): int
+    {
+        return $this->getFactory()->createStorageRedisWrapper()->getDbSize();
     }
 
     /**

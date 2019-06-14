@@ -263,6 +263,20 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     /**
      * @api
      *
+     * @param string $match
+     * @param int $count
+     * @param int|null $cursor
+     *
+     * @return array [string, string[]]
+     */
+    public function scanKeys(string $match, int $count, ?int $cursor = 0): array
+    {
+        return $this->getService()->scanKeys($match, $count, $cursor);
+    }
+
+    /**
+     * @api
+     *
      * @return void
      */
     public function resetAccessStats()
