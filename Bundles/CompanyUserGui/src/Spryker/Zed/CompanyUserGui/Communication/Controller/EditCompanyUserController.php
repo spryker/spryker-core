@@ -21,6 +21,8 @@ class EditCompanyUserController extends AbstractController
 
     protected const MESSAGE_SUCCESS_COMPANY_USER_UPDATE = 'Company User has been updated.';
 
+    protected const MESSAGE_COMPANY_USER_NOT_FOUND = 'Company User not found.';
+
     protected const URL_REDIRECT_COMPANY_USER_PAGE = '/company-user-gui/list-company-user';
 
     /**
@@ -33,9 +35,17 @@ class EditCompanyUserController extends AbstractController
         $idCompanyUser = $this->castId($request->query->get(CompanyUserGuiConfig::PARAM_ID_COMPANY_USER));
 
         $dataProvider = $this->getFactory()->createCompanyUserFormDataProvider();
+        $companyUserTransfer = $dataProvider->getData($idCompanyUser);
+
+        if (!$companyUserTransfer->getIdCompanyUser()) {
+            $this->addErrorMessage(static::MESSAGE_COMPANY_USER_NOT_FOUND);
+
+            return $this->redirectResponse(static::URL_REDIRECT_COMPANY_USER_PAGE);
+        }
+
         $companyUserForm = $this->getFactory()
             ->getCompanyUserEditForm(
-                $dataProvider->getData($idCompanyUser),
+                $companyUserTransfer,
                 $dataProvider->getOptions()
             )
             ->handleRequest($request);

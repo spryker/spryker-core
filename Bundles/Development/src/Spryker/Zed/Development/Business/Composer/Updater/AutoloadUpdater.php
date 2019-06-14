@@ -223,6 +223,7 @@ class AutoloadUpdater implements UpdaterInterface
     protected function getLastPartOfPath($path)
     {
         $pathArray = explode(DIRECTORY_SEPARATOR, rtrim($path, DIRECTORY_SEPARATOR));
+
         return end($pathArray);
     }
 

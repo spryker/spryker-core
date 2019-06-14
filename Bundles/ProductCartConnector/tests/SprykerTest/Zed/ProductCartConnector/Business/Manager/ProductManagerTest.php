@@ -133,7 +133,7 @@ class ProductManagerTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @return \Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     private function getMockProductFacade()
     {
@@ -151,7 +151,7 @@ class ProductManagerTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToLocaleInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @return \Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToLocaleInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     private function getMockLocaleFacade()
     {

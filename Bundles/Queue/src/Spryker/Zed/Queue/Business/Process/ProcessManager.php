@@ -45,8 +45,10 @@ class ProcessManager implements ProcessManagerInterface
         $process = $this->createProcess($command);
         $process->start();
 
-        $queueProcessTransfer = $this->createQueueProcessTransfer($queue, $process->getPid());
-        $this->saveProcess($queueProcessTransfer);
+        if ($process->isRunning()) {
+            $queueProcessTransfer = $this->createQueueProcessTransfer($queue, $process->getPid());
+            $this->saveProcess($queueProcessTransfer);
+        }
 
         return $process;
     }

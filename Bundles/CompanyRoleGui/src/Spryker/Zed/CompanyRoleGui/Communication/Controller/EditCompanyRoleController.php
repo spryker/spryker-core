@@ -20,6 +20,8 @@ class EditCompanyRoleController extends AbstractController
 
     protected const MESSAGE_SUCCESS_COMPANY_ROLE_UPDATE = 'Company role has been successfully updated';
 
+    protected const MESSAGE_COMPANY_ROLE_NOT_FOUND = 'Company role not found';
+
     protected const REQUEST_ID_COMPANY_ROLE = 'id-company-role';
 
     /**
@@ -36,6 +38,12 @@ class EditCompanyRoleController extends AbstractController
         $companyRoleForm = $this->getFactory()
             ->createCompanyRoleEditForm($companyRoleTransfer)
             ->handleRequest($request);
+
+        if (!$companyRoleForm->getData()->getIdCompanyRole()) {
+            $this->addErrorMessage(static::MESSAGE_COMPANY_ROLE_NOT_FOUND);
+
+            return $this->redirectResponse(static::URL_REDIRECT_LIST_COMPANY_ROLE);
+        }
 
         if ($companyRoleForm->isSubmitted() && $companyRoleForm->isValid()) {
             $companyRoleFormData = $companyRoleForm->getData();

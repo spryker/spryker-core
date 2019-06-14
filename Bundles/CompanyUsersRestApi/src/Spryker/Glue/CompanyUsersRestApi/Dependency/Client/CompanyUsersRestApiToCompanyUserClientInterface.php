@@ -8,6 +8,7 @@
 namespace Spryker\Glue\CompanyUsersRestApi\Dependency\Client;
 
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
+use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 
 interface CompanyUsersRestApiToCompanyUserClientInterface
@@ -20,4 +21,11 @@ interface CompanyUsersRestApiToCompanyUserClientInterface
     public function getActiveCompanyUsersByCustomerReference(
         CustomerTransfer $customerTransfer
     ): CompanyUserCollectionTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer
+     */
+    public function getCompanyUserById(CompanyUserTransfer $companyUserTransfer): CompanyUserTransfer;
 }

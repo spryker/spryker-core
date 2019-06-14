@@ -37,7 +37,7 @@ class TwigFacadeTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Twig\Business\TwigBusinessFactory
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Twig\Business\TwigBusinessFactory
      */
     protected function getFactoryMock()
     {
@@ -51,7 +51,7 @@ class TwigFacadeTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Twig\Business\Model\CacheWarmerInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Twig\Business\Model\CacheWarmerInterface
      */
     protected function getCacheWarmerMock()
     {

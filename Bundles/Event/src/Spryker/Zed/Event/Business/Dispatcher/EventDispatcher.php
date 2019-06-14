@@ -65,7 +65,13 @@ class EventDispatcher implements EventDispatcherInterface
      */
     public function trigger(string $eventName, TransferInterface $transfer): void
     {
-        foreach ($this->extractEventListeners($eventName) as $eventListener) {
+        $eventListeners = $this->extractEventListeners($eventName);
+
+        if (empty($eventListeners)) {
+            return;
+        }
+
+        foreach (clone $eventListeners as $eventListener) {
             if ($eventListener->isHandledInQueue()) {
                 $this->eventQueueProducer->enqueueListener($eventName, $transfer, $eventListener->getListenerName(), $eventListener->getQueuePoolName());
             } elseif ($eventListener instanceof EventHandlerInterface) {
@@ -83,7 +89,13 @@ class EventDispatcher implements EventDispatcherInterface
      */
     public function triggerBulk(string $eventName, array $transfers): void
     {
-        foreach ($this->extractEventListeners($eventName) as $eventListener) {
+        $eventListeners = $this->extractEventListeners($eventName);
+
+        if (empty($eventListeners)) {
+            return;
+        }
+
+        foreach (clone $eventListeners as $eventListener) {
             if ($eventListener->isHandledInQueue()) {
                 $this->eventQueueProducer->enqueueListenerBulk($eventName, $transfers, $eventListener->getListenerName(), $eventListener->getQueuePoolName());
                 $this->logEventHandleBulk($eventName, $transfers, $eventListener);

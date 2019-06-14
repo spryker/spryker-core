@@ -118,13 +118,16 @@ class PostgresIndexGenerator implements PostgresIndexGeneratorInterface
     }
 
     /**
-     * @param \DOMDocument $document
+     * @param \DOMDocument $domDocument
      *
      * @return bool
      */
-    protected function isDocumentEmpty(DOMDocument $document): bool
+    protected function isDocumentEmpty(DOMDocument $domDocument): bool
     {
-        return (!$document->documentElement->hasChildNodes());
+        /** @var \DOMElement $element */
+        $element = $domDocument->documentElement;
+
+        return !$element->hasChildNodes();
     }
 
     /**
@@ -209,7 +212,10 @@ class PostgresIndexGenerator implements PostgresIndexGeneratorInterface
             $tableElement = $domDocument->createElement('table');
             $foreignTableName = (string)$foreignKeyTableTransfer->getTableName();
             $tableElement->setAttribute('name', $foreignTableName);
-            $domDocument->documentElement->appendChild($tableElement);
+
+            /** @var \DOMElement $element */
+            $element = $domDocument->documentElement;
+            $element->appendChild($tableElement);
 
             $this->addForeignKeyTableColumnElements($foreignKeyTableTransfer, $tableElement, $domDocument);
         }

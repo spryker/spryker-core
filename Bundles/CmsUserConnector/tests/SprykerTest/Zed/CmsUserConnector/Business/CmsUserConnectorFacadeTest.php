@@ -123,7 +123,7 @@ class CmsUserConnectorFacadeTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject
+     * @return \PHPUnit\Framework\MockObject\MockObject
      */
     protected function createUserMockBridgeForUpdating()
     {
@@ -133,7 +133,7 @@ class CmsUserConnectorFacadeTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject
+     * @return \PHPUnit\Framework\MockObject\MockObject
      */
     protected function createUserMockBridgeForExpanding()
     {
@@ -143,9 +143,9 @@ class CmsUserConnectorFacadeTest extends Unit
     }
 
     /**
-     * @param \PHPUnit_Framework_MockObject_MockObject $userBridgeMock
+     * @param \PHPUnit\Framework\MockObject\MockObject $userBridgeMock
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject
+     * @return \PHPUnit\Framework\MockObject\MockObject
      */
     protected function mockUserMethodForUpdateUser($userBridgeMock)
     {
@@ -161,9 +161,9 @@ class CmsUserConnectorFacadeTest extends Unit
     }
 
     /**
-     * @param \PHPUnit_Framework_MockObject_MockObject $userBridgeMock
+     * @param \PHPUnit\Framework\MockObject\MockObject $userBridgeMock
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject
+     * @return \PHPUnit\Framework\MockObject\MockObject
      */
     protected function mockUserMethodForExpandUser($userBridgeMock)
     {
@@ -188,7 +188,7 @@ class CmsUserConnectorFacadeTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject
+     * @return \PHPUnit\Framework\MockObject\MockObject
      */
     protected function mockUserBridge()
     {
@@ -241,6 +241,7 @@ class CmsUserConnectorFacadeTest extends Unit
                 ],
             ],
         ];
+
         return $fixtures;
     }
 }

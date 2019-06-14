@@ -21,5 +21,8 @@ interface CmsConstants
     public const RESOURCE_TYPE_CATEGORY_NODE = 'category';
     public const RESOURCE_TYPE_STATIC = 'static';
 
+    /**
+     * @deprecated Please use `\Spryker\Zed\Cms\CmsConfig::getThemeName()` instead.
+     */
     public const YVES_THEME = 'YVES_THEME';
 }

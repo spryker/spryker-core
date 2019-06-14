@@ -68,7 +68,7 @@ class AbstractProductFormDataProviderTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject
+     * @return \PHPUnit\Framework\MockObject\MockObject
      */
     protected function getProductFormDataProviderMock()
     {

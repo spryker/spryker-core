@@ -1,8 +1,8 @@
 {% set chartType = 'chart' %}
 {% set chartData = [] %}
-{% set maxLabeLength = 1 %}
+{% set maxLabeLength = 10 %}
+
 {% for trace in data.traces %}
-    {% set lablels = trace.labels %}
     {% set isPie = (trace.type == 'pie') %}
     {% set xLabels = isPie ? 'labels' : 'x' %}
     {% set yValues = isPie ? 'values' : 'y' %}
@@ -12,20 +12,33 @@
         (xLabels): (trace.labels),
         (yValues): (trace.values)
     } %}
-    {% if trace.options is not empty %}
-        {% for option in trace.options %}
-                {% set dataTrace = dataTrace|merge(option) %}
-                {% if option.orientation  is defined and option.orientation == 'h' %}
-                    {% set lablels = trace.values %}
-                {% endif %}
+
+    {% if trace.type == 'bar' and data.key == 'top-orders' %}
+        {% set values = [] %}
+        {% set titles = [] %}
+
+        {% for key, value in trace.values %}
+            {% set values = values|merge([value|length > 20 ? value|slice(0, 20) ~ '… ' : value ~ ' ']) %}
+            {% set titles = titles|merge([
+                'Count orders' | trans ~ ': ' ~ trace.labels[key] ~
+                '<br>' ~ 'Title' | trans ~ ': ' ~ (value|length > 35 ? value|slice(0, 35) ~ '…' : value) ~
+                '<br>' ~ 'SKU' | trans ~ ': ' ~ trace.options[key]
+            ]) %}
         {% endfor %}
+
+        {% set dataTrace = {
+            name: trace.name,
+            type: trace.type,
+            x: trace.labels,
+            y: values,
+            text: titles,
+            hoverinfo: 'text',
+            orientation: 'h'
+        } %}
+
+        {% set maxLabeLength = 24 %}
     {% endif %}
 
-    {% for label in lablels %}
-        {% if label|length > maxLabeLength %}
-            {% set maxLabeLength = label|length %}
-        {% endif %}
-    {% endfor %}
     {% set chartData = chartData | merge([dataTrace]) %}
 {% endfor %}
 

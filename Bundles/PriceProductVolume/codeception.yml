@@ -2,6 +2,10 @@ namespace: SprykerTest
 
 actor: Tester
 
+include:
+  - tests/SprykerTest/Zed/PriceProductVolume
+  - tests/SprykerTest/Service/PriceProductVolume
+
 paths:
     tests: tests
     log: tests/_output
@@ -11,7 +15,7 @@ paths:
 
 settings:
     bootstrap: _bootstrap.php
-    suite_class: \PHPUnit_Framework_TestSuite
+    suite_class: \PHPUnit\Framework\TestSuite
     colors: true
     memory_limit: 1024M
     log: true

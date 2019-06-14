@@ -11,12 +11,15 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CustomerIdentifierTransfer;
 use Generated\Shared\Transfer\OauthAccessTokenValidationRequestTransfer;
 use Generated\Shared\Transfer\OauthClientTransfer;
+use Generated\Shared\Transfer\OauthGrantTypeConfigurationTransfer;
 use Generated\Shared\Transfer\OauthRequestTransfer;
 use Generated\Shared\Transfer\OauthScopeTransfer;
 use Generated\Shared\Transfer\OauthUserTransfer;
 use Orm\Zed\Oauth\Persistence\SpyOauthClientQuery;
+use Spryker\Zed\Oauth\Business\Model\League\Grant\PasswordGrantType;
 use Spryker\Zed\Oauth\Business\OauthFacadeInterface;
 use Spryker\Zed\Oauth\OauthDependencyProvider;
+use Spryker\Zed\OauthExtension\Dependency\Plugin\OauthGrantTypeConfigurationProviderPluginInterface;
 use Spryker\Zed\OauthExtension\Dependency\Plugin\OauthUserProviderPluginInterface;
 
 /**
@@ -51,6 +54,7 @@ class OauthFacadeTest extends Unit
     {
         $this->createTestClient();
         $this->setUserProviderPluginMock();
+        $this->setGrantTypeConfigurationProviderPluginMock();
 
         $oauthRequestTransfer = $this->createOauthRequestTransfer();
         $oauthResponseTransfer = $this->getOauthFacade()->processAccessTokenRequest($oauthRequestTransfer);
@@ -84,6 +88,7 @@ class OauthFacadeTest extends Unit
     {
         $this->createTestClient();
         $this->setUserProviderPluginMock();
+        $this->setGrantTypeConfigurationProviderPluginMock();
 
         $oauthRequestTransfer = $this->createOauthRequestTransfer();
         $oauthResponseTransfer = $this->getOauthFacade()->processAccessTokenRequest($oauthRequestTransfer);
@@ -247,6 +252,33 @@ class OauthFacadeTest extends Unit
     /**
      * @return void
      */
+    protected function setGrantTypeConfigurationProviderPluginMock(): void
+    {
+        $grantTypeConfigurationProviderPluginMock = $this->getMockBuilder(OauthGrantTypeConfigurationProviderPluginInterface::class)
+            ->setMethods(['getGrantTypeConfiguration'])
+            ->getMock();
+
+        $grantTypeConfigurationProviderPluginMock->method('getGrantTypeConfiguration')->willReturnCallback(
+            function () {
+                $oauthGrantTypeConfigurationTransfer = (new OauthGrantTypeConfigurationTransfer())
+                    ->setIdentifier('password')
+                    ->setFullyQualifiedClassName(PasswordGrantType::class);
+
+                return $oauthGrantTypeConfigurationTransfer;
+            }
+        );
+
+        $this->tester->setDependency(
+            OauthDependencyProvider::PLUGINS_GRANT_TYPE_CONFIGURATION_PROVIDER,
+            [
+                $grantTypeConfigurationProviderPluginMock,
+            ]
+        );
+    }
+
+    /**
+     * @return void
+     */
     protected function createTestClient(): void
     {
         $oauthClientEntity = SpyOauthClientQuery::create()
@@ -280,6 +312,7 @@ class OauthFacadeTest extends Unit
             ->setClientSecret('abc123')
             ->setUsername('spencor.hopkin@spryker.com')
             ->setPassword('change123');
+
         return $oauthRequestTransfer;
     }
 }

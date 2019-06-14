@@ -25,6 +25,7 @@ class QuoteApprovalDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_COMPANY_USER = 'FACADE_COMPANY_USER';
     public const FACADE_QUOTE = 'FACADE_QUOTE';
     public const FACADE_CUSTOMER = 'FACADE_CUSTOMER';
+    public const PLUGINS_QUOTE_APPROVAL_UNLOCK_PRE_CHECK = 'PLUGINS_QUOTE_APPROVAL_UNLOCK_PRE_CHECK';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -39,6 +40,7 @@ class QuoteApprovalDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCompanyRoleFacade($container);
         $container = $this->addCompanyUserFacade($container);
         $container = $this->addSharedCartFacade($container);
+        $container = $this->addQuoteApprovalUnlockPreCheckPlugins($container);
 
         return $container;
     }
@@ -119,5 +121,27 @@ class QuoteApprovalDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addQuoteApprovalUnlockPreCheckPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_QUOTE_APPROVAL_UNLOCK_PRE_CHECK] = function (Container $container) {
+            return $this->getQuoteApprovalUnlockPreCheckPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\QuoteApprovalExtension\Dependency\Plugin\QuoteApprovalUnlockPreCheckPluginInterface[]
+     */
+    protected function getQuoteApprovalUnlockPreCheckPlugins(): array
+    {
+        return [];
     }
 }

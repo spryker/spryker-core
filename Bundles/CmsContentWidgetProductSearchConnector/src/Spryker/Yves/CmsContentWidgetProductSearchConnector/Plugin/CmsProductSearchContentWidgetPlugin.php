@@ -12,7 +12,7 @@ use Spryker\Shared\CmsContentWidget\Dependency\CmsContentWidgetConfigurationProv
 use Spryker\Yves\CmsContentWidget\Dependency\CmsContentWidgetPluginInterface;
 use Spryker\Yves\CmsContentWidgetProductSearchConnector\Exception\TemplateIdentifierNotFoundException;
 use Spryker\Yves\Kernel\AbstractPlugin;
-use Twig_Environment;
+use Twig\Environment;
 
 /**
  * @method \Spryker\Yves\CmsContentWidgetProductSearchConnector\CmsContentWidgetProductSearchConnectorFactory getFactory()
@@ -42,7 +42,7 @@ class CmsProductSearchContentWidgetPlugin extends AbstractPlugin implements CmsC
     }
 
     /**
-     * @param \Twig_Environment $twig
+     * @param \Twig\Environment $twig
      * @param array $context Data related to twig function
      * @param string $searchString String for direct search in elastic
      * @param string|null $templateIdentifier
@@ -50,7 +50,7 @@ class CmsProductSearchContentWidgetPlugin extends AbstractPlugin implements CmsC
      * @return string
      */
     public function contentWidgetFunction(
-        Twig_Environment $twig,
+        Environment $twig,
         array $context,
         $searchString,
         $templateIdentifier = null

@@ -76,7 +76,7 @@ class ZedBootstrapTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Application\Communication\ZedBootstrap
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Application\Communication\ZedBootstrap
      */
     protected function createZedBootstrapMock()
     {

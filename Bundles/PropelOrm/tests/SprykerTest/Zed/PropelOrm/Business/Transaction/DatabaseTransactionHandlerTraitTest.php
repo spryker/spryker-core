@@ -25,7 +25,7 @@ use SprykerTest\Zed\PropelOrm\Stub\DatabaseTransactionHandlerTraitStub;
 class DatabaseTransactionHandlerTraitTest extends Unit
 {
     /**
-     * @var \Propel\Runtime\Connection\ConnectionInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Propel\Runtime\Connection\ConnectionInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $connection;
 

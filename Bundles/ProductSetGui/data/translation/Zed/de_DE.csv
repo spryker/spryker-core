@@ -17,14 +17,12 @@ Keywords,Schlüsselwörter
 Name,Name
 Position,Position
 Preview,Vorschau
-Preview,Vorschau
 Price,Preis
 "Product details",Produktdetails
 "Product Sets",Produktsets
 "Products in this Set","Produkte in diesem Set"
 "Products to be assigned","Zuzuordnende Produkte"
 "Products to be deassigned","Zu entfernende Produkte"
-"Reorder Product Sets","Produktesets neu ordnen"
 "Reorder Product Sets","Produktesets neu ordnen"
 "Select All","Alle auswählen"
 "Select products to assign","Produkte zur Zuweisung auswählen"
@@ -40,3 +38,7 @@ URL,URL
 View,Ansicht
 Weight,Gewicht
 "Weight defines sorting order. Product Sets with higher numbers listed first.","Das Gewicht bestimmt die Anordnung. Produktsets mit höheren Nummern werden zuerst gelistet."
+"Delete image","Lösche Bild"
+"Image Set","Bildmenge"
+"Delete image set","Bilderset löschen"
+"Save","Speichern"

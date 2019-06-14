@@ -204,6 +204,7 @@ class BuilderTest extends Unit
         $stateMachineProcessTransfer = new StateMachineProcessTransfer();
         $stateMachineProcessTransfer->setProcessName('TestProcess');
         $stateMachineProcessTransfer->setStateMachineName('TestingSm');
+
         return $stateMachineProcessTransfer;
     }
 }

@@ -42,22 +42,26 @@ class OrderItemSplitTest extends Unit
     ];
 
     /**
+     * @dataProvider isOrderItemDataCopiedProvider
+     *
+     * @param int|float $oldQuantity
+     * @param int|float $quantityToSplit
+     *
      * @return void
      */
-    public function testIsOrderItemDataCopied()
+    public function testIsOrderItemDataCopied($oldQuantity, $quantityToSplit)
     {
         $spySalesOrderItem = $this->createOrderItem();
-        $itemSplit = $this->createOrderItemSplitter($spySalesOrderItem, 4);
+        $itemSplit = $this->createOrderItemSplitter($spySalesOrderItem, $oldQuantity);
         $orderItemId = 1;
-        $quantity = 1;
-        $splitResponse = $itemSplit->split($orderItemId, $quantity);
+        $splitResponse = $itemSplit->split($orderItemId, $quantityToSplit);
 
         $this->assertTrue($splitResponse->getSuccess());
         $this->assertNotEmpty($splitResponse->getSuccessMessage());
 
         $createdCopy = $spySalesOrderItem->getCreatedCopy();
-        $this->assertEquals(1, $createdCopy->getQuantity());
-        $this->assertEquals(4, $spySalesOrderItem->getQuantity());
+        $this->assertEquals($quantityToSplit, $createdCopy->getQuantity());
+        $this->assertEquals($oldQuantity, $spySalesOrderItem->getQuantity());
         $this->assertEquals(OrderItemSplit::SPLIT_MARKER . $spySalesOrderItem->getGroupKey(), $createdCopy->getGroupKey());
 
         $oldSalesOrderItemArray = $spySalesOrderItem->toArray();
@@ -76,8 +80,19 @@ class OrderItemSplitTest extends Unit
     }
 
     /**
+     * @return array
+     */
+    public function isOrderItemDataCopiedProvider(): array
+    {
+        return [
+            'int stock' => [4, 1],
+            'float stock' => [4.8, 1.6],
+        ];
+    }
+
+    /**
      * @param \SprykerTest\Zed\SalesSplit\Business\Model\Fixtures\SpySalesOrderItemMock $orderItem
-     * @param int $quantityForOld
+     * @param int|float $quantityForOld
      *
      * @return \Spryker\Zed\SalesSplit\Business\Model\OrderItemSplit
      */
@@ -116,7 +131,7 @@ class OrderItemSplitTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\SalesSplit\Business\Model\Validation\ValidatorInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\SalesSplit\Business\Model\Validation\ValidatorInterface
      */
     protected function createValidatorMock()
     {
@@ -129,7 +144,7 @@ class OrderItemSplitTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface
      */
     protected function createQueryContainerMock()
     {
@@ -139,7 +154,7 @@ class OrderItemSplitTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Orm\Zed\Sales\Persistence\SpySalesOrderQuery
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Orm\Zed\Sales\Persistence\SpySalesOrderQuery
      */
     protected function createSalesOrderMock()
     {
@@ -153,7 +168,7 @@ class OrderItemSplitTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\SalesSplit\Business\Model\CalculatorInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\SalesSplit\Business\Model\CalculatorInterface
      */
     protected function createCalculatorMock()
     {
@@ -166,7 +181,7 @@ class OrderItemSplitTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Propel\Runtime\Connection\ConnectionInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Propel\Runtime\Connection\ConnectionInterface
      */
     protected function createDatabaseConnectionMock()
     {

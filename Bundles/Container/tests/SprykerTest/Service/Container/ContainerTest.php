@@ -190,6 +190,17 @@ class ContainerTest extends Unit
     /**
      * @return void
      */
+    public function testRemoveWithNotExistingServiceIdentifier(): void
+    {
+        $container = new Container();
+        $container->remove(static::SERVICE);
+
+        $this->assertFalse($container->has(static::SERVICE));
+    }
+
+    /**
+     * @return void
+     */
     public function testFactoryThrowsAnExceptionWhenPassedServiceNotInvokable(): void
     {
         $this->expectException(ContainerException::class);

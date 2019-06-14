@@ -244,6 +244,7 @@ class ForeignKeysProvider implements ForeignKeysProviderInterface
             $xmlElement->registerXPathNamespace('s', 'spryker:schema-01');
         }
 
+        /** @var array $database */
         $database = $xmlElement->xpath($hasNamespace ?  '//s:database' : '//database')[0] ?: [];
 
         $foreignKeyFileTransfer->setNamespace((string)$database['namespace']);

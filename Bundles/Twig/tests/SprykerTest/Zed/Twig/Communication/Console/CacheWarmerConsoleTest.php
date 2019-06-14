@@ -30,8 +30,6 @@ class CacheWarmerConsoleTest extends Unit
      */
     public function testCommandIsExecutable()
     {
-        $this->markTestSkipped('[ErrorException] posix_isatty(): could not use stream of type \'MEMORY\'');
-
         $application = new Application();
         $application->add($this->getCacheWarmerConsoleMock());
 
@@ -44,7 +42,7 @@ class CacheWarmerConsoleTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Twig\Communication\Console\CacheWarmerConsole
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Twig\Communication\Console\CacheWarmerConsole
      */
     protected function getCacheWarmerConsoleMock()
     {
@@ -58,7 +56,7 @@ class CacheWarmerConsoleTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Kernel\Business\AbstractFacade
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Kernel\Business\AbstractFacade
      */
     protected function getFacadeMock()
     {

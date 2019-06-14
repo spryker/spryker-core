@@ -105,7 +105,7 @@ interface CmsGuiToCmsInterface
     /**
      * @param int $idCmsPage
      *
-     * @return bool
+     * @return void
      */
     public function revert($idCmsPage);
 

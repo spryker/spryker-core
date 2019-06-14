@@ -66,7 +66,7 @@ class RefundCalculatorTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Refund\Dependency\Facade\RefundToSalesInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Refund\Dependency\Facade\RefundToSalesInterface
      */
     protected function getSalesFacadeMock()
     {
@@ -77,7 +77,7 @@ class RefundCalculatorTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Refund\Dependency\Plugin\RefundCalculatorPluginInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Refund\Dependency\Plugin\RefundCalculatorPluginInterface
      */
     protected function getRefundCalculationPlugin()
     {

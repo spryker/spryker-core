@@ -15,4 +15,9 @@ interface UserLocaleToStoreInterface
      * @return void
      */
     public function setCurrentLocale($localeCode);
+
+    /**
+     * @return string
+     */
+    public function getCurrentLocale();
 }

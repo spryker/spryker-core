@@ -10,6 +10,10 @@ namespace Spryker\Yves\Twig;
 use Spryker\Shared\Twig\Cache\Cache\FilesystemCache;
 use Spryker\Shared\Twig\Cache\CacheLoader\FilesystemCacheLoader;
 use Spryker\Shared\Twig\Cache\CacheWriter\FilesystemCacheWriter;
+use Spryker\Shared\Twig\Loader\FilesystemLoader;
+use Spryker\Shared\Twig\Loader\FilesystemLoaderInterface;
+use Spryker\Shared\Twig\Loader\TwigChainLoader;
+use Spryker\Shared\Twig\Loader\TwigChainLoaderInterface;
 use Spryker\Shared\Twig\TwigFilesystemLoader;
 use Spryker\Yves\Kernel\AbstractFactory;
 use Spryker\Yves\Twig\Model\TemplateNameExtractor\TemplateNameExtractor;
@@ -20,7 +24,7 @@ use Spryker\Yves\Twig\Model\TemplateNameExtractor\TemplateNameExtractor;
 class TwigFactory extends AbstractFactory
 {
     /**
-     * @return \Twig_LoaderInterface
+     * @return \Spryker\Shared\Twig\Loader\FilesystemLoaderInterface
      */
     public function createFilesystemLoader()
     {
@@ -29,6 +33,14 @@ class TwigFactory extends AbstractFactory
             $this->createFilesystemCache(),
             $this->createTemplateNameExtractor()
         );
+    }
+
+    /**
+     * @return \Spryker\Shared\TwigExtension\Dependency\Plugin\TwigPluginInterface[]
+     */
+    public function getTwigPlugins(): array
+    {
+        return $this->getProvidedDependency(TwigDependencyProvider::PLUGINS_TWIG);
     }
 
     /**
@@ -78,5 +90,31 @@ class TwigFactory extends AbstractFactory
     protected function getUtilTextService()
     {
         return $this->getProvidedDependency(TwigDependencyProvider::SERVICE_UTIL_TEXT);
+    }
+
+    /**
+     * @return \Spryker\Shared\Twig\Loader\TwigChainLoaderInterface
+     */
+    public function createTwigChainLoader(): TwigChainLoaderInterface
+    {
+        return new TwigChainLoader(
+            $this->getTwigLoaderPlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Shared\Twig\Loader\FilesystemLoaderInterface
+     */
+    public function createTwigFilesystemLoader(): FilesystemLoaderInterface
+    {
+        return new FilesystemLoader($this->getConfig()->getFormTemplateDirectories());
+    }
+
+    /**
+     * @return \Spryker\Shared\TwigExtension\Dependency\Plugin\TwigLoaderPluginInterface[]
+     */
+    public function getTwigLoaderPlugins(): array
+    {
+        return $this->getProvidedDependency(TwigDependencyProvider::PLUGINS_TWIG_LOADER);
     }
 }

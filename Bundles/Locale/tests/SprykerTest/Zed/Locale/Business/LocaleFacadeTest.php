@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\Locale\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Locale\Business\LocaleFacade;
 use Spryker\Zed\Locale\Persistence\LocaleQueryContainer;
@@ -62,7 +63,7 @@ class LocaleFacadeTest extends Unit
      */
     public function testAvailableLocalesToBeArrayType()
     {
-        $this->assertInternalType('array', $this->localeNames);
+        $this->assertIsArray($this->localeNames);
     }
 
     /**
@@ -85,5 +86,22 @@ class LocaleFacadeTest extends Unit
             array_keys($this->availableLocales),
             array_keys($this->localeNames)
         );
+    }
+
+    /**
+     * @return void
+     */
+    public function testCurrentLocaleIsChangeable(): void
+    {
+        //Arrange
+        $currentLocale = $this->localeFacade->getCurrentLocale();
+        $newLocale = (new LocaleTransfer())->setLocaleName('de_DE');
+
+        //Act
+        $this->localeFacade->setCurrentLocale($newLocale);
+        $newCurentLocale = $this->localeFacade->getCurrentLocale();
+
+        //Assert
+        $this->assertSame($currentLocale->getLocaleName(), $newCurentLocale->getLocaleName());
     }
 }

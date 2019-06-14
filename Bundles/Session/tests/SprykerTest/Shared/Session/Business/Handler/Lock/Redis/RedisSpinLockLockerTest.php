@@ -66,7 +66,7 @@ class RedisSpinLockLockerTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Predis\Client
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Predis\Client
      */
     private function getRedisClientMock()
     {

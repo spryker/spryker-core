@@ -5,6 +5,7 @@
 
     <transfer name="DataImporterConfiguration">
         <property name="importType" type="string" />
+        <property name="importGroup" type="string" />
         <property name="readerConfiguration" type="DataImporterReaderConfiguration" />
         <property name="throwException" type="bool" />
     </transfer>
@@ -29,8 +30,29 @@
         <property name="expectedImportableDataSetCount" type="int" />
         <property name="isReaderCountable" type="bool" />
         <property name="isSuccess" type="bool" />
+        <property name="messages" type="DataImporterReportMessage[]" singular="message" />
         <property name="dataImporterReports" type="DataImporterReport[]" singular="dataImporterReport" />
     </transfer>
 
-</transfers>
+    <transfer name="DataImporterReportMessage">
+        <property name="message" type="string" />
+    </transfer>
 
+    <transfer name="QueueDataImporterConfiguration">
+        <property name="importType" type="string" />
+        <property name="readerConfiguration" type="DataImporterQueueReaderConfiguration" />
+        <property name="throwException" type="bool" />
+    </transfer>
+
+    <transfer name="DataImporterQueueReaderConfiguration">
+        <property name="queueName" type="string" />
+        <property name="chunkSize" type="int" />
+        <property name="queueConsumerOptions" type="array" />
+    </transfer>
+
+    <transfer name="DataImporterQueueWriterConfiguration">
+        <property name="queueName" type="string" />
+        <property name="chunkSize" type="int" />
+    </transfer>
+
+</transfers>

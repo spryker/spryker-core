@@ -147,7 +147,9 @@ class PriceProductStorageFactory extends AbstractFactory
      */
     public function createPriceProductMapper(): PriceProductMapperInterface
     {
-        return new PriceProductMapper();
+        return new PriceProductMapper(
+            $this->getPriceProductService()
+        );
     }
 
     /**
