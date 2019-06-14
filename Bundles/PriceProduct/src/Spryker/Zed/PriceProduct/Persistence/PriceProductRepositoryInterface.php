@@ -129,4 +129,26 @@ interface PriceProductRepositoryInterface
      * @return \Generated\Shared\Transfer\SpyPriceProductStoreEntityTransfer[]
      */
     public function findPriceProductStoresByPriceProduct(PriceProductTransfer $priceProductTransfer): array;
+
+    /**
+     * @param string[] $concreteSkus
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+     *
+     * @return array
+     */
+    public function getProductAbstractPricesByConcreteSkusAndCriteria(
+        array $concreteSkus,
+        PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+    ): array;
+
+    /**
+     * @param string[] $concreteSkus
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+     *
+     * @return array
+     */
+    public function getProductConcretePricesByConcreteSkusAndCriteria(
+        array $concreteSkus,
+        PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+    ): array;
 }

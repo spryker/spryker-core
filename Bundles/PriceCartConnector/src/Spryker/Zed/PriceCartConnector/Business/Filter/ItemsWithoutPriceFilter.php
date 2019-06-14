@@ -10,6 +10,7 @@ namespace Spryker\Zed\PriceCartConnector\Business\Filter;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
+use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToMessengerInterface;
 use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceInterface;
@@ -57,10 +58,14 @@ class ItemsWithoutPriceFilter implements ItemFilterInterface
      */
     public function filterItems(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        foreach ($quoteTransfer->getItems() as $key => $itemTransfer) {
-            if (!$this->isProductConcretePriceExists($itemTransfer, $quoteTransfer)) {
-                $quoteTransfer->getItems()->offsetUnset($key);
-                $this->addFilterMessage($itemTransfer->getSku());
+        $filters = $this->createPriceProductFilters($quoteTransfer);
+        $validPrices = $this->priceProductFacade->getValidPrices($filters);
+        foreach ($this->getMissedSkus($validPrices, $quoteTransfer->getItems()->getArrayCopy()) as $sku) {
+            $this->addFilterMessage($sku);
+            foreach ($quoteTransfer->getItems() as $key => $value) {
+                if ($value->getSku() === $sku) {
+                    $quoteTransfer->getItems()->offsetUnset($key);
+                }
             }
         }
 
@@ -178,5 +183,35 @@ class ItemsWithoutPriceFilter implements ItemFilterInterface
     protected function isPriceProductDimensionEnabled(PriceProductFilterTransfer $priceProductFilterTransfer): bool
     {
         return property_exists($priceProductFilterTransfer, 'quote');
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductFilterTransfer[]
+     */
+    protected function createPriceProductFilters(QuoteTransfer $quoteTransfer): array
+    {
+        $priceProductFilters = [];
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            $priceProductFilters[] = $this->createPriceProductFilter($itemTransfer, $quoteTransfer);
+        }
+        return $priceProductFilters;
+    }
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $items
+     *
+     * @return string[]
+     */
+    protected function getMissedSkus(array $priceProductTransfers, array $items): array
+    {
+        $totalSkus = array_map(function (ItemTransfer $item) {
+            return $item->getSku();
+        }, $items);
+        $validSkus = array_map(function (PriceProductTransfer $priceProductTransfer) {
+            return $priceProductTransfer->getSkuProduct();
+        }, $priceProductTransfers);
+        return array_diff($totalSkus, $validSkus);
     }
 }

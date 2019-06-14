@@ -16,6 +16,7 @@ use Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Collection\ObjectCollection;
 use Propel\Runtime\Propel;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -366,5 +367,55 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
             ->filterByFkStore($moneyValueTransfer->getFkStore());
 
         return $this->buildQueryFromCriteria($priceProductStoreEntityQuery)->find();
+    }
+
+    /**
+     * @param string[] $concreteSkus
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+     *
+     * @return array
+     */
+    public function getProductAbstractPricesByConcreteSkusAndCriteria(
+        array $concreteSkus,
+        PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+    ): array {
+        $priceProductStoreQuery = $this->createBasePriceProductStoreQuery($priceProductCriteriaTransfer);
+        $priceProductStoreQuery
+            ->addAsColumn('product_sku', 'spy_product.sku')
+            ->innerJoinWithPriceProduct()
+            ->usePriceProductQuery()
+                ->innerJoinWithSpyProductAbstract()
+                ->useSpyProductAbstractQuery()
+                    ->innerJoinWithSpyProduct()
+                    ->useSpyProductQuery()
+                        ->filterBySku_In($concreteSkus)
+                    ->endUse()
+                ->endUse()
+            ->endUse();
+
+        return $priceProductStoreQuery->setFormatter(ModelCriteria::FORMAT_ARRAY)->find()->toArray();
+    }
+
+    /**
+     * @param string[] $concreteSkus
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+     *
+     * @return array
+     */
+    public function getProductConcretePricesByConcreteSkusAndCriteria(
+        array $concreteSkus,
+        PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+    ): array {
+        $priceProductStoreQuery = $this->createBasePriceProductStoreQuery($priceProductCriteriaTransfer);
+        $priceProductStoreQuery
+            ->joinWithPriceProduct()
+            ->usePriceProductQuery()
+                ->innerJoinWithProduct()
+                ->useProductQuery()
+                    ->filterBySku_In($concreteSkus)
+                ->endUse()
+            ->endUse();
+
+        return $priceProductStoreQuery->setFormatter(ModelCriteria::FORMAT_ARRAY)->find()->toArray();
     }
 }

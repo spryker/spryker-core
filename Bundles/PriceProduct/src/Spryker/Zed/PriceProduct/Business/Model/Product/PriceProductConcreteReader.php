@@ -229,4 +229,30 @@ class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
 
         return $priceProductTransfers;
     }
+
+    /**
+     * @param string[] $skus
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function getProductConcretePricesByConcreteSkusAndCriteria(array $skus, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): array
+    {
+        $priceData = $this->priceProductRepository->getProductConcretePricesByConcreteSkusAndCriteria($skus, $priceProductCriteriaTransfer);
+        $pricesBySku = [];
+        foreach ($priceData as $price) {
+            $pricesBySku[$price['PriceProduct']['Product']['sku']][] = $price;
+        }
+        $out = [];
+        foreach ($pricesBySku as $sku => $nestedPrices) {
+            $priceProductTransfers = $this->priceProductMapper->mapPricesToPriceProductTransfers(
+                $nestedPrices
+            );
+            $priceProductTransfers = $this->priceProductExpander->expandPriceProductTransfers($priceProductTransfers);
+            $priceProductTransfers = $this->pluginExecutor->executePriceExtractorPluginsForProductConcrete($priceProductTransfers);
+            $out[$sku] = $priceProductTransfers;
+        }
+
+        return $out;
+    }
 }

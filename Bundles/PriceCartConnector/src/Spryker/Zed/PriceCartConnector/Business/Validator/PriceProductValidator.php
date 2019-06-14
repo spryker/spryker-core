@@ -7,11 +7,13 @@
 
 namespace Spryker\Zed\PriceCartConnector\Business\Validator;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
+use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceInterface;
 use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceProductInterface;
@@ -41,6 +43,16 @@ class PriceProductValidator implements PriceProductValidatorInterface
     protected $config;
 
     /**
+     * @var string|null
+     */
+    protected $defaultPriceTypeName = null;
+
+    /**
+     * @var string|null
+     */
+    protected $defaultPriceMode = null;
+
+    /**
      * @param \Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceProductInterface $priceProductFacade
      * @param \Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceInterface $priceFacade
      * @param \Spryker\Zed\PriceCartConnector\PriceCartConnectorConfig $config
@@ -60,7 +72,7 @@ class PriceProductValidator implements PriceProductValidatorInterface
      *
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
-    public function validatePrices(CartChangeTransfer $cartChangeTransfer)
+    public function validatePrices1(CartChangeTransfer $cartChangeTransfer)
     {
         $cartPreCheckResponseTransfer = (new CartPreCheckResponseTransfer())
             ->setIsSuccess(true);
@@ -87,6 +99,29 @@ class PriceProductValidator implements PriceProductValidatorInterface
                 ->addMessage($this->createMessage($itemTransfer));
         }
 
+        return $cartPreCheckResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
+     */
+    public function validatePrices(CartChangeTransfer $cartChangeTransfer)
+    {
+        $cartPreCheckResponseTransfer = (new CartPreCheckResponseTransfer())
+            ->setIsSuccess(true);
+        $priceProductFilters = $this->createPriceProductFilters($cartChangeTransfer->getItems(), $cartChangeTransfer->getQuote());
+        $validPrices = $this->priceProductFacade->getValidPrices($priceProductFilters);
+        foreach ($this->getMissedSkus($validPrices, $cartChangeTransfer->getItems()->getArrayCopy()) as $skuWithErrors) {
+            return $cartPreCheckResponseTransfer
+                ->setIsSuccess(false)
+                ->addMessage(
+                    (new MessageTransfer())
+                        ->setValue(static::CART_PRE_CHECK_PRICE_FAILED_TRANSLATION_KEY)
+                        ->setParameters(['%sku%' => $skuWithErrors])
+                );
+        }
         return $cartPreCheckResponseTransfer;
     }
 
@@ -192,7 +227,7 @@ class PriceProductValidator implements PriceProductValidatorInterface
     protected function getPriceMode(QuoteTransfer $quoteTransfer): string
     {
         if (!$quoteTransfer->getPriceMode()) {
-            return $this->priceFacade->getDefaultPriceMode();
+            return $this->getDefaultPriceMode();
         }
 
         return $quoteTransfer->getPriceMode();
@@ -220,5 +255,59 @@ class PriceProductValidator implements PriceProductValidatorInterface
     protected function isPriceProductDimensionEnabled(PriceProductFilterTransfer $priceProductFilterTransfer): bool
     {
         return property_exists($priceProductFilterTransfer, 'quote');
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $items
+     *
+     * @return string[]
+     */
+    protected function getMissedSkus(array $priceProductTransfers, array $items): array
+    {
+        $totalSkus = array_map(function (ItemTransfer $item) {
+            return $item->getSku();
+        }, $items);
+        $validSkus = array_map(function (PriceProductTransfer $priceProductTransfer) {
+            return $priceProductTransfer->getSkuProduct();
+        }, $priceProductTransfers);
+        return array_diff($totalSkus, $validSkus);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getDefaultPriceMode(): string
+    {
+        if ($this->defaultPriceMode === null) {
+            $this->defaultPriceMode = $this->priceFacade->getDefaultPriceMode();
+        }
+        return $this->defaultPriceMode;
+    }
+    /**
+     * @return string
+     */
+    protected function getDefaultPriceTypeName(): string
+    {
+        if ($this->defaultPriceTypeName === null) {
+            $this->defaultPriceTypeName = $this->priceProductFacade->getDefaultPriceTypeName();
+        }
+        return $this->defaultPriceTypeName;
+    }
+
+    /**
+     * @param \ArrayObject $itemTransfers
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductFilterTransfer[]
+     */
+    protected function createPriceProductFilters(ArrayObject $itemTransfers, QuoteTransfer $quoteTransfer): array
+    {
+        $priceProductFilters = [];
+        foreach ($itemTransfers as $itemTransfer) {
+            $priceProductFilters[] = $this->createPriceProductFilter($itemTransfer, $quoteTransfer);
+        }
+
+        return $priceProductFilters;
     }
 }

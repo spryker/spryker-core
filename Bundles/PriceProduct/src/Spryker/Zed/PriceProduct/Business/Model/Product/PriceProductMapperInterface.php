@@ -38,4 +38,11 @@ interface PriceProductMapperInterface
     public function mapPriceProductStoreEntitiesToPriceProductTransfers(
         $priceProductStoreEntities
     ): array;
+
+    /**
+     * @param array $prices
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function mapPricesToPriceProductTransfers(array $prices): array;
 }

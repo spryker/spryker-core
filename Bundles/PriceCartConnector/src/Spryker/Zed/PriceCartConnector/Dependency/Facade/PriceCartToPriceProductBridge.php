@@ -74,4 +74,14 @@ class PriceCartToPriceProductBridge implements PriceCartToPriceProductInterface
     {
         return $this->priceProductFacade->getDefaultPriceTypeName();
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer[] $priceProductFilterTransfers
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function getValidPrices(array $priceProductFilterTransfers): array
+    {
+        return $this->priceProductFacade->getValidPrices($priceProductFilterTransfers);
+    }
 }
