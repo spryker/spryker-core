@@ -2,22 +2,26 @@
 
     {% block widget_content %}
 
-        <div class="comment-wrapper">
-            {% for comment in order.commentThread.comments %}
-                <div class="comment-box">
-                    <p class="comment-title">
-                        {{ comment.customer.firstName }} {{ comment.customer.lastName }} @
-                        <span>
-                            {{ comment.createdAt | formatDateTime }}
-                            {% if comment.isUpdated %}
-                                ({{ 'edited' | trans }})
-                            {% endif %}
-                        </span>
-                    </p>
-                    <span>{{ comment.message }}</span>
-                </div>
-            {% endfor %}
-        </div>
+        {% if order.commentThread %}
+            <div class="comment-wrapper">
+                {% for comment in order.commentThread.comments %}
+                    <div class="comment-box">
+                        <p class="comment-title">
+                            {{ comment.customer.firstName }} {{ comment.customer.lastName }} @
+                            <span>
+                                {{ comment.createdAt | formatDateTime }}
+                                {% if comment.isUpdated %}
+                                    ({{ 'edited' | trans }})
+                                {% endif %}
+                            </span>
+                        </p>
+                        <span>{{ comment.message }}</span>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            {{ 'Order has no comments' | trans }}
+        {% endif %}
 
     {% endblock %}
 
