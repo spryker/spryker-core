@@ -14,7 +14,11 @@ use Generated\Shared\Transfer\CmsBlockGlossaryTransfer;
 use Generated\Shared\Transfer\CmsGlossaryAttributesTransfer;
 use Generated\Shared\Transfer\CmsGlossaryTransfer;
 use Generated\Shared\Transfer\CmsPlaceholderTranslationTransfer;
+use Spryker\Zed\ContentGui\Business\ContentGuiBusinessFactory;
+use Spryker\Zed\ContentGui\Business\ContentGuiFacade;
+use Spryker\Zed\ContentGui\Business\ContentGuiFacadeInterface;
 use Spryker\Zed\ContentGui\ContentGuiDependencyProvider;
+use SprykerTest\Zed\ContentGui\ContentGuiConfigTest;
 use SprykerTest\Zed\ContentGui\Plugin\ContentBannerContentGuiEditorPluginMock;
 use SprykerTest\Zed\ContentGui\Plugin\ContentProductContentGuiEditorPluginMock;
 
@@ -36,6 +40,11 @@ class ContentGuiFacadeTest extends Unit
     protected $tester;
 
     /**
+     * @var \Spryker\Zed\ContentGui\Business\ContentGuiFacadeInterface
+     */
+    protected $contentGuiFacade;
+
+    /**
      * @return void
      */
     public function setUp(): void
@@ -46,113 +55,88 @@ class ContentGuiFacadeTest extends Unit
             new ContentBannerContentGuiEditorPluginMock(),
             new ContentProductContentGuiEditorPluginMock(),
         ]);
+
+        $this->contentGuiFacade = $this->createContentGuiFacade();
+
+        $this->tester->createBannerContentItem();
+        $this->tester->createAbstractProductListContentItem();
     }
 
     /**
-     * @dataProvider getContent
+     * @dataProvider getContentHtmlToTwigExpression
      *
-     * @param string $inputContentMethod
-     * @param string $expectedContentMethod
+     * @param string $input
+     * @param string $expectedResult
      *
      * @return void
      */
-    public function testCmsBlockGlossaryHtmlToTwigExpression(string $inputContentMethod, string $expectedContentMethod): void
+    public function testCmsBlockGlossaryHtmlToTwigExpression(string $input, string $expectedResult): void
     {
         // Arrange
-        $inputString = $this->tester->{$inputContentMethod}();
-        $expectedResult = $this->tester->{$expectedContentMethod}(true);
-
-        // It's necessary because DOMDocument returns valid HTML after converting
-        if ($expectedContentMethod === 'getTwoSameTwigExpressionsWithInvalidHtml') {
-            $expectedResult = str_replace('<p>', '', $expectedResult);
-        }
-
-        $cmsBlockGlossaryTransfer = $this->createCmsBlockGlossaryTransfer($inputString);
+        $cmsBlockGlossaryTransfer = $this->createCmsBlockGlossaryTransfer($input);
 
         // Act
-        $cmsBlockGlossaryTransfer = $this->tester->getFacade()->convertCmsBlockGlossaryHtmlToTwigExpressions($cmsBlockGlossaryTransfer);
+        $cmsBlockGlossaryTransfer = $this->contentGuiFacade->convertCmsBlockGlossaryHtmlToTwigExpressions($cmsBlockGlossaryTransfer);
 
         // Assert
         $this->assertCmsBlockGlossaryResults($expectedResult, $cmsBlockGlossaryTransfer);
     }
 
     /**
-     * @dataProvider getContent
+     * @dataProvider getContentHtmlToTwigExpression
      *
-     * @param string $expectedContentMethod
-     * @param string $inputContentMethod
-     *
-     * @return void
-     */
-    public function testCmsBlockGlossaryTwigExpressionToHtml(string $expectedContentMethod, string $inputContentMethod): void
-    {
-        // This method only for test conversion html to twig expression
-        if ($expectedContentMethod === 'getInvalidHtmlWidget') {
-            return;
-        }
-
-        // Arrange
-        $inputString = $this->tester->{$inputContentMethod}();
-        $expectedResult = $this->tester->{$expectedContentMethod}(true);
-        $cmsBlockGlossaryTransfer = $this->createCmsBlockGlossaryTransfer($inputString);
-
-        // Act
-        $cmsBlockGlossaryTransfer = $this->tester->getFacade()->convertCmsBlockGlossaryTwigExpressionsToHtml($cmsBlockGlossaryTransfer);
-
-        // Assert
-        $this->assertCmsBlockGlossaryResults($expectedResult, $cmsBlockGlossaryTransfer);
-    }
-
-    /**
-     * @dataProvider getContent
-     *
-     * @param string $inputContentMethod
-     * @param string $expectedContentMethod
+     * @param string $input
+     * @param string $expectedResult
      *
      * @return void
      */
-    public function testCmsGlossaryHtmlToTwigExpression(string $inputContentMethod, string $expectedContentMethod): void
+    public function testCmsGlossaryHtmlToTwigExpression(string $input, string $expectedResult): void
     {
         // Arrange
-        $inputString = $this->tester->{$inputContentMethod}();
-        $expectedResult = $this->tester->{$expectedContentMethod}(true);
-
-        // It's necessary because DOMDocument returns valid HTML after converting
-        if ($expectedContentMethod === 'getTwoSameTwigExpressionsWithInvalidHtml') {
-            $expectedResult = str_replace('<p>', '', $expectedResult);
-        }
-
-        $cmsGlossaryTransfer = $this->createCmsGlossaryTransfer($inputString);
+        $cmsGlossaryTransfer = $this->createCmsGlossaryTransfer($input);
 
         // Act
-        $cmsGlossaryTransfer = $this->tester->getFacade()->convertCmsGlossaryHtmlToTwigExpressions($cmsGlossaryTransfer);
+        $cmsGlossaryTransfer = $this->contentGuiFacade->convertCmsGlossaryHtmlToTwigExpressions($cmsGlossaryTransfer);
 
         // Assert
         $this->assertCmsGlossaryResults($expectedResult, $cmsGlossaryTransfer);
     }
 
     /**
-     * @dataProvider getContent
+     * @dataProvider getContentTwigExpressionToHtml
      *
-     * @param string $expectedContentMethod
-     * @param string $inputContentMethod
+     * @param string $input
+     * @param string $expectedResult
      *
      * @return void
      */
-    public function testCmsGlossaryTwigExpressionToHtml(string $expectedContentMethod, string $inputContentMethod): void
+    public function testCmsBlockGlossaryTwigExpressionToHtml(string $input, string $expectedResult): void
     {
-        // This method only for test conversion html to twig expression
-        if ($expectedContentMethod === 'getInvalidHtmlWidget') {
-            return;
-        }
-
         // Arrange
-        $inputString = $this->tester->{$inputContentMethod}();
-        $expectedResult = $this->tester->{$expectedContentMethod}(true);
-        $cmsGlossaryTransfer = $this->createCmsGlossaryTransfer($inputString);
+        $cmsBlockGlossaryTransfer = $this->createCmsBlockGlossaryTransfer($input);
 
         // Act
-        $cmsGlossaryTransfer = $this->tester->getFacade()->convertCmsGlossaryTwigExpressionsToHtml($cmsGlossaryTransfer);
+        $cmsBlockGlossaryTransfer = $this->contentGuiFacade->convertCmsBlockGlossaryTwigExpressionsToHtml($cmsBlockGlossaryTransfer);
+
+        // Assert
+        $this->assertCmsBlockGlossaryResults($expectedResult, $cmsBlockGlossaryTransfer);
+    }
+
+    /**
+     * @dataProvider getContentTwigExpressionToHtml
+     *
+     * @param string $input
+     * @param string $expectedResult
+     *
+     * @return void
+     */
+    public function testCmsGlossaryTwigExpressionToHtml(string $input, string $expectedResult): void
+    {
+        // Arrange
+        $cmsGlossaryTransfer = $this->createCmsGlossaryTransfer($input);
+
+        // Act
+        $cmsGlossaryTransfer = $this->contentGuiFacade->convertCmsGlossaryTwigExpressionsToHtml($cmsGlossaryTransfer);
 
         // Assert
         $this->assertCmsGlossaryResults($expectedResult, $cmsGlossaryTransfer);
@@ -161,30 +145,170 @@ class ContentGuiFacadeTest extends Unit
     /**
      * @return array
      */
-    public function getContent(): array
+    public function getContentTwigExpressionToHtml(): array
     {
         return [
-            'one element without html' => ['getOneHtmlWidget', 'getOneTwigExpression'],
-            'two of the same elements without html' => ['getTwoSameHtmlWidgets', 'getTwoSameTwigExpressions'],
-            'two different elements without html' => ['getTwoDifferentHtmlWidgets', 'getTwoDifferentTwigExpression'],
-            'empty string' => ['getEmptyString', 'getEmptyString'],
-            'wrong html' => ['getWrongHtml', 'getWrongHtml'],
-            'one element with invalid content item' => ['getInvalidContentItemTwigExpression', 'getInvalidContentItemTwigExpression'],
-            'two of the same elements with invalid HTML' => ['getTwoSameHtmlWidgetsWithInvalidHtml', 'getTwoSameTwigExpressionsWithInvalidHtml'],
-            'just text with part of twig expression' => ['getStringWithPartOfTwigExpression', 'getStringWithPartOfTwigExpression'],
-            'invalid html widget' => ['getInvalidHtmlWidget', 'getOneTwigExpression'],
+            'one element without html' => [
+                "{{ content_banner('br-test', 'default') }}",
+
+                '<span data-type="Banner" data-key="br-test" data-template="default" '
+                . 'data-twig-expression="{{ content_banner(\'br-test\', \'default\') }}">'
+                . '<span>Name: Test Banner</span>'
+                . '<span>Template: Default</span>'
+                . '</span>',
+            ],
+            'two of the same elements without html' => [
+                "{{ content_banner('br-test', 'default') }}{{ content_banner('br-test', 'default') }}",
+
+                '<span data-type="Banner" data-key="br-test" data-template="default" '
+                . 'data-twig-expression="{{ content_banner(\'br-test\', \'default\') }}">'
+                . '<span>Name: Test Banner</span>'
+                . '<span>Template: Default</span>'
+                . '</span>'
+                . '<span data-type="Banner" data-key="br-test" data-template="default" '
+                . 'data-twig-expression="{{ content_banner(\'br-test\', \'default\') }}">'
+                . '<span>Name: Test Banner</span>'
+                . '<span>Template: Default</span>'
+                . '</span>',
+            ],
+            'two different elements without html' => [
+                "{{ content_banner('apl-test', 'top-title') }}{{ content_banner('br-test', 'default') }}",
+
+                '<span data-type="Abstract Product List" data-key="apl-test" data-template="top-title" '
+                . 'data-twig-expression="{{ content_banner(\'apl-test\', \'top-title\') }}">'
+                . '<span>Name: Test Product List</span>'
+                . '<span>Template: Top title</span>'
+                . '</span>'
+                . '<span data-type="Banner" data-key="br-test" data-template="default" '
+                . 'data-twig-expression="{{ content_banner(\'br-test\', \'default\') }}">'
+                . '<span>Name: Test Banner</span>'
+                . '<span>Template: Default</span>'
+                . '</span>',
+            ],
+            'empty string' => [
+                '',
+                '',
+            ],
+            'wrong html' => [
+                '<p></p><div>',
+                '<p></p><div>',
+            ],
+            'two of the same elements with invalid HTML' => [
+                "{{ content_banner('br-test', 'default') }}<p>{{ content_banner('br-test', 'default') }}",
+
+                '<span data-type="Banner" data-key="br-test" data-template="default" '
+                . 'data-twig-expression="{{ content_banner(\'br-test\', \'default\') }}">'
+                . '<span>Name: Test Banner</span>'
+                . '<span>Template: Default</span>'
+                . '</span>'
+                . '<p>'
+                . '<span data-type="Banner" data-key="br-test" data-template="default" '
+                . 'data-twig-expression="{{ content_banner(\'br-test\', \'default\') }}">'
+                . '<span>Name: Test Banner</span>'
+                . '<span>Template: Default</span>'
+                . '</span>',
+            ],
+            'just text with part of twig expression' => [
+                '{{ content_banner just text',
+                '{{ content_banner just text',
+            ],
         ];
     }
 
     /**
-     * @param string $inputString
+     * @return array
+     */
+    public function getContentHtmlToTwigExpression(): array
+    {
+        return [
+            'one element without html' => [
+                '<span data-type="Banner" data-key="br-test" data-template="default" '
+                . 'data-twig-expression="{{ content_banner(\'br-test\', \'default\') }}">'
+                . '<span>Name: Test Banner</span>'
+                . '<span>Template: Default</span>'
+                . '</span>',
+
+                "{{ content_banner('br-test', 'default') }}",
+            ],
+            'two of the same elements without html' => [
+                '<span data-type="Banner" data-key="br-test" data-template="default" '
+                . 'data-twig-expression="{{ content_banner(\'br-test\', \'default\') }}">'
+                . '<span>Name: Test Banner</span>'
+                . '<span>Template: Default</span>'
+                . '</span>'
+                . '<span data-type="Banner" data-key="br-test" data-template="default" '
+                . 'data-twig-expression="{{ content_banner(\'br-test\', \'default\') }}">'
+                . '<span>Name: Test Banner</span>'
+                . '<span>Template: Default</span>'
+                . '</span>',
+
+                "{{ content_banner('br-test', 'default') }}{{ content_banner('br-test', 'default') }}",
+
+            ],
+            'two different elements without html' => [
+                '<span data-type="Abstract Product List" data-key="apl-test" data-template="top-title" '
+                . 'data-twig-expression="{{ content_banner(\'apl-test\', \'top-title\') }}">'
+                . '<span>Name: Test Product List</span>'
+                . '<span>Template: Top title</span>'
+                . '</span>'
+                . '<span data-type="Banner" data-key="br-test" data-template="default" '
+                . 'data-twig-expression="{{ content_banner(\'br-test\', \'default\') }}">'
+                . '<span>Name: Test Banner</span>'
+                . '<span>Template: Default</span>'
+                . '</span>',
+
+                "{{ content_banner('apl-test', 'top-title') }}{{ content_banner('br-test', 'default') }}",
+
+            ],
+            'empty string' => [
+                '',
+                '',
+            ],
+            'wrong html' => [
+                '<p></p><div>',
+                '<p></p><div>',
+            ],
+            'one element with not-existing content item' => [
+                "{{ content_banner('test', 'test') }}",
+                "{{ content_banner('test', 'test') }}",
+            ],
+            'two of the same elements with invalid HTML' => [
+                '<span data-type="Banner" data-key="br-test" data-template="default" '
+                . 'data-twig-expression="{{ content_banner(\'br-test\', \'default\') }}">'
+                . '<span>Name: Test Banner</span>'
+                . '<span>Template: Default</span>'
+                . '</span>'
+                . '<p>'
+                . '<span data-type="Banner" data-key="br-test" data-template="default" '
+                . 'data-twig-expression="{{ content_banner(\'br-test\', \'default\') }}">'
+                . '<span>Name: Test Banner</span>'
+                . '<span>Template: Default</span>'
+                . '</span>',
+
+                "{{ content_banner('br-test', 'default') }}{{ content_banner('br-test', 'default') }}",
+            ],
+            'just text with part of twig expression' => [
+                '{{ content_banner just text',
+                '{{ content_banner just text',
+            ],
+            'invalid html widget' => [
+                '<span data-type="Abstract Product List" data-key="apl-test" data-template="top-title" '
+                . 'data-twig-expression="{{ content_banner(\'apl-test\', \'top-title\') }}">',
+
+                "{{ content_banner('apl-test', 'top-title') }}",
+            ],
+        ];
+    }
+
+    /**
+     * @param string $input
      *
      * @return \Generated\Shared\Transfer\CmsBlockGlossaryTransfer
      */
-    protected function createCmsBlockGlossaryTransfer(string $inputString): CmsBlockGlossaryTransfer
+    protected function createCmsBlockGlossaryTransfer(string $input): CmsBlockGlossaryTransfer
     {
         $cmsBlockGlossaryPlaceholderTranslationTransfer = (new CmsBlockGlossaryPlaceholderTranslationTransfer())
-            ->setTranslation($inputString);
+            ->setTranslation($input);
 
         $cmsBlockGlossaryPlaceholderTransfer = (new CmsBlockGlossaryPlaceholderTransfer())
             ->addTranslation($cmsBlockGlossaryPlaceholderTranslationTransfer);
@@ -232,7 +356,7 @@ class ContentGuiFacadeTest extends Unit
      *
      * @return void
      */
-    protected function assertCmsGlossaryResults(string $expectedResult, CmsGlossaryTransfer $cmsGlossaryTransfer): void
+    public function assertCmsGlossaryResults(string $expectedResult, CmsGlossaryTransfer $cmsGlossaryTransfer): void
     {
         // Assert
         $this->assertNotEmpty($cmsGlossaryTransfer->getGlossaryAttributes());
@@ -240,5 +364,20 @@ class ContentGuiFacadeTest extends Unit
         $translation = $cmsGlossaryTransfer->getGlossaryAttributes()->offsetGet(0)->getTranslations()->offsetGet(0)->getTranslation();
         $this->assertIsString($translation);
         $this->assertEquals($expectedResult, $translation);
+    }
+
+    /**
+     * @return \Spryker\Zed\ContentGui\Business\ContentGuiFacadeInterface
+     */
+    protected function createContentGuiFacade(): ContentGuiFacadeInterface
+    {
+        $factory = new ContentGuiBusinessFactory();
+        $config = new ContentGuiConfigTest();
+        $factory->setConfig($config);
+
+        $facade = new ContentGuiFacade();
+        $facade->setFactory($factory);
+
+        return $facade;
     }
 }

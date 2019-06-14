@@ -57,7 +57,7 @@ class HtmlToTwigExpressionsConverter implements HtmlToTwigExpressionsConverterIn
 
         $this->replaceNodes($replaceableNodes);
 
-        return str_replace(['<html>', '</html>'], '', $this->domDocument->saveHTML());
+        return str_replace(['<html>', '</html>', "\n", "\r"], '', $this->domDocument->saveHTML());
     }
 
     /**
