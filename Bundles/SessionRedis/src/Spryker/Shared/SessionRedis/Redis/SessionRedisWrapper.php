@@ -151,6 +151,8 @@ class SessionRedisWrapper implements SessionRedisWrapperInterface
     }
 
     /**
+     * @deprecated Will be removed with next major release.
+     *
      * @param string $pattern
      *
      * @return array
