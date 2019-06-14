@@ -55,7 +55,7 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     public function findOrderByIdSalesOrder(int $idSalesOrder): ?OrderTransfer
     {
         return $this->getFactory()
-            ->createOrderReaderWithMultiShippingAddress()
+            ->createOrderReader()
             ->findOrderByIdSalesOrder($idSalesOrder);
     }
 
@@ -71,7 +71,7 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     public function findOrderByIdSalesOrderItem($idSalesOrderItem)
     {
         return $this->getFactory()
-            ->createOrderReaderWithMultiShippingAddress()
+            ->createOrderReader()
             ->findOrderByIdSalesOrderItem($idSalesOrderItem);
     }
 
@@ -213,7 +213,7 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     public function getDistinctOrderStates($idSalesOrder)
     {
         return $this->getFactory()
-            ->createOrderReaderWithMultiShippingAddress()
+            ->createOrderReader()
             ->getDistinctOrderStates($idSalesOrder);
     }
 

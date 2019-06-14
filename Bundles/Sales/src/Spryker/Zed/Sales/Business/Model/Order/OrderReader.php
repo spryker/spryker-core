@@ -10,9 +10,6 @@ namespace Spryker\Zed\Sales\Business\Model\Order;
 use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
-/**
- * @deprecated Use Spryker\Zed\Sales\Business\Order\OrderReader instead.
- */
 class OrderReader implements OrderReaderInterface
 {
     /**
@@ -64,15 +61,14 @@ class OrderReader implements OrderReaderInterface
     public function findOrderByIdSalesOrder(int $idSalesOrder): ?OrderTransfer
     {
         $orderEntity = $this->queryContainer
-            ->querySalesOrderDetails($idSalesOrder)
+            ->querySalesOrderDetailsWithoutShippingAddress($idSalesOrder)
             ->findOne();
 
-        if (!$orderEntity) {
+        if ($orderEntity === null) {
             return null;
         }
 
-        return $this->orderHydrator
-            ->hydrateOrderTransferFromPersistenceBySalesOrder($orderEntity);
+        return $this->orderHydrator->hydrateOrderTransferFromPersistenceBySalesOrder($orderEntity);
     }
 
     /**
