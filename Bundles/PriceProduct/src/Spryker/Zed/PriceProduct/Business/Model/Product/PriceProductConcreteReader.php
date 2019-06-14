@@ -238,21 +238,25 @@ class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
      */
     public function getProductConcretePricesByConcreteSkusAndCriteria(array $skus, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): array
     {
-        $priceData = $this->priceProductRepository->getProductConcretePricesByConcreteSkusAndCriteria($skus, $priceProductCriteriaTransfer);
-        $pricesBySku = [];
-        foreach ($priceData as $price) {
-            $pricesBySku[$price['PriceProduct']['Product']['sku']][] = $price;
-        }
-        $out = [];
-        foreach ($pricesBySku as $sku => $nestedPrices) {
-            $priceProductTransfers = $this->priceProductMapper->mapPricesToPriceProductTransfers(
-                $nestedPrices
-            );
-            $priceProductTransfers = $this->priceProductExpander->expandPriceProductTransfers($priceProductTransfers);
-            $priceProductTransfers = $this->pluginExecutor->executePriceExtractorPluginsForProductConcrete($priceProductTransfers);
-            $out[$sku] = $priceProductTransfers;
+        $priceProductTransfers = $this->priceProductRepository->getProductConcretePricesByConcreteSkusAndCriteria($skus, $priceProductCriteriaTransfer);
+        $priceProductTransfers = $this->priceProductExpander->expandPriceProductTransfers($priceProductTransfers);
+        $priceProductTransfers = $this->pluginExecutor->executePriceExtractorPluginsForProductConcrete($priceProductTransfers);
+
+        return $this->indexPriceProductTransferByProductSku($priceProductTransfers);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[][]
+     */
+    protected function indexPriceProductTransferByProductSku(array $priceProductTransfers): array
+    {
+        $indexedPriceProductTransfers = [];
+        foreach ( $priceProductTransfers as $priceProductTransfer) {
+            $indexedPriceProductTransfers[$priceProductTransfer->getSkuProduct()][] = $priceProductTransfer;
         }
 
-        return $out;
+        return $indexedPriceProductTransfers;
     }
 }

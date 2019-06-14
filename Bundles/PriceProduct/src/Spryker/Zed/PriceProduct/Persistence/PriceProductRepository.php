@@ -16,7 +16,6 @@ use Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
-use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Collection\ObjectCollection;
 use Propel\Runtime\Propel;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -373,14 +372,15 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
      * @param string[] $concreteSkus
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
     public function getProductAbstractPricesByConcreteSkusAndCriteria(
         array $concreteSkus,
         PriceProductCriteriaTransfer $priceProductCriteriaTransfer
     ): array {
         $priceProductStoreQuery = $this->createBasePriceProductStoreQuery($priceProductCriteriaTransfer);
-        $priceProductStoreQuery
+        $priceProductStoreEntities = $priceProductStoreQuery
+            ->joinWithCurrency()
             ->addAsColumn('product_sku', 'spy_product.sku')
             ->innerJoinWithPriceProduct()
             ->usePriceProductQuery()
@@ -391,9 +391,14 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
                         ->filterBySku_In($concreteSkus)
                     ->endUse()
                 ->endUse()
-            ->endUse();
+            ->endUse()
+            ->find();
 
-        return $priceProductStoreQuery->setFormatter(ModelCriteria::FORMAT_ARRAY)->find()->toArray();
+        if (!$priceProductStoreEntities->count()) {
+            return [];
+        }
+
+        return $this->mapPriceProductStoreEntitiesToPriceProductTransfers($priceProductStoreEntities);
     }
 
     /**
@@ -407,15 +412,37 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
         PriceProductCriteriaTransfer $priceProductCriteriaTransfer
     ): array {
         $priceProductStoreQuery = $this->createBasePriceProductStoreQuery($priceProductCriteriaTransfer);
-        $priceProductStoreQuery
+        $priceProductStoreEntities = $priceProductStoreQuery
+            ->joinWithCurrency()
             ->joinWithPriceProduct()
             ->usePriceProductQuery()
                 ->innerJoinWithProduct()
                 ->useProductQuery()
                     ->filterBySku_In($concreteSkus)
                 ->endUse()
-            ->endUse();
+            ->endUse()
+            ->find();
 
-        return $priceProductStoreQuery->setFormatter(ModelCriteria::FORMAT_ARRAY)->find()->toArray();
+        if (!$priceProductStoreEntities->count()) {
+            return [];
+        }
+
+        return $this->mapPriceProductStoreEntitiesToPriceProductTransfers($priceProductStoreEntities);
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore[] $priceProductStoreEntities
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    protected function mapPriceProductStoreEntitiesToPriceProductTransfers(ObjectCollection $priceProductStoreEntities): array
+    {
+        $mapper = $this->getFactory()->createPriceProductMapper();
+        $priceProductTransfers = [];
+        foreach ($priceProductStoreEntities as $priceProductStoreEntity) {
+            $priceProductTransfers[] = $mapper->mapPriceProductStoreEntityToPriceProductTransfer($priceProductStoreEntity, new PriceProductTransfer());
+        }
+
+        return $priceProductTransfers;
     }
 }
