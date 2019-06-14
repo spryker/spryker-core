@@ -160,6 +160,7 @@ class ForeignKeysProvider implements ForeignKeysProviderInterface
         if ($hasNamespace) {
             $tableXmlElement->registerXPathNamespace('s', 'spryker:schema-01');
         }
+
         return ($tableXmlElement->xpath($hasNamespace ? 's:behavior[@name="archivable"]' : 'behavior[@name="archivable"]') === false || count($tableXmlElement->xpath($hasNamespace ? 's:behavior[@name="archivable"]' : 'behavior[@name="archivable"]')) === 0);
     }
 
@@ -227,6 +228,7 @@ class ForeignKeysProvider implements ForeignKeysProviderInterface
         if ($hasNamespace) {
             $xmlElement->registerXPathNamespace('s', 'spryker:schema-01');
         }
+
         return $xmlElement->xpath($hasNamespace ? '//s:table' : '//table') ?: [];
     }
 
