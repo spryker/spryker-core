@@ -35,8 +35,6 @@ use Spryker\Zed\Sales\Business\Model\OrderItem\OrderItemTransformerInterface;
 use Spryker\Zed\Sales\Business\Model\OrderItem\SalesOrderItemMapper as ModelSalesOrderItemMapper;
 use Spryker\Zed\Sales\Business\Order\OrderHydrator as OrderHydratorWithMultiShippingAddress;
 use Spryker\Zed\Sales\Business\Order\OrderHydratorInterface;
-use Spryker\Zed\Sales\Business\Order\OrderReader as OrderReaderWithMultiShippingAddress;
-use Spryker\Zed\Sales\Business\Order\OrderReaderInterface;
 use Spryker\Zed\Sales\Business\OrderItem\SalesOrderItemGrouper;
 use Spryker\Zed\Sales\Business\OrderItem\SalesOrderItemGrouperInterface;
 use Spryker\Zed\Sales\Business\OrderItem\SalesOrderItemReader;
@@ -135,17 +133,6 @@ class SalesBusinessFactory extends AbstractBusinessFactory
         return new OrderReader(
             $this->getQueryContainer(),
             $this->createOrderHydrator()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\Sales\Business\Order\OrderReaderInterface
-     */
-    public function createOrderReaderWithMultiShippingAddress(): OrderReaderInterface
-    {
-        return new OrderReaderWithMultiShippingAddress(
-            $this->getQueryContainer(),
-            $this->createOrderHydratorWithMultiShippingAddress()
         );
     }
 

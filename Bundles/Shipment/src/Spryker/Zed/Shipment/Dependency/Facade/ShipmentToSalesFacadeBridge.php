@@ -9,7 +9,6 @@ namespace Spryker\Zed\Shipment\Dependency\Facade;
 
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
-use Generated\Shared\Transfer\ItemCollectionTransfer;
 
 class ShipmentToSalesFacadeBridge implements ShipmentToSalesFacadeInterface
 {

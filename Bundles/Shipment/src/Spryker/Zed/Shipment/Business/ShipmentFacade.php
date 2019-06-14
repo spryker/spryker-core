@@ -79,9 +79,9 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
      *
      * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $methodTransfer
      *
-     * @return int
+     * @return int|null
      */
-    public function createMethod(ShipmentMethodTransfer $methodTransfer): int
+    public function createMethod(ShipmentMethodTransfer $methodTransfer): ?int
     {
         return $this->getFactory()
             ->createMethodWriter()
@@ -338,7 +338,7 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ShipmentTransfer|null
      */
-    public function findShipmentTransferById(int $idSalesShipment): ?ShipmentTransfer
+    public function findShipmentById(int $idSalesShipment): ?ShipmentTransfer
     {
         return $this->getFactory()
             ->createShipmentReader()

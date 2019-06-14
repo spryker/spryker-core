@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Shipment\Business\Checkout;
 
-use ArrayObject;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -137,8 +136,8 @@ class MultiShipmentOrderSaver implements MultiShipmentOrderSaverInterface
         ShipmentGroupTransfer $shipmentGroupTransfer,
         SaveOrderTransfer $saveOrderTransfer
     ): ShipmentGroupTransfer {
-
         $shipmentTransfer = $shipmentGroupTransfer->getShipment();
+        $shipmentGroupTransfer->requireShipment();
 
         $expenseTransfer = $this->findShipmentExpense($orderTransfer, $shipmentTransfer);
         if ($expenseTransfer !== null) {
@@ -147,7 +146,7 @@ class MultiShipmentOrderSaver implements MultiShipmentOrderSaverInterface
 
         $shipmentTransfer = $this->saveSalesOrderAddress($shipmentTransfer);
 
-        $shipmentTransfer = $this->entityManager->createSalesShipment(
+        $shipmentTransfer = $this->entityManager->saveSalesShipment(
             $shipmentTransfer,
             $orderTransfer,
             $expenseTransfer

@@ -8,8 +8,6 @@
 namespace Spryker\Zed\Shipment\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\AddressTransfer;
-use Generated\Shared\Transfer\ExpenseTransfer;
-use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ShipmentCarrierTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
@@ -19,47 +17,25 @@ use Orm\Zed\Shipment\Persistence\SpyShipmentMethod;
 interface ShipmentMapperInterface
 {
     /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesShipment $salesShipmentEntity
      * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
+     * @param \Orm\Zed\Sales\Persistence\SpySalesShipment $salesShipmentEntity
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesShipment
      */
     public function mapShipmentTransferToShipmentEntity(
-        SpySalesShipment $salesShipmentEntity,
-        ShipmentTransfer $shipmentTransfer
+        ShipmentTransfer $shipmentTransfer,
+        SpySalesShipment $salesShipmentEntity
     ): SpySalesShipment;
 
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesShipment $salesShipmentEntity
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesShipment
-     */
-    public function mapOrderTransferToShipmentEntity(
-        SpySalesShipment $salesShipmentEntity,
-        OrderTransfer $orderTransfer
-    ): SpySalesShipment;
-
-    /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesShipment $salesShipmentEntity
-     * @param \Generated\Shared\Transfer\ExpenseTransfer|null $expenseTransfer
-     *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesShipment
-     */
-    public function mapExpenseTransferToShipmentEntity(
-        SpySalesShipment $salesShipmentEntity,
-        ?ExpenseTransfer $expenseTransfer = null
-    ): SpySalesShipment;
-
-    /**
      * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
-     * @param \Orm\Zed\Sales\Persistence\SpySalesShipment $salesShipmentEntity
      *
      * @return \Generated\Shared\Transfer\ShipmentTransfer
      */
     public function mapShipmentEntityToShipmentTransfer(
-        ShipmentTransfer $shipmentTransfer,
-        SpySalesShipment $salesShipmentEntity
+        SpySalesShipment $salesShipmentEntity,
+        ShipmentTransfer $shipmentTransfer
     ): ShipmentTransfer;
 
     /**
@@ -96,14 +72,14 @@ interface ShipmentMapperInterface
     ): AddressTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
      * @param \Orm\Zed\Sales\Persistence\SpySalesShipment $salesShipmentEntity
+     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentTransfer
      */
     public function mapShipmentEntityToShipmentTransferWithDetails(
-        ShipmentTransfer $shipmentTransfer,
-        SpySalesShipment $salesShipmentEntity
+        SpySalesShipment $salesShipmentEntity,
+        ShipmentTransfer $shipmentTransfer
     ): ShipmentTransfer;
 
     /**

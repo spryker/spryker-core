@@ -7,11 +7,28 @@
 
 namespace Spryker\Zed\Sales\Business\Model\Order;
 
-use Spryker\Zed\Sales\Business\Order\OrderReaderInterface as OrderReaderInterfaceWithMultiShippingAddress;
+use Generated\Shared\Transfer\OrderTransfer;
 
-/**
- * @deprecated Use Spryker\Zed\Sales\Business\Order\OrderReaderInterface instead.
- */
-interface OrderReaderInterface extends OrderReaderInterfaceWithMultiShippingAddress
+interface OrderReaderInterface
 {
+    /**
+     * @param int $idSalesOrder
+     *
+     * @return string[]
+     */
+    public function getDistinctOrderStates($idSalesOrder);
+
+    /**
+     * @param int $idSalesOrder
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer|null
+     */
+    public function findOrderByIdSalesOrder(int $idSalesOrder): ?OrderTransfer;
+
+    /**
+     * @param int $idSalesOrderItem
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer|null
+     */
+    public function findOrderByIdSalesOrderItem($idSalesOrderItem);
 }

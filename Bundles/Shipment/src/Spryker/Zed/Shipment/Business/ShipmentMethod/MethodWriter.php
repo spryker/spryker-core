@@ -8,16 +8,24 @@
 namespace Spryker\Zed\Shipment\Business\ShipmentMethod;
 
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
-use Orm\Zed\Shipment\Persistence\SpyShipmentMethod;
 use Spryker\Zed\Shipment\Business\Model\MethodPriceInterface;
-use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface;
+use Spryker\Zed\Shipment\Persistence\ShipmentEntityManagerInterface;
+use Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface;
 
+/**
+ * @method \Spryker\Zed\Shipment\Persistence\ShipmentPersistenceFactory getFactory()
+ */
 class MethodWriter implements MethodWriterInterface
 {
     /**
-     * @var \Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface
+     * @var \Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface
      */
-    protected $queryContainer;
+    protected $shipmentRepository;
+
+    /**
+     * @var \Spryker\Zed\Shipment\Persistence\ShipmentEntityManagerInterface
+     */
+    protected $shipmentEntityManager;
 
     /**
      * @var \Spryker\Zed\Shipment\Business\Model\MethodPriceInterface
@@ -25,33 +33,31 @@ class MethodWriter implements MethodWriterInterface
     protected $methodPrice;
 
     /**
-     * @param \Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface $shipmentRepository
+     * @param \Spryker\Zed\Shipment\Persistence\ShipmentEntityManagerInterface $shipmentEntityManager
      * @param \Spryker\Zed\Shipment\Business\Model\MethodPriceInterface $methodPrice
      */
     public function __construct(
-        ShipmentQueryContainerInterface $queryContainer,
+        ShipmentRepositoryInterface $shipmentRepository,
+        ShipmentEntityManagerInterface $shipmentEntityManager,
         MethodPriceInterface $methodPrice
     ) {
-        $this->queryContainer = $queryContainer;
+        $this->shipmentRepository = $shipmentRepository;
+        $this->shipmentEntityManager = $shipmentEntityManager;
         $this->methodPrice = $methodPrice;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $methodTransfer
+     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
      *
-     * @return int
+     * @return int|null
      */
-    public function create(ShipmentMethodTransfer $methodTransfer): int
+    public function create(ShipmentMethodTransfer $shipmentMethodTransfer): ?int
     {
-        $methodEntity = new SpyShipmentMethod();
-        $methodEntity->fromArray($methodTransfer->toArray());
-        $methodEntity->save();
+        $shipmentMethodTransfer = $this->shipmentEntityManager->saveSalesShipmentMethod($shipmentMethodTransfer);
+        $this->methodPrice->save($shipmentMethodTransfer);
 
-        $idShipmentMethod = $methodEntity->getPrimaryKey();
-        $methodTransfer->setIdShipmentMethod($idShipmentMethod);
-        $this->methodPrice->save($methodTransfer);
-
-        return $idShipmentMethod;
+        return $shipmentMethodTransfer->getIdShipmentMethod();
     }
 
     /**
@@ -61,35 +67,27 @@ class MethodWriter implements MethodWriterInterface
      */
     public function delete(int $idShipmentMethod): bool
     {
-        $methodQuery = $this->queryContainer->queryMethodByIdMethod($idShipmentMethod);
-        $entity = $methodQuery->findOne();
-
-        if ($entity) {
-            $entity->delete();
-        }
+        $this->shipmentEntityManager->deleteMethodByIdMethod($idShipmentMethod);
 
         return true;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $methodTransfer
+     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
      *
-     * @return int|bool
+     * @return bool
      */
-    public function update(ShipmentMethodTransfer $methodTransfer)
+    public function update(ShipmentMethodTransfer $shipmentMethodTransfer): bool
     {
-        if ($this->hasMethod($methodTransfer->getIdShipmentMethod())) {
-            $methodEntity =
-                $this->queryContainer->queryMethodByIdMethod($methodTransfer->getIdShipmentMethod())->findOne();
-
-            $methodEntity->fromArray($methodTransfer->toArray());
-            $methodEntity->save();
-            $this->methodPrice->save($methodTransfer);
-
-            return $methodEntity->getPrimaryKey();
+        $idShipmentMethod = $shipmentMethodTransfer->getIdShipmentMethod();
+        if ($idShipmentMethod === null || !$this->hasMethod($idShipmentMethod)) {
+            return false;
         }
 
-        return false;
+        $shipmentMethodTransfer = $this->shipmentEntityManager->saveSalesShipmentMethod($shipmentMethodTransfer);
+        $this->methodPrice->save($shipmentMethodTransfer);
+
+        return true;
     }
 
     /**
@@ -99,8 +97,6 @@ class MethodWriter implements MethodWriterInterface
      */
     protected function hasMethod(int $idShipmentMethod): bool
     {
-        $methodQuery = $this->queryContainer->queryMethodByIdMethod($idShipmentMethod);
-
-        return $methodQuery->count() > 0;
+        return $this->shipmentRepository->hasShipmentMethodByIdShipmentMethod($idShipmentMethod);
     }
 }

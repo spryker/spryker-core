@@ -9,32 +9,31 @@ namespace Spryker\Zed\Shipment\Business\Shipment;
 
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
-use Orm\Zed\Sales\Persistence\SpySalesShipment;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToSalesFacadeInterface;
-use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface;
+use Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface;
 
 class ShipmentReader implements ShipmentReaderInterface
 {
-    /**
-     * @var \Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface
-     */
-    protected $queryContainer;
-
     /**
      * @var \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToSalesFacadeInterface
      */
     protected $salesFacade;
 
     /**
-     * @param \Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface $queryContainer
+     * @var \Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface
+     */
+    protected $shipmentRepository;
+
+    /**
      * @param \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToSalesFacadeInterface $salesFacade
+     * @param \Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface $shipmentRepository
      */
     public function __construct(
-        ShipmentQueryContainerInterface $queryContainer,
-        ShipmentToSalesFacadeInterface $salesFacade
+        ShipmentToSalesFacadeInterface $salesFacade,
+        ShipmentRepositoryInterface $shipmentRepository
     ) {
-        $this->queryContainer = $queryContainer;
         $this->salesFacade = $salesFacade;
+        $this->shipmentRepository = $shipmentRepository;
     }
 
     /**
@@ -44,41 +43,25 @@ class ShipmentReader implements ShipmentReaderInterface
      */
     public function findShipmentById(int $idSalesShipment): ?ShipmentTransfer
     {
-        /**
-         * @todo Refactor this.
-         */
-        $shipmentEntity = $this->queryContainer
-            ->querySalesShipmentById($idSalesShipment)
-            ->find()
-            ->getFirst();
-
-        if ($shipmentEntity === null) {
+        $shipmentTransfer = $this->shipmentRepository->findShipmentById($idSalesShipment);
+        if ($shipmentTransfer === null) {
             return null;
         }
 
-        $shipmentTransfer = new ShipmentTransfer();
-        $shipmentTransfer = $this->mapShipmentEntityToShipmentTransfer($shipmentEntity, $shipmentTransfer);
+        $shippingAddressTransfer = $shipmentTransfer->getShippingAddress();
+        if ($shippingAddressTransfer !== null) {
+            $shipmentAddressTransfer = $this->salesFacade
+                ->findOrderAddressByIdOrderAddress($shippingAddressTransfer->getIdSalesOrderAddress());
+            $shipmentTransfer->setShippingAddress($shipmentAddressTransfer);
+        }
 
-        return $shipmentTransfer;
-    }
+        $shipmentMethodTransfer = $shipmentTransfer->getMethod();
+        if ($shipmentMethodTransfer === null) {
+            return $shipmentTransfer;
+        }
 
-    /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesShipment $shipmentEntity
-     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShipmentTransfer
-     */
-    protected function mapShipmentEntityToShipmentTransfer(SpySalesShipment $shipmentEntity, ShipmentTransfer $shipmentTransfer): ShipmentTransfer
-    {
-        $shipmentTransfer->fromArray($shipmentEntity->toArray(), true);
-
-        $shipmentTransfer->setShippingAddress(
-            $this->salesFacade->findOrderAddressByIdOrderAddress($shipmentEntity->getFkSalesOrderAddress())
-        );
-
-        $shipmentTransfer->setMethod(
-            $this->getShipmentMethodTransferByName($shipmentEntity->getName())
-        );
+        $shipmentMethodTransfer = $this->getShipmentMethodTransferByName($shipmentMethodTransfer->getName());
+        $shipmentTransfer->setMethod($shipmentMethodTransfer);
 
         return $shipmentTransfer;
     }
@@ -86,17 +69,14 @@ class ShipmentReader implements ShipmentReaderInterface
     /**
      * @param string $shipmentMethodName
      *
-     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
      */
-    protected function getShipmentMethodTransferByName(string $shipmentMethodName): ShipmentMethodTransfer
+    protected function getShipmentMethodTransferByName(string $shipmentMethodName): ?ShipmentMethodTransfer
     {
-        $shipmentMethodTransfer = new ShipmentMethodTransfer();
-        $shipmentMethodEntity = $this->queryContainer
-            ->queryMethodsWithMethodPricesAndCarrier()
-            ->filterByName($shipmentMethodName)
-            ->find()
-            ->getFirst();
+        if ($shipmentMethodName === '') {
+            return null;
+        }
 
-        return $shipmentMethodTransfer->fromArray($shipmentMethodEntity->toArray(), true);
+        return $this->shipmentRepository->findShipmentMethodByName($shipmentMethodName);
     }
 }
