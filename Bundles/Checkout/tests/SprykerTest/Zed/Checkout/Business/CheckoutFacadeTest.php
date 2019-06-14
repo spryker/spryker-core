@@ -129,7 +129,7 @@ class CheckoutFacadeTest extends Unit
             ->withBillingAddress([AddressTransfer::EMAIL => $email])
             ->build();
 
-        $result = $this->checkoutFacade->placeOrder($quoteTransfer);
+        $result = $this->tester->getFacade()->placeOrder($quoteTransfer);
 
         $this->assertTrue($result->getIsSuccess());
     }
@@ -214,7 +214,7 @@ class CheckoutFacadeTest extends Unit
             ->withBillingAddress()
             ->build();
 
-        $result = $this->checkoutFacade->placeOrder($quoteTransfer);
+        $result = $this->tester->getFacade()->placeOrder($quoteTransfer);
 
         $this->assertTrue($result->getIsSuccess());
         $this->assertEquals(0, count($result->getErrors()));
