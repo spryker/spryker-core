@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\PriceProduct\Persistence\Mapper;
 
 use Generated\Shared\Transfer\CurrencyTransfer;
@@ -11,6 +16,12 @@ use Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore;
 
 class PriceProductMapper
 {
+    /**
+     * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore $priceProductStoreEntity
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
+     */
     public function mapPriceProductStoreEntityToPriceProductTransfer(
         SpyPriceProductStore $priceProductStoreEntity,
         PriceProductTransfer $priceProductTransfer
@@ -36,6 +47,7 @@ class PriceProductMapper
         $priceProductDimensionTransfer->fromArray($priceProductStoreEntityData, true);
 
         $sku = $priceProductEntity->getProduct() ? $priceProductEntity->getProduct()->getSku() : $priceProductStoreEntityData['product_sku'];
+        
         return $priceProductTransfer
             ->fromArray($priceProductStoreEntityData, true)
             ->setSkuProduct($sku)
