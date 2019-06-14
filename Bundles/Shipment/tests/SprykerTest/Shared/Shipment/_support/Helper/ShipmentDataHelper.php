@@ -11,6 +11,7 @@ use Codeception\Module;
 use Generated\Shared\DataBuilder\ShipmentBuilder;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesShipment;
+use Orm\Zed\Sales\Persistence\SpySalesShipmentQuery;
 use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
@@ -77,8 +78,6 @@ class ShipmentDataHelper extends Module
     {
         $this->debug(sprintf('Deleting Sales shipment: %d', $idSalesShipment));
 
-        $this->getShipmentQuery()
-            ->querySalesShipmentById($idSalesShipment)
-            ->delete();
+        SpySalesShipmentQuery::create()->filterByIdSalesShipment($idSalesShipment)->delete();
     }
 }

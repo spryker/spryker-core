@@ -7,8 +7,21 @@
 
 namespace Spryker\Zed\ShipmentGui\Communication\Form\DataProvider;
 
-class ShipmentFormCreateDataProvider extends BaseShipmentFormDataProvider
+class ShipmentFormCreateDataProvider implements ShipmentFormDataProviderInterface
 {
+    /**
+     * @var \Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentFormDefaultDataProviderInterface
+     */
+    protected $shipmentFormDefaultDataProvider;
+
+    /**
+     * @param \Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentFormDefaultDataProviderInterface $shipmentFormDefaultDataProvider
+     */
+    public function __construct(ShipmentFormDefaultDataProviderInterface $shipmentFormDefaultDataProvider)
+    {
+        $this->shipmentFormDefaultDataProvider = $shipmentFormDefaultDataProvider;
+    }
+
     /**
      * @param int $idSalesOrder
      * @param int|null $idSalesShipment
@@ -17,11 +30,17 @@ class ShipmentFormCreateDataProvider extends BaseShipmentFormDataProvider
      */
     public function getData(int $idSalesOrder, ?int $idSalesShipment = null): array
     {
-        $formData = [];
-        $defaults = $this->getDefaultFormFields($idSalesOrder, $idSalesShipment);
+        return $this->shipmentFormDefaultDataProvider->getDefaultFormFields($idSalesOrder, $idSalesShipment);
+    }
 
-        $formData = array_merge($defaults, $formData);
-
-        return $formData;
+    /**
+     * @param int $idSalesOrder
+     * @param int|null $idSalesShipment
+     *
+     * @return array[]
+     */
+    public function getOptions(int $idSalesOrder, ?int $idSalesShipment = null): array
+    {
+        return $this->shipmentFormDefaultDataProvider->getOptions($idSalesOrder, $idSalesShipment);
     }
 }

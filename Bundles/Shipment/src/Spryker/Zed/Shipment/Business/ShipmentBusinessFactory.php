@@ -22,6 +22,8 @@ use Spryker\Zed\Shipment\Business\Model\ShipmentOrderHydrate;
 use Spryker\Zed\Shipment\Business\Model\ShipmentOrderSaver;
 use Spryker\Zed\Shipment\Business\Model\ShipmentTaxRateCalculator;
 use Spryker\Zed\Shipment\Business\Model\Transformer\ShipmentMethodTransformer;
+use Spryker\Zed\Shipment\Business\Sanitizer\ExpenseSanitizer;
+use Spryker\Zed\Shipment\Business\Sanitizer\ExpenseSanitizerInterface;
 use Spryker\Zed\Shipment\Business\Shipment\ShipmentOrderHydrate as MultipleShipmentOrderHydrate;
 use Spryker\Zed\Shipment\Business\Shipment\ShipmentOrderHydrateInterface;
 use Spryker\Zed\Shipment\Business\Shipment\ShipmentReader;
@@ -32,6 +34,12 @@ use Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentFetcher;
 use Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentFetcherInterface;
 use Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentMethodExpander;
 use Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentMethodExpanderInterface;
+use Spryker\Zed\Shipment\Business\ShipmentMethod\MethodAvailabilityChecker;
+use Spryker\Zed\Shipment\Business\ShipmentMethod\MethodAvailabilityCheckerInterface;
+use Spryker\Zed\Shipment\Business\ShipmentMethod\MethodDeliveryTimeReader;
+use Spryker\Zed\Shipment\Business\ShipmentMethod\MethodDeliveryTimeReaderInterface;
+use Spryker\Zed\Shipment\Business\ShipmentMethod\MethodPriceReader;
+use Spryker\Zed\Shipment\Business\ShipmentMethod\MethodPriceReaderInterface;
 use Spryker\Zed\Shipment\Business\ShipmentMethod\MethodReader;
 use Spryker\Zed\Shipment\Business\ShipmentMethod\MethodReaderInterface;
 use Spryker\Zed\Shipment\Business\ShipmentMethod\MethodWriter;
@@ -40,7 +48,6 @@ use Spryker\Zed\Shipment\Business\StrategyResolver\OrderSaverStrategyResolver;
 use Spryker\Zed\Shipment\Business\StrategyResolver\OrderSaverStrategyResolverInterface;
 use Spryker\Zed\Shipment\Business\StrategyResolver\TaxRateCalculatorStrategyResolver;
 use Spryker\Zed\Shipment\Business\StrategyResolver\TaxRateCalculatorStrategyResolverInterface;
-use Spryker\Zed\Shipment\Business\Transfer\TransferBuilder;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCustomerInterface;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToSalesFacadeInterface;
 use Spryker\Zed\Shipment\ShipmentDependencyProvider;
@@ -102,7 +109,11 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
             $this->getStoreFacade(),
             $this->getShipmentService(),
             $this->getPlugins(),
-            $this->getMethodFilterPlugins()
+            $this->getMethodFilterPlugins(),
+            $this->getRepository(),
+            $this->createShipmentMethodAvailabilityChecker(),
+            $this->createShipmentMethodPriceReader(),
+            $this->createShipmentMethodDeliveryTimeReader()
         );
     }
 
@@ -112,18 +123,9 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     public function createMethodWriter(): MethodWriterInterface
     {
         return new MethodWriter(
-            $this->getQueryContainer(),
+            $this->getRepository(),
+            $this->getEntityManager(),
             $this->createMethodPrice()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\Shipment\Business\Transfer\TransferBuilder
-     */
-    public function createTransferBuilder(): TransferBuilder
-    {
-        return new TransferBuilder(
-            $this->createMethodReader()
         );
     }
 
@@ -172,10 +174,9 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     public function createShipmentOrderSaver()
     {
         return new ShipmentOrderSaver(
-            $this->getSalesQueryContainer(),
             $this->getEntityManager(),
-            $this->getSalesFacade(),
-            $this->getCustomerFacade()
+            $this->createExpenseSanitizer(),
+            $this->getRepository()
         );
     }
 
@@ -187,10 +188,9 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     public function createCheckoutShipmentOrderSaver()
     {
         return new CheckoutShipmentOrderSaver(
-            $this->getSalesQueryContainer(),
             $this->getEntityManager(),
-            $this->getSalesFacade(),
-            $this->getCustomerFacade()
+            $this->createExpenseSanitizer(),
+            $this->getRepository()
         );
     }
 
@@ -378,8 +378,8 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     public function createShipmentReader(): ShipmentReaderInterface
     {
         return new ShipmentReader(
-            $this->getQueryContainer(),
-            $this->getSalesFacade()
+            $this->getSalesFacade(),
+            $this->getRepository()
         );
     }
 
@@ -392,5 +392,66 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
             $this->createCheckoutMultiShipmentOrderSaver(),
             $this->createShipmentMethodExpander()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Shipment\Business\Sanitizer\ExpenseSanitizerInterface
+     */
+    public function createExpenseSanitizer(): ExpenseSanitizerInterface
+    {
+        return new ExpenseSanitizer();
+    }
+
+    /**
+     * @return \Spryker\Zed\Shipment\Business\ShipmentMethod\MethodAvailabilityCheckerInterface
+     */
+    public function createShipmentMethodAvailabilityChecker(): MethodAvailabilityCheckerInterface
+    {
+        return new MethodAvailabilityChecker($this->getAvailabilityPlugins());
+    }
+
+    /**
+     * @return \Spryker\Zed\Shipment\Business\ShipmentMethod\MethodPriceReaderInterface
+     */
+    public function createShipmentMethodPriceReader(): MethodPriceReaderInterface
+    {
+        return new MethodPriceReader(
+            $this->getPricePlugins(),
+            $this->getStoreFacade(),
+            $this->getRepository(),
+            $this->getCurrencyFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Shipment\Business\ShipmentMethod\MethodDeliveryTimeReaderInterface
+     */
+    public function createShipmentMethodDeliveryTimeReader(): MethodDeliveryTimeReaderInterface
+    {
+        return new MethodDeliveryTimeReader($this->getDeliveryTimePlugins());
+    }
+
+    /**
+     * @return \Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodAvailabilityPluginInterface[]|\Spryker\Zed\Shipment\Communication\Plugin\ShipmentMethodAvailabilityPluginInterface[]
+     */
+    public function getAvailabilityPlugins(): array
+    {
+        return $this->getProvidedDependency(ShipmentDependencyProvider::AVAILABILITY_PLUGINS);
+    }
+
+    /**
+     * @return \Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodPricePluginInterface[]|\Spryker\Zed\Shipment\Communication\Plugin\ShipmentMethodPricePluginInterface[]
+     */
+    public function getPricePlugins(): array
+    {
+        return $this->getProvidedDependency(ShipmentDependencyProvider::PRICE_PLUGINS);
+    }
+
+    /**
+     * @return \Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodDeliveryTimePluginInterface[]|\Spryker\Zed\Shipment\Communication\Plugin\ShipmentMethodDeliveryTimePluginInterface[]
+     */
+    public function getDeliveryTimePlugins(): array
+    {
+        return $this->getProvidedDependency(ShipmentDependencyProvider::DELIVERY_TIME_PLUGINS);
     }
 }

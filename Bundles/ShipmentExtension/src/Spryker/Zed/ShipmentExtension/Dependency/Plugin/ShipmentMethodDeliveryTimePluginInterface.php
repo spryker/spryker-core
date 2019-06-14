@@ -5,19 +5,20 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Shipment\Communication\Plugin;
+namespace Spryker\Zed\ShipmentExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShipmentGroupTransfer;
 
-/**
- * @deprecated Use \Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodDeliveryTimePluginInterface instead.
- */
 interface ShipmentMethodDeliveryTimePluginInterface
 {
     /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return int Delivery time in seconds
+     * @return int
      */
-    public function getTime(QuoteTransfer $quoteTransfer);
+    public function getTime(ShipmentGroupTransfer $shipmentGroupTransfer, QuoteTransfer $quoteTransfer): int;
 }

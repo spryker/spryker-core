@@ -113,8 +113,6 @@ class Method implements MethodInterface
     }
 
     /**
-     * @deprecated Use MethodReader::getAvailableMethodsByShipment() instead.
-     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer
@@ -147,8 +145,6 @@ class Method implements MethodInterface
     }
 
     /**
-     * @deprecated Use MethodReader::getAvailableMethodsByShipment() instead.
-     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentGroupCollectionTransfer
@@ -165,8 +161,6 @@ class Method implements MethodInterface
     }
 
     /**
-     * @deprecated Use MethodReader::getAvailableMethodsByShipmentTransfer() instead.
-     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer
@@ -386,8 +380,6 @@ class Method implements MethodInterface
     }
 
     /**
-     * @deprecated use MethodReader::isShipmentMethodAvailableForShipmentGroup() instead
-     *
      * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethod $method
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -418,8 +410,6 @@ class Method implements MethodInterface
     }
 
     /**
-     * @deprecated MethodReader::getShipmentGroupShippingPrice()
-     *
      * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethod $method
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *

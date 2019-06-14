@@ -5,18 +5,24 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ShipmentExtension\Communication\Plugin;
+namespace Spryker\Zed\Shipment\Business\ShipmentMethod;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
+use Generated\Shared\Transfer\ShipmentMethodTransfer;
 
-interface ShipmentMethodAvailabilityPluginInterface
+interface MethodPriceReaderInterface
 {
     /**
+     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
      * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return bool
+     * @return int|null
      */
-    public function isAvailable(ShipmentGroupTransfer $shipmentGroupTransfer, QuoteTransfer $quoteTransfer): bool;
+    public function getShipmentGroupShippingPrice(
+        ShipmentMethodTransfer $shipmentMethodTransfer,
+        ShipmentGroupTransfer $shipmentGroupTransfer,
+        QuoteTransfer $quoteTransfer
+    ): ?int;
 }

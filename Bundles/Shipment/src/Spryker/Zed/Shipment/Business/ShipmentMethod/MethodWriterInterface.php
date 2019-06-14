@@ -14,9 +14,9 @@ interface MethodWriterInterface
     /**
      * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
      *
-     * @return int
+     * @return int|null
      */
-    public function create(ShipmentMethodTransfer $shipmentMethodTransfer): int;
+    public function create(ShipmentMethodTransfer $shipmentMethodTransfer): ?int;
 
     /**
      * @param int $idShipmentMethod
@@ -28,7 +28,7 @@ interface MethodWriterInterface
     /**
      * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
      *
-     * @return int|bool
+     * @return bool
      */
-    public function update(ShipmentMethodTransfer $shipmentMethodTransfer);
+    public function update(ShipmentMethodTransfer $shipmentMethodTransfer): bool;
 }

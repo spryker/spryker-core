@@ -47,13 +47,13 @@ class ShipmentGuiToShipmentFacadeBridge implements ShipmentGuiToShipmentFacadeIn
     }
 
     /**
-     * @param int $idShipment
+     * @param int $idSalesShipment
      *
      * @return \Generated\Shared\Transfer\ShipmentTransfer|null
      */
-    public function findShipmentById(int $idShipment): ?ShipmentTransfer
+    public function findShipmentById(int $idSalesShipment): ?ShipmentTransfer
     {
-        return $this->shipmentFacade->findShipmentTransferById($idShipment);
+        return $this->shipmentFacade->findShipmentById($idSalesShipment);
     }
 
     /**
