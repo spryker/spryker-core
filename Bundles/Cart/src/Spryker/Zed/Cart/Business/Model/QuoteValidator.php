@@ -79,8 +79,8 @@ class QuoteValidator implements QuoteValidatorInterface
         $quoteTransfer = $this->operation->reloadItems($quoteTransfer);
         $this->changeNote->checkChanges($quoteTransfer, $originalQuoteTransfer);
 
-        $quoteResponseTransfer = $this->addErrorsToQuoteResponse($quoteValidationResponseTransfer);
-        $quoteResponseTransfer->setQuoteTransfer($quoteTransfer);
+        $quoteValidationResponseTransfer = $this->addErrorsToQuoteResponse($quoteValidationResponseTransfer);
+        $quoteValidationResponseTransfer->setQuoteTransfer($quoteTransfer);
 
         return $quoteValidationResponseTransfer;
     }
