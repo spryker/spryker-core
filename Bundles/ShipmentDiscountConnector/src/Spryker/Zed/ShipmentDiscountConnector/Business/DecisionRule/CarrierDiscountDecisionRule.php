@@ -74,6 +74,7 @@ class CarrierDiscountDecisionRule extends CarrierDiscountDecisionRuleWithoutMult
 
         if ($shipmentTransfer->getMethod()) {
             $shipmentMethodTransfer = $this->shipmentFacade->findMethodById($shipmentTransfer->getMethod()->getIdShipmentMethod());
+
             return $shipmentMethodTransfer->getFkShipmentCarrier();
         }
 

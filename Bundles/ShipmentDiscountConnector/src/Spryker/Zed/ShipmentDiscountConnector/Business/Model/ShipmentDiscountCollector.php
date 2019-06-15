@@ -24,8 +24,6 @@ class ShipmentDiscountCollector implements ShipmentDiscountCollectorInterface
     protected $shipmentDiscountDecisionRule;
 
     /**
-     * ShipmentDiscountCollector constructor.
-     *
      * @param \Spryker\Zed\ShipmentDiscountConnector\Business\Model\ShipmentDiscountDecisionRuleInterface $carrierDiscountDecisionRule
      */
     public function __construct(ShipmentDiscountDecisionRuleInterface $carrierDiscountDecisionRule)
