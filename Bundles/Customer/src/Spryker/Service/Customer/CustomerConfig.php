@@ -23,6 +23,12 @@ class CustomerConfig extends AbstractBundleConfig
             AddressTransfer::IS_DEFAULT_BILLING,
             AddressTransfer::IS_DEFAULT_SHIPPING,
             AddressTransfer::ID_COMPANY_UNIT_ADDRESS,
+            AddressTransfer::FK_CUSTOMER,
+            AddressTransfer::FK_COUNTRY,
+            AddressTransfer::FK_MISC_COUNTRY,
+            AddressTransfer::FK_REGION,
+            AddressTransfer::UUID,
+            AddressTransfer::KEY,
         ];
     }
 }
