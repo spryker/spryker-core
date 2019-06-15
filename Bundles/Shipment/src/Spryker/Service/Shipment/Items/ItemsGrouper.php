@@ -53,6 +53,9 @@ class ItemsGrouper implements ItemsGrouperInterface
             $shipmentGroupTransfers[$key]->addItem($itemTransfer);
         }
 
+        /**
+         * @todo Check if we always need ArrayObject.
+         */
         return new ArrayObject(array_values($shipmentGroupTransfers));
     }
 
