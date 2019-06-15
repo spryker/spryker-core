@@ -203,7 +203,8 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->getSalesFacade(),
             $this->getCustomerFacade(),
-            $this->getShipmentService()
+            $this->getShipmentService(),
+            $this->createExpenseSanitizer()
         );
     }
 
@@ -390,7 +391,8 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     {
         return new ShipmentSaver(
             $this->createCheckoutMultiShipmentOrderSaver(),
-            $this->createShipmentMethodExpander()
+            $this->createShipmentMethodExpander(),
+            $this->createExpenseSanitizer()
         );
     }
 
