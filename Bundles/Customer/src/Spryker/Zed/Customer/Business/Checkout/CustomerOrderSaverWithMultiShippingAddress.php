@@ -94,15 +94,17 @@ class CustomerOrderSaverWithMultiShippingAddress extends CustomerOrderSaver
      */
     protected function processNewUniqueCustomerAddress(AddressTransfer $addressTransfer, CustomerTransfer $customer): AddressTransfer
     {
-        if ($this->isAddressForSave($addressTransfer)) {
-            return $addressTransfer;
-        }
-
         if ($addressTransfer->getFkCustomer() === null) {
             $addressTransfer->setFkCustomer($customer->getIdCustomer());
         }
 
+        if ($this->isAddressNewAndUnique($addressTransfer)) {
+            return $addressTransfer;
+        }
+
         $this->processCustomerAddress($addressTransfer, $customer);
+
+        $this->setAddressIsAlreadyPersisted($addressTransfer);
 
         return $addressTransfer;
     }
@@ -112,17 +114,11 @@ class CustomerOrderSaverWithMultiShippingAddress extends CustomerOrderSaver
      *
      * @return bool
      */
-    protected function checkNewAddressIsAlreadyPersist(AddressTransfer $addressTransfer): bool
+    protected function isAddressNewAndUnique(AddressTransfer $addressTransfer): bool
     {
-        $key = $this->customerService->getUniqueAddressKey($addressTransfer);
-        if (isset($this->existingAddresses[$key])) {
-            return true;
-        }
-
-        $customerAddressTransfer = $this->customerRepository->findAddressByAddressData($addressTransfer);
-        $this->existingAddresses[$key] = true;
-
-        return $customerAddressTransfer !== null;
+        return $addressTransfer->getIdCompanyUnitAddress() !== null
+            || $addressTransfer->getIdCustomerAddress() !== null
+            || $this->isAddressAlreadyPersisted($addressTransfer);
     }
 
     /**
@@ -130,10 +126,31 @@ class CustomerOrderSaverWithMultiShippingAddress extends CustomerOrderSaver
      *
      * @return bool
      */
-    protected function isAddressForSave(AddressTransfer $addressTransfer): bool
+    protected function isAddressAlreadyPersisted(AddressTransfer $addressTransfer): bool
     {
-        return $addressTransfer->getIdCompanyUnitAddress() !== null
-            || $addressTransfer->getIdCustomerAddress() !== null
-            || $this->checkNewAddressIsAlreadyPersist($addressTransfer);
+        $key = $this->customerService->getUniqueAddressKey($addressTransfer);
+        if (isset($this->existingAddresses[$key])) {
+            return true;
+        }
+
+        $customerAddressTransfer = $this->customerRepository->findAddressByAddressData($addressTransfer);
+        if ($customerAddressTransfer === null) {
+            return false;
+        }
+
+        $this->existingAddresses[$key] = true;
+
+        return true;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
+     * @return void
+     */
+    protected function setAddressIsAlreadyPersisted(AddressTransfer $addressTransfer): void
+    {
+        $key = $this->customerService->getUniqueAddressKey($addressTransfer);
+        $this->existingAddresses[$key] = true;
     }
 }
