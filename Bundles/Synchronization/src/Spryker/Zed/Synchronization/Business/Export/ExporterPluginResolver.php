@@ -17,7 +17,7 @@ class ExporterPluginResolver implements ExporterPluginResolverInterface
     public const QUERY_CONTAINER_SYNCHRONIZATION_PLUGINS = 'query_container';
 
     /**
-     * @var array[string]\Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataPluginInterface
+     * @var \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataPluginInterface[]
      */
     protected $synchronizationDataPlugins;
 
@@ -80,12 +80,12 @@ class ExporterPluginResolver implements ExporterPluginResolverInterface
     {
         $resourceNames = [];
         foreach ($this->synchronizationDataPlugins as $plugin) {
-            $resourceNames[$plugin->getResourceName()] = $plugin->getResourceName();
+            $resourceNames[] = $plugin->getResourceName();
         }
 
         sort($resourceNames);
 
-        return array_values($resourceNames);
+        return array_unique($resourceNames);
     }
 
     /**
@@ -95,8 +95,8 @@ class ExporterPluginResolver implements ExporterPluginResolverInterface
      */
     protected function getResolvedPluginsByResources(array $resources): array
     {
-        $this->mapPluginsByResourceName();
-        $effectivePluginsByResource = $this->getEffectivePlugins($resources);
+        $mappedPluginsByResourceName = $this->mapPluginsByResourceAndQueueName($this->synchronizationDataPlugins);
+        $effectivePluginsByResource = $this->getEffectivePlugins($resources, $mappedPluginsByResourceName);
         $pluginsPerExporter = [
             static::REPOSITORY_SYNCHRONIZATION_PLUGINS => [],
             static::QUERY_CONTAINER_SYNCHRONIZATION_PLUGINS => [],
@@ -111,19 +111,20 @@ class ExporterPluginResolver implements ExporterPluginResolverInterface
 
     /**
      * @param string[] $resources
+     * @param \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataPluginInterface[][] $synchronizationDataPlugins
      *
      * @return array
      */
-    protected function getEffectivePlugins(array $resources): array
+    protected function getEffectivePlugins(array $resources, array $synchronizationDataPlugins): array
     {
         if ($resources === []) {
-            return $this->synchronizationDataPlugins;
+            return $synchronizationDataPlugins;
         }
 
         $effectivePlugins = [];
         foreach ($resources as $resource) {
-            if (isset($this->synchronizationDataPlugins[$resource])) {
-                $effectivePlugins[$resource] = $this->synchronizationDataPlugins[$resource];
+            if (isset($synchronizationDataPlugins[$resource])) {
+                $effectivePlugins[$resource] = $synchronizationDataPlugins[$resource];
             }
         }
 
@@ -131,16 +132,18 @@ class ExporterPluginResolver implements ExporterPluginResolverInterface
     }
 
     /**
-     * @return void
+     * @param \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataPluginInterface[] $synchronizationDataPlugins
+     *
+     * @return \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataPluginInterface[][]
      */
-    protected function mapPluginsByResourceName(): void
+    protected function mapPluginsByResourceAndQueueName(array $synchronizationDataPlugins): array
     {
         $mappedDataPlugins = [];
-        foreach ($this->synchronizationDataPlugins as $plugin) {
+        foreach ($synchronizationDataPlugins as $plugin) {
             $mappedDataPlugins[$plugin->getResourceName()][$plugin->getQueueName()] = $plugin;
         }
 
-        $this->synchronizationDataPlugins = $mappedDataPlugins;
+        return $mappedDataPlugins;
     }
 
     /**
