@@ -119,7 +119,7 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
     {
         return $this->getFactory()
             ->createMethod()
-            ->getAvailableShipmentMethods($quoteTransfer);
+            ->getAvailableMethods($quoteTransfer);
     }
 
     /**

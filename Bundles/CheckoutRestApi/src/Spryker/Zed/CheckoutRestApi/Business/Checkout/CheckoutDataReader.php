@@ -104,7 +104,15 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
      */
     protected function getShipmentMethodsTransfer(QuoteTransfer $quoteTransfer): ShipmentMethodsTransfer
     {
-        return $this->shipmentFacade->getAvailableMethods($quoteTransfer);
+        $shipmentGroupCollectionTransfer = $this->shipmentFacade->getAvailableMethodsByShipment($quoteTransfer);
+
+        /** @var \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer */
+        $shipmentGroupTransfer = current($shipmentGroupCollectionTransfer->getGroups());
+        if (!$shipmentGroupTransfer) {
+            return new ShipmentMethodsTransfer();
+        }
+
+        return $shipmentGroupTransfer->getAvailableShipmentMethods();
     }
 
     /**

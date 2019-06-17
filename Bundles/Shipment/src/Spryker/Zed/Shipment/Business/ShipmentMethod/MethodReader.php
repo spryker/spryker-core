@@ -102,6 +102,10 @@ class MethodReader extends Method
      */
     public function getAvailableMethodsByShipment(QuoteTransfer $quoteTransfer): ShipmentGroupCollectionTransfer
     {
+        if (!$this->isMultiShipment($quoteTransfer)) {
+            return parent::getAvailableMethodsByShipment($quoteTransfer);
+        }
+
         $shipmentGroupCollectionTransfer = $this->getShipmentGroupWithAvailableMethods($quoteTransfer);
         $shipmentGroupCollectionTransfer = $this->applyFiltersByShipment($shipmentGroupCollectionTransfer, $quoteTransfer);
 
@@ -130,7 +134,7 @@ class MethodReader extends Method
             $shipmentGroupCollection[$shipmentGroupTransfer->getHash()] = $shipmentGroupTransfer;
         }
 
-        return (new ShipmentGroupCollectionTransfer())->setGroups($shipmentGroupCollection);
+        return (new ShipmentGroupCollectionTransfer())->setShipmentGroups($shipmentGroupCollection);
     }
 
     /**
@@ -201,7 +205,7 @@ class MethodReader extends Method
         ShipmentGroupCollectionTransfer $shipmentGroupCollectionTransfer,
         QuoteTransfer $quoteTransfer
     ): ShipmentGroupCollectionTransfer {
-        foreach ($shipmentGroupCollectionTransfer->getGroups() as $shipmentGroupTransfer) {
+        foreach ($shipmentGroupCollectionTransfer->getShipmentGroups() as $shipmentGroupTransfer) {
             $shipmentMethods = $shipmentGroupTransfer->getAvailableShipmentMethods();
 
             foreach ($this->shipmentMethodFilters as $shipmentMethodFilter) {
@@ -252,5 +256,25 @@ class MethodReader extends Method
         }
 
         return $shipmentMethodTransfer->setCurrencyIsoCode($currencyTransfer->getCode());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function isMultiShipment(QuoteTransfer $quoteTransfer): bool
+    {
+        if ($quoteTransfer->getItems()->count() === 0) {
+            return false;
+        }
+
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            if ($itemTransfer->getShipment() === null) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

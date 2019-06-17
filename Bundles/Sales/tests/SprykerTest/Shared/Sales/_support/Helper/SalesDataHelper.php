@@ -10,7 +10,6 @@ namespace SprykerTest\Shared\Sales\Helper;
 use Codeception\Module;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\DataBuilder\SaveOrderBuilder;
-use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Spryker\Zed\Sales\Business\SalesBusinessFactory;
@@ -23,14 +22,14 @@ class SalesDataHelper extends Module
     use LocatorHelperTrait;
 
     /**
-     * @var \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface[]|\Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutDoSaveOrderInterface[]
+     * @var \Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutDoSaveOrderInterface[]
      */
     protected $saveOrderStack;
 
     /**
      * @param array $override
      * @param string|null $stateMachineProcessName
-     * @param \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface[]|\Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutDoSaveOrderInterface[] $saveOrderStack
+     * @param \Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutDoSaveOrderInterface[] $saveOrderStack
      *
      * @return \Generated\Shared\Transfer\SaveOrderTransfer
      */
@@ -51,7 +50,7 @@ class SalesDataHelper extends Module
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string|null $stateMachineProcessName
-     * @param \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface[]|\Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutDoSaveOrderInterface[] $saveOrderStack
+     * @param \Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutDoSaveOrderInterface[] $saveOrderStack
      *
      * @return \Generated\Shared\Transfer\SaveOrderTransfer|\Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
@@ -140,9 +139,8 @@ class SalesDataHelper extends Module
      */
     protected function executeSaveOrderPlugins(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer)
     {
-        $checkoutResponseTransfer = (new CheckoutResponseTransfer())->setSaveOrder($saveOrderTransfer);
         foreach ($this->saveOrderStack as $orderSaver) {
-            $orderSaver->saveOrder($quoteTransfer, $checkoutResponseTransfer);
+            $orderSaver->saveOrder($quoteTransfer, $saveOrderTransfer);
         }
     }
 }
