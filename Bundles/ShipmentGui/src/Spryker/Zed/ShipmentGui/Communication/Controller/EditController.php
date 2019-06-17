@@ -9,7 +9,9 @@ namespace Spryker\Zed\ShipmentGui\Communication\Controller;
 
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
+use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+use Spryker\Zed\Sales\SalesConfig;
 use Spryker\Zed\ShipmentGui\Communication\Form\ShipmentFormCreate;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -20,9 +22,9 @@ class EditController extends AbstractController
 {
     protected const PARAM_ID_SALES_ORDER = 'id-sales-order';
     protected const PARAM_ID_SALES_SHIPMENT = 'id-shipment';
-    protected const PARAM_REDIRECT_URL = 'redirect-url';
 
     protected const REDIRECT_URL_DEFAULT = '/sales';
+    protected const REDIRECT_URL = '/sales/detail';
 
     protected const MESSAGE_SHIPMENT_EDIT_SUCCESS = 'Shipment has been successfully created.';
     protected const MESSAGE_SHIPMENT_EDIT_ERROR = 'Shipment create failed.';
@@ -34,8 +36,6 @@ class EditController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $redirectUrl = $request->get(static::PARAM_REDIRECT_URL, static::REDIRECT_URL_DEFAULT);
-
         $idSalesOrder = $request->query->get(static::PARAM_ID_SALES_ORDER);
         $idSalesShipment = $request->query->get(static::PARAM_ID_SALES_SHIPMENT);
         $dataProvider = $this->getFactory()->createShipmentFormEditDataProvider();
@@ -57,6 +57,8 @@ class EditController extends AbstractController
             if ($orderTransfer === null) {
                 $this->addErrorMessage('Order does not exist');
 
+                $redirectUrl = Url::generate(static::REDIRECT_URL_DEFAULT)->build();
+
                 return $this->redirectResponse($redirectUrl);
             }
 
@@ -67,6 +69,10 @@ class EditController extends AbstractController
             if ($responseTransfer->getIsSuccessful()) {
                 $this->addSuccessMessage('Shipment has been updated successfully');
             }
+
+            $redirectUrl = Url::generate(static::REDIRECT_URL, [
+                SalesConfig::PARAM_ID_SALES_ORDER => $idSalesOrder,
+            ])->build();
 
             return $this->redirectResponse($redirectUrl);
         }
@@ -96,8 +102,10 @@ class EditController extends AbstractController
      *
      * @return \Generated\Shared\Transfer\ShipmentGroupTransfer
      */
-    protected function addShipmentTransfer(ShipmentGroupTransfer $shipmentGroupTransfer, array $formData): ShipmentGroupTransfer
-    {
+    protected function addShipmentTransfer(
+        ShipmentGroupTransfer $shipmentGroupTransfer,
+        array $formData
+    ): ShipmentGroupTransfer {
         $shipmentTransfer = (new ShipmentTransfer())->fromArray($formData, true);
         $shipmentTransfer->requireShippingAddress();
         if ($formData['id_shipping_address']) {

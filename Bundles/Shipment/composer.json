@@ -27,10 +27,13 @@
     "spryker/code-sniffer": "*",
     "spryker/config": "*",
     "spryker/country": "*",
+    "spryker/oms": "*",
+    "spryker/price": "*",
+    "spryker/product": "*",
     "spryker/propel": "*",
+    "spryker/tax-product-connector": "*",
     "spryker/testify": "*",
-    "spryker/zed-navigation": "*",
-    "spryker/oms": "*"
+    "spryker/zed-navigation": "*"
   },
   "suggest": {
     "spryker/calculation": "If you want to use Calculation plugins.",

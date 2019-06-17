@@ -64,10 +64,6 @@ class CarrierDiscountDecisionRule extends CarrierDiscountDecisionRuleWithoutMult
      */
     protected function getIdShipmentCarrier(ShipmentTransfer $shipmentTransfer): ?int
     {
-        if ($shipmentTransfer === null) {
-            return null;
-        }
-
         if ($shipmentTransfer->getCarrier()) {
             return $shipmentTransfer->getCarrier()->getIdShipmentCarrier();
         }

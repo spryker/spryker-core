@@ -534,6 +534,7 @@ class CheckoutFacadeTest extends Unit
     protected function createItemWithShipment(array $seed, ?CustomerTransfer $customer = null)
     {
         $address = (new AddressBuilder([AddressTransfer::EMAIL => $customer->getEmail()]));
+
         return (new ItemBuilder($seed))->withShipment(
             (new ShipmentBuilder())->withShippingAddress($address)
         );

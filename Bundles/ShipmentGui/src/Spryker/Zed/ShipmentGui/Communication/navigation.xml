@@ -1,24 +1,28 @@
 <?xml version="1.0"?>
 <config>
-    <shipment>
+    <sales>
         <pages>
-            <shipment-create>
-                <label>Create a Shipment</label>
-                <title>Create a Shipment</title>
-                <bundle>shipment-gui</bundle>
-                <controller>create</controller>
-                <action>index</action>
-                <visible>0</visible>
-            </shipment-create>
+            <order-list>
+                <pages>
+                    <shipment-create>
+                        <label>Create a Shipment</label>
+                        <title>Create a Shipment</title>
+                        <bundle>shipment-gui</bundle>
+                        <controller>create</controller>
+                        <action>index</action>
+                        <visible>0</visible>
+                    </shipment-create>
 
-            <shipment-edit>
-                <label>Edit Shipment</label>
-                <title>Edit Shipment</title>
-                <bundle>shipment-gui</bundle>
-                <controller>edit</controller>
-                <action>index</action>
-                <visible>0</visible>
-            </shipment-edit>
+                    <shipment-edit>
+                        <label>Edit Shipment</label>
+                        <title>Edit Shipment</title>
+                        <bundle>shipment-gui</bundle>
+                        <controller>edit</controller>
+                        <action>index</action>
+                        <visible>0</visible>
+                    </shipment-edit>
+                </pages>
+            </order-list>
         </pages>
-    </shipment>
+    </sales>
 </config>

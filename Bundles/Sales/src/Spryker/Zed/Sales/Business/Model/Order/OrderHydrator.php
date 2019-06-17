@@ -333,10 +333,14 @@ class OrderHydrator implements OrderHydratorInterface
      */
     protected function hydrateShippingAddressToOrderTransfer(SpySalesOrder $orderEntity, OrderTransfer $orderTransfer)
     {
-        $countryEntity = $orderEntity->getShippingAddress()->getCountry();
+        $orderShippingAddressEntity = $orderEntity->getShippingAddress();
+        if ($orderShippingAddressEntity === null) {
+            return;
+        }
 
+        $countryEntity = $orderShippingAddressEntity->getCountry();
         $shippingAddressTransfer = new AddressTransfer();
-        $shippingAddressTransfer->fromArray($orderEntity->getShippingAddress()->toArray(), true);
+        $shippingAddressTransfer->fromArray($orderShippingAddressEntity->toArray(), true);
         $this->hydrateCountryEntityIntoAddressTransfer($shippingAddressTransfer, $countryEntity);
 
         $orderTransfer->setShippingAddress($shippingAddressTransfer);

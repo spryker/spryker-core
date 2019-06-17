@@ -6,7 +6,7 @@
 'use strict';
 
 $(document).ready(function() {
-    $('#shipment_form_create_requested_delivery_date').datepicker({
+    $('#shipment_form_edit_requested_delivery_date').datepicker({
         dateFormat: 'yy-mm-dd',
         changeMonth: true,
         numberOfMonths: 3,
@@ -14,18 +14,21 @@ $(document).ready(function() {
         defaultData: 0
     });
 
-    var trigger = document.getElementById('shipment_form_create_id_shipping_address');
+    var triggerEdit = document.getElementById('shipment_form_edit_id_shipping_address');
 
-    function toggleForm() {
-        var target = $('#shipment_form_create_shipping_address');
-        var selectedOption = trigger.selectedIndex;
+    function toggleEditForm() {
+        var target = $('#shipment_form_edit_shipping_address');
+        var selectedOption = triggerEdit.selectedIndex;
 
         if (!selectedOption) {
             target.show();
-        } else {
-            target.hide();
+            return;
         }
+
+        target.hide();
     }
 
-    trigger.addEventListener('change', toggleForm, false);
+    toggleEditForm();
+
+    triggerEdit.addEventListener('change', toggleEditForm, false);
 });

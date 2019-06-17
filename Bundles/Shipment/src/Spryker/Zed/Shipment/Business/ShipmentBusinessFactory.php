@@ -261,7 +261,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use \Spryker\Zed\Shipment\Business\Shipment\ShipmentOrderHydrateInterface instead.
+     * @deprecated Use createMultipleShipmentOrderHydrate() instead.
      *
      * @return \Spryker\Zed\Shipment\Business\Model\ShipmentOrderHydrateInterface
      */

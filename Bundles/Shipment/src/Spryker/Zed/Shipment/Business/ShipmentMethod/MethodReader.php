@@ -102,7 +102,7 @@ class MethodReader extends Method
      */
     public function getAvailableMethodsByShipment(QuoteTransfer $quoteTransfer): ShipmentGroupCollectionTransfer
     {
-        if (!$this->isMultiShipment($quoteTransfer)) {
+        if (!$this->isMultiShipmentQuote($quoteTransfer)) {
             return parent::getAvailableMethodsByShipment($quoteTransfer);
         }
 
@@ -263,7 +263,7 @@ class MethodReader extends Method
      *
      * @return bool
      */
-    protected function isMultiShipment(QuoteTransfer $quoteTransfer): bool
+    protected function isMultiShipmentQuote(QuoteTransfer $quoteTransfer): bool
     {
         if ($quoteTransfer->getItems()->count() === 0) {
             return false;
