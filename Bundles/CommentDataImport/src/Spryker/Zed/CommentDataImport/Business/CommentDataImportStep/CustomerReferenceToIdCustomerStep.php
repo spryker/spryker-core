@@ -19,12 +19,10 @@ class CustomerReferenceToIdCustomerStep implements DataImportStepInterface
     /**
      * @var int[]
      */
-    protected $idCustomerCache;
+    protected $idCustomerBuffer;
 
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
-     *
-     * @throws \Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException
      *
      * @return void
      */
@@ -32,19 +30,44 @@ class CustomerReferenceToIdCustomerStep implements DataImportStepInterface
     {
         $customerReference = $dataSet[CommentDataSetInterface::COLUMN_CUSTOMER_REFERENCE];
 
-        if (!isset($this->idCustomerCache[$customerReference])) {
-            $idCustomer = $this->createCustomerQuery()
-                ->select([SpyCustomerTableMap::COL_ID_CUSTOMER])
-                ->findOneByCustomerReference($customerReference);
+        $dataSet[CommentDataSetInterface::ID_CUSTOMER] = $this->getIdCustomerByReference($customerReference);
+    }
 
-            if (!$idCustomer) {
-                throw new EntityNotFoundException(sprintf('Could not find customer by reference "%s"', $customerReference));
-            }
-
-            $this->idCustomerCache[$customerReference] = $idCustomer;
+    /**
+     * @param string $customerReference
+     *
+     * @return int
+     */
+    protected function getIdCustomerByReference(string $customerReference): int
+    {
+        if (isset($this->idCustomerBuffer[$customerReference])) {
+            return $this->idCustomerBuffer[$customerReference];
         }
 
-        $dataSet[CommentDataSetInterface::ID_CUSTOMER] = $this->idCustomerCache[$customerReference];
+        return $this->resolveCustomerReference($customerReference);
+    }
+
+    /**
+     * @param string $customerReference
+     *
+     * @throws \Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException
+     *
+     * @return int
+     */
+    protected function resolveCustomerReference(string $customerReference): int
+    {
+        /** @var int $idCustomer */
+        $idCustomer = $this->createCustomerQuery()
+            ->select([SpyCustomerTableMap::COL_ID_CUSTOMER])
+            ->findOneByCustomerReference($customerReference);
+
+        if (!$idCustomer) {
+            throw new EntityNotFoundException(sprintf('Could not find customer by reference "%s"', $customerReference));
+        }
+
+        $this->idCustomerBuffer[$customerReference] = $idCustomer;
+
+        return $idCustomer;
     }
 
     /**

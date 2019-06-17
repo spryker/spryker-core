@@ -16,41 +16,64 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
 class QuoteOwnerKeyToCommentThreadOwnerIdStep implements DataImportStepInterface
 {
-    protected const QUOTE_TYPE = 'quote';
+    protected const OWNER_TYPE = 'quote';
 
     /**
      * @var int[]
      */
-    protected $idQuoteCache;
+    protected $idQuoteBuffer;
 
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
-     *
-     * @throws \Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException
      *
      * @return void
      */
     public function execute(DataSetInterface $dataSet): void
     {
-        if ($dataSet[CommentDataSetInterface::COLUMN_OWNER_TYPE] !== static::QUOTE_TYPE) {
+        if ($dataSet[CommentDataSetInterface::COLUMN_OWNER_TYPE] !== static::OWNER_TYPE) {
             return;
         }
 
         $ownerKey = $dataSet[CommentDataSetInterface::COLUMN_OWNER_KEY];
 
-        if (!isset($this->idQuoteCache[$ownerKey])) {
-            $idQuote = $this->createQuoteQuery()
-                ->select([SpyQuoteTableMap::COL_ID_QUOTE])
-                ->findOneByKey($ownerKey);
+        $dataSet[CommentDataSetInterface::COMMENT_THREAD_OWNER_ID] = $this->getIdQuoteByQuoteOwnerKey($ownerKey);
+    }
 
-            if (!$idQuote) {
-                throw new EntityNotFoundException(sprintf('Could not find quote by key "%s"', $ownerKey));
-            }
-
-            $this->idQuoteCache[$ownerKey] = $idQuote;
+    /**
+     * @param string $ownerKey
+     *
+     * @return int
+     */
+    protected function getIdQuoteByQuoteOwnerKey(string $ownerKey): int
+    {
+        if (isset($this->idQuoteBuffer[$ownerKey])) {
+            return $this->idQuoteBuffer[$ownerKey];
         }
 
-        $dataSet[CommentDataSetInterface::COMMENT_THREAD_OWNER_ID] = $this->idQuoteCache[$ownerKey];
+        return $this->resolveOwnerKey($ownerKey);
+    }
+
+    /**
+     * @param string $ownerKey
+     *
+     * @throws \Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException
+     *
+     * @return int
+     */
+    protected function resolveOwnerKey(string $ownerKey): int
+    {
+        /** @var int $idQuote */
+        $idQuote = $this->createQuoteQuery()
+            ->select([SpyQuoteTableMap::COL_ID_QUOTE])
+            ->findOneByKey($ownerKey);
+
+        if (!$idQuote) {
+            throw new EntityNotFoundException(sprintf('Could not find quote by key "%s"', $ownerKey));
+        }
+
+        $this->idQuoteBuffer[$ownerKey] = $idQuote;
+
+        return $idQuote;
     }
 
     /**
