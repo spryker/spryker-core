@@ -25,7 +25,7 @@ class CommentDataImportFacade extends AbstractFacade implements CommentDataImpor
      *
      * @return \Generated\Shared\Transfer\DataImporterReportTransfer
      */
-    public function importComments(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
+    public function importComment(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
     {
         return $this->getFactory()
             ->getCommentDataImporter()

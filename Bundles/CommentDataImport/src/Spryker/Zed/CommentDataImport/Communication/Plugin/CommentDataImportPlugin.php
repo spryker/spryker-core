@@ -32,7 +32,7 @@ class CommentDataImportPlugin extends AbstractPlugin implements DataImportPlugin
     public function import(
         ?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null
     ): DataImporterReportTransfer {
-        return $this->getFacade()->importComments($dataImporterConfigurationTransfer);
+        return $this->getFacade()->importComment($dataImporterConfigurationTransfer);
     }
 
     /**
