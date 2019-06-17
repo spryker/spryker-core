@@ -22,7 +22,7 @@ interface SalesOrderItemMapperInterface
     public function mapSpySalesOrderItemEntityToSalesOrderItemEntity(
         SpySalesOrderItem $salesOrderItemEntity,
         SpySalesOrderItemEntityTransfer $salesOrderItemEntityTransfer
-    );
+    ): SpySalesOrderItemEntityTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer $salesOrderItemEntity

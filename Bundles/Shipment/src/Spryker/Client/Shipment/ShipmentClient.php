@@ -17,6 +17,8 @@ use Spryker\Client\Kernel\AbstractClient;
 class ShipmentClient extends AbstractClient implements ShipmentClientInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @deprecated Use getAvailableMethodsByShipment() instead.
@@ -31,6 +33,8 @@ class ShipmentClient extends AbstractClient implements ShipmentClientInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

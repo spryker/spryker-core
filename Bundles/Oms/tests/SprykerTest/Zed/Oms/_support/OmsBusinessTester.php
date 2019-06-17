@@ -8,8 +8,6 @@
 namespace SprykerTest\Zed\Oms;
 
 use Codeception\Actor;
-use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\SaveOrderTransfer;
 
 /**
  * Inherited Methods
@@ -23,7 +21,6 @@ use Generated\Shared\Transfer\SaveOrderTransfer;
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
- * @method \Spryker\Zed\Oms\Business\OmsFacadeInterface getFacade()
  *
  * @SuppressWarnings(PHPMD)
  */
@@ -34,21 +31,4 @@ class OmsBusinessTester extends Actor
    /**
     * Define custom actions here
     */
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string|null $testStateMachineProcessName
-     * @param \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface[]|\Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutDoSaveOrderInterface[] $saveOrderStack
-     *
-     * @return \Generated\Shared\Transfer\SaveOrderTransfer
-     */
-    public function createOrderWithShipment(
-        QuoteTransfer $quoteTransfer,
-        ?string $testStateMachineProcessName = 'Test01',
-        array $saveOrderStack = []
-    ): SaveOrderTransfer {
-        $this->configureTestStateMachine([$testStateMachineProcessName]);
-
-        return $this->haveOrderUsingPreparedQuoteTransfer($quoteTransfer, $testStateMachineProcessName, $saveOrderStack);
-    }
 }

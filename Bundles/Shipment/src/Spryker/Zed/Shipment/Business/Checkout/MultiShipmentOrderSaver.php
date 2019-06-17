@@ -17,15 +17,12 @@ use Spryker\Service\Shipment\ShipmentServiceInterface;
 use Spryker\Shared\Shipment\ShipmentConstants;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 use Spryker\Zed\Shipment\Business\Sanitizer\ExpenseSanitizerInterface;
-use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCustomerInterface;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToSalesFacadeInterface;
 use Spryker\Zed\Shipment\Persistence\ShipmentEntityManagerInterface;
 
 class MultiShipmentOrderSaver implements MultiShipmentOrderSaverInterface
 {
     use DatabaseTransactionHandlerTrait;
-
-    protected const SHIPMENT_TRANSFER_KEY_PATTERN = '%s-%s-%s';
 
     /**
      * @var \Spryker\Zed\Shipment\Persistence\ShipmentEntityManagerInterface
@@ -36,11 +33,6 @@ class MultiShipmentOrderSaver implements MultiShipmentOrderSaverInterface
      * @var \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToSalesFacadeInterface
      */
     protected $salesFacade;
-
-    /**
-     * @var \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCustomerInterface
-     */
-    protected $customerFacade;
 
     /**
      * @var \Spryker\Service\Shipment\ShipmentServiceInterface
@@ -55,20 +47,17 @@ class MultiShipmentOrderSaver implements MultiShipmentOrderSaverInterface
     /**
      * @param \Spryker\Zed\Shipment\Persistence\ShipmentEntityManagerInterface $entityManager
      * @param \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToSalesFacadeInterface $salesFacade
-     * @param \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCustomerInterface $customerFacade
      * @param \Spryker\Service\Shipment\ShipmentServiceInterface $shipmentService
      * @param \Spryker\Zed\Shipment\Business\Sanitizer\ExpenseSanitizerInterface $expenseSanitizer
      */
     public function __construct(
         ShipmentEntityManagerInterface $entityManager,
         ShipmentToSalesFacadeInterface $salesFacade,
-        ShipmentToCustomerInterface $customerFacade,
         ShipmentServiceInterface $shipmentService,
         ExpenseSanitizerInterface $expenseSanitizer
     ) {
         $this->entityManager = $entityManager;
         $this->salesFacade = $salesFacade;
-        $this->customerFacade = $customerFacade;
         $this->shipmentService = $shipmentService;
         $this->expenseSanitizer = $expenseSanitizer;
     }
@@ -107,12 +96,11 @@ class MultiShipmentOrderSaver implements MultiShipmentOrderSaverInterface
             $shipmentGroupTransfer,
             $saveOrderTransfer
         ) {
-            return $this
-                ->saveOrderShipmentTransactionByShipmentGroup(
-                    $orderTransfer,
-                    $shipmentGroupTransfer,
-                    $saveOrderTransfer
-                );
+            return $this->saveOrderShipmentTransactionByShipmentGroup(
+                $orderTransfer,
+                $shipmentGroupTransfer,
+                $saveOrderTransfer
+            );
         });
 
         return $shipmentGroupTransfer;
@@ -131,12 +119,11 @@ class MultiShipmentOrderSaver implements MultiShipmentOrderSaverInterface
         $orderTransfer = $this->addShipmentExpensesFromQuoteToOrder($quoteTransfer, $orderTransfer);
 
         foreach ($shipmentGroups as $shipmentGroupTransfer) {
-            $shipmentGroupTransfer = $this
-                ->saveOrderShipmentTransactionByShipmentGroup(
-                    $orderTransfer,
-                    $shipmentGroupTransfer,
-                    $saveOrderTransfer
-                );
+            $this->saveOrderShipmentTransactionByShipmentGroup(
+                $orderTransfer,
+                $shipmentGroupTransfer,
+                $saveOrderTransfer
+            );
         }
     }
 
@@ -182,11 +169,6 @@ class MultiShipmentOrderSaver implements MultiShipmentOrderSaverInterface
     protected function saveSalesOrderAddress(ShipmentTransfer $shipmentTransfer): ShipmentTransfer
     {
         $shippingAddressTransfer = $shipmentTransfer->requireShippingAddress()->getShippingAddress();
-        $customerAddressTransfer = $this->customerFacade->findCustomerAddressByAddressData($shippingAddressTransfer);
-        if ($customerAddressTransfer !== null) {
-            $shippingAddressTransfer = $customerAddressTransfer;
-        }
-
         $shippingAddressTransfer = $this->salesFacade->createOrderAddress($shippingAddressTransfer);
 
         $shipmentTransfer->setShippingAddress($shippingAddressTransfer);

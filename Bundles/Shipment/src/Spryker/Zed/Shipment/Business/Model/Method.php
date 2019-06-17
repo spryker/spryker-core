@@ -113,6 +113,8 @@ class Method implements MethodInterface
     }
 
     /**
+     * @deprecated Use getAvailableMethodsByShipment() instead.
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer
@@ -128,36 +130,18 @@ class Method implements MethodInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer
-     */
-    public function getAvailableShipmentMethods(QuoteTransfer $quoteTransfer): ShipmentMethodsTransfer
-    {
-        $shipmentGroupCollectionTransfer = $this->getAvailableMethodsByShipment($quoteTransfer);
-
-        /** @var false|\Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer */
-        $shipmentGroupTransfer = current($shipmentGroupCollectionTransfer->getGroups());
-
-        if ($shipmentGroupTransfer === false) {
-            return new ShipmentMethodsTransfer();
-        }
-
-        return $shipmentGroupTransfer->getAvailableShipmentMethods();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
      * @return \Generated\Shared\Transfer\ShipmentGroupCollectionTransfer
      */
     public function getAvailableMethodsByShipment(QuoteTransfer $quoteTransfer): ShipmentGroupCollectionTransfer
     {
         $shipmentGroupTransfer = (new ShipmentGroupTransfer())
             ->setAvailableShipmentMethods($this->getAvailableMethods($quoteTransfer));
+
         $shipmentGroupCollection = (new ArrayObject());
         $shipmentGroupCollection->offsetSet($shipmentGroupTransfer->getHash(), $shipmentGroupTransfer);
 
         return (new ShipmentGroupCollectionTransfer())
-            ->setGroups($shipmentGroupCollection);
+            ->setShipmentGroups($shipmentGroupCollection);
     }
 
     /**

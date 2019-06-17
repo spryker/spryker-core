@@ -87,7 +87,7 @@ class ShipmentCheckoutPreCheck implements ShipmentCheckoutPreCheckInterface
         int $idShipmentMethod,
         ShipmentGroupCollectionTransfer $availableShipmentMethodCollectionTransfer
     ): ?ShipmentMethodTransfer {
-        foreach ($availableShipmentMethodCollectionTransfer->getGroups() as $shipmentGroupTransfer) {
+        foreach ($availableShipmentMethodCollectionTransfer->getShipmentGroups() as $shipmentGroupTransfer) {
             $shipmentTransfer = $shipmentGroupTransfer->getShipment();
             if ($shipmentTransfer === null) {
                 continue;

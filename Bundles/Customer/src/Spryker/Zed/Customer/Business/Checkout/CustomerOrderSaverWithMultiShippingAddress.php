@@ -63,10 +63,6 @@ class CustomerOrderSaverWithMultiShippingAddress extends CustomerOrderSaver
      */
     protected function persistAddresses(QuoteTransfer $quoteTransfer, CustomerTransfer $customer)
     {
-        if ($quoteTransfer->getIsAddressSavingSkipped()) {
-            return;
-        }
-
         $this->existingAddresses = [];
 
         $quoteTransfer->requireBillingAddress();

@@ -68,6 +68,24 @@ interface SalesFacadeInterface
      *
      * @api
      *
+     * @deprecated Use saveSalesOrder() instead
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return void
+     */
+    public function saveOrder(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer);
+
+    /**
+     * Specification:
+     * - Saves order and items to database
+     * - Sets "is test" flag
+     * - Updates checkout response with saved order data
+     * - Sets initial state for state machine
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
      *
@@ -207,6 +225,7 @@ interface SalesFacadeInterface
     /**
      * Specification:
      * - Returns the order for the given sales order item id.
+     * - Hydrates order using quote level (BC) or item level shipping addresses.
      *
      * @api
      *

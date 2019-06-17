@@ -20,6 +20,7 @@ use Orm\Zed\Tax\Persistence\Map\SpyTaxRateTableMap;
 use Orm\Zed\Tax\Persistence\Map\SpyTaxSetTableMap;
 use Spryker\Shared\Tax\TaxConstants;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
+use Spryker\Zed\Shipment\Persistence\Propel\Mapper\ShipmentMapperInterface;
 
 /**
  * @method \Spryker\Zed\Shipment\Persistence\ShipmentPersistenceFactory getFactory()
@@ -298,7 +299,53 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
                 ->mapShipmentEntityToShipmentTransferWithDetails($salesShipmentEntity, new ShipmentTransfer());
         }
 
+        return $this->hydrateShipmentMethodTransfersFromShipmentTransfers($shipmentTransfers, $shipmentMapper);
+    }
+
+    /**
+     * @param iterable|\Generated\Shared\Transfer\ShipmentTransfer[] $shipmentTransfers
+     * @param \Spryker\Zed\Shipment\Persistence\Propel\Mapper\ShipmentMapperInterface $shipmentMapper
+     *
+     * @return array
+     */
+    protected function hydrateShipmentMethodTransfersFromShipmentTransfers(
+        iterable $shipmentTransfers,
+        ShipmentMapperInterface $shipmentMapper
+    ): array {
+        $shipmentMethodTransfers = $this->findShipmentMethodTransfersByShipment($shipmentTransfers);
+
+        if (count($shipmentMethodTransfers) === 0 || count($shipmentTransfers) === 0) {
+            return $shipmentTransfers;
+        }
+
+        foreach ($shipmentTransfers as $shipmentTransfer) {
+            $shipmentMethodTransfer = $this->findShipmentMethodTransferByName($shipmentMethodTransfers, $shipmentTransfer);
+            if ($shipmentMethodTransfer === null) {
+                continue;
+            }
+
+            $shipmentMethodTransfer = $shipmentMapper->mapShipmentTransferToShipmentMethodTransfer($shipmentMethodTransfer, $shipmentTransfer);
+            $shipmentTransfer->setMethod($shipmentMethodTransfer);
+        }
+
         return $shipmentTransfers;
+    }
+
+    /**
+     * @param iterable|\Generated\Shared\Transfer\ShipmentMethodTransfer[] $shipmentMethodTransfers
+     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
+     */
+    protected function findShipmentMethodTransferByName(iterable $shipmentMethodTransfers, ShipmentTransfer $shipmentTransfer): ?ShipmentMethodTransfer
+    {
+        foreach ($shipmentMethodTransfers as $shipmentMethodTransfer) {
+            if ($shipmentTransfer->getMethod()->getName() === $shipmentMethodTransfer->getName()) {
+                return $shipmentMethodTransfer;
+            }
+        }
+
+        return null;
     }
 
     /**

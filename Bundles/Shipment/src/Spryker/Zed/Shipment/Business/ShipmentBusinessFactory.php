@@ -48,7 +48,6 @@ use Spryker\Zed\Shipment\Business\StrategyResolver\OrderSaverStrategyResolver;
 use Spryker\Zed\Shipment\Business\StrategyResolver\OrderSaverStrategyResolverInterface;
 use Spryker\Zed\Shipment\Business\StrategyResolver\TaxRateCalculatorStrategyResolver;
 use Spryker\Zed\Shipment\Business\StrategyResolver\TaxRateCalculatorStrategyResolverInterface;
-use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCustomerInterface;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToSalesFacadeInterface;
 use Spryker\Zed\Shipment\ShipmentDependencyProvider;
 
@@ -202,7 +201,6 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
         return new MultiShipmentOrderSaver(
             $this->getEntityManager(),
             $this->getSalesFacade(),
-            $this->getCustomerFacade(),
             $this->getShipmentService(),
             $this->createExpenseSanitizer()
         );
@@ -244,14 +242,6 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     protected function getCurrencyFacade()
     {
         return $this->getProvidedDependency(ShipmentDependencyProvider::FACADE_CURRENCY);
-    }
-
-    /**
-     * @return \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCustomerInterface
-     */
-    protected function getCustomerFacade(): ShipmentToCustomerInterface
-    {
-        return $this->getProvidedDependency(ShipmentDependencyProvider::FACADE_CUSTOMER);
     }
 
     /**

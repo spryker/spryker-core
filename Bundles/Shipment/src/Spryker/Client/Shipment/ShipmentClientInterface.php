@@ -13,6 +13,14 @@ use Generated\Shared\Transfer\ShipmentGroupCollectionTransfer;
 interface ShipmentClientInterface
 {
     /**
+     * Specification:
+     * - Retrieves active shipment methods for Quote level shipment.
+     * - Calculates shipment method delivery time using ShipmentMethodDeliveryTimePluginInterface plugin.
+     * - Selects shipment method price for the provided currency and current store.
+     * - Overrides shipment method price using ShipmentMethodPricePluginInterface plugin.
+     * - Excludes shipment methods which do not have a valid price as a result.
+     * - Excludes shipment methods which do not fulfill ShipmentMethodAvailabilityPluginInterface plugin requirements.
+     *
      * @api
      *
      * @deprecated Use getAvailableMethodsByShipment() instead.
