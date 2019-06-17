@@ -17,7 +17,7 @@ class ExporterPluginResolver implements ExporterPluginResolverInterface
     public const QUERY_CONTAINER_SYNCHRONIZATION_PLUGINS = 'query_container';
 
     /**
-     * @var array
+     * @var array[string]\Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataPluginInterface
      */
     protected $synchronizationDataPlugins;
 
@@ -32,7 +32,7 @@ class ExporterPluginResolver implements ExporterPluginResolverInterface
     protected $repositoryExporter;
 
     /**
-     * @param array $synchronizationDataPlugins
+     * @param \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataPluginInterface[] $synchronizationDataPlugins
      * @param \Spryker\Zed\Synchronization\Business\Export\QueryContainerExporter $queryContainerExporter
      * @param \Spryker\Zed\Synchronization\Business\Export\RepositoryExporter $repositoryExporter
      */
@@ -103,7 +103,7 @@ class ExporterPluginResolver implements ExporterPluginResolverInterface
         ];
 
         foreach ($effectivePluginsByResource as $effectivePlugins) {
-            $pluginsPerExporter = $this->extractEffectiveUniquePlugins($effectivePlugins, $pluginsPerExporter);
+            $pluginsPerExporter = $this->extractEffectivePlugins($effectivePlugins, $pluginsPerExporter);
         }
 
         return $pluginsPerExporter;
@@ -137,7 +137,7 @@ class ExporterPluginResolver implements ExporterPluginResolverInterface
     {
         $mappedDataPlugins = [];
         foreach ($this->synchronizationDataPlugins as $plugin) {
-            $mappedDataPlugins[$plugin->getResourceName()][] = $plugin;
+            $mappedDataPlugins[$plugin->getResourceName()][$plugin->getQueueName()] = $plugin;
         }
 
         $this->synchronizationDataPlugins = $mappedDataPlugins;
@@ -149,15 +149,15 @@ class ExporterPluginResolver implements ExporterPluginResolverInterface
      *
      * @return array
      */
-    protected function extractEffectiveUniquePlugins($effectivePlugins, $pluginsPerExporter): array
+    protected function extractEffectivePlugins($effectivePlugins, $pluginsPerExporter): array
     {
         foreach ($effectivePlugins as $effectivePlugin) {
             if ($effectivePlugin instanceof SynchronizationDataRepositoryPluginInterface || $effectivePlugin instanceof SynchronizationDataBulkRepositoryPluginInterface) {
-                $pluginsPerExporter[static::REPOSITORY_SYNCHRONIZATION_PLUGINS][$effectivePlugin->getResourceName()] = $effectivePlugin;
+                $pluginsPerExporter[static::REPOSITORY_SYNCHRONIZATION_PLUGINS][] = $effectivePlugin;
             }
 
             if ($effectivePlugin instanceof SynchronizationDataQueryContainerPluginInterface) {
-                $pluginsPerExporter[static::QUERY_CONTAINER_SYNCHRONIZATION_PLUGINS][$effectivePlugin->getResourceName()] = $effectivePlugin;
+                $pluginsPerExporter[static::QUERY_CONTAINER_SYNCHRONIZATION_PLUGINS][] = $effectivePlugin;
             }
         }
 
