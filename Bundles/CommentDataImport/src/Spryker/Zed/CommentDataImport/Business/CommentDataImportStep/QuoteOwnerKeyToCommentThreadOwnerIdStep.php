@@ -34,44 +34,44 @@ class QuoteOwnerKeyToCommentThreadOwnerIdStep implements DataImportStepInterface
             return;
         }
 
-        $ownerKey = $dataSet[CommentDataSetInterface::COLUMN_OWNER_KEY];
+        $quoteKey = $dataSet[CommentDataSetInterface::COLUMN_OWNER_KEY];
 
-        $dataSet[CommentDataSetInterface::COMMENT_THREAD_OWNER_ID] = $this->getIdQuoteByQuoteOwnerKey($ownerKey);
+        $dataSet[CommentDataSetInterface::COMMENT_THREAD_OWNER_ID] = $this->getIdQuoteByQuoteKey($quoteKey);
     }
 
     /**
-     * @param string $ownerKey
+     * @param string $quoteKey
      *
      * @return int
      */
-    protected function getIdQuoteByQuoteOwnerKey(string $ownerKey): int
+    protected function getIdQuoteByQuoteKey(string $quoteKey): int
     {
-        if (isset($this->idQuoteBuffer[$ownerKey])) {
-            return $this->idQuoteBuffer[$ownerKey];
+        if (isset($this->idQuoteBuffer[$quoteKey])) {
+            return $this->idQuoteBuffer[$quoteKey];
         }
 
-        return $this->resolveOwnerKey($ownerKey);
+        return $this->resolveOwnerKey($quoteKey);
     }
 
     /**
-     * @param string $ownerKey
+     * @param string $quoteKey
      *
      * @throws \Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException
      *
      * @return int
      */
-    protected function resolveOwnerKey(string $ownerKey): int
+    protected function resolveOwnerKey(string $quoteKey): int
     {
         /** @var int $idQuote */
         $idQuote = $this->createQuoteQuery()
             ->select([SpyQuoteTableMap::COL_ID_QUOTE])
-            ->findOneByKey($ownerKey);
+            ->findOneByKey($quoteKey);
 
         if (!$idQuote) {
-            throw new EntityNotFoundException(sprintf('Could not find quote by key "%s"', $ownerKey));
+            throw new EntityNotFoundException(sprintf('Could not find quote by key "%s"', $quoteKey));
         }
 
-        $this->idQuoteBuffer[$ownerKey] = $idQuote;
+        $this->idQuoteBuffer[$quoteKey] = $idQuote;
 
         return $idQuote;
     }
