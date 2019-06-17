@@ -23,6 +23,11 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class SalesOrderSaverPlugin extends AbstractPlugin implements CheckoutDoSaveOrderInterface
 {
     /**
+     * {@inheritdoc}
+     * - Saves order and items to Persistence
+     * - Sets initial state for state machine
+     * - Executes `OrderPostSavePluginInterface` stack of plugins
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

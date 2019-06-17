@@ -13,8 +13,7 @@ interface OrderExpanderPluginInterface
 {
     /**
      * Specification:
-     * - Its a plugin which hydrates OrderTransfer when order read is persistence.
-     * - Can be used to add additional data to OrderTransfer.
+     * - Expands OrderTransfer after order was read from Persistence.
      *
      * @api
      *
