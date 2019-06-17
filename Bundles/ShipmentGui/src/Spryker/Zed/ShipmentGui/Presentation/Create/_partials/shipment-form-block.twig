@@ -85,7 +85,7 @@
                                     {% set shipmentNumberList = shipmentNumberList|merge(data) %}
                                 {% endif %}
 
-                                {{ 'Shipment n°'|trans }} {{ shipmentNumberList[key] }}
+                                {{ 'Shipment n° %shipmentNumber%'|trans({'%shipmentNumber%': shipmentNumberList[key]}) }}
                             </td>
                         </tr>
                     {% endfor %}

@@ -38,7 +38,6 @@
         <property name="shipmentMethods" type="ShipmentMethod[]" singular="shipmentMethod" deprecated="Obsolete. Not used." />
         <property name="currencyIsoCode" type="string" />
         <property name="shipmentGroups" type="ShipmentGroup[]" singular="shipmentGroup"/>
-        <property name="isMultiShipment" type="bool" deprecated="Used for BC only. Flag is true when unique item level shipments count is more than 1."/>
     </transfer>
 
     <transfer name="Address">
