@@ -24,8 +24,8 @@ class AbstractSpyResourceShare extends BaseSpyResourceShare
     /**
      * @return void
      */
-    public function updateUuid(): void
+    public function setGeneratedUuid(): void
     {
-        $this->updateUuidBeforeUpdate();
+        parent::setGeneratedUuid();
     }
 }
