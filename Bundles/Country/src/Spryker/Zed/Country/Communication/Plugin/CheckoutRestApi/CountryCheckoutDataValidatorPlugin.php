@@ -18,7 +18,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\Country\Persistence\CountryQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Country\Communication\CountryCommunicationFactory getFactory()
  */
-class CheckoutDataCountryValidatorPlugin extends AbstractPlugin implements CheckoutDataValidatorPluginInterface
+class CountryCheckoutDataValidatorPlugin extends AbstractPlugin implements CheckoutDataValidatorPluginInterface
 {
     /**
      * {@inheritdoc}

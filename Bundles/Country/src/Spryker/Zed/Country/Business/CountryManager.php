@@ -20,8 +20,7 @@ use Spryker\Zed\Country\Persistence\CountryQueryContainerInterface;
 class CountryManager implements CountryManagerInterface
 {
     protected const ERROR_MESSAGE_COUNTRY_NOT_FOUND = '%s country not found for country code: %s';
-    protected const ERROR_MESSAGE_BILLING_ADDRESS_IS_MISSING = 'Billing address is missing';
-    protected const ERROR_MESSAGE_SHIPPING_ADDRESS_IS_MISSING = 'Shipping address is missing';
+    protected const ERROR_MESSAGE_ADDRESS_IS_MISSING = '%s address is missing';
 
     protected const BILLING = 'Billing';
     protected const SHIPPING = 'Shipping';
@@ -188,14 +187,14 @@ class CountryManager implements CountryManagerInterface
         if (!$checkoutDataTransfer->getBillingAddress()) {
             return $this->addErrorToCheckoutResponseTransfer(
                 $checkoutResponseTransfer,
-                static::ERROR_MESSAGE_BILLING_ADDRESS_IS_MISSING
+                sprintf(static::ERROR_MESSAGE_ADDRESS_IS_MISSING, static::BILLING)
             );
         }
 
         if (!$checkoutDataTransfer->getShippingAddress()) {
             return $this->addErrorToCheckoutResponseTransfer(
                 $checkoutResponseTransfer,
-                static::ERROR_MESSAGE_SHIPPING_ADDRESS_IS_MISSING
+                sprintf(static::ERROR_MESSAGE_ADDRESS_IS_MISSING, static::SHIPPING)
             );
         }
 
