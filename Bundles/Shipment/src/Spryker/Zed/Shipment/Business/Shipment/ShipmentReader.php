@@ -48,13 +48,6 @@ class ShipmentReader implements ShipmentReaderInterface
             return null;
         }
 
-        $shippingAddressTransfer = $shipmentTransfer->getShippingAddress();
-        if ($shippingAddressTransfer !== null) {
-            $shipmentAddressTransfer = $this->salesFacade
-                ->findOrderAddressByIdOrderAddress($shippingAddressTransfer->getIdSalesOrderAddress());
-            $shipmentTransfer->setShippingAddress($shipmentAddressTransfer);
-        }
-
         $shipmentMethodTransfer = $shipmentTransfer->getMethod();
         if ($shipmentMethodTransfer === null) {
             return $shipmentTransfer;

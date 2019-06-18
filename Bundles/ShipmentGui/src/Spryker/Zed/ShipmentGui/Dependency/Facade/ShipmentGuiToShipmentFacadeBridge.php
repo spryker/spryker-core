@@ -66,4 +66,16 @@ class ShipmentGuiToShipmentFacadeBridge implements ShipmentGuiToShipmentFacadeIn
     {
         return $this->shipmentFacade->saveShipment($shipmentGroupTransfer, $orderTransfer);
     }
+
+    /**
+     * @param array $formData
+     * @param int|null $idCustomerAddress
+     * @param int|null $idShipmentMethod
+     *
+     * @return \Generated\Shared\Transfer\ShipmentGroupTransfer
+     */
+    public function createShipmentGroupTransfer(array $formData, ?int $idCustomerAddress, ?int $idShipmentMethod): ShipmentGroupTransfer
+    {
+        return $this->shipmentFacade->createShipmentGroupTransfer($formData, $idCustomerAddress, $idShipmentMethod);
+    }
 }

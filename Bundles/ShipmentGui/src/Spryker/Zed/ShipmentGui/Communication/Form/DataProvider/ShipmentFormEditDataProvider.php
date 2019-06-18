@@ -66,7 +66,7 @@ class ShipmentFormEditDataProvider implements ShipmentFormDataProviderInterface
     protected function getFormData(ShipmentTransfer $shipmentTransfer): array
     {
         $formData = [
-            ShipmentFormCreate::FIELD_ID_SHIPMENT_ADDRESS => $this->getShippingAddressId($shipmentTransfer->getShippingAddress()),
+            ShipmentFormCreate::FIELD_ID_CUSTOMER_ADDRESS => $this->getCustomerAddressId($shipmentTransfer->getShippingAddress()),
             ShipmentFormCreate::FIELD_ID_SHIPMENT_METHOD => $this->getShipmentMethodId($shipmentTransfer->getMethod()),
             ShipmentFormCreate::FIELD_REQUESTED_DELIVERY_DATE => $shipmentTransfer->getRequestedDeliveryDate(),
             ShipmentFormCreate::FORM_SHIPPING_ADDRESS => [],
@@ -87,13 +87,13 @@ class ShipmentFormEditDataProvider implements ShipmentFormDataProviderInterface
      *
      * @return int|null
      */
-    protected function getShippingAddressId(?AddressTransfer $addressTransfer = null): ?int
+    protected function getCustomerAddressId(?AddressTransfer $addressTransfer = null): ?int
     {
         if ($addressTransfer === null) {
             return null;
         }
 
-        return $addressTransfer->getIdSalesOrderAddress();
+        return $addressTransfer->getIdCustomerAddress();
     }
 
     /**
@@ -118,6 +118,7 @@ class ShipmentFormEditDataProvider implements ShipmentFormDataProviderInterface
     protected function getAddressFields(AddressTransfer $shippingAddressTransfer): array
     {
         return [
+            AddressForm::ADDRESS_FIELD_ID_SALES_ORDER_ADDRESS => $shippingAddressTransfer->getIdSalesOrderAddress(),
             AddressForm::ADDRESS_FIELD_SALUTATION => $shippingAddressTransfer->getSalutation(),
             AddressForm::ADDRESS_FIELD_FIRST_NAME => $shippingAddressTransfer->getFirstName(),
             AddressForm::ADDRESS_FIELD_MIDDLE_NAME => $shippingAddressTransfer->getMiddleName(),

@@ -29,7 +29,7 @@ class ShipmentFormCreate extends AbstractType
 {
     public const FIELD_ID_SALES_SHIPMENT = 'id_sales_shipment';
     public const FIELD_ID_SALES_ORDER = 'id_sales_order';
-    public const FIELD_ID_SHIPMENT_ADDRESS = 'id_shipping_address';
+    public const FIELD_ID_CUSTOMER_ADDRESS = 'id_customer_address';
     public const FIELD_ID_SHIPMENT_METHOD = 'id_shipment_method';
     public const FIELD_REQUESTED_DELIVERY_DATE = 'requested_delivery_date';
     public const FIELD_SHIPMENT_SELECTED_ITEMS = 'selected_items';
@@ -42,7 +42,7 @@ class ShipmentFormCreate extends AbstractType
 
     protected const VALIDATION_DATE_TODAY = 'today';
     protected const FIELD_REQUESTED_DELIVERY_DATE_FORMAT = 'yyyy-MM-dd'; // Format accepted by IntlDate
-    protected const VALIDATION_INVALID_DATE_MESSAGE = 'validation.invalid_date';
+    protected const VALIDATION_INVALID_DATE_MESSAGE = 'Date should be in correct format %s.';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -97,7 +97,7 @@ class ShipmentFormCreate extends AbstractType
      */
     protected function addIdShippingAddressField(FormBuilderInterface $builder, array $options = [])
     {
-        $builder->add(static::FIELD_ID_SHIPMENT_ADDRESS, ChoiceType::class, [
+        $builder->add(static::FIELD_ID_CUSTOMER_ADDRESS, ChoiceType::class, [
             'label' => 'Delivery Address',
             'choices' => array_flip($options),
             'required' => false,

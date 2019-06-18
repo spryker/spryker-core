@@ -64,7 +64,7 @@ class ShipmentFormDefaultDataProvider implements ShipmentFormDefaultDataProvider
         $defaultShipmentFormCreateFields = [
             ShipmentFormCreate::FIELD_ID_SALES_SHIPMENT => $idSalesShipment,
             ShipmentFormCreate::FIELD_ID_SALES_ORDER => $idSalesOrder,
-            ShipmentFormCreate::FIELD_ID_SHIPMENT_ADDRESS => null,
+            ShipmentFormCreate::FIELD_ID_CUSTOMER_ADDRESS => null,
             ShipmentFormCreate::FIELD_ID_SHIPMENT_METHOD => null,
             ShipmentFormCreate::FIELD_REQUESTED_DELIVERY_DATE => null,
             ShipmentFormCreate::FORM_SHIPPING_ADDRESS => $this->getAddressDefaultFields(),
