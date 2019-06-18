@@ -46,7 +46,6 @@ class RestUserMapper implements RestUserMapperInterface
 
         if (!$companyUserStorageTransfer) {
             $restUserTransfer->setIdCompanyUser(null);
-            $restUserTransfer->setUuidCompanyUser($uuidCompanyUser);
 
             return $restUserTransfer;
         }
