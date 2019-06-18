@@ -44,9 +44,9 @@ use Spryker\Glue\CartsRestApi\Processor\Quote\SingleQuoteCreator;
 use Spryker\Glue\CartsRestApi\Processor\Quote\SingleQuoteCreatorInterface;
 use Spryker\Glue\CartsRestApi\Processor\RestRequest\RestRequestUpdater;
 use Spryker\Glue\CartsRestApi\Processor\RestRequest\RestRequestUpdaterInterface;
-use Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilder;
+use Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartCartRestResponseBuilder;
 use Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface;
-use Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\GuestCartRestResponseBuilder;
+use Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\GuestCartCartRestResponseBuilder;
 use Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\GuestCartRestResponseBuilderInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
 
@@ -221,7 +221,7 @@ class CartsRestApiFactory extends AbstractFactory
      */
     public function createCartRestResponseBuilder(): CartRestResponseBuilderInterface
     {
-        return new CartRestResponseBuilder(
+        return new CartCartRestResponseBuilder(
             $this->getConfig(),
             $this->getResourceBuilder()
         );
@@ -232,7 +232,8 @@ class CartsRestApiFactory extends AbstractFactory
      */
     public function createGuestCartRestResponseBuilder(): GuestCartRestResponseBuilderInterface
     {
-        return new GuestCartRestResponseBuilder(
+        return new GuestCartCartRestResponseBuilder(
+            $this->getConfig(),
             $this->getResourceBuilder(),
             $this->createCartsResourceMapper(),
             $this->createCartItemsResourceMapper()
