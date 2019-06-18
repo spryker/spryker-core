@@ -79,9 +79,9 @@ class CountryFacade extends AbstractFacade implements CountryFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
-    public function validateCountryData(CheckoutDataTransfer $checkoutDataTransfer): CheckoutResponseTransfer
+    public function validateCheckoutData(CheckoutDataTransfer $checkoutDataTransfer): CheckoutResponseTransfer
     {
-        return $this->getFactory()->createCountryManager()->validateCountryData($checkoutDataTransfer);
+        return $this->getFactory()->createCountryManager()->validateCheckoutData($checkoutDataTransfer);
     }
 
     /**

@@ -18,7 +18,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\Country\Persistence\CountryQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Country\Communication\CountryCommunicationFactory getFactory()
  */
-class CountryValidatorPlugin extends AbstractPlugin implements CheckoutDataValidatorPluginInterface
+class CheckoutDataCountryValidatorPlugin extends AbstractPlugin implements CheckoutDataValidatorPluginInterface
 {
     /**
      * {@inheritdoc}
@@ -33,6 +33,6 @@ class CountryValidatorPlugin extends AbstractPlugin implements CheckoutDataValid
      */
     public function validateCheckoutData(CheckoutDataTransfer $checkoutDataTransfer): CheckoutResponseTransfer
     {
-        return $this->getFacade()->validateCountryData($checkoutDataTransfer);
+        return $this->getFacade()->validateCheckoutData($checkoutDataTransfer);
     }
 }

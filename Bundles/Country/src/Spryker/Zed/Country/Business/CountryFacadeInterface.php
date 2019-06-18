@@ -56,7 +56,6 @@ interface CountryFacadeInterface
      * Specification:
      * - Verifies if given country can be found.
      * - Returns CheckoutResponseTransfer with error if country can't be found.
-     * - AddressTransfer with iso2Code must be set in billingAddress and in shippingAddress.
      *
      * @api
      *
@@ -64,7 +63,7 @@ interface CountryFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
-    public function validateCountryData(CheckoutDataTransfer $checkoutDataTransfer): CheckoutResponseTransfer;
+    public function validateCheckoutData(CheckoutDataTransfer $checkoutDataTransfer): CheckoutResponseTransfer;
 
     /**
      * Specification:

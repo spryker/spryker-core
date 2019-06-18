@@ -110,11 +110,6 @@
         <property name="checkoutResponse" type="CheckoutResponse" />
     </transfer>
 
-    <transfer name="CheckoutData">
-        <property name="billingAddress" type="Address" />
-        <property name="shippingAddress" type="Address" />
-    </transfer>
-
     <transfer name="CheckoutResponse">
         <property name="isSuccess" type="bool" />
         <property name="errors" type="CheckoutError[]" singular="error" />
