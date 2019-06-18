@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\CompanyUser;
 use Codeception\Actor;
 use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
+use Spryker\Zed\Customer\Business\CustomerFacadeInterface;
 
 /**
  * Inherited Methods
@@ -63,5 +64,13 @@ class CompanyUserBusinessTester extends Actor
         }
 
         return $this->haveCompanyUser($seedData);
+    }
+
+    /**
+     * @return \Spryker\Zed\Customer\Business\CustomerFacadeInterface
+     */
+    public function getCustomerFacade(): CustomerFacadeInterface
+    {
+        return $this->getLocator()->customer()->facade();
     }
 }
