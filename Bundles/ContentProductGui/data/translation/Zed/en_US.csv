@@ -1,7 +1,12 @@
 "Abstract Product List","Abstract Product List"
+"content_product_abstract_list.template.default","Default"
+"content_product_abstract_list.template.top-title","Top Title"
 Actions,Actions
 "Add more products","Add more products"
 Delete,Delete
+Inactive,Inactive
+Active,Active
+Add to list,Add to list
 ID,ID
 Image,Image
 "Move Down","Move Down"
