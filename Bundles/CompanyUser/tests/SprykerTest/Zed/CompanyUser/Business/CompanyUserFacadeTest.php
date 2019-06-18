@@ -166,7 +166,10 @@ class CompanyUserFacadeTest extends Test
     public function testFindActiveCompanyUserByCustomerIdShouldReturnTransfer(): void
     {
         // Assign
-        $companyUserTransfer = $this->tester->createCompanyUserTransfer([CompanyUserTransfer::IS_ACTIVE => true], [CompanyTransfer::IS_ACTIVE => true]);
+        $companyUserTransfer = $this->tester->createCompanyUserTransfer(
+            [CompanyUserTransfer::IS_ACTIVE => true],
+            [CompanyTransfer::IS_ACTIVE => true]
+        );
         $customerTransfer = (new CustomerBuilder())->build();
         $customerTransfer->setIdCustomer($companyUserTransfer->getFkCustomer());
 
@@ -184,7 +187,10 @@ class CompanyUserFacadeTest extends Test
     public function testFindActiveCompanyUserByCustomerIdShouldReturnNullWhenCompanyIsNotActive(): void
     {
         // Assign
-        $companyUserTransfer = $this->tester->createCompanyUserTransfer([CompanyUserTransfer::IS_ACTIVE => true], [CompanyTransfer::IS_ACTIVE => false]);
+        $companyUserTransfer = $this->tester->createCompanyUserTransfer(
+            [CompanyUserTransfer::IS_ACTIVE => true],
+            [CompanyTransfer::IS_ACTIVE => false]
+        );
         $customerTransfer = (new CustomerBuilder())->build();
         $customerTransfer->setIdCustomer($companyUserTransfer->getFkCustomer());
 
@@ -202,7 +208,10 @@ class CompanyUserFacadeTest extends Test
     public function testFindActiveCompanyUserByCustomerIdShouldReturnNullWhenCompanyUserIsNotActive(): void
     {
         // Assign
-        $companyUserTransfer = $this->tester->createCompanyUserTransfer([CompanyUserTransfer::IS_ACTIVE => false], [CompanyTransfer::IS_ACTIVE => true]);
+        $companyUserTransfer = $this->tester->createCompanyUserTransfer(
+            [CompanyUserTransfer::IS_ACTIVE => false],
+            [CompanyTransfer::IS_ACTIVE => true]
+        );
         $customerTransfer = (new CustomerBuilder())->build();
         $customerTransfer->setIdCustomer($companyUserTransfer->getFkCustomer());
 
@@ -241,9 +250,9 @@ class CompanyUserFacadeTest extends Test
         // Assign
         $customerTransfer = (new CustomerBuilder())->build();
         $customerTransfer->setAnonymizedAt(new DateTime());
-        $companyUserTransfer = $this->tester->createCompanyUserTransfer([
-            CompanyUserTransfer::CUSTOMER => $customerTransfer,
-        ]);
+        $companyUserTransfer = $this->tester->createCompanyUserTransfer(
+            [CompanyUserTransfer::CUSTOMER => $customerTransfer]
+        );
         $companyUserCriteriaFilterTransfer = (new CompanyUserCriteriaFilterBuilder([
             CompanyUserCriteriaFilterTransfer::ID_COMPANY => $companyUserTransfer->getFkCompany(),
         ]))->build();
@@ -278,7 +287,10 @@ class CompanyUserFacadeTest extends Test
     public function testGetActiveCompanyUsersByCustomerReferenceShouldNotReturnInactiveCompanyUsers(): void
     {
         // Assign
-        $companyUserTransfer = $this->tester->createCompanyUserTransfer([CompanyUserTransfer::IS_ACTIVE => false], [CompanyTransfer::IS_ACTIVE => true]);
+        $companyUserTransfer = $this->tester->createCompanyUserTransfer(
+            [CompanyUserTransfer::IS_ACTIVE => false],
+            [CompanyTransfer::IS_ACTIVE => true]
+        );
         $customerTransfer = $companyUserTransfer->getCustomer();
 
         // Act
@@ -315,9 +327,9 @@ class CompanyUserFacadeTest extends Test
         $companyTransfer = $this->tester->haveCompany([CompanyTransfer::IS_ACTIVE => true]);
 
         for ($i = 0; $i < 5; $i++) {
-            $companyUserTransfer = $this->tester->createCompanyUserTransfer([
-                CompanyUserTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
-            ]);
+            $companyUserTransfer = $this->tester->createCompanyUserTransfer(
+                [CompanyUserTransfer::FK_COMPANY => $companyTransfer->getIdCompany()]
+            );
 
             if ($initialCompanyUserId === null) {
                 $initialCompanyUserId = $companyUserTransfer->getIdCompanyUser();
@@ -363,7 +375,9 @@ class CompanyUserFacadeTest extends Test
     public function testEnableCompanyUserShouldEnableInactiveUser(): void
     {
         // Arrange
-        $companyUserTransfer = $this->tester->createCompanyUserTransfer([CompanyUserTransfer::IS_ACTIVE => false]);
+        $companyUserTransfer = $this->tester->createCompanyUserTransfer(
+            [CompanyUserTransfer::IS_ACTIVE => false]
+        );
 
         // Act
         $companyUserResponseTransfer = $this->tester->getFacade()
@@ -411,7 +425,9 @@ class CompanyUserFacadeTest extends Test
     public function testDisableCompanyUserShouldNotDisableInactiveUser(): void
     {
         // Arrange
-        $companyUserTransfer = $this->tester->createCompanyUserTransfer([CompanyUserTransfer::IS_ACTIVE => false]);
+        $companyUserTransfer = $this->tester->createCompanyUserTransfer(
+            [CompanyUserTransfer::IS_ACTIVE => false]
+        );
 
         // Act
         $companyUserResponseTransfer = $this->tester->getFacade()
@@ -427,8 +443,12 @@ class CompanyUserFacadeTest extends Test
     public function testFindActiveCompanyUsersWillReturnArrayOfActiveCompanyUsers(): void
     {
         //Assign
-        $activeCompanyUserTransfer = $this->tester->createCompanyUserTransfer([CompanyUserTransfer::IS_ACTIVE => true]);
-        $inActiveCompanyUserTransfer = $this->tester->createCompanyUserTransfer([CompanyUserTransfer::IS_ACTIVE => false]);
+        $activeCompanyUserTransfer = $this->tester->createCompanyUserTransfer(
+            [CompanyUserTransfer::IS_ACTIVE => true]
+        );
+        $inActiveCompanyUserTransfer = $this->tester->createCompanyUserTransfer(
+            [CompanyUserTransfer::IS_ACTIVE => false]
+        );
         $companyUserIds = [
             $activeCompanyUserTransfer->getIdCompanyUser(),
             $inActiveCompanyUserTransfer->getIdCompanyUser(),
@@ -449,8 +469,12 @@ class CompanyUserFacadeTest extends Test
     public function testFindActiveCompanyUserIdsByCompanyIdsShouldReturnIdsOfActiveCompanyUsers(): void
     {
         //Assign
-        $activeCompanyUserTransfer = $this->tester->createCompanyUserTransfer([CompanyUserTransfer::IS_ACTIVE => true]);
-        $inActiveCompanyUserTransfer = $this->tester->createCompanyUserTransfer([CompanyUserTransfer::IS_ACTIVE => false]);
+        $activeCompanyUserTransfer = $this->tester->createCompanyUserTransfer(
+            [CompanyUserTransfer::IS_ACTIVE => true]
+        );
+        $inActiveCompanyUserTransfer = $this->tester->createCompanyUserTransfer(
+            [CompanyUserTransfer::IS_ACTIVE => false]
+        );
         $companyIds = [
             $activeCompanyUserTransfer->getFkCompany(),
             $inActiveCompanyUserTransfer->getFkCompany(),
@@ -472,9 +496,9 @@ class CompanyUserFacadeTest extends Test
     {
         // Assign
         $customerTransfer = (new CustomerBuilder())->build();
-        $companyUserTransfer = $this->tester->createCompanyUserTransfer([
-            CompanyUserTransfer::CUSTOMER => $customerTransfer,
-        ]);
+        $companyUserTransfer = $this->tester->createCompanyUserTransfer(
+            [CompanyUserTransfer::CUSTOMER => $customerTransfer]
+        );
         $idCompanyUser = $companyUserTransfer->getIdCompanyUser();
 
         // Act
