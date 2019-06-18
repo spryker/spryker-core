@@ -24,7 +24,7 @@ interface ContentGuiToUtilEncodingInterface
      * @param int|null $depth
      * @param int|null $options
      *
-     * @return array
+     * @return mixed|null
      */
     public function decodeJson($jsonValue, $assoc = false, $depth = null, $options = null);
 }

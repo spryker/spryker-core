@@ -13,11 +13,20 @@ use Generated\Shared\Transfer\ProductQuantityTransfer;
 interface ProductQuantityStorageReaderInterface
 {
     /**
+     * @deprecated use getProductQuantityStorage instead.
+     *
      * @param int $idProduct
      *
      * @return \Generated\Shared\Transfer\ProductQuantityStorageTransfer|null
      */
     public function findProductQuantityStorage(int $idProduct): ?ProductQuantityStorageTransfer;
+
+    /**
+     * @param int $idProduct
+     *
+     * @return \Generated\Shared\Transfer\ProductQuantityStorageTransfer
+     */
+    public function getProductQuantityStorage(int $idProduct): ProductQuantityStorageTransfer;
 
     /**
      * @param int $idProduct
