@@ -9,14 +9,15 @@ namespace Spryker\Zed\SchedulerJenkins\Business\Executor;
 
 use Generated\Shared\Transfer\SchedulerJenkinsResponseTransfer;
 use Generated\Shared\Transfer\SchedulerJobTransfer;
+use Spryker\Zed\SchedulerJenkins\Business\Api\Configuration\ConfigurationProviderInterface;
 
 interface ExecutorInterface
 {
     /**
-     * @param string $idScheduler
+     * @param \Spryker\Zed\SchedulerJenkins\Business\Api\Configuration\ConfigurationProviderInterface $configurationProvider
      * @param \Generated\Shared\Transfer\SchedulerJobTransfer $jobTransfer
      *
      * @return \Generated\Shared\Transfer\SchedulerJenkinsResponseTransfer
      */
-    public function execute(string $idScheduler, SchedulerJobTransfer $jobTransfer): SchedulerJenkinsResponseTransfer;
+    public function execute(ConfigurationProviderInterface $configurationProvider, SchedulerJobTransfer $jobTransfer): SchedulerJenkinsResponseTransfer;
 }

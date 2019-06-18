@@ -38,7 +38,7 @@ class SchedulerFacade extends AbstractFacade implements SchedulerFacadeInterface
 
     /**
      * {@inheritdoc}
-     * ф
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\SchedulerFilterTransfer $filterTransfer

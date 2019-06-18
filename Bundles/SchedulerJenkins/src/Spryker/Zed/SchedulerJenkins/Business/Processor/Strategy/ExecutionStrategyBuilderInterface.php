@@ -7,12 +7,14 @@
 
 namespace Spryker\Zed\SchedulerJenkins\Business\Processor\Strategy;
 
+use Spryker\Zed\SchedulerJenkins\Business\Api\Configuration\ConfigurationProviderInterface;
+
 interface ExecutionStrategyBuilderInterface
 {
     /**
-     * @param string $idScheduler
+     * @param \Spryker\Zed\SchedulerJenkins\Business\Api\Configuration\ConfigurationProviderInterface $configurationProvider
      *
      * @return \Spryker\Zed\SchedulerJenkins\Business\Processor\Strategy\ExecutionStrategyInterface
      */
-    public function buildExecutionStrategy(string $idScheduler): ExecutionStrategyInterface;
+    public function buildExecutionStrategy(ConfigurationProviderInterface $configurationProvider): ExecutionStrategyInterface;
 }

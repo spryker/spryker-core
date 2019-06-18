@@ -8,23 +8,56 @@
 namespace Spryker\Zed\SchedulerJenkins\Business\Api;
 
 use Generated\Shared\Transfer\SchedulerJenkinsResponseTransfer;
+use Spryker\Zed\SchedulerJenkins\Business\Api\Configuration\ConfigurationProviderInterface;
 
 interface JenkinsApiInterface
 {
     /**
-     * @param string $schedulerId
-     * @param string $urlPath
+     * @param \Spryker\Zed\SchedulerJenkins\Business\Api\Configuration\ConfigurationProviderInterface $configurationProvider
      *
      * @return \Generated\Shared\Transfer\SchedulerJenkinsResponseTransfer
      */
-    public function executeGetRequest(string $schedulerId, string $urlPath): SchedulerJenkinsResponseTransfer;
+    public function getJobs(ConfigurationProviderInterface $configurationProvider): SchedulerJenkinsResponseTransfer;
 
     /**
-     * @param string $schedulerId
-     * @param string $urlPath
-     * @param string $body
+     * @param \Spryker\Zed\SchedulerJenkins\Business\Api\Configuration\ConfigurationProviderInterface $configurationProvider
+     * @param string $jobName
+     * @param string $jobXmlTemplate
      *
      * @return \Generated\Shared\Transfer\SchedulerJenkinsResponseTransfer
      */
-    public function executePostRequest(string $schedulerId, string $urlPath, string $body = ''): SchedulerJenkinsResponseTransfer;
+    public function updateJob(ConfigurationProviderInterface $configurationProvider, string $jobName, string $jobXmlTemplate): SchedulerJenkinsResponseTransfer;
+
+    /**
+     * @param \Spryker\Zed\SchedulerJenkins\Business\Api\Configuration\ConfigurationProviderInterface $configurationProvider
+     * @param string $jobName
+     * @param string $jobXmlTemplate
+     *
+     * @return \Generated\Shared\Transfer\SchedulerJenkinsResponseTransfer
+     */
+    public function createJob(ConfigurationProviderInterface $configurationProvider, string $jobName, string $jobXmlTemplate): SchedulerJenkinsResponseTransfer;
+
+    /**
+     * @param \Spryker\Zed\SchedulerJenkins\Business\Api\Configuration\ConfigurationProviderInterface $configurationProvider
+     * @param string $jobName
+     *
+     * @return \Generated\Shared\Transfer\SchedulerJenkinsResponseTransfer
+     */
+    public function deleteJob(ConfigurationProviderInterface $configurationProvider, string $jobName): SchedulerJenkinsResponseTransfer;
+
+    /**
+     * @param \Spryker\Zed\SchedulerJenkins\Business\Api\Configuration\ConfigurationProviderInterface $configurationProvider
+     * @param string $jobName
+     *
+     * @return \Generated\Shared\Transfer\SchedulerJenkinsResponseTransfer
+     */
+    public function enableJob(ConfigurationProviderInterface $configurationProvider, string $jobName): SchedulerJenkinsResponseTransfer;
+
+    /**
+     * @param \Spryker\Zed\SchedulerJenkins\Business\Api\Configuration\ConfigurationProviderInterface $configurationProvider
+     * @param string $jobName
+     *
+     * @return \Generated\Shared\Transfer\SchedulerJenkinsResponseTransfer
+     */
+    public function disableJob(ConfigurationProviderInterface $configurationProvider, string $jobName): SchedulerJenkinsResponseTransfer;
 }

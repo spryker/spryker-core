@@ -7,14 +7,13 @@
 
 namespace Spryker\Zed\SchedulerJenkins\Business\Processor\Strategy;
 
+use Spryker\Zed\SchedulerJenkins\Business\Api\Configuration\ConfigurationProviderInterface;
 use Spryker\Zed\SchedulerJenkins\Business\Api\JenkinsApiInterface;
 use Spryker\Zed\SchedulerJenkins\Business\Executor\ExecutorInterface;
 use Spryker\Zed\SchedulerJenkins\Dependency\Service\SchedulerJenkinsToUtilEncodingServiceInterface;
 
 class ExecutionStrategyBuilder implements ExecutionStrategyBuilderInterface
 {
-    protected const JENKINS_API_JOBS_URL = 'api/json/jobs?pretty=true&tree=jobs[name]';
-
     protected const KEY_JOBS = 'jobs';
     protected const KEY_NAME = 'name';
 
@@ -57,13 +56,13 @@ class ExecutionStrategyBuilder implements ExecutionStrategyBuilderInterface
     }
 
     /**
-     * @param string $idScheduler
+     * @param \Spryker\Zed\SchedulerJenkins\Business\Api\Configuration\ConfigurationProviderInterface $configurationProvider
      *
      * @return \Spryker\Zed\SchedulerJenkins\Business\Processor\Strategy\ExecutionStrategyInterface
      */
-    public function buildExecutionStrategy(string $idScheduler): ExecutionStrategyInterface
+    public function buildExecutionStrategy(ConfigurationProviderInterface $configurationProvider): ExecutionStrategyInterface
     {
-        $jobs = $this->getJobs($idScheduler);
+        $jobs = $this->getJobs($configurationProvider);
         $executionStrategy = new ExecutionStrategy($this->executorForExistingJob, $this->executorForAbsentJob);
 
         if (!is_array($jobs)) {
@@ -91,13 +90,13 @@ class ExecutionStrategyBuilder implements ExecutionStrategyBuilderInterface
     }
 
     /**
-     * @param string $idScheduler
+     * @param \Spryker\Zed\SchedulerJenkins\Business\Api\Configuration\ConfigurationProviderInterface $configurationProvider
      *
      * @return mixed|null
      */
-    protected function getJobs(string $idScheduler)
+    protected function getJobs(ConfigurationProviderInterface $configurationProvider)
     {
-        $response = $this->jenkinsApi->executeGetRequest($idScheduler, static::JENKINS_API_JOBS_URL);
+        $response = $this->jenkinsApi->getJobs($configurationProvider);
 
         if ($response->getStatus() === false) {
             return null;

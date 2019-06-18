@@ -8,17 +8,14 @@
 namespace Spryker\Zed\SchedulerJenkins\Business\TemplateGenerator;
 
 use Generated\Shared\Transfer\SchedulerJobTransfer;
-use Spryker\Shared\Config\Environment;
 use Spryker\Zed\SchedulerJenkins\Dependency\TwigEnvironment\SchedulerJenkinsToTwigEnvironmentInterface;
 use Spryker\Zed\SchedulerJenkins\SchedulerJenkinsConfig;
 
 class XmlJenkinsJobTemplateGenerator implements JenkinsJobTemplateGeneratorInterface
 {
-    protected const LOG_ROTATE_DAYS_KEY = 'logrotate_days';
-
-    protected const JOB_TEMPLATE_KEY = 'job';
-    protected const WORKING_DIR_TEMPLATE_KEY = 'workingDir';
-    protected const ENVIRONMENT_TEMPLATE_KEY = 'environment';
+    protected const KEY_LOG_ROTATE_DAYS = 'logrotate_days';
+    protected const KEY_JOB = 'job';
+    protected const KEY_WORKING_DIR = 'working_dir';
 
     /**
      * @var \Spryker\Zed\SchedulerJenkins\Dependency\TwigEnvironment\SchedulerJenkinsToTwigEnvironmentInterface
@@ -50,7 +47,6 @@ class XmlJenkinsJobTemplateGenerator implements JenkinsJobTemplateGeneratorInter
     public function generateJobTemplate(SchedulerJobTransfer $jobTransfer): string
     {
         $jobTransfer
-            ->requireName()
             ->requireRepeatPattern()
             ->requireCommand()
             ->requireStore();
@@ -58,9 +54,8 @@ class XmlJenkinsJobTemplateGenerator implements JenkinsJobTemplateGeneratorInter
         $jobTransfer = $this->extendSchedulerJobTransferWithLogRotateValue($jobTransfer);
 
         $xmlTemplate = $this->twig->render($this->schedulerJenkinsConfig->getJenkinsTemplatePath(), [
-            static::JOB_TEMPLATE_KEY => $jobTransfer->toArray(),
-            static::WORKING_DIR_TEMPLATE_KEY => APPLICATION_ROOT_DIR,
-            static::ENVIRONMENT_TEMPLATE_KEY => Environment::getInstance()->getEnvironment(),
+            static::KEY_JOB => $jobTransfer->toArray(),
+            static::KEY_WORKING_DIR => APPLICATION_ROOT_DIR,
         ]);
 
         return $xmlTemplate;
@@ -75,11 +70,11 @@ class XmlJenkinsJobTemplateGenerator implements JenkinsJobTemplateGeneratorInter
     {
         $jobPayload = $jobTransfer->getPayload();
 
-        if (array_key_exists(static::LOG_ROTATE_DAYS_KEY, $jobPayload) && is_int($jobPayload[static::LOG_ROTATE_DAYS_KEY])) {
+        if (array_key_exists(static::KEY_LOG_ROTATE_DAYS, $jobPayload) && is_int($jobPayload[static::KEY_LOG_ROTATE_DAYS])) {
             return $jobTransfer;
         }
 
-        $jobPayload[static::LOG_ROTATE_DAYS_KEY] = $this->schedulerJenkinsConfig->getAmountOfDaysForLogFileRotation();
+        $jobPayload[static::KEY_LOG_ROTATE_DAYS] = $this->schedulerJenkinsConfig->getAmountOfDaysForLogFileRotation();
 
         return $jobTransfer->setPayload($jobPayload);
     }

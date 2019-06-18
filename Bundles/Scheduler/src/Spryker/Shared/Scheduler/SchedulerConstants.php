@@ -18,5 +18,5 @@ interface SchedulerConstants
      *
      * @api
      */
-    public const ENABLED_SCHEDULERS = 'SCHEDULER:JENKINS_CONFIGURATION';
+    public const ENABLED_SCHEDULERS = 'SCHEDULER:ENABLED_SCHEDULERS';
 }

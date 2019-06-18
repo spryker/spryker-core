@@ -19,13 +19,4 @@ interface SchedulerJenkinsToGuzzleInterface
      * @return \Psr\Http\Message\ResponseInterface
      */
     public function send(RequestInterface $request, array $options = []): ResponseInterface;
-
-    /**
-     * @param string $method
-     * @param string $uri
-     * @param array $options
-     *
-     * @return \Psr\Http\Message\ResponseInterface
-     */
-    public function request(string $method, string $uri, array $options = []): ResponseInterface;
 }

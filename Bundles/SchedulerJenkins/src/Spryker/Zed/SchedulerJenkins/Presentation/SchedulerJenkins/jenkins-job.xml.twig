@@ -20,7 +20,7 @@
     {% block triggers %}
     <triggers class='vector'>
         <hudson.triggers.TimerTrigger>
-            <spec>{{ job.repeatPattern }}</spec>
+            <spec>{{ job.repeat_pattern }}</spec>
         </hudson.triggers.TimerTrigger>
     </triggers>
     {% endblock triggers %}
@@ -30,9 +30,9 @@
             <command>
                 {%- block setup %}
                     [ -z "${PHP_BIN}" ] &amp;&amp; export PHP_BIN=php
-                    export APPLICATION_ENV={{ environment }}
+                    export APPLICATION_ENV={{ getenv('APPLICATION_ENV') }}
                     export APPLICATION_STORE={{ job.store }}
-                    cd {{ workingDir }}
+                    cd {{ working_dir }}
                 {% endblock setup -%}
                 {%- block command %}
                     {{ job.command }}

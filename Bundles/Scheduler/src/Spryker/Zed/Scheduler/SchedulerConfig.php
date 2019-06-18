@@ -62,6 +62,6 @@ class SchedulerConfig extends AbstractBundleConfig
      */
     public function getEnabledSchedulers(): array
     {
-        return (array)$this->get(SchedulerConstants::ENABLED_SCHEDULERS, []);
+        return $this->get(SchedulerConstants::ENABLED_SCHEDULERS, []);
     }
 }

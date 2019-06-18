@@ -19,6 +19,7 @@ interface SchedulerJenkinsConstants
      *     'schedulerId' => [
      *         SchedulerJenkinsConfig::SCHEDULER_JENKINS_BASE_URL => 'http://localhost:10007/',
      *         SharedSchedulerJenkinsConfig::SCHEDULER_JENKINS_CREDENTIALS => ['username', 'password']
+     *         SchedulerJenkinsConfig::SCHEDULER_JENKINS_CSRF_ENABLED => true
      *     ],
      * ...
      * ]
@@ -26,14 +27,6 @@ interface SchedulerJenkinsConstants
      * @api
      */
     public const JENKINS_CONFIGURATION = 'SCHEDULER_JENKINS:JENKINS_CONFIGURATION';
-
-    /**
-     * Specification:
-     * - Defines if CSRF protection is enabled for Jenkins API calls.
-     *
-     * @api
-     */
-    public const JENKINS_CSRF_PROTECTION_ENABLED = 'SCHEDULER_JENKINS:JENKINS_CSRF_PROTECTION_ENABLED';
 
     /**
      * Specification:

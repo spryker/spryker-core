@@ -9,6 +9,7 @@ namespace Spryker\Zed\SchedulerJenkins\Business\Executor;
 
 use Generated\Shared\Transfer\SchedulerJenkinsResponseTransfer;
 use Generated\Shared\Transfer\SchedulerJobTransfer;
+use Spryker\Zed\SchedulerJenkins\Business\Api\Configuration\ConfigurationProviderInterface;
 use Spryker\Zed\SchedulerJenkins\Business\Api\JenkinsApiInterface;
 use Spryker\Zed\SchedulerJenkins\Business\TemplateGenerator\JenkinsJobTemplateGeneratorInterface;
 
@@ -39,19 +40,17 @@ class UpdateExecutor implements ExecutorInterface
     }
 
     /**
-     * @param string $idScheduler
+     * @param \Spryker\Zed\SchedulerJenkins\Business\Api\Configuration\ConfigurationProviderInterface $configurationProvider
      * @param \Generated\Shared\Transfer\SchedulerJobTransfer $jobTransfer
      *
      * @return \Generated\Shared\Transfer\SchedulerJenkinsResponseTransfer
      */
-    public function execute(string $idScheduler, SchedulerJobTransfer $jobTransfer): SchedulerJenkinsResponseTransfer
+    public function execute(ConfigurationProviderInterface $configurationProvider, SchedulerJobTransfer $jobTransfer): SchedulerJenkinsResponseTransfer
     {
+        $jobTransfer->requireName();
+
         $jobXmlTemplate = $this->jobTemplateGenerator->generateJobTemplate($jobTransfer);
 
-        return $this->jenkinsApi->executePostRequest(
-            $idScheduler,
-            sprintf(static::UPDATE_JOB_URL_TEMPLATE, $jobTransfer->getName()),
-            $jobXmlTemplate
-        );
+        return $this->jenkinsApi->updateJob($configurationProvider, $jobTransfer->getName(), $jobXmlTemplate);
     }
 }

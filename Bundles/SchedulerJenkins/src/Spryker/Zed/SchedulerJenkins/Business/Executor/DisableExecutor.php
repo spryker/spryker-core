@@ -9,12 +9,11 @@ namespace Spryker\Zed\SchedulerJenkins\Business\Executor;
 
 use Generated\Shared\Transfer\SchedulerJenkinsResponseTransfer;
 use Generated\Shared\Transfer\SchedulerJobTransfer;
+use Spryker\Zed\SchedulerJenkins\Business\Api\Configuration\ConfigurationProviderInterface;
 use Spryker\Zed\SchedulerJenkins\Business\Api\JenkinsApiInterface;
 
 class DisableExecutor implements ExecutorInterface
 {
-    protected const DISABLE_JOB_URL_TEMPLATE = 'job/%s/disable';
-
     /**
      * @var \Spryker\Zed\SchedulerJenkins\Business\Api\JenkinsApiInterface
      */
@@ -30,18 +29,15 @@ class DisableExecutor implements ExecutorInterface
     }
 
     /**
-     * @param string $idScheduler
+     * @param \Spryker\Zed\SchedulerJenkins\Business\Api\Configuration\ConfigurationProviderInterface $configurationProvider
      * @param \Generated\Shared\Transfer\SchedulerJobTransfer $jobTransfer
      *
      * @return \Generated\Shared\Transfer\SchedulerJenkinsResponseTransfer
      */
-    public function execute(string $idScheduler, SchedulerJobTransfer $jobTransfer): SchedulerJenkinsResponseTransfer
+    public function execute(ConfigurationProviderInterface $configurationProvider, SchedulerJobTransfer $jobTransfer): SchedulerJenkinsResponseTransfer
     {
         $jobTransfer->requireName();
 
-        return $this->jenkinsApi->executePostRequest(
-            $idScheduler,
-            sprintf(static::DISABLE_JOB_URL_TEMPLATE, $jobTransfer->getName())
-        );
+        return $this->jenkinsApi->disableJob($configurationProvider, $jobTransfer->getName());
     }
 }

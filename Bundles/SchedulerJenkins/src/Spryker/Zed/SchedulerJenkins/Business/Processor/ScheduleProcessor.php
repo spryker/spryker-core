@@ -9,7 +9,7 @@ namespace Spryker\Zed\SchedulerJenkins\Business\Processor;
 
 use Generated\Shared\Transfer\SchedulerResponseTransfer;
 use Generated\Shared\Transfer\SchedulerScheduleTransfer;
-use Spryker\Zed\SchedulerJenkins\Business\Processor\Builder\SchedulerResponseBuilderInterface;
+use Spryker\Zed\SchedulerJenkins\Business\Processor\Builder\ConfigurationProviderBuilderInterface;
 use Spryker\Zed\SchedulerJenkins\Business\Processor\Strategy\ExecutionStrategyBuilderInterface;
 
 class ScheduleProcessor implements ScheduleProcessorInterface
@@ -20,20 +20,20 @@ class ScheduleProcessor implements ScheduleProcessorInterface
     protected $executionStrategyBuilder;
 
     /**
-     * @var \Spryker\Zed\SchedulerJenkins\Business\Processor\Builder\SchedulerResponseBuilderInterface
+     * @var \Spryker\Zed\SchedulerJenkins\Business\Processor\Builder\ConfigurationProviderBuilderInterface
      */
-    protected $responseBuilder;
+    protected $configurationProviderBuilder;
 
     /**
-     * @param \Spryker\Zed\SchedulerJenkins\Business\Processor\Strategy\ExecutionStrategyBuilderInterface $jenkinsJobReader
-     * @param \Spryker\Zed\SchedulerJenkins\Business\Processor\Builder\SchedulerResponseBuilderInterface $responseBuilder
+     * @param \Spryker\Zed\SchedulerJenkins\Business\Processor\Strategy\ExecutionStrategyBuilderInterface $executionStrategyBuilder
+     * @param \Spryker\Zed\SchedulerJenkins\Business\Processor\Builder\ConfigurationProviderBuilderInterface $configurationProviderBuilder
      */
     public function __construct(
-        ExecutionStrategyBuilderInterface $jenkinsJobReader,
-        SchedulerResponseBuilderInterface $responseBuilder
+        ExecutionStrategyBuilderInterface $executionStrategyBuilder,
+        ConfigurationProviderBuilderInterface $configurationProviderBuilder
     ) {
-        $this->executionStrategyBuilder = $jenkinsJobReader;
-        $this->responseBuilder = $responseBuilder;
+        $this->executionStrategyBuilder = $executionStrategyBuilder;
+        $this->configurationProviderBuilder = $configurationProviderBuilder;
     }
 
     /**
@@ -44,24 +44,33 @@ class ScheduleProcessor implements ScheduleProcessorInterface
     public function processSchedule(SchedulerScheduleTransfer $scheduleTransfer): SchedulerResponseTransfer
     {
         $idScheduler = $scheduleTransfer->getIdScheduler();
-        $executionStrategy = $this->executionStrategyBuilder->buildExecutionStrategy($idScheduler);
+        $configurationProvider = $this->configurationProviderBuilder->build($idScheduler);
+        $executionStrategy = $this->executionStrategyBuilder->buildExecutionStrategy($configurationProvider);
+        $schedulerResponseTransfer = $this->createSchedulerResponseTransfer($scheduleTransfer);
 
         foreach ($scheduleTransfer->getJobs() as $jobTransfer) {
             $executor = $executionStrategy->getExecutor($jobTransfer);
-            $response = $executor->execute($idScheduler, $jobTransfer);
+            $response = $executor->execute($configurationProvider, $jobTransfer);
 
             if ($response->getStatus() === false) {
-                return $this->responseBuilder
-                    ->withSchedule($scheduleTransfer)
-                    ->withStatus(false)
-                    ->withMessage($response->getMessage())
-                    ->build();
+                return $schedulerResponseTransfer
+                    ->setStatus(false)
+                    ->setMessage($response->getMessage());
             }
         }
 
-        return $this->responseBuilder
-            ->withSchedule($scheduleTransfer)
-            ->withStatus(true)
-            ->build();
+        return $schedulerResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SchedulerScheduleTransfer $scheduleTransfer
+     *
+     * @return \Generated\Shared\Transfer\SchedulerResponseTransfer
+     */
+    protected function createSchedulerResponseTransfer(SchedulerScheduleTransfer $scheduleTransfer): SchedulerResponseTransfer
+    {
+        return (new SchedulerResponseTransfer())
+            ->setSchedule($scheduleTransfer)
+            ->setStatus(true);
     }
 }

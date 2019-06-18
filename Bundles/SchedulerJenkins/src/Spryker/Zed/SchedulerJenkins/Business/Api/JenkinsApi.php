@@ -8,196 +8,206 @@
 namespace Spryker\Zed\SchedulerJenkins\Business\Api;
 
 use Generated\Shared\Transfer\SchedulerJenkinsResponseTransfer;
-use GuzzleHttp\Psr7\Request as Psr7Request;
 use Psr\Http\Message\RequestInterface;
-use RuntimeException;
+use Spryker\Zed\SchedulerJenkins\Business\Api\Builder\RequestBuilderInterface;
 use Spryker\Zed\SchedulerJenkins\Business\Api\Configuration\ConfigurationProviderInterface;
-use Spryker\Zed\SchedulerJenkins\Dependency\Guzzle\SchedulerJenkinsToGuzzleInterface;
+use Spryker\Zed\SchedulerJenkins\Business\Api\Exception\InvalidJenkinsConfiguration;
+use Spryker\Zed\SchedulerJenkins\Business\Api\Executor\RequestExecutorInterface;
 
 class JenkinsApi implements JenkinsApiInterface
 {
     protected const JENKINS_URL_API_CSRF_TOKEN = 'crumbIssuer/api/xml?xpath=string(//crumb)';
 
-    protected const HEADERS_KEY = 'headers';
-    protected const BODY_KEY = 'body';
-    protected const AUTH_KEY = 'auth';
-    protected const CRUMB_KEY = '.crumb';
-
-    protected const SUCCESS_STATUS_CODE = 200;
+    protected const GET_JOBS_URL = 'api/json/jobs?pretty=true&tree=jobs[name]';
+    protected const CREATE_JOB_URL = 'createItem?name=%s';
+    protected const DELETE_JOB_URL = 'job/%s/doDelete';
+    protected const UPDATE_JOB_URL = 'job/%s/config.xml';
+    protected const ENABLE_JOB_URL = 'job/%s/enable';
+    protected const DISABLE_JOB_URL = 'job/%s/disable';
 
     protected const REQUEST_GET_METHOD = 'GET';
     protected const REQUEST_POST_METHOD = 'POST';
 
-    /**
-     * @var \Spryker\Zed\SchedulerJenkins\Dependency\Guzzle\SchedulerJenkinsToGuzzleInterface
-     */
-    protected $client;
+    protected const AUTH_KEY = 'auth';
+    protected const CRUMB_KEY = '.crumb';
 
     /**
-     * @var \Spryker\Zed\SchedulerJenkins\Business\Api\Configuration\ConfigurationProviderInterface
+     * @var \Spryker\Zed\SchedulerJenkins\Business\Api\Builder\RequestBuilderInterface
      */
-    protected $jenkinsConfigurationReader;
+    protected $requestBuilder;
 
     /**
-     * @param \Spryker\Zed\SchedulerJenkins\Dependency\Guzzle\SchedulerJenkinsToGuzzleInterface $client
-     * @param \Spryker\Zed\SchedulerJenkins\Business\Api\Configuration\ConfigurationProviderInterface $jenkinsConfigurationReader
+     * @var \Spryker\Zed\SchedulerJenkins\Business\Api\Executor\RequestExecutorInterface
+     */
+    protected $requestExecutor;
+
+    /**
+     * @param \Spryker\Zed\SchedulerJenkins\Business\Api\Builder\RequestBuilderInterface $requestBuilder
+     * @param \Spryker\Zed\SchedulerJenkins\Business\Api\Executor\RequestExecutorInterface $requestExecutor
      */
     public function __construct(
-        SchedulerJenkinsToGuzzleInterface $client,
-        ConfigurationProviderInterface $jenkinsConfigurationReader
+        RequestBuilderInterface $requestBuilder,
+        RequestExecutorInterface $requestExecutor
     ) {
-        $this->client = $client;
-        $this->jenkinsConfigurationReader = $jenkinsConfigurationReader;
+        $this->requestBuilder = $requestBuilder;
+        $this->requestExecutor = $requestExecutor;
     }
 
     /**
-     * @param string $idScheduler
-     * @param string $urlPath
+     * @param \Spryker\Zed\SchedulerJenkins\Business\Api\Configuration\ConfigurationProviderInterface $configurationProvider
      *
      * @return \Generated\Shared\Transfer\SchedulerJenkinsResponseTransfer
      */
-    public function executeGetRequest(string $idScheduler, string $urlPath): SchedulerJenkinsResponseTransfer
+    public function getJobs(ConfigurationProviderInterface $configurationProvider): SchedulerJenkinsResponseTransfer
     {
-        $request = $this->createGuzzleRequest(static::REQUEST_GET_METHOD, $idScheduler, $urlPath);
+        $request = $this->requestBuilder->buildPsrRequest(
+            static::REQUEST_GET_METHOD,
+            $configurationProvider,
+            static::GET_JOBS_URL
+        );
 
-        return $this->executeRequest($request, $idScheduler);
+        $request = $this->extendRequestWithCsrfToken($request, $configurationProvider);
+
+        return $this->requestExecutor->execute($request, $configurationProvider);
     }
 
     /**
-     * @param string $idScheduler
-     * @param string $urlPath
-     * @param string $body
+     * @param \Spryker\Zed\SchedulerJenkins\Business\Api\Configuration\ConfigurationProviderInterface $configurationProvider
+     * @param string $jobName
+     * @param string $jobXmlTemplate
      *
      * @return \Generated\Shared\Transfer\SchedulerJenkinsResponseTransfer
      */
-    public function executePostRequest(string $idScheduler, string $urlPath, string $body = ''): SchedulerJenkinsResponseTransfer
+    public function updateJob(ConfigurationProviderInterface $configurationProvider, string $jobName, string $jobXmlTemplate): SchedulerJenkinsResponseTransfer
     {
-        $request = $this->createGuzzleRequest(static::REQUEST_POST_METHOD, $idScheduler, $urlPath, $body);
+        $request = $this->requestBuilder->buildPsrRequest(
+            static::REQUEST_POST_METHOD,
+            $configurationProvider,
+            sprintf(static::UPDATE_JOB_URL, $jobName),
+            $jobXmlTemplate
+        );
 
-        return $this->executeRequest($request, $idScheduler);
+        $request = $this->extendRequestWithCsrfToken($request, $configurationProvider);
+
+        return $this->requestExecutor->execute($request, $configurationProvider);
     }
 
     /**
-     * @param string $requestMethod
-     * @param string $idScheduler
-     * @param string $urlPath
-     * @param string $body
+     * @param \Spryker\Zed\SchedulerJenkins\Business\Api\Configuration\ConfigurationProviderInterface $configurationProvider
+     * @param string $jobName
+     * @param string $jobXmlTemplate
+     *
+     * @return \Generated\Shared\Transfer\SchedulerJenkinsResponseTransfer
+     */
+    public function createJob(ConfigurationProviderInterface $configurationProvider, string $jobName, string $jobXmlTemplate): SchedulerJenkinsResponseTransfer
+    {
+        $request = $this->requestBuilder->buildPsrRequest(
+            static::REQUEST_POST_METHOD,
+            $configurationProvider,
+            sprintf(static::CREATE_JOB_URL, $jobName),
+            $jobXmlTemplate
+        );
+
+        $request = $this->extendRequestWithCsrfToken($request, $configurationProvider);
+
+        return $this->requestExecutor->execute($request, $configurationProvider);
+    }
+
+    /**
+     * @param \Spryker\Zed\SchedulerJenkins\Business\Api\Configuration\ConfigurationProviderInterface $configurationProvider
+     * @param string $jobName
+     *
+     * @return \Generated\Shared\Transfer\SchedulerJenkinsResponseTransfer
+     */
+    public function deleteJob(ConfigurationProviderInterface $configurationProvider, string $jobName): SchedulerJenkinsResponseTransfer
+    {
+        $request = $this->requestBuilder->buildPsrRequest(
+            static::REQUEST_POST_METHOD,
+            $configurationProvider,
+            sprintf(static::DELETE_JOB_URL, $jobName)
+        );
+
+        $request = $this->extendRequestWithCsrfToken($request, $configurationProvider);
+
+        return $this->requestExecutor->execute($request, $configurationProvider);
+    }
+
+    /**
+     * @param \Spryker\Zed\SchedulerJenkins\Business\Api\Configuration\ConfigurationProviderInterface $configurationProvider
+     * @param string $jobName
+     *
+     * @return \Generated\Shared\Transfer\SchedulerJenkinsResponseTransfer
+     */
+    public function enableJob(ConfigurationProviderInterface $configurationProvider, string $jobName): SchedulerJenkinsResponseTransfer
+    {
+        $request = $this->requestBuilder->buildPsrRequest(
+            static::REQUEST_POST_METHOD,
+            $configurationProvider,
+            sprintf(static::ENABLE_JOB_URL, $jobName)
+        );
+
+        $request = $this->extendRequestWithCsrfToken($request, $configurationProvider);
+
+        return $this->requestExecutor->execute($request, $configurationProvider);
+    }
+
+    /**
+     * @param \Spryker\Zed\SchedulerJenkins\Business\Api\Configuration\ConfigurationProviderInterface $configurationProvider
+     * @param string $jobName
+     *
+     * @return \Generated\Shared\Transfer\SchedulerJenkinsResponseTransfer
+     */
+    public function disableJob(ConfigurationProviderInterface $configurationProvider, string $jobName): SchedulerJenkinsResponseTransfer
+    {
+        $request = $this->requestBuilder->buildPsrRequest(
+            static::REQUEST_POST_METHOD,
+            $configurationProvider,
+            sprintf(static::DISABLE_JOB_URL, $jobName)
+        );
+
+        $request = $this->extendRequestWithCsrfToken($request, $configurationProvider);
+
+        return $this->requestExecutor->execute($request, $configurationProvider);
+    }
+
+    /**
+     * @param \Psr\Http\Message\RequestInterface $request
+     * @param \Spryker\Zed\SchedulerJenkins\Business\Api\Configuration\ConfigurationProviderInterface $configurationProvider
      *
      * @return \Psr\Http\Message\RequestInterface
      */
-    protected function createGuzzleRequest(string $requestMethod, string $idScheduler, string $urlPath, string $body = ''): RequestInterface
+    protected function extendRequestWithCsrfToken(RequestInterface $request, ConfigurationProviderInterface $configurationProvider): RequestInterface
     {
-        $baseUrl = $this->jenkinsConfigurationReader->getJenkinsBaseUrlBySchedulerId($idScheduler, $urlPath);
-        $headers = $this->getHeaders($idScheduler);
-
-        $request = new Psr7Request(
-            $requestMethod,
-            $baseUrl,
-            $headers,
-            $body
-        );
+        if ($configurationProvider->isJenkinsCsrfProtectionEnabled()) {
+            $csrfProtectionToken = $this->getCsrfToken($configurationProvider);
+            $request = $request->withHeader(static::CRUMB_KEY, $csrfProtectionToken);
+        }
 
         return $request;
     }
 
     /**
-     * @param \Psr\Http\Message\RequestInterface $request
-     * @param string $idScheduler
+     * @param \Spryker\Zed\SchedulerJenkins\Business\Api\Configuration\ConfigurationProviderInterface $configurationProvider
      *
-     * @return \Generated\Shared\Transfer\SchedulerJenkinsResponseTransfer
-     */
-    protected function executeRequest(
-        RequestInterface $request,
-        string $idScheduler
-    ): SchedulerJenkinsResponseTransfer {
-        try {
-            $requestOptions = $this->getRequestOptions($idScheduler);
-            $response = $this->client->send($request, $requestOptions);
-        } catch (RuntimeException $runtimeException) {
-            return $this->createSchedulerJenkinsErrorResponseTransfer($runtimeException->getMessage(), false);
-        }
-
-        $payload = $response->getBody()->getContents();
-        $status = $response->getStatusCode() === static::SUCCESS_STATUS_CODE;
-
-        return $this->createSchedulerJenkinsSuccessResponseTransfer($payload, $status);
-    }
-
-    /**
-     * @param string $payload
-     * @param bool $status
-     *
-     * @return \Generated\Shared\Transfer\SchedulerJenkinsResponseTransfer
-     */
-    protected function createSchedulerJenkinsSuccessResponseTransfer(string $payload, bool $status): SchedulerJenkinsResponseTransfer
-    {
-        return (new SchedulerJenkinsResponseTransfer())
-            ->setPayload($payload)
-            ->setStatus($status);
-    }
-
-    /**
-     * @param string $message
-     * @param bool $status
-     *
-     * @return \Generated\Shared\Transfer\SchedulerJenkinsResponseTransfer
-     */
-    protected function createSchedulerJenkinsErrorResponseTransfer(string $message, bool $status): SchedulerJenkinsResponseTransfer
-    {
-        return (new SchedulerJenkinsResponseTransfer())
-            ->setMessage($message)
-            ->setStatus($status);
-    }
-
-    /**
-     * @param string $idScheduler
-     *
-     * @return array
-     */
-    protected function getHeaders(string $idScheduler): array
-    {
-        $httpHeader = [
-            'Content-Type' => 'text/xml; charset=UTF8',
-        ];
-
-        if ($this->jenkinsConfigurationReader->isJenkinsCsrfProtectionEnabled()) {
-            $csrfProtectionToken = $this->getCsrfToken($idScheduler);
-            $httpHeader[static::CRUMB_KEY] = $csrfProtectionToken;
-        }
-
-        return $httpHeader;
-    }
-
-    /**
-     * @param string $idScheduler
+     * @throws \Spryker\Zed\SchedulerJenkins\Business\Api\Exception\InvalidJenkinsConfiguration
      *
      * @return string
      */
-    protected function getCsrfToken(string $idScheduler): string
+    protected function getCsrfToken(ConfigurationProviderInterface $configurationProvider): string
     {
-        $baseUrl = $this->jenkinsConfigurationReader->getJenkinsBaseUrlBySchedulerId($idScheduler, static::JENKINS_URL_API_CSRF_TOKEN);
-        $response = $this->client->request(static::REQUEST_GET_METHOD, $baseUrl);
+        $request = $this->requestBuilder->buildPsrRequest(
+            static::REQUEST_GET_METHOD,
+            $configurationProvider,
+            static::JENKINS_URL_API_CSRF_TOKEN
+        );
 
-        return $response->getBody()->getContents();
-    }
+        $responseTransfer = $this->requestExecutor->execute($request, $configurationProvider);
+        $payload = $responseTransfer->getPayload();
 
-    /**
-     * @param string $idScheduler
-     *
-     * @return array
-     */
-    protected function getRequestOptions(string $idScheduler): array
-    {
-        $requestOptions = [];
-
-        $jenkinsAuthCredentials = $this->jenkinsConfigurationReader->getJenkinsAuthCredentials($idScheduler);
-
-        if (count($jenkinsAuthCredentials) === 0) {
-            return $requestOptions;
+        if ($payload === null) {
+            throw new InvalidJenkinsConfiguration('Cannot generate CSRF token. Please check that CSRF protection is enabled on Jenkins server.');
         }
 
-        $requestOptions[static::AUTH_KEY] = $jenkinsAuthCredentials;
-
-        return $requestOptions;
+        return $payload;
     }
 }

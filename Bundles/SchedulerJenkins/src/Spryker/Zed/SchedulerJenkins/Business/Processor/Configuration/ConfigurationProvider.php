@@ -5,35 +5,41 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\SchedulerJenkins\Business\Api\Configuration;
+namespace Spryker\Zed\SchedulerJenkins\Business\Processor\Configuration;
 
 use Spryker\Shared\SchedulerJenkins\SchedulerJenkinsConfig as SharedSchedulerJenkinsConfig;
+use Spryker\Zed\SchedulerJenkins\Business\Api\Configuration\ConfigurationProviderInterface;
 use Spryker\Zed\SchedulerJenkins\Business\Api\Exception\InvalidJenkinsConfiguration;
 use Spryker\Zed\SchedulerJenkins\SchedulerJenkinsConfig;
 
 class ConfigurationProvider implements ConfigurationProviderInterface
 {
     /**
+     * @var string
+     */
+    protected $idScheduler;
+
+    /**
      * @var \Spryker\Zed\SchedulerJenkins\SchedulerJenkinsConfig
      */
     protected $schedulerJenkinsConfig;
 
     /**
+     * @param string $idScheduler
      * @param \Spryker\Zed\SchedulerJenkins\SchedulerJenkinsConfig $schedulerJenkinsConfig
      */
-    public function __construct(SchedulerJenkinsConfig $schedulerJenkinsConfig)
+    public function __construct(string $idScheduler, SchedulerJenkinsConfig $schedulerJenkinsConfig)
     {
+        $this->idScheduler = $idScheduler;
         $this->schedulerJenkinsConfig = $schedulerJenkinsConfig;
     }
 
     /**
-     * @param string $schedulerId
-     *
      * @return string[]
      */
-    public function getJenkinsAuthCredentials(string $schedulerId): array
+    public function getJenkinsAuthCredentials(): array
     {
-        $schedulerJenkinsConfiguration = $this->getJenkinsConfigurationBySchedulerId($schedulerId);
+        $schedulerJenkinsConfiguration = $this->getJenkinsConfigurationBySchedulerId($this->idScheduler);
 
         if (!array_key_exists(
             SharedSchedulerJenkinsConfig::SCHEDULER_JENKINS_CREDENTIALS,
@@ -46,16 +52,15 @@ class ConfigurationProvider implements ConfigurationProviderInterface
     }
 
     /**
-     * @param string $schedulerId
      * @param string $urlPath
      *
      * @throws \Spryker\Zed\SchedulerJenkins\Business\Api\Exception\InvalidJenkinsConfiguration
      *
      * @return string
      */
-    public function getJenkinsBaseUrlBySchedulerId(string $schedulerId, string $urlPath): string
+    public function buildJenkinsApiUrl(string $urlPath): string
     {
-        $schedulerJenkinsConfiguration = $this->getJenkinsConfigurationBySchedulerId($schedulerId);
+        $schedulerJenkinsConfiguration = $this->getJenkinsConfigurationBySchedulerId($this->idScheduler);
 
         if (!array_key_exists(
             SharedSchedulerJenkinsConfig::SCHEDULER_JENKINS_BASE_URL,
@@ -64,7 +69,7 @@ class ConfigurationProvider implements ConfigurationProviderInterface
             throw new InvalidJenkinsConfiguration('');
         }
 
-        return $schedulerJenkinsConfiguration[SharedSchedulerJenkinsConfig::SCHEDULER_JENKINS_BASE_URL] . $urlPath;
+        return rtrim($schedulerJenkinsConfiguration[SharedSchedulerJenkinsConfig::SCHEDULER_JENKINS_BASE_URL], '/') . '/' . $urlPath;
     }
 
     /**
@@ -72,7 +77,16 @@ class ConfigurationProvider implements ConfigurationProviderInterface
      */
     public function isJenkinsCsrfProtectionEnabled(): bool
     {
-        return $this->schedulerJenkinsConfig->isJenkinsCsrfProtectionEnabled();
+        $schedulerJenkinsConfiguration = $this->getJenkinsConfigurationBySchedulerId($this->idScheduler);
+
+        if (array_key_exists(
+            SharedSchedulerJenkinsConfig::SCHEDULER_JENKINS_CSRF_ENABLED,
+            $schedulerJenkinsConfiguration
+        )) {
+            return $schedulerJenkinsConfiguration[SharedSchedulerJenkinsConfig::SCHEDULER_JENKINS_CSRF_ENABLED];
+        }
+
+        return false;
     }
 
     /**

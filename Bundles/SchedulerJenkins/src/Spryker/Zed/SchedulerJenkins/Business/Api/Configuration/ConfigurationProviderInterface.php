@@ -10,21 +10,18 @@ namespace Spryker\Zed\SchedulerJenkins\Business\Api\Configuration;
 interface ConfigurationProviderInterface
 {
     /**
-     * @param string $schedulerId
-     *
      * @return string[]
      */
-    public function getJenkinsAuthCredentials(string $schedulerId): array;
+    public function getJenkinsAuthCredentials(): array;
 
     /**
-     * @param string $schedulerId
      * @param string $urlPath
      *
      * @throws \Spryker\Zed\SchedulerJenkins\Business\Api\Exception\InvalidJenkinsConfiguration
      *
      * @return string
      */
-    public function getJenkinsBaseUrlBySchedulerId(string $schedulerId, string $urlPath): string;
+    public function buildJenkinsApiUrl(string $urlPath): string;
 
     /**
      * @return bool

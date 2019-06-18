@@ -5,23 +5,22 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\SchedulerJenkins\Business\Executor;
+namespace Spryker\Zed\SchedulerJenkins\Business\Api\Executor;
 
 use Generated\Shared\Transfer\SchedulerJenkinsResponseTransfer;
-use Generated\Shared\Transfer\SchedulerJobTransfer;
+use Psr\Http\Message\RequestInterface;
 use Spryker\Zed\SchedulerJenkins\Business\Api\Configuration\ConfigurationProviderInterface;
 
-class NullExecutor implements ExecutorInterface
+interface RequestExecutorInterface
 {
     /**
+     * @param \Psr\Http\Message\RequestInterface $request
      * @param \Spryker\Zed\SchedulerJenkins\Business\Api\Configuration\ConfigurationProviderInterface $configurationProvider
-     * @param \Generated\Shared\Transfer\SchedulerJobTransfer $jobTransfer
      *
      * @return \Generated\Shared\Transfer\SchedulerJenkinsResponseTransfer
      */
-    public function execute(ConfigurationProviderInterface $configurationProvider, SchedulerJobTransfer $jobTransfer): SchedulerJenkinsResponseTransfer
-    {
-        return (new SchedulerJenkinsResponseTransfer())
-            ->setStatus(true);
-    }
+    public function execute(
+        RequestInterface $request,
+        ConfigurationProviderInterface $configurationProvider
+    ): SchedulerJenkinsResponseTransfer;
 }

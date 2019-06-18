@@ -9,12 +9,11 @@ namespace Spryker\Zed\SchedulerJenkins\Business\Executor;
 
 use Generated\Shared\Transfer\SchedulerJenkinsResponseTransfer;
 use Generated\Shared\Transfer\SchedulerJobTransfer;
+use Spryker\Zed\SchedulerJenkins\Business\Api\Configuration\ConfigurationProviderInterface;
 use Spryker\Zed\SchedulerJenkins\Business\Api\JenkinsApiInterface;
 
 class EnableExecutor implements ExecutorInterface
 {
-    protected const ENABLE_JOB_URL_TEMPLATE = 'job/%s/enable';
-
     /**
      * @var \Spryker\Zed\SchedulerJenkins\Business\Api\JenkinsApiInterface
      */
@@ -30,18 +29,15 @@ class EnableExecutor implements ExecutorInterface
     }
 
     /**
-     * @param string $idScheduler
+     * @param \Spryker\Zed\SchedulerJenkins\Business\Api\Configuration\ConfigurationProviderInterface $configurationProvider
      * @param \Generated\Shared\Transfer\SchedulerJobTransfer $jobTransfer
      *
      * @return \Generated\Shared\Transfer\SchedulerJenkinsResponseTransfer
      */
-    public function execute(string $idScheduler, SchedulerJobTransfer $jobTransfer): SchedulerJenkinsResponseTransfer
+    public function execute(ConfigurationProviderInterface $configurationProvider, SchedulerJobTransfer $jobTransfer): SchedulerJenkinsResponseTransfer
     {
         $jobTransfer->requireName();
 
-        return $this->jenkinsApi->executePostRequest(
-            $idScheduler,
-            sprintf(static::ENABLE_JOB_URL_TEMPLATE, $jobTransfer->getName())
-        );
+        return $this->jenkinsApi->enableJob($configurationProvider, $jobTransfer->getName());
     }
 }

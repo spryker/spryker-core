@@ -35,14 +35,6 @@ class SchedulerJenkinsConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return bool
-     */
-    public function isJenkinsCsrfProtectionEnabled(): bool
-    {
-        return $this->get(SchedulerJenkinsConstants::JENKINS_CSRF_PROTECTION_ENABLED, false);
-    }
-
-    /**
      * @return int
      */
     public function getAmountOfDaysForLogFileRotation(): int
