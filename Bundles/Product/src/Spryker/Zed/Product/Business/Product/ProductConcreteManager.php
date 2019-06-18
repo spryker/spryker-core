@@ -20,6 +20,7 @@ use Spryker\Zed\Product\Business\Product\Observer\AbstractProductConcreteManager
 use Spryker\Zed\Product\Business\Transfer\ProductTransferMapperInterface;
 use Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface;
 use Spryker\Zed\Product\Dependency\Facade\ProductToTouchInterface;
+use Spryker\Zed\Product\Dependency\ProductEvents;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 use Spryker\Zed\Product\Persistence\ProductRepositoryInterface;
 
@@ -476,7 +477,7 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
         }
 
         $productTransfer = $this->productTransferMapper->mapSpyProductEntityTransferToProductConcreteTransfer($productEntityTransfer);
-        $productTransfer = $this->loadRawProductData($productTransfer);
+        $this->triggerEvent(ProductEvents::PRODUCT_CONCRETE_READ, $productTransfer);
 
         return $productTransfer;
     }
@@ -491,20 +492,6 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
         $this->loadLocalizedAttributes($productTransfer);
 
         $this->notifyReadObservers($productTransfer);
-
-        return $productTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
-     */
-    protected function loadRawProductData(ProductConcreteTransfer $productTransfer): ProductConcreteTransfer
-    {
-        $this->loadLocalizedAttributes($productTransfer);
-
-        $this->triggerProductConcreteReadEvent($productTransfer);
 
         return $productTransfer;
     }
