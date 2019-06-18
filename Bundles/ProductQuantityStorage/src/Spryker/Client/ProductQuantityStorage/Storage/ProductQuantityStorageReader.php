@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ProductQuantityStorageTransfer;
 use Generated\Shared\Transfer\ProductQuantityTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\ProductQuantityStorage\Dependency\Client\ProductQuantityStorageToStorageClientInterface;
+use Spryker\Client\ProductQuantityStorage\Dependency\Service\ProductQuantityStorageToProductQuantityServiceInterface;
 use Spryker\Client\ProductQuantityStorage\Dependency\Service\ProductQuantityStorageToSynchronizationServiceInterface;
 use Spryker\Shared\ProductQuantityStorage\ProductQuantityStorageConfig;
 
@@ -27,18 +28,28 @@ class ProductQuantityStorageReader implements ProductQuantityStorageReaderInterf
     protected $synchronizationService;
 
     /**
+     * @var \Spryker\Client\ProductQuantityStorage\Dependency\Service\ProductQuantityStorageToProductQuantityServiceInterface
+     */
+    protected $productQuantityService;
+
+    /**
      * @param \Spryker\Client\ProductQuantityStorage\Dependency\Client\ProductQuantityStorageToStorageClientInterface $storageClient
      * @param \Spryker\Client\ProductQuantityStorage\Dependency\Service\ProductQuantityStorageToSynchronizationServiceInterface $synchronizationService
+     * @param \Spryker\Client\ProductQuantityStorage\Dependency\Service\ProductQuantityStorageToProductQuantityServiceInterface $productQuantityService
      */
     public function __construct(
         ProductQuantityStorageToStorageClientInterface $storageClient,
-        ProductQuantityStorageToSynchronizationServiceInterface $synchronizationService
+        ProductQuantityStorageToSynchronizationServiceInterface $synchronizationService,
+        ProductQuantityStorageToProductQuantityServiceInterface $productQuantityService
     ) {
         $this->storageClient = $storageClient;
         $this->synchronizationService = $synchronizationService;
+        $this->productQuantityService = $productQuantityService;
     }
 
     /**
+     * @deprecated use getProductQuantityStorage instead.
+     *
      * @param int $idProduct
      *
      * @return \Generated\Shared\Transfer\ProductQuantityStorageTransfer|null
@@ -53,6 +64,49 @@ class ProductQuantityStorageReader implements ProductQuantityStorageReaderInterf
         }
 
         return $this->mapToProductQuantityStorageTransfer($productQuantityStorageData);
+    }
+
+    /**
+     * @param int $idProduct
+     *
+     * @return \Generated\Shared\Transfer\ProductQuantityStorageTransfer
+     */
+    public function getProductQuantityStorage(int $idProduct): ProductQuantityStorageTransfer
+    {
+        $key = $this->generateKey($idProduct);
+        $productQuantityStorageData = $this->storageClient->get($key);
+
+        if (!$productQuantityStorageData) {
+            return $this->createDefaultProductQuantityStorageTransfer();
+        }
+
+        return $this->prepareProductQuantityStorageTransfer($productQuantityStorageData);
+    }
+
+    /**
+     * @param array $productQuantityStorageData
+     *
+     * @return \Generated\Shared\Transfer\ProductQuantityStorageTransfer
+     */
+    protected function prepareProductQuantityStorageTransfer(array $productQuantityStorageData): ProductQuantityStorageTransfer
+    {
+        $productQuantityStorageTransfer = $this->mapToProductQuantityStorageTransfer($productQuantityStorageData);
+
+        $quantityMin = $productQuantityStorageTransfer->getQuantityMin() ?? $this->productQuantityService->getDefaultMinimumQuantity();
+        $quantityInterval = $productQuantityStorageTransfer->getQuantityInterval() ?? $this->productQuantityService->getDefaultInterval();
+
+        return $productQuantityStorageTransfer->setQuantityMin($quantityMin)
+            ->setQuantityInterval($quantityInterval);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\ProductQuantityStorageTransfer
+     */
+    protected function createDefaultProductQuantityStorageTransfer(): ProductQuantityStorageTransfer
+    {
+        return (new ProductQuantityStorageTransfer())
+            ->setQuantityMin($this->productQuantityService->getDefaultMinimumQuantity())
+            ->setQuantityInterval($this->productQuantityService->getDefaultInterval());
     }
 
     /**

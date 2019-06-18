@@ -19,11 +19,26 @@ interface ProductQuantityStorageClientInterface
      *
      * @api
      *
+     * @deprecated use getProductQuantityStorage instead.
+     *
      * @param int $idProduct
      *
      * @return \Generated\Shared\Transfer\ProductQuantityStorageTransfer|null
      */
     public function findProductQuantityStorage(int $idProduct): ?ProductQuantityStorageTransfer;
+
+    /**
+     * Specification:
+     * - Finds a product quantity within Storage with the given related product ID.
+     * - Returns ProductStorageTransfer with default values if product quantity was not found.
+     *
+     * @api
+     *
+     * @param int $idProduct
+     *
+     * @return \Generated\Shared\Transfer\ProductQuantityStorageTransfer
+     */
+    public function getProductQuantityStorage(int $idProduct): ProductQuantityStorageTransfer;
 
     /**
      * Specification:
