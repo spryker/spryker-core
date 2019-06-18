@@ -106,6 +106,7 @@ class CommentRepository extends AbstractRepository implements CommentRepositoryI
     {
         $commentEntity = $this->getFactory()
             ->getCommentPropelQuery()
+            ->filterByIsDeleted(false)
             ->filterByUuid($uuid)
             ->findOne();
 
@@ -147,6 +148,7 @@ class CommentRepository extends AbstractRepository implements CommentRepositoryI
 
         $commentQuery = $this->getFactory()
             ->getCommentPropelQuery()
+            ->filterByIsDeleted(false)
             ->useSpyCommentThreadQuery()
                 ->filterByOwnerType($commentFilterTransfer->getOwnerType())
                 ->filterByOwnerId($commentFilterTransfer->getOwnerId())
