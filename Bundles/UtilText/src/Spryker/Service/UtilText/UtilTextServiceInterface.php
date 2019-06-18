@@ -10,7 +10,7 @@ interface UtilTextServiceInterface
 {
     /**
      * Specification:
-     * - Generate slug based on value
+     * - Generate slug based on value.
      *
      * @api
      *
@@ -21,9 +21,8 @@ interface UtilTextServiceInterface
     public function generateSlug($value);
 
     /**
-     *
      * Specification:
-     * - Generates random string for given length value
+     * - Generates random string for given length value.
      *
      * @api
      *
@@ -34,12 +33,17 @@ interface UtilTextServiceInterface
     public function generateRandomString($length);
 
     /**
-     * @param string $algorithm
+     * Specification:
+     * - Generates hash from value by specified algorithm.
+     *
+     * @api
+     *
      * @param mixed $value
+     * @param string $algorithm
      *
      * @return string
      */
-    public function hashValue($algorithm, $value);
+    public function hashValue($value, $algorithm);
 
     /**
      * Specification:

@@ -25,13 +25,13 @@ class ContentBannerToContentStorageClientBridge implements ContentBannerToConten
     }
 
     /**
-     * @param int $idContent
+     * @param string $contentKey
      * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\ContentTypeContextTransfer|null
      */
-    public function findContentTypeContext(int $idContent, string $localeName): ?ContentTypeContextTransfer
+    public function findContentTypeContextByKey(string $contentKey, string $localeName): ?ContentTypeContextTransfer
     {
-        return $this->contentStorageClient->findContentTypeContext($idContent, $localeName);
+        return $this->contentStorageClient->findContentTypeContextByKey($contentKey, $localeName);
     }
 }

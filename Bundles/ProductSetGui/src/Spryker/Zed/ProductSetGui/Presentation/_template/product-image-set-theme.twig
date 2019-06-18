@@ -1,22 +1,29 @@
 {% block product_image_set_widget %}
-    <div class="image-set sep_down m-t-sm">
-        <div class="row">
-            <div class="col-lg-11">{{ form_row(form.name) }}</div>
-            <div class="col-lg-1">
-                {{ removeActionButton('#', '', {'class': 'remove-image-set'}) }}
+    <div class="panel panel-default image-set">
+        <div class="panel-heading">{{ 'Image Set' | trans }}: {{ form.name.vars.value }}</div>
+        <div class="panel-body">
+            <div class="sep_down m-t-sm">
+                <div class="row">
+                    <div class="col-lg-11">{{ form_row(form.name) }}</div>
+                </div>
+                <h3>{{ 'Images' | trans }}</h3>
+                <div class="image-collection-container">
+                    {% for productImage in form.product_image_collection %}
+                        {{ form_widget(productImage) }}
+                    {% endfor %}
+                </div>
+
+                {{ form_rest(form) }}
+
             </div>
         </div>
-
-        <div class="image-collection-container">
-            {% for productImage in form.product_image_collection %}
-                {{ form_widget(productImage) }}
-            {% endfor %}
+        <div class="panel-footer">
+            <a href="#" class="btn btn-outline btn-primary add-another-image-collection m-b-sm">
+                <i class="fa fa-file-image-o"></i> {{ 'Add image' | trans }}
+            </a>
+            <a href="#" class="btn btn-outline safe-submit btn-remove remove-image-set m-b-sm">
+                <i class="fa fa-trash"></i> {{ 'Delete image set' | trans }}
+            </a>
         </div>
-
-        {{ form_rest(form) }}
-
-        <a href="#" class="btn btn-outline btn-primary add-another-image-collection m-b-sm">
-            <i class="fa fa-file-image-o"></i> {{ 'Add image' | trans }}
-        </a>
     </div>
 {% endblock %}
