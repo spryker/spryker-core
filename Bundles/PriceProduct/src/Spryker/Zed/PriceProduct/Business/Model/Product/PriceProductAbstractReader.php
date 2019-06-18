@@ -333,7 +333,7 @@ class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
      * @param string[] $concreteSkus
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[][]
      */
     public function getProductAbstractPricesByConcreteSkusAndCriteria(array $concreteSkus, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): array
     {
@@ -353,7 +353,7 @@ class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
     protected function indexPriceProductTransferByProductSku(array $priceProductTransfers): array
     {
         $indexedPriceProductTransfers = [];
-        foreach ( $priceProductTransfers as $priceProductTransfer) {
+        foreach ($priceProductTransfers as $priceProductTransfer) {
             $indexedPriceProductTransfers[$priceProductTransfer->getSkuProduct()][] = $priceProductTransfer;
         }
 

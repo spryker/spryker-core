@@ -54,4 +54,11 @@ interface ProductCartConnectorToProductInterface
      * @return bool
      */
     public function isProductConcreteActive(ProductConcreteTransfer $productConcreteTransfer): bool;
+
+    /**
+     * @param array $productConcreteSkus
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function getRawProductConcreteTransfersByConcreteSkus(array $productConcreteSkus): array;
 }

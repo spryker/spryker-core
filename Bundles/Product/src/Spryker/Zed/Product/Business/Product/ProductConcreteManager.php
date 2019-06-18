@@ -477,7 +477,7 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
         }
 
         $productTransfer = $this->productTransferMapper->mapSpyProductEntityTransferToProductConcreteTransfer($productEntityTransfer);
-        $this->triggerEvent(ProductEvents::PRODUCT_CONCRETE_READ, $productTransfer);
+        $productTransfer = $this->loadRawProductData($productTransfer);
 
         return $productTransfer;
     }
@@ -492,6 +492,19 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
         $this->loadLocalizedAttributes($productTransfer);
 
         $this->notifyReadObservers($productTransfer);
+
+        return $productTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    protected function loadRawProductData(ProductConcreteTransfer $productTransfer): ProductConcreteTransfer
+    {
+        $this->loadLocalizedAttributes($productTransfer);
+        $this->triggerEvent(ProductEvents::PRODUCT_CONCRETE_READ, $productTransfer);
 
         return $productTransfer;
     }
@@ -592,5 +605,15 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
     public function getProductConcreteSkusByConcreteIds(array $productIds): array
     {
         return $this->productRepository->getProductConcreteSkusByConcreteIds($productIds);
+    }
+
+    /**
+     * @param string[] $productConcreteSkus
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function getProductConcretesByConcreteSkus(array $productConcreteSkus): array
+    {
+        return $this->productRepository->getProductConcretesByConcreteSkus($productConcreteSkus);
     }
 }

@@ -15,9 +15,23 @@ use Orm\Zed\Locale\Persistence\SpyLocale;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductLocalizedAttributes;
 use Orm\Zed\Store\Persistence\SpyStore;
+use Spryker\Zed\Product\Dependency\Service\ProductToUtilEncodingInterface;
 
 class ProductMapper implements ProductMapperInterface
 {
+    /**
+     * @var \Spryker\Zed\Product\Dependency\Service\ProductToUtilEncodingInterface
+     */
+    protected $utilEncodingService;
+
+    /**
+     * @param \Spryker\Zed\Product\Dependency\Service\ProductToUtilEncodingInterface $utilEncodingService
+     */
+    public function __construct(ProductToUtilEncodingInterface $utilEncodingService)
+    {
+        $this->utilEncodingService = $utilEncodingService;
+    }
+
     /**
      * @param \Orm\Zed\Product\Persistence\SpyProduct $productConcreteEntity
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
@@ -101,5 +115,30 @@ class ProductMapper implements ProductMapperInterface
             $storeEntity->toArray(),
             true
         );
+    }
+
+    /**
+     * @param \Orm\Zed\Product\Persistence\SpyProduct $productEntity
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function mapProductEntityToProductConcreteTransferWithoutLocalizedAttributes(
+        SpyProduct $productEntity,
+        ProductConcreteTransfer $productConcreteTransfer
+    ): ProductConcreteTransfer {
+        $productConcreteTransfer->fromArray($productEntity->toArray(), true);
+
+        $attributes = $this->utilEncodingService->decodeJson($productEntity->getAttributes());
+        $productConcreteTransfer->setAttributes(is_array($attributes) ? $attributes : []);
+
+        $productConcreteTransfer->setIdProductConcrete($productEntity->getIdProduct());
+
+        $productAbstractEntityTransfer = $productEntity->getSpyProductAbstract();
+        if ($productAbstractEntityTransfer !== null) {
+            $productConcreteTransfer->setAbstractSku($productAbstractEntityTransfer->getSku());
+        }
+
+        return $productConcreteTransfer;
     }
 }

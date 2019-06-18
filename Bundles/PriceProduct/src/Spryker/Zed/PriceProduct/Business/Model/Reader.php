@@ -513,6 +513,7 @@ class Reader implements ReaderInterface
 
         return $this->resolveProductPrices(array_merge($abstractPricesBySku, $concretePricesBySku), $priceProductFilterTransfers);
     }
+
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      * @param \Generated\Shared\Transfer\PriceProductFilterTransfer[] $priceProductFilterTransfers
@@ -530,10 +531,11 @@ class Reader implements ReaderInterface
 
         return array_unique($resolvedPriceProductTransfers, SORT_REGULAR);
     }
+
     /**
      * @param \Generated\Shared\Transfer\PriceProductFilterTransfer[] $priceProductFilterTransfers
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[][]
      */
     protected function findPricesForConcreteProducts(array $priceProductFilterTransfers): array
     {
@@ -549,11 +551,12 @@ class Reader implements ReaderInterface
 
         return $concretePricesBySku;
     }
+
     /**
      * @param string[] $productConcreteSkus
      * @param \Generated\Shared\Transfer\PriceProductFilterTransfer[] $priceProductFilterTransfers
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[][]
      */
     protected function findPricesForAbstractProducts(array $productConcreteSkus, array $priceProductFilterTransfers): array
     {
@@ -565,6 +568,7 @@ class Reader implements ReaderInterface
 
         return $abstractPricesBySku;
     }
+
     /**
      * @param \Generated\Shared\Transfer\PriceProductFilterTransfer[] $priceProductFilterTransfers
      * @param \Generated\Shared\Transfer\PriceProductTransfer[] $concretePricesBySku
@@ -581,6 +585,7 @@ class Reader implements ReaderInterface
 
         return $skusWithMissingPrices;
     }
+
     /**
      * @param \Generated\Shared\Transfer\PriceProductFilterTransfer[] $priceProductFilterTransfers
      *
@@ -595,6 +600,7 @@ class Reader implements ReaderInterface
 
         return $priceProductFilterTransfersBySku;
     }
+
     /**
      * @param \Generated\Shared\Transfer\PriceProductFilterTransfer[] $priceProductFilterTransfers
      *
@@ -611,6 +617,7 @@ class Reader implements ReaderInterface
 
         return true;
     }
+
     /**
      * @param \Generated\Shared\Transfer\PriceProductFilterTransfer[] $priceProductFilterTransfers
      *

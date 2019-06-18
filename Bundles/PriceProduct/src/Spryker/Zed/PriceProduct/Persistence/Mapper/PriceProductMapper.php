@@ -47,7 +47,7 @@ class PriceProductMapper
         $priceProductDimensionTransfer->fromArray($priceProductStoreEntityData, true);
 
         $sku = $priceProductEntity->getProduct() ? $priceProductEntity->getProduct()->getSku() : $priceProductStoreEntityData['product_sku'];
-        
+
         return $priceProductTransfer
             ->fromArray($priceProductStoreEntityData, true)
             ->setSkuProduct($sku)

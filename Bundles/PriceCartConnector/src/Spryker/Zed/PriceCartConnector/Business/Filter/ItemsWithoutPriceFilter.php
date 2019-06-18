@@ -217,6 +217,7 @@ class ItemsWithoutPriceFilter implements ItemFilterInterface
 
         return $priceProductFilters;
     }
+
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      * @param \Generated\Shared\Transfer\ItemTransfer[] $items

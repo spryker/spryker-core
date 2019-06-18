@@ -107,6 +107,7 @@ class PriceProductValidator implements PriceProductValidatorInterface
         $productWithoutPriceSkus = $this->getProductWithoutPriceSkus($validPriceProductTransfers, $cartChangeTransfer->getItems()->getArrayCopy());
         if ($productWithoutPriceSkus) {
             $sku = array_shift($productWithoutPriceSkus);
+
             return $cartPreCheckResponseTransfer
                 ->setIsSuccess(false)
                 ->addMessage($this->createMessage($sku));
@@ -304,9 +305,11 @@ class PriceProductValidator implements PriceProductValidatorInterface
         $totalSkus = array_map(function (ItemTransfer $item) {
             return $item->getSku();
         }, $items);
+
         $validSkus = array_map(function (PriceProductTransfer $priceProductTransfer) {
             return $priceProductTransfer->getSkuProduct();
         }, $priceProductTransfers);
+
         return array_diff($totalSkus, $validSkus);
     }
 
@@ -318,8 +321,10 @@ class PriceProductValidator implements PriceProductValidatorInterface
         if ($this->defaultPriceMode === null) {
             $this->defaultPriceMode = $this->priceFacade->getDefaultPriceMode();
         }
+
         return $this->defaultPriceMode;
     }
+
     /**
      * @return string
      */
@@ -328,6 +333,7 @@ class PriceProductValidator implements PriceProductValidatorInterface
         if ($this->defaultPriceTypeName === null) {
             $this->defaultPriceTypeName = $this->priceProductFacade->getDefaultPriceTypeName();
         }
+
         return $this->defaultPriceTypeName;
     }
 

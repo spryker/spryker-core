@@ -85,4 +85,14 @@ class ProductCartConnectorToProductBridge implements ProductCartConnectorToProdu
     {
         return $this->productFacade->isProductConcreteActive($productConcreteTransfer);
     }
+
+    /**
+     * @param array $productConcreteSkus
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function getRawProductConcreteTransfersByConcreteSkus(array $productConcreteSkus): array
+    {
+        return $this->productFacade->getRawProductConcreteTransfersByConcreteSkus($productConcreteSkus);
+    }
 }

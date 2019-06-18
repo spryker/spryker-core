@@ -174,7 +174,7 @@ abstract class AbstractProductConcreteManagerSubject
     }
 
     /**
-     * @deprecated Will be removed, please trigger the event directly
+     * @deprecated Will be removed, please trigger the event directly.
      *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
