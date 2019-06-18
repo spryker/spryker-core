@@ -139,4 +139,6 @@ $(document).ready(function() {
             $(this).prop('checked', checked);
         });
     });
+
+    $('.comment-wrapper').animate({ scrollTop: $('.comment-wrapper').height() }, 1000);
 });
