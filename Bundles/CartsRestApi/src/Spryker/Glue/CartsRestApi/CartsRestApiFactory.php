@@ -157,7 +157,9 @@ class CartsRestApiFactory extends AbstractFactory
     {
         return new GuestCartReader(
             $this->createGuestCartRestResponseBuilder(),
-            $this->createCartReader()
+            $this->createCartReader(),
+            $this->getClient(),
+            $this->createCartRestResponseBuilder()
         );
     }
 
