@@ -9,6 +9,7 @@ namespace Spryker\Zed\Customer\Business\Checkout;
 
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Service\Customer\CustomerServiceInterface;
 use Spryker\Zed\Customer\Business\Customer\AddressInterface;
@@ -65,25 +66,55 @@ class CustomerOrderSaverWithMultiShippingAddress extends CustomerOrderSaver
     {
         $this->existingAddresses = [];
 
-        $quoteTransfer->requireBillingAddress();
-        $billingAddress = $this->processNewUniqueCustomerAddress($quoteTransfer->getBillingAddress(), $customer);
-        $quoteTransfer->setBillingAddress($billingAddress);
+        $quoteTransfer = $this->persistBillingAddress($quoteTransfer, $customer);
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if ($itemTransfer->getIsAddressSavingSkipped()) {
-                continue;
-            }
-
-            $itemTransfer->requireShipment();
-            $shipmentTransfer = $itemTransfer->getShipment();
-
-            $shipmentTransfer->requireShippingAddress();
-            $addressTransfer = $shipmentTransfer->getShippingAddress();
-
-            $addressTransfer = $this->processNewUniqueCustomerAddress($addressTransfer, $customer);
-
-            $itemTransfer->getShipment()->setShippingAddress($addressTransfer);
+            $this->persistShippingAddress($itemTransfer, $customer);
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function persistBillingAddress(QuoteTransfer $quoteTransfer, CustomerTransfer $customer): QuoteTransfer
+    {
+        $quoteTransfer->requireBillingAddress();
+        $billingAddressTransfer = $quoteTransfer->getBillingAddress();
+
+        if ($billingAddressTransfer->getIsAddressSavingSkipped()) {
+            return $quoteTransfer;
+        }
+
+        $billingAddressTransfer = $this->processNewUniqueCustomerAddress($billingAddressTransfer, $customer);
+        $quoteTransfer->setBillingAddress($billingAddressTransfer);
+
+        return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customer
+     *
+     * @return void
+     */
+    protected function persistShippingAddress(ItemTransfer $itemTransfer, CustomerTransfer $customer): void
+    {
+        $itemTransfer->requireShipment();
+        $itemTransfer->getShipment()
+            ->requireShippingAddress();
+        $shippingAddressTransfer = $itemTransfer->getShipment()
+            ->getShippingAddress();
+
+        if ($shippingAddressTransfer->getIsAddressSavingSkipped()) {
+            return;
+        }
+
+        $shippingAddressTransfer = $this->processNewUniqueCustomerAddress($shippingAddressTransfer, $customer);
+        $itemTransfer->getShipment()
+            ->setShippingAddress($shippingAddressTransfer);
     }
 
     /**

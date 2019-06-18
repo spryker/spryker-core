@@ -44,7 +44,7 @@ class ShipmentExpenseMapper implements ShipmentExpenseMapperInterface
         SpySalesExpense $salesOrderExpenseEntity,
         ExpenseTransfer $expenseTransfer
     ): ExpenseTransfer {
-        $expenseTransfer->fromArray($salesOrderExpenseEntity->toArray());
+        $expenseTransfer->fromArray($salesOrderExpenseEntity->toArray(), true);
         $expenseTransfer->setSumGrossPrice($salesOrderExpenseEntity->getGrossPrice());
         $expenseTransfer->setSumNetPrice($salesOrderExpenseEntity->getNetPrice());
         $expenseTransfer->setSumPrice($salesOrderExpenseEntity->getPrice());
