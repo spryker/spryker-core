@@ -166,6 +166,9 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
         $salesShipmentEntity = $this->getFactory()
             ->createSalesShipmentQuery()
             ->leftJoinWithSpySalesOrderAddress()
+            ->useSpySalesOrderAddressQuery()
+                ->leftJoinCountry()
+            ->endUse()
             ->filterByIdSalesShipment($idShipmentMethod)
             ->findOne();
 

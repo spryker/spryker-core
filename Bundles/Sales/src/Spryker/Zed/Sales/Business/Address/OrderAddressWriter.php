@@ -8,7 +8,9 @@
 namespace Spryker\Zed\Sales\Business\Address;
 
 use Generated\Shared\Transfer\AddressTransfer;
+use Spryker\Zed\Sales\Business\Mapper\SalesMapperInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCountryInterface;
+use Spryker\Zed\Sales\Dependency\Facade\SalesToCustomerInterface;
 use Spryker\Zed\Sales\Persistence\SalesEntityManagerInterface;
 use Spryker\Zed\Sales\Persistence\SalesRepositoryInterface;
 
@@ -30,18 +32,34 @@ class OrderAddressWriter implements OrderAddressWriterInterface
     protected $countryFacade;
 
     /**
+     * @var \Spryker\Zed\Sales\Dependency\Facade\SalesToCustomerInterface
+     */
+    protected $customerFacade;
+
+    /**
+     * @var \Spryker\Zed\Sales\Business\Mapper\SalesMapperInterface
+     */
+    protected $salesMapper;
+
+    /**
      * @param \Spryker\Zed\Sales\Persistence\SalesEntityManagerInterface $entityManager
      * @param \Spryker\Zed\Sales\Persistence\SalesRepositoryInterface $repository
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToCountryInterface $countryFacade
+     * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToCustomerInterface $customerFacade
+     * @param \Spryker\Zed\Sales\Business\Mapper\SalesMapperInterface $salesMapper
      */
     public function __construct(
         SalesEntityManagerInterface $entityManager,
         SalesRepositoryInterface $repository,
-        SalesToCountryInterface $countryFacade
+        SalesToCountryInterface $countryFacade,
+        SalesToCustomerInterface $customerFacade,
+        SalesMapperInterface $salesMapper
     ) {
         $this->entityManager = $entityManager;
         $this->repository = $repository;
         $this->countryFacade = $countryFacade;
+        $this->customerFacade = $customerFacade;
+        $this->salesMapper = $salesMapper;
     }
 
     /**
@@ -72,13 +90,11 @@ class OrderAddressWriter implements OrderAddressWriterInterface
      */
     public function update(AddressTransfer $addressTransfer, int $idAddress): bool
     {
-        $foundAddressTransfer = $this->repository->findOrderAddressByIdOrderAddress($idAddress);
-
+        $foundAddressTransfer = $this->resolveAddressSource($addressTransfer);
         if ($foundAddressTransfer === null) {
             return false;
         }
 
-        $foundAddressTransfer = $this->hydrateAddressTransferFromModifiedAddressTransfer($foundAddressTransfer, $addressTransfer);
         $this->entityManager->updateSalesOrderAddress($foundAddressTransfer);
 
         return true;
@@ -86,16 +102,25 @@ class OrderAddressWriter implements OrderAddressWriterInterface
 
     /**
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
-     * @param \Generated\Shared\Transfer\AddressTransfer $modifiedAddressTransfer
      *
-     * @return \Generated\Shared\Transfer\AddressTransfer
+     * @return \Generated\Shared\Transfer\AddressTransfer|null
      */
-    protected function hydrateAddressTransferFromModifiedAddressTransfer(
-        AddressTransfer $addressTransfer,
-        AddressTransfer $modifiedAddressTransfer
-    ): AddressTransfer {
-        $addressTransfer->fromArray($modifiedAddressTransfer->modifiedToArray());
+    protected function resolveAddressSource(AddressTransfer $addressTransfer): ?AddressTransfer
+    {
+        if ($addressTransfer->getIdCustomerAddress() !== null) {
+            $foundAddressTransfer = $this->customerFacade->findCustomerAddressById($addressTransfer->getIdCustomerAddress());
+            if ($foundAddressTransfer === null) {
+                return null;
+            }
 
-        return $addressTransfer;
+            return $foundAddressTransfer->setIdSalesOrderAddress($addressTransfer->getIdSalesOrderAddress());
+        }
+
+        $foundAddressTransfer = $this->repository->findOrderAddressByIdOrderAddress($addressTransfer->getIdSalesOrderAddress());
+        if ($foundAddressTransfer === null) {
+            return null;
+        }
+
+        return $this->salesMapper->mapAddressTransferToAddressTransfer($foundAddressTransfer, $addressTransfer);
     }
 }

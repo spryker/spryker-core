@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\SaveOrderTransfer;
 use Generated\Shared\Transfer\ShipmentGroupResponseTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
-use Spryker\Shared\Shipment\ShipmentConstants;
 use Spryker\Zed\Shipment\Business\Checkout\MultiShipmentOrderSaverInterface;
 use Spryker\Zed\Shipment\Business\Sanitizer\ExpenseSanitizerInterface;
 use Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentMethodExpanderInterface;
@@ -64,7 +63,7 @@ class ShipmentSaver implements ShipmentSaverInterface
         $saveOrderTransfer = $this->buildSaveOrderTransfer($orderTransfer);
         $shipmentGroupTransfer = $this->setShipmentMethod($shipmentGroupTransfer, $orderTransfer);
         $expenseTransfer = $this->createShippingExpenseTransfer($shipmentGroupTransfer->getShipment(), $orderTransfer);
-        $orderTransfer = $this->addShippingExpenseToOrderExpenses($expenseTransfer, $orderTransfer);
+        $orderTransfer = $this->addShippingExpenseToOrderExpenses($orderTransfer, $expenseTransfer);
 
         $shipmentGroupTransfer = $this->shipmentOrderSaver
             ->saveOrderShipmentByShipmentGroup($orderTransfer, $shipmentGroupTransfer, $saveOrderTransfer);
@@ -94,39 +93,50 @@ class ShipmentSaver implements ShipmentSaverInterface
      * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return \Generated\Shared\Transfer\ExpenseTransfer
+     * @return \Generated\Shared\Transfer\ExpenseTransfer|null
      */
     protected function createShippingExpenseTransfer(
         ShipmentTransfer $shipmentTransfer,
         OrderTransfer $orderTransfer
-    ): ExpenseTransfer {
-        $shipmentMethodTransfer = $shipmentTransfer->getMethod();
-        $expenseTransfer = new ExpenseTransfer();
+    ): ?ExpenseTransfer {
+        $shipmentMethodTransfer = $shipmentTransfer->requireMethod()->getMethod();
+        foreach ($orderTransfer->getExpenses() as $expenseTransfer) {
+            $expenseShipmentTransfer = $expenseTransfer->getShipment();
+            if ($expenseShipmentTransfer === null) {
+                continue;
+            }
 
-        $expenseTransfer->fromArray($shipmentMethodTransfer->modifiedToArray(), true);
-        $expenseTransfer->setFkSalesOrder($orderTransfer->getIdSalesOrder());
-        $expenseTransfer->setType(ShipmentConstants::SHIPMENT_EXPENSE_TYPE);
-        $this->setPrice(
-            $expenseTransfer,
-            $shipmentMethodTransfer->getStoreCurrencyPrice(),
-            $orderTransfer->getPriceMode()
-        );
-        $expenseTransfer->setQuantity(1);
-        $expenseTransfer->setShipment($shipmentTransfer);
+            $expenseShipmentMethodTransfer = $expenseShipmentTransfer->getMethod();
+            if ($expenseShipmentMethodTransfer === null) {
+                continue;
+            }
 
-        return $this->expenseSanitizer->sanitizeExpenseSumValues($expenseTransfer);
+            if ($expenseShipmentMethodTransfer->getIdShipmentMethod() !== $shipmentMethodTransfer->getIdShipmentMethod()) {
+                continue;
+            }
+
+            $expenseTransfer->setShipment($shipmentTransfer);
+
+            return $expenseTransfer;
+        }
+
+        return null;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\ExpenseTransfer|null $expenseTransfer
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
     protected function addShippingExpenseToOrderExpenses(
-        ExpenseTransfer $expenseTransfer,
-        OrderTransfer $orderTransfer
+        OrderTransfer $orderTransfer,
+        ?ExpenseTransfer $expenseTransfer
     ): OrderTransfer {
+        if ($expenseTransfer === null) {
+            return $orderTransfer;
+        }
+
         $orderTransfer = $this->removeExistingShippingExpenseFromOrderExpenses($expenseTransfer, $orderTransfer);
         $orderTransfer->addExpense($expenseTransfer);
 
@@ -159,30 +169,6 @@ class ShipmentSaver implements ShipmentSaverInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ExpenseTransfer $shipmentExpenseTransfer
-     * @param int $price
-     * @param string $priceMode
-     *
-     * @return void
-     */
-    protected function setPrice(ExpenseTransfer $shipmentExpenseTransfer, int $price, string $priceMode): void
-    {
-        if ($priceMode === ShipmentConstants::PRICE_MODE_NET) {
-            $shipmentExpenseTransfer->setUnitGrossPrice(0);
-            $shipmentExpenseTransfer->setUnitPriceToPayAggregation(0);
-            $shipmentExpenseTransfer->setUnitPrice($price);
-            $shipmentExpenseTransfer->setUnitNetPrice($price);
-
-            return;
-        }
-
-        $shipmentExpenseTransfer->setUnitPriceToPayAggregation(0);
-        $shipmentExpenseTransfer->setUnitNetPrice(0);
-        $shipmentExpenseTransfer->setUnitPrice($price);
-        $shipmentExpenseTransfer->setUnitGrossPrice($price);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
@@ -192,11 +178,8 @@ class ShipmentSaver implements ShipmentSaverInterface
         ShipmentGroupTransfer $shipmentGroupTransfer,
         OrderTransfer $orderTransfer
     ): ShipmentGroupTransfer {
-        $shipmentGroupTransfer->requireShipment();
-        $shipmentTransfer = $shipmentGroupTransfer->getShipment();
-
-        $shipmentTransfer->requireMethod();
-        $shipmentMethodTransfer = $shipmentTransfer->getMethod();
+        $shipmentTransfer = $shipmentGroupTransfer->requireShipment()->getShipment();
+        $shipmentMethodTransfer = $shipmentTransfer->requireMethod()->getMethod();
 
         $shipmentTransfer->setMethod($this->shipmentMethodExpander->expand($shipmentMethodTransfer, $orderTransfer));
 

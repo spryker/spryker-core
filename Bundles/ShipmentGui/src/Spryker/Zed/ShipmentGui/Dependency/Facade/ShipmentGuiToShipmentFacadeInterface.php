@@ -41,4 +41,13 @@ interface ShipmentGuiToShipmentFacadeInterface
      * @return \Generated\Shared\Transfer\ShipmentGroupResponseTransfer
      */
     public function saveShipment(ShipmentGroupTransfer $shipmentGroupTransfer, OrderTransfer $orderTransfer): ShipmentGroupResponseTransfer;
+
+    /**
+     * @param array $formData
+     * @param int|null $idCustomerAddress
+     * @param int|null $idShipmentMethod
+     *
+     * @return \Generated\Shared\Transfer\ShipmentGroupTransfer
+     */
+    public function createShipmentGroupTransfer(array $formData, ?int $idCustomerAddress, ?int $idShipmentMethod): ShipmentGroupTransfer;
 }

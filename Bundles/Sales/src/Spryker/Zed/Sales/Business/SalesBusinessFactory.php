@@ -13,6 +13,8 @@ use Spryker\Zed\Sales\Business\Address\OrderAddressWriter;
 use Spryker\Zed\Sales\Business\Address\OrderAddressWriterInterface;
 use Spryker\Zed\Sales\Business\Expense\ExpenseWriter;
 use Spryker\Zed\Sales\Business\Expense\ExpenseWriterInterface;
+use Spryker\Zed\Sales\Business\Mapper\SalesMapper;
+use Spryker\Zed\Sales\Business\Mapper\SalesMapperInterface;
 use Spryker\Zed\Sales\Business\Model\Address\OrderAddressUpdater;
 use Spryker\Zed\Sales\Business\Model\Comment\OrderCommentReader;
 use Spryker\Zed\Sales\Business\Model\Comment\OrderCommentSaver;
@@ -45,6 +47,7 @@ use Spryker\Zed\Sales\Business\OrderItem\SalesOrderItemReader;
 use Spryker\Zed\Sales\Business\OrderItem\SalesOrderItemReaderInterface;
 use Spryker\Zed\Sales\Business\StrategyResolver\OrderHydratorStrategyResolver;
 use Spryker\Zed\Sales\Business\StrategyResolver\OrderHydratorStrategyResolverInterface;
+use Spryker\Zed\Sales\Dependency\Facade\SalesToCustomerInterface;
 use Spryker\Zed\Sales\Dependency\Service\SalesToUtilPriceServiceInterface;
 use Spryker\Zed\Sales\Dependency\Service\SalesToUtilQuantityServiceInterface;
 use Spryker\Zed\Sales\Persistence\Propel\Mapper\SalesOrderItemMapper;
@@ -260,7 +263,9 @@ class SalesBusinessFactory extends AbstractBusinessFactory
         return new OrderAddressWriter(
             $this->getEntityManager(),
             $this->getRepository(),
-            $this->getCountryFacade()
+            $this->getCountryFacade(),
+            $this->getCustomerFacade(),
+            $this->createSalesMapper()
         );
     }
 
@@ -282,6 +287,74 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     public function createOrderItemTransformer(): OrderItemTransformerInterface
     {
         return new OrderItemTransformer();
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaverPluginExecutorInterface
+     */
+    public function createSalesOrderSaverPluginExecutor()
+    {
+        return new SalesOrderSaverPluginExecutor(
+            $this->getOrderItemExpanderPreSavePlugins()
+        );
+    }
+
+    /**
+     * @deprecated Use createSalesOrderItemMapper() instead.
+     *
+     * @return \Spryker\Zed\Sales\Business\Model\OrderItem\SalesOrderItemMapperInterface
+     */
+    public function createOrderItemMapper()
+    {
+        return new ModelSalesOrderItemMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Business\Mapper\SalesMapperInterface
+     */
+    public function createSalesMapper(): SalesMapperInterface
+    {
+        return new SalesMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Business\Expense\ExpenseWriterInterface
+     */
+    public function createExpenseWriter(): ExpenseWriterInterface
+    {
+        return new ExpenseWriter($this->getEntityManager());
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Business\OrderItem\SalesOrderItemGrouperInterface
+     */
+    public function createSalesOrderItemGrouper(): SalesOrderItemGrouperInterface
+    {
+        return new SalesOrderItemGrouper($this->getUtilQuantityService());
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Business\OrderItem\SalesOrderItemReaderInterface
+     */
+    public function createSalesOrderItemReader(): SalesOrderItemReaderInterface
+    {
+        return new SalesOrderItemReader($this->getRepository(), $this->createSalesOrderItemMapper());
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Business\Address\OrderAddressReader
+     */
+    public function createOrderAddressReader()
+    {
+        return new OrderAddressReader($this->getRepository());
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Persistence\Propel\Mapper\SalesOrderItemMapperInterface
+     */
+    public function createSalesOrderItemMapper(): SalesOrderItemMapperInterface
+    {
+        return new SalesOrderItemMapper();
     }
 
     /**
@@ -349,16 +422,6 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaverPluginExecutorInterface
-     */
-    public function createSalesOrderSaverPluginExecutor()
-    {
-        return new SalesOrderSaverPluginExecutor(
-            $this->getOrderItemExpanderPreSavePlugins()
-        );
-    }
-
-    /**
      * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemExpanderPreSavePluginInterface[]
      */
     public function getOrderItemExpanderPreSavePlugins()
@@ -367,31 +430,11 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use createSalesOrderItemMapper() instead.
-     *
-     * @return \Spryker\Zed\Sales\Business\Model\OrderItem\SalesOrderItemMapperInterface
-     */
-    public function createOrderItemMapper()
-    {
-        return new ModelSalesOrderItemMapper();
-    }
-
-    /**
      * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\ItemTransformerStrategyPluginInterface[]
      */
     public function getItemTransformerStrategyPlugins(): array
     {
         return $this->getProvidedDependency(SalesDependencyProvider::ITEM_TRANSFORMER_STRATEGY_PLUGINS);
-    }
-
-    /**
-     * @return \Spryker\Zed\Sales\Business\Expense\ExpenseWriterInterface
-     */
-    public function createExpenseWriter(): ExpenseWriterInterface
-    {
-        return new ExpenseWriter(
-            $this->getEntityManager()
-        );
     }
 
     /**
@@ -423,47 +466,18 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Sales\Business\OrderItem\SalesOrderItemGrouperInterface
-     */
-    public function createSalesOrderItemGrouper(): SalesOrderItemGrouperInterface
-    {
-        return new SalesOrderItemGrouper($this->getUtilQuantityService());
-    }
-
-    /**
-     * @return \Spryker\Zed\Sales\Business\OrderItem\SalesOrderItemReaderInterface
-     */
-    public function createSalesOrderItemReader(): SalesOrderItemReaderInterface
-    {
-        return new SalesOrderItemReader(
-            $this->getRepository(),
-            $this->createSalesOrderItemMapper()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\Sales\Business\Address\OrderAddressReader
-     */
-    public function createOrderAddressReader()
-    {
-        return new OrderAddressReader(
-            $this->getRepository()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\Sales\Persistence\Propel\Mapper\SalesOrderItemMapperInterface
-     */
-    public function createSalesOrderItemMapper(): SalesOrderItemMapperInterface
-    {
-        return new SalesOrderItemMapper();
-    }
-
-    /**
      * @return \Spryker\Zed\Sales\Dependency\Service\SalesToUtilQuantityServiceInterface
      */
-    protected function getUtilQuantityService(): SalesToUtilQuantityServiceInterface
+    public function getUtilQuantityService(): SalesToUtilQuantityServiceInterface
     {
         return $this->getProvidedDependency(SalesDependencyProvider::SERVICE_UTIL_QUANTITY);
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Dependency\Facade\SalesToCustomerInterface
+     */
+    public function getCustomerFacade(): SalesToCustomerInterface
+    {
+        return $this->getProvidedDependency(SalesDependencyProvider::FACADE_CUSTOMER);
     }
 }

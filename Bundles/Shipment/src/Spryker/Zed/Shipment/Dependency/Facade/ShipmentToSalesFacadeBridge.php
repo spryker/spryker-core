@@ -54,14 +54,4 @@ class ShipmentToSalesFacadeBridge implements ShipmentToSalesFacadeInterface
     {
         return $this->salesFacade->createSalesExpense($expenseTransfer);
     }
-
-    /**
-     * @param int $idSalesOrderAddress
-     *
-     * @return \Generated\Shared\Transfer\AddressTransfer|null
-     */
-    public function findOrderAddressByIdOrderAddress(int $idSalesOrderAddress): ?AddressTransfer
-    {
-        return $this->salesFacade->findOrderAddressByIdOrderAddress($idSalesOrderAddress);
-    }
 }
