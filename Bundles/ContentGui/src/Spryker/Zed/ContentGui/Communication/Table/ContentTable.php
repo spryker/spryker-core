@@ -174,6 +174,6 @@ class ContentTable extends AbstractTable
      */
     protected function buildContentTypeLabel(string $label): string
     {
-        return sprintf('<span class="label label-info">%s</span>', ucfirst($label));
+        return $this->generateLabel(ucfirst($label), 'label-info');
     }
 }

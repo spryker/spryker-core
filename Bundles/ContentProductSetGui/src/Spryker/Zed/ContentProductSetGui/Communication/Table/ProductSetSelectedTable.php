@@ -26,7 +26,7 @@ class ProductSetSelectedTable extends AbstractTable
 
     public const COL_ID_PRODUCT_SET = 'ID';
     public const COL_NAME = 'Name';
-    public const COL_COUNT = '# of Products';
+    public const COL_COUNT = 'Number of Products';
     public const COL_STATUS = 'Status';
     public const COL_ACTIONS = 'Actions';
 
