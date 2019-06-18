@@ -14,18 +14,12 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Service\Customer\CustomerServiceInterface;
 use Spryker\Zed\Customer\Business\Customer\AddressInterface;
 use Spryker\Zed\Customer\Business\Customer\CustomerInterface;
-use Spryker\Zed\Customer\Persistence\CustomerRepositoryInterface;
 
 /**
  * @method \Spryker\Zed\Customer\Business\CustomerBusinessFactory getFactory()
  */
 class CustomerOrderSaverWithMultiShippingAddress extends CustomerOrderSaver
 {
-    /**
-     * @var \Spryker\Zed\Customer\Persistence\CustomerRepositoryInterface
-     */
-    protected $customerRepository;
-
     /**
      * Keys are unique strings generated using address data. Values don't matter.
      *
@@ -41,18 +35,15 @@ class CustomerOrderSaverWithMultiShippingAddress extends CustomerOrderSaver
     /**
      * @param \Spryker\Zed\Customer\Business\Customer\CustomerInterface $customer
      * @param \Spryker\Zed\Customer\Business\Customer\AddressInterface $address
-     * @param \Spryker\Zed\Customer\Persistence\CustomerRepositoryInterface $customerRepository
      * @param \Spryker\Service\Customer\CustomerServiceInterface $customerService
      */
     public function __construct(
         CustomerInterface $customer,
         AddressInterface $address,
-        CustomerRepositoryInterface $customerRepository,
         CustomerServiceInterface $customerService
     ) {
         parent::__construct($customer, $address);
 
-        $this->customerRepository = $customerRepository;
         $this->customerService = $customerService;
     }
 
@@ -65,7 +56,6 @@ class CustomerOrderSaverWithMultiShippingAddress extends CustomerOrderSaver
     protected function persistAddresses(QuoteTransfer $quoteTransfer, CustomerTransfer $customer)
     {
         $this->existingAddresses = [];
-
         $quoteTransfer = $this->persistBillingAddress($quoteTransfer, $customer);
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
@@ -81,10 +71,9 @@ class CustomerOrderSaverWithMultiShippingAddress extends CustomerOrderSaver
      */
     protected function persistBillingAddress(QuoteTransfer $quoteTransfer, CustomerTransfer $customer): QuoteTransfer
     {
-        $quoteTransfer->requireBillingAddress();
-        $billingAddressTransfer = $quoteTransfer->getBillingAddress();
+        $billingAddressTransfer = $quoteTransfer->requireBillingAddress()->getBillingAddress();
 
-        if ($billingAddressTransfer->getIsAddressSavingSkipped()) {
+        if ($billingAddressTransfer === null || $billingAddressTransfer->getIsAddressSavingSkipped()) {
             return $quoteTransfer;
         }
 
@@ -102,10 +91,9 @@ class CustomerOrderSaverWithMultiShippingAddress extends CustomerOrderSaver
      */
     protected function persistShippingAddress(ItemTransfer $itemTransfer, CustomerTransfer $customer): void
     {
-        $itemTransfer->requireShipment();
-        $itemTransfer->getShipment()
-            ->requireShippingAddress();
-        $shippingAddressTransfer = $itemTransfer->getShipment()
+        $shippingAddressTransfer = $itemTransfer->requireShipment()
+            ->getShipment()
+            ->requireShippingAddress()
             ->getShippingAddress();
 
         if ($shippingAddressTransfer->getIsAddressSavingSkipped()) {
@@ -113,8 +101,7 @@ class CustomerOrderSaverWithMultiShippingAddress extends CustomerOrderSaver
         }
 
         $shippingAddressTransfer = $this->processNewUniqueCustomerAddress($shippingAddressTransfer, $customer);
-        $itemTransfer->getShipment()
-            ->setShippingAddress($shippingAddressTransfer);
+        $itemTransfer->requireShipment()->getShipment()->setShippingAddress($shippingAddressTransfer);
     }
 
     /**
@@ -123,65 +110,35 @@ class CustomerOrderSaverWithMultiShippingAddress extends CustomerOrderSaver
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
-    protected function processNewUniqueCustomerAddress(AddressTransfer $addressTransfer, CustomerTransfer $customer): AddressTransfer
-    {
+    protected function processNewUniqueCustomerAddress(
+        AddressTransfer $addressTransfer,
+        CustomerTransfer $customer
+    ): AddressTransfer {
         if ($addressTransfer->getFkCustomer() === null) {
             $addressTransfer->setFkCustomer($customer->getIdCustomer());
         }
 
-        if ($this->isAddressNewAndUnique($addressTransfer)) {
+        $addressTransferKey = $this->customerService->getUniqueAddressKey($addressTransfer);
+        if ($this->isAddressNewAndUnique($addressTransfer, $addressTransferKey)) {
             return $addressTransfer;
         }
 
         $this->processCustomerAddress($addressTransfer, $customer);
-
-        $this->setAddressIsAlreadyPersisted($addressTransfer);
+        $this->existingAddresses[$addressTransferKey] = true;
 
         return $addressTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     * @param string $addressTransferKey
      *
      * @return bool
      */
-    protected function isAddressNewAndUnique(AddressTransfer $addressTransfer): bool
+    protected function isAddressNewAndUnique(AddressTransfer $addressTransfer, string $addressTransferKey): bool
     {
         return $addressTransfer->getIdCompanyUnitAddress() !== null
             || $addressTransfer->getIdCustomerAddress() !== null
-            || $this->isAddressAlreadyPersisted($addressTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
-     *
-     * @return bool
-     */
-    protected function isAddressAlreadyPersisted(AddressTransfer $addressTransfer): bool
-    {
-        $key = $this->customerService->getUniqueAddressKey($addressTransfer);
-        if (isset($this->existingAddresses[$key])) {
-            return true;
-        }
-
-        $customerAddressTransfer = $this->customerRepository->findAddressByAddressData($addressTransfer);
-        if ($customerAddressTransfer === null) {
-            return false;
-        }
-
-        $this->existingAddresses[$key] = true;
-
-        return true;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
-     *
-     * @return void
-     */
-    protected function setAddressIsAlreadyPersisted(AddressTransfer $addressTransfer): void
-    {
-        $key = $this->customerService->getUniqueAddressKey($addressTransfer);
-        $this->existingAddresses[$key] = true;
+            || isset($this->existingAddresses[$addressTransferKey]);
     }
 }

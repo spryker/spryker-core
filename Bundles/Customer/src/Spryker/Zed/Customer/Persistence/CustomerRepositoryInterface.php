@@ -28,13 +28,6 @@ interface CustomerRepositoryInterface
     public function findCustomerByReference(string $customerReference): ?CustomerTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
-     *
-     * @return \Generated\Shared\Transfer\AddressTransfer|null
-     */
-    public function findAddressByAddressData(AddressTransfer $addressTransfer): ?AddressTransfer;
-
-    /**
      * @param int $idCustomerAddress
      *
      * @return \Generated\Shared\Transfer\AddressTransfer|null
