@@ -18,7 +18,7 @@ use Spryker\Zed\TaxStorage\Communication\Plugin\Event\Listener\TaxSetTaxStorageP
 
 /**
  * @method \Spryker\Zed\TaxStorage\Communication\TaxStorageCommunicationFactory getFactory()
- * @method \Spryker\Zed\TaxStorage\Business\TaxStorageFacade getFacade()
+ * @method \Spryker\Zed\TaxStorage\Business\TaxStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\TaxStorage\TaxStorageConfig getConfig()
  */
 class TaxStorageSubscriber extends AbstractPlugin implements EventSubscriberInterface

@@ -18,4 +18,14 @@ interface ProductQuantityStorageToProductQuantityServiceInterface
      * @return float
      */
     public function getNearestQuantity(ProductQuantityTransfer $productQuantityTransfer, float $quantity): float;
+
+    /**
+     * @return float
+     */
+    public function getDefaultMinimumQuantity(): float;
+
+    /**
+     * @return float
+     */
+    public function getDefaultInterval(): float;
 }

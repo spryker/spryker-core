@@ -8,6 +8,7 @@
 namespace Spryker\Service\UtilQuantity\Comparator;
 
 use Spryker\Service\UtilQuantity\Calculator\PrecisionCalculatorInterface;
+use Spryker\Service\UtilQuantity\Converter\QuantityConverterInterface;
 
 class QuantityComparator implements QuantityComparatorInterface
 {
@@ -19,11 +20,20 @@ class QuantityComparator implements QuantityComparatorInterface
     protected $precisionCalculator;
 
     /**
-     * @param \Spryker\Service\UtilQuantity\Calculator\PrecisionCalculatorInterface $precisionCalculator
+     * @var \Spryker\Service\UtilQuantity\Converter\QuantityConverterInterface
      */
-    public function __construct(PrecisionCalculatorInterface $precisionCalculator)
-    {
+    protected $quantityConverter;
+
+    /**
+     * @param \Spryker\Service\UtilQuantity\Calculator\PrecisionCalculatorInterface $precisionCalculator
+     * @param \Spryker\Service\UtilQuantity\Converter\QuantityConverterInterface $quantityConverter
+     */
+    public function __construct(
+        PrecisionCalculatorInterface $precisionCalculator,
+        QuantityConverterInterface $quantityConverter
+    ) {
         $this->precisionCalculator = $precisionCalculator;
+        $this->quantityConverter = $quantityConverter;
     }
 
     /**
@@ -48,11 +58,11 @@ class QuantityComparator implements QuantityComparatorInterface
     {
         $maxPrecision = $this->precisionCalculator->getMaxPrecision($dividendQuantity, $divisorQuantity);
 
-        $intDividentQuantity = (int)($dividendQuantity * pow(10, $maxPrecision));
-        $intDivisorQuantity = (int)($divisorQuantity * pow(10, $maxPrecision));
+        $intDividendQuantity = $this->quantityConverter->convertWithExponentialBase($dividendQuantity, $maxPrecision);
+        $intDivisorQuantity = $this->quantityConverter->convertWithExponentialBase($divisorQuantity, $maxPrecision);
 
         return $this->isQuantityEqual(
-            $intDividentQuantity % $intDivisorQuantity,
+            $intDividendQuantity % $intDivisorQuantity,
             $remainder
         );
     }

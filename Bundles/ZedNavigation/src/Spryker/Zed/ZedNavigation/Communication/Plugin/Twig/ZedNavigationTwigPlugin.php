@@ -18,7 +18,7 @@ use Twig\TwigFunction;
 /**
  * @method \Spryker\Zed\ZedNavigation\Communication\ZedNavigationCommunicationFactory getFactory()
  * @method \Spryker\Zed\ZedNavigation\ZedNavigationConfig getConfig()
- * @method \Spryker\Zed\ZedNavigation\Business\ZedNavigationFacade getFacade()
+ * @method \Spryker\Zed\ZedNavigation\Business\ZedNavigationFacadeInterface getFacade()
  */
 class ZedNavigationTwigPlugin extends AbstractPlugin implements TwigPluginInterface
 {

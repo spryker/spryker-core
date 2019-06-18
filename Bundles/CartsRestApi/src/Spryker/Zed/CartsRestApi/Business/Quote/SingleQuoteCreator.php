@@ -12,13 +12,14 @@ use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\CartsRestApi\CartsRestApiConfig as CartsRestApiSharedConfig;
+use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToPersistentCartFacadeInterface;
 
 class SingleQuoteCreator implements SingleQuoteCreatorInterface
 {
     /**
-     * @var \Spryker\Zed\CartsRestApi\Business\Quote\QuoteCreatorInterface
+     * @var \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToPersistentCartFacadeInterface
      */
-    protected $quoteCreator;
+    protected $persistentCartFacade;
 
     /**
      * @var \Spryker\Zed\CartsRestApi\Business\Quote\QuoteReaderInterface
@@ -26,14 +27,14 @@ class SingleQuoteCreator implements SingleQuoteCreatorInterface
     protected $quoteReader;
 
     /**
-     * @param \Spryker\Zed\CartsRestApi\Business\Quote\QuoteCreatorInterface $quoteCreator
+     * @param \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToPersistentCartFacadeInterface $persistentCartFacade
      * @param \Spryker\Zed\CartsRestApi\Business\Quote\QuoteReaderInterface $quoteReader
      */
     public function __construct(
-        QuoteCreatorInterface $quoteCreator,
+        CartsRestApiToPersistentCartFacadeInterface $persistentCartFacade,
         QuoteReaderInterface $quoteReader
     ) {
-        $this->quoteCreator = $quoteCreator;
+        $this->persistentCartFacade = $persistentCartFacade;
         $this->quoteReader = $quoteReader;
     }
 
@@ -44,9 +45,9 @@ class SingleQuoteCreator implements SingleQuoteCreatorInterface
      */
     public function createSingleQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
+        $customerReference = $quoteTransfer->getCustomerReference() ?? $quoteTransfer->getCustomer()->getCustomerReference();
         $quoteCriteriaFilterTransfer = (new QuoteCriteriaFilterTransfer())
-            ->setCustomerReference($quoteTransfer->getCustomerReference())
-            ->setIdStore($quoteTransfer->getStore()->getIdStore());
+            ->setCustomerReference($customerReference);
 
         $quoteCollectionTransfer = $this->quoteReader->getQuoteCollection($quoteCriteriaFilterTransfer);
         if ($quoteCollectionTransfer->getQuotes()->count()) {
@@ -58,6 +59,6 @@ class SingleQuoteCreator implements SingleQuoteCreatorInterface
                 ->setIsSuccessful(false);
         }
 
-        return $this->quoteCreator->createQuote($quoteCollectionTransfer->getQuotes()[0]);
+        return $this->persistentCartFacade->createQuote($quoteTransfer);
     }
 }

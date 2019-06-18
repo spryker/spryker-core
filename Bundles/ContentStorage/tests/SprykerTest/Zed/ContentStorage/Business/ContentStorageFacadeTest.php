@@ -65,6 +65,7 @@ class ContentStorageFacadeTest extends Unit
         $this->tester->getFacade()->publish([$contentTransfer->getIdContent()]);
         $contentStorageEntity = $this->getContentStorageEntity();
         $storageData = [
+            ContentTransfer::ID_CONTENT => $contentTransfer->getIdContent(),
             ContentStorageConfig::TERM_KEY => $data[ContentTransfer::CONTENT_TERM_KEY],
             ContentStorageConfig::CONTENT_KEY => json_decode(
                 $data[ContentTransfer::LOCALIZED_CONTENTS][0][LocalizedContentTransfer::PARAMETERS]

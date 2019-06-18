@@ -25,6 +25,7 @@ class ContentHelper extends Module
     public function haveContent(array $override = []): ContentTransfer
     {
         $data = [
+            ContentTransfer::KEY => 'test-key',
             ContentTransfer::CONTENT_TERM_KEY => 'test-term',
             ContentTransfer::CONTENT_TYPE_KEY => 'test-type',
             ContentTransfer::DESCRIPTION => 'description',

@@ -51,7 +51,7 @@ class QuoteMapper implements QuoteMapperInterface
             $originalQuoteTransfer->setPriceMode($priceMode);
         }
 
-        if ($currencyTransfer->getCode()) {
+        if ($currencyTransfer && $currencyTransfer->getCode()) {
             $originalQuoteTransfer->setCurrency($currencyTransfer);
         }
 
