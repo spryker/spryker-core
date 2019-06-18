@@ -113,7 +113,7 @@ class Method implements MethodInterface
     }
 
     /**
-     * @deprecated Use MethodReader::getAvailableMethodsByShipment() instead.
+     * @deprecated Use getAvailableMethodsByShipment() instead.
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -130,43 +130,21 @@ class Method implements MethodInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer
-     */
-    public function getAvailableShipmentMethods(QuoteTransfer $quoteTransfer): ShipmentMethodsTransfer
-    {
-        $shipmentGroupCollectionTransfer = $this->getAvailableMethodsByShipment($quoteTransfer);
-
-        /** @var false|\Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer */
-        $shipmentGroupTransfer = current($shipmentGroupCollectionTransfer->getGroups());
-
-        if ($shipmentGroupTransfer === false) {
-            return new ShipmentMethodsTransfer();
-        }
-
-        return $shipmentGroupTransfer->getAvailableShipmentMethods();
-    }
-
-    /**
-     * @deprecated Use MethodReader::getAvailableMethodsByShipment() instead.
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
      * @return \Generated\Shared\Transfer\ShipmentGroupCollectionTransfer
      */
     public function getAvailableMethodsByShipment(QuoteTransfer $quoteTransfer): ShipmentGroupCollectionTransfer
     {
         $shipmentGroupTransfer = (new ShipmentGroupTransfer())
             ->setAvailableShipmentMethods($this->getAvailableMethods($quoteTransfer));
+
         $shipmentGroupCollection = (new ArrayObject());
         $shipmentGroupCollection->offsetSet($shipmentGroupTransfer->getHash(), $shipmentGroupTransfer);
 
         return (new ShipmentGroupCollectionTransfer())
-            ->setGroups($shipmentGroupCollection);
+            ->setShipmentGroups($shipmentGroupCollection);
     }
 
     /**
-     * @deprecated Use MethodReader::getAvailableMethodsByShipmentTransfer() instead.
-     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer
@@ -386,8 +364,6 @@ class Method implements MethodInterface
     }
 
     /**
-     * @deprecated use MethodReader::isShipmentMethodAvailableForShipmentGroup() instead
-     *
      * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethod $method
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -418,8 +394,6 @@ class Method implements MethodInterface
     }
 
     /**
-     * @deprecated MethodReader::getShipmentGroupShippingPrice()
-     *
      * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethod $method
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *

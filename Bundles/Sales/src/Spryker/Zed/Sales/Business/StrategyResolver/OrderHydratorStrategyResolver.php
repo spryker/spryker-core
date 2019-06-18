@@ -18,6 +18,7 @@ class OrderHydratorStrategyResolver implements OrderHydratorStrategyResolverInte
 {
     public const STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT = 'STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT';
     public const STRATEGY_KEY_WITH_MULTI_SHIPMENT = 'STRATEGY_KEY_WITH_MULTI_SHIPMENT';
+
     /**
      * @var array|\Closure[]
      */

@@ -38,22 +38,20 @@ class ItemsGrouper implements ItemsGrouperInterface
      */
     public function groupByShipment(iterable $itemTransfers): ArrayObject
     {
-        $shipmentGroupTransfers = new ArrayObject();
+        $shipmentGroupTransfers = [];
 
         foreach ($itemTransfers as $itemTransfer) {
             $this->assertRequiredShipment($itemTransfer);
 
             $key = $this->getShipmentHashKey($itemTransfer->getShipment());
             if (!isset($shipmentGroupTransfers[$key])) {
-                $shipmentGroupTransfers[$key] = (new ShipmentGroupTransfer())
-                    ->setShipment($itemTransfer->getShipment())
-                    ->setHash($key);
+                $shipmentGroupTransfers[$key] = $this->createShipmentGroupTransfer($itemTransfer, $key);
             }
 
             $shipmentGroupTransfers[$key]->addItem($itemTransfer);
         }
 
-        return $shipmentGroupTransfers;
+        return new ArrayObject(array_values($shipmentGroupTransfers));
     }
 
     /**
@@ -65,8 +63,9 @@ class ItemsGrouper implements ItemsGrouperInterface
     {
         return md5(sprintf(
             static::SHIPMENT_TRANSFER_KEY_PATTERN,
-            $shipmentTransfer->getMethod() ? $shipmentTransfer->getMethod()->getIdShipmentMethod() : '',
-            $shipmentTransfer->getShippingAddress() ? $this->customerService->getUniqueAddressKey($shipmentTransfer->getShippingAddress()) : '',
+            $shipmentTransfer->getMethod() !== null ? $shipmentTransfer->getMethod()->getIdShipmentMethod() : '',
+            $shipmentTransfer->getShippingAddress() !== null ?
+                $this->customerService->getUniqueAddressKey($shipmentTransfer->getShippingAddress()) : '',
             $shipmentTransfer->getRequestedDeliveryDate()
         ));
     }
@@ -79,5 +78,18 @@ class ItemsGrouper implements ItemsGrouperInterface
     protected function assertRequiredShipment(ItemTransfer $itemTransfer): void
     {
         $itemTransfer->requireShipment();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param string $key
+     *
+     * @return \Generated\Shared\Transfer\ShipmentGroupTransfer
+     */
+    protected function createShipmentGroupTransfer(ItemTransfer $itemTransfer, string $key): ShipmentGroupTransfer
+    {
+        return (new ShipmentGroupTransfer())
+            ->setShipment($itemTransfer->getShipment())
+            ->setHash($key);
     }
 }

@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CommentTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
-use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -59,6 +58,24 @@ interface SalesFacadeInterface
      * @return \Generated\Shared\Transfer\OrderDetailsCommentsTransfer
      */
     public function getOrderCommentsByIdSalesOrder($idSalesOrder);
+
+    /**
+     * Specification:
+     * - Saves order and items to database
+     * - Sets "is test" flag
+     * - Updates checkout response with saved order data
+     * - Sets initial state for state machine
+     *
+     * @api
+     *
+     * @deprecated Use saveSalesOrder() instead
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return void
+     */
+    public function saveOrder(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer);
 
     /**
      * Specification:
@@ -208,6 +225,7 @@ interface SalesFacadeInterface
     /**
      * Specification:
      * - Returns the order for the given sales order item id.
+     * - Hydrates order using quote level (BC) or item level shipping addresses.
      *
      * @api
      *

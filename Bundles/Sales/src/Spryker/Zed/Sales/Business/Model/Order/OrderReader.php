@@ -71,8 +71,7 @@ class OrderReader implements OrderReaderInterface
             return null;
         }
 
-        return $this->orderHydrator
-            ->hydrateOrderTransferFromPersistenceBySalesOrder($orderEntity);
+        return $this->orderHydrator->hydrateOrderTransferFromPersistenceBySalesOrder($orderEntity);
     }
 
     /**

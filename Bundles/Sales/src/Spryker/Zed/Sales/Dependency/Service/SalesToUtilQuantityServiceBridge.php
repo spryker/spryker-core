@@ -15,7 +15,7 @@ class SalesToUtilQuantityServiceBridge implements SalesToUtilQuantityServiceInte
     protected $utilQuantityService;
 
     /**
- * @param \Spryker\Service\UtilQuantity\UtilQuantityServiceInterface $utilQuantityService
+     * @param \Spryker\Service\UtilQuantity\UtilQuantityServiceInterface $utilQuantityService
      */
     public function __construct($utilQuantityService)
     {

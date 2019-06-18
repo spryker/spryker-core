@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CommentTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
-use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -32,8 +31,6 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
      * @api
      *
      * @param int $idSalesOrder
-     *
-     * @throws \Spryker\Zed\Sales\Business\Exception\InvalidSalesOrderException
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
@@ -72,7 +69,7 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     public function findOrderByIdSalesOrderItem($idSalesOrderItem)
     {
         return $this->getFactory()
-            ->createOrderReader()
+            ->createOrderReaderWithMultiShippingAddress()
             ->findOrderByIdSalesOrderItem($idSalesOrderItem);
     }
 
@@ -152,8 +149,6 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @throws \Spryker\Zed\Sales\Business\Exception\InvalidSalesOrderException
-     *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function getCustomerOrder(OrderTransfer $orderTransfer)
@@ -162,6 +157,25 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
             ->createOrderHydratorStrategyResolver()
             ->resolve($orderTransfer->getItems())
             ->getCustomerOrder($orderTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @deprecated Use saveSalesOrder() instead
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return void
+     */
+    public function saveOrder(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
+    {
+        $this->getFactory()
+            ->createOrderSaver()
+            ->saveOrder($quoteTransfer, $checkoutResponseTransfer);
     }
 
     /**
@@ -202,8 +216,7 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Returns the distinct states of all order items for the given order id
+     * {@inheritdoc}
      *
      * @api
      *
@@ -214,7 +227,7 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     public function getDistinctOrderStates($idSalesOrder)
     {
         return $this->getFactory()
-            ->createOrderReader()
+            ->createOrderReaderWithMultiShippingAddress()
             ->getDistinctOrderStates($idSalesOrder);
     }
 

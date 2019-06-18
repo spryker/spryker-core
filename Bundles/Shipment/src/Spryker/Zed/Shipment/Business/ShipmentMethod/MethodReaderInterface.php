@@ -9,7 +9,6 @@ namespace Spryker\Zed\Shipment\Business\ShipmentMethod;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentGroupCollectionTransfer;
-use Generated\Shared\Transfer\ShipmentMethodsTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 
 interface MethodReaderInterface
@@ -91,11 +90,4 @@ interface MethodReaderInterface
      * @return bool
      */
     public function isShipmentMethodActive($idShipmentMethod);
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer
-     */
-    public function getAvailableShipmentMethods(QuoteTransfer $quoteTransfer): ShipmentMethodsTransfer;
 }

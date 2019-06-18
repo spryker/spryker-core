@@ -22,6 +22,7 @@
     "spryker/user": "^3.0.0",
     "spryker/util-date-time": "^1.0.0",
     "spryker/util-price": "^1.0.0",
+    "spryker/util-quantity": "^1.1.0",
     "spryker/util-sanitize": "^2.0.0",
     "spryker/util-text": "^1.1.0",
     "spryker/zed-request": "^3.0.0"
@@ -31,6 +32,7 @@
     "spryker/checkout": "*",
     "spryker/config": "*",
     "spryker/product": "*",
+    "spryker/shipment": "*",
     "spryker/stock": "*",
     "spryker/testify": "*",
     "spryker/zed-navigation": "*"

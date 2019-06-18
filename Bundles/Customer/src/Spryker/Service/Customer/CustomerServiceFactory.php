@@ -7,8 +7,6 @@
 
 namespace Spryker\Service\Customer;
 
-use Spryker\Service\Customer\Address\AddressDataChecker;
-use Spryker\Service\Customer\Address\AddressDataCheckerInterface;
 use Spryker\Service\Customer\Address\CustomerAddressKeyGenerator;
 use Spryker\Service\Customer\Address\CustomerAddressKeyGeneratorInterface;
 use Spryker\Service\Kernel\AbstractServiceFactory;
@@ -24,13 +22,5 @@ class CustomerServiceFactory extends AbstractServiceFactory
     public function createCustomerAddressKeyGenerator(): CustomerAddressKeyGeneratorInterface
     {
         return new CustomerAddressKeyGenerator($this->getConfig());
-    }
-
-    /**
-     * @return \Spryker\Service\Customer\Address\AddressDataCheckerInterface
-     */
-    public function createAddressDataChecker(): AddressDataCheckerInterface
-    {
-        return new AddressDataChecker();
     }
 }

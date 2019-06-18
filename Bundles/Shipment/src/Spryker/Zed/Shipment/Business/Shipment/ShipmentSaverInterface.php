@@ -19,5 +19,8 @@ interface ShipmentSaverInterface
      *
      * @return \Generated\Shared\Transfer\ShipmentGroupResponseTransfer
      */
-    public function saveShipment(ShipmentGroupTransfer $shipmentGroupTransfer, OrderTransfer $orderTransfer): ShipmentGroupResponseTransfer;
+    public function saveShipment(
+        ShipmentGroupTransfer $shipmentGroupTransfer,
+        OrderTransfer $orderTransfer
+    ): ShipmentGroupResponseTransfer;
 }

@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ShipmentExtension\Communication\Plugin;
+namespace Spryker\Zed\ShipmentExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
@@ -13,6 +13,8 @@ use Generated\Shared\Transfer\ShipmentGroupTransfer;
 interface ShipmentMethodPricePluginInterface
 {
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *

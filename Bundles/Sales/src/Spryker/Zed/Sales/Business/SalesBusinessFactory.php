@@ -13,6 +13,7 @@ use Spryker\Zed\Sales\Business\Address\OrderAddressWriter;
 use Spryker\Zed\Sales\Business\Address\OrderAddressWriterInterface;
 use Spryker\Zed\Sales\Business\Expense\ExpenseWriter;
 use Spryker\Zed\Sales\Business\Expense\ExpenseWriterInterface;
+use Spryker\Zed\Sales\Business\Model\Address\OrderAddressUpdater;
 use Spryker\Zed\Sales\Business\Model\Comment\OrderCommentReader;
 use Spryker\Zed\Sales\Business\Model\Comment\OrderCommentSaver;
 use Spryker\Zed\Sales\Business\Model\Customer\CustomerOrderOverviewInterface;
@@ -26,6 +27,7 @@ use Spryker\Zed\Sales\Business\Model\Order\OrderHydrator;
 use Spryker\Zed\Sales\Business\Model\Order\OrderReader;
 use Spryker\Zed\Sales\Business\Model\Order\OrderReferenceGenerator;
 use Spryker\Zed\Sales\Business\Model\Order\OrderRepositoryReader;
+use Spryker\Zed\Sales\Business\Model\Order\OrderSaver;
 use Spryker\Zed\Sales\Business\Model\Order\OrderUpdater;
 use Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaver;
 use Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaverInterface;
@@ -33,8 +35,6 @@ use Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaverPluginExecutor;
 use Spryker\Zed\Sales\Business\Model\OrderItem\OrderItemTransformer;
 use Spryker\Zed\Sales\Business\Model\OrderItem\OrderItemTransformerInterface;
 use Spryker\Zed\Sales\Business\Model\OrderItem\SalesOrderItemMapper as ModelSalesOrderItemMapper;
-use Spryker\Zed\Sales\Dependency\Service\SalesToUtilQuantityServiceInterface;
-use Spryker\Zed\Sales\Persistence\Propel\Mapper\SalesOrderItemMapper;
 use Spryker\Zed\Sales\Business\Order\OrderHydrator as OrderHydratorWithMultiShippingAddress;
 use Spryker\Zed\Sales\Business\Order\OrderHydratorInterface;
 use Spryker\Zed\Sales\Business\Order\OrderReader as OrderReaderWithMultiShippingAddress;
@@ -45,9 +45,10 @@ use Spryker\Zed\Sales\Business\OrderItem\SalesOrderItemReader;
 use Spryker\Zed\Sales\Business\OrderItem\SalesOrderItemReaderInterface;
 use Spryker\Zed\Sales\Business\StrategyResolver\OrderHydratorStrategyResolver;
 use Spryker\Zed\Sales\Business\StrategyResolver\OrderHydratorStrategyResolverInterface;
-use Spryker\Zed\Sales\Dependency\Service\SalesToShipmentServiceInterface;
-use Spryker\Zed\Sales\Persistence\Propel\Mapper\SalesOrderItemMapperInterface;
 use Spryker\Zed\Sales\Dependency\Service\SalesToUtilPriceServiceInterface;
+use Spryker\Zed\Sales\Dependency\Service\SalesToUtilQuantityServiceInterface;
+use Spryker\Zed\Sales\Persistence\Propel\Mapper\SalesOrderItemMapper;
+use Spryker\Zed\Sales\Persistence\Propel\Mapper\SalesOrderItemMapperInterface;
 use Spryker\Zed\Sales\SalesDependencyProvider;
 
 /**
@@ -103,6 +104,26 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Use createSalesOrderSaver() instead.
+     *
+     * @return \Spryker\Zed\Sales\Business\Model\Order\OrderSaverInterface
+     */
+    public function createOrderSaver()
+    {
+        return new OrderSaver(
+            $this->getCountryFacade(),
+            $this->getOmsFacade(),
+            $this->createReferenceGenerator(),
+            $this->getConfig(),
+            $this->getLocaleQueryContainer(),
+            $this->getStore(),
+            $this->getOrderExpanderPreSavePlugins(),
+            $this->createSalesOrderSaverPluginExecutor(),
+            $this->createSalesOrderItemMapper()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaverInterface
      */
     public function createSalesOrderSaver(): SalesOrderSaverInterface
@@ -129,6 +150,8 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Use createOrderReaderWithMultiShippingAddress() instead.
+     *
      * @return \Spryker\Zed\Sales\Business\Model\Order\OrderReaderInterface
      */
     public function createOrderReader()
@@ -217,6 +240,16 @@ class SalesBusinessFactory extends AbstractBusinessFactory
             $this->getSequenceNumberFacade(),
             $sequenceNumberSettings
         );
+    }
+
+    /**
+     * @deprecated Use createOrderAddressWriter() instead.
+     *
+     * @return \Spryker\Zed\Sales\Business\Model\Address\OrderAddressUpdaterInterface
+     */
+    public function createOrderAddressUpdater()
+    {
+        return new OrderAddressUpdater($this->getQueryContainer());
     }
 
     /**

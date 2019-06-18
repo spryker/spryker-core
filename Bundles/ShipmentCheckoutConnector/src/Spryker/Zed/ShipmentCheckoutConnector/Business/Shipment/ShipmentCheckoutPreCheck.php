@@ -10,8 +10,9 @@ namespace Spryker\Zed\ShipmentCheckoutConnector\Business\Shipment;
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\ShipmentMethodsTransfer;
+use Generated\Shared\Transfer\ShipmentGroupCollectionTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
+use Spryker\Shared\ShipmentCheckoutConnector\ShipmentCheckoutConnectorConfig;
 use Spryker\Zed\ShipmentCheckoutConnector\Dependency\Facade\ShipmentCheckoutConnectorToShipmentFacadeInterface;
 
 class ShipmentCheckoutPreCheck implements ShipmentCheckoutPreCheckInterface
@@ -41,20 +42,28 @@ class ShipmentCheckoutPreCheck implements ShipmentCheckoutPreCheckInterface
         QuoteTransfer $quoteTransfer,
         CheckoutResponseTransfer $checkoutResponseTransfer
     ): bool {
-        $availableShipmentMethods = $this->shipmentFacade->getAvailableMethods($quoteTransfer);
+        $availableShipmentMethodCollectionTransfer = $this->shipmentFacade->getAvailableMethodsByShipment($quoteTransfer);
 
         $checkShipmentStatus = true;
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $shipmentTransfer = $itemTransfer->getShipment();
-            if ($shipmentTransfer === null) {
+            $quoteShipmentTransfer = $itemTransfer->getShipment();
+            if ($quoteShipmentTransfer === null) {
                 continue;
             }
 
-            $idShipmentMethod = $shipmentTransfer->getMethod()->getIdShipmentMethod();
-            $shipmentMethodTransfer = $this->filterAvailableMethodById($idShipmentMethod, $availableShipmentMethods);
+            $quoteShipmentMethodTransfer = $quoteShipmentTransfer->getMethod();
+            if ($quoteShipmentMethodTransfer === null) {
+                continue;
+            }
 
-            if ($idShipmentMethod === null || $shipmentMethodTransfer === null) {
-                $checkoutErrorTransfer = $this->createCheckoutErrorTransfer($shipmentTransfer->getMethod());
+            $quoteIddShipmentMethod = $quoteShipmentMethodTransfer->getIdShipmentMethod();
+            if ($quoteIddShipmentMethod === null) {
+                continue;
+            }
+
+            $shipmentMethodTransfer = $this->filterAvailableMethodById($quoteIddShipmentMethod, $availableShipmentMethodCollectionTransfer);
+            if ($shipmentMethodTransfer === null) {
+                $checkoutErrorTransfer = $this->createCheckoutErrorTransfer($quoteShipmentTransfer->getMethod());
 
                 $checkoutResponseTransfer
                     ->setIsSuccess(false)
@@ -70,17 +79,27 @@ class ShipmentCheckoutPreCheck implements ShipmentCheckoutPreCheckInterface
 
     /**
      * @param int $idShipmentMethod
-     * @param \Generated\Shared\Transfer\ShipmentMethodsTransfer $availableShipmentMethods
+     * @param \Generated\Shared\Transfer\ShipmentGroupCollectionTransfer $availableShipmentMethodCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
      */
     protected function filterAvailableMethodById(
         int $idShipmentMethod,
-        ShipmentMethodsTransfer $availableShipmentMethods
+        ShipmentGroupCollectionTransfer $availableShipmentMethodCollectionTransfer
     ): ?ShipmentMethodTransfer {
-        foreach ($availableShipmentMethods->getMethods() as $shipentMethodTransfer) {
-            if ($idShipmentMethod === $shipentMethodTransfer->getIdShipmentMethod()) {
-                return $shipentMethodTransfer;
+        foreach ($availableShipmentMethodCollectionTransfer->getShipmentGroups() as $shipmentGroupTransfer) {
+            $shipmentTransfer = $shipmentGroupTransfer->getShipment();
+            if ($shipmentTransfer === null) {
+                continue;
+            }
+
+            $shipmentMethodTransfer = $shipmentTransfer->getMethod();
+            if ($shipmentMethodTransfer === null) {
+                continue;
+            }
+
+            if ($idShipmentMethod === $shipmentMethodTransfer->getIdShipmentMethod()) {
+                return $shipmentMethodTransfer;
             }
         }
 

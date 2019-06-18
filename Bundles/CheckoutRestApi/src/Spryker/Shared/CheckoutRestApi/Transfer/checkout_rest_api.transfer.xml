@@ -184,4 +184,12 @@
         <property name="customerTransfer" type="Customer" />
     </transfer>
 
+    <transfer name="ShipmentGroup">
+        <property name="availableShipmentMethods" type="ShipmentMethods" />
+    </transfer>
+
+    <transfer name="ShipmentGroupCollection">
+        <property name="shipmentGroups" type="ShipmentGroup[]" singular="shipmentGroup"/>
+    </transfer>
+
 </transfers>
