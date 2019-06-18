@@ -71,11 +71,8 @@ class CompanyUnitAddressLabelBusinessTester extends Actor
      */
     public function createCompanyUnitAddressLabelRelations(array $seedData = []): CompanyUnitAddressResponseTransfer
     {
-        if (!array_key_exists(CompanyUnitAddressTransfer::LABEL_COLLECTION, $seedData)) {
-            $seedData = array_merge($seedData, [
-                CompanyUnitAddressTransfer::LABEL_COLLECTION => (new CompanyUnitAddressLabelRepository())
-                    ->findCompanyUnitAddressLabels(),
-            ]);
+        if (!isset($seedData[CompanyUnitAddressTransfer::LABEL_COLLECTION])) {
+            $seedData[CompanyUnitAddressTransfer::LABEL_COLLECTION] = $this->getCompanyUnitAddressLabelCollection();
         }
 
         return $this->haveCompanyUnitAddressLabelRelations(
