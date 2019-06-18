@@ -19,7 +19,7 @@ interface PhpScheduleMapperInterface
      *
      * @return \Generated\Shared\Transfer\SchedulerScheduleTransfer
      */
-    public function mapScheduleFromArray(
+    public function fromJobsArray(
         SchedulerFilterTransfer $filterTransfer,
         SchedulerScheduleTransfer $scheduleTransfer,
         array $jobs
