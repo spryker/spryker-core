@@ -302,6 +302,9 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
                 ->mapShipmentEntityToShipmentTransferWithDetails($salesShipmentEntity, new ShipmentTransfer());
         }
 
+        /**
+         * @todo delete hydrateShipmentMethodTransfersFromShipmentTransfers and all related functionality after tests are ready
+         */
         return $this->hydrateShipmentMethodTransfersFromShipmentTransfers($shipmentTransfers, $shipmentMapper);
     }
 

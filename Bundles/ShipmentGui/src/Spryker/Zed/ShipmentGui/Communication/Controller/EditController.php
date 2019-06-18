@@ -59,13 +59,16 @@ class EditController extends AbstractController
             }
 
             $formData = $form->getData();
+
+            $idCustomerAddress = isset($formData[ShipmentFormCreate::FIELD_ID_CUSTOMER_ADDRESS]) ?
+                (int)$formData[ShipmentFormCreate::FIELD_ID_CUSTOMER_ADDRESS] : null;
+
+            $idShipmentMethod = isset($formData[ShipmentFormCreate::FIELD_ID_SHIPMENT_METHOD]) ?
+                (int)$formData[ShipmentFormCreate::FIELD_ID_SHIPMENT_METHOD] : null;
+
             $shipmentGroupTransfer = $this->getFactory()
                 ->getShipmentFacade()
-                ->createShipmentGroupTransfer(
-                    $formData,
-                    $formData[ShipmentFormCreate::FIELD_ID_CUSTOMER_ADDRESS] ?? null,
-                    $formData[ShipmentFormCreate::FIELD_ID_SHIPMENT_METHOD] ?? null
-                );
+                ->createShipmentGroupTransfer($formData, $idCustomerAddress, $idShipmentMethod);
 
             $responseTransfer = $this->getFactory()
                 ->getShipmentFacade()
