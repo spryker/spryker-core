@@ -50,7 +50,7 @@ class CommentFacadeTest extends Unit
     protected const GLOSSARY_KEY_COMMENT_EMPTY_MESSAGE = 'comment.validation.error.empty_message';
 
     /**
-     * @uses \Spryker\Zed\Comment\Business\Writer\CommentWriter::GLOSSARY_KEY_COMMENT_THREAD_ALREADY_EXISTS
+     * @uses \Spryker\Zed\Comment\Business\Writer\CommentThreadWriter::GLOSSARY_KEY_COMMENT_THREAD_ALREADY_EXISTS
      */
     protected const GLOSSARY_KEY_COMMENT_THREAD_ALREADY_EXISTS = 'comment.validation.error.comment_thread_already_exists';
 

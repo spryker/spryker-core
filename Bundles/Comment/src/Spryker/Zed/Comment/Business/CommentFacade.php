@@ -80,7 +80,7 @@ class CommentFacade extends AbstractFacade implements CommentFacadeInterface
     public function updateCommentTags(CommentRequestTransfer $commentRequestTransfer): CommentThreadResponseTransfer
     {
         return $this->getFactory()
-            ->createCommentWriter()
+            ->createCommentTagWriter()
             ->updateCommentTags($commentRequestTransfer);
     }
 
@@ -113,7 +113,7 @@ class CommentFacade extends AbstractFacade implements CommentFacadeInterface
     public function duplicateCommentThread(CommentFilterTransfer $commentFilterTransfer, CommentRequestTransfer $commentRequestTransfer): CommentThreadResponseTransfer
     {
         return $this->getFactory()
-            ->createCommentWriter()
+            ->createCommentThreadWriter()
             ->duplicateCommentThread($commentFilterTransfer, $commentRequestTransfer);
     }
 }
