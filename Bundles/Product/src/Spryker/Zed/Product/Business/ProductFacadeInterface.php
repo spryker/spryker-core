@@ -881,7 +881,6 @@ interface ProductFacadeInterface
     /**
      * Specification:
      * - Returns concrete products w/o joined data.
-     * - Triggers `ProductEvents::PRODUCT_CONCRETE_READ` event but doesn't trigger READ plugins.
      *
      * @api
      *

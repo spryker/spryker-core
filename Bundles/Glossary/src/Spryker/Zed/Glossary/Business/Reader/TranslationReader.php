@@ -17,11 +17,6 @@ class TranslationReader implements TranslationReaderInterface
     protected $glossaryRepository;
 
     /**
-     * @var \Spryker\Shared\Kernel\Store
-     */
-    protected $store;
-
-    /**
      * @param \Spryker\Zed\Glossary\Persistence\GlossaryRepositoryInterface $glossaryRepository
      */
     public function __construct(GlossaryRepositoryInterface $glossaryRepository)
