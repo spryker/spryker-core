@@ -14,6 +14,8 @@ use Spryker\Zed\Shipment\Business\Calculator\ShipmentTaxRateCalculator as Shipme
 use Spryker\Zed\Shipment\Business\Checkout\MultiShipmentOrderSaver;
 use Spryker\Zed\Shipment\Business\Checkout\MultiShipmentOrderSaverInterface;
 use Spryker\Zed\Shipment\Business\Checkout\ShipmentOrderSaver as CheckoutShipmentOrderSaver;
+use Spryker\Zed\Shipment\Business\Mapper\ShipmentMapper;
+use Spryker\Zed\Shipment\Business\Mapper\ShipmentMapperInterface;
 use Spryker\Zed\Shipment\Business\Model\Carrier;
 use Spryker\Zed\Shipment\Business\Model\Method;
 use Spryker\Zed\Shipment\Business\Model\MethodPrice;
@@ -32,6 +34,8 @@ use Spryker\Zed\Shipment\Business\Shipment\ShipmentSaver;
 use Spryker\Zed\Shipment\Business\Shipment\ShipmentSaverInterface;
 use Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentFetcher;
 use Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentFetcherInterface;
+use Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentGrouper;
+use Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentGrouperInterface;
 use Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentMethodExpander;
 use Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentMethodExpanderInterface;
 use Spryker\Zed\Shipment\Business\ShipmentMethod\MethodAvailabilityChecker;
@@ -413,6 +417,22 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->getCurrencyFacade()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentGrouperInterface
+     */
+    public function createShipmentGrouper(): ShipmentGrouperInterface
+    {
+        return new ShipmentGrouper($this->createShipmentMapper(), $this->createMethodReader());
+    }
+
+    /**
+     * @return \Spryker\Zed\Shipment\Business\Mapper\ShipmentMapperInterface
+     */
+    public function createShipmentMapper(): ShipmentMapperInterface
+    {
+        return new ShipmentMapper();
     }
 
     /**

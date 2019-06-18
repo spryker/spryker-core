@@ -314,4 +314,19 @@ interface ShipmentFacadeInterface
      * @return \Generated\Shared\Transfer\ShipmentGroupResponseTransfer
      */
     public function saveShipment(ShipmentGroupTransfer $shipmentGroupTransfer, OrderTransfer $orderTransfer): ShipmentGroupResponseTransfer;
+
+    /**
+     * Specification:
+     * - Creates new ShipmentGroupTransfer for specified order in Zed.
+     * - Uses shipment findShipmentMethodTransferById logic from the ShipmentReader class.
+     *
+     * @api
+     *
+     * @param array $formData
+     * @param int|null $idCustomerAddress
+     * @param int|null $idShipmentMethod
+     *
+     * @return \Generated\Shared\Transfer\ShipmentGroupTransfer
+     */
+    public function createShipmentGroupTransfer(array $formData, ?int $idCustomerAddress, ?int $idShipmentMethod): ShipmentGroupTransfer;
 }

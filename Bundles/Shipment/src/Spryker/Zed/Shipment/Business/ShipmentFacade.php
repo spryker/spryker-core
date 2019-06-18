@@ -361,4 +361,22 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
             ->createShipmentSaver()
             ->saveShipment($shipmentGroupTransfer, $orderTransfer);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param array $formData
+     * @param int|null $idCustomerAddress
+     * @param int|null $idShipmentMethod
+     *
+     * @return \Generated\Shared\Transfer\ShipmentGroupTransfer
+     */
+    public function createShipmentGroupTransfer(array $formData, ?int $idCustomerAddress, ?int $idShipmentMethod): ShipmentGroupTransfer
+    {
+        return $this->getFactory()
+            ->createShipmentGrouper()
+            ->createShipmentGroupTransfer($formData, $idCustomerAddress, $idShipmentMethod);
+    }
 }

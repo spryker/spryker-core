@@ -2,7 +2,7 @@
         {{ form_widget(form.id_sales_shipment) }}
         {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Delivery Address' } %}
             {% block widget_content %}
-                {{ form_row(form.id_shipping_address) }}
+                {{ form_row(form.id_customer_address) }}
                 {{ form_row(form.shipping_address) }}
             {% endblock %}
         {% endembed %}

@@ -8,9 +8,11 @@
 namespace Spryker\Zed\Shipment\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\CountryTransfer;
 use Generated\Shared\Transfer\ShipmentCarrierTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
+use Orm\Zed\Country\Persistence\SpyCountry;
 use Orm\Zed\Sales\Persistence\SpySalesShipment;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethod;
 
@@ -103,4 +105,15 @@ interface ShipmentMapperInterface
         ShipmentMethodTransfer $shipmentMethodTransfer,
         ShipmentTransfer $shipmentTransfer
     ): ShipmentMethodTransfer;
+
+    /**
+     * @param \Orm\Zed\Country\Persistence\SpyCountry $countryEntity
+     * @param \Generated\Shared\Transfer\CountryTransfer $countryTransfer
+     *
+     * @return \Generated\Shared\Transfer\CountryTransfer
+     */
+    public function mapCountryEntityToCountryTransfer(
+        SpyCountry $countryEntity,
+        CountryTransfer $countryTransfer
+    ): CountryTransfer;
 }

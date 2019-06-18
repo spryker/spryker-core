@@ -53,12 +53,14 @@ class CreateController extends AbstractController
                 ->getSalesFacade()
                 ->findOrderByIdSalesOrder($idSalesOrder);
 
-            $responseTransfer = $this->getFactory()
-                ->getShipmentFacade()
-                ->saveShipment($shipmentGroupTransfer, $orderTransfer);
+            if ($orderTransfer !== null && $shipmentGroupTransfer !== null) {
+                $responseTransfer = $this->getFactory()
+                    ->getShipmentFacade()
+                    ->saveShipment($shipmentGroupTransfer, $orderTransfer);
 
-            if ($responseTransfer->getIsSuccessful()) {
-                $this->addSuccessMessage(static::MESSAGE_SHIPMENT_CREATE_SUCCESS);
+                if ($responseTransfer->getIsSuccessful()) {
+                    $this->addSuccessMessage(static::MESSAGE_SHIPMENT_CREATE_SUCCESS);
+                }
             }
 
             $redirectUrl = Url::generate(
@@ -84,7 +86,7 @@ class CreateController extends AbstractController
     {
         $shipmentGroupTransfer = new ShipmentGroupTransfer();
         $shipmentGroupTransfer->setShipment($this->createShipmentTransfer($formData));
-        $shipmentGroupTransfer->setItems($this->createItemTransferList($shipmentGroupTransfer->getShipment(), $formData));
+        $shipmentGroupTransfer->setItems($this->createItemTransferList($shipmentGroupTransfer->requireShipment()->getShipment(), $formData));
 
         return $shipmentGroupTransfer;
     }
@@ -102,8 +104,8 @@ class CreateController extends AbstractController
             ->findMethodById($formData[ShipmentFormCreate::FIELD_ID_SHIPMENT_METHOD]);
         $shipmentTransfer->setMethod($shipmentMethodTransfer);
 
-        if ($formData[ShipmentFormCreate::FIELD_ID_SHIPMENT_ADDRESS]) {
-            $shipmentTransfer = $this->mapCustomerAddressToShippingAddress($shipmentTransfer, $formData[ShipmentFormCreate::FIELD_ID_SHIPMENT_ADDRESS]);
+        if ($formData[ShipmentFormCreate::FIELD_ID_CUSTOMER_ADDRESS]) {
+            $shipmentTransfer = $this->mapCustomerAddressToShippingAddress($shipmentTransfer, $formData[ShipmentFormCreate::FIELD_ID_CUSTOMER_ADDRESS]);
         }
 
         return $shipmentTransfer;

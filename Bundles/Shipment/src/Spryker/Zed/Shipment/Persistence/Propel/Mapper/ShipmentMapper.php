@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\CountryTransfer;
 use Generated\Shared\Transfer\ShipmentCarrierTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
+use Orm\Zed\Country\Persistence\SpyCountry;
 use Orm\Zed\Sales\Persistence\SpySalesShipment;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethod;
 
@@ -94,14 +95,16 @@ class ShipmentMapper implements ShipmentMapperInterface
         SpySalesShipment $salesShipment
     ): AddressTransfer {
         $addressEntity = $salesShipment->getSpySalesOrderAddress();
-        if ($addressEntity !== null) {
-            $addressTransfer->fromArray($addressEntity->toArray(), true);
-
-            $countryTransfer = new CountryTransfer();
-            $countryTransfer->fromArray($addressEntity->getCountry()->toArray(), true);
-
-            $addressTransfer->setCountry($countryTransfer);
+        if ($addressEntity === null) {
+            return $addressTransfer;
         }
+
+        $addressTransfer->fromArray($addressEntity->toArray(), true);
+
+        $countryTransfer = $this->mapCountryEntityToCountryTransfer($addressEntity->getCountry(), new CountryTransfer());
+
+        $addressTransfer->setIso2Code($countryTransfer->getIso2Code());
+        $addressTransfer->setCountry($countryTransfer);
 
         return $addressTransfer;
     }
@@ -152,5 +155,18 @@ class ShipmentMapper implements ShipmentMapperInterface
         ShipmentTransfer $shipmentTransfer
     ): ShipmentMethodTransfer {
         return $shipmentMethodTransfer->fromArray($shipmentTransfer->getMethod()->modifiedToArray(), true);
+    }
+
+    /**
+     * @param \Orm\Zed\Country\Persistence\SpyCountry $countryEntity
+     * @param \Generated\Shared\Transfer\CountryTransfer $countryTransfer
+     *
+     * @return \Generated\Shared\Transfer\CountryTransfer
+     */
+    public function mapCountryEntityToCountryTransfer(
+        SpyCountry $countryEntity,
+        CountryTransfer $countryTransfer
+    ): CountryTransfer {
+        return $countryTransfer->fromArray($countryEntity->toArray(), true);
     }
 }

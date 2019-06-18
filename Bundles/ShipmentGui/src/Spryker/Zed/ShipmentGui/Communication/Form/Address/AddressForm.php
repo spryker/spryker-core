@@ -27,6 +27,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  */
 class AddressForm extends AbstractType
 {
+    public const ADDRESS_FIELD_ID_SALES_ORDER_ADDRESS = 'id_sales_order_address';
     public const ADDRESS_FIELD_SALUTATION = 'salutation';
     public const ADDRESS_FIELD_FIRST_NAME = 'first_name';
     public const ADDRESS_FIELD_MIDDLE_NAME = 'middle_name';
@@ -407,7 +408,7 @@ class AddressForm extends AbstractType
         return new Callback([
         'callback' => function ($value, ExecutionContextInterface $context) {
             $formData = $context->getRoot()->getData();
-            if ($formData[ShipmentFormCreate::FIELD_ID_SHIPMENT_ADDRESS]) {
+            if ($formData[ShipmentFormCreate::FIELD_ID_CUSTOMER_ADDRESS]) {
                 return;
             }
 

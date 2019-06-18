@@ -7,19 +7,47 @@
 
 namespace Spryker\Zed\ShipmentGui\Communication\Form;
 
+use Spryker\Zed\ShipmentGui\Communication\Form\Address\AddressForm;
 use Spryker\Zed\ShipmentGui\Communication\Form\Item\ItemForm;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ShipmentFormEdit extends ShipmentFormCreate
 {
     /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     *
+     * @return void
+     */
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        parent::configureOptions($resolver);
+
+        // $resolver->setRequired(AddressForm::ADDRESS_FIELD_ID_SALES_ORDER_ADDRESS);
+    }
+
+    /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
-     * @return $this
+     * @return void
      */
-    protected function addOrderItemsForm(FormBuilderInterface $builder, array $options = [])
+    public function buildForm(FormBuilderInterface $builder, array $options): void
+    {
+        parent::buildForm($builder, $options);
+
+        $this->addIdSalesOrderAddressField($builder);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return \Spryker\Zed\ShipmentGui\Communication\Form\ShipmentFormCreate
+     */
+    protected function addOrderItemsForm(FormBuilderInterface $builder, array $options = []): ShipmentFormCreate
     {
         $builder->add(static::FORM_SALES_ORDER_ITEMS, CollectionType::class, [
             'entry_type' => ItemForm::class,
@@ -28,6 +56,18 @@ class ShipmentFormEdit extends ShipmentFormCreate
                 static::FIELD_SHIPMENT_SELECTED_ITEMS => $builder->getOption(static::FIELD_SHIPMENT_SELECTED_ITEMS),
             ],
         ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addIdSalesOrderAddressField(FormBuilderInterface $builder)
+    {
+        $builder->add(AddressForm::ADDRESS_FIELD_ID_SALES_ORDER_ADDRESS, HiddenType::class);
 
         return $this;
     }
