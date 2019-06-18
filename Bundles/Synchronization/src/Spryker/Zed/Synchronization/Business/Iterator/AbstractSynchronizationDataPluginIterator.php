@@ -7,9 +7,10 @@
 
 namespace Spryker\Zed\Synchronization\Business\Iterator;
 
+use Iterator;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataPluginInterface;
 
-abstract class AbstractSynchronizationDataPluginIterator
+abstract class AbstractSynchronizationDataPluginIterator implements Iterator
 {
     /**
      * @var \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataPluginInterface
