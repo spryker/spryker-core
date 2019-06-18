@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CartsRestApi\Communication\Controller;
 
 use Generated\Shared\Transfer\AssignGuestQuoteRequestTransfer;
+use Generated\Shared\Transfer\CartItemRequestTransfer;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
@@ -71,6 +72,8 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
+     * @deprecated Use updateItemQuantityAction() instead.
+     *
      * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
@@ -81,6 +84,18 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
+     * @param \Generated\Shared\Transfer\CartItemRequestTransfer $cartItemRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function updateItemQuantityAction(CartItemRequestTransfer $cartItemRequestTransfer): QuoteResponseTransfer
+    {
+        return $this->getFacade()->updateItemQuantity($cartItemRequestTransfer);
+    }
+
+    /**
+     * @deprecated Use addToCartAction() instead.
+     *
      * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
@@ -91,6 +106,18 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
+     * @param \Generated\Shared\Transfer\CartItemRequestTransfer $cartItemRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function addToCartAction(CartItemRequestTransfer $cartItemRequestTransfer): QuoteResponseTransfer
+    {
+        return $this->getFacade()->addToCart($cartItemRequestTransfer);
+    }
+
+    /**
+     * @deprecated Use removeItemAction() instead.
+     *
      * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
@@ -101,6 +128,18 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
+     * @param \Generated\Shared\Transfer\CartItemRequestTransfer $cartItemRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function removeItemAction(CartItemRequestTransfer $cartItemRequestTransfer): QuoteResponseTransfer
+    {
+        return $this->getFacade()->removeItem($cartItemRequestTransfer);
+    }
+
+    /**
+     * @deprecated Use addToGuestCartAction() instead.
+     *
      * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
@@ -108,6 +147,16 @@ class GatewayController extends AbstractGatewayController
     public function addItemToGuestCartAction(RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer): QuoteResponseTransfer
     {
         return $this->getFacade()->addItemToGuestCart($restCartItemsAttributesTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartItemRequestTransfer $cartItemRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function addToGuestCartAction(CartItemRequestTransfer $cartItemRequestTransfer): QuoteResponseTransfer
+    {
+        return $this->getFacade()->addToGuestCart($cartItemRequestTransfer);
     }
 
     /**

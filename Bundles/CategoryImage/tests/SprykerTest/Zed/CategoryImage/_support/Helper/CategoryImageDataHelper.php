@@ -12,6 +12,7 @@ use Codeception\Module;
 use Generated\Shared\DataBuilder\CategoryImageBuilder;
 use Generated\Shared\DataBuilder\CategoryImageSetBuilder;
 use Generated\Shared\Transfer\CategoryImageSetTransfer;
+use Generated\Shared\Transfer\CategoryImageTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Orm\Zed\CategoryImage\Persistence\SpyCategoryImageQuery;
 use Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSetQuery;
@@ -85,6 +86,23 @@ class CategoryImageDataHelper extends Module
     public function buildLocaleTransfer(array $seedData = [])
     {
         return $this->getModule(static::NAMESPACE_ROOT . LocaleDataHelper::class)->haveLocale($seedData);
+    }
+
+    /**
+     * @param int[] $sortOrders
+     *
+     * @return \Generated\Shared\Transfer\CategoryImageSetTransfer
+     */
+    public function createCategoryImageSetWithOrderedImages(array $sortOrders): CategoryImageSetTransfer
+    {
+        $categoryImages = new ArrayObject();
+        foreach ($sortOrders as $sortOrder) {
+            $categoryImages->append($this->buildCategoryImageTransfer([CategoryImageTransfer::SORT_ORDER => $sortOrder]));
+        }
+
+        $categoryImageSetTransfer = $this->buildCategoryImageSetTransfer()->setCategoryImages($categoryImages);
+
+        return $categoryImageSetTransfer;
     }
 
     /**

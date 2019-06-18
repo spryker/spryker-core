@@ -1,9 +1,10 @@
 "Add Content Item","Add Content Item"
 "Back to Content Items","Back to Content Items"
-Cancel,Cancel
+"Cancel","Cancel"
 "Create Content Item","Create Content Item"
-Default,Default
+"Default","Default"
 "Edit Content Item","Edit Content Item"
+"Edit Widget","Widget bearbeiten"
 "List of Content Items","List of Content Items"
 "Content Item","Inhaltselement"
 "Insert","Einfügen"
@@ -13,5 +14,8 @@ Default,Default
 "Name","Name"
 "Default","Default"
 "Overview of Content Items","Overview of Content Items"
-"Overwrite default by specifying a different list per specific locale","Overwrite default by specifying a different list per specific locale"
-Save,Save
+"Overwrite default by specifying a different list per specific locale","Overwrite default by specifying different content elements per specific locale"
+"Invalid data provided","Ungültige Daten angegeben"
+"Save","Save"
+"Content Item Key","Inhaltselement Schlüssel"
+"Overwrite default by specifying different content elements per specific locale","Overwrite default by specifying different content elements per specific locale"
