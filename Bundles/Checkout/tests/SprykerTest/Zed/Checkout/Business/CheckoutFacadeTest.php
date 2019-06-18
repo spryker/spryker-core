@@ -127,6 +127,7 @@ class CheckoutFacadeTest extends Unit
             ->withTotals()
             ->withCurrency()
             ->withBillingAddress([AddressTransfer::EMAIL => $email])
+            ->withShippingAddress([AddressTransfer::EMAIL => $email])
             ->build();
 
         $result = $this->tester->getFacade()->placeOrder($quoteTransfer);
@@ -151,6 +152,7 @@ class CheckoutFacadeTest extends Unit
             ->withTotals()
             ->withCurrency()
             ->withBillingAddress()
+            ->withShippingAddress()
             ->build();
 
         $result = $this->tester->getFacade()->placeOrder($quoteTransfer);
@@ -212,6 +214,7 @@ class CheckoutFacadeTest extends Unit
             ->withTotals()
             ->withCurrency()
             ->withBillingAddress()
+            ->withShippingAddress()
             ->build();
 
         $result = $this->tester->getFacade()->placeOrder($quoteTransfer);
@@ -397,16 +400,16 @@ class CheckoutFacadeTest extends Unit
             ->setSpyProduct($productConcrete2)
             ->save();
 
-        $shippingAddressBuilder = (new AddressBuilder([
+        $shippingAddress = (new AddressBuilder([
             AddressTransfer::ADDRESS2 => '84',
             AddressTransfer::ZIP_CODE => '12346',
             AddressTransfer::EMAIL => 'max@mustermann.de',
             AddressTransfer::CITY => 'Entenhausen2',
-        ]));
-
-        $shipmentBuilder = (new ShipmentBuilder())
-            ->withShippingAddress($shippingAddressBuilder);
-
+        ]))->build();
+        $quoteTransfer->setShippingAddress($shippingAddress);
+        $shipment = (new ShipmentBuilder())
+        ->build();
+        $shipment->setShippingAddress($shippingAddress);
         $item1 = (new ItemBuilder())
             ->seed([
                 ItemTransfer::UNIT_PRICE => 4000,
@@ -416,9 +419,8 @@ class CheckoutFacadeTest extends Unit
                 ItemTransfer::SUM_GROSS_PRICE => 3000,
                 ItemTransfer::NAME => 'Product1',
             ])
-            ->withShipment($shipmentBuilder)
             ->build();
-
+        $item1->setShipment($shipment);
         $item2 = (new ItemBuilder())
             ->seed([
                 ItemTransfer::UNIT_PRICE => 4000,
@@ -428,8 +430,8 @@ class CheckoutFacadeTest extends Unit
                 ItemTransfer::SUM_GROSS_PRICE => 4000,
                 ItemTransfer::NAME => 'Product2',
             ])
-            ->withShipment($shipmentBuilder)
             ->build();
+        $item2->setShipment($shipment);
 
         $quoteTransfer->addItem($item1);
         $quoteTransfer->addItem($item2);
