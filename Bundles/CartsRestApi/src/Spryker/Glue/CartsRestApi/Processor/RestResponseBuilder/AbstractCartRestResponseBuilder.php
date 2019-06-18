@@ -12,11 +12,10 @@ use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Symfony\Component\HttpFoundation\Response;
 
-class CartRestResponseBuilder implements CartRestResponseBuilderInterface
+abstract class AbstractRestResponseBuilder
 {
     /**
      * @var \Spryker\Glue\CartsRestApi\CartsRestApiConfig
@@ -38,24 +37,6 @@ class CartRestResponseBuilder implements CartRestResponseBuilderInterface
     ) {
         $this->config = $config;
         $this->restResourceBuilder = $restResourceBuilder;
-    }
-
-    /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function createRestResponse(): RestResponseInterface
-    {
-        return $this->restResourceBuilder->createRestResponse();
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $cartRestResource
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function createCartRestResponse(RestResourceInterface $cartRestResource): RestResponseInterface
-    {
-        return $this->createRestResponse()->addResource($cartRestResource);
     }
 
     /**
