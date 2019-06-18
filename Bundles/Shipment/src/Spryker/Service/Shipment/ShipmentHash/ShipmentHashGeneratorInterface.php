@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Service\Shipment\ShipmentHashing;
+namespace Spryker\Service\Shipment\ShipmentHash;
 
 use Generated\Shared\Transfer\ShipmentTransfer;
 
-interface ShipmentHashingInterface
+interface ShipmentHashGeneratorInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
@@ -24,5 +24,5 @@ interface ShipmentHashingInterface
      *
      * @return bool
      */
-    public function isShipmentEqualShipmentHashKey(ShipmentTransfer $shipmentTransfer, string $shipmentHashKey): bool;
+    public function isShipmentEqualToShipmentHash(ShipmentTransfer $shipmentTransfer, string $shipmentHashKey): bool;
 }

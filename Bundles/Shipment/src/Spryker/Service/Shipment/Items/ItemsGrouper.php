@@ -10,23 +10,23 @@ namespace Spryker\Service\Shipment\Items;
 use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
-use Spryker\Service\Shipment\ShipmentHashing\ShipmentHashingInterface;
+use Spryker\Service\Shipment\ShipmentHash\ShipmentHashGeneratorInterface;
 
 class ItemsGrouper implements ItemsGrouperInterface
 {
     protected const SHIPMENT_TRANSFER_KEY_PATTERN = '%s-%s-%s';
 
     /**
-     * @var \Spryker\Service\Shipment\ShipmentHashing\ShipmentHashingInterface
+     * @var \Spryker\Service\Shipment\ShipmentHash\ShipmentHashGeneratorInterface
      */
-    protected $shipmentHashing;
+    protected $shipmentHashGenerator;
 
     /**
-     * @param \Spryker\Service\Shipment\ShipmentHashing\ShipmentHashingInterface $shipmentHashing
+     * @param \Spryker\Service\Shipment\ShipmentHash\ShipmentHashGeneratorInterface $shipmentHashGenerator
      */
-    public function __construct(ShipmentHashingInterface $shipmentHashing)
+    public function __construct(ShipmentHashGeneratorInterface $shipmentHashGenerator)
     {
-        $this->shipmentHashing = $shipmentHashing;
+        $this->shipmentHashGenerator = $shipmentHashGenerator;
     }
 
     /**
@@ -41,7 +41,7 @@ class ItemsGrouper implements ItemsGrouperInterface
         foreach ($itemTransfers as $itemTransfer) {
             $this->assertRequiredShipment($itemTransfer);
 
-            $key = $this->shipmentHashing->getShipmentHashKey($itemTransfer->getShipment());
+            $key = $this->shipmentHashGenerator->getShipmentHashKey($itemTransfer->getShipment());
             if (!isset($shipmentGroupTransfers[$key])) {
                 $shipmentGroupTransfers[$key] = $this->createShipmentGroupTransfer($itemTransfer, $key);
             }

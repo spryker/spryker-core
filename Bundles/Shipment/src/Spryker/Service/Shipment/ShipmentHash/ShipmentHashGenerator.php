@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Service\Shipment\ShipmentHashing;
+namespace Spryker\Service\Shipment\ShipmentHash;
 
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Service\Shipment\Dependency\Service\ShipmentToCustomerServiceInterface;
 
-class ShipmentHashing implements ShipmentHashingInterface
+class ShipmentHashGenerator implements ShipmentHashGeneratorInterface
 {
     protected const SHIPMENT_TRANSFER_KEY_PATTERN = '%s-%s-%s';
 
@@ -49,7 +49,7 @@ class ShipmentHashing implements ShipmentHashingInterface
      *
      * @return bool
      */
-    public function isShipmentEqualShipmentHashKey(ShipmentTransfer $shipmentTransfer, string $shipmentHashKey): bool
+    public function isShipmentEqualToShipmentHash(ShipmentTransfer $shipmentTransfer, string $shipmentHashKey): bool
     {
         return $this->getShipmentHashKey($shipmentTransfer) === $shipmentHashKey;
     }

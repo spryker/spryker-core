@@ -38,7 +38,8 @@ interface ShipmentServiceInterface
 
     /**
      * Specification:
-     * - Returns true if shipping address equal with shipment hash key or false if not.
+     * - Generates shipment hash based on shipping address, shipment method and requested delivery date.
+     * - Compares two shipment hashes to be equal.
      *
      * @api
      *
@@ -47,5 +48,5 @@ interface ShipmentServiceInterface
      *
      * @return bool
      */
-    public function isShipmentEqualShipmentHashKey(ShipmentTransfer $shipmentTransfer, string $shipmentHashKey): bool;
+    public function isShipmentEqualToShipmentHash(ShipmentTransfer $shipmentTransfer, string $shipmentHashKey): bool;
 }

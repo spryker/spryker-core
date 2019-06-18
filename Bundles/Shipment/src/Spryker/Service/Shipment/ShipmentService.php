@@ -41,7 +41,7 @@ class ShipmentService extends AbstractService implements ShipmentServiceInterfac
      */
     public function getShipmentHashKey(ShipmentTransfer $shipmentTransfer): string
     {
-        return $this->getFactory()->createShipmentHashing()->getShipmentHashKey($shipmentTransfer);
+        return $this->getFactory()->createShipmentHashGenerator()->getShipmentHashKey($shipmentTransfer);
     }
 
     /**
@@ -54,10 +54,10 @@ class ShipmentService extends AbstractService implements ShipmentServiceInterfac
      *
      * @return bool
      */
-    public function isShipmentEqualShipmentHashKey(ShipmentTransfer $shipmentTransfer, string $shipmentHashKey): bool
+    public function isShipmentEqualToShipmentHash(ShipmentTransfer $shipmentTransfer, string $shipmentHashKey): bool
     {
         return $this->getFactory()
-            ->createShipmentHashing()
-            ->isShipmentEqualShipmentHashKey($shipmentTransfer, $shipmentHashKey);
+            ->createShipmentHashGenerator()
+            ->isShipmentEqualToShipmentHash($shipmentTransfer, $shipmentHashKey);
     }
 }

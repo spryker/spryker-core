@@ -115,10 +115,10 @@ class ShipmentSaver implements ShipmentSaverInterface
                 continue;
             }
 
-            $isShipmentEqualShipmentHashKey = $this->shipmentService
-                ->isShipmentEqualShipmentHashKey($expenseShipmentTransfer, $shipmentMethodHashKey);
+            $isShipmentEqualToShipmentHash = $this->shipmentService
+                ->isShipmentEqualToShipmentHash($expenseShipmentTransfer, $shipmentMethodHashKey);
 
-            if (!$isShipmentEqualShipmentHashKey) {
+            if (!$isShipmentEqualToShipmentHash) {
                 continue;
             }
 

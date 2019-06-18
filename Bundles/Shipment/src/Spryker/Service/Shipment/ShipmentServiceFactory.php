@@ -11,8 +11,8 @@ use Spryker\Service\Kernel\AbstractServiceFactory;
 use Spryker\Service\Shipment\Dependency\Service\ShipmentToCustomerServiceInterface;
 use Spryker\Service\Shipment\Items\ItemsGrouper;
 use Spryker\Service\Shipment\Items\ItemsGrouperInterface;
-use Spryker\Service\Shipment\ShipmentHashing\ShipmentHashing;
-use Spryker\Service\Shipment\ShipmentHashing\ShipmentHashingInterface;
+use Spryker\Service\Shipment\ShipmentHash\ShipmentHashGenerator;
+use Spryker\Service\Shipment\ShipmentHash\ShipmentHashGeneratorInterface;
 
 class ShipmentServiceFactory extends AbstractServiceFactory
 {
@@ -21,15 +21,15 @@ class ShipmentServiceFactory extends AbstractServiceFactory
      */
     public function createItemsGrouper(): ItemsGrouperInterface
     {
-        return new ItemsGrouper($this->createShipmentHashing());
+        return new ItemsGrouper($this->createShipmentHashGenerator());
     }
 
     /**
-     * @return \Spryker\Service\Shipment\ShipmentHashing\ShipmentHashingInterface
+     * @return \Spryker\Service\Shipment\ShipmentHash\ShipmentHashGeneratorInterface
      */
-    public function createShipmentHashing(): ShipmentHashingInterface
+    public function createShipmentHashGenerator(): ShipmentHashGeneratorInterface
     {
-        return new ShipmentHashing($this->getCustomerService());
+        return new ShipmentHashGenerator($this->getCustomerService());
     }
 
     /**
