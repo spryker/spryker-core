@@ -137,7 +137,7 @@ class ContentFileListSelectedTable extends AbstractTable
         $query = $this->fileQueryContainer
             ->filterByIdFile_In($fileIds);
 
-        $this->setLimit(ContentFileGuiConfig::MAX_NUMBER_FILES_IN_FILE_LIST);
+        $this->setLimit(ContentFileGuiConfig::MAX_NUMBER_SELECTABLE_FILES_IN_FILE_LIST);
         $queryResults = $this->runQuery($query, $config, true);
 
         /** @var \Orm\Zed\FileManager\Persistence\SpyFile $fileEntity */

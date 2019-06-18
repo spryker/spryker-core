@@ -15,11 +15,9 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class ContentFileGuiConfig extends AbstractBundleConfig
 {
     /**
-     * @uses \Spryker\Zed\ContentFile\ContentFileConfig::MAX_NUMBER_FILES_IN_FILE_LIST
-     *
      * Should be more than in max count of list files
      */
-    public const MAX_NUMBER_FILES_IN_FILE_LIST = 30;
+    public const MAX_NUMBER_SELECTABLE_FILES_IN_FILE_LIST = 30;
 
     /**
      * @return array
