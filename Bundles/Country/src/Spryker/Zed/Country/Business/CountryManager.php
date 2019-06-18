@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\Country\Business;
 
+use Generated\Shared\Transfer\CheckoutDataTransfer;
+use Generated\Shared\Transfer\CheckoutErrorTransfer;
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CountryCollectionTransfer;
 use Generated\Shared\Transfer\CountryTransfer;
 use Orm\Zed\Country\Persistence\SpyCountry;
@@ -16,6 +19,8 @@ use Spryker\Zed\Country\Persistence\CountryQueryContainerInterface;
 
 class CountryManager implements CountryManagerInterface
 {
+    protected const ERROR_DETAIL = 'Country not found for country code: %s';
+
     /**
      * @var \Spryker\Zed\Country\Persistence\CountryQueryContainerInterface
      */
@@ -164,6 +169,36 @@ class CountryManager implements CountryManagerInterface
         $countryTransfer = (new CountryTransfer())->fromArray($countryEntity->toArray(), true);
 
         return $countryTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CheckoutDataTransfer $checkoutDataTransfer
+     *
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
+     */
+    public function validateCountryData(CheckoutDataTransfer $checkoutDataTransfer): CheckoutResponseTransfer
+    {
+        $checkoutDataTransfer->requireBillingAddress();
+        $checkoutDataTransfer->requireShippingAddress();
+
+        $checkoutDataTransfer->getBillingAddress()->requireIso2Code();
+        $checkoutDataTransfer->getShippingAddress()->requireIso2Code();
+
+        $iso2Codes = [
+            $checkoutDataTransfer->getBillingAddress()->getIso2Code(),
+            $checkoutDataTransfer->getShippingAddress()->getIso2Code(),
+        ];
+
+        $checkoutResponseTransfer = (new CheckoutResponseTransfer())->setIsSuccess(true);
+        foreach ($iso2Codes as $iso2Code) {
+            if (!$this->hasCountry($iso2Code)) {
+                $checkoutResponseTransfer
+                    ->setIsSuccess(false)
+                    ->addError((new CheckoutErrorTransfer())->setMessage(sprintf(static::ERROR_DETAIL, $iso2Code)));
+            }
+        }
+
+        return $checkoutResponseTransfer;
     }
 
     /**

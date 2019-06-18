@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CheckoutRestApi\Business\Checkout;
 
+use Generated\Shared\Transfer\CheckoutDataTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -53,12 +54,18 @@ class PlaceOrderProcessor implements PlaceOrderProcessorInterface
     protected $quoteMapperPlugins;
 
     /**
+     * @var \Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\CheckoutDataValidatorPluginInterface[]
+     */
+    protected $checkoutDataValidatorPlugins;
+
+    /**
      * @param \Spryker\Zed\CheckoutRestApi\Business\Checkout\Quote\QuoteReaderInterface $quoteReader
      * @param \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCartFacadeInterface $cartFacade
      * @param \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCheckoutFacadeInterface $checkoutFacade
      * @param \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToQuoteFacadeInterface $quoteFacade
      * @param \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCalculationFacadeInterface $calculationFacade
      * @param \Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\QuoteMapperPluginInterface[] $quoteMapperPlugins
+     * @param \Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\CheckoutDataValidatorPluginInterface[] $checkoutDataValidatorPlugins
      */
     public function __construct(
         QuoteReaderInterface $quoteReader,
@@ -66,7 +73,8 @@ class PlaceOrderProcessor implements PlaceOrderProcessorInterface
         CheckoutRestApiToCheckoutFacadeInterface $checkoutFacade,
         CheckoutRestApiToQuoteFacadeInterface $quoteFacade,
         CheckoutRestApiToCalculationFacadeInterface $calculationFacade,
-        array $quoteMapperPlugins
+        array $quoteMapperPlugins,
+        array $checkoutDataValidatorPlugins
     ) {
         $this->quoteReader = $quoteReader;
         $this->cartFacade = $cartFacade;
@@ -74,6 +82,7 @@ class PlaceOrderProcessor implements PlaceOrderProcessorInterface
         $this->quoteFacade = $quoteFacade;
         $this->calculationFacade = $calculationFacade;
         $this->quoteMapperPlugins = $quoteMapperPlugins;
+        $this->checkoutDataValidatorPlugins = $checkoutDataValidatorPlugins;
     }
 
     /**
@@ -83,6 +92,11 @@ class PlaceOrderProcessor implements PlaceOrderProcessorInterface
      */
     public function placeOrder(RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer): RestCheckoutResponseTransfer
     {
+        $restCheckoutResponseTransfer = $this->validateCheckoutData($restCheckoutRequestAttributesTransfer);
+        if (!$restCheckoutResponseTransfer->getIsSuccess()) {
+            return $restCheckoutResponseTransfer;
+        }
+
         $quoteTransfer = $this->quoteReader->findCustomerQuoteByUuid($restCheckoutRequestAttributesTransfer);
 
         $restCheckoutResponseTransfer = $this->validateQuoteTransfer($quoteTransfer);
@@ -135,6 +149,51 @@ class PlaceOrderProcessor implements PlaceOrderProcessorInterface
         }
 
         return null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestCheckoutResponseTransfer|null
+     */
+    protected function validateCheckoutData(RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer): ?RestCheckoutResponseTransfer
+    {
+        $restCheckoutResponse = (new RestCheckoutResponseTransfer())->setIsSuccess(true);
+        foreach ($this->checkoutDataValidatorPlugins as $checkoutDataValidatorPlugin) {
+            $checkoutResponseTransfer = $checkoutDataValidatorPlugin
+                ->validateCheckoutData(
+                    (new CheckoutDataTransfer())->fromArray($restCheckoutRequestAttributesTransfer->toArray(), true)
+                );
+
+            if (!$checkoutResponseTransfer->getIsSuccess()) {
+                $this->addErrorToCheckoutResponse($restCheckoutResponse, $checkoutResponseTransfer->getErrors()->getArrayCopy());
+            }
+        }
+
+        return $restCheckoutResponse;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestCheckoutResponseTransfer $restCheckoutResponse
+     * @param \Generated\Shared\Transfer\CheckoutErrorTransfer[] $checkoutErrorTransfers
+     *
+     * @return \Generated\Shared\Transfer\RestCheckoutResponseTransfer
+     */
+    protected function addErrorToCheckoutResponse(
+        RestCheckoutResponseTransfer $restCheckoutResponse,
+        array $checkoutErrorTransfers
+    ): RestCheckoutResponseTransfer {
+        $restCheckoutResponse->setIsSuccess(false);
+
+        foreach ($checkoutErrorTransfers as $checkoutErrorTransfer) {
+            $restCheckoutResponse->addError(
+                (new RestCheckoutErrorTransfer())
+                    ->setDetail($checkoutErrorTransfer->getMessage())
+                    ->setErrorIdentifier(CheckoutRestApiConfig::ERROR_IDENTIFIER_CHECKOUT_DATA_INVALID)
+            );
+        }
+
+        return $restCheckoutResponse;
     }
 
     /**
