@@ -41,6 +41,23 @@ class ShipmentService extends AbstractService implements ShipmentServiceInterfac
      */
     public function getShipmentHashKey(ShipmentTransfer $shipmentTransfer): string
     {
-        return $this->getFactory()->createItemsGrouper()->getShipmentHashKey($shipmentTransfer);
+        return $this->getFactory()->createShipmentHashing()->getShipmentHashKey($shipmentTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
+     * @param string $shipmentHashKey
+     *
+     * @return bool
+     */
+    public function isShipmentEqualShipmentHashKey(ShipmentTransfer $shipmentTransfer, string $shipmentHashKey): bool
+    {
+        return $this->getFactory()
+            ->createShipmentHashing()
+            ->isShipmentEqualShipmentHashKey($shipmentTransfer, $shipmentHashKey);
     }
 }

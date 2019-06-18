@@ -386,7 +386,8 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
         return new ShipmentSaver(
             $this->createCheckoutMultiShipmentOrderSaver(),
             $this->createShipmentMethodExpander(),
-            $this->createExpenseSanitizer()
+            $this->createExpenseSanitizer(),
+            $this->getShipmentService()
         );
     }
 

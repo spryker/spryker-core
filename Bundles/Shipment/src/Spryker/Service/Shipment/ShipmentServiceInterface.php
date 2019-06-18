@@ -35,4 +35,17 @@ interface ShipmentServiceInterface
      * @return string
      */
     public function getShipmentHashKey(ShipmentTransfer $shipmentTransfer): string;
+
+    /**
+     * Specification:
+     * - Returns true if shipping address equal with shipment hash key or false if not.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
+     * @param string $shipmentHashKey
+     *
+     * @return bool
+     */
+    public function isShipmentEqualShipmentHashKey(ShipmentTransfer $shipmentTransfer, string $shipmentHashKey): bool;
 }
