@@ -9,6 +9,10 @@ namespace Spryker\Zed\Comment\Business;
 
 use Spryker\Zed\Comment\Business\Reader\CommentReader;
 use Spryker\Zed\Comment\Business\Reader\CommentReaderInterface;
+use Spryker\Zed\Comment\Business\Writer\CommentTagWriter;
+use Spryker\Zed\Comment\Business\Writer\CommentTagWriterInterface;
+use Spryker\Zed\Comment\Business\Writer\CommentThreadWriter;
+use Spryker\Zed\Comment\Business\Writer\CommentThreadWriterInterface;
 use Spryker\Zed\Comment\Business\Writer\CommentWriter;
 use Spryker\Zed\Comment\Business\Writer\CommentWriterInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
@@ -26,6 +30,32 @@ class CommentBusinessFactory extends AbstractBusinessFactory
     public function createCommentWriter(): CommentWriterInterface
     {
         return new CommentWriter(
+            $this->getEntityManager(),
+            $this->getRepository(),
+            $this->createCommentReader(),
+            $this->createCommentTagWriter(),
+            $this->createCommentThreadWriter()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Comment\Business\Writer\CommentThreadWriterInterface
+     */
+    public function createCommentThreadWriter(): CommentThreadWriterInterface
+    {
+        return new CommentThreadWriter(
+            $this->getEntityManager(),
+            $this->getRepository(),
+            $this->createCommentTagWriter()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Comment\Business\Writer\CommentTagWriterInterface
+     */
+    public function createCommentTagWriter(): CommentTagWriterInterface
+    {
+        return new CommentTagWriter(
             $this->getEntityManager(),
             $this->getRepository(),
             $this->createCommentReader()
