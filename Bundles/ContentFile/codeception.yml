@@ -2,6 +2,7 @@ namespace: ContentFile
 actor: Tester
 include:
     - tests/SprykerTest/Zed/ContentFile
+    - tests/SprykerTest/Client/ContentFile
 paths:
     tests: tests
     log: tests/_output
