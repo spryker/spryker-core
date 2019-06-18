@@ -12,6 +12,7 @@ use Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractEdit
 
 /**
  * @method \Spryker\Zed\PriceProductScheduleGui\Communication\PriceProductScheduleGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\PriceProductScheduleGui\PriceProductScheduleGuiConfig getConfig()
  */
 class ScheduledPriceProductAbstractEditViewExpanderPlugin extends AbstractPlugin implements ProductAbstractEditViewExpanderPluginInterface
 {

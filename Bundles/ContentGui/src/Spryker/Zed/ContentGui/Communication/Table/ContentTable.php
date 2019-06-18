@@ -131,7 +131,6 @@ class ContentTable extends AbstractTable
         $buttons = [];
 
         $urlParams = [
-            ContentTableConstants::REQUEST_TERM_KEY => $content[ContentTableConstants::COL_TERM_KEY],
             ContentTableConstants::REQUEST_ID_CONTENT => $content[ContentTableConstants::COL_ID_CONTENT],
         ];
 

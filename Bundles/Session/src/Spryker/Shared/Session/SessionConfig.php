@@ -12,9 +12,21 @@ use Spryker\Shared\Kernel\AbstractSharedConfig;
 class SessionConfig extends AbstractSharedConfig
 {
     public const SESSION_HANDLER_COUCHBASE = 'couchbase';
+
+    /**
+     * @deprecated Use `Spryker\Shared\SessionRedis\SessionRedisConfig::SESSION_HANDLER_REDIS` instead.
+     */
     public const SESSION_HANDLER_REDIS = 'redis';
+
+    /**
+     * @deprecated Use `Spryker\Shared\SessionRedis\SessionRedisConfig::SESSION_HANDLER_REDIS_LOCKING` instead.
+     */
     public const SESSION_HANDLER_REDIS_LOCKING = 'redis_locking';
     public const SESSION_HANDLER_MYSQL = 'mysql';
+
+    /**
+     * @deprecated Use `Spryker\Shared\SessionFile\SessionFileConfig::SESSION_HANDLER_FILE` instead.
+     */
     public const SESSION_HANDLER_FILE = 'file';
 
     public const SESSION_LIFETIME_BROWSER_SESSION = '0';
