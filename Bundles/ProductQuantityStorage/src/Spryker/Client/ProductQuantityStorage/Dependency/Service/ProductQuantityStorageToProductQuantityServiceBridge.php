@@ -35,4 +35,20 @@ class ProductQuantityStorageToProductQuantityServiceBridge implements ProductQua
         return $this->productQuantityService
             ->getNearestQuantity($productQuantityTransfer, $quantity);
     }
+
+    /**
+     * @return float
+     */
+    public function getDefaultMinimumQuantity(): float
+    {
+        return $this->productQuantityService->getDefaultMinimumQuantity();
+    }
+
+    /**
+     * @return float
+     */
+    public function getDefaultInterval(): float
+    {
+        return $this->productQuantityService->getDefaultInterval();
+    }
 }
