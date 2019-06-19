@@ -15,14 +15,14 @@ interface MethodDeliveryTimeReaderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
-     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer|null $shipmentGroupTransfer
      *
      * @return int|null
      */
     public function getDeliveryTimeForShippingGroup(
         ShipmentMethodTransfer $shipmentMethodTransfer,
-        ShipmentGroupTransfer $shipmentGroupTransfer,
-        QuoteTransfer $quoteTransfer
+        QuoteTransfer $quoteTransfer,
+        ?ShipmentGroupTransfer $shipmentGroupTransfer = null
     ): ?int;
 }

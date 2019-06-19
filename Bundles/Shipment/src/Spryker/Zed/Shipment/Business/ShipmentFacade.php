@@ -68,7 +68,7 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
     public function getMethods()
     {
         return $this->getFactory()
-            ->createMethodReader()
+            ->createShipmentMethod()
             ->getShipmentMethodTransfers();
     }
 
@@ -100,7 +100,7 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
     public function findMethodById($idShipmentMethod)
     {
         return $this->getFactory()
-            ->createMethodReader()
+            ->createShipmentMethod()
             ->findShipmentMethodTransferById($idShipmentMethod);
     }
 
@@ -135,7 +135,7 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
     {
         return $this
             ->getFactory()
-            ->createMethodReader()
+            ->createShipmentMethod()
             ->getAvailableMethodsByShipment($quoteTransfer);
     }
 
@@ -152,7 +152,7 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
     public function findAvailableMethodById($idShipmentMethod, QuoteTransfer $quoteTransfer)
     {
         return $this->getFactory()
-            ->createMethodReader()
+            ->createShipmentMethod()
             ->findAvailableMethodById($idShipmentMethod, $quoteTransfer);
     }
 
@@ -167,7 +167,7 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
      */
     public function getShipmentMethodTransferById($idMethod)
     {
-        $methodModel = $this->getFactory()->createMethodReader();
+        $methodModel = $this->getFactory()->createShipmentMethod();
 
         return $methodModel->getShipmentMethodTransferById($idMethod);
     }
@@ -184,7 +184,7 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
     public function hasMethod($idMethod): bool
     {
         return $this->getFactory()
-            ->createMethodReader()
+            ->createShipmentMethod()
             ->hasMethod($idMethod);
     }
 
@@ -314,7 +314,7 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
      */
     public function isShipmentMethodActive($idShipmentMethod)
     {
-        return $this->getFactory()->createMethodReader()->isShipmentMethodActive($idShipmentMethod);
+        return $this->getFactory()->createShipmentMethod()->isShipmentMethodActive($idShipmentMethod);
     }
 
     /**
