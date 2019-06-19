@@ -30,8 +30,8 @@ class ProductImageRepository extends AbstractRepository implements ProductImageR
         $productImageSetEntities = $this->getFactory()
             ->createProductImageSetQuery()
             ->filterByFkProduct_In($productIds)
-            ->condition('isCurrentLocale', SpyProductImageSetTableMap::COL_FK_LOCALE . ' = ?', $idLocale)
-            ->condition('isLocaleNull', SpyProductImageSetTableMap::COL_FK_LOCALE . ' IS NULL')
+            ->condition('isCurrentLocale', sprintf('%s = ?', SpyProductImageSetTableMap::COL_FK_LOCALE), $idLocale)
+            ->condition('isLocaleNull', sprintf('%s IS NULL', SpyProductImageSetTableMap::COL_FK_LOCALE))
             ->combine(['isCurrentLocale', 'isLocaleNull'], Criteria::LOGICAL_OR)
             ->find();
 
