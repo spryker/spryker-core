@@ -1048,7 +1048,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
      * @param \Generated\Shared\Transfer\ItemTransfer $firstItemTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer $secondItemTransfer
      * @param int|float $expectedResult
-     * @group test123
+     *
      * @return void
      */
     public function testAddItemToQuoteShouldAddItemQuantity(

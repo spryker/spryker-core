@@ -9,6 +9,7 @@ namespace Spryker\Zed\Shipment\Business\ShipmentMethod;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentGroupCollectionTransfer;
+use Generated\Shared\Transfer\ShipmentMethodsTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 
 interface MethodReaderInterface
@@ -18,63 +19,60 @@ interface MethodReaderInterface
      *
      * @return \Generated\Shared\Transfer\ShipmentGroupCollectionTransfer
      */
-    public function getAvailableMethodsByShipment(QuoteTransfer $quoteTransfer): ShipmentGroupCollectionTransfer;
+    public function getAvailableMethodsByShipmentWithoutMultiShipment(
+        QuoteTransfer $quoteTransfer
+    ): ShipmentGroupCollectionTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $methodTransfer
-     *
-     * @return int
-     */
-    public function create(ShipmentMethodTransfer $methodTransfer);
-
-    /**
-     * @deprecated Use getAvailableMethodsByShipment() instead.
-     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer
+     * @return bool
      */
-    public function getAvailableMethods(QuoteTransfer $quoteTransfer);
+    public function isMultiShipmentQuote(QuoteTransfer $quoteTransfer): bool;
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentGroupCollectionTransfer
+     */
+    public function getShipmentGroupWithAvailableMethods(QuoteTransfer $quoteTransfer): ShipmentGroupCollectionTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentGroupCollectionTransfer $shipmentGroupCollectionTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentGroupCollectionTransfer
+     */
+    public function applyFiltersByShipment(
+        ShipmentGroupCollectionTransfer $shipmentGroupCollectionTransfer,
+        QuoteTransfer $quoteTransfer
+    ): ShipmentGroupCollectionTransfer;
 
     /**
      * @param int $idMethod
      *
      * @return bool
      */
-    public function hasMethod($idMethod);
+    public function hasMethod(int $idMethod): bool;
 
     /**
      * @param int $idMethod
      *
-     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer
-     */
-    public function getShipmentMethodTransferById($idMethod);
-
-    /**
-     * @param int $idShipmentMethod
-     *
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
      */
-    public function findShipmentMethodTransferById($idShipmentMethod);
+    public function findShipmentMethodById(int $idMethod): ?ShipmentMethodTransfer;
 
     /**
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer[]
      */
-    public function getShipmentMethodTransfers();
+    public function getActiveShipmentMethods(): array;
 
     /**
-     * @param int $idMethod
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer
      */
-    public function deleteMethod($idMethod);
-
-    /**
-     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $methodTransfer
-     *
-     * @return int|bool
-     */
-    public function updateMethod(ShipmentMethodTransfer $methodTransfer);
+    public function getAvailableMethods(QuoteTransfer $quoteTransfer): ShipmentMethodsTransfer;
 
     /**
      * @param int $idShipmentMethod
@@ -82,12 +80,5 @@ interface MethodReaderInterface
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
      */
-    public function findAvailableMethodById($idShipmentMethod, QuoteTransfer $quoteTransfer);
-
-    /**
-     * @param int $idShipmentMethod
-     *
-     * @return bool
-     */
-    public function isShipmentMethodActive($idShipmentMethod);
+    public function findAvailableMethodById(int $idShipmentMethod, QuoteTransfer $quoteTransfer): ?ShipmentMethodTransfer;
 }

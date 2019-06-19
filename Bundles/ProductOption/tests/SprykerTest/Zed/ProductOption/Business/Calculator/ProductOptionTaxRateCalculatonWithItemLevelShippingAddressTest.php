@@ -19,6 +19,7 @@ use Generated\Shared\Transfer\ProductOptionValueTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\TaxRateTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
+use Orm\Zed\Country\Persistence\SpyCountryQuery;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionValueQuery;
 use Pyz\Zed\ProductOption\ProductOptionDependencyProvider;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxFacadeBridge;
@@ -64,7 +65,7 @@ class ProductOptionTaxRateCalculatonWithItemLevelShippingAddressTest extends Uni
             ],
         ]);
 
-        $productOptionGroupTransfer = $this->tester->haveProductOptionGroupWithValues(
+        $this->tester->haveProductOptionGroupWithValues(
             [ProductOptionGroupTransfer::FK_TAX_SET => $taxSetTransfer->getIdTaxSet()],
             [
                 [
@@ -140,7 +141,7 @@ class ProductOptionTaxRateCalculatonWithItemLevelShippingAddressTest extends Uni
     {
         return [
             'quote has one item with two options, shipping address: Germany, expected tax rate 15%' => $this->getQuoteWithOneItemWithTwoOptionsAndShippingAddressToGermany(),
-            'quote has two items with one option, shipping address: Farnce and Germany, expected tax rate 20% and 15%' => $this->getQuoteWithTwoItemsWithOneOptionAndDifferentShippinggAdresses(),
+            'quote has two items with one option, shipping address: France and Germany, expected tax rate 20% and 15%' => $this->getQuoteWithTwoItemsWithOneOptionAndDifferentShippinggAdresses(),
         ];
     }
 
@@ -236,12 +237,15 @@ class ProductOptionTaxRateCalculatonWithItemLevelShippingAddressTest extends Uni
     }
 
     /**
-     * @param string $iso2code
+     * @param string $iso2Code
      *
      * @return int
      */
-    protected function getCountryIdByIso2Code(string $iso2code): int
+    protected function getCountryIdByIso2Code(string $iso2Code): int
     {
-        return SpyCountryQuery::create()->filterByIso2Code($iso2Code)->findOne()->getIdCountry();
+        return SpyCountryQuery::create()
+            ->filterByIso2Code($iso2Code)
+            ->findOne()
+            ->getIdCountry();
     }
 }

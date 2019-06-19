@@ -35,4 +35,18 @@ interface ShipmentServiceInterface
      * @return string
      */
     public function getShipmentHashKey(ShipmentTransfer $shipmentTransfer): string;
+
+    /**
+     * Specification:
+     * - Generates shipment hash based on shipping address, shipment method and requested delivery date.
+     * - Compares two shipment hashes to be equal.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
+     * @param string $shipmentHashKey
+     *
+     * @return bool
+     */
+    public function isShipmentEqualToShipmentHash(ShipmentTransfer $shipmentTransfer, string $shipmentHashKey): bool;
 }

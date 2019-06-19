@@ -7,17 +7,17 @@
 
 namespace Spryker\Zed\ShipmentGui\Communication\Form\DataProvider;
 
-class ShipmentFormCreateDataProvider implements ShipmentFormDataProviderInterface
+class ShipmentFormCreateDataProvider
 {
     /**
-     * @var \Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentFormDefaultDataProviderInterface
+     * @var \Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentFormDefaultDataProvider
      */
     protected $shipmentFormDefaultDataProvider;
 
     /**
-     * @param \Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentFormDefaultDataProviderInterface $shipmentFormDefaultDataProvider
+     * @param \Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentFormDefaultDataProvider $shipmentFormDefaultDataProvider
      */
-    public function __construct(ShipmentFormDefaultDataProviderInterface $shipmentFormDefaultDataProvider)
+    public function __construct(ShipmentFormDefaultDataProvider $shipmentFormDefaultDataProvider)
     {
         $this->shipmentFormDefaultDataProvider = $shipmentFormDefaultDataProvider;
     }

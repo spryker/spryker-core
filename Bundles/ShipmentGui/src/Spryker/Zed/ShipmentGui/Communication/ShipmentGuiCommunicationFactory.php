@@ -9,9 +9,7 @@ namespace Spryker\Zed\ShipmentGui\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentFormCreateDataProvider;
-use Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentFormDataProviderInterface;
 use Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentFormDefaultDataProvider;
-use Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentFormDefaultDataProviderInterface;
 use Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentFormEditDataProvider;
 use Spryker\Zed\ShipmentGui\Communication\Form\ShipmentFormCreate;
 use Spryker\Zed\ShipmentGui\Communication\Form\ShipmentFormEdit;
@@ -27,25 +25,25 @@ use Symfony\Component\Form\FormInterface;
 class ShipmentGuiCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return \Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentFormDataProviderInterface
+     * @return \Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentFormCreateDataProvider
      */
-    public function createShipmentFormCreateDataProvider(): ShipmentFormDataProviderInterface
+    public function createShipmentFormCreateDataProvider(): ShipmentFormCreateDataProvider
     {
         return new ShipmentFormCreateDataProvider($this->createShipmentFormDefaultDataProvider());
     }
 
     /**
-     * @return \Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentFormDataProviderInterface
+     * @return \Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentFormEditDataProvider
      */
-    public function createShipmentFormEditDataProvider(): ShipmentFormDataProviderInterface
+    public function createShipmentFormEditDataProvider(): ShipmentFormEditDataProvider
     {
         return new ShipmentFormEditDataProvider($this->createShipmentFormDefaultDataProvider());
     }
 
     /**
-     * @return \Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentFormDefaultDataProviderInterface
+     * @return \Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentFormDefaultDataProvider
      */
-    public function createShipmentFormDefaultDataProvider(): ShipmentFormDefaultDataProviderInterface
+    public function createShipmentFormDefaultDataProvider(): ShipmentFormDefaultDataProvider
     {
         return new ShipmentFormDefaultDataProvider(
             $this->getSalesFacade(),

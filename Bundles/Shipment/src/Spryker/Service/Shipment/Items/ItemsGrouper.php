@@ -10,25 +10,23 @@ namespace Spryker\Service\Shipment\Items;
 use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
-use Generated\Shared\Transfer\ShipmentTransfer;
-use Spryker\Service\Shipment\Dependency\Service\ShipmentToCustomerServiceInterface;
+use Spryker\Service\Shipment\ShipmentHash\ShipmentHashGeneratorInterface;
 
 class ItemsGrouper implements ItemsGrouperInterface
 {
     protected const SHIPMENT_TRANSFER_KEY_PATTERN = '%s-%s-%s';
 
     /**
-     * @var \Spryker\Service\Shipment\Dependency\Service\ShipmentToCustomerServiceInterface
+     * @var \Spryker\Service\Shipment\ShipmentHash\ShipmentHashGeneratorInterface
      */
-    protected $customerService;
+    protected $shipmentHashGenerator;
 
     /**
-     * @param \Spryker\Service\Shipment\Dependency\Service\ShipmentToCustomerServiceInterface $customerService
+     * @param \Spryker\Service\Shipment\ShipmentHash\ShipmentHashGeneratorInterface $shipmentHashGenerator
      */
-    public function __construct(
-        ShipmentToCustomerServiceInterface $customerService
-    ) {
-        $this->customerService = $customerService;
+    public function __construct(ShipmentHashGeneratorInterface $shipmentHashGenerator)
+    {
+        $this->shipmentHashGenerator = $shipmentHashGenerator;
     }
 
     /**
@@ -43,7 +41,7 @@ class ItemsGrouper implements ItemsGrouperInterface
         foreach ($itemTransfers as $itemTransfer) {
             $this->assertRequiredShipment($itemTransfer);
 
-            $key = $this->getShipmentHashKey($itemTransfer->getShipment());
+            $key = $this->shipmentHashGenerator->getShipmentHashKey($itemTransfer->getShipment());
             if (!isset($shipmentGroupTransfers[$key])) {
                 $shipmentGroupTransfers[$key] = $this->createShipmentGroupTransfer($itemTransfer, $key);
             }
@@ -52,22 +50,6 @@ class ItemsGrouper implements ItemsGrouperInterface
         }
 
         return new ArrayObject(array_values($shipmentGroupTransfers));
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
-     *
-     * @return string
-     */
-    public function getShipmentHashKey(ShipmentTransfer $shipmentTransfer): string
-    {
-        return md5(sprintf(
-            static::SHIPMENT_TRANSFER_KEY_PATTERN,
-            $shipmentTransfer->getMethod() !== null ? $shipmentTransfer->getMethod()->getIdShipmentMethod() : '',
-            $shipmentTransfer->getShippingAddress() !== null ?
-                $this->customerService->getUniqueAddressKey($shipmentTransfer->getShippingAddress()) : '',
-            $shipmentTransfer->getRequestedDeliveryDate()
-        ));
     }
 
     /**
