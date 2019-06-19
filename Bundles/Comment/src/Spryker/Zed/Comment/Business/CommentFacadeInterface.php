@@ -9,6 +9,8 @@ namespace Spryker\Zed\Comment\Business;
 
 use Generated\Shared\Transfer\CommentFilterTransfer;
 use Generated\Shared\Transfer\CommentRequestTransfer;
+use Generated\Shared\Transfer\CommentResponseTransfer;
+use Generated\Shared\Transfer\CommentTagRequestTransfer;
 use Generated\Shared\Transfer\CommentThreadResponseTransfer;
 use Generated\Shared\Transfer\CommentThreadTransfer;
 
@@ -63,21 +65,6 @@ interface CommentFacadeInterface
 
     /**
      * Specification:
-     * - Updates the provided comment tags by comment UUID in Persistence.
-     * - Generates missing tags if Persistence.
-     * - Returns with the up to date comment thread.
-     * - Returns with error message(s) in case of error.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CommentRequestTransfer $commentRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\CommentThreadResponseTransfer
-     */
-    public function updateCommentTags(CommentRequestTransfer $commentRequestTransfer): CommentThreadResponseTransfer;
-
-    /**
-     * Specification:
      * - Expects id customer to be provided.
      * - Removes the provided comment by comment UUID in Persistence.
      * - Removes assigned tags in Persistence.
@@ -108,4 +95,32 @@ interface CommentFacadeInterface
      * @return \Generated\Shared\Transfer\CommentThreadResponseTransfer
      */
     public function duplicateCommentThread(CommentFilterTransfer $commentFilterTransfer, CommentRequestTransfer $commentRequestTransfer): CommentThreadResponseTransfer;
+
+    /**
+     * Specification:
+     * - Adds the provided comment tag by comment UUID in Persistence.
+     * - Returns with the up to date comment.
+     * - Returns with error message(s) in case of error.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CommentTagRequestTransfer $commentTagRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\CommentResponseTransfer
+     */
+    public function addCommentTag(CommentTagRequestTransfer $commentTagRequestTransfer): CommentResponseTransfer;
+
+    /**
+     * Specification:
+     * - Removes the provided comment tag by comment UUID in Persistence.
+     * - Returns with the up to date comment.
+     * - Returns with error message(s) in case of error.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CommentTagRequestTransfer $commentTagRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\CommentResponseTransfer
+     */
+    public function removeCommentTag(CommentTagRequestTransfer $commentTagRequestTransfer): CommentResponseTransfer;
 }

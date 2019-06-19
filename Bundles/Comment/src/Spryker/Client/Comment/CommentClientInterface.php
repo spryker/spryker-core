@@ -8,6 +8,8 @@
 namespace Spryker\Client\Comment;
 
 use Generated\Shared\Transfer\CommentRequestTransfer;
+use Generated\Shared\Transfer\CommentResponseTransfer;
+use Generated\Shared\Transfer\CommentTagRequestTransfer;
 use Generated\Shared\Transfer\CommentThreadResponseTransfer;
 
 interface CommentClientInterface
@@ -81,4 +83,34 @@ interface CommentClientInterface
      * @return \Generated\Shared\Transfer\CommentThreadResponseTransfer
      */
     public function removeComment(CommentRequestTransfer $commentRequestTransfer): CommentThreadResponseTransfer;
+
+    /**
+     * Specification:
+     * - Makes Zed request.
+     * - Adds the provided comment tag by comment UUID in Persistence.
+     * - Returns with the up to date comment.
+     * - Returns with error message(s) in case of error.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CommentTagRequestTransfer $commentTagRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\CommentResponseTransfer
+     */
+    public function addCommentTag(CommentTagRequestTransfer $commentTagRequestTransfer): CommentResponseTransfer;
+
+    /**
+     * Specification:
+     * - Makes Zed request.
+     * - Removes the provided comment tag by comment UUID in Persistence.
+     * - Returns with the up to date comment.
+     * - Returns with error message(s) in case of error.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CommentTagRequestTransfer $commentTagRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\CommentResponseTransfer
+     */
+    public function removeCommentTag(CommentTagRequestTransfer $commentTagRequestTransfer): CommentResponseTransfer;
 }

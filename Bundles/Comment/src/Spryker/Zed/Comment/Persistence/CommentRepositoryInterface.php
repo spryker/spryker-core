@@ -36,11 +36,11 @@ interface CommentRepositoryInterface
     public function findCommentsByCommentThread(CommentThreadTransfer $commentThreadTransfer): array;
 
     /**
-     * @param string $uuid
+     * @param \Generated\Shared\Transfer\CommentTransfer $commentTransfer
      *
      * @return \Generated\Shared\Transfer\CommentTransfer|null
      */
-    public function findCommentByUuid(string $uuid): ?CommentTransfer;
+    public function findCommentByUuid(CommentTransfer $commentTransfer): ?CommentTransfer;
 
     /**
      * @return \Generated\Shared\Transfer\CommentTagTransfer[]

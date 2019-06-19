@@ -40,8 +40,19 @@
         <property name="comment" type="Comment"/>
     </transfer>
 
+    <transfer name="CommentTagRequest">
+        <property name="name" type="string"/>
+        <property name="comment" type="Comment"/>
+    </transfer>
+
     <transfer name="CommentThreadResponse">
         <property name="commentThread" type="CommentThread"/>
+        <property name="isSuccessful" type="bool"/>
+        <property name="messages" type="Message[]" singular="message"/>
+    </transfer>
+
+    <transfer name="CommentResponse">
+        <property name="comment" type="Comment"/>
         <property name="isSuccessful" type="bool"/>
         <property name="messages" type="Message[]" singular="message"/>
     </transfer>

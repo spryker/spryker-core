@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Comment\Business;
 
-use Spryker\Zed\Comment\Business\Reader\CommentReader;
-use Spryker\Zed\Comment\Business\Reader\CommentReaderInterface;
+use Spryker\Zed\Comment\Business\Reader\CommentThreadReader;
+use Spryker\Zed\Comment\Business\Reader\CommentThreadReaderInterface;
 use Spryker\Zed\Comment\Business\Writer\CommentTagWriter;
 use Spryker\Zed\Comment\Business\Writer\CommentTagWriterInterface;
 use Spryker\Zed\Comment\Business\Writer\CommentThreadWriter;
@@ -32,7 +32,7 @@ class CommentBusinessFactory extends AbstractBusinessFactory
         return new CommentWriter(
             $this->getEntityManager(),
             $this->getRepository(),
-            $this->createCommentReader(),
+            $this->createCommentThreadReader(),
             $this->createCommentThreadWriter()
         );
     }
@@ -57,16 +57,17 @@ class CommentBusinessFactory extends AbstractBusinessFactory
         return new CommentTagWriter(
             $this->getEntityManager(),
             $this->getRepository(),
-            $this->createCommentReader()
+            $this->createCommentThreadReader(),
+            $this->getConfig()
         );
     }
 
     /**
-     * @return \Spryker\Zed\Comment\Business\Reader\CommentReaderInterface
+     * @return \Spryker\Zed\Comment\Business\Reader\CommentThreadReaderInterface
      */
-    public function createCommentReader(): CommentReaderInterface
+    public function createCommentThreadReader(): CommentThreadReaderInterface
     {
-        return new CommentReader(
+        return new CommentThreadReader(
             $this->getRepository()
         );
     }

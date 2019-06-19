@@ -7,18 +7,25 @@
 
 namespace Spryker\Zed\Comment\Business\Writer;
 
-use Generated\Shared\Transfer\CommentRequestTransfer;
-use Generated\Shared\Transfer\CommentThreadResponseTransfer;
+use Generated\Shared\Transfer\CommentResponseTransfer;
+use Generated\Shared\Transfer\CommentTagRequestTransfer;
 use Generated\Shared\Transfer\CommentTransfer;
 
 interface CommentTagWriterInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\CommentRequestTransfer $commentRequestTransfer
+     * @param \Generated\Shared\Transfer\CommentTagRequestTransfer $commentTagRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\CommentThreadResponseTransfer
+     * @return \Generated\Shared\Transfer\CommentResponseTransfer
      */
-    public function updateCommentTags(CommentRequestTransfer $commentRequestTransfer): CommentThreadResponseTransfer;
+    public function addCommentTag(CommentTagRequestTransfer $commentTagRequestTransfer): CommentResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CommentTagRequestTransfer $commentTagRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\CommentResponseTransfer
+     */
+    public function removeCommentTag(CommentTagRequestTransfer $commentTagRequestTransfer): CommentResponseTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\CommentTransfer $commentTransfer

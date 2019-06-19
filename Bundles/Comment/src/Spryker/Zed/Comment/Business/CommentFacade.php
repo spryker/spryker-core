@@ -9,6 +9,8 @@ namespace Spryker\Zed\Comment\Business;
 
 use Generated\Shared\Transfer\CommentFilterTransfer;
 use Generated\Shared\Transfer\CommentRequestTransfer;
+use Generated\Shared\Transfer\CommentResponseTransfer;
+use Generated\Shared\Transfer\CommentTagRequestTransfer;
 use Generated\Shared\Transfer\CommentThreadResponseTransfer;
 use Generated\Shared\Transfer\CommentThreadTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -32,7 +34,7 @@ class CommentFacade extends AbstractFacade implements CommentFacadeInterface
     public function findCommentThreadByOwner(CommentRequestTransfer $commentRequestTransfer): ?CommentThreadTransfer
     {
         return $this->getFactory()
-            ->createCommentReader()
+            ->createCommentThreadReader()
             ->findCommentThreadByOwner($commentRequestTransfer);
     }
 
@@ -77,22 +79,6 @@ class CommentFacade extends AbstractFacade implements CommentFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CommentThreadResponseTransfer
      */
-    public function updateCommentTags(CommentRequestTransfer $commentRequestTransfer): CommentThreadResponseTransfer
-    {
-        return $this->getFactory()
-            ->createCommentTagWriter()
-            ->updateCommentTags($commentRequestTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CommentRequestTransfer $commentRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\CommentThreadResponseTransfer
-     */
     public function removeComment(CommentRequestTransfer $commentRequestTransfer): CommentThreadResponseTransfer
     {
         return $this->getFactory()
@@ -115,5 +101,37 @@ class CommentFacade extends AbstractFacade implements CommentFacadeInterface
         return $this->getFactory()
             ->createCommentThreadWriter()
             ->duplicateCommentThread($commentFilterTransfer, $commentRequestTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CommentTagRequestTransfer $commentTagRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\CommentResponseTransfer
+     */
+    public function addCommentTag(CommentTagRequestTransfer $commentTagRequestTransfer): CommentResponseTransfer
+    {
+        return $this->getFactory()
+            ->createCommentTagWriter()
+            ->addCommentTag($commentTagRequestTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CommentTagRequestTransfer $commentTagRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\CommentResponseTransfer
+     */
+    public function removeCommentTag(CommentTagRequestTransfer $commentTagRequestTransfer): CommentResponseTransfer
+    {
+        return $this->getFactory()
+            ->createCommentTagWriter()
+            ->removeCommentTag($commentTagRequestTransfer);
     }
 }

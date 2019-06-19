@@ -8,12 +8,13 @@
 namespace Spryker\Zed\Comment\Business\Writer;
 
 use ArrayObject;
-use Generated\Shared\Transfer\CommentRequestTransfer;
-use Generated\Shared\Transfer\CommentThreadResponseTransfer;
-use Generated\Shared\Transfer\CommentThreadTransfer;
+use Generated\Shared\Transfer\CommentResponseTransfer;
+use Generated\Shared\Transfer\CommentTagRequestTransfer;
+use Generated\Shared\Transfer\CommentTagTransfer;
 use Generated\Shared\Transfer\CommentTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
-use Spryker\Zed\Comment\Business\Reader\CommentReaderInterface;
+use Spryker\Zed\Comment\Business\Reader\CommentThreadReaderInterface;
+use Spryker\Zed\Comment\CommentConfig;
 use Spryker\Zed\Comment\Persistence\CommentEntityManagerInterface;
 use Spryker\Zed\Comment\Persistence\CommentRepositoryInterface;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
@@ -23,6 +24,7 @@ class CommentTagWriter implements CommentTagWriterInterface
     use TransactionTrait;
 
     protected const GLOSSARY_KEY_COMMENT_NOT_FOUND = 'comment.validation.error.comment_not_found';
+    protected const GLOSSARY_KEY_COMMENT_TAG_NOT_AVAILABLE = 'comment.validation.error.comment_tag_not_available';
 
     /**
      * @var \Spryker\Zed\Comment\Persistence\CommentEntityManagerInterface
@@ -35,40 +37,104 @@ class CommentTagWriter implements CommentTagWriterInterface
     protected $commentRepository;
 
     /**
-     * @var \Spryker\Zed\Comment\Business\Reader\CommentReaderInterface
+     * @var \Spryker\Zed\Comment\Business\Reader\CommentThreadReaderInterface
      */
-    protected $commentReader;
+    protected $commentThreadReader;
+
+    /**
+     * @var \Spryker\Zed\Comment\CommentConfig
+     */
+    protected $commentConfig;
 
     /**
      * @param \Spryker\Zed\Comment\Persistence\CommentEntityManagerInterface $commentEntityManager
      * @param \Spryker\Zed\Comment\Persistence\CommentRepositoryInterface $commentRepository
-     * @param \Spryker\Zed\Comment\Business\Reader\CommentReaderInterface $commentReader
+     * @param \Spryker\Zed\Comment\Business\Reader\CommentThreadReaderInterface $commentThreadReader
+     * @param \Spryker\Zed\Comment\CommentConfig $commentConfig
      */
     public function __construct(
         CommentEntityManagerInterface $commentEntityManager,
         CommentRepositoryInterface $commentRepository,
-        CommentReaderInterface $commentReader
+        CommentThreadReaderInterface $commentThreadReader,
+        CommentConfig $commentConfig
     ) {
         $this->commentEntityManager = $commentEntityManager;
         $this->commentRepository = $commentRepository;
-        $this->commentReader = $commentReader;
+        $this->commentThreadReader = $commentThreadReader;
+        $this->commentConfig = $commentConfig;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CommentRequestTransfer $commentRequestTransfer
+     * @param \Generated\Shared\Transfer\CommentTagRequestTransfer $commentTagRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\CommentThreadResponseTransfer
+     * @return \Generated\Shared\Transfer\CommentResponseTransfer
      */
-    public function updateCommentTags(CommentRequestTransfer $commentRequestTransfer): CommentThreadResponseTransfer
+    public function addCommentTag(CommentTagRequestTransfer $commentTagRequestTransfer): CommentResponseTransfer
     {
-        $commentRequestTransfer
+        $commentTagRequestTransfer
+            ->requireName()
             ->requireComment()
             ->getComment()
                 ->requireUuid();
 
-        return $this->getTransactionHandler()->handleTransaction(function () use ($commentRequestTransfer) {
-            return $this->executeUpdateCommentTagsTransaction($commentRequestTransfer);
-        });
+        if (!$this->isCommentTagAvailable($commentTagRequestTransfer)) {
+            return $this->createErrorResponse(static::GLOSSARY_KEY_COMMENT_TAG_NOT_AVAILABLE);
+        }
+
+        $commentTransfer = $this->commentRepository->findCommentByUuid($commentTagRequestTransfer->getComment());
+
+        if (!$commentTransfer) {
+            return $this->createErrorResponse(static::GLOSSARY_KEY_COMMENT_NOT_FOUND);
+        }
+
+        $commentTagTransfer = (new CommentTagTransfer())
+            ->setName($commentTagRequestTransfer->getName());
+
+        $commentTransfer->addCommentTag($commentTagTransfer);
+        $commentTransfer = $this->saveCommentTags($commentTransfer);
+
+        return (new CommentResponseTransfer())
+            ->setIsSuccessful(true)
+            ->setComment($commentTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CommentTagRequestTransfer $commentTagRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\CommentResponseTransfer
+     */
+    public function removeCommentTag(CommentTagRequestTransfer $commentTagRequestTransfer): CommentResponseTransfer
+    {
+        $commentTagRequestTransfer
+            ->requireName()
+            ->requireComment()
+            ->getComment()
+                ->requireUuid();
+
+        if (!$this->isCommentTagAvailable($commentTagRequestTransfer)) {
+            return $this->createErrorResponse(static::GLOSSARY_KEY_COMMENT_TAG_NOT_AVAILABLE);
+        }
+
+        $commentTransfer = $this->commentRepository->findCommentByUuid($commentTagRequestTransfer->getComment());
+
+        if (!$commentTransfer) {
+            return $this->createErrorResponse(static::GLOSSARY_KEY_COMMENT_NOT_FOUND);
+        }
+
+        $commentTagTransfers = [];
+
+        foreach ($commentTransfer->getTags() as $commentTagTransfer) {
+            if ($commentTagTransfer->getName() !== $commentTagRequestTransfer->getName()) {
+                $commentTagTransfers[] = $commentTagTransfer;
+            }
+        }
+
+        $commentTransfer->setTags(new ArrayObject($commentTagTransfers));
+        $commentTransfer = $this->saveCommentTags($commentTransfer);
+
+        return (new CommentResponseTransfer())
+            ->setIsSuccessful(true)
+            ->setComment($commentTransfer);
     }
 
     /**
@@ -98,26 +164,6 @@ class CommentTagWriter implements CommentTagWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CommentRequestTransfer $commentRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\CommentThreadResponseTransfer
-     */
-    protected function executeUpdateCommentTagsTransaction(CommentRequestTransfer $commentRequestTransfer): CommentThreadResponseTransfer
-    {
-        $commentTransfer = $this->commentRepository
-            ->findCommentByUuid($commentRequestTransfer->getComment()->getUuid());
-
-        if (!$commentTransfer) {
-            return $this->createErrorResponse(static::GLOSSARY_KEY_COMMENT_NOT_FOUND);
-        }
-
-        $commentTransfer->setTags($commentRequestTransfer->getComment()->getTags());
-        $this->saveCommentTags($commentTransfer);
-
-        return $this->createCommentThreadResponse($commentTransfer);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\CommentTagTransfer[] $commentTagTransfers
      *
      * @return \Generated\Shared\Transfer\CommentTagTransfer[]
@@ -134,33 +180,26 @@ class CommentTagWriter implements CommentTagWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CommentTransfer $commentTransfer
+     * @param \Generated\Shared\Transfer\CommentTagRequestTransfer $commentTagRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\CommentThreadResponseTransfer
+     * @return bool
      */
-    protected function createCommentThreadResponse(CommentTransfer $commentTransfer): CommentThreadResponseTransfer
+    protected function isCommentTagAvailable(CommentTagRequestTransfer $commentTagRequestTransfer): bool
     {
-        $commentThreadTransfer = (new CommentThreadTransfer())
-            ->setIdCommentThread($commentTransfer->getIdCommentThread());
-
-        $commentThreadTransfer = $this->commentReader->findCommentThreadById($commentThreadTransfer);
-
-        return (new CommentThreadResponseTransfer())
-            ->setIsSuccessful(true)
-            ->setCommentThread($commentThreadTransfer);
+        return in_array($commentTagRequestTransfer->getName(), $this->commentConfig->getCommentAvailableTags(), true);
     }
 
     /**
      * @param string $message
      *
-     * @return \Generated\Shared\Transfer\CommentThreadResponseTransfer
+     * @return \Generated\Shared\Transfer\CommentResponseTransfer
      */
-    protected function createErrorResponse(string $message): CommentThreadResponseTransfer
+    protected function createErrorResponse(string $message): CommentResponseTransfer
     {
         $messageTransfer = (new MessageTransfer())
             ->setValue($message);
 
-        return (new CommentThreadResponseTransfer())
+        return (new CommentResponseTransfer())
             ->setIsSuccessful(false)
             ->addMessage($messageTransfer);
     }

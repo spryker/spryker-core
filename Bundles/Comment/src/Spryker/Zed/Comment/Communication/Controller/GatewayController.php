@@ -8,6 +8,8 @@
 namespace Spryker\Zed\Comment\Communication\Controller;
 
 use Generated\Shared\Transfer\CommentRequestTransfer;
+use Generated\Shared\Transfer\CommentResponseTransfer;
+use Generated\Shared\Transfer\CommentTagRequestTransfer;
 use Generated\Shared\Transfer\CommentThreadResponseTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
@@ -41,18 +43,28 @@ class GatewayController extends AbstractGatewayController
      *
      * @return \Generated\Shared\Transfer\CommentThreadResponseTransfer
      */
-    public function updateCommentTagsAction(CommentRequestTransfer $commentRequestTransfer): CommentThreadResponseTransfer
-    {
-        return $this->getFacade()->updateCommentTags($commentRequestTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CommentRequestTransfer $commentRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\CommentThreadResponseTransfer
-     */
     public function removeCommentAction(CommentRequestTransfer $commentRequestTransfer): CommentThreadResponseTransfer
     {
         return $this->getFacade()->removeComment($commentRequestTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CommentTagRequestTransfer $commentTagRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\CommentResponseTransfer
+     */
+    public function addCommentTagAction(CommentTagRequestTransfer $commentTagRequestTransfer): CommentResponseTransfer
+    {
+        return $this->getFacade()->addCommentTag($commentTagRequestTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CommentTagRequestTransfer $commentTagRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\CommentResponseTransfer
+     */
+    public function removeCommentTagAction(CommentTagRequestTransfer $commentTagRequestTransfer): CommentResponseTransfer
+    {
+        return $this->getFacade()->removeCommentTag($commentTagRequestTransfer);
     }
 }

@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\CommentThreadResponseTransfer;
 use Generated\Shared\Transfer\CommentThreadTransfer;
 use Generated\Shared\Transfer\CommentTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
-use Spryker\Zed\Comment\Business\Reader\CommentReaderInterface;
+use Spryker\Zed\Comment\Business\Reader\CommentThreadReaderInterface;
 use Spryker\Zed\Comment\Persistence\CommentEntityManagerInterface;
 use Spryker\Zed\Comment\Persistence\CommentRepositoryInterface;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
@@ -38,9 +38,9 @@ class CommentWriter implements CommentWriterInterface
     protected $commentRepository;
 
     /**
-     * @var \Spryker\Zed\Comment\Business\Reader\CommentReaderInterface
+     * @var \Spryker\Zed\Comment\Business\Reader\CommentThreadReaderInterface
      */
-    protected $commentReader;
+    protected $commentThreadReader;
 
     /**
      * @var \Spryker\Zed\Comment\Business\Writer\CommentThreadWriterInterface
@@ -50,18 +50,18 @@ class CommentWriter implements CommentWriterInterface
     /**
      * @param \Spryker\Zed\Comment\Persistence\CommentEntityManagerInterface $commentEntityManager
      * @param \Spryker\Zed\Comment\Persistence\CommentRepositoryInterface $commentRepository
-     * @param \Spryker\Zed\Comment\Business\Reader\CommentReaderInterface $commentReader
+     * @param \Spryker\Zed\Comment\Business\Reader\CommentThreadReaderInterface $commentThreadReader
      * @param \Spryker\Zed\Comment\Business\Writer\CommentThreadWriterInterface $commentThreadWriter
      */
     public function __construct(
         CommentEntityManagerInterface $commentEntityManager,
         CommentRepositoryInterface $commentRepository,
-        CommentReaderInterface $commentReader,
+        CommentThreadReaderInterface $commentThreadReader,
         CommentThreadWriterInterface $commentThreadWriter
     ) {
         $this->commentEntityManager = $commentEntityManager;
         $this->commentRepository = $commentRepository;
-        $this->commentReader = $commentReader;
+        $this->commentThreadReader = $commentThreadReader;
         $this->commentThreadWriter = $commentThreadWriter;
     }
 
@@ -164,8 +164,7 @@ class CommentWriter implements CommentWriterInterface
      */
     protected function executeUpdateCommentTransaction(CommentRequestTransfer $commentRequestTransfer): CommentThreadResponseTransfer
     {
-        $commentTransfer = $this->commentRepository
-            ->findCommentByUuid($commentRequestTransfer->getComment()->getUuid());
+        $commentTransfer = $this->commentRepository->findCommentByUuid($commentRequestTransfer->getComment());
 
         $commentThreadResponseTransfer = $this->validateComment($commentRequestTransfer, $commentTransfer);
 
@@ -196,8 +195,7 @@ class CommentWriter implements CommentWriterInterface
      */
     protected function executeRemoveCommentTransaction(CommentRequestTransfer $commentRequestTransfer): CommentThreadResponseTransfer
     {
-        $commentTransfer = $this->commentRepository
-            ->findCommentByUuid($commentRequestTransfer->getComment()->getUuid());
+        $commentTransfer = $this->commentRepository->findCommentByUuid($commentRequestTransfer->getComment());
 
         $commentThreadResponseTransfer = $this->validateComment($commentRequestTransfer, $commentTransfer);
 
@@ -275,7 +273,7 @@ class CommentWriter implements CommentWriterInterface
         $commentThreadTransfer = (new CommentThreadTransfer())
             ->setIdCommentThread($commentTransfer->getIdCommentThread());
 
-        $commentThreadTransfer = $this->commentReader->findCommentThreadById($commentThreadTransfer);
+        $commentThreadTransfer = $this->commentThreadReader->findCommentThreadById($commentThreadTransfer);
 
         return (new CommentThreadResponseTransfer())
             ->setIsSuccessful(true)

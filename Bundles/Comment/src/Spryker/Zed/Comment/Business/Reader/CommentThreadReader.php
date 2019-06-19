@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\CommentRequestTransfer;
 use Generated\Shared\Transfer\CommentThreadTransfer;
 use Spryker\Zed\Comment\Persistence\CommentRepositoryInterface;
 
-class CommentReader implements CommentReaderInterface
+class CommentThreadReader implements CommentThreadReaderInterface
 {
     /**
      * @var \Spryker\Zed\Comment\Persistence\CommentRepositoryInterface

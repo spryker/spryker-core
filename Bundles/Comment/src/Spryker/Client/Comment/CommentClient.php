@@ -8,6 +8,8 @@
 namespace Spryker\Client\Comment;
 
 use Generated\Shared\Transfer\CommentRequestTransfer;
+use Generated\Shared\Transfer\CommentResponseTransfer;
+use Generated\Shared\Transfer\CommentTagRequestTransfer;
 use Generated\Shared\Transfer\CommentThreadResponseTransfer;
 use Spryker\Client\Comment\Zed\CommentStubInterface;
 use Spryker\Client\Kernel\AbstractClient;
@@ -71,6 +73,34 @@ class CommentClient extends AbstractClient implements CommentClientInterface
     public function removeComment(CommentRequestTransfer $commentRequestTransfer): CommentThreadResponseTransfer
     {
         return $this->getZedStub()->removeComment($commentRequestTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CommentTagRequestTransfer $commentTagRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\CommentResponseTransfer
+     */
+    public function addCommentTag(CommentTagRequestTransfer $commentTagRequestTransfer): CommentResponseTransfer
+    {
+        return $this->getZedStub()->addCommentTag($commentTagRequestTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CommentTagRequestTransfer $commentTagRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\CommentResponseTransfer
+     */
+    public function removeCommentTag(CommentTagRequestTransfer $commentTagRequestTransfer): CommentResponseTransfer
+    {
+        return $this->getZedStub()->removeCommentTag($commentTagRequestTransfer);
     }
 
     /**

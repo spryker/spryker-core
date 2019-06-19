@@ -8,6 +8,8 @@
 namespace Spryker\Client\Comment\Zed;
 
 use Generated\Shared\Transfer\CommentRequestTransfer;
+use Generated\Shared\Transfer\CommentResponseTransfer;
+use Generated\Shared\Transfer\CommentTagRequestTransfer;
 use Generated\Shared\Transfer\CommentThreadResponseTransfer;
 use Spryker\Client\Comment\Dependency\Client\CommentToZedRequestClientInterface;
 
@@ -88,5 +90,37 @@ class CommentStub implements CommentStubInterface
         );
 
         return $commentThreadResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CommentTagRequestTransfer $commentTagRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\CommentResponseTransfer
+     */
+    public function addCommentTag(CommentTagRequestTransfer $commentTagRequestTransfer): CommentResponseTransfer
+    {
+        /** @var \Generated\Shared\Transfer\CommentResponseTransfer $commentResponseTransfer */
+        $commentResponseTransfer = $this->zedRequestClient->call(
+            '/comment/gateway/add-comment-tag',
+            $commentTagRequestTransfer
+        );
+
+        return $commentResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CommentTagRequestTransfer $commentTagRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\CommentResponseTransfer
+     */
+    public function removeCommentTag(CommentTagRequestTransfer $commentTagRequestTransfer): CommentResponseTransfer
+    {
+        /** @var \Generated\Shared\Transfer\CommentResponseTransfer $commentResponseTransfer */
+        $commentResponseTransfer = $this->zedRequestClient->call(
+            '/comment/gateway/remove-comment-tag',
+            $commentTagRequestTransfer
+        );
+
+        return $commentResponseTransfer;
     }
 }
