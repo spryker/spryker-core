@@ -11,6 +11,7 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCurrencyBridge;
+use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCustomerFacadeBridge;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToMoneyBridge;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToSalesFacadeBridge;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToStoreBridge;
@@ -32,6 +33,7 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
 
     public const FACADE_MONEY = 'FACADE_MONEY';
     public const FACADE_CURRENCY = 'FACADE_CURRENCY';
+    public const FACADE_CUSTOMER = 'FACADE_CUSTOMER';
     public const FACADE_SALES = 'FACADE_SALES';
     public const FACADE_STORE = 'FACADE_STORE';
     public const FACADE_TAX = 'FACADE_TAX';
@@ -185,6 +187,20 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
+    protected function addCustomerFacade(Container $container)
+    {
+        $container->set(static::FACADE_CUSTOMER, function (Container $container) {
+            return new ShipmentToCustomerFacadeBridge($container->getLocator()->customer()->facade());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     protected function addShipmentService(Container $container)
     {
         $container->set(static::SERVICE_SHIPMENT, function (Container $container) {
@@ -220,6 +236,7 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCurrencyFacade($container);
         $container = $this->addSalesFacade($container);
         $container = $this->addStoreFacade($container);
+        $container = $this->addCustomerFacade($container);
         $container = $this->addMethodFilterPlugins($container);
         $container = $this->addShipmentService($container);
         $container = $this->addAvailabilityPlugins($container);

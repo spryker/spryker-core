@@ -7,15 +7,16 @@
 
 namespace Spryker\Zed\Shipment\Business\Mapper;
 
+use Generated\Shared\Transfer\ShipmentFormTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 
 interface ShipmentMapperInterface
 {
     /**
-     * @param array $formData
+     * @param \Generated\Shared\Transfer\ShipmentFormTransfer $shipmentFormTransfer
      * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentTransfer
      */
-    public function mapFormDataToShipmentTransfer(array $formData, ShipmentTransfer $shipmentTransfer): ShipmentTransfer;
+    public function mapFormDataToShipmentTransfer(ShipmentFormTransfer $shipmentFormTransfer, ShipmentTransfer $shipmentTransfer): ShipmentTransfer;
 }

@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Generated\Shared\Transfer\ShipmentCarrierTransfer;
+use Generated\Shared\Transfer\ShipmentFormTransfer;
 use Generated\Shared\Transfer\ShipmentGroupCollectionTransfer;
 use Generated\Shared\Transfer\ShipmentGroupResponseTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
@@ -367,16 +368,14 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
      *
      * @api
      *
-     * @param array $formData
-     * @param int|null $idCustomerAddress
-     * @param int|null $idShipmentMethod
+     * @param \Generated\Shared\Transfer\ShipmentFormTransfer $shipmentFormTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentGroupTransfer
      */
-    public function createShipmentGroupTransfer(array $formData, ?int $idCustomerAddress, ?int $idShipmentMethod): ShipmentGroupTransfer
+    public function createShipmentGroupTransfer(ShipmentFormTransfer $shipmentFormTransfer): ShipmentGroupTransfer
     {
         return $this->getFactory()
             ->createShipmentGrouper()
-            ->createShipmentGroupTransfer($formData, $idCustomerAddress, $idShipmentMethod);
+            ->createShipmentGroupTransfer($shipmentFormTransfer);
     }
 }

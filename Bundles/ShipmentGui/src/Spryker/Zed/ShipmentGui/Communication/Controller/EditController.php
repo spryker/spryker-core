@@ -10,7 +10,6 @@ namespace Spryker\Zed\ShipmentGui\Communication\Controller;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\Sales\SalesConfig;
-use Spryker\Zed\ShipmentGui\Communication\Form\ShipmentFormEdit;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -58,14 +57,10 @@ class EditController extends AbstractController
                 return $this->redirectResponse($redirectUrl);
             }
 
-            $formData = $form->getData();
+            $shipmentFormTransfer = $form->getData();
             $shipmentGroupTransfer = $this->getFactory()
                 ->getShipmentFacade()
-                ->createShipmentGroupTransfer(
-                    $formData,
-                    (int)$formData[ShipmentFormEdit::FIELD_ID_CUSTOMER_ADDRESS] ?? null,
-                    (int)$formData[ShipmentFormEdit::FIELD_ID_SHIPMENT_METHOD] ?? null
-                );
+                ->createShipmentGroupTransfer($shipmentFormTransfer);
 
             $responseTransfer = $this->getFactory()
                 ->getShipmentFacade()

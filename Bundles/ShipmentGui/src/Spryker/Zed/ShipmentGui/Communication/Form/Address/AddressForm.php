@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ShipmentGui\Communication\Form\Address;
 
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
-use Spryker\Zed\ShipmentGui\Communication\Form\ShipmentFormCreate;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -27,20 +26,20 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  */
 class AddressForm extends AbstractType
 {
-    public const ADDRESS_FIELD_ID_SALES_ORDER_ADDRESS = 'id_sales_order_address';
+    public const ADDRESS_FIELD_ID_SALES_ORDER_ADDRESS = 'idSalesOrderAddress';
     public const ADDRESS_FIELD_SALUTATION = 'salutation';
-    public const ADDRESS_FIELD_FIRST_NAME = 'first_name';
-    public const ADDRESS_FIELD_MIDDLE_NAME = 'middle_name';
-    public const ADDRESS_FIELD_LAST_NAME = 'last_name';
+    public const ADDRESS_FIELD_FIRST_NAME = 'firstName';
+    public const ADDRESS_FIELD_MIDDLE_NAME = 'middleName';
+    public const ADDRESS_FIELD_LAST_NAME = 'lastName';
     public const ADDRESS_FIELD_EMAIL = 'email';
     public const ADDRESS_FIELD_ADDRESS_1 = 'address1';
     public const ADDRESS_FIELD_ADDRESS_2 = 'address2';
     public const ADDRESS_FIELD_COMPANY = 'company';
     public const ADDRESS_FIELD_CITY = 'city';
-    public const ADDRESS_FIELD_ZIP_CODE = 'zip_code';
-    public const ADDRESS_FIELD_PO_BOX = 'po_box';
+    public const ADDRESS_FIELD_ZIP_CODE = 'zipCode';
+    public const ADDRESS_FIELD_PO_BOX = 'poPox';
     public const ADDRESS_FIELD_PHONE = 'phone';
-    public const ADDRESS_FIELD_CELL_PHONE = 'cell_phone';
+    public const ADDRESS_FIELD_CELL_PHONE = 'cellPhone';
     public const ADDRESS_FIELD_DESCRIPTION = 'description';
     public const ADDRESS_FIELD_COMMENT = 'comment';
     public const ADDRESS_FIELD_ISO_2_CODE = 'iso2Code';
@@ -408,7 +407,7 @@ class AddressForm extends AbstractType
         return new Callback([
         'callback' => function ($value, ExecutionContextInterface $context) {
             $formData = $context->getRoot()->getData();
-            if ($formData[ShipmentFormCreate::FIELD_ID_CUSTOMER_ADDRESS]) {
+            if ($formData->getIdCustomerAddress()) {
                 return;
             }
 

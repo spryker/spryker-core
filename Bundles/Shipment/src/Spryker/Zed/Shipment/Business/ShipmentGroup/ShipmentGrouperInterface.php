@@ -7,16 +7,15 @@
 
 namespace Spryker\Zed\Shipment\Business\ShipmentGroup;
 
+use Generated\Shared\Transfer\ShipmentFormTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 
 interface ShipmentGrouperInterface
 {
     /**
-     * @param array $formData
-     * @param int|null $idCustomerAddress
-     * @param int|null $idShipmentMethod
+     * @param \Generated\Shared\Transfer\ShipmentFormTransfer $shipmentFormTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentGroupTransfer
      */
-    public function createShipmentGroupTransfer(array $formData, ?int $idCustomerAddress, ?int $idShipmentMethod): ShipmentGroupTransfer;
+    public function createShipmentGroupTransfer(ShipmentFormTransfer $shipmentFormTransfer): ShipmentGroupTransfer;
 }

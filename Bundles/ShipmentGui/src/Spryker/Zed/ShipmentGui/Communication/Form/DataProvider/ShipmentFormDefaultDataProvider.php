@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\ShipmentGui\Communication\Form\DataProvider;
 
+use ArrayObject;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\ShipmentFormTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Spryker\Zed\ShipmentGui\Communication\Form\Address\AddressForm;
@@ -20,6 +22,8 @@ use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToShipmentFacadeInterfa
 
 class ShipmentFormDefaultDataProvider implements ShipmentFormDefaultDataProviderInterface
 {
+    public const OPTION_DATA_CLASS = 'data_class';
+
     protected const ADDRESS_LABEL_PATTERN = '%s %s %s, %s %s, %s %s';
     protected const SHIPMENT_METHODS_OPTIONS_NAMES_PATTERN = '%s - %s';
 
@@ -92,7 +96,11 @@ class ShipmentFormDefaultDataProvider implements ShipmentFormDefaultDataProvider
 
         $customerAddressTransfer = $this->customerFacade->findCustomerAddressByAddressData($addressTransfer);
 
-        return $customerAddressTransfer === null ?: $customerAddressTransfer->getIdCustomerAddress();
+        if ($customerAddressTransfer === null) {
+            return null;
+        }
+
+        return $customerAddressTransfer->getIdCustomerAddress();
     }
 
     /**
@@ -118,11 +126,12 @@ class ShipmentFormDefaultDataProvider implements ShipmentFormDefaultDataProvider
      * @param int $idSalesOrder
      * @param int|null $idSalesShipment
      *
-     * @return array[]
+     * @return array
      */
     public function getOptions(int $idSalesOrder, ?int $idSalesShipment = null): array
     {
         $options = [
+            static::OPTION_DATA_CLASS => ShipmentFormTransfer::class,
             ShipmentFormCreate::OPTION_SHIPMENT_ADDRESS_CHOICES => $this->getShippingAddressesOptions($idSalesOrder),
             ShipmentFormCreate::OPTION_SHIPMENT_METHOD_CHOICES => $this->getShippingMethodsOptions(),
             ShipmentFormCreate::FIELD_SHIPMENT_SELECTED_ITEMS => $this->getShipmentSelectedItemsIds($idSalesShipment),
@@ -247,7 +256,7 @@ class ShipmentFormDefaultDataProvider implements ShipmentFormDefaultDataProvider
      */
     protected function getShippingAddressesOptions(int $idSalesOrder): array
     {
-        $addresses = [null => 'New address'];
+        $addresses = ['New address'];
 
         $orderTransfer = $this->salesFacade->findOrderByIdSalesOrder($idSalesOrder);
         if ($orderTransfer === null) {
@@ -330,5 +339,22 @@ class ShipmentFormDefaultDataProvider implements ShipmentFormDefaultDataProvider
         }
 
         return $combinedSalutation;
+    }
+
+    /**
+     * @param array $formData
+     *
+     * @return \Generated\Shared\Transfer\ShipmentFormTransfer
+     */
+    public function mapFormDataToShipmentFormTransfer(array $formData): ShipmentFormTransfer
+    {
+        $shipmentFormTransfer = (new ShipmentFormTransfer())->fromArray($formData, true);
+
+        $itemList = new ArrayObject();
+        foreach ($formData[ShipmentFormTransfer::ITEMS] as $itemTransfer) {
+            $itemList->append($itemTransfer);
+        }
+
+        return $shipmentFormTransfer->setItems($itemList);
     }
 }

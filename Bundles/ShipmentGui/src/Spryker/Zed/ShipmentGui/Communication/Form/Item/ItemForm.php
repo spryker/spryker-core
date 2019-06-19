@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ShipmentGui\Communication\Form\Item;
 
+use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Spryker\Zed\ShipmentGui\Communication\Form\ShipmentFormCreate;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -41,6 +42,9 @@ class ItemForm extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setRequired(ShipmentFormCreate::FIELD_SHIPMENT_SELECTED_ITEMS);
+        $resolver->setDefaults([
+            'data_class' => ItemTransfer::class,
+        ]);
     }
 
     /**

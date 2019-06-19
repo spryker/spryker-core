@@ -7,15 +7,17 @@
 
 namespace Spryker\Zed\ShipmentGui\Communication\Form\DataProvider;
 
+use Generated\Shared\Transfer\ShipmentFormTransfer;
+
 interface ShipmentFormDataProviderInterface
 {
     /**
      * @param int $idSalesOrder
      * @param int|null $idSalesShipment
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\ShipmentFormTransfer
      */
-    public function getData(int $idSalesOrder, ?int $idSalesShipment = null): array;
+    public function getData(int $idSalesOrder, ?int $idSalesShipment = null): ShipmentFormTransfer;
 
     /**
      * @param int $idSalesOrder

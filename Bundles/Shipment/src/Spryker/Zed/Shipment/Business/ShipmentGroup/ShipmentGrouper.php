@@ -7,13 +7,20 @@
 
 namespace Spryker\Zed\Shipment\Business\ShipmentGroup;
 
+use Generated\Shared\Transfer\ShipmentFormTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Zed\Shipment\Business\Mapper\ShipmentMapperInterface;
 use Spryker\Zed\Shipment\Business\ShipmentMethod\MethodReaderInterface;
+use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCustomerFacadeInterface;
 
 class ShipmentGrouper implements ShipmentGrouperInterface
 {
+    /**
+     * @var \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCustomerFacadeInterface
+     */
+    protected $customerFacade;
+
     /**
      * @var \Spryker\Zed\Shipment\Business\Mapper\ShipmentMapperInterface
      */
@@ -25,68 +32,76 @@ class ShipmentGrouper implements ShipmentGrouperInterface
     protected $methodReader;
 
     /**
+     * @param \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCustomerFacadeInterface $customerFacade
      * @param \Spryker\Zed\Shipment\Business\Mapper\ShipmentMapperInterface $shipmentMapper
      * @param \Spryker\Zed\Shipment\Business\ShipmentMethod\MethodReaderInterface $methodReader
      */
-    public function __construct(ShipmentMapperInterface $shipmentMapper, MethodReaderInterface $methodReader)
-    {
+    public function __construct(
+        ShipmentToCustomerFacadeInterface $customerFacade,
+        ShipmentMapperInterface $shipmentMapper,
+        MethodReaderInterface $methodReader
+    ) {
+        $this->customerFacade = $customerFacade;
         $this->shipmentMapper = $shipmentMapper;
         $this->methodReader = $methodReader;
     }
 
     /**
-     * @param array $formData
-     * @param int|null $idCustomerAddress
-     * @param int|null $idShipmentMethod
+     * @param \Generated\Shared\Transfer\ShipmentFormTransfer $shipmentFormTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentGroupTransfer
      */
-    public function createShipmentGroupTransfer(
-        array $formData,
-        ?int $idCustomerAddress,
-        ?int $idShipmentMethod
-    ): ShipmentGroupTransfer {
+    public function createShipmentGroupTransfer(ShipmentFormTransfer $shipmentFormTransfer): ShipmentGroupTransfer
+    {
         $shipmentGroupTransfer = new ShipmentGroupTransfer();
-        $shipmentGroupTransfer = $this->addShipmentTransfer(
-            $shipmentGroupTransfer,
-            $formData,
-            $idCustomerAddress,
-            $idShipmentMethod
-        );
+        $shipmentGroupTransfer = $this->addShipmentTransfer($shipmentGroupTransfer, $shipmentFormTransfer);
+        $shipmentGroupTransfer = $this->addShipmentItems($shipmentGroupTransfer, $shipmentFormTransfer);
 
         return $shipmentGroupTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
-     * @param array $formData
-     * @param int|null $idCustomerAddress
-     * @param int|null $idShipmentMethod
+     * @param \Generated\Shared\Transfer\ShipmentFormTransfer $shipmentFormTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentGroupTransfer
      */
     protected function addShipmentTransfer(
         ShipmentGroupTransfer $shipmentGroupTransfer,
-        array $formData,
-        ?int $idCustomerAddress = null,
-        ?int $idShipmentMethod = null
+        ShipmentFormTransfer $shipmentFormTransfer
     ): ShipmentGroupTransfer {
-        $shipmentTransfer = $this->shipmentMapper->mapFormDataToShipmentTransfer($formData, new ShipmentTransfer());
+        $shipmentTransfer = $this->shipmentMapper->mapFormDataToShipmentTransfer($shipmentFormTransfer, new ShipmentTransfer());
 
-        if ($idCustomerAddress !== null) {
-            $shipmentTransfer->requireShippingAddress()
-                ->getShippingAddress()
-                ->setIdCustomerAddress($idCustomerAddress);
+        if ($shipmentFormTransfer->getIdCustomerAddress()) {
+            $shippingAddress = $this->customerFacade->findCustomerAddressById($shipmentFormTransfer->getIdCustomerAddress());
+            $shipmentTransfer->setShippingAddress($shippingAddress);
         }
 
         $shipmentGroupTransfer->setShipment($shipmentTransfer);
 
-        if ($idShipmentMethod === null) {
+        if ($shipmentFormTransfer->getIdShipmentMethod() === null) {
             return $shipmentGroupTransfer;
         }
 
-        $shipmentMethodTransfer = $this->methodReader->findShipmentMethodTransferById($idShipmentMethod);
+        $shipmentMethodTransfer = $this->methodReader->findShipmentMethodTransferById($shipmentFormTransfer->getIdShipmentMethod());
         $shipmentTransfer->setMethod($shipmentMethodTransfer);
+
+        return $shipmentGroupTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
+     * @param \Generated\Shared\Transfer\ShipmentFormTransfer $shipmentFormTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentGroupTransfer
+     */
+    protected function addShipmentItems(ShipmentGroupTransfer $shipmentGroupTransfer, ShipmentFormTransfer $shipmentFormTransfer): ShipmentGroupTransfer
+    {
+        foreach ($shipmentFormTransfer->getItems() as $itemTransfer) {
+            if ($itemTransfer->getIsUpdated() === true) {
+                $shipmentGroupTransfer->addItem($itemTransfer);
+            }
+        }
 
         return $shipmentGroupTransfer;
     }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ShipmentGui\Communication;
 
+use Generated\Shared\Transfer\ShipmentFormTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentFormCreateDataProvider;
 use Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentFormDataProviderInterface;
@@ -70,16 +71,16 @@ class ShipmentGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param array $formData
+     * @param \Generated\Shared\Transfer\ShipmentFormTransfer $shipmentFormTransfer
      * @param array $formOptions
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createShipmentFormEdit(array $formData, array $formOptions = []): FormInterface
+    public function createShipmentFormEdit(ShipmentFormTransfer $shipmentFormTransfer, array $formOptions = []): FormInterface
     {
         return $this->getFormFactory()->create(
             ShipmentFormEdit::class,
-            $formData,
+            $shipmentFormTransfer,
             $formOptions
         );
     }

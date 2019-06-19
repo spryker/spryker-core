@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ShipmentGui\Dependency\Facade;
 
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\ShipmentFormTransfer;
 use Generated\Shared\Transfer\ShipmentGroupResponseTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
@@ -68,14 +69,12 @@ class ShipmentGuiToShipmentFacadeBridge implements ShipmentGuiToShipmentFacadeIn
     }
 
     /**
-     * @param array $formData
-     * @param int|null $idCustomerAddress
-     * @param int|null $idShipmentMethod
+     * @param \Generated\Shared\Transfer\ShipmentFormTransfer $shipmentFormTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentGroupTransfer
      */
-    public function createShipmentGroupTransfer(array $formData, ?int $idCustomerAddress, ?int $idShipmentMethod): ShipmentGroupTransfer
+    public function createShipmentGroupTransfer(ShipmentFormTransfer $shipmentFormTransfer): ShipmentGroupTransfer
     {
-        return $this->shipmentFacade->createShipmentGroupTransfer($formData, $idCustomerAddress, $idShipmentMethod);
+        return $this->shipmentFacade->createShipmentGroupTransfer($shipmentFormTransfer);
     }
 }

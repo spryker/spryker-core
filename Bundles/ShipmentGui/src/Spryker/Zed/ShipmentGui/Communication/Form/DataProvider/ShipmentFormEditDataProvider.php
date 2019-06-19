@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ShipmentGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\ShipmentFormTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Zed\ShipmentGui\Communication\Form\Address\AddressForm;
@@ -32,14 +33,16 @@ class ShipmentFormEditDataProvider implements ShipmentFormDataProviderInterface
      * @param int $idSalesOrder
      * @param int|null $idSalesShipment
      *
-     * @return array[]
+     * @return \Generated\Shared\Transfer\ShipmentFormTransfer
      */
-    public function getData(int $idSalesOrder, ?int $idSalesShipment = null): array
+    public function getData(int $idSalesOrder, ?int $idSalesShipment = null): ShipmentFormTransfer
     {
-        return array_merge(
+        $formData = array_merge(
             $this->shipmentFormDefaultDataProvider->getDefaultFormFields($idSalesOrder, $idSalesShipment),
             $this->prepareFormData($idSalesShipment)
         );
+
+        return $this->shipmentFormDefaultDataProvider->mapFormDataToShipmentFormTransfer($formData);
     }
 
     /**

@@ -52,6 +52,7 @@ use Spryker\Zed\Shipment\Business\StrategyResolver\OrderSaverStrategyResolver;
 use Spryker\Zed\Shipment\Business\StrategyResolver\OrderSaverStrategyResolverInterface;
 use Spryker\Zed\Shipment\Business\StrategyResolver\TaxRateCalculatorStrategyResolver;
 use Spryker\Zed\Shipment\Business\StrategyResolver\TaxRateCalculatorStrategyResolverInterface;
+use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCustomerFacadeInterface;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToSalesFacadeInterface;
 use Spryker\Zed\Shipment\ShipmentDependencyProvider;
 
@@ -265,6 +266,14 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCustomerFacadeInterface
+     */
+    protected function getCustomerFacade(): ShipmentToCustomerFacadeInterface
+    {
+        return $this->getProvidedDependency(ShipmentDependencyProvider::FACADE_CUSTOMER);
+    }
+
+    /**
      * @deprecated Use createMultipleShipmentOrderHydrate() instead.
      *
      * @return \Spryker\Zed\Shipment\Business\Model\ShipmentOrderHydrateInterface
@@ -424,7 +433,11 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
      */
     public function createShipmentGrouper(): ShipmentGrouperInterface
     {
-        return new ShipmentGrouper($this->createShipmentMapper(), $this->createMethodReader());
+        return new ShipmentGrouper(
+            $this->getCustomerFacade(),
+            $this->createShipmentMapper(),
+            $this->createMethodReader()
+        );
     }
 
     /**
