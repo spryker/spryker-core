@@ -7,9 +7,6 @@
 
 namespace Spryker\Zed\Country\Business;
 
-use Generated\Shared\Transfer\CheckoutDataTransfer;
-use Generated\Shared\Transfer\CheckoutErrorTransfer;
-use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CountryCollectionTransfer;
 use Generated\Shared\Transfer\CountryTransfer;
 use Orm\Zed\Country\Persistence\SpyCountry;
@@ -19,12 +16,6 @@ use Spryker\Zed\Country\Persistence\CountryQueryContainerInterface;
 
 class CountryManager implements CountryManagerInterface
 {
-    protected const ERROR_MESSAGE_COUNTRY_NOT_FOUND = '%s country not found for country code: %s';
-    protected const ERROR_MESSAGE_ADDRESS_IS_MISSING = '%s address is missing';
-
-    protected const BILLING = 'Billing';
-    protected const SHIPPING = 'Shipping';
-
     /**
      * @var \Spryker\Zed\Country\Persistence\CountryQueryContainerInterface
      */
@@ -176,46 +167,6 @@ class CountryManager implements CountryManagerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CheckoutDataTransfer $checkoutDataTransfer
-     *
-     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
-     */
-    public function validateCheckoutData(CheckoutDataTransfer $checkoutDataTransfer): CheckoutResponseTransfer
-    {
-        $checkoutResponseTransfer = (new CheckoutResponseTransfer())->setIsSuccess(true);
-
-        if (!$checkoutDataTransfer->getBillingAddress()) {
-            return $this->addErrorToCheckoutResponseTransfer(
-                $checkoutResponseTransfer,
-                sprintf(static::ERROR_MESSAGE_ADDRESS_IS_MISSING, static::BILLING)
-            );
-        }
-
-        if (!$checkoutDataTransfer->getShippingAddress()) {
-            return $this->addErrorToCheckoutResponseTransfer(
-                $checkoutResponseTransfer,
-                sprintf(static::ERROR_MESSAGE_ADDRESS_IS_MISSING, static::SHIPPING)
-            );
-        }
-
-        $iso2Codes = [
-            static::BILLING => $checkoutDataTransfer->getBillingAddress()->getIso2Code(),
-            static::SHIPPING => $checkoutDataTransfer->getShippingAddress()->getIso2Code(),
-        ];
-
-        foreach ($iso2Codes as $key => $iso2Code) {
-            if (!$this->hasCountry($iso2Code)) {
-                $this->addErrorToCheckoutResponseTransfer(
-                    $checkoutResponseTransfer,
-                    sprintf(static::ERROR_MESSAGE_COUNTRY_NOT_FOUND, $key, $iso2Code)
-                );
-            }
-        }
-
-        return $checkoutResponseTransfer;
-    }
-
-    /**
      * @param string $iso3code
      *
      * @throws \Spryker\Zed\Country\Business\Exception\MissingCountryException
@@ -248,20 +199,5 @@ class CountryManager implements CountryManagerInterface
         if ($this->hasCountry($iso2code)) {
             throw new CountryExistsException();
         }
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
-     * @param string $message
-     *
-     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
-     */
-    protected function addErrorToCheckoutResponseTransfer(
-        CheckoutResponseTransfer $checkoutResponseTransfer,
-        string $message
-    ): CheckoutResponseTransfer {
-        return $checkoutResponseTransfer
-            ->setIsSuccess(false)
-            ->addError((new CheckoutErrorTransfer())->setMessage($message));
     }
 }

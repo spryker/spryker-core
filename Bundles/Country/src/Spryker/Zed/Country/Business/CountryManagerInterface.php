@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\Country\Business;
 
-use Generated\Shared\Transfer\CheckoutDataTransfer;
-use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CountryTransfer;
 
 interface CountryManagerInterface
@@ -52,13 +50,6 @@ interface CountryManagerInterface
      * @return \Generated\Shared\Transfer\CountryTransfer
      */
     public function getCountryByIso2Code($iso2code);
-
-    /**
-     * @param \Generated\Shared\Transfer\CheckoutDataTransfer $checkoutDataTransfer
-     *
-     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
-     */
-    public function validateCheckoutData(CheckoutDataTransfer $checkoutDataTransfer): CheckoutResponseTransfer;
 
     /**
      * @param string $iso3code
