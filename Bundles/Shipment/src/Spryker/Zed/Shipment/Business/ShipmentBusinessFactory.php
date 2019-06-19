@@ -281,7 +281,6 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     {
         return new MultipleShipmentOrderHydrate(
             $this->getRepository(),
-            $this->getShipmentService(),
             $this->getSalesFacade()
         );
     }

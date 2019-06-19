@@ -31,7 +31,6 @@
         <property name="priceMode" type="string" />
         <property name="store" type="string" />
         <property name="currencyIsoCode" type="string" />
-        <property name="shipmentGroups" type="ShipmentGroup[]" singular="shipmentGroup"/>
     </transfer>
 
     <transfer name="Quote">

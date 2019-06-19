@@ -107,7 +107,7 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
         $shipmentGroupCollectionTransfer = $this->shipmentFacade->getAvailableMethodsByShipment($quoteTransfer);
 
         /** @var \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer */
-        $shipmentGroupTransfer = current($shipmentGroupCollectionTransfer->getGroups());
+        $shipmentGroupTransfer = current($shipmentGroupCollectionTransfer->getShipmentGroups());
         if (!$shipmentGroupTransfer) {
             return new ShipmentMethodsTransfer();
         }
