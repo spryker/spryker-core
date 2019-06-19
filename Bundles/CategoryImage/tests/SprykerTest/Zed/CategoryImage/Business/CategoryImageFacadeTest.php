@@ -192,6 +192,54 @@ class CategoryImageFacadeTest extends Test
     }
 
     /**
+     * @return void
+     */
+    public function testGetCategoryImageSetsByIdCategorySortsImagesBySortOrderAsc(): void
+    {
+        // Assign
+        $categoryTransfer = $this->tester->haveCategory();
+        $categoryImageSetTransfer = $this->tester->createCategoryImageSetWithOrderedImages([3, 1, 0, 2]);
+        $categoryTransfer->setImageSets(new ArrayObject([$categoryImageSetTransfer]));
+        $this->getFacade()->createCategoryImageSetsForCategory($categoryTransfer);
+
+        // Act
+        $categoryImageCollection = $this->getFacade()->getCategoryImageSetsByIdCategory(
+            $categoryTransfer->getIdCategory()
+        )[0]->getCategoryImages();
+
+        $sortOrder = 0;
+        foreach ($categoryImageCollection as $categoryImageTransfer) {
+            $this->assertTrue($categoryImageTransfer->getSortOrder() >= $sortOrder);
+            $sortOrder = $categoryImageTransfer->getSortOrder();
+        }
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetCategoryImageSetsByIdCategorySortsImagesByIdCategoryImageSetToCategoryImageAsc(): void
+    {
+        // Assign
+        $categoryTransfer = $this->tester->haveCategory();
+        $categoryImageSetTransfer = $this->tester->createCategoryImageSetWithOrderedImages([0, 0, 0]);
+        $categoryTransfer->setImageSets(new ArrayObject([$categoryImageSetTransfer]));
+        $this->getFacade()->createCategoryImageSetsForCategory($categoryTransfer);
+
+        // Act
+        $categoryImageCollection = $this->getFacade()->getCategoryImageSetsByIdCategory(
+            $categoryTransfer->getIdCategory()
+        )[0]->getCategoryImages();
+
+        $idCategoryImageSetToCategoryImage = 0;
+        foreach ($categoryImageCollection as $categoryImageTransfer) {
+            $this->assertTrue(
+                $categoryImageTransfer->getIdCategoryImageSetToCategoryImage() > $idCategoryImageSetToCategoryImage
+            );
+            $idCategoryImageSetToCategoryImage = $categoryImageTransfer->getIdCategoryImageSetToCategoryImage();
+        }
+    }
+
+    /**
      * @param int $size
      *
      * @return \Generated\Shared\Transfer\CategoryImageSetTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractTransfer[]

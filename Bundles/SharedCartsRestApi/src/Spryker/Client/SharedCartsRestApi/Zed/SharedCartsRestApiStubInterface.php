@@ -8,6 +8,8 @@
 namespace Spryker\Client\SharedCartsRestApi\Zed;
 
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShareCartRequestTransfer;
+use Generated\Shared\Transfer\ShareCartResponseTransfer;
 use Generated\Shared\Transfer\ShareDetailCollectionTransfer;
 
 interface SharedCartsRestApiStubInterface
@@ -18,4 +20,25 @@ interface SharedCartsRestApiStubInterface
      * @return \Generated\Shared\Transfer\ShareDetailCollectionTransfer
      */
     public function getSharedCartsByCartUuid(QuoteTransfer $quoteTransfer): ShareDetailCollectionTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ShareCartRequestTransfer $shareCartRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShareCartResponseTransfer
+     */
+    public function create(ShareCartRequestTransfer $shareCartRequestTransfer): ShareCartResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ShareCartRequestTransfer $shareCartRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShareCartResponseTransfer
+     */
+    public function update(ShareCartRequestTransfer $shareCartRequestTransfer): ShareCartResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ShareCartRequestTransfer $shareCartRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShareCartResponseTransfer
+     */
+    public function delete(ShareCartRequestTransfer $shareCartRequestTransfer): ShareCartResponseTransfer;
 }

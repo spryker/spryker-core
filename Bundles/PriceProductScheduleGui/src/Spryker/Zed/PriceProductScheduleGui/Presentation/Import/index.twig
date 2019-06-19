@@ -1,0 +1,44 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% if widget_title is not defined %}
+    {% set widget_title = 'Scheduled Prices' | trans %}
+{% endif %}
+
+{% block head_title -%}
+    {{ widget_title }}
+{%- endblock %}
+
+{% block section_title %}{{ widget_title }}{% endblock %}
+
+{% block action %}
+    {{ parent() }}
+{% endblock %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' with {widget_title: 'Import new scheduled prices' | trans} %}
+
+        {% block widget_content %}
+            <div class="row">
+                <div class="col-xs-12 col-md-6 col-lg-3">
+                    <div class="m-b-sm">
+                        <a target="_blank" href="https://documentation.spryker.com/tutorials/howtos/feature_howtos/ht-import-scheduled-prices-201907.htm">{{ 'Learn about file format on our documentation' | trans }}</a>
+                    </div>
+
+                    {{ form_start(importForm, {'action': url('/price-product-schedule-gui/dry-run-import')}) }}
+
+                    {{ form_row(importForm.priceProductScheduleName) }}
+                    {{ form_row(importForm.fileUpload) }}
+
+                    <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Import your CSV file' | trans }}"/>
+                    <div class="m-b-sm">
+                        {{ 'Importing a lot of scheduled prices can take some time.' | trans }}
+                    </div>
+                    {{ form_end(importForm) }}
+                </div>
+            </div>
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}
