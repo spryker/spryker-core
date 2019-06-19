@@ -59,7 +59,6 @@ class GuestCartReader implements GuestCartReaderInterface
 
         $quoteTransfer = (new QuoteTransfer())
             ->setCustomerReference($customerReference)
-            ->setCustomer((new CustomerTransfer())->setCustomerReference($customerReference))
             ->setUuid($uuidCart);
 
         $quoteResponseTransfer = $this->cartsRestApiClient->findQuoteByUuid($quoteTransfer);
