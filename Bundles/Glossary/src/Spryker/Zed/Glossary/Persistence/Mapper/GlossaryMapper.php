@@ -18,10 +18,10 @@ class GlossaryMapper
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    public function mapGlossaryTranslationEntityToTranslationTransfer(SpyGlossaryTranslation $glossaryTranslationEntity, TranslationTransfer $translationTransfer): TranslationTransfer
-    {
-        $translationTransfer = $translationTransfer->fromArray($glossaryTranslationEntity->toArray(), true);
-
-        return $translationTransfer;
+    public function mapGlossaryTranslationEntityToTranslationTransfer(
+        SpyGlossaryTranslation $glossaryTranslationEntity,
+        TranslationTransfer $translationTransfer
+    ): TranslationTransfer {
+        return $translationTransfer->fromArray($glossaryTranslationEntity->toArray(), true);
     }
 }
