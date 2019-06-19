@@ -26,6 +26,17 @@ interface ShoppingListMapperInterface
     ): ShoppingListTransfer;
 
     /**
+     * @param \Generated\Shared\Transfer\SpyShoppingListEntityTransfer $shoppingListEntityTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListTransfer
+     */
+    public function mapShoppingListEntityTransferWithItemsToShoppingListTransfer(
+        SpyShoppingListEntityTransfer $shoppingListEntityTransfer,
+        ShoppingListTransfer $shoppingListTransfer
+    ): ShoppingListTransfer;
+
+    /**
      * @param \Generated\Shared\Transfer\SpyShoppingListEntityTransfer[] $shoppingListEntityTransferCollection
      *
      * @return \Generated\Shared\Transfer\ShoppingListCollectionTransfer

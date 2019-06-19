@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ShoppingList\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
+use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use Generated\Shared\Transfer\SpyShoppingListEntityTransfer;
 use Orm\Zed\ShoppingList\Persistence\SpyShoppingList;
@@ -17,6 +18,19 @@ class ShoppingListMapper implements ShoppingListMapperInterface
     public const FIELD_FIRST_NAME = 'first_name';
     public const FIELD_LAST_NAME = 'last_name';
     public const FIELD_CREATED_AT = 'created_at';
+
+    /**
+     * @var \Spryker\Zed\ShoppingList\Persistence\Propel\Mapper\ShoppingListItemMapperInterface
+     */
+    protected $shoppingListItemMapper;
+
+    /**
+     * @param \Spryker\Zed\ShoppingList\Persistence\Propel\Mapper\ShoppingListItemMapperInterface $shoppingListItemMapper
+     */
+    public function __construct(ShoppingListItemMapperInterface $shoppingListItemMapper)
+    {
+        $this->shoppingListItemMapper = $shoppingListItemMapper;
+    }
 
     /**
      * @param \Generated\Shared\Transfer\SpyShoppingListEntityTransfer $shoppingListEntityTransfer
@@ -46,6 +60,27 @@ class ShoppingListMapper implements ShoppingListMapperInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\SpyShoppingListEntityTransfer $shoppingListEntityTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListTransfer
+     */
+    public function mapShoppingListEntityTransferWithItemsToShoppingListTransfer(
+        SpyShoppingListEntityTransfer $shoppingListEntityTransfer,
+        ShoppingListTransfer $shoppingListTransfer
+    ): ShoppingListTransfer {
+        $shoppingListTransfer = $this->mapShoppingListTransfer(
+            $shoppingListEntityTransfer,
+            $shoppingListTransfer
+        );
+
+        return $this->mapShoppingListItemCollectionTransferToShoppingListTransfer(
+            $this->shoppingListItemMapper->mapItemCollectionTransfer($shoppingListEntityTransfer->getSpyShoppingListItems()->getArrayCopy()),
+            $shoppingListTransfer
+        );
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\SpyShoppingListEntityTransfer[] $shoppingListEntityTransferCollection
      *
      * @return \Generated\Shared\Transfer\ShoppingListCollectionTransfer
@@ -72,6 +107,23 @@ class ShoppingListMapper implements ShoppingListMapperInterface
         $shoppingListEntity->fromArray($shoppingListTransfer->modifiedToArray());
 
         return $shoppingListEntity;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     */
+    protected function mapShoppingListItemCollectionTransferToShoppingListTransfer(
+        ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer,
+        ShoppingListTransfer $shoppingListTransfer
+    ): ShoppingListTransfer {
+        foreach ($shoppingListItemCollectionTransfer->getItems() as $shoppingListItemTransfer) {
+            $shoppingListTransfer->addItem($shoppingListItemTransfer);
+        }
+
+        return $shoppingListTransfer;
     }
 
     /**

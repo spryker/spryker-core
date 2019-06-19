@@ -223,11 +223,11 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
     {
         $shoppingListItemTransfer->requireIdShoppingListItem()->requireFkShoppingList();
 
-        $shoppingListTransfer = $this->shoppingListRepository->findShoppingListById(
+        $shoppingListTransfer = $this->shoppingListRepository->findShoppingListWithItemsByIdShoppingList(
             (new ShoppingListTransfer())->setIdShoppingList($shoppingListItemTransfer->getFkShoppingList())
         );
 
-        if (!$shoppingListTransfer) {
+        if (!$shoppingListTransfer || !$this->findShoppingListItemByIdInShoppingList($shoppingListItemTransfer, $shoppingListTransfer)) {
             return (new ShoppingListItemResponseTransfer())->setIsSuccess(false);
         }
 
@@ -284,6 +284,25 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
 
     /**
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer|null
+     */
+    protected function findShoppingListItemByIdInShoppingList(
+        ShoppingListItemTransfer $shoppingListItemTransfer,
+        ShoppingListTransfer $shoppingListTransfer
+    ): ?ShoppingListItemTransfer {
+        foreach ($shoppingListTransfer->getItems() as $ownShoppingListItemTransfer) {
+            if ($ownShoppingListItemTransfer->getIdShoppingListItem() === $shoppingListItemTransfer->getIdShoppingListItem()) {
+                return $ownShoppingListItemTransfer;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
      */
@@ -329,20 +348,10 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
      */
     protected function deleteShoppingListItemTransaction(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemResponseTransfer
     {
-        $shoppingListItemCollectionTransfer = $this->shoppingListRepository->findShoppingListItemsByIds([
-            $shoppingListItemTransfer->getIdShoppingListItem(),
-        ]);
-
-        if (!$shoppingListItemCollectionTransfer->getItems()->count()) {
-            return (new ShoppingListItemResponseTransfer())
-                ->setIsSuccess(false);
-        }
-
         $this->pluginExecutor->executeBeforeDeletePlugins($shoppingListItemTransfer);
         $this->shoppingListEntityManager->deleteShoppingListItem($shoppingListItemTransfer->getIdShoppingListItem());
 
-        return (new ShoppingListItemResponseTransfer())
-            ->setIsSuccess(true);
+        return (new ShoppingListItemResponseTransfer())->setIsSuccess(true);
     }
 
     /**
