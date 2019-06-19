@@ -99,7 +99,7 @@ class ContentFileClientTest extends Unit
      *
      * @return void
      */
-    protected function setStorageMock(ContentTypeContextTransfer $content)
+    protected function setStorageMock(ContentTypeContextTransfer $content): void
     {
         $contentFileToContentStorageClientBridge = $this->getMockBuilder(ContentFileToContentStorageClientInterface::class)->getMock();
         $contentFileToContentStorageClientBridge->method('findContentTypeContextByKey')->willReturn($content);

@@ -17,6 +17,7 @@ use Generated\Shared\Transfer\ContentFileListTermTransfer;
  * @group ContentFile
  * @group Business
  * @group Facade
+ * @group Facade
  * @group ContentFileFacadeTest
  * Add your own group annotations below this line
  */
