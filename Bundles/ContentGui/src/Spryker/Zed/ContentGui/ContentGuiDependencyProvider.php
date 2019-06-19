@@ -43,6 +43,7 @@ class ContentGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addContentPlugins($container);
         $container = $this->addContentEditorPlugins($container);
         $container = $this->addUtilEncoding($container);
+        $container = $this->addTranslatorFacade($container);
 
         return $container;
     }

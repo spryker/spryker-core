@@ -11,12 +11,13 @@ use Orm\Zed\Content\Persistence\Map\SpyContentTableMap;
 use Orm\Zed\Content\Persistence\SpyContentQuery;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\ContentGui\Communication\Controller\ListContentByTypeController;
+use Spryker\Zed\ContentGui\Dependency\Facade\ContentGuiToTranslatorFacadeInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class ContentByTypeTable extends AbstractTable
 {
-    protected const FIELD_ACTION_CONTENT_ITEM = '<input type="radio" %s  data-content-item-type="%s" data-content-item-name="%s" data-id="%d" name="content-item" value="%s"/>';
+    protected const FIELD_ACTION_CONTENT_ITEM = '<input type="radio" %s data-content-item-display-type="%s"  data-content-item-type="%s" data-content-item-name="%s" data-id="%d" name="content-item" value="%s"/>';
 
     /**
      * @var string
@@ -29,6 +30,11 @@ class ContentByTypeTable extends AbstractTable
     protected $contentQuery;
 
     /**
+     * @var \Spryker\Zed\ContentGui\Dependency\Facade\ContentGuiToTranslatorFacadeInterface
+     */
+    protected $translatorFacade;
+
+    /**
      * @var string|null
      */
     protected $contentKey;
@@ -36,15 +42,18 @@ class ContentByTypeTable extends AbstractTable
     /**
      * @param string $contentType
      * @param \Orm\Zed\Content\Persistence\SpyContentQuery $contentQuery
+     * @param \Spryker\Zed\ContentGui\Dependency\Facade\ContentGuiToTranslatorFacadeInterface $translatorFacade
      * @param string|null $contentKey
      */
     public function __construct(
         string $contentType,
         SpyContentQuery $contentQuery,
+        ContentGuiToTranslatorFacadeInterface $translatorFacade,
         ?string $contentKey = null
     ) {
         $this->contentType = $contentType;
         $this->contentQuery = $contentQuery;
+        $this->translatorFacade = $translatorFacade;
         $this->contentKey = $contentKey;
     }
 
@@ -148,6 +157,7 @@ class ContentByTypeTable extends AbstractTable
         return sprintf(
             static::FIELD_ACTION_CONTENT_ITEM,
             $selectedAttr,
+            $this->translatorFacade->trans($contentItem[ContentTableConstants::COL_CONTENT_TYPE_KEY]),
             $contentItem[ContentTableConstants::COL_CONTENT_TYPE_KEY],
             $contentItem[ContentTableConstants::COL_NAME],
             $contentItem[ContentTableConstants::COL_ID_CONTENT],
