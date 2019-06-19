@@ -35,6 +35,8 @@ class ShipmentMethodExpander implements ShipmentMethodExpanderInterface
      */
     public function expand(ShipmentMethodTransfer $shipmentMethodTransfer, OrderTransfer $orderTransfer): ShipmentMethodTransfer
     {
+        $shipmentMethodTransfer->requireIdShipmentMethod();
+
         $newShipmentTransfer = $this->shipmentFetcher
             ->findActiveShipmentMethodWithPricesAndCarrierById($shipmentMethodTransfer->getIdShipmentMethod());
 
