@@ -60,6 +60,7 @@ class ContentFileClientTest extends Unit
 
         $this->setStorageMock($content);
 
+        // Assert
         $this->expectExceptionObject(
             new InvalidFileListTermException(
                 sprintf(static::EXCEPTION_ERROR_MESSAGE, 'Banner')
