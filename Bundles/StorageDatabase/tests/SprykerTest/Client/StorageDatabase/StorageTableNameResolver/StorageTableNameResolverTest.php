@@ -9,6 +9,8 @@ namespace SprykerTest\Client\StorageDatabase\StorageTableNameResolver;
 
 use Codeception\Test\Unit;
 use Spryker\Client\StorageDatabase\StorageDatabaseFactory;
+use Spryker\Shared\StorageDatabase\StorageDatabaseConfig;
+use Spryker\Shared\StorageDatabase\StorageDatabaseConstants;
 
 /**
  * Auto-generated group annotations
@@ -18,6 +20,7 @@ use Spryker\Client\StorageDatabase\StorageDatabaseFactory;
  * @group StorageTableNameResolver
  * @group StorageTableNameResolverTest
  * Add your own group annotations below this line
+ * @property \SprykerTest\Client\StorageDatabase\StorageDatabaseClientTester $tester
  */
 class StorageTableNameResolverTest extends Unit
 {
@@ -32,6 +35,7 @@ class StorageTableNameResolverTest extends Unit
     protected function setUp(): void
     {
         parent::setUp();
+        $this->setupConfig();
         $this->setupStorageTableNameResolver();
     }
 
@@ -73,5 +77,26 @@ class StorageTableNameResolverTest extends Unit
     protected function setupStorageTableNameResolver(): void
     {
         $this->storageTableNameResolver = (new StorageDatabaseFactory())->createStorageTableNameResolver();
+    }
+
+    /**
+     * @return void
+     */
+    protected function setupConfig(): void
+    {
+        $this->tester->setConfig(StorageDatabaseConstants::RESOURCE_PREFIX_TO_STORAGE_TABLE_MAP, [
+            'translation' => [
+                StorageDatabaseConfig::KEY_STORAGE_TABLE_NAME => 'glossary',
+            ],
+            'product_search_config_extension' => [
+                StorageDatabaseConfig::KEY_STORAGE_TABLE_NAME => 'product_search_config',
+            ],
+            'product_abstract_product_lists' => [
+                StorageDatabaseConfig::KEY_STORAGE_TABLE_NAME => 'product_abstract_product_list',
+            ],
+            'product_concrete_product_lists' => [
+                StorageDatabaseConfig::KEY_STORAGE_TABLE_NAME => 'product_concrete_product_list',
+            ],
+        ]);
     }
 }

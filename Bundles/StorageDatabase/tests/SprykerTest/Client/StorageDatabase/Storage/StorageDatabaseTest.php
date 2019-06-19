@@ -26,7 +26,8 @@ use Spryker\Client\StorageDatabase\Storage\StorageDatabase;
  */
 class StorageDatabaseTest extends Unit
 {
-    protected const DUMMY_SINGLE_KEY = 'dummy_key';
+    protected const DUMMY_KEY = 'dummy_key';
+    protected const DUMMY_VALUE = 'dummy_value';
 
     /**
      * @var \Spryker\Client\StorageDatabase\Storage\Reader\AbstractStorageReader|\PHPUnit\Framework\MockObject\MockObject
@@ -53,7 +54,7 @@ class StorageDatabaseTest extends Unit
      */
     public function testGetReadsFromStorage(): void
     {
-        $dummyKey = 'dummy_key';
+        $dummyKey = static::DUMMY_KEY;
 
         $this->storageReaderMock
             ->expects($this->once())
@@ -77,7 +78,7 @@ class StorageDatabaseTest extends Unit
             ->method('get')
             ->willReturn($storageReaderReturnValue);
 
-        $result = $this->storageDatabase->get('dummy_key');
+        $result = $this->storageDatabase->get(static::DUMMY_KEY);
         $this->assertNotEmpty($result);
         $this->assertEquals($expectedResult, $result);
     }
@@ -88,9 +89,9 @@ class StorageDatabaseTest extends Unit
     public function getReturnsDecodedResultWhenPresentProvider(): array
     {
         return [
-            ['"dummy_value"', 'dummy_value'],
-            ['["dummy_value"]', ['dummy_value']],
-            ['{"dummy_key": "dummy_value"}', ['dummy_key' => 'dummy_value']],
+            [sprintf('"%s"', static::DUMMY_VALUE), static::DUMMY_VALUE],
+            [sprintf('["%s"]', static::DUMMY_VALUE), [static::DUMMY_VALUE]],
+            [sprintf('{"%s": "%s"}', static::DUMMY_KEY, static::DUMMY_VALUE), [static::DUMMY_KEY => static::DUMMY_VALUE]],
         ];
     }
 
@@ -103,7 +104,7 @@ class StorageDatabaseTest extends Unit
             ->method('get')
             ->willReturn('');
 
-        $this->assertNull($this->storageDatabase->get('dummy_key'));
+        $this->assertNull($this->storageDatabase->get(static::DUMMY_KEY));
     }
 
     /**
@@ -138,12 +139,12 @@ class StorageDatabaseTest extends Unit
     {
         $this->storageDatabase->setDebug(true);
 
-        $this->storageDatabase->get('dummy_key');
+        $this->storageDatabase->get(static::DUMMY_KEY);
         $accessStats = $this->storageDatabase->getAccessStats();
 
         $this->assertEquals(1, $accessStats['count']['read']);
         $this->assertCount(1, $accessStats['keys']['read']);
-        $this->assertEquals('dummy_key', $accessStats['keys']['read'][0]);
+        $this->assertEquals(static::DUMMY_KEY, $accessStats['keys']['read'][0]);
 
         return $accessStats;
     }
@@ -171,7 +172,7 @@ class StorageDatabaseTest extends Unit
     {
         $this->storageDatabase->setDebug(false);
 
-        $this->storageDatabase->get('dummy_key');
+        $this->storageDatabase->get(static::DUMMY_KEY);
         $accessStats = $this->storageDatabase->getAccessStats();
 
         $this->assertEquals($this->getEmptyAccessStats(), $accessStats);

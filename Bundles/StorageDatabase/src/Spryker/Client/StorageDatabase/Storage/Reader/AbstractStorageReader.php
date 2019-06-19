@@ -125,7 +125,7 @@ abstract class AbstractStorageReader
     {
         $multiTableQueryInputData = [];
 
-        foreach ($queryDataPerTable as $tableName => $tableQueryData) {
+        foreach ($queryDataPerTable as $tableQueryData) {
             foreach ($tableQueryData as $fieldQueryData) {
                 $multiTableQueryInputData = array_merge($multiTableQueryInputData, $fieldQueryData);
             }
@@ -202,11 +202,21 @@ abstract class AbstractStorageReader
      */
     protected function getSqlSelectFragment(string $tableName, array $keyPlaceholders, array $aliasKeysPlaceholders): string
     {
-        if (count($keyPlaceholders) === 1 && count($aliasKeysPlaceholders) === 1) {
+        if ($this->isSingleCriterionQuery($keyPlaceholders)) {
             return $this->buildSingleCriterionQuerySql($tableName, current($keyPlaceholders), current($aliasKeysPlaceholders));
         }
 
         return $this->buildMultiCriteriaQuerySql($tableName, $keyPlaceholders, $aliasKeysPlaceholders);
+    }
+
+    /**
+     * @param string[] $keyPlaceholders
+     *
+     * @return bool
+     */
+    protected function isSingleCriterionQuery(array $keyPlaceholders): bool
+    {
+        return count($keyPlaceholders) === 1;
     }
 
     /**
