@@ -14,6 +14,11 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
  */
 class CommentConfig extends AbstractBundleConfig
 {
-    public const COMMENT_THREAD_QUOTE_OWNER_TYPE = 'quote';
-    public const COMMENT_THREAD_SALES_ORDER_OWNER_TYPE = 'sales_order';
+    /**
+     * @return string[]
+     */
+    public function getCommentAvailableTags(): array
+    {
+        return $this->getSharedConfig()->getCommentAvailableTags();
+    }
 }

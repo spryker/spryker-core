@@ -110,25 +110,35 @@ class CommentThreadWriter implements CommentThreadWriterInterface
         $commentTransfers = $this->commentRepository->getCommentsByFilter($commentFilterTransfer);
 
         foreach ($commentTransfers as $commentTransfer) {
-            $newCommentTransfer = (new CommentTransfer())
-                ->setCustomer($commentTransfer->getCustomer())
-                ->setIdCommentThread($commentThreadTransfer->getIdCommentThread())
-                ->setMessage($commentTransfer->getMessage())
-                ->setIsUpdated($commentTransfer->getIsUpdated())
-                ->setTags($commentTransfer->getTags());
+            $duplicatedCommentTransfer = $this->duplicateComment($commentTransfer, $commentThreadTransfer);
+            $duplicatedCommentTransfer = $this->commentEntityManager->createComment($duplicatedCommentTransfer);
 
-            $newCommentTransfer = $this->commentEntityManager->createComment($newCommentTransfer);
-
-            if ($newCommentTransfer->getTags()->count()) {
-                $this->commentTagWriter->saveCommentTags($newCommentTransfer);
+            if ($duplicatedCommentTransfer->getTags()->count()) {
+                $this->commentTagWriter->saveCommentTags($duplicatedCommentTransfer);
             }
 
-            $commentThreadTransfer->addComment($newCommentTransfer);
+            $commentThreadTransfer->addComment($duplicatedCommentTransfer);
         }
 
         return (new CommentThreadResponseTransfer())
             ->setIsSuccessful(true)
             ->setCommentThread($commentThreadTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CommentTransfer $commentTransfer
+     * @param \Generated\Shared\Transfer\CommentThreadTransfer $commentThreadTransfer
+     *
+     * @return \Generated\Shared\Transfer\CommentTransfer
+     */
+    protected function duplicateComment(CommentTransfer $commentTransfer, CommentThreadTransfer $commentThreadTransfer): CommentTransfer
+    {
+        return (new CommentTransfer())
+            ->setCustomer($commentTransfer->getCustomer())
+            ->setIdCommentThread($commentThreadTransfer->getIdCommentThread())
+            ->setMessage($commentTransfer->getMessage())
+            ->setIsUpdated($commentTransfer->getIsUpdated())
+            ->setTags($commentTransfer->getTags());
     }
 
     /**

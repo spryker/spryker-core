@@ -33,7 +33,6 @@ class CommentBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->getRepository(),
             $this->createCommentReader(),
-            $this->createCommentTagWriter(),
             $this->createCommentThreadWriter()
         );
     }

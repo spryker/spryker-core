@@ -11,4 +11,13 @@ use Spryker\Shared\Kernel\AbstractSharedConfig;
 
 class CommentConfig extends AbstractSharedConfig
 {
+    protected const COMMENT_AVAILABLE_TAGS = [];
+
+    /**
+     * @return string[]
+     */
+    public function getCommentAvailableTags(): array
+    {
+        return static::COMMENT_AVAILABLE_TAGS;
+    }
 }

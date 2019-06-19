@@ -43,11 +43,6 @@ class CommentWriter implements CommentWriterInterface
     protected $commentReader;
 
     /**
-     * @var \Spryker\Zed\Comment\Business\Writer\CommentTagWriterInterface
-     */
-    protected $commentTagWriter;
-
-    /**
      * @var \Spryker\Zed\Comment\Business\Writer\CommentThreadWriterInterface
      */
     protected $commentThreadWriter;
@@ -56,20 +51,17 @@ class CommentWriter implements CommentWriterInterface
      * @param \Spryker\Zed\Comment\Persistence\CommentEntityManagerInterface $commentEntityManager
      * @param \Spryker\Zed\Comment\Persistence\CommentRepositoryInterface $commentRepository
      * @param \Spryker\Zed\Comment\Business\Reader\CommentReaderInterface $commentReader
-     * @param \Spryker\Zed\Comment\Business\Writer\CommentTagWriterInterface $commentTagWriter
      * @param \Spryker\Zed\Comment\Business\Writer\CommentThreadWriterInterface $commentThreadWriter
      */
     public function __construct(
         CommentEntityManagerInterface $commentEntityManager,
         CommentRepositoryInterface $commentRepository,
         CommentReaderInterface $commentReader,
-        CommentTagWriterInterface $commentTagWriter,
         CommentThreadWriterInterface $commentThreadWriter
     ) {
         $this->commentEntityManager = $commentEntityManager;
         $this->commentRepository = $commentRepository;
         $this->commentReader = $commentReader;
-        $this->commentTagWriter = $commentTagWriter;
         $this->commentThreadWriter = $commentThreadWriter;
     }
 
@@ -157,17 +149,8 @@ class CommentWriter implements CommentWriterInterface
         $commentThreadTransfer = $this->getCommentThread($commentRequestTransfer);
         $commentTransfer->setIdCommentThread($commentThreadTransfer->getIdCommentThread());
 
-        $commentTransfer = $this->commentEntityManager->createComment($commentTransfer);
-
-        if ($commentTransfer->getTags()->count()) {
-            $this->commentTagWriter->saveCommentTags($commentTransfer);
-        }
-
-        $commentThreadTransfer = $this->commentReader->findCommentThreadByOwner($commentRequestTransfer);
-
-        if (!$commentThreadTransfer) {
-            return $this->createErrorResponse(static::GLOSSARY_KEY_COMMENT_THREAD_NOT_FOUND);
-        }
+        $this->commentEntityManager->createComment($commentTransfer);
+        $commentThreadTransfer->addComment($commentTransfer);
 
         return (new CommentThreadResponseTransfer())
             ->setIsSuccessful(true)
@@ -202,7 +185,6 @@ class CommentWriter implements CommentWriterInterface
         }
 
         $commentTransfer = $this->commentEntityManager->updateComment($commentTransfer);
-        $this->commentTagWriter->saveCommentTags($commentTransfer);
 
         return $this->createCommentThreadResponse($commentTransfer);
     }

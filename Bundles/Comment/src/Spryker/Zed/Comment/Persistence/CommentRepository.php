@@ -161,15 +161,6 @@ class CommentRepository extends AbstractRepository implements CommentRepositoryI
             ->endUse()
             ->orderByIdComment();
 
-        if ($commentFilterTransfer->getTags()) {
-            $commentQuery
-                ->useSpyCommentToCommentTagQuery(null, Criteria::LEFT_JOIN)
-                    ->useSpyCommentTagQuery(null, Criteria::LEFT_JOIN)
-                        ->filterByName_In($commentFilterTransfer->getTags())
-                    ->endUse()
-                ->endUse();
-        }
-
         return $this->getFactory()
             ->createCommentMapper()
             ->mapCommentEntitiesToCommentTransfers($commentQuery->find());

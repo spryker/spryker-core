@@ -16,8 +16,6 @@ use Spryker\Zed\CommentSalesConnector\Dependency\Facade\CommentSalesConnectorToC
 
 class CommentWriter implements CommentWriterInterface
 {
-    protected const COMMENT_TAG_ATTACHED = 'attached';
-
     /**
      * @var \Spryker\Zed\CommentSalesConnector\Dependency\Facade\CommentSalesConnectorToCommentFacadeInterface
      */
@@ -49,8 +47,7 @@ class CommentWriter implements CommentWriterInterface
 
         $commentFilterTransfer = (new CommentFilterTransfer())
             ->setOwnerId($quoteTransfer->getCommentThread()->getOwnerId())
-            ->setOwnerType($quoteTransfer->getCommentThread()->getOwnerType())
-            ->setTags([static::COMMENT_TAG_ATTACHED]);
+            ->setOwnerType($quoteTransfer->getCommentThread()->getOwnerType());
 
         $commentRequestTransfer = (new CommentRequestTransfer())
             ->setOwnerId($saveOrderTransfer->getIdSalesOrder())
