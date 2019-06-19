@@ -1,16 +1,16 @@
 {% set deleteButtonTemplate %}
-    <button type="button" class="js-delete-product-abstract btn btn-sm btn-outline btn-danger">
+    <a href="#" onclick="return false;" class="js-delete-product-abstract btn btn-xs btn-outline btn-danger">
         <i class="fa fa-trash"></i>
-        Delete
-        </button>
-    <button type="button" data-direction="up" class="js-reorder-product-abstract btn btn-sm btn-outline btn-create">
+        {{ 'Delete' | trans }}
+    </a>
+    <a href="#" data-direction="up" onclick="return false;" class="js-reorder-product-abstract btn btn-xs btn-outline btn-create">
         <i class="fa fa-arrow-up"></i>
-        Move Up
-        </button>
-    <button type="button" data-direction="down" class="js-reorder-product-abstract btn btn-sm btn-outline btn-create">
+        {{ 'Move Up' | trans }}
+    </a>
+    <a href="#" data-direction="down" onclick="return false;" class="js-reorder-product-abstract btn btn-xs btn-outline btn-create">
         <i class="fa fa-arrow-down"></i>
-        Move Down
-    </button>
+        {{ 'Move Down' | trans }}
+    </a>
 {% endset %}
 <div
     class="id-product-abstract-fields"

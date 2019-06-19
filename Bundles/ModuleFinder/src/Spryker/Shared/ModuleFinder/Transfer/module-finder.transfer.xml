@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<transfers
+    xmlns="spryker:transfer-01"
+    xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="spryker:transfer-01 https://static.spryker.com/transfer-01.xsd"
+>
+
+    <transfer name="ModuleFilter">
+        <property name="organization" type="Organization"/>
+        <property name="module" type="Module"/>
+        <property name="application" type="Application"/>
+    </transfer>
+
+    <transfer name="Package">
+        <property name="composerName" type="string"/>
+        <property name="organizationName" type="string"/>
+        <property name="organizationNameDashed" type="string"/>
+        <property name="packageName" type="string"/>
+        <property name="packageNameDashed" type="string"/>
+        <property name="path" type="string"/>
+    </transfer>
+
+    <transfer name="Module">
+        <property name="name" type="string"/>
+        <property name="nameDashed" type="string"/>
+        <property name="organization" type="Organization"/>
+        <property name="application" type="Application"/>
+        <property name="applications" type="Application[]" singular="application"/>
+        <property name="path" type="string"/>
+        <property name="isStandalone" type="bool"/>
+    </transfer>
+
+    <transfer name="Organization">
+        <property name="name" type="string"/>
+        <property name="nameDashed" type="string"/>
+        <property name="isProject" type="bool"/>
+    </transfer>
+
+    <transfer name="Application">
+        <property name="name" type="string"/>
+    </transfer>
+
+</transfers>

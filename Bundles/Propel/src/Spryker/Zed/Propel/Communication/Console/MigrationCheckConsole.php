@@ -7,13 +7,9 @@
 
 namespace Spryker\Zed\Propel\Communication\Console;
 
-use Spryker\Shared\Config\Config;
-use Spryker\Shared\Propel\PropelConstants;
 use Spryker\Zed\Kernel\Communication\Console\Console;
-use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Process\Process;
 
 /**
  * @method \Spryker\Zed\Propel\Business\PropelFacadeInterface getFacade()
@@ -22,9 +18,8 @@ use Symfony\Component\Process\Process;
 class MigrationCheckConsole extends Console
 {
     public const COMMAND_NAME = 'propel:migration:check';
+    public const COMMAND_DESCRIPTION = 'propel:migration:check';
     public const CODE_CHANGES = 3;
-
-    public const MESSAGE_MIGRATION_PATTERN = '(migrations?\sneeds?\sto\sbe\sexecuted)';
 
     /**
      * @return void
@@ -32,7 +27,7 @@ class MigrationCheckConsole extends Console
     protected function configure()
     {
         $this->setName(static::COMMAND_NAME);
-        $this->setDescription('Checks if migration needs to be executed. Scripts can use return code ' . static::CODE_SUCCESS . ' (all good) vs ' . static::CODE_CHANGES . ' (migration needed).');
+        $this->setDescription(static::COMMAND_DESCRIPTION);
 
         parent::configure();
     }
@@ -43,44 +38,16 @@ class MigrationCheckConsole extends Console
      *
      * @return int
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $output->writeln('Checking if migration is needed:' . PHP_EOL);
+        $this->info($this->getDescription());
 
-        $config = Config::get(PropelConstants::PROPEL);
-        $command = 'APPLICATION_ENV=' . APPLICATION_ENV
-            . ' APPLICATION_STORE=' . APPLICATION_STORE
-            . ' APPLICATION_ROOT_DIR=' . APPLICATION_ROOT_DIR
-            . ' APPLICATION=' . APPLICATION
-            . ' vendor/bin/propel status --config-dir '
-            . $config['paths']['phpConfDir'];
+        $command = $this->getFactory()->createMigrationStatusCommand();
 
-        $process = new Process($command, APPLICATION_ROOT_DIR);
-        $process->run();
-
-        $processOutput = $process->getOutput();
-        if ($this->checkIfMigrationRunNeeded($processOutput)) {
-            $output->writeln($processOutput, OutputInterface::VERBOSITY_VERBOSE);
-
-            $output->writeln('<error>migration needed</error>');
-
-            return static::CODE_CHANGES;
-        }
-
-        $style = new OutputFormatterStyle('black', 'green');
-        $this->output->getFormatter()->setStyle('success', $style);
-        $output->writeln('<success>migration not needed</success>');
-
-        return static::CODE_SUCCESS;
-    }
-
-    /**
-     * @param string $processOutput
-     *
-     * @return bool
-     */
-    protected function checkIfMigrationRunNeeded(string $processOutput): bool
-    {
-        return (bool)preg_match(static::MESSAGE_MIGRATION_PATTERN, $processOutput);
+        return $this->getFactory()->createPropelCommandRunner()->runCommand(
+            $command,
+            $this->getDefinition(),
+            $output
+        );
     }
 }

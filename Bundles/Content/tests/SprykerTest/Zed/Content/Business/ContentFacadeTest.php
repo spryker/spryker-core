@@ -27,6 +27,7 @@ class ContentFacadeTest extends Test
     private const NAME = 'New name';
     private const PARAMETERS = '{"sku"}';
     private const DESCRIPTION = 'Test description';
+    protected const KEY = 'name-1';
 
     /**
      * @var \SprykerTest\Zed\Content\ContentBusinessTester
@@ -39,7 +40,18 @@ class ContentFacadeTest extends Test
     public function testFindContentById(): void
     {
         $contentTransfer = $this->tester->haveContent();
-        $foundContentTransfer = $this->getFacade()->findContentById($contentTransfer->getIdContent());
+        $foundContentTransfer = $this->tester->getFacade()->findContentById($contentTransfer->getIdContent());
+
+        $this->assertNotNull($foundContentTransfer->getIdContent());
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindContentByKey(): void
+    {
+        $contentTransfer = $this->tester->haveContent();
+        $foundContentTransfer = $this->tester->getFacade()->findContentByKey($contentTransfer->getKey());
 
         $this->assertNotNull($foundContentTransfer->getIdContent());
     }
@@ -56,11 +68,51 @@ class ContentFacadeTest extends Test
                         LocalizedContentTransfer::PARAMETERS => '{}',
                     ],
                 ],
+                ContentTransfer::KEY => static::KEY,
             ]
         ))->build();
-        $createdContentTransfer = $this->getFacade()->create($contentTransfer);
+        $createdContentTransfer = $this->tester->getFacade()->create($contentTransfer);
 
         $this->assertNotNull($createdContentTransfer->getIdContent());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreateContentWithProvidedKeyHasSameKey(): void
+    {
+        $contentTransfer = (new ContentBuilder(
+            [
+                ContentTransfer::LOCALIZED_CONTENTS => [
+                    [
+                        LocalizedContentTransfer::PARAMETERS => '{}',
+                    ],
+                ],
+                ContentTransfer::KEY => static::KEY,
+            ]
+        ))->build();
+        $createdContentTransfer = $this->tester->getFacade()->create($contentTransfer);
+
+        $this->assertEquals($createdContentTransfer->getKey(), static::KEY);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreateContentWithEmptyKeyGeneratesKey(): void
+    {
+        $contentTransfer = (new ContentBuilder(
+            [
+                ContentTransfer::LOCALIZED_CONTENTS => [
+                    [
+                        LocalizedContentTransfer::PARAMETERS => '{}',
+                    ],
+                ],
+            ]
+        ))->build();
+        $createdContentTransfer = $this->tester->getFacade()->create($contentTransfer);
+
+        $this->assertNotNull($createdContentTransfer->getKey());
     }
 
     /**
@@ -73,9 +125,9 @@ class ContentFacadeTest extends Test
         $contentTransfer->setName(static::NAME);
         $contentTransfer->getLocalizedContents()[0]->setParameters(static::PARAMETERS);
 
-        $this->getFacade()->update($contentTransfer);
+        $this->tester->getFacade()->update($contentTransfer);
 
-        $updatedContentTransfer = $this->getFacade()->findContentById($contentTransfer->getIdContent());
+        $updatedContentTransfer = $this->tester->getFacade()->findContentById($contentTransfer->getIdContent());
 
         $this->assertEquals($contentTransfer->getName(), $updatedContentTransfer->getName());
         $this->assertEquals(
@@ -89,11 +141,12 @@ class ContentFacadeTest extends Test
      */
     public function testValidateSuccess(): void
     {
-        $contentTransfer = $this->tester->haveContent();
+        $contentTransfer = new ContentTransfer();
         $contentTransfer->setName(static::NAME);
         $contentTransfer->setDescription(static::DESCRIPTION);
+        $contentTransfer->setKey(static::KEY);
 
-        $validationResponse = $this->getFacade()->validateContent($contentTransfer);
+        $validationResponse = $this->tester->getFacade()->validateContent($contentTransfer);
 
         $this->assertTrue($validationResponse->getIsSuccess());
     }
@@ -103,11 +156,12 @@ class ContentFacadeTest extends Test
      */
     public function testValidateFailsOnEmptyName(): void
     {
-        $contentTransfer = $this->tester->haveContent();
+        $contentTransfer = new ContentTransfer();
         $contentTransfer->setName('');
         $contentTransfer->setDescription(static::DESCRIPTION);
+        $contentTransfer->setKey(static::KEY);
 
-        $validationResponse = $this->getFacade()->validateContent($contentTransfer);
+        $validationResponse = $this->tester->getFacade()->validateContent($contentTransfer);
 
         $this->assertFalse($validationResponse->getIsSuccess());
     }
@@ -115,22 +169,30 @@ class ContentFacadeTest extends Test
     /**
      * @return void
      */
-    public function testValidateFailsOnVeryLongDescription()
+    public function testValidateFailsOnVeryLongDescription(): void
     {
-        $contentTransfer = $this->tester->haveContent();
+        $contentTransfer = new ContentTransfer();
         $contentTransfer->setName(static::NAME);
         $contentTransfer->setDescription(str_repeat(static::DESCRIPTION, 100));
+        $contentTransfer->setKey(static::KEY);
 
-        $validationResponse = $this->getFacade()->validateContent($contentTransfer);
+        $validationResponse = $this->tester->getFacade()->validateContent($contentTransfer);
 
         $this->assertFalse($validationResponse->getIsSuccess());
     }
 
     /**
-     * @return \Spryker\Zed\Content\Business\ContentFacadeInterface|\Spryker\Zed\Kernel\Business\AbstractFacade
+     * @return void
      */
-    protected function getFacade()
+    public function testValidateFailsOnIncorrectlyFormattedKey(): void
     {
-        return $this->tester->getFacade();
+        $contentTransfer = new ContentTransfer();
+        $contentTransfer->setName(static::NAME);
+        $contentTransfer->setDescription(static::DESCRIPTION);
+        $contentTransfer->setKey('Wrong-key');
+
+        $validationResponse = $this->tester->getFacade()->validateContent($contentTransfer);
+
+        $this->assertFalse($validationResponse->getIsSuccess());
     }
 }

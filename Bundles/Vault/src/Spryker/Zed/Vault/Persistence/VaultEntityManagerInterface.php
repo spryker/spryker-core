@@ -21,7 +21,7 @@ interface VaultEntityManagerInterface
     /**
      * @param \Generated\Shared\Transfer\VaultDepositTransfer $vaultDepositTransfer
      *
-     * @return bool
+     * @return void
      */
-    public function updateVaultDeposit(VaultDepositTransfer $vaultDepositTransfer): bool;
+    public function updateVaultDeposit(VaultDepositTransfer $vaultDepositTransfer): void;
 }

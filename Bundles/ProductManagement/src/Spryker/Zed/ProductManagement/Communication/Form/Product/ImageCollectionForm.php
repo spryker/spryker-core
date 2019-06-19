@@ -10,10 +10,13 @@ namespace Spryker\Zed\ProductManagement\Communication\Form\Product;
 use Spryker\Zed\Gui\Communication\Form\Type\ImageType;
 use Spryker\Zed\ProductManagement\Communication\Form\AbstractSubForm;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
 use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\LessThanOrEqual;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
@@ -33,6 +36,23 @@ class ImageCollectionForm extends AbstractSubForm
 
     public const OPTION_IMAGE_PREVIEW_LARGE_URL = 'option_image_preview_large_url';
 
+    protected const MAX_SORT_ORDER_VALUE = 2147483647; // 32 bit integer
+    protected const MIN_SORT_ORDER_VALUE = 0;
+    protected const DEFAULT_SORT_ORDER_VALUE = 0;
+
+    /**
+     * @uses \Spryker\Zed\Gui\Communication\Form\Type\ImageType::OPTION_IMAGE_WIDTH
+     */
+    protected const OPTION_IMAGE_WIDTH = 'image_width';
+
+    /**
+     * @return string
+     */
+    public function getBlockPrefix()
+    {
+        return 'product_image_collection';
+    }
+
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
@@ -45,12 +65,12 @@ class ImageCollectionForm extends AbstractSubForm
 
         $this
             ->addProductImageIdHiddenField($builder, $options)
-            ->addProductImageLargeUrlHiddenField($builder, $options)
+            ->addProductImageLargeUrlField($builder, $options)
             ->addImageSetIdHiddenField($builder, $options)
             ->addImagePreviewField($builder, $options)
             ->addImageSmallField($builder, $options)
             ->addImageBigField($builder, $options)
-            ->addOrderHiddenField($builder, $options);
+            ->addSortOrderField($builder, $options);
     }
 
     /**
@@ -89,10 +109,12 @@ class ImageCollectionForm extends AbstractSubForm
      *
      * @return $this
      */
-    protected function addProductImageLargeUrlHiddenField(FormBuilderInterface $builder, array $options = [])
+    protected function addProductImageLargeUrlField(FormBuilderInterface $builder, array $options = [])
     {
-        $builder
-            ->add(self::FIELD_IMAGE_PREVIEW_LARGE_URL, HiddenType::class, []);
+        $builder->add(static::FIELD_IMAGE_PREVIEW_LARGE_URL, ImageType::class, [
+            'label' => false,
+            static::OPTION_IMAGE_WIDTH => 150,
+        ]);
 
         return $this;
     }
@@ -123,7 +145,7 @@ class ImageCollectionForm extends AbstractSubForm
             ->add(self::FIELD_IMAGE_PREVIEW, ImageType::class, [
                 'required' => false,
                 'label' => false,
-                ImageType::OPTION_IMAGE_WIDTH => 150,
+                static::OPTION_IMAGE_WIDTH => 150,
             ]);
 
         return $this;
@@ -140,7 +162,7 @@ class ImageCollectionForm extends AbstractSubForm
         $builder
             ->add(self::FIELD_IMAGE_SMALL, TextType::class, [
                 'required' => true,
-                'label' => 'Small',
+                'label' => 'Small Image URL',
                 'constraints' => [
                     new NotBlank(),
                     new Length([
@@ -164,7 +186,7 @@ class ImageCollectionForm extends AbstractSubForm
         $builder
             ->add(self::FIELD_IMAGE_LARGE, TextType::class, [
                 'required' => true,
-                'label' => 'Large',
+                'label' => 'Large Image URL',
                 'constraints' => [
                     new NotBlank(),
                     new Length([
@@ -183,10 +205,23 @@ class ImageCollectionForm extends AbstractSubForm
      *
      * @return $this
      */
-    protected function addOrderHiddenField(FormBuilderInterface $builder, array $options = [])
+    protected function addSortOrderField(FormBuilderInterface $builder, array $options = [])
     {
         $builder
-            ->add(self::FIELD_SORT_ORDER, HiddenType::class, []);
+            ->add(static::FIELD_SORT_ORDER, NumberType::class, [
+                'constraints' => [
+                    new NotBlank(),
+                    new LessThanOrEqual([
+                        'value' => static::MAX_SORT_ORDER_VALUE,
+                    ]),
+                    new GreaterThanOrEqual([
+                        'value' => static::MIN_SORT_ORDER_VALUE,
+                    ]),
+                ],
+                'attr' => [
+                    'data-sort-order' => static::DEFAULT_SORT_ORDER_VALUE,
+                ],
+            ]);
 
         return $this;
     }

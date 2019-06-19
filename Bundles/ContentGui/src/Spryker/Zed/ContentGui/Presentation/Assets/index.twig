@@ -11,10 +11,28 @@
     window.editorConfiguration.contentGuiConfigData = {
         dropDownItems: {{ dropdownItems | json_encode | raw }},
         dialogContentUrl: '/content-gui/list-content-by-type',
+        contentItemUrl: '/content-gui/edit-content',
         buttonTitle: '{{ 'Content Item' | trans }}',
         title: '{{ 'Insert a Content Item' | trans }}',
-        insertButtonTitle: '{{ 'Insert' | trans }}'
+        insertButtonTitle: '{{ 'Insert' | trans }}',
+        editorContentWidgetTemplate: '{{ editorContentWidgetTemplate | raw }}',
+        popoverButtons: {
+            editWidget: {
+                icon: '<i class="fa fa-pencil" aria-hidden="true"></i>',
+                title: '{{ 'Edit Widget' | trans }}'
+            },
+            editContentItem: {
+                icon: '<i class="fa fa-pencil" aria-hidden="true"></i>',
+                title: '{{ 'Edit Content Item' | trans }}'
+            },
+            removeContentItem: {
+                icon: '<i class="fa fa-trash-o" aria-hidden="true"></i>',
+                title: ''
+            }
+        },
+        maxWidgetNumber: {{ maxWidgetNumber }}
     };
 </script>
+
 <script src="/assets/js/spryker-zed-content-item.js"></script>
 <link rel="stylesheet" href="/assets/css/spryker-zed-content-item.css" />

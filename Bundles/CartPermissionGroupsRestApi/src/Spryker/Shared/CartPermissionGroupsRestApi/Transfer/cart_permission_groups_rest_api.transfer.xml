@@ -17,4 +17,12 @@
         <property name="idQuotePermissionGroup" type="int"/>
     </transfer>
 
+    <transfer name="Quote">
+        <property name="quotePermissionGroup" type="QuotePermissionGroup"/>
+    </transfer>
+
+    <transfer name="ShareDetail">
+        <property name="quotePermissionGroup" type="QuotePermissionGroup"/>
+    </transfer>
+
 </transfers>
