@@ -26,7 +26,7 @@ class ProductListDataLoaderPlugin extends AbstractPlugin implements ProductPageD
      *
      * @return \Generated\Shared\Transfer\ProductPageLoadTransfer
      */
-    public function expandProductPageDataTransfer(ProductPageLoadTransfer $loadTransfer): ProductPageLoadTransfer
+    public function expandProductPageDataTransfer(ProductPageLoadTransfer $loadTransfer)
     {
         return $this->getFacade()->expandProductPageData($loadTransfer);
     }

@@ -26,22 +26,22 @@ class ProductPageDataExpander implements ProductPageDataExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductPageLoadTransfer $loadTransfer
+     * @param \Generated\Shared\Transfer\ProductPageLoadTransfer $productPageLoadTransfer
      *
      * @return \Generated\Shared\Transfer\ProductPageLoadTransfer
      */
-    public function expandProductPageData(ProductPageLoadTransfer $loadTransfer): ProductPageLoadTransfer
+    public function expandProductPageData(ProductPageLoadTransfer $productPageLoadTransfer): ProductPageLoadTransfer
     {
-        $productList = $this->productListFacade->getProductAbstractListIdsByProductAbstractIds($loadTransfer->getProductAbstractIds());
+        $productList = $this->productListFacade->getProductAbstractListIdsByProductAbstractIds($productPageLoadTransfer->getProductAbstractIds());
 
         $updatedPayloadTransfers = $this->updatePayloadTransfers(
-            $loadTransfer->getPayloadTransfers(),
+            $productPageLoadTransfer->getPayloadTransfers(),
             $productList
         );
 
-        $loadTransfer->setPayloadTransfers($updatedPayloadTransfers);
+        $productPageLoadTransfer->setPayloadTransfers($updatedPayloadTransfers);
 
-        return $loadTransfer;
+        return $productPageLoadTransfer;
     }
 
     /**

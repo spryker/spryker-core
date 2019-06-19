@@ -76,9 +76,9 @@ class ProductListDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addMessengerFacade(Container $container): Container
     {
-        $container[static::FACADE_MESSENGER] = function (Container $container) {
+        $container->set(static::FACADE_MESSENGER, function (Container $container) {
             return new ProductListToMessengerFacadeBridge($container->getLocator()->messenger()->facade());
-        };
+        });
 
         return $container;
     }
@@ -90,9 +90,9 @@ class ProductListDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addProductFacade(Container $container): Container
     {
-        $container[static::FACADE_PRODUCT] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT, function (Container $container) {
             return new ProductListToProductFacadeBridge($container->getLocator()->product()->facade());
-        };
+        });
 
         return $container;
     }
@@ -104,9 +104,9 @@ class ProductListDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addProductListPreCreatePlugins(Container $container): Container
     {
-        $container[static::PLUGINS_PRODUCT_LIST_PRE_CREATE] = function (Container $container) {
+        $container->set(static::PLUGINS_PRODUCT_LIST_PRE_CREATE, function (Container $container) {
             return $this->getProductListPreCreatePlugins();
-        };
+        });
 
         return $container;
     }
@@ -118,9 +118,9 @@ class ProductListDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addProductListPreUpdatePlugins(Container $container): Container
     {
-        $container[static::PLUGINS_PRODUCT_LIST_PRE_UPDATE] = function (Container $container) {
+        $container->set(static::PLUGINS_PRODUCT_LIST_PRE_UPDATE, function (Container $container) {
             return $this->getProductListPreUpdatePlugins();
-        };
+        });
 
         return $container;
     }
