@@ -7,11 +7,11 @@
 
 namespace Spryker\Zed\Shipment\Business\Model;
 
-use Spryker\Zed\Shipment\Business\ShipmentMethod\MethodReaderInterface;
+use Spryker\Zed\Shipment\Business\ShipmentMethod\MethodInterface as ShipmentMethodInterface;
 
 /**
  * @deprecated Use \Spryker\Zed\Shipment\Business\ShipmentMethod\MethodReaderInterface instead.
  */
-interface MethodInterface extends MethodReaderInterface
+interface MethodInterface extends ShipmentMethodInterface
 {
 }

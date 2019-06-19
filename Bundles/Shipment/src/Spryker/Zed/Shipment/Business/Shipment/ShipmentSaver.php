@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\SaveOrderTransfer;
 use Generated\Shared\Transfer\ShipmentGroupResponseTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
+use Spryker\Service\Shipment\ShipmentServiceInterface;
 use Spryker\Zed\Shipment\Business\Checkout\MultiShipmentOrderSaverInterface;
 use Spryker\Zed\Shipment\Business\Sanitizer\ExpenseSanitizerInterface;
 use Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentMethodExpanderInterface;
@@ -36,18 +37,26 @@ class ShipmentSaver implements ShipmentSaverInterface
     protected $expenseSanitizer;
 
     /**
+     * @var \Spryker\Service\Shipment\ShipmentServiceInterface
+     */
+    protected $shipmentService;
+
+    /**
      * @param \Spryker\Zed\Shipment\Business\Checkout\MultiShipmentOrderSaverInterface $shipmentOrderSaver
      * @param \Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentMethodExpanderInterface $shipmentMethodExpander
      * @param \Spryker\Zed\Shipment\Business\Sanitizer\ExpenseSanitizerInterface $expenseSanitizer
+     * @param \Spryker\Service\Shipment\ShipmentServiceInterface $shipmentService
      */
     public function __construct(
         MultiShipmentOrderSaverInterface $shipmentOrderSaver,
         ShipmentMethodExpanderInterface $shipmentMethodExpander,
-        ExpenseSanitizerInterface $expenseSanitizer
+        ExpenseSanitizerInterface $expenseSanitizer,
+        ShipmentServiceInterface $shipmentService
     ) {
         $this->shipmentOrderSaver = $shipmentOrderSaver;
         $this->shipmentMethodExpander = $shipmentMethodExpander;
         $this->expenseSanitizer = $expenseSanitizer;
+        $this->shipmentService = $shipmentService;
     }
 
     /**
@@ -99,19 +108,17 @@ class ShipmentSaver implements ShipmentSaverInterface
         ShipmentTransfer $shipmentTransfer,
         OrderTransfer $orderTransfer
     ): ?ExpenseTransfer {
-        $shipmentMethodTransfer = $shipmentTransfer->requireMethod()->getMethod();
+        $shipmentMethodHashKey = $this->shipmentService->getShipmentHashKey($shipmentTransfer);
         foreach ($orderTransfer->getExpenses() as $expenseTransfer) {
             $expenseShipmentTransfer = $expenseTransfer->getShipment();
             if ($expenseShipmentTransfer === null) {
                 continue;
             }
 
-            $expenseShipmentMethodTransfer = $expenseShipmentTransfer->getMethod();
-            if ($expenseShipmentMethodTransfer === null) {
-                continue;
-            }
+            $isShipmentEqualToShipmentHash = $this->shipmentService
+                ->isShipmentEqualToShipmentHash($expenseShipmentTransfer, $shipmentMethodHashKey);
 
-            if ($expenseShipmentMethodTransfer->getIdShipmentMethod() !== $shipmentMethodTransfer->getIdShipmentMethod()) {
+            if (!$isShipmentEqualToShipmentHash) {
                 continue;
             }
 

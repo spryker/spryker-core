@@ -29,27 +29,30 @@ class MethodAvailabilityChecker implements MethodAvailabilityCheckerInterface
 
     /**
      * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
-     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer|null $shipmentGroupTransfer
      *
      * @return bool
      */
     public function isShipmentMethodAvailableForShipmentGroup(
         ShipmentMethodTransfer $shipmentMethodTransfer,
-        ShipmentGroupTransfer $shipmentGroupTransfer,
-        QuoteTransfer $quoteTransfer
+        QuoteTransfer $quoteTransfer,
+        ?ShipmentGroupTransfer $shipmentGroupTransfer = null
     ): bool {
         if (!$this->isSetAvailabilityPlugin($shipmentMethodTransfer)) {
             return true;
         }
 
         $availabilityPlugin = $this->getAvailabilityPlugin($shipmentMethodTransfer);
-
-        if ($availabilityPlugin instanceof ShipmentMethodAvailabilityPluginInterface) {
-            return $availabilityPlugin->isAvailable($shipmentGroupTransfer, $quoteTransfer);
+        if (!$availabilityPlugin instanceof ShipmentMethodAvailabilityPluginInterface) {
+            return $availabilityPlugin->isAvailable($quoteTransfer);
         }
 
-        return $availabilityPlugin->isAvailable($quoteTransfer);
+        if ($shipmentGroupTransfer === null) {
+            return true;
+        }
+
+        return $availabilityPlugin->isAvailable($shipmentGroupTransfer, $quoteTransfer);
     }
 
     /**

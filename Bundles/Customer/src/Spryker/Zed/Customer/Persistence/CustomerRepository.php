@@ -79,10 +79,9 @@ class CustomerRepository extends AbstractRepository implements CustomerRepositor
             ->filterByCity($addressTransfer->getCity())
             ->filterByPhone($addressTransfer->getPhone())
             ->useCountryQuery()
-                ->filterByIso2Code($addressTransfer->getIso2Code())
+            ->filterByIso2Code($addressTransfer->getIso2Code())
             ->endUse()
             ->findOne();
-
         if ($addressEntity === null) {
             return null;
         }
