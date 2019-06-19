@@ -64,8 +64,8 @@ var ContentItemDialog = function(
                 var $titleHeader = this.$dialog.find('.ibox-title h5');
                 var $templateHeader = this.$dialog.find('.template-title');
                 var checkedContentItem = this.$dialog.find('table input:checked');
-                var chosenType = checkedContentItem.data('content-item-type');
-                var chosenDisplayType = checkedContentItem.data('content-item-display-type');
+                var chosenType = this.$dialog.find('input[name=type]').val();
+                var chosenDisplayType = this.$dialog.find('input[name=displayType]').val();
                 var chosenName = checkedContentItem.data('content-item-name');
                 var chosenId = this.$dialog.find('table input:checked').data('id');
                 var chosenKey = this.$dialog.find('table input:checked').val();

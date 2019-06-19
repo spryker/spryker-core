@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\CmsBlockGlossaryTransfer;
 use Generated\Shared\Transfer\CmsGlossaryAttributesTransfer;
 use Generated\Shared\Transfer\CmsGlossaryTransfer;
 use Generated\Shared\Transfer\CmsPlaceholderTranslationTransfer;
+use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\ContentGui\Business\ContentGuiBusinessFactory;
 use Spryker\Zed\ContentGui\Business\ContentGuiFacade;
 use Spryker\Zed\ContentGui\Business\ContentGuiFacadeInterface;
@@ -107,12 +108,14 @@ class ContentGuiFacadeTest extends Unit
      *
      * @param string $input
      * @param string $expectedResult
+     * @param string $localeName
      *
      * @return void
      */
-    public function testCmsBlockGlossaryTwigExpressionToHtml(string $input, string $expectedResult): void
+    public function testCmsBlockGlossaryTwigExpressionToHtml(string $input, string $expectedResult, string $localeName = 'en_US'): void
     {
         // Arrange
+        Store::getInstance()->setCurrentLocale($localeName);
         $cmsBlockGlossaryTransfer = $this->createCmsBlockGlossaryTransfer($input);
 
         // Act
@@ -127,12 +130,14 @@ class ContentGuiFacadeTest extends Unit
      *
      * @param string $input
      * @param string $expectedResult
+     * @param string $localeName
      *
      * @return void
      */
-    public function testCmsGlossaryTwigExpressionToHtml(string $input, string $expectedResult): void
+    public function testCmsGlossaryTwigExpressionToHtml(string $input, string $expectedResult, string $localeName = 'en_US'): void
     {
         // Arrange
+        Store::getInstance()->setCurrentLocale($localeName);
         $cmsGlossaryTransfer = $this->createCmsGlossaryTransfer($input);
 
         // Act
@@ -153,6 +158,7 @@ class ContentGuiFacadeTest extends Unit
 
                 '<span data-type="Banner" data-key="br-test" data-template="default" '
                 . 'data-twig-expression="{{ content_banner(\'br-test\', \'default\') }}">'
+                . '<span>Content Item Type: Banner</span>'
                 . '<span>Name: Test Banner</span>'
                 . '<span>Template: Default</span>'
                 . '</span>',
@@ -162,11 +168,13 @@ class ContentGuiFacadeTest extends Unit
 
                 '<span data-type="Banner" data-key="br-test" data-template="default" '
                 . 'data-twig-expression="{{ content_banner(\'br-test\', \'default\') }}">'
+                . '<span>Content Item Type: Banner</span>'
                 . '<span>Name: Test Banner</span>'
                 . '<span>Template: Default</span>'
                 . '</span>'
                 . '<span data-type="Banner" data-key="br-test" data-template="default" '
                 . 'data-twig-expression="{{ content_banner(\'br-test\', \'default\') }}">'
+                . '<span>Content Item Type: Banner</span>'
                 . '<span>Name: Test Banner</span>'
                 . '<span>Template: Default</span>'
                 . '</span>',
@@ -176,11 +184,13 @@ class ContentGuiFacadeTest extends Unit
 
                 '<span data-type="Abstract Product List" data-key="apl-test" data-template="top-title" '
                 . 'data-twig-expression="{{ content_banner(\'apl-test\', \'top-title\') }}">'
+                . '<span>Content Item Type: Abstract Product List</span>'
                 . '<span>Name: Test Product List</span>'
-                . '<span>Template: Top title</span>'
+                . '<span>Template: Top Title</span>'
                 . '</span>'
                 . '<span data-type="Banner" data-key="br-test" data-template="default" '
                 . 'data-twig-expression="{{ content_banner(\'br-test\', \'default\') }}">'
+                . '<span>Content Item Type: Banner</span>'
                 . '<span>Name: Test Banner</span>'
                 . '<span>Template: Default</span>'
                 . '</span>',
@@ -198,12 +208,14 @@ class ContentGuiFacadeTest extends Unit
 
                 '<span data-type="Banner" data-key="br-test" data-template="default" '
                 . 'data-twig-expression="{{ content_banner(\'br-test\', \'default\') }}">'
+                . '<span>Content Item Type: Banner</span>'
                 . '<span>Name: Test Banner</span>'
                 . '<span>Template: Default</span>'
                 . '</span>'
                 . '<p>'
                 . '<span data-type="Banner" data-key="br-test" data-template="default" '
                 . 'data-twig-expression="{{ content_banner(\'br-test\', \'default\') }}">'
+                . '<span>Content Item Type: Banner</span>'
                 . '<span>Name: Test Banner</span>'
                 . '<span>Template: Default</span>'
                 . '</span>',
@@ -211,6 +223,18 @@ class ContentGuiFacadeTest extends Unit
             'just text with part of twig expression' => [
                 '{{ content_banner just text',
                 '{{ content_banner just text',
+            ],
+            'check DE locale' => [
+                "{{ content_product_abstract_list('apl-test', 'top-title') }}",
+
+                '<span data-type="Abstract Product List" data-key="apl-test" data-template="top-title" '
+                . 'data-twig-expression="{{ content_product_abstract_list(\'apl-test\', \'top-title\') }}">'
+                . '<span>Content Item Type: Abstrakte Produktliste</span>'
+                . '<span>Name: Test Product List</span>'
+                . '<span>Template: Titel oben</span>'
+                . '</span>',
+
+                'de_DE',
             ],
         ];
     }
@@ -249,7 +273,7 @@ class ContentGuiFacadeTest extends Unit
                 '<span data-type="Abstract Product List" data-key="apl-test" data-template="top-title" '
                 . 'data-twig-expression="{{ content_banner(\'apl-test\', \'top-title\') }}">'
                 . '<span>Name: Test Product List</span>'
-                . '<span>Template: Top title</span>'
+                . '<span>Template: Top Title</span>'
                 . '</span>'
                 . '<span data-type="Banner" data-key="br-test" data-template="default" '
                 . 'data-twig-expression="{{ content_banner(\'br-test\', \'default\') }}">'

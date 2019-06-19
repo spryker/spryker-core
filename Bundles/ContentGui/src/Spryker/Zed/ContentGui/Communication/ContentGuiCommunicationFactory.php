@@ -22,7 +22,6 @@ use Spryker\Zed\ContentGui\Communication\Tabs\ContentTabs;
 use Spryker\Zed\ContentGui\ContentGuiDependencyProvider;
 use Spryker\Zed\ContentGui\Dependency\Facade\ContentGuiToContentFacadeInterface;
 use Spryker\Zed\ContentGui\Dependency\Facade\ContentGuiToLocaleFacadeInterface;
-use Spryker\Zed\ContentGui\Dependency\Facade\ContentGuiToTranslatorFacadeInterface;
 use Spryker\Zed\ContentGui\Dependency\Service\ContentGuiToUtilEncodingInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Symfony\Component\Form\FormInterface;
@@ -83,7 +82,6 @@ class ContentGuiCommunicationFactory extends AbstractCommunicationFactory
         return new ContentByTypeTable(
             $contentType,
             $this->getPropelContentQuery(),
-            $this->getTranslatorFacade(),
             $contentKey
         );
     }
@@ -153,13 +151,5 @@ class ContentGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getContentEditorPlugins(): array
     {
         return $this->getProvidedDependency(ContentGuiDependencyProvider::PLUGINS_CONTENT_EDITOR);
-    }
-
-    /**
-     * @return \Spryker\Zed\ContentGui\Dependency\Facade\ContentGuiToTranslatorFacadeInterface
-     */
-    public function getTranslatorFacade(): ContentGuiToTranslatorFacadeInterface
-    {
-        return $this->getProvidedDependency(ContentGuiDependencyProvider::FACADE_TRANSLATOR);
     }
 }

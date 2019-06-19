@@ -34,6 +34,7 @@ class ContentGuiConfigTest extends ContentGuiConfig
     {
         return '<span data-type="' . $this->getParameterType() . '" data-key="' . $this->getParameterKey() . '" '
         . 'data-template="' . $this->getParameterTemplate() . '" data-twig-expression="' . $this->getParameterTwigExpression() . '">'
+        . '<span>Content Item Type: ' . $this->getParameterDisplayType() . '</span>'
         . '<span>Name: ' . $this->getParameterName() . '</span>'
         . '<span>Template: ' . $this->getParameterTemplateDisplayName() . '</span>'
         . '</span>';
