@@ -33,26 +33,18 @@ class MethodWriter implements MethodWriterInterface
     protected $methodPrice;
 
     /**
-     * @var \Spryker\Zed\Shipment\Business\ShipmentMethod\MethodReaderInterface
-     */
-    protected $methodReader;
-
-    /**
      * @param \Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface $shipmentRepository
      * @param \Spryker\Zed\Shipment\Persistence\ShipmentEntityManagerInterface $shipmentEntityManager
-     * @param \Spryker\Zed\Shipment\Business\ShipmentMethod\MethodReaderInterface $methodReader
      * @param \Spryker\Zed\Shipment\Business\Model\MethodPriceInterface $methodPrice
      */
     public function __construct(
         ShipmentRepositoryInterface $shipmentRepository,
         ShipmentEntityManagerInterface $shipmentEntityManager,
-        MethodReaderInterface $methodReader,
         MethodPriceInterface $methodPrice
     ) {
         $this->shipmentRepository = $shipmentRepository;
         $this->shipmentEntityManager = $shipmentEntityManager;
         $this->methodPrice = $methodPrice;
-        $this->methodReader = $methodReader;
     }
 
     /**

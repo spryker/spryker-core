@@ -117,7 +117,6 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
         return new MethodWriter(
             $this->getRepository(),
             $this->getEntityManager(),
-            $this->createMethodReader(),
             $this->createMethodPrice()
         );
     }
