@@ -26,6 +26,8 @@ class PriceProductValidator implements PriceProductValidatorInterface
     protected const MESSAGE_GLOSSARY_KEY_PRICE = '%price%';
     protected const MESSAGE_GLOSSARY_KEY_CURRENCY_ISO_CODE = '%currencyIsoCode%';
 
+    protected const CENT_REPRESENTATION_DIVIDER = 100;
+
     /**
      * @var \Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceProductInterface
      */
@@ -130,10 +132,12 @@ class PriceProductValidator implements PriceProductValidatorInterface
      */
     protected function createMessageMinPriceRestriction(string $currencyIsoCode): MessageTransfer
     {
+        $parameterMinPrice = $this->config->getMinPriceRestriction() / static::CENT_REPRESENTATION_DIVIDER;
+
         return (new MessageTransfer())
             ->setValue(static::CART_PRE_CHECK_MIN_PRICE_RESTRICTION_FAILED_KEY)
             ->setParameters([
-                static::MESSAGE_GLOSSARY_KEY_PRICE => $this->config->getMinPriceRestriction(),
+                static::MESSAGE_GLOSSARY_KEY_PRICE => $parameterMinPrice,
                 static::MESSAGE_GLOSSARY_KEY_CURRENCY_ISO_CODE => $currencyIsoCode,
             ]);
     }
