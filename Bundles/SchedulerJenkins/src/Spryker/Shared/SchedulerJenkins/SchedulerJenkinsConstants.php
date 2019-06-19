@@ -38,6 +38,14 @@ interface SchedulerJenkinsConstants
 
     /**
      * Specification:
+     * - Defined the path to Jenkins twig template name for Jenkins API.
+     *
+     * @api
+     */
+    public const JENKINS_TEMPLATE_NAME = 'SCHEDULER_JENKINS:JENKINS_TEMPLATE_NAME';
+
+    /**
+     * Specification:
      * - Defines Jenkins logs rotation in days.
      *
      * @api

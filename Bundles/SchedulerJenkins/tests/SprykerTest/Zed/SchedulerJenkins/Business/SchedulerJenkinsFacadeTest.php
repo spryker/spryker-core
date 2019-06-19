@@ -14,10 +14,13 @@ use Generated\Shared\Transfer\SchedulerResponseTransfer;
 use Generated\Shared\Transfer\SchedulerScheduleTransfer;
 use Spryker\Service\UtilEncoding\UtilEncodingService;
 use Spryker\Zed\SchedulerJenkins\Business\Api\JenkinsApi;
+use Spryker\Zed\SchedulerJenkins\Business\Processor\Builder\ConfigurationProviderBuilderInterface;
+use Spryker\Zed\SchedulerJenkins\Business\Processor\Configuration\ConfigurationProvider;
 use Spryker\Zed\SchedulerJenkins\Business\SchedulerJenkinsBusinessFactory;
 use Spryker\Zed\SchedulerJenkins\Business\SchedulerJenkinsFacade;
 use Spryker\Zed\SchedulerJenkins\Business\SchedulerJenkinsFacadeInterface;
 use Spryker\Zed\SchedulerJenkins\Dependency\Service\SchedulerJenkinsToUtilEncodingServiceBridge;
+use Spryker\Zed\SchedulerJenkins\SchedulerJenkinsConfig;
 
 /**
  * Auto-generated group annotations
@@ -31,6 +34,8 @@ use Spryker\Zed\SchedulerJenkins\Dependency\Service\SchedulerJenkinsToUtilEncodi
  */
 class SchedulerJenkinsFacadeTest extends Unit
 {
+    protected const ID_SCHEDULER = 'test';
+
     /**
      * @return void
      */
@@ -105,7 +110,7 @@ class SchedulerJenkinsFacadeTest extends Unit
                     ->setRepeatPattern('* * * * *')
                     ->setPayload([])
             )
-            ->setIdScheduler('test');
+            ->setIdScheduler(static::ID_SCHEDULER);
     }
 
     /**
@@ -128,6 +133,7 @@ class SchedulerJenkinsFacadeTest extends Unit
                     'createXmkJenkinsJobTemplateGenerator',
                     'createJenkinsApi',
                     'getUtilEncodingService',
+                    'createConfigurationProviderBuilder',
                 ]
             )
             ->getMock();
@@ -137,10 +143,32 @@ class SchedulerJenkinsFacadeTest extends Unit
             ->willReturn($this->createJenkinsApiMock());
 
         $schedulerJenkinsBusinessFactoryMock
+            ->method('createConfigurationProviderBuilder')
+            ->willReturn($this->createConfigurationProviderBuilder());
+
+        $schedulerJenkinsBusinessFactoryMock
             ->method('getUtilEncodingService')
             ->willReturn($this->createUtilEncodingServiceBridge());
 
         return $schedulerJenkinsBusinessFactoryMock;
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\SchedulerJenkins\Business\Processor\Builder\ConfigurationProviderBuilderInterface
+     */
+    protected function createConfigurationProviderBuilder()
+    {
+        $configurationProviderBuilderMock = $this->getMockBuilder(ConfigurationProviderBuilderInterface::class)
+            ->setMethods([
+                'build',
+            ])
+            ->getMock();
+
+        $configurationProviderBuilderMock
+            ->method('build')
+            ->willReturn(new ConfigurationProvider(static::ID_SCHEDULER, $this->createSchedulerJenkinsConfigMock()));
+
+        return $configurationProviderBuilderMock;
     }
 
     /**
@@ -151,22 +179,66 @@ class SchedulerJenkinsFacadeTest extends Unit
         $jenkinsApiMock = $this->getMockBuilder(JenkinsApi::class)
             ->disableOriginalConstructor()
             ->setMethods([
-                'executeGetRequest',
-                'executePostRequest',
+                'getJobs',
+                'createJob',
+                'updateJob',
+                'deleteJob',
+                'enableJob',
+                'disableJob',
             ])
             ->getMock();
 
         $jenkinsApiMock
-            ->method('executeGetRequest')
+            ->method('getJobs')
             ->willReturn((new SchedulerJenkinsResponseTransfer())
                     ->setPayload('{"jobs" : [{"name":"DE__test"},{"name":"DE__test1"}]}')
                     ->setStatus(true));
 
         $jenkinsApiMock
-            ->method('executePostRequest')
-            ->willReturn((new SchedulerJenkinsResponseTransfer())->setStatus(true));
+            ->method('createJob')
+            ->willReturn($this->createSchedulerJenkinsResponseTransfer());
+
+        $jenkinsApiMock
+            ->method('updateJob')
+            ->willReturn($this->createSchedulerJenkinsResponseTransfer());
+
+        $jenkinsApiMock
+            ->method('deleteJob')
+            ->willReturn($this->createSchedulerJenkinsResponseTransfer());
+
+        $jenkinsApiMock
+            ->method('enableJob')
+            ->willReturn($this->createSchedulerJenkinsResponseTransfer());
+
+        $jenkinsApiMock
+            ->method('disableJob')
+            ->willReturn($this->createSchedulerJenkinsResponseTransfer());
 
         return $jenkinsApiMock;
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\SchedulerJenkins\SchedulerJenkinsConfig
+     */
+    protected function createSchedulerJenkinsConfigMock()
+    {
+        $schedulerJenkinsConfigMock = $this->getMockBuilder(SchedulerJenkinsConfig::class)
+            ->setMethods(['getJenkinsConfiguration'])
+            ->getMock();
+
+        $schedulerJenkinsConfigMock
+            ->method('getJenkinsConfiguration')
+            ->willReturn('test');
+
+        return $schedulerJenkinsConfigMock;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\SchedulerJenkinsResponseTransfer
+     */
+    protected function createSchedulerJenkinsResponseTransfer(): SchedulerJenkinsResponseTransfer
+    {
+        return (new SchedulerJenkinsResponseTransfer())->setStatus(true);
     }
 
     /**

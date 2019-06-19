@@ -15,6 +15,7 @@ use Spryker\Zed\SchedulerJenkins\Dependency\Guzzle\SchedulerJenkinsToGuzzleBridg
 use Spryker\Zed\SchedulerJenkins\Dependency\Service\SchedulerJenkinsToUtilEncodingServiceBridge;
 use Spryker\Zed\SchedulerJenkins\Dependency\TwigEnvironment\SchedulerJenkinsToTwigEnvironmentBridge;
 use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
 
 /**
  * @method \Spryker\Zed\SchedulerJenkins\SchedulerJenkinsConfig getConfig()
@@ -79,9 +80,18 @@ class SchedulerJenkinsDependencyProvider extends AbstractBundleDependencyProvide
         $pimplePlugin = new Pimple();
         /** @var \Twig\Environment $twig */
         $twig = $pimplePlugin->getApplication()['twig'];
+        $twig->setLoader($this->createFilesystemLoader());
         $twig->setCache(false);
 
         return $twig;
+    }
+
+    /**
+     * @return \Twig\Loader\FilesystemLoader
+     */
+    protected function createFilesystemLoader(): FilesystemLoader
+    {
+        return new FilesystemLoader($this->getConfig()->getJenkinsTemplatePath());
     }
 
     /**
