@@ -1,6 +1,6 @@
 # Storage Module
 
-Storage provides the infrastructure for reading and writing to the key-value storage (Redis).
+Storage provides the infrastructure for reading and writing to a storage of choice.
 
 ## Installation
 

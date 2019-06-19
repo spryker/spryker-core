@@ -71,8 +71,8 @@ class ContentProductAbstractListReader implements ContentProductAbstractListRead
         }
 
         try {
-            $contentProductAbstractListTypeTransfer = $this->contentProductClient->executeProductAbstractListTypeById(
-                (int)$parentResource->getId(),
+            $contentProductAbstractListTypeTransfer = $this->contentProductClient->executeProductAbstractListTypeByKey(
+                $parentResource->getId(),
                 $restRequest->getMetadata()->getLocale()
             );
         } catch (Exception $e) {
@@ -101,9 +101,9 @@ class ContentProductAbstractListReader implements ContentProductAbstractListRead
     protected function addContentItemIdNotSpecifiedError(RestResponseInterface $response): RestResponseInterface
     {
         $restErrorTransfer = (new RestErrorMessageTransfer())
-            ->setCode(ContentProductAbstractListsRestApiConfig::RESPONSE_CODE_CONTENT_ID_IS_MISSING)
+            ->setCode(ContentProductAbstractListsRestApiConfig::RESPONSE_CODE_CONTENT_KEY_IS_MISSING)
             ->setStatus(Response::HTTP_BAD_REQUEST)
-            ->setDetail(ContentProductAbstractListsRestApiConfig::RESPONSE_DETAILS_CONTENT_ID_IS_MISSING);
+            ->setDetail(ContentProductAbstractListsRestApiConfig::RESPONSE_DETAILS_CONTENT_KEY_IS_MISSING);
 
         return $response->addError($restErrorTransfer);
     }

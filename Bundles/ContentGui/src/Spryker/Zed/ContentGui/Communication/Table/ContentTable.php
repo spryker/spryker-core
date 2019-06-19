@@ -47,7 +47,7 @@ class ContentTable extends AbstractTable
         $config = $this->setHeader($config);
 
         $config->setSortable([
-            ContentTableConstants::COL_ID_CONTENT,
+            ContentTableConstants::COL_KEY,
             ContentTableConstants::COL_NAME,
             ContentTableConstants::COL_CONTENT_TYPE_KEY,
             ContentTableConstants::COL_CREATED_AT,
@@ -56,10 +56,10 @@ class ContentTable extends AbstractTable
 
         $config->addRawColumn(ContentTableConstants::COL_ACTIONS);
         $config->addRawColumn(ContentTableConstants::COL_CONTENT_TYPE_KEY);
-        $config->setDefaultSortField(ContentTableConstants::COL_ID_CONTENT, TableConfiguration::SORT_DESC);
+        $config->setDefaultSortField(ContentTableConstants::COL_NAME, TableConfiguration::SORT_ASC);
 
         $config->setSearchable([
-            ContentTableConstants::COL_ID_CONTENT,
+            ContentTableConstants::COL_KEY,
             ContentTableConstants::COL_NAME,
             ContentTableConstants::COL_DESCRIPTION,
             ContentTableConstants::COL_CONTENT_TYPE_KEY,
@@ -78,7 +78,7 @@ class ContentTable extends AbstractTable
     protected function setHeader(TableConfiguration $config): TableConfiguration
     {
         $header = [
-            ContentTableConstants::COL_ID_CONTENT => 'Content Item ID',
+            ContentTableConstants::COL_KEY => 'Content Item Key',
             ContentTableConstants::COL_NAME => 'Name',
             ContentTableConstants::COL_DESCRIPTION => 'Description',
             ContentTableConstants::COL_CONTENT_TYPE_KEY => 'Content Type',
@@ -104,7 +104,7 @@ class ContentTable extends AbstractTable
 
         foreach ($contents as $key => $content) {
             $results[] = [
-                ContentTableConstants::COL_ID_CONTENT => $content[SpyContentTableMap::COL_ID_CONTENT],
+                ContentTableConstants::COL_KEY => $content[SpyContentTableMap::COL_KEY],
                 ContentTableConstants::COL_NAME => $content[SpyContentTableMap::COL_NAME],
                 ContentTableConstants::COL_DESCRIPTION => $content[SpyContentTableMap::COL_DESCRIPTION],
                 ContentTableConstants::COL_CONTENT_TYPE_KEY => $this->buildContentTypeLabel($content[SpyContentTableMap::COL_CONTENT_TYPE_KEY]),
@@ -131,7 +131,6 @@ class ContentTable extends AbstractTable
         $buttons = [];
 
         $urlParams = [
-            ContentTableConstants::REQUEST_TERM_KEY => $content[ContentTableConstants::COL_TERM_KEY],
             ContentTableConstants::REQUEST_ID_CONTENT => $content[ContentTableConstants::COL_ID_CONTENT],
         ];
 
@@ -175,6 +174,6 @@ class ContentTable extends AbstractTable
      */
     protected function buildContentTypeLabel(string $label): string
     {
-        return sprintf('<span class="label label-info">%s</span>', ucfirst($label));
+        return $this->generateLabel(ucfirst($label), 'label-info');
     }
 }

@@ -1,12 +1,16 @@
 <?xml version="1.0"?>
 <database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\Content\Persistence" package="src.Orm.Zed.Content.Persistence">
 
-    <table name="spy_content" phpName="SpyContent">
+    <table name="spy_content" phpName="SpyContent" identifierQuoting="true">
         <column name="id_content" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="name" required="true" type="VARCHAR" size="255"/>
         <column name="description" required="false" type="LONGVARCHAR" />
         <column name="content_term_key" required="true" type="VARCHAR" size="255"/>
         <column name="content_type_key" required="true" type="VARCHAR" size="255"/>
+        <column name="key" required="true" type="VARCHAR" size="255" description="Identifier for existing entities. It should never be changed."/>
+        <unique name="spy_content-key">
+            <unique-column name="key"/>
+        </unique>
         <behavior name="timestampable"/>
         <id-method-parameter value="spy_content_pk_seq"/>
     </table>
