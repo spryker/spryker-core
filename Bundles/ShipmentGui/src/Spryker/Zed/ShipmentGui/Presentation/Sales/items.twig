@@ -7,7 +7,7 @@
 
             {% if order.items | length > 1 %}
                 <div class="col-sm-3 text-right">
-                    {% include '@ShipmentGui/Create/_partials/create-shipment-link.twig' ignore missing %}
+                    {% include '@ShipmentGui/Create/_partials/create-shipment-link.twig' %}
                 </div>
             {% endif %}
         </div>
@@ -20,7 +20,7 @@
                     <h3>Shipment {{ loop.index }} of {{ loop.length }}</h3>
                 </div>
                 <div class="col-sm-3 text-right">
-                    {% include '@ShipmentGui/Edit/_partials/edit-shipment-link.twig' ignore missing %}
+                    {% include '@ShipmentGui/Edit/_partials/edit-shipment-link.twig' %}
                 </div>
             </div>
             <div class="row">

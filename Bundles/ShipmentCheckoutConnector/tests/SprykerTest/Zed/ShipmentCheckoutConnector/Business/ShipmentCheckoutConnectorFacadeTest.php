@@ -12,7 +12,6 @@ use Generated\Shared\DataBuilder\CheckoutResponseBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\DataBuilder\ShipmentBuilder;
 use Generated\Shared\DataBuilder\ShipmentMethodBuilder;
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Spryker\Zed\ShipmentCheckoutConnector\Business\ShipmentCheckoutConnectorFacade;
 
@@ -44,11 +43,9 @@ class ShipmentCheckoutConnectorFacadeTest extends Unit
             ->withMethod()
             ->build();
 
-        $itemTransfer = new ItemTransfer();
-        $itemTransfer->setShipment($shipmentTransfer);
-
-        $quoteTransfer = (new QuoteBuilder())->build();
-        $quoteTransfer->addItem($itemTransfer);
+        $quoteTransfer = (new QuoteBuilder())
+            ->withShipment($shipmentTransfer->toArray())
+            ->build();
 
         $checkoutResponseTransfer = (new CheckoutResponseBuilder())->build();
 
@@ -107,11 +104,9 @@ class ShipmentCheckoutConnectorFacadeTest extends Unit
             ->withMethod($shipmentMethodTransfer->toArray())
             ->build();
 
-        $itemTransfer = new ItemTransfer();
-        $itemTransfer->setShipment($shipmentTransfer);
-
-        $quoteTransfer = (new QuoteBuilder())->build();
-        $quoteTransfer->addItem($itemTransfer);
+        $quoteTransfer = (new QuoteBuilder())
+            ->withShipment($shipmentTransfer->toArray())
+            ->build();
 
         $checkoutResponseTransfer = (new CheckoutResponseBuilder())->build();
 

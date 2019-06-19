@@ -10,7 +10,6 @@ namespace Spryker\Zed\Shipment\Business\Shipment;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
-use Spryker\Service\Shipment\ShipmentServiceInterface;
 use Spryker\Shared\Shipment\ShipmentConstants;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToSalesFacadeInterface;
 use Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface;
@@ -23,27 +22,19 @@ class ShipmentOrderHydrate implements ShipmentOrderHydrateInterface
     protected $shipmentRepository;
 
     /**
-     * @var \Spryker\Service\Shipment\ShipmentServiceInterface
-     */
-    protected $shipmentService;
-
-    /**
      * @var \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToSalesFacadeInterface
      */
     protected $salesFacade;
 
     /**
      * @param \Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface $shipmentRepository
-     * @param \Spryker\Service\Shipment\ShipmentServiceInterface $shipmentService
      * @param \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToSalesFacadeInterface $salesFacade
      */
     public function __construct(
         ShipmentRepositoryInterface $shipmentRepository,
-        ShipmentServiceInterface $shipmentService,
         ShipmentToSalesFacadeInterface $salesFacade
     ) {
         $this->shipmentRepository = $shipmentRepository;
-        $this->shipmentService = $shipmentService;
         $this->salesFacade = $salesFacade;
     }
 
@@ -68,7 +59,6 @@ class ShipmentOrderHydrate implements ShipmentOrderHydrateInterface
         }
 
         $orderTransfer = $this->setShipmentToOrderExpenses($orderTransfer);
-        $orderTransfer = $this->setOrderShipmentGroups($orderTransfer);
 
         return $orderTransfer;
     }
@@ -195,24 +185,15 @@ class ShipmentOrderHydrate implements ShipmentOrderHydrateInterface
     protected function findShipmentByOrderExpense(OrderTransfer $orderTransfer, ExpenseTransfer $expenseTransfer): ?ShipmentTransfer
     {
         foreach ($orderTransfer->getItems() as $itemTransfer) {
+            $itemTransfer->requireShipment()
+                ->getShipment()->requireMethod();
+
             if ($itemTransfer->getShipment()->getMethod()->getFkSalesExpense() === $expenseTransfer->getIdSalesExpense()) {
                 return $itemTransfer->getShipment();
             }
         }
 
         return null;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return \Generated\Shared\Transfer\OrderTransfer
-     */
-    protected function setOrderShipmentGroups(OrderTransfer $orderTransfer): OrderTransfer
-    {
-        $shipmentGroups = $this->shipmentService->groupItemsByShipment($orderTransfer->getItems());
-
-        return $orderTransfer->setShipmentGroups($shipmentGroups);
     }
 
     /**
@@ -225,8 +206,8 @@ class ShipmentOrderHydrate implements ShipmentOrderHydrateInterface
     protected function setOrderLevelShipmentMethod(OrderTransfer $orderTransfer): OrderTransfer
     {
         $firstItemTransfer = $orderTransfer->getItems()[0];
-        $firstItemTransfer->requireShipment();
-        $firstItemTransfer->getShipment()->requireMethod();
+        $firstItemTransfer->requireShipment()
+            ->getShipment()->requireMethod();
 
         return $orderTransfer->addShipmentMethod($firstItemTransfer->getShipment()->getMethod());
     }

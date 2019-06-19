@@ -108,4 +108,12 @@ class ShipmentGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return $this->getProvidedDependency(ShipmentGuiDependencyProvider::FACADE_CUSTOMER);
     }
+
+    /**
+     * @return \Spryker\Zed\ShipmentGui\Dependency\Service\ShipmentGuiToShipmentServiceInterface
+     */
+    public function getShipmentService()
+    {
+        return $this->getProvidedDependency(ShipmentGuiDependencyProvider::SERVICE_SHIPMENT);
+    }
 }

@@ -48,7 +48,11 @@ class CustomerOrderSaverWithItemLevelShippingAddressTest extends Test
         ?int $expectedResult
     ): void {
         // Arrange
+        $customerTransfer = $this->tester->haveCustomer();
         $quoteTransfer->setIsAddressSavingSkipped(false);
+        $quoteTransfer->setCustomer($customerTransfer)
+            ->setCustomerReference($customerTransfer->getCustomerReference())
+            ->setIdCustomer($customerTransfer->getIdCustomer());
 
         // Act
         $this->tester->getFacade()->saveOrderCustomer($quoteTransfer, $saveOrderTransfer);
@@ -73,17 +77,18 @@ class CustomerOrderSaverWithItemLevelShippingAddressTest extends Test
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
-     * @param int|null $expectedResult
      *
      * @return void
      */
     public function testSaveCustomerOrderWithQuoteLevelShippingAddressAndAddressSavingIsSkipped(
         QuoteTransfer $quoteTransfer,
-        SaveOrderTransfer $saveOrderTransfer,
-        ?int $expectedResult
+        SaveOrderTransfer $saveOrderTransfer
     ): void {
         // Arrange
         $quoteTransfer->setIsAddressSavingSkipped(true);
+        foreach ($quoteTransfer->getItems() as $item) {
+            $item->getShipment()->getShippingAddress()->setIsAddressSavingSkipped(true);
+        }
 
         // Act
         $this->tester->getFacade()->saveOrderCustomer($quoteTransfer, $saveOrderTransfer);
@@ -92,7 +97,8 @@ class CustomerOrderSaverWithItemLevelShippingAddressTest extends Test
         $idCustomer = $quoteTransfer->getCustomer()->getIdCustomer();
         $customerAddressEntity = SpyCustomerAddressQuery::create()->findByFkCustomer($idCustomer);
 
-        $this->assertEmpty(
+        $this->assertCount(
+            1,
             $customerAddressEntity,
             sprintf(
                 'Any shipping or billing addresses should not be saved. Saved %d',

@@ -169,8 +169,11 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
      *
      * @return float
      */
-    protected function getEffectiveTaxRate(array $mappedTaxRates, int $idProductAbstract, string $countryIso2Code): float
-    {
+    protected function getEffectiveTaxRate(
+        array $mappedTaxRates,
+        int $idProductAbstract,
+        string $countryIso2Code
+    ): float {
         $taxRate = $mappedTaxRates[$idProductAbstract][$countryIso2Code] ??
             $mappedTaxRates[$idProductAbstract][TaxConstants::TAX_EXEMPT_PLACEHOLDER] ??
             $this->getDefaultTaxRate();
