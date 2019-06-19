@@ -56,24 +56,6 @@ class ShoppingListMapper implements ShoppingListMapperInterface
 
         $this->addItemsCount($shoppingListEntityTransfer, $shoppingListTransfer);
 
-        return $shoppingListTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\SpyShoppingListEntityTransfer $shoppingListEntityTransfer
-     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShoppingListTransfer
-     */
-    public function mapShoppingListEntityTransferWithItemsToShoppingListTransfer(
-        SpyShoppingListEntityTransfer $shoppingListEntityTransfer,
-        ShoppingListTransfer $shoppingListTransfer
-    ): ShoppingListTransfer {
-        $shoppingListTransfer = $this->mapShoppingListTransfer(
-            $shoppingListEntityTransfer,
-            $shoppingListTransfer
-        );
-
         return $this->mapShoppingListItemCollectionTransferToShoppingListTransfer(
             $this->shoppingListItemMapper->mapItemCollectionTransfer($shoppingListEntityTransfer->getSpyShoppingListItems()->getArrayCopy()),
             $shoppingListTransfer

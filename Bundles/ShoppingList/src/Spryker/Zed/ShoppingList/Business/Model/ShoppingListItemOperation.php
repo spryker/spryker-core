@@ -223,7 +223,7 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
     {
         $shoppingListItemTransfer->requireIdShoppingListItem()->requireFkShoppingList();
 
-        $shoppingListTransfer = $this->shoppingListRepository->findShoppingListWithItemsByIdShoppingList(
+        $shoppingListTransfer = $this->shoppingListRepository->findShoppingListById(
             (new ShoppingListTransfer())->setIdShoppingList($shoppingListItemTransfer->getFkShoppingList())
         );
 

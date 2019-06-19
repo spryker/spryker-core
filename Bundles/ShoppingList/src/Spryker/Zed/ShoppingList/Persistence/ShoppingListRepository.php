@@ -102,33 +102,6 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
     }
 
     /**
-     * @module Customer
-     *
-     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShoppingListTransfer|null
-     */
-    public function findShoppingListWithItemsByIdShoppingList(ShoppingListTransfer $shoppingListTransfer): ?ShoppingListTransfer
-    {
-        $shoppingListQuery = $this->getFactory()->createShoppingListQuery()
-            ->leftJoinWithSpyShoppingListItem()
-            ->addJoin(SpyShoppingListTableMap::COL_CUSTOMER_REFERENCE, SpyCustomerTableMap::COL_CUSTOMER_REFERENCE, Criteria::LEFT_JOIN)
-            ->withColumn(SpyCustomerTableMap::COL_FIRST_NAME, ShoppingListMapper::FIELD_FIRST_NAME)
-            ->withColumn(SpyCustomerTableMap::COL_LAST_NAME, ShoppingListMapper::FIELD_LAST_NAME)
-            ->filterByIdShoppingList($shoppingListTransfer->getIdShoppingList());
-
-        $shoppingListEntityTransferCollection = $this->buildQueryFromCriteria($shoppingListQuery)->find();
-
-        if ($shoppingListEntityTransferCollection) {
-            return $this->getFactory()
-                ->createShoppingListMapper()
-                ->mapShoppingListEntityTransferWithItemsToShoppingListTransfer($shoppingListEntityTransferCollection[0], $shoppingListTransfer);
-        }
-
-        return null;
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\ShoppingListOverviewRequestTransfer $shoppingListOverviewRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer
