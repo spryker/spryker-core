@@ -273,7 +273,7 @@ class ProductConcreteImageStorageWriter implements ProductConcreteImageStorageWr
     }
 
     /**
-     * @param \Orm\Zed\Product\Persistence\SpyProductLocalizedAttributes[] $productLocalizedAttributesEntities
+     * @param array $productLocalizedAttributesEntities
      * @param array $productImageSetsBulk
      * @param array $productDefaultImageSetsBulk
      *
