@@ -8,14 +8,10 @@
 namespace SprykerTest\Zed\SharedCart\Business;
 
 use Codeception\TestCase\Test;
-use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
-use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ResourceShareDataTransfer;
 use Generated\Shared\Transfer\ResourceShareRequestTransfer;
-use Generated\Shared\Transfer\ResourceShareResponseTransfer;
-use Generated\Shared\Transfer\ResourceShareTransfer;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 
 /**
@@ -41,6 +37,11 @@ class SharedCartFacadeTest extends Test
     protected const GLOSSARY_KEY_UNABLE_TO_SHARE_CART = 'shared_cart.resource_share.strategy.error.unable_to_share_cart';
 
     /**
+     * @uses \Spryker\Zed\SharedCart\Business\ResourceShare\ResourceShareQuoteShare::GLOSSARY_KEY_QUOTE_IS_NOT_AVAILABLE
+     */
+    protected const GLOSSARY_KEY_QUOTE_IS_NOT_AVAILABLE = 'persistent_cart_share.error.quote_is_not_available';
+
+    /**
      * @uses \Spryker\Shared\SharedCart\SharedCartConfig::PERMISSION_GROUP_READ_ONLY
      */
     public const PERMISSION_GROUP_READ_ONLY = 'READ_ONLY';
@@ -50,17 +51,6 @@ class SharedCartFacadeTest extends Test
      */
     public const PERMISSION_GROUP_FULL_ACCESS = 'FULL_ACCESS';
 
-    protected const KEY_SHARE_OPTION = 'share_option';
-    protected const KEY_ID_QUOTE = 'id_quote';
-    protected const KEY_OWNER_COMPANY_USER_ID = 'owner_company_user_id';
-    protected const KEY_OWNER_COMPANY_BUSINESS_UNIT_ID = 'owner_company_business_unit_id';
-
-    protected const VALUE_SHARE_OPTION = 'VALUE_SHARE_OPTION';
-    protected const VALUE_ID_QUOTE = 1;
-    protected const VALUE_OWNER_ID_COMPANY_USER = 1;
-    protected const VALUE_OWNER_ID_COMPANY_BUSINESS_UNIT = 1;
-
-    protected const VALUE_CUSTOMER_REFERENCE = 'VALUE_CUSTOMER_REFERENCE';
     protected const VALUE_NOT_EXISTING_ID_COMPANY_USER = 0;
     protected const VALUE_NOT_EXISTING_SHARE_OPTION = 'VALUE_NIT_EXISTING_SHARE_OPTION';
     protected const VALUE_IS_QUOTE_LOCKED_FALSE = false;
@@ -78,13 +68,13 @@ class SharedCartFacadeTest extends Test
         // Arrange
         $resourceShareRequestTransfer = (new ResourceShareRequestTransfer())
             ->setCustomer(null)
-            ->setResourceShare($this->createResourceShareTransfer());
+            ->setResourceShare($this->tester->createResourceShare());
 
         // Assert
         $this->expectException(RequiredTransferPropertyException::class);
 
         // Act
-        $this->getFacade()->shareCartByResourceShareRequest($resourceShareRequestTransfer);
+        $this->tester->getFacade()->shareCartByResourceShareRequest($resourceShareRequestTransfer);
     }
 
     /**
@@ -101,7 +91,7 @@ class SharedCartFacadeTest extends Test
         $this->expectException(RequiredTransferPropertyException::class);
 
         // Act
-        $this->getFacade()->shareCartByResourceShareRequest($resourceShareRequestTransfer);
+        $this->tester->getFacade()->shareCartByResourceShareRequest($resourceShareRequestTransfer);
     }
 
     /**
@@ -110,12 +100,12 @@ class SharedCartFacadeTest extends Test
     public function testShareCartByResourceShareRequestShouldReturnErrorMessageWhenCompanyUserIsFromDifferentBusinessUnit(): void
     {
         // Arrange
-        $firstCompanyUserTransfer = $this->createCompanyUserTransfer();
-        $secondCompanyUserTransfer = $this->createCompanyUserTransfer();
+        $firstCompanyUserTransfer = $this->tester->createCompanyUserTransfer();
+        $secondCompanyUserTransfer = $this->tester->createCompanyUserTransfer();
 
-        $resourceShareTransfer = $this->createResourceShareTransfer([
-            static::KEY_OWNER_COMPANY_USER_ID => $secondCompanyUserTransfer->getIdCompanyUser(),
-            static::KEY_OWNER_COMPANY_BUSINESS_UNIT_ID => $secondCompanyUserTransfer->getFkCompanyBusinessUnit(),
+        $resourceShareTransfer = $this->tester->createResourceShare([
+            ResourceShareDataTransfer::OWNER_COMPANY_USER_ID => $secondCompanyUserTransfer->getIdCompanyUser(),
+            ResourceShareDataTransfer::OWNER_COMPANY_BUSINESS_UNIT_ID => $secondCompanyUserTransfer->getFkCompanyBusinessUnit(),
         ]);
 
         $resourceShareRequestTransfer = (new ResourceShareRequestTransfer())
@@ -123,11 +113,11 @@ class SharedCartFacadeTest extends Test
             ->setResourceShare($resourceShareTransfer);
 
         // Act
-        $resourceShareResponseTransfer = $this->getFacade()->shareCartByResourceShareRequest($resourceShareRequestTransfer);
+        $resourceShareResponseTransfer = $this->tester->getFacade()->shareCartByResourceShareRequest($resourceShareRequestTransfer);
 
         // Assert
         $this->assertFalse($resourceShareResponseTransfer->getIsSuccessful());
-        $this->hasResourceShareResponseTransferErrorMessage(
+        $this->tester->hasResourceShareResponseTransferErrorMessage(
             $resourceShareResponseTransfer,
             static::GLOSSARY_KEY_CART_ACCESS_DENIED
         );
@@ -139,14 +129,14 @@ class SharedCartFacadeTest extends Test
     public function testShareCartByResourceShareRequestShouldReturnErrorMessageWhenCompanyUserIsNotFoundByIdCompanyUser(): void
     {
         // Arrange
-        $firstCompanyUserTransfer = $this->createCompanyUserTransfer();
-        $secondCompanyUserTransfer = $this->createCompanyUserTransfer([
-            static::KEY_OWNER_COMPANY_USER_ID => static::VALUE_NOT_EXISTING_ID_COMPANY_USER,
+        $firstCompanyUserTransfer = $this->tester->createCompanyUserTransfer();
+        $secondCompanyUserTransfer = $this->tester->createCompanyUserTransfer([
+            ResourceShareDataTransfer::OWNER_COMPANY_USER_ID => static::VALUE_NOT_EXISTING_ID_COMPANY_USER,
         ]);
 
-        $resourceShareTransfer = $this->createResourceShareTransfer([
-            static::KEY_OWNER_COMPANY_USER_ID => $secondCompanyUserTransfer->getIdCompanyUser(),
-            static::KEY_OWNER_COMPANY_BUSINESS_UNIT_ID => $secondCompanyUserTransfer->getFkCompanyBusinessUnit(),
+        $resourceShareTransfer = $this->tester->createResourceShare([
+            ResourceShareDataTransfer::OWNER_COMPANY_USER_ID => $secondCompanyUserTransfer->getIdCompanyUser(),
+            ResourceShareDataTransfer::OWNER_COMPANY_BUSINESS_UNIT_ID => $secondCompanyUserTransfer->getFkCompanyBusinessUnit(),
         ]);
 
         $resourceShareRequestTransfer = (new ResourceShareRequestTransfer())
@@ -154,11 +144,11 @@ class SharedCartFacadeTest extends Test
             ->setResourceShare($resourceShareTransfer);
 
         // Act
-        $resourceShareResponseTransfer = $this->getFacade()->shareCartByResourceShareRequest($resourceShareRequestTransfer);
+        $resourceShareResponseTransfer = $this->tester->getFacade()->shareCartByResourceShareRequest($resourceShareRequestTransfer);
 
         // Assert
         $this->assertFalse($resourceShareResponseTransfer->getIsSuccessful());
-        $this->hasResourceShareResponseTransferErrorMessage(
+        $this->tester->hasResourceShareResponseTransferErrorMessage(
             $resourceShareResponseTransfer,
             static::GLOSSARY_KEY_UNABLE_TO_SHARE_CART
         );
@@ -170,14 +160,14 @@ class SharedCartFacadeTest extends Test
     public function testShareCartByResourceShareRequestShouldReturnErrorMessageWhenQuotePermissionGroupIsNotFoundByShareOption(): void
     {
         // Arrange
-        $firstCompanyUserTransfer = $this->createCompanyUserTransfer();
-        $secondCompanyUserTransfer = $this->createCompanyUserTransfer([
-            static::KEY_SHARE_OPTION => static::VALUE_NOT_EXISTING_SHARE_OPTION,
+        $firstCompanyUserTransfer = $this->tester->createCompanyUserTransfer();
+        $secondCompanyUserTransfer = $this->tester->createCompanyUserTransfer([
+            ResourceShareDataTransfer::SHARE_OPTION => static::VALUE_NOT_EXISTING_SHARE_OPTION,
         ]);
 
-        $resourceShareTransfer = $this->createResourceShareTransfer([
-            static::KEY_OWNER_COMPANY_USER_ID => $secondCompanyUserTransfer->getIdCompanyUser(),
-            static::KEY_OWNER_COMPANY_BUSINESS_UNIT_ID => $secondCompanyUserTransfer->getFkCompanyBusinessUnit(),
+        $resourceShareTransfer = $this->tester->createResourceShare([
+            ResourceShareDataTransfer::OWNER_COMPANY_USER_ID => $secondCompanyUserTransfer->getIdCompanyUser(),
+            ResourceShareDataTransfer::OWNER_COMPANY_BUSINESS_UNIT_ID => $secondCompanyUserTransfer->getFkCompanyBusinessUnit(),
         ]);
 
         $resourceShareRequestTransfer = (new ResourceShareRequestTransfer())
@@ -185,11 +175,11 @@ class SharedCartFacadeTest extends Test
             ->setResourceShare($resourceShareTransfer);
 
         // Act
-        $resourceShareResponseTransfer = $this->getFacade()->shareCartByResourceShareRequest($resourceShareRequestTransfer);
+        $resourceShareResponseTransfer = $this->tester->getFacade()->shareCartByResourceShareRequest($resourceShareRequestTransfer);
 
         // Assert
         $this->assertFalse($resourceShareResponseTransfer->getIsSuccessful());
-        $this->hasResourceShareResponseTransferErrorMessage(
+        $this->tester->hasResourceShareResponseTransferErrorMessage(
             $resourceShareResponseTransfer,
             static::GLOSSARY_KEY_UNABLE_TO_SHARE_CART
         );
@@ -201,8 +191,8 @@ class SharedCartFacadeTest extends Test
     public function testShareCartByResourceShareRequestShouldShareCartWithReadOnlyAccessWhenAllParametersAreCorrect(): void
     {
         // Arrange
-        $firstCompanyUserTransfer = $this->createCompanyUserTransfer();
-        $secondCompanyUserTransfer = $this->createCompanyUserTransfer([
+        $firstCompanyUserTransfer = $this->tester->createCompanyUserTransfer();
+        $secondCompanyUserTransfer = $this->tester->createCompanyUserTransfer([
             CompanyUserTransfer::FK_COMPANY => $firstCompanyUserTransfer->getFkCompany(),
             CompanyUserTransfer::FK_COMPANY_BUSINESS_UNIT => $firstCompanyUserTransfer->getFkCompanyBusinessUnit(),
         ]);
@@ -212,11 +202,11 @@ class SharedCartFacadeTest extends Test
             QuoteTransfer::CUSTOMER => $customerTransfer,
             QuoteTransfer::IS_LOCKED => static::VALUE_IS_QUOTE_LOCKED_FALSE,
         ]);
-        $resourceShareTransfer = $this->createResourceShareTransfer([
-            static::KEY_SHARE_OPTION => static::PERMISSION_GROUP_READ_ONLY,
-            static::KEY_OWNER_COMPANY_USER_ID => $secondCompanyUserTransfer->getIdCompanyUser(),
-            static::KEY_OWNER_COMPANY_BUSINESS_UNIT_ID => $secondCompanyUserTransfer->getFkCompanyBusinessUnit(),
-            static::KEY_ID_QUOTE => $quoteTransfer->getIdQuote(),
+        $resourceShareTransfer = $this->tester->createResourceShare([
+            ResourceShareDataTransfer::SHARE_OPTION => static::PERMISSION_GROUP_READ_ONLY,
+            ResourceShareDataTransfer::OWNER_COMPANY_USER_ID => $secondCompanyUserTransfer->getIdCompanyUser(),
+            ResourceShareDataTransfer::OWNER_COMPANY_BUSINESS_UNIT_ID => $secondCompanyUserTransfer->getFkCompanyBusinessUnit(),
+            ResourceShareDataTransfer::ID_QUOTE => $quoteTransfer->getIdQuote(),
         ]);
 
         $resourceShareRequestTransfer = (new ResourceShareRequestTransfer())
@@ -224,7 +214,7 @@ class SharedCartFacadeTest extends Test
             ->setResourceShare($resourceShareTransfer);
 
         // Act
-        $resourceShareResponseTransfer = $this->getFacade()->shareCartByResourceShareRequest($resourceShareRequestTransfer);
+        $resourceShareResponseTransfer = $this->tester->getFacade()->shareCartByResourceShareRequest($resourceShareRequestTransfer);
 
         // Assert
         $this->assertTrue($resourceShareResponseTransfer->getIsSuccessful());
@@ -237,8 +227,8 @@ class SharedCartFacadeTest extends Test
     public function testShareCartByResourceShareRequestShouldShareCartWithFullAccessWhenAllParametersAreCorrect(): void
     {
         // Arrange
-        $firstCompanyUserTransfer = $this->createCompanyUserTransfer();
-        $secondCompanyUserTransfer = $this->createCompanyUserTransfer([
+        $firstCompanyUserTransfer = $this->tester->createCompanyUserTransfer();
+        $secondCompanyUserTransfer = $this->tester->createCompanyUserTransfer([
             CompanyUserTransfer::FK_COMPANY => $firstCompanyUserTransfer->getCompany()->getIdCompany(),
             CompanyUserTransfer::FK_COMPANY_BUSINESS_UNIT => $firstCompanyUserTransfer->getCompanyBusinessUnit()->getIdCompanyBusinessUnit(),
         ]);
@@ -249,11 +239,11 @@ class SharedCartFacadeTest extends Test
             QuoteTransfer::IS_LOCKED => static::VALUE_IS_QUOTE_LOCKED_FALSE,
         ]);
 
-        $resourceShareTransfer = $this->createResourceShareTransfer([
-            static::KEY_SHARE_OPTION => static::PERMISSION_GROUP_FULL_ACCESS,
-            static::KEY_OWNER_COMPANY_USER_ID => $secondCompanyUserTransfer->getIdCompanyUser(),
-            static::KEY_OWNER_COMPANY_BUSINESS_UNIT_ID => $secondCompanyUserTransfer->getFkCompanyBusinessUnit(),
-            static::KEY_ID_QUOTE => $quoteTransfer->getIdQuote(),
+        $resourceShareTransfer = $this->tester->createResourceShare([
+            ResourceShareDataTransfer::SHARE_OPTION => static::PERMISSION_GROUP_FULL_ACCESS,
+            ResourceShareDataTransfer::OWNER_COMPANY_USER_ID => $secondCompanyUserTransfer->getIdCompanyUser(),
+            ResourceShareDataTransfer::OWNER_COMPANY_BUSINESS_UNIT_ID => $secondCompanyUserTransfer->getFkCompanyBusinessUnit(),
+            ResourceShareDataTransfer::ID_QUOTE => $quoteTransfer->getIdQuote(),
         ]);
 
         $resourceShareRequestTransfer = (new ResourceShareRequestTransfer())
@@ -261,7 +251,7 @@ class SharedCartFacadeTest extends Test
             ->setResourceShare($resourceShareTransfer);
 
         // Act
-        $resourceShareResponseTransfer = $this->getFacade()->shareCartByResourceShareRequest($resourceShareRequestTransfer);
+        $resourceShareResponseTransfer = $this->tester->getFacade()->shareCartByResourceShareRequest($resourceShareRequestTransfer);
 
         // Assert
         $this->assertTrue($resourceShareResponseTransfer->getIsSuccessful());
@@ -269,83 +259,44 @@ class SharedCartFacadeTest extends Test
     }
 
     /**
-     * @param array $resourceShareDataSeed
-     * @param array $resourceShareSeed
-     *
-     * @return \Generated\Shared\Transfer\ResourceShareTransfer
+     * @return void
      */
-    protected function createResourceShareTransfer(array $resourceShareDataSeed = [], array $resourceShareSeed = []): ResourceShareTransfer
+    public function testShareCartByResourceShareRequestShouldReturnErrorMessageWhenWhenQuoteDoesNotExistsAnyMore(): void
     {
-        $resourceShareData = $resourceShareDataSeed + [
-            static::KEY_SHARE_OPTION => static::VALUE_SHARE_OPTION,
-            static::KEY_ID_QUOTE => static::VALUE_ID_QUOTE,
-            static::KEY_OWNER_COMPANY_USER_ID => static::VALUE_OWNER_ID_COMPANY_USER,
-            static::KEY_OWNER_COMPANY_BUSINESS_UNIT_ID => static::VALUE_OWNER_ID_COMPANY_BUSINESS_UNIT,
-        ];
-
-        $resourceShareDataTransfer = (new ResourceShareDataTransfer())
-            ->fromArray($resourceShareData, true);
-
-        return $this->tester->haveResourceShare($resourceShareSeed + [
-            ResourceShareTransfer::RESOURCE_SHARE_DATA => $resourceShareDataTransfer,
+        // Arrange
+        $firstCompanyUserTransfer = $this->tester->createCompanyUserTransfer();
+        $secondCompanyUserTransfer = $this->tester->createCompanyUserTransfer([
+            CompanyUserTransfer::FK_COMPANY => $firstCompanyUserTransfer->getCompany()->getIdCompany(),
+            CompanyUserTransfer::FK_COMPANY_BUSINESS_UNIT => $firstCompanyUserTransfer->getCompanyBusinessUnit()->getIdCompanyBusinessUnit(),
         ]);
-    }
 
-    /**
-     * @param array $seed
-     *
-     * @return \Generated\Shared\Transfer\CompanyUserTransfer
-     */
-    protected function createCompanyUserTransfer(array $seed = []): CompanyUserTransfer
-    {
         $customerTransfer = $this->tester->haveCustomer();
-        $companyTransfer = $this->tester->haveCompany([
-            CompanyTransfer::IS_ACTIVE => true,
-        ]);
-        $companyBusinessUnitTransfer = $this->tester->haveCompanyBusinessUnit([
-            CompanyBusinessUnitTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
+        $quoteTransfer = $this->tester->havePersistentQuote([
+            QuoteTransfer::CUSTOMER => $customerTransfer,
+            QuoteTransfer::IS_LOCKED => static::VALUE_IS_QUOTE_LOCKED_FALSE,
         ]);
 
-        $companyUserTransfer = $this->tester->haveCompanyUser($seed + [
-            CompanyUserTransfer::CUSTOMER => $customerTransfer,
-            CompanyUserTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
-            CompanyUserTransfer::FK_COMPANY_BUSINESS_UNIT => $companyBusinessUnitTransfer->getIdCompanyBusinessUnit(),
+        $resourceShareTransfer = $this->tester->createResourceShare([
+            ResourceShareDataTransfer::SHARE_OPTION => static::PERMISSION_GROUP_FULL_ACCESS,
+            ResourceShareDataTransfer::OWNER_COMPANY_USER_ID => $secondCompanyUserTransfer->getIdCompanyUser(),
+            ResourceShareDataTransfer::OWNER_COMPANY_BUSINESS_UNIT_ID => $secondCompanyUserTransfer->getFkCompanyBusinessUnit(),
+            ResourceShareDataTransfer::ID_QUOTE => $quoteTransfer->getIdQuote(),
         ]);
 
-        $companyUserTransfer->getCustomer()
-            ->setCompanyUserTransfer($companyUserTransfer);
+        $resourceShareRequestTransfer = (new ResourceShareRequestTransfer())
+            ->setCustomer($firstCompanyUserTransfer->getCustomer())
+            ->setResourceShare($resourceShareTransfer);
 
-        return $companyUserTransfer->setCompany($companyTransfer)
-            ->setCompanyBusinessUnit($companyBusinessUnitTransfer);
-    }
+        $this->tester->getQuoteFacade()->deleteQuote($quoteTransfer);
 
-    /**
-     * @param \Generated\Shared\Transfer\ResourceShareResponseTransfer $resourceShareResponseTransfer
-     * @param string $errorMessage
-     *
-     * @return bool
-     */
-    protected function hasResourceShareResponseTransferErrorMessage(
-        ResourceShareResponseTransfer $resourceShareResponseTransfer,
-        string $errorMessage
-    ): bool {
-        $resourceShareResponseTransfer->requireMessages();
-        foreach ($resourceShareResponseTransfer->getMessages() as $messageTransfer) {
-            $messageTransfer->requireValue();
+        // Act
+        $resourceShareResponseTransfer = $this->tester->getFacade()->shareCartByResourceShareRequest($resourceShareRequestTransfer);
 
-            if ($messageTransfer->getValue() === $errorMessage) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * @return \Spryker\Zed\Kernel\Business\AbstractFacade|\Spryker\Zed\SharedCart\Business\SharedCartFacadeInterface
-     */
-    protected function getFacade()
-    {
-        return $this->tester->getFacade();
+        // Assert
+        $this->assertFalse($resourceShareResponseTransfer->getIsSuccessful());
+        $this->tester->hasResourceShareResponseTransferErrorMessage(
+            $resourceShareResponseTransfer,
+            static::GLOSSARY_KEY_QUOTE_IS_NOT_AVAILABLE
+        );
     }
 }

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\SharedCart\Business\ResourceShare;
 
 use Generated\Shared\Transfer\MessageTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
 use Generated\Shared\Transfer\ShareDetailTransfer;
@@ -61,26 +62,9 @@ class ResourceShareQuoteShare implements ResourceShareQuoteShareInterface
             ->requireCustomer()
             ->requireResourceShare();
 
-        if ($this->isProvidedCompanyUserResourceShareOwner($resourceShareRequestTransfer)) {
-            return (new ResourceShareResponseTransfer())
-                ->setIsSuccessful(true)
-                ->setResourceShare($resourceShareRequestTransfer->getResourceShare());
-        }
-
-        if (!$this->isProvidedCompanyUserAllowedToShareCart($resourceShareRequestTransfer)) {
-            return (new ResourceShareResponseTransfer())
-                ->setIsSuccessful(false)
-                ->addMessage(
-                    (new MessageTransfer())->setValue(static::GLOSSARY_KEY_CART_ACCESS_DENIED)
-                );
-        }
-
-        if ($this->isSharedCartLocked($resourceShareRequestTransfer)) {
-            return (new ResourceShareResponseTransfer())
-                ->setIsSuccessful(false)
-                ->addMessage(
-                    (new MessageTransfer())->setValue(static::GLOSSARY_KEY_QUOTE_IS_NOT_AVAILABLE)
-                );
+        $resourceShareResponseTransfer = $this->validateResourceShare($resourceShareRequestTransfer);
+        if (!$resourceShareResponseTransfer->getIsSuccessful()) {
+            return $resourceShareResponseTransfer;
         }
 
         $shareDetailTransfer = $this->findShareDetail($resourceShareRequestTransfer);
@@ -98,21 +82,6 @@ class ResourceShareQuoteShare implements ResourceShareQuoteShareInterface
      */
     protected function createCartShareForProvidedCompanyUser(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer
     {
-        $idQuote = $resourceShareRequestTransfer
-            ->getResourceShare()
-            ->getResourceShareData()
-            ->getIdQuote();
-
-        $quoteResponseTransfer = $this->quoteFacade->findQuoteById($idQuote);
-
-        if (!$quoteResponseTransfer->getIsSuccessful()) {
-            return (new ResourceShareResponseTransfer())
-                ->setIsSuccessful(false)
-                ->addMessage(
-                    (new MessageTransfer())->setValue(static::GLOSSARY_KEY_QUOTE_IS_NOT_AVAILABLE)
-                );
-        }
-
         return $this->resourceShareQuoteCompanyUserWriter->createCartShareForCompanyUser($resourceShareRequestTransfer);
     }
 
@@ -179,11 +148,21 @@ class ResourceShareQuoteShare implements ResourceShareQuoteShareInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */
-    protected function isSharedCartLocked(ResourceShareRequestTransfer $resourceShareRequestTransfer): bool
+    protected function isSharedCartLocked(QuoteTransfer $quoteTransfer): bool
+    {
+        return $this->quoteFacade->isQuoteLocked($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer|null
+     */
+    protected function findQuoteTransferByResourceShareRequest(ResourceShareRequestTransfer $resourceShareRequestTransfer): ?QuoteTransfer
     {
         $quoteResponseTransfer = $this->quoteFacade->findQuoteById(
             $resourceShareRequestTransfer
@@ -192,6 +171,48 @@ class ResourceShareQuoteShare implements ResourceShareQuoteShareInterface
                 ->getIdQuote()
         );
 
-        return $this->quoteFacade->isQuoteLocked($quoteResponseTransfer->getQuoteTransfer());
+        return $quoteResponseTransfer->getQuoteTransfer();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
+     */
+    protected function validateResourceShare(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer
+    {
+        if ($this->isProvidedCompanyUserResourceShareOwner($resourceShareRequestTransfer)) {
+            return (new ResourceShareResponseTransfer())
+                ->setIsSuccessful(true)
+                ->setResourceShare($resourceShareRequestTransfer->getResourceShare());
+        }
+
+        if (!$this->isProvidedCompanyUserAllowedToShareCart($resourceShareRequestTransfer)) {
+            return (new ResourceShareResponseTransfer())
+                ->setIsSuccessful(false)
+                ->addMessage(
+                    (new MessageTransfer())->setValue(static::GLOSSARY_KEY_CART_ACCESS_DENIED)
+                );
+        }
+
+        $quoteTransfer = $this->findQuoteTransferByResourceShareRequest($resourceShareRequestTransfer);
+        if ($quoteTransfer === null) {
+            return (new ResourceShareResponseTransfer())
+                ->setIsSuccessful(false)
+                ->addMessage(
+                    (new MessageTransfer())->setValue(static::GLOSSARY_KEY_QUOTE_IS_NOT_AVAILABLE)
+                );
+        }
+
+        if ($this->isSharedCartLocked($quoteTransfer)) {
+            return (new ResourceShareResponseTransfer())
+                ->setIsSuccessful(false)
+                ->addMessage(
+                    (new MessageTransfer())->setValue(static::GLOSSARY_KEY_QUOTE_IS_NOT_AVAILABLE)
+                );
+        }
+
+        return (new ResourceShareResponseTransfer())
+            ->setIsSuccessful(true);
     }
 }
