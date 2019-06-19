@@ -8,6 +8,8 @@
 namespace Spryker\Client\SharedCartsRestApi;
 
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShareCartRequestTransfer;
+use Generated\Shared\Transfer\ShareCartResponseTransfer;
 use Generated\Shared\Transfer\ShareDetailCollectionTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
@@ -28,5 +30,53 @@ class SharedCartsRestApiClient extends AbstractClient implements SharedCartsRest
     public function getSharedCartsByCartUuid(QuoteTransfer $quoteTransfer): ShareDetailCollectionTransfer
     {
         return $this->getFactory()->createSharedCartsRestApiStub()->getSharedCartsByCartUuid($quoteTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShareCartRequestTransfer $shareCartRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShareCartResponseTransfer
+     */
+    public function create(ShareCartRequestTransfer $shareCartRequestTransfer): ShareCartResponseTransfer
+    {
+        return $this->getFactory()
+            ->createSharedCartsRestApiStub()
+            ->create($shareCartRequestTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShareCartRequestTransfer $shareCartRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShareCartResponseTransfer
+     */
+    public function update(ShareCartRequestTransfer $shareCartRequestTransfer): ShareCartResponseTransfer
+    {
+        return $this->getFactory()
+            ->createSharedCartsRestApiStub()
+            ->update($shareCartRequestTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShareCartRequestTransfer $shareCartRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShareCartResponseTransfer
+     */
+    public function delete(ShareCartRequestTransfer $shareCartRequestTransfer): ShareCartResponseTransfer
+    {
+        return $this->getFactory()
+            ->createSharedCartsRestApiStub()
+            ->delete($shareCartRequestTransfer);
     }
 }
