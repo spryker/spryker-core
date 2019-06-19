@@ -560,13 +560,12 @@ class Reader implements ReaderInterface
      */
     protected function findPricesForAbstractProducts(array $productConcreteSkus, array $priceProductFilterTransfers): array
     {
-        $priceProductCriteriaTransfer = $this->priceProductCriteriaBuilder->buildCriteriaFromFilter($priceProductFilterTransfers[0]);
-        $abstractPricesBySku = $this->priceProductAbstractReader->getProductAbstractPricesByConcreteSkusAndCriteria(
+        $priceProductCriteriaTransfer = $this->priceProductCriteriaBuilder->buildCriteriaFromFilter(array_shift($priceProductFilterTransfers));
+
+        return $this->priceProductAbstractReader->getProductAbstractPricesByConcreteSkusAndCriteria(
             $productConcreteSkus,
             $priceProductCriteriaTransfer
         );
-
-        return $abstractPricesBySku;
     }
 
     /**

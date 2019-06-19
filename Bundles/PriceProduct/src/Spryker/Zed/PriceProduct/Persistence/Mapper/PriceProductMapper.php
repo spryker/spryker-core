@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\PriceTypeTransfer;
+use Orm\Zed\PriceProduct\Persistence\SpyPriceProduct;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore;
 
 class PriceProductMapper
@@ -26,26 +27,95 @@ class PriceProductMapper
         SpyPriceProductStore $priceProductStoreEntity,
         PriceProductTransfer $priceProductTransfer
     ): PriceProductTransfer {
-
         $priceProductEntity = $priceProductStoreEntity->getPriceProduct();
         $priceProductStoreEntityData = $priceProductStoreEntity->toArray();
 
-        $priceTypeTransfer = (new PriceTypeTransfer())
+        $priceTypeTransfer = $this->createPriceTypeTransfer($priceProductEntity);
+        $moneyValueTransfer = $this->createMoneyValueTransfer($priceProductStoreEntity, $priceProductStoreEntityData);
+        $priceProductDimensionTransfer = $this->createPriceProductDimensionTransfer($priceProductStoreEntityData);
+
+        return $this->mapPriceProductTransfer(
+            $priceProductTransfer,
+            $priceProductEntity,
+            $priceTypeTransfer,
+            $moneyValueTransfer,
+            $priceProductDimensionTransfer,
+            $priceProductStoreEntityData
+        );
+    }
+
+    /**
+     * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProduct $priceProductEntity
+     *
+     * @return \Generated\Shared\Transfer\PriceTypeTransfer
+     */
+    protected function createPriceTypeTransfer(SpyPriceProduct $priceProductEntity): PriceTypeTransfer
+    {
+        return (new PriceTypeTransfer())
             ->setName($priceProductEntity->getPriceType()->getName())
             ->setPriceModeConfiguration($priceProductEntity->getPriceType()->getPriceModeConfiguration());
+    }
 
-        $currencyTransfer = (new CurrencyTransfer())->fromArray($priceProductStoreEntity->getCurrency()->toArray(), true);
+    /**
+     * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore $priceProductStoreEntity
+     *
+     * @return \Generated\Shared\Transfer\CurrencyTransfer
+     */
+    protected function createCurrencyTransfer(SpyPriceProductStore $priceProductStoreEntity): CurrencyTransfer
+    {
+        return (new CurrencyTransfer())
+            ->fromArray($priceProductStoreEntity->getCurrency()->toArray(), true);
+    }
 
-        $moneyValueTransfer = (new MoneyValueTransfer())
+    /**
+     * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore $priceProductStoreEntity
+     * @param array $priceProductStoreEntityData
+     *
+     * @return \Generated\Shared\Transfer\MoneyValueTransfer
+     */
+    protected function createMoneyValueTransfer(
+        SpyPriceProductStore $priceProductStoreEntity,
+        array $priceProductStoreEntityData
+    ): MoneyValueTransfer {
+        $currencyTransfer = $this->createCurrencyTransfer($priceProductStoreEntity);
+
+        return (new MoneyValueTransfer())
             ->fromArray($priceProductStoreEntityData, true)
             ->setIdEntity($priceProductStoreEntity->getIdPriceProductStore())
             ->setNetAmount($priceProductStoreEntity->getNetPrice())
             ->setGrossAmount($priceProductStoreEntity->getGrossPrice())
             ->setCurrency($currencyTransfer);
+    }
 
-        $priceProductDimensionTransfer = new PriceProductDimensionTransfer();
-        $priceProductDimensionTransfer->fromArray($priceProductStoreEntityData, true);
+    /**
+     * @param array $priceProductStoreEntityData
+     *
+     * @return \Generated\Shared\Transfer\PriceProductDimensionTransfer
+     */
+    protected function createPriceProductDimensionTransfer(array $priceProductStoreEntityData): PriceProductDimensionTransfer
+    {
+        return (new PriceProductDimensionTransfer())
+            ->fromArray($priceProductStoreEntityData, true);
+    }
 
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProduct $priceProductEntity
+     * @param \Generated\Shared\Transfer\PriceTypeTransfer $priceTypeTransfer
+     * @param \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer
+     * @param \Generated\Shared\Transfer\PriceProductDimensionTransfer $priceProductDimensionTransfer
+     * @param array $priceProductStoreEntityData
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
+     */
+    protected function mapPriceProductTransfer(
+        PriceProductTransfer $priceProductTransfer,
+        SpyPriceProduct $priceProductEntity,
+        PriceTypeTransfer $priceTypeTransfer,
+        MoneyValueTransfer $moneyValueTransfer,
+        PriceProductDimensionTransfer $priceProductDimensionTransfer,
+        array $priceProductStoreEntityData
+    ): PriceProductTransfer {
         $sku = $priceProductEntity->getProduct() ? $priceProductEntity->getProduct()->getSku() : $priceProductStoreEntityData['product_sku'];
 
         return $priceProductTransfer

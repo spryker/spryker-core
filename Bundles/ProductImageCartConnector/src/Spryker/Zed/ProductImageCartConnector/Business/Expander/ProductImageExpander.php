@@ -53,7 +53,7 @@ class ProductImageExpander implements ProductImageExpanderInterface
      *
      * @return void
      */
-    protected function expandItemsWithImages(ItemTransfer $itemTransfer, array $productImages)
+    protected function expandItemsWithImages(ItemTransfer $itemTransfer, array $productImages): void
     {
         if (!isset($productImages[$itemTransfer->getId()])) {
             return;

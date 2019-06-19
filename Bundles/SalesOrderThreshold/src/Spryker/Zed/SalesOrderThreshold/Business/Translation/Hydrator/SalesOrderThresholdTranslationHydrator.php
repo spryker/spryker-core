@@ -53,10 +53,30 @@ class SalesOrderThresholdTranslationHydrator implements SalesOrderThresholdTrans
 
         $availableLocaleTransfers = $this->localeFacade->getLocaleCollection();
         $translationTransfers = $this->glossaryFacade->getTranslationsByGlossaryKeyAndLocales($glossaryKey, $availableLocaleTransfers);
+
+        $salesOrderThresholdTransfer = $this
+            ->extendSalesOrderThresholdTransferWithLocalizedMessages($salesOrderThresholdTransfer, $translationTransfers, $availableLocaleTransfers);
+
+        return $salesOrderThresholdTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SalesOrderThresholdTransfer $salesOrderThresholdTransfer
+     * @param array $translationTransfers
+     * @param array $availableLocaleTransfers
+     *
+     * @return \Generated\Shared\Transfer\SalesOrderThresholdTransfer
+     */
+    protected function extendSalesOrderThresholdTransferWithLocalizedMessages(
+        SalesOrderThresholdTransfer $salesOrderThresholdTransfer,
+        array $translationTransfers,
+        array $availableLocaleTransfers
+    ): SalesOrderThresholdTransfer {
         $localizedMessages = new ArrayObject();
 
+        $indexedTranslationTransfers = $this->indexTranslationTransfersByLocaleId($translationTransfers);
         foreach ($availableLocaleTransfers as $localeTransfer) {
-            $translationTransfer = $this->findTranslationTransferByLocaleId($localeTransfer->getIdLocale(), $translationTransfers);
+            $translationTransfer = $indexedTranslationTransfers[$localeTransfer->getIdLocale()] ?? null;
             $salesOrderThresholdLocalizedMessageTransfer = $this->createLocalizedMessage($localeTransfer, $translationTransfer);
 
             $localizedMessages->append($salesOrderThresholdLocalizedMessageTransfer);
@@ -67,20 +87,18 @@ class SalesOrderThresholdTranslationHydrator implements SalesOrderThresholdTrans
     }
 
     /**
-     * @param int $localeId
-     * @param \Generated\Shared\Transfer\TranslationTransfer[] $translations
+     * @param \Generated\Shared\Transfer\TranslationTransfer[] $translationTransfers
      *
-     * @return \Generated\Shared\Transfer\TranslationTransfer|null
+     * @return \Generated\Shared\Transfer\TranslationTransfer[]
      */
-    protected function findTranslationTransferByLocaleId(int $localeId, array $translations): ?TranslationTransfer
+    protected function indexTranslationTransfersByLocaleId(array $translationTransfers): array
     {
-        foreach ($translations as $translation) {
-            if ($translation->getFkLocale() === $localeId) {
-                return $translation;
-            }
+        $indexedTranslationTransfers = [];
+        foreach ($translationTransfers as $translationTransfer) {
+            $indexedTranslationTransfers[$translationTransfer->getFkLocale()] = $translationTransfer;
         }
 
-        return null;
+        return $indexedTranslationTransfers;
     }
 
     /**

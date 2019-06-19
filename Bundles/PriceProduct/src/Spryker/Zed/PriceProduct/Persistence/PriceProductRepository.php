@@ -405,7 +405,7 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
      * @param string[] $concreteSkus
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
     public function getProductConcretePricesByConcreteSkusAndCriteria(
         array $concreteSkus,

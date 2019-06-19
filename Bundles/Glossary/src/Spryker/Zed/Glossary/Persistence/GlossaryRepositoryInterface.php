@@ -13,7 +13,7 @@ interface GlossaryRepositoryInterface
      * @param string $keyName
      * @param array $localeIsoCodes
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\TranslationTransfer[]
      */
     public function getTranslationsByGlossaryKeyAndLocaleIsoCodes(string $keyName, array $localeIsoCodes): array;
 }

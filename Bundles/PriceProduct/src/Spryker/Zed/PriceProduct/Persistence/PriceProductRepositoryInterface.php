@@ -134,7 +134,7 @@ interface PriceProductRepositoryInterface
      * @param string[] $concreteSkus
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
     public function getProductAbstractPricesByConcreteSkusAndCriteria(
         array $concreteSkus,
@@ -145,7 +145,7 @@ interface PriceProductRepositoryInterface
      * @param string[] $concreteSkus
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
     public function getProductConcretePricesByConcreteSkusAndCriteria(
         array $concreteSkus,

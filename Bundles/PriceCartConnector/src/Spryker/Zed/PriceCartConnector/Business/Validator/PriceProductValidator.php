@@ -130,12 +130,11 @@ class PriceProductValidator implements PriceProductValidatorInterface
     ): CartPreCheckResponseTransfer {
         $indexedValidPriceProductTransfers = $this->indexPriceProductTransfersBySku($validPriceProductTransfers);
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
-            $priceProductTransfer = $indexedValidPriceProductTransfers[$itemTransfer->getSku()] ?? null;
-            if (!$priceProductTransfer) {
+            $totalItemPrice = $this->calculateTotalItemPrice($itemTransfer, $indexedValidPriceProductTransfers);
+            if ($totalItemPrice === null) {
                 continue;
             }
-            $price = $itemTransfer->getQuantity() * (int)$this->getPriceFromPriceProductTransfer($priceProductTransfer);
-            if ($price < $this->config->getMinPriceRestriction()) {
+            if ($totalItemPrice < $this->config->getMinPriceRestriction()) {
                 return $cartPreCheckResponseTransfer
                     ->setIsSuccess(false)
                     ->addMessage($this->createMessageMinPriceRestriction($cartChangeTransfer->getQuote()->getCurrency()->getCode()));
@@ -143,6 +142,22 @@ class PriceProductValidator implements PriceProductValidatorInterface
         }
 
         return $cartPreCheckResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $indexedValidPriceProductTransfers
+     *
+     * @return int|null
+     */
+    protected function calculateTotalItemPrice(ItemTransfer $itemTransfer, array $indexedValidPriceProductTransfers): ?int
+    {
+        $priceProductTransfer = $indexedValidPriceProductTransfers[$itemTransfer->getSku()] ?? null;
+        if (!$priceProductTransfer) {
+            return null;
+        }
+
+        return $itemTransfer->getQuantity() * (int)$this->getPriceFromPriceProductTransfer($priceProductTransfer);
     }
 
     /**
@@ -302,15 +317,15 @@ class PriceProductValidator implements PriceProductValidatorInterface
      */
     protected function getProductWithoutPriceSkus(array $priceProductTransfers, array $items): array
     {
-        $totalSkus = array_map(function (ItemTransfer $item) {
+        $totalItemSkus = array_map(function (ItemTransfer $item) {
             return $item->getSku();
         }, $items);
 
-        $validSkus = array_map(function (PriceProductTransfer $priceProductTransfer) {
+        $validProductSkus = array_map(function (PriceProductTransfer $priceProductTransfer) {
             return $priceProductTransfer->getSkuProduct();
         }, $priceProductTransfers);
 
-        return array_diff($totalSkus, $validSkus);
+        return array_diff($totalItemSkus, $validProductSkus);
     }
 
     /**

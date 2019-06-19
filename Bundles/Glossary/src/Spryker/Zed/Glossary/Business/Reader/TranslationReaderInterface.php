@@ -13,7 +13,7 @@ interface TranslationReaderInterface
      * @param string $glossaryKey
      * @param \Generated\Shared\Transfer\LocaleTransfer[] $localeTransfers
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\TranslationTransfer[]
      */
     public function getTranslationsByGlossaryKeyAndLocaleTransfers(string $glossaryKey, array $localeTransfers): array;
 }

@@ -59,8 +59,8 @@ class ItemsWithoutPriceFilter implements ItemFilterInterface
      */
     public function filterItems(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        $filters = $this->createPriceProductFilters($quoteTransfer);
-        $validPrices = $this->priceProductFacade->getValidPrices($filters);
+        $priceProductFilters = $this->createPriceProductFilters($quoteTransfer);
+        $validPrices = $this->priceProductFacade->getValidPrices($priceProductFilters);
 
         $productWithoutProductSkus = $this->getProductWithoutPriceSkus($validPrices, $quoteTransfer->getItems()->getArrayCopy());
 
@@ -230,10 +230,10 @@ class ItemsWithoutPriceFilter implements ItemFilterInterface
             return $item->getSku();
         }, $items);
 
-        $validSkus = array_map(function (PriceProductTransfer $priceProductTransfer) {
+        $validProductSkus = array_map(function (PriceProductTransfer $priceProductTransfer) {
             return $priceProductTransfer->getSkuProduct();
         }, $priceProductTransfers);
 
-        return array_diff($itemSkus, $validSkus);
+        return array_diff($itemSkus, $validProductSkus);
     }
 }

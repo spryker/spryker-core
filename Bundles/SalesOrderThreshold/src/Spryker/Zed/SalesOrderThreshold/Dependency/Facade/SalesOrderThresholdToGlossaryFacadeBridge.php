@@ -72,7 +72,7 @@ class SalesOrderThresholdToGlossaryFacadeBridge implements SalesOrderThresholdTo
      * @param string $glossaryKey
      * @param \Generated\Shared\Transfer\LocaleTransfer[] $localeTransfers
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\TranslationTransfer[]
      */
     public function getTranslationsByGlossaryKeyAndLocales(string $glossaryKey, array $localeTransfers): array
     {
