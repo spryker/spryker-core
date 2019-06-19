@@ -227,7 +227,7 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
             (new ShoppingListTransfer())->setIdShoppingList($shoppingListItemTransfer->getFkShoppingList())
         );
 
-        if (!$shoppingListTransfer || !$this->findShoppingListItemByIdInShoppingList($shoppingListItemTransfer, $shoppingListTransfer)) {
+        if (!$shoppingListTransfer || !$this->findShoppingListItemById($shoppingListItemTransfer, $shoppingListTransfer)) {
             return (new ShoppingListItemResponseTransfer())->setIsSuccess(false);
         }
 
@@ -288,7 +288,7 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer|null
      */
-    protected function findShoppingListItemByIdInShoppingList(
+    protected function findShoppingListItemById(
         ShoppingListItemTransfer $shoppingListItemTransfer,
         ShoppingListTransfer $shoppingListTransfer
     ): ?ShoppingListItemTransfer {
