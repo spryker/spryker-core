@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\ProductOptionValueTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\TaxRateTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
+use Orm\Zed\Country\Persistence\SpyCountryQuery;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionValueQuery;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxFacadeBridge;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxFacadeInterface;
@@ -201,6 +202,6 @@ class ProductOptionTaxRateCalculatonWithDefaultTaxRatesTest extends Unit
      */
     protected function getCountryIdByIso2Code(string $iso2code): int
     {
-        return SpyCountryQuery::create()->filterByIso2Code($iso2Code)->findOne()->getIdCountry();
+        return SpyCountryQuery::create()->filterByIso2Code($iso2code)->findOne()->getIdCountry();
     }
 }

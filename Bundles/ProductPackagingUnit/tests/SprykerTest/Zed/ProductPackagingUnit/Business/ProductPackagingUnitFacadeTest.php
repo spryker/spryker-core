@@ -1048,7 +1048,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
      * @param \Generated\Shared\Transfer\ItemTransfer $firstItemTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer $secondItemTransfer
      * @param int|float $expectedResult
-     *
+     * @group test123
      * @return void
      */
     public function testAddItemToQuoteShouldAddItemQuantity(
@@ -1110,12 +1110,14 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
             ItemTransfer::SKU => 'sku_1',
             ItemTransfer::QUANTITY => $firstQuantity,
             ItemTransfer::AMOUNT => $firstQuantity,
+            ItemTransfer::GROUP_KEY => 'gr_1',
         ])->build();
 
         $secondItemTransfer = (new ItemBuilder())->seed([
             ItemTransfer::SKU => 'sku_1',
             ItemTransfer::QUANTITY => $secondQuantity,
             ItemTransfer::AMOUNT => $secondQuantity,
+            ItemTransfer::GROUP_KEY => 'gr_1',
         ])->build();
 
         return [$firstItemTransfer, $secondItemTransfer, $expectedResult];

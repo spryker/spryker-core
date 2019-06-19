@@ -7,6 +7,7 @@
 
 namespace SprykerTest\Zed\CheckoutRestApi;
 
+use ArrayObject;
 use Codeception\Actor;
 use Generated\Shared\DataBuilder\CheckoutResponseBuilder;
 use Generated\Shared\DataBuilder\CustomerBuilder;
@@ -16,6 +17,10 @@ use Generated\Shared\DataBuilder\PaymentMethodsBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\DataBuilder\QuoteResponseBuilder;
 use Generated\Shared\DataBuilder\RestCheckoutRequestAttributesBuilder;
+use Generated\Shared\DataBuilder\ShipmentBuilder;
+use Generated\Shared\DataBuilder\ShipmentGroupBuilder;
+use Generated\Shared\DataBuilder\ShipmentGroupCollectionBuilder;
+use Generated\Shared\DataBuilder\ShipmentMethodBuilder;
 use Generated\Shared\DataBuilder\ShipmentMethodsBuilder;
 use Generated\Shared\Transfer\AddressesTransfer;
 use Generated\Shared\Transfer\AddressTransfer;
@@ -246,6 +251,30 @@ class CheckoutRestApiBusinessTester extends Actor
         ];
 
         return (new ShipmentMethodsBuilder())->withMethod($shipmentMethodData)->build();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\ShipmentGroupCollectionTransfer|\Spryker\Shared\Kernel\Transfer\AbstractTransfer
+     */
+    public function createShipmentGroupCollectionTransfer(): AbstractTransfer
+    {
+        $shipmentMethodData = [
+            'carrierName' => 'Spryker Dummy Shipment',
+            'idShipmentMethod' => '1',
+            'name' => 'Standard',
+            'storeCurrencyPrice' => '490',
+        ];
+        $shipmentMethodTransfer = (new ShipmentMethodBuilder())->seed($shipmentMethodData)->build();
+        $shipmentTransfer = (new ShipmentBuilder())->build();
+        $shipmentTransfer->setMethod($shipmentMethodTransfer);
+        $shipmentGroupTransfer = (new ShipmentGroupBuilder())->build();
+        $shipmentMethodsTransfer = (new ShipmentMethodsBuilder())->build();
+        $shipmentMethodsTransfer->addMethod($shipmentMethodTransfer);
+        $shipmentGroupTransfer->setShipment($shipmentTransfer)
+            ->setAvailableShipmentMethods($shipmentMethodsTransfer);
+
+        $shipmentGroupCollectionTransfer = (new ShipmentGroupCollectionBuilder())->build();
+        return $shipmentGroupCollectionTransfer->setShipmentGroups(new ArrayObject([$shipmentGroupTransfer]));
     }
 
     /**

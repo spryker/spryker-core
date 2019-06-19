@@ -42,8 +42,10 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
      * @param \Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorQueryContainerInterface $taxQueryContainer
      * @param \Spryker\Zed\TaxProductConnector\Dependency\Facade\TaxProductConnectorToTaxInterface $taxFacade
      */
-    public function __construct(TaxProductConnectorQueryContainerInterface $taxQueryContainer, TaxProductConnectorToTaxInterface $taxFacade)
-    {
+    public function __construct(
+        TaxProductConnectorQueryContainerInterface $taxQueryContainer,
+        TaxProductConnectorToTaxInterface $taxFacade
+    ) {
         $this->taxQueryContainer = $taxQueryContainer;
         $this->taxFacade = $taxFacade;
     }
@@ -62,7 +64,10 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
             $countryIso2Code = $this->getDefaultTaxCountryIso2Code();
         }
 
-        $taxRates = $this->findTaxRatesByAllIdProductAbstractsAndCountryIso2Code($allIdProductAbstracts, $countryIso2Code);
+        $taxRates = $this->findTaxRatesByAllIdProductAbstractsAndCountryIso2Code(
+            $allIdProductAbstracts,
+            $countryIso2Code
+        );
         $this->setItemsTax($quoteTransfer, $taxRates);
     }
 
@@ -131,9 +136,12 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
      *
      * @return array
      */
-    protected function findTaxRatesByAllIdProductAbstractsAndCountryIso2Code(array $allIdProductAbstracts, $countryIso2Code)
-    {
-        return $this->taxQueryContainer->queryTaxSetByIdProductAbstractAndCountryIso2Code($allIdProductAbstracts, $countryIso2Code)
+    protected function findTaxRatesByAllIdProductAbstractsAndCountryIso2Code(
+        array $allIdProductAbstracts,
+        $countryIso2Code
+    ): array {
+        return $this->taxQueryContainer->queryTaxSetByIdProductAbstractAndCountryIso2Code($allIdProductAbstracts,
+            $countryIso2Code)
             ->find()
             ->toArray();
     }
@@ -153,7 +161,7 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
     /**
      * @return float
      */
-    protected function getDefaultTaxRate(): string
+    protected function getDefaultTaxRate(): float
     {
         if ($this->defaultTaxRate === null) {
             $this->defaultTaxRate = $this->taxFacade->getDefaultTaxRate();
