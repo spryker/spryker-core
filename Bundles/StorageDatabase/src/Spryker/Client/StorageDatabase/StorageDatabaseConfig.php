@@ -15,32 +15,9 @@ use Spryker\Shared\StorageDatabase\StorageDatabaseConstants;
  */
 class StorageDatabaseConfig extends AbstractBundleConfig
 {
-    protected const FIELD_DATA = 'data';
-    protected const FIELD_KEY = 'key';
-    protected const FIELD_ALIAS_KEYS = 'alias_keys';
-
-    protected const RESOURCE_PREFIX_TO_STORAGE_TABLE_MAP = [
-        'translation' => [
-            self::KEY_STORAGE_TABLE_NAME => 'glossary',
-        ],
-        'product_search_config_extension' => [
-            self::KEY_STORAGE_TABLE_NAME => 'product_search_config',
-        ],
-        'product_abstract_product_lists' => [
-            self::KEY_STORAGE_TABLE_NAME => 'product_abstract_product_list',
-        ],
-        'product_concrete_product_lists' => [
-            self::KEY_STORAGE_TABLE_NAME => 'product_concrete_product_list',
-        ],
-    ];
-
     protected const DEFAULT_STORAGE_TABLE_PREFIX = 'spy';
     protected const DEFAULT_STORAGE_TABLE_SUFFIX = 'storage';
     protected const STORAGE_TABLE_NAME_PART_SEPARATOR = '_';
-
-    public const KEY_STORAGE_TABLE_PREFIX = 'KEY_STORAGE_TABLE_PREFIX';
-    public const KEY_STORAGE_TABLE_SUFFIX = 'KEY_STORAGE_TABLE_SUFFIX';
-    public const KEY_STORAGE_TABLE_NAME = 'KEY_STORAGE_TABLE_NAME';
 
     /**
      * @return array
@@ -66,7 +43,7 @@ class StorageDatabaseConfig extends AbstractBundleConfig
      */
     public function getResourceNameToStorageTableMap(): array
     {
-        return static::RESOURCE_PREFIX_TO_STORAGE_TABLE_MAP;
+        return $this->get(StorageDatabaseConstants::RESOURCE_PREFIX_TO_STORAGE_TABLE_MAP, []);
     }
 
     /**
@@ -115,6 +92,30 @@ class StorageDatabaseConfig extends AbstractBundleConfig
     public function getDbEngineName(): string
     {
         return $this->get(StorageDatabaseConstants::DB_ENGINE, '');
+    }
+
+    /**
+     * @return string
+     */
+    public function getStorageTablePrefixConfigKey(): string
+    {
+        return $this->getSharedConfig()->getStorageTablePrefixConfigKey();
+    }
+
+    /**
+     * @return string
+     */
+    public function getStorageTableSuffixConfigKey(): string
+    {
+        return $this->getSharedConfig()->getStorageTableSuffixConfigKey();
+    }
+
+    /**
+     * @return string
+     */
+    public function getStorageTableNameConfigKey(): string
+    {
+        return $this->getSharedConfig()->getStorageTableNameConfigKey();
     }
 
     /**

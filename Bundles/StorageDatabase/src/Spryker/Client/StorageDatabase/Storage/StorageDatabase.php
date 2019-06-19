@@ -7,12 +7,17 @@
 
 namespace Spryker\Client\StorageDatabase\Storage;
 
+use Spryker\Client\StorageDatabase\Dependency\Service\StorageDatabaseToUtilEncodingInterface;
 use Spryker\Client\StorageDatabase\Storage\Reader\AbstractStorageReader;
 
 class StorageDatabase implements StorageDatabaseInterface
 {
     protected const KEY_PLACEHOLDER = ':key';
     protected const KV_PREFIX = 'kv:';
+
+    protected const ACCESS_STATS_KEY_COUNT = 'count';
+    protected const ACCESS_STATS_KEY_KEYS = 'keys';
+    protected const ACCESS_STATS_KEY_READ = 'read';
 
     /**
      * @var \Spryker\Client\StorageDatabase\Storage\Reader\AbstractStorageReader
@@ -22,14 +27,7 @@ class StorageDatabase implements StorageDatabaseInterface
     /**
      * @var array
      */
-    protected $accessStats = [
-        'count' => [
-            'read' => 0,
-        ],
-        'keys' => [
-            'read' => [],
-        ],
-    ];
+    protected $accessStats;
 
     /**
      * @var bool
@@ -37,11 +35,19 @@ class StorageDatabase implements StorageDatabaseInterface
     protected $debug;
 
     /**
-     * @param \Spryker\Client\StorageDatabase\Storage\Reader\AbstractStorageReader $storageReader
+     * @var \Spryker\Client\StorageDatabase\Dependency\Service\StorageDatabaseToUtilEncodingInterface
      */
-    public function __construct(AbstractStorageReader $storageReader)
+    protected $utilEncodingService;
+
+    /**
+     * @param \Spryker\Client\StorageDatabase\Storage\Reader\AbstractStorageReader $storageReader
+     * @param \Spryker\Client\StorageDatabase\Dependency\Service\StorageDatabaseToUtilEncodingInterface $utilEncodingService
+     */
+    public function __construct(AbstractStorageReader $storageReader, StorageDatabaseToUtilEncodingInterface $utilEncodingService)
     {
         $this->storageReader = $storageReader;
+        $this->utilEncodingService = $utilEncodingService;
+        $this->resetAccessStats();
     }
 
     /**
@@ -82,11 +88,11 @@ class StorageDatabase implements StorageDatabaseInterface
     public function resetAccessStats(): void
     {
         $this->accessStats = [
-            'count' => [
-                'read' => 0,
+            static::ACCESS_STATS_KEY_COUNT => [
+                static::ACCESS_STATS_KEY_READ => 0,
             ],
-            'keys' => [
-                'read' => [],
+            static::ACCESS_STATS_KEY_KEYS => [
+                static::ACCESS_STATS_KEY_READ => [],
             ],
         ];
     }
@@ -132,7 +138,7 @@ class StorageDatabase implements StorageDatabaseInterface
      */
     protected function getPrefixedKeyName(string $key): string
     {
-        return self::KV_PREFIX . $key;
+        return sprintf('%s%s', static::KV_PREFIX, $key);
     }
 
     /**
@@ -143,8 +149,8 @@ class StorageDatabase implements StorageDatabaseInterface
     protected function addReadAccessStats(string $key): void
     {
         if ($this->debug) {
-            $this->accessStats['count']['read']++;
-            $this->accessStats['keys']['read'][] = $key;
+            $this->accessStats[static::ACCESS_STATS_KEY_COUNT][static::ACCESS_STATS_KEY_READ]++;
+            $this->accessStats[static::ACCESS_STATS_KEY_KEYS][static::ACCESS_STATS_KEY_READ][] = $key;
         }
     }
 
@@ -156,9 +162,9 @@ class StorageDatabase implements StorageDatabaseInterface
     protected function addMultiReadAccessStats(array $keys): void
     {
         if ($this->debug) {
-            $this->accessStats['count']['read'] += count($keys);
-            $this->accessStats['keys']['read'] = array_unique(
-                array_merge($this->accessStats['keys']['read'], $keys)
+            $this->accessStats[static::ACCESS_STATS_KEY_COUNT][static::ACCESS_STATS_KEY_READ] += count($keys);
+            $this->accessStats[static::ACCESS_STATS_KEY_KEYS][static::ACCESS_STATS_KEY_READ] = array_unique(
+                array_merge($this->accessStats[static::ACCESS_STATS_KEY_KEYS][static::ACCESS_STATS_KEY_READ], $keys)
             );
         }
     }
@@ -170,7 +176,7 @@ class StorageDatabase implements StorageDatabaseInterface
      */
     protected function decodeResult(string $data)
     {
-        $decodedResult = json_decode($data, true);
+        $decodedResult = $this->utilEncodingService->decodeJson($data, true);
 
         if (json_last_error() === JSON_ERROR_SYNTAX) {
             return $data;

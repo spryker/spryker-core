@@ -29,7 +29,7 @@ class StorageTableNameResolverTest extends Unit
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->setupStorageTableNameResolver();

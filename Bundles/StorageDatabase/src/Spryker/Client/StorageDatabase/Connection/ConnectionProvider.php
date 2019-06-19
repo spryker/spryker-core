@@ -8,6 +8,7 @@
 namespace Spryker\Client\StorageDatabase\Connection;
 
 use Propel\Runtime\Connection\ConnectionInterface;
+use Propel\Runtime\Connection\ConnectionManagerInterface;
 use Propel\Runtime\Connection\ConnectionManagerSingle;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ServiceContainer\ServiceContainerInterface;
@@ -57,16 +58,24 @@ class ConnectionProvider implements ConnectionProviderInterface
      */
     protected function establishConnection(): void
     {
-        $manager = new ConnectionManagerSingle();
-        $manager->setConfiguration($this->getPropelConfig());
-        $manager->setName(static::CONNECTION_NAME);
-
         $serviceContainer = $this->getServiceContainer();
         $serviceContainer->setAdapterClass(static::CONNECTION_NAME, $this->config->getDbEngineName());
-        $serviceContainer->setConnectionManager(static::CONNECTION_NAME, $manager);
+        $serviceContainer->setConnectionManager(static::CONNECTION_NAME, $this->createConnectionManager());
         $serviceContainer->setDefaultDatasource(static::CONNECTION_NAME);
 
         $this->setupConnection();
+    }
+
+    /**
+     * @return \Propel\Runtime\Connection\ConnectionManagerInterface
+     */
+    protected function createConnectionManager(): ConnectionManagerInterface
+    {
+        $connectionManager = new ConnectionManagerSingle();
+        $connectionManager->setConfiguration($this->getPropelConfig());
+        $connectionManager->setName(static::CONNECTION_NAME);
+
+        return $connectionManager;
     }
 
     /**

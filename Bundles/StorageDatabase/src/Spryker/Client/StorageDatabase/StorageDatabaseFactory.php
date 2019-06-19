@@ -10,6 +10,7 @@ namespace Spryker\Client\StorageDatabase;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\StorageDatabase\Connection\ConnectionProvider;
 use Spryker\Client\StorageDatabase\Connection\ConnectionProviderInterface;
+use Spryker\Client\StorageDatabase\Dependency\Service\StorageDatabaseToUtilEncodingInterface;
 use Spryker\Client\StorageDatabase\Storage\Reader\AbstractStorageReader;
 use Spryker\Client\StorageDatabase\Storage\Reader\StorageReaderFactory;
 use Spryker\Client\StorageDatabase\Storage\Reader\StorageReaderFactoryInterface;
@@ -39,7 +40,8 @@ class StorageDatabaseFactory extends AbstractFactory
     public function createStorageDatabaseService(): StorageDatabaseInterface
     {
         return new StorageDatabase(
-            $this->createStorageReader()
+            $this->createStorageReader(),
+            $this->getUtilEncodingService()
         );
     }
 
@@ -71,5 +73,13 @@ class StorageDatabaseFactory extends AbstractFactory
             $this->createStorageTableNameResolver(),
             $this->getConfig()
         );
+    }
+
+    /**
+     * @return \Spryker\Client\StorageDatabase\Dependency\Service\StorageDatabaseToUtilEncodingInterface
+     */
+    public function getUtilEncodingService(): StorageDatabaseToUtilEncodingInterface
+    {
+        return $this->getProvidedDependency(StorageDatabaseDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 }

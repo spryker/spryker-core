@@ -38,5 +38,5 @@ interface StorageDatabaseInterface
      *
      * @return void
      */
-    public function setDebug(bool $debug);
+    public function setDebug(bool $debug): void;
 }

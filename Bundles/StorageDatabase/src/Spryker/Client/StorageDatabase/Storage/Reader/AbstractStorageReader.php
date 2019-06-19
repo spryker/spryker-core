@@ -203,7 +203,7 @@ abstract class AbstractStorageReader
     protected function getSqlSelectFragment(string $tableName, array $keyPlaceholders, array $aliasKeysPlaceholders): string
     {
         if (count($keyPlaceholders) === 1 && count($aliasKeysPlaceholders) === 1) {
-            return $this->buildSingleCriterionQuerySql($tableName, $keyPlaceholders[0], $aliasKeysPlaceholders[0]);
+            return $this->buildSingleCriterionQuerySql($tableName, current($keyPlaceholders), current($aliasKeysPlaceholders));
         }
 
         return $this->buildMultiCriteriaQuerySql($tableName, $keyPlaceholders, $aliasKeysPlaceholders);

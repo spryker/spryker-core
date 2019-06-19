@@ -9,6 +9,8 @@ namespace SprykerTest\Client\StorageDatabase\Storage;
 
 use Codeception\Test\Unit;
 use ReflectionClass;
+use Spryker\Client\StorageDatabase\Dependency\Service\StorageDatabaseToUtilEncodingBridge;
+use Spryker\Client\StorageDatabase\Dependency\Service\StorageDatabaseToUtilEncodingInterface;
 use Spryker\Client\StorageDatabase\Storage\Reader\AbstractStorageReader;
 use Spryker\Client\StorageDatabase\Storage\StorageDatabase;
 
@@ -20,6 +22,7 @@ use Spryker\Client\StorageDatabase\Storage\StorageDatabase;
  * @group Storage
  * @group StorageDatabaseTest
  * Add your own group annotations below this line
+ * @property \SprykerTest\Client\StorageDatabase\StorageDatabaseClientTester $tester
  */
 class StorageDatabaseTest extends Unit
 {
@@ -242,7 +245,18 @@ class StorageDatabaseTest extends Unit
     protected function setupStorageDatabase(): void
     {
         $this->storageDatabase = new StorageDatabase(
-            $this->storageReaderMock
+            $this->storageReaderMock,
+            $this->createUtilEncodingService()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\StorageDatabase\Dependency\Service\StorageDatabaseToUtilEncodingInterface
+     */
+    protected function createUtilEncodingService(): StorageDatabaseToUtilEncodingInterface
+    {
+        return new StorageDatabaseToUtilEncodingBridge(
+            $this->tester->getLocator()->utilEncoding()->service()
         );
     }
 }

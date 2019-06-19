@@ -59,7 +59,7 @@ class StorageDatabaseDataHelper extends Module
             ->queryAvailabilityStorageByAvailabilityAbstractIds([$availabilityAbstractId])
             ->findOne();
 
-        $this->getDataCleanupHelper()->_addCleanup(function () use ($availabilityStorageEntity) {
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($availabilityStorageEntity): void {
             $availabilityStorageEntity->delete();
         });
 
