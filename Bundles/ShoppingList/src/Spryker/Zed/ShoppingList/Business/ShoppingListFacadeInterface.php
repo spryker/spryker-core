@@ -107,7 +107,10 @@ interface ShoppingListFacadeInterface
 
     /**
      * Specification:
-     *  - Remove item by id.
+     * - Removes existing shopping list item from the shopping list.
+     * - Returns ShoppingListItemResponseTransfer with 'isSuccess=false' if item does not exist.
+     * - Retrieves shopping list with items by id from the database.
+     * - Executes ItemExpanderPluginInterface[] plugin stack before deletion.
      *
      * @api
      *
