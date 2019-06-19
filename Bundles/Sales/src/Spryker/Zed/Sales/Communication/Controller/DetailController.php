@@ -59,7 +59,6 @@ class DetailController extends AbstractController
             'order' => $orderTransfer,
             'orderItemSplitFormCollection' => $orderItemSplitFormCollection,
             'groupedOrderItems' => $groupedOrderItems,
-            'groupedOrderItemsByShipment' => $orderTransfer->getShipmentGroups(),
         ], $blockResponseData);
     }
 

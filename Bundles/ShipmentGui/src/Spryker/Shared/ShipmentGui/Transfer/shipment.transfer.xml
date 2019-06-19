@@ -6,7 +6,6 @@
     <transfer name="Quote">
         <property name="shipment" deprecated="Use item level shipment details (item.shipment) instead." />
         <property name="shippingAddress" deprecated="Use item level shipping addresses (item.shipment.shippingAddress) instead." />
-        <property name="shipmentGroups" type="ShipmentGroup[]" singular="shipmentGroup" />
     </transfer>
 
     <transfer name="Item">

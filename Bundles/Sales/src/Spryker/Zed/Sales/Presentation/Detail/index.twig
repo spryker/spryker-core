@@ -13,7 +13,7 @@
     <div id="order-overview">{% include '@Sales/Detail/boxes/order-overview.twig' %}</div>
     <div id="customer">{% include '@Sales/Detail/boxes/customer.twig' %}</div>
     <div id="items">{% include [
-        '@ShipmentGui/Sales/items.twig',
+        '@ShipmentGui/Sales/boxes/items.twig',
         '@Sales/Detail/boxes/items.twig'
     ] %}</div>
     {% for blockName, externalBlock in blocks %}
