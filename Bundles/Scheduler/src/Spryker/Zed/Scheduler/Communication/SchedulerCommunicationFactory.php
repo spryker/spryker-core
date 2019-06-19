@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Scheduler\Communication;
 
-use Spryker\Shared\Twig\Loader\FilesystemLoader;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
@@ -16,11 +15,4 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
  */
 class SchedulerCommunicationFactory extends AbstractCommunicationFactory
 {
-    /**
-     * @return FilesystemLoader
-     */
-    public function createFilesystemLoader()
-    {
-        return new FilesystemLoader($this->getConfig()->getTemplatePaths());
-    }
 }
