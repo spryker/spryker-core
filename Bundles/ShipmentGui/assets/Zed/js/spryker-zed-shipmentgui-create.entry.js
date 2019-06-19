@@ -14,7 +14,7 @@ $(document).ready(function() {
         defaultData: 0
     });
 
-    var triggerCreate = document.getElementById('shipment_form_create_id_shipping_address');
+    var triggerCreate = document.getElementById('shipment_form_create_id_customer_address');
 
     function toggleCreateForm() {
         var target = $('#shipment_form_create_shipping_address');

@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Zed\ShipmentGui\Communication\Form\Address\AddressForm;
-use Spryker\Zed\ShipmentGui\Communication\Form\ShipmentFormCreate;
 use Spryker\Zed\ShipmentGui\Communication\Form\ShipmentFormEdit;
 
 class ShipmentFormEditDataProvider implements ShipmentFormDataProviderInterface
@@ -66,10 +65,9 @@ class ShipmentFormEditDataProvider implements ShipmentFormDataProviderInterface
     protected function getFormData(ShipmentTransfer $shipmentTransfer): array
     {
         $formData = [
-            ShipmentFormCreate::FIELD_ID_CUSTOMER_ADDRESS => $this->getCustomerAddressId($shipmentTransfer->getShippingAddress()),
-            ShipmentFormCreate::FIELD_ID_SHIPMENT_METHOD => $this->getShipmentMethodId($shipmentTransfer->getMethod()),
-            ShipmentFormCreate::FIELD_REQUESTED_DELIVERY_DATE => $shipmentTransfer->getRequestedDeliveryDate(),
-            ShipmentFormCreate::FORM_SHIPPING_ADDRESS => [],
+            ShipmentFormEdit::FIELD_ID_SHIPMENT_METHOD => $this->getShipmentMethodId($shipmentTransfer->getMethod()),
+            ShipmentFormEdit::FIELD_REQUESTED_DELIVERY_DATE => $shipmentTransfer->getRequestedDeliveryDate(),
+            ShipmentFormEdit::FORM_SHIPPING_ADDRESS => [],
         ];
 
         $shipmentAddressTransfer = $shipmentTransfer->getShippingAddress();
@@ -77,7 +75,7 @@ class ShipmentFormEditDataProvider implements ShipmentFormDataProviderInterface
             return $formData;
         }
 
-        $formData[ShipmentFormCreate::FORM_SHIPPING_ADDRESS] = $this->getAddressFields($shipmentAddressTransfer);
+        $formData[ShipmentFormEdit::FORM_SHIPPING_ADDRESS] = $this->getAddressFields($shipmentAddressTransfer);
 
         return $formData;
     }

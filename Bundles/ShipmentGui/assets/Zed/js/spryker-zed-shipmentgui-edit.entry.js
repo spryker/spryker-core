@@ -14,7 +14,7 @@ $(document).ready(function() {
         defaultData: 0
     });
 
-    var triggerEdit = document.getElementById('shipment_form_edit_id_shipping_address');
+    var triggerEdit = document.getElementById('shipment_form_edit_id_customer_address');
 
     function toggleEditForm() {
         var target = $('#shipment_form_edit_shipping_address');

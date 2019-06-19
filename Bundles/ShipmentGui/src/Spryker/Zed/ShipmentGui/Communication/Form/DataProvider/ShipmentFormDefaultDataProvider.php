@@ -64,13 +64,54 @@ class ShipmentFormDefaultDataProvider implements ShipmentFormDefaultDataProvider
         $defaultShipmentFormCreateFields = [
             ShipmentFormCreate::FIELD_ID_SALES_SHIPMENT => $idSalesShipment,
             ShipmentFormCreate::FIELD_ID_SALES_ORDER => $idSalesOrder,
-            ShipmentFormCreate::FIELD_ID_CUSTOMER_ADDRESS => null,
+            ShipmentFormCreate::FIELD_ID_CUSTOMER_ADDRESS => $this->getIdCustomerAddress($idSalesOrder, $idSalesShipment),
             ShipmentFormCreate::FIELD_ID_SHIPMENT_METHOD => null,
             ShipmentFormCreate::FIELD_REQUESTED_DELIVERY_DATE => null,
             ShipmentFormCreate::FORM_SHIPPING_ADDRESS => $this->getAddressDefaultFields(),
         ];
 
         return array_merge($defaultShipmentFormCreateFields, $this->getItemsDefaultFields($idSalesOrder));
+    }
+
+    /**
+     * @param int $idSalesOrder
+     * @param int|null $idSalesShipment
+     *
+     * @return int|null
+     */
+    protected function getIdCustomerAddress(int $idSalesOrder, ?int $idSalesShipment): ?int
+    {
+        if ($idSalesShipment === null) {
+            return null;
+        }
+
+        $addressTransfer = $this->hydrateAddressTransfer(
+            $this->salesFacade->findOrderByIdSalesOrder($idSalesOrder),
+            $this->findShipmentById($idSalesShipment)
+        );
+
+        $customerAddressTransfer = $this->customerFacade->findCustomerAddressByAddressData($addressTransfer);
+
+        return $customerAddressTransfer === null ?: $customerAddressTransfer->getIdCustomerAddress();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer|null $orderTransfer
+     * @param \Generated\Shared\Transfer\ShipmentTransfer|null $shipmentTransfer
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer
+     */
+    protected function hydrateAddressTransfer(?OrderTransfer $orderTransfer, ?ShipmentTransfer $shipmentTransfer): AddressTransfer
+    {
+        $addressTransfer = new AddressTransfer();
+
+        if ($shipmentTransfer !== null) {
+            $addressTransfer->fromArray($shipmentTransfer->getShippingAddress()->toArray(), true);
+        }
+
+        $addressTransfer->setFkCustomer($orderTransfer->getFkCustomer());
+
+        return $addressTransfer;
     }
 
     /**

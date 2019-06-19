@@ -178,7 +178,7 @@ class AddressForm extends AbstractType
                 'required' => false,
                 'label' => 'Email',
                 'constraints' => [
-                    $this->createNotBlankConstraint(),
+//                    $this->createNotBlankConstraint(),
                     new Email(),
                     new Length(['max' => 255]),
                 ],
