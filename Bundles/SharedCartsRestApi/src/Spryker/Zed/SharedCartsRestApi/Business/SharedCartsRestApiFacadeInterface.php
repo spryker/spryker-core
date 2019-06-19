@@ -72,6 +72,7 @@ interface SharedCartsRestApiFacadeInterface
     /**
      * Specification:
      * - Expands QuoteTransfer with QuotePermissionGroupTransfer if applicable.
+     * - Will expand only if QuoteTransfer::$customer is a company user the cart is shared with.
      *
      * @api
      *

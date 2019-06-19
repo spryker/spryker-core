@@ -21,6 +21,7 @@ class QuotePermissionGroupQuoteExpanderPlugin extends AbstractPlugin implements 
     /**
      * {@inheritdoc}
      * - Expands quote transfer with quote permission group.
+     * - Will expand only if QuoteTransfer::$customer is a company user the cart is shared with.
      *
      * @api
      *

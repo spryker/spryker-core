@@ -451,7 +451,7 @@ class SharedCartsRestApiFacadeTest extends Test
     /**
      * @return void
      */
-    public function testExpandQuoteWithQuotePermissionGroupShouldExpandQuoteWithQuotePermissionGroup(): void
+    public function testExpandQuoteWithQuotePermissionGroupSuccessfullyExpandsQuote(): void
     {
         // Assign
         $companyTransfer = $this->tester->haveCompany();
