@@ -51,7 +51,7 @@ class SessionHandlerMysql implements SessionHandlerInterface
     /**
      * @var int
      */
-    protected $port;
+    protected $port = 3306;
 
     /**
      * @var \Spryker\Shared\Session\Dependency\Service\SessionToMonitoringServiceInterface
@@ -59,19 +59,13 @@ class SessionHandlerMysql implements SessionHandlerInterface
     protected $monitoringService;
 
     /**
-     * @var string
-     */
-    protected $environmentName;
-
-    /**
      * @param \Spryker\Shared\Session\Dependency\Service\SessionToMonitoringServiceInterface $monitoringService
      * @param array $hosts
      * @param string|null $user
      * @param string|null $password
      * @param int $lifetime
-     * @param string $environmentName
      */
-    public function __construct(SessionToMonitoringServiceInterface $monitoringService, $hosts, $user, $password, $lifetime, $environmentName)
+    public function __construct(SessionToMonitoringServiceInterface $monitoringService, $hosts = ['127.0.0.1:3306'], $user = null, $password = null, $lifetime = 600)
     {
         $host = $hosts[0];
         if (strpos($host, ':')) {
@@ -85,7 +79,6 @@ class SessionHandlerMysql implements SessionHandlerInterface
         $this->user = $user;
         $this->password = $password;
         $this->lifetime = $lifetime;
-        $this->environmentName = $environmentName;
 
         $databaseName = 'shared_data';
         $dsn = 'mysql:host=' . $this->host . ';port=' . $this->port . ';dbname=' . $databaseName;
@@ -129,7 +122,7 @@ class SessionHandlerMysql implements SessionHandlerInterface
         $query = 'SELECT * FROM session WHERE session.key=? AND session.store=? AND session.environment=? AND session.expires >= session.updated_at + ' . $this->lifetime . ' LIMIT 1';
 
         $statement = $this->connection->prepare($query);
-        $statement->execute([$key, $store, $this->environmentName]);
+        $statement->execute([$key, $store, $this->getEnvironmentName()]);
         $result = $statement->fetch();
         $this->monitoringService->addCustomParameter(self::METRIC_SESSION_READ_TIME, microtime(true) - $startTime);
 
@@ -160,7 +153,7 @@ class SessionHandlerMysql implements SessionHandlerInterface
         $query = 'REPLACE INTO session (session.key, session.value, session.store, session.environment, session.expires, session.updated_at) VALUES (?,?,?,?,?,?)';
 
         $statement = $this->connection->prepare($query);
-        $result = $statement->execute([$key, $data, $storeName, $this->environmentName, $expires, $timestamp]);
+        $result = $statement->execute([$key, $data, $storeName, $this->getEnvironmentName(), $expires, $timestamp]);
 
         $this->monitoringService->addCustomParameter(self::METRIC_SESSION_WRITE_TIME, microtime(true) - $startTime);
 
@@ -215,5 +208,15 @@ class SessionHandlerMysql implements SessionHandlerInterface
 
         $statement = $this->connection->query($query);
         $statement->execute();
+    }
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
+     * @return string
+     */
+    protected function getEnvironmentName(): string
+    {
+        return APPLICATION_ENV;
     }
 }

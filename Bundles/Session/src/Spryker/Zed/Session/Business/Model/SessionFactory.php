@@ -13,23 +13,23 @@ use Spryker\Shared\Session\Dependency\Service\SessionToMonitoringServiceInterfac
 class SessionFactory extends SharedSessionFactory
 {
     /**
-     * @var \Spryker\Shared\Session\Dependency\Service\SessionToMonitoringServiceInterface
-     */
-    protected $monitoringService;
-
-    /**
      * @var int
      */
     protected $sessionLifeTime;
 
     /**
-     * @param \Spryker\Shared\Session\Dependency\Service\SessionToMonitoringServiceInterface $monitoringService
-     * @param int $sessionLifeTime
+     * @var \Spryker\Shared\Session\Dependency\Service\SessionToMonitoringServiceInterface
      */
-    public function __construct(SessionToMonitoringServiceInterface $monitoringService, int $sessionLifeTime)
+    protected $monitoringService;
+
+    /**
+     * @param int $sessionLifeTime
+     * @param \Spryker\Shared\Session\Dependency\Service\SessionToMonitoringServiceInterface $monitoringService
+     */
+    public function __construct(int $sessionLifeTime, SessionToMonitoringServiceInterface $monitoringService)
     {
-        $this->monitoringService = $monitoringService;
         $this->sessionLifeTime = $sessionLifeTime;
+        $this->monitoringService = $monitoringService;
     }
 
     /**
