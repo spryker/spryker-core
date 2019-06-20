@@ -20,7 +20,7 @@ trait ContainerMocker
      */
     protected function overwriteForTesting(ContainerInterface $container)
     {
-        if (!Config::get(KernelConstants::OVERWRITE_CONTAINER_FOR_TESTING, $this->getOverwriteContainerForTestingDefaultValue())) {
+        if (!Config::get(KernelConstants::ENABLE_CONTAINER_OVERRIDING, $this->getOverwriteContainerForTestingDefaultValue())) {
             return $container;
         }
 

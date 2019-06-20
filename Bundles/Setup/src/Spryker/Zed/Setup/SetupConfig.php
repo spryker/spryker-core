@@ -136,37 +136,21 @@ class SetupConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return bool
-     */
-    public function isSchedulerEnabled(): bool
-    {
-        return $this->get(SetupConstants::ENABLE_SCHEDULER, $this->getSchedulerEnabledDefaultValue());
-    }
-
-    /**
      * @deprecated Method will be removed without replacement.
      *
      * @return bool
      */
-    protected function getSchedulerEnabledDefaultValue(): bool
+    public function isSchedulerEnabled(): bool
     {
         return APPLICATION_ENV !== 'production';
     }
 
     /**
-     * @return bool
-     */
-    public function isDeployVarsEnabled(): bool
-    {
-        return $this->get(SetupConstants::ENABLE_DEPLOY_VARS, $this->getDeployVarsEnabledDefaultValue());
-    }
-
-    /**
      * @deprecated Method will be removed without replacement.
      *
      * @return bool
      */
-    protected function getDeployVarsEnabledDefaultValue(): bool
+    public function isDeployVarsEnabled(): bool
     {
         return APPLICATION_ENV !== 'development';
     }

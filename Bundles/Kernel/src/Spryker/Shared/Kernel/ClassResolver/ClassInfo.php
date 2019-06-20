@@ -51,7 +51,7 @@ class ClassInfo
 
         if ($this->isFullyQualifiedClassName($callerClass)) {
             $callerClassParts = explode('\\', ltrim($callerClass, '\\'));
-            if (Config::get(KernelConstants::ADJUST_TEST_NAMESPACE, $this->getAdjustTestNamespaceDefaultValue())) {
+            if ($this->shouldTestNamespaceBeAdjusted()) {
                 $callerClassParts = $this->adjustTestNamespace($callerClassParts);
             }
         }
@@ -62,11 +62,9 @@ class ClassInfo
     }
 
     /**
-     * @deprecated Will be removed without replacement.
-     *
      * @return bool
      */
-    protected function getAdjustTestNamespaceDefaultValue(): bool
+    protected function shouldTestNamespaceBeAdjusted(): bool
     {
         return APPLICATION_ENV === 'devtest';
     }

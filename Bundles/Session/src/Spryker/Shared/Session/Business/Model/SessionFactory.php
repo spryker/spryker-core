@@ -294,10 +294,12 @@ abstract class SessionFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return string
      */
     protected function getEnvironmentName(): string
     {
-        return Config::get(SessionConstants::SESSION_ENVIRONMENT_NAME, APPLICATION_ENV);
+        return APPLICATION_ENV;
     }
 }

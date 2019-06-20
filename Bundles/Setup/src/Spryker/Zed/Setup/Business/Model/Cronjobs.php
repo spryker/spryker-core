@@ -410,7 +410,7 @@ class Cronjobs
             return $schedule;
         }
 
-        if ($this->config->isSchedulerEnabled()) {
+        if ($this->config->isSchedulerEnabled() === false) {
             // Non-production - don't run automatically via Jenkins
             return '';
         }

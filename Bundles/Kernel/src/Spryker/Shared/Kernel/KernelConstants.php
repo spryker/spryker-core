@@ -40,19 +40,11 @@ interface KernelConstants
 
     /**
      * Specification:
-     * - Defines the mode when a dependency container is overridden for testing needs.
+     * - Defines the mode when a dependency container can be overridden, e.g. for testing needs.
      * - This should set to `true` to be able to use \Spryker\Shared\Kernel\ContainerMocker\ContainerGlobals
      *   via \SprykerTest\Shared\Testify\Helper\DependencyHelper for overriding dependencies in container for testing.
      *
      * @api
      */
-    public const OVERWRITE_CONTAINER_FOR_TESTING = 'KERNEL:OVERWRITE_CONTAINER_FOR_TESTING';
-
-    /**
-     * Specification:
-     * - Defines the mode when namespaces are adjusted by removing Test prefix.
-     *
-     * @api
-     */
-    public const ADJUST_TEST_NAMESPACE = 'KERNEL:ADJUST_TEST_NAMESPACE';
+    public const ENABLE_CONTAINER_OVERRIDING = 'KERNEL:ENABLE_CONTAINER_OVERRIDING';
 }

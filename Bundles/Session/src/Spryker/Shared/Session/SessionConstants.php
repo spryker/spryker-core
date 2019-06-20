@@ -150,12 +150,4 @@ interface SessionConstants
      * @deprecated Use `Spryker\Shared\SessionRedis\SessionRedisConstants::ZED_SESSION_REDIS_CLIENT_OPTIONS` instead.
      */
     public const ZED_SESSION_PREDIS_CLIENT_OPTIONS = 'SESSION:ZED_SESSION_PREDIS_CLIENT_OPTIONS';
-
-    /**
-     * Specification:
-     * - Defines session environment name.
-     *
-     * @api
-     */
-    public const SESSION_ENVIRONMENT_NAME = 'SESSIONS:SESSION_ENVIRONMENT_NAME';
 }
