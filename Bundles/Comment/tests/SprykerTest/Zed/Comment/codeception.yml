@@ -26,3 +26,4 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
                 - \SprykerTest\Shared\Customer\Helper\CustomerDataHelper
                 - \SprykerTest\Shared\Comment\Helper\CommentHelper
+                - \SprykerTest\Shared\UtilText\Helper\UtilTextHelper

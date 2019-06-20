@@ -8,7 +8,6 @@
 namespace Spryker\Client\Comment\Zed;
 
 use Generated\Shared\Transfer\CommentRequestTransfer;
-use Generated\Shared\Transfer\CommentResponseTransfer;
 use Generated\Shared\Transfer\CommentTagRequestTransfer;
 use Generated\Shared\Transfer\CommentThreadResponseTransfer;
 use Spryker\Client\Comment\Dependency\Client\CommentToZedRequestClientInterface;
@@ -95,32 +94,32 @@ class CommentStub implements CommentStubInterface
     /**
      * @param \Generated\Shared\Transfer\CommentTagRequestTransfer $commentTagRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\CommentResponseTransfer
+     * @return \Generated\Shared\Transfer\CommentThreadResponseTransfer
      */
-    public function addCommentTag(CommentTagRequestTransfer $commentTagRequestTransfer): CommentResponseTransfer
+    public function addCommentTag(CommentTagRequestTransfer $commentTagRequestTransfer): CommentThreadResponseTransfer
     {
-        /** @var \Generated\Shared\Transfer\CommentResponseTransfer $commentResponseTransfer */
-        $commentResponseTransfer = $this->zedRequestClient->call(
+        /** @var \Generated\Shared\Transfer\CommentThreadResponseTransfer $commentThreadResponseTransfer */
+        $commentThreadResponseTransfer = $this->zedRequestClient->call(
             '/comment/gateway/add-comment-tag',
             $commentTagRequestTransfer
         );
 
-        return $commentResponseTransfer;
+        return $commentThreadResponseTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\CommentTagRequestTransfer $commentTagRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\CommentResponseTransfer
+     * @return \Generated\Shared\Transfer\CommentThreadResponseTransfer
      */
-    public function removeCommentTag(CommentTagRequestTransfer $commentTagRequestTransfer): CommentResponseTransfer
+    public function removeCommentTag(CommentTagRequestTransfer $commentTagRequestTransfer): CommentThreadResponseTransfer
     {
-        /** @var \Generated\Shared\Transfer\CommentResponseTransfer $commentResponseTransfer */
-        $commentResponseTransfer = $this->zedRequestClient->call(
+        /** @var \Generated\Shared\Transfer\CommentThreadResponseTransfer $commentThreadResponseTransfer */
+        $commentThreadResponseTransfer = $this->zedRequestClient->call(
             '/comment/gateway/remove-comment-tag',
             $commentTagRequestTransfer
         );
 
-        return $commentResponseTransfer;
+        return $commentThreadResponseTransfer;
     }
 }

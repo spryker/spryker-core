@@ -8,9 +8,10 @@
 namespace Spryker\Zed\Comment\Business\Writer;
 
 use ArrayObject;
-use Generated\Shared\Transfer\CommentResponseTransfer;
 use Generated\Shared\Transfer\CommentTagRequestTransfer;
 use Generated\Shared\Transfer\CommentTagTransfer;
+use Generated\Shared\Transfer\CommentThreadResponseTransfer;
+use Generated\Shared\Transfer\CommentThreadTransfer;
 use Generated\Shared\Transfer\CommentTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Spryker\Zed\Comment\Business\Reader\CommentThreadReaderInterface;
@@ -67,9 +68,9 @@ class CommentTagWriter implements CommentTagWriterInterface
     /**
      * @param \Generated\Shared\Transfer\CommentTagRequestTransfer $commentTagRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\CommentResponseTransfer
+     * @return \Generated\Shared\Transfer\CommentThreadResponseTransfer
      */
-    public function addCommentTag(CommentTagRequestTransfer $commentTagRequestTransfer): CommentResponseTransfer
+    public function addCommentTag(CommentTagRequestTransfer $commentTagRequestTransfer): CommentThreadResponseTransfer
     {
         $commentTagRequestTransfer
             ->requireName()
@@ -93,17 +94,15 @@ class CommentTagWriter implements CommentTagWriterInterface
         $commentTransfer->addCommentTag($commentTagTransfer);
         $commentTransfer = $this->saveCommentTags($commentTransfer);
 
-        return (new CommentResponseTransfer())
-            ->setIsSuccessful(true)
-            ->setComment($commentTransfer);
+        return $this->createCommentThreadResponse($commentTransfer);
     }
 
     /**
      * @param \Generated\Shared\Transfer\CommentTagRequestTransfer $commentTagRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\CommentResponseTransfer
+     * @return \Generated\Shared\Transfer\CommentThreadResponseTransfer
      */
-    public function removeCommentTag(CommentTagRequestTransfer $commentTagRequestTransfer): CommentResponseTransfer
+    public function removeCommentTag(CommentTagRequestTransfer $commentTagRequestTransfer): CommentThreadResponseTransfer
     {
         $commentTagRequestTransfer
             ->requireName()
@@ -132,9 +131,7 @@ class CommentTagWriter implements CommentTagWriterInterface
         $commentTransfer->setCommentTags(new ArrayObject($commentTagTransfers));
         $commentTransfer = $this->saveCommentTags($commentTransfer);
 
-        return (new CommentResponseTransfer())
-            ->setIsSuccessful(true)
-            ->setComment($commentTransfer);
+        return $this->createCommentThreadResponse($commentTransfer);
     }
 
     /**
@@ -192,15 +189,32 @@ class CommentTagWriter implements CommentTagWriterInterface
     /**
      * @param string $message
      *
-     * @return \Generated\Shared\Transfer\CommentResponseTransfer
+     * @return \Generated\Shared\Transfer\CommentThreadResponseTransfer
      */
-    protected function createErrorResponse(string $message): CommentResponseTransfer
+    protected function createErrorResponse(string $message): CommentThreadResponseTransfer
     {
         $messageTransfer = (new MessageTransfer())
             ->setValue($message);
 
-        return (new CommentResponseTransfer())
+        return (new CommentThreadResponseTransfer())
             ->setIsSuccessful(false)
             ->addMessage($messageTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CommentTransfer $commentTransfer
+     *
+     * @return \Generated\Shared\Transfer\CommentThreadResponseTransfer
+     */
+    protected function createCommentThreadResponse(CommentTransfer $commentTransfer): CommentThreadResponseTransfer
+    {
+        $commentThreadTransfer = (new CommentThreadTransfer())
+            ->setIdCommentThread($commentTransfer->getIdCommentThread());
+
+        $commentThreadTransfer = $this->commentThreadReader->findCommentThreadById($commentThreadTransfer);
+
+        return (new CommentThreadResponseTransfer())
+            ->setIsSuccessful(true)
+            ->setCommentThread($commentThreadTransfer);
     }
 }
