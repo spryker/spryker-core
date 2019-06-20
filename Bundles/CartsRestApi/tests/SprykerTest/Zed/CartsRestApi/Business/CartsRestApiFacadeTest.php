@@ -667,6 +667,7 @@ class CartsRestApiFacadeTest extends Unit
             [
                 'updateQuote',
                 'deleteQuote',
+                'add',
                 'changeItemQuantity',
                 'remove',
             ]
@@ -675,6 +676,8 @@ class CartsRestApiFacadeTest extends Unit
         $persistentCartFacadeMock->method('updateQuote')
             ->willReturn($this->tester->prepareQuoteResponseTransferWithQuote());
         $persistentCartFacadeMock->method('deleteQuote')
+            ->willReturn($this->tester->prepareQuoteResponseTransfer());
+        $persistentCartFacadeMock->method('add')
             ->willReturn($this->tester->prepareQuoteResponseTransfer());
         $persistentCartFacadeMock->method('changeItemQuantity')
             ->willReturn($this->tester->prepareQuoteResponseTransfer());
