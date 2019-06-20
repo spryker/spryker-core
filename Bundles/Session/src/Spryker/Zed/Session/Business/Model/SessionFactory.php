@@ -37,7 +37,7 @@ class SessionFactory extends SharedSessionFactory
      */
     public function getSessionLifetime()
     {
-        return (int)$this->sessionLifeTime;
+        return $this->sessionLifeTime;
     }
 
     /**
