@@ -91,7 +91,7 @@ class SchedulerJenkinsDependencyProvider extends AbstractBundleDependencyProvide
      */
     protected function createFilesystemLoader(): FilesystemLoader
     {
-        return new FilesystemLoader($this->getConfig()->getJenkinsTemplateFolder());
+        return new FilesystemLoader($this->getConfig()->getJenkinsTemplateFolders());
     }
 
     /**

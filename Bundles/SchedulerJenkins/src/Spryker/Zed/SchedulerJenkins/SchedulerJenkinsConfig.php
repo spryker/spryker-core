@@ -14,7 +14,7 @@ class SchedulerJenkinsConfig extends AbstractBundleConfig
 {
     protected const DEFAULT_AMOUNT_OF_DAYS_FOR_LOGFILE_ROTATION = 7;
 
-    protected const DEFAULT_JENKINS_TEMPLATE_PATH = __DIR__ . '/Presentation/SchedulerJenkins/jenkins-job.xml.twig';
+    protected const DEFAULT_JENKINS_TEMPLATE_PATH = __DIR__ . '/Business/TemplateGenerator/Template/jenkins-job.default.xml.twig';
 
     /**
      * @return array
@@ -43,11 +43,14 @@ class SchedulerJenkinsConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return string
+     * @return string[]
      */
-    public function getJenkinsTemplateFolder(): string
+    public function getJenkinsTemplateFolders(): array
     {
-        return dirname($this->getJenkinsTemplatePath());
+        return [
+            dirname($this->getJenkinsTemplatePath()),
+            dirname(static::DEFAULT_JENKINS_TEMPLATE_PATH),
+        ];
     }
 
     /**
