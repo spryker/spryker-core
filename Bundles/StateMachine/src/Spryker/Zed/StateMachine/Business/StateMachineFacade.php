@@ -265,14 +265,15 @@ class StateMachineFacade extends AbstractFacade implements StateMachineFacadeInt
      *
      * @param \Generated\Shared\Transfer\StateMachineProcessTransfer $stateMachineProcessTransfer
      * @param string $flagName
+     * @param string $sort
      *
      * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
      */
-    public function getItemsWithFlag(StateMachineProcessTransfer $stateMachineProcessTransfer, $flagName)
+    public function getItemsWithFlag(StateMachineProcessTransfer $stateMachineProcessTransfer, $flagName, string $sort = 'ASC')
     {
         return $this->getFactory()
             ->createStateMachineFinder()
-            ->getItemsWithFlag($stateMachineProcessTransfer, $flagName);
+            ->getItemsWithFlag($stateMachineProcessTransfer, $flagName, $sort);
     }
 
     /**
@@ -282,14 +283,15 @@ class StateMachineFacade extends AbstractFacade implements StateMachineFacadeInt
      *
      * @param \Generated\Shared\Transfer\StateMachineProcessTransfer $stateMachineProcessTransfer
      * @param string $flagName
+     * @param string $sort
      *
      * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
      */
-    public function getItemsWithoutFlag(StateMachineProcessTransfer $stateMachineProcessTransfer, $flagName)
+    public function getItemsWithoutFlag(StateMachineProcessTransfer $stateMachineProcessTransfer, $flagName, string $sort = 'ASC')
     {
         return $this->getFactory()
             ->createStateMachineFinder()
-            ->getItemsWithoutFlag($stateMachineProcessTransfer, $flagName);
+            ->getItemsWithoutFlag($stateMachineProcessTransfer, $flagName, $sort);
     }
 
     /**

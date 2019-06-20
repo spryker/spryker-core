@@ -44,10 +44,14 @@ class RestUserMapper implements RestUserMapperInterface
         $companyUserStorageTransfer = $this->companyUserStorageClient
             ->findCompanyUserByMapping(static::MAPPING_TYPE_UUID, $uuidCompanyUser);
 
-        if ($companyUserStorageTransfer !== null) {
-            $restUserTransfer->fromArray($companyUserStorageTransfer->toArray(), true);
-            $restUserTransfer->setUuidCompanyUser($uuidCompanyUser);
+        if (!$companyUserStorageTransfer) {
+            $restUserTransfer->setIdCompanyUser(null);
+
+            return $restUserTransfer;
         }
+
+        $restUserTransfer->fromArray($companyUserStorageTransfer->toArray(), true);
+        $restUserTransfer->setUuidCompanyUser($uuidCompanyUser);
 
         return $restUserTransfer;
     }
