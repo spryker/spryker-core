@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\PriceProductSchedule\Persistence;
 
+use Generated\Shared\Transfer\PriceProductScheduleListTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 
 /**
@@ -29,4 +30,24 @@ interface PriceProductScheduleEntityManagerInterface
     public function savePriceProductSchedule(
         PriceProductScheduleTransfer $priceProductScheduleTransfer
     ): PriceProductScheduleTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductScheduleListTransfer $priceProductScheduleListTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleListTransfer
+     */
+    public function createPriceProductScheduleList(
+        PriceProductScheduleListTransfer $priceProductScheduleListTransfer
+    ): PriceProductScheduleListTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductScheduleListTransfer $priceProductScheduleListTransfer
+     *
+     * @throws \Spryker\Zed\PriceProductSchedule\Persistence\Exception\PriceProductScheduleListNotFoundException
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleListTransfer
+     */
+    public function updatePriceProductScheduleList(
+        PriceProductScheduleListTransfer $priceProductScheduleListTransfer
+    ): PriceProductScheduleListTransfer;
 }
