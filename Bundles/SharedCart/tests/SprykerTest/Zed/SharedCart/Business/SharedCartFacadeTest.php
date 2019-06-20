@@ -270,24 +270,16 @@ class SharedCartFacadeTest extends Test
             CompanyUserTransfer::FK_COMPANY_BUSINESS_UNIT => $firstCompanyUserTransfer->getCompanyBusinessUnit()->getIdCompanyBusinessUnit(),
         ]);
 
-        $customerTransfer = $this->tester->haveCustomer();
-        $quoteTransfer = $this->tester->havePersistentQuote([
-            QuoteTransfer::CUSTOMER => $customerTransfer,
-            QuoteTransfer::IS_LOCKED => static::VALUE_IS_QUOTE_LOCKED_FALSE,
-        ]);
-
         $resourceShareTransfer = $this->tester->createResourceShare([
             ResourceShareDataTransfer::SHARE_OPTION => static::PERMISSION_GROUP_FULL_ACCESS,
             ResourceShareDataTransfer::OWNER_COMPANY_USER_ID => $secondCompanyUserTransfer->getIdCompanyUser(),
             ResourceShareDataTransfer::OWNER_COMPANY_BUSINESS_UNIT_ID => $secondCompanyUserTransfer->getFkCompanyBusinessUnit(),
-            ResourceShareDataTransfer::ID_QUOTE => $quoteTransfer->getIdQuote(),
+            ResourceShareDataTransfer::ID_QUOTE => 0,
         ]);
 
         $resourceShareRequestTransfer = (new ResourceShareRequestTransfer())
             ->setCustomer($firstCompanyUserTransfer->getCustomer())
             ->setResourceShare($resourceShareTransfer);
-
-        $this->tester->getQuoteFacade()->deleteQuote($quoteTransfer);
 
         // Act
         $resourceShareResponseTransfer = $this->tester->getFacade()->shareCartByResourceShareRequest($resourceShareRequestTransfer);

@@ -62,7 +62,13 @@ class ResourceShareQuoteShare implements ResourceShareQuoteShareInterface
             ->requireCustomer()
             ->requireResourceShare();
 
-        $resourceShareResponseTransfer = $this->validateResourceShare($resourceShareRequestTransfer);
+        if ($this->isProvidedCompanyUserResourceShareOwner($resourceShareRequestTransfer)) {
+            return (new ResourceShareResponseTransfer())
+                ->setIsSuccessful(true)
+                ->setResourceShare($resourceShareRequestTransfer->getResourceShare());
+        }
+
+        $resourceShareResponseTransfer = $this->validateResourceShareRequestTransfer($resourceShareRequestTransfer);
         if (!$resourceShareResponseTransfer->getIsSuccessful()) {
             return $resourceShareResponseTransfer;
         }
@@ -179,14 +185,8 @@ class ResourceShareQuoteShare implements ResourceShareQuoteShareInterface
      *
      * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
      */
-    protected function validateResourceShare(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer
+    protected function validateResourceShareRequestTransfer(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer
     {
-        if ($this->isProvidedCompanyUserResourceShareOwner($resourceShareRequestTransfer)) {
-            return (new ResourceShareResponseTransfer())
-                ->setIsSuccessful(true)
-                ->setResourceShare($resourceShareRequestTransfer->getResourceShare());
-        }
-
         if (!$this->isProvidedCompanyUserAllowedToShareCart($resourceShareRequestTransfer)) {
             return (new ResourceShareResponseTransfer())
                 ->setIsSuccessful(false)
@@ -196,15 +196,8 @@ class ResourceShareQuoteShare implements ResourceShareQuoteShareInterface
         }
 
         $quoteTransfer = $this->findQuoteTransferByResourceShareRequest($resourceShareRequestTransfer);
-        if ($quoteTransfer === null) {
-            return (new ResourceShareResponseTransfer())
-                ->setIsSuccessful(false)
-                ->addMessage(
-                    (new MessageTransfer())->setValue(static::GLOSSARY_KEY_QUOTE_IS_NOT_AVAILABLE)
-                );
-        }
 
-        if ($this->isSharedCartLocked($quoteTransfer)) {
+        if ($quoteTransfer === null || $this->isSharedCartLocked($quoteTransfer)) {
             return (new ResourceShareResponseTransfer())
                 ->setIsSuccessful(false)
                 ->addMessage(
