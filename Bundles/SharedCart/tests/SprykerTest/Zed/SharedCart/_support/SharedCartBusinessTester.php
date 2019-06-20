@@ -15,10 +15,8 @@ use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuotePermissionGroupTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ResourceShareDataTransfer;
-use Generated\Shared\Transfer\ResourceShareResponseTransfer;
 use Generated\Shared\Transfer\ResourceShareTransfer;
 use Generated\Shared\Transfer\ShareDetailTransfer;
-use Spryker\Zed\Quote\Business\QuoteFacadeInterface;
 
 /**
  * Inherited Methods
@@ -175,27 +173,5 @@ class SharedCartBusinessTester extends Actor
         return $this->haveResourceShare($resourceShareSeed + [
             ResourceShareTransfer::RESOURCE_SHARE_DATA => $resourceShareDataTransfer,
         ]);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ResourceShareResponseTransfer $resourceShareResponseTransfer
-     * @param string $errorMessage
-     *
-     * @return bool
-     */
-    public function hasResourceShareResponseTransferErrorMessage(
-        ResourceShareResponseTransfer $resourceShareResponseTransfer,
-        string $errorMessage
-    ): bool {
-        $resourceShareResponseTransfer->requireMessages();
-        foreach ($resourceShareResponseTransfer->getMessages() as $messageTransfer) {
-            $messageTransfer->requireValue();
-
-            if ($messageTransfer->getValue() === $errorMessage) {
-                return true;
-            }
-        }
-
-        return false;
     }
 }

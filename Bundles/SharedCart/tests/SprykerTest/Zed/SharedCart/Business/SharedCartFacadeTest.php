@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ResourceShareDataTransfer;
 use Generated\Shared\Transfer\ResourceShareRequestTransfer;
+use Generated\Shared\Transfer\ResourceShareResponseTransfer;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 
 /**
@@ -117,7 +118,7 @@ class SharedCartFacadeTest extends Test
 
         // Assert
         $this->assertFalse($resourceShareResponseTransfer->getIsSuccessful());
-        $this->tester->hasResourceShareResponseTransferErrorMessage(
+        $this->hasResourceShareResponseTransferErrorMessage(
             $resourceShareResponseTransfer,
             static::GLOSSARY_KEY_CART_ACCESS_DENIED
         );
@@ -148,7 +149,7 @@ class SharedCartFacadeTest extends Test
 
         // Assert
         $this->assertFalse($resourceShareResponseTransfer->getIsSuccessful());
-        $this->tester->hasResourceShareResponseTransferErrorMessage(
+        $this->hasResourceShareResponseTransferErrorMessage(
             $resourceShareResponseTransfer,
             static::GLOSSARY_KEY_UNABLE_TO_SHARE_CART
         );
@@ -179,7 +180,7 @@ class SharedCartFacadeTest extends Test
 
         // Assert
         $this->assertFalse($resourceShareResponseTransfer->getIsSuccessful());
-        $this->tester->hasResourceShareResponseTransferErrorMessage(
+        $this->hasResourceShareResponseTransferErrorMessage(
             $resourceShareResponseTransfer,
             static::GLOSSARY_KEY_UNABLE_TO_SHARE_CART
         );
@@ -286,9 +287,31 @@ class SharedCartFacadeTest extends Test
 
         // Assert
         $this->assertFalse($resourceShareResponseTransfer->getIsSuccessful());
-        $this->tester->hasResourceShareResponseTransferErrorMessage(
+        $this->hasResourceShareResponseTransferErrorMessage(
             $resourceShareResponseTransfer,
             static::GLOSSARY_KEY_QUOTE_IS_NOT_AVAILABLE
         );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ResourceShareResponseTransfer $resourceShareResponseTransfer
+     * @param string $errorMessage
+     *
+     * @return bool
+     */
+    protected function hasResourceShareResponseTransferErrorMessage(
+        ResourceShareResponseTransfer $resourceShareResponseTransfer,
+        string $errorMessage
+    ): bool {
+        $resourceShareResponseTransfer->requireMessages();
+        foreach ($resourceShareResponseTransfer->getMessages() as $messageTransfer) {
+            $messageTransfer->requireValue();
+
+            if ($messageTransfer->getValue() === $errorMessage) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
