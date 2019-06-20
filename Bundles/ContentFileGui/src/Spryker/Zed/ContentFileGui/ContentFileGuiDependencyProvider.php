@@ -9,6 +9,7 @@ namespace Spryker\Zed\ContentFileGui;
 
 use Orm\Zed\FileManager\Persistence\SpyFileQuery;
 use Spryker\Zed\ContentFileGui\Dependency\Facade\ContentFileGuiToContentFileFacadeBridge;
+use Spryker\Zed\ContentFileGui\Dependency\Facade\ContentFileGuiToFileManagerFacadeBridge;
 use Spryker\Zed\ContentFileGui\Dependency\Facade\ContentFileGuiToLocaleFacadeBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
@@ -21,6 +22,7 @@ class ContentFileGuiDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_LOCALE = 'FACADE_LOCALE';
     public const FACADE_CONTENT_FILE = 'FACADE_CONTENT_FILE';
     public const PROPEL_QUERY_FILE = 'PROPEL_QUERY_FILE';
+    public const FACADE_FILE_MANAGER = 'FACADE_FILE_MANAGER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -32,6 +34,7 @@ class ContentFileGuiDependencyProvider extends AbstractBundleDependencyProvider
         $this->addFileQueryContainer($container);
         $this->addLocaleFacade($container);
         $this->addContentFileFacade($container);
+        $this->addFileManagerFacade($container);
 
         return $container;
     }
@@ -69,6 +72,18 @@ class ContentFileGuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_CONTENT_FILE, function (Container $container) {
             return new ContentFileGuiToContentFileFacadeBridge($container->getLocator()->contentFile()->facade());
+        });
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return void
+     */
+    protected function addFileManagerFacade(Container $container): void
+    {
+        $container->set(static::FACADE_FILE_MANAGER, function (Container $container) {
+            return new ContentFileGuiToFileManagerFacadeBridge($container->getLocator()->fileManager()->facade());
         });
     }
 }

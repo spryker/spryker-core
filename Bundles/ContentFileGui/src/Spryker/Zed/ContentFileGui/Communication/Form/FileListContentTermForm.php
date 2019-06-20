@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ContentFileGui\Communication\Form;
 
-use Orm\Zed\FileManager\Persistence\Map\SpyFileTableMap;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -135,13 +134,20 @@ class FileListContentTermForm extends AbstractType
                     return;
                 }
 
-                $fileQueryContainer = $this->getFactory()->getFileQueryContainer();
-                /** @var \Orm\Zed\FileManager\Persistence\SpyFileQuery $fileQueryContainer */
-                $ids = $fileQueryContainer->filterByIdFile_In($event->getData())
-                    ->select([SpyFileTableMap::COL_ID_FILE])
-                    ->find()
-                    ->toArray();
-                $event->setData($ids);
+                $fileManagerFacade = $this->getFactory()->getFileManagerFacade();
+                $fileIds = [];
+
+                foreach ($event->getData() as $idFile) {
+                    $fileManagerDataTransfer = $fileManagerFacade->findFileByIdFile($idFile);
+
+                    if (!$fileManagerDataTransfer->getFile()) {
+                        continue;
+                    }
+
+                    $fileIds[] = $fileManagerDataTransfer->getFile()->getIdFile();
+                }
+
+                $event->setData($fileIds);
             }
         );
 
