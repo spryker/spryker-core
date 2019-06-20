@@ -7,9 +7,6 @@
 
 namespace Spryker\Shared\Kernel\ClassResolver;
 
-use Spryker\Shared\Config\Config;
-use Spryker\Shared\Kernel\KernelConstants;
-
 class ClassInfo
 {
     public const TEST_NAMESPACE_SUFFIX = 'Test';
