@@ -225,7 +225,7 @@ class MethodReader implements MethodReaderInterface
                 }
             }
 
-            $shipmentMethodsTransfer = (new ShipmentMethodsTransfer())->setMethods($shipmentMethods);
+            $shipmentMethodsTransfer = (new ShipmentMethodsTransfer())->setMethods($shipmentMethods->getMethods());
             $shipmentGroupTransfer->setAvailableShipmentMethods($shipmentMethodsTransfer);
         }
 

@@ -97,7 +97,7 @@ class ProductOptionTaxRateCalculatonWithQuoteLevelShippingAddressTest extends Un
         // Arrange
         $this->tester->setDependency(
             ProductOptionDependencyProvider::FACADE_TAX,
-            $this->createProductOptionToTaxFacadeBridgeMock('MOON', 66.00)
+            $this->createProductOptionToTaxFacadeBridgeMock('RU', 66.00)
         );
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
@@ -161,7 +161,7 @@ class ProductOptionTaxRateCalculatonWithQuoteLevelShippingAddressTest extends Un
     {
         return [
             'quote has one item with one option, shipping address: France, expected tax rate 20%' => $this->getQuoteWithOneItemWithOneOptionAndQuoteLevelShippingAddressToFrance(),
-            'quote has one item with one option, shipping address: Moon, expected tax rate 66%' => $this->getQuoteWithOneItemWithOneOptionAndQuoteLevelShippingAddressToMoon(),
+            'quote has one item with one option, shipping address: Russia, expected tax rate 66%' => $this->getQuoteWithOneItemWithOneOptionAndQuoteLevelShippingAddressToRussia(),
             'quote has one item with two options, shipping address: Germany, expected tax rate 15%' => $this->getQuoteWithOneItemWithTwoOptionsAndQuoteLevelShippingAddressToGermany(),
             'quote has two items item with one option, shipping address: Germany, expected tax rate 15%' => $this->getQuoteWithTwoItemsWithOneOptionAndQuoteLevelShippingAddressToGermany(),
         ];
@@ -190,11 +190,11 @@ class ProductOptionTaxRateCalculatonWithQuoteLevelShippingAddressTest extends Un
     /**
      * @return array
      */
-    public function getQuoteWithOneItemWithOneOptionAndQuoteLevelShippingAddressToMoon(): array
+    public function getQuoteWithOneItemWithOneOptionAndQuoteLevelShippingAddressToRussia(): array
     {
         $quoteTransfer = (new QuoteBuilder())
             ->withShippingAddress(
-                (new AddressBuilder(['iso2Code' => 'MOON']))
+                (new AddressBuilder(['iso2Code' => 'RU']))
             )
             ->build();
 

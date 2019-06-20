@@ -121,7 +121,7 @@ class ProductOptionTaxRateCalculatonWithDefaultTaxRatesTest extends Unit
         return [
             'quote has one item with one option; no shipping address; default store country France; expected rate 20%' => $this->getQuoteWithOneItemWithoutShippingAddressesAndDefaultCountryIsFrance(),
             'quote has one item with one option; no shipping address; default store country Germany; expected rate 15%' => $this->getQuoteWithOneItemWithoutShippingAddressesAndDefaultCountryIsGermany(),
-            'quote has one item with one option; no shipping address; default store country Moon; expected rate 0%' => $this->getQuoteWithOneItemWithoutShippingAddressesAndDefaultCountryIsMoon(),
+            'quote has one item with one option; no shipping address; default store country Russia; expected rate 0%' => $this->getQuoteWithOneItemWithoutShippingAddressesAndDefaultCountryIsRussia(),
         ];
     }
 
@@ -158,7 +158,7 @@ class ProductOptionTaxRateCalculatonWithDefaultTaxRatesTest extends Unit
     /**
      * @return array
      */
-    public function getQuoteWithOneItemWithoutShippingAddressesAndDefaultCountryIsMoon(): array
+    public function getQuoteWithOneItemWithoutShippingAddressesAndDefaultCountryIsRussia(): array
     {
         $itemTransfer = (new ItemBuilder())
             ->withProductOption([ProductOptionValueTransfer::SKU => static::PRODUCT_OPTION_VALUE_SKU])
@@ -167,7 +167,7 @@ class ProductOptionTaxRateCalculatonWithDefaultTaxRatesTest extends Unit
         $quoteTransfer = (new QuoteBuilder())->build();
         $quoteTransfer->addItem($itemTransfer);
 
-        return [$quoteTransfer, 'MOON', 0.00];
+        return [$quoteTransfer, 'RU', 0.00];
     }
 
     /**
