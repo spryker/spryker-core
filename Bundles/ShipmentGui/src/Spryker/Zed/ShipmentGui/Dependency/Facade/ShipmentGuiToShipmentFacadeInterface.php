@@ -45,8 +45,12 @@ interface ShipmentGuiToShipmentFacadeInterface
 
     /**
      * @param \Generated\Shared\Transfer\ShipmentFormTransfer $shipmentFormTransfer
+     * @param bool[] $itemListUpdatedStatus
      *
      * @return \Generated\Shared\Transfer\ShipmentGroupTransfer
      */
-    public function createShipmentGroupTransfer(ShipmentFormTransfer $shipmentFormTransfer): ShipmentGroupTransfer;
+    public function createShipmentGroupTransfer(
+        ShipmentFormTransfer $shipmentFormTransfer,
+        array $itemListUpdatedStatus
+    ): ShipmentGroupTransfer;
 }

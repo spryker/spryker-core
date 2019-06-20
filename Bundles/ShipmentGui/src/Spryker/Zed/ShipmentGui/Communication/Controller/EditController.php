@@ -10,6 +10,9 @@ namespace Spryker\Zed\ShipmentGui\Communication\Controller;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\Sales\SalesConfig;
+use Spryker\Zed\ShipmentGui\Communication\Form\Item\ItemForm;
+use Spryker\Zed\ShipmentGui\Communication\Form\ShipmentFormCreate;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -60,7 +63,7 @@ class EditController extends AbstractController
             $shipmentFormTransfer = $form->getData();
             $shipmentGroupTransfer = $this->getFactory()
                 ->getShipmentFacade()
-                ->createShipmentGroupTransfer($shipmentFormTransfer);
+                ->createShipmentGroupTransfer($shipmentFormTransfer, $this->getItemListUpdatedStatus($form));
 
             $responseTransfer = $this->getFactory()
                 ->getShipmentFacade()
@@ -81,5 +84,22 @@ class EditController extends AbstractController
             'idSalesOrder' => $idSalesOrder,
             'form' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormInterface $form
+     *
+     * @return bool[]
+     */
+    protected function getItemListUpdatedStatus(FormInterface $form): array
+    {
+        $requestedItems = [];
+        foreach ($form->get(ShipmentFormCreate::FORM_SALES_ORDER_ITEMS) as $itemForm) {
+            $itemTransfer = $itemForm->getData();
+            /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
+            $requestedItems[$itemTransfer->getIdSalesOrderItem()] = $itemForm->get(ItemForm::FIELD_IS_UPDATED)->getData();
+        }
+
+        return $requestedItems;
     }
 }

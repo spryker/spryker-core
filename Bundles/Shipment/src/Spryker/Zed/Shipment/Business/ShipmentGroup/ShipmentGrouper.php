@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Shipment\Business\ShipmentGroup;
 
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ShipmentFormTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
@@ -48,14 +49,21 @@ class ShipmentGrouper implements ShipmentGrouperInterface
 
     /**
      * @param \Generated\Shared\Transfer\ShipmentFormTransfer $shipmentFormTransfer
+     * @param bool[] $itemListUpdatedStatus
      *
      * @return \Generated\Shared\Transfer\ShipmentGroupTransfer
      */
-    public function createShipmentGroupTransfer(ShipmentFormTransfer $shipmentFormTransfer): ShipmentGroupTransfer
-    {
+    public function createShipmentGroupTransfer(
+        ShipmentFormTransfer $shipmentFormTransfer,
+        array $itemListUpdatedStatus
+    ): ShipmentGroupTransfer {
         $shipmentGroupTransfer = new ShipmentGroupTransfer();
         $shipmentGroupTransfer = $this->addShipmentTransfer($shipmentGroupTransfer, $shipmentFormTransfer);
-        $shipmentGroupTransfer = $this->addShipmentItems($shipmentGroupTransfer, $shipmentFormTransfer);
+        $shipmentGroupTransfer = $this->addShipmentItems(
+            $shipmentGroupTransfer,
+            $shipmentFormTransfer,
+            $itemListUpdatedStatus
+        );
 
         return $shipmentGroupTransfer;
     }
@@ -70,10 +78,12 @@ class ShipmentGrouper implements ShipmentGrouperInterface
         ShipmentGroupTransfer $shipmentGroupTransfer,
         ShipmentFormTransfer $shipmentFormTransfer
     ): ShipmentGroupTransfer {
-        $shipmentTransfer = $this->shipmentMapper->mapFormDataToShipmentTransfer($shipmentFormTransfer, new ShipmentTransfer());
+        $shipmentTransfer = $this->shipmentMapper
+            ->mapFormDataToShipmentTransfer($shipmentFormTransfer, new ShipmentTransfer());
 
         if ($shipmentFormTransfer->getIdCustomerAddress()) {
-            $shippingAddress = $this->customerFacade->findCustomerAddressById($shipmentFormTransfer->getIdCustomerAddress());
+            $shippingAddress = $this->customerFacade
+                ->findCustomerAddressById($shipmentFormTransfer->getIdCustomerAddress());
             $shipmentTransfer->setShippingAddress($shippingAddress);
         }
 
@@ -83,7 +93,8 @@ class ShipmentGrouper implements ShipmentGrouperInterface
             return $shipmentGroupTransfer;
         }
 
-        $shipmentMethodTransfer = $this->shipmentMethodReader->findShipmentMethodById($shipmentFormTransfer->getIdShipmentMethod());
+        $shipmentMethodTransfer = $this->shipmentMethodReader
+            ->findShipmentMethodTransferById($shipmentFormTransfer->getIdShipmentMethod());
         $shipmentTransfer->setMethod($shipmentMethodTransfer);
 
         return $shipmentGroupTransfer;
@@ -92,17 +103,37 @@ class ShipmentGrouper implements ShipmentGrouperInterface
     /**
      * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
      * @param \Generated\Shared\Transfer\ShipmentFormTransfer $shipmentFormTransfer
+     * @param bool[] $itemListUpdatedStatus
      *
      * @return \Generated\Shared\Transfer\ShipmentGroupTransfer
      */
-    protected function addShipmentItems(ShipmentGroupTransfer $shipmentGroupTransfer, ShipmentFormTransfer $shipmentFormTransfer): ShipmentGroupTransfer
-    {
+    protected function addShipmentItems(
+        ShipmentGroupTransfer $shipmentGroupTransfer,
+        ShipmentFormTransfer $shipmentFormTransfer,
+        array $itemListUpdatedStatus
+    ): ShipmentGroupTransfer {
         foreach ($shipmentFormTransfer->getItems() as $itemTransfer) {
-            if ($itemTransfer->getIsUpdated() === true) {
+            if ($this->isItemForUpdate($itemTransfer, $itemListUpdatedStatus)) {
                 $shipmentGroupTransfer->addItem($itemTransfer);
             }
         }
 
         return $shipmentGroupTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param bool[] $itemListUpdatedStatus
+     *
+     * @return bool
+     */
+    protected function isItemForUpdate(ItemTransfer $itemTransfer, array $itemListUpdatedStatus): bool
+    {
+        $idSalesOrderItem = $itemTransfer->getIdSalesOrderItem();
+
+        return $idSalesOrderItem !== null
+            && isset($itemListUpdatedStatus[$idSalesOrderItem])
+            && is_bool($itemListUpdatedStatus[$idSalesOrderItem])
+            && $itemListUpdatedStatus[$idSalesOrderItem];
     }
 }
