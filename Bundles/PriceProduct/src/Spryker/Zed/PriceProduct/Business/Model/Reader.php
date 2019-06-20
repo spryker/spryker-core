@@ -541,7 +541,8 @@ class Reader implements ReaderInterface
      */
     protected function findPricesForConcreteProducts(array $priceProductFilterTransfers): array
     {
-        $priceProductCriteriaTransfer = $this->priceProductCriteriaBuilder->buildCriteriaFromFilter($priceProductFilterTransfers[0]);
+        $priceProductFilterTransfer = $this->getCommonPriceProductFilterTransfer($priceProductFilterTransfers);
+        $priceProductCriteriaTransfer = $this->priceProductCriteriaBuilder->buildCriteriaFromFilter($priceProductFilterTransfer);
         $productConcreteSkus = array_map(function (PriceProductFilterTransfer $priceProductFilterTransfer) {
             return $priceProductFilterTransfer->getSku();
         }, $priceProductFilterTransfers);
@@ -562,7 +563,8 @@ class Reader implements ReaderInterface
      */
     protected function findPricesForAbstractProducts(array $productConcreteSkus, array $priceProductFilterTransfers): array
     {
-        $priceProductCriteriaTransfer = $this->priceProductCriteriaBuilder->buildCriteriaFromFilter(array_shift($priceProductFilterTransfers));
+        $priceProductFilterTransfer = $this->getCommonPriceProductFilterTransfer($priceProductFilterTransfers);
+        $priceProductCriteriaTransfer = $this->priceProductCriteriaBuilder->buildCriteriaFromFilter($priceProductFilterTransfer);
 
         return $this->priceProductAbstractReader->getProductAbstractPricesByConcreteSkusAndCriteria(
             $productConcreteSkus,
@@ -600,6 +602,16 @@ class Reader implements ReaderInterface
         }
 
         return $priceProductFilterTransfersBySku;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer[] $priceProductFilterTransfers
+     *
+     * @return \Generated\Shared\Transfer\PriceProductFilterTransfer
+     */
+    protected function getCommonPriceProductFilterTransfer(array $priceProductFilterTransfers): PriceProductFilterTransfer
+    {
+        return array_shift($priceProductFilterTransfers);
     }
 
     /**
