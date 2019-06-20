@@ -178,14 +178,6 @@ class SharedCartBusinessTester extends Actor
     }
 
     /**
-     * @return \Spryker\Zed\Quote\Business\QuoteFacadeInterface
-     */
-    public function getQuoteFacade(): QuoteFacadeInterface
-    {
-        return $this->getLocator()->quote()->facade();
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\ResourceShareResponseTransfer $resourceShareResponseTransfer
      * @param string $errorMessage
      *

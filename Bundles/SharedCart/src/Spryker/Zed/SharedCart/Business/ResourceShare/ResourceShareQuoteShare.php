@@ -78,16 +78,6 @@ class ResourceShareQuoteShare implements ResourceShareQuoteShareInterface
             return $this->resourceShareQuoteCompanyUserWriter->updateCartShareForCompanyUser($resourceShareRequestTransfer, $shareDetailTransfer);
         }
 
-        return $this->createCartShareForProvidedCompanyUser($resourceShareRequestTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
-     */
-    protected function createCartShareForProvidedCompanyUser(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer
-    {
         return $this->resourceShareQuoteCompanyUserWriter->createCartShareForCompanyUser($resourceShareRequestTransfer);
     }
 
@@ -154,21 +144,11 @@ class ResourceShareQuoteShare implements ResourceShareQuoteShareInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return bool
-     */
-    protected function isSharedCartLocked(QuoteTransfer $quoteTransfer): bool
-    {
-        return $this->quoteFacade->isQuoteLocked($quoteTransfer);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer|null
      */
-    protected function findQuoteTransferByResourceShareRequest(ResourceShareRequestTransfer $resourceShareRequestTransfer): ?QuoteTransfer
+    protected function findQuoteByResourceShareRequestTransfer(ResourceShareRequestTransfer $resourceShareRequestTransfer): ?QuoteTransfer
     {
         $quoteResponseTransfer = $this->quoteFacade->findQuoteById(
             $resourceShareRequestTransfer
@@ -195,9 +175,9 @@ class ResourceShareQuoteShare implements ResourceShareQuoteShareInterface
                 );
         }
 
-        $quoteTransfer = $this->findQuoteTransferByResourceShareRequest($resourceShareRequestTransfer);
+        $quoteTransfer = $this->findQuoteByResourceShareRequestTransfer($resourceShareRequestTransfer);
 
-        if ($quoteTransfer === null || $this->isSharedCartLocked($quoteTransfer)) {
+        if ($quoteTransfer === null || $this->quoteFacade->isQuoteLocked($quoteTransfer)) {
             return (new ResourceShareResponseTransfer())
                 ->setIsSuccessful(false)
                 ->addMessage(
