@@ -78,6 +78,23 @@ interface StateMachineQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
+     * @param string $stateMachineName
+     * @param string $processName
+     * @param string[] $states
+     * @param string $historySortDirection
+     *
+     * @return \Orm\Zed\StateMachine\Persistence\SpyStateMachineItemStateQuery
+     */
+    public function queryItemsByStateMachineProcessNameAndItemStates(
+        $stateMachineName,
+        $processName,
+        array $states,
+        string $historySortDirection
+    );
+
+    /**
+     * @api
+     *
      * @param int $idProcess
      * @param string $stateName
      *
