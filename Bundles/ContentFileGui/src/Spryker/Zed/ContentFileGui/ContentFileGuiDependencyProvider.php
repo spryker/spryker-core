@@ -21,8 +21,8 @@ class ContentFileGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_LOCALE = 'FACADE_LOCALE';
     public const FACADE_CONTENT_FILE = 'FACADE_CONTENT_FILE';
-    public const PROPEL_QUERY_FILE = 'PROPEL_QUERY_FILE';
     public const FACADE_FILE_MANAGER = 'FACADE_FILE_MANAGER';
+    public const PROPEL_QUERY_FILE = 'PROPEL_QUERY_FILE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
