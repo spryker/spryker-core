@@ -8,7 +8,6 @@
 namespace Spryker\Service\Shipment\Items;
 
 use ArrayObject;
-use Generated\Shared\Transfer\ShipmentTransfer;
 
 interface ItemsGrouperInterface
 {
@@ -18,11 +17,4 @@ interface ItemsGrouperInterface
      * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
      */
     public function groupByShipment(iterable $itemTransfers): ArrayObject;
-
-    /**
-     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
-     *
-     * @return string
-     */
-    public function getShipmentHashKey(ShipmentTransfer $shipmentTransfer): string;
 }

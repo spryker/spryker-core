@@ -83,7 +83,7 @@ class ShipmentGrouper implements ShipmentGrouperInterface
             return $shipmentGroupTransfer;
         }
 
-        $shipmentMethodTransfer = $this->methodReader->findShipmentMethodTransferById($shipmentFormTransfer->getIdShipmentMethod());
+        $shipmentMethodTransfer = $this->methodReader->findShipmentMethodById($shipmentFormTransfer->getIdShipmentMethod());
         $shipmentTransfer->setMethod($shipmentMethodTransfer);
 
         return $shipmentGroupTransfer;

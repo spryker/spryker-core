@@ -60,7 +60,7 @@ class ProductOptionTaxRateCalculatonWithDefaultTaxRatesTest extends Unit
             ],
         ]);
 
-        $productOptionGroupTransfer = $this->tester->haveProductOptionGroupWithValues(
+        $this->tester->haveProductOptionGroupWithValues(
             [ProductOptionGroupTransfer::FK_TAX_SET => $taxSetTransfer->getIdTaxSet()],
             [
                 [
@@ -196,12 +196,15 @@ class ProductOptionTaxRateCalculatonWithDefaultTaxRatesTest extends Unit
     }
 
     /**
-     * @param string $iso2code
+     * @param string $iso2Code
      *
      * @return int
      */
-    protected function getCountryIdByIso2Code(string $iso2code): int
+    protected function getCountryIdByIso2Code(string $iso2Code): int
     {
-        return SpyCountryQuery::create()->filterByIso2Code($iso2code)->findOne()->getIdCountry();
+        return SpyCountryQuery::create()
+            ->filterByIso2Code($iso2Code)
+            ->findOne()
+            ->getIdCountry();
     }
 }

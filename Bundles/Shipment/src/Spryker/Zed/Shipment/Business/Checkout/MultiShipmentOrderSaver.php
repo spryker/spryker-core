@@ -271,7 +271,12 @@ class MultiShipmentOrderSaver implements MultiShipmentOrderSaverInterface
     ): ?ExpenseTransfer {
         $itemShipmentKey = $this->shipmentService->getShipmentHashKey($shipmentTransfer);
         foreach ($salesOrderTransfer->getExpenses() as $expenseTransfer) {
-            $expenseShipmentKey = $this->shipmentService->getShipmentHashKey($expenseTransfer->getShipment());
+            $expenseShipmentTransfer = $expenseTransfer->getShipment();
+            if ($expenseShipmentTransfer === null) {
+                continue;
+            }
+
+            $expenseShipmentKey = $this->shipmentService->getShipmentHashKey($expenseShipmentTransfer);
             if ($this->checkShipmentKeyAndType($expenseTransfer, $expenseShipmentKey, $itemShipmentKey)) {
                 return $expenseTransfer;
             }

@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Shipment\Persistence;
 
-use ArrayObject;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentPriceTransfer;
@@ -159,6 +158,27 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
     /**
      * @param int $idShipmentMethod
      *
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
+     */
+    public function findShipmentMethodById(int $idShipmentMethod): ?ShipmentMethodTransfer
+    {
+        $salesShipmentMethodEntity = $this->queryMethodsWithMethodPricesAndCarrier()
+            ->filterByIdShipmentMethod($idShipmentMethod)
+            ->find()
+            ->getFirst();
+
+        if ($salesShipmentMethodEntity === null) {
+            return null;
+        }
+
+        return $this->getFactory()
+            ->createShipmentMethodMapper()
+            ->mapShipmentMethodEntityToShipmentMethodTransfer($salesShipmentMethodEntity, new ShipmentMethodTransfer());
+    }
+
+    /**
+     * @param int $idShipmentMethod
+     *
      * @return \Generated\Shared\Transfer\ShipmentTransfer|null
      */
     public function findShipmentById(int $idShipmentMethod): ?ShipmentTransfer
@@ -182,11 +202,11 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
     }
 
     /**
-     * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentMethodTransfer[]
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer[]
      */
-    public function getActiveShipmentMethods(): ArrayObject
+    public function getActiveShipmentMethods(): array
     {
-        $shipmentMethodList = new ArrayObject();
+        $shipmentMethodList = [];
         $shipmentMethodEntities = $this->queryActiveMethodsWithMethodPricesAndCarrier()->find();
 
         if ($shipmentMethodEntities->count() === 0) {
@@ -198,7 +218,7 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
             $shipmentMethodTransfer = $shipmentMethodMapper
                     ->mapShipmentMethodEntityToShipmentMethodTransfer($shipmentMethodEntity, new ShipmentMethodTransfer());
 
-            $shipmentMethodList->append($shipmentMethodTransfer);
+            $shipmentMethodList[] = $shipmentMethodTransfer;
         }
 
         return $shipmentMethodList;
@@ -217,8 +237,7 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
             $idShipmentMethod,
             $idStore,
             $idCurrency
-        )
-            ->findOne();
+        )->findOne();
 
         if ($shipmentMethodPriceEntity === null) {
             return null;
@@ -302,6 +321,9 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
                 ->mapShipmentEntityToShipmentTransferWithDetails($salesShipmentEntity, new ShipmentTransfer());
         }
 
+        /**
+         * @todo delete hydrateShipmentMethodTransfersFromShipmentTransfers and all related functionality after tests are ready
+         */
         return $this->hydrateShipmentMethodTransfersFromShipmentTransfers($shipmentTransfers, $shipmentMapper);
     }
 

@@ -101,10 +101,10 @@ class UpdateShipmentWithNewDataTest extends Test
             $saveOrderTransfer->getIdSalesOrder(),
             $saveOrderTransfer->getOrderItems()[0]->getShipment()->toArray()
         );
-        $oldIdShipmentMethod = $shipmentTransfer->getMethod()->getIdShipmentMethod();
 
         $newShipmentMethod = $this->tester->haveShipmentMethod((new ShipmentMethodBuilder())->build()->toArray());
         $shipmentTransfer->setMethod($newShipmentMethod);
+        $expectedIdShipmentMethod = $shipmentTransfer->getMethod()->getIdShipmentMethod();
 
         $shipmentGroupTransfer = (new ShipmentGroupTransfer())->setShipment($shipmentTransfer);
 
@@ -121,7 +121,7 @@ class UpdateShipmentWithNewDataTest extends Test
         $this->assertTrue($shipmentGroupResponseTransfer->getIsSuccessful(), 'Saving a shipment should have been successful.');
         $this->assertEquals($shipmentTransfer->getIdSalesShipment(), $shipmentEntity->getIdSalesShipment(), 'The shipment should have been updated.');
         $this->assertNotEquals(
-            $oldIdShipmentMethod,
+            $expectedIdShipmentMethod,
             $shipmentGroupResponseTransfer->getShipmentGroup()->getShipment()->getMethod()->getIdShipmentMethod(),
             'New shipment method should have been assigned to shipment.'
         );

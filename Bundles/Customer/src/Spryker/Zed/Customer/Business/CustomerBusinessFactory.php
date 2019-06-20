@@ -152,7 +152,6 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
         return new CustomerOrderSaverWithMultiShippingAddress(
             $this->createCustomer(),
             $this->createAddress(),
-            $this->getRepository(),
             $this->getCustomerService()
         );
     }

@@ -79,24 +79,9 @@ class MethodWriter implements MethodWriterInterface
      */
     public function update(ShipmentMethodTransfer $shipmentMethodTransfer): bool
     {
-        $idShipmentMethod = $shipmentMethodTransfer->getIdShipmentMethod();
-        if ($idShipmentMethod === null || !$this->hasMethod($idShipmentMethod)) {
-            return false;
-        }
-
         $shipmentMethodTransfer = $this->shipmentEntityManager->saveSalesShipmentMethod($shipmentMethodTransfer);
         $this->methodPrice->save($shipmentMethodTransfer);
 
         return true;
-    }
-
-    /**
-     * @param int $idShipmentMethod
-     *
-     * @return bool
-     */
-    protected function hasMethod(int $idShipmentMethod): bool
-    {
-        return $this->shipmentRepository->hasShipmentMethodByIdShipmentMethod($idShipmentMethod);
     }
 }

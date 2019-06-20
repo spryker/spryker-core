@@ -20,7 +20,7 @@ use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToCustomerFacadeInterfa
 use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToSalesFacadeInterface;
 use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToShipmentFacadeInterface;
 
-class ShipmentFormDefaultDataProvider implements ShipmentFormDefaultDataProviderInterface
+class ShipmentFormDefaultDataProvider
 {
     public const OPTION_DATA_CLASS = 'data_class';
 

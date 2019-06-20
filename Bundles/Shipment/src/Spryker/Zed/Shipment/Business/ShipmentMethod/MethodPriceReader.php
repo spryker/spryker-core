@@ -64,21 +64,25 @@ class MethodPriceReader implements MethodPriceReaderInterface
 
     /**
      * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
-     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer|null $shipmentGroupTransfer
      *
      * @return int|null
      */
     public function getShipmentGroupShippingPrice(
         ShipmentMethodTransfer $shipmentMethodTransfer,
-        ShipmentGroupTransfer $shipmentGroupTransfer,
-        QuoteTransfer $quoteTransfer
+        QuoteTransfer $quoteTransfer,
+        ?ShipmentGroupTransfer $shipmentGroupTransfer = null
     ): ?int {
-        if ($this->isSetPricePlugin($shipmentMethodTransfer)) {
-            return $this->getPricePluginValue($shipmentMethodTransfer, $shipmentGroupTransfer, $quoteTransfer);
+        if (!$this->isSetPricePlugin($shipmentMethodTransfer)) {
+            return $this->findShipmentMethodPriceValue($shipmentMethodTransfer, $quoteTransfer);
         }
 
-        return $this->findShipmentMethodPriceValue($shipmentMethodTransfer, $quoteTransfer);
+        if ($shipmentGroupTransfer === null) {
+            return null;
+        }
+
+        return $this->getPricePluginValue($shipmentMethodTransfer, $shipmentGroupTransfer, $quoteTransfer);
     }
 
     /**

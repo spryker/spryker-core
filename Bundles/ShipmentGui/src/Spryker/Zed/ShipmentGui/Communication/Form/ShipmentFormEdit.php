@@ -12,22 +12,9 @@ use Spryker\Zed\ShipmentGui\Communication\Form\Item\ItemForm;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ShipmentFormEdit extends ShipmentFormCreate
 {
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     *
-     * @return void
-     */
-    public function configureOptions(OptionsResolver $resolver): void
-    {
-        parent::configureOptions($resolver);
-
-        // $resolver->setRequired(AddressForm::ADDRESS_FIELD_ID_SALES_ORDER_ADDRESS);
-    }
-
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options

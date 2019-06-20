@@ -14,17 +14,17 @@ use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Zed\ShipmentGui\Communication\Form\Address\AddressForm;
 use Spryker\Zed\ShipmentGui\Communication\Form\ShipmentFormEdit;
 
-class ShipmentFormEditDataProvider implements ShipmentFormDataProviderInterface
+class ShipmentFormEditDataProvider
 {
     /**
-     * @var \Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentFormDefaultDataProviderInterface
+     * @var \Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentFormDefaultDataProvider
      */
     protected $shipmentFormDefaultDataProvider;
 
     /**
-     * @param \Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentFormDefaultDataProviderInterface $shipmentFormDefaultDataProvider
+     * @param \Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentFormDefaultDataProvider $shipmentFormDefaultDataProvider
      */
-    public function __construct(ShipmentFormDefaultDataProviderInterface $shipmentFormDefaultDataProvider)
+    public function __construct(ShipmentFormDefaultDataProvider $shipmentFormDefaultDataProvider)
     {
         $this->shipmentFormDefaultDataProvider = $shipmentFormDefaultDataProvider;
     }
