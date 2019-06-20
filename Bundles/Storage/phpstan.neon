@@ -1,4 +1,3 @@
 parameters:
     ignoreErrors:
     - '#Static call to instance method .+StorageClient::getFactory\(\).#'
-    - '#Return type \(array\) of method .+StorageFactory::getConfig\(\) should be compatible with return type \(.+AbstractBundleConfig\) of method .+AbstractFactory::getConfig\(\)#'

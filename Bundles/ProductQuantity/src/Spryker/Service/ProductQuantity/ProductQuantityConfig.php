@@ -21,4 +21,12 @@ class ProductQuantityConfig extends AbstractBundleConfig
     {
         return $this->getSharedConfig()->getDefaultMinimumQuantity();
     }
+
+    /**
+     * @return float
+     */
+    public function getDefaultInterval(): float
+    {
+        return $this->getSharedConfig()->getDefaultInterval();
+    }
 }

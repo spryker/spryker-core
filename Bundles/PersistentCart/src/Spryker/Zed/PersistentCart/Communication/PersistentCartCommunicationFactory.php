@@ -12,7 +12,7 @@ use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToQuoteFacadeInte
 use Spryker\Zed\PersistentCart\PersistentCartDependencyProvider;
 
 /**
- * @method \Spryker\Zed\PersistentCart\Business\PersistentCartFacade getFacade()
+ * @method \Spryker\Zed\PersistentCart\Business\PersistentCartFacadeInterface getFacade()
  * @method \Spryker\Zed\PersistentCart\PersistentCartConfig getConfig()
  */
 class PersistentCartCommunicationFactory extends AbstractCommunicationFactory
