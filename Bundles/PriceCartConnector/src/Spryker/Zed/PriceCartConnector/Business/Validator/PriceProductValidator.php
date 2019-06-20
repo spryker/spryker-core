@@ -106,14 +106,22 @@ class PriceProductValidator implements PriceProductValidatorInterface
     ): CartPreCheckResponseTransfer {
         $productWithoutPriceSkus = $this->getProductWithoutPriceSkus($validPriceProductTransfers, $cartChangeTransfer->getItems()->getArrayCopy());
         if ($productWithoutPriceSkus) {
-            $sku = array_shift($productWithoutPriceSkus);
-
             return $cartPreCheckResponseTransfer
                 ->setIsSuccess(false)
-                ->addMessage($this->createMessage($sku));
+                ->addMessage($this->createMessage($this->getFirstNotValidSku($productWithoutPriceSkus)));
         }
 
         return $cartPreCheckResponseTransfer;
+    }
+
+    /**
+     * @param string[] $productWithoutPriceSkus
+     *
+     * @return string
+     */
+    protected function getFirstNotValidSku(array $productWithoutPriceSkus): string
+    {
+        return array_shift($productWithoutPriceSkus);
     }
 
     /**

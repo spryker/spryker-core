@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Locale\Persistence\Mapper;
+namespace Spryker\Zed\Locale\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Locale\Persistence\SpyLocale;

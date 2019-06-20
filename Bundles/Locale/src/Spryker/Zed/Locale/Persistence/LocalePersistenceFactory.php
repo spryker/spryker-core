@@ -9,7 +9,7 @@ namespace Spryker\Zed\Locale\Persistence;
 
 use Orm\Zed\Locale\Persistence\SpyLocaleQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
-use Spryker\Zed\Locale\Persistence\Mapper\LocaleMapper;
+use Spryker\Zed\Locale\Persistence\Propel\Mapper\LocaleMapper;
 
 /**
  * @method \Spryker\Zed\Locale\LocaleConfig getConfig()
@@ -27,7 +27,7 @@ class LocalePersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Spryker\Zed\Locale\Persistence\Mapper\LocaleMapper
+     * @return \Spryker\Zed\Locale\Persistence\Propel\Mapper\LocaleMapper
      */
     public function createLocaleMapper(): LocaleMapper
     {

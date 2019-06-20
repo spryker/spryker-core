@@ -504,9 +504,11 @@ class Reader implements ReaderInterface
         if (count($priceProductFilterTransfers) === 0) {
             return [];
         }
-        if (!$this->isPriceTypesExists($priceProductFilterTransfers)) {
+        $priceProductFilterTransfers = $this->filterPriceProductFilterTransfersWithoutExistingPriceType($priceProductFilterTransfers);
+        if (!$priceProductFilterTransfers) {
             return [];
         }
+
         $concretePricesBySku = $this->findPricesForConcreteProducts($priceProductFilterTransfers);
         $skusWithMissingPrices = $this->getProductConcreteSkusWithMissingPrices($priceProductFilterTransfers, $concretePricesBySku);
         $abstractPricesBySku = $this->findPricesForAbstractProducts($skusWithMissingPrices, $priceProductFilterTransfers);
@@ -603,33 +605,20 @@ class Reader implements ReaderInterface
     /**
      * @param \Generated\Shared\Transfer\PriceProductFilterTransfer[] $priceProductFilterTransfers
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\PriceProductFilterTransfer[]
      */
-    protected function isPriceTypesExists(array $priceProductFilterTransfers): bool
+    protected function filterPriceProductFilterTransfersWithoutExistingPriceType(array $priceProductFilterTransfers): array
     {
-        $priceTypeNames = $this->getPriceTypeNames($priceProductFilterTransfers);
-        foreach ($priceTypeNames as $priceTypeName) {
-            if (!$this->priceProductTypeReader->hasPriceType($priceTypeName)) {
-                return false;
+        $filteredPriceProductFilterTransfers = [];
+        foreach ($priceProductFilterTransfers as $priceProductFilterTransfer) {
+            $priceTypeName = $this->priceProductTypeReader->handleDefaultPriceType(
+                $priceProductFilterTransfer->getPriceTypeName()
+            );
+            if ($this->priceProductTypeReader->hasPriceType($priceTypeName)) {
+                $filteredPriceProductFilterTransfers[] = $priceProductFilterTransfer;
             }
         }
 
-        return true;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer[] $priceProductFilterTransfers
-     *
-     * @return string[]
-     */
-    protected function getPriceTypeNames(array $priceProductFilterTransfers): array
-    {
-        $priceTypeNames = array_map(function (PriceProductFilterTransfer $priceProductFilterTransfer) {
-            return $this->priceProductTypeReader->handleDefaultPriceType(
-                $priceProductFilterTransfer->getPriceTypeName()
-            );
-        }, $priceProductFilterTransfers);
-
-        return array_unique($priceTypeNames, SORT_REGULAR);
+        return $filteredPriceProductFilterTransfers;
     }
 }

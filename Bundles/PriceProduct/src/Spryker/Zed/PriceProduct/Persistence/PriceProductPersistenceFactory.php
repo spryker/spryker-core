@@ -12,7 +12,7 @@ use Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceTypeQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
-use Spryker\Zed\PriceProduct\Persistence\Mapper\PriceProductMapper;
+use Spryker\Zed\PriceProduct\Persistence\Propel\Mapper\PriceProductMapper;
 use Spryker\Zed\PriceProduct\Persistence\Propel\PriceDimensionQueryExpander\DefaultPriceQueryExpander;
 use Spryker\Zed\PriceProduct\Persistence\Propel\PriceDimensionQueryExpander\DefaultPriceQueryExpanderInterface;
 use Spryker\Zed\PriceProduct\PriceProductDependencyProvider;
@@ -82,7 +82,7 @@ class PriceProductPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Spryker\Zed\PriceProduct\Persistence\Mapper\PriceProductMapper
+     * @return \Spryker\Zed\PriceProduct\Persistence\Propel\Mapper\PriceProductMapper
      */
     public function createPriceProductMapper(): PriceProductMapper
     {

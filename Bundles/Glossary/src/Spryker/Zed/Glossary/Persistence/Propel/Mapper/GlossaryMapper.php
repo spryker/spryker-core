@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Glossary\Persistence\Mapper;
+namespace Spryker\Zed\Glossary\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\TranslationTransfer;
 use Orm\Zed\Glossary\Persistence\SpyGlossaryTranslation;

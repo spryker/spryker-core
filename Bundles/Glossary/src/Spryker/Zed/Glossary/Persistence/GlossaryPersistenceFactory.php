@@ -9,7 +9,7 @@ namespace Spryker\Zed\Glossary\Persistence;
 
 use Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery;
 use Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery;
-use Spryker\Zed\Glossary\Persistence\Mapper\GlossaryMapper;
+use Spryker\Zed\Glossary\Persistence\Propel\Mapper\GlossaryMapper;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
@@ -36,7 +36,7 @@ class GlossaryPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Spryker\Zed\Glossary\Persistence\Mapper\GlossaryMapper
+     * @return \Spryker\Zed\Glossary\Persistence\Propel\Mapper\GlossaryMapper
      */
     public function createGlossaryMapper(): GlossaryMapper
     {
