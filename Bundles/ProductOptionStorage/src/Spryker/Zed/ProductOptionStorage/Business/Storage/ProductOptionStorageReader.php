@@ -46,7 +46,7 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
     /**
      * @param int[] $productAbstractIds
      *
-     * @return array [[fkProductAbstract => [productOptionGroupName => productOptionGroupStatus]]]
+     * @return bool[][]
      */
     protected function getIndexedProductAbstractOptionGroupStatusesByProductAbstractIds(array $productAbstractIds): array
     {

@@ -65,9 +65,9 @@ class ProductOptionGroupReader implements ProductOptionGroupReaderInterface
      */
     public function getProductOptionGroupById($idProductOptionGroup)
     {
-        return $this->hydrateProductOptionGroupTransfer(
-            $this->getProductOptionGroupEntityWithValuesAndValuePricesById((int)$idProductOptionGroup)
-        );
+        $productOptionGroupEntity = $this->getProductOptionGroupEntityWithValuesAndValuePricesById((int)$idProductOptionGroup);
+
+        return $this->hydrateProductOptionGroupTransfer($productOptionGroupEntity);
     }
 
     /**

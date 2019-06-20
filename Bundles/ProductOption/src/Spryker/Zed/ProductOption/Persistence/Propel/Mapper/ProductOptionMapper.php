@@ -14,7 +14,7 @@ class ProductOptionMapper
     /**
      * @param array $productAbstractOptionGroupStatuses
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\ProductAbstractOptionGroupStatusTransfer[]
      */
     public function mapProductAbstractOptionGroupStatusesToTransfers(
         array $productAbstractOptionGroupStatuses

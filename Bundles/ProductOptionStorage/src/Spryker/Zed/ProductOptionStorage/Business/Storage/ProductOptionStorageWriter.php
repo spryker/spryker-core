@@ -72,7 +72,7 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
     }
 
     /**
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return void
      */
@@ -89,50 +89,46 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
         $productAbstractIdsWithDeactivatedGroups = $this->productOptionStorageReader->getProductAbstractIdsWithDeactivatedGroups($productAbstractIds);
 
         if ($productAbstractIdsWithDeactivatedGroups) {
-            $this->deleteProductAbstractOptionStorageEntitiesWithDeactivatedGroups(
+            $deletableProductAbstractOptionStorageEntities = $this->filterProductAbstractOptionStorageEntitiesByProductAbstractIds(
                 $productAbstractOptionStorageEntities,
                 $productAbstractIdsWithDeactivatedGroups
             );
+
+            $this->deleteProductAbstractOptionStorageEntities($deletableProductAbstractOptionStorageEntities);
         }
 
         $this->storeData($productAbstractOptionStorageEntities, $productOptions);
     }
 
     /**
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return void
      */
     public function unpublish(array $productAbstractIds)
     {
         $productAbstractOptionStorageEntities = $this->findProductStorageOptionEntitiesByProductAbstractIds($productAbstractIds);
-        foreach ($productAbstractOptionStorageEntities as $storeName => $productAbstractOptionStorageEntity) {
-            $productAbstractOptionStorageEntity->delete();
+        foreach ($productAbstractOptionStorageEntities as $productAbstractOptionStorageEntityArray) {
+            foreach (array_values($productAbstractOptionStorageEntityArray) as $productAbstractOptionStorageEntity) {
+                $productAbstractOptionStorageEntity->delete();
+            }
         }
     }
 
     /**
-     * @param array $productAbstractOptionStorageEntities
-     * @param int[] $productAbstractIdsWithDeactivatedGroups
+     * @param \Orm\Zed\ProductOptionStorage\Persistence\SpyProductAbstractOptionStorage[] $deletableProductAbstractOptionStorageEntities
      *
      * @return void
      */
-    protected function deleteProductAbstractOptionStorageEntitiesWithDeactivatedGroups(
-        array $productAbstractOptionStorageEntities,
-        array $productAbstractIdsWithDeactivatedGroups
-    ): void {
-        $deletableProductAbstractOptionStorageEntitiesByProductAbstractIds = $this->filterProductAbstractOptionStorageEntitiesByProductAbstractIds(
-            $productAbstractOptionStorageEntities,
-            $productAbstractIdsWithDeactivatedGroups
-        );
-
-        foreach ($deletableProductAbstractOptionStorageEntitiesByProductAbstractIds as $productAbstractOptionStorageEntity) {
+    protected function deleteProductAbstractOptionStorageEntities(array $deletableProductAbstractOptionStorageEntities): void
+    {
+        foreach ($deletableProductAbstractOptionStorageEntities as $productAbstractOptionStorageEntity) {
             $productAbstractOptionStorageEntity->delete();
         }
     }
 
     /**
-     * @param array $productAbstractOptionStorageEntities
+     * @param \Orm\Zed\ProductOptionStorage\Persistence\SpyProductAbstractOptionStorage[][] $productAbstractOptionStorageEntities
      * @param int[] $productAbstractIds
      *
      * @return \Orm\Zed\ProductOptionStorage\Persistence\SpyProductAbstractOptionStorage[]
@@ -142,7 +138,7 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
         $filteredProductAbstractOptionStorageEntities = [];
 
         foreach ($productAbstractOptionStorageEntities as $productAbstractOptionStorageEntityArray) {
-            foreach ($productAbstractOptionStorageEntityArray as $storeName => $productAbstractOptionStorageEntity) {
+            foreach (array_values($productAbstractOptionStorageEntityArray) as $productAbstractOptionStorageEntity) {
                 if (in_array($productAbstractOptionStorageEntity->getFkProductAbstract(), $productAbstractIds, true)) {
                     $filteredProductAbstractOptionStorageEntities[] = $productAbstractOptionStorageEntity;
                 }
@@ -153,14 +149,14 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
     }
 
     /**
-     * @param array $productAbstractOptionStorageEntities
+     * @param \Orm\Zed\ProductOptionStorage\Persistence\SpyProductAbstractOptionStorage[][] $productAbstractOptionStorageEntities
      *
      * @return void
      */
     protected function deleteStorageData(array $productAbstractOptionStorageEntities): void
     {
         foreach ($productAbstractOptionStorageEntities as $productAbstractOptionStorageEntityArray) {
-            foreach ($productAbstractOptionStorageEntityArray as $storeName => $productAbstractOptionStorageEntity) {
+            foreach (array_values($productAbstractOptionStorageEntityArray) as $productAbstractOptionStorageEntity) {
                 $productAbstractOptionStorageEntity->delete();
             }
         }
@@ -249,7 +245,7 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
     /**
      * @param int[] $productAbstractIds
      *
-     * @return array
+     * @return \Orm\Zed\ProductOptionStorage\Persistence\SpyProductAbstractOptionStorage[][]
      */
     protected function findProductStorageOptionEntitiesByProductAbstractIds(array $productAbstractIds): array
     {
