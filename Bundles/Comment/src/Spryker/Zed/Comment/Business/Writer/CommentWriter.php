@@ -174,7 +174,7 @@ class CommentWriter implements CommentWriterInterface
 
         $commentTransfer
             ->setMessage(trim($commentRequestTransfer->getComment()->getMessage()))
-            ->setTags($commentRequestTransfer->getComment()->getTags())
+            ->setCommentTags($commentRequestTransfer->getComment()->getCommentTags())
             ->setIsUpdated(true);
 
         $commentThreadResponseTransfer = $this->validateCommentMessage($commentTransfer);
@@ -203,7 +203,7 @@ class CommentWriter implements CommentWriterInterface
             return $commentThreadResponseTransfer;
         }
 
-        $commentTransfer->setTags(new ArrayObject());
+        $commentTransfer->setCommentTags(new ArrayObject());
         $this->commentEntityManager->removeCommentTagsFromComment($commentTransfer);
         $this->commentEntityManager->removeComment($commentTransfer);
 

@@ -106,7 +106,7 @@ class CommentEntityManager extends AbstractEntityManager implements CommentEntit
     {
         $commentTransfer->requireIdComment();
 
-        foreach ($commentTransfer->getTags() as $commentTagTransfer) {
+        foreach ($commentTransfer->getCommentTags() as $commentTagTransfer) {
             $assignedCommentTagIds[] = $commentTagTransfer->getIdCommentTag();
 
             $commentCommentTagEntity = $this->getFactory()
@@ -138,7 +138,7 @@ class CommentEntityManager extends AbstractEntityManager implements CommentEntit
 
         $assignedCommentTagIds = [];
 
-        foreach ($commentTransfer->getTags() as $commentTagTransfer) {
+        foreach ($commentTransfer->getCommentTags() as $commentTagTransfer) {
             $assignedCommentTagIds[] = $commentTagTransfer->getIdCommentTag();
         }
 

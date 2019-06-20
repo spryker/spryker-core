@@ -17,7 +17,7 @@
         <property name="uuid" type="string"/>
         <property name="customer" type="Customer"/>
         <property name="message" type="string"/>
-        <property name="tags" type="CommentTag[]" singular="commentTag"/>
+        <property name="commentTags" type="CommentTag[]" singular="commentTag"/>
         <property name="isUpdated" type="bool"/>
         <property name="createdAt" type="string"/>
         <property name="updatedAt" type="string"/>

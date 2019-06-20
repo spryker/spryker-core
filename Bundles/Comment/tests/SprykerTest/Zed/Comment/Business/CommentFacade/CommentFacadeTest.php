@@ -832,8 +832,8 @@ class CommentFacadeTest extends Unit
         $this->assertTrue($commentThreadResponseTransfer->getIsSuccessful());
         $this->assertCount(1, $commentThreadTransfer->getComments());
         $this->assertEquals(
-            $commentTransfer->getTags()->offsetGet(0)->getName(),
-            $storedCommentTransfer->getTags()->offsetGet(0)->getName()
+            $commentTransfer->getCommentTags()->offsetGet(0)->getName(),
+            $storedCommentTransfer->getCommentTags()->offsetGet(0)->getName()
         );
     }
 
@@ -868,10 +868,10 @@ class CommentFacadeTest extends Unit
 
         // Assert
         $this->assertTrue($commentResponseTransfer->getIsSuccessful());
-        $this->assertCount(1, $storedCommentTransfer->getTags());
+        $this->assertCount(1, $storedCommentTransfer->getCommentTags());
         $this->assertEquals(
             $commentTagRequestTransfer->getName(),
-            $storedCommentTransfer->getTags()->offsetGet(0)->getName()
+            $storedCommentTransfer->getCommentTags()->offsetGet(0)->getName()
         );
     }
 
@@ -918,14 +918,14 @@ class CommentFacadeTest extends Unit
 
         // Assert
         $this->assertTrue($commentResponseTransfer->getIsSuccessful());
-        $this->assertCount(2, $storedCommentTransfer->getTags());
+        $this->assertCount(2, $storedCommentTransfer->getCommentTags());
         $this->assertEquals(
             $firstCommentTagTransfer->getName(),
-            $storedCommentTransfer->getTags()->offsetGet(0)->getName()
+            $storedCommentTransfer->getCommentTags()->offsetGet(0)->getName()
         );
         $this->assertEquals(
             $secondCommentTagTransfer->getName(),
-            $storedCommentTransfer->getTags()->offsetGet(1)->getName()
+            $storedCommentTransfer->getCommentTags()->offsetGet(1)->getName()
         );
     }
 

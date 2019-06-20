@@ -131,7 +131,7 @@ class CommentMapper
         $commentTransfer
             ->setIdCommentThread($commentEntity->getFkCommentThread())
             ->setCustomer($this->mapCustomerEntityToCustomerTransfer($commentEntity->getSpyCustomer(), new CustomerTransfer()))
-            ->setTags(new ArrayObject($this->mapCommentEntityToCommentTagTransfers($commentEntity)));
+            ->setCommentTags(new ArrayObject($this->mapCommentEntityToCommentTagTransfers($commentEntity)));
 
         return $commentTransfer;
     }

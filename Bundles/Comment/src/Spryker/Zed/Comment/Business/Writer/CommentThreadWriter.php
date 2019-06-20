@@ -113,7 +113,7 @@ class CommentThreadWriter implements CommentThreadWriterInterface
             $duplicatedCommentTransfer = $this->duplicateComment($commentTransfer, $commentThreadTransfer);
             $duplicatedCommentTransfer = $this->commentEntityManager->createComment($duplicatedCommentTransfer);
 
-            if ($duplicatedCommentTransfer->getTags()->count()) {
+            if ($duplicatedCommentTransfer->getCommentTags()->count()) {
                 $this->commentTagWriter->saveCommentTags($duplicatedCommentTransfer);
             }
 
@@ -138,7 +138,7 @@ class CommentThreadWriter implements CommentThreadWriterInterface
             ->setIdCommentThread($commentThreadTransfer->getIdCommentThread())
             ->setMessage($commentTransfer->getMessage())
             ->setIsUpdated($commentTransfer->getIsUpdated())
-            ->setTags($commentTransfer->getTags());
+            ->setCommentTags($commentTransfer->getCommentTags());
     }
 
     /**

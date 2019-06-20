@@ -123,13 +123,13 @@ class CommentTagWriter implements CommentTagWriterInterface
 
         $commentTagTransfers = [];
 
-        foreach ($commentTransfer->getTags() as $commentTagTransfer) {
+        foreach ($commentTransfer->getCommentTags() as $commentTagTransfer) {
             if ($commentTagTransfer->getName() !== $commentTagRequestTransfer->getName()) {
                 $commentTagTransfers[] = $commentTagTransfer;
             }
         }
 
-        $commentTransfer->setTags(new ArrayObject($commentTagTransfers));
+        $commentTransfer->setCommentTags(new ArrayObject($commentTagTransfers));
         $commentTransfer = $this->saveCommentTags($commentTransfer);
 
         return (new CommentResponseTransfer())
@@ -147,7 +147,7 @@ class CommentTagWriter implements CommentTagWriterInterface
         $expandedCommentTagTransfers = [];
         $commentTagMap = $this->mapCommentTagsByName($this->commentRepository->getAllCommentTags());
 
-        foreach ($commentTransfer->getTags() as $commentTagTransfer) {
+        foreach ($commentTransfer->getCommentTags() as $commentTagTransfer) {
             if (!isset($commentTagMap[$commentTagTransfer->getName()])) {
                 $commentTagMap[$commentTagTransfer->getName()] = $this->commentEntityManager->createCommentTag($commentTagTransfer);
             }
@@ -155,7 +155,7 @@ class CommentTagWriter implements CommentTagWriterInterface
             $expandedCommentTagTransfers[] = $commentTagMap[$commentTagTransfer->getName()];
         }
 
-        $commentTransfer->setTags(new ArrayObject($expandedCommentTagTransfers));
+        $commentTransfer->setCommentTags(new ArrayObject($expandedCommentTagTransfers));
 
         $this->commentEntityManager->addCommentTagsToComment($commentTransfer);
         $this->commentEntityManager->removeCommentTagsFromComment($commentTransfer);
