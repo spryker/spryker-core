@@ -602,7 +602,9 @@ class AbstractProductFormDataProvider
 
         $productValues = $this->getProductAttributesFormValues($productAttributes);
 
-        return array_merge($productValues, $result);
+        $result = $result + $productValues;
+
+        return $result;
     }
 
     /**
