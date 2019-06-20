@@ -560,7 +560,7 @@ cd %s
     protected function extendJobCommand(array $jobs): array
     {
         foreach ($jobs as $i => $job) {
-            if (count($job['command']) === 0) {
+            if (empty($job['command'])) {
                 continue;
             }
             $command = $job['command'];

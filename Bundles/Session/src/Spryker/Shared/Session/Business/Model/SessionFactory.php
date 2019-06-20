@@ -59,9 +59,8 @@ abstract class SessionFactory
         $password = !empty($credentials) && array_key_exists(self::PASSWORD, $credentials) ? $credentials[self::PASSWORD] : null;
         $hosts = $this->getHostsFromSavePath($savePath);
         $lifetime = $this->getSessionLifetime();
-        $environmentName = $this->getEnvironmentName();
 
-        $handler = new SessionHandlerMysql($this->getMonitoringService(), $hosts, $user, $password, $lifetime, $environmentName);
+        $handler = new SessionHandlerMysql($this->getMonitoringService(), $hosts, $user, $password, $lifetime);
         $this->setSessionSaveHandler($handler);
 
         return $handler;
