@@ -147,8 +147,8 @@ class Config
     public static function init(?string $environmentName = null): void
     {
         $config = new ArrayObject();
-        $environmentName = $environmentName ?? APPLICATION_ENV;
-        $storeName = Store::getInstance()->getStoreName();
+        $environmentName = $environmentName ?? static::getEnvironmentName();
+        $storeName = static::getStore()->getStoreName();
 
         /*
          * e.g. config_default.php
@@ -207,5 +207,21 @@ class Config
         }
 
         return $config;
+    }
+
+    /**
+     * @return string
+     */
+    private static function getEnvironmentName(): string
+    {
+        return APPLICATION_ENV;
+    }
+
+    /**
+     * @return \Spryker\Shared\Kernel\Store
+     */
+    private static function getStore(): Store
+    {
+        return Store::getInstance();
     }
 }

@@ -41,6 +41,8 @@ interface KernelConstants
     /**
      * Specification:
      * - Defines the mode when a dependency container is overridden for testing needs.
+     * - This should set to `true` to be able to use \Spryker\Shared\Kernel\ContainerMocker\ContainerGlobals
+     *   via \SprykerTest\Shared\Testify\Helper\DependencyHelper for overriding dependencies in container for testing.
      *
      * @api
      */

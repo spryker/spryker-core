@@ -215,11 +215,6 @@ abstract class SessionFactory
     abstract protected function getSessionLifetime();
 
     /**
-     * @return string
-     */
-    abstract protected function getEnvironmentName(): string;
-
-    /**
      * @return \Spryker\Shared\Session\Dependency\Service\SessionToMonitoringServiceInterface
      */
     abstract public function getMonitoringService(): SessionToMonitoringServiceInterface;
@@ -296,5 +291,13 @@ abstract class SessionFactory
         }
 
         return $hosts;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getEnvironmentName(): string
+    {
+        return Config::get(SessionConstants::SESSION_ENVIRONMENT_NAME, APPLICATION_ENV);
     }
 }
