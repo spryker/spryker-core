@@ -22,10 +22,13 @@ class CommentWriter implements CommentWriterInterface
 {
     use TransactionTrait;
 
+    protected const COMMENT_MESSAGE_MIN_LENGTH = 1;
+    protected const COMMENT_MESSAGE_MAX_LENGTH = 5000;
+
     protected const GLOSSARY_KEY_COMMENT_NOT_FOUND = 'comment.validation.error.comment_not_found';
     protected const GLOSSARY_KEY_COMMENT_THREAD_NOT_FOUND = 'comment.validation.error.comment_thread_not_found';
     protected const GLOSSARY_KEY_COMMENT_ACCESS_DENIED = 'comment.validation.error.access_denied';
-    protected const GLOSSARY_KEY_COMMENT_EMPTY_MESSAGE = 'comment.validation.error.empty_message';
+    protected const GLOSSARY_KEY_COMMENT_INVALID_MESSAGE_LENGTH = 'comment.validation.error.invalid_message_length';
 
     /**
      * @var \Spryker\Zed\Comment\Persistence\CommentEntityManagerInterface
@@ -255,8 +258,10 @@ class CommentWriter implements CommentWriterInterface
      */
     protected function validateCommentMessage(CommentTransfer $commentTransfer): CommentThreadResponseTransfer
     {
-        if (!mb_strlen($commentTransfer->getMessage())) {
-            return $this->createErrorResponse(static::GLOSSARY_KEY_COMMENT_EMPTY_MESSAGE);
+        $messageLength = mb_strlen($commentTransfer->getMessage());
+
+        if ($messageLength < static::COMMENT_MESSAGE_MIN_LENGTH || $messageLength > static::COMMENT_MESSAGE_MAX_LENGTH) {
+            return $this->createErrorResponse(static::GLOSSARY_KEY_COMMENT_INVALID_MESSAGE_LENGTH);
         }
 
         return (new CommentThreadResponseTransfer())
