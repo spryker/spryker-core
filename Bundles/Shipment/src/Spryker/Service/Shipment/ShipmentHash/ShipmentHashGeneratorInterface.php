@@ -17,12 +17,4 @@ interface ShipmentHashGeneratorInterface
      * @return string
      */
     public function getShipmentHashKey(ShipmentTransfer $shipmentTransfer): string;
-
-    /**
-     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
-     * @param string $shipmentHashKey
-     *
-     * @return bool
-     */
-    public function isShipmentEqualToShipmentHash(ShipmentTransfer $shipmentTransfer, string $shipmentHashKey): bool;
 }

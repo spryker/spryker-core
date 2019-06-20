@@ -7,10 +7,7 @@
 
 namespace Spryker\Zed\Shipment\Business\Model;
 
-use ArrayObject;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\ShipmentGroupCollectionTransfer;
-use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Generated\Shared\Transfer\ShipmentMethodsTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Orm\Zed\Shipment\Persistence\Map\SpyShipmentMethodTableMap;
@@ -113,8 +110,6 @@ class Method implements MethodInterface
     }
 
     /**
-     * @deprecated Use getAvailableMethodsByShipment() instead.
-     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer
@@ -125,23 +120,6 @@ class Method implements MethodInterface
         $shipmentMethodsTransfer = $this->applyFilters($shipmentMethodsTransfer, $quoteTransfer);
 
         return $shipmentMethodsTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShipmentGroupCollectionTransfer
-     */
-    public function getAvailableMethodsByShipment(QuoteTransfer $quoteTransfer): ShipmentGroupCollectionTransfer
-    {
-        $shipmentGroupTransfer = (new ShipmentGroupTransfer())
-            ->setAvailableShipmentMethods($this->getAvailableMethods($quoteTransfer));
-
-        $shipmentGroupCollection = (new ArrayObject());
-        $shipmentGroupCollection->offsetSet($shipmentGroupTransfer->getHash(), $shipmentGroupTransfer);
-
-        return (new ShipmentGroupCollectionTransfer())
-            ->setShipmentGroups($shipmentGroupCollection);
     }
 
     /**

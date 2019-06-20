@@ -29,21 +29,21 @@ class ShipmentGrouper implements ShipmentGrouperInterface
     /**
      * @var \Spryker\Zed\Shipment\Business\ShipmentMethod\MethodReaderInterface
      */
-    protected $methodReader;
+    protected $shipmentMethodReader;
 
     /**
      * @param \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCustomerFacadeInterface $customerFacade
      * @param \Spryker\Zed\Shipment\Business\Mapper\ShipmentMapperInterface $shipmentMapper
-     * @param \Spryker\Zed\Shipment\Business\ShipmentMethod\MethodReaderInterface $methodReader
+     * @param \Spryker\Zed\Shipment\Business\ShipmentMethod\MethodReaderInterface $shipmentMethodReader
      */
     public function __construct(
         ShipmentToCustomerFacadeInterface $customerFacade,
         ShipmentMapperInterface $shipmentMapper,
-        MethodReaderInterface $methodReader
+        MethodReaderInterface $shipmentMethodReader
     ) {
         $this->customerFacade = $customerFacade;
         $this->shipmentMapper = $shipmentMapper;
-        $this->methodReader = $methodReader;
+        $this->shipmentMethodReader = $shipmentMethodReader;
     }
 
     /**
@@ -83,7 +83,7 @@ class ShipmentGrouper implements ShipmentGrouperInterface
             return $shipmentGroupTransfer;
         }
 
-        $shipmentMethodTransfer = $this->methodReader->findShipmentMethodById($shipmentFormTransfer->getIdShipmentMethod());
+        $shipmentMethodTransfer = $this->shipmentMethodReader->findShipmentMethodById($shipmentFormTransfer->getIdShipmentMethod());
         $shipmentTransfer->setMethod($shipmentMethodTransfer);
 
         return $shipmentGroupTransfer;

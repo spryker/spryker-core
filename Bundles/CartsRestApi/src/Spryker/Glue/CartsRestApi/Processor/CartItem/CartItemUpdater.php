@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\CartsRestApi\Processor\CartItem;
 
+use Generated\Shared\Transfer\CartItemRequestTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\RestCartItemsAttributesTransfer;
 use Spryker\Client\CartsRestApi\CartsRestApiClientInterface;
@@ -75,17 +76,9 @@ class CartItemUpdater implements CartItemUpdaterInterface
         RestRequestInterface $restRequest,
         RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
     ): RestResponseInterface {
-        $uuidQuote = $this->findCartIdentifier($restRequest);
-        $itemIdentifier = $restRequest->getResource()->getId();
-        $customerTransfer = (new CustomerTransfer())->setIdCustomer($restRequest->getRestUser()->getSurrogateIdentifier());
-        $customerTransfer = $this->executeCustomerExpanderPlugins($customerTransfer, $restRequest);
-        $restCartItemsAttributesTransfer
-            ->setQuoteUuid($uuidQuote)
-            ->setSku($itemIdentifier)
-            ->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier())
-            ->setCustomer($customerTransfer);
+        $cartItemRequestTransfer = $this->createCartItemRequestTransfer($restRequest, $restCartItemsAttributesTransfer);
 
-        $quoteResponseTransfer = $this->cartsRestApiClient->updateItem($restCartItemsAttributesTransfer);
+        $quoteResponseTransfer = $this->cartsRestApiClient->updateItemQuantity($cartItemRequestTransfer);
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $this->cartRestResponseBuilder->createFailedErrorResponse($quoteResponseTransfer->getErrors());
@@ -127,5 +120,29 @@ class CartItemUpdater implements CartItemUpdaterInterface
         }
 
         return $customerTransfer;
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartItemRequestTransfer
+     */
+    protected function createCartItemRequestTransfer(
+        RestRequestInterface $restRequest,
+        RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
+    ): CartItemRequestTransfer {
+        $uuidQuote = $this->findCartIdentifier($restRequest);
+        $itemIdentifier = $restRequest->getResource()->getId();
+        $customerTransfer = (new CustomerTransfer())
+            ->setIdCustomer($restRequest->getRestUser()->getSurrogateIdentifier())
+            ->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier());
+        $customerTransfer = $this->executeCustomerExpanderPlugins($customerTransfer, $restRequest);
+
+        return (new CartItemRequestTransfer())
+            ->setQuantity($restCartItemsAttributesTransfer->getQuantity())
+            ->setQuoteUuid($uuidQuote)
+            ->setSku($itemIdentifier)
+            ->setCustomer($customerTransfer);
     }
 }

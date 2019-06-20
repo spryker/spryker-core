@@ -43,21 +43,4 @@ class ShipmentService extends AbstractService implements ShipmentServiceInterfac
     {
         return $this->getFactory()->createShipmentHashGenerator()->getShipmentHashKey($shipmentTransfer);
     }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
-     * @param string $shipmentHashKey
-     *
-     * @return bool
-     */
-    public function isShipmentEqualToShipmentHash(ShipmentTransfer $shipmentTransfer, string $shipmentHashKey): bool
-    {
-        return $this->getFactory()
-            ->createShipmentHashGenerator()
-            ->isShipmentEqualToShipmentHash($shipmentTransfer, $shipmentHashKey);
-    }
 }

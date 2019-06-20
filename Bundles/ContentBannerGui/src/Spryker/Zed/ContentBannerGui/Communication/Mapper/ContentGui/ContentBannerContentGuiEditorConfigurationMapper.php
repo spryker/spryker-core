@@ -12,21 +12,17 @@ use Spryker\Zed\ContentBannerGui\ContentBannerGuiConfig;
 
 class ContentBannerContentGuiEditorConfigurationMapper implements ContentBannerContentGuiEditorConfigurationMapperInterface
 {
-    protected const PARAMETER_TWIG_FUNCTION_TEMPLATE_ID = '%ID%';
-    protected const PARAMETER_TWIG_FUNCTION_TEMPLATE = '%TEMPLATE%';
-    protected const PARAMETER_TWIG_FUNCTION_TEMPLATE_FORMAT = "{{ %s(%s, '%s') }}";
-
     /**
      * @var \Spryker\Zed\ContentBannerGui\ContentBannerGuiConfig
      */
-    protected $config;
+    protected $contentBannerGuiConfig;
 
     /**
      * @param \Spryker\Zed\ContentBannerGui\ContentBannerGuiConfig $config
      */
     public function __construct(ContentBannerGuiConfig $config)
     {
-        $this->config = $config;
+        $this->contentBannerGuiConfig = $config;
     }
 
     /**
@@ -36,7 +32,7 @@ class ContentBannerContentGuiEditorConfigurationMapper implements ContentBannerC
     {
         $templates = [];
 
-        foreach ($this->config->getContentWidgetTemplates() as $templateIdentifier => $templateName) {
+        foreach ($this->contentBannerGuiConfig->getContentWidgetTemplates() as $templateIdentifier => $templateName) {
             $templates[] = (new ContentWidgetTemplateTransfer())
                 ->setIdentifier($templateIdentifier)
                 ->setName($templateName);
@@ -50,11 +46,6 @@ class ContentBannerContentGuiEditorConfigurationMapper implements ContentBannerC
      */
     public function getTwigFunctionTemplate(): string
     {
-        return sprintf(
-            static::PARAMETER_TWIG_FUNCTION_TEMPLATE_FORMAT,
-            $this->config->getTwigFunctionName(),
-            static::PARAMETER_TWIG_FUNCTION_TEMPLATE_ID,
-            static::PARAMETER_TWIG_FUNCTION_TEMPLATE
-        );
+        return "{{ " . $this->contentBannerGuiConfig->getTwigFunctionName() . "('%KEY%', '%TEMPLATE%') }}";
     }
 }
