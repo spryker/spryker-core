@@ -45,7 +45,7 @@ class ProductAbstractImageEventResourceQueryContainerPlugin extends AbstractPlug
      */
     public function queryData(array $ids = []): ?ModelCriteria
     {
-        $query = $this->getQueryContainer()->queryProductAbstractIdsByProductImageSetToProductImageIds($ids);
+        $query = $this->getQueryContainer()->queryProductImageSetToProductImageByIds($ids);
 
         if ($ids === []) {
             $query->clear();
