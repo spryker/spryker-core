@@ -52,6 +52,7 @@ class ProductImageCartPluginTest extends Unit
         $changeTransfer = new CartChangeTransfer();
         $itemTransfer = new ItemTransfer();
         $itemTransfer->setProductConcrete($productTransfer);
+        $itemTransfer->setId($productTransfer->getIdProductConcrete());
         $changeTransfer->addItem($itemTransfer);
 
         $this->productImageCartConnectorFacade->expandItems($changeTransfer);

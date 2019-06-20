@@ -37,6 +37,12 @@ class AbstractKvProviderTest extends Unit
      */
     protected function getAbstractKvProviderMock()
     {
-        return $this->getMockBuilder(AbstractKvProvider::class)->getMockForAbstractClass();
+        $abstractKvProviderMock = $this->getMockBuilder(AbstractKvProvider::class)
+            ->setMethods(['getConnectionParameters'])
+            ->getMockForAbstractClass();
+        $abstractKvProviderMock->method('getConnectionParameters')
+            ->willReturn([]);
+
+        return $abstractKvProviderMock;
     }
 }

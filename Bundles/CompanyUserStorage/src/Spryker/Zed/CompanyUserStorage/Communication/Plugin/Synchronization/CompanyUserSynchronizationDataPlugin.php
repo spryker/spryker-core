@@ -14,7 +14,7 @@ use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataRe
 
 /**
  * @method \Spryker\Zed\CompanyUserStorage\CompanyUserStorageConfig getConfig()
- * @method \Spryker\Zed\CompanyUserStorage\Persistence\CompanyUserStorageRepository getRepository()
+ * @method \Spryker\Zed\CompanyUserStorage\Persistence\CompanyUserStorageRepositoryInterface getRepository()
  * @method \Spryker\Zed\CompanyUserStorage\Business\CompanyUserStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\CompanyUserStorage\Communication\CompanyUserStorageCommunicationFactory getFactory()
  */

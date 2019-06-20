@@ -12,8 +12,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataRepositoryPluginInterface;
 
 /**
- * @method \Spryker\Zed\TaxStorage\Persistence\TaxStorageRepository getRepository()
- * @method \Spryker\Zed\TaxStorage\Business\TaxStorageFacade getFacade()
+ * @method \Spryker\Zed\TaxStorage\Persistence\TaxStorageRepositoryInterface getRepository()
+ * @method \Spryker\Zed\TaxStorage\Business\TaxStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\TaxStorage\Communication\TaxStorageCommunicationFactory getFactory()
  * @method \Spryker\Shared\TaxStorage\TaxStorageConfig getConfig()
  */

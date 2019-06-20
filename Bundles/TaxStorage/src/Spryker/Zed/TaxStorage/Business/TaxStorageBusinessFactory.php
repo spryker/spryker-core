@@ -14,8 +14,8 @@ use Spryker\Zed\TaxStorage\Business\TaxStorageUnpublisher\TaxStorageUnpublisher;
 use Spryker\Zed\TaxStorage\Business\TaxStorageUnpublisher\TaxStorageUnpublisherInterface;
 
 /**
- * @method \Spryker\Zed\TaxStorage\Persistence\TaxStorageRepository getRepository()
- * @method \Spryker\Zed\TaxStorage\Persistence\TaxStorageEntityManager getEntityManager()
+ * @method \Spryker\Zed\TaxStorage\Persistence\TaxStorageRepositoryInterface getRepository()
+ * @method \Spryker\Zed\TaxStorage\Persistence\TaxStorageEntityManagerInterface getEntityManager()
  * @method \Spryker\Zed\TaxStorage\TaxStorageConfig getConfig()
  */
 class TaxStorageBusinessFactory extends AbstractBusinessFactory

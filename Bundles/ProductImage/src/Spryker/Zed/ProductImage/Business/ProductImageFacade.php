@@ -90,6 +90,22 @@ class ProductImageFacade extends AbstractFacade implements ProductImageFacadeInt
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idProduct
+     *
+     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
+     */
+    public function getProductImagesSetCollectionByProductIdForCurrentLocale(int $idProduct): array
+    {
+        return $this->getFactory()
+            ->createProductImageReader()
+            ->getProductImagesSetCollectionByProductIdForCurrentLocale($idProduct);
+    }
+
+    /**
      * Specification:
      * - Persists all provided image sets to database for the given abstract product.
      * - Returns ProductAbstractTransfer along with the data from the persisted ProductImageSetTransfers.

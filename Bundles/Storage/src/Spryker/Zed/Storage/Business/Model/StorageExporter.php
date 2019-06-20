@@ -9,6 +9,9 @@ namespace Spryker\Zed\Storage\Business\Model;
 
 use Symfony\Component\Process\Process;
 
+/**
+ * @deprecated Use `Spryker\Zed\Redis\Business\Export\RedisExporter` instead.
+ */
 class StorageExporter implements StorageExporterInterface
 {
     /**

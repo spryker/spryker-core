@@ -82,6 +82,29 @@ class CompanyUserRestResponseBuilder implements CompanyUserRestResponseBuilderIn
     }
 
     /**
+     * @param string $companyUserUuid
+     * @param \Generated\Shared\Transfer\RestCompanyUserAttributesTransfer $restCompanyUserAttributesTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     */
+    public function createCompanyUsersRestResource(
+        string $companyUserUuid,
+        RestCompanyUserAttributesTransfer $restCompanyUserAttributesTransfer,
+        CompanyUserTransfer $companyUserTransfer
+    ): RestResourceInterface {
+        $companyUserRestResource = $this->restResourceBuilder->createRestResource(
+            CompanyUsersRestApiConfig::RESOURCE_COMPANY_USERS,
+            $companyUserUuid,
+            $restCompanyUserAttributesTransfer
+        );
+
+        $companyUserRestResource->setPayload($companyUserTransfer);
+
+        return $companyUserRestResource;
+    }
+
+    /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function createCompanyUserNotSelectedErrorResponse(): RestResponseInterface

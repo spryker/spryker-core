@@ -33,4 +33,14 @@ interface ProductQuantityServiceInterface
      * @return float
      */
     public function getDefaultMinimumQuantity(): float;
+
+    /**
+     * Specification:
+     * - Reads default quantity interval value from config.
+     *
+     * @api
+     *
+     * @return float
+     */
+    public function getDefaultInterval(): float;
 }

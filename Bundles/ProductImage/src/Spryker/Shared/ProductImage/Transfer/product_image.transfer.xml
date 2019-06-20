@@ -14,6 +14,7 @@
 
     <transfer name="ProductImage">
         <property name="idProductImage" type="int" />
+        <property name="idProductImageSetToProductImage" type="int" />
         <property name="sortOrder" type="int" />
         <property name="externalUrlSmall" type="string" />
         <property name="externalUrlLarge" type="string" />
