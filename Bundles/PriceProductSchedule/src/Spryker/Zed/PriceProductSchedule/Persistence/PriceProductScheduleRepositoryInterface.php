@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\PriceProductSchedule\Persistence;
 
+use Generated\Shared\Transfer\PriceProductScheduleCriteriaFilterTransfer;
+use Generated\Shared\Transfer\PriceProductScheduleListTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 
@@ -29,9 +31,25 @@ interface PriceProductScheduleRepositoryInterface
     /**
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @throws \Spryker\Zed\PriceProductSchedule\Persistence\Exception\NotSupportedDbEngineException
-     *
      * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
      */
     public function findPriceProductSchedulesToEnableByStore(StoreTransfer $storeTransfer): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductScheduleCriteriaFilterTransfer $priceProductScheduleCriteriaFilterTransfer
+     *
+     * @return int
+     */
+    public function findCountPriceProductScheduleByCriteriaFilter(
+        PriceProductScheduleCriteriaFilterTransfer $priceProductScheduleCriteriaFilterTransfer
+    ): int;
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductScheduleListTransfer $priceProductScheduleListTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleListTransfer|null
+     */
+    public function findPriceProductScheduleListById(
+        PriceProductScheduleListTransfer $priceProductScheduleListTransfer
+    ): ?PriceProductScheduleListTransfer;
 }

@@ -13,4 +13,9 @@ interface ConfigReaderInterface
      * @return float
      */
     public function getDefaultMinimumQuantity(): float;
+
+    /**
+     * @return float
+     */
+    public function getDefaultInterval(): float;
 }
