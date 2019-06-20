@@ -38,12 +38,10 @@ use Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentGrouper;
 use Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentGrouperInterface;
 use Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentMethodExpander;
 use Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentMethodExpanderInterface;
-use Spryker\Zed\Shipment\Business\ShipmentMethod\Method as ShipmentMethod;
 use Spryker\Zed\Shipment\Business\ShipmentMethod\MethodAvailabilityChecker;
 use Spryker\Zed\Shipment\Business\ShipmentMethod\MethodAvailabilityCheckerInterface;
 use Spryker\Zed\Shipment\Business\ShipmentMethod\MethodDeliveryTimeReader;
 use Spryker\Zed\Shipment\Business\ShipmentMethod\MethodDeliveryTimeReaderInterface;
-use Spryker\Zed\Shipment\Business\ShipmentMethod\MethodInterface;
 use Spryker\Zed\Shipment\Business\ShipmentMethod\MethodPriceReader;
 use Spryker\Zed\Shipment\Business\ShipmentMethod\MethodPriceReaderInterface;
 use Spryker\Zed\Shipment\Business\ShipmentMethod\MethodReader;
@@ -102,14 +100,6 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Shipment\Business\ShipmentMethod\MethodInterface
-     */
-    public function createShipmentMethod(): MethodInterface
-    {
-        return new ShipmentMethod($this->createMethodWriter(), $this->createMethodReader());
-    }
-
-    /**
      * @return \Spryker\Zed\Shipment\Business\ShipmentMethod\MethodWriterInterface
      */
     public function createMethodWriter(): MethodWriterInterface
@@ -117,7 +107,8 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
         return new MethodWriter(
             $this->getRepository(),
             $this->getEntityManager(),
-            $this->createMethodPrice()
+            $this->createMethodPrice(),
+            $this->createMethodReader()
         );
     }
 
@@ -428,7 +419,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
      */
     public function createShipmentGrouper(): ShipmentGrouperInterface
     {
-        return new ShipmentGrouper($this->createShipmentMapper(), $this->createShipmentMethod());
+        return new ShipmentGrouper($this->createShipmentMapper(), $this->createMethodReader());
     }
 
     /**

@@ -143,6 +143,8 @@ interface ShipmentFacadeInterface
      *
      * @api
      *
+     * @deprecated Use findMethodById() instead.
+     *
      * @param int $idMethod
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer

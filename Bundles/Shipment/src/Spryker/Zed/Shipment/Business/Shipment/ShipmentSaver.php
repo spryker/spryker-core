@@ -115,10 +115,7 @@ class ShipmentSaver implements ShipmentSaverInterface
                 continue;
             }
 
-            $isShipmentEqualToShipmentHash = $this->shipmentService
-                ->isShipmentEqualToShipmentHash($expenseShipmentTransfer, $shipmentMethodHashKey);
-
-            if (!$isShipmentEqualToShipmentHash) {
+            if (!$this->isShipmentEqualToShipmentHash($expenseShipmentTransfer, $shipmentMethodHashKey)) {
                 continue;
             }
 
@@ -191,5 +188,18 @@ class ShipmentSaver implements ShipmentSaverInterface
         $shipmentTransfer->setMethod($this->shipmentMethodExpander->expand($shipmentMethodTransfer, $orderTransfer));
 
         return $shipmentGroupTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
+     * @param string $shipmentMethodHashKey
+     *
+     * @return bool
+     */
+    protected function isShipmentEqualToShipmentHash(
+        ShipmentTransfer $shipmentTransfer,
+        string $shipmentMethodHashKey
+    ): bool {
+        return $this->shipmentService->getShipmentHashKey($shipmentTransfer) === $shipmentMethodHashKey;
     }
 }
