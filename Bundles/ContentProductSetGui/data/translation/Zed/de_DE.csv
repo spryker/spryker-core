@@ -11,3 +11,5 @@
 "Product Set","Produkt Set"
 "content_product_set_gui.template.default","Standard"
 "content_product_set_gui.template.cart-button-btm","Cart Button Unten"
+"content_product_set_gui.template.cart-button-top","In den Warenkorb Button oben"
+"content_product_set_gui.template.cart-button-btm","In den Warenkorb Button unten"
