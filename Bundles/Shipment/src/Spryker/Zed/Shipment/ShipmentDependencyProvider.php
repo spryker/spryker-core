@@ -22,6 +22,9 @@ use Spryker\Zed\Shipment\Exception\MissingMoneyCollectionFormTypePluginException
  */
 class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @deprecated Will be removed in the next major version.
+     */
     public const PLUGINS = 'PLUGINS';
     public const AVAILABILITY_PLUGINS = 'AVAILABILITY_PLUGINS';
     public const PRICE_PLUGINS = 'PRICE_PLUGINS';
