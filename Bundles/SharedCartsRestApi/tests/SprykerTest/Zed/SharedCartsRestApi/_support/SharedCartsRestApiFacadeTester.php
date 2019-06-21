@@ -144,14 +144,14 @@ class SharedCartsRestApiFacadeTester extends Actor
 
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $ownerCustomerTransfer
-     * @param \Generated\Shared\Transfer\CustomerTransfer $otherCustomerTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      * @param \Generated\Shared\Transfer\SpyQuotePermissionGroupEntityTransfer $quotePermissionGroupEntityTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function haveSharedQuote(
         CustomerTransfer $ownerCustomerTransfer,
-        CustomerTransfer $otherCustomerTransfer,
+        CompanyUserTransfer $companyUserTransfer,
         SpyQuotePermissionGroupEntityTransfer $quotePermissionGroupEntityTransfer
     ): QuoteTransfer {
         $quoteTransfer = $this->havePersistentQuote([
@@ -159,7 +159,7 @@ class SharedCartsRestApiFacadeTester extends Actor
         ]);
 
         $this->haveQuoteCompanyUser(
-            $otherCustomerTransfer->getCompanyUserTransfer(),
+            $companyUserTransfer,
             $quoteTransfer,
             $quotePermissionGroupEntityTransfer
         );
