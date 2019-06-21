@@ -87,12 +87,12 @@ class QuotePermissionGroupQuoteExpanderPluginTest extends Test
         $companyTransfer = $this->tester->haveCompany();
 
         $this->ownerCustomerTransfer = $this->tester->haveCustomerWithCompanyUser($companyTransfer);
-
+        $this->ownerCustomerTransfer->setCompanyUserTransfer(null);
         $this->otherCustomerTransfer = $this->tester->haveCustomerWithCompanyUser($companyTransfer);
 
         $this->quoteTransfer = $this->tester->haveSharedQuote(
             $this->ownerCustomerTransfer,
-            $this->otherCustomerTransfer,
+            $this->otherCustomerTransfer->getCompanyUserTransfer(),
             $this->quotePermissionGroupEntityTransfer
         );
     }
