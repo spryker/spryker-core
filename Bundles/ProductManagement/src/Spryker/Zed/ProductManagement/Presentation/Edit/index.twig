@@ -31,7 +31,9 @@
             'variantTable': variantTable,
             'idProduct': null,
             'idProductAbstract': idProductAbstract,
-            'priceDimension': priceDimension
+            'priceDimension': priceDimension,
+            'priceTypeTabs': priceTypeTabs | default(null),
+            'tablesByPriceType': tablesByPriceType | default([]),
         }) }}
 
     {{ form_end(form) }}

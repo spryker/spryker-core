@@ -13,19 +13,25 @@ use Spryker\Client\Storage\Cache\StorageCacheStrategyFactory;
 use Spryker\Client\Storage\Dependency\Client\StorageToLocaleClientInterface;
 use Spryker\Client\Storage\Dependency\Client\StorageToStoreClientInterface;
 use Spryker\Client\Storage\Redis\Service;
+use Spryker\Client\StorageExtension\Dependency\Plugin\StoragePluginInterface;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Storage\StorageConstants;
 
 class StorageFactory extends AbstractFactory
 {
+    /**
+     * @deprecated Will be removed with next major release. StorageRedis module handles default database value.
+     */
     public const DEFAULT_REDIS_DATABASE = 0;
 
     /**
-     * @var \Spryker\Client\Storage\Redis\ServiceInterface
+     * @var \Spryker\Client\Storage\Redis\ServiceInterface|\Spryker\Client\StorageExtension\Dependency\Plugin\StoragePluginInterface
      */
     protected static $storageService;
 
     /**
+     * @deprecated Use `Spryker\Client\StorageExtension\Dependency\Plugin\StoragePluginInterface` instead.
+     *
      * @return \Spryker\Client\Storage\Redis\ServiceInterface
      */
     public function createService()
@@ -36,23 +42,28 @@ class StorageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Storage\Redis\ServiceInterface
+     * @return \Spryker\Client\Storage\Redis\ServiceInterface|\Spryker\Client\StorageExtension\Dependency\Plugin\StoragePluginInterface
      */
     public function createCachedService()
     {
         if (static::$storageService === null) {
-            static::$storageService = $this->createService();
+            /**
+             * This check was added for BC only and will be removed with the next major release.
+             */
+            static::$storageService = $this->getStoragePlugin() ?? $this->createService();
         }
 
         return static::$storageService;
     }
 
     /**
+     * @deprecated Will be removed with next major release. Use storage plugins instead.
+     *
      * @return \Predis\ClientInterface
      */
     protected function createClient()
     {
-        return new Client($this->getConfig(), $this->getPredisClientOptions());
+        return new Client($this->getPredisConfig(), $this->getPredisClientOptions());
     }
 
     /**
@@ -60,7 +71,7 @@ class StorageFactory extends AbstractFactory
      *
      * @return array
      */
-    protected function getConfig()
+    protected function getPredisConfig()
     {
         return $this->getConnectionParameters();
     }
@@ -101,6 +112,14 @@ class StorageFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Client\StorageExtension\Dependency\Plugin\StoragePluginInterface|null
+     */
+    protected function getStoragePlugin(): ?StoragePluginInterface
+    {
+        return $this->getProvidedDependency(StorageDependencyProvider::PLUGIN_STORAGE);
+    }
+
+    /**
      * @return \Spryker\Client\Storage\Cache\StorageCacheStrategyFactory
      */
     protected function createStorageClientStrategyFactory()
@@ -114,7 +133,7 @@ class StorageFactory extends AbstractFactory
     /**
      * @param string $storageCacheStrategy
      *
-     * @return Cache\StorageCacheStrategyInterface
+     * @return \Spryker\Client\Storage\Cache\StorageCacheStrategyInterface
      */
     public function createStorageCacheStrategy($storageCacheStrategy)
     {
@@ -124,6 +143,8 @@ class StorageFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Will be removed with next major release. Use storage plugins instead.
+     *
      * @return array
      */
     protected function getConnectionParameters()
@@ -153,6 +174,8 @@ class StorageFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Will be removed with next major release. Use storage plugins instead.
+     *
      * @return mixed|null
      */
     protected function getPredisClientOptions()

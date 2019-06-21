@@ -23,12 +23,12 @@ interface MethodWriterInterface
      *
      * @return bool
      */
-    public function delete(int $idShipmentMethod): bool;
+    public function deleteMethod(int $idShipmentMethod): bool;
 
     /**
      * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
      *
      * @return bool
      */
-    public function update(ShipmentMethodTransfer $shipmentMethodTransfer): bool;
+    public function updateMethod(ShipmentMethodTransfer $shipmentMethodTransfer): bool;
 }

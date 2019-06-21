@@ -67,6 +67,18 @@ interface ProductImageFacadeInterface
 
     /**
      * Specification:
+     * - Returns all product image sets from database for the given concrete product id and current locale.
+     *
+     * @api
+     *
+     * @param int $idProduct
+     *
+     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
+     */
+    public function getProductImagesSetCollectionByProductIdForCurrentLocale(int $idProduct): array;
+
+    /**
+     * Specification:
      * - Persists all provided image sets to database for the given abstract product.
      * - Returns ProductAbstractTransfer along with the data from the persisted ProductImageSetTransfers.
      *

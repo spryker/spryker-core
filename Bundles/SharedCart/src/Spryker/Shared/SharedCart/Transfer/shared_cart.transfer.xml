@@ -40,6 +40,7 @@
     <transfer name="ShareDetail">
         <property name="idQuoteCompanyUser" type="int"/>
         <property name="idCompanyUser" type="int"/>
+        <property name="companyUser" type="CompanyUser"/>
         <property name="customerName" type="string"/>
         <property name="quotePermissionGroup" type="QuotePermissionGroup"/>
     </transfer>
@@ -51,6 +52,7 @@
 
     <transfer name="Quote">
         <property name="shareDetails" type="ShareDetail[]" singular="shareDetail"/>
+        <property name="quotePermissionGroup" type="QuotePermissionGroup"/>
     </transfer>
 
     <transfer name="QuoteUpdateRequestAttributes">
@@ -75,6 +77,21 @@
 
     <transfer name="CompanyUser">
         <property name="idCompanyUser" type="int"/>
+    </transfer>
+
+    <transfer name="ShareDetailCriteriaFilter">
+        <property name="idQuote" type="int"/>
+        <property name="idCompanyUser" type="int"/>
+        <property name="idQuoteCompanyUser" type="int"/>
+    </transfer>
+
+    <transfer name="QuoteCompanyUser">
+        <property name="idQuoteCompanyUser" type="int"/>
+        <property name="fkCompanyUser" type="int"/>
+        <property name="fkQuotePermissionGroup" type="int"/>
+        <property name="fkQuote" type="int"/>
+        <property name="quote" type="Quote"/>
+        <property name="uuid" type="string"/>
     </transfer>
 
 </transfers>

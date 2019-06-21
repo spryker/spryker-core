@@ -10,9 +10,12 @@ namespace Spryker\Zed\ProductSetGui\Communication\Form\Images;
 use Spryker\Zed\Gui\Communication\Form\Type\ImageType;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
 use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\LessThanOrEqual;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
@@ -31,6 +34,15 @@ class ProductImageFormType extends AbstractType
     public const FIELD_FK_IMAGE_SET_ID = 'fk_image_set_id';
 
     public const OPTION_IMAGE_PREVIEW_LARGE_URL = 'option_image_preview_large_url';
+
+    protected const MAX_SORT_ORDER_VALUE = 2147483647; // 32 bit integer
+    protected const MIN_SORT_ORDER_VALUE = 0;
+    protected const DEFAULT_SORT_ORDER_VALUE = 0;
+
+    /**
+     * @uses \Spryker\Zed\Gui\Communication\Form\Type\ImageType::OPTION_IMAGE_WIDTH
+     */
+    protected const OPTION_IMAGE_WIDTH = 'image_width';
 
     /**
      * @return string
@@ -60,12 +72,12 @@ class ProductImageFormType extends AbstractType
     {
         $this
             ->addProductImageIdHiddenField($builder)
-            ->addProductImageLargeUrlHiddenField($builder)
+            ->addProductImageLargeUrlField($builder)
             ->addImageSetIdHiddenField($builder)
             ->addImagePreviewField($builder)
             ->addImageSmallField($builder)
             ->addImageBigField($builder)
-            ->addOrderHiddenField($builder);
+            ->addSortOrderField($builder);
     }
 
     /**
@@ -85,9 +97,12 @@ class ProductImageFormType extends AbstractType
      *
      * @return $this
      */
-    protected function addProductImageLargeUrlHiddenField(FormBuilderInterface $builder)
+    protected function addProductImageLargeUrlField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_IMAGE_PREVIEW_LARGE_URL, HiddenType::class);
+        $builder->add(static::FIELD_IMAGE_PREVIEW_LARGE_URL, ImageType::class, [
+            'label' => false,
+            static::OPTION_IMAGE_WIDTH => 150,
+        ]);
 
         return $this;
     }
@@ -113,7 +128,7 @@ class ProductImageFormType extends AbstractType
     {
         $builder->add(static::FIELD_IMAGE_PREVIEW, ImageType::class, [
             'label' => false,
-            ImageType::OPTION_IMAGE_WIDTH => 150,
+            static::OPTION_IMAGE_WIDTH => 150,
         ]);
 
         return $this;
@@ -168,9 +183,22 @@ class ProductImageFormType extends AbstractType
      *
      * @return $this
      */
-    protected function addOrderHiddenField(FormBuilderInterface $builder)
+    protected function addSortOrderField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_SORT_ORDER, HiddenType::class);
+        $builder->add(static::FIELD_SORT_ORDER, NumberType::class, [
+            'constraints' => [
+                new NotBlank(),
+                new LessThanOrEqual([
+                    'value' => static::MAX_SORT_ORDER_VALUE,
+                ]),
+                new GreaterThanOrEqual([
+                    'value' => static::MIN_SORT_ORDER_VALUE,
+                ]),
+            ],
+            'attr' => [
+                'data-sort-order' => static::DEFAULT_SORT_ORDER_VALUE,
+            ],
+        ]);
 
         return $this;
     }

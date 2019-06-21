@@ -36,21 +36,39 @@ class ShipmentHashGenerator implements ShipmentHashGeneratorInterface
     {
         return md5(sprintf(
             static::SHIPMENT_TRANSFER_KEY_PATTERN,
-            $shipmentTransfer->getMethod() !== null ? $shipmentTransfer->getMethod()->getIdShipmentMethod() : '',
-            $shipmentTransfer->getShippingAddress() !== null ?
-                $this->customerService->getUniqueAddressKey($shipmentTransfer->getShippingAddress()) : '',
+            $this->prepareIdShipmentMethod($shipmentTransfer),
+            $this->prepareShippingAddressKey($shipmentTransfer),
             $shipmentTransfer->getRequestedDeliveryDate()
         ));
     }
 
     /**
      * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
-     * @param string $shipmentHashKey
      *
-     * @return bool
+     * @return string
      */
-    public function isShipmentEqualToShipmentHash(ShipmentTransfer $shipmentTransfer, string $shipmentHashKey): bool
+    protected function prepareShippingAddressKey(ShipmentTransfer $shipmentTransfer): string
     {
-        return $this->getShipmentHashKey($shipmentTransfer) === $shipmentHashKey;
+        $shipmentAddressTransfer = $shipmentTransfer->getShippingAddress();
+        if ($shipmentAddressTransfer === null) {
+            return '';
+        }
+
+        return $this->customerService->getUniqueAddressKey($shipmentTransfer->getShippingAddress());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
+     *
+     * @return string
+     */
+    protected function prepareIdShipmentMethod(ShipmentTransfer $shipmentTransfer): string
+    {
+        $shipmentMethodTransfer = $shipmentTransfer->getMethod();
+        if ($shipmentMethodTransfer === null) {
+            return '';
+        }
+
+        return (string)$shipmentMethodTransfer->getIdShipmentMethod();
     }
 }

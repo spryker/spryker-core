@@ -102,16 +102,15 @@ class OrderHydrator extends OrderHydratorWithoutMultiShipping
     }
 
     /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    public function hydrateOrderItemsToOrderTransfer(SpySalesOrder $orderEntity, OrderTransfer $orderTransfer)
+    public function getCustomerOrder(OrderTransfer $orderTransfer)
     {
-        parent::hydrateOrderItemsToOrderTransfer($orderEntity, $orderTransfer);
+        $orderTransfer = parent::getCustomerOrder($orderTransfer);
 
-        $this->setUniqueOrderItems($orderTransfer);
+        return $this->groupUniqueOrderItems($orderTransfer);
     }
 
     /**
@@ -119,13 +118,13 @@ class OrderHydrator extends OrderHydratorWithoutMultiShipping
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    protected function setUniqueOrderItems(OrderTransfer $orderTransfer): OrderTransfer
+    protected function groupUniqueOrderItems(OrderTransfer $orderTransfer): OrderTransfer
     {
         $uniqueOrderItemCollection = $this->orderItemGrouper->getUniqueOrderItems($orderTransfer->getItems());
 
         $orderItemsWithNumericIndexes = new ArrayObject();
         foreach ($uniqueOrderItemCollection as $itemTransfer) {
-            $orderItemsWithNumericIndexes[] = $itemTransfer;
+            $orderItemsWithNumericIndexes->append($itemTransfer);
         }
 
         return $orderTransfer->setItems($orderItemsWithNumericIndexes);

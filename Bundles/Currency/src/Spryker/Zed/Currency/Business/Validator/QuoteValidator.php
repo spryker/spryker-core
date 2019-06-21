@@ -14,10 +14,10 @@ use Spryker\Zed\Currency\Dependency\Facade\CurrencyToStoreFacadeInterface;
 
 class QuoteValidator implements QuoteValidatorInterface
 {
-    protected const MESSAGE_CURRENCY_DATA_IS_MISSING = 'quote.validation.error.currency_mode_is_missing';
-    protected const MESSAGE_CURRENCY_DATA_IS_INCORRECT = 'quote.validation.error.currency_mode_is_incorrect';
+    protected const MESSAGE_CURRENCY_DATA_IS_MISSING = 'quote.validation.error.currency_is_missing';
+    protected const MESSAGE_CURRENCY_DATA_IS_INCORRECT = 'quote.validation.error.currency_is_incorrect';
     protected const GLOSSARY_KEY_ISO_CODE = '{{iso_code}}';
-    protected const ERROR_MESSAGE_STORE_NOT_FOUND = 'Store not found.';
+    protected const ERROR_MESSAGE_STORE_NOT_FOUND = 'quote.validation.error.store_not_found';
 
     /**
      * @var \Spryker\Zed\Currency\Dependency\Facade\CurrencyToStoreFacadeInterface
