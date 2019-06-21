@@ -40,7 +40,7 @@ class ShipmentCheckoutPreCheckTest extends Test
         $quoteTransfer = (new QuoteBuilder())
             ->withShipment(
                 (new ShipmentBuilder())
-                    ->withMethod([ShipmentMethodTransfer::IS_ACTIVE => true])
+                    ->withMethod([ShipmentMethodTransfer::IS_ACTIVE => true, ShipmentMethodTransfer::ID_SHIPMENT_METHOD => 1])
             )
             ->withItem()
             ->build();
