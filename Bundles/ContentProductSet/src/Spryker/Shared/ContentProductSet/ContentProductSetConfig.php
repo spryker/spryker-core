@@ -27,9 +27,14 @@ class ContentProductSetConfig extends AbstractSharedConfig
     public const TWIG_FUNCTION_NAME = 'content_product_set';
 
     /**
-     * Content item product set default template identifier
+     * @deprecated Use `\Spryker\Shared\ContentProductSet\ContentProductSetConfig::WIDGET_TEMPLATE_IDENTIFIER_CART_BUTTON_TOP` instead.
      */
     public const WIDGET_TEMPLATE_IDENTIFIER_DEFAULT = 'default';
+
+    /**
+     * Content item product set cart-button-top template identifier
+     */
+    public const WIDGET_TEMPLATE_IDENTIFIER_CART_BUTTON_TOP = 'cart-button-top';
 
     /**
      * Content item product set cart-button-btm template identifier

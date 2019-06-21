@@ -5,9 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\CompanyUnitAddress;
+namespace SprykerTest\Client\ContentFile;
 
 use Codeception\Actor;
+use Spryker\Client\ContentFile\ContentFileClientInterface;
 
 /**
  * Inherited Methods
@@ -24,7 +25,15 @@ use Codeception\Actor;
  *
  * @SuppressWarnings(PHPMD)
  */
-class CompanyUnitAddressCommunicationTester extends Actor
+class ContentFileClientTester extends Actor
 {
-    use _generated\CompanyUnitAddressCommunicationTesterActions;
+    use _generated\ContentFileClientTesterActions;
+
+    /**
+     * @return \Spryker\Client\ContentFile\ContentFileClientInterface
+     */
+    public function getClient(): ContentFileClientInterface
+    {
+        return $this->getLocator()->contentFile()->client();
+    }
 }
