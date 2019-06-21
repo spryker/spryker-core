@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\CartsRestApi\Processor\GuestCart;
 
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\CartsRestApi\CartsRestApiClientInterface;
 use Spryker\Glue\CartsRestApi\Processor\Cart\CartReaderInterface;
@@ -58,6 +59,7 @@ class GuestCartReader implements GuestCartReaderInterface
 
         $quoteTransfer = (new QuoteTransfer())
             ->setCustomerReference($customerReference)
+            ->setCustomer((new CustomerTransfer())->setCustomerReference($customerReference))
             ->setUuid($uuidCart);
 
         $quoteResponseTransfer = $this->cartsRestApiClient->findQuoteByUuid($quoteTransfer);
