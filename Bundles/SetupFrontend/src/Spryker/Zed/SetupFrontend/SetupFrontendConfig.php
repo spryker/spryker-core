@@ -100,7 +100,7 @@ class SetupFrontendConfig extends AbstractBundleConfig
     {
         return [
             $this->getZedInstallerDirectoryPattern(),
-            APPLICATION_ROOT_DIR . '/src/*/Zed/*/assets/Zed',
+            APPLICATION_ROOT_DIR . '/src/Pyz/Zed/*/assets/Zed',
         ];
     }
 
