@@ -1,0 +1,32 @@
+{% set deleteButtonTemplate %}
+    <a href="#" onclick="return false;" class="js-delete-item btn btn-xs btn-outline btn-danger">
+        <i class="fa fa-trash"></i>
+        {{ 'Delete' | trans }}
+        </a>
+    <a href="#" data-direction="up" onclick="return false;" class="js-reorder-item btn btn-xs btn-outline btn-create">
+        <i class="fa fa-arrow-up"></i>
+        {{ 'Move Up' | trans }}
+        </a>
+    <a href="#" data-direction="down" onclick="return false;" class="js-reorder-item btn btn-xs btn-outline btn-create">
+        <i class="fa fa-arrow-down"></i>
+        {{ 'Move Down' | trans }}
+    </a>
+{% endset %}
+<div
+    class="id-item-fields"
+    id="localized-contents-{{ form.parent.vars.name }}"
+    data-prototype="{{ form_widget(form.fileIds.vars.prototype) | e }}"
+    data-delete-button="{{ deleteButtonTemplate | e }}"
+>
+    <div class="js-selected-items-wrapper">
+        {% for idFile in form.fileIds %}
+            {{ form_widget(idFile) }}
+        {% endfor %}
+    </div>
+    <h2>{{ 'Selected Files' | trans }}</h2>
+    {{ form.vars.tables.fileListSelectedTable.render | raw }}
+    <h2>{{ 'Available Files' | trans }}</h2>
+    {{ form.vars.tables.fileListViewTable.render | raw }}
+</div>
+<link rel="stylesheet" href="/assets/css/spryker-zed-item-list-table.css" />
+<script src="/assets/js/spryker-zed-item-list-table.js"></script>

@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartConnectorToCurrencyFacadeInterface;
 use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceInterface;
 use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceProductInterface;
 use Spryker\Zed\PriceCartConnector\PriceCartConnectorConfig;
@@ -26,6 +27,8 @@ class PriceProductValidator implements PriceProductValidatorInterface
 
     protected const MESSAGE_GLOSSARY_KEY_PRICE = '%price%';
     protected const MESSAGE_GLOSSARY_KEY_CURRENCY_ISO_CODE = '%currencyIsoCode%';
+
+    protected const CENT_REPRESENTATION_DIVIDER = 100;
 
     /**
      * @var string
@@ -48,6 +51,11 @@ class PriceProductValidator implements PriceProductValidatorInterface
     protected $config;
 
     /**
+     * @var \Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartConnectorToCurrencyFacadeInterface
+     */
+    protected $currencyFacade;
+
+    /**
      * @var string|null
      */
     protected $defaultPriceTypeName;
@@ -61,15 +69,18 @@ class PriceProductValidator implements PriceProductValidatorInterface
      * @param \Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceProductInterface $priceProductFacade
      * @param \Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceInterface $priceFacade
      * @param \Spryker\Zed\PriceCartConnector\PriceCartConnectorConfig $config
+     * @param \Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartConnectorToCurrencyFacadeInterface $currencyFacade
      */
     public function __construct(
         PriceCartToPriceProductInterface $priceProductFacade,
         PriceCartToPriceInterface $priceFacade,
-        PriceCartConnectorConfig $config
+        PriceCartConnectorConfig $config,
+        PriceCartConnectorToCurrencyFacadeInterface $currencyFacade
     ) {
         $this->priceProductFacade = $priceProductFacade;
         $this->priceFacade = $priceFacade;
         $this->config = $config;
+        $this->currencyFacade = $currencyFacade;
     }
 
     /**
@@ -216,10 +227,12 @@ class PriceProductValidator implements PriceProductValidatorInterface
      */
     protected function createMessageMinPriceRestriction(string $currencyIsoCode): MessageTransfer
     {
+        $parameterMinPrice = $this->config->getMinPriceRestriction() / static::CENT_REPRESENTATION_DIVIDER;
+
         return (new MessageTransfer())
             ->setValue(static::CART_PRE_CHECK_MIN_PRICE_RESTRICTION_FAILED_KEY)
             ->setParameters([
-                static::MESSAGE_GLOSSARY_KEY_PRICE => $this->config->getMinPriceRestriction(),
+                static::MESSAGE_GLOSSARY_KEY_PRICE => $parameterMinPrice,
                 static::MESSAGE_GLOSSARY_KEY_CURRENCY_ISO_CODE => $currencyIsoCode,
             ]);
     }
@@ -233,7 +246,7 @@ class PriceProductValidator implements PriceProductValidatorInterface
     protected function createPriceProductFilter(ItemTransfer $itemTransfer, QuoteTransfer $quoteTransfer): PriceProductFilterTransfer
     {
         $priceMode = $this->getPriceMode($quoteTransfer);
-        $currencyTransfer = $quoteTransfer->getCurrency();
+        $currencyCode = $this->getCurrencyCode($quoteTransfer);
         $storeName = $this->findStoreName($quoteTransfer);
 
         $priceProductFilterTransfer = $this->mapItemTransferToPriceProductFilterTransfer(
@@ -242,7 +255,7 @@ class PriceProductValidator implements PriceProductValidatorInterface
         )
             ->setStoreName($storeName)
             ->setPriceMode($priceMode)
-            ->setCurrencyIsoCode($currencyTransfer->getCode())
+            ->setCurrencyIsoCode($currencyCode)
             ->setPriceTypeName($this->priceProductFacade->getDefaultPriceTypeName());
 
         if ($this->isPriceProductDimensionEnabled($priceProductFilterTransfer)) {
@@ -291,6 +304,20 @@ class PriceProductValidator implements PriceProductValidatorInterface
         }
 
         return $quoteTransfer->getPriceMode();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return string
+     */
+    protected function getCurrencyCode(QuoteTransfer $quoteTransfer): string
+    {
+        if ($quoteTransfer->getCurrency() === null || $quoteTransfer->getCurrency()->getCode() === null) {
+            return $this->currencyFacade->getCurrent()->getCode();
+        }
+
+        return $quoteTransfer->getCurrency()->getCode();
     }
 
     /**
