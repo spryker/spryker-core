@@ -26,7 +26,7 @@ class SchedulerDependencyProvider extends AbstractBundleDependencyProvider
     public function provideBusinessLayerDependencies(Container $container): Container
     {
         $container = parent::provideBusinessLayerDependencies($container);
-        $container = $this->addSchedulerReaderPlugins($container);
+        $container = $this->addScheduleReaderPlugins($container);
         $container = $this->addSchedulerAdapterPlugins($container);
 
         return $container;
@@ -37,10 +37,10 @@ class SchedulerDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addSchedulerReaderPlugins(Container $container): Container
+    protected function addScheduleReaderPlugins(Container $container): Container
     {
         $container->set(static::PLUGINS_SCHEDULE_READER, function (Container $container) {
-            return $this->getSchedulerReaderPlugins();
+            return $this->getScheduleReaderPlugins();
         });
 
         return $container;
@@ -63,7 +63,7 @@ class SchedulerDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @return \Spryker\Zed\SchedulerExtension\Dependency\Plugin\ScheduleReaderPluginInterface[]
      */
-    protected function getSchedulerReaderPlugins(): array
+    protected function getScheduleReaderPlugins(): array
     {
         return [];
     }
