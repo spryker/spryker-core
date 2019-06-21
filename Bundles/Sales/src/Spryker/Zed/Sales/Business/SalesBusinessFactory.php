@@ -11,10 +11,10 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Sales\Business\Address\OrderAddressReader;
 use Spryker\Zed\Sales\Business\Address\OrderAddressWriter;
 use Spryker\Zed\Sales\Business\Address\OrderAddressWriterInterface;
+use Spryker\Zed\Sales\Business\Expander\SalesAddressExpander;
+use Spryker\Zed\Sales\Business\Expander\SalesAddressExpanderInterface;
 use Spryker\Zed\Sales\Business\Expense\ExpenseWriter;
 use Spryker\Zed\Sales\Business\Expense\ExpenseWriterInterface;
-use Spryker\Zed\Sales\Business\Mapper\SalesMapper;
-use Spryker\Zed\Sales\Business\Mapper\SalesMapperInterface;
 use Spryker\Zed\Sales\Business\Model\Address\OrderAddressUpdater;
 use Spryker\Zed\Sales\Business\Model\Comment\OrderCommentReader;
 use Spryker\Zed\Sales\Business\Model\Comment\OrderCommentSaver;
@@ -262,11 +262,17 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     {
         return new OrderAddressWriter(
             $this->getEntityManager(),
-            $this->getRepository(),
             $this->getCountryFacade(),
-            $this->getCustomerFacade(),
-            $this->createSalesMapper()
+            $this->createSalesAddressExpander()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Business\Expander\SalesAddressExpanderInterface
+     */
+    public function createSalesAddressExpander(): SalesAddressExpanderInterface
+    {
+        return new SalesAddressExpander($this->getCustomerFacade(), $this->getRepository());
     }
 
     /**
@@ -307,14 +313,6 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     public function createOrderItemMapper()
     {
         return new ModelSalesOrderItemMapper();
-    }
-
-    /**
-     * @return \Spryker\Zed\Sales\Business\Mapper\SalesMapperInterface
-     */
-    public function createSalesMapper(): SalesMapperInterface
-    {
-        return new SalesMapper();
     }
 
     /**
