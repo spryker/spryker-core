@@ -29,7 +29,7 @@ class JobsFilterByRole extends AbstractJobsFilter implements ChainableJobsFilter
     protected $defaultRole;
 
     /**
-     * @param \Spryker\Zed\Scheduler\SchedulerConfig $config \
+     * @param \Spryker\Zed\Scheduler\SchedulerConfig $config
      */
     public function __construct(SchedulerConfig $config)
     {

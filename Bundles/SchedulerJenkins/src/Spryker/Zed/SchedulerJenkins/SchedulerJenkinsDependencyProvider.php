@@ -35,6 +35,7 @@ class SchedulerJenkinsDependencyProvider extends AbstractBundleDependencyProvide
      */
     public function provideBusinessLayerDependencies(Container $container): Container
     {
+        $container = parent::provideBusinessLayerDependencies($container);
         $container = $this->addGuzzleClient($container);
         $container = $this->addTwigEnvironment($container);
         $container = $this->addUtilEncodingService($container);
@@ -49,9 +50,9 @@ class SchedulerJenkinsDependencyProvider extends AbstractBundleDependencyProvide
      */
     protected function addGuzzleClient(Container $container): Container
     {
-        $container[static::CLIENT_GUZZLE] = function (Container $container) {
+        $container->set(static::CLIENT_GUZZLE, function (Container $container) {
             return new SchedulerJenkinsToGuzzleBridge(new Client());
-        };
+        });
 
         return $container;
     }
@@ -63,11 +64,11 @@ class SchedulerJenkinsDependencyProvider extends AbstractBundleDependencyProvide
      */
     protected function addTwigEnvironment(Container $container): Container
     {
-        $container[static::TWIG_ENVIRONMENT] = function () {
+        $container->set(static::TWIG_ENVIRONMENT, function (Container $container) {
             $twig = $this->getTwigEnvironment();
 
             return new SchedulerJenkinsToTwigEnvironmentBridge($twig);
-        };
+        });
 
         return $container;
     }
@@ -101,11 +102,11 @@ class SchedulerJenkinsDependencyProvider extends AbstractBundleDependencyProvide
      */
     protected function addUtilEncodingService(Container $container): Container
     {
-        $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new SchedulerJenkinsToUtilEncodingServiceBridge(
                 $container->getLocator()->utilEncoding()->service()
             );
-        };
+        });
 
         return $container;
     }

@@ -23,7 +23,7 @@ class ExecutionStrategy implements ExecutionStrategyInterface
     protected $executorForAbsentJob;
 
     /**
-     * @var array
+     * @var bool[]
      */
     protected $jobNames = [];
 
@@ -42,7 +42,7 @@ class ExecutionStrategy implements ExecutionStrategyInterface
     /**
      * @param string $jobName
      *
-     * @return static
+     * @return $this
      */
     public function addJobName(string $jobName)
     {
