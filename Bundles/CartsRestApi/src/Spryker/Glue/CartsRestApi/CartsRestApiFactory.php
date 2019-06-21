@@ -232,10 +232,10 @@ class CartsRestApiFactory extends AbstractFactory
     public function createGuestCartRestResponseBuilder(): GuestCartRestResponseBuilderInterface
     {
         return new GuestCartRestResponseBuilder(
-            $this->getConfig(),
             $this->getResourceBuilder(),
             $this->createCartsResourceMapper(),
-            $this->createCartItemsResourceMapper()
+            $this->createCartItemsResourceMapper(),
+            $this->getConfig()
         );
     }
 

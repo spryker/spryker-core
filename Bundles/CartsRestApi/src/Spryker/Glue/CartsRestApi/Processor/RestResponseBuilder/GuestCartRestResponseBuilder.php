@@ -32,16 +32,17 @@ class GuestCartRestResponseBuilder extends CartErrorRestResponseBuilder implemen
     protected $cartItemsResourceMapper;
 
     /**
-     * @param \Spryker\Glue\CartsRestApi\CartsRestApiConfig $config
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface $cartsResourceMapper
      * @param \Spryker\Glue\CartsRestApi\Processor\Mapper\CartItemsResourceMapperInterface $cartItemsResourceMapper
+     * @param \Spryker\Glue\CartsRestApi\CartsRestApiConfig $config
+     *
      */
     public function __construct(
-        CartsRestApiConfig $config,
         RestResourceBuilderInterface $restResourceBuilder,
         CartsResourceMapperInterface $cartsResourceMapper,
-        CartItemsResourceMapperInterface $cartItemsResourceMapper
+        CartItemsResourceMapperInterface $cartItemsResourceMapper,
+        CartsRestApiConfig $config
     ) {
         parent::__construct($config, $restResourceBuilder);
         $this->restResourceBuilder = $restResourceBuilder;
