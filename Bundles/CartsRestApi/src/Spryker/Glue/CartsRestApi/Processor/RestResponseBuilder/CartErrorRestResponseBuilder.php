@@ -15,7 +15,7 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Symfony\Component\HttpFoundation\Response;
 
-abstract class AbstractCartRestResponseBuilder
+class CartErrorRestResponseBuilder
 {
     /**
      * @var \Spryker\Glue\CartsRestApi\CartsRestApiConfig
