@@ -71,22 +71,6 @@ class StorageDatabaseConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return bool
-     */
-    public function isPostgresSqlDbEngine(): bool
-    {
-        return $this->getDbEngineName() === $this->getSharedConfig()->getPostgreSqlDbEngineName();
-    }
-
-    /**
-     * @return bool
-     */
-    public function isMySqlDbEngine(): bool
-    {
-        return $this->getDbEngineName() === $this->getSharedConfig()->getMySqlDbEngineName();
-    }
-
-    /**
      * @return string
      */
     public function getDbEngineName(): string
@@ -156,7 +140,7 @@ class StorageDatabaseConfig extends AbstractBundleConfig
     {
         return sprintf(
             '%s:host=%s;port=%d;dbname=%s',
-            $this->get(StorageDatabaseConstants::DB_ENGINE),
+            $this->get($this->getDbEngineName()),
             $this->get(StorageDatabaseConstants::DB_HOST),
             $this->get(StorageDatabaseConstants::DB_PORT),
             $this->get(StorageDatabaseConstants::DB_DATABASE)
