@@ -457,13 +457,15 @@ class SharedCartsRestApiFacadeTest extends Test
         $companyTransfer = $this->tester->haveCompany();
 
         $ownerCustomerTransfer = $this->tester->haveCustomerWithCompanyUser($companyTransfer);
+        $ownerCustomerTransfer->setCompanyUserTransfer(null);
         $otherCustomerTransfer = $this->tester->haveCustomerWithCompanyUser($companyTransfer);
 
         $quoteTransfer = $this->tester->haveSharedQuote(
             $ownerCustomerTransfer,
-            $otherCustomerTransfer,
+            $otherCustomerTransfer->getCompanyUserTransfer(),
             $this->readOnlyQuotePermissionGroup
         );
+
         $quoteTransfer->setCustomer($otherCustomerTransfer);
 
         // Act
@@ -486,11 +488,12 @@ class SharedCartsRestApiFacadeTest extends Test
         $companyTransfer = $this->tester->haveCompany();
 
         $ownerCustomerTransfer = $this->tester->haveCustomerWithCompanyUser($companyTransfer);
+        $ownerCustomerTransfer->setCompanyUserTransfer(null);
         $otherCustomerTransfer = $this->tester->haveCustomerWithCompanyUser($companyTransfer);
 
         $quoteTransfer = $this->tester->haveSharedQuote(
             $ownerCustomerTransfer,
-            $otherCustomerTransfer,
+            $otherCustomerTransfer->getCompanyUserTransfer(),
             $this->readOnlyQuotePermissionGroup
         );
         $otherCustomerTransfer->setCompanyUserTransfer(null);
@@ -512,6 +515,7 @@ class SharedCartsRestApiFacadeTest extends Test
         $companyTransfer = $this->tester->haveCompany();
 
         $ownerCustomerTransfer = $this->tester->haveCustomerWithCompanyUser($companyTransfer);
+        $ownerCustomerTransfer->setCompanyUserTransfer(null);
         $quoteTransfer = $this->tester->havePersistentQuote([
             QuoteTransfer::CUSTOMER => $ownerCustomerTransfer,
         ]);
