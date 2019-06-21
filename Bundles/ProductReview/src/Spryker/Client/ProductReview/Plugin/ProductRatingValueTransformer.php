@@ -39,14 +39,14 @@ class ProductRatingValueTransformer implements FacetSearchResultValueTransformer
      */
     public function transformFromDisplay($rangeValues)
     {
-        if (isset($rangeValues['min'])) {
+        if (isset($rangeValues['min']) && is_numeric($rangeValues['min'])) {
             $rangeValues['min'] =
                 $this->adjustLowerThreshold(
                     $this->normalizeRatingForFilter($rangeValues['min'])
                 );
         }
 
-        if (isset($rangeValues['max'])) {
+        if (isset($rangeValues['max']) && is_numeric($rangeValues['max'])) {
             $rangeValues['max'] =
                 $this->adjustUpperThreshold(
                     $this->normalizeRatingForFilter($rangeValues['max'])

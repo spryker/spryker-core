@@ -100,7 +100,9 @@ class CatalogSearchReader implements CatalogSearchReaderInterface
     {
         $searchString = $this->getRequestParameter($restRequest, CatalogSearchRestApiConfig::QUERY_STRING_PARAMETER);
         $requestParameters = $this->getAllRequestParameters($restRequest);
-        $searchResult = $this->catalogClient->catalogSearch($searchString, $requestParameters);
+
+        $urlEncodedRequestParameter = $this->recursiveUrlEncode($requestParameters);
+        $searchResult = $this->catalogClient->catalogSearch($searchString, $urlEncodedRequestParameter);
 
         $restSearchAttributesTransfer = $this
             ->catalogSearchResourceMapper
@@ -128,7 +130,8 @@ class CatalogSearchReader implements CatalogSearchReaderInterface
             return $this->createEmptyResponse($response);
         }
         $requestParameters = $this->getAllRequestParameters($restRequest);
-        $suggestions = $this->catalogClient->catalogSuggestSearch($searchString, $requestParameters);
+        $urlEncodedRequestParameter = $this->recursiveUrlEncode($requestParameters);
+        $suggestions = $this->catalogClient->catalogSuggestSearch($searchString, $urlEncodedRequestParameter);
         $restSuggestionsAttributesTransfer = $this
             ->catalogSearchSuggestionsResourceMapper
             ->mapSuggestionsToRestAttributesTransfer($suggestions);
@@ -225,5 +228,25 @@ class CatalogSearchReader implements CatalogSearchReaderInterface
         }
 
         return $response->addResource($restResource);
+    }
+
+    /**
+     * @param array $queryParameters
+     *
+     * @return array
+     */
+    protected function recursiveUrlEncode(array $queryParameters): array
+    {
+        $urlEncodedRequestParameter = [];
+        foreach ($queryParameters as $queryParameter) {
+            if (is_array($queryParameter)) {
+                $urlEncodedRequestParameter[] = $this->recursiveUrlEncode($queryParameter);
+
+                continue;
+            }
+            $urlEncodedRequestParameter[] = urlencode($queryParameter);
+
+        }
+        return $urlEncodedRequestParameter;
     }
 }
