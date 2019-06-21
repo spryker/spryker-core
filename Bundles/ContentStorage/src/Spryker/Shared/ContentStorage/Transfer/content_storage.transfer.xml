@@ -14,19 +14,15 @@
     <transfer name="ContentStorage">
         <property name="idContentStorage" type="int"/>
         <property name="fkContent" type="int"/>
+        <property name="contentKey" type="string"/>
         <property name="data" type="string"/>
         <property name="locale" type="string"/>
         <property name="key" type="string"/>
     </transfer>
 
-    <transfer name="ExecutedContentStorage">
-        <property name="idContent" type="int" />
-        <property name="type" type="string" />
-        <property name="content" type="array" />
-    </transfer>
-
     <transfer name="ContentTypeContext">
-        <property name="idContent" type="int" />
+        <property name="idContent" type="int"/>
+        <property name="key" type="string" />
         <property name="term" type="string" />
         <property name="parameters" type="array" />
     </transfer>

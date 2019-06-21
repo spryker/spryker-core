@@ -47,7 +47,7 @@ interface StockFacadeInterface
      *
      * @param string $sku
      *
-     * @return int
+     * @return float
      */
     public function calculateStockForProduct($sku);
 
@@ -60,7 +60,7 @@ interface StockFacadeInterface
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return int
+     * @return float
      */
     public function calculateProductStockForStore($sku, StoreTransfer $storeTransfer);
 
@@ -116,11 +116,11 @@ interface StockFacadeInterface
      *
      * @param string $sku
      * @param string $stockType
-     * @param int $decrementBy
+     * @param float $decrementBy
      *
      * @return void
      */
-    public function decrementStockProduct($sku, $stockType, $decrementBy = 1);
+    public function decrementStockProduct($sku, $stockType, float $decrementBy = 1.0);
 
     /**
      * Specification:
@@ -131,11 +131,11 @@ interface StockFacadeInterface
      *
      * @param string $sku
      * @param string $stockType
-     * @param int $incrementBy
+     * @param float $incrementBy
      *
      * @return void
      */
-    public function incrementStockProduct($sku, $stockType, $incrementBy = 1);
+    public function incrementStockProduct($sku, $stockType, float $incrementBy = 1.0);
 
     /**
      * Specification:

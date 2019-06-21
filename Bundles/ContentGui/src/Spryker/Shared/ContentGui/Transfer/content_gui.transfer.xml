@@ -6,6 +6,7 @@
     <transfer name="Content">
         <property name="idContent" type="int" />
         <property name="name" type="string" />
+        <property name="key" type="string" />
         <property name="description" type="string" />
         <property name="contentTermKey" type="string" />
         <property name="contentTypeKey" type="string" />
@@ -28,6 +29,36 @@
     <transfer name="ContentWidgetTemplate">
         <property name="identifier" type="string"/>
         <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="CmsBlockGlossary">
+        <property name="glossaryPlaceholders" type="CmsBlockGlossaryPlaceholder[]" singular="glossaryPlaceholder" />
+    </transfer>
+
+    <transfer name="CmsBlockGlossaryPlaceholder">
+        <property name="translations" type="CmsBlockGlossaryPlaceholderTranslation[]" singular="translation" />
+    </transfer>
+
+    <transfer name="CmsBlockGlossaryPlaceholderTranslation">
+        <property name="translation" type="string" />
+    </transfer>
+
+    <transfer name="CmsGlossary">
+        <property name="glossaryAttributes" type="CmsGlossaryAttributes[]" singular="glossaryAttribute" />
+    </transfer>
+
+    <transfer name="CmsGlossaryAttributes">
+        <property name="translations" type="CmsPlaceholderTranslation[]" singular="translation" />
+    </transfer>
+
+    <transfer name="CmsPlaceholderTranslation">
+        <property name="translation" type="string" />
+    </transfer>
+
+    <transfer name="TwigExpression">
+        <property name="content" type="Content" />
+        <property name="contentWidgetTemplate" type="ContentWidgetTemplate" />
+        <property name="twigExpression" type="string" />
     </transfer>
 </transfers>
 

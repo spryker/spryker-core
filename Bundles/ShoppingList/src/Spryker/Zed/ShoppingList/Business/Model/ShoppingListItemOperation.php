@@ -17,6 +17,7 @@ use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\ShoppingList\Business\ShoppingListItem\ShoppingListItemPluginExecutorInterface;
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToMessengerFacadeInterface;
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToProductFacadeInterface;
+use Spryker\Zed\ShoppingList\Dependency\Service\ShoppingListToUtilQuantityServiceInterface;
 use Spryker\Zed\ShoppingList\Persistence\ShoppingListEntityManagerInterface;
 use Spryker\Zed\ShoppingList\Persistence\ShoppingListRepositoryInterface;
 
@@ -60,12 +61,18 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
     protected $pluginExecutor;
 
     /**
+     * @var \Spryker\Zed\ShoppingList\Dependency\Service\ShoppingListToUtilQuantityServiceInterface
+     */
+    protected $utilQuantityService;
+
+    /**
      * @param \Spryker\Zed\ShoppingList\Persistence\ShoppingListEntityManagerInterface $shoppingListEntityManager
      * @param \Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToProductFacadeInterface $productFacade
      * @param \Spryker\Zed\ShoppingList\Persistence\ShoppingListRepositoryInterface $shoppingListRepository
      * @param \Spryker\Zed\ShoppingList\Business\Model\ShoppingListResolverInterface $shoppingListResolver
      * @param \Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToMessengerFacadeInterface $messengerFacade
      * @param \Spryker\Zed\ShoppingList\Business\ShoppingListItem\ShoppingListItemPluginExecutorInterface $pluginExecutor
+     * @param \Spryker\Zed\ShoppingList\Dependency\Service\ShoppingListToUtilQuantityServiceInterface $utilQuantityService
      */
     public function __construct(
         ShoppingListEntityManagerInterface $shoppingListEntityManager,
@@ -73,7 +80,8 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
         ShoppingListRepositoryInterface $shoppingListRepository,
         ShoppingListResolverInterface $shoppingListResolver,
         ShoppingListToMessengerFacadeInterface $messengerFacade,
-        ShoppingListItemPluginExecutorInterface $pluginExecutor
+        ShoppingListItemPluginExecutorInterface $pluginExecutor,
+        ShoppingListToUtilQuantityServiceInterface $utilQuantityService
     ) {
         $this->shoppingListEntityManager = $shoppingListEntityManager;
         $this->productFacade = $productFacade;
@@ -81,6 +89,7 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
         $this->shoppingListResolver = $shoppingListResolver;
         $this->messengerFacade = $messengerFacade;
         $this->pluginExecutor = $pluginExecutor;
+        $this->utilQuantityService = $utilQuantityService;
     }
 
     /**
@@ -342,7 +351,7 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
             return false;
         }
 
-        if ($shoppingListItemTransfer->getQuantity() <= 0) {
+        if ($this->isQuantityLessOrEqual($shoppingListItemTransfer->getQuantity(), 0)) {
             $this->messengerFacade->addErrorMessage(
                 (new MessageTransfer())
                     ->setValue(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_ADD_FAILED)
@@ -353,6 +362,17 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
         }
 
         return $this->pluginExecutor->executeAddItemPreCheckPlugins($shoppingListItemTransfer);
+    }
+
+    /**
+     * @param float $firstQuantity
+     * @param float $secondQuantity
+     *
+     * @return bool
+     */
+    protected function isQuantityLessOrEqual(float $firstQuantity, float $secondQuantity): bool
+    {
+        return $this->utilQuantityService->isQuantityLessOrEqual($firstQuantity, $secondQuantity);
     }
 
     /**

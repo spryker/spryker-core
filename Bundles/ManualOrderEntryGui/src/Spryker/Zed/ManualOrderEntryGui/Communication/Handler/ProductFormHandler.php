@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToCartFacadeInterface;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToProductFacadeInterface;
+use Spryker\Zed\ManualOrderEntryGui\Dependency\Service\ManualOrderEntryGuiToUtilQuantityServiceInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class ProductFormHandler implements FormHandlerInterface
@@ -28,15 +29,23 @@ class ProductFormHandler implements FormHandlerInterface
     protected $productFacade;
 
     /**
+     * @var \Spryker\Zed\ManualOrderEntryGui\Dependency\Service\ManualOrderEntryGuiToUtilQuantityServiceInterface
+     */
+    protected $utilQuantityService;
+
+    /**
      * @param \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToCartFacadeInterface $cartFacade
      * @param \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToProductFacadeInterface $productFacade
+     * @param \Spryker\Zed\ManualOrderEntryGui\Dependency\Service\ManualOrderEntryGuiToUtilQuantityServiceInterface $utilQuantityService
      */
     public function __construct(
         ManualOrderEntryGuiToCartFacadeInterface $cartFacade,
-        ManualOrderEntryGuiToProductFacadeInterface $productFacade
+        ManualOrderEntryGuiToProductFacadeInterface $productFacade,
+        ManualOrderEntryGuiToUtilQuantityServiceInterface $utilQuantityService
     ) {
         $this->cartFacade = $cartFacade;
         $this->productFacade = $productFacade;
+        $this->utilQuantityService = $utilQuantityService;
     }
 
     /**
@@ -52,7 +61,7 @@ class ProductFormHandler implements FormHandlerInterface
         $addedSkus = [];
 
         foreach ($quoteTransfer->getManualOrder()->getProducts() as $newProduct) {
-            if ($this->isProductValid($newProduct, $addedSkus)) {
+            if ($this->isProductInvalid($newProduct, $addedSkus)) {
                 continue;
             }
 
@@ -82,9 +91,11 @@ class ProductFormHandler implements FormHandlerInterface
         $items = [];
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             if (isset($items[$itemTransfer->getSku()])) {
-                $items[$itemTransfer->getSku()]->setQuantity(
-                    $items[$itemTransfer->getSku()]->getQuantity() + $itemTransfer->getQuantity()
+                $newQuantity = $this->sumQuantities(
+                    $items[$itemTransfer->getSku()]->getQuantity(),
+                    $itemTransfer->getQuantity()
                 );
+                $items[$itemTransfer->getSku()]->setQuantity($newQuantity);
                 continue;
             }
 
@@ -107,15 +118,37 @@ class ProductFormHandler implements FormHandlerInterface
     }
 
     /**
+     * @param float $firstQuantity
+     * @param float $secondQuantity
+     *
+     * @return float
+     */
+    protected function sumQuantities(float $firstQuantity, float $secondQuantity): float
+    {
+        return $this->utilQuantityService->sumQuantities($firstQuantity, $secondQuantity);
+    }
+
+    /**
+     * @param float $firstQuantity
+     * @param float $secondQuantity
+     *
+     * @return bool
+     */
+    protected function isQuantityLessOrEqual(float $firstQuantity, float $secondQuantity): bool
+    {
+        return $this->utilQuantityService->isQuantityLessOrEqual($firstQuantity, $secondQuantity);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ItemTransfer $newProduct
      * @param array $addedSkus
      *
      * @return bool
      */
-    protected function isProductValid($newProduct, $addedSkus): bool
+    protected function isProductInvalid(ItemTransfer $newProduct, array $addedSkus): bool
     {
         return $newProduct->getSku() === ''
-            || $newProduct->getQuantity() <= 0
+            || $this->isQuantityLessOrEqual($newProduct->getQuantity(), 0)
             || in_array($newProduct->getSku(), $addedSkus)
             || !$this->productFacade->hasProductConcrete($newProduct->getSku());
     }
