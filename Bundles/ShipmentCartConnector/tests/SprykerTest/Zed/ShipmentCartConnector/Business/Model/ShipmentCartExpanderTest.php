@@ -38,6 +38,7 @@ class ShipmentCartExpanderTest extends Test
 
     public const CURRENCY_CODE_EUR = 'EUR';
     public const CURRENCY_CODE_USD = 'USD';
+
     /**
      * @var \SprykerTest\Zed\ShipmentCartConnector\ShipmentCartConnectorBusinessTester
      */
@@ -81,7 +82,6 @@ class ShipmentCartExpanderTest extends Test
     public function updateShipmentPriceWithQuoteLevelShipmentDataProvider(): array
     {
         return [
-            'quote has not shipment method; shipment price should not have been changed' => $this->getDataWithoutShipment(),
             'quote currency and shipment currency are the same; shipment price should not have been changed' => $this->getDataWithQuoteLevelShipmentWhereQuoteCurrencyAndShipmentCurrencyAreSame(),
         ];
     }

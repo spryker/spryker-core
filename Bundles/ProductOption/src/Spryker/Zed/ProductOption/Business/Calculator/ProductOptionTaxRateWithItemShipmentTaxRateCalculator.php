@@ -50,16 +50,16 @@ class ProductOptionTaxRateWithItemShipmentTaxRateCalculator implements Calculato
      */
     public function recalculate(QuoteTransfer $quoteTransfer)
     {
-        $countryIso2CodesByIdProductAbstracts = $this->getCountryIso2CodesByIdProductAbstracts($quoteTransfer->getItems());
+        $countryIso2Codes = $this->getCountryIso2Codes($quoteTransfer->getItems());
         $idProductOptionValues = $this->getIdProductOptionValues($quoteTransfer->getItems());
 
-        $taxRates = $this->findTaxRatesByIdOptionValuesAndCountryIso2Codes($idProductOptionValues, $countryIso2CodesByIdProductAbstracts);
+        $taxRates = $this->findTaxRatesByIdOptionValuesAndCountryIso2Codes($idProductOptionValues, $countryIso2Codes);
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             $this->setProductOptionTaxRate(
                 $itemTransfer,
                 $taxRates,
-                $countryIso2CodesByIdProductAbstracts[$itemTransfer->getIdProductAbstract()]
+                $this->getShippingCountryIso2CodeByItem($itemTransfer)
             );
         }
     }
@@ -69,12 +69,12 @@ class ProductOptionTaxRateWithItemShipmentTaxRateCalculator implements Calculato
      *
      * @return string[]
      */
-    protected function getCountryIso2CodesByIdProductAbstracts(ArrayObject $itemTransfers): array
+    protected function getCountryIso2Codes(ArrayObject $itemTransfers): array
     {
         $countryIso2CodesByIdProductAbstracts = [];
 
         foreach ($itemTransfers as $itemTransfer) {
-            $countryIso2CodesByIdProductAbstracts[$itemTransfer->getIdProductAbstract()] = $this->getShippingCountryIso2CodeByItem($itemTransfer);
+            $countryIso2CodesByIdProductAbstracts[] = $this->getShippingCountryIso2CodeByItem($itemTransfer);
         }
 
         return $countryIso2CodesByIdProductAbstracts;
@@ -177,16 +177,16 @@ class ProductOptionTaxRateWithItemShipmentTaxRateCalculator implements Calculato
 
     /**
      * @param int[] $idProductOptionValues
-     * @param string[] $countryIso2CodesByIdProductAbstracts
+     * @param string[] $countryIso2Codes
      *
      * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethod[]
      */
-    protected function findTaxRatesByIdOptionValuesAndCountryIso2Codes(array $idProductOptionValues, array $countryIso2CodesByIdProductAbstracts): array
+    protected function findTaxRatesByIdOptionValuesAndCountryIso2Codes(array $idProductOptionValues, array $countryIso2Codes): array
     {
         $taxSetCollection = $this->queryContainer
             ->queryTaxSetByIdProductOptionValueAndCountryIso2Codes(
                 $idProductOptionValues,
-                array_unique($countryIso2CodesByIdProductAbstracts)
+                array_unique($countryIso2Codes)
             )
             ->find();
 
