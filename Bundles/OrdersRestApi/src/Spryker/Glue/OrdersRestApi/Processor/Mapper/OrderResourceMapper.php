@@ -78,11 +78,11 @@ class OrderResourceMapper implements OrderResourceMapperInterface
      */
     protected function findItemLevelShippingAddressCountry(OrderTransfer $orderTransfer): ?CountryTransfer
     {
-        if ($orderTransfer->getItems()->count() === 0) {
+        if ($orderTransfer->getItems()->count() < 1) {
             return null;
         }
 
-        $firstItemTransfer = $orderTransfer->getItems()[0];
+        $firstItemTransfer = current($orderTransfer->getItems());
         if ($firstItemTransfer->getShipment() === null
             || $firstItemTransfer->getShipment()->getShippingAddress() === null
         ) {
