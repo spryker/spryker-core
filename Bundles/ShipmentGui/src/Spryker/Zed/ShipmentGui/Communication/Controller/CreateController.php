@@ -85,8 +85,9 @@ class CreateController extends AbstractController
     protected function createShipmentGroupTransfer(array $formData): ShipmentGroupTransfer
     {
         $shipmentGroupTransfer = new ShipmentGroupTransfer();
-        $shipmentGroupTransfer->setShipment($this->createShipmentTransfer($formData));
-        $shipmentGroupTransfer->setItems($this->createItemTransferList($shipmentGroupTransfer->requireShipment()->getShipment(), $formData));
+        $shipmentTransfer = $this->createShipmentTransfer($formData);
+        $shipmentGroupTransfer->setShipment($shipmentTransfer);
+        $shipmentGroupTransfer->setItems($this->createItemTransferList($shipmentTransfer, $formData));
 
         return $shipmentGroupTransfer;
     }

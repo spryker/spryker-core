@@ -179,7 +179,7 @@ class ProductOptionTaxRateWithItemShipmentTaxRateCalculator implements Calculato
      * @param int[] $idProductOptionValues
      * @param string[] $countryIso2Codes
      *
-     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethod[]
+     * @return array
      */
     protected function findTaxRatesByIdOptionValuesAndCountryIso2Codes(array $idProductOptionValues, array $countryIso2Codes): array
     {
@@ -196,7 +196,7 @@ class ProductOptionTaxRateWithItemShipmentTaxRateCalculator implements Calculato
     /**
      * @param iterable|\Orm\Zed\ProductOption\Persistence\SpyProductOptionValue[] $taxSetCollection
      *
-     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValue[]
+     * @return array
      */
     protected function getGroupedTaxSetCollection(iterable $taxSetCollection): array
     {
