@@ -49,9 +49,8 @@ class HtmlToTwigExpressionsConverter implements HtmlToTwigExpressionsConverterIn
     {
         $this->assureMaxWidgetNumberIsNotExceeded($html);
 
-        // Libxml requires a root node and <html> is treating the first element, so libxml finds as the root node.
         $this->domDocument->loadHTML(
-            $this->prepareHtmlForDomDocumentLoading($html),
+            $this->getHtmlForDomDocumentLoading($html),
             LIBXML_NOWARNING | LIBXML_NOERROR | LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD
         );
         $replaceableNodes = $this->getReplaceableNodes();
@@ -62,7 +61,7 @@ class HtmlToTwigExpressionsConverter implements HtmlToTwigExpressionsConverterIn
 
         $this->replaceNodes($replaceableNodes);
 
-        return rtrim(str_replace(['<html>', '</html>'], '', $this->domDocument->saveHTML()));
+        return $this->getHtmlFromDomDocumentSaving($this->domDocument->saveHTML());
     }
 
     /**
@@ -70,9 +69,20 @@ class HtmlToTwigExpressionsConverter implements HtmlToTwigExpressionsConverterIn
      *
      * @return string
      */
-    protected function prepareHtmlForDomDocumentLoading(string $html): string
+    protected function getHtmlForDomDocumentLoading(string $html): string
     {
+        // Libxml requires a root node and <html> is treating the first element, so libxml finds as the root node.
         return mb_convert_encoding("<html>$html</html>", static::HTML_OUTPUT_ENCODING, static::HTML_INPUT_ENCODING);
+    }
+
+    /**
+     * @param string $html
+     *
+     * @return string
+     */
+    protected function getHtmlFromDomDocumentSaving(string $html): string
+    {
+        return rtrim(str_replace(['<html>', '</html>'], '', $html));
     }
 
     /**
