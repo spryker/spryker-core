@@ -11,12 +11,15 @@ use Spryker\Shared\Currency\Builder\CurrencyBuilder;
 use Spryker\Zed\Currency\Business\Model\CurrencyMapper;
 use Spryker\Zed\Currency\Business\Model\CurrencyReader;
 use Spryker\Zed\Currency\Business\Model\CurrencyWriter;
+use Spryker\Zed\Currency\Business\Validator\QuoteValidator;
+use Spryker\Zed\Currency\Business\Validator\QuoteValidatorInterface;
 use Spryker\Zed\Currency\CurrencyDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
  * @method \Spryker\Zed\Currency\Persistence\CurrencyQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Currency\CurrencyConfig getConfig()
+ * @method \Spryker\Zed\Currency\Persistence\CurrencyRepositoryInterface getRepository()
  */
 class CurrencyBusinessFactory extends AbstractBusinessFactory
 {
@@ -45,6 +48,14 @@ class CurrencyBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Currency\Business\Validator\QuoteValidatorInterface
+     */
+    public function createQuoteValidator(): QuoteValidatorInterface
+    {
+        return new QuoteValidator($this->getStoreFacade());
+    }
+
+    /**
      * @return \Spryker\Zed\Currency\Business\Model\CurrencyWriterInterface
      */
     public function createCurrencyWriter()
@@ -61,7 +72,7 @@ class CurrencyBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Currency\Dependency\Facade\CurrencyToStoreInterface
+     * @return \Spryker\Zed\Currency\Dependency\Facade\CurrencyToStoreFacadeInterface
      */
     protected function getStoreFacade()
     {

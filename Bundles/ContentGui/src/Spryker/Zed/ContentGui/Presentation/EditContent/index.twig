@@ -5,7 +5,11 @@
 {% endif %}
 
 {% block head_title widget_title %}
-{% block section_title 'Edit Content Item' | trans ~ ' ' ~ contentName | trans ~ ': ' ~ contentId %}
+
+{% block section_title %}
+    {{ 'Edit Content Item' | trans ~ ' ' ~ contentName | trans ~ ': ' }} <br/>
+    <small>{{ contentKey }}</small>
+{% endblock %}
 
 {% block action %}
     {{ backActionButton(backButton, 'Back to Content Items' | trans) }}

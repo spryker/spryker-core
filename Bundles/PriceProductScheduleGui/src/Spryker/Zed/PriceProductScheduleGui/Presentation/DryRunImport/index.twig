@@ -1,0 +1,102 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% if widget_title is not defined %}
+    {% set widget_title = 'Scheduled Prices: Import dry run' | trans %}
+{% endif %}
+
+{% block head_title -%}
+    {{ widget_title }}
+{%- endblock %}
+
+{% block section_title %}{{ widget_title }}{% endblock %}
+
+{% block action %}
+    {{ parent() }}
+{% endblock %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' with {widget_title: 'Dry run of your import' | trans} %}
+
+        {% block widget_content %}
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="m-b-sm">
+                        {{ 'You will find below the list errors and successfully processed rows inside your import file.' | trans }}
+                        <br>
+                        {{ 'If you want to retry your import with corrected data, use "Import your csv file" button.' | trans }}
+                    </div>
+                </div>
+                <br>
+                <div class="col-xs-12 col-md-6 col-lg-3">
+                    <div class="m-b-sm">
+                        <a target="_blank" href="https://documentation.spryker.com/tutorials/howtos/feature_howtos/ht-import-scheduled-prices-201907.htm">{{ 'Learn about file format on our documentation' | trans }}</a>
+                    </div>
+
+                    {{ form_start(importForm, {'action': url('/price-product-schedule-gui/dry-run-import', {'idPriceProductScheduleList':priceProductScheduleList.idPriceProductScheduleList})}) }}
+
+                    {{ form_row(importForm.priceProductScheduleName, { 'attr': {'readonly': true} }) }}
+                    {{ form_row(importForm.fileUpload) }}
+
+                    <input type="submit" class="btn btn-primary safe-submit"
+                           value="{{ 'Import your CSV file' | trans }}"/>
+                    <div class="m-b-sm">
+                        {{ 'Importing a lot of scheduled prices can take some time.' | trans }}
+                    </div>
+                    {{ form_end(importForm) }}
+                </div>
+            </div>
+        {% endblock %}
+
+    {% endembed %}
+
+    {% embed '@Gui/Partials/widget.twig' with {widget_title: 'Publish the scheduled prices' | trans} %}
+
+        {% block widget_content %}
+            {{ 'By clicking the "Publish" button below, you will send the scheduled prices to the live system.' | trans }}
+            <br>
+
+            {{ 'They will be available to your customers based on the dates' | trans }}
+
+            <br>
+            <br>
+
+            <a href="{{ url('/price-product-schedule-gui/publish', {'idPriceProductScheduleList': priceProductScheduleList.idPriceProductScheduleList }) }}"
+               class="btn btn-primary safe-submit">{{ 'Publish' | trans }}</a>
+        {% endblock %}
+
+    {% endembed %}
+
+    {% embed '@Gui/Partials/widget.twig' with {widget_title: 'Errors found inside your file' | trans} %}
+
+        {% block widget_content %}
+            {% if errorTable.data is not empty %}
+                {% include '@Gui/Table/table.twig' with {table: errorTable, id: 'scheduled-prices-errors-form'} %}
+            {% else %}
+                <div>
+                    {{ 'Your file does not contain any errors.' | trans }}
+                </div>
+            {% endif %}
+        {% endblock %}
+
+    {% endembed %}
+
+    {% embed '@Gui/Partials/widget.twig' with {widget_title: 'Row processed with success' | trans} %}
+
+        {% block widget_content %}
+            {% if renderSuccessTable %}
+                {{ successTableView | raw }}
+            {% else %}
+                <div>
+                    {{ 'No prices have been processed. You may have only errors inside your file or no prices were defined inside.' | trans }}
+                </div>
+            {% endif %}
+        {% endblock %}
+
+    {% endembed %}
+{% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+    <script src="/assets/js/spryker-zed-price-product-schedule-gui-main.js"></script>
+{% endblock %}

@@ -1,0 +1,5 @@
+architecture-sniffer:
+  priority: 1
+
+code-sniffer:
+  level: 1
