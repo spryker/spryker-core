@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\QuotePermissionGroupTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShareDetailTransfer;
 
@@ -89,7 +90,7 @@ class SharedCartBusinessTester extends Actor
      *
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer
      */
-    public function createCompanyBusinessUnit($companyTransfer)
+    public function createCompanyBusinessUnit(CompanyTransfer $companyTransfer): CompanyBusinessUnitTransfer
     {
         return $this->haveCompanyBusinessUnit(
             [
@@ -107,7 +108,7 @@ class SharedCartBusinessTester extends Actor
      *
      * @return \Generated\Shared\Transfer\ShareDetailTransfer
      */
-    public function createShareCartDetail(int $idCompanyUser, $permissionQuoteGroup): ShareDetailTransfer
+    public function createShareCartDetail(int $idCompanyUser, QuotePermissionGroupTransfer $permissionQuoteGroup): ShareDetailTransfer
     {
         $shareDetailTransfer = new ShareDetailTransfer();
         $shareDetailTransfer->setIdCompanyUser($idCompanyUser);

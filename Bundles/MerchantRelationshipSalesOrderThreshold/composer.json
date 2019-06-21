@@ -15,6 +15,7 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/company": "*",
     "spryker/company-business-unit": "*",
     "spryker/merchant": "*",
     "spryker/propel": "*",
