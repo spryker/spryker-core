@@ -7,6 +7,7 @@
 
 namespace SprykerTest\Zed\ShoppingListDataImport\Communication\Plugin;
 
+use Codeception\Configuration;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
@@ -42,14 +43,13 @@ class ShoppingListDataImportPluginTest extends Unit
     public function testImportImportsData(): void
     {
         $this->tester->ensureShoppingListDatabaseTableIsEmpty();
-        $this->tester->ensureCustomerWithReferenceDoesNotExist(static::TEST_CUSTOMER_REFERENCE);
         $this->tester->createCustomer([
             CustomerTransfer::CUSTOMER_REFERENCE => static::TEST_CUSTOMER_REFERENCE,
         ]);
 
         // Arrange
         $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
-        $dataImporterReaderConfigurationTransfer->setFileName(codecept_data_dir() . 'import/shopping_list.csv');
+        $dataImporterReaderConfigurationTransfer->setFileName(Configuration::dataDir() . 'import/shopping_list.csv');
 
         $dataImportConfigurationTransfer = new DataImporterConfigurationTransfer();
         $dataImportConfigurationTransfer->setReaderConfiguration($dataImporterReaderConfigurationTransfer);
@@ -74,7 +74,7 @@ class ShoppingListDataImportPluginTest extends Unit
 
         // Arrange
         $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
-        $dataImporterReaderConfigurationTransfer->setFileName(codecept_data_dir() . 'import/shopping_list_customer_not_exists.csv');
+        $dataImporterReaderConfigurationTransfer->setFileName(Configuration::dataDir() . 'import/shopping_list_customer_not_exists.csv');
 
         $dataImportConfigurationTransfer = new DataImporterConfigurationTransfer();
         $dataImportConfigurationTransfer->setReaderConfiguration($dataImporterReaderConfigurationTransfer)
