@@ -88,18 +88,12 @@ class ContentStorageRepository extends AbstractRepository implements ContentStor
      */
     public function findContentByContentIds(array $contentIds): array
     {
-        $query = $this->getFactory()
-            ->getContentQuery()
-            ->filterByIdContent($contentIds, Criteria::IN);
+        $query = $this->getFactory()->getContentQuery();
+
+        if ($contentIds !== []) {
+            $query->filterByIdContent_In($contentIds);
+        }
 
         return $this->buildQueryFromCriteria($query)->find();
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\SpyContentEntityTransfer[]
-     */
-    public function findAllContent(): array
-    {
-        return $this->buildQueryFromCriteria($this->getFactory()->getContentQuery())->find();
     }
 }

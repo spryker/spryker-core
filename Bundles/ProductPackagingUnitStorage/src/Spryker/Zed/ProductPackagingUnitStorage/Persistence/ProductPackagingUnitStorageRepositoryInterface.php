@@ -31,9 +31,11 @@ interface ProductPackagingUnitStorageRepositoryInterface
     public function findAllProductAbstractPackagingStorageEntities(): array;
 
     /**
-     * @return int[]
+     * @param int[] $productAbstractIds
+     *
+     * @return \Generated\Shared\Transfer\SpyProductPackagingLeadProductEntityTransfer[]
      */
-    public function findProductAbstractIdsWithProductPackagingUnit(): array;
+    public function getProductPackagingLeadProductEntityTransfersByProductAbstractIds(array $productAbstractIds): array;
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer

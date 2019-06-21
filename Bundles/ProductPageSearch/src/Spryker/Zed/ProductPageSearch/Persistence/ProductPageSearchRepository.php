@@ -142,4 +142,22 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
 
         return $storesAndProductsConditions;
     }
+
+    /**
+     * @module Product
+     *
+     * @param int[] $productIds
+     *
+     * @return \Generated\Shared\Transfer\SpyProductEntityTransfer[]
+     */
+    public function getProductEntityTransfers(array $productIds): array
+    {
+        $query = $this->getFactory()->getProductQuery();
+
+        if ($productIds !== []) {
+            $query->filterByIdProduct_In($productIds);
+        }
+
+        return $this->buildQueryFromCriteria($query)->find();
+    }
 }

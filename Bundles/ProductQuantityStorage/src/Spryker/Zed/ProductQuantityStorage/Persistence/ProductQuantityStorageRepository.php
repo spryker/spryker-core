@@ -59,4 +59,22 @@ class ProductQuantityStorageRepository extends AbstractRepository implements Pro
 
         return $this->buildQueryFromCriteria($query, $filterTransfer)->find();
     }
+
+    /**
+     * @module ProductQuantity
+     *
+     * @param int[] $productIds
+     *
+     * @return \Generated\Shared\Transfer\SpyProductQuantityEntityTransfer[]
+     */
+    public function getProductQuantityEntityTransfersByProductIds(array $productIds): array
+    {
+        $query = $this->getFactory()->getProductQuantityQuery();
+
+        if ($productIds !== []) {
+            $query->filterByFkProduct_In($productIds);
+        }
+
+        return $this->buildQueryFromCriteria($query)->find();
+    }
 }

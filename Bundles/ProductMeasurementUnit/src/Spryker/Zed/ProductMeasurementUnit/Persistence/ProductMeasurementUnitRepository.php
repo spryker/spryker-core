@@ -94,7 +94,7 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
     }
 
     /**
-     * @uses SpyStoreQuery
+     * @module Store
      *
      * @param int[] $salesUnitsIds
      *
