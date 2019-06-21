@@ -17,6 +17,8 @@ use Spryker\Zed\ContentGui\ContentGuiConfig;
 class HtmlToTwigExpressionsConverter implements HtmlToTwigExpressionsConverterInterface
 {
     protected const ERROR_MESSAGE_MAX_WIDGET_NUMBER = 'Limit exceeded, maximum number of widgets %d';
+    protected const HTML_OUTPUT_ENCODING = 'HTML-ENTITIES';
+    protected const HTML_INPUT_ENCODING = 'UTF-8';
 
     /**
      * @var \DOMDocument
@@ -48,7 +50,10 @@ class HtmlToTwigExpressionsConverter implements HtmlToTwigExpressionsConverterIn
         $this->assureMaxWidgetNumberIsNotExceeded($html);
 
         // Libxml requires a root node and <html> is treating the first element, so libxml finds as the root node.
-        $this->domDocument->loadHTML("<html>$html</html>", LIBXML_NOWARNING | LIBXML_NOERROR | LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+        $this->domDocument->loadHTML(
+            $this->prepareHtmlForDomDocumentLoading($html),
+            LIBXML_NOWARNING | LIBXML_NOERROR | LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD
+        );
         $replaceableNodes = $this->getReplaceableNodes();
 
         if (!$replaceableNodes) {
@@ -58,6 +63,16 @@ class HtmlToTwigExpressionsConverter implements HtmlToTwigExpressionsConverterIn
         $this->replaceNodes($replaceableNodes);
 
         return rtrim(str_replace(['<html>', '</html>'], '', $this->domDocument->saveHTML()));
+    }
+
+    /**
+     * @param string $html
+     *
+     * @return string
+     */
+    protected function prepareHtmlForDomDocumentLoading(string $html): string
+    {
+        return mb_convert_encoding("<html>$html</html>", static::HTML_OUTPUT_ENCODING, static::HTML_INPUT_ENCODING);
     }
 
     /**
