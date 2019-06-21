@@ -109,7 +109,7 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
     {
         $productAbstractOptionStorageEntities = $this->findProductStorageOptionEntitiesByProductAbstractIds($productAbstractIds);
         foreach ($productAbstractOptionStorageEntities as $productAbstractOptionStorageEntityArray) {
-            foreach (array_values($productAbstractOptionStorageEntityArray) as $productAbstractOptionStorageEntity) {
+            foreach ($productAbstractOptionStorageEntityArray as $productAbstractOptionStorageEntity) {
                 $productAbstractOptionStorageEntity->delete();
             }
         }
@@ -138,7 +138,7 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
         $filteredProductAbstractOptionStorageEntities = [];
 
         foreach ($productAbstractOptionStorageEntities as $productAbstractOptionStorageEntityArray) {
-            foreach (array_values($productAbstractOptionStorageEntityArray) as $productAbstractOptionStorageEntity) {
+            foreach ($productAbstractOptionStorageEntityArray as $productAbstractOptionStorageEntity) {
                 if (in_array($productAbstractOptionStorageEntity->getFkProductAbstract(), $productAbstractIds, true)) {
                     $filteredProductAbstractOptionStorageEntities[] = $productAbstractOptionStorageEntity;
                 }
@@ -156,7 +156,7 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
     protected function deleteStorageData(array $productAbstractOptionStorageEntities): void
     {
         foreach ($productAbstractOptionStorageEntities as $productAbstractOptionStorageEntityArray) {
-            foreach (array_values($productAbstractOptionStorageEntityArray) as $productAbstractOptionStorageEntity) {
+            foreach ($productAbstractOptionStorageEntityArray as $productAbstractOptionStorageEntity) {
                 $productAbstractOptionStorageEntity->delete();
             }
         }
