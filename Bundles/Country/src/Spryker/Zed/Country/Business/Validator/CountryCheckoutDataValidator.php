@@ -14,13 +14,11 @@ use Spryker\Zed\Country\Business\CountryManagerInterface;
 
 class CountryCheckoutDataValidator implements CountryCheckoutDataValidatorInterface
 {
-    protected const ERROR_MESSAGE_COUNTRY_NOT_FOUND = 'country.validation.not_found';
-    protected const ERROR_MESSAGE_ADDRESS_IS_MISSING = 'address.validation.is_missing';
+    protected const ERROR_MESSAGE_BILLING_COUNTRY_NOT_FOUND = 'billing.address.country.validation.not_found';
+    protected const ERROR_MESSAGE_SHIPPING_COUNTRY_NOT_FOUND = 'shipping.address.country.validation.not_found';
+    protected const ERROR_MESSAGE_BILLING_ADDRESS_IS_MISSING = 'billing.address.validation.is_missing';
+    protected const ERROR_MESSAGE_SHIPPING_ADDRESS_IS_MISSING = 'shipping.address.validation.is_missing';
 
-    protected const BILLING_ADDRESS = 'Billing address';
-    protected const SHIPPING_ADDRESS = 'Shipping address';
-
-    protected const ADDRESS_TYPE_PARAMETER = '%type%';
     protected const COUNTRY_CODE_PARAMETER = '%code%';
 
     /**
@@ -56,9 +54,8 @@ class CountryCheckoutDataValidator implements CountryCheckoutDataValidatorInterf
         if (!$this->countryManager->hasCountry($billingAddressCountryIso2Code)) {
             $this->addErrorToCheckoutResponseTransfer(
                 $checkoutResponseTransfer,
-                static::ERROR_MESSAGE_COUNTRY_NOT_FOUND,
+                static::ERROR_MESSAGE_BILLING_COUNTRY_NOT_FOUND,
                 [
-                    static::ADDRESS_TYPE_PARAMETER => static::BILLING_ADDRESS,
                     static::COUNTRY_CODE_PARAMETER => $billingAddressCountryIso2Code,
                 ]
             );
@@ -68,9 +65,8 @@ class CountryCheckoutDataValidator implements CountryCheckoutDataValidatorInterf
         if (!$this->countryManager->hasCountry($shippingAddressCountryIso2Code)) {
             $this->addErrorToCheckoutResponseTransfer(
                 $checkoutResponseTransfer,
-                static::ERROR_MESSAGE_COUNTRY_NOT_FOUND,
+                static::ERROR_MESSAGE_SHIPPING_COUNTRY_NOT_FOUND,
                 [
-                    static::ADDRESS_TYPE_PARAMETER => static::SHIPPING_ADDRESS,
                     static::COUNTRY_CODE_PARAMETER => $shippingAddressCountryIso2Code,
                 ]
             );
@@ -90,19 +86,11 @@ class CountryCheckoutDataValidator implements CountryCheckoutDataValidatorInterf
         CheckoutResponseTransfer $checkoutResponseTransfer
     ): CheckoutResponseTransfer {
         if (!$checkoutDataTransfer->getBillingAddress()) {
-            $this->addErrorToCheckoutResponseTransfer(
-                $checkoutResponseTransfer,
-                static::ERROR_MESSAGE_ADDRESS_IS_MISSING,
-                [static::ADDRESS_TYPE_PARAMETER => static::BILLING_ADDRESS]
-            );
+            $this->addErrorToCheckoutResponseTransfer($checkoutResponseTransfer, static::ERROR_MESSAGE_BILLING_ADDRESS_IS_MISSING);
         }
 
         if (!$checkoutDataTransfer->getShippingAddress()) {
-            $this->addErrorToCheckoutResponseTransfer(
-                $checkoutResponseTransfer,
-                static::ERROR_MESSAGE_ADDRESS_IS_MISSING,
-                [static::ADDRESS_TYPE_PARAMETER => static::SHIPPING_ADDRESS]
-            );
+            $this->addErrorToCheckoutResponseTransfer($checkoutResponseTransfer, static::ERROR_MESSAGE_SHIPPING_ADDRESS_IS_MISSING);
         }
 
         return $checkoutResponseTransfer;
@@ -118,7 +106,7 @@ class CountryCheckoutDataValidator implements CountryCheckoutDataValidatorInterf
     protected function addErrorToCheckoutResponseTransfer(
         CheckoutResponseTransfer $checkoutResponseTransfer,
         string $message,
-        array $parameters
+        array $parameters = []
     ): CheckoutResponseTransfer {
         return $checkoutResponseTransfer
             ->setIsSuccess(false)

@@ -15,7 +15,7 @@ interface CheckoutDataValidatorPluginInterface
     /**
      * Specification:
      * - Validates checkout data.
-     * - Returns RestCheckoutErrorTransfer if there is invalid data in RestCheckoutRequestAttributesTransfer.
+     * - Returns CheckoutResponseTransfer if there is invalid data in RestCheckoutRequestAttributesTransfer.
      *
      * @api
      *

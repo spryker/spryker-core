@@ -159,12 +159,13 @@ class PlaceOrderProcessor implements PlaceOrderProcessorInterface
     protected function validateCheckoutData(RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer): CheckoutResponseTransfer
     {
         $checkoutResponseTransfer = (new CheckoutResponseTransfer())->setIsSuccess(true);
+        $checkoutDataTransfer = (new CheckoutDataTransfer())
+            ->fromArray($restCheckoutRequestAttributesTransfer->toArray(), true);
+
         foreach ($this->checkoutDataValidatorPlugins as $checkoutDataValidatorPlugin) {
-            $checkoutDataTransfer = (new CheckoutDataTransfer())
-                ->fromArray($restCheckoutRequestAttributesTransfer->toArray(), true);
             $validatedCheckoutData = $checkoutDataValidatorPlugin->validateCheckoutData($checkoutDataTransfer);
             if (!$validatedCheckoutData->getIsSuccess()) {
-                $checkoutResponseTransfer = $this->addCheckoutDataValidationErrorsToCheckoutResponse(
+                $checkoutResponseTransfer = $this->appendCheckoutResponseErrors(
                     $validatedCheckoutData,
                     $checkoutResponseTransfer
                 );
@@ -180,12 +181,12 @@ class PlaceOrderProcessor implements PlaceOrderProcessorInterface
      *
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
-    protected function addCheckoutDataValidationErrorsToCheckoutResponse(
+    protected function appendCheckoutResponseErrors(
         CheckoutResponseTransfer $validatedCheckoutData,
         CheckoutResponseTransfer $checkoutResponseTransfer
     ): CheckoutResponseTransfer {
         foreach ($validatedCheckoutData->getErrors() as $checkoutErrorTransfer) {
-            $checkoutResponseTransfer->addError($checkoutErrorTransfer);
+            $checkoutResponseTransfer->getErrors()->append($checkoutErrorTransfer);
         }
 
         return $checkoutResponseTransfer->setIsSuccess(false);
