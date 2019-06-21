@@ -36,7 +36,6 @@ class GuestCartRestResponseBuilder extends CartErrorRestResponseBuilder implemen
      * @param \Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface $cartsResourceMapper
      * @param \Spryker\Glue\CartsRestApi\Processor\Mapper\CartItemsResourceMapperInterface $cartItemsResourceMapper
      * @param \Spryker\Glue\CartsRestApi\CartsRestApiConfig $config
-     *
      */
     public function __construct(
         RestResourceBuilderInterface $restResourceBuilder,
