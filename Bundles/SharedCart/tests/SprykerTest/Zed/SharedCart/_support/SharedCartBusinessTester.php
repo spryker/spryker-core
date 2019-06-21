@@ -14,6 +14,8 @@ use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuotePermissionGroupTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ResourceShareDataTransfer;
+use Generated\Shared\Transfer\ResourceShareTransfer;
 use Generated\Shared\Transfer\ShareDetailTransfer;
 
 /**
@@ -36,12 +38,17 @@ class SharedCartBusinessTester extends Actor
 {
     use _generated\SharedCartBusinessTesterActions;
 
+    protected const VALUE_SHARE_OPTION = 'VALUE_SHARE_OPTION';
+    protected const VALUE_ID_QUOTE = 1;
+    protected const VALUE_OWNER_ID_COMPANY_USER = 1;
+    protected const VALUE_OWNER_ID_COMPANY_BUSINESS_UNIT = 1;
+
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function createQuote(CustomerTransfer $customerTransfer)
+    public function createQuote(CustomerTransfer $customerTransfer): QuoteTransfer
     {
         return $this->havePersistentQuote(
             [
@@ -55,7 +62,7 @@ class SharedCartBusinessTester extends Actor
      *
      * @return \Generated\Shared\Transfer\CompanyUserTransfer
      */
-    public function createCompanyUser(CustomerTransfer $customerTransfer)
+    public function createCompanyUser(CustomerTransfer $customerTransfer): CompanyUserTransfer
     {
         $companyTransfer = $this->createCompany();
         $companyBusinessUnit = $this->createCompanyBusinessUnit($companyTransfer);
@@ -73,7 +80,7 @@ class SharedCartBusinessTester extends Actor
     /**
      * @return \Generated\Shared\Transfer\CompanyTransfer
      */
-    public function createCompany()
+    public function createCompany(): CompanyTransfer
     {
         return $this->haveCompany(
             [
@@ -115,5 +122,56 @@ class SharedCartBusinessTester extends Actor
         $shareDetailTransfer->setQuotePermissionGroup($permissionQuoteGroup);
 
         return $shareDetailTransfer;
+    }
+
+    /**
+     * @param array $seed
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer
+     */
+    public function createCompanyUserTransfer(array $seed = []): CompanyUserTransfer
+    {
+        $customerTransfer = $this->haveCustomer();
+        $companyTransfer = $this->haveCompany([
+            CompanyTransfer::IS_ACTIVE => true,
+        ]);
+        $companyBusinessUnitTransfer = $this->haveCompanyBusinessUnit([
+            CompanyBusinessUnitTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
+        ]);
+
+        $companyUserTransfer = $this->haveCompanyUser($seed + [
+                CompanyUserTransfer::CUSTOMER => $customerTransfer,
+                CompanyUserTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
+                CompanyUserTransfer::FK_COMPANY_BUSINESS_UNIT => $companyBusinessUnitTransfer->getIdCompanyBusinessUnit(),
+            ]);
+
+        $companyUserTransfer->getCustomer()
+            ->setCompanyUserTransfer($companyUserTransfer);
+
+        return $companyUserTransfer->setCompany($companyTransfer)
+            ->setCompanyBusinessUnit($companyBusinessUnitTransfer);
+    }
+
+    /**
+     * @param array $resourceShareDataSeed
+     * @param array $resourceShareSeed
+     *
+     * @return \Generated\Shared\Transfer\ResourceShareTransfer
+     */
+    public function createResourceShare(array $resourceShareDataSeed = [], array $resourceShareSeed = []): ResourceShareTransfer
+    {
+        $resourceShareData = $resourceShareDataSeed + [
+            ResourceShareDataTransfer::SHARE_OPTION => static::VALUE_SHARE_OPTION,
+            ResourceShareDataTransfer::OWNER_COMPANY_USER_ID => static::VALUE_OWNER_ID_COMPANY_USER,
+            ResourceShareDataTransfer::OWNER_COMPANY_BUSINESS_UNIT_ID => static::VALUE_OWNER_ID_COMPANY_BUSINESS_UNIT,
+            ResourceShareDataTransfer::ID_QUOTE => static::VALUE_ID_QUOTE,
+        ];
+
+        $resourceShareDataTransfer = (new ResourceShareDataTransfer())
+            ->fromArray($resourceShareData, true);
+
+        return $this->haveResourceShare($resourceShareSeed + [
+            ResourceShareTransfer::RESOURCE_SHARE_DATA => $resourceShareDataTransfer,
+        ]);
     }
 }
