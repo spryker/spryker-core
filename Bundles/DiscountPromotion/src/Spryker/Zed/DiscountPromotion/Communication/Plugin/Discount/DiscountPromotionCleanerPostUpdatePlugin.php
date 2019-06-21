@@ -8,19 +8,19 @@
 namespace Spryker\Zed\DiscountPromotion\Communication\Plugin\Discount;
 
 use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
+use Generated\Shared\Transfer\DiscountPromotionTransfer;
 use Spryker\Zed\Discount\Dependency\Plugin\DiscountPostUpdatePluginInterface;
 
 /**
  * @method \Spryker\Zed\DiscountPromotion\Business\DiscountPromotionFacadeInterface getFacade()
  * @method \Spryker\Zed\DiscountPromotion\Communication\DiscountPromotionCommunicationFactory getFactory()
  */
-class DiscountPromotionPostUpdatePlugin extends BaseDiscountPromotionSaverPlugin implements DiscountPostUpdatePluginInterface
+class DiscountPromotionCleanerPostUpdatePlugin extends BaseDiscountPromotionSaverPlugin implements DiscountPostUpdatePluginInterface
 {
     /**
      * {@inheritdoc}
-     *  - Checks if given discount CollectorStrategyType is set to "promotion"
-     *    then updates Promotion for Discount.
-     *  - Sets updated DiscountPromotion to DiscountCalculator of DiscountConfigurator.
+     *  - Checks if given discount CollectorStrategyType is not set to "promotion"
+     *    then removes Promotion from Discount.
      *
      * @api
      *
@@ -31,12 +31,9 @@ class DiscountPromotionPostUpdatePlugin extends BaseDiscountPromotionSaverPlugin
     public function postUpdate(DiscountConfiguratorTransfer $discountConfiguratorTransfer)
     {
         if (!$this->isDiscountWithPromotion($discountConfiguratorTransfer)) {
-            return $discountConfiguratorTransfer;
+            $this->getFacade()->removePromotionByIdDiscount($discountConfiguratorTransfer->getDiscountGeneral()->getIdDiscount());
+            $discountConfiguratorTransfer->getDiscountCalculator()->setDiscountPromotion(new DiscountPromotionTransfer());
         }
-
-        $discountPromotionTransfer = $this->getDiscountPromotionTransfer($discountConfiguratorTransfer);
-        $discountPromotionTransfer = $this->getFacade()->updatePromotionDiscount($discountPromotionTransfer);
-        $discountConfiguratorTransfer->getDiscountCalculator()->setDiscountPromotion($discountPromotionTransfer);
 
         return $discountConfiguratorTransfer;
     }
