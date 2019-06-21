@@ -23,12 +23,12 @@ class ContentFileGuiToFileManagerFacadeBridge implements ContentFileGuiToFileMan
     }
 
     /**
-     * @param int $idFile
+     * @param int[] $idFiles
      *
-     * @return \Generated\Shared\Transfer\FileManagerDataTransfer
+     * @return \Generated\Shared\Transfer\FileManagerDataTransfer[]
      */
-    public function findFileByIdFile($idFile)
+    public function getFilesByIds(array $idFiles): array
     {
-        return $this->fileManagerFacade->findFileByIdFile($idFile);
+        return $this->fileManagerFacade->getFilesByIds($idFiles);
     }
 }

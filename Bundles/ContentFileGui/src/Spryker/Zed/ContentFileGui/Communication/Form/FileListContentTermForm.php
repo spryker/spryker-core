@@ -135,11 +135,10 @@ class FileListContentTermForm extends AbstractType
                 }
 
                 $fileManagerFacade = $this->getFactory()->getFileManagerFacade();
+                $fileManagerDataTransfers = $fileManagerFacade->getFilesByIds($event->getData());
                 $fileIds = [];
 
-                foreach ($event->getData() as $idFile) {
-                    $fileManagerDataTransfer = $fileManagerFacade->findFileByIdFile($idFile);
-
+                foreach ($fileManagerDataTransfers as $fileManagerDataTransfer) {
                     if (!$fileManagerDataTransfer->getFile()) {
                         continue;
                     }

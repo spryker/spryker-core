@@ -10,9 +10,9 @@ namespace Spryker\Zed\ContentFileGui\Dependency\Facade;
 interface ContentFileGuiToFileManagerFacadeInterface
 {
     /**
-     * @param int $idFile
+     * @param int[] $idFiles
      *
-     * @return \Generated\Shared\Transfer\FileManagerDataTransfer
+     * @return \Generated\Shared\Transfer\FileManagerDataTransfer[]
      */
-    public function findFileByIdFile($idFile);
+    public function getFilesByIds(array $idFiles): array;
 }
