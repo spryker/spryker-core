@@ -8,7 +8,7 @@
 namespace Spryker\Client\StorageDatabase\Storage;
 
 use Spryker\Client\StorageDatabase\Dependency\Service\StorageDatabaseToUtilEncodingInterface;
-use Spryker\Client\StorageDatabase\Storage\Reader\AbstractStorageReader;
+use Spryker\Client\StorageDatabaseExtension\Storage\Reader\StorageReaderInterface;
 
 class StorageDatabase implements StorageDatabaseInterface
 {
@@ -20,7 +20,7 @@ class StorageDatabase implements StorageDatabaseInterface
     protected const ACCESS_STATS_KEY_READ = 'read';
 
     /**
-     * @var \Spryker\Client\StorageDatabase\Storage\Reader\AbstractStorageReader
+     * @var \Spryker\Client\StorageDatabaseExtension\Storage\Reader\StorageReaderInterface
      */
     protected $storageReader;
 
@@ -40,10 +40,10 @@ class StorageDatabase implements StorageDatabaseInterface
     protected $utilEncodingService;
 
     /**
-     * @param \Spryker\Client\StorageDatabase\Storage\Reader\AbstractStorageReader $storageReader
+     * @param \Spryker\Client\StorageDatabaseExtension\Storage\Reader\StorageReaderInterface $storageReader
      * @param \Spryker\Client\StorageDatabase\Dependency\Service\StorageDatabaseToUtilEncodingInterface $utilEncodingService
      */
-    public function __construct(AbstractStorageReader $storageReader, StorageDatabaseToUtilEncodingInterface $utilEncodingService)
+    public function __construct(StorageReaderInterface $storageReader, StorageDatabaseToUtilEncodingInterface $utilEncodingService)
     {
         $this->storageReader = $storageReader;
         $this->utilEncodingService = $utilEncodingService;

@@ -45,6 +45,7 @@ class StorageDatabaseClientTest extends Unit
     protected function setUp(): void
     {
         parent::setUp();
+        $this->tester->setupStorageReaderPlugins();
 
         $this->tester->setDependency(QueueDependencyProvider::QUEUE_ADAPTERS, function (Container $container) {
             return [

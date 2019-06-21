@@ -78,6 +78,11 @@ interface StorageDatabaseConstants
      *     'translation' => [
      *         StorageDatabaseConfig::KEY_STORAGE_TABLE_NAME => 'glossary',
      *     ],
+     *     'product_search_config_extension' => [
+     *         StorageDatabaseConfig::KEY_STORAGE_TABLE_PREFIX => 'pyz',
+     *         StorageDatabaseConfig::KEY_STORAGE_TABLE_NAME => 'product_search_config',
+     *         StorageDatabaseConfig::KEY_STORAGE_TABLE_SUFFIX => 'storage',
+     *     ],
      * ];
      *
      * @api

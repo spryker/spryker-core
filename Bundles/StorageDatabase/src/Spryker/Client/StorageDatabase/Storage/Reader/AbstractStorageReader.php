@@ -12,8 +12,9 @@ use Propel\Runtime\Connection\ConnectionInterface;
 use Spryker\Client\StorageDatabase\Connection\ConnectionProviderInterface;
 use Spryker\Client\StorageDatabase\Exception\StatementNotPreparedException;
 use Spryker\Client\StorageDatabase\StorageTableNameResolver\StorageTableNameResolverInterface;
+use Spryker\Client\StorageDatabaseExtension\Storage\Reader\StorageReaderInterface;
 
-abstract class AbstractStorageReader
+abstract class AbstractStorageReader implements StorageReaderInterface
 {
     protected const SELECT_STATEMENT_PATTERN = 'SELECT %s FROM %s WHERE %s OR %s';
 
