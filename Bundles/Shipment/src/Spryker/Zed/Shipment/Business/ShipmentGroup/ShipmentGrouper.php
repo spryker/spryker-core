@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ShipmentFormTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
+use Spryker\Service\Shipment\ShipmentServiceInterface;
 use Spryker\Zed\Shipment\Business\Mapper\ShipmentMapperInterface;
 use Spryker\Zed\Shipment\Business\ShipmentMethod\MethodReaderInterface;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCustomerFacadeInterface;
@@ -33,18 +34,26 @@ class ShipmentGrouper implements ShipmentGrouperInterface
     protected $shipmentMethodReader;
 
     /**
+     * @var \Spryker\Service\Shipment\ShipmentServiceInterface
+     */
+    protected $shipmentService;
+
+    /**
      * @param \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCustomerFacadeInterface $customerFacade
      * @param \Spryker\Zed\Shipment\Business\Mapper\ShipmentMapperInterface $shipmentMapper
      * @param \Spryker\Zed\Shipment\Business\ShipmentMethod\MethodReaderInterface $shipmentMethodReader
+     * @param \Spryker\Service\Shipment\ShipmentServiceInterface $shipmentService
      */
     public function __construct(
         ShipmentToCustomerFacadeInterface $customerFacade,
         ShipmentMapperInterface $shipmentMapper,
-        MethodReaderInterface $shipmentMethodReader
+        MethodReaderInterface $shipmentMethodReader,
+        ShipmentServiceInterface $shipmentService
     ) {
         $this->customerFacade = $customerFacade;
         $this->shipmentMapper = $shipmentMapper;
         $this->shipmentMethodReader = $shipmentMethodReader;
+        $this->shipmentService = $shipmentService;
     }
 
     /**
@@ -64,6 +73,7 @@ class ShipmentGrouper implements ShipmentGrouperInterface
             $shipmentFormTransfer,
             $itemListUpdatedStatus
         );
+        $shipmentGroupTransfer = $this->addShipmentHashKey($shipmentGroupTransfer);
 
         return $shipmentGroupTransfer;
     }
@@ -112,13 +122,30 @@ class ShipmentGrouper implements ShipmentGrouperInterface
         ShipmentFormTransfer $shipmentFormTransfer,
         array $itemListUpdatedStatus
     ): ShipmentGroupTransfer {
+        $shipmentTransfer = $shipmentGroupTransfer->getShipment();
         foreach ($shipmentFormTransfer->getItems() as $itemTransfer) {
-            if ($this->isItemForUpdate($itemTransfer, $itemListUpdatedStatus)) {
-                $shipmentGroupTransfer->addItem($itemTransfer);
+            if (!$this->isItemForUpdate($itemTransfer, $itemListUpdatedStatus)) {
+                continue;
             }
+
+            $itemTransfer->setShipment($shipmentTransfer);
+            $shipmentGroupTransfer->addItem($itemTransfer);
         }
 
         return $shipmentGroupTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentGroupTransfer
+     */
+    protected function addShipmentHashKey(ShipmentGroupTransfer $shipmentGroupTransfer): ShipmentGroupTransfer
+    {
+        $shipmentTransfer = $shipmentGroupTransfer->requireShipment()->getShipment();
+        $shipmentHashKey = $this->shipmentService->getShipmentHashKey($shipmentTransfer);
+
+        return $shipmentGroupTransfer->setHash($shipmentHashKey);
     }
 
     /**

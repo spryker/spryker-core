@@ -7,14 +7,13 @@
 
 namespace Spryker\Zed\ShipmentGui\Communication\Controller;
 
-use ArrayObject;
-use Generated\Shared\Transfer\ShipmentGroupTransfer;
-use Generated\Shared\Transfer\ShipmentTransfer;
+use Generated\Shared\Transfer\ShipmentGroupResponseTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\Sales\SalesConfig;
 use Spryker\Zed\ShipmentGui\Communication\Form\Item\ItemForm;
 use Spryker\Zed\ShipmentGui\Communication\Form\ShipmentFormCreate;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -27,6 +26,7 @@ class CreateController extends AbstractController
     protected const REDIRECT_URL_DEFAULT = '/sales/detail';
 
     protected const MESSAGE_SHIPMENT_CREATE_SUCCESS = 'Shipment has been successfully created.';
+    protected const MESSAGE_SHIPMENT_CREATE_FAIL = 'Shipment has not been created.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -47,20 +47,26 @@ class CreateController extends AbstractController
             ->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $shipmentGroupTransfer = $this->createShipmentGroupTransfer($form->getData());
+            $shipmentGroupTransfer = $this->getFactory()
+                ->getShipmentFacade()
+                ->createShipmentGroupTransfer($form->getData(), $this->getItemListUpdatedStatus($form));
+
             $orderTransfer = $this
                 ->getFactory()
                 ->getSalesFacade()
                 ->findOrderByIdSalesOrder($idSalesOrder);
 
+            $responseTransfer = (new ShipmentGroupResponseTransfer())->setIsSuccessful(false);
             if ($orderTransfer !== null && $shipmentGroupTransfer !== null) {
                 $responseTransfer = $this->getFactory()
                     ->getShipmentFacade()
                     ->saveShipment($shipmentGroupTransfer, $orderTransfer);
+            }
 
-                if ($responseTransfer->getIsSuccessful()) {
-                    $this->addSuccessMessage(static::MESSAGE_SHIPMENT_CREATE_SUCCESS);
-                }
+            if ($responseTransfer->getIsSuccessful()) {
+                $this->addSuccessMessage(static::MESSAGE_SHIPMENT_CREATE_SUCCESS);
+            } else {
+                $this->addErrorMessage(static::MESSAGE_SHIPMENT_CREATE_FAIL);
             }
 
             $redirectUrl = Url::generate(
@@ -78,71 +84,19 @@ class CreateController extends AbstractController
     }
 
     /**
-     * @param array $formData
+     * @param \Symfony\Component\Form\FormInterface $form
      *
-     * @return \Generated\Shared\Transfer\ShipmentGroupTransfer
+     * @return bool[]
      */
-    protected function createShipmentGroupTransfer(array $formData): ShipmentGroupTransfer
+    protected function getItemListUpdatedStatus(FormInterface $form): array
     {
-        $shipmentGroupTransfer = new ShipmentGroupTransfer();
-        $shipmentGroupTransfer->setShipment($this->createShipmentTransfer($formData));
-        $shipmentGroupTransfer->setItems($this->createItemTransferList($shipmentGroupTransfer->requireShipment()->getShipment(), $formData));
-
-        return $shipmentGroupTransfer;
-    }
-
-    /**
-     * @param array $formData
-     *
-     * @return \Generated\Shared\Transfer\ShipmentTransfer
-     */
-    protected function createShipmentTransfer(array $formData): ShipmentTransfer
-    {
-        $shipmentTransfer = (new ShipmentTransfer())->fromArray($formData, true);
-        $shipmentMethodTransfer = $this->getFactory()
-            ->getShipmentFacade()
-            ->findMethodById($formData[ShipmentFormCreate::FIELD_ID_SHIPMENT_METHOD]);
-        $shipmentTransfer->setMethod($shipmentMethodTransfer);
-
-        if ($formData[ShipmentFormCreate::FIELD_ID_CUSTOMER_ADDRESS]) {
-            $shipmentTransfer = $this->mapCustomerAddressToShippingAddress($shipmentTransfer, $formData[ShipmentFormCreate::FIELD_ID_CUSTOMER_ADDRESS]);
+        $requestedItems = [];
+        foreach ($form->get(ShipmentFormCreate::FORM_SALES_ORDER_ITEMS) as $itemForm) {
+            $itemTransfer = $itemForm->getData();
+            /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
+            $requestedItems[$itemTransfer->getIdSalesOrderItem()] = $itemForm->get(ItemForm::FIELD_IS_UPDATED)->getData();
         }
 
-        return $shipmentTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
-     * @param int $idCustomerAddress
-     *
-     * @return \Generated\Shared\Transfer\ShipmentTransfer
-     */
-    protected function mapCustomerAddressToShippingAddress(ShipmentTransfer $shipmentTransfer, int $idCustomerAddress): ShipmentTransfer
-    {
-        $addressTransfer = $this->getFactory()
-            ->getCustomerFacade()
-            ->findCustomerAddressById($idCustomerAddress);
-
-        return $shipmentTransfer->setShippingAddress($addressTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
-     * @param array $formData
-     *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]|\ArrayObject
-     */
-    protected function createItemTransferList(ShipmentTransfer $shipmentTransfer, array $formData): ArrayObject
-    {
-        $itemTransfers = new ArrayObject();
-        /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
-        foreach ($formData[ShipmentFormCreate::FORM_SALES_ORDER_ITEMS] as $itemTransfer) {
-            if ($itemTransfer[ItemForm::FIELD_IS_UPDATED] === true) {
-                $itemTransfer->setShipment($shipmentTransfer);
-                $itemTransfers->append($itemTransfer);
-            }
-        }
-
-        return $itemTransfers;
+        return $requestedItems;
     }
 }

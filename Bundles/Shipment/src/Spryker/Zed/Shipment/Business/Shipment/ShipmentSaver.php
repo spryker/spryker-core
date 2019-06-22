@@ -69,19 +69,23 @@ class ShipmentSaver implements ShipmentSaverInterface
         ShipmentGroupTransfer $shipmentGroupTransfer,
         OrderTransfer $orderTransfer
     ): ShipmentGroupResponseTransfer {
+        $shipmentGroupResponseTransfer = (new ShipmentGroupResponseTransfer())->setIsSuccessful(false);
+        if (!$this->isOrderShipmentUnique($shipmentGroupTransfer->requireShipment()->getShipment(), $orderTransfer)) {
+            return $shipmentGroupResponseTransfer;
+        }
+
         $saveOrderTransfer = $this->buildSaveOrderTransfer($orderTransfer);
         $shipmentGroupTransfer = $this->setShipmentMethod($shipmentGroupTransfer, $orderTransfer);
+
         $expenseTransfer = $this->createShippingExpenseTransfer($shipmentGroupTransfer->getShipment(), $orderTransfer);
         $orderTransfer = $this->addShippingExpenseToOrderExpenses($orderTransfer, $expenseTransfer);
 
         $shipmentGroupTransfer = $this->shipmentOrderSaver
             ->saveOrderShipmentByShipmentGroup($orderTransfer, $shipmentGroupTransfer, $saveOrderTransfer);
 
-        $shipmentGroupResponseTransfer = new ShipmentGroupResponseTransfer();
-        $shipmentGroupResponseTransfer->setIsSuccessful(true);
-        $shipmentGroupResponseTransfer->setShipmentGroup($shipmentGroupTransfer);
-
-        return $shipmentGroupResponseTransfer;
+        return $shipmentGroupResponseTransfer
+            ->setIsSuccessful(true)
+            ->setShipmentGroup($shipmentGroupTransfer);
     }
 
     /**
@@ -201,5 +205,31 @@ class ShipmentSaver implements ShipmentSaverInterface
         string $shipmentMethodHashKey
     ): bool {
         return $this->shipmentService->getShipmentHashKey($shipmentTransfer) === $shipmentMethodHashKey;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return bool
+     */
+    protected function isOrderShipmentUnique(ShipmentTransfer $shipmentTransfer, OrderTransfer $orderTransfer): bool
+    {
+        $itemTransfers = $orderTransfer->requireItems()->getItems();
+        $orderShipmentGroupTransfers = $this->shipmentService->groupItemsByShipment($itemTransfers);
+        if ($orderShipmentGroupTransfers->count() === 0) {
+            return true;
+        }
+
+        $shipmentHasKey = $this->shipmentService->getShipmentHashKey($shipmentTransfer);
+        $idShipment = $shipmentTransfer->getIdSalesShipment();
+        foreach ($orderShipmentGroupTransfers as $orderShipmentGroupTransfer) {
+            $idOrderShipment = $orderShipmentGroupTransfer->requireShipment()->getShipment()->getIdSalesShipment();
+            if ($orderShipmentGroupTransfer->getHash() === $shipmentHasKey && $idShipment !== $idOrderShipment) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

@@ -20,6 +20,9 @@ class ShipmentMapper implements ShipmentMapperInterface
      */
     public function mapFormDataToShipmentTransfer(ShipmentFormTransfer $shipmentFormTransfer, ShipmentTransfer $shipmentTransfer): ShipmentTransfer
     {
-        return $shipmentTransfer->fromArray($shipmentFormTransfer->toArray(), true);
+        $shipmentTransfer = $shipmentTransfer->fromArray($shipmentFormTransfer->toArray(), true);
+        $shipmentTransfer->setIdSalesShipment((int)$shipmentTransfer->getIdSalesShipment());
+
+        return $shipmentTransfer;
     }
 }

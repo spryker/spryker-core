@@ -26,7 +26,7 @@ class EditController extends AbstractController
     protected const REDIRECT_URL_DEFAULT = '/sales';
     protected const REDIRECT_URL = '/sales/detail';
 
-    protected const MESSAGE_SHIPMENT_EDIT_SUCCESS = 'Shipment has been successfully created.';
+    protected const MESSAGE_SHIPMENT_EDIT_SUCCESS = 'Shipment has been successfully edited.';
     protected const MESSAGE_SHIPMENT_EDIT_ERROR = 'Shipment create failed.';
 
     /**
@@ -60,17 +60,18 @@ class EditController extends AbstractController
                 return $this->redirectResponse($redirectUrl);
             }
 
-            $shipmentFormTransfer = $form->getData();
             $shipmentGroupTransfer = $this->getFactory()
                 ->getShipmentFacade()
-                ->createShipmentGroupTransfer($shipmentFormTransfer, $this->getItemListUpdatedStatus($form));
+                ->createShipmentGroupTransfer($form->getData(), $this->getItemListUpdatedStatus($form));
 
             $responseTransfer = $this->getFactory()
                 ->getShipmentFacade()
                 ->saveShipment($shipmentGroupTransfer, $orderTransfer);
 
             if ($responseTransfer->getIsSuccessful()) {
-                $this->addSuccessMessage('Shipment has been updated successfully');
+                $this->addSuccessMessage(static::MESSAGE_SHIPMENT_EDIT_SUCCESS);
+            } else {
+                $this->addErrorMessage(static::MESSAGE_SHIPMENT_EDIT_ERROR);
             }
 
             $redirectUrl = Url::generate(static::REDIRECT_URL, [

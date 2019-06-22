@@ -431,7 +431,8 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
         return new ShipmentGrouper(
             $this->getCustomerFacade(),
             $this->createShipmentMapper(),
-            $this->createMethodReader()
+            $this->createMethodReader(),
+            $this->getShipmentService()
         );
     }
 
