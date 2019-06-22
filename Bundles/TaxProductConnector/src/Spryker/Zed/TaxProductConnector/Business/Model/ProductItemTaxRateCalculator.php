@@ -140,8 +140,10 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
         array $allIdProductAbstracts,
         $countryIso2Code
     ): array {
-        return $this->taxQueryContainer->queryTaxSetByIdProductAbstractAndCountryIso2Code($allIdProductAbstracts,
-            $countryIso2Code)
+        return $this->taxQueryContainer->queryTaxSetByIdProductAbstractAndCountryIso2Code(
+            $allIdProductAbstracts,
+            $countryIso2Code
+        )
             ->find()
             ->toArray();
     }

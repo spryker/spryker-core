@@ -48,7 +48,7 @@ class ShipmentOrderHydrate implements ShipmentOrderHydrateInterface
         $orderTransfer->requireIdSalesOrder();
 
         $shipmentTransfers = $this->shipmentRepository->findShipmentTransfersByOrder($orderTransfer);
-        if (count($shipmentTransfers) === 0) {
+        if (count($shipmentTransfers) < 1) {
             return $orderTransfer;
         }
 
@@ -205,7 +205,7 @@ class ShipmentOrderHydrate implements ShipmentOrderHydrateInterface
      */
     protected function setOrderLevelShipmentMethod(OrderTransfer $orderTransfer): OrderTransfer
     {
-        $firstItemTransfer = $orderTransfer->getItems()[0];
+        $firstItemTransfer = current($orderTransfer->getItems());
         $firstItemTransfer->requireShipment()
             ->getShipment()->requireMethod();
 

@@ -28,10 +28,10 @@ use Spryker\Zed\ProductOption\ProductOptionDependencyProvider;
  * @group ProductOption
  * @group Business
  * @group Calculator
- * @group ProductOptionTaxRateCalculatonWithDefaultTaxRatesTest
+ * @group ProductOptionTaxRateCalculationWithDefaultTaxRatesTest
  * Add your own group annotations below this line
  */
-class ProductOptionTaxRateCalculatonWithDefaultTaxRatesTest extends Unit
+class ProductOptionTaxRateCalculationWithDefaultTaxRatesTest extends Unit
 {
     protected const TAX_SET_NAME = 'test.tax.set';
 

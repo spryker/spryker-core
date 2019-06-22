@@ -274,6 +274,7 @@ class CheckoutRestApiBusinessTester extends Actor
             ->setAvailableShipmentMethods($shipmentMethodsTransfer);
 
         $shipmentGroupCollectionTransfer = (new ShipmentGroupCollectionBuilder())->build();
+
         return $shipmentGroupCollectionTransfer->setShipmentGroups(new ArrayObject([$shipmentGroupTransfer]));
     }
 
