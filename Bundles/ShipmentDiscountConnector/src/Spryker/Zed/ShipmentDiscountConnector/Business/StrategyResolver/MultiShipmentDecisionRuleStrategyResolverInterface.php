@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ShipmentDiscountConnector\Business\StrategyResolver;
 
-use Spryker\Zed\ShipmentDiscountConnector\Business\DecisionRule\ShipmentDiscountDecisionRuleInterface;
+use Spryker\Zed\ShipmentDiscountConnector\Business\Model\ShipmentDiscountDecisionRuleInterface;
 
 /**
  * @deprecated Exists for Backward Compatibility reasons only.
@@ -18,7 +18,7 @@ interface MultiShipmentDecisionRuleStrategyResolverInterface
      * @param string $type
      * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
-     * @return \Spryker\Zed\ShipmentDiscountConnector\Business\DecisionRule\ShipmentDiscountDecisionRuleInterface
+     * @return \Spryker\Zed\ShipmentDiscountConnector\Business\Model\ShipmentDiscountDecisionRuleInterface
      */
     public function resolveByTypeAndItems(string $type, iterable $itemTransfers): ShipmentDiscountDecisionRuleInterface;
 }

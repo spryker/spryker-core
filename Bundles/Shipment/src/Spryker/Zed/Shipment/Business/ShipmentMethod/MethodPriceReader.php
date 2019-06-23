@@ -69,7 +69,7 @@ class MethodPriceReader implements MethodPriceReaderInterface
      *
      * @return int|null
      */
-    public function getShipmentGroupShippingPrice(
+    public function findShipmentGroupShippingPrice(
         ShipmentMethodTransfer $shipmentMethodTransfer,
         QuoteTransfer $quoteTransfer,
         ?ShipmentGroupTransfer $shipmentGroupTransfer = null

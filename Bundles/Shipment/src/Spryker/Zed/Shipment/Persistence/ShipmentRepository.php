@@ -152,7 +152,7 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
 
         return $this->getFactory()
             ->createShipmentMethodMapper()
-            ->mapShipmentMethodEntityToShipmentMethodTransfer($salesShipmentMethodEntity, new ShipmentMethodTransfer());
+            ->mapShipmentMethodEntityToShipmentMethodTransferWithPrices($salesShipmentMethodEntity, new ShipmentMethodTransfer());
     }
 
     /**
@@ -162,8 +162,29 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
      */
     public function findShipmentMethodById(int $idShipmentMethod): ?ShipmentMethodTransfer
     {
+        $salesShipmentMethodEntity = $this->queryMethods()
+            ->filterByIdShipmentMethod($idShipmentMethod)
+            ->findOne();
+
+        if ($salesShipmentMethodEntity === null) {
+            return null;
+        }
+
+        return $this->getFactory()
+            ->createShipmentMethodMapper()
+            ->mapShipmentMethodEntityToShipmentMethodTransferWithPrices($salesShipmentMethodEntity, new ShipmentMethodTransfer());
+    }
+
+    /**
+     * @param int $idShipmentMethod
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
+     */
+    public function findShipmentMethodByIdWithPricesAndCarrier(int $idShipmentMethod): ?ShipmentMethodTransfer
+    {
         $salesShipmentMethodEntity = $this->queryMethodsWithMethodPricesAndCarrier()
             ->filterByIdShipmentMethod($idShipmentMethod)
+            ->filterByIsActive(true)
             ->find()
             ->getFirst();
 
@@ -173,7 +194,7 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
 
         return $this->getFactory()
             ->createShipmentMethodMapper()
-            ->mapShipmentMethodEntityToShipmentMethodTransfer($salesShipmentMethodEntity, new ShipmentMethodTransfer());
+            ->mapShipmentMethodEntityToShipmentMethodTransferWithPrices($salesShipmentMethodEntity, new ShipmentMethodTransfer());
     }
 
     /**
@@ -216,7 +237,7 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
         $shipmentMethodMapper = $this->getFactory()->createShipmentMethodMapper();
         foreach ($shipmentMethodEntities as $shipmentMethodEntity) {
             $shipmentMethodTransfer = $shipmentMethodMapper
-                    ->mapShipmentMethodEntityToShipmentMethodTransfer($shipmentMethodEntity, new ShipmentMethodTransfer());
+                    ->mapShipmentMethodEntityToShipmentMethodTransferWithPrices($shipmentMethodEntity, new ShipmentMethodTransfer());
 
             $shipmentMethodList[] = $shipmentMethodTransfer;
         }
@@ -257,6 +278,20 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
         return $this->getFactory()
             ->createShipmentMethodQuery()
             ->filterByIdShipmentMethod($idShipmentMethod)
+            ->exists();
+    }
+
+    /**
+     * @param int $idShipmentMethod
+     *
+     * @return bool
+     */
+    public function hasActiveShipmentMethodByIdShipmentMethod(int $idShipmentMethod): bool
+    {
+        return $this->getFactory()
+            ->createShipmentMethodQuery()
+            ->filterByIdShipmentMethod($idShipmentMethod)
+            ->filterByIsActive(true)
             ->exists();
     }
 

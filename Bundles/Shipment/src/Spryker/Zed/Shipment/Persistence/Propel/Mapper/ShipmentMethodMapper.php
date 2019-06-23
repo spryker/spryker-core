@@ -28,7 +28,7 @@ class ShipmentMethodMapper implements ShipmentMethodMapperInterface
         ShipmentMethodTransfer $shipmentMethodTransfer,
         SpyShipmentMethod $salesShipmentMethodEntity
     ): SpyShipmentMethod {
-        $salesShipmentMethodEntity->fromArray($shipmentMethodTransfer->toArray());
+        $salesShipmentMethodEntity->fromArray($shipmentMethodTransfer->modifiedToArray());
 
         return $salesShipmentMethodEntity;
     }
@@ -40,6 +40,21 @@ class ShipmentMethodMapper implements ShipmentMethodMapperInterface
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer
      */
     public function mapShipmentMethodEntityToShipmentMethodTransfer(
+        SpyShipmentMethod $salesShipmentMethodEntity,
+        ShipmentMethodTransfer $shipmentMethodTransfer
+    ): ShipmentMethodTransfer {
+        $shipmentMethodTransfer = $shipmentMethodTransfer->fromArray($salesShipmentMethodEntity->toArray(), true);
+
+        return $shipmentMethodTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethod $salesShipmentMethodEntity
+     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer
+     */
+    public function mapShipmentMethodEntityToShipmentMethodTransferWithPrices(
         SpyShipmentMethod $salesShipmentMethodEntity,
         ShipmentMethodTransfer $shipmentMethodTransfer
     ): ShipmentMethodTransfer {

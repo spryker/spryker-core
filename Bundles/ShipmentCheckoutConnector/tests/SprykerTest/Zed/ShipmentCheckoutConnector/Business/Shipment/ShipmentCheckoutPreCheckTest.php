@@ -13,6 +13,7 @@ use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\DataBuilder\ShipmentBuilder;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
+use Generated\Shared\Transfer\ShipmentTransfer;
 
 /**
  * Auto-generated group annotations
@@ -38,12 +39,12 @@ class ShipmentCheckoutPreCheckTest extends Test
     {
         // Arrange
         $quoteTransfer = (new QuoteBuilder())
-            ->withShipment(
-                (new ShipmentBuilder())
-                    ->withMethod([ShipmentMethodTransfer::IS_ACTIVE => true])
-            )
+            ->withShipment(new ShipmentBuilder())
             ->withItem()
             ->build();
+
+        $shipmentTransfer = $this->addShipmentMethodTransfer($quoteTransfer->getShipment(), true);
+        $quoteTransfer->setShipment($shipmentTransfer);
 
         $checkoutResponseTransfer = (new CheckoutResponseBuilder())->build();
 
@@ -59,18 +60,21 @@ class ShipmentCheckoutPreCheckTest extends Test
      */
     public function testCheckShipmentWhenQuoteShipmentIsDefinedAndMethodIsInactive(): void
     {
+        // Arrange
         $quoteTransfer = (new QuoteBuilder())
-            ->withShipment(
-                (new ShipmentBuilder())
-                    ->withMethod([ShipmentMethodTransfer::IS_ACTIVE => false])
-            )
+            ->withShipment(new ShipmentBuilder())
             ->withItem()
             ->build();
 
+        $shipmentTransfer = $this->addShipmentMethodTransfer($quoteTransfer->getShipment(), false);
+        $quoteTransfer->setShipment($shipmentTransfer);
+
         $checkoutResponseTransfer = (new CheckoutResponseBuilder())->build();
 
+        // Act
         $result = $this->tester->getFacade()->checkShipment($quoteTransfer, $checkoutResponseTransfer);
 
+        // Assert
         $this->assertFalse($result, 'The shipment check should return false, true given');
     }
 
@@ -79,27 +83,30 @@ class ShipmentCheckoutPreCheckTest extends Test
      */
     public function testCheckShipmentWhenQuoteHasMultipleShipmentsAndAllMethodsAreActive(): void
     {
+        // Arrange
         $quoteTransfer = (new QuoteBuilder())
             ->withItem(
                 (new ItemBuilder())
-                ->withShipment(
-                    (new ShipmentBuilder())
-                        ->withMethod([ShipmentMethodTransfer::IS_ACTIVE => true])
-                )
+                ->withShipment(new ShipmentBuilder())
             )
             ->withAnotherItem(
                 (new ItemBuilder())
-                ->withAnotherShipment(
-                    (new ShipmentBuilder())
-                        ->withAnotherMethod([ShipmentMethodTransfer::IS_ACTIVE => true])
-                )
+                ->withAnotherShipment(new ShipmentBuilder())
             )
             ->build();
 
+        $shipmentTransfer = $this->addShipmentMethodTransfer($quoteTransfer->getItems()[0]->getShipment(), true);
+        $quoteTransfer->getItems()[0]->setShipment($shipmentTransfer);
+
+        $shipmentTransfer = $this->addShipmentMethodTransfer($quoteTransfer->getItems()[1]->getShipment(), true);
+        $quoteTransfer->getItems()[1]->setShipment($shipmentTransfer);
+
         $checkoutResponseTransfer = (new CheckoutResponseBuilder())->build();
 
+        // Act
         $result = $this->tester->getFacade()->checkShipment($quoteTransfer, $checkoutResponseTransfer);
 
+        // Assert
         $this->assertTrue($result, 'The shipment check should return true, false given');
     }
 
@@ -108,25 +115,31 @@ class ShipmentCheckoutPreCheckTest extends Test
      */
     public function testCheckShipmentWhenQuoteHasTwoItemsWithSameShipmentAndMethodIsInactive(): void
     {
-        $shipmentBuilder = (new ShipmentBuilder())
-            ->withAnotherMethod([ShipmentMethodTransfer::IS_ACTIVE => false]);
-
+        // Arrange
         $quoteTransfer = (new QuoteBuilder())
             ->withItem(
                 (new ItemBuilder())
-                    ->withShipment($shipmentBuilder)
+                    ->withShipment(new ShipmentBuilder())
             )
             ->withAnotherItem(
                 (new ItemBuilder())
-                    ->withShipment($shipmentBuilder)
+                    ->withShipment(new ShipmentBuilder())
             )
             ->build();
 
+        $shipmentTransfer = $this->addShipmentMethodTransfer($quoteTransfer->getItems()[0]->getShipment(), false);
+        $quoteTransfer->getItems()[0]->setShipment($shipmentTransfer);
+
+        $shipmentTransfer = $this->addShipmentMethodTransfer($quoteTransfer->getItems()[1]->getShipment(), false);
+        $quoteTransfer->getItems()[1]->setShipment($shipmentTransfer);
+
         $checkoutResponseTransfer = (new CheckoutResponseBuilder())->build();
 
+        // Act
         $result = $this->tester->getFacade()->checkShipment($quoteTransfer, $checkoutResponseTransfer);
 
-        $this->assertTrue($result, 'The shipment check should return true, false given');
+        // Assert
+        $this->assertFalse($result, 'The shipment check should return false, true given');
     }
 
     /**
@@ -134,27 +147,43 @@ class ShipmentCheckoutPreCheckTest extends Test
      */
     public function testCheckShipmentWhenQuoteHasTwoItemsWithDifferentShipmentsAndAllMethodsAreInactive(): void
     {
+        // Arrange
         $quoteTransfer = (new QuoteBuilder())
             ->withItem(
                 (new ItemBuilder())
-                    ->withShipment(
-                        (new ShipmentBuilder())
-                            ->withMethod([ShipmentMethodTransfer::IS_ACTIVE => false])
-                    )
+                    ->withShipment(new ShipmentBuilder())
             )
             ->withAnotherItem(
                 (new ItemBuilder())
-                    ->withAnotherShipment(
-                        (new ShipmentBuilder())
-                            ->withAnotherMethod([ShipmentMethodTransfer::IS_ACTIVE => false])
-                    )
+                    ->withAnotherShipment(new ShipmentBuilder())
             )
             ->build();
 
+        $shipmentTransfer = $this->addShipmentMethodTransfer($quoteTransfer->getItems()[0]->getShipment(), false);
+        $quoteTransfer->getItems()[0]->setShipment($shipmentTransfer);
+
+        $shipmentTransfer = $this->addShipmentMethodTransfer($quoteTransfer->getItems()[1]->getShipment(), false);
+        $quoteTransfer->getItems()[1]->setShipment($shipmentTransfer);
+
         $checkoutResponseTransfer = (new CheckoutResponseBuilder())->build();
 
+        // Act
         $result = $this->tester->getFacade()->checkShipment($quoteTransfer, $checkoutResponseTransfer);
 
-        $this->assertTrue($result, 'The shipment check should return true, false given');
+        // Assert
+        $this->assertFalse($result, 'The shipment check should return false, true given');
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
+     * @param bool $isActive
+     *
+     * @return \Generated\Shared\Transfer\ShipmentTransfer
+     */
+    public function addShipmentMethodTransfer(ShipmentTransfer $shipmentTransfer, bool $isActive): ShipmentTransfer
+    {
+        $shipmentMethodTransfer = $this->tester->haveShipmentMethod([ShipmentMethodTransfer::IS_ACTIVE => $isActive]);
+
+        return $shipmentTransfer->setMethod($shipmentMethodTransfer);
     }
 }

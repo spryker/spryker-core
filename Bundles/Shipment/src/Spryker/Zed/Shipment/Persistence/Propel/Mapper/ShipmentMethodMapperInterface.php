@@ -40,6 +40,17 @@ interface ShipmentMethodMapperInterface
     ): ShipmentMethodTransfer;
 
     /**
+     * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethod $salesShipmentMethodEntity
+     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer
+     */
+    public function mapShipmentMethodEntityToShipmentMethodTransferWithPrices(
+        SpyShipmentMethod $salesShipmentMethodEntity,
+        ShipmentMethodTransfer $shipmentMethodTransfer
+    ): ShipmentMethodTransfer;
+
+    /**
      * @param \Orm\Zed\Currency\Persistence\SpyCurrency $currencyEntity
      * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
      *

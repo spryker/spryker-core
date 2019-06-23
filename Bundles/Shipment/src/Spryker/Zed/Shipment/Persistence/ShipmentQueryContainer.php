@@ -69,8 +69,6 @@ class ShipmentQueryContainer extends AbstractQueryContainer implements ShipmentQ
     /**
      * @api
      *
-     * @deprecated Use \Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface::queryActiveMethodsWithMethodPricesAndCarrier() instead.
-     *
      * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
      */
     public function queryMethods()
@@ -92,8 +90,6 @@ class ShipmentQueryContainer extends AbstractQueryContainer implements ShipmentQ
 
     /**
      * @api
-     *
-     * @deprecated Not used anymore and obsolete.
      *
      * @param int $idMethod
      *

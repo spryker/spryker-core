@@ -8,7 +8,7 @@
 namespace Spryker\Client\Shipment;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\ShipmentGroupCollectionTransfer;
+use Generated\Shared\Transfer\ShipmentMethodsCollectionTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -39,9 +39,9 @@ class ShipmentClient extends AbstractClient implements ShipmentClientInterface
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\ShipmentGroupCollectionTransfer
+     * @return \Generated\Shared\Transfer\ShipmentMethodsCollectionTransfer
      */
-    public function getAvailableMethodsByShipment(QuoteTransfer $quoteTransfer): ShipmentGroupCollectionTransfer
+    public function getAvailableMethodsByShipment(QuoteTransfer $quoteTransfer): ShipmentMethodsCollectionTransfer
     {
         return $this->getFactory()->createZedStub()->getAvailableMethodsByShipment($quoteTransfer);
     }
