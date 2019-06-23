@@ -42,7 +42,7 @@ class ShipmentFormEditDataProvider
             $this->prepareFormData($idSalesShipment)
         );
 
-        return $this->shipmentFormDefaultDataProvider->mapFormDataToShipmentFormTransfer($formData);
+        return $this->shipmentFormDefaultDataProvider->mapFormDataToShipmentFormTransfer($formData, new ShipmentFormTransfer());
     }
 
     /**

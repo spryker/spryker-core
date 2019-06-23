@@ -177,7 +177,6 @@ class AddressForm extends AbstractType
                 'required' => false,
                 'label' => 'Email',
                 'constraints' => [
-//                    $this->createNotBlankConstraint(),
                     new Email(),
                     new Length(['max' => 255]),
                 ],
@@ -407,7 +406,7 @@ class AddressForm extends AbstractType
         return new Callback([
         'callback' => function ($value, ExecutionContextInterface $context) {
             $formData = $context->getRoot()->getData();
-            if ($formData->getIdCustomerAddress()) {
+            if ($formData->getIdCustomerAddress() !== null) {
                 return;
             }
 

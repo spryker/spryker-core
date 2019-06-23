@@ -67,8 +67,8 @@ class ItemForm extends AbstractType
             $form->add(static::FIELD_IS_UPDATED, CheckboxType::class, [
                 'label' => false,
                 'required' => false,
+                'data' => $isSelected,
                 'attr' => [
-                    'checked' => $isSelected,
                     'disabled' => $isSelected,
                 ],
             ]);

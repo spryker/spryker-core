@@ -74,14 +74,16 @@ class SalesAddressExpander implements SalesAddressExpanderInterface
             return null;
         }
 
-        foreach ($addressTransfer->toArray() as $addressOffset => $addressValue) {
-            if ($addressValue !== null || !$addressTransfer->offsetExists($addressOffset)) {
-                continue;
-            }
+        return $addressTransfer->fromArray($foundAddressTransfer->modifiedToArray(), true);
 
-            $addressTransfer->offsetSet($addressOffset, $addressValue);
-        }
+//        foreach ($addressTransfer->toArray() as $addressOffset => $addressValue) {
+//            if ($addressValue !== null || !$addressTransfer->offsetExists($addressOffset)) {
+//                continue;
+//            }
+//
+//            $addressTransfer->offsetSet($addressOffset, $addressValue);
+//        }
 
-        return $addressTransfer;
+//        return $addressTransfer;
     }
 }

@@ -66,16 +66,14 @@ class ShipmentGrouper implements ShipmentGrouperInterface
         ShipmentFormTransfer $shipmentFormTransfer,
         array $itemListUpdatedStatus
     ): ShipmentGroupTransfer {
-        $shipmentGroupTransfer = new ShipmentGroupTransfer();
-        $shipmentGroupTransfer = $this->addShipmentTransfer($shipmentGroupTransfer, $shipmentFormTransfer);
+        $shipmentGroupTransfer = $this->addShipmentTransfer(new ShipmentGroupTransfer(), $shipmentFormTransfer);
         $shipmentGroupTransfer = $this->addShipmentItems(
             $shipmentGroupTransfer,
             $shipmentFormTransfer,
             $itemListUpdatedStatus
         );
-        $shipmentGroupTransfer = $this->addShipmentHashKey($shipmentGroupTransfer);
 
-        return $shipmentGroupTransfer;
+        return $this->addShipmentHashKey($shipmentGroupTransfer);
     }
 
     /**
@@ -91,7 +89,7 @@ class ShipmentGrouper implements ShipmentGrouperInterface
         $shipmentTransfer = $this->shipmentMapper
             ->mapFormDataToShipmentTransfer($shipmentFormTransfer, new ShipmentTransfer());
 
-        if ($shipmentFormTransfer->getIdCustomerAddress()) {
+        if ($shipmentFormTransfer->getIdCustomerAddress() !== null) {
             $shippingAddress = $this->customerFacade
                 ->findCustomerAddressById($shipmentFormTransfer->getIdCustomerAddress());
             $shipmentTransfer->setShippingAddress($shippingAddress);

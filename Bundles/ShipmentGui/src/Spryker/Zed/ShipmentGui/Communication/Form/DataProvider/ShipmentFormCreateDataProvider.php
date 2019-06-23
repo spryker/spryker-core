@@ -34,7 +34,7 @@ class ShipmentFormCreateDataProvider
     {
         $formData = $this->shipmentFormDefaultDataProvider->getDefaultFormFields($idSalesOrder, $idSalesShipment);
 
-        return $this->shipmentFormDefaultDataProvider->mapFormDataToShipmentFormTransfer($formData);
+        return $this->shipmentFormDefaultDataProvider->mapFormDataToShipmentFormTransfer($formData, new ShipmentFormTransfer());
     }
 
     /**

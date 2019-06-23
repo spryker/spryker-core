@@ -68,7 +68,7 @@ class ShipmentFormDefaultDataProvider
         $defaultShipmentFormCreateFields = [
             ShipmentFormCreate::FIELD_ID_SALES_SHIPMENT => $idSalesShipment,
             ShipmentFormCreate::FIELD_ID_SALES_ORDER => $idSalesOrder,
-            ShipmentFormCreate::FIELD_ID_CUSTOMER_ADDRESS => $this->getIdCustomerAddress($idSalesOrder, $idSalesShipment),
+            ShipmentFormCreate::FIELD_ID_CUSTOMER_ADDRESS => ($idSalesShipment === null ? null : $this->getIdCustomerAddress($idSalesOrder, $idSalesShipment)),
             ShipmentFormCreate::FIELD_ID_SHIPMENT_METHOD => null,
             ShipmentFormCreate::FIELD_REQUESTED_DELIVERY_DATE => null,
             ShipmentFormCreate::FORM_SHIPPING_ADDRESS => $this->getAddressDefaultFields(),
@@ -79,16 +79,12 @@ class ShipmentFormDefaultDataProvider
 
     /**
      * @param int $idSalesOrder
-     * @param int|null $idSalesShipment
+     * @param int $idSalesShipment
      *
      * @return int|null
      */
-    protected function getIdCustomerAddress(int $idSalesOrder, ?int $idSalesShipment): ?int
+    protected function getIdCustomerAddress(int $idSalesOrder, int $idSalesShipment): ?int
     {
-        if ($idSalesShipment === null) {
-            return null;
-        }
-
         $addressTransfer = $this->hydrateAddressTransfer(
             $this->salesFacade->findOrderByIdSalesOrder($idSalesOrder),
             $this->findShipmentById($idSalesShipment)
@@ -112,11 +108,20 @@ class ShipmentFormDefaultDataProvider
     protected function hydrateAddressTransfer(?OrderTransfer $orderTransfer, ?ShipmentTransfer $shipmentTransfer): AddressTransfer
     {
         $addressTransfer = new AddressTransfer();
-
-        if ($shipmentTransfer !== null) {
-            $addressTransfer->fromArray($shipmentTransfer->getShippingAddress()->toArray(), true);
+        if ($shipmentTransfer === null || $orderTransfer === null) {
+            return $addressTransfer;
         }
 
+        $shipmentAddressTransfer = $shipmentTransfer->getShippingAddress();
+        if ($shipmentAddressTransfer === null) {
+            $shipmentAddressTransfer = $orderTransfer->requireShippingAddress()->getShippingAddress();
+        }
+
+        if ($shipmentAddressTransfer === null) {
+            return $addressTransfer;
+        }
+
+        $addressTransfer->fromArray($shipmentAddressTransfer->modifiedToArray(), true);
         $addressTransfer->setFkCustomer($orderTransfer->getFkCustomer());
 
         return $addressTransfer;
@@ -185,6 +190,29 @@ class ShipmentFormDefaultDataProvider
         }
 
         return $itemsIds;
+    }
+
+    /**
+     * @param array $formData
+     * @param \Generated\Shared\Transfer\ShipmentFormTransfer $shipmentFormTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentFormTransfer
+     */
+    public function mapFormDataToShipmentFormTransfer(
+        array $formData,
+        ShipmentFormTransfer $shipmentFormTransfer
+    ): ShipmentFormTransfer {
+        $shipmentFormTransfer = $shipmentFormTransfer->fromArray($formData, true);
+        if (!isset($formData[ShipmentFormTransfer::ITEMS])) {
+            return $shipmentFormTransfer;
+        }
+
+        $itemList = new ArrayObject();
+        foreach ($formData[ShipmentFormTransfer::ITEMS] as $itemTransfer) {
+            $itemList->append($itemTransfer);
+        }
+
+        return $shipmentFormTransfer->setItems($itemList);
     }
 
     /**
@@ -339,22 +367,5 @@ class ShipmentFormDefaultDataProvider
         }
 
         return $combinedSalutation;
-    }
-
-    /**
-     * @param array $formData
-     *
-     * @return \Generated\Shared\Transfer\ShipmentFormTransfer
-     */
-    public function mapFormDataToShipmentFormTransfer(array $formData): ShipmentFormTransfer
-    {
-        $shipmentFormTransfer = (new ShipmentFormTransfer())->fromArray($formData, true);
-
-        $itemList = new ArrayObject();
-        foreach ($formData[ShipmentFormTransfer::ITEMS] as $itemTransfer) {
-            $itemList->append($itemTransfer);
-        }
-
-        return $shipmentFormTransfer->setItems($itemList);
     }
 }

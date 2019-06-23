@@ -190,7 +190,7 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addCustomerFacade(Container $container)
+    protected function addCustomerFacade(Container $container): Container
     {
         $container->set(static::FACADE_CUSTOMER, function (Container $container) {
             return new ShipmentToCustomerFacadeBridge($container->getLocator()->customer()->facade());
@@ -204,7 +204,7 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addShipmentService(Container $container)
+    protected function addShipmentService(Container $container): Container
     {
         $container->set(static::SERVICE_SHIPMENT, function (Container $container) {
             return $container->getLocator()->shipment()->service();

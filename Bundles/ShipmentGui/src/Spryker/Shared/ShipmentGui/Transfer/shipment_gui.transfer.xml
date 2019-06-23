@@ -14,7 +14,4 @@
         <property name="items" type="Item[]" singular="item"/>
     </transfer>
 
-    <transfer name="Item">
-        <property name="isUpdated" type="bool"/>
-    </transfer>
 </transfers>
