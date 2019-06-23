@@ -63,6 +63,11 @@ class CommentFacadeTest extends Unit
     protected const GLOSSARY_KEY_COMMENT_THREAD_ALREADY_EXISTS = 'comment.validation.error.comment_thread_already_exists';
 
     /**
+     * @uses \Spryker\Zed\Comment\Business\Writer\CommentTagWriter::GLOSSARY_KEY_COMMENT_TAG_NOT_AVAILABLE
+     */
+    protected const GLOSSARY_KEY_COMMENT_TAG_NOT_AVAILABLE = 'comment.validation.error.comment_tag_not_available';
+
+    /**
      * @var \SprykerTest\Zed\Comment\CommentBusinessTester
      */
     protected $tester;
@@ -75,7 +80,7 @@ class CommentFacadeTest extends Unit
     /**
      * @var string[]
      */
-    protected $commentAvailableTags;
+    protected $commentAvailableTags = [];
 
     /**
      * @return void
@@ -917,6 +922,171 @@ class CommentFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testAddCommentTagThrowsExceptionWhenCommentTagNameNotProvided(): void
+    {
+        // Arrange
+        $commentTagRequestTransfer = (new CommentTagRequestTransfer())
+            ->setName(null)
+            ->setComment((new CommentBuilder())->build());
+
+        // Assert
+        $this->expectException(RequiredTransferPropertyException::class);
+
+        // Act
+        $this->getFacadeMock()->addCommentTag($commentTagRequestTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testAddCommentTagThrowsExceptionWhenCommentNotProvided(): void
+    {
+        // Arrange
+        $commentTagRequestTransfer = (new CommentTagRequestTransfer())
+            ->setName((new CommentTagBuilder())->build()->getName())
+            ->setComment(null);
+
+        // Assert
+        $this->expectException(RequiredTransferPropertyException::class);
+
+        // Act
+        $this->getFacadeMock()->addCommentTag($commentTagRequestTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testAddCommentTagThrowsExceptionWhenCommentUuidNotProvided(): void
+    {
+        // Arrange
+        $commentTagRequestTransfer = (new CommentTagRequestTransfer())
+            ->setName((new CommentTagBuilder())->build()->getName())
+            ->setComment((new CommentBuilder())->build());
+
+        // Assert
+        $this->expectException(RequiredTransferPropertyException::class);
+
+        // Act
+        $this->getFacadeMock()->addCommentTag($commentTagRequestTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testAddCommentTagAddsNotAvailableTagToComment(): void
+    {
+        // Arrange
+        $commentTransfer = (new CommentBuilder())->build()
+            ->setCustomer($this->customerTransfer);
+
+        $commentRequestTransfer = (new CommentRequestBuilder())->build()
+            ->setComment($commentTransfer);
+
+        $commentThreadResponseTransfer = $this->tester->createComment($commentRequestTransfer);
+
+        $commentTagRequestTransfer = (new CommentTagRequestTransfer())
+            ->setName((new CommentTagBuilder())->build()->getName())
+            ->setComment($commentThreadResponseTransfer->getCommentThread()->getComments()->offsetGet(0));
+
+        // Act
+        $commentThreadResponseTransfer = $this->getFacadeMock()->addCommentTag($commentTagRequestTransfer);
+        $commentThreadTransfer = $this->tester
+            ->getFacade()
+            ->findCommentThreadByOwner($commentRequestTransfer);
+
+        /** @var \Generated\Shared\Transfer\CommentTransfer $storedCommentTransfer */
+        $storedCommentTransfer = $commentThreadTransfer->getComments()->offsetGet(0);
+
+        // Assert
+        $this->assertFalse($commentThreadResponseTransfer->getIsSuccessful());
+        $this->assertCount(0, $storedCommentTransfer->getCommentTags());
+        $this->assertEquals(
+            static::GLOSSARY_KEY_COMMENT_TAG_NOT_AVAILABLE,
+            $commentThreadResponseTransfer->getMessages()[0]->getValue()
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testAddCommentTagAddsTagToCommentWithWrongUuid(): void
+    {
+        // Arrange
+        $commentTransfer = (new CommentBuilder())->build()
+            ->setCustomer($this->customerTransfer)
+            ->setUuid(static::FAKE_COMMENT_UUID);
+
+        $commentTagRequestTransfer = (new CommentTagRequestTransfer())
+            ->setName((new CommentTagBuilder())->build()->getName())
+            ->setComment($commentTransfer);
+
+        $this->commentAvailableTags = [$commentTagRequestTransfer->getName()];
+
+        // Act
+        $commentThreadResponseTransfer = $this->getFacadeMock()->addCommentTag($commentTagRequestTransfer);
+
+        // Assert
+        $this->assertFalse($commentThreadResponseTransfer->getIsSuccessful());
+        $this->assertEquals(
+            static::GLOSSARY_KEY_COMMENT_NOT_FOUND,
+            $commentThreadResponseTransfer->getMessages()[0]->getValue()
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testAddCommentTagAddsSameCommentTag(): void
+    {
+        // Arrange
+        $commentTagTransfer = (new CommentTagBuilder())->build();
+        $duplicatedCommentTagTransfer = (new CommentTagBuilder())->build()->setName($commentTagTransfer->getName());
+
+        $this->commentAvailableTags = [$commentTagTransfer->getName()];
+
+        $commentTransfer = (new CommentBuilder())->build()
+            ->setCustomer($this->customerTransfer);
+
+        $commentRequestTransfer = (new CommentRequestBuilder())->build()
+            ->setComment($commentTransfer);
+
+        $commentThreadResponseTransfer = $this->tester->createComment($commentRequestTransfer);
+
+        $commentTagRequestTransfer = (new CommentTagRequestTransfer())
+            ->setName($commentTagTransfer->getName())
+            ->setComment($commentThreadResponseTransfer->getCommentThread()->getComments()->offsetGet(0));
+
+        $commentTransfer = $this->getFacadeMock()
+            ->addCommentTag($commentTagRequestTransfer)
+            ->getCommentThread()
+            ->getComments()
+            ->offsetGet(0);
+
+        $commentTagRequestTransfer = (new CommentTagRequestTransfer())
+            ->setName($duplicatedCommentTagTransfer->getName())
+            ->setComment($commentTransfer);
+
+        // Act
+        $commentThreadResponseTransfer = $this->getFacadeMock()->addCommentTag($commentTagRequestTransfer);
+        $commentThreadTransfer = $this->tester
+            ->getFacade()
+            ->findCommentThreadByOwner($commentRequestTransfer);
+
+        /** @var \Generated\Shared\Transfer\CommentTransfer $storedCommentTransfer */
+        $storedCommentTransfer = $commentThreadTransfer->getComments()->offsetGet(0);
+
+        // Assert
+        $this->assertTrue($commentThreadResponseTransfer->getIsSuccessful());
+        $this->assertCount(1, $storedCommentTransfer->getCommentTags());
+        $this->assertEquals(
+            $commentTagTransfer->getName(),
+            $storedCommentTransfer->getCommentTags()->offsetGet(0)->getName()
+        );
+    }
+
+    /**
+     * @return void
+     */
     public function testAddCommentTagAddsCommentTagToCommentWithTags(): void
     {
         // Arrange
@@ -970,6 +1140,184 @@ class CommentFacadeTest extends Unit
             $secondCommentTagTransfer->getName(),
             $storedCommentTransfer->getCommentTags()->offsetGet(1)->getName()
         );
+    }
+
+    /**
+     * @return void
+     */
+    public function testRemoveCommentTagRemovesCommentTagFromComment(): void
+    {
+        // Arrange
+        $commentTagTransfer = (new CommentTagBuilder())->build();
+        $this->commentAvailableTags = [$commentTagTransfer->getName()];
+
+        $commentTransfer = (new CommentBuilder())->build()
+            ->setCustomer($this->customerTransfer);
+
+        $commentRequestTransfer = (new CommentRequestBuilder())->build()
+            ->setComment($commentTransfer);
+
+        $commentThreadResponseTransfer = $this->tester->createComment($commentRequestTransfer);
+
+        $commentTagRequestTransfer = (new CommentTagRequestTransfer())
+            ->setName($commentTagTransfer->getName())
+            ->setComment($commentThreadResponseTransfer->getCommentThread()->getComments()->offsetGet(0));
+
+        $this->getFacadeMock()->addCommentTag($commentTagRequestTransfer);
+
+        // Act
+        $commentThreadResponseTransfer = $this->getFacadeMock()->removeCommentTag($commentTagRequestTransfer);
+        $commentThreadTransfer = $this->tester
+            ->getFacade()
+            ->findCommentThreadByOwner($commentRequestTransfer);
+
+        /** @var \Generated\Shared\Transfer\CommentTransfer $storedCommentTransfer */
+        $storedCommentTransfer = $commentThreadTransfer->getComments()->offsetGet(0);
+
+        // Assert
+        $this->assertTrue($commentThreadResponseTransfer->getIsSuccessful());
+        $this->assertCount(0, $storedCommentTransfer->getCommentTags());
+    }
+
+    /**
+     * @return void
+     */
+    public function testRemoveCommentTagThrowsExceptionWhenCommentTagNameNotProvided(): void
+    {
+        // Arrange
+        $commentTagRequestTransfer = (new CommentTagRequestTransfer())
+            ->setName(null)
+            ->setComment((new CommentBuilder())->build());
+
+        // Assert
+        $this->expectException(RequiredTransferPropertyException::class);
+
+        // Act
+        $this->getFacadeMock()->removeCommentTag($commentTagRequestTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testRemoveCommentTagThrowsExceptionWhenCommentNotProvided(): void
+    {
+        // Arrange
+        $commentTagRequestTransfer = (new CommentTagRequestTransfer())
+            ->setName((new CommentTagBuilder())->build()->getName())
+            ->setComment(null);
+
+        // Assert
+        $this->expectException(RequiredTransferPropertyException::class);
+
+        // Act
+        $this->getFacadeMock()->removeCommentTag($commentTagRequestTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testRemoveCommentTagThrowsExceptionWhenCommentUuidNotProvided(): void
+    {
+        // Arrange
+        $commentTagRequestTransfer = (new CommentTagRequestTransfer())
+            ->setName((new CommentTagBuilder())->build()->getName())
+            ->setComment((new CommentBuilder())->build());
+
+        // Assert
+        $this->expectException(RequiredTransferPropertyException::class);
+
+        // Act
+        $this->getFacadeMock()->removeCommentTag($commentTagRequestTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testRemoveCommentTagRemovesNotAvailableTagFromComment(): void
+    {
+        // Arrange
+        $commentTransfer = (new CommentBuilder())->build()
+            ->setCustomer($this->customerTransfer);
+
+        $commentRequestTransfer = (new CommentRequestBuilder())->build()
+            ->setComment($commentTransfer);
+
+        $commentThreadResponseTransfer = $this->tester->createComment($commentRequestTransfer);
+
+        $commentTagRequestTransfer = (new CommentTagRequestTransfer())
+            ->setName((new CommentTagBuilder())->build()->getName())
+            ->setComment($commentThreadResponseTransfer->getCommentThread()->getComments()->offsetGet(0));
+
+        // Act
+        $commentThreadResponseTransfer = $this->getFacadeMock()->removeCommentTag($commentTagRequestTransfer);
+
+        // Assert
+        $this->assertFalse($commentThreadResponseTransfer->getIsSuccessful());
+        $this->assertEquals(
+            static::GLOSSARY_KEY_COMMENT_TAG_NOT_AVAILABLE,
+            $commentThreadResponseTransfer->getMessages()[0]->getValue()
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testRemoveCommentTagRemovesTagFromCommentWithWrongUuid(): void
+    {
+        // Arrange
+        $commentTransfer = (new CommentBuilder())->build()
+            ->setCustomer($this->customerTransfer)
+            ->setUuid(static::FAKE_COMMENT_UUID);
+
+        $commentTagRequestTransfer = (new CommentTagRequestTransfer())
+            ->setName((new CommentTagBuilder())->build()->getName())
+            ->setComment($commentTransfer);
+
+        $this->commentAvailableTags = [$commentTagRequestTransfer->getName()];
+
+        // Act
+        $commentThreadResponseTransfer = $this->getFacadeMock()->removeCommentTag($commentTagRequestTransfer);
+
+        // Assert
+        $this->assertFalse($commentThreadResponseTransfer->getIsSuccessful());
+        $this->assertEquals(
+            static::GLOSSARY_KEY_COMMENT_NOT_FOUND,
+            $commentThreadResponseTransfer->getMessages()[0]->getValue()
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testRemoveCommentTagRemovesUnsavedTagFromComment(): void
+    {
+        // Arrange
+        $commentTransfer = (new CommentBuilder())->build()
+            ->setCustomer($this->customerTransfer);
+
+        $commentRequestTransfer = (new CommentRequestBuilder())->build()
+            ->setComment($commentTransfer);
+
+        $commentThreadResponseTransfer = $this->tester->createComment($commentRequestTransfer);
+
+        $commentTagRequestTransfer = (new CommentTagRequestTransfer())
+            ->setName((new CommentTagBuilder())->build()->getName())
+            ->setComment($commentThreadResponseTransfer->getCommentThread()->getComments()->offsetGet(0));
+
+        $this->commentAvailableTags = [$commentTagRequestTransfer->getName()];
+
+        // Act
+        $commentThreadResponseTransfer = $this->getFacadeMock()->removeCommentTag($commentTagRequestTransfer);
+        $commentThreadTransfer = $this->tester
+            ->getFacade()
+            ->findCommentThreadByOwner($commentRequestTransfer);
+
+        /** @var \Generated\Shared\Transfer\CommentTransfer $storedCommentTransfer */
+        $storedCommentTransfer = $commentThreadTransfer->getComments()->offsetGet(0);
+
+        // Assert
+        $this->assertTrue($commentThreadResponseTransfer->getIsSuccessful());
+        $this->assertCount(0, $storedCommentTransfer->getCommentTags());
     }
 
     /**
