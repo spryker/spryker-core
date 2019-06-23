@@ -82,6 +82,7 @@ class ShipmentCartExpanderTest extends Test
     public function updateShipmentPriceWithQuoteLevelShipmentDataProvider(): array
     {
         return [
+            'quote has not shipment method; shipment price should not have been changed' => $this->getDataWithoutShipment(),
             'quote currency and shipment currency are the same; shipment price should not have been changed' => $this->getDataWithQuoteLevelShipmentWhereQuoteCurrencyAndShipmentCurrencyAreSame(),
         ];
     }
@@ -162,7 +163,7 @@ class ShipmentCartExpanderTest extends Test
     public function updateShipmentPriceWithItemLevelShipment(): array
     {
         return [
-            'quote has multi shipments, quote currency and shipment currency are the same; shipment prices should have been changed' => $this->getDataWithItemLevelShipmentAndQuteCurrencyIsNotSameAsShipmentMethodCurrency(),
+            'quote has multi shipments, quote currency and shipment currency are the same; shipment prices should have been changed' => $this->getDataWithItemLevelShipmentAndQuoteCurrencyIsNotSameAsShipmentMethodCurrency(),
         ];
     }
 
