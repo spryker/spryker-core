@@ -76,7 +76,14 @@ class ShipmentDataProvider implements FormDataProviderInterface
         if (!$quoteTransfer->getStore() || !$quoteTransfer->getCurrency()) {
             return [];
         }
-        $shipmentMethodsTransfer = $this->shipmentFacade->getAvailableMethods($quoteTransfer);
+        $shipmentMethodsCollectionTransfer = $this->shipmentFacade->getAvailableMethodsByShipment($quoteTransfer);
+        /** @var \Generated\Shared\Transfer\ShipmentMethodsTransfer|false $shipmentMethodsTransfer */
+        $shipmentMethodsTransfer = current($shipmentMethodsCollectionTransfer->getShipmentMethods());
+
+        if (!$shipmentMethodsTransfer) {
+            return [];
+        }
+
         $shipmentMethodList = [];
 
         foreach ($shipmentMethodsTransfer->getMethods() as $shipmentMethodTransfer) {

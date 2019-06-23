@@ -124,7 +124,10 @@ class ShipmentMapper implements ShipmentMapperInterface
         $methodTransfer = $this->mapShipmentEntityToShipmentMethodTransfer(new ShipmentMethodTransfer(), $salesShipmentEntity);
         $carrierTransfer = $this->mapShipmentEntityToShipmentCarrierTransfer(new ShipmentCarrierTransfer(), $salesShipmentEntity);
 
-        $shipmentTransfer->setShippingAddress($addressTransfer);
+        if (!$this->isAddressEmpty($addressTransfer)) {
+            $shipmentTransfer->setShippingAddress($addressTransfer);
+        }
+
         $shipmentTransfer->setMethod($methodTransfer);
         $shipmentTransfer->setCarrier($carrierTransfer);
 
@@ -168,5 +171,21 @@ class ShipmentMapper implements ShipmentMapperInterface
         CountryTransfer $countryTransfer
     ): CountryTransfer {
         return $countryTransfer->fromArray($countryEntity->toArray(), true);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
+     * @return bool
+     */
+    protected function isAddressEmpty(AddressTransfer $addressTransfer): bool
+    {
+        foreach ($addressTransfer->toArray() as $addressValue) {
+            if ($addressValue !== null) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

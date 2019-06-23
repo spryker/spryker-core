@@ -88,11 +88,11 @@ class ShipmentDiscountConnectorDependencyProvider extends AbstractBundleDependen
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addShipmentService(Container $container)
+    protected function addShipmentService(Container $container): Container
     {
-        $container[static::SERVICE_SHIPMENT] = function (Container $container) {
+        $container->set(static::SERVICE_SHIPMENT, function (Container $container) {
             return new ShipmentDiscountConnectorToShipmentServiceBridge($container->getLocator()->shipment()->service());
-        };
+        });
 
         return $container;
     }

@@ -249,7 +249,7 @@ class CheckoutRestApiFacadeTest extends Unit
         );
         $mockShipmentFacade
             ->method('getAvailableMethodsByShipment')
-            ->willReturn($this->tester->createShipmentGroupCollectionTransfer());
+            ->willReturn($this->tester->createShipmentMethodsCollectionTransfer());
 
         $mockCheckoutRestApiFactory
             ->method('getShipmentFacade')

@@ -32,10 +32,10 @@ use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxFacadeInterfac
  * @group ProductOption
  * @group Business
  * @group Calculator
- * @group ProductOptionTaxRateCalculatonWithItemLevelShippingAddressTest
+ * @group ProductOptionTaxRateCalculationWithItemLevelShippingAddressTest
  * Add your own group annotations below this line
  */
-class ProductOptionTaxRateCalculatonWithItemLevelShippingAddressTest extends Unit
+class ProductOptionTaxRateCalculationWithItemLevelShippingAddressTest extends Unit
 {
     protected const TAX_SET_NAME = 'test.tax.set';
 

@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ShipmentDiscountConnector\Business\StrategyResolver;
 
-use Spryker\Zed\ShipmentDiscountConnector\Business\Collector\ShipmentDiscountCollectorInterface;
+use Spryker\Zed\ShipmentDiscountConnector\Business\Model\ShipmentDiscountCollectorInterface;
 
 /**
  * @deprecated Exists for Backward Compatibility reasons only.
@@ -18,7 +18,7 @@ interface MultiShipmentCollectorStrategyResolverInterface
      * @param string $type
      * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
-     * @return \Spryker\Zed\ShipmentDiscountConnector\Business\Collector\ShipmentDiscountCollectorInterface
+     * @return \Spryker\Zed\ShipmentDiscountConnector\Business\Model\ShipmentDiscountCollectorInterface
      */
     public function resolveByTypeAndItems(string $type, iterable $itemTransfers): ShipmentDiscountCollectorInterface;
 }

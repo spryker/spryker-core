@@ -132,7 +132,7 @@
         <property name="taxRate" type="float" />
         <property name="unitTaxAmount" type="int" />
         <property name="sumTaxAmount" type="int" />
-        <property name="quantity" type="float" />
+        <property name="quantity" type="int" />
         <property name="unitNetPrice" type="int" />
         <property name="sumNetPrice" type="int" />
         <property name="unitPrice" type="int" />
@@ -217,23 +217,6 @@
         <property name="lastIndex" type="int" />
         <property name="firstPage" type="int" />
         <property name="lastPage" type="int" />
-    </transfer>
-
-    <transfer name="Shipment">
-        <property name="carrier" type="ShipmentCarrier"/>
-        <property name="method" type="ShipmentMethod"/>
-        <property name="shipmentSelection" type="string"/>
-        <property name="shippingAddress" type="Address" />
-        <property name="requestedDeliveryDate" type="string" />
-    </transfer>
-
-    <transfer name="ShipmentGroup">
-        <property name="shipment" type="Shipment" />
-        <property name="items" type="Item[]" singular="item" />
-    </transfer>
-
-    <transfer name="ShipmentGroupCollection">
-        <property name="shipmentGroups" type="ShipmentGroup[]" singular="shipmentGroup"/>
     </transfer>
 
 </transfers>

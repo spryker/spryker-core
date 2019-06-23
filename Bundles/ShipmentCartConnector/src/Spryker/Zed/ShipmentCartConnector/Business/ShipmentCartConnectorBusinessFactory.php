@@ -18,6 +18,7 @@ use Spryker\Zed\ShipmentCartConnector\Business\StrategyResolver\CartExpanderStra
 use Spryker\Zed\ShipmentCartConnector\Business\StrategyResolver\CartExpanderStrategyResolverInterface;
 use Spryker\Zed\ShipmentCartConnector\Business\StrategyResolver\CartValidatorStrategyResolver;
 use Spryker\Zed\ShipmentCartConnector\Business\StrategyResolver\CartValidatorStrategyResolverInterface;
+use Spryker\Zed\ShipmentCartConnector\Dependency\Service\ShipmentCartConnectorToShipmentServiceInterface;
 use Spryker\Zed\ShipmentCartConnector\ShipmentCartConnectorDependencyProvider;
 
 /**
@@ -42,7 +43,8 @@ class ShipmentCartConnectorBusinessFactory extends AbstractBusinessFactory
     {
         return new ShipmentCartExpanderWithMultiShippingAddress(
             $this->getShipmentFacade(),
-            $this->getPriceFacade()
+            $this->getPriceFacade(),
+            $this->getShipmentService()
         );
     }
 
@@ -63,7 +65,8 @@ class ShipmentCartConnectorBusinessFactory extends AbstractBusinessFactory
     {
         return new ShipmentCartValidatorWithMultiShippingAddress(
             $this->getShipmentFacade(),
-            $this->getPriceFacade()
+            $this->getPriceFacade(),
+            $this->getShipmentService()
         );
     }
 
@@ -81,6 +84,14 @@ class ShipmentCartConnectorBusinessFactory extends AbstractBusinessFactory
     protected function getPriceFacade()
     {
         return $this->getProvidedDependency(ShipmentCartConnectorDependencyProvider::FACADE_PRICE);
+    }
+
+    /**
+     * @return \Spryker\Zed\ShipmentCartConnector\Dependency\Service\ShipmentCartConnectorToShipmentServiceInterface
+     */
+    public function getShipmentService(): ShipmentCartConnectorToShipmentServiceInterface
+    {
+        return $this->getProvidedDependency(ShipmentCartConnectorDependencyProvider::SERVICE_SHIPMENT);
     }
 
     /**

@@ -38,6 +38,9 @@ class CustomerAddressKeyGenerator implements CustomerAddressKeyGeneratorInterfac
             unset($addressData[$addressExcludedField]);
         }
 
+        /**
+         * @todo Use UtilEncode.
+         */
         return md5(json_encode($addressData));
     }
 }

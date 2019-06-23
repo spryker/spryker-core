@@ -11,6 +11,7 @@
 
     <transfer name="ShipmentMethods">
         <property name="methods" type="ShipmentMethod[]" singular="method" />
+        <property name="shipmentHash" type="string"/>
     </transfer>
 
     <transfer name="ShipmentMethod">
@@ -126,10 +127,11 @@
         <property name="shipment" type="Shipment" />
         <property name="items" type="Item[]" singular="item" />
         <property name="availableShipmentMethods" type="ShipmentMethods" />
+        <property name="hash" type="string"/>
     </transfer>
 
-    <transfer name="ShipmentGroupCollection">
-        <property name="shipmentGroups" type="ShipmentGroup[]" singular="shipmentGroup"/>
+    <transfer name="ShipmentMethodsCollection">
+        <property name="shipmentMethods" type="ShipmentMethods[]" singular="ShipmentMethods"/>
     </transfer>
 
     <transfer name="ShipmentPrice">

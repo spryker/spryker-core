@@ -56,6 +56,39 @@ class ShipmentCartExpanderTest extends Test
     }
 
     /**
+     * @dataProvider updateShipmentPriceWithoutQuoteLevelShipmentDataProvider
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return void
+     */
+    public function testUpdateShipmentPriceWithoutQuoteLevelShipment(
+        CartChangeTransfer $cartChangeTransfer
+    ): void {
+        // Act
+        $actualCartChangeTransfer = $this->tester->getFacade()->updateShipmentPrice($cartChangeTransfer);
+
+        // Assert
+        /**
+         * @todo Add assertion of shipment expense price.
+         */
+        $this->assertNull(
+            $actualCartChangeTransfer->getQuote()->getShipment(),
+            'Quote shipment should not have been set.'
+        );
+    }
+
+    /**
+     * @return array
+     */
+    public function updateShipmentPriceWithoutQuoteLevelShipmentDataProvider(): array
+    {
+        return [
+            'quote has not shipment method; shipment price should not have been changed' => $this->getDataWithoutShipment(),
+        ];
+    }
+
+    /**
      * @dataProvider updateShipmentPriceWithQuoteLevelShipmentDataProvider
      *
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
@@ -69,6 +102,9 @@ class ShipmentCartExpanderTest extends Test
         $actualCartChangeTransfer = $this->tester->getFacade()->updateShipmentPrice($cartChangeTransfer);
 
         // Assert
+        /**
+         * @todo Add assertion of shipment expense price.
+         */
         $this->assertSame(
             $cartChangeTransfer->getQuote()->getShipment()->getMethod()->getPrices(),
             $actualCartChangeTransfer->getQuote()->getShipment()->getMethod()->getPrices(),
@@ -82,7 +118,6 @@ class ShipmentCartExpanderTest extends Test
     public function updateShipmentPriceWithQuoteLevelShipmentDataProvider(): array
     {
         return [
-            'quote has not shipment method; shipment price should not have been changed' => $this->getDataWithoutShipment(),
             'quote currency and shipment currency are the same; shipment price should not have been changed' => $this->getDataWithQuoteLevelShipmentWhereQuoteCurrencyAndShipmentCurrencyAreSame(),
         ];
     }

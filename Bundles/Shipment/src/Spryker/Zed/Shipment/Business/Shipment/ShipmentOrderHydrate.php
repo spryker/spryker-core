@@ -52,6 +52,8 @@ class ShipmentOrderHydrate implements ShipmentOrderHydrateInterface
             return $orderTransfer;
         }
 
+        $shipmentTransfers = $this->addOrderAddressToShipments($shipmentTransfers, $orderTransfer);
+
         if ($this->isMultiShipmentOrder($shipmentTransfers)) {
             $orderTransfer = $this->hydrateMultiShipmentMethodToOrderTransfer($shipmentTransfers, $orderTransfer);
         } else {
@@ -205,10 +207,27 @@ class ShipmentOrderHydrate implements ShipmentOrderHydrateInterface
      */
     protected function setOrderLevelShipmentMethod(OrderTransfer $orderTransfer): OrderTransfer
     {
-        $firstItemTransfer = $orderTransfer->getItems()[0];
+        $firstItemTransfer = current($orderTransfer->getItems());
         $firstItemTransfer->requireShipment()
             ->getShipment()->requireMethod();
 
         return $orderTransfer->addShipmentMethod($firstItemTransfer->getShipment()->getMethod());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentTransfer[] $shipmentTransfers
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentTransfer[]
+     */
+    protected function addOrderAddressToShipments(array $shipmentTransfers, OrderTransfer $orderTransfer): array
+    {
+        foreach ($shipmentTransfers as $shipmentTransfer) {
+            if ($shipmentTransfer->getShippingAddress() === null) {
+                $shipmentTransfer->setShippingAddress($orderTransfer->getShippingAddress());
+            }
+        }
+
+        return $shipmentTransfers;
     }
 }

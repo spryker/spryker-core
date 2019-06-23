@@ -59,6 +59,13 @@ interface ShipmentRepositoryInterface
     public function hasShipmentMethodByIdShipmentMethod(int $idShipmentMethod): bool;
 
     /**
+     * @param int $idShipmentMethod
+     *
+     * @return bool
+     */
+    public function hasActiveShipmentMethodByIdShipmentMethod(int $idShipmentMethod): bool;
+
+    /**
      * @param int $idSalesOrder
      *
      * @return \Generated\Shared\Transfer\OrderTransfer|null
@@ -78,6 +85,13 @@ interface ShipmentRepositoryInterface
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
      */
     public function findShipmentMethodById(int $idShipmentMethod): ?ShipmentMethodTransfer;
+
+    /**
+     * @param int $idShipmentMethod
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
+     */
+    public function findShipmentMethodByIdWithPricesAndCarrier(int $idShipmentMethod): ?ShipmentMethodTransfer;
 
     /**
      * @param int $idShipmentMethod
