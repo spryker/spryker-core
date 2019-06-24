@@ -27,9 +27,14 @@ class ContentBannerConfig extends AbstractSharedConfig
     public const TWIG_FUNCTION_NAME = 'content_banner';
 
     /**
-     * Content item banner default template identifier
+     * @deprecated Use `\Spryker\Shared\ContentBanner\ContentBannerConfig::WIDGET_TEMPLATE_IDENTIFIER_BOTTOM_TITLE` instead.
      */
     public const WIDGET_TEMPLATE_IDENTIFIER_DEFAULT = 'default';
+
+    /**
+     * Content item banner bottom-title template identifier
+     */
+    public const WIDGET_TEMPLATE_IDENTIFIER_BOTTOM_TITLE = 'bottom-title';
 
     /**
      * Content item banner top-title template identifier
