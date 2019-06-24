@@ -19,6 +19,9 @@ class EntityDefinitionNormalizer extends DefinitionNormalizer
     public const FOREIGN_TABLE = 'foreignTable';
     public const KEY_PHP_NAME = 'phpName';
     public const ENTITY_NAMESPACE = 'entity-namespace';
+    protected const TYPE_MAPPING = [
+        'double' => 'float',
+    ];
 
     /**
      * @var \Spryker\Zed\Transfer\Business\Model\Generator\Helper\PluralizerInterface
@@ -109,8 +112,12 @@ class EntityDefinitionNormalizer extends DefinitionNormalizer
     protected function getTransferType($type)
     {
         $type = mb_strtolower($type);
-        if (!preg_match('/^int|^integer|^float|^string|^array|^\[\]|^bool|^boolean/', $type)) {
+        if (!preg_match('/^int|^integer|^float|^double|^string|^array|^\[\]|^bool|^boolean/', $type)) {
             return 'string';
+        }
+
+        if (array_key_exists($type, static::TYPE_MAPPING)) {
+            return static::TYPE_MAPPING[$type];
         }
 
         return $type;
