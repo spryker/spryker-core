@@ -116,11 +116,7 @@ class EntityDefinitionNormalizer extends DefinitionNormalizer
             return 'string';
         }
 
-        if (array_key_exists($type, static::TYPE_MAPPING)) {
-            return static::TYPE_MAPPING[$type];
-        }
-
-        return $type;
+        return static::TYPE_MAPPING[$type] ?? $type;
     }
 
     /**
