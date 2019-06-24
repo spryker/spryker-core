@@ -121,7 +121,7 @@ class ShipmentOrderHydrate implements ShipmentOrderHydrateInterface
         $salesOrderItemIdsGroupedByShipmentIds = $this->shipmentRepository
             ->getItemIdsGroupedByShipmentIds(
                 $orderTransfer,
-                $this->getDefaultOldOrderShipmentTransfer($orderTransfer, $shipmentTransfers)
+                $this->getDefaultShipmentTransferWithOrderLevelShippingAddress($orderTransfer, $shipmentTransfers)
             );
 
         foreach ($shipmentTransfers as $shipmentTransfer) {
@@ -239,12 +239,14 @@ class ShipmentOrderHydrate implements ShipmentOrderHydrateInterface
     }
 
     /**
+     * @deprecated Exists for Backward Compatibility reasons only.
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param iterable|\Generated\Shared\Transfer\ShipmentTransfer[] $shipmentTransfers
      *
      * @return \Generated\Shared\Transfer\ShipmentTransfer|null
      */
-    protected function getDefaultOldOrderShipmentTransfer(
+    protected function getDefaultShipmentTransferWithOrderLevelShippingAddress(
         OrderTransfer $orderTransfer,
         iterable $shipmentTransfers
     ): ?ShipmentTransfer {

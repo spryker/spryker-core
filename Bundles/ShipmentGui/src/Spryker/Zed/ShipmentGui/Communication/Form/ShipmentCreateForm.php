@@ -43,10 +43,11 @@ class ShipmentCreateForm extends AbstractType
     public const OPTION_SHIPMENT_METHOD_CHOICES = 'method_choices';
     public const OPTION_DATA_CLASS = 'data_class';
 
+    public const GROUP_SHIPPING_ADDRESS = 'shippingAddress';
+
     protected const VALIDATION_DATE_TODAY = 'today';
     protected const FIELD_REQUESTED_DELIVERY_DATE_FORMAT = 'yyyy-MM-dd'; // Format accepted by IntlDate
     protected const VALIDATION_INVALID_DATE_MESSAGE = 'Date should be in correct format %s.';
-    public const GROUP_SHIPPING_ADDRESS = 'shippingAddress';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
