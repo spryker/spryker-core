@@ -153,7 +153,7 @@ class ShipmentCartConnectorFacadeTest extends Unit
      */
     public function testValidateShipmentShouldReturnTrueWhenSelectedShipmentHavePriceWithItemLevelShipments()
     {
-        $shipmentCartConnectorFacade = $this->createShipmentCartConnectorFacade();
+        $shipmentCartConnectorFacade = $this->tester->getFacade();
 
         $shipmentMethodTransfer = $this->tester->haveShipmentMethod();
 
@@ -226,8 +226,8 @@ class ShipmentCartConnectorFacadeTest extends Unit
         $shipmentExpense->setShipment($shipmentTransfer);
 
         $itemTransfer = (new ItemBuilder())->build();
-        $itemTransfer->setSku(self::SKU);
-        $itemTransfer->setGroupKey(self::SKU);
+        $itemTransfer->setSku(static::SKU);
+        $itemTransfer->setGroupKey(static::SKU);
         $itemTransfer->setShipment($shipmentTransfer);
 
         $quoteTransfer->addItem($itemTransfer);

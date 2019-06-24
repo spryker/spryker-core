@@ -17,8 +17,11 @@ use Generated\Shared\DataBuilder\ShipmentBuilder;
 use Generated\Shared\DataBuilder\ShipmentMethodBuilder;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CurrencyTransfer;
+use Generated\Shared\Transfer\ExpenseTransfer;
+use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Shared\Shipment\ShipmentConstants;
 
 /**
@@ -59,22 +62,30 @@ class ShipmentCartExpanderTest extends Test
      * @dataProvider updateShipmentPriceWithoutQuoteLevelShipmentDataProvider
      *
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     * @param int $expectedPrice
      *
      * @return void
      */
     public function testUpdateShipmentPriceWithoutQuoteLevelShipment(
-        CartChangeTransfer $cartChangeTransfer
+        CartChangeTransfer $cartChangeTransfer,
+        int $expectedPrice
     ): void {
+        // Arrange
+        $cartChangeTransfer = $this->haveAvailableShipmentMethods($cartChangeTransfer);
+
         // Act
         $actualCartChangeTransfer = $this->tester->getFacade()->updateShipmentPrice($cartChangeTransfer);
 
         // Assert
-        /**
-         * @todo Add assertion of shipment expense price.
-         */
         $this->assertNull(
             $actualCartChangeTransfer->getQuote()->getShipment(),
             'Quote shipment should not have been set.'
+        );
+
+        $this->assertEquals(
+            $expectedPrice,
+            $actualCartChangeTransfer->getQuote()->getExpenses()[0]->getUnitNetPrice(),
+            sprintf('Shipment price should not have been changed for shipment expense.')
         );
     }
 
@@ -92,23 +103,31 @@ class ShipmentCartExpanderTest extends Test
      * @dataProvider updateShipmentPriceWithQuoteLevelShipmentDataProvider
      *
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     * @param int $expectedPrice
      *
      * @return void
      */
     public function testUpdateShipmentPriceWithQuoteLevelShipment(
-        CartChangeTransfer $cartChangeTransfer
+        CartChangeTransfer $cartChangeTransfer,
+        int $expectedPrice
     ): void {
+        // Arrange
+        $cartChangeTransfer = $this->haveAvailableShipmentMethods($cartChangeTransfer);
+
         // Act
         $actualCartChangeTransfer = $this->tester->getFacade()->updateShipmentPrice($cartChangeTransfer);
 
         // Assert
-        /**
-         * @todo Add assertion of shipment expense price.
-         */
         $this->assertSame(
             $cartChangeTransfer->getQuote()->getShipment()->getMethod()->getPrices(),
             $actualCartChangeTransfer->getQuote()->getShipment()->getMethod()->getPrices(),
             'Shipment price should not have been changed.'
+        );
+
+        $this->assertEquals(
+            $expectedPrice,
+            $actualCartChangeTransfer->getQuote()->getExpenses()[0]->getUnitNetPrice(),
+            sprintf('Shipment price should not have been changed for shipment expense.')
         );
     }
 
@@ -127,14 +146,27 @@ class ShipmentCartExpanderTest extends Test
      */
     public function getDataWithoutShipment(): array
     {
-        return [
-            (new CartChangeBuilder())
-                ->withQuote(
-                    (new QuoteBuilder())
-                        ->withCurrency([CurrencyTransfer::CODE => static::CURRENCY_CODE_EUR])
-                )
-                ->build(),
-        ];
+        $netPriceAmountEur1 = 10000;
+
+        $cartChangeTransfer = (new CartChangeBuilder())
+            ->withQuote(
+                (new QuoteBuilder([QuoteTransfer::PRICE_MODE => ShipmentConstants::PRICE_MODE_NET]))
+                    ->withCurrency([CurrencyTransfer::CODE => static::CURRENCY_CODE_EUR])
+                    ->withExpense(
+                        (new ExpenseBuilder([
+                            ExpenseTransfer::TYPE => ShipmentConstants::SHIPMENT_EXPENSE_TYPE,
+                            ExpenseTransfer::UNIT_PRICE => $netPriceAmountEur1,
+                            ExpenseTransfer::UNIT_NET_PRICE => $netPriceAmountEur1,
+                        ]))
+                    )
+            )
+            ->build();
+
+        $quoteTransfer = $cartChangeTransfer->getQuote();
+        $quoteTransfer->setShipment(null);
+        $quoteTransfer->getExpenses()[0]->setShipment(null);
+
+        return [$cartChangeTransfer, $netPriceAmountEur1];
     }
 
     /**
@@ -142,20 +174,43 @@ class ShipmentCartExpanderTest extends Test
      */
     public function getDataWithQuoteLevelShipmentWhereQuoteCurrencyAndShipmentCurrencyAreSame(): array
     {
-        return [
-            (new CartChangeBuilder())
-                ->withQuote(
-                    (new QuoteBuilder())
-                        ->withShipment(
-                            (new ShipmentBuilder())
-                                ->withMethod(
-                                    (new ShipmentMethodBuilder([ShipmentMethodTransfer::CURRENCY_ISO_CODE => static::CURRENCY_CODE_EUR]))
-                                )
-                        )
-                        ->withCurrency([CurrencyTransfer::CODE => static::CURRENCY_CODE_EUR])
-                )
-                ->build(),
-        ];
+        $netPriceAmountEur1 = 10000;
+        $netPriceAmountUsd1 = 20000;
+
+        $shipmentTransfer1 = (new ShipmentBuilder())
+            ->withMethod(
+                (new ShipmentMethodBuilder([ShipmentMethodTransfer::CURRENCY_ISO_CODE => static::CURRENCY_CODE_EUR]))
+                    ->withPrice(
+                        (new MoneyValueBuilder([MoneyValueTransfer::NET_AMOUNT => $netPriceAmountEur1]))
+                            ->withCurrency([CurrencyTransfer::CODE => static::CURRENCY_CODE_EUR])
+                            ->withStore([StoreTransfer::NAME => static::DEFAULT_STORE_NAME])
+                    )
+                    ->withAnotherPrice(
+                        (new MoneyValueBuilder([MoneyValueTransfer::NET_AMOUNT => $netPriceAmountUsd1]))
+                            ->withCurrency([CurrencyTransfer::CODE => static::CURRENCY_CODE_USD])
+                            ->withStore([StoreTransfer::NAME => static::DEFAULT_STORE_NAME])
+                    )
+            )->build();
+
+        $cartChangeTransfer = (new CartChangeBuilder())
+            ->withQuote(
+                (new QuoteBuilder([QuoteTransfer::PRICE_MODE => ShipmentConstants::PRICE_MODE_NET]))
+                    ->withCurrency([CurrencyTransfer::CODE => static::CURRENCY_CODE_EUR])
+                    ->withExpense(
+                        (new ExpenseBuilder([
+                            ExpenseTransfer::TYPE => ShipmentConstants::SHIPMENT_EXPENSE_TYPE,
+                            ExpenseTransfer::UNIT_PRICE => $netPriceAmountEur1,
+                            ExpenseTransfer::UNIT_NET_PRICE => $netPriceAmountEur1,
+                        ]))
+                    )
+            )
+            ->build();
+
+        $quoteTransfer = $cartChangeTransfer->getQuote();
+        $quoteTransfer->setShipment($shipmentTransfer1);
+        $quoteTransfer->getExpenses()[0]->setShipment($shipmentTransfer1);
+
+        return [$cartChangeTransfer, $netPriceAmountEur1];
     }
 
     /**
@@ -171,23 +226,18 @@ class ShipmentCartExpanderTest extends Test
         array $expectedPrices
     ): void {
         // Arrange
-        foreach ($cartChangeTransfer->getQuote()->getItems() as $itemTransfer) {
-            $shipmentTransfer = $this->tester->haveShipmentMethod([
-                ShipmentMethodTransfer::NAME => $itemTransfer->getShipment()->getMethod()->getName(),
-            ]);
-            $itemTransfer->getShipment()->getMethod()->setIdShipmentMethod($shipmentTransfer->getIdShipmentMethod());
-        }
+        $cartChangeTransfer = $this->haveAvailableShipmentMethods($cartChangeTransfer);
 
         // Act
         $actualCartChangeTransfer = $this->tester->getFacade()->updateShipmentPrice($cartChangeTransfer);
 
         // Assert
-        foreach ($actualCartChangeTransfer->getQuote()->getExpenses() as $expenseTransfer) {
+        foreach ($actualCartChangeTransfer->getQuote()->getExpenses() as $i => $expenseTransfer) {
             $shipmentMethodTransfer = $expenseTransfer->getShipment()->getMethod();
             $this->assertEquals(
                 $expectedPrices[$shipmentMethodTransfer->getName()][$cartChangeTransfer->getQuote()->getCurrency()->getCode()],
                 $expenseTransfer->getUnitNetPrice(),
-                sprintf('Shipment price should have been changed for shipment %s.', $expenseTransfer->getName())
+                sprintf('Shipment price should have been changed for shipment expense #%s.', $i)
             );
         }
     }
@@ -207,61 +257,129 @@ class ShipmentCartExpanderTest extends Test
      */
     protected function getDataWithItemLevelShipmentAndQuoteCurrencyIsNotSameAsShipmentMethodCurrency(): array
     {
-        $shipmentBuilder1 = (new ShipmentBuilder())
+        $netPriceAmountEur1 = 10000;
+        $netPriceAmountUsd1 = 20000;
+        $netPriceAmountEur2 = 15000;
+        $netPriceAmountUsd2 = 30000;
+
+        $shipmentTransfer1 = (new ShipmentBuilder())
             ->withMethod(
                 (new ShipmentMethodBuilder([ShipmentMethodTransfer::CURRENCY_ISO_CODE => static::CURRENCY_CODE_EUR]))
                     ->withPrice(
-                        (new MoneyValueBuilder())
+                        (new MoneyValueBuilder([MoneyValueTransfer::NET_AMOUNT => $netPriceAmountEur1]))
                             ->withCurrency([CurrencyTransfer::CODE => static::CURRENCY_CODE_EUR])
+                            ->withStore([StoreTransfer::NAME => static::DEFAULT_STORE_NAME])
                     )
                     ->withAnotherPrice(
-                        (new MoneyValueBuilder())
+                        (new MoneyValueBuilder([MoneyValueTransfer::NET_AMOUNT => $netPriceAmountUsd1]))
                             ->withCurrency([CurrencyTransfer::CODE => static::CURRENCY_CODE_USD])
+                            ->withStore([StoreTransfer::NAME => static::DEFAULT_STORE_NAME])
                     )
-            );
-        $shipmentBuilder2 = (new ShipmentBuilder())
+            )->build();
+        $shipmentTransfer2 = (new ShipmentBuilder())
             ->withAnotherMethod(
                 (new ShipmentMethodBuilder([ShipmentMethodTransfer::CURRENCY_ISO_CODE => static::CURRENCY_CODE_EUR]))
                     ->withAnotherPrice(
-                        (new MoneyValueBuilder())
+                        (new MoneyValueBuilder([MoneyValueTransfer::NET_AMOUNT => $netPriceAmountEur2]))
                             ->withCurrency([CurrencyTransfer::CODE => static::CURRENCY_CODE_EUR])
+                            ->withStore([StoreTransfer::NAME => static::DEFAULT_STORE_NAME])
                     )
                     ->withAnotherPrice(
-                        (new MoneyValueBuilder())
+                        (new MoneyValueBuilder([MoneyValueTransfer::NET_AMOUNT => $netPriceAmountUsd2]))
                             ->withCurrency([CurrencyTransfer::CODE => static::CURRENCY_CODE_USD])
+                            ->withStore([StoreTransfer::NAME => static::DEFAULT_STORE_NAME])
                     )
-            );
+            )->build();
 
         $cartChangeTransfer = (new CartChangeBuilder())
             ->withQuote(
                 (new QuoteBuilder([
                     QuoteTransfer::PRICE_MODE => ShipmentConstants::PRICE_MODE_NET,
                 ]))
-                    ->withItem(
-                        (new ItemBuilder())
-                            ->withShipment($shipmentBuilder1)
-                    )
-                    ->withAnotherItem(
-                        (new ItemBuilder())
-                            ->withShipment($shipmentBuilder2)
-                    )
+                    ->withItem()
+                    ->withAnotherItem()
                     ->withCurrency([CurrencyTransfer::CODE => static::CURRENCY_CODE_USD])
                 ->withExpense(
-                    (new ExpenseBuilder())->withShipment($shipmentBuilder1)
+                    (new ExpenseBuilder([
+                        ExpenseTransfer::TYPE => ShipmentConstants::SHIPMENT_EXPENSE_TYPE,
+                        ExpenseTransfer::UNIT_PRICE => $netPriceAmountEur1,
+                        ExpenseTransfer::UNIT_NET_PRICE => $netPriceAmountEur1,
+                    ]))
                 )
                 ->withAnotherExpense(
-                    (new ExpenseBuilder())->withShipment($shipmentBuilder2)
+                    (new ExpenseBuilder([
+                        ExpenseTransfer::TYPE => ShipmentConstants::SHIPMENT_EXPENSE_TYPE,
+                        ExpenseTransfer::UNIT_PRICE => $netPriceAmountEur2,
+                        ExpenseTransfer::UNIT_NET_PRICE => $netPriceAmountEur2,
+                    ]))
                 )
             )
             ->build();
 
-        $expectedPrices = [];
-        foreach ($cartChangeTransfer->getQuote()->getItems() as $itemTransfer) {
-            foreach ($itemTransfer->getShipment()->getMethod()->getPrices() as $moneyValueTransfer) {
-                $expectedPrices[$itemTransfer->getShipment()->getMethod()->getName()] = [$moneyValueTransfer->getCurrency()->getCode() => $moneyValueTransfer->getNetAmount()];
-            }
-        }
+        $quoteTransfer = $cartChangeTransfer->getQuote();
+        $quoteTransfer->getItems()[0]->setShipment($shipmentTransfer1);
+        $quoteTransfer->getExpenses()[0]->setShipment($shipmentTransfer1);
+        $quoteTransfer->getItems()[1]->setShipment($shipmentTransfer2);
+        $quoteTransfer->getExpenses()[1]->setShipment($shipmentTransfer2);
+
+        $expectedPrices = [
+            $shipmentTransfer1->getMethod()->getName() => [
+                $shipmentTransfer1->getMethod()->getPrices()[0]->getCurrency()->getCode() => $shipmentTransfer1->getMethod()->getPrices()[0]->getNetAmount(),
+                $shipmentTransfer1->getMethod()->getPrices()[1]->getCurrency()->getCode() => $shipmentTransfer1->getMethod()->getPrices()[1]->getNetAmount(),
+            ],
+            $shipmentTransfer2->getMethod()->getName() => [
+                $shipmentTransfer2->getMethod()->getPrices()[0]->getCurrency()->getCode() => $shipmentTransfer2->getMethod()->getPrices()[0]->getNetAmount(),
+                $shipmentTransfer2->getMethod()->getPrices()[1]->getCurrency()->getCode() => $shipmentTransfer2->getMethod()->getPrices()[1]->getNetAmount(),
+            ],
+        ];
 
         return [$cartChangeTransfer, $expectedPrices];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    protected function haveAvailableShipmentMethods(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
+    {
+        foreach ($cartChangeTransfer->getQuote()->getExpenses() as $expenseTransfer) {
+            if ($expenseTransfer->getShipment() === null
+                || $expenseTransfer->getShipment()->getMethod() === null) {
+                continue;
+            }
+
+            $shipmentTransfer = $this->tester->haveShipmentMethod([
+                ShipmentMethodTransfer::NAME => $expenseTransfer->getShipment()->getMethod()->getName(),
+            ],
+                [],
+                $this->prepareShipmentMethodPriceListBuilderOptions($expenseTransfer->getShipment()->getMethod())
+            );
+            $expenseTransfer->getShipment()->getMethod()->setIdShipmentMethod($shipmentTransfer->getIdShipmentMethod());
+        }
+
+        return $cartChangeTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
+     *
+     * @return array
+     */
+    protected function prepareShipmentMethodPriceListBuilderOptions(ShipmentMethodTransfer $shipmentMethodTransfer): array
+    {
+        $options = [];
+
+        foreach ($shipmentMethodTransfer->getPrices() as $moneyValueTransfer) {
+            $storeName = $moneyValueTransfer->getStore()->getName();
+            if (!isset($options[$storeName])) {
+                $options[$storeName] = [];
+            }
+
+            $currencyIsoCode = $moneyValueTransfer->getCurrency()->getCode();
+            $options[$storeName][$currencyIsoCode] = $moneyValueTransfer->modifiedToArray();
+        }
+
+        return $options;
     }
 }
