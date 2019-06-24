@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\QuotePermissionGroupCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuotePermissionGroupTransfer;
 use Generated\Shared\Transfer\ShareDetailCollectionTransfer;
 use Generated\Shared\Transfer\ShareDetailCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ShareDetailTransfer;
 use Generated\Shared\Transfer\SharedQuoteCriteriaFilterTransfer;
 use Orm\Zed\CompanyUser\Persistence\Map\SpyCompanyUserTableMap;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
@@ -427,5 +428,28 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
         }
 
         return $quoteCompanyUserQuery;
+    }
+
+    /**
+     * @param int $idQuote
+     * @param int $idCompanyUser
+     *
+     * @return \Generated\Shared\Transfer\ShareDetailTransfer|null
+     */
+    public function findShareDetailByIdQuoteAndIdCompanyUser(int $idQuote, int $idCompanyUser): ?ShareDetailTransfer
+    {
+        $quoteCompanyUserEntity = $this->getFactory()
+            ->createQuoteCompanyUserQuery()
+            ->filterByFkQuote($idQuote)
+            ->filterByFkCompanyUser($idCompanyUser)
+            ->findOne();
+
+        if (!$quoteCompanyUserEntity) {
+            return null;
+        }
+
+        return $this->getFactory()
+            ->createQuoteShareDetailMapper()
+            ->mapQuoteCompanyUserToShareDetailTransfer($quoteCompanyUserEntity);
     }
 }
