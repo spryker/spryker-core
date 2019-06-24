@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\Shipment\Business\Mapper;
 
+use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ShipmentFormTransfer;
+use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 
 class ShipmentMapper implements ShipmentMapperInterface
@@ -21,5 +23,18 @@ class ShipmentMapper implements ShipmentMapperInterface
     public function mapFormDataToShipmentTransfer(ShipmentFormTransfer $shipmentFormTransfer, ShipmentTransfer $shipmentTransfer): ShipmentTransfer
     {
         return $shipmentTransfer->fromArray($shipmentFormTransfer->toArray(), true);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
+     * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
+     *
+     * @return \Generated\Shared\Transfer\ExpenseTransfer
+     */
+    public function mapShipmentMethodTransferToExpenseTransfer(
+        ShipmentMethodTransfer $shipmentMethodTransfer,
+        ExpenseTransfer $expenseTransfer
+    ): ExpenseTransfer {
+        return $expenseTransfer->fromArray($shipmentMethodTransfer->modifiedToArray(), true);
     }
 }
