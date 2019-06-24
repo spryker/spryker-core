@@ -15,7 +15,7 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Symfony\Component\HttpFoundation\Response;
 
-class CartErrorRestResponseBuilder
+class CartErrorRestResponseBuilder implements CartErrorRestResponseBuilderInterface
 {
     /**
      * @var \Spryker\Glue\CartsRestApi\CartsRestApiConfig
@@ -71,8 +71,9 @@ class CartErrorRestResponseBuilder
         RestErrorMessageTransfer $restErrorMessageTransfer
     ): RestErrorMessageTransfer {
         $errorIdentifier = $quoteErrorTransfer->getErrorIdentifier();
-        if ($errorIdentifier) {
-            $errorIdentifierMapping = $this->config->getErrorIdentifierToRestErrorMapping()[$quoteErrorTransfer->getErrorIdentifier()];
+        $errorIdentifierToRestErrorMapping = $this->config->getErrorIdentifierToRestErrorMapping();
+        if ($errorIdentifier && isset($errorIdentifierToRestErrorMapping[$errorIdentifier])) {
+            $errorIdentifierMapping = $errorIdentifierToRestErrorMapping[$errorIdentifier];
             $restErrorMessageTransfer->fromArray($errorIdentifierMapping, true);
 
             return $restErrorMessageTransfer;
