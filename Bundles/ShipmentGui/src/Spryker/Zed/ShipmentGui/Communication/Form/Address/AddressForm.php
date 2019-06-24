@@ -8,7 +8,7 @@
 namespace Spryker\Zed\ShipmentGui\Communication\Form\Address;
 
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
-use Spryker\Zed\ShipmentGui\Communication\Form\ShipmentFormCreate;
+use Spryker\Zed\ShipmentGui\Communication\Form\ShipmentCreateForm;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -409,7 +409,7 @@ class AddressForm extends AbstractType
     {
         return new NotBlank([
             'message' => 'Field should not be empty.',
-            'groups' => [ShipmentFormCreate::GROUP_SHIPPING_ADDRESS],
+            'groups' => [ShipmentCreateForm::GROUP_SHIPPING_ADDRESS],
         ]);
     }
 

@@ -27,7 +27,7 @@ use Symfony\Component\Validator\Constraints\Required;
  * @method \Spryker\Zed\ShipmentGui\Communication\ShipmentGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\ShipmentGui\ShipmentGuiConfig getConfig()
  */
-class ShipmentFormCreate extends AbstractType
+class ShipmentCreateForm extends AbstractType
 {
     public const FIELD_ID_SALES_SHIPMENT = 'id_sales_shipment';
     public const FIELD_ID_SALES_ORDER = 'id_sales_order';

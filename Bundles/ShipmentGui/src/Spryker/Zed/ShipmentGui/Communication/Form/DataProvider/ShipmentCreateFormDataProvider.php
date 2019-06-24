@@ -9,7 +9,7 @@ namespace Spryker\Zed\ShipmentGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\ShipmentFormTransfer;
 
-class ShipmentFormCreateDataProvider
+class ShipmentCreateFormDataProvider
 {
     /**
      * @var \Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentFormDefaultDataProvider
