@@ -222,10 +222,10 @@ class ShipmentSaver implements ShipmentSaverInterface
         }
 
         $shipmentHasKey = $this->shipmentService->getShipmentHashKey($shipmentTransfer);
-        $idShipment = $shipmentTransfer->getIdSalesShipment();
+        $originalIdSalesShipment = $shipmentTransfer->getIdSalesShipment();
         foreach ($orderShipmentGroupTransfers as $orderShipmentGroupTransfer) {
-            $idOrderShipment = $orderShipmentGroupTransfer->requireShipment()->getShipment()->getIdSalesShipment();
-            if ($orderShipmentGroupTransfer->getHash() === $shipmentHasKey && $idShipment !== $idOrderShipment) {
+            $idSalesShipment = $orderShipmentGroupTransfer->requireShipment()->getShipment()->getIdSalesShipment();
+            if ($orderShipmentGroupTransfer->getHash() === $shipmentHasKey && $originalIdSalesShipment !== $idSalesShipment) {
                 return false;
             }
         }

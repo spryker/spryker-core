@@ -41,6 +41,7 @@ class ShipmentFormCreate extends AbstractType
 
     public const OPTION_SHIPMENT_ADDRESS_CHOICES = 'address_choices';
     public const OPTION_SHIPMENT_METHOD_CHOICES = 'method_choices';
+    public const OPTION_DATA_CLASS = 'data_class';
 
     protected const VALIDATION_DATE_TODAY = 'today';
     protected const FIELD_REQUESTED_DELIVERY_DATE_FORMAT = 'yyyy-MM-dd'; // Format accepted by IntlDate

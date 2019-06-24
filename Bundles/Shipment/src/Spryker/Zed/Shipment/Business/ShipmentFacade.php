@@ -375,12 +375,12 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ShipmentGroupTransfer
      */
-    public function createShipmentGroupTransfer(
+    public function createShipmentGroupTransferWithListedItems(
         ShipmentFormTransfer $shipmentFormTransfer,
         array $itemListUpdatedStatus
     ): ShipmentGroupTransfer {
         return $this->getFactory()
-            ->createShipmentGrouper()
-            ->createShipmentGroupTransfer($shipmentFormTransfer, $itemListUpdatedStatus);
+            ->createShipmentGroupCreator()
+            ->createShipmentGroupTransferWithListedItems($shipmentFormTransfer, $itemListUpdatedStatus);
     }
 }

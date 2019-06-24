@@ -34,8 +34,8 @@ use Spryker\Zed\Shipment\Business\Shipment\ShipmentSaver;
 use Spryker\Zed\Shipment\Business\Shipment\ShipmentSaverInterface;
 use Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentFetcher;
 use Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentFetcherInterface;
-use Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentGrouper;
-use Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentGrouperInterface;
+use Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentGroupCreator;
+use Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentGroupCreatorInterface;
 use Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentMethodExpander;
 use Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentMethodExpanderInterface;
 use Spryker\Zed\Shipment\Business\ShipmentMethod\MethodAvailabilityChecker;
@@ -415,11 +415,11 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentGrouperInterface
+     * @return \Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentGroupCreatorInterface
      */
-    public function createShipmentGrouper(): ShipmentGrouperInterface
+    public function createShipmentGroupCreator(): ShipmentGroupCreatorInterface
     {
-        return new ShipmentGrouper(
+        return new ShipmentGroupCreator(
             $this->createShipmentMapper(),
             $this->createMethodReader(),
             $this->getShipmentService(),

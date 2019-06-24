@@ -62,7 +62,7 @@ class EditController extends AbstractController
 
             $shipmentGroupTransfer = $this->getFactory()
                 ->getShipmentFacade()
-                ->createShipmentGroupTransfer($form->getData(), $this->getItemListUpdatedStatus($form));
+                ->createShipmentGroupTransferWithListedItems($form->getData(), $this->getItemListUpdatedStatus($form));
 
             $responseTransfer = $this->getFactory()
                 ->getShipmentFacade()

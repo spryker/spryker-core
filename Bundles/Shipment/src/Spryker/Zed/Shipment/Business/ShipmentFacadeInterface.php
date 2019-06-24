@@ -330,7 +330,7 @@ interface ShipmentFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ShipmentGroupTransfer
      */
-    public function createShipmentGroupTransfer(
+    public function createShipmentGroupTransferWithListedItems(
         ShipmentFormTransfer $shipmentFormTransfer,
         array $itemListUpdatedStatus
     ): ShipmentGroupTransfer;

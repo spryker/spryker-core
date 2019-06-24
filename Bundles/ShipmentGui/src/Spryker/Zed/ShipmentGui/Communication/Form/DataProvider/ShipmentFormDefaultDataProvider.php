@@ -22,8 +22,6 @@ use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToShipmentFacadeInterfa
 
 class ShipmentFormDefaultDataProvider
 {
-    public const OPTION_DATA_CLASS = 'data_class';
-
     protected const ADDRESS_LABEL_PATTERN = '%s %s %s, %s %s, %s %s';
     protected const SHIPMENT_METHODS_OPTIONS_NAMES_PATTERN = '%s - %s';
 
@@ -134,7 +132,7 @@ class ShipmentFormDefaultDataProvider
     public function getOptions(int $idSalesOrder, ?int $idSalesShipment = null): array
     {
         $options = [
-            static::OPTION_DATA_CLASS => ShipmentFormTransfer::class,
+            ShipmentFormCreate::OPTION_DATA_CLASS => ShipmentFormTransfer::class,
             ShipmentFormCreate::OPTION_SHIPMENT_ADDRESS_CHOICES => $this->getShippingAddressesOptions($idSalesOrder),
             ShipmentFormCreate::OPTION_SHIPMENT_METHOD_CHOICES => $this->getShippingMethodsOptions(),
             ShipmentFormCreate::FIELD_SHIPMENT_SELECTED_ITEMS => $this->getShipmentSelectedItemsIds($idSalesShipment),

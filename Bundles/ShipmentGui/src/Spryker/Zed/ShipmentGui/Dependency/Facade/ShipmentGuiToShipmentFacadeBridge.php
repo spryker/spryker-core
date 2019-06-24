@@ -74,10 +74,10 @@ class ShipmentGuiToShipmentFacadeBridge implements ShipmentGuiToShipmentFacadeIn
      *
      * @return \Generated\Shared\Transfer\ShipmentGroupTransfer
      */
-    public function createShipmentGroupTransfer(
+    public function createShipmentGroupTransferWithListedItems(
         ShipmentFormTransfer $shipmentFormTransfer,
         array $itemListUpdatedStatus
     ): ShipmentGroupTransfer {
-        return $this->shipmentFacade->createShipmentGroupTransfer($shipmentFormTransfer, $itemListUpdatedStatus);
+        return $this->shipmentFacade->createShipmentGroupTransferWithListedItems($shipmentFormTransfer, $itemListUpdatedStatus);
     }
 }

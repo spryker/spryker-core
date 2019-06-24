@@ -16,7 +16,7 @@ use Spryker\Zed\Shipment\Business\Mapper\ShipmentMapperInterface;
 use Spryker\Zed\Shipment\Business\ShipmentMethod\MethodReaderInterface;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToSalesFacadeInterface;
 
-class ShipmentGrouper implements ShipmentGrouperInterface
+class ShipmentGroupCreator implements ShipmentGroupCreatorInterface
 {
     /**
      * @var \Spryker\Zed\Shipment\Business\Mapper\ShipmentMapperInterface
@@ -62,7 +62,7 @@ class ShipmentGrouper implements ShipmentGrouperInterface
      *
      * @return \Generated\Shared\Transfer\ShipmentGroupTransfer
      */
-    public function createShipmentGroupTransfer(
+    public function createShipmentGroupTransferWithListedItems(
         ShipmentFormTransfer $shipmentFormTransfer,
         array $itemListUpdatedStatus
     ): ShipmentGroupTransfer {
@@ -168,7 +168,7 @@ class ShipmentGrouper implements ShipmentGrouperInterface
 
         return $idSalesOrderItem !== null
             && isset($itemListUpdatedStatus[$idSalesOrderItem])
-            && is_bool($itemListUpdatedStatus[$idSalesOrderItem])
+            && is_scalar($itemListUpdatedStatus[$idSalesOrderItem])
             && $itemListUpdatedStatus[$idSalesOrderItem];
     }
 }
