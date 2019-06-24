@@ -37,14 +37,37 @@ class CustomerDataHelper extends Module
             ->withShippingAddress()
             ->build();
 
+        $this->ensureCustomerWithReferenceDoesNotExist($customerTransfer);
+
         $customerResponseTransfer = $this->getCustomerFacade()->registerCustomer($customerTransfer);
 
         $this->getDataCleanupHelper()->_addCleanup(function () use ($customerResponseTransfer) {
+            if (!$customerResponseTransfer->getIsSuccess()) {
+                return;
+            }
             $this->getCustomerFacade()
                 ->deleteCustomer($customerResponseTransfer->getCustomerTransfer());
         });
 
-        return $customerTransfer;
+        return $customerResponseTransfer->getCustomerTransfer();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return void
+     */
+    protected function ensureCustomerWithReferenceDoesNotExist(CustomerTransfer $customerTransfer): void
+    {
+        if (!$customerTransfer->getCustomerReference()) {
+            return;
+        }
+
+        $customerTransferFound = $this->getCustomerFacade()->findByReference($customerTransfer->getCustomerReference());
+
+        if ($customerTransferFound) {
+            $this->getCustomerFacade()->deleteCustomer($customerTransferFound);
+        }
     }
 
     /**

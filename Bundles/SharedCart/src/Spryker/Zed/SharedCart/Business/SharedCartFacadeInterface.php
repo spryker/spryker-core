@@ -17,6 +17,8 @@ use Generated\Shared\Transfer\QuotePermissionGroupResponseTransfer;
 use Generated\Shared\Transfer\QuotePermissionGroupTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ResourceShareRequestTransfer;
+use Generated\Shared\Transfer\ResourceShareResponseTransfer;
 use Generated\Shared\Transfer\ShareCartRequestTransfer;
 use Generated\Shared\Transfer\ShareCartResponseTransfer;
 use Generated\Shared\Transfer\ShareDetailCollectionTransfer;
@@ -282,4 +284,19 @@ interface SharedCartFacadeInterface
      * @return void
      */
     public function deleteQuoteCompanyUser(ShareCartRequestTransfer $shareCartRequestTransfer): void;
+
+    /**
+     * Specification:
+     * - Creates cart share for provided Quote and provided company user within the same business unit.
+     * - Updates permission to Full-access, if resource was shared with higher permission.
+     * - Returns 'isSuccessful=true' with ResourceShareTransfer if cart was shared successfully.
+     * - Returns 'isSuccessful=false' with error messages otherwise.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
+     */
+    public function shareCartByResourceShareRequest(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer;
 }
