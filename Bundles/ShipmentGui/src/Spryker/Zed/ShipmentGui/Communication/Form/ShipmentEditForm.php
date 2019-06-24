@@ -13,7 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class ShipmentFormEdit extends ShipmentFormCreate
+class ShipmentEditForm extends ShipmentCreateForm
 {
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -32,9 +32,9 @@ class ShipmentFormEdit extends ShipmentFormCreate
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
-     * @return \Spryker\Zed\ShipmentGui\Communication\Form\ShipmentFormCreate
+     * @return \Spryker\Zed\ShipmentGui\Communication\Form\ShipmentCreateForm
      */
-    protected function addOrderItemsForm(FormBuilderInterface $builder, array $options = []): ShipmentFormCreate
+    protected function addOrderItemsForm(FormBuilderInterface $builder, array $options = []): ShipmentCreateForm
     {
         $builder->add(static::FORM_SALES_ORDER_ITEMS, CollectionType::class, [
             'entry_type' => ItemForm::class,

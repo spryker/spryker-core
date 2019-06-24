@@ -10,7 +10,9 @@ namespace Spryker\Zed\ShipmentGui\Communication\Controller;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\Sales\SalesConfig;
-use Spryker\Zed\ShipmentGui\Communication\Form\ShipmentFormCreate;
+use Spryker\Zed\ShipmentGui\Communication\Form\Item\ItemForm;
+use Spryker\Zed\ShipmentGui\Communication\Form\ShipmentCreateForm;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -24,7 +26,7 @@ class EditController extends AbstractController
     protected const REDIRECT_URL_DEFAULT = '/sales';
     protected const REDIRECT_URL = '/sales/detail';
 
-    protected const MESSAGE_SHIPMENT_EDIT_SUCCESS = 'Shipment has been successfully created.';
+    protected const MESSAGE_SHIPMENT_EDIT_SUCCESS = 'Shipment has been successfully edited.';
     protected const MESSAGE_SHIPMENT_EDIT_ERROR = 'Shipment create failed.';
 
     /**
@@ -36,10 +38,10 @@ class EditController extends AbstractController
     {
         $idSalesOrder = $request->query->get(static::PARAM_ID_SALES_ORDER);
         $idSalesShipment = $request->query->get(static::PARAM_ID_SALES_SHIPMENT);
-        $dataProvider = $this->getFactory()->createShipmentFormEditDataProvider();
+        $dataProvider = $this->getFactory()->createShipmentEditFormDataProvider();
 
         $form = $this->getFactory()
-            ->createShipmentFormEdit(
+            ->createShipmentEditForm(
                 $dataProvider->getData($idSalesOrder, $idSalesShipment),
                 $dataProvider->getOptions($idSalesOrder, $idSalesShipment)
             )
@@ -58,24 +60,18 @@ class EditController extends AbstractController
                 return $this->redirectResponse($redirectUrl);
             }
 
-            $formData = $form->getData();
-
-            $idCustomerAddress = isset($formData[ShipmentFormCreate::FIELD_ID_CUSTOMER_ADDRESS]) ?
-                (int)$formData[ShipmentFormCreate::FIELD_ID_CUSTOMER_ADDRESS] : null;
-
-            $idShipmentMethod = isset($formData[ShipmentFormCreate::FIELD_ID_SHIPMENT_METHOD]) ?
-                (int)$formData[ShipmentFormCreate::FIELD_ID_SHIPMENT_METHOD] : null;
-
             $shipmentGroupTransfer = $this->getFactory()
                 ->getShipmentFacade()
-                ->createShipmentGroupTransfer($formData, $idCustomerAddress, $idShipmentMethod);
+                ->createShipmentGroupTransferWithListedItems($form->getData(), $this->getItemListUpdatedStatus($form));
 
             $responseTransfer = $this->getFactory()
                 ->getShipmentFacade()
                 ->saveShipment($shipmentGroupTransfer, $orderTransfer);
 
             if ($responseTransfer->getIsSuccessful()) {
-                $this->addSuccessMessage('Shipment has been updated successfully');
+                $this->addSuccessMessage(static::MESSAGE_SHIPMENT_EDIT_SUCCESS);
+            } else {
+                $this->addErrorMessage(static::MESSAGE_SHIPMENT_EDIT_ERROR);
             }
 
             $redirectUrl = Url::generate(static::REDIRECT_URL, [
@@ -89,5 +85,22 @@ class EditController extends AbstractController
             'idSalesOrder' => $idSalesOrder,
             'form' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormInterface $form
+     *
+     * @return bool[]
+     */
+    protected function getItemListUpdatedStatus(FormInterface $form): array
+    {
+        $requestedItems = [];
+        foreach ($form->get(ShipmentCreateForm::FORM_SALES_ORDER_ITEMS) as $itemForm) {
+            $itemTransfer = $itemForm->getData();
+            /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
+            $requestedItems[$itemTransfer->getIdSalesOrderItem()] = $itemForm->get(ItemForm::FIELD_IS_UPDATED)->getData();
+        }
+
+        return $requestedItems;
     }
 }

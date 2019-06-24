@@ -18,6 +18,8 @@ use Spryker\Zed\Sales\Persistence\Propel\Mapper\SalesExpenseMapper;
 use Spryker\Zed\Sales\Persistence\Propel\Mapper\SalesExpenseMapperInterface;
 use Spryker\Zed\Sales\Persistence\Propel\Mapper\SalesOrderAddressMapper;
 use Spryker\Zed\Sales\Persistence\Propel\Mapper\SalesOrderAddressMapperInterface;
+use Spryker\Zed\Sales\Persistence\Propel\Mapper\SalesOrderItemMapper;
+use Spryker\Zed\Sales\Persistence\Propel\Mapper\SalesOrderItemMapperInterface;
 
 /**
  * @method \Spryker\Zed\Sales\SalesConfig getConfig()
@@ -91,5 +93,13 @@ class SalesPersistenceFactory extends AbstractPersistenceFactory
     public function createSalesOrderAddressMapper(): SalesOrderAddressMapperInterface
     {
         return new SalesOrderAddressMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Persistence\Propel\Mapper\SalesOrderItemMapperInterface
+     */
+    public function createSalesOrderItemMapper(): SalesOrderItemMapperInterface
+    {
+        return new SalesOrderItemMapper();
     }
 }

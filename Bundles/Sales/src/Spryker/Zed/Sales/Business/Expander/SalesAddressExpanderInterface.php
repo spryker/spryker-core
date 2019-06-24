@@ -5,20 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Sales\Business\Mapper;
+namespace Spryker\Zed\Sales\Business\Expander;
 
 use Generated\Shared\Transfer\AddressTransfer;
 
-interface SalesMapperInterface
+interface SalesAddressExpanderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
-     * @param \Generated\Shared\Transfer\AddressTransfer $modifiedAddressTransfer
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
-    public function mapAddressTransferToAddressTransfer(
-        AddressTransfer $addressTransfer,
-        AddressTransfer $modifiedAddressTransfer
-    ): AddressTransfer;
+    public function expandWithCustomerOrSalesAddress(AddressTransfer $addressTransfer): AddressTransfer;
 }

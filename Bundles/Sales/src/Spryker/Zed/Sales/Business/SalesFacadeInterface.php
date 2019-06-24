@@ -313,4 +313,16 @@ interface SalesFacadeInterface
      * @return \Generated\Shared\Transfer\ItemTransfer[]|\ArrayObject
      */
     public function findSalesOrderItemsIdsBySalesShipmentId(int $idSalesShipment): ArrayObject;
+
+    /**
+     * Specification:
+     * - Expands AddressTransfer with customer address data or sales address data and returns the modified object.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer
+     */
+    public function expandWithCustomerOrSalesAddress(AddressTransfer $addressTransfer): AddressTransfer;
 }

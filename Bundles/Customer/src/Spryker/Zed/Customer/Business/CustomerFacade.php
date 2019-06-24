@@ -335,6 +335,22 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
      *
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
+     * @return \Generated\Shared\Transfer\AddressTransfer|null
+     */
+    public function findCustomerAddressByAddressData(AddressTransfer $addressTransfer): ?AddressTransfer
+    {
+        return $this->getFactory()
+            ->createAddress()
+            ->findCustomerAddressByAddressData($addressTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
      * @return bool
      */
     public function setDefaultBillingAddress(AddressTransfer $addressTransfer)

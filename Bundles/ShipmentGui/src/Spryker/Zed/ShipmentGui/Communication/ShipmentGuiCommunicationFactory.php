@@ -7,12 +7,13 @@
 
 namespace Spryker\Zed\ShipmentGui\Communication;
 
+use Generated\Shared\Transfer\ShipmentFormTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentFormCreateDataProvider;
+use Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentCreateFormDataProvider;
+use Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentEditFormDataProvider;
 use Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentFormDefaultDataProvider;
-use Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentFormEditDataProvider;
-use Spryker\Zed\ShipmentGui\Communication\Form\ShipmentFormCreate;
-use Spryker\Zed\ShipmentGui\Communication\Form\ShipmentFormEdit;
+use Spryker\Zed\ShipmentGui\Communication\Form\ShipmentCreateForm;
+use Spryker\Zed\ShipmentGui\Communication\Form\ShipmentEditForm;
 use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToCustomerFacadeInterface;
 use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToSalesFacadeInterface;
 use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToShipmentFacadeInterface;
@@ -25,19 +26,19 @@ use Symfony\Component\Form\FormInterface;
 class ShipmentGuiCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return \Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentFormCreateDataProvider
+     * @return \Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentCreateFormDataProvider
      */
-    public function createShipmentFormCreateDataProvider(): ShipmentFormCreateDataProvider
+    public function createShipmentCreateFormDataProvider(): ShipmentCreateFormDataProvider
     {
-        return new ShipmentFormCreateDataProvider($this->createShipmentFormDefaultDataProvider());
+        return new ShipmentCreateFormDataProvider($this->createShipmentFormDefaultDataProvider());
     }
 
     /**
-     * @return \Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentFormEditDataProvider
+     * @return \Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentEditFormDataProvider
      */
-    public function createShipmentFormEditDataProvider(): ShipmentFormEditDataProvider
+    public function createShipmentEditFormDataProvider(): ShipmentEditFormDataProvider
     {
-        return new ShipmentFormEditDataProvider($this->createShipmentFormDefaultDataProvider());
+        return new ShipmentEditFormDataProvider($this->createShipmentFormDefaultDataProvider());
     }
 
     /**
@@ -53,31 +54,31 @@ class ShipmentGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param array $formData
+     * @param \Generated\Shared\Transfer\ShipmentFormTransfer $shipmentFormTransfer
      * @param array $formOptions
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createShipmentFormCreate(array $formData, array $formOptions = []): FormInterface
+    public function createShipmentCreateForm(ShipmentFormTransfer $shipmentFormTransfer, array $formOptions = []): FormInterface
     {
         return $this->getFormFactory()->create(
-            ShipmentFormCreate::class,
-            $formData,
+            ShipmentCreateForm::class,
+            $shipmentFormTransfer,
             $formOptions
         );
     }
 
     /**
-     * @param array $formData
+     * @param \Generated\Shared\Transfer\ShipmentFormTransfer $shipmentFormTransfer
      * @param array $formOptions
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createShipmentFormEdit(array $formData, array $formOptions = []): FormInterface
+    public function createShipmentEditForm(ShipmentFormTransfer $shipmentFormTransfer, array $formOptions = []): FormInterface
     {
         return $this->getFormFactory()->create(
-            ShipmentFormEdit::class,
-            $formData,
+            ShipmentEditForm::class,
+            $shipmentFormTransfer,
             $formOptions
         );
     }

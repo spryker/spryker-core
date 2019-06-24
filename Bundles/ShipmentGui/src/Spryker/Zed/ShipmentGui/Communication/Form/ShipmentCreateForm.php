@@ -16,7 +16,9 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\Date;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Required;
@@ -25,7 +27,7 @@ use Symfony\Component\Validator\Constraints\Required;
  * @method \Spryker\Zed\ShipmentGui\Communication\ShipmentGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\ShipmentGui\ShipmentGuiConfig getConfig()
  */
-class ShipmentFormCreate extends AbstractType
+class ShipmentCreateForm extends AbstractType
 {
     public const FIELD_ID_SALES_SHIPMENT = 'id_sales_shipment';
     public const FIELD_ID_SALES_ORDER = 'id_sales_order';
@@ -39,6 +41,9 @@ class ShipmentFormCreate extends AbstractType
 
     public const OPTION_SHIPMENT_ADDRESS_CHOICES = 'address_choices';
     public const OPTION_SHIPMENT_METHOD_CHOICES = 'method_choices';
+    public const OPTION_DATA_CLASS = 'data_class';
+
+    public const GROUP_SHIPPING_ADDRESS = 'shippingAddress';
 
     protected const VALIDATION_DATE_TODAY = 'today';
     protected const FIELD_REQUESTED_DELIVERY_DATE_FORMAT = 'yyyy-MM-dd'; // Format accepted by IntlDate
@@ -58,6 +63,14 @@ class ShipmentFormCreate extends AbstractType
         $resolver->setRequired(static::FIELD_SHIPMENT_SELECTED_ITEMS);
         $resolver->setRequired(AddressForm::OPTION_SALUTATION_CHOICES);
         $resolver->setRequired(ItemForm::OPTION_ORDER_ITEMS_CHOICES);
+
+        /** @var \Symfony\Component\OptionsResolver\OptionsResolver $resolver */
+        $resolver->setDefaults([
+            'validation_groups' => function (FormInterface $form) {
+                return [Constraint::DEFAULT_GROUP, static::GROUP_SHIPPING_ADDRESS];
+            },
+            'attr' => ['novalidate' => 'novalidate'],
+        ]);
     }
 
     /**
@@ -149,6 +162,19 @@ class ShipmentFormCreate extends AbstractType
                 $this->createDateConstraint(),
                 $this->createDateGreaterThanOrEqualConstraint(static::VALIDATION_DATE_TODAY),
             ],
+            'validation_groups' => function (FormInterface $form) {
+                $formParent = $form->getParent();
+                if ($formParent === null || !$formParent->has(static::VALIDATION_DATE_TODAY)) {
+                    return [static::GROUP_SHIPPING_ADDRESS];
+                }
+
+                $dateValue = $formParent->get(static::VALIDATION_DATE_TODAY)->getData();
+                if ($dateValue === '') {
+                    return false;
+                }
+
+                return [static::GROUP_SHIPPING_ADDRESS];
+            },
         ]);
 
         return $this;
@@ -164,6 +190,19 @@ class ShipmentFormCreate extends AbstractType
     {
         $builder->add(static::FORM_SHIPPING_ADDRESS, AddressForm::class, [
             'label' => false,
+            'validation_groups' => function (FormInterface $form) {
+                $formParent = $form->getParent();
+                if ($formParent === null || !$formParent->has(static::FIELD_ID_CUSTOMER_ADDRESS)) {
+                    return [static::GROUP_SHIPPING_ADDRESS];
+                }
+
+                $dateValue = $formParent->get(static::FIELD_ID_CUSTOMER_ADDRESS)->getData();
+                if ($dateValue === '') {
+                    return [static::GROUP_SHIPPING_ADDRESS];
+                }
+
+                return false;
+            },
             AddressForm::OPTION_SALUTATION_CHOICES => $options[AddressForm::OPTION_SALUTATION_CHOICES],
         ]);
 

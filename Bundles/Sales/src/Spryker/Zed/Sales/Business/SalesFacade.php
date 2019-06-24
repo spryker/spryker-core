@@ -380,4 +380,20 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
             ->createSalesOrderItemReader()
             ->findSalesOrderItemsBySalesShipmentId($idSalesShipment);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer
+     */
+    public function expandWithCustomerOrSalesAddress(AddressTransfer $addressTransfer): AddressTransfer
+    {
+        return $this->getFactory()
+            ->createSalesAddressExpander()
+            ->expandWithCustomerOrSalesAddress($addressTransfer);
+    }
 }

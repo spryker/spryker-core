@@ -8,13 +8,13 @@
 namespace Spryker\Zed\ShipmentGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\ShipmentFormTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Zed\ShipmentGui\Communication\Form\Address\AddressForm;
-use Spryker\Zed\ShipmentGui\Communication\Form\ShipmentFormCreate;
-use Spryker\Zed\ShipmentGui\Communication\Form\ShipmentFormEdit;
+use Spryker\Zed\ShipmentGui\Communication\Form\ShipmentEditForm;
 
-class ShipmentFormEditDataProvider
+class ShipmentEditFormDataProvider
 {
     /**
      * @var \Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentFormDefaultDataProvider
@@ -33,14 +33,16 @@ class ShipmentFormEditDataProvider
      * @param int $idSalesOrder
      * @param int|null $idSalesShipment
      *
-     * @return array[]
+     * @return \Generated\Shared\Transfer\ShipmentFormTransfer
      */
-    public function getData(int $idSalesOrder, ?int $idSalesShipment = null): array
+    public function getData(int $idSalesOrder, ?int $idSalesShipment = null): ShipmentFormTransfer
     {
-        return array_merge(
+        $formData = array_merge(
             $this->shipmentFormDefaultDataProvider->getDefaultFormFields($idSalesOrder, $idSalesShipment),
             $this->prepareFormData($idSalesShipment)
         );
+
+        return $this->shipmentFormDefaultDataProvider->mapFormDataToShipmentFormTransfer($formData, new ShipmentFormTransfer());
     }
 
     /**
@@ -52,7 +54,7 @@ class ShipmentFormEditDataProvider
     public function getOptions(int $idSalesOrder, ?int $idSalesShipment = null): array
     {
         $options = $this->shipmentFormDefaultDataProvider->getOptions($idSalesOrder, $idSalesShipment);
-        $options[ShipmentFormEdit::FIELD_SHIPMENT_SELECTED_ITEMS] = $this->shipmentFormDefaultDataProvider
+        $options[ShipmentEditForm::FIELD_SHIPMENT_SELECTED_ITEMS] = $this->shipmentFormDefaultDataProvider
             ->getShipmentSelectedItemsIds($idSalesShipment);
 
         return $options;
@@ -66,10 +68,9 @@ class ShipmentFormEditDataProvider
     protected function getFormData(ShipmentTransfer $shipmentTransfer): array
     {
         $formData = [
-            ShipmentFormCreate::FIELD_ID_CUSTOMER_ADDRESS => $this->getCustomerAddressId($shipmentTransfer->getShippingAddress()),
-            ShipmentFormCreate::FIELD_ID_SHIPMENT_METHOD => $this->getShipmentMethodId($shipmentTransfer->getMethod()),
-            ShipmentFormCreate::FIELD_REQUESTED_DELIVERY_DATE => $shipmentTransfer->getRequestedDeliveryDate(),
-            ShipmentFormCreate::FORM_SHIPPING_ADDRESS => [],
+            ShipmentEditForm::FIELD_ID_SHIPMENT_METHOD => $this->getShipmentMethodId($shipmentTransfer->getMethod()),
+            ShipmentEditForm::FIELD_REQUESTED_DELIVERY_DATE => $shipmentTransfer->getRequestedDeliveryDate(),
+            ShipmentEditForm::FORM_SHIPPING_ADDRESS => [],
         ];
 
         $shipmentAddressTransfer = $shipmentTransfer->getShippingAddress();
@@ -77,7 +78,7 @@ class ShipmentFormEditDataProvider
             return $formData;
         }
 
-        $formData[ShipmentFormCreate::FORM_SHIPPING_ADDRESS] = $this->getAddressFields($shipmentAddressTransfer);
+        $formData[ShipmentEditForm::FORM_SHIPPING_ADDRESS] = $this->getAddressFields($shipmentAddressTransfer);
 
         return $formData;
     }
