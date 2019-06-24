@@ -10,7 +10,6 @@ namespace SprykerTest\Zed\ShipmentCartConnector\Business\Model;
 use Codeception\TestCase\Test;
 use Generated\Shared\DataBuilder\CartChangeBuilder;
 use Generated\Shared\DataBuilder\ExpenseBuilder;
-use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\DataBuilder\MoneyValueBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\DataBuilder\ShipmentBuilder;
@@ -349,12 +348,14 @@ class ShipmentCartExpanderTest extends Test
                 continue;
             }
 
-            $shipmentTransfer = $this->tester->haveShipmentMethod([
-                ShipmentMethodTransfer::NAME => $expenseTransfer->getShipment()->getMethod()->getName(),
-            ],
-                [],
-                $this->prepareShipmentMethodPriceListBuilderOptions($expenseTransfer->getShipment()->getMethod())
-            );
+            $shipmentData = [ShipmentMethodTransfer::NAME => $expenseTransfer->getShipment()->getMethod()->getName()];
+
+            $shipmentTransfer = $this->tester
+                ->haveShipmentMethod(
+                    $shipmentData,
+                    [],
+                    $this->prepareShipmentMethodPriceListBuilderOptions($expenseTransfer->getShipment()->getMethod())
+                );
             $expenseTransfer->getShipment()->getMethod()->setIdShipmentMethod($shipmentTransfer->getIdShipmentMethod());
         }
 
