@@ -10,6 +10,9 @@ namespace Spryker\Zed\Setup\Business\Model;
 use ErrorException;
 use Spryker\Zed\Setup\SetupConfig;
 
+/**
+ * @deprecated Use Scheduler module instead. Will be removed without replacement.
+ */
 class Cronjobs
 {
     public const ROLE_ADMIN = 'admin';

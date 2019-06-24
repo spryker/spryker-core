@@ -8,6 +8,7 @@
 namespace Spryker\Zed\DiscountPromotion\Communication\Plugin\Discount;
 
 use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
+use Generated\Shared\Transfer\DiscountPromotionTransfer;
 use Spryker\Shared\DiscountPromotion\DiscountPromotionConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
@@ -24,7 +25,7 @@ class BaseDiscountPromotionSaverPlugin extends AbstractPlugin
      *
      * @return bool
      */
-    protected function isDiscountWithPromotion(DiscountConfiguratorTransfer $discountConfiguratorTransfer)
+    protected function isDiscountWithPromotion(DiscountConfiguratorTransfer $discountConfiguratorTransfer): bool
     {
         return $discountConfiguratorTransfer->getDiscountCalculator()->getCollectorStrategyType() === DiscountPromotionConfig::DISCOUNT_COLLECTOR_STRATEGY;
     }
@@ -34,10 +35,11 @@ class BaseDiscountPromotionSaverPlugin extends AbstractPlugin
      *
      * @return \Generated\Shared\Transfer\DiscountPromotionTransfer
      */
-    protected function getDiscountPromotionTransfer(DiscountConfiguratorTransfer $discountConfiguratorTransfer)
+    protected function getDiscountPromotionTransfer(DiscountConfiguratorTransfer $discountConfiguratorTransfer): DiscountPromotionTransfer
     {
         $discountGeneralTransfer = $discountConfiguratorTransfer->getDiscountGeneral();
-        $discountPromotionTransfer = $discountConfiguratorTransfer->getDiscountCalculator()->getDiscountPromotion();
+        $discountGeneralTransfer->requireIdDiscount();
+        $discountPromotionTransfer = $discountConfiguratorTransfer->getDiscountCalculator()->getDiscountPromotion() ?? new DiscountPromotionTransfer();
         $discountPromotionTransfer->setFkDiscount($discountGeneralTransfer->getIdDiscount());
 
         return $discountPromotionTransfer;
