@@ -61,8 +61,8 @@ class TaxSetDataHelper extends Module
     {
         $taxSetTransfer = $this->haveTaxSet($overrideSet);
 
-        foreach ($overrideRates as $ovverideTaxRate) {
-            $taxRateTransfer = $this->createTaxRateTransfer($ovverideTaxRate);
+        foreach ($overrideRates as $overrideTaxRate) {
+            $taxRateTransfer = $this->createTaxRateTransfer($overrideTaxRate);
             $this->addTaxRateToTaxSet($taxSetTransfer, $taxRateTransfer);
         }
 
