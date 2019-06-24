@@ -23,12 +23,12 @@ class ProductRatingValueTransformer implements FacetSearchResultValueTransformer
      */
     public function transformForDisplay($rangeValues)
     {
-        if (isset($rangeValues[self::RANGE_MIN_PARAMETER])) {
-            $rangeValues[self::RANGE_MIN_PARAMETER] = $this->normalizeRatingForDisplay($rangeValues[self::RANGE_MIN_PARAMETER]);
+        if (isset($rangeValues[static::RANGE_MIN_PARAMETER])) {
+            $rangeValues[static::RANGE_MIN_PARAMETER] = $this->normalizeRatingForDisplay($rangeValues[static::RANGE_MIN_PARAMETER]);
         }
 
-        if (isset($rangeValues[self::RANGE_MAX_PARAMETER])) {
-            $rangeValues[self::RANGE_MAX_PARAMETER] = $this->normalizeRatingForDisplay($rangeValues[self::RANGE_MAX_PARAMETER]);
+        if (isset($rangeValues[static::RANGE_MAX_PARAMETER])) {
+            $rangeValues[static::RANGE_MAX_PARAMETER] = $this->normalizeRatingForDisplay($rangeValues[static::RANGE_MAX_PARAMETER]);
         }
 
         return $rangeValues;
@@ -41,17 +41,17 @@ class ProductRatingValueTransformer implements FacetSearchResultValueTransformer
      */
     public function transformFromDisplay($rangeValues)
     {
-        if (isset($rangeValues[self::RANGE_MIN_PARAMETER]) && is_numeric($rangeValues[self::RANGE_MIN_PARAMETER])) {
-            $rangeValues[self::RANGE_MIN_PARAMETER] =
+        if (isset($rangeValues[static::RANGE_MIN_PARAMETER]) && is_numeric($rangeValues[static::RANGE_MIN_PARAMETER])) {
+            $rangeValues[static::RANGE_MIN_PARAMETER] =
                 $this->adjustLowerThreshold(
-                    $this->normalizeRatingForFilter($rangeValues[self::RANGE_MIN_PARAMETER])
+                    $this->normalizeRatingForFilter($rangeValues[static::RANGE_MIN_PARAMETER])
                 );
         }
 
-        if (isset($rangeValues[self::RANGE_MAX_PARAMETER]) && is_numeric($rangeValues[self::RANGE_MAX_PARAMETER])) {
-            $rangeValues[self::RANGE_MAX_PARAMETER] =
+        if (isset($rangeValues[static::RANGE_MAX_PARAMETER]) && is_numeric($rangeValues[static::RANGE_MAX_PARAMETER])) {
+            $rangeValues[static::RANGE_MAX_PARAMETER] =
                 $this->adjustUpperThreshold(
-                    $this->normalizeRatingForFilter($rangeValues[self::RANGE_MAX_PARAMETER])
+                    $this->normalizeRatingForFilter($rangeValues[static::RANGE_MAX_PARAMETER])
                 );
         }
 

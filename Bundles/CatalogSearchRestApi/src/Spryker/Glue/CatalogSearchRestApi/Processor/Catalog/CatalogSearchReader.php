@@ -101,7 +101,7 @@ class CatalogSearchReader implements CatalogSearchReaderInterface
         $searchString = $this->getRequestParameter($restRequest, CatalogSearchRestApiConfig::QUERY_STRING_PARAMETER);
         $requestParameters = $this->getAllRequestParameters($restRequest);
 
-        $urlEncodedRequestParameter = $this->getRecursivelyUrlEncodedArray($requestParameters);
+        $urlEncodedRequestParameter = $this->getUrlParametersEncodedRecursively($requestParameters);
         $searchResult = $this->catalogClient->catalogSearch($searchString, $urlEncodedRequestParameter);
 
         $restSearchAttributesTransfer = $this
@@ -130,7 +130,7 @@ class CatalogSearchReader implements CatalogSearchReaderInterface
             return $this->createEmptyResponse($response);
         }
         $requestParameters = $this->getAllRequestParameters($restRequest);
-        $urlEncodedRequestParameter = $this->getRecursivelyUrlEncodedArray($requestParameters);
+        $urlEncodedRequestParameter = $this->getUrlParametersEncodedRecursively($requestParameters);
         $suggestions = $this->catalogClient->catalogSuggestSearch($searchString, $urlEncodedRequestParameter);
         $restSuggestionsAttributesTransfer = $this
             ->catalogSearchSuggestionsResourceMapper
@@ -235,12 +235,12 @@ class CatalogSearchReader implements CatalogSearchReaderInterface
      *
      * @return array
      */
-    protected function getRecursivelyUrlEncodedArray(array $queryParameters): array
+    protected function getUrlParametersEncodedRecursively(array $queryParameters): array
     {
         $urlEncodedRequestParameter = [];
         foreach ($queryParameters as $queryParameter) {
             if (is_array($queryParameter)) {
-                $urlEncodedRequestParameter[] = $this->getRecursivelyUrlEncodedArray($queryParameter);
+                $urlEncodedRequestParameter[] = $this->getUrlParametersEncodedRecursively($queryParameter);
 
                 continue;
             }
