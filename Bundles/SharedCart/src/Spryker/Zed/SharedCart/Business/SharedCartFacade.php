@@ -17,6 +17,8 @@ use Generated\Shared\Transfer\QuotePermissionGroupResponseTransfer;
 use Generated\Shared\Transfer\QuotePermissionGroupTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ResourceShareRequestTransfer;
+use Generated\Shared\Transfer\ResourceShareResponseTransfer;
 use Generated\Shared\Transfer\ShareCartRequestTransfer;
 use Generated\Shared\Transfer\ShareCartResponseTransfer;
 use Generated\Shared\Transfer\ShareDetailCollectionTransfer;
@@ -336,5 +338,21 @@ class SharedCartFacade extends AbstractFacade implements SharedCartFacadeInterfa
         $this->getFactory()
             ->createQuoteCompanyUserWriter()
             ->deleteQuoteCompanyUser($shareCartRequestTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
+     */
+    public function shareCartByResourceShareRequest(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer
+    {
+        return $this->getFactory()
+            ->createResourceShareQuoteShare()
+            ->shareCartByResourceShareRequest($resourceShareRequestTransfer);
     }
 }

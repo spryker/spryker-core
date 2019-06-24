@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\QuotePermissionGroupCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuotePermissionGroupTransfer;
 use Generated\Shared\Transfer\ShareDetailCollectionTransfer;
 use Generated\Shared\Transfer\ShareDetailCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ShareDetailTransfer;
 use Generated\Shared\Transfer\SharedQuoteCriteriaFilterTransfer;
 
 interface SharedCartRepositoryInterface
@@ -108,4 +109,12 @@ interface SharedCartRepositoryInterface
      * @return \Generated\Shared\Transfer\QuoteCompanyUserTransfer|null
      */
     public function findQuoteCompanyUserByUuid(string $quoteCompanyUserUuid): ?QuoteCompanyUserTransfer;
+
+    /**
+     * @param int $idQuote
+     * @param int $idCompanyUser
+     *
+     * @return \Generated\Shared\Transfer\ShareDetailTransfer|null
+     */
+    public function findShareDetailByIdQuoteAndIdCompanyUser(int $idQuote, int $idCompanyUser): ?ShareDetailTransfer;
 }
