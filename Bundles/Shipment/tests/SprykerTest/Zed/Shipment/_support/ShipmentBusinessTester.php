@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\Shipment;
 
 use Codeception\Actor;
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
@@ -19,6 +20,8 @@ use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
 use Spryker\Service\Shipment\ShipmentServiceInterface;
 use Spryker\Shared\Tax\TaxConstants;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
+use Spryker\Zed\Shipment\Communication\Plugin\Checkout\OrderShipmentSavePlugin;
+use Spryker\Zed\Shipment\Communication\Plugin\ShipmentOrderHydratePlugin;
 
 /**
  * Inherited Methods
@@ -220,5 +223,40 @@ class ShipmentBusinessTester extends Actor
         $savedOrderTransfer = $this->haveOrderUsingPreparedQuoteTransfer($quoteTransfer, $testStateMachineProcessName);
 
         return $savedOrderTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string|null $testStateMachineProcessName
+     *
+     * @return \Generated\Shared\Transfer\SaveOrderTransfer
+     */
+    public function createOrderWithMultishipment(QuoteTransfer $quoteTransfer, ?string $testStateMachineProcessName = 'Test01'): SaveOrderTransfer
+    {
+        $this->configureTestStateMachine([$testStateMachineProcessName]);
+
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            $this->haveProduct($itemTransfer->toArray());
+        }
+        $savedOrderTransfer = $this->haveOrderUsingPreparedQuoteTransfer(
+            $quoteTransfer,
+            $testStateMachineProcessName,
+            [new OrderShipmentSavePlugin()]
+        );
+
+        return $savedOrderTransfer;
+    }
+
+    /**
+     * @param int $idSalesOrder
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function getOrderTransferByIdSalesOrder(int $idSalesOrder): OrderTransfer
+    {
+        $orderTransfer = $this->getLocator()->sales()->facade()->getOrderByIdSalesOrder($idSalesOrder);
+        $orderTransfer = (new ShipmentOrderHydratePlugin())->hydrate($orderTransfer);
+
+        return $orderTransfer;
     }
 }

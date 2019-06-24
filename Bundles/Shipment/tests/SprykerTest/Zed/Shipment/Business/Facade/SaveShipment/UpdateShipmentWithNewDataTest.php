@@ -34,8 +34,6 @@ use Spryker\Shared\Price\PriceConfig;
  */
 class UpdateShipmentWithNewDataTest extends Test
 {
-    protected const TEST_STATE_MACHINE_PROCESS_NAME = 'TestPayment01';
-
     /**
      * @var \SprykerTest\Zed\Shipment\ShipmentBusinessTester
      */
@@ -44,34 +42,21 @@ class UpdateShipmentWithNewDataTest extends Test
     /**
      * @return void
      */
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->tester->configureTestStateMachine([static::TEST_STATE_MACHINE_PROCESS_NAME]);
-    }
-
-    /**
-     * @return void
-     */
     public function testUpdateShipmentWithNewShippingAddress(): void
     {
         // Arrange
         $quoteTransfer = $this->createQuoteTransfer();
-        $saveOrderTransfer = $this->tester->haveOrderUsingPreparedQuoteTransfer($quoteTransfer, static::TEST_STATE_MACHINE_PROCESS_NAME);
+        $saveOrderTransfer = $this->tester->createOrderWithMultishipment($quoteTransfer);
 
-        $shipmentTransfer = $this->tester->haveShipment(
-            $saveOrderTransfer->getIdSalesOrder(),
-            $saveOrderTransfer->getOrderItems()[0]->getShipment()->toArray()
-        );
-        $shipmentTransfer->setMethod($this->tester->haveShipmentMethod($shipmentTransfer->getMethod()->toArray()));
+        $shipmentTransfer = $saveOrderTransfer->getOrderItems()[0]->getShipment();
+        $shipmentTransfer->setMethod($this->tester->haveShipmentMethod());
 
-        $oldIdSalesOrderAddress = $shipmentTransfer->getShippingAddress()->getIdSalesOrderAddress();
+        $expectedIdSalesOrderAddress = $shipmentTransfer->getShippingAddress()->getIdSalesOrderAddress();
         $shipmentTransfer->setShippingAddress((new AddressBuilder())->build());
 
         $shipmentGroupTransfer = (new ShipmentGroupTransfer())->setShipment($shipmentTransfer);
 
-        $orderTransfer = $this->tester->getLocator()->sales()->facade()->getOrderByIdSalesOrder($saveOrderTransfer->getIdSalesOrder());
+        $orderTransfer = $this->tester->getOrderTransferByIdSalesOrder($saveOrderTransfer->getIdSalesOrder());
 
         // Act
         $shipmentGroupResponseTransfer = $this->tester->getFacade()->saveShipment($shipmentGroupTransfer, $orderTransfer);
@@ -81,11 +66,10 @@ class UpdateShipmentWithNewDataTest extends Test
             $shipmentGroupResponseTransfer->getShipmentGroup()->getShipment()->getIdSalesShipment()
         );
 
-        // Assert
         $this->assertTrue($shipmentGroupResponseTransfer->getIsSuccessful(), 'Saving a shipment should have been successful.');
         $this->assertEquals($shipmentTransfer->getIdSalesShipment(), $shipmentEntity->getIdSalesShipment(), 'The shipment should have been updated.');
         $this->assertNotNull($shipmentEntity->getFkSalesOrderAddress(), 'The sales shipment should have a sales order address.');
-        $this->assertNotEquals($oldIdSalesOrderAddress, $shipmentEntity->getFkSalesOrderAddress(), 'The sales shipment should have been a new sales order address assigned.');
+        $this->assertNotEquals($expectedIdSalesOrderAddress, $shipmentEntity->getFkSalesOrderAddress(), 'The sales shipment should have been a new sales order address assigned.');
     }
 
     /**
@@ -95,20 +79,17 @@ class UpdateShipmentWithNewDataTest extends Test
     {
         // Arrange
         $quoteTransfer = $this->createQuoteTransfer();
-        $saveOrderTransfer = $this->tester->haveOrderUsingPreparedQuoteTransfer($quoteTransfer, static::TEST_STATE_MACHINE_PROCESS_NAME);
+        $saveOrderTransfer = $this->tester->createOrderWithMultishipment($quoteTransfer);
 
-        $shipmentTransfer = $this->tester->haveShipment(
-            $saveOrderTransfer->getIdSalesOrder(),
-            $saveOrderTransfer->getOrderItems()[0]->getShipment()->toArray()
-        );
-
-        $newShipmentMethod = $this->tester->haveShipmentMethod((new ShipmentMethodBuilder())->build()->toArray());
-        $shipmentTransfer->setMethod($newShipmentMethod);
+        $shipmentTransfer = $saveOrderTransfer->getOrderItems()[0]->getShipment();
         $expectedIdShipmentMethod = $shipmentTransfer->getMethod()->getIdShipmentMethod();
+        $shipmentTransfer->setMethod(
+            $this->tester->haveShipmentMethod((new ShipmentMethodBuilder())->build()->toArray())
+        );
 
         $shipmentGroupTransfer = (new ShipmentGroupTransfer())->setShipment($shipmentTransfer);
 
-        $orderTransfer = $this->tester->getLocator()->sales()->facade()->getOrderByIdSalesOrder($saveOrderTransfer->getIdSalesOrder());
+        $orderTransfer = $this->tester->getOrderTransferByIdSalesOrder($saveOrderTransfer->getIdSalesOrder());
 
         // Act
         $shipmentGroupResponseTransfer = $this->tester->getFacade()->saveShipment($shipmentGroupTransfer, $orderTransfer);
@@ -134,21 +115,19 @@ class UpdateShipmentWithNewDataTest extends Test
     {
         // Arrange
         $quoteTransfer = $this->createQuoteTransfer();
-        $saveOrderTransfer = $this->tester->haveOrderUsingPreparedQuoteTransfer($quoteTransfer, static::TEST_STATE_MACHINE_PROCESS_NAME);
+        $saveOrderTransfer = $this->tester->createOrderWithMultishipment($quoteTransfer);
 
-        $shipmentTransfer = $this->tester->haveShipment(
-            $saveOrderTransfer->getIdSalesOrder(),
-            $saveOrderTransfer->getOrderItems()[0]->getShipment()->toArray()
-        );
+        $shipmentTransfer = $saveOrderTransfer->getOrderItems()[0]->getShipment();
         $shipmentTransfer->setMethod($this->tester->haveShipmentMethod($shipmentTransfer->getMethod()->toArray()));
 
-        $oldDeliveryDate = $shipmentTransfer->getRequestedDeliveryDate();
-        $newDeliveryDate = (new DateTime())->getTimestamp();
-        $shipmentTransfer->setRequestedDeliveryDate($newDeliveryDate);
+        $expectedDeliveryDate = $shipmentTransfer->getRequestedDeliveryDate();
+
+        $actualDeliveryDate = (new DateTime())->getTimestamp();
+        $shipmentTransfer->setRequestedDeliveryDate($actualDeliveryDate);
 
         $shipmentGroupTransfer = (new ShipmentGroupTransfer())->setShipment($shipmentTransfer);
 
-        $orderTransfer = $this->tester->getLocator()->sales()->facade()->getOrderByIdSalesOrder($saveOrderTransfer->getIdSalesOrder());
+        $orderTransfer = $this->tester->getOrderTransferByIdSalesOrder($saveOrderTransfer->getIdSalesOrder());
 
         // Act
         $shipmentGroupResponseTransfer = $this->tester->getFacade()->saveShipment($shipmentGroupTransfer, $orderTransfer);
@@ -160,7 +139,7 @@ class UpdateShipmentWithNewDataTest extends Test
 
         $this->assertTrue($shipmentGroupResponseTransfer->getIsSuccessful(), 'Saving a shipment should have been successful.');
         $this->assertEquals($shipmentTransfer->getIdSalesShipment(), $shipmentEntity->getIdSalesShipment(), 'The shipment should have been updated.');
-        $this->assertNotEquals($oldDeliveryDate, $shipmentEntity->getRequestedDeliveryDate(), 'The shipment should have been updated with new delivery date.');
+        $this->assertNotEquals($expectedDeliveryDate, $shipmentEntity->getRequestedDeliveryDate(), 'The shipment should have been updated with new delivery date.');
     }
 
     /**
