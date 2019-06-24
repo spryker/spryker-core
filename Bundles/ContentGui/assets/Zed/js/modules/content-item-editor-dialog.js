@@ -5,7 +5,7 @@
 
 'use strict';
 
-var dataTable = require('../../../../../Gui/assets/Zed/js/modules/libs/data-table');
+var dataTable = require('ZedGuiModules/libs/data-table');
 
 var ContentItemDialog = function(
     dialogTitle,
