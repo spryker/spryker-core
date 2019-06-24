@@ -190,9 +190,13 @@ class ShipmentFormCreate extends AbstractType
         $builder->add(static::FORM_SHIPPING_ADDRESS, AddressForm::class, [
             'label' => false,
             'validation_groups' => function (FormInterface $form) {
-                $idCustomerAddress = $form->getParent()->get(static::FIELD_ID_CUSTOMER_ADDRESS)->getData();
+                $formParent = $form->getParent();
+                if ($formParent === null || !$formParent->has(static::FIELD_ID_CUSTOMER_ADDRESS)) {
+                    return [static::GROUP_SHIPPING_ADDRESS];
+                }
 
-                if ($idCustomerAddress === "") {
+                $dateValue = $formParent->get(static::FIELD_ID_CUSTOMER_ADDRESS)->getData();
+                if ($dateValue === '') {
                     return [static::GROUP_SHIPPING_ADDRESS];
                 }
 
