@@ -10,58 +10,24 @@ namespace Spryker\Client\StorageDatabase;
 use Spryker\Client\Kernel\AbstractBundleConfig;
 use Spryker\Shared\StorageDatabase\StorageDatabaseConstants;
 
+/**
+ * @method \Spryker\Shared\StorageDatabase\StorageDatabaseConfig getSharedConfig()
+ */
 class StorageDatabaseConfig extends AbstractBundleConfig
 {
-    /**
-     * @uses \Spryker\Zed\Propel\PropelConfig::DB_ENGINE_PGSQL
-     */
-    protected const DB_ENGINE_PGSQL = 'pgsql';
-
-    /**
-     * @uses \Spryker\Zed\Propel\PropelConfig::DB_ENGINE_MYSQL
-     */
-    protected const DB_ENGINE_MYSQL = 'mysql';
-
-    protected const RESOURCE_PREFIX_TO_STORAGE_TABLE_MAPPING = [
-        'translation' => [
-            self::KEY_STORAGE_TABLE_NAME => 'glossary',
-        ],
-        'product_search_config_extension' => [
-            self::KEY_STORAGE_TABLE_NAME => 'product_search_config',
-        ],
-        'product_abstract_product_lists' => [
-            self::KEY_STORAGE_TABLE_NAME => 'product_abstract_product_list',
-        ],
-        'product_concrete_product_lists' => [
-            self::KEY_STORAGE_TABLE_NAME => 'product_concrete_product_list',
-        ],
-    ];
-
     protected const DEFAULT_STORAGE_TABLE_PREFIX = 'spy';
     protected const DEFAULT_STORAGE_TABLE_SUFFIX = 'storage';
     protected const STORAGE_TABLE_NAME_PART_SEPARATOR = '_';
-
-    public const KEY_STORAGE_TABLE_PREFIX = 'KEY_STORAGE_TABLE_PREFIX';
-    public const KEY_STORAGE_TABLE_SUFFIX = 'KEY_STORAGE_TABLE_SUFFIX';
-    public const KEY_STORAGE_TABLE_NAME = 'KEY_STORAGE_TABLE_NAME';
 
     /**
      * @return array
      */
     public function getConnectionConfigForCurrentEngine(): array
     {
-        $dbEngine = $this->getDatabaseEngine();
+        $dbEngine = $this->getDbEngineName();
         $connectionData = $this->getConnectionConfigData();
 
         return $connectionData[$dbEngine] ?? [];
-    }
-
-    /**
-     * @return string
-     */
-    public function getDatabaseEngine(): string
-    {
-        return $this->get(StorageDatabaseConstants::DB_ENGINE, '');
     }
 
     /**
@@ -73,11 +39,11 @@ class StorageDatabaseConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return string[]
+     * @return string[][]
      */
-    public function getResourcePrefixToStorageTableMapping(): array
+    public function getResourceNameToStorageTableMap(): array
     {
-        return static::RESOURCE_PREFIX_TO_STORAGE_TABLE_MAPPING;
+        return $this->get(StorageDatabaseConstants::RESOURCE_PREFIX_TO_STORAGE_TABLE_MAP, []);
     }
 
     /**
@@ -105,20 +71,55 @@ class StorageDatabaseConfig extends AbstractBundleConfig
     }
 
     /**
+     * @return string
+     */
+    public function getDbEngineName(): string
+    {
+        return $this->get(StorageDatabaseConstants::DB_ENGINE, '');
+    }
+
+    /**
+     * @return string
+     */
+    public function getStorageTablePrefixConfigKey(): string
+    {
+        return $this->getSharedConfig()->getStorageTablePrefixConfigKey();
+    }
+
+    /**
+     * @return string
+     */
+    public function getStorageTableSuffixConfigKey(): string
+    {
+        return $this->getSharedConfig()->getStorageTableSuffixConfigKey();
+    }
+
+    /**
+     * @return string
+     */
+    public function getStorageTableNameConfigKey(): string
+    {
+        return $this->getSharedConfig()->getStorageTableNameConfigKey();
+    }
+
+    /**
      * @return array
      */
     protected function getConnectionConfigData(): array
     {
+        $postgreSqlDbEngineName = $this->getSharedConfig()->getPostgreSqlDbEngineName();
+        $mySqlDbEngineName = $this->getSharedConfig()->getMySqlDbEngineName();
+
         return [
-            static::DB_ENGINE_PGSQL => [
-                'adapter' => static::DB_ENGINE_PGSQL,
+            $postgreSqlDbEngineName => [
+                'adapter' => $postgreSqlDbEngineName,
                 'dsn' => $this->getDsn(),
                 'user' => $this->get(StorageDatabaseConstants::DB_USERNAME),
                 'password' => $this->get(StorageDatabaseConstants::DB_PASSWORD),
                 'settings' => [],
             ],
-            static::DB_ENGINE_MYSQL => [
-                'adapter' => static::DB_ENGINE_MYSQL,
+            $mySqlDbEngineName => [
+                'adapter' => $mySqlDbEngineName,
                 'dsn' => $this->getDsn(),
                 'user' => $this->get(StorageDatabaseConstants::DB_USERNAME),
                 'password' => $this->get(StorageDatabaseConstants::DB_PASSWORD),
@@ -139,7 +140,7 @@ class StorageDatabaseConfig extends AbstractBundleConfig
     {
         return sprintf(
             '%s:host=%s;port=%d;dbname=%s',
-            $this->get(StorageDatabaseConstants::DB_ENGINE),
+            $this->getDbEngineName(),
             $this->get(StorageDatabaseConstants::DB_HOST),
             $this->get(StorageDatabaseConstants::DB_PORT),
             $this->get(StorageDatabaseConstants::DB_DATABASE)

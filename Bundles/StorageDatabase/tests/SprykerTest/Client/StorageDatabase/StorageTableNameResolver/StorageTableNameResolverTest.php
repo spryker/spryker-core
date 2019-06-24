@@ -5,34 +5,38 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Client\StorageDatabase;
+namespace SprykerTest\Client\StorageDatabase\StorageTableNameResolver;
 
 use Codeception\Test\Unit;
 use Spryker\Client\StorageDatabase\StorageDatabaseFactory;
+use Spryker\Shared\StorageDatabase\StorageDatabaseConfig;
+use Spryker\Shared\StorageDatabase\StorageDatabaseConstants;
 
 /**
  * Auto-generated group annotations
  * @group SprykerTest
  * @group Client
  * @group StorageDatabase
- * @group ResourceKeyToTableNameResolverTest
+ * @group StorageTableNameResolver
+ * @group StorageTableNameResolverTest
  * Add your own group annotations below this line
+ * @property \SprykerTest\Client\StorageDatabase\StorageDatabaseClientTester $tester
  */
-class ResourceKeyToTableNameResolverTest extends Unit
+class StorageTableNameResolverTest extends Unit
 {
     /**
-     * @var \Spryker\Client\StorageDatabase\ResourceToTableMapper\ResourceKeyToTableNameResolverInterface
+     * @var \Spryker\Client\StorageDatabase\StorageTableNameResolver\StorageTableNameResolverInterface
      */
-    private $resourceToTableResolver;
+    protected $storageTableNameResolver;
 
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
-
-        $this->resourceToTableResolver = (new StorageDatabaseFactory())->createResourceKeyToTableNameResolver();
+        $this->setupConfig();
+        $this->setupStorageTableNameResolver();
     }
 
     /**
@@ -46,7 +50,7 @@ class ResourceKeyToTableNameResolverTest extends Unit
      */
     public function testTableNamesAreResolvedCorrectly(string $resourcePrefix, string $tableName, bool $isCorrect): void
     {
-        $resolvedTableName = $this->resourceToTableResolver->resolve($resourcePrefix);
+        $resolvedTableName = $this->storageTableNameResolver->resolveByResourceKey($resourcePrefix);
         $this->assertEquals($isCorrect, $resolvedTableName === $tableName);
     }
 
@@ -65,5 +69,34 @@ class ResourceKeyToTableNameResolverTest extends Unit
             'concrete product list correct mapping' => ['product_concrete_product_lists', 'spy_product_concrete_product_list_storage', true],
             'availability incorrect mapping' => ['availability', 'spy_availabilities_storage', false],
         ];
+    }
+
+    /**
+     * @return void
+     */
+    protected function setupStorageTableNameResolver(): void
+    {
+        $this->storageTableNameResolver = (new StorageDatabaseFactory())->createStorageTableNameResolver();
+    }
+
+    /**
+     * @return void
+     */
+    protected function setupConfig(): void
+    {
+        $this->tester->setConfig(StorageDatabaseConstants::RESOURCE_PREFIX_TO_STORAGE_TABLE_MAP, [
+            'translation' => [
+                StorageDatabaseConfig::KEY_STORAGE_TABLE_NAME => 'glossary',
+            ],
+            'product_search_config_extension' => [
+                StorageDatabaseConfig::KEY_STORAGE_TABLE_NAME => 'product_search_config',
+            ],
+            'product_abstract_product_lists' => [
+                StorageDatabaseConfig::KEY_STORAGE_TABLE_NAME => 'product_abstract_product_list',
+            ],
+            'product_concrete_product_lists' => [
+                StorageDatabaseConfig::KEY_STORAGE_TABLE_NAME => 'product_concrete_product_list',
+            ],
+        ]);
     }
 }
