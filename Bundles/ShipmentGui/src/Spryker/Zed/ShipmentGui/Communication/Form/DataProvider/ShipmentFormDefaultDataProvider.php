@@ -82,7 +82,7 @@ class ShipmentFormDefaultDataProvider
     protected function getIdCustomerAddress(int $idSalesOrder, ?int $idSalesShipment): ?int
     {
         $shipmentTransfer = null;
-        if($idSalesShipment !== null) {
+        if ($idSalesShipment !== null) {
             $shipmentTransfer = $this->findShipmentById($idSalesShipment);
         }
 
