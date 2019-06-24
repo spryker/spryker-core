@@ -108,6 +108,8 @@ interface ShipmentQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
+     * @todo Check every deprecated method is it truly deprecated?
+     *
      * @deprecated Use \Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface::getActiveShipmentMethods() instead.
      *
      * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery

@@ -10,10 +10,10 @@ namespace Spryker\Zed\ShipmentCheckoutConnector\Business\Shipment;
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\ShipmentGroupCollectionTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Spryker\Shared\ShipmentCheckoutConnector\ShipmentCheckoutConnectorConfig;
 use Spryker\Zed\ShipmentCheckoutConnector\Dependency\Facade\ShipmentCheckoutConnectorToShipmentFacadeInterface;
+use Spryker\Zed\ShipmentCheckoutConnector\Dependency\Service\ShipmentCheckoutConnectorToShipmentServiceInterface;
 
 class ShipmentCheckoutPreCheck implements ShipmentCheckoutPreCheckInterface
 {
@@ -25,11 +25,20 @@ class ShipmentCheckoutPreCheck implements ShipmentCheckoutPreCheckInterface
     protected $shipmentFacade;
 
     /**
-     * @param \Spryker\Zed\ShipmentCheckoutConnector\Dependency\Facade\ShipmentCheckoutConnectorToShipmentFacadeInterface $shipmentFacade
+     * @var \Spryker\Zed\ShipmentDiscountConnector\Business\DecisionRule\ShipmentDiscountDecisionRuleInterface
      */
-    public function __construct(ShipmentCheckoutConnectorToShipmentFacadeInterface $shipmentFacade)
-    {
+    protected $shipmentService;
+
+    /**
+     * @param \Spryker\Zed\ShipmentCheckoutConnector\Dependency\Facade\ShipmentCheckoutConnectorToShipmentFacadeInterface $shipmentFacade
+     * @param \Spryker\Zed\ShipmentCheckoutConnector\Dependency\Service\ShipmentCheckoutConnectorToShipmentServiceInterface $shipmentService
+     */
+    public function __construct(
+        ShipmentCheckoutConnectorToShipmentFacadeInterface $shipmentFacade,
+        ShipmentCheckoutConnectorToShipmentServiceInterface $shipmentService
+    ) {
         $this->shipmentFacade = $shipmentFacade;
+        $this->shipmentService = $shipmentService;
     }
 
     /**
@@ -42,81 +51,46 @@ class ShipmentCheckoutPreCheck implements ShipmentCheckoutPreCheckInterface
         QuoteTransfer $quoteTransfer,
         CheckoutResponseTransfer $checkoutResponseTransfer
     ): bool {
-        $availableShipmentMethodCollectionTransfer = $this->shipmentFacade->getAvailableMethodsByShipment($quoteTransfer);
+        $shipmentGroupCollection = $this->shipmentService->groupItemsByShipment($quoteTransfer->getItems());
 
         $checkShipmentStatus = true;
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $quoteShipmentTransfer = $itemTransfer->getShipment();
-            if ($quoteShipmentTransfer === null) {
-                continue;
-            }
-
-            $quoteShipmentMethodTransfer = $quoteShipmentTransfer->getMethod();
-            if ($quoteShipmentMethodTransfer === null) {
-                continue;
-            }
-
-            $quoteIddShipmentMethod = $quoteShipmentMethodTransfer->getIdShipmentMethod();
-            if ($quoteIddShipmentMethod === null) {
-                continue;
-            }
-
-            $shipmentMethodTransfer = $this->filterAvailableMethodById($quoteIddShipmentMethod, $availableShipmentMethodCollectionTransfer);
-            if ($shipmentMethodTransfer === null) {
-                $checkoutErrorTransfer = $this->createCheckoutErrorTransfer($quoteShipmentTransfer->getMethod());
-
-                $checkoutResponseTransfer
-                    ->setIsSuccess(false)
-                    ->addError($checkoutErrorTransfer);
-
-                $checkShipmentStatus = false;
-                continue;
-            }
-        }
-
-        return $checkShipmentStatus;
-    }
-
-    /**
-     * @param int $idShipmentMethod
-     * @param \Generated\Shared\Transfer\ShipmentGroupCollectionTransfer $availableShipmentMethodCollectionTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
-     */
-    protected function filterAvailableMethodById(
-        int $idShipmentMethod,
-        ShipmentGroupCollectionTransfer $availableShipmentMethodCollectionTransfer
-    ): ?ShipmentMethodTransfer {
-        foreach ($availableShipmentMethodCollectionTransfer->getShipmentGroups() as $shipmentGroupTransfer) {
+        foreach ($shipmentGroupCollection as $shipmentGroupTransfer) {
             $shipmentTransfer = $shipmentGroupTransfer->getShipment();
             if ($shipmentTransfer === null) {
                 continue;
             }
 
             $shipmentMethodTransfer = $shipmentTransfer->getMethod();
-            if ($shipmentMethodTransfer === null) {
+
+            if ($shipmentMethodTransfer !== null
+                && $shipmentMethodTransfer->getIdShipmentMethod()
+                && $this->shipmentFacade->isShipmentMethodActive($shipmentMethodTransfer->getIdShipmentMethod())
+            ) {
                 continue;
             }
 
-            if ($idShipmentMethod === $shipmentMethodTransfer->getIdShipmentMethod()) {
-                return $shipmentMethodTransfer;
-            }
+            $checkoutErrorTransfer = $this->createCheckoutErrorTransfer($shipmentMethodTransfer);
+
+            $checkoutResponseTransfer
+                ->setIsSuccess(false)
+                ->addError($checkoutErrorTransfer);
+            $checkShipmentStatus = false;
         }
 
-        return null;
+        return $checkShipmentStatus;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
+     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer|null $shipmentMethodTransfer
      *
      * @return \Generated\Shared\Transfer\CheckoutErrorTransfer
      */
-    protected function createCheckoutErrorTransfer(ShipmentMethodTransfer $shipmentMethodTransfer): CheckoutErrorTransfer
+    protected function createCheckoutErrorTransfer(?ShipmentMethodTransfer $shipmentMethodTransfer): CheckoutErrorTransfer
     {
         return (new CheckoutErrorTransfer())
             ->addParameters([
-                '%method_name%' => $shipmentMethodTransfer->getName(),
-                '%carrier_name%' => $shipmentMethodTransfer->getCarrierName(),
+                '%method_name%' => $shipmentMethodTransfer ? $shipmentMethodTransfer->getName() : 'null',
+                '%carrier_name%' => $shipmentMethodTransfer ? $shipmentMethodTransfer->getCarrierName() : 'null',
             ])
             ->setErrorCode(ShipmentCheckoutConnectorConfig::ERROR_CODE_SHIPMENT_FAILED)
             ->setMessage(static::TRANSLATION_KEY_SHIPMENT_NOT_VALID);

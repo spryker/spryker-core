@@ -11,11 +11,14 @@ use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShipmentGroupTransfer;
+use Generated\Shared\Transfer\ShipmentMethodsCollectionTransfer;
 use Generated\Shared\Transfer\ShipmentMethodsTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Zed\ShipmentCartConnector\Dependency\Facade\ShipmentCartConnectorToPriceFacadeInterface;
 use Spryker\Zed\ShipmentCartConnector\Dependency\Facade\ShipmentCartConnectorToShipmentFacadeInterface;
+use Spryker\Zed\ShipmentCartConnector\Dependency\Service\ShipmentCartConnectorToShipmentServiceInterface;
 
 class ShipmentCartExpander implements ShipmentCartExpanderInterface
 {
@@ -30,15 +33,23 @@ class ShipmentCartExpander implements ShipmentCartExpanderInterface
     protected $priceFacade;
 
     /**
+     * @var \Spryker\Zed\ShipmentDiscountConnector\Business\DecisionRule\ShipmentDiscountDecisionRuleInterface
+     */
+    protected $shipmentService;
+
+    /**
      * @param \Spryker\Zed\ShipmentCartConnector\Dependency\Facade\ShipmentCartConnectorToShipmentFacadeInterface $shipmentFacade
      * @param \Spryker\Zed\ShipmentCartConnector\Dependency\Facade\ShipmentCartConnectorToPriceFacadeInterface $priceFacade
+     * @param \Spryker\Zed\ShipmentCartConnector\Dependency\Service\ShipmentCartConnectorToShipmentServiceInterface $shipmentService
      */
     public function __construct(
         ShipmentCartConnectorToShipmentFacadeInterface $shipmentFacade,
-        ShipmentCartConnectorToPriceFacadeInterface $priceFacade
+        ShipmentCartConnectorToPriceFacadeInterface $priceFacade,
+        ShipmentCartConnectorToShipmentServiceInterface $shipmentService
     ) {
         $this->shipmentFacade = $shipmentFacade;
         $this->priceFacade = $priceFacade;
+        $this->shipmentService = $shipmentService;
     }
 
     /**
@@ -49,55 +60,50 @@ class ShipmentCartExpander implements ShipmentCartExpanderInterface
     public function updateShipmentPrice(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
     {
         $quoteTransfer = $cartChangeTransfer->getQuote();
-        $availableShipmentMethods = $this->shipmentFacade->getAvailableMethods($quoteTransfer);
 
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $shipmentTransfer = $itemTransfer->getShipment();
-            $skipUpdate = (
-                $shipmentTransfer === null
-                || $shipmentTransfer->getMethod() === null
-                || $shipmentTransfer->getMethod()->getIdShipmentMethod() === null
-                || $this->isCurrencyChanged($shipmentTransfer, $quoteTransfer) === false
-            );
+        $availableShipmentMethodsCollectionTransfer = $this->shipmentFacade->getAvailableMethodsByShipment($quoteTransfer);
+        $shipmentGroupCollection = $this->shipmentService->groupItemsByShipment($quoteTransfer->getItems());
 
-            if ($skipUpdate) {
+        foreach ($shipmentGroupCollection as $shipmentGroupTransfer) {
+            $shipmentTransfer = $shipmentGroupTransfer->getShipment();
+            if ($shipmentTransfer === null) {
                 continue;
             }
 
-            $idShipmentMethod = $shipmentTransfer->getMethod()->getIdShipmentMethod();
-            $shipmentMethodTransfer = $this->filterAvailableMethodById($idShipmentMethod, $availableShipmentMethods);
+            $cartShipmentMethodTransfer = $shipmentTransfer->getMethod();
+
+            if ($cartShipmentMethodTransfer === null
+                || $cartShipmentMethodTransfer->getIdShipmentMethod() === null
+                || $this->isCurrencyChanged($shipmentTransfer, $quoteTransfer) === false
+            ) {
+                continue;
+            }
+
+            $availableShipmentMethods = $this->findAvailableShipmentMethodsByShipment(
+                $availableShipmentMethodsCollectionTransfer,
+                $shipmentTransfer
+            );
+
+            if ($availableShipmentMethods === null) {
+                continue;
+            }
+
+            $shipmentMethodTransfer = $this->findAvailableShipmentMethodByIdShipmentMethod(
+                $availableShipmentMethods,
+                $cartShipmentMethodTransfer->getIdShipmentMethod()
+            );
 
             if ($shipmentMethodTransfer === null) {
                 continue;
             }
 
             $shipmentMethodTransfer->setCurrencyIsoCode($quoteTransfer->getCurrency()->getCode());
+            $shipmentGroupTransfer->getShipment()->setMethod($shipmentMethodTransfer);
 
-            $itemTransfer->getShipment()->setMethod($shipmentMethodTransfer);
+            $quoteTransfer = $this->updateShipmentExpense($quoteTransfer, $shipmentGroupTransfer);
         }
 
-        $this->updateShipmentExpenses($quoteTransfer);
-
-        return $cartChangeTransfer;
-    }
-
-    /**
-     * @param int $idShipmentMethod
-     * @param \Generated\Shared\Transfer\ShipmentMethodsTransfer $availableShipmentMethods
-     *
-     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
-     */
-    protected function filterAvailableMethodById(
-        int $idShipmentMethod,
-        ShipmentMethodsTransfer $availableShipmentMethods
-    ): ?ShipmentMethodTransfer {
-        foreach ($availableShipmentMethods->getMethods() as $shipmentMethodTransfer) {
-            if ($idShipmentMethod === $shipmentMethodTransfer->getIdShipmentMethod()) {
-                return $shipmentMethodTransfer;
-            }
-        }
-
-        return null;
+        return $cartChangeTransfer->setQuote($quoteTransfer);
     }
 
     /**
@@ -118,6 +124,88 @@ class ShipmentCartExpander implements ShipmentCartExpanderInterface
         }
 
         return false;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentMethodsCollectionTransfer $shipmentMethodsCollection
+     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer|null
+     */
+    protected function findAvailableShipmentMethodsByShipment(
+        ShipmentMethodsCollectionTransfer $shipmentMethodsCollection,
+        ShipmentTransfer $shipmentTransfer
+    ): ?ShipmentMethodsTransfer {
+        $shipmentHash = $this->shipmentService->getShipmentHashKey($shipmentTransfer);
+        foreach ($shipmentMethodsCollection->getShipmentMethods() as $shipmentMethodsTransfer) {
+            if ($shipmentMethodsTransfer->getShipmentHash() === $shipmentHash) {
+                return $shipmentMethodsTransfer;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentMethodsTransfer $availableShipmentMethods
+     * @param int $idShipmentMethod
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
+     */
+    protected function findAvailableShipmentMethodByIdShipmentMethod(
+        ShipmentMethodsTransfer $availableShipmentMethods,
+        int $idShipmentMethod
+    ): ?ShipmentMethodTransfer {
+        foreach ($availableShipmentMethods->getMethods() as $shipmentMethodTransfer) {
+            if ($idShipmentMethod === $shipmentMethodTransfer->getIdShipmentMethod()) {
+                return $shipmentMethodTransfer;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function updateShipmentExpense(QuoteTransfer $quoteTransfer, ShipmentGroupTransfer $shipmentGroupTransfer): QuoteTransfer
+    {
+        $expenseTransfer = $this->findExpenseByShipmentGroup($quoteTransfer, $shipmentGroupTransfer);
+        if ($expenseTransfer === null) {
+            return $quoteTransfer;
+        }
+
+        $expenseTransfer->setShipment($shipmentGroupTransfer->getShipment());
+
+        $this->setExpensePrice(
+            $expenseTransfer,
+            $quoteTransfer->getCurrency(),
+            $quoteTransfer->getPriceMode()
+        );
+
+        return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
+     *
+     * @return \Generated\Shared\Transfer\ExpenseTransfer|null
+     */
+    protected function findExpenseByShipmentGroup(QuoteTransfer $quoteTransfer, ShipmentGroupTransfer $shipmentGroupTransfer): ?ExpenseTransfer
+    {
+        $shipmentHashKey = $shipmentGroupTransfer->getHash();
+        foreach ($quoteTransfer->getExpenses() as $expenseTransfer) {
+            $expenseShipmentHashKey = $this->shipmentService->getShipmentHashKey($expenseTransfer->getShipment());
+            if ($shipmentHashKey === $expenseShipmentHashKey) {
+                return $expenseTransfer;
+            }
+        }
+
+        return null;
     }
 
     /**
@@ -149,29 +237,6 @@ class ShipmentCartExpander implements ShipmentCartExpanderInterface
             $shipmentExpenseTransfer->setUnitGrossPrice($moneyValueTransfer->getGrossAmount());
 
             return;
-        }
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return void
-     */
-    protected function updateShipmentExpenses(
-        QuoteTransfer $quoteTransfer
-    ): void {
-        $shipmentExpenseTypeIdentifier = $this->shipmentFacade->getShipmentExpenseTypeIdentifier();
-
-        foreach ($quoteTransfer->getExpenses() as $expenseTransfer) {
-            if ($expenseTransfer->getType() !== $shipmentExpenseTypeIdentifier) {
-                return;
-            }
-
-            $this->setExpensePrice(
-                $expenseTransfer,
-                $quoteTransfer->getCurrency(),
-                $quoteTransfer->getPriceMode()
-            );
         }
     }
 }

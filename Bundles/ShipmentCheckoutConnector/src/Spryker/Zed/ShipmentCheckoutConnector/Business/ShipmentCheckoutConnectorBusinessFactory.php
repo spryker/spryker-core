@@ -13,6 +13,7 @@ use Spryker\Zed\ShipmentCheckoutConnector\Business\Shipment\ShipmentCheckoutPreC
 use Spryker\Zed\ShipmentCheckoutConnector\Business\Shipment\ShipmentCheckoutPreCheckInterface;
 use Spryker\Zed\ShipmentCheckoutConnector\Business\StrategyResolver\PreCheckStrategyResolver;
 use Spryker\Zed\ShipmentCheckoutConnector\Business\StrategyResolver\PreCheckStrategyResolverInterface;
+use Spryker\Zed\ShipmentCheckoutConnector\Dependency\Service\ShipmentCheckoutConnectorToShipmentServiceInterface;
 use Spryker\Zed\ShipmentCheckoutConnector\ShipmentCheckoutConnectorDependencyProvider;
 
 /**
@@ -36,7 +37,8 @@ class ShipmentCheckoutConnectorBusinessFactory extends AbstractBusinessFactory
     public function createShipmentCheckoutPreCheckWithMultipleShippingAddress(): ShipmentCheckoutPreCheckInterface
     {
         return new ShipmentCheckoutPreCheckWithMultipleShippingAddress(
-            $this->getShipmentFacade()
+            $this->getShipmentFacade(),
+            $this->getShipmentService()
         );
     }
 
@@ -46,6 +48,14 @@ class ShipmentCheckoutConnectorBusinessFactory extends AbstractBusinessFactory
     protected function getShipmentFacade()
     {
         return $this->getProvidedDependency(ShipmentCheckoutConnectorDependencyProvider::FACADE_SHIPMENT);
+    }
+
+    /**
+     * @return \Spryker\Zed\ShipmentCheckoutConnector\Dependency\Service\ShipmentCheckoutConnectorToShipmentServiceInterface
+     */
+    public function getShipmentService(): ShipmentCheckoutConnectorToShipmentServiceInterface
+    {
+        return $this->getProvidedDependency(ShipmentCheckoutConnectorDependencyProvider::SERVICE_SHIPMENT);
     }
 
     /**

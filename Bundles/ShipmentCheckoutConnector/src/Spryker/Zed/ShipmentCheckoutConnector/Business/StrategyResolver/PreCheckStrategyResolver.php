@@ -39,6 +39,12 @@ class PreCheckStrategyResolver implements PreCheckStrategyResolverInterface
      */
     public function resolve(iterable $itemTransfers): ShipmentCheckoutPreCheckInterface
     {
+        if (count($itemTransfers) === 0) {
+            $this->assertRequiredStrategyWithoutMultiShipmentContainerItems();
+
+            return call_user_func($this->strategyContainer[static::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT]);
+        }
+
         foreach ($itemTransfers as $itemTransfer) {
             if ($itemTransfer->getShipment() === null) {
                 $this->assertRequiredStrategyWithoutMultiShipmentContainerItems();

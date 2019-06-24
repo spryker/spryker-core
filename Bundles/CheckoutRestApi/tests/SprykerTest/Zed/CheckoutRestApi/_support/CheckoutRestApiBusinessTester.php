@@ -7,7 +7,6 @@
 
 namespace SprykerTest\Zed\CheckoutRestApi;
 
-use ArrayObject;
 use Codeception\Actor;
 use Generated\Shared\DataBuilder\CheckoutResponseBuilder;
 use Generated\Shared\DataBuilder\CustomerBuilder;
@@ -17,11 +16,9 @@ use Generated\Shared\DataBuilder\PaymentMethodsBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\DataBuilder\QuoteResponseBuilder;
 use Generated\Shared\DataBuilder\RestCheckoutRequestAttributesBuilder;
-use Generated\Shared\DataBuilder\ShipmentBuilder;
-use Generated\Shared\DataBuilder\ShipmentGroupBuilder;
-use Generated\Shared\DataBuilder\ShipmentGroupCollectionBuilder;
 use Generated\Shared\DataBuilder\ShipmentMethodBuilder;
 use Generated\Shared\DataBuilder\ShipmentMethodsBuilder;
+use Generated\Shared\DataBuilder\ShipmentMethodsCollectionBuilder;
 use Generated\Shared\Transfer\AddressesTransfer;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
@@ -31,6 +28,7 @@ use Generated\Shared\Transfer\PaymentProviderCollectionTransfer;
 use Generated\Shared\Transfer\PaymentProviderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
+use Generated\Shared\Transfer\ShipmentMethodsCollectionTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
@@ -254,9 +252,9 @@ class CheckoutRestApiBusinessTester extends Actor
     }
 
     /**
-     * @return \Generated\Shared\Transfer\ShipmentGroupCollectionTransfer|\Spryker\Shared\Kernel\Transfer\AbstractTransfer
+     * @return \Generated\Shared\Transfer\ShipmentMethodsCollectionTransfer
      */
-    public function createShipmentGroupCollectionTransfer(): AbstractTransfer
+    public function createShipmentMethodsCollectionTransfer(): ShipmentMethodsCollectionTransfer
     {
         $shipmentMethodData = [
             'carrierName' => 'Spryker Dummy Shipment',
@@ -264,18 +262,15 @@ class CheckoutRestApiBusinessTester extends Actor
             'name' => 'Standard',
             'storeCurrencyPrice' => '490',
         ];
-        $shipmentMethodTransfer = (new ShipmentMethodBuilder())->seed($shipmentMethodData)->build();
-        $shipmentTransfer = (new ShipmentBuilder())->build();
-        $shipmentTransfer->setMethod($shipmentMethodTransfer);
-        $shipmentGroupTransfer = (new ShipmentGroupBuilder())->build();
-        $shipmentMethodsTransfer = (new ShipmentMethodsBuilder())->build();
-        $shipmentMethodsTransfer->addMethod($shipmentMethodTransfer);
-        $shipmentGroupTransfer->setShipment($shipmentTransfer)
-            ->setAvailableShipmentMethods($shipmentMethodsTransfer);
 
-        $shipmentGroupCollectionTransfer = (new ShipmentGroupCollectionBuilder())->build();
-
-        return $shipmentGroupCollectionTransfer->setShipmentGroups(new ArrayObject([$shipmentGroupTransfer]));
+        return (new ShipmentMethodsCollectionBuilder())
+            ->withShipmentMethods(
+                (new ShipmentMethodsBuilder())
+                    ->withMethod(
+                        (new ShipmentMethodBuilder($shipmentMethodData))
+                    )
+            )
+            ->build();
     }
 
     /**

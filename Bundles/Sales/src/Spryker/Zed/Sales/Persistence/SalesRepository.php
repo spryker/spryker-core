@@ -55,7 +55,7 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
             return null;
         }
 
-        return $this->hydrateAddressTransferFromEntity($this->createOrderAddressTranfer(), $addressEntity);
+        return $this->hydrateAddressTransferFromEntity($this->createOrderAddressTransfer(), $addressEntity);
     }
 
     /**
@@ -77,7 +77,7 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
     /**
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
-    protected function createOrderAddressTranfer(): AddressTransfer
+    protected function createOrderAddressTransfer(): AddressTransfer
     {
         return new AddressTransfer();
     }

@@ -96,7 +96,7 @@ class ShipmentEntityManager extends AbstractEntityManager implements ShipmentEnt
         $shipmentMethodEntity->save();
 
         return $shipmentMethodMapper
-            ->mapShipmentMethodEntityToShipmentMethodTransfer($shipmentMethodEntity, new ShipmentMethodTransfer());
+            ->mapShipmentMethodEntityToShipmentMethodTransfer($shipmentMethodEntity, $shipmentMethodTransfer);
     }
 
     /**
@@ -130,6 +130,6 @@ class ShipmentEntityManager extends AbstractEntityManager implements ShipmentEnt
         $salesOrderExpenseEntity->save();
 
         return $expenseMapper
-            ->mapOrderSalesExpenseEntityToExpenseTransfer($salesOrderExpenseEntity, new ExpenseTransfer());
+            ->mapOrderSalesExpenseEntityToExpenseTransfer($salesOrderExpenseEntity, $expenseTransfer);
     }
 }

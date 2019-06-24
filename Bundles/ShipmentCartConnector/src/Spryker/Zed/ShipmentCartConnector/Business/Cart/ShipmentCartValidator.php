@@ -11,11 +11,13 @@ use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShipmentMethodsCollectionTransfer;
 use Generated\Shared\Transfer\ShipmentMethodsTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Zed\ShipmentCartConnector\Dependency\Facade\ShipmentCartConnectorToPriceFacadeInterface;
 use Spryker\Zed\ShipmentCartConnector\Dependency\Facade\ShipmentCartConnectorToShipmentFacadeInterface;
+use Spryker\Zed\ShipmentCartConnector\Dependency\Service\ShipmentCartConnectorToShipmentServiceInterface;
 
 class ShipmentCartValidator implements ShipmentCartValidatorInterface
 {
@@ -32,15 +34,23 @@ class ShipmentCartValidator implements ShipmentCartValidatorInterface
     protected $priceFacade;
 
     /**
+     * @var \Spryker\Zed\ShipmentDiscountConnector\Business\DecisionRule\ShipmentDiscountDecisionRuleInterface
+     */
+    protected $shipmentService;
+
+    /**
      * @param \Spryker\Zed\ShipmentCartConnector\Dependency\Facade\ShipmentCartConnectorToShipmentFacadeInterface $shipmentFacade
      * @param \Spryker\Zed\ShipmentCartConnector\Dependency\Facade\ShipmentCartConnectorToPriceFacadeInterface $priceFacade
+     * @param \Spryker\Zed\ShipmentCartConnector\Dependency\Service\ShipmentCartConnectorToShipmentServiceInterface $shipmentService
      */
     public function __construct(
         ShipmentCartConnectorToShipmentFacadeInterface $shipmentFacade,
-        ShipmentCartConnectorToPriceFacadeInterface $priceFacade
+        ShipmentCartConnectorToPriceFacadeInterface $priceFacade,
+        ShipmentCartConnectorToShipmentServiceInterface $shipmentService
     ) {
         $this->shipmentFacade = $shipmentFacade;
         $this->priceFacade = $priceFacade;
+        $this->shipmentService = $shipmentService;
     }
 
     /**
@@ -55,10 +65,11 @@ class ShipmentCartValidator implements ShipmentCartValidatorInterface
 
         $quoteTransfer = $cartChangeTransfer->getQuote();
 
-        $availableShipmentMethods = $this->shipmentFacade->getAvailableMethods($quoteTransfer);
+        $availableShipmentMethodsCollectionTransfer = $this->shipmentFacade->getAvailableMethodsByShipment($quoteTransfer);
+        $shipmentGroupCollection = $this->shipmentService->groupItemsByShipment($quoteTransfer->getItems());
 
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $shipmentTransfer = $itemTransfer->getShipment();
+        foreach ($shipmentGroupCollection as $shipmentGroupTransfer) {
+            $shipmentTransfer = $shipmentGroupTransfer->getShipment();
             if ($shipmentTransfer === null) {
                 continue;
             }
@@ -72,36 +83,65 @@ class ShipmentCartValidator implements ShipmentCartValidatorInterface
                 continue;
             }
 
-            $shipmentMethodTransfer = $this->filterAvailableMethodById(
-                $cartShipmentMethodTransfer->getIdShipmentMethod(),
-                $availableShipmentMethods
+            $availableShipmentMethods = $this->findAvailableShipmentMethodsByShipment(
+                $availableShipmentMethodsCollectionTransfer,
+                $shipmentTransfer
             );
 
-            if ($shipmentMethodTransfer === null) {
-                $cartPreCheckResponseTransfer
-                    ->setIsSuccess(false)
-                    ->addMessage($this->createMessage($cartShipmentMethodTransfer));
-
+            if ($availableShipmentMethods === null) {
                 continue;
             }
+
+            $shipmentMethodTransfer = $this->findAvailableShipmentMethodByIdShipmentMethod(
+                $availableShipmentMethods,
+                $cartShipmentMethodTransfer->getIdShipmentMethod()
+            );
+
+            if ($shipmentMethodTransfer !== null) {
+                continue;
+            }
+
+            $cartPreCheckResponseTransfer
+                ->setIsSuccess(false)
+                ->addMessage($this->createMessage($cartShipmentMethodTransfer));
         }
 
         return $cartPreCheckResponseTransfer;
     }
 
     /**
-     * @param int $idShipmentMethod
+     * @param \Generated\Shared\Transfer\ShipmentMethodsCollectionTransfer $shipmentMethodsCollection
+     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer|null
+     */
+    protected function findAvailableShipmentMethodsByShipment(
+        ShipmentMethodsCollectionTransfer $shipmentMethodsCollection,
+        ShipmentTransfer $shipmentTransfer
+    ): ?ShipmentMethodsTransfer {
+        $shipmentHash = $this->shipmentService->getShipmentHashKey($shipmentTransfer);
+        foreach ($shipmentMethodsCollection->getShipmentMethods() as $shipmentMethodsTransfer) {
+            if ($shipmentMethodsTransfer->getShipmentHash() === $shipmentHash) {
+                return $shipmentMethodsTransfer;
+            }
+        }
+
+        return null;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ShipmentMethodsTransfer $availableShipmentMethods
+     * @param int $idShipmentMethod
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
      */
-    protected function filterAvailableMethodById(
-        int $idShipmentMethod,
-        ShipmentMethodsTransfer $availableShipmentMethods
+    protected function findAvailableShipmentMethodByIdShipmentMethod(
+        ShipmentMethodsTransfer $availableShipmentMethods,
+        int $idShipmentMethod
     ): ?ShipmentMethodTransfer {
-        foreach ($availableShipmentMethods->getMethods() as $shipentMethodTransfer) {
-            if ($idShipmentMethod === $shipentMethodTransfer->getIdShipmentMethod()) {
-                return $shipentMethodTransfer;
+        foreach ($availableShipmentMethods->getMethods() as $shipmentMethodTransfer) {
+            if ($idShipmentMethod === $shipmentMethodTransfer->getIdShipmentMethod()) {
+                return $shipmentMethodTransfer;
             }
         }
 

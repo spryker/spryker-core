@@ -12,6 +12,8 @@ use Generated\Shared\DataBuilder\CheckoutResponseBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\DataBuilder\ShipmentBuilder;
 use Generated\Shared\DataBuilder\ShipmentMethodBuilder;
+use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Spryker\Zed\ShipmentCheckoutConnector\Business\ShipmentCheckoutConnectorFacade;
 
@@ -46,6 +48,34 @@ class ShipmentCheckoutConnectorFacadeTest extends Unit
         $quoteTransfer = (new QuoteBuilder())
             ->withShipment($shipmentTransfer->toArray())
             ->build();
+
+        $quoteTransfer = $this->removeItemLevelShipments($quoteTransfer);
+
+        $checkoutResponseTransfer = (new CheckoutResponseBuilder())->build();
+
+        $isValid = $shipmentCheckoutConnectorFacade->checkShipment($quoteTransfer, $checkoutResponseTransfer);
+
+        $this->assertFalse($isValid);
+        $this->assertFalse($checkoutResponseTransfer->getIsSuccess());
+        $this->assertCount(1, $checkoutResponseTransfer->getErrors());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCheckShipmentWhenNonActiveUsedShouldAddErrorWithItemLevelShipment()
+    {
+        $shipmentCheckoutConnectorFacade = $this->createShipmentCheckoutConnectorFacade();
+
+        $shipmentTransfer = (new ShipmentBuilder())
+            ->withMethod()
+            ->build();
+
+        $itemTransfer = new ItemTransfer();
+        $itemTransfer->setShipment($shipmentTransfer);
+
+        $quoteTransfer = (new QuoteBuilder())->build();
+        $quoteTransfer->addItem($itemTransfer);
 
         $checkoutResponseTransfer = (new CheckoutResponseBuilder())->build();
 
@@ -108,6 +138,54 @@ class ShipmentCheckoutConnectorFacadeTest extends Unit
             ->withShipment($shipmentTransfer->toArray())
             ->build();
 
+        $quoteTransfer = $this->removeItemLevelShipments($quoteTransfer);
+
+        $checkoutResponseTransfer = (new CheckoutResponseBuilder())->build();
+
+        $isValid = $shipmentCheckoutConnectorFacade->checkShipment($quoteTransfer, $checkoutResponseTransfer);
+
+        $this->assertTrue($isValid);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCheckShipmentWhenValidShipmentGivenShouldPassWithItemLevelShipment()
+    {
+        $shipmentCheckoutConnectorFacade = $this->createShipmentCheckoutConnectorFacade();
+
+        $priceList = [
+            $this->getDefaultStoreName() => [
+                'EUR' => [
+                    'netAmount' => 10,
+                    'grossAmount' => 15,
+                ],
+            ],
+        ];
+
+        $idShipmentMethod = $this->tester
+            ->haveShipmentMethod([], [], $priceList)
+            ->getIdShipmentMethod();
+
+        $shipmentMethodTransfer = (new ShipmentMethodBuilder(
+            [
+                ShipmentMethodTransfer::ID_SHIPMENT_METHOD => $idShipmentMethod,
+            ]
+        ))
+            ->build();
+
+        $shipmentTransfer = (new ShipmentBuilder())
+            ->withMethod($shipmentMethodTransfer->toArray())
+            ->build();
+
+        $itemTransfer = new ItemTransfer();
+        $itemTransfer->setShipment($shipmentTransfer);
+
+        $quoteTransfer = (new QuoteBuilder())->build();
+        $quoteTransfer->addItem($itemTransfer);
+
+        $quoteTransfer = $this->removeItemLevelShipments($quoteTransfer);
+
         $checkoutResponseTransfer = (new CheckoutResponseBuilder())->build();
 
         $isValid = $shipmentCheckoutConnectorFacade->checkShipment($quoteTransfer, $checkoutResponseTransfer);
@@ -129,5 +207,19 @@ class ShipmentCheckoutConnectorFacadeTest extends Unit
     public function getDefaultStoreName()
     {
         return $this->tester->getLocator()->store()->facade()->getCurrentStore()->getName();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function removeItemLevelShipments(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            $itemTransfer->setShipment(null);
+        }
+
+        return $quoteTransfer;
     }
 }

@@ -9,7 +9,7 @@ namespace Spryker\Zed\ShipmentDiscountConnector\Business\StrategyResolver;
 
 use Closure;
 use Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException;
-use Spryker\Zed\ShipmentDiscountConnector\Business\DecisionRule\ShipmentDiscountDecisionRuleInterface;
+use Spryker\Zed\ShipmentDiscountConnector\Business\Model\ShipmentDiscountDecisionRuleInterface;
 
 /**
  * @deprecated Exists for Backward Compatibility reasons only.
@@ -40,7 +40,7 @@ class MultiShipmentDecisionRuleStrategyResolver implements MultiShipmentDecision
      * @param string $type
      * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
-     * @return \Spryker\Zed\ShipmentDiscountConnector\Business\DecisionRule\ShipmentDiscountDecisionRuleInterface
+     * @return \Spryker\Zed\ShipmentDiscountConnector\Business\Model\ShipmentDiscountDecisionRuleInterface
      */
     public function resolveByTypeAndItems(string $type, iterable $itemTransfers): ShipmentDiscountDecisionRuleInterface
     {

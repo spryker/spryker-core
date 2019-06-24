@@ -7,10 +7,9 @@
 
 namespace Spryker\Zed\Shipment\Business\ShipmentMethod;
 
-use ArrayObject;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\ShipmentGroupCollectionTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
+use Generated\Shared\Transfer\ShipmentMethodsCollectionTransfer;
 use Generated\Shared\Transfer\ShipmentMethodsTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Spryker\Service\Shipment\ShipmentServiceInterface;
@@ -84,13 +83,23 @@ class MethodReader implements MethodReaderInterface
     }
 
     /**
+     * @param int $idShipmentMethod
+     *
+     * @return bool
+     */
+    public function isShipmentMethodActive(int $idShipmentMethod): bool
+    {
+        return $this->shipmentRepository->hasActiveShipmentMethodByIdShipmentMethod($idShipmentMethod);
+    }
+
+    /**
      * @param int $idMethod
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
      */
     public function findShipmentMethodTransferById(int $idMethod): ?ShipmentMethodTransfer
     {
-        return $this->shipmentRepository->findShipmentMethodById($idMethod);
+        return $this->shipmentRepository->findShipmentMethodByIdWithPricesAndCarrier($idMethod);
     }
 
     /**
@@ -114,7 +123,8 @@ class MethodReader implements MethodReaderInterface
             return null;
         }
 
-        $storeCurrencyPrice = $this->findStoreCurrencyPriceAmountByShipmentMethodTransfer($shipmentMethodTransfer, $quoteTransfer);
+        $storeCurrencyPrice = $this->methodPriceReader
+            ->findShipmentGroupShippingPrice($shipmentMethodTransfer, $quoteTransfer);
         if ($storeCurrencyPrice === null) {
             return null;
         }
@@ -125,138 +135,106 @@ class MethodReader implements MethodReaderInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\ShipmentGroupCollectionTransfer
+     * @return \Generated\Shared\Transfer\ShipmentMethodsCollectionTransfer
      */
-    public function getAvailableMethodsByShipment(QuoteTransfer $quoteTransfer): ShipmentGroupCollectionTransfer
+    public function getAvailableMethodsByShipment(QuoteTransfer $quoteTransfer): ShipmentMethodsCollectionTransfer
     {
-        if (!$this->isMultiShipmentQuote($quoteTransfer)) {
-            return $this->getAvailableMethodsByShipmentWithoutMultiShipment($quoteTransfer);
-        }
+        $shipmentGroupCollection = $this->shipmentService->groupItemsByShipment($quoteTransfer->getItems());
+        $shipmentMethodsCollectionTransfer = $this->getAvailableMethodsCollection($quoteTransfer, $shipmentGroupCollection);
+        $shipmentMethodsCollectionTransfer = $this->applyFilters($shipmentMethodsCollectionTransfer, $shipmentGroupCollection, $quoteTransfer);
 
-        $shipmentGroupCollectionTransfer = $this->getShipmentGroupWithAvailableMethods($quoteTransfer);
-        $shipmentGroupCollectionTransfer = $this->applyFiltersByShipment($shipmentGroupCollectionTransfer, $quoteTransfer);
-
-        return $shipmentGroupCollectionTransfer;
+        return $shipmentMethodsCollectionTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param iterable|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $shipmentGroupCollection
      *
-     * @return \Generated\Shared\Transfer\ShipmentGroupCollectionTransfer
+     * @return \Generated\Shared\Transfer\ShipmentMethodsCollectionTransfer
      */
-    protected function getAvailableMethodsByShipmentWithoutMultiShipment(
-        QuoteTransfer $quoteTransfer
-    ): ShipmentGroupCollectionTransfer {
-        $shipmentGroupTransfer = (new ShipmentGroupTransfer())
-            ->setAvailableShipmentMethods($this->getAvailableMethods($quoteTransfer));
-
-        $shipmentGroupCollection = (new ArrayObject());
-        $shipmentGroupCollection->offsetSet($shipmentGroupTransfer->getHash(), $shipmentGroupTransfer);
-
-        return (new ShipmentGroupCollectionTransfer())->setShipmentGroups($shipmentGroupCollection);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return bool
-     */
-    protected function isMultiShipmentQuote(QuoteTransfer $quoteTransfer): bool
+    protected function getAvailableMethodsCollection(QuoteTransfer $quoteTransfer, iterable $shipmentGroupCollection): ShipmentMethodsCollectionTransfer
     {
-        if ($quoteTransfer->getItems()->count() === 0) {
-            return false;
-        }
+        $shipmentMethodsCollection = new ShipmentMethodsCollectionTransfer();
+        $activeShipmentMethodTransfers = $this->shipmentRepository->getActiveShipmentMethods();
 
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if ($itemTransfer->getShipment() === null) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShipmentGroupCollectionTransfer
-     */
-    protected function getShipmentGroupWithAvailableMethods(QuoteTransfer $quoteTransfer): ShipmentGroupCollectionTransfer
-    {
-        $shipmentMethodTransfers = $this->shipmentRepository->getActiveShipmentMethods();
-        $quoteShipmentGroupCollection = $this->shipmentService->groupItemsByShipment($quoteTransfer->getItems());
-
-        $shipmentGroupCollection = new ArrayObject();
-        foreach ($quoteShipmentGroupCollection as $shipmentGroupTransfer) {
-            $shipmentMethodsTransfer = $this->getAvailableMethodForShipmentGroup(
-                $shipmentGroupTransfer,
-                $shipmentMethodTransfers,
-                $quoteTransfer
+        foreach ($shipmentGroupCollection as $shipmentGroupTransfer) {
+            $shipmentMethodsTransfer = $this->getAvailableMethodsTransfer(
+                $activeShipmentMethodTransfers,
+                $quoteTransfer,
+                $shipmentGroupTransfer
             );
 
-            $shipmentGroupTransfer->setAvailableShipmentMethods($shipmentMethodsTransfer);
-            $shipmentGroupCollection[$shipmentGroupTransfer->getHash()] = $shipmentGroupTransfer;
+            $shipmentMethodsTransfer->setShipmentHash($shipmentGroupTransfer->getHash());
+            $shipmentMethodsCollection->addShipmentMethods($shipmentMethodsTransfer);
         }
 
-        return (new ShipmentGroupCollectionTransfer())->setShipmentGroups($shipmentGroupCollection);
+        return $shipmentMethodsCollection;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShipmentGroupCollectionTransfer $shipmentGroupCollectionTransfer
+     * @param \Generated\Shared\Transfer\ShipmentMethodsCollectionTransfer $shipmentMethodsCollectionTransfer
+     * @param iterable|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $shipmentGroupCollection
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\ShipmentGroupCollectionTransfer
+     * @return \Generated\Shared\Transfer\ShipmentMethodsCollectionTransfer
      */
-    protected function applyFiltersByShipment(
-        ShipmentGroupCollectionTransfer $shipmentGroupCollectionTransfer,
+    protected function applyFilters(
+        ShipmentMethodsCollectionTransfer $shipmentMethodsCollectionTransfer,
+        iterable $shipmentGroupCollection,
         QuoteTransfer $quoteTransfer
-    ): ShipmentGroupCollectionTransfer {
-        foreach ($shipmentGroupCollectionTransfer->getShipmentGroups() as $shipmentGroupTransfer) {
-            $shipmentMethods = $shipmentGroupTransfer->getAvailableShipmentMethods();
+    ): ShipmentMethodsCollectionTransfer {
+        foreach ($shipmentMethodsCollectionTransfer->getShipmentMethods() as $index => $shipmentMethodsTransfer) {
+            if (count($shipmentMethodsTransfer->getMethods()) < 1) {
+                continue;
+            }
 
             foreach ($this->shipmentMethodFilters as $shipmentMethodFilter) {
                 if ($shipmentMethodFilter instanceof ShipmentMethodFilterPluginInterface) {
-                    $shipmentMethods = $shipmentMethodFilter->filterShipmentMethods($shipmentGroupTransfer, $quoteTransfer);
+                    $shipmentGroupTransfer = $this->getShipmentGroupByHash($shipmentGroupCollection, $shipmentMethodsTransfer->getShipmentHash());
+
+                    $shipmentGroupTransfer->setAvailableShipmentMethods($shipmentMethodsTransfer);
+                    $shipmentMethodCollection = $shipmentMethodFilter->filterShipmentMethods($shipmentGroupTransfer, $quoteTransfer);
+                    $shipmentMethodsTransfer->setMethods($shipmentMethodCollection);
                 } else {
                     /**
                      * @deprecated Exists for Backward Compatibility reasons only.
                      */
-                    $shipmentMethods = $shipmentMethodFilter->filterShipmentMethods($shipmentMethods->getMethods(), $quoteTransfer);
+                    $shipmentMethodCollection = $shipmentMethodsTransfer->getMethods();
+                    $shipmentMethodCollection = $shipmentMethodFilter->filterShipmentMethods($shipmentMethodCollection, $quoteTransfer);
+                    $shipmentMethodsTransfer->setMethods($shipmentMethodCollection);
+                }
+
+                if (count($shipmentMethodsTransfer->getMethods()) < 1) {
+                    break;
                 }
             }
 
-            $shipmentMethodsTransfer = (new ShipmentMethodsTransfer())->setMethods($shipmentMethods);
-            $shipmentGroupTransfer->setAvailableShipmentMethods($shipmentMethodsTransfer);
+            $shipmentMethodsCollectionTransfer->getShipmentMethods()->offsetSet($index, $shipmentMethodsTransfer);
         }
 
-        return $shipmentGroupCollectionTransfer;
+        return $shipmentMethodsCollectionTransfer;
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer[] $activeShipmentMethodTransfers
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer|null $shipmentGroupTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer
      */
-    protected function getAvailableMethods(QuoteTransfer $quoteTransfer): ShipmentMethodsTransfer
-    {
-        $shipmentMethodsTransfer = $this->getAvailableMethodsTransfer($quoteTransfer);
-        $shipmentMethodsTransfer = $this->applyFilters($shipmentMethodsTransfer, $quoteTransfer);
-
-        return $shipmentMethodsTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer
-     */
-    protected function getAvailableMethodsTransfer(QuoteTransfer $quoteTransfer): ShipmentMethodsTransfer
-    {
+    protected function getAvailableMethodsTransfer(
+        array $activeShipmentMethodTransfers,
+        QuoteTransfer $quoteTransfer,
+        ?ShipmentGroupTransfer $shipmentGroupTransfer = null
+    ): ShipmentMethodsTransfer {
         $shipmentMethodsTransfer = new ShipmentMethodsTransfer();
-        $activeShipmentMethodTransfers = $this->shipmentRepository->getActiveShipmentMethods();
+        foreach ($activeShipmentMethodTransfers as $shipmentMethodTransfer) {
+            $shipmentMethodTransfer = $this->prepareAvailableShipmentMethod(
+                $shipmentMethodTransfer,
+                $quoteTransfer,
+                $shipmentGroupTransfer
+            );
 
-        foreach ($activeShipmentMethodTransfers as $activeShipmentMethodTransfer) {
-            $shipmentMethodTransfer = $this->prepareAvailableShipmentMethod($activeShipmentMethodTransfer, $quoteTransfer);
             if ($shipmentMethodTransfer === null) {
                 continue;
             }
@@ -268,85 +246,30 @@ class MethodReader implements MethodReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShipmentMethodsTransfer $shipmentMethodsTransfer
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer
-     */
-    protected function applyFilters(
-        ShipmentMethodsTransfer $shipmentMethodsTransfer,
-        QuoteTransfer $quoteTransfer
-    ): ShipmentMethodsTransfer {
-        $shipmentMethods = $shipmentMethodsTransfer->getMethods();
-
-        foreach ($this->shipmentMethodFilters as $shipmentMethodFilter) {
-            $shipmentMethods = $shipmentMethodFilter->filterShipmentMethods($shipmentMethods, $quoteTransfer);
-        }
-
-        return $shipmentMethodsTransfer->setMethods($shipmentMethods);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
-     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer[] $shipmentMethodTransfers
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer
-     */
-    protected function getAvailableMethodForShipmentGroup(
-        ShipmentGroupTransfer $shipmentGroupTransfer,
-        array $shipmentMethodTransfers,
-        QuoteTransfer $quoteTransfer
-    ): ShipmentMethodsTransfer {
-        $shipmentMethodsTransfer = new ShipmentMethodsTransfer();
-        foreach ($shipmentMethodTransfers as $shipmentMethodTransfer) {
-            $isShipmentMethodAvailableForShipmentGroup = $this->methodAvailabilityChecker
-                ->isShipmentMethodAvailableForShipmentGroup(
-                    $shipmentMethodTransfer,
-                    $quoteTransfer,
-                    $shipmentGroupTransfer
-                );
-            if (!$isShipmentMethodAvailableForShipmentGroup) {
-                continue;
-            }
-
-            $storeCurrencyPrice = $this->methodPriceReader
-                ->getShipmentGroupShippingPrice($shipmentMethodTransfer, $quoteTransfer, $shipmentGroupTransfer);
-            if ($storeCurrencyPrice === null) {
-                continue;
-            }
-
-            $shipmentMethodTransfer = $this->transformShipmentMethod(
-                $quoteTransfer,
-                $shipmentMethodTransfer,
-                $storeCurrencyPrice,
-                $shipmentGroupTransfer
-            );
-            $shipmentMethodsTransfer->addMethod($shipmentMethodTransfer);
-        }
-
-        return $shipmentMethodsTransfer;
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer|null $shipmentGroupTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
      */
     protected function prepareAvailableShipmentMethod(
         ShipmentMethodTransfer $shipmentMethodTransfer,
-        QuoteTransfer $quoteTransfer
+        QuoteTransfer $quoteTransfer,
+        ?ShipmentGroupTransfer $shipmentGroupTransfer = null
     ): ?ShipmentMethodTransfer {
-        if (!$this->methodAvailabilityChecker
-            ->isShipmentMethodAvailableForShipmentGroup($shipmentMethodTransfer, $quoteTransfer)) {
+        $isShipmentMethodAvailable = $this->methodAvailabilityChecker
+            ->isShipmentMethodAvailableForShipmentGroup(
+                $shipmentMethodTransfer,
+                $quoteTransfer,
+                $shipmentGroupTransfer
+            );
+        if (!$isShipmentMethodAvailable) {
             return null;
         }
 
-        $storeCurrencyPrice = $this->findStoreCurrencyPriceAmountByShipmentMethodTransfer(
-            $shipmentMethodTransfer,
-            $quoteTransfer
-        );
+        $storeCurrencyPrice = $this->methodPriceReader
+            ->findShipmentGroupShippingPrice($shipmentMethodTransfer, $quoteTransfer, $shipmentGroupTransfer);
+
         if ($storeCurrencyPrice === null) {
             return null;
         }
@@ -393,16 +316,19 @@ class MethodReader implements MethodReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param iterable|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $shipmentGroupCollection
+     * @param string $shipmentHash
      *
-     * @return int|null
+     * @return \Generated\Shared\Transfer\ShipmentGroupTransfer
      */
-    protected function findStoreCurrencyPriceAmountByShipmentMethodTransfer(
-        ShipmentMethodTransfer $shipmentMethodTransfer,
-        QuoteTransfer $quoteTransfer
-    ): ?int {
-        return $this->methodPriceReader
-            ->getShipmentGroupShippingPrice($shipmentMethodTransfer, $quoteTransfer);
+    public function getShipmentGroupByHash(iterable $shipmentGroupCollection, string $shipmentHash): ShipmentGroupTransfer
+    {
+        foreach ($shipmentGroupCollection as $shipmentGroupTransfer) {
+            if ($shipmentGroupTransfer->getHash() === $shipmentHash) {
+                return $shipmentGroupTransfer;
+            }
+        }
+
+        return new ShipmentGroupTransfer();
     }
 }
