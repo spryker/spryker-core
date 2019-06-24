@@ -66,12 +66,14 @@ class EntityTagRequestValidator implements EntityTagRequestValidatorInterface
             );
         }
 
+        $headerValue = $httpRequest->headers->get(RequestConstantsInterface::HEADER_IF_MATCH);
+
         $entityTag = $this->entityTagClient->read(
             $restRequest->getResource()->getType(),
             $restRequest->getResource()->getId()
         );
 
-        if (!$this->compareEntityTags($httpRequest->headers->get(RequestConstantsInterface::HEADER_IF_MATCH), $entityTag)) {
+        if (!$this->compareEntityTags($this->getHashFromHeader($headerValue), $entityTag)) {
             return $restErrorCollectionTransfer->addRestError(
                 $this->entityTagRestResponseBuilder->createPreconditionFailedError()
             );
@@ -89,5 +91,15 @@ class EntityTagRequestValidator implements EntityTagRequestValidatorInterface
     protected function compareEntityTags(string $entityTagFromRequest, string $entityTagFromStorage): bool
     {
         return ($entityTagFromStorage !== null && $entityTagFromStorage === $entityTagFromRequest);
+    }
+
+    /**
+     * @param string $headerValue
+     *
+     * @return string
+     */
+    protected function getHashFromHeader(string $headerValue): string
+    {
+        return trim($headerValue, '"');
     }
 }
