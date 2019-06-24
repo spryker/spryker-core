@@ -335,6 +335,7 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
         $productConcreteEntities = $this->getFactory()
             ->createProductQuery()
             ->joinWithSpyProductAbstract()
+            ->joinWithSpyProductLocalizedAttributes()
             ->filterBySku_In($productConcreteSkus)
             ->find();
 
@@ -342,7 +343,7 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
             return [];
         }
 
-        return $this->mapProductEntitiesToProductConcreteTransfersWithoutLocalizedAttributes($productConcreteEntities);
+        return $this->mapProductEntitiesToProductConcreteTransfersWithoutStores($productConcreteEntities);
     }
 
     /**
@@ -350,14 +351,14 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
-    protected function mapProductEntitiesToProductConcreteTransfersWithoutLocalizedAttributes(ObjectCollection $productEntities): array
+    protected function mapProductEntitiesToProductConcreteTransfersWithoutStores(ObjectCollection $productEntities): array
     {
         $productConcreteTransfers = [];
         $productMapper = $this->getFactory()->createProductMapper();
 
         foreach ($productEntities as $productEntity) {
             $productConcreteTransfers[] = $productMapper
-                ->mapProductEntityToProductConcreteTransferWithoutLocalizedAttributes($productEntity, new ProductConcreteTransfer());
+                ->mapProductEntityToProductConcreteTransferWithoutStores($productEntity, new ProductConcreteTransfer());
         }
 
         return $productConcreteTransfers;

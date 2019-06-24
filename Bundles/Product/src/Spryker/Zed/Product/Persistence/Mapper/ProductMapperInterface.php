@@ -29,7 +29,7 @@ interface ProductMapperInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function mapProductEntityToProductConcreteTransferWithoutLocalizedAttributes(
+    public function mapProductEntityToProductConcreteTransferWithoutStores(
         SpyProduct $productEntity,
         ProductConcreteTransfer $productConcreteTransfer
     ): ProductConcreteTransfer;

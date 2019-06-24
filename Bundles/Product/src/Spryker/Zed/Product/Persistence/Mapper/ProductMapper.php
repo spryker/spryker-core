@@ -123,7 +123,7 @@ class ProductMapper implements ProductMapperInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function mapProductEntityToProductConcreteTransferWithoutLocalizedAttributes(
+    public function mapProductEntityToProductConcreteTransferWithoutStores(
         SpyProduct $productEntity,
         ProductConcreteTransfer $productConcreteTransfer
     ): ProductConcreteTransfer {
@@ -137,6 +137,12 @@ class ProductMapper implements ProductMapperInterface
         $productAbstractEntityTransfer = $productEntity->getSpyProductAbstract();
         if ($productAbstractEntityTransfer !== null) {
             $productConcreteTransfer->setAbstractSku($productAbstractEntityTransfer->getSku());
+        }
+
+        foreach ($productEntity->getSpyProductLocalizedAttributess() as $productLocalizedAttributesEntity) {
+            $productConcreteTransfer->addLocalizedAttributes(
+                $this->mapProductLocalizedAttributesEntityToTransfer($productLocalizedAttributesEntity, new LocalizedAttributesTransfer())
+            );
         }
 
         return $productConcreteTransfer;

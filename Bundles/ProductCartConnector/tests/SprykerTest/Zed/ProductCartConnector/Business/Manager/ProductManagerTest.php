@@ -121,6 +121,10 @@ class ProductManagerTest extends Unit
             ->will($this->returnValue($returnValue));
 
         $mockProductFacade->expects($this->once())
+            ->method('getRawProductConcreteTransfersByConcreteSkus')
+            ->will($this->returnValue([$returnValue]));
+
+        $mockProductFacade->expects($this->once())
             ->method('getLocalizedProductConcreteName')
             ->will($this->returnValue($localizedName));
 
