@@ -27,7 +27,8 @@ class LocaleBusinessFactory extends AbstractBusinessFactory
     {
         return new LocaleManager(
             $this->getQueryContainer(),
-            $this->createTransferGenerator()
+            $this->createTransferGenerator(),
+            $this->getRepository()
         );
     }
 

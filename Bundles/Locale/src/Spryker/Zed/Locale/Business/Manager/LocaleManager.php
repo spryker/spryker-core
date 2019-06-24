@@ -181,14 +181,16 @@ class LocaleManager
     }
 
     /**
-     * @deprecated Use `Spryker\Zed\Locale\Business\Reader\LocaleReaderInterface::findAvailableLocaleCollection()` method instead.
-     *
      * @return \Generated\Shared\Transfer\LocaleTransfer[]
      */
     public function getLocaleCollection()
     {
-        $availableLocales = Store::getInstance()->getLocales();
+        $storeInstance = Store::getInstance();
+        if ($this->localeRepository) {
+            return $this->getAvailableLocaleCollection($storeInstance);
+        }
 
+        $availableLocales = $storeInstance->getLocales();
         $transferCollection = [];
         foreach ($availableLocales as $localeName) {
             $localeInfo = $this->getLocale($localeName);
@@ -203,12 +205,7 @@ class LocaleManager
      */
     public function getAvailableLocales()
     {
-        $store = Store::getInstance();
-        if ($this->localeRepository) {
-            return $this->getAvailableLocaleCollection($store);
-        }
-
-        $availableLocales = $store->getLocales();
+        $availableLocales = Store::getInstance()->getLocales();
         $locales = [];
         foreach ($availableLocales as $localeName) {
             $localeInfo = $this->getLocale($localeName);
@@ -227,7 +224,7 @@ class LocaleManager
     {
         $availableLocales = $store->getLocales();
 
-        $localeTransfers = $this->localeRepository->getLocaleByLocaleNames($availableLocales);
+        $localeTransfers = $this->localeRepository->getLocaleTransfersByLocaleNames($availableLocales);
 
         return $this->indexLocaleTransfersByLocalename($localeTransfers);
     }
@@ -235,7 +232,7 @@ class LocaleManager
     /**
      * @param \Generated\Shared\Transfer\LocaleTransfer[] $localeTransfers
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\LocaleTransfer[]
      */
     protected function indexLocaleTransfersByLocaleName(array $localeTransfers): array
     {
