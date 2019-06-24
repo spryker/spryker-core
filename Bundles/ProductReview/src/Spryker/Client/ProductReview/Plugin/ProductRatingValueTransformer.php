@@ -13,6 +13,8 @@ class ProductRatingValueTransformer implements FacetSearchResultValueTransformer
 {
     public const CONVERSION_PRECISION = 100;
     public const RATING_VALUE_TOLERANCE = 25;
+    protected const RANGE_MIN_PARAMETER = 'min';
+    protected const RANGE_MAX_PARAMETER = 'max';
 
     /**
      * @param array $rangeValues
@@ -21,12 +23,12 @@ class ProductRatingValueTransformer implements FacetSearchResultValueTransformer
      */
     public function transformForDisplay($rangeValues)
     {
-        if (isset($rangeValues['min'])) {
-            $rangeValues['min'] = $this->normalizeRatingForDisplay($rangeValues['min']);
+        if (isset($rangeValues[self::RANGE_MIN_PARAMETER])) {
+            $rangeValues[self::RANGE_MIN_PARAMETER] = $this->normalizeRatingForDisplay($rangeValues[self::RANGE_MIN_PARAMETER ]);
         }
 
-        if (isset($rangeValues['max'])) {
-            $rangeValues['max'] = $this->normalizeRatingForDisplay($rangeValues['max']);
+        if (isset($rangeValues[self::RANGE_MAX_PARAMETER])) {
+            $rangeValues[self::RANGE_MAX_PARAMETER] = $this->normalizeRatingForDisplay($rangeValues[self::RANGE_MAX_PARAMETER]);
         }
 
         return $rangeValues;
@@ -39,17 +41,17 @@ class ProductRatingValueTransformer implements FacetSearchResultValueTransformer
      */
     public function transformFromDisplay($rangeValues)
     {
-        if (isset($rangeValues['min']) && is_numeric($rangeValues['min'])) {
-            $rangeValues['min'] =
+        if (isset($rangeValues[self::RANGE_MIN_PARAMETER]) && is_numeric($rangeValues[self::RANGE_MIN_PARAMETER])) {
+            $rangeValues[self::RANGE_MIN_PARAMETER] =
                 $this->adjustLowerThreshold(
-                    $this->normalizeRatingForFilter($rangeValues['min'])
+                    $this->normalizeRatingForFilter($rangeValues[self::RANGE_MIN_PARAMETER])
                 );
         }
 
-        if (isset($rangeValues['max']) && is_numeric($rangeValues['max'])) {
-            $rangeValues['max'] =
+        if (isset($rangeValues[self::RANGE_MAX_PARAMETER]) && is_numeric($rangeValues[self::RANGE_MAX_PARAMETER])) {
+            $rangeValues[self::RANGE_MAX_PARAMETER] =
                 $this->adjustUpperThreshold(
-                    $this->normalizeRatingForFilter($rangeValues['max'])
+                    $this->normalizeRatingForFilter($rangeValues[self::RANGE_MAX_PARAMETER])
                 );
         }
 
