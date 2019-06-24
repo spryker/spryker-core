@@ -398,6 +398,29 @@ class FileManagerFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testGetFilesByIds(): void
+    {
+        // Arrange
+        $idFiles = $this->tester->inserFilesCollection();
+
+        // Act
+        $fileManagerDataTransfers = $this->facade->getFilesByIds($idFiles);
+
+        // Assert
+
+        $this->assertCount(9, $fileManagerDataTransfers);
+
+        foreach ($fileManagerDataTransfers as $fileManagerDataTransfer) {
+            $this->assertInstanceOf(FileManagerDataTransfer::class, $fileManagerDataTransfer);
+            $this->assertInstanceOf(FileTransfer::class, $fileManagerDataTransfer->getFile());
+            $this->assertInstanceOf(FileInfoTransfer::class, $fileManagerDataTransfer->getFileInfo());
+            $this->assertContains($fileManagerDataTransfer->getFile()->getIdFile(), $idFiles);
+        }
+    }
+
+    /**
      * @param int $idMimeType
      *
      * @return \Generated\Shared\Transfer\MimeTypeTransfer
