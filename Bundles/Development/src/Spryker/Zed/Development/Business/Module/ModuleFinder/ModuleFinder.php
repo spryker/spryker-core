@@ -20,6 +20,9 @@ use Zend\Filter\StringToLower;
 use Zend\Filter\Word\CamelCaseToDash;
 use Zend\Filter\Word\DashToCamelCase;
 
+/**
+ * @deprecated Use `spryker/module-finder` instead.
+ */
 class ModuleFinder implements ModuleFinderInterface
 {
     /**

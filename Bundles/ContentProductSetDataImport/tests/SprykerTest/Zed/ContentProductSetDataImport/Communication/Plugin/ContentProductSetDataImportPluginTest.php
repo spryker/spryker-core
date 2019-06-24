@@ -30,7 +30,7 @@ use Spryker\Zed\DataImport\Business\Exception\DataImportException;
  */
 class ContentProductSetDataImportPluginTest extends Unit
 {
-    protected const ERROR_MESSAGE_PRODUCT_SET_WRONG_KEY = 'Please check "product_set_key.default" in the row with key: "PS-1". The wrong product set key passed.';
+    protected const ERROR_MESSAGE_PRODUCT_SET_WRONG_KEY = 'Please check "product_set_key.default" in the row with key: "ps-1". The wrong product set key passed.';
     protected const KEY_ID_PRODUCT_SET = 'id_product_set';
 
     /**
@@ -63,9 +63,9 @@ class ContentProductSetDataImportPluginTest extends Unit
         // Assert
         $this->assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);
 
-        $this->tester->assertDatabaseTableContainsData('PS-1');
-        $this->tester->assertDatabaseTableContainsData('PS-2');
-        $this->tester->assertDatabaseTableContainsData('PS-3');
+        $this->tester->assertDatabaseTableContainsData('ps-1');
+        $this->tester->assertDatabaseTableContainsData('ps-2');
+        $this->tester->assertDatabaseTableContainsData('ps-3');
     }
 
     /**

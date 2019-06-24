@@ -8,7 +8,9 @@
     "spryker/discount-extension": "^1.0.0",
     "spryker/kernel": "^3.17.0",
     "spryker/product": "^6.0.0",
-    "spryker/sales-extension": "^1.0.0"
+    "spryker/sales-extension": "^1.0.0",
+    "spryker/util-price": "^1.0.0",
+    "spryker/util-quantity": "^1.0.0"
   },
   "require-dev": {
     "spryker/cart": "*",

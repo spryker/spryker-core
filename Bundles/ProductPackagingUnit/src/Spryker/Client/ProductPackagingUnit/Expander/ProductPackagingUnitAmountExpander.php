@@ -90,15 +90,15 @@ class ProductPackagingUnitAmountExpander implements ProductPackagingUnitAmountEx
      * @param array $params
      * @param string $sku
      *
-     * @return int|null
+     * @return float|null
      */
-    protected function findAmount(array $params, string $sku): ?int
+    protected function findAmount(array $params, string $sku): ?float
     {
         if (!isset($params[static::PARAM_AMOUNT][$sku])) {
             return null;
         }
 
-        return (int)$params[static::PARAM_AMOUNT][$sku];
+        return (float)$params[static::PARAM_AMOUNT][$sku];
     }
 
     /**

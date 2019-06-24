@@ -147,7 +147,7 @@ class FinderTest extends StateMachineMocks
         $stateMachineItemStateQuery->method('find')->willReturn([$stateMachineItemEntity]);
 
         $stateMachineQueryContainerMock->expects($this->once())
-            ->method('queryItemsByIdStateMachineProcessAndItemStates')
+            ->method('queryItemsByStateMachineProcessNameAndItemStates')
             ->willReturn($stateMachineItemStateQuery);
 
         $finder = $this->createFinder(null, $builderMock, $stateMachineQueryContainerMock);

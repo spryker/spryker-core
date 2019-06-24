@@ -10,6 +10,7 @@ namespace Spryker\Glue\CustomersRestApi\Processor\Customer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\RestCustomerPasswordAttributesTransfer;
 use Generated\Shared\Transfer\RestCustomersAttributesTransfer;
+use Generated\Shared\Transfer\RestCustomersResponseAttributesTransfer;
 use Spryker\Glue\CustomersRestApi\CustomersRestApiConfig;
 use Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToCustomerClientInterface;
 use Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomerResourceMapperInterface;
@@ -126,7 +127,10 @@ class CustomerWriter implements CustomerWriterInterface
         $customerTransfer = $this->executeCustomerPostCreatePlugins($restRequest, $customerTransfer);
 
         $restCustomersResponseAttributesTransfer = $this->customerResourceMapper
-            ->mapCustomerTransferToRestCustomersResponseAttributesTransfer($customerTransfer);
+            ->mapCustomerTransferToRestCustomersResponseAttributesTransfer(
+                $customerTransfer,
+                new RestCustomersResponseAttributesTransfer()
+            );
 
         $restResource = $this->restResourceBuilder->createRestResource(
             CustomersRestApiConfig::RESOURCE_CUSTOMERS,
@@ -188,7 +192,8 @@ class CustomerWriter implements CustomerWriterInterface
 
         $restCustomersResponseAttributesTransfer = $this->customerResourceMapper
             ->mapCustomerTransferToRestCustomersResponseAttributesTransfer(
-                $customerResponseTransfer->getCustomerTransfer()
+                $customerResponseTransfer->getCustomerTransfer(),
+                new RestCustomersResponseAttributesTransfer()
             );
 
         $restResource = $this->restResourceBuilder->createRestResource(
@@ -293,7 +298,9 @@ class CustomerWriter implements CustomerWriterInterface
     {
         unset(
             $customerAttributes[RestCustomersAttributesTransfer::CREATED_AT],
-            $customerAttributes[RestCustomersAttributesTransfer::UPDATED_AT]
+            $customerAttributes[RestCustomersAttributesTransfer::UPDATED_AT],
+            $customerAttributes[RestCustomersAttributesTransfer::PASSWORD],
+            $customerAttributes[RestCustomersAttributesTransfer::CONFIRM_PASSWORD]
         );
 
         return $customerAttributes;
