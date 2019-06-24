@@ -9,6 +9,7 @@ namespace SprykerTest\Shared\CompanyUser\Helper;
 
 use Codeception\Module;
 use Generated\Shared\DataBuilder\CompanyUserBuilder;
+use Generated\Shared\Transfer\CompanyUserTransfer;
 use Spryker\Zed\CompanyUser\Business\CompanyUserFacadeInterface;
 use SprykerTest\Shared\Testify\Helper\DependencyHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
@@ -23,7 +24,7 @@ class CompanyUserHelper extends Module
      *
      * @return \Generated\Shared\Transfer\CompanyUserTransfer
      */
-    public function haveCompanyUser(array $seed = [])
+    public function haveCompanyUser(array $seed = []): CompanyUserTransfer
     {
         $companyUserTransfer = (new CompanyUserBuilder($seed))->build();
         $companyUserTransfer->setIdCompanyUser(null);

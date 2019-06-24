@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\CompanyUnitAddress;
+namespace SprykerTest\Zed\ResourceShare;
 
 use Codeception\Actor;
 
@@ -24,7 +24,11 @@ use Codeception\Actor;
  *
  * @SuppressWarnings(PHPMD)
  */
-class CompanyUnitAddressCommunicationTester extends Actor
+class ResourceShareBusinessTester extends Actor
 {
-    use _generated\CompanyUnitAddressCommunicationTesterActions;
+    use _generated\ResourceShareBusinessTesterActions;
+
+   /**
+    * Define custom actions here
+    */
 }
