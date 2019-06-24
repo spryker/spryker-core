@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Sales\Business\Address;
 
 use Generated\Shared\Transfer\AddressTransfer;
-use Spryker\Zed\Sales\Business\Expander\SalesAddressExpanderInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCountryInterface;
 use Spryker\Zed\Sales\Persistence\SalesEntityManagerInterface;
 
@@ -25,23 +24,15 @@ class OrderAddressWriter implements OrderAddressWriterInterface
     protected $countryFacade;
 
     /**
-     * @var \Spryker\Zed\Sales\Business\Expander\SalesAddressExpanderInterface
-     */
-    protected $salesAddressExpander;
-
-    /**
      * @param \Spryker\Zed\Sales\Persistence\SalesEntityManagerInterface $entityManager
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToCountryInterface $countryFacade
-     * @param \Spryker\Zed\Sales\Business\Expander\SalesAddressExpanderInterface $salesAddressExpander
      */
     public function __construct(
         SalesEntityManagerInterface $entityManager,
-        SalesToCountryInterface $countryFacade,
-        SalesAddressExpanderInterface $salesAddressExpander
+        SalesToCountryInterface $countryFacade
     ) {
         $this->entityManager = $entityManager;
         $this->countryFacade = $countryFacade;
-        $this->salesAddressExpander = $salesAddressExpander;
     }
 
     /**
@@ -72,12 +63,15 @@ class OrderAddressWriter implements OrderAddressWriterInterface
      */
     public function update(AddressTransfer $addressTransfer, int $idAddress): bool
     {
-        $foundAddressTransfer = $this->salesAddressExpander->expandWithCustomerOrSalesAddress($addressTransfer);
-        if ($foundAddressTransfer === null) {
+        if ($idAddress !== 0) {
+            $addressTransfer->setIdSalesOrderAddress($idAddress);
+        }
+
+        if ($addressTransfer->getIdCustomerAddress() === null && $addressTransfer->getIdSalesOrderAddress() === null) {
             return false;
         }
 
-        $this->entityManager->updateSalesOrderAddress($foundAddressTransfer);
+        $this->entityManager->updateSalesOrderAddress($addressTransfer);
 
         return true;
     }

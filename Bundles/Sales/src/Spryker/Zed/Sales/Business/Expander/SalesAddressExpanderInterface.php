@@ -14,7 +14,7 @@ interface SalesAddressExpanderInterface
     /**
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
-     * @return \Generated\Shared\Transfer\AddressTransfer|null
+     * @return \Generated\Shared\Transfer\AddressTransfer
      */
-    public function expandWithCustomerOrSalesAddress(AddressTransfer $addressTransfer): ?AddressTransfer;
+    public function expandWithCustomerOrSalesAddress(AddressTransfer $addressTransfer): AddressTransfer;
 }

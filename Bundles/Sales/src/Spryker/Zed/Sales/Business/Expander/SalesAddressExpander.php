@@ -36,9 +36,9 @@ class SalesAddressExpander implements SalesAddressExpanderInterface
     /**
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
-     * @return \Generated\Shared\Transfer\AddressTransfer|null
+     * @return \Generated\Shared\Transfer\AddressTransfer
      */
-    public function expandWithCustomerOrSalesAddress(AddressTransfer $addressTransfer): ?AddressTransfer
+    public function expandWithCustomerOrSalesAddress(AddressTransfer $addressTransfer): AddressTransfer
     {
         if ($addressTransfer->getIdCustomerAddress() === null) {
             return $this->expandWithSalesAddress($addressTransfer);
@@ -50,13 +50,18 @@ class SalesAddressExpander implements SalesAddressExpanderInterface
     /**
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
-     * @return \Generated\Shared\Transfer\AddressTransfer|null
+     * @return \Generated\Shared\Transfer\AddressTransfer
      */
-    protected function expandWithCustomerAddress(AddressTransfer $addressTransfer): ?AddressTransfer
+    protected function expandWithCustomerAddress(AddressTransfer $addressTransfer): AddressTransfer
     {
-        $foundAddressTransfer = $this->customerFacade->findCustomerAddressById($addressTransfer->getIdCustomerAddress());
+        $idCustomerAddress = $addressTransfer->getIdCustomerAddress();
+        if ($idCustomerAddress === null) {
+            return $addressTransfer;
+        }
+
+        $foundAddressTransfer = $this->customerFacade->findCustomerAddressById($idCustomerAddress);
         if ($foundAddressTransfer === null) {
-            return null;
+            return $addressTransfer;
         }
 
         return $foundAddressTransfer->setIdSalesOrderAddress($addressTransfer->getIdSalesOrderAddress());
@@ -65,25 +70,20 @@ class SalesAddressExpander implements SalesAddressExpanderInterface
     /**
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
-     * @return \Generated\Shared\Transfer\AddressTransfer|null
+     * @return \Generated\Shared\Transfer\AddressTransfer
      */
-    protected function expandWithSalesAddress(AddressTransfer $addressTransfer): ?AddressTransfer
+    protected function expandWithSalesAddress(AddressTransfer $addressTransfer): AddressTransfer
     {
-        $foundAddressTransfer = $this->repository->findOrderAddressByIdOrderAddress($addressTransfer->getIdSalesOrderAddress());
-        if ($foundAddressTransfer === null) {
-            return null;
+        $idSalesOrderAddress = $addressTransfer->getIdSalesOrderAddress();
+        if ($idSalesOrderAddress === null) {
+            return $addressTransfer;
         }
 
-        return $addressTransfer->fromArray($foundAddressTransfer->modifiedToArray(), true);
+        $foundAddressTransfer = $this->repository->findOrderAddressByIdOrderAddress($addressTransfer->getIdSalesOrderAddress());
+        if ($foundAddressTransfer === null) {
+            return $addressTransfer;
+        }
 
-//        foreach ($addressTransfer->toArray() as $addressOffset => $addressValue) {
-//            if ($addressValue !== null || !$addressTransfer->offsetExists($addressOffset)) {
-//                continue;
-//            }
-//
-//            $addressTransfer->offsetSet($addressOffset, $addressValue);
-//        }
-
-//        return $addressTransfer;
+        return $foundAddressTransfer->fromArray($addressTransfer->modifiedToArray(), true);
     }
 }

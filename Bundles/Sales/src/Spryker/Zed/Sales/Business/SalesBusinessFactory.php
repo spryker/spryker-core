@@ -260,11 +260,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
      */
     public function createOrderAddressWriter(): OrderAddressWriterInterface
     {
-        return new OrderAddressWriter(
-            $this->getEntityManager(),
-            $this->getCountryFacade(),
-            $this->createSalesAddressExpander()
-        );
+        return new OrderAddressWriter($this->getEntityManager(), $this->getCountryFacade());
     }
 
     /**

@@ -90,11 +90,14 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\ShipmentTransfer|null $defaultShipmentTransfer
      *
      * @return int[][]
      */
-    public function getItemIdsGroupedByShipmentIds(OrderTransfer $orderTransfer): array
-    {
+    public function getItemIdsGroupedByShipmentIds(
+        OrderTransfer $orderTransfer,
+        ?ShipmentTransfer $defaultShipmentTransfer = null
+    ): array {
         $salesOrderItemIdsWithShipmentIds = $this->getFactory()
             ->createSalesOrderItemQuery()
             ->filterByFkSalesOrder($orderTransfer->getIdSalesOrder())
@@ -105,7 +108,7 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
             return [];
         }
 
-        return $this->groupSalesOrderItemIdsByShipmentId($salesOrderItemIdsWithShipmentIds);
+        return $this->groupSalesOrderItemIdsByShipmentId($salesOrderItemIdsWithShipmentIds, $defaultShipmentTransfer);
     }
 
     /**
@@ -393,17 +396,26 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
 
     /**
      * @param iterable|array $salesOrderItemIdsWithShipmentIds
+     * @param \Generated\Shared\Transfer\ShipmentTransfer|null $defaultShipmentTransfer
      *
      * @return int[][]
      */
-    protected function groupSalesOrderItemIdsByShipmentId(iterable $salesOrderItemIdsWithShipmentIds): array
-    {
+    protected function groupSalesOrderItemIdsByShipmentId(
+        iterable $salesOrderItemIdsWithShipmentIds,
+        ?ShipmentTransfer $defaultShipmentTransfer = null
+    ): array {
         $groupedResult = [];
+        $idDefaultShipmentTransfer = null;
+
+        if ($defaultShipmentTransfer !== null) {
+            $idDefaultShipmentTransfer = $defaultShipmentTransfer->getIdSalesShipment();
+        }
 
         foreach ($salesOrderItemIdsWithShipmentIds as [
             SpySalesOrderItemTableMap::COL_FK_SALES_SHIPMENT => $shipmentId,
             SpySalesOrderItemTableMap::COL_ID_SALES_ORDER_ITEM => $orderItemId,
         ]) {
+            $shipmentId = $shipmentId ?? $idDefaultShipmentTransfer;
             if (!isset($groupedResult[$shipmentId])) {
                 $groupedResult[$shipmentId] = [];
             }

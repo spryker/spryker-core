@@ -16,7 +16,9 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\Date;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Required;
@@ -43,6 +45,7 @@ class ShipmentFormCreate extends AbstractType
     protected const VALIDATION_DATE_TODAY = 'today';
     protected const FIELD_REQUESTED_DELIVERY_DATE_FORMAT = 'yyyy-MM-dd'; // Format accepted by IntlDate
     protected const VALIDATION_INVALID_DATE_MESSAGE = 'Date should be in correct format %s.';
+    public const GROUP_SHIPPING_ADDRESS = 'shippingAddress';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -58,6 +61,14 @@ class ShipmentFormCreate extends AbstractType
         $resolver->setRequired(static::FIELD_SHIPMENT_SELECTED_ITEMS);
         $resolver->setRequired(AddressForm::OPTION_SALUTATION_CHOICES);
         $resolver->setRequired(ItemForm::OPTION_ORDER_ITEMS_CHOICES);
+
+        /** @var \Symfony\Component\OptionsResolver\OptionsResolver $resolver */
+        $resolver->setDefaults([
+            'validation_groups' => function (FormInterface $form) {
+                return [Constraint::DEFAULT_GROUP, static::GROUP_SHIPPING_ADDRESS];
+            },
+            'attr' => ['novalidate' => 'novalidate'],
+        ]);
     }
 
     /**
@@ -149,6 +160,19 @@ class ShipmentFormCreate extends AbstractType
                 $this->createDateConstraint(),
                 $this->createDateGreaterThanOrEqualConstraint(static::VALIDATION_DATE_TODAY),
             ],
+            'validation_groups' => function (FormInterface $form) {
+                $formParent = $form->getParent();
+                if ($formParent === null || !$formParent->has(static::VALIDATION_DATE_TODAY)) {
+                    return [static::GROUP_SHIPPING_ADDRESS];
+                }
+
+                $dateValue = $formParent->get(static::VALIDATION_DATE_TODAY)->getData();
+                if ($dateValue === '') {
+                    return false;
+                }
+
+                return [static::GROUP_SHIPPING_ADDRESS];
+            },
         ]);
 
         return $this;
@@ -164,6 +188,15 @@ class ShipmentFormCreate extends AbstractType
     {
         $builder->add(static::FORM_SHIPPING_ADDRESS, AddressForm::class, [
             'label' => false,
+            'validation_groups' => function (FormInterface $form) {
+                $idCustomerAddress = $form->getParent()->get(static::FIELD_ID_CUSTOMER_ADDRESS)->getData();
+
+                if ($idCustomerAddress === "") {
+                    return [static::GROUP_SHIPPING_ADDRESS];
+                }
+
+                return false;
+            },
             AddressForm::OPTION_SALUTATION_CHOICES => $options[AddressForm::OPTION_SALUTATION_CHOICES],
         ]);
 

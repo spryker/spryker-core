@@ -118,7 +118,11 @@ class ShipmentOrderHydrate implements ShipmentOrderHydrateInterface
         iterable $shipmentTransfers,
         OrderTransfer $orderTransfer
     ): OrderTransfer {
-        $salesOrderItemIdsGroupedByShipmentIds = $this->shipmentRepository->getItemIdsGroupedByShipmentIds($orderTransfer);
+        $salesOrderItemIdsGroupedByShipmentIds = $this->shipmentRepository
+            ->getItemIdsGroupedByShipmentIds(
+                $orderTransfer,
+                $this->getDefaultOldOrderShipmentTransfer($orderTransfer, $shipmentTransfers)
+            );
 
         foreach ($shipmentTransfers as $shipmentTransfer) {
             if (empty($salesOrderItemIdsGroupedByShipmentIds[$shipmentTransfer->getIdSalesShipment()])) {
@@ -187,10 +191,13 @@ class ShipmentOrderHydrate implements ShipmentOrderHydrateInterface
     protected function findShipmentByOrderExpense(OrderTransfer $orderTransfer, ExpenseTransfer $expenseTransfer): ?ShipmentTransfer
     {
         foreach ($orderTransfer->getItems() as $itemTransfer) {
-            $itemTransfer->requireShipment()
-                ->getShipment()->requireMethod();
+            $itemShipmentTransfer = $itemTransfer->getShipment();
+            if ($itemShipmentTransfer === null) {
+                continue;
+            }
 
-            if ($itemTransfer->getShipment()->getMethod()->getFkSalesExpense() === $expenseTransfer->getIdSalesExpense()) {
+            $itemShipmentTransfer->requireMethod();
+            if ($itemShipmentTransfer->getMethod()->getFkSalesExpense() === $expenseTransfer->getIdSalesExpense()) {
                 return $itemTransfer->getShipment();
             }
         }
@@ -229,5 +236,43 @@ class ShipmentOrderHydrate implements ShipmentOrderHydrateInterface
         }
 
         return $shipmentTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param iterable|\Generated\Shared\Transfer\ShipmentTransfer[] $shipmentTransfers
+     *
+     * @return \Generated\Shared\Transfer\ShipmentTransfer|null
+     */
+    protected function getDefaultOldOrderShipmentTransfer(
+        OrderTransfer $orderTransfer,
+        iterable $shipmentTransfers
+    ): ?ShipmentTransfer {
+        if (count($shipmentTransfers) === 0) {
+            return null;
+        }
+
+        $orderShippingAddressTransfer = $orderTransfer->getShippingAddress();
+        if ($orderShippingAddressTransfer === null) {
+            return null;
+        }
+
+        $idSalesOrderAddress = $orderShippingAddressTransfer->getIdSalesOrderAddress();
+        if ($idSalesOrderAddress === null) {
+            return null;
+        }
+
+        foreach ($shipmentTransfers as $shipmentTransfer) {
+            $shipmentAddressTransfer = $shipmentTransfer->getShippingAddress();
+            if ($shipmentAddressTransfer === null) {
+                continue;
+            }
+
+            if ($shipmentAddressTransfer->getIdSalesOrderAddress() === $idSalesOrderAddress) {
+                return $shipmentTransfer;
+            }
+        }
+
+        return null;
     }
 }

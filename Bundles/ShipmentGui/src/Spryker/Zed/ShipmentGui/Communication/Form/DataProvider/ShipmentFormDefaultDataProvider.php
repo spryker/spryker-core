@@ -68,10 +68,8 @@ class ShipmentFormDefaultDataProvider
         $defaultShipmentFormCreateFields = [
             ShipmentFormCreate::FIELD_ID_SALES_SHIPMENT => $idSalesShipment,
             ShipmentFormCreate::FIELD_ID_SALES_ORDER => $idSalesOrder,
-            ShipmentFormCreate::FIELD_ID_CUSTOMER_ADDRESS => ($idSalesShipment === null ? null : $this->getIdCustomerAddress($idSalesOrder, $idSalesShipment)),
-            ShipmentFormCreate::FIELD_ID_SHIPMENT_METHOD => null,
-            ShipmentFormCreate::FIELD_REQUESTED_DELIVERY_DATE => null,
-            ShipmentFormCreate::FORM_SHIPPING_ADDRESS => $this->getAddressDefaultFields(),
+            ShipmentFormCreate::FIELD_ID_CUSTOMER_ADDRESS => $this->getIdCustomerAddress($idSalesOrder, $idSalesShipment),
+            ShipmentFormCreate::FORM_SHIPPING_ADDRESS => [],
         ];
 
         return array_merge($defaultShipmentFormCreateFields, $this->getItemsDefaultFields($idSalesOrder));
@@ -79,15 +77,15 @@ class ShipmentFormDefaultDataProvider
 
     /**
      * @param int $idSalesOrder
-     * @param int $idSalesShipment
+     * @param int|null $idSalesShipment
      *
      * @return int|null
      */
-    protected function getIdCustomerAddress(int $idSalesOrder, int $idSalesShipment): ?int
+    protected function getIdCustomerAddress(int $idSalesOrder, ?int $idSalesShipment): ?int
     {
         $addressTransfer = $this->hydrateAddressTransfer(
             $this->salesFacade->findOrderByIdSalesOrder($idSalesOrder),
-            $this->findShipmentById($idSalesShipment)
+            ($idSalesShipment === null ? null : $this->findShipmentById($idSalesShipment))
         );
 
         $customerAddressTransfer = $this->customerFacade->findCustomerAddressByAddressData($addressTransfer);
@@ -216,31 +214,6 @@ class ShipmentFormDefaultDataProvider
     }
 
     /**
-     * @return null[]
-     */
-    protected function getAddressDefaultFields(): array
-    {
-        return [
-            AddressForm::ADDRESS_FIELD_SALUTATION => null,
-            AddressForm::ADDRESS_FIELD_FIRST_NAME => null,
-            AddressForm::ADDRESS_FIELD_MIDDLE_NAME => null,
-            AddressForm::ADDRESS_FIELD_LAST_NAME => null,
-            AddressForm::ADDRESS_FIELD_EMAIL => null,
-            AddressForm::ADDRESS_FIELD_ISO_2_CODE => null,
-            AddressForm::ADDRESS_FIELD_ADDRESS_1 => null,
-            AddressForm::ADDRESS_FIELD_ADDRESS_2 => null,
-            AddressForm::ADDRESS_FIELD_COMPANY => null,
-            AddressForm::ADDRESS_FIELD_CITY => null,
-            AddressForm::ADDRESS_FIELD_ZIP_CODE => null,
-            AddressForm::ADDRESS_FIELD_PO_BOX => null,
-            AddressForm::ADDRESS_FIELD_PHONE => null,
-            AddressForm::ADDRESS_FIELD_CELL_PHONE => null,
-            AddressForm::ADDRESS_FIELD_DESCRIPTION => null,
-            AddressForm::ADDRESS_FIELD_COMMENT => null,
-        ];
-    }
-
-    /**
      * @param int $idSalesOrder
      *
      * @return array[]
@@ -284,7 +257,7 @@ class ShipmentFormDefaultDataProvider
      */
     protected function getShippingAddressesOptions(int $idSalesOrder): array
     {
-        $addresses = ['New address'];
+        $addresses = [null => 'New address'];
 
         $orderTransfer = $this->salesFacade->findOrderByIdSalesOrder($idSalesOrder);
         if ($orderTransfer === null) {

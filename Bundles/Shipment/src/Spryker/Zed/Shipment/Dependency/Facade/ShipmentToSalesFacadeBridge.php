@@ -54,4 +54,14 @@ class ShipmentToSalesFacadeBridge implements ShipmentToSalesFacadeInterface
     {
         return $this->salesFacade->createSalesExpense($expenseTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer
+     */
+    public function expandWithCustomerOrSalesAddress(AddressTransfer $addressTransfer): AddressTransfer
+    {
+        return $this->salesFacade->expandWithCustomerOrSalesAddress($addressTransfer);
+    }
 }

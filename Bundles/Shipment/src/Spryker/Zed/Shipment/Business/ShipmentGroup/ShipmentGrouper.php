@@ -14,15 +14,10 @@ use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Service\Shipment\ShipmentServiceInterface;
 use Spryker\Zed\Shipment\Business\Mapper\ShipmentMapperInterface;
 use Spryker\Zed\Shipment\Business\ShipmentMethod\MethodReaderInterface;
-use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCustomerFacadeInterface;
+use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToSalesFacadeInterface;
 
 class ShipmentGrouper implements ShipmentGrouperInterface
 {
-    /**
-     * @var \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCustomerFacadeInterface
-     */
-    protected $customerFacade;
-
     /**
      * @var \Spryker\Zed\Shipment\Business\Mapper\ShipmentMapperInterface
      */
@@ -39,21 +34,26 @@ class ShipmentGrouper implements ShipmentGrouperInterface
     protected $shipmentService;
 
     /**
-     * @param \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCustomerFacadeInterface $customerFacade
+     * @var \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToSalesFacadeInterface
+     */
+    protected $salesFacade;
+
+    /**
      * @param \Spryker\Zed\Shipment\Business\Mapper\ShipmentMapperInterface $shipmentMapper
      * @param \Spryker\Zed\Shipment\Business\ShipmentMethod\MethodReaderInterface $shipmentMethodReader
      * @param \Spryker\Service\Shipment\ShipmentServiceInterface $shipmentService
+     * @param \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToSalesFacadeInterface $salesFacade
      */
     public function __construct(
-        ShipmentToCustomerFacadeInterface $customerFacade,
         ShipmentMapperInterface $shipmentMapper,
         MethodReaderInterface $shipmentMethodReader,
-        ShipmentServiceInterface $shipmentService
+        ShipmentServiceInterface $shipmentService,
+        ShipmentToSalesFacadeInterface $salesFacade
     ) {
-        $this->customerFacade = $customerFacade;
         $this->shipmentMapper = $shipmentMapper;
         $this->shipmentMethodReader = $shipmentMethodReader;
         $this->shipmentService = $shipmentService;
+        $this->salesFacade = $salesFacade;
     }
 
     /**
@@ -89,12 +89,22 @@ class ShipmentGrouper implements ShipmentGrouperInterface
         $shipmentTransfer = $this->shipmentMapper
             ->mapFormDataToShipmentTransfer($shipmentFormTransfer, new ShipmentTransfer());
 
-        if ($shipmentFormTransfer->getIdCustomerAddress() !== null) {
-            $shippingAddress = $this->customerFacade
-                ->findCustomerAddressById($shipmentFormTransfer->getIdCustomerAddress());
-            $shipmentTransfer->setShippingAddress($shippingAddress);
+        $idSalesShipment = $shipmentTransfer->getIdSalesShipment();
+        if ($idSalesShipment !== null) {
+            $shipmentTransfer->setIdSalesShipment((int)$idSalesShipment);
         }
 
+        $shipmentAddressTransfer = $shipmentTransfer->getShippingAddress();
+        if ($shipmentAddressTransfer !== null && $shipmentAddressTransfer->getIdCustomerAddress() === null) {
+            $shipmentAddressTransfer->setIdCustomerAddress($shipmentFormTransfer->getIdCustomerAddress());
+        }
+
+        if ($shipmentAddressTransfer !== null && $shipmentAddressTransfer->getIdSalesOrderAddress() === null) {
+            $shipmentAddressTransfer->setIdSalesOrderAddress($shipmentFormTransfer->getIdSalesOrderAddress());
+        }
+
+        $shipmentAddressTransfer = $this->salesFacade->expandWithCustomerOrSalesAddress($shipmentAddressTransfer);
+        $shipmentTransfer->setShippingAddress($shipmentAddressTransfer);
         $shipmentGroupTransfer->setShipment($shipmentTransfer);
 
         if ($shipmentFormTransfer->getIdShipmentMethod() === null) {

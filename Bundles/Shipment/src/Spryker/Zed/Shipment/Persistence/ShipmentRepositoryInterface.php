@@ -46,10 +46,14 @@ interface ShipmentRepositoryInterface
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\ShipmentTransfer|null $defaultShipmentTransfer
      *
      * @return int[][]
      */
-    public function getItemIdsGroupedByShipmentIds(OrderTransfer $orderTransfer): array;
+    public function getItemIdsGroupedByShipmentIds(
+        OrderTransfer $orderTransfer,
+        ?ShipmentTransfer $defaultShipmentTransfer = null
+    ): array;
 
     /**
      * @param int $idShipmentMethod
