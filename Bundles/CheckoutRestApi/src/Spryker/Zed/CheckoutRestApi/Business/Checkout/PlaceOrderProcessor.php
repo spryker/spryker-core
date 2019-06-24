@@ -91,7 +91,9 @@ class PlaceOrderProcessor implements PlaceOrderProcessorInterface
         }
 
         $quoteTransfer = $this->mapRestCheckoutRequestAttributesToQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);
-
+        if (!$quoteTransfer->getShipment()) {
+            return $this->createShipmentMethodNotFoundErrorResponse();
+        }
         $quoteTransfer = $this->recalculateQuote($quoteTransfer);
 
         $checkoutResponseTransfer = $this->executePlaceOrder($quoteTransfer);
@@ -226,6 +228,19 @@ class PlaceOrderProcessor implements PlaceOrderProcessorInterface
             ->addError(
                 (new RestCheckoutErrorTransfer())
                     ->setErrorIdentifier(CheckoutRestApiConfig::ERROR_IDENTIFIER_CART_NOT_FOUND)
+            );
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\RestCheckoutResponseTransfer
+     */
+    protected function createShipmentMethodNotFoundErrorResponse(): RestCheckoutResponseTransfer
+    {
+        return (new RestCheckoutResponseTransfer())
+            ->setIsSuccess(false)
+            ->addError(
+                (new RestCheckoutErrorTransfer())
+                    ->setErrorIdentifier(CheckoutRestApiConfig::ERROR_IDENTIFIER_SHIPMENT_METHOD_NOT_FOUND)
             );
     }
 
