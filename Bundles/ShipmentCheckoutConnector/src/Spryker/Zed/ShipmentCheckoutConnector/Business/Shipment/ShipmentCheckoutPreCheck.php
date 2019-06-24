@@ -25,7 +25,7 @@ class ShipmentCheckoutPreCheck implements ShipmentCheckoutPreCheckInterface
     protected $shipmentFacade;
 
     /**
-     * @var \Spryker\Zed\ShipmentDiscountConnector\Business\DecisionRule\ShipmentDiscountDecisionRuleInterface
+     * @var \Spryker\Zed\ShipmentCheckoutConnector\Dependency\Service\ShipmentCheckoutConnectorToShipmentServiceInterface
      */
     protected $shipmentService;
 

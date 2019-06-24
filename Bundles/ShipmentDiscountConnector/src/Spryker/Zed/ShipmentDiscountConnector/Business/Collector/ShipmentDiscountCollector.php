@@ -19,7 +19,7 @@ use Spryker\Zed\ShipmentDiscountConnector\Dependency\Service\ShipmentDiscountCon
 class ShipmentDiscountCollector extends ShipmentDiscountWithoutMultiShipmentCollector
 {
     /**
-     * @var \Spryker\Zed\ShipmentDiscountConnector\Business\DecisionRule\ShipmentDiscountDecisionRuleInterface
+     * @var \Spryker\Zed\ShipmentDiscountConnector\Dependency\Service\ShipmentDiscountConnectorToShipmentServiceInterface
      */
     protected $shipmentService;
 

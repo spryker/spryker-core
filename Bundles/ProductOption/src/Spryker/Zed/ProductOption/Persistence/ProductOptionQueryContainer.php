@@ -467,6 +467,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     {
         return $this->getFactory()->createProductOptionValueQuery()
             ->filterByIdProductOptionValue($idProductOptionValues, Criteria::IN)
+            ->withColumn(SpyProductOptionValueTableMap::COL_ID_PRODUCT_OPTION_VALUE, static::COL_ID_PRODUCT_OPTION_VALUE)
             ->groupBy(SpyProductOptionValueTableMap::COL_ID_PRODUCT_OPTION_VALUE)
             ->useSpyProductOptionGroupQuery()
                 ->useSpyTaxSetQuery()
