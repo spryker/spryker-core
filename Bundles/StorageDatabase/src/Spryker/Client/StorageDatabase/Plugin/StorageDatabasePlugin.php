@@ -92,6 +92,7 @@ class StorageDatabasePlugin extends AbstractPlugin implements StoragePluginInter
      */
     public function set(string $key, string $value, ?int $ttl = null): void
     {
+        $this->getClient()->set($key, $value, $ttl);
     }
 
     /**
@@ -105,6 +106,7 @@ class StorageDatabasePlugin extends AbstractPlugin implements StoragePluginInter
      */
     public function setMulti(array $items): void
     {
+        $this->getClient()->setMulti($items);
     }
 
     /**
@@ -118,7 +120,7 @@ class StorageDatabasePlugin extends AbstractPlugin implements StoragePluginInter
      */
     public function delete(string $key): int
     {
-        return 0;
+        return $this->getClient()->delete($key);
     }
 
     /**
@@ -132,7 +134,7 @@ class StorageDatabasePlugin extends AbstractPlugin implements StoragePluginInter
      */
     public function deleteMulti(array $keys): int
     {
-        return 0;
+        return $this->getClient()->deleteMulti($keys);
     }
 
     /**
@@ -144,7 +146,7 @@ class StorageDatabasePlugin extends AbstractPlugin implements StoragePluginInter
      */
     public function deleteAll(): int
     {
-        return 0;
+        return $this->getClient()->deleteAll();
     }
 
     /**
@@ -156,7 +158,7 @@ class StorageDatabasePlugin extends AbstractPlugin implements StoragePluginInter
      */
     public function getStats(): array
     {
-        return [];
+        return $this->getClient()->getStats();
     }
 
     /**
@@ -168,7 +170,7 @@ class StorageDatabasePlugin extends AbstractPlugin implements StoragePluginInter
      */
     public function getAllKeys(): array
     {
-        return [];
+        return $this->getClient()->getAllKeys();
     }
 
     /**
@@ -182,7 +184,7 @@ class StorageDatabasePlugin extends AbstractPlugin implements StoragePluginInter
      */
     public function getKeys(string $pattern): array
     {
-        return [];
+        return $this->getClient()->getKeys($pattern);
     }
 
     /**
@@ -194,6 +196,6 @@ class StorageDatabasePlugin extends AbstractPlugin implements StoragePluginInter
      */
     public function getCountItems(): int
     {
-        return 0;
+        return $this->getClient()->getCountItems();
     }
 }

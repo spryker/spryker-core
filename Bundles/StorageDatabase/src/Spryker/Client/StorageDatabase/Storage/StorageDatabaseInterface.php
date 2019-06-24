@@ -39,4 +39,61 @@ interface StorageDatabaseInterface
      * @return void
      */
     public function setDebug(bool $debug): void;
+
+    /**
+     * @param string $key
+     * @param string $value
+     * @param int|null $ttl
+     *
+     * @return void
+     */
+    public function set(string $key, string $value, ?int $ttl = null): void;
+
+    /**
+     * @param array $items
+     *
+     * @return void
+     */
+    public function setMulti(array $items): void;
+
+    /**
+     * @param string $key
+     *
+     * @return int
+     */
+    public function delete(string $key): int;
+
+    /**
+     * @param array $keys
+     *
+     * @return int
+     */
+    public function deleteMulti(array $keys): int;
+
+    /**
+     * @return int
+     */
+    public function deleteAll(): int;
+
+    /**
+     * @return array
+     */
+    public function getStats(): array;
+
+    /**
+     * @return array
+     */
+    public function getAllKeys(): array;
+
+    /**
+     * @param string $pattern
+     *
+     * @return array
+     */
+    public function getKeys(string $pattern): array;
+
+    /**
+     * @return int
+     */
+    public function getCountItems(): int;
 }

@@ -140,7 +140,7 @@ class StorageDatabaseConfig extends AbstractBundleConfig
     {
         return sprintf(
             '%s:host=%s;port=%d;dbname=%s',
-            $this->get($this->getDbEngineName()),
+            $this->getDbEngineName(),
             $this->get(StorageDatabaseConstants::DB_HOST),
             $this->get(StorageDatabaseConstants::DB_PORT),
             $this->get(StorageDatabaseConstants::DB_DATABASE)

@@ -116,6 +116,88 @@ class StorageDatabase implements StorageDatabaseInterface
     }
 
     /**
+     * @param string $key
+     * @param string $value
+     * @param int|null $ttl
+     *
+     * @return void
+     */
+    public function set(string $key, string $value, ?int $ttl = null): void
+    {
+    }
+
+    /**
+     * @param array $items
+     *
+     * @return void
+     */
+    public function setMulti(array $items): void
+    {
+    }
+
+    /**
+     * @param string $key
+     *
+     * @return int
+     */
+    public function delete(string $key): int
+    {
+        return 0;
+    }
+
+    /**
+     * @param array $keys
+     *
+     * @return int
+     */
+    public function deleteMulti(array $keys): int
+    {
+        return 0;
+    }
+
+    /**
+     * @return int
+     */
+    public function deleteAll(): int
+    {
+        return 0;
+    }
+
+    /**
+     * @return array
+     */
+    public function getStats(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return array
+     */
+    public function getAllKeys(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param string $pattern
+     *
+     * @return array
+     */
+    public function getKeys(string $pattern): array
+    {
+        return [];
+    }
+
+    /**
+     * @return int
+     */
+    public function getCountItems(): int
+    {
+        return 0;
+    }
+
+    /**
      * @param string[] $keys
      *
      * @return string[]
