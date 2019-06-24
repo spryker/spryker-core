@@ -48,7 +48,7 @@ class ApplicationCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createYvesUrlFunction(): TwigFunction
     {
-        return new YvesUrlFunction();
+        return new YvesUrlFunction($this->getConfig());
     }
 
     /**
