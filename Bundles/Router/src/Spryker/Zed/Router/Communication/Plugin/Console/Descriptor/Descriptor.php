@@ -41,11 +41,9 @@ abstract class Descriptor implements DescriptorInterface
     }
 
     /**
-     * Returns the output.
-     *
-     * @return \Symfony\Component\Console\Output\OutputInterface The output
+     * @return \Symfony\Component\Console\Output\OutputInterface
      */
-    protected function getOutput()
+    protected function getOutput(): OutputInterface
     {
         return $this->output;
     }
@@ -56,7 +54,7 @@ abstract class Descriptor implements DescriptorInterface
      *
      * @return void
      */
-    protected function write($content, $decorated = false)
+    protected function write($content, $decorated = false): void
     {
         $this->output->write($content, false, $decorated ? OutputInterface::OUTPUT_NORMAL : OutputInterface::OUTPUT_RAW);
     }
@@ -78,13 +76,11 @@ abstract class Descriptor implements DescriptorInterface
     abstract protected function describeRoute(Route $route, array $options = []);
 
     /**
-     * Formats a value as string.
-     *
      * @param mixed $value
      *
      * @return string
      */
-    protected function formatValue($value)
+    protected function formatValue($value): string
     {
         if (is_object($value)) {
             return sprintf('object(%s)', get_class($value));

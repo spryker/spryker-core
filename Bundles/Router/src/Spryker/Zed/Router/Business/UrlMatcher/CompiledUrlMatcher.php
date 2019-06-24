@@ -20,7 +20,7 @@ class CompiledUrlMatcher extends SymfonyCompiledUrlMatcher implements Redirectab
      *
      * @return array
      */
-    public function redirect($path, $route, $scheme = null)
+    public function redirect($path, $route, $scheme = null): array
     {
         $url = $this->context->getBaseUrl() . $path;
         $query = $this->context->getQueryString() ?: '';
