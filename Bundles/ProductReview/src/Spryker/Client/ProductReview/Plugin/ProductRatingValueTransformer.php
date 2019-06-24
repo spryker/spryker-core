@@ -24,7 +24,7 @@ class ProductRatingValueTransformer implements FacetSearchResultValueTransformer
     public function transformForDisplay($rangeValues)
     {
         if (isset($rangeValues[self::RANGE_MIN_PARAMETER])) {
-            $rangeValues[self::RANGE_MIN_PARAMETER] = $this->normalizeRatingForDisplay($rangeValues[self::RANGE_MIN_PARAMETER ]);
+            $rangeValues[self::RANGE_MIN_PARAMETER] = $this->normalizeRatingForDisplay($rangeValues[self::RANGE_MIN_PARAMETER]);
         }
 
         if (isset($rangeValues[self::RANGE_MAX_PARAMETER])) {
