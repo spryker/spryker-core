@@ -48,7 +48,7 @@ class MethodDiscountDecisionRule extends MethodDiscountDecisionRuleWithMultiShip
      */
     protected function isSatisfiedItemShipmentMethod(ShipmentTransfer $shipmentTransfer, ClauseTransfer $clauseTransfer): bool
     {
-        if ($shipmentTransfer === null || $shipmentTransfer->getMethod() === null) {
+        if ($shipmentTransfer->getMethod() === null) {
             return false;
         }
 

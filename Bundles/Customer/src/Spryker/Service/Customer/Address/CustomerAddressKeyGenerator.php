@@ -13,7 +13,7 @@ use Spryker\Service\Customer\CustomerConfig;
 class CustomerAddressKeyGenerator implements CustomerAddressKeyGeneratorInterface
 {
     /**
-     * @var \Spryker\Zed\Customer\CustomerConfig
+     * @var \Spryker\Service\Customer\CustomerConfig
      */
     protected $customerConfig;
 

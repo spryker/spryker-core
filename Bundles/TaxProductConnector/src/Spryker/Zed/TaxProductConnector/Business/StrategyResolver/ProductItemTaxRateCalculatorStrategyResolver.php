@@ -34,7 +34,7 @@ class ProductItemTaxRateCalculatorStrategyResolver implements ProductItemTaxRate
     }
 
     /**
-     * @param iterable|\Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Spryker\Zed\Tax\Business\Model\CalculatorInterface
      */

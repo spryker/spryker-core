@@ -166,8 +166,7 @@ class ShipmentGroupCreator implements ShipmentGroupCreatorInterface
     {
         $idSalesOrderItem = $itemTransfer->getIdSalesOrderItem();
 
-        return $idSalesOrderItem !== null
-            && isset($itemListUpdatedStatus[$idSalesOrderItem])
+        return isset($itemListUpdatedStatus[$idSalesOrderItem])
             && is_scalar($itemListUpdatedStatus[$idSalesOrderItem])
             && $itemListUpdatedStatus[$idSalesOrderItem];
     }
