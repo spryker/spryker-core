@@ -401,7 +401,7 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
     {
         foreach ($shipmentMethodTransfers as $shipmentMethodTransfer) {
             if ($shipmentTransfer->getMethod()->getName() === $shipmentMethodTransfer->getName()) {
-                return $shipmentMethodTransfer;
+                return clone $shipmentMethodTransfer;
             }
         }
 
