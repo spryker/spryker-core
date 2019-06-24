@@ -9,14 +9,7 @@ namespace Spryker\Shared\StorageDatabase;
 
 class StorageDatabaseConfig
 {
-    /**
-     * @uses `\Spryker\Zed\Propel\PropelConfig::DB_ENGINE_PGSQL`
-     */
     public const DB_ENGINE_PGSQL = 'pgsql';
-
-    /**
-     * @uses \Spryker\Zed\Propel\PropelConfig::DB_ENGINE_MYSQL
-     */
     public const DB_ENGINE_MYSQL = 'mysql';
 
     public const KEY_STORAGE_TABLE_PREFIX = 'KEY_STORAGE_TABLE_PREFIX';

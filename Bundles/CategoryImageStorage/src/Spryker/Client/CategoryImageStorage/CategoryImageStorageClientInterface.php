@@ -14,7 +14,7 @@ interface CategoryImageStorageClientInterface
 {
     /**
      * Specification:
-     * - Get category image set collection transfer object from storage for the specified category id and locale combination.
+     * - Gets category image set collection transfer object from storage for the specified category id and locale combination.
      *
      * @api
      *
@@ -29,7 +29,7 @@ interface CategoryImageStorageClientInterface
 
     /**
      * Specification:
-     * - Get category image set item transfer object from storage for the specified category id and locale combination.
+     * - Gets category image set item transfer object from storage for the specified category id and locale combination.
      *
      * @api
      *
