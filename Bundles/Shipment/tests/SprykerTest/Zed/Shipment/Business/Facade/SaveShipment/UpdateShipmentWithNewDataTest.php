@@ -34,8 +34,6 @@ use Spryker\Shared\Price\PriceConfig;
  */
 class UpdateShipmentWithNewDataTest extends Test
 {
-    protected const TEST_STATE_MACHINE_PROCESS_NAME = 'TestPayment01';
-
     /**
      * @var \SprykerTest\Zed\Shipment\ShipmentBusinessTester
      */
@@ -44,21 +42,11 @@ class UpdateShipmentWithNewDataTest extends Test
     /**
      * @return void
      */
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->tester->configureTestStateMachine([static::TEST_STATE_MACHINE_PROCESS_NAME]);
-    }
-
-    /**
-     * @return void
-     */
     public function testUpdateShipmentWithNewShippingAddress(): void
     {
         // Arrange
         $quoteTransfer = $this->createQuoteTransfer();
-        $saveOrderTransfer = $this->tester->haveOrderUsingPreparedQuoteTransfer($quoteTransfer, static::TEST_STATE_MACHINE_PROCESS_NAME);
+        $saveOrderTransfer = $this->tester->createOrderWithMultishipment($quoteTransfer);
 
         $shipmentTransfer = $this->tester->haveShipment(
             $saveOrderTransfer->getIdSalesOrder(),
@@ -71,7 +59,7 @@ class UpdateShipmentWithNewDataTest extends Test
 
         $shipmentGroupTransfer = (new ShipmentGroupTransfer())->setShipment($shipmentTransfer);
 
-        $orderTransfer = $this->tester->getLocator()->sales()->facade()->getOrderByIdSalesOrder($saveOrderTransfer->getIdSalesOrder());
+        $orderTransfer = $this->tester->getOrderTransferByIdSalesOrder($saveOrderTransfer->getIdSalesOrder());
 
         // Act
         $shipmentGroupResponseTransfer = $this->tester->getFacade()->saveShipment($shipmentGroupTransfer, $orderTransfer);
@@ -95,7 +83,7 @@ class UpdateShipmentWithNewDataTest extends Test
     {
         // Arrange
         $quoteTransfer = $this->createQuoteTransfer();
-        $saveOrderTransfer = $this->tester->haveOrderUsingPreparedQuoteTransfer($quoteTransfer, static::TEST_STATE_MACHINE_PROCESS_NAME);
+        $saveOrderTransfer = $this->tester->createOrderWithMultishipment($quoteTransfer);
 
         $shipmentTransfer = $this->tester->haveShipment(
             $saveOrderTransfer->getIdSalesOrder(),
@@ -108,7 +96,7 @@ class UpdateShipmentWithNewDataTest extends Test
 
         $shipmentGroupTransfer = (new ShipmentGroupTransfer())->setShipment($shipmentTransfer);
 
-        $orderTransfer = $this->tester->getLocator()->sales()->facade()->getOrderByIdSalesOrder($saveOrderTransfer->getIdSalesOrder());
+        $orderTransfer = $this->tester->getOrderTransferByIdSalesOrder($saveOrderTransfer->getIdSalesOrder());
 
         // Act
         $shipmentGroupResponseTransfer = $this->tester->getFacade()->saveShipment($shipmentGroupTransfer, $orderTransfer);
@@ -134,7 +122,7 @@ class UpdateShipmentWithNewDataTest extends Test
     {
         // Arrange
         $quoteTransfer = $this->createQuoteTransfer();
-        $saveOrderTransfer = $this->tester->haveOrderUsingPreparedQuoteTransfer($quoteTransfer, static::TEST_STATE_MACHINE_PROCESS_NAME);
+        $saveOrderTransfer = $this->tester->createOrderWithMultishipment($quoteTransfer);
 
         $shipmentTransfer = $this->tester->haveShipment(
             $saveOrderTransfer->getIdSalesOrder(),
@@ -148,7 +136,7 @@ class UpdateShipmentWithNewDataTest extends Test
 
         $shipmentGroupTransfer = (new ShipmentGroupTransfer())->setShipment($shipmentTransfer);
 
-        $orderTransfer = $this->tester->getLocator()->sales()->facade()->getOrderByIdSalesOrder($saveOrderTransfer->getIdSalesOrder());
+        $orderTransfer = $this->tester->getOrderTransferByIdSalesOrder($saveOrderTransfer->getIdSalesOrder());
 
         // Act
         $shipmentGroupResponseTransfer = $this->tester->getFacade()->saveShipment($shipmentGroupTransfer, $orderTransfer);
