@@ -39,9 +39,9 @@ class StorageDatabaseDataHelper extends Module
             ->filterByFkProduct($productConcreteId)
             ->findOne();
 
-//        $this->getDataCleanupHelper()->_addCleanup(function () use ($productQuantityStorageEntity) {
-//            $productQuantityStorageEntity->delete();
-//        });
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($productQuantityStorageEntity) {
+            $productQuantityStorageEntity->delete();
+        });
 
         return $productQuantityStorageEntity->getKey();
     }
