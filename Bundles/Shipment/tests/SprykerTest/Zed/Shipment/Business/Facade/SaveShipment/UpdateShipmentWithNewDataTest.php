@@ -66,7 +66,6 @@ class UpdateShipmentWithNewDataTest extends Test
             $shipmentGroupResponseTransfer->getShipmentGroup()->getShipment()->getIdSalesShipment()
         );
 
-        // Assert
         $this->assertTrue($shipmentGroupResponseTransfer->getIsSuccessful(), 'Saving a shipment should have been successful.');
         $this->assertEquals($shipmentTransfer->getIdSalesShipment(), $shipmentEntity->getIdSalesShipment(), 'The shipment should have been updated.');
         $this->assertNotNull($shipmentEntity->getFkSalesOrderAddress(), 'The sales shipment should have a sales order address.');
