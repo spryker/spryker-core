@@ -12,6 +12,12 @@ use Zend\Filter\Word\UnderscoreToCamelCase;
 
 class EntityDefinitionNormalizer extends DefinitionNormalizer
 {
+    protected const TYPE_MAPPING = [
+        'double' => 'float',
+    ];
+    protected const ENTITY_TYPES_PATTERN = '/^int|^integer|^float|^double|^string|^array|^\[\]|^bool|^boolean/';
+    protected const TYPE_STRING = 'string';
+
     public const KEY_TYPE = 'type';
     public const KEY_COLUMN = 'column';
     public const KEY_FOREIGN_KEY = 'foreign-key';
@@ -19,9 +25,6 @@ class EntityDefinitionNormalizer extends DefinitionNormalizer
     public const FOREIGN_TABLE = 'foreignTable';
     public const KEY_PHP_NAME = 'phpName';
     public const ENTITY_NAMESPACE = 'entity-namespace';
-    protected const TYPE_MAPPING = [
-        'double' => 'float',
-    ];
 
     /**
      * @var \Spryker\Zed\Transfer\Business\Model\Generator\Helper\PluralizerInterface
@@ -112,8 +115,8 @@ class EntityDefinitionNormalizer extends DefinitionNormalizer
     protected function getTransferType($type)
     {
         $type = mb_strtolower($type);
-        if (!preg_match('/^int|^integer|^float|^double|^string|^array|^\[\]|^bool|^boolean/', $type)) {
-            return 'string';
+        if (!preg_match(static::ENTITY_TYPES_PATTERN, $type)) {
+            return static::TYPE_STRING;
         }
 
         return static::TYPE_MAPPING[$type] ?? $type;
