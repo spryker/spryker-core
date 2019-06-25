@@ -16,7 +16,7 @@ use Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteExpandBeforeCreatePluginIn
  * @method \Spryker\Zed\Currency\CurrencyConfig getConfig()
  * @method \Spryker\Zed\Currency\Persistence\CurrencyQueryContainerInterface getQueryContainer()
  */
-class DefaultCurrencyQuoteExpandBeforeCreatePluginInterface extends AbstractPlugin implements QuoteExpandBeforeCreatePluginInterface
+class DefaultCurrencyQuoteExpandBeforeCreatePlugin extends AbstractPlugin implements QuoteExpandBeforeCreatePluginInterface
 {
     /**
      * {@inheritdoc}
