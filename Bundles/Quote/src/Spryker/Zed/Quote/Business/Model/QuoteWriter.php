@@ -99,6 +99,7 @@ class QuoteWriter implements QuoteWriterInterface
         }
 
         $quoteTransfer = $this->addStoreToQuote($quoteTransfer);
+        $quoteTransfer = $this->executeQuoteExpandBeforeCreatePlugins($quoteTransfer);
 
         $quoteValidationResponseTransfer = $this->quoteValidator->validate($quoteTransfer);
 
@@ -125,7 +126,6 @@ class QuoteWriter implements QuoteWriterInterface
         }
 
         $quoteTransfer = $this->addStoreToQuote($quoteTransfer);
-        $quoteTransfer = $this->executeQuoteExpandBeforeCreatePlugins($quoteTransfer);
 
         $quoteValidationResponseTransfer = $this->quoteValidator->validate($quoteTransfer);
 
