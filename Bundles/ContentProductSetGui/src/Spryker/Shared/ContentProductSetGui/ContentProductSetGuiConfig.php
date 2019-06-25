@@ -31,14 +31,14 @@ class ContentProductSetGuiConfig extends AbstractSharedConfig
     protected const TWIG_FUNCTION_NAME = 'content_product_set';
 
     /**
-     * @uses \Spryker\Shared\ContentProductSet\ContentProductSetConfig::WIDGET_TEMPLATE_IDENTIFIER_DEFAULT
+     * @uses \Spryker\Shared\ContentProductSet\ContentProductSetConfig::WIDGET_TEMPLATE_IDENTIFIER_CART_BUTTON_TOP
      */
-    protected const WIDGET_TEMPLATE_IDENTIFIER_DEFAULT = 'default';
+    protected const WIDGET_TEMPLATE_IDENTIFIER_CART_BUTTON_TOP = 'cart-button-top';
 
     /**
-     * Content item product set default template name
+     * Content item product set cart-button-top template name
      */
-    protected const WIDGET_TEMPLATE_DISPLAY_NAME_DEFAULT = 'content_product_set_gui.template.default';
+    protected const WIDGET_TEMPLATE_DISPLAY_NAME_CART_BUTTON_TOP = 'content_product_set_gui.template.cart-button-top';
 
     /**
      * @uses \Spryker\Shared\ContentProductSet\ContentProductSetConfig::WIDGET_TEMPLATE_IDENTIFIER_CART_BUTTON_BOTTOM
@@ -56,7 +56,7 @@ class ContentProductSetGuiConfig extends AbstractSharedConfig
     public function getContentWidgetTemplates(): array
     {
         return [
-            static::WIDGET_TEMPLATE_IDENTIFIER_DEFAULT => static::WIDGET_TEMPLATE_DISPLAY_NAME_DEFAULT,
+            static::WIDGET_TEMPLATE_IDENTIFIER_CART_BUTTON_TOP => static::WIDGET_TEMPLATE_DISPLAY_NAME_CART_BUTTON_TOP,
             static::WIDGET_TEMPLATE_IDENTIFIER_CART_BUTTON_BOTTOM => static::WIDGET_TEMPLATE_DISPLAY_NAME_CART_BUTTON_BOTTOM,
         ];
     }
