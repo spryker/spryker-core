@@ -9,9 +9,10 @@ namespace SprykerTest\Zed\CompanyBusinessUnit\Business;
 
 use Codeception\TestCase\Test;
 use Generated\Shared\DataBuilder\CompanyUserBuilder;
+use Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer;
+use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyUserResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
-use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitFacadeInterface;
 use TypeError;
 
 /**
@@ -27,6 +28,8 @@ use TypeError;
  */
 class CompanyBusinessUnitFacadeTest extends Test
 {
+    protected const TEST_NAME = 'TEST_NAME';
+
     /**
      * @var \SprykerTest\Zed\CompanyBusinessUnit\CompanyBusinessUnitTester
      */
@@ -35,30 +38,59 @@ class CompanyBusinessUnitFacadeTest extends Test
     /**
      * @return void
      */
-    public function testCreateShouldPersistCompanyBusinessUnit()
+    public function testCreateShouldPersistCompanyBusinessUnit(): void
     {
-        $businessUnitTransfer = $this->tester->haveCompanyBusinessUnitWithCompany();
+        // Arrange
+        $companyBusinessUnitTransfer = $this->tester->buildCompanyBusinessUnitTransfer([
+            CompanyBusinessUnitTransfer::FK_COMPANY => $this->tester->haveCompany()->getIdCompany(),
+        ]);
 
-        $createdTransfer = $this->getFacade()
-            ->create($businessUnitTransfer)
+        // Act
+        $companyBusinessUnitTransferCreated = $this->tester->getFacade()
+            ->create($companyBusinessUnitTransfer)
             ->getCompanyBusinessUnitTransfer();
 
-        $this->assertNotNull($createdTransfer->getIdCompanyBusinessUnit());
+        // Assert
+        $this->assertNotNull(
+            $this->tester->getFacade()
+                ->findCompanyBusinessUnitById($companyBusinessUnitTransferCreated->getIdCompanyBusinessUnit())
+        );
     }
 
     /**
      * @return void
      */
-    public function testGetCompanyBusinessUnitByIdShouldReturnTransferObject()
+    public function testGetCompanyBusinessUnitByIdShouldReturnTransferObject(): void
     {
-        $businessUnitTransfer = $this->tester->haveCompanyBusinessUnitWithCompany();
+        // Arrange
+        $companyBusinessUnitTransfer = $this->tester->haveCompanyBusinessUnit([
+            CompanyBusinessUnitTransfer::FK_COMPANY => $this->tester->haveCompany()->getIdCompany(),
+        ]);
 
-        $createdBusinessUnitTransfer = $this->getFacade()
-            ->create($businessUnitTransfer)
-            ->getCompanyBusinessUnitTransfer();
+        // Act
+        $foundBusinessUnitTransfer = $this->tester->getFacade()
+            ->getCompanyBusinessUnitById($companyBusinessUnitTransfer);
 
-        $foundBusinessUnitTransfer = $this->getFacade()->getCompanyBusinessUnitById($createdBusinessUnitTransfer);
-        $this->assertSame($createdBusinessUnitTransfer->getName(), $foundBusinessUnitTransfer->getName());
+        // Assert
+        $this->assertSame($companyBusinessUnitTransfer->getName(), $foundBusinessUnitTransfer->getName());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetCompanyBusinessUnitByIdShouldThrowExceptionWhenNoIdCompanyBusinessUnitProvided(): void
+    {
+        // Arrange
+        $companyBusinessUnitTransfer = $this->tester->buildCompanyBusinessUnitTransfer([
+            CompanyBusinessUnitTransfer::FK_COMPANY => $this->tester->haveCompany()->getIdCompany(),
+        ]);
+
+        // Assert
+        $this->expectException(TypeError::class);
+
+        // Act
+        $this->tester->getFacade()
+            ->getCompanyBusinessUnitById($companyBusinessUnitTransfer);
     }
 
     /**
@@ -66,18 +98,17 @@ class CompanyBusinessUnitFacadeTest extends Test
      */
     public function testFindCompanyBusinessUnitByIdShouldReturnTransferObject(): void
     {
-        //Arrange
-        $companyBusinessUnitTransfer = $this->tester->haveCompanyBusinessUnitWithCompany();
+        // Arrange
+        $companyBusinessUnitTransfer = $this->tester->haveCompanyBusinessUnit([
+            CompanyBusinessUnitTransfer::FK_COMPANY => $this->tester->haveCompany()->getIdCompany(),
+        ]);
 
-        //Act
-        $expectedCompanyBusinessUnitTransfer = $this->getFacade()
-            ->create($companyBusinessUnitTransfer)
-            ->getCompanyBusinessUnitTransfer();
-        $actualCompanyBusinessUnitTransfer = $this->getFacade()
-            ->findCompanyBusinessUnitById($expectedCompanyBusinessUnitTransfer->getIdCompanyBusinessUnit());
+        // Act
+        $actualCompanyBusinessUnitTransfer = $this->tester->getFacade()
+            ->findCompanyBusinessUnitById($companyBusinessUnitTransfer->getIdCompanyBusinessUnit());
 
-        //Assert
-        $this->assertSame($expectedCompanyBusinessUnitTransfer->getName(), $actualCompanyBusinessUnitTransfer->getName());
+        // Assert
+        $this->assertSame($companyBusinessUnitTransfer->getName(), $actualCompanyBusinessUnitTransfer->getName());
     }
 
     /**
@@ -85,83 +116,103 @@ class CompanyBusinessUnitFacadeTest extends Test
      */
     public function testFindCompanyBusinessUnitByIdShouldReturnNull(): void
     {
-        //Act
-        $companyBusinessUnitTransfer = $this->getFacade()->findCompanyBusinessUnitById(-1);
+        // Arrange
+        $idCompanyBusinessUnit = -1;
 
-        //Assert
+        // Act
+        $companyBusinessUnitTransfer = $this->tester->getFacade()
+            ->findCompanyBusinessUnitById($idCompanyBusinessUnit);
+
+        // Assert
         $this->assertNull($companyBusinessUnitTransfer);
     }
 
     /**
      * @return void
      */
-    public function testGetCustomerCompanyBusinessUnitTreeShouldReturnNodesCollection()
+    public function testGetCustomerCompanyBusinessUnitTreeShouldReturnNodesCollection(): void
     {
-        $businessUnitTransfer = $this->tester->haveCompanyBusinessUnitWithCompany();
-        $this->getFacade()->create($businessUnitTransfer);
-
+        // Arrange
+        $businessUnitTransfer = $this->tester->haveCompanyBusinessUnit([
+            CompanyBusinessUnitTransfer::FK_COMPANY => $this->tester->haveCompany()->getIdCompany(),
+        ]);
         $customerTransfer = $this->tester->haveCustomer();
-        $companyUserTransfer = $this->tester->haveCompanyUser(
-            [
-                CompanyUserTransfer::CUSTOMER => $customerTransfer,
-                CompanyUserTransfer::FK_COMPANY => $businessUnitTransfer->getFkCompany(),
-            ]
-        );
+        $companyUserTransfer = $this->tester->haveCompanyUser([
+            CompanyUserTransfer::CUSTOMER => $customerTransfer,
+            CompanyUserTransfer::FK_COMPANY => $businessUnitTransfer->getFkCompany(),
+        ]);
         $customerTransfer->setCompanyUserTransfer($companyUserTransfer);
 
-        $companyBusinessUnitTreeNodeCollectionTransfer = $this->getFacade()->getCustomerCompanyBusinessUnitTree($customerTransfer);
+        // Act
+        $companyBusinessUnitTreeNodeCollectionTransfer = $this->tester->getFacade()
+            ->getCustomerCompanyBusinessUnitTree($customerTransfer);
 
+        // Assert
         $this->assertEquals(1, count($companyBusinessUnitTreeNodeCollectionTransfer->getCompanyBusinessUnitTreeNodes()));
     }
 
     /**
      * @return void
      */
-    public function testUpdateShouldPersistCompanyBusinessUnitChanges()
+    public function testUpdateShouldPersistCompanyBusinessUnitChanges(): void
     {
-        $businessUnitTransfer = $this->tester->haveCompanyBusinessUnitWithCompany();
+        // Arrange
+        $companyBusinessUnitTransferOriginal = $this->tester->haveCompanyBusinessUnit([
+            CompanyBusinessUnitTransfer::FK_COMPANY => $this->tester->haveCompany()->getIdCompany(),
+        ]);
+        $companyBusinessUnitTransfer = (new CompanyBusinessUnitTransfer())->fromArray($companyBusinessUnitTransferOriginal->toArray());
+        $companyBusinessUnitTransfer->setName(static::TEST_NAME);
 
-        $createdBusinessUnitTransfer = $this->getFacade()
-            ->create(clone $businessUnitTransfer)
-            ->getCompanyBusinessUnitTransfer();
+        // Act
+        $companyBusinessUnitResponseTransfer = $this->tester->getFacade()
+            ->update($companyBusinessUnitTransfer);
 
-        $createdBusinessUnitTransfer->setName($createdBusinessUnitTransfer->getName() . 'TEST');
-        $updatedBusinessUnitTransfer = $this->getFacade()
-            ->update($createdBusinessUnitTransfer)
-            ->getCompanyBusinessUnitTransfer();
+        $actualCompanyBusinessUnitTransfer = $this->tester->getFacade()
+            ->findCompanyBusinessUnitById($companyBusinessUnitTransferOriginal->getIdCompanyBusinessUnit());
 
-        $this->assertNotSame($businessUnitTransfer->getName(), $updatedBusinessUnitTransfer->getName());
+        // Assert
+        $this->assertTrue($companyBusinessUnitResponseTransfer->getIsSuccessful());
+        $this->assertEquals(static::TEST_NAME, $actualCompanyBusinessUnitTransfer->getName());
     }
 
     /**
      * @return void
      */
-    public function testDeleteShouldRemoveCompanyBusinessUnitFromStorage()
+    public function testDeleteShouldRemoveCompanyBusinessUnitFromStorage(): void
     {
-        $businessUnitTransfer = $this->tester->haveCompanyBusinessUnitWithCompany();
+        // Arrange
+        $companyBusinessUnitTransfer = $this->tester->haveCompanyBusinessUnit([
+            CompanyBusinessUnitTransfer::FK_COMPANY => $this->tester->haveCompany()->getIdCompany(),
+        ]);
 
-        $createdBusinessUnitTransfer = $this->getFacade()
-            ->create(clone $businessUnitTransfer)
-            ->getCompanyBusinessUnitTransfer();
+        // Act
+        $this->tester->getFacade()
+            ->delete($companyBusinessUnitTransfer);
 
-        $this->getFacade()->delete($createdBusinessUnitTransfer);
-        $this->expectException(TypeError::class);
-        $this->getFacade()->getCompanyBusinessUnitById($createdBusinessUnitTransfer);
+        // Assert
+        $this->assertNull(
+            $this->tester->getFacade()
+                ->findCompanyBusinessUnitById($companyBusinessUnitTransfer->getIdCompanyBusinessUnit())
+        );
     }
 
     /**
      * @return void
      */
-    public function testAssignDefaultBusinessUnitToCompanyUserShouldAssignFkCompanyBusinessUnitIfIsNotSet()
+    public function testAssignDefaultBusinessUnitToCompanyUserShouldAssignFkCompanyBusinessUnitIfIsNotSet(): void
     {
-        $companyBusinessUnitTransfer = $this->tester->haveCompanyBusinessUnitWithCompany();
-        $idCompany = $companyBusinessUnitTransfer->getFkCompany();
+        // Arrange
+        $companyBusinessUnitTransfer = $this->tester->haveCompanyBusinessUnit([
+            CompanyBusinessUnitTransfer::FK_COMPANY => $this->tester->haveCompany()->getIdCompany(),
+        ]);
+        $companyUserTransfer = (new CompanyUserTransfer())->setFkCompany($companyBusinessUnitTransfer->getFkCompany());
+        $companyUserResponseTransfer = (new CompanyUserResponseTransfer())->setCompanyUser($companyUserTransfer);
 
-        $companyUser = (new CompanyUserTransfer())->setFkCompany($idCompany);
-        $companyUserResponseTransfer = (new CompanyUserResponseTransfer())->setCompanyUser($companyUser);
+        // Act
+        $companyUserResponseTransfer = $this->tester->getFacade()
+            ->assignDefaultBusinessUnitToCompanyUser($companyUserResponseTransfer);
 
-        $companyUserResponseTransfer = $this->getFacade()->assignDefaultBusinessUnitToCompanyUser($companyUserResponseTransfer);
-
+        // Assert
         $this->assertEquals(
             $companyBusinessUnitTransfer->getIdCompanyBusinessUnit(),
             $companyUserResponseTransfer->getCompanyUser()->getFkCompanyBusinessUnit()
@@ -171,46 +222,47 @@ class CompanyBusinessUnitFacadeTest extends Test
     /**
      * @return void
      */
-    public function testBusinessUnitParentIsSaved()
+    public function testBusinessUnitParentIsSaved(): void
     {
-        $businessUnitTransfer = $this->tester->haveCompanyBusinessUnitWithCompany();
-
-        $seedData = [
-            'fkCompany' => $businessUnitTransfer->getFkCompany(),
-            'idCompanyBusinessUnit' => null,
-            'fkParentCompanyBusinessUnit' => $businessUnitTransfer->getIdCompanyBusinessUnit(),
-        ];
-        $childBusinessUnitTransfer = $this->tester->haveCompanyBusinessUnit($seedData);
+        // Arrange
+        $companyBusinessUnitTransfer = $this->tester->haveCompanyBusinessUnit([
+            CompanyBusinessUnitTransfer::FK_COMPANY => $this->tester->haveCompany()->getIdCompany(),
+        ]);
+        $companyBusinessUnitTransferChild = $this->tester->haveCompanyBusinessUnit([
+            CompanyBusinessUnitTransfer::FK_COMPANY => $companyBusinessUnitTransfer->getFkCompany(),
+            CompanyBusinessUnitTransfer::ID_COMPANY_BUSINESS_UNIT => null,
+            CompanyBusinessUnitTransfer::FK_PARENT_COMPANY_BUSINESS_UNIT => $companyBusinessUnitTransfer->getIdCompanyBusinessUnit(),
+        ]);
 
         // Act
-        $loadedChildBusinessUnitTransfer = $this->getFacade()
-            ->getCompanyBusinessUnitById($childBusinessUnitTransfer);
+        $loadedChildBusinessUnitTransfer = $this->tester->getFacade()
+            ->getCompanyBusinessUnitById($companyBusinessUnitTransferChild);
 
         // Assert
         $this->assertSame(
             $loadedChildBusinessUnitTransfer->getParentCompanyBusinessUnit()->getIdCompanyBusinessUnit(),
-            $businessUnitTransfer->getIdCompanyBusinessUnit()
+            $companyBusinessUnitTransfer->getIdCompanyBusinessUnit()
         );
     }
 
     /**
      * @return void
      */
-    public function testBusinessUnitCanBeUpdated()
+    public function testBusinessUnitCanBeUpdated(): void
     {
         // Arrange
         $companyTransfer = $this->tester->haveCompany();
         $seedData = [
-            'fkCompany' => $companyTransfer->getIdCompany(),
-            'idCompanyBusinessUnit' => null,
+            CompanyBusinessUnitTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
+            CompanyBusinessUnitTransfer::ID_COMPANY_BUSINESS_UNIT => null,
         ];
         $businessUnitTransfer = $this->tester->haveCompanyBusinessUnit($seedData);
         $businessUnitTransfer->setCompany($companyTransfer);
 
         // Act
-        $this->getFacade()->update($businessUnitTransfer);
-        $loadedChildBusinessUnitTransfer = $this->getFacade()
-            ->getCompanyBusinessUnitById($businessUnitTransfer);
+        $loadedChildBusinessUnitTransfer = $this->tester->getFacade()
+            ->update($businessUnitTransfer)
+            ->getCompanyBusinessUnitTransfer();
 
         // Assert
         $this->assertSame(
@@ -226,29 +278,28 @@ class CompanyBusinessUnitFacadeTest extends Test
     /**
      * @return void
      */
-    public function testBusinessUnitRelationCanBeAddedToExistingUnit()
+    public function testBusinessUnitRelationCanBeAddedToExistingUnit(): void
     {
         // Arrange
-        $businessUnitTransfer = $this->tester->haveCompanyBusinessUnitWithCompany();
-
-        $seedData = [
-            'fkCompany' => $businessUnitTransfer->getFkCompany(),
-            'idCompanyBusinessUnit' => null,
-        ];
-        $childBusinessUnitTransfer = $this->tester->haveCompanyBusinessUnit($seedData);
-        $childBusinessUnitTransfer = $this->getFacade()
-            ->getCompanyBusinessUnitById($childBusinessUnitTransfer);
+        $companyBusinessUnitTransferParent = $this->tester->haveCompanyBusinessUnit([
+            CompanyBusinessUnitTransfer::FK_COMPANY => $this->tester->haveCompany()->getIdCompany(),
+        ]);
+        $companyBusinessUnitTransferChild = $this->tester->haveCompanyBusinessUnit([
+            CompanyBusinessUnitTransfer::FK_COMPANY => $companyBusinessUnitTransferParent->getFkCompany(),
+            CompanyBusinessUnitTransfer::ID_COMPANY_BUSINESS_UNIT => null,
+        ]);
 
         // Act
-        $childBusinessUnitTransfer->setFkParentCompanyBusinessUnit($businessUnitTransfer->getIdCompanyBusinessUnit());
-        $this->getFacade()->update($childBusinessUnitTransfer);
-        $loadedChildBusinessUnitTransfer = $this->getFacade()
-            ->getCompanyBusinessUnitById($childBusinessUnitTransfer);
+        $companyBusinessUnitTransferChild->setFkParentCompanyBusinessUnit($companyBusinessUnitTransferParent->getIdCompanyBusinessUnit());
+        $this->tester->getFacade()
+            ->update($companyBusinessUnitTransferChild);
+        $loadedChildBusinessUnitTransfer = $this->tester->getFacade()
+            ->getCompanyBusinessUnitById($companyBusinessUnitTransferChild);
 
         // Assert
         $this->assertSame(
             $loadedChildBusinessUnitTransfer->getParentCompanyBusinessUnit()->getIdCompanyBusinessUnit(),
-            $businessUnitTransfer->getIdCompanyBusinessUnit()
+            $companyBusinessUnitTransferParent->getIdCompanyBusinessUnit()
         );
     }
 
@@ -257,55 +308,56 @@ class CompanyBusinessUnitFacadeTest extends Test
      *
      * @return void
      */
-    public function testParentBusinessUnitRelationCanBeSaved()
+    public function testParentBusinessUnitRelationCanBeSaved(): void
     {
         // Arrange
-        $parentBusinessUnitTransfer = $this->tester->haveCompanyBusinessUnitWithCompany();
-        $parentBusinessUnitTransfer = $this->getFacade()
-            ->getCompanyBusinessUnitById($parentBusinessUnitTransfer);
-
-        $seedData = [
-            'fkCompany' => $parentBusinessUnitTransfer->getFkCompany(),
-            'idCompanyBusinessUnit' => null,
-            'fkParentCompanyBusinessUnit' => $parentBusinessUnitTransfer->getIdCompanyBusinessUnit(),
-        ];
-        $businessUnitTransfer = $this->tester->haveCompanyBusinessUnit($seedData);
-        $businessUnitTransfer = $this->getFacade()
-            ->getCompanyBusinessUnitById($businessUnitTransfer);
+        $companyBusinessUnitTransferParent = $this->tester->haveCompanyBusinessUnit([
+            CompanyBusinessUnitTransfer::FK_COMPANY => $this->tester->haveCompany()->getIdCompany(),
+        ]);
+        $companyBusinessUnitTransferChild = $this->tester->haveCompanyBusinessUnit([
+            CompanyBusinessUnitTransfer::FK_COMPANY => $companyBusinessUnitTransferParent->getFkCompany(),
+            CompanyBusinessUnitTransfer::ID_COMPANY_BUSINESS_UNIT => null,
+            CompanyBusinessUnitTransfer::FK_PARENT_COMPANY_BUSINESS_UNIT => $companyBusinessUnitTransferParent->getIdCompanyBusinessUnit(),
+        ]);
 
         // Act
-        $this->getFacade()->update($businessUnitTransfer);
-        $loadedChildBusinessUnitTransfer = $this->getFacade()
-            ->getCompanyBusinessUnitById($businessUnitTransfer);
+        $this->tester->getFacade()
+            ->update($companyBusinessUnitTransferChild);
+        $companyBusinessUnitTransferChildLoaded = $this->tester
+            ->getFacade()
+            ->getCompanyBusinessUnitById($companyBusinessUnitTransferChild);
 
         // Assert
         $this->assertSame(
-            $loadedChildBusinessUnitTransfer->getParentCompanyBusinessUnit()->getIdCompanyBusinessUnit(),
-            $loadedChildBusinessUnitTransfer->getFkParentCompanyBusinessUnit()
+            $companyBusinessUnitTransferChildLoaded->getParentCompanyBusinessUnit()->getIdCompanyBusinessUnit(),
+            $companyBusinessUnitTransferChildLoaded->getFkParentCompanyBusinessUnit()
         );
         $this->assertSame(
-            $loadedChildBusinessUnitTransfer->getFkParentCompanyBusinessUnit(),
-            $parentBusinessUnitTransfer->getIdCompanyBusinessUnit()
+            $companyBusinessUnitTransferChildLoaded->getFkParentCompanyBusinessUnit(),
+            $companyBusinessUnitTransferParent->getIdCompanyBusinessUnit()
         );
     }
 
     /**
      * @return void
      */
-    public function testDeleteShouldClearParentForChildrenBusinessUnit()
+    public function testDeleteShouldClearParentForChildrenBusinessUnit(): void
     {
         // Arrange
-        $businessUnitTransfer = $this->tester->haveCompanyBusinessUnitWithCompany();
+        $businessUnitTransfer = $this->tester->haveCompanyBusinessUnit([
+            CompanyBusinessUnitTransfer::FK_COMPANY => $this->tester->haveCompany()->getIdCompany(),
+        ]);
         $seedData = [
-            'fkCompany' => $businessUnitTransfer->getFkCompany(),
-            'idCompanyBusinessUnit' => null,
-            'fkParentCompanyBusinessUnit' => $businessUnitTransfer->getIdCompanyBusinessUnit(),
+            CompanyBusinessUnitTransfer::FK_COMPANY => $businessUnitTransfer->getFkCompany(),
+            CompanyBusinessUnitTransfer::ID_COMPANY_BUSINESS_UNIT => null,
+            CompanyBusinessUnitTransfer::FK_PARENT_COMPANY_BUSINESS_UNIT => $businessUnitTransfer->getIdCompanyBusinessUnit(),
         ];
         $childBusinessUnitTransfer = $this->tester->haveCompanyBusinessUnit($seedData);
 
         // Act
-        $this->getFacade()->delete($businessUnitTransfer);
-        $loadedChildBusinessUnitTransfer = $this->getFacade()
+        $this->tester->getFacade()
+            ->delete($businessUnitTransfer);
+        $loadedChildBusinessUnitTransfer = $this->tester->getFacade()
             ->getCompanyBusinessUnitById($childBusinessUnitTransfer);
 
         // Assert
@@ -317,25 +369,25 @@ class CompanyBusinessUnitFacadeTest extends Test
     /**
      * @return void
      */
-    public function testIsUniqueCompanyUserByCustomerShouldReturnFalseIfCompanyUserRelationAlreadyExists()
+    public function testIsUniqueCompanyUserByCustomerShouldReturnFalseIfCompanyUserRelationAlreadyExists(): void
     {
         // Arrange
-        $businessUnitTransfer = $this->tester->haveCompanyBusinessUnitWithCompany();
+        $businessUnitTransfer = $this->tester->haveCompanyBusinessUnit([
+            CompanyBusinessUnitTransfer::FK_COMPANY => $this->tester->haveCompany()->getIdCompany(),
+        ]);
         $customerTransfer = $this->tester->haveCustomer();
-        $companyUserTransfer = $this->tester->haveCompanyUser(
-            [
-                CompanyUserTransfer::CUSTOMER => $customerTransfer,
-                CompanyUserTransfer::COMPANY_BUSINESS_UNIT => $businessUnitTransfer,
-                CompanyUserTransfer::FK_COMPANY => $businessUnitTransfer->getFkCompany(),
-                CompanyUserTransfer::FK_COMPANY_BUSINESS_UNIT => $businessUnitTransfer->getIdCompanyBusinessUnit(),
-                CompanyUserTransfer::FK_CUSTOMER => $customerTransfer->getIdCustomer(),
-            ]
-        );
+        $companyUserTransfer = $this->tester->haveCompanyUser([
+            CompanyUserTransfer::CUSTOMER => $customerTransfer,
+            CompanyUserTransfer::COMPANY_BUSINESS_UNIT => $businessUnitTransfer,
+            CompanyUserTransfer::FK_COMPANY => $businessUnitTransfer->getFkCompany(),
+            CompanyUserTransfer::FK_COMPANY_BUSINESS_UNIT => $businessUnitTransfer->getIdCompanyBusinessUnit(),
+            CompanyUserTransfer::FK_CUSTOMER => $customerTransfer->getIdCustomer(),
+        ]);
 
         $companyUserTransfer->setIdCompanyUser(null);
 
         // Act
-        $existsCompanyUser = $this->getFacade()
+        $existsCompanyUser = $this->tester->getFacade()
             ->isUniqueCompanyUserByCustomer($companyUserTransfer);
 
         // Assert
@@ -345,23 +397,23 @@ class CompanyBusinessUnitFacadeTest extends Test
     /**
      * @return void
      */
-    public function testIsUniqueCompanyUserByCustomerShouldReturnTrueToUpdateItself()
+    public function testIsUniqueCompanyUserByCustomerShouldReturnTrueToUpdateItself(): void
     {
         // Arrange
-        $businessUnitTransfer = $this->tester->haveCompanyBusinessUnitWithCompany();
+        $businessUnitTransfer = $this->tester->haveCompanyBusinessUnit([
+            CompanyBusinessUnitTransfer::FK_COMPANY => $this->tester->haveCompany()->getIdCompany(),
+        ]);
         $customerTransfer = $this->tester->haveCustomer();
-        $companyUserTransfer = $this->tester->haveCompanyUser(
-            [
-                CompanyUserTransfer::CUSTOMER => $customerTransfer,
-                CompanyUserTransfer::COMPANY_BUSINESS_UNIT => $businessUnitTransfer,
-                CompanyUserTransfer::FK_COMPANY => $businessUnitTransfer->getFkCompany(),
-                CompanyUserTransfer::FK_COMPANY_BUSINESS_UNIT => $businessUnitTransfer->getIdCompanyBusinessUnit(),
-                CompanyUserTransfer::FK_CUSTOMER => $customerTransfer->getIdCustomer(),
-            ]
-        );
+        $companyUserTransfer = $this->tester->haveCompanyUser([
+            CompanyUserTransfer::CUSTOMER => $customerTransfer,
+            CompanyUserTransfer::COMPANY_BUSINESS_UNIT => $businessUnitTransfer,
+            CompanyUserTransfer::FK_COMPANY => $businessUnitTransfer->getFkCompany(),
+            CompanyUserTransfer::FK_COMPANY_BUSINESS_UNIT => $businessUnitTransfer->getIdCompanyBusinessUnit(),
+            CompanyUserTransfer::FK_CUSTOMER => $customerTransfer->getIdCustomer(),
+        ]);
 
         // Act
-        $existsCompanyUser = $this->getFacade()
+        $existsCompanyUser = $this->tester->getFacade()
             ->isUniqueCompanyUserByCustomer($companyUserTransfer);
 
         // Assert
@@ -371,7 +423,7 @@ class CompanyBusinessUnitFacadeTest extends Test
     /**
      * @return void
      */
-    public function testIsUniqueCompanyUserByCustomerShouldReturnTrueIfFkCompanyBusinessUnitIsEmpty()
+    public function testIsUniqueCompanyUserByCustomerShouldReturnTrueIfFkCompanyBusinessUnitIsEmpty(): void
     {
         // Arrange
         $customerTransfer = $this->tester->haveCustomer();
@@ -381,7 +433,7 @@ class CompanyBusinessUnitFacadeTest extends Test
             ->setFkCustomer($customerTransfer->getIdCustomer());
 
         // Act
-        $existsCompanyUser = $this->getFacade()
+        $existsCompanyUser = $this->tester->getFacade()
             ->isUniqueCompanyUserByCustomer($notExistentCompanyUserTransfer);
 
         // Assert
@@ -391,17 +443,19 @@ class CompanyBusinessUnitFacadeTest extends Test
     /**
      * @return void
      */
-    public function testIsUniqueCompanyUserByCustomerShouldReturnTrueIfFkCustomerIsEmpty()
+    public function testIsUniqueCompanyUserByCustomerShouldReturnTrueIfFkCustomerIsEmpty(): void
     {
         // Arrange
-        $businessUnitTransfer = $this->tester->haveCompanyBusinessUnitWithCompany();
+        $businessUnitTransfer = $this->tester->haveCompanyBusinessUnit([
+            CompanyBusinessUnitTransfer::FK_COMPANY => $this->tester->haveCompany()->getIdCompany(),
+        ]);
 
         $notExistentCompanyUserTransfer = (new CompanyUserBuilder())
             ->build()
             ->setFkCompanyBusinessUnit($businessUnitTransfer->getFkCompany());
 
         // Act
-        $existsCompanyUser = $this->getFacade()
+        $existsCompanyUser = $this->tester->getFacade()
             ->isUniqueCompanyUserByCustomer($notExistentCompanyUserTransfer);
 
         // Assert
@@ -411,10 +465,12 @@ class CompanyBusinessUnitFacadeTest extends Test
     /**
      * @return void
      */
-    public function testIsUniqueCompanyUserByCustomerShouldReturnTrueIfCompanyUserRelationDoesNotExists()
+    public function testIsUniqueCompanyUserByCustomerShouldReturnTrueIfCompanyUserRelationDoesNotExists(): void
     {
         // Arrange
-        $businessUnitTransfer = $this->tester->haveCompanyBusinessUnitWithCompany();
+        $businessUnitTransfer = $this->tester->haveCompanyBusinessUnit([
+            CompanyBusinessUnitTransfer::FK_COMPANY => $this->tester->haveCompany()->getIdCompany(),
+        ]);
         $customerTransfer = $this->tester->haveCustomer();
 
         $notExistentCompanyUserTransfer = (new CompanyUserBuilder())
@@ -423,7 +479,7 @@ class CompanyBusinessUnitFacadeTest extends Test
             ->setFkCompanyBusinessUnit($businessUnitTransfer->getFkCompany());
 
         // Act
-        $existsCompanyUser = $this->getFacade()
+        $existsCompanyUser = $this->tester->getFacade()
             ->isUniqueCompanyUserByCustomer($notExistentCompanyUserTransfer);
 
         // Assert
@@ -433,15 +489,21 @@ class CompanyBusinessUnitFacadeTest extends Test
     /**
      * @return void
      */
-    public function testGetCompanyBusinessUnitCollectionShouldReturnTransferObject()
+    public function testGetCompanyBusinessUnitCollectionShouldReturnTransferObject(): void
     {
-    }
+        // Arrange
+        $businessUnitTransfer = $this->tester->haveCompanyBusinessUnit([
+            CompanyBusinessUnitTransfer::FK_COMPANY => $this->tester->haveCompany()->getIdCompany(),
+        ]);
 
-    /**
-     * @return \Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitFacadeInterface
-     */
-    protected function getFacade(): CompanyBusinessUnitFacadeInterface
-    {
-        return $this->tester->getFacade();
+        $companyBusinessUnitCriteriaFilterTransfer = (new CompanyBusinessUnitCriteriaFilterTransfer())
+            ->setIdCompany($businessUnitTransfer->getFkCompany());
+
+        // Act
+        $companyBusinessUnitCollection = $this->tester->getFacade()
+            ->getCompanyBusinessUnitCollection($companyBusinessUnitCriteriaFilterTransfer);
+
+        // Assert
+        $this->assertGreaterThan(0, $companyBusinessUnitCollection->getCompanyBusinessUnits()->count());
     }
 }
