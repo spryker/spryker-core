@@ -249,7 +249,6 @@ class CollectDiscountByShipmentTest extends Test
             'createMethodDiscountDecisionRuleWithMultiShipment',
             'createShipmentPriceDiscountDecisionRule',
             'createShipmentPriceDiscountDecisionRuleWithMultiShipment',
-            'getShipmentService',
         ])->getMock();
         $mockedBusinessFactory->method('createCarrierDiscountDecisionRule')->willReturn($mockedQuoteLevelShipmentCarrierDiscountDecisionRule);
         $mockedBusinessFactory->method('createCarrierDiscountDecisionRuleWithMultiShipment')->willReturn($mockedMultiShipmentCarrierDiscountDecisionRule);
@@ -259,12 +258,6 @@ class CollectDiscountByShipmentTest extends Test
 
         $mockedBusinessFactory->method('createShipmentPriceDiscountDecisionRule')->willReturn($mockedQuoteLevelShipmentPriceDiscountDecisionRule);
         $mockedBusinessFactory->method('createShipmentPriceDiscountDecisionRuleWithMultiShipment')->willReturn($mockedMultiShipmentPriceDiscountDecisionRule);
-        /**
-         * @todo Investigate and try to remove this mocking.
-         */
-        $mockedBusinessFactory->method('getShipmentService')->willReturn(
-            new ShipmentDiscountConnectorToShipmentServiceBridge($this->tester->getLocator()->shipment()->service())
-        );
 
         $facade = $this->tester->getFacade();
         $facade->setFactory($mockedBusinessFactory);
