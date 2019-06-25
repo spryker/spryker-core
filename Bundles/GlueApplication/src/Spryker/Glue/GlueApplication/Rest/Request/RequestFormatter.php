@@ -222,11 +222,11 @@ class RequestFormatter implements RequestFormatterInterface
 
         $page = $queryParameters[RequestConstantsInterface::QUERY_PAGE];
 
-        if (!is_numeric($page[RequestConstantsInterface::QUERY_OFFSET])) {
+        if (!preg_match('/^\d+$/', $page[RequestConstantsInterface::QUERY_OFFSET])) {
             $page[RequestConstantsInterface::QUERY_OFFSET] = 0;
         }
 
-        if (!is_numeric($page[RequestConstantsInterface::QUERY_LIMIT])) {
+        if (!preg_match('/^\d+$/', $page[RequestConstantsInterface::QUERY_LIMIT])) {
             $page[RequestConstantsInterface::QUERY_LIMIT] = 0;
         }
 
