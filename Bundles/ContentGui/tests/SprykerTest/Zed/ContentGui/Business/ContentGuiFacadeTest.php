@@ -224,18 +224,6 @@ class ContentGuiFacadeTest extends Unit
                 '{{ content_banner just text',
                 '{{ content_banner just text',
             ],
-            'check DE locale' => [
-                "{{ content_product_abstract_list('apl-test', 'top-title') }}",
-
-                '<span data-type="Abstract Product List" data-key="apl-test" data-template="top-title" '
-                . 'data-twig-expression="{{ content_product_abstract_list(\'apl-test\', \'top-title\') }}">'
-                . '<span>Content Item Type: Abstrakte Produktliste</span>'
-                . '<span>Name: Test Product List</span>'
-                . '<span>Template: Titel oben</span>'
-                . '</span>',
-
-                'de_DE',
-            ],
         ];
     }
 
