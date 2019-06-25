@@ -17,8 +17,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class EntityTagResponseHeaderFormatter implements EntityTagResponseHeaderFormatterInterface
 {
-    protected const FORMAT_ENTITY_TAG_HEADER = '"%s"';
-
     /**
      * @var \Spryker\Glue\EntityTagsRestApi\Processor\EntityTag\EntityTagResolverInterface
      */
@@ -112,9 +110,6 @@ class EntityTagResponseHeaderFormatter implements EntityTagResponseHeaderFormatt
      */
     protected function formatEntityTag(string $entityTag): string
     {
-        return sprintf(
-            static::FORMAT_ENTITY_TAG_HEADER,
-            $entityTag
-        );
+        return sprintf('"%s"', $entityTag);
     }
 }
