@@ -125,11 +125,11 @@ class RestRequestValidator implements RestRequestValidatorInterface
         $pageOffset = $page->getOffset();
         $pageLimit = $page->getLimit();
 
-        if ($pageOffset === 0 && $pageLimit === 0) {
+        if ($pageLimit <= 0) {
             return false;
         }
 
-        if ($pageLimit <= 0) {
+        if ($pageOffset === 0 && $pageLimit === 0) {
             return false;
         }
 
