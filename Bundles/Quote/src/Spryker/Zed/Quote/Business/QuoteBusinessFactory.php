@@ -44,7 +44,8 @@ class QuoteBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->createQuoteWriterPluginExecutor(),
             $this->getStoreFacade(),
-            $this->createQuoteValidator()
+            $this->createQuoteValidator(),
+            $this->getQuoteExpandBeforeCreatePlugins()
         );
     }
 
@@ -162,6 +163,14 @@ class QuoteBusinessFactory extends AbstractBusinessFactory
     protected function getQuoteCreateBeforePlugins(): array
     {
         return $this->getProvidedDependency(QuoteDependencyProvider::PLUGINS_QUOTE_CREATE_BEFORE);
+    }
+
+    /**
+     * @return \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteExpandBeforeCreatePluginInterface[]
+     */
+    protected function getQuoteExpandBeforeCreatePlugins(): array
+    {
+        return $this->getProvidedDependency(QuoteDependencyProvider::PLUGINS_QUOTE_EXPAND_BEFORE_CREATE_PLUGINS);
     }
 
     /**

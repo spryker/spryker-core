@@ -9,20 +9,19 @@ namespace Spryker\Zed\Currency\Communication\Plugin;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteWritePluginInterface;
+use Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteExpandBeforeCreatePluginInterface;
 
 /**
- * @deprecated Use \Spryker\Zed\Currency\Communication\Plugin\DefaultCurrencyQuoteExpandBeforeCreatePluginInterface instead.
- *
  * @method \Spryker\Zed\Currency\Business\CurrencyFacadeInterface getFacade()
  * @method \Spryker\Zed\Currency\CurrencyConfig getConfig()
  * @method \Spryker\Zed\Currency\Persistence\CurrencyQueryContainerInterface getQueryContainer()
  */
-class SetDefaultCurrencyBeforeQuoteCreatePlugin extends AbstractPlugin implements QuoteWritePluginInterface
+class DefaultCurrencyQuoteExpandBeforeCreatePluginInterface extends AbstractPlugin implements QuoteExpandBeforeCreatePluginInterface
 {
     /**
-     * Specification:
-     * - Set default currency to quote if it does not have
+     * {@inheritdoc}
+     * - Expands quote with default currency.
+     * - Does nothing if quote have currency.
      *
      * @api
      *
@@ -30,7 +29,7 @@ class SetDefaultCurrencyBeforeQuoteCreatePlugin extends AbstractPlugin implement
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function execute(QuoteTransfer $quoteTransfer): QuoteTransfer
+    public function expand(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         if (!$quoteTransfer->getCurrency()) {
             $quoteTransfer->setCurrency($this->getFacade()->getCurrent());

@@ -45,24 +45,32 @@ class QuoteWriter implements QuoteWriterInterface
     protected $quoteValidator;
 
     /**
+     * @var \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteExpandBeforeCreatePluginInterface[]
+     */
+    protected $quoteExpandBeforeCreatePlugins;
+
+    /**
      * @param \Spryker\Zed\Quote\Persistence\QuoteEntityManagerInterface $quoteEntityManager
      * @param \Spryker\Zed\Quote\Persistence\QuoteRepositoryInterface $quoteRepository
      * @param \Spryker\Zed\Quote\Business\Model\QuoteWriterPluginExecutorInterface $quoteWriterPluginExecutor
      * @param \Spryker\Zed\Quote\Dependency\Facade\QuoteToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\Quote\Business\Validator\QuoteValidatorInterface $quoteValidator
+     * @param \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteExpandBeforeCreatePluginInterface[] $quoteExpandBeforeCreatePlugins
      */
     public function __construct(
         QuoteEntityManagerInterface $quoteEntityManager,
         QuoteRepositoryInterface $quoteRepository,
         QuoteWriterPluginExecutorInterface $quoteWriterPluginExecutor,
         QuoteToStoreFacadeInterface $storeFacade,
-        QuoteValidatorInterface $quoteValidator
+        QuoteValidatorInterface $quoteValidator,
+        array $quoteExpandBeforeCreatePlugins
     ) {
         $this->quoteEntityManager = $quoteEntityManager;
         $this->storeFacade = $storeFacade;
         $this->quoteRepository = $quoteRepository;
         $this->quoteWriterPluginExecutor = $quoteWriterPluginExecutor;
         $this->quoteValidator = $quoteValidator;
+        $this->quoteExpandBeforeCreatePlugins = $quoteExpandBeforeCreatePlugins;
     }
 
     /**
@@ -90,14 +98,14 @@ class QuoteWriter implements QuoteWriterInterface
             return $this->createQuoteResponseTransfer($quoteTransfer);
         }
 
+        $quoteTransfer = $this->addStoreToQuote($quoteTransfer);
+
         $quoteValidationResponseTransfer = $this->quoteValidator->validate($quoteTransfer);
 
         if (!$quoteValidationResponseTransfer->getIsSuccessful()) {
             return $this->createQuoteResponseTransfer($quoteTransfer)
                 ->setErrors($quoteValidationResponseTransfer->getErrors());
         }
-
-        $quoteTransfer = $this->addStoreToQuote($quoteTransfer);
 
         return $this->getTransactionHandler()->handleTransaction(function () use ($quoteTransfer) {
             return $this->executeCreateTransaction($quoteTransfer);
@@ -116,14 +124,15 @@ class QuoteWriter implements QuoteWriterInterface
             return $this->createQuoteResponseTransfer($quoteTransfer);
         }
 
+        $quoteTransfer = $this->addStoreToQuote($quoteTransfer);
+        $quoteTransfer = $this->executeQuoteExpandBeforeCreatePlugins($quoteTransfer);
+
         $quoteValidationResponseTransfer = $this->quoteValidator->validate($quoteTransfer);
 
         if (!$quoteValidationResponseTransfer->getIsSuccessful()) {
             return $this->createQuoteResponseTransfer($quoteTransfer)
                 ->setErrors($quoteValidationResponseTransfer->getErrors());
         }
-
-        $quoteTransfer = $this->addStoreToQuote($quoteTransfer);
 
         return $this->getTransactionHandler()->handleTransaction(function () use ($quoteTransfer) {
             return $this->executeUpdateTransaction($quoteTransfer);
@@ -195,5 +204,19 @@ class QuoteWriter implements QuoteWriterInterface
         return (new QuoteResponseTransfer())
             ->setCustomer($quoteTransfer->getCustomer())
             ->setIsSuccessful(false);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     */
+    protected function executeQuoteExpandBeforeCreatePlugins(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        foreach ($this->quoteExpandBeforeCreatePlugins as $quoteExpandBeforeCreatePlugin) {
+            $quoteTransfer = $quoteExpandBeforeCreatePlugin->expand($quoteTransfer);
+        }
+
+        return $quoteTransfer;
     }
 }
