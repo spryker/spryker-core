@@ -49,24 +49,32 @@ class QuoteUpdater implements QuoteUpdaterInterface
     protected $quotePermissionChecker;
 
     /**
+     * @var \Spryker\Zed\CartsRestApi\Business\Quote\QuoteErrorIdentifierAdderInterface
+     */
+    protected $quoteErrorIdentifierAdder;
+
+    /**
      * @param \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToPersistentCartFacadeInterface $persistentCartFacade
      * @param \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToCartFacadeInterface $cartFacade
      * @param \Spryker\Zed\CartsRestApi\Business\Quote\QuoteReaderInterface $quoteReader
      * @param \Spryker\Zed\CartsRestApi\Business\Quote\Mapper\QuoteMapperInterface $quoteMapper
      * @param \Spryker\Zed\CartsRestApi\Business\PermissionChecker\QuotePermissionCheckerInterface $quotePermissionChecker
+     * @param \Spryker\Zed\CartsRestApi\Business\Quote\QuoteErrorIdentifierAdderInterface $quoteErrorIdentifierAdder
      */
     public function __construct(
         CartsRestApiToPersistentCartFacadeInterface $persistentCartFacade,
         CartsRestApiToCartFacadeInterface $cartFacade,
         QuoteReaderInterface $quoteReader,
         QuoteMapperInterface $quoteMapper,
-        QuotePermissionCheckerInterface $quotePermissionChecker
+        QuotePermissionCheckerInterface $quotePermissionChecker,
+        QuoteErrorIdentifierAdderInterface $quoteErrorIdentifierAdder
     ) {
         $this->persistentCartFacade = $persistentCartFacade;
         $this->cartFacade = $cartFacade;
         $this->quoteReader = $quoteReader;
         $this->quoteMapper = $quoteMapper;
         $this->quotePermissionChecker = $quotePermissionChecker;
+        $this->quoteErrorIdentifierAdder = $quoteErrorIdentifierAdder;
     }
 
     /**
@@ -80,7 +88,6 @@ class QuoteUpdater implements QuoteUpdaterInterface
         $quoteTransfer->requireUuid();
 
         $quoteResponseTransfer = $this->quoteReader->findQuoteByUuid($quoteTransfer);
-
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $quoteResponseTransfer;
         }
@@ -183,7 +190,13 @@ class QuoteUpdater implements QuoteUpdaterInterface
      */
     protected function performUpdatingQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
-        return $this->persistentCartFacade
+        $quoteResponseTransfer = $this->persistentCartFacade
             ->updateQuote($this->quoteMapper->mapQuoteTransferToQuoteUpdateRequestTransfer($quoteTransfer, new QuoteUpdateRequestTransfer()));
+
+        if (!$quoteResponseTransfer->getIsSuccessful()) {
+            return $this->quoteErrorIdentifierAdder->addErrorIdentifiersToQuoteResponseErrors($quoteResponseTransfer);
+        }
+
+        return $quoteResponseTransfer;
     }
 }

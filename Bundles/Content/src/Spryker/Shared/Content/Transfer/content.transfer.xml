@@ -5,6 +5,7 @@
 
     <transfer name="Content">
         <property name="idContent" type="int" />
+        <property name="key" type="string" />
         <property name="name" type="string" />
         <property name="description" type="string" />
         <property name="contentTermKey" type="string" />

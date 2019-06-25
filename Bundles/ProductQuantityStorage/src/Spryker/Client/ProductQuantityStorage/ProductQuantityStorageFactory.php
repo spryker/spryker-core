@@ -33,7 +33,8 @@ class ProductQuantityStorageFactory extends AbstractFactory
     {
         return new ProductQuantityStorageReader(
             $this->getStorage(),
-            $this->getSynchronizationService()
+            $this->getSynchronizationService(),
+            $this->getProductQuantityService()
         );
     }
 
