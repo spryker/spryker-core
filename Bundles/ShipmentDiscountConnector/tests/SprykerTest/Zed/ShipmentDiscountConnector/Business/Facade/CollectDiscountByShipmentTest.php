@@ -24,7 +24,6 @@ use Spryker\Zed\ShipmentDiscountConnector\Business\Model\DecisionRule\MethodDisc
 use Spryker\Zed\ShipmentDiscountConnector\Business\Model\DecisionRule\ShipmentPriceDiscountDecisionRule as ShipmentPriceDiscountDecisionRuleWithQuoteLevelShipment;
 use Spryker\Zed\ShipmentDiscountConnector\Business\ShipmentDiscountConnectorBusinessFactory;
 use Spryker\Zed\ShipmentDiscountConnector\Business\ShipmentDiscountConnectorFacadeInterface;
-use Spryker\Zed\ShipmentDiscountConnector\Dependency\Service\ShipmentDiscountConnectorToShipmentServiceBridge;
 
 /**
  * Auto-generated group annotations

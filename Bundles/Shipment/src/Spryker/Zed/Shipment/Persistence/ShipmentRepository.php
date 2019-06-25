@@ -19,7 +19,6 @@ use Orm\Zed\Tax\Persistence\Map\SpyTaxRateTableMap;
 use Orm\Zed\Tax\Persistence\Map\SpyTaxSetTableMap;
 use Spryker\Shared\Tax\TaxConstants;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
-use Spryker\Zed\Shipment\Persistence\Propel\Mapper\ShipmentMapperInterface;
 
 /**
  * @method \Spryker\Zed\Shipment\Persistence\ShipmentPersistenceFactory getFactory()
