@@ -229,7 +229,7 @@ interface FileManagerFacadeInterface
 
     /**
      * Specification:
-     * - Finds files by idFiles.
+     * - Finds files by their ids.
      * - Returns files with localized attributes.
      *
      * @api
