@@ -10,6 +10,7 @@ namespace Spryker\Glue\GlueApplication\Rest\Request;
 use Generated\Shared\Transfer\RestErrorCollectionTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
+use Spryker\Glue\GlueApplication\Rest\Request\Data\PageInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\GlueApplication\Rest\RequestConstantsInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,6 +21,7 @@ class RestRequestValidator implements RestRequestValidatorInterface
     protected const EXCEPTION_MESSAGE_POST_DATA_IS_INVALID = 'Post data is invalid.';
     protected const EXCEPTION_MESSAGE_RESOURCE_TYPE_IS_INVALID = 'Invalid type.';
     protected const EXCEPTION_MESSAGE_RESOURCE_ID_IS_NOT_SPECIFIED = 'Resource id is not specified.';
+    protected const EXCEPTION_MESSAGE_INVALID_PAGE_PARAMETERS = 'Page parameters are invalid.';
 
     /**
      * @var \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ValidateRestRequestPluginInterface[]
@@ -52,6 +54,10 @@ class RestRequestValidator implements RestRequestValidatorInterface
         $restErrorCollectionTransfer = $this->validateRequest($restRequest);
         if (!$restErrorCollectionTransfer) {
             $restErrorCollectionTransfer = $this->validateResourceIdSpecified($restRequest);
+        }
+
+        if (!$restErrorCollectionTransfer) {
+            $restErrorCollectionTransfer = $this->validateRestRequestPage($restRequest);
         }
 
         if (!$restErrorCollectionTransfer) {
@@ -89,6 +95,45 @@ class RestRequestValidator implements RestRequestValidatorInterface
         }
 
         return null;
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Generated\Shared\Transfer\RestErrorCollectionTransfer|null
+     */
+    protected function validateRestRequestPage(RestRequestInterface $restRequest): ?RestErrorCollectionTransfer
+    {
+        $restRequestPage = $restRequest->getPage();
+        if (!$restRequestPage || $this->validatePageParameters($restRequestPage)) {
+            return null;
+        }
+
+        $restErrorMessageTransfer = new RestErrorMessageTransfer();
+        $restErrorMessageTransfer->setDetail(static::EXCEPTION_MESSAGE_INVALID_PAGE_PARAMETERS);
+
+        return (new RestErrorCollectionTransfer())->addRestError($restErrorMessageTransfer);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\PageInterface $page
+     *
+     * @return bool
+     */
+    protected function validatePageParameters(PageInterface $page): bool
+    {
+        $pageOffset = $page->getOffset();
+        $pageLimit = $page->getLimit();
+
+        if ($pageOffset === 0 && $pageLimit === 0) {
+            return false;
+        }
+
+        if ($pageOffset < 0 || $pageLimit < 0) {
+            return false;
+        }
+
+        return true;
     }
 
     /**
