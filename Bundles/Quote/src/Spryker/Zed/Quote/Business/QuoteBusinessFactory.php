@@ -170,7 +170,7 @@ class QuoteBusinessFactory extends AbstractBusinessFactory
      */
     protected function getQuoteExpandBeforeCreatePlugins(): array
     {
-        return $this->getProvidedDependency(QuoteDependencyProvider::PLUGINS_QUOTE_EXPAND_BEFORE_CREATE_PLUGINS);
+        return $this->getProvidedDependency(QuoteDependencyProvider::PLUGINS_QUOTE_EXPAND_BEFORE_CREATE);
     }
 
     /**

@@ -21,7 +21,7 @@ class DefaultCurrencyQuoteExpandBeforeCreatePlugin extends AbstractPlugin implem
     /**
      * {@inheritdoc}
      * - Expands quote with default currency.
-     * - Does nothing if quote have currency.
+     * - Does nothing if quote has currency.
      *
      * @api
      *
