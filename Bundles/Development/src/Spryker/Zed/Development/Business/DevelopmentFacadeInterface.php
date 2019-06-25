@@ -41,6 +41,10 @@ interface DevelopmentFacadeInterface
     public function runTest($module, array $options = []);
 
     /**
+     * Specification:
+     * - Runs the vendor/bin/codecept fixtures command with options
+     * - If options contains "initialize", it will also run vendor/bin/codecept build
+     *
      * @api
      *
      * @param string|null $module
