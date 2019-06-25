@@ -14,11 +14,6 @@ use Spryker\Zed\Country\Business\CountryManagerInterface;
 
 class CountryCheckoutDataValidator implements CountryCheckoutDataValidatorInterface
 {
-    protected const ERROR_MESSAGE_BILLING_COUNTRY_NOT_FOUND = 'billing.address.country.validation.not_found';
-    protected const ERROR_MESSAGE_SHIPPING_COUNTRY_NOT_FOUND = 'shipping.address.country.validation.not_found';
-    protected const ERROR_MESSAGE_BILLING_ADDRESS_IS_MISSING = 'billing.address.validation.is_missing';
-    protected const ERROR_MESSAGE_SHIPPING_ADDRESS_IS_MISSING = 'shipping.address.validation.is_missing';
-
     protected const COUNTRY_CODE_PARAMETER = '%code%';
 
     /**
@@ -54,7 +49,7 @@ class CountryCheckoutDataValidator implements CountryCheckoutDataValidatorInterf
         if (!$this->countryManager->hasCountry($billingAddressCountryIso2Code)) {
             $this->addErrorToCheckoutResponseTransfer(
                 $checkoutResponseTransfer,
-                static::ERROR_MESSAGE_BILLING_COUNTRY_NOT_FOUND,
+                'billing.address.country.validation.not_found',
                 [
                     static::COUNTRY_CODE_PARAMETER => $billingAddressCountryIso2Code,
                 ]
@@ -65,7 +60,7 @@ class CountryCheckoutDataValidator implements CountryCheckoutDataValidatorInterf
         if (!$this->countryManager->hasCountry($shippingAddressCountryIso2Code)) {
             $this->addErrorToCheckoutResponseTransfer(
                 $checkoutResponseTransfer,
-                static::ERROR_MESSAGE_SHIPPING_COUNTRY_NOT_FOUND,
+                'shipping.address.country.validation.not_found',
                 [
                     static::COUNTRY_CODE_PARAMETER => $shippingAddressCountryIso2Code,
                 ]
@@ -86,11 +81,11 @@ class CountryCheckoutDataValidator implements CountryCheckoutDataValidatorInterf
         CheckoutResponseTransfer $checkoutResponseTransfer
     ): CheckoutResponseTransfer {
         if (!$checkoutDataTransfer->getBillingAddress()) {
-            $this->addErrorToCheckoutResponseTransfer($checkoutResponseTransfer, static::ERROR_MESSAGE_BILLING_ADDRESS_IS_MISSING);
+            $this->addErrorToCheckoutResponseTransfer($checkoutResponseTransfer, 'billing.address.validation.is_missing');
         }
 
         if (!$checkoutDataTransfer->getShippingAddress()) {
-            $this->addErrorToCheckoutResponseTransfer($checkoutResponseTransfer, static::ERROR_MESSAGE_SHIPPING_ADDRESS_IS_MISSING);
+            $this->addErrorToCheckoutResponseTransfer($checkoutResponseTransfer, 'shipping.address.validation.is_missing');
         }
 
         return $checkoutResponseTransfer;
