@@ -183,8 +183,6 @@ class OmsFacadeSumReservedItemsTest extends Unit
     }
 
     /**
-     * @internal param string $sku
-     *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $spySalesOrderItem
      *
      * @return void
