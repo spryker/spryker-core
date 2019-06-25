@@ -14,8 +14,6 @@ use Spryker\Zed\PersistentCart\Business\Model\CartChangeRequestExpander;
 use Spryker\Zed\PersistentCart\Business\Model\CartChangeRequestExpanderInterface;
 use Spryker\Zed\PersistentCart\Business\Model\CartOperation;
 use Spryker\Zed\PersistentCart\Business\Model\CartOperationInterface;
-use Spryker\Zed\PersistentCart\Business\Model\QuoteCreator;
-use Spryker\Zed\PersistentCart\Business\Model\QuoteCreatorInterface;
 use Spryker\Zed\PersistentCart\Business\Model\QuoteDeleter;
 use Spryker\Zed\PersistentCart\Business\Model\QuoteDeleterInterface;
 use Spryker\Zed\PersistentCart\Business\Model\QuoteItemOperation;
@@ -30,7 +28,6 @@ use Spryker\Zed\PersistentCart\Business\Model\QuoteStorageSynchronizer;
 use Spryker\Zed\PersistentCart\Business\Model\QuoteStorageSynchronizerInterface;
 use Spryker\Zed\PersistentCart\Business\Model\QuoteWriter;
 use Spryker\Zed\PersistentCart\Business\Model\QuoteWriterInterface;
-use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToCurrencyFacadeInterface;
 use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToStoreFacadeInterface;
 use Spryker\Zed\PersistentCart\Dependency\Service\PersistentCartToUtilQuantityServiceInterface;
 use Spryker\Zed\PersistentCart\PersistentCartDependencyProvider;
@@ -80,8 +77,7 @@ class PersistentCartBusinessFactory extends AbstractBusinessFactory
             $this->createQuoteResponseExpander(),
             $this->getMessengerFacade(),
             $this->getStoreFacade(),
-            $this->getConfig(),
-            $this->createQuoteCreator()
+            $this->getConfig()
         );
     }
 
@@ -95,8 +91,7 @@ class PersistentCartBusinessFactory extends AbstractBusinessFactory
             $this->getQuoteFacade(),
             $this->createQuoteResponseExpander(),
             $this->createQuoteMerger(),
-            $this->getStoreFacade(),
-            $this->createQuoteCreator()
+            $this->getStoreFacade()
         );
     }
 
@@ -109,18 +104,6 @@ class PersistentCartBusinessFactory extends AbstractBusinessFactory
             $this->getQuoteFacade(),
             $this->createQuoteResponseExpander(),
             $this->getMessengerFacade()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\PersistentCart\Business\Model\QuoteCreatorInterface
-     */
-    public function createQuoteCreator(): QuoteCreatorInterface
-    {
-        return new QuoteCreator(
-            $this->getQuoteFacade(),
-            $this->getStoreFacade(),
-            $this->getCurrencyFacade()
         );
     }
 
@@ -211,14 +194,6 @@ class PersistentCartBusinessFactory extends AbstractBusinessFactory
     public function getStoreFacade(): PersistentCartToStoreFacadeInterface
     {
         return $this->getProvidedDependency(PersistentCartDependencyProvider::FACADE_STORE);
-    }
-
-    /**
-     * @return \Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToCurrencyFacadeInterface
-     */
-    public function getCurrencyFacade(): PersistentCartToCurrencyFacadeInterface
-    {
-        return $this->getProvidedDependency(PersistentCartDependencyProvider::FACADE_CURRENCY);
     }
 
     /**

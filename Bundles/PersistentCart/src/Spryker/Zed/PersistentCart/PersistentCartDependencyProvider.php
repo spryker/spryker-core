@@ -11,7 +11,6 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\PersistentCart\Communication\Plugin\SimpleProductQuoteItemFinderPlugin;
 use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToCartFacadeBridge;
-use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToCurrencyFacadeBridge;
 use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToMessengerFacadeBridge;
 use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToQuoteFacadeBridge;
 use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToStoreFacadeBridge;
@@ -27,7 +26,6 @@ class PersistentCartDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_MESSENGER = 'FACADE_MESSENGER';
     public const FACADE_QUOTE = 'FACADE_QUOTE';
     public const FACADE_STORE = 'FACADE_STORE';
-    public const FACADE_CURRENCY = 'FACADE_CURRENCY';
     public const PLUGIN_QUOTE_ITEM_FINDER = 'PLUGIN_QUOTE_ITEM_FINDER';
     public const PLUGINS_QUOTE_RESPONSE_EXPANDER = 'PLUGINS_QUOTE_RESPONSE_EXPANDER';
     public const PLUGINS_REMOVE_ITEMS_REQUEST_EXPANDER = 'PLUGINS_REMOVE_ITEMS_REQUEST_EXPANDER';
@@ -48,7 +46,6 @@ class PersistentCartDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addQuoteItemFinderPlugin($container);
         $container = $this->addQuoteFacade($container);
         $container = $this->addStoreFacade($container);
-        $container = $this->addCurrencyFacade($container);
         $container = $this->addQuoteResponseExpanderPlugins($container);
         $container = $this->addRemoveItemsRequestExpanderPlugins($container);
         $container = $this->addCartAddItemStrategyPlugins($container);
@@ -107,20 +104,6 @@ class PersistentCartDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::FACADE_STORE] = function (Container $container) {
             return new PersistentCartToStoreFacadeBridge($container->getLocator()->store()->facade());
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addCurrencyFacade(Container $container): Container
-    {
-        $container[static::FACADE_CURRENCY] = function (Container $container) {
-            return new PersistentCartToCurrencyFacadeBridge($container->getLocator()->currency()->facade());
         };
 
         return $container;

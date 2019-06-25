@@ -49,32 +49,24 @@ class QuoteResolver implements QuoteResolverInterface
     protected $persistentCartConfig;
 
     /**
-     * @var \Spryker\Zed\PersistentCart\Business\Model\QuoteCreatorInterface
-     */
-    protected $quoteCreator;
-
-    /**
      * @param \Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToQuoteFacadeInterface $quoteFacade
      * @param \Spryker\Zed\PersistentCart\Business\Model\QuoteResponseExpanderInterface $quoteResponseExpander
      * @param \Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToMessengerFacadeInterface $messengerFacade
      * @param \Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\PersistentCart\PersistentCartConfig $persistentCartConfig
-     * @param \Spryker\Zed\PersistentCart\Business\Model\QuoteCreatorInterface $quoteCreator
      */
     public function __construct(
         PersistentCartToQuoteFacadeInterface $quoteFacade,
         QuoteResponseExpanderInterface $quoteResponseExpander,
         PersistentCartToMessengerFacadeInterface $messengerFacade,
         PersistentCartToStoreFacadeInterface $storeFacade,
-        PersistentCartConfig $persistentCartConfig,
-        QuoteCreatorInterface $quoteCreator
+        PersistentCartConfig $persistentCartConfig
     ) {
         $this->quoteFacade = $quoteFacade;
         $this->quoteResponseExpander = $quoteResponseExpander;
         $this->messengerFacade = $messengerFacade;
         $this->storeFacade = $storeFacade;
         $this->persistentCartConfig = $persistentCartConfig;
-        $this->quoteCreator = $quoteCreator;
     }
 
     /**
@@ -155,12 +147,9 @@ class QuoteResolver implements QuoteResolverInterface
         if ($customerQuoteTransfer->getIsSuccessful()) {
             $quoteTransfer = $customerQuoteTransfer->getQuoteTransfer();
         }
-
         $quoteTransfer->setCustomer($customerTransfer);
-
         if (!$quoteTransfer->getIdQuote()) {
-            return $this->quoteCreator->createQuoteWithDefaultCurrencyAndStore($quoteTransfer)
-                ->getQuoteTransfer();
+            $this->quoteFacade->createQuote($quoteTransfer);
         }
 
         return $quoteTransfer;
@@ -181,7 +170,7 @@ class QuoteResolver implements QuoteResolverInterface
             $quoteTransfer->fromArray($quoteUpdateRequestAttributesTransfer->modifiedToArray(), true);
         }
 
-        return $this->quoteCreator->createQuoteWithDefaultCurrencyAndStore($quoteTransfer);
+        return $this->quoteFacade->createQuote($quoteTransfer);
     }
 
     /**
