@@ -129,7 +129,7 @@ class RestRequestValidator implements RestRequestValidatorInterface
             return false;
         }
 
-        if ($pageOffset < 0 || $pageLimit < 0) {
+        if ($pageOffset < 0 || $pageLimit <= 0) {
             return false;
         }
 
