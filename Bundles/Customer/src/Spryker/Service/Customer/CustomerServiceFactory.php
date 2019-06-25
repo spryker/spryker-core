@@ -9,6 +9,7 @@ namespace Spryker\Service\Customer;
 
 use Spryker\Service\Customer\Address\CustomerAddressKeyGenerator;
 use Spryker\Service\Customer\Address\CustomerAddressKeyGeneratorInterface;
+use Spryker\Service\Customer\Dependency\Service\CustomerToUtilEncodingServiceInterface;
 use Spryker\Service\Kernel\AbstractServiceFactory;
 
 /**
@@ -21,6 +22,17 @@ class CustomerServiceFactory extends AbstractServiceFactory
      */
     public function createCustomerAddressKeyGenerator(): CustomerAddressKeyGeneratorInterface
     {
-        return new CustomerAddressKeyGenerator($this->getConfig());
+        return new CustomerAddressKeyGenerator(
+            $this->getConfig(),
+            $this->getCustomerToUtilEncodingService()
+        );
+    }
+
+    /**
+     * @return \Spryker\Service\Customer\Dependency\Service\CustomerToUtilEncodingServiceInterface
+     */
+    public function getCustomerToUtilEncodingService(): CustomerToUtilEncodingServiceInterface
+    {
+        return $this->getProvidedDependency(CustomerDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 }
