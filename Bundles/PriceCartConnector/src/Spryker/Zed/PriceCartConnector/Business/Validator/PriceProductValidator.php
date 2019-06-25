@@ -154,9 +154,11 @@ class PriceProductValidator implements PriceProductValidatorInterface
         $currencyCode = $this->getCurrencyCode($quoteTransfer);
         $storeName = $this->findStoreName($quoteTransfer);
 
+        $itemInQuote = $this->getItemInQuote($itemTransfer, $quoteTransfer);
         $priceProductFilterTransfer = $this->mapItemTransferToPriceProductFilterTransfer(
             (new PriceProductFilterTransfer()),
-            $itemTransfer
+            $itemTransfer,
+            $itemInQuote
         )
             ->setStoreName($storeName)
             ->setPriceMode($priceMode)
@@ -173,16 +175,39 @@ class PriceProductValidator implements PriceProductValidatorInterface
     /**
      * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer|null $itemInQuote
      *
      * @return \Generated\Shared\Transfer\PriceProductFilterTransfer
      */
     protected function mapItemTransferToPriceProductFilterTransfer(
         PriceProductFilterTransfer $priceProductFilterTransfer,
-        ItemTransfer $itemTransfer
+        ItemTransfer $itemTransfer,
+        ?ItemTransfer $itemInQuote = null
     ): PriceProductFilterTransfer {
         $priceProductFilterTransfer->fromArray($itemTransfer->toArray(), true);
 
+        if ($itemInQuote !== null) {
+            $priceProductFilterTransfer->setQuantity($itemTransfer->getQuantity() + $itemInQuote->getQuantity());
+        }
+
         return $priceProductFilterTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $cartChangeItemTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer|null
+     */
+    protected function getItemInQuote(ItemTransfer $cartChangeItemTransfer, QuoteTransfer $quoteTransfer): ?ItemTransfer
+    {
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            if ($itemTransfer->getSku() === $cartChangeItemTransfer->getSku()) {
+                return $itemTransfer;
+            }
+        }
+
+        return null;
     }
 
     /**
