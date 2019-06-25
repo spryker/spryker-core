@@ -16,7 +16,7 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 
-class GuestCartRestResponseBuilder extends CartErrorRestResponseBuilder implements GuestCartRestResponseBuilderInterface
+class GuestCartRestResponseBuilder extends BaseCartRestResponseBuilder implements GuestCartRestResponseBuilderInterface
 {
     protected const PATTERN_GUEST_CART_ITEM_RESOURCE_SELF_LINK = '%s/%s/%s/%s';
     protected const KEY_REST_RESOURCE_SELF_LINK = 'self';
@@ -44,7 +44,6 @@ class GuestCartRestResponseBuilder extends CartErrorRestResponseBuilder implemen
         CartsRestApiConfig $config
     ) {
         parent::__construct($config, $restResourceBuilder);
-        $this->restResourceBuilder = $restResourceBuilder;
         $this->cartsResourceMapper = $cartsResourceMapper;
         $this->cartItemsResourceMapper = $cartItemsResourceMapper;
     }

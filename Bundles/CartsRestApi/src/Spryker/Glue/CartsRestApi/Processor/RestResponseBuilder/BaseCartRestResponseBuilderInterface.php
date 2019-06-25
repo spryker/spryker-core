@@ -10,7 +10,7 @@ namespace Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder;
 use ArrayObject;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 
-interface CartErrorRestResponseBuilderInterface
+interface BaseCartRestResponseBuilderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteErrorTransfer[]|\ArrayObject $errors
