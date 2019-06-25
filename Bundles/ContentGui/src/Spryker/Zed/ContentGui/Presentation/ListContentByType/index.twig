@@ -12,6 +12,8 @@
     {% endembed %}
 
     <input type="hidden" name="twigFunctionTemplate" value="{{ twigFunctionTemplate | default('No defined widget' | trans) }}" />
+    <input type="hidden" name="type" value="{{ contentType }}" />
+    <input type="hidden" name="displayType" value="{{ contentType | trans }}" />
 
     {% if templates is not empty %}
         {% set selectedTemplateIdentifier = selectedTemplateIdentifier is not empty ? selectedTemplateIdentifier : templates[0].identifier %}

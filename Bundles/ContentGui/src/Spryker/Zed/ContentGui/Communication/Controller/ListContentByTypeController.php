@@ -40,6 +40,7 @@ class ListContentByTypeController extends AbstractController
             'templates' => $contentTypeTemplates,
             'twigFunctionTemplate' => $twigFunctionTemplate,
             'selectedTemplateIdentifier' => $selectedTemplateIdentifier,
+            'contentType' => $contentType,
         ];
 
         return $this->viewResponse($data);
