@@ -14,4 +14,11 @@ use Spryker\Client\Kernel\AbstractBundleConfig;
  */
 class CommentConfig extends AbstractBundleConfig
 {
+    /**
+     * @return string[]
+     */
+    public function getCommentAvailableTags(): array
+    {
+        return $this->getSharedConfig()->getCommentAvailableTags();
+    }
 }

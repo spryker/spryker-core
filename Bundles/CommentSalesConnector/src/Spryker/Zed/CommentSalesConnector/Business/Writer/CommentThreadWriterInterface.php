@@ -10,7 +10,7 @@ namespace Spryker\Zed\CommentSalesConnector\Business\Writer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 
-interface CommentWriterInterface
+interface CommentThreadWriterInterface
 {
     /**
      * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer

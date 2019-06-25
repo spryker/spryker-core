@@ -169,7 +169,7 @@ class CommentWriter implements CommentWriterInterface
     {
         $commentTransfer = $this->commentRepository->findCommentByUuid($commentRequestTransfer->getComment());
 
-        $commentThreadResponseTransfer = $this->validateComment($commentRequestTransfer, $commentTransfer);
+        $commentThreadResponseTransfer = $this->validateCommentRequest($commentRequestTransfer, $commentTransfer);
 
         if (!$commentThreadResponseTransfer->getIsSuccessful()) {
             return $commentThreadResponseTransfer;
@@ -200,7 +200,7 @@ class CommentWriter implements CommentWriterInterface
     {
         $commentTransfer = $this->commentRepository->findCommentByUuid($commentRequestTransfer->getComment());
 
-        $commentThreadResponseTransfer = $this->validateComment($commentRequestTransfer, $commentTransfer);
+        $commentThreadResponseTransfer = $this->validateCommentRequest($commentRequestTransfer, $commentTransfer);
 
         if (!$commentThreadResponseTransfer->getIsSuccessful()) {
             return $commentThreadResponseTransfer;
@@ -235,7 +235,7 @@ class CommentWriter implements CommentWriterInterface
      *
      * @return \Generated\Shared\Transfer\CommentThreadResponseTransfer
      */
-    protected function validateComment(
+    protected function validateCommentRequest(
         CommentRequestTransfer $commentRequestTransfer,
         ?CommentTransfer $commentTransfer
     ): CommentThreadResponseTransfer {

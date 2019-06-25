@@ -19,7 +19,10 @@ interface CommentSalesConnectorFacadeInterface
 {
     /**
      * Specification:
-     *  - Duplicates commentThread from Quote to new order.
+     * - Expects commentThread.ownerId in QuoteTransfer to be provided.
+     * - Expects commentThread.ownerType in QuoteTransfer to be provided.
+     * - Expects idSalesOrder to be provided.
+     * - Duplicates commentThread from Quote to new order.
      *
      * @api
      *
@@ -32,7 +35,8 @@ interface CommentSalesConnectorFacadeInterface
 
     /**
      * Specification:
-     *  - Retrieves CommentThread by order.
+     * - Expects idSalesOrder to be provided.
+     * - Retrieves CommentThread by order.
      *
      * @api
      *

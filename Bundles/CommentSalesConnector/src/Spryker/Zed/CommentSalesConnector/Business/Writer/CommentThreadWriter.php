@@ -14,7 +14,7 @@ use Generated\Shared\Transfer\SaveOrderTransfer;
 use Spryker\Zed\CommentSalesConnector\CommentSalesConnectorConfig;
 use Spryker\Zed\CommentSalesConnector\Dependency\Facade\CommentSalesConnectorToCommentFacadeInterface;
 
-class CommentWriter implements CommentWriterInterface
+class CommentThreadWriter implements CommentThreadWriterInterface
 {
     /**
      * @var \Spryker\Zed\CommentSalesConnector\Dependency\Facade\CommentSalesConnectorToCommentFacadeInterface

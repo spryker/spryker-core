@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\CommentSalesConnector\Business;
 
-use Spryker\Zed\CommentSalesConnector\Business\Reader\CommentReader;
-use Spryker\Zed\CommentSalesConnector\Business\Reader\CommentReaderInterface;
-use Spryker\Zed\CommentSalesConnector\Business\Writer\CommentWriter;
-use Spryker\Zed\CommentSalesConnector\Business\Writer\CommentWriterInterface;
+use Spryker\Zed\CommentSalesConnector\Business\Reader\CommentThreadReader;
+use Spryker\Zed\CommentSalesConnector\Business\Reader\CommentThreadReaderInterface;
+use Spryker\Zed\CommentSalesConnector\Business\Writer\CommentThreadWriter;
+use Spryker\Zed\CommentSalesConnector\Business\Writer\CommentThreadWriterInterface;
 use Spryker\Zed\CommentSalesConnector\CommentSalesConnectorDependencyProvider;
 use Spryker\Zed\CommentSalesConnector\Dependency\Facade\CommentSalesConnectorToCommentFacadeInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
@@ -21,21 +21,21 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 class CommentSalesConnectorBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\CommentSalesConnector\Business\Writer\CommentWriterInterface
+     * @return \Spryker\Zed\CommentSalesConnector\Business\Writer\CommentThreadWriterInterface
      */
-    public function createCommentWriter(): CommentWriterInterface
+    public function createCommentThreadWriter(): CommentThreadWriterInterface
     {
-        return new CommentWriter(
+        return new CommentThreadWriter(
             $this->getCustomerFacade()
         );
     }
 
     /**
-     * @return \Spryker\Zed\CommentSalesConnector\Business\Reader\CommentReaderInterface
+     * @return \Spryker\Zed\CommentSalesConnector\Business\Reader\CommentThreadReaderInterface
      */
-    public function createCommentReader(): CommentReaderInterface
+    public function createCommentThreadReader(): CommentThreadReaderInterface
     {
-        return new CommentReader(
+        return new CommentThreadReader(
             $this->getCustomerFacade()
         );
     }

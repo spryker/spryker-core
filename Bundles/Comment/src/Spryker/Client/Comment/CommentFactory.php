@@ -20,9 +20,20 @@ class CommentFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\Comment\Zed\CommentStubInterface
      */
-    public function createCommentStub(): CommentStubInterface
+    public function createZedCommentStub(): CommentStubInterface
     {
         return new CommentStub($this->getZedRequestClient());
+    }
+
+    /**
+     * @return \Spryker\Client\Comment\CommentConfig
+     */
+    public function getModuleConfig(): CommentConfig
+    {
+        /** @var \Spryker\Client\Comment\CommentConfig $config */
+        $config = parent::getConfig();
+
+        return $config;
     }
 
     /**

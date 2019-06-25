@@ -92,7 +92,6 @@
     </table>
 
     <table name="spy_comment_to_comment_tag" idMethod="native" allowPkInsert="true" phpName="SpyCommentToCommentTag" isCrossRef="true">
-        <column name="id_comment_to_comment_tag" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_comment" type="INTEGER" primaryKey="true"/>
         <column name="fk_comment_tag" type="INTEGER" primaryKey="true"/>
 
@@ -107,8 +106,6 @@
             <unique-column name="fk_comment"/>
             <unique-column name="fk_comment_tag"/>
         </unique>
-
-        <id-method-parameter value="spy_comment_to_comment_tag_pk_seq"/>
     </table>
 
 </database>

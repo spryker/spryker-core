@@ -103,10 +103,24 @@ class CommentClient extends AbstractClient implements CommentClientInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return string[]
+     */
+    public function getCommentAvailableTags(): array
+    {
+        return $this->getFactory()
+            ->getModuleConfig()
+            ->getCommentAvailableTags();
+    }
+
+    /**
      * @return \Spryker\Client\Comment\Zed\CommentStubInterface
      */
     protected function getZedStub(): CommentStubInterface
     {
-        return $this->getFactory()->createCommentStub();
+        return $this->getFactory()->createZedCommentStub();
     }
 }

@@ -112,4 +112,14 @@ interface CommentClientInterface
      * @return \Generated\Shared\Transfer\CommentThreadResponseTransfer
      */
     public function removeCommentTag(CommentTagRequestTransfer $commentTagRequestTransfer): CommentThreadResponseTransfer;
+
+    /**
+     * Specification:
+     * - Returns available tags for add/remove operations.
+     *
+     * @api
+     *
+     * @return string[]
+     */
+    public function getCommentAvailableTags(): array;
 }

@@ -110,14 +110,9 @@ class CommentThreadWriter implements CommentThreadWriterInterface
         $commentTransfers = $this->commentRepository->getCommentsByFilter($commentFilterTransfer);
 
         foreach ($commentTransfers as $commentTransfer) {
-            $duplicatedCommentTransfer = $this->duplicateComment($commentTransfer, $commentThreadTransfer);
-            $duplicatedCommentTransfer = $this->commentEntityManager->createComment($duplicatedCommentTransfer);
-
-            if ($duplicatedCommentTransfer->getCommentTags()->count()) {
-                $this->commentTagWriter->saveCommentTags($duplicatedCommentTransfer);
-            }
-
-            $commentThreadTransfer->addComment($duplicatedCommentTransfer);
+            $commentThreadTransfer->addComment(
+                $this->duplicateComment($commentTransfer, $commentThreadTransfer)
+            );
         }
 
         return (new CommentThreadResponseTransfer())
@@ -133,12 +128,20 @@ class CommentThreadWriter implements CommentThreadWriterInterface
      */
     protected function duplicateComment(CommentTransfer $commentTransfer, CommentThreadTransfer $commentThreadTransfer): CommentTransfer
     {
-        return (new CommentTransfer())
+        $duplicatedCommentTransfer = (new CommentTransfer())
             ->setCustomer($commentTransfer->getCustomer())
             ->setIdCommentThread($commentThreadTransfer->getIdCommentThread())
             ->setMessage($commentTransfer->getMessage())
             ->setIsUpdated($commentTransfer->getIsUpdated())
             ->setCommentTags($commentTransfer->getCommentTags());
+
+        $duplicatedCommentTransfer = $this->commentEntityManager->createComment($duplicatedCommentTransfer);
+
+        if ($duplicatedCommentTransfer->getCommentTags()->count()) {
+            $this->commentTagWriter->saveCommentTags($duplicatedCommentTransfer);
+        }
+
+        return $duplicatedCommentTransfer;
     }
 
     /**

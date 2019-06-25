@@ -31,7 +31,7 @@ class CommentSalesConnectorFacade extends AbstractFacade implements CommentSales
     public function attachCommentThreadToOrder(SaveOrderTransfer $saveOrderTransfer, QuoteTransfer $quoteTransfer): void
     {
         $this->getFactory()
-            ->createCommentWriter()
+            ->createCommentThreadWriter()
             ->attachCommentThreadToOrder($saveOrderTransfer, $quoteTransfer);
     }
 
@@ -47,7 +47,7 @@ class CommentSalesConnectorFacade extends AbstractFacade implements CommentSales
     public function findCommentThreadByOrder(OrderTransfer $orderTransfer): ?CommentThreadTransfer
     {
         return $this->getFactory()
-            ->createCommentReader()
+            ->createCommentThreadReader()
             ->findCommentThreadByOrder($orderTransfer);
     }
 }

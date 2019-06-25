@@ -101,7 +101,7 @@ class SalesOrderSaver implements SalesOrderSaverInterface
         $orderExpanderPreSavePlugins,
         SalesOrderSaverPluginExecutorInterface $salesOrderSaverPluginExecutor,
         SalesOrderItemMapperInterface $salesOrderItemMapper,
-        array $orderPostSavePlugins
+        array $orderPostSavePlugins = []
     ) {
         $this->countryFacade = $countryFacade;
         $this->omsFacade = $omsFacade;

@@ -10,7 +10,7 @@ namespace Spryker\Zed\CommentSalesConnector\Business\Reader;
 use Generated\Shared\Transfer\CommentThreadTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 
-interface CommentReaderInterface
+interface CommentThreadReaderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer

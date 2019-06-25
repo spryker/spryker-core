@@ -38,7 +38,7 @@ class OrderHydrator implements OrderHydratorInterface
     protected $omsFacade;
 
     /**
-     * @var array|\Spryker\Zed\SalesExtension\Dependency\Plugin\OrderExpanderPluginInterface[]
+     * @var \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderExpanderPluginInterface[]
      */
     protected $hydrateOrderPlugins;
 

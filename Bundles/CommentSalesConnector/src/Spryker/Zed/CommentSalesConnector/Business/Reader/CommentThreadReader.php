@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\CommentSalesConnector\CommentSalesConnectorConfig;
 use Spryker\Zed\CommentSalesConnector\Dependency\Facade\CommentSalesConnectorToCommentFacadeInterface;
 
-class CommentReader implements CommentReaderInterface
+class CommentThreadReader implements CommentThreadReaderInterface
 {
     /**
      * @var \Spryker\Zed\CommentSalesConnector\Dependency\Facade\CommentSalesConnectorToCommentFacadeInterface

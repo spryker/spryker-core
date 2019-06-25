@@ -24,9 +24,7 @@ class SalesOrderSaverPlugin extends AbstractPlugin implements CheckoutDoSaveOrde
 {
     /**
      * {@inheritdoc}
-     * - Saves order and items to Persistence
-     * - Sets initial state for state machine
-     * - Executes `OrderPostSavePluginInterface` stack of plugins
+     * - Saves order and items to Persistence.
      *
      * @api
      *

@@ -20,7 +20,7 @@ class CommentThreadAttachedCommentOrderPostSavePlugin extends AbstractPlugin imp
 {
     /**
      * {@inheritdoc}
-     * - Executes when commentThread is not empty.
+     * - Executes when commentThread in QuoteTransfer is not empty.
      * - Duplicates commentThread from Quote to new order.
      *
      * @api
