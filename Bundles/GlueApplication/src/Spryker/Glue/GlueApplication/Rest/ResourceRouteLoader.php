@@ -115,7 +115,7 @@ class ResourceRouteLoader implements ResourceRouteLoaderInterface
             return $this->findByVersion($resourcePlugins, $requestedVersionTransfer);
         }
 
-        $resourcePlugins = $this->filterOutContradictoryResourceRoutePlugins($resourcePlugins, $resources);
+        $resourcePlugins = $this->filterOutDuplicatedResourceRoutePlugins($resourcePlugins, $resources);
         if (count($resourcePlugins) === 1) {
             return $resourcePlugins[0];
         }
@@ -169,6 +169,7 @@ class ResourceRouteLoader implements ResourceRouteLoaderInterface
                 return true;
             }
         }
+
         return false;
     }
 
@@ -190,7 +191,6 @@ class ResourceRouteLoader implements ResourceRouteLoaderInterface
         ResourceRoutePluginInterface $resourceRoutePlugin,
         RestVersionTransfer $requestedVersionTransfer
     ): bool {
-
         if (!($resourceRoutePlugin instanceof ResourceVersionableInterface)) {
             return false;
         }
@@ -285,24 +285,44 @@ class ResourceRouteLoader implements ResourceRouteLoaderInterface
      *
      * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface[]
      */
-    protected function filterOutContradictoryResourceRoutePlugins(array $resourceRoutePlugins, array $resources): array
+    protected function filterOutDuplicatedResourceRoutePlugins(array $resourceRoutePlugins, array $resources): array
     {
         if (count($resourceRoutePlugins) <= 1) {
             return $resourceRoutePlugins;
         }
 
         if (count($resources) === 1) {
-            return array_values(array_filter($resourceRoutePlugins, function ($resourcePlugin) {
-                return !$resourcePlugin instanceof ResourceWithParentPluginInterface;
-            }));
+            return $this->filterOutResourceWithParentPlugins($resourceRoutePlugins);
         }
 
         if (count($resources) > 1) {
-            return array_values(array_filter($resourceRoutePlugins, function ($resourcePlugin) {
-                return $resourcePlugin instanceof ResourceWithParentPluginInterface;
-            }));
+            return $this->filterOutResourceWithoutParentPlugins($resourceRoutePlugins);
         }
 
         return $resourceRoutePlugins;
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface[] $resourceRoutePlugins
+     *
+     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface[]
+     */
+    protected function filterOutResourceWithParentPlugins(array $resourceRoutePlugins): array
+    {
+        return array_values(array_filter($resourceRoutePlugins, function ($resourcePlugin) {
+            return !$resourcePlugin instanceof ResourceWithParentPluginInterface;
+        }));
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface[] $resourceRoutePlugins
+     *
+     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface[]
+     */
+    protected function filterOutResourceWithoutParentPlugins(array $resourceRoutePlugins): array
+    {
+        return array_values(array_filter($resourceRoutePlugins, function ($resourcePlugin) {
+            return $resourcePlugin instanceof ResourceWithParentPluginInterface;
+        }));
     }
 }
