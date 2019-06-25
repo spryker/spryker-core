@@ -359,38 +359,6 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
                 ->mapShipmentEntityToShipmentTransferWithDetails($salesShipmentEntity, new ShipmentTransfer());
         }
 
-        /**
-         * @todo delete hydrateShipmentMethodTransfersFromShipmentTransfers and all related functionality after tests are ready
-         */
-        return $this->hydrateShipmentMethodTransfersFromShipmentTransfers($shipmentTransfers, $shipmentMapper);
-    }
-
-    /**
-     * @param iterable|\Generated\Shared\Transfer\ShipmentTransfer[] $shipmentTransfers
-     * @param \Spryker\Zed\Shipment\Persistence\Propel\Mapper\ShipmentMapperInterface $shipmentMapper
-     *
-     * @return array
-     */
-    protected function hydrateShipmentMethodTransfersFromShipmentTransfers(
-        iterable $shipmentTransfers,
-        ShipmentMapperInterface $shipmentMapper
-    ): array {
-        $shipmentMethodTransfers = $this->findShipmentMethodTransfersByShipment($shipmentTransfers);
-
-        if (count($shipmentMethodTransfers) === 0 || count($shipmentTransfers) === 0) {
-            return $shipmentTransfers;
-        }
-
-        foreach ($shipmentTransfers as $shipmentTransfer) {
-            $shipmentMethodTransfer = $this->findShipmentMethodTransferByName($shipmentMethodTransfers, $shipmentTransfer);
-            if ($shipmentMethodTransfer === null) {
-                continue;
-            }
-
-            $shipmentMethodTransfer = $shipmentMapper->mapShipmentTransferToShipmentMethodTransfer($shipmentMethodTransfer, $shipmentTransfer);
-            $shipmentTransfer->setMethod($shipmentMethodTransfer);
-        }
-
         return $shipmentTransfers;
     }
 
