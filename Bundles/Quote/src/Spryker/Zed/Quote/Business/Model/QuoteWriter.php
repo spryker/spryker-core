@@ -63,7 +63,7 @@ class QuoteWriter implements QuoteWriterInterface
         QuoteWriterPluginExecutorInterface $quoteWriterPluginExecutor,
         QuoteToStoreFacadeInterface $storeFacade,
         QuoteValidatorInterface $quoteValidator,
-        array $quoteExpandBeforeCreatePlugins
+        array $quoteExpandBeforeCreatePlugins = []
     ) {
         $this->quoteEntityManager = $quoteEntityManager;
         $this->storeFacade = $storeFacade;
@@ -98,7 +98,7 @@ class QuoteWriter implements QuoteWriterInterface
             return $this->createQuoteResponseTransfer($quoteTransfer);
         }
 
-        $quoteTransfer = $this->addStoreToQuote($quoteTransfer);
+        $quoteTransfer = $this->addDefaultStoreToQuote($quoteTransfer);
         $quoteTransfer = $this->executeQuoteExpandBeforeCreatePlugins($quoteTransfer);
 
         $quoteValidationResponseTransfer = $this->quoteValidator->validate($quoteTransfer);
@@ -107,6 +107,8 @@ class QuoteWriter implements QuoteWriterInterface
             return $this->createQuoteResponseTransfer($quoteTransfer)
                 ->setErrors($quoteValidationResponseTransfer->getErrors());
         }
+
+        $quoteTransfer = $this->reloadStoreForQuote($quoteTransfer);
 
         return $this->getTransactionHandler()->handleTransaction(function () use ($quoteTransfer) {
             return $this->executeCreateTransaction($quoteTransfer);
@@ -125,14 +127,14 @@ class QuoteWriter implements QuoteWriterInterface
             return $this->createQuoteResponseTransfer($quoteTransfer);
         }
 
-        $quoteTransfer = $this->addStoreToQuote($quoteTransfer);
-
         $quoteValidationResponseTransfer = $this->quoteValidator->validate($quoteTransfer);
 
         if (!$quoteValidationResponseTransfer->getIsSuccessful()) {
             return $this->createQuoteResponseTransfer($quoteTransfer)
                 ->setErrors($quoteValidationResponseTransfer->getErrors());
         }
+
+        $quoteTransfer = $this->reloadStoreForQuote($quoteTransfer);
 
         return $this->getTransactionHandler()->handleTransaction(function () use ($quoteTransfer) {
             return $this->executeUpdateTransaction($quoteTransfer);
@@ -176,14 +178,22 @@ class QuoteWriter implements QuoteWriterInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function addStoreToQuote(QuoteTransfer $quoteTransfer): QuoteTransfer
+    protected function addDefaultStoreToQuote(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         if (!$quoteTransfer->getStore()) {
             $quoteTransfer->setStore($this->storeFacade->getCurrentStore());
 
             return $quoteTransfer;
         }
+    }
 
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function reloadStoreForQuote(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
         if ($quoteTransfer->getStore()->getIdStore()) {
             return $quoteTransfer;
         }

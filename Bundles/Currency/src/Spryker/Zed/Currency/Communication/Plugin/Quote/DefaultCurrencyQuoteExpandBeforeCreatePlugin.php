@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Currency\Communication\Plugin;
+namespace Spryker\Zed\Currency\Communication\Plugin\Quote;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -21,7 +21,7 @@ class DefaultCurrencyQuoteExpandBeforeCreatePlugin extends AbstractPlugin implem
     /**
      * {@inheritdoc}
      * - Expands quote with default currency.
-     * - Does nothing if quote have currency.
+     * - Does nothing if quote has currency.
      *
      * @api
      *

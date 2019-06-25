@@ -21,7 +21,9 @@ interface QuoteFacadeInterface
     /**
      * Specification:
      * - Creates new quote entity if it does not exist.
-     * - Verifies before saving if provided store is available.
+     * - Verifies before saving if provided store is available, sets current store as default if not provided.
+     * - Reloads quote store by name if it's provided.
+     * - Executes QuoteExpandBeforeCreatePluginInterface plugins.
      * - Applies QuoteValidatorPluginInterface validation plugins before saving.
      *
      * @api
@@ -35,7 +37,7 @@ interface QuoteFacadeInterface
     /**
      * Specification:
      * - Updates existing quote entity from QuoteTransfer.
-     * - Verifies before saving if provided store is available.
+     * - Reloads quote store by name if it's provided.
      * - Applies QuoteValidatorPluginInterface validation plugins before saving.
      *
      * @api

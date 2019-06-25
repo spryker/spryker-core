@@ -27,7 +27,7 @@ class QuoteDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_QUOTE_DELETE_AFTER = 'PLUGINS_QUOTE_DELETE_AFTER';
     public const PLUGINS_QUOTE_VALIDATOR = 'PLUGINS_QUOTE_VALIDATOR';
     public const PLUGINS_QUOTE_EXPANDER = 'PLUGINS_QUOTE_EXPANDER';
-    public const PLUGINS_QUOTE_EXPAND_BEFORE_CREATE_PLUGINS = 'PLUGINS_QUOTE_EXPAND_BEFORE_CREATE_PLUGINS';
+    public const PLUGINS_QUOTE_EXPAND_BEFORE_CREATE = 'PLUGINS_QUOTE_EXPAND_BEFORE_CREATE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -155,7 +155,7 @@ class QuoteDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addQuoteExpandBeforeCreatePlugins(Container $container): Container
     {
-        $container[static::PLUGINS_QUOTE_EXPAND_BEFORE_CREATE_PLUGINS] = function (Container $container) {
+        $container[static::PLUGINS_QUOTE_EXPAND_BEFORE_CREATE] = function (Container $container): array {
             return $this->getQuoteExpandBeforeCreatePlugins();
         };
 
