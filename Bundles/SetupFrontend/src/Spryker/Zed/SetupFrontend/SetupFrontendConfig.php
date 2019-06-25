@@ -57,7 +57,7 @@ class SetupFrontendConfig extends AbstractBundleConfig
      */
     public function getYvesFrontendConfigFilePath(): string
     {
-        return APPLICATION_ROOT_DIR . '/frontend/config.json';
+        return APPLICATION_ROOT_DIR . '/frontend/store-config.json';
     }
 
     /**
