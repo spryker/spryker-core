@@ -15,8 +15,6 @@ class EntityDefinitionNormalizer extends DefinitionNormalizer
     protected const TYPE_MAPPING = [
         'double' => 'float',
     ];
-    protected const ENTITY_TYPES_PATTERN = '/^int|^integer|^float|^double|^string|^array|^\[\]|^bool|^boolean/';
-    protected const TYPE_STRING = 'string';
 
     public const KEY_TYPE = 'type';
     public const KEY_COLUMN = 'column';
@@ -115,8 +113,8 @@ class EntityDefinitionNormalizer extends DefinitionNormalizer
     protected function getTransferType($type)
     {
         $type = mb_strtolower($type);
-        if (!preg_match(static::ENTITY_TYPES_PATTERN, $type)) {
-            return static::TYPE_STRING;
+        if (!preg_match('/^int|^integer|^float|^double|^string|^array|^\[\]|^bool|^boolean/', $type)) {
+            return 'string';
         }
 
         return static::TYPE_MAPPING[$type] ?? $type;
