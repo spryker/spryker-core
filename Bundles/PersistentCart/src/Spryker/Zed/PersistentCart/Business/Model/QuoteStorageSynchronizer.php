@@ -45,24 +45,32 @@ class QuoteStorageSynchronizer implements QuoteStorageSynchronizerInterface
     protected $storeFacade;
 
     /**
+     * @var \Spryker\Zed\PersistentCart\Business\Model\QuoteCreatorInterface
+     */
+    protected $quoteCreator;
+
+    /**
      * @param \Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToCartFacadeInterface $cartFacade
      * @param \Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToQuoteFacadeInterface $quoteFacade
      * @param \Spryker\Zed\PersistentCart\Business\Model\QuoteResponseExpanderInterface $quoteResponseExpander
      * @param \Spryker\Zed\PersistentCart\Business\Model\QuoteMergerInterface $quoteMerger
      * @param \Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToStoreFacadeInterface $storeFacade
+     * @param \Spryker\Zed\PersistentCart\Business\Model\QuoteCreatorInterface $quoteCreator
      */
     public function __construct(
         PersistentCartToCartFacadeInterface $cartFacade,
         PersistentCartToQuoteFacadeInterface $quoteFacade,
         QuoteResponseExpanderInterface $quoteResponseExpander,
         QuoteMergerInterface $quoteMerger,
-        PersistentCartToStoreFacadeInterface $storeFacade
+        PersistentCartToStoreFacadeInterface $storeFacade,
+        QuoteCreatorInterface $quoteCreator
     ) {
         $this->cartFacade = $cartFacade;
         $this->quoteFacade = $quoteFacade;
         $this->quoteResponseExpander = $quoteResponseExpander;
         $this->quoteMerger = $quoteMerger;
         $this->storeFacade = $storeFacade;
+        $this->quoteCreator = $quoteCreator;
     }
 
     /**
@@ -146,7 +154,7 @@ class QuoteStorageSynchronizer implements QuoteStorageSynchronizerInterface
             return $this->quoteFacade->updateQuote($quoteTransfer);
         }
 
-        return $this->quoteFacade->createQuote($quoteTransfer);
+        return $this->quoteCreator->createQuoteWithDefaultCurrencyAndStore($quoteTransfer);
     }
 
     /**
