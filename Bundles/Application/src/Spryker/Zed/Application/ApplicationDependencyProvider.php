@@ -90,8 +90,11 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
             new TranslationServiceProvider(),
             new SubRequestServiceProvider(),
             new HeadersSecurityServiceProvider(),
-            new WhoopsErrorHandlerServiceProvider(),
         ];
+
+        if ($this->getConfig()->isPrettyErrorHandlerEnabled()) {
+            $providers[] = new WhoopsErrorHandlerServiceProvider();
+        }
 
         return $providers;
     }

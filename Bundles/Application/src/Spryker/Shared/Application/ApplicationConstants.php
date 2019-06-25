@@ -345,4 +345,12 @@ interface ApplicationConstants
      * @api
      */
     public const TWIG_ENVIRONMENT_NAME = 'APPLICATION:TWIG_ENVIRONMENT_NAME';
+
+    /**
+     * Specification:
+     * - Enables error handling with stacktrace.
+     *
+     * @api
+     */
+    public const ENABLE_PRETTY_ERROR_HANDLER = 'APPLICATION:ENABLE_PRETTY_ERROR_HANDLER';
 }

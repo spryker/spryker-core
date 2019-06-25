@@ -99,12 +99,4 @@ interface ErrorHandlerConstants
      * @api
      */
     public const DISPLAY_ERRORS = 'DISPLAY_ERRORS';
-
-    /**
-     * Specification:
-     * - Enables error handling with stacktrace.
-     *
-     * @api
-     */
-    public const ENABLE_PRETTY_ERROR_HANDLER = 'ERROR_HANDLER:ENABLE_PRETTY_ERROR_HANDLER';
 }
