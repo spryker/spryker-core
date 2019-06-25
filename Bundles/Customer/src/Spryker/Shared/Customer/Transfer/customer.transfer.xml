@@ -99,7 +99,7 @@
 
     <transfer name="Quote">
         <property name="isAddressSavingSkipped" type="bool" deprecated="Use address transfer property (shippingAddress.isAddressSavingSkipped) instead." />
-        <property name="shippingAddress" deprecated="Use item level shipping addresses (item.shipment.shippingAddress) instead." />
+        <property name="shippingAddress" type="Address" deprecated="Use item level shipping addresses (item.shipment.shippingAddress) instead." />
         <property name="billingAddress" type="Address"/>
     </transfer>
 

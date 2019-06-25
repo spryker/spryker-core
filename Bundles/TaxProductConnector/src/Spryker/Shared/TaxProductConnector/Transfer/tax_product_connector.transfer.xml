@@ -14,7 +14,7 @@
     </transfer>
 
     <transfer name="Quote">
-        <property name="shippingAddress" deprecated="Use item level shipping addresses (item.shipment.shippingAddress) instead." />
+        <property name="shippingAddress" type="Address" deprecated="Use item level shipping addresses (item.shipment.shippingAddress) instead." />
     </transfer>
 
     <transfer name="Item">

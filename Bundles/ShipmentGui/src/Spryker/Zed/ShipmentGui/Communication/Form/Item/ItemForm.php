@@ -7,9 +7,8 @@
 
 namespace Spryker\Zed\ShipmentGui\Communication\Form\Item;
 
-use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
-use Spryker\Zed\ShipmentGui\Communication\Form\ShipmentFormCreate;
+use Spryker\Zed\ShipmentGui\Communication\Form\ShipmentCreateForm;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -41,10 +40,7 @@ class ItemForm extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setRequired(ShipmentFormCreate::FIELD_SHIPMENT_SELECTED_ITEMS);
-        $resolver->setDefaults([
-            'data_class' => ItemTransfer::class,
-        ]);
+        $resolver->setRequired(ShipmentCreateForm::FIELD_SHIPMENT_SELECTED_ITEMS);
     }
 
     /**
@@ -56,7 +52,7 @@ class ItemForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options = [])
     {
         parent::buildForm($builder, $options);
-        $selectedItems = $options[ShipmentFormCreate::FIELD_SHIPMENT_SELECTED_ITEMS];
+        $selectedItems = $options[ShipmentCreateForm::FIELD_SHIPMENT_SELECTED_ITEMS];
 
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($selectedItems) {
             $item = $event->getData();

@@ -15,6 +15,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\DiscountPromotion\Business\DiscountPromotionBusinessFactory getFactory()
+ * @method \Spryker\Zed\DiscountPromotion\Persistence\DiscountPromotionEntityManagerInterface getEntityManager()
  */
 class DiscountPromotionFacade extends AbstractFacade implements DiscountPromotionFacadeInterface
 {
@@ -65,6 +66,20 @@ class DiscountPromotionFacade extends AbstractFacade implements DiscountPromotio
         return $this->getFactory()
             ->createDiscountPromotionWriter()
             ->update($discountPromotionTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int $idDiscount
+     *
+     * @return void
+     */
+    public function removePromotionByIdDiscount(int $idDiscount): void
+    {
+        $this->getEntityManager()->removePromotionByIdDiscount($idDiscount);
     }
 
     /**

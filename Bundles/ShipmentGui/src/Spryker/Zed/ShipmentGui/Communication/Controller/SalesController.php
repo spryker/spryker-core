@@ -25,7 +25,7 @@ class SalesController extends AbstractController
      */
     public function itemsAction(Request $request)
     {
-        /** @var \Generated\Shared\Transfer\OrderTransfer $orderTransfer */
+        /** @var \Generated\Shared\Transfer\OrderTransfer|null $orderTransfer */
         $orderTransfer = $request->attributes->get('orderTransfer');
         if ($orderTransfer === null) {
             throw new OrderNotFoundException();

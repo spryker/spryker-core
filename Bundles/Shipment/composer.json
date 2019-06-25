@@ -5,6 +5,7 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
+    "spryker/country": "^3.0.0",
     "spryker/currency": "^3.1.0",
     "spryker/customer": "^7.16.1",
     "spryker/gui": "^3.17.0",
@@ -26,7 +27,6 @@
     "spryker/checkout": "*",
     "spryker/code-sniffer": "*",
     "spryker/config": "*",
-    "spryker/country": "*",
     "spryker/oms": "*",
     "spryker/price": "*",
     "spryker/product": "*",

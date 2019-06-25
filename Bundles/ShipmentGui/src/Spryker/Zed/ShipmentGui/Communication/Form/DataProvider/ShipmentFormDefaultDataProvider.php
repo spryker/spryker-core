@@ -15,7 +15,7 @@ use Generated\Shared\Transfer\ShipmentTransfer;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Spryker\Zed\ShipmentGui\Communication\Form\Address\AddressForm;
 use Spryker\Zed\ShipmentGui\Communication\Form\Item\ItemForm;
-use Spryker\Zed\ShipmentGui\Communication\Form\ShipmentFormCreate;
+use Spryker\Zed\ShipmentGui\Communication\Form\ShipmentCreateForm;
 use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToCustomerFacadeInterface;
 use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToSalesFacadeInterface;
 use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToShipmentFacadeInterface;
@@ -63,14 +63,14 @@ class ShipmentFormDefaultDataProvider
      */
     public function getDefaultFormFields(int $idSalesOrder, ?int $idSalesShipment = null): array
     {
-        $defaultShipmentFormCreateFields = [
-            ShipmentFormCreate::FIELD_ID_SALES_SHIPMENT => $idSalesShipment,
-            ShipmentFormCreate::FIELD_ID_SALES_ORDER => $idSalesOrder,
-            ShipmentFormCreate::FIELD_ID_CUSTOMER_ADDRESS => $this->getIdCustomerAddress($idSalesOrder, $idSalesShipment),
-            ShipmentFormCreate::FORM_SHIPPING_ADDRESS => [],
+        $defaultShipmentCreateFormFields = [
+            ShipmentCreateForm::FIELD_ID_SALES_SHIPMENT => $idSalesShipment,
+            ShipmentCreateForm::FIELD_ID_SALES_ORDER => $idSalesOrder,
+            ShipmentCreateForm::FIELD_ID_CUSTOMER_ADDRESS => $this->getIdCustomerAddress($idSalesOrder, $idSalesShipment),
+            ShipmentCreateForm::FORM_SHIPPING_ADDRESS => [],
         ];
 
-        return array_merge($defaultShipmentFormCreateFields, $this->getItemsDefaultFields($idSalesOrder));
+        return array_merge($defaultShipmentCreateFormFields, $this->getItemsDefaultFields($idSalesOrder));
     }
 
     /**
@@ -81,9 +81,14 @@ class ShipmentFormDefaultDataProvider
      */
     protected function getIdCustomerAddress(int $idSalesOrder, ?int $idSalesShipment): ?int
     {
+        $shipmentTransfer = null;
+        if ($idSalesShipment !== null) {
+            $shipmentTransfer = $this->findShipmentById($idSalesShipment);
+        }
+
         $addressTransfer = $this->hydrateAddressTransfer(
             $this->salesFacade->findOrderByIdSalesOrder($idSalesOrder),
-            ($idSalesShipment === null ? null : $this->findShipmentById($idSalesShipment))
+            $shipmentTransfer
         );
 
         $customerAddressTransfer = $this->customerFacade->findCustomerAddressByAddressData($addressTransfer);
@@ -132,10 +137,10 @@ class ShipmentFormDefaultDataProvider
     public function getOptions(int $idSalesOrder, ?int $idSalesShipment = null): array
     {
         $options = [
-            ShipmentFormCreate::OPTION_DATA_CLASS => ShipmentFormTransfer::class,
-            ShipmentFormCreate::OPTION_SHIPMENT_ADDRESS_CHOICES => $this->getShippingAddressesOptions($idSalesOrder),
-            ShipmentFormCreate::OPTION_SHIPMENT_METHOD_CHOICES => $this->getShippingMethodsOptions(),
-            ShipmentFormCreate::FIELD_SHIPMENT_SELECTED_ITEMS => $this->getShipmentSelectedItemsIds($idSalesShipment),
+            ShipmentCreateForm::OPTION_DATA_CLASS => ShipmentFormTransfer::class,
+            ShipmentCreateForm::OPTION_SHIPMENT_ADDRESS_CHOICES => $this->getShippingAddressesOptions($idSalesOrder),
+            ShipmentCreateForm::OPTION_SHIPMENT_METHOD_CHOICES => $this->getShippingMethodsOptions(),
+            ShipmentCreateForm::FIELD_SHIPMENT_SELECTED_ITEMS => $this->getShipmentSelectedItemsIds($idSalesShipment),
             AddressForm::OPTION_SALUTATION_CHOICES => $this->getSalutationOptions(),
         ];
 
@@ -224,7 +229,7 @@ class ShipmentFormDefaultDataProvider
         }
 
         return [
-            ShipmentFormCreate::FORM_SALES_ORDER_ITEMS => $this->getOrderItemsOptions($orderTransfer),
+            ShipmentCreateForm::FORM_SALES_ORDER_ITEMS => $this->getOrderItemsOptions($orderTransfer),
         ];
     }
 

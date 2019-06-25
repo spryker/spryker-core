@@ -16,6 +16,9 @@ use Generated\Shared\Transfer\TaxSetTransfer;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
+/**
+ * @todo Try using tests/SprykerTest/Zed/Tax/_support/Helper/TaxSetDataHelper instead.
+ */
 class TaxHelper extends Module
 {
     use DataCleanupHelperTrait;

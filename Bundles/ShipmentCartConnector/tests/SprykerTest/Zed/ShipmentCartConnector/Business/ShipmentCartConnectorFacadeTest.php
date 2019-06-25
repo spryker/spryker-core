@@ -16,7 +16,6 @@ use Generated\Shared\DataBuilder\ShipmentBuilder;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Spryker\Shared\Shipment\ShipmentConstants;
-use Spryker\Zed\ShipmentCartConnector\Business\ShipmentCartConnectorFacade;
 
 /**
  * Auto-generated group annotations
@@ -44,7 +43,7 @@ class ShipmentCartConnectorFacadeTest extends Unit
      */
     public function testUpdateShipmentPriceShouldUpdatePriceBasedOnCurrency()
     {
-        $shipmentCartConnectorFacade = $this->createShipmentCartConnectorFacade();
+        $shipmentCartConnectorFacade = $this->tester->getFacade();
 
         $shipmentMethodTransfer = $this->tester->haveShipmentMethod();
 
@@ -69,7 +68,7 @@ class ShipmentCartConnectorFacadeTest extends Unit
      */
     public function testUpdateShipmentPriceShouldUpdatePriceBasedOnCurrencyWithItemLevelShipments()
     {
-        $shipmentCartConnectorFacade = $this->createShipmentCartConnectorFacade();
+        $shipmentCartConnectorFacade = $this->tester->getFacade();
 
         $shipmentMethodTransfer = $this->tester->haveShipmentMethod();
 
@@ -98,7 +97,7 @@ class ShipmentCartConnectorFacadeTest extends Unit
      */
     public function testValidateShipmentShouldReturnFalseWhenSelectedShipmentHaveNoPrice()
     {
-        $shipmentCartConnectorFacade = $this->createShipmentCartConnectorFacade();
+        $shipmentCartConnectorFacade = $this->tester->getFacade();
 
         $shipmentMethodTransfer = $this->tester->haveShipmentMethod();
 
@@ -117,7 +116,7 @@ class ShipmentCartConnectorFacadeTest extends Unit
      */
     public function testValidateShipmentShouldReturnFalseWhenSelectedShipmentHaveNoPriceWithItemLevelShipments()
     {
-        $shipmentCartConnectorFacade = $this->createShipmentCartConnectorFacade();
+        $shipmentCartConnectorFacade = $this->tester->getFacade();
 
         $shipmentMethodTransfer = $this->tester->haveShipmentMethod();
 
@@ -136,7 +135,7 @@ class ShipmentCartConnectorFacadeTest extends Unit
      */
     public function testValidateShipmentShouldReturnTrueWhenSelectedShipmentHavePrice()
     {
-        $shipmentCartConnectorFacade = $this->createShipmentCartConnectorFacade();
+        $shipmentCartConnectorFacade = $this->tester->getFacade();
 
         $shipmentMethodTransfer = $this->tester->haveShipmentMethod();
 
@@ -153,7 +152,7 @@ class ShipmentCartConnectorFacadeTest extends Unit
      */
     public function testValidateShipmentShouldReturnTrueWhenSelectedShipmentHavePriceWithItemLevelShipments()
     {
-        $shipmentCartConnectorFacade = $this->createShipmentCartConnectorFacade();
+        $shipmentCartConnectorFacade = $this->tester->getFacade();
 
         $shipmentMethodTransfer = $this->tester->haveShipmentMethod();
 
@@ -163,14 +162,6 @@ class ShipmentCartConnectorFacadeTest extends Unit
 
         $this->assertTrue($cartPreCheckResponseTransfer->getIsSuccess());
         $this->assertCount(0, $cartPreCheckResponseTransfer->getMessages());
-    }
-
-    /**
-     * @return \Spryker\Zed\ShipmentCartConnector\Business\ShipmentCartConnectorFacadeInterface
-     */
-    protected function createShipmentCartConnectorFacade()
-    {
-        return new ShipmentCartConnectorFacade();
     }
 
     /**
@@ -234,10 +225,12 @@ class ShipmentCartConnectorFacadeTest extends Unit
         $shipmentExpense->setShipment($shipmentTransfer);
 
         $itemTransfer = (new ItemBuilder())->build();
-        $itemTransfer->setSku(self::SKU);
-        $itemTransfer->setGroupKey(self::SKU);
+        $itemTransfer->setSku(static::SKU);
+        $itemTransfer->setGroupKey(static::SKU);
         $itemTransfer->setShipment($shipmentTransfer);
+
         $quoteTransfer->addItem($itemTransfer);
+        $quoteTransfer->addExpense($shipmentExpense);
 
         $cartChangeTransfer->setQuote($quoteTransfer);
 

@@ -21,7 +21,7 @@ use Spryker\Zed\ShipmentDiscountConnector\Dependency\Service\ShipmentDiscountCon
 class ShipmentPriceDiscountDecisionRule extends ShipmentPriceDiscountDecisionRuleWithMultiShipment
 {
     /**
-     * @var \Spryker\Zed\ShipmentDiscountConnector\Business\DecisionRule\ShipmentDiscountDecisionRuleInterface
+     * @var \Spryker\Zed\ShipmentDiscountConnector\Dependency\Service\ShipmentDiscountConnectorToShipmentServiceInterface
      */
     protected $shipmentService;
 

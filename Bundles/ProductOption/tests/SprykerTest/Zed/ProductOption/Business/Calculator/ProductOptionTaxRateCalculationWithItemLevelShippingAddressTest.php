@@ -180,14 +180,16 @@ class ProductOptionTaxRateCalculationWithItemLevelShippingAddressTest extends Un
         $shipmentBuilder1 = (new ShipmentBuilder())
             ->withShippingAddress([AddressTransfer::ISO2_CODE => 'FR'])
             ->build();
-        $shipmentBuilder2 = (new ShipmentBuilder())
-            ->withAnotherShippingAddress([AddressTransfer::ISO2_CODE => 'DE'])
-            ->build();
 
         $itemTransfer1 = (new ItemBuilder())
             ->withShipment($shipmentBuilder1->toArray())
             ->withProductOption($productOptionBuilder)
             ->build();
+
+        $shipmentBuilder2 = (new ShipmentBuilder())
+            ->withAnotherShippingAddress([AddressTransfer::ISO2_CODE => 'DE'])
+            ->build();
+
         $itemTransfer2 = (new ItemBuilder())
             ->withAnotherShipment($shipmentBuilder2->toArray())
             ->withProductOption($productOptionBuilder)
