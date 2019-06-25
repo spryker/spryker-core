@@ -24,6 +24,7 @@ use Spryker\Zed\ShipmentDiscountConnector\Business\Model\DecisionRule\MethodDisc
 use Spryker\Zed\ShipmentDiscountConnector\Business\Model\DecisionRule\ShipmentPriceDiscountDecisionRule as ShipmentPriceDiscountDecisionRuleWithQuoteLevelShipment;
 use Spryker\Zed\ShipmentDiscountConnector\Business\ShipmentDiscountConnectorBusinessFactory;
 use Spryker\Zed\ShipmentDiscountConnector\Business\ShipmentDiscountConnectorFacadeInterface;
+use Spryker\Zed\ShipmentDiscountConnector\Dependency\Service\ShipmentDiscountConnectorToShipmentServiceBridge;
 
 /**
  * Auto-generated group annotations
@@ -248,6 +249,7 @@ class CollectDiscountByShipmentTest extends Test
             'createMethodDiscountDecisionRuleWithMultiShipment',
             'createShipmentPriceDiscountDecisionRule',
             'createShipmentPriceDiscountDecisionRuleWithMultiShipment',
+            'getShipmentService',
         ])->getMock();
         $mockedBusinessFactory->method('createCarrierDiscountDecisionRule')->willReturn($mockedQuoteLevelShipmentCarrierDiscountDecisionRule);
         $mockedBusinessFactory->method('createCarrierDiscountDecisionRuleWithMultiShipment')->willReturn($mockedMultiShipmentCarrierDiscountDecisionRule);
@@ -258,9 +260,20 @@ class CollectDiscountByShipmentTest extends Test
         $mockedBusinessFactory->method('createShipmentPriceDiscountDecisionRule')->willReturn($mockedQuoteLevelShipmentPriceDiscountDecisionRule);
         $mockedBusinessFactory->method('createShipmentPriceDiscountDecisionRuleWithMultiShipment')->willReturn($mockedMultiShipmentPriceDiscountDecisionRule);
 
+        $shipmentDiscountConnectorToShipmentServiceBridge = $this->createShipmentDiscountConnectorToShipmentServiceBridge();
+        $mockedBusinessFactory->method('getShipmentService')->willReturn($shipmentDiscountConnectorToShipmentServiceBridge);
+
         $facade = $this->tester->getFacade();
         $facade->setFactory($mockedBusinessFactory);
 
         return $facade;
+    }
+
+    /**
+     * @return \Spryker\Zed\ShipmentDiscountConnector\Dependency\Service\ShipmentDiscountConnectorToShipmentServiceBridge
+     */
+    protected function createShipmentDiscountConnectorToShipmentServiceBridge(): ShipmentDiscountConnectorToShipmentServiceBridge
+    {
+        return new ShipmentDiscountConnectorToShipmentServiceBridge($this->tester->getLocator()->shipment()->service());
     }
 }
