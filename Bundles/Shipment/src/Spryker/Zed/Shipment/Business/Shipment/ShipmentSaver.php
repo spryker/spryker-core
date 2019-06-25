@@ -158,9 +158,10 @@ class ShipmentSaver implements ShipmentSaverInterface
 
         $expenseTransfer->setFkSalesOrder($orderTransfer->getIdSalesOrder());
         $expenseTransfer->setType(ShipmentConstants::SHIPMENT_EXPENSE_TYPE);
+        $price = $shipmentTransfer->getIdSalesShipment() ? $shipmentMethodTransfer->getStoreCurrencyPrice() : 0;
         $this->setPrice(
             $expenseTransfer,
-            $shipmentMethodTransfer->getStoreCurrencyPrice(),
+            $price,
             $orderTransfer->getPriceMode()
         );
         $expenseTransfer->setQuantity(1);
