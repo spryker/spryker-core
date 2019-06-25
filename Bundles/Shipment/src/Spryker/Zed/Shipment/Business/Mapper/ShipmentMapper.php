@@ -22,7 +22,33 @@ class ShipmentMapper implements ShipmentMapperInterface
      */
     public function mapFormDataToShipmentTransfer(ShipmentFormTransfer $shipmentFormTransfer, ShipmentTransfer $shipmentTransfer): ShipmentTransfer
     {
-        return $shipmentTransfer->fromArray($shipmentFormTransfer->toArray(), true);
+        $shipmentTransfer = $shipmentTransfer->fromArray($shipmentFormTransfer->toArray(), true);
+
+        $idSalesShipment = $shipmentTransfer->getIdSalesShipment();
+        if ($idSalesShipment !== null) {
+            $shipmentTransfer->setIdSalesShipment((int)$idSalesShipment);
+        }
+
+        $shipmentAddressTransfer = $shipmentTransfer->getShippingAddress();
+        if ($shipmentAddressTransfer !== null && $shipmentAddressTransfer->getIdCustomerAddress() === null) {
+            $shipmentAddressTransfer->setIdCustomerAddress($shipmentFormTransfer->getIdCustomerAddress());
+        }
+
+        if ($shipmentAddressTransfer !== null && $shipmentAddressTransfer->getIdSalesOrderAddress() === null) {
+            $shipmentAddressTransfer->setIdSalesOrderAddress($shipmentFormTransfer->getIdSalesOrderAddress());
+        }
+
+        $idSalesOrderAddress = $shipmentAddressTransfer->getIdSalesOrderAddress();
+        if ($shipmentAddressTransfer->getIdSalesOrderAddress() !== null) {
+            $shipmentAddressTransfer->setIdSalesOrderAddress((int)$idSalesOrderAddress);
+        }
+
+        $idSalesOrderAddress = $shipmentAddressTransfer->getIdCustomerAddress();
+        if ($shipmentAddressTransfer->getIdCustomerAddress() !== null) {
+            $shipmentAddressTransfer->setIdCustomerAddress((int)$idSalesOrderAddress);
+        }
+
+        return $shipmentTransfer;
     }
 
     /**
