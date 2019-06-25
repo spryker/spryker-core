@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<config>
+    <price>
+        <label>Prices</label>
+        <title>Prices</title>
+        <icon>fa-angle-double-right</icon>
+        <pages>
+            <price-product-schedule>
+                <label>Scheduled Prices</label>
+                <title>Scheduled Prices</title>
+                <bundle>price-product-schedule-gui</bundle>
+                <controller>import</controller>
+                <action>index</action>
+                <icon>fa-angle-double-right</icon>
+                <pages>
+                    <price-product-schedule-dry-run-import>
+                        <label>Import</label>
+                        <title>Import</title>
+                        <bundle>price-product-schedule-gui</bundle>
+                        <controller>dry-run-import</controller>
+                        <action>index</action>
+                        <icon>fa-angle-double-right</icon>
+                        <visible>0</visible>
+                    </price-product-schedule-dry-run-import>
+                    <price-product-schedule-publish>
+                        <label>Import</label>
+                        <title>Import</title>
+                        <bundle>price-product-schedule-gui</bundle>
+                        <controller>publish</controller>
+                        <action>index</action>
+                        <icon>fa-angle-double-right</icon>
+                        <visible>0</visible>
+                    </price-product-schedule-publish>
+                </pages>
+            </price-product-schedule>
+        </pages>
+    </price>
+</config>

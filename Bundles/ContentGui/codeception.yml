@@ -1,17 +1,24 @@
 namespace: ContentGui
+
 actor: Tester
+
+include:
+    - tests/SprykerTest/Zed/ContentGui
+
 paths:
     tests: tests
     log: tests/_output
     data: tests/_data
     support: tests/_support
     envs: tests/_envs
+
 settings:
     bootstrap: _bootstrap.php
-    suite_class: \PHPUnit_Framework_TestSuite
+    suite_class: \PHPUnit\Framework\TestSuite
     colors: true
     memory_limit: 1024M
     log: true
+
 coverage:
     enabled: true
     whitelist:

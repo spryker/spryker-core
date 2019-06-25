@@ -6,6 +6,7 @@
 
 namespace Spryker\Glue\GlueApplication\Rest\Request\Data;
 
+use Generated\Shared\Transfer\RestUserTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -64,18 +65,26 @@ interface RestRequestInterface
     public function getInclude(): array;
 
     /**
+     * @deprecated use getRestUser() instead.
+     *
      * @return \Spryker\Glue\GlueApplication\Rest\Request\Data\UserInterface|null
      */
     public function getUser(): ?UserInterface;
 
     /**
+     * @deprecated use setRestUser() instead.
+     *
      * @param string $surrogateIdentifier
      * @param string $naturalIdentifier
      * @param array $scopes
      *
      * @return void
      */
-    public function setUser(string $surrogateIdentifier, string $naturalIdentifier, array $scopes = []): void;
+    public function setUser(
+        string $surrogateIdentifier,
+        string $naturalIdentifier,
+        array $scopes = []
+    ): void;
 
     /**
      * @return \Symfony\Component\HttpFoundation\Request
@@ -133,4 +142,18 @@ interface RestRequestInterface
      * @return string
      */
     public function getQueryString(array $excludeParams = []): string;
+
+    /**
+     * @param \Generated\Shared\Transfer\RestUserTransfer|null $restUserTransfer
+     *
+     * @throws \Spryker\Glue\GlueApplication\Rest\Exception\UserAlreadySetException
+     *
+     * @return void
+     */
+    public function setRestUser(?RestUserTransfer $restUserTransfer): void;
+
+    /**
+     * @return \Generated\Shared\Transfer\RestUserTransfer|null
+     */
+    public function getRestUser(): ?RestUserTransfer;
 }

@@ -36,7 +36,6 @@ class DetailController extends AbstractController
             ->getSalesReclamationFacade()
             ->getReclamationById($reclamationTransfer);
 
-        /** @var array[] $eventsGroupedByItem */
         $eventsGroupedByItem = $this->getFactory()
             ->getOmsFacade()
             ->getManualEventsByIdSalesOrder($reclamationTransfer->getOrder()->getIdSalesOrder());

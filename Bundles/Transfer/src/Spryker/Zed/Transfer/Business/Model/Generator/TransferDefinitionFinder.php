@@ -65,7 +65,7 @@ class TransferDefinitionFinder implements FinderInterface
 
         $finder->in($existingSourceDirectories)->name($this->fileNamePattern)->depth('< 1');
 
-        return iterator_to_array($finder);
+        return iterator_to_array($finder->getIterator());
     }
 
     /**

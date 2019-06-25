@@ -8,9 +8,15 @@
 namespace Spryker\Service\ProductQuantity;
 
 use Spryker\Service\Kernel\AbstractServiceFactory;
+use Spryker\Service\ProductQuantity\Dependency\Service\ProductQuantityToUtilQuantityServiceInterface;
+use Spryker\Service\ProductQuantity\Reader\ConfigReader;
+use Spryker\Service\ProductQuantity\Reader\ConfigReaderInterface;
 use Spryker\Service\ProductQuantity\Rounder\ProductQuantityRounder;
 use Spryker\Service\ProductQuantity\Rounder\ProductQuantityRounderInterface;
 
+/**
+ * @method \Spryker\Service\ProductQuantity\ProductQuantityConfig getConfig()
+ */
 class ProductQuantityServiceFactory extends AbstractServiceFactory
 {
     /**
@@ -18,6 +24,25 @@ class ProductQuantityServiceFactory extends AbstractServiceFactory
      */
     public function createProductQuantityRounder(): ProductQuantityRounderInterface
     {
-        return new ProductQuantityRounder();
+        return new ProductQuantityRounder(
+            $this->getConfig(),
+            $this->getUtilQuantityService()
+        );
+    }
+
+    /**
+     * @return \Spryker\Service\ProductQuantity\Reader\ConfigReaderInterface
+     */
+    public function createConfigReader(): ConfigReaderInterface
+    {
+        return new ConfigReader($this->getConfig());
+    }
+
+    /**
+     * @return \Spryker\Service\ProductQuantity\Dependency\Service\ProductQuantityToUtilQuantityServiceInterface
+     */
+    public function getUtilQuantityService(): ProductQuantityToUtilQuantityServiceInterface
+    {
+        return $this->getProvidedDependency(ProductQuantityDependencyProvider::SERVICE_UTIL_QUANTITY);
     }
 }

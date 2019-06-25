@@ -53,6 +53,13 @@ interface ProductRepositoryInterface
     public function findProductAbstractIdByConcreteId(int $idProductConcrete): ?int;
 
     /**
+     * @param int[] $productConcreteIds
+     *
+     * @return int[]
+     */
+    public function getProductAbstractIdsByProductConcreteIds(array $productConcreteIds): array;
+
+    /**
      * @param int $idProductAbstract
      *
      * @return int[]
@@ -69,7 +76,7 @@ interface ProductRepositoryInterface
     /**
      * @param string[] $skus
      *
-     * @return array
+     * @return int[]
      */
     public function getProductConcreteIdsByConcreteSkus(array $skus): array;
 

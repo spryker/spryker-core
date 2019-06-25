@@ -14,8 +14,8 @@ use Spryker\Shared\Twig\Dependency\Service\TwigToUtilTextServiceBridge;
 use Spryker\Shared\Twig\TemplateNameExtractor\TemplateNameExtractor;
 use Spryker\Shared\Twig\TwigFilesystemLoader;
 use SprykerTest\Shared\Twig\Stub\CacheStub;
-use Twig_Error_Loader;
-use Twig_LoaderInterface;
+use Twig\Error\LoaderError;
+use Twig\Loader\LoaderInterface;
 
 /**
  * Auto-generated group annotations
@@ -40,7 +40,7 @@ class TwigFilesystemLoaderTest extends Unit
         $templatePaths = [];
         $filesystemLoader = new TwigFilesystemLoader($templatePaths, $this->getCacheStub(), $this->getTemplateNameExtractor());
 
-        $this->assertInstanceOf(Twig_LoaderInterface::class, $filesystemLoader);
+        $this->assertInstanceOf(LoaderInterface::class, $filesystemLoader);
     }
 
     /**
@@ -64,7 +64,7 @@ class TwigFilesystemLoaderTest extends Unit
         $cache->set('@Invalid/Controller/index.twig', false);
         $filesystemLoader = $this->getFilesystemLoader(static::PATH_TO_ZED_PROJECT, $cache);
 
-        $this->expectException(Twig_Error_Loader::class);
+        $this->expectException(LoaderError::class);
         $this->expectExceptionMessage('Unable to find template "@Invalid/Controller/index.twig" (cached).');
 
         $filesystemLoader->getSource('@Invalid/Controller/index.twig');
@@ -110,7 +110,7 @@ class TwigFilesystemLoaderTest extends Unit
     {
         $filesystemLoader = $this->getFilesystemLoader(static::PATH_TO_ZED_PROJECT);
 
-        $this->expectException(Twig_Error_Loader::class);
+        $this->expectException(LoaderError::class);
         $this->expectExceptionMessage('Unable to find template "NotExistent/index.twig');
 
         $filesystemLoader->getSource('@Bundle/NotExistent/index.twig');
@@ -123,7 +123,7 @@ class TwigFilesystemLoaderTest extends Unit
     {
         $filesystemLoader = $this->getFilesystemLoader(static::PATH_TO_ZED_PROJECT);
 
-        $this->expectException(Twig_Error_Loader::class);
+        $this->expectException(LoaderError::class);
         $this->expectExceptionMessage('Malformed bundle template name "@Bundle" (expecting "@Bundle/template_name").');
 
         $filesystemLoader->getSource('@Bundle');

@@ -9,7 +9,6 @@ namespace Spryker\Zed\ContentBannerGui\Communication\Form;
 
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -17,8 +16,11 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Required;
-use Symfony\Component\Validator\Constraints\Url;
 
+/**
+ * @method \Spryker\Zed\ContentBannerGui\Communication\ContentBannerGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ContentBannerGui\ContentBannerGuiConfig getConfig()
+ */
 class BannerContentTermForm extends AbstractType
 {
     public const FIELD_TITLE = 'title';
@@ -47,7 +49,7 @@ class BannerContentTermForm extends AbstractType
                 if ($localizedContentTransfer->getFkLocale() === null) {
                     return [Constraint::DEFAULT_GROUP];
                 }
-                /** @var \Generated\Shared\Transfer\ContentBannerTransfer $contentBanner */
+                /** @var \Generated\Shared\Transfer\ContentBannerTermTransfer $contentBanner */
                 $contentBanner = $form->getNormData();
 
                 foreach ($contentBanner->toArray() as $field) {
@@ -137,7 +139,6 @@ class BannerContentTermForm extends AbstractType
                 $this->getTextFieldConstraints(),
                 [
                     new Length(['max' => 1028]),
-                    new Url(),
                 ]
             ),
         ]);
@@ -152,13 +153,12 @@ class BannerContentTermForm extends AbstractType
      */
     protected function addClickUrlField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_CLICK_URL, UrlType::class, [
+        $builder->add(static::FIELD_CLICK_URL, TextType::class, [
             'label' => static::LABEL_CLICK_URL,
             'constraints' => array_merge(
                 $this->getTextFieldConstraints(),
                 [
                     new Length(['max' => 1028]),
-                    new Url(),
                 ]
             ),
         ]);

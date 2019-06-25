@@ -12,9 +12,23 @@ use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface;
+use Spryker\Zed\Calculation\Dependency\Service\CalculationToUtilPriceServiceInterface;
 
 class SumNetPriceCalculator implements CalculatorInterface
 {
+    /**
+     * @var \Spryker\Zed\Calculation\Dependency\Service\CalculationToUtilPriceServiceInterface
+     */
+    protected $utilPriceService;
+
+    /**
+     * @param \Spryker\Zed\Calculation\Dependency\Service\CalculationToUtilPriceServiceInterface $utilPriceService
+     */
+    public function __construct(CalculationToUtilPriceServiceInterface $utilPriceService)
+    {
+        $this->utilPriceService = $utilPriceService;
+    }
+
     /**
      * For already ordered entities, sum prices are acting as source of truth.
      *
@@ -24,8 +38,8 @@ class SumNetPriceCalculator implements CalculatorInterface
      */
     public function recalculate(CalculableObjectTransfer $calculableObjectTransfer)
     {
-        $this->calculateItemGrossAmountForItems($calculableObjectTransfer->getItems());
-        $this->calculateSumGrossPriceForExpenses($calculableObjectTransfer->getExpenses());
+        $this->calculateItemNetAmountForItems($calculableObjectTransfer->getItems());
+        $this->calculateSumNetPriceForExpenses($calculableObjectTransfer->getExpenses());
     }
 
     /**
@@ -33,15 +47,27 @@ class SumNetPriceCalculator implements CalculatorInterface
      *
      * @return void
      */
-    protected function calculateSumGrossPriceForExpenses(ArrayObject $expenses)
+    protected function calculateSumNetPriceForExpenses(ArrayObject $expenses)
     {
         foreach ($expenses as $expenseTransfer) {
             if ($expenseTransfer->getIsOrdered() === true) {
                 continue;
             }
 
-            $expenseTransfer->setSumNetPrice($expenseTransfer->getUnitNetPrice() * $expenseTransfer->getQuantity());
+            $sumNetPrice = $this->roundPrice($expenseTransfer->getUnitNetPrice() * $expenseTransfer->getQuantity());
+
+            $expenseTransfer->setSumNetPrice($sumNetPrice);
         }
+    }
+
+    /**
+     * @param float $price
+     *
+     * @return int
+     */
+    protected function roundPrice(float $price): int
+    {
+        return $this->utilPriceService->roundPrice($price);
     }
 
     /**
@@ -57,7 +83,11 @@ class SumNetPriceCalculator implements CalculatorInterface
             return;
         }
 
-        $itemTransfer->setSumNetPrice($itemTransfer->getUnitNetPrice() * $itemTransfer->getQuantity());
+        $sumNetPrice = $this->roundPrice(
+            $itemTransfer->getUnitNetPrice() * $itemTransfer->getQuantity()
+        );
+
+        $itemTransfer->setSumNetPrice($sumNetPrice);
     }
 
     /**
@@ -85,7 +115,7 @@ class SumNetPriceCalculator implements CalculatorInterface
      *
      * @return void
      */
-    protected function calculateItemGrossAmountForItems(ArrayObject $items)
+    protected function calculateItemNetAmountForItems(ArrayObject $items)
     {
         foreach ($items as $itemTransfer) {
             $this->addCalculatedItemNetAmounts($itemTransfer);
@@ -96,7 +126,10 @@ class SumNetPriceCalculator implements CalculatorInterface
                     continue;
                 }
 
-                $productOptionTransfer->setSumNetPrice($productOptionTransfer->getUnitNetPrice() * $productOptionTransfer->getQuantity());
+                $sumNetPrice = $this->roundPrice(
+                    $productOptionTransfer->getUnitNetPrice() * $productOptionTransfer->getQuantity()
+                );
+                $productOptionTransfer->setSumNetPrice($sumNetPrice);
             }
         }
     }

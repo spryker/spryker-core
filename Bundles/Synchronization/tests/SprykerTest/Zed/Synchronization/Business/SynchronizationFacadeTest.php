@@ -370,6 +370,7 @@ class SynchronizationFacadeTest extends Unit
 
             if (count($synchronizationPlugins) && $this->isSuiteProject()) {
                 $queueMock->expects($this->atLeastOnce())->method('sendMessages');
+
                 return $queueMock;
             }
 

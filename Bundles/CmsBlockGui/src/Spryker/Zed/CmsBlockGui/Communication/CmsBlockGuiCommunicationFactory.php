@@ -18,6 +18,8 @@ use Spryker\Zed\CmsBlockGui\Communication\Form\Glossary\CmsBlockGlossaryPlacehol
 use Spryker\Zed\CmsBlockGui\Communication\Form\Glossary\CmsBlockGlossaryPlaceholderTranslationForm;
 use Spryker\Zed\CmsBlockGui\Communication\Table\CmsBlockTable;
 use Spryker\Zed\CmsBlockGui\Communication\Tabs\CmsBlockGlossaryTabs;
+use Spryker\Zed\CmsBlockGui\Communication\Updater\CmsBlockGlossaryUpdater;
+use Spryker\Zed\CmsBlockGui\Communication\Updater\CmsBlockGlossaryUpdaterInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
@@ -122,7 +124,8 @@ class CmsBlockGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createCmsBlockGlossaryFormDataProvider()
     {
         return new CmsBlockGlossaryFormDataProvider(
-            $this->getCmsBlockFacade()
+            $this->getCmsBlockFacade(),
+            $this->createCmsBlockGlossaryUpdater()
         );
     }
 
@@ -163,7 +166,7 @@ class CmsBlockGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Twig_Environment
+     * @return \Twig\Environment
      */
     protected function getTwigEnvironment()
     {
@@ -184,5 +187,32 @@ class CmsBlockGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getStoreRelationFormTypePlugin()
     {
         return $this->getProvidedDependency(CmsBlockGuiDependencyProvider::PLUGIN_STORE_RELATION_FORM_TYPE);
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsBlockGui\Communication\Updater\CmsBlockGlossaryUpdaterInterface
+     */
+    public function createCmsBlockGlossaryUpdater(): CmsBlockGlossaryUpdaterInterface
+    {
+        return new CmsBlockGlossaryUpdater(
+            $this->getCmsBlockGlossaryAfterFindPlugins(),
+            $this->getCmsBlockGlossaryBeforeSavePlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsBlockGuiExtension\Dependency\Plugin\CmsBlockGlossaryAfterFindPluginInterface[]
+     */
+    public function getCmsBlockGlossaryAfterFindPlugins(): array
+    {
+        return $this->getProvidedDependency(CmsBlockGuiDependencyProvider::PLUGINS_CMS_BLOCK_GLOSSARY_AFTER_FIND);
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsBlockGuiExtension\Dependency\Plugin\CmsBlockGlossaryBeforeSavePluginInterface[]
+     */
+    public function getCmsBlockGlossaryBeforeSavePlugins(): array
+    {
+        return $this->getProvidedDependency(CmsBlockGuiDependencyProvider::PLUGINS_CMS_BLOCK_GLOSSARY_BEFORE_SAVE);
     }
 }

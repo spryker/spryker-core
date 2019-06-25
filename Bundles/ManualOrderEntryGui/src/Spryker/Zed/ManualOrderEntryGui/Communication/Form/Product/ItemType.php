@@ -17,6 +17,7 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\Regex;
+use Symfony\Component\Validator\Constraints\Type;
 
 /**
  * @method \Spryker\Zed\ManualOrderEntryGui\Communication\ManualOrderEntryGuiCommunicationFactory getFactory()
@@ -127,7 +128,7 @@ class ItemType extends AbstractType
             'label' => 'Quantity',
             'required' => false,
             'constraints' => [
-                $this->createNumberConstraint($options),
+                $this->createQuantityConstraint($options),
             ],
         ]);
 
@@ -152,14 +153,14 @@ class ItemType extends AbstractType
     /**
      * @param array $options
      *
-     * @return \Symfony\Component\Validator\Constraints\Regex
+     * @return \Symfony\Component\Validator\Constraints\Type
      */
-    protected function createNumberConstraint(array $options): Regex
+    protected function createQuantityConstraint(array $options): Constraint
     {
         $validationGroup = $this->getValidationGroup($options);
 
-        return new Regex([
-            'pattern' => '/^\d*$/',
+        return new Type([
+            'type' => 'numeric',
             'message' => static::ERROR_MESSAGE_QUANTITY,
             'groups' => $validationGroup,
         ]);
@@ -192,6 +193,7 @@ class ItemType extends AbstractType
         if (!empty($options['validation_group'])) {
             $validationGroup = $options['validation_group'];
         }
+
         return $validationGroup;
     }
 
@@ -207,6 +209,7 @@ class ItemType extends AbstractType
         $data = $event->getData();
 
         if ($data instanceof ItemTransfer) {
+            /** @var int $moneyFloat */
             $moneyFloat = $moneyFacade->convertIntegerToDecimal((int)$data->getUnitGrossPrice());
             $data->setUnitGrossPrice($moneyFloat);
 

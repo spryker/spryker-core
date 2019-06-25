@@ -10,8 +10,8 @@ namespace Spryker\Yves\Currency\Plugin;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
-use Twig_Environment;
-use Twig_SimpleFunction;
+use Twig\Environment;
+use Twig\TwigFunction;
 
 /**
  * @method \Spryker\Yves\Currency\CurrencyFactory getFactory()
@@ -34,7 +34,7 @@ class CurrencySwitcherServiceProvider extends AbstractPlugin implements ServiceP
     public function register(Application $app)
     {
         $app['twig'] = $app->share(
-            $app->extend('twig', function (Twig_Environment $twig) {
+            $app->extend('twig', function (Environment $twig) {
                 $twig->addFunction(
                     $this->getCurrencySwitcher($twig)
                 );
@@ -61,15 +61,15 @@ class CurrencySwitcherServiceProvider extends AbstractPlugin implements ServiceP
     }
 
     /**
-     * @param \Twig_Environment $twig
+     * @param \Twig\Environment $twig
      *
-     * @return \Twig_SimpleFunction
+     * @return \Twig\TwigFunction
      */
-    protected function getCurrencySwitcher(Twig_Environment $twig)
+    protected function getCurrencySwitcher(Environment $twig)
     {
         $options = ['is_safe' => ['html']];
 
-        return new Twig_SimpleFunction(static::$functionName, function () use ($twig) {
+        return new TwigFunction(static::$functionName, function () use ($twig) {
             return $twig->render(
                 '@Currency/partial/currency_switcher.twig',
                 [
@@ -105,6 +105,7 @@ class CurrencySwitcherServiceProvider extends AbstractPlugin implements ServiceP
         if (!$currentCurrencyIsoCode) {
             return $this->getFactory()->getStore()->getCurrencyIsoCode();
         }
+
         return $currentCurrencyIsoCode;
     }
 }

@@ -49,6 +49,7 @@ class TaxBusinessTester extends Actor
 
         return array_reduce($items, function (?int $total, ItemTransfer $itemTransfer) {
             $total += $itemTransfer->getSumTaxAmount();
+
             return $total;
         });
     }
