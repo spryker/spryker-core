@@ -193,4 +193,6 @@ class RedirectAfterLoginProviderTest extends Unit
      */
     protected function getHttpKernel()
     {
-        return $this->getMockBuilder(HttpKernelInterface
+        return $this->getMockBuilder(HttpKernelInterface::class)->getMock();
+    }
+}
