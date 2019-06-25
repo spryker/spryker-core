@@ -54,7 +54,7 @@ class OpenApi3SchemaParserTest extends Unit
         );
         $this->assertEquals(
             'string',
-            $document->paths['/pets']->get->parameters['schema']->items->type
+            $document->paths['/pets']->get->parameters[0]->schema->items->type
         );
     }
 }
