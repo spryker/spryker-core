@@ -10,6 +10,8 @@ namespace Spryker\Zed\PriceCartConnector\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\PriceCartConnector\Business\Filter\ItemFilterInterface;
 use Spryker\Zed\PriceCartConnector\Business\Filter\ItemsWithoutPriceFilter;
+use Spryker\Zed\PriceCartConnector\Business\Filter\PriceProductFilter;
+use Spryker\Zed\PriceCartConnector\Business\Filter\PriceProductFilterInterface;
 use Spryker\Zed\PriceCartConnector\Business\Manager\PriceManager;
 use Spryker\Zed\PriceCartConnector\Business\Sanitizer\SourcePriceSanitizer;
 use Spryker\Zed\PriceCartConnector\Business\Sanitizer\SourcePriceSanitizerInterface;
@@ -31,7 +33,8 @@ class PriceCartConnectorBusinessFactory extends AbstractBusinessFactory
     {
         return new PriceManager(
             $this->getPriceProductFacade(),
-            $this->getPriceFacade()
+            $this->getPriceFacade(),
+            $this->createPriceProductFilter()
         );
     }
 
@@ -42,8 +45,19 @@ class PriceCartConnectorBusinessFactory extends AbstractBusinessFactory
     {
         return new PriceProductValidator(
             $this->getPriceProductFacade(),
+            $this->createPriceProductFilter(),
+            $this->getConfig()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceCartConnector\Business\Filter\PriceProductFilterInterface
+     */
+    public function createPriceProductFilter(): PriceProductFilterInterface
+    {
+        return new PriceProductFilter(
+            $this->getPriceProductFacade(),
             $this->getPriceFacade(),
-            $this->getConfig(),
             $this->getCurrencyFacade()
         );
     }

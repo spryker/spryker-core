@@ -12,9 +12,7 @@ use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartConnectorToCurrencyFacadeInterface;
-use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceInterface;
+use Spryker\Zed\PriceCartConnector\Business\Filter\PriceProductFilterInterface;
 use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceProductInterface;
 use Spryker\Zed\PriceCartConnector\PriceCartConnectorConfig;
 
@@ -34,36 +32,28 @@ class PriceProductValidator implements PriceProductValidatorInterface
     protected $priceProductFacade;
 
     /**
-     * @var \Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceInterface
-     */
-    protected $priceFacade;
-
-    /**
      * @var \Spryker\Zed\PriceCartConnector\PriceCartConnectorConfig
      */
     protected $config;
 
     /**
-     * @var \Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartConnectorToCurrencyFacadeInterface
+     * @var \Spryker\Zed\PriceCartConnector\Business\Filter\PriceProductFilterInterface
      */
-    protected $currencyFacade;
+    protected $priceProductFilter;
 
     /**
      * @param \Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceProductInterface $priceProductFacade
-     * @param \Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceInterface $priceFacade
+     * @param \Spryker\Zed\PriceCartConnector\Business\Filter\PriceProductFilterInterface $priceProductFilter
      * @param \Spryker\Zed\PriceCartConnector\PriceCartConnectorConfig $config
-     * @param \Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartConnectorToCurrencyFacadeInterface $currencyFacade
      */
     public function __construct(
         PriceCartToPriceProductInterface $priceProductFacade,
-        PriceCartToPriceInterface $priceFacade,
-        PriceCartConnectorConfig $config,
-        PriceCartConnectorToCurrencyFacadeInterface $currencyFacade
+        PriceProductFilterInterface $priceProductFilter,
+        PriceCartConnectorConfig $config
     ) {
         $this->priceProductFacade = $priceProductFacade;
-        $this->priceFacade = $priceFacade;
+        $this->priceProductFilter = $priceProductFilter;
         $this->config = $config;
-        $this->currencyFacade = $currencyFacade;
     }
 
     /**
@@ -77,7 +67,8 @@ class PriceProductValidator implements PriceProductValidatorInterface
             ->setIsSuccess(true);
 
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
-            $priceProductFilterTransfer = $this->createPriceProductFilter($itemTransfer, $cartChangeTransfer->getQuote());
+            $priceProductFilterTransfer = $this->priceProductFilter
+                ->createPriceProductFilterTransfer($cartChangeTransfer->getQuote(), $itemTransfer);
 
             if ($this->priceProductFacade->hasValidPriceFor($priceProductFilterTransfer)) {
                 $cartPreCheckResponseTransfer = $this->checkMinPriceRestriction(
@@ -144,74 +135,6 @@ class PriceProductValidator implements PriceProductValidatorInterface
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\PriceProductFilterTransfer
-     */
-    protected function createPriceProductFilter(ItemTransfer $itemTransfer, QuoteTransfer $quoteTransfer): PriceProductFilterTransfer
-    {
-        $priceMode = $this->getPriceMode($quoteTransfer);
-        $currencyCode = $this->getCurrencyCode($quoteTransfer);
-        $storeName = $this->findStoreName($quoteTransfer);
-
-        $itemInQuote = $this->getItemInQuote($itemTransfer, $quoteTransfer);
-        $priceProductFilterTransfer = $this->mapItemTransferToPriceProductFilterTransfer(
-            (new PriceProductFilterTransfer()),
-            $itemTransfer,
-            $itemInQuote
-        )
-            ->setStoreName($storeName)
-            ->setPriceMode($priceMode)
-            ->setCurrencyIsoCode($currencyCode)
-            ->setPriceTypeName($this->priceProductFacade->getDefaultPriceTypeName());
-
-        if ($this->isPriceProductDimensionEnabled($priceProductFilterTransfer)) {
-            $priceProductFilterTransfer->setQuote($quoteTransfer);
-        }
-
-        return $priceProductFilterTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param \Generated\Shared\Transfer\ItemTransfer|null $itemInQuote
-     *
-     * @return \Generated\Shared\Transfer\PriceProductFilterTransfer
-     */
-    protected function mapItemTransferToPriceProductFilterTransfer(
-        PriceProductFilterTransfer $priceProductFilterTransfer,
-        ItemTransfer $itemTransfer,
-        ?ItemTransfer $itemInQuote = null
-    ): PriceProductFilterTransfer {
-        $priceProductFilterTransfer->fromArray($itemTransfer->toArray(), true);
-
-        if ($itemInQuote !== null) {
-            $priceProductFilterTransfer->setQuantity($itemTransfer->getQuantity() + $itemInQuote->getQuantity());
-        }
-
-        return $priceProductFilterTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $cartChangeItemTransfer
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\ItemTransfer|null
-     */
-    protected function getItemInQuote(ItemTransfer $cartChangeItemTransfer, QuoteTransfer $quoteTransfer): ?ItemTransfer
-    {
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if ($itemTransfer->getSku() === $cartChangeItemTransfer->getSku()) {
-                return $itemTransfer;
-            }
-        }
-
-        return null;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return \Generated\Shared\Transfer\MessageTransfer
      */
@@ -220,57 +143,5 @@ class PriceProductValidator implements PriceProductValidatorInterface
         return (new MessageTransfer())
          ->setValue(static::CART_PRE_CHECK_PRICE_FAILED_TRANSLATION_KEY)
          ->setParameters(['%sku%' => $itemTransfer->getSku()]);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return string
-     */
-    protected function getPriceMode(QuoteTransfer $quoteTransfer): string
-    {
-        if (!$quoteTransfer->getPriceMode()) {
-            return $this->priceFacade->getDefaultPriceMode();
-        }
-
-        return $quoteTransfer->getPriceMode();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return string
-     */
-    protected function getCurrencyCode(QuoteTransfer $quoteTransfer): string
-    {
-        if ($quoteTransfer->getCurrency() === null || $quoteTransfer->getCurrency()->getCode() === null) {
-            return $this->currencyFacade->getCurrent()->getCode();
-        }
-
-        return $quoteTransfer->getCurrency()->getCode();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return string|null
-     */
-    protected function findStoreName(QuoteTransfer $quoteTransfer): ?string
-    {
-        if ($quoteTransfer->getStore() === null) {
-            return null;
-        }
-
-        return $quoteTransfer->getStore()->getName();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
-     *
-     * @return bool
-     */
-    protected function isPriceProductDimensionEnabled(PriceProductFilterTransfer $priceProductFilterTransfer): bool
-    {
-        return property_exists($priceProductFilterTransfer, 'quote');
     }
 }
