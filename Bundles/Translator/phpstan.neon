@@ -1,0 +1,3 @@
+parameters:
+  ignoreErrors:
+    - '#constructor expects Symfony\\Contracts\\Translation\\TranslatorInterface#'

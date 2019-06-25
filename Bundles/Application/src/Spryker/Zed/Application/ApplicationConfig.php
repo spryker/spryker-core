@@ -9,6 +9,7 @@ namespace Spryker\Zed\Application;
 
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
+use Symfony\Component\HttpFoundation\Request;
 
 class ApplicationConfig extends AbstractBundleConfig
 {
@@ -50,6 +51,14 @@ class ApplicationConfig extends AbstractBundleConfig
     public function getTrustedProxies()
     {
         return $this->get(ApplicationConstants::ZED_TRUSTED_PROXIES, []);
+    }
+
+    /**
+     * @return int
+     */
+    public function getTrustedHeader(): int
+    {
+        return $this->get(ApplicationConstants::YVES_TRUSTED_HEADER, Request::HEADER_X_FORWARDED_ALL);
     }
 
     /**
