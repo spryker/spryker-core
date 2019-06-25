@@ -43,7 +43,7 @@ class ScopeRepository implements ScopeRepositoryInterface
      *
      * @param string $identifier The scope identifier
      *
-     * @return \League\OAuth2\Server\Entities\ScopeEntityInterface
+     * @return \League\OAuth2\Server\Entities\ScopeEntityInterface|null
      */
     public function getScopeEntityByIdentifier($identifier)
     {
@@ -126,7 +126,10 @@ class ScopeRepository implements ScopeRepositoryInterface
                 continue;
             }
 
-            $providedScopes = $scopeProviderPlugin->getScopes($oauthScopeRequestTransfer);
+            $providedScopes = array_merge(
+                $providedScopes,
+                $scopeProviderPlugin->getScopes($oauthScopeRequestTransfer)
+            );
         }
 
         return $providedScopes;
