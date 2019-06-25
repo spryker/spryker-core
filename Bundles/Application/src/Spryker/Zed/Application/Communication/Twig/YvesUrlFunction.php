@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Application\Communication\Model\Twig;
+namespace Spryker\Zed\Application\Communication\Twig;
 
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Shared\Twig\TwigFunction;

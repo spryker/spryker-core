@@ -12,7 +12,7 @@ use Spryker\Shared\Config\Environment;
 use Spryker\Shared\Log\LoggerTrait;
 use Spryker\Shared\Twig\TwigFunction;
 use Spryker\Zed\Application\ApplicationDependencyProvider;
-use Spryker\Zed\Application\Communication\Model\Twig\YvesUrlFunction;
+use Spryker\Zed\Application\Communication\Twig\YvesUrlFunction;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\EventListener\SaveSessionListener;
