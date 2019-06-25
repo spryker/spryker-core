@@ -181,7 +181,7 @@ class FileManagerBusinessTester extends Actor
     /**
      * @return int[]
      */
-    public function inserFilesCollection(): array
+    public function insertFilesCollection(): array
     {
         $idFiles = [];
         for ($i = 1; $i < 10; $i++) {
