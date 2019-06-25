@@ -11,6 +11,7 @@ use Orm\Zed\DiscountPromotion\Persistence\SpyDiscountPromotionQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
+ * @method \Spryker\Zed\DiscountPromotion\Persistence\DiscountPromotionEntityManagerInterface getEntityManager()
  * @method \Spryker\Zed\DiscountPromotion\DiscountPromotionConfig getConfig()
  * @method \Spryker\Zed\DiscountPromotion\Persistence\DiscountPromotionQueryContainerInterface getQueryContainer()
  */
