@@ -89,21 +89,8 @@ class ShipmentGroupCreator implements ShipmentGroupCreatorInterface
         $shipmentTransfer = $this->shipmentMapper
             ->mapFormDataToShipmentTransfer($shipmentFormTransfer, new ShipmentTransfer());
 
-        $idSalesShipment = $shipmentTransfer->getIdSalesShipment();
-        if ($idSalesShipment !== null) {
-            $shipmentTransfer->setIdSalesShipment((int)$idSalesShipment);
-        }
-
-        $shipmentAddressTransfer = $shipmentTransfer->getShippingAddress();
-        if ($shipmentAddressTransfer !== null && $shipmentAddressTransfer->getIdCustomerAddress() === null) {
-            $shipmentAddressTransfer->setIdCustomerAddress($shipmentFormTransfer->getIdCustomerAddress());
-        }
-
-        if ($shipmentAddressTransfer !== null && $shipmentAddressTransfer->getIdSalesOrderAddress() === null) {
-            $shipmentAddressTransfer->setIdSalesOrderAddress($shipmentFormTransfer->getIdSalesOrderAddress());
-        }
-
-        $shipmentAddressTransfer = $this->salesFacade->expandWithCustomerOrSalesAddress($shipmentAddressTransfer);
+        $shipmentAddressTransfer = $this->salesFacade
+            ->expandWithCustomerOrSalesAddress($shipmentTransfer->getShippingAddress());
         $shipmentTransfer->setShippingAddress($shipmentAddressTransfer);
         $shipmentGroupTransfer->setShipment($shipmentTransfer);
 
