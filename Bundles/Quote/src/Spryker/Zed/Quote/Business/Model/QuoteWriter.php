@@ -182,9 +182,9 @@ class QuoteWriter implements QuoteWriterInterface
     {
         if (!$quoteTransfer->getStore()) {
             $quoteTransfer->setStore($this->storeFacade->getCurrentStore());
-
-            return $quoteTransfer;
         }
+
+        return $quoteTransfer;
     }
 
     /**
