@@ -65,7 +65,7 @@ class CmsStorageQueryContainer extends AbstractQueryContainer implements CmsStor
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsPageQuery
      */
-    public function queryCmsPageVersionByCmsPageIds(array $cmsPageIds): SpyCmsPageQuery
+    public function queryCmsPageByIds(array $cmsPageIds): SpyCmsPageQuery
     {
         return $this->getFactory()
             ->getCmsQueryContainer()

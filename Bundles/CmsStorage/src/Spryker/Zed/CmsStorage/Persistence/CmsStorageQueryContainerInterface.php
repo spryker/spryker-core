@@ -31,7 +31,7 @@ interface CmsStorageQueryContainerInterface extends QueryContainerInterface
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsPageQuery
      */
-    public function queryCmsPageVersionByCmsPageIds(array $cmsPageIds): SpyCmsPageQuery;
+    public function queryCmsPageByIds(array $cmsPageIds): SpyCmsPageQuery;
 
     /**
      * @api
