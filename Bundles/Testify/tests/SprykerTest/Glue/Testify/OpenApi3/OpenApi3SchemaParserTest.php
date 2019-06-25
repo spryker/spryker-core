@@ -36,7 +36,6 @@ class OpenApi3SchemaParserTest extends Unit
         $this->assertEquals('Swagger API Team', $document->info->contact->name);
         $this->assertEquals('http://petstore.swagger.io/api', $document->servers[0]->url);
 
-
         $this->assertEquals(
             ['name'],
             $document->paths['/pets']->post->responses[200]->content['application/json']->schema->allOf[0]->required->toArray()
