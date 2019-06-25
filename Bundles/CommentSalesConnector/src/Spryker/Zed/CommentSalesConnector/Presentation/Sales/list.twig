@@ -16,6 +16,9 @@
                             </span>
                         </p>
                         <span>{{ comment.message }}</span>
+                        {% for commentTag in comment.commentTags %}
+                            <p>{{ commentTag.name }}</p>
+                        {% endfor %}
                     </div>
                 {% endfor %}
             </div>
