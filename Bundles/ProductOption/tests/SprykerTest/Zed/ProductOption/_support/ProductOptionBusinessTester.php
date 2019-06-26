@@ -11,6 +11,7 @@ use Codeception\Actor;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\ProductOptionValueTransfer;
+use Orm\Zed\Country\Persistence\SpyCountry;
 use Orm\Zed\Country\Persistence\SpyCountryQuery;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionValuePriceQuery;
@@ -192,5 +193,24 @@ class ProductOptionBusinessTester extends Actor
             ProductOptionDependencyProvider::FACADE_CURRENCY,
             new ProductOptionToCurrencyFacadeBridge($currencyFacade)
         );
+    }
+
+    /**
+     * @param string $iso2Code
+     *
+     * @return int
+     */
+    public function getCountryIdByIso2Code(string $iso2Code): int
+    {
+        $countryEntity = SpyCountryQuery::create()->filterByIso2Code($iso2Code)->findOne();
+        if ($countryEntity !== null) {
+            return $countryEntity->getIdCountry();
+        }
+
+        $countryEntity = new SpyCountry();
+        $countryEntity->setIso2Code($iso2Code);
+        $countryEntity->save();
+
+        return $countryEntity->getIdCountry();
     }
 }
