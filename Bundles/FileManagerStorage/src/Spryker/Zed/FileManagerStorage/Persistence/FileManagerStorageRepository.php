@@ -10,6 +10,7 @@ namespace Spryker\Zed\FileManagerStorage\Persistence;
 use ArrayObject;
 use Generated\Shared\Transfer\FileStorageTransfer;
 use Generated\Shared\Transfer\FileTransfer;
+use Generated\Shared\Transfer\FilterTransfer;
 use Orm\Zed\FileManagerStorage\Persistence\Map\SpyFileStorageTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -70,5 +71,25 @@ class FileManagerStorageRepository extends AbstractRepository implements FileMan
         }
 
         return $fileStorageTransferCollection;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $ids
+     *
+     * @return \Generated\Shared\Transfer\SpyFileStorageEntityTransfer[]
+     */
+    public function findFilteredFileManagerStorageEntities(FilterTransfer $filterTransfer, array $ids = []): array
+    {
+        $query = $this->getFactory()->createFileStorageQuery();
+
+        if ($ids) {
+            $query->filterByFkFile_In($ids);
+        }
+
+        $query->setOffset($filterTransfer->getOffset())
+            ->setLimit($filterTransfer->getLimit());
+
+        return $this->buildQueryFromCriteria($query)->find();
     }
 }
