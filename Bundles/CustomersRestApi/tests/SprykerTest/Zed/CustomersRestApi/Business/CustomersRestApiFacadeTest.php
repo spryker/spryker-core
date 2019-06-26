@@ -127,6 +127,24 @@ class CustomersRestApiFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testMapAddressesToQuoteWillReturnQuoteOnOnlyShippingAddressProvidedWithSplitDelivery(): void
+    {
+        /** @var \Spryker\Zed\CustomersRestApi\Business\CustomersRestApiFacade $customersRestApiFacade */
+        $customersRestApiFacade = $this->tester->getFacade();
+        $customersRestApiFacade->setFactory($this->getMockCustomersRestApiFactory());
+
+        $restCheckoutRequestAttributesTransfer = $this->tester->prepareOnlyShippingRestCheckoutRequestAttributesTransfer();
+        $quoteTransfer = $this->tester->prepareQuoteTransfer();
+
+        $actualQuote = $customersRestApiFacade->mapAddressesToQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);
+
+        $this->tester->assertShippingAddressMappingWithSplitDelivery($restCheckoutRequestAttributesTransfer, $actualQuote);
+        $this->assertEquals($restCheckoutRequestAttributesTransfer->getShippingAddress()->getId(), $actualQuote->getShippingAddress()->getUuid());
+    }
+
+    /**
+     * @return void
+     */
     public function testMapAddressesToQuoteWillReturnQuoteForGuestOnOnlyShippingAddressProvided(): void
     {
         /** @var \Spryker\Zed\CustomersRestApi\Business\CustomersRestApiFacade $customersRestApiFacade */
@@ -139,6 +157,23 @@ class CustomersRestApiFacadeTest extends Unit
         $actualQuote = $customersRestApiFacade->mapAddressesToQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);
 
         $this->tester->assertShippingAddressMapping($restCheckoutRequestAttributesTransfer, $actualQuote);
+    }
+
+    /**
+     * @return void
+     */
+    public function testMapAddressesToQuoteWillReturnQuoteForGuestOnOnlyShippingAddressProvidedWithSplitDelivery(): void
+    {
+        /** @var \Spryker\Zed\CustomersRestApi\Business\CustomersRestApiFacade $customersRestApiFacade */
+        $customersRestApiFacade = $this->tester->getFacade();
+        $customersRestApiFacade->setFactory($this->getMockCustomersRestApiFactoryForGuest());
+
+        $restCheckoutRequestAttributesTransfer = $this->tester->prepareOnlyShippingGuestRestCheckoutRequestAttributesTransfer();
+        $quoteTransfer = $this->tester->prepareQuoteTransfer();
+
+        $actualQuote = $customersRestApiFacade->mapAddressesToQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);
+
+        $this->tester->assertShippingAddressMappingWithSplitDelivery($restCheckoutRequestAttributesTransfer, $actualQuote);
     }
 
     /**

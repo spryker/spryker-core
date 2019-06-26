@@ -285,4 +285,30 @@ class CustomersRestApiBusinessTester extends Actor
         $this->assertEquals($expectedShippingAddress->getZipCode(), $actualShippingAddressTransfer->getZipCode());
         $this->assertEquals($expectedShippingAddress->getCompany(), $actualShippingAddressTransfer->getCompany());
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $actualQuote
+     *
+     * @return void
+     */
+    public function assertShippingAddressMappingWithSplitDelivery(RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer, QuoteTransfer $actualQuote): void
+    {
+        $this->assertNull($actualQuote->getBillingAddress());
+
+        $expectedShippingAddress = $restCheckoutRequestAttributesTransfer->getShippingAddress();
+
+        foreach ($actualQuote->getItems() as $itemTransfer) {
+            $actualShippingAddressTransfer = $itemTransfer->getShipment()->getShippingAddress();
+            $this->assertEquals($expectedShippingAddress->getSalutation(), $actualShippingAddressTransfer->getSalutation());
+            $this->assertEquals($expectedShippingAddress->getFirstName(), $actualShippingAddressTransfer->getFirstName());
+            $this->assertEquals($expectedShippingAddress->getLastName(), $actualShippingAddressTransfer->getLastName());
+            $this->assertEquals($expectedShippingAddress->getAddress1(), $actualShippingAddressTransfer->getAddress1());
+            $this->assertEquals($expectedShippingAddress->getAddress2(), $actualShippingAddressTransfer->getAddress2());
+            $this->assertEquals($expectedShippingAddress->getCity(), $actualShippingAddressTransfer->getCity());
+            $this->assertEquals($expectedShippingAddress->getIso2Code(), $actualShippingAddressTransfer->getIso2Code());
+            $this->assertEquals($expectedShippingAddress->getZipCode(), $actualShippingAddressTransfer->getZipCode());
+            $this->assertEquals($expectedShippingAddress->getCompany(), $actualShippingAddressTransfer->getCompany());
+        }
+    }
 }
