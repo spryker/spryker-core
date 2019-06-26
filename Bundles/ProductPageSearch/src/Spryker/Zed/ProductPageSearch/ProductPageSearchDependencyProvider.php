@@ -165,6 +165,10 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
             return new ProductPageSearchToSearchBridge($container->getLocator()->search()->facade());
         };
 
+        $container[self::FACADE_STORE] = function (Container $container) {
+            return new ProductPageSearchToStoreFacadeBridge($container->getLocator()->store()->facade());
+        };
+
         $container[static::PLUGIN_PRODUCT_PAGE_DATA_EXPANDER] = function () {
             return $this->getDataExpanderPlugins();
         };
