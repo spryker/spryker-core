@@ -24,8 +24,8 @@ use Spryker\Glue\GlueApplication\Rest\Language\LanguageNegotiation;
 use Spryker\Glue\GlueApplication\Rest\Language\LanguageNegotiationInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\HttpRequestValidator;
 use Spryker\Glue\GlueApplication\Rest\Request\HttpRequestValidatorInterface;
-use Spryker\Glue\GlueApplication\Rest\Request\PaginationParametersRequestValidator;
-use Spryker\Glue\GlueApplication\Rest\Request\PaginationParametersRequestValidatorInterface;
+use Spryker\Glue\GlueApplication\Rest\Request\PaginationParametersHttpHttpRequestValidator;
+use Spryker\Glue\GlueApplication\Rest\Request\PaginationParametersHttpRequestValidatorInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\RequestFormatter;
 use Spryker\Glue\GlueApplication\Rest\Request\RequestFormatterInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\RequestMetaDataExtractor;
@@ -343,11 +343,11 @@ class GlueApplicationFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\GlueApplication\Rest\Request\PaginationParametersRequestValidatorInterface
+     * @return \Spryker\Glue\GlueApplication\Rest\Request\PaginationParametersHttpRequestValidatorInterface
      */
-    public function createPaginationParametersRequestValidator(): PaginationParametersRequestValidatorInterface
+    public function createPaginationParametersRequestValidator(): PaginationParametersHttpRequestValidatorInterface
     {
-        return new PaginationParametersRequestValidator();
+        return new PaginationParametersHttpHttpRequestValidator();
     }
 
     /**

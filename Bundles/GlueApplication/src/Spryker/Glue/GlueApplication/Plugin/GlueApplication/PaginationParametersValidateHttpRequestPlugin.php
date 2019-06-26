@@ -15,12 +15,12 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \Spryker\Glue\GlueApplication\GlueApplicationFactory getFactory()
  */
-class PaginationParametersRequestValidatorPlugin extends AbstractPlugin implements ValidateHttpRequestPluginInterface
+class PaginationParametersValidateHttpRequestPlugin extends AbstractPlugin implements ValidateHttpRequestPluginInterface
 {
     /**
      * {@inheritdoc}
      *  - Validates pagination parameters of request.
-     *  - Return error if parameters are invalid.
+     *  - Returns error if parameters are invalid.
      *
      * @api
      *

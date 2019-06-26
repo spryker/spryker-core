@@ -12,11 +12,11 @@ use Spryker\Glue\GlueApplication\Rest\RequestConstantsInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class PaginationParametersRequestValidator implements PaginationParametersRequestValidatorInterface
+class PaginationParametersHttpHttpRequestValidator implements PaginationParametersHttpRequestValidatorInterface
 {
     protected const PATTERN_REGEX_PAGE_PARAMETER = '/^\d+$/';
 
-    protected const EXCEPTION_MESSAGE_INVALID_PAGE_PARAMETERS = 'Pagination parameters are invalid.';
+    protected const ERROR_MESSAGE_INVALID_PAGE_PARAMETERS = 'Pagination parameters are invalid.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -31,14 +31,14 @@ class PaginationParametersRequestValidator implements PaginationParametersReques
         $offset = $queryPage[RequestConstantsInterface::QUERY_OFFSET] ?? null;
         $limit = $queryPage[RequestConstantsInterface::QUERY_LIMIT] ?? null;
 
-        if ($offset === null || $limit === null) {
+        if ($offset === null && $limit === null) {
             return null;
         }
 
-        if (!$this->validatePageParameters($offset, $limit)) {
+        if (!$this->arePageParametersValid($offset, $limit)) {
             return (new RestErrorMessageTransfer())
                 ->setStatus(Response::HTTP_BAD_REQUEST)
-                ->setDetail(static::EXCEPTION_MESSAGE_INVALID_PAGE_PARAMETERS);
+                ->setDetail(static::ERROR_MESSAGE_INVALID_PAGE_PARAMETERS);
         }
 
         return null;
@@ -50,7 +50,7 @@ class PaginationParametersRequestValidator implements PaginationParametersReques
      *
      * @return bool
      */
-    protected function validatePageParameters(string $offset, string $limit): bool
+    protected function arePageParametersValid(string $offset, string $limit): bool
     {
         if ($offset && !preg_match(static::PATTERN_REGEX_PAGE_PARAMETER, $offset)) {
             return false;
