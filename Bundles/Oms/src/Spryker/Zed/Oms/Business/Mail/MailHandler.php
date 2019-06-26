@@ -63,7 +63,7 @@ class MailHandler
             ->setOrder($orderTransfer)
             ->setType(OrderConfirmationMailTypePlugin::MAIL_TYPE)
             ->setLocale($orderTransfer->getLocale())
-            ->setShipmentGroups($shipmentGroups->getArrayCopy());
+            ->setShipmentGroups($shipmentGroups);
 
         $this->mailFacade->handleMail($mailTransfer);
     }
