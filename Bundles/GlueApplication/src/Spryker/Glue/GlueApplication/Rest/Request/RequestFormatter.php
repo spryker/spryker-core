@@ -16,8 +16,6 @@ use Symfony\Component\HttpFoundation\Request as HttpRequest;
 
 class RequestFormatter implements RequestFormatterInterface
 {
-    protected const PATTERN_REGEX_PAGE_PARAMETER = '/^[1-9]\d*$/';
-
     /**
      * @var \Spryker\Glue\GlueApplication\Rest\Request\RequestMetaDataExtractorInterface
      */
@@ -223,15 +221,6 @@ class RequestFormatter implements RequestFormatterInterface
         }
 
         $page = $queryParameters[RequestConstantsInterface::QUERY_PAGE];
-
-        if (!preg_match(static::PATTERN_REGEX_PAGE_PARAMETER, $page[RequestConstantsInterface::QUERY_OFFSET])) {
-            $page[RequestConstantsInterface::QUERY_OFFSET] = 0;
-        }
-
-        if (!preg_match(static::PATTERN_REGEX_PAGE_PARAMETER, $page[RequestConstantsInterface::QUERY_LIMIT])) {
-            $page[RequestConstantsInterface::QUERY_LIMIT] = 0;
-        }
-
         if (isset($page[RequestConstantsInterface::QUERY_OFFSET], $page[RequestConstantsInterface::QUERY_LIMIT])) {
             $requestBuilder->addPage($page[RequestConstantsInterface::QUERY_OFFSET], $page[RequestConstantsInterface::QUERY_LIMIT]);
         }
