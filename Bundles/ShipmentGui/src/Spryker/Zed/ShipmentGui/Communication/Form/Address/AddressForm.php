@@ -11,6 +11,7 @@ use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Spryker\Zed\ShipmentGui\Communication\Form\ShipmentCreateForm;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -19,6 +20,7 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Regex;
 
 /**
  * @method \Spryker\Zed\ShipmentGui\Communication\ShipmentGuiCommunicationFactory getFactory()
@@ -177,12 +179,12 @@ class AddressForm extends AbstractType
     protected function addEmailField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(static::ADDRESS_FIELD_EMAIL, TextType::class, [
+            ->add(static::ADDRESS_FIELD_EMAIL, EmailType::class, [
                 'required' => true,
                 'label' => 'Email',
                 'constraints' => [
-                    new Email(),
                     $this->createMaxLengthConstraint(),
+                    $this->createEmailConstraint(),
                 ],
             ]);
 
@@ -301,6 +303,7 @@ class AddressForm extends AbstractType
                 'constraints' => [
                     $this->createNotBlankConstraint(),
                     $this->createMaxLengthConstraint(15),
+                    $this->createZipCodeConstraint(),
                 ],
             ]);
 
@@ -422,6 +425,30 @@ class AddressForm extends AbstractType
     {
         return new Length([
             'max' => $maxLength,
+            'groups' => [static::GROUP_SHIPPING_ADDRESS],
+        ]);
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraints\Email
+     */
+    protected function createEmailConstraint(): Email
+    {
+        return new Email([
+            'message' => 'Email is not valid.',
+            'groups' => [static::GROUP_SHIPPING_ADDRESS],
+        ]);
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraints\Regex
+     */
+    protected function createZipCodeConstraint(): Regex
+    {
+        return new Regex([
+            'pattern' => '/^\d{5}$/',
+            'message' => 'Zip code is not valid.',
+            'groups' => [static::GROUP_SHIPPING_ADDRESS],
         ]);
     }
 }
