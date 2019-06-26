@@ -10,8 +10,8 @@
     </transfer>
 
     <transfer name="Mail">
-        <property name="order" type="Order" />
-        <property name="shipmentGroups" type="shipmentGroup[]" singular="shipmentGroup" />
+        <property name="order" type="Order"/>
+        <property name="shipmentGroups" type="ShipmentGroup[]" singular="shipmentGroup"/>
     </transfer>
 
     <transfer name="Order">
@@ -64,3 +64,4 @@
     </transfer>
 
 </transfers>
+
