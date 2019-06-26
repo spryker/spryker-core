@@ -85,7 +85,9 @@ class CommentClient extends AbstractClient implements CommentClientInterface
      */
     public function addCommentTag(CommentTagRequestTransfer $commentTagRequestTransfer): CommentThreadResponseTransfer
     {
-        return $this->getZedStub()->addCommentTag($commentTagRequestTransfer);
+        return $this->getFactory()
+            ->createCommentTagWriter()
+            ->addCommentTag($commentTagRequestTransfer);
     }
 
     /**
@@ -99,7 +101,9 @@ class CommentClient extends AbstractClient implements CommentClientInterface
      */
     public function removeCommentTag(CommentTagRequestTransfer $commentTagRequestTransfer): CommentThreadResponseTransfer
     {
-        return $this->getZedStub()->removeCommentTag($commentTagRequestTransfer);
+        return $this->getFactory()
+            ->createCommentTagWriter()
+            ->removeCommentTag($commentTagRequestTransfer);
     }
 
     /**

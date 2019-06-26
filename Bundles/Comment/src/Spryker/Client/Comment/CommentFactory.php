@@ -8,6 +8,8 @@
 namespace Spryker\Client\Comment;
 
 use Spryker\Client\Comment\Dependency\Client\CommentToZedRequestClientInterface;
+use Spryker\Client\Comment\Writer\CommentTagWriter;
+use Spryker\Client\Comment\Writer\CommentTagWriterInterface;
 use Spryker\Client\Comment\Zed\CommentStub;
 use Spryker\Client\Comment\Zed\CommentStubInterface;
 use Spryker\Client\Kernel\AbstractFactory;
@@ -23,6 +25,17 @@ class CommentFactory extends AbstractFactory
     public function createZedCommentStub(): CommentStubInterface
     {
         return new CommentStub($this->getZedRequestClient());
+    }
+
+    /**
+     * @return \Spryker\Client\Comment\Writer\CommentTagWriterInterface
+     */
+    public function createCommentTagWriter(): CommentTagWriterInterface
+    {
+        return new CommentTagWriter(
+            $this->createZedCommentStub(),
+            $this->getModuleConfig()
+        );
     }
 
     /**
