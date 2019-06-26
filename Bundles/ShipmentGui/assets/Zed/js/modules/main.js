@@ -12,6 +12,10 @@ module.exports = function(trigger, target, inputDate) {
         numberOfMonths: 3,
         minDate: 0,
         defaultData: 0
+    }).keyup(function(event) {
+        if(event.keyCode === 8 || event.keyCode === 46) {
+            $.datepicker._clearDate(this);
+        }
     });
 
     function toggleForm() {
