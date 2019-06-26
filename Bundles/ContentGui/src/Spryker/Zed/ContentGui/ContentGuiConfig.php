@@ -14,6 +14,7 @@ class ContentGuiConfig extends AbstractBundleConfig
     protected const PARAMETER_ID = '%ID%';
     protected const PARAMETER_KEY = '%KEY%';
     protected const PARAMETER_TYPE = '%TYPE%';
+    protected const PARAMETER_DISPLAY_TYPE = '%DISPLAY_TYPE%';
     protected const PARAMETER_TEMPLATE = '%TEMPLATE%';
     protected const PARAMETER_TWIG_EXPRESSION = '%TWIG_EXPRESSION%';
     protected const PARAMETER_NAME = '%NAME%';
@@ -29,9 +30,10 @@ class ContentGuiConfig extends AbstractBundleConfig
     {
         return '<span class="content-item-editor js-content-item-editor" contenteditable="false" '
             . 'data-type="' . $this->getParameterType() . '" data-key="' . $this->getParameterKey() . '" '
+            . 'data-display-type="' . $this->getParameterDisplayType() . '" '
             . 'data-id="' . $this->getParameterId() . '" '
             . 'data-template="' . $this->getParameterTemplate() . '" data-twig-expression="' . $this->getParameterTwigExpression() . '">'
-                . '<span>Content Item Type: <b>' . $this->getParameterType() . '</b></span>'
+                . '<span>Content Item Type: <b>' . $this->getParameterDisplayType() . '</b></span>'
                 . '<span>Content Item Key#: <b>' . $this->getParameterKey() . '</b></span>'
                 . '<span>Name: <b>' . $this->getParameterName() . '</b></span>'
                 . '<span>Template: <b>' . $this->getParameterTemplateDisplayName() . '</b></span>'
@@ -68,6 +70,14 @@ class ContentGuiConfig extends AbstractBundleConfig
     public function getParameterType(): string
     {
         return static::PARAMETER_TYPE;
+    }
+
+    /**
+     * @return string
+     */
+    public function getParameterDisplayType(): string
+    {
+        return static::PARAMETER_DISPLAY_TYPE;
     }
 
     /**

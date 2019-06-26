@@ -227,7 +227,7 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
             (new ShoppingListTransfer())->setIdShoppingList($shoppingListItemTransfer->getFkShoppingList())
         );
 
-        if (!$shoppingListTransfer) {
+        if (!$shoppingListTransfer || !$this->findShoppingListItemById($shoppingListItemTransfer, $shoppingListTransfer)) {
             return (new ShoppingListItemResponseTransfer())->setIsSuccess(false);
         }
 
@@ -280,6 +280,25 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
         return $this->getTransactionHandler()->handleTransaction(function () use ($shoppingListItemTransfer) {
             return $this->deleteShoppingListItemTransaction($shoppingListItemTransfer);
         });
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer|null
+     */
+    protected function findShoppingListItemById(
+        ShoppingListItemTransfer $shoppingListItemTransfer,
+        ShoppingListTransfer $shoppingListTransfer
+    ): ?ShoppingListItemTransfer {
+        foreach ($shoppingListTransfer->getItems() as $ownShoppingListItemTransfer) {
+            if ($ownShoppingListItemTransfer->getIdShoppingListItem() === $shoppingListItemTransfer->getIdShoppingListItem()) {
+                return $ownShoppingListItemTransfer;
+            }
+        }
+
+        return null;
     }
 
     /**

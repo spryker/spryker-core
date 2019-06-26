@@ -70,7 +70,8 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
             $this->getQuoteFacade(),
             $this->getStoreFacade(),
             $this->createQuotePermissionChecker(),
-            $this->getQuoteCollectionExpanderPlugins()
+            $this->getQuoteCollectionExpanderPlugins(),
+            $this->getQuoteExpanderPlugins()
         );
     }
 
@@ -264,5 +265,13 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
     protected function getQuoteCollectionExpanderPlugins(): array
     {
         return $this->getProvidedDependency(CartsRestApiDependencyProvider::PLUGINS_QUOTE_COLLECTION_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteExpanderPluginInterface[]
+     */
+    protected function getQuoteExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(CartsRestApiDependencyProvider::PLUGINS_QUOTE_EXPANDER);
     }
 }
