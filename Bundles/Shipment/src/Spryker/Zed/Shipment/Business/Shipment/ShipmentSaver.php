@@ -88,6 +88,7 @@ class ShipmentSaver implements ShipmentSaverInterface
         $saveOrderTransfer = $this->buildSaveOrderTransfer($orderTransfer);
         $shipmentGroupTransfer = $this->setShipmentMethod($shipmentGroupTransfer, $orderTransfer);
         $expenseTransfer = $this->getShippingExpenseTransfer($shipmentTransfer, $orderTransfer);
+        $expenseTransfer->setName($shipmentTransfer->requireMethod()->getMethod()->getName());
         if ($expenseTransfer->getIdSalesExpense() === null) {
             $orderTransfer->addExpense($expenseTransfer);
         }
