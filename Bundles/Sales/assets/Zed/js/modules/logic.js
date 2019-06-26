@@ -73,7 +73,7 @@ $(document).ready(function() {
         e.preventDefault();
 
         var $item = $(this);
-        
+
         disableTrigger($item);
 
         var idOrder = $item.data('id-sales-order');
@@ -139,6 +139,4 @@ $(document).ready(function() {
             $(this).prop('checked', checked);
         });
     });
-
-    $('.comment-wrapper').animate({ scrollTop: $('.comment-wrapper').height() }, 1000);
 });

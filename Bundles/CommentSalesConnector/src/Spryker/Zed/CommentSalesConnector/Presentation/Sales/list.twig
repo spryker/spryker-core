@@ -2,6 +2,10 @@
 
     {% block widget_content %}
 
+        {% block head_css %}
+            <link rel="stylesheet" href="/assets/css/spryker-zed-comment-sales-connector-main.css">
+        {% endblock %}
+
         {% if order.commentThread %}
             <div class="comment-wrapper">
                 {% for comment in order.commentThread.comments %}
@@ -15,9 +19,11 @@
                                 {% endif %}
                             </span>
                         </p>
-                        <span>{{ comment.message }}</span>
+
+                        <p>{{ comment.message }}</p>
+
                         {% for commentTag in comment.commentTags %}
-                            <p>{{ commentTag.name }}</p>
+                            <span class="comment-tag">{{ commentTag.name }}</span>
                         {% endfor %}
                     </div>
                 {% endfor %}
@@ -25,6 +31,10 @@
         {% else %}
             {{ 'Order has no comments' | trans }}
         {% endif %}
+
+        {% block footer_js %}
+            <script src="/assets/js/spryker-zed-comment-sales-connector-main.js"></script>
+        {% endblock %}
 
     {% endblock %}
 
