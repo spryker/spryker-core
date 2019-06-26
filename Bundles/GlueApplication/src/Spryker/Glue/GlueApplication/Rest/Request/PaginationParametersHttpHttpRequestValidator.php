@@ -45,12 +45,12 @@ class PaginationParametersHttpHttpRequestValidator implements PaginationParamete
     }
 
     /**
-     * @param string $offset
-     * @param string $limit
+     * @param string|null $offset
+     * @param string|null $limit
      *
      * @return bool
      */
-    protected function arePageParametersValid(string $offset, string $limit): bool
+    protected function arePageParametersValid(?string $offset, ?string $limit): bool
     {
         if ($offset && !preg_match(static::PATTERN_REGEX_PAGE_PARAMETER, $offset)) {
             return false;
