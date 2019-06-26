@@ -40,9 +40,8 @@ class CompanyUnitAddressEntityManager extends AbstractEntityManager implements C
             );
 
         $companyUnitAddressEntity->save();
-        $companyUnitAddressTransfer->setIdCompanyUnitAddress($companyUnitAddressEntity->getIdCompanyUnitAddress());
 
-        return $companyUnitAddressTransfer;
+        return $companyUnitAddressTransfer->fromArray($companyUnitAddressEntity->toArray(), true);
     }
 
     /**
