@@ -8,10 +8,10 @@
 namespace Spryker\Glue\CatalogSearchRestApi\Processor\Catalog;
 
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
+use Spryker\Glue\CatalogSearchRestApi\CatalogSearchRestApiConfig;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Spryker\Glue\CatalogSearchRestApi\CatalogSearchRestApiConfig;
 use Symfony\Component\HttpFoundation\Response;
 
 class CatalogSearchRequestParametersValidator implements CatalogSearchRequestParametersValidatorInterface
@@ -83,7 +83,7 @@ class CatalogSearchRequestParametersValidator implements CatalogSearchRequestPar
     /**
      * @param string $key
      * @param array $data
-     * @param null $default
+     * @param mixed $default
      *
      * @return mixed|null
      */
