@@ -273,11 +273,11 @@ class ProductConcreteImageStorageWriter implements ProductConcreteImageStorageWr
     }
 
     /**
-     * @param array $productLocalizedAttributesEntities
-     * @param array $productImageSetsBulk
-     * @param array $productDefaultImageSetsBulk
+     * @param int[][] $productLocalizedAttributesEntities
+     * @param \Generated\Shared\Transfer\SpyProductImageSetEntityTransfer[][][] $productImageSetsBulk
+     * @param \Generated\Shared\Transfer\SpyProductImageSetEntityTransfer[][] $productDefaultImageSetsBulk
      *
-     * @return array[]
+     * @return \ArrayObject[][]|\Generated\Shared\Transfer\SpyProductImageSetEntityTransfer[][][]
      */
     protected function getImageSetsForLocalizedAttributes(
         array $productLocalizedAttributesEntities,
@@ -311,7 +311,7 @@ class ProductConcreteImageStorageWriter implements ProductConcreteImageStorageWr
      *
      * @param \Generated\Shared\Transfer\SpyProductImageSetEntityTransfer[] $productImageSets
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\SpyProductImageSetEntityTransfer[][][]
      */
     protected function indexImageSetsByProductIdAndLocale(array $productImageSets): array
     {
@@ -329,7 +329,7 @@ class ProductConcreteImageStorageWriter implements ProductConcreteImageStorageWr
     /**
      * @param \Generated\Shared\Transfer\SpyProductImageSetEntityTransfer[] $productImageSets
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\SpyProductImageSetEntityTransfer[][]
      */
     protected function indexImageSetsByProductId(array $productImageSets): array
     {
