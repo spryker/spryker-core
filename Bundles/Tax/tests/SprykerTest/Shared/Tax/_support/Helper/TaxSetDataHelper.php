@@ -77,11 +77,7 @@ class TaxSetDataHelper extends Module
      */
     protected function createTaxRateTransfer(array $override = []): TaxRateTransfer
     {
-        $countryTransfer = $this->haveCountry();
-
         $taxRateTransfer = (new TaxRateBuilder($override))->build();
-        $taxRateTransfer->setCountry($countryTransfer);
-        $taxRateTransfer->setFkCountry($countryTransfer->getIdCountry());
 
         $taxRateEntity = new SpyTaxRate();
         $taxRateEntity->fromArray($taxRateTransfer->toArray());
