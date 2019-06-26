@@ -80,6 +80,10 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
         $this->attributeMap = $attributeMap;
         $this->queryContainer = $queryContainer;
         $this->isSendingToQueue = $isSendingToQueue;
+
+        if (static::$allStores === null) {
+            static::$allStores = $this->storeFacade->getAllStores();
+        }
     }
 
     /**
@@ -259,10 +263,6 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
      */
     protected function isValidStoreLocale(string $storeName, string $localeName): bool
     {
-        if (!isset(static::$allStores)) {
-            static::$allStores = $this->storeFacade->getAllStores();
-        }
-
         foreach (static::$allStores as $storeTransfer) {
             if ($storeTransfer->getName() === $storeName) {
                 return in_array($localeName, $storeTransfer->getAvailableLocaleIsoCodes());

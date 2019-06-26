@@ -20,6 +20,7 @@ use Spryker\Zed\ProductPageSearch\Business\Publisher\ProductConcretePageSearchPu
 use Spryker\Zed\ProductPageSearch\Business\Publisher\ProductConcretePageSearchPublisherInterface;
 use Spryker\Zed\ProductPageSearch\Business\Unpublisher\ProductConcretePageSearchUnpublisher;
 use Spryker\Zed\ProductPageSearch\Business\Unpublisher\ProductConcretePageSearchUnpublisherInterface;
+use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToStoreFacadeInterface;
 use Spryker\Zed\ProductPageSearch\ProductPageSearchDependencyProvider;
 
 /**
@@ -155,7 +156,7 @@ class ProductPageSearchBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToStoreFacadeInterface
      */
-    public function getStoreFacade()
+    public function getStoreFacade(): ProductPageSearchToStoreFacadeInterface
     {
         return $this->getProvidedDependency(ProductPageSearchDependencyProvider::FACADE_STORE);
     }

@@ -82,6 +82,10 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
         $this->productPageSearchMapper = $productPageSearchMapper;
         $this->productPageSearchWriter = $productPageSearchWriter;
         $this->storeFacade = $storeFacade;
+
+        if (static::$allStores === null) {
+            static::$allStores = $this->storeFacade->getAllStores();
+        }
     }
 
     /**
@@ -517,10 +521,6 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
      */
     protected function isValidStoreLocale(string $storeName, string $localeName): bool
     {
-        if (!isset(static::$allStores)) {
-            static::$allStores = $this->storeFacade->getAllStores();
-        }
-
         foreach (static::$allStores as $storeTransfer) {
             if ($storeTransfer->getName() === $storeName) {
                 return in_array($localeName, $storeTransfer->getAvailableLocaleIsoCodes());
