@@ -13,7 +13,10 @@ module.exports = function(trigger, target, inputDate) {
         minDate: 0,
         defaultData: 0
     }).keyup(function(event) {
-        if(event.keyCode === 8 || event.keyCode === 46) {
+        var backspaceButton = 8;
+        var deleteButton = 46;
+        
+        if(event.keyCode === backspaceButton || event.keyCode === deleteButton) {
             $.datepicker._clearDate(this);
         }
     });
