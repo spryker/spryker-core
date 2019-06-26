@@ -8,8 +8,8 @@
 namespace Spryker\Zed\CompanyUnitAddress\Persistence;
 
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
-use Generated\Shared\Transfer\SpyCompanyUnitAddressEntityTransfer;
 use Generated\Shared\Transfer\SpyCompanyUnitAddressToCompanyBusinessUnitEntityTransfer;
+use Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddress;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -30,14 +30,17 @@ class CompanyUnitAddressEntityManager extends AbstractEntityManager implements C
      */
     public function saveCompanyUnitAddress(CompanyUnitAddressTransfer $companyUnitAddressTransfer): CompanyUnitAddressTransfer
     {
-        $entityTransfer = $this->getFactory()
+        $companyUnitAddressEntity = $this->getCompanyUnitAddressEntity($companyUnitAddressTransfer);
+
+        $companyUnitAddressEntity = $this->getFactory()
             ->createCompanyUniAddressMapper()
-            ->mapCompanyUnitAddressTransferToEntityTransfer(
+            ->mapCompanyUnitAddressTransferToCompanyUnitAddressEntity(
                 $companyUnitAddressTransfer,
-                new SpyCompanyUnitAddressEntityTransfer()
+                $companyUnitAddressEntity
             );
-        $entityTransfer = $this->save($entityTransfer);
-        $companyUnitAddressTransfer->setIdCompanyUnitAddress($entityTransfer->getIdCompanyUnitAddress());
+
+        $companyUnitAddressEntity->save();
+        $companyUnitAddressTransfer->setIdCompanyUnitAddress($companyUnitAddressEntity->getIdCompanyUnitAddress());
 
         return $companyUnitAddressTransfer;
     }
@@ -103,5 +106,21 @@ class CompanyUnitAddressEntityManager extends AbstractEntityManager implements C
     public function saveAddressToBusinessUnitRelation(SpyCompanyUnitAddressToCompanyBusinessUnitEntityTransfer $companyUnitAddressToCompanyBusinessUnitEntityTransfer): void
     {
         $this->save($companyUnitAddressToCompanyBusinessUnitEntityTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
+     *
+     * @return \Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddress
+     */
+    protected function getCompanyUnitAddressEntity(CompanyUnitAddressTransfer $companyUnitAddressTransfer): SpyCompanyUnitAddress
+    {
+        if (!$companyUnitAddressTransfer->getIdCompanyUnitAddress()) {
+            return new SpyCompanyUnitAddress();
+        }
+
+        return $this->getFactory()->createCompanyUnitAddressQuery()
+            ->filterByIdCompanyUnitAddress($companyUnitAddressTransfer->getIdCompanyUnitAddress())
+            ->findOneOrCreate();
     }
 }

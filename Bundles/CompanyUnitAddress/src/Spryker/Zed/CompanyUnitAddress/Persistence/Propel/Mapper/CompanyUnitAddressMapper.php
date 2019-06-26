@@ -97,4 +97,19 @@ class CompanyUnitAddressMapper implements CompanyUnitAddressMapperInterface
 
         return $companyUnitAddressTransfer;
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
+     * @param \Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddress $companyUnitAddressEntity
+     *
+     * @return \Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddress
+     */
+    public function mapCompanyUnitAddressTransferToCompanyUnitAddressEntity(
+        CompanyUnitAddressTransfer $companyUnitAddressTransfer,
+        SpyCompanyUnitAddress $companyUnitAddressEntity
+    ): SpyCompanyUnitAddress {
+        $companyUnitAddressEntity->fromArray($companyUnitAddressTransfer->toArray());
+
+        return $companyUnitAddressEntity;
+    }
 }
