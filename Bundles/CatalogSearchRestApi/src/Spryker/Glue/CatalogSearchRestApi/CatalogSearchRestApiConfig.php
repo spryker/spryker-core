@@ -15,4 +15,8 @@ class CatalogSearchRestApiConfig extends AbstractBundleConfig
     public const RESOURCE_CATALOG_SEARCH_SUGGESTIONS = 'catalog-search-suggestions';
 
     public const QUERY_STRING_PARAMETER = 'q';
+
+    public const RESPONSE_CODE_PARAMETER_MUST_BE_INTEGER = '503';
+
+    public const EXCEPTION_MESSAGE_PARAMETER_MUST_BE_INTEGER = 'Value of %s must be of time integer.';
 }

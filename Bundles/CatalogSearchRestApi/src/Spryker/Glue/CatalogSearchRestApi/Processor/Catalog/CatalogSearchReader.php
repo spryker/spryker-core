@@ -9,6 +9,8 @@ namespace Spryker\Glue\CatalogSearchRestApi\Processor\Catalog;
 
 use Generated\Shared\Transfer\PriceModeConfigurationTransfer;
 use Generated\Shared\Transfer\RestCatalogSearchAttributesTransfer;
+use Generated\Shared\Transfer\RestErrorMessageTransfer;
+use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
 use Spryker\Glue\CatalogSearchRestApi\CatalogSearchRestApiConfig;
 use Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToCatalogClientInterface;
 use Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToPriceClientInterface;
@@ -19,6 +21,7 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\Page;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 class CatalogSearchReader implements CatalogSearchReaderInterface
 {
@@ -68,12 +71,18 @@ class CatalogSearchReader implements CatalogSearchReaderInterface
     protected $catalogSearchTranslationExpander;
 
     /**
+     * @var \Spryker\Glue\CatalogSearchRestApi\Processor\Catalog\CatalogSearchRequestParametersValidator
+     */
+    protected $catalogSearchRequestParametersValidator;
+
+    /**
      * @param \Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToCatalogClientInterface $catalogClient
      * @param \Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToPriceClientInterface $priceClient
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\CatalogSearchRestApi\Processor\Mapper\CatalogSearchResourceMapperInterface $catalogSearchResourceMapper
      * @param \Spryker\Glue\CatalogSearchRestApi\Processor\Mapper\CatalogSearchSuggestionsResourceMapperInterface $catalogSearchSuggestionsResourceMapper
      * @param \Spryker\Glue\CatalogSearchRestApi\Processor\Translation\CatalogSearchTranslationExpanderInterface $catalogSearchTranslationExpander
+     * @param \Spryker\Glue\CatalogSearchRestApi\Processor\Catalog\CatalogSearchRequestParametersValidator $catalogSearchRequestParametersValidator
      */
     public function __construct(
         CatalogSearchRestApiToCatalogClientInterface $catalogClient,
@@ -81,7 +90,8 @@ class CatalogSearchReader implements CatalogSearchReaderInterface
         RestResourceBuilderInterface $restResourceBuilder,
         CatalogSearchResourceMapperInterface $catalogSearchResourceMapper,
         CatalogSearchSuggestionsResourceMapperInterface $catalogSearchSuggestionsResourceMapper,
-        CatalogSearchTranslationExpanderInterface $catalogSearchTranslationExpander
+        CatalogSearchTranslationExpanderInterface $catalogSearchTranslationExpander,
+        CatalogSearchRequestParametersValidator $catalogSearchRequestParametersValidator
     ) {
         $this->catalogClient = $catalogClient;
         $this->priceClient = $priceClient;
@@ -89,6 +99,7 @@ class CatalogSearchReader implements CatalogSearchReaderInterface
         $this->catalogSearchResourceMapper = $catalogSearchResourceMapper;
         $this->catalogSearchSuggestionsResourceMapper = $catalogSearchSuggestionsResourceMapper;
         $this->catalogSearchTranslationExpander = $catalogSearchTranslationExpander;
+        $this->catalogSearchRequestParametersValidator = $catalogSearchRequestParametersValidator;
     }
 
     /**
@@ -101,8 +112,14 @@ class CatalogSearchReader implements CatalogSearchReaderInterface
         $searchString = $this->getRequestParameter($restRequest, CatalogSearchRestApiConfig::QUERY_STRING_PARAMETER);
         $requestParameters = $this->getAllRequestParameters($restRequest);
 
-        $urlEncodedRequestParameter = $this->getUrlParametersEncodedRecursively($requestParameters);
-        $searchResult = $this->catalogClient->catalogSearch($searchString, $urlEncodedRequestParameter);
+        $failedValidationResponse = $this->catalogSearchRequestParametersValidator
+            ->validateIntegerParameters($restRequest);
+
+        if($failedValidationResponse){
+            return $failedValidationResponse;
+        }
+
+        $searchResult = $this->catalogClient->catalogSearch($searchString, $requestParameters);
 
         $restSearchAttributesTransfer = $this
             ->catalogSearchResourceMapper
@@ -130,8 +147,7 @@ class CatalogSearchReader implements CatalogSearchReaderInterface
             return $this->createEmptyResponse($response);
         }
         $requestParameters = $this->getAllRequestParameters($restRequest);
-        $urlEncodedRequestParameter = $this->getUrlParametersEncodedRecursively($requestParameters);
-        $suggestions = $this->catalogClient->catalogSuggestSearch($searchString, $urlEncodedRequestParameter);
+        $suggestions = $this->catalogClient->catalogSuggestSearch($searchString, $requestParameters);
         $restSuggestionsAttributesTransfer = $this
             ->catalogSearchSuggestionsResourceMapper
             ->mapSuggestionsToRestAttributesTransfer($suggestions);
@@ -228,25 +244,5 @@ class CatalogSearchReader implements CatalogSearchReaderInterface
         }
 
         return $response->addResource($restResource);
-    }
-
-    /**
-     * @param array $queryParameters
-     *
-     * @return array
-     */
-    protected function getUrlParametersEncodedRecursively(array $queryParameters): array
-    {
-        $urlEncodedRequestParameter = [];
-        foreach ($queryParameters as $queryParameter) {
-            if (is_array($queryParameter)) {
-                $urlEncodedRequestParameter[] = $this->getUrlParametersEncodedRecursively($queryParameter);
-
-                continue;
-            }
-            $urlEncodedRequestParameter[] = urlencode($queryParameter);
-        }
-
-        return $urlEncodedRequestParameter;
     }
 }
