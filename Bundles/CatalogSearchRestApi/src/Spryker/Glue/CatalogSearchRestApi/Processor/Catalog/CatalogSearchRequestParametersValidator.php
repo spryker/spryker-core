@@ -106,7 +106,5 @@ class CatalogSearchRequestParametersValidator implements CatalogSearchRequestPar
         }
 
         return $data;
-
-
     }
 }
