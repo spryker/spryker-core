@@ -304,7 +304,8 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     {
         $mailHandler = new MailHandler(
             $this->getSalesFacade(),
-            $this->getMailFacade()
+            $this->getMailFacade(),
+            $this->getShipmentService()
         );
 
         return $mailHandler;
@@ -361,5 +362,13 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     public function getUtilQuantityService(): OmsToUtilQuantityServiceInterface
     {
         return $this->getProvidedDependency(OmsDependencyProvider::SERVICE_UTIL_QUANTITY);
+    }
+
+    /**
+     * @return \Spryker\Zed\Oms\Dependency\Service\OmsToShipmentServiceInterface
+     */
+    protected function getShipmentService()
+    {
+        return $this->getProvidedDependency(OmsDependencyProvider::SERVICE_SHIPMENT);
     }
 }

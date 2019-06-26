@@ -15,6 +15,7 @@ use Spryker\Zed\Oms\Communication\Plugin\Mail\OrderConfirmationMailTypePlugin;
 use Spryker\Zed\Oms\Communication\Plugin\Mail\OrderShippedMailTypePlugin;
 use Spryker\Zed\Oms\Dependency\Facade\OmsToMailInterface;
 use Spryker\Zed\Oms\Dependency\Facade\OmsToSalesInterface;
+use Spryker\Zed\Oms\Dependency\Service\OmsToShipmentServiceInterface;
 
 class MailHandler
 {
@@ -29,13 +30,23 @@ class MailHandler
     protected $mailFacade;
 
     /**
-     * @param \Spryker\Zed\Oms\Dependency\Facade\OmsToSalesInterface $salesFacade
-     * @param \Spryker\Zed\Oms\Dependency\Facade\OmsToMailInterface $mailFacade
+     * @var \Spryker\Zed\Oms\Dependency\Service\OmsToShipmentServiceInterface
      */
-    public function __construct(OmsToSalesInterface $salesFacade, OmsToMailInterface $mailFacade)
-    {
-        $this->saleFacade = $salesFacade;
+    protected $shipmentService;
+
+    /**
+     * @param \Spryker\Zed\Oms\Dependency\Facade\OmsToSalesInterface $saleFacade
+     * @param \Spryker\Zed\Oms\Dependency\Facade\OmsToMailInterface $mailFacade
+     * @param \Spryker\Zed\Oms\Dependency\Service\OmsToShipmentServiceInterface $shipmentService
+     */
+    public function __construct(
+        OmsToSalesInterface $saleFacade,
+        OmsToMailInterface $mailFacade,
+        OmsToShipmentServiceInterface $shipmentService
+    ) {
+        $this->saleFacade = $saleFacade;
         $this->mailFacade = $mailFacade;
+        $this->shipmentService = $shipmentService;
     }
 
     /**
@@ -46,11 +57,13 @@ class MailHandler
     public function sendOrderConfirmationMail(SpySalesOrder $salesOrderEntity)
     {
         $orderTransfer = $this->getOrderTransfer($salesOrderEntity);
+        $shipmentGroups = $this->shipmentService->groupItemsByShipment($orderTransfer->getItems());
 
-        $mailTransfer = new MailTransfer();
-        $mailTransfer->setOrder($orderTransfer);
-        $mailTransfer->setType(OrderConfirmationMailTypePlugin::MAIL_TYPE);
-        $mailTransfer->setLocale($orderTransfer->getLocale());
+        $mailTransfer = (new MailTransfer())
+            ->setOrder($orderTransfer)
+            ->setType(OrderConfirmationMailTypePlugin::MAIL_TYPE)
+            ->setLocale($orderTransfer->getLocale())
+            ->setShipmentGroups($shipmentGroups->getArrayCopy());
 
         $this->mailFacade->handleMail($mailTransfer);
     }
