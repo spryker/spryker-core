@@ -17,7 +17,6 @@ use Generated\Shared\Transfer\ProductOptionValueTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\TaxRateTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
-use Orm\Zed\Country\Persistence\SpyCountryQuery;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionValueQuery;
 use Pyz\Zed\ProductOption\ProductOptionDependencyProvider;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxFacadeBridge;
@@ -54,11 +53,11 @@ class ProductOptionTaxRateCalculationWithQuoteLevelShippingAddressTest extends U
 
         $taxSetTransfer = $this->tester->haveTaxSetWithTaxRates([TaxSetTransfer::NAME => static::TAX_SET_NAME], [
             [
-                TaxRateTransfer::FK_COUNTRY => $this->getCountryIdByIso2Code('DE'),
+                TaxRateTransfer::FK_COUNTRY => $this->tester->getCountryIdByIso2Code('DE'),
                 TaxRateTransfer::RATE => 15.00,
             ],
             [
-                TaxRateTransfer::FK_COUNTRY => $this->getCountryIdByIso2Code('FR'),
+                TaxRateTransfer::FK_COUNTRY => $this->tester->getCountryIdByIso2Code('FR'),
                 TaxRateTransfer::RATE => 20.00,
             ],
         ]);
@@ -263,18 +262,5 @@ class ProductOptionTaxRateCalculationWithQuoteLevelShippingAddressTest extends U
         $productOptionValueEntity = SpyProductOptionValueQuery::create()->findOneBySku($sku);
 
         return $productOptionValueEntity->getIdProductOptionValue();
-    }
-
-    /**
-     * @param string $iso2Code
-     *
-     * @return int
-     */
-    protected function getCountryIdByIso2Code(string $iso2Code): int
-    {
-        return SpyCountryQuery::create()
-            ->filterByIso2Code($iso2Code)
-            ->findOne()
-            ->getIdCountry();
     }
 }
