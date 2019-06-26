@@ -65,7 +65,7 @@ class PriceManager implements PriceManagerInterface
         );
 
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
-            $this->setOriginUnitPrices($itemTransfer, $cartChangeTransfer->getQuote());
+            $this->setOriginUnitPrices($itemTransfer, $cartChangeTransfer);
 
             if ($this->hasForcedUnitGrossPrice($itemTransfer)) {
                 continue;
@@ -84,14 +84,14 @@ class PriceManager implements PriceManagerInterface
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
      * @return \Generated\Shared\Transfer\ItemTransfer
      */
-    protected function setOriginUnitPrices(ItemTransfer $itemTransfer, QuoteTransfer $quoteTransfer)
+    protected function setOriginUnitPrices(ItemTransfer $itemTransfer, CartChangeTransfer $cartChangeTransfer)
     {
-        $priceProductFilterTransfer = $this->priceProductFilter->createPriceProductFilterTransfer($quoteTransfer, $itemTransfer);
-        $priceMode = $quoteTransfer->getPriceMode();
+        $priceProductFilterTransfer = $this->priceProductFilter->createPriceProductFilterTransfer($cartChangeTransfer, $itemTransfer);
+        $priceMode = $cartChangeTransfer->getQuote()->getPriceMode();
 
         $this->setPrice($itemTransfer, $priceProductFilterTransfer, $priceMode);
 

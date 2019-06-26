@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\PriceCartConnector\Business\Filter;
 
+use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -47,27 +48,27 @@ class PriceProductFilter implements PriceProductFilterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductFilterTransfer
      */
     public function createPriceProductFilterTransfer(
-        QuoteTransfer $quoteTransfer,
+        CartChangeTransfer $cartChangeTransfer,
         ItemTransfer $itemTransfer
     ): PriceProductFilterTransfer {
         $priceProductFilterTransfer = $this->mapItemTransferToPriceProductFilterTransfer(
             new PriceProductFilterTransfer(),
-            $quoteTransfer,
+            $cartChangeTransfer,
             $itemTransfer
         )
-            ->setStoreName($this->findStoreName($quoteTransfer))
-            ->setPriceMode($this->getPriceMode($quoteTransfer))
-            ->setCurrencyIsoCode($this->getCurrencyCode($quoteTransfer))
+            ->setStoreName($this->findStoreName($cartChangeTransfer->getQuote()))
+            ->setPriceMode($this->getPriceMode($cartChangeTransfer->getQuote()))
+            ->setCurrencyIsoCode($this->getCurrencyCode($cartChangeTransfer->getQuote()))
             ->setPriceTypeName($this->priceProductFacade->getDefaultPriceTypeName());
 
         if ($this->isPriceProductDimensionEnabled($priceProductFilterTransfer)) {
-            $priceProductFilterTransfer->setQuote($quoteTransfer);
+            $priceProductFilterTransfer->setQuote($cartChangeTransfer->getQuote());
         }
 
         return $priceProductFilterTransfer;
@@ -127,40 +128,44 @@ class PriceProductFilter implements PriceProductFilterInterface
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductFilterTransfer
      */
     protected function mapItemTransferToPriceProductFilterTransfer(
         PriceProductFilterTransfer $priceProductFilterTransfer,
-        QuoteTransfer $quoteTransfer,
+        CartChangeTransfer $cartChangeTransfer,
         ItemTransfer $itemTransfer
     ): PriceProductFilterTransfer {
-        $priceProductFilterTransfer = $priceProductFilterTransfer->fromArray($itemTransfer->toArray(), true);
-
-        $itemInQuote = $this->getItemInQuote($itemTransfer, $quoteTransfer);
-        if ($itemInQuote !== null) {
-            $priceProductFilterTransfer->setQuantity($itemTransfer->getQuantity() + $itemInQuote->getQuantity());
-        }
+        $priceProductFilterTransfer = $priceProductFilterTransfer
+            ->fromArray($itemTransfer->toArray(), true)
+            ->setQuantity($this->getItemTotalQuantity($itemTransfer, $cartChangeTransfer));
 
         return $priceProductFilterTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $cartChangeItemTransfer
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer|null
+     * @return int
      */
-    protected function getItemInQuote(ItemTransfer $cartChangeItemTransfer, QuoteTransfer $quoteTransfer): ?ItemTransfer
+    protected function getItemTotalQuantity(ItemTransfer $cartChangeItemTransfer, CartChangeTransfer $cartChangeTransfer): int
     {
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+        $quantity = 0;
+        foreach ($cartChangeTransfer->getQuote()->getItems() as $itemTransfer) {
             if ($itemTransfer->getSku() === $cartChangeItemTransfer->getSku()) {
-                return $itemTransfer;
+                $quantity += $itemTransfer->getQuantity();
             }
         }
 
-        return null;
+        foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
+            if ($itemTransfer->getSku() === $cartChangeItemTransfer->getSku()) {
+                $quantity += $itemTransfer->getQuantity();
+            }
+        }
+
+        return $quantity;
     }
 }

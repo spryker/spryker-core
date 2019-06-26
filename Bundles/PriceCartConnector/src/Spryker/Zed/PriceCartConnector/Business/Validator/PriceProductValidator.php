@@ -68,7 +68,7 @@ class PriceProductValidator implements PriceProductValidatorInterface
 
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
             $priceProductFilterTransfer = $this->priceProductFilter
-                ->createPriceProductFilterTransfer($cartChangeTransfer->getQuote(), $itemTransfer);
+                ->createPriceProductFilterTransfer($cartChangeTransfer, $itemTransfer);
 
             if ($this->priceProductFacade->hasValidPriceFor($priceProductFilterTransfer)) {
                 $cartPreCheckResponseTransfer = $this->checkMinPriceRestriction(

@@ -7,20 +7,20 @@
 
 namespace Spryker\Zed\PriceCartConnector\Business\Filter;
 
+use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 
 interface PriceProductFilterInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductFilterTransfer
      */
     public function createPriceProductFilterTransfer(
-        QuoteTransfer $quoteTransfer,
+        CartChangeTransfer $cartChangeTransfer,
         ItemTransfer $itemTransfer
     ): PriceProductFilterTransfer;
 }
