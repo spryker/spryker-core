@@ -7,7 +7,6 @@
 
 namespace Spryker\Glue\ContentProductAbstractListsRestApi\Processor;
 
-use Exception;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\ContentProductAbstractListsRestApi\ContentProductAbstractListsRestApiConfig;
 use Spryker\Glue\ContentProductAbstractListsRestApi\Dependency\Client\ContentProductAbstractListsRestApiToContentProductClientInterface;
@@ -16,6 +15,7 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Symfony\Component\HttpFoundation\Response;
+use Throwable;
 
 class ContentProductAbstractListReader implements ContentProductAbstractListReaderInterface
 {
@@ -75,7 +75,7 @@ class ContentProductAbstractListReader implements ContentProductAbstractListRead
                 $parentResource->getId(),
                 $restRequest->getMetadata()->getLocale()
             );
-        } catch (Exception $e) {
+        } catch (Throwable $e) {
             return $this->addContentTypeInvalidError($restResponse);
         }
 

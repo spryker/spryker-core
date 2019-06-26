@@ -198,7 +198,7 @@ var ProductListContentItem = function(
 
         buttons.each(function() {
             var button = $(this);
-            if (button.is('button')) {
+            if (button.is('a')) {
                 buttonsTemplate += button.attr('data-id', productId)[0].outerHTML + ' ';
             }
         });

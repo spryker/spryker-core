@@ -31,4 +31,12 @@ class ConfigReader implements ConfigReaderInterface
     {
         return $this->config->getDefaultMinimumQuantity();
     }
+
+    /**
+     * @return float
+     */
+    public function getDefaultInterval(): float
+    {
+        return $this->config->getDefaultInterval();
+    }
 }
