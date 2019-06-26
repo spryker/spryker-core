@@ -11,7 +11,7 @@
 
     <transfer name="Mail">
         <property name="order" type="Order"/>
-        <property name="shipmentGroups" type="array"/>
+        <property name="shipmentGroups" type="ShipmentGroup[]" singular="shipmentGroup"/>
     </transfer>
 
     <transfer name="Order">
