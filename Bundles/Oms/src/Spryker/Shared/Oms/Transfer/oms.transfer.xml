@@ -11,6 +11,7 @@
 
     <transfer name="Mail">
         <property name="order" type="Order"/>
+        <property name="shipmentGroups" type="array"/>
     </transfer>
 
     <transfer name="Order">
