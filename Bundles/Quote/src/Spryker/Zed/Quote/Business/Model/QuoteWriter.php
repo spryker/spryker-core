@@ -98,7 +98,7 @@ class QuoteWriter implements QuoteWriterInterface
             return $this->createQuoteResponseTransfer($quoteTransfer);
         }
 
-        $quoteTransfer = $this->addDefaultStoreToQuote($quoteTransfer);
+        $quoteTransfer = $this->addCurrentStoreToQuote($quoteTransfer);
         $quoteTransfer = $this->executeQuoteExpandBeforeCreatePlugins($quoteTransfer);
 
         $quoteValidationResponseTransfer = $this->quoteValidator->validate($quoteTransfer);
@@ -178,7 +178,7 @@ class QuoteWriter implements QuoteWriterInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function addDefaultStoreToQuote(QuoteTransfer $quoteTransfer): QuoteTransfer
+    protected function addCurrentStoreToQuote(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         if (!$quoteTransfer->getStore()) {
             $quoteTransfer->setStore($this->storeFacade->getCurrentStore());
