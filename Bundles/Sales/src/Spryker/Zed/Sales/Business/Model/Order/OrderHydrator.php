@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Sales\Business\Model\Order;
 
+use ArrayObject;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CountryTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
@@ -180,8 +181,8 @@ class OrderHydrator implements OrderHydratorInterface
             ->count();
 
         $orderTransfer->setUniqueProductQuantity($uniqueProductQuantity);
-
         $orderTransfer = $this->executeHydrateOrderPlugins($orderTransfer);
+        $orderTransfer = $this->sortOrderItemsByIdShipment($orderTransfer);
 
         return $orderTransfer;
     }
@@ -524,5 +525,32 @@ class OrderHydrator implements OrderHydratorInterface
             // Deprecated: Using FK to customer is obsolete, but needed to prevent BC break.
             $orderTransfer->setFkCustomer(null);
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    protected function sortOrderItemsByIdShipment(OrderTransfer $orderTransfer): OrderTransfer
+    {
+        $orderItemTransfers = $orderTransfer->getItems();
+        if ($orderItemTransfers->count() === 0) {
+            return $orderTransfer;
+        }
+
+        $sortedOrderItemIndexes = [];
+        foreach ($orderItemTransfers as $orderItemIndex => $orderItemTransfer) {
+            $sortedOrderItemIndexes[$orderItemIndex] = $orderItemTransfer->requireShipment()->getShipment()->getIdSalesShipment();
+        }
+
+        asort($sortedOrderItemIndexes);
+
+        $sortedOrderItemTransfers = new ArrayObject();
+        foreach (array_keys($sortedOrderItemIndexes) as $sortedOrderItemIndex) {
+            $sortedOrderItemTransfers->append($orderItemTransfers->offsetGet($sortedOrderItemIndex));
+        }
+
+        return $orderTransfer->setItems($sortedOrderItemTransfers);
     }
 }
