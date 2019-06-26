@@ -39,8 +39,24 @@ class GenerateRestApiDocumentationConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        if ($this->isDocumentationGenerationEnabled()) {
+            $this->error('This command intended to be used in development environment only!');
+
+            return static::CODE_ERROR;
+        }
+
         $this->getFacade()->generateDocumentation();
 
         return static::CODE_SUCCESS;
+    }
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
+     * @return bool
+     */
+    protected function isDocumentationGenerationEnabled(): bool
+    {
+        return APPLICATION_ENV !== 'development';
     }
 }

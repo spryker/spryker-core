@@ -63,7 +63,7 @@ class ApplicationConfig extends AbstractBundleConfig
     /**
      * @return string
      */
-    public function getTwigEnvironmentName(): string
+    protected function getTwigEnvironmentName(): string
     {
         return $this->get(ApplicationConstants::TWIG_ENVIRONMENT_NAME, APPLICATION_ENV);
     }
