@@ -33,7 +33,7 @@
             <tr>
                 <td><strong>{{ 'mail.order.confirmation.shipment_details' | trans }}</strong></td>
             </tr>
-            {% for shipmentGroup in mail.order.shipmentGroups %}
+            {% for shipmentGroup in mail.shipmentGroups %}
             <tr>
                 <td>
                     {{ 'mail.order.confirmation.shipment_number' | trans }} {{ loop.index +1 }}<br />

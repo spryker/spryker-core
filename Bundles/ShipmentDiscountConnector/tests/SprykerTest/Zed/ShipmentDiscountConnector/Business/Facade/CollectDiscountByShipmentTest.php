@@ -259,16 +259,21 @@ class CollectDiscountByShipmentTest extends Test
 
         $mockedBusinessFactory->method('createShipmentPriceDiscountDecisionRule')->willReturn($mockedQuoteLevelShipmentPriceDiscountDecisionRule);
         $mockedBusinessFactory->method('createShipmentPriceDiscountDecisionRuleWithMultiShipment')->willReturn($mockedMultiShipmentPriceDiscountDecisionRule);
-        /**
-         * @todo Investigate and try to remove this mocking.
-         */
-        $mockedBusinessFactory->method('getShipmentService')->willReturn(
-            new ShipmentDiscountConnectorToShipmentServiceBridge($this->tester->getLocator()->shipment()->service())
-        );
+
+        $shipmentDiscountConnectorToShipmentServiceBridge = $this->createShipmentDiscountConnectorToShipmentServiceBridge();
+        $mockedBusinessFactory->method('getShipmentService')->willReturn($shipmentDiscountConnectorToShipmentServiceBridge);
 
         $facade = $this->tester->getFacade();
         $facade->setFactory($mockedBusinessFactory);
 
         return $facade;
+    }
+
+    /**
+     * @return \Spryker\Zed\ShipmentDiscountConnector\Dependency\Service\ShipmentDiscountConnectorToShipmentServiceBridge
+     */
+    protected function createShipmentDiscountConnectorToShipmentServiceBridge(): ShipmentDiscountConnectorToShipmentServiceBridge
+    {
+        return new ShipmentDiscountConnectorToShipmentServiceBridge($this->tester->getLocator()->shipment()->service());
     }
 }

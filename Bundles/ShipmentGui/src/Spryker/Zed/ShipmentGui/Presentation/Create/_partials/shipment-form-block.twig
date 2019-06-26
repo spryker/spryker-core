@@ -13,7 +13,12 @@
         {% endembed %}
         {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Requested delivery date' } %}
             {% block widget_content %}
-                {{ form_row(form.requested_delivery_date) }}
+                {{ form_row(form.requested_delivery_date, {
+                    type: 'text',
+                    attr: {
+                        placeholder: 'YYYY-MM-DD',
+                    },
+                }) }}
             {% endblock %}
         {% endembed %}
         {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Order items inside this shipment' } %}

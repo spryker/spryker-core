@@ -12,6 +12,13 @@ module.exports = function(trigger, target, inputDate) {
         numberOfMonths: 3,
         minDate: 0,
         defaultData: 0
+    }).keyup(function(event) {
+        var backspaceButton = 8;
+        var deleteButton = 46;
+        
+        if(event.keyCode === backspaceButton || event.keyCode === deleteButton) {
+            $.datepicker._clearDate(this);
+        }
     });
 
     function toggleForm() {

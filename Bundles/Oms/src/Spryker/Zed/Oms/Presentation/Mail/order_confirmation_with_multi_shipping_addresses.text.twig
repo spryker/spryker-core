@@ -24,7 +24,7 @@
 
 {{ 'mail.order.confirmation.shipment_details' | trans }}
 
-{% for shipmentGroup in mail.order.shipmentGroups %}
+{% for shipmentGroup in mail.shipmentGroups %}
 
     {{ 'mail.order.confirmation.shipment_number' | trans }} {{ loop.index +1 }}
 
