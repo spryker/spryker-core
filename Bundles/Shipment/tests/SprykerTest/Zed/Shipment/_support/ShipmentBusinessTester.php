@@ -70,7 +70,12 @@ class ShipmentBusinessTester extends Actor
      */
     public function getIdShipmentMethodCollection(ShipmentMethodsTransfer $shipmentMethodsTransfer)
     {
-        $idShipmentMethodCollection = array_column($shipmentMethodsTransfer->getMethods()->getArrayCopy(), 'id_shipment_method');
+        $idShipmentMethodCollection = [];
+
+        foreach ($shipmentMethodsTransfer->getMethods() as $shipmentMethodTransfer) {
+            $idShipmentMethodCollection[] = $shipmentMethodTransfer->getIdShipmentMethod();
+        }
+
         sort($idShipmentMethodCollection);
 
         return $idShipmentMethodCollection;

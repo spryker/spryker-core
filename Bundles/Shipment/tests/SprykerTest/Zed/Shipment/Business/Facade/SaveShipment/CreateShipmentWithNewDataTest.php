@@ -100,11 +100,10 @@ class CreateShipmentWithNewDataTest extends Test
         $quoteTransfer = $this->createQuoteTransfer();
         $itemTransfer = $quoteTransfer->getItems()[0];
 
-        $actualShipmentTransfer = clone $itemTransfer
-            ->getShipment()
-            ->setShippingAddress(
-                (new AddressBuilder())->build()
-            );
+        $actualShipmentTransfer = clone $itemTransfer->getShipment();
+        $actualShipmentTransfer->setShippingAddress(
+            (new AddressBuilder())->build()
+        );
 
         return [$quoteTransfer, $actualShipmentTransfer, $itemTransfer];
     }

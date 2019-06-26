@@ -9,6 +9,7 @@ namespace Spryker\Service\Customer\Address;
 
 use Generated\Shared\Transfer\AddressTransfer;
 use Spryker\Service\Customer\CustomerConfig;
+use Spryker\Service\Customer\Dependency\Service\CustomerToUtilEncodingServiceInterface;
 
 class CustomerAddressKeyGenerator implements CustomerAddressKeyGeneratorInterface
 {
@@ -18,11 +19,20 @@ class CustomerAddressKeyGenerator implements CustomerAddressKeyGeneratorInterfac
     protected $customerConfig;
 
     /**
-     * @param \Spryker\Service\Customer\CustomerConfig $customerConfig
+     * @var \Spryker\Service\Customer\Dependency\Service\CustomerToUtilEncodingServiceInterface
      */
-    public function __construct(CustomerConfig $customerConfig)
-    {
+    protected $utilEncodingService;
+
+    /**
+     * @param \Spryker\Service\Customer\CustomerConfig $customerConfig
+     * @param \Spryker\Service\Customer\Dependency\Service\CustomerToUtilEncodingServiceInterface $utilEncodingService
+     */
+    public function __construct(
+        CustomerConfig $customerConfig,
+        CustomerToUtilEncodingServiceInterface $utilEncodingService
+    ) {
         $this->customerConfig = $customerConfig;
+        $this->utilEncodingService = $utilEncodingService;
     }
 
     /**
@@ -38,9 +48,6 @@ class CustomerAddressKeyGenerator implements CustomerAddressKeyGeneratorInterfac
             unset($addressData[$addressExcludedField]);
         }
 
-        /**
-         * @todo Use UtilEncode.
-         */
-        return md5(json_encode($addressData));
+        return md5($this->utilEncodingService->encodeJson($addressData));
     }
 }

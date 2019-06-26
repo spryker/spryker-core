@@ -10,6 +10,7 @@ namespace SprykerTest\Shared\Tax\Helper;
 use Codeception\Module;
 use Generated\Shared\DataBuilder\TaxRateBuilder;
 use Generated\Shared\DataBuilder\TaxSetBuilder;
+use Generated\Shared\Transfer\CountryTransfer;
 use Generated\Shared\Transfer\TaxRateTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
 use Orm\Zed\Tax\Persistence\SpyTaxRate;
@@ -76,7 +77,11 @@ class TaxSetDataHelper extends Module
      */
     protected function createTaxRateTransfer(array $override = []): TaxRateTransfer
     {
+        $countryTransfer = $this->haveCountry();
+
         $taxRateTransfer = (new TaxRateBuilder($override))->build();
+        $taxRateTransfer->setCountry($countryTransfer);
+        $taxRateTransfer->setFkCountry($countryTransfer->getIdCountry());
 
         $taxRateEntity = new SpyTaxRate();
         $taxRateEntity->fromArray($taxRateTransfer->toArray());
@@ -101,5 +106,13 @@ class TaxSetDataHelper extends Module
         $taxSetTaxEntity->save();
 
         $taxSetTransfer->addTaxRate($taxRateTransfer);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CountryTransfer
+     */
+    protected function haveCountry(): CountryTransfer
+    {
+        return $this->getLocator()->country()->facade()->getCountryByIso2Code('DE');
     }
 }
