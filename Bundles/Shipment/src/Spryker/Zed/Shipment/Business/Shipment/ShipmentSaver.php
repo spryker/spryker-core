@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Shipment\Business\Shipment;
 
-use ArrayObject;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
@@ -89,8 +88,10 @@ class ShipmentSaver implements ShipmentSaverInterface
         $saveOrderTransfer = $this->buildSaveOrderTransfer($orderTransfer);
         $shipmentGroupTransfer = $this->setShipmentMethod($shipmentGroupTransfer, $orderTransfer);
         $expenseTransfer = $this->getShippingExpenseTransfer($shipmentTransfer, $orderTransfer);
+        if ($expenseTransfer->getIdSalesExpense() === null) {
+            $orderTransfer->addExpense($expenseTransfer);
+        }
 
-        $orderTransfer = $this->addShippingExpenseToOrderExpenses($orderTransfer, $expenseTransfer);
         $shipmentGroupTransfer = $this->shipmentOrderSaver
             ->saveOrderShipmentByShipmentGroup($orderTransfer, $shipmentGroupTransfer, $saveOrderTransfer);
 
@@ -164,51 +165,6 @@ class ShipmentSaver implements ShipmentSaverInterface
         $expenseTransfer->setShipment($shipmentTransfer);
 
         return $this->expenseSanitizer->sanitizeExpenseSumValues($expenseTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     * @param \Generated\Shared\Transfer\ExpenseTransfer|null $expenseTransfer
-     *
-     * @return \Generated\Shared\Transfer\OrderTransfer
-     */
-    protected function addShippingExpenseToOrderExpenses(
-        OrderTransfer $orderTransfer,
-        ?ExpenseTransfer $expenseTransfer
-    ): OrderTransfer {
-        if ($expenseTransfer === null) {
-            return $orderTransfer;
-        }
-
-        $orderTransfer = $this->removeExistingShippingExpenseFromOrderExpenses($expenseTransfer, $orderTransfer);
-        $orderTransfer->addExpense($expenseTransfer);
-
-        return $orderTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return \Generated\Shared\Transfer\OrderTransfer
-     */
-    protected function removeExistingShippingExpenseFromOrderExpenses(
-        ExpenseTransfer $expenseTransfer,
-        OrderTransfer $orderTransfer
-    ): OrderTransfer {
-        $orderExpensesCollection = new ArrayObject();
-
-        foreach ($orderTransfer->getExpenses() as $orderExpenseTransfer) {
-            if ($expenseTransfer->getShipment() === $orderExpenseTransfer->getShipment()) {
-                continue;
-            }
-
-            $orderExpensesCollection->append($expenseTransfer);
-        }
-
-        $orderTransfer->setExpenses($orderExpensesCollection);
-
-        return $orderTransfer;
     }
 
     /**
