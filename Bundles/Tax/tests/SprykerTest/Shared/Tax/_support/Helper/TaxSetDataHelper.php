@@ -85,6 +85,12 @@ class TaxSetDataHelper extends Module
 
         $taxRateTransfer->setIdTaxRate($taxRateEntity->getIdTaxRate());
 
+        if ($taxRateTransfer->getFkCountry() === null) {
+            $countryTransfer = $this->haveCountry();
+            $taxRateTransfer->setFkCountry($countryTransfer->getIdCountry());
+            $taxRateTransfer->setCountry($countryTransfer);
+        }
+
         return $taxRateTransfer;
     }
 
