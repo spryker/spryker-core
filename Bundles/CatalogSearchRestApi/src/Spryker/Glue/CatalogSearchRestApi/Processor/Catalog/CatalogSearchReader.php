@@ -143,6 +143,7 @@ class CatalogSearchReader implements CatalogSearchReaderInterface
         if (empty($searchString)) {
             return $this->createEmptyResponse($response);
         }
+
         $requestParameters = $this->getAllRequestParameters($restRequest);
         $suggestions = $this->catalogClient->catalogSuggestSearch($searchString, $requestParameters);
         $restSuggestionsAttributesTransfer = $this

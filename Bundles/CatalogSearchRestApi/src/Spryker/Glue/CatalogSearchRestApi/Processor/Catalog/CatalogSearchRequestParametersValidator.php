@@ -40,16 +40,15 @@ class CatalogSearchRequestParametersValidator implements CatalogSearchRequestPar
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
         foreach ($this->getIntegerRequestParameterNames() as $dotNotatedIntegerRequestParameterKey) {
-            if ($this->getArrayElementByDotNotation($dotNotatedIntegerRequestParameterKey, $requestParameters)
-                && filter_var($requestParameters[$this->getArrayElementByDotNotation($dotNotatedIntegerRequestParameterKey, $requestParameters)], FILTER_VALIDATE_INT) === false
-            ) {
+            $requestParameterValue = $this->getArrayElementByDotNotation($dotNotatedIntegerRequestParameterKey, $requestParameters);
+            if (filter_var($requestParameterValue, FILTER_VALIDATE_INT) === false) {
                 $restResponse->addError(
                     $this->createErrorMessageTransfer($dotNotatedIntegerRequestParameterKey)
                 );
             }
         }
 
-        if (count($restResponse->getErrors()) > 0) {
+        if ($restResponse->getErrors()) {
             return $restResponse;
         }
     }
@@ -77,7 +76,7 @@ class CatalogSearchRequestParametersValidator implements CatalogSearchRequestPar
         return (new RestErrorMessageTransfer())
             ->setCode(CatalogSearchRestApiConfig::RESPONSE_CODE_PARAMETER_MUST_BE_INTEGER)
             ->setStatus(Response::HTTP_BAD_REQUEST)
-            ->setDetail(sprintf(CatalogSearchRestApiConfig::EXCEPTION_MESSAGE_PARAMETER_MUST_BE_INTEGER, $requestParameterName));
+            ->setDetail(sprintf(CatalogSearchRestApiConfig::ERROR_MESSAGE_PARAMETER_MUST_BE_INTEGER, $requestParameterName));
     }
 
     /**
@@ -89,24 +88,25 @@ class CatalogSearchRequestParametersValidator implements CatalogSearchRequestPar
      */
     protected function getArrayElementByDotNotation(string $key, array $data, $default = null)
     {
-        if (empty($key) || !count($data)) {
+        if (empty($key) || $data) {
             return $default;
         }
 
-        if (strpos($key, '.') !== false) {
-            $keys = explode('.', $key);
-
-            foreach ($keys as $innerKey) {
-                if (!array_key_exists($innerKey, $data)) {
-                    return $default;
-                }
-
-                $data = $data[$innerKey];
-            }
-
-            return $data;
+        if (strpos($key, '.') === false) {
+            return $data[$key] ?? $default;
         }
 
-        return $data[$key] ?? $default;
+        $keys = explode('.', $key);
+        foreach ($keys as $innerKey) {
+            if (!array_key_exists($innerKey, $data)) {
+                return $default;
+            }
+
+            $data = $data[$innerKey];
+        }
+
+        return $data;
+
+
     }
 }
