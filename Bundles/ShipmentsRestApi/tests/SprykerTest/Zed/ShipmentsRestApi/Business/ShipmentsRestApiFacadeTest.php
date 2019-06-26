@@ -74,7 +74,7 @@ class ShipmentsRestApiFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testShipmentsRestApiFacadeWillMapShipmentToQuoteOnShipmentProvidedWithSplitDelivery(): void
+    public function testShipmentsRestApiFacadeWillMapShipmentToQuoteOnShipmentProvidedWithItemLevelShippingAddresses(): void
     {
         /** @var \Spryker\Zed\ShipmentsRestApi\Business\ShipmentsRestApiFacade $shipmentRestApiFacade */
         $shipmentRestApiFacade = $this->tester->getFacade();
@@ -121,7 +121,7 @@ class ShipmentsRestApiFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testShipmentsRestApiFacadeWillMapShipmentToQuoteOnNoShipmentProvidedWithSplitDelivery(): void
+    public function testShipmentsRestApiFacadeWillMapShipmentToQuoteOnNoShipmentProvidedWithItemLevelShippingAddresses(): void
     {
         /** @var \Spryker\Zed\ShipmentsRestApi\Business\ShipmentsRestApiFacade $shipmentRestApiFacade */
         $shipmentRestApiFacade = $this->tester->getFacade();
@@ -160,7 +160,7 @@ class ShipmentsRestApiFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testShipmentsRestApiFacadeWillMapShipmentToQuoteOnShipmentNotFoundWithSplitDelivery(): void
+    public function testShipmentsRestApiFacadeWillMapShipmentToQuoteOnShipmentNotFoundWithItemLevelShippingAddresses(): void
     {
         /** @var \Spryker\Zed\ShipmentsRestApi\Business\ShipmentsRestApiFacade $shipmentRestApiFacade */
         $shipmentRestApiFacade = $this->tester->getFacade();

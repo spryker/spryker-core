@@ -292,9 +292,47 @@ class CustomersRestApiBusinessTester extends Actor
      *
      * @return void
      */
-    public function assertShippingAddressMappingWithSplitDelivery(RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer, QuoteTransfer $actualQuote): void
+    public function assertShippingAddressMappingWithItemLevelShippingAddresses(RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer, QuoteTransfer $actualQuote): void
     {
         $this->assertNull($actualQuote->getBillingAddress());
+
+        $expectedShippingAddress = $restCheckoutRequestAttributesTransfer->getShippingAddress();
+
+        foreach ($actualQuote->getItems() as $itemTransfer) {
+            $actualShippingAddressTransfer = $itemTransfer->getShipment()->getShippingAddress();
+            $this->assertEquals($expectedShippingAddress->getSalutation(), $actualShippingAddressTransfer->getSalutation());
+            $this->assertEquals($expectedShippingAddress->getFirstName(), $actualShippingAddressTransfer->getFirstName());
+            $this->assertEquals($expectedShippingAddress->getLastName(), $actualShippingAddressTransfer->getLastName());
+            $this->assertEquals($expectedShippingAddress->getAddress1(), $actualShippingAddressTransfer->getAddress1());
+            $this->assertEquals($expectedShippingAddress->getAddress2(), $actualShippingAddressTransfer->getAddress2());
+            $this->assertEquals($expectedShippingAddress->getCity(), $actualShippingAddressTransfer->getCity());
+            $this->assertEquals($expectedShippingAddress->getIso2Code(), $actualShippingAddressTransfer->getIso2Code());
+            $this->assertEquals($expectedShippingAddress->getZipCode(), $actualShippingAddressTransfer->getZipCode());
+            $this->assertEquals($expectedShippingAddress->getCompany(), $actualShippingAddressTransfer->getCompany());
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $actualQuote
+     *
+     * @return void
+     */
+    public function assertBothAddressesMappingWithItemLevelShippingAddresses(
+        RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer,
+        QuoteTransfer $actualQuote
+    ): void {
+        $expectedBillingAddress = $restCheckoutRequestAttributesTransfer->getBillingAddress();
+        $actualBillingAddressTransfer = $actualQuote->getBillingAddress();
+        $this->assertEquals($expectedBillingAddress->getSalutation(), $actualBillingAddressTransfer->getSalutation());
+        $this->assertEquals($expectedBillingAddress->getFirstName(), $actualBillingAddressTransfer->getFirstName());
+        $this->assertEquals($expectedBillingAddress->getLastName(), $actualBillingAddressTransfer->getLastName());
+        $this->assertEquals($expectedBillingAddress->getAddress1(), $actualBillingAddressTransfer->getAddress1());
+        $this->assertEquals($expectedBillingAddress->getAddress2(), $actualBillingAddressTransfer->getAddress2());
+        $this->assertEquals($expectedBillingAddress->getCity(), $actualBillingAddressTransfer->getCity());
+        $this->assertEquals($expectedBillingAddress->getIso2Code(), $actualBillingAddressTransfer->getIso2Code());
+        $this->assertEquals($expectedBillingAddress->getZipCode(), $actualBillingAddressTransfer->getZipCode());
+        $this->assertEquals($expectedBillingAddress->getCompany(), $actualBillingAddressTransfer->getCompany());
 
         $expectedShippingAddress = $restCheckoutRequestAttributesTransfer->getShippingAddress();
 

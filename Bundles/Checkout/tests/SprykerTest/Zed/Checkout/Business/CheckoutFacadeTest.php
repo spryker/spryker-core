@@ -111,7 +111,7 @@ class CheckoutFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCheckoutSuccessfullyWithSplitDelivery()
+    public function testCheckoutSuccessfullyWithItemLevelShippingAddresses()
     {
         $product = $this->tester->haveProduct();
         $this->tester->haveProductInStock([StockProductTransfer::SKU => $product->getSku(), StockProductTransfer::QUANTITY => 3]);
@@ -198,7 +198,7 @@ class CheckoutFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCheckoutCreatesOrderItemsWithSplitDelivery()
+    public function testCheckoutCreatesOrderItemsWithItemLevelShippingAddresses()
     {
         $product1 = $this->tester->haveProduct();
         $this->tester->haveProductInStock([StockProductTransfer::SKU => $product1->getSku()]);

@@ -56,6 +56,25 @@ class CustomersRestApiFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testMapAddressesToQuoteWillReturnQuoteOnAllDataProvidedWithItemLevelShippingAddresses(): void
+    {
+        /** @var \Spryker\Zed\CustomersRestApi\Business\CustomersRestApiFacade $customersRestApiFacade */
+        $customersRestApiFacade = $this->tester->getFacade();
+        $customersRestApiFacade->setFactory($this->getMockCustomersRestApiFactory());
+
+        $restCheckoutRequestAttributesTransfer = $this->tester->prepareFullRestCheckoutRequestAttributesTransfer();
+        $quoteTransfer = $this->tester->prepareQuoteTransfer();
+
+        $actualQuote = $customersRestApiFacade->mapAddressesToQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);
+
+        $this->tester->assertBothAddressesMappingWithItemLevelShippingAddresses($restCheckoutRequestAttributesTransfer, $actualQuote);
+        $this->assertEquals($restCheckoutRequestAttributesTransfer->getBillingAddress()->getId(), $actualQuote->getBillingAddress()->getUuid());
+        $this->assertEquals($restCheckoutRequestAttributesTransfer->getShippingAddress()->getId(), $actualQuote->getShippingAddress()->getUuid());
+    }
+
+    /**
+     * @return void
+     */
     public function testMapAddressesToQuoteWillReturnQuoteForGuestOnAllDataProvided(): void
     {
         /** @var \Spryker\Zed\CustomersRestApi\Business\CustomersRestApiFacade $customersRestApiFacade */
@@ -68,6 +87,23 @@ class CustomersRestApiFacadeTest extends Unit
         $actualQuote = $customersRestApiFacade->mapAddressesToQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);
 
         $this->tester->assertBothAddressesMapping($restCheckoutRequestAttributesTransfer, $actualQuote);
+    }
+
+    /**
+     * @return void
+     */
+    public function testMapAddressesToQuoteWillReturnQuoteForGuestOnAllDataProvidedWithItemLevelShippingAddresses(): void
+    {
+        /** @var \Spryker\Zed\CustomersRestApi\Business\CustomersRestApiFacade $customersRestApiFacade */
+        $customersRestApiFacade = $this->tester->getFacade();
+        $customersRestApiFacade->setFactory($this->getMockCustomersRestApiFactoryForGuest());
+
+        $restCheckoutRequestAttributesTransfer = $this->tester->prepareFullGuestRestCheckoutRequestAttributesTransfer();
+        $quoteTransfer = $this->tester->prepareQuoteTransfer();
+
+        $actualQuote = $customersRestApiFacade->mapAddressesToQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);
+
+        $this->tester->assertBothAddressesMappingWithItemLevelShippingAddresses($restCheckoutRequestAttributesTransfer, $actualQuote);
     }
 
     /**
@@ -127,7 +163,7 @@ class CustomersRestApiFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testMapAddressesToQuoteWillReturnQuoteOnOnlyShippingAddressProvidedWithSplitDelivery(): void
+    public function testMapAddressesToQuoteWillReturnQuoteOnOnlyShippingAddressProvidedWithItemLevelShippingAddresses(): void
     {
         /** @var \Spryker\Zed\CustomersRestApi\Business\CustomersRestApiFacade $customersRestApiFacade */
         $customersRestApiFacade = $this->tester->getFacade();
@@ -138,7 +174,7 @@ class CustomersRestApiFacadeTest extends Unit
 
         $actualQuote = $customersRestApiFacade->mapAddressesToQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);
 
-        $this->tester->assertShippingAddressMappingWithSplitDelivery($restCheckoutRequestAttributesTransfer, $actualQuote);
+        $this->tester->assertShippingAddressMappingWithItemLevelShippingAddresses($restCheckoutRequestAttributesTransfer, $actualQuote);
         $this->assertEquals($restCheckoutRequestAttributesTransfer->getShippingAddress()->getId(), $actualQuote->getShippingAddress()->getUuid());
     }
 
@@ -162,7 +198,7 @@ class CustomersRestApiFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testMapAddressesToQuoteWillReturnQuoteForGuestOnOnlyShippingAddressProvidedWithSplitDelivery(): void
+    public function testMapAddressesToQuoteWillReturnQuoteForGuestOnOnlyShippingAddressProvidedWithItemLevelShippingAddresses(): void
     {
         /** @var \Spryker\Zed\CustomersRestApi\Business\CustomersRestApiFacade $customersRestApiFacade */
         $customersRestApiFacade = $this->tester->getFacade();
@@ -173,7 +209,7 @@ class CustomersRestApiFacadeTest extends Unit
 
         $actualQuote = $customersRestApiFacade->mapAddressesToQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);
 
-        $this->tester->assertShippingAddressMappingWithSplitDelivery($restCheckoutRequestAttributesTransfer, $actualQuote);
+        $this->tester->assertShippingAddressMappingWithItemLevelShippingAddresses($restCheckoutRequestAttributesTransfer, $actualQuote);
     }
 
     /**
@@ -197,7 +233,7 @@ class CustomersRestApiFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testMapAddressesToQuoteWillReturnQuoteOnNoAddressProvidedWithSplitDelivery(): void
+    public function testMapAddressesToQuoteWillReturnQuoteOnNoAddressProvidedWithItemLevelShippingAddresses(): void
     {
         /** @var \Spryker\Zed\CustomersRestApi\Business\CustomersRestApiFacade $customersRestApiFacade */
         $customersRestApiFacade = $this->tester->getFacade();
@@ -236,7 +272,7 @@ class CustomersRestApiFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testMapAddressesToQuoteWillReturnQuoteForGuestOnNoAddressProvidedWithSplitDelivery(): void
+    public function testMapAddressesToQuoteWillReturnQuoteForGuestOnNoAddressProvidedWithItemLevelShippingAddresses(): void
     {
         /** @var \Spryker\Zed\CustomersRestApi\Business\CustomersRestApiFacade $customersRestApiFacade */
         $customersRestApiFacade = $this->tester->getFacade();
