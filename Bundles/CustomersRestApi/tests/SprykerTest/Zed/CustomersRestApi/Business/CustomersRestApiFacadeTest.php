@@ -162,6 +162,27 @@ class CustomersRestApiFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testMapAddressesToQuoteWillReturnQuoteOnNoAddressProvidedWithSplitDelivery(): void
+    {
+        /** @var \Spryker\Zed\CustomersRestApi\Business\CustomersRestApiFacade $customersRestApiFacade */
+        $customersRestApiFacade = $this->tester->getFacade();
+        $customersRestApiFacade->setFactory($this->getMockCustomersRestApiFactory());
+
+        $restCheckoutRequestAttributesTransfer = $this->tester->prepareCustomerRestCheckoutRequestAttributesTransfer();
+        $quoteTransfer = $this->tester->prepareQuoteTransfer();
+
+        $actualQuote = $customersRestApiFacade->mapAddressesToQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);
+
+        $this->assertNull($actualQuote->getBillingAddress());
+
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            $this->assertNull($itemTransfer->getShipment()->getShippingAddress());
+        }
+    }
+
+    /**
+     * @return void
+     */
     public function testMapAddressesToQuoteWillReturnQuoteForGuestOnNoAddressProvided(): void
     {
         /** @var \Spryker\Zed\CustomersRestApi\Business\CustomersRestApiFacade $customersRestApiFacade */
@@ -175,6 +196,27 @@ class CustomersRestApiFacadeTest extends Unit
 
         $this->assertNull($actualQuote->getBillingAddress());
         $this->assertNull($actualQuote->getShippingAddress());
+    }
+
+    /**
+     * @return void
+     */
+    public function testMapAddressesToQuoteWillReturnQuoteForGuestOnNoAddressProvidedWithSplitDelivery(): void
+    {
+        /** @var \Spryker\Zed\CustomersRestApi\Business\CustomersRestApiFacade $customersRestApiFacade */
+        $customersRestApiFacade = $this->tester->getFacade();
+        $customersRestApiFacade->setFactory($this->getMockCustomersRestApiFactoryForGuest());
+
+        $restCheckoutRequestAttributesTransfer = $this->tester->prepareGuestCustomerRestCheckoutRequestAttributesTransfer();
+        $quoteTransfer = $this->tester->prepareQuoteTransfer();
+
+        $actualQuote = $customersRestApiFacade->mapAddressesToQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);
+
+        $this->assertNull($actualQuote->getBillingAddress());
+
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            $this->assertNull($itemTransfer->getShipment()->getShippingAddress());
+        }
     }
 
     /**
