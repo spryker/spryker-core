@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class PaginationParametersRequestValidator implements PaginationParametersRequestValidatorInterface
 {
-    protected const PATTERN_REGEX_PAGE_PARAMETER = '/^[1-9]\d*$/';
+    protected const PATTERN_REGEX_PAGE_PARAMETER = '/^\d+$/';
 
     protected const EXCEPTION_MESSAGE_INVALID_PAGE_PARAMETERS = 'Pagination parameters are invalid.';
 
@@ -31,7 +31,7 @@ class PaginationParametersRequestValidator implements PaginationParametersReques
         $offset = $queryPage[RequestConstantsInterface::QUERY_OFFSET] ?? null;
         $limit = $queryPage[RequestConstantsInterface::QUERY_LIMIT] ?? null;
 
-        if (!$offset || !$limit) {
+        if ($offset === null || $limit === null) {
             return null;
         }
 
