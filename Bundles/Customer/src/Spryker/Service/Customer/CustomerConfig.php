@@ -29,6 +29,7 @@ class CustomerConfig extends AbstractBundleConfig
             AddressTransfer::FK_REGION,
             AddressTransfer::UUID,
             AddressTransfer::KEY,
+            AddressTransfer::IS_ADDRESS_SAVING_SKIPPED,
         ];
     }
 }
