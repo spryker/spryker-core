@@ -49,7 +49,7 @@ class TriggerController extends AbstractController
     {
         $redirect = $request->query->get('redirect', static::ROUTE_REDIRECT_DEFAULT);
 
-        if (!$this->isRequestValid($request)) {
+        if (!$this->isValidPostRequest($request)) {
             return $this->redirectResponse($redirect);
         }
 
@@ -93,7 +93,7 @@ class TriggerController extends AbstractController
     {
         $redirect = $request->query->get('redirect', static::ROUTE_REDIRECT_DEFAULT);
 
-        if (!$this->isRequestValid($request)) {
+        if (!$this->isValidPostRequest($request)) {
             return $this->redirectResponse($redirect);
         }
 
@@ -133,7 +133,7 @@ class TriggerController extends AbstractController
      *
      * @return bool
      */
-    protected function isRequestValid(Request $request): bool
+    protected function isValidPostRequest(Request $request): bool
     {
         return $request->isMethod(Request::METHOD_POST) && $this->isTriggerFormValid($request);
     }
