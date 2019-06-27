@@ -146,6 +146,33 @@ class CheckoutFacadeTest extends Unit
         $customer = $this->tester->haveCustomer();
 
         $quoteTransfer = (new QuoteBuilder([CustomerTransfer::EMAIL => 'max@mustermann.de']))
+            ->withItem([ItemTransfer::SKU => $product->getSku()])
+            ->withStore([StoreTransfer::NAME => 'DE'])
+            ->withCustomer()
+            ->withTotals()
+            ->withCurrency()
+            ->withBillingAddress()
+            ->withShippingAddress(new AddressBuilder([AddressTransfer::EMAIL => $customer->getEmail()]))
+            ->build();
+
+        $result = $this->tester->getFacade()->placeOrder($quoteTransfer);
+
+        $this->assertFalse($result->getIsSuccess());
+        $this->assertEquals(1, count($result->getErrors()));
+        $this->assertEquals(CheckoutConfig::ERROR_CODE_CUSTOMER_ALREADY_REGISTERED, $result->getErrors()[0]->getErrorCode());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCheckoutResponseContainsErrorIfCustomerAlreadyRegisteredWithItemLevelShippingAddress()
+    {
+        $this->tester->haveCustomer([CustomerTransfer::EMAIL => 'max@mustermann.de']);
+        $product = $this->tester->haveProduct();
+        $this->tester->haveProductInStock([StockProductTransfer::SKU => $product->getSku()]);
+        $customer = $this->tester->haveCustomer();
+
+        $quoteTransfer = (new QuoteBuilder([CustomerTransfer::EMAIL => 'max@mustermann.de']))
             ->withItem($this->createItemWithShipment([ItemTransfer::SKU => $product->getSku()], $customer))
             ->withStore([StoreTransfer::NAME => 'DE'])
             ->withCustomer()
@@ -249,6 +276,22 @@ class CheckoutFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testRegistrationIsTriggeredOnNewNonGuestCustomerWithItemLevelShippingAddresses()
+    {
+        $quoteTransfer = $this->getBaseQuoteTransferWithItemLevelShippingAddresses();
+
+        $result = $this->tester->getFacade()->placeOrder($quoteTransfer);
+
+        $this->assertTrue($result->getIsSuccess());
+        $this->assertEquals(0, count($result->getErrors()));
+
+        $customerQuery = SpyCustomerQuery::create()->filterByEmail($quoteTransfer->getCustomer()->getEmail());
+        $this->assertEquals(1, $customerQuery->count());
+    }
+
+    /**
      * @todo move this code to customer checkout connector, registration can only happen if we have
      * already installed customer bundle
      *
@@ -257,6 +300,23 @@ class CheckoutFacadeTest extends Unit
     public function testRegistrationDoesNotCreateACustomerIfGuest()
     {
         $quoteTransfer = $this->getBaseQuoteTransfer();
+        $quoteTransfer->getCustomer()->setIsGuest(true);
+
+        $result = $this->tester->getFacade()->placeOrder($quoteTransfer);
+
+        $this->assertTrue($result->getIsSuccess());
+        $this->assertEquals(0, count($result->getErrors()));
+
+        $customerQuery = SpyCustomerQuery::create()->filterByEmail($quoteTransfer->getCustomer()->getEmail());
+        $this->assertEquals(0, $customerQuery->count());
+    }
+
+    /**
+     * @return void
+     */
+    public function testRegistrationDoesNotCreateACustomerIfGuestWithItemLevelShippingAddresses()
+    {
+        $quoteTransfer = $this->getBaseQuoteTransferWithItemLevelShippingAddresses();
         $quoteTransfer->getCustomer()->setIsGuest(true);
 
         $result = $this->tester->getFacade()->placeOrder($quoteTransfer);
@@ -316,9 +376,80 @@ class CheckoutFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testCheckoutResponseContainsErrorIfStockNotSufficientWithItemLevelShippingAddresses()
+    {
+        $quoteTransfer = $this->getBaseQuoteTransferWithItemLevelShippingAddresses();
+        $productAbstract1 = new SpyProductAbstract();
+        $productAbstract1
+            ->setSku('AOSB1339')
+            ->setAttributes('{}');
+        $productConcrete1 = new SpyProduct();
+        $productConcrete1
+            ->setSku('OSB1339')
+            ->setAttributes('{}')
+            ->setSpyProductAbstract($productAbstract1)
+            ->save();
+
+        $stock = new SpyStock();
+        $stock
+            ->setName('Stock2');
+
+        $stock1 = new SpyStockProduct();
+        $stock1
+            ->setQuantity(1)
+            ->setStock($stock)
+            ->setSpyProduct($productConcrete1)
+            ->save();
+
+        $item = new ItemTransfer();
+        $item
+            ->setSku('OSB1339')
+            ->setQuantity(2)
+            ->setUnitPrice(3000)
+            ->setUnitGrossPrice(3000)
+            ->setSumGrossPrice(6000);
+
+        $quoteTransfer->addItem($item);
+
+        $result = $this->tester->getFacade()->placeOrder($quoteTransfer);
+
+        $this->assertFalse($result->getIsSuccess());
+        $this->assertEquals(1, count($result->getErrors()));
+        $this->assertEquals(CheckoutConfig::ERROR_CODE_PRODUCT_UNAVAILABLE, $result->getErrors()[0]->getErrorCode());
+    }
+
+
+    /**
+     * @return void
+     */
     public function testCheckoutTriggersStateMachine()
     {
         $quoteTransfer = $this->getBaseQuoteTransfer();
+
+        $this->tester->getFacade()->placeOrder($quoteTransfer);
+
+        $omsConfig = new OmsConfig();
+
+        $orderItem1 = SpySalesOrderItemQuery::create()
+            ->filterBySku('OSB1337')
+            ->findOne();
+        $orderItem2 = SpySalesOrderItemQuery::create()
+            ->filterBySku('OSB1338')
+            ->findOne();
+
+        $this->assertNotNull($orderItem1);
+        $this->assertNotNull($orderItem2);
+
+        $this->assertEquals($omsConfig->getInitialStatus(), $orderItem1->getState()->getName());
+        $this->assertEquals($omsConfig->getInitialStatus(), $orderItem2->getState()->getName());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCheckoutTriggersStateMachineWithItemLevelShippingAddresses()
+    {
+        $quoteTransfer = $this->getBaseQuoteTransferWithItemLevelShippingAddresses();
 
         $this->tester->getFacade()->placeOrder($quoteTransfer);
 
@@ -407,8 +538,130 @@ class CheckoutFacadeTest extends Unit
             AddressTransfer::CITY => 'Entenhausen2',
         ]))->build();
         $quoteTransfer->setShippingAddress($shippingAddress);
+        $item1 = (new ItemBuilder())
+            ->seed([
+                ItemTransfer::UNIT_PRICE => 4000,
+                ItemTransfer::SKU => 'OSB1337',
+                ItemTransfer::QUANTITY => 1,
+                ItemTransfer::UNIT_GROSS_PRICE => 3000,
+                ItemTransfer::SUM_GROSS_PRICE => 3000,
+                ItemTransfer::NAME => 'Product1',
+            ])
+            ->build();
+        $item2 = (new ItemBuilder())
+            ->seed([
+                ItemTransfer::UNIT_PRICE => 4000,
+                ItemTransfer::SKU => 'OSB1338',
+                ItemTransfer::QUANTITY => 1,
+                ItemTransfer::UNIT_GROSS_PRICE => 4000,
+                ItemTransfer::SUM_GROSS_PRICE => 4000,
+                ItemTransfer::NAME => 'Product2',
+            ])
+            ->build();
+
+        $quoteTransfer->addItem($item1);
+        $quoteTransfer->addItem($item2);
+
+        $totals = (new TotalsBuilder())->seed([
+            TotalsTransfer::GRAND_TOTAL => 1000,
+            TotalsTransfer::SUBTOTAL => 500,
+        ])->build();
+
+        $quoteTransfer->setTotals($totals);
+
+        $billingAddress = (new AddressBuilder())->seed([
+            AddressTransfer::ISO2_CODE => 'xi',
+            AddressTransfer::EMAIL => 'max@mustermann.de',
+        ])->build();
+
+        $quoteTransfer->setBillingAddress($billingAddress);
+        $customerTransfer = (new CustomerBuilder())->seed([
+            CustomerTransfer::IS_GUEST => false,
+            CustomerTransfer::EMAIL => $billingAddress->getEmail(),
+        ])->build();
+
+        $quoteTransfer->setCustomer($customerTransfer);
+
+        $paymentTransfer = (new PaymentBuilder())->seed([
+            PaymentTransfer::PAYMENT_SELECTION => 'no_payment',
+        ])->build();
+
+        $quoteTransfer->setPayment($paymentTransfer);
+
+        return $quoteTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function getBaseQuoteTransferWithItemLevelShippingAddresses(): QuoteTransfer
+    {
+        $storeTransfer = (new StoreBuilder())->seed([
+            StoreTransfer::NAME => 'DE',
+        ])->build();
+        $currencyTransfer = (new CurrencyBuilder())->seed([
+            CurrencyTransfer::CODE => 'EUR',
+        ])->build();
+        $quoteTransfer = (new QuoteBuilder())->build();
+        $quoteTransfer->setStore($storeTransfer);
+        $quoteTransfer->setCurrency($currencyTransfer);
+
+        $country = new SpyCountry();
+        $country
+            ->setIso2Code('xi')
+            ->save();
+
+        $productAbstract1 = new SpyProductAbstract();
+        $productAbstract1
+            ->setSku('AOSB1337')
+            ->setAttributes('{}');
+        $productConcrete1 = new SpyProduct();
+        $productConcrete1
+            ->setSku('OSB1337')
+            ->setAttributes('{}')
+            ->setSpyProductAbstract($productAbstract1)
+            ->save();
+
+        $productAbstract2 = new SpyProductAbstract();
+        $productAbstract2
+            ->setSku('AOSB1338')
+            ->setAttributes('{}');
+        $productConcrete2 = new SpyProduct();
+        $productConcrete2
+            ->setSku('OSB1338')
+            ->setSpyProductAbstract($productAbstract2)
+            ->setAttributes('{}')
+            ->save();
+
+        $stock = (new SpyStockQuery())
+            ->filterByName('Warehouse1')
+            ->findOneOrCreate();
+
+        $stock->save();
+
+        $stock1 = new SpyStockProduct();
+        $stock1
+            ->setQuantity(3)
+            ->setStock($stock)
+            ->setSpyProduct($productConcrete1)
+            ->save();
+
+        $stock2 = new SpyStockProduct();
+        $stock2
+            ->setQuantity(3)
+            ->setStock($stock)
+            ->setSpyProduct($productConcrete2)
+            ->save();
+
+        $shippingAddress = (new AddressBuilder([
+            AddressTransfer::ADDRESS2 => '84',
+            AddressTransfer::ZIP_CODE => '12346',
+            AddressTransfer::EMAIL => 'max@mustermann.de',
+            AddressTransfer::CITY => 'Entenhausen2',
+        ]))->build();
+        $quoteTransfer->setShippingAddress($shippingAddress);
         $shipment = (new ShipmentBuilder())
-        ->build();
+            ->build();
         $shipment->setShippingAddress($shippingAddress);
         $item1 = (new ItemBuilder())
             ->seed([
