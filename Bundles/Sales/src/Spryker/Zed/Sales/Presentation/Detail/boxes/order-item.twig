@@ -70,13 +70,9 @@
   {% endif %}
 </td>
 <td rowspan="{{ numberOfItemAdditions }}">
-    {% if orderItemsOmsTriggerFormCollection[orderItem.IdSalesOrderItem] | length > 0 %}
-        {% for orderItemOmsTriggerForm in orderItemsOmsTriggerFormCollection[orderItem.IdSalesOrderItem] %}
-            {% include '@Oms/Form/oms_trigger_form.twig' with {
-                form: orderItemOmsTriggerForm
-            } only %}
-        {% endfor %}
-    {% else -%}
-        -
-    {%- endif %}
+        {{ render(controller('/oms/render-form/order-item', {
+            'item': item,
+            'eventsGroupedByItem': eventsGroupedByItem[orderItem.IdSalesOrderItem],
+        })) }}
+
 </td>

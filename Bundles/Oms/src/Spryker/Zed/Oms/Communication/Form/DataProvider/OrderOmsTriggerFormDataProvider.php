@@ -5,14 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Sales\Communication\Form\DataProvider;
+namespace Spryker\Zed\Oms\Communication\Form\DataProvider;
 
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Spryker\Zed\Oms\Communication\Form\DataProvider\AbstractOmsTriggerFormDataProvider;
 use Spryker\Zed\Oms\Communication\Form\OmsTriggerForm;
 
-class OmsTriggerFormDataProvider extends AbstractOmsTriggerFormDataProvider
+class OrderOmsTriggerFormDataProvider extends AbstractOmsTriggerFormDataProvider
 {
     public const ROUTE_REDIRECT = '/sales/detail';
 
@@ -36,30 +34,6 @@ class OmsTriggerFormDataProvider extends AbstractOmsTriggerFormDataProvider
             OmsTriggerForm::OPTION_QUERY_PARAMS => [
                 static::QUERY_PARAM_EVENT => $event,
                 static::QUERY_PARAM_ID_SALES_ORDER => $idSalesOrder,
-                static::QUERY_PARAM_REDIRECT => $this->createRedirectLink(static::ROUTE_REDIRECT, $redirectUrlParams),
-            ],
-        ];
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param string $event
-     *
-     * @return array
-     */
-    public function getOrderItemOmsTriggerFormOptions(ItemTransfer $itemTransfer, string $event): array
-    {
-        $redirectUrlParams = [
-            static::QUERY_PARAM_ID_SALES_ORDER => $itemTransfer->getFkSalesOrder(),
-        ];
-
-        return [
-            OmsTriggerForm::OPTION_OMS_ACTION => static::OMS_ACTION_ITEM_TRIGGER,
-            OmsTriggerForm::OPTION_EVENT => $event,
-            OmsTriggerForm::OPTION_SUBMIT_BUTTON_CLASS => static::SUBMIT_BUTTON_CLASS,
-            OmsTriggerForm::OPTION_QUERY_PARAMS => [
-                static::QUERY_PARAM_EVENT => $event,
-                static::QUERY_PARAM_ID_SALES_ORDER_ITEM => $itemTransfer->getIdSalesOrderItem(),
                 static::QUERY_PARAM_REDIRECT => $this->createRedirectLink(static::ROUTE_REDIRECT, $redirectUrlParams),
             ],
         ];

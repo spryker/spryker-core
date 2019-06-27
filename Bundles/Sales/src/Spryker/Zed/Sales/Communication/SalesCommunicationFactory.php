@@ -8,24 +8,19 @@
 namespace Spryker\Zed\Sales\Communication;
 
 use ArrayObject;
-use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\Oms\Communication\Form\OmsTriggerForm;
 use Spryker\Zed\Sales\Communication\Form\AddressForm;
 use Spryker\Zed\Sales\Communication\Form\CommentForm;
 use Spryker\Zed\Sales\Communication\Form\CustomerForm;
 use Spryker\Zed\Sales\Communication\Form\DataProvider\AddressFormDataProvider;
 use Spryker\Zed\Sales\Communication\Form\DataProvider\CommentFormDataProvider;
 use Spryker\Zed\Sales\Communication\Form\DataProvider\CustomerFormDataProvider;
-use Spryker\Zed\Sales\Communication\Form\DataProvider\OmsTriggerFormDataProvider;
 use Spryker\Zed\Sales\Communication\Table\CustomerOrdersTable;
 use Spryker\Zed\Sales\Communication\Table\OrdersTable;
 use Spryker\Zed\Sales\Communication\Table\OrdersTableQueryBuilder;
 use Spryker\Zed\Sales\SalesDependencyProvider;
 use Spryker\Zed\SalesSplit\Communication\Form\DataProvider\OrderItemSplitDataProvider;
 use Spryker\Zed\SalesSplit\Communication\Form\OrderItemSplitForm;
-use Symfony\Component\Form\FormInterface;
 
 /**
  * @method \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface getQueryContainer()
@@ -61,34 +56,6 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     * @param string $event
-     *
-     * @return \Symfony\Component\Form\FormInterface
-     */
-    public function getOrderOmsTriggerForm(OrderTransfer $orderTransfer, string $event): FormInterface
-    {
-        $options = $this->createOmsTriggerFormDataProvider()
-            ->getOrderOmsTriggerFormOptions($orderTransfer, $event);
-
-        return $this->getFormFactory()->create(OmsTriggerForm::class, null, $options);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param string $event
-     *
-     * @return \Symfony\Component\Form\FormInterface
-     */
-    public function getOrderItemOmsTriggerForm(ItemTransfer $itemTransfer, string $event): FormInterface
-    {
-        $options = $this->createOmsTriggerFormDataProvider()
-            ->getOrderItemOmsTriggerFormOptions($itemTransfer, $event);
-
-        return $this->getFormFactory()->create(OmsTriggerForm::class, null, $options);
-    }
-
-    /**
      * @return \Spryker\Zed\Sales\Communication\Form\DataProvider\CustomerFormDataProvider
      */
     public function createCustomerFormDataProvider()
@@ -102,14 +69,6 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
     public function createCommentFormDataProvider()
     {
         return new CommentFormDataProvider();
-    }
-
-    /**
-     * @return \Spryker\Zed\Sales\Communication\Form\DataProvider\OmsTriggerFormDataProvider
-     */
-    public function createOmsTriggerFormDataProvider(): OmsTriggerFormDataProvider
-    {
-        return new OmsTriggerFormDataProvider();
     }
 
     /**

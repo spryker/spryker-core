@@ -6,11 +6,10 @@
             {% block widget_content %}
 
                 <div>
-                    {% for orderOmsTriggerForm in orderOmsTriggerFormCollection %}
-                        {% include '@Oms/Form/oms_trigger_form.twig' with {
-                            form: orderOmsTriggerForm
-                        } only %}
-                    {% endfor %}
+                    {{ render(controller('/oms/render-form/order', {
+                        'order': order,
+                        'events': events,
+                    })) }}
                 </div>
 
             {% endblock %}

@@ -8,9 +8,11 @@
 namespace Spryker\Zed\Oms\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\Oms\Communication\Form\OmsTriggerForm;
+use Spryker\Zed\Oms\Communication\Collector\OmsTriggerFormCollector;
+use Spryker\Zed\Oms\Communication\Collector\OmsTriggerFormCollectorInterface;
+use Spryker\Zed\Oms\Communication\Factory\OmsTriggerFormFactory;
+use Spryker\Zed\Oms\Communication\Factory\OmsTriggerFormFactoryInterface;
 use Spryker\Zed\Oms\Communication\Table\TransitionLogTable;
-use Symfony\Component\Form\FormInterface;
 
 /**
  * @method \Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface getQueryContainer()
@@ -31,13 +33,18 @@ class OmsCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param mixed|null $data
-     * @param array $options
-     *
-     * @return \Symfony\Component\Form\FormInterface
+     * @return \Spryker\Zed\Oms\Communication\Factory\OmsTriggerFormFactoryInterface
      */
-    public function createOmsTriggerForm($data = null, array $options = []): FormInterface
+    public function createOmsTriggerFormFactory(): OmsTriggerFormFactoryInterface
     {
-        return $this->getFormFactory()->create(OmsTriggerForm::class, $data, $options);
+        return new OmsTriggerFormFactory($this->getFormFactory());
+    }
+
+    /**
+     * @return \Spryker\Zed\Oms\Communication\Collector\OmsTriggerFormCollectorInterface
+     */
+    public function createOmsTriggerFormCollector(): OmsTriggerFormCollectorInterface
+    {
+        return new OmsTriggerFormCollector($this->createOmsTriggerFormFactory());
     }
 }

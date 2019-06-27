@@ -79,13 +79,9 @@
     {% endif %}
 </td>
 <td>
-    {% if orderItemsOmsTriggerFormCollection[orderItem.IdSalesOrderItem] | length > 0 %}
-        {% for orderItemOmsTriggerForm in orderItemsOmsTriggerFormCollection[orderItem.IdSalesOrderItem] %}
-            {% include '@Oms/Form/oms_trigger_form.twig' with {
-                form: orderItemOmsTriggerForm
-            } only %}
-        {% endfor %}
-    {% else -%}
-        -
-    {%- endif %}
+    {{ render(controller('/oms/render-form/reclamation-item', {
+        orderItem: orderItem,
+        eventsGroupedByItem: eventsGroupedByItem[orderItem.idSalesOrderItem],
+        reclamation: reclamation,
+    })) }}
 </td>

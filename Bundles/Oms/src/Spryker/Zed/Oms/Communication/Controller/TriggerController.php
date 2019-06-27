@@ -135,7 +135,7 @@ class TriggerController extends AbstractController
      */
     protected function isRequestValid(Request $request): bool
     {
-        return $request->isMethod(Request::METHOD_POST) && $this->isCsrfTokenValid($request);
+        return $request->isMethod(Request::METHOD_POST) && $this->isTriggerFormValid($request);
     }
 
     /**
@@ -143,9 +143,10 @@ class TriggerController extends AbstractController
      *
      * @return bool
      */
-    protected function isCsrfTokenValid(Request $request): bool
+    protected function isTriggerFormValid(Request $request): bool
     {
         return $this->getFactory()
+            ->createOmsTriggerFormFactory()
             ->createOmsTriggerForm()
             ->handleRequest($request)
             ->isValid();

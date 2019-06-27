@@ -7,12 +7,8 @@
 
 namespace Spryker\Zed\SalesReclamationGui\Communication;
 
-use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\ReclamationTransfer;
 use Orm\Zed\SalesReclamation\Persistence\SpySalesReclamationQuery;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\Oms\Communication\Form\OmsTriggerForm;
-use Spryker\Zed\SalesReclamationGui\Communication\Form\DataProvider\OmsTriggerFormDataProvider;
 use Spryker\Zed\SalesReclamationGui\Communication\ReclamationItem\ReclamationItemEventsFinder;
 use Spryker\Zed\SalesReclamationGui\Communication\ReclamationItem\ReclamationItemEventsFinderInterface;
 use Spryker\Zed\SalesReclamationGui\Communication\Table\ReclamationTable;
@@ -21,7 +17,6 @@ use Spryker\Zed\SalesReclamationGui\Dependency\Facade\SalesReclamationGuiToSales
 use Spryker\Zed\SalesReclamationGui\Dependency\Facade\SalesReclamationGuiToSalesReclamationFacadeInterface;
 use Spryker\Zed\SalesReclamationGui\Dependency\Service\SalesReclamationGuiToUtilDateTimeServiceInterface;
 use Spryker\Zed\SalesReclamationGui\SalesReclamationGuiDependencyProvider;
-use Symfony\Component\Form\FormInterface;
 
 /**
  * @method \Spryker\Zed\SalesReclamationGui\SalesReclamationGuiConfig getConfig()
@@ -85,42 +80,5 @@ class SalesReclamationGuiCommunicationFactory extends AbstractCommunicationFacto
     public function createReclamationItemEventsFinder(): ReclamationItemEventsFinderInterface
     {
         return new ReclamationItemEventsFinder();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ReclamationTransfer $reclamationTransfer
-     * @param string $event
-     *
-     * @return \Symfony\Component\Form\FormInterface
-     */
-    public function getOrderOmsTriggerForm(ReclamationTransfer $reclamationTransfer, string $event): FormInterface
-    {
-        $options = $this->createOmsTriggerFormDataProvider()
-            ->getOrderOmsTriggerFormOptions($reclamationTransfer, $event);
-
-        return $this->getFormFactory()->create(OmsTriggerForm::class, null, $options);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param string $event
-     * @param int $idReclamation
-     *
-     * @return \Symfony\Component\Form\FormInterface
-     */
-    public function getOrderItemOmsTriggerForm(ItemTransfer $itemTransfer, string $event, int $idReclamation): FormInterface
-    {
-        $options = $this->createOmsTriggerFormDataProvider()
-            ->getOrderItemOmsTriggerFormOptions($itemTransfer, $event, $idReclamation);
-
-        return $this->getFormFactory()->create(OmsTriggerForm::class, null, $options);
-    }
-
-    /**
-     * @return \Spryker\Zed\SalesReclamationGui\Communication\Form\DataProvider\OmsTriggerFormDataProvider
-     */
-    public function createOmsTriggerFormDataProvider(): OmsTriggerFormDataProvider
-    {
-        return new OmsTriggerFormDataProvider();
     }
 }

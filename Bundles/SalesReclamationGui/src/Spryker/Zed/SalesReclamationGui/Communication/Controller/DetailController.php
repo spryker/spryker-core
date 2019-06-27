@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\SalesReclamationGui\Communication\Controller;
 
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ReclamationTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
@@ -45,15 +44,10 @@ class DetailController extends AbstractController
             ->createReclamationItemEventsFinder()
             ->getDistinctManualEventsByReclamationItems($reclamationTransfer->getReclamationItems(), $eventsGroupedByItem);
 
-        $orderOmsTriggerFormCollection = $this->getOrderOmsTriggerFormCollection($reclamationTransfer, $events);
-        $orderItemsOmsTriggerFormCollection = $this->getOrderItemsOmsTriggerFormCollection($reclamationTransfer, $eventsGroupedByItem);
-
         return $this->viewResponse([
             'reclamation' => $reclamationTransfer,
             'eventsGroupedByItem' => $eventsGroupedByItem,
             'events' => $events,
-            'orderOmsTriggerFormCollection' => $orderOmsTriggerFormCollection,
-            'orderItemsOmsTriggerFormCollection' => $orderItemsOmsTriggerFormCollection,
         ]);
     }
 
@@ -82,67 +76,5 @@ class DetailController extends AbstractController
                 '/sales-reclamation-gui'
             )->build()
         );
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ReclamationTransfer $reclamationTransfer
-     * @param string[] $events
-     *
-     * @return \Symfony\Component\Form\FormView[]
-     */
-    protected function getOrderOmsTriggerFormCollection(ReclamationTransfer $reclamationTransfer, array $events): array
-    {
-        $orderOmsTriggerFormCollection = [];
-
-        foreach ($events as $event) {
-            $orderOmsTriggerFormCollection[$event] = $this->getFactory()
-                ->getOrderOmsTriggerForm($reclamationTransfer, $event)
-                ->createView();
-        }
-
-        return $orderOmsTriggerFormCollection;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ReclamationTransfer $reclamationTransfer
-     * @param array $eventsGroupedByItem
-     *
-     * @return array
-     */
-    protected function getOrderItemsOmsTriggerFormCollection(ReclamationTransfer $reclamationTransfer, array $eventsGroupedByItem): array
-    {
-        $orderItemsOmsTriggerFormCollection = [];
-
-        foreach ($reclamationTransfer->getOrder()->getItems() as $itemTransfer) {
-            $idSalesOrderItem = $itemTransfer->getIdSalesOrderItem();
-
-            $orderItemsOmsTriggerFormCollection[$idSalesOrderItem] = $this->getSingleOrderItemOmsTriggerFormCollection(
-                $itemTransfer,
-                $eventsGroupedByItem[$idSalesOrderItem],
-                $reclamationTransfer->getIdSalesReclamation()
-            );
-        }
-
-        return $orderItemsOmsTriggerFormCollection;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param string[] $events
-     * @param int $idReclamation
-     *
-     * @return \Symfony\Component\Form\FormView[]
-     */
-    protected function getSingleOrderItemOmsTriggerFormCollection(ItemTransfer $itemTransfer, array $events, int $idReclamation): array
-    {
-        $orderItemOmsTriggerFormCollection = [];
-
-        foreach ($events as $event) {
-            $orderItemOmsTriggerFormCollection[$event] = $this->getFactory()
-                ->getOrderItemOmsTriggerForm($itemTransfer, $event, $idReclamation)
-                ->createView();
-        }
-
-        return $orderItemOmsTriggerFormCollection;
     }
 }
