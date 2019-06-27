@@ -116,4 +116,15 @@ interface ShipmentMapperInterface
         SpyCountry $countryEntity,
         CountryTransfer $countryTransfer
     ): CountryTransfer;
+
+    /**
+     * @param iterable|\Orm\Zed\Sales\Persistence\SpySalesShipment[]|\Propel\Runtime\Collection\ObjectCollection $salesOrderShipments
+     * @param array $shipmentTransfers
+     *
+     * @return \Generated\Shared\Transfer\ShipmentTransfer[]
+     */
+    public function mapShipmentEntitiesToShipmentTransfers(
+        iterable $salesOrderShipments,
+        array $shipmentTransfers
+    ): array;
 }
