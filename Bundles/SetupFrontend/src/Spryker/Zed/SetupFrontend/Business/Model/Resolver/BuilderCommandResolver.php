@@ -16,15 +16,15 @@ class BuilderCommandResolver implements BuilderCommandResolverInterface
     /**
      * @var \Spryker\Zed\SetupFrontend\SetupFrontendConfig
      */
-    protected $setupFrontendConfig;
+    protected $config;
 
     /**
-     * @param \Spryker\Zed\SetupFrontend\SetupFrontendConfig $setupFrontendConfig
+     * @param \Spryker\Zed\SetupFrontend\SetupFrontendConfig $config
      */
     public function __construct(
-        SetupFrontendConfig $setupFrontendConfig
+        SetupFrontendConfig $config
     ) {
-        $this->setupFrontendConfig = $setupFrontendConfig;
+        $this->config = $config;
     }
 
     /**
@@ -37,7 +37,7 @@ class BuilderCommandResolver implements BuilderCommandResolverInterface
         return str_replace(
             static::STORE_NAME_KEY,
             $storeName,
-            $this->setupFrontendConfig->getYvesBuildCommand()
+            $this->config->getYvesBuildCommand()
         );
     }
 }
