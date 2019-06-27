@@ -86,7 +86,7 @@ class ShipmentsRestApiFacadeTest extends Unit
         $actualQuote = $shipmentRestApiFacade->mapShipmentToQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);
         $this->assertGreaterThan(0, $actualQuote->getExpenses()->count());
 
-        foreach($actualQuote->getItems() as $itemTransfer) {
+        foreach ($actualQuote->getItems() as $itemTransfer) {
             $this->assertNotNull($itemTransfer->getShipment());
             $actualShipmentMethodTransfer = $itemTransfer->getShipment()->getMethod();
             $this->assertEquals(static::SHIPMENT_METHOD['idShipmentMethod'], $actualShipmentMethodTransfer->getIdShipmentMethod());
@@ -117,7 +117,6 @@ class ShipmentsRestApiFacadeTest extends Unit
         $this->assertCount(0, $actualQuote->getExpenses());
     }
 
-
     /**
      * @return void
      */
@@ -132,7 +131,7 @@ class ShipmentsRestApiFacadeTest extends Unit
 
         $actualQuote = $shipmentRestApiFacade->mapShipmentToQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);
 
-        foreach($actualQuote->getItems() as $itemTransfer) {
+        foreach ($actualQuote->getItems() as $itemTransfer) {
             $this->assertNull($itemTransfer->getShipment());
         }
 
@@ -171,7 +170,7 @@ class ShipmentsRestApiFacadeTest extends Unit
 
         $actualQuote = $shipmentRestApiFacade->mapShipmentToQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);
 
-        foreach($actualQuote->getItems() as $itemTransfer) {
+        foreach ($actualQuote->getItems() as $itemTransfer) {
             $this->assertNull($itemTransfer->getShipment());
         }
 
