@@ -275,7 +275,7 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
     }
 
     /**
-     * @deprecated Use `Spryker\Zed|Product\Business\Product\ProductConcreteManager::getProductConcretesByConcreteSkus()` instead.
+     * @deprecated Use `Spryker\Zed\Product\Business\Product\ProductConcreteManager::getProductConcretesByConcreteSkus()` instead.
      *
      * @param string $productConcreteSku
      *

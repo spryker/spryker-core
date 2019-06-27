@@ -287,7 +287,7 @@ interface ProductFacadeInterface
      *
      * @api
      *
-     * @deprecated Use `Spryker\Zed|Product\Business\ProductFacadeInterface::getProductConcretesByConcreteSkus()` instead.
+     * @deprecated Use `Spryker\Zed\Product\Business\ProductFacadeInterface::getProductConcretesByConcreteSkus()` instead.
      *
      * @param string $productConcreteSku
      *
