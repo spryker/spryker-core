@@ -58,15 +58,17 @@ class FileSynchronizationDataBulkPlugin extends AbstractPlugin implements Synchr
      */
     public function getData(int $offset, int $limit, array $ids = []): array
     {
-        $synchronizationDataTransfers = [];
         $filterTransfer = $this->createFilterTransfer($offset, $limit);
+        $fileStorageTransfers = $this->getRepository()
+            ->getFilteredFileStorageTransfers($filterTransfer, $ids);
 
-        $fileStorageEntityTransfers = $this->getRepository()->findFilteredFileManagerStorageEntities($filterTransfer, $ids);
-
-        foreach ($fileStorageEntityTransfers as $fileStorageEntityTransfer) {
+        $synchronizationDataTransfers = [];
+        foreach ($fileStorageTransfers as $fileStorageTransfer) {
             $synchronizationDataTransfer = new SynchronizationDataTransfer();
-            $synchronizationDataTransfer->setData($fileStorageEntityTransfer->getData());
-            $synchronizationDataTransfer->setKey($fileStorageEntityTransfer->getKey());
+            /** @var string $data */
+            $data = $fileStorageTransfer->getData()->toArray();
+            $synchronizationDataTransfer->setData($data);
+            $synchronizationDataTransfer->setKey($fileStorageTransfer->getKey());
             $synchronizationDataTransfers[] = $synchronizationDataTransfer;
         }
 

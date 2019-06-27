@@ -29,7 +29,7 @@ interface FileManagerStorageRepositoryInterface
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      * @param int[] $ids
      *
-     * @return \Generated\Shared\Transfer\SpyFileStorageEntityTransfer[]
+     * @return \Generated\Shared\Transfer\FileStorageTransfer[]
      */
-    public function findFilteredFileManagerStorageEntities(FilterTransfer $filterTransfer, array $ids = []): array;
+    public function getFilteredFileStorageTransfers(FilterTransfer $filterTransfer, array $ids = []): array;
 }
