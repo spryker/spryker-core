@@ -22,9 +22,11 @@
 
                         <p>{{ comment.message }}</p>
 
-                        {% for commentTag in comment.commentTags %}
-                            <span class="comment-tag">{{ commentTag.name }}</span>
-                        {% endfor %}
+                        <ul class="comment-tag-list">
+                            {% for commentTag in comment.commentTags %}
+                                <li class="tag">{{ commentTag.name }}</li>
+                            {% endfor %}
+                        </ul>
                     </div>
                 {% endfor %}
             </div>
