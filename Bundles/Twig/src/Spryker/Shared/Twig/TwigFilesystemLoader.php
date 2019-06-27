@@ -115,9 +115,14 @@ class TwigFilesystemLoader implements FilesystemLoaderInterface
         $module = $this->extractModule($moduleOrganization);
 
         foreach ($this->paths as $path) {
+            $package = $module;
             $path = $this->getNamespacedPath($path, $organization);
 
-            $path = sprintf($path, $module);
+            if ($this->isPathInSplit($path)) {
+                $package = $this->filterBundleName($module);
+            }
+
+            $path = sprintf($path, $module, $package);
             if (strpos($path, '*') === false && is_dir($path)) {
                 $paths[] = $path;
 
@@ -246,8 +251,6 @@ class TwigFilesystemLoader implements FilesystemLoaderInterface
     }
 
     /**
-     * @deprecated Will be removed without replacement.
-     *
      * @param string $path
      *
      * @return bool
@@ -258,8 +261,6 @@ class TwigFilesystemLoader implements FilesystemLoaderInterface
     }
 
     /**
-     * @deprecated Will be removed without replacement.
-     *
      * @param string $bundleName
      *
      * @return string
