@@ -15,8 +15,8 @@ class ConsoleConfig extends AbstractBundleConfig
     /**
      * @return bool
      */
-    public function isCatchExceptions(): bool
+    public function shouldCatchExceptions(): bool
     {
-        return $this->get(ConsoleConstants::CONSOLE_CATCH_EXCEPTIONS, false);
+        return $this->get(ConsoleConstants::CATCH_EXCEPTIONS, false);
     }
 }

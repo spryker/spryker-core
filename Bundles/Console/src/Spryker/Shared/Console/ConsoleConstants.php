@@ -19,5 +19,5 @@ interface ConsoleConstants
      *
      * @api
      */
-    public const CONSOLE_CATCH_EXCEPTIONS = 'CONSOLE:CATCH_EXCEPTIONS';
+    public const CATCH_EXCEPTIONS = 'CONSOLE:CATCH_EXCEPTIONS';
 }
