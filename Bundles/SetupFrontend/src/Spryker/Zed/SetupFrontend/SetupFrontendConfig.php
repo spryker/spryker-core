@@ -33,8 +33,7 @@ class SetupFrontendConfig extends AbstractBundleConfig
 
     /**
      * Specification:
-     * - Yves public folder for assets.
-     * - %store% will be replaced with current store.
+     * - Yves public folders for assets.
      *
      * @api
      *

@@ -63,11 +63,12 @@ interface SetupFrontendFacadeInterface
      *
      * @api
      *
+     * @param string $storeName
      * @param \Psr\Log\LoggerInterface $logger
      *
      * @return bool
      */
-    public function generateYvesAssetsBuildConfig(LoggerInterface $logger): bool;
+    public function generateYvesAssetsBuildConfigForStore(string $storeName, LoggerInterface $logger): bool;
 
     /**
      * Specification:

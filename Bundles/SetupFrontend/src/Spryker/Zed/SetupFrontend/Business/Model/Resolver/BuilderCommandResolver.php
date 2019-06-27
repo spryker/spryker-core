@@ -19,30 +19,24 @@ class BuilderCommandResolver implements BuilderCommandResolverInterface
     protected $setupFrontendConfig;
 
     /**
-     * @var string
-     */
-    protected $storeName;
-
-    /**
      * @param \Spryker\Zed\SetupFrontend\SetupFrontendConfig $setupFrontendConfig
-     * @param string $storeName
      */
     public function __construct(
-        SetupFrontendConfig $setupFrontendConfig,
-        string $storeName
+        SetupFrontendConfig $setupFrontendConfig
     ) {
         $this->setupFrontendConfig = $setupFrontendConfig;
-        $this->storeName = $storeName;
     }
 
     /**
+     * @param string $storeName
+     *
      * @return string
      */
-    public function getYvesBuildCommand(): string
+    public function getYvesBuildCommand(string $storeName): string
     {
         return str_replace(
             static::STORE_NAME_KEY,
-            $this->storeName,
+            $storeName,
             $this->setupFrontendConfig->getYvesBuildCommand()
         );
     }

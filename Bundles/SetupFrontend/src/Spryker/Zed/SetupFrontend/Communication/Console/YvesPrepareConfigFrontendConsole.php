@@ -13,6 +13,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\SetupFrontend\Business\SetupFrontendFacadeInterface getFacade()
+ * @method \Spryker\Zed\SetupFrontend\Communication\SetupFrontendCommunicationFactory getFactory()
  */
 class YvesPrepareConfigFrontendConsole extends Console
 {
@@ -40,7 +41,9 @@ class YvesPrepareConfigFrontendConsole extends Console
     {
         $this->info('Generate configuration for Yves frontend building.');
 
-        if ($this->getFacade()->generateYvesAssetsBuildConfig($this->getMessenger())) {
+        $storeName = $this->getFactory()->getStoreName();
+
+        if ($this->getFacade()->generateYvesAssetsBuildConfigForStore($storeName, $this->getMessenger())) {
             return static::CODE_SUCCESS;
         }
 

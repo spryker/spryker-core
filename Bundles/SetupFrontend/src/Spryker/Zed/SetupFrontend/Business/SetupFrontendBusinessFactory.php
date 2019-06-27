@@ -10,7 +10,6 @@ namespace Spryker\Zed\SetupFrontend\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\SetupFrontend\Business\BuildConfigProvider\YvesAssetsBuildConfigProvider;
 use Spryker\Zed\SetupFrontend\Business\BuildConfigProvider\YvesAssetsBuildConfigProviderInterface;
-use Spryker\Zed\SetupFrontend\Business\Cleaner\YvesAssetsCleaner;
 use Spryker\Zed\SetupFrontend\Business\Model\Builder\Builder;
 use Spryker\Zed\SetupFrontend\Business\Model\Builder\BuilderInterface;
 use Spryker\Zed\SetupFrontend\Business\Model\Cleaner\Cleaner;
@@ -58,10 +57,7 @@ class SetupFrontendBusinessFactory extends AbstractBusinessFactory
      */
     public function createYvesAssetsCleaner(): CleanerInterface
     {
-        return new YvesAssetsCleaner(
-            $this->getConfig(),
-            $this->getStoreName()
-        );
+        return new Cleaner($this->getConfig()->getYvesAssetsDirectories());
     }
 
     /**
@@ -88,7 +84,12 @@ class SetupFrontendBusinessFactory extends AbstractBusinessFactory
      */
     public function createYvesBuilder(): BuilderInterface
     {
-        return new Builder($this->createBuilderCommandResolver()->getYvesBuildCommand());
+        $buildCommand = $this->createBuilderCommandResolver()
+            ->getYvesBuildCommand(
+                $this->getStoreName()
+            );
+
+        return new Builder($buildCommand);
     }
 
     /**
@@ -97,8 +98,7 @@ class SetupFrontendBusinessFactory extends AbstractBusinessFactory
     public function createBuilderCommandResolver(): BuilderCommandResolverInterface
     {
         return new BuilderCommandResolver(
-            $this->getConfig(),
-            $this->getStoreName()
+            $this->getConfig()
         );
     }
 
@@ -145,7 +145,6 @@ class SetupFrontendBusinessFactory extends AbstractBusinessFactory
         return new YvesAssetsBuildConfigProvider(
             $this->getConfig(),
             $this->getUtilEncodingService(),
-            $this->getStoreName(),
             $this->getYvesFrontendStoreConfigExpanderPlugins()
         );
     }

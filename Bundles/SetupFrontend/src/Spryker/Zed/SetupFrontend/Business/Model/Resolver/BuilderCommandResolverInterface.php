@@ -10,7 +10,9 @@ namespace Spryker\Zed\SetupFrontend\Business\Model\Resolver;
 interface BuilderCommandResolverInterface
 {
     /**
+     * @param string $storeName
+     *
      * @return string
      */
-    public function getYvesBuildCommand(): string;
+    public function getYvesBuildCommand(string $storeName): string;
 }

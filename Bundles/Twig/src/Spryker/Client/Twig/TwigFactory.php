@@ -17,7 +17,7 @@ class TwigFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\Twig\TwigConfig
      */
-    public function getBundleConfig(): TwigConfig
+    public function getModuleConfig(): TwigConfig
     {
         return $this->getConfig();
     }

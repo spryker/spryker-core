@@ -18,12 +18,7 @@ class YvesAssetsBuildConfigProvider implements YvesAssetsBuildConfigProviderInte
     /**
      * @var \Spryker\Zed\SetupFrontend\SetupFrontendConfig
      */
-    protected $setupFrontendConfig;
-
-    /**
-     * @var string
-     */
-    protected $storeName;
+    protected $config;
 
     /**
      * @var \Spryker\Zed\SetupFrontend\Dependency\Service\SetupFrontendToUtilEncodingServiceInterface
@@ -36,54 +31,53 @@ class YvesAssetsBuildConfigProvider implements YvesAssetsBuildConfigProviderInte
     protected $yvesFrontendStoreConfigExpanderPlugins;
 
     /**
-     * @param \Spryker\Zed\SetupFrontend\SetupFrontendConfig $setupFrontendConfig
+     * @param \Spryker\Zed\SetupFrontend\SetupFrontendConfig $config
      * @param \Spryker\Zed\SetupFrontend\Dependency\Service\SetupFrontendToUtilEncodingServiceInterface $utilEncodingService
-     * @param string $storeName
      * @param \Spryker\Zed\SetupFrontendExtension\Dependency\Plugin\YvesFrontendStoreConfigExpanderPluginInterface[] $yvesFrontendStoreConfigExpanderPlugins
      */
     public function __construct(
-        SetupFrontendConfig $setupFrontendConfig,
+        SetupFrontendConfig $config,
         SetupFrontendToUtilEncodingServiceInterface $utilEncodingService,
-        string $storeName,
         array $yvesFrontendStoreConfigExpanderPlugins
     ) {
-        $this->setupFrontendConfig = $setupFrontendConfig;
-        $this->storeName = $storeName;
+        $this->config = $config;
         $this->utilEncodingService = $utilEncodingService;
         $this->yvesFrontendStoreConfigExpanderPlugins = $yvesFrontendStoreConfigExpanderPlugins;
     }
 
     /**
+     * @param string $storeName
      * @param \Psr\Log\LoggerInterface $logger
      *
      * @return bool
      */
-    public function generateYvesAssetsBuildConfig(LoggerInterface $logger): bool
+    public function generateYvesAssetsBuildConfig(string $storeName, LoggerInterface $logger): bool
     {
         $configData = $this->loadDataFromConfigFile($logger);
 
-        $configData = $this->prepareConfigDataForCurrentStore($configData);
+        $configData = $this->prepareConfigDataForStore($configData, $storeName);
 
         return $this->storeConfigDataFile($configData, $logger);
     }
 
     /**
      * @param array $configData
+     * @param string $storeName
      *
      * @return array
      */
-    protected function prepareConfigDataForCurrentStore(array $configData): array
+    protected function prepareConfigDataForStore(array $configData, string $storeName): array
     {
         $storeConfigData = [];
-        if (isset($configData[$this->storeName])) {
-            $storeConfigData = $configData[$this->storeName];
+        if (isset($configData[$storeName])) {
+            $storeConfigData = $configData[$storeName];
         }
 
-        $storeConfigData[static::YVES_ASSETS_CONFIG_STORE_KEY] = strtolower($this->storeName);
+        $storeConfigData[static::YVES_ASSETS_CONFIG_STORE_KEY] = strtolower($storeName);
 
-        $storeConfigData = $this->executeExpandYvesFrontendConfigDataPlugins($storeConfigData);
+        $storeConfigData = $this->executeYvesFrontendConfigExpanderPlugins($storeConfigData);
 
-        $configData[$this->storeName] = $storeConfigData;
+        $configData[$storeName] = $storeConfigData;
 
         return $configData;
     }
@@ -93,7 +87,7 @@ class YvesAssetsBuildConfigProvider implements YvesAssetsBuildConfigProviderInte
      *
      * @return array
      */
-    protected function executeExpandYvesFrontendConfigDataPlugins(array $storeConfigData): array
+    protected function executeYvesFrontendConfigExpanderPlugins(array $storeConfigData): array
     {
         foreach ($this->yvesFrontendStoreConfigExpanderPlugins as $frontendStoreConfigExpanderPlugin) {
             $storeConfigData = $frontendStoreConfigExpanderPlugin->expand($storeConfigData);
@@ -109,7 +103,7 @@ class YvesAssetsBuildConfigProvider implements YvesAssetsBuildConfigProviderInte
      */
     protected function loadDataFromConfigFile(LoggerInterface $logger): array
     {
-        $configFileName = $this->setupFrontendConfig->getYvesFrontendConfigFilePath();
+        $configFileName = $this->config->getYvesFrontendConfigFilePath();
 
         if (!file_exists($configFileName)) {
             $logger->info(sprintf(
@@ -120,9 +114,9 @@ class YvesAssetsBuildConfigProvider implements YvesAssetsBuildConfigProviderInte
             return [];
         }
 
-        $encodedConfigFileData = file_get_contents($configFileName);
+        $fileContent = file_get_contents($configFileName);
 
-        if ($encodedConfigFileData === false) {
+        if ($fileContent === false) {
             $logger->info(sprintf(
                 'Config file "%s" is not readable.',
                 $configFileName
@@ -136,7 +130,7 @@ class YvesAssetsBuildConfigProvider implements YvesAssetsBuildConfigProviderInte
             $configFileName
         ));
 
-        return $this->utilEncodingService->decodeJson($encodedConfigFileData, true);
+        return $this->utilEncodingService->decodeJson($fileContent, true);
     }
 
     /**
@@ -148,16 +142,16 @@ class YvesAssetsBuildConfigProvider implements YvesAssetsBuildConfigProviderInte
     protected function storeConfigDataFile(array $configData, LoggerInterface $logger): bool
     {
         $encodedConfigFileData = $this->utilEncodingService->encodeJson($configData, JSON_PRETTY_PRINT);
-        $configFileName = $this->setupFrontendConfig->getYvesFrontendConfigFilePath();
+        $configFileName = $this->config->getYvesFrontendConfigFilePath();
 
-        $isFileUpdated = (bool)file_put_contents(
+        $isFileSaved = (bool)file_put_contents(
             $configFileName,
             $encodedConfigFileData
         );
 
-        if ($isFileUpdated === false) {
+        if ($isFileSaved === false) {
             $logger->error(sprintf(
-                'Config file "%s" is not available for update.',
+                'Config file "%s" is not writable.',
                 $configFileName
             ));
 
@@ -165,7 +159,7 @@ class YvesAssetsBuildConfigProvider implements YvesAssetsBuildConfigProviderInte
         }
 
         $logger->info(sprintf(
-            'Config file "%s" successfully stored.',
+            'Config file "%s" successfully saved.',
             $configFileName
         ));
 

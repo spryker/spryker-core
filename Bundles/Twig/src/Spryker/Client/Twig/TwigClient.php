@@ -24,7 +24,7 @@ class TwigClient extends AbstractClient implements TwigClientInterface
     public function getYvesThemeName(): string
     {
         return $this->getFactory()
-            ->getBundleConfig()
+            ->getModuleConfig()
             ->getYvesThemeName();
     }
 
@@ -38,7 +38,7 @@ class TwigClient extends AbstractClient implements TwigClientInterface
     public function getYvesThemeNameDefault(): string
     {
         return $this->getFactory()
-            ->getBundleConfig()
+            ->getModuleConfig()
             ->getYvesThemeNameDefault();
     }
 }
