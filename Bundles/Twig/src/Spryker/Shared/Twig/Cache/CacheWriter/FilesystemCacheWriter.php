@@ -70,7 +70,7 @@ class FilesystemCacheWriter implements CacheWriterInterface
     {
         if (!is_writable($directory)) {
             throw new PermissionDeniedException(
-                sprintf('Couldn\'t create directory "%s", with permission mode "%s".', $directory, $this->permissionMode)
+                sprintf('Couldn\'t create directory "%s".', $directory)
             );
         }
     }
