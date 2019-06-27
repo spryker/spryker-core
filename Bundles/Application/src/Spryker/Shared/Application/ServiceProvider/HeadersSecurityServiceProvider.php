@@ -37,7 +37,7 @@ class HeadersSecurityServiceProvider implements ServiceProviderInterface
     /**
      * @const string
      */
-    protected const HEADER_REFERER_POLICY = 'Referrer-Policy';
+    protected const HEADER_REFERRER_POLICY = 'Referrer-Policy';
 
     /**
      * @const string
@@ -82,7 +82,7 @@ class HeadersSecurityServiceProvider implements ServiceProviderInterface
         $event->getResponse()->headers->set(static::HEADER_CONTENT_SECURITY_POLICY, 'frame-ancestors \'self\'');
         $event->getResponse()->headers->set(static::HEADER_X_CONTENT_TYPE_OPTIONS, 'nosniff');
         $event->getResponse()->headers->set(static::HEADER_X_XSS_PROTECTION, '1; mode=block');
-        $event->getResponse()->headers->set(static::HEADER_REFERER_POLICY, 'same-origin');
+        $event->getResponse()->headers->set(static::HEADER_REFERRER_POLICY, 'same-origin');
         $event->getResponse()->headers->set(static::HEADER_FEATURE_POLICY, '*');
     }
 }
