@@ -51,10 +51,10 @@
 
 
     <transfer name="Quote">
-        <property name="idQuote"/>
+        <property name="idQuote" type="int"/>
         <property name="shareDetails" type="ShareDetail[]" singular="shareDetail"/>
         <property name="quotePermissionGroup" type="QuotePermissionGroup"/>
-        <property name="customerReference"/>
+        <property name="customerReference" type="string"/>
         <property name="customer" type="Customer"/>
     </transfer>
 

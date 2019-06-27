@@ -20,13 +20,6 @@ interface SharedCartToCustomerFacadeInterface
     public function findCustomerByReference(string $customerReference): CustomerResponseTransfer;
 
     /**
-     * @param string $customerReference
-     *
-     * @return \Generated\Shared\Transfer\CustomerTransfer|null
-     */
-    public function findByReference($customerReference);
-
-    /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer

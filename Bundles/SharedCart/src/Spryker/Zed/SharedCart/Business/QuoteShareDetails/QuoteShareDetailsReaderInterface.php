@@ -33,5 +33,5 @@ interface QuoteShareDetailsReaderInterface
      *
      * @return \Generated\Shared\Transfer\CustomerCollectionTransfer
      */
-    public function getSharingSameQuoteCustomerCollection(QuoteTransfer $quoteTransfer): CustomerCollectionTransfer;
+    public function getCustomersSharingSameQuote(QuoteTransfer $quoteTransfer): CustomerCollectionTransfer;
 }

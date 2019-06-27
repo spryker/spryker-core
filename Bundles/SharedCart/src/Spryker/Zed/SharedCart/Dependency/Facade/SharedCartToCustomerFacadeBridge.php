@@ -36,16 +36,6 @@ class SharedCartToCustomerFacadeBridge implements SharedCartToCustomerFacadeInte
     }
 
     /**
-     * @param string $customerReference
-     *
-     * @return \Generated\Shared\Transfer\CustomerTransfer|null
-     */
-    public function findByReference($customerReference)
-    {
-        return $this->customerFacade->findByReference($customerReference);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer

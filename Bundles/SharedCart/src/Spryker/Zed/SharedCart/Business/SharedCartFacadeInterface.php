@@ -303,7 +303,8 @@ interface SharedCartFacadeInterface
 
     /**
      * Specification:
-     *  - Finds all customers (including quote owner) that shares a provided quote with customer.
+     *  - Finds all customers (including quote owner) that have access to the quote.
+     *  - Customer provided with QuoteTransfer will be excluded from customers collection.
      *  - Requires idQuote and customerReference to be set in QuoteTransfer.
      *  - Requires CustomerTransfer to be set in QuoteTransfer.
      *  - Requires idCustomer and customerReference to be set in CustomerTransfer.
@@ -314,5 +315,5 @@ interface SharedCartFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CustomerCollectionTransfer
      */
-    public function getSharingSameQuoteCustomerCollection(QuoteTransfer $quoteTransfer): CustomerCollectionTransfer;
+    public function getCustomersSharingSameQuote(QuoteTransfer $quoteTransfer): CustomerCollectionTransfer;
 }

@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\SharedCart\Business\QuoteShareDetails;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CustomerCollectionTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShareDetailCollectionTransfer;
 use Generated\Shared\Transfer\ShareDetailCriteriaFilterTransfer;
@@ -63,7 +65,7 @@ class QuoteShareDetailsReader implements QuoteShareDetailsReaderInterface
      *
      * @return \Generated\Shared\Transfer\CustomerCollectionTransfer
      */
-    public function getSharingSameQuoteCustomerCollection(QuoteTransfer $quoteTransfer): CustomerCollectionTransfer
+    public function getCustomersSharingSameQuote(QuoteTransfer $quoteTransfer): CustomerCollectionTransfer
     {
         $quoteTransfer->requireIdQuote()
             ->requireCustomerReference()
@@ -72,10 +74,7 @@ class QuoteShareDetailsReader implements QuoteShareDetailsReaderInterface
             ->requireIdCustomer()
             ->requireCustomerReference();
 
-        $customerCollectionTransfer = $this->sharedCartRepository->getSharingSameQuoteCustomerCollection(
-            $quoteTransfer->getIdQuote(),
-            $quoteTransfer->getCustomer()->getIdCustomer()
-        );
+        $customerCollectionTransfer = $this->sharedCartRepository->getCustomersSharingSameQuote($quoteTransfer->getIdQuote());
 
         if ($quoteTransfer->getCustomerReference() === $quoteTransfer->getCustomer()->getCustomerReference()) {
             return $customerCollectionTransfer;
@@ -86,6 +85,28 @@ class QuoteShareDetailsReader implements QuoteShareDetailsReaderInterface
             $customerCollectionTransfer->addCustomer($quoteOwnerCustomerResponseTransfer->getCustomerTransfer());
         }
 
-        return $customerCollectionTransfer;
+        return $this->excludeCustomerFromCustomerCollection($customerCollectionTransfer, $quoteTransfer->getCustomer());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerCollectionTransfer $customerCollectionTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $excludingCustomerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerCollectionTransfer
+     */
+    protected function excludeCustomerFromCustomerCollection(
+        CustomerCollectionTransfer $customerCollectionTransfer,
+        CustomerTransfer $excludingCustomerTransfer
+    ): CustomerCollectionTransfer {
+        $customersCollection = new ArrayObject();
+        foreach ($customerCollectionTransfer->getCustomers() as $customerTransfer) {
+            if ($customerTransfer->getCustomerReference() === $excludingCustomerTransfer->getCustomerReference()) {
+                continue;
+            }
+
+            $customersCollection->append($customerTransfer);
+        }
+
+        return $customerCollectionTransfer->setCustomers($customersCollection);
     }
 }
