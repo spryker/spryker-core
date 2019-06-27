@@ -9,7 +9,7 @@ namespace Spryker\Zed\Oms\Communication\Form\DataProvider;
 
 use Spryker\Service\UtilText\Model\Url\Url;
 
-abstract class AbstractOmsTriggerFormDataProvider
+class InitialOmsTriggerFormDataProvider
 {
     public const OMS_ACTION_ITEM_TRIGGER = 'submit-trigger-event-for-order-items';
     public const OMS_ACTION_ORDER_TRIGGER = 'submit-trigger-event-for-order';

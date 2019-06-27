@@ -10,7 +10,7 @@ namespace Spryker\Zed\Oms\Communication\Form\DataProvider;
 use Generated\Shared\Transfer\ReclamationTransfer;
 use Spryker\Zed\Oms\Communication\Form\OmsTriggerForm;
 
-class ReclamationOmsTriggerFormDataProvider extends AbstractOmsTriggerFormDataProvider
+class ReclamationOmsTriggerFormDataProvider extends InitialOmsTriggerFormDataProvider
 {
     public const ROUTE_REDIRECT = '/sales-reclamation-gui/detail';
     public const QUERY_PARAM_ID_RECLAMATION = 'id-reclamation';

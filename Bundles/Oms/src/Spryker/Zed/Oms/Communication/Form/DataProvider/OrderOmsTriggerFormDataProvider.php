@@ -10,7 +10,7 @@ namespace Spryker\Zed\Oms\Communication\Form\DataProvider;
 use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Oms\Communication\Form\OmsTriggerForm;
 
-class OrderOmsTriggerFormDataProvider extends AbstractOmsTriggerFormDataProvider
+class OrderOmsTriggerFormDataProvider extends InitialOmsTriggerFormDataProvider
 {
     public const ROUTE_REDIRECT = '/sales/detail';
 
