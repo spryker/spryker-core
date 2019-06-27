@@ -107,8 +107,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
         return new MethodWriter(
             $this->getRepository(),
             $this->getEntityManager(),
-            $this->createMethodPrice(),
-            $this->createMethodReader()
+            $this->createMethodPrice()
         );
     }
 
@@ -422,7 +421,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     {
         return new ShipmentGroupCreator(
             $this->createShipmentMapper(),
-            $this->createMethodReader(),
+            $this->getRepository(),
             $this->getShipmentService(),
             $this->getSalesFacade()
         );

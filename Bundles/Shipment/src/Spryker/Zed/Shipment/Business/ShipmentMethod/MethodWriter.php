@@ -33,26 +33,18 @@ class MethodWriter implements MethodWriterInterface
     protected $methodPrice;
 
     /**
-     * @var \Spryker\Zed\Shipment\Business\ShipmentMethod\MethodReaderInterface
-     */
-    protected $methodReader;
-
-    /**
      * @param \Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface $shipmentRepository
      * @param \Spryker\Zed\Shipment\Persistence\ShipmentEntityManagerInterface $shipmentEntityManager
      * @param \Spryker\Zed\Shipment\Business\Model\MethodPriceInterface $methodPrice
-     * @param \Spryker\Zed\Shipment\Business\ShipmentMethod\MethodReaderInterface $methodReader
      */
     public function __construct(
         ShipmentRepositoryInterface $shipmentRepository,
         ShipmentEntityManagerInterface $shipmentEntityManager,
-        MethodPriceInterface $methodPrice,
-        MethodReaderInterface $methodReader
+        MethodPriceInterface $methodPrice
     ) {
         $this->shipmentRepository = $shipmentRepository;
         $this->shipmentEntityManager = $shipmentEntityManager;
         $this->methodPrice = $methodPrice;
-        $this->methodReader = $methodReader;
     }
 
     /**
@@ -88,7 +80,9 @@ class MethodWriter implements MethodWriterInterface
     public function updateMethod(ShipmentMethodTransfer $shipmentMethodTransfer): bool
     {
         $idShipmentMethod = $shipmentMethodTransfer->getIdShipmentMethod();
-        if ($idShipmentMethod === null || !$this->methodReader->hasMethod($idShipmentMethod)) {
+        $hasShipmentMethod = $this->shipmentRepository->hasShipmentMethodByIdShipmentMethod($idShipmentMethod);
+
+        if ($idShipmentMethod === null || $hasShipmentMethod === false) {
             return false;
         }
 
