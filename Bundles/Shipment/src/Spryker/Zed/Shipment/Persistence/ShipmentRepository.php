@@ -28,34 +28,6 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
     protected const COL_MAX_TAX_RATE = 'maxTaxRate';
 
     /**
-     * @var \Spryker\Zed\Shipment\Persistence\Propel\Mapper\ShipmentMapperInterface
-     */
-    protected $shipmentMapper;
-
-    /**
-     * @var \Spryker\Zed\Shipment\Persistence\Propel\Mapper\ShipmentMethodMapperInterface
-     */
-    protected $shipmentMethodMapper;
-
-    /**
-     * @var \Spryker\Zed\Shipment\Persistence\Propel\Mapper\ShipmentTaxSetMapperInterface
-     */
-    protected $taxSetMapper;
-
-    /**
-     * @var \Spryker\Zed\Shipment\Persistence\Propel\Mapper\ShipmentOrderMapperInterface
-     */
-    protected $shipmentOrderMapper;
-
-    public function __construct()
-    {
-        $this->shipmentMapper = $this->getFactory()->createShipmentMapper();
-        $this->taxSetMapper = $this->getFactory()->createTaxSetMapper();
-        $this->shipmentMethodMapper = $this->getFactory()->createShipmentMethodMapper();
-        $this->shipmentOrderMapper = $this->getFactory()->createShipmentOrderMapper();
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $methodTransfer
      * @param string $countryIso2Code
      *
@@ -88,7 +60,8 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
             return null;
         }
 
-        $taxSetTransfer = $this->taxSetMapper
+        $taxSetTransfer = $this->getFactory()
+            ->createTaxSetMapper()
             ->mapTaxSetEntityToTaxSetTransfer(
                 $shipmentMethodEntity->getTaxSet(),
                 new TaxSetTransfer()
@@ -114,7 +87,8 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
             return [];
         }
 
-        return $this->shipmentMapper
+        return $this->getFactory()
+            ->createShipmentMapper()
             ->mapShipmentEntitiesToShipmentTransfers($salesOrderShipments, []);
     }
 
@@ -164,7 +138,8 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
             return [];
         }
 
-        return $this->shipmentMethodMapper
+        return $this->getFactory()
+            ->createShipmentMethodMapper()
             ->mapShipmentMethodEntitiesToShipmentMethodTransfers($salesShipmentMethods, []);
     }
 
@@ -184,7 +159,8 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
             return null;
         }
 
-        return $this->shipmentMethodMapper
+        return $this->getFactory()
+            ->createShipmentMethodMapper()
             ->mapShipmentMethodEntityToShipmentMethodTransferWithPrices(
                 $salesShipmentMethodEntity,
                 new ShipmentMethodTransfer()
@@ -206,7 +182,8 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
             return null;
         }
 
-        return $this->shipmentMethodMapper
+        return $this->getFactory()
+            ->createShipmentMethodMapper()
             ->mapShipmentMethodEntityToShipmentMethodTransferWithPrices(
                 $salesShipmentMethodEntity,
                 new ShipmentMethodTransfer()
@@ -230,7 +207,8 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
             return null;
         }
 
-        return $this->shipmentMethodMapper
+        return $this->getFactory()
+            ->createShipmentMethodMapper()
             ->mapShipmentMethodEntityToShipmentMethodTransferWithPrices(
                 $salesShipmentMethodEntity,
                 new ShipmentMethodTransfer()
@@ -257,7 +235,8 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
             return null;
         }
 
-        return $this->shipmentMapper
+        return $this->getFactory()
+            ->createShipmentMapper()
             ->mapShipmentEntityToShipmentTransferWithDetails($salesShipmentEntity, new ShipmentTransfer());
     }
 
@@ -274,11 +253,12 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
         }
 
         foreach ($shipmentMethodEntities as $shipmentMethodEntity) {
-            $shipmentMethodTransfer = $this->shipmentMethodMapper
-                    ->mapShipmentMethodEntityToShipmentMethodTransferWithPrices(
-                        $shipmentMethodEntity,
-                        new ShipmentMethodTransfer()
-                    );
+            $shipmentMethodTransfer = $this->getFactory()
+                ->createShipmentMethodMapper()
+                ->mapShipmentMethodEntityToShipmentMethodTransferWithPrices(
+                    $shipmentMethodEntity,
+                    new ShipmentMethodTransfer()
+                );
 
             $shipmentMethodList[] = $shipmentMethodTransfer;
         }
@@ -305,7 +285,8 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
             return null;
         }
 
-        return $this->shipmentMethodMapper
+        return $this->getFactory()
+            ->createShipmentMethodMapper()
             ->mapShipmentMethodPriceEntityToShipmentPriceTransfer(
                 $shipmentMethodPriceEntity,
                 new ShipmentPriceTransfer()
@@ -355,7 +336,8 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
             return null;
         }
 
-        return $this->shipmentOrderMapper
+        return $this->getFactory()
+            ->createShipmentOrderMapper()
             ->mapSalesOrderEntityToOrderTransfer($salesOrderEntity, new OrderTransfer());
     }
 
