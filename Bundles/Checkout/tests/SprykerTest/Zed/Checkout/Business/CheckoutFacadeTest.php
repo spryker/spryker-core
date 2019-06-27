@@ -418,7 +418,6 @@ class CheckoutFacadeTest extends Unit
         $this->assertEquals(CheckoutConfig::ERROR_CODE_PRODUCT_UNAVAILABLE, $result->getErrors()[0]->getErrorCode());
     }
 
-
     /**
      * @return void
      */
