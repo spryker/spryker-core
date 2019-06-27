@@ -7,9 +7,11 @@
 
 namespace Spryker\Zed\SharedCart\Business\QuoteShareDetails;
 
+use Generated\Shared\Transfer\CustomerCollectionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShareDetailCollectionTransfer;
 use Generated\Shared\Transfer\ShareDetailCriteriaFilterTransfer;
+use Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToCustomerFacadeInterface;
 use Spryker\Zed\SharedCart\Persistence\SharedCartRepositoryInterface;
 
 class QuoteShareDetailsReader implements QuoteShareDetailsReaderInterface
@@ -20,11 +22,18 @@ class QuoteShareDetailsReader implements QuoteShareDetailsReaderInterface
     protected $sharedCartRepository;
 
     /**
-     * @param \Spryker\Zed\SharedCart\Persistence\SharedCartRepositoryInterface $sharedCartRepository
+     * @var \Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToCustomerFacadeInterface
      */
-    public function __construct(SharedCartRepositoryInterface $sharedCartRepository)
+    protected $customerFacade;
+
+    /**
+     * @param \Spryker\Zed\SharedCart\Persistence\SharedCartRepositoryInterface $sharedCartRepository
+     * @param \Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToCustomerFacadeInterface $customerFacade
+     */
+    public function __construct(SharedCartRepositoryInterface $sharedCartRepository, SharedCartToCustomerFacadeInterface $customerFacade)
     {
         $this->sharedCartRepository = $sharedCartRepository;
+        $this->customerFacade = $customerFacade;
     }
 
     /**
@@ -47,5 +56,36 @@ class QuoteShareDetailsReader implements QuoteShareDetailsReaderInterface
     public function getShareDetailCollectionByShareDetailCriteria(ShareDetailCriteriaFilterTransfer $shareDetailCriteriaFilterTransfer): ShareDetailCollectionTransfer
     {
         return $this->sharedCartRepository->getShareDetailCollectionByShareDetailCriteria($shareDetailCriteriaFilterTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerCollectionTransfer
+     */
+    public function getSharingSameQuoteCustomerCollection(QuoteTransfer $quoteTransfer): CustomerCollectionTransfer
+    {
+        $quoteTransfer->requireIdQuote()
+            ->requireCustomerReference()
+            ->requireCustomer();
+        $quoteTransfer->getCustomer()
+            ->requireIdCustomer()
+            ->requireCustomerReference();
+
+        $customerCollectionTransfer = $this->sharedCartRepository->getSharingSameQuoteCustomerCollection(
+            $quoteTransfer->getIdQuote(),
+            $quoteTransfer->getCustomer()->getIdCustomer()
+        );
+
+        if ($quoteTransfer->getCustomerReference() === $quoteTransfer->getCustomer()->getCustomerReference()) {
+            return $customerCollectionTransfer;
+        }
+
+        $quoteOwnerCustomerResponseTransfer = $this->customerFacade->findCustomerByReference($quoteTransfer->getCustomerReference());
+        if ($quoteOwnerCustomerResponseTransfer->getIsSuccess()) {
+            $customerCollectionTransfer->addCustomer($quoteOwnerCustomerResponseTransfer->getCustomerTransfer());
+        }
+
+        return $customerCollectionTransfer;
     }
 }

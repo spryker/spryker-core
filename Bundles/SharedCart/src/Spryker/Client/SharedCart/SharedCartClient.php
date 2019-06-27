@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\SharedCart;
 
+use Generated\Shared\Transfer\CustomerCollectionTransfer;
 use Generated\Shared\Transfer\QuotePermissionGroupCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuotePermissionGroupResponseTransfer;
 use Generated\Shared\Transfer\QuotePermissionGroupTransfer;
@@ -178,5 +179,25 @@ class SharedCartClient extends AbstractClient implements SharedCartClientInterfa
         return $this->getFactory()
             ->createSwitchDefaultCartByResourceShare()
             ->switchDefaultCartByResourceShare($resourceShareRequestTransfer);
+    }
+
+    /**
+     * Specification:
+     *  - Finds all customers (including quote owner) that shares a provided quote with customer.
+     *  - Requires idQuote and customerReference to be set in QuoteTransfer.
+     *  - Requires CustomerTransfer to be set in QuoteTransfer.
+     *  - Requires idCustomer and customerReference to be set in CustomerTransfer.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerCollectionTransfer
+     */
+    public function getSharingSameQuoteCustomerCollection(QuoteTransfer $quoteTransfer): CustomerCollectionTransfer
+    {
+        return $this->getFactory()
+            ->createZedSharedCartStub()
+            ->getSharingSameQuoteCustomerCollection($quoteTransfer);
     }
 }
