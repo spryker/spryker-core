@@ -78,4 +78,14 @@ interface ProductListStorageRepositoryInterface
      * @return \Generated\Shared\Transfer\SpyProductAbstractProductListStorageEntityTransfer[]
      */
     public function findFilteredProductAbstractProductListStorageEntities(FilterTransfer $filterTransfer, array $productAbstractIds = []): array;
+
+    /**
+     * @return int
+     */
+    public function getProductListWhitelistEnumValue(): int;
+
+    /**
+     * @return int
+     */
+    public function getProductListBlacklistEnumValue(): int;
 }
