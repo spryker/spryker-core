@@ -11,6 +11,8 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductImage\Business\Model\ProductImageSetCombiner;
 use Spryker\Zed\ProductImage\Business\Model\Reader;
 use Spryker\Zed\ProductImage\Business\Model\Writer;
+use Spryker\Zed\ProductImage\Business\Reader\ProductImageBulkReader;
+use Spryker\Zed\ProductImage\Business\Reader\ProductImageBulkReaderInterface;
 use Spryker\Zed\ProductImage\Business\Transfer\ProductImageTransferMapper;
 use Spryker\Zed\ProductImage\ProductImageDependencyProvider;
 
@@ -29,9 +31,16 @@ class ProductImageBusinessFactory extends AbstractBusinessFactory
         return new Reader(
             $this->getQueryContainer(),
             $this->createTransferGenerator(),
-            $this->getLocaleFacade(),
-            $this->getRepository()
+            $this->getLocaleFacade()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductImage\Business\Reader\ProductImageBulkReaderInterface
+     */
+    public function createProductImageBulkReader(): ProductImageBulkReaderInterface
+    {
+        return new ProductImageBulkReader($this->getRepository(), $this->getLocaleFacade());
     }
 
     /**
