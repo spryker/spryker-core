@@ -11,6 +11,9 @@ use ErrorException;
 use Spryker\Shared\Config\Environment;
 use Spryker\Zed\Setup\SetupConfig;
 
+/**
+ * @deprecated Use Scheduler module instead. Will be removed without replacement.
+ */
 class Cronjobs
 {
     public const ROLE_ADMIN = 'admin';
@@ -120,11 +123,16 @@ class Cronjobs
 
         include_once $this->getJobConfigPath();
 
+        if (count($jobs) === 0) {
+            return $jobs;
+        }
+
         foreach ($jobs as $i => $job) {
             if (!empty($job['command'])) {
                 $command = $job['command'];
                 $commandExpl = explode(' ', $command);
                 $requestParts = ['module' => '', 'controller' => '', 'action' => ''];
+
                 foreach ($commandExpl as $part) {
                     $segments = array_keys($requestParts);
                     foreach ($segments as $segment) {

@@ -22,6 +22,8 @@ use Spryker\Zed\SharedCart\Business\Model\QuoteReader;
 use Spryker\Zed\SharedCart\Business\Model\QuoteReaderInterface;
 use Spryker\Zed\SharedCart\Business\QuoteCollectionExpander\SharedCartQuoteCollectionExpander;
 use Spryker\Zed\SharedCart\Business\QuoteCollectionExpander\SharedCartQuoteCollectionExpanderInterface;
+use Spryker\Zed\SharedCart\Business\QuoteCompanyUser\QuoteCompanyUserReader;
+use Spryker\Zed\SharedCart\Business\QuoteCompanyUser\QuoteCompanyUserReaderInterface;
 use Spryker\Zed\SharedCart\Business\QuoteResponseExpander\CustomerPermissionQuoteResponseExpander;
 use Spryker\Zed\SharedCart\Business\QuoteResponseExpander\CustomerShareCartQuoteResponseExpander;
 use Spryker\Zed\SharedCart\Business\QuoteResponseExpander\QuoteResponseExpander;
@@ -29,6 +31,10 @@ use Spryker\Zed\SharedCart\Business\QuoteResponseExpander\QuoteResponseExpanderI
 use Spryker\Zed\SharedCart\Business\QuoteResponseExpander\QuoteShareDetailsQuoteResponseExpander;
 use Spryker\Zed\SharedCart\Business\QuoteShareDetails\QuoteShareDetailsReader;
 use Spryker\Zed\SharedCart\Business\QuoteShareDetails\QuoteShareDetailsReaderInterface;
+use Spryker\Zed\SharedCart\Business\ResourceShare\ResourceShareQuoteCompanyUserWriter;
+use Spryker\Zed\SharedCart\Business\ResourceShare\ResourceShareQuoteCompanyUserWriterInterface;
+use Spryker\Zed\SharedCart\Business\ResourceShare\ResourceShareQuoteShare;
+use Spryker\Zed\SharedCart\Business\ResourceShare\ResourceShareQuoteShareInterface;
 use Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToCustomerFacadeInterface;
 use Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToPermissionFacadeInterface;
 use Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToQuoteFacadeInterface;
@@ -141,6 +147,38 @@ class SharedCartBusinessFactory extends AbstractBusinessFactory
     {
         return new QuoteShareDetailsReader(
             $this->getRepository()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\SharedCart\Business\QuoteCompanyUser\QuoteCompanyUserReaderInterface
+     */
+    public function createQuoteCompanyUserReader(): QuoteCompanyUserReaderInterface
+    {
+        return new QuoteCompanyUserReader($this->getRepository());
+    }
+
+    /**
+     * @return \Spryker\Zed\SharedCart\Business\ResourceShare\ResourceShareQuoteShareInterface
+     */
+    public function createResourceShareQuoteShare(): ResourceShareQuoteShareInterface
+    {
+        return new ResourceShareQuoteShare(
+            $this->getRepository(),
+            $this->getQuoteFacade(),
+            $this->createResourceShareQuoteCompanyUserWriter()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\SharedCart\Business\ResourceShare\ResourceShareQuoteCompanyUserWriterInterface
+     */
+    public function createResourceShareQuoteCompanyUserWriter(): ResourceShareQuoteCompanyUserWriterInterface
+    {
+        return new ResourceShareQuoteCompanyUserWriter(
+            $this->getRepository(),
+            $this->getEntityManager(),
+            $this->createQuoteCompanyUserWriter()
         );
     }
 

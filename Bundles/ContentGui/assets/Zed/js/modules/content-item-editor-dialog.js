@@ -5,8 +5,13 @@
 
 'use strict';
 
-var ContentItemDialog = function(dialogTitle, dialogContentUrl, insertButtonTitle) {
-
+var ContentItemDialog = function(
+    dialogTitle,
+    dialogContentUrl,
+    insertButtonTitle,
+    widgetHtmlTemplate,
+    maxWidgetNumber
+) {
     $.extend($.summernote.plugins, {
         'contentItemDialog': function (context) {
             this.context = context;
@@ -14,6 +19,7 @@ var ContentItemDialog = function(dialogTitle, dialogContentUrl, insertButtonTitl
             this.editor = context.layoutInfo.editor;
             this.options = context.options;
             this.$ui = $.summernote.ui;
+            this.$range = $.summernote.range;
             this.contentCache = {};
 
             this.initialize = function() {
@@ -50,7 +56,6 @@ var ContentItemDialog = function(dialogTitle, dialogContentUrl, insertButtonTitl
                 });
             };
 
-
             this.showError = function (errorSelector, container) {
                 errorSelector.insertAfter(container);
             };
@@ -58,25 +63,41 @@ var ContentItemDialog = function(dialogTitle, dialogContentUrl, insertButtonTitl
             this.addContent = function () {
                 var $titleHeader = this.$dialog.find('.ibox-title h5');
                 var $templateHeader = this.$dialog.find('.template-title');
+                var checkedContentItem = this.$dialog.find('table input:checked');
+                var chosenType = this.$dialog.find('input[name=type]').val();
+                var chosenDisplayType = this.$dialog.find('input[name=displayType]').val();
+                var chosenName = checkedContentItem.data('content-item-name');
+                var chosenId = this.$dialog.find('table input:checked').data('id');
                 var chosenKey = this.$dialog.find('table input:checked').val();
                 var $choseIdErrorSelector = this.$dialog.find('.content-errors .item');
                 var isTemplateListExists = this.$dialog.find('.template-list').length;
-                var chosenTemplate = this.$dialog.find('.template-list input:checked').val();
+                var chosenTemplate = this.$dialog.find('.template-list input:checked').data('template');
+                var chosenTemplateIdentifier = this.$dialog.find('.template-list input:checked').val();
                 var $chooseTemplateErrorSelector = this.$dialog.find('.content-errors .template');
                 var twigTemplate = this.$dialog.find('input[name=twigFunctionTemplate]').val();
                 var readyToInsert = chosenKey !== undefined && (!isTemplateListExists || isTemplateListExists && chosenTemplate);
 
                 if (readyToInsert) {
-                    var builtText = twigTemplate.replace(/%\w+%/g, function (param) {
-                        return {
-                            '%KEY%': chosenKey,
-                            '%TEMPLATE%': chosenTemplate
-                        }[param];
-                    });
+                    if ($('span[data-twig-expression*="{{ content_"]').length > maxWidgetNumber) {
+                        alert('Limit exceeded, maximum number of widgets ' + maxWidgetNumber);
+                        return;
+                    }
+
                     this.context.invoke('editor.restoreRange');
-                    this.context.invoke('editor.insertText', builtText);
                     this.$ui.hideDialog(this.$dialog);
-                    return;
+
+                    var elementForInsert = this.getNewDomElement(
+                        twigTemplate,
+                        chosenId,
+                        chosenKey,
+                        chosenType,
+                        chosenDisplayType,
+                        chosenName,
+                        chosenTemplate,
+                        chosenTemplateIdentifier,
+                        widgetHtmlTemplate
+                    );
+                    this.addItemInEditor(elementForInsert);
                 }
 
                 if (!chosenKey) {
@@ -86,6 +107,67 @@ var ContentItemDialog = function(dialogTitle, dialogContentUrl, insertButtonTitl
                 if (isTemplateListExists && !chosenTemplate) {
                     this.showError($chooseTemplateErrorSelector, $templateHeader);
                 }
+            };
+
+            this.addItemInEditor = function (elementForInsert) {
+                var $clickedNode = this.context.invoke('contentItemPopover.getClickedNode');
+
+                if ($clickedNode.length) {
+                    this.clearNode($clickedNode);
+                } else {
+                    var $existingRange = this.context.invoke('editor.createRange');
+                    $($existingRange.sc).parents('p').empty();
+                }
+
+                this.context.invoke('insertNode', elementForInsert);
+            };
+
+            this.removeItemFromEditor = function () {
+                var $clickedNode = this.context.invoke('contentItemPopover.getClickedNode');
+
+                this.clearNode($clickedNode);
+                this.context.invoke('contentItemPopover.hidePopover');
+                this.context.invoke('pasteHTML', ' ');
+            };
+
+            this.clearNode = function ($clickedNode) {
+                var $clickedNodeParent = $clickedNode.parent('p');
+
+                $clickedNodeParent.empty();
+            };
+
+            this.getNewDomElement = function (
+                twigTemplate,
+                id,
+                key,
+                type,
+                displayType,
+                contentName,
+                templateName,
+                templateIdentifier,
+                widgetHtmlTemplate
+            ) {
+                var twigExpression = twigTemplate.replace(/%\w+%/g, function (param) {
+                    return {
+                        '%KEY%': key,
+                        '%TEMPLATE%': templateIdentifier
+                    }[param];
+                });
+
+                var builtTemplate = widgetHtmlTemplate.replace(/%\w+%/g, function (param) {
+                    return {
+                        '%TYPE%': type,
+                        '%DISPLAY_TYPE%': displayType,
+                        '%KEY%': key,
+                        '%ID%': id,
+                        '%NAME%': contentName,
+                        '%TEMPLATE_DISPLAY_NAME%': templateName,
+                        '%TEMPLATE%': templateIdentifier,
+                        '%TWIG_EXPRESSION%': twigExpression,
+                    }[param];
+                });
+
+                return $.parseHTML(builtTemplate.trim())[0];
             };
 
             this.getDialogContent = function (url) {
@@ -108,6 +190,7 @@ var ContentItemDialog = function(dialogTitle, dialogContentUrl, insertButtonTitl
 
             this.initContentHtml = function (data) {
                 var dataAjaxUrl = $(data).find('table').data('ajax');
+
                 this.$dialog.find('.content-item-loader').hide();
                 this.$dialog.find('.content-item-body .content-ajax').append(data);
                 this.$dialog.find('table').DataTable({
@@ -123,18 +206,29 @@ var ContentItemDialog = function(dialogTitle, dialogContentUrl, insertButtonTitl
 
             this.show = function (value, target) {
                 var dataset = target[0].dataset;
+                this.isCreateNew = dataset.hasOwnProperty('new');
+
                 if (!dataset.hasOwnProperty('type')) {
                     return;
                 }
 
-                var urlParams = {type: dataset.type};
+                var urlParams = { type: dataset.type };
+
+                if (dataset.hasOwnProperty('key')) {
+                    urlParams.contentKey = dataset.key;
+                }
+
+                if (dataset.hasOwnProperty('template')) {
+                    urlParams.template = dataset.template;
+                }
+
                 var url = dialogContentUrl + '?' + $.param(urlParams);
 
+                this.context.invoke('editor.saveRange');
                 this.clearContent();
                 this.getDialogContent(url);
-                this.context.invoke('editor.saveRange');
                 this.$ui.showDialog(this.$dialog);
-            }
+            };
         }
     });
 };
