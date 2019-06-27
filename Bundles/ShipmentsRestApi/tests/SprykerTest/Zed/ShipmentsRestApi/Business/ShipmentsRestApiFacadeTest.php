@@ -8,9 +8,11 @@
 namespace SprykerTest\Zed\ShipmentsRestApi\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\DataBuilder\CheckoutDataBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\DataBuilder\RestCheckoutRequestAttributesBuilder;
 use Generated\Shared\DataBuilder\ShipmentMethodBuilder;
+use Generated\Shared\Transfer\CheckoutDataTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -39,6 +41,8 @@ class ShipmentsRestApiFacadeTest extends Unit
         'taxRate' => 19,
         'isActive' => true,
     ];
+
+    protected const SHIPMENT_METHOD_ID_INVALID = 9999;
 
     /**
      * @var \SprykerTest\Zed\ShipmentsRestApi\ShipmentsRestApiBusinessTester
@@ -108,6 +112,22 @@ class ShipmentsRestApiFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testShipmentsRestApiFacadeWillValidateShipmentMethodCheckoutData(): void
+    {
+        /** @var \Spryker\Zed\ShipmentsRestApi\Business\ShipmentsRestApiFacade $shipmentRestApiFacade */
+        $shipmentRestApiFacade = $this->tester->getFacade();
+        $shipmentRestApiFacade->setFactory($this->getMockShipmentsRestApiFactory());
+
+        $checkoutDataTransfer = $this->prepareCheckoutDataTransferWithShipmentMethodId();
+        $checkoutResponseTransfer = $shipmentRestApiFacade->validateShipmentMethodCheckoutData($checkoutDataTransfer);
+
+        $this->assertTrue($checkoutResponseTransfer->getIsSuccess());
+        $this->assertEquals(0, $checkoutResponseTransfer->getErrors()->count());
+    }
+
+    /**
      * @return \PHPUnit\Framework\MockObject\MockObject
      */
     protected function getMockShipmentsRestApiFactory(): MockObject
@@ -130,12 +150,20 @@ class ShipmentsRestApiFacadeTest extends Unit
     {
         $mockCustomerFacade = $this->createPartialMock(
             ShipmentFacade::class,
-            ['findAvailableMethodById']
+            [
+                'findAvailableMethodById',
+                'findMethodById',
+            ]
         );
 
         $mockCustomerFacade->method('findAvailableMethodById')
             ->willReturn(
                 (new ShipmentMethodBuilder(static::SHIPMENT_METHOD))->withPrice()->build()
+            );
+
+        $mockCustomerFacade->method('findMethodById')
+            ->willReturn(
+                (new ShipmentMethodBuilder(static::SHIPMENT_METHOD))->build()
             );
 
         return $mockCustomerFacade;
@@ -195,6 +223,32 @@ class ShipmentsRestApiFacadeTest extends Unit
             ->build();
 
         return $restCheckoutRequestAttributesTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CheckoutDataTransfer
+     */
+    protected function prepareCheckoutDataTransferWithShipmentMethodId(): CheckoutDataTransfer
+    {
+        /** @var \Generated\Shared\Transfer\CheckoutDataTransfer $checkoutDataTransfer */
+        $checkoutDataTransfer = (new CheckoutDataBuilder())
+            ->withShipment(['idShipmentMethod' => static::SHIPMENT_METHOD['idShipmentMethod']])
+            ->build();
+
+        return $checkoutDataTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CheckoutDataTransfer
+     */
+    protected function prepareCheckoutDataTransferWithInvalidShipmentMethodId(): CheckoutDataTransfer
+    {
+        /** @var \Generated\Shared\Transfer\CheckoutDataTransfer $checkoutDataTransfer */
+        $checkoutDataTransfer = (new CheckoutDataBuilder())
+            ->withShipment(['idShipmentMethod' => static::SHIPMENT_METHOD_ID_INVALID])
+            ->build();
+
+        return $checkoutDataTransfer;
     }
 
     /**
