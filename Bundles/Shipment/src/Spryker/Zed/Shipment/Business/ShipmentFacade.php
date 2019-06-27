@@ -83,8 +83,8 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
     public function createMethod(ShipmentMethodTransfer $methodTransfer): ?int
     {
         return $this->getFactory()
-            ->createMethodWriter()
-            ->create($methodTransfer);
+            ->createShipmentMethodCreator()
+            ->createShipmentMethod($methodTransfer);
     }
 
     /**
@@ -197,8 +197,8 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
     public function deleteMethod($idMethod): bool
     {
         return $this->getFactory()
-            ->createMethodWriter()
-            ->deleteMethod($idMethod);
+            ->createShipmentMethodDeleter()
+            ->deleteShipmentMethod($idMethod);
     }
 
     /**
@@ -213,8 +213,8 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
     public function updateMethod(ShipmentMethodTransfer $methodTransfer)
     {
         return $this->getFactory()
-            ->createMethodWriter()
-            ->updateMethod($methodTransfer);
+            ->createShipmentMethodUpdater()
+            ->updateShipmentMethod($methodTransfer);
     }
 
     /**

@@ -46,8 +46,12 @@ use Spryker\Zed\Shipment\Business\ShipmentMethod\MethodPriceReader;
 use Spryker\Zed\Shipment\Business\ShipmentMethod\MethodPriceReaderInterface;
 use Spryker\Zed\Shipment\Business\ShipmentMethod\MethodReader;
 use Spryker\Zed\Shipment\Business\ShipmentMethod\MethodReaderInterface;
-use Spryker\Zed\Shipment\Business\ShipmentMethod\MethodWriter;
-use Spryker\Zed\Shipment\Business\ShipmentMethod\MethodWriterInterface;
+use Spryker\Zed\Shipment\Business\ShipmentMethod\ShipmentMethodCreator;
+use Spryker\Zed\Shipment\Business\ShipmentMethod\ShipmentMethodCreatorInterface;
+use Spryker\Zed\Shipment\Business\ShipmentMethod\ShipmentMethodDeleter;
+use Spryker\Zed\Shipment\Business\ShipmentMethod\ShipmentMethodDeleterInterface;
+use Spryker\Zed\Shipment\Business\ShipmentMethod\ShipmentMethodUpdater;
+use Spryker\Zed\Shipment\Business\ShipmentMethod\ShipmentMethodUpdaterInterface;
 use Spryker\Zed\Shipment\Business\StrategyResolver\OrderSaverStrategyResolver;
 use Spryker\Zed\Shipment\Business\StrategyResolver\OrderSaverStrategyResolverInterface;
 use Spryker\Zed\Shipment\Business\StrategyResolver\TaxRateCalculatorStrategyResolver;
@@ -100,14 +104,36 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Shipment\Business\ShipmentMethod\MethodWriterInterface
+     * @return \Spryker\Zed\Shipment\Business\ShipmentMethod\ShipmentMethodCreatorInterface
      */
-    public function createMethodWriter(): MethodWriterInterface
+    public function createShipmentMethodCreator(): ShipmentMethodCreatorInterface
     {
-        return new MethodWriter(
+        return new ShipmentMethodCreator(
+            $this->getEntityManager(),
+            $this->createMethodPrice()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Shipment\Business\ShipmentMethod\ShipmentMethodUpdaterInterface
+     */
+    public function createShipmentMethodUpdater(): ShipmentMethodUpdaterInterface
+    {
+        return new ShipmentMethodUpdater(
             $this->getRepository(),
             $this->getEntityManager(),
             $this->createMethodPrice()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Shipment\Business\ShipmentMethod\ShipmentMethodDeleterInterface
+     */
+    public function createShipmentMethodDeleter(): ShipmentMethodDeleterInterface
+    {
+        return new ShipmentMethodDeleter(
+            $this->getRepository(),
+            $this->getEntityManager()
         );
     }
 

@@ -15,7 +15,7 @@ use Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface;
 /**
  * @method \Spryker\Zed\Shipment\Persistence\ShipmentPersistenceFactory getFactory()
  */
-class MethodWriter implements MethodWriterInterface
+class ShipmentMethodUpdater implements ShipmentMethodUpdaterInterface
 {
     /**
      * @var \Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface
@@ -50,34 +50,9 @@ class MethodWriter implements MethodWriterInterface
     /**
      * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
      *
-     * @return int|null
-     */
-    public function create(ShipmentMethodTransfer $shipmentMethodTransfer): ?int
-    {
-        $shipmentMethodTransfer = $this->shipmentEntityManager->saveSalesShipmentMethod($shipmentMethodTransfer);
-        $this->methodPrice->save($shipmentMethodTransfer);
-
-        return $shipmentMethodTransfer->getIdShipmentMethod();
-    }
-
-    /**
-     * @param int $idShipmentMethod
-     *
      * @return bool
      */
-    public function deleteMethod(int $idShipmentMethod): bool
-    {
-        $this->shipmentEntityManager->deleteMethodByIdMethod($idShipmentMethod);
-
-        return true;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
-     *
-     * @return bool
-     */
-    public function updateMethod(ShipmentMethodTransfer $shipmentMethodTransfer): bool
+    public function updateShipmentMethod(ShipmentMethodTransfer $shipmentMethodTransfer): bool
     {
         $idShipmentMethod = $shipmentMethodTransfer->getIdShipmentMethod();
         $hasShipmentMethod = $this->shipmentRepository->hasShipmentMethodByIdShipmentMethod($idShipmentMethod);
