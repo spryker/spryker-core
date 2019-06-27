@@ -1,5 +1,0 @@
-parameters:
-    dynamicConstantNames:
-        - APPLICATION
-        - APPLICATION_ENV
-        - APPLICATION_STORE
