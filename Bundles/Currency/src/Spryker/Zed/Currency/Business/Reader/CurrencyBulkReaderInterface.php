@@ -5,19 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Currency\Persistence;
+namespace Spryker\Zed\Currency\Business\Reader;
 
-use Generated\Shared\Transfer\CurrencyTransfer;
-
-interface CurrencyRepositoryInterface
+interface CurrencyBulkReaderInterface
 {
-    /**
-     * @param string $isoCode
-     *
-     * @return \Generated\Shared\Transfer\CurrencyTransfer|null
-     */
-    public function findCurrencyByIsoCode(string $isoCode): ?CurrencyTransfer;
-
     /**
      * @param string[] $isoCodes
      *

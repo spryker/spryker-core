@@ -524,14 +524,19 @@ class Reader implements ReaderInterface
      */
     protected function resolveProductPrices(array $priceProductTransfers, array $priceProductFilterTransfers): array
     {
-        $priceProductFilterTransfersBySku = $this->getPriceProductFilterTransfersBySku($priceProductFilterTransfers);
+        $priceProductCriteriaTransfersBySku = $this
+            ->priceProductCriteriaBuilder
+            ->buildCriteriaTransfersFromFilterTransfersIndexedBySku($priceProductFilterTransfers);
+
         $resolvedPriceProductTransfers = [];
         foreach ($priceProductTransfers as $sku => $pricesBySku) {
-            $resolvedItemPrices = $this->priceProductService->resolveProductPricesByPriceProductFilter($pricesBySku, $priceProductFilterTransfersBySku[$sku]);
-            $resolvedPriceProductTransfers = array_merge($resolvedItemPrices, $resolvedPriceProductTransfers);
+            $resolvedItemPrice = $this->priceProductService->resolveProductPriceByPriceProductCriteria($pricesBySku, $priceProductCriteriaTransfersBySku[$sku]);
+            if ($resolvedItemPrice) {
+                $resolvedPriceProductTransfers[] = $resolvedItemPrice;
+            }
         }
 
-        return array_unique($resolvedPriceProductTransfers, SORT_REGULAR);
+        return $resolvedPriceProductTransfers;
     }
 
     /**

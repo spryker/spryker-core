@@ -12,6 +12,7 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/product-image-cart-connector": "*",
     "spryker/propel": "*",
     "spryker/testify": "*"
   },

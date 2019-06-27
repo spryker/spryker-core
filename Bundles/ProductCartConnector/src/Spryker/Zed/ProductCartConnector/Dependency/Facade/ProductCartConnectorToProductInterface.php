@@ -20,6 +20,8 @@ interface ProductCartConnectorToProductInterface
     public function getProductConcrete($concreteSku);
 
     /**
+     * @deprecated Use `Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductInterface::getRawProductConcreteTransfersByConcreteSkus()` instead.
+     *
      * @param string $productConcreteSku
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer

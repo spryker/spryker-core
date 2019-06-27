@@ -10,7 +10,6 @@ namespace Spryker\Zed\ProductImage\Business\Model;
 use ArrayObject;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Spryker\Shared\ProductImage\ProductImageConfig;
 use Spryker\Zed\ProductImage\Business\Transfer\ProductImageTransferMapperInterface;
 use Spryker\Zed\ProductImage\Dependency\Facade\ProductImageToLocaleInterface;
 use Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainerInterface;
@@ -167,10 +166,11 @@ class Reader implements ReaderInterface
 
     /**
      * @param int[] $productIds
+     * @param string $productImageSetName
      *
      * @return \Generated\Shared\Transfer\ProductImageTransfer[][]
      */
-    public function getDefaultProductImagesByProductIds(array $productIds): array
+    public function getProductImagesByProductIdsAndProductImageSetName(array $productIds, string $productImageSetName): array
     {
         $localeTransfer = $this->localeFacade->getCurrentLocale();
         $productImageSetTransfers = $this
@@ -181,21 +181,22 @@ class Reader implements ReaderInterface
             return [];
         }
 
-        $productSetIds = $this->getDefaultImageSetIds($productImageSetTransfers);
+        $productSetIds = $this->getImageSetIdsByName($productImageSetTransfers, $productImageSetName);
 
         return $this->getProductImagesByProductSetIds($productSetIds);
     }
 
     /**
      * @param \Generated\Shared\Transfer\ProductImageSetTransfer[] $productImageSetTransfers
+     * @param string $productImageSetName
      *
      * @return int[]
      */
-    protected function getDefaultImageSetIds(array $productImageSetTransfers): array
+    protected function getImageSetIdsByName(array $productImageSetTransfers, string $productImageSetName): array
     {
         $productSetIds = [];
         foreach ($productImageSetTransfers as $productImageSetTransfer) {
-            if ($productImageSetTransfer->getName() === ProductImageConfig::DEFAULT_IMAGE_SET_NAME) {
+            if ($productImageSetTransfer->getName() === $productImageSetName) {
                 $productSetIds[$productImageSetTransfer->getIdProduct()] = $productImageSetTransfer->getIdProductImageSet();
                 continue;
             }

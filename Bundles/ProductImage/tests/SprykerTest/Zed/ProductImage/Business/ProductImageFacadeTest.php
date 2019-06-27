@@ -21,6 +21,7 @@ use Orm\Zed\ProductImage\Persistence\SpyProductImageSet;
 use Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery;
 use Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImage;
 use Spryker\Shared\Kernel\Store;
+use Spryker\Shared\ProductImageCartConnector\ProductImageCartConnectorConfig;
 use Spryker\Zed\ProductImage\Business\ProductImageFacade;
 use Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainer;
 
@@ -1096,7 +1097,7 @@ class ProductImageFacadeTest extends Unit
         $productIds = [$this->productConcreteEntity->getIdProduct()];
 
         //Act
-        $productImagesCollection = $this->productImageFacade->getDefaultProductImagesByProductIds($productIds);
+        $productImagesCollection = $this->productImageFacade->getProductImagesByProductIdsAndProductImageSetName($productIds, ProductImageCartConnectorConfig::DEFAULT_IMAGE_SET_NAME);
 
         //Assert
         $this->assertCount(count($productIds), $productImagesCollection);

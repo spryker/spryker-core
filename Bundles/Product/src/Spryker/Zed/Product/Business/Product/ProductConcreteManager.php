@@ -207,6 +207,8 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param string $productConcreteSku
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
@@ -273,6 +275,8 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
     }
 
     /**
+     * @deprecated Use `Spryker\Zed|Product\Business\Product\ProductConcreteManager::getProductConcretesByConcreteSkus()` instead.
+     *
      * @param string $productConcreteSku
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer

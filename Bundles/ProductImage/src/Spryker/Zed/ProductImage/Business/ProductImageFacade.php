@@ -285,13 +285,14 @@ class ProductImageFacade extends AbstractFacade implements ProductImageFacadeInt
      * @api
      *
      * @param int[] $productIds
+     * @param string $productImageSetName
      *
      * @return \Generated\Shared\Transfer\ProductImageTransfer[][]
      */
-    public function getDefaultProductImagesByProductIds(array $productIds): array
+    public function getProductImagesByProductIdsAndProductImageSetName(array $productIds, string $productImageSetName): array
     {
         return $this->getFactory()
             ->createProductImageReader()
-            ->getDefaultProductImagesByProductIds($productIds);
+            ->getProductImagesByProductIdsAndProductImageSetName($productIds, $productImageSetName);
     }
 }

@@ -36,6 +36,8 @@ class ProductCartConnectorToProductBridge implements ProductCartConnectorToProdu
     }
 
     /**
+     * @deprecated Use `Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductBridge::getRawProductConcreteTransfersByConcreteSkus()` instead.
+     *
      * @param string $productConcreteSku
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer

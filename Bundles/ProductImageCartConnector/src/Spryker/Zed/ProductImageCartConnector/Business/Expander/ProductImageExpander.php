@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductImageCartConnector\Business\Expander;
 use ArrayObject;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Spryker\Shared\ProductImageCartConnector\ProductImageCartConnectorConfig;
 use Spryker\Zed\ProductImageCartConnector\Dependency\Facade\ProductImageCartConnectorToProductImageInterface;
 
 class ProductImageExpander implements ProductImageExpanderInterface
@@ -38,7 +39,7 @@ class ProductImageExpander implements ProductImageExpanderInterface
         $productIds = array_map(function (ItemTransfer $itemTransfer) {
             return $itemTransfer->getId();
         }, $cartChangeTransfer->getItems()->getArrayCopy());
-        $productImages = $this->productImageFacade->getDefaultProductImagesByProductIds($productIds);
+        $productImages = $this->productImageFacade->getProductImagesByProductIdsAndProductImageSetName($productIds, ProductImageCartConnectorConfig::DEFAULT_IMAGE_SET_NAME);
 
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
             $this->expandItemsWithImages($itemTransfer, $productImages);
