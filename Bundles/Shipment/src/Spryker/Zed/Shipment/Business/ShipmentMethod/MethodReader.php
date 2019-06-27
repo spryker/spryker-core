@@ -7,12 +7,14 @@
 
 namespace Spryker\Zed\Shipment\Business\ShipmentMethod;
 
+use ArrayObject;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Generated\Shared\Transfer\ShipmentMethodsCollectionTransfer;
 use Generated\Shared\Transfer\ShipmentMethodsTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Spryker\Service\Shipment\ShipmentServiceInterface;
+use Spryker\Zed\Shipment\Dependency\Plugin\ShipmentMethodFilterPluginInterface as DeprecatedShipmentMethodFilterPluginInterface;
 use Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface;
 use Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodFilterPluginInterface;
 
@@ -70,44 +72,6 @@ class MethodReader implements MethodReaderInterface
         $this->methodAvailabilityChecker = $methodAvailabilityChecker;
         $this->methodPriceReader = $methodPriceReader;
         $this->methodDeliveryTimeReader = $methodDeliveryTimeReader;
-    }
-
-    /**
-     * @param int $idShipmentMethod
-     *
-     * @return bool
-     */
-    public function hasMethod(int $idShipmentMethod): bool
-    {
-        return $this->shipmentRepository->hasShipmentMethodByIdShipmentMethod($idShipmentMethod);
-    }
-
-    /**
-     * @param int $idShipmentMethod
-     *
-     * @return bool
-     */
-    public function isShipmentMethodActive(int $idShipmentMethod): bool
-    {
-        return $this->shipmentRepository->hasActiveShipmentMethodByIdShipmentMethod($idShipmentMethod);
-    }
-
-    /**
-     * @param int $idMethod
-     *
-     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
-     */
-    public function findShipmentMethodTransferById(int $idMethod): ?ShipmentMethodTransfer
-    {
-        return $this->shipmentRepository->findShipmentMethodByIdWithPricesAndCarrier($idMethod);
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer[]
-     */
-    public function getShipmentMethodTransfers(): array
-    {
-        return $this->shipmentRepository->getActiveShipmentMethods();
     }
 
     /**
@@ -188,31 +152,99 @@ class MethodReader implements MethodReaderInterface
                 continue;
             }
 
-            foreach ($this->shipmentMethodFilters as $shipmentMethodFilter) {
-                if ($shipmentMethodFilter instanceof ShipmentMethodFilterPluginInterface) {
-                    $shipmentGroupTransfer = $this->getShipmentGroupByHash($shipmentGroupCollection, $shipmentMethodsTransfer->getShipmentHash());
-
-                    $shipmentGroupTransfer->setAvailableShipmentMethods($shipmentMethodsTransfer);
-                    $shipmentMethodCollection = $shipmentMethodFilter->filterShipmentMethods($shipmentGroupTransfer, $quoteTransfer);
-                    $shipmentMethodsTransfer->setMethods($shipmentMethodCollection);
-                } else {
-                    /**
-                     * @deprecated Exists for Backward Compatibility reasons only.
-                     */
-                    $shipmentMethodCollection = $shipmentMethodsTransfer->getMethods();
-                    $shipmentMethodCollection = $shipmentMethodFilter->filterShipmentMethods($shipmentMethodCollection, $quoteTransfer);
-                    $shipmentMethodsTransfer->setMethods($shipmentMethodCollection);
-                }
-
-                if (count($shipmentMethodsTransfer->getMethods()) < 1) {
-                    break;
-                }
-            }
+            $this->applyShipmentFilters($quoteTransfer, $shipmentMethodsTransfer, $shipmentGroupCollection);
 
             $shipmentMethodsCollectionTransfer->getShipmentMethods()->offsetSet($index, $shipmentMethodsTransfer);
         }
 
         return $shipmentMethodsCollectionTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ShipmentMethodsTransfer $shipmentMethodsTransfer
+     * @param iterable|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $shipmentGroupCollection
+     *
+     * @return void
+     */
+    protected function applyShipmentFilters(
+        QuoteTransfer $quoteTransfer,
+        ShipmentMethodsTransfer $shipmentMethodsTransfer,
+        iterable $shipmentGroupCollection
+    ): void {
+        foreach ($this->shipmentMethodFilters as $shipmentMethodFilter) {
+            if (!($shipmentMethodFilter instanceof ShipmentMethodFilterPluginInterface)) {
+                $shipmentMethodCollection = $this->applyShipmentFilterWithShipmentMethodCollection(
+                    $quoteTransfer,
+                    $shipmentMethodsTransfer,
+                    $shipmentMethodFilter
+                );
+                $shipmentMethodsTransfer->setMethods($shipmentMethodCollection);
+
+                continue;
+            }
+
+            $shipmentMethodCollection = $this->applyShipmentFilterWithShipmentGroup(
+                $quoteTransfer,
+                $shipmentMethodsTransfer,
+                $shipmentGroupCollection,
+                $shipmentMethodFilter
+            );
+            $shipmentMethodsTransfer->setMethods($shipmentMethodCollection);
+
+            if (count($shipmentMethodsTransfer->getMethods()) < 1) {
+                break;
+            }
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ShipmentMethodsTransfer $shipmentMethodsTransfer
+     * @param iterable|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $shipmentGroupCollection
+     * @param \Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodFilterPluginInterface $shipmentMethodFilter
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentMethodTransfer[]
+     */
+    protected function applyShipmentFilterWithShipmentGroup(
+        QuoteTransfer $quoteTransfer,
+        ShipmentMethodsTransfer $shipmentMethodsTransfer,
+        iterable $shipmentGroupCollection,
+        ShipmentMethodFilterPluginInterface $shipmentMethodFilter
+    ): ArrayObject {
+        $shipmentGroupTransfer = $this->getShipmentGroupByHash(
+            $shipmentGroupCollection,
+            $shipmentMethodsTransfer->getShipmentHash()
+        );
+
+        $shipmentGroupTransfer->setAvailableShipmentMethods($shipmentMethodsTransfer);
+
+        return $shipmentMethodFilter->filterShipmentMethods(
+            $shipmentGroupTransfer,
+            $quoteTransfer
+        );
+    }
+
+    /**
+     * @deprecated Exists for Backward Compatibility reasons only.
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ShipmentMethodsTransfer $shipmentMethodsTransfer
+     * @param \Spryker\Zed\Shipment\Dependency\Plugin\ShipmentMethodFilterPluginInterface $shipmentMethodFilter
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentMethodTransfer[]
+     */
+    protected function applyShipmentFilterWithShipmentMethodCollection(
+        QuoteTransfer $quoteTransfer,
+        ShipmentMethodsTransfer $shipmentMethodsTransfer,
+        DeprecatedShipmentMethodFilterPluginInterface $shipmentMethodFilter
+    ): ArrayObject {
+        $shipmentMethodCollection = $shipmentMethodsTransfer->getMethods();
+
+        return $shipmentMethodFilter->filterShipmentMethods(
+            $shipmentMethodCollection,
+            $quoteTransfer
+        );
     }
 
     /**
@@ -321,7 +353,7 @@ class MethodReader implements MethodReaderInterface
      *
      * @return \Generated\Shared\Transfer\ShipmentGroupTransfer
      */
-    public function getShipmentGroupByHash(iterable $shipmentGroupCollection, string $shipmentHash): ShipmentGroupTransfer
+    protected function getShipmentGroupByHash(iterable $shipmentGroupCollection, string $shipmentHash): ShipmentGroupTransfer
     {
         foreach ($shipmentGroupCollection as $shipmentGroupTransfer) {
             if ($shipmentGroupTransfer->getHash() === $shipmentHash) {

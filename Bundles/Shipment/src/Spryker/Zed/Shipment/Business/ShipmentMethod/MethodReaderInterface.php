@@ -15,32 +15,6 @@ interface MethodReaderInterface
 {
     /**
      * @param int $idShipmentMethod
-     *
-     * @return bool
-     */
-    public function hasMethod(int $idShipmentMethod): bool;
-
-    /**
-     * @param int $idShipmentMethod
-     *
-     * @return bool
-     */
-    public function isShipmentMethodActive(int $idShipmentMethod): bool;
-
-    /**
-     * @param int $idMethod
-     *
-     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
-     */
-    public function findShipmentMethodTransferById(int $idMethod): ?ShipmentMethodTransfer;
-
-    /**
-     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer[]
-     */
-    public function getShipmentMethodTransfers(): array;
-
-    /**
-     * @param int $idShipmentMethod
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null

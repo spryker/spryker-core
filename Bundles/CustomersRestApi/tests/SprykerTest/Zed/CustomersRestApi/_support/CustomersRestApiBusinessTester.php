@@ -256,6 +256,8 @@ class CustomersRestApiBusinessTester extends Actor
     /**
      * @param \Generated\Shared\Transfer\RestAddressTransfer $expectedShippingAddress
      * @param \Generated\Shared\Transfer\AddressTransfer $actualShippingAddressTransfer
+     *
+     * @return void
      */
     protected function assertAddress(
         RestAddressTransfer $expectedShippingAddress,

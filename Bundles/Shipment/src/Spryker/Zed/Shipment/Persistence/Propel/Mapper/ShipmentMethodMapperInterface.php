@@ -82,4 +82,15 @@ interface ShipmentMethodMapperInterface
         SpyShipmentMethodPrice $shipmentMethodPriceEntity,
         MoneyValueTransfer $moneyValueTransfer
     ): MoneyValueTransfer;
+
+    /**
+     * @param iterable $shipmentMethodsEntities
+     * @param array $shipmentMethodTransfers
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer[]
+     */
+    public function mapShipmentMethodEntitiesToShipmentMethodTransfers(
+        iterable $shipmentMethodsEntities,
+        array $shipmentMethodTransfers
+    ): array;
 }
