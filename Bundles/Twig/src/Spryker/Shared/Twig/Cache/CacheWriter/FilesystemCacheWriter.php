@@ -47,7 +47,7 @@ class FilesystemCacheWriter implements CacheWriterInterface
 
         $directory = dirname($this->cacheFilePath);
         if (!is_dir($directory)) {
-            $this->assertDirectoryWritability($directory);
+            $this->assertDirectoryIsWritable($directory);
 
             mkdir($directory, $this->permissionMode, true);
         }
@@ -66,7 +66,7 @@ class FilesystemCacheWriter implements CacheWriterInterface
      *
      * @return void
      */
-    protected function assertDirectoryWritability(string $directory): void
+    protected function assertDirectoryIsWritable(string $directory): void
     {
         if (!is_writable($directory)) {
             throw new PermissionDeniedException(
