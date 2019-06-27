@@ -61,8 +61,7 @@ class CategoryImageStorageCommunicationTester extends Actor
     public function getCategoryImages(int $idCategory): array
     {
         $categoryStorage = SpyCategoryImageStorageQuery::create()->findOneByFkCategory($idCategory);
-
-        $categoryImages = $categoryStorage->getData()['image_sets'][0]['images'];
+        $categoryImages = $categoryStorage->getData()['image_sets'][0]['category_images'];
 
         return $categoryImages;
     }
