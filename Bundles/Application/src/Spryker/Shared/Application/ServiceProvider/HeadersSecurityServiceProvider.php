@@ -37,12 +37,12 @@ class HeadersSecurityServiceProvider implements ServiceProviderInterface
     /**
      * @const string
      */
-    public const HEADER_REFERER_POLICY = 'Referrer-Policy';
+    protected const HEADER_REFERER_POLICY = 'Referrer-Policy';
 
     /**
      * @const string
      */
-    public const HEADER_FEATURE_POLICY = 'Feature-Policy';
+    protected const HEADER_FEATURE_POLICY = 'Feature-Policy';
 
     /**
      * {@inheritdoc}
