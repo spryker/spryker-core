@@ -108,7 +108,9 @@ class FileSynchronizationDataBulkPlugin extends AbstractPlugin implements Synchr
      */
     public function getSynchronizationQueuePoolName(): ?string
     {
-        return $this->getFactory()->getConfig()->getFileManagerSynchronizationPoolName();
+        return $this->getFactory()
+            ->getConfig()
+            ->getFileManagerSynchronizationPoolName();
     }
 
     /**

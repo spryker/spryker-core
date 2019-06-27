@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\FileTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
 use Orm\Zed\FileManagerStorage\Persistence\Map\SpyFileStorageTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
-use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -82,35 +81,21 @@ class FileManagerStorageRepository extends AbstractRepository implements FileMan
      */
     public function getFilteredFileStorageTransfers(FilterTransfer $filterTransfer, array $fileManagerStorageIds = []): array
     {
-        $fileStorageQuery = $this->getFactory()->createFileStorageQuery();
+        $fileStorageQuery = $this->getFactory()
+            ->createFileStorageQuery();
 
         if ($fileManagerStorageIds) {
             $fileStorageQuery->filterByFkFile_In($fileManagerStorageIds);
         }
 
-        $fileStorageQuery->setOffset($filterTransfer->getOffset())
+        $fileStorageQuery
+            ->setOffset($filterTransfer->getOffset())
             ->setLimit($filterTransfer->getLimit());
 
-        return $this->getMappedFileStorageTransfers($fileStorageQuery->find());
-    }
-
-    /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\FileManagerStorage\Persistence\SpyFileStorage[] $fileStorageEntities
-     *
-     * @return \Generated\Shared\Transfer\FileStorageTransfer[]
-     */
-    protected function getMappedFileStorageTransfers(ObjectCollection $fileStorageEntities): array
-    {
-        $fileStorageTransfers = [];
-        $fileManagerStorageMapper = $this->getFactory()->createFileManagerStorageMapper();
-
-        foreach ($fileStorageEntities as $fileStorageEntity) {
-            $fileStorageTransfers[] = $fileManagerStorageMapper->mapFileStorageEntityToTransfer(
-                $fileStorageEntity,
-                new FileStorageTransfer()
+        return $this->getFactory()
+            ->createFileManagerStorageMapper()
+            ->mapFileStorageEntityCollectionToTransferCollection(
+                $fileStorageQuery->find()
             );
-        }
-
-        return $fileStorageTransfers;
     }
 }
