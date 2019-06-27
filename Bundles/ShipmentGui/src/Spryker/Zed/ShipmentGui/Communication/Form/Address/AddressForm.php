@@ -51,6 +51,9 @@ class AddressForm extends AbstractType
     public const ERROR_MESSAGE_VALUE_SHOULD_NOT_BE_BLANK = 'This value should not be blank.';
     protected const GROUP_SHIPPING_ADDRESS = 'shippingAddress';
 
+    protected const VALIDATION_ZIP_CODE_PATTERN = '/^\d{5}$/';
+    protected const VALIDATION_ZIP_CODE_MESSAGE = 'Zip code is not valid.';
+
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *
@@ -435,7 +438,6 @@ class AddressForm extends AbstractType
     protected function createEmailConstraint(): Email
     {
         return new Email([
-            'message' => 'Email is not valid.',
             'groups' => [static::GROUP_SHIPPING_ADDRESS],
         ]);
     }
@@ -446,8 +448,8 @@ class AddressForm extends AbstractType
     protected function createZipCodeConstraint(): Regex
     {
         return new Regex([
-            'pattern' => '/^\d{5}$/',
-            'message' => 'Zip code is not valid.',
+            'pattern' => static::VALIDATION_ZIP_CODE_PATTERN,
+            'message' => static::VALIDATION_ZIP_CODE_MESSAGE,
             'groups' => [static::GROUP_SHIPPING_ADDRESS],
         ]);
     }
