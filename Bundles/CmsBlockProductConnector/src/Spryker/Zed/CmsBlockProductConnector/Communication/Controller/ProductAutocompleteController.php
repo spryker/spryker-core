@@ -98,7 +98,8 @@ class ProductAutocompleteController extends AbstractController
      */
     protected function getPaginationData(PaginationTransfer $paginationTransfer): array
     {
-        $hasMoreResults = $paginationTransfer->getLastPage() !== $paginationTransfer->getPage();
+        $hasMoreResults = $paginationTransfer->getLastPage() > 0 &&
+            $paginationTransfer->getLastPage() !== $paginationTransfer->getPage();
 
         return [
             static::RESPONSE_KEY_PAGINATION_MORE => $hasMoreResults,
