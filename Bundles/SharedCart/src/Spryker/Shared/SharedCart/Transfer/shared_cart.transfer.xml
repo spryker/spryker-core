@@ -51,8 +51,11 @@
 
 
     <transfer name="Quote">
+        <property name="idQuote"/>
         <property name="shareDetails" type="ShareDetail[]" singular="shareDetail"/>
         <property name="quotePermissionGroup" type="QuotePermissionGroup"/>
+        <property name="customerReference"/>
+        <property name="customer" type="Customer"/>
     </transfer>
 
     <transfer name="QuoteUpdateRequestAttributes">
@@ -71,6 +74,7 @@
     </transfer>
 
     <transfer name="Customer">
+        <property name="idCustomer" type="int"/>
         <property name="companyUserTransfer" type="CompanyUser"/>
         <property name="customerReference" type="string" />
     </transfer>
@@ -124,6 +128,10 @@
         <property name="fkQuote" type="int"/>
         <property name="quote" type="Quote"/>
         <property name="uuid" type="string"/>
+    </transfer>
+
+    <transfer name="CustomerCollectionTransfer">
+        <property name="customers" type="Customer"/>
     </transfer>
 
 </transfers>
