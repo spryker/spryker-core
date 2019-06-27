@@ -76,22 +76,22 @@ class FileManagerStorageRepository extends AbstractRepository implements FileMan
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     * @param int[] $ids
+     * @param int[] $fileManagerStorageIds
      *
      * @return \Generated\Shared\Transfer\FileStorageTransfer[]
      */
-    public function getFilteredFileStorageTransfers(FilterTransfer $filterTransfer, array $ids = []): array
+    public function getFilteredFileStorageTransfers(FilterTransfer $filterTransfer, array $fileManagerStorageIds = []): array
     {
-        $query = $this->getFactory()->createFileStorageQuery();
+        $fileStorageQuery = $this->getFactory()->createFileStorageQuery();
 
-        if ($ids) {
-            $query->filterByFkFile_In($ids);
+        if ($fileManagerStorageIds) {
+            $fileStorageQuery->filterByFkFile_In($fileManagerStorageIds);
         }
 
-        $query->setOffset($filterTransfer->getOffset())
+        $fileStorageQuery->setOffset($filterTransfer->getOffset())
             ->setLimit($filterTransfer->getLimit());
 
-        return $this->getMappedFileStorageTransfers($query->find());
+        return $this->getMappedFileStorageTransfers($fileStorageQuery->find());
     }
 
     /**

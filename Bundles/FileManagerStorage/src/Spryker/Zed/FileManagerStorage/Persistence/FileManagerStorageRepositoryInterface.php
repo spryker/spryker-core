@@ -27,9 +27,9 @@ interface FileManagerStorageRepositoryInterface
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     * @param int[] $ids
+     * @param int[] $fileManagerStorageIds
      *
      * @return \Generated\Shared\Transfer\FileStorageTransfer[]
      */
-    public function getFilteredFileStorageTransfers(FilterTransfer $filterTransfer, array $ids = []): array;
+    public function getFilteredFileStorageTransfers(FilterTransfer $filterTransfer, array $fileManagerStorageIds = []): array;
 }
