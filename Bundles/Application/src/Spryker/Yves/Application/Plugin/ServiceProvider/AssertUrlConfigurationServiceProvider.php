@@ -15,7 +15,7 @@ use Spryker\Yves\Kernel\AbstractPlugin;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @deprecated Will be removed without replacement.
+ * @deprecated Will be removed without replacement. We should not throw an exception if the requested domain is not equal to configured one as it is not a security issue neither non-valid configuration.
  *
  * @method \Spryker\Yves\Application\ApplicationConfig getConfig()
  */
