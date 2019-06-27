@@ -14,7 +14,7 @@ interface CalculatorInterface
     /**
      * @param string $sku
      *
-     * @return float
+     * @return int
      */
     public function calculateStockForProduct($sku);
 
@@ -22,7 +22,7 @@ interface CalculatorInterface
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return float
+     * @return int
      */
     public function calculateProductStockForStore($sku, StoreTransfer $storeTransfer);
 }
