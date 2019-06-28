@@ -14,8 +14,8 @@ interface ConsoleConstants
 {
     /**
      * Specification:
-     * - If option set to true, the console commands will return the exception error code.
-     * - If option set to false, the console commands will throw the exception, if any.
+     * - If true, the console commands will throw the exception, if any, always returning code `1` for errors.
+     * - If false, the console commands will return the exception code.
      *
      * @api
      */
