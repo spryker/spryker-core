@@ -32,11 +32,6 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
     protected $productFacade;
 
     /**
-     * @var \Spryker\Zed\ProductStorage\Dependency\Facade\ProductStorageToStoreFacadeInterface
-     */
-    protected $storeFacade;
-
-    /**
      * @var \Spryker\Zed\ProductStorage\Business\Attribute\AttributeMapInterface
      */
     protected $attributeMap;
@@ -45,6 +40,11 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
      * @var \Spryker\Zed\ProductStorage\Persistence\ProductStorageQueryContainerInterface
      */
     protected $queryContainer;
+
+    /**
+     * @var \Spryker\Zed\ProductStorage\Dependency\Facade\ProductStorageToStoreFacadeInterface
+     */
+    protected $storeFacade;
 
     /**
      * @var bool
@@ -57,22 +57,17 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
     protected $superAttributeKeyBuffer = [];
 
     /**
-     * @var \Generated\Shared\Transfer\StoreTransfer[]
-     */
-    protected static $allStores;
-
-    /**
      * @param \Spryker\Zed\ProductStorage\Dependency\Facade\ProductStorageToProductInterface $productFacade
-     * @param \Spryker\Zed\ProductStorage\Dependency\Facade\ProductStorageToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\ProductStorage\Business\Attribute\AttributeMapInterface $attributeMap
      * @param \Spryker\Zed\ProductStorage\Persistence\ProductStorageQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\ProductStorage\Dependency\Facade\ProductStorageToStoreFacadeInterface $storeFacade
      * @param bool $isSendingToQueue
      */
     public function __construct(
         ProductStorageToProductInterface $productFacade,
-        ProductStorageToStoreFacadeInterface $storeFacade,
         AttributeMapInterface $attributeMap,
         ProductStorageQueryContainerInterface $queryContainer,
+        ProductStorageToStoreFacadeInterface $storeFacade,
         $isSendingToQueue
     ) {
         $this->productFacade = $productFacade;
@@ -80,10 +75,6 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
         $this->attributeMap = $attributeMap;
         $this->queryContainer = $queryContainer;
         $this->isSendingToQueue = $isSendingToQueue;
-
-        if (static::$allStores === null) {
-            static::$allStores = $this->storeFacade->getAllStores();
-        }
     }
 
     /**
@@ -263,13 +254,7 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
      */
     protected function isValidStoreLocale(string $storeName, string $localeName): bool
     {
-        foreach (static::$allStores as $storeTransfer) {
-            if ($storeTransfer->getName() === $storeName) {
-                return in_array($localeName, $storeTransfer->getAvailableLocaleIsoCodes());
-            }
-        }
-
-        return false;
+        return in_array($localeName, $this->storeFacade->getStoreByName($storeName)->getAvailableLocaleIsoCodes());
     }
 
     /**

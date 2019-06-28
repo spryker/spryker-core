@@ -56,11 +56,6 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
     protected $storeFacade;
 
     /**
-     * @var \Generated\Shared\Transfer\StoreTransfer[]
-     */
-    protected static $allStores;
-
-    /**
      * @param \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataExpanderInterface[] $pageDataExpanderPlugins
      * @param \Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductPageDataLoaderPluginInterface[] $productPageDataLoaderPlugins
@@ -82,10 +77,6 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
         $this->productPageSearchMapper = $productPageSearchMapper;
         $this->productPageSearchWriter = $productPageSearchWriter;
         $this->storeFacade = $storeFacade;
-
-        if (static::$allStores === null) {
-            static::$allStores = $this->storeFacade->getAllStores();
-        }
     }
 
     /**
@@ -521,12 +512,6 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
      */
     protected function isValidStoreLocale(string $storeName, string $localeName): bool
     {
-        foreach (static::$allStores as $storeTransfer) {
-            if ($storeTransfer->getName() === $storeName) {
-                return in_array($localeName, $storeTransfer->getAvailableLocaleIsoCodes());
-            }
-        }
-
-        return false;
+        return in_array($localeName, $this->storeFacade->getStoreByName($storeName)->getAvailableLocaleIsoCodes());
     }
 }

@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductPageSearch\Dependency\Facade;
 
+use Generated\Shared\Transfer\StoreTransfer;
+
 class ProductPageSearchToStoreFacadeBridge implements ProductPageSearchToStoreFacadeInterface
 {
     /**
@@ -28,5 +30,15 @@ class ProductPageSearchToStoreFacadeBridge implements ProductPageSearchToStoreFa
     public function getAllStores()
     {
         return $this->storeFacade->getAllStores();
+    }
+
+    /**
+     * @param string $storeName
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer
+     */
+    public function getStoreByName($storeName): StoreTransfer
+    {
+        return $this->storeFacade->getStoreByName($storeName);
     }
 }

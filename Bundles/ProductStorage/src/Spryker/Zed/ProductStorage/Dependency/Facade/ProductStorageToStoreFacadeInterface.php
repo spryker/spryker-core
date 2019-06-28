@@ -10,7 +10,9 @@ namespace Spryker\Zed\ProductStorage\Dependency\Facade;
 interface ProductStorageToStoreFacadeInterface
 {
     /**
-     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     * @param string $storeName
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getAllStores();
+    public function getStoreByName($storeName);
 }
