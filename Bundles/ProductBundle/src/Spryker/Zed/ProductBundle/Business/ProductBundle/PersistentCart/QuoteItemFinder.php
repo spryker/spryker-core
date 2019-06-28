@@ -9,23 +9,9 @@ namespace Spryker\Zed\ProductBundle\Business\ProductBundle\PersistentCart;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\ProductBundle\Dependency\Service\ProductBundleToUtilQuantityServiceInterface;
 
 class QuoteItemFinder implements QuoteItemFinderInterface
 {
-    /**
-     * @var \Spryker\Zed\ProductBundle\Dependency\Service\ProductBundleToUtilQuantityServiceInterface
-     */
-    protected $utilQuantityService;
-
-    /**
-     * @param \Spryker\Zed\ProductBundle\Dependency\Service\ProductBundleToUtilQuantityServiceInterface $utilQuantityService
-     */
-    public function __construct(ProductBundleToUtilQuantityServiceInterface $utilQuantityService)
-    {
-        $this->utilQuantityService = $utilQuantityService;
-    }
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $sku
@@ -70,20 +56,16 @@ class QuoteItemFinder implements QuoteItemFinderInterface
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $groupKey
      *
-     * @return float
+     * @return int
      */
-    protected function getBundledProductTotalQuantity(QuoteTransfer $quoteTransfer, string $groupKey): float
+    protected function getBundledProductTotalQuantity(QuoteTransfer $quoteTransfer, string $groupKey): int
     {
-        $bundleItemQuantity = 0.0;
+        $bundleItemQuantity = 0;
         foreach ($quoteTransfer->getBundleItems() as $bundleItemTransfer) {
             if ($bundleItemTransfer->getGroupKey() !== $groupKey) {
                 continue;
             }
-
-            $bundleItemQuantity = $this->sumQuantities(
-                $bundleItemQuantity,
-                $bundleItemTransfer->getQuantity()
-            );
+            $bundleItemQuantity += $bundleItemTransfer->getQuantity();
         }
 
         return $bundleItemQuantity;
@@ -106,16 +88,5 @@ class QuoteItemFinder implements QuoteItemFinderInterface
         }
 
         return null;
-    }
-
-    /**
-     * @param float $firstQuantity
-     * @param float $secondQuantity
-     *
-     * @return float
-     */
-    protected function sumQuantities(float $firstQuantity, float $secondQuantity): float
-    {
-        return $this->utilQuantityService->sumQuantities($firstQuantity, $secondQuantity);
     }
 }

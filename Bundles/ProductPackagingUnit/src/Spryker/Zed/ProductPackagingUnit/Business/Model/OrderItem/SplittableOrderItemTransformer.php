@@ -43,9 +43,9 @@ class SplittableOrderItemTransformer implements SplittableOrderItemTransformerIn
     {
         $transformedItemTransfer = new ItemTransfer();
         $transformedItemTransfer->fromArray($itemTransfer->toArray(), true);
-        $transformedItemTransfer->setQuantity(1.0);
+        $transformedItemTransfer->setQuantity(1);
         $amountPerQuantity = $itemTransfer->getAmount() / $itemTransfer->getQuantity();
-        $transformedItemTransfer->setAmount((float)$amountPerQuantity);
+        $transformedItemTransfer->setAmount((int)$amountPerQuantity);
         $transformedProductOptions = new ArrayObject();
 
         foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
@@ -67,7 +67,7 @@ class SplittableOrderItemTransformer implements SplittableOrderItemTransformerIn
 
         $transformedProductOptionTransfer->fromArray($productOptionTransfer->toArray(), true);
         $transformedProductOptionTransfer
-            ->setQuantity(1.0);
+            ->setQuantity(1);
 
         return $transformedProductOptionTransfer;
     }
