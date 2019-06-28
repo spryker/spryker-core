@@ -374,7 +374,13 @@ class FacetResultFormatterPluginTest extends AbstractResultFormatterPluginTest
     {
         [$searchConfig, $aggregationResult, $expectedResult] = $this->getMultiIntegerFacetResultTestData();
 
-        $expectedResult['baz']['activeMin'] = 5;
+        $expectedResult['baz'] = (new RangeSearchResultTransfer())
+            ->setName('baz')
+            ->setConfig($searchConfig->getFacetConfigBuilder()->get('baz'))
+            ->setMin(10)
+            ->setMax(20)
+            ->setActiveMin(5)
+            ->setActiveMax(20);
 
         return [
             $searchConfig,
