@@ -7,19 +7,18 @@
 
 namespace Spryker\Zed\Shipment\Business\ShipmentGroup;
 
-use Generated\Shared\Transfer\ShipmentFormTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 
 interface ShipmentGroupCreatorInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ShipmentFormTransfer $shipmentFormTransfer
+     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
      * @param bool[] $itemListUpdatedStatus
      *
      * @return \Generated\Shared\Transfer\ShipmentGroupTransfer
      */
     public function createShipmentGroupTransferWithListedItems(
-        ShipmentFormTransfer $shipmentFormTransfer,
+        ShipmentGroupTransfer $shipmentGroupTransfer,
         array $itemListUpdatedStatus
     ): ShipmentGroupTransfer;
 }

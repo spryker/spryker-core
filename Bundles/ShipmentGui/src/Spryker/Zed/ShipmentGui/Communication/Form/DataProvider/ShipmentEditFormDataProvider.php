@@ -8,11 +8,13 @@
 namespace Spryker\Zed\ShipmentGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\AddressTransfer;
-use Generated\Shared\Transfer\ShipmentFormTransfer;
+use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
-use Spryker\Zed\ShipmentGui\Communication\Form\Address\AddressForm;
-use Spryker\Zed\ShipmentGui\Communication\Form\ShipmentEditForm;
+use Spryker\Zed\ShipmentGui\Communication\Form\Address\AddressFormType;
+use Spryker\Zed\ShipmentGui\Communication\Form\Shipment\ShipmentFormType;
+use Spryker\Zed\ShipmentGui\Communication\Form\Shipment\ShipmentGroupFormType;
+use Spryker\Zed\ShipmentGui\Communication\Form\Shipment\ShipmentMethodFormType;
 
 class ShipmentEditFormDataProvider
 {
@@ -33,28 +35,28 @@ class ShipmentEditFormDataProvider
      * @param int $idSalesOrder
      * @param int|null $idSalesShipment
      *
-     * @return \Generated\Shared\Transfer\ShipmentFormTransfer
+     * @return \Generated\Shared\Transfer\ShipmentGroupTransfer
      */
-    public function getData(int $idSalesOrder, ?int $idSalesShipment = null): ShipmentFormTransfer
+    public function getData(int $idSalesOrder, ?int $idSalesShipment = null): ShipmentGroupTransfer
     {
         $formData = array_merge(
             $this->shipmentFormDefaultDataProvider->getDefaultFormFields($idSalesOrder, $idSalesShipment),
             $this->prepareFormData($idSalesShipment)
         );
 
-        return $this->shipmentFormDefaultDataProvider->mapFormDataToShipmentFormTransfer($formData, new ShipmentFormTransfer());
+        return $this->shipmentFormDefaultDataProvider->mapFormDataToShipmentGroupTransfer($formData, new ShipmentGroupTransfer());
     }
 
     /**
      * @param int $idSalesOrder
      * @param int|null $idSalesShipment
      *
-     * @return array[]
+     * @return array
      */
     public function getOptions(int $idSalesOrder, ?int $idSalesShipment = null): array
     {
         $options = $this->shipmentFormDefaultDataProvider->getOptions($idSalesOrder, $idSalesShipment);
-        $options[ShipmentEditForm::FIELD_SHIPMENT_SELECTED_ITEMS] = $this->shipmentFormDefaultDataProvider
+        $options[ShipmentGroupFormType::FIELD_SHIPMENT_SELECTED_ITEMS] = $this->shipmentFormDefaultDataProvider
             ->getShipmentSelectedItemsIds($idSalesShipment);
 
         return $options;
@@ -68,17 +70,20 @@ class ShipmentEditFormDataProvider
     protected function getFormData(ShipmentTransfer $shipmentTransfer): array
     {
         $formData = [
-            ShipmentEditForm::FIELD_ID_SHIPMENT_METHOD => $this->getShipmentMethodId($shipmentTransfer->getMethod()),
-            ShipmentEditForm::FIELD_REQUESTED_DELIVERY_DATE => $shipmentTransfer->getRequestedDeliveryDate(),
-            ShipmentEditForm::FORM_SHIPPING_ADDRESS => [],
+            ShipmentGroupFormType::FORM_SHIPMENT => [],
         ];
 
         $shipmentAddressTransfer = $shipmentTransfer->getShippingAddress();
-        if ($shipmentAddressTransfer === null) {
-            return $formData;
+        if ($shipmentAddressTransfer !== null) {
+            $formData[ShipmentGroupFormType::FORM_SHIPMENT] = $this->getAddressFields($shipmentAddressTransfer);
         }
 
-        $formData[ShipmentEditForm::FORM_SHIPPING_ADDRESS] = $this->getAddressFields($shipmentAddressTransfer);
+        $formData[ShipmentGroupFormType::FORM_SHIPMENT] = array_merge(
+            $formData[ShipmentGroupFormType::FORM_SHIPMENT],
+            $this->getShipmentMethod($shipmentTransfer->getMethod()),
+            [ShipmentFormType::FIELD_REQUESTED_DELIVERY_DATE => $shipmentTransfer->getRequestedDeliveryDate()],
+            [ShipmentFormType::FIELD_ID_SALES_SHIPMENT => $shipmentTransfer->getIdSalesShipment()]
+        );
 
         return $formData;
     }
@@ -100,15 +105,17 @@ class ShipmentEditFormDataProvider
     /**
      * @param \Generated\Shared\Transfer\ShipmentMethodTransfer|null $shipmentMethodTransfer
      *
-     * @return int|null
+     * @return array
      */
-    protected function getShipmentMethodId(?ShipmentMethodTransfer $shipmentMethodTransfer = null): ?int
+    protected function getShipmentMethod(?ShipmentMethodTransfer $shipmentMethodTransfer = null): array
     {
-        if ($shipmentMethodTransfer === null) {
-            return null;
-        }
+        $idShipmentMethod = $shipmentMethodTransfer === null ? null : $shipmentMethodTransfer->getIdShipmentMethod();
 
-        return $shipmentMethodTransfer->getIdShipmentMethod();
+        return [
+            ShipmentFormType::FORM_SHIPMENT_METHOD => [
+                ShipmentMethodFormType::FIELD_ID_SHIPMENT_METHOD => $idShipmentMethod,
+            ],
+        ];
     }
 
     /**
@@ -119,23 +126,26 @@ class ShipmentEditFormDataProvider
     protected function getAddressFields(AddressTransfer $shippingAddressTransfer): array
     {
         return [
-            AddressForm::ADDRESS_FIELD_ID_SALES_ORDER_ADDRESS => $shippingAddressTransfer->getIdSalesOrderAddress(),
-            AddressForm::ADDRESS_FIELD_SALUTATION => $shippingAddressTransfer->getSalutation(),
-            AddressForm::ADDRESS_FIELD_FIRST_NAME => $shippingAddressTransfer->getFirstName(),
-            AddressForm::ADDRESS_FIELD_MIDDLE_NAME => $shippingAddressTransfer->getMiddleName(),
-            AddressForm::ADDRESS_FIELD_LAST_NAME => $shippingAddressTransfer->getLastName(),
-            AddressForm::ADDRESS_FIELD_EMAIL => $shippingAddressTransfer->getEmail(),
-            AddressForm::ADDRESS_FIELD_ISO_2_CODE => $shippingAddressTransfer->getIso2Code(),
-            AddressForm::ADDRESS_FIELD_ADDRESS_1 => $shippingAddressTransfer->getAddress1(),
-            AddressForm::ADDRESS_FIELD_ADDRESS_2 => $shippingAddressTransfer->getAddress2(),
-            AddressForm::ADDRESS_FIELD_COMPANY => $shippingAddressTransfer->getCompany(),
-            AddressForm::ADDRESS_FIELD_CITY => $shippingAddressTransfer->getCity(),
-            AddressForm::ADDRESS_FIELD_ZIP_CODE => $shippingAddressTransfer->getZipCode(),
-            AddressForm::ADDRESS_FIELD_PO_BOX => $shippingAddressTransfer->getPoBox(),
-            AddressForm::ADDRESS_FIELD_PHONE => $shippingAddressTransfer->getPhone(),
-            AddressForm::ADDRESS_FIELD_CELL_PHONE => $shippingAddressTransfer->getCellPhone(),
-            AddressForm::ADDRESS_FIELD_DESCRIPTION => $shippingAddressTransfer->getDescription(),
-            AddressForm::ADDRESS_FIELD_COMMENT => $shippingAddressTransfer->getComment(),
+            ShipmentFormType::FIELD_SHIPPING_ADDRESS_FORM => [
+                AddressFormType::ADDRESS_FIELD_ID_SALES_ORDER_ADDRESS => $shippingAddressTransfer->getIdSalesOrderAddress(),
+                AddressFormType::FIELD_ID_CUSTOMER_ADDRESS => $shippingAddressTransfer->getIdCustomerAddress(),
+                AddressFormType::ADDRESS_FIELD_SALUTATION => $shippingAddressTransfer->getSalutation(),
+                AddressFormType::ADDRESS_FIELD_FIRST_NAME => $shippingAddressTransfer->getFirstName(),
+                AddressFormType::ADDRESS_FIELD_MIDDLE_NAME => $shippingAddressTransfer->getMiddleName(),
+                AddressFormType::ADDRESS_FIELD_LAST_NAME => $shippingAddressTransfer->getLastName(),
+                AddressFormType::ADDRESS_FIELD_EMAIL => $shippingAddressTransfer->getEmail(),
+                AddressFormType::ADDRESS_FIELD_ISO_2_CODE => $shippingAddressTransfer->getIso2Code(),
+                AddressFormType::ADDRESS_FIELD_ADDRESS_1 => $shippingAddressTransfer->getAddress1(),
+                AddressFormType::ADDRESS_FIELD_ADDRESS_2 => $shippingAddressTransfer->getAddress2(),
+                AddressFormType::ADDRESS_FIELD_COMPANY => $shippingAddressTransfer->getCompany(),
+                AddressFormType::ADDRESS_FIELD_CITY => $shippingAddressTransfer->getCity(),
+                AddressFormType::ADDRESS_FIELD_ZIP_CODE => $shippingAddressTransfer->getZipCode(),
+                AddressFormType::ADDRESS_FIELD_PO_BOX => $shippingAddressTransfer->getPoBox(),
+                AddressFormType::ADDRESS_FIELD_PHONE => $shippingAddressTransfer->getPhone(),
+                AddressFormType::ADDRESS_FIELD_CELL_PHONE => $shippingAddressTransfer->getCellPhone(),
+                AddressFormType::ADDRESS_FIELD_DESCRIPTION => $shippingAddressTransfer->getDescription(),
+                AddressFormType::ADDRESS_FIELD_COMMENT => $shippingAddressTransfer->getComment(),
+            ],
         ];
     }
 
@@ -144,7 +154,7 @@ class ShipmentEditFormDataProvider
      *
      * @return array
      */
-    public function prepareFormData(?int $idSalesShipment = null): array
+    protected function prepareFormData(?int $idSalesShipment = null): array
     {
         if ($idSalesShipment === null) {
             return [];

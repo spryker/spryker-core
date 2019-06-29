@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ShipmentGui\Communication\Form\DataProvider;
 
-use Generated\Shared\Transfer\ShipmentFormTransfer;
+use Generated\Shared\Transfer\ShipmentGroupTransfer;
 
 class ShipmentCreateFormDataProvider
 {
@@ -28,20 +28,20 @@ class ShipmentCreateFormDataProvider
      * @param int $idSalesOrder
      * @param int|null $idSalesShipment
      *
-     * @return \Generated\Shared\Transfer\ShipmentFormTransfer
+     * @return \Generated\Shared\Transfer\ShipmentGroupTransfer
      */
-    public function getData(int $idSalesOrder, ?int $idSalesShipment = null): ShipmentFormTransfer
+    public function getData(int $idSalesOrder, ?int $idSalesShipment = null): ShipmentGroupTransfer
     {
         $formData = $this->shipmentFormDefaultDataProvider->getDefaultFormFields($idSalesOrder, $idSalesShipment);
 
-        return $this->shipmentFormDefaultDataProvider->mapFormDataToShipmentFormTransfer($formData, new ShipmentFormTransfer());
+        return $this->shipmentFormDefaultDataProvider->mapFormDataToShipmentGroupTransfer($formData, new ShipmentGroupTransfer());
     }
 
     /**
      * @param int $idSalesOrder
      * @param int|null $idSalesShipment
      *
-     * @return array[]
+     * @return array
      */
     public function getOptions(int $idSalesOrder, ?int $idSalesShipment = null): array
     {

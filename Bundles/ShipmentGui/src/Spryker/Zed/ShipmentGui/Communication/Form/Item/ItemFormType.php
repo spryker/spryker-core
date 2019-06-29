@@ -8,7 +8,7 @@
 namespace Spryker\Zed\ShipmentGui\Communication\Form\Item;
 
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
-use Spryker\Zed\ShipmentGui\Communication\Form\ShipmentCreateForm;
+use Spryker\Zed\ShipmentGui\Communication\Form\Shipment\ShipmentGroupFormType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -16,14 +16,14 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * @method \Spryker\Zed\ShipmentGui\Business\ShipmentGuiFacadeInterface getFacade()
  * @method \Spryker\Zed\ShipmentGui\Communication\ShipmentGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\ShipmentGui\ShipmentGuiConfig getConfig()
  */
-class ItemForm extends AbstractType
+class ItemFormType extends AbstractType
 {
     public const OPTION_ORDER_ITEMS_CHOICES = 'items_choices';
     public const FIELD_IS_UPDATED = 'is_updated';
+    public const FIELD_SHIPMENT_SELECTED_ITEMS = 'selected_items';
 
     /**
      * @return string
@@ -40,7 +40,9 @@ class ItemForm extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setRequired(ShipmentCreateForm::FIELD_SHIPMENT_SELECTED_ITEMS);
+        $resolver
+            ->setRequired(ShipmentGroupFormType::FIELD_SHIPMENT_SELECTED_ITEMS)
+            ->setDefault(static::OPTION_ORDER_ITEMS_CHOICES, []);
     }
 
     /**
@@ -52,7 +54,7 @@ class ItemForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options = [])
     {
         parent::buildForm($builder, $options);
-        $selectedItems = $options[ShipmentCreateForm::FIELD_SHIPMENT_SELECTED_ITEMS];
+        $selectedItems = $options[ShipmentGroupFormType::FIELD_SHIPMENT_SELECTED_ITEMS];
 
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($selectedItems) {
             $item = $event->getData();
