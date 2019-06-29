@@ -11,6 +11,7 @@ use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Spryker\Zed\ShipmentGui\Communication\Form\Shipment\ShipmentFormType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -20,6 +21,7 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Regex;
 
 /**
  * @method \Spryker\Zed\ShipmentGui\Communication\ShipmentGuiCommunicationFactory getFactory()
@@ -51,6 +53,9 @@ class AddressFormType extends AbstractType
 
     public const ERROR_MESSAGE_VALUE_SHOULD_NOT_BE_BLANK = 'This value should not be blank.';
     protected const GROUP_SHIPPING_ADDRESS = 'shippingAddress';
+
+    protected const VALIDATION_ZIP_CODE_PATTERN = '/^\d{5}$/';
+    protected const VALIDATION_ZIP_CODE_MESSAGE = 'Zip code is not valid.';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -182,12 +187,12 @@ class AddressFormType extends AbstractType
     protected function addEmailField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(static::ADDRESS_FIELD_EMAIL, TextType::class, [
+            ->add(static::ADDRESS_FIELD_EMAIL, EmailType::class, [
                 'required' => true,
                 'label' => 'Email',
                 'constraints' => [
-                    new Email(),
                     $this->createMaxLengthConstraint(),
+                    $this->createEmailConstraint(),
                 ],
             ]);
 
@@ -306,6 +311,7 @@ class AddressFormType extends AbstractType
                 'constraints' => [
                     $this->createNotBlankConstraint(),
                     $this->createMaxLengthConstraint(15),
+                    $this->createZipCodeConstraint(),
                 ],
             ]);
 
@@ -457,6 +463,29 @@ class AddressFormType extends AbstractType
     {
         return new Length([
             'max' => $maxLength,
+            'groups' => [static::GROUP_SHIPPING_ADDRESS],
+        ]);
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraints\Email
+     */
+    protected function createEmailConstraint(): Email
+    {
+        return new Email([
+            'groups' => [static::GROUP_SHIPPING_ADDRESS],
+        ]);
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraints\Regex
+     */
+    protected function createZipCodeConstraint(): Regex
+    {
+        return new Regex([
+            'pattern' => static::VALIDATION_ZIP_CODE_PATTERN,
+            'message' => static::VALIDATION_ZIP_CODE_MESSAGE,
+            'groups' => [static::GROUP_SHIPPING_ADDRESS],
         ]);
     }
 }

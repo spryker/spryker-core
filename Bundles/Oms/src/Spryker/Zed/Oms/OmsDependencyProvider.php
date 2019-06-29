@@ -75,6 +75,34 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
+    public function providePersistenceLayerDependencies(Container $container)
+    {
+        $container = $this->addSalesQueryContainer($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addSalesQueryContainer(Container $container): Container
+    {
+        $container->set(static::QUERY_CONTAINER_SALES, function (Container $container) {
+            return new PersistenceOmsToSalesBridge(
+                $container->getLocator()->sales()->queryContainer()
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     protected function addUtilQuantityService(Container $container): Container
     {
         $container->set(static::SERVICE_UTIL_QUANTITY, function (Container $container) {
@@ -107,20 +135,6 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    public function providePersistenceLayerDependencies(Container $container)
-    {
-        $container->set(self::QUERY_CONTAINER_SALES, function (Container $container) {
-            return new PersistenceOmsToSalesBridge($container->getLocator()->sales()->queryContainer());
-        });
-
-        return $container;
-    }
-
-    /**
      * @return \Spryker\Zed\Graph\Communication\Plugin\GraphPlugin
      */
     protected function getGraphPlugin()
@@ -143,9 +157,9 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addReservationExportPlugins(Container $container)
+    protected function addReservationExportPlugins(Container $container): Container
     {
-        $container->set(static::PLUGINS_RESERVATION_EXPORT, function (Container $container) {
+        $container->set(static::PLUGINS_RESERVATION_EXPORT, function () {
             return $this->getReservationExportPlugins();
         });
 
@@ -165,7 +179,7 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addStoreFacade(Container $container)
+    protected function addStoreFacade(Container $container): Container
     {
         $container->set(static::FACADE_STORE, function (Container $container) {
             return new OmsToStoreFacadeBridge($container->getLocator()->store()->facade());
@@ -179,7 +193,7 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addShipmentService(Container $container)
+    protected function addShipmentService(Container $container): Container
     {
         $container->set(static::SERVICE_SHIPMENT, function (Container $container) {
             return new OmsToShipmentServiceBridge($container->getLocator()->shipment()->service());
@@ -193,7 +207,7 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addConditionPlugins(Container $container)
+    protected function addConditionPlugins(Container $container): Container
     {
         $container->set(self::CONDITION_PLUGINS, function (Container $container) {
             return $this->getConditionPlugins($container);
@@ -207,7 +221,7 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addCommandPlugins(Container $container)
+    protected function addCommandPlugins(Container $container): Container
     {
         $container->set(self::COMMAND_PLUGINS, function (Container $container) {
             return $this->getCommandPlugins($container);
@@ -221,7 +235,7 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addMailFacade(Container $container)
+    protected function addMailFacade(Container $container): Container
     {
         $container->set(self::FACADE_MAIL, function (Container $container) {
             return new OmsToMailBridge($container->getLocator()->mail()->facade());
@@ -235,7 +249,7 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addUtilTextFacade(Container $container)
+    protected function addUtilTextFacade(Container $container): Container
     {
         $container->set(self::FACADE_UTIL_TEXT, function (Container $container) {
             return new OmsToUtilTextBridge($container->getLocator()->utilText()->service());
@@ -249,7 +263,7 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addUtilSanitizeService(Container $container)
+    protected function addUtilSanitizeService(Container $container): Container
     {
         $container->set(self::SERVICE_UTIL_SANITIZE, function (Container $container) {
             return new OmsToUtilSanitizeBridge($container->getLocator()->utilSanitize()->service());
@@ -263,7 +277,7 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addUtilNetworkService(Container $container)
+    protected function addUtilNetworkService(Container $container): Container
     {
         $container->set(self::SERVICE_UTIL_NETWORK, function (Container $container) {
             return new OmsToUtilNetworkBridge($container->getLocator()->utilNetwork()->service());
@@ -277,7 +291,7 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addSalesFacade(Container $container)
+    protected function addSalesFacade(Container $container): Container
     {
         $container->set(static::FACADE_SALES, function (Container $container) {
             return new OmsToSalesBridge($container->getLocator()->sales()->facade());
@@ -291,9 +305,9 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addGraphPlugin(Container $container)
+    protected function addGraphPlugin(Container $container): Container
     {
-        $container->set(self::PLUGIN_GRAPH, function (Container $container) {
+        $container->set(self::PLUGIN_GRAPH, function () {
             return $this->getGraphPlugin();
         });
 
@@ -305,7 +319,7 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addReservationHandlerPlugins(Container $container)
+    protected function addReservationHandlerPlugins(Container $container): Container
     {
         $container->set(self::PLUGINS_RESERVATION, function (Container $container) {
             return $this->getReservationHandlerPlugins($container);

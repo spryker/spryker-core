@@ -13,14 +13,16 @@ use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Service\Shipment\ShipmentServiceInterface;
 use Spryker\Zed\Shipment\Business\ShipmentMethod\MethodReaderInterface;
+use Spryker\Zed\Shipment\Business\Mapper\ShipmentMapperInterface;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToSalesFacadeInterface;
+use Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface;
 
 class ShipmentGroupCreator implements ShipmentGroupCreatorInterface
 {
     /**
-     * @var \Spryker\Zed\Shipment\Business\ShipmentMethod\MethodReaderInterface
+     * @var \Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface
      */
-    protected $shipmentMethodReader;
+    protected $shipmentRepository;
 
     /**
      * @var \Spryker\Service\Shipment\ShipmentServiceInterface
@@ -33,16 +35,16 @@ class ShipmentGroupCreator implements ShipmentGroupCreatorInterface
     protected $salesFacade;
 
     /**
-     * @param \Spryker\Zed\Shipment\Business\ShipmentMethod\MethodReaderInterface $shipmentMethodReader
+     * @param \Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface $shipmentRepository
      * @param \Spryker\Service\Shipment\ShipmentServiceInterface $shipmentService
      * @param \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToSalesFacadeInterface $salesFacade
      */
     public function __construct(
-        MethodReaderInterface $shipmentMethodReader,
+        ShipmentRepositoryInterface $shipmentRepository,
         ShipmentServiceInterface $shipmentService,
         ShipmentToSalesFacadeInterface $salesFacade
     ) {
-        $this->shipmentMethodReader = $shipmentMethodReader;
+        $this->shipmentRepository = $shipmentRepository;
         $this->shipmentService = $shipmentService;
         $this->salesFacade = $salesFacade;
     }
@@ -85,9 +87,8 @@ class ShipmentGroupCreator implements ShipmentGroupCreatorInterface
             return $shipmentGroupTransfer;
         }
 
-        $shipmentMethodTransfer = $this->shipmentMethodReader
-            ->findShipmentMethodTransferById($shipmentMethodTransfer->getIdShipmentMethod());
-
+        $shipmentMethodTransfer = $this->shipmentRepository
+            ->findShipmentMethodByIdWithPricesAndCarrier($shipmentFormTransfer->getIdShipmentMethod());
         $shipmentTransfer->setMethod($shipmentMethodTransfer);
 
         return $shipmentGroupTransfer;
