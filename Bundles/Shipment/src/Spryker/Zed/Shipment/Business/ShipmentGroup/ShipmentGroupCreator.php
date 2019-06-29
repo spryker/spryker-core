@@ -12,8 +12,6 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Service\Shipment\ShipmentServiceInterface;
-use Spryker\Zed\Shipment\Business\ShipmentMethod\MethodReaderInterface;
-use Spryker\Zed\Shipment\Business\Mapper\ShipmentMapperInterface;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToSalesFacadeInterface;
 use Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface;
 
@@ -88,7 +86,7 @@ class ShipmentGroupCreator implements ShipmentGroupCreatorInterface
         }
 
         $shipmentMethodTransfer = $this->shipmentRepository
-            ->findShipmentMethodByIdWithPricesAndCarrier($shipmentFormTransfer->getIdShipmentMethod());
+            ->findShipmentMethodByIdWithPricesAndCarrier($shipmentMethodTransfer->getIdShipmentMethod());
         $shipmentTransfer->setMethod($shipmentMethodTransfer);
 
         return $shipmentGroupTransfer;
