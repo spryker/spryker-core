@@ -8,7 +8,6 @@
 namespace SprykerTest\Zed\ProductPackagingUnit\Business;
 
 use Codeception\Stub;
-use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\DataBuilder\ProductPackagingUnitTypeBuilder;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
