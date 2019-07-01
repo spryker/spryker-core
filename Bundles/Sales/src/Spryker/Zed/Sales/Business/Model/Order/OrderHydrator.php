@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Sales\Business\Model\Order;
 
-use ArrayObject;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CountryTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
