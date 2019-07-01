@@ -537,7 +537,7 @@ interface PriceProductFacadeInterface
     /**
      * Specification:
      * - Filters product prices using provided filters.
-     * - Returns valid price products.
+     * - Returns valid price products for given price filter configurations.
      *
      * @api
      *

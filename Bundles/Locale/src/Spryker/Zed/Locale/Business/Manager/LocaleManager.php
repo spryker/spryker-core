@@ -220,7 +220,7 @@ class LocaleManager
      *
      * @return \Generated\Shared\Transfer\LocaleTransfer[]
      */
-    public function getAvailableLocaleCollection(Store $store): array
+    protected function getAvailableLocaleCollection(Store $store): array
     {
         $availableLocales = $store->getLocales();
 
