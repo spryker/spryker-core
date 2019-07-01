@@ -23,6 +23,7 @@ class ShipmentMethodFormType extends AbstractType
 {
     public const FIELD_ID_SHIPMENT_METHOD = 'idShipmentMethod';
     public const OPTION_SHIPMENT_METHOD_CHOICES = 'method_choices';
+    public const OPTION_ID_SHIPMENT_METHOD = 'idShipmentMethod';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
