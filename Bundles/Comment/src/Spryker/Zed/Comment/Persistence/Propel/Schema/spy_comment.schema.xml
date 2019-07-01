@@ -34,7 +34,7 @@
         <column name="id_comment" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
         <column name="fk_comment_thread" required="true" type="INTEGER"/>
         <column name="uuid" required="false" type="VARCHAR" size="36"/>
-        <column name="fk_customer" type="INTEGER"/>
+        <column name="fk_customer" required="false" type="INTEGER"/>
         <column name="message" required="true" type="VARCHAR" size="5000"/>
         <column name="is_deleted" defaultValue="false" type="BOOLEAN"/>
         <column name="is_updated" defaultValue="false" type="BOOLEAN"/>

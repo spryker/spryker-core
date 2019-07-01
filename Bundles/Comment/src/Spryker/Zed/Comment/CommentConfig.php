@@ -17,8 +17,8 @@ class CommentConfig extends AbstractBundleConfig
     /**
      * @return string[]
      */
-    public function getCommentAvailableTags(): array
+    public function getAvailableCommentTags(): array
     {
-        return $this->getSharedConfig()->getCommentAvailableTags();
+        return $this->getSharedConfig()->getAvailableCommentTags();
     }
 }

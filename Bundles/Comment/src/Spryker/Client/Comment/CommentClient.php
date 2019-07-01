@@ -113,11 +113,11 @@ class CommentClient extends AbstractClient implements CommentClientInterface
      *
      * @return string[]
      */
-    public function getCommentAvailableTags(): array
+    public function getAvailableCommentTags(): array
     {
         return $this->getFactory()
             ->getModuleConfig()
-            ->getCommentAvailableTags();
+            ->getAvailableCommentTags();
     }
 
     /**

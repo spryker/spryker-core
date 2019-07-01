@@ -14,7 +14,7 @@ class CommentConfig extends AbstractSharedConfig
     /**
      * @return string[]
      */
-    public function getCommentAvailableTags(): array
+    public function getAvailableCommentTags(): array
     {
         return [];
     }

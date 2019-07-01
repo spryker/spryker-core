@@ -56,7 +56,7 @@ class CommentFacadeAddCommentTagTest extends Unit
     /**
      * @var string[]
      */
-    protected $commentAvailableTags = [];
+    protected $availableCommentTags = [];
 
     /**
      * @return void
@@ -86,7 +86,7 @@ class CommentFacadeAddCommentTagTest extends Unit
             ->setName((new CommentTagBuilder())->build()->getName())
             ->setComment($commentThreadResponseTransfer->getCommentThread()->getComments()->offsetGet(0));
 
-        $this->commentAvailableTags = [$commentTagRequestTransfer->getName()];
+        $this->availableCommentTags = [$commentTagRequestTransfer->getName()];
 
         // Act
         $commentThreadResponseTransfer = $this->getFacadeMock()->addCommentTag($commentTagRequestTransfer);
@@ -207,7 +207,7 @@ class CommentFacadeAddCommentTagTest extends Unit
             ->setName((new CommentTagBuilder())->build()->getName())
             ->setComment($commentTransfer);
 
-        $this->commentAvailableTags = [$commentTagRequestTransfer->getName()];
+        $this->availableCommentTags = [$commentTagRequestTransfer->getName()];
 
         // Act
         $commentThreadResponseTransfer = $this->getFacadeMock()->addCommentTag($commentTagRequestTransfer);
@@ -229,7 +229,7 @@ class CommentFacadeAddCommentTagTest extends Unit
         $commentTagTransfer = (new CommentTagBuilder())->build();
         $duplicatedCommentTagTransfer = (new CommentTagBuilder())->build()->setName($commentTagTransfer->getName());
 
-        $this->commentAvailableTags = [$commentTagTransfer->getName()];
+        $this->availableCommentTags = [$commentTagTransfer->getName()];
 
         $commentTransfer = (new CommentBuilder())->build()
             ->setCustomer($this->customerTransfer);
@@ -280,7 +280,7 @@ class CommentFacadeAddCommentTagTest extends Unit
         $firstCommentTagTransfer = (new CommentTagBuilder())->build();
         $secondCommentTagTransfer = (new CommentTagBuilder())->build();
 
-        $this->commentAvailableTags = [
+        $this->availableCommentTags = [
             $firstCommentTagTransfer->getName(),
             $secondCommentTagTransfer->getName(),
         ];
@@ -336,13 +336,13 @@ class CommentFacadeAddCommentTagTest extends Unit
     {
         /** @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Comment\CommentConfig $commentConfigMock */
         $commentConfigMock = $this->getMockBuilder(CommentConfig::class)
-            ->setMethods(['getCommentAvailableTags'])
+            ->setMethods(['getAvailableCommentTags'])
             ->disableOriginalConstructor()
             ->getMock();
 
         $commentConfigMock
-            ->method('getCommentAvailableTags')
-            ->willReturn($this->commentAvailableTags);
+            ->method('getAvailableCommentTags')
+            ->willReturn($this->availableCommentTags);
 
         /** @var \Spryker\Zed\Comment\Business\CommentFacade $commentFacade */
         $commentFacade = $this->tester->getFacade();

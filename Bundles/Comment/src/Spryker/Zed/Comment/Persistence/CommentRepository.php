@@ -84,7 +84,7 @@ class CommentRepository extends AbstractRepository implements CommentRepositoryI
             ->getCommentPropelQuery()
             ->filterByFkCommentThread($commentThreadTransfer->getIdCommentThread())
             ->filterByIsDeleted(false)
-            ->joinWithSpyCustomer()
+            ->leftJoinWithSpyCustomer()
             ->leftJoinWithSpyCommentToCommentTag()
             ->useSpyCommentToCommentTagQuery(null, Criteria::LEFT_JOIN)
                 ->leftJoinWithSpyCommentTag()

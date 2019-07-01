@@ -51,7 +51,7 @@ class CommentFacadeDuplicateCommentThreadTest extends Unit
     /**
      * @var string[]
      */
-    protected $commentAvailableTags = [];
+    protected $availableCommentTags = [];
 
     /**
      * @return void
@@ -216,7 +216,7 @@ class CommentFacadeDuplicateCommentThreadTest extends Unit
             ->setName((new CommentTagBuilder())->build()->getName())
             ->setComment($commentThreadResponseTransfer->getCommentThread()->getComments()->offsetGet(0));
 
-        $this->commentAvailableTags = [$commentTagRequestTransfer->getName()];
+        $this->availableCommentTags = [$commentTagRequestTransfer->getName()];
         $commentTransfer = $this->getFacadeMock()
             ->addCommentTag($commentTagRequestTransfer)
             ->getCommentThread()
@@ -256,13 +256,13 @@ class CommentFacadeDuplicateCommentThreadTest extends Unit
     {
         /** @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Comment\CommentConfig $commentConfigMock */
         $commentConfigMock = $this->getMockBuilder(CommentConfig::class)
-            ->setMethods(['getCommentAvailableTags'])
+            ->setMethods(['getAvailableCommentTags'])
             ->disableOriginalConstructor()
             ->getMock();
 
         $commentConfigMock
-            ->method('getCommentAvailableTags')
-            ->willReturn($this->commentAvailableTags);
+            ->method('getAvailableCommentTags')
+            ->willReturn($this->availableCommentTags);
 
         /** @var \Spryker\Zed\Comment\Business\CommentFacade $commentFacade */
         $commentFacade = $this->tester->getFacade();

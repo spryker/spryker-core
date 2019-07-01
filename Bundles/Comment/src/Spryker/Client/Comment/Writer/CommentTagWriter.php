@@ -72,7 +72,7 @@ class CommentTagWriter implements CommentTagWriterInterface
      */
     protected function isCommentTagAvailable(CommentTagRequestTransfer $commentTagRequestTransfer): bool
     {
-        return in_array($commentTagRequestTransfer->getName(), $this->commentConfig->getCommentAvailableTags(), true);
+        return in_array($commentTagRequestTransfer->getName(), $this->commentConfig->getAvailableCommentTags(), true);
     }
 
     /**
