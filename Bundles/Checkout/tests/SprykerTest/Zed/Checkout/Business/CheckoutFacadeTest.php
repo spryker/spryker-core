@@ -23,6 +23,8 @@ use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShipmentMethodTransfer;
+use Generated\Shared\Transfer\ShipmentTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
@@ -472,14 +474,12 @@ class CheckoutFacadeTest extends Unit
      */
     protected function getBaseQuoteTransfer(): QuoteTransfer
     {
-        $storeTransfer = (new StoreBuilder())->seed([
-            StoreTransfer::NAME => 'DE',
-        ])->build();
-        $currencyTransfer = (new CurrencyBuilder())->seed([
-            CurrencyTransfer::CODE => 'EUR',
-        ])->build();
-        $quoteTransfer = (new QuoteBuilder())->build();
-        $quoteTransfer->setStore($storeTransfer);
+        $quoteTransfer = new QuoteTransfer();
+
+        $quoteTransfer->setStore((new StoreTransfer())->setName('DE'));
+
+        $currencyTransfer = new CurrencyTransfer();
+        $currencyTransfer->setCode('EUR');
         $quoteTransfer->setCurrency($currencyTransfer);
 
         $country = new SpyCountry();
@@ -512,78 +512,89 @@ class CheckoutFacadeTest extends Unit
         $stock = (new SpyStockQuery())
             ->filterByName('Warehouse1')
             ->findOneOrCreate();
-
         $stock->save();
 
         $stock1 = new SpyStockProduct();
         $stock1
-            ->setQuantity(3)
+            ->setQuantity(1)
             ->setStock($stock)
             ->setSpyProduct($productConcrete1)
             ->save();
 
         $stock2 = new SpyStockProduct();
         $stock2
-            ->setQuantity(3)
+            ->setQuantity(1)
             ->setStock($stock)
             ->setSpyProduct($productConcrete2)
             ->save();
 
-        $shippingAddress = (new AddressBuilder([
-            AddressTransfer::ADDRESS2 => '84',
-            AddressTransfer::ZIP_CODE => '12346',
-            AddressTransfer::EMAIL => 'max@mustermann.de',
-            AddressTransfer::CITY => 'Entenhausen2',
-        ]))->build();
-        $quoteTransfer->setShippingAddress($shippingAddress);
-        $item1 = (new ItemBuilder())
-            ->seed([
-                ItemTransfer::UNIT_PRICE => 4000,
-                ItemTransfer::SKU => 'OSB1337',
-                ItemTransfer::QUANTITY => 1,
-                ItemTransfer::UNIT_GROSS_PRICE => 3000,
-                ItemTransfer::SUM_GROSS_PRICE => 3000,
-                ItemTransfer::NAME => 'Product1',
-            ])
-            ->build();
-        $item2 = (new ItemBuilder())
-            ->seed([
-                ItemTransfer::UNIT_PRICE => 4000,
-                ItemTransfer::SKU => 'OSB1338',
-                ItemTransfer::QUANTITY => 1,
-                ItemTransfer::UNIT_GROSS_PRICE => 4000,
-                ItemTransfer::SUM_GROSS_PRICE => 4000,
-                ItemTransfer::NAME => 'Product2',
-            ])
-            ->build();
+        $item1 = new ItemTransfer();
+        $item1
+            ->setUnitPrice(4000)
+            ->setSku('OSB1337')
+            ->setQuantity(1)
+            ->setUnitGrossPrice(3000)
+            ->setSumGrossPrice(3000)
+            ->setName('Product1');
+
+        $item2 = new ItemTransfer();
+        $item2
+            ->setUnitPrice(4000)
+            ->setSku('OSB1338')
+            ->setQuantity(1)
+            ->setUnitGrossPrice(4000)
+            ->setSumGrossPrice(4000)
+            ->setName('Product2');
 
         $quoteTransfer->addItem($item1);
         $quoteTransfer->addItem($item2);
 
-        $totals = (new TotalsBuilder())->seed([
-            TotalsTransfer::GRAND_TOTAL => 1000,
-            TotalsTransfer::SUBTOTAL => 500,
-        ])->build();
+        $totals = new TotalsTransfer();
+        $totals
+            ->setGrandTotal(1000)
+            ->setSubtotal(500);
 
         $quoteTransfer->setTotals($totals);
 
-        $billingAddress = (new AddressBuilder())->seed([
-            AddressTransfer::ISO2_CODE => 'xi',
-            AddressTransfer::EMAIL => 'max@mustermann.de',
-        ])->build();
+        $billingAddress = new AddressTransfer();
+        $shippingAddress = new AddressTransfer();
+
+        $billingAddress
+            ->setIso2Code('xi')
+            ->setEmail('max@mustermann.de')
+            ->setFirstName('Max')
+            ->setLastName('Mustermann')
+            ->setAddress1('Straße')
+            ->setAddress2('82')
+            ->setZipCode('12345')
+            ->setCity('Entenhausen');
+        $shippingAddress
+            ->setIso2Code('xi')
+            ->setFirstName('Max')
+            ->setLastName('Mustermann')
+            ->setEmail('max@mustermann.de')
+            ->setAddress1('Straße')
+            ->setAddress2('84')
+            ->setZipCode('12346')
+            ->setCity('Entenhausen2');
 
         $quoteTransfer->setBillingAddress($billingAddress);
-        $customerTransfer = (new CustomerBuilder())->seed([
-            CustomerTransfer::IS_GUEST => false,
-            CustomerTransfer::EMAIL => $billingAddress->getEmail(),
-        ])->build();
+        $quoteTransfer->setShippingAddress($shippingAddress);
+
+        $customerTransfer = new CustomerTransfer();
+        $customerTransfer
+            ->setIsGuest(false)
+            ->setEmail('max@mustermann.de');
 
         $quoteTransfer->setCustomer($customerTransfer);
 
-        $paymentTransfer = (new PaymentBuilder())->seed([
-            PaymentTransfer::PAYMENT_SELECTION => 'no_payment',
-        ])->build();
+        $shipment = new ShipmentTransfer();
+        $shipment->setMethod(new ShipmentMethodTransfer());
 
+        $quoteTransfer->setShipment($shipment);
+
+        $paymentTransfer = new PaymentTransfer();
+        $paymentTransfer->setPaymentSelection('no_payment');
         $quoteTransfer->setPayment($paymentTransfer);
 
         return $quoteTransfer;
