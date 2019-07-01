@@ -11,7 +11,7 @@ use Exception;
 use Generated\Shared\Transfer\MessageTransfer;
 
 /**
- * @internal will be removed with a major release
+ * @internal Will be removed with a major release.
  */
 trait UniqueFlashMessagesTrait
 {

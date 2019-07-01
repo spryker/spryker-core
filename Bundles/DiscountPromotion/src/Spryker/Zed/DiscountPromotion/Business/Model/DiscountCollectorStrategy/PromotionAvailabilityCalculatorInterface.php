@@ -11,9 +11,9 @@ interface PromotionAvailabilityCalculatorInterface
 {
     /**
      * @param int $idProductAbstract
-     * @param float $maxQuantity
+     * @param int $maxQuantity
      *
-     * @return float
+     * @return int
      */
     public function getMaximumQuantityBasedOnAvailability($idProductAbstract, $maxQuantity);
 }

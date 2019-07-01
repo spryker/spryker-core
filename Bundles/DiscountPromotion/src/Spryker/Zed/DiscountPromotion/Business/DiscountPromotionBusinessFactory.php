@@ -12,7 +12,6 @@ use Spryker\Zed\DiscountPromotion\Business\Model\DiscountCollectorStrategy\Promo
 use Spryker\Zed\DiscountPromotion\Business\Model\DiscountPromotionReader;
 use Spryker\Zed\DiscountPromotion\Business\Model\DiscountPromotionWriter;
 use Spryker\Zed\DiscountPromotion\Business\Model\Mapper\DiscountPromotionMapper;
-use Spryker\Zed\DiscountPromotion\Dependency\Service\DiscountPromotionToUtilQuantityServiceInterface;
 use Spryker\Zed\DiscountPromotion\DiscountPromotionDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
@@ -31,8 +30,7 @@ class DiscountPromotionBusinessFactory extends AbstractBusinessFactory
         return new DiscountPromotionCollectorStrategy(
             $this->getProductFacade(),
             $this->getQueryContainer(),
-            $this->createPromotionAvailabilityCalculator(),
-            $this->getUtilQuantityService()
+            $this->createPromotionAvailabilityCalculator()
         );
     }
 
@@ -41,11 +39,7 @@ class DiscountPromotionBusinessFactory extends AbstractBusinessFactory
      */
     protected function createPromotionAvailabilityCalculator()
     {
-        return new PromotionAvailabilityCalculator(
-            $this->getAvailabilityFacade(),
-            $this->getLocaleFacade(),
-            $this->getUtilQuantityService()
-        );
+        return new PromotionAvailabilityCalculator($this->getAvailabilityFacade(), $this->getLocaleFacade());
     }
 
     /**
@@ -94,13 +88,5 @@ class DiscountPromotionBusinessFactory extends AbstractBusinessFactory
     protected function getLocaleFacade()
     {
         return $this->getProvidedDependency(DiscountPromotionDependencyProvider::FACADE_LOCALE);
-    }
-
-    /**
-     * @return \Spryker\Zed\DiscountPromotion\Dependency\Service\DiscountPromotionToUtilQuantityServiceInterface
-     */
-    public function getUtilQuantityService(): DiscountPromotionToUtilQuantityServiceInterface
-    {
-        return $this->getProvidedDependency(DiscountPromotionDependencyProvider::SERVICE_UTIL_QUANTITY);
     }
 }

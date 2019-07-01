@@ -16,7 +16,7 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class ContentByTypeTable extends AbstractTable
 {
-    protected const FIELD_ACTION_CONTENT_ITEM = '<input type="radio" %s  data-content-item-type="%s" data-content-item-name="%s" data-id="%d" name="content-item" value="%s"/>';
+    protected const FIELD_ACTION_CONTENT_ITEM = '<input type="radio" %s data-content-item-name="%s" data-id="%d" name="content-item" value="%s"/>';
 
     /**
      * @var string
@@ -148,7 +148,6 @@ class ContentByTypeTable extends AbstractTable
         return sprintf(
             static::FIELD_ACTION_CONTENT_ITEM,
             $selectedAttr,
-            $contentItem[ContentTableConstants::COL_CONTENT_TYPE_KEY],
             $contentItem[ContentTableConstants::COL_NAME],
             $contentItem[ContentTableConstants::COL_ID_CONTENT],
             $contentItem[ContentTableConstants::COL_KEY]

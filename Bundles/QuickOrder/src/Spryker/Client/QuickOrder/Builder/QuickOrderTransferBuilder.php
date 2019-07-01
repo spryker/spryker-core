@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\QuickOrderItemTransfer;
 use Generated\Shared\Transfer\QuickOrderTransfer;
-use Spryker\Client\QuickOrder\Dependency\Service\QuickOrderToUtilQuantityServiceInterface;
 use Spryker\Client\QuickOrder\Expander\ProductConcreteExpanderInterface;
 use Spryker\Client\QuickOrder\Product\ProductConcreteResolverInterface;
 use Spryker\Client\QuickOrder\Validator\QuickOrderItemValidatorInterface;
@@ -40,26 +39,18 @@ class QuickOrderTransferBuilder implements QuickOrderTransferBuilderInterface
     protected $productConcreteExpander;
 
     /**
-     * @var \Spryker\Client\QuickOrder\Dependency\Service\QuickOrderToUtilQuantityServiceInterface
-     */
-    protected $utilQuantityService;
-
-    /**
      * @param \Spryker\Client\QuickOrder\Product\ProductConcreteResolverInterface $productConcreteResolver
      * @param \Spryker\Client\QuickOrder\Validator\QuickOrderItemValidatorInterface $quickOrderItemValidator
      * @param \Spryker\Client\QuickOrder\Expander\ProductConcreteExpanderInterface $productConcreteExpander
-     * @param \Spryker\Client\QuickOrder\Dependency\Service\QuickOrderToUtilQuantityServiceInterface $utilQuantityService
      */
     public function __construct(
         ProductConcreteResolverInterface $productConcreteResolver,
         QuickOrderItemValidatorInterface $quickOrderItemValidator,
-        ProductConcreteExpanderInterface $productConcreteExpander,
-        QuickOrderToUtilQuantityServiceInterface $utilQuantityService
+        ProductConcreteExpanderInterface $productConcreteExpander
     ) {
         $this->productConcreteResolver = $productConcreteResolver;
         $this->quickOrderItemValidator = $quickOrderItemValidator;
         $this->productConcreteExpander = $productConcreteExpander;
-        $this->utilQuantityService = $utilQuantityService;
     }
 
     /**
@@ -78,8 +69,8 @@ class QuickOrderTransferBuilder implements QuickOrderTransferBuilderInterface
             }
 
             $quickOrderItemTransfer = $this->resolveProductConcrete($quickOrderItemTransfer);
-            $quickOrderItemTransfer = $this->expandProductConcrete($quickOrderItemTransfer);
             $quickOrderItemTransfer = $this->validateQuickOrderItem($quickOrderItemTransfer);
+            $quickOrderItemTransfer = $this->expandProductConcrete($quickOrderItemTransfer);
 
             $quickOrderItemTransfers->append($quickOrderItemTransfer);
         }
@@ -111,27 +102,12 @@ class QuickOrderTransferBuilder implements QuickOrderTransferBuilderInterface
     }
 
     /**
-     * @param float $firstQuantity
-     * @param float $secondQuantity
-     *
-     * @return bool
-     */
-    protected function isQuantityEqual(float $firstQuantity, float $secondQuantity): bool
-    {
-        return $this->utilQuantityService->isQuantityEqual($firstQuantity, $secondQuantity);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\QuickOrderItemTransfer $quickOrderItemTransfer
      *
      * @return \Generated\Shared\Transfer\QuickOrderItemTransfer
      */
     protected function validateQuickOrderItem(QuickOrderItemTransfer $quickOrderItemTransfer): QuickOrderItemTransfer
     {
-        if ($this->isQuantityEqual($quickOrderItemTransfer->getQuantity(), 0)) {
-            $quickOrderItemTransfer->setQuantity($quickOrderItemTransfer->getProductConcrete()->getMinQuantity());
-        }
-
         $itemValidationTransfer = (new ItemValidationTransfer())->setItem(
             $this->getItemTransfer($quickOrderItemTransfer)
         );
