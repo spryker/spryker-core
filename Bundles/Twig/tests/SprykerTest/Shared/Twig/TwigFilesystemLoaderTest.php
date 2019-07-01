@@ -78,12 +78,12 @@ class TwigFilesystemLoaderTest extends Unit
     public function templateNameContentProvider(): array
     {
         return [
-//            ['@Bundle/Controller/index.twig', static::CONTENT_PROJECT_ZED_FILE],
-//            ['/Bundle/Controller/index.twig', static::CONTENT_PROJECT_ZED_FILE],
-//            ['Bundle/Controller/index.twig', static::CONTENT_PROJECT_ZED_FILE],
-//            ['@ProjectNamespace:Bundle/Controller/index.twig', static::CONTENT_PROJECT_ZED_FILE],
-//            ['/ProjectNamespace:Bundle/Controller/index.twig', static::CONTENT_PROJECT_ZED_FILE],
-//            ['ProjectNamespace:Bundle/Controller/index.twig', static::CONTENT_PROJECT_ZED_FILE],
+            ['@Bundle/Controller/index.twig', static::CONTENT_PROJECT_ZED_FILE],
+            ['/Bundle/Controller/index.twig', static::CONTENT_PROJECT_ZED_FILE],
+            ['Bundle/Controller/index.twig', static::CONTENT_PROJECT_ZED_FILE],
+            ['@ProjectNamespace:Bundle/Controller/index.twig', static::CONTENT_PROJECT_ZED_FILE],
+            ['/ProjectNamespace:Bundle/Controller/index.twig', static::CONTENT_PROJECT_ZED_FILE],
+            ['ProjectNamespace:Bundle/Controller/index.twig', static::CONTENT_PROJECT_ZED_FILE],
             ['@CoreNamespace:Bundle/Controller/index.twig', static::CONTENT_CORE_ZED_FILE],
             ['/CoreNamespace:Bundle/Controller/index.twig', static::CONTENT_CORE_ZED_FILE],
             ['CoreNamespace:Bundle/Controller/index.twig', static::CONTENT_CORE_ZED_FILE],
