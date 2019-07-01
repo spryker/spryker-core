@@ -41,8 +41,8 @@ use Spryker\Zed\Checkout\CheckoutConfig;
 use Spryker\Zed\Checkout\CheckoutDependencyProvider;
 use Spryker\Zed\Customer\Business\CustomerBusinessFactory;
 use Spryker\Zed\Customer\Business\CustomerFacade;
+use Spryker\Zed\Customer\Communication\Plugin\Checkout\CustomerOrderSavePlugin;
 use Spryker\Zed\Customer\Communication\Plugin\CustomerPreConditionCheckerPlugin;
-use Spryker\Zed\Customer\Communication\Plugin\OrderCustomerSavePlugin;
 use Spryker\Zed\Customer\CustomerDependencyProvider;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToMailInterface;
 use Spryker\Zed\Kernel\Container;
@@ -668,10 +668,11 @@ class CheckoutFacadeTest extends Unit
             AddressTransfer::EMAIL => 'max@mustermann.de',
             AddressTransfer::CITY => 'Entenhausen2',
         ]))->build();
-        $quoteTransfer->setShippingAddress($shippingAddress);
+
         $shipment = (new ShipmentBuilder())
             ->build();
         $shipment->setShippingAddress($shippingAddress);
+
         $item1 = (new ItemBuilder())
             ->seed([
                 ItemTransfer::UNIT_PRICE => 4000,
@@ -754,7 +755,7 @@ class CheckoutFacadeTest extends Unit
         $customerFacade = new CustomerFacade();
         $customerFacade->setFactory($customerFactory);
 
-        $customerOrderSavePlugin = new OrderCustomerSavePlugin();
+        $customerOrderSavePlugin = new CustomerOrderSavePlugin();
         $customerOrderSavePlugin->setFacade($customerFacade);
 
         return $customerOrderSavePlugin;
