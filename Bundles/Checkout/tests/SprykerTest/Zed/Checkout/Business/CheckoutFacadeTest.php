@@ -179,7 +179,6 @@ class CheckoutFacadeTest extends Unit
             ->withTotals()
             ->withCurrency()
             ->withBillingAddress()
-            ->withShippingAddress()
             ->build();
 
         $result = $this->tester->getFacade()->placeOrder($quoteTransfer);
