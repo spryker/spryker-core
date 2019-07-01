@@ -10,23 +10,9 @@ namespace Spryker\Zed\SalesQuantity\Business\Discount\DiscountableItem;
 use Generated\Shared\Transfer\CalculatedDiscountTransfer;
 use Generated\Shared\Transfer\DiscountableItemTransformerTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
-use Spryker\Zed\SalesQuantity\Dependency\Service\SalesQuantityToUtilPriceServiceInterface;
 
 class DiscountableItemTransformer implements DiscountableItemTransformerInterface
 {
-    /**
-     * @var \Spryker\Zed\SalesQuantity\Dependency\Service\SalesQuantityToUtilPriceServiceInterface
-     */
-    protected $utilPriceService;
-
-    /**
-     * @param \Spryker\Zed\SalesQuantity\Dependency\Service\SalesQuantityToUtilPriceServiceInterface $utilPriceService
-     */
-    public function __construct(SalesQuantityToUtilPriceServiceInterface $utilPriceService)
-    {
-        $this->utilPriceService = $utilPriceService;
-    }
-
     /**
      * @param \Generated\Shared\Transfer\DiscountableItemTransformerTransfer $discountableItemTransformerTransfer
      *
@@ -46,14 +32,13 @@ class DiscountableItemTransformer implements DiscountableItemTransformerInterfac
         $singleItemAmountShare = $discountableItemTransfer->getUnitPrice() * $quantity / $totalAmount;
 
         $itemDiscountAmount = ($totalDiscountAmount * $singleItemAmountShare) + $roundingError;
-        $itemDiscountAmountRounded = $this->roundPrice($itemDiscountAmount);
+        $itemDiscountAmountRounded = (int)round($itemDiscountAmount);
         $roundingError = $itemDiscountAmount - $itemDiscountAmountRounded;
 
         $distributedDiscountTransfer = clone $calculatedDiscountTransfer;
         $distributedDiscountTransfer->setIdDiscount($discountTransfer->getIdDiscount());
         $distributedDiscountTransfer->setSumAmount($itemDiscountAmountRounded);
-        $unitAmount = $this->roundPrice($itemDiscountAmountRounded / $quantity);
-        $distributedDiscountTransfer->setUnitAmount($unitAmount);
+        $distributedDiscountTransfer->setUnitAmount((int)round($itemDiscountAmountRounded / $quantity));
         $distributedDiscountTransfer->setQuantity($quantity);
 
         $discountableItemTransfer->getOriginalItemCalculatedDiscounts()->append($distributedDiscountTransfer);
@@ -63,16 +48,6 @@ class DiscountableItemTransformer implements DiscountableItemTransformerInterfac
             ->setDiscountableItem($discountableItemTransfer);
 
         return $discountableItemTransformerTransfer;
-    }
-
-    /**
-     * @param float $price
-     *
-     * @return int
-     */
-    protected function roundPrice(float $price): int
-    {
-        return $this->utilPriceService->roundPrice($price);
     }
 
     /**

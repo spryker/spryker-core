@@ -21,18 +21,18 @@ interface StockSalesConnectorToStockInterface
     /**
      * @param string $sku
      * @param string $stockType
-     * @param float $decrementBy
+     * @param int $decrementBy
      *
      * @return void
      */
-    public function decrementStockProduct($sku, $stockType, float $decrementBy = 1.0);
+    public function decrementStockProduct($sku, $stockType, $decrementBy = 1);
 
     /**
      * @param string $sku
      * @param string $stockType
-     * @param float $incrementBy
+     * @param int $incrementBy
      *
      * @return void
      */
-    public function incrementStockProduct($sku, $stockType, float $incrementBy = 1.0);
+    public function incrementStockProduct($sku, $stockType, $incrementBy = 1);
 }

@@ -13,19 +13,9 @@ interface ProductQuantityStorageToProductQuantityServiceInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ProductQuantityTransfer $productQuantityTransfer
-     * @param float $quantity
+     * @param int $quantity
      *
-     * @return float
+     * @return int
      */
-    public function getNearestQuantity(ProductQuantityTransfer $productQuantityTransfer, float $quantity): float;
-
-    /**
-     * @return float
-     */
-    public function getDefaultMinimumQuantity(): float;
-
-    /**
-     * @return float
-     */
-    public function getDefaultInterval(): float;
+    public function getNearestQuantity(ProductQuantityTransfer $productQuantityTransfer, int $quantity): int;
 }

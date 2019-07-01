@@ -17,7 +17,6 @@ use Spryker\Zed\PriceProductVolumeGui\Dependency\Facade\PriceProductVolumeGuiToC
 use Spryker\Zed\PriceProductVolumeGui\Dependency\Facade\PriceProductVolumeGuiToPriceProductFacadeInterface;
 use Spryker\Zed\PriceProductVolumeGui\Dependency\Facade\PriceProductVolumeGuiToStoreFacadeInterface;
 use Spryker\Zed\PriceProductVolumeGui\Dependency\Service\PriceProductVolumeGuiToUtilEncodingServiceInterface;
-use Spryker\Zed\PriceProductVolumeGui\Dependency\Service\PriceProductVolumeGuiToUtilQuantityServiceInterface;
 use Spryker\Zed\PriceProductVolumeGui\PriceProductVolumeGuiDependencyProvider;
 use Symfony\Component\Form\FormInterface;
 
@@ -103,13 +102,5 @@ class PriceProductVolumeGuiCommunicationFactory extends AbstractCommunicationFac
     public function getUtilEncodingService(): PriceProductVolumeGuiToUtilEncodingServiceInterface
     {
         return $this->getProvidedDependency(PriceProductVolumeGuiDependencyProvider::SERVICE_UTIL_ENCODING);
-    }
-
-    /**
-     * @return \Spryker\Zed\PriceProductVolumeGui\Dependency\Service\PriceProductVolumeGuiToUtilQuantityServiceInterface
-     */
-    public function getUtilQuantityService(): PriceProductVolumeGuiToUtilQuantityServiceInterface
-    {
-        return $this->getProvidedDependency(PriceProductVolumeGuiDependencyProvider::SERVICE_UTIL_QUANTITY);
     }
 }

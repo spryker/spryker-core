@@ -17,7 +17,6 @@ use Spryker\Zed\ProductQuantity\Business\Model\ProductQuantityReader;
 use Spryker\Zed\ProductQuantity\Business\Model\ProductQuantityReaderInterface;
 use Spryker\Zed\ProductQuantity\Business\Model\Validator\ProductQuantityRestrictionValidator;
 use Spryker\Zed\ProductQuantity\Business\Model\Validator\ProductQuantityRestrictionValidatorInterface;
-use Spryker\Zed\ProductQuantity\Dependency\Service\ProductQuantityToUtilQuantityServiceInterface;
 use Spryker\Zed\ProductQuantity\ProductQuantityDependencyProvider;
 
 /**
@@ -32,11 +31,7 @@ class ProductQuantityBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductQuantityRestrictionValidator(): ProductQuantityRestrictionValidatorInterface
     {
-        return new ProductQuantityRestrictionValidator(
-            $this->createProductQuantityReader(),
-            $this->getUtilQuantityService(),
-            $this->getConfig()
-        );
+        return new ProductQuantityRestrictionValidator($this->createProductQuantityReader());
     }
 
     /**
@@ -48,22 +43,13 @@ class ProductQuantityBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductQuantity\Dependency\Service\ProductQuantityToUtilQuantityServiceInterface
-     */
-    public function getUtilQuantityService(): ProductQuantityToUtilQuantityServiceInterface
-    {
-        return $this->getProvidedDependency(ProductQuantityDependencyProvider::SERVICE_UTIL_QUANTITY);
-    }
-
-    /**
      * @return \Spryker\Zed\ProductQuantity\Business\Model\Normalizer\CartChangeTransferQuantityNormalizerInterface
      */
     public function createCartChangeTransferQuantityNormalizer(): CartChangeTransferQuantityNormalizerInterface
     {
         return new CartChangeTransferQuantityNormalizer(
             $this->createProductQuantityReader(),
-            $this->getProductQuantityService(),
-            $this->getUtilQuantityService()
+            $this->getProductQuantityService()
         );
     }
 

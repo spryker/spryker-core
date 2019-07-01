@@ -25,7 +25,7 @@ class ProductManagementToAvailabilityBridge implements ProductManagementToAvaila
     /**
      * @param string $sku
      *
-     * @return float
+     * @return int
      */
     public function calculateStockForProduct($sku)
     {
