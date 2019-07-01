@@ -11,6 +11,10 @@ use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\StorageExtension\Dependency\Plugin\StoragePluginInterface;
 
 /**
+ * - The methods `getKeys()` and `getCountItems()` uses Redis `KEYS` command which should only be used in production environments with extreme care.
+ * - Use `Spryker\Client\StorageRedis\Plugin\StorageRedisScanPlugin` which replaces `KEYS` with `SCAN` command instead
+ * - Be aware that `SCAN` offers limited guarantees about the returned elements.
+ *
  * @method \Spryker\Client\StorageRedis\StorageRedisFactory getFactory()
  * @method \Spryker\Client\StorageRedis\StorageRedisConfig getConfig()
  * @method \Spryker\Client\StorageRedis\StorageRedisClientInterface getClient()

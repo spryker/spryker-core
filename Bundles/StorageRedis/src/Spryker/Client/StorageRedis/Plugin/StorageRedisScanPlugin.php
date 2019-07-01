@@ -11,6 +11,10 @@ use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\StorageExtension\Dependency\Plugin\StoragePluginInterface;
 
 /**
+ * - The methods `getKeys()` and `getCountItems()` uses Redis `SCAN` and `DBSIZE` commands.
+ * - `SCAN` offers limited guarantees about the returned elements.
+ * - `DBSIZE` will return the correct storage items count if you are using separate database for storage.
+ *
  * @method \Spryker\Client\StorageRedis\StorageRedisFactory getFactory()
  * @method \Spryker\Client\StorageRedis\StorageRedisConfig getConfig()
  * @method \Spryker\Client\StorageRedis\StorageRedisClientInterface getClient()
@@ -141,6 +145,7 @@ class StorageRedisScanPlugin extends AbstractPlugin implements StoragePluginInte
 
     /**
      * {@inheritdoc}
+     * - Uses Redis `SCAN` command and it offers limited guarantees about the returned elements, because it's not blocking command.
      *
      * @api
      *
@@ -195,6 +200,7 @@ class StorageRedisScanPlugin extends AbstractPlugin implements StoragePluginInte
 
     /**
      * {@inheritdoc}
+     * - Uses Redis `DBSIZE` command.
      *
      * @api
      *
