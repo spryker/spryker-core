@@ -254,8 +254,8 @@ class ProductConcreteImageStorageWriter implements ProductConcreteImageStorageWr
      */
     protected function getImageSets(array $productIds): array
     {
-        $productLocalizedAttributes = $this->repository->getProductLocalizedAttributesWithProductByIdProductIn($productIds);
-        $productFks = array_column($productLocalizedAttributes, SpyProductLocalizedAttributesTableMap::COL_FK_PRODUCT);
+        $productLocalizedAttributeIds = $this->repository->getProductLocalizedAttributesWithProductByIdProductIn($productIds);
+        $productFks = array_column($productLocalizedAttributeIds, SpyProductLocalizedAttributesTableMap::COL_FK_PRODUCT);
         $productImageSetsBulk = $this->indexImageSetsByProductIdAndLocale(
             $this->repository->getProductImageSetsByFkProductIn($productFks)
         );
@@ -264,7 +264,7 @@ class ProductConcreteImageStorageWriter implements ProductConcreteImageStorageWr
         );
 
         $imageSets = $this->getImageSetsForLocalizedAttributes(
-            $productLocalizedAttributes,
+            $productLocalizedAttributeIds,
             $productImageSetsBulk,
             $productDefaultImageSetsBulk
         );
@@ -273,23 +273,23 @@ class ProductConcreteImageStorageWriter implements ProductConcreteImageStorageWr
     }
 
     /**
-     * @param int[][] $productLocalizedAttributesEntities
+     * @param int[][] $productLocalizedAttributeIds
      * @param \Generated\Shared\Transfer\SpyProductImageSetEntityTransfer[][][] $productImageSetsBulk
      * @param \Generated\Shared\Transfer\SpyProductImageSetEntityTransfer[][] $productDefaultImageSetsBulk
      *
      * @return \Generated\Shared\Transfer\SpyProductImageSetEntityTransfer[][][]
      */
     protected function getImageSetsForLocalizedAttributes(
-        array $productLocalizedAttributesEntities,
+        array $productLocalizedAttributeIds,
         array $productImageSetsBulk,
         array $productDefaultImageSetsBulk
     ): array {
         $imageSets = [];
 
-        foreach ($productLocalizedAttributesEntities as $productLocalizedAttribute) {
-            $idProduct = $productLocalizedAttribute[SpyProductLocalizedAttributesTableMap::COL_FK_PRODUCT];
-            $colIdProductAttributes = $productLocalizedAttribute[SpyProductLocalizedAttributesTableMap::COL_ID_PRODUCT_ATTRIBUTES];
-            $colFkLocale = $productLocalizedAttribute[SpyProductLocalizedAttributesTableMap::COL_FK_LOCALE];
+        foreach ($productLocalizedAttributeIds as $productLocalizedAttributeId) {
+            $idProduct = $productLocalizedAttributeId[SpyProductLocalizedAttributesTableMap::COL_FK_PRODUCT];
+            $colIdProductAttributes = $productLocalizedAttributeId[SpyProductLocalizedAttributesTableMap::COL_ID_PRODUCT_ATTRIBUTES];
+            $colFkLocale = $productLocalizedAttributeId[SpyProductLocalizedAttributesTableMap::COL_FK_LOCALE];
 
             if (isset($productImageSetsBulk[$idProduct][$colFkLocale])) {
                 $imageSets[$idProduct][$colIdProductAttributes] = $productImageSetsBulk[$idProduct][$colFkLocale];
