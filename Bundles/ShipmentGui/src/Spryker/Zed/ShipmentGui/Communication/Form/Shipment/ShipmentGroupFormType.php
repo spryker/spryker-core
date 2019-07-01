@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ShipmentGui\Communication\Form\Shipment;
 
+use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Spryker\Zed\ShipmentGui\Communication\Form\Address\AddressFormType;
 use Spryker\Zed\ShipmentGui\Communication\Form\Item\ItemFormType;
@@ -28,8 +29,8 @@ class ShipmentGroupFormType extends AbstractType
     public const FIELD_ID_SHIPMENT_METHOD = ShipmentMethodFormType::FIELD_ID_SHIPMENT_METHOD;
     public const OPTION_ORDER_ITEMS_CHOICES = ItemFormType::OPTION_ORDER_ITEMS_CHOICES;
 
-    public const FORM_SHIPMENT = 'shipment';
-    public const FORM_SALES_ORDER_ITEMS = 'items';
+    public const FIELD_SHIPMENT_FORM = 'shipment';
+    public const FIELD_SALES_ORDER_ITEMS_FORM = 'items';
 
     public const OPTION_SHIPMENT_METHOD_CHOICES = ShipmentMethodFormType::OPTION_SHIPMENT_METHOD_CHOICES;
     public const OPTION_SALUTATION_CHOICES = AddressFormType::OPTION_SALUTATION_CHOICES;
@@ -39,7 +40,7 @@ class ShipmentGroupFormType extends AbstractType
      *
      * @return void
      */
-    public function configureOptions(OptionsResolver $resolver): void
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver
             ->setRequired(static::OPTION_SHIPMENT_ADDRESS_CHOICES)
@@ -48,7 +49,10 @@ class ShipmentGroupFormType extends AbstractType
             ->setRequired(static::OPTION_SHIPMENT_METHOD_CHOICES)
             ->setRequired(static::OPTION_SALUTATION_CHOICES)
             ->setRequired(static::FIELD_SHIPMENT_SELECTED_ITEMS)
-            ->setRequired(static::FIELD_ID_SALES_SHIPMENT);
+            ->setRequired(static::FIELD_ID_SALES_SHIPMENT)
+            ->setDefaults([
+                'data_class' => ShipmentGroupTransfer::class,
+            ]);
     }
 
     /**
@@ -57,7 +61,7 @@ class ShipmentGroupFormType extends AbstractType
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options): void
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this
             ->addOrderItemsForm($builder, $options)
@@ -70,9 +74,9 @@ class ShipmentGroupFormType extends AbstractType
      *
      * @return $this
      */
-    protected function addShipmentFormType(FormBuilderInterface $builder, array $options = [])
+    protected function addShipmentFormType(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(static::FORM_SHIPMENT, ShipmentFormType::class, [
+        $builder->add(static::FIELD_SHIPMENT_FORM, ShipmentFormType::class, [
             ShipmentFormType::FIELD_ID_SALES_SHIPMENT => $options[static::FIELD_ID_SALES_SHIPMENT],
             ShipmentFormType::OPTION_SHIPMENT_ADDRESS_CHOICES => $options[static::OPTION_SHIPMENT_ADDRESS_CHOICES],
             ShipmentMethodFormType::OPTION_SHIPMENT_METHOD_CHOICES => $options[static::OPTION_SHIPMENT_METHOD_CHOICES],
@@ -91,7 +95,7 @@ class ShipmentGroupFormType extends AbstractType
      */
     protected function addOrderItemsForm(FormBuilderInterface $builder, array $options = [])
     {
-        $builder->add(static::FORM_SALES_ORDER_ITEMS, CollectionType::class, [
+        $builder->add(static::FIELD_SALES_ORDER_ITEMS_FORM, CollectionType::class, [
             'entry_type' => ItemFormType::class,
             'entry_options' => [
                 'label' => false,

@@ -9,9 +9,7 @@ namespace Spryker\Zed\ShipmentGui\Communication;
 
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentCreateFormDataProvider;
-use Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentEditFormDataProvider;
-use Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentFormDefaultDataProvider;
+use Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentFormDataProvider;
 use Spryker\Zed\ShipmentGui\Communication\Form\Shipment\ShipmentGroupFormType;
 use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToCustomerFacadeInterface;
 use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToSalesFacadeInterface;
@@ -25,27 +23,11 @@ use Symfony\Component\Form\FormInterface;
 class ShipmentGuiCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return \Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentCreateFormDataProvider
+     * @return \Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentFormDataProvider
      */
-    public function createShipmentCreateFormDataProvider(): ShipmentCreateFormDataProvider
+    public function createShipmentFormDataProvider(): ShipmentFormDataProvider
     {
-        return new ShipmentCreateFormDataProvider($this->createShipmentFormDefaultDataProvider());
-    }
-
-    /**
-     * @return \Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentEditFormDataProvider
-     */
-    public function createShipmentEditFormDataProvider(): ShipmentEditFormDataProvider
-    {
-        return new ShipmentEditFormDataProvider($this->createShipmentFormDefaultDataProvider());
-    }
-
-    /**
-     * @return \Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentFormDefaultDataProvider
-     */
-    public function createShipmentFormDefaultDataProvider(): ShipmentFormDefaultDataProvider
-    {
-        return new ShipmentFormDefaultDataProvider(
+        return new ShipmentFormDataProvider(
             $this->getSalesFacade(),
             $this->getCustomerFacade(),
             $this->getShipmentFacade()

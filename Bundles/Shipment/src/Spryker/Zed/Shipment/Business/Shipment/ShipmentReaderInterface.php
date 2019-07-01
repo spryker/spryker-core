@@ -12,9 +12,9 @@ use Generated\Shared\Transfer\ShipmentTransfer;
 interface ShipmentReaderInterface
 {
     /**
-     * @param int $idSalesShipment
+     * @param string $idSalesShipment
      *
      * @return \Generated\Shared\Transfer\ShipmentTransfer|null
      */
-    public function findShipmentById(int $idSalesShipment): ?ShipmentTransfer;
+    public function findShipmentById(string $idSalesShipment): ?ShipmentTransfer;
 }

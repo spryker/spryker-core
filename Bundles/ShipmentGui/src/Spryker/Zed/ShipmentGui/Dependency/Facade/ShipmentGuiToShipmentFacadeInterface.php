@@ -28,11 +28,11 @@ interface ShipmentGuiToShipmentFacadeInterface
     public function findMethodById($idShipmentMethod): ?ShipmentMethodTransfer;
 
     /**
-     * @param int $idSalesShipment
+     * @param string $idSalesShipment
      *
      * @return \Generated\Shared\Transfer\ShipmentTransfer|null
      */
-    public function findShipmentById(int $idSalesShipment): ?ShipmentTransfer;
+    public function findShipmentById(string $idSalesShipment): ?ShipmentTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer

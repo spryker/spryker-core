@@ -38,7 +38,7 @@ class EditController extends AbstractController
     {
         $idSalesOrder = $request->query->get(static::PARAM_ID_SALES_ORDER);
         $idSalesShipment = $request->query->get(static::PARAM_ID_SALES_SHIPMENT);
-        $dataProvider = $this->getFactory()->createShipmentEditFormDataProvider();
+        $dataProvider = $this->getFactory()->createShipmentFormDataProvider();
 
         $form = $this->getFactory()
             ->createShipmentEditForm(
@@ -94,11 +94,11 @@ class EditController extends AbstractController
      */
     protected function getItemListUpdatedStatus(FormInterface $form): array
     {
-        if (!$form->offsetExists(ShipmentGroupFormType::FORM_SALES_ORDER_ITEMS)) {
+        if (!$form->offsetExists(ShipmentGroupFormType::FIELD_SALES_ORDER_ITEMS_FORM)) {
             return [];
         }
 
-        $items = $form->get(ShipmentGroupFormType::FORM_SALES_ORDER_ITEMS);
+        $items = $form->get(ShipmentGroupFormType::FIELD_SALES_ORDER_ITEMS_FORM);
         $requestedItems = [];
         foreach ($items as $itemFormType) {
             $itemTransfer = $itemFormType->getData();

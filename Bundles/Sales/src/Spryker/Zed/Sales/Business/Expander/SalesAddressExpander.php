@@ -40,8 +40,6 @@ class SalesAddressExpander implements SalesAddressExpanderInterface
      */
     public function expandWithCustomerOrSalesAddress(AddressTransfer $addressTransfer): AddressTransfer
     {
-        $addressTransfer = $this->prepareAddressIds($addressTransfer);
-
         if ($addressTransfer->getIdCustomerAddress() === null) {
             return $this->expandWithSalesAddress($addressTransfer);
         }
@@ -87,23 +85,5 @@ class SalesAddressExpander implements SalesAddressExpanderInterface
         }
 
         return $foundAddressTransfer->fromArray($addressTransfer->modifiedToArray(), true);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
-     *
-     * @return \Generated\Shared\Transfer\AddressTransfer
-     */
-    protected function prepareAddressIds(AddressTransfer $addressTransfer): AddressTransfer
-    {
-        $idSalesOrderAddress = (int)$addressTransfer->getIdSalesOrderAddress();
-        $idSalesOrderAddress = $idSalesOrderAddress === 0 ? null : $idSalesOrderAddress;
-
-        $idCustomerAddress = (int)$addressTransfer->getIdCustomerAddress();
-        $idCustomerAddress = $idCustomerAddress === 0 ? null : $idCustomerAddress;
-
-        return $addressTransfer
-            ->setIdSalesOrderAddress($idSalesOrderAddress)
-            ->setIdCustomerAddress($idCustomerAddress);
     }
 }

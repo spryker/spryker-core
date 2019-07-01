@@ -10,7 +10,6 @@ namespace Spryker\Zed\Shipment\Business\ShipmentGroup;
 use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
-use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Service\Shipment\ShipmentServiceInterface;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToSalesFacadeInterface;
 use Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface;
@@ -77,7 +76,6 @@ class ShipmentGroupCreator implements ShipmentGroupCreatorInterface
             ->expandWithCustomerOrSalesAddress($shipmentTransfer->getShippingAddress());
 
         $shipmentTransfer->setShippingAddress($shipmentAddressTransfer);
-        $shipmentTransfer = $this->prepareShipmentIds($shipmentTransfer);
         $shipmentGroupTransfer->setShipment($shipmentTransfer);
 
         $shipmentMethodTransfer = $shipmentTransfer->getMethod();
@@ -103,14 +101,17 @@ class ShipmentGroupCreator implements ShipmentGroupCreatorInterface
         array $itemListUpdatedStatus
     ): ShipmentGroupTransfer {
         $shipmentTransfer = $shipmentGroupTransfer->requireShipment()->getShipment();
-        $idGroupShipment = $shipmentTransfer->getIdSalesShipment();
+        $idSalesShipmentOfShipmentGroup = $shipmentTransfer->getIdSalesShipment();
         $items = new ArrayObject();
-        foreach ($shipmentGroupTransfer->getItems() as $itemIndex => $itemTransfer) {
+        foreach ($shipmentGroupTransfer->getItems() as $itemTransfer) {
             $idItemShipment = $itemTransfer->requireShipment()->getShipment()->getIdSalesShipment();
-            if ($idItemShipment === $idGroupShipment || $this->isItemSelected($itemTransfer, $itemListUpdatedStatus)) {
-                $items->append(clone $itemTransfer->setShipment($shipmentTransfer));
+            if ($idItemShipment !== $idSalesShipmentOfShipmentGroup && !$this->isItemSelected($itemTransfer, $itemListUpdatedStatus)) {
                 continue;
             }
+
+            $clonedItemTransfer = clone $itemTransfer;
+            $clonedItemTransfer->setShipment($shipmentTransfer);
+            $items->append($clonedItemTransfer);
         }
 
         return $shipmentGroupTransfer->setItems($items);
@@ -142,39 +143,5 @@ class ShipmentGroupCreator implements ShipmentGroupCreatorInterface
         return isset($itemListUpdatedStatus[$idSalesOrderItem])
             && is_scalar($itemListUpdatedStatus[$idSalesOrderItem])
             && $itemListUpdatedStatus[$idSalesOrderItem];
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShipmentTransfer
-     */
-    protected function prepareShipmentIds(ShipmentTransfer $shipmentTransfer): ShipmentTransfer
-    {
-        $idSalesShipment = $shipmentTransfer->getIdSalesShipment();
-        if ($idSalesShipment !== null) {
-            $shipmentTransfer->setIdSalesShipment((int)$idSalesShipment);
-        }
-
-        $shipmentAddressTransfer = $shipmentTransfer->getShippingAddress();
-        if ($shipmentAddressTransfer === null) {
-            return $shipmentTransfer;
-        }
-
-        $idCustomerAddress = (int)$shipmentAddressTransfer->getIdCustomerAddress();
-        $shipmentAddressTransfer->setIdCustomerAddress($idCustomerAddress === 0 ? null : $idCustomerAddress);
-
-        $idSalesOrderAddress = (int)$shipmentAddressTransfer->getIdSalesOrderAddress();
-        $shipmentAddressTransfer->setIdSalesOrderAddress($idSalesOrderAddress === 0 ? null : $idSalesOrderAddress);
-
-        $shipmentMethodTransfer = $shipmentTransfer->getMethod();
-        if ($shipmentMethodTransfer === null) {
-            return $shipmentTransfer;
-        }
-
-        $idShipmentMethod = (int)$shipmentMethodTransfer->getIdShipmentMethod();
-        $shipmentMethodTransfer->setIdShipmentMethod($idShipmentMethod === 0 ? null : $idShipmentMethod);
-
-        return $shipmentTransfer;
     }
 }

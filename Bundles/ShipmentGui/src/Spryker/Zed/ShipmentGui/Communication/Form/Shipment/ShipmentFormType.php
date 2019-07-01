@@ -7,9 +7,11 @@
 
 namespace Spryker\Zed\ShipmentGui\Communication\Form\Shipment;
 
+use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Spryker\Zed\ShipmentGui\Communication\Form\Address\AddressFormType;
 use Spryker\Zed\ShipmentGui\Communication\Form\Validator\Constraints\GreaterThanOrEqualDate;
+use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -23,15 +25,16 @@ use Symfony\Component\Validator\Constraints\Date;
  */
 class ShipmentFormType extends AbstractType
 {
-    public const GROUP_SHIPPING_ADDRESS = 'shippingAddress';
+    public const VALIDATION_GROUP_SHIPPING_ADDRESS = 'shippingAddress';
     public const OPTION_SHIPMENT_ADDRESS_CHOICES = 'address_choices';
     public const FIELD_ID_SALES_SHIPMENT = 'idSalesShipment';
     public const FIELD_REQUESTED_DELIVERY_DATE = 'requestedDeliveryDate';
     public const FIELD_SHIPPING_ADDRESS_FORM = 'shippingAddress';
-    public const FORM_SHIPMENT_METHOD = 'method';
+    public const FIELD_SHIPMENT_METHOD_FORM = 'method';
     public const OPTION_SALUTATION_CHOICES = AddressFormType::OPTION_SALUTATION_CHOICES;
     public const FIELD_ID_SHIPMENT_METHOD = ShipmentMethodFormType::FIELD_ID_SHIPMENT_METHOD;
     public const OPTION_SHIPMENT_METHOD_CHOICES = ShipmentMethodFormType::OPTION_SHIPMENT_METHOD_CHOICES;
+    public const OPTION_ID_SHIPMENT_METHOD = ShipmentMethodFormType::FIELD_ID_SHIPMENT_METHOD;
 
     protected const FIELD_REQUESTED_DELIVERY_DATE_FORMAT = 'yyyy-MM-dd';
     protected const VALIDATION_DATE_TODAY = 'today';
@@ -42,14 +45,17 @@ class ShipmentFormType extends AbstractType
      *
      * @return void
      */
-    public function configureOptions(OptionsResolver $resolver): void
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver
             ->setRequired(static::OPTION_SALUTATION_CHOICES)
             ->setRequired(static::FIELD_ID_SHIPMENT_METHOD)
             ->setRequired(static::OPTION_SHIPMENT_METHOD_CHOICES)
             ->setRequired(static::FIELD_ID_SALES_SHIPMENT)
-            ->setRequired(static::OPTION_SHIPMENT_ADDRESS_CHOICES);
+            ->setRequired(static::OPTION_SHIPMENT_ADDRESS_CHOICES)
+            ->setDefaults([
+                'data_class' => ShipmentTransfer::class,
+            ]);
     }
 
     /**
@@ -58,7 +64,7 @@ class ShipmentFormType extends AbstractType
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options = []): void
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this
             ->addShipmentMethodForm($builder, $options)
@@ -73,10 +79,10 @@ class ShipmentFormType extends AbstractType
      *
      * @return $this
      */
-    protected function addShipmentMethodForm(FormBuilderInterface $builder, array $options = [])
+    protected function addShipmentMethodForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(static::FORM_SHIPMENT_METHOD, ShipmentMethodFormType::class, [
-            ShipmentMethodFormType::FIELD_ID_SHIPMENT_METHOD => $options[static::FIELD_ID_SHIPMENT_METHOD],
+        $builder->add(static::FIELD_SHIPMENT_METHOD_FORM, ShipmentMethodFormType::class, [
+            ShipmentMethodFormType::FIELD_ID_SHIPMENT_METHOD => $options[static::OPTION_ID_SHIPMENT_METHOD],
             ShipmentMethodFormType::OPTION_SHIPMENT_METHOD_CHOICES => $options[static::OPTION_SHIPMENT_METHOD_CHOICES],
         ]);
 
@@ -106,7 +112,7 @@ class ShipmentFormType extends AbstractType
             'validation_groups' => function (FormInterface $form) {
                 $formParent = $form->getParent();
                 if ($formParent === null || !$formParent->has(static::VALIDATION_DATE_TODAY)) {
-                    return [static::GROUP_SHIPPING_ADDRESS];
+                    return [static::VALIDATION_GROUP_SHIPPING_ADDRESS];
                 }
 
                 $dateValue = $formParent->get(static::VALIDATION_DATE_TODAY)->getData();
@@ -114,7 +120,7 @@ class ShipmentFormType extends AbstractType
                     return false;
                 }
 
-                return [static::GROUP_SHIPPING_ADDRESS];
+                return [static::VALIDATION_GROUP_SHIPPING_ADDRESS];
             },
         ]);
 
@@ -147,6 +153,9 @@ class ShipmentFormType extends AbstractType
     {
         $builder->add(static::FIELD_ID_SALES_SHIPMENT, HiddenType::class);
 
+        $builder->get(static::FIELD_ID_SALES_SHIPMENT)
+            ->addModelTransformer($this->createStringToIntCallbackTransformer());
+
         return $this;
     }
 
@@ -171,5 +180,22 @@ class ShipmentFormType extends AbstractType
     protected function createDateGreaterThanOrEqualConstraint(string $minDate): GreaterThanOrEqualDate
     {
         return new GreaterThanOrEqualDate($minDate);
+    }
+
+    /**
+     * @return \Symfony\Component\Form\CallbackTransformer
+     */
+    protected function createStringToIntCallbackTransformer(): CallbackTransformer
+    {
+        return new CallbackTransformer(
+            function ($id) {
+                return $id;
+            },
+            function ($idString) {
+                $idString = (int)$idString;
+
+                return $idString === 0 ? null : $idString;
+            }
+        );
     }
 }
