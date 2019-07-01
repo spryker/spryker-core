@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Generated\Shared\Transfer\ShipmentCarrierTransfer;
-use Generated\Shared\Transfer\ShipmentFormTransfer;
 use Generated\Shared\Transfer\ShipmentGroupResponseTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Generated\Shared\Transfer\ShipmentMethodsCollectionTransfer;
@@ -325,13 +324,13 @@ interface ShipmentFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ShipmentFormTransfer $shipmentFormTransfer
+     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
      * @param bool[] $itemListUpdatedStatus
      *
      * @return \Generated\Shared\Transfer\ShipmentGroupTransfer
      */
     public function createShipmentGroupTransferWithListedItems(
-        ShipmentFormTransfer $shipmentFormTransfer,
+        ShipmentGroupTransfer $shipmentGroupTransfer,
         array $itemListUpdatedStatus
     ): ShipmentGroupTransfer;
 }

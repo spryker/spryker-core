@@ -7,17 +7,16 @@
 
 namespace Spryker\Zed\ShipmentGui\Communication;
 
-use Generated\Shared\Transfer\ShipmentFormTransfer;
+use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentCreateFormDataProvider;
-use Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentEditFormDataProvider;
-use Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentFormDefaultDataProvider;
-use Spryker\Zed\ShipmentGui\Communication\Form\ShipmentCreateForm;
-use Spryker\Zed\ShipmentGui\Communication\Form\ShipmentEditForm;
+use Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentFormDataProvider;
+use Spryker\Zed\ShipmentGui\Communication\Form\Shipment\ShipmentGroupFormType;
+use Spryker\Zed\ShipmentGui\Communication\Form\Transformer\StringToNumberTransformer;
 use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToCustomerFacadeInterface;
 use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToSalesFacadeInterface;
 use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToShipmentFacadeInterface;
 use Spryker\Zed\ShipmentGui\ShipmentGuiDependencyProvider;
+use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\FormInterface;
 
 /**
@@ -26,27 +25,11 @@ use Symfony\Component\Form\FormInterface;
 class ShipmentGuiCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return \Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentCreateFormDataProvider
+     * @return \Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentFormDataProvider
      */
-    public function createShipmentCreateFormDataProvider(): ShipmentCreateFormDataProvider
+    public function createShipmentFormDataProvider(): ShipmentFormDataProvider
     {
-        return new ShipmentCreateFormDataProvider($this->createShipmentFormDefaultDataProvider());
-    }
-
-    /**
-     * @return \Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentEditFormDataProvider
-     */
-    public function createShipmentEditFormDataProvider(): ShipmentEditFormDataProvider
-    {
-        return new ShipmentEditFormDataProvider($this->createShipmentFormDefaultDataProvider());
-    }
-
-    /**
-     * @return \Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentFormDefaultDataProvider
-     */
-    public function createShipmentFormDefaultDataProvider(): ShipmentFormDefaultDataProvider
-    {
-        return new ShipmentFormDefaultDataProvider(
+        return new ShipmentFormDataProvider(
             $this->getSalesFacade(),
             $this->getCustomerFacade(),
             $this->getShipmentFacade()
@@ -54,33 +37,37 @@ class ShipmentGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShipmentFormTransfer $shipmentFormTransfer
+     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
      * @param array $formOptions
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createShipmentCreateForm(ShipmentFormTransfer $shipmentFormTransfer, array $formOptions = []): FormInterface
-    {
-        return $this->getFormFactory()->create(
-            ShipmentCreateForm::class,
-            $shipmentFormTransfer,
-            $formOptions
-        );
+    public function createShipmentCreateForm(
+        ShipmentGroupTransfer $shipmentGroupTransfer,
+        array $formOptions = []
+    ): FormInterface {
+        return $this->getFormFactory()->create(ShipmentGroupFormType::class, $shipmentGroupTransfer, $formOptions);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShipmentFormTransfer $shipmentFormTransfer
+     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
      * @param array $formOptions
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createShipmentEditForm(ShipmentFormTransfer $shipmentFormTransfer, array $formOptions = []): FormInterface
+    public function createShipmentEditForm(
+        ShipmentGroupTransfer $shipmentGroupTransfer,
+        array $formOptions = []
+    ): FormInterface {
+        return $this->getFormFactory()->create(ShipmentGroupFormType::class, $shipmentGroupTransfer, $formOptions);
+    }
+
+    /**
+     * @return \Symfony\Component\Form\DataTransformerInterface
+     */
+    public function createStringToNumberTransformer(): DataTransformerInterface
     {
-        return $this->getFormFactory()->create(
-            ShipmentEditForm::class,
-            $shipmentFormTransfer,
-            $formOptions
-        );
+        return new StringToNumberTransformer();
     }
 
     /**

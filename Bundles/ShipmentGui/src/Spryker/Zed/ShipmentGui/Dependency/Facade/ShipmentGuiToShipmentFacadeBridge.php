@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ShipmentGui\Dependency\Facade;
 
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\ShipmentFormTransfer;
 use Generated\Shared\Transfer\ShipmentGroupResponseTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
@@ -63,21 +62,24 @@ class ShipmentGuiToShipmentFacadeBridge implements ShipmentGuiToShipmentFacadeIn
      *
      * @return \Generated\Shared\Transfer\ShipmentGroupResponseTransfer
      */
-    public function saveShipment(ShipmentGroupTransfer $shipmentGroupTransfer, OrderTransfer $orderTransfer): ShipmentGroupResponseTransfer
-    {
+    public function saveShipment(
+        ShipmentGroupTransfer $shipmentGroupTransfer,
+        OrderTransfer $orderTransfer
+    ): ShipmentGroupResponseTransfer {
         return $this->shipmentFacade->saveShipment($shipmentGroupTransfer, $orderTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShipmentFormTransfer $shipmentFormTransfer
+     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
      * @param bool[] $itemListUpdatedStatus
      *
      * @return \Generated\Shared\Transfer\ShipmentGroupTransfer
      */
     public function createShipmentGroupTransferWithListedItems(
-        ShipmentFormTransfer $shipmentFormTransfer,
+        ShipmentGroupTransfer $shipmentGroupTransfer,
         array $itemListUpdatedStatus
     ): ShipmentGroupTransfer {
-        return $this->shipmentFacade->createShipmentGroupTransferWithListedItems($shipmentFormTransfer, $itemListUpdatedStatus);
+        return $this->shipmentFacade
+            ->createShipmentGroupTransferWithListedItems($shipmentGroupTransfer, $itemListUpdatedStatus);
     }
 }

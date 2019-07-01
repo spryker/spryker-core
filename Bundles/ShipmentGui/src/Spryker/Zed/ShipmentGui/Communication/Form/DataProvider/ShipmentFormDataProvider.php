@@ -10,17 +10,19 @@ namespace Spryker\Zed\ShipmentGui\Communication\Form\DataProvider;
 use ArrayObject;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\ShipmentFormTransfer;
+use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
-use Spryker\Zed\ShipmentGui\Communication\Form\Address\AddressForm;
-use Spryker\Zed\ShipmentGui\Communication\Form\Item\ItemForm;
-use Spryker\Zed\ShipmentGui\Communication\Form\ShipmentCreateForm;
+use Spryker\Zed\ShipmentGui\Communication\Form\Address\AddressFormType;
+use Spryker\Zed\ShipmentGui\Communication\Form\Item\ItemFormType;
+use Spryker\Zed\ShipmentGui\Communication\Form\Shipment\ShipmentFormType;
+use Spryker\Zed\ShipmentGui\Communication\Form\Shipment\ShipmentGroupFormType;
+use Spryker\Zed\ShipmentGui\Communication\Form\Shipment\ShipmentMethodFormType;
 use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToCustomerFacadeInterface;
 use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToSalesFacadeInterface;
 use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToShipmentFacadeInterface;
 
-class ShipmentFormDefaultDataProvider
+class ShipmentFormDataProvider
 {
     protected const ADDRESS_LABEL_PATTERN = '%s %s %s, %s %s, %s %s';
     protected const SHIPMENT_METHODS_OPTIONS_NAMES_PATTERN = '%s - %s';
@@ -59,73 +61,88 @@ class ShipmentFormDefaultDataProvider
      * @param int $idSalesOrder
      * @param int|null $idSalesShipment
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\ShipmentGroupTransfer
      */
-    public function getDefaultFormFields(int $idSalesOrder, ?int $idSalesShipment = null): array
+    public function getData(int $idSalesOrder, ?int $idSalesShipment = null): ShipmentGroupTransfer
     {
-        $defaultShipmentCreateFormFields = [
-            ShipmentCreateForm::FIELD_ID_SALES_SHIPMENT => $idSalesShipment,
-            ShipmentCreateForm::FIELD_ID_SALES_ORDER => $idSalesOrder,
-            ShipmentCreateForm::FIELD_ID_CUSTOMER_ADDRESS => $this->getIdCustomerAddress($idSalesOrder, $idSalesShipment),
-            ShipmentCreateForm::FORM_SHIPPING_ADDRESS => [],
-        ];
+        $shipmentGroupTransfer = new ShipmentGroupTransfer();
 
-        return array_merge($defaultShipmentCreateFormFields, $this->getItemsDefaultFields($idSalesOrder));
+        $shipmentTransfer = new ShipmentTransfer();
+        $shipmentTransfer->setIdSalesShipment($idSalesShipment);
+        $shipmentTransfer = $this->fillShipmentTransfer($shipmentTransfer, $idSalesOrder);
+
+        $shipmentGroupTransfer->setShipment($shipmentTransfer);
+        $shipmentGroupTransfer->setItems($this->getItemsDefaultFields($idSalesOrder));
+
+        return $shipmentGroupTransfer;
     }
 
     /**
-     * @param int $idSalesOrder
-     * @param int|null $idSalesShipment
+     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
+     * @param int|null $idSalesOrder
      *
-     * @return int|null
+     * @return \Generated\Shared\Transfer\ShipmentTransfer
      */
-    protected function getIdCustomerAddress(int $idSalesOrder, ?int $idSalesShipment): ?int
+    protected function fillShipmentTransfer(ShipmentTransfer $shipmentTransfer, ?int $idSalesOrder): ShipmentTransfer
     {
-        $shipmentTransfer = null;
+        $idSalesShipment = $shipmentTransfer->getIdSalesShipment();
         if ($idSalesShipment !== null) {
-            $shipmentTransfer = $this->findShipmentById($idSalesShipment);
+            $shipmentTransfer = $this->shipmentFacade->findShipmentById($idSalesShipment);
         }
 
-        $addressTransfer = $this->hydrateAddressTransfer(
-            $this->salesFacade->findOrderByIdSalesOrder($idSalesOrder),
-            $shipmentTransfer
-        );
-
-        $customerAddressTransfer = $this->customerFacade->findCustomerAddressByAddressData($addressTransfer);
-
-        if ($customerAddressTransfer === null) {
-            return null;
+        $orderTransfer = $this->salesFacade->findOrderByIdSalesOrder($idSalesOrder);
+        if ($orderTransfer !== null && $shipmentTransfer !== null) {
+            $shipmentTransfer = $this->hydrateShipmentAddressTransfer($orderTransfer, $shipmentTransfer);
         }
 
-        return $customerAddressTransfer->getIdCustomerAddress();
+        $shipmentAddressTransfer = $shipmentTransfer->getShippingAddress();
+        if ($shipmentAddressTransfer === null) {
+            return $shipmentTransfer;
+        }
+
+        $customerAddressTransfer = $this->customerFacade->findCustomerAddressByAddressData($shipmentAddressTransfer);
+        if ($customerAddressTransfer !== null) {
+            $shipmentTransfer->setShippingAddress($customerAddressTransfer);
+        }
+
+        return $shipmentTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer|null $orderTransfer
-     * @param \Generated\Shared\Transfer\ShipmentTransfer|null $shipmentTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
      *
-     * @return \Generated\Shared\Transfer\AddressTransfer
+     * @return \Generated\Shared\Transfer\ShipmentTransfer
      */
-    protected function hydrateAddressTransfer(?OrderTransfer $orderTransfer, ?ShipmentTransfer $shipmentTransfer): AddressTransfer
-    {
-        $addressTransfer = new AddressTransfer();
-        if ($shipmentTransfer === null || $orderTransfer === null) {
-            return $addressTransfer;
-        }
-
+    protected function hydrateShipmentAddressTransfer(
+        OrderTransfer $orderTransfer,
+        ShipmentTransfer $shipmentTransfer
+    ): ShipmentTransfer {
         $shipmentAddressTransfer = $shipmentTransfer->getShippingAddress();
         if ($shipmentAddressTransfer === null) {
             $shipmentAddressTransfer = $orderTransfer->requireShippingAddress()->getShippingAddress();
         }
 
-        if ($shipmentAddressTransfer === null) {
-            return $addressTransfer;
+        if ($shipmentAddressTransfer !== null) {
+            $shipmentAddressTransfer->setFkCustomer($orderTransfer->getFkCustomer());
         }
 
-        $addressTransfer->fromArray($shipmentAddressTransfer->modifiedToArray(), true);
-        $addressTransfer->setFkCustomer($orderTransfer->getFkCustomer());
+        return $shipmentTransfer;
+    }
 
-        return $addressTransfer;
+    /**
+     * @param int $idSalesOrder
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
+     */
+    protected function getItemsDefaultFields(int $idSalesOrder): ArrayObject
+    {
+        $orderTransfer = $this->salesFacade->findOrderByIdSalesOrder($idSalesOrder);
+        if ($orderTransfer === null || $orderTransfer->getItems()->count() === 0) {
+            return new ArrayObject();
+        }
+
+        return $orderTransfer->getItems();
     }
 
     /**
@@ -137,11 +154,13 @@ class ShipmentFormDefaultDataProvider
     public function getOptions(int $idSalesOrder, ?int $idSalesShipment = null): array
     {
         $options = [
-            ShipmentCreateForm::OPTION_DATA_CLASS => ShipmentFormTransfer::class,
-            ShipmentCreateForm::OPTION_SHIPMENT_ADDRESS_CHOICES => $this->getShippingAddressesOptions($idSalesOrder),
-            ShipmentCreateForm::OPTION_SHIPMENT_METHOD_CHOICES => $this->getShippingMethodsOptions(),
-            ShipmentCreateForm::FIELD_SHIPMENT_SELECTED_ITEMS => $this->getShipmentSelectedItemsIds($idSalesShipment),
-            AddressForm::OPTION_SALUTATION_CHOICES => $this->getSalutationOptions(),
+            ShipmentFormType::OPTION_SHIPMENT_ADDRESS_CHOICES => $this->getShippingAddressesOptions($idSalesOrder),
+            ShipmentMethodFormType::OPTION_SHIPMENT_METHOD_CHOICES => $this->getShippingMethodsOptions(),
+            ShipmentGroupFormType::FIELD_SHIPMENT_SELECTED_ITEMS => $this->getShipmentSelectedItemsIds($idSalesShipment),
+            AddressFormType::OPTION_SALUTATION_CHOICES => $this->getSalutationOptions(),
+            ItemFormType::OPTION_ORDER_ITEMS_CHOICES => [],
+            ShipmentMethodFormType::FIELD_ID_SHIPMENT_METHOD => null,
+            ShipmentGroupFormType::FIELD_ID_SALES_SHIPMENT => null,
         ];
 
         $orderTransfer = $this->salesFacade->findOrderByIdSalesOrder($idSalesOrder);
@@ -149,19 +168,9 @@ class ShipmentFormDefaultDataProvider
             return $options;
         }
 
-        $options[ItemForm::OPTION_ORDER_ITEMS_CHOICES] = $this->getOrderItemsOptions($orderTransfer);
+        $options[ItemFormType::OPTION_ORDER_ITEMS_CHOICES] = $orderTransfer->getItems();
 
         return $options;
-    }
-
-    /**
-     * @param int $idSalesShipment
-     *
-     * @return \Generated\Shared\Transfer\ShipmentTransfer|null
-     */
-    public function findShipmentById(int $idSalesShipment): ?ShipmentTransfer
-    {
-        return $this->shipmentFacade->findShipmentById($idSalesShipment);
     }
 
     /**
@@ -191,66 +200,6 @@ class ShipmentFormDefaultDataProvider
         }
 
         return $itemsIds;
-    }
-
-    /**
-     * @param array $formData
-     * @param \Generated\Shared\Transfer\ShipmentFormTransfer $shipmentFormTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShipmentFormTransfer
-     */
-    public function mapFormDataToShipmentFormTransfer(
-        array $formData,
-        ShipmentFormTransfer $shipmentFormTransfer
-    ): ShipmentFormTransfer {
-        $shipmentFormTransfer = $shipmentFormTransfer->fromArray($formData, true);
-        if (!isset($formData[ShipmentFormTransfer::ITEMS])) {
-            return $shipmentFormTransfer;
-        }
-
-        $itemList = new ArrayObject();
-        foreach ($formData[ShipmentFormTransfer::ITEMS] as $itemTransfer) {
-            $itemList->append($itemTransfer);
-        }
-
-        return $shipmentFormTransfer->setItems($itemList);
-    }
-
-    /**
-     * @param int $idSalesOrder
-     *
-     * @return array[]
-     */
-    protected function getItemsDefaultFields(int $idSalesOrder): array
-    {
-        $orderTransfer = $this->salesFacade->findOrderByIdSalesOrder($idSalesOrder);
-        if ($orderTransfer === null) {
-            return [];
-        }
-
-        return [
-            ShipmentCreateForm::FORM_SALES_ORDER_ITEMS => $this->getOrderItemsOptions($orderTransfer),
-        ];
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
-     */
-    protected function getOrderItemsOptions(OrderTransfer $orderTransfer): array
-    {
-        $itemCollection = [];
-        foreach ($orderTransfer->getItems() as $itemTransfer) {
-            $idSalesOrderItem = $itemTransfer->getIdSalesOrderItem();
-            if ($idSalesOrderItem === null) {
-                continue;
-            }
-
-            $itemCollection[$idSalesOrderItem] = $itemTransfer;
-        }
-
-        return $itemCollection;
     }
 
     /**

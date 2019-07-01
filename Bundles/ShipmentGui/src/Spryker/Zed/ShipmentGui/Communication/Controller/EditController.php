@@ -10,8 +10,8 @@ namespace Spryker\Zed\ShipmentGui\Communication\Controller;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\Sales\SalesConfig;
-use Spryker\Zed\ShipmentGui\Communication\Form\Item\ItemForm;
-use Spryker\Zed\ShipmentGui\Communication\Form\ShipmentCreateForm;
+use Spryker\Zed\ShipmentGui\Communication\Form\Item\ItemFormType;
+use Spryker\Zed\ShipmentGui\Communication\Form\Shipment\ShipmentGroupFormType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -38,7 +38,7 @@ class EditController extends AbstractController
     {
         $idSalesOrder = $request->query->get(static::PARAM_ID_SALES_ORDER);
         $idSalesShipment = $request->query->get(static::PARAM_ID_SALES_SHIPMENT);
-        $dataProvider = $this->getFactory()->createShipmentEditFormDataProvider();
+        $dataProvider = $this->getFactory()->createShipmentFormDataProvider();
 
         $form = $this->getFactory()
             ->createShipmentEditForm(
@@ -94,11 +94,16 @@ class EditController extends AbstractController
      */
     protected function getItemListUpdatedStatus(FormInterface $form): array
     {
+        if (!$form->offsetExists(ShipmentGroupFormType::FIELD_SALES_ORDER_ITEMS_FORM)) {
+            return [];
+        }
+
+        $itemFormTypeCollection = $form->get(ShipmentGroupFormType::FIELD_SALES_ORDER_ITEMS_FORM);
         $requestedItems = [];
-        foreach ($form->get(ShipmentCreateForm::FORM_SALES_ORDER_ITEMS) as $itemForm) {
-            $itemTransfer = $itemForm->getData();
+        foreach ($itemFormTypeCollection as $itemFormType) {
+            $itemTransfer = $itemFormType->getData();
             /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
-            $requestedItems[$itemTransfer->getIdSalesOrderItem()] = $itemForm->get(ItemForm::FIELD_IS_UPDATED)->getData();
+            $requestedItems[$itemTransfer->getIdSalesOrderItem()] = $itemFormType->get(ItemFormType::FIELD_IS_UPDATED)->getData();
         }
 
         return $requestedItems;

@@ -98,11 +98,11 @@ interface ShipmentRepositoryInterface
     public function findShipmentMethodByIdWithPricesAndCarrier(int $idShipmentMethod): ?ShipmentMethodTransfer;
 
     /**
-     * @param int $idShipmentMethod
+     * @param string $idShipmentMethod
      *
      * @return \Generated\Shared\Transfer\ShipmentTransfer|null
      */
-    public function findShipmentById(int $idShipmentMethod): ?ShipmentTransfer;
+    public function findShipmentById(string $idShipmentMethod): ?ShipmentTransfer;
 
     /**
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer[]

@@ -446,7 +446,6 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     public function createShipmentGroupCreator(): ShipmentGroupCreatorInterface
     {
         return new ShipmentGroupCreator(
-            $this->createShipmentMapper(),
             $this->getRepository(),
             $this->getShipmentService(),
             $this->getSalesFacade()

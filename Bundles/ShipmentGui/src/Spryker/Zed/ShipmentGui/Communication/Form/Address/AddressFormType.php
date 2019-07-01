@@ -7,11 +7,13 @@
 
 namespace Spryker\Zed\ShipmentGui\Communication\Form\Address;
 
+use Generated\Shared\Transfer\AddressTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
-use Spryker\Zed\ShipmentGui\Communication\Form\ShipmentCreateForm;
+use Spryker\Zed\ShipmentGui\Communication\Form\Shipment\ShipmentFormType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -26,26 +28,26 @@ use Symfony\Component\Validator\Constraints\Regex;
  * @method \Spryker\Zed\ShipmentGui\Communication\ShipmentGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\ShipmentGui\ShipmentGuiConfig getConfig()
  */
-class AddressForm extends AbstractType
+class AddressFormType extends AbstractType
 {
-    public const ADDRESS_FIELD_ID_SALES_ORDER_ADDRESS = 'idSalesOrderAddress';
-    public const ADDRESS_FIELD_SALUTATION = 'salutation';
-    public const ADDRESS_FIELD_FIRST_NAME = 'firstName';
-    public const ADDRESS_FIELD_MIDDLE_NAME = 'middleName';
-    public const ADDRESS_FIELD_LAST_NAME = 'lastName';
-    public const ADDRESS_FIELD_EMAIL = 'email';
-    public const ADDRESS_FIELD_ADDRESS_1 = 'address1';
-    public const ADDRESS_FIELD_ADDRESS_2 = 'address2';
-    public const ADDRESS_FIELD_COMPANY = 'company';
-    public const ADDRESS_FIELD_CITY = 'city';
-    public const ADDRESS_FIELD_ZIP_CODE = 'zipCode';
-    public const ADDRESS_FIELD_PO_BOX = 'poPox';
-    public const ADDRESS_FIELD_PHONE = 'phone';
-    public const ADDRESS_FIELD_CELL_PHONE = 'cellPhone';
-    public const ADDRESS_FIELD_DESCRIPTION = 'description';
-    public const ADDRESS_FIELD_COMMENT = 'comment';
-    public const ADDRESS_FIELD_ISO_2_CODE = 'iso2Code';
-
+    public const OPTION_SHIPMENT_ADDRESS_CHOICES = 'address_choices';
+    public const FIELD_ID_CUSTOMER_ADDRESS = 'idCustomerAddress';
+    public const FIELD_ADDRESS_ID_SALES_ORDER_ADDRESS = 'idSalesOrderAddress';
+    public const FIELD_ADDRESS_SALUTATION = 'salutation';
+    public const FIELD_ADDRESS_FIRST_NAME = 'firstName';
+    public const FIELD_ADDRESS_MIDDLE_NAME = 'middleName';
+    public const FIELD_ADDRESS_LAST_NAME = 'lastName';
+    public const FIELD_ADDRESS_EMAIL = 'email';
+    public const FIELD_ADDRESS_ADDRESS_1 = 'address1';
+    public const FIELD_ADDRESS_ADDRESS_2 = 'address2';
+    public const FIELD_ADDRESS_COMPANY = 'company';
+    public const FIELD_ADDRESS_CITY = 'city';
+    public const FIELD_ADDRESS_ZIP_CODE = 'zipCode';
+    public const FIELD_ADDRESS_PHONE = 'phone';
+    public const FIELD_ADDRESS_CELL_PHONE = 'cellPhone';
+    public const FIELD_ADDRESS_DESCRIPTION = 'description';
+    public const FIELD_ADDRESS_COMMENT = 'comment';
+    public const FIELD_ADDRESS_ISO_2_CODE = 'iso2Code';
     public const OPTION_SALUTATION_CHOICES = 'salutation_choices';
 
     public const ERROR_MESSAGE_VALUE_SHOULD_NOT_BE_BLANK = 'This value should not be blank.';
@@ -61,7 +63,12 @@ class AddressForm extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setRequired(AddressForm::OPTION_SALUTATION_CHOICES);
+        $resolver
+            ->setRequired(static::OPTION_SALUTATION_CHOICES)
+            ->setRequired(static::OPTION_SHIPMENT_ADDRESS_CHOICES)
+            ->setDefaults([
+                'data_class' => AddressTransfer::class,
+            ]);
     }
 
     /**
@@ -70,12 +77,10 @@ class AddressForm extends AbstractType
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options = [])
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        parent::buildForm($builder, $options);
-
         $this
-            ->addSalutationField($builder, $options[static::OPTION_SALUTATION_CHOICES])
+            ->addSalutationField($builder, $options)
             ->addFirstNameField($builder)
             ->addMiddleNameField($builder)
             ->addLastNameField($builder)
@@ -86,11 +91,12 @@ class AddressForm extends AbstractType
             ->addCompanyField($builder)
             ->addCityField($builder)
             ->addZipCodeField($builder)
-            ->addPoBoxField($builder)
             ->addPhoneField($builder)
             ->addCellPhoneField($builder)
             ->addDescriptionField($builder)
-            ->addCommentField($builder);
+            ->addCommentField($builder)
+            ->addIdSalesOrderAddressField($builder)
+            ->addIdShippingAddressField($builder, $options);
     }
 
     /**
@@ -102,11 +108,11 @@ class AddressForm extends AbstractType
     protected function addSalutationField(FormBuilderInterface $builder, array $options = [])
     {
         $builder
-            ->add(static::ADDRESS_FIELD_SALUTATION, ChoiceType::class, [
+            ->add(static::FIELD_ADDRESS_SALUTATION, ChoiceType::class, [
                 'required' => true,
                 'label' => 'Salutation',
                 'placeholder' => '-select-',
-                'choices' => $options,
+                'choices' => $options[static::OPTION_SALUTATION_CHOICES],
                 'constraints' => [
                     $this->createNotBlankConstraint(),
                     ],
@@ -123,7 +129,7 @@ class AddressForm extends AbstractType
     protected function addFirstNameField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(static::ADDRESS_FIELD_FIRST_NAME, TextType::class, [
+            ->add(static::FIELD_ADDRESS_FIRST_NAME, TextType::class, [
                 'required' => true,
                 'label' => 'First name',
                 'constraints' => [
@@ -143,7 +149,7 @@ class AddressForm extends AbstractType
     protected function addMiddleNameField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(static::ADDRESS_FIELD_MIDDLE_NAME, TextType::class, [
+            ->add(static::FIELD_ADDRESS_MIDDLE_NAME, TextType::class, [
                 'required' => false,
                 'label' => 'Middle name',
                 'constraints' => [
@@ -162,7 +168,7 @@ class AddressForm extends AbstractType
     protected function addLastNameField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(static::ADDRESS_FIELD_LAST_NAME, TextType::class, [
+            ->add(static::FIELD_ADDRESS_LAST_NAME, TextType::class, [
                 'required' => true,
                 'label' => 'Last name',
                 'constraints' => [
@@ -182,7 +188,7 @@ class AddressForm extends AbstractType
     protected function addEmailField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(static::ADDRESS_FIELD_EMAIL, EmailType::class, [
+            ->add(static::FIELD_ADDRESS_EMAIL, EmailType::class, [
                 'required' => true,
                 'label' => 'Email',
                 'constraints' => [
@@ -202,7 +208,7 @@ class AddressForm extends AbstractType
     protected function addCountryField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(static::ADDRESS_FIELD_ISO_2_CODE, CountryType::class, [
+            ->add(static::FIELD_ADDRESS_ISO_2_CODE, CountryType::class, [
                 'required' => true,
                 'label' => 'Country',
                 'placeholder' => '-select-',
@@ -222,7 +228,7 @@ class AddressForm extends AbstractType
     protected function addAddress1Field(FormBuilderInterface $builder)
     {
         $builder
-            ->add(static::ADDRESS_FIELD_ADDRESS_1, TextType::class, [
+            ->add(static::FIELD_ADDRESS_ADDRESS_1, TextType::class, [
                 'required' => true,
                 'label' => 'Address 1',
                 'constraints' => [
@@ -242,7 +248,7 @@ class AddressForm extends AbstractType
     protected function addAddress2Field(FormBuilderInterface $builder)
     {
         $builder
-            ->add(static::ADDRESS_FIELD_ADDRESS_2, TextType::class, [
+            ->add(static::FIELD_ADDRESS_ADDRESS_2, TextType::class, [
                 'required' => true,
                 'label' => 'Addres 2',
                 'constraints' => [
@@ -261,7 +267,7 @@ class AddressForm extends AbstractType
     protected function addCompanyField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(static::ADDRESS_FIELD_COMPANY, TextType::class, [
+            ->add(static::FIELD_ADDRESS_COMPANY, TextType::class, [
                 'required' => false,
                 'label' => 'Company',
                 'constraints' => [
@@ -280,7 +286,7 @@ class AddressForm extends AbstractType
     protected function addCityField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(static::ADDRESS_FIELD_CITY, TextType::class, [
+            ->add(static::FIELD_ADDRESS_CITY, TextType::class, [
                 'required' => true,
                 'label' => 'City',
                 'constraints' => [
@@ -300,7 +306,7 @@ class AddressForm extends AbstractType
     protected function addZipCodeField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(static::ADDRESS_FIELD_ZIP_CODE, TextType::class, [
+            ->add(static::FIELD_ADDRESS_ZIP_CODE, TextType::class, [
                 'required' => true,
                 'label' => 'ZIP code',
                 'constraints' => [
@@ -318,29 +324,10 @@ class AddressForm extends AbstractType
      *
      * @return $this
      */
-    protected function addPoBoxField(FormBuilderInterface $builder)
-    {
-        $builder
-            ->add(static::ADDRESS_FIELD_PO_BOX, TextType::class, [
-                'required' => false,
-                'label' => 'PO box',
-                'constraints' => [
-                    $this->createMaxLengthConstraint(),
-                ],
-            ]);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
     protected function addPhoneField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(static::ADDRESS_FIELD_PHONE, TextType::class, [
+            ->add(static::FIELD_ADDRESS_PHONE, TextType::class, [
                 'required' => false,
                 'label' => 'Phone',
                 'constraints' => [
@@ -359,7 +346,7 @@ class AddressForm extends AbstractType
     protected function addCellPhoneField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(static::ADDRESS_FIELD_CELL_PHONE, TextType::class, [
+            ->add(static::FIELD_ADDRESS_CELL_PHONE, TextType::class, [
                 'required' => false,
                 'label' => 'Cellphone',
                 'constraints' => [
@@ -378,7 +365,7 @@ class AddressForm extends AbstractType
     protected function addDescriptionField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(static::ADDRESS_FIELD_DESCRIPTION, TextType::class, [
+            ->add(static::FIELD_ADDRESS_DESCRIPTION, TextType::class, [
                 'required' => false,
                 'label' => 'Description',
                 'constraints' => [
@@ -397,7 +384,7 @@ class AddressForm extends AbstractType
     protected function addCommentField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(static::ADDRESS_FIELD_COMMENT, TextareaType::class, [
+            ->add(static::FIELD_ADDRESS_COMMENT, TextareaType::class, [
                 'required' => false,
                 'label' => 'Comment',
                 'constraints' => [
@@ -415,8 +402,44 @@ class AddressForm extends AbstractType
     {
         return new NotBlank([
             'message' => 'Field should not be empty.',
-            'groups' => [ShipmentCreateForm::GROUP_SHIPPING_ADDRESS],
+            'groups' => [ShipmentFormType::VALIDATION_GROUP_SHIPPING_ADDRESS],
         ]);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addIdSalesOrderAddressField(FormBuilderInterface $builder)
+    {
+        $builder->add(static::FIELD_ADDRESS_ID_SALES_ORDER_ADDRESS, HiddenType::class);
+
+        $builder->get(static::FIELD_ADDRESS_ID_SALES_ORDER_ADDRESS)
+            ->addModelTransformer($this->getFactory()->createStringToNumberTransformer());
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return $this
+     */
+    protected function addIdShippingAddressField(FormBuilderInterface $builder, array $options = [])
+    {
+        $builder->add(static::FIELD_ID_CUSTOMER_ADDRESS, ChoiceType::class, [
+            'label' => 'Delivery Address',
+            'choices' => array_flip($options[static::OPTION_SHIPMENT_ADDRESS_CHOICES]),
+            'required' => false,
+            'placeholder' => false,
+        ]);
+
+        $builder->get(static::FIELD_ID_CUSTOMER_ADDRESS)
+            ->addModelTransformer($this->getFactory()->createStringToNumberTransformer());
+
+        return $this;
     }
 
     /**
