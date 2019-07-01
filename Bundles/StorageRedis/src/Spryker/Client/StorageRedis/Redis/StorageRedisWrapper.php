@@ -165,25 +165,6 @@ class StorageRedisWrapper implements StorageRedisWrapperInterface
     }
 
     /**
-     * @param string $pattern
-     * @param int $count
-     * @param int $cursor
-     *
-     * @return array [string, string[]]
-     */
-    public function scanKeys(string $pattern, int $count, int $cursor): array
-    {
-        return $this->redisClient->scan(
-            $this->connectionKey,
-            $cursor,
-            [
-                'COUNT' => $count,
-                'MATCH' => $this->getSearchPattern($pattern),
-            ]
-        );
-    }
-
-    /**
      * @return int
      */
     public function getCountItems(): int

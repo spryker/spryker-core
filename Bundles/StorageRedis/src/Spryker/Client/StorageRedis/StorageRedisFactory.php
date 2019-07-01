@@ -9,6 +9,8 @@ namespace Spryker\Client\StorageRedis;
 
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\StorageRedis\Dependency\Client\StorageRedisToRedisClientInterface;
+use Spryker\Client\StorageRedis\Redis\Iterator\StorageRedisScanIterator;
+use Spryker\Client\StorageRedis\Redis\Iterator\StorageRedisScanIteratorInterface;
 use Spryker\Client\StorageRedis\Redis\StorageRedisWrapper;
 use Spryker\Client\StorageRedis\Redis\StorageRedisWrapperInterface;
 
@@ -27,6 +29,17 @@ class StorageRedisFactory extends AbstractFactory
             $this->getConfig()->getRedisConnectionKey(),
             $this->getConfig()->getRedisConnectionConfiguration(),
             $this->getConfig()->getDebugMode()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\StorageRedis\Redis\Iterator\StorageRedisScanIteratorInterface
+     */
+    public function createStorageRedisScanIterator(): StorageRedisScanIteratorInterface
+    {
+        return new StorageRedisScanIterator(
+            $this->getRedisClient(),
+            $this->getConfig()
         );
     }
 

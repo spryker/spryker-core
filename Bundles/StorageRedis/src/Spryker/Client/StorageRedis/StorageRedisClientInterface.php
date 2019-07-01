@@ -139,12 +139,12 @@ interface StorageRedisClientInterface
      * @api
      *
      * @param string $pattern
-     * @param int $count
+     * @param int $limit
      * @param int $cursor
      *
      * @return array [string, string[]]
      */
-    public function scanKeys(string $pattern, int $count, int $cursor): array;
+    public function scanKeys(string $pattern, int $limit, int $cursor): array;
 
     /**
      * Specification:

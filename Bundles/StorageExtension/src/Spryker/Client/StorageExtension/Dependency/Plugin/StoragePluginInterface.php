@@ -137,12 +137,12 @@ interface StoragePluginInterface
      * @api
      *
      * @param string $pattern
-     * @param int $count
+     * @param int $limit
      * @param int|null $cursor
      *
      * @return array [string, string[]]
      */
-    public function scanKeys(string $pattern, int $count, ?int $cursor = 0): array;
+    public function scanKeys(string $pattern, int $limit, ?int $cursor = 0): array;
 
     /**
      * Specification:

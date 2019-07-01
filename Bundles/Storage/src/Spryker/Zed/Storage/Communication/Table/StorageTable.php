@@ -17,7 +17,7 @@ class StorageTable extends AbstractTable
 {
     protected const KV_PREFIX = 'kv:';
     protected const MATCH_ALL = '*';
-    protected const DEFAULT_PAGE_LENGTH = 3000;
+    protected const DEFAULT_PAGE_LENGTH = 100;
     protected const VALUE_LENGTH_LIMIT = 120;
 
     /**
@@ -88,7 +88,6 @@ class StorageTable extends AbstractTable
                 'value' => mb_substr($value, 0, static::VALUE_LENGTH_LIMIT) . '....',
             ];
         }
-        $result = array_slice($result, 0, static::DEFAULT_PAGE_LENGTH);
 
         $this->setTotal($this->storageClient->getCountItems());
         $this->setFiltered(count($result));
