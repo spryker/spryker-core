@@ -71,7 +71,6 @@ class QuoteShareDetailsReader implements QuoteShareDetailsReaderInterface
             ->requireCustomerReference()
             ->requireCustomer();
         $quoteTransfer->getCustomer()
-            ->requireIdCustomer()
             ->requireCustomerReference();
 
         $customerCollectionTransfer = $this->sharedCartRepository->getCustomersSharingSameQuote($quoteTransfer->getIdQuote());

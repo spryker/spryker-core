@@ -307,7 +307,7 @@ interface SharedCartFacadeInterface
      *  - Customer provided with QuoteTransfer will be excluded from customers collection.
      *  - Requires idQuote and customerReference to be set in QuoteTransfer.
      *  - Requires CustomerTransfer to be set in QuoteTransfer.
-     *  - Requires idCustomer and customerReference to be set in CustomerTransfer.
+     *  - Requires customerReference to be set in CustomerTransfer.
      *
      * @api
      *
