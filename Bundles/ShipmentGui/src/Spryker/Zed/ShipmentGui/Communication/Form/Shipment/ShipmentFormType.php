@@ -79,7 +79,7 @@ class ShipmentFormType extends AbstractType
      *
      * @return $this
      */
-    protected function addShipmentMethodForm(FormBuilderInterface $builder, array $options)
+    protected function addShipmentMethodForm(FormBuilderInterface $builder, array $options = [])
     {
         $builder->add(static::FIELD_SHIPMENT_METHOD_FORM, ShipmentMethodFormType::class, [
             ShipmentMethodFormType::FIELD_ID_SHIPMENT_METHOD => $options[static::OPTION_ID_SHIPMENT_METHOD],
