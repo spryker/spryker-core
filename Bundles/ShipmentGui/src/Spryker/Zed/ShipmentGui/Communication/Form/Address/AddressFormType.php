@@ -10,7 +10,6 @@ namespace Spryker\Zed\ShipmentGui\Communication\Form\Address;
 use Generated\Shared\Transfer\AddressTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Spryker\Zed\ShipmentGui\Communication\Form\Shipment\ShipmentFormType;
-use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -417,7 +416,7 @@ class AddressFormType extends AbstractType
         $builder->add(static::FIELD_ADDRESS_ID_SALES_ORDER_ADDRESS, HiddenType::class);
 
         $builder->get(static::FIELD_ADDRESS_ID_SALES_ORDER_ADDRESS)
-            ->addModelTransformer($this->createStringToIntCallbackTransformer());
+            ->addModelTransformer($this->getFactory()->createStringToNumberTransformer());
 
         return $this;
     }
@@ -438,7 +437,7 @@ class AddressFormType extends AbstractType
         ]);
 
         $builder->get(static::FIELD_ID_CUSTOMER_ADDRESS)
-            ->addModelTransformer($this->createStringToIntCallbackTransformer());
+            ->addModelTransformer($this->getFactory()->createStringToNumberTransformer());
 
         return $this;
     }
@@ -476,28 +475,5 @@ class AddressFormType extends AbstractType
             'message' => static::VALIDATION_ZIP_CODE_MESSAGE,
             'groups' => [static::GROUP_SHIPPING_ADDRESS],
         ]);
-    }
-
-    /**
-     * @return \Symfony\Component\Form\CallbackTransformer
-     */
-    protected function createStringToIntCallbackTransformer(): CallbackTransformer
-    {
-        return new CallbackTransformer(
-            function (?string $id): ?string {
-                if (empty($id)) {
-                    return null;
-                }
-
-                return $id;
-            },
-            function (?string $idString): ?int {
-                if (empty($idString)) {
-                    return null;
-                }
-
-                return (int)$idString;
-            }
-        );
     }
 }

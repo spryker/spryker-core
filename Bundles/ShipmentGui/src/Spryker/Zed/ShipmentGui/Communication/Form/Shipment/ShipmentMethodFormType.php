@@ -9,7 +9,6 @@ namespace Spryker\Zed\ShipmentGui\Communication\Form\Shipment;
 
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
-use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -70,31 +69,8 @@ class ShipmentMethodFormType extends AbstractType
         ]);
 
         $builder->get(static::FIELD_ID_SHIPMENT_METHOD)
-            ->addModelTransformer($this->createStringToIntCallbackTransformer());
+            ->addModelTransformer($this->getFactory()->createStringToNumberTransformer());
 
         return $this;
-    }
-
-    /**
-     * @return \Symfony\Component\Form\CallbackTransformer
-     */
-    protected function createStringToIntCallbackTransformer(): CallbackTransformer
-    {
-        return new CallbackTransformer(
-            function (?string $id): ?string {
-                if (empty($id)) {
-                    return null;
-                }
-
-                return $id;
-            },
-            function (?string $idString): ?int {
-                if (empty($idString)) {
-                    return null;
-                }
-
-                return (int)$idString;
-            }
-        );
     }
 }

@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Spryker\Zed\ShipmentGui\Communication\Form\Address\AddressFormType;
 use Spryker\Zed\ShipmentGui\Communication\Form\Validator\Constraints\GreaterThanOrEqualDate;
-use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -154,7 +153,7 @@ class ShipmentFormType extends AbstractType
         $builder->add(static::FIELD_ID_SALES_SHIPMENT, HiddenType::class);
 
         $builder->get(static::FIELD_ID_SALES_SHIPMENT)
-            ->addModelTransformer($this->createStringToIntCallbackTransformer());
+            ->addModelTransformer($this->getFactory()->createStringToNumberTransformer());
 
         return $this;
     }
@@ -180,28 +179,5 @@ class ShipmentFormType extends AbstractType
     protected function createDateGreaterThanOrEqualConstraint(string $minDate): GreaterThanOrEqualDate
     {
         return new GreaterThanOrEqualDate($minDate);
-    }
-
-    /**
-     * @return \Symfony\Component\Form\CallbackTransformer
-     */
-    protected function createStringToIntCallbackTransformer(): CallbackTransformer
-    {
-        return new CallbackTransformer(
-            function (?string $id): ?string {
-                if (empty($id)) {
-                    return null;
-                }
-
-                return $id;
-            },
-            function (?string $idString): ?int {
-                if (empty($idString)) {
-                    return null;
-                }
-
-                return (int)$idString;
-            }
-        );
     }
 }

@@ -59,11 +59,11 @@ class ShipmentFormDataProvider
 
     /**
      * @param int $idSalesOrder
-     * @param string|null $idSalesShipment
+     * @param int|null $idSalesShipment
      *
      * @return \Generated\Shared\Transfer\ShipmentGroupTransfer
      */
-    public function getData(int $idSalesOrder, ?string $idSalesShipment = null): ShipmentGroupTransfer
+    public function getData(int $idSalesOrder, ?int $idSalesShipment = null): ShipmentGroupTransfer
     {
         $shipmentGroupTransfer = new ShipmentGroupTransfer();
 

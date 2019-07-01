@@ -13,7 +13,7 @@
     </transfer>
 
     <transfer name="Shipment">
-        <property name="idSalesShipment" type="string"/>
+        <property name="idSalesShipment" type="int"/>
         <property name="shippingAddress" type="Address"/>
         <property name="requestedDeliveryDate" type="string"/>
     </transfer>
