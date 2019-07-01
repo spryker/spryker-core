@@ -273,12 +273,12 @@ class FileManagerRepository extends AbstractRepository implements FileManagerRep
      */
     public function getFilesByIds(array $idFiles): array
     {
-        $query = $this->getFactory()->createFileQuery();
-        $query
+        $fileEntities = $this->getFactory()
+            ->createFileQuery()
             ->joinWithSpyFileInfo()
-            ->addDescendingOrderByColumn(SpyFileInfoTableMap::COL_VERSION);
-
-        $fileEntities = $query->filterByIdFile_In($idFiles)->find();
+            ->addDescendingOrderByColumn(SpyFileInfoTableMap::COL_VERSION)
+            ->filterByIdFile_In($idFiles)
+            ->find();
 
         if (!$fileEntities->count()) {
             return [];
