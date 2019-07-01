@@ -115,11 +115,23 @@ var ContentItemDialog = function(
                 if ($clickedNode.length) {
                     this.clearNode($clickedNode);
                 } else {
-                    var $existingRange = this.context.invoke('editor.createRange');
-                    $($existingRange.sc).parents('p').empty();
-                }
+                    $clickedNode = $(this.context.invoke('editor.createRange').sc);
 
-                this.context.invoke('insertNode', elementForInsert);
+                    if (this.isNodeEmpty($clickedNode)) {
+                        $clickedNode.parents('p').empty();
+                    } else {
+                        elementForInsert = '<p>' + elementForInsert + '</p>'
+                    }
+                }
+                console.log($clickedNode);
+                this.context.invoke('pasteHTML', elementForInsert);
+                this.removeUnecessaryLines();
+            };
+
+            this.isNodeEmpty = function ($clickedNode) {
+                var $nodeInnerItems = $clickedNode.children();
+
+                return $nodeInnerItems.length <= 1 && $nodeInnerItems.eq(0).is('br');
             };
 
             this.removeItemFromEditor = function () {
@@ -128,6 +140,14 @@ var ContentItemDialog = function(
                 this.clearNode($clickedNode);
                 this.context.invoke('contentItemPopover.hidePopover');
                 this.context.invoke('pasteHTML', ' ');
+            };
+
+            this.removeUnecessaryLines = function () {
+                var $insertedNode = $(this.context.invoke('editor.createRange').sc);
+                var $nextNode = $insertedNode.next();
+
+                $insertedNode.removeAttr('');
+                $nextNode.remove();
             };
 
             this.clearNode = function ($clickedNode) {
@@ -167,7 +187,7 @@ var ContentItemDialog = function(
                     }[param];
                 });
 
-                return $.parseHTML(builtTemplate.trim())[0];
+                return builtTemplate;
             };
 
             this.getDialogContent = function (url) {
