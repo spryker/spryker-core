@@ -16,7 +16,7 @@ class FileManagerStorageConfig extends AbstractBundleConfig
     /**
      * @return string
      */
-    public function getStorageCompositeKey(): string
+    public function getStorageCompositeKey()
     {
         return static::STORAGE_COMPOSITE_KEY;
     }
