@@ -29,7 +29,7 @@ class ShipmentMethodFormType extends AbstractType
      *
      * @return void
      */
-    public function configureOptions(OptionsResolver $resolver): void
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver
             ->setRequired(static::OPTION_SHIPMENT_METHOD_CHOICES)
@@ -45,7 +45,7 @@ class ShipmentMethodFormType extends AbstractType
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options = []): void
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->addIdShipmentMethodField($builder, $options);
     }
