@@ -196,7 +196,7 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
      *
      * @api
      *
-     * @deprecated Not used anymore
+     * @deprecated Not used anymore.
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *

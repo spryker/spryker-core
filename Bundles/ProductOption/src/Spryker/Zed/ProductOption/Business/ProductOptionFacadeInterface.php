@@ -181,7 +181,7 @@ interface ProductOptionFacadeInterface
      *
      * @api
      *
-     * @deprecated Not used anymore
+     * @deprecated Not used anymore.
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
