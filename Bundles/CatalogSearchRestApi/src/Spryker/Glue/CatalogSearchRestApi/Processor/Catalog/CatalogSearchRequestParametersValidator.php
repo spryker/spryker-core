@@ -51,13 +51,7 @@ class CatalogSearchRequestParametersValidator implements CatalogSearchRequestPar
                 $requestParameters
             );
 
-            if ($requestParameterValue === '') {
-                $restResponse->addError(
-                    $this->createErrorMessageTransfer($dotNotatedIntegerRequestParameterKey)
-                );
-            }
-
-            if ($requestParameterValue && filter_var($requestParameterValue, FILTER_VALIDATE_INT) === false) {
+            if (!$this->isValidInteger($requestParameterValue)) {
                 $restResponse->addError(
                     $this->createErrorMessageTransfer($dotNotatedIntegerRequestParameterKey)
                 );
@@ -69,6 +63,24 @@ class CatalogSearchRequestParametersValidator implements CatalogSearchRequestPar
         }
 
         return null;
+    }
+
+    /**
+     * @param $requestParameterValue
+     *
+     * @return bool
+     */
+    protected function isValidInteger($requestParameterValue): bool
+    {
+        if($requestParameterValue === ''){
+            return false;
+        }
+
+        if(($requestParameterValue && filter_var($requestParameterValue, FILTER_VALIDATE_INT) === false)){
+            return false;
+        }
+
+        return true;
     }
 
     /**
