@@ -15,7 +15,7 @@ use Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface;
 /**
  * @method \Spryker\Zed\Shipment\Persistence\ShipmentPersistenceFactory getFactory()
  */
-class MethodWriter implements MethodWriterInterface
+class ShipmentMethodUpdater implements ShipmentMethodUpdaterInterface
 {
     /**
      * @var \Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface
@@ -33,51 +33,18 @@ class MethodWriter implements MethodWriterInterface
     protected $methodPrice;
 
     /**
-     * @var \Spryker\Zed\Shipment\Business\ShipmentMethod\MethodReaderInterface
-     */
-    protected $methodReader;
-
-    /**
      * @param \Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface $shipmentRepository
      * @param \Spryker\Zed\Shipment\Persistence\ShipmentEntityManagerInterface $shipmentEntityManager
      * @param \Spryker\Zed\Shipment\Business\Model\MethodPriceInterface $methodPrice
-     * @param \Spryker\Zed\Shipment\Business\ShipmentMethod\MethodReaderInterface $methodReader
      */
     public function __construct(
         ShipmentRepositoryInterface $shipmentRepository,
         ShipmentEntityManagerInterface $shipmentEntityManager,
-        MethodPriceInterface $methodPrice,
-        MethodReaderInterface $methodReader
+        MethodPriceInterface $methodPrice
     ) {
         $this->shipmentRepository = $shipmentRepository;
         $this->shipmentEntityManager = $shipmentEntityManager;
         $this->methodPrice = $methodPrice;
-        $this->methodReader = $methodReader;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
-     *
-     * @return int|null
-     */
-    public function create(ShipmentMethodTransfer $shipmentMethodTransfer): ?int
-    {
-        $shipmentMethodTransfer = $this->shipmentEntityManager->saveSalesShipmentMethod($shipmentMethodTransfer);
-        $this->methodPrice->save($shipmentMethodTransfer);
-
-        return $shipmentMethodTransfer->getIdShipmentMethod();
-    }
-
-    /**
-     * @param int $idShipmentMethod
-     *
-     * @return bool
-     */
-    public function deleteMethod(int $idShipmentMethod): bool
-    {
-        $this->shipmentEntityManager->deleteMethodByIdMethod($idShipmentMethod);
-
-        return true;
     }
 
     /**
@@ -85,10 +52,12 @@ class MethodWriter implements MethodWriterInterface
      *
      * @return bool
      */
-    public function updateMethod(ShipmentMethodTransfer $shipmentMethodTransfer): bool
+    public function updateShipmentMethod(ShipmentMethodTransfer $shipmentMethodTransfer): bool
     {
         $idShipmentMethod = $shipmentMethodTransfer->getIdShipmentMethod();
-        if ($idShipmentMethod === null || !$this->methodReader->hasMethod($idShipmentMethod)) {
+        $hasShipmentMethod = $this->shipmentRepository->hasShipmentMethodByIdShipmentMethod($idShipmentMethod);
+
+        if ($idShipmentMethod === null || $hasShipmentMethod === false) {
             return false;
         }
 

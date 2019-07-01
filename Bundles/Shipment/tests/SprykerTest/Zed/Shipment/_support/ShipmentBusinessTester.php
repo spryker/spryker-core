@@ -220,12 +220,10 @@ class ShipmentBusinessTester extends Actor
      */
     public function createOrderWithoutShipment(QuoteTransfer $quoteTransfer, ?string $testStateMachineProcessName = 'Test01'): SaveOrderTransfer
     {
-        $this->configureTestStateMachine([$testStateMachineProcessName]);
-
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             $this->haveProduct($itemTransfer->toArray());
         }
-        $savedOrderTransfer = $this->haveOrderUsingPreparedQuoteTransfer($quoteTransfer, $testStateMachineProcessName);
+        $savedOrderTransfer = $this->haveOrderUsingPreparedQuoteTransfer($quoteTransfer, [$testStateMachineProcessName]);
 
         return $savedOrderTransfer;
     }
@@ -236,7 +234,7 @@ class ShipmentBusinessTester extends Actor
      *
      * @return \Generated\Shared\Transfer\SaveOrderTransfer
      */
-    public function createOrderWithMultishipment(QuoteTransfer $quoteTransfer, ?string $testStateMachineProcessName = 'Test01'): SaveOrderTransfer
+    public function createOrderWithMultiShipment(QuoteTransfer $quoteTransfer, ?string $testStateMachineProcessName = 'Test01'): SaveOrderTransfer
     {
         $this->configureTestStateMachine([$testStateMachineProcessName]);
 
@@ -245,7 +243,7 @@ class ShipmentBusinessTester extends Actor
         }
         $savedOrderTransfer = $this->haveOrderUsingPreparedQuoteTransfer(
             $quoteTransfer,
-            $testStateMachineProcessName,
+            [$testStateMachineProcessName],
             [new OrderShipmentSavePlugin()]
         );
 

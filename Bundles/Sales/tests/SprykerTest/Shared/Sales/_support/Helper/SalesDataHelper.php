@@ -49,19 +49,21 @@ class SalesDataHelper extends Module
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string|null $stateMachineProcessName
+     * @param string[] $stateMachineProcessNameList
      * @param \Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutDoSaveOrderInterface[] $saveOrderStack
      *
      * @return \Generated\Shared\Transfer\SaveOrderTransfer|\Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
     public function haveOrderUsingPreparedQuoteTransfer(
         QuoteTransfer $quoteTransfer,
-        ?string $stateMachineProcessName = null,
+        array $stateMachineProcessNameList = [],
         array $saveOrderStack = []
     ): SaveOrderTransfer {
+        $this->configureTestStateMachine($stateMachineProcessNameList);
+
         $this->saveOrderStack = $saveOrderStack;
 
-        $saveOrderTransfer = $this->createOrder($quoteTransfer, $stateMachineProcessName);
+        $saveOrderTransfer = $this->createOrder($quoteTransfer, $stateMachineProcessNameList);
         $this->executeSaveOrderPlugins($quoteTransfer, $saveOrderTransfer);
 
         return $saveOrderTransfer;

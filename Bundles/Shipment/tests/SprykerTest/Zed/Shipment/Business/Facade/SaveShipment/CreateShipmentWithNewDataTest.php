@@ -57,7 +57,7 @@ class CreateShipmentWithNewDataTest extends Test
         ItemTransfer $itemTransfer
     ): void {
         // Arrange
-        $saveOrderTransfer = $this->tester->createOrderWithMultishipment($quoteTransfer);
+        $saveOrderTransfer = $this->tester->createOrderWithMultiShipment($quoteTransfer);
 
         $shipmentTransfer->getMethod()->setIdShipmentMethod(
             $this->tester->haveShipmentMethod($shipmentTransfer->getMethod()->toArray())->getIdShipmentMethod()
@@ -188,7 +188,7 @@ class CreateShipmentWithNewDataTest extends Test
         ItemTransfer $itemTransfer
     ): void {
         // Arrange
-        $saveOrderTransfer = $this->tester->createOrderWithMultishipment($quoteTransfer);
+        $saveOrderTransfer = $this->tester->createOrderWithMultiShipment($quoteTransfer);
 
         $itemTransfer = $saveOrderTransfer->getOrderItems()[0];
         $expectedIdSalesOrderAddress = $itemTransfer->getShipment()->getShippingAddress()->getIdSalesOrderAddress();
@@ -239,7 +239,7 @@ class CreateShipmentWithNewDataTest extends Test
         ItemTransfer $itemTransfer
     ): void {
         // Arrange
-        $saveOrderTransfer = $this->tester->createOrderWithMultishipment($quoteTransfer);
+        $saveOrderTransfer = $this->tester->createOrderWithMultiShipment($quoteTransfer);
         $orderTransfer = $this->tester->getOrderTransferByIdSalesOrder($saveOrderTransfer->getIdSalesOrder());
 
         $itemTransfer = $orderTransfer->getItems()[0];
@@ -278,7 +278,7 @@ class CreateShipmentWithNewDataTest extends Test
         ItemTransfer $itemTransfer
     ): void {
         // Arrange
-        $saveOrderTransfer = $this->tester->createOrderWithMultishipment($quoteTransfer);
+        $saveOrderTransfer = $this->tester->createOrderWithMultiShipment($quoteTransfer);
         $oldShipmentTransfer = $saveOrderTransfer->getOrderItems()[0]->getShipment();
         $shipmentTransfer->setMethod($this->tester->haveShipmentMethod());
 

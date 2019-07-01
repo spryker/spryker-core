@@ -28,7 +28,6 @@ suites:
                 - \SprykerTest\Shared\Shipment\Helper\ShipmentDataHelper
                 - \SprykerTest\Shared\Shipment\Helper\ShipmentMethodDataHelper
                 - \SprykerTest\Shared\Product\Helper\ProductDataHelper
-                - \SprykerTest\Zed\Oms\Helper\OmsHelper
                 - \SprykerTest\Shared\Sales\Helper\SalesDataHelper
                 - \SprykerTest\Shared\Sales\Helper\SalesHelper
                 - \SprykerTest\Shared\Tax\Helper\TaxSetDataHelper

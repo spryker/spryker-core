@@ -117,6 +117,26 @@ class ShipmentMethodMapper implements ShipmentMethodMapperInterface
     }
 
     /**
+     * @param iterable|\Orm\Zed\Shipment\Persistence\SpyShipmentMethod[]|\Propel\Runtime\Collection\ObjectCollection $shipmentMethodsEntities
+     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer[] $shipmentMethodTransfers
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer[]
+     */
+    public function mapShipmentMethodEntitiesToShipmentMethodTransfers(
+        iterable $shipmentMethodsEntities,
+        array $shipmentMethodTransfers
+    ): array {
+        foreach ($shipmentMethodsEntities as $salesShipmentMethodEntity) {
+            $shipmentMethodTransfers[] = $this->mapShipmentMethodEntityToShipmentMethodTransfer(
+                $salesShipmentMethodEntity,
+                new ShipmentMethodTransfer()
+            );
+        }
+
+        return $shipmentMethodTransfers;
+    }
+
+    /**
      * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethod $salesShipmentMethodEntity
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\MoneyValueTransfer[]
