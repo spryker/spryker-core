@@ -99,8 +99,8 @@ class ShipmentGroupFormType extends AbstractType
             'entry_type' => ItemFormType::class,
             'entry_options' => [
                 'label' => false,
-                static::FIELD_SHIPMENT_SELECTED_ITEMS => $options[static::FIELD_SHIPMENT_SELECTED_ITEMS],
-                static::OPTION_ORDER_ITEMS_CHOICES => $options[static::OPTION_ORDER_ITEMS_CHOICES],
+                ItemFormType::FIELD_SHIPMENT_SELECTED_ITEMS => $options[static::FIELD_SHIPMENT_SELECTED_ITEMS],
+                ItemFormType::OPTION_ORDER_ITEMS_CHOICES => $options[static::OPTION_ORDER_ITEMS_CHOICES],
             ],
         ]);
 

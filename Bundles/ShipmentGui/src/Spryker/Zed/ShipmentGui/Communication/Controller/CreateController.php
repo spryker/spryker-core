@@ -94,9 +94,9 @@ class CreateController extends AbstractController
             return [];
         }
 
-        $items = $form->get(ShipmentGroupFormType::FIELD_SALES_ORDER_ITEMS_FORM);
+        $itemFormTypeCollection = $form->get(ShipmentGroupFormType::FIELD_SALES_ORDER_ITEMS_FORM);
         $requestedItems = [];
-        foreach ($items as $itemFormType) {
+        foreach ($itemFormTypeCollection as $itemFormType) {
             $itemTransfer = $itemFormType->getData();
             /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
             $requestedItems[$itemTransfer->getIdSalesOrderItem()] = $itemFormType->get(ItemFormType::FIELD_IS_UPDATED)->getData();
