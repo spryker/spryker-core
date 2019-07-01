@@ -79,9 +79,8 @@
     {% endif %}
 </td>
 <td>
-    {{ render(controller('/oms/render-form/reclamation-item', {
-        orderItem: orderItem,
-        eventsGroupedByItem: eventsGroupedByItem[orderItem.idSalesOrderItem],
-        reclamation: reclamation,
-    })) }}
+    {% include [
+        '@Oms/RenderForm/_partial/reclamation-item-actions.twig',
+        '@SalesReclamationGui/Detail/_partial/reclamation-item-actions.twig'
+    ] %}
 </td>

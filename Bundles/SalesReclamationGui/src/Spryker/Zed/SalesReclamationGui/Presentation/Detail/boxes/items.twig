@@ -6,10 +6,10 @@
             {% block widget_content %}
 
                 <div>
-                    {{ render(controller('/oms/render-form/reclamation', {
-                        reclamation: reclamation,
-                        events: events,
-                    })) }}
+                    {% include [
+                        '@Oms/RenderForm/_partial/reclamation-actions.twig',
+                        '@SalesReclamationGui/Detail/_partial/reclamation-actions.twig'
+                    ] %}
                 </div>
 
             {% endblock %}

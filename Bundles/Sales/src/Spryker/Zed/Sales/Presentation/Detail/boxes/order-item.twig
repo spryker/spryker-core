@@ -70,9 +70,8 @@
   {% endif %}
 </td>
 <td rowspan="{{ numberOfItemAdditions }}">
-        {{ render(controller('/oms/render-form/order-item', {
-            'item': item,
-            'eventsGroupedByItem': eventsGroupedByItem[orderItem.IdSalesOrderItem],
-        })) }}
-
+    {% include [
+        '@Oms/RenderForm/_partial/order-item-actions.twig',
+        '@Sales/Detail/_partial/order-item-actions.twig',
+    ] %}
 </td>

@@ -6,10 +6,10 @@
             {% block widget_content %}
 
                 <div>
-                    {{ render(controller('/oms/render-form/order', {
-                        'order': order,
-                        'events': events,
-                    })) }}
+                    {% include [
+                        '@Oms/RenderForm/_partial/order-actions.twig',
+                        '@Sales/Detail/_partial/order-actions.twig',
+                    ] %}
                 </div>
 
             {% endblock %}
