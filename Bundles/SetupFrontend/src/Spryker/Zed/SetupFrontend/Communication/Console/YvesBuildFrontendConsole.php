@@ -13,7 +13,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\SetupFrontend\Business\SetupFrontendFacadeInterface getFacade()
- * @method \Spryker\Zed\SetupFrontend\Communication\SetupFrontendCommunicationFactory getFactory()
  */
 class YvesBuildFrontendConsole extends Console
 {
@@ -23,7 +22,7 @@ class YvesBuildFrontendConsole extends Console
     /**
      * @return void
      */
-    protected function configure(): void
+    protected function configure()
     {
         $this->setName(self::COMMAND_NAME);
         $this->setDescription(self::DESCRIPTION);
@@ -37,7 +36,7 @@ class YvesBuildFrontendConsole extends Console
      *
      * @return int
      */
-    protected function execute(InputInterface $input, OutputInterface $output): int
+    protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->info('Build Yves frontend');
 

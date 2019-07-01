@@ -47,19 +47,6 @@ class SetupFrontendConfig extends AbstractBundleConfig
     }
 
     /**
-     * Specification:
-     * - Yves assets builder config file path.
-     *
-     * @api
-     *
-     * @return string
-     */
-    public function getYvesFrontendConfigFilePath(): string
-    {
-        return APPLICATION_ROOT_DIR . '/frontend/store-config.json';
-    }
-
-    /**
      * @return string
      */
     public function getYvesInstallerDirectoryPattern()

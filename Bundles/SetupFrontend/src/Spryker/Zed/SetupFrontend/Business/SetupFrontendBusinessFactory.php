@@ -8,20 +8,12 @@
 namespace Spryker\Zed\SetupFrontend\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\SetupFrontend\Business\BuildConfigProvider\YvesAssetsBuildConfigProvider;
-use Spryker\Zed\SetupFrontend\Business\BuildConfigProvider\YvesAssetsBuildConfigProviderInterface;
 use Spryker\Zed\SetupFrontend\Business\Model\Builder\Builder;
-use Spryker\Zed\SetupFrontend\Business\Model\Builder\BuilderInterface;
 use Spryker\Zed\SetupFrontend\Business\Model\Cleaner\Cleaner;
-use Spryker\Zed\SetupFrontend\Business\Model\Cleaner\CleanerInterface;
 use Spryker\Zed\SetupFrontend\Business\Model\Installer\DependencyInstaller;
 use Spryker\Zed\SetupFrontend\Business\Model\Installer\PathFinder\InstallPathFinder;
 use Spryker\Zed\SetupFrontend\Business\Model\Installer\ProjectInstaller;
 use Spryker\Zed\SetupFrontend\Business\Model\PackageManager\NodeInstaller;
-use Spryker\Zed\SetupFrontend\Business\Model\Resolver\BuilderCommandResolver;
-use Spryker\Zed\SetupFrontend\Business\Model\Resolver\BuilderCommandResolverInterface;
-use Spryker\Zed\SetupFrontend\Dependency\Service\SetupFrontendToUtilEncodingServiceInterface;
-use Spryker\Zed\SetupFrontend\SetupFrontendDependencyProvider;
 
 /**
  * @method \Spryker\Zed\SetupFrontend\SetupFrontendConfig getConfig()
@@ -55,7 +47,7 @@ class SetupFrontendBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\SetupFrontend\Business\Model\Cleaner\CleanerInterface
      */
-    public function createYvesAssetsCleaner(): CleanerInterface
+    public function createYvesAssetsCleaner()
     {
         return new Cleaner($this->getConfig()->getYvesAssetsDirectories());
     }
@@ -82,24 +74,9 @@ class SetupFrontendBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\SetupFrontend\Business\Model\Builder\BuilderInterface
      */
-    public function createYvesBuilder(): BuilderInterface
+    public function createYvesBuilder()
     {
-        $buildCommand = $this->createBuilderCommandResolver()
-            ->getYvesBuildCommand(
-                $this->getStoreName()
-            );
-
-        return new Builder($buildCommand);
-    }
-
-    /**
-     * @return \Spryker\Zed\SetupFrontend\Business\Model\Resolver\BuilderCommandResolverInterface
-     */
-    public function createBuilderCommandResolver(): BuilderCommandResolverInterface
-    {
-        return new BuilderCommandResolver(
-            $this->getConfig()
-        );
+        return new Builder($this->getConfig()->getYvesBuildCommand());
     }
 
     /**
@@ -135,41 +112,5 @@ class SetupFrontendBusinessFactory extends AbstractBusinessFactory
     public function createZedBuilder()
     {
         return new Builder($this->getConfig()->getZedBuildCommand());
-    }
-
-    /**
-     * @return \Spryker\Zed\SetupFrontend\Business\BuildConfigProvider\YvesAssetsBuildConfigProviderInterface
-     */
-    public function createYvesAssetsBuildConfigProvider(): YvesAssetsBuildConfigProviderInterface
-    {
-        return new YvesAssetsBuildConfigProvider(
-            $this->getConfig(),
-            $this->getUtilEncodingService(),
-            $this->getYvesFrontendStoreConfigExpanderPlugins()
-        );
-    }
-
-    /**
-     * @return string
-     */
-    public function getStoreName(): string
-    {
-        return $this->getProvidedDependency(SetupFrontendDependencyProvider::STORE_NAME);
-    }
-
-    /**
-     * @return \Spryker\Zed\SetupFrontend\Dependency\Service\SetupFrontendToUtilEncodingServiceInterface
-     */
-    public function getUtilEncodingService(): SetupFrontendToUtilEncodingServiceInterface
-    {
-        return $this->getProvidedDependency(SetupFrontendDependencyProvider::SERVICE_UTIL_ENCODING);
-    }
-
-    /**
-     * @return \Spryker\Zed\SetupFrontendExtension\Dependency\Plugin\YvesFrontendStoreConfigExpanderPluginInterface[]
-     */
-    public function getYvesFrontendStoreConfigExpanderPlugins(): array
-    {
-        return $this->getProvidedDependency(SetupFrontendDependencyProvider::PLUGINS_YVES_FRONTEND_STORE_CONFIG_EXPANDER);
     }
 }

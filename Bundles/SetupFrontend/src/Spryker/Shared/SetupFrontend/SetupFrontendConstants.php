@@ -15,9 +15,8 @@ interface SetupFrontendConstants
     /**
      * Specification:
      * - Sets the command to build Yves assets.
-     * - %store% will be replaced with current store name.
      *
-     * @example 'npm run yves %store%'
+     * @example 'npm run yves'
      *
      * @api
      */
