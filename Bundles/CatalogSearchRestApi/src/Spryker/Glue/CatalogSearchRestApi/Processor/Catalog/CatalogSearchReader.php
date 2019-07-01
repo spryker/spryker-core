@@ -68,9 +68,9 @@ class CatalogSearchReader implements CatalogSearchReaderInterface
     protected $catalogSearchTranslationExpander;
 
     /**
-     * @var \Spryker\Glue\CatalogSearchRestApi\Processor\Catalog\CatalogSearchRequestParametersValidator
+     * @var \Spryker\Glue\CatalogSearchRestApiExtension\Dependency\Plugin\CatalogSearchRequestValidatorPluginInterface[]
      */
-    protected $catalogSearchRequestParametersValidator;
+    protected $catalogSearchRequestValidatorPlugins;
 
     /**
      * @param \Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToCatalogClientInterface $catalogClient
@@ -79,7 +79,7 @@ class CatalogSearchReader implements CatalogSearchReaderInterface
      * @param \Spryker\Glue\CatalogSearchRestApi\Processor\Mapper\CatalogSearchResourceMapperInterface $catalogSearchResourceMapper
      * @param \Spryker\Glue\CatalogSearchRestApi\Processor\Mapper\CatalogSearchSuggestionsResourceMapperInterface $catalogSearchSuggestionsResourceMapper
      * @param \Spryker\Glue\CatalogSearchRestApi\Processor\Translation\CatalogSearchTranslationExpanderInterface $catalogSearchTranslationExpander
-     * @param \Spryker\Glue\CatalogSearchRestApi\Processor\Catalog\CatalogSearchRequestParametersValidator $catalogSearchRequestParametersValidator
+     * @param \Spryker\Glue\CatalogSearchRestApiExtension\Dependency\Plugin\CatalogSearchRequestValidatorPluginInterface[] $catalogSearchRequestValidatorPlugins
      */
     public function __construct(
         CatalogSearchRestApiToCatalogClientInterface $catalogClient,
@@ -88,7 +88,7 @@ class CatalogSearchReader implements CatalogSearchReaderInterface
         CatalogSearchResourceMapperInterface $catalogSearchResourceMapper,
         CatalogSearchSuggestionsResourceMapperInterface $catalogSearchSuggestionsResourceMapper,
         CatalogSearchTranslationExpanderInterface $catalogSearchTranslationExpander,
-        CatalogSearchRequestParametersValidator $catalogSearchRequestParametersValidator
+        array $catalogSearchRequestValidatorPlugins
     ) {
         $this->catalogClient = $catalogClient;
         $this->priceClient = $priceClient;
@@ -96,7 +96,7 @@ class CatalogSearchReader implements CatalogSearchReaderInterface
         $this->catalogSearchResourceMapper = $catalogSearchResourceMapper;
         $this->catalogSearchSuggestionsResourceMapper = $catalogSearchSuggestionsResourceMapper;
         $this->catalogSearchTranslationExpander = $catalogSearchTranslationExpander;
-        $this->catalogSearchRequestParametersValidator = $catalogSearchRequestParametersValidator;
+        $this->catalogSearchRequestValidatorPlugins = $catalogSearchRequestValidatorPlugins;
     }
 
     /**
@@ -109,11 +109,11 @@ class CatalogSearchReader implements CatalogSearchReaderInterface
         $searchString = $this->getRequestParameter($restRequest, CatalogSearchRestApiConfig::QUERY_STRING_PARAMETER);
         $requestParameters = $this->getAllRequestParameters($restRequest);
 
-        $failedValidationResponse = $this->catalogSearchRequestParametersValidator
-            ->validateIntegerParameters($restRequest);
-
-        if ($failedValidationResponse) {
-            return $failedValidationResponse;
+        foreach ($this->catalogSearchRequestValidatorPlugins as $catalogSearchRequestValidatorPlugin) {
+            $failedValidationResponse = $catalogSearchRequestValidatorPlugin->validateIntegerParameters($restRequest);
+            if ($failedValidationResponse) {
+                return $failedValidationResponse;
+            }
         }
 
         $searchResult = $this->catalogClient->catalogSearch($searchString, $requestParameters);

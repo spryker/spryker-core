@@ -18,5 +18,18 @@ class CatalogSearchRestApiConfig extends AbstractBundleConfig
 
     public const RESPONSE_CODE_PARAMETER_MUST_BE_INTEGER = '503';
 
-    public const ERROR_MESSAGE_PARAMETER_MUST_BE_INTEGER = 'Value of %s must be of time integer.';
+    public const ERROR_MESSAGE_PARAMETER_MUST_BE_INTEGER = 'Value of %s must be of type integer.';
+
+    /**
+     * @return string[]
+     */
+    public function getIntegerRequestParameterNames(): array
+    {
+        return [
+            'rating.min',
+            'rating.max',
+            'page',
+            'category',
+        ];
+    }
 }

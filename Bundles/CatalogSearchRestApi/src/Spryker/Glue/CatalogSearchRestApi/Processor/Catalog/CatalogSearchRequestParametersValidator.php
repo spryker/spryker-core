@@ -22,11 +22,18 @@ class CatalogSearchRequestParametersValidator implements CatalogSearchRequestPar
     protected $restResourceBuilder;
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
+     * @var \Spryker\Glue\CatalogSearchRestApi\CatalogSearchRestApiConfig
      */
-    public function __construct(RestResourceBuilderInterface $restResourceBuilder)
+    protected $catalogSearchRestApiConfig;
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
+     * @param \Spryker\Glue\CatalogSearchRestApi\CatalogSearchRestApiConfig $catalogSearchRestApiConfig
+     */
+    public function __construct(RestResourceBuilderInterface $restResourceBuilder, CatalogSearchRestApiConfig $catalogSearchRestApiConfig)
     {
         $this->restResourceBuilder = $restResourceBuilder;
+        $this->catalogSearchRestApiConfig = $catalogSearchRestApiConfig;
     }
 
     /**
@@ -38,10 +45,20 @@ class CatalogSearchRequestParametersValidator implements CatalogSearchRequestPar
     {
         $requestParameters = $restRequest->getHttpRequest()->query->all();
         $restResponse = $this->restResourceBuilder->createRestResponse();
+        
+        foreach ($this->catalogSearchRestApiConfig->getIntegerRequestParameterNames() as $dotNotatedIntegerRequestParameterKey) {
+            $requestParameterValue = $this->getArrayElementByDotNotation(
+                $dotNotatedIntegerRequestParameterKey,
+                $requestParameters
+            );
 
-        foreach ($this->getIntegerRequestParameterNames() as $dotNotatedIntegerRequestParameterKey) {
-            $requestParameterValue = $this->getArrayElementByDotNotation($dotNotatedIntegerRequestParameterKey, $requestParameters);
-            if (filter_var($requestParameterValue, FILTER_VALIDATE_INT) === false) {
+            if($requestParameterValue === ''){
+                $restResponse->addError(
+                    $this->createErrorMessageTransfer($dotNotatedIntegerRequestParameterKey)
+                );
+            }
+
+            if ($requestParameterValue && filter_var($requestParameterValue, FILTER_VALIDATE_INT) === false) {
                 $restResponse->addError(
                     $this->createErrorMessageTransfer($dotNotatedIntegerRequestParameterKey)
                 );
@@ -51,19 +68,8 @@ class CatalogSearchRequestParametersValidator implements CatalogSearchRequestPar
         if ($restResponse->getErrors()) {
             return $restResponse;
         }
-    }
 
-    /**
-     * @return string[]
-     */
-    protected function getIntegerRequestParameterNames(): array
-    {
-        return [
-            'rating.min',
-            'rating.max',
-            'page',
-            'category',
-        ];
+        return null;
     }
 
     /**
@@ -88,7 +94,7 @@ class CatalogSearchRequestParametersValidator implements CatalogSearchRequestPar
      */
     protected function getArrayElementByDotNotation(string $key, array $data, $default = null)
     {
-        if (empty($key) || $data) {
+        if (!$key || !$data) {
             return $default;
         }
 

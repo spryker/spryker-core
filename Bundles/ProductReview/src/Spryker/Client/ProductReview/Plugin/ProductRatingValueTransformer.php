@@ -14,9 +14,6 @@ class ProductRatingValueTransformer implements FacetSearchResultValueTransformer
     public const CONVERSION_PRECISION = 100;
     public const RATING_VALUE_TOLERANCE = 25;
 
-    protected const PARAMETER_RANGE_MIN = 'min';
-    protected const PARAMETER_RANGE_MAX = 'max';
-
     /**
      * @param array $rangeValues
      *
@@ -24,12 +21,12 @@ class ProductRatingValueTransformer implements FacetSearchResultValueTransformer
      */
     public function transformForDisplay($rangeValues)
     {
-        if (isset($rangeValues[static::PARAMETER_RANGE_MIN])) {
-            $rangeValues[static::PARAMETER_RANGE_MIN] = $this->normalizeRatingForDisplay($rangeValues[static::PARAMETER_RANGE_MIN]);
+        if (isset($rangeValues['min'])) {
+            $rangeValues['min'] = $this->normalizeRatingForDisplay($rangeValues['min']);
         }
 
-        if (isset($rangeValues[static::PARAMETER_RANGE_MAX])) {
-            $rangeValues[static::PARAMETER_RANGE_MAX] = $this->normalizeRatingForDisplay($rangeValues[static::PARAMETER_RANGE_MAX]);
+        if (isset($rangeValues['max'])) {
+            $rangeValues['max'] = $this->normalizeRatingForDisplay($rangeValues['max']);
         }
 
         return $rangeValues;
@@ -42,17 +39,17 @@ class ProductRatingValueTransformer implements FacetSearchResultValueTransformer
      */
     public function transformFromDisplay($rangeValues)
     {
-        if (isset($rangeValues[static::PARAMETER_RANGE_MIN])) {
-            $rangeValues[static::PARAMETER_RANGE_MIN] =
+        if (isset($rangeValues['min'])) {
+            $rangeValues['min'] =
                 $this->adjustLowerThreshold(
-                    $this->normalizeRatingForFilter($rangeValues[static::PARAMETER_RANGE_MIN])
+                    $this->normalizeRatingForFilter($rangeValues['min'])
                 );
         }
 
-        if (isset($rangeValues[static::PARAMETER_RANGE_MAX])) {
-            $rangeValues[static::PARAMETER_RANGE_MAX] =
+        if (isset($rangeValues['max'])) {
+            $rangeValues['max'] =
                 $this->adjustUpperThreshold(
-                    $this->normalizeRatingForFilter($rangeValues[static::PARAMETER_RANGE_MAX])
+                    $this->normalizeRatingForFilter($rangeValues['max'])
                 );
         }
 
