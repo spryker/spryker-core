@@ -45,14 +45,13 @@ class CatalogSearchRequestParametersValidator implements CatalogSearchRequestPar
     {
         $requestParameters = $restRequest->getHttpRequest()->query->all();
         $restResponse = $this->restResourceBuilder->createRestResponse();
-        
         foreach ($this->catalogSearchRestApiConfig->getIntegerRequestParameterNames() as $dotNotatedIntegerRequestParameterKey) {
             $requestParameterValue = $this->getArrayElementByDotNotation(
                 $dotNotatedIntegerRequestParameterKey,
                 $requestParameters
             );
 
-            if($requestParameterValue === ''){
+            if ($requestParameterValue === '') {
                 $restResponse->addError(
                     $this->createErrorMessageTransfer($dotNotatedIntegerRequestParameterKey)
                 );

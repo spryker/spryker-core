@@ -82,7 +82,7 @@ class CatalogSearchRestApiFactory extends AbstractFactory
     /**
      * @return \Spryker\Glue\CatalogSearchRestApiExtension\Dependency\Plugin\CatalogSearchRequestValidatorPluginInterface[]
      */
-    public function getCatalogSearchRequestValidatorPlugins():array
+    public function getCatalogSearchRequestValidatorPlugins(): array
     {
         return $this->getProvidedDependency(CatalogSearchRestApiDependencyProvider::PLUGINS_REST_REQUEST_VALIDATOR);
     }
