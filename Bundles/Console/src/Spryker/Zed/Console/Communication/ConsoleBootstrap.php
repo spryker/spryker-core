@@ -143,13 +143,16 @@ class ConsoleBootstrap extends Application
     public function doRun(InputInterface $input, OutputInterface $output)
     {
         $this->setDecorated($output);
-        $output->writeln($this->getInfoText());
+        if (!$input->hasParameterOption(['--format'], true)) {
+            $output->writeln($this->getInfoText());
+        }
 
         $this->application->boot();
 
         if (!$input->hasParameterOption(['--no-pre'], true)) {
             $this->getFacade()->preRun($input, $output);
         }
+
         $response = parent::doRun($input, $output);
 
         if (!$input->hasParameterOption(['--no-post'], true)) {
