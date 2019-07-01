@@ -22,7 +22,6 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
 class ContentBannerWriterStep extends PublishAwareStep implements DataImportStepInterface
 {
-    protected const ERROR_MESSAGE_EMPTY_KEY_FIELD = "Key field can't be empty.";
     protected const ERROR_MESSAGE_REQUIRED_DEFAULT_LOCALE = "Default locale is required.";
 
     /**
