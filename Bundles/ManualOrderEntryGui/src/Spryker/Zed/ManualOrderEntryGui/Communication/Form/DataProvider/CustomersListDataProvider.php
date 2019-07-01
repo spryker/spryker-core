@@ -47,7 +47,7 @@ class CustomersListDataProvider implements FormDataProviderInterface
         return [
             'data_class' => QuoteTransfer::class,
             'allow_extra_fields' => true,
-            'csrf_protection' => true,
+            'csrf_protection' => false,
             CustomersListType::OPTION_CUSTOMER_ARRAY => $this->getCustomerList(),
         ];
     }
