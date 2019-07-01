@@ -10,8 +10,6 @@ namespace SprykerTest\Zed\ProductPackagingUnit\Business\Model\PriceChange;
 use Codeception\Test\Unit;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\PriceChange\PriceChangeExpander;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReader;
-use Spryker\Zed\ProductPackagingUnit\Dependency\Service\ProductPackagingUnitToUtilPriceServiceBridge;
-use Spryker\Zed\ProductPackagingUnit\Dependency\Service\ProductPackagingUnitToUtilQuantityServiceBridge;
 
 /**
  * Auto-generated group annotations
@@ -39,17 +37,7 @@ class PriceChangeExpanderTest extends Unit
      */
     public function testCustomAmountPriceIsCorrect(): void
     {
-        $utilPriceService = new ProductPackagingUnitToUtilPriceServiceBridge(
-            $this->tester->getLocator()->utilPrice()->service()
-        );
-        $utilQuantityService = new ProductPackagingUnitToUtilQuantityServiceBridge(
-            $this->tester->getLocator()->utilQuantity()->service()
-        );
-        $priceChangeExpander = new PriceChangeExpander(
-            $this->getProductPackagingUnitReaderMock(),
-            $utilPriceService,
-            $utilQuantityService
-        );
+        $priceChangeExpander = new PriceChangeExpander($this->getProductPackagingUnitReaderMock());
         $cartChangeTransfer = $priceChangeExpander->setCustomAmountPrice($this->tester->getCartChangeTransfer());
 
         foreach ($cartChangeTransfer->getItems() as $item) {

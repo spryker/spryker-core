@@ -19,8 +19,6 @@ interface ProductQuantityStorageClientInterface
      *
      * @api
      *
-     * @deprecated use getProductQuantityStorage instead.
-     *
      * @param int $idProduct
      *
      * @return \Generated\Shared\Transfer\ProductQuantityStorageTransfer|null
@@ -29,29 +27,16 @@ interface ProductQuantityStorageClientInterface
 
     /**
      * Specification:
-     * - Finds a product quantity within Storage with the given related product ID.
-     * - Returns ProductStorageTransfer with default values if product quantity was not found.
-     *
-     * @api
-     *
-     * @param int $idProduct
-     *
-     * @return \Generated\Shared\Transfer\ProductQuantityStorageTransfer
-     */
-    public function getProductQuantityStorage(int $idProduct): ProductQuantityStorageTransfer;
-
-    /**
-     * Specification:
      * - Retrieves the nearest valid quantity for a given product based on its product quantity restrictions.
      *
      * @api
      *
      * @param int $idProduct
-     * @param float $quantity
+     * @param int $quantity
      *
-     * @return float
+     * @return int
      */
-    public function getNearestQuantity(int $idProduct, float $quantity): float;
+    public function getNearestQuantity(int $idProduct, int $quantity): int;
 
     /**
      * Specification:

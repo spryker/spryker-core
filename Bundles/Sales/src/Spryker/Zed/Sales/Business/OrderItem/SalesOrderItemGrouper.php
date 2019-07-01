@@ -8,23 +8,9 @@
 namespace Spryker\Zed\Sales\Business\OrderItem;
 
 use Generated\Shared\Transfer\ItemTransfer;
-use Spryker\Zed\Sales\Dependency\Service\SalesToUtilQuantityServiceInterface;
 
 class SalesOrderItemGrouper implements SalesOrderItemGrouperInterface
 {
-    /**
-     * @var \Spryker\Zed\Sales\Dependency\Service\SalesToUtilQuantityServiceInterface
-     */
-    protected $utilQuantityService;
-
-    /**
-     * @param \Spryker\Zed\Sales\Dependency\Service\SalesToUtilQuantityServiceInterface $utilQuantityService
-     */
-    public function __construct(SalesToUtilQuantityServiceInterface $utilQuantityService)
-    {
-        $this->utilQuantityService = $utilQuantityService;
-    }
-
     /**
      * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
@@ -54,12 +40,7 @@ class SalesOrderItemGrouper implements SalesOrderItemGrouperInterface
      */
     protected function setQuantityAndPriceOfUniqueOrderItem(ItemTransfer $calculatedOrderItem, ItemTransfer $itemTransfer): ItemTransfer
     {
-        $newQuantity = $this->utilQuantityService->sumQuantities(
-            $calculatedOrderItem->getQuantity(),
-            $itemTransfer->getQuantity()
-        );
-
-        $calculatedOrderItem->setQuantity($newQuantity);
+        $calculatedOrderItem->setQuantity($calculatedOrderItem->getQuantity() + $itemTransfer->getQuantity());
         $calculatedOrderItem->setSumPrice($calculatedOrderItem->getSumPrice() + $itemTransfer->getSumPrice());
 
         return $calculatedOrderItem;
