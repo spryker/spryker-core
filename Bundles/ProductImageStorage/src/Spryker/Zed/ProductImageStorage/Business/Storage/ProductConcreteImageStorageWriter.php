@@ -250,7 +250,7 @@ class ProductConcreteImageStorageWriter implements ProductConcreteImageStorageWr
     /**
      * @param int[] $productIds
      *
-     * @return \ArrayObject[][]|\Generated\Shared\Transfer\SpyProductImageSetEntityTransfer[][][]
+     * @return \Generated\Shared\Transfer\SpyProductImageSetEntityTransfer[][][]
      */
     protected function getImageSets(array $productIds): array
     {
