@@ -223,11 +223,11 @@ class ProductConcreteImageStorageWriter implements ProductConcreteImageStorageWr
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\SpyProductImageSetEntityTransfer[] $productImageSetEntityTransfers
+     * @param \Generated\Shared\Transfer\SpyProductImageSetEntityTransfer[] $productImageSetEntityTransfers
      *
-     * @return \ArrayObject
+     * @return \ArrayObject|\Generated\Shared\Transfer\ProductImageSetStorageTransfer[]
      */
-    protected function generateProductImageSetStorageTransfers(ArrayObject $productImageSetEntityTransfers): ArrayObject
+    protected function generateProductImageSetStorageTransfers(array $productImageSetEntityTransfers): ArrayObject
     {
         $productImageSetStorageTransfers = new ArrayObject();
 
@@ -250,7 +250,7 @@ class ProductConcreteImageStorageWriter implements ProductConcreteImageStorageWr
     /**
      * @param int[] $productIds
      *
-     * @return \ArrayObject[][]
+     * @return \ArrayObject[][]|\Generated\Shared\Transfer\SpyProductImageSetEntityTransfer[][][]
      */
     protected function getImageSets(array $productIds): array
     {
@@ -277,7 +277,7 @@ class ProductConcreteImageStorageWriter implements ProductConcreteImageStorageWr
      * @param \Generated\Shared\Transfer\SpyProductImageSetEntityTransfer[][][] $productImageSetsBulk
      * @param \Generated\Shared\Transfer\SpyProductImageSetEntityTransfer[][] $productDefaultImageSetsBulk
      *
-     * @return \ArrayObject[][]
+     * @return \Generated\Shared\Transfer\SpyProductImageSetEntityTransfer[][][]
      */
     protected function getImageSetsForLocalizedAttributes(
         array $productLocalizedAttributesEntities,
@@ -292,13 +292,13 @@ class ProductConcreteImageStorageWriter implements ProductConcreteImageStorageWr
             $colFkLocale = $productLocalizedAttribute[SpyProductLocalizedAttributesTableMap::COL_FK_LOCALE];
 
             if (isset($productImageSetsBulk[$idProduct][$colFkLocale])) {
-                $imageSets[$idProduct][$colIdProductAttributes] = new ArrayObject($productImageSetsBulk[$idProduct][$colFkLocale]);
+                $imageSets[$idProduct][$colIdProductAttributes] = $productImageSetsBulk[$idProduct][$colFkLocale];
 
                 continue;
             }
 
             if (isset($productDefaultImageSetsBulk[$idProduct])) {
-                $imageSets[$idProduct][$colIdProductAttributes] = new ArrayObject($productDefaultImageSetsBulk[$idProduct]);
+                $imageSets[$idProduct][$colIdProductAttributes] = $productDefaultImageSetsBulk[$idProduct];
             }
         }
 
