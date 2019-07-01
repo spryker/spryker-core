@@ -12,8 +12,6 @@ use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ProductQuantityTransfer;
 use Spryker\Zed\ProductQuantity\Business\Model\ProductQuantityReaderInterface;
-use Spryker\Zed\ProductQuantity\Dependency\Service\ProductQuantityToUtilQuantityServiceInterface;
-use Spryker\Zed\ProductQuantity\ProductQuantityConfig;
 
 class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionValidatorInterface
 {
@@ -32,28 +30,11 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
     protected $productQuantityReader;
 
     /**
-     * @var \Spryker\Zed\ProductQuantity\Dependency\Service\ProductQuantityToUtilQuantityServiceInterface
-     */
-    protected $utilQuantityService;
-
-    /**
-     * @var \Spryker\Zed\ProductQuantity\ProductQuantityConfig
-     */
-    protected $config;
-
-    /**
      * @param \Spryker\Zed\ProductQuantity\Business\Model\ProductQuantityReaderInterface $productQuantityReader
-     * @param \Spryker\Zed\ProductQuantity\Dependency\Service\ProductQuantityToUtilQuantityServiceInterface $utilQuantityService
-     * @param \Spryker\Zed\ProductQuantity\ProductQuantityConfig $config
      */
-    public function __construct(
-        ProductQuantityReaderInterface $productQuantityReader,
-        ProductQuantityToUtilQuantityServiceInterface $utilQuantityService,
-        ProductQuantityConfig $config
-    ) {
+    public function __construct(ProductQuantityReaderInterface $productQuantityReader)
+    {
         $this->productQuantityReader = $productQuantityReader;
-        $this->utilQuantityService = $utilQuantityService;
-        $this->config = $config;
     }
 
     /**
@@ -82,31 +63,20 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
 
     /**
      * @param string $sku
-     * @param float $quantity
+     * @param int $quantity
      * @param \Generated\Shared\Transfer\CartPreCheckResponseTransfer $responseTransfer
      *
      * @return bool
      */
-    protected function validateQuantityIsPositive(string $sku, float $quantity, CartPreCheckResponseTransfer $responseTransfer): bool
+    protected function validateQuantityIsPositive(string $sku, int $quantity, CartPreCheckResponseTransfer $responseTransfer): bool
     {
-        if ($this->isQuantityLessOrEqual($quantity, 0)) {
-            $this->addViolation(static::ERROR_QUANTITY_INCORRECT, $sku, 0, $quantity, $responseTransfer);
+        if ($quantity <= 0) {
+            $this->addViolation(static::ERROR_QUANTITY_INCORRECT, $sku, 1, $quantity, $responseTransfer);
 
             return false;
         }
 
         return true;
-    }
-
-    /**
-     * @param float $firstQuantity
-     * @param float $secondQuantity
-     *
-     * @return bool
-     */
-    protected function isQuantityLessOrEqual(float $firstQuantity, float $secondQuantity): bool
-    {
-        return $this->utilQuantityService->isQuantityLessOrEqual($firstQuantity, $secondQuantity);
     }
 
     /**
@@ -132,25 +102,23 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
 
     /**
      * @param string $sku
-     * @param float $quantity
+     * @param int $quantity
      * @param \Generated\Shared\Transfer\ProductQuantityTransfer $productQuantityTransfer
      * @param \Generated\Shared\Transfer\CartPreCheckResponseTransfer $responseTransfer
      *
      * @return void
      */
-    protected function validateItem(string $sku, float $quantity, ProductQuantityTransfer $productQuantityTransfer, CartPreCheckResponseTransfer $responseTransfer): void
+    protected function validateItem(string $sku, int $quantity, ProductQuantityTransfer $productQuantityTransfer, CartPreCheckResponseTransfer $responseTransfer): void
     {
         $min = $productQuantityTransfer->getQuantityMin();
         $max = $productQuantityTransfer->getQuantityMax();
         $interval = $productQuantityTransfer->getQuantityInterval();
 
-        if (!$this->isQuantityEqual($quantity, 0) && $quantity < $min) {
+        if ($quantity !== 0 && $quantity < $min) {
             $this->addViolation(static::ERROR_QUANTITY_MIN_NOT_FULFILLED, $sku, $min, $quantity, $responseTransfer);
         }
 
-        $quantityMinusMin = $this->subtractQuantities($quantity, $min);
-
-        if (!$this->isQuantityEqual($quantity, 0) && !$this->isQuantityModuloEqual($quantityMinusMin, $interval, 0)) {
+        if ($quantity !== 0 && ($quantity - $min) % $interval !== 0) {
             $this->addViolation(static::ERROR_QUANTITY_INTERVAL_NOT_FULFILLED, $sku, $interval, $quantity, $responseTransfer);
         }
 
@@ -160,54 +128,9 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
     }
 
     /**
-     * @param float $dividentQuantity
-     * @param float $divisorQuantity
-     * @param float $remainder
-     *
-     * @return bool
-     */
-    protected function isQuantityModuloEqual(float $dividentQuantity, float $divisorQuantity, float $remainder): bool
-    {
-        return $this->utilQuantityService->isQuantityModuloEqual($dividentQuantity, $divisorQuantity, $remainder);
-    }
-
-    /**
-     * @param float $firstQuantity
-     * @param float $secondQuantity
-     *
-     * @return bool
-     */
-    protected function isQuantityEqual(float $firstQuantity, float $secondQuantity): bool
-    {
-        return $this->utilQuantityService->isQuantityEqual($firstQuantity, $secondQuantity);
-    }
-
-    /**
-     * @param float $firstQuantity
-     * @param float $secondQuantity
-     *
-     * @return float
-     */
-    protected function subtractQuantities(float $firstQuantity, float $secondQuantity): float
-    {
-        return $this->utilQuantityService->subtractQuantities($firstQuantity, $secondQuantity);
-    }
-
-    /**
-     * @param float $firstQuantity
-     * @param float $secondQuantity
-     *
-     * @return float
-     */
-    protected function sumQuantities(float $firstQuantity, float $secondQuantity): float
-    {
-        return $this->utilQuantityService->sumQuantities($firstQuantity, $secondQuantity);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return float[] Keys are product group keys, values are product quantities as 'quote.quantity + change.quantity'
+     * @return int[] Keys are product group keys, values are product quantities as 'quote.quantity + change.quantity'
      */
     protected function getItemAddCartQuantityMap(CartChangeTransfer $cartChangeTransfer): array
     {
@@ -219,10 +142,7 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
             $cartQuantityMap[$productGroupKey] = $itemTransfer->getQuantity();
 
             if (isset($quoteQuantityMapByGroupKey[$productGroupKey])) {
-                $cartQuantityMap[$productGroupKey] = $this->sumQuantities(
-                    $cartQuantityMap[$productGroupKey],
-                    $quoteQuantityMapByGroupKey[$productGroupKey]
-                );
+                $cartQuantityMap[$productGroupKey] += $quoteQuantityMapByGroupKey[$productGroupKey];
             }
         }
 
@@ -232,7 +152,7 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return float[] Keys are product group keys, values are product quantities as 'quote.quantity - change.quantity'
+     * @return int[] Keys are product group keys, values are product quantities as 'quote.quantity - change.quantity'
      */
     protected function getItemRemoveCartQuantityMap(CartChangeTransfer $cartChangeTransfer): array
     {
@@ -244,10 +164,7 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
             $cartQuantityMap[$productGroupKey] = -$itemTransfer->getQuantity();
 
             if (isset($quoteQuantityMapByGroupKey[$productGroupKey])) {
-                $cartQuantityMap[$productGroupKey] = $this->sumQuantities(
-                    $quoteQuantityMapByGroupKey[$productGroupKey],
-                    $cartQuantityMap[$productGroupKey]
-                );
+                $cartQuantityMap[$productGroupKey] += $quoteQuantityMapByGroupKey[$productGroupKey];
             }
         }
 
@@ -306,8 +223,8 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
     protected function getDefaultProductQuantityTransfer(): ProductQuantityTransfer
     {
         return (new ProductQuantityTransfer())
-            ->setQuantityInterval($this->config->getDefaultInterval())
-            ->setQuantityMin($this->config->getDefaultMinimumQuantity());
+            ->setQuantityInterval(1)
+            ->setQuantityMin(1);
     }
 
     /**
@@ -349,13 +266,13 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
     /**
      * @param string $message
      * @param string $sku
-     * @param float $restrictionValue
-     * @param float $actualValue
+     * @param int $restrictionValue
+     * @param int $actualValue
      * @param \Generated\Shared\Transfer\CartPreCheckResponseTransfer $responseTransfer
      *
      * @return void
      */
-    protected function addViolation(string $message, string $sku, float $restrictionValue, float $actualValue, CartPreCheckResponseTransfer $responseTransfer): void
+    protected function addViolation(string $message, string $sku, int $restrictionValue, int $actualValue, CartPreCheckResponseTransfer $responseTransfer): void
     {
         $responseTransfer->setIsSuccess(false);
         $responseTransfer->addMessage(

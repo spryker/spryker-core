@@ -59,7 +59,6 @@ use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToProdu
 use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToShipmentFacadeInterface;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToStoreFacadeInterface;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\QueryContainer\ManualOrderEntryGuiToCustomerQueryContainerInterface;
-use Spryker\Zed\ManualOrderEntryGui\Dependency\Service\ManualOrderEntryGuiToUtilQuantityServiceInterface;
 use Spryker\Zed\ManualOrderEntryGui\ManualOrderEntryGuiDependencyProvider;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -92,14 +91,6 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
     public function getCartFacade(): ManualOrderEntryGuiToCartFacadeInterface
     {
         return $this->getProvidedDependency(ManualOrderEntryGuiDependencyProvider::FACADE_CART);
-    }
-
-    /**
-     * @return \Spryker\Zed\ManualOrderEntryGui\Dependency\Service\ManualOrderEntryGuiToUtilQuantityServiceInterface
-     */
-    public function getUtilQuantityService(): ManualOrderEntryGuiToUtilQuantityServiceInterface
-    {
-        return $this->getProvidedDependency(ManualOrderEntryGuiDependencyProvider::SERVICE_UTIL_QUANTITY);
     }
 
     /**
@@ -585,8 +576,7 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
     {
         return new ProductFormHandler(
             $this->getCartFacade(),
-            $this->getProductFacade(),
-            $this->getUtilQuantityService()
+            $this->getProductFacade()
         );
     }
 
@@ -597,8 +587,7 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
     {
         return new ItemFormHandler(
             $this->getCartFacade(),
-            $this->getMessengerFacade(),
-            $this->getUtilQuantityService()
+            $this->getMessengerFacade()
         );
     }
 

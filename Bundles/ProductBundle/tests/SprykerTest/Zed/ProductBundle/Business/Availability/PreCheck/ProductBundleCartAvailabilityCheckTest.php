@@ -9,15 +9,11 @@ namespace SprykerTest\Zed\ProductBundle\Business\Availability\PreCheck;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Availability\Persistence\SpyAvailability;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\PreCheck\ProductBundleCartAvailabilityCheck;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface;
 use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerInterface;
-use Spryker\Zed\ProductBundle\Dependency\Service\ProductBundleToUtilQuantityServiceBridge;
-use Spryker\Zed\ProductBundle\Dependency\Service\ProductBundleToUtilQuantityServiceInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
 use Spryker\Zed\ProductBundle\ProductBundleConfig;
 
@@ -73,17 +69,12 @@ class ProductBundleCartAvailabilityCheckTest extends PreCheckMocks
     }
 
     /**
-     * @dataProvider bundledItemsNotAvailableDataProvider
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\ItemTransfer $cartChangeItemTransfer
+     * return void
      *
      * @return void
      */
-    public function testCheckCartAvailabilityWhenBundledItemsNotAvailableShouldStoreErrorMessages(
-        QuoteTransfer $quoteTransfer,
-        ItemTransfer $cartChangeItemTransfer
-    ) {
+    public function testCheckCartAvailabilityWhenBundledItemsNotAvailableShouldStoreErrorMessages()
+    {
         $availabilityFacadeMock = $this->createAvailabilityFacadeMock();
         $availabilityFacadeMock->expects($this->once())
             ->method('isProductSellableForStore')
@@ -99,9 +90,16 @@ class ProductBundleCartAvailabilityCheckTest extends PreCheckMocks
 
         $this->setupFindBundledProducts($this->fixtures, $productBundleAvailabilityCheckMock);
 
+        $quoteTransfer = $this->createTestQuoteTransfer();
+
         $cartChangeTransfer = new CartChangeTransfer();
         $cartChangeTransfer->setQuote($quoteTransfer);
-        $cartChangeTransfer->addItem($cartChangeItemTransfer);
+
+        $itemTransfer = new ItemTransfer();
+        $itemTransfer->setSku($this->fixtures['bundle-sku']);
+        $itemTransfer->setQuantity(3);
+        $cartChangeTransfer->addItem($itemTransfer);
+
         $cartPreCheckResponseTransfer = $productBundleAvailabilityCheckMock->checkCartAvailability($cartChangeTransfer);
 
         $this->assertCount(1, $cartPreCheckResponseTransfer->getMessages());
@@ -138,14 +136,7 @@ class ProductBundleCartAvailabilityCheckTest extends PreCheckMocks
         $productBundleConfig = $this->createProductBundleConfigMock();
 
         $productBundleCartAvailabilityCheckMock = $this->getMockBuilder(ProductBundleCartAvailabilityCheck::class)
-            ->setConstructorArgs([
-                $availabilityFacadeMock,
-                $productBundleQueryContainerMock,
-                $availabilityQueryContainerMock,
-                $storeFacadeMock,
-                $productBundleConfig,
-                $this->createUtilQuantityService(),
-            ])
+            ->setConstructorArgs([$availabilityFacadeMock, $productBundleQueryContainerMock, $availabilityQueryContainerMock, $storeFacadeMock, $productBundleConfig])
             ->setMethods(['findBundledProducts', 'findAvailabilityEntityBySku'])
             ->getMock();
 
@@ -161,120 +152,10 @@ class ProductBundleCartAvailabilityCheckTest extends PreCheckMocks
     }
 
     /**
-     * @return \Spryker\Zed\ProductBundle\Dependency\Service\ProductBundleToUtilQuantityServiceInterface
-     */
-    protected function createUtilQuantityService(): ProductBundleToUtilQuantityServiceInterface
-    {
-        return new ProductBundleToUtilQuantityServiceBridge($this->tester->getLocator()->utilQuantity()->service());
-    }
-
-    /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductBundle\ProductBundleConfig
      */
     protected function createProductBundleConfigMock(): ProductBundleConfig
     {
         return $this->getMockBuilder(ProductBundleConfig::class)->getMock();
-    }
-
-    /**
-     * @return array
-     */
-    public function quoteTransferWithCartChangeItemTransferDataProvider(): array
-    {
-        $quoteTransferWithCartChangeItemTransferDataProvider = [
-            'int quantity' => $this->getDataForQuoteTransferWithCartChangeItemTransfer(
-                3,
-                $this->fixtures['bundle-sku'],
-                15
-            ),
-            'float quantity' => $this->getDataForQuoteTransferWithCartChangeItemTransfer(
-                3.1,
-                $this->fixtures['bundle-sku'],
-                15.5
-            ),
-        ];
-
-        return $quoteTransferWithCartChangeItemTransferDataProvider;
-    }
-
-    /**
-     * @param float|int $quantity
-     * @param string $bundleSku
-     * @param float|int $expectedValue
-     *
-     * @return array
-     */
-    protected function getDataForQuoteTransferWithCartChangeItemTransfer(
-        $quantity,
-        string $bundleSku,
-        $expectedValue
-    ): array {
-        $quoteTransfer = new QuoteTransfer();
-        $quoteTransfer->setStore((new StoreTransfer())->setName('DE'));
-
-        $itemTransfer = new ItemTransfer();
-        $itemTransfer->setSku($bundleSku);
-        $itemTransfer->setQuantity($quantity);
-
-        $quoteTransfer->addItem($itemTransfer);
-
-        $bundleItemTransfer = new ItemTransfer();
-        $bundleItemTransfer->setSku($bundleSku);
-
-        $quoteTransfer->addBundleItem($bundleItemTransfer);
-
-        $cartChangeItemTransfer = new ItemTransfer();
-        $cartChangeItemTransfer->setSku($bundleSku);
-        $cartChangeItemTransfer->setQuantity($quantity);
-
-        return [$quoteTransfer, $cartChangeItemTransfer, $expectedValue];
-    }
-
-    /**
-     * @return array
-     */
-    public function bundledItemsNotAvailableDataProvider(): array
-    {
-        $quoteTransferWithCartChangeItemTransferDataProvider = [
-            'int quantity' => $this->getDataForBundledItemsNotAvailableDataProvider(
-                3,
-                $this->fixtures['bundle-sku']
-            ),
-            'float quantity' => $this->getDataForBundledItemsNotAvailableDataProvider(
-                3.1,
-                $this->fixtures['bundle-sku']
-            ),
-        ];
-
-        return $quoteTransferWithCartChangeItemTransferDataProvider;
-    }
-
-    /**
-     * @param float|int $quantity
-     * @param string $bundleSku
-     *
-     * @return array
-     */
-    protected function getDataForBundledItemsNotAvailableDataProvider($quantity, string $bundleSku): array
-    {
-        $quoteTransfer = new QuoteTransfer();
-        $quoteTransfer->setStore((new StoreTransfer())->setName('DE'));
-
-        $itemTransfer = new ItemTransfer();
-        $itemTransfer->setSku($bundleSku);
-        $itemTransfer->setQuantity($quantity);
-
-        $quoteTransfer->addItem($itemTransfer);
-
-        $bundleItemTransfer = new ItemTransfer();
-        $bundleItemTransfer->setSku($bundleSku);
-
-        $quoteTransfer->addBundleItem($bundleItemTransfer);
-
-        $cartChangeItemTransfer = new ItemTransfer();
-        $cartChangeItemTransfer->setSku($bundleSku);
-        $cartChangeItemTransfer->setQuantity($quantity);
-
-        return [$quoteTransfer, $cartChangeItemTransfer];
     }
 }

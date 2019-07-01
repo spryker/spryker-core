@@ -1,10 +1,5 @@
-namespace: SprykerTest
+namespace: SalesQuantity
 actor: Tester
-
-include:
-    - tests/SprykerTest/Shared/SalesQuantity
-    - tests/SprykerTest/Zed/SalesQuantity
-
 paths:
     tests: tests
     log: tests/_output

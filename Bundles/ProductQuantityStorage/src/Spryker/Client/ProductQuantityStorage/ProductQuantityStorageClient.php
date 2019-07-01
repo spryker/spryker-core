@@ -17,8 +17,6 @@ use Spryker\Client\Kernel\AbstractClient;
 class ProductQuantityStorageClient extends AbstractClient implements ProductQuantityStorageClientInterface
 {
     /**
-     * @deprecated use getProductQuantityStorage instead.
-     *
      * {@inheritdoc}
      *
      * @api
@@ -40,27 +38,11 @@ class ProductQuantityStorageClient extends AbstractClient implements ProductQuan
      * @api
      *
      * @param int $idProduct
+     * @param int $quantity
      *
-     * @return \Generated\Shared\Transfer\ProductQuantityStorageTransfer
+     * @return int
      */
-    public function getProductQuantityStorage(int $idProduct): ProductQuantityStorageTransfer
-    {
-        return $this->getFactory()
-            ->createProductQuantityStorageReader()
-            ->getProductQuantityStorage($idProduct);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param int $idProduct
-     * @param float $quantity
-     *
-     * @return float
-     */
-    public function getNearestQuantity(int $idProduct, float $quantity): float
+    public function getNearestQuantity(int $idProduct, int $quantity): int
     {
         return $this->getFactory()
             ->createProductQuantityResolver()

@@ -8,14 +8,9 @@
 namespace SprykerTest\Zed\ProductBundle\Business\Availability\PreCheck;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\PreCheck\ProductBundleCheckoutAvailabilityCheck;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface;
-use Spryker\Zed\ProductBundle\Dependency\Service\ProductBundleToUtilQuantityServiceBridge;
-use Spryker\Zed\ProductBundle\Dependency\Service\ProductBundleToUtilQuantityServiceInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
 use Spryker\Zed\ProductBundle\ProductBundleConfig;
 
@@ -35,15 +30,10 @@ class ProductBundleCheckoutAvailabilityCheckTest extends PreCheckMocks
     public const ID_STORE = 1;
 
     /**
-     * @dataProvider quoteTransferDataProvider
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
      * @return void
      */
-    public function testCheckCheckoutAvailabilityWhenAvailabilityExistingShouldReturnEmptyErrorContainer(
-        QuoteTransfer $quoteTransfer
-    ): void {
+    public function testCheckCheckoutAvailabilityWhenAvailabilityExistingShouldReturnEmptyErrorContainer()
+    {
         $availabilityFacadeMock = $this->createAvailabilityFacadeMock();
         $availabilityFacadeMock->expects($this->once())
             ->method('isProductSellableForStore')
@@ -52,6 +42,8 @@ class ProductBundleCheckoutAvailabilityCheckTest extends PreCheckMocks
         $productBundleAvailabilityCheckMock = $this->createProductBundleCheckoutAvailabilityCheckMock($availabilityFacadeMock);
 
         $this->setupFindBundledProducts($this->fixtures, $productBundleAvailabilityCheckMock);
+
+        $quoteTransfer = $this->createTestQuoteTransfer();
 
         $checkoutResponseTransfer = new CheckoutResponseTransfer();
         $checkoutResponseTransfer->setIsSuccess(true);
@@ -66,15 +58,10 @@ class ProductBundleCheckoutAvailabilityCheckTest extends PreCheckMocks
     }
 
     /**
-     * @dataProvider quoteTransferDataProvider
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
      * @return void
      */
-    public function testCheckCheckoutAvailabilityWhenAvailabilityNonExistingShouldStoreErrorMessage(
-        QuoteTransfer $quoteTransfer
-    ): void {
+    public function testCheckCheckoutAvailabilityWhenAvailabilityNonExistingShouldStoreErrorMessage()
+    {
         $availabilityFacadeMock = $this->createAvailabilityFacadeMock();
         $availabilityFacadeMock->expects($this->once())
             ->method('isProductSellableForStore')
@@ -83,6 +70,8 @@ class ProductBundleCheckoutAvailabilityCheckTest extends PreCheckMocks
         $productBundleAvailabilityCheckMock = $this->createProductBundleCheckoutAvailabilityCheckMock($availabilityFacadeMock);
 
         $this->setupFindBundledProducts($this->fixtures, $productBundleAvailabilityCheckMock);
+
+        $quoteTransfer = $this->createTestQuoteTransfer();
 
         $checkoutResponseTransfer = new CheckoutResponseTransfer();
         $checkoutResponseTransfer->setIsSuccess(true);
@@ -119,13 +108,7 @@ class ProductBundleCheckoutAvailabilityCheckTest extends PreCheckMocks
         $productBundleConfig = $this->createProductBundleConfigMock();
 
         $productBundleCartAvailabilityCheckMock = $this->getMockBuilder(ProductBundleCheckoutAvailabilityCheck::class)
-            ->setConstructorArgs([
-                $availabilityFacadeMock,
-                $productBundleQueryContainerMock,
-                $storeFacadeMock,
-                $productBundleConfig,
-                $this->createUtilQuantityService(),
-            ])
+            ->setConstructorArgs([$availabilityFacadeMock, $productBundleQueryContainerMock, $storeFacadeMock, $productBundleConfig])
             ->setMethods(['findBundledProducts'])
             ->getMock();
 
@@ -138,55 +121,5 @@ class ProductBundleCheckoutAvailabilityCheckTest extends PreCheckMocks
     protected function createProductBundleConfigMock(): ProductBundleConfig
     {
         return $this->getMockBuilder(ProductBundleConfig::class)->getMock();
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductBundle\Dependency\Service\ProductBundleToUtilQuantityServiceInterface
-     */
-    protected function createUtilQuantityService(): ProductBundleToUtilQuantityServiceInterface
-    {
-        return new ProductBundleToUtilQuantityServiceBridge($this->tester->getLocator()->utilQuantity()->service());
-    }
-
-    /**
-     * @return array
-     */
-    public function quoteTransferDataProvider(): array
-    {
-        return [
-            'int quantity' => $this->getDataForQuoteTransfer(
-                5,
-                $this->fixtures['bundle-sku']
-            ),
-            'float quantity' => $this->getDataForQuoteTransfer(
-                5.1,
-                $this->fixtures['bundle-sku']
-            ),
-        ];
-    }
-
-    /**
-     * @param float|int $quantity
-     * @param string $bundleSku
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer[]
-     */
-    protected function getDataForQuoteTransfer($quantity, string $bundleSku): array
-    {
-        $quoteTransfer = new QuoteTransfer();
-        $quoteTransfer->setStore((new StoreTransfer())->setName('DE'));
-
-        $itemTransfer = new ItemTransfer();
-        $itemTransfer->setSku($bundleSku);
-        $itemTransfer->setQuantity($quantity);
-
-        $quoteTransfer->addItem($itemTransfer);
-
-        $bundleItemTransfer = new ItemTransfer();
-        $bundleItemTransfer->setSku($bundleSku);
-
-        $quoteTransfer->addBundleItem($bundleItemTransfer);
-
-        return [$quoteTransfer];
     }
 }

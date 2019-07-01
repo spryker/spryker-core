@@ -22,7 +22,6 @@ use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToLocaleInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceProductFacadeInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductInterface;
-use Spryker\Zed\ProductBundle\Dependency\Service\ProductBundleToUtilQuantityServiceInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
 
 class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
@@ -71,32 +70,24 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
     protected static $productPriceCache = [];
 
     /**
-     * @var \Spryker\Zed\ProductBundle\Dependency\Service\ProductBundleToUtilQuantityServiceInterface
-     */
-    protected $utilQuantityService;
-
-    /**
      * @param \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface $productBundleQueryContainer
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceProductFacadeInterface $priceProductFacade
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductInterface $productFacade
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToLocaleInterface $localeFacade
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceInterface $priceFacade
-     * @param \Spryker\Zed\ProductBundle\Dependency\Service\ProductBundleToUtilQuantityServiceInterface $utilQuantityService
      */
     public function __construct(
         ProductBundleQueryContainerInterface $productBundleQueryContainer,
         ProductBundleToPriceProductFacadeInterface $priceProductFacade,
         ProductBundleToProductInterface $productFacade,
         ProductBundleToLocaleInterface $localeFacade,
-        ProductBundleToPriceInterface $priceFacade,
-        ProductBundleToUtilQuantityServiceInterface $utilQuantityService
+        ProductBundleToPriceInterface $priceFacade
     ) {
         $this->productBundleQueryContainer = $productBundleQueryContainer;
         $this->priceProductFacade = $priceProductFacade;
         $this->productFacade = $productFacade;
         $this->localeFacade = $localeFacade;
         $this->priceFacade = $priceFacade;
-        $this->utilQuantityService = $utilQuantityService;
     }
 
     /**
@@ -238,52 +229,16 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
         $bundledItems = [];
         foreach ($bundledProducts as $index => $productBundleEntity) {
             $quantity = $productBundleEntity->getQuantity();
-            for ($i = 0; $i < (int)$quantity; $i++) {
+            for ($i = 0; $i < $quantity; $i++) {
                 $bundledItems[] = $this->createBundledItemTransfer(
                     $productBundleEntity,
                     $bundleItemIdentifier,
                     $quoteTransfer
                 );
             }
-
-            if ($this->isQuantityModuloEqual($quantity, 1, 0)) {
-                continue;
-            }
-
-            $deltaQuantity = $this->subtractQuantities($quantity, (int)$quantity);
-
-            $bundledItems[] = $this->createBundledItemTransfer(
-                $productBundleEntity,
-                $bundleItemIdentifier,
-                $quoteTransfer,
-                $deltaQuantity
-            );
         }
 
         return $bundledItems;
-    }
-
-    /**
-     * @param float $firstQuantity
-     * @param float $secondQuantity
-     *
-     * @return float
-     */
-    protected function subtractQuantities(float $firstQuantity, float $secondQuantity): float
-    {
-        return $this->utilQuantityService->subtractQuantities($firstQuantity, $secondQuantity);
-    }
-
-    /**
-     * @param float $dividentQuantity
-     * @param float $divisorQuantity
-     * @param float $remainder
-     *
-     * @return bool
-     */
-    public function isQuantityModuloEqual(float $dividentQuantity, float $divisorQuantity, float $remainder): bool
-    {
-        return $this->utilQuantityService->isQuantityModuloEqual($dividentQuantity, $divisorQuantity, $remainder);
     }
 
     /**
@@ -336,15 +291,13 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
      * @param \Orm\Zed\ProductBundle\Persistence\SpyProductBundle $bundleProductEntity
      * @param string $bundleItemIdentifier
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param float $quantity
      *
      * @return \Generated\Shared\Transfer\ItemTransfer
      */
     protected function createBundledItemTransfer(
         SpyProductBundle $bundleProductEntity,
         $bundleItemIdentifier,
-        QuoteTransfer $quoteTransfer,
-        float $quantity = 1.0
+        QuoteTransfer $quoteTransfer
     ) {
         $bundledConcreteProductEntity = $bundleProductEntity->getSpyProductRelatedByFkBundledProduct();
 
@@ -368,7 +321,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
             ->setIdProductAbstract($productConcreteTransfer->getFkProductAbstract())
             ->setAbstractSku($productConcreteTransfer->getAbstractSku())
             ->setName($localizedProductName)
-            ->setQuantity($quantity)
+            ->setQuantity(1)
             ->setRelatedBundleItemIdentifier($bundleItemIdentifier);
 
         $this->setPrice($itemTransfer, $unitPrice, $quoteTransfer->getPriceMode());
