@@ -24,7 +24,6 @@ use Spryker\Zed\Discount\Business\Persistence\DiscountEntityMapperInterface;
 use Spryker\Zed\Discount\Business\QueryString\SpecificationBuilderInterface;
 use Spryker\Zed\Discount\Business\Voucher\VoucherValidatorInterface;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToStoreFacadeInterface;
-use Spryker\Zed\Discount\Dependency\Service\DiscountToUtilQuantityServiceBridge;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 
 /**
@@ -39,11 +38,6 @@ use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
  */
 class DiscountTest extends Unit
 {
-    /**
-     * @var \SprykerTest\Zed\Discount\DiscountBusinessTester
-     */
-    protected $tester;
-
     /**
      * @var \Spryker\Zed\Discount\Business\Calculator\CalculatorInterface|\PHPUnit\Framework\MockObject\MockObject
      */
@@ -103,10 +97,6 @@ class DiscountTest extends Unit
             ->disableOriginalConstructor()
             ->getMock();
 
-        $utilQuantityService = new DiscountToUtilQuantityServiceBridge(
-            $this->tester->getLocator()->utilQuantity()->service()
-        );
-
         $this->discountMock = $this->getMockBuilder(Discount::class)
             ->setConstructorArgs([
                 $this->discountQueryContainerMock,
@@ -115,7 +105,6 @@ class DiscountTest extends Unit
                 $voucherValidatorMock,
                 $this->discountEntityMapperMock,
                 $this->storeFacadeMock,
-                $utilQuantityService,
             ])->setMethods([
                 'isDiscountApplicable',
                 'hydrateDiscountTransfer',

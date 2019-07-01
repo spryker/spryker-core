@@ -194,11 +194,11 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
      *
      * @param string $sku
      * @param string|null $groupKey
-     * @param float $quantity
+     * @param int $quantity
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function changeItemQuantity($sku, $groupKey = null, float $quantity = 1.0)
+    public function changeItemQuantity($sku, $groupKey = null, $quantity = 1)
     {
         $persistentCartChangeTransfer = $this->createPersistentCartChangeQuantityTransfer();
         $itemTransfer = new ItemTransfer();
@@ -223,11 +223,11 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
      *
      * @param string $sku
      * @param string|null $groupKey
-     * @param float $quantity
+     * @param int $quantity
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function decreaseItemQuantity($sku, $groupKey = null, float $quantity = 1.0)
+    public function decreaseItemQuantity($sku, $groupKey = null, $quantity = 1)
     {
         $persistentCartChangeTransfer = $this->createPersistentCartChangeQuantityTransfer();
         $itemTransfer = new ItemTransfer();
@@ -252,11 +252,11 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
      *
      * @param string $sku
      * @param string|null $groupKey
-     * @param float $quantity
+     * @param int $quantity
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function increaseItemQuantity($sku, $groupKey = null, float $quantity = 1.0)
+    public function increaseItemQuantity($sku, $groupKey = null, $quantity = 1)
     {
         $persistentCartChangeTransfer = $this->createPersistentCartChangeQuantityTransfer();
         $itemTransfer = new ItemTransfer();
