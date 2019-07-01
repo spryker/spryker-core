@@ -59,7 +59,7 @@
     <transfer name="Item">
         <property name="name" type="string" />
         <property name="sku" type="string" />
-        <property name="quantity" type="float" />
+        <property name="quantity" type="int" />
         <property name="unitPrice" type="int" />
     </transfer>
 
