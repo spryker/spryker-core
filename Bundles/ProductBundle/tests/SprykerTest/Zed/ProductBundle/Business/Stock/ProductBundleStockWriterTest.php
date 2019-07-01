@@ -22,8 +22,6 @@ use Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\ProductBundleA
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Stock\ProductBundleStockWriter;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface;
 use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToStockQueryContainerInterface;
-use Spryker\Zed\ProductBundle\Dependency\Service\ProductBundleToUtilQuantityServiceBridge;
-use Spryker\Zed\ProductBundle\Dependency\Service\ProductBundleToUtilQuantityServiceInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
 
 /**
@@ -39,11 +37,6 @@ use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
 class ProductBundleStockWriterTest extends Unit
 {
     public const ID_STORE = 1;
-
-    /**
-     * @var \SprykerTest\Zed\ProductBundle\ProductBundleBusinessTester
-     */
-    protected $tester;
 
     /**
      * @return void
@@ -77,10 +70,10 @@ class ProductBundleStockWriterTest extends Unit
         $this->assertCount(2, $stocks);
 
         $stockTransfer = $stocks[0];
-        $this->assertEquals($relatedProductStock / $bundleQuantity, $stockTransfer->getQuantity());
+        $this->assertSame($relatedProductStock / $bundleQuantity, $stockTransfer->getQuantity());
 
         $stockTransfer = $stocks[1];
-        $this->assertEquals($relatedProductStock / $bundleQuantity, $stockTransfer->getQuantity());
+        $this->assertSame($relatedProductStock / $bundleQuantity, $stockTransfer->getQuantity());
     }
 
     /**
@@ -110,10 +103,10 @@ class ProductBundleStockWriterTest extends Unit
         $this->assertCount(2, $stocks);
 
         $stockTransfer = $stocks[0];
-        $this->assertEquals(0, $stockTransfer->getQuantity());
+        $this->assertSame(0, $stockTransfer->getQuantity());
 
         $stockTransfer = $stocks[1];
-        $this->assertEquals(0, $stockTransfer->getQuantity());
+        $this->assertSame(0, $stockTransfer->getQuantity());
     }
 
     /**
@@ -157,23 +150,9 @@ class ProductBundleStockWriterTest extends Unit
         $productBundleQueryContainerMock->method('getConnection')->willReturn($connectionMock);
 
         return $this->getMockBuilder(ProductBundleStockWriter::class)
-            ->setConstructorArgs([
-                $productBundleQueryContainerMock,
-                $stockQueryContainerMock,
-                $productBundleAvailabilityMock,
-                $storeFacadeMock,
-                $this->createUtilQuantityService(),
-            ])
+            ->setConstructorArgs([$productBundleQueryContainerMock, $stockQueryContainerMock, $productBundleAvailabilityMock, $storeFacadeMock])
             ->setMethods(['findProductStocks', 'findOrCreateProductStockEntity', 'findBundledItemsByIdBundleProduct', 'findProductBundleBySku'])
             ->getMock();
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductBundle\Dependency\Service\ProductBundleToUtilQuantityServiceInterface
-     */
-    protected function createUtilQuantityService(): ProductBundleToUtilQuantityServiceInterface
-    {
-        return new ProductBundleToUtilQuantityServiceBridge($this->tester->getLocator()->utilQuantity()->service());
     }
 
     /**

@@ -9,8 +9,6 @@ namespace SprykerTest\Zed\ProductOptionCartConnector\Business;
 
 use ArrayObject;
 use Codeception\Test\Unit;
-use Generated\Shared\DataBuilder\ItemBuilder;
-use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
@@ -54,54 +52,6 @@ class ProductOptionCartConnectorFacadeTest extends Unit
         parent::setUp();
 
         $this->productOptionCartConnectorFacade = $this->tester->getLocator()->productOptionCartConnector()->facade();
-    }
-
-    /**
-     * @dataProvider changeProductOptionInCartQuantityDataProvider
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param int|float $expectedResult
-     *
-     * @return void
-     */
-    public function testChangeProductOptionInCartQuantity(QuoteTransfer $quoteTransfer, $expectedResult): void
-    {
-        $quoteTransfer = $this->productOptionCartConnectorFacade
-            ->changeProductOptionInCartQuantity($quoteTransfer);
-
-        $resultedItemTransfer = $quoteTransfer->getItems()[0];
-
-        $this->assertSame($expectedResult, $resultedItemTransfer->getProductOptions()[0]->getQuantity());
-    }
-
-    /**
-     * @return array
-     */
-    public function changeProductOptionInCartQuantityDataProvider(): array
-    {
-        return [
-            'int stock' => $this->getDataForChangeProductOptionInCartQuantity(5),
-            'float stock' => $this->getDataForChangeProductOptionInCartQuantity(1.23),
-        ];
-    }
-
-    /**
-     * @param int|float $quantity
-     *
-     * @return array
-     */
-    protected function getDataForChangeProductOptionInCartQuantity($quantity): array
-    {
-        $quoteTransfer = (new QuoteBuilder())->build();
-        $itemTransfer = (new ItemBuilder())
-            ->seed([
-                ItemTransfer::QUANTITY => $quantity,
-            ])
-            ->withProductOption()
-            ->build();
-        $quoteTransfer->addItem($itemTransfer);
-
-        return [$quoteTransfer, $quantity];
     }
 
     /**

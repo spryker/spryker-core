@@ -283,7 +283,7 @@ interface OmsFacadeInterface
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
-     * @return float
+     * @return int
      */
     public function sumReservedProductQuantitiesForSku($sku, ?StoreTransfer $storeTransfer = null);
 
@@ -296,7 +296,7 @@ interface OmsFacadeInterface
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return float
+     * @return int
      */
     public function getOmsReservedProductQuantityForSku($sku, StoreTransfer $storeTransfer);
 
@@ -576,11 +576,11 @@ interface OmsFacadeInterface
      *
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     * @param float $reservationQuantity
+     * @param int $reservationQuantity
      *
      * @return void
      */
-    public function saveReservation(string $sku, StoreTransfer $storeTransfer, float $reservationQuantity): void;
+    public function saveReservation(string $sku, StoreTransfer $storeTransfer, int $reservationQuantity): void;
 
     /**
      * Specification:
