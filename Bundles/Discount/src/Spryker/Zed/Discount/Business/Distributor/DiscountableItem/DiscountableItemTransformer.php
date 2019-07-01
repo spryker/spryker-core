@@ -21,6 +21,7 @@ class DiscountableItemTransformer implements DiscountableItemTransformerInterfac
     public function transformSplittableDiscountableItem(
         DiscountableItemTransformerTransfer $discountableItemTransformerTransfer
     ): DiscountableItemTransformerTransfer {
+        $roundingError = $discountableItemTransformerTransfer->getRoundingError();
         $discountableItemTransfer = $discountableItemTransformerTransfer->getDiscountableItem();
         $discountTransfer = $discountableItemTransformerTransfer->getDiscount();
         $totalDiscountAmount = $discountableItemTransformerTransfer->getTotalDiscountAmount();
@@ -29,14 +30,9 @@ class DiscountableItemTransformer implements DiscountableItemTransformerInterfac
 
         $calculatedDiscountTransfer = $this->createBaseCalculatedDiscountTransfer($discountTransfer);
         $singleItemAmountShare = $discountableItemTransfer->getUnitPrice() / $totalAmount;
-        $roundingError = $discountableItemTransformerTransfer->getRoundingError();
 
-        for ($decreasedQuantity = $quantity; $decreasedQuantity > 0; $decreasedQuantity--) {
-            $singelItemQuantity = min($decreasedQuantity, 1);
-            $itemDiscountAmount = (
-                ($totalDiscountAmount * $singleItemAmountShare * $singelItemQuantity)
-                + $roundingError
-            );
+        for ($i = 0; $i < $quantity; $i++) {
+            $itemDiscountAmount = ($totalDiscountAmount * $singleItemAmountShare) + $roundingError;
             $itemDiscountAmountRounded = (int)round($itemDiscountAmount);
             $roundingError = $itemDiscountAmount - $itemDiscountAmountRounded;
 
@@ -44,7 +40,7 @@ class DiscountableItemTransformer implements DiscountableItemTransformerInterfac
             $distributedDiscountTransfer->setIdDiscount($discountTransfer->getIdDiscount());
             $distributedDiscountTransfer->setSumAmount($itemDiscountAmountRounded);
             $distributedDiscountTransfer->setUnitAmount($itemDiscountAmountRounded);
-            $distributedDiscountTransfer->setQuantity($singelItemQuantity);
+            $distributedDiscountTransfer->setQuantity(1);
 
             $discountableItemTransfer->getOriginalItemCalculatedDiscounts()->append($distributedDiscountTransfer);
         }
