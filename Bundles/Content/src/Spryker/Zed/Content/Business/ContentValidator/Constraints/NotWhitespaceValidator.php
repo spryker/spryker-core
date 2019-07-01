@@ -29,7 +29,7 @@ class NotWhitespaceValidator extends ConstraintValidator
             throw new UnexpectedTypeException($constraint, __NAMESPACE__ . '\NotWhitespace');
         }
 
-        if (empty($trimmedValue) && $trimmedValue != '0') {
+        if (empty($trimmedValue)) {
             $this->context->buildViolation($constraint->message)
                 ->setCode(NotWhitespace::IS_EMPTY_ERROR)
                 ->addViolation();
