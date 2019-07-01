@@ -222,6 +222,8 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Not used anymore.
+     *
      * @return \Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionItemSorterInterface
      */
     public function createProductOptionItemSorter()
