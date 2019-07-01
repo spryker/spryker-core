@@ -409,7 +409,6 @@ class FileManagerFacadeTest extends Unit
         $fileManagerDataTransfers = $this->facade->getFilesByIds($idFiles);
 
         // Assert
-
         $this->assertCount(9, $fileManagerDataTransfers);
 
         foreach ($fileManagerDataTransfers as $fileManagerDataTransfer) {
