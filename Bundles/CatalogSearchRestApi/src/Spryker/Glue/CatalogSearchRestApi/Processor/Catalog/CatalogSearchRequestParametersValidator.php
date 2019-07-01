@@ -66,17 +66,17 @@ class CatalogSearchRequestParametersValidator implements CatalogSearchRequestPar
     }
 
     /**
-     * @param $requestParameterValue
+     * @param mixed $requestParameterValue
      *
      * @return bool
      */
     protected function isValidInteger($requestParameterValue): bool
     {
-        if($requestParameterValue === ''){
+        if ($requestParameterValue === '') {
             return false;
         }
 
-        if(($requestParameterValue && filter_var($requestParameterValue, FILTER_VALIDATE_INT) === false)){
+        if (($requestParameterValue && filter_var($requestParameterValue, FILTER_VALIDATE_INT) === false)) {
             return false;
         }
 
