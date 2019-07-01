@@ -41,7 +41,7 @@ class ItemFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver
-            ->setRequired(ShipmentGroupFormType::FIELD_SHIPMENT_SELECTED_ITEMS)
+            ->setRequired(static::FIELD_SHIPMENT_SELECTED_ITEMS)
             ->setDefault(static::OPTION_ORDER_ITEMS_CHOICES, []);
     }
 
