@@ -58,7 +58,7 @@ class OrderItemSplit implements OrderItemSplitInterface
 
     /**
      * @param int $idSalesOrderItem
-     * @param float $quantityToSplit
+     * @param int $quantityToSplit
      *
      * @return \Generated\Shared\Transfer\ItemSplitResponseTransfer
      */
@@ -116,7 +116,7 @@ class OrderItemSplit implements OrderItemSplitInterface
 
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $salesOrderItem
-     * @param float $quantity
+     * @param int $quantity
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem
      */
@@ -133,7 +133,7 @@ class OrderItemSplit implements OrderItemSplitInterface
 
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $salesOrderItem
-     * @param float $quantity
+     * @param int $quantity
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem
      */
@@ -171,7 +171,7 @@ class OrderItemSplit implements OrderItemSplitInterface
 
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $salesOrderItem
-     * @param float $quantity
+     * @param int $quantity
      *
      * @return void
      */

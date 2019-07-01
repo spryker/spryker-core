@@ -129,7 +129,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaverInterface
      */
-    public function createSalesOrderSaver(): SalesOrderSaverInterface
+    public function createSalesOrderSaver()
     {
         return new SalesOrderSaver(
             $this->getCountryFacade(),
@@ -213,7 +213,6 @@ class SalesBusinessFactory extends AbstractBusinessFactory
         return new OrderHydrator(
             $this->getQueryContainer(),
             $this->getOmsFacade(),
-            $this->getUtilPriceService(),
             $this->getHydrateOrderPlugins()
         );
     }
@@ -226,7 +225,6 @@ class SalesBusinessFactory extends AbstractBusinessFactory
         return new OrderHydratorWithMultiShippingAddress(
             $this->getQueryContainer(),
             $this->getOmsFacade(),
-            $this->getUtilPriceService(),
             $this->createSalesOrderItemGrouper(),
             $this->getHydrateOrderPlugins()
         );
@@ -324,7 +322,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
      */
     public function createSalesOrderItemGrouper(): SalesOrderItemGrouperInterface
     {
-        return new SalesOrderItemGrouper($this->getUtilQuantityService());
+        return new SalesOrderItemGrouper();
     }
 
     /**
@@ -432,14 +430,6 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Sales\Dependency\Service\SalesToUtilPriceServiceInterface
-     */
-    public function getUtilPriceService(): SalesToUtilPriceServiceInterface
-    {
-        return $this->getProvidedDependency(SalesDependencyProvider::SERVICE_UTIL_PRICE);
-    }
-
-    /**
      * @deprecated Exists for Backward Compatibility reasons only. Use $this->createOrderHydratorWithMultiShippingAddress() instead.
      *
      * @return \Spryker\Zed\Sales\Business\StrategyResolver\OrderHydratorStrategyResolverInterface
@@ -457,14 +447,6 @@ class SalesBusinessFactory extends AbstractBusinessFactory
         };
 
         return new OrderHydratorStrategyResolver($strategyContainer);
-    }
-
-    /**
-     * @return \Spryker\Zed\Sales\Dependency\Service\SalesToUtilQuantityServiceInterface
-     */
-    public function getUtilQuantityService(): SalesToUtilQuantityServiceInterface
-    {
-        return $this->getProvidedDependency(SalesDependencyProvider::SERVICE_UTIL_QUANTITY);
     }
 
     /**

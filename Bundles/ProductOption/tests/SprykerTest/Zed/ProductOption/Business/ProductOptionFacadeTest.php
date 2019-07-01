@@ -88,179 +88,6 @@ class ProductOptionFacadeTest extends Unit
     }
 
     /**
-     * @dataProvider hydrateDataProvider
-     *
-     * @param int|float $quantity
-     * @param int $expectedResult
-     *
-     * @return void
-     */
-    public function testHydrateShouldCorrectlyCalculateUnitPrice($quantity, int $expectedResult): void
-    {
-        $orderTransfer = $this->prepareOrderTransfer($quantity);
-
-        $hydratedOrderTransfer = $this->createProductOptionFacade()
-            ->hydrateSalesOrderProductOptions($orderTransfer);
-
-        $productOptionTransfer = $hydratedOrderTransfer->getItems()[0]->getProductOptions()[0];
-        $this->assertEquals($expectedResult, $productOptionTransfer->getUnitPrice());
-    }
-
-    /**
-     * @dataProvider hydrateDataProvider
-     *
-     * @param int|float $quantity
-     * @param int $expectedResult
-     *
-     * @return void
-     */
-    public function testHydrateShouldCorrectlyCalculateUnitGrossPrice($quantity, int $expectedResult): void
-    {
-        $orderTransfer = $this->prepareOrderTransfer($quantity);
-
-        $hydratedOrderTransfer = $this->createProductOptionFacade()
-            ->hydrateSalesOrderProductOptions($orderTransfer);
-
-        $productOptionTransfer = $hydratedOrderTransfer->getItems()[0]->getProductOptions()[0];
-        $this->assertEquals($expectedResult, $productOptionTransfer->getUnitGrossPrice());
-    }
-
-    /**
-     * @dataProvider hydrateDataProvider
-     *
-     * @param int|float $quantity
-     * @param int $expectedResult
-     *
-     * @return void
-     */
-    public function testHydrateShouldCorrectlyCalculateUnitNetPrice($quantity, int $expectedResult): void
-    {
-        $orderTransfer = $this->prepareOrderTransfer($quantity);
-
-        $hydratedOrderTransfer = $this->createProductOptionFacade()
-            ->hydrateSalesOrderProductOptions($orderTransfer);
-
-        $productOptionTransfer = $hydratedOrderTransfer->getItems()[0]->getProductOptions()[0];
-        $this->assertEquals($expectedResult, $productOptionTransfer->getUnitNetPrice());
-    }
-
-    /**
-     * @dataProvider hydrateDataProvider
-     *
-     * @param int|float $quantity
-     * @param int $expectedResult
-     *
-     * @return void
-     */
-    public function testHydrateShouldCorrectlyCalculateUnitDiscountAmountAggregation($quantity, int $expectedResult): void
-    {
-        $orderTransfer = $this->prepareOrderTransfer($quantity);
-
-        $hydratedOrderTransfer = $this->createProductOptionFacade()
-            ->hydrateSalesOrderProductOptions($orderTransfer);
-
-        $productOptionTransfer = $hydratedOrderTransfer->getItems()[0]->getProductOptions()[0];
-        $this->assertEquals($expectedResult, $productOptionTransfer->getUnitDiscountAmountAggregation());
-    }
-
-    /**
-     * @return array
-     */
-    public function hydrateDataProvider(): array
-    {
-        return [
-            'int data' => [2, 50],
-            'float data' => [0.5, 200],
-        ];
-    }
-
-    /**
-     * @dataProvider hydrateDataProvider
-     *
-     * @param int|float $quantity
-     * @param int $expectedResult
-     *
-     * @return void
-     */
-    public function testHydrateShouldCorrectlyCalculateUnitTaxAmount($quantity, int $expectedResult): void
-    {
-        $orderTransfer = $this->prepareOrderTransfer($quantity);
-
-        $hydratedOrderTransfer = $this->createProductOptionFacade()
-            ->hydrateSalesOrderProductOptions($orderTransfer);
-
-        $productOptionTransfer = $hydratedOrderTransfer->getItems()[0]->getProductOptions()[0];
-        $this->assertEquals($expectedResult, $productOptionTransfer->getUnitTaxAmount());
-    }
-
-    /**
-     * @param int|float $quantity
-     *
-     * @return \Generated\Shared\Transfer\OrderTransfer
-     */
-    protected function prepareOrderTransfer($quantity): OrderTransfer
-    {
-        $salesEntity = new SpySalesOrder();
-        $salesEntity->setOrderReference('test');
-        $salesEntity->setFkLocale(1);
-        $billingAddressTransfer = (new AddressBuilder())->seed([
-            AddressTransfer::EMAIL => 'test@example.com',
-            AddressTransfer::FK_COUNTRY => 1,
-        ])->build();
-        $salesOrderAddressBilling = new SpySalesOrderAddress();
-        $salesOrderAddressBilling->fromArray($billingAddressTransfer->toArray());
-        $salesOrderAddressBilling->save();
-        $salesEntity->setFkSalesOrderAddressBilling($salesOrderAddressBilling->getIdSalesOrderAddress());
-
-        $shippingAddressTransfer = (new AddressBuilder())->seed([
-            AddressTransfer::EMAIL => 'test@example.com',
-            AddressTransfer::FK_COUNTRY => 1,
-        ])->build();
-        $salesOrderAddressShipping = new SpySalesOrderAddress();
-        $salesOrderAddressShipping->fromArray($shippingAddressTransfer->toArray());
-        $salesOrderAddressShipping->save();
-        $salesEntity->setFkSalesOrderAddressShipping($salesOrderAddressShipping->getIdSalesOrderAddress());
-        $salesEntity->save();
-
-        $omsOrderItemStateEntity = new SpyOmsOrderItemState();
-        $omsOrderItemStateEntity->setName('test');
-        $omsOrderItemStateEntity->save();
-
-        $salesOrderItem = new SpySalesOrderItem();
-        $itemTransfer = (new ItemBuilder())->seed([
-            ItemTransfer::QUANTITY => $quantity,
-        ])->build();
-        $salesOrderItem->fromArray($itemTransfer->toArray());
-        $salesOrderItem->setFkSalesOrder($salesEntity->getIdSalesOrder());
-        $salesOrderItem->setFkOmsOrderItemState(1);
-        $salesOrderItem->setGrossPrice(100);
-        $salesOrderItem->setNetPrice(100);
-        $salesOrderItem->setFkOmsOrderItemState($omsOrderItemStateEntity->getIdOmsOrderItemState());
-        $salesOrderItem->save();
-
-        $salesProductOption = new SpySalesOrderItemOption();
-        $salesProductOption->setPrice(100);
-        $salesProductOption->setGrossPrice(100);
-        $salesProductOption->setNetPrice(100);
-        $salesProductOption->setDiscountAmountAggregation(100);
-        $salesProductOption->setTaxAmount(100);
-        $salesProductOption->setGroupName('test');
-        $salesProductOption->setSku('test-sku');
-        $salesProductOption->setTaxRate(1);
-        $salesProductOption->setValue('test');
-        $salesProductOption->setFkSalesOrderItem($salesOrderItem->getIdSalesOrderItem());
-        $salesProductOption->save();
-
-        $orderTransfer = new OrderTransfer();
-        $orderTransfer->setIdSalesOrder($salesEntity->getIdSalesOrder());
-        $itemTransfer = new ItemTransfer();
-        $itemTransfer->fromArray($salesOrderItem->toArray(), true);
-        $orderTransfer->addItem($itemTransfer);
-
-        return $orderTransfer;
-    }
-
-    /**
      * @return void
      */
     public function testSaveProductOptionGroupUpdatesCurrencyPrices()
@@ -702,7 +529,46 @@ class ProductOptionFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCalculateTaxRateForProductOptionShouldSetRateToProvidedOptions(): void
+    public function testCalculateTaxRateForProductOptionShouldSetRateToProvidedOptions()
+    {
+        $iso2Code = 'DE';
+        $taxRate = 19;
+
+        $productOptionFacade = $this->createProductOptionFacade();
+
+        $productOptionValueTransfer = $this->createProductOptionValueTransfer();
+        $productOptionGroupTransfer = $this->createProductOptionGroupTransfer($productOptionValueTransfer);
+        $productOptionGroupTransfer->addProductOptionValue($productOptionValueTransfer);
+
+        $taxSetEntity = $this->tester->createTaxSet($iso2Code, $taxRate);
+
+        $productOptionGroupTransfer->setFkTaxSet($taxSetEntity->getIdTaxSet());
+
+        $productOptionFacade->saveProductOptionGroup($productOptionGroupTransfer);
+
+        $quoteTransfer = new QuoteTransfer();
+        $quoteTransfer->setShippingAddress($this->tester->createAddressTransfer($iso2Code));
+
+        $productOptionTransfer = new ProductOptionTransfer();
+        $productOptionTransfer->setIdProductOptionValue($productOptionValueTransfer->getIdProductOptionValue());
+
+        $itemTransfer = new ItemTransfer();
+        $itemTransfer->addProductOption($productOptionTransfer);
+
+        $quoteTransfer->addItem($itemTransfer);
+
+        $productOptionFacade->calculateProductOptionTaxRate($quoteTransfer);
+
+        $itemTransfer = $quoteTransfer->getItems()[0];
+        $productOptionTransfer = $itemTransfer->getProductOptions()[0];
+
+        $this->assertEquals($taxRate, $productOptionTransfer->getTaxRate());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCalculateTaxRateForProductOptionShouldSetRateToProvidedOptionsWithItemLevelShipments(): void
     {
         $iso2Code = 'DE';
         $taxRate = 19;

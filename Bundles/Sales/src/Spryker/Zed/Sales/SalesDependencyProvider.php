@@ -17,8 +17,6 @@ use Spryker\Zed\Sales\Dependency\Facade\SalesToMoneyBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToSequenceNumberBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToUserBridge;
-use Spryker\Zed\Sales\Dependency\Service\SalesToUtilPriceServiceBridge;
-use Spryker\Zed\Sales\Dependency\Service\SalesToUtilQuantityServiceBridge;
 use Spryker\Zed\Sales\Dependency\Service\SalesToUtilSanitizeBridge;
 
 /**
@@ -49,9 +47,6 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_LOCALE = 'LOCALE_FACADE';
     public const FACADE_CALCULATION = 'FACADE_CALCULATION';
 
-    public const SERVICE_UTIL_PRICE = 'SERVICE_UTIL_PRICE';
-    public const SERVICE_UTIL_QUANTITY = 'SERVICE_UTIL_QUANTITY';
-
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -70,8 +65,6 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCustomerFacade($container);
         $container = $this->addOrderItemExpanderPreSavePlugins($container);
         $container = $this->addItemTransformerStrategyPlugins($container);
-        $container = $this->addUtilPriceService($container);
-        $container = $this->addUtiQuantityService($container);
 
         return $container;
     }
@@ -91,39 +84,6 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addUtilSanitizeService($container);
         $container = $this->addCustomerFacade($container);
         $container = $this->addSalesTablePlugins($container);
-        $container = $this->addUtiQuantityService($container);
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addUtiQuantityService(Container $container): Container
-    {
-        $container->set(static::SERVICE_UTIL_QUANTITY, function (Container $container) {
-            return new SalesToUtilQuantityServiceBridge(
-                $container->getLocator()->utilQuantity()->service()
-            );
-        });
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addUtilPriceService(Container $container): Container
-    {
-        $container[static::SERVICE_UTIL_PRICE] = function (Container $container) {
-            return new SalesToUtilPriceServiceBridge(
-                $container->getLocator()->utilPrice()->service()
-            );
-        };
 
         return $container;
     }
