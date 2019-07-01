@@ -20,7 +20,7 @@ class ShipmentMethodCheckoutDataValidatorPlugin extends AbstractPlugin implement
 {
     /**
      * {@inheritdoc}
-     * - Verifies if shipmentMethod is valid.
+     * - Verifies if shipment method is valid.
      * - Returns CheckoutResponseTransfer with error if any check was failed.
      *
      * @api

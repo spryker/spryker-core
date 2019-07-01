@@ -33,7 +33,7 @@ interface ShipmentsRestApiFacadeInterface
 
     /**
      * Specification:
-     * - Verifies if shipmentMethod is valid.
+     * - Verifies if shipment method is valid.
      * - Returns CheckoutResponseTransfer with error if any check was failed.
      *
      * @api
