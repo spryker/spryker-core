@@ -68,9 +68,7 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
      */
     public function getMethods()
     {
-        return $this->getFactory()
-            ->createMethodReader()
-            ->getShipmentMethodTransfers();
+        return $this->getRepository()->getActiveShipmentMethods();
     }
 
     /**
@@ -85,8 +83,8 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
     public function createMethod(ShipmentMethodTransfer $methodTransfer): ?int
     {
         return $this->getFactory()
-            ->createMethodWriter()
-            ->create($methodTransfer);
+            ->createShipmentMethodCreator()
+            ->createShipmentMethod($methodTransfer);
     }
 
     /**
@@ -100,9 +98,7 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
      */
     public function findMethodById($idShipmentMethod)
     {
-        return $this->getFactory()
-            ->createMethodReader()
-            ->findShipmentMethodTransferById($idShipmentMethod);
+        return $this->getRepository()->findShipmentMethodByIdWithPricesAndCarrier($idShipmentMethod);
     }
 
     /**
@@ -186,9 +182,7 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
      */
     public function hasMethod($idMethod): bool
     {
-        return $this->getFactory()
-            ->createMethodReader()
-            ->hasMethod($idMethod);
+        return $this->getRepository()->hasShipmentMethodByIdShipmentMethod($idMethod);
     }
 
     /**
@@ -203,8 +197,8 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
     public function deleteMethod($idMethod): bool
     {
         return $this->getFactory()
-            ->createMethodWriter()
-            ->deleteMethod($idMethod);
+            ->createShipmentMethodDeleter()
+            ->deleteShipmentMethod($idMethod);
     }
 
     /**
@@ -219,8 +213,8 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
     public function updateMethod(ShipmentMethodTransfer $methodTransfer)
     {
         return $this->getFactory()
-            ->createMethodWriter()
-            ->updateMethod($methodTransfer);
+            ->createShipmentMethodUpdater()
+            ->updateShipmentMethod($methodTransfer);
     }
 
     /**
@@ -317,7 +311,7 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
      */
     public function isShipmentMethodActive($idShipmentMethod)
     {
-        return $this->getFactory()->createMethodReader()->isShipmentMethodActive($idShipmentMethod);
+        return $this->getRepository()->hasActiveShipmentMethodByIdShipmentMethod($idShipmentMethod);
     }
 
     /**

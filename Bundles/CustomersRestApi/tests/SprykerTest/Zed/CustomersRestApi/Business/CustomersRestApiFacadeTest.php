@@ -91,7 +91,8 @@ class CustomersRestApiFacadeTest extends Unit
         $actualQuote = $customersRestApiFacade->mapAddressesToQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);
 
         $this->tester->assertBillingAddressMapping($restCheckoutRequestAttributesTransfer, $actualQuote);
-        $this->tester->assertShippingAddressMapping($restCheckoutRequestAttributesTransfer, $actualQuote);    }
+        $this->tester->assertShippingAddressMapping($restCheckoutRequestAttributesTransfer, $actualQuote);
+    }
 
     /**
      * @return void
