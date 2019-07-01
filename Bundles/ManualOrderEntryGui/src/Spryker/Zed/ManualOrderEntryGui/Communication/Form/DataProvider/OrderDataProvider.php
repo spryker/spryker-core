@@ -26,8 +26,6 @@ class OrderDataProvider implements FormDataProviderInterface
      */
     public function getOptions($dataTransfer)
     {
-        return [
-            'csrf_protection' => false,
-        ];
+        return [];
     }
 }

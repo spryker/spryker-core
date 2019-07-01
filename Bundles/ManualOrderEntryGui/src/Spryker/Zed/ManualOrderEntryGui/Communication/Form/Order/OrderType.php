@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Form\Order;
 
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * @method \Spryker\Zed\ManualOrderEntryGui\Communication\ManualOrderEntryGuiCommunicationFactory getFactory()
@@ -23,5 +24,15 @@ class OrderType extends AbstractType
     public function getBlockPrefix(): string
     {
         return static::TYPE_NAME;
+    }
+
+    /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     *
+     * @return void
+     */
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setDefault('csrf_protection', true);
     }
 }
