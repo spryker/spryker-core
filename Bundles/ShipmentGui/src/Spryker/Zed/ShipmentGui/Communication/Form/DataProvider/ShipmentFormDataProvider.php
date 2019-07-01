@@ -87,7 +87,7 @@ class ShipmentFormDataProvider
     {
         $idSalesShipment = $shipmentTransfer->getIdSalesShipment();
         if ($idSalesShipment !== null) {
-            $shipmentTransfer = $this->findShipmentById($idSalesShipment);
+            $shipmentTransfer = $this->shipmentFacade->findShipmentById($idSalesShipment);
         }
 
         $orderTransfer = $this->salesFacade->findOrderByIdSalesOrder($idSalesOrder);
@@ -106,16 +106,6 @@ class ShipmentFormDataProvider
         }
 
         return $shipmentTransfer;
-    }
-
-    /**
-     * @param string $idSalesShipment
-     *
-     * @return \Generated\Shared\Transfer\ShipmentTransfer|null
-     */
-    public function findShipmentById(string $idSalesShipment): ?ShipmentTransfer
-    {
-        return $this->shipmentFacade->findShipmentById($idSalesShipment);
     }
 
     /**

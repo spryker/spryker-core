@@ -81,13 +81,19 @@ class ShipmentMethodFormType extends AbstractType
     protected function createStringToIntCallbackTransformer(): CallbackTransformer
     {
         return new CallbackTransformer(
-            function ($id) {
+            function (?string $id): ?string {
+                if (empty($id)) {
+                    return null;
+                }
+
                 return $id;
             },
-            function ($idString) {
-                $idString = (int)$idString;
+            function (?string $idString): ?int {
+                if (empty($idString)) {
+                    return null;
+                }
 
-                return $idString === 0 ? null : $idString;
+                return (int)$idString;
             }
         );
     }
