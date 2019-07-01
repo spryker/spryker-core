@@ -74,7 +74,6 @@
     </transfer>
 
     <transfer name="Customer">
-        <property name="idCustomer" type="int"/>
         <property name="companyUserTransfer" type="CompanyUser"/>
         <property name="customerReference" type="string" />
     </transfer>
