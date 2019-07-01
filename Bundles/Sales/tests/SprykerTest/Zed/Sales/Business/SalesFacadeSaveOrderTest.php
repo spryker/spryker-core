@@ -9,13 +9,6 @@ namespace SprykerTest\Zed\Sales\Business;
 
 use Codeception\Test\Unit;
 use DateTime;
-use Generated\Shared\DataBuilder\AddressBuilder;
-use Generated\Shared\DataBuilder\CurrencyBuilder;
-use Generated\Shared\DataBuilder\CustomerBuilder;
-use Generated\Shared\DataBuilder\ExpenseBuilder;
-use Generated\Shared\DataBuilder\ItemBuilder;
-use Generated\Shared\DataBuilder\QuoteBuilder;
-use Generated\Shared\DataBuilder\TotalsBuilder;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
