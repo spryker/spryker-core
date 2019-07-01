@@ -123,7 +123,7 @@ var ContentItemDialog = function(
                         elementForInsert = '<p>' + elementForInsert + '</p>'
                     }
                 }
-                console.log($clickedNode);
+
                 this.context.invoke('pasteHTML', elementForInsert);
                 this.removeUnecessaryLines();
             };
