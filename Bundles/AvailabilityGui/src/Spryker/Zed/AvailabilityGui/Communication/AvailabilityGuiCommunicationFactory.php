@@ -14,7 +14,6 @@ use Spryker\Zed\AvailabilityGui\Communication\Form\DataProvider\AvailabilityStoc
 use Spryker\Zed\AvailabilityGui\Communication\Table\AvailabilityAbstractTable;
 use Spryker\Zed\AvailabilityGui\Communication\Table\AvailabilityTable;
 use Spryker\Zed\AvailabilityGui\Communication\Table\BundledProductAvailabilityTable;
-use Spryker\Zed\AvailabilityGui\Dependency\Service\AvailabilityGuiToUtilQuantityServiceInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
@@ -39,8 +38,7 @@ class AvailabilityGuiCommunicationFactory extends AbstractCommunicationFactory
         return new AvailabilityAbstractTable(
             $queryProductAbstractAvailabilityGui,
             $storeTransfer,
-            $this->getOmsFacade(),
-            $this->getUtilQuantityService()
+            $this->getOmsFacade()
         );
     }
 
@@ -118,6 +116,8 @@ class AvailabilityGuiCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createAvailabilityStockForm($idProduct, $sku, StoreTransfer $storeTransfer)
     {
+        $availabilityForm = new AvailabilityStockForm();
+
         $availabilityGuiStockFormDataProvider = $this->createAvailabilityGuiStockFormDataProvider($storeTransfer);
 
         return $this->getFormFactory()->create(
@@ -191,13 +191,5 @@ class AvailabilityGuiCommunicationFactory extends AbstractCommunicationFactory
     protected function getOmsFacade()
     {
         return $this->getProvidedDependency(AvailabilityGuiDependencyProvider::FACADE_OMS);
-    }
-
-    /**
-     * @return \Spryker\Zed\AvailabilityGui\Dependency\Service\AvailabilityGuiToUtilQuantityServiceInterface
-     */
-    public function getUtilQuantityService(): AvailabilityGuiToUtilQuantityServiceInterface
-    {
-        return $this->getProvidedDependency(AvailabilityGuiDependencyProvider::SERVICE_UTIL_QUANTITY);
     }
 }

@@ -33,7 +33,7 @@ class SalesSplitFacade extends AbstractFacade implements SalesSplitFacadeInterfa
      * @api
      *
      * @param int $idSalesOrderItem
-     * @param float $quantity
+     * @param int $quantity
      *
      * @return \Generated\Shared\Transfer\ItemSplitResponseTransfer
      */

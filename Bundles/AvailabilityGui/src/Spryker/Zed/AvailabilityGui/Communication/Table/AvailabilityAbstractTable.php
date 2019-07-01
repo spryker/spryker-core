@@ -16,7 +16,6 @@ use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Availability\Persistence\AvailabilityQueryContainer;
 use Spryker\Zed\AvailabilityGui\Dependency\Facade\AvailabilityGuiToOmsFacadeInterface;
-use Spryker\Zed\AvailabilityGui\Dependency\Service\AvailabilityGuiToUtilQuantityServiceInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
@@ -46,26 +45,18 @@ class AvailabilityAbstractTable extends AbstractTable
     protected $omsFacade;
 
     /**
-     * @var \Spryker\Zed\AvailabilityGui\Dependency\Service\AvailabilityGuiToUtilQuantityServiceInterface
-     */
-    protected $utilQuantityService;
-
-    /**
      * @param \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $queryProductAbstractAvailabilityGui
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param \Spryker\Zed\AvailabilityGui\Dependency\Facade\AvailabilityGuiToOmsFacadeInterface $omsFacade
-     * @param \Spryker\Zed\AvailabilityGui\Dependency\Service\AvailabilityGuiToUtilQuantityServiceInterface $utilQuantityService
      */
     public function __construct(
         SpyProductAbstractQuery $queryProductAbstractAvailabilityGui,
         StoreTransfer $storeTransfer,
-        AvailabilityGuiToOmsFacadeInterface $omsFacade,
-        AvailabilityGuiToUtilQuantityServiceInterface $utilQuantityService
+        AvailabilityGuiToOmsFacadeInterface $omsFacade
     ) {
         $this->queryProductAbstractAvailability = $queryProductAbstractAvailabilityGui;
         $this->storeTransfer = $storeTransfer;
         $this->omsFacade = $omsFacade;
-        $this->utilQuantityService = $utilQuantityService;
     }
 
     /**
@@ -175,7 +166,7 @@ class AvailabilityAbstractTable extends AbstractTable
     }
 
     /**
-     * @param float $quantity
+     * @param int $quantity
      * @param bool $isNeverOutOfStock
      *
      * @return string
@@ -226,7 +217,7 @@ class AvailabilityAbstractTable extends AbstractTable
     /**
      * @param string $reservationQuantity
      *
-     * @return float
+     * @return int
      */
     protected function calculateReservation($reservationQuantity)
     {
@@ -239,7 +230,7 @@ class AvailabilityAbstractTable extends AbstractTable
     /**
      * @param array $reservationItems
      *
-     * @return float
+     * @return int
      */
     protected function getReservationUniqueValue($reservationItems)
     {
@@ -252,24 +243,10 @@ class AvailabilityAbstractTable extends AbstractTable
 
             [$sku, $quantity] = $itemParts;
 
-            $reservation = $this->sumQuantities($reservation, (float)$quantity);
-            $reservation = $this->sumQuantities(
-                $reservation,
-                $this->omsFacade->getReservationsFromOtherStores($sku, $this->storeTransfer)
-            );
+            $reservation += (int)$quantity;
+            $reservation += $this->omsFacade->getReservationsFromOtherStores($sku, $this->storeTransfer);
         }
 
         return $reservation;
-    }
-
-    /**
-     * @param float $firstQuantity
-     * @param float $secondQuantity
-     *
-     * @return float
-     */
-    protected function sumQuantities(float $firstQuantity, float $secondQuantity): float
-    {
-        return $this->utilQuantityService->sumQuantities($firstQuantity, $secondQuantity);
     }
 }

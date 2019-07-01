@@ -36,10 +36,8 @@ class ProductConcreteResolver implements ProductConcreteResolverInterface
      * @param \Spryker\Client\QuickOrder\Dependency\Client\QuickOrderToProductStorageClientInterface $productStorageClient
      * @param \Spryker\Client\QuickOrder\Dependency\Client\QuickOrderToLocaleClientInterface $localeClient
      */
-    public function __construct(
-        QuickOrderToProductStorageClientInterface $productStorageClient,
-        QuickOrderToLocaleClientInterface $localeClient
-    ) {
+    public function __construct(QuickOrderToProductStorageClientInterface $productStorageClient, QuickOrderToLocaleClientInterface $localeClient)
+    {
         $this->productStorageClient = $productStorageClient;
         $this->localeClient = $localeClient;
     }
