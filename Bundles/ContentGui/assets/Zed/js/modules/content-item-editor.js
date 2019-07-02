@@ -54,7 +54,7 @@ var ContentItemEditor = function(options) {
                 'editContentItem': ['editWidget', 'editContentItem', 'removeContentItem']
             },
             callbacks: {
-                onKeydown: this.onKeydownHandler
+                onKeyup: this.onKeyupHandler
             },
             dialogsInBody: true
         };
@@ -110,7 +110,7 @@ var ContentItemEditor = function(options) {
         }
     };
 
-    this.onKeydownHandler = function (event) {
+    this.onKeyupHandler = function (event) {
         var pressedKey = event.originalEvent.key;
 
         if (pressedKey !== 'Enter') {
@@ -122,8 +122,7 @@ var ContentItemEditor = function(options) {
         var $contentItem = $($editorRange.sc).find('.js-content-item-editor');
 
         if ($contentItem.length) {
-            $editorRange.deleteContents();
-            $editor.summernote('pasteHTML', ' ');
+            $($editorRange.sc).html('<br>');
         }
     };
 
