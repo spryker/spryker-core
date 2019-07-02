@@ -119,14 +119,8 @@ class ShipmentFormDataProvider
         ShipmentTransfer $shipmentTransfer
     ): ShipmentTransfer {
         $shipmentAddressTransfer = $shipmentTransfer->getShippingAddress();
-        $orderShipmentAddressTransfer = $orderTransfer->getShippingAddress();
-
-        if ($shipmentAddressTransfer === null && $orderShipmentAddressTransfer === null) {
-            return $shipmentTransfer;
-        }
-
-        if ($shipmentAddressTransfer === null && $orderShipmentAddressTransfer !== null) {
-            $shipmentAddressTransfer = $orderShipmentAddressTransfer;
+        if ($shipmentAddressTransfer === null) {
+            $shipmentAddressTransfer = $this->findOrderItemShipmentAddressTransfer($orderTransfer);
         }
 
         if ($shipmentAddressTransfer !== null) {
@@ -298,5 +292,29 @@ class ShipmentFormDataProvider
         }
 
         return $combinedSalutation;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer|null
+     */
+    protected function findOrderItemShipmentAddressTransfer(OrderTransfer $orderTransfer): ?AddressTransfer
+    {
+        foreach ($orderTransfer->getItems() as $itemTransfer) {
+            $shipmentTransfer = $itemTransfer->getShipment();
+            if ($shipmentTransfer === null) {
+                continue;
+            }
+
+            $shipmentAddressTransfer = $shipmentTransfer->getShippingAddress();
+            if ($shipmentAddressTransfer === null) {
+                continue;
+            }
+
+            return $shipmentAddressTransfer;
+        }
+
+        return null;
     }
 }
