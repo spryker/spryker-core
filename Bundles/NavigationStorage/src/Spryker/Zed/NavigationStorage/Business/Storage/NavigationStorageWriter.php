@@ -152,7 +152,7 @@ class NavigationStorageWriter implements NavigationStorageWriterInterface
     protected function getNavigationTreeTransfer(array $navigationIds)
     {
         $navigationTrees = [];
-        $localeNames = $this->store->getLocales();
+        $localeNames = $this->getAllLocaleNames();
         $locales = $this->queryContainer->queryLocalesWithLocaleNames($localeNames)->find()->getData();
         foreach ($navigationIds as $navigationId) {
             $navigationTransfer = new NavigationTransfer();
@@ -164,6 +164,21 @@ class NavigationStorageWriter implements NavigationStorageWriterInterface
         }
 
         return $navigationTrees;
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function getAllLocaleNames(): array
+    {
+        $localeNames = [];
+        foreach ($this->store->getAllowedStores() as $storeName) {
+            foreach ($this->store->getLocalesPerStore($storeName) as $localeName) {
+                $localeNames[$localeName] = $localeName;
+            }
+        }
+
+        return array_values($localeNames);
     }
 
     /**

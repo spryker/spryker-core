@@ -139,7 +139,7 @@ class CategoryTreeStorage implements CategoryTreeStorageInterface
      */
     protected function getCategoryTrees()
     {
-        $localeNames = $this->store->getLocales();
+        $localeNames = $this->getAllLocaleNames();
         $locales = $this->queryContainer->queryLocalesWithLocaleNames($localeNames)->find();
 
         $rootCategory = $this->queryContainer->queryCategoryRoot()->findOne();
@@ -152,6 +152,21 @@ class CategoryTreeStorage implements CategoryTreeStorageInterface
         $this->enableInstancePooling();
 
         return $categoryNodeTree;
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function getAllLocaleNames(): array
+    {
+        $localeNames = [];
+        foreach ($this->store->getAllowedStores() as $storeName) {
+            foreach ($this->store->getLocalesPerStore($storeName) as $localeName) {
+                $localeNames[$localeName] = $localeName;
+            }
+        }
+
+        return array_values($localeNames);
     }
 
     /**

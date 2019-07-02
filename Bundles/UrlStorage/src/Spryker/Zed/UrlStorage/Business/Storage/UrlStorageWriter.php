@@ -68,12 +68,24 @@ class UrlStorageWriter implements UrlStorageWriterInterface
      */
     public function publish(array $urlIds)
     {
+        $localeNames = $this->getAllLocaleNames();
         $urls = $this->findUrls($urlIds);
-        $storeTransfer = $this->storeFacade->getCurrentStore();
-        $locales = $storeTransfer->getAvailableLocaleIsoCodes();
-        $urlStorageTransfers = $this->mapUrlsToUrlStorageTransfers($urls, $locales);
+        $urlStorageTransfers = $this->mapUrlsToUrlStorageTransfers($urls, $localeNames);
         $urlStorageEntities = $this->findUrlStorageEntitiesByIds($urlIds);
         $this->storeData($urlStorageTransfers, $urlStorageEntities);
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function getAllLocaleNames(): array
+    {
+        $localeNames = [];
+        foreach ($this->storeFacade->getAllStores() as $storeTransfer) {
+            $localeNames = array_merge($localeNames, $storeTransfer->getAvailableLocaleIsoCodes());
+        }
+
+        return array_unique($localeNames);
     }
 
     /**

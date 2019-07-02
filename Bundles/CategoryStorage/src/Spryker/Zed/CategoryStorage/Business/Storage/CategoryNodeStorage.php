@@ -169,7 +169,7 @@ class CategoryNodeStorage implements CategoryNodeStorageInterface
      */
     protected function getCategoryNodes(array $categoryNodeIds)
     {
-        $localeNames = $this->store->getLocales();
+        $localeNames = $this->getAllLocaleNames();
         $locales = $this->queryContainer->queryLocalesWithLocaleNames($localeNames)->find();
 
         $categoryNodeTree = [];
@@ -185,6 +185,21 @@ class CategoryNodeStorage implements CategoryNodeStorageInterface
         $this->enableInstancePooling();
 
         return $categoryNodeTree;
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function getAllLocaleNames(): array
+    {
+        $localeNames = [];
+        foreach ($this->store->getAllowedStores() as $storeName) {
+            foreach ($this->store->getLocalesPerStore($storeName) as $localeName) {
+                $localeNames[$localeName] = $localeName;
+            }
+        }
+
+        return array_values($localeNames);
     }
 
     /**
