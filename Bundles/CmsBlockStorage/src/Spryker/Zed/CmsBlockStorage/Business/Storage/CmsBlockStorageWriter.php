@@ -199,7 +199,7 @@ class CmsBlockStorageWriter implements CmsBlockStorageWriterInterface
     protected function pairCmsBlockEntitiesWithCmsBlockStorageEntities(array $cmsBlockEntities, array $cmsBlockStorageEntities)
     {
         $mappedCmsBlockStorageEntities = $this->mapCmsBlockStorageEntities($cmsBlockStorageEntities);
-        $localeNames = $this->store->getLocales();
+        $localeNames = $this->getAllLocaleNames();
 
         $pairs = [];
         foreach ($cmsBlockEntities as $cmsBlockEntity) {
@@ -216,6 +216,21 @@ class CmsBlockStorageWriter implements CmsBlockStorageWriterInterface
         $pairs = $this->pairRemainingCmsBlockStorageEntities($mappedCmsBlockStorageEntities, $pairs);
 
         return $pairs;
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function getAllLocaleNames(): array
+    {
+        $localeNames = [];
+        foreach ($this->store->getAllowedStores() as $storeName) {
+            foreach ($this->store->getLocalesPerStore($storeName) as $localeName) {
+                $localeNames[$localeName] = $localeName;
+            }
+        }
+
+        return array_values($localeNames);
     }
 
     /**

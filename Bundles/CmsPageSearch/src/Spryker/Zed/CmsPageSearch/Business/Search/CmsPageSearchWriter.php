@@ -312,7 +312,7 @@ class CmsPageSearchWriter implements CmsPageSearchWriterInterface
         array $cmsPageEntities,
         array $cmsPageSearchEntities
     ): array {
-        $localeNames = $this->store->getLocales();
+        $localeNames = $this->getAllLocaleNames();
 
         $pairs = [];
 
@@ -328,6 +328,21 @@ class CmsPageSearchWriter implements CmsPageSearchWriterInterface
         $pairs = $this->pairRemainingCmsPageSearchEntities($cmsPageSearchEntities, $pairs);
 
         return $pairs;
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function getAllLocaleNames(): array
+    {
+        $localeNames = [];
+        foreach ($this->store->getAllowedStores() as $storeName) {
+            foreach ($this->store->getLocalesPerStore($storeName) as $localeName) {
+                $localeNames[$localeName] = $localeName;
+            }
+        }
+
+        return array_values($localeNames);
     }
 
     /**

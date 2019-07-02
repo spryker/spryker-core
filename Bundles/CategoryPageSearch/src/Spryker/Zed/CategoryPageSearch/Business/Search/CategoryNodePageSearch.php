@@ -202,7 +202,7 @@ class CategoryNodePageSearch implements CategoryNodePageSearchInterface
      */
     protected function getCategoryTrees(array $categoryNodeIds): array
     {
-        $localeNames = $this->store->getLocales();
+        $localeNames = $this->getAllLocaleNames();
         $locales = $this->queryContainer->queryLocalesWithLocaleNames($localeNames)->find();
 
         $categoryNodeTree = [];
@@ -219,5 +219,20 @@ class CategoryNodePageSearch implements CategoryNodePageSearchInterface
         $this->enableInstancePooling();
 
         return $categoryNodeTree;
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function getAllLocaleNames(): array
+    {
+        $localeNames = [];
+        foreach ($this->store->getAllowedStores() as $storeName) {
+            foreach ($this->store->getLocalesPerStore($storeName) as $localeName) {
+                $localeNames[$localeName] = $localeName;
+            }
+        }
+
+        return array_values($localeNames);
     }
 }
