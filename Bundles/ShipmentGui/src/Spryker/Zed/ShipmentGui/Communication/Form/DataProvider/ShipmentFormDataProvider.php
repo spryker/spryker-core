@@ -119,8 +119,14 @@ class ShipmentFormDataProvider
         ShipmentTransfer $shipmentTransfer
     ): ShipmentTransfer {
         $shipmentAddressTransfer = $shipmentTransfer->getShippingAddress();
-        if ($shipmentAddressTransfer === null) {
-            $shipmentAddressTransfer = $orderTransfer->requireShippingAddress()->getShippingAddress();
+        $orderShipmentAddressTransfer = $orderTransfer->getShippingAddress();
+
+        if ($shipmentAddressTransfer === null && $orderShipmentAddressTransfer === null) {
+            return $shipmentTransfer;
+        }
+
+        if ($shipmentAddressTransfer === null && $orderShipmentAddressTransfer !== null) {
+            $shipmentAddressTransfer = $orderShipmentAddressTransfer;
         }
 
         if ($shipmentAddressTransfer !== null) {
