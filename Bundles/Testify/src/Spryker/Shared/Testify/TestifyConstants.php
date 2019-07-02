@@ -15,7 +15,18 @@ class TestifyConstants
     public const BOOTSTRAP_CLASS_YVES = 'TESTIFY_CONSTANTS:BOOTSTRAP_CLASS_YVES';
     public const BOOTSTRAP_CLASS_ZED = 'TESTIFY_CONSTANTS:BOOTSTRAP_CLASS_ZED';
 
+    /**
+     * Specification:
+     * - Glue application domain to test end to end against.
+     *
+     * @api
+     */
     public const GLUE_APPLICATION_DOMAIN = 'TESTIFY_CONSTANTS:GLUE_APPLICATION_DOMAIN';
+
+    /**
+     * Specification:
+     * - Folder in which the aggregated Glue OpenApi3 schema is saved.
+     */
     public const GLUE_OPEN_API_SCHEMA = 'TESTIFY_CONSTANTS:GLUE_OPEN_API_SCHEMA';
 
     /**

@@ -37,10 +37,6 @@ class ReferenceResolver implements ReferenceResolverInterface
         [$file, $path] = explode('#', $reference, 2);
         $path = array_reverse(explode('/', trim($path, '/')));
 
-        if (array_key_exists($file, $this->containers)) {
-            // TODO preload file
-        }
-
         /** @var \Spryker\Glue\Testify\OpenApi3\SchemaFieldInterface $pointer */
         $pointer = $this->containers[$file] ?? new Any();
 

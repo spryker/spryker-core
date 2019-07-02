@@ -8,7 +8,7 @@
 namespace Spryker\Glue\Testify\OpenApi3\Object;
 
 use Spryker\Glue\Testify\OpenApi3\Collection\Paths;
-use Spryker\Glue\Testify\OpenApi3\Collection\SecurityRequirement;
+use Spryker\Glue\Testify\OpenApi3\Collection\SecurityRequirements;
 use Spryker\Glue\Testify\OpenApi3\Collection\Servers;
 use Spryker\Glue\Testify\OpenApi3\Primitive\StringEnumeration;
 use Spryker\Glue\Testify\OpenApi3\Primitive\StringPrimitive;
@@ -37,7 +37,7 @@ class OpenApi extends AbstractObject
             ->setProperty('servers', new PropertyDefinition(Servers::class))
             ->setProperty('paths', (new PropertyDefinition(Paths::class))->setRequired(true))
             ->setProperty('components', new PropertyDefinition(Components::class))
-            ->setProperty('security', new PropertyDefinition(SecurityRequirement::class))
+            ->setProperty('security', new PropertyDefinition(SecurityRequirements::class))
             ->setProperty('tags', new PropertyDefinition(StringEnumeration::class))
             ->setProperty('externalDocs', new PropertyDefinition(ExternalDocumentation::class));
     }

@@ -18,7 +18,6 @@ use Spryker\Glue\Testify\OpenApi3\Property\PropertyDefinition;
  * @property-read string $style
  * @property-read bool $explode
  * @property-read bool $allowReserved
- * @property-read \Spryker\Glue\Testify\OpenApi3\Object\License $license
  * @property-read string $version
  */
 class Encoding extends AbstractObject

@@ -15,7 +15,6 @@ class TransactionHelper extends SharedTransactionHelper
 {
     /**
      * Preventing opening transaction
-     * // TODO [E2E] Consider preventing transactions
      *
      * @inheritdoc
      */
@@ -25,7 +24,7 @@ class TransactionHelper extends SharedTransactionHelper
     }
 
     /**
-     * Preventing to rollbac transaction
+     * Preventing to rollback transaction
      *
      * @inheritdoc
      */
