@@ -12,13 +12,4 @@ namespace Spryker\Shared\SetupFrontend;
  */
 interface SetupFrontendConstants
 {
-    /**
-     * Specification:
-     * - Sets the command to build Yves assets.
-     *
-     * @example 'npm run yves'
-     *
-     * @api
-     */
-    public const YVES_BUILD_COMMAND = 'SETUP_FRONTEND:YVES_BUILD_COMMAND';
 }

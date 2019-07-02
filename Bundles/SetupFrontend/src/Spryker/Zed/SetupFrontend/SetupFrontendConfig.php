@@ -8,7 +8,6 @@
 namespace Spryker\Zed\SetupFrontend;
 
 use Spryker\Shared\Kernel\KernelConstants;
-use Spryker\Shared\SetupFrontend\SetupFrontendConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class SetupFrontendConfig extends AbstractBundleConfig
@@ -72,7 +71,7 @@ class SetupFrontendConfig extends AbstractBundleConfig
      */
     public function getYvesBuildCommand()
     {
-        return $this->get(SetupFrontendConstants::YVES_BUILD_COMMAND, 'npm run yves');
+        return 'npm run yves';
     }
 
     /**
