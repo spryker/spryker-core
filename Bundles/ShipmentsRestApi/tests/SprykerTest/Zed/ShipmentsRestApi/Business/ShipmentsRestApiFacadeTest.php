@@ -42,7 +42,7 @@ class ShipmentsRestApiFacadeTest extends Unit
         'isActive' => true,
     ];
 
-    protected const SHIPMENT_METHOD_ID_INVALID = 9999;
+    protected const SHIPMENT_METHOD_ID_INVALID = -1;
 
     /**
      * @var \SprykerTest\Zed\ShipmentsRestApi\ShipmentsRestApiBusinessTester

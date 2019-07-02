@@ -36,7 +36,6 @@ class CheckoutRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_CODE_UNABLE_TO_DELETE_CART = '1106';
     public const RESPONSE_CODE_MULTIPLE_PAYMENTS_NOT_ALLOWED = '1107';
     public const RESPONSE_CODE_INVALID_PAYMENT = '1108';
-    public const RESPONSE_CODE_SHIPMENT_METHOD_NOT_FOUND = '1109';
 
     public const RESPONSE_DETAILS_CHECKOUT_DATA_INVALID = 'Checkout data is invalid.';
     public const RESPONSE_DETAILS_ORDER_NOT_PLACED = 'Order could not be placed.';
@@ -46,7 +45,6 @@ class CheckoutRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_DETAILS_UNABLE_TO_DELETE_CART = 'Unable to delete cart.';
     public const RESPONSE_DETAILS_MULTIPLE_PAYMENTS_NOT_ALLOWED = 'Multiple payments are not allowed.';
     public const RESPONSE_DETAILS_INVALID_PAYMENT = 'Payment method "%s" of payment provider "%s" is invalid';
-    public const RESPONSE_DETAILS_SHIPMENT_METHOD_NOT_FOUND = 'Shipment method not found';
 
     protected const PAYMENT_REQUIRED_FIELDS = [
         'paymentMethod',
@@ -79,11 +77,6 @@ class CheckoutRestApiConfig extends AbstractBundleConfig
             RestErrorMessageTransfer::CODE => self::RESPONSE_CODE_CHECKOUT_DATA_INVALID,
             RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
             RestErrorMessageTransfer::DETAIL => self::RESPONSE_DETAILS_CHECKOUT_DATA_INVALID,
-        ],
-        SharedCheckoutRestApiConfig::ERROR_IDENTIFIER_SHIPMENT_METHOD_NOT_FOUND => [
-            RestErrorMessageTransfer::CODE => self::RESPONSE_CODE_SHIPMENT_METHOD_NOT_FOUND,
-            RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
-            RestErrorMessageTransfer::DETAIL => self::RESPONSE_DETAILS_SHIPMENT_METHOD_NOT_FOUND,
         ],
     ];
 
