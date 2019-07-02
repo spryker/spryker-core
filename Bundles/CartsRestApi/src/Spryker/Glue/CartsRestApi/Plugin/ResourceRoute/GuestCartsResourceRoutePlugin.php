@@ -28,7 +28,8 @@ class GuestCartsResourceRoutePlugin extends AbstractPlugin implements ResourceRo
     public function configure(ResourceRouteCollectionInterface $resourceRouteCollection): ResourceRouteCollectionInterface
     {
         return $resourceRouteCollection
-            ->addGet(CartsRestApiConfig::ACTION_GUEST_CARTS_GET, false);
+            ->addGet('get', false)
+            ->addPatch('patch', false);
     }
 
     /**

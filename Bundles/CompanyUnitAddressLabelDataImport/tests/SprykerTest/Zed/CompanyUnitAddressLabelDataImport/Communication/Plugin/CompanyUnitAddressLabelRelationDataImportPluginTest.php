@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\CompanyUnitAddressLabelDataImport\Communication\Plugin;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
@@ -27,6 +28,9 @@ use Spryker\Zed\DataImport\Business\Exception\DataImportException;
  */
 class CompanyUnitAddressLabelRelationDataImportPluginTest extends Unit
 {
+    protected const COMPANY_ADDRESS_KEY_1 = 'spryker-address-1';
+    protected const COMPANY_ADDRESS_KEY_2 = 'spryker-address-2';
+
     /**
      * @var \SprykerTest\Zed\CompanyUnitAddressLabelDataImport\CompanyUnitAddressLabelDataImportCommunicationTester
      */
@@ -38,11 +42,16 @@ class CompanyUnitAddressLabelRelationDataImportPluginTest extends Unit
     public function testImportImportsCompanyUnitAddressLabelRelation(): void
     {
         $this->tester->ensureRelationTableIsEmpty();
-        $this->tester->ensureCompanyUnitAddressWithKeyDoesNotExist('spryker-address-1');
-        $this->tester->ensureCompanyUnitAddressWithKeyDoesNotExist('spryker-address-2');
-        $this->tester->haveCompanyUnitAddress(['key' => 'spryker-address-1']);
-        $this->tester->haveCompanyUnitAddress(['key' => 'spryker-address-2']);
-
+        $this->tester->ensureCompanyUnitAddressWithKeyDoesNotExist(static::COMPANY_ADDRESS_KEY_1);
+        $this->tester->ensureCompanyUnitAddressWithKeyDoesNotExist(static::COMPANY_ADDRESS_KEY_2);
+        $this->tester->haveCompanyUnitAddress([
+            CompanyUnitAddressTransfer::FK_COUNTRY => $this->tester->haveCountry()->getIdCountry(),
+            CompanyUnitAddressTransfer::KEY => static::COMPANY_ADDRESS_KEY_1,
+        ]);
+        $this->tester->haveCompanyUnitAddress([
+            CompanyUnitAddressTransfer::FK_COUNTRY => $this->tester->haveCountry()->getIdCountry(),
+            CompanyUnitAddressTransfer::KEY => static::COMPANY_ADDRESS_KEY_2,
+        ]);
         $this->tester->haveCompanyUnitAddressLabel(['name' => 'label-1']);
         $this->tester->haveCompanyUnitAddressLabel(['name' => 'label-2']);
 

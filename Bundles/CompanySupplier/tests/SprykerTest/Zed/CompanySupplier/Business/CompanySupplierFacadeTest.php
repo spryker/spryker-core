@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\CompanySupplier\Business;
 
 use ArrayObject;
 use Codeception\TestCase\Test;
+use Generated\Shared\Transfer\CompanyTransfer;
 
 /**
  * Auto-generated group annotations
@@ -54,7 +55,11 @@ class CompanySupplierFacadeTest extends Test
      */
     public function testGetCompanyTypesReturnsNotEmptyCollection(): void
     {
-        $companyTypesCollection = $this->tester->getFacade()->getCompanyTypes();
+        // Act
+        $companyTypesCollection = $this->tester->getFacade()
+            ->getCompanyTypes();
+
+        // Assert
         $this->assertGreaterThan(0, $companyTypesCollection->getCompanyTypes()->count());
     }
 
@@ -63,7 +68,11 @@ class CompanySupplierFacadeTest extends Test
      */
     public function testGetAllSuppliersReturnsCompanySuppliers(): void
     {
-        $supplierCompanies = $this->tester->getFacade()->getAllSuppliers();
+        // Act
+        $supplierCompanies = $this->tester->getFacade()
+            ->getAllSuppliers();
+
+        // Assert
         $this->assertSame(static::COMPANY_TYPE_SUPPLIER, $supplierCompanies->getSuppliers()[0]->getCompanyType()->getName());
     }
 
@@ -72,12 +81,18 @@ class CompanySupplierFacadeTest extends Test
      */
     public function testSaveCompanySupplierStoreRelations(): void
     {
-        $this->tester->getFacade()->saveCompanySupplierRelationsForProductConcrete(
-            $this->productConcrete
-        );
+        // Arrange
+        $productConcreteTransfer = $this->productConcrete;
 
-        $CompanySupplierProductRelations = $this->tester->getFacade()->getSuppliersByIdProduct($this->productConcrete->getIdProductConcrete());
+        // Act
+        $this->tester->getFacade()
+            ->saveCompanySupplierRelationsForProductConcrete(
+                $productConcreteTransfer
+            );
+        $CompanySupplierProductRelations = $this->tester->getFacade()
+            ->getSuppliersByIdProduct($productConcreteTransfer->getIdProductConcrete());
 
+        // Assert
         $this->assertGreaterThan(0, $CompanySupplierProductRelations->getSuppliers()->count());
     }
 
@@ -88,7 +103,7 @@ class CompanySupplierFacadeTest extends Test
     {
         $companyType = $this->tester->haveCompanyType(['name' => static::COMPANY_TYPE_SUPPLIER]);
         $this->companySupplier = $this->tester->haveCompany([
-            'fk_company_type' => $companyType->getIdCompanyType(),
+            CompanyTransfer::FK_COMPANY_TYPE => $companyType->getIdCompanyType(),
         ]);
     }
 
@@ -101,6 +116,7 @@ class CompanySupplierFacadeTest extends Test
         $companySuppliers = new ArrayObject([
             $this->companySupplier,
         ]);
+
         $productConcrete->setCompanySuppliers($companySuppliers);
         $this->productConcrete = $productConcrete;
     }
