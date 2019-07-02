@@ -9,8 +9,8 @@ var init = require('./modules/main');
 
 $(document).ready(function() {
     init(
-        '#shipment_edit_form_id_customer_address',
-        '#shipment_edit_form_shipping_address',
-        '#shipment_edit_form_requested_delivery_date'
+        '#shipment_group_form_shipment_shippingAddress_idCustomerAddress',
+        '#shipment_group_form_shipment_shippingAddress',
+        '#shipment_group_form_shipment_requestedDeliveryDate'
     );
 });
