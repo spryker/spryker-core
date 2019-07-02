@@ -14,7 +14,6 @@ use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToCartFacadeBridg
 use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToMessengerFacadeBridge;
 use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToQuoteFacadeBridge;
 use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToStoreFacadeBridge;
-use Spryker\Zed\PersistentCart\Dependency\Service\PersistentCartToUtilQuantityServiceBridge;
 use Spryker\Zed\PersistentCartExtension\Dependency\Plugin\QuoteItemFinderPluginInterface;
 
 /**
@@ -30,7 +29,6 @@ class PersistentCartDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_QUOTE_RESPONSE_EXPANDER = 'PLUGINS_QUOTE_RESPONSE_EXPANDER';
     public const PLUGINS_REMOVE_ITEMS_REQUEST_EXPANDER = 'PLUGINS_REMOVE_ITEMS_REQUEST_EXPANDER';
     public const PLUGINS_CART_ADD_ITEM_STRATEGY = 'PLUGINS_CART_ADD_ITEM_STRATEGY';
-    public const SERVICE_UTIL_QUANTITY = 'SERVICE_UTIL_QUANTITY';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -49,7 +47,6 @@ class PersistentCartDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addQuoteResponseExpanderPlugins($container);
         $container = $this->addRemoveItemsRequestExpanderPlugins($container);
         $container = $this->addCartAddItemStrategyPlugins($container);
-        $container = $this->addUtilQuantityService($container);
 
         return $container;
     }
@@ -174,22 +171,6 @@ class PersistentCartDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::PLUGINS_CART_ADD_ITEM_STRATEGY] = function (Container $container) {
             return $this->getCartAddItemStrategyPlugins($container);
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    public function addUtilQuantityService(Container $container): Container
-    {
-        $container[static::SERVICE_UTIL_QUANTITY] = function (Container $container) {
-            return new PersistentCartToUtilQuantityServiceBridge(
-                $container->getLocator()->utilQuantity()->service()
-            );
         };
 
         return $container;

@@ -15,7 +15,6 @@ use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToMessengerFacadeBrid
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToPermissionFacadeBridge;
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToPersistentCartFacadeBridge;
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToProductFacadeBridge;
-use Spryker\Zed\ShoppingList\Dependency\Service\ShoppingListToUtilQuantityServiceBridge;
 
 /**
  * @method \Spryker\Zed\ShoppingList\ShoppingListConfig getConfig()
@@ -28,8 +27,6 @@ class ShoppingListDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_PERMISSION = 'FACADE_PERMISSION';
     public const FACADE_PERSISTENT_CART = 'FACADE_PERSISTENT_CART';
     public const FACADE_EVENT = 'FACADE_EVENT';
-
-    public const SERVICE_UTIL_QUANTITY = 'SERVICE_UTIL_QUANTITY';
 
     public const PLUGINS_ITEM_EXPANDER = 'PLUGINS_ITEM_EXPANDER';
     public const PLUGINS_QUOTE_ITEM_EXPANDER = 'PLUGINS_QUOTE_ITEM_EXPANDER';
@@ -58,24 +55,6 @@ class ShoppingListDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addShoppingListItemPostSavePlugins($container);
         $container = $this->addBeforeDeleteShoppingListItemPlugins($container);
         $container = $this->addItemToShoppingListItemMapperPlugins($container);
-
-        $container = $this->addUtilQuantityService($container);
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addUtilQuantityService(Container $container): Container
-    {
-        $container[static::SERVICE_UTIL_QUANTITY] = function (Container $container) {
-            return new ShoppingListToUtilQuantityServiceBridge(
-                $container->getLocator()->utilQuantity()->service()
-            );
-        };
 
         return $container;
     }

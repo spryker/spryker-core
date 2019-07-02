@@ -455,6 +455,7 @@ class StateMachineFacadeTest extends Unit
         $stateMachineFacade = $this->createStateMachineFacade($stateMachineHandler);
 
         $stateMachineFacade->triggerForNewStateMachineItem($stateMachineProcessTransfer, $identifier);
+        sleep(1);
         $stateMachineFacade->triggerForNewStateMachineItem($stateMachineProcessTransfer, $identifier2);
 
         $stateMachineItemsWithGivenFlag = $stateMachineFacade->getItemsWithFlag(
