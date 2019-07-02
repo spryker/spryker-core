@@ -11,8 +11,6 @@ use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReaderInterface;
-use Spryker\Zed\ProductPackagingUnit\Dependency\Service\ProductPackagingUnitToUtilPriceServiceInterface;
-use Spryker\Zed\ProductPackagingUnit\Dependency\Service\ProductPackagingUnitToUtilQuantityServiceInterface;
 
 class PriceChangeExpander implements PriceChangeExpanderInterface
 {
@@ -27,28 +25,12 @@ class PriceChangeExpander implements PriceChangeExpanderInterface
     protected $productPackagingUnitReader;
 
     /**
-     * @var \Spryker\Zed\ProductPackagingUnit\Dependency\Service\ProductPackagingUnitToUtilPriceServiceInterface
-     */
-    protected $utilPriceService;
-
-    /**
-     * @var \Spryker\Zed\ProductPackagingUnit\Dependency\Service\ProductPackagingUnitToUtilQuantityServiceInterface
-     */
-    protected $utilQuantityService;
-
-    /**
      * @param \Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReaderInterface $productPackagingUnitReader
-     * @param \Spryker\Zed\ProductPackagingUnit\Dependency\Service\ProductPackagingUnitToUtilPriceServiceInterface $utilPriceService
-     * @param \Spryker\Zed\ProductPackagingUnit\Dependency\Service\ProductPackagingUnitToUtilQuantityServiceInterface $utilQuantityService
      */
     public function __construct(
-        ProductPackagingUnitReaderInterface $productPackagingUnitReader,
-        ProductPackagingUnitToUtilPriceServiceInterface $utilPriceService,
-        ProductPackagingUnitToUtilQuantityServiceInterface $utilQuantityService
+        ProductPackagingUnitReaderInterface $productPackagingUnitReader
     ) {
         $this->productPackagingUnitReader = $productPackagingUnitReader;
-        $this->utilPriceService = $utilPriceService;
-        $this->utilQuantityService = $utilQuantityService;
     }
 
     /**
@@ -88,43 +70,22 @@ class PriceChangeExpander implements PriceChangeExpanderInterface
             ->getProductPackagingUnitAmount()
             ->getDefaultAmount();
 
-        $amountPerQuantity = $itemTransfer->getAmount() / $itemTransfer->getQuantity();
+        $amountPerQuantity = (int)($itemTransfer->getAmount() / $itemTransfer->getQuantity());
 
-        if ($this->isQuantityEqual($amountPerQuantity, $defaultAmount)) {
+        if ($amountPerQuantity === $defaultAmount) {
             return $itemTransfer;
         }
 
         if ($quoteTransfer->getPriceMode() === static::PRICE_MODE_NET) {
             $unitNetPrice = $itemTransfer->getUnitNetPrice();
-            $newUnitNetPrice = (($amountPerQuantity / $defaultAmount) * $unitNetPrice);
-            $itemTransfer->setUnitNetPrice($this->roundPrice($newUnitNetPrice));
+            $newUnitNetPrice = (int)round((($amountPerQuantity / $defaultAmount) * $unitNetPrice));
+            $itemTransfer->setUnitNetPrice($newUnitNetPrice);
         } else {
             $unitGrossPrice = $itemTransfer->getUnitGrossPrice();
-            $newUnitGrossPrice = (($amountPerQuantity / $defaultAmount) * $unitGrossPrice);
-            $itemTransfer->setUnitGrossPrice($this->roundPrice($newUnitGrossPrice));
+            $newUnitGrossPrice = (int)round((($amountPerQuantity / $defaultAmount) * $unitGrossPrice));
+            $itemTransfer->setUnitGrossPrice($newUnitGrossPrice);
         }
 
         return $itemTransfer;
-    }
-
-    /**
-     * @param float $price
-     *
-     * @return int
-     */
-    protected function roundPrice(float $price): int
-    {
-        return $this->utilPriceService->roundPrice($price);
-    }
-
-    /**
-     * @param float $firstQuantity
-     * @param float $secondQuantity
-     *
-     * @return bool
-     */
-    protected function isQuantityEqual(float $firstQuantity, float $secondQuantity): bool
-    {
-        return $this->utilQuantityService->isQuantityEqual($firstQuantity, $secondQuantity);
     }
 }

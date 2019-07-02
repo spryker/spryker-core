@@ -14,7 +14,6 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderItemOption;
 use Propel\Runtime\Collection\Collection;
 use Spryker\Zed\SalesSplit\Business\Model\Validation\Messages;
 use Spryker\Zed\SalesSplit\Business\Model\Validation\Validator;
-use Spryker\Zed\SalesSplit\Dependency\Service\SalesSplitToUtilQuantityServiceBridge;
 
 /**
  * Auto-generated group annotations
@@ -30,39 +29,18 @@ use Spryker\Zed\SalesSplit\Dependency\Service\SalesSplitToUtilQuantityServiceBri
 class ValidatorTest extends Unit
 {
     /**
-     * @var \SprykerTest\Zed\SalesSplit\SalesSplitBusinessTester
-     */
-    protected $tester;
-
-    /**
-     * @dataProvider invalidQuantityProvider
-     *
-     * @param int|float $quantity
-     * @param int|float $quantityToSplit
-     *
      * @return void
      */
-    public function testInvalidQuantity($quantity, $quantityToSplit): void
+    public function testInvalidQuantity()
     {
         $validator = $this->getValidator();
-        $spySalesOrderItem = $this->getSalesOrderItem($quantity);
+        $spySalesOrderItem = $this->getSalesOrderItem(1);
 
-        $validateResponse = $validator->isValid($spySalesOrderItem, $quantityToSplit);
+        $validateResponse = $validator->isValid($spySalesOrderItem, 666);
         $validationMessages = $validator->getMessages();
 
         $this->assertFalse($validateResponse);
         $this->assertEquals(Messages::VALIDATE_QUANTITY_MESSAGE, $validationMessages[0]);
-    }
-
-    /**
-     * @return array
-     */
-    public function invalidQuantityProvider(): array
-    {
-        return [
-            'int stock' => [1, 666],
-            'float stock' => [2.8561, 700.64524],
-        ];
     }
 
     /**
@@ -127,32 +105,16 @@ class ValidatorTest extends Unit
     }
 
     /**
-     * @dataProvider validOrderItemProvider
-     *
-     * @param int|float $quantityToSplit
-     *
      * @return void
      */
-    public function testValidOrderItem($quantityToSplit): void
+    public function testValidOrderItem()
     {
         $validator = $this->getValidator();
         $spySalesOrderItem = $this->getSalesOrderItem();
 
-        $validateResponse = $validator->isValid($spySalesOrderItem, $quantityToSplit);
+        $validateResponse = $validator->isValid($spySalesOrderItem, 1);
 
         $this->assertTrue($validateResponse);
-    }
-
-    /**
-     * @return array
-     */
-    public function validOrderItemProvider(): array
-    {
-        return [
-            'int stock' => [1],
-            'float stock' => [1.4],
-            '0 < float stock < 1' => [0.3],
-        ];
     }
 
     /**
@@ -160,11 +122,7 @@ class ValidatorTest extends Unit
      */
     protected function getValidator()
     {
-        $utilQuantityService = new SalesSplitToUtilQuantityServiceBridge(
-            $this->tester->getLocator()->utilQuantity()->service()
-        );
-
-        return new Validator($utilQuantityService);
+        return new Validator();
     }
 
     /**

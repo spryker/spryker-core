@@ -7,7 +7,6 @@
 
 namespace SprykerTest\Zed\AvailabilityGui\Communication\Controller;
 
-use Codeception\Example;
 use SprykerTest\Zed\AvailabilityGui\AvailabilityGuiCommunicationTester;
 use SprykerTest\Zed\AvailabilityGui\PageObject\AvailabilityPage;
 
@@ -24,25 +23,21 @@ use SprykerTest\Zed\AvailabilityGui\PageObject\AvailabilityPage;
 class AvailabilityEditStockCest
 {
     /**
-     * @dataProvider stockProvider
-     *
      * @param \SprykerTest\Zed\AvailabilityGui\AvailabilityGuiCommunicationTester $i
-     * @param \Codeception\Example $example
      *
      * @return void
      */
-    public function testEditExistingStock(AvailabilityGuiCommunicationTester $i, Example $example): void
+    public function testEditExistingStock(AvailabilityGuiCommunicationTester $i)
     {
-        $productConcreteTransfer = $i->haveProduct();
         $i->wantTo('Edit availability stock');
         $i->expect('New stock added.');
 
         $i->amOnPage(
             sprintf(
                 AvailabilityPage::AVAILABILITY_EDIT_STOCK_URL,
-                $productConcreteTransfer->getIdProductConcrete(),
-                $productConcreteTransfer->getSku(),
-                $productConcreteTransfer->getFkProductAbstract(),
+                AvailabilityPage::AVAILABILITY_ID,
+                AvailabilityPage::AVAILABILITY_SKU,
+                AvailabilityPage::AVAILABILITY_ABSTRACT_PRODUCT_ID,
                 AvailabilityPage::AVAILABILITY_ID_STORE
             )
         );
@@ -51,26 +46,15 @@ class AvailabilityEditStockCest
 
         $i->see(AvailabilityPage::PAGE_AVAILABILITY_EDIT_HEADER);
 
-        $i->fillField('//*[@id="AvailabilityGui_stock_stocks_0_quantity"]', $example['quantity']);
+        $i->fillField('//*[@id="AvailabilityGui_stock_stocks_0_quantity"]', 50);
         $i->click('Save');
-        $i->seeResponseCodeIs($example['expectedResponseCode']);
+        $i->seeResponseCodeIs(200);
 
         $i->fillField('//*[@id="AvailabilityGui_stock_stocks_0_quantity"]', 'string');
         $i->click('input[type=submit]');
-        $i->see('This value should be of type numeric.');
+        $i->see('This value is not valid.');
 
         $i->click('//*[@id="page-wrapper"]/div[2]/div[2]/div/a');
         $i->see(AvailabilityPage::PAGE_AVAILABILITY_VIEW_HEADER);
-    }
-
-    /**
-     * @return array
-     */
-    protected function stockProvider(): array
-    {
-        return [
-            'int stock' => ['quantity' => 50, 'expectedResponseCode' => 200],
-            'float stock' => ['quantity' => 50.88, 'expectedResponseCode' => 200],
-        ];
     }
 }
