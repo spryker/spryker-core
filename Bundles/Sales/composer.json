@@ -29,7 +29,6 @@
     "spryker/application": "*",
     "spryker/checkout": "*",
     "spryker/config": "*",
-    "spryker/price": "*",
     "spryker/product": "*",
     "spryker/shipment": "*",
     "spryker/stock": "*",
