@@ -26,8 +26,6 @@ use Spryker\Zed\Offer\Business\Model\OfferWriterInterface;
 use Spryker\Zed\Offer\Dependency\Facade\OfferToCartFacadeInterface;
 use Spryker\Zed\Offer\Dependency\Facade\OfferToCustomerFacadeInterface;
 use Spryker\Zed\Offer\Dependency\Facade\OfferToSalesFacadeInterface;
-use Spryker\Zed\Offer\Dependency\Service\OfferToUtilPriceServiceInterface;
-use Spryker\Zed\Offer\Dependency\Service\OfferToUtilQuantityServiceInterface;
 use Spryker\Zed\Offer\OfferDependencyProvider;
 
 /**
@@ -54,8 +52,7 @@ class OfferBusinessFactory extends AbstractBusinessFactory
     public function createOfferCalculator(): OfferCalculatorInterface
     {
         return new OfferCalculator(
-            $this->getCartFacade(),
-            $this->getUtilQuantityService()
+            $this->getCartFacade()
         );
     }
 
@@ -116,8 +113,7 @@ class OfferBusinessFactory extends AbstractBusinessFactory
     public function createOfferSavingAmountHydrator(): OfferSavingAmountHydratorInterface
     {
         return new OfferSavingAmountHydrator(
-            $this->getConfig(),
-            $this->getUtilPriceService()
+            $this->getConfig()
         );
     }
 
@@ -126,7 +122,7 @@ class OfferBusinessFactory extends AbstractBusinessFactory
      */
     public function createOfferItemSubtotalAggregator(): OfferItemSubtotalAggregatorInterface
     {
-        return new OfferItemSubtotalAggregator($this->getUtilPriceService());
+        return new OfferItemSubtotalAggregator();
     }
 
     /**
@@ -159,21 +155,5 @@ class OfferBusinessFactory extends AbstractBusinessFactory
     public function createOfferGrandTotalCalculator(): OfferGrandTotalCalculatorInterface
     {
         return new OfferGrandTotalCalculator();
-    }
-
-    /**
-     * @return \Spryker\Zed\Offer\Dependency\Service\OfferToUtilPriceServiceInterface
-     */
-    public function getUtilPriceService(): OfferToUtilPriceServiceInterface
-    {
-        return $this->getProvidedDependency(OfferDependencyProvider::SERVICE_UTIL_PRICE);
-    }
-
-    /**
-     * @return \Spryker\Zed\Offer\Dependency\Service\OfferToUtilQuantityServiceInterface
-     */
-    public function getUtilQuantityService(): OfferToUtilQuantityServiceInterface
-    {
-        return $this->getProvidedDependency(OfferDependencyProvider::SERVICE_UTIL_QUANTITY);
     }
 }

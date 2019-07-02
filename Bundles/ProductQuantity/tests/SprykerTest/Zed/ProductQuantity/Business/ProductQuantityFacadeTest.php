@@ -8,13 +8,6 @@
 namespace SprykerTest\Zed\ProductQuantity\Business;
 
 use Codeception\Test\Unit;
-use Spryker\Service\Kernel\Container;
-use Spryker\Service\ProductQuantity\Dependency\Service\ProductQuantityToUtilQuantityServiceBridge as ServiceProductQuantityToUtilQuantityServiceBridge;
-use Spryker\Service\ProductQuantity\ProductQuantityService;
-use Spryker\Service\ProductQuantity\ProductQuantityServiceFactory;
-use Spryker\Zed\ProductQuantity\Business\ProductQuantityFacadeInterface;
-use Spryker\Zed\ProductQuantity\Dependency\Service\ProductQuantityToUtilQuantityServiceBridge;
-use Spryker\Zed\ProductQuantity\ProductQuantityDependencyProvider;
 
 /**
  * Auto-generated group annotations
@@ -34,7 +27,7 @@ class ProductQuantityFacadeTest extends Unit
     protected $tester;
 
     /**
-     * @var \Spryker\Zed\ProductQuantity\Business\ProductQuantityFacadeInterface|\Spryker\Zed\Kernel\Business\AbstractFacade
+     * @var \Spryker\Zed\ProductQuantity\Business\ProductQuantityFacadeInterface
      */
     protected $productQuantityFacade;
 
@@ -45,39 +38,15 @@ class ProductQuantityFacadeTest extends Unit
     {
         parent::setUp();
 
-        $this->productQuantityFacade = $this->createProductQuantityFacade();
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductQuantity\Business\ProductQuantityFacadeInterface
-     */
-    protected function createProductQuantityFacade(): ProductQuantityFacadeInterface
-    {
-        $utilQuantityServiceBridge = new ProductQuantityToUtilQuantityServiceBridge(
-            $this->tester->getLocator()->utilQuantity()->service()
-        );
-        $this->tester->setDependency(ProductQuantityDependencyProvider::SERVICE_UTIL_QUANTITY, $utilQuantityServiceBridge);
-        $productQuantityService = new ProductQuantityService();
-        $productQuantityServiceFactory = new ProductQuantityServiceFactory();
-        $container = new Container();
-        $container[ProductQuantityDependencyProvider::SERVICE_UTIL_QUANTITY] = function () {
-            return new ServiceProductQuantityToUtilQuantityServiceBridge(
-                $this->tester->getLocator()->utilQuantity()->service()
-            );
-        };
-        $productQuantityServiceFactory->setContainer($container);
-        $productQuantityService->setFactory($productQuantityServiceFactory);
-        $this->tester->setDependency(ProductQuantityDependencyProvider::SERVICE_PRODUCT_QUANTITY, $productQuantityService);
-
-        return $this->tester->getFacade();
+        $this->productQuantityFacade = $this->tester->getLocator()->productQuantity()->facade();
     }
 
     /**
      * @dataProvider itemRemovalQuantities
      *
      * @param bool $expectedIsSuccess
-     * @param float $quoteQuantity
-     * @param float $changeQuantity
+     * @param int $quoteQuantity
+     * @param int $changeQuantity
      * @param int|null $minRestriction
      * @param int|null $maxRestriction
      * @param int|null $intervalRestriction
@@ -115,32 +84,20 @@ class ProductQuantityFacadeTest extends Unit
     public function itemRemovalQuantities()
     {
         return [
-            'general rule int stock' => [true, 5, 2, 1, null, 1],
-            'general rule float stock' => [true, 5.5, 2.5, 1, null, 1],
-            'min equals new int quantity' => [true, 5, 2, 3, null, 1],
-            'min equals new float quantity' => [true, 5.5, 2.5, 3, null, 1],
-            'max equals new int quantity' => [true, 5, 2, 1, 3,    1],
-            'max equals new float quantity' => [true, 5.5, 2.5, 1, 3, 1],
-            'shifted interval matches new int quantity' => [true, 5, 2, 1, null, 2],
-            'shifted interval matches new float quantity' => [true, 5.5, 2.5, 1, null, 2],
-            'interval matches new int quantity' => [true, 5, 2, 0, null, 3],
-            'interval matches new float quantity' => [true, 5.5, 2.5, 0, null, 3],
-            'min, max, interval matches new int quantity' => [true, 5, 2, 3, 3,    3],
-            'min, max, interval matches new float quantity' => [true, 5.5, 2.5, 3, 3,    3],
-            'can remove all items regardless rules int stock' => [true, 5, 5, 2, 4,    3],
-            'can remove all items regardless rules float stock' => [true, 5.5, 5.5, 2, 4,    3],
-            'general false rule int stock' => [false, 5, 6, 1, null, 1],
-            'general false rule float stock' => [false, 5.5, 6.5, 1, null, 1],
-            'min above new int quantity' => [false, 5, 2, 4, null, 1],
-            'min above new float quantity' => [false, 5.5, 2.5, 4, null, 1],
-            'max below new int quantity' => [false, 5, 2, 1, 2,    1],
-            'max below new float quantity' => [false, 5.5, 2.5, 1, 2,    1],
-            'shifted interval does not match new int quantity' => [false, 5, 2, 1, null, 3],
-            'shifted interval does not match new float quantity' => [false, 5.5, 2.5, 1, null, 3],
-            'interval does not match new int quantity' => [false, 5, 2, 0, null, 2],
-            'interval does not match new float quantity' => [false, 5.5, 2.5, 0, null, 2],
-            'empty quote int stock' => [false, 0, 1, 1, null, 1],
-            'empty quote float stock' => [false, 0, 1.5, 1, null, 1],
+            [true, 5, 2, 1, null, 1], // general rule
+            [true, 5, 2, 3, null, 1], // min equals new quantity
+            [true, 5, 2, 1, 3,    1], // max equals new quantity
+            [true, 5, 2, 1, null, 2], // shifted interval matches new quantity
+            [true, 5, 2, 0, null, 3], // interval matches new quantity
+            [true, 5, 2, 3, 3,    3], // min, max, interval matches new quantity
+            [true, 5, 5, 2, 4,    3], // can remove all items regardless rules
+
+            [false, 5, 6, 1, null, 1], // general rule
+            [false, 5, 2, 4, null, 1], // min above new quantity
+            [false, 5, 2, 1, 2,    1], // max below new quantity
+            [false, 5, 2, 1, null, 3], // shifted interval does not match new quantity
+            [false, 5, 2, 0, null, 2], // interval does not match new quantity
+            [false, 0, 1, 1, null, 1], // empty quote
         ];
     }
 
@@ -148,8 +105,8 @@ class ProductQuantityFacadeTest extends Unit
      * @dataProvider itemRemovalProductsWithoutProductQuantity
      *
      * @param bool $expectedIsSuccess
-     * @param float $quoteQuantity
-     * @param float $changeQuantity
+     * @param int $quoteQuantity
+     * @param int $changeQuantity
      *
      * @return void
      */
@@ -182,13 +139,9 @@ class ProductQuantityFacadeTest extends Unit
     {
         return [
             [true,  5, 4],
-            [true,  5.5, 4.5],
             [true,  5, 5],
-            [true,  5.5, 5.5],
             [false, 0, 1],
-            [false, 0, 1.5],
             [false, 5, 6],
-            [false, 5.5, 6.5],
         ];
     }
 
@@ -196,8 +149,8 @@ class ProductQuantityFacadeTest extends Unit
      * @dataProvider itemAdditionQuantities
      *
      * @param bool $expectedIsSuccess
-     * @param float $quoteQuantity
-     * @param float $changeQuantity
+     * @param int $quoteQuantity
+     * @param int $changeQuantity
      * @param int|null $minRestriction
      * @param int|null $maxRestriction
      * @param int|null $intervalRestriction
@@ -235,32 +188,20 @@ class ProductQuantityFacadeTest extends Unit
     public function itemAdditionQuantities()
     {
         return [
-            'general rule int stock' => [true, 5, 2, 1, null, 1],
-            'general rule float stock' => [true, 5.5, 2.5, 1, null, 1],
-            'min equals new int quantity' => [true, 5, 2, 7, null, 1],
-            'min equals new float quantity' => [true, 5.5, 2.5, 8, null, 1],
-            'max equals new int quantity' => [true, 5, 2, 7, 7,    1],
-            'max equals new float quantity' => [true, 5.5, 2.5, 7, 8,    1],
-            'shifted interval matches new int quantity' => [true, 5, 2, 7, null, 2],
-            'shifted interval matches new float quantity' => [true, 5.5, 2.5, 8, null, 2],
-            'interval matches new int quantity' => [true, 5, 2, 0, null, 7],
-            'interval matches new float quantity' => [true, 5.5, 2.5, 0, null, 8],
-            'min, max, interval matches new int quantity' => [true, 5, 2, 7, 7,    7],
-            'min, max, interval matches new float quantity' => [true, 5.5, 2.5, 8, 8,    8],
-            'empty quote int quantity' => [true, 0, 1, 1, null, 1],
-            'empty quote float quantity' => [true, 0, 1.5, 1, null, 0.5],
+            [true, 5, 2, 1, null, 1], // general rule
+            [true, 5, 2, 7, null, 1], // min equals new quantity
+            [true, 5, 2, 7, 7,    1], // max equals new quantity
+            [true, 5, 2, 7, null, 2], // shifted interval matches new quantity
+            [true, 5, 2, 0, null, 7], // interval matches new quantity
+            [true, 5, 2, 7, 7,    7], // min, max, interval matches new quantity
+            [true, 0, 1, 1, null, 1], // empty quote
 
-            'general rule 0 qty' => [false, 0, 0, 1, null, 1],
-            'general rule negative int qty' => [false, 0, -4, 1, null, 1],
-            'general rule negative float qty' => [false, 0, -4.5, 1, null, 1],
-            'min above new int quantity' => [false, 5, 2, 8, null, 1],
-            'min above new float quantity' => [false, 5.5, 2.3, 8, null, 1],
-            'max below new int quantity' => [false, 5, 2, 1, 6,    1],
-            'max below new float quantity' => [false, 5.5, 2.5, 1, 6,    1],
-            'shifted interval does not match new int quantity' => [false, 5, 2, 1, null, 4],
-            'shifted interval does not match new float quantity' => [false, 5.5, 2.5, 1, null, 4],
-            'interval does not match new int quantity' => [false, 5, 2, 0, null, 2],
-            'interval does not match new float quantity' => [false, 5.5, 2.5, 0, null, 3],
+            [false, 0, 0, 1, null, 1], // general rule 0 qty
+            [false, 0, -4, 1, null, 1], // general rule negative qty
+            [false, 5, 2, 8, null, 1], // min above new quantity
+            [false, 5, 2, 1, 6,    1], // max below new quantity
+            [false, 5, 2, 1, null, 4], // shifted interval does not match new quantity
+            [false, 5, 2, 0, null, 2], // interval does not match new quantity
         ];
     }
 
@@ -268,8 +209,8 @@ class ProductQuantityFacadeTest extends Unit
      * @dataProvider itemAdditionProductsWithoutProductQuantity
      *
      * @param bool $expectedIsSuccess
-     * @param float $quoteQuantity
-     * @param float $changeQuantity
+     * @param int $quoteQuantity
+     * @param int $changeQuantity
      *
      * @return void
      */
@@ -302,12 +243,9 @@ class ProductQuantityFacadeTest extends Unit
     {
         return [
             [true, 0, 1],
-            [true, 0.5, 1.5],
             [true, 2, 4],
-            [true, 2.5, 4.5],
             [false, 0, 0],
             [false, 0, -1],
-            [false, 0, -1.5],
         ];
     }
 
@@ -353,7 +291,7 @@ class ProductQuantityFacadeTest extends Unit
      */
     public function testNormalizeCartChangeTransferMinimumAdjustment(): void
     {
-        $expectedQuantity = 2.0;
+        $expectedQuantity = 2;
         $productTransfer = $this->tester->createProductWithSpecificProductQuantity($expectedQuantity, 100, 2);
         $expectedSku = $productTransfer->getSku();
 
@@ -372,7 +310,7 @@ class ProductQuantityFacadeTest extends Unit
      */
     public function testNormalizeCartChangeTransferMaximumAdjustment(): void
     {
-        $expectedQuantity = 100.0;
+        $expectedQuantity = 100;
         $productTransfer = $this->tester->createProductWithSpecificProductQuantity(2, $expectedQuantity, 2);
         $expectedSku = $productTransfer->getSku();
 
@@ -391,7 +329,7 @@ class ProductQuantityFacadeTest extends Unit
      */
     public function testNormalizeCartChangeTransferStepAdjustment(): void
     {
-        $expectedQuantity = 4.0;
+        $expectedQuantity = 4;
         $productTransfer = $this->tester->createProductWithSpecificProductQuantity(2, 100, 2);
         $expectedSku = $productTransfer->getSku();
 

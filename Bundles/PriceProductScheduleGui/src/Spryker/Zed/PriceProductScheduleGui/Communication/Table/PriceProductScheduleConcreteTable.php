@@ -18,6 +18,11 @@ class PriceProductScheduleConcreteTable extends AbstractScheduledPriceTable
     protected const TABLE_IDENTIFIER = 'price-product-schedule-concrete:';
 
     /**
+     * @var \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery
+     */
+    protected $priceProductScheduleQuery;
+
+    /**
      * @var int
      */
     protected $fkProduct;
@@ -31,11 +36,13 @@ class PriceProductScheduleConcreteTable extends AbstractScheduledPriceTable
      * @param int $fkProduct
      * @param int $fkPriceType
      * @param \Spryker\Zed\PriceProductScheduleGui\Communication\Formatter\RowFormatterInterface $rowFormatter
+     * @param \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery $priceProductScheduleQuery
      */
     public function __construct(
         int $fkProduct,
         int $fkPriceType,
-        RowFormatterInterface $rowFormatter
+        RowFormatterInterface $rowFormatter,
+        SpyPriceProductScheduleQuery $priceProductScheduleQuery
     ) {
         parent::__construct($rowFormatter);
         $this->fkProduct = $fkProduct;
@@ -45,6 +52,7 @@ class PriceProductScheduleConcreteTable extends AbstractScheduledPriceTable
             IndexController::REQUEST_KEY_ID_PRODUCT_CONCRETE => $fkProduct,
             IndexController::REQUEST_KEY_ID_PRICE_TYPE => $fkPriceType,
         ])->build();
+        $this->priceProductScheduleQuery = $priceProductScheduleQuery;
     }
 
     /**

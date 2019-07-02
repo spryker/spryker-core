@@ -40,21 +40,29 @@ class QuoteReader implements QuoteReaderInterface
     protected $quoteCollectionExpanderPlugins;
 
     /**
+     * @var \Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteExpanderPluginInterface[]
+     */
+    protected $quoteExpanderPlugins;
+
+    /**
      * @param \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToQuoteFacadeInterface $quoteFacade
      * @param \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\CartsRestApi\Business\PermissionChecker\QuotePermissionCheckerInterface $quotePermissionChecker
      * @param \Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionExpanderPluginInterface[] $quoteCollectionExpanderPlugins
+     * @param \Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteExpanderPluginInterface[] $quoteExpanderPlugins
      */
     public function __construct(
         CartsRestApiToQuoteFacadeInterface $quoteFacade,
         CartsRestApiToStoreFacadeInterface $storeFacade,
         QuotePermissionCheckerInterface $quotePermissionChecker,
-        array $quoteCollectionExpanderPlugins
+        array $quoteCollectionExpanderPlugins,
+        array $quoteExpanderPlugins
     ) {
         $this->quoteFacade = $quoteFacade;
         $this->storeFacade = $storeFacade;
         $this->quotePermissionChecker = $quotePermissionChecker;
         $this->quoteCollectionExpanderPlugins = $quoteCollectionExpanderPlugins;
+        $this->quoteExpanderPlugins = $quoteExpanderPlugins;
     }
 
     /**
@@ -82,7 +90,9 @@ class QuoteReader implements QuoteReaderInterface
                     ->setErrorIdentifier(CartsRestApiSharedConfig::ERROR_IDENTIFIER_CART_NOT_FOUND));
         }
 
-        return $quoteResponseTransfer;
+        $expandedQuoteTransfer = $this->executeQuoteExpanderPlugins($quoteResponseTransfer->getQuoteTransfer());
+
+        return $quoteResponseTransfer->setQuoteTransfer($expandedQuoteTransfer);
     }
 
     /**
@@ -121,5 +131,19 @@ class QuoteReader implements QuoteReaderInterface
         }
 
         return $quoteCollectionTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function executeQuoteExpanderPlugins(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        foreach ($this->quoteExpanderPlugins as $quoteExpanderPlugin) {
+            $quoteTransfer = $quoteExpanderPlugin->expandQuote($quoteTransfer);
+        }
+
+        return $quoteTransfer;
     }
 }

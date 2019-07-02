@@ -26,11 +26,11 @@ class ProductQuantityStorageToProductQuantityServiceBridge implements ProductQua
 
     /**
      * @param \Generated\Shared\Transfer\ProductQuantityTransfer $productQuantityTransfer
-     * @param float $quantity
+     * @param int $quantity
      *
-     * @return float
+     * @return int
      */
-    public function getNearestQuantity(ProductQuantityTransfer $productQuantityTransfer, float $quantity): float
+    public function getNearestQuantity(ProductQuantityTransfer $productQuantityTransfer, int $quantity): int
     {
         return $this->productQuantityService
             ->getNearestQuantity($productQuantityTransfer, $quantity);

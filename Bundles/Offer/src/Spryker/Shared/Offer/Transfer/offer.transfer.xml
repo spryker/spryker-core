@@ -17,7 +17,7 @@
 
         <property name="offerDiscount" type="int" />
         <property name="offerFee" type="int" />
-        <property name="stock" type="float" />
+        <property name="stock" type="int" />
         <property name="savingAmount" type="int" />
     </transfer>
 
