@@ -59,4 +59,40 @@ class ApplicationConfig extends AbstractBundleConfig
     {
         return $this->get(ApplicationConstants::PROJECT_NAMESPACE);
     }
+
+    /**
+     * @return string
+     */
+    public function getTwigEnvironmentName(): string
+    {
+        return $this->get(ApplicationConstants::TWIG_ENVIRONMENT_NAME, $this->getTwigEnvironmentNameDefaultValue());
+    }
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
+     * @return string
+     */
+    protected function getTwigEnvironmentNameDefaultValue(): string
+    {
+        return APPLICATION_ENV;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isPrettyErrorHandlerEnabled(): bool
+    {
+        return $this->get(ApplicationConstants::ENABLE_PRETTY_ERROR_HANDLER, $this->getPrettyErrorHandlerDefaultValue());
+    }
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
+     * @return bool
+     */
+    protected function getPrettyErrorHandlerDefaultValue(): bool
+    {
+        return APPLICATION_ENV === 'development';
+    }
 }
