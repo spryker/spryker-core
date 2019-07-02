@@ -68,4 +68,17 @@ interface SharedCartsRestApiFacadeInterface
      * @return \Generated\Shared\Transfer\ShareCartResponseTransfer
      */
     public function delete(ShareCartRequestTransfer $shareCartRequestTransfer): ShareCartResponseTransfer;
+
+    /**
+     * Specification:
+     * - Expands QuoteTransfer with QuotePermissionGroupTransfer if applicable.
+     * - Will expand only if QuoteTransfer::$customer is a company user the cart is shared with.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function expandQuoteWithQuotePermissionGroup(QuoteTransfer $quoteTransfer): QuoteTransfer;
 }

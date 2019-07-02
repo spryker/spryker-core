@@ -16,7 +16,7 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class ContentByTypeTable extends AbstractTable
 {
-    protected const FIELD_ACTION_CONTENT_ITEM = '<input type="radio" %s name="content-item" value="%s"/>';
+    protected const FIELD_ACTION_CONTENT_ITEM = '<input type="radio" %s data-content-item-name="%s" data-id="%d" name="content-item" value="%s"/>';
 
     /**
      * @var string
@@ -100,6 +100,11 @@ class ContentByTypeTable extends AbstractTable
     protected function prepareData(TableConfiguration $config): array
     {
         $this->contentQuery->filterByContentTypeKey($this->contentType);
+
+        if ($this->contentKey) {
+            $this->addOrderBySelectedKey();
+        }
+
         $contentItems = $this->runQuery($this->contentQuery, $config);
         $results = [];
 
@@ -117,6 +122,20 @@ class ContentByTypeTable extends AbstractTable
     }
 
     /**
+     * @return void
+     */
+    protected function addOrderBySelectedKey(): void
+    {
+        $keyColumn = SpyContentTableMap::COL_KEY;
+        $selectedKeyColumn = sprintf("(CASE WHEN $keyColumn = '%s' THEN 0 ELSE 1 END)", $this->contentKey);
+
+        $this->contentQuery
+            ->withColumn($selectedKeyColumn, 'selectedKey')
+            ->orderBy('selectedKey')
+            ->orderBy(SpyContentTableMap::COL_ID_CONTENT);
+    }
+
+    /**
      * @param array $contentItem
      * @param bool $checked
      *
@@ -129,6 +148,8 @@ class ContentByTypeTable extends AbstractTable
         return sprintf(
             static::FIELD_ACTION_CONTENT_ITEM,
             $selectedAttr,
+            $contentItem[ContentTableConstants::COL_NAME],
+            $contentItem[ContentTableConstants::COL_ID_CONTENT],
             $contentItem[ContentTableConstants::COL_KEY]
         );
     }
@@ -153,6 +174,12 @@ class ContentByTypeTable extends AbstractTable
      */
     protected function getTableUrl(): string
     {
-        return Url::generate($this->defaultUrl, [ListContentByTypeController::PARAM_CONTENT_TYPE => $this->contentType]);
+        $params = [ListContentByTypeController::PARAM_CONTENT_TYPE => $this->contentType];
+
+        if ($this->contentKey) {
+            $params[ListContentByTypeController::PARAM_CONTENT_KEY] = $this->contentKey;
+        }
+
+        return Url::generate($this->defaultUrl, $params);
     }
 }

@@ -27,4 +27,8 @@ use Codeception\Actor;
 class ProductBundleBusinessTester extends Actor
 {
     use _generated\ProductBundleBusinessTesterActions;
+
+   /**
+    * Define custom actions here
+    */
 }

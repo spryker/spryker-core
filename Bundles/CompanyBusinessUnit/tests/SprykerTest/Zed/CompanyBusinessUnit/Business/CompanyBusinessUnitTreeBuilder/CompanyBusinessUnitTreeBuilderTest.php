@@ -8,8 +8,8 @@
 namespace SprykerTest\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitTreeBuilder;
 
 use ArrayObject;
-use Codeception\Test\Unit;
-use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
+use Codeception\TestCase\Test;
+use PHPUnit\Framework\MockObject\MockObject;
 use ReflectionMethod;
 use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitTreeBuilder\CompanyBusinessUnitTreeBuilder;
 use Spryker\Zed\CompanyBusinessUnit\Persistence\CompanyBusinessUnitRepositoryInterface;
@@ -24,156 +24,49 @@ use Spryker\Zed\CompanyBusinessUnit\Persistence\CompanyBusinessUnitRepositoryInt
  * @group CompanyBusinessUnitTreeBuilderTest
  * Add your own group annotations below this line
  */
-class CompanyBusinessUnitTreeBuilderTest extends Unit
+class CompanyBusinessUnitTreeBuilderTest extends Test
 {
-    protected const LEVEL = 'level';
-    protected const CHILDREN = 'children';
-
     /**
-     * @var \Spryker\Zed\CompanyBusinessUnit\Persistence\CompanyBusinessUnitRepositoryInterface
+     * @var \SprykerTest\Zed\CompanyBusinessUnit\CompanyBusinessUnitTester
      */
-    protected $repositoryMock;
+    protected $tester;
 
     /**
-     * @var \ArrayObject
-     */
-    protected $companyBusinessUnits;
-
-    /**
-     * @var array
-     */
-    protected $companyBusinessUnitTreeArray = [
-        1 => [
-            self::LEVEL => 0,
-            self::CHILDREN => [
-                2 => [
-                    self::LEVEL => 1,
-                    self::CHILDREN => null,
-                ],
-                3 => [
-                    self::LEVEL => 1,
-                    self::CHILDREN => null,
-                ],
-            ],
-        ],
-        4 => [
-            self::LEVEL => 0,
-            self::CHILDREN => [
-                5 => [
-                    self::LEVEL => 1,
-                    self::CHILDREN => [
-                        6 => [
-                            self::LEVEL => 2,
-                            self::CHILDREN => null,
-                        ],
-                    ],
-                ],
-                7 => [
-                    self::LEVEL => 1,
-                    self::CHILDREN => null,
-                ],
-            ],
-        ],
-    ];
-
-    /**
+     * @dataProvider \SprykerTest\Zed\CompanyBusinessUnit\CompanyBusinessUnitTester::createCompanyBusinessUnitsProvider
+     *
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer[]|\ArrayObject $companyBusinessUnits
+     * @param array $companyBusinessUnitTreeArray
+     *
      * @return void
      */
-    protected function setUp()
+    public function testTreeBuilderCanBuildCorrectTree(ArrayObject $companyBusinessUnits, array $companyBusinessUnitTreeArray): void
     {
-        parent::setUp();
-
-        $this->repositoryMock = $this->getMockBuilder(CompanyBusinessUnitRepositoryInterface::class)->getMock();
-        $this->initCompanyBusinessUnits();
-    }
-
-    /**
-     * @return void
-     */
-    public function testTreeBuilderCanBuildCorrectTree(): void
-    {
+        // Arrange
         $companyBusinessUnitTreeBuilder = new ReflectionMethod(
             '\Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitTreeBuilder\CompanyBusinessUnitTreeBuilder',
             'buildTree'
         );
-
         $companyBusinessUnitTreeBuilder->setAccessible(true);
+        $companyBusinessUnitRepositoryMock = $this->createCompanyBusinessUnitRepositoryMock();
 
-        /** @var \Generated\Shared\Transfer\CompanyBusinessUnitTreeNodeTransfer[]|\ArrayObject $companyBusinessUnitTreeNodes */
+        // Act
         $companyBusinessUnitTree = $companyBusinessUnitTreeBuilder->invoke(
-            new CompanyBusinessUnitTreeBuilder($this->repositoryMock),
-            $this->companyBusinessUnits,
+            new CompanyBusinessUnitTreeBuilder($companyBusinessUnitRepositoryMock),
+            $companyBusinessUnits,
             null,
             0
         );
 
-        $companyBusinessUnitTreeMappedToArray = $this->mapTreeToArray($companyBusinessUnitTree);
-        $this->assertEquals($this->companyBusinessUnitTreeArray, $companyBusinessUnitTreeMappedToArray);
+        // Assert
+        $this->assertEquals($companyBusinessUnitTreeArray, $this->tester->mapTreeToArray($companyBusinessUnitTree));
     }
 
     /**
-     * @param \ArrayObject $customerCompanyBusinessUnitTreeNodes
-     *
-     * @return array
+     * @return \Spryker\Zed\CompanyBusinessUnit\Persistence\CompanyBusinessUnitRepositoryInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function mapTreeToArray(ArrayObject $customerCompanyBusinessUnitTreeNodes): array
+    protected function createCompanyBusinessUnitRepositoryMock(): MockObject
     {
-        $companyBusinessUnitTreeNodes = [];
-        foreach ($customerCompanyBusinessUnitTreeNodes as $companyBusinessUnitTreeNode) {
-            $companyBusinessUnitTreeNodeArray = [];
-
-            $companyBusinessUnitTreeNodeArray[static::LEVEL] = $companyBusinessUnitTreeNode->getLevel();
-
-            $children = $this->mapTreeToArray($companyBusinessUnitTreeNode->getChildren());
-            $idCompanyBusinessUnit = $companyBusinessUnitTreeNode->getCompanyBusinessUnit()->getIdCompanyBusinessUnit();
-
-            $companyBusinessUnitTreeNodeArray[static::CHILDREN] = $children ?: null;
-            $companyBusinessUnitTreeNodes[$idCompanyBusinessUnit] = $companyBusinessUnitTreeNodeArray;
-        }
-
-        return $companyBusinessUnitTreeNodes;
-    }
-
-    /**
-     * @return void
-     */
-    protected function initCompanyBusinessUnits(): void
-    {
-        $this->companyBusinessUnits = new ArrayObject();
-
-        /**
-         * tree structure: null -> A -> B, C
-         *
-         * (null -> A -> B, C means: A is parent of B and C, A is doesn`t have parent)
-         */
-        $this->companyBusinessUnits->append($this->createBusinessUnit(1, 'A', null));
-        $this->companyBusinessUnits->append($this->createBusinessUnit(2, 'B', 1));
-        $this->companyBusinessUnits->append($this->createBusinessUnit(3, 'C', 1));
-
-        /**
-         * tree structure: null -> D -> E -> G ; D -> F
-         */
-        $this->companyBusinessUnits->append($this->createBusinessUnit(4, 'D', null));
-        $this->companyBusinessUnits->append($this->createBusinessUnit(5, 'E', 4));
-        $this->companyBusinessUnits->append($this->createBusinessUnit(6, 'G', 5));
-        $this->companyBusinessUnits->append($this->createBusinessUnit(7, 'F', 4));
-    }
-
-    /**
-     * @param int $companyBusinessUnitId
-     * @param string $companyBusinessUnitName
-     * @param int|null $fkParentCompanyBusinessUnit
-     *
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer
-     */
-    protected function createBusinessUnit(int $companyBusinessUnitId, string $companyBusinessUnitName, ?int $fkParentCompanyBusinessUnit): CompanyBusinessUnitTransfer
-    {
-        $companyBusinessUnitTransfer = new CompanyBusinessUnitTransfer();
-        $companyBusinessUnitTransfer
-            ->setIdCompanyBusinessUnit($companyBusinessUnitId)
-            ->setName($companyBusinessUnitName)
-            ->setFkParentCompanyBusinessUnit($fkParentCompanyBusinessUnit);
-
-        return $companyBusinessUnitTransfer;
+        return $this->getMockBuilder(CompanyBusinessUnitRepositoryInterface::class)
+            ->getMock();
     }
 }
