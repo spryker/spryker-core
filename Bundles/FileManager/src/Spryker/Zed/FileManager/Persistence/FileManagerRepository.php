@@ -285,11 +285,10 @@ class FileManagerRepository extends AbstractRepository implements FileManagerRep
         }
 
         $fileTransfers = [];
+        $fileManagerMapper = $this->getFactory()->createFileManagerMapper();
 
         foreach ($fileEntities as $fileEntity) {
-            $fileTransfers[] = $this->getFactory()
-                ->createFileManagerMapper()
-                ->mapFileEntityToTransfer($fileEntity, new FileTransfer());
+            $fileTransfers[] = $fileManagerMapper->mapFileEntityToTransfer($fileEntity, new FileTransfer());
         }
 
         return $fileTransfers;
