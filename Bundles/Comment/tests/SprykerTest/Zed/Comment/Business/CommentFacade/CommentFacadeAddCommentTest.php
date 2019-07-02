@@ -95,12 +95,13 @@ class CommentFacadeAddCommentTest extends Unit
             ->setOwnerType($commentRequestTransfer->getOwnerType());
 
         // Act
-        $this->tester->getFacade()->addComment($commentRequestTransfer);
+        $commentThreadResponseTransfer = $this->tester->getFacade()->addComment($commentRequestTransfer);
         $commentThreadTransfer = $this->tester
             ->getFacade()
             ->findCommentThreadByOwner($commentRequestTransfer);
 
         // Assert
+        $this->assertCount(2, $commentThreadResponseTransfer->getCommentThread()->getComments());
         $this->assertCount(2, $commentThreadTransfer->getComments());
         $this->assertEquals(
             $firstCommentTransfer->getMessage(),
