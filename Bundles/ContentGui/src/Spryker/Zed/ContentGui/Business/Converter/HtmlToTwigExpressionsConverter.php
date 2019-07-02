@@ -65,13 +65,15 @@ class HtmlToTwigExpressionsConverter implements HtmlToTwigExpressionsConverterIn
     }
 
     /**
+     * Libxml requires a root node and <html> is treating the first element, so libxml finds as the root node.
+     * LoadHTML also converts non ISO-8859-1 charset, so the string's encoding needs to be converted before it goes to loading.
+     *
      * @param string $html
      *
      * @return string
      */
     protected function getHtmlForDomDocumentLoading(string $html): string
     {
-        // Libxml requires a root node and <html> is treating the first element, so libxml finds as the root node.
         return mb_convert_encoding("<html>$html</html>", static::HTML_OUTPUT_ENCODING, static::HTML_INPUT_ENCODING);
     }
 
