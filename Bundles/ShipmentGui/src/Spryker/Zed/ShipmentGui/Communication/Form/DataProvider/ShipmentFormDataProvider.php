@@ -122,7 +122,7 @@ class ShipmentFormDataProvider
         $idSalesShipment = $shipmentTransfer->getIdSalesShipment();
 
         if ($shipmentAddressTransfer === null && $idSalesShipment !== null) {
-            $shipmentAddressTransfer = $this->findOrderItemShipmentAddressTransfer($orderTransfer, $idSalesShipment);
+            $shipmentAddressTransfer = $this->findOrderItemShippingAddressTransfer($orderTransfer, $idSalesShipment);
         }
 
         if ($shipmentAddressTransfer !== null) {
@@ -302,7 +302,7 @@ class ShipmentFormDataProvider
      *
      * @return \Generated\Shared\Transfer\AddressTransfer|null
      */
-    protected function findOrderItemShipmentAddressTransfer(
+    protected function findOrderItemShippingAddressTransfer(
         OrderTransfer $orderTransfer,
         int $idSalesShipment
     ): ?AddressTransfer {
