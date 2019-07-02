@@ -149,15 +149,5 @@
         <property name="sumGrossAmount" type="int"/>
     </transfer>
 
-    <transfer name="Shipment">
-        <property name="method" type="ShipmentMethod"/>
-        <property name="shippingAddress" type="Address" />
-    </transfer>
-
-    <transfer name="ShipmentGroup">
-        <property name="shipment" type="Shipment" />
-        <property name="items" type="Item[]" singular="item" />
-    </transfer>
-
 </transfers>
 
