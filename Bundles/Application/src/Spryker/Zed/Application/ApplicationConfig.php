@@ -15,22 +15,22 @@ class ApplicationConfig extends AbstractBundleConfig
     /**
      * @const string
      */
-    public const HEADER_X_FRAME_OPTIONS = 'X-Frame-Options';
+    protected const HEADER_X_FRAME_OPTIONS = 'X-Frame-Options';
 
     /**
      * @const string
      */
-    public const HEADER_CONTENT_SECURITY_POLICY = 'Content-Security-Policy';
+    protected const HEADER_CONTENT_SECURITY_POLICY = 'Content-Security-Policy';
 
     /**
      * @const string
      */
-    public const HEADER_X_CONTENT_TYPE_OPTIONS = 'X-Content-Type-Options';
+    protected const HEADER_X_CONTENT_TYPE_OPTIONS = 'X-Content-Type-Options';
 
     /**
      * @const string
      */
-    public const HEADER_X_XSS_PROTECTION = 'X-XSS-Protection';
+    protected const HEADER_X_XSS_PROTECTION = 'X-XSS-Protection';
 
     /**
      * @const string
