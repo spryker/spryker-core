@@ -73,7 +73,7 @@ class EntityTagRequestValidator implements EntityTagRequestValidatorInterface
             $restRequest->getResource()->getId()
         );
 
-        if (!$entityTag || !$this->compareEntityTags($this->getHashFromHeader($headerValue), $entityTag)) {
+        if (!$this->compareEntityTags($this->getHashFromHeader($headerValue), $entityTag)) {
             return $restErrorCollectionTransfer->addRestError(
                 $this->entityTagRestResponseBuilder->createPreconditionFailedError()
             );
@@ -84,13 +84,13 @@ class EntityTagRequestValidator implements EntityTagRequestValidatorInterface
 
     /**
      * @param string $entityTagFromRequest
-     * @param string $entityTagFromStorage
+     * @param string|null $entityTagFromStorage
      *
      * @return bool
      */
-    protected function compareEntityTags(string $entityTagFromRequest, string $entityTagFromStorage): bool
+    protected function compareEntityTags(string $entityTagFromRequest, ?string $entityTagFromStorage): bool
     {
-        return ($entityTagFromStorage !== null && $entityTagFromStorage === $entityTagFromRequest);
+        return $entityTagFromStorage !== null && $entityTagFromStorage === $entityTagFromRequest;
     }
 
     /**
