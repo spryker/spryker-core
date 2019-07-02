@@ -10,6 +10,9 @@ namespace Spryker\Yves\Application;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractBundleConfig;
 
+/**
+ * @method \Spryker\Shared\Application\ApplicationConfig getSharedConfig()
+ */
 class ApplicationConfig extends AbstractBundleConfig
 {
     /**
@@ -50,5 +53,13 @@ class ApplicationConfig extends AbstractBundleConfig
     public function getTrustedHosts()
     {
         return $this->get(ApplicationConstants::YVES_TRUSTED_HOSTS, []);
+    }
+
+    /**
+     * @return array
+     */
+    public function getSecurityHeaders(): array
+    {
+        return $this->getSharedConfig()->getSecurityHeaders();
     }
 }

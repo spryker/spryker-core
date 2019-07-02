@@ -15,7 +15,7 @@ use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
- * @method \Spryker\Zed\Application\ApplicationConfig getConfig()
+ * @method \Spryker\Yves\Application\ApplicationConfig getConfig()
  */
 class HeadersSecurityEventDispatcherPlugin extends AbstractPlugin implements EventDispatcherPluginInterface
 {
