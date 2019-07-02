@@ -220,7 +220,7 @@ class CommentWriter implements CommentWriterInterface
      */
     protected function getCommentThread(CommentRequestTransfer $commentRequestTransfer): CommentThreadTransfer
     {
-        $commentThreadTransfer = $this->commentRepository->findCommentThread($commentRequestTransfer);
+        $commentThreadTransfer = $this->commentThreadReader->findCommentThreadByOwner($commentRequestTransfer);
 
         if ($commentThreadTransfer) {
             return $commentThreadTransfer;
