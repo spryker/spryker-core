@@ -98,7 +98,7 @@ class CommentThreadWriter implements CommentThreadWriterInterface
      *
      * @return \Generated\Shared\Transfer\CommentThreadResponseTransfer
      */
-    public function executeDuplicateCommentThreadTransaction(
+    protected function executeDuplicateCommentThreadTransaction(
         CommentFilterTransfer $commentFilterTransfer,
         CommentRequestTransfer $commentRequestTransfer
     ): CommentThreadResponseTransfer {
