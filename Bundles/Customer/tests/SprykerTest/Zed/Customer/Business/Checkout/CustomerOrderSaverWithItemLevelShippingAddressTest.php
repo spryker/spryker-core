@@ -184,17 +184,17 @@ class CustomerOrderSaverWithItemLevelShippingAddressTest extends Test
      */
     public function getQuoteWithThreeItemsAndTwoDifferentAddresses(): array
     {
-        $addresTransfer1 = (new AddressBuilder())->build();
+        $addressTransfer1 = (new AddressBuilder())->build();
         $addressTransfer2 = (new AddressBuilder())->build();
 
         $quoteTransfer = (new QuoteBuilder())
             ->withCustomer()
-            ->withBillingAddress($addresTransfer1->toArray())
+            ->withBillingAddress($addressTransfer1->toArray())
             ->withItem(
                 (new ItemBuilder())
                     ->withShipment(
                         (new ShipmentBuilder())
-                            ->withShippingAddress($addresTransfer1->toArray())
+                            ->withShippingAddress($addressTransfer1->toArray())
                     )
             )
             ->withAnotherItem(

@@ -104,8 +104,8 @@ class CustomerOrderSaverWithQuoteLevelShippingAddressTest extends Test
     public function saveCustomerOrderWithQuoteLevelShippingAddressAndAddressSavingIsNotSkipped(): array
     {
         return [
-            'quote shipping address is defined, billind is not same shipping; expected shipping and billing addresses saved' => $this->getQuoteWithBillingAddresIsNotSameAsShippingAddress(),
-            'quote shipping address is defined, billing is same shipping; expected shipping and billing addresses saved' => $this->getQuoteWithBillingAddresIsSameAsShippingAddress(),
+            'quote shipping address is defined, billind is not same shipping; expected shipping and billing addresses saved' => $this->getQuoteWithBillingAddressIsNotSameAsShippingAddress(),
+            'quote shipping address is defined, billing is same shipping; expected shipping and billing addresses saved' => $this->getQuoteWithBillingAddressIsSameAsShippingAddress(),
         ];
     }
 
@@ -115,15 +115,15 @@ class CustomerOrderSaverWithQuoteLevelShippingAddressTest extends Test
     public function saveCustomerOrderWithQuoteLevelShippingAddressAndAddressSavingIsSkipped(): array
     {
         return [
-            'quote shipping address is defined, billind is not same shipping; expected no shipping or billing addresses saved' => $this->getQuoteWithBillingAddresIsNotSameAsShippingAddress(),
-            'quote shipping address is defined, billing is same shipping; expected no shipping or billing addresses saved' => $this->getQuoteWithBillingAddresIsSameAsShippingAddress(),
+            'quote shipping address is defined, billind is not same shipping; expected no shipping or billing addresses saved' => $this->getQuoteWithBillingAddressIsNotSameAsShippingAddress(),
+            'quote shipping address is defined, billing is same shipping; expected no shipping or billing addresses saved' => $this->getQuoteWithBillingAddressIsSameAsShippingAddress(),
         ];
     }
 
     /**
      * @return array
      */
-    public function getQuoteWithBillingAddresIsSameAsShippingAddress(): array
+    public function getQuoteWithBillingAddressIsSameAsShippingAddress(): array
     {
         $quoteTransfer = (new QuoteBuilder([
             QuoteTransfer::BILLING_SAME_AS_SHIPPING => true,
@@ -141,7 +141,7 @@ class CustomerOrderSaverWithQuoteLevelShippingAddressTest extends Test
     /**
      * @return array
      */
-    public function getQuoteWithBillingAddresIsNotSameAsShippingAddress(): array
+    public function getQuoteWithBillingAddressIsNotSameAsShippingAddress(): array
     {
         $quoteTransfer = (new QuoteBuilder([
             QuoteTransfer::BILLING_SAME_AS_SHIPPING => false,
