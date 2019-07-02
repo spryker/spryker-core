@@ -21,6 +21,7 @@ use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
@@ -217,10 +218,12 @@ class CheckoutFacadeTest extends Unit
         $this->assertEquals(0, count($result->getErrors()));
 
         $salesFacade = $this->tester->getLocator()->sales()->facade();
-        $order = $salesFacade->getOrderByIdSalesOrder($result->getSaveOrder()->getIdSalesOrder());
-        $this->assertEquals(2, $order->getItems()->count());
-        $this->assertEquals($product1->getSku(), $order->getItems()[0]->getSku());
-        $this->assertEquals($product2->getSku(), $order->getItems()[1]->getSku());
+        $orderTransfer = $salesFacade->getOrderByIdSalesOrder($result->getSaveOrder()->getIdSalesOrder());
+        $orderItemsSkuList = $this->getOrderItemsSkuList($orderTransfer);
+
+        $this->assertEquals(2, $orderTransfer->getItems()->count());
+        $this->assertArrayHasKey($product1->getSku(), $orderItemsSkuList);
+        $this->assertArrayHasKey($product2->getSku(), $orderItemsSkuList);
     }
 
     /**
@@ -228,6 +231,7 @@ class CheckoutFacadeTest extends Unit
      */
     public function testCheckoutCreatesOrderItemsWithItemLevelShippingAddresses()
     {
+        // Arrange
         $product1 = $this->tester->haveProduct();
         $this->tester->haveProductInStock([StockProductTransfer::SKU => $product1->getSku()]);
         $product2 = $this->tester->haveProduct();
@@ -242,19 +246,22 @@ class CheckoutFacadeTest extends Unit
             ->withTotals()
             ->withCurrency()
             ->withBillingAddress()
-            ->withShippingAddress()
             ->build();
 
+        // Act
         $result = $this->tester->getFacade()->placeOrder($quoteTransfer);
 
+        // Assert
         $this->assertTrue($result->getIsSuccess());
         $this->assertEquals(0, count($result->getErrors()));
 
         $salesFacade = $this->tester->getLocator()->sales()->facade();
-        $order = $salesFacade->getOrderByIdSalesOrder($result->getSaveOrder()->getIdSalesOrder());
-        $this->assertEquals(2, $order->getItems()->count());
-        $this->assertEquals($product1->getSku(), $order->getItems()[0]->getSku());
-        $this->assertEquals($product2->getSku(), $order->getItems()[1]->getSku());
+        $orderTransfer = $salesFacade->getOrderByIdSalesOrder($result->getSaveOrder()->getIdSalesOrder());
+        $orderItemsSkuList = $this->getOrderItemsSkuList($orderTransfer);
+
+        $this->assertEquals(2, $orderTransfer->getItems()->count());
+        $this->assertArrayHasKey($product1->getSku(), $orderItemsSkuList);
+        $this->assertArrayHasKey($product2->getSku(), $orderItemsSkuList);
     }
 
     /**
@@ -803,5 +810,21 @@ class CheckoutFacadeTest extends Unit
         return (new ItemBuilder($seed))->withShipment(
             (new ShipmentBuilder())->withShippingAddress($address)
         );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return string[]
+     */
+    protected function getOrderItemsSkuList(OrderTransfer $orderTransfer): array
+    {
+        $orderItemsSkuList = [];
+
+        foreach ($orderTransfer->getItems() as $itemTransfer) {
+            $orderItemsSkuList[$itemTransfer->getSku()] = $itemTransfer->getSku();
+        }
+
+        return $orderItemsSkuList;
     }
 }
