@@ -134,6 +134,14 @@ var ContentItemDialog = function(
                 return $nodeInnerItems.length <= 1 && $nodeInnerItems.eq(0).is('br');
             };
 
+            this.isWidgetEmpty = function ($clickedNode) {
+                var $nodeInnerItems = $clickedNode.children();
+
+                return $nodeInnerItems.length <= 1 &&
+                    $nodeInnerItems.eq(0).is('span') &&
+                    $nodeInnerItems.children().length <= 1;
+            };
+
             this.removeItemFromEditor = function () {
                 var $clickedNode = this.context.invoke('contentItemPopover.getClickedNode');
 
@@ -146,8 +154,10 @@ var ContentItemDialog = function(
                 var $insertedNode = $(this.context.invoke('editor.createRange').sc);
                 var $nextNode = $insertedNode.next();
 
-                $insertedNode.removeAttr('');
-                $nextNode.remove();
+                if (this.isWidgetEmpty($nextNode) || this.isNodeEmpty($nextNode)) {
+                    $insertedNode.removeAttr('style');
+                    $nextNode.remove();
+                };
             };
 
             this.clearNode = function ($clickedNode) {
