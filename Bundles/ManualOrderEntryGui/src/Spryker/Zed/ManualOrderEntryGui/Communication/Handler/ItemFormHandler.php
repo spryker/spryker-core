@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToCartFacadeInterface;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToMessengerFacadeInterface;
-use Spryker\Zed\ManualOrderEntryGui\Dependency\Service\ManualOrderEntryGuiToUtilQuantityServiceInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class ItemFormHandler implements FormHandlerInterface
@@ -28,23 +27,15 @@ class ItemFormHandler implements FormHandlerInterface
     protected $messengerFacade;
 
     /**
-     * @var \Spryker\Zed\ManualOrderEntryGui\Dependency\Service\ManualOrderEntryGuiToUtilQuantityServiceInterface
-     */
-    protected $utilQuantityService;
-
-    /**
      * @param \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToCartFacadeInterface $cartFacade
      * @param \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToMessengerFacadeInterface $messengerFacade
-     * @param \Spryker\Zed\ManualOrderEntryGui\Dependency\Service\ManualOrderEntryGuiToUtilQuantityServiceInterface $utilQuantityService
      */
     public function __construct(
         ManualOrderEntryGuiToCartFacadeInterface $cartFacade,
-        ManualOrderEntryGuiToMessengerFacadeInterface $messengerFacade,
-        ManualOrderEntryGuiToUtilQuantityServiceInterface $utilQuantityService
+        ManualOrderEntryGuiToMessengerFacadeInterface $messengerFacade
     ) {
         $this->cartFacade = $cartFacade;
         $this->messengerFacade = $messengerFacade;
-        $this->utilQuantityService = $utilQuantityService;
     }
 
     /**
@@ -102,7 +93,7 @@ class ItemFormHandler implements FormHandlerInterface
         $addedSkus = [];
 
         foreach ($quoteTransfer->getManualOrder()->getItems() as $newItemTransfer) {
-            if ($this->isQuantityLessOrEqual($newItemTransfer->getQuantity(), 0)
+            if ($newItemTransfer->getQuantity() <= 0
                 || isset($addedSkus[$newItemTransfer->getSku()])
             ) {
                 continue;
@@ -116,17 +107,6 @@ class ItemFormHandler implements FormHandlerInterface
         }
 
         return $items;
-    }
-
-    /**
-     * @param float $firstQuantity
-     * @param float $secondQuantity
-     *
-     * @return bool
-     */
-    protected function isQuantityLessOrEqual(float $firstQuantity, float $secondQuantity): bool
-    {
-        return $this->utilQuantityService->isQuantityLessOrEqual($firstQuantity, $secondQuantity);
     }
 
     /**

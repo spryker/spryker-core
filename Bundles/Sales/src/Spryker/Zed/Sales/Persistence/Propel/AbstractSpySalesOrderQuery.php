@@ -194,12 +194,10 @@ abstract class AbstractSpySalesOrderQuery extends BaseSpySalesOrderQuery
     }
 
     /**
-     * @internal param int $idCustomer
-     *
-     * @deprecated
-     *
      * This is for bc reasons, because we don't have database foreign key from fk_customer.
      * Will be removed in the future.
+     *
+     * @deprecated
      *
      * @param int|null $fkCustomer
      * @param string $comparison

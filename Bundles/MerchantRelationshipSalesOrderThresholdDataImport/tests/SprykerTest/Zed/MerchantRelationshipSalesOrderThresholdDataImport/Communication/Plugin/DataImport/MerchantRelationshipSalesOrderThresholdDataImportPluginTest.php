@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\MerchantRelationshipSalesOrderThresholdDataImport\Communication\Plugin\DataImport;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
@@ -95,7 +96,9 @@ class MerchantRelationshipSalesOrderThresholdDataImportPluginTest extends Unit
      */
     protected function createMerchantRelationship(int $idMerchant, string $key): void
     {
-        $companyBusinessUnitTransfer = $this->tester->haveCompanyBusinessUnit();
+        $companyBusinessUnitTransfer = $this->tester->haveCompanyBusinessUnit([
+            CompanyBusinessUnitTransfer::FK_COMPANY => $this->tester->haveCompany()->getIdCompany(),
+        ]);
 
         $this->tester->haveMerchantRelationship([
             SpyMerchantRelationshipEntityTransfer::MERCHANT_RELATIONSHIP_KEY => $key,

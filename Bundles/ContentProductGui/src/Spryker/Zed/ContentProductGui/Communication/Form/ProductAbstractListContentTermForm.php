@@ -118,7 +118,7 @@ class ProductAbstractListContentTermForm extends AbstractType
             ],
         ])->get(static::FIELD_ID_ABSTRACT_PRODUCTS)->addEventListener(
             FormEvents::PRE_SUBMIT,
-            function (FormEvent $event) {
+            function (FormEvent $event): void {
                 if (!$event->getData()) {
                     return;
                 }

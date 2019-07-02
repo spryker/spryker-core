@@ -62,7 +62,7 @@ class OrderItemExpander implements OrderItemExpanderInterface
         $packagingUnitLeadProductSku = $itemTransfer->getAmountLeadProduct()->getProduct()->getSku();
         $packagingUnitAmount = $itemTransfer->getAmount();
 
-        $salesOrderItemEntity->setAmount((string)$packagingUnitAmount);
+        $salesOrderItemEntity->setAmount($packagingUnitAmount);
         $salesOrderItemEntity->setAmountSku($packagingUnitLeadProductSku);
 
         return $salesOrderItemEntity;
