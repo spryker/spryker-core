@@ -131,7 +131,7 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
     public function createQuoteItemAdder(): QuoteItemAdderInterface
     {
         return new QuoteItemAdder(
-            $this->getCartFacade(),
+            $this->getPersistentCartFacade(),
             $this->createQuoteReader(),
             $this->createQuoteItemMapper(),
             $this->createQuotePermissionChecker()
