@@ -36,6 +36,8 @@ class DiscountOrderHydratePluginTest extends Unit
     protected const DISCOUNT_NAME = 'Discount order saver tester';
     protected const FIELD_NAME_NAME = 'name';
 
+    protected const FIELD_DISPLAY_NAME = 'display_name';
+
     /**
      * @var \SprykerTest\Zed\Discount\DiscountCommunicationTester
      */
@@ -59,6 +61,26 @@ class DiscountOrderHydratePluginTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testOrderWithSameDiscountNameShouldCorrectlyHydrateThem(): void
+    {
+        // Arrange
+        $orderTransfer = $this->createOrder();
+        $this->createDiscountForOrder($orderTransfer);
+        $this->createDiscountForOrder($orderTransfer);
+        $discountOrderHydratePlugin = $this->createDiscountOrderHydratePlugin();
+
+        // Act
+        $orderTransfer = $discountOrderHydratePlugin->hydrate($orderTransfer);
+
+        // Assert
+        foreach ($orderTransfer->getItems()[0]->getCalculatedDiscounts() as $calculatedDiscountTransfer) {
+            $this->assertEquals(1, $calculatedDiscountTransfer->getQuantity());
+        }
+    }
+
+    /**
      * @param int $idSalesOrder
      * @param int $idSalesOrderItem
      *
@@ -71,6 +93,7 @@ class DiscountOrderHydratePluginTest extends Unit
             $this->getDiscountPhpFieldName(SpySalesDiscountTableMap::COL_FK_SALES_ORDER_ITEM) => $idSalesOrderItem,
             static::FIELD_NAME_AMOUNT => static::DISCOUNT_AMOUNT,
             static::FIELD_NAME_NAME => static::DISCOUNT_NAME,
+            static::FIELD_DISPLAY_NAME => static::DISCOUNT_NAME,
         ];
     }
 
