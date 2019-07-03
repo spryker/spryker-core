@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\OfferTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Offer\Dependency\Facade\OfferToCartFacadeInterface;
-use Spryker\Zed\Offer\Dependency\Service\OfferToUtilQuantityServiceInterface;
 
 class OfferCalculator implements OfferCalculatorInterface
 {
@@ -22,20 +21,11 @@ class OfferCalculator implements OfferCalculatorInterface
     protected $cartFacade;
 
     /**
-     * @var \Spryker\Zed\Offer\Dependency\Service\OfferToUtilQuantityServiceInterface
-     */
-    protected $utilQuantityService;
-
-    /**
      * @param \Spryker\Zed\Offer\Dependency\Facade\OfferToCartFacadeInterface $cartFacade
-     * @param \Spryker\Zed\Offer\Dependency\Service\OfferToUtilQuantityServiceInterface $utilQuantityService
      */
-    public function __construct(
-        OfferToCartFacadeInterface $cartFacade,
-        OfferToUtilQuantityServiceInterface $utilQuantityService
-    ) {
+    public function __construct(OfferToCartFacadeInterface $cartFacade)
+    {
         $this->cartFacade = $cartFacade;
-        $this->utilQuantityService = $utilQuantityService;
     }
 
     /**
@@ -105,7 +95,7 @@ class OfferCalculator implements OfferCalculatorInterface
         $quoteTransfer->setItems(new ArrayObject());
 
         foreach ($items as $itemTransfer) {
-            if ($this->isQuantityLessOrEqual($itemTransfer->getQuantity(), 0)) {
+            if ($itemTransfer->getQuantity() <= 0) {
                 continue;
             }
 
@@ -117,17 +107,6 @@ class OfferCalculator implements OfferCalculatorInterface
         }
 
         return $quoteTransfer;
-    }
-
-    /**
-     * @param float $firstQuantity
-     * @param float $secondQuantity
-     *
-     * @return bool
-     */
-    protected function isQuantityLessOrEqual(float $firstQuantity, float $secondQuantity): bool
-    {
-        return $this->utilQuantityService->isQuantityLessOrEqual($firstQuantity, $secondQuantity);
     }
 
     /**

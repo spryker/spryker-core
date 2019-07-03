@@ -15,6 +15,8 @@ use Spryker\Zed\CartsRestApi\Business\Quote\QuoteCreator;
 use Spryker\Zed\CartsRestApi\Business\Quote\QuoteCreatorInterface;
 use Spryker\Zed\CartsRestApi\Business\Quote\QuoteDeleter;
 use Spryker\Zed\CartsRestApi\Business\Quote\QuoteDeleterInterface;
+use Spryker\Zed\CartsRestApi\Business\Quote\QuoteErrorIdentifierAdder;
+use Spryker\Zed\CartsRestApi\Business\Quote\QuoteErrorIdentifierAdderInterface;
 use Spryker\Zed\CartsRestApi\Business\Quote\QuoteReader;
 use Spryker\Zed\CartsRestApi\Business\Quote\QuoteReaderInterface;
 use Spryker\Zed\CartsRestApi\Business\Quote\QuoteUpdater;
@@ -68,7 +70,8 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
             $this->getQuoteFacade(),
             $this->getStoreFacade(),
             $this->createQuotePermissionChecker(),
-            $this->getQuoteCollectionExpanderPlugins()
+            $this->getQuoteCollectionExpanderPlugins(),
+            $this->getQuoteExpanderPlugins()
         );
     }
 
@@ -78,8 +81,9 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
     public function createQuoteCreator(): QuoteCreatorInterface
     {
         return new QuoteCreator(
-            $this->getQuoteCreatorPlugins(),
-            $this->getStoreFacade()
+            $this->getQuoteCreatorPlugin(),
+            $this->getStoreFacade(),
+            $this->createQuoteErrorIdentifierAdder()
         );
     }
 
@@ -89,7 +93,7 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
     public function createSingleQuoteCreator(): SingleQuoteCreatorInterface
     {
         return new SingleQuoteCreator(
-            $this->createQuoteCreator(),
+            $this->getPersistentCartFacade(),
             $this->createQuoteReader()
         );
     }
@@ -116,7 +120,8 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
             $this->getCartFacade(),
             $this->createQuoteReader(),
             $this->createQuoteMapper(),
-            $this->createQuotePermissionChecker()
+            $this->createQuotePermissionChecker(),
+            $this->createQuoteErrorIdentifierAdder()
         );
     }
 
@@ -126,7 +131,7 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
     public function createQuoteItemAdder(): QuoteItemAdderInterface
     {
         return new QuoteItemAdder(
-            $this->getPersistentCartFacade(),
+            $this->getCartFacade(),
             $this->createQuoteReader(),
             $this->createQuoteItemMapper(),
             $this->createQuotePermissionChecker()
@@ -180,6 +185,14 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
             $this->createQuoteItemReader(),
             $this->createQuotePermissionChecker()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\CartsRestApi\Business\Quote\QuoteErrorIdentifierAdderInterface
+     */
+    public function createQuoteErrorIdentifierAdder(): QuoteErrorIdentifierAdderInterface
+    {
+        return new QuoteErrorIdentifierAdder();
     }
 
     /**
@@ -241,7 +254,7 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteCreatorPluginInterface
      */
-    public function getQuoteCreatorPlugins(): QuoteCreatorPluginInterface
+    public function getQuoteCreatorPlugin(): QuoteCreatorPluginInterface
     {
         return $this->getProvidedDependency(CartsRestApiDependencyProvider::PLUGIN_QUOTE_CREATOR);
     }
@@ -252,5 +265,13 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
     protected function getQuoteCollectionExpanderPlugins(): array
     {
         return $this->getProvidedDependency(CartsRestApiDependencyProvider::PLUGINS_QUOTE_COLLECTION_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteExpanderPluginInterface[]
+     */
+    protected function getQuoteExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(CartsRestApiDependencyProvider::PLUGINS_QUOTE_EXPANDER);
     }
 }

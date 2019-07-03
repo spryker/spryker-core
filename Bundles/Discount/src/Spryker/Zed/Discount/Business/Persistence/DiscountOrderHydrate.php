@@ -206,7 +206,7 @@ class DiscountOrderHydrate implements DiscountOrderHydrateInterface
      *
      * @param \Orm\Zed\Sales\Persistence\SpySalesDiscount $salesOrderDiscountEntity
      *
-     * @return float
+     * @return int
      */
     protected function getCalculatedDiscountQuantity(SpySalesDiscount $salesOrderDiscountEntity)
     {

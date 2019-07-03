@@ -17,7 +17,7 @@ use Symfony\Component\Validator\ConstraintValidator;
 class ContentProductAbstractListConstraintValidator extends ConstraintValidator
 {
     /**
-     * @param array $abstractProductIds The value that should be validated
+     * @param mixed $abstractProductIds The value that should be validated
      * @param \Symfony\Component\Validator\Constraint|\Spryker\Zed\ContentProductGui\Communication\Form\Constraints\ContentProductAbstractListConstraint $constraint The constraint for the validation
      *
      * @throws \InvalidArgumentException
@@ -56,11 +56,13 @@ class ContentProductAbstractListConstraintValidator extends ConstraintValidator
     protected function addViolations(ContentParameterMessageTransfer $parameterMessageTransfer): void
     {
         foreach ($parameterMessageTransfer->getMessages() as $messageTransfer) {
-            $text = strtr($messageTransfer->getValue(), $messageTransfer->getParameters());
-            $this->context
-                ->buildViolation($text)
-                ->atPath(ProductAbstractListContentTermForm::FIELD_ID_ABSTRACT_PRODUCTS)
-                ->addViolation();
+            $constraintViolation = $this->context
+                ->buildViolation($messageTransfer->getValue())
+                ->atPath(ProductAbstractListContentTermForm::FIELD_ID_ABSTRACT_PRODUCTS);
+            foreach ($messageTransfer->getParameters() as $parameter => $value) {
+                $constraintViolation->setParameter($parameter, $value);
+            }
+            $constraintViolation->addViolation();
         }
     }
 }

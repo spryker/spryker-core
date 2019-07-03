@@ -63,45 +63,54 @@ class CategoryNodeStorage implements CategoryNodeStorageInterface
      */
     protected function getStorageData(int $idCategoryNode, string $localeName)
     {
-        $categoryNodeKey = $this->generateKey($idCategoryNode, $localeName);
-        $categoryData = $this->storageClient->get($categoryNodeKey);
-
         if (CategoryStorageConfig::isCollectorCompatibilityMode()) {
-            $categoryNodeKey = sprintf(
-                '%s.%s.resource.categorynode.%s',
-                strtolower(Store::getInstance()->getStoreName()),
-                strtolower($localeName),
-                $idCategoryNode
-            );
-            $collectorData = $this->storageClient->get($categoryNodeKey);
-
-            if (!$collectorData) {
-                return null;
-            }
-
-            if (empty($collectorData['parents'])) {
-                unset($collectorData['parents']);
-            }
-
-            if (empty($collectorData['children'])) {
-                unset($collectorData['children']);
-            }
-
-            if (isset($collectorData['parents']) && is_array($collectorData['parents'])) {
-                $collectorData['parents'] = $this->filterCollectorDataRecursive($collectorData['parents']);
-            }
-
-            if (isset($collectorData['children']) && is_array($collectorData['children'])) {
-                $collectorData['children'] = $this->filterCollectorDataRecursive($collectorData['children']);
-            }
-
-            return $collectorData;
+            return $this->getCollectorStorageData($idCategoryNode, $localeName);
         }
 
         $categoryNodeKey = $this->generateKey($idCategoryNode, $localeName);
         $categoryData = $this->storageClient->get($categoryNodeKey);
 
         return $categoryData;
+    }
+
+    /**
+     * @param int $idCategoryNode
+     * @param string $localeName
+     *
+     * @return array|null
+     */
+    protected function getCollectorStorageData(int $idCategoryNode, string $localeName): ?array
+    {
+        $categoryNodeKey = sprintf(
+            '%s.%s.resource.categorynode.%s',
+            strtolower(Store::getInstance()->getStoreName()),
+            strtolower($localeName),
+            $idCategoryNode
+        );
+
+        $collectorData = $this->storageClient->get($categoryNodeKey);
+
+        if (!$collectorData) {
+            return null;
+        }
+
+        if (empty($collectorData['parents'])) {
+            unset($collectorData['parents']);
+        }
+
+        if (empty($collectorData['children'])) {
+            unset($collectorData['children']);
+        }
+
+        if (isset($collectorData['parents']) && is_array($collectorData['parents'])) {
+            $collectorData['parents'] = $this->filterCollectorDataRecursive($collectorData['parents']);
+        }
+
+        if (isset($collectorData['children']) && is_array($collectorData['children'])) {
+            $collectorData['children'] = $this->filterCollectorDataRecursive($collectorData['children']);
+        }
+
+        return $collectorData;
     }
 
     /**
