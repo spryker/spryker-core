@@ -33,28 +33,18 @@ module.exports = function(trigger, target, inputDate) {
         $(target).hide();
     }
 
-    function toggleDisablingFields() {
+    function setDisableFields() {
         var selectedOptionValue = $(trigger).val();
         var $requiredFields = $(target).find('select[required], input[required]');
 
-        if (!selectedOptionValue) {
-            setDisableFields($requiredFields, false);
-
-            return;
-        }
-
-        setDisableFields($requiredFields, true);
-    }
-
-    function setDisableFields($requiredFields, isDisabled) {
         $requiredFields.each(function() {
-            $(this).attr('disabled', isDisabled);
+            $(this).attr('disabled', !!selectedOptionValue);
         });
     }
 
     function init() {
         toggleForm();
-        toggleDisablingFields();
+        setDisableFields();
     }
 
     init();
