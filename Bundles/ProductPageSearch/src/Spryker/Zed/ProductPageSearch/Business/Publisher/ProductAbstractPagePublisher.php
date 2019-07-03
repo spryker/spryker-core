@@ -481,17 +481,17 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
     ) {
         foreach ($productAbstractStores as $productAbstractStore) {
             $storeName = $productAbstractStore['SpyStore']['name'];
-            $productAbstractLocalizedEntity[ProductPageSearchConfig::PRODUCT_ABSTRACT_PAGE_LOAD_DATA] = $productPayloadTransfer;
 
+            if (!$this->isValidStoreLocale($storeName, $localeName)) {
+                continue;
+            }
+
+            $productAbstractLocalizedEntity[ProductPageSearchConfig::PRODUCT_ABSTRACT_PAGE_LOAD_DATA] = $productPayloadTransfer;
             $searchEntity = isset($mappedProductAbstractPageSearchEntities[$idProductAbstract][$storeName][$localeName]) ?
                 $mappedProductAbstractPageSearchEntities[$idProductAbstract][$storeName][$localeName] :
                 new SpyProductAbstractPageSearch();
 
             unset($mappedProductAbstractPageSearchEntities[$idProductAbstract][$storeName][$localeName]);
-
-            if (!$this->isValidStoreLocale($storeName, $localeName)) {
-                continue;
-            }
 
             $pairs[] = [
                 static::PRODUCT_ABSTRACT_LOCALIZED_ENTITY => $productAbstractLocalizedEntity,
