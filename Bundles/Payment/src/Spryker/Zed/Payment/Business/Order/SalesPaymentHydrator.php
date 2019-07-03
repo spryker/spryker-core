@@ -108,10 +108,6 @@ class SalesPaymentHydrator implements SalesPaymentHydratorInterface
             $priceToPay = $priceToPay - $paymentTransfer->getAvailableAmount();
         }
 
-        if ($priceToPay < 0) {
-            return 0;
-        }
-
         return $priceToPay;
     }
 
