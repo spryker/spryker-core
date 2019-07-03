@@ -54,7 +54,7 @@ class PaginationParametersHttpRequestValidator implements PaginationParametersHt
             return false;
         }
 
-        if ($limit && !filter_var($limit, FILTER_VALIDATE_INT)) {
+        if ($limit && filter_var($limit, FILTER_VALIDATE_INT) !== false) {
             return false;
         }
 
