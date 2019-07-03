@@ -30,7 +30,7 @@ interface FileManagerStorageConstants
 
     /**
      * Specification:
-     * - Resource name, this will use for key generating
+     * - Resource name, this will use for key generating.
      *
      * @api
      */
