@@ -22,8 +22,6 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
 class ContentBannerWriterStep extends PublishAwareStep implements DataImportStepInterface
 {
-    protected const ERROR_MESSAGE_REQUIRED_DEFAULT_LOCALE = "Default locale is required.";
-
     /**
      * @var \Spryker\Zed\ContentBannerDataImport\Dependency\Service\ContentBannerDataImportToUtilEncodingInterface
      */
@@ -112,7 +110,7 @@ class ContentBannerWriterStep extends PublishAwareStep implements DataImportStep
         }
 
         if (!$defaultLocaleIsPresent) {
-            throw new InvalidDataException(static::ERROR_MESSAGE_REQUIRED_DEFAULT_LOCALE);
+            throw new InvalidDataException('Default locale is required.');
         }
     }
 
