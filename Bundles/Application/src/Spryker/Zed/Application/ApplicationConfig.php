@@ -11,39 +11,39 @@ use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 /**
- * @method \Spryker\Shared\Application\ApplicationConfig getSharedConfig()
+ * @method \Spryker\Zed\Application\ApplicationConfig getSharedConfig()
  */
 class ApplicationConfig extends AbstractBundleConfig
 {
     /**
      * @const string
      */
-    protected const HEADER_X_FRAME_OPTIONS = 'X-Frame-Options';
+    protected const HEADER_X_FRAME_OPTIONS_VALUE = 'SAMEORIGIN';
 
     /**
      * @const string
      */
-    protected const HEADER_CONTENT_SECURITY_POLICY = 'Content-Security-Policy';
+    protected const HEADER_CONTENT_SECURITY_POLICY_VALUE = 'frame-ancestors \'self\'';
 
     /**
      * @const string
      */
-    protected const HEADER_X_CONTENT_TYPE_OPTIONS = 'X-Content-Type-Options';
+    protected const HEADER_X_CONTENT_TYPE_OPTIONS_VALUE = 'nosniff';
 
     /**
      * @const string
      */
-    protected const HEADER_X_XSS_PROTECTION = 'X-XSS-Protection';
+    protected const HEADER_X_XSS_PROTECTION_VALUE = '1; mode=block';
 
     /**
      * @const string
      */
-    protected const HEADER_REFERRER_POLICY = 'Referrer-Policy';
+    protected const HEADER_REFERRER_POLICY_VALUE = 'same-origin';
 
     /**
      * @const string
      */
-    protected const HEADER_FEATURE_POLICY = 'Feature-Policy';
+    protected const HEADER_FEATURE_POLICY_VALUE = '';
 
     /**
      * @return string
@@ -135,12 +135,12 @@ class ApplicationConfig extends AbstractBundleConfig
     public function getSecurityHeaders(): array
     {
         return [
-            static::HEADER_X_FRAME_OPTIONS => 'SAMEORIGIN',
-            static::HEADER_CONTENT_SECURITY_POLICY => 'frame-ancestors \'self\'',
-            static::HEADER_X_CONTENT_TYPE_OPTIONS => 'nosniff',
-            static::HEADER_X_XSS_PROTECTION => '1; mode=block',
-            static::HEADER_REFERRER_POLICY => 'same-origin',
-            static::HEADER_FEATURE_POLICY => '',
+            'X-Frame-Options' => static::HEADER_X_FRAME_OPTIONS_VALUE,
+            'Content-Security-Policy' => static::HEADER_CONTENT_SECURITY_POLICY_VALUE,
+            'X-Content-Type-Options' => static::HEADER_X_CONTENT_TYPE_OPTIONS_VALUE,
+            'X-XSS-Protection' => static::HEADER_X_XSS_PROTECTION_VALUE,
+            'Referrer-Policy' => static::HEADER_REFERRER_POLICY_VALUE,
+            'Feature-Policy' => static::HEADER_FEATURE_POLICY_VALUE,
         ];
     }
 }
