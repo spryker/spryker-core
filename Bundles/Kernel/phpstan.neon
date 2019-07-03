@@ -1,4 +1,9 @@
 parameters:
+    dynamicConstantNames:
+        - APPLICATION
+        - APPLICATION_ENV
+        - APPLICATION_STORE
+
     ignoreErrors:
         - '#Call to an undefined method .+ActiveRecordInterface::save\(\)#'
         - '#Access to an undefined static property .+EntityTransferInterface::\$entityNamespace.#'

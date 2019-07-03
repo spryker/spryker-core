@@ -8,9 +8,7 @@
 namespace Spryker\Zed\Application\Communication;
 
 use Spryker\Shared\Application\EventListener\KernelLogListener;
-use Spryker\Shared\Config\Environment;
 use Spryker\Shared\Log\LoggerTrait;
-use Spryker\Zed\Application\ApplicationDependencyProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\EventListener\SaveSessionListener;
@@ -39,13 +37,5 @@ class ApplicationCommunicationFactory extends AbstractCommunicationFactory
     public function createSaveSessionEventSubscriber(): EventSubscriberInterface
     {
         return new SaveSessionListener();
-    }
-
-    /**
-     * @return \Spryker\Shared\Config\Environment
-     */
-    public function getEnvironment(): Environment
-    {
-        return $this->getProvidedDependency(ApplicationDependencyProvider::ENVIRONMENT);
     }
 }

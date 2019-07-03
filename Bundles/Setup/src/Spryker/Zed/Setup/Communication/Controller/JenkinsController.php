@@ -8,9 +8,6 @@
 namespace Spryker\Zed\Setup\Communication\Controller;
 
 use ErrorException;
-use Spryker\Shared\Config\Config;
-use Spryker\Shared\Config\Environment;
-use Spryker\Shared\Setup\SetupConstants;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 
 /**
@@ -37,13 +34,6 @@ class JenkinsController extends AbstractController
     ];
 
     /**
-     * @return void
-     */
-    public function init()
-    {
-    }
-
-    /**
      * @param string $url
      * @param string $body
      *
@@ -53,7 +43,7 @@ class JenkinsController extends AbstractController
      */
     private function callJenkins($url, $body = '')
     {
-        $postUrl = Config::get(SetupConstants::JENKINS_BASE_URL) . '/' . $url;
+        $postUrl = $this->getFactory()->getConfig()->getJenkinsUrl() . '/' . $url;
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $postUrl);
         curl_setopt($ch, CURLOPT_POST, 1);
@@ -86,7 +76,7 @@ class JenkinsController extends AbstractController
             return $schedule;
         }
 
-        if (Environment::isNotProduction()) {
+        if ($this->getFactory()->getConfig()->isSchedulerEnabled() === false) {
             // Non-production - don't run automatically via Jenkins
             return '';
         } else {
@@ -116,7 +106,7 @@ class JenkinsController extends AbstractController
      */
     protected function getCommand($command, $store)
     {
-        if (Environment::getInstance()->isNotDevelopment()) {
+        if ($this->getFactory()->getConfig()->isDeployVarsEnabled()) {
             return "<command>[ -f ../../../../../../../current/deploy/vars ] &amp;&amp; . ../../../../../../../current/deploy/vars
 [ -f ../../../../../../current/deploy/vars ] &amp;&amp; . ../../../../../../current/deploy/vars
 [ -f ../../../../../current/deploy/vars ] &amp;&amp; . ../../../../../current/deploy/vars
