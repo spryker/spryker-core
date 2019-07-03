@@ -5,21 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Product\Business\Product\Suggest;
+namespace Spryker\Zed\CmsBlockProductConnector\Dependency\Facade;
 
 use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\ProductAbstractSuggestionCollectionTransfer;
 
-interface ProductSuggesterInterface
+interface CmsBlockProductConnectorToProductFacadeInterface
 {
-    /**
-     * @param string $suggestion
-     * @param int|null $limit
-     *
-     * @return string[]
-     */
-    public function suggestProductAbstract(string $suggestion, ?int $limit = null): array;
-
     /**
      * @param string $suggestion
      * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
@@ -27,12 +19,4 @@ interface ProductSuggesterInterface
      * @return \Generated\Shared\Transfer\ProductAbstractSuggestionCollectionTransfer
      */
     public function getPaginatedProductAbstractSuggestions(string $suggestion, PaginationTransfer $paginationTransfer): ProductAbstractSuggestionCollectionTransfer;
-
-    /**
-     * @param string $suggestion
-     * @param int|null $limit
-     *
-     * @return string[]
-     */
-    public function suggestProductConcrete(string $suggestion, ?int $limit = null): array;
 }
