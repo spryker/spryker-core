@@ -281,7 +281,7 @@ class CmsPageStorageWriter implements CmsPageStorageWriterInterface
         array $cmsPageEntities,
         array $cmsPageStorageEntities
     ): array {
-        $localeNames = $this->getAllLocaleNames();
+        $localeNames = $this->store->getLocales();
 
         $pairs = [];
 
@@ -297,21 +297,6 @@ class CmsPageStorageWriter implements CmsPageStorageWriterInterface
         $pairs = $this->pairRemainingCmsPageStorageEntities($cmsPageStorageEntities, $pairs);
 
         return $pairs;
-    }
-
-    /**
-     * @return string[]
-     */
-    protected function getAllLocaleNames(): array
-    {
-        $localeNames = [];
-        foreach ($this->store->getAllowedStores() as $storeName) {
-            foreach ($this->store->getLocalesPerStore($storeName) as $localeName) {
-                $localeNames[$localeName] = $localeName;
-            }
-        }
-
-        return array_values($localeNames);
     }
 
     /**
