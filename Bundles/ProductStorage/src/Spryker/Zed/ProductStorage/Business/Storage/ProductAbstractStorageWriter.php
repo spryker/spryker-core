@@ -225,13 +225,15 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
         foreach ($productAbstractStoreEntities as $productAbstractStoreEntity) {
             $storeName = $productAbstractStoreEntity['SpyStore']['name'];
 
-            if (!$this->isValidStoreLocale($storeName, $localeName)) {
-                continue;
-            }
-
             $productAbstractStorageEntity = isset($mappedProductAbstractStorageEntities[$idProduct][$storeName][$localeName]) ?
                 $mappedProductAbstractStorageEntities[$idProduct][$storeName][$localeName] :
                 new SpyProductAbstractStorage();
+
+            unset($mappedProductAbstractStorageEntities[$idProduct][$storeName][$localeName]);
+
+            if (!$this->isValidStoreLocale($storeName, $localeName)) {
+                continue;
+            }
 
             $pairs[] = [
                 static::PRODUCT_ABSTRACT_LOCALIZED_ENTITY => $productAbstractLocalizedEntity,
@@ -239,8 +241,6 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
                 static::LOCALE_NAME => $localeName,
                 static::STORE_NAME => $storeName,
             ];
-
-            unset($mappedProductAbstractStorageEntities[$idProduct][$storeName][$localeName]);
         }
 
         return [$pairs, $mappedProductAbstractStorageEntities];
