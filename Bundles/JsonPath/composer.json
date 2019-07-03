@@ -4,8 +4,8 @@
   "description": "JsonPath module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
-    "galbar/jsonpath": "^1.0"
+    "galbar/jsonpath": "^1.0",
+    "php": ">=7.1"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

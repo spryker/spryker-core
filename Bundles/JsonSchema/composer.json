@@ -4,8 +4,8 @@
   "description": "JsonSchema module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
-    "justinrainbow/json-schema": "^5.2"
+    "justinrainbow/json-schema": "^5.2",
+    "php": ">=7.1"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
