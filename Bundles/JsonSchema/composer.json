@@ -1,0 +1,21 @@
+{
+  "name": "spryker/json-schema",
+  "description": "JsonSchema module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.1"
+  },
+  "require-dev": {
+    "justinrainbow/json-schema": "^5.2"
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}
