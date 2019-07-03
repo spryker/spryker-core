@@ -64,11 +64,11 @@ class ContentBannerConstraintValidator extends ConstraintValidator
 
     /**
      * @param string $bannerData
-     * @param \Symfony\Component\Validator\Constraint|\Spryker\Zed\ContentBannerGui\Communication\Form\Constraints\ContentBannerConstraint $constraint
+     * @param \Spryker\Zed\ContentBannerGui\Communication\Form\Constraints\ContentBannerConstraint $constraint
      *
      * @return \Generated\Shared\Transfer\ContentBannerTermTransfer
      */
-    protected function mapBannerDataToTransfer($bannerData, Constraint $constraint): ContentBannerTermTransfer
+    protected function mapBannerDataToTransfer($bannerData, ContentBannerConstraint $constraint): ContentBannerTermTransfer
     {
         $contentBannerTermTransfer = new ContentBannerTermTransfer();
 
