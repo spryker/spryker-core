@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ShipmentGui\Communication\Controller;
 
+use Generated\Shared\Transfer\ShipmentGroupResponseTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\Sales\SalesConfig;
@@ -27,7 +28,7 @@ class EditController extends AbstractController
     protected const REDIRECT_URL = '/sales/detail';
 
     protected const MESSAGE_SHIPMENT_EDIT_SUCCESS = 'Shipment has been successfully edited.';
-    protected const MESSAGE_SHIPMENT_EDIT_ERROR = 'Shipment create failed.';
+    protected const MESSAGE_SHIPMENT_EDIT_FAIL = 'Shipment create failed.';
     protected const MESSAGE_ORDER_NOT_FOUND_ERROR = 'Sales order #%d not found.';
     protected const MESSAGE_ORDER_SHIPMENT_NOT_FOUND_ERROR = 'Sales order shipment #%d not found.';
 
@@ -45,16 +46,16 @@ class EditController extends AbstractController
             ->getSalesFacade()
             ->findOrderByIdSalesOrder($idSalesOrder);
 
-        $shipmentTransfer = $this->getFactory()
-            ->getShipmentFacade()
-            ->findShipmentById($idSalesShipment);
-
         if ($orderTransfer === null) {
             $this->addErrorMessage(static::MESSAGE_ORDER_NOT_FOUND_ERROR, ['%d' => $idSalesOrder]);
             $redirectUrl = Url::generate(static::REDIRECT_URL_DEFAULT)->build();
 
             return $this->redirectResponse($redirectUrl);
         }
+
+        $shipmentTransfer = $this->getFactory()
+            ->getShipmentFacade()
+            ->findShipmentById($idSalesShipment);
 
         if ($shipmentTransfer === null) {
             $this->addErrorMessage(static::MESSAGE_ORDER_SHIPMENT_NOT_FOUND_ERROR, ['%d' => $idSalesShipment]);
@@ -81,11 +82,7 @@ class EditController extends AbstractController
                 ->getShipmentFacade()
                 ->saveShipment($shipmentGroupTransfer, $orderTransfer);
 
-            if ($responseTransfer->getIsSuccessful()) {
-                $this->addSuccessMessage(static::MESSAGE_SHIPMENT_EDIT_SUCCESS);
-            } else {
-                $this->addErrorMessage(static::MESSAGE_SHIPMENT_EDIT_ERROR);
-            }
+            $this->addStatusMessage($responseTransfer);
 
             $redirectUrl = Url::generate(static::REDIRECT_URL, [
                 SalesConfig::PARAM_ID_SALES_ORDER => $idSalesOrder,
@@ -120,5 +117,19 @@ class EditController extends AbstractController
         }
 
         return $requestedItems;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentGroupResponseTransfer $responseTransfer
+     *
+     * @return void
+     */
+    protected function addStatusMessage(ShipmentGroupResponseTransfer $responseTransfer): void
+    {
+        if ($responseTransfer->getIsSuccessful()) {
+            $this->addSuccessMessage(static::MESSAGE_SHIPMENT_EDIT_SUCCESS);
+        }
+
+        $this->addErrorMessage(static::MESSAGE_SHIPMENT_EDIT_FAIL);
     }
 }

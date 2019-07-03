@@ -60,18 +60,11 @@ class CreateController extends AbstractController
                 ->getShipmentFacade()
                 ->createShipmentGroupTransferWithListedItems($form->getData(), $this->getItemListUpdatedStatus($form));
 
-            $responseTransfer = (new ShipmentGroupResponseTransfer())->setIsSuccessful(false);
-            if ($shipmentGroupTransfer !== null) {
-                $responseTransfer = $this->getFactory()
-                    ->getShipmentFacade()
-                    ->saveShipment($shipmentGroupTransfer, $orderTransfer);
-            }
+            $responseTransfer = $this->getFactory()
+                ->getShipmentFacade()
+                ->saveShipment($shipmentGroupTransfer, $orderTransfer);
 
-            if ($responseTransfer->getIsSuccessful()) {
-                $this->addSuccessMessage(static::MESSAGE_SHIPMENT_CREATE_SUCCESS);
-            } else {
-                $this->addErrorMessage(static::MESSAGE_SHIPMENT_CREATE_FAIL);
-            }
+            $this->addStatusMessage($responseTransfer);
 
             $redirectUrl = Url::generate(
                 static::REDIRECT_URL_DEFAULT,
@@ -107,5 +100,19 @@ class CreateController extends AbstractController
         }
 
         return $requestedItems;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentGroupResponseTransfer $responseTransfer
+     *
+     * @return void
+     */
+    protected function addStatusMessage(ShipmentGroupResponseTransfer $responseTransfer): void
+    {
+        if ($responseTransfer->getIsSuccessful()) {
+            $this->addSuccessMessage(static::MESSAGE_SHIPMENT_CREATE_SUCCESS);
+        }
+
+        $this->addErrorMessage(static::MESSAGE_SHIPMENT_CREATE_FAIL);
     }
 }
