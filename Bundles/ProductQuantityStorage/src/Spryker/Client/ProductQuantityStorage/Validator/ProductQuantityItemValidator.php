@@ -9,7 +9,6 @@ namespace Spryker\Client\ProductQuantityStorage\Validator;
 
 use Generated\Shared\Transfer\ItemValidationTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
-use Spryker\Client\ProductQuantityStorage\Dependency\Service\ProductQuantityStorageToUtilQuantityServiceInterface;
 use Spryker\Client\ProductQuantityStorage\Resolver\ProductQuantityResolverInterface;
 use Spryker\Client\ProductQuantityStorage\Storage\ProductQuantityStorageReaderInterface;
 
@@ -34,46 +33,15 @@ class ProductQuantityItemValidator implements ProductQuantityItemValidatorInterf
     protected $productQuantityResolver;
 
     /**
-     * @var \Spryker\Client\ProductQuantityStorage\Dependency\Service\ProductQuantityStorageToUtilQuantityServiceInterface
-     */
-    protected $utilQuantityService;
-
-    /**
      * @param \Spryker\Client\ProductQuantityStorage\Storage\ProductQuantityStorageReaderInterface $productQuantityStorageReader
      * @param \Spryker\Client\ProductQuantityStorage\Resolver\ProductQuantityResolverInterface $productQuantityResolver
-     * @param \Spryker\Client\ProductQuantityStorage\Dependency\Service\ProductQuantityStorageToUtilQuantityServiceInterface $utilQuantityService
      */
     public function __construct(
         ProductQuantityStorageReaderInterface $productQuantityStorageReader,
-        ProductQuantityResolverInterface $productQuantityResolver,
-        ProductQuantityStorageToUtilQuantityServiceInterface $utilQuantityService
+        ProductQuantityResolverInterface $productQuantityResolver
     ) {
         $this->productQuantityStorageReader = $productQuantityStorageReader;
         $this->productQuantityResolver = $productQuantityResolver;
-        $this->utilQuantityService = $utilQuantityService;
-    }
-
-    /**
-     * @param float $firstQuantity
-     * @param float $secondQuantity
-     *
-     * @return bool
-     */
-    protected function isQuantityEqual(float $firstQuantity, float $secondQuantity): bool
-    {
-        return $this->utilQuantityService->isQuantityEqual($firstQuantity, $secondQuantity);
-    }
-
-    /**
-     * @param float $dividentQuantity
-     * @param float $divisorQuantity
-     * @param float $remainder
-     *
-     * @return bool
-     */
-    protected function isQuantityModuloEqual(float $dividentQuantity, float $divisorQuantity, float $remainder): bool
-    {
-        return $this->utilQuantityService->isQuantityModuloEqual($dividentQuantity, $divisorQuantity, $remainder);
     }
 
     /**
@@ -103,7 +71,7 @@ class ProductQuantityItemValidator implements ProductQuantityItemValidatorInterf
         $interval = $productQuantityTransfer->getQuantityInterval();
         $quantity = $itemTransfer->requireQuantity()->getQuantity();
 
-        if (!$this->isQuantityEqual($quantity, 0) && $quantity < $min) {
+        if ($quantity !== 0 && $quantity < $min) {
             $nearestQuantity = $this->productQuantityResolver->getNearestQuantity($itemTransfer->getId(), $quantity);
 
             $itemValidationTransfer->addMessage((new MessageTransfer())
@@ -117,9 +85,7 @@ class ProductQuantityItemValidator implements ProductQuantityItemValidatorInterf
             return $itemValidationTransfer;
         }
 
-        $quantityMinusMin = $quantity - $min;
-
-        if (!$this->isQuantityEqual($quantity, 0) && !$this->isQuantityModuloEqual($quantityMinusMin, $interval, 0)) {
+        if ($quantity !== 0 && ($quantity - $min) % $interval !== 0) {
             $nearestQuantity = $this->productQuantityResolver->getNearestQuantity($itemTransfer->getId(), $quantity);
 
             $itemValidationTransfer->addMessage((new MessageTransfer())

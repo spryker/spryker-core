@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Stock\Business\Model;
 
 use Generated\Shared\Transfer\StoreTransfer;
+use Traversable;
 
 class Calculator implements CalculatorInterface
 {
@@ -27,21 +28,41 @@ class Calculator implements CalculatorInterface
     /**
      * @param string $sku
      *
-     * @return float
+     * @return int
      */
     public function calculateStockForProduct($sku)
     {
-        return $this->reader->getProductStockSumBySku($sku);
+        $productEntities = $this->reader->getStocksProduct($sku);
+
+        return $this->calculateTotalQuantity($productEntities);
     }
 
     /**
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return float
+     * @return int
      */
     public function calculateProductStockForStore($sku, StoreTransfer $storeTransfer)
     {
-        return $this->reader->getProductStockSumBySkuAndStore($sku, $storeTransfer);
+        $productEntities = $this->reader->findProductStocksForStore($sku, $storeTransfer);
+
+        return $this->calculateTotalQuantity($productEntities);
+    }
+
+    /**
+     * @param \Traversable|\Orm\Zed\Stock\Persistence\SpyStockProduct[] $productEntities
+     *
+     * @return int
+     */
+    protected function calculateTotalQuantity(Traversable $productEntities)
+    {
+        $quantity = 0;
+
+        foreach ($productEntities as $productEntity) {
+            $quantity += $productEntity->getQuantity();
+        }
+
+        return $quantity;
     }
 }

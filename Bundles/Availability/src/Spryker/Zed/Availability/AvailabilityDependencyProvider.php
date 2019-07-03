@@ -14,7 +14,6 @@ use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockBridge;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeBridge;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToTouchBridge;
 use Spryker\Zed\Availability\Dependency\QueryContainer\AvailabilityToProductBridge as AvailabilityToProductQueryContainerBridge;
-use Spryker\Zed\Availability\Dependency\Service\AvailabilityToUtilQuantityServiceBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -32,8 +31,6 @@ class AvailabilityDependencyProvider extends AbstractBundleDependencyProvider
 
     public const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
 
-    public const SERVICE_UTIL_QUANTITY = 'SERVICE_UTIL_QUANTITY';
-
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -46,7 +43,6 @@ class AvailabilityDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addTouchFacade($container);
         $container = $this->addProductFacade($container);
         $container = $this->addStoreFacade($container);
-        $container = $this->addUtilQuantityService($container);
         $container = $this->addEventFacade($container);
 
         return $container;
@@ -73,22 +69,6 @@ class AvailabilityDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::FACADE_STORE] = function (Container $container) {
             return new AvailabilityToStoreFacadeBridge($container->getLocator()->store()->facade());
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    public function addUtilQuantityService(Container $container): Container
-    {
-        $container[static::SERVICE_UTIL_QUANTITY] = function (Container $container) {
-            return new AvailabilityToUtilQuantityServiceBridge(
-                $container->getLocator()->utilQuantity()->service()
-            );
         };
 
         return $container;
