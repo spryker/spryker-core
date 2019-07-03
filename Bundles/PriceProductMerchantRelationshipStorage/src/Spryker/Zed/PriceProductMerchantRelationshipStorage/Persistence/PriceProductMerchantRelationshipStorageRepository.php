@@ -399,4 +399,40 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
 
         return $this->buildQueryFromCriteria($query, $filterTransfer)->find();
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $priceProductConcreteMerchantRelationshipIds
+     *
+     * @return \Generated\Shared\Transfer\SpyPriceProductConcreteMerchantRelationshipStorageEntityTransfer[]
+     */
+    public function findFilteredPriceProductConcreteMerchantRelationshipEntities(FilterTransfer $filterTransfer, array $priceProductConcreteMerchantRelationshipIds = []): array
+    {
+        $query = $this->queryPriceProductMerchantRelationship()
+            ->filterByFkProduct(null, Criteria::ISNOTNULL);
+
+        if ($priceProductConcreteMerchantRelationshipIds) {
+            $query->filterByIdPriceProductMerchantRelationship_In($priceProductConcreteMerchantRelationshipIds);
+        }
+
+        return $this->buildQueryFromCriteria($query, $filterTransfer)->find();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $priceProductAbstractMerchantRelationshipIds
+     *
+     * @return \Generated\Shared\Transfer\SpyPriceProductMerchantRelationshipEntityTransfer[]
+     */
+    public function findFilteredPriceProductAbstractMerchantRelationshipEntities(FilterTransfer $filterTransfer, array $priceProductAbstractMerchantRelationshipIds = []): array
+    {
+        $query = $this->queryPriceProductMerchantRelationship()
+            ->filterByFkProductAbstract(null, Criteria::ISNOTNULL);
+
+        if ($priceProductAbstractMerchantRelationshipIds) {
+            $query->filterByIdPriceProductMerchantRelationship_In($priceProductAbstractMerchantRelationshipIds);
+        }
+
+        return $this->buildQueryFromCriteria($query, $filterTransfer)->find();
+    }
 }
