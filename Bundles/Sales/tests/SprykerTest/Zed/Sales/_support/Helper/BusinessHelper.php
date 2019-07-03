@@ -45,7 +45,7 @@ class BusinessHelper extends Module
     }
 
     /**
-     * @param iterable|null $itemTransfers
+     * @param iterable|array $itemTransfers
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrder
      */
@@ -74,7 +74,7 @@ class BusinessHelper extends Module
      * @param \Orm\Zed\Oms\Persistence\SpyOmsOrderItemState $omsStateEntity
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrderEntity
      * @param \Orm\Zed\Oms\Persistence\SpyOmsOrderProcess $omsOrderProcessEntity
-     * @param iterable $itemTransfers
+     * @param iterable|array $itemTransfers
      *
      * @return iterable|\Orm\Zed\Sales\Persistence\SpySalesOrderItem[]
      */
