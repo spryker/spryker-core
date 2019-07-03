@@ -157,7 +157,6 @@ interface SharedCartClientInterface
     /**
      * Specification:
      *  - Sends Zed Request to find all customers (including quote owner) that have access to the quote.
-     *  - Customer provided with QuoteTransfer will be excluded from customers collection.
      *  - Requires idQuote and customerReference to be set in QuoteTransfer.
      *  - Requires CustomerTransfer to be set in QuoteTransfer.
      *  - Requires customerReference to be set in CustomerTransfer.

@@ -455,6 +455,9 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
     }
 
     /**
+     * @module Customer
+     * @module CompanyUser
+     *
      * @param int $idQuote
      *
      * @return \Generated\Shared\Transfer\CustomerCollectionTransfer

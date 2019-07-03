@@ -130,7 +130,7 @@
     </transfer>
 
     <transfer name="CustomerCollectionTransfer">
-        <property name="customers" type="Customer"/>
+        <property name="customers" type="Customer" singular="customer"/>
     </transfer>
 
 </transfers>
