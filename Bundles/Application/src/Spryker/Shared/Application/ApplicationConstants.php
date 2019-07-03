@@ -337,4 +337,20 @@ interface ApplicationConstants
     public const HOST_SSL_STATIC_MEDIA = 'HOST_SSL_STATIC_MEDIA';
 
     public const FORM_FACTORY = 'FORM_FACTORY';
+
+    /**
+     * Specification:
+     * - Defines environment name for twig.
+     *
+     * @api
+     */
+    public const TWIG_ENVIRONMENT_NAME = 'APPLICATION:TWIG_ENVIRONMENT_NAME';
+
+    /**
+     * Specification:
+     * - Enables error handling with stacktrace.
+     *
+     * @api
+     */
+    public const ENABLE_PRETTY_ERROR_HANDLER = 'APPLICATION:ENABLE_PRETTY_ERROR_HANDLER';
 }

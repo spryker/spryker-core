@@ -84,13 +84,13 @@ class EntityTagRequestValidator implements EntityTagRequestValidatorInterface
 
     /**
      * @param string $entityTagFromRequest
-     * @param string $entityTagFromStorage
+     * @param string|null $entityTagFromStorage
      *
      * @return bool
      */
-    protected function compareEntityTags(string $entityTagFromRequest, string $entityTagFromStorage): bool
+    protected function compareEntityTags(string $entityTagFromRequest, ?string $entityTagFromStorage): bool
     {
-        return ($entityTagFromStorage !== null && $entityTagFromStorage === $entityTagFromRequest);
+        return $entityTagFromStorage !== null && $entityTagFromStorage === $entityTagFromRequest;
     }
 
     /**
