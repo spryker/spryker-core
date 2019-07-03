@@ -147,7 +147,6 @@ class SearchPreferencesForm extends AbstractAttributeKeyForm
     {
         $builder->add(self::FIELD_SUGGESTION_TERMS, ChoiceType::class, [
             'choices' => array_flip($this->getYesNoChoices()),
-            'choices_as_values' => true,
         ]);
 
         $this->addBoolModelTransformer($builder, self::FIELD_SUGGESTION_TERMS);
@@ -164,7 +163,6 @@ class SearchPreferencesForm extends AbstractAttributeKeyForm
     {
         $builder->add(self::FIELD_COMPLETION_TERMS, ChoiceType::class, [
             'choices' => array_flip($this->getYesNoChoices()),
-            'choices_as_values' => true,
         ]);
 
         $this->addBoolModelTransformer($builder, self::FIELD_COMPLETION_TERMS);
