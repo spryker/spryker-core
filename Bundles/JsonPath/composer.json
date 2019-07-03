@@ -1,12 +1,15 @@
 {
   "name": "spryker/json-path",
+  "type": "library",
   "description": "JsonPath module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1"
+    "php": ">=7.1",
+    "galbar/jsonpath": "^1.0"
   },
   "require-dev": {
-    "galbar/jsonpath": "^1.0"
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,

@@ -57,6 +57,6 @@ class GenerateRestApiDocumentationConsole extends Console
      */
     protected function isDocumentationGenerationEnabled(): bool
     {
-        return APPLICATION_ENV === 'production';
+        return APPLICATION_ENV !== 'production';
     }
 }

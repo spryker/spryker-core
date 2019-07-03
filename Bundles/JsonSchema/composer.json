@@ -1,12 +1,15 @@
 {
   "name": "spryker/json-schema",
+  "type": "library",
   "description": "JsonSchema module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1"
+    "php": ">=7.1",
+    "justinrainbow/json-schema": "^5.2"
   },
   "require-dev": {
-    "justinrainbow/json-schema": "^5.2"
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
