@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\DocumentationGeneratorRestApi\Communication\Console;
 
-use Spryker\Shared\Config\Environment;
 use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -40,8 +39,8 @@ class GenerateRestApiDocumentationConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        if (Environment::isProduction()) {
-            $this->error('This command intended to be used in non production environment only!');
+        if ($this->isDocumentationGenerationDisabled()) {
+            $this->error('This command intended to be used in development environment only!');
 
             return static::CODE_ERROR;
         }
@@ -49,5 +48,15 @@ class GenerateRestApiDocumentationConsole extends Console
         $this->getFacade()->generateDocumentation();
 
         return static::CODE_SUCCESS;
+    }
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
+     * @return bool
+     */
+    protected function isDocumentationGenerationDisabled(): bool
+    {
+        return APPLICATION_ENV === 'production';
     }
 }
