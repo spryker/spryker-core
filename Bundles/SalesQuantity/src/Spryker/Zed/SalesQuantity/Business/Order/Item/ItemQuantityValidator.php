@@ -8,7 +8,6 @@
 namespace Spryker\Zed\SalesQuantity\Business\Order\Item;
 
 use Generated\Shared\Transfer\ItemTransfer;
-use Spryker\Zed\SalesQuantity\Dependency\Service\SalesQuantityToUtilQuantityServiceInterface;
 use Spryker\Zed\SalesQuantity\SalesQuantityConfig;
 
 class ItemQuantityValidator implements ItemQuantityValidatorInterface
@@ -19,20 +18,11 @@ class ItemQuantityValidator implements ItemQuantityValidatorInterface
     protected $config;
 
     /**
-     * @var \Spryker\Zed\SalesQuantity\Dependency\Service\SalesQuantityToUtilQuantityServiceInterface
-     */
-    protected $utilQuantityService;
-
-    /**
      * @param \Spryker\Zed\SalesQuantity\SalesQuantityConfig $config
-     * @param \Spryker\Zed\SalesQuantity\Dependency\Service\SalesQuantityToUtilQuantityServiceInterface $utilQuantityService
      */
-    public function __construct(
-        SalesQuantityConfig $config,
-        SalesQuantityToUtilQuantityServiceInterface $utilQuantityService
-    ) {
+    public function __construct(SalesQuantityConfig $config)
+    {
         $this->config = $config;
-        $this->utilQuantityService = $utilQuantityService;
     }
 
     /**
@@ -99,21 +89,10 @@ class ItemQuantityValidator implements ItemQuantityValidatorInterface
             return false;
         }
 
-        if ($this->isQuantityGreaterOrEqual($itemTransfer->getQuantity(), $threshold)) {
+        if ($itemTransfer->getQuantity() >= $threshold) {
             return true;
         }
 
         return false;
-    }
-
-    /**
-     * @param float $firstQuantity
-     * @param float $secondQuantity
-     *
-     * @return bool
-     */
-    protected function isQuantityGreaterOrEqual(float $firstQuantity, float $secondQuantity): bool
-    {
-        return $this->utilQuantityService->isQuantityGreaterOrEqual($firstQuantity, $secondQuantity);
     }
 }

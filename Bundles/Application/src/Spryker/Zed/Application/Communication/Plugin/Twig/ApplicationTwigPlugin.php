@@ -45,7 +45,7 @@ class ApplicationTwigPlugin extends AbstractPlugin implements TwigPluginInterfac
      */
     protected function addTwigGlobalVariables(Environment $twig): Environment
     {
-        $environment = $this->getFactory()->getEnvironment()->getEnvironment();
+        $environment = $this->getFactory()->getConfig()->getTwigEnvironmentName();
 
         $vars = [
             'environment' => $environment,

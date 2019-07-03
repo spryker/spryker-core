@@ -27,11 +27,6 @@ class ContentProductConfig extends AbstractSharedConfig
     public const TWIG_FUNCTION_NAME = 'content_product_abstract_list';
 
     /**
-     * @deprecated Use `\Spryker\Shared\ContentProduct\ContentProductConfig::WIDGET_TEMPLATE_IDENTIFIER_BOTTOM_TITLE` instead.
-     */
-    public const WIDGET_TEMPLATE_IDENTIFIER_DEFAULT = 'default';
-
-    /**
      * Content item abstract product list bottom-title template identifier
      */
     public const WIDGET_TEMPLATE_IDENTIFIER_BOTTOM_TITLE = 'bottom-title';

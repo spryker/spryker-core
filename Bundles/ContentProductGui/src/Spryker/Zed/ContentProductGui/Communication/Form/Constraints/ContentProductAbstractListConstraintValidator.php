@@ -17,7 +17,7 @@ use Symfony\Component\Validator\ConstraintValidator;
 class ContentProductAbstractListConstraintValidator extends ConstraintValidator
 {
     /**
-     * @param array $abstractProductIds The value that should be validated
+     * @param mixed $abstractProductIds The value that should be validated
      * @param \Symfony\Component\Validator\Constraint|\Spryker\Zed\ContentProductGui\Communication\Form\Constraints\ContentProductAbstractListConstraint $constraint The constraint for the validation
      *
      * @throws \InvalidArgumentException
