@@ -76,12 +76,38 @@ class PriceCartToPriceProductBridge implements PriceCartToPriceProductInterface
     }
 
     /**
+     * The method check for `method_exists` is for BC for supporting old majors of `PriceProduct` module.
+     *
      * @param \Generated\Shared\Transfer\PriceProductFilterTransfer[] $priceProductFilterTransfers
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
     public function getValidPrices(array $priceProductFilterTransfers): array
     {
+        if (!method_exists($this->priceProductFacade, 'getValidPrices')) {
+            return $this->findPriceProductsForPriceProductFilterTransfers($priceProductFilterTransfers);
+        }
+
         return $this->priceProductFacade->getValidPrices($priceProductFilterTransfers);
+    }
+
+    /**
+     * @deprecated Will be removed with the next major.
+     *
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer[] $priceProductFilterTransfers
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    protected function findPriceProductsForPriceProductFilterTransfers(array $priceProductFilterTransfers): array
+    {
+        $priceProductTransfers = [];
+        foreach ($priceProductFilterTransfers as $priceProductFilterTransfer) {
+            $priceProductTransfer = $this->findPriceProductFor($priceProductFilterTransfer);
+            if ($priceProductTransfer) {
+                $priceProductTransfers[] = $priceProductTransfer;
+            }
+        }
+
+        return $priceProductTransfers;
     }
 }
