@@ -233,14 +233,14 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
                 $mappedProductAbstractStorageEntities[$idProduct][$storeName][$localeName] :
                 new SpyProductAbstractStorage();
 
-            unset($mappedProductAbstractStorageEntities[$idProduct][$storeName][$localeName]);
-
             $pairs[] = [
                 static::PRODUCT_ABSTRACT_LOCALIZED_ENTITY => $productAbstractLocalizedEntity,
                 static::PRODUCT_ABSTRACT_STORAGE_ENTITY => $productAbstractStorageEntity,
                 static::LOCALE_NAME => $localeName,
                 static::STORE_NAME => $storeName,
             ];
+
+            unset($mappedProductAbstractStorageEntities[$idProduct][$storeName][$localeName]);
         }
 
         return [$pairs, $mappedProductAbstractStorageEntities];

@@ -491,14 +491,14 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
                 $mappedProductAbstractPageSearchEntities[$idProductAbstract][$storeName][$localeName] :
                 new SpyProductAbstractPageSearch();
 
-            unset($mappedProductAbstractPageSearchEntities[$idProductAbstract][$storeName][$localeName]);
-
             $pairs[] = [
                 static::PRODUCT_ABSTRACT_LOCALIZED_ENTITY => $productAbstractLocalizedEntity,
                 static::PRODUCT_ABSTRACT_PAGE_SEARCH_ENTITY => $searchEntity,
                 static::LOCALE_NAME => $localeName,
                 static::STORE_NAME => $storeName,
             ];
+
+            unset($mappedProductAbstractPageSearchEntities[$idProductAbstract][$storeName][$localeName]);
         }
 
         return [$pairs, $mappedProductAbstractPageSearchEntities];

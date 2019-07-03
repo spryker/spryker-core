@@ -68,7 +68,7 @@ class ProductStorageBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ProductStorage\Dependency\Facade\ProductStorageToStoreFacadeInterface
      */
-    protected function getStoreFacade(): ProductStorageToStoreFacadeInterface
+    public function getStoreFacade(): ProductStorageToStoreFacadeInterface
     {
         return $this->getProvidedDependency(ProductStorageDependencyProvider::FACADE_STORE);
     }
