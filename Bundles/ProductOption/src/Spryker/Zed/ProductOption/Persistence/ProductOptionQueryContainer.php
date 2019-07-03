@@ -456,6 +456,8 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
+     * @api
+     *
      * @param int[] $idProductOptionValues
      * @param string[] $countryIso2Codes
      *

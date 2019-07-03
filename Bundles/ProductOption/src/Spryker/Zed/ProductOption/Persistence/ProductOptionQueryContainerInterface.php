@@ -95,6 +95,8 @@ interface ProductOptionQueryContainerInterface
     public function queryTaxSetByIdProductOptionValueAndCountryIso2Code($allIdOptionValueUsages, $countryIso2Code);
 
     /**
+     * @api
+     *
      * @param int[] $idProductOptionValues
      * @param string[] $countryIso2Codes
      *
