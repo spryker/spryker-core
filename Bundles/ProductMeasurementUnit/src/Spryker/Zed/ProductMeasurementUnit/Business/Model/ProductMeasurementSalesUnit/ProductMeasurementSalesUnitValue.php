@@ -44,17 +44,14 @@ class ProductMeasurementSalesUnitValue implements ProductMeasurementSalesUnitVal
      * and 2 KG represents 1 quantity (unit to availability conversion ratio is 0.5).
      * The retrieved normalized unit value is 1600 (16.00 KG when displayed).
      *
-     * @param float $availabilityValue
+     * @param int $availabilityValue
      * @param float $unitToAvailabilityConversion
      * @param int $unitPrecision
      *
      * @return int
      */
-    protected function calculateNormalizedValue(
-        float $availabilityValue,
-        float $unitToAvailabilityConversion,
-        int $unitPrecision
-    ): int {
+    protected function calculateNormalizedValue(int $availabilityValue, float $unitToAvailabilityConversion, int $unitPrecision): int
+    {
         return (int)round(
             $this->calculateFloatNormalizedValue($availabilityValue, $unitToAvailabilityConversion, $unitPrecision)
         );
@@ -63,13 +60,13 @@ class ProductMeasurementSalesUnitValue implements ProductMeasurementSalesUnitVal
     /**
      * @see ProductMeasurementSalesUnitValue::calculateNormalizedValue()
      *
-     * @param float $availabilityValue
+     * @param int $availabilityValue
      * @param float $unitToAvailabilityConversion
      * @param int $unitPrecision
      *
      * @return float
      */
-    protected function calculateFloatNormalizedValue(float $availabilityValue, float $unitToAvailabilityConversion, int $unitPrecision): float
+    protected function calculateFloatNormalizedValue(int $availabilityValue, float $unitToAvailabilityConversion, int $unitPrecision): float
     {
         return $availabilityValue / $unitToAvailabilityConversion * $unitPrecision;
     }

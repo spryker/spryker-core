@@ -28,7 +28,7 @@ class AvailabilityCartConnectorToAvailabilityBridge implements AvailabilityCartC
      * @deprecated Use calculateStockForProductWithStore() instead.
      *
      * @param string $sku
-     * @param float $quantity
+     * @param int $quantity
      *
      * @return bool
      */
@@ -42,7 +42,7 @@ class AvailabilityCartConnectorToAvailabilityBridge implements AvailabilityCartC
      *
      * @param string $sku
      *
-     * @return float
+     * @return int
      */
     public function calculateStockForProduct($sku)
     {
@@ -55,7 +55,7 @@ class AvailabilityCartConnectorToAvailabilityBridge implements AvailabilityCartC
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return float
+     * @return int
      */
     public function calculateStockForProductWithStore($sku, StoreTransfer $storeTransfer)
     {
@@ -70,7 +70,7 @@ class AvailabilityCartConnectorToAvailabilityBridge implements AvailabilityCartC
      * The method check for "method_exists" is for BC for modules without multi store support.
      *
      * @param string $sku
-     * @param float $quantity
+     * @param int $quantity
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return bool

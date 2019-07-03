@@ -12,6 +12,8 @@ interface SetupFacadeInterface
     /**
      * @api
      *
+     * @deprecated Method will be removed without replacement.
+     *
      * @param array $roles
      *
      * @return string
@@ -21,12 +23,16 @@ interface SetupFacadeInterface
     /**
      * @api
      *
+     * @deprecated Method will be removed without replacement.
+     *
      * @return string
      */
     public function enableJenkins();
 
     /**
      * @api
+     *
+     * @deprecated Method will be removed without replacement.
      *
      * @return string
      */

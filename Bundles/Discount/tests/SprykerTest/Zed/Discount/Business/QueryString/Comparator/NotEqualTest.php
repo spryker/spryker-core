@@ -26,11 +26,6 @@ use Spryker\Zed\Discount\Business\QueryString\Comparator\NotEqual;
 class NotEqualTest extends Unit
 {
     /**
-     * @var \SprykerTest\Zed\Discount\DiscountBusinessTester
-     */
-    protected $tester;
-
-    /**
      * @return void
      */
     public function testAcceptShouldReturnTrueWhenNotEaualExpressionProvided()
@@ -46,73 +41,33 @@ class NotEqualTest extends Unit
     }
 
     /**
-     * @dataProvider compareWhenClauseValueIsNotEqualToProvidedShouldReturnTrueProvider
-     *
-     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
-     * @param string $withValue
-     *
      * @return void
      */
-    public function testCompareWhenClauseValueIsNotEqualToProvidedShouldReturnTrue(ClauseTransfer $clauseTransfer, string $withValue): void
+    public function testCompareWhenClauseValueIsNotEqualToProvidedShouldReturnTrue()
     {
         $notEqual = $this->createNotEqual();
 
-        $isMatching = $notEqual->compare($clauseTransfer, $withValue);
+        $clauseTransfer = new ClauseTransfer();
+        $clauseTransfer->setValue('2');
+
+        $isMatching = $notEqual->compare($clauseTransfer, '1');
 
         $this->assertTrue($isMatching);
     }
 
     /**
-     * @return array
-     */
-    public function compareWhenClauseValueIsNotEqualToProvidedShouldReturnTrueProvider(): array
-    {
-        return [
-            'int stock' => $this->createClauseData('2', '1'),
-            'float stock' => $this->createClauseData('1.2', '1.1'),
-        ];
-    }
-
-    /**
-     * @param string $clauseValue
-     * @param string $withValue
-     *
-     * @return array
-     */
-    protected function createClauseData(string $clauseValue, string $withValue): array
-    {
-        $clauseTransfer = new ClauseTransfer();
-        $clauseTransfer->setValue($clauseValue);
-
-        return [$clauseTransfer, $withValue];
-    }
-
-    /**
-     * @dataProvider compareWhenClauseValueIsEqualToProvidedProvidedShouldReturnFalseProvider
-     *
-     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
-     * @param string $withValue
-     *
      * @return void
      */
-    public function testCompareWhenClauseValueIsEqualToProvidedProvidedShouldReturnFalse(ClauseTransfer $clauseTransfer, string $withValue): void
+    public function testCompareWhenClauseValueIsEqualToProvidedProvidedShouldReturnFalse()
     {
         $more = $this->createNotEqual();
 
-        $isMatching = $more->compare($clauseTransfer, $withValue);
+        $clauseTransfer = new ClauseTransfer();
+        $clauseTransfer->setValue('1');
+
+        $isMatching = $more->compare($clauseTransfer, '1');
 
         $this->assertFalse($isMatching);
-    }
-
-    /**
-     * @return array
-     */
-    public function compareWhenClauseValueIsEqualToProvidedProvidedShouldReturnFalseProvider(): array
-    {
-        return [
-            'int stock' => $this->createClauseData('1', '1'),
-            'float stock' => $this->createClauseData('1.1', '1.1'),
-        ];
     }
 
     /**
