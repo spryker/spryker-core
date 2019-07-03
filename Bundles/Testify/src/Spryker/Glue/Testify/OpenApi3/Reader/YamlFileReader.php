@@ -7,8 +7,10 @@
 
 namespace Spryker\Glue\Testify\OpenApi3\Reader;
 
-use Spryker\Glue\Testify\Dependency\TestifyToYamlAdapterInterface;
+use Spryker\Glue\Testify\OpenApi3\Exception\ParseException;
 use Spryker\Glue\Testify\OpenApi3\ReaderInterface;
+use Symfony\Component\Yaml\Exception\ParseException as YamlParseException;
+use Symfony\Component\Yaml\Yaml;
 
 class YamlFileReader implements ReaderInterface
 {
@@ -18,25 +20,24 @@ class YamlFileReader implements ReaderInterface
     protected $fileName;
 
     /**
-     * @var \Spryker\Glue\Testify\Dependency\TestifyToYamlAdapterInterface
-     */
-    protected $yamlAdapter;
-
-    /**
      * @param string $fileName
-     * @param \Spryker\Glue\Testify\Dependency\TestifyToYamlAdapterInterface $yamlAdapter
      */
-    public function __construct(string $fileName, TestifyToYamlAdapterInterface $yamlAdapter)
+    public function __construct(string $fileName)
     {
         $this->fileName = $fileName;
-        $this->yamlAdapter = $yamlAdapter;
     }
 
     /**
      * @inheritdoc
+     *
+     * @throws \Spryker\Glue\Testify\OpenApi3\Exception\ParseException
      */
     public function read()
     {
-        return $this->yamlAdapter->parseFile($this->fileName);
+        try {
+            return Yaml::parseFile($this->fileName);
+        } catch (YamlParseException $exception) {
+            throw new ParseException($exception->getMessage());
+        }
     }
 }
