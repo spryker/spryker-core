@@ -23,7 +23,7 @@ class HeadersSecurityEventDispatcherPlugin extends AbstractPlugin implements Eve
 {
     /**
      * {@inheritdoc}
-     * - Provides security headers.
+     * - Extends EventDispatch with a KernelEvents::RESPONSE event to add security headers from config.
      *
      * @api
      *
