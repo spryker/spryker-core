@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\UrlStorage\Dependency\Facade;
 
+use Generated\Shared\Transfer\StoreTransfer;
+
 class UrlStorageToStoreFacadeBridge implements UrlStorageToStoreFacadeInterface
 {
     /**
@@ -23,10 +25,20 @@ class UrlStorageToStoreFacadeBridge implements UrlStorageToStoreFacadeInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getAllStores(): array
+    public function getCurrentStore(): StoreTransfer
     {
-        return $this->storeFacade->getAllStores();
+        return $this->storeFacade->getCurrentStore();
+    }
+
+    /**
+     * @param string $storeName
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer
+     */
+    public function getStoreByName($storeName): StoreTransfer
+    {
+        return $this->storeFacade->getStoreByName($storeName);
     }
 }

@@ -10,7 +10,14 @@ namespace Spryker\Zed\UrlStorage\Dependency\Facade;
 interface UrlStorageToStoreFacadeInterface
 {
     /**
-     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getAllStores();
+    public function getCurrentStore();
+
+    /**
+     * @param string $storeName
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer
+     */
+    public function getStoreByName($storeName);
 }
