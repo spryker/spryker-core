@@ -27,6 +27,7 @@ class CreateController extends AbstractController
 
     protected const MESSAGE_SHIPMENT_CREATE_SUCCESS = 'Shipment has been successfully created.';
     protected const MESSAGE_SHIPMENT_CREATE_FAIL = 'Shipment has not been created.';
+    protected const MESSAGE_ORDER_NOT_FOUND_ERROR = 'Sales order #%d not found.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -37,13 +38,21 @@ class CreateController extends AbstractController
     {
         $idSalesOrder = $request->query->get(static::PARAM_ID_SALES_ORDER);
 
+        $orderTransfer = $this->getFactory()
+            ->getSalesFacade()
+            ->findOrderByIdSalesOrder($idSalesOrder);
+
+        if ($orderTransfer === null) {
+            $this->addErrorMessage(static::MESSAGE_ORDER_NOT_FOUND_ERROR, ['%d' => $idSalesOrder]);
+            $redirectUrl = Url::generate(static::REDIRECT_URL_DEFAULT)->build();
+
+            return $this->redirectResponse($redirectUrl);
+        }
+
         $dataProvider = $this->getFactory()->createShipmentFormDataProvider();
 
         $form = $this->getFactory()
-            ->createShipmentCreateForm(
-                $dataProvider->getData($idSalesOrder),
-                $dataProvider->getOptions($idSalesOrder, null)
-            )
+            ->createShipmentCreateForm($dataProvider->getData($orderTransfer), $dataProvider->getOptions($orderTransfer))
             ->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -51,13 +60,8 @@ class CreateController extends AbstractController
                 ->getShipmentFacade()
                 ->createShipmentGroupTransferWithListedItems($form->getData(), $this->getItemListUpdatedStatus($form));
 
-            $orderTransfer = $this
-                ->getFactory()
-                ->getSalesFacade()
-                ->findOrderByIdSalesOrder($idSalesOrder);
-
             $responseTransfer = (new ShipmentGroupResponseTransfer())->setIsSuccessful(false);
-            if ($orderTransfer !== null && $shipmentGroupTransfer !== null) {
+            if ($shipmentGroupTransfer !== null) {
                 $responseTransfer = $this->getFactory()
                     ->getShipmentFacade()
                     ->saveShipment($shipmentGroupTransfer, $orderTransfer);

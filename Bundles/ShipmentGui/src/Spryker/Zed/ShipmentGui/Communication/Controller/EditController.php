@@ -28,6 +28,8 @@ class EditController extends AbstractController
 
     protected const MESSAGE_SHIPMENT_EDIT_SUCCESS = 'Shipment has been successfully edited.';
     protected const MESSAGE_SHIPMENT_EDIT_ERROR = 'Shipment create failed.';
+    protected const MESSAGE_ORDER_NOT_FOUND_ERROR = 'Sales order #%d not found.';
+    protected const MESSAGE_ORDER_SHIPMENT_NOT_FOUND_ERROR = 'Sales order shipment #%d not found.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -36,30 +38,41 @@ class EditController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $idSalesOrder = $request->query->get(static::PARAM_ID_SALES_ORDER);
-        $idSalesShipment = $request->query->get(static::PARAM_ID_SALES_SHIPMENT);
+        $idSalesOrder = $request->query->getInt(static::PARAM_ID_SALES_ORDER);
+        $idSalesShipment = $request->query->getInt(static::PARAM_ID_SALES_SHIPMENT);
+
+        $orderTransfer = $this->getFactory()
+            ->getSalesFacade()
+            ->findOrderByIdSalesOrder($idSalesOrder);
+
+        $shipmentTransfer = $this->getFactory()
+            ->getShipmentFacade()
+            ->findShipmentById($idSalesShipment);
+
+        if ($orderTransfer === null) {
+            $this->addErrorMessage(static::MESSAGE_ORDER_NOT_FOUND_ERROR, ['%d' => $idSalesOrder]);
+            $redirectUrl = Url::generate(static::REDIRECT_URL_DEFAULT)->build();
+
+            return $this->redirectResponse($redirectUrl);
+        }
+
+        if ($shipmentTransfer === null) {
+            $this->addErrorMessage(static::MESSAGE_ORDER_SHIPMENT_NOT_FOUND_ERROR, ['%d' => $idSalesShipment]);
+            $redirectUrl = Url::generate(static::REDIRECT_URL_DEFAULT)->build();
+
+            return $this->redirectResponse($redirectUrl);
+        }
+
         $dataProvider = $this->getFactory()->createShipmentFormDataProvider();
 
         $form = $this->getFactory()
             ->createShipmentEditForm(
-                $dataProvider->getData($idSalesOrder, $idSalesShipment),
-                $dataProvider->getOptions($idSalesOrder, $idSalesShipment)
+                $dataProvider->getData($orderTransfer, $shipmentTransfer),
+                $dataProvider->getOptions($orderTransfer, $shipmentTransfer)
             )
             ->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $orderTransfer = $this
-                ->getFactory()
-                ->getSalesFacade()
-                ->findOrderByIdSalesOrder($idSalesOrder);
-
-            if ($orderTransfer === null) {
-                $this->addErrorMessage('Order does not exist');
-                $redirectUrl = Url::generate(static::REDIRECT_URL_DEFAULT)->build();
-
-                return $this->redirectResponse($redirectUrl);
-            }
-
             $shipmentGroupTransfer = $this->getFactory()
                 ->getShipmentFacade()
                 ->createShipmentGroupTransferWithListedItems($form->getData(), $this->getItemListUpdatedStatus($form));
