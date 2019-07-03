@@ -16,10 +16,13 @@ use Spryker\Zed\Sales\Business\SalesBusinessFactory;
 use Spryker\Zed\Sales\Business\SalesFacadeInterface;
 use SprykerTest\Shared\Sales\Helper\Config\TesterSalesConfig;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
+use SprykerTest\Zed\Oms\Helper\OmsHelper;
 
 class SalesDataHelper extends Module
 {
     use LocatorHelperTrait;
+
+    public const NAMESPACE_ROOT = '\\';
 
     /**
      * @var \Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutDoSaveOrderInterface[]
@@ -49,21 +52,22 @@ class SalesDataHelper extends Module
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string[] $stateMachineProcessNameList
+     * @param string|null $stateMachineProcessName
      * @param \Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutDoSaveOrderInterface[] $saveOrderStack
      *
      * @return \Generated\Shared\Transfer\SaveOrderTransfer|\Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
     public function haveOrderUsingPreparedQuoteTransfer(
         QuoteTransfer $quoteTransfer,
-        array $stateMachineProcessNameList = [],
+        ?string $stateMachineProcessName = null,
         array $saveOrderStack = []
     ): SaveOrderTransfer {
-        $this->configureTestStateMachine($stateMachineProcessNameList);
+
+        $this->getOmsHelperModule()->configureTestStateMachine([$stateMachineProcessName]);
 
         $this->saveOrderStack = $saveOrderStack;
 
-        $saveOrderTransfer = $this->createOrder($quoteTransfer, $stateMachineProcessNameList);
+        $saveOrderTransfer = $this->createOrder($quoteTransfer, $stateMachineProcessName);
         $this->executeSaveOrderPlugins($quoteTransfer, $saveOrderTransfer);
 
         return $saveOrderTransfer;
@@ -144,5 +148,19 @@ class SalesDataHelper extends Module
         foreach ($this->saveOrderStack as $orderSaver) {
             $orderSaver->saveOrder($quoteTransfer, $saveOrderTransfer);
         }
+    }
+
+    /**
+     * @return \Codeception\Module|\SprykerTest\Zed\Oms\Helper\OmsHelper
+     */
+    protected function getOmsHelperModule(): OmsHelper
+    {
+        if ($this->hasModule(static::NAMESPACE_ROOT . OmsHelper::class)) {
+            return $this->getModule(static::NAMESPACE_ROOT . OmsHelper::class);
+        }
+
+        $this->moduleContainer->create(static::NAMESPACE_ROOT . OmsHelper::class);
+
+        return $this->getModule(static::NAMESPACE_ROOT . OmsHelper::class);
     }
 }

@@ -9,17 +9,27 @@ namespace SprykerTest\Zed\Sales\Business;
 
 use Codeception\Test\Unit;
 use DateTime;
+use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\CurrencyTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
+use Generated\Shared\Transfer\ShipmentMethodTransfer;
+use Generated\Shared\Transfer\ShipmentTransfer;
+use Generated\Shared\Transfer\TaxTotalTransfer;
+use Generated\Shared\Transfer\TotalsTransfer;
+use Orm\Zed\Country\Persistence\SpyCountry;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderProcessQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddressQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Spryker\Shared\Kernel\Store;
+use Spryker\Shared\Price\PriceMode;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Locale\Persistence\LocaleQueryContainer;
 use Spryker\Zed\Oms\OmsConfig;
@@ -129,7 +139,7 @@ class SalesFacadeSaveOrderTest extends Unit
 
         $quoteTransfer = $this->getValidBaseQuoteTransfer();
 
-        $this->salesFacade->saveSalesOrder($quoteTransfer, $this->getValidBaseResponseTransfer());
+        $this->salesFacade->saveSalesOrder($quoteTransfer, $this->getValidBaseResponseTransfer()->getSaveOrder());
 
         $addressEntity = $salesOrderAddressQuery->findOne();
 
@@ -239,7 +249,7 @@ class SalesFacadeSaveOrderTest extends Unit
 
         $quoteTransfer = $this->getValidBaseQuoteTransfer();
 
-        $this->salesFacade->saveSalesOrder($quoteTransfer, $this->getValidBaseResponseTransfer());
+        $this->salesFacade->saveSalesOrder($quoteTransfer, $this->getValidBaseResponseTransfer()->getSaveOrder());
 
         $addressEntity = $salesOrderAddressQuery->findOne();
 
