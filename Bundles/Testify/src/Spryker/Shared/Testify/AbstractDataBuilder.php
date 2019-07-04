@@ -259,7 +259,7 @@ abstract class AbstractDataBuilder
         }
 
         // @codingStandardsIgnoreStart
-        return (string)eval("return \$this->faker->$rule;");
+        return eval("return \$this->faker->$rule;");
         // @codingStandardsIgnoreEnd
     }
 

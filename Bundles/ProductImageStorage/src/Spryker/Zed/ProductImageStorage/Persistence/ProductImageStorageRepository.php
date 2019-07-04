@@ -61,6 +61,25 @@ class ProductImageStorageRepository extends AbstractRepository implements Produc
     }
 
     /**
+     * @param int[] $productIds
+     *
+     * @return \Generated\Shared\Transfer\SpyProductImageSetEntityTransfer[]
+     */
+    public function getDefaultConcreteProductImageSetsByFkProductIn(array $productIds): array
+    {
+        $productImageSetsQuery = $this->getFactory()
+            ->getProductImageSetQuery()
+            ->innerJoinWithSpyProductImageSetToProductImage()
+            ->useSpyProductImageSetToProductImageQuery()
+                ->innerJoinWithSpyProductImage()
+            ->endUse()
+            ->filterByFkProduct_In($productIds)
+            ->filterByFkLocale(null, Criteria::ISNULL);
+
+        return $this->buildQueryFromCriteria($productImageSetsQuery)->find();
+    }
+
+    /**
      * @param array $productAbstractFks
      *
      * @return \Generated\Shared\Transfer\SpyProductImageSetEntityTransfer[]

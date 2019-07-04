@@ -40,11 +40,16 @@ class FacetResultFormatterPluginTest extends AbstractResultFormatterPluginTest
      * @param \Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface $searchConfig
      * @param array $aggregationResult
      * @param array $expectedResult
+     * @param array $requestParameters
      *
      * @return void
      */
-    public function testFormatResultShouldReturnCorrectFormat(SearchConfigInterface $searchConfig, array $aggregationResult, array $expectedResult)
-    {
+    public function testFormatResultShouldReturnCorrectFormat(
+        SearchConfigInterface $searchConfig,
+        array $aggregationResult,
+        array $expectedResult,
+        array $requestParameters = []
+    ): void {
         /** @var \Spryker\Client\Search\SearchFactory|\PHPUnit\Framework\MockObject\MockObject $searchFactoryMock */
         $searchFactoryMock = $this->getMockBuilder(SearchFactory::class)
             ->setMethods(['getSearchConfig'])
@@ -71,7 +76,7 @@ class FacetResultFormatterPluginTest extends AbstractResultFormatterPluginTest
             ->method('getAggregations')
             ->willReturn($aggregationResult);
 
-        $formattedResult = $facetResultFormatterPlugin->formatResult($resultSetMock);
+        $formattedResult = $facetResultFormatterPlugin->formatResult($resultSetMock, $requestParameters);
 
         $this->assertEquals($expectedResult, $formattedResult);
     }
@@ -79,7 +84,7 @@ class FacetResultFormatterPluginTest extends AbstractResultFormatterPluginTest
     /**
      * @return array
      */
-    public function resultFormatterDataProvider()
+    public function resultFormatterDataProvider(): array
     {
         return [
             'empty result set' => $this->getEmptyResultTestData(),
@@ -87,6 +92,7 @@ class FacetResultFormatterPluginTest extends AbstractResultFormatterPluginTest
             'multiple string facet result set' => $this->getMultiStringFacetResultTestData(),
             'integer facet result set' => $this->getIntegerFacetResultTestData(),
             'multiple integer facet result set' => $this->getMultiIntegerFacetResultTestData(),
+            'multiple integer facet result set with params' => $this->getMultiIntegerFacetResultTestDataForParams(),
             'category result set' => $this->getCategoryResultTestData(),
             'filtered result set' => $this->getFilteredResultTestData(),
         ];
@@ -95,7 +101,7 @@ class FacetResultFormatterPluginTest extends AbstractResultFormatterPluginTest
     /**
      * @return array
      */
-    protected function getEmptyResultTestData()
+    protected function getEmptyResultTestData(): array
     {
         $searchConfig = $this->createStringSearchConfig();
         $aggregationResult = [];
@@ -107,7 +113,7 @@ class FacetResultFormatterPluginTest extends AbstractResultFormatterPluginTest
     /**
      * @return array
      */
-    protected function getStringFacetResultTestData()
+    protected function getStringFacetResultTestData(): array
     {
         $searchConfig = $this->createStringSearchConfig();
 
@@ -151,7 +157,7 @@ class FacetResultFormatterPluginTest extends AbstractResultFormatterPluginTest
     /**
      * @return array
      */
-    protected function getMultiStringFacetResultTestData()
+    protected function getMultiStringFacetResultTestData(): array
     {
         $searchConfig = $this->createMultiStringSearchConfig();
 
@@ -239,7 +245,7 @@ class FacetResultFormatterPluginTest extends AbstractResultFormatterPluginTest
     /**
      * @return array
      */
-    protected function getIntegerFacetResultTestData()
+    protected function getIntegerFacetResultTestData(): array
     {
         $searchConfig = $this->createIntegerSearchConfig();
 
@@ -283,7 +289,7 @@ class FacetResultFormatterPluginTest extends AbstractResultFormatterPluginTest
     /**
      * @return array
      */
-    protected function getMultiIntegerFacetResultTestData()
+    protected function getMultiIntegerFacetResultTestData(): array
     {
         $searchConfig = $this->createMultiIntegerSearchConfig();
 
@@ -364,7 +370,30 @@ class FacetResultFormatterPluginTest extends AbstractResultFormatterPluginTest
     /**
      * @return array
      */
-    protected function getCategoryResultTestData()
+    protected function getMultiIntegerFacetResultTestDataForParams(): array
+    {
+        [$searchConfig, $aggregationResult, $expectedResult] = $this->getMultiIntegerFacetResultTestData();
+
+        $expectedResult['baz'] = (new RangeSearchResultTransfer())
+            ->setName('baz')
+            ->setConfig($searchConfig->getFacetConfigBuilder()->get('baz'))
+            ->setMin(10)
+            ->setMax(20)
+            ->setActiveMin(5)
+            ->setActiveMax(20);
+
+        return [
+            $searchConfig,
+            $aggregationResult,
+            $expectedResult,
+            ['baz-param' => ['min' => 5]],
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    protected function getCategoryResultTestData(): array
     {
         $searchConfig = $this->createCategorySearchConfig();
 
@@ -399,7 +428,7 @@ class FacetResultFormatterPluginTest extends AbstractResultFormatterPluginTest
     /**
      * @return array
      */
-    protected function getFilteredResultTestData()
+    protected function getFilteredResultTestData(): array
     {
         $searchConfig = $this->createSearchConfigMock();
         $searchConfig->getFacetConfigBuilder()

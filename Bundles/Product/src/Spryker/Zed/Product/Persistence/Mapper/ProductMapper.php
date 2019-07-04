@@ -9,13 +9,16 @@ namespace Spryker\Zed\Product\Persistence\Mapper;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
+use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Locale\Persistence\SpyLocale;
 use Orm\Zed\Product\Persistence\SpyProduct;
+use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\Product\Persistence\SpyProductLocalizedAttributes;
 use Orm\Zed\Store\Persistence\SpyStore;
 use Spryker\Zed\Product\Dependency\Service\ProductToUtilEncodingInterface;
+use Spryker\Zed\Product\Persistence\ProductRepository;
 
 class ProductMapper implements ProductMapperInterface
 {
@@ -65,6 +68,23 @@ class ProductMapper implements ProductMapperInterface
         }
 
         return $productConcreteTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
+     */
+    public function mapProductAbstractEntityToProductAbstractTransferForSuggestion(
+        SpyProductAbstract $productAbstractEntity,
+        ProductAbstractTransfer $productAbstractTransfer
+    ): ProductAbstractTransfer {
+        $productAbstractTransfer->setIdProductAbstract($productAbstractEntity->getIdProductAbstract());
+        $productAbstractTransfer->setName($productAbstractEntity->getVirtualColumn(ProductRepository::KEY_FILTERED_PRODUCTS_PRODUCT_NAME));
+        $productAbstractTransfer->setSku($productAbstractEntity->getSku());
+
+        return $productAbstractTransfer;
     }
 
     /**
