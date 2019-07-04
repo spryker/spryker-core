@@ -56,8 +56,7 @@ class PriceProductConcreteMerchantRelationEventResourceBulkRepositoryPlugin exte
     }
 
     /**
-     * Specification:
-     *  - Returns the event name of resource entity.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -69,8 +68,7 @@ class PriceProductConcreteMerchantRelationEventResourceBulkRepositoryPlugin exte
     }
 
     /**
-     * Specification:
-     *  - Returns the name of ID column for publishing.
+     * {@inheritdoc}
      *
      * @api
      *
