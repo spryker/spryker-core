@@ -12,7 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraint;
-use Symfony\Component\Validator\Constraints\Type;
+use Symfony\Component\Validator\Constraints\Regex;
 
 /**
  * @method \Spryker\Zed\ManualOrderEntryGui\Communication\ManualOrderEntryGuiCommunicationFactory getFactory()
@@ -80,7 +80,7 @@ class ProductType extends AbstractType
             'label' => 'Quantity',
             'required' => false,
             'constraints' => [
-                $this->createQuantityConstraint($options),
+                $this->createNumberConstraint($options),
             ],
             'data' => 1,
         ]);
@@ -91,14 +91,14 @@ class ProductType extends AbstractType
     /**
      * @param array $options
      *
-     * @return \Symfony\Component\Validator\Constraints\Type
+     * @return \Symfony\Component\Validator\Constraints\Regex
      */
-    protected function createQuantityConstraint(array $options): Constraint
+    protected function createNumberConstraint(array $options): Regex
     {
         $validationGroup = $this->getValidationGroup($options);
 
-        return new Type([
-            'type' => 'numeric',
+        return new Regex([
+            'pattern' => '/^\d*$/',
             'message' => static::ERROR_MESSAGE_QUANTITY,
             'groups' => $validationGroup,
         ]);

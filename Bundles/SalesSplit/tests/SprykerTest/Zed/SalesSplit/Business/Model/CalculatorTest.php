@@ -24,33 +24,16 @@ use Spryker\Zed\SalesSplit\Business\Model\Calculator;
 class CalculatorTest extends Unit
 {
     /**
-     * @dataProvider calculateAmountLeftProvider
-     *
-     * @param int|float $currentQuantity
-     * @param int|float $minusQuantity
-     * @param int|float $resultQuantity
-     *
      * @return void
      */
-    public function testCalculateAmountLeft($currentQuantity, $minusQuantity, $resultQuantity): void
+    public function testCalculateAmountLeft()
     {
         $calculator = new Calculator();
         $spySalesOrderItem = new SpySalesOrderItem();
-        $spySalesOrderItem->setQuantity($currentQuantity);
+        $spySalesOrderItem->setQuantity(2);
 
-        $quantityAmountLeft = $calculator->calculateQuantityAmountLeft($spySalesOrderItem, $minusQuantity);
+        $quantityAmountLeft = $calculator->calculateQuantityAmountLeft($spySalesOrderItem, 1);
 
-        $this->assertEquals($resultQuantity, $quantityAmountLeft);
-    }
-
-    /**
-     * @return array
-     */
-    public function calculateAmountLeftProvider(): array
-    {
-        return [
-            'int stock' => [2, 1, 1],
-            'float stock' => [2.3658, 0.31, 2.0558],
-        ];
+        $this->assertEquals(1, $quantityAmountLeft);
     }
 }

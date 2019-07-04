@@ -42,26 +42,22 @@ class OrderItemSplitTest extends Unit
     ];
 
     /**
-     * @dataProvider isOrderItemDataCopiedProvider
-     *
-     * @param int|float $oldQuantity
-     * @param int|float $quantityToSplit
-     *
      * @return void
      */
-    public function testIsOrderItemDataCopied($oldQuantity, $quantityToSplit)
+    public function testIsOrderItemDataCopied()
     {
         $spySalesOrderItem = $this->createOrderItem();
-        $itemSplit = $this->createOrderItemSplitter($spySalesOrderItem, $oldQuantity);
+        $itemSplit = $this->createOrderItemSplitter($spySalesOrderItem, 4);
         $orderItemId = 1;
-        $splitResponse = $itemSplit->split($orderItemId, $quantityToSplit);
+        $quantity = 1;
+        $splitResponse = $itemSplit->split($orderItemId, $quantity);
 
         $this->assertTrue($splitResponse->getSuccess());
         $this->assertNotEmpty($splitResponse->getSuccessMessage());
 
         $createdCopy = $spySalesOrderItem->getCreatedCopy();
-        $this->assertEquals($quantityToSplit, $createdCopy->getQuantity());
-        $this->assertEquals($oldQuantity, $spySalesOrderItem->getQuantity());
+        $this->assertEquals(1, $createdCopy->getQuantity());
+        $this->assertEquals(4, $spySalesOrderItem->getQuantity());
         $this->assertEquals(OrderItemSplit::SPLIT_MARKER . $spySalesOrderItem->getGroupKey(), $createdCopy->getGroupKey());
 
         $oldSalesOrderItemArray = $spySalesOrderItem->toArray();
@@ -80,19 +76,8 @@ class OrderItemSplitTest extends Unit
     }
 
     /**
-     * @return array
-     */
-    public function isOrderItemDataCopiedProvider(): array
-    {
-        return [
-            'int stock' => [4, 1],
-            'float stock' => [4.8, 1.6],
-        ];
-    }
-
-    /**
      * @param \SprykerTest\Zed\SalesSplit\Business\Model\Fixtures\SpySalesOrderItemMock $orderItem
-     * @param int|float $quantityForOld
+     * @param int $quantityForOld
      *
      * @return \Spryker\Zed\SalesSplit\Business\Model\OrderItemSplit
      */

@@ -102,6 +102,32 @@ interface ProductListFacadeInterface
 
     /**
      * Specification:
+     * - Retrieves product lists for product abstract ids and its categories.
+     * - Returns product list where keys are product abstract IDs, values are arrays with product list ids by type.
+     *
+     * @api
+     *
+     * @param int[] $productAbstractIds
+     *
+     * @return array
+     */
+    public function getProductAbstractListIdsByProductAbstractIds(array $productAbstractIds): array;
+
+    /**
+     * Specification:
+     * - Retrieves product lists for product ids and its abstract products.
+     * - Returns product list where keys are product concrete IDs, values are arrays with product list ids by type.
+     *
+     * @api
+     *
+     * @param int[] $productIds
+     *
+     * @return array
+     */
+    public function getProductListsIdsByProductIds(array $productIds): array;
+
+    /**
+     * Specification:
      *  - Retrieves product list IDs with type "blacklist".
      *  - Retrieves the product list IDs for product concretes related to the given product abstract ID.
      *

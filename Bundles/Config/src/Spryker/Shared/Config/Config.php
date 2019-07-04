@@ -140,19 +140,15 @@ class Config
     }
 
     /**
-     * @param string|null $environment
+     * @param string|null $environmentName
      *
      * @return void
      */
-    public static function init($environment = null)
+    public static function init(?string $environmentName = null): void
     {
-        if ($environment === null) {
-            $environment = Environment::getInstance()->getEnvironment();
-        }
-
-        $storeName = Store::getInstance()->getStoreName();
-
         $config = new ArrayObject();
+        $environmentName = $environmentName ?? static::getEnvironmentName();
+        $storeName = static::getStore()->getStoreName();
 
         /*
          * e.g. config_default.php
@@ -162,7 +158,7 @@ class Config
         /*
          * e.g. config_default-production.php
          */
-        static::buildConfig('default-' . $environment, $config);
+        static::buildConfig('default-' . $environmentName, $config);
 
         /*
          * e.g. config_default_DE.php
@@ -172,7 +168,7 @@ class Config
         /*
          * e.g. config_default-production_DE.php
          */
-        static::buildConfig('default-' . $environment . '_' . $storeName, $config);
+        static::buildConfig('default-' . $environmentName . '_' . $storeName, $config);
 
         /*
          * e.g. config_local_test.php
@@ -211,5 +207,21 @@ class Config
         }
 
         return $config;
+    }
+
+    /**
+     * @return string
+     */
+    private static function getEnvironmentName(): string
+    {
+        return APPLICATION_ENV;
+    }
+
+    /**
+     * @return \Spryker\Shared\Kernel\Store
+     */
+    private static function getStore(): Store
+    {
+        return Store::getInstance();
     }
 }
