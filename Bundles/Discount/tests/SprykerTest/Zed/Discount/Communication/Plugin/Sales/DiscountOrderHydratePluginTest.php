@@ -67,15 +67,21 @@ class DiscountOrderHydratePluginTest extends Unit
     {
         // Arrange
         $orderTransfer = $this->createOrder();
-        $this->createDiscountForOrder($orderTransfer);
-        $this->createDiscountForOrder($orderTransfer);
+        $seedData = [
+            static::FIELD_DISPLAY_NAME => static::DISCOUNT_NAME,
+        ];
+        $this->createDiscountForOrder($orderTransfer, $seedData);
+        $this->createDiscountForOrder($orderTransfer, $seedData);
         $discountOrderHydratePlugin = $this->createDiscountOrderHydratePlugin();
 
         // Act
         $orderTransfer = $discountOrderHydratePlugin->hydrate($orderTransfer);
 
         // Assert
-        foreach ($orderTransfer->getItems()[0]->getCalculatedDiscounts() as $calculatedDiscountTransfer) {
+        $calculatedDiscounts = $orderTransfer->getItems()[0]->getCalculatedDiscounts();
+        $this->assertCount(2, $calculatedDiscounts);
+
+        foreach ($calculatedDiscounts as $calculatedDiscountTransfer) {
             $this->assertEquals(1, $calculatedDiscountTransfer->getQuantity());
         }
     }
@@ -93,7 +99,6 @@ class DiscountOrderHydratePluginTest extends Unit
             $this->getDiscountPhpFieldName(SpySalesDiscountTableMap::COL_FK_SALES_ORDER_ITEM) => $idSalesOrderItem,
             static::FIELD_NAME_AMOUNT => static::DISCOUNT_AMOUNT,
             static::FIELD_NAME_NAME => static::DISCOUNT_NAME,
-            static::FIELD_DISPLAY_NAME => static::DISCOUNT_NAME,
         ];
     }
 
@@ -140,14 +145,16 @@ class DiscountOrderHydratePluginTest extends Unit
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param array $seedData
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesDiscount
      */
-    protected function createDiscountForOrder(OrderTransfer $orderTransfer): SpySalesDiscount
+    protected function createDiscountForOrder(OrderTransfer $orderTransfer, $seedData = []): SpySalesDiscount
     {
         $orderTransfer->requireItems();
         $orderItem = $orderTransfer->getItems()[0];
-        $seedData = $this->getSeedDataForSalesDiscount($orderTransfer->getIdSalesOrder(), $orderItem->getIdSalesOrderItem());
+        $additionalSeedData = $this->getSeedDataForSalesDiscount($orderTransfer->getIdSalesOrder(), $orderItem->getIdSalesOrderItem());
+        $seedData = array_merge($seedData, $additionalSeedData);
         $spySalesDiscountEntity = $this->tester->haveSalesDiscount($seedData);
 
         return $spySalesDiscountEntity;
