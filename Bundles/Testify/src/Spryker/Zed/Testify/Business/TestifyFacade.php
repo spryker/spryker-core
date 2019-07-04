@@ -10,13 +10,15 @@ namespace Spryker\Zed\Testify\Business;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @api
- *
  * @method \Spryker\Zed\Testify\Business\TestifyBusinessFactory getFactory()
  */
 class TestifyFacade extends AbstractFacade implements TestifyFacadeInterface
 {
     /**
+     * Specification:
+     * - Removes all files in configured directories.
+     * - Directories are configured in `\Spryker\Zed\Testify\TestifyConfig::getOutputDirectoriesForCleanup()`.
+     *
      * @api
      *
      * @return array
