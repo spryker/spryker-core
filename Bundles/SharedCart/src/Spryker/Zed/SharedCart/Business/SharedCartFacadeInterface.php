@@ -304,9 +304,9 @@ interface SharedCartFacadeInterface
     /**
      * Specification:
      *  - Finds all customers (including quote owner) that have access to the quote.
-     *  - Requires idQuote and customerReference to be set in QuoteTransfer.
-     *  - Requires CustomerTransfer to be set in QuoteTransfer.
-     *  - Requires customerReference to be set in CustomerTransfer.
+     *  - QuoteTransfer.idQuote is required
+     *  - QuoteTransfer.customerReference is required
+     *  - QuoteTransfer.customerTransfer.customerReference is required
      *
      * @api
      *

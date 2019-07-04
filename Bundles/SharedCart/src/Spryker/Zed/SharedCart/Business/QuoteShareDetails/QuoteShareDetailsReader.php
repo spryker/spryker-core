@@ -8,6 +8,7 @@
 namespace Spryker\Zed\SharedCart\Business\QuoteShareDetails;
 
 use Generated\Shared\Transfer\CustomerCollectionTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShareDetailCollectionTransfer;
 use Generated\Shared\Transfer\ShareDetailCriteriaFilterTransfer;
@@ -65,15 +66,11 @@ class QuoteShareDetailsReader implements QuoteShareDetailsReaderInterface
      */
     public function getCustomersSharingSameQuote(QuoteTransfer $quoteTransfer): CustomerCollectionTransfer
     {
-        $quoteTransfer->requireIdQuote()
-            ->requireCustomerReference()
-            ->requireCustomer();
-        $quoteTransfer->getCustomer()
-            ->requireCustomerReference();
+        $this->assertQuoteCustomerData($quoteTransfer);
 
         $customerCollectionTransfer = $this->sharedCartRepository->getCustomersSharingSameQuote($quoteTransfer->getIdQuote());
 
-        if ($quoteTransfer->getCustomerReference() === $quoteTransfer->getCustomer()->getCustomerReference()) {
+        if ($this->isQuoteOwner($quoteTransfer, $quoteTransfer->getCustomer())) {
             return $customerCollectionTransfer;
         }
 
@@ -83,5 +80,30 @@ class QuoteShareDetailsReader implements QuoteShareDetailsReaderInterface
         }
 
         return $customerCollectionTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    protected function assertQuoteCustomerData(QuoteTransfer $quoteTransfer): void
+    {
+        $quoteTransfer->requireIdQuote()
+            ->requireCustomerReference()
+            ->requireCustomer()
+            ->getCustomer()
+            ->requireCustomerReference();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return bool
+     */
+    protected function isQuoteOwner(QuoteTransfer $quoteTransfer, CustomerTransfer $customerTransfer): bool
+    {
+        return $quoteTransfer->getCustomerReference() === $customerTransfer->getCustomerReference();
     }
 }
