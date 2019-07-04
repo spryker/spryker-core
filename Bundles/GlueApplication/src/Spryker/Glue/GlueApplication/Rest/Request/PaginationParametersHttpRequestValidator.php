@@ -54,11 +54,11 @@ class PaginationParametersHttpRequestValidator implements PaginationParametersHt
      */
     protected function checkParameters(?string $offset, ?string $limit): bool
     {
-        if ($offset && !filter_var($offset, FILTER_VALIDATE_INT)) {
+        if ($offset && filter_var($offset, FILTER_VALIDATE_INT) !== false) {
             return false;
         }
 
-        if ($limit && !filter_var($limit, FILTER_VALIDATE_INT)) {
+        if ($limit && filter_var($limit, FILTER_VALIDATE_INT) !== false) {
             return false;
         }
 
