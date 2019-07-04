@@ -127,6 +127,27 @@ class FileListContentTermForm extends AbstractType
                 $event->setData($ids);
                 $event->getForm()->setData($ids);
             }
+        )->addEventListener(
+            FormEvents::PRE_SET_DATA,
+            function (FormEvent $event): void {
+                if (!$event->getData()) {
+                    return;
+                }
+
+                $fileManagerFacade = $this->getFactory()->getFileManagerFacade();
+                $fileManagerDataTransfers = $fileManagerFacade->getFilesByIds($event->getData());
+                $fileIds = [];
+
+                foreach ($fileManagerDataTransfers as $fileManagerDataTransfer) {
+                    if (!$fileManagerDataTransfer->getFile()) {
+                        continue;
+                    }
+
+                    $fileIds[] = $fileManagerDataTransfer->getFile()->getIdFile();
+                }
+
+                $event->setData($fileIds);
+            }
         );
 
         return $this;
