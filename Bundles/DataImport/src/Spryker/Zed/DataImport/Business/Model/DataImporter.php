@@ -10,20 +10,24 @@ namespace Spryker\Zed\DataImport\Business\Model;
 use Countable;
 use Exception;
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
+use Generated\Shared\Transfer\DataImporterReportMessageTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
 use Spryker\Shared\ErrorHandler\ErrorLogger;
+use Spryker\Zed\DataImport\Business\DataImporter\DataImporterImportGroupAwareInterface;
 use Spryker\Zed\DataImport\Business\Exception\DataImportException;
 use Spryker\Zed\DataImport\Business\Model\DataReader\ConfigurableDataReaderInterface;
 use Spryker\Zed\DataImport\Business\Model\DataReader\DataReaderInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerAwareInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerInterface;
+use Spryker\Zed\DataImport\DataImportConfig;
 
 class DataImporter implements
     DataImporterBeforeImportAwareInterface,
     DataImporterInterface,
     DataImporterAfterImportAwareInterface,
-    DataSetStepBrokerAwareInterface
+    DataSetStepBrokerAwareInterface,
+    DataImporterImportGroupAwareInterface
 {
     /**
      * @var string
@@ -49,6 +53,11 @@ class DataImporter implements
      * @var \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerInterface[]
      */
     protected $dataSetStepBroker = [];
+
+    /**
+     * @var string
+     */
+    protected $importGroup;
 
     /**
      * @param string $importType
@@ -143,12 +152,20 @@ class DataImporter implements
                 $this->importDataSet($dataSet);
                 $dataImporterReportTransfer->setImportedDataSetCount($dataImporterReportTransfer->getImportedDataSetCount() + 1);
             } catch (Exception $dataImportException) {
+                $exceptionMessage = $this->buildExceptionMessage($dataImportException, $dataImporterReportTransfer->getImportedDataSetCount() + 1);
+
                 if ($dataImporterConfigurationTransfer && $dataImporterConfigurationTransfer->getThrowException()) {
-                    throw new DataImportException($this->buildExceptionMessage($dataImportException, $dataImporterReportTransfer->getImportedDataSetCount() + 1), 0, $dataImportException);
+                    throw new DataImportException($exceptionMessage, 0, $dataImportException);
                 }
 
                 ErrorLogger::getInstance()->log($dataImportException);
-                $dataImporterReportTransfer->setIsSuccess(false);
+
+                $dataImporterReportMessageTransfer = new DataImporterReportMessageTransfer();
+                $dataImporterReportMessageTransfer->setMessage($exceptionMessage);
+
+                $dataImporterReportTransfer
+                    ->setIsSuccess(false)
+                    ->addMessage($dataImporterReportMessageTransfer);
             }
 
             unset($dataSet);
@@ -187,6 +204,24 @@ class DataImporter implements
     public function getImportType()
     {
         return $this->importType;
+    }
+
+    /**
+     * @param string $importGroup
+     *
+     * @return void
+     */
+    public function setImportGroup(string $importGroup): void
+    {
+        $this->importGroup = $importGroup;
+    }
+
+    /**
+     * @return string
+     */
+    public function getImportGroup(): string
+    {
+        return $this->importGroup ?: DataImportConfig::IMPORT_GROUP_FULL;
     }
 
     /**

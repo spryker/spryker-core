@@ -40,6 +40,8 @@ class PriceProductServiceTest extends Unit
         array $concretePriceProductTransfers,
         array $abstractPriceProductTransfers
     ): void {
+        $abstractPriceProductTransfers = $this->prefillTransferWithDataForPriceGrouping($abstractPriceProductTransfers);
+        $concretePriceProductTransfers = $this->prefillTransferWithDataForPriceGrouping($concretePriceProductTransfers);
         $priceProductService = $this->getPriceProductService();
 
         $mergedPriceProductTransfers = $priceProductService->mergeConcreteAndAbstractPrices($abstractPriceProductTransfers, $concretePriceProductTransfers);
@@ -69,6 +71,9 @@ class PriceProductServiceTest extends Unit
         array $concretePriceProductTransfers,
         array $abstractPriceProductTransfers
     ): void {
+        $abstractPriceProductTransfers = $this->prefillTransferWithDataForPriceGrouping($abstractPriceProductTransfers);
+        $concretePriceProductTransfers = $this->prefillTransferWithDataForPriceGrouping($concretePriceProductTransfers);
+
         $priceProductService = $this->getPriceProductService();
 
         /** @var \Generated\Shared\Transfer\PriceProductTransfer $concretePriceProductTransfer */
@@ -98,6 +103,8 @@ class PriceProductServiceTest extends Unit
         array $concretePriceProductTransfers,
         array $abstractPriceProductTransfers
     ): void {
+        $abstractPriceProductTransfers = $this->prefillTransferWithDataForPriceGrouping($abstractPriceProductTransfers);
+        $concretePriceProductTransfers = $this->prefillTransferWithDataForPriceGrouping($concretePriceProductTransfers);
         $priceProductService = $this->getPriceProductService();
 
         $mergedPriceProductTransfers = $priceProductService->mergeConcreteAndAbstractPrices($abstractPriceProductTransfers, $concretePriceProductTransfers);
@@ -135,6 +142,8 @@ class PriceProductServiceTest extends Unit
         array $concretePriceProductTransfers,
         array $abstractPriceProductTransfers
     ): void {
+        $abstractPriceProductTransfers = $this->prefillTransferWithDataForPriceGrouping($abstractPriceProductTransfers);
+        $concretePriceProductTransfers = $this->prefillTransferWithDataForPriceGrouping($concretePriceProductTransfers);
         $priceProductService = $this->getPriceProductService();
 
         $mergedPriceProductTransfers = $priceProductService->mergeConcreteAndAbstractPrices($abstractPriceProductTransfers, $concretePriceProductTransfers);
@@ -182,6 +191,7 @@ class PriceProductServiceTest extends Unit
     protected function getMultiplePriceProductTransfers(): array
     {
         $chfCurrencyData = ['code' => 'CHF', 'name' => 'CHF', 'symbol' => 'CHF'];
+
         return [
             (new PriceProductBuilder(['priceTypeName' => 'DEFAULT']))
                 ->withMoneyValue((new MoneyValueBuilder())->withCurrency())
@@ -234,5 +244,22 @@ class PriceProductServiceTest extends Unit
         return [
             [$this->getMultiplePriceProductTransfers(), $this->getSinglePriceProductTransfers()],
         ];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    protected function prefillTransferWithDataForPriceGrouping(array $priceProductTransfers)
+    {
+        foreach ($priceProductTransfers as $priceProductTransfer) {
+            $priceProductTransfer->setIsMergeable(true)
+                ->setGroupKey(
+                    $this->getPriceProductService()->buildPriceProductGroupKey($priceProductTransfer)
+                );
+        }
+
+        return $priceProductTransfers;
     }
 }

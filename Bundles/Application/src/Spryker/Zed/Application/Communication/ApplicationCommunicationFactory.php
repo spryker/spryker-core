@@ -9,6 +9,8 @@ namespace Spryker\Zed\Application\Communication;
 
 use Spryker\Shared\Application\EventListener\KernelLogListener;
 use Spryker\Shared\Log\LoggerTrait;
+use Spryker\Shared\Twig\TwigFunction;
+use Spryker\Zed\Application\Communication\Twig\YvesUrlFunction;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\EventListener\SaveSessionListener;
@@ -37,5 +39,13 @@ class ApplicationCommunicationFactory extends AbstractCommunicationFactory
     public function createSaveSessionEventSubscriber(): EventSubscriberInterface
     {
         return new SaveSessionListener();
+    }
+
+    /**
+     * @return \Spryker\Shared\Twig\TwigFunction
+     */
+    public function createYvesUrlFunction(): TwigFunction
+    {
+        return new YvesUrlFunction($this->getConfig());
     }
 }

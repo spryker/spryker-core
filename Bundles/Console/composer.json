@@ -11,6 +11,7 @@
   },
   "require-dev": {
     "spryker/application": "*",
+    "spryker/code-sniffer": "*",
     "spryker/log": "^3.0.0",
     "spryker/propel": "*",
     "spryker/testify": "*"
@@ -20,7 +21,8 @@
   },
   "autoload": {
     "psr-4": {
-      "Spryker\\": "src/Spryker/"
+      "Spryker\\": "src/Spryker/",
+      "SprykerTest\\Zed\\Console\\Helper\\": "tests/SprykerTest/Zed/Console/_support/Helper/"
     }
   },
   "autoload-dev": {

@@ -7,7 +7,6 @@
 
 namespace Spryker\Yves\Kernel\Widget;
 
-use Spryker\Shared\Kernel\Communication\Application;
 use Spryker\Yves\Kernel\BundleConfigResolverAwareTrait;
 use Spryker\Yves\Kernel\ClientResolverAwareTrait;
 use Spryker\Yves\Kernel\Dependency\Widget\WidgetInterface;
@@ -22,6 +21,8 @@ abstract class AbstractWidget implements WidgetInterface
     use FactoryResolverAwareTrait;
     use ClientResolverAwareTrait;
     use BundleConfigResolverAwareTrait;
+
+    protected const SERVICE_LOCALE = 'locale';
 
     /**
      * @var array
@@ -124,9 +125,9 @@ abstract class AbstractWidget implements WidgetInterface
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\Communication\Application
+     * @return \Spryker\Service\Container\Container
      */
-    protected function getApplication(): Application
+    protected function getApplication()
     {
         return (new Pimple())->getApplication();
     }
@@ -136,6 +137,6 @@ abstract class AbstractWidget implements WidgetInterface
      */
     protected function getLocale(): string
     {
-        return $this->getApplication()['locale'];
+        return $this->getApplication()->get(static::SERVICE_LOCALE);
     }
 }

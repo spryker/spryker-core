@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\ProductBundle\Persistence\SpyProductBundle;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -180,7 +181,11 @@ class ProductBundleCartExpanderTest extends Unit
         $currencyTransfer = new CurrencyTransfer();
         $currencyTransfer->setCode('EUR');
 
+        $storeTransfer = new StoreTransfer();
+        $storeTransfer->setName('DE');
+
         $quoteTransfer->setCurrency($currencyTransfer);
+        $quoteTransfer->setStore($storeTransfer);
         $cartChangeTransfer->setQuote($quoteTransfer);
 
         $itemTransfer = new ItemTransfer();

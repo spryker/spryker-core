@@ -107,6 +107,13 @@ interface ProductConcreteManagerInterface
     public function findProductConcreteIdsByAbstractProductId(int $idProductAbstract): array;
 
     /**
+     * @param int[] $productConcreteIds
+     *
+     * @return int[]
+     */
+    public function getProductAbstractIdsByProductConcreteIds(array $productConcreteIds): array;
+
+    /**
      * @param int $idProductConcrete
      *
      * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
@@ -126,7 +133,7 @@ interface ProductConcreteManagerInterface
     /**
      * @param string[] $skus
      *
-     * @return array
+     * @return int[]
      */
     public function getProductConcreteIdsByConcreteSkus(array $skus): array;
 

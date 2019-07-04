@@ -8,6 +8,8 @@
 namespace Spryker\Zed\Product\Business;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\PaginationTransfer;
+use Generated\Shared\Transfer\ProductAbstractSuggestionCollectionTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductAttributeKeyTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
@@ -725,7 +727,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      * @param array $attributeCollection
      *
-     * @return array|\Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
     public function generateVariants(ProductAbstractTransfer $productAbstractTransfer, array $attributeCollection)
     {
@@ -912,6 +914,23 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      * @api
      *
      * @param string $suggestion
+     * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractSuggestionCollectionTransfer
+     */
+    public function getPaginatedProductAbstractSuggestions(string $suggestion, PaginationTransfer $paginationTransfer): ProductAbstractSuggestionCollectionTransfer
+    {
+        return $this->getFactory()
+            ->createProductSuggester()
+            ->getPaginatedProductAbstractSuggestions($suggestion, $paginationTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $suggestion
      *
      * @return string[]
      */
@@ -943,9 +962,25 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      *
      * @api
      *
+     * @param int[] $productConcreteIds
+     *
+     * @return int[]
+     */
+    public function getProductAbstractIdsByProductConcreteIds(array $productConcreteIds): array
+    {
+        return $this->getFactory()
+            ->createProductConcreteManager()
+            ->getProductAbstractIdsByProductConcreteIds($productConcreteIds);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param string[] $skus
      *
-     * @return array
+     * @return int[]
      */
     public function getProductConcreteIdsByConcreteSkus(array $skus): array
     {

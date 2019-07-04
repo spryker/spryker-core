@@ -132,4 +132,14 @@ class GatewayController extends AbstractGatewayController
             ->setPermission($permissionTransfer)
             ->setIsSuccessful(true);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyRoleResponseTransfer
+     */
+    public function findCompanyRoleByUuidAction(CompanyRoleTransfer $companyRoleTransfer): CompanyRoleResponseTransfer
+    {
+        return $this->getFacade()->findCompanyRoleByUuid($companyRoleTransfer);
+    }
 }

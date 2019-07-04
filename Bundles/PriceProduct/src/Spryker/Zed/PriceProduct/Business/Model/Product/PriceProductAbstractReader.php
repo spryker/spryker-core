@@ -165,6 +165,19 @@ class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
      */
     public function findPriceForProductAbstract(string $sku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): ?PriceProductTransfer
     {
+        $priceProductTransfers = $this->findProductAbstractPricesBySkuAndCriteria($sku, $priceProductCriteriaTransfer);
+
+        return $this->priceProductService->resolveProductPriceByPriceProductCriteria($priceProductTransfers, $priceProductCriteriaTransfer);
+    }
+
+    /**
+     * @param string $sku
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function findProductAbstractPricesBySkuAndCriteria(string $sku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): array
+    {
         $priceProductStoreEntities = $this->priceProductRepository
             ->findProductAbstractPricesBySkuAndCriteria($sku, $priceProductCriteriaTransfer);
 
@@ -175,7 +188,7 @@ class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
         $priceProductTransfers = $this->priceProductExpander->expandPriceProductTransfers($priceProductTransfers);
         $priceProductTransfers = $this->pluginExecutor->executePriceExtractorPluginsForProductAbstract($priceProductTransfers);
 
-        return $this->priceProductService->resolveProductPriceByPriceProductCriteria($priceProductTransfers, $priceProductCriteriaTransfer);
+        return $priceProductTransfers;
     }
 
     /**

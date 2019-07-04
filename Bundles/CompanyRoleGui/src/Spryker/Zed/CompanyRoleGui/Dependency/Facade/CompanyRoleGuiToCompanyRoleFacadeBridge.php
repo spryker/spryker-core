@@ -87,4 +87,14 @@ class CompanyRoleGuiToCompanyRoleFacadeBridge implements CompanyRoleGuiToCompany
     ): CompanyRoleCollectionTransfer {
         return $this->companyRoleFacade->getCompanyRoleCollection($criteriaFilterTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyRoleTransfer|null
+     */
+    public function findCompanyRoleById(CompanyRoleTransfer $companyRoleTransfer): ?CompanyRoleTransfer
+    {
+        return $this->companyRoleFacade->findCompanyRoleById($companyRoleTransfer);
+    }
 }

@@ -124,6 +124,7 @@ class CmsPageReader implements CmsPageReaderInterface
         if (isset($urlLocaleMap[$cmsPageLocalizedAttributesEntity->getFkLocale()])) {
             $url = $urlLocaleMap[$cmsPageLocalizedAttributesEntity->getFkLocale()];
         }
+
         return $url;
     }
 

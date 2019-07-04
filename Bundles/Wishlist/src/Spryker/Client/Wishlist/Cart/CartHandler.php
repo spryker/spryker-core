@@ -173,6 +173,7 @@ class CartHandler implements CartHandlerInterface
         foreach ($quoteTransfer->getBundleItems() as $itemTransfer) {
             $skuIndex[$itemTransfer->getSku()] = true;
         }
+
         return $skuIndex;
     }
 }

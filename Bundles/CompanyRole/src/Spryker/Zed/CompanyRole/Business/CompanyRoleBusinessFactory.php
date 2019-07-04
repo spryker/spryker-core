@@ -13,6 +13,8 @@ use Spryker\Zed\CompanyRole\Business\Model\CompanyRolePermissionReader;
 use Spryker\Zed\CompanyRole\Business\Model\CompanyRolePermissionReaderInterface;
 use Spryker\Zed\CompanyRole\Business\Model\CompanyRolePermissionWriter;
 use Spryker\Zed\CompanyRole\Business\Model\CompanyRolePermissionWriterInterface;
+use Spryker\Zed\CompanyRole\Business\Reader\CompanyRoleReader;
+use Spryker\Zed\CompanyRole\Business\Reader\CompanyRoleReaderInterface;
 use Spryker\Zed\CompanyRole\CompanyRoleDependencyProvider;
 use Spryker\Zed\CompanyRole\Dependency\Facade\CompanyRoleToPermissionFacadeInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
@@ -36,6 +38,14 @@ class CompanyRoleBusinessFactory extends AbstractBusinessFactory
             $this->getConfig(),
             $this->getPermissionFacade()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyRole\Business\Reader\CompanyRoleReaderInterface
+     */
+    public function createCompanyRoleReader(): CompanyRoleReaderInterface
+    {
+        return new CompanyRoleReader($this->getRepository());
     }
 
     /**

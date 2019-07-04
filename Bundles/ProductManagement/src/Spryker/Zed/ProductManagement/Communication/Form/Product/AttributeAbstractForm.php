@@ -248,10 +248,13 @@ class AttributeAbstractForm extends AbstractSubForm
         foreach ($valueCollection as $entity) {
             $data = $entity->toArray();
             $value = $data['value'];
+            $originalValue = $value;
+
             if (isset($data['translation'])) {
                 $value = $data['translation'];
             }
-            $result[$value] = $value;
+
+            $result[$originalValue] = $value;
         }
 
         return $result;

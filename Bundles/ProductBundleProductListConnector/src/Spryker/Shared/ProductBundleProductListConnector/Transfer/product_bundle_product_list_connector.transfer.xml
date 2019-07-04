@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="ProductBundle">
+        <property name="idProductConcreteBundle" type="int" />
+        <property name="bundledProducts" type="ProductForBundle[]" singular="bundledProduct" />
+    </transfer>
+
+    <transfer name="ProductForBundle">
+        <property name="idProductBundle" type="int" />
+        <property name="idProductConcrete" type="int" />
+    </transfer>
+
+    <transfer name="ProductList">
+        <property name="type" type="string"/>
+        <property name="productListProductConcreteRelation" type="ProductListProductConcreteRelation"/>
+    </transfer>
+
+    <transfer name="ProductListProductConcreteRelation">
+        <property name="productIds" type="int[]"/>
+    </transfer>
+
+    <transfer name="ProductListResponse">
+        <property name="productList" type="ProductList" />
+        <property name="messages" type="Message[]" singular="message"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="value" type="string"/>
+        <property name="parameters" type="array"/>
+    </transfer>
+
+</transfers>

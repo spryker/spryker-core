@@ -120,4 +120,22 @@ class CompanyBusinessUnitClient extends AbstractClient implements CompanyBusines
             ->createZedCompanyBusinessUnitStub()
             ->getCustomerCompanyBusinessUnitTree($customerTransfer);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * {@internal will work if UUID field is provided.}
+     *
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer
+     */
+    public function findCompanyBusinessUnitByUuid(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): CompanyBusinessUnitResponseTransfer
+    {
+        return $this->getFactory()
+            ->createZedCompanyBusinessUnitStub()
+            ->findCompanyBusinessUnitByUuid($companyBusinessUnitTransfer);
+    }
 }

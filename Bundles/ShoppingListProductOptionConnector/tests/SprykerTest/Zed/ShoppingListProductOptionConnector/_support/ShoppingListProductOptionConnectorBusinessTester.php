@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\ShoppingListProductOptionConnector;
 
 use Codeception\Actor;
+use Generated\Shared\Transfer\ProductOptionGroupTransfer;
 use Generated\Shared\Transfer\ProductOptionValueTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Orm\Zed\ShoppingListProductOptionConnector\Persistence\SpyShoppingListProductOptionQuery;
@@ -27,29 +28,22 @@ use Orm\Zed\ShoppingListProductOptionConnector\Persistence\SpyShoppingListProduc
  *
  * @SuppressWarnings(PHPMD)
  *
- * @method \Spryker\Zed\ShoppingListProductOptionConnector\Business\ShoppingListProductOptionConnectorFacade getFacade()
+ * @method \Spryker\Zed\ShoppingListProductOptionConnector\Business\ShoppingListProductOptionConnectorFacadeInterface getFacade()
  */
 class ShoppingListProductOptionConnectorBusinessTester extends Actor
 {
     use _generated\ShoppingListProductOptionConnectorBusinessTesterActions;
 
     /**
-     * @param string $sku
+     * @param array $override
      *
      * @return \Generated\Shared\Transfer\ProductOptionValueTransfer
      */
-    public function createProductOptionGroupValueTransfer(string $sku): ProductOptionValueTransfer
+    public function createProductOptionGroupValueTransfer(array $override): ProductOptionValueTransfer
     {
         $productOptionGroupTransfer = $this->haveProductOptionGroupWithValues(
-            [],
-            [
-                [
-                    [ProductOptionValueTransfer::SKU => $sku],
-                    [
-                        [],
-                    ],
-                ],
-            ]
+            $this->getOverrideGroup($override),
+            $this->getOverrideValues($override)
         );
 
         $productOptionValueTransfer = $productOptionGroupTransfer->getProductOptionValues()->offsetGet(0);
@@ -84,5 +78,40 @@ class ShoppingListProductOptionConnectorBusinessTester extends Actor
 
         $this->getFacade()
             ->saveShoppingListItemProductOptions($shoppingListItemTransfer);
+    }
+
+    /**
+     * @param array $override
+     *
+     * @return array
+     */
+    protected function getOverrideGroup(array $override): array
+    {
+        $isGroupActive = $override[ProductOptionGroupTransfer::ACTIVE] ?? true;
+
+        return [
+            ProductOptionGroupTransfer::ACTIVE => $isGroupActive,
+        ];
+    }
+
+    /**
+     * @param array $override
+     *
+     * @return array
+     */
+    protected function getOverrideValues(array $override): array
+    {
+        $sku = $override[ProductOptionValueTransfer::SKU];
+
+        return [
+            [
+                [
+                    ProductOptionValueTransfer::SKU => $sku,
+                ],
+                [
+                    [],
+                ],
+            ],
+        ];
     }
 }
