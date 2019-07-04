@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Setup\Business\Model;
 
 use ErrorException;
-use Spryker\Shared\Config\Environment;
 use Spryker\Zed\Setup\SetupConfig;
 
 /**
@@ -124,30 +123,10 @@ class Cronjobs
         include_once $this->getJobConfigPath();
 
         if (count($jobs) === 0) {
-            return $jobs;
+            return [];
         }
 
-        foreach ($jobs as $i => $job) {
-            if (!empty($job['command'])) {
-                $command = $job['command'];
-                $commandExpl = explode(' ', $command);
-                $requestParts = ['module' => '', 'controller' => '', 'action' => ''];
-
-                foreach ($commandExpl as $part) {
-                    $segments = array_keys($requestParts);
-                    foreach ($segments as $segment) {
-                        if (strpos($part, $segment . '=') !== false) {
-                            $requestParts[$segment] = str_replace('--' . $segment . '=', '', $part);
-                        }
-                    }
-                }
-
-                $jobs[$i]['request'] = '/' . $requestParts['module'] . '/' . $requestParts['controller']
-                    . '/' . $requestParts['action'];
-
-                $jobs[$i]['id'] = null;
-            }
-        }
+        $jobs = $this->extendJobCommand($jobs);
 
         return $this->indexJobsByName($jobs, $roles);
     }
@@ -197,10 +176,12 @@ class Cronjobs
         $jobs = $this->getJenkinsApiResponse(self::JENKINS_API_JOBS_URL);
         $jobs = json_decode($jobs, true);
 
-        if (!empty($jobs['jobs'])) {
-            foreach ($jobs['jobs'] as $job) {
-                $jobsNames[] = $job['name'];
-            }
+        if (count($jobs['jobs']) === 0) {
+            return $jobsNames;
+        }
+
+        foreach ($jobs['jobs'] as $job) {
+            $jobsNames[] = $job['name'];
         }
 
         return $jobsNames;
@@ -218,7 +199,7 @@ class Cronjobs
         $output = '';
         $existingJobs = $this->getExistingJobs();
 
-        if (empty($existingJobs)) {
+        if (count($existingJobs) === 0) {
             return $output;
         }
 
@@ -432,7 +413,7 @@ class Cronjobs
             return $schedule;
         }
 
-        if (Environment::isNotProduction()) {
+        if ($this->config->isSchedulerEnabled() === false) {
             // Non-production - don't run automatically via Jenkins
             return '';
         }
@@ -473,11 +454,10 @@ cd %s
 
         $cronjobsConfigPath = $this->config->getCronjobsConfigFilePath();
 
-        $environment = Environment::getInstance();
         $customBashCommand = '';
         $destination = APPLICATION_ROOT_DIR;
 
-        if ($environment->isNotDevelopment()) {
+        if ($this->config->isDeployVarsEnabled()) {
             $checkDeployFolderExistsBashCommand = '[ -f ' . APPLICATION_ROOT_DIR . '/deploy/vars ]';
             $sourceBashCommand = '. ' . APPLICATION_ROOT_DIR . '/deploy/vars';
 
@@ -488,7 +468,7 @@ cd %s
         return sprintf(
             $commandTemplate,
             $customBashCommand,
-            $environment->getEnvironment(),
+            APPLICATION_ENV,
             $store,
             $destination,
             $cronjobsConfigPath,
@@ -573,5 +553,37 @@ cd %s
         }
 
         return $httpHeader;
+    }
+
+    /**
+     * @param array $jobs
+     *
+     * @return array
+     */
+    protected function extendJobCommand(array $jobs): array
+    {
+        foreach ($jobs as $i => $job) {
+            if (empty($job['command'])) {
+                continue;
+            }
+            $command = $job['command'];
+            $commandExpl = explode(' ', $command);
+            $requestParts = ['module' => '', 'controller' => '', 'action' => ''];
+            foreach ($commandExpl as $part) {
+                $segments = array_keys($requestParts);
+                foreach ($segments as $segment) {
+                    if (strpos($part, $segment . '=') !== false) {
+                        $requestParts[$segment] = str_replace('--' . $segment . '=', '', $part);
+                    }
+                }
+            }
+
+            $jobs[$i]['request'] = '/' . $requestParts['module'] . '/' . $requestParts['controller']
+                . '/' . $requestParts['action'];
+
+            $jobs[$i]['id'] = null;
+        }
+
+        return $jobs;
     }
 }
