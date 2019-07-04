@@ -55,8 +55,8 @@ class GatewayController extends AbstractGatewayController
      *
      * @return \Generated\Shared\Transfer\CustomerCollectionTransfer
      */
-    public function getCustomersSharingSameQuoteAction(QuoteTransfer $quoteTransfer): CustomerCollectionTransfer
+    public function getCustomerCollectionByQuoteAction(QuoteTransfer $quoteTransfer): CustomerCollectionTransfer
     {
-        return $this->getFacade()->getCustomersSharingSameQuote($quoteTransfer);
+        return $this->getFacade()->getCustomerCollectionByQuote($quoteTransfer);
     }
 }

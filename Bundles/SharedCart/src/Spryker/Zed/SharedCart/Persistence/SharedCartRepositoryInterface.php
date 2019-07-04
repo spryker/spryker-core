@@ -124,5 +124,5 @@ interface SharedCartRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\CustomerCollectionTransfer
      */
-    public function getCustomersSharingSameQuote(int $idQuote): CustomerCollectionTransfer;
+    public function getCustomerCollectionByQuote(int $idQuote): CustomerCollectionTransfer;
 }

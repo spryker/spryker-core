@@ -190,10 +190,10 @@ class SharedCartClient extends AbstractClient implements SharedCartClientInterfa
      *
      * @return \Generated\Shared\Transfer\CustomerCollectionTransfer
      */
-    public function getCustomersSharingSameQuote(QuoteTransfer $quoteTransfer): CustomerCollectionTransfer
+    public function getCustomerCollectionByQuote(QuoteTransfer $quoteTransfer): CustomerCollectionTransfer
     {
         return $this->getFactory()
             ->createZedSharedCartStub()
-            ->getCustomersSharingSameQuote($quoteTransfer);
+            ->getCustomerCollectionByQuote($quoteTransfer);
     }
 }

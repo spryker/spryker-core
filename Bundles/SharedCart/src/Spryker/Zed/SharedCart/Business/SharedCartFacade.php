@@ -366,10 +366,10 @@ class SharedCartFacade extends AbstractFacade implements SharedCartFacadeInterfa
      *
      * @return \Generated\Shared\Transfer\CustomerCollectionTransfer
      */
-    public function getCustomersSharingSameQuote(QuoteTransfer $quoteTransfer): CustomerCollectionTransfer
+    public function getCustomerCollectionByQuote(QuoteTransfer $quoteTransfer): CustomerCollectionTransfer
     {
         return $this->getFactory()
             ->createQuoteShareDetailsReader()
-            ->getCustomersSharingSameQuote($quoteTransfer);
+            ->getCustomerCollectionByQuote($quoteTransfer);
     }
 }

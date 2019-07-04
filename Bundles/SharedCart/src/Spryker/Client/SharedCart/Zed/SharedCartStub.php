@@ -64,11 +64,11 @@ class SharedCartStub extends ZedRequestStub implements SharedCartStubInterface
      *
      * @return \Generated\Shared\Transfer\CustomerCollectionTransfer
      */
-    public function getCustomersSharingSameQuote(QuoteTransfer $quoteTransfer): CustomerCollectionTransfer
+    public function getCustomerCollectionByQuote(QuoteTransfer $quoteTransfer): CustomerCollectionTransfer
     {
         /** @var \Generated\Shared\Transfer\CustomerCollectionTransfer $customerCollectionTransfer */
         $customerCollectionTransfer = $this->zedStub->call(
-            '/shared-cart/gateway/get-customers-sharing-same-quote',
+            '/shared-cart/gateway/get-customer-collection-by-quote',
             $quoteTransfer
         );
 

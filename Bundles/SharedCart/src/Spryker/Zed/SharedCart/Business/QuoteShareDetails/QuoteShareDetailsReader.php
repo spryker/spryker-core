@@ -64,11 +64,11 @@ class QuoteShareDetailsReader implements QuoteShareDetailsReaderInterface
      *
      * @return \Generated\Shared\Transfer\CustomerCollectionTransfer
      */
-    public function getCustomersSharingSameQuote(QuoteTransfer $quoteTransfer): CustomerCollectionTransfer
+    public function getCustomerCollectionByQuote(QuoteTransfer $quoteTransfer): CustomerCollectionTransfer
     {
         $this->assertQuoteCustomerData($quoteTransfer);
 
-        $customerCollectionTransfer = $this->sharedCartRepository->getCustomersSharingSameQuote($quoteTransfer->getIdQuote());
+        $customerCollectionTransfer = $this->sharedCartRepository->getCustomerCollectionByQuote($quoteTransfer->getIdQuote());
 
         if ($this->isQuoteOwner($quoteTransfer, $quoteTransfer->getCustomer())) {
             return $customerCollectionTransfer;

@@ -462,7 +462,7 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
      *
      * @return \Generated\Shared\Transfer\CustomerCollectionTransfer
      */
-    public function getCustomersSharingSameQuote(int $idQuote): CustomerCollectionTransfer
+    public function getCustomerCollectionByQuote(int $idQuote): CustomerCollectionTransfer
     {
         $customerEntityCollection = $this->getFactory()->createSpyCustomerQuery()
             ->joinWithCompanyUser()

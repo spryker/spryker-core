@@ -325,15 +325,11 @@ class SharedCartFacadeTest extends Test
 
         //Act
         $customerCollectionTransfer = $this->tester->getFacade()
-            ->getCustomersSharingSameQuote($quoteTransfer->setCustomer($otherCustomerTransfer));
+            ->getCustomerCollectionByQuote($quoteTransfer->setCustomer($otherCustomerTransfer));
 
         //Assert
         $this->assertNotEmpty($customerCollectionTransfer->getCustomers());
-        $this->assertCount(1, $customerCollectionTransfer->getCustomers());
-        $this->assertSame(
-            $ownerCustomerTransfer->getCustomerReference(),
-            $customerCollectionTransfer->getCustomers()->offsetGet(0)->getCustomerReference()
-        );
+        $this->assertCount(2, $customerCollectionTransfer->getCustomers());
     }
 
     /**
@@ -366,7 +362,7 @@ class SharedCartFacadeTest extends Test
 
         //Act
         $customerCollectionTransfer = $this->tester->getFacade()
-            ->getCustomersSharingSameQuote($quoteTransfer);
+            ->getCustomerCollectionByQuote($quoteTransfer);
 
         //Assert
         $this->assertNotEmpty($customerCollectionTransfer->getCustomers());
