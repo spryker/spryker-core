@@ -24,7 +24,11 @@ class PaginationParametersHttpRequestValidator implements PaginationParametersHt
     public function validate(Request $request): ?RestErrorMessageTransfer
     {
         $queryParameters = $request->query->all();
-        $queryPage = $queryParameters[RequestConstantsInterface::QUERY_PAGE];
+        $queryPage = $queryParameters[RequestConstantsInterface::QUERY_PAGE] ?? null;
+
+        if ($queryPage === null) {
+            return null;
+        }
 
         $offset = $queryPage[RequestConstantsInterface::QUERY_OFFSET] ?? null;
         $limit = $queryPage[RequestConstantsInterface::QUERY_LIMIT] ?? null;
