@@ -12,9 +12,9 @@ use ArrayObject;
 interface OmsToShipmentServiceInterface
 {
     /**
-     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfersCollection
+     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransferCollection
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
      */
-    public function groupItemsByShipment(iterable $itemTransfersCollection): ArrayObject;
+    public function groupItemsByShipment(iterable $itemTransferCollection): ArrayObject;
 }
