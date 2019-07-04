@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ShipmentGui\Communication\Controller;
 
 use Generated\Shared\Transfer\ShipmentGroupResponseTransfer;
+use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\Sales\SalesConfig;
@@ -50,9 +51,11 @@ class CreateController extends AbstractController
         }
 
         $dataProvider = $this->getFactory()->createShipmentFormDataProvider();
-
         $form = $this->getFactory()
-            ->createShipmentCreateForm($dataProvider->getData($orderTransfer), $dataProvider->getOptions($orderTransfer))
+            ->createShipmentCreateForm(
+                $dataProvider->getData($orderTransfer, $this->createDefaultShipmentTransfer()),
+                $dataProvider->getOptions($orderTransfer)
+            )
             ->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -78,6 +81,14 @@ class CreateController extends AbstractController
             'idSalesOrder' => $idSalesOrder,
             'form' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\ShipmentTransfer
+     */
+    protected function createDefaultShipmentTransfer(): ShipmentTransfer
+    {
+        return new ShipmentTransfer();
     }
 
     /**

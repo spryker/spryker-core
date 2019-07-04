@@ -62,16 +62,11 @@ class ShipmentFormDataProvider
      *
      * @return \Generated\Shared\Transfer\ShipmentGroupTransfer
      */
-    public function getData(OrderTransfer $orderTransfer, ?ShipmentTransfer $shipmentTransfer = null): ShipmentGroupTransfer
+    public function getData(OrderTransfer $orderTransfer, ShipmentTransfer $shipmentTransfer): ShipmentGroupTransfer
     {
-        $shipmentGroupTransfer = new ShipmentGroupTransfer();
-
-        if ($shipmentTransfer === null) {
-            $shipmentTransfer = new ShipmentTransfer();
-        }
-
         $shipmentTransfer = $this->fillShipmentTransfer($shipmentTransfer, $orderTransfer);
 
+        $shipmentGroupTransfer = new ShipmentGroupTransfer();
         $shipmentGroupTransfer->setShipment($shipmentTransfer);
         $shipmentGroupTransfer->setItems($orderTransfer->getItems());
 
