@@ -476,6 +476,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
                             ->useCountryQuery()
                                 ->withColumn(SpyCountryTableMap::COL_ISO2_CODE, static::COL_COUNTRY_ISO2_CODE)
                                 ->filterByIso2Code_In($countryIso2Codes)
+                                ->groupBy(SpyCountryTableMap::COL_ISO2_CODE)
                             ->endUse()
                             ->_or()
                             ->filterByName(TaxConstants::TAX_EXEMPT_PLACEHOLDER)
@@ -484,7 +485,8 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
                     ->groupBy(SpyTaxSetTableMap::COL_NAME)
                 ->endUse()
                 ->withColumn('MAX(' . SpyTaxRateTableMap::COL_RATE . ')', static::COL_MAX_TAX_RATE)
-            ->endUse();
+            ->endUse()
+            ->select([static::COL_ID_PRODUCT_OPTION_VALUE, static::COL_COUNTRY_ISO2_CODE, static::COL_MAX_TAX_RATE]);
     }
 
     /**
