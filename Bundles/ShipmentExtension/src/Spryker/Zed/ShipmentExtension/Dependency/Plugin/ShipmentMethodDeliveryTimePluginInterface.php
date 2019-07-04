@@ -13,6 +13,9 @@ use Generated\Shared\Transfer\ShipmentGroupTransfer;
 interface ShipmentMethodDeliveryTimePluginInterface
 {
     /**
+     * Specification:
+     *  - Returns delivery time for shipment group.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer

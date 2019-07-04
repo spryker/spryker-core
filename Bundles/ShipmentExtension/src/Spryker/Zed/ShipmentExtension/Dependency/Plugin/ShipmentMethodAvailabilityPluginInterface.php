@@ -13,6 +13,9 @@ use Generated\Shared\Transfer\ShipmentGroupTransfer;
 interface ShipmentMethodAvailabilityPluginInterface
 {
     /**
+     * Specification:
+     *  - Checks shipment method availability for shipment group.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer

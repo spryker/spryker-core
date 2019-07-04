@@ -140,7 +140,7 @@ class ProductOptionTaxRateCalculationWithItemLevelShippingAddressTest extends Un
     {
         return [
             'quote has one item with two options, shipping address: Germany, expected tax rate 15%' => $this->getQuoteWithOneItemWithTwoOptionsAndShippingAddressToGermany(),
-            'quote has two items with one option, shipping address: France and Germany, expected tax rate 20% and 15%' => $this->getQuoteWithTwoItemsWithOneOptionAndDifferentShippinggAdresses(),
+            'quote has two items with one option, shipping address: France and Germany, expected tax rate 20% and 15%' => $this->getQuoteWithTwoItemsWithOneOptionAndDifferentShippingAddresses(),
         ];
     }
 
@@ -169,7 +169,7 @@ class ProductOptionTaxRateCalculationWithItemLevelShippingAddressTest extends Un
     /**
      * @return array
      */
-    public function getQuoteWithTwoItemsWithOneOptionAndDifferentShippinggAdresses(): array
+    public function getQuoteWithTwoItemsWithOneOptionAndDifferentShippingAddresses(): array
     {
         $quoteTransfer = (new QuoteBuilder())
             ->build();

@@ -14,6 +14,9 @@ use Generated\Shared\Transfer\ShipmentGroupTransfer;
 interface ShipmentMethodFilterPluginInterface
 {
     /**
+     * Specification:
+     *  - Filters available shipment methods for shipment group.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer

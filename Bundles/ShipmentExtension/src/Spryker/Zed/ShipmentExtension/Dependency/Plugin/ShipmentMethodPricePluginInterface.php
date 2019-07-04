@@ -13,6 +13,9 @@ use Generated\Shared\Transfer\ShipmentGroupTransfer;
 interface ShipmentMethodPricePluginInterface
 {
     /**
+     * Specification:
+     *  - Returns shipment method price for shipment group.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
