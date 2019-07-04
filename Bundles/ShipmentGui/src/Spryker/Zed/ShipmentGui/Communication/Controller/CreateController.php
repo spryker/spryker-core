@@ -122,6 +122,8 @@ class CreateController extends AbstractController
     {
         if ($responseTransfer->getIsSuccessful()) {
             $this->addSuccessMessage(static::MESSAGE_SHIPMENT_CREATE_SUCCESS);
+
+            return;
         }
 
         $this->addErrorMessage(static::MESSAGE_SHIPMENT_CREATE_FAIL);

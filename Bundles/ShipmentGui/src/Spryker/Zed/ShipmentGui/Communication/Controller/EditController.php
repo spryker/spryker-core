@@ -28,7 +28,7 @@ class EditController extends AbstractController
     protected const REDIRECT_URL = '/sales/detail';
 
     protected const MESSAGE_SHIPMENT_EDIT_SUCCESS = 'Shipment has been successfully edited.';
-    protected const MESSAGE_SHIPMENT_EDIT_FAIL = 'Shipment create failed.';
+    protected const MESSAGE_SHIPMENT_EDIT_FAIL = 'Shipment edit failed.';
     protected const MESSAGE_ORDER_NOT_FOUND_ERROR = 'Sales order #%d not found.';
     protected const MESSAGE_ORDER_SHIPMENT_NOT_FOUND_ERROR = 'Sales order shipment #%d not found.';
 
@@ -128,6 +128,8 @@ class EditController extends AbstractController
     {
         if ($responseTransfer->getIsSuccessful()) {
             $this->addSuccessMessage(static::MESSAGE_SHIPMENT_EDIT_SUCCESS);
+
+            return;
         }
 
         $this->addErrorMessage(static::MESSAGE_SHIPMENT_EDIT_FAIL);
