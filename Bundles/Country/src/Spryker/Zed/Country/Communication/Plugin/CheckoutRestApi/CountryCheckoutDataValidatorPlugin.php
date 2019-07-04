@@ -34,6 +34,6 @@ class CountryCheckoutDataValidatorPlugin extends AbstractPlugin implements Check
      */
     public function validateCheckoutData(CheckoutDataTransfer $checkoutDataTransfer): CheckoutResponseTransfer
     {
-        return $this->getFacade()->validateCheckoutData($checkoutDataTransfer);
+        return $this->getFacade()->validateCountryCheckoutData($checkoutDataTransfer);
     }
 }
