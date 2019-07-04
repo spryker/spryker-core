@@ -10,7 +10,7 @@ namespace Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 
-class CartRestResponseBuilder extends BaseCartRestResponseBuilder implements CartRestResponseBuilderInterface
+class CartRestResponseBuilder extends AbstractCartRestResponseBuilder implements CartRestResponseBuilderInterface
 {
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
