@@ -35,15 +35,13 @@ class GuestCartRestResponseBuilder extends BaseCartRestResponseBuilder implement
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface $cartsResourceMapper
      * @param \Spryker\Glue\CartsRestApi\Processor\Mapper\CartItemsResourceMapperInterface $cartItemsResourceMapper
-     * @param \Spryker\Glue\CartsRestApi\CartsRestApiConfig $config
      */
     public function __construct(
         RestResourceBuilderInterface $restResourceBuilder,
         CartsResourceMapperInterface $cartsResourceMapper,
-        CartItemsResourceMapperInterface $cartItemsResourceMapper,
-        CartsRestApiConfig $config
+        CartItemsResourceMapperInterface $cartItemsResourceMapper
     ) {
-        parent::__construct($config, $restResourceBuilder);
+        parent::__construct($restResourceBuilder, $cartsResourceMapper);
         $this->cartsResourceMapper = $cartsResourceMapper;
         $this->cartItemsResourceMapper = $cartItemsResourceMapper;
     }
