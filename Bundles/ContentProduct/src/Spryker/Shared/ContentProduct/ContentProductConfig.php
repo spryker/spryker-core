@@ -27,22 +27,12 @@ class ContentProductConfig extends AbstractSharedConfig
     public const TWIG_FUNCTION_NAME = 'content_product_abstract_list';
 
     /**
-     * Content item abstract product list default template identifier
+     * Content item abstract product list bottom-title template identifier
      */
-    protected const WIDGET_TEMPLATE_IDENTIFIER_DEFAULT = 'default';
-
-    /**
-     * Content item abstract product list default template name
-     */
-    protected const WIDGET_TEMPLATE_DISPLAY_NAME_DEFAULT = 'content_product_abstract_list.template.default';
+    public const WIDGET_TEMPLATE_IDENTIFIER_BOTTOM_TITLE = 'bottom-title';
 
     /**
      * Content item abstract product list top-title template identifier
      */
-    protected const WIDGET_TEMPLATE_IDENTIFIER_TOP_TITLE = 'top-title';
-
-    /**
-     * Content item abstract product list top-title template name
-     */
-    protected const WIDGET_TEMPLATE_DISPLAY_NAME_TOP_TITLE = 'content_product_abstract_list.template.top-title';
+    public const WIDGET_TEMPLATE_IDENTIFIER_TOP_TITLE = 'top-title';
 }

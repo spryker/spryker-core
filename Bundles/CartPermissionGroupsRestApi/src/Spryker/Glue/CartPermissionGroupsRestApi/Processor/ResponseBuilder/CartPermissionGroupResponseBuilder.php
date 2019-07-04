@@ -78,6 +78,26 @@ class CartPermissionGroupResponseBuilder implements CartPermissionGroupResponseB
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuotePermissionGroupTransfer $quotePermissionGroupTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     */
+    public function createCartPermissionGroupsResource(QuotePermissionGroupTransfer $quotePermissionGroupTransfer): RestResourceInterface
+    {
+        $cartPermissionGroupRestResource = $this->restResourceBuilder->createRestResource(
+            CartPermissionGroupsRestApiConfig::RESOURCE_CART_PERMISSION_GROUPS,
+            (string)$quotePermissionGroupTransfer->getIdQuotePermissionGroup(),
+            $this->cartPermissionGroupMapper->mapQuotePermissionGroupTransferToRestCartPermissionGroupsAttributesTransfer(
+                $quotePermissionGroupTransfer,
+                new RestCartPermissionGroupsAttributesTransfer()
+            )
+        );
+        $cartPermissionGroupRestResource->setPayload($quotePermissionGroupTransfer);
+
+        return $cartPermissionGroupRestResource;
+    }
+
+    /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function createCartPermissionGroupNotFoundErrorResponse(): RestResponseInterface
@@ -90,23 +110,6 @@ class CartPermissionGroupResponseBuilder implements CartPermissionGroupResponseB
 
         return $this->createEmptyCartPermissionGroupsResponse()
             ->addError($errorMessageTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuotePermissionGroupTransfer $quotePermissionGroupTransfer
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
-     */
-    protected function createCartPermissionGroupsResource(QuotePermissionGroupTransfer $quotePermissionGroupTransfer): RestResourceInterface
-    {
-        return $this->restResourceBuilder->createRestResource(
-            CartPermissionGroupsRestApiConfig::RESOURCE_CART_PERMISSION_GROUPS,
-            (string)$quotePermissionGroupTransfer->getIdQuotePermissionGroup(),
-            $this->cartPermissionGroupMapper->mapQuotePermissionGroupTransferToRestCartPermissionGroupsAttributesTransfer(
-                $quotePermissionGroupTransfer,
-                new RestCartPermissionGroupsAttributesTransfer()
-            )
-        );
     }
 
     /**
