@@ -12,16 +12,12 @@ coverage:
     whitelist: { include: ['../../../../src/*'] }
 
 suites:
-    Communication:
-     path: Business
-     class_name: ContentBannerBusinessTester
-     modules:
-         enabled:
-             - Asserts
-             - \SprykerTest\Shared\Testify\Helper\Environment
-             - \SprykerTest\Shared\Testify\Helper\ConfigHelper
-             - \SprykerTest\Shared\Testify\Helper\LocatorHelper
-             - \SprykerTest\Shared\Testify\Helper\DependencyHelper
-             - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
-             - \SprykerTest\Shared\Propel\Helper\TransactionHelper
-             - \SprykerTest\Zed\ContentBanner\Helper\ContentBannerHelper
+    Business:
+        path: Business
+        class_name: ContentBannerBusinessTester
+        modules:
+             enabled:
+                 - Asserts
+                 - \SprykerTest\Shared\Testify\Helper\Environment
+                 - \SprykerTest\Shared\Testify\Helper\ConfigHelper
+                 - \SprykerTest\Shared\Testify\Helper\LocatorHelper
