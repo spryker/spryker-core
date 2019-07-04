@@ -270,4 +270,18 @@ class FileManagerFacade extends AbstractFacade implements FileManagerFacadeInter
             ->createMimeTypeReader()
             ->findAllowedMimeTypes();
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int[] $idFiles
+     *
+     * @return \Generated\Shared\Transfer\FileManagerDataTransfer[]
+     */
+    public function getFilesByIds(array $idFiles): array
+    {
+        return $this->getFactory()->createFileReader()->getFilesByIds($idFiles);
+    }
 }
