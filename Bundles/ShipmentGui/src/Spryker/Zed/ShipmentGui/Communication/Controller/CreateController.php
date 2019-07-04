@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ShipmentGui\Communication\Controller;
 
 use Generated\Shared\Transfer\ShipmentGroupResponseTransfer;
+use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\Sales\SalesConfig;
@@ -27,6 +28,7 @@ class CreateController extends AbstractController
 
     protected const MESSAGE_SHIPMENT_CREATE_SUCCESS = 'Shipment has been successfully created.';
     protected const MESSAGE_SHIPMENT_CREATE_FAIL = 'Shipment has not been created.';
+    protected const MESSAGE_ORDER_NOT_FOUND_ERROR = 'Sales order #%d not found.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -37,12 +39,22 @@ class CreateController extends AbstractController
     {
         $idSalesOrder = $request->query->get(static::PARAM_ID_SALES_ORDER);
 
-        $dataProvider = $this->getFactory()->createShipmentFormDataProvider();
+        $orderTransfer = $this->getFactory()
+            ->getSalesFacade()
+            ->findOrderByIdSalesOrder($idSalesOrder);
 
+        if ($orderTransfer === null) {
+            $this->addErrorMessage(static::MESSAGE_ORDER_NOT_FOUND_ERROR, ['%d' => $idSalesOrder]);
+            $redirectUrl = Url::generate(static::REDIRECT_URL_DEFAULT)->build();
+
+            return $this->redirectResponse($redirectUrl);
+        }
+
+        $dataProvider = $this->getFactory()->createShipmentFormDataProvider();
         $form = $this->getFactory()
             ->createShipmentCreateForm(
-                $dataProvider->getData($idSalesOrder),
-                $dataProvider->getOptions($idSalesOrder, null)
+                $dataProvider->getData($orderTransfer, $this->createDefaultShipmentTransfer()),
+                $dataProvider->getOptions($orderTransfer)
             )
             ->handleRequest($request);
 
@@ -51,23 +63,11 @@ class CreateController extends AbstractController
                 ->getShipmentFacade()
                 ->createShipmentGroupTransferWithListedItems($form->getData(), $this->getItemListUpdatedStatus($form));
 
-            $orderTransfer = $this
-                ->getFactory()
-                ->getSalesFacade()
-                ->findOrderByIdSalesOrder($idSalesOrder);
+            $responseTransfer = $this->getFactory()
+                ->getShipmentFacade()
+                ->saveShipment($shipmentGroupTransfer, $orderTransfer);
 
-            $responseTransfer = (new ShipmentGroupResponseTransfer())->setIsSuccessful(false);
-            if ($orderTransfer !== null && $shipmentGroupTransfer !== null) {
-                $responseTransfer = $this->getFactory()
-                    ->getShipmentFacade()
-                    ->saveShipment($shipmentGroupTransfer, $orderTransfer);
-            }
-
-            if ($responseTransfer->getIsSuccessful()) {
-                $this->addSuccessMessage(static::MESSAGE_SHIPMENT_CREATE_SUCCESS);
-            } else {
-                $this->addErrorMessage(static::MESSAGE_SHIPMENT_CREATE_FAIL);
-            }
+            $this->addStatusMessage($responseTransfer);
 
             $redirectUrl = Url::generate(
                 static::REDIRECT_URL_DEFAULT,
@@ -81,6 +81,14 @@ class CreateController extends AbstractController
             'idSalesOrder' => $idSalesOrder,
             'form' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\ShipmentTransfer
+     */
+    protected function createDefaultShipmentTransfer(): ShipmentTransfer
+    {
+        return new ShipmentTransfer();
     }
 
     /**
@@ -103,5 +111,21 @@ class CreateController extends AbstractController
         }
 
         return $requestedItems;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentGroupResponseTransfer $responseTransfer
+     *
+     * @return void
+     */
+    protected function addStatusMessage(ShipmentGroupResponseTransfer $responseTransfer): void
+    {
+        if ($responseTransfer->getIsSuccessful()) {
+            $this->addSuccessMessage(static::MESSAGE_SHIPMENT_CREATE_SUCCESS);
+
+            return;
+        }
+
+        $this->addErrorMessage(static::MESSAGE_SHIPMENT_CREATE_FAIL);
     }
 }
