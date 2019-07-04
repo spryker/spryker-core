@@ -23,7 +23,7 @@
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/",
-      "SprykerTest\\Zed\\Tax\\Helper\\": "tests/SprykerTest/Zed/Tax/_support/Helper/"
+      "SprykerTest\\Shared\\Tax\\Helper\\": "tests/SprykerTest/Shared/Tax/_support/Helper/"
     }
   },
   "autoload-dev": {

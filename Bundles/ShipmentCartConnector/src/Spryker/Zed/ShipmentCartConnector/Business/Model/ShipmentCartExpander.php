@@ -15,6 +15,9 @@ use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Spryker\Zed\ShipmentCartConnector\Dependency\Facade\ShipmentCartConnectorToPriceFacadeInterface;
 use Spryker\Zed\ShipmentCartConnector\Dependency\Facade\ShipmentCartConnectorToShipmentFacadeInterface;
 
+/**
+ * @deprecated Use \Spryker\Zed\ShipmentCartConnector\Business\Cart\ShipmentCartExpander instead.
+ */
 class ShipmentCartExpander implements ShipmentCartExpanderInterface
 {
     /**

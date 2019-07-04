@@ -9,6 +9,8 @@ namespace Spryker\Zed\ProductOption\Persistence;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductOptionCriteriaTransfer;
+use Orm\Zed\Country\Persistence\Map\SpyCountryTableMap;
+use Orm\Zed\Country\Persistence\SpyCountryQuery;
 use Orm\Zed\Locale\Persistence\Map\SpyLocaleTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
@@ -30,6 +32,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
 {
     public const COL_MAX_TAX_RATE = 'MaxTaxRate';
     public const COL_ID_PRODUCT_OPTION_VALUE = 'idProductOptionValue';
+    public const COL_COUNTRY_ISO2_CODE = 'countryIso2Code';
 
     /**
      * @api
@@ -393,6 +396,8 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     /**
      * @api
      *
+     * @deprecated Use queryTaxSetByIdProductOptionValueAndCountryIso2Codes() instead.
+     *
      * @param int[] $allIdOptionValueUsages
      * @param string $countryIso2Code
      *
@@ -435,6 +440,51 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
             ->getCountryQueryContainer()
             ->queryCountries()
             ->filterByIso2Code($countryIso2Code);
+    }
+
+    /**
+     * @param string[] $countryIso2Codes
+     *
+     * @return \Orm\Zed\Country\Persistence\SpyCountryQuery
+     */
+    protected function queryCountryListByIso2Codes(array $countryIso2Codes): SpyCountryQuery
+    {
+        return $this->getFactory()
+            ->getCountryQueryContainer()
+            ->queryCountries()
+            ->filterByIso2Code($countryIso2Codes, Criteria::IN);
+    }
+
+    /**
+     * @api
+     *
+     * @param int[] $idProductOptionValues
+     * @param string[] $countryIso2Codes
+     *
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValueQuery
+     */
+    public function queryTaxSetByIdProductOptionValueAndCountryIso2Codes(array $idProductOptionValues, array $countryIso2Codes): SpyProductOptionValueQuery
+    {
+        return $this->getFactory()->createProductOptionValueQuery()
+            ->filterByIdProductOptionValue($idProductOptionValues, Criteria::IN)
+            ->withColumn(SpyProductOptionValueTableMap::COL_ID_PRODUCT_OPTION_VALUE, static::COL_ID_PRODUCT_OPTION_VALUE)
+            ->groupBy(SpyProductOptionValueTableMap::COL_ID_PRODUCT_OPTION_VALUE)
+            ->useSpyProductOptionGroupQuery()
+                ->useSpyTaxSetQuery()
+                    ->useSpyTaxSetTaxQuery()
+                        ->useSpyTaxRateQuery()
+                            ->useCountryQuery()
+                                ->withColumn(SpyCountryTableMap::COL_ISO2_CODE, static::COL_COUNTRY_ISO2_CODE)
+                                ->filterByIso2Code_In($countryIso2Codes)
+                            ->endUse()
+                            ->_or()
+                            ->filterByName(TaxConstants::TAX_EXEMPT_PLACEHOLDER)
+                        ->endUse()
+                    ->endUse()
+                    ->groupBy(SpyTaxSetTableMap::COL_NAME)
+                ->endUse()
+                ->withColumn('MAX(' . SpyTaxRateTableMap::COL_RATE . ')', static::COL_MAX_TAX_RATE)
+            ->endUse();
     }
 
     /**

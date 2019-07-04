@@ -13,4 +13,15 @@
         <property name="taxSet" type="TaxSet" />
     </transfer>
 
+    <transfer name="Quote">
+        <property name="shippingAddress" type="Address" deprecated="Use item level shipping addresses (item.shipment.shippingAddress) instead." />
+    </transfer>
+
+    <transfer name="Item">
+        <property name="shipment" type="Shipment" />
+    </transfer>
+
+    <transfer name="Shipment">
+        <property name="shippingAddress" type="Address" />
+    </transfer>
 </transfers>

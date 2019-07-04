@@ -7,6 +7,10 @@
 
 namespace Spryker\Zed\Sales\Persistence;
 
+use ArrayObject;
+use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
+use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -32,5 +36,80 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
             ->findOne();
 
         return $idSalesOrder;
+    }
+
+    /**
+     * @param int $idOrderAddress
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer|null
+     */
+    public function findOrderAddressByIdOrderAddress(int $idOrderAddress): ?AddressTransfer
+    {
+        $addressEntity = $this->getFactory()
+            ->createSalesOrderAddressQuery()
+            ->leftJoinWithCountry()
+            ->filterByIdSalesOrderAddress($idOrderAddress)
+            ->findOne();
+
+        if ($addressEntity === null) {
+            return null;
+        }
+
+        return $this->hydrateAddressTransferFromEntity($this->createOrderAddressTransfer(), $addressEntity);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderAddress $addressEntity
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer
+     */
+    protected function hydrateAddressTransferFromEntity(
+        AddressTransfer $addressTransfer,
+        SpySalesOrderAddress $addressEntity
+    ): AddressTransfer {
+        $addressTransfer->fromArray($addressEntity->toArray(), true);
+        $addressTransfer->setIso2Code($addressEntity->getCountry()->getIso2Code());
+
+        return $addressTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\AddressTransfer
+     */
+    protected function createOrderAddressTransfer(): AddressTransfer
+    {
+        return new AddressTransfer();
+    }
+
+    /**
+     * @param int $idSalesShipment
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function findSalesOrderItemsBySalesShipmentId(int $idSalesShipment): ArrayObject
+    {
+        $salesOrderItemEntities = $this->getFactory()
+            ->createSalesOrderItemQuery()
+            ->filterByFkSalesShipment($idSalesShipment)
+            ->_or()
+            ->filterByFkSalesShipment(null)
+            ->find();
+
+        if ($salesOrderItemEntities->count() === 0) {
+            return new ArrayObject();
+        }
+
+        $salesOrderItemMapper = $this->getFactory()->createSalesOrderItemMapper();
+
+        $itemTransfers = new ArrayObject();
+        foreach ($salesOrderItemEntities as $salesOrderItemEntity) {
+            $itemTransfer = $salesOrderItemMapper
+                ->mapSalesOrderItemEntityToItemTransfer($salesOrderItemEntity, new ItemTransfer());
+
+            $itemTransfers->append($itemTransfer);
+        }
+
+        return $itemTransfers;
     }
 }

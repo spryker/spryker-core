@@ -31,6 +31,7 @@ use Spryker\Zed\Oms\Business\Util\OrderItemMatrix;
 use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 use Spryker\Zed\Oms\Business\Util\Reservation;
 use Spryker\Zed\Oms\Business\Util\TransitionLog;
+use Spryker\Zed\Oms\Dependency\Service\OmsToShipmentServiceInterface;
 use Spryker\Zed\Oms\OmsDependencyProvider;
 
 /**
@@ -302,7 +303,8 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     {
         $mailHandler = new MailHandler(
             $this->getSalesFacade(),
-            $this->getMailFacade()
+            $this->getMailFacade(),
+            $this->getShipmentService()
         );
 
         return $mailHandler;
@@ -351,5 +353,13 @@ class OmsBusinessFactory extends AbstractBusinessFactory
         return new OrderStateMachineFlagReader(
             $this->createOrderStateMachineBuilder()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Oms\Dependency\Service\OmsToShipmentServiceInterface
+     */
+    protected function getShipmentService(): OmsToShipmentServiceInterface
+    {
+        return $this->getProvidedDependency(OmsDependencyProvider::SERVICE_SHIPMENT);
     }
 }

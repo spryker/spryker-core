@@ -12,7 +12,11 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Generated\Shared\Transfer\ShipmentCarrierTransfer;
+use Generated\Shared\Transfer\ShipmentGroupResponseTransfer;
+use Generated\Shared\Transfer\ShipmentGroupTransfer;
+use Generated\Shared\Transfer\ShipmentMethodsCollectionTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
+use Generated\Shared\Transfer\ShipmentTransfer;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethod;
 
 interface ShipmentFacadeInterface
@@ -41,7 +45,8 @@ interface ShipmentFacadeInterface
 
     /**
      * Specification:
-     * - Retrieves the list of shipment methods from database as transfer object collection.
+     * - Retrieves the list of available shipment methods from database as transfer object collection
+     * grouped by shipment hash.
      *
      * @api
      *
@@ -82,9 +87,12 @@ interface ShipmentFacadeInterface
      * - Selects shipment method price for the provided currency and current store.
      * - Overrides shipment method price using its assigned ShipmentMethodPricePluginInterface plugin if there is any.
      * - Excludes shipment methods which do not have a valid price as a result.
-     * - Excludes shipment methods which do not fulfill their assigned ShipmentMethodAvailabilityPluginInterface plugin requirements.
+     * - Excludes shipment methods which do not fulfill their assigned ShipmentMethodAvailabilityPluginInterface plugin
+     * requirements.
      *
      * @api
+     *
+     * @deprecated Use getAvailableMethodsByShipment() instead.
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -94,12 +102,31 @@ interface ShipmentFacadeInterface
 
     /**
      * Specification:
+     * - Retrieves active shipment methods for every shipment group in QuoteTransfer.
+     * - Calculates shipment method delivery time using its assigned ShipmentMethodDeliveryTimePluginInterface plugin.
+     * - Selects shipment method price for the provided currency and current store.
+     * - Overrides shipment method price using its assigned ShipmentMethodPricePluginInterface plugin if there is any.
+     * - Excludes shipment methods which do not have a valid price as a result.
+     * - Excludes shipment methods which do not fulfill their assigned ShipmentMethodAvailabilityPluginInterface plugin
+     * requirements.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodsCollectionTransfer
+     */
+    public function getAvailableMethodsByShipment(QuoteTransfer $quoteTransfer): ShipmentMethodsCollectionTransfer;
+
+    /**
+     * Specification:
      * - Retrieves active shipment method buy id shipment method.
      * - Calculates shipment method delivery time using its assigned ShipmentMethodDeliveryTimePluginInterface plugin.
      * - Selects shipment method price for the provided currency and current store.
      * - Overrides shipment method price using its assigned ShipmentMethodPricePluginInterface plugin if there is any.
      * - Excludes shipment methods which do not have a valid price as a result.
-     * - Excludes shipment methods which do not fulfill their assigned ShipmentMethodAvailabilityPluginInterface plugin requirements.
+     * - Excludes shipment methods which do not fulfill their assigned ShipmentMethodAvailabilityPluginInterface plugin
+     * requirements.
      *
      * @api
      *
@@ -115,6 +142,8 @@ interface ShipmentFacadeInterface
      * - Retrieves a shipment method from database by ID.
      *
      * @api
+     *
+     * @deprecated Use findMethodById() instead.
      *
      * @param int $idMethod
      *
@@ -163,11 +192,10 @@ interface ShipmentFacadeInterface
 
     /**
      * Specification:
-     * - Updates tax rates in Quote transfer object if shipment method is set in Quote transfer object.
-     * - Selects shipment method tax rate using shipping address's country code.
-     * - Uses default tax rate if shipping address is not defined in Quote transfer object.
-     * - Sets tax rate in provided Quote transfer object's shipment method.
-     * - Sets tax rate in provided Quote transfer object's selected shipment expense.
+     * - Selects shipment method tax rates using shipping address's country code of all shipments (quote or item level).
+     * - Uses default tax rate if shipping address is not defined on quote level (BC) or item level.
+     * - Sets tax rate in provided Quote transfer object's quote level (BC) or item level shipment methods.
+     * - Sets tax rate in provided Quote transfer object's quote level (BC) or item level shipment expenses.
      *
      * @api
      *
@@ -184,7 +212,7 @@ interface ShipmentFacadeInterface
      *
      * @api
      *
-     * @deprecated Use saveOrderShipment() instead
+     * @deprecated Use saveOrderShipment() instead.
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
@@ -195,8 +223,9 @@ interface ShipmentFacadeInterface
 
     /**
      * Specification:
-     * - Adds shipment sales expense to sales order.
-     * - Creates sales shipment for sales order.
+     * - Adds shipment sales expenses to sales order according to quote level (BC) or item level shipments.
+     * - Creates sales shipments for sales order.
+     * - Creates sales shipping addresses for each item level shipment.
      *
      * @api
      *
@@ -222,9 +251,12 @@ interface ShipmentFacadeInterface
     /**
      * Specification:
      * - Transforms provided ShipmentMethod entity into ShipmentMethod transfer object.
-     * - ShipmentMethod transfer object's CarrierName field is populated using ShipmentMethod entity's carrier connection.
-     * - ShipmentMethod entity related ShipmentMethodPrice entities are transformed to MoneyValue transfer object collection.
-     * - Currency transfer object in MoneyValue transfer objects is populated using the corresponding ShipmentMethodPrice entity's currency reference.
+     * - ShipmentMethod transfer object's CarrierName field is populated using ShipmentMethod entity's carrier
+     * connection.
+     * - ShipmentMethod entity related ShipmentMethodPrice entities are transformed to MoneyValue transfer object
+     * collection.
+     * - Currency transfer object in MoneyValue transfer objects is populated using the corresponding
+     * ShipmentMethodPrice entity's currency reference.
      *
      * @api
      *
@@ -255,4 +287,50 @@ interface ShipmentFacadeInterface
      * @return bool
      */
     public function isShipmentMethodActive($idShipmentMethod);
+
+    /**
+     * Specification:
+     * - Returns ShipmentTransfer for provided id or null.
+     *
+     * @api
+     *
+     * @param int $idSalesShipment
+     *
+     * @return \Generated\Shared\Transfer\ShipmentTransfer|null
+     */
+    public function findShipmentById(int $idSalesShipment): ?ShipmentTransfer;
+
+    /**
+     * Specification:
+     * - Creates new or update existing shipment for specified order in Zed.
+     * - Uses shipment saving logic from the saveOrderShipment() method.
+     * - Adds shipment sales expenses to sales order according to quote level (BC) or item level shipments.
+     * - Creates or updates sales shipment.
+     * - Creates or updates sales shipping addresses.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentGroupResponseTransfer
+     */
+    public function saveShipment(ShipmentGroupTransfer $shipmentGroupTransfer, OrderTransfer $orderTransfer): ShipmentGroupResponseTransfer;
+
+    /**
+     * Specification:
+     * - Creates new ShipmentGroupTransfer for specified order in Zed.
+     * - Uses shipment findShipmentMethodTransferById logic from the ShipmentReader class.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
+     * @param bool[] $itemListUpdatedStatus
+     *
+     * @return \Generated\Shared\Transfer\ShipmentGroupTransfer
+     */
+    public function createShipmentGroupTransferWithListedItems(
+        ShipmentGroupTransfer $shipmentGroupTransfer,
+        array $itemListUpdatedStatus
+    ): ShipmentGroupTransfer;
 }

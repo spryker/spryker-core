@@ -42,12 +42,17 @@
         <property name="productOptions" type="ProductOption[]" singular="productOption" />
         <property name="refundableAmount" type="int"/>
         <property name="canceledAmount" type="int"/>
+        <property name="shipment" type="Shipment" />
+    </transfer>
+
+    <transfer name="Shipment">
+        <property name="shippingAddress" type="Address" />
     </transfer>
 
     <transfer name="Quote">
         <property name="items" type="Item[]" singular="item"/>
         <property name="totals" type="Totals" />
-        <property name="shippingAddress" type="Address"/>
+        <property name="shippingAddress" type="Address" deprecated="Use item level shipping addresses (item.shipment.shippingAddress) instead."/>
     </transfer>
 
     <transfer name="Order">

@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
  * @method \Spryker\Zed\Shipment\Communication\ShipmentCommunicationFactory getFactory()
  * @method \Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Shipment\Business\ShipmentFacadeInterface getFacade()
+ * @method \Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface getRepository()
  */
 class SalesController extends AbstractController
 {
@@ -24,8 +25,15 @@ class SalesController extends AbstractController
      */
     public function listAction(Request $request)
     {
+        /** @var \Generated\Shared\Transfer\OrderTransfer $orderTransfer */
+        $orderTransfer = $request->request->get('orderTransfer');
+
+        $shipmentGroups = $this->getFactory()->getShipmentService()->groupItemsByShipment($orderTransfer->getItems());
+
         return $this->viewResponse([
-            'order' => $request->request->get('orderTransfer'),
+            'shipmentGroups' => $shipmentGroups,
+            'order' => $orderTransfer,
+            'currencyIsoCode' => $orderTransfer->getCurrencyIsoCode(),
         ]);
     }
 }

@@ -19,6 +19,9 @@ use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToStoreInterface;
 use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface;
 use Spryker\Zed\Shipment\ShipmentDependencyProvider;
 
+/**
+ * @deprecated Use classes from \Spryker\Zed\Shipment\Business\ShipmentMethod namespace instead.
+ */
 class Method implements MethodInterface
 {
     /**

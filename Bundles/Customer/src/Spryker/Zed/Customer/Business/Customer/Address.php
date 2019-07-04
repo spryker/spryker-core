@@ -202,6 +202,16 @@ class Address implements AddressInterface
     /**
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
+     * @return \Generated\Shared\Transfer\AddressTransfer|null
+     */
+    public function findCustomerAddressByAddressData(AddressTransfer $addressTransfer): ?AddressTransfer
+    {
+        return $this->customerRepository->findAddressByAddressData($addressTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
      * @throws \Spryker\Zed\Customer\Business\Exception\AddressNotFoundException
      *
      * @return bool
@@ -340,14 +350,7 @@ class Address implements AddressInterface
      */
     protected function getCustomerFromAddressTransfer(AddressTransfer $addressTransfer)
     {
-        $customer = null;
-        if ($addressTransfer->getEmail()) {
-            $customer = $this->queryContainer->queryCustomerByEmail($addressTransfer->getEmail())
-                ->findOne();
-        } elseif ($addressTransfer->getFkCustomer()) {
-            $customer = $this->queryContainer->queryCustomerById($addressTransfer->getFkCustomer())
-                ->findOne();
-        }
+        $customer = $this->findCustomerByIdOrEmail($addressTransfer);
 
         if ($customer === null) {
             throw new CustomerNotFoundException(sprintf(
@@ -358,6 +361,26 @@ class Address implements AddressInterface
         }
 
         return $customer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
+     * @return \Orm\Zed\Customer\Persistence\SpyCustomer|null
+     */
+    protected function findCustomerByIdOrEmail(AddressTransfer $addressTransfer): ?SpyCustomer
+    {
+        $customerEntity = $this->queryContainer->queryCustomerById($addressTransfer->getFkCustomer())
+            ->findOne();
+
+        if ($customerEntity !== null) {
+            return $customerEntity;
+        }
+
+        $customerEntity = $this->queryContainer->queryCustomerByEmail($addressTransfer->getEmail())
+            ->findOne();
+
+        return $customerEntity;
     }
 
     /**

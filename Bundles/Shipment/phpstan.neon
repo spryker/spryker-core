@@ -2,3 +2,4 @@ parameters:
     ignoreErrors:
     - '#Call to an undefined method .+Criteria::.+\(\).#'
     - '#Cannot access offset .+ on .+SpyShipmentMethod#'
+    - '#Method .+ShipmentMethodDeliveryTimePluginInterface::getTime\(\) invoked with 2 parameters, 1 required.#'

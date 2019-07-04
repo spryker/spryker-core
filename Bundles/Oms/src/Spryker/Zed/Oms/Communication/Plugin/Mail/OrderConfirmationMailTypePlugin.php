@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Oms\Communication\Plugin\Mail;
 
+use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Mail\Business\Model\Mail\Builder\MailBuilderInterface;
 use Spryker\Zed\Mail\Dependency\Plugin\MailTypePluginInterface;
@@ -67,7 +68,17 @@ class OrderConfirmationMailTypePlugin extends AbstractPlugin implements MailType
      */
     protected function setHtmlTemplate(MailBuilderInterface $mailBuilder)
     {
-        $mailBuilder->setHtmlTemplate('oms/mail/order_confirmation.html.twig');
+        $orderTransfer = $mailBuilder->getMailTransfer()->getOrder();
+        if (!$this->isMultipleShipment($orderTransfer)) {
+            /**
+             * @deprecated Exists for Backward Compatibility reasons only.
+             */
+            $mailBuilder->setHtmlTemplate('oms/mail/order_confirmation.html.twig');
+
+            return $this;
+        }
+
+        $mailBuilder->setHtmlTemplate('oms/mail/order_confirmation_with_multi_shipping_addresses.html.twig');
 
         return $this;
     }
@@ -79,7 +90,17 @@ class OrderConfirmationMailTypePlugin extends AbstractPlugin implements MailType
      */
     protected function setTextTemplate(MailBuilderInterface $mailBuilder)
     {
-        $mailBuilder->setTextTemplate('oms/mail/order_confirmation.text.twig');
+        $orderTransfer = $mailBuilder->getMailTransfer()->getOrder();
+        if (!$this->isMultipleShipment($orderTransfer)) {
+            /**
+             * @deprecated Exists for Backward Compatibility reasons only.
+             */
+            $mailBuilder->setTextTemplate('oms/mail/order_confirmation.text.twig');
+
+            return $this;
+        }
+
+        $mailBuilder->setTextTemplate('oms/mail/order_confirmation_with_multi_shipping_addresses.text.twig');
 
         return $this;
     }
@@ -111,5 +132,23 @@ class OrderConfirmationMailTypePlugin extends AbstractPlugin implements MailType
         $mailBuilder->setSender('mail.sender.email', 'mail.sender.name');
 
         return $this;
+    }
+
+    /**
+     * @deprecated Exists for Backward Compatibility reasons only.
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return bool
+     */
+    protected function isMultipleShipment(OrderTransfer $orderTransfer): bool
+    {
+        foreach ($orderTransfer->getItems() as $itemTransfer) {
+            if ($itemTransfer->getShipment() === null) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

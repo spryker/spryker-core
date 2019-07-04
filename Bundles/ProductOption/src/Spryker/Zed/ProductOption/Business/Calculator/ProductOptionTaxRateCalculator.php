@@ -13,6 +13,9 @@ use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxFacadeInterfac
 use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainer;
 use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
 
+/**
+ * @deprecated Use \Spryker\Zed\ProductOption\Business\Calculator\ProductOptionTaxRateWithItemShipmentTaxRateCalculator instead.
+ */
 class ProductOptionTaxRateCalculator implements CalculatorInterface
 {
     /**
@@ -148,7 +151,7 @@ class ProductOptionTaxRateCalculator implements CalculatorInterface
     protected function findTaxRatesByIdOptionValueAndCountryIso2Code(array $productOptionValueIds, $countryIso2Code)
     {
         return $this->queryContainer
-            ->queryTaxSetByIdProductOptionValueAndCountryIso2Code($productOptionValueIds, $countryIso2Code)
+            ->queryTaxSetByIdProductOptionValueAndCountryIso2Codes($productOptionValueIds, [$countryIso2Code])
             ->find()
             ->toArray();
     }

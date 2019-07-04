@@ -53,8 +53,7 @@ class TaxProductConnectorFacade extends AbstractFacade implements TaxProductConn
     }
 
     /**
-     * Specification:
-     *  - Set tax rate for each item
+     * {@inheritdoc}
      *
      * @api
      *
@@ -65,7 +64,8 @@ class TaxProductConnectorFacade extends AbstractFacade implements TaxProductConn
     public function calculateProductItemTaxRate(QuoteTransfer $quoteTransfer)
     {
         $this->getFactory()
-            ->createProductItemTaxRateCalculator()
+            ->createProductItemTaxRateCalculatorStrategyResolver()
+            ->resolve($quoteTransfer)
             ->recalculate($quoteTransfer);
     }
 

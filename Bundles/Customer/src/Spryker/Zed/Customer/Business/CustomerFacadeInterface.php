@@ -276,6 +276,18 @@ interface CustomerFacadeInterface
 
     /**
      * Specification:
+     * - Retrieves customer address by address details.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer|null
+     */
+    public function findCustomerAddressByAddressData(AddressTransfer $addressTransfer): ?AddressTransfer;
+
+    /**
+     * Specification:
      * - Sets provided address as default billing address for the related customer.
      *
      * @api
@@ -389,6 +401,7 @@ interface CustomerFacadeInterface
      * - Registers customer if it does not exist in persistent storage.
      * - Updates customer if it exists in persistent storage.
      * - Updates customer addresses.
+     * - Processes quote level (BC) or item level shipping addresses.
      *
      * @see CustomerFacadeInterface::registerCustomer()
      * @see CustomerFacadeInterface::updateCustomer()

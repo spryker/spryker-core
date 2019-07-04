@@ -33,4 +33,11 @@ interface CustomerRepositoryInterface
      * @return \Generated\Shared\Transfer\AddressTransfer|null
      */
     public function findCustomerAddressById(int $idCustomerAddress): ?AddressTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer|null
+     */
+    public function findAddressByAddressData(AddressTransfer $addressTransfer): ?AddressTransfer;
 }

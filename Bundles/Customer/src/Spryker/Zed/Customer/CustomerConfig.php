@@ -65,14 +65,6 @@ class CustomerConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return string
-     */
-    protected function getUniqueIdentifierSeparator()
-    {
-        return '-';
-    }
-
-    /**
      * This method provides list of URLs to render blocks inside customer detail page.
      * URL defines path to external bundle controller. For example: /sales/customer/customer-orders would call sales bundle, customer controller, customerOrders action.
      *
@@ -86,5 +78,13 @@ class CustomerConfig extends AbstractBundleConfig
     public function getCustomerDetailExternalBlocksUrls()
     {
         return [];
+    }
+
+    /**
+     * @return string
+     */
+    protected function getUniqueIdentifierSeparator()
+    {
+        return '-';
     }
 }
