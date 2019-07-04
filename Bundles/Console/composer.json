@@ -11,6 +11,7 @@
   },
   "require-dev": {
     "spryker/application": "*",
+    "spryker/code-sniffer": "*",
     "spryker/log": "^3.0.0",
     "spryker/propel": "*",
     "spryker/testify": "*"

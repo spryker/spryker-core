@@ -13,7 +13,7 @@ interface ValidatorInterface
 {
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $salesOrderItem
-     * @param float $quantityToSplit
+     * @param int $quantityToSplit
      *
      * @return bool
      */

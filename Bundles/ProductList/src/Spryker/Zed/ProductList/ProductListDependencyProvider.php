@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\ProductList;
 
-use Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductList\Dependency\Facade\ProductListToMessengerFacadeBridge;
+use Spryker\Zed\ProductList\Dependency\Facade\ProductListToProductFacadeBridge;
 use Spryker\Zed\ProductList\Dependency\Service\ProductListToUtilTextServiceBridge;
 
 /**
@@ -18,10 +18,10 @@ use Spryker\Zed\ProductList\Dependency\Service\ProductListToUtilTextServiceBridg
  */
 class ProductListDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const PROPEL_PRODUCT_CATEGORY_QUERY = 'PROPEL_PRODUCT_CATEGORY_QUERY';
     public const SERVICE_UTIL_TEXT = 'SERVICE_UTIL_TEXT';
 
     public const FACADE_MESSENGER = 'FACADE_MESSENGER';
+    public const FACADE_PRODUCT = 'FACADE_PRODUCT';
 
     public const PLUGINS_PRODUCT_LIST_PRE_CREATE = 'PLUGINS_PRODUCT_LIST_PRE_CREATE';
     public const PLUGINS_PRODUCT_LIST_PRE_UPDATE = 'PLUGINS_PRODUCT_LIST_PRE_UPDATE';
@@ -34,7 +34,6 @@ class ProductListDependencyProvider extends AbstractBundleDependencyProvider
     public function providePersistenceLayerDependencies(Container $container): Container
     {
         $container = parent::providePersistenceLayerDependencies($container);
-        $container = $this->addProductCategoryPropelQuery($container);
 
         return $container;
     }
@@ -51,20 +50,7 @@ class ProductListDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addMessengerFacade($container);
         $container = $this->addProductListPreCreatePlugins($container);
         $container = $this->addProductListPreUpdatePlugins($container);
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addProductCategoryPropelQuery(Container $container): Container
-    {
-        $container[static::PROPEL_PRODUCT_CATEGORY_QUERY] = function (Container $container) {
-            return SpyProductCategoryQuery::create();
-        };
+        $container = $this->addProductFacade($container);
 
         return $container;
     }
@@ -76,9 +62,9 @@ class ProductListDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addUtilTextService(Container $container): Container
     {
-        $container[static::SERVICE_UTIL_TEXT] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_TEXT, function (Container $container) {
             return new ProductListToUtilTextServiceBridge($container->getLocator()->utilText()->service());
-        };
+        });
 
         return $container;
     }
@@ -90,9 +76,23 @@ class ProductListDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addMessengerFacade(Container $container): Container
     {
-        $container[static::FACADE_MESSENGER] = function (Container $container) {
+        $container->set(static::FACADE_MESSENGER, function (Container $container) {
             return new ProductListToMessengerFacadeBridge($container->getLocator()->messenger()->facade());
-        };
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_PRODUCT, function (Container $container) {
+            return new ProductListToProductFacadeBridge($container->getLocator()->product()->facade());
+        });
 
         return $container;
     }
@@ -104,9 +104,9 @@ class ProductListDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addProductListPreCreatePlugins(Container $container): Container
     {
-        $container[static::PLUGINS_PRODUCT_LIST_PRE_CREATE] = function (Container $container) {
+        $container->set(static::PLUGINS_PRODUCT_LIST_PRE_CREATE, function (Container $container) {
             return $this->getProductListPreCreatePlugins();
-        };
+        });
 
         return $container;
     }
@@ -118,9 +118,9 @@ class ProductListDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addProductListPreUpdatePlugins(Container $container): Container
     {
-        $container[static::PLUGINS_PRODUCT_LIST_PRE_UPDATE] = function (Container $container) {
+        $container->set(static::PLUGINS_PRODUCT_LIST_PRE_UPDATE, function (Container $container) {
             return $this->getProductListPreUpdatePlugins();
-        };
+        });
 
         return $container;
     }
