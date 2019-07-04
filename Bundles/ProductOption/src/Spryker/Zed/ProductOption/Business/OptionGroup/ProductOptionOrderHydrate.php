@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\ProductOptionTransfer;
 use Orm\Zed\ProductOption\Persistence\Map\SpyProductOptionValueTableMap;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemOption;
-use Spryker\Zed\ProductOption\Dependency\Service\ProductOptionToUtilPriceServiceInterface;
 use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
 
 class ProductOptionOrderHydrate implements ProductOptionOrderHydrateInterface
@@ -24,20 +23,11 @@ class ProductOptionOrderHydrate implements ProductOptionOrderHydrateInterface
     protected $productOptionQueryContainer;
 
     /**
-     * @var \Spryker\Zed\ProductOption\Dependency\Service\ProductOptionToUtilPriceServiceInterface
-     */
-    protected $utilPriceService;
-
-    /**
      * @param \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface $productOptionQueryContainer
-     * @param \Spryker\Zed\ProductOption\Dependency\Service\ProductOptionToUtilPriceServiceInterface $utilPriceService
      */
-    public function __construct(
-        ProductOptionQueryContainerInterface $productOptionQueryContainer,
-        ProductOptionToUtilPriceServiceInterface $utilPriceService
-    ) {
+    public function __construct(ProductOptionQueryContainerInterface $productOptionQueryContainer)
+    {
         $this->productOptionQueryContainer = $productOptionQueryContainer;
-        $this->utilPriceService = $utilPriceService;
     }
 
     /**
@@ -84,18 +74,8 @@ class ProductOptionOrderHydrate implements ProductOptionOrderHydrateInterface
     protected function deriveItemUnitPrices(ItemTransfer $itemTransfer, SpySalesOrderItem $salesOrderItemEntity)
     {
         $itemTransfer->setUnitProductOptionPriceAggregation(
-            $this->roundPrice($salesOrderItemEntity->getProductOptionPriceAggregation() / $salesOrderItemEntity->getQuantity())
+            (int)round($salesOrderItemEntity->getProductOptionPriceAggregation() / $salesOrderItemEntity->getQuantity())
         );
-    }
-
-    /**
-     * @param float $price
-     *
-     * @return int
-     */
-    protected function roundPrice(float $price): int
-    {
-        return $this->utilPriceService->roundPrice($price);
     }
 
     /**
@@ -117,7 +97,7 @@ class ProductOptionOrderHydrate implements ProductOptionOrderHydrateInterface
 
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItemOption $orderItemOptionEntity
-     * @param float $orderItemQuantity
+     * @param int $orderItemQuantity
      *
      * @return \Generated\Shared\Transfer\ProductOptionTransfer
      */
@@ -154,11 +134,11 @@ class ProductOptionOrderHydrate implements ProductOptionOrderHydrateInterface
      */
     protected function deriveProductOptionUnitPrices(ProductOptionTransfer $productOptionTransfer)
     {
-        $productOptionTransfer->setUnitPrice($this->roundPrice($productOptionTransfer->getSumPrice() / $productOptionTransfer->getQuantity()));
-        $productOptionTransfer->setUnitGrossPrice($this->roundPrice($productOptionTransfer->getSumGrossPrice() / $productOptionTransfer->getQuantity()));
-        $productOptionTransfer->setUnitNetPrice($this->roundPrice($productOptionTransfer->getSumNetPrice() / $productOptionTransfer->getQuantity()));
-        $productOptionTransfer->setUnitDiscountAmountAggregation($this->roundPrice($productOptionTransfer->getSumDiscountAmountAggregation() / $productOptionTransfer->getQuantity()));
-        $productOptionTransfer->setUnitTaxAmount($this->roundPrice($productOptionTransfer->getSumTaxAmount() / $productOptionTransfer->getQuantity()));
+        $productOptionTransfer->setUnitPrice((int)round($productOptionTransfer->getSumPrice() / $productOptionTransfer->getQuantity()));
+        $productOptionTransfer->setUnitGrossPrice((int)round($productOptionTransfer->getSumGrossPrice() / $productOptionTransfer->getQuantity()));
+        $productOptionTransfer->setUnitNetPrice((int)round($productOptionTransfer->getSumNetPrice() / $productOptionTransfer->getQuantity()));
+        $productOptionTransfer->setUnitDiscountAmountAggregation((int)round($productOptionTransfer->getSumDiscountAmountAggregation() / $productOptionTransfer->getQuantity()));
+        $productOptionTransfer->setUnitTaxAmount((int)round($productOptionTransfer->getSumTaxAmount() / $productOptionTransfer->getQuantity()));
     }
 
     /**

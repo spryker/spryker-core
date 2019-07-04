@@ -51,11 +51,13 @@ class ProductListProductAbstractStorageWriter implements ProductListProductAbstr
      */
     public function publish(array $productAbstractIds): void
     {
+        $productLists = $this->productListFacade->getProductAbstractListIdsByProductAbstractIds($productAbstractIds);
+
         $productAbstractProductListStorageEntities = $this->findProductAbstractProductListStorageEntities($productAbstractIds);
         $indexedProductAbstractProductListStorageEntities = $this->indexProductAbstractProductListStorageEntities($productAbstractProductListStorageEntities);
         foreach ($productAbstractIds as $idProductAbstract) {
             $productAbstractProductListStorageEntity = $this->getProductAbstractProductListStorageEntity($idProductAbstract, $indexedProductAbstractProductListStorageEntities);
-            if ($this->saveProductAbstractProductListStorageEntity($idProductAbstract, $productAbstractProductListStorageEntity)) {
+            if ($this->saveProductAbstractProductListStorageEntity($idProductAbstract, $productAbstractProductListStorageEntity, $productLists)) {
                 unset($indexedProductAbstractProductListStorageEntities[$idProductAbstract]);
             }
         }
@@ -66,14 +68,16 @@ class ProductListProductAbstractStorageWriter implements ProductListProductAbstr
     /**
      * @param int $idProductAbstract
      * @param \Orm\Zed\ProductListStorage\Persistence\SpyProductAbstractProductListStorage $productAbstractProductListStorageEntity
+     * @param array $productLists
      *
      * @return bool
      */
     protected function saveProductAbstractProductListStorageEntity(
         int $idProductAbstract,
-        SpyProductAbstractProductListStorage $productAbstractProductListStorageEntity
+        SpyProductAbstractProductListStorage $productAbstractProductListStorageEntity,
+        array $productLists
     ): bool {
-        $productAbstractProductListsStorageEntityTransfer = $this->getProductAbstractProductListsStorageTransfer($idProductAbstract);
+        $productAbstractProductListsStorageEntityTransfer = $this->getProductAbstractProductListsStorageTransfer($idProductAbstract, $productLists);
         if ($productAbstractProductListsStorageEntityTransfer->getIdWhitelists() || $productAbstractProductListsStorageEntityTransfer->getIdBlacklists()) {
             $productAbstractProductListStorageEntity->setFkProductAbstract($idProductAbstract)
                 ->setData($productAbstractProductListsStorageEntityTransfer->toArray())
@@ -88,37 +92,42 @@ class ProductListProductAbstractStorageWriter implements ProductListProductAbstr
 
     /**
      * @param int $idProductAbstract
+     * @param array $productLists
      *
      * @return \Generated\Shared\Transfer\ProductAbstractProductListStorageTransfer
      */
-    protected function getProductAbstractProductListsStorageTransfer(int $idProductAbstract): ProductAbstractProductListStorageTransfer
-    {
+    protected function getProductAbstractProductListsStorageTransfer(
+        int $idProductAbstract,
+        array $productLists
+    ): ProductAbstractProductListStorageTransfer {
         $productAbstractProductListsStorageTransfer = new ProductAbstractProductListStorageTransfer();
         $productAbstractProductListsStorageTransfer->setIdProductAbstract($idProductAbstract)
-            ->setIdBlacklists($this->findProductAbstractBlacklistIds($idProductAbstract))
-            ->setIdWhitelists($this->findProductAbstractWhitelistIds($idProductAbstract));
+            ->setIdBlacklists($this->findProductAbstractBlacklistIds($idProductAbstract, $productLists))
+            ->setIdWhitelists($this->findProductAbstractWhitelistIds($idProductAbstract, $productLists));
 
         return $productAbstractProductListsStorageTransfer;
     }
 
     /**
      * @param int $idProductAbstract
+     * @param array $productLists
      *
      * @return int[]
      */
-    protected function findProductAbstractBlacklistIds(int $idProductAbstract): array
+    protected function findProductAbstractBlacklistIds(int $idProductAbstract, array $productLists): array
     {
-        return $this->productListFacade->getProductBlacklistIdsByIdProductAbstract($idProductAbstract);
+        return $productLists[$idProductAbstract][$this->productListStorageRepository->getProductListBlacklistEnumValue()] ?? [];
     }
 
     /**
      * @param int $idProductAbstract
+     * @param array $productLists
      *
      * @return int[]
      */
-    protected function findProductAbstractWhitelistIds(int $idProductAbstract): array
+    protected function findProductAbstractWhitelistIds(int $idProductAbstract, array $productLists): array
     {
-        return $this->productListFacade->getProductWhitelistIdsByIdProductAbstract($idProductAbstract);
+        return $productLists[$idProductAbstract][$this->productListStorageRepository->getProductListWhitelistEnumValue()] ?? [];
     }
 
     /**

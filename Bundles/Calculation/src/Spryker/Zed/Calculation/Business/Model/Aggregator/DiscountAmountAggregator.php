@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\CalculatedDiscountTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface;
-use Spryker\Zed\Calculation\Dependency\Service\CalculationToUtilPriceServiceInterface;
 
 class DiscountAmountAggregator implements CalculatorInterface
 {
@@ -25,19 +24,6 @@ class DiscountAmountAggregator implements CalculatorInterface
      * @var int[]
      */
     protected $cartRuleDiscountTotals = [];
-
-    /**
-     * @var \Spryker\Zed\Calculation\Dependency\Service\CalculationToUtilPriceServiceInterface
-     */
-    protected $utilPriceService;
-
-    /**
-     * @param \Spryker\Zed\Calculation\Dependency\Service\CalculationToUtilPriceServiceInterface $utilPriceService
-     */
-    public function __construct(CalculationToUtilPriceServiceInterface $utilPriceService)
-    {
-        $this->utilPriceService = $utilPriceService;
-    }
 
     /**
      * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
@@ -135,21 +121,10 @@ class DiscountAmountAggregator implements CalculatorInterface
     protected function sanitizeCalculatedDiscountSumPrices(CalculatedDiscountTransfer $calculatedDiscountTransfer)
     {
         if (!$calculatedDiscountTransfer->getSumAmount()) {
-            $sumAmount = $this->roundPrice(
+            $calculatedDiscountTransfer->setSumAmount(
                 $calculatedDiscountTransfer->getUnitAmount() * $calculatedDiscountTransfer->getQuantity()
             );
-            $calculatedDiscountTransfer->setSumAmount($sumAmount);
         }
-    }
-
-    /**
-     * @param float $price
-     *
-     * @return int
-     */
-    protected function roundPrice(float $price): int
-    {
-        return $this->utilPriceService->roundPrice($price);
     }
 
     /**

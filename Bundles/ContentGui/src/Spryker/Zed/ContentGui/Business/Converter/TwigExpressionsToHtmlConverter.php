@@ -170,9 +170,6 @@ class TwigExpressionsToHtmlConverter implements TwigExpressionsToHtmlConverterIn
             return null;
         }
 
-        $contentTypeKey = $this->translatorFacade->trans($contentTransfer->getContentTypeKey());
-        $contentTransfer->setContentTypeKey($contentTypeKey);
-
         return $contentTransfer;
     }
 
@@ -235,6 +232,7 @@ class TwigExpressionsToHtmlConverter implements TwigExpressionsToHtmlConverterIn
             $this->contentGuiConfig->getParameterId() => $twigExpressionTransfer->getContent()->getIdContent(),
             $this->contentGuiConfig->getParameterKey() => $twigExpressionTransfer->getContent()->getKey(),
             $this->contentGuiConfig->getParameterType() => $twigExpressionTransfer->getContent()->getContentTypeKey(),
+            $this->contentGuiConfig->getParameterDisplayType() => $this->translatorFacade->trans($twigExpressionTransfer->getContent()->getContentTypeKey()),
             $this->contentGuiConfig->getParameterName() => $twigExpressionTransfer->getContent()->getName(),
             $this->contentGuiConfig->getParameterTwigExpression() => $twigExpressionTransfer->getTwigExpression(),
             $this->contentGuiConfig->getParameterTemplate() => $twigExpressionTransfer->getContentWidgetTemplate()->getIdentifier(),
