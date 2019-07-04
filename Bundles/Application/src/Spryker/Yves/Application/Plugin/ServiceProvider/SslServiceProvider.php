@@ -44,7 +44,10 @@ class SslServiceProvider extends AbstractPlugin implements ServiceProviderInterf
      */
     protected function setTrustedProxies()
     {
-        Request::setTrustedProxies($this->getConfig()->getTrustedProxies());
+        Request::setTrustedProxies(
+            $this->getConfig()->getTrustedProxies(),
+            $this->getConfig()->getTrustedHeader()
+        );
     }
 
     /**
