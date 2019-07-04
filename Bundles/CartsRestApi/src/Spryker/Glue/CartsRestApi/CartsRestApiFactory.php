@@ -221,8 +221,8 @@ class CartsRestApiFactory extends AbstractFactory
     public function createCartRestResponseBuilder(): CartRestResponseBuilderInterface
     {
         return new CartRestResponseBuilder(
-            $this->getConfig(),
-            $this->getResourceBuilder()
+            $this->getResourceBuilder(),
+            $this->createCartsResourceMapper()
         );
     }
 
@@ -287,7 +287,11 @@ class CartsRestApiFactory extends AbstractFactory
      */
     public function createCartsResourceMapper(): CartsResourceMapperInterface
     {
-        return new CartsResourceMapper($this->createCartItemsResourceMapper(), $this->getResourceBuilder());
+        return new CartsResourceMapper(
+            $this->createCartItemsResourceMapper(),
+            $this->getResourceBuilder(),
+            $this->getConfig()
+        );
     }
 
     /**

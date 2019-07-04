@@ -8,35 +8,33 @@
 namespace Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder;
 
 use ArrayObject;
-use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
-use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
+use Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
-use Symfony\Component\HttpFoundation\Response;
 
-class BaseCartRestResponseBuilder implements BaseCartRestResponseBuilderInterface
+abstract class BaseCartRestResponseBuilder implements BaseCartRestResponseBuilderInterface
 {
-    /**
-     * @var \Spryker\Glue\CartsRestApi\CartsRestApiConfig
-     */
-    protected $config;
-
     /**
      * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
      */
     protected $restResourceBuilder;
 
     /**
-     * @param \Spryker\Glue\CartsRestApi\CartsRestApiConfig $config
+     * @var \Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface
+     */
+    protected $cartsResourceMapper;
+
+    /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
+     * @param \Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface $cartsResourceMapper
      */
     public function __construct(
-        CartsRestApiConfig $config,
-        RestResourceBuilderInterface $restResourceBuilder
+        RestResourceBuilderInterface $restResourceBuilder,
+        CartsResourceMapperInterface $cartsResourceMapper
     ) {
-        $this->config = $config;
         $this->restResourceBuilder = $restResourceBuilder;
+        $this->cartsResourceMapper = $cartsResourceMapper;
     }
 
     /**
@@ -50,7 +48,7 @@ class BaseCartRestResponseBuilder implements BaseCartRestResponseBuilderInterfac
 
         foreach ($errors as $quoteErrorTransfer) {
             $restResponse->addError(
-                $this->mapQuoteErrorTransferToRestErrorMessageTransfer(
+                $this->cartsResourceMapper->mapQuoteErrorTransferToRestErrorMessageTransfer(
                     $quoteErrorTransfer,
                     new RestErrorMessageTransfer()
                 )
@@ -58,44 +56,5 @@ class BaseCartRestResponseBuilder implements BaseCartRestResponseBuilderInterfac
         }
 
         return $restResponse;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteErrorTransfer $quoteErrorTransfer
-     * @param \Generated\Shared\Transfer\RestErrorMessageTransfer $restErrorMessageTransfer
-     *
-     * @return \Generated\Shared\Transfer\RestErrorMessageTransfer
-     */
-    protected function mapQuoteErrorTransferToRestErrorMessageTransfer(
-        QuoteErrorTransfer $quoteErrorTransfer,
-        RestErrorMessageTransfer $restErrorMessageTransfer
-    ): RestErrorMessageTransfer {
-        $errorIdentifier = $quoteErrorTransfer->getErrorIdentifier();
-        $errorIdentifierToRestErrorMapping = $this->config->getErrorIdentifierToRestErrorMapping();
-        if ($errorIdentifier && isset($errorIdentifierToRestErrorMapping[$errorIdentifier])) {
-            $errorIdentifierMapping = $errorIdentifierToRestErrorMapping[$errorIdentifier];
-            $restErrorMessageTransfer->fromArray($errorIdentifierMapping, true);
-
-            return $restErrorMessageTransfer;
-        }
-
-        if ($quoteErrorTransfer->getMessage()) {
-            return $this->createErrorMessageTransfer($quoteErrorTransfer);
-        }
-
-        return $restErrorMessageTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteErrorTransfer $quoteErrorTransfer
-     *
-     * @return \Generated\Shared\Transfer\RestErrorMessageTransfer
-     */
-    protected function createErrorMessageTransfer(QuoteErrorTransfer $quoteErrorTransfer): RestErrorMessageTransfer
-    {
-        return (new RestErrorMessageTransfer())
-            ->setCode(CartsRestApiConfig::RESPONSE_CODE_ITEM_VALIDATION)
-            ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
-            ->setDetail($quoteErrorTransfer->getMessage());
     }
 }

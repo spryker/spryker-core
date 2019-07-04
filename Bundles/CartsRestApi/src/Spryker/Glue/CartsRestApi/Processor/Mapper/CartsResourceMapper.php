@@ -9,16 +9,19 @@ namespace Spryker\Glue\CartsRestApi\Processor\Mapper;
 
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCartsAttributesTransfer;
 use Generated\Shared\Transfer\RestCartsDiscountsTransfer;
 use Generated\Shared\Transfer\RestCartsTotalsTransfer;
+use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 class CartsResourceMapper implements CartsResourceMapperInterface
 {
@@ -33,13 +36,21 @@ class CartsResourceMapper implements CartsResourceMapperInterface
     protected $restResourceBuilder;
 
     /**
+     * @var \Spryker\Glue\CartsRestApi\CartsRestApiConfig
+     */
+    protected $config;
+
+    /**
      * @param \Spryker\Glue\CartsRestApi\Processor\Mapper\CartItemsResourceMapperInterface $cartItemsResourceMapper
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
+     * @param \Spryker\Glue\CartsRestApi\CartsRestApiConfig $config
      */
     public function __construct(
         CartItemsResourceMapperInterface $cartItemsResourceMapper,
-        RestResourceBuilderInterface $restResourceBuilder
+        RestResourceBuilderInterface $restResourceBuilder,
+        CartsRestApiConfig $config
     ) {
+        $this->config = $config;
         $this->cartItemsResourceMapper = $cartItemsResourceMapper;
         $this->restResourceBuilder = $restResourceBuilder;
     }
@@ -125,6 +136,45 @@ class CartsResourceMapper implements CartsResourceMapperInterface
             ->setCustomerReference($restUserTransfer->getNaturalIdentifier())
             ->setCustomer($customerTransfer)
             ->setUuid($restRequest->getResource()->getId());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteErrorTransfer $quoteErrorTransfer
+     * @param \Generated\Shared\Transfer\RestErrorMessageTransfer $restErrorMessageTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestErrorMessageTransfer
+     */
+    public function mapQuoteErrorTransferToRestErrorMessageTransfer(
+        QuoteErrorTransfer $quoteErrorTransfer,
+        RestErrorMessageTransfer $restErrorMessageTransfer
+    ): RestErrorMessageTransfer {
+        $errorIdentifier = $quoteErrorTransfer->getErrorIdentifier();
+        $errorIdentifierToRestErrorMapping = $this->config->getErrorIdentifierToRestErrorMapping();
+        if ($errorIdentifier && isset($errorIdentifierToRestErrorMapping[$errorIdentifier])) {
+            $errorIdentifierMapping = $errorIdentifierToRestErrorMapping[$errorIdentifier];
+            $restErrorMessageTransfer->fromArray($errorIdentifierMapping, true);
+
+            return $restErrorMessageTransfer;
+        }
+
+        if ($quoteErrorTransfer->getMessage()) {
+            return $this->createErrorMessageTransfer($quoteErrorTransfer);
+        }
+
+        return $restErrorMessageTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteErrorTransfer $quoteErrorTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestErrorMessageTransfer
+     */
+    protected function createErrorMessageTransfer(QuoteErrorTransfer $quoteErrorTransfer): RestErrorMessageTransfer
+    {
+        return (new RestErrorMessageTransfer())
+            ->setCode(CartsRestApiConfig::RESPONSE_CODE_ITEM_VALIDATION)
+            ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
+            ->setDetail($quoteErrorTransfer->getMessage());
     }
 
     /**
