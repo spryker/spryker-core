@@ -52,7 +52,7 @@ class PriceProductAbstractMerchantRelationEventResourceBulkRepositoryPlugin exte
             ->setLimit($limit);
 
         return $this->getRepository()
-            ->findFilteredPriceProductAbstractMerchantRelationshipEntities($filterTransfer, $ids);
+            ->getFilteredPriceProductAbstractMerchantRelationshipEntities($filterTransfer, $ids);
     }
 
     /**
