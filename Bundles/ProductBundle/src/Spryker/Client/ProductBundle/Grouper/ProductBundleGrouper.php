@@ -11,7 +11,6 @@ use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Client\ProductBundle\Dependency\Service\ProductBundleToUtilQuantityServiceInterface;
 
 class ProductBundleGrouper implements ProductBundleGrouperInterface
 {
@@ -23,19 +22,6 @@ class ProductBundleGrouper implements ProductBundleGrouperInterface
      * @var array
      */
     protected $bundleGroupKeys = [];
-
-    /**
-     * @var \Spryker\Client\ProductBundle\Dependency\Service\ProductBundleToUtilQuantityServiceInterface
-     */
-    protected $utilQuantityService;
-
-    /**
-     * @param \Spryker\Client\ProductBundle\Dependency\Service\ProductBundleToUtilQuantityServiceInterface $utilQuantityService
-     */
-    public function __construct(ProductBundleToUtilQuantityServiceInterface $utilQuantityService)
-    {
-        $this->utilQuantityService = $utilQuantityService;
-    }
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -193,18 +179,11 @@ class ProductBundleGrouper implements ProductBundleGrouperInterface
         $groupedBundleQuantity = [];
         foreach ($bundleItems as $bundleItemTransfer) {
             $bundleGroupKey = $this->getBundleItemGroupKey($bundleItemTransfer, $items);
-
             if (!isset($groupedBundleQuantity[$bundleGroupKey])) {
                 $groupedBundleQuantity[$bundleGroupKey] = $bundleItemTransfer->getQuantity();
-
-                continue;
+            } else {
+                $groupedBundleQuantity[$bundleGroupKey] += $bundleItemTransfer->getQuantity();
             }
-
-            $summaryQuantity = $this->sumQuantities(
-                $groupedBundleQuantity[$bundleGroupKey],
-                $bundleItemTransfer->getQuantity()
-            );
-            $groupedBundleQuantity[$bundleGroupKey] = $summaryQuantity;
         }
 
         return $groupedBundleQuantity;
@@ -257,16 +236,12 @@ class ProductBundleGrouper implements ProductBundleGrouperInterface
 
         if (!isset($currentBundledItems[$currentBundleIdentifer])) {
             $currentBundledItems[$currentBundleIdentifer] = clone $bundledItemTransfer;
-
-            return $currentBundledItems;
+        } else {
+            $currentBundleItemTransfer = $currentBundledItems[$currentBundleIdentifer];
+            $currentBundleItemTransfer->setQuantity(
+                $currentBundleItemTransfer->getQuantity() + $bundledItemTransfer->getQuantity()
+            );
         }
-
-        $currentBundleItemTransfer = $currentBundledItems[$currentBundleIdentifer];
-        $summaryQuantity = $this->sumQuantities(
-            $currentBundleItemTransfer->getQuantity(),
-            $bundledItemTransfer->getQuantity()
-        );
-        $currentBundleItemTransfer->setQuantity($summaryQuantity);
 
         return $currentBundledItems;
     }
@@ -339,16 +314,5 @@ class ProductBundleGrouper implements ProductBundleGrouperInterface
         }
 
         return $groupedBundleItems;
-    }
-
-    /**
-     * @param float $firstQuantity
-     * @param float $secondQuantity
-     *
-     * @return float
-     */
-    protected function sumQuantities(float $firstQuantity, float $secondQuantity): float
-    {
-        return $this->utilQuantityService->sumQuantities($firstQuantity, $secondQuantity);
     }
 }

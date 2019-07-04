@@ -1,4 +1,8 @@
 parameters:
+    dynamicConstantNames:
+        - APPLICATION
+        - APPLICATION_ENV
+        - APPLICATION_STORE
     ignoreErrors:
         - '#Call to an undefined method .+ActiveRecordInterface::toArray\(\).#'
         - '#Call to an undefined method Silex\\Application::getTransferSession\(\).#'

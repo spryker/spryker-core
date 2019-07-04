@@ -37,7 +37,8 @@ class EditBlockController extends AbstractCmsBlockController
             ->getCmsBlockFacade()
             ->syncTemplate($this->getFactory()->getConfig()->getTemplatePath());
 
-        $cmsBlockTransfer = $this->findCmsBlockById($request);
+        $idCmsBlock = $request->query->get(static::URL_PARAM_ID_CMS_BLOCK);
+        $cmsBlockTransfer = $this->findCmsBlockById($idCmsBlock);
 
         if (!$cmsBlockTransfer) {
             $this->addErrorMessage(static::MESSAGE_CMS_BLOCK_INVALID_ID_ERROR);

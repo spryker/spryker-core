@@ -48,7 +48,7 @@ class SalesQuantityFacadeTest extends Unit
     protected $configMock;
 
     /**
-     * @var \Spryker\Zed\SalesQuantity\Business\SalesQuantityFacadeInterface|\Spryker\Zed\Kernel\Business\AbstractFacade
+     * @var \Spryker\Zed\SalesQuantity\Business\SalesQuantityFacadeInterface
      */
     protected $facade;
 
@@ -61,6 +61,7 @@ class SalesQuantityFacadeTest extends Unit
 
         $this->configMock = $this->getMockBuilder(SalesQuantityConfig::class)->getMock();
 
+        /** @var \Spryker\Zed\SalesQuantity\Business\SalesQuantityFacade $facade */
         $this->facade = $this->tester->getFacade();
 
         $this->facade->setFactory(
@@ -70,45 +71,18 @@ class SalesQuantityFacadeTest extends Unit
     }
 
     /**
-     * @dataProvider transformNonSplittableItemShouldNotSplitItemsProvider
-     *
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     *
      * @return void
      */
-    public function testTransformNonSplittableItemShouldNotSplitItems(ItemTransfer $itemTransfer): void
+    public function testTransformNonSplittableItemShouldNotSplitItems(): void
     {
+        $itemTransfer = (new ItemTransfer())->setQuantity(static::QUANTITY);
         $itemCollectionTransfer = $this->facade->transformNonSplittableItem($itemTransfer);
 
         $this->assertSame($itemCollectionTransfer->getItems()->count(), 1);
 
-        foreach ($itemCollectionTransfer->getItems() as $dstItemTransfer) {
-            $this->assertSame($dstItemTransfer->getQuantity(), $itemTransfer->getQuantity());
+        foreach ($itemCollectionTransfer->getItems() as $itemTransfer) {
+            $this->assertSame($itemTransfer->getQuantity(), static::QUANTITY);
         }
-    }
-
-    /**
-     * @return array
-     */
-    public function transformNonSplittableItemShouldNotSplitItemsProvider(): array
-    {
-        return [
-            'int stock' => [$this->transformNonSplittableItemShouldNotSplitItemsData(static::QUANTITY)],
-            'float stock' => [$this->transformNonSplittableItemShouldNotSplitItemsData(5.5)],
-        ];
-    }
-
-    /**
-     * @param int|float $quantity
-     *
-     * @return \Generated\Shared\Transfer\ItemTransfer
-     */
-    protected function transformNonSplittableItemShouldNotSplitItemsData($quantity): ItemTransfer
-    {
-        $itemTransfer = (new ItemTransfer())
-            ->setQuantity($quantity);
-
-        return $itemTransfer;
     }
 
     /**
@@ -136,52 +110,22 @@ class SalesQuantityFacadeTest extends Unit
     }
 
     /**
-     * @dataProvider transformDiscountableItemShouldBeUsedNonSplitTransformationProvider
-     *
-     * @param \Generated\Shared\Transfer\DiscountableItemTransformerTransfer $discountableItemTransformerTransfer
-     * @param \Generated\Shared\Transfer\DiscountableItemTransfer $discountableItemTransfer
-     *
      * @return void
      */
-    public function testTransformDiscountableItemShouldBeUsedNonSplitTransformation(
-        DiscountableItemTransformerTransfer $discountableItemTransformerTransfer,
-        DiscountableItemTransfer $discountableItemTransfer
-    ): void {
+    public function testTransformDiscountableItemShouldBeUsedNonSplitTransformation(): void
+    {
+        $discountableItemTransfer = $this->createDiscountableItemTransfer();
+        $discountableItemTransformerTransfer = $this->createDiscountableItemTransformerTransfer($discountableItemTransfer);
+
         $this->facade->transformNonSplittableDiscountableItem($discountableItemTransformerTransfer);
 
         $this->assertSame($discountableItemTransfer->getOriginalItemCalculatedDiscounts()->count(), 1);
 
         foreach ($discountableItemTransfer->getOriginalItemCalculatedDiscounts() as $resultedDiscountableItemTransfer) {
             $this->assertSame($resultedDiscountableItemTransfer->getUnitAmount(), 10);
-            $this->assertSame($resultedDiscountableItemTransfer->getSumAmount(), (int)($discountableItemTransfer->getQuantity() * $discountableItemTransformerTransfer->getTotalDiscountAmount()));
-            $this->assertSame($resultedDiscountableItemTransfer->getQuantity(), $discountableItemTransformerTransfer->getQuantity());
+            $this->assertSame($resultedDiscountableItemTransfer->getSumAmount(), 50);
+            $this->assertSame($resultedDiscountableItemTransfer->getQuantity(), static::QUANTITY);
         }
-    }
-
-    /**
-     * @return array
-     */
-    public function transformDiscountableItemShouldBeUsedNonSplitTransformationProvider(): array
-    {
-        return [
-            'int stock' => $this->transformDiscountableItemShouldBeUsedNonSplitTransformationData(static::QUANTITY),
-            'float stock' => $this->transformDiscountableItemShouldBeUsedNonSplitTransformationData(5.5),
-        ];
-    }
-
-    /**
-     * @param int|float $quantity
-     *
-     * @return array
-     */
-    protected function transformDiscountableItemShouldBeUsedNonSplitTransformationData($quantity): array
-    {
-        $discountableItemTransfer = $this->createDiscountableItemTransfer();
-        $discountableItemTransfer->setQuantity($quantity);
-        $discountableItemTransformerTransfer = $this->createDiscountableItemTransformerTransfer($discountableItemTransfer);
-        $discountableItemTransformerTransfer->setQuantity($quantity);
-
-        return [$discountableItemTransformerTransfer, $discountableItemTransfer];
     }
 
     /**

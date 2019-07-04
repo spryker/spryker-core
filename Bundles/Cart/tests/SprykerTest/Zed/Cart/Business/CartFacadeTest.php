@@ -8,8 +8,6 @@
 namespace SprykerTest\Zed\Cart\Business;
 
 use Codeception\Test\Unit;
-use Generated\Shared\DataBuilder\CartChangeBuilder;
-use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -17,6 +15,9 @@ use Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceTypeQuery;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
+use Spryker\Zed\Cart\Business\CartFacade;
+use Spryker\Zed\Cart\CartDependencyProvider;
+use Spryker\Zed\Kernel\Container;
 
 /**
  * Auto-generated group annotations
@@ -44,128 +45,22 @@ class CartFacadeTest extends Unit
     private $cartFacade;
 
     /**
-     * @var \SprykerTest\Zed\Cart\CartBusinessTester
-     */
-    protected $tester;
-
-    /**
      * @return void
      */
     public function setUp()
     {
         parent::setUp();
 
-        $this->cartFacade = $this->tester->getFacade();
+        $container = new Container();
+
+        $dependencyProvider = new CartDependencyProvider();
+        $dependencyProvider->provideBusinessLayerDependencies($container);
+        $dependencyProvider->provideCommunicationLayerDependencies($container);
+        $dependencyProvider->providePersistenceLayerDependencies($container);
+
+        $this->cartFacade = new CartFacade();
 
         $this->setTestData();
-    }
-
-    /**
-     * @dataProvider addToCartIncreaseCartQuantityDataProvider
-     *
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
-     * @param float $expectedResult
-     *
-     * @return void
-     */
-    public function testAddToCartIncreaseCartQuantity(CartChangeTransfer $cartChangeTransfer, float $expectedResult): void
-    {
-        $resultQuoteTransfer = $this->cartFacade->add($cartChangeTransfer);
-
-        $this->assertSame($expectedResult, $resultQuoteTransfer->getItems()[0]->getQuantity());
-    }
-
-    /**
-     * @return array
-     */
-    public function addToCartIncreaseCartQuantityDataProvider(): array
-    {
-        return [
-            'int stock' => $this->getDataForAddToCartIncreaseCartQuantity(1, 2, 3.0),
-            'float stock' => $this->getDataForAddToCartIncreaseCartQuantity(1.1, 2.2, 3.3),
-            'float stock high precision' => $this->getDataForAddToCartIncreaseCartQuantity(1.111111111, 2.100000002, 3.211111113),
-        ];
-    }
-
-    /**
-     * @param int|float $quoteQty
-     * @param int|float $additionalQty
-     * @param float $expectedResult
-     *
-     * @return array
-     */
-    public function getDataForAddToCartIncreaseCartQuantity($quoteQty, $additionalQty, float $expectedResult): array
-    {
-        $quoteTransfer = (new QuoteBuilder())
-            ->withItem([
-                ItemTransfer::QUANTITY => $quoteQty,
-                ItemTransfer::GROUP_KEY => 'group',
-                ItemTransfer::SKU => '123',
-            ])
-            ->build();
-
-        $cartChangeTransfer = (new CartChangeBuilder())->withItem([
-            ItemTransfer::QUANTITY => $additionalQty,
-            ItemTransfer::GROUP_KEY => 'group',
-            ItemTransfer::SKU => '123',
-        ])->build();
-        $cartChangeTransfer->setQuote($quoteTransfer);
-
-        return [$cartChangeTransfer, $expectedResult];
-    }
-
-    /**
-     * @dataProvider addToCartDecreaseCartQuantityDataProvider
-     *
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
-     * @param float $expectedResult
-     *
-     * @return void
-     */
-    public function testAddToCartDecreaseCartQuantity(CartChangeTransfer $cartChangeTransfer, float $expectedResult): void
-    {
-        $resultQuoteTransfer = $this->cartFacade->remove($cartChangeTransfer);
-
-        $this->assertSame($expectedResult, $resultQuoteTransfer->getItems()[0]->getQuantity());
-    }
-
-    /**
-     * @return array
-     */
-    public function addToCartDecreaseCartQuantityDataProvider(): array
-    {
-        return [
-            'int stock' => $this->getDataForAddToCartDecreaseCartQuantity(3, 1, 2.0),
-            'float stock' => $this->getDataForAddToCartDecreaseCartQuantity(3.1, 2.2, 0.9),
-            'float stock high precision' => $this->getDataForAddToCartDecreaseCartQuantity(3.111111111, 2.1, 1.011111111),
-        ];
-    }
-
-    /**
-     * @param int|float $quoteQty
-     * @param int|float $additionalQty
-     * @param float $expectedResult
-     *
-     * @return array
-     */
-    public function getDataForAddToCartDecreaseCartQuantity($quoteQty, $additionalQty, float $expectedResult): array
-    {
-        $quoteTransfer = (new QuoteBuilder())
-            ->withItem([
-                ItemTransfer::QUANTITY => $quoteQty,
-                ItemTransfer::GROUP_KEY => 'group',
-                ItemTransfer::SKU => '123',
-            ])
-            ->build();
-
-        $cartChangeTransfer = (new CartChangeBuilder())->withItem([
-            ItemTransfer::QUANTITY => $additionalQty,
-            ItemTransfer::GROUP_KEY => 'group',
-            ItemTransfer::SKU => '123',
-        ])->build();
-        $cartChangeTransfer->setQuote($quoteTransfer);
-
-        return [$cartChangeTransfer, $expectedResult];
     }
 
     /**
@@ -236,18 +131,14 @@ class CartFacadeTest extends Unit
     }
 
     /**
-     * @dataProvider quoteOneItemQuantityDataProvider
-     *
-     * @param int|float $quantity
-     *
      * @return void
      */
-    public function testCleanUpItemsRemoveKeyGroupPrefixFromQuoteItem($quantity): void
+    public function testCleanUpItemsRemoveKeyGroupPrefixFromQuoteItem(): void
     {
         // Arrange
         $quoteTransfer = new QuoteTransfer();
         $cartItem = (new ItemTransfer())->setSku(self::DUMMY_1_SKU_CONCRETE_PRODUCT)
-            ->setQuantity($quantity)
+            ->setQuantity(3)
             ->setUnitGrossPrice(1)
             ->setGroupKeyPrefix(uniqid('', true));
 
@@ -261,35 +152,19 @@ class CartFacadeTest extends Unit
     }
 
     /**
-     * @return array
-     */
-    public function quoteOneItemQuantityDataProvider(): array
-    {
-        return [
-            'int stock' => [1],
-            'float stock' => [1.1],
-        ];
-    }
-
-    /**
-     * @dataProvider quoteTwoItemQuantityDataProvider
-     *
-     * @param int|float $quantity1
-     * @param int|float $quantity2
-     *
      * @return void
      */
-    public function testCleanUpItemsRemoveKeyGroupPrefixFromQuoteItemIfMoreThanOne($quantity1, $quantity2): void
+    public function testCleanUpItemsRemoveKeyGroupPrefixFromQuoteItemIfMoreThanOne(): void
     {
         // Arrange
         $quoteTransfer = new QuoteTransfer();
         $cartItem = (new ItemTransfer())->setSku(self::DUMMY_1_SKU_CONCRETE_PRODUCT)
-            ->setQuantity($quantity1)
+            ->setQuantity(3)
             ->setUnitGrossPrice(1)
             ->setGroupKeyPrefix(uniqid('', true));
 
         $newItem = (new ItemTransfer())->setSku(self::DUMMY_1_SKU_CONCRETE_PRODUCT)
-            ->setQuantity($quantity2)
+            ->setQuantity(1)
             ->setUnitGrossPrice(1);
 
         $quoteTransfer->addItem($cartItem);
@@ -300,17 +175,6 @@ class CartFacadeTest extends Unit
 
         // Assert
         $this->assertNotNull($quoteTransfer->getItems()[0]->getGroupKeyPrefix());
-    }
-
-    /**
-     * @return array
-     */
-    public function quoteTwoItemQuantityDataProvider(): array
-    {
-        return [
-            'int stock' => [1, 2],
-            'float stock' => [1.1, 2.2],
-        ];
     }
 
     /**

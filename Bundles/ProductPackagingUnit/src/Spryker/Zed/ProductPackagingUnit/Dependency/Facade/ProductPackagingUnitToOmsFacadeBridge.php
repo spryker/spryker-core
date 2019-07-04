@@ -28,9 +28,9 @@ class ProductPackagingUnitToOmsFacadeBridge implements ProductPackagingUnitToOms
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return float
+     * @return int
      */
-    public function sumReservedProductQuantitiesForSku(string $sku, StoreTransfer $storeTransfer): float
+    public function sumReservedProductQuantitiesForSku(string $sku, StoreTransfer $storeTransfer): int
     {
         return $this->omsFacade->sumReservedProductQuantitiesForSku($sku, $storeTransfer);
     }
@@ -38,11 +38,11 @@ class ProductPackagingUnitToOmsFacadeBridge implements ProductPackagingUnitToOms
     /**
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     * @param float $reservationQuantity
+     * @param int $reservationQuantity
      *
      * @return void
      */
-    public function saveReservation(string $sku, StoreTransfer $storeTransfer, float $reservationQuantity): void
+    public function saveReservation(string $sku, StoreTransfer $storeTransfer, int $reservationQuantity): void
     {
         $this->omsFacade->saveReservation($sku, $storeTransfer, $reservationQuantity);
     }

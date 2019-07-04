@@ -127,8 +127,6 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
     }
 
     /**
-     * @internal param SpyProductAbstractLocalizedAttributes $productAbstractLocalizedEntity
-     *
      * @param int $idProductAbstract
      * @param array $productOptions
      * @param \Orm\Zed\ProductOptionStorage\Persistence\SpyProductAbstractOptionStorage[] $productAbstractOptionStorageEntities
