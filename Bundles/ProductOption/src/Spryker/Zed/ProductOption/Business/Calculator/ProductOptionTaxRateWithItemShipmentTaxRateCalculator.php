@@ -204,11 +204,11 @@ class ProductOptionTaxRateWithItemShipmentTaxRateCalculator implements Calculato
 
         foreach ($taxSetCollection as $data) {
             $key = $this->getTaxGroupedKey(
-                $data->getIdProductOptionValue(),
-                $data->getVirtualColumn(ProductOptionQueryContainer::COL_COUNTRY_ISO2_CODE)
+                $data[ProductOptionQueryContainer::COL_ID_PRODUCT_OPTION_VALUE],
+                $data[ProductOptionQueryContainer::COL_COUNTRY_ISO2_CODE]
             );
 
-            $groupedTaxSetCollection[$key] = $data->getVirtualColumn(ProductOptionQueryContainer::COL_MAX_TAX_RATE);
+            $groupedTaxSetCollection[$key] = $data[ProductOptionQueryContainer::COL_MAX_TAX_RATE];
         }
 
         return $groupedTaxSetCollection;

@@ -405,9 +405,6 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
      */
     public function queryTaxSetByIdProductOptionValueAndCountryIso2Code($allIdOptionValueUsages, $countryIso2Code)
     {
-        $countryEntity = $this->queryCountryByIso2Code($countryIso2Code)
-            ->findOne();
-
         return $this->getFactory()->createProductOptionValueQuery()
             ->filterByIdProductOptionValue($allIdOptionValueUsages, Criteria::IN)
             ->withColumn(SpyProductOptionValueTableMap::COL_ID_PRODUCT_OPTION_VALUE, self::COL_ID_PRODUCT_OPTION_VALUE)
@@ -416,7 +413,9 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
                 ->useSpyTaxSetQuery()
                     ->useSpyTaxSetTaxQuery()
                         ->useSpyTaxRateQuery()
-                              ->filterByFkCountry($countryEntity->getIdCountry())
+                            ->useCountryQuery()
+                                ->filterByIso2Code($countryIso2Code)
+                            ->endUse()
                             ->_or()
                                ->filterByName(TaxConstants::TAX_EXEMPT_PLACEHOLDER)
                         ->endUse()
@@ -476,6 +475,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
                             ->useCountryQuery()
                                 ->withColumn(SpyCountryTableMap::COL_ISO2_CODE, static::COL_COUNTRY_ISO2_CODE)
                                 ->filterByIso2Code_In($countryIso2Codes)
+                                ->groupBy(SpyCountryTableMap::COL_ISO2_CODE)
                             ->endUse()
                             ->_or()
                             ->filterByName(TaxConstants::TAX_EXEMPT_PLACEHOLDER)
@@ -484,7 +484,8 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
                     ->groupBy(SpyTaxSetTableMap::COL_NAME)
                 ->endUse()
                 ->withColumn('MAX(' . SpyTaxRateTableMap::COL_RATE . ')', static::COL_MAX_TAX_RATE)
-            ->endUse();
+            ->endUse()
+            ->select([static::COL_ID_PRODUCT_OPTION_VALUE, static::COL_COUNTRY_ISO2_CODE, static::COL_MAX_TAX_RATE]);
     }
 
     /**
