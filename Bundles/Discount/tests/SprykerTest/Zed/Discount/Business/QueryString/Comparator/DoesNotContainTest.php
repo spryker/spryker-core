@@ -26,11 +26,6 @@ use Spryker\Zed\Discount\Business\QueryString\Comparator\DoesNotContain;
 class DoesNotContainTest extends Unit
 {
     /**
-     * @var \SprykerTest\Zed\Discount\DiscountBusinessTester
-     */
-    protected $tester;
-
-    /**
      * @return void
      */
     public function testAcceptShouldReturnTrueWhenDoesNotContainExpressionProvided()

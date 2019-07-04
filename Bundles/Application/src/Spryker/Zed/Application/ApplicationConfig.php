@@ -9,6 +9,7 @@ namespace Spryker\Zed\Application;
 
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
+use Symfony\Component\HttpFoundation\Request;
 
 class ApplicationConfig extends AbstractBundleConfig
 {
@@ -18,6 +19,14 @@ class ApplicationConfig extends AbstractBundleConfig
     public function getHostName()
     {
         return $this->get(ApplicationConstants::HOST_ZED);
+    }
+
+    /**
+     * @return string
+     */
+    public function getYvesHostName(): string
+    {
+        return $this->get(ApplicationConstants::HOST_YVES);
     }
 
     /**
@@ -45,6 +54,14 @@ class ApplicationConfig extends AbstractBundleConfig
     }
 
     /**
+     * @return int
+     */
+    public function getTrustedHeader(): int
+    {
+        return $this->get(ApplicationConstants::YVES_TRUSTED_HEADER, Request::HEADER_X_FORWARDED_ALL);
+    }
+
+    /**
      * @return array
      */
     public function getTrustedHosts()
@@ -58,5 +75,41 @@ class ApplicationConfig extends AbstractBundleConfig
     public function getProjectNamespace(): string
     {
         return $this->get(ApplicationConstants::PROJECT_NAMESPACE);
+    }
+
+    /**
+     * @return string
+     */
+    public function getTwigEnvironmentName(): string
+    {
+        return $this->get(ApplicationConstants::TWIG_ENVIRONMENT_NAME, $this->getTwigEnvironmentNameDefaultValue());
+    }
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
+     * @return string
+     */
+    protected function getTwigEnvironmentNameDefaultValue(): string
+    {
+        return APPLICATION_ENV;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isPrettyErrorHandlerEnabled(): bool
+    {
+        return $this->get(ApplicationConstants::ENABLE_PRETTY_ERROR_HANDLER, $this->getPrettyErrorHandlerDefaultValue());
+    }
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
+     * @return bool
+     */
+    protected function getPrettyErrorHandlerDefaultValue(): bool
+    {
+        return APPLICATION_ENV === 'development';
     }
 }

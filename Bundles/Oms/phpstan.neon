@@ -1,6 +1,0 @@
-parameters:
-    ignoreErrors:
-    - '#Method .+CommandByOrderInterface::run\(\) invoked with 2 parameters, 3 required.#'
-    - '#Call to an undefined method .+Criteria::.+\(\).#'
-    - '#Cannot cast .+SpySalesOrderItem|null to float.#'
-    - '#Cannot cast .+SpyOmsProductReservationStore to int.#'
