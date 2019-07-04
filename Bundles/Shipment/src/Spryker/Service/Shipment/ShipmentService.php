@@ -21,13 +21,13 @@ class ShipmentService extends AbstractService implements ShipmentServiceInterfac
      *
      * @api
      *
-     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransferCollection
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
      */
-    public function groupItemsByShipment(iterable $itemTransfers): ArrayObject
+    public function groupItemsByShipment(iterable $itemTransferCollection): ArrayObject
     {
-        return $this->getFactory()->createItemsGrouper()->groupByShipment($itemTransfers);
+        return $this->getFactory()->createItemsGrouper()->groupByShipment($itemTransferCollection);
     }
 
     /**

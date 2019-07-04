@@ -30,15 +30,15 @@ class ItemsGrouper implements ItemsGrouperInterface
     }
 
     /**
-     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransferCollection
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
      */
-    public function groupByShipment(iterable $itemTransfers): ArrayObject
+    public function groupByShipment(iterable $itemTransferCollection): ArrayObject
     {
         $shipmentGroupTransfers = [];
 
-        foreach ($itemTransfers as $itemTransfer) {
+        foreach ($itemTransferCollection as $itemTransfer) {
             $this->assertRequiredShipment($itemTransfer);
 
             $shipmentHashKey = $this->shipmentHashGenerator->getShipmentHashKey($itemTransfer->getShipment());
