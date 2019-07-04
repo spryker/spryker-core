@@ -104,6 +104,7 @@ class PriceCartConnectorToPriceProductAdapter implements PriceCartToPriceProduct
         foreach ($priceProductFilterTransfers as $priceProductFilterTransfer) {
             $priceProductTransfer = $this->findPriceProductFor($priceProductFilterTransfer);
             if ($priceProductTransfer) {
+                $priceProductTransfer->setSkuProduct($priceProductFilterTransfer->getSku());
                 $priceProductTransfers[] = $priceProductTransfer;
             }
         }
