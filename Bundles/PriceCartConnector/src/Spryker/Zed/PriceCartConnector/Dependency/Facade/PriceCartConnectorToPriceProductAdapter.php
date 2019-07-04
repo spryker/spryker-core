@@ -10,7 +10,7 @@ namespace Spryker\Zed\PriceCartConnector\Dependency\Facade;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 
-class PriceCartToPriceProductBridge implements PriceCartToPriceProductInterface
+class PriceCartConnectorToPriceProductAdapter implements PriceCartToPriceProductInterface
 {
     /**
      * @var \Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface
