@@ -5,8 +5,8 @@
             <order-list>
                 <pages>
                     <shipment-create>
-                        <label>Create a Shipment</label>
-                        <title>Create a Shipment</title>
+                        <label>Create Shipment</label>
+                        <title>Create Shipment</title>
                         <bundle>shipment-gui</bundle>
                         <controller>create</controller>
                         <action>index</action>
