@@ -26,6 +26,7 @@ class DataImportDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_EVENT = 'event facade';
     public const PROPEL_CONNECTION = 'propel connection';
     public const DATA_IMPORTER_PLUGINS = 'IMPORTER_PLUGINS';
+    public const DATA_IMPORTER_REGISTERED_PLUGINS = 'DATA_IMPORTER_REGISTERED_PLUGINS';
     public const DATA_IMPORT_BEFORE_HOOK_PLUGINS = 'DATA_IMPORT_BEFORE_HOOK_PLUGINS';
     public const DATA_IMPORT_AFTER_HOOK_PLUGINS = 'DATA_IMPORT_AFTER_HOOK_PLUGINS';
     public const DATA_IMPORT_DEFAULT_WRITER_PLUGINS = 'DATA_IMPORT_DEFAULT_WRITER_PLUGINS';
@@ -44,6 +45,7 @@ class DataImportDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addEventFacade($container);
         $container = $this->addPropelConnection($container);
         $container = $this->addDataImporterPlugins($container);
+        $container = $this->addDataImporterRegisteredPlugins($container);
         $container = $this->addStore($container);
         $container = $this->addDataImportBeforeImportHookPlugins($container);
         $container = $this->addDataImportAfterImportHookPlugins($container);
@@ -131,9 +133,31 @@ class DataImportDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addDataImporterRegisteredPlugins(Container $container): Container
+    {
+        $container[static::DATA_IMPORTER_REGISTERED_PLUGINS] = function () {
+            return $this->getDataImporterRegisteredPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
      * @return array
      */
     protected function getDataImporterPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return array
+     */
+    protected function getDataImporterRegisteredPlugins(): array
     {
         return [];
     }

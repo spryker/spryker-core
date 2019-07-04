@@ -55,6 +55,14 @@ class DataImportBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface
+     */
+    public function getImporterList()
+    {
+        return $this->createDataImporterCollection();
+    }
+
+    /**
      * @return \Spryker\Zed\DataImport\Business\Model\DataImporterPluginCollectionInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterCollectionInterface
      */
     public function createDataImporterCollection()
@@ -125,6 +133,14 @@ class DataImportBusinessFactory extends AbstractBusinessFactory
     public function getDataImporterPlugins(): array
     {
         return $this->getProvidedDependency(DataImportDependencyProvider::DATA_IMPORTER_PLUGINS);
+    }
+
+    /**
+     * @return \Spryker\Zed\DataImport\Dependency\Plugin\DataImportPluginInterface[]
+     */
+    public function getDataImporterRegisteredPlugins(): array
+    {
+        return $this->getProvidedDependency(DataImportDependencyProvider::DATA_IMPORTER_REGISTERED_PLUGINS);
     }
 
     /**

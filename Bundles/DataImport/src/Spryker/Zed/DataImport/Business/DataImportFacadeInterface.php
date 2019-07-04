@@ -30,6 +30,20 @@ interface DataImportFacadeInterface
 
     /**
      * Specification:
+     * - Creates importer.
+     * - Runs `DataImporterInterface::import()`.
+     * - Returns DataImportReportTransfer.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfiguration
+     *
+     * @return \Generated\Shared\Transfer\DataImporterReportTransfer
+     */
+    public function importSingle(?DataImporterConfigurationTransfer $dataImporterConfiguration = null);
+
+    /**
+     * Specification:
      * - Returns a list of all applied `DataImportPluginInterfaces` and `DataImportInterfaces`.
      *
      * @api
