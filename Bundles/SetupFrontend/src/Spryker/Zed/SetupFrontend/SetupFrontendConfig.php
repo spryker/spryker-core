@@ -55,7 +55,6 @@ class SetupFrontendConfig extends AbstractBundleConfig
     {
         return [
             $this->getYvesInstallerDirectoryPattern(),
-            APPLICATION_ROOT_DIR . '/src/Pyz/Yves/*/assets/Yves',
         ];
     }
 
