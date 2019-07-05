@@ -44,7 +44,7 @@ var SelectTableAPI = function() {
                 this.addRow(parsedData[i]);
             }
 
-            this.initialDataLoaded = true; 
+            this.initialDataLoaded = true;
         }
     };
 
