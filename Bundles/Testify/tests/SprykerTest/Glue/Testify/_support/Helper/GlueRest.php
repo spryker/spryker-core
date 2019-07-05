@@ -13,8 +13,6 @@ use Codeception\Util\HttpCode;
 use JsonPath\JsonObject;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Testify\TestifyConstants;
-use SprykerTest\Glue\Testify\Helper\Connection;
-use SprykerTest\Glue\Testify\Helper\JsonConnection;
 use SprykerTest\Shared\Testify\Helper\ModuleLocatorTrait;
 
 class GlueRest extends REST implements LastConnectionProviderInterface
