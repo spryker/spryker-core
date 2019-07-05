@@ -9,16 +9,15 @@ namespace Spryker\Service\Shipment;
 
 use Spryker\Service\Kernel\AbstractBundleConfig;
 
-/**
- * @method \Spryker\Shared\Shipment\ShipmentConfig getSharedConfig()
- */
 class ShipmentConfig extends AbstractBundleConfig
 {
+    protected const SHIPMENT_EXPENSE_TYPE = 'SHIPMENT_EXPENSE_TYPE';
+
     /**
      * @return string
      */
     public function getShipmentExpenseType(): string
     {
-        return $this->getSharedConfig()->getShipmentExpenseType();
+        return static::SHIPMENT_EXPENSE_TYPE;
     }
 }
