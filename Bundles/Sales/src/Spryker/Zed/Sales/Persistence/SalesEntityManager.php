@@ -99,7 +99,13 @@ class SalesEntityManager extends AbstractEntityManager implements SalesEntityMan
      */
     protected function getSalesExpenseEntity(ExpenseTransfer $expenseTransfer): SpySalesExpense
     {
-        return $salesOrderExpenseEntity = SpySalesExpenseQuery::create()
+        $salesOrderExpenseEntity = SpySalesExpenseQuery::create()
             ->findOneByIdSalesExpense($expenseTransfer->getIdSalesExpense());
+
+        if ($salesOrderExpenseEntity === null) {
+            return new SpySalesExpense();
+        }
+
+        return $salesOrderExpenseEntity;
     }
 }
