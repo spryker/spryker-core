@@ -125,7 +125,6 @@ class Finder implements FinderInterface
         }
 
         return $eventsList;
-
     }
 
     /**

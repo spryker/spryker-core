@@ -34,14 +34,14 @@ function createTriggerUrl(idOrder, eventName) {
 }
 
 function createTriggerItemsUrl(idOrder, idOrderItems, eventName) {
-    let url = '/oms/trigger/trigger-event-for-order-items';
-    let parameters = {
+    var url = '/oms/trigger/trigger-event-for-order-items';
+    var parameters = {
         event: eventName,
         redirect: '/sales/detail?id-sales-order=' + idOrder,
         items: idOrderItems,
     };
 
-    let finalUrl = url + '?' + $.param(parameters);
+    var finalUrl = url + '?' + $.param(parameters);
 
     return decodeURIComponent(finalUrl);
 }
@@ -56,13 +56,13 @@ $(document).ready(function() {
     $('.trigger-order-single-event').click(function(e){
         e.preventDefault();
 
-        let $item = $(this);
+        var $item = $(this);
 
         disableTrigger($item);
 
-        let idOrder = $item.data('id-sales-order');
-        let eventName = $item.data('event');
-        let idOrderItem = $item.data('id-item');
+        var idOrder = $item.data('id-sales-order');
+        var eventName = $item.data('event');
+        var idOrderItem = $item.data('id-item');
 
         window.location = createTriggerItemsUrl(idOrder, [idOrderItem], eventName);
     });
@@ -70,12 +70,12 @@ $(document).ready(function() {
     $('.trigger-order-event-for-all-items').click(function (e) {
         e.preventDefault();
 
-        let $item = $(this);
+        var $item = $(this);
 
         disableTrigger($item);
 
-        let idOrder = $item.data('id-sales-order');
-        let eventName = $item.data('event');
+        var idOrder = $item.data('id-sales-order');
+        var eventName = $item.data('event');
 
         window.location = createTriggerUrl(idOrder, eventName);
     });
@@ -83,27 +83,27 @@ $(document).ready(function() {
     $('.trigger-order-event').click(function (e) {
         e.preventDefault();
 
-        let $item = $(this);
+        var $item = $(this);
 
         disableTrigger($item);
 
-        let idOrder = $item.data('id-sales-order');
-        let eventName = $item.data('event');
-        let idShipment = $item.data('id-sales-shipment');
-        let $shipmentTable = $('.shipment-item-table-' + idShipment);
-        let $idOrderItems = $shipmentTable.find('input[name="order-item"]');
-        let idOrderItemsCheckedList = [];
-        let idOrderItemsFullList = [];
+        var idOrder = $item.data('id-sales-order');
+        var eventName = $item.data('event');
+        var idShipment = $item.data('id-sales-shipment');
+        var $shipmentTable = $('.shipment-item-table-' + idShipment);
+        var $idOrderItems = $shipmentTable.find('input[name="order-item"]');
+        var idOrderItemsCheckedList = [];
+        var idOrderItemsFullList = [];
 
         $idOrderItems.each(function () {
             idOrderItemsFullList.push($(this).val());
 
-            if ($(this).prop('checked') === true) {
+            if ($(this).prop('checked')) {
                 idOrderItemsCheckedList.push($(this).val());
             }
         });
 
-        if (idOrderItemsCheckedList.length === 0) {
+        if (!idOrderItemsCheckedList.length) {
             idOrderItemsCheckedList = idOrderItemsFullList;
         }
 
