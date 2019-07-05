@@ -7,12 +7,12 @@
 
 namespace SprykerTest\Glue\Testify\Helper;
 
-use SprykerTest\Glue\Testify\Model\Connection;
+use SprykerTest\Glue\Testify\Helper\Connection;
 
 interface LastConnectionProviderInterface
 {
     /**
-     * @return \SprykerTest\Glue\Testify\Model\Connection|null
+     * @return \SprykerTest\Glue\Testify\Helper\Connection|null
      */
     public function getLastConnection(): ?Connection;
 }

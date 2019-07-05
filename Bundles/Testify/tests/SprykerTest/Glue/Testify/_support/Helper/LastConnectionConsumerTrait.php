@@ -8,7 +8,7 @@
 namespace SprykerTest\Glue\Testify\Helper;
 
 use Codeception\Exception\ModuleException;
-use SprykerTest\Glue\Testify\Model\JsonConnection;
+use SprykerTest\Glue\Testify\Helper\JsonConnection;
 use SprykerTest\Shared\Testify\Helper\ModuleLocatorTrait;
 
 trait LastConnectionConsumerTrait
@@ -16,9 +16,9 @@ trait LastConnectionConsumerTrait
     use ModuleLocatorTrait;
 
     /**
-     * @throws \Codeception\Exception\ModuleException
+     * @return \SprykerTest\Glue\Testify\Helper\JsonConnection
+     *@throws \Codeception\Exception\ModuleException
      *
-     * @return \SprykerTest\Glue\Testify\Model\JsonConnection
      */
     protected function getJsonLastConnection(): JsonConnection
     {

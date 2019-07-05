@@ -5,7 +5,9 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
-namespace SprykerTest\Glue\Testify\Model;
+namespace SprykerTest\Glue\Testify\Helper;
+
+use SprykerTest\Glue\Testify\Helper\AbstractConnection;
 
 class JsonConnection extends AbstractConnection
 {
