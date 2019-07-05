@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\RestErrorCollectionTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\CatalogSearchRestApi\CatalogSearchRestApiConfig;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -40,15 +39,15 @@ class CatalogSearchRequestParametersValidator implements CatalogSearchRequestPar
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface|null
+     * @return \Generated\Shared\Transfer\RestErrorCollectionTransfer|null
      */
     public function validate(RestRequestInterface $restRequest): ?RestErrorCollectionTransfer
     {
-        $requestParameters = $restRequest->getHttpRequest()->query->all();
-        if($restRequest->getResource()->getType() !== CatalogSearchRestApiConfig::RESOURCE_CATALOG_SEARCH){
+        if ($restRequest->getResource()->getType() !== CatalogSearchRestApiConfig::RESOURCE_CATALOG_SEARCH) {
             return null;
         }
 
+        $requestParameters = $restRequest->getHttpRequest()->query->all();
         $restErrorCollectionTransfer = new RestErrorCollectionTransfer();
         foreach ($this->catalogSearchRestApiConfig->getIntegerRequestParameterNames() as $dotNotatedIntegerRequestParameterKey) {
             $requestParameterValue = $this->getArrayElementByDotNotation(
@@ -63,7 +62,7 @@ class CatalogSearchRequestParametersValidator implements CatalogSearchRequestPar
             }
         }
 
-        if ($restErrorCollectionTransfer->getRestErrors()) {
+        if ($restErrorCollectionTransfer->getRestErrors()->count()) {
             return $restErrorCollectionTransfer;
         }
 

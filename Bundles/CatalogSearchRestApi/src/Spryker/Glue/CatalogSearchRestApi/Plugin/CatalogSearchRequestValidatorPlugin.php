@@ -7,10 +7,7 @@
 
 namespace Spryker\Glue\CatalogSearchRestApi\Plugin;
 
-// remove references
-//use Spryker\Glue\CatalogSearchRestApiExtension\Dependency\Plugin\CatalogSearchRequestValidatorPluginInterface;
 use Generated\Shared\Transfer\RestErrorCollectionTransfer;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RestRequestValidatorPluginInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
