@@ -43,7 +43,7 @@ class PropelSchemaParserTest extends Unit
     {
         // Arrange
         $propelSchemaParser = $this->getPropelSchemaParser();
-        $fileInfo = new SplFileInfo(Configuration::dataDir() . 'SchemaWithDependencies/test.schema.xml', null, null);
+        $fileInfo = new SplFileInfo(Configuration::dataDir() . 'SchemaWithDependencies/test.schema.xml', '', '');
         $expectedResult = [
             0 => 'spy_zip_zap.id_zip_zap',
             1 => 'spy_qux_quux.id_qux_quux',
@@ -63,7 +63,7 @@ class PropelSchemaParserTest extends Unit
     {
         // Arrange
         $propelSchemaParser = $this->getPropelSchemaParser();
-        $fileInfo = new SplFileInfo(Configuration::dataDir() . 'StaleSchemaWithDependencies/test.schema.xml', null, null);
+        $fileInfo = new SplFileInfo(Configuration::dataDir() . 'StaleSchemaWithDependencies/test.schema.xml', '', '');
         $expectedResult = [
             0 => 'spy_zip_zap.id_zip_zap',
             1 => 'spy_qux_quux.id_qux_quux',
