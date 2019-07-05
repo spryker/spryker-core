@@ -39,15 +39,15 @@ class GenerateRestApiDocumentationConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        if ($this->isDocumentationGenerationDisabled()) {
-            $this->error('This command intended to be used non production environment only!');
+        if ($this->isDocumentationGenerationEnabled()) {
+            $this->getFacade()->generateDocumentation();
 
-            return static::CODE_ERROR;
+            return static::CODE_SUCCESS;
         }
 
-        $this->getFacade()->generateDocumentation();
+        $this->error('This command intended to be used non production environment only!');
 
-        return static::CODE_SUCCESS;
+        return static::CODE_ERROR;
     }
 
     /**
@@ -55,8 +55,8 @@ class GenerateRestApiDocumentationConsole extends Console
      *
      * @return bool
      */
-    protected function isDocumentationGenerationDisabled(): bool
+    protected function isDocumentationGenerationEnabled(): bool
     {
-        return !in_array(APPLICATION_ENV, ['development', 'devtest']);
+        return in_array(APPLICATION_ENV, ['development', 'devtest'], true);
     }
 }
