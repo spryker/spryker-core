@@ -70,7 +70,7 @@ class CartsResourceMapper implements CartsResourceMapperInterface
         $this->setDiscounts($quoteTransfer, $restCartsAttributesTransfer);
 
         $cartResource = $this->restResourceBuilder->createRestResource(
-            CartsRestApiConfig::RESOURCE_CARTS,
+            $this->getCartResourceName(),
             $quoteTransfer->getUuid(),
             $restCartsAttributesTransfer
         );
@@ -187,13 +187,13 @@ class CartsResourceMapper implements CartsResourceMapperInterface
     {
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             $itemResource = $this->restResourceBuilder->createRestResource(
-                CartsRestApiConfig::RESOURCE_CART_ITEMS,
+                $this->getCartItemResourceName(),
                 $itemTransfer->getGroupKey(),
                 $this->cartItemsResourceMapper->mapCartItemAttributes($itemTransfer)
             );
             $itemResource->addLink(
                 RestLinkInterface::LINK_SELF,
-                CartsRestApiConfig::RESOURCE_CARTS . '/' . $cartResource->getId() . '/' . CartsRestApiConfig::RESOURCE_CART_ITEMS . '/' . $itemTransfer->getGroupKey()
+                $this->getCartResourceName() . '/' . $cartResource->getId() . '/' . $this->getCartItemResourceName() . '/' . $itemTransfer->getGroupKey()
             );
 
             $cartResource->addRelationship($itemResource);
@@ -261,5 +261,21 @@ class CartsResourceMapper implements CartsResourceMapperInterface
         $restCartsAttributesTransfer
             ->setCurrency($quoteTransfer->getCurrency()->getCode())
             ->setStore($quoteTransfer->getStore()->getName());
+    }
+
+    /**
+     * @return string
+     */
+    protected function getCartResourceName(): string
+    {
+        return CartsRestApiConfig::RESOURCE_CARTS;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getCartItemResourceName(): string
+    {
+        return CartsRestApiConfig::RESOURCE_CART_ITEMS;
     }
 }
