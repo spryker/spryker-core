@@ -23,6 +23,7 @@ class AutoloadUpdater implements UpdaterInterface
     public const BASE_HELPER_DIRECTORY = 'Helper';
     public const BASE_TESTER_DIRECTORY = 'Tester';
     public const BASE_FIXTURES_DIRECTORY = 'Fixtures';
+    public const BASE_STEP_OVERRIDE_DIRECTORY = 'StepOverride';
 
     public const SPRYKER_TEST_NAMESPACE = 'SprykerTest';
     public const SPRYKER_SDK_TEST_NAMESPACE = 'SprykerSdkTest';
@@ -73,6 +74,7 @@ class AutoloadUpdater implements UpdaterInterface
         self::SPRYKER_ECO_NAMESPACE,
         self::BASE_HELPER_DIRECTORY,
         self::BASE_TESTER_DIRECTORY,
+        self::BASE_STEP_OVERRIDE_DIRECTORY,
         self::BASE_FIXTURES_DIRECTORY,
         self::SPRYKER_SDK_NAMESPACE,
         self::SPRYKER_MERCHANT_PORTAL_NAMESPACE,
