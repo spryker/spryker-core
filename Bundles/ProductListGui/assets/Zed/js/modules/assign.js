@@ -36,7 +36,7 @@ var SelectTableAPI = function() {
 
     this.selectProductsOnLoad = function(initialSelectedProductsData) {
         if (!this.initialDataLoaded) {
-            var data = initialSelectedProductsData.replace(/&quot;/g, '"').replace(',', '');
+            var data = initialSelectedProductsData.replace(/&quot;/g, '"').replace(/,/g, '');
             var parsedData = JSON.parse(data);
 
             for (var i = 0; i < parsedData.length; i++) {
@@ -44,7 +44,7 @@ var SelectTableAPI = function() {
                 this.addRow(parsedData[i]);
             }
 
-            this.initialDataLoaded = true;
+            this.initialDataLoaded = true; 
         }
     };
 
