@@ -5,7 +5,7 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
-namespace SprykerTest\Glue\Testify;
+namespace SprykerTest\Glue\Testify\Helper;
 
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Testify\TestifyConstants;
