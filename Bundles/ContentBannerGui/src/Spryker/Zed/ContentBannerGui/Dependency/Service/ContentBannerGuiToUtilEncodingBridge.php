@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ContentBannerDataImport\Dependency\Service;
+namespace Spryker\Zed\ContentBannerGui\Dependency\Service;
 
-class ContentBannerDataImportToUtilEncodingBridge implements ContentBannerDataImportToUtilEncodingInterface
+class ContentBannerGuiToUtilEncodingBridge implements ContentBannerGuiToUtilEncodingInterface
 {
     /**
      * @var \Spryker\Service\UtilEncoding\UtilEncodingServiceInterface
@@ -23,14 +23,15 @@ class ContentBannerDataImportToUtilEncodingBridge implements ContentBannerDataIm
     }
 
     /**
-     * @param array $value
-     * @param int|null $options
+     * @param string $jsonValue
+     * @param bool $assoc
      * @param int|null $depth
+     * @param int|null $options
      *
-     * @return string|null
+     * @return mixed|null
      */
-    public function encodeJson($value, $options = null, $depth = null)
+    public function decodeJson($jsonValue, $assoc = false, $depth = null, $options = null)
     {
-        return $this->utilEncodingService->encodeJson($value, $options, $depth);
+        return $this->utilEncodingService->decodeJson($jsonValue, $assoc, $depth, $options);
     }
 }
