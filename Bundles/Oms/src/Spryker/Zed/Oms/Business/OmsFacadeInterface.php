@@ -463,6 +463,19 @@ interface OmsFacadeInterface
 
     /**
      * Specification:
+     *  - Reads all order manual event from persistence.
+     *  - Returns array of manual events grouped by shipment.
+     *
+     * @api
+     *
+     * @param int $idSalesOrder
+     *
+     * @return string[]
+     */
+    public function getDistinctManualEventsByIdSalesOrderGroupedByShipment(int $idSalesOrder): array;
+
+    /**
+     * Specification:
      *  - Clears state machine lock table, which used when items are locked. This is garbage collection call
      *
      * @api

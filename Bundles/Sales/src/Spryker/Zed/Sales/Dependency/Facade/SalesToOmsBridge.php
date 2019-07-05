@@ -92,6 +92,16 @@ class SalesToOmsBridge implements SalesToOmsInterface
     }
 
     /**
+     * @param int $idSalesOrder
+     *
+     * @return array
+     */
+    public function getDistinctManualEventsByIdSalesOrderGroupedByShipment(int $idSalesOrder): array
+    {
+        return $this->omsFacade->getDistinctManualEventsByIdSalesOrderGroupedByShipment($idSalesOrder);
+    }
+
+    /**
      * @param int $idOrder
      *
      * @return bool

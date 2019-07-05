@@ -82,7 +82,7 @@ interface FinderInterface
     /**
      * @param int $idSalesOrder
      *
-     * @return string[][]
+     * @return string[]
      */
     public function getManualEventsByIdSalesOrder($idSalesOrder);
 
@@ -92,6 +92,20 @@ interface FinderInterface
      * @return string[]
      */
     public function getDistinctManualEventsByIdSalesOrder($idSalesOrder);
+
+    /**
+     * @param int $idSalesOrder
+     *
+     * @return string[]
+     */
+    public function getDistinctManualEventsByIdSalesOrderGroupedByShipment(int $idSalesOrder): array;
+
+    /**
+     * @param int $idSalesOrder
+     *
+     * @return string[]
+     */
+    public function getManualEventsByIdSalesOrderGroupedByShipment(int $idSalesOrder): array;
 
     /**
      * @param int $idOrder

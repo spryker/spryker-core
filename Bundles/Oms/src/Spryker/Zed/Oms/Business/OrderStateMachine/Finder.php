@@ -95,6 +95,45 @@ class Finder implements FinderInterface
     }
 
     /**
+     * @param int $idSalesOrder
+     *
+     * @return string[]
+     */
+    public function getDistinctManualEventsByIdSalesOrderGroupedByShipment(int $idSalesOrder): array
+    {
+        $events = $this->getManualEventsByIdSalesOrderGroupedByShipment($idSalesOrder);
+
+        $eventsList = [];
+
+        foreach ($events as $shipmentId => $eventNamesCollecton) {
+            foreach ($eventNamesCollecton as $eventNames) {
+                $eventsList[$shipmentId] = array_merge($eventsList[$shipmentId] ?? [], $eventNames);
+            }
+
+            $eventsList[$shipmentId] = array_unique($eventsList[$shipmentId]);
+        }
+
+        return $eventsList;
+    }
+
+    /**
+     * @param int $idSalesOrder
+     *
+     * @return string[][]
+     */
+    public function getManualEventsByIdSalesOrderGroupedByShipment(int $idSalesOrder): array
+    {
+        $orderItems = $this->queryContainer->querySalesOrderItemsByIdSalesOrder($idSalesOrder)->find();
+
+        $events = [];
+        foreach ($orderItems as $orderItemEntity) {
+            $events[$orderItemEntity->getFkSalesShipment()][] = $this->getManualEventsByOrderItemEntity($orderItemEntity);
+        }
+
+        return $events;
+    }
+
+    /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
      *
      * @return string[]
