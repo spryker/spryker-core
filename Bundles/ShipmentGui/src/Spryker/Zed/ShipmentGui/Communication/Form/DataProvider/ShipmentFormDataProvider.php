@@ -197,7 +197,7 @@ class ShipmentFormDataProvider
         $addresses = $this->getCustomerAddressChoices($addressesTransfer->getAddresses());
         $addresses = $this->sanitizeDuplicatedCustomerAddressChoices($addresses);
 
-        return array_merge($newAddressChoice, $addresses);
+        return $newAddressChoice + $addresses;
     }
 
     /**
