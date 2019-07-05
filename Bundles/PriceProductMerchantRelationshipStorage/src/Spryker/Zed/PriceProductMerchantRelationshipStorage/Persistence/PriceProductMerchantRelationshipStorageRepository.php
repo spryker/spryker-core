@@ -408,14 +408,14 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
      */
     public function getFilteredPriceProductConcreteMerchantRelationshipEntities(FilterTransfer $filterTransfer, array $priceProductConcreteMerchantRelationshipIds = []): array
     {
-        $priceProductMerchantRelationshipsQuery = $this->queryPriceProductMerchantRelationship()
+        $priceProductMerchantRelationshipQuery = $this->queryPriceProductMerchantRelationship()
             ->filterByFkProduct(null, Criteria::ISNOTNULL);
 
         if ($priceProductConcreteMerchantRelationshipIds) {
-            $priceProductMerchantRelationshipsQuery->filterByIdPriceProductMerchantRelationship_In($priceProductConcreteMerchantRelationshipIds);
+            $priceProductMerchantRelationshipQuery->filterByIdPriceProductMerchantRelationship_In($priceProductConcreteMerchantRelationshipIds);
         }
 
-        return $this->buildQueryFromCriteria($priceProductMerchantRelationshipsQuery, $filterTransfer)->find();
+        return $this->buildQueryFromCriteria($priceProductMerchantRelationshipQuery, $filterTransfer)->find();
     }
 
     /**
@@ -426,13 +426,13 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
      */
     public function getFilteredPriceProductAbstractMerchantRelationshipEntities(FilterTransfer $filterTransfer, array $priceProductAbstractMerchantRelationshipIds = []): array
     {
-        $priceProductMerchantRelationshipsQuery = $this->queryPriceProductMerchantRelationship()
+        $priceProductMerchantRelationshipQuery = $this->queryPriceProductMerchantRelationship()
             ->filterByFkProductAbstract(null, Criteria::ISNOTNULL);
 
         if ($priceProductAbstractMerchantRelationshipIds) {
-            $priceProductMerchantRelationshipsQuery->filterByIdPriceProductMerchantRelationship_In($priceProductAbstractMerchantRelationshipIds);
+            $priceProductMerchantRelationshipQuery->filterByIdPriceProductMerchantRelationship_In($priceProductAbstractMerchantRelationshipIds);
         }
 
-        return $this->buildQueryFromCriteria($priceProductMerchantRelationshipsQuery, $filterTransfer)->find();
+        return $this->buildQueryFromCriteria($priceProductMerchantRelationshipQuery, $filterTransfer)->find();
     }
 }
