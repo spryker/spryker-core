@@ -36,6 +36,16 @@ interface TransferFacadeInterface
 
     /**
      * Specification:
+     * - Deletes generated entity transfer objects.
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function deleteGeneratedEntityTransferObjects(): void;
+
+    /**
+     * Specification:
      * - Loads all *databuilder.xml and *transfer.xml definitions
      * - Merges definitions
      * - Generates transfer data builder objects

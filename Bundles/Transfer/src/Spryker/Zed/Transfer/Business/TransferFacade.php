@@ -74,6 +74,18 @@ class TransferFacade extends AbstractFacade implements TransferFacadeInterface
      *
      * @return void
      */
+    public function deleteGeneratedEntityTransferObjects(): void
+    {
+        $this->getFactory()->createGeneratedEntityTransferDirectory()->clear();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return void
+     */
     public function deleteGeneratedDataBuilderObjects()
     {
         $this->getFactory()->createDataBuilderGeneratedDirectory()->clear();

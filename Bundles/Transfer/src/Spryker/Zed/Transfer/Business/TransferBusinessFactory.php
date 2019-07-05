@@ -27,6 +27,8 @@ use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionMerger;
 use Spryker\Zed\Transfer\Business\Model\TransferCleaner;
 use Spryker\Zed\Transfer\Business\Model\TransferGenerator;
 use Spryker\Zed\Transfer\Business\Model\TransferValidator;
+use Spryker\Zed\Transfer\Business\TransferFileFinder\GeneratedFileFinder;
+use Spryker\Zed\Transfer\Business\TransferFileFinder\GeneratedFileFinderInterface;
 use Spryker\Zed\Transfer\TransferDependencyProvider;
 
 /**
@@ -193,7 +195,19 @@ class TransferBusinessFactory extends AbstractBusinessFactory
         return new GeneratedTransferDirectory(
             $this->getConfig()->getClassTargetDirectory(),
             $this->getFileSystem(),
-            $this->getFinder()
+            $this->createGeneratedFileFinder()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Transfer\Business\Model\GeneratedTransferDirectoryInterface
+     */
+    public function createGeneratedEntityTransferDirectory()
+    {
+        return new GeneratedTransferDirectory(
+            $this->getConfig()->getClassTargetDirectory(),
+            $this->getFileSystem(),
+            $this->createGeneratedEntityTransferFileFinder()
         );
     }
 
@@ -205,7 +219,28 @@ class TransferBusinessFactory extends AbstractBusinessFactory
         return new GeneratedTransferDirectory(
             $this->getConfig()->getDataBuilderTargetDirectory(),
             $this->getFileSystem(),
+            $this->createGeneratedFileFinder()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Transfer\Business\TransferFileFinder\GeneratedFileFinderInterface
+     */
+    public function createGeneratedFileFinder(): GeneratedFileFinderInterface
+    {
+        return new GeneratedFileFinder(
             $this->getFinder()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Transfer\Business\TransferFileFinder\GeneratedFileFinderInterface
+     */
+    public function createGeneratedEntityTransferFileFinder(): GeneratedFileFinderInterface
+    {
+        return new GeneratedFileFinder(
+            $this->getFinder(),
+            $this->getConfig()->getEntityTransferClassFileNamePattern()
         );
     }
 

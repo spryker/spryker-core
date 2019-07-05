@@ -74,6 +74,7 @@ class PropelInstallConsole extends Console
             PostgresqlCompatibilityConsole::COMMAND_NAME,
             SchemaCopyConsole::COMMAND_NAME,
             BuildModelConsole::COMMAND_NAME,
+            EntityTransferGeneratorConsole::COMMAND_NAME,
         ];
         if ($noDiffOption === false) {
             $dependingCommands[] = DiffConsole::COMMAND_NAME;

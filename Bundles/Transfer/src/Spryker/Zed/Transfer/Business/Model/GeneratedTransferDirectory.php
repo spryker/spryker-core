@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Transfer\Business\Model;
 
+use Spryker\Zed\Transfer\Business\TransferFileFinder\GeneratedFileFinderInterface;
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Finder\Finder;
 
 class GeneratedTransferDirectory implements GeneratedTransferDirectoryInterface
 {
@@ -23,20 +23,20 @@ class GeneratedTransferDirectory implements GeneratedTransferDirectoryInterface
     protected $fileSystem;
 
     /**
-     * @var \Symfony\Component\Finder\Finder
+     * @var \Spryker\Zed\Transfer\Business\TransferFileFinder\GeneratedFileFinderInterface
      */
-    protected $finder;
+    private $fileFinder;
 
     /**
      * @param string $directoryPath
      * @param \Symfony\Component\Filesystem\Filesystem $fileSystem
-     * @param \Symfony\Component\Finder\Finder $finder
+     * @param \Spryker\Zed\Transfer\Business\TransferFileFinder\GeneratedFileFinderInterface $fileFinder
      */
-    public function __construct($directoryPath, Filesystem $fileSystem, Finder $finder)
+    public function __construct($directoryPath, Filesystem $fileSystem, GeneratedFileFinderInterface $fileFinder)
     {
         $this->directoryPath = $directoryPath;
         $this->fileSystem = $fileSystem;
-        $this->finder = $finder;
+        $this->fileFinder = $fileFinder;
     }
 
     /**
@@ -48,19 +48,8 @@ class GeneratedTransferDirectory implements GeneratedTransferDirectoryInterface
             return;
         }
 
-        $this->fileSystem->remove($this->findFiles());
-    }
-
-    /**
-     * @return \Symfony\Component\Finder\Finder
-     */
-    protected function findFiles()
-    {
-        $finder = clone $this->finder;
-        $finder
-            ->in($this->directoryPath)
-            ->depth(0);
-
-        return $finder;
+        $this->fileSystem->remove(
+            $this->fileFinder->findFiles($this->directoryPath)
+        );
     }
 }

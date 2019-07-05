@@ -138,4 +138,12 @@ class TransferConfig extends AbstractBundleConfig
     {
         return false;
     }
+
+    /**
+     * @return string
+     */
+    public function getEntityTransferClassFileNamePattern(): string
+    {
+        return '/^Spy.*EntityTransfer.php/';
+    }
 }
