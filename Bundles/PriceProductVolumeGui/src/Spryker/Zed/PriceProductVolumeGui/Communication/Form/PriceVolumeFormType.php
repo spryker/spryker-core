@@ -28,7 +28,7 @@ class PriceVolumeFormType extends AbstractType
     protected const FIELD_NET_PRICE = 'net_price';
     protected const FIELD_GROSS_PRICE = 'gross_price';
 
-    public const MINIMUM_QUANTITY = 0;
+    public const MINIMUM_QUANTITY = 1;
     protected const MINIMUM_PRICE_VALUE = 0;
     protected const MESSAGE_QUANTITY_ERROR = 'The quantity you have entered is invalid.';
 

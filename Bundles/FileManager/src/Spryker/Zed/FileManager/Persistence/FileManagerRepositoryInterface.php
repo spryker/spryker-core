@@ -78,4 +78,11 @@ interface FileManagerRepositoryInterface
      * @return \Generated\Shared\Transfer\MimeTypeCollectionTransfer
      */
     public function getAllowedMimeTypes();
+
+    /**
+     * @param int[] $idFiles
+     *
+     * @return \Generated\Shared\Transfer\FileTransfer[]
+     */
+    public function getFilesByIds(array $idFiles): array;
 }

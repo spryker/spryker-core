@@ -23,7 +23,7 @@ interface AvailabilityFacadeInterface
      * @api
      *
      * @param string $sku
-     * @param float $quantity
+     * @param int $quantity
      *
      * @return bool
      */
@@ -38,7 +38,7 @@ interface AvailabilityFacadeInterface
      * @api
      *
      * @param string $sku
-     * @param float $quantity
+     * @param int $quantity
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return bool
@@ -67,7 +67,7 @@ interface AvailabilityFacadeInterface
      *
      * @param string $sku
      *
-     * @return float
+     * @return int
      */
     public function calculateStockForProduct($sku);
 
@@ -82,7 +82,7 @@ interface AvailabilityFacadeInterface
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return float
+     * @return int
      */
     public function calculateStockForProductWithStore($sku, StoreTransfer $storeTransfer);
 
@@ -197,7 +197,7 @@ interface AvailabilityFacadeInterface
      * @api
      *
      * @param string $sku
-     * @param float $quantity
+     * @param int $quantity
      *
      * @return int
      */
@@ -212,7 +212,7 @@ interface AvailabilityFacadeInterface
      * @api
      *
      * @param string $sku
-     * @param float $quantity
+     * @param int $quantity
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return int
