@@ -47,6 +47,8 @@ class ShipmentService extends AbstractService implements ShipmentServiceInterfac
     /**
      * {@inheritdoc}
      *
+     * @api
+     *
      * @return string
      */
     public function getShipmentExpenseType(): string
