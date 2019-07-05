@@ -8,8 +8,10 @@
 namespace Spryker\Service\Shipment;
 
 use Spryker\Service\Kernel\AbstractBundleConfig;
-use Spryker\Shared\Shipment\ShipmentConstants;
 
+/**
+ * @method \Spryker\Shared\Shipment\ShipmentConfig getSharedConfig()
+ */
 class ShipmentConfig extends AbstractBundleConfig
 {
     /**
@@ -17,9 +19,6 @@ class ShipmentConfig extends AbstractBundleConfig
      */
     public function getShipmentExpenseType(): string
     {
-        return $this->get(
-            ShipmentConstants::SHIPMENT_EXPENSE_TYPE,
-            ShipmentConstants::SHIPMENT_EXPENSE_TYPE
-        );
+        return $this->getSharedConfig()->getShipmentExpenseType();
     }
 }

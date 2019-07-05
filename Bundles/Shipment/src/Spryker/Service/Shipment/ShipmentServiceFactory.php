@@ -17,7 +17,7 @@ use Spryker\Service\Shipment\ShipmentHash\ShipmentHashGenerator;
 use Spryker\Service\Shipment\ShipmentHash\ShipmentHashGeneratorInterface;
 
 /**
- * @method \Spryker\Service\Shipment\ShipmentConfig getConfig()
+ * @method \Spryker\Shared\Shipment\ShipmentConfig getConfig()
  */
 class ShipmentServiceFactory extends AbstractServiceFactory
 {
