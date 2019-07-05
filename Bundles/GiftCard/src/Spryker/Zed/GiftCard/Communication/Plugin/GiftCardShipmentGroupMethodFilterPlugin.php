@@ -9,8 +9,9 @@ namespace Spryker\Zed\GiftCard\Communication\Plugin;
 
 use ArrayObject;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\Shipment\Dependency\Plugin\ShipmentMethodFilterPluginInterface;
+use Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodFilterPluginInterface;
 
 /**
  * @method \Spryker\Zed\GiftCard\Business\GiftCardFacadeInterface getFacade()
@@ -18,20 +19,22 @@ use Spryker\Zed\Shipment\Dependency\Plugin\ShipmentMethodFilterPluginInterface;
  * @method \Spryker\Zed\GiftCard\GiftCardConfig getConfig()
  * @method \Spryker\Zed\GiftCard\Persistence\GiftCardQueryContainerInterface getQueryContainer()
  */
-class OnlyGiftCardShipmentMethodFilterPlugin extends AbstractPlugin implements ShipmentMethodFilterPluginInterface
+class GiftCardShipmentGroupMethodFilterPlugin extends AbstractPlugin implements ShipmentMethodFilterPluginInterface
 {
     /**
+     * @todo spec info
+     *
      * @api
      *
-     * @deprecated Use \Spryker\Zed\GiftCard\Communication\Plugin\GiftCardShipmentGroupMethodFilterPlugin instead.
-     *
-     * @param \ArrayObject|\Generated\Shared\Transfer\ShipmentMethodTransfer[] $shipmentMethods
+     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentMethodTransfer[] $shipmentMethods
      */
-    public function filterShipmentMethods(ArrayObject $shipmentMethods, QuoteTransfer $quoteTransfer)
-    {
-        return $this->getFacade()->filterShipmentMethods($shipmentMethods, $quoteTransfer);
+    public function filterShipmentMethods(
+        ShipmentGroupTransfer $shipmentGroupTransfer,
+        QuoteTransfer $quoteTransfer
+    ): ArrayObject {
+        return $this->getFacade()->filterShipmentGroupMethods($shipmentGroupTransfer);
     }
 }

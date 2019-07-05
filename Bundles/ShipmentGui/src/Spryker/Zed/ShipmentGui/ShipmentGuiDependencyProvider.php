@@ -87,7 +87,7 @@ class ShipmentGuiDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addShipmentService(Container $container)
+    protected function addShipmentService(Container $container): Container
     {
         $container[static::SERVICE_SHIPMENT] = function (Container $container) {
             return new ShipmentGuiToShipmentServiceBridge($container->getLocator()->shipment()->service());

@@ -148,7 +148,7 @@ class MethodReader implements MethodReaderInterface
         QuoteTransfer $quoteTransfer
     ): ShipmentMethodsCollectionTransfer {
         foreach ($shipmentMethodsCollectionTransfer->getShipmentMethods() as $index => $shipmentMethodsTransfer) {
-            if (count($shipmentMethodsTransfer->getMethods()) < 1) {
+            if ($shipmentMethodsTransfer->getMethods()->count() === 0) {
                 continue;
             }
 
@@ -342,9 +342,7 @@ class MethodReader implements MethodReaderInterface
             return $shipmentMethodTransfer;
         }
 
-        $shipmentMethodTransfer->setCurrencyIsoCode($currencyTransfer->getCode());
-
-        return $shipmentMethodTransfer;
+        return $shipmentMethodTransfer->setCurrencyIsoCode($currencyTransfer->getCode());
     }
 
     /**

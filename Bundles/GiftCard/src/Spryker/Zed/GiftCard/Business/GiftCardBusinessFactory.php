@@ -20,6 +20,8 @@ use Spryker\Zed\GiftCard\Business\Payment\PaymentMethodFilter;
 use Spryker\Zed\GiftCard\Business\Payment\SalesOrderPaymentSaver;
 use Spryker\Zed\GiftCard\Business\Payment\SalesOrderPreChecker;
 use Spryker\Zed\GiftCard\Business\Sales\SalesOrderItemSaver;
+use Spryker\Zed\GiftCard\Business\Shipment\ShipmentGroupMethodFilter;
+use Spryker\Zed\GiftCard\Business\Shipment\ShipmentGroupMethodFilterInterface;
 use Spryker\Zed\GiftCard\Business\Shipment\ShipmentMethodFilter;
 use Spryker\Zed\GiftCard\GiftCardDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
@@ -219,10 +221,20 @@ class GiftCardBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Use createShipmentGroupMethodFilter() instead.
+     *
      * @return \Spryker\Zed\GiftCard\Business\Shipment\ShipmentMethodFilterInterface
      */
     public function createShipmentMethodFilter()
     {
         return new ShipmentMethodFilter($this->getConfig());
+    }
+
+    /**
+     * @return \Spryker\Zed\GiftCard\Business\Shipment\ShipmentGroupMethodFilterInterface
+     */
+    public function createShipmentGroupMethodFilter(): ShipmentGroupMethodFilterInterface
+    {
+        return new ShipmentGroupMethodFilter($this->getConfig());
     }
 }
