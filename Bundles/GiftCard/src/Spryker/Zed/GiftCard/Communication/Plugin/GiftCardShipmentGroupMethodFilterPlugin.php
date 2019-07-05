@@ -22,7 +22,8 @@ use Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodFilterPluginIn
 class GiftCardShipmentGroupMethodFilterPlugin extends AbstractPlugin implements ShipmentMethodFilterPluginInterface
 {
     /**
-     * @todo spec info
+     * Specification:
+     *  - Filters available shipment methods for shipment group.
      *
      * @api
      *
