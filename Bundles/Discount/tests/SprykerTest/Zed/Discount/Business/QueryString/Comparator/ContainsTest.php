@@ -26,11 +26,6 @@ use Spryker\Zed\Discount\Business\QueryString\Comparator\Contains;
 class ContainsTest extends Unit
 {
     /**
-     * @var \SprykerTest\Zed\Discount\DiscountBusinessTester
-     */
-    protected $tester;
-
-    /**
      * @return void
      */
     public function testAcceptShouldReturnTrueWhenContainsExpressionProvided()

@@ -10,23 +10,9 @@ namespace Spryker\Client\ProductBundle\QuoteChangeRequestExpander;
 use ArrayObject;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Client\ProductBundle\Dependency\Service\ProductBundleToUtilQuantityServiceInterface;
 
 class QuoteChangeRequestExpander implements QuoteChangeRequestExpanderInterface
 {
-    /**
-     * @var \Spryker\Client\ProductBundle\Dependency\Service\ProductBundleToUtilQuantityServiceInterface
-     */
-    protected $utilQuantityService;
-
-    /**
-     * @param \Spryker\Client\ProductBundle\Dependency\Service\ProductBundleToUtilQuantityServiceInterface $utilQuantityService
-     */
-    public function __construct(ProductBundleToUtilQuantityServiceInterface $utilQuantityService)
-    {
-        $this->utilQuantityService = $utilQuantityService;
-    }
-
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      * @param array $params
@@ -36,22 +22,14 @@ class QuoteChangeRequestExpander implements QuoteChangeRequestExpanderInterface
     public function expand(CartChangeTransfer $cartChangeTransfer, array $params = []): CartChangeTransfer
     {
         $itemTransferList = [];
-        foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
-            $bundledItemTransferList = $this->getBundledItems(
-                $cartChangeTransfer->getQuote(),
-                $itemTransfer->getGroupKey(),
-                $itemTransfer->getQuantity()
-            );
-
+        foreach ($cartChangeTransfer->getItems() as $quoteTransfer) {
+            $bundledItemTransferList = $this->getBundledItems($cartChangeTransfer->getQuote(), $quoteTransfer->getGroupKey(), $quoteTransfer->getQuantity());
             if (count($bundledItemTransferList)) {
                 $itemTransferList = array_merge($itemTransferList, $bundledItemTransferList);
-
                 continue;
             }
-
-            $itemTransferList[] = $itemTransfer;
+            $itemTransferList[] = $quoteTransfer;
         }
-
         $cartChangeTransfer->setItems(new ArrayObject($itemTransferList));
 
         return $cartChangeTransfer;
@@ -69,7 +47,6 @@ class QuoteChangeRequestExpander implements QuoteChangeRequestExpanderInterface
         if (!$numberOfBundlesToRemove) {
             $numberOfBundlesToRemove = $this->getBundledProductTotalQuantity($quoteTransfer, $groupKey);
         }
-
         $bundledItems = [];
         foreach ($quoteTransfer->getBundleItems() as $bundleItemTransfer) {
             if ($numberOfBundlesToRemove === 0) {
@@ -84,10 +61,8 @@ class QuoteChangeRequestExpander implements QuoteChangeRequestExpanderInterface
                 if ($itemTransfer->getRelatedBundleItemIdentifier() !== $bundleItemTransfer->getBundleItemIdentifier()) {
                     continue;
                 }
-
                 $bundledItems[] = $itemTransfer;
             }
-
             $numberOfBundlesToRemove--;
         }
 
@@ -98,33 +73,18 @@ class QuoteChangeRequestExpander implements QuoteChangeRequestExpanderInterface
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $groupKey
      *
-     * @return float
+     * @return int
      */
-    protected function getBundledProductTotalQuantity(QuoteTransfer $quoteTransfer, $groupKey): float
+    protected function getBundledProductTotalQuantity(QuoteTransfer $quoteTransfer, $groupKey): int
     {
-        $bundleItemQuantity = 0.0;
+        $bundleItemQuantity = 0;
         foreach ($quoteTransfer->getBundleItems() as $bundleItemTransfer) {
             if ($bundleItemTransfer->getGroupKey() !== $groupKey) {
                 continue;
             }
-
-            $bundleItemQuantity = $this->sumQuantities(
-                $bundleItemQuantity,
-                $bundleItemTransfer->getQuantity()
-            );
+            $bundleItemQuantity += $bundleItemTransfer->getQuantity();
         }
 
         return $bundleItemQuantity;
-    }
-
-    /**
-     * @param float $firstQuantity
-     * @param float $secondQuantity
-     *
-     * @return float
-     */
-    protected function sumQuantities(float $firstQuantity, float $secondQuantity): float
-    {
-        return $this->utilQuantityService->sumQuantities($firstQuantity, $secondQuantity);
     }
 }

@@ -8,7 +8,6 @@
 namespace Spryker\Zed\SalesSplit\Business\Model\Validation;
 
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
-use Spryker\Zed\SalesSplit\Dependency\Service\SalesSplitToUtilQuantityServiceInterface;
 
 class Validator implements ValidatorInterface
 {
@@ -18,21 +17,8 @@ class Validator implements ValidatorInterface
     private $messages = [];
 
     /**
-     * @var \Spryker\Zed\SalesSplit\Dependency\Service\SalesSplitToUtilQuantityServiceInterface
-     */
-    protected $utilQuantityService;
-
-    /**
-     * @param \Spryker\Zed\SalesSplit\Dependency\Service\SalesSplitToUtilQuantityServiceInterface $utilQuantityService
-     */
-    public function __construct(SalesSplitToUtilQuantityServiceInterface $utilQuantityService)
-    {
-        $this->utilQuantityService = $utilQuantityService;
-    }
-
-    /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $salesOrderItem
-     * @param float $quantityToSplit
+     * @param int $quantityToSplit
      *
      * @return bool
      */
@@ -56,30 +42,19 @@ class Validator implements ValidatorInterface
 
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $salesOrderItem
-     * @param float $quantityToSplit
+     * @param int $quantityToSplit
      *
      * @return bool
      */
     protected function isValidQuantity(SpySalesOrderItem $salesOrderItem, $quantityToSplit)
     {
-        if ($this->isQuantityLessOrEqual($quantityToSplit, 0) || $this->isQuantityLessOrEqual($salesOrderItem->getQuantity(), $quantityToSplit)) {
+        if ($quantityToSplit < 1 || $salesOrderItem->getQuantity() <= $quantityToSplit) {
             $this->messages[] = Messages::VALIDATE_QUANTITY_MESSAGE;
 
             return false;
         }
 
         return true;
-    }
-
-    /**
-     * @param float $firstQuantity
-     * @param float $secondQuantity
-     *
-     * @return bool
-     */
-    protected function isQuantityLessOrEqual(float $firstQuantity, float $secondQuantity): bool
-    {
-        return $this->utilQuantityService->isQuantityLessOrEqual($firstQuantity, $secondQuantity);
     }
 
     /**

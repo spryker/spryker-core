@@ -68,7 +68,7 @@ class ContentBannerReader implements ContentBannerReaderInterface
         }
 
         try {
-            $contentBannerTypeTransfer = $this->contentBannerClient->executeBannerTypeById(
+            $contentBannerTypeTransfer = $this->contentBannerClient->executeBannerTypeByKey(
                 $contentBannerKey,
                 $restRequest->getMetadata()->getLocale()
             );

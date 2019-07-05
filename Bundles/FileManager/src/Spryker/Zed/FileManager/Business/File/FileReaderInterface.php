@@ -29,4 +29,11 @@ interface FileReaderInterface
      * @return \Generated\Shared\Transfer\FileManagerDataTransfer
      */
     public function readLatestByFileId(int $idFile);
+
+    /**
+     * @param int[] $idFiles
+     *
+     * @return \Generated\Shared\Transfer\FileManagerDataTransfer[]
+     */
+    public function getFilesByIds(array $idFiles): array;
 }
