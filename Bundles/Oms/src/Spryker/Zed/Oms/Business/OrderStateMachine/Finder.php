@@ -64,7 +64,7 @@ class Finder implements FinderInterface
     /**
      * @param int $idSalesOrder
      *
-     * @return string[]
+     * @return string[][]
      */
     public function getManualEventsByIdSalesOrder($idSalesOrder)
     {

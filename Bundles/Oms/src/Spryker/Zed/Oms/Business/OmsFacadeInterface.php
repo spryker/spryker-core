@@ -463,8 +463,8 @@ interface OmsFacadeInterface
 
     /**
      * Specification:
-     *  - Reads all order manual event from persistence.
-     *  - Returns array of manual events grouped by shipment.
+     *  - Reads all order manual events from persistence.
+     *  - Returns a list of manual events grouped by shipment.
      *
      * @api
      *

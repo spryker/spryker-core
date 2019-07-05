@@ -19,6 +19,11 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class TriggerController extends AbstractController
 {
+    protected const REQUEST_PARAMETER_ID_SALES_ORDER = 'id-sales-order';
+    protected const REQUEST_PARAMETER_ITEMS = 'items';
+    protected const REQUEST_PARAMETER_EVENT = 'event';
+    protected const REQUEST_PARAMETER_REDIRECT = 'redirect';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -26,9 +31,18 @@ class TriggerController extends AbstractController
      */
     public function triggerEventForOrderItemsAction(Request $request)
     {
-        $idOrderItems = $request->query->get('items');
-        $event = $request->query->get('event');
-        $redirect = $request->query->get('redirect', '/');
+        $idOrderItems = $request->query->get(static::REQUEST_PARAMETER_ITEMS);
+
+        /**
+         * Exists for Backward Compatibility reasons only.
+         */
+        $idOrderItem = $request->query->get(static::REQUEST_PARAMETER_ID_SALES_ORDER);
+        if ($idOrderItems === null && $idOrderItem !== null) {
+            $idOrderItems = [$idOrderItem];
+        }
+
+        $event = $request->query->get(static::REQUEST_PARAMETER_EVENT);
+        $redirect = $request->query->get(static::REQUEST_PARAMETER_REDIRECT, '/');
 
         $this->getFacade()->triggerEventForOrderItems($event, $idOrderItems);
         $this->addInfoMessage('Status change triggered successfully.');
@@ -43,10 +57,10 @@ class TriggerController extends AbstractController
      */
     public function triggerEventForOrderAction(Request $request)
     {
-        $idOrder = $this->castId($request->query->getInt('id-sales-order'));
-        $event = $request->query->get('event');
-        $redirect = $request->query->get('redirect', '/');
-        $itemsList = $request->query->get('items');
+        $idOrder = $this->castId($request->query->getInt(static::REQUEST_PARAMETER_ID_SALES_ORDER));
+        $event = $request->query->get(static::REQUEST_PARAMETER_EVENT);
+        $redirect = $request->query->get(static::REQUEST_PARAMETER_REDIRECT, '/');
+        $itemsList = $request->query->get(static::REQUEST_PARAMETER_ITEMS);
 
         $orderItems = $this->getOrderItemsToTriggerAction($idOrder, $itemsList);
 
