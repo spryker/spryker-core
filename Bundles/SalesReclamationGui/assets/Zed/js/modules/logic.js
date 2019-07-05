@@ -126,15 +126,7 @@ $(document).ready(function() {
         return true;
     });
 
-    $('#check-all-orders').click(function() {
-        if ($(this).prop('checked') === true) {
-            var checked = true;
-        } else {
-            var checked = false;
-        }
-
-        $('.item-check').each(function() {
-            $(this).prop('checked', checked);
-        });
+    $('.check-all-orders').click(function() {
+        $(this).closest('table').find('.item-check').prop('checked', $(this).prop('checked'));
     });
 });
