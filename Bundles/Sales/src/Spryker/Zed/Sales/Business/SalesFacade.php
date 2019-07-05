@@ -345,7 +345,7 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     public function updateSalesExpense(ExpenseTransfer $expenseTransfer): ExpenseTransfer
     {
         return $this->getFactory()
-            ->createExpenseWriter()
+            ->createExpenseUpdater()
             ->updateSalesExpense($expenseTransfer);
     }
 

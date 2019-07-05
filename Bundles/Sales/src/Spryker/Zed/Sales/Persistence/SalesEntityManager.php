@@ -10,7 +10,6 @@ namespace Spryker\Zed\Sales\Persistence;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesExpense;
-use Orm\Zed\Sales\Persistence\SpySalesExpenseQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -44,9 +43,14 @@ class SalesEntityManager extends AbstractEntityManager implements SalesEntityMan
     public function updateSalesExpense(ExpenseTransfer $expenseTransfer): ExpenseTransfer
     {
         $expenseTransfer->requireIdSalesExpense();
+
+        $salesOrderExpenseEntity = $this->getFactory()
+            ->createSalesExpenseQuery()
+            ->findOneByIdSalesExpense($expenseTransfer->getIdSalesExpense());
+
         $salesOrderExpenseEntity = $this->getFactory()
             ->createSalesExpenseMapper()
-            ->mapExpenseTransferToSalesExpenseEntity($expenseTransfer, $this->getSalesExpenseEntity($expenseTransfer));
+            ->mapExpenseTransferToSalesExpenseEntity($expenseTransfer, $salesOrderExpenseEntity);
 
         $salesOrderExpenseEntity->save();
 
@@ -90,22 +94,5 @@ class SalesEntityManager extends AbstractEntityManager implements SalesEntityMan
         $addressTransfer->setIdSalesOrderAddress($salesOrderAddressEntity->getIdSalesOrderAddress());
 
         return $addressTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
-     *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesExpense
-     */
-    protected function getSalesExpenseEntity(ExpenseTransfer $expenseTransfer): SpySalesExpense
-    {
-        $salesOrderExpenseEntity = SpySalesExpenseQuery::create()
-            ->findOneByIdSalesExpense($expenseTransfer->getIdSalesExpense());
-
-        if ($salesOrderExpenseEntity === null) {
-            return new SpySalesExpense();
-        }
-
-        return $salesOrderExpenseEntity;
     }
 }
