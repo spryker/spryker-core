@@ -9,10 +9,13 @@ namespace SprykerTest\Zed\Shipment\Business;
 
 use ArrayObject;
 use Codeception\TestCase\Test;
+use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\CurrencyTransfer;
+use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
+use Generated\Shared\Transfer\ShipmentTransfer;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethod;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodPrice;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodPriceQuery;
@@ -46,6 +49,8 @@ class ShipmentFacadeTest extends Test
 
     public const DEFAULT_DELIVERY_TIME = 'example delivery time';
     public const DEFAULT_PLUGIN_PRICE = 1500;
+
+    protected const VALUE_ANOTHER_EXPENSE_TYPE = 'VALUE_ANOTHER_EXPENSE_TYPE';
 
     /**
      * @var \SprykerTest\Zed\Shipment\ShipmentBusinessTester
@@ -428,6 +433,76 @@ class ShipmentFacadeTest extends Test
     }
 
     /**
+     * @return void
+     */
+    public function testFilterObsoleteShipmentExpensesShouldNotFilterExpensesWhenShipmentMethodIsSet(): void
+    {
+        // Arrange
+        $calculableObjectTransfer = $this->buildCalculableObjectTransfer();
+
+        $shipmentExpenseTransfer = (new ExpenseTransfer())
+            ->setType(ShipmentConstants::SHIPMENT_EXPENSE_TYPE);
+
+        $calculableObjectTransfer->addExpense($shipmentExpenseTransfer);
+
+        // Act
+        $this->getShipmentFacade()->filterObsoleteShipmentExpenses($calculableObjectTransfer);
+
+        // Assert
+        $this->assertTrue($this->hasShipmentExpense($calculableObjectTransfer, $shipmentExpenseTransfer));
+    }
+
+    /**
+     * @return void
+     */
+    public function testFilterObsoleteShipmentExpensesShouldFilterShipmentExpensesWhenShipmentMethodIsNotSet(): void
+    {
+        // Arrange
+        $calculableObjectTransfer = $this->buildCalculableObjectTransfer([], [
+            QuoteTransfer::SHIPMENT => null,
+        ]);
+
+        $shipmentExpenseTransfer = (new ExpenseTransfer())
+            ->setType(ShipmentConstants::SHIPMENT_EXPENSE_TYPE);
+
+        $calculableObjectTransfer->addExpense($shipmentExpenseTransfer);
+
+        // Act
+        $this->getShipmentFacade()->filterObsoleteShipmentExpenses($calculableObjectTransfer);
+
+        // Assert
+        $this->assertFalse($this->hasShipmentExpense($calculableObjectTransfer, $shipmentExpenseTransfer));
+    }
+
+    /**
+     * @return void
+     */
+    public function testFilterObsoleteShipmentExpensesShouldNotFilterNonShipmentExpensesWhenShipmentMethodIsNotSet(): void
+    {
+        // Arrange
+        $calculableObjectTransfer = $this->buildCalculableObjectTransfer([], [
+            QuoteTransfer::SHIPMENT => null,
+        ]);
+
+        $shipmentExpenseTransfer = (new ExpenseTransfer())
+            ->setType(ShipmentConstants::SHIPMENT_EXPENSE_TYPE);
+
+        $calculableObjectTransfer->addExpense($shipmentExpenseTransfer);
+
+        $anotherExpenseTransfer = (new ExpenseTransfer())
+            ->setType(static::VALUE_ANOTHER_EXPENSE_TYPE);
+
+        $calculableObjectTransfer->addExpense($anotherExpenseTransfer);
+
+        // Act
+        $this->getShipmentFacade()->filterObsoleteShipmentExpenses($calculableObjectTransfer);
+
+        // Assert
+        $this->assertTrue($this->hasShipmentExpense($calculableObjectTransfer, $anotherExpenseTransfer));
+        $this->assertFalse($this->hasShipmentExpense($calculableObjectTransfer, $shipmentExpenseTransfer));
+    }
+
+    /**
      * @return array
      */
     public function multiCurrencyPrices()
@@ -436,6 +511,42 @@ class ShipmentFacadeTest extends Test
             ['EUR', 3100],
             ['USD', 3200],
         ];
+    }
+
+    /**
+     * @param array $calculableObjectSeed
+     * @param array $originalQuoteSeed
+     * @param array $shipmentSeed
+     *
+     * @return \Generated\Shared\Transfer\CalculableObjectTransfer
+     */
+    protected function buildCalculableObjectTransfer(
+        array $calculableObjectSeed = [],
+        array $originalQuoteSeed = [],
+        array $shipmentSeed = []
+    ): CalculableObjectTransfer {
+        $shipmentTransfer = (new ShipmentTransfer())
+            ->setMethod($this->tester->haveShipmentMethod())
+            ->fromArray($shipmentSeed);
+
+        $originalQuoteTransfer = (new QuoteTransfer())
+            ->setShipment($shipmentTransfer)
+            ->fromArray($originalQuoteSeed);
+
+        return (new CalculableObjectTransfer())
+            ->setOriginalQuote($originalQuoteTransfer)
+            ->fromArray($calculableObjectSeed);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     * @param \Generated\Shared\Transfer\ExpenseTransfer $shipmentExpenseTransfer
+     *
+     * @return bool
+     */
+    protected function hasShipmentExpense(CalculableObjectTransfer $calculableObjectTransfer, ExpenseTransfer $shipmentExpenseTransfer): bool
+    {
+        return in_array($shipmentExpenseTransfer, $calculableObjectTransfer->getExpenses()->getArrayCopy(), true);
     }
 
     /**
@@ -506,5 +617,13 @@ class ShipmentFacadeTest extends Test
         ];
 
         return $priceList;
+    }
+
+    /**
+     * @return \Spryker\Zed\Kernel\Business\AbstractFacade|\Spryker\Zed\Shipment\Business\ShipmentFacadeInterface
+     */
+    protected function getShipmentFacade()
+    {
+        return $this->tester->getFacade();
     }
 }
