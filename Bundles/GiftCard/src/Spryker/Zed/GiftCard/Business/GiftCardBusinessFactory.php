@@ -20,9 +20,15 @@ use Spryker\Zed\GiftCard\Business\Payment\PaymentMethodFilter;
 use Spryker\Zed\GiftCard\Business\Payment\SalesOrderPaymentSaver;
 use Spryker\Zed\GiftCard\Business\Payment\SalesOrderPreChecker;
 use Spryker\Zed\GiftCard\Business\Sales\SalesOrderItemSaver;
-use Spryker\Zed\GiftCard\Business\Shipment\ShipmentGroupMethodFilter;
-use Spryker\Zed\GiftCard\Business\Shipment\ShipmentGroupMethodFilterInterface;
 use Spryker\Zed\GiftCard\Business\Shipment\ShipmentMethodFilter;
+use Spryker\Zed\GiftCard\Business\ShipmentGroup\ShipmentGroupMethodFilter;
+use Spryker\Zed\GiftCard\Business\ShipmentGroup\ShipmentGroupMethodFilterInterface;
+use Spryker\Zed\GiftCard\Business\ShipmentMethod\ShipmentMethodCollectionRemover;
+use Spryker\Zed\GiftCard\Business\ShipmentMethod\ShipmentMethodCollectionRemoverInterface;
+use Spryker\Zed\GiftCard\Business\ShipmentMethod\ShipmentMethodGiftCardCollectionGetter;
+use Spryker\Zed\GiftCard\Business\ShipmentMethod\ShipmentMethodGiftCardCollectionGetterInterface;
+use Spryker\Zed\GiftCard\Business\ShipmentMethod\ShipmentMethodGiftCardFilter;
+use Spryker\Zed\GiftCard\Business\ShipmentMethod\ShipmentMethodGiftCardFilterInterface;
 use Spryker\Zed\GiftCard\GiftCardDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
@@ -231,10 +237,37 @@ class GiftCardBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\GiftCard\Business\Shipment\ShipmentGroupMethodFilterInterface
+     * @return \Spryker\Zed\GiftCard\Business\ShipmentGroup\ShipmentGroupMethodFilterInterface
      */
     public function createShipmentGroupMethodFilter(): ShipmentGroupMethodFilterInterface
     {
-        return new ShipmentGroupMethodFilter($this->getConfig());
+        return new ShipmentGroupMethodFilter($this->createShipmentMethodGiftCardFilter());
+    }
+
+    /**
+     * @return \Spryker\Zed\GiftCard\Business\ShipmentMethod\ShipmentMethodGiftCardFilterInterface
+     */
+    public function createShipmentMethodGiftCardFilter(): ShipmentMethodGiftCardFilterInterface
+    {
+        return new ShipmentMethodGiftCardFilter(
+            $this->createShipmentMethodCollectionRemover(),
+            $this->createShipmentMethodGiftCardCollectionGetter()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\GiftCard\Business\ShipmentMethod\ShipmentMethodCollectionRemoverInterface
+     */
+    public function createShipmentMethodCollectionRemover(): ShipmentMethodCollectionRemoverInterface
+    {
+        return new ShipmentMethodCollectionRemover();
+    }
+
+    /**
+     * @return \Spryker\Zed\GiftCard\Business\ShipmentMethod\ShipmentMethodGiftCardCollectionGetterInterface
+     */
+    public function createShipmentMethodGiftCardCollectionGetter(): ShipmentMethodGiftCardCollectionGetterInterface
+    {
+        return new ShipmentMethodGiftCardCollectionGetter($this->getConfig());
     }
 }

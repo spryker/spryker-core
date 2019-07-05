@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\GiftCard\Business\Shipment;
+namespace Spryker\Zed\GiftCard\Business\ShipmentGroup;
 
 use ArrayObject;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
