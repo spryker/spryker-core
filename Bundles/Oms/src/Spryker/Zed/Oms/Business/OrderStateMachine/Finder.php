@@ -105,8 +105,8 @@ class Finder implements FinderInterface
 
         $eventsList = [];
 
-        foreach ($events as $shipmentId => $eventNamesCollecton) {
-            foreach ($eventNamesCollecton as $eventNames) {
+        foreach ($events as $shipmentId => $eventNamesCollection) {
+            foreach ($eventNamesCollection as $eventNames) {
                 $eventsList[$shipmentId] = array_merge($eventsList[$shipmentId] ?? [], $eventNames);
             }
 
