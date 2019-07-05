@@ -34,6 +34,13 @@ interface ShipmentToSalesFacadeInterface
     public function createSalesExpense(ExpenseTransfer $expenseTransfer): ExpenseTransfer;
 
     /**
+     * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
+     *
+     * @return \Generated\Shared\Transfer\ExpenseTransfer
+     */
+    public function updateSalesExpense(ExpenseTransfer $expenseTransfer): ExpenseTransfer;
+
+    /**
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @return \Generated\Shared\Transfer\AddressTransfer

@@ -17,4 +17,11 @@ interface ExpenseWriterInterface
      * @return \Generated\Shared\Transfer\ExpenseTransfer
      */
     public function createSalesExpense(ExpenseTransfer $expenseTransfer): ExpenseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
+     *
+     * @return \Generated\Shared\Transfer\ExpenseTransfer
+     */
+    public function updateSalesExpense(ExpenseTransfer $expenseTransfer): ExpenseTransfer;
 }

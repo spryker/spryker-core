@@ -9,6 +9,8 @@ namespace Spryker\Zed\Sales\Persistence;
 
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
+use Orm\Zed\Sales\Persistence\SpySalesExpense;
+use Orm\Zed\Sales\Persistence\SpySalesExpenseQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -25,11 +27,28 @@ class SalesEntityManager extends AbstractEntityManager implements SalesEntityMan
     {
         $salesOrderExpenseEntity = $this->getFactory()
             ->createSalesExpenseMapper()
-            ->mapExpenseTransferToSalesExpenseEntity($expenseTransfer);
+            ->mapExpenseTransferToSalesExpenseEntity($expenseTransfer, new SpySalesExpense());
 
         $salesOrderExpenseEntity->save();
 
         $expenseTransfer->setIdSalesExpense($salesOrderExpenseEntity->getIdSalesExpense());
+
+        return $expenseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
+     *
+     * @return \Generated\Shared\Transfer\ExpenseTransfer
+     */
+    public function updateSalesExpense(ExpenseTransfer $expenseTransfer): ExpenseTransfer
+    {
+        $expenseTransfer->requireIdSalesExpense();
+        $salesOrderExpenseEntity = $this->getFactory()
+            ->createSalesExpenseMapper()
+            ->mapExpenseTransferToSalesExpenseEntity($expenseTransfer, $this->getSalesExpenseEntity($expenseTransfer));
+
+        $salesOrderExpenseEntity->save();
 
         return $expenseTransfer;
     }
@@ -71,5 +90,16 @@ class SalesEntityManager extends AbstractEntityManager implements SalesEntityMan
         $addressTransfer->setIdSalesOrderAddress($salesOrderAddressEntity->getIdSalesOrderAddress());
 
         return $addressTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesExpense
+     */
+    protected function getSalesExpenseEntity(ExpenseTransfer $expenseTransfer): SpySalesExpense
+    {
+        return $salesOrderExpenseEntity = SpySalesExpenseQuery::create()
+            ->findOneByIdSalesExpense($expenseTransfer->getIdSalesExpense());
     }
 }

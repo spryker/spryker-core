@@ -34,4 +34,14 @@ class ExpenseWriter implements ExpenseWriterInterface
     {
         return $this->salesEntityManager->createSalesExpense($expenseTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
+     *
+     * @return \Generated\Shared\Transfer\ExpenseTransfer
+     */
+    public function updateSalesExpense(ExpenseTransfer $expenseTransfer): ExpenseTransfer
+    {
+        return $this->salesEntityManager->updateSalesExpense($expenseTransfer);
+    }
 }

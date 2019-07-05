@@ -137,6 +137,8 @@ class ShipmentSaver implements ShipmentSaverInterface
             }
 
             if ($expenseShipmentTransfer->getIdSalesShipment() === $idShipmentTransfer) {
+                $expenseTransfer->setShipment($shipmentTransfer);
+
                 return $expenseTransfer;
             }
         }
