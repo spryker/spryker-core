@@ -26,11 +26,11 @@ class TriggerController extends AbstractController
      */
     public function triggerEventForOrderItemsAction(Request $request)
     {
-        $idOrderItem = $this->castId($request->query->getInt('id-sales-order-item'));
+        $idOrderItems = $request->query->get('items');
         $event = $request->query->get('event');
         $redirect = $request->query->get('redirect', '/');
 
-        $this->getFacade()->triggerEventForOrderItems($event, [$idOrderItem]);
+        $this->getFacade()->triggerEventForOrderItems($event, $idOrderItems);
         $this->addInfoMessage('Status change triggered successfully.');
 
         return $this->redirectResponse($redirect);
