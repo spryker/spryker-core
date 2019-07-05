@@ -15,7 +15,6 @@ use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
-use Generated\Shared\Transfer\ShipmentTransfer;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethod;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodPrice;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodPriceQuery;
@@ -438,7 +437,7 @@ class ShipmentFacadeTest extends Test
     public function testFilterObsoleteShipmentExpensesShouldNotFilterExpensesWhenShipmentMethodIsSet(): void
     {
         // Arrange
-        $calculableObjectTransfer = $this->buildCalculableObjectTransfer();
+        $calculableObjectTransfer = $this->tester->buildCalculableObjectTransfer();
 
         $shipmentExpenseTransfer = (new ExpenseTransfer())
             ->setType(ShipmentConstants::SHIPMENT_EXPENSE_TYPE);
@@ -446,7 +445,7 @@ class ShipmentFacadeTest extends Test
         $calculableObjectTransfer->addExpense($shipmentExpenseTransfer);
 
         // Act
-        $this->getShipmentFacade()->filterObsoleteShipmentExpenses($calculableObjectTransfer);
+        $this->tester->getFacade()->filterObsoleteShipmentExpenses($calculableObjectTransfer);
 
         // Assert
         $this->assertTrue($this->hasShipmentExpense($calculableObjectTransfer, $shipmentExpenseTransfer));
@@ -458,7 +457,7 @@ class ShipmentFacadeTest extends Test
     public function testFilterObsoleteShipmentExpensesShouldFilterShipmentExpensesWhenShipmentMethodIsNotSet(): void
     {
         // Arrange
-        $calculableObjectTransfer = $this->buildCalculableObjectTransfer([], [
+        $calculableObjectTransfer = $this->tester->buildCalculableObjectTransfer([
             QuoteTransfer::SHIPMENT => null,
         ]);
 
@@ -468,7 +467,7 @@ class ShipmentFacadeTest extends Test
         $calculableObjectTransfer->addExpense($shipmentExpenseTransfer);
 
         // Act
-        $this->getShipmentFacade()->filterObsoleteShipmentExpenses($calculableObjectTransfer);
+        $this->tester->getFacade()->filterObsoleteShipmentExpenses($calculableObjectTransfer);
 
         // Assert
         $this->assertFalse($this->hasShipmentExpense($calculableObjectTransfer, $shipmentExpenseTransfer));
@@ -480,7 +479,7 @@ class ShipmentFacadeTest extends Test
     public function testFilterObsoleteShipmentExpensesShouldNotFilterNonShipmentExpensesWhenShipmentMethodIsNotSet(): void
     {
         // Arrange
-        $calculableObjectTransfer = $this->buildCalculableObjectTransfer([], [
+        $calculableObjectTransfer = $this->tester->buildCalculableObjectTransfer([
             QuoteTransfer::SHIPMENT => null,
         ]);
 
@@ -495,7 +494,7 @@ class ShipmentFacadeTest extends Test
         $calculableObjectTransfer->addExpense($anotherExpenseTransfer);
 
         // Act
-        $this->getShipmentFacade()->filterObsoleteShipmentExpenses($calculableObjectTransfer);
+        $this->tester->getFacade()->filterObsoleteShipmentExpenses($calculableObjectTransfer);
 
         // Assert
         $this->assertTrue($this->hasShipmentExpense($calculableObjectTransfer, $anotherExpenseTransfer));
@@ -511,31 +510,6 @@ class ShipmentFacadeTest extends Test
             ['EUR', 3100],
             ['USD', 3200],
         ];
-    }
-
-    /**
-     * @param array $calculableObjectSeed
-     * @param array $originalQuoteSeed
-     * @param array $shipmentSeed
-     *
-     * @return \Generated\Shared\Transfer\CalculableObjectTransfer
-     */
-    protected function buildCalculableObjectTransfer(
-        array $calculableObjectSeed = [],
-        array $originalQuoteSeed = [],
-        array $shipmentSeed = []
-    ): CalculableObjectTransfer {
-        $shipmentTransfer = (new ShipmentTransfer())
-            ->setMethod($this->tester->haveShipmentMethod())
-            ->fromArray($shipmentSeed);
-
-        $originalQuoteTransfer = (new QuoteTransfer())
-            ->setShipment($shipmentTransfer)
-            ->fromArray($originalQuoteSeed);
-
-        return (new CalculableObjectTransfer())
-            ->setOriginalQuote($originalQuoteTransfer)
-            ->fromArray($calculableObjectSeed);
     }
 
     /**
@@ -617,13 +591,5 @@ class ShipmentFacadeTest extends Test
         ];
 
         return $priceList;
-    }
-
-    /**
-     * @return \Spryker\Zed\Kernel\Business\AbstractFacade|\Spryker\Zed\Shipment\Business\ShipmentFacadeInterface
-     */
-    protected function getShipmentFacade()
-    {
-        return $this->tester->getFacade();
     }
 }
