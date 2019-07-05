@@ -7,8 +7,6 @@
 
 namespace SprykerTest\Glue\Testify\Helper;
 
-use SprykerTest\Glue\Testify\Helper\Connection;
-
 abstract class AbstractConnection implements Connection
 {
     /**
