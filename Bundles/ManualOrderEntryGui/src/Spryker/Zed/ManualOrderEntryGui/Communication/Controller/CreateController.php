@@ -68,6 +68,12 @@ class CreateController extends AbstractController
             $forms[] = $form;
         }
 
+        $orderForm = $this->getFactory()->createOrderForm($quoteTransfer);
+        $orderForm->handleRequest($request);
+        if (!$orderForm->isValid()) {
+            $allFormsAreValid = false;
+        }
+
         if ($this->isReadyToCreateOrder($allFormsAreValid, $allFormPlugins, $filteredFormPlugins, $skippedFormPlugins)) {
             $checkoutResponseTransfer = $this->createOrder($quoteTransfer);
 
@@ -84,6 +90,7 @@ class CreateController extends AbstractController
         }
 
         return $this->viewResponse([
+            'orderForm' => $orderForm->createView(),
             'forms' => $formsView,
             'previousStepName' => static::PREVIOUS_STEP_NAME,
             'nextStepName' => static::NEXT_STEP_NAME,
