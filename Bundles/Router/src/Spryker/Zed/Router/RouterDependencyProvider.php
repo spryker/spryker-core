@@ -16,6 +16,7 @@ use Spryker\Zed\Kernel\Container;
 class RouterDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const ROUTER_PLUGINS = 'ROUTER_PLUGINS';
+    public const ROUTER_ENHANCER_PLUGINS = 'router enhancer plugin';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -25,6 +26,7 @@ class RouterDependencyProvider extends AbstractBundleDependencyProvider
     public function provideBusinessLayerDependencies(Container $container): Container
     {
         $container = $this->addRouterPlugins($container);
+        $container = $this->addRouterEnhancerPlugins($container);
 
         return $container;
     }
@@ -47,6 +49,28 @@ class RouterDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Zed\RouterExtension\Dependency\Plugin\RouterPluginInterface[]
      */
     protected function getRouterPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addRouterEnhancerPlugins(Container $container): Container
+    {
+        $container->set(static::ROUTER_ENHANCER_PLUGINS, function () {
+            return $this->getRouterEnhancerPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\RouterExtension\Dependency\Plugin\RouterEnhancerPluginInterface[]
+     */
+    protected function getRouterEnhancerPlugins(): array
     {
         return [];
     }

@@ -10,6 +10,7 @@ namespace Spryker\Zed\Router;
 use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Shared\Router\RouterConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
+use Spryker\Zed\Router\Business\Generator\UrlGenerator;
 use Spryker\Zed\Router\Business\UrlMatcher\CompiledUrlMatcher;
 
 class RouterConfig extends AbstractBundleConfig
@@ -21,7 +22,9 @@ class RouterConfig extends AbstractBundleConfig
     {
         return [
             'cache_dir' => $this->getCachePathIfCacheEnabled(),
+            'generator_class' => UrlGenerator::class,
             'matcher_class' => CompiledUrlMatcher::class,
+            'matcher_base_class' => CompiledUrlMatcher::class,
         ];
     }
 

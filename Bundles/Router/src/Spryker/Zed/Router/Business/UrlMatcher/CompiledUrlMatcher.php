@@ -7,12 +7,48 @@
 
 namespace Spryker\Zed\Router\Business\UrlMatcher;
 
+use Spryker\Zed\RouterExtension\Dependency\Plugin\RouterEnhancerAwareInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Matcher\CompiledUrlMatcher as SymfonyCompiledUrlMatcher;
 use Symfony\Component\Routing\Matcher\RedirectableUrlMatcherInterface;
 
-class CompiledUrlMatcher extends SymfonyCompiledUrlMatcher implements RedirectableUrlMatcherInterface
+class CompiledUrlMatcher extends SymfonyCompiledUrlMatcher implements RouterEnhancerAwareInterface, RedirectableUrlMatcherInterface
 {
+    /**
+     * @var \Spryker\Zed\RouterExtension\Dependency\Plugin\RouterEnhancerPluginInterface[]
+     */
+    protected $routerEnhancerPlugins;
+
+    /**
+     * @param \Spryker\Zed\RouterExtension\Dependency\Plugin\RouterEnhancerPluginInterface[] $routerEnhancerPlugins
+     *
+     * @return void
+     */
+    public function setRouterEnhancerPlugins(array $routerEnhancerPlugins): void
+    {
+        $this->routerEnhancerPlugins = $routerEnhancerPlugins;
+    }
+
+    /**
+     * @param string $pathinfo
+     *
+     * @return array
+     */
+    public function match($pathinfo)
+    {
+        foreach ($this->routerEnhancerPlugins as $routerEnhancerPlugin) {
+            $pathinfo = $routerEnhancerPlugin->beforeMatch($pathinfo, $this->getContext());
+        }
+
+        $parameters = parent::match($pathinfo);
+
+        foreach ($this->routerEnhancerPlugins as $routerEnhancerPlugin) {
+            $parameters = $routerEnhancerPlugin->afterMatch($parameters, $this->getContext());
+        }
+
+        return $parameters;
+    }
+
     /**
      * @param string $path
      * @param string $route
@@ -20,7 +56,7 @@ class CompiledUrlMatcher extends SymfonyCompiledUrlMatcher implements Redirectab
      *
      * @return array
      */
-    public function redirect($path, $route, $scheme = null): array
+    public function redirect($path, $route, $scheme = null)
     {
         $url = $this->context->getBaseUrl() . $path;
         $query = $this->context->getQueryString() ?: '';
