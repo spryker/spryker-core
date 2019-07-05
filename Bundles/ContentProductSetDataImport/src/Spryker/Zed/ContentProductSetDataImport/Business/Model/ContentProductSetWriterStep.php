@@ -13,7 +13,6 @@ use Orm\Zed\Content\Persistence\SpyContentLocalizedQuery;
 use Orm\Zed\Content\Persistence\SpyContentQuery;
 use Spryker\Zed\Content\Dependency\ContentEvents;
 use Spryker\Zed\ContentProductSetDataImport\Business\Model\DataSet\ContentProductSetDataSetInterface;
-use Spryker\Zed\DataImport\Business\Exception\InvalidDataException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\PublishAwareStep;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
@@ -64,16 +63,10 @@ class ContentProductSetWriterStep extends PublishAwareStep implements DataImport
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
-     * @throws \Spryker\Zed\DataImport\Business\Exception\InvalidDataException
-     *
      * @return \Orm\Zed\Content\Persistence\SpyContent
      */
     protected function saveContentProductSetEntity(DataSetInterface $dataSet): SpyContent
     {
-        if (!trim($dataSet[ContentProductSetDataSetInterface::COLUMN_KEY])) {
-            throw new InvalidDataException('Key field can\'t be empty.');
-        }
-
         $contentProductSetEntity = SpyContentQuery::create()
             ->filterByKey($dataSet[ContentProductSetDataSetInterface::COLUMN_KEY])
             ->findOneOrCreate();
