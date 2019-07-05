@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\CatalogSearchRestApi\Processor\Catalog;
 
+use Generated\Shared\Transfer\RestErrorCollectionTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\CatalogSearchRestApi\CatalogSearchRestApiConfig;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
@@ -41,10 +42,14 @@ class CatalogSearchRequestParametersValidator implements CatalogSearchRequestPar
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface|null
      */
-    public function validateIntegerParameters(RestRequestInterface $restRequest): ?RestResponseInterface
+    public function validate(RestRequestInterface $restRequest): ?RestErrorCollectionTransfer
     {
         $requestParameters = $restRequest->getHttpRequest()->query->all();
-        $restResponse = $this->restResourceBuilder->createRestResponse();
+        if($restRequest->getResource()->getType() !== CatalogSearchRestApiConfig::RESOURCE_CATALOG_SEARCH){
+            return null;
+        }
+
+        $restErrorCollectionTransfer = new RestErrorCollectionTransfer();
         foreach ($this->catalogSearchRestApiConfig->getIntegerRequestParameterNames() as $dotNotatedIntegerRequestParameterKey) {
             $requestParameterValue = $this->getArrayElementByDotNotation(
                 $dotNotatedIntegerRequestParameterKey,
@@ -52,14 +57,14 @@ class CatalogSearchRequestParametersValidator implements CatalogSearchRequestPar
             );
 
             if (!$this->isValidInteger($requestParameterValue)) {
-                $restResponse->addError(
+                $restErrorCollectionTransfer->addRestError(
                     $this->createErrorMessageTransfer($dotNotatedIntegerRequestParameterKey)
                 );
             }
         }
 
-        if ($restResponse->getErrors()) {
-            return $restResponse;
+        if ($restErrorCollectionTransfer->getRestErrors()) {
+            return $restErrorCollectionTransfer;
         }
 
         return null;

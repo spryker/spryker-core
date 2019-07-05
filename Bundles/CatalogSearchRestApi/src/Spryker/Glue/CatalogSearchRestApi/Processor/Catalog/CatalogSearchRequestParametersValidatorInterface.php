@@ -7,7 +7,7 @@
 
 namespace Spryker\Glue\CatalogSearchRestApi\Processor\Catalog;
 
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
+use Generated\Shared\Transfer\RestErrorCollectionTransfer;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 interface CatalogSearchRequestParametersValidatorInterface
@@ -15,7 +15,7 @@ interface CatalogSearchRequestParametersValidatorInterface
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface|null
+     * @return \Generated\Shared\Transfer\RestErrorCollectionTransfer|null
      */
-    public function validateIntegerParameters(RestRequestInterface $restRequest): ?RestResponseInterface;
+    public function validate(RestRequestInterface $restRequest): ?RestErrorCollectionTransfer;
 }

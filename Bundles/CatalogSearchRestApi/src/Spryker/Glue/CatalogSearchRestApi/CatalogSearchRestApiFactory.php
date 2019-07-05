@@ -13,6 +13,7 @@ use Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToPr
 use Spryker\Glue\CatalogSearchRestApi\Processor\Catalog\CatalogSearchReader;
 use Spryker\Glue\CatalogSearchRestApi\Processor\Catalog\CatalogSearchReaderInterface;
 use Spryker\Glue\CatalogSearchRestApi\Processor\Catalog\CatalogSearchRequestParametersValidator;
+use Spryker\Glue\CatalogSearchRestApi\Processor\Catalog\CatalogSearchRequestParametersValidatorInterface;
 use Spryker\Glue\CatalogSearchRestApi\Processor\Mapper\CatalogSearchResourceMapper;
 use Spryker\Glue\CatalogSearchRestApi\Processor\Mapper\CatalogSearchResourceMapperInterface;
 use Spryker\Glue\CatalogSearchRestApi\Processor\Mapper\CatalogSearchSuggestionsResourceMapper;
@@ -55,8 +56,7 @@ class CatalogSearchRestApiFactory extends AbstractFactory
             $this->getResourceBuilder(),
             $this->createCatalogSearchResourceMapper(),
             $this->createCatalogSearchSuggestionsResourceMapper(),
-            $this->createCatalogSearchTranslationExpander(),
-            $this->getCatalogSearchRequestValidatorPlugins()
+            $this->createCatalogSearchTranslationExpander()
         );
     }
 
@@ -69,22 +69,14 @@ class CatalogSearchRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\CatalogSearchRestApi\Processor\Catalog\CatalogSearchRequestParametersValidator
+     * @return \Spryker\Glue\CatalogSearchRestApi\Processor\Catalog\CatalogSearchRequestParametersValidatorInterface
      */
-    public function createCatalogSearchRequestParametersValidator(): CatalogSearchRequestParametersValidator
+    public function createCatalogSearchRequestParametersValidator(): CatalogSearchRequestParametersValidatorInterface
     {
         return new CatalogSearchRequestParametersValidator(
             $this->getResourceBuilder(),
             $this->getConfig()
         );
-    }
-
-    /**
-     * @return \Spryker\Glue\CatalogSearchRestApiExtension\Dependency\Plugin\CatalogSearchRequestValidatorPluginInterface[]
-     */
-    public function getCatalogSearchRequestValidatorPlugins(): array
-    {
-        return $this->getProvidedDependency(CatalogSearchRestApiDependencyProvider::PLUGINS_REST_REQUEST_VALIDATOR);
     }
 
     /**

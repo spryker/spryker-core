@@ -23,8 +23,6 @@ class CatalogSearchRestApiDependencyProvider extends AbstractBundleDependencyPro
     public const CLIENT_CURRENCY = 'CLIENT_CURRENCY';
     public const CLIENT_GLOSSARY_STORAGE = 'CLIENT_GLOSSARY_STORAGE';
 
-    public const PLUGINS_REST_REQUEST_VALIDATOR = 'PLUGINS_REST_REQUEST_VALIDATOR';
-
     /**
      * @param \Spryker\Glue\Kernel\Container $container
      *
@@ -38,7 +36,6 @@ class CatalogSearchRestApiDependencyProvider extends AbstractBundleDependencyPro
         $container = $this->addCatalogClient($container);
         $container = $this->addPriceClient($container);
         $container = $this->addCurrencyClient($container);
-        $container = $this->addCatalogSearchRequestValidatorPlugins($container);
 
         return $container;
     }
@@ -97,27 +94,5 @@ class CatalogSearchRestApiDependencyProvider extends AbstractBundleDependencyPro
         };
 
         return $container;
-    }
-
-    /**
-     * @param \Spryker\Glue\Kernel\Container $container
-     *
-     * @return \Spryker\Glue\Kernel\Container
-     */
-    protected function addCatalogSearchRequestValidatorPlugins(Container $container): Container
-    {
-        $container[static::PLUGINS_REST_REQUEST_VALIDATOR] = function () {
-            return $this->getCatalogSearchRequestValidatorPlugins();
-        };
-
-        return $container;
-    }
-
-    /**
-     * @return \Spryker\Glue\CatalogSearchRestApiExtension\Dependency\Plugin\CatalogSearchRequestValidatorPluginInterface[]
-     */
-    protected function getCatalogSearchRequestValidatorPlugins(): array
-    {
-        return [];
     }
 }

@@ -7,15 +7,19 @@
 
 namespace Spryker\Glue\CatalogSearchRestApi\Plugin;
 
-use Spryker\Glue\CatalogSearchRestApiExtension\Dependency\Plugin\CatalogSearchRequestValidatorPluginInterface;
+// remove references
+//use Spryker\Glue\CatalogSearchRestApiExtension\Dependency\Plugin\CatalogSearchRequestValidatorPluginInterface;
+use Generated\Shared\Transfer\RestErrorCollectionTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
+use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RestRequestValidatorPluginInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Glue\CatalogSearchRestApi\CatalogSearchRestApiFactory getFactory()
  */
-class CatalogSearchRequestValidatorPlugin extends AbstractPlugin implements CatalogSearchRequestValidatorPluginInterface
+class CatalogSearchRequestValidatorPlugin extends AbstractPlugin implements RestRequestValidatorPluginInterface
 {
     /**
      * Specification:
@@ -23,14 +27,15 @@ class CatalogSearchRequestValidatorPlugin extends AbstractPlugin implements Cata
      *
      * @api
      *
+     * @param \Symfony\Component\HttpFoundation\Request $httpRequest
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface|null
+     * @return \Generated\Shared\Transfer\RestErrorCollectionTransfer|null
      */
-    public function validateIntegerParameters(RestRequestInterface $restRequest): ?RestResponseInterface
+    public function validate(Request $httpRequest, RestRequestInterface $restRequest): ?RestErrorCollectionTransfer
     {
         return $this->getFactory()
             ->createCatalogSearchRequestParametersValidator()
-            ->validateIntegerParameters($restRequest);
+            ->validate($restRequest);
     }
 }
