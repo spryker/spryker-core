@@ -25,6 +25,7 @@ class ShipmentFormDataProvider
 {
     protected const ADDRESS_LABEL_PATTERN = '%s %s %s, %s %s, %s %s';
     protected const SHIPMENT_METHODS_OPTIONS_NAMES_PATTERN = '%s - %s';
+    protected const SANITIZED_CUSTOMER_ADDRESS_LABEL_PATTERN = '%s - %s';
 
     /**
      * @var \Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToSalesFacadeInterface
@@ -180,24 +181,23 @@ class ShipmentFormDataProvider
      */
     protected function getShippingAddressesOptions(OrderTransfer $orderTransfer): array
     {
-        $addresses = [null => 'New address'];
+        $newAddressChoice = ['New address' => null];
 
         $customerTransfer = $orderTransfer->getCustomer();
         if ($customerTransfer === null) {
-            return $addresses;
+            return $newAddressChoice;
         }
 
         $addressesTransfer = $this->customerFacade->getAddresses($customerTransfer);
-        foreach ($addressesTransfer->getAddresses() as $addressTransfer) {
-            $idCustomerAddress = $addressTransfer->getIdCustomerAddress();
-            if ($idCustomerAddress === null) {
-                continue;
-            }
 
-            $addresses[$idCustomerAddress] = $this->getAddressLabel($addressTransfer);
+        if (count($addressesTransfer->getAddresses()) === 0) {
+            return $newAddressChoice;
         }
 
-        return $addresses;
+        $addresses = $this->getCustomerAddressChoices($addressesTransfer->getAddresses());
+        $addresses = $this->sanitizeDuplicatedCustomerAddressChoices($addresses);
+
+        return array_merge($newAddressChoice, $addresses);
     }
 
     /**
@@ -217,6 +217,67 @@ class ShipmentFormDataProvider
             $addressTransfer->getZipCode(),
             $addressTransfer->getCity()
         );
+    }
+
+    /**
+     * @param iterable|\ArrayObject|\Generated\Shared\Transfer\AddressTransfer[] $customerAddressesCollection
+     *
+     * @return string[]
+     */
+    protected function getCustomerAddressChoices(iterable $customerAddressesCollection): array
+    {
+        $choices = [];
+
+        foreach ($customerAddressesCollection as $addressTransfer) {
+            $idCustomerAddress = $addressTransfer->getIdCustomerAddress();
+            if ($idCustomerAddress === null) {
+                continue;
+            }
+
+            $choices[$idCustomerAddress] = $this->getAddressLabel($addressTransfer);
+        }
+
+        return $choices;
+    }
+
+    /**
+     * @param iterable|string[] $choices
+     *
+     * @return string[]
+     */
+    protected function sanitizeDuplicatedCustomerAddressChoices(iterable $choices): array
+    {
+        $sanitizedChoices = [];
+        $choicesCounts = [];
+
+        foreach ($choices as $idAddress => $addressLabel) {
+            if (isset($sanitizedChoices[$addressLabel])) {
+                $originAddressLabel = $addressLabel;
+                if (!isset($choicesCounts[$originAddressLabel])) {
+                    $choicesCounts[$originAddressLabel] = 1;
+                }
+
+                $addressLabel = $this->getSanitizedCustomerAddressChoices($addressLabel, $choicesCounts[$originAddressLabel]);
+                $choicesCounts[$originAddressLabel]++;
+            }
+
+            $sanitizedChoices[$addressLabel] = $idAddress;
+        }
+
+        ksort($sanitizedChoices, SORT_NATURAL);
+
+        return $sanitizedChoices;
+    }
+
+    /**
+     * @param string $addressLabel
+     * @param int $itemNumber
+     *
+     * @return string
+     */
+    protected function getSanitizedCustomerAddressChoices(string $addressLabel, int $itemNumber): string
+    {
+        return sprintf(static::SANITIZED_CUSTOMER_ADDRESS_LABEL_PATTERN, $addressLabel, $itemNumber);
     }
 
     /**

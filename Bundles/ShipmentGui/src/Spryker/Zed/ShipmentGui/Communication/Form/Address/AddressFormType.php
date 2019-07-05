@@ -431,7 +431,7 @@ class AddressFormType extends AbstractType
     {
         $builder->add(static::FIELD_ID_CUSTOMER_ADDRESS, ChoiceType::class, [
             'label' => 'Delivery Address',
-            'choices' => array_flip($options[static::OPTION_SHIPMENT_ADDRESS_CHOICES]),
+            'choices' => $options[static::OPTION_SHIPMENT_ADDRESS_CHOICES],
             'required' => false,
             'placeholder' => false,
         ]);
