@@ -168,7 +168,7 @@ class AddController extends AbstractController
             $productConcreteTransfer = new ProductConcreteTransfer();
             $productConcreteTransfer->setSku($productAbstractTransfer->getSku());
             $productConcreteTransfer->setIsActive(false);
-            $productConcreteTransfer->setPrices($productAbstractTransfer->getPrices());
+            $productConcreteTransfer->setPrices(clone $productAbstractTransfer->getPrices());
             $productConcreteTransfer->setLocalizedAttributes($productAbstractTransfer->getLocalizedAttributes());
 
             return [$productConcreteTransfer];
