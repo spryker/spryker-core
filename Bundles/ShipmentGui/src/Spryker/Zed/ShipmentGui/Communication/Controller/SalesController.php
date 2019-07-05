@@ -32,6 +32,9 @@ class SalesController extends AbstractController
             throw new OrderNotFoundException();
         }
 
+        /** @var string[] $events */
+        $events = $request->attributes->get('events', []);
+
         /** @var string[] $eventsGroupedByShipment */
         $eventsGroupedByShipment = $request->attributes->get('eventsGroupedByShipment', []);
 
@@ -43,6 +46,7 @@ class SalesController extends AbstractController
             ->groupItemsByShipment($orderTransfer->getItems());
 
         return $this->viewResponse([
+            'events' => $events,
             'eventsGroupedByShipment' => $eventsGroupedByShipment,
             'eventsGroupedByItem' => $eventsGroupedByItem,
             'order' => $orderTransfer,

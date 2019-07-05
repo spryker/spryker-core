@@ -67,22 +67,35 @@ $(document).ready(function() {
         window.location = createTriggerItemsUrl(idOrder, [idOrderItem], eventName);
     });
 
-    $('.trigger-order-event').click(function(e){
+    $('.trigger-order-event-for-all-items').click(function (e) {
         e.preventDefault();
 
         let $item = $(this);
-        
+
         disableTrigger($item);
 
         let idOrder = $item.data('id-sales-order');
-        let idShipment = $item.data('id-sales-shipment');
         let eventName = $item.data('event');
+
+        window.location = createTriggerUrl(idOrder, eventName);
+    });
+
+    $('.trigger-order-event').click(function (e) {
+        e.preventDefault();
+
+        let $item = $(this);
+
+        disableTrigger($item);
+
+        let idOrder = $item.data('id-sales-order');
+        let eventName = $item.data('event');
+        let idShipment = $item.data('id-sales-shipment');
         let $shipmentTable = $('.shipment-item-table-' + idShipment);
         let $idOrderItems = $shipmentTable.find('input[name="order-item"]');
         let idOrderItemsCheckedList = [];
         let idOrderItemsFullList = [];
 
-        $idOrderItems.each(function() {
+        $idOrderItems.each(function () {
             idOrderItemsFullList.push($(this).val());
 
             if ($(this).prop('checked') === true) {
@@ -90,7 +103,7 @@ $(document).ready(function() {
             }
         });
 
-        if(idOrderItemsCheckedList.length === 0) {
+        if (idOrderItemsCheckedList.length === 0) {
             idOrderItemsCheckedList = idOrderItemsFullList;
         }
 

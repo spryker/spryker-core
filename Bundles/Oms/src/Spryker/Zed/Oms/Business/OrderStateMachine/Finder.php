@@ -10,6 +10,7 @@ namespace Spryker\Zed\Oms\Business\OrderStateMachine;
 use Exception;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
+use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Shared\Oms\OmsConfig;
 use Spryker\Zed\Oms\Business\Exception\StateNotFoundException;
 use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
@@ -63,7 +64,7 @@ class Finder implements FinderInterface
     /**
      * @param int $idSalesOrder
      *
-     * @return string[][]
+     * @return string[]
      */
     public function getManualEventsByIdSalesOrder($idSalesOrder)
     {
@@ -103,6 +104,16 @@ class Finder implements FinderInterface
     {
         $events = $this->getManualEventsByIdSalesOrderGroupedByShipment($idSalesOrder);
 
+        return $this->retrieveEventNamesFromEventList($events);
+    }
+
+    /**
+     * @param array $events
+     *
+     * @return string[]
+     */
+    protected function retrieveEventNamesFromEventList(array $events): array
+    {
         $eventsList = [];
 
         foreach ($events as $shipmentId => $eventNamesCollection) {
@@ -114,18 +125,30 @@ class Finder implements FinderInterface
         }
 
         return $eventsList;
+
     }
 
     /**
      * @param int $idSalesOrder
      *
-     * @return string[][]
+     * @return string[]
      */
     public function getManualEventsByIdSalesOrderGroupedByShipment(int $idSalesOrder): array
     {
         $orderItems = $this->queryContainer->querySalesOrderItemsByIdSalesOrder($idSalesOrder)->find();
 
+        return $this->groupEventsByShipment($orderItems);
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
+     *
+     * @return string[]
+     */
+    protected function groupEventsByShipment(ObjectCollection $orderItems): array
+    {
         $events = [];
+
         foreach ($orderItems as $orderItemEntity) {
             $events[$orderItemEntity->getFkSalesShipment()][] = $this->getManualEventsByOrderItemEntity($orderItemEntity);
         }
