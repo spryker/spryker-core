@@ -43,4 +43,14 @@ class ShipmentService extends AbstractService implements ShipmentServiceInterfac
     {
         return $this->getFactory()->createShipmentHashGenerator()->getShipmentHashKey($shipmentTransfer);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @return string
+     */
+    public function getShipmentExpenseType(): string
+    {
+        return $this->getFactory()->createConfigReader()->getShipmentExpenseType();
+    }
 }
