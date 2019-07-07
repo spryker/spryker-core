@@ -9,7 +9,6 @@ namespace Spryker\Zed\GiftCard\Business\ShipmentMethod;
 
 use ArrayObject;
 use Generated\Shared\Transfer\ShipmentMethodsTransfer;
-use Generated\Shared\Transfer\ShipmentMethodTransfer;
 
 class ShipmentMethodGiftCardFilter implements ShipmentMethodGiftCardFilterInterface
 {
@@ -19,68 +18,47 @@ class ShipmentMethodGiftCardFilter implements ShipmentMethodGiftCardFilterInterf
     protected $shipmentMethodCollectionRemover;
 
     /**
-     * @var \Spryker\Zed\GiftCard\Business\ShipmentMethod\ShipmentMethodGiftCardCollectionGetterInterface
+     * @var \Spryker\Zed\GiftCard\Business\ShipmentMethod\ShipmentMethodGiftCardAllowanceCheckerInterface
      */
-    protected $shipmentMethodGiftCardCollectionGetter;
+    protected $shipmentMethodGiftCardAllowanceChecker;
 
     /**
      * @param \Spryker\Zed\GiftCard\Business\ShipmentMethod\ShipmentMethodCollectionRemoverInterface $shipmentMethodCollectionRemover
-     * @param \Spryker\Zed\GiftCard\Business\ShipmentMethod\ShipmentMethodGiftCardCollectionGetterInterface $shipmentMethodGiftCardCollectionGetter
+     * @param \Spryker\Zed\GiftCard\Business\ShipmentMethod\ShipmentMethodGiftCardAllowanceCheckerInterface $shipmentMethodGiftCardAllowanceChecker
      */
     public function __construct(
         ShipmentMethodCollectionRemoverInterface $shipmentMethodCollectionRemover,
-        ShipmentMethodGiftCardCollectionGetterInterface $shipmentMethodGiftCardCollectionGetter
+        ShipmentMethodGiftCardAllowanceCheckerInterface $shipmentMethodGiftCardAllowanceChecker
     ) {
         $this->shipmentMethodCollectionRemover = $shipmentMethodCollectionRemover;
-        $this->shipmentMethodGiftCardCollectionGetter = $shipmentMethodGiftCardCollectionGetter;
+        $this->shipmentMethodGiftCardAllowanceChecker = $shipmentMethodGiftCardAllowanceChecker;
     }
 
     /**
      * @param \Generated\Shared\Transfer\ShipmentMethodsTransfer $shipmentMethodsTransfer
-     * @param bool $checkOnlyNonGiftCardMethods
+     * @param string[] $giftCardOnlyShipmentMethods
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentMethodTransfer[]
      */
-    public function filterGiftCardShipmentMethods(
-        ShipmentMethodsTransfer $shipmentMethodsTransfer,
-        bool $checkOnlyNonGiftCardMethods
-    ): ArrayObject {
+    public function filter(ShipmentMethodsTransfer $shipmentMethodsTransfer, array $giftCardOnlyShipmentMethods): ArrayObject
+    {
         $shipmentMethodsTransferForRemoveIndexes = [];
-        $giftCardOnlyShipmentMethods = $this->shipmentMethodGiftCardCollectionGetter->getGiftCardOnlyShipmentMethods();
         $shipmentMethodsTransferList = $shipmentMethodsTransfer->getMethods();
 
         foreach ($shipmentMethodsTransferList as $shipmentMethodIndex => $shipmentMethodTransfer) {
-            if ($this->isShipmentMethodSuitable(
+            if ($this->shipmentMethodGiftCardAllowanceChecker->isShipmentMethodSuitable(
                 $shipmentMethodTransfer,
-                $giftCardOnlyShipmentMethods,
-                $checkOnlyNonGiftCardMethods
+                $giftCardOnlyShipmentMethods
             )) {
-                $shipmentMethodsTransferForRemoveIndexes[] = $shipmentMethodIndex;
+                continue;
             }
+
+            $shipmentMethodsTransferForRemoveIndexes[] = $shipmentMethodIndex;
         }
 
         return $this->shipmentMethodCollectionRemover->remove(
             $shipmentMethodsTransferList,
             $shipmentMethodsTransferForRemoveIndexes
         );
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
-     * @param string[] $giftCardOnlyShipmentMethods
-     * @param bool $checkOnlyNonGiftCardMethods
-     *
-     * @return bool
-     */
-    protected function isShipmentMethodSuitable(
-        ShipmentMethodTransfer $shipmentMethodTransfer,
-        array $giftCardOnlyShipmentMethods,
-        bool $checkOnlyNonGiftCardMethods
-    ): bool {
-        if ($checkOnlyNonGiftCardMethods) {
-            return in_array($shipmentMethodTransfer->getName(), $giftCardOnlyShipmentMethods);
-        }
-
-        return !in_array($shipmentMethodTransfer->getName(), $giftCardOnlyShipmentMethods);
     }
 }

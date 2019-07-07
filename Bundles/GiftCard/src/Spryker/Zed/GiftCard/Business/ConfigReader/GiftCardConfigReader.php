@@ -5,14 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\GiftCard\Business\ShipmentMethod;
+namespace Spryker\Zed\GiftCard\Business\ConfigReader;
 
 use Spryker\Zed\GiftCard\GiftCardConfig;
 
-/**
- * @deprecated Added for BC reasons, will be removed in next major release. Use GiftCardConfig::getGiftCardOnlyShipmentMethods() instead.
- */
-class ShipmentMethodGiftCardCollectionGetter implements ShipmentMethodGiftCardCollectionGetterInterface
+class GiftCardConfigReader implements GiftCardConfigReaderInterface
 {
     public const NO_SHIPMENT_METHOD = 'NO_SHIPMENT_METHOD';
 
@@ -34,7 +31,17 @@ class ShipmentMethodGiftCardCollectionGetter implements ShipmentMethodGiftCardCo
      */
     public function getGiftCardOnlyShipmentMethods(): array
     {
-        $giftCardOnlyShipmentMethods = $this->giftCardConfig->getGiftCardOnlyShipmentMethods();
+        return $this->giftCardConfig->getGiftCardOnlyShipmentMethods();
+    }
+
+    /**
+     * @deprecated Added for BC reasons, will be removed in next major release. Use getGiftCardOnlyShipmentMethods() instead.
+     *
+     * @return string[]
+     */
+    public function getGiftCardOnlyShipmentMethodsWithBC(): array
+    {
+        $giftCardOnlyShipmentMethods = $this->getGiftCardOnlyShipmentMethods();
         if (count($giftCardOnlyShipmentMethods) === 0) {
             return [static::NO_SHIPMENT_METHOD];
         }

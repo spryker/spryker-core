@@ -8,8 +8,9 @@
 namespace Spryker\Zed\GiftCard\Business\ShipmentGroup;
 
 use ArrayObject;
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
+use Spryker\Zed\GiftCard\Business\ConfigReader\GiftCardConfigReaderInterface;
+use Spryker\Zed\GiftCard\Business\ShipmentMethod\ShipmentMethodGiftCardCheckerInterface;
 use Spryker\Zed\GiftCard\Business\ShipmentMethod\ShipmentMethodGiftCardFilterInterface;
 
 class ShipmentGroupMethodFilter implements ShipmentGroupMethodFilterInterface
@@ -17,14 +18,39 @@ class ShipmentGroupMethodFilter implements ShipmentGroupMethodFilterInterface
     /**
      * @var \Spryker\Zed\GiftCard\Business\ShipmentMethod\ShipmentMethodGiftCardFilterInterface
      */
-    protected $shipmentMethodGiftCardFilter;
+    protected $allowedShipmentMethodGiftCardFilter;
 
     /**
-     * @param \Spryker\Zed\GiftCard\Business\ShipmentMethod\ShipmentMethodGiftCardFilterInterface $shipmentMethodGiftCardFilter
+     * @var \Spryker\Zed\GiftCard\Business\ShipmentMethod\ShipmentMethodGiftCardFilterInterface
      */
-    public function __construct(ShipmentMethodGiftCardFilterInterface $shipmentMethodGiftCardFilter)
-    {
-        $this->shipmentMethodGiftCardFilter = $shipmentMethodGiftCardFilter;
+    protected $disallowedShipmentMethodGiftCardFilter;
+
+    /**
+     * @var \Spryker\Zed\GiftCard\Business\ShipmentMethod\ShipmentMethodGiftCardCheckerInterface
+     */
+    protected $shipmentMethodGiftCardChecker;
+
+    /**
+     * @var \Spryker\Zed\GiftCard\Business\ConfigReader\GiftCardConfigReaderInterface
+     */
+    protected $giftCardConfigReader;
+
+    /**
+     * @param \Spryker\Zed\GiftCard\Business\ShipmentMethod\ShipmentMethodGiftCardFilterInterface $allowedShipmentMethodGiftCardFilter
+     * @param \Spryker\Zed\GiftCard\Business\ShipmentMethod\ShipmentMethodGiftCardFilterInterface $disallowedShipmentMethodGiftCardFilter
+     * @param \Spryker\Zed\GiftCard\Business\ShipmentMethod\ShipmentMethodGiftCardCheckerInterface $shipmentMethodGiftCardChecker
+     * @param \Spryker\Zed\GiftCard\Business\ConfigReader\GiftCardConfigReaderInterface $giftCardConfigReader
+     */
+    public function __construct(
+        ShipmentMethodGiftCardFilterInterface $allowedShipmentMethodGiftCardFilter,
+        ShipmentMethodGiftCardFilterInterface $disallowedShipmentMethodGiftCardFilter,
+        ShipmentMethodGiftCardCheckerInterface $shipmentMethodGiftCardChecker,
+        GiftCardConfigReaderInterface $giftCardConfigReader
+    ) {
+        $this->allowedShipmentMethodGiftCardFilter = $allowedShipmentMethodGiftCardFilter;
+        $this->disallowedShipmentMethodGiftCardFilter = $disallowedShipmentMethodGiftCardFilter;
+        $this->shipmentMethodGiftCardChecker = $shipmentMethodGiftCardChecker;
+        $this->giftCardConfigReader = $giftCardConfigReader;
     }
 
     /**
@@ -34,43 +60,14 @@ class ShipmentGroupMethodFilter implements ShipmentGroupMethodFilterInterface
      */
     public function filterShipmentMethods(ShipmentGroupTransfer $shipmentGroupTransfer): ArrayObject
     {
-        if ($this->containsOnlyGiftCardItems($shipmentGroupTransfer)) {
-            return $this->shipmentMethodGiftCardFilter
-                ->filterGiftCardShipmentMethods($shipmentGroupTransfer->getAvailableShipmentMethods(), false);
+        $giftCardOnlyShipmentMethods = $this->giftCardConfigReader->getGiftCardOnlyShipmentMethodsWithBC();
+
+        if ($this->shipmentMethodGiftCardChecker->containsOnlyGiftCardItems($shipmentGroupTransfer)) {
+            return $this->allowedShipmentMethodGiftCardFilter
+                ->filter($shipmentGroupTransfer->getAvailableShipmentMethods(), $giftCardOnlyShipmentMethods);
         }
 
-        return $this->shipmentMethodGiftCardFilter
-            ->filterGiftCardShipmentMethods($shipmentGroupTransfer->getAvailableShipmentMethods(), true);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
-     *
-     * @return bool
-     */
-    protected function containsOnlyGiftCardItems(ShipmentGroupTransfer $shipmentGroupTransfer): bool
-    {
-        foreach ($shipmentGroupTransfer->getItems() as $itemTransfer) {
-            if (!$this->isGiftCard($itemTransfer)) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     *
-     * @return bool
-     */
-    protected function isGiftCard(ItemTransfer $itemTransfer): bool
-    {
-        $giftCardMetadataTransfer = $itemTransfer->getGiftCardMetadata();
-        if ($giftCardMetadataTransfer === null) {
-            return false;
-        }
-
-        return (bool)$giftCardMetadataTransfer->getIsGiftCard();
+        return $this->disallowedShipmentMethodGiftCardFilter
+            ->filter($shipmentGroupTransfer->getAvailableShipmentMethods(), $giftCardOnlyShipmentMethods);
     }
 }
