@@ -10,8 +10,8 @@ namespace Spryker\Zed\GiftCard\Business;
 use Spryker\Zed\GiftCard\Business\ActualValueHydrator\GiftCardActualValueHydrator;
 use Spryker\Zed\GiftCard\Business\Calculation\GiftCardCalculator;
 use Spryker\Zed\GiftCard\Business\Cart\MetadataExpander;
+use Spryker\Zed\GiftCard\Business\ConfigReader\GiftCardConfigReader;
 use Spryker\Zed\GiftCard\Business\ConfigReader\GiftCardConfigReaderInterface;
-use Spryker\Zed\GiftCard\Business\ConfigReader\ShipmentMethodGiftCardChecker;
 use Spryker\Zed\GiftCard\Business\Discount\GiftCardDiscountableItemFilter;
 use Spryker\Zed\GiftCard\Business\GiftCard\GiftCardCodeGenerator;
 use Spryker\Zed\GiftCard\Business\GiftCard\GiftCardCreator;
@@ -25,12 +25,13 @@ use Spryker\Zed\GiftCard\Business\Sales\SalesOrderItemSaver;
 use Spryker\Zed\GiftCard\Business\Shipment\ShipmentMethodFilter;
 use Spryker\Zed\GiftCard\Business\ShipmentGroup\ShipmentGroupMethodFilter;
 use Spryker\Zed\GiftCard\Business\ShipmentGroup\ShipmentGroupMethodFilterInterface;
-use Spryker\Zed\GiftCard\Business\ShipmentMethod\GiftCardConfigReader;
 use Spryker\Zed\GiftCard\Business\ShipmentMethod\ShipmentMethodCollectionRemover;
 use Spryker\Zed\GiftCard\Business\ShipmentMethod\ShipmentMethodCollectionRemoverInterface;
 use Spryker\Zed\GiftCard\Business\ShipmentMethod\ShipmentMethodGiftCardAllowanceCheckerInterface;
 use Spryker\Zed\GiftCard\Business\ShipmentMethod\ShipmentMethodGiftCardAllowedChecker;
+use Spryker\Zed\GiftCard\Business\ShipmentMethod\ShipmentMethodGiftCardChecker;
 use Spryker\Zed\GiftCard\Business\ShipmentMethod\ShipmentMethodGiftCardCheckerInterface;
+use Spryker\Zed\GiftCard\Business\ShipmentMethod\ShipmentMethodGiftCardDisallowedChecker;
 use Spryker\Zed\GiftCard\Business\ShipmentMethod\ShipmentMethodGiftCardFilter;
 use Spryker\Zed\GiftCard\Business\ShipmentMethod\ShipmentMethodGiftCardFilterInterface;
 use Spryker\Zed\GiftCard\GiftCardDependencyProvider;
@@ -249,7 +250,7 @@ class GiftCardBusinessFactory extends AbstractBusinessFactory
             $this->createAllowedShipmentMethodGiftCardFilter(),
             $this->createDisallowedShipmentMethodGiftCardFilter(),
             $this->createShipmentMethodGiftCardChecker(),
-            $this->createGiftCardConfigReader(),
+            $this->createGiftCardConfigReader()
         );
     }
 
@@ -312,6 +313,6 @@ class GiftCardBusinessFactory extends AbstractBusinessFactory
      */
     public function createShipmentMethodGiftCardDisallowedChecker(): ShipmentMethodGiftCardAllowanceCheckerInterface
     {
-        return new ShipmentMethodGiftCardAllowedChecker();
+        return new ShipmentMethodGiftCardDisallowedChecker();
     }
 }
