@@ -181,7 +181,7 @@ class ShipmentFormDataProvider
      */
     protected function getShippingAddressesOptions(OrderTransfer $orderTransfer): array
     {
-        $newAddressChoice = ['New address' => null];
+        $newAddressChoice = [AddressFormType::ADDRESS_CHOICE_NEW_ADDRESS_LABEL => AddressFormType::VALUE_ADD_NEW_ADDRESS];
 
         $customerTransfer = $orderTransfer->getCustomer();
         if ($customerTransfer === null) {
