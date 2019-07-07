@@ -5,10 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\ContentBanner\Helper;
+namespace Spryker\Service\Shipment\ConfigReader;
 
-use Codeception\Module;
-
-class ContentBannerHelper extends Module
+interface ConfigReaderInterface
 {
+    /**
+     * @return string
+     */
+    public function getShipmentExpenseType(): string;
 }

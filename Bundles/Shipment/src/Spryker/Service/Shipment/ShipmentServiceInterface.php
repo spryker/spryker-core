@@ -35,4 +35,14 @@ interface ShipmentServiceInterface
      * @return string
      */
     public function getShipmentHashKey(ShipmentTransfer $shipmentTransfer): string;
+
+    /**
+     * Specification:
+     * - Returns shipment expense type name.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getShipmentExpenseType(): string;
 }

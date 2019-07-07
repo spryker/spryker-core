@@ -8,12 +8,17 @@
 namespace Spryker\Service\Shipment;
 
 use Spryker\Service\Kernel\AbstractServiceFactory;
+use Spryker\Service\Shipment\ConfigReader\ConfigReader;
+use Spryker\Service\Shipment\ConfigReader\ConfigReaderInterface;
 use Spryker\Service\Shipment\Dependency\Service\ShipmentToCustomerServiceInterface;
 use Spryker\Service\Shipment\Items\ItemsGrouper;
 use Spryker\Service\Shipment\Items\ItemsGrouperInterface;
 use Spryker\Service\Shipment\ShipmentHash\ShipmentHashGenerator;
 use Spryker\Service\Shipment\ShipmentHash\ShipmentHashGeneratorInterface;
 
+/**
+ * @method \Spryker\Service\Shipment\ShipmentConfig getConfig()
+ */
 class ShipmentServiceFactory extends AbstractServiceFactory
 {
     /**
@@ -38,5 +43,13 @@ class ShipmentServiceFactory extends AbstractServiceFactory
     public function getCustomerService(): ShipmentToCustomerServiceInterface
     {
         return $this->getProvidedDependency(ShipmentDependencyProvider::SERVICE_CUSTOMER);
+    }
+
+    /**
+     * @return \Spryker\Service\Shipment\ConfigReader\ConfigReaderInterface
+     */
+    public function createConfigReader(): ConfigReaderInterface
+    {
+        return new ConfigReader($this->getConfig());
     }
 }

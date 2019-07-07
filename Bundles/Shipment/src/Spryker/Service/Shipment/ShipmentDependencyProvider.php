@@ -12,6 +12,9 @@ use Spryker\Service\Kernel\Container;
 use Spryker\Service\Shipment\Dependency\Service\ShipmentToCustomerServiceBridge;
 use Spryker\Service\Shipment\Dependency\Service\ShipmentToCustomerServiceInterface;
 
+/**
+ * @method \Spryker\Service\Shipment\ShipmentConfig getConfig()
+ */
 class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const SERVICE_CUSTOMER = 'SERVICE_CUSTOMER';
