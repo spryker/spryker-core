@@ -50,6 +50,9 @@ class AddressFormType extends AbstractType
     public const FIELD_ADDRESS_ISO_2_CODE = 'iso2Code';
     public const OPTION_SALUTATION_CHOICES = 'salutation_choices';
 
+    public const VALUE_ADD_NEW_ADDRESS = '';
+    public const ADDRESS_CHOICE_NEW_ADDRESS_LABEL = 'New address';
+
     public const ERROR_MESSAGE_VALUE_SHOULD_NOT_BE_BLANK = 'This value should not be blank.';
     protected const GROUP_SHIPPING_ADDRESS = 'shippingAddress';
 
