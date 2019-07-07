@@ -19,10 +19,16 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class TriggerController extends AbstractController
 {
+    /**
+     * @deprecated Exists for Backward Compatibility reasons only. Use static::REQUEST_PARAMETER_ITEMS instead.
+     */
+    protected const REQUEST_PARAMETER_ID_SALES_ORDER_ITEM = 'id-sales-order-item';
     protected const REQUEST_PARAMETER_ID_SALES_ORDER = 'id-sales-order';
     protected const REQUEST_PARAMETER_ITEMS = 'items';
     protected const REQUEST_PARAMETER_EVENT = 'event';
     protected const REQUEST_PARAMETER_REDIRECT = 'redirect';
+
+    protected const MESSAGE_STATUS_CHANGED_SUCCESSFULLY = 'Status change triggered successfully.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -36,7 +42,7 @@ class TriggerController extends AbstractController
         /**
          * Exists for Backward Compatibility reasons only.
          */
-        $idOrderItem = $request->query->get(static::REQUEST_PARAMETER_ID_SALES_ORDER);
+        $idOrderItem = $request->query->get(static::REQUEST_PARAMETER_ID_SALES_ORDER_ITEM);
         if ($idOrderItems === null && $idOrderItem !== null) {
             $idOrderItems = [$idOrderItem];
         }
@@ -45,7 +51,7 @@ class TriggerController extends AbstractController
         $redirect = $request->query->get(static::REQUEST_PARAMETER_REDIRECT, '/');
 
         $this->getFacade()->triggerEventForOrderItems($event, $idOrderItems);
-        $this->addInfoMessage('Status change triggered successfully.');
+        $this->addInfoMessage(static::MESSAGE_STATUS_CHANGED_SUCCESSFULLY);
 
         return $this->redirectResponse($redirect);
     }
@@ -65,7 +71,7 @@ class TriggerController extends AbstractController
         $orderItems = $this->getOrderItemsToTriggerAction($idOrder, $itemsList);
 
         $this->getFacade()->triggerEvent($event, $orderItems, []);
-        $this->addInfoMessage('Status change triggered successfully.');
+        $this->addInfoMessage(static::MESSAGE_STATUS_CHANGED_SUCCESSFULLY);
 
         return $this->redirectResponse($redirect);
     }
