@@ -14,15 +14,12 @@ interface ShipmentMethodGiftCardFilterInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ShipmentMethodsTransfer $shipmentMethodsTransfer
+     * @param bool $checkOnlyNonGiftCardMethods
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentMethodTransfer[]
      */
-    public function filterNonGiftCardShipmentMethods(ShipmentMethodsTransfer $shipmentMethodsTransfer): ArrayObject;
-
-    /**
-     * @param \Generated\Shared\Transfer\ShipmentMethodsTransfer $shipmentMethodsTransfer
-     *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentMethodTransfer[]
-     */
-    public function filterGiftCardOnlyShipmentMethods(ShipmentMethodsTransfer $shipmentMethodsTransfer): ArrayObject;
+    public function filterGiftCardShipmentMethods(
+        ShipmentMethodsTransfer $shipmentMethodsTransfer,
+        bool $checkOnlyNonGiftCardMethods
+    ): ArrayObject;
 }

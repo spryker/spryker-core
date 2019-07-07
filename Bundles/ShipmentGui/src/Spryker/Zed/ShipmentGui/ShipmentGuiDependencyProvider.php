@@ -47,9 +47,9 @@ class ShipmentGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addSalesFacade(Container $container): Container
     {
-        $container[static::FACADE_SALES] = function (Container $container) {
+        $container->set(static::FACADE_SALES, function (Container $container) {
             return new ShipmentGuiToSalesFacadeBridge($container->getLocator()->sales()->facade());
-        };
+        });
 
         return $container;
     }
@@ -61,9 +61,9 @@ class ShipmentGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addShipmentFacade(Container $container): Container
     {
-        $container[static::FACADE_SHIPMENT] = function (Container $container) {
+        $container->set(static::FACADE_SHIPMENT, function (Container $container) {
             return new ShipmentGuiToShipmentFacadeBridge($container->getLocator()->shipment()->facade());
-        };
+        });
 
         return $container;
     }
@@ -75,9 +75,9 @@ class ShipmentGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCustomerFacade(Container $container): Container
     {
-        $container[static::FACADE_CUSTOMER] = function (Container $container) {
+        $container->set(static::FACADE_CUSTOMER, function (Container $container) {
             return new ShipmentGuiToCustomerFacadeBridge($container->getLocator()->customer()->facade());
-        };
+        });
 
         return $container;
     }
@@ -89,9 +89,9 @@ class ShipmentGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addShipmentService(Container $container): Container
     {
-        $container[static::SERVICE_SHIPMENT] = function (Container $container) {
+        $container->set(static::SERVICE_SHIPMENT, function (Container $container) {
             return new ShipmentGuiToShipmentServiceBridge($container->getLocator()->shipment()->service());
-        };
+        });
 
         return $container;
     }

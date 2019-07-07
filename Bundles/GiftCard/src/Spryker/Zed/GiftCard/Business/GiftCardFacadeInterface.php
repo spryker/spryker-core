@@ -206,7 +206,7 @@ interface GiftCardFacadeInterface
 
     /**
      * Specification:
-     * - Filters non-available for gift cards shipment methods in groups.
+     * - Filters non-available for gift cards shipment methods for each shipment group.
      *
      * @api
      *

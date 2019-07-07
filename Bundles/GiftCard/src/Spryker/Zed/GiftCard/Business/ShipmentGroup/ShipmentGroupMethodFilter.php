@@ -36,11 +36,11 @@ class ShipmentGroupMethodFilter implements ShipmentGroupMethodFilterInterface
     {
         if ($this->containsOnlyGiftCardItems($shipmentGroupTransfer)) {
             return $this->shipmentMethodGiftCardFilter
-                ->filterGiftCardOnlyShipmentMethods($shipmentGroupTransfer->getAvailableShipmentMethods());
+                ->filterGiftCardShipmentMethods($shipmentGroupTransfer->getAvailableShipmentMethods(), false);
         }
 
         return $this->shipmentMethodGiftCardFilter
-            ->filterNonGiftCardShipmentMethods($shipmentGroupTransfer->getAvailableShipmentMethods());
+            ->filterGiftCardShipmentMethods($shipmentGroupTransfer->getAvailableShipmentMethods(), true);
     }
 
     /**
