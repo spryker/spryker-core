@@ -139,9 +139,9 @@ class DataImportDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addDataImporterRegisteredPlugins(Container $container): Container
     {
-        $container[static::DATA_IMPORTER_REGISTERED_PLUGINS] = function () {
+        $container->set(static::DATA_IMPORTER_REGISTERED_PLUGINS, function () {
             return $this->getDataImporterRegisteredPlugins();
-        };
+        });
 
         return $container;
     }

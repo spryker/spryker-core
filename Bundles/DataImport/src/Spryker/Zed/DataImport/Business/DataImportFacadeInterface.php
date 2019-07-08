@@ -8,6 +8,7 @@
 namespace Spryker\Zed\DataImport\Business;
 
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
+use Generated\Shared\Transfer\DataImporterReportTransfer;
 
 /**
  * @method \Spryker\Zed\DataImport\Business\DataImportBusinessFactory getFactory()
@@ -30,9 +31,7 @@ interface DataImportFacadeInterface
 
     /**
      * Specification:
-     * - Creates importer.
-     * - Runs `DataImporterInterface::import()`.
-     * - Returns DataImportReportTransfer.
+     * - Executes import of chosen group.
      *
      * @api
      *
@@ -40,7 +39,7 @@ interface DataImportFacadeInterface
      *
      * @return \Generated\Shared\Transfer\DataImporterReportTransfer
      */
-    public function importGroup(?DataImporterConfigurationTransfer $dataImporterConfiguration = null);
+    public function importGroup(?DataImporterConfigurationTransfer $dataImporterConfiguration = null): DataImporterReportTransfer;
 
     /**
      * Specification:
