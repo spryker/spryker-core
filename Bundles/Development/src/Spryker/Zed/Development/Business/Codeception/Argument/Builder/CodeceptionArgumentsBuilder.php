@@ -44,9 +44,9 @@ class CodeceptionArgumentsBuilder implements CodeceptionArgumentsBuilderInterfac
         $codeceptionArguments = new CodeceptionArguments();
 
         $codeceptionArguments = $this->addConfigPath($codeceptionArguments, $options);
-        $codeceptionArguments = $this->buildInclusiveGroups($codeceptionArguments, $options);
-        $codeceptionArguments = $this->buildIncludeGroups($codeceptionArguments, $options);
-        $codeceptionArguments = $this->buildExcludeGroups($codeceptionArguments, $options);
+        $codeceptionArguments = $this->addInclusiveGroups($codeceptionArguments, $options);
+        $codeceptionArguments = $this->addIncludeGroups($codeceptionArguments, $options);
+        $codeceptionArguments = $this->addExcludeGroups($codeceptionArguments, $options);
         $codeceptionArguments = $this->addVerboseMode($codeceptionArguments, $options);
 
         return $codeceptionArguments;
@@ -73,7 +73,7 @@ class CodeceptionArgumentsBuilder implements CodeceptionArgumentsBuilderInterfac
      *
      * @return \Spryker\Zed\Development\Business\Codeception\Argument\CodeceptionArguments
      */
-    protected function buildIncludeGroups(CodeceptionArguments $codeceptionArguments, array $options): CodeceptionArguments
+    protected function addIncludeGroups(CodeceptionArguments $codeceptionArguments, array $options): CodeceptionArguments
     {
         if ($options[static::OPTION_GROUP_INCLUDE]) {
             $codeceptionArguments->addArgument(
@@ -91,7 +91,7 @@ class CodeceptionArgumentsBuilder implements CodeceptionArgumentsBuilderInterfac
      *
      * @return \Spryker\Zed\Development\Business\Codeception\Argument\CodeceptionArguments
      */
-    protected function buildExcludeGroups(CodeceptionArguments $codeceptionArguments, array $options): CodeceptionArguments
+    protected function addExcludeGroups(CodeceptionArguments $codeceptionArguments, array $options): CodeceptionArguments
     {
         if ($options[static::OPTION_GROUP_EXCLUDE]) {
             $codeceptionArguments->addArgument(
@@ -124,7 +124,7 @@ class CodeceptionArgumentsBuilder implements CodeceptionArgumentsBuilderInterfac
      *
      * @return \Spryker\Zed\Development\Business\Codeception\Argument\CodeceptionArguments
      */
-    protected function buildInclusiveGroups(CodeceptionArguments $codeceptionArguments, array $options): CodeceptionArguments
+    protected function addInclusiveGroups(CodeceptionArguments $codeceptionArguments, array $options): CodeceptionArguments
     {
         if (!$options[static::OPTION_MODULE]) {
             return $codeceptionArguments;

@@ -42,16 +42,4 @@ class CodeceptionArguments
     {
         return $this->arguments;
     }
-
-    /**
-     * @return string
-     */
-    public function asString(): string
-    {
-        if (count($this->arguments) === 0) {
-            return '';
-        }
-
-        return ' ' . implode(' ', $this->arguments);
-    }
 }

@@ -30,7 +30,7 @@ class CodeTester
     /**
      * @var string
      */
-    protected $pathToBundles;
+    protected $pathToModules;
 
     /**
      * @var \Spryker\Zed\Development\Business\Codeception\Argument\Builder\CodeceptionArgumentsBuilderInterface
@@ -38,18 +38,26 @@ class CodeTester
     protected $argumentBuilder;
 
     /**
+     * @var int
+     */
+    protected $processTimeout;
+
+    /**
      * @param string $applicationRoot
-     * @param string $pathToBundles
+     * @param string $pathToModules
      * @param \Spryker\Zed\Development\Business\Codeception\Argument\Builder\CodeceptionArgumentsBuilderInterface $argumentBuilder
+     * @param int $processTimeout
      */
     public function __construct(
         string $applicationRoot,
-        string $pathToBundles,
-        CodeceptionArgumentsBuilderInterface $argumentBuilder
+        string $pathToModules,
+        CodeceptionArgumentsBuilderInterface $argumentBuilder,
+        int $processTimeout
     ) {
         $this->applicationRoot = $applicationRoot;
-        $this->pathToBundles = $pathToBundles;
+        $this->pathToModules = $pathToModules;
         $this->argumentBuilder = $argumentBuilder;
+        $this->processTimeout = $processTimeout;
     }
 
     /**
@@ -115,7 +123,7 @@ class CodeTester
      */
     protected function getPathToBundle($bundle)
     {
-        return $this->pathToBundles . $bundle . DIRECTORY_SEPARATOR;
+        return $this->pathToModules . $bundle . DIRECTORY_SEPARATOR;
     }
 
     /**
@@ -126,17 +134,16 @@ class CodeTester
      */
     protected function runTestCommand($path, array $options)
     {
-        $commandArguments = $this->argumentBuilder
-            ->build($options)
-            ->asString();
-
         if ($options[static::OPTION_INITIALIZE]) {
             $this->runCodeceptionBuild($options);
         }
 
-        $command = 'vendor/bin/codecept run' . $this->extractOptions($path, $options) . $commandArguments;
+        $commandLine[] = 'vendor/bin/codecept run' . $this->extractOptions($path, $options);
+        $commandLine = array_merge($commandLine, $this->argumentBuilder
+            ->build($options)
+            ->getArguments());
 
-        $process = new Process($command, $this->applicationRoot, null, null, 4800);
+        $process = new Process($commandLine, $this->applicationRoot, null, null, $this->processTimeout);
         $process->run(function ($type, $buffer) {
             echo $buffer;
         });
@@ -156,7 +163,7 @@ class CodeTester
 
         $command = 'vendor/bin/codecept fixtures' . $this->extractOptions($path, $options);
 
-        $process = new Process($command, $this->applicationRoot, null, null, 4800);
+        $process = new Process([$command], $this->applicationRoot, null, null, $this->processTimeout);
         $process->run(function ($type, $buffer) {
             echo $buffer;
         });
@@ -220,13 +227,11 @@ class CodeTester
     protected function runCodeceptionBuild(array $options): void
     {
         $command = 'vendor/bin/codecept build';
-        $process = new Process($command, $this->applicationRoot, null, null, 4800);
+        $process = new Process([$command], $this->applicationRoot, null, null, $this->processTimeout);
         $process->run(function ($type, $buffer) use ($options) {
             if ($options[static::OPTION_VERBOSE]) {
                 echo $buffer;
             }
         });
-
-        echo 'Test classes generated.';
     }
 }

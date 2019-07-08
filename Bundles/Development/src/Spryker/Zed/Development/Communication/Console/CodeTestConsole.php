@@ -28,7 +28,7 @@ class CodeTestConsole extends Console
 
     public const OPTION_CONFIG_PATH = 'config';
 
-    protected const CODECEPT_CONFIG_FILE_NAME = 'codeception.yml';
+    protected const CODECEPTION_CONFIG_FILE_NAME = 'codeception.yml';
 
     /**
      * @return void
@@ -94,6 +94,6 @@ class CodeTestConsole extends Console
      */
     protected function getCodeceptionConfigPath(): string
     {
-        return APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . static::CODECEPT_CONFIG_FILE_NAME;
+        return APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . static::CODECEPTION_CONFIG_FILE_NAME;
     }
 }

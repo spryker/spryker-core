@@ -227,7 +227,8 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
         return new CodeTester(
             $this->getConfig()->getPathToRoot(),
             $this->getConfig()->getPathToCore(),
-            $this->createConfigArgumentCollectionBuilder()
+            $this->createConfigArgumentCollectionBuilder(),
+            $this->getConfig()->getProcessTimeout()
         );
     }
 
@@ -1977,7 +1978,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     public function createConfigArgumentCollectionBuilder(): CodeceptionArgumentsBuilderInterface
     {
         return new CodeceptionArgumentsBuilder(
-            $this->getConfig()->getDefaultInclusiveTestGroups()
+            $this->getConfig()->getDefaultInclusiveGroups()
         );
     }
 }

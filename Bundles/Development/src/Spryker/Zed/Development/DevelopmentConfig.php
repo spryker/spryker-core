@@ -55,6 +55,8 @@ class DevelopmentConfig extends AbstractBundleConfig
 
     protected const INTERNAL_PACKAGE_DIRECTORIES = ['spryker', 'spryker-shop', 'spryker-merchant-portal'];
 
+    protected const TIMEOUT_DEFAULT = 4800;
+
     /**
      * @return int
      */
@@ -565,12 +567,25 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
+     * Specification:
+     * - Returns group names for inclusive tests.
+     *
+     * @api
+     *
      * @return string[]
      */
-    public function getDefaultInclusiveTestGroups(): array
+    public function getDefaultInclusiveGroups(): array
     {
         return [
             static::GROUP_SPRYKER_TEST,
         ];
+    }
+
+    /**
+     * @return int
+     */
+    public function getProcessTimeout(): int
+    {
+        return static::TIMEOUT_DEFAULT;
     }
 }
