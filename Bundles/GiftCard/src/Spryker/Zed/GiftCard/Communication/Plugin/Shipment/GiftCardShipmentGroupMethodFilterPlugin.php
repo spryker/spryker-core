@@ -5,33 +5,37 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\GiftCard\Communication\Plugin;
+namespace Spryker\Zed\GiftCard\Communication\Plugin\Shipment;
 
 use ArrayObject;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\Shipment\Dependency\Plugin\ShipmentMethodFilterPluginInterface;
+use Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodFilterPluginInterface;
 
 /**
- * @deprecated Use \Spryker\Zed\GiftCard\Communication\Plugin\Shipment\GiftCardShipmentGroupMethodFilterPlugin instead.
- *
  * @method \Spryker\Zed\GiftCard\Business\GiftCardFacadeInterface getFacade()
  * @method \Spryker\Zed\GiftCard\Communication\GiftCardCommunicationFactory getFactory()
  * @method \Spryker\Zed\GiftCard\GiftCardConfig getConfig()
  * @method \Spryker\Zed\GiftCard\Persistence\GiftCardQueryContainerInterface getQueryContainer()
  */
-class OnlyGiftCardShipmentMethodFilterPlugin extends AbstractPlugin implements ShipmentMethodFilterPluginInterface
+class GiftCardShipmentGroupMethodFilterPlugin extends AbstractPlugin implements ShipmentMethodFilterPluginInterface
 {
     /**
+     * Specification:
+     *  - Filters available shipment methods for shipment group.
+     *
      * @api
      *
-     * @param \ArrayObject|\Generated\Shared\Transfer\ShipmentMethodTransfer[] $shipmentMethods
+     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentMethodTransfer[] $shipmentMethods
      */
-    public function filterShipmentMethods(ArrayObject $shipmentMethods, QuoteTransfer $quoteTransfer)
-    {
-        return $this->getFacade()->filterShipmentMethods($shipmentMethods, $quoteTransfer);
+    public function filterShipmentMethods(
+        ShipmentGroupTransfer $shipmentGroupTransfer,
+        QuoteTransfer $quoteTransfer
+    ): ArrayObject {
+        return $this->getFacade()->filterShipmentGroupMethods($shipmentGroupTransfer);
     }
 }
