@@ -1,0 +1,33 @@
+{
+  "name": "spryker/comment-sales-connector",
+  "type": "library",
+  "description": "CommentSalesConnector module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.1",
+    "spryker/comment": "^1.0.0",
+    "spryker/gui": "^3.0.0",
+    "spryker/kernel": "^3.30.0",
+    "spryker/sales-extension": "^1.3.0",
+    "spryker/symfony": "^3.0.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}
