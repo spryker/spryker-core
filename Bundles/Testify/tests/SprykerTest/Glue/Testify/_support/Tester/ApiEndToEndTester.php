@@ -9,7 +9,7 @@ namespace SprykerTest\Glue\Testify\Tester;
 
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Testify\TestifyConstants;
-use SprykerTest\Shared\Testify\EndToEndTester;
+use SprykerTest\Shared\Testify\Tester\EndToEndTester;
 
 abstract class ApiEndToEndTester extends EndToEndTester
 {
