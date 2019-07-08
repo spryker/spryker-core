@@ -12,6 +12,9 @@ use Codeception\TestInterface;
 use Exception;
 use Symfony\Component\Process\Process;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 class SetupHelper extends Module
 {
     public const SPRYKER_DEPLOY = 'vendor/bin/install -r testing -q';

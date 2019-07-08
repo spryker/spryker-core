@@ -147,7 +147,7 @@ abstract class AbstractBundleMethodBuilder implements BundleMethodBuilderInterfa
         $filePath = $searchPath . $fileName;
 
         if (file_exists($filePath)) {
-            return new SplFileInfo($filePath, null, null);
+            return new SplFileInfo($filePath, dirname($filePath), basename($filePath));
         }
 
         return null;
@@ -189,6 +189,6 @@ abstract class AbstractBundleMethodBuilder implements BundleMethodBuilderInterfa
     {
         $classFileDirectory = str_replace($file->getFilename(), '', $file->getPath());
 
-        return new SplFileInfo($classFileDirectory, null, null);
+        return new SplFileInfo($classFileDirectory, $file->getRelativePath(), $file->getFilename());
     }
 }
