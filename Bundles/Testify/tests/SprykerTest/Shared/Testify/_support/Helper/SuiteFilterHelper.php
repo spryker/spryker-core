@@ -18,11 +18,11 @@ use SprykerTest\Shared\Testify\Filter\InclusiveGroupFilterIterator;
 
 class SuiteFilterHelper extends Extension
 {
-    protected const KEY_CONFIG_INCLUDE_GROUPS = 'groups';
-    protected const KEY_CONFIG_EXCLUDE_GROUPS = 'skip-group';
+    protected const CONFIG_KEY_INCLUDE = 'groups';
+    protected const CONFIG_KEY_EXCLUDE = 'skip-group';
 
-    protected const KEY_CONFIG_INCLUSIVE = 'inclusive';
-    protected const KEY_CONFIG_EXCLUSIVE = 'exclusive';
+    protected const CONFIG_KEY_INCLUSIVE = 'inclusive';
+    protected const CONFIG_KEY_EXCLUSIVE = 'exclusive';
 
     /**
      * @var array
@@ -54,17 +54,17 @@ class SuiteFilterHelper extends Extension
     /**
      * @return array
      */
-    protected function getIncludeGroups(): array
+    protected function getIncludeParameter(): array
     {
-        return $this->options[static::KEY_CONFIG_INCLUDE_GROUPS] ?? [];
+        return $this->options[static::CONFIG_KEY_INCLUDE] ?? [];
     }
 
     /**
      * @return array
      */
-    protected function getExcludeGroups(): array
+    protected function getExcludeParameter(): array
     {
-        return $this->options[static::KEY_CONFIG_EXCLUDE_GROUPS] ?? [];
+        return $this->options[static::CONFIG_KEY_EXCLUDE] ?? [];
     }
 
     /**
@@ -72,7 +72,7 @@ class SuiteFilterHelper extends Extension
      */
     protected function getInclusiveGroups(): array
     {
-        return $this->getUniqueConfigByKey(static::KEY_CONFIG_INCLUSIVE);
+        return $this->getUniqueConfigByKey(static::CONFIG_KEY_INCLUSIVE);
     }
 
     /**
@@ -80,7 +80,7 @@ class SuiteFilterHelper extends Extension
      */
     protected function getExclusiveGroups(): array
     {
-        return $this->getUniqueConfigByKey(static::KEY_CONFIG_EXCLUSIVE);
+        return $this->getUniqueConfigByKey(static::CONFIG_KEY_EXCLUSIVE);
     }
 
     /**
@@ -146,7 +146,7 @@ class SuiteFilterHelper extends Extension
      */
     protected function addIncludeFilter(Factory $filterFactory): Factory
     {
-        $groupsFormConfig = $this->getIncludeGroups();
+        $groupsFormConfig = $this->getIncludeParameter();
 
         if (count($groupsFormConfig) === 0) {
             return $filterFactory;
@@ -167,7 +167,7 @@ class SuiteFilterHelper extends Extension
      */
     protected function addExcludeFilter(Factory $filterFactory): Factory
     {
-        $groupsFormConfig = $this->getExcludeGroups();
+        $groupsFormConfig = $this->getExcludeParameter();
 
         if (count($groupsFormConfig) === 0) {
             return $filterFactory;

@@ -16,7 +16,7 @@ class InclusiveGroupFilterIterator extends RecursiveFilterIterator
     /**
      * @var string[]
      */
-    protected $groupTests = [];
+    protected $testGroups = [];
 
     /**
      * @param \RecursiveIterator $iterator
@@ -27,7 +27,7 @@ class InclusiveGroupFilterIterator extends RecursiveFilterIterator
     {
         parent::__construct($iterator);
 
-        $this->setGroupTests(
+        $this->setTestGroups(
             $this->getSuiteGroupsIntersection($suite, $groups)
         );
     }
@@ -45,7 +45,7 @@ class InclusiveGroupFilterIterator extends RecursiveFilterIterator
 
         return in_array(
             spl_object_hash($test),
-            $this->groupTests,
+            $this->testGroups,
             true
         );
     }
@@ -75,7 +75,7 @@ class InclusiveGroupFilterIterator extends RecursiveFilterIterator
      *
      * @return void
      */
-    protected function setGroupTests(array $suiteGroups): void
+    protected function setTestGroups(array $suiteGroups): void
     {
         foreach ($suiteGroups as $tests) {
             $testHashes = array_map(
@@ -83,9 +83,9 @@ class InclusiveGroupFilterIterator extends RecursiveFilterIterator
                 $tests
             );
 
-            $this->groupTests = count($this->groupTests) === 0
+            $this->testGroups = count($this->testGroups) === 0
                 ? $testHashes
-                : array_intersect($testHashes, $this->groupTests);
+                : array_intersect($testHashes, $this->testGroups);
         }
     }
 }

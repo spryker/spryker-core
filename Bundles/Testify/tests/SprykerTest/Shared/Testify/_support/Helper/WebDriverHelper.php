@@ -14,7 +14,7 @@ use Codeception\Module\WebDriver;
 
 class WebDriverHelper extends Phantoman
 {
-    protected const NAME_MODULE_WEBDRIVER = 'WebDriver';
+    protected const MODULE_NAME_WEBDRIVER = 'WebDriver';
 
     protected const KEY_REMOTE_ENABLE = 'remote-enable';
     protected const KEY_HOST = 'host';
@@ -50,7 +50,7 @@ class WebDriverHelper extends Phantoman
      */
     public function configureWebDriverModule(): void
     {
-        if (!$this->hasModule(static::NAME_MODULE_WEBDRIVER)) {
+        if (!$this->hasModule(static::MODULE_NAME_WEBDRIVER)) {
             return;
         }
 
@@ -78,7 +78,7 @@ class WebDriverHelper extends Phantoman
      */
     protected function getWebDriver(): WebDriver
     {
-        return $this->getModule(static::NAME_MODULE_WEBDRIVER);
+        return $this->getModule(static::MODULE_NAME_WEBDRIVER);
     }
 
     /**

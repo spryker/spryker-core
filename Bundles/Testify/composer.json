@@ -19,7 +19,7 @@
     "spryker/symfony": "^3.0.0"
   },
   "require-dev": {
-    "site5/phantoman": "^2.0.1",
+    "spryker-sdk/codeception-phantoman": "*",
     "spryker/symfony": "^3.0.0",
     "spryker/json-path": "^1.0.0",
     "spryker/json-schema": "^1.0.0",
