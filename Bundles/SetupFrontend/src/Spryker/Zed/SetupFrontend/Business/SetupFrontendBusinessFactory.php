@@ -81,7 +81,7 @@ class SetupFrontendBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\SetupFrontend\Business\Model\Installer\PathFinder\PathFinderInterface
      */
-    protected function createInstallMultiPathFinderForYves()
+    public function createInstallMultiPathFinderForYves(): PathFinderInterface
     {
         return new InstallMultiPathFinder(
             $this->createFinder(),
@@ -130,7 +130,7 @@ class SetupFrontendBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\SetupFrontend\Business\Model\Installer\PathFinder\PathFinderInterface
      */
-    protected function createInstallMultiPathFinderForZed(): PathFinderInterface
+    public function createInstallMultiPathFinderForZed(): PathFinderInterface
     {
         return new InstallMultiPathFinder(
             $this->createFinder(),
