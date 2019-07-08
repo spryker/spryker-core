@@ -83,6 +83,7 @@ class SalesFacadeSaveOrderTest extends Unit
                 'getItemsWithFlag',
                 'getManualEventsByIdSalesOrder',
                 'getDistinctManualEventsByIdSalesOrder',
+                'getDistinctManualEventsByIdSalesOrderGroupedByShipment',
                 'getOrderItemMatrix',
                 'isOrderFlaggedExcludeFromCustomer',
             ])
