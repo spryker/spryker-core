@@ -106,7 +106,7 @@ class ManualEventReader implements ManualEventReaderInterface
         $events = [];
 
         foreach ($orderItems as $orderItemEntity) {
-            $events[$orderItemEntity->getFkSalesShipment()][] = $this->getManualEventsByOrderItemEntity($orderItemEntity);
+            $events[(int)$orderItemEntity->getFkSalesShipment()][] = $this->getManualEventsByOrderItemEntity($orderItemEntity);
         }
 
         return $events;
