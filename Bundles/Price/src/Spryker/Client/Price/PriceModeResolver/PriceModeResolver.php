@@ -24,19 +24,19 @@ class PriceModeResolver implements PriceModeResolverInterface
     protected $priceConfig;
 
     /**
-     * @var \Spryker\Client\Price\PriceModeCache\PriceModeCacheInterface
+     * @var \Spryker\Client\Price\PriceModeCache\PriceModeCacheInterface|null
      */
     protected $priceModeCache;
 
     /**
      * @param \Spryker\Client\Price\Dependency\Client\PriceToQuoteClientInterface $quoteClient
      * @param \Spryker\Client\Price\PriceConfig $priceConfig
-     * @param \Spryker\Client\Price\PriceModeCache\PriceModeCacheInterface $priceModeCache
+     * @param \Spryker\Client\Price\PriceModeCache\PriceModeCacheInterface|null $priceModeCache
      */
     public function __construct(
         PriceToQuoteClientInterface $quoteClient,
         PriceConfig $priceConfig,
-        PriceModeCacheInterface $priceModeCache
+        ?PriceModeCacheInterface $priceModeCache = null
     ) {
         $this->quoteClient = $quoteClient;
         $this->priceConfig = $priceConfig;
@@ -48,15 +48,17 @@ class PriceModeResolver implements PriceModeResolverInterface
      */
     public function getCurrentPriceMode()
     {
-        if (!$this->priceModeCache->isCached()) {
-            $quoteTransfer = $this->quoteClient->getQuote();
-
-            $priceMode = $quoteTransfer->getPriceMode() ?: $this->priceConfig->getDefaultPriceMode();
-            $this->priceModeCache->cache($priceMode);
-
-            return $priceMode;
+        if ($this->priceModeCache && $this->priceModeCache->isCached()) {
+            return $this->priceModeCache->get();
         }
 
-        return $this->priceModeCache->get();
+        $quoteTransfer = $this->quoteClient->getQuote();
+
+        $priceMode = $quoteTransfer->getPriceMode() ?: $this->priceConfig->getDefaultPriceMode();
+        if ($this->priceModeCache) {
+            $this->priceModeCache->cache($priceMode);
+        }
+
+        return $priceMode;
     }
 }

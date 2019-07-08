@@ -27,8 +27,4 @@ use Codeception\Actor;
 class PriceClientTester extends Actor
 {
     use _generated\PriceClientTesterActions;
-
-   /**
-    * Define custom actions here
-    */
 }

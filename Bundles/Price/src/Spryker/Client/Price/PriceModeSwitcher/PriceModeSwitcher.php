@@ -30,7 +30,7 @@ class PriceModeSwitcher implements PriceModeSwitcherInterface
     protected $priceModePostUpdatePlugins;
 
     /**
-     * @var \Spryker\Client\Price\PriceModeCache\PriceModeCacheInterface
+     * @var \Spryker\Client\Price\PriceModeCache\PriceModeCacheInterface|null
      */
     protected $priceModeCache;
 
@@ -38,13 +38,13 @@ class PriceModeSwitcher implements PriceModeSwitcherInterface
      * @param \Spryker\Client\Price\Dependency\Client\PriceToQuoteClientInterface $quoteClient
      * @param \Spryker\Client\Price\PriceConfig $priceConfig
      * @param \Spryker\Client\PriceExtension\Dependency\Plugin\PriceModePostUpdatePluginInterface[] $priceModePostUpdatePlugins
-     * @param \Spryker\Client\Price\PriceModeCache\PriceModeCacheInterface $priceModeCache
+     * @param \Spryker\Client\Price\PriceModeCache\PriceModeCacheInterface|null $priceModeCache
      */
     public function __construct(
         PriceToQuoteClientInterface $quoteClient,
         PriceConfig $priceConfig,
         array $priceModePostUpdatePlugins,
-        PriceModeCacheInterface $priceModeCache
+        ?PriceModeCacheInterface $priceModeCache = null
     ) {
         $this->quoteClient = $quoteClient;
         $this->priceConfig = $priceConfig;
@@ -73,7 +73,9 @@ class PriceModeSwitcher implements PriceModeSwitcherInterface
         $this->quoteClient->setQuote($quoteTransfer);
         $this->executePriceModePostUpdatePlugins($priceMode);
 
-        $this->priceModeCache->cache($priceMode);
+        if ($this->priceModeCache) {
+            $this->priceModeCache->cache($priceMode);
+        }
     }
 
     /**
