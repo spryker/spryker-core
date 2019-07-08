@@ -75,7 +75,7 @@ class CodeceptionArgumentsBuilder implements CodeceptionArgumentsBuilderInterfac
      */
     protected function addIncludeGroups(CodeceptionArguments $codeceptionArguments, array $options): CodeceptionArguments
     {
-        if ($options[static::OPTION_GROUP_INCLUDE]) {
+        if (array_key_exists(static::OPTION_GROUP_INCLUDE, $options)) {
             $codeceptionArguments->addArgument(
                 '-g',
                 explode(',', $options[static::OPTION_GROUP_INCLUDE])
@@ -93,7 +93,7 @@ class CodeceptionArgumentsBuilder implements CodeceptionArgumentsBuilderInterfac
      */
     protected function addExcludeGroups(CodeceptionArguments $codeceptionArguments, array $options): CodeceptionArguments
     {
-        if ($options[static::OPTION_GROUP_EXCLUDE]) {
+        if (array_key_exists(static::OPTION_GROUP_EXCLUDE, $options)) {
             $codeceptionArguments->addArgument(
                 '-x',
                 explode(',', $options[static::OPTION_GROUP_EXCLUDE])
