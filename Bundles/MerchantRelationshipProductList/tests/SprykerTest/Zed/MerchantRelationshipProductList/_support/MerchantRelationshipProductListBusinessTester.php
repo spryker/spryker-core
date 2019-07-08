@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\MerchantRelationshipProductList;
 
 use Codeception\Actor;
+use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 use Generated\Shared\Transfer\ProductListTransfer;
 use Generated\Shared\Transfer\SpyMerchantRelationshipEntityTransfer;
@@ -55,7 +56,9 @@ class MerchantRelationshipProductListBusinessTester extends Actor
     public function createMerchantRelationship(): MerchantRelationshipTransfer
     {
         $idMerchant = $this->haveMerchant()->getIdMerchant();
-        $idCompanyBusinessUnit = $this->haveCompanyBusinessUnit()->getIdCompanyBusinessUnit();
+        $idCompanyBusinessUnit = $this->haveCompanyBusinessUnit([
+            CompanyBusinessUnitTransfer::FK_COMPANY => $this->haveCompany()->getIdCompany(),
+        ])->getIdCompanyBusinessUnit();
 
         $merchantRelationship = $this->haveMerchantRelationship([
             SpyMerchantRelationshipEntityTransfer::MERCHANT_RELATIONSHIP_KEY => 'test',

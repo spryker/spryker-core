@@ -18,4 +18,19 @@
         <property name="uuid" type="string" />
     </transfer>
 
+    <transfer name="TaxProductStorage">
+        <property name="idTaxSet" type="int" />
+    </transfer>
+
+    <transfer name="TaxSetStorage">
+        <property name="uuid" type="string" />
+        <property name="taxRates" type="TaxRateStorage[]"  singular="taxRate"/>
+    </transfer>
+
+    <transfer name="TaxRateStorage">
+        <property name="name" type="string"/>
+        <property name="country" type="string"/>
+        <property name="rate" type="float"/>
+    </transfer>
+
 </transfers>

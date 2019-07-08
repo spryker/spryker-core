@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\DataImport\Model;
+namespace SprykerTest\Zed\DataImport\Business\Model;
 
 use Codeception\Test\Unit;
 use Exception;
@@ -18,17 +18,18 @@ use Generated\Shared\Transfer\DataImporterReportTransfer;
  * @group SprykerTest
  * @group Zed
  * @group DataImport
+ * @group Business
  * @group Model
  * @group DataImporterTest
  * Add your own group annotations below this line
- * @property \SprykerTest\Zed\DataImport\BusinessTester $tester
+ * @property \SprykerTest\Zed\DataImport\DataImportBusinessTester $tester
  */
 class DataImporterTest extends Unit
 {
     public const IMPORTER_TYPE = 'specific-importer';
 
     /**
-     * @var \SprykerTest\Zed\DataImport\BusinessTester
+     * @var \SprykerTest\Zed\DataImport\DataImportBusinessTester
      */
     protected $tester;
 
@@ -129,6 +130,23 @@ class DataImporterTest extends Unit
         $dataImportConfigurationTransfer = new DataImporterConfigurationTransfer();
         $dataImportConfigurationTransfer->setThrowException(false);
         $dataImporter->import($dataImportConfigurationTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testImportReturnsReportWithMessagesWhenThrowExceptionFlagNotSet()
+    {
+        $dataImporter = $this->getDataImporter();
+        $dataSetImporter = $this->tester->getFactory()->createDataSetStepBroker();
+        $dataSetImporter->addStep($this->tester->getFailingDataImportStepMock());
+        $dataImporter->addDataSetStepBroker($dataSetImporter);
+
+        $dataImportConfigurationTransfer = new DataImporterConfigurationTransfer();
+        $dataImportConfigurationTransfer->setThrowException(false);
+        $dataImportReportTransfer = $dataImporter->import($dataImportConfigurationTransfer);
+
+        $this->assertTrue($dataImportReportTransfer->getMessages()->count() > 0);
     }
 
     /**
