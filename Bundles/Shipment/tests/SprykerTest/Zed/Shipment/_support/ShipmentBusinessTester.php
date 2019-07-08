@@ -8,6 +8,10 @@
 namespace SprykerTest\Zed\Shipment;
 
 use Codeception\Actor;
+use Generated\Shared\DataBuilder\CalculableObjectBuilder;
+use Generated\Shared\DataBuilder\QuoteBuilder;
+use Generated\Shared\DataBuilder\ShipmentBuilder;
+use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -259,5 +263,28 @@ class ShipmentBusinessTester extends Actor
         $orderTransfer = (new ShipmentOrderHydratePlugin())->hydrate($orderTransfer);
 
         return $orderTransfer;
+    }
+
+    /**
+     * @param array $originalQuoteSeed
+     *
+     * @return \Generated\Shared\Transfer\CalculableObjectTransfer
+     */
+    public function buildCalculableObjectTransfer(array $originalQuoteSeed = []): CalculableObjectTransfer
+    {
+        $shipmentTransfer = (new ShipmentBuilder())
+            ->build()
+            ->setMethod(
+                $this->haveShipmentMethod()
+            );
+
+        $originalQuoteTransfer = (new QuoteBuilder())
+            ->build()
+            ->setShipment($shipmentTransfer)
+            ->fromArray($originalQuoteSeed);
+
+        return (new CalculableObjectBuilder())
+            ->build()
+            ->setOriginalQuote($originalQuoteTransfer);
     }
 }

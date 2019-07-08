@@ -149,4 +149,9 @@
         <property name="messages" type="Message" singular="message"/>
     </transfer>
 
+    <transfer name="CalculableObject">
+        <property name="expenses" type="Expense[]" singular="expense"/>
+        <property name="originalQuote" type="Quote" />
+    </transfer>
+
 </transfers>

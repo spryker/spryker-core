@@ -32,6 +32,8 @@ use Spryker\Zed\Shipment\Business\Shipment\ShipmentReader;
 use Spryker\Zed\Shipment\Business\Shipment\ShipmentReaderInterface;
 use Spryker\Zed\Shipment\Business\Shipment\ShipmentSaver;
 use Spryker\Zed\Shipment\Business\Shipment\ShipmentSaverInterface;
+use Spryker\Zed\Shipment\Business\ShipmentExpense\ShipmentExpenseFilter;
+use Spryker\Zed\Shipment\Business\ShipmentExpense\ShipmentExpenseFilterInterface;
 use Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentFetcher;
 use Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentFetcherInterface;
 use Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentGroupCreator;
@@ -161,6 +163,14 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
             $this->getCurrencyFacade(),
             $this->getQueryContainer()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Shipment\Business\ShipmentExpense\ShipmentExpenseFilterInterface
+     */
+    public function createShipmentExpenseFilter(): ShipmentExpenseFilterInterface
+    {
+        return new ShipmentExpenseFilter();
     }
 
     /**
