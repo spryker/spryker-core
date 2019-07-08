@@ -22,7 +22,6 @@ use Spryker\Zed\DataImport\Business\Model\DataImporter;
 use Spryker\Zed\DataImport\Business\Model\DataImporterCollection;
 use Spryker\Zed\DataImport\Business\Model\DataImporterCollectionInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImporterDataSetWriterAware;
-use Spryker\Zed\DataImport\Business\Model\DataImporterInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\AddLocalesStep;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\LocalizedAttributesExtractorStep;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\RenameDataSetKeysStep;
