@@ -49,6 +49,6 @@ class RouterFacade extends AbstractFacade implements RouterFacadeInterface
      */
     public function getZedFallbackRouter(): RouterInterface
     {
-        return $this->getFactory()->createZedFallbackRouter();
+        return $this->getFactory()->createZedDevelopmentRouter();
     }
 }

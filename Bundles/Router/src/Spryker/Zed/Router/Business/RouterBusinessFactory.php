@@ -54,7 +54,7 @@ class RouterBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Router\Business\Router\RouterInterface
      */
-    public function createZedFallbackRouter(): RouterInterface
+    public function createZedDevelopmentRouter(): RouterInterface
     {
         return new Router(
             $this->createClosureLoader(),

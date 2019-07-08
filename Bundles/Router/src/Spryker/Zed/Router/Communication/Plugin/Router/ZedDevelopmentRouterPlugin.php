@@ -16,7 +16,7 @@ use Symfony\Component\Routing\RouterInterface;
  * @method \Spryker\Zed\Router\RouterConfig getConfig()
  * @method \Spryker\Zed\Router\Communication\RouterCommunicationFactory getFactory()
  */
-class ZedFallbackRouterPlugin extends AbstractPlugin implements RouterPluginInterface
+class ZedDevelopmentRouterPlugin extends AbstractPlugin implements RouterPluginInterface
 {
     /**
      * Specification:
