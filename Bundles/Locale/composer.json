@@ -8,7 +8,8 @@
     "spryker/application-extension": "^1.0.0",
     "spryker/event-dispatcher-extension": "^1.0.0",
     "spryker/kernel": "^3.0.0",
-    "spryker/locale-extension": "^1.0.0"
+    "spryker/locale-extension": "^1.0.0",
+    "spryker/propel-orm": "^1.8.0"
   },
   "require-dev": {
     "spryker/config": "*",
