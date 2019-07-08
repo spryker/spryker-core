@@ -20,6 +20,7 @@ var ContentItemDialog = function(
             this.options = context.options;
             this.$ui = $.summernote.ui;
             this.$range = $.summernote.range;
+            this.history = context.modules.editor.history;
             this.contentCache = {};
 
             this.initialize = function() {
@@ -118,14 +119,14 @@ var ContentItemDialog = function(
                     $clickedNode = $(this.context.invoke('editor.createRange').sc);
 
                     if (this.isNodeEmpty($clickedNode)) {
-                        $clickedNode.parents('p').empty();
+                        this.clearNode($clickedNode);
                     } else {
                         elementForInsert = '<p>' + elementForInsert + '</p>'
                     }
                 }
 
                 this.context.invoke('pasteHTML', elementForInsert);
-                this.removeUnecessaryLines();
+                this.removeUnecessaryLines($clickedNode);
             };
 
             this.isNodeEmpty = function ($clickedNode) {
@@ -150,13 +151,21 @@ var ContentItemDialog = function(
                 this.context.invoke('pasteHTML', ' ');
             };
 
-            this.removeUnecessaryLines = function () {
-                var $insertedNode = $(this.context.invoke('editor.createRange').sc);
+            this.removeUnecessaryLines = function ($clickedNode) {
+                $clickedNode = $clickedNode.is('p') ? $clickedNode : $clickedNode.parents('p');
+                var self = this;
+                var $insertedNode = $clickedNode.next();
                 var $nextNode = $insertedNode.next();
 
                 if (this.isWidgetEmpty($nextNode) || this.isNodeEmpty($nextNode)) {
-                    $insertedNode.removeAttr('style');
-                    $nextNode.remove();
+                    $.when(function () {
+                        $insertedNode.removeAttr('style');
+                        $nextNode.remove();
+                    }()).then(function () {
+                        self.history.stackOffset--;
+                        self.history.stack.splice(-1,1);
+                        self.history.recordUndo();
+                    });
                 };
             };
 
