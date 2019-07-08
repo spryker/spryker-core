@@ -218,7 +218,7 @@ class CodeTester
         $commandLine[] = 'vendor/bin/codecept';
         $commandLine[] = 'build';
 
-        $process = new Process([$commandLine], $this->applicationRoot, null, null, $this->processTimeout);
+        $process = new Process($commandLine, $this->applicationRoot, null, null, $this->processTimeout);
         $process->run(function ($type, $buffer) use ($options) {
             if ($options[static::OPTION_VERBOSE]) {
                 echo $buffer;
