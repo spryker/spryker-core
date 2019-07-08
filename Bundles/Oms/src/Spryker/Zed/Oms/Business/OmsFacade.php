@@ -520,7 +520,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     public function getDistinctManualEventsByIdSalesOrderGroupedByShipment(int $idSalesOrder): array
     {
         return $this->getFactory()
-            ->createOrderStateMachineFinder()
+            ->createManualOrderReader()
             ->getDistinctManualEventsByIdSalesOrderGroupedByShipment($idSalesOrder);
     }
 
