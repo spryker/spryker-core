@@ -117,7 +117,7 @@ class ManualEventReader implements ManualEventReaderInterface
      *
      * @return string[]
      */
-    protected function getManualEventsByOrderItemEntity(SpySalesOrderItem $orderItem)
+    protected function getManualEventsByOrderItemEntity(SpySalesOrderItem $orderItem): array
     {
         $state = $orderItem->getState()->getName();
         $processName = $orderItem->getProcess()->getName();
