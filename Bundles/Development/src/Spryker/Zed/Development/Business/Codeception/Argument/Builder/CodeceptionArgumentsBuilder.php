@@ -111,11 +111,11 @@ class CodeceptionArgumentsBuilder implements CodeceptionArgumentsBuilderInterfac
      */
     protected function addVerboseMode(CodeceptionArguments $codeceptionArguments, array $options): CodeceptionArguments
     {
-        if (!(bool)$options[static::OPTION_VERBOSE]) {
-            return $codeceptionArguments;
+        if (array_key_exists(static::OPTION_VERBOSE, $options) && $options[static::OPTION_VERBOSE]) {
+            return $codeceptionArguments->addArgument('-v');
         }
 
-        return $codeceptionArguments->addArgument('-v');
+        return $codeceptionArguments;
     }
 
     /**
@@ -126,7 +126,7 @@ class CodeceptionArgumentsBuilder implements CodeceptionArgumentsBuilderInterfac
      */
     protected function addInclusiveGroups(CodeceptionArguments $codeceptionArguments, array $options): CodeceptionArguments
     {
-        if (!$options[static::OPTION_MODULE]) {
+        if (!array_key_exists(static::OPTION_MODULE, $options)) {
             return $codeceptionArguments;
         }
 
