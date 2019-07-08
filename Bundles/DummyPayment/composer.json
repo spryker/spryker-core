@@ -5,13 +5,13 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/checkout": "^3.0.0 || ^4.0.0",
+    "spryker/checkout": "^3.0.0 || ^4.0.0 || ^6.0.0",
     "spryker/kernel": "^3.31.0",
     "spryker/manual-order-entry-gui-extension": "^1.0.0",
-    "spryker/oms": "^6.0.0 || ^7.0.0 || ^8.0.0",
+    "spryker/oms": "^6.0.0 || ^7.0.0 || ^8.0.0 || ^10.0.0",
     "spryker/payment": "^3.0.0 || ^4.0.0",
     "spryker/refund": "^4.0.0 || ^5.0.0",
-    "spryker/sales": "^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0",
+    "spryker/sales": "^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0 || ^10.0.0",
     "spryker/step-engine": "^3.1.0",
     "spryker/symfony": "^3.0.0"
   },

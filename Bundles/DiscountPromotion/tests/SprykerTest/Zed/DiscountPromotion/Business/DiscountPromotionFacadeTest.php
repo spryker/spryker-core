@@ -4,6 +4,7 @@
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
+
 namespace SprykerTest\Zed\DiscountPromotion\Business;
 
 use Codeception\Test\Unit;
@@ -226,6 +227,60 @@ class DiscountPromotionFacadeTest extends Unit
         );
 
         $this->assertSame($discountPromotionTransferUpdated->getAbstractSku(), $updateSku);
+    }
+
+    /**
+     * @return void
+     */
+    public function testDeletePromotionDiscountShouldDeleteAnyExistingPromotions()
+    {
+        // Arrange
+        $discountPromotionFacade = $this->getDiscountPromotionFacade();
+
+        $promotionItemSku = '001';
+        $promotionItemQuantity = 1;
+        $discountGeneralTransfer = $this->tester->haveDiscount();
+
+        $discountPromotionTransfer = $this->createDiscountPromotionTransfer($promotionItemSku, $promotionItemQuantity);
+        $discountPromotionTransfer->setFkDiscount($discountGeneralTransfer->getIdDiscount());
+
+        $discountPromotionTransferSaved = $discountPromotionFacade->createPromotionDiscount($discountPromotionTransfer);
+
+        // Act
+        $discountPromotionFacade->removePromotionByIdDiscount($discountPromotionTransferSaved->getFkDiscount());
+
+        $discountPromotionTransferUpdated = $discountPromotionFacade->findDiscountPromotionByIdDiscount(
+            $discountPromotionTransferSaved->getFkDiscount()
+        );
+
+        // Assert
+        $this->assertNull($discountPromotionTransferUpdated);
+    }
+
+    /**
+     * @return void
+     */
+    public function testDeletePromotionDiscountShouldNotFailIfThereWasNoExistingPromotion()
+    {
+        // Arrange
+        $discountPromotionFacade = $this->getDiscountPromotionFacade();
+
+        $promotionItemSku = '001';
+        $promotionItemQuantity = 1;
+        $discountGeneralTransfer = $this->tester->haveDiscount();
+
+        $discountPromotionTransfer = $this->createDiscountPromotionTransfer($promotionItemSku, $promotionItemQuantity);
+        $discountPromotionTransfer->setFkDiscount($discountGeneralTransfer->getIdDiscount());
+
+        // Act
+        $discountPromotionFacade->removePromotionByIdDiscount($discountPromotionTransfer->getFkDiscount());
+
+        $discountPromotionTransferUpdated = $discountPromotionFacade->findDiscountPromotionByIdDiscount(
+            $discountPromotionTransfer->getFkDiscount()
+        );
+
+        // Assert
+        $this->assertEmpty($discountPromotionTransferUpdated);
     }
 
     /**
