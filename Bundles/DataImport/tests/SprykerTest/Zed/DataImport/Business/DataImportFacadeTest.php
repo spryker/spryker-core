@@ -105,7 +105,9 @@ class DataImportFacadeTest extends Unit
         $dataImporterConfigurationTransfer->setImportType(static::IMPORT_TYPE_SPECIFIC_A);
         $dataImporterConfigurationTransfer->setImportGroup(static::IMPORT_GROUP_FULL);
 
-        $dataImportFacade->importGroup($dataImporterConfigurationTransfer);
+        $dataImporterReportTransfer = $dataImportFacade->importType($dataImporterConfigurationTransfer);
+        $this->assertSame(static::IMPORT_TYPE_SPECIFIC_A, $dataImporterReportTransfer->getImportType());
+
     }
 
     /**

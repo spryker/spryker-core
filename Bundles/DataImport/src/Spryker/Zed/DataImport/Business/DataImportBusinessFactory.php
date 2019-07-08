@@ -20,6 +20,7 @@ use Spryker\Zed\DataImport\Business\DataWriter\QueueWriter\QueueWriter;
 use Spryker\Zed\DataImport\Business\DataWriter\QueueWriter\QueueWriterInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImporter;
 use Spryker\Zed\DataImport\Business\Model\DataImporterCollection;
+use Spryker\Zed\DataImport\Business\Model\DataImporterCollectionInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImporterDataSetWriterAware;
 use Spryker\Zed\DataImport\Business\Model\DataImporterInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\AddLocalesStep;
@@ -56,9 +57,9 @@ class DataImportBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterCollectionInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterInterface
      */
-    public function getImporterList(): DataImporterInterface
+    public function getDataImporterCollection(): DataImporterCollectionInterface
     {
         return $this->createDataImporterCollection();
     }

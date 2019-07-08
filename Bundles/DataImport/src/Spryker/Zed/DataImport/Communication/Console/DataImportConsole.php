@@ -145,10 +145,10 @@ class DataImportConsole extends Console
     protected function executeImport(DataImporterConfigurationTransfer $dataImporterConfigurationTransfer): DataImporterReportTransfer
     {
         if ($dataImporterConfigurationTransfer->getImportType() === static::DEFAULT_IMPORTER_TYPE) {
-           return $this->getFacade()->import($dataImporterConfigurationTransfer);
+            return $this->getFacade()->import($dataImporterConfigurationTransfer);
         }
 
-        return $this->getFacade()->importGroup($dataImporterConfigurationTransfer);
+        return $this->getFacade()->importType($dataImporterConfigurationTransfer);
     }
 
     /**

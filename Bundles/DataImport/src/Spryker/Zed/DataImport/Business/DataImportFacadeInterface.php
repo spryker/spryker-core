@@ -39,7 +39,7 @@ interface DataImportFacadeInterface
      *
      * @return \Generated\Shared\Transfer\DataImporterReportTransfer
      */
-    public function importGroup(?DataImporterConfigurationTransfer $dataImporterConfiguration = null): DataImporterReportTransfer;
+    public function importType(?DataImporterConfigurationTransfer $dataImporterConfiguration = null): DataImporterReportTransfer;
 
     /**
      * Specification:
