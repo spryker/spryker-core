@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\GiftCard\Communication\Plugin;
+namespace Spryker\Zed\GiftCard\Communication\Plugin\Shipment;
 
 use ArrayObject;
 use Generated\Shared\Transfer\QuoteTransfer;
