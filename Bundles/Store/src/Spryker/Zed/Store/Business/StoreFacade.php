@@ -137,4 +137,20 @@ class StoreFacade extends AbstractFacade implements StoreFacadeInterface
             ->createStoreValidator()
             ->validateQuoteStore($quoteTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string[] $storeNames
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     */
+    public function getStoreTransfersByStoreNames(array $storeNames): array
+    {
+        return $this->getFactory()
+            ->createStoreReader()
+            ->getStoreTransfersByStoreNames($storeNames);
+    }
 }

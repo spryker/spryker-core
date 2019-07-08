@@ -8,7 +8,7 @@
     "spryker/catalog": "^5.0.0",
     "spryker/category": "^4.0.0",
     "spryker/gui": "^3.0.0",
-    "spryker/kernel": "^3.0.0",
+    "spryker/kernel": "^3.30.0",
     "spryker/locale": "^3.0.0",
     "spryker/product": "^5.0.0 || ^6.0.0",
     "spryker/product-category": "^4.0.0",

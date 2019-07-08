@@ -17,6 +17,20 @@ class TestifyConstants
 
     /**
      * Specification:
+     * - Glue application domain to test end to end against.
+     *
+     * @api
+     */
+    public const GLUE_APPLICATION_DOMAIN = 'TESTIFY_CONSTANTS:GLUE_APPLICATION_DOMAIN';
+
+    /**
+     * Specification:
+     * - Folder in which the aggregated Glue OpenApi3 schema is saved.
+     */
+    public const GLUE_OPEN_API_SCHEMA = 'TESTIFY_CONSTANTS:GLUE_OPEN_API_SCHEMA';
+
+    /**
+     * Specification:
      * - Host to be used for Presentation tests.
      * - When selenium server is installed on host, tests run in the hosts browser.
      */

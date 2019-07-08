@@ -113,4 +113,16 @@ interface StoreFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteValidationResponseTransfer
      */
     public function validateQuoteStore(QuoteTransfer $quoteTransfer): QuoteValidationResponseTransfer;
+
+    /**
+     * Specification:
+     * - Gets array of StoreTransfer by array of store names.
+     *
+     * @api
+     *
+     * @param string[] $storeNames
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     */
+    public function getStoreTransfersByStoreNames(array $storeNames): array;
 }
