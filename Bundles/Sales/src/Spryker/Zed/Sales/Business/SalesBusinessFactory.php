@@ -13,6 +13,8 @@ use Spryker\Zed\Sales\Business\Address\OrderAddressWriter;
 use Spryker\Zed\Sales\Business\Address\OrderAddressWriterInterface;
 use Spryker\Zed\Sales\Business\Expander\SalesAddressExpander;
 use Spryker\Zed\Sales\Business\Expander\SalesAddressExpanderInterface;
+use Spryker\Zed\Sales\Business\Expense\ExpenseUpdater;
+use Spryker\Zed\Sales\Business\Expense\ExpenseUpdaterInterface;
 use Spryker\Zed\Sales\Business\Expense\ExpenseWriter;
 use Spryker\Zed\Sales\Business\Expense\ExpenseWriterInterface;
 use Spryker\Zed\Sales\Business\Model\Address\OrderAddressUpdater;
@@ -312,6 +314,14 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     public function createExpenseWriter(): ExpenseWriterInterface
     {
         return new ExpenseWriter($this->getEntityManager());
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Business\Expense\ExpenseUpdaterInterface
+     */
+    public function createExpenseUpdater(): ExpenseUpdaterInterface
+    {
+        return new ExpenseUpdater($this->getEntityManager());
     }
 
     /**

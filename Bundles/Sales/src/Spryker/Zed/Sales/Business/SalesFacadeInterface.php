@@ -280,6 +280,18 @@ interface SalesFacadeInterface
 
     /**
      * Specification:
+     * - Updates sales expense entity from transfer object.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
+     *
+     * @return \Generated\Shared\Transfer\ExpenseTransfer
+     */
+    public function updateSalesExpense(ExpenseTransfer $expenseTransfer): ExpenseTransfer;
+
+    /**
+     * Specification:
      * - Returns a collection of order items grouped by unique group key.
      *
      * @api

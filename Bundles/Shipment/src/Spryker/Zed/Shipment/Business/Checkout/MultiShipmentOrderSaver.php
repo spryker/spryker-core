@@ -143,7 +143,7 @@ class MultiShipmentOrderSaver implements MultiShipmentOrderSaverInterface
 
         $expenseTransfer = $this->findShipmentExpense($orderTransfer, $shipmentTransfer);
         if ($expenseTransfer !== null) {
-            $expenseTransfer = $this->addShipmentExpenseToOrder($expenseTransfer, $orderTransfer, $saveOrderTransfer);
+            $expenseTransfer = $this->saveShipmentExpenseToOrder($expenseTransfer, $orderTransfer, $saveOrderTransfer);
         }
 
         /**
@@ -209,34 +209,26 @@ class MultiShipmentOrderSaver implements MultiShipmentOrderSaverInterface
      *
      * @return \Generated\Shared\Transfer\ExpenseTransfer
      */
-    protected function addShipmentExpenseToOrder(
+    protected function saveShipmentExpenseToOrder(
         ExpenseTransfer $expenseTransfer,
         OrderTransfer $orderTransfer,
         SaveOrderTransfer $saveOrderTransfer
     ): ExpenseTransfer {
+
         $expenseTransfer = $this->expenseSanitizer->sanitizeExpenseSumValues($expenseTransfer);
+
+        if ($expenseTransfer->getIdSalesExpense() !== null) {
+            return $this->salesFacade->updateSalesExpense($expenseTransfer);
+        }
+
         $expenseTransfer->setFkSalesOrder($saveOrderTransfer->getIdSalesOrder());
 
-        $expenseTransfer = $this->createExpense($expenseTransfer);
+        $expenseTransfer = $this->salesFacade->createSalesExpense($expenseTransfer);
 
         $orderTransfer->addExpense($expenseTransfer);
         $saveOrderTransfer->addOrderExpense($expenseTransfer);
 
         return $expenseTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
-     *
-     * @return \Generated\Shared\Transfer\ExpenseTransfer
-     */
-    protected function createExpense(ExpenseTransfer $expenseTransfer): ExpenseTransfer
-    {
-        if ($expenseTransfer->getIdSalesExpense()) {
-            return $expenseTransfer;
-        }
-
-        return $this->salesFacade->createSalesExpense($expenseTransfer);
     }
 
     /**
