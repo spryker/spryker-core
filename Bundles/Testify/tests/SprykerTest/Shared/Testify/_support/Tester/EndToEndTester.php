@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Shared\Testify;
+namespace SprykerTest\Shared\Testify\Tester;
 
 use Codeception\Actor;
 use SprykerTest\Shared\Testify\Fixtures\FixturesExporterInterface;
