@@ -27,7 +27,6 @@ class CompanyUserHelper extends Module
     public function haveCompanyUser(array $seed = []): CompanyUserTransfer
     {
         $companyUserTransfer = (new CompanyUserBuilder($seed))->build();
-        $companyUserTransfer->setIdCompanyUser(null);
 
         $companyUserTransfer->requireCustomer();
 
