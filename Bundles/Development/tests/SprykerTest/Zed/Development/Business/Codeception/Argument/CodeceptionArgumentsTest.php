@@ -47,8 +47,8 @@ class CodeceptionArgumentsTest extends Unit
     {
         return [
             'without value' => ['group', [], ['group']],
-            'with value' => ['group', [1], ['group 1']],
-            'multiple value' => ['group', [1, 2, 3], ['group 1', 'group 2', 'group 3']],
+            'with value' => ['group', [1], ['group', 1]],
+            'multiple value' => ['group', [1, 2, 3], ['group', 1, 'group', 2, 'group', 3]],
         ];
     }
 }

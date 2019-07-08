@@ -213,8 +213,12 @@ class CodeTester
      */
     protected function runCodeceptionBuild(array $options): void
     {
-        $command = 'vendor/bin/codecept build';
-        $process = new Process([$command], $this->applicationRoot, null, null, $this->processTimeout);
+        $commandLine = [];
+
+        $commandLine[] = 'vendor/bin/codecept';
+        $commandLine[] = 'build';
+
+        $process = new Process([$commandLine], $this->applicationRoot, null, null, $this->processTimeout);
         $process->run(function ($type, $buffer) use ($options) {
             if ($options[static::OPTION_VERBOSE]) {
                 echo $buffer;
