@@ -31,6 +31,11 @@ class Container implements ContainerInterface, ArrayAccess
     protected $services = [];
 
     /**
+     * @var mixed[]
+     */
+    protected $raw = [];
+
+    /**
      * @var bool[]
      */
     protected $serviceIdentifier = [];
@@ -251,7 +256,8 @@ class Container implements ContainerInterface, ArrayAccess
             throw new NotFoundException(sprintf('The requested service "%s" was not found in the container!', $id));
         }
 
-        if (!is_object($this->services[$id])
+        if (isset($this->raw[$id])
+            || !is_object($this->services[$id])
             || isset($this->protectedServices[$this->services[$id]])
             || !method_exists($this->services[$id], '__invoke')
         ) {
@@ -264,6 +270,7 @@ class Container implements ContainerInterface, ArrayAccess
 
         $rawService = $this->services[$id];
         $resolvedService = $this->services[$id] = $rawService($this);
+        $this->raw[$id] = $rawService;
 
         $this->frozenServices[$id] = true;
 
