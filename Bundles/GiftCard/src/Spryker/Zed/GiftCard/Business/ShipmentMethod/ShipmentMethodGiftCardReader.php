@@ -34,7 +34,7 @@ class ShipmentMethodGiftCardReader implements ShipmentMethodGiftCardReaderInterf
      */
     public function getGiftCardOnlyShipmentMethods(): array
     {
-        $giftCardOnlyShipmentMethods = $this->getGiftCardOnlyShipmentMethods();
+        $giftCardOnlyShipmentMethods = $this->giftCardConfig->getGiftCardOnlyShipmentMethods();
         if (count($giftCardOnlyShipmentMethods) === 0) {
             return [static::NO_SHIPMENT_METHOD];
         }
