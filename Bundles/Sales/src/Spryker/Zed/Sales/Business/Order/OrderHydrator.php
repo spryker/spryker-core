@@ -32,7 +32,7 @@ class OrderHydrator extends OrderHydratorWithoutMultiShipping
      * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface $omsFacade
      * @param \Spryker\Zed\Sales\Business\OrderItem\SalesOrderItemGrouperInterface $orderItemGrouper
-     * @param \Spryker\Zed\Sales\Dependency\Plugin\HydrateOrderPluginInterface[] $hydrateOrderPlugins
+     * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderExpanderPluginInterface[] $hydrateOrderPlugins
      */
     public function __construct(
         SalesQueryContainerInterface $queryContainer,
