@@ -138,10 +138,17 @@ class CodeTester
             $this->runCodeceptionBuild($options);
         }
 
-        $commandLine[] = 'vendor/bin/codecept run' . $this->extractOptions($path, $options);
-        $commandLine = array_merge($commandLine, $this->argumentBuilder
-            ->build($options)
-            ->getArguments());
+        $commandLine = [];
+
+        $commandLine[] = 'vendor/bin/codecept';
+        $commandLine[] = 'run';
+
+        $commandLine = array_merge(
+            $commandLine,
+            $this->argumentBuilder
+                ->build($options)
+                ->getArguments()
+        );
 
         $process = new Process($commandLine, $this->applicationRoot, null, null, $this->processTimeout);
         $process->run(function ($type, $buffer) {
@@ -161,9 +168,19 @@ class CodeTester
             $this->runCodeceptionBuild($options);
         }
 
-        $command = 'vendor/bin/codecept fixtures' . $this->extractOptions($path, $options);
+        $commandLine = [];
 
-        $process = new Process([$command], $this->applicationRoot, null, null, $this->processTimeout);
+        $commandLine[] = 'vendor/bin/codecept';
+        $commandLine[] = 'fixtures';
+
+        $commandLine = array_merge(
+            $commandLine,
+            $this->argumentBuilder
+                ->build($options)
+                ->getArguments()
+        );
+
+        $process = new Process($commandLine, $this->applicationRoot, null, null, $this->processTimeout);
         $process->run(function ($type, $buffer) {
             echo $buffer;
         });
@@ -187,36 +204,6 @@ class CodeTester
 
             throw new ErrorException($message);
         }
-    }
-
-    /**
-     * @param string $path
-     * @param array $options
-     *
-     * @return string
-     */
-    protected function extractOptions(string $path, array $options): string
-    {
-        $pathToFiles = rtrim($path, DIRECTORY_SEPARATOR);
-        $config = [];
-
-        if ($pathToFiles) {
-            $config[] = '-c ' . $pathToFiles;
-        }
-
-        if ($options[static::OPTION_GROUP]) {
-            $config[] = '-g ' . $options[static::OPTION_GROUP];
-        }
-
-        if ($options[static::OPTION_TYPE_EXCLUDE]) {
-            $config[] = '-x ' . $options[static::OPTION_TYPE_EXCLUDE];
-        }
-
-        if ($options[static::OPTION_VERBOSE]) {
-            $config[] = '-v';
-        }
-
-        return ' ' . implode(' ', $config);
     }
 
     /**

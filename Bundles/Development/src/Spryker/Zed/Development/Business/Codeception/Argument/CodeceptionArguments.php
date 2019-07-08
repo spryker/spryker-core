@@ -16,20 +16,21 @@ class CodeceptionArguments
 
     /**
      * @param string $argumentName
-     * @param array $argumentValue
+     * @param array $argumentValues
      *
      * @return $this
      */
-    public function addArgument(string $argumentName, array $argumentValue = [])
+    public function addArgument(string $argumentName, array $argumentValues = [])
     {
-        if (empty($argumentValue)) {
+        if (empty($argumentValues)) {
             $this->arguments[] = $argumentName;
 
             return $this;
         }
 
-        foreach ($argumentValue as $value) {
-            $this->arguments[] = $argumentName . ' ' . $value;
+        foreach ($argumentValues as $value) {
+            $this->arguments[] = $argumentName;
+            $this->arguments[] = $value;
         }
 
         return $this;
