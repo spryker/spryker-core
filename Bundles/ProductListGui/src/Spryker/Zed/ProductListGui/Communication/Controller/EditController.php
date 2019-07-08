@@ -18,6 +18,8 @@ class EditController extends ProductListAbstractController
 {
     public const MESSAGE_PRODUCT_LIST_UPDATE_SUCCESS = 'Product List "%s" has been successfully updated.';
 
+    protected const PATTERN_REDIRTECT_ROUTE = '/product-list-gui/edit?id-product-list=%s';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -47,7 +49,9 @@ class EditController extends ProductListAbstractController
             ]);
         }
 
-        return $this->viewResponse($this->executeEditAction($request, $productListAggregateForm));
+        return $this->redirectResponse(
+            sprintf(static::PATTERN_REDIRTECT_ROUTE, $productListTransfer->getIdProductList())
+        );
     }
 
     /**
