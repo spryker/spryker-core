@@ -10,8 +10,6 @@ namespace Spryker\Zed\GiftCard\Business;
 use Spryker\Zed\GiftCard\Business\ActualValueHydrator\GiftCardActualValueHydrator;
 use Spryker\Zed\GiftCard\Business\Calculation\GiftCardCalculator;
 use Spryker\Zed\GiftCard\Business\Cart\MetadataExpander;
-use Spryker\Zed\GiftCard\Business\ConfigReader\GiftCardConfigReader;
-use Spryker\Zed\GiftCard\Business\ConfigReader\GiftCardConfigReaderInterface;
 use Spryker\Zed\GiftCard\Business\Discount\GiftCardDiscountableItemFilter;
 use Spryker\Zed\GiftCard\Business\GiftCard\GiftCardCodeGenerator;
 use Spryker\Zed\GiftCard\Business\GiftCard\GiftCardCreator;
@@ -34,6 +32,8 @@ use Spryker\Zed\GiftCard\Business\ShipmentMethod\ShipmentMethodGiftCardCheckerIn
 use Spryker\Zed\GiftCard\Business\ShipmentMethod\ShipmentMethodGiftCardDisallowedChecker;
 use Spryker\Zed\GiftCard\Business\ShipmentMethod\ShipmentMethodGiftCardFilter;
 use Spryker\Zed\GiftCard\Business\ShipmentMethod\ShipmentMethodGiftCardFilterInterface;
+use Spryker\Zed\GiftCard\Business\ShipmentMethod\ShipmentMethodGiftCardReader;
+use Spryker\Zed\GiftCard\Business\ShipmentMethod\ShipmentMethodGiftCardReaderInterface;
 use Spryker\Zed\GiftCard\GiftCardDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
@@ -250,7 +250,7 @@ class GiftCardBusinessFactory extends AbstractBusinessFactory
             $this->createAllowedShipmentMethodGiftCardFilter(),
             $this->createDisallowedShipmentMethodGiftCardFilter(),
             $this->createShipmentMethodGiftCardChecker(),
-            $this->createGiftCardConfigReader()
+            $this->createShipmentMethodGiftCardReader()
         );
     }
 
@@ -285,11 +285,11 @@ class GiftCardBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\GiftCard\Business\ConfigReader\GiftCardConfigReaderInterface
+     * @return \Spryker\Zed\GiftCard\Business\ShipmentMethod\ShipmentMethodGiftCardReaderInterface
      */
-    public function createGiftCardConfigReader(): GiftCardConfigReaderInterface
+    public function createShipmentMethodGiftCardReader(): ShipmentMethodGiftCardReaderInterface
     {
-        return new GiftCardConfigReader($this->getConfig());
+        return new ShipmentMethodGiftCardReader($this->getConfig());
     }
 
     /**

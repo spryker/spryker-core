@@ -119,8 +119,7 @@ class ShipmentMethodFilter implements ShipmentMethodFilterInterface
     }
 
     /**
-     * @deprecated Added for BC reasons, will be removed in next major release.
-     * Use \Spryker\Zed\GiftCard\Business\ConfigReader\GiftCardConfigReader::getGiftCardOnlyShipmentMethods instead.
+     * @deprecated Added for BC reasons, will be removed in next major release. Use GiftCardConfig::getGiftCardOnlyShipmentMethods() instead.
      *
      * @return array
      */

@@ -9,9 +9,9 @@ namespace Spryker\Zed\GiftCard\Business\ShipmentGroup;
 
 use ArrayObject;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
-use Spryker\Zed\GiftCard\Business\ConfigReader\GiftCardConfigReaderInterface;
 use Spryker\Zed\GiftCard\Business\ShipmentMethod\ShipmentMethodGiftCardCheckerInterface;
 use Spryker\Zed\GiftCard\Business\ShipmentMethod\ShipmentMethodGiftCardFilterInterface;
+use Spryker\Zed\GiftCard\Business\ShipmentMethod\ShipmentMethodGiftCardReaderInterface;
 
 class ShipmentGroupMethodFilter implements ShipmentGroupMethodFilterInterface
 {
@@ -31,7 +31,7 @@ class ShipmentGroupMethodFilter implements ShipmentGroupMethodFilterInterface
     protected $shipmentMethodGiftCardChecker;
 
     /**
-     * @var \Spryker\Zed\GiftCard\Business\ConfigReader\GiftCardConfigReaderInterface
+     * @var \Spryker\Zed\GiftCard\Business\ShipmentMethod\ShipmentMethodGiftCardReaderInterface
      */
     protected $giftCardConfigReader;
 
@@ -39,13 +39,13 @@ class ShipmentGroupMethodFilter implements ShipmentGroupMethodFilterInterface
      * @param \Spryker\Zed\GiftCard\Business\ShipmentMethod\ShipmentMethodGiftCardFilterInterface $allowedShipmentMethodGiftCardFilter
      * @param \Spryker\Zed\GiftCard\Business\ShipmentMethod\ShipmentMethodGiftCardFilterInterface $disallowedShipmentMethodGiftCardFilter
      * @param \Spryker\Zed\GiftCard\Business\ShipmentMethod\ShipmentMethodGiftCardCheckerInterface $shipmentMethodGiftCardChecker
-     * @param \Spryker\Zed\GiftCard\Business\ConfigReader\GiftCardConfigReaderInterface $giftCardConfigReader
+     * @param \Spryker\Zed\GiftCard\Business\ShipmentMethod\ShipmentMethodGiftCardReaderInterface $giftCardConfigReader
      */
     public function __construct(
         ShipmentMethodGiftCardFilterInterface $allowedShipmentMethodGiftCardFilter,
         ShipmentMethodGiftCardFilterInterface $disallowedShipmentMethodGiftCardFilter,
         ShipmentMethodGiftCardCheckerInterface $shipmentMethodGiftCardChecker,
-        GiftCardConfigReaderInterface $giftCardConfigReader
+        ShipmentMethodGiftCardReaderInterface $giftCardConfigReader
     ) {
         $this->allowedShipmentMethodGiftCardFilter = $allowedShipmentMethodGiftCardFilter;
         $this->disallowedShipmentMethodGiftCardFilter = $disallowedShipmentMethodGiftCardFilter;
@@ -60,7 +60,7 @@ class ShipmentGroupMethodFilter implements ShipmentGroupMethodFilterInterface
      */
     public function filterShipmentMethods(ShipmentGroupTransfer $shipmentGroupTransfer): ArrayObject
     {
-        $giftCardOnlyShipmentMethods = $this->giftCardConfigReader->getGiftCardOnlyShipmentMethodsWithBC();
+        $giftCardOnlyShipmentMethods = $this->giftCardConfigReader->getGiftCardOnlyShipmentMethods();
 
         if ($this->shipmentMethodGiftCardChecker->containsOnlyGiftCardItems($shipmentGroupTransfer)) {
             return $this->allowedShipmentMethodGiftCardFilter
