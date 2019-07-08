@@ -51,7 +51,7 @@ class AvailabilityEventResourceQueryContainerPlugin extends AbstractPlugin imple
             $query->clear();
         }
 
-        return $query->orderBy($this->getIdColumnName());
+        return $query;
     }
 
     /**

@@ -68,7 +68,7 @@ interface ProductImageStorageQueryContainerInterface extends QueryContainerInter
 
     /**
      * Specification:
-     * - Returns a a query for the table `spy_product_image_set_to_product_image` filtered by primary ids.
+     * - Returns a a query for the table `spy_product_image_set_to_product_image` joining `spy_product_image_set` filtered by primary ids.
      *
      * @api
      *

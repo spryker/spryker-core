@@ -51,7 +51,7 @@ class CmsBlockCategoryEventResourceQueryContainerPlugin extends AbstractPlugin i
             $query->clear();
         }
 
-        return $query->orderBy($this->getIdColumnName());
+        return $query;
     }
 
     /**

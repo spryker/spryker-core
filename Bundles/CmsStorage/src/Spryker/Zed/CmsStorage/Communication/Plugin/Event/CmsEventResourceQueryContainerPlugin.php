@@ -45,9 +45,7 @@ class CmsEventResourceQueryContainerPlugin extends AbstractPlugin implements Eve
      */
     public function queryData(array $ids = []): ?ModelCriteria
     {
-        return $this->getQueryContainer()
-            ->queryCmsPageByIds($ids)
-            ->orderBy($this->getIdColumnName());
+        return $this->getQueryContainer()->queryCmsPageByIds($ids);
     }
 
     /**

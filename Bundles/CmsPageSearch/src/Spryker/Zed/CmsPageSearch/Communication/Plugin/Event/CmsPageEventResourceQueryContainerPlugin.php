@@ -51,7 +51,7 @@ class CmsPageEventResourceQueryContainerPlugin extends AbstractPlugin implements
             $query->clear();
         }
 
-        return $query->orderBy($this->getIdColumnName());
+        return $query;
     }
 
     /**

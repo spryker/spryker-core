@@ -51,7 +51,7 @@ class ProductAbstractEventResourceQueryContainerPlugin extends AbstractPlugin im
             $query->clear();
         }
 
-        return $query->orderBy($this->getIdColumnName());
+        return $query;
     }
 
     /**

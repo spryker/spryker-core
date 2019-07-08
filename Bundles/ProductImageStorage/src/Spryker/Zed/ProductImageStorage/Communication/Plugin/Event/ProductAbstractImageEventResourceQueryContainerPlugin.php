@@ -50,10 +50,9 @@ class ProductAbstractImageEventResourceQueryContainerPlugin extends AbstractPlug
         if ($ids === []) {
             $query->clear();
             $query->clearSelectColumns();
-            $query->innerJoinSpyProductImageSet();
         }
 
-        return $query->orderBy($this->getIdColumnName());
+        return $query;
     }
 
     /**

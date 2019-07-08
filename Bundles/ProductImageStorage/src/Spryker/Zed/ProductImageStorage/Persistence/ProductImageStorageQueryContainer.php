@@ -154,6 +154,7 @@ class ProductImageStorageQueryContainer extends AbstractQueryContainer implement
         return $this->getFactory()
             ->getProductImageQueryContainer()
             ->queryProductImageSetToProductImage()
+            ->innerJoinSpyProductImageSet()
             ->filterByIdProductImageSetToProductImage_In($productImageSetToProductImageIds);
     }
 
