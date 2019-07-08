@@ -54,7 +54,7 @@ var ContentItemEditor = function(options) {
                 'editContentItem': ['editWidget', 'editContentItem', 'removeContentItem']
             },
             callbacks: {
-                onKeyup: this.onKeyupHandler
+                onKeydown: this.onKeydownHandler
             },
             dialogsInBody: true
         };
@@ -110,7 +110,7 @@ var ContentItemEditor = function(options) {
         }
     };
 
-    this.onKeyupHandler = function (event) {
+    this.onKeydownHandler = function (event) {
         var pressedKey = event.originalEvent.key;
 
         if (pressedKey !== 'Enter') {
@@ -119,11 +119,28 @@ var ContentItemEditor = function(options) {
 
         var $editor = $(this);
         var $editorRange = $editor.summernote('editor.createRange');
-        var $contentItem = $($editorRange.sc).find('.js-content-item-editor');
+        var widgetClassName = 'js-content-item-editor';
+        var isWidgetWrapper = $($editorRange.sc).find('.' + widgetClassName).length;
+        var isWidget = $($editorRange.sc).hasClass(widgetClassName);
 
-        if ($contentItem.length) {
-            $($editorRange.sc).html('<br>');
+        var addNewLineAfterWidget = function (target) {
+            event.preventDefault();
+            $('<p><br></p>').insertAfter($(target));
+            var range = document.createRange();
+            range.selectNode(target.nextElementSibling.childNodes[0]);
+            var sel = window.getSelection();
+            sel.removeAllRanges();
+            sel.addRange(range);
+        };
+
+        if (isWidgetWrapper) {
+            addNewLineAfterWidget($editorRange.sc);
         }
+
+        if (isWidget) {
+            addNewLineAfterWidget($editorRange.sc.parentNode);
+        }
+
     };
 
     this.generateDropdownList = function () {
