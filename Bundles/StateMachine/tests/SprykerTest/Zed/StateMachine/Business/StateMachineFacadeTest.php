@@ -380,21 +380,25 @@ class StateMachineFacadeTest extends Unit
         $stateMachineFacade->triggerForNewStateMachineItem($stateMachineProcessTransfer, $identifier);
         $stateMachineItemTransfer = $stateMachineHandler->getItemStateUpdated();
 
-        $stateMachineItemsTransfer = $stateMachineFacade->getStateHistoryByStateItemIdentifier(
+        $stateMachineItemsTransfers = $stateMachineFacade->getStateHistoryByStateItemIdentifier(
             $stateMachineItemTransfer->getIdStateMachineProcess(),
             $identifier
         );
 
-        $this->assertCount(3, $stateMachineItemsTransfer);
-
-        $stateMachineItemTransfer = $stateMachineItemsTransfer[0];
-        $this->assertEquals('invoice created', $stateMachineItemTransfer->getStateName());
-
-        $stateMachineItemTransfer = $stateMachineItemsTransfer[1];
-        $this->assertEquals('invoice sent', $stateMachineItemTransfer->getStateName());
-
-        $stateMachineItemTransfer = $stateMachineItemsTransfer[2];
-        $this->assertEquals('order exported', $stateMachineItemTransfer->getStateName());
+        $this->assertCount(3, $stateMachineItemsTransfers);
+        $this->assertEquals(
+            [
+                'invoice created',
+                'invoice sent',
+                'order exported',
+            ],
+            array_map(
+                function (StateMachineItemTransfer $stateMachineItemTransfer) {
+                    return $stateMachineItemTransfer->getStateName();
+                },
+                $stateMachineItemsTransfers
+            )
+        );
     }
 
     /**
