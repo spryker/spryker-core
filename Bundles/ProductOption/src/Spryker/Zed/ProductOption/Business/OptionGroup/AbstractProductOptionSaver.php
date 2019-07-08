@@ -157,7 +157,7 @@ class AbstractProductOptionSaver implements AbstractProductOptionSaverInterface
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstract
      */
-    protected function getProductAbstractBySku(string $abstractSku): SpyProductAbstract
+    protected function getProductAbstractBySku($abstractSku): SpyProductAbstract
     {
         $productAbstractEntity = $this->productOptionQueryContainer
             ->queryProductAbstractBySku($abstractSku)
