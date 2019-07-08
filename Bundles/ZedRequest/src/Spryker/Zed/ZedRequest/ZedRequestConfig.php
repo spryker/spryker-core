@@ -58,4 +58,22 @@ class ZedRequestConfig extends AbstractBundleConfig
     {
         return $this->get(ZedRequestConstants::DIRECTORY_PERMISSION, 0777);
     }
+
+    /**
+     * @return bool
+     */
+    public function isRepeatEnabled(): bool
+    {
+        return $this->get(ZedRequestConstants::ENABLE_REPEAT, $this->getEnableRepeatDefaultValue());
+    }
+
+    /**
+     * @deprecated Method will be removed without replacement.
+     *
+     * @return bool
+     */
+    protected function getEnableRepeatDefaultValue(): bool
+    {
+        return APPLICATION_ENV === 'development';
+    }
 }

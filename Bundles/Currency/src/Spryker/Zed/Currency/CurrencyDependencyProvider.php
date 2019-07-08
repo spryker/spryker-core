@@ -40,29 +40,37 @@ class CurrencyDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addInternationalization(Container $container)
+    public function providePersistenceLayerDependencies(Container $container)
     {
-        $container[static::INTERNATIONALIZATION] = function () {
-            $currencyToInternationalizationBridge = new CurrencyToInternationalizationBridge(
-                Intl::getCurrencyBundle()
-            );
-
-            return $currencyToInternationalizationBridge;
-        };
+        $container = $this->addInternationalization($container);
 
         return $container;
     }
 
-      /**
-       * @param \Spryker\Zed\Kernel\Container $container
-       *
-       * @return \Spryker\Zed\Kernel\Container
-       */
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addInternationalization(Container $container)
+    {
+        $container->set(static::INTERNATIONALIZATION, function () {
+            return new CurrencyToInternationalizationBridge(Intl::getCurrencyBundle());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     protected function addStoreFacade(Container $container)
     {
-        $container[static::FACADE_STORE] = function (Container $container) {
+        $container->set(static::FACADE_STORE, function (Container $container) {
             return new CurrencyToStoreFacadeBridge($container->getLocator()->store()->facade());
-        };
+        });
 
         return $container;
     }

@@ -63,16 +63,6 @@ class CartsRestApiToPersistentCartFacadeBridge implements CartsRestApiToPersiste
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function add(PersistentCartChangeTransfer $persistentCartChangeTransfer): QuoteResponseTransfer
-    {
-        return $this->persistentCartFacade->add($persistentCartChangeTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\PersistentCartChangeTransfer $persistentCartChangeTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
     public function remove(PersistentCartChangeTransfer $persistentCartChangeTransfer): QuoteResponseTransfer
     {
         return $this->persistentCartFacade->remove($persistentCartChangeTransfer);
@@ -86,5 +76,25 @@ class CartsRestApiToPersistentCartFacadeBridge implements CartsRestApiToPersiste
     public function changeItemQuantity(PersistentCartChangeQuantityTransfer $persistentCartChangeQuantityTransfer): QuoteResponseTransfer
     {
         return $this->persistentCartFacade->changeItemQuantity($persistentCartChangeQuantityTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function validateQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    {
+        return $this->persistentCartFacade->validateQuote($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PersistentCartChangeTransfer $persistentCartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function add(PersistentCartChangeTransfer $persistentCartChangeTransfer): QuoteResponseTransfer
+    {
+        return $this->persistentCartFacade->add($persistentCartChangeTransfer);
     }
 }

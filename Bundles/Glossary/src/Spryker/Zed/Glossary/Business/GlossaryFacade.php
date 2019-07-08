@@ -392,6 +392,23 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string $glossaryKey
+     * @param \Generated\Shared\Transfer\LocaleTransfer[] $localeTransfers
+     *
+     * @return \Generated\Shared\Transfer\TranslationTransfer[]
+     */
+    public function getTranslationsByGlossaryKeyAndLocales(string $glossaryKey, array $localeTransfers): array
+    {
+        return $this->getFactory()
+            ->createTranslationReader()
+            ->getTranslationsByGlossaryKeyAndLocaleTransfers($glossaryKey, $localeTransfers);
+    }
+
+    /**
      * {@inheritdoc}
      *
      * @api
@@ -414,7 +431,7 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
      *
      * @return \Generated\Shared\Transfer\SpyGlossaryKeyEntityTransfer[]
      */
-    public function findFilteredGlossaryKeyEntityTransfers(FilterTransfer $filterTransfer)
+    public function findFilteredGlossaryKeyEntityTransfers(FilterTransfer $filterTransfer): array
     {
         return $this->getRepository()->findFilteredGlossaryKeyEntityTransfers($filterTransfer);
     }

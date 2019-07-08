@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Cart\Business\Exception\InvalidQuantityExeption;
-use Spryker\Zed\Cart\Dependency\Service\CartToUtilQuantityServiceInterface;
 use Traversable;
 
 class NonPersistentProvider implements StorageProviderInterface
@@ -27,23 +26,15 @@ class NonPersistentProvider implements StorageProviderInterface
     protected $cartRemoveItemStrategyPlugins;
 
     /**
-     * @var \Spryker\Zed\Cart\Dependency\Service\CartToUtilQuantityServiceInterface
-     */
-    protected $utilQuantityService;
-
-    /**
      * @param \Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationStrategyPluginInterface[] $cartAddItemStrategyPlugins
      * @param \Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationStrategyPluginInterface[] $cartRemoveItemStrategyPlugins
-     * @param \Spryker\Zed\Cart\Dependency\Service\CartToUtilQuantityServiceInterface $utilQuantityService
      */
     public function __construct(
         array $cartAddItemStrategyPlugins,
-        array $cartRemoveItemStrategyPlugins,
-        CartToUtilQuantityServiceInterface $utilQuantityService
+        array $cartRemoveItemStrategyPlugins
     ) {
         $this->cartAddItemStrategyPlugins = $cartAddItemStrategyPlugins;
         $this->cartRemoveItemStrategyPlugins = $cartRemoveItemStrategyPlugins;
-        $this->utilQuantityService = $utilQuantityService;
     }
 
     /**
@@ -172,32 +163,18 @@ class NonPersistentProvider implements StorageProviderInterface
             }
         }
 
-        if ($existingItemTransfer === null && isset($existingItems[$itemIndex])) {
+        if ($existingItemTransfer === null) {
             $itemIndex = $cartIndex[$itemIdentifier];
             $existingItemTransfer = $existingItems[$itemIndex];
         }
 
-        $changedQuantity = $this->subtractQuantities(
-            $existingItemTransfer->getQuantity(),
-            $itemTransfer->getQuantity()
-        );
+        $changedQuantity = $existingItemTransfer->getQuantity() - $itemTransfer->getQuantity();
 
         if ($changedQuantity > 0) {
             $existingItemTransfer->setQuantity($changedQuantity);
         } else {
             unset($existingItems[$itemIndex]);
         }
-    }
-
-    /**
-     * @param float $firstQuantity
-     * @param float $secondQuantity
-     *
-     * @return float
-     */
-    protected function subtractQuantities(float $firstQuantity, float $secondQuantity): float
-    {
-        return $this->utilQuantityService->subtractQuantities($firstQuantity, $secondQuantity);
     }
 
     /**
@@ -209,28 +186,10 @@ class NonPersistentProvider implements StorageProviderInterface
      */
     protected function increaseExistingItem(Traversable $existingItems, $index, $itemTransfer)
     {
-        if (!isset($existingItems[$index])) {
-            return;
-        }
-
         $existingItemTransfer = $existingItems[$index];
-        $changedQuantity = $this->sumQuantities(
-            $existingItemTransfer->getQuantity(),
-            $itemTransfer->getQuantity()
-        );
+        $changedQuantity = $existingItemTransfer->getQuantity() + $itemTransfer->getQuantity();
 
         $existingItemTransfer->setQuantity($changedQuantity);
-    }
-
-    /**
-     * @param float $firstQuantity
-     * @param float $secondQuantity
-     *
-     * @return float
-     */
-    protected function sumQuantities(float $firstQuantity, float $secondQuantity): float
-    {
-        return $this->utilQuantityService->sumQuantities($firstQuantity, $secondQuantity);
     }
 
     /**
@@ -242,7 +201,7 @@ class NonPersistentProvider implements StorageProviderInterface
      */
     protected function isValidQuantity(ItemTransfer $itemTransfer)
     {
-        if ($this->isQuantityLessOrEqual($itemTransfer->getQuantity(), 0)) {
+        if ($itemTransfer->getQuantity() < 1) {
             throw new InvalidQuantityExeption(
                 sprintf(
                     'Could not change the quantity of cart item "%s" to "%d".',
@@ -253,16 +212,5 @@ class NonPersistentProvider implements StorageProviderInterface
         }
 
         return true;
-    }
-
-    /**
-     * @param float $firstQuantity
-     * @param float $secondQuantity
-     *
-     * @return bool
-     */
-    protected function isQuantityLessOrEqual(float $firstQuantity, float $secondQuantity): bool
-    {
-        return $this->utilQuantityService->isQuantityLessOrEqual($firstQuantity, $secondQuantity);
     }
 }

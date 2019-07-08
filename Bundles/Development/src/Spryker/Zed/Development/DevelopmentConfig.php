@@ -275,6 +275,8 @@ class DevelopmentConfig extends AbstractBundleConfig
             'Egulias\\EmailValidator\\' => 'spryker/egulias',
             'Ramsey\\Uuid' => 'spryker/ramsey-uuid',
             'Doctrine\\Common\\Inflector' => 'spryker/doctrine-inflector',
+            'JsonPath\\' => 'spryker/json-path',
+            'JsonSchema\\' => 'spryker/json-schema',
         ];
     }
 
@@ -551,6 +553,8 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
+     * @deprecated Use `spryker/module-finder` instead.
+     *
      * @return string[]
      */
     public function getInternalPackageDirectories(): array

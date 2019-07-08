@@ -46,16 +46,26 @@ class SessionCommunicationFactory extends AbstractCommunicationFactory
      */
     protected function createSessionStorageHandlerPool()
     {
-        $sessionHandlerPool = new SessionStorageHandlerPool();
-        $sessionHandlerPool
-            ->addHandler($this->createSessionHandlerRedis(), SessionConfig::SESSION_HANDLER_REDIS)
-            ->addHandler($this->createSessionHandlerRedisLocking(), SessionConfig::SESSION_HANDLER_REDIS_LOCKING)
-            ->addHandler($this->createSessionHandlerFile(), SessionConfig::SESSION_HANDLER_FILE);
+        $sessionHandlerPool = new SessionStorageHandlerPool(
+            $this->getSessionHandlerPlugins()
+        );
+
+        /**
+         * This check was added because of BC and will be removed in the next major release.
+         */
+        if (!$this->getSessionHandlerPlugins()) {
+            $sessionHandlerPool
+                ->addHandler($this->createSessionHandlerRedis(), SessionConfig::SESSION_HANDLER_REDIS)
+                ->addHandler($this->createSessionHandlerRedisLocking(), SessionConfig::SESSION_HANDLER_REDIS_LOCKING)
+                ->addHandler($this->createSessionHandlerFile(), SessionConfig::SESSION_HANDLER_FILE);
+        }
 
         return $sessionHandlerPool;
     }
 
     /**
+     * @deprecated Use `Spryker\Zed\SessionExtension\Dependency\Plugin\SessionLockReleaserPluginInterface` instead.
+     *
      * @return \Spryker\Shared\Session\Business\Handler\SessionHandlerRedis|\SessionHandlerInterface
      */
     protected function createSessionHandlerRedis()
@@ -67,6 +77,8 @@ class SessionCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @deprecated Use `Spryker\Zed\SessionRedis\Communication\SessionRedisCommunicationFactory::createSessionHandlerRedisLocking()` instead.
+     *
      * @return \Spryker\Shared\Session\Business\Handler\SessionHandlerRedisLocking|\SessionHandlerInterface
      */
     protected function createSessionHandlerRedisLocking()
@@ -78,6 +90,8 @@ class SessionCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @deprecated Use `Spryker\Zed\SessionFile\Communication\SessionFileCommunicationFactory::createSessionHandlerFile()` instead.
+     *
      * @return \Spryker\Shared\Session\Business\Handler\SessionHandlerRedisLocking|\SessionHandlerInterface
      */
     protected function createSessionHandlerFile()
@@ -88,11 +102,16 @@ class SessionCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @deprecated User `Spryker\Zed\SessionRedis\Communication\SessionRedisCommunicationFactory::createSessionHandlerFactory()` instead.
+     *
      * @return \Spryker\Zed\Session\Communication\SessionHandlerFactory
      */
     protected function createSessionHandlerFactory()
     {
-        return new SessionHandlerFactory($this->getConfig()->getSessionLifeTime(), $this->getMonitoringService());
+        return new SessionHandlerFactory(
+            $this->getConfig()->getSessionLifeTime(),
+            $this->getMonitoringService()
+        );
     }
 
     /**
@@ -101,6 +120,14 @@ class SessionCommunicationFactory extends AbstractCommunicationFactory
     public function getMonitoringService(): SessionToMonitoringServiceInterface
     {
         return $this->getProvidedDependency(SessionDependencyProvider::MONITORING_SERVICE);
+    }
+
+    /**
+     * @return \Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerProviderPluginInterface[]
+     */
+    protected function getSessionHandlerPlugins(): array
+    {
+        return $this->getProvidedDependency(SessionDependencyProvider::PLUGINS_SESSION_HANDLER);
     }
 
     /**

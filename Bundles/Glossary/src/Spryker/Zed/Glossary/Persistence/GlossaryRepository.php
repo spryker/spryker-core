@@ -8,6 +8,8 @@
 namespace Spryker\Zed\Glossary\Persistence;
 
 use Generated\Shared\Transfer\FilterTransfer;
+use Generated\Shared\Transfer\TranslationTransfer;
+use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
@@ -17,11 +19,57 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 class GlossaryRepository extends AbstractRepository implements GlossaryRepositoryInterface
 {
     /**
+     * @param string $glossaryKey
+     * @param string[] $localeIsoCodes
+     *
+     * @return \Generated\Shared\Transfer\TranslationTransfer[]
+     */
+    public function getTranslationsByGlossaryKeyAndLocaleIsoCodes(string $glossaryKey, array $localeIsoCodes): array
+    {
+        $glossaryTranslationEntities = $this->getFactory()->createGlossaryTranslationQuery()
+            ->useGlossaryKeyQuery()
+                ->filterByKey($glossaryKey)
+            ->endUse()
+            ->useLocaleQuery()
+                ->filterByLocaleName_In($localeIsoCodes)
+            ->endUse()
+            ->find();
+
+        if ($glossaryTranslationEntities->count() === 0) {
+            return [];
+        }
+
+        return $this->mapGlossaryTranslationEntitiesToTranslationTransfers($glossaryTranslationEntities);
+    }
+
+    /**
+     * @param \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslation[]|\Propel\Runtime\Collection\ObjectCollection $glossaryTranslationEntities
+     *
+     * @return \Generated\Shared\Transfer\TranslationTransfer[]
+     */
+    protected function mapGlossaryTranslationEntitiesToTranslationTransfers(ObjectCollection $glossaryTranslationEntities): array
+    {
+        $translationTransfers = [];
+        $glossaryMapper = $this->getFactory()
+            ->createGlossaryMapper();
+
+        foreach ($glossaryTranslationEntities as $glossaryTranslationEntity) {
+            $translationTransfer = new TranslationTransfer();
+            $translationTransfer = $glossaryMapper
+                ->mapGlossaryTranslationEntityToTranslationTransfer($glossaryTranslationEntity, $translationTransfer);
+
+            $translationTransfers[] = $translationTransfer;
+        }
+
+        return $translationTransfers;
+    }
+
+    /**
      * @param array $glossaryKeyIds
      *
      * @return \Generated\Shared\Transfer\SpyGlossaryTranslationEntityTransfer[]
      */
-    public function findGlossaryTranslationEntityTransfer(array $glossaryKeyIds)
+    public function findGlossaryTranslationEntityTransfer(array $glossaryKeyIds): array
     {
         if (!$glossaryKeyIds) {
             return [];
@@ -30,8 +78,8 @@ class GlossaryRepository extends AbstractRepository implements GlossaryRepositor
         $query = $this->getFactory()
             ->createGlossaryTranslationQuery()
             ->leftJoinWithGlossaryKey()
-                ->joinWithLocale()
-                ->addAnd('fk_glossary_key', $glossaryKeyIds, Criteria::IN);
+            ->joinWithLocale()
+            ->addAnd('fk_glossary_key', $glossaryKeyIds, Criteria::IN);
 
         return $this->buildQueryFromCriteria($query)->find();
     }
@@ -41,7 +89,7 @@ class GlossaryRepository extends AbstractRepository implements GlossaryRepositor
      *
      * @return \Generated\Shared\Transfer\SpyGlossaryKeyEntityTransfer[]
      */
-    public function findFilteredGlossaryKeyEntityTransfers(FilterTransfer $filterTransfer)
+    public function findFilteredGlossaryKeyEntityTransfers(FilterTransfer $filterTransfer): array
     {
         $query = $this->getFactory()->createGlossaryKeyQuery()
             ->setLimit($filterTransfer->getLimit())

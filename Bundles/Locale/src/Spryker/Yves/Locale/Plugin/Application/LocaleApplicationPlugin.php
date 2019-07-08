@@ -48,14 +48,14 @@ class LocaleApplicationPlugin extends AbstractPlugin implements ApplicationPlugi
      */
     protected function addLocale(ContainerInterface $container): ContainerInterface
     {
-        $container->set(static::BC_FEATURE_FLAG_LOCALE_LISTENER, false);
-        $container->set(static::SERVICE_LOCALE, function (ContainerInterface $container) {
+        $container[static::BC_FEATURE_FLAG_LOCALE_LISTENER] = false;
+        $container[static::SERVICE_LOCALE] = function (ContainerInterface $container) {
             $localeName = $this->getLocaleTransfer($container)->getLocaleName();
             $this->getFactory()->getStore()->setCurrentLocale($localeName);
             ApplicationEnvironment::initializeLocale($localeName);
 
             return $localeName;
-        });
+        };
 
         return $container;
     }

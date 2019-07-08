@@ -12,16 +12,24 @@ use Generated\Shared\Transfer\FilterTransfer;
 interface GlossaryRepositoryInterface
 {
     /**
+     * @param string $keyName
+     * @param array $localeIsoCodes
+     *
+     * @return \Generated\Shared\Transfer\TranslationTransfer[]
+     */
+    public function getTranslationsByGlossaryKeyAndLocaleIsoCodes(string $keyName, array $localeIsoCodes): array;
+
+    /**
      * @param array $glossaryKeyIds
      *
      * @return \Generated\Shared\Transfer\SpyGlossaryTranslationEntityTransfer[]
      */
-    public function findGlossaryTranslationEntityTransfer(array $glossaryKeyIds);
+    public function findGlossaryTranslationEntityTransfer(array $glossaryKeyIds): array;
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
      * @return \Generated\Shared\Transfer\SpyGlossaryKeyEntityTransfer[]
      */
-    public function findFilteredGlossaryKeyEntityTransfers(FilterTransfer $filterTransfer);
+    public function findFilteredGlossaryKeyEntityTransfers(FilterTransfer $filterTransfer): array;
 }

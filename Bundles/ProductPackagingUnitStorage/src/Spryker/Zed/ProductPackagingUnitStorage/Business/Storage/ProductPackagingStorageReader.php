@@ -251,7 +251,7 @@ class ProductPackagingStorageReader implements ProductPackagingStorageReaderInte
     ): void {
 
         $productConcretePackagingStorageTransfer
-            ->setDefaultAmount((float)$productPackagingUnitAmountEntityTransfer->getDefaultAmount())
+            ->setDefaultAmount($productPackagingUnitAmountEntityTransfer->getDefaultAmount())
             ->setIsVariable($productPackagingUnitAmountEntityTransfer->getIsVariable());
 
         if ($productPackagingUnitAmountEntityTransfer->getIsVariable()) {
@@ -260,9 +260,9 @@ class ProductPackagingStorageReader implements ProductPackagingStorageReaderInte
             $amountMax = $productPackagingUnitAmountEntityTransfer->getAmountMax();
 
             $productConcretePackagingStorageTransfer
-                ->setAmountMin((float)$amountMin)
-                ->setAmountMax((float)$amountMax)
-                ->setAmountInterval((float)$amountInterval);
+                ->setAmountMin($amountMin)
+                ->setAmountMax($amountMax)
+                ->setAmountInterval($amountInterval);
         }
     }
 

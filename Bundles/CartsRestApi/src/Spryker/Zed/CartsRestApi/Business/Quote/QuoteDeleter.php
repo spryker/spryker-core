@@ -61,6 +61,7 @@ class QuoteDeleter implements QuoteDeleterInterface
             return $quoteResponseTransfer;
         }
 
+        $originalQuoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
         $quoteTransfer->setIdQuote($quoteResponseTransfer->getQuoteTransfer()->getIdQuote());
 
         if (!$this->quotePermissionChecker->checkQuoteWritePermission($quoteTransfer)) {
@@ -71,7 +72,7 @@ class QuoteDeleter implements QuoteDeleterInterface
         }
 
         $quoteResponseTransfer = $this->persistentCartFacade->deleteQuote(
-            $quoteResponseTransfer->getQuoteTransfer()->setCustomer($quoteTransfer->getCustomer())
+            $originalQuoteTransfer->setCustomer($quoteTransfer->getCustomer())
         );
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {

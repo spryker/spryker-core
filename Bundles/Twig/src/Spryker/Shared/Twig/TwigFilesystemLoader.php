@@ -103,34 +103,90 @@ class TwigFilesystemLoader implements FilesystemLoaderInterface
     }
 
     /**
-     * @param string $bundle
+     * @param string $moduleOrganization
      *
      * @return array
      */
-    protected function getPathsForBundle($bundle)
+    protected function getPathsForBundle($moduleOrganization)
     {
         $paths = [];
+
+        $organization = $this->extractOrganization($moduleOrganization);
+        $module = $this->extractModule($moduleOrganization);
+
         foreach ($this->paths as $path) {
-            $package = $bundle;
+            $package = $module;
+            $path = $this->getNamespacedPath($path, $organization);
 
             if ($this->isPathInSplit($path)) {
-                $package = $this->filterBundleName($bundle);
+                $package = $this->filterBundleName($module);
             }
 
-            $path = sprintf($path, $bundle, $package);
-            if (strpos($path, '*') === false) {
+            $path = sprintf($path, $module, $package);
+            if (strpos($path, '*') === false && is_dir($path)) {
                 $paths[] = $path;
 
                 continue;
             }
 
-            $path = glob($path);
+            $path = glob($path, GLOB_ONLYDIR | GLOB_NOSORT);
             if (count($path) > 0) {
                 $paths[] = $path[0];
             }
         }
 
         return $paths;
+    }
+
+    /**
+     * @param string $organizationModule
+     *
+     * @return string|null
+     */
+    protected function extractOrganization(string $organizationModule): ?string
+    {
+        if (strpos($organizationModule, ':') === false) {
+            return null;
+        }
+
+        $organizationModule = explode(':', $organizationModule);
+
+        return current($organizationModule);
+    }
+
+    /**
+     * @param string $organizationModule
+     *
+     * @return string|null
+     */
+    protected function extractModule(string $organizationModule): ?string
+    {
+        if (strpos($organizationModule, ':') === false) {
+            return $organizationModule;
+        }
+
+        $organizationModule = explode(':', $organizationModule);
+
+        return array_pop($organizationModule);
+    }
+
+    /**
+     * @param string $path
+     * @param string|null $organization
+     *
+     * @return string
+     */
+    protected function getNamespacedPath(string $path, ?string $organization): string
+    {
+        if ($organization === null) {
+            return $path;
+        }
+
+        $pathFragments = explode(DIRECTORY_SEPARATOR, $path);
+        $positionOfSourceDirectory = array_search('src', $pathFragments);
+        $pathFragments[$positionOfSourceDirectory + 1] = $organization;
+
+        return implode(DIRECTORY_SEPARATOR, $pathFragments);
     }
 
     /**
