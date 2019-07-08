@@ -513,6 +513,22 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      *
      * @api
      *
+     * @param int $idSalesOrder
+     *
+     * @return string[]
+     */
+    public function getDistinctManualEventsByIdSalesOrderGroupedByShipment(int $idSalesOrder): array
+    {
+        return $this->getFactory()
+            ->createManualOrderReader()
+            ->getDistinctManualEventsByIdSalesOrderGroupedByShipment($idSalesOrder);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @return void
      */
     public function clearLocks()

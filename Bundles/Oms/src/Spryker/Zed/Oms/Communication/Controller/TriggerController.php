@@ -20,18 +20,38 @@ use Symfony\Component\HttpFoundation\Request;
 class TriggerController extends AbstractController
 {
     /**
+     * @deprecated Exists for Backward Compatibility reasons only. Use static::REQUEST_PARAMETER_ITEMS instead.
+     */
+    protected const REQUEST_PARAMETER_ID_SALES_ORDER_ITEM = 'id-sales-order-item';
+    protected const REQUEST_PARAMETER_ID_SALES_ORDER = 'id-sales-order';
+    protected const REQUEST_PARAMETER_ITEMS = 'items';
+    protected const REQUEST_PARAMETER_EVENT = 'event';
+    protected const REQUEST_PARAMETER_REDIRECT = 'redirect';
+
+    protected const MESSAGE_STATUS_CHANGED_SUCCESSFULLY = 'Status change triggered successfully.';
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function triggerEventForOrderItemsAction(Request $request)
     {
-        $idOrderItem = $this->castId($request->query->getInt('id-sales-order-item'));
-        $event = $request->query->get('event');
-        $redirect = $request->query->get('redirect', '/');
+        $idOrderItems = $request->query->get(static::REQUEST_PARAMETER_ITEMS);
 
-        $this->getFacade()->triggerEventForOrderItems($event, [$idOrderItem]);
-        $this->addInfoMessage('Status change triggered successfully.');
+        /**
+         * Exists for Backward Compatibility reasons only.
+         */
+        $idOrderItem = $request->query->get(static::REQUEST_PARAMETER_ID_SALES_ORDER_ITEM);
+        if ($idOrderItems === null && $idOrderItem !== null) {
+            $idOrderItems = [$idOrderItem];
+        }
+
+        $event = $request->query->get(static::REQUEST_PARAMETER_EVENT);
+        $redirect = $request->query->get(static::REQUEST_PARAMETER_REDIRECT, '/');
+
+        $this->getFacade()->triggerEventForOrderItems($event, $idOrderItems);
+        $this->addInfoMessage(static::MESSAGE_STATUS_CHANGED_SUCCESSFULLY);
 
         return $this->redirectResponse($redirect);
     }
@@ -43,15 +63,15 @@ class TriggerController extends AbstractController
      */
     public function triggerEventForOrderAction(Request $request)
     {
-        $idOrder = $this->castId($request->query->getInt('id-sales-order'));
-        $event = $request->query->get('event');
-        $redirect = $request->query->get('redirect', '/');
-        $itemsList = $request->query->get('items');
+        $idOrder = $this->castId($request->query->getInt(static::REQUEST_PARAMETER_ID_SALES_ORDER));
+        $event = $request->query->get(static::REQUEST_PARAMETER_EVENT);
+        $redirect = $request->query->get(static::REQUEST_PARAMETER_REDIRECT, '/');
+        $itemsList = $request->query->get(static::REQUEST_PARAMETER_ITEMS);
 
         $orderItems = $this->getOrderItemsToTriggerAction($idOrder, $itemsList);
 
         $this->getFacade()->triggerEvent($event, $orderItems, []);
-        $this->addInfoMessage('Status change triggered successfully.');
+        $this->addInfoMessage(static::MESSAGE_STATUS_CHANGED_SUCCESSFULLY);
 
         return $this->redirectResponse($redirect);
     }

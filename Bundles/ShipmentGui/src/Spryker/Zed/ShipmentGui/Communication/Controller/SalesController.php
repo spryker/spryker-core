@@ -27,12 +27,16 @@ class SalesController extends AbstractController
     {
         /** @var \Generated\Shared\Transfer\OrderTransfer|null $orderTransfer */
         $orderTransfer = $request->attributes->get('orderTransfer');
+
         if ($orderTransfer === null) {
             throw new OrderNotFoundException();
         }
 
         /** @var string[] $events */
         $events = $request->attributes->get('events', []);
+
+        /** @var string[] $eventsGroupedByShipment */
+        $eventsGroupedByShipment = $request->attributes->get('eventsGroupedByShipment', []);
 
         /** @var string[][] $events */
         $eventsGroupedByItem = $request->attributes->get('eventsGroupedByItem', []);
@@ -43,6 +47,7 @@ class SalesController extends AbstractController
 
         return $this->viewResponse([
             'events' => $events,
+            'eventsGroupedByShipment' => $eventsGroupedByShipment,
             'eventsGroupedByItem' => $eventsGroupedByItem,
             'order' => $orderTransfer,
             'groupedOrderItemsByShipment' => $shipmentGroupsCollection,

@@ -40,9 +40,10 @@ class DetailController extends AbstractController
         }
 
         $distinctOrderStates = $this->getFacade()->getDistinctOrderStates($idSalesOrder);
-        $events = $this->getFactory()->getOmsFacade()->getDistinctManualEventsByIdSalesOrder($idSalesOrder);
+        $eventsGroupedByShipment = $this->getFactory()->getOmsFacade()->getDistinctManualEventsByIdSalesOrderGroupedByShipment($idSalesOrder);
         $eventsGroupedByItem = $this->getFactory()->getOmsFacade()->getManualEventsByIdSalesOrder($idSalesOrder);
         $orderItemSplitFormCollection = $this->getFactory()->createOrderItemSplitFormCollection($orderTransfer->getItems());
+        $events = $this->getFactory()->getOmsFacade()->getDistinctManualEventsByIdSalesOrder($idSalesOrder);
 
         $blockResponseData = $this->renderSalesDetailBlocks($request, $orderTransfer);
         if ($blockResponseData instanceof RedirectResponse) {
@@ -55,6 +56,7 @@ class DetailController extends AbstractController
         return array_merge([
             'eventsGroupedByItem' => $eventsGroupedByItem,
             'events' => $events,
+            'eventsGroupedByShipment' => $eventsGroupedByShipment,
             'distinctOrderStates' => $distinctOrderStates,
             'order' => $orderTransfer,
             'orderItemSplitFormCollection' => $orderItemSplitFormCollection,

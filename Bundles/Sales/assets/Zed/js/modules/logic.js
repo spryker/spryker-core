@@ -33,15 +33,13 @@ function createTriggerUrl(idOrder, eventName) {
     return decodeURIComponent(finalUrl);
 }
 
-function createTriggerItemUrl(idOrder, idOrderItem, eventName) {
+function createTriggerItemsUrl(idOrder, idOrderItems, eventName) {
     var url = '/oms/trigger/trigger-event-for-order-items';
     var parameters = {
         event: eventName,
-        'id-sales-order-item': idOrderItem,
-        redirect: '/sales/detail?id-sales-order=' + idOrder
+        redirect: '/sales/detail?id-sales-order=' + idOrder,
+        items: idOrderItems,
     };
-
-    parameters.items = getSelectedItems();
 
     var finalUrl = url + '?' + $.param(parameters);
 
@@ -66,20 +64,50 @@ $(document).ready(function() {
         var eventName = $item.data('event');
         var idOrderItem = $item.data('id-item');
 
-        window.location = createTriggerItemUrl(idOrder, idOrderItem, eventName);
+        window.location = createTriggerItemsUrl(idOrder, [idOrderItem], eventName);
     });
 
-    $('.trigger-order-event').click(function(e){
+    $('.trigger-order-event-for-all-items').click(function (e) {
         e.preventDefault();
 
         var $item = $(this);
-        
+
         disableTrigger($item);
 
         var idOrder = $item.data('id-sales-order');
         var eventName = $item.data('event');
 
         window.location = createTriggerUrl(idOrder, eventName);
+    });
+
+    $('.trigger-order-event').click(function (e) {
+        e.preventDefault();
+
+        var $item = $(this);
+
+        disableTrigger($item);
+
+        var idOrder = $item.data('id-sales-order');
+        var eventName = $item.data('event');
+        var idShipment = $item.data('id-sales-shipment');
+        var $shipmentTable = $('.shipment-item-table-' + idShipment);
+        var $idOrderItems = $shipmentTable.find('input[name="order-item"]');
+        var idOrderItemsCheckedList = [];
+        var idOrderItemsFullList = [];
+
+        $idOrderItems.each(function () {
+            idOrderItemsFullList.push($(this).val());
+
+            if ($(this).prop('checked')) {
+                idOrderItemsCheckedList.push($(this).val());
+            }
+        });
+
+        if (!idOrderItemsCheckedList.length) {
+            idOrderItemsCheckedList = idOrderItemsFullList;
+        }
+
+        window.location = createTriggerItemsUrl(idOrder, idOrderItemsCheckedList, eventName);
     });
 
     $('.item-check').click(function(){
@@ -128,15 +156,7 @@ $(document).ready(function() {
         $('#split_form_row_' + theID).toggle();
     });
 
-    $('#check-all-orders').click(function(){
-        if ($(this).prop('checked') === true) {
-            var checked = true;
-        } else {
-            var checked = false;
-        }
-
-        $('.item-check').each(function(){
-            $(this).prop('checked', checked);
-        });
+    $('.check-all-orders').click(function(){
+        $(this).closest('table').find('.item-check').prop('checked', $(this).prop('checked'));
     });
 });

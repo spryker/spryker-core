@@ -13,6 +13,8 @@ use Spryker\Zed\Oms\Business\Mail\MailHandler;
 use Spryker\Zed\Oms\Business\OrderStateMachine\Builder;
 use Spryker\Zed\Oms\Business\OrderStateMachine\Finder;
 use Spryker\Zed\Oms\Business\OrderStateMachine\LockedOrderStateMachine;
+use Spryker\Zed\Oms\Business\OrderStateMachine\ManualEventReader;
+use Spryker\Zed\Oms\Business\OrderStateMachine\ManualEventReaderInterface;
 use Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachine;
 use Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachineFlagReader;
 use Spryker\Zed\Oms\Business\OrderStateMachine\PersistenceManager;
@@ -109,6 +111,17 @@ class OmsBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->createOrderStateMachineBuilder(),
             $config->getActiveProcesses()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Oms\Business\OrderStateMachine\ManualEventReaderInterface
+     */
+    public function createManualOrderReader(): ManualEventReaderInterface
+    {
+        return new ManualEventReader(
+            $this->getQueryContainer(),
+            $this->createOrderStateMachineBuilder()
         );
     }
 
