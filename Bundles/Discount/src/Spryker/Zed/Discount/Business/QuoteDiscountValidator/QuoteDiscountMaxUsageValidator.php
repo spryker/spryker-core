@@ -48,7 +48,7 @@ class QuoteDiscountMaxUsageValidator implements QuoteDiscountValidatorInterface
         $voucherCodesExceedingUsageLimit = $this->findVoucherCodesExceedingUsageLimit($voucherDiscounts);
         foreach ($voucherCodesExceedingUsageLimit as $voucherCode) {
             $this->addError(
-                $this->createVoucherCodeLimitReachedMessageTransfer(),
+                $this->createVoucherCodeLimitReachedMessageTransfer($voucherCode),
                 static::ERROR_VOUCHER_CODE_LIMIT_REACHED,
                 $checkoutResponseTransfer
             );
@@ -58,12 +58,17 @@ class QuoteDiscountMaxUsageValidator implements QuoteDiscountValidatorInterface
     }
 
     /**
+     * @param string $voucherCode
+     *
      * @return \Generated\Shared\Transfer\MessageTransfer
      */
-    protected function createVoucherCodeLimitReachedMessageTransfer(): MessageTransfer
+    protected function createVoucherCodeLimitReachedMessageTransfer(string $voucherCode): MessageTransfer
     {
         return (new MessageTransfer())
-            ->setValue(VoucherValidator::REASON_VOUCHER_CODE_LIMIT_REACHED);
+            ->setValue(VoucherValidator::REASON_VOUCHER_CODE_LIMIT_REACHED)
+            ->setParameters([
+                '%code%' => $voucherCode,
+            ]);
     }
 
     /**
