@@ -363,7 +363,7 @@ class FacetResultFormatterPluginTest extends AbstractResultFormatterPluginTest
                 ->setActiveMin(10)
                 ->setActiveMax(20)
                 ->setDefaultMin(10)
-                ->setDefaultMax(20)
+                ->setDefaultMax(20),
         ];
 
         return [$searchConfig, $aggregationResult, $expectedResult];
