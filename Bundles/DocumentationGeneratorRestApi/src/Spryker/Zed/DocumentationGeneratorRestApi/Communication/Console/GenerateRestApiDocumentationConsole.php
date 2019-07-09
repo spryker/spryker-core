@@ -12,7 +12,6 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method \Spryker\Zed\DocumentationGeneratorRestApi\DocumentationGeneratorRestApiConfig getConfig()
  * @method \Spryker\Zed\DocumentationGeneratorRestApi\Business\DocumentationGeneratorRestApiFacadeInterface getFacade()
  * @method \Spryker\Zed\DocumentationGeneratorRestApi\Communication\DocumentationGeneratorRestApiCommunicationFactory getFactory()
  */
@@ -40,7 +39,7 @@ class GenerateRestApiDocumentationConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        if ($this->getConfig()->isRestApiDocumentationGeneratorEnabled()) {
+        if ($this->getFactory()->getConfig()->isRestApiDocumentationGeneratorEnabled()) {
             $this->getFacade()->generateDocumentation();
 
             return static::CODE_SUCCESS;
