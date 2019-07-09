@@ -110,37 +110,46 @@ var ContentItemDialog = function(
                 }
             };
 
+            this.updateElementForInsert = function ($clickedNode, elementForInsert) {
+                if (this.isNodeEmpty($clickedNode)) {
+                    this.clearNode($clickedNode);
+
+                    return elementForInsert;
+                }
+
+                return '<p>' + elementForInsert + '</p>';
+            };
+
             this.addItemInEditor = function (elementForInsert) {
                 var $clickedNode = this.context.invoke('contentItemPopover.getClickedNode');
 
                 if ($clickedNode.length) {
                     this.clearNode($clickedNode);
-                } else {
-                    $clickedNode = $(this.context.invoke('editor.createRange').sc);
-
-                    if (this.isNodeEmpty($clickedNode)) {
-                        this.clearNode($clickedNode);
-                    } else {
-                        elementForInsert = '<p>' + elementForInsert + '</p>'
-                    }
                 }
 
-                this.context.invoke('pasteHTML', elementForInsert);
+                if (!$clickedNode.length) {
+                    $clickedNode = $(this.context.invoke('editor.createRange').sc);
+                    elementForInsert = this.updateElementForInsert($clickedNode, elementForInsert);
+                }
+
+                this.context.invoke('pasteHTML', elementForInsert)
                 this.removeUnecessaryLines($clickedNode);
             };
 
             this.isNodeEmpty = function ($clickedNode) {
                 var $nodeInnerItems = $clickedNode.children();
 
-                return $nodeInnerItems.length <= 1 && $nodeInnerItems.eq(0).is('br');
+                return $nodeInnerItems.length <= 1 && $nodeInnerItems.eq(0).is('br'); // Empty node in summernote consider <br> tag
             };
 
             this.isWidgetEmpty = function ($clickedNode) {
                 var $nodeInnerItems = $clickedNode.children();
 
-                return $nodeInnerItems.length <= 1 &&
-                    $nodeInnerItems.eq(0).is('span') &&
-                    $nodeInnerItems.children().length <= 1;
+                if (!$nodeInnerItems.eq(0).is('.js-content-item-editor')) {
+                    return false;
+                }
+
+                return $nodeInnerItems.length <= 1 && $nodeInnerItems.children().length <= 1;
             };
 
             this.removeItemFromEditor = function () {
@@ -170,9 +179,9 @@ var ContentItemDialog = function(
             };
 
             this.clearNode = function ($clickedNode) {
-                var $clickedNodeParent = $clickedNode.parent('p');
+                $clickedNode = $clickedNode.is('p') ? $clickedNode : $clickedNode.parents('p');
 
-                $clickedNodeParent.empty();
+                $clickedNode.empty();
             };
 
             this.getNewDomElement = function (
