@@ -128,9 +128,9 @@ var ContentItemEditor = function(options) {
             $('<p><br></p>').insertAfter($(target));
             var range = document.createRange();
             range.selectNode(target.nextElementSibling.childNodes[0]);
-            var sel = window.getSelection();
-            sel.removeAllRanges();
-            sel.addRange(range);
+            var selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
         };
 
         if (isWidgetWrapper) {
