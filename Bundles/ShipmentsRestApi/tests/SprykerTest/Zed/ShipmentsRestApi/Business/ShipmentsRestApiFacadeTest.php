@@ -128,6 +128,22 @@ class ShipmentsRestApiFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testShipmentsRestApiFacadeWillValidateShipmentMethodCheckoutDataWithInvalidShipmentMethodId(): void
+    {
+        /** @var \Spryker\Zed\ShipmentsRestApi\Business\ShipmentsRestApiFacade $shipmentRestApiFacade */
+        $shipmentRestApiFacade = $this->tester->getFacade();
+        $shipmentRestApiFacade->setFactory($this->getMockShipmentsRestApiFactoryWithShipmentNotFound());
+
+        $checkoutDataTransfer = $this->prepareCheckoutDataTransferWithInvalidShipmentMethodId();
+        $checkoutResponseTransfer = $shipmentRestApiFacade->validateShipmentMethodCheckoutData($checkoutDataTransfer);
+
+        $this->assertFalse($checkoutResponseTransfer->getIsSuccess());
+        $this->assertGreaterThan(0, $checkoutResponseTransfer->getErrors()->count());
+    }
+
+    /**
      * @return \PHPUnit\Framework\MockObject\MockObject
      */
     protected function getMockShipmentsRestApiFactory(): MockObject
@@ -192,10 +208,16 @@ class ShipmentsRestApiFacadeTest extends Unit
     {
         $mockCustomerFacade = $this->createPartialMock(
             ShipmentFacade::class,
-            ['findAvailableMethodById']
+            [
+                'findAvailableMethodById',
+                'findMethodById',
+            ]
         );
 
         $mockCustomerFacade->method('findAvailableMethodById')
+            ->willReturn(null);
+
+        $mockCustomerFacade->method('findMethodById')
             ->willReturn(null);
 
         return $mockCustomerFacade;
