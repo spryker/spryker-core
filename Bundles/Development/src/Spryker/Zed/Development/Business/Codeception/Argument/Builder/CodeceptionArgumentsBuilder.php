@@ -60,7 +60,7 @@ class CodeceptionArgumentsBuilder implements CodeceptionArgumentsBuilderInterfac
      */
     protected function addConfigPath(CodeceptionArguments $codeceptionArguments, array $options): CodeceptionArguments
     {
-        if (array_key_exists(static::OPTION_CONFIG_PATH, $options) && $options[static::OPTION_CONFIG_PATH]) {
+        if (!empty($options[static::OPTION_CONFIG_PATH])) {
             return $codeceptionArguments->addArgument('-c', [$options[static::OPTION_CONFIG_PATH]]);
         }
 
@@ -75,7 +75,7 @@ class CodeceptionArgumentsBuilder implements CodeceptionArgumentsBuilderInterfac
      */
     protected function addIncludeGroups(CodeceptionArguments $codeceptionArguments, array $options): CodeceptionArguments
     {
-        if (array_key_exists(static::OPTION_GROUP_INCLUDE, $options) && $options[static::OPTION_GROUP_INCLUDE]) {
+        if (!empty($options[static::OPTION_GROUP_INCLUDE])) {
             $codeceptionArguments->addArgument(
                 '-g',
                 explode(',', $options[static::OPTION_GROUP_INCLUDE])
@@ -93,7 +93,7 @@ class CodeceptionArgumentsBuilder implements CodeceptionArgumentsBuilderInterfac
      */
     protected function addExcludeGroups(CodeceptionArguments $codeceptionArguments, array $options): CodeceptionArguments
     {
-        if (array_key_exists(static::OPTION_GROUP_EXCLUDE, $options) && $options[static::OPTION_GROUP_EXCLUDE]) {
+        if (!empty($options[static::OPTION_GROUP_EXCLUDE])) {
             $codeceptionArguments->addArgument(
                 '-x',
                 explode(',', $options[static::OPTION_GROUP_EXCLUDE])
@@ -111,7 +111,7 @@ class CodeceptionArgumentsBuilder implements CodeceptionArgumentsBuilderInterfac
      */
     protected function addVerboseMode(CodeceptionArguments $codeceptionArguments, array $options): CodeceptionArguments
     {
-        if (array_key_exists(static::OPTION_VERBOSE, $options) && $options[static::OPTION_VERBOSE]) {
+        if (!empty($options[static::OPTION_VERBOSE])) {
             return $codeceptionArguments->addArgument('-v');
         }
 
@@ -126,7 +126,7 @@ class CodeceptionArgumentsBuilder implements CodeceptionArgumentsBuilderInterfac
      */
     protected function addInclusiveGroups(CodeceptionArguments $codeceptionArguments, array $options): CodeceptionArguments
     {
-        if (array_key_exists(static::OPTION_MODULE, $options) && $options[static::OPTION_MODULE]) {
+        if (!empty($options[static::OPTION_MODULE])) {
             $codeceptionArguments = $this->enableSuiteFilterExtension($codeceptionArguments);
             $codeceptionArguments = $this->buildInlineExtensionConfig($codeceptionArguments, $options);
         }

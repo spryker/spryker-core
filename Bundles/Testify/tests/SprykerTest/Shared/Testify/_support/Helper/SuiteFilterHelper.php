@@ -98,6 +98,8 @@ class SuiteFilterHelper extends Extension
     }
 
     /**
+     * Adds filter to exclude tests with ANY of groups defined in extention configuration.
+     *
      * @param \PHPUnit\Runner\Filter\Factory $filterFactory
      *
      * @return \PHPUnit\Runner\Filter\Factory
@@ -119,6 +121,8 @@ class SuiteFilterHelper extends Extension
     }
 
     /**
+     * Adds filter to include tests with ALL groups defined in extention configuration.
+     *
      * @param \PHPUnit\Runner\Filter\Factory $filterFactory
      *
      * @return \PHPUnit\Runner\Filter\Factory
@@ -140,6 +144,8 @@ class SuiteFilterHelper extends Extension
     }
 
     /**
+     * Adds filter to include tests with ANY of groups defined in command arguments.
+     *
      * @param \PHPUnit\Runner\Filter\Factory $filterFactory
      *
      * @return \PHPUnit\Runner\Filter\Factory
@@ -161,6 +167,8 @@ class SuiteFilterHelper extends Extension
     }
 
     /**
+     * Adds filter to exclude tests with ANY of groups defined in command arguments.
+     *
      * @param \PHPUnit\Runner\Filter\Factory $filterFactory
      *
      * @return \PHPUnit\Runner\Filter\Factory
