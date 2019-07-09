@@ -56,7 +56,7 @@ class ProductMeasurementUnitBusinessTester extends Actor
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      * @param int $idProductMeasurementSalesUnit
      * @param string $sku
-     * @param float $quantity
+     * @param int $quantity
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
@@ -64,7 +64,7 @@ class ProductMeasurementUnitBusinessTester extends Actor
         CartChangeTransfer $cartChangeTransfer,
         int $idProductMeasurementSalesUnit,
         $sku,
-        $quantity = 1.0
+        $quantity = 1
     ): CartChangeTransfer {
         $quantitySalesUnit = $this->createProductMeasurementSalesUnitTransfer($idProductMeasurementSalesUnit);
 

@@ -37,4 +37,14 @@ interface KernelConstants
      */
     public const DOMAIN_WHITELIST = 'KERNEL:DOMAIN_WHITELIST';
     public const STRICT_DOMAIN_REDIRECT = 'KERNEL:STRICT_DOMAIN_REDIRECT';
+
+    /**
+     * Specification:
+     * - Defines the mode when a dependency container can be overridden, e.g. for testing needs.
+     * - This should set to `true` to be able to use \Spryker\Shared\Kernel\ContainerMocker\ContainerGlobals
+     *   via \SprykerTest\Shared\Testify\Helper\DependencyHelper for overriding dependencies in container for testing.
+     *
+     * @api
+     */
+    public const ENABLE_CONTAINER_OVERRIDING = 'KERNEL:ENABLE_CONTAINER_OVERRIDING';
 }

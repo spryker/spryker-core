@@ -11,10 +11,8 @@ use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\DiscountableItemTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
-use Spryker\Zed\Discount\Business\Calculator\Type\CalculatorTypeInterface;
 use Spryker\Zed\Discount\Business\Calculator\Type\PercentageType;
 use Spryker\Zed\Discount\Business\Exception\CalculatorException;
-use Spryker\Zed\Discount\Dependency\Service\DiscountToUtilPriceServiceBridge;
 
 /**
  * Auto-generated group annotations
@@ -35,11 +33,6 @@ class PercentageTest extends Unit
     public const DISCOUNT_PERCENTAGE_200 = 20000;
 
     /**
-     * @var \SprykerTest\Zed\Discount\DiscountBusinessTester
-     */
-    protected $tester;
-
-    /**
      * @return void
      */
     public function testCalculatePercentageShouldNotGrantDiscountsHigherThanHundredPercent()
@@ -52,23 +45,11 @@ class PercentageTest extends Unit
             ]
         );
 
-        $calculator = $this->createPercentageType();
+        $calculator = new PercentageType();
         $discountTransfer = (new DiscountTransfer())->setAmount(self::DISCOUNT_PERCENTAGE_200);
         $discountAmount = $calculator->calculateDiscount($items, $discountTransfer);
 
         $this->assertSame(self::ITEM_GROSS_PRICE_1000 * 3, $discountAmount);
-    }
-
-    /**
-     * @return \Spryker\Zed\Discount\Business\Calculator\Type\PercentageType
-     */
-    protected function createPercentageType(): CalculatorTypeInterface
-    {
-        return new PercentageType(
-            new DiscountToUtilPriceServiceBridge(
-                $this->tester->getLocator()->utilPrice()->service()
-            )
-        );
     }
 
     /**
@@ -84,7 +65,7 @@ class PercentageTest extends Unit
             ]
         );
 
-        $calculator = $this->createPercentageType();
+        $calculator = new PercentageType();
         $discountTransfer = (new DiscountTransfer())->setAmount(-1 * self::DISCOUNT_PERCENTAGE_200);
         $discountAmount = $calculator->calculateDiscount($items, $discountTransfer);
 
@@ -104,7 +85,7 @@ class PercentageTest extends Unit
             ]
         );
 
-        $calculator = $this->createPercentageType();
+        $calculator = new PercentageType();
         $this->expectException(CalculatorException::class);
         $discountCalculatorTransfer = (new DiscountTransfer())->setAmount('string');
         $calculator->calculateDiscount($items, $discountCalculatorTransfer);
@@ -123,7 +104,7 @@ class PercentageTest extends Unit
             ]
         );
 
-        $calculator = $this->createPercentageType();
+        $calculator = new PercentageType();
         $discountCalculatorTransfer = (new DiscountTransfer())->setAmount(self::DISCOUNT_PERCENTAGE_10);
         $discountAmount = $calculator->calculateDiscount($items, $discountCalculatorTransfer);
 
@@ -143,7 +124,7 @@ class PercentageTest extends Unit
 
         $items[0]->setQuantity(0);
 
-        $calculator = $this->createPercentageType();
+        $calculator = new PercentageType();
         $discountTransfer = (new DiscountTransfer())->setAmount(self::DISCOUNT_PERCENTAGE_10);
         $discountAmount = $calculator->calculateDiscount($items, $discountTransfer);
 

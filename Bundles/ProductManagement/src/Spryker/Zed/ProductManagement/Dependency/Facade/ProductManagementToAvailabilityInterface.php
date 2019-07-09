@@ -11,7 +11,7 @@ interface ProductManagementToAvailabilityInterface
     /**
      * @param string $sku
      *
-     * @return float
+     * @return int
      */
     public function calculateStockForProduct($sku);
 }

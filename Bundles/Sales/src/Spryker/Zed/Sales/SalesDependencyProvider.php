@@ -17,7 +17,6 @@ use Spryker\Zed\Sales\Dependency\Facade\SalesToMoneyBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToSequenceNumberBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToUserBridge;
-use Spryker\Zed\Sales\Dependency\Service\SalesToUtilPriceServiceBridge;
 use Spryker\Zed\Sales\Dependency\Service\SalesToUtilSanitizeBridge;
 
 /**
@@ -41,14 +40,13 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     public const ORDER_ITEM_EXPANDER_PRE_SAVE_PLUGINS = 'ORDER_ITEM_EXPANDER_PRE_SAVE_PLUGINS';
     public const ITEM_TRANSFORMER_STRATEGY_PLUGINS = 'ITEM_TRANSFORMER_STRATEGY_PLUGINS';
     public const UI_SALES_TABLE_PLUGINS = 'UI_SALES_TABLE_PLUGINS';
+    public const PLUGINS_ORDER_POST_SAVE = 'PLUGINS_ORDER_POST_SAVE';
 
     /**
      * @deprecated Will be removed in the next major version.
      */
     public const FACADE_LOCALE = 'LOCALE_FACADE';
     public const FACADE_CALCULATION = 'FACADE_CALCULATION';
-
-    public const SERVICE_UTIL_PRICE = 'SERVICE_UTIL_PRICE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -68,7 +66,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCustomerFacade($container);
         $container = $this->addOrderItemExpanderPreSavePlugins($container);
         $container = $this->addItemTransformerStrategyPlugins($container);
-        $container = $this->addUtilPriceService($container);
+        $container = $this->addOrderPostSavePlugins($container);
 
         return $container;
     }
@@ -88,22 +86,6 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addUtilSanitizeService($container);
         $container = $this->addCustomerFacade($container);
         $container = $this->addSalesTablePlugins($container);
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addUtilPriceService(Container $container): Container
-    {
-        $container[static::SERVICE_UTIL_PRICE] = function (Container $container) {
-            return new SalesToUtilPriceServiceBridge(
-                $container->getLocator()->utilPrice()->service()
-            );
-        };
 
         return $container;
     }
@@ -333,6 +315,20 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addOrderPostSavePlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_ORDER_POST_SAVE] = function () {
+            return $this->getOrderPostSavePlugins();
+        };
+
+        return $container;
+    }
+
+    /**
      * @return \Spryker\Zed\Sales\Dependency\Plugin\OrderExpanderPreSavePluginInterface[]
      */
     protected function getOrderExpanderPreSavePlugins()
@@ -341,7 +337,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\Sales\Dependency\Plugin\HydrateOrderPluginInterface[]
+     * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderExpanderPluginInterface[]
      */
     protected function getOrderHydrationPlugins()
     {
@@ -370,5 +366,13 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     protected function getSalesTablePlugins()
     {
          return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderPostSavePluginInterface[]
+     */
+    protected function getOrderPostSavePlugins()
+    {
+        return [];
     }
 }

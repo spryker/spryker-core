@@ -42,7 +42,7 @@ class CacheStub implements CacheInterface
 
     /**
      * @param string $key
-     * @param string $value
+     * @param string|bool $value
      *
      * @return $this
      */

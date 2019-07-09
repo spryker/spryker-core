@@ -54,7 +54,7 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
      *
      * @param string $sku
      *
-     * @return float
+     * @return int
      */
     public function calculateStockForProduct($sku)
     {
@@ -69,7 +69,7 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return float
+     * @return int
      */
     public function calculateProductStockForStore($sku, StoreTransfer $storeTransfer)
     {
@@ -125,11 +125,11 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
      *
      * @param string $sku
      * @param string $stockType
-     * @param float $decrementBy
+     * @param int $decrementBy
      *
      * @return void
      */
-    public function decrementStockProduct($sku, $stockType, float $decrementBy = 1.0)
+    public function decrementStockProduct($sku, $stockType, $decrementBy = 1)
     {
         $this->getFactory()->createWriterModel()->decrementStock($sku, $stockType, $decrementBy);
     }
@@ -141,11 +141,11 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
      *
      * @param string $sku
      * @param string $stockType
-     * @param float $incrementBy
+     * @param int $incrementBy
      *
      * @return void
      */
-    public function incrementStockProduct($sku, $stockType, float $incrementBy = 1.0)
+    public function incrementStockProduct($sku, $stockType, $incrementBy = 1)
     {
         $this->getFactory()->createWriterModel()->incrementStock($sku, $stockType, $incrementBy);
     }

@@ -2,10 +2,6 @@ namespace: SprykerTest
 
 actor: Tester
 
-include:
-  - tests/SprykerTest/Zed/PriceProductVolume
-  - tests/SprykerTest/Service/PriceProductVolume
-
 paths:
     tests: tests
     log: tests/_output

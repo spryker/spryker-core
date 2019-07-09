@@ -17,6 +17,7 @@ use Spryker\Zed\ContentFileGui\Communication\Table\ContentFileListSelectedTable;
 use Spryker\Zed\ContentFileGui\Communication\Table\ContentFileListViewTable;
 use Spryker\Zed\ContentFileGui\ContentFileGuiDependencyProvider;
 use Spryker\Zed\ContentFileGui\Dependency\Facade\ContentFileGuiToContentFileFacadeInterface;
+use Spryker\Zed\ContentFileGui\Dependency\Facade\ContentFileGuiToFileManagerFacadeInterface;
 use Spryker\Zed\ContentFileGui\Dependency\Facade\ContentFileGuiToLocaleFacadeInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
@@ -101,5 +102,13 @@ class ContentFileGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getContentFileFacade(): ContentFileGuiToContentFileFacadeInterface
     {
         return $this->getProvidedDependency(ContentFileGuiDependencyProvider::FACADE_CONTENT_FILE);
+    }
+
+    /**
+     * @return \Spryker\Zed\ContentFileGui\Dependency\Facade\ContentFileGuiToFileManagerFacadeInterface
+     */
+    public function getFileManagerFacade(): ContentFileGuiToFileManagerFacadeInterface
+    {
+        return $this->getProvidedDependency(ContentFileGuiDependencyProvider::FACADE_FILE_MANAGER);
     }
 }

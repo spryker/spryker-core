@@ -1,7 +1,0 @@
-namespace: SprykerTest\Shared\SalesQuantity
-actor: Tester
-paths:
-  tests: .
-  data: ../../../_data
-  support: _support
-  log: ../../../_output
