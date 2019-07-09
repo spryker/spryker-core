@@ -15,6 +15,11 @@ use Spryker\Yves\Kernel\AbstractBundleConfig;
 class TwigConfig extends AbstractBundleConfig
 {
     /**
+     * Specification:
+     * - Returns the current theme name for Yves.
+     *
+     * @api
+     *
      * @return string
      */
     public function getYvesThemeName(): string
@@ -23,6 +28,11 @@ class TwigConfig extends AbstractBundleConfig
     }
 
     /**
+     * Specification:
+     * - Returns the default theme name for Yves.
+     *
+     * @api
+     *
      * @return string
      */
     public function getYvesThemeNameDefault(): string

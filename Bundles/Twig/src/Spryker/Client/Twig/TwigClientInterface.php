@@ -14,7 +14,7 @@ interface TwigClientInterface
 {
     /**
      * Specification:
-     * - Returns current theme name for Yves.
+     * - Returns the current theme name for Yves.
      *
      * @api
      *
@@ -24,7 +24,7 @@ interface TwigClientInterface
 
     /**
      * Specification:
-     * - Returns default theme name for Yves.
+     * - Returns the default theme name for Yves.
      *
      * @api
      *

@@ -32,7 +32,7 @@ class SetupFrontendConfig extends AbstractBundleConfig
 
     /**
      * Specification:
-     * - Yves public folders for assets.
+     * - Returns the public directory for Yves assets.
      *
      * @api
      *
@@ -63,7 +63,7 @@ class SetupFrontendConfig extends AbstractBundleConfig
 
     /**
      * Specification:
-     * - Yves assets builder command.
+     * - Returns the command to build Yves assets.
      *
      * @api
      *
