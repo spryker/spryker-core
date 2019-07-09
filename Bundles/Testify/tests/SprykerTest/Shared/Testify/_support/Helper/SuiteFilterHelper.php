@@ -25,7 +25,7 @@ class SuiteFilterHelper extends Extension
     protected const CONFIG_KEY_EXCLUSIVE = 'exclusive';
 
     /**
-     * @var array
+     * @var string[]
      */
     public static $events = [
         Events::SUITE_BEFORE => 'filterSuiteByGroups',
@@ -52,7 +52,7 @@ class SuiteFilterHelper extends Extension
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     protected function getIncludeParameter(): array
     {
@@ -60,7 +60,7 @@ class SuiteFilterHelper extends Extension
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     protected function getExcludeParameter(): array
     {
@@ -68,7 +68,7 @@ class SuiteFilterHelper extends Extension
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     protected function getInclusiveGroups(): array
     {
@@ -76,7 +76,7 @@ class SuiteFilterHelper extends Extension
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     protected function getExclusiveGroups(): array
     {
@@ -86,7 +86,7 @@ class SuiteFilterHelper extends Extension
     /**
      * @param string $configKey
      *
-     * @return array
+     * @return string[]
      */
     protected function getUniqueConfigByKey(string $configKey): array
     {

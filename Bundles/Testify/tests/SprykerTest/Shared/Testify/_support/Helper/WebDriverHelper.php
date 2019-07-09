@@ -60,7 +60,7 @@ class WebDriverHelper extends Phantoman
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     protected function getWebDriverConfig(): array
     {

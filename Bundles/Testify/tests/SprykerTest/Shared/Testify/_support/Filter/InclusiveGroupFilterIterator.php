@@ -23,7 +23,7 @@ class InclusiveGroupFilterIterator extends RecursiveFilterIterator
 
     /**
      * @param \RecursiveIterator $iterator
-     * @param array $groups
+     * @param string[] $groups
      * @param \PHPUnit\Framework\TestSuite $suite
      */
     public function __construct(RecursiveIterator $iterator, array $groups, TestSuite $suite)
@@ -55,7 +55,7 @@ class InclusiveGroupFilterIterator extends RecursiveFilterIterator
 
     /**
      * @param \PHPUnit\Framework\TestSuite $suite
-     * @param array $inclusiveGroups
+     * @param string[] $inclusiveGroups
      *
      * @return array
      */
@@ -74,7 +74,7 @@ class InclusiveGroupFilterIterator extends RecursiveFilterIterator
     }
 
     /**
-     * @param array $suiteGroups
+     * @param string[] $suiteGroups
      *
      * @return void
      */

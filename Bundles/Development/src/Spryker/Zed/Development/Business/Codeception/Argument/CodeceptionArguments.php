@@ -16,7 +16,7 @@ class CodeceptionArguments
 
     /**
      * @param string $argumentName
-     * @param array $argumentValues
+     * @param string[] $argumentValues
      *
      * @return $this
      */
@@ -37,7 +37,7 @@ class CodeceptionArguments
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getArguments(): array
     {

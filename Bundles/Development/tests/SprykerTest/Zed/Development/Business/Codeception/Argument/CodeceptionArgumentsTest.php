@@ -27,8 +27,8 @@ class CodeceptionArgumentsTest extends Unit
      * @dataProvider argumentsDataProvider
      *
      * @param string $argumentName
-     * @param array $argumentValues
-     * @param array $result
+     * @param string[] $argumentValues
+     * @param string[] $result
      *
      * @return void
      */
