@@ -51,7 +51,10 @@ class DataImportBusinessFactory extends AbstractBusinessFactory
      */
     public function getImporter()
     {
-        return $this->createDataImporterCollection();
+        /** @var \Spryker\Zed\DataImport\Business\Model\DataImporterInterface $dataImporterCollection */
+        $dataImporterCollection = $this->createDataImporterCollection();
+
+        return $dataImporterCollection;
     }
 
     /**

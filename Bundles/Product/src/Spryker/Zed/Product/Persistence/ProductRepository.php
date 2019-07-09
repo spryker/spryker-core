@@ -414,6 +414,45 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
     }
 
     /**
+     * @param string[] $productConcreteSkus
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function getProductConcretesByConcreteSkus(array $productConcreteSkus): array
+    {
+        $productConcreteEntities = $this->getFactory()
+            ->createProductQuery()
+            ->joinWithSpyProductAbstract()
+            ->joinWithSpyProductLocalizedAttributes()
+            ->filterBySku_In($productConcreteSkus)
+            ->find();
+
+        if ($productConcreteEntities->count() === 0) {
+            return [];
+        }
+
+        return $this->mapProductEntitiesToProductConcreteTransfersWithoutStores($productConcreteEntities);
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection $productEntities
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    protected function mapProductEntitiesToProductConcreteTransfersWithoutStores(ObjectCollection $productEntities): array
+    {
+        $productConcreteTransfers = [];
+        $productMapper = $this->getFactory()->createProductMapper();
+
+        foreach ($productEntities as $productEntity) {
+            $productConcreteTransfers[] = $productMapper
+                ->mapProductEntityToProductConcreteTransferWithoutStores($productEntity, new ProductConcreteTransfer());
+        }
+
+        return $productConcreteTransfers;
+    }
+
+    /**
      * @param \Propel\Runtime\Collection\ObjectCollection $productAbstractEntities
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\ProductAbstractTransfer[]
