@@ -73,7 +73,7 @@ $(document).ready(function() {
         e.preventDefault();
 
         var $item = $(this);
-        
+
         disableTrigger($item);
 
         var idOrder = $item.data('id-sales-order');
