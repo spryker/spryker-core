@@ -22,8 +22,6 @@ use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataBu
  */
 class CustomerAccessSynchronizationDataBulkPlugin extends AbstractPlugin implements SynchronizationDataBulkRepositoryPluginInterface
 {
-    protected const FILTER_ORDER_DIRECTION = 'ASC';
-
     /**
      * {@inheritdoc}
      *
@@ -123,7 +121,6 @@ class CustomerAccessSynchronizationDataBulkPlugin extends AbstractPlugin impleme
     {
         return (new FilterTransfer())
             ->setOrderBy(SpyUnauthenticatedCustomerAccessStorageTableMap::COL_ID_UNAUTHENTICATED_CUSTOMER_ACCESS_STORAGE)
-            ->setOrderDirection(static::FILTER_ORDER_DIRECTION)
             ->setOffset($offset)
             ->setLimit($limit);
     }
