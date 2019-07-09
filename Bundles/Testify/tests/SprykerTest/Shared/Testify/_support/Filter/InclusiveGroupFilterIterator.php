@@ -11,6 +11,9 @@ use PHPUnit\Framework\TestSuite;
 use RecursiveFilterIterator;
 use RecursiveIterator;
 
+/**
+ * Filters tests that have all the requested groups
+ */
 class InclusiveGroupFilterIterator extends RecursiveFilterIterator
 {
     /**

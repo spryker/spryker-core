@@ -568,7 +568,8 @@ class DevelopmentConfig extends AbstractBundleConfig
 
     /**
      * Specification:
-     * - Returns group names for inclusive tests.
+     * - Returns group names to run only tests that have all of the groups.
+     * - Example: ['Customer', 'Communication'] inclusive parameter runs tests Communication suite in Customer module.
      *
      * @api
      *
