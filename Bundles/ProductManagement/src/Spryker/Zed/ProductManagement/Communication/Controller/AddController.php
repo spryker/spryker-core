@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Controller;
 
-use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
