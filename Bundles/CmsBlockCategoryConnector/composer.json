@@ -9,7 +9,7 @@
     "spryker/cms-block": "^1.2.0 || ^2.0.0",
     "spryker/collector": "^5.0.0 || ^6.0.0",
     "spryker/gui": "^3.6.0",
-    "spryker/kernel": "^3.0.0",
+    "spryker/kernel": "^3.30.0",
     "spryker/locale": "^3.0.0",
     "spryker/propel-orm": "^1.0.0",
     "spryker/symfony": "^3.0.0",

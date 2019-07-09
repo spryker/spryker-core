@@ -101,7 +101,8 @@ class SalesBusinessFactory extends AbstractBusinessFactory
             $this->getStore(),
             $this->getOrderExpanderPreSavePlugins(),
             $this->createSalesOrderSaverPluginExecutor(),
-            $this->createOrderItemMapper()
+            $this->createOrderItemMapper(),
+            $this->getOrderPostSavePlugins()
         );
     }
 
@@ -119,7 +120,8 @@ class SalesBusinessFactory extends AbstractBusinessFactory
             $this->getStore(),
             $this->getOrderExpanderPreSavePlugins(),
             $this->createSalesOrderSaverPluginExecutor(),
-            $this->createOrderItemMapper()
+            $this->createOrderItemMapper(),
+            $this->getOrderPostSavePlugins()
         );
     }
 
@@ -271,7 +273,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Sales\Dependency\Plugin\HydrateOrderPluginInterface[]
+     * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderExpanderPluginInterface[]
      */
     public function getHydrateOrderPlugins()
     {
@@ -318,6 +320,14 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     public function getItemTransformerStrategyPlugins(): array
     {
         return $this->getProvidedDependency(SalesDependencyProvider::ITEM_TRANSFORMER_STRATEGY_PLUGINS);
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderPostSavePluginInterface[]
+     */
+    public function getOrderPostSavePlugins(): array
+    {
+        return $this->getProvidedDependency(SalesDependencyProvider::PLUGINS_ORDER_POST_SAVE);
     }
 
     /**

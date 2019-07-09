@@ -117,8 +117,8 @@ class ProductManagerTest extends Unit
         $mockProductFacade = $this->getMockProductFacade();
 
         $mockProductFacade->expects($this->once())
-            ->method('getRawProductConcreteBySku')
-            ->will($this->returnValue($returnValue));
+            ->method('getRawProductConcreteTransfersByConcreteSkus')
+            ->will($this->returnValue([$returnValue]));
 
         $mockProductFacade->expects($this->once())
             ->method('getLocalizedProductConcreteName')
@@ -145,6 +145,7 @@ class ProductManagerTest extends Unit
                 'hasProductConcrete',
                 'isProductConcreteActive',
                 'getRawProductConcreteBySku',
+                'getRawProductConcreteTransfersByConcreteSkus',
             ])
             ->disableOriginalConstructor()
             ->getMock();

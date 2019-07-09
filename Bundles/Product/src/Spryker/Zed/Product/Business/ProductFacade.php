@@ -321,6 +321,8 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      *
      * @api
      *
+     * @deprecated Use `Spryker\Zed\Product\Business\ProductFacade::getProductConcretesByConcreteSkus()` instead.
+     *
      * @param string $productConcreteSku
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
@@ -1050,5 +1052,21 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     {
         return $this->getRepository()
             ->getProductConcreteTransfersByProductAbstractIds($productAbstractIds);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param array $productConcreteSkus
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function getRawProductConcreteTransfersByConcreteSkus(array $productConcreteSkus): array
+    {
+        return $this->getFactory()
+            ->createProductConcreteManager()
+            ->getProductConcretesByConcreteSkus($productConcreteSkus);
     }
 }

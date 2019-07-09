@@ -7,7 +7,7 @@
     "php": ">=7.1",
     "spryker/glue-application": "^1.0.0",
     "spryker/glue-application-extension": "^1.0.0",
-    "spryker/kernel": "^3.22.0",
+    "spryker/kernel": "^3.30.0",
     "spryker/products-rest-api": "^1.2.0 || ^2.0.0"
   },
   "require-dev": {
