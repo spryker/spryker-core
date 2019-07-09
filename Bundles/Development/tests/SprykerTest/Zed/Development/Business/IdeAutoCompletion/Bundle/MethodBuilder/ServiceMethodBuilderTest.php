@@ -39,7 +39,7 @@ class ServiceMethodBuilderTest extends Unit
         $methodBuilderMock
             ->expects($this->any())
             ->method('findFileByName')
-            ->willReturn(new SplFileInfo(static::BUNDLE_DIRECTORY . 'FooBundle/FooBundleServiceInterface.php', null, null));
+            ->willReturn(new SplFileInfo(static::BUNDLE_DIRECTORY . 'FooBundle/FooBundleServiceInterface.php', 'foo', 'bar'));
 
         $bundleMethodTransfer = $methodBuilderMock->getMethod($this->getBundleTransfer());
 

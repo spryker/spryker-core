@@ -57,12 +57,38 @@ class RangeExtractor extends AbstractAggregationExtractor implements Aggregation
         [$activeMin, $activeMax] = $this->getActiveRangeData($requestParameters, $min, $max);
 
         $rangeResultTransfer
-            ->setMin((int)min($min, $activeMin))
-            ->setMax((int)max($max, $activeMax))
+            ->setMin($this->resolveMin((int)$min, (int)$activeMin))
+            ->setMax($this->resolveMax((int)$max, (int)$activeMax))
             ->setActiveMin((int)$activeMin)
             ->setActiveMax((int)$activeMax);
 
         return $rangeResultTransfer;
+    }
+
+    /**
+     * Resolves the aggregation range minimum.
+     *
+     * @param int $facetMin
+     * @param int $selectedMin
+     *
+     * @return int
+     */
+    protected function resolveMin(int $facetMin, int $selectedMin): int
+    {
+        return max($facetMin, $selectedMin);
+    }
+
+    /**
+     * Resolves the aggregation range maximum.
+     *
+     * @param int $facetMax
+     * @param int $selectedMax
+     *
+     * @return int
+     */
+    protected function resolveMax(int $facetMax, int $selectedMax): int
+    {
+        return min($facetMax, $selectedMax);
     }
 
     /**

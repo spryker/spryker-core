@@ -13,7 +13,6 @@ use Spryker\Zed\PriceProductVolumeGui\Dependency\Facade\PriceProductVolumeGuiToC
 use Spryker\Zed\PriceProductVolumeGui\Dependency\Facade\PriceProductVolumeGuiToPriceProductFacadeBridge;
 use Spryker\Zed\PriceProductVolumeGui\Dependency\Facade\PriceProductVolumeGuiToStoreFacadeBridge;
 use Spryker\Zed\PriceProductVolumeGui\Dependency\Service\PriceProductVolumeGuiToUtilEncodingServiceBridge;
-use Spryker\Zed\PriceProductVolumeGui\Dependency\Service\PriceProductVolumeGuiToUtilQuantityServiceBridge;
 
 /**
  * @method \Spryker\Zed\PriceProductVolumeGui\PriceProductVolumeGuiConfig getConfig()
@@ -25,7 +24,6 @@ class PriceProductVolumeGuiDependencyProvider extends AbstractBundleDependencyPr
     public const FACADE_STORE = 'FACADE_STORE';
 
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
-    public const SERVICE_UTIL_QUANTITY = 'SERVICE_UTIL_QUANTITY';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -40,23 +38,6 @@ class PriceProductVolumeGuiDependencyProvider extends AbstractBundleDependencyPr
         $container = $this->addStoreFacade($container);
 
         $container = $this->addUtilEncodingService($container);
-        $container = $this->addUtilQuantityService($container);
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addUtilQuantityService(Container $container): Container
-    {
-        $container[static::SERVICE_UTIL_QUANTITY] = function (Container $container) {
-            return new PriceProductVolumeGuiToUtilQuantityServiceBridge(
-                $container->getLocator()->utilQuantity()->service()
-            );
-        };
 
         return $container;
     }
