@@ -62,14 +62,14 @@ class ContentBannerReader implements ContentBannerReaderInterface
     {
         $response = $this->restResourceBuilder->createRestResponse();
 
-        $idContentBanner = $restRequest->getResource()->getId();
-        if (!$idContentBanner) {
+        $contentBannerKey = $restRequest->getResource()->getId();
+        if (!$contentBannerKey) {
             return $this->addContentBannerIdNotSpecifiedError($response);
         }
 
         try {
-            $contentBannerTypeTransfer = $this->contentBannerClient->executeBannerTypeById(
-                (int)$idContentBanner,
+            $contentBannerTypeTransfer = $this->contentBannerClient->executeBannerTypeByKey(
+                $contentBannerKey,
                 $restRequest->getMetadata()->getLocale()
             );
         } catch (MissingBannerTermException $bannerTermException) {
@@ -88,7 +88,7 @@ class ContentBannerReader implements ContentBannerReaderInterface
 
         $restResource = $this->restResourceBuilder->createRestResource(
             ContentBannersRestApiConfig::RESOURCE_CONTENT_BANNERS,
-            $idContentBanner,
+            $contentBannerKey,
             $restContentBannerAttributes
         );
 
@@ -103,9 +103,9 @@ class ContentBannerReader implements ContentBannerReaderInterface
     protected function addContentBannerIdNotSpecifiedError(RestResponseInterface $response): RestResponseInterface
     {
         $restErrorTransfer = (new RestErrorMessageTransfer())
-            ->setCode(ContentBannersRestApiConfig::RESPONSE_CODE_CONTENT_ID_IS_MISSING)
+            ->setCode(ContentBannersRestApiConfig::RESPONSE_CODE_CONTENT_KEY_IS_MISSING)
             ->setStatus(Response::HTTP_BAD_REQUEST)
-            ->setDetail(ContentBannersRestApiConfig::RESPONSE_DETAILS_CONTENT_ID_IS_MISSING);
+            ->setDetail(ContentBannersRestApiConfig::RESPONSE_DETAILS_CONTENT_KEY_IS_MISSING);
 
         return $response->addError($restErrorTransfer);
     }

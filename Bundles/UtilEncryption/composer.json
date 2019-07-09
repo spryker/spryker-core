@@ -4,9 +4,9 @@
   "description": "UtilEncryption module",
   "license": "proprietary",
   "require": {
-    "ext-openssl": "@stable",
+    "ext-openssl": "*",
     "php": ">=7.1",
-    "spryker/kernel": "^3.0.0",
+    "spryker/kernel": "^3.30.0",
     "spryker/util-text": "^1.0.0"
   },
   "require-dev": {

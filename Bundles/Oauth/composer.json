@@ -8,8 +8,8 @@
     "php": ">=7.1",
     "spryker/config": "^3.0.0",
     "spryker/guzzle": "^2.0.0",
-    "spryker/kernel": "^3.0.0",
-    "spryker/oauth-extension": "^1.1.0",
+    "spryker/kernel": "^3.30.0",
+    "spryker/oauth-extension": "^1.2.0",
     "spryker/util-encoding": "^2.0.0",
     "spryker/zed-request": "^3.0.0"
   },

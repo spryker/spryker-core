@@ -126,10 +126,10 @@ class ScopeRepository implements ScopeRepositoryInterface
                 continue;
             }
 
-            $providedScopes = $scopeProviderPlugin->getScopes($oauthScopeRequestTransfer);
+            $providedScopes[] = $scopeProviderPlugin->getScopes($oauthScopeRequestTransfer);
         }
 
-        return $providedScopes;
+        return $providedScopes ? array_merge(...$providedScopes) : [];
     }
 
     /**

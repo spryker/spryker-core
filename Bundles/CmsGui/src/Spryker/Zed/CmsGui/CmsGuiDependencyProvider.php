@@ -39,6 +39,8 @@ class CmsGuiDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_CMS_PAGE_TABLE_EXPANDER = 'PLUGINS_CMS_PAGE_TABLE_EXPANDER';
     public const PLUGINS_CREATE_GLOSSARY_EXPANDER = 'PLUGINS_CREATE_GLOSSARY_EXPANDER';
     public const PLUGIN_STORE_RELATION_FORM_TYPE = 'PLUGIN_STORE_RELATION_FORM_TYPE';
+    public const PLUGINS_CMS_GLOSSARY_BEFORE_SAVE = 'PLUGINS_CMS_GLOSSARY_BEFORE_SAVE';
+    public const PLUGINS_CMS_GLOSSARY_AFTER_FIND = 'PLUGINS_CMS_GLOSSARY_AFTER_FIND';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -78,6 +80,8 @@ class CmsGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCmsPageTableExpanderPlugins($container);
         $container = $this->addCreateGlossaryExpanderPlugins($container);
         $container = $this->addStoreRelationFormTypePlugin($container);
+        $container = $this->addCmsGlossaryBeforeSavePlugins($container);
+        $container = $this->addCmsGlossaryAfterFindPlugins($container);
 
         return $container;
     }
@@ -165,5 +169,49 @@ class CmsGuiDependencyProvider extends AbstractBundleDependencyProvider
                 FormTypeInterface::class
             )
         );
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCmsGlossaryAfterFindPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_CMS_GLOSSARY_AFTER_FIND, function () {
+            return $this->getCmsGlossaryAfterFindPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsGuiExtension\Dependency\Plugin\CmsGlossaryAfterFindPluginInterface[]
+     */
+    protected function getCmsGlossaryAfterFindPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCmsGlossaryBeforeSavePlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_CMS_GLOSSARY_BEFORE_SAVE, function () {
+            return $this->getCmsGlossaryBeforeSavePlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsGuiExtension\Dependency\Plugin\CmsGlossaryBeforeSavePluginInterface[]
+     */
+    protected function getCmsGlossaryBeforeSavePlugins(): array
+    {
+        return [];
     }
 }

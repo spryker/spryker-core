@@ -123,33 +123,36 @@ class Finder implements FinderInterface
     /**
      * @param \Generated\Shared\Transfer\StateMachineProcessTransfer $stateMachineProcessTransfer
      * @param string $flag
+     * @param string $sort
      *
      * @return \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItemTransfer
      */
-    public function getItemsWithFlag(StateMachineProcessTransfer $stateMachineProcessTransfer, $flag)
+    public function getItemsWithFlag(StateMachineProcessTransfer $stateMachineProcessTransfer, $flag, string $sort = 'ASC')
     {
-        return $this->getItemsByFlag($stateMachineProcessTransfer, $flag, true);
+        return $this->getItemsByFlag($stateMachineProcessTransfer, $flag, true, $sort);
     }
 
     /**
      * @param \Generated\Shared\Transfer\StateMachineProcessTransfer $stateMachineProcessTransfer
      * @param string $flag
+     * @param string $sort
      *
      * @return \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItemTransfer
      */
-    public function getItemsWithoutFlag(StateMachineProcessTransfer $stateMachineProcessTransfer, $flag)
+    public function getItemsWithoutFlag(StateMachineProcessTransfer $stateMachineProcessTransfer, $flag, string $sort = 'ASC')
     {
-        return $this->getItemsByFlag($stateMachineProcessTransfer, $flag, false);
+        return $this->getItemsByFlag($stateMachineProcessTransfer, $flag, false, $sort);
     }
 
     /**
      * @param \Generated\Shared\Transfer\StateMachineProcessTransfer $stateMachineProcessTransfer
      * @param string $flagName
      * @param bool $hasFlag
+     * @param string $sort
      *
      * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
      */
-    protected function getItemsByFlag(StateMachineProcessTransfer $stateMachineProcessTransfer, $flagName, $hasFlag)
+    protected function getItemsByFlag(StateMachineProcessTransfer $stateMachineProcessTransfer, $flagName, $hasFlag, string $sort)
     {
         $stateMachineProcessTransfer->requireProcessName()->requireStateMachineName();
 
@@ -165,7 +168,8 @@ class Finder implements FinderInterface
 
         $stateMachineItems = $this->getFlaggedStateMachineItems(
             $stateMachineProcessTransfer,
-            array_keys($statesByFlag)
+            array_keys($statesByFlag),
+            $sort
         );
 
         $stateMachineItemsWithFlag = [];
@@ -336,14 +340,23 @@ class Finder implements FinderInterface
         $stateMachineItemTransfer->setIdStateMachineProcess($stateMachineProcessEntity->getIdStateMachineProcess());
         $stateMachineItemTransfer->setStateName($stateMachineItemEntity->getName());
         $stateMachineItemTransfer->setStateMachineName($stateMachineProcessEntity->getStateMachineName());
-
-        $stateMachineItemHistory = $stateMachineItemEntity->getStateHistories();
-        if (count($stateMachineItemHistory) > 0) {
-            $itemIdentifier = $stateMachineItemHistory->getFirst()->getIdentifier();
-            $stateMachineItemTransfer->setIdentifier($itemIdentifier);
-        }
+        $stateMachineItemTransfer->setIdentifier($this->getItemIdentifier($stateMachineItemEntity));
 
         return $stateMachineItemTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\StateMachine\Persistence\SpyStateMachineItemState $stateMachineItemEntity
+     *
+     * @return int|null
+     */
+    protected function getItemIdentifier(SpyStateMachineItemState $stateMachineItemEntity): ?int
+    {
+        if ($stateMachineItemEntity->getStateHistories()->count() === 0) {
+            return null;
+        }
+
+        return $stateMachineItemEntity->getStateHistories()->getFirst()->getIdentifier();
     }
 
     /**
@@ -362,15 +375,17 @@ class Finder implements FinderInterface
     /**
      * @param \Generated\Shared\Transfer\StateMachineProcessTransfer $stateMachineProcessTransfer
      * @param array $statesByFlag
+     * @param string $historySortDirection
      *
      * @return \Orm\Zed\StateMachine\Persistence\SpyStateMachineItemState[]|\Propel\Runtime\Collection\ObjectCollection
      */
-    protected function getFlaggedStateMachineItems(StateMachineProcessTransfer $stateMachineProcessTransfer, array $statesByFlag)
+    protected function getFlaggedStateMachineItems(StateMachineProcessTransfer $stateMachineProcessTransfer, array $statesByFlag, string $historySortDirection)
     {
-        $itemStateCollection = $this->queryContainer->queryItemsByIdStateMachineProcessAndItemStates(
+        $itemStateCollection = $this->queryContainer->queryItemsByStateMachineProcessNameAndItemStates(
             $stateMachineProcessTransfer->getStateMachineName(),
             $stateMachineProcessTransfer->getProcessName(),
-            $statesByFlag
+            $statesByFlag,
+            $historySortDirection
         )->find();
 
         return $itemStateCollection;

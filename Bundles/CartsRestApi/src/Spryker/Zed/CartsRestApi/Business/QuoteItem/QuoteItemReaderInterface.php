@@ -7,15 +7,15 @@
 
 namespace Spryker\Zed\CartsRestApi\Business\QuoteItem;
 
+use Generated\Shared\Transfer\CartItemRequestTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
-use Generated\Shared\Transfer\RestCartItemsAttributesTransfer;
 
 interface QuoteItemReaderInterface
 {
   /**
-   * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
+   * @param \Generated\Shared\Transfer\CartItemRequestTransfer $cartItemRequestTransfer
    *
    * @return \Generated\Shared\Transfer\QuoteResponseTransfer
    */
-    public function readQuoteItem(RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer): QuoteResponseTransfer;
+    public function readItem(CartItemRequestTransfer $cartItemRequestTransfer): QuoteResponseTransfer;
 }

@@ -28,7 +28,7 @@ class ImageCollectionTransformer implements DataTransformerInterface
 
         $formImageCollection = [];
         foreach ($value as $categoryImageTransfer) {
-            $formImageCollection[$categoryImageTransfer->getSortOrder()] = $categoryImageTransfer;
+            $formImageCollection[] = $categoryImageTransfer;
         }
 
         return $formImageCollection;
@@ -51,7 +51,6 @@ class ImageCollectionTransformer implements DataTransformerInterface
         $categoryImageTransferCollection = [];
         /** @var \Generated\Shared\Transfer\CategoryImageTransfer $categoryImageTransfer */
         foreach ($value as $sortOrder => $categoryImageTransfer) {
-            $categoryImageTransfer->setSortOrder($sortOrder);
             $categoryImageTransferCollection[] = $categoryImageTransfer;
         }
 

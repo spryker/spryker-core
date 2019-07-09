@@ -45,4 +45,17 @@ interface OauthPermissionFacadeInterface
         CompanyUserIdentifierTransfer $companyUserIdentifierTransfer,
         CompanyUserTransfer $companyUserTransfer
     ): CompanyUserIdentifierTransfer;
+
+    /**
+     * Specification:
+     * - Filters user identifier array to remove configured in
+     * \Spryker\Zed\OauthPermission\OauthPermissionConfig::getOauthUserIdentifierFilterKeys() keys.
+     *
+     * @api
+     *
+     * @param array $userIdentifier
+     *
+     * @return array
+     */
+    public function filterOauthUserIdentifier(array $userIdentifier): array;
 }
