@@ -8,9 +8,9 @@
 namespace Spryker\Zed\Application\Communication;
 
 use Spryker\Shared\Application\EventListener\KernelLogListener;
-use Spryker\Shared\Config\Environment;
 use Spryker\Shared\Log\LoggerTrait;
-use Spryker\Zed\Application\ApplicationDependencyProvider;
+use Spryker\Shared\Twig\TwigFunction;
+use Spryker\Zed\Application\Communication\Twig\YvesUrlFunction;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\EventListener\SaveSessionListener;
@@ -42,10 +42,10 @@ class ApplicationCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Shared\Config\Environment
+     * @return \Spryker\Shared\Twig\TwigFunction
      */
-    public function getEnvironment(): Environment
+    public function createYvesUrlFunction(): TwigFunction
     {
-        return $this->getProvidedDependency(ApplicationDependencyProvider::ENVIRONMENT);
+        return new YvesUrlFunction($this->getConfig());
     }
 }

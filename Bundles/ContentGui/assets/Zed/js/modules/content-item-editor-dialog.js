@@ -5,6 +5,8 @@
 
 'use strict';
 
+var dataTable = require('ZedGuiModules/libs/data-table');
+
 var ContentItemDialog = function(
     dialogTitle,
     dialogContentUrl,
@@ -195,7 +197,8 @@ var ContentItemDialog = function(
                 this.$dialog.find('.content-item-body .content-ajax').append(data);
                 this.$dialog.find('table').DataTable({
                     'ajax': dataAjaxUrl,
-                    'lengthChange': false
+                    'lengthChange': false,
+                    'language': dataTable.defaultConfiguration.language
                 });
             };
 

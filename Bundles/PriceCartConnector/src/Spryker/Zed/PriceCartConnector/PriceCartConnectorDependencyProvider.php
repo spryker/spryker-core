@@ -10,9 +10,9 @@ namespace Spryker\Zed\PriceCartConnector;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartConnectorToCurrencyFacadeBridge;
+use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartConnectorToPriceProductAdapter;
 use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToMessengerFacadeBridge;
 use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceBridge;
-use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceProductBridge;
 
 /**
  * @method \Spryker\Zed\PriceCartConnector\PriceCartConnectorConfig getConfig()
@@ -47,7 +47,7 @@ class PriceCartConnectorDependencyProvider extends AbstractBundleDependencyProvi
     protected function addPriceProductFacade(Container $container)
     {
         $container->set(static::FACADE_PRICE_PRODUCT, function (Container $container) {
-            return new PriceCartToPriceProductBridge($container->getLocator()->priceProduct()->facade());
+            return new PriceCartConnectorToPriceProductAdapter($container->getLocator()->priceProduct()->facade());
         });
 
         return $container;
