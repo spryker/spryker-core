@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Currency\Persistence;
 
 use Generated\Shared\Transfer\CurrencyTransfer;
+use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -45,6 +46,40 @@ class CurrencyRepository extends AbstractRepository implements CurrencyRepositor
             $currencyEntity,
             $this->createCurrencyTransfer()
         );
+    }
+
+    /**
+     * @param string[] $isoCodes
+     *
+     * @return \Generated\Shared\Transfer\CurrencyTransfer[]
+     */
+    public function getCurrencyTransfersByIsoCodes(array $isoCodes): array
+    {
+        $currencyEntities = $this->getFactory()
+            ->createCurrencyQuery()
+            ->filterByCode_In($isoCodes)
+            ->find();
+
+        if ($currencyEntities->count() === 0) {
+            return [];
+        }
+
+        return $this->mapCurrencyEntitiesToCurrencyTransfers($currencyEntities);
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Currency\Persistence\SpyCurrency[] $currencyEntities
+     *
+     * @return array
+     */
+    protected function mapCurrencyEntitiesToCurrencyTransfers(ObjectCollection $currencyEntities): array
+    {
+        $currencyTransfers = [];
+        foreach ($currencyEntities as $currencyEntity) {
+            $currencyTransfers[] = $this->currencyMapper->mapCurrencyEntityToCurrencyTransfer($currencyEntity, $this->createCurrencyTransfer());
+        }
+
+        return $currencyTransfers;
     }
 
     /**
