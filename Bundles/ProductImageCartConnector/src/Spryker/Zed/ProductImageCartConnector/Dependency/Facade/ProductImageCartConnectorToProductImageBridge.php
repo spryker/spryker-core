@@ -41,4 +41,15 @@ class ProductImageCartConnectorToProductImageBridge implements ProductImageCartC
     {
         return $this->productImageFacade->getProductImagesSetCollectionByProductIdForCurrentLocale($idProduct);
     }
+
+    /**
+     * @param int[] $productIds
+     * @param string $productImageSetName
+     *
+     * @return \Generated\Shared\Transfer\ProductImageTransfer[][]
+     */
+    public function getProductImagesByProductIdsAndProductImageSetName(array $productIds, string $productImageSetName): array
+    {
+        return $this->productImageFacade->getProductImagesByProductIdsAndProductImageSetName($productIds, $productImageSetName);
+    }
 }
