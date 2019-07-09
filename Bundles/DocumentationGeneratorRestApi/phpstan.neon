@@ -5,4 +5,3 @@ parameters:
         - APPLICATION_STORE
     ignoreErrors:
     - '#Cannot assign offset mixed to string.#'
-    - '#Call to function in_array\(\) with arguments .+ will always evaluate to false.#'
