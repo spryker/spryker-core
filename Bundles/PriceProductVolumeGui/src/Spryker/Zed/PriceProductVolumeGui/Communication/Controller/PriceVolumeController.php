@@ -26,6 +26,7 @@ class PriceVolumeController extends AbstractController
     protected const REQUEST_PARAM_CURRENCY_CODE = 'currency-code';
     protected const REQUEST_PARAM_PRICE_DIMENSION = 'price-dimension';
     protected const REQUEST_PARAM_SAVE_AND_EXIT = 'save_and_exit';
+    protected const REQUEST_PARAM_SKU = 'sku';
 
     protected const PRICE_PRODUCT_VOLUME_EDIT_URL = '/price-product-volume-gui/price-volume/edit';
     protected const PRODUCT_CONCRETE_EDIT_URL = '/product-management/edit/variant';
@@ -61,6 +62,7 @@ class PriceVolumeController extends AbstractController
             'price_product' => $priceProductTransfer,
             'store_name' => $request->get(static::REQUEST_PARAM_STORE_NAME),
             'back_url' => $this->getExitUrl($request),
+            'product_sku' => $request->get(static::REQUEST_PARAM_SKU),
         ]);
     }
 
@@ -89,6 +91,7 @@ class PriceVolumeController extends AbstractController
             'price_product' => $priceProductTransfer,
             'store_name' => $request->get(static::REQUEST_PARAM_STORE_NAME),
             'back_url' => $this->getExitUrl($request),
+            'product_sku' => $request->get(static::REQUEST_PARAM_SKU),
         ]);
     }
 
