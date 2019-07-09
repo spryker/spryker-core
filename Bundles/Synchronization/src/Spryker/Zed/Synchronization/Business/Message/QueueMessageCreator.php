@@ -10,6 +10,7 @@ namespace Spryker\Zed\Synchronization\Business\Message;
 use Generated\Shared\Transfer\QueueSendMessageTransfer;
 use Generated\Shared\Transfer\SynchronizationQueueMessageTransfer;
 use Spryker\Zed\Synchronization\Business\Exception\SynchronizationQueuePoolNotFoundException;
+use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataPluginInterface;
 
 class QueueMessageCreator implements QueueMessageCreatorInterface
 {
@@ -17,32 +18,36 @@ class QueueMessageCreator implements QueueMessageCreatorInterface
 
     /**
      * @param \Generated\Shared\Transfer\SynchronizationQueueMessageTransfer $synchronizationQueueMessageTransfer
+     * @param \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataPluginInterface $plugin
      * @param string|null $store
-     * @param string|null $queuePoolName
      *
      * @return \Generated\Shared\Transfer\QueueSendMessageTransfer
      */
-    public function createQueueMessage(SynchronizationQueueMessageTransfer $synchronizationQueueMessageTransfer, $store = null, $queuePoolName = null): QueueSendMessageTransfer
-    {
+    public function createQueueMessage(
+        SynchronizationQueueMessageTransfer $synchronizationQueueMessageTransfer,
+        SynchronizationDataPluginInterface $plugin,
+        $store = null
+    ): QueueSendMessageTransfer {
         $message = [];
         $message[static::WRITE] = $synchronizationQueueMessageTransfer->toArray();
 
-        return $this->createQueueSendMessageTransfer($message, $store, $queuePoolName);
+        return $this->createQueueSendMessageTransfer($message, $plugin, $store);
     }
 
     /**
      * @param array $message
+     * @param \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataPluginInterface $plugin
      * @param string|null $store
-     * @param string|null $queuePoolName
      *
      * @throws \Spryker\Zed\Synchronization\Business\Exception\SynchronizationQueuePoolNotFoundException
      *
      * @return \Generated\Shared\Transfer\QueueSendMessageTransfer
      */
-    protected function createQueueSendMessageTransfer(array $message, $store = null, $queuePoolName = null): QueueSendMessageTransfer
+    protected function createQueueSendMessageTransfer(array $message, SynchronizationDataPluginInterface $plugin, $store = null): QueueSendMessageTransfer
     {
         $queueSendTransfer = new QueueSendMessageTransfer();
         $queueSendTransfer->setBody(json_encode($message));
+        $queuePoolName = $plugin->getSynchronizationQueuePoolName();
 
         if ($store) {
             $queueSendTransfer->setStoreName($store);
@@ -51,7 +56,9 @@ class QueueMessageCreator implements QueueMessageCreatorInterface
         }
 
         if (!$queuePoolName) {
-            throw new SynchronizationQueuePoolNotFoundException('You must either have store column or `SynchronizationQueuePoolName` in your schema.xml file');
+            throw new SynchronizationQueuePoolNotFoundException(
+                sprintf('You must specify either store column or SynchronizationQueuePoolName for %s resource.', $plugin->getResourceName())
+            );
         }
         $queueSendTransfer->setQueuePoolName($queuePoolName);
 

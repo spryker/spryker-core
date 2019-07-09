@@ -132,7 +132,7 @@ class RepositoryExporter implements ExporterInterface
                 ->setResource($plugin->getResourceName())
                 ->setParams($plugin->getParams());
 
-            $queueSendTransfers[] = $this->queueMessageCreator->createQueueMessage($syncQueueMessage, $store, $plugin->getSynchronizationQueuePoolName());
+            $queueSendTransfers[] = $this->queueMessageCreator->createQueueMessage($syncQueueMessage, $plugin, $store);
         }
 
         $this->queueClient->sendMessages($plugin->getQueueName(), $queueSendTransfers);
