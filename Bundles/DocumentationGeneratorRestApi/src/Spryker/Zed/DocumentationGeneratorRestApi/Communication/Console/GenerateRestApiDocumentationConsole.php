@@ -12,6 +12,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
+ * @method \Spryker\Zed\DocumentationGeneratorRestApi\DocumentationGeneratorRestApiConfig getConfig()
  * @method \Spryker\Zed\DocumentationGeneratorRestApi\Business\DocumentationGeneratorRestApiFacadeInterface getFacade()
  * @method \Spryker\Zed\DocumentationGeneratorRestApi\Communication\DocumentationGeneratorRestApiCommunicationFactory getFactory()
  */
@@ -39,7 +40,7 @@ class GenerateRestApiDocumentationConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        if ($this->isDocumentationGenerationEnabled()) {
+        if ($this->getConfig()->isRestApiDocumentationGeneratorEnabled()) {
             $this->getFacade()->generateDocumentation();
 
             return static::CODE_SUCCESS;
@@ -48,15 +49,5 @@ class GenerateRestApiDocumentationConsole extends Console
         $this->error('This command intended to be used non production environment only!');
 
         return static::CODE_ERROR;
-    }
-
-    /**
-     * @deprecated Will be removed without replacement.
-     *
-     * @return bool
-     */
-    protected function isDocumentationGenerationEnabled(): bool
-    {
-        return APPLICATION_ENV !== 'production';
     }
 }
