@@ -60,7 +60,9 @@ class RangeExtractor extends AbstractAggregationExtractor implements Aggregation
             ->setMin($this->resolveMin((int)$min, (int)$activeMin))
             ->setMax($this->resolveMax((int)$max, (int)$activeMax))
             ->setActiveMin((int)$activeMin)
-            ->setActiveMax((int)$activeMax);
+            ->setActiveMax((int)$activeMax)
+            ->setDefaultMin((int)$min)
+            ->setDefaultMax((int)$max);
 
         return $rangeResultTransfer;
     }
