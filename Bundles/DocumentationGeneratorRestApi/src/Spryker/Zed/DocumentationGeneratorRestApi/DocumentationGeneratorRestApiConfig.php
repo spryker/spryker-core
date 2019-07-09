@@ -118,6 +118,6 @@ class DocumentationGeneratorRestApiConfig extends AbstractBundleConfig
      */
     protected function getDocumentationGeneratorRestApiDefaultValue(): bool
     {
-        return APPLICATION_ENV === 'development';
+        return APPLICATION_ENV === 'development' || APPLICATION_ENV === 'devtest';
     }
 }
