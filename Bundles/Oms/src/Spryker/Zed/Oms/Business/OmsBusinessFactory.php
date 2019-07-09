@@ -371,7 +371,7 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Oms\Dependency\Service\OmsToShipmentServiceInterface
      */
-    protected function getShipmentService(): OmsToShipmentServiceInterface
+    public function getShipmentService(): OmsToShipmentServiceInterface
     {
         return $this->getProvidedDependency(OmsDependencyProvider::SERVICE_SHIPMENT);
     }
