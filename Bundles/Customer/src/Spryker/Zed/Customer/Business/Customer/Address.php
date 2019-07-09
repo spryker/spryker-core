@@ -370,9 +370,9 @@ class Address implements AddressInterface
      */
     protected function findCustomerByIdOrEmail(AddressTransfer $addressTransfer): ?SpyCustomer
     {
-        $idCustomer = $addressTransfer->getFkCustomer();
         $customerEntity = null;
 
+        $idCustomer = $addressTransfer->getFkCustomer();
         if ($idCustomer !== null) {
             $customerEntity = $this->queryContainer
                 ->queryCustomerById($idCustomer)
@@ -390,7 +390,7 @@ class Address implements AddressInterface
                 ->findOne();
         }
 
-        return $customerEntity;
+        return null;
     }
 
     /**
