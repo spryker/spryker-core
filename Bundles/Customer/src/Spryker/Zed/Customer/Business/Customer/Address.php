@@ -370,15 +370,25 @@ class Address implements AddressInterface
      */
     protected function findCustomerByIdOrEmail(AddressTransfer $addressTransfer): ?SpyCustomer
     {
-        $customerEntity = $this->queryContainer->queryCustomerById($addressTransfer->getFkCustomer())
-            ->findOne();
+        $idCustomer = $addressTransfer->getFkCustomer();
+        $customerEntity = null;
+
+        if ($idCustomer !== null) {
+            $customerEntity = $this->queryContainer
+                ->queryCustomerById($idCustomer)
+                ->findOne();
+        }
 
         if ($customerEntity !== null) {
             return $customerEntity;
         }
 
-        $customerEntity = $this->queryContainer->queryCustomerByEmail($addressTransfer->getEmail())
-            ->findOne();
+        $emailCustomer = $addressTransfer->getEmail();
+        if ($emailCustomer !== null) {
+            return $this->queryContainer
+                ->queryCustomerByEmail($emailCustomer)
+                ->findOne();
+        }
 
         return $customerEntity;
     }
