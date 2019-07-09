@@ -191,11 +191,11 @@ interface GiftCardFacadeInterface
 
     /**
      * Specification:
-     * - Filters non-available for gift cards shipment methods
+     * - Filters non-available for gift cards shipment methods.
      *
      * @api
      *
-     * @deprecated Use filterShipmentGroupMethods() instead
+     * @deprecated Use \Spryker\Zed\GiftCard\Business\GiftCardFacadeInterface::filterShipmentGroupMethods() instead.
      *
      * @param \ArrayObject|\Generated\Shared\Transfer\ShipmentMethodTransfer[] $shipmentMethods
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

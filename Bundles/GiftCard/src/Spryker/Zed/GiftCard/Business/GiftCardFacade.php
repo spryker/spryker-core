@@ -244,7 +244,7 @@ class GiftCardFacade extends AbstractFacade implements GiftCardFacadeInterface
      *
      * @api
      *
-     * @deprecated Use filterShipmentGroupMethods() instead
+     * @deprecated Use \Spryker\Zed\GiftCard\Business\GiftCardFacadeInterface::filterShipmentGroupMethods() instead.
      *
      * @param \ArrayObject|\Generated\Shared\Transfer\ShipmentMethodTransfer[] $shipmentMethods
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
