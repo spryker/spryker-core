@@ -41,9 +41,9 @@ class StoreApplicationPlugin extends AbstractPlugin implements ApplicationPlugin
      */
     protected function addStore(ContainerInterface $container): ContainerInterface
     {
-        $container->set(static::STORE, function () {
+        $container[static::STORE] = function () {
             return $this->getStoreName();
-        });
+        };
 
         return $container;
     }

@@ -7,7 +7,7 @@
     "php": ">=7.1",
     "spryker/content-file": "^1.0.0",
     "spryker/content-gui-extension": "^1.1.0",
-    "spryker/file-manager": "^1.0.2",
+    "spryker/file-manager": "^1.1.0",
     "spryker/gui": "^3.21.0",
     "spryker/kernel": "^3.33.0",
     "spryker/locale": "^3.2.0",

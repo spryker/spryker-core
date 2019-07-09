@@ -9,6 +9,7 @@ namespace Spryker\Zed\Console\Communication;
 
 use Spryker\Shared\Kernel\Communication\Application as SprykerApplication;
 use Spryker\Zed\Console\Business\Model\Environment;
+use Spryker\Zed\Kernel\BundleConfigResolverAwareTrait;
 use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeResolver;
 use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
 use Symfony\Component\Console\Application;
@@ -17,8 +18,13 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
+/**
+ * @method \Spryker\Zed\Console\ConsoleConfig getConfig()
+ */
 class ConsoleBootstrap extends Application
 {
+    use BundleConfigResolverAwareTrait;
+
     /**
      * @var \Spryker\Zed\Console\Business\ConsoleFacadeInterface
      */
@@ -38,7 +44,7 @@ class ConsoleBootstrap extends Application
         Environment::initialize();
 
         parent::__construct($name, $version);
-        $this->setCatchExceptions(false);
+        $this->setCatchExceptions($this->getConfig()->shouldCatchExceptions());
         $this->addEventDispatcher();
 
         $this->application = new SprykerApplication();

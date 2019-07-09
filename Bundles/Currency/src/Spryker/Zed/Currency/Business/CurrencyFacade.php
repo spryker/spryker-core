@@ -146,4 +146,20 @@ class CurrencyFacade extends AbstractFacade implements CurrencyFacadeInterface
         return $this->getRepository()
             ->findCurrencyByIsoCode($isoCode);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string[] $isoCodes
+     *
+     * @return \Generated\Shared\Transfer\CurrencyTransfer[]
+     */
+    public function getCurrencyTransfersByIsoCodes(array $isoCodes): array
+    {
+        return $this->getFactory()
+            ->createCurrencyBulkReader()
+            ->getCurrencyTransfersByIsoCodes($isoCodes);
+    }
 }

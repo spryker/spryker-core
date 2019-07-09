@@ -533,4 +533,17 @@ interface PriceProductFacadeInterface
      * @return void
      */
     public function removePriceProductDefaultForPriceProduct(PriceProductTransfer $priceProductTransfer): void;
+
+    /**
+     * Specification:
+     * - Filters product prices using provided filters.
+     * - Returns valid price products for given price filter configurations.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer[] $priceProductFilterTransfers
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function getValidPrices(array $priceProductFilterTransfers): array;
 }
