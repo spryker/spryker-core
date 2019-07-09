@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Controller;
 
+use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
@@ -168,7 +169,9 @@ class AddController extends AbstractController
             $productConcreteTransfer = new ProductConcreteTransfer();
             $productConcreteTransfer->setSku($productAbstractTransfer->getSku());
             $productConcreteTransfer->setIsActive(false);
-            $productConcreteTransfer->setPrices(clone $productAbstractTransfer->getPrices());
+            foreach ($productAbstractTransfer->getPrices() as $price) {
+                $productConcreteTransfer->addPrice(clone $price);
+            }
             $productConcreteTransfer->setLocalizedAttributes($productAbstractTransfer->getLocalizedAttributes());
 
             return [$productConcreteTransfer];
