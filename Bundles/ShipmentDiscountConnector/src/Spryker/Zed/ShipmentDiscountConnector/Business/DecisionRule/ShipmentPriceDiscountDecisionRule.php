@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
-use Spryker\Shared\Shipment\ShipmentConstants;
 use Spryker\Zed\ShipmentDiscountConnector\Business\Model\DecisionRule\ShipmentPriceDiscountDecisionRule as ShipmentPriceDiscountDecisionRuleWithMultiShipment;
 use Spryker\Zed\ShipmentDiscountConnector\Dependency\Facade\ShipmentDiscountConnectorToDiscountInterface;
 use Spryker\Zed\ShipmentDiscountConnector\Dependency\Facade\ShipmentDiscountConnectorToMoneyInterface;
@@ -98,7 +97,7 @@ class ShipmentPriceDiscountDecisionRule extends ShipmentPriceDiscountDecisionRul
         $itemShipmentKey = $this->shipmentService->getShipmentHashKey($shipmentTransfer);
         foreach ($quoteTransfer->getExpenses() as $expenseTransfer) {
             $expenseShipmentKey = $this->shipmentService->getShipmentHashKey($expenseTransfer->getShipment());
-            if ($expenseTransfer->getType() === ShipmentConstants::SHIPMENT_EXPENSE_TYPE
+            if ($expenseTransfer->getType() === $this->getShipmentExpenseType()
                 && $expenseTransfer->getShipment() !== null
                 && $expenseShipmentKey === $itemShipmentKey
             ) {
@@ -107,5 +106,13 @@ class ShipmentPriceDiscountDecisionRule extends ShipmentPriceDiscountDecisionRul
         }
 
         return null;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getShipmentExpenseType(): string
+    {
+        return $this->shipmentService->getShipmentExpenseType();
     }
 }
