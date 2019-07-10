@@ -7,7 +7,7 @@
     "php": ">=7.1",
     "spryker/category": "^3.0.0 || ^4.0.0",
     "spryker/data-import": "^1.3.0",
-    "spryker/kernel": "^3.17.0",
+    "spryker/kernel": "^3.30.0",
     "spryker/product": "^5.0.0 || ^6.0.0",
     "spryker/product-list": "^1.0.0"
   },
