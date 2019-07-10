@@ -429,19 +429,6 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
-     * @param string $countryIso2Code
-     *
-     * @return \Orm\Zed\Country\Persistence\SpyCountryQuery
-     */
-    protected function queryCountryByIso2Code($countryIso2Code)
-    {
-        return $this->getFactory()
-            ->getCountryQueryContainer()
-            ->queryCountries()
-            ->filterByIso2Code($countryIso2Code);
-    }
-
-    /**
      * @param string[] $countryIso2Codes
      *
      * @return \Orm\Zed\Country\Persistence\SpyCountryQuery
