@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Cart\Business;
 
+use Spryker\Zed\Cart\Business\Locker\QuoteLocker;
+use Spryker\Zed\Cart\Business\Locker\QuoteLockerInterface;
 use Spryker\Zed\Cart\Business\Model\Operation;
 use Spryker\Zed\Cart\Business\Model\QuoteChangeObserver;
 use Spryker\Zed\Cart\Business\Model\QuoteChangeObserverInterface;
@@ -67,6 +69,18 @@ class CartBusinessFactory extends AbstractBusinessFactory
     public function createQuoteCleaner(): QuoteCleanerInterface
     {
         return new QuoteCleaner();
+    }
+
+    /**
+     * @return \Spryker\Zed\Cart\Business\Locker\QuoteLockerInterface
+     */
+    public function createQuoteLocker(): QuoteLockerInterface
+    {
+        return new QuoteLocker(
+            $this->getQuoteFacade(),
+            $this->createCartOperation(),
+            $this->getQuoteLockPreResetPlugins()
+        );
     }
 
     /**
@@ -198,5 +212,13 @@ class CartBusinessFactory extends AbstractBusinessFactory
     public function getPostReloadItemsPlugins(): array
     {
         return $this->getProvidedDependency(CartDependencyProvider::PLUGINS_POST_RELOAD_ITEMS);
+    }
+
+    /**
+     * @return \Spryker\Zed\CartExtension\Dependency\Plugin\QuoteLockPreResetPluginInterface[]
+     */
+    public function getQuoteLockPreResetPlugins(): array
+    {
+        return $this->getProvidedDependency(CartDependencyProvider::PLUGINS_QUOTE_LOCK_PRE_RESET);
     }
 }

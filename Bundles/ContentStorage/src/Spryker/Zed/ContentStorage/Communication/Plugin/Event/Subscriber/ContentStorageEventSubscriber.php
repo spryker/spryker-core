@@ -64,7 +64,7 @@ class ContentStorageEventSubscriber extends AbstractPlugin implements EventSubsc
      */
     protected function addContentPublishListener(EventCollectionInterface $eventCollection): void
     {
-        $eventCollection->addListenerQueued(ContentEvents::ENTITY_SPY_CONTENT_PUBLISH, new ContentStorageListener());
+        $eventCollection->addListenerQueued(ContentEvents::CONTENT_PUBLISH, new ContentStorageListener());
     }
 
     /**

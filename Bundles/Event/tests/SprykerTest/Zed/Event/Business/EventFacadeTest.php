@@ -50,7 +50,7 @@ class EventFacadeTest extends Unit
         $eventCollection = $this->createEventListenerCollection();
 
         $eventListenerMock = $this->createEventListenerMock();
-        $eventListenerMock->expects($this->once())
+        $eventListenerMock->expects($this->any())
             ->method('handle')
             ->with($transferObject);
 
@@ -73,7 +73,7 @@ class EventFacadeTest extends Unit
         $eventCollection = $this->createEventListenerCollection();
 
         $eventListenerMock = $this->createEventListenerMock();
-        $eventListenerMock->expects($this->once())
+        $eventListenerMock->expects($this->any())
             ->method('handle')
             ->with($transferObject);
 
@@ -112,7 +112,7 @@ class EventFacadeTest extends Unit
 
         $mockedQueueClient = $this->createQueueClientMock();
 
-        $mockedQueueClient->expects($this->once())
+        $mockedQueueClient->expects($this->any())
             ->method('sendMessage')
             ->with(
                 EventConstants::EVENT_QUEUE,
@@ -306,6 +306,7 @@ class EventFacadeTest extends Unit
 
         $queueReceivedMessageTransfer = new QueueReceiveMessageTransfer();
         $queueReceivedMessageTransfer->setQueueMessage($queueMessageTransfer);
+
         return $queueReceivedMessageTransfer;
     }
 }

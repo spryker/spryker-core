@@ -316,6 +316,7 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     {
         if ($urlRedirectTransfer instanceof RedirectTransfer) {
             $this->legacyDeleteUrlRedirect($urlRedirectTransfer);
+
             return;
         }
 

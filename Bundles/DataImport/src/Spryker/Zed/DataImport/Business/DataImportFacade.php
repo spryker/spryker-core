@@ -52,4 +52,19 @@ class DataImportFacade extends AbstractFacade implements DataImportFacadeInterfa
     {
         $this->getFactory()->createDataImporterPublisher()->triggerEvents();
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $queueName
+     * @param \Generated\Shared\Transfer\DataSetItemTransfer[] $dataSetItems
+     *
+     * @return void
+     */
+    public function writeDataSetItemsToQueue(string $queueName, array $dataSetItems): void
+    {
+        $this->getFactory()->createQueueWriter()->write($queueName, $dataSetItems);
+    }
 }

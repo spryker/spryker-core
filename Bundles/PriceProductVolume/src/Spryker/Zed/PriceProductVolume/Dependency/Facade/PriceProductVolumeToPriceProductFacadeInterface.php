@@ -16,7 +16,7 @@ interface PriceProductVolumeToPriceProductFacadeInterface
      * @param int $idProductAbstract
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductCriteriaTransfer[]
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
     public function findProductAbstractPricesWithoutPriceExtraction(int $idProductAbstract, ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null): array;
 

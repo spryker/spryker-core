@@ -1,10 +1,13 @@
+{% set baseUrl = config.baseUrl is not empty ? config.baseUrl : '/' ~ app.request.get('module') ~ '/' ~ app.request.get('controller') ~ '/' %}
 <table
     class="table table-striped table-bordered table-hover {{ config.class | default('gui-table-data') }}"
-    data-ajax="/{{ app.request.get('module') }}/{{ app.request.get('controller') }}/{{ config.url }}"
+    data-ajax="{{ baseUrl }}{{ config.url }}"
     id="{{ config.tableId }}"
-    data-processing="true"
-    data-server-side="true"
+    data-processing="{{ config.processing is defined and config.processing ? 'true' : 'false' }}"
+    data-server-side="{{ config.serverSide is defined and config.serverSide ? 'true' : 'false' }}"
     data-state-save="{{ config.stateSave is defined and config.stateSave ? 'true' : 'false' }}"
+    data-ordering="{{ config.ordering is defined and config.ordering ? 'true' : 'false' }}"
+    data-paging="{{ config.paging is defined and config.paging ? 'true' : 'false' }}"
     {% if config.pageLength is defined -%}
         data-page-length="{{ config.pageLength }}"
     {% endif -%}

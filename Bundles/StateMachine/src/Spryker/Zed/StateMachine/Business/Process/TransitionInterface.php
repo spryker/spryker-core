@@ -10,7 +10,7 @@ namespace Spryker\Zed\StateMachine\Business\Process;
 interface TransitionInterface
 {
     /**
-     * @param mixed $happy
+     * @param bool $happy
      *
      * @return void
      */

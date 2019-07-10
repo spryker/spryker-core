@@ -18,6 +18,9 @@ class DiscountPromotionPostUpdatePlugin extends BaseDiscountPromotionSaverPlugin
 {
     /**
      * {@inheritdoc}
+     *  - Checks if given discount CollectorStrategyType is set to "promotion"
+     *    then updates Promotion for Discount.
+     *  - Sets updated DiscountPromotion to DiscountCalculator of DiscountConfigurator.
      *
      * @api
      *

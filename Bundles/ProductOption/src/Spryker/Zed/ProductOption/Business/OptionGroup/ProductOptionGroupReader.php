@@ -197,6 +197,7 @@ class ProductOptionGroupReader implements ProductOptionGroupReaderInterface
 
             $productOptionValueTranslations = array_merge($productOptionValueTranslations, $valueTranslations);
         }
+
         return $productOptionValueTranslations;
     }
 

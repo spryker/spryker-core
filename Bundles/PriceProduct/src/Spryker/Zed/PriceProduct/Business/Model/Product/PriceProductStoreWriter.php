@@ -95,6 +95,22 @@ class PriceProductStoreWriter implements PriceProductStoreWriterInterface
     }
 
     /**
+     * @return void
+     */
+    public function deleteOrphanPriceProductStoreEntities(): void
+    {
+        $orphanPriceProductStoreEntities = $this->priceProductRepository->findOrphanPriceProductStoreEntities();
+
+        if (count($orphanPriceProductStoreEntities) === 0) {
+            return;
+        }
+
+        $this->getTransactionHandler()->handleTransaction(function () use ($orphanPriceProductStoreEntities) {
+            $this->doDeleteOrphanPriceProductStoreEntities($orphanPriceProductStoreEntities);
+        });
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer
@@ -137,22 +153,6 @@ class PriceProductStoreWriter implements PriceProductStoreWriterInterface
     }
 
     /**
-     * @return void
-     */
-    public function deleteOrphanPriceProductStoreEntities(): void
-    {
-        $orphanPriceProductStoreEntities = $this->priceProductRepository->findOrphanPriceProductStoreEntities();
-
-        if (count($orphanPriceProductStoreEntities) === 0) {
-            return;
-        }
-
-        $this->getTransactionHandler()->handleTransaction(function () use ($orphanPriceProductStoreEntities) {
-            $this->doDeleteOrphanPriceProductStoreEntities($orphanPriceProductStoreEntities);
-        });
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer
@@ -160,27 +160,58 @@ class PriceProductStoreWriter implements PriceProductStoreWriterInterface
     protected function savePriceProductEntity(PriceProductTransfer $priceProductTransfer): PriceProductTransfer
     {
         $priceProductTransfer
-            ->requireFkPriceType()
-            ->requireIdProduct();
+            ->requireFkPriceType();
 
-        $idPriceProduct = $this->priceProductRepository
-            ->findIdPriceProductForProductConcrete($priceProductTransfer);
+        $this->requireFieldsBaseOnProductType($priceProductTransfer);
 
-        if ($idPriceProduct !== null) {
-            $priceProductTransfer->setIdPriceProduct($idPriceProduct);
+        if ($priceProductTransfer->getIdProduct() !== null) {
+            $idPriceProduct = $this->priceProductRepository
+                ->findIdPriceProductForProductConcrete($priceProductTransfer);
 
-            return $priceProductTransfer;
+            if ($idPriceProduct !== null) {
+                $priceProductTransfer->setIdPriceProduct($idPriceProduct);
+
+                return $priceProductTransfer;
+            }
+        }
+
+        if ($priceProductTransfer->getIdProductAbstract() !== null) {
+            $idPriceProduct = $this->priceProductRepository
+                ->findIdPriceProductForProductAbstract($priceProductTransfer);
+
+            if ($idPriceProduct !== null) {
+                $priceProductTransfer->setIdPriceProduct($idPriceProduct);
+
+                return $priceProductTransfer;
+            }
         }
 
         $priceProductEntity = (new SpyPriceProduct())
             ->setFkPriceType($priceProductTransfer->getFkPriceType())
-            ->setFkProduct($priceProductTransfer->getIdProduct());
+            ->setFkProduct($priceProductTransfer->getIdProduct())
+            ->setFkProductAbstract($priceProductTransfer->getIdProductAbstract());
 
         $priceProductEntity->save();
 
         $priceProductTransfer->setIdPriceProduct($priceProductEntity->getIdPriceProduct());
 
         return $priceProductTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return void
+     */
+    protected function requireFieldsBaseOnProductType(PriceProductTransfer $priceProductTransfer): void
+    {
+        if ($priceProductTransfer->getIdProduct() === null) {
+            $priceProductTransfer->requireIdProductAbstract();
+        }
+
+        if ($priceProductTransfer->getIdProductAbstract() === null) {
+            $priceProductTransfer->requireIdProduct();
+        }
     }
 
     /**

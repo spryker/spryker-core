@@ -147,6 +147,7 @@ class HttpRequestValidator implements HttpRequestValidatorInterface
                 ->setDetail('Not allowed.')
                 ->setStatus(Response::HTTP_FORBIDDEN);
         }
+
         return null;
     }
 
@@ -165,6 +166,7 @@ class HttpRequestValidator implements HttpRequestValidatorInterface
 
             return $restErrorMessageTransfer;
         }
+
         return null;
     }
 }

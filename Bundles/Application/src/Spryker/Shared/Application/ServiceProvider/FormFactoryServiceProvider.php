@@ -13,8 +13,8 @@ use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Kernel\ContainerGlobals;
 use Symfony\Bridge\Twig\Form\TwigRenderer;
 use Symfony\Component\Form\FormRenderer;
+use Twig\Environment;
 use Twig\RuntimeLoader\FactoryRuntimeLoader;
-use Twig_Environment;
 
 class FormFactoryServiceProvider implements ServiceProviderInterface
 {
@@ -31,7 +31,7 @@ class FormFactoryServiceProvider implements ServiceProviderInterface
         });
 
         $app['twig'] = $app->share(
-            $app->extend('twig', function (Twig_Environment $twig) use ($app) {
+            $app->extend('twig', function (Environment $twig) use ($app) {
                 $data = [
                     FormRenderer::class => function () use ($app) {
                         return $app['twig.form.renderer'];

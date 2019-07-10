@@ -16,7 +16,7 @@ interface ProductSetStorageQueryContainerInterface extends QueryContainerInterfa
      *
      * @param array $productSetIds
      *
-     * @return \Orm\Zed\ProductSet\Persistence\SpyProductSetQuery
+     * @return \Orm\Zed\ProductSet\Persistence\SpyProductSetDataQuery
      */
     public function queryProductSetDataByIds(array $productSetIds);
 

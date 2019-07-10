@@ -9,7 +9,7 @@ namespace Spryker\Zed\Gui\Communication\Plugin\Twig;
 
 use Generated\Shared\Transfer\TabsViewTransfer;
 use Spryker\Shared\Twig\TwigFunction;
-use Twig_Environment;
+use Twig\Environment;
 
 class TabsFunction extends TwigFunction
 {
@@ -42,13 +42,13 @@ class TabsFunction extends TwigFunction
     }
 
     /**
-     * @param \Twig_Environment $twig
+     * @param \Twig\Environment $twig
      * @param \Generated\Shared\Transfer\TabsViewTransfer $tabsViewTransfer
      * @param array $context
      *
      * @return string
      */
-    public function tabs(Twig_Environment $twig, TabsViewTransfer $tabsViewTransfer, array $context = [])
+    public function tabs(Environment $twig, TabsViewTransfer $tabsViewTransfer, array $context = [])
     {
         $context['tabsViewTransfer'] = $tabsViewTransfer;
 

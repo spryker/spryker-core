@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Kernel\Communication\Plugin;
 
-use Spryker\Shared\Kernel\Communication\Application;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
@@ -16,22 +15,22 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class Pimple extends AbstractPlugin
 {
     /**
-     * @var \Spryker\Shared\Kernel\Communication\Application
+     * @var \Spryker\Service\Container\Container
      */
     protected static $application;
 
     /**
-     * @param \Spryker\Shared\Kernel\Communication\Application $application
+     * @param \Spryker\Service\Container\Container $application
      *
      * @return void
      */
-    public static function setApplication(Application $application)
+    public static function setApplication($application)
     {
         self::$application = $application;
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\Communication\Application
+     * @return \Spryker\Service\Container\Container
      */
     public function getApplication()
     {

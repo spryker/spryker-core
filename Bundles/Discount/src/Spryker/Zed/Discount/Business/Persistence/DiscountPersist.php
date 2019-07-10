@@ -376,6 +376,7 @@ class DiscountPersist implements DiscountPersistInterface
         foreach ($this->discountPostUpdatePlugins as $discountPostUpdatePlugin) {
             $discountConfiguratorTransfer = $discountPostUpdatePlugin->postUpdate($discountConfiguratorTransfer);
         }
+
         return $discountConfiguratorTransfer;
     }
 

@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\SpyCmsBlockEntityTransfer;
 use Spryker\Shared\CmsContentWidget\Dependency\CmsContentWidgetConfigurationProviderInterface;
 use Spryker\Yves\CmsContentWidget\Dependency\CmsContentWidgetPluginInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
-use Twig_Environment;
+use Twig\Environment;
 
 /**
  * @method \Spryker\Yves\CmsContentWidgetCmsBlockConnector\CmsContentWidgetCmsBlockConnectorFactory getFactory()
@@ -46,14 +46,14 @@ class CmsBlockContentWidgetPlugin extends AbstractPlugin implements CmsContentWi
     }
 
     /**
-     * @param \Twig_Environment $twig
+     * @param \Twig\Environment $twig
      * @param array $context
      * @param string[] $blockNames
      * @param string|null $templateIdentifier
      *
      * @return string
      */
-    public function contentWidgetFunction(Twig_Environment $twig, array $context, array $blockNames, $templateIdentifier = null): string
+    public function contentWidgetFunction(Environment $twig, array $context, array $blockNames, $templateIdentifier = null): string
     {
         $blocks = $this->getBlockDataByNames($blockNames);
         $templatePath = $this->resolveTemplatePath($templateIdentifier);

@@ -9,8 +9,17 @@ namespace Spryker\Zed\Content\Business;
 
 use Spryker\Zed\Content\Business\ContentReader\ContentReader;
 use Spryker\Zed\Content\Business\ContentReader\ContentReaderInterface;
+use Spryker\Zed\Content\Business\ContentValidator\ContentConstraintsProvider;
+use Spryker\Zed\Content\Business\ContentValidator\ContentConstraintsProviderInterface;
+use Spryker\Zed\Content\Business\ContentValidator\ContentValidator;
+use Spryker\Zed\Content\Business\ContentValidator\ContentValidatorInterface;
 use Spryker\Zed\Content\Business\ContentWriter\ContentWriter;
 use Spryker\Zed\Content\Business\ContentWriter\ContentWriterInterface;
+use Spryker\Zed\Content\Business\KeyProvider\ContentKeyProvider;
+use Spryker\Zed\Content\Business\KeyProvider\ContentKeyProviderInterface;
+use Spryker\Zed\Content\ContentDependencyProvider;
+use Spryker\Zed\Content\Dependency\External\ContentToValidationAdapterInterface;
+use Spryker\Zed\Content\Dependency\Service\ContentToUtilUuidGeneratorServiceInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -26,7 +35,8 @@ class ContentBusinessFactory extends AbstractBusinessFactory
     public function createContentWriter(): ContentWriterInterface
     {
         return new ContentWriter(
-            $this->getEntityManager()
+            $this->getEntityManager(),
+            $this->createContentKeyProvider()
         );
     }
 
@@ -38,5 +48,51 @@ class ContentBusinessFactory extends AbstractBusinessFactory
         return new ContentReader(
             $this->getRepository()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Content\Business\ContentValidator\ContentValidatorInterface
+     */
+    public function createContentValidator(): ContentValidatorInterface
+    {
+        return new ContentValidator(
+            $this->createContentConstraintsProvider(),
+            $this->getValidatorAdapter()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Content\Business\ContentValidator\ContentConstraintsProviderInterface
+     */
+    public function createContentConstraintsProvider(): ContentConstraintsProviderInterface
+    {
+        return new ContentConstraintsProvider();
+    }
+
+    /**
+     * @return \Spryker\Zed\Content\Business\KeyProvider\ContentKeyProviderInterface
+     */
+    public function createContentKeyProvider(): ContentKeyProviderInterface
+    {
+        return new ContentKeyProvider(
+            $this->getUtilUuidGeneratorService(),
+            $this->getRepository()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Content\Dependency\External\ContentToValidationAdapterInterface
+     */
+    public function getValidatorAdapter(): ContentToValidationAdapterInterface
+    {
+        return $this->getProvidedDependency(ContentDependencyProvider::ADAPTER_VALIDATION);
+    }
+
+    /**
+     * @return \Spryker\Zed\Content\Dependency\Service\ContentToUtilUuidGeneratorServiceInterface
+     */
+    public function getUtilUuidGeneratorService(): ContentToUtilUuidGeneratorServiceInterface
+    {
+        return $this->getProvidedDependency(ContentDependencyProvider::SERVICE_UTIL_UUID_GENERATOR);
     }
 }

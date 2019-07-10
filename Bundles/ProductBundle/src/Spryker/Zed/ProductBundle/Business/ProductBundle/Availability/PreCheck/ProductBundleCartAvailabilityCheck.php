@@ -112,6 +112,7 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
     protected function createItemIsNotAvailableMessageTransfer($stock, $sku)
     {
         $translationKey = $this->getItemAvailabilityTranslationKey($stock);
+
         return $this->createCartMessageTransfer($stock, $translationKey, $sku);
     }
 
@@ -145,6 +146,7 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
         if ($stock <= 0) {
             $translationKey = static::CART_PRE_CHECK_ITEM_AVAILABILITY_EMPTY;
         }
+
         return $translationKey;
     }
 
@@ -314,6 +316,7 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
         }
 
         $availability = $this->calculateRegularItemAvailability($itemTransfer, $itemsInCart, $storeTransfer);
+
         return $this->createItemIsNotAvailableMessageTransfer($availability, $itemTransfer->getSku());
     }
 }

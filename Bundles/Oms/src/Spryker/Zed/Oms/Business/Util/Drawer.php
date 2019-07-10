@@ -508,7 +508,7 @@ class Drawer implements DrawerInterface
 
     /**
      * @param \Spryker\Zed\Oms\Business\Process\TransitionInterface $transition
-     * @param string $fromName
+     * @param string|null $fromName
      *
      * @return string
      */

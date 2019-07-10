@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\SalesOrderThreshold\Dependency\Facade;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 interface SalesOrderThresholdToStoreFacadeInterface
 {
     /**

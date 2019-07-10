@@ -15,6 +15,7 @@
         <property name="code" type="string"/>
         <property name="detail" type="string"/>
         <property name="parameters" type="array"/>
+        <property name="errorIdentifier" type="string"/>
     </transfer>
 
     <transfer name="RestCheckoutDataResponse">
@@ -96,13 +97,91 @@
 
     <transfer name="RestCheckoutResponseAttributes">
         <property name="orderReference" type="string"/>
+        <property name="redirectUrl" type="string" />
+        <property name="isExternalRedirect" type="bool" />
     </transfer>
 
     <transfer name="RestCheckoutResponse">
         <property name="isSuccess" type="bool" />
         <property name="errors" type="RestCheckoutError[]" singular="error" />
         <property name="orderReference" type="string" />
+        <property name="redirectUrl" type="string" />
+        <property name="isExternalRedirect" type="bool" />
+        <property name="checkoutResponse" type="CheckoutResponse" />
+    </transfer>
+
+    <transfer name="CheckoutResponse">
+        <property name="isSuccess" type="bool" />
+        <property name="errors" type="CheckoutError[]" singular="error" />
+        <property name="saveOrder" type="SaveOrder" deprecated="Use SaveOrderTransfer directly/decoupled from the checkout response" />
+    </transfer>
+
+    <transfer name="SaveOrder">
+        <property name="orderReference" type="string" />
+    </transfer>
+
+    <transfer name="CheckoutError">
+        <property name="errorCode" type="int" />
+        <property name="message" type="string" />
+    </transfer>
+
+    <transfer name="Addresses">
+        <property name="addresses" type="Address[]" singular="Address" />
+    </transfer>
+
+    <transfer name="Address">
+        <property name="idCustomerAddress" type="int" />
+        <property name="uuid" type="string" />
+        <property name="isDefaultBilling" type="bool" />
+        <property name="isDefaultShipping" type="bool" />
+    </transfer>
+
+    <transfer name="ShipmentMethods">
+        <property name="methods" type="ShipmentMethod[]" singular="method" />
+    </transfer>
+
+    <transfer name="ShipmentMethod">
+        <property name="idShipmentMethod" type="int" />
+        <property name="storeCurrencyPrice" type="int" />
+    </transfer>
+
+    <transfer name="PaymentProviderCollection">
+        <property name="paymentProviders" singular="paymentProvider" type="PaymentProvider[]" />
+    </transfer>
+
+    <transfer name="PaymentProvider">
+        <property name="name" type="string"/>
+        <property name="paymentMethods" singular="paymentMethod" type="PaymentMethod[]" />
+    </transfer>
+
+    <transfer name="PaymentMethods">
+        <property name="methods" singular="method" type="PaymentMethod[]" />
+    </transfer>
+
+    <transfer name="PaymentMethod">
+        <property name="methodName" type="string" />
+    </transfer>
+
+    <transfer name="Quote">
+        <property name="customer" type="Customer" />
+        <property name="items" type="Item[]" />
+    </transfer>
+
+    <transfer name="Item">
+        <property name="sku" type="string"/>
+    </transfer>
+
+    <transfer name="Customer">
+        <property name="isGuest" type="bool" />
+        <property name="customerReference" type="string"/>
+        <property name="defaultBillingAddress" type="string" />
+        <property name="defaultShippingAddress" type="string" />
+        <property name="addresses" type="Addresses" singular="address" />
+    </transfer>
+
+    <transfer name="CustomerResponse">
+        <property name="hasCustomer" type="bool" />
+        <property name="customerTransfer" type="Customer" />
     </transfer>
 
 </transfers>
-
