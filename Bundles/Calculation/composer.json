@@ -6,7 +6,7 @@
   "require": {
     "php": ">=7.1",
     "spryker/calculation-extension": "^1.1.0",
-    "spryker/kernel": "^3.0.0",
+    "spryker/kernel": "^3.30.0",
     "spryker/util-text": "^1.1.0",
     "spryker/zed-request": "^3.0.0"
   },
