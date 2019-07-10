@@ -21,7 +21,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CreateController extends AbstractController
 {
-    public const PARAM_ID_SALES_ORDER = 'id-sales-order';
+    protected const PARAM_ID_SALES_ORDER = 'id-sales-order';
 
     protected const REDIRECT_URL_DEFAULT = '/sales/detail';
 
