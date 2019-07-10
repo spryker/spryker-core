@@ -10,7 +10,7 @@ namespace Spryker\Zed\PriceCartConnector\Dependency\Facade;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 
-class PriceCartToPriceProductBridge implements PriceCartToPriceProductInterface
+class PriceCartConnectorToPriceProductAdapter implements PriceCartToPriceProductInterface
 {
     /**
      * @var \Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface
@@ -73,5 +73,42 @@ class PriceCartToPriceProductBridge implements PriceCartToPriceProductInterface
     public function getDefaultPriceTypeName()
     {
         return $this->priceProductFacade->getDefaultPriceTypeName();
+    }
+
+    /**
+     * The method check for `method_exists` is for BC for supporting old majors of `PriceProduct` module.
+     *
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer[] $priceProductFilterTransfers
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function getValidPrices(array $priceProductFilterTransfers): array
+    {
+        if (!method_exists($this->priceProductFacade, 'getValidPrices')) {
+            return $this->findPriceProductsForPriceProductFilterTransfers($priceProductFilterTransfers);
+        }
+
+        return $this->priceProductFacade->getValidPrices($priceProductFilterTransfers);
+    }
+
+    /**
+     * @deprecated Will be removed with the next major.
+     *
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer[] $priceProductFilterTransfers
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    protected function findPriceProductsForPriceProductFilterTransfers(array $priceProductFilterTransfers): array
+    {
+        $priceProductTransfers = [];
+        foreach ($priceProductFilterTransfers as $priceProductFilterTransfer) {
+            $priceProductTransfer = $this->findPriceProductFor($priceProductFilterTransfer);
+            if ($priceProductTransfer) {
+                $priceProductTransfer->setSkuProduct($priceProductFilterTransfer->getSku());
+                $priceProductTransfers[] = $priceProductTransfer;
+            }
+        }
+
+        return $priceProductTransfers;
     }
 }

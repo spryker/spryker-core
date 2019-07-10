@@ -135,8 +135,9 @@ interface MultiCartClientInterface
 
     /**
      * Specification:
-     * - Remove all items from quote.
-     * - Save quote in database.
+     * - Removes all items from quote.
+     * - Clears totals and expenses.
+     * - Saves quote in persistence.
      *
      * @api
      *

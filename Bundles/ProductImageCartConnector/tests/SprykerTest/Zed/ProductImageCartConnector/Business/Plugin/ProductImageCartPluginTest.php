@@ -27,9 +27,9 @@ use Spryker\Zed\ProductImageCartConnector\Business\ProductImageCartConnectorFaca
 class ProductImageCartPluginTest extends Unit
 {
     /**
-     * @var \Spryker\Zed\ProductCartConnector\Business\ProductCartConnectorFacade
+     * @var \Spryker\Zed\ProductImageCartConnector\Business\ProductImageCartConnectorFacadeInterface
      */
-    private $productImageCartConnectorFacade;
+    protected $productImageCartConnectorFacade;
 
     /**
      * @return void
