@@ -21,6 +21,7 @@ use Spryker\Client\SharedCart\Dependency\Client\SharedCartToCustomerClientInterf
 use Spryker\Client\SharedCart\Dependency\Client\SharedCartToMessengerClientInterface;
 use Spryker\Client\SharedCart\Dependency\Client\SharedCartToMultiCartClientInterface;
 use Spryker\Client\SharedCart\Dependency\Client\SharedCartToPersistentCartClientInterface;
+use Spryker\Client\SharedCart\Dependency\Client\SharedCartToQuoteClientInterface;
 use Spryker\Client\SharedCart\Exception\CartNotFoundException;
 use Spryker\Client\SharedCart\Plugin\ReadSharedCartPermissionPlugin;
 use Spryker\Client\SharedCart\Zed\SharedCartStubInterface;
@@ -57,24 +58,32 @@ class CartSharer implements CartSharerInterface
     protected $customerClient;
 
     /**
+     * @var \Spryker\Client\SharedCart\Dependency\Client\SharedCartToQuoteClientInterface|null
+     */
+    protected $quoteClient;
+
+    /**
      * @param \Spryker\Client\SharedCart\Zed\SharedCartStubInterface $sharedCartStub
      * @param \Spryker\Client\SharedCart\Dependency\Client\SharedCartToMultiCartClientInterface $multiCartClient
      * @param \Spryker\Client\SharedCart\Dependency\Client\SharedCartToPersistentCartClientInterface $persistentCartClient
      * @param \Spryker\Client\SharedCart\Dependency\Client\SharedCartToMessengerClientInterface $messengerClient
      * @param \Spryker\Client\SharedCart\Dependency\Client\SharedCartToCustomerClientInterface $customerClient
+     * @param \Spryker\Client\SharedCart\Dependency\Client\SharedCartToQuoteClientInterface|null $quoteClient
      */
     public function __construct(
         SharedCartStubInterface $sharedCartStub,
         SharedCartToMultiCartClientInterface $multiCartClient,
         SharedCartToPersistentCartClientInterface $persistentCartClient,
         SharedCartToMessengerClientInterface $messengerClient,
-        SharedCartToCustomerClientInterface $customerClient
+        SharedCartToCustomerClientInterface $customerClient,
+        ?SharedCartToQuoteClientInterface $quoteClient = null
     ) {
         $this->multiCartClient = $multiCartClient;
         $this->persistentCartClient = $persistentCartClient;
         $this->sharedCartStub = $sharedCartStub;
         $this->messengerClient = $messengerClient;
         $this->customerClient = $customerClient;
+        $this->quoteClient = $quoteClient;
     }
 
     /**
@@ -136,7 +145,7 @@ class CartSharer implements CartSharerInterface
 
         $quoteTransfer = $this->getQuote($shareCartRequestTransfer->getIdQuote());
 
-        if ($quoteTransfer->getIsLocked()) {
+        if ($this->quoteClient && $this->quoteClient->isQuoteLocked($quoteTransfer)) {
             return (new QuoteResponseTransfer())->setIsSuccessful(false);
         }
 
