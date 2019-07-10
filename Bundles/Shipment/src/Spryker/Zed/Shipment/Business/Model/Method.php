@@ -16,6 +16,7 @@ use Spryker\Shared\Shipment\ShipmentConstants;
 use Spryker\Zed\Shipment\Business\Model\Transformer\ShipmentMethodTransformerInterface;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCurrencyInterface;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToStoreInterface;
+use Spryker\Zed\Shipment\Dependency\Plugin\ShipmentMethodFilterPluginInterface;
 use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface;
 use Spryker\Zed\Shipment\ShipmentDependencyProvider;
 
@@ -159,8 +160,14 @@ class Method implements MethodInterface
     protected function applyFilters(ShipmentMethodsTransfer $shipmentMethodsTransfer, QuoteTransfer $quoteTransfer)
     {
         $shipmentMethods = $shipmentMethodsTransfer->getMethods();
-
         foreach ($this->shipmentMethodFilters as $shipmentMethodFilter) {
+            if (!$shipmentMethodFilter instanceof ShipmentMethodFilterPluginInterface) {
+                continue;
+            }
+
+            $shipmentMethodCollection = $shipmentMethodFilter->filterShipmentMethods($shipmentMethods, $quoteTransfer);
+            $shipmentMethodsTransfer->setMethods($shipmentMethodCollection);
+
             $shipmentMethods = $shipmentMethodFilter->filterShipmentMethods($shipmentMethods, $quoteTransfer);
         }
 
