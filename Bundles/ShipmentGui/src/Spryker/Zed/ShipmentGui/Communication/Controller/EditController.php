@@ -10,7 +10,6 @@ namespace Spryker\Zed\ShipmentGui\Communication\Controller;
 use Generated\Shared\Transfer\ShipmentGroupResponseTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
-use Spryker\Zed\Sales\SalesConfig;
 use Spryker\Zed\ShipmentGui\Communication\Form\Item\ItemFormType;
 use Spryker\Zed\ShipmentGui\Communication\Form\Shipment\ShipmentGroupFormType;
 use Symfony\Component\Form\FormInterface;
@@ -84,8 +83,12 @@ class EditController extends AbstractController
 
             $this->addStatusMessage($responseTransfer);
 
+            $paramIdSalesOrder = $this->getFactory()
+                ->getSalesFacade()
+                ->getIdSalesOrderParameter();
+
             $redirectUrl = Url::generate(static::REDIRECT_URL, [
-                SalesConfig::PARAM_ID_SALES_ORDER => $idSalesOrder,
+                $paramIdSalesOrder => $idSalesOrder,
             ])->build();
 
             return $this->redirectResponse($redirectUrl);

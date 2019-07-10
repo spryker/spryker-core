@@ -8,9 +8,10 @@
 namespace Spryker\Zed\Sales\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Sales\Business\Address\OrderAddressReader;
 use Spryker\Zed\Sales\Business\Address\OrderAddressWriter;
 use Spryker\Zed\Sales\Business\Address\OrderAddressWriterInterface;
+use Spryker\Zed\Sales\Business\ConfigReader\ConfigReader;
+use Spryker\Zed\Sales\Business\ConfigReader\ConfigReaderInterface;
 use Spryker\Zed\Sales\Business\Expander\SalesAddressExpander;
 use Spryker\Zed\Sales\Business\Expander\SalesAddressExpanderInterface;
 use Spryker\Zed\Sales\Business\Expense\ExpenseUpdater;
@@ -343,14 +344,6 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Sales\Business\Address\OrderAddressReader
-     */
-    public function createOrderAddressReader()
-    {
-        return new OrderAddressReader($this->getRepository());
-    }
-
-    /**
      * @return \Spryker\Zed\Sales\Persistence\Propel\Mapper\SalesOrderItemMapperInterface
      */
     public function createSalesOrderItemMapper(): SalesOrderItemMapperInterface
@@ -472,5 +465,13 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     public function getCustomerFacade(): SalesToCustomerInterface
     {
         return $this->getProvidedDependency(SalesDependencyProvider::FACADE_CUSTOMER);
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Business\ConfigReader\ConfigReaderInterface
+     */
+    public function createConfigReader(): ConfigReaderInterface
+    {
+        return new ConfigReader($this->getConfig());
     }
 }

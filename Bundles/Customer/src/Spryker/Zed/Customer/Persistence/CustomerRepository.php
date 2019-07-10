@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\CustomerCollectionTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
+use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\Formatter\ArrayFormatter;
@@ -183,5 +184,13 @@ class CustomerRepository extends AbstractRepository implements CustomerRepositor
         return $this->getFactory()
             ->createCustomerMapper()
             ->mapCustomerAddressEntityToAddressTransfer($customerAddressEntity, new AddressTransfer());
+    }
+
+    /**
+     * @return array
+     */
+    public function getAllSalutations(): array
+    {
+        return SpyCustomerTableMap::getValueSet(SpyCustomerTableMap::COL_SALUTATION);
     }
 }

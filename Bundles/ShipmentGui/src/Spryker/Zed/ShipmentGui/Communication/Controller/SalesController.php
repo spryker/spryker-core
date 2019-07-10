@@ -8,7 +8,7 @@
 namespace Spryker\Zed\ShipmentGui\Communication\Controller;
 
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
-use Spryker\Zed\Sales\Business\Exception\OrderNotFoundException;
+use Spryker\Zed\ShipmentGui\Communication\Exception\OrderNotFoundException;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
