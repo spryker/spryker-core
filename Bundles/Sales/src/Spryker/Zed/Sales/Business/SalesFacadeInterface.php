@@ -339,4 +339,14 @@ interface SalesFacadeInterface
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
     public function expandWithCustomerOrSalesAddress(AddressTransfer $addressTransfer): AddressTransfer;
+
+    /**
+     * Specification:
+     * - Gets id-sales-order parameter from config.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getIdSalesOrderParameter(): string;
 }

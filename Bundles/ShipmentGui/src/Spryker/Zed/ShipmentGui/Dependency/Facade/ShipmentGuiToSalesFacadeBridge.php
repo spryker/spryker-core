@@ -44,4 +44,12 @@ class ShipmentGuiToSalesFacadeBridge implements ShipmentGuiToSalesFacadeInterfac
     {
         return $this->salesFacade->findSalesOrderItemsIdsBySalesShipmentId($idSalesShipment);
     }
+
+    /**
+     * @return string
+     */
+    public function getIdSalesOrderParameter(): string
+    {
+        return $this->salesFacade->getIdSalesOrderParameter();
+    }
 }

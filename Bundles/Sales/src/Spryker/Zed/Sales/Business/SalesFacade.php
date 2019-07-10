@@ -412,4 +412,18 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
             ->createSalesAddressExpander()
             ->expandWithCustomerOrSalesAddress($addressTransfer);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getIdSalesOrderParameter(): string
+    {
+        return $this->getFactory()
+            ->createConfigReader()
+            ->getIdSalesOrderParameter();
+    }
 }

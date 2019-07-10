@@ -25,4 +25,9 @@ interface ShipmentGuiToSalesFacadeInterface
      * @return \Generated\Shared\Transfer\ItemTransfer[]|\ArrayObject
      */
     public function findSalesOrderItemsIdsBySalesShipmentId(int $idSalesShipment): ArrayObject;
+
+    /**
+     * @return string
+     */
+    public function getIdSalesOrderParameter(): string;
 }

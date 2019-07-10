@@ -22,6 +22,14 @@ class SalesConfig extends AbstractBundleConfig
     public const TEST_CUSTOMER_FIRST_NAME = 'test order';
 
     /**
+     * @return string
+     */
+    public function getIdSalesOrderParameter(): string
+    {
+        return static::PARAM_ID_SALES_ORDER;
+    }
+
+    /**
      * Separator for the sequence number
      *
      * @return string
