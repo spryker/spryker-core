@@ -399,26 +399,34 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
-     * @return \Generated\Shared\Transfer\SpyPriceProductConcreteMerchantRelationshipStorageEntityTransfer[]
+     * @return \Generated\Shared\Transfer\PriceProductMerchantRelationshipTransfer[]
      */
     public function getFilteredPriceProductConcreteMerchantRelationshipEntities(FilterTransfer $filterTransfer): array
     {
         $priceProductMerchantRelationshipQuery = $this->queryPriceProductMerchantRelationship()
             ->filterByFkProduct(null, Criteria::ISNOTNULL);
 
-        return $this->buildQueryFromCriteria($priceProductMerchantRelationshipQuery, $filterTransfer)->find();
+        return $this->getFactory()
+            ->createPriceProductMerchantRelationshipMapper()
+            ->mapEntitiesToPriceProductMerchantRelationshipTransferCollection(
+                $this->buildQueryFromCriteria($priceProductMerchantRelationshipQuery, $filterTransfer)->find()
+            );
     }
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
-     * @return \Generated\Shared\Transfer\SpyPriceProductMerchantRelationshipEntityTransfer[]
+     * @return \Generated\Shared\Transfer\PriceProductMerchantRelationshipTransfer[]
      */
     public function getFilteredPriceProductAbstractMerchantRelationshipEntities(FilterTransfer $filterTransfer): array
     {
         $priceProductMerchantRelationshipQuery = $this->queryPriceProductMerchantRelationship()
             ->filterByFkProductAbstract(null, Criteria::ISNOTNULL);
 
-        return $this->buildQueryFromCriteria($priceProductMerchantRelationshipQuery, $filterTransfer)->find();
+        return $this->getFactory()
+            ->createPriceProductMerchantRelationshipMapper()
+            ->mapEntitiesToPriceProductMerchantRelationshipTransferCollection(
+                $this->buildQueryFromCriteria($priceProductMerchantRelationshipQuery, $filterTransfer)->find()
+            );
     }
 }

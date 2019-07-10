@@ -141,14 +141,14 @@ interface PriceProductMerchantRelationshipStorageRepositoryInterface
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
-     * @return \Generated\Shared\Transfer\SpyPriceProductConcreteMerchantRelationshipStorageEntityTransfer[]
+     * @return \Generated\Shared\Transfer\PriceProductMerchantRelationshipTransfer[]
      */
     public function getFilteredPriceProductConcreteMerchantRelationshipEntities(FilterTransfer $filterTransfer): array;
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
-     * @return \Generated\Shared\Transfer\SpyPriceProductMerchantRelationshipEntityTransfer[]
+     * @return \Generated\Shared\Transfer\PriceProductMerchantRelationshipTransfer[]
      */
     public function getFilteredPriceProductAbstractMerchantRelationshipEntities(FilterTransfer $filterTransfer): array;
 }
