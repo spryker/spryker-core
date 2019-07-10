@@ -219,4 +219,12 @@
         <property name="lastPage" type="int" />
     </transfer>
 
+    <transfer name="Shipment">
+        <property name="shippingAddress" type="Address"/>
+    </transfer>
+
+    <transfer name="Address">
+        <property name="firstName" type="string"/>
+    </transfer>
+
 </transfers>
