@@ -15,9 +15,9 @@ use Symfony\Component\Console\Output\OutputInterface;
  * @method \Spryker\Zed\Transfer\Business\TransferFacadeInterface getFacade()
  * @method \Spryker\Zed\Transfer\Communication\TransferCommunicationFactory getFactory()
  */
-class DataTransferGeneratorConsole extends Console
+class TransferGeneratorConsole extends Console
 {
-    public const COMMAND_NAME = 'transfer:generate:data';
+    public const COMMAND_NAME = 'transfer:generate';
     public const COMMAND_DESCRIPTION = 'Generates data transfer objects from transfer XML definition files';
 
     /**
