@@ -9,13 +9,13 @@ namespace Spryker\Zed\TaxProductConnector\Business\Calculator;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Shared\Tax\TaxConstants;
 use Spryker\Zed\TaxProductConnector\Dependency\Facade\TaxProductConnectorToTaxInterface;
 use Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorQueryContainer;
 use Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorQueryContainerInterface;
 
 class ProductItemTaxRateCalculator implements CalculatorInterface
 {
+    protected const TAX_EXEMPT_PLACEHOLDER = 'Tax Exempt';
     /**
      * @var \Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorQueryContainerInterface
      */
@@ -114,7 +114,7 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
         $mappedResult = [];
         foreach ($taxRatesByCountryAndProduct as $taxRate) {
             $idProductAbstract = $taxRate[TaxProductConnectorQueryContainer::COL_ID_ABSTRACT_PRODUCT];
-            $iso2Code = $taxRate[TaxProductConnectorQueryContainer::COL_COUNTRY_CODE] ?? TaxConstants::TAX_EXEMPT_PLACEHOLDER;
+            $iso2Code = $taxRate[TaxProductConnectorQueryContainer::COL_COUNTRY_CODE] ?? static::TAX_EXEMPT_PLACEHOLDER;
             $maxTaxRate = $taxRate[TaxProductConnectorQueryContainer::COL_MAX_TAX_RATE];
 
             $mappedResult[$idProductAbstract][$iso2Code] = $maxTaxRate;
@@ -174,7 +174,7 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
         string $countryIso2Code
     ): float {
         $taxRate = $mappedTaxRates[$idProductAbstract][$countryIso2Code] ??
-            $mappedTaxRates[$idProductAbstract][TaxConstants::TAX_EXEMPT_PLACEHOLDER] ??
+            $mappedTaxRates[$idProductAbstract][static::TAX_EXEMPT_PLACEHOLDER] ??
             $this->getDefaultTaxRate();
 
         return (float)$taxRate;
