@@ -122,4 +122,16 @@ interface CurrencyFacadeInterface
      * @return \Generated\Shared\Transfer\CurrencyTransfer|null
      */
     public function findCurrencyByIsoCode(string $isoCode): ?CurrencyTransfer;
+
+    /**
+     * Specification:
+     * - Gets currency transfers by array of iso codes.
+     *
+     * @api
+     *
+     * @param string[] $isoCodes
+     *
+     * @return \Generated\Shared\Transfer\CurrencyTransfer[]
+     */
+    public function getCurrencyTransfersByIsoCodes(array $isoCodes): array;
 }
