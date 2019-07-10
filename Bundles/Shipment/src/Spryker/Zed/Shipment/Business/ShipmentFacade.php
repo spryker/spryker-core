@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Shipment\Business;
 
+use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -296,5 +297,21 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
     public function getShipmentExpenseTypeIdentifier()
     {
         return ShipmentConstants::SHIPMENT_EXPENSE_TYPE;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return void
+     */
+    public function filterObsoleteShipmentExpenses(CalculableObjectTransfer $calculableObjectTransfer): void
+    {
+        $this->getFactory()
+            ->createShipmentExpenseFilter()
+            ->filterObsoleteShipmentExpenses($calculableObjectTransfer);
     }
 }
