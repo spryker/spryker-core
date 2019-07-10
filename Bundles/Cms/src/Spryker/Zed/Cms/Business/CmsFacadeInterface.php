@@ -56,7 +56,7 @@ interface CmsFacadeInterface
     /**
      * @api
      *
-     * @deprecated Use `createPage()` or `updatePage()` instead.
+     * @deprecated Use `\Spryker\Zed\Cms\Business\CmsFacade::createPage()` or `\Spryker\Zed\Cms\Business\CmsFacade::updatePage()` instead.
      *
      * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      *
