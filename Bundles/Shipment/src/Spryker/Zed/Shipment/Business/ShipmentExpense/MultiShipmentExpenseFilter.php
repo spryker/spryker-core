@@ -48,7 +48,6 @@ class MultiShipmentExpenseFilter implements MultiShipmentExpenseFilterInterface
         }
 
         $shipmentGroupTransfers = $this->shipmentService->groupItemsByShipment($quoteTransfer->getItems());
-        $shipmentExpenseType = $this->shipmentService->getShipmentExpenseType();
         $calculableObjectExpenseTransfers = $calculableObjectTransfer->getExpenses();
 
         foreach ($shipmentGroupTransfers as $shipmentGroupTransfer) {
