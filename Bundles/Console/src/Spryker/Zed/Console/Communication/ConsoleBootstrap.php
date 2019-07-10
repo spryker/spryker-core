@@ -164,7 +164,7 @@ class ConsoleBootstrap extends Application
     public function doRun(InputInterface $input, OutputInterface $output)
     {
         $this->setDecorated($output);
-        
+
         if (!$input->hasParameterOption(['--format'], true)) {
             $output->writeln($this->getInfoText());
         }
