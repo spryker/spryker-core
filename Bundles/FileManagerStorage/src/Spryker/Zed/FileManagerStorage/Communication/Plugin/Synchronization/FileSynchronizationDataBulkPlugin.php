@@ -9,8 +9,6 @@ namespace Spryker\Zed\FileManagerStorage\Communication\Plugin\Synchronization;
 
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
-use Orm\Zed\FileManager\Persistence\Map\SpyFileTableMap;
-use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Shared\FileManagerStorage\FileManagerStorageConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataBulkRepositoryPluginInterface;
