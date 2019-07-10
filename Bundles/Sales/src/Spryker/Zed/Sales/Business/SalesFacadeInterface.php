@@ -306,18 +306,6 @@ interface SalesFacadeInterface
 
     /**
      * Specification:
-     * - Returns the sales order address for the given sales order address id.
-     *
-     * @api
-     *
-     * @param int $idSalesOrderAddress
-     *
-     * @return \Generated\Shared\Transfer\AddressTransfer|null
-     */
-    public function findOrderAddressByIdOrderAddress(int $idSalesOrderAddress): ?AddressTransfer;
-
-    /**
-     * Specification:
      * - Returns sales order items by salesShipmentId or null.
      *
      * @api

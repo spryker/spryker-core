@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Sales\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Sales\Business\Address\OrderAddressReader;
 use Spryker\Zed\Sales\Business\Address\OrderAddressWriter;
 use Spryker\Zed\Sales\Business\Address\OrderAddressWriterInterface;
 use Spryker\Zed\Sales\Business\ConfigReader\ConfigReader;
@@ -342,14 +341,6 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     public function createSalesOrderItemReader(): SalesOrderItemReaderInterface
     {
         return new SalesOrderItemReader($this->getRepository());
-    }
-
-    /**
-     * @return \Spryker\Zed\Sales\Business\Address\OrderAddressReader
-     */
-    public function createOrderAddressReader()
-    {
-        return new OrderAddressReader($this->getRepository());
     }
 
     /**

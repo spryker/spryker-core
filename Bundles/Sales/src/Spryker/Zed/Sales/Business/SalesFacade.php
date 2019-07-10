@@ -370,22 +370,6 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
      *
      * @api
      *
-     * @param int $idSalesOrderAddress
-     *
-     * @return \Generated\Shared\Transfer\AddressTransfer|null
-     */
-    public function findOrderAddressByIdOrderAddress(int $idSalesOrderAddress): ?AddressTransfer
-    {
-        return $this->getFactory()
-            ->createOrderAddressReader()
-            ->findOrderAddressByIdOrderAddress($idSalesOrderAddress);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param int $idSalesShipment
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]|\ArrayObject
