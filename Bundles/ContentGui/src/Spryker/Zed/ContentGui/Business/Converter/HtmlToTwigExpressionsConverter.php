@@ -65,8 +65,8 @@ class HtmlToTwigExpressionsConverter implements HtmlToTwigExpressionsConverterIn
     }
 
     /**
-     * Libxml requires a root node, for which <html> is used
-     * `LoadHTML` converts non ISO-8859-1 charsets, so the string encoding must be converted before loading.
+     * Libxml requires a root node, for which <html> is used.
+     * `DomDocument::loadHTML()` converts non ISO-8859-1 charsets, so the string encoding must be converted before loading.
      *
      * @param string $html
      *
