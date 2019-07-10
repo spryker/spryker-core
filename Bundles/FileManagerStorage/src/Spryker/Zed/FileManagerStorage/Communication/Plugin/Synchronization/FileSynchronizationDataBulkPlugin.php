@@ -9,6 +9,8 @@ namespace Spryker\Zed\FileManagerStorage\Communication\Plugin\Synchronization;
 
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
+use Orm\Zed\FileManager\Persistence\Map\SpyFileTableMap;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Shared\FileManagerStorage\FileManagerStorageConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataBulkRepositoryPluginInterface;
@@ -65,8 +67,8 @@ class FileSynchronizationDataBulkPlugin extends AbstractPlugin implements Synchr
         $synchronizationDataTransfers = [];
         foreach ($fileStorageTransfers as $fileStorageTransfer) {
             $synchronizationDataTransfer = new SynchronizationDataTransfer();
+            $data = $fileStorageTransfer->getData() ? $fileStorageTransfer->getData()->toArray() : [];
             /** @var string $data */
-            $data = $fileStorageTransfer->getData()->toArray();
             $synchronizationDataTransfer->setData($data);
             $synchronizationDataTransfer->setKey($fileStorageTransfer->getKey());
             $synchronizationDataTransfers[] = $synchronizationDataTransfer;
@@ -123,6 +125,8 @@ class FileSynchronizationDataBulkPlugin extends AbstractPlugin implements Synchr
     {
         return (new FilterTransfer())
             ->setOffset($offset)
-            ->setLimit($limit);
+            ->setLimit($limit)
+            ->setOrderBy(SpyFileTableMap::COL_ID_FILE)
+            ->setOrderDirection(ModelCriteria::ASC);
     }
 }
