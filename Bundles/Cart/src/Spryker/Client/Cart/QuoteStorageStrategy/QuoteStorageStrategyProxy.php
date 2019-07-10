@@ -15,6 +15,8 @@ use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Cart\Dependency\Client\CartToMessengerClientInterface;
 use Spryker\Client\Cart\Dependency\Client\CartToQuoteInterface;
+use Spryker\Client\Cart\Exception\QuoteStorageStrategyPluginNotFound;
+use Spryker\Client\CartExtension\Dependency\Plugin\QuoteResetLockQuoteStorageStrategyPluginInterface;
 use Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface;
 
 class QuoteStorageStrategyProxy implements QuoteStorageStrategyProxyInterface
@@ -223,6 +225,22 @@ class QuoteStorageStrategyProxy implements QuoteStorageStrategyProxyInterface
         }
 
         return $this->quoteStorageStrategy->setQuoteCurrency($currencyTransfer);
+    }
+
+    /**
+     * @throws \Spryker\Client\Cart\Exception\QuoteStorageStrategyPluginNotFound
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function resetQuoteLock(): QuoteResponseTransfer
+    {
+        if (!$this->quoteStorageStrategy instanceof QuoteResetLockQuoteStorageStrategyPluginInterface) {
+            throw new QuoteStorageStrategyPluginNotFound(
+                'Quote storage strategy should implement QuoteResetLockQuoteStorageStrategyPluginInterface in order to use `resetQuoteLock` functionality.'
+            );
+        }
+
+        return $this->quoteStorageStrategy->resetQuoteLock();
     }
 
     /**

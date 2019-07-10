@@ -7,7 +7,7 @@ CompanyUnitAddressExtension module provides interfaces of plugins to influence o
 ## Installation
 
 ```
-composer require spryker/company-unit-address-gui-extension
+composer require spryker/company-unit-address-extension
 ```
 
 ## Documentation

@@ -9,6 +9,7 @@
     "spryker/config": "^3.0.0",
     "spryker/container": "^1.1.0",
     "spryker/error-handler": "^2.0.0",
+    "spryker/event-dispatcher-extension": "^1.0.0",
     "spryker/kernel": "^3.31.0",
     "spryker/log": "^3.1.0",
     "spryker/monolog": "^2.0.0",
@@ -23,8 +24,12 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/event-dispatcher": "*",
     "spryker/propel": "*",
     "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/event-dispatcher": "If you want to use EventDispatcher plugin."
   },
   "autoload": {
     "psr-4": {

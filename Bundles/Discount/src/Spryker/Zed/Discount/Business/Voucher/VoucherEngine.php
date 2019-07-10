@@ -178,6 +178,7 @@ class VoucherEngine implements VoucherEngineInterface
 
             $this->createVoucherCode($discountVoucherTransfer);
         }
+
         return $codeCollisions;
     }
 

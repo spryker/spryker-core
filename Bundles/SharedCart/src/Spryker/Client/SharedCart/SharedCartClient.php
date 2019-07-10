@@ -12,6 +12,8 @@ use Generated\Shared\Transfer\QuotePermissionGroupResponseTransfer;
 use Generated\Shared\Transfer\QuotePermissionGroupTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ResourceShareRequestTransfer;
+use Generated\Shared\Transfer\ResourceShareResponseTransfer;
 use Generated\Shared\Transfer\ShareCartRequestTransfer;
 use Generated\Shared\Transfer\ShareDetailCollectionTransfer;
 use Spryker\Client\Kernel\AbstractClient;
@@ -160,5 +162,21 @@ class SharedCartClient extends AbstractClient implements SharedCartClientInterfa
         return $this->getFactory()
             ->createZedSharedCartStub()
             ->findQuotePermissionGroupById($quotePermissionGroupTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
+     */
+    public function switchDefaultCartByResourceShare(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer
+    {
+        return $this->getFactory()
+            ->createSwitchDefaultCartByResourceShare()
+            ->switchDefaultCartByResourceShare($resourceShareRequestTransfer);
     }
 }

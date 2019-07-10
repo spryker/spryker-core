@@ -245,6 +245,7 @@ class ResourceRouteLoaderTest extends Unit
             ->willReturnCallback(
                 function (ResourceRouteCollectionInterface $resourceRouteCollection) {
                     $resourceRouteCollection->addGet('get', true, [1 => 1]);
+
                     return $resourceRouteCollection;
                 }
             );

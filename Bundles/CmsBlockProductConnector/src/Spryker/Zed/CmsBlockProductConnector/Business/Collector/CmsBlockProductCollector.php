@@ -42,6 +42,7 @@ class CmsBlockProductCollector extends AbstractStoragePropelCollector
     protected function extractCmsBlockNames($cmsBlockNames)
     {
         $separator = ',';
+
         return explode($separator, trim($cmsBlockNames));
     }
 

@@ -36,8 +36,6 @@ class CustomerApiResourcePlugin extends AbstractPlugin implements ApiResourcePlu
     /**
      * @api
      *
-     * @internal param ApiFilterTransfer $apiFilterTransfer
-     *
      * @param int $id
      *
      * @return \Generated\Shared\Transfer\ApiItemTransfer

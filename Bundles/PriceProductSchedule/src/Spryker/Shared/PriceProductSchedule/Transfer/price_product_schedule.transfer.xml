@@ -1,0 +1,95 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="PriceProductSchedule">
+        <property name="idPriceProductSchedule" type="int"/>
+        <property name="priceProduct" type="PriceProduct"/>
+        <property name="activeFrom" type="string"/>
+        <property name="activeTo" type="string"/>
+        <property name="isCurrent" type="bool"/>
+        <property name="priceProductScheduleList" type="PriceProductScheduleList"/>
+    </transfer>
+
+    <transfer name="PriceProductScheduleCriteriaFilter">
+        <property name="filter" type="Filter"/>
+        <property name="skuProductAbstract" type="string"/>
+        <property name="skuProduct" type="string"/>
+        <property name="priceTypeName" type="string"/>
+        <property name="storeName" type="string"/>
+        <property name="currencyCode" type="string"/>
+        <property name="activeFrom" type="string"/>
+        <property name="activeTo" type="string"/>
+        <property name="netAmount" type="int"/>
+        <property name="grossAmount" type="int"/>
+        <property name="fkPriceProductScheduleList" type="int"/>
+    </transfer>
+
+    <transfer name="Filter">
+        <property name="limit" type="int"/>
+    </transfer>
+
+    <transfer name="PriceProductScheduleList">
+        <property name="idPriceProductScheduleList" type="int"/>
+        <property name="name" type="string"/>
+        <property name="isActive" type="bool"/>
+        <property name="createdAt" type="string"/>
+        <property name="updatedAt" type="string"/>
+        <property name="fkUser" type="int"/>
+        <property name="user" type="User"/>
+    </transfer>
+
+    <transfer name="PriceProductScheduleImport">
+        <property name="metaData" type="PriceProductScheduleImportMetaData"/>
+        <property name="skuProductAbstract" type="string"/>
+        <property name="skuProduct" type="string"/>
+        <property name="priceTypeName" type="string"/>
+        <property name="storeName" type="string"/>
+        <property name="currencyCode" type="string"/>
+        <property name="activeFrom" type="string"/>
+        <property name="activeTo" type="string"/>
+        <property name="netAmount" type="int"/>
+        <property name="grossAmount" type="int"/>
+    </transfer>
+
+    <transfer name="PriceProductScheduleImportMetaData">
+        <property name="identifier" type="string"/>
+    </transfer>
+
+    <transfer name="PriceProductScheduledListImportRequest">
+        <property name="priceProductScheduleList" type="PriceProductScheduleList"/>
+        <property name="items" type="PriceProductScheduleImport[]" singular="item"/>
+    </transfer>
+
+    <transfer name="PriceProductScheduleListImportError">
+        <property name="priceProductScheduleImport" type="PriceProductScheduleImport"/>
+        <property name="message" type="string"/>
+        <property name="parameters" type="string[]"/>
+    </transfer>
+
+    <transfer name="PriceProductScheduleListError">
+        <property name="message" type="string"/>
+    </transfer>
+
+    <transfer name="PriceProductScheduleListImportResponse">
+        <property name="errors" type="PriceProductScheduleListImportError[]" singular="error"/>
+        <property name="isSuccess" type="bool"/>
+        <property name="priceProductScheduleList" type="PriceProductScheduleList"/>
+    </transfer>
+
+    <transfer name="PriceProductScheduleListResponse">
+        <property name="priceProductScheduleList" type="PriceProductScheduleList"/>
+        <property name="errors" type="PriceProductScheduleListError[]" singular="error"/>
+        <property name="isSuccess" type="bool"/>
+    </transfer>
+
+    <transfer name="MoneyValue">
+        <property name="store" type="Store"/>
+    </transfer>
+
+    <transfer name="PriceProductScheduleCsvValidationResult">
+        <property name="error" type="string" singular="error"/>
+        <property name="isSuccess" type="bool"/>
+    </transfer>
+</transfers>

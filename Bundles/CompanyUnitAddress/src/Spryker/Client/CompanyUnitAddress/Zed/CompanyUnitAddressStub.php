@@ -149,4 +149,20 @@ class CompanyUnitAddressStub implements CompanyUnitAddressStubInterface
             $companyBusinessUnitTransfer
         );
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer
+     */
+    public function findCompanyBusinessUnitAddressByUuid(CompanyUnitAddressTransfer $companyUnitAddressTransfer): CompanyUnitAddressResponseTransfer
+    {
+        /** @var \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer $companyUnitAddressResponseTransfer */
+        $companyUnitAddressResponseTransfer = $this->zedRequestClient->call(
+            '/company-unit-address/gateway/find-company-business-unit-address-by-uuid',
+            $companyUnitAddressTransfer
+        );
+
+        return $companyUnitAddressResponseTransfer;
+    }
 }

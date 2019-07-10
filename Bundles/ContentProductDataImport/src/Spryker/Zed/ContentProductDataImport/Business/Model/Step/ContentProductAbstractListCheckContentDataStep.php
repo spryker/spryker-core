@@ -41,7 +41,8 @@ class ContentProductAbstractListCheckContentDataStep implements DataImportStepIn
     {
         $contentTransfer = (new ContentTransfer())
             ->setName($dataSet[ContentProductAbstractListDataSetInterface::COLUMN_NAME])
-            ->setDescription($dataSet[ContentProductAbstractListDataSetInterface::COLUMN_DESCRIPTION]);
+            ->setDescription($dataSet[ContentProductAbstractListDataSetInterface::COLUMN_DESCRIPTION])
+            ->setKey($dataSet[ContentProductAbstractListDataSetInterface::CONTENT_PRODUCT_ABSTRACT_LIST_KEY]);
 
         $validationResult = $this->contentFacade->validateContent($contentTransfer);
 

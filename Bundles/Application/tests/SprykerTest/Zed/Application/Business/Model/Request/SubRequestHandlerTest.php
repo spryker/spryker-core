@@ -37,7 +37,7 @@ class SubRequestHandlerTest extends WebTestCase
     public function setUp()
     {
         Request::setTrustedHosts([]);
-        Request::setTrustedProxies([]);
+        Request::setTrustedProxies([], Request::HEADER_X_FORWARDED_ALL);
 
         parent::setUp();
     }
@@ -72,6 +72,7 @@ class SubRequestHandlerTest extends WebTestCase
 
         $callback = function () use ($app) {
             $subRequestHandler = new SubRequestHandler($app);
+
             return $subRequestHandler->handleSubRequest(new Request(), self::URL_SUB_REQUEST);
         };
 

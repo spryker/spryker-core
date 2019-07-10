@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\DocumentationGeneratorRestApi;
 
+use Spryker\Shared\DocumentationGeneratorRestApi\DocumentationGeneratorRestApiConstants;
 use Spryker\Shared\GlueApplication\GlueApplicationConstants;
 use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
@@ -100,5 +101,23 @@ class DocumentationGeneratorRestApiConfig extends AbstractBundleConfig
         return [
             APPLICATION_SOURCE_DIR . '/' . $this->get(KernelConstants::PROJECT_NAMESPACE) . static::APPLICATION_PROJECT_ANNOTATION_SOURCE_DIRECTORY_PATTERN,
         ];
+    }
+
+    /**
+     * @return bool
+     */
+    public function isRestApiDocumentationGeneratorEnabled(): bool
+    {
+        return $this->get(DocumentationGeneratorRestApiConstants::ENABLE_REST_API_DOCUMENTATION_GENERATION, $this->getDocumentationGeneratorRestApiDefaultValue());
+    }
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
+     * @return bool
+     */
+    protected function getDocumentationGeneratorRestApiDefaultValue(): bool
+    {
+        return APPLICATION_ENV === 'development' || APPLICATION_ENV === 'devtest';
     }
 }
