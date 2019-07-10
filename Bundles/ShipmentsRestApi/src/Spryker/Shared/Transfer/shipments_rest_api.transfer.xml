@@ -31,6 +31,11 @@
         <property name="unitNetPrice" type="int" />
         <property name="unitGrossPrice" type="int" />
         <property name="quantity" type="int" />
+        <property name="shipment" type="Shipment"/>
+    </transfer>
+
+    <transfer name="Item">
+        <property name="shipment" type="Shipment"/>
     </transfer>
 
 </transfers>
