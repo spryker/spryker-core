@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\ProductsRestApi\Processor\Expander;
 
+use Generated\Shared\Transfer\AbstractProductsRestAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\ProductsRestApi\Processor\ConcreteProducts\ConcreteProductsReaderInterface;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
@@ -15,7 +16,6 @@ class ConcreteProductsRelationshipExpander implements ConcreteProductsRelationsh
 {
     protected const KEY_SKU = 'sku';
     protected const KEY_PRODUCT_CONCRETE_IDS = 'product_concrete_ids';
-    protected const KEY_ATTRIBUTE_MAP = 'attributeMap';
 
     /**
      * @var \Spryker\Glue\ProductsRestApi\Processor\ConcreteProducts\ConcreteProductsReaderInterface
@@ -84,8 +84,8 @@ class ConcreteProductsRelationshipExpander implements ConcreteProductsRelationsh
      */
     protected function findProductConcreteSkus(?AbstractTransfer $attributes): ?array
     {
-        if ($attributes && !empty($attributes[static::KEY_ATTRIBUTE_MAP][static::KEY_PRODUCT_CONCRETE_IDS])) {
-            return $attributes[static::KEY_ATTRIBUTE_MAP][static::KEY_PRODUCT_CONCRETE_IDS];
+        if ($attributes && $attributes instanceof AbstractProductsRestAttributesTransfer && !empty($attributes->getAttributeMap()[static::KEY_PRODUCT_CONCRETE_IDS])) {
+            return $attributes->getAttributeMap()[static::KEY_PRODUCT_CONCRETE_IDS];
         }
 
         return null;
