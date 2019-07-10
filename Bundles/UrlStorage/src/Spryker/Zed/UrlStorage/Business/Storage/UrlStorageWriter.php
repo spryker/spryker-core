@@ -210,11 +210,15 @@ class UrlStorageWriter implements UrlStorageWriterInterface
             return $urlEntity->getIdUrl() <> $otherUrlEntity->getIdUrl();
         });
 
-        $urlStorageTransfer = (new UrlStorageTransfer())->fromArray($urlEntity->toArray(), true);
+        $urlStorageTransfer = (new UrlStorageTransfer())
+            ->fromArray($urlEntity->toArray(), true)
+            ->setLocaleName($urlEntity->getSpyLocale()->getLocaleName());
 
         foreach ($urlEntities as $otherUrlEntity) {
             $urlStorageTransfer->addUrlStorage(
-                (new UrlStorageTransfer())->fromArray($otherUrlEntity->toArray(), true)
+                (new UrlStorageTransfer())
+                    ->fromArray($otherUrlEntity->toArray(), true)
+                    ->setLocaleName($otherUrlEntity->getSpyLocale()->getLocaleName())
             );
         }
 

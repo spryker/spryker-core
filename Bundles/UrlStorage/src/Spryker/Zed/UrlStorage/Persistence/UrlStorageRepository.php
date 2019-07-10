@@ -81,6 +81,7 @@ class UrlStorageRepository extends AbstractRepository implements UrlStorageRepos
     {
         return $this->getFactory()->getUrlQuery()
             ->filterByResourceTypeAndIds($resourceType, $resourceIds)
+            ->joinWithSpyLocale()
             ->useSpyLocaleQuery()
                 ->filterByLocaleName_In($localeNames)
             ->endUse()
