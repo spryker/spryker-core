@@ -104,7 +104,7 @@ class ShipmentDataProvider implements FormDataProviderInterface
      */
     protected function resolveShipmentMethods(QuoteTransfer $quoteTransfer): ShipmentMethodsTransfer
     {
-        if ($this->hasQuoteItemsShipment($quoteTransfer)) {
+        if ($this->hasItemLevelShipments($quoteTransfer)) {
             $shipmentMethodsCollectionTransfer = $this->shipmentFacade->getAvailableMethodsByShipment($quoteTransfer);
 
             return current($shipmentMethodsCollectionTransfer->getShipmentMethods());
@@ -120,7 +120,7 @@ class ShipmentDataProvider implements FormDataProviderInterface
      *
      * @return bool
      */
-    protected function hasQuoteItemsShipment(QuoteTransfer $quoteTransfer): bool
+    protected function hasItemLevelShipments(QuoteTransfer $quoteTransfer): bool
     {
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             if ($itemTransfer->getShipment() === null) {
