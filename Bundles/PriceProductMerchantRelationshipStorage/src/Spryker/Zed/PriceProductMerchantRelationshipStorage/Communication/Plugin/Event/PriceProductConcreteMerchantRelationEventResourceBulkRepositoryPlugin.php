@@ -23,6 +23,11 @@ use Spryker\Zed\PriceProductMerchantRelationship\Dependency\PriceProductMerchant
 class PriceProductConcreteMerchantRelationEventResourceBulkRepositoryPlugin extends AbstractPlugin implements EventResourceBulkRepositoryPluginInterface
 {
     /**
+     * @uses \Propel\Runtime\ActiveQuery\Criteria::ASC
+     */
+    protected const ORDER_DIRECTION = 'ASC';
+
+    /**
      * {@inheritdoc}
      *
      * @api
@@ -41,18 +46,19 @@ class PriceProductConcreteMerchantRelationEventResourceBulkRepositoryPlugin exte
      *
      * @param int $offset
      * @param int $limit
-     * @param int[] $ids
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function getData(int $offset, int $limit, array $ids = []): array
+    public function getData(int $offset, int $limit): array
     {
         $filterTransfer = (new FilterTransfer())
             ->setOffset($offset)
-            ->setLimit($limit);
+            ->setLimit($limit)
+            ->setOrderBy($this->getIdColumnName())
+            ->setOrderDirection(static::ORDER_DIRECTION);
 
         return $this->getRepository()
-            ->getFilteredPriceProductConcreteMerchantRelationshipEntities($filterTransfer, $ids);
+            ->getFilteredPriceProductConcreteMerchantRelationshipEntities($filterTransfer);
     }
 
     /**
