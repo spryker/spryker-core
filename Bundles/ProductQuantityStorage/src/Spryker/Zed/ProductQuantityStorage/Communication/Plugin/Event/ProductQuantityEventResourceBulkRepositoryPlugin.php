@@ -84,6 +84,7 @@ class ProductQuantityEventResourceBulkRepositoryPlugin extends AbstractPlugin im
     protected function createFilterTransfer(int $offset, int $limit): FilterTransfer
     {
         return (new FilterTransfer())
+            ->setOrderBy(SpyProductQuantityTableMap::COL_ID_PRODUCT_QUANTITY)
             ->setOffset($offset)
             ->setLimit($limit);
     }
