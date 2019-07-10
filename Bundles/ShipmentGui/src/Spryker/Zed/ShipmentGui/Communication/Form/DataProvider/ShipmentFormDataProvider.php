@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
-use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Spryker\Zed\ShipmentGui\Communication\Form\Address\AddressFormType;
 use Spryker\Zed\ShipmentGui\Communication\Form\Item\ItemFormType;
 use Spryker\Zed\ShipmentGui\Communication\Form\Shipment\ShipmentFormType;
@@ -308,7 +307,7 @@ class ShipmentFormDataProvider
      */
     protected function getSalutationOptions(): array
     {
-        $salutation = SpyCustomerTableMap::getValueSet(SpyCustomerTableMap::COL_SALUTATION);
+        $salutation = $this->customerFacade->getAllSalutations();
         if (!is_array($salutation) || empty($salutation)) {
             return [];
         }

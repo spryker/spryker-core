@@ -495,4 +495,14 @@ interface CustomerFacadeInterface
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
     public function findCustomerByReference(string $customerReference): CustomerResponseTransfer;
+
+    /**
+     * Specification:
+     * - Gets all salutations available in the system.
+     *
+     * @api
+     *
+     * @return array
+     */
+    public function getAllSalutations(): array;
 }

@@ -40,4 +40,9 @@ interface CustomerRepositoryInterface
      * @return \Generated\Shared\Transfer\AddressTransfer|null
      */
     public function findAddressByAddressData(AddressTransfer $addressTransfer): ?AddressTransfer;
+
+    /**
+     * @return array
+     */
+    public function getAllSalutations(): array;
 }

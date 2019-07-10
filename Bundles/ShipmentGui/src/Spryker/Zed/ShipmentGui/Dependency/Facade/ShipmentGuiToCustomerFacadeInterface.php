@@ -33,4 +33,9 @@ interface ShipmentGuiToCustomerFacadeInterface
      * @return \Generated\Shared\Transfer\AddressTransfer|null
      */
     public function findCustomerAddressByAddressData(AddressTransfer $addressTransfer): ?AddressTransfer;
+
+    /**
+     * @return array
+     */
+    public function getAllSalutations(): array;
 }

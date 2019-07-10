@@ -55,4 +55,12 @@ class ShipmentGuiToCustomerFacadeBridge implements ShipmentGuiToCustomerFacadeIn
     {
         return $this->customerFacade->findCustomerAddressByAddressData($addressTransfer);
     }
+
+    /**
+     * @return array
+     */
+    public function getAllSalutations(): array
+    {
+        return $this->customerFacade->getAllSalutations();
+    }
 }

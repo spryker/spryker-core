@@ -571,4 +571,16 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     {
         return $this->getFactory()->createCustomerReader()->findCustomerByReference($customerReference);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return array
+     */
+    public function getAllSalutations(): array
+    {
+        return $this->getRepository()->getAllSalutations();
+    }
 }
