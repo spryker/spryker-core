@@ -19,18 +19,11 @@ class ShipmentExpenseCollectionRemover implements ShipmentExpenseCollectionRemov
     protected $shipmentService;
 
     /**
-     * @var string
-     */
-    protected $shipmentExpenseType;
-
-    /**
      * @param \Spryker\Service\Shipment\ShipmentServiceInterface $shipmentService
      */
     public function __construct(ShipmentServiceInterface $shipmentService)
     {
         $this->shipmentService = $shipmentService;
-
-        $this->setShipmentExpenseType();
     }
 
     /**
@@ -39,10 +32,12 @@ class ShipmentExpenseCollectionRemover implements ShipmentExpenseCollectionRemov
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\ExpenseTransfer[]
      */
-    public function removeByShipmentHash(ArrayObject $expenseTransfers, string $shipmentHash): ArrayObject
+    public function removeExpenseByShipmentHash(ArrayObject $expenseTransfers, string $shipmentHash): ArrayObject
     {
+        $shipmentExpenseType = $this->shipmentService->getShipmentExpenseType();
         foreach ($expenseTransfers as $expenseIndex => $expenseTransfer) {
-            if ($this->isExpenseShipmentMatchesWithHash($expenseTransfer, $shipmentHash)) {
+            if ($expenseTransfer->getType() === $shipmentExpenseType
+                && $this->isExpenseShipmentMatchesWithHash($expenseTransfer, $shipmentHash)) {
                 $expenseTransfers->offsetUnset($expenseIndex);
 
                 break;
@@ -60,23 +55,9 @@ class ShipmentExpenseCollectionRemover implements ShipmentExpenseCollectionRemov
      */
     protected function isExpenseShipmentMatchesWithHash(ExpenseTransfer $expenseTransfer, string $shipmentHash): bool
     {
-        if ($expenseTransfer->getType() !== $this->shipmentExpenseType) {
-            return false;
-        }
-
         $expenseShipmentTransfer = $expenseTransfer->requireShipment()->getShipment();
         $expenseShipmentHash = $this->shipmentService->getShipmentHashKey($expenseShipmentTransfer);
 
         return $expenseShipmentHash === $shipmentHash;
-    }
-
-    /**
-     * @return \Spryker\Zed\Shipment\Business\ShipmentExpense\ShipmentExpenseCollectionRemoverInterface
-     */
-    protected function setShipmentExpenseType(): ShipmentExpenseCollectionRemoverInterface
-    {
-        $this->shipmentExpenseType = $this->shipmentService->getShipmentExpenseType();
-
-        return $this;
     }
 }

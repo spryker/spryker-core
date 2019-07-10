@@ -56,7 +56,7 @@ class MultiShipmentExpenseFilter implements MultiShipmentExpenseFilterInterface
                 continue;
             }
 
-            $calculableObjectExpenseTransfers = $this->shipmentExpenseCollectionRemover->removeByShipmentHash(
+            $calculableObjectExpenseTransfers = $this->shipmentExpenseCollectionRemover->removeExpenseByShipmentHash(
                 $calculableObjectExpenseTransfers,
                 $shipmentGroupTransfer->getHash()
             );

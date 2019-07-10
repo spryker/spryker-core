@@ -17,5 +17,5 @@ interface ShipmentExpenseCollectionRemoverInterface
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\ExpenseTransfer[]
      */
-    public function removeByShipmentHash(ArrayObject $expenseTransfers, string $shipmentHash): ArrayObject;
+    public function removeExpenseByShipmentHash(ArrayObject $expenseTransfers, string $shipmentHash): ArrayObject;
 }
