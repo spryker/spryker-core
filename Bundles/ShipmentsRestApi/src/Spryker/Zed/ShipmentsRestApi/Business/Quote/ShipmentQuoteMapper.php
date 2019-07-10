@@ -11,8 +11,8 @@ use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
-use Spryker\Shared\Shipment\ShipmentConstants;
 use Spryker\Zed\ShipmentsRestApi\Dependency\Facade\ShipmentsRestApiToShipmentFacadeInterface;
+use Spryker\Zed\ShipmentsRestApi\Dependency\Facade\ShipmentsRestApiToShipmentServiceInterface;
 
 class ShipmentQuoteMapper implements ShipmentQuoteMapperInterface
 {
@@ -22,11 +22,20 @@ class ShipmentQuoteMapper implements ShipmentQuoteMapperInterface
     protected $shipmentFacade;
 
     /**
-     * @param \Spryker\Zed\ShipmentsRestApi\Dependency\Facade\ShipmentsRestApiToShipmentFacadeInterface $shipmentFacade
+     * @var \Spryker\Zed\ShipmentsRestApi\Dependency\Facade\ShipmentsRestApiToShipmentServiceInterface
      */
-    public function __construct(ShipmentsRestApiToShipmentFacadeInterface $shipmentFacade)
-    {
+    protected $shipmentService;
+
+    /**
+     * @param \Spryker\Zed\ShipmentsRestApi\Dependency\Facade\ShipmentsRestApiToShipmentFacadeInterface $shipmentFacade
+     * @param \Spryker\Zed\ShipmentsRestApi\Dependency\Facade\ShipmentsRestApiToShipmentServiceInterface $shipmentService
+     */
+    public function __construct(
+        ShipmentsRestApiToShipmentFacadeInterface $shipmentFacade,
+        ShipmentsRestApiToShipmentServiceInterface $shipmentService
+    ) {
         $this->shipmentFacade = $shipmentFacade;
+        $this->shipmentService = $shipmentService;
     }
 
     /**
@@ -72,7 +81,7 @@ class ShipmentQuoteMapper implements ShipmentQuoteMapperInterface
     {
         $shipmentExpenseTransfer = new ExpenseTransfer();
         $shipmentExpenseTransfer->fromArray($shipmentTransfer->getMethod()->toArray(), true);
-        $shipmentExpenseTransfer->setType(ShipmentConstants::SHIPMENT_EXPENSE_TYPE);
+        $shipmentExpenseTransfer->setType($this->shipmentService->getShipmentExpenseType());
         $shipmentExpenseTransfer->setUnitNetPrice(0);
         $shipmentExpenseTransfer->setUnitGrossPrice($shipmentTransfer->getMethod()->getStoreCurrencyPrice());
         $shipmentExpenseTransfer->setQuantity(1);

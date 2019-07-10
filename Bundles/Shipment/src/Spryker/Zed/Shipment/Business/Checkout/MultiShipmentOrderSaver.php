@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\SaveOrderTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Service\Shipment\ShipmentServiceInterface;
-use Spryker\Shared\Shipment\ShipmentConstants;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 use Spryker\Zed\Shipment\Business\Sanitizer\ExpenseSanitizerInterface;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToSalesFacadeInterface;
@@ -193,8 +192,9 @@ class MultiShipmentOrderSaver implements MultiShipmentOrderSaverInterface
         QuoteTransfer $quoteTransfer,
         OrderTransfer $orderTransfer
     ): OrderTransfer {
+        $shipmentExpenseType = $this->shipmentService->getShipmentExpenseType();
         foreach ($quoteTransfer->getExpenses() as $expenseTransfer) {
-            if ($expenseTransfer->getType() === ShipmentConstants::SHIPMENT_EXPENSE_TYPE) {
+            if ($expenseTransfer->getType() === $shipmentExpenseType) {
                 $orderTransfer->addExpense($expenseTransfer);
             }
         }
@@ -269,34 +269,19 @@ class MultiShipmentOrderSaver implements MultiShipmentOrderSaverInterface
         ShipmentTransfer $shipmentTransfer
     ): ?ExpenseTransfer {
         $itemShipmentKey = $this->shipmentService->getShipmentHashKey($shipmentTransfer);
+        $shipmentExpenseType = $this->shipmentService->getShipmentExpenseType();
         foreach ($salesOrderTransfer->getExpenses() as $expenseTransfer) {
             $expenseShipmentTransfer = $expenseTransfer->getShipment();
-            if ($expenseShipmentTransfer === null) {
+            if ($expenseShipmentTransfer === null || $expenseTransfer->getType() !== $shipmentExpenseType) {
                 continue;
             }
 
             $expenseShipmentKey = $this->shipmentService->getShipmentHashKey($expenseShipmentTransfer);
-            if ($this->checkShipmentKeyAndType($expenseTransfer, $expenseShipmentKey, $itemShipmentKey)) {
+            if ($expenseShipmentKey === $itemShipmentKey) {
                 return $expenseTransfer;
             }
         }
 
         return null;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
-     * @param string $expenseShipmentKey
-     * @param string $itemShipmentKey
-     *
-     * @return bool
-     */
-    protected function checkShipmentKeyAndType(
-        ExpenseTransfer $expenseTransfer,
-        string $expenseShipmentKey,
-        string $itemShipmentKey
-    ): bool {
-        return $expenseTransfer->getType() === ShipmentConstants::SHIPMENT_EXPENSE_TYPE
-            && $expenseShipmentKey === $itemShipmentKey;
     }
 }

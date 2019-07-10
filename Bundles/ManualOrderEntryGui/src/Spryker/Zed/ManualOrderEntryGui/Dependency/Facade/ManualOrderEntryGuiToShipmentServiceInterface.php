@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Service\Shipment\ConfigReader;
+namespace Spryker\Zed\ManualOrderEntryGui\Dependency\Facade;
 
-interface ConfigReaderInterface
+interface ManualOrderEntryGuiToShipmentServiceInterface
 {
     /**
      * @return string

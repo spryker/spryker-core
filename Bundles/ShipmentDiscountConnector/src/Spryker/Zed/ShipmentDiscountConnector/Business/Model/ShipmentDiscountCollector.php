@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\ClauseTransfer;
 use Generated\Shared\Transfer\DiscountableItemTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Shared\Shipment\ShipmentConstants;
+use Spryker\Zed\ShipmentDiscountConnector\Dependency\Service\ShipmentDiscountConnectorToShipmentServiceInterface;
 
 /**
  * @deprecated Use \Spryker\Zed\ShipmentDiscountConnector\Business\Collector\ShipmentDiscountCollector instead.
@@ -24,11 +24,20 @@ class ShipmentDiscountCollector implements ShipmentDiscountCollectorInterface
     protected $shipmentDiscountDecisionRule;
 
     /**
-     * @param \Spryker\Zed\ShipmentDiscountConnector\Business\Model\ShipmentDiscountDecisionRuleInterface $carrierDiscountDecisionRule
+     * @var \Spryker\Zed\ShipmentDiscountConnector\Dependency\Service\ShipmentDiscountConnectorToShipmentServiceInterface
      */
-    public function __construct(ShipmentDiscountDecisionRuleInterface $carrierDiscountDecisionRule)
-    {
+    protected $shipmentService;
+
+    /**
+     * @param \Spryker\Zed\ShipmentDiscountConnector\Business\Model\ShipmentDiscountDecisionRuleInterface $carrierDiscountDecisionRule
+     * @param \Spryker\Zed\ShipmentDiscountConnector\Dependency\Service\ShipmentDiscountConnectorToShipmentServiceInterface $shipmentService
+     */
+    public function __construct(
+        ShipmentDiscountDecisionRuleInterface $carrierDiscountDecisionRule,
+        ShipmentDiscountConnectorToShipmentServiceInterface $shipmentService
+    ) {
         $this->shipmentDiscountDecisionRule = $carrierDiscountDecisionRule;
+        $this->shipmentService = $shipmentService;
     }
 
     /**
@@ -40,9 +49,9 @@ class ShipmentDiscountCollector implements ShipmentDiscountCollectorInterface
     public function collect(QuoteTransfer $quoteTransfer, ClauseTransfer $clauseTransfer)
     {
         $discountableItems = [];
-
+        $shipmentExpenseType = $this->shipmentService->getShipmentExpenseType();
         foreach ($quoteTransfer->getExpenses() as $expenseTransfer) {
-            if ($expenseTransfer->getType() !== ShipmentConstants::SHIPMENT_EXPENSE_TYPE) {
+            if ($expenseTransfer->getType() !== $shipmentExpenseType) {
                 continue;
             }
 

@@ -170,7 +170,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
      */
     public function createShipmentExpenseFilter(): ShipmentExpenseFilterInterface
     {
-        return new ShipmentExpenseFilter();
+        return new ShipmentExpenseFilter($this->getShipmentService());
     }
 
     /**
@@ -209,7 +209,8 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
         return new ShipmentOrderSaver(
             $this->getEntityManager(),
             $this->createExpenseSanitizer(),
-            $this->getRepository()
+            $this->getRepository(),
+            $this->getShipmentService()
         );
     }
 
@@ -223,7 +224,8 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
         return new CheckoutShipmentOrderSaver(
             $this->getEntityManager(),
             $this->createExpenseSanitizer(),
-            $this->getRepository()
+            $this->getRepository(),
+            $this->getShipmentService()
         );
     }
 
@@ -247,7 +249,11 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
      */
     public function createShipmentTaxCalculator()
     {
-        return new ShipmentTaxRateCalculator($this->getQueryContainer(), $this->getTaxFacade());
+        return new ShipmentTaxRateCalculator(
+            $this->getQueryContainer(),
+            $this->getTaxFacade(),
+            $this->getShipmentService()
+        );
     }
 
     /**
@@ -311,7 +317,8 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     {
         return new MultipleShipmentOrderHydrate(
             $this->getRepository(),
-            $this->getSalesFacade()
+            $this->getSalesFacade(),
+            $this->getShipmentService()
         );
     }
 

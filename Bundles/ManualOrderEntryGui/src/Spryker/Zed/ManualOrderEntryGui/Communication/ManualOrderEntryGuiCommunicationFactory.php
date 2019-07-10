@@ -59,6 +59,7 @@ use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToMoney
 use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToPaymentFacadeInterface;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToProductFacadeInterface;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToShipmentFacadeInterface;
+use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToShipmentServiceInterface;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToStoreFacadeInterface;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\QueryContainer\ManualOrderEntryGuiToCustomerQueryContainerInterface;
 use Spryker\Zed\ManualOrderEntryGui\ManualOrderEntryGuiDependencyProvider;
@@ -125,6 +126,14 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
     public function getShipmentFacade(): ManualOrderEntryGuiToShipmentFacadeInterface
     {
         return $this->getProvidedDependency(ManualOrderEntryGuiDependencyProvider::FACADE_SHIPMENT);
+    }
+
+    /**
+     * @return \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToShipmentServiceInterface
+     */
+    public function getShipmentService(): ManualOrderEntryGuiToShipmentServiceInterface
+    {
+        return $this->getProvidedDependency(ManualOrderEntryGuiDependencyProvider::SERVICE_SHIPMENT);
     }
 
     /**
@@ -599,7 +608,8 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
     public function createShipmentFormHandler(): FormHandlerInterface
     {
         return new ShipmentFormHandler(
-            $this->getShipmentFacade()
+            $this->getShipmentFacade(),
+            $this->getShipmentService()
         );
     }
 

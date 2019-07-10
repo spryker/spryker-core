@@ -53,6 +53,6 @@ class ShipmentService extends AbstractService implements ShipmentServiceInterfac
      */
     public function getShipmentExpenseType(): string
     {
-        return $this->getFactory()->createConfigReader()->getShipmentExpenseType();
+        return $this->getFactory()->getConfig()->getShipmentExpenseType();
     }
 }

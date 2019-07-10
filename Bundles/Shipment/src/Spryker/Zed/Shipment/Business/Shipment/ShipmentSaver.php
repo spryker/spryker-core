@@ -162,7 +162,7 @@ class ShipmentSaver implements ShipmentSaverInterface
             ->mapShipmentMethodTransferToExpenseTransfer($shipmentMethodTransfer, new ExpenseTransfer());
 
         $expenseTransfer->setFkSalesOrder($orderTransfer->getIdSalesOrder());
-        $expenseTransfer->setType(ShipmentConstants::SHIPMENT_EXPENSE_TYPE);
+        $expenseTransfer->setType($this->shipmentService->getShipmentExpenseType());
         $expenseTransfer = $this->setExpenseSetPrice($expenseTransfer, 0, $orderTransfer->getPriceMode());
         $expenseTransfer->setQuantity(1);
         $expenseTransfer->setShipment($shipmentTransfer);

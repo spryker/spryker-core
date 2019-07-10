@@ -12,4 +12,12 @@ use Spryker\Shared\Kernel\AbstractSharedConfig;
 class ShipmentConfig extends AbstractSharedConfig
 {
     public const SHIPMENT_METHOD_NAME_NO_SHIPMENT = 'NoShipment';
+
+    /**
+     * @return string
+     */
+    public function getShipmentExpenseType(): string
+    {
+        return $this->get(ShipmentConstants::SHIPMENT_EXPENSE_TYPE, ShipmentConstants::SHIPMENT_EXPENSE_TYPE);
+    }
 }
