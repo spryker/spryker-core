@@ -133,7 +133,13 @@ class CartSharer implements CartSharerInterface
         if (!$this->can(ReadSharedCartPermissionPlugin::KEY, $shareCartRequestTransfer->getIdQuote())) {
             return (new QuoteResponseTransfer())->setIsSuccessful(false);
         }
+
         $quoteTransfer = $this->getQuote($shareCartRequestTransfer->getIdQuote());
+
+        if ($quoteTransfer->getIsLocked()) {
+            return (new QuoteResponseTransfer())->setIsSuccessful(false);
+        }
+
         $quoteUpdateRequestTransfer = $this->createQuoteUpdateRequest($quoteTransfer);
         $quoteUpdateRequestTransfer->getQuoteUpdateRequestAttributes()
             ->setShareDetails(
