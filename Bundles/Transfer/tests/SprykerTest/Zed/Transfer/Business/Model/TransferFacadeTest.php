@@ -71,9 +71,81 @@ class TransferFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testCanGenerateDataTransfers(): void
+    {
+        $transferDestinationDirectory = $this->tester->getTransferDestinationDir();
+
+        $this->generateDataTransfers();
+        $this->tester->assertVirtualDirectoryNotEmpty($transferDestinationDirectory);
+        $this->tester->isDataTransfersExist($transferDestinationDirectory);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCanGenerateEntityTransfers(): void
+    {
+        $transferDestinationDirectory = $this->tester->getTransferDestinationDir();
+
+        $this->generateEntityTransfers();
+        $this->tester->assertVirtualDirectoryNotEmpty($transferDestinationDirectory);
+        $this->tester->isEntityTransfersExist($transferDestinationDirectory);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCanDeleteDataTransfers(): void
+    {
+        $transferDestinationDirectory = $this->tester->getTransferDestinationDir();
+
+        $this->generateTransfers();
+        $this->tester->getFacade()->deleteGeneratedDataTransferObjects();
+        $this->assertTrue(
+            $this->tester->isEntityTransfersExist($transferDestinationDirectory)
+        );
+        $this->assertFalse(
+            $this->tester->isDataTransfersExist($transferDestinationDirectory)
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testCanDeleteEntityTransfers(): void
+    {
+        $this->generateTransfers();
+        $this->tester->getFacade()->deleteGeneratedEntityTransferObjects();
+        $this->assertTrue($this->tester->isDataTransfersExist(
+            $this->tester->getTransferDestinationDir()
+        ));
+        $this->assertFalse($this->tester->isEntityTransfersExist(
+            $this->tester->getTransferDestinationDir()
+        ));
+    }
+
+    /**
+     * @return void
+     */
     protected function generateTransfers(): void
     {
+        $this->generateDataTransfers();
+        $this->generateEntityTransfers();
+    }
+
+    /**
+     * @return void
+     */
+    protected function generateDataTransfers(): void
+    {
         $this->tester->getFacade()->generateTransferObjects($this->getMessenger());
+    }
+
+    /**
+     * @return void
+     */
+    protected function generateEntityTransfers()
+    {
         $this->tester->getFacade()->generateEntityTransferObjects($this->getMessenger());
     }
 }

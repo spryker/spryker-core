@@ -25,7 +25,7 @@ class GeneratedTransferDirectory implements GeneratedTransferDirectoryInterface
     /**
      * @var \Spryker\Zed\Transfer\Business\TransferFileFinder\GeneratedFileFinderInterface
      */
-    private $fileFinder;
+    protected $fileFinder;
 
     /**
      * @param string $directoryPath

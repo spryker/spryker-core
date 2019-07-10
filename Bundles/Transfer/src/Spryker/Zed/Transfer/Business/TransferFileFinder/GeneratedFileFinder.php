@@ -17,7 +17,7 @@ class GeneratedFileFinder implements GeneratedFileFinderInterface
     protected $finder;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     protected $fileNamePattern;
 

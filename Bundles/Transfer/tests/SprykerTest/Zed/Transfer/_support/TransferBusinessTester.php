@@ -55,6 +55,38 @@ class TransferBusinessTester extends Actor
     }
 
     /**
+     * @param string $path
+     *
+     * @return bool
+     */
+    public function isEntityTransfersExist(string $path): bool
+    {
+        foreach ($this->getVirtualDirectoryContents($path) as $transferFile) {
+            if (strpos($transferFile->getName(), 'EntityTransfer') !== false) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param string $path
+     *
+     * @return bool
+     */
+    public function isDataTransfersExist(string $path): bool
+    {
+        foreach ($this->getVirtualDirectoryContents($path) as $transferFile) {
+            if (preg_match('/.+(?<!Entity)Transfer/', $transferFile->getName()) === 1) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * @return string
      */
     protected function getTransferDestinationUrl(): string

@@ -188,6 +188,8 @@ class TransferBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Use `Spryker\Zed\Transfer\Business\TransferBusinessFactory::createRegularTransferGeneratedDirectory()` instead.
+     *
      * @return \Spryker\Zed\Transfer\Business\Model\GeneratedTransferDirectoryInterface
      */
     public function createTransferGeneratedDirectory()
@@ -195,19 +197,31 @@ class TransferBusinessFactory extends AbstractBusinessFactory
         return new GeneratedTransferDirectory(
             $this->getConfig()->getClassTargetDirectory(),
             $this->getFileSystem(),
-            $this->createGeneratedFileFinder()
+            $this->createFileFinder()
         );
     }
 
     /**
      * @return \Spryker\Zed\Transfer\Business\Model\GeneratedTransferDirectoryInterface
      */
-    public function createGeneratedEntityTransferDirectory()
+    public function createDataTransferGeneratedDirectory()
     {
         return new GeneratedTransferDirectory(
             $this->getConfig()->getClassTargetDirectory(),
             $this->getFileSystem(),
-            $this->createGeneratedEntityTransferFileFinder()
+            $this->createDataTransferFileFinder()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Transfer\Business\Model\GeneratedTransferDirectoryInterface
+     */
+    public function createEntityTransferGeneratedDirectory()
+    {
+        return new GeneratedTransferDirectory(
+            $this->getConfig()->getClassTargetDirectory(),
+            $this->getFileSystem(),
+            $this->createEntityTransferFileFinder()
         );
     }
 
@@ -219,14 +233,14 @@ class TransferBusinessFactory extends AbstractBusinessFactory
         return new GeneratedTransferDirectory(
             $this->getConfig()->getDataBuilderTargetDirectory(),
             $this->getFileSystem(),
-            $this->createGeneratedFileFinder()
+            $this->createFileFinder()
         );
     }
 
     /**
      * @return \Spryker\Zed\Transfer\Business\TransferFileFinder\GeneratedFileFinderInterface
      */
-    public function createGeneratedFileFinder(): GeneratedFileFinderInterface
+    public function createFileFinder(): GeneratedFileFinderInterface
     {
         return new GeneratedFileFinder(
             $this->getFinder()
@@ -236,7 +250,18 @@ class TransferBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Transfer\Business\TransferFileFinder\GeneratedFileFinderInterface
      */
-    public function createGeneratedEntityTransferFileFinder(): GeneratedFileFinderInterface
+    public function createDataTransferFileFinder(): GeneratedFileFinderInterface
+    {
+        return new GeneratedFileFinder(
+            $this->getFinder(),
+            $this->getConfig()->getDataTransferClassFileNamePattern()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Transfer\Business\TransferFileFinder\GeneratedFileFinderInterface
+     */
+    public function createEntityTransferFileFinder(): GeneratedFileFinderInterface
     {
         return new GeneratedFileFinder(
             $this->getFinder(),
