@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Transfer\Business\Model;
 
-use Spryker\Zed\Transfer\Business\TransferFileFinder\GeneratedFileFinderInterface;
+use Spryker\Zed\Transfer\Business\GeneratedFileFinder\GeneratedFileFinderInterface;
 use Symfony\Component\Filesystem\Filesystem;
 
 class GeneratedTransferDirectory implements GeneratedTransferDirectoryInterface
@@ -23,14 +23,14 @@ class GeneratedTransferDirectory implements GeneratedTransferDirectoryInterface
     protected $fileSystem;
 
     /**
-     * @var \Spryker\Zed\Transfer\Business\TransferFileFinder\GeneratedFileFinderInterface
+     * @var \Spryker\Zed\Transfer\Business\GeneratedFileFinder\GeneratedFileFinderInterface
      */
     protected $fileFinder;
 
     /**
      * @param string $directoryPath
      * @param \Symfony\Component\Filesystem\Filesystem $fileSystem
-     * @param \Spryker\Zed\Transfer\Business\TransferFileFinder\GeneratedFileFinderInterface $fileFinder
+     * @param \Spryker\Zed\Transfer\Business\GeneratedFileFinder\GeneratedFileFinderInterface $fileFinder
      */
     public function __construct($directoryPath, Filesystem $fileSystem, GeneratedFileFinderInterface $fileFinder)
     {

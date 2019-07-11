@@ -8,8 +8,8 @@
 namespace SprykerTest\Zed\Transfer\Business\Model;
 
 use Codeception\Test\Unit;
+use Spryker\Zed\Transfer\Business\GeneratedFileFinder\GeneratedFileFinderInterface;
 use Spryker\Zed\Transfer\Business\Model\GeneratedTransferDirectory;
-use Spryker\Zed\Transfer\Business\TransferFileFinder\GeneratedFileFinderInterface;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
@@ -48,7 +48,7 @@ class GeneratedTransferDirectoryTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\Transfer\Business\TransferFileFinder\GeneratedFileFinderInterface|\PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Zed\Transfer\Business\GeneratedFileFinder\GeneratedFileFinderInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     protected function createGeneratedFileFinderMock(): GeneratedFileFinderInterface
     {

@@ -31,11 +31,18 @@ class VirtualFilesystemHelper extends Module
     /**
      * @param string $path
      *
-     * @return \org\bovigo\vfs\vfsStreamContent[]
+     * @return string[]
      */
     public function getVirtualDirectoryContents(string $path): array
     {
-        return $this->getVirtualRootDirectory()->getChild($path)->getChildren();
+        $contents = [];
+
+        /** @var \org\bovigo\vfs\vfsStreamContent $child */
+        foreach ($this->getVirtualRootDirectory()->getChild($path)->getChildren() as $child) {
+            $contents[] = $child->getName();
+        }
+
+        return $contents;
     }
 
     /**

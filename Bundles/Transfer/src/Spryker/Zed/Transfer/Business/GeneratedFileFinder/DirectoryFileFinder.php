@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Transfer\Business\TransferFileFinder;
+namespace Spryker\Zed\Transfer\Business\GeneratedFileFinder;
 
 use Symfony\Component\Finder\Finder;
 
-class GeneratedFileFinder implements GeneratedFileFinderInterface
+class DirectoryFileFinder implements GeneratedFileFinderInterface
 {
     /**
      * @var \Symfony\Component\Finder\Finder
@@ -17,18 +17,11 @@ class GeneratedFileFinder implements GeneratedFileFinderInterface
     protected $finder;
 
     /**
-     * @var string|null
-     */
-    protected $fileNamePattern;
-
-    /**
      * @param \Symfony\Component\Finder\Finder $finder
-     * @param string|null $fileNamePattern
      */
-    public function __construct(Finder $finder, ?string $fileNamePattern = null)
+    public function __construct(Finder $finder)
     {
         $this->finder = $finder;
-        $this->fileNamePattern = $fileNamePattern;
     }
 
     /**
@@ -41,17 +34,8 @@ class GeneratedFileFinder implements GeneratedFileFinderInterface
         $finder = clone $this->finder;
         $finder
             ->in($directoryPath)
-            ->depth(0)
-            ->name($this->getFileNamePattern());
+            ->depth(0);
 
         return $finder;
-    }
-
-    /**
-     * @return string
-     */
-    protected function getFileNamePattern(): string
-    {
-        return $this->fileNamePattern ?? '*';
     }
 }

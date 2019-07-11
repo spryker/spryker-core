@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Transfer\Business\TransferFileFinder;
+namespace Spryker\Zed\Transfer\Business\GeneratedFileFinder;
 
 use Symfony\Component\Finder\Finder;
 

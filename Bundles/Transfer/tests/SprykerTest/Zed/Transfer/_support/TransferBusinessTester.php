@@ -9,6 +9,9 @@ namespace SprykerTest\Zed\Transfer;
 
 use Codeception\Actor;
 use Codeception\Util\Stub;
+use ReflectionClass;
+use Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer;
+use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Zed\Transfer\Business\TransferBusinessFactory;
 use Spryker\Zed\Transfer\TransferConfig;
 
@@ -61,8 +64,8 @@ class TransferBusinessTester extends Actor
      */
     public function isEntityTransfersExist(string $path): bool
     {
-        foreach ($this->getVirtualDirectoryContents($path) as $transferFile) {
-            if (strpos($transferFile->getName(), 'EntityTransfer') !== false) {
+        foreach ($this->getVirtualDirectoryContents($path) as $transferFileName) {
+            if ($this->isEntityTransfer($transferFileName)) {
                 return true;
             }
         }
@@ -77,13 +80,81 @@ class TransferBusinessTester extends Actor
      */
     public function isDataTransfersExist(string $path): bool
     {
-        foreach ($this->getVirtualDirectoryContents($path) as $transferFile) {
-            if (preg_match('/.+(?<!Entity)Transfer/', $transferFile->getName()) === 1) {
+        foreach ($this->getVirtualDirectoryContents($path) as $transferFileName) {
+            if ($this->isDataTransfer($transferFileName)) {
                 return true;
             }
         }
 
         return false;
+    }
+
+    /**
+     * @param string $transferFileName
+     *
+     * @return bool
+     */
+    protected function isDataTransfer(string $transferFileName): bool
+    {
+        return $this->isTransferExtends($transferFileName, AbstractTransfer::class);
+    }
+
+    /**
+     * @param string $transferFileName
+     *
+     * @return bool
+     */
+    protected function isEntityTransfer(string $transferFileName): bool
+    {
+        return $this->isTransferExtends($transferFileName, AbstractEntityTransfer::class);
+    }
+
+    /**
+     * @param string $transferFileName
+     * @param string $expectedBaseClassName
+     *
+     * @return bool
+     */
+    protected function isTransferExtends(string $transferFileName, string $expectedBaseClassName)
+    {
+        $transferFQCN = $this->buildTransferClassName($transferFileName);
+
+        if (!$transferFQCN) {
+            return false;
+        }
+
+        $transferReflection = new ReflectionClass($transferFQCN);
+        $parentClassName = $transferReflection->getParentClass()
+            ? $transferReflection->getParentClass()->getName()
+            : null;
+
+        return $parentClassName === $expectedBaseClassName;
+    }
+
+    /**
+     * @param string $transferFileName
+     *
+     * @return string|null
+     */
+    protected function buildTransferClassName(string $transferFileName): ?string
+    {
+        $className = pathinfo($transferFileName)['filename'] ?? null;
+
+        if (!$className || !$this->isTransferClassName($className)) {
+            return null;
+        }
+
+        return sprintf('Generated\Shared\Transfer\%s', $className);
+    }
+
+    /**
+     * @param string $className
+     *
+     * @return bool
+     */
+    protected function isTransferClassName(string $className): bool
+    {
+        return (substr($className, -8) === 'Transfer');
     }
 
     /**
