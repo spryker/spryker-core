@@ -38,7 +38,7 @@ class TransferGeneratorConsole extends Console
      *
      * @return int|null
      */
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): ?int
     {
         $facade = $this->getFacade();
         $messenger = $this->getMessenger();

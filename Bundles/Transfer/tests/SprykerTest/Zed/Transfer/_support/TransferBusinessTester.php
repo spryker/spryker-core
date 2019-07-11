@@ -115,7 +115,7 @@ class TransferBusinessTester extends Actor
      *
      * @return bool
      */
-    protected function isTransferExtends(string $transferFileName, string $expectedBaseClassName)
+    protected function isTransferExtends(string $transferFileName, string $expectedBaseClassName): bool
     {
         $transferFQCN = $this->buildTransferClassName($transferFileName);
 

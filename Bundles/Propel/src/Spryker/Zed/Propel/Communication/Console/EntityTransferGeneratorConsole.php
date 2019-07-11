@@ -38,7 +38,7 @@ class EntityTransferGeneratorConsole extends Console
      *
      * @return int|null
      */
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): ?int
     {
         $facade = $this->getFactory()->getTransferFacade();
         $messenger = $this->getMessenger();
