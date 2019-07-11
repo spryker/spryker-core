@@ -8,10 +8,10 @@
 namespace Spryker\Zed\Storage\Communication\Table;
 
 use Spryker\Client\Storage\StorageClientInterface;
-use Spryker\Service\UtilSanitize\UtilSanitizeService;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
+use Spryker\Zed\Storage\Dependency\Service\StorageToUtilSanitizeServiceInterface;
 
 class StorageTable extends AbstractTable
 {
@@ -26,17 +26,18 @@ class StorageTable extends AbstractTable
     protected $storageClient;
 
     /**
-     * @var \Spryker\Service\UtilSanitize\UtilSanitizeServiceInterface
+     * @var \Spryker\Zed\Storage\Dependency\Service\StorageToUtilSanitizeServiceInterface
      */
     protected $utilSanitizeService;
 
     /**
      * @param \Spryker\Client\Storage\StorageClientInterface $storageClient
+     * @param \Spryker\Zed\Storage\Dependency\Service\StorageToUtilSanitizeServiceInterface $utilSanitizeService
      */
-    public function __construct(StorageClientInterface $storageClient)
+    public function __construct(StorageClientInterface $storageClient, StorageToUtilSanitizeServiceInterface $utilSanitizeService)
     {
         $this->storageClient = $storageClient;
-        $this->utilSanitizeService = new UtilSanitizeService();
+        $this->utilSanitizeService = $utilSanitizeService;
     }
 
     /**
