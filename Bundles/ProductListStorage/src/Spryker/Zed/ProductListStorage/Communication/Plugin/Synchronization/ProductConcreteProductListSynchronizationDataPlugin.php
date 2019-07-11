@@ -103,7 +103,7 @@ class ProductConcreteProductListSynchronizationDataPlugin extends AbstractPlugin
      */
     protected function findSpyProductConcreteProductListStorageEntities(array $ids = []): array
     {
-        if (empty($ids)) {
+        if ($ids === []) {
             return $this->getRepository()->findAllProductConcreteProductListStorageEntities();
         }
 

@@ -112,7 +112,6 @@ class MethodForm extends AbstractType
             'label' => 'Carrier',
             'placeholder' => 'Select one',
             'choices' => array_flip($options[self::OPTION_CARRIER_CHOICES]),
-            'choices_as_values' => true,
             'constraints' => [
                 new NotBlank(),
                 new Required(),
@@ -171,7 +170,6 @@ class MethodForm extends AbstractType
             'label' => 'Availability Plugin',
             'placeholder' => 'Select one',
             'choices' => array_flip($options[self::OPTION_AVAILABILITY_PLUGIN_CHOICE_LIST]),
-            'choices_as_values' => true,
             'required' => false,
         ]);
 
@@ -190,7 +188,6 @@ class MethodForm extends AbstractType
             'label' => 'Price Plugin',
             'placeholder' => 'Select one',
             'choices' => array_flip($options[self::OPTION_PRICE_PLUGIN_CHOICE_LIST]),
-            'choices_as_values' => true,
             'required' => false,
         ]);
 
@@ -209,7 +206,6 @@ class MethodForm extends AbstractType
             'label' => 'Delivery Time Plugin',
             'placeholder' => 'Select one',
             'choices' => array_flip($options[self::OPTION_DELIVERY_TIME_PLUGIN_CHOICE_LIST]),
-            'choices_as_values' => true,
             'required' => false,
         ]);
 
@@ -256,7 +252,6 @@ class MethodForm extends AbstractType
             [
                 'label' => 'Tax set',
                 'choices' => array_flip($options[self::OPTION_TAX_SETS]),
-                'choices_as_values' => true,
             ]
         );
 
