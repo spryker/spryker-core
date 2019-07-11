@@ -10,7 +10,7 @@ namespace Spryker\Zed\Shipment\Business\Shipment;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
-use Spryker\Service\Shipment\ShipmentServiceInterface;
+use Spryker\Shared\Shipment\ShipmentConfig;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToSalesFacadeInterface;
 use Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface;
 
@@ -27,23 +27,23 @@ class ShipmentOrderHydrate implements ShipmentOrderHydrateInterface
     protected $salesFacade;
 
     /**
-     * @var \Spryker\Service\Shipment\ShipmentServiceInterface
+     * @var \Spryker\Shared\Shipment\ShipmentConfig
      */
-    protected $shipmentService;
+    protected $shipmentConfig;
 
     /**
      * @param \Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface $shipmentRepository
      * @param \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToSalesFacadeInterface $salesFacade
-     * @param \Spryker\Service\Shipment\ShipmentServiceInterface $shipmentService
+     * @param \Spryker\Shared\Shipment\ShipmentConfig $shipmentConfig
      */
     public function __construct(
         ShipmentRepositoryInterface $shipmentRepository,
         ShipmentToSalesFacadeInterface $salesFacade,
-        ShipmentServiceInterface $shipmentService
+        ShipmentConfig $shipmentConfig
     ) {
         $this->shipmentRepository = $shipmentRepository;
         $this->salesFacade = $salesFacade;
-        $this->shipmentService = $shipmentService;
+        $this->shipmentConfig = $shipmentConfig;
     }
 
     /**
@@ -178,7 +178,7 @@ class ShipmentOrderHydrate implements ShipmentOrderHydrateInterface
      */
     protected function setShipmentToOrderExpenses(OrderTransfer $orderTransfer): OrderTransfer
     {
-        $shipmentExpenseType = $this->shipmentService->getShipmentExpenseType();
+        $shipmentExpenseType = $this->shipmentConfig->getShipmentExpenseType();
         foreach ($orderTransfer->getExpenses() as $expenseTransfer) {
             if ($expenseTransfer->getType() !== $shipmentExpenseType) {
                 continue;

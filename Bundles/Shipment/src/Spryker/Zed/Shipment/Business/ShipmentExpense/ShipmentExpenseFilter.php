@@ -10,21 +10,21 @@ namespace Spryker\Zed\Shipment\Business\ShipmentExpense;
 use ArrayObject;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Service\Shipment\ShipmentServiceInterface;
+use Spryker\Shared\Shipment\ShipmentConfig;
 
 class ShipmentExpenseFilter implements ShipmentExpenseFilterInterface
 {
     /**
-     * @var \Spryker\Service\Shipment\ShipmentServiceInterface
+     * @var \Spryker\Shared\Shipment\ShipmentConfig
      */
-    protected $shipmentService;
+    protected $shipmentConfig;
 
     /**
-     * @param \Spryker\Service\Shipment\ShipmentServiceInterface $shipmentService
+     * @param \Spryker\Shared\Shipment\ShipmentConfig $shipmentConfig
      */
-    public function __construct(ShipmentServiceInterface $shipmentService)
+    public function __construct(ShipmentConfig $shipmentConfig)
     {
-        $this->shipmentService = $shipmentService;
+        $this->shipmentConfig = $shipmentConfig;
     }
 
     /**
@@ -51,7 +51,7 @@ class ShipmentExpenseFilter implements ShipmentExpenseFilterInterface
      */
     protected function filterShipmentExpenses(ArrayObject $expenseTransferCollection): ArrayObject
     {
-        $shipmentExpenseType = $this->shipmentService->getShipmentExpenseType();
+        $shipmentExpenseType = $this->shipmentConfig->getShipmentExpenseType();
         $filteredExpenseTransferCollection = new ArrayObject();
         foreach ($expenseTransferCollection as $expenseTransfer) {
             if ($expenseTransfer->getType() !== $shipmentExpenseType) {

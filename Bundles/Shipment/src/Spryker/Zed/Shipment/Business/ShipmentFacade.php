@@ -322,7 +322,7 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
      */
     public function getShipmentExpenseTypeIdentifier()
     {
-        return $this->getFactory()->getShipmentService()->getShipmentExpenseType();
+        return $this->getFactory()->getConfig()->getShipmentExpenseType();
     }
 
     /**

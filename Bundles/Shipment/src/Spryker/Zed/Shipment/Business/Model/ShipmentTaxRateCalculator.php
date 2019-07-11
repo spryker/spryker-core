@@ -74,7 +74,11 @@ class ShipmentTaxRateCalculator implements CalculatorInterface
     protected function setQuoteExpenseTaxRate(QuoteTransfer $quoteTransfer, $taxRate)
     {
         $shipmentExpenseType = $this->shipmentService->getShipmentExpenseType();
-        $shipmentMethodName = $quoteTransfer->requireShipment()->getShipment()->requireMethod()->getMethod()->getName();
+        $shipmentMethodName = $quoteTransfer->requireShipment()
+            ->getShipment()
+            ->requireMethod()
+            ->getMethod()
+            ->getName();
         foreach ($quoteTransfer->getExpenses() as $expense) {
             if ($expense->getType() === $shipmentExpenseType && $expense->getName() === $shipmentMethodName) {
                 $expense->setTaxRate($taxRate);
@@ -118,14 +122,18 @@ class ShipmentTaxRateCalculator implements CalculatorInterface
     protected function findTaxSet(QuoteTransfer $quoteTransfer)
     {
         $countryIso2Code = $this->getCountryIso2Code($quoteTransfer);
+        $idShipmentMethod = $quoteTransfer->requireShipment()
+            ->getShipment()
+            ->requireMethod()
+            ->getMethod()
+            ->getIdShipmentMethod();
 
         /**
-         * @var string[] $taxSet
+         * @var string[]|null $taxSet
          */
-        $taxSet = $this->shipmentQueryContainer->queryTaxSetByIdShipmentMethodAndCountryIso2Code(
-            $quoteTransfer->getShipment()->getMethod()->getIdShipmentMethod(),
-            $countryIso2Code
-        )->findOne();
+        $taxSet = $this->shipmentQueryContainer
+            ->queryTaxSetByIdShipmentMethodAndCountryIso2Code($idShipmentMethod, $countryIso2Code)
+            ->findOne();
 
         return $taxSet;
     }
