@@ -145,7 +145,7 @@ class CartSharer implements CartSharerInterface
 
         $quoteTransfer = $this->getQuote($shareCartRequestTransfer->getIdQuote());
 
-        if ($this->quoteClient && $this->quoteClient->isQuoteLocked($quoteTransfer)) {
+        if ($this->isQuoteLocked($quoteTransfer)) {
             return (new QuoteResponseTransfer())->setIsSuccessful(false);
         }
 
@@ -319,5 +319,15 @@ class CartSharer implements CartSharerInterface
         $quoteUpdateRequestTransfer->setQuoteUpdateRequestAttributes($quoteUpdateRequestAttributesTransfer);
 
         return $quoteUpdateRequestTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function isQuoteLocked(QuoteTransfer $quoteTransfer): bool
+    {
+        return $this->quoteClient && $this->quoteClient->isQuoteLocked($quoteTransfer);
     }
 }
