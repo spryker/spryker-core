@@ -105,8 +105,6 @@
         <property name="activeMax" type="float" />
         <property name="config" type="FacetConfig" />
         <property name="docCount" type="int" />
-        <property name="defaultMin" type="int" />
-        <property name="defaultMax" type="int" />
     </transfer>
 
     <transfer name="PaginationSearchResult">
