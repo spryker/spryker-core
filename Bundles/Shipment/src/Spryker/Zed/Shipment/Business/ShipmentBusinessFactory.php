@@ -170,7 +170,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
      */
     public function createShipmentExpenseFilter(): ShipmentExpenseFilterInterface
     {
-        return new ShipmentExpenseFilter($this->getShipmentService());
+        return new ShipmentExpenseFilter($this->getConfig());
     }
 
     /**

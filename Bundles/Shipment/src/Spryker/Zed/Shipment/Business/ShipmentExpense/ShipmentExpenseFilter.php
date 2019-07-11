@@ -10,17 +10,17 @@ namespace Spryker\Zed\Shipment\Business\ShipmentExpense;
 use ArrayObject;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Shared\Shipment\ShipmentConfig;
+use Spryker\Zed\Shipment\ShipmentConfig;
 
 class ShipmentExpenseFilter implements ShipmentExpenseFilterInterface
 {
     /**
-     * @var \Spryker\Shared\Shipment\ShipmentConfig
+     * @var \Spryker\Zed\Shipment\ShipmentConfig
      */
     protected $shipmentConfig;
 
     /**
-     * @param \Spryker\Shared\Shipment\ShipmentConfig $shipmentConfig
+     * @param \Spryker\Zed\Shipment\ShipmentConfig $shipmentConfig
      */
     public function __construct(ShipmentConfig $shipmentConfig)
     {
