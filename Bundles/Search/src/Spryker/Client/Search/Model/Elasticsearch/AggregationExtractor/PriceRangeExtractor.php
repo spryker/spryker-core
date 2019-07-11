@@ -51,14 +51,44 @@ class PriceRangeExtractor extends RangeExtractor
      */
     protected function getActiveRangeData(array $requestParameters, $min, $max)
     {
-        $parameterName = $this->facetConfigTransfer->getParameterName();
-
-        $activeMin = (isset($requestParameters[$parameterName]['min']) ? (float)$requestParameters[$parameterName]['min'] : null);
-        $activeMax = (isset($requestParameters[$parameterName]['max']) ? (float)$requestParameters[$parameterName]['max'] : null);
+        $activeMin = $this->getActiveMinFromRequestParameters($requestParameters);
+        $activeMax = $this->getActiveMaxFromRequestParameters($requestParameters);
 
         return [
             $activeMin !== null ? $this->moneyPlugin->convertDecimalToInteger($activeMin) : $min,
             $activeMax !== null ? $this->moneyPlugin->convertDecimalToInteger($activeMax) : $max,
         ];
+    }
+
+    /**
+     * @param array $requestParameters
+     *
+     * @return float|null
+     */
+    protected function getActiveMinFromRequestParameters(array $requestParameters): ?float
+    {
+        $parameterName = $this->facetConfigTransfer->getParameterName();
+
+        if (isset($requestParameters[$parameterName]['min']) && empty($requestParameters[$parameterName]['min']) === false) {
+            return (float)$requestParameters[$parameterName]['min'];
+        }
+
+        return null;
+    }
+
+    /**
+     * @param array $requestParameters
+     *
+     * @return float|null
+     */
+    protected function getActiveMaxFromRequestParameters(array $requestParameters): ?float
+    {
+        $parameterName = $this->facetConfigTransfer->getParameterName();
+
+        if (isset($requestParameters[$parameterName]['max']) && empty($requestParameters[$parameterName]['max']) === false) {
+            return (float)$requestParameters[$parameterName]['max'];
+        }
+
+        return null;
     }
 }
