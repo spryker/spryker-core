@@ -60,7 +60,7 @@ class ProductConcreteMeasurementUnitSynchronizationDataPlugin extends AbstractPl
         $synchronizationDataTransfers = [];
         $productConcreteMeasurementUnitTransfers = $this->getRepository()->findProductConcreteMeasurementUnitStorageEntities($ids);
 
-        if (empty($ids)) {
+        if ($ids === []) {
             $productConcreteMeasurementUnitTransfers = $this->getRepository()->findAllProductConcreteMeasurementUnitStorageEntities();
         }
 

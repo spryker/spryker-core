@@ -123,7 +123,6 @@ class ProductRelationFormType extends AbstractType
             'label' => 'Relation type',
             'property_path' => ProductRelationTransfer::PRODUCT_RELATION_TYPE . '.' . ProductRelationTypeTransfer::KEY,
             'choices' => array_flip($options[static::OPTION_RELATION_CHOICES]),
-            'choices_as_values' => true,
         ]);
 
         return $this;

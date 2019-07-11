@@ -57,11 +57,11 @@ class AvailabilitySynchronizationDataPlugin extends AbstractPlugin implements Sy
     {
         $query = $this->getQueryContainer()->queryAvailabilityStorageByAvailabilityAbstractIds($ids);
 
-        if (empty($ids)) {
+        if ($ids === []) {
             $query->clear();
         }
 
-        return $query;
+        return $query->orderByIdAvailabilityStorage();
     }
 
     /**
