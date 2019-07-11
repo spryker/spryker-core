@@ -96,7 +96,6 @@ class MerchantRelationshipCreateForm extends AbstractType
             'choices' => array_flip($options[static::OPTION_COMPANY_CHOICES]),
             'mapped' => false,
             'data' => $options[static::OPTION_SELECTED_COMPANY],
-            'choices_as_values' => true,
             'constraints' => [
                 new NotBlank(),
             ],
@@ -117,7 +116,6 @@ class MerchantRelationshipCreateForm extends AbstractType
             'label' => static::MERCHANT_FIELD_LABEL,
             'placeholder' => static::MERCHANT_FIELD_PLACEHOLDER,
             'choices' => array_flip($choices),
-            'choices_as_values' => true,
             'constraints' => [
                 new NotBlank(),
             ],
@@ -143,7 +141,6 @@ class MerchantRelationshipCreateForm extends AbstractType
             'label' => static::FK_COMPANY_BUSINESS_UNIT_FIELD_LABEL,
             'placeholder' => static::FK_COMPANY_BUSINESS_UNIT_FIELD_PLACEHOLDER,
             'choices' => array_flip($options[static::OPTION_ASSIGNED_COMPANY_BUSINESS_UNIT_CHOICES]),
-            'choices_as_values' => true,
             'required' => $options[static::OPTION_IS_PERSISTENCE_FORM],
             'constraints' => $constraints,
         ]);
@@ -163,7 +160,6 @@ class MerchantRelationshipCreateForm extends AbstractType
             'label' => static::ASSIGNED_COMPANY_BUSINESS_UNIT_FIELD_LABEL,
             'placeholder' => static::ASSIGNED_COMPANY_BUSINESS_UNIT_FIELD_PLACEHOLDER,
             'choices' => array_flip($choices),
-            'choices_as_values' => true,
             'required' => false,
             'multiple' => 'true',
         ]);
