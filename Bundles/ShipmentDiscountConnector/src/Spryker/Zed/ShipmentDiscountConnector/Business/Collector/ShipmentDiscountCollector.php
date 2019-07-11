@@ -18,11 +18,6 @@ use Spryker\Zed\ShipmentDiscountConnector\Dependency\Service\ShipmentDiscountCon
 class ShipmentDiscountCollector extends ShipmentDiscountWithoutMultiShipmentCollector
 {
     /**
-     * @var \Spryker\Zed\ShipmentDiscountConnector\Dependency\Service\ShipmentDiscountConnectorToShipmentServiceInterface
-     */
-    protected $shipmentService;
-
-    /**
      * @param \Spryker\Zed\ShipmentDiscountConnector\Business\Model\ShipmentDiscountDecisionRuleInterface|\Spryker\Zed\ShipmentDiscountConnector\Business\DecisionRule\ShipmentDiscountDecisionRuleInterface $carrierDiscountDecisionRule
      * @param \Spryker\Zed\ShipmentDiscountConnector\Dependency\Service\ShipmentDiscountConnectorToShipmentServiceInterface $shipmentService
      */
@@ -30,9 +25,7 @@ class ShipmentDiscountCollector extends ShipmentDiscountWithoutMultiShipmentColl
         ShipmentDiscountDecisionRuleInterface $carrierDiscountDecisionRule,
         ShipmentDiscountConnectorToShipmentServiceInterface $shipmentService
     ) {
-        parent::__construct($carrierDiscountDecisionRule);
-
-        $this->shipmentService = $shipmentService;
+        parent::__construct($carrierDiscountDecisionRule, $shipmentService);
     }
 
     /**

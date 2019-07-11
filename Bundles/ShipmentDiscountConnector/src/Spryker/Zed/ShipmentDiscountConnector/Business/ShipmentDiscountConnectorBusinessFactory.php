@@ -49,7 +49,8 @@ class ShipmentDiscountConnectorBusinessFactory extends AbstractBusinessFactory
     public function createCarrierDiscountCollector()
     {
         return new ShipmentDiscountCollector(
-            $this->createCarrierDiscountDecisionRule()
+            $this->createCarrierDiscountDecisionRule(),
+            $this->getShipmentService()
         );
     }
 
@@ -96,7 +97,8 @@ class ShipmentDiscountConnectorBusinessFactory extends AbstractBusinessFactory
     public function createMethodDiscountCollector()
     {
         return new ShipmentDiscountCollector(
-            $this->createMethodDiscountDecisionRule()
+            $this->createMethodDiscountDecisionRule(),
+            $this->getShipmentService()
         );
     }
 
@@ -141,7 +143,8 @@ class ShipmentDiscountConnectorBusinessFactory extends AbstractBusinessFactory
     public function createShipmentPriceDiscountCollector()
     {
         return new ShipmentDiscountCollector(
-            $this->createShipmentPriceDiscountDecisionRule()
+            $this->createShipmentPriceDiscountDecisionRule(),
+            $this->getShipmentService()
         );
     }
 

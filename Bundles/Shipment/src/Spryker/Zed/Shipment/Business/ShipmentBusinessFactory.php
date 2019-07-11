@@ -36,6 +36,8 @@ use Spryker\Zed\Shipment\Business\ShipmentExpense\MultiShipmentExpenseFilter;
 use Spryker\Zed\Shipment\Business\ShipmentExpense\MultiShipmentExpenseFilterInterface;
 use Spryker\Zed\Shipment\Business\ShipmentExpense\ShipmentExpenseCollectionRemover;
 use Spryker\Zed\Shipment\Business\ShipmentExpense\ShipmentExpenseCollectionRemoverInterface;
+use Spryker\Zed\Shipment\Business\ShipmentExpense\ShipmentExpenseCreator;
+use Spryker\Zed\Shipment\Business\ShipmentExpense\ShipmentExpenseCreatorInterface;
 use Spryker\Zed\Shipment\Business\ShipmentExpense\ShipmentExpenseFilter;
 use Spryker\Zed\Shipment\Business\ShipmentExpense\ShipmentExpenseFilterInterface;
 use Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentFetcher;
@@ -176,7 +178,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
      */
     public function createShipmentExpenseFilter(): ShipmentExpenseFilterInterface
     {
-        return new ShipmentExpenseFilter();
+        return new ShipmentExpenseFilter($this->getConfig());
     }
 
     /**
@@ -234,7 +236,8 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
         return new ShipmentOrderSaver(
             $this->getEntityManager(),
             $this->createExpenseSanitizer(),
-            $this->getRepository()
+            $this->getRepository(),
+            $this->getConfig()
         );
     }
 
@@ -248,7 +251,8 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
         return new CheckoutShipmentOrderSaver(
             $this->getEntityManager(),
             $this->createExpenseSanitizer(),
-            $this->getRepository()
+            $this->getRepository(),
+            $this->getConfig()
         );
     }
 
@@ -272,7 +276,11 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
      */
     public function createShipmentTaxCalculator()
     {
-        return new ShipmentTaxRateCalculator($this->getQueryContainer(), $this->getTaxFacade());
+        return new ShipmentTaxRateCalculator(
+            $this->getQueryContainer(),
+            $this->getTaxFacade(),
+            $this->getShipmentService()
+        );
     }
 
     /**
@@ -336,7 +344,8 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     {
         return new MultipleShipmentOrderHydrate(
             $this->getRepository(),
-            $this->getSalesFacade()
+            $this->getSalesFacade(),
+            $this->getShipmentService()
         );
     }
 
@@ -460,9 +469,20 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
         return new ShipmentSaver(
             $this->createCheckoutMultiShipmentOrderSaver(),
             $this->createShipmentMethodExpander(),
-            $this->createExpenseSanitizer(),
             $this->getShipmentService(),
-            $this->createShipmentMapper()
+            $this->createShipmentExpenseCreator()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Shipment\Business\ShipmentExpense\ShipmentExpenseCreatorInterface
+     */
+    public function createShipmentExpenseCreator(): ShipmentExpenseCreatorInterface
+    {
+        return new ShipmentExpenseCreator(
+            $this->getConfig(),
+            $this->createShipmentMapper(),
+            $this->createExpenseSanitizer()
         );
     }
 
@@ -500,11 +520,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
      */
     public function createShipmentGroupCreator(): ShipmentGroupCreatorInterface
     {
-        return new ShipmentGroupCreator(
-            $this->getRepository(),
-            $this->getShipmentService(),
-            $this->getSalesFacade()
-        );
+        return new ShipmentGroupCreator($this->getRepository(), $this->getShipmentService(), $this->getSalesFacade());
     }
 
     /**

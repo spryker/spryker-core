@@ -17,6 +17,7 @@ use Spryker\Zed\ShipmentsRestApi\Dependency\Facade\ShipmentsRestApiToShipmentFac
 class ShipmentsRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_SHIPMENT = 'FACADE_SHIPMENT';
+    public const SERVICE_SHIPMENT = 'SERVICE_SHIPMENT';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -27,6 +28,7 @@ class ShipmentsRestApiDependencyProvider extends AbstractBundleDependencyProvide
     {
         $container = parent::provideBusinessLayerDependencies($container);
         $container = $this->addShipmentFacade($container);
+        $container = $this->addShipmentService($container);
 
         return $container;
     }
@@ -41,6 +43,20 @@ class ShipmentsRestApiDependencyProvider extends AbstractBundleDependencyProvide
         $container[static::FACADE_SHIPMENT] = function (Container $container) {
             return new ShipmentsRestApiToShipmentFacadeBridge($container->getLocator()->shipment()->facade());
         };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addShipmentService(Container $container): Container
+    {
+        $container->set(static::SERVICE_SHIPMENT, function (Container $container) {
+            return new ShipmentsRestApiToShipmentFacadeBridge($container->getLocator()->shipment()->facade());
+        });
 
         return $container;
     }

@@ -10,7 +10,7 @@ namespace Spryker\Zed\Shipment\Business\Shipment;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
-use Spryker\Shared\Shipment\ShipmentConstants;
+use Spryker\Shared\Shipment\ShipmentConfig;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToSalesFacadeInterface;
 use Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface;
 
@@ -27,15 +27,23 @@ class ShipmentOrderHydrate implements ShipmentOrderHydrateInterface
     protected $salesFacade;
 
     /**
+     * @var \Spryker\Shared\Shipment\ShipmentConfig
+     */
+    protected $shipmentConfig;
+
+    /**
      * @param \Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface $shipmentRepository
      * @param \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToSalesFacadeInterface $salesFacade
+     * @param \Spryker\Shared\Shipment\ShipmentConfig $shipmentConfig
      */
     public function __construct(
         ShipmentRepositoryInterface $shipmentRepository,
-        ShipmentToSalesFacadeInterface $salesFacade
+        ShipmentToSalesFacadeInterface $salesFacade,
+        ShipmentConfig $shipmentConfig
     ) {
         $this->shipmentRepository = $shipmentRepository;
         $this->salesFacade = $salesFacade;
+        $this->shipmentConfig = $shipmentConfig;
     }
 
     /**
@@ -170,8 +178,9 @@ class ShipmentOrderHydrate implements ShipmentOrderHydrateInterface
      */
     protected function setShipmentToOrderExpenses(OrderTransfer $orderTransfer): OrderTransfer
     {
+        $shipmentExpenseType = $this->shipmentConfig->getShipmentExpenseType();
         foreach ($orderTransfer->getExpenses() as $expenseTransfer) {
-            if ($expenseTransfer->getType() !== ShipmentConstants::SHIPMENT_EXPENSE_TYPE) {
+            if ($expenseTransfer->getType() !== $shipmentExpenseType) {
                 continue;
             }
 
