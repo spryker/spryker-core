@@ -252,7 +252,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->createExpenseSanitizer(),
             $this->getRepository(),
-            $this->getShipmentService()
+            $this->getConfig()
         );
     }
 
@@ -480,7 +480,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     public function createShipmentExpenseCreator(): ShipmentExpenseCreatorInterface
     {
         return new ShipmentExpenseCreator(
-            $this->getShipmentService(),
+            $this->getConfig(),
             $this->createShipmentMapper(),
             $this->createExpenseSanitizer()
         );
@@ -520,11 +520,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
      */
     public function createShipmentGroupCreator(): ShipmentGroupCreatorInterface
     {
-        return new ShipmentGroupCreator(
-            $this->getRepository(),
-            $this->getShipmentService(),
-            $this->getSalesFacade()
-        );
+        return new ShipmentGroupCreator($this->getRepository(), $this->getShipmentService(), $this->getSalesFacade());
     }
 
     /**

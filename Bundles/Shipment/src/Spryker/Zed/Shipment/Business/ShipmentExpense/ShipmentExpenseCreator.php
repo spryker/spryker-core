@@ -10,10 +10,10 @@ namespace Spryker\Zed\Shipment\Business\ShipmentExpense;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
-use Spryker\Service\Shipment\ShipmentServiceInterface;
 use Spryker\Shared\Shipment\ShipmentConstants;
 use Spryker\Zed\Shipment\Business\Mapper\ShipmentMapperInterface;
 use Spryker\Zed\Shipment\Business\Sanitizer\ExpenseSanitizerInterface;
+use Spryker\Zed\Shipment\ShipmentConfig;
 
 class ShipmentExpenseCreator implements ShipmentExpenseCreatorInterface
 {
@@ -23,27 +23,27 @@ class ShipmentExpenseCreator implements ShipmentExpenseCreatorInterface
     protected $expenseSanitizer;
 
     /**
-     * @var \Spryker\Service\Shipment\ShipmentServiceInterface
-     */
-    protected $shipmentService;
-
-    /**
      * @var \Spryker\Zed\Shipment\Business\Mapper\ShipmentMapperInterface
      */
     protected $shipmentMapper;
 
     /**
-     * @param \Spryker\Service\Shipment\ShipmentServiceInterface $shipmentService
+     * @var \Spryker\Zed\Shipment\ShipmentConfig
+     */
+    protected $shipmentConfig;
+
+    /**
+     * @param \Spryker\Zed\Shipment\ShipmentConfig $shipmentConfig
      * @param \Spryker\Zed\Shipment\Business\Mapper\ShipmentMapperInterface $shipmentMapper
      * @param \Spryker\Zed\Shipment\Business\Sanitizer\ExpenseSanitizerInterface $expenseSanitizer
      */
     public function __construct(
-        ShipmentServiceInterface $shipmentService,
+        ShipmentConfig $shipmentConfig,
         ShipmentMapperInterface $shipmentMapper,
         ExpenseSanitizerInterface $expenseSanitizer
     ) {
+        $this->shipmentConfig = $shipmentConfig;
         $this->expenseSanitizer = $expenseSanitizer;
-        $this->shipmentService = $shipmentService;
         $this->shipmentMapper = $shipmentMapper;
     }
 
@@ -63,7 +63,7 @@ class ShipmentExpenseCreator implements ShipmentExpenseCreatorInterface
             ->mapShipmentMethodTransferToExpenseTransfer($shipmentMethodTransfer, new ExpenseTransfer());
 
         $expenseTransfer->setFkSalesOrder($orderTransfer->getIdSalesOrder());
-        $expenseTransfer->setType($this->shipmentService->getShipmentExpenseType());
+        $expenseTransfer->setType($this->shipmentConfig->getShipmentExpenseType());
         $expenseTransfer = $this->setExpenseSetPrice($expenseTransfer, 0, $orderTransfer->getPriceMode());
         $expenseTransfer->setQuantity(1);
         $expenseTransfer->setShipment($shipmentTransfer);
