@@ -73,9 +73,13 @@ class TransferFacadeTest extends Unit
      */
     public function testCanGenerateDataTransfers(): void
     {
+        // Arrange
         $transferDestinationDirectory = $this->tester->getTransferDestinationDir();
 
+        // Act
         $this->generateDataTransfers();
+
+        // Assert
         $this->tester->assertVirtualDirectoryNotEmpty($transferDestinationDirectory);
         $this->tester->isDataTransfersExist($transferDestinationDirectory);
     }
@@ -85,9 +89,13 @@ class TransferFacadeTest extends Unit
      */
     public function testCanGenerateEntityTransfers(): void
     {
+        // Arrange
         $transferDestinationDirectory = $this->tester->getTransferDestinationDir();
 
+        // Act
         $this->generateEntityTransfers();
+
+        // Assert
         $this->tester->assertVirtualDirectoryNotEmpty($transferDestinationDirectory);
         $this->tester->isEntityTransfersExist($transferDestinationDirectory);
     }
@@ -97,10 +105,14 @@ class TransferFacadeTest extends Unit
      */
     public function testCanDeleteDataTransfers(): void
     {
+        // Arrange
         $transferDestinationDirectory = $this->tester->getTransferDestinationDir();
 
+        // Act
         $this->generateTransfers();
         $this->tester->getFacade()->deleteGeneratedDataTransferObjects();
+
+        // Assert
         $this->assertTrue(
             $this->tester->isEntityTransfersExist($transferDestinationDirectory)
         );
@@ -114,8 +126,13 @@ class TransferFacadeTest extends Unit
      */
     public function testCanDeleteEntityTransfers(): void
     {
+        // Arrange
         $this->generateTransfers();
+
+        // Act
         $this->tester->getFacade()->deleteGeneratedEntityTransferObjects();
+
+        // Assert
         $this->assertTrue($this->tester->isDataTransfersExist(
             $this->tester->getTransferDestinationDir()
         ));

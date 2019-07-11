@@ -96,7 +96,7 @@ class TransferBusinessTester extends Actor
      */
     protected function isDataTransfer(string $transferFileName): bool
     {
-        return $this->isTransferExtends($transferFileName, AbstractTransfer::class);
+        return $this->isTransferExtending($transferFileName, AbstractTransfer::class);
     }
 
     /**
@@ -106,7 +106,7 @@ class TransferBusinessTester extends Actor
      */
     protected function isEntityTransfer(string $transferFileName): bool
     {
-        return $this->isTransferExtends($transferFileName, AbstractEntityTransfer::class);
+        return $this->isTransferExtending($transferFileName, AbstractEntityTransfer::class);
     }
 
     /**
@@ -115,15 +115,15 @@ class TransferBusinessTester extends Actor
      *
      * @return bool
      */
-    protected function isTransferExtends(string $transferFileName, string $expectedBaseClassName): bool
+    protected function isTransferExtending(string $transferFileName, string $expectedBaseClassName): bool
     {
-        $transferFQCN = $this->buildTransferClassName($transferFileName);
+        $transferFullyQualifiedClassName = $this->buildTransferClassName($transferFileName);
 
-        if (!$transferFQCN) {
+        if (!$transferFullyQualifiedClassName) {
             return false;
         }
 
-        $transferReflection = new ReflectionClass($transferFQCN);
+        $transferReflection = new ReflectionClass($transferFullyQualifiedClassName);
         $parentClassName = $transferReflection->getParentClass()
             ? $transferReflection->getParentClass()->getName()
             : null;
@@ -138,7 +138,7 @@ class TransferBusinessTester extends Actor
      */
     protected function buildTransferClassName(string $transferFileName): ?string
     {
-        $className = pathinfo($transferFileName)['filename'] ?? null;
+        $className = pathinfo($transferFileName, PATHINFO_FILENAME);
 
         if (!$className || !$this->isTransferClassName($className)) {
             return null;

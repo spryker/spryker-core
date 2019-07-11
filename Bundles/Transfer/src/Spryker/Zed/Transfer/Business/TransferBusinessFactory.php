@@ -15,6 +15,7 @@ use Spryker\Zed\Transfer\Business\GeneratedFileFinder\EntityTransferFileFinder;
 use Spryker\Zed\Transfer\Business\GeneratedFileFinder\GeneratedFileFinderInterface;
 use Spryker\Zed\Transfer\Business\Model\DataBuilderGenerator;
 use Spryker\Zed\Transfer\Business\Model\GeneratedTransferDirectory;
+use Spryker\Zed\Transfer\Business\Model\GeneratedTransferDirectoryInterface;
 use Spryker\Zed\Transfer\Business\Model\Generator\ClassDefinition;
 use Spryker\Zed\Transfer\Business\Model\Generator\ClassGenerator;
 use Spryker\Zed\Transfer\Business\Model\Generator\DataBuilderClassGenerator;
@@ -190,7 +191,8 @@ class TransferBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use `Spryker\Zed\Transfer\Business\TransferBusinessFactory::createRegularTransferGeneratedDirectory()` instead.
+     * @deprecated Use `Spryker\Zed\Transfer\Business\TransferBusinessFactory::createDataTransferGeneratedDirectory()` instead to manipulate regular transfers.
+     * @deprecated Use `Spryker\Zed\Transfer\Business\TransferBusinessFactory::createEntityTransferGeneratedDirectory()` instead to manipulate entity transfers.
      *
      * @return \Spryker\Zed\Transfer\Business\Model\GeneratedTransferDirectoryInterface
      */
@@ -206,7 +208,7 @@ class TransferBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Transfer\Business\Model\GeneratedTransferDirectoryInterface
      */
-    public function createDataTransferGeneratedDirectory()
+    public function createDataTransferGeneratedDirectory(): GeneratedTransferDirectoryInterface
     {
         return new GeneratedTransferDirectory(
             $this->getConfig()->getClassTargetDirectory(),
@@ -218,7 +220,7 @@ class TransferBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Transfer\Business\Model\GeneratedTransferDirectoryInterface
      */
-    public function createEntityTransferGeneratedDirectory()
+    public function createEntityTransferGeneratedDirectory(): GeneratedTransferDirectoryInterface
     {
         return new GeneratedTransferDirectory(
             $this->getConfig()->getClassTargetDirectory(),

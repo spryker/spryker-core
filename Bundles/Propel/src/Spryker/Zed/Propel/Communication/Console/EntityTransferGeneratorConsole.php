@@ -18,7 +18,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class EntityTransferGeneratorConsole extends Console
 {
     public const COMMAND_NAME = 'transfer:entity:generate';
-    public const COMMAND_DESCRIPTION = 'Generates entity transfer objects from Propel schema XML definition files';
+    public const COMMAND_DESCRIPTION = 'Generates entity transfer objects from Propel schema definition files';
 
     /**
      * @return void
@@ -38,13 +38,13 @@ class EntityTransferGeneratorConsole extends Console
      *
      * @return int|null
      */
-    public function execute(InputInterface $input, OutputInterface $output): ?int
+    protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $facade = $this->getFactory()->getTransferFacade();
+        $transferFacade = $this->getFactory()->getTransferFacade();
         $messenger = $this->getMessenger();
 
-        $facade->deleteGeneratedEntityTransferObjects();
-        $facade->generateEntityTransferObjects($messenger);
+        $transferFacade->deleteGeneratedEntityTransferObjects();
+        $transferFacade->generateEntityTransferObjects($messenger);
 
         return null;
     }

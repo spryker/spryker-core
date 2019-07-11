@@ -8,8 +8,8 @@
 namespace Spryker\Zed\Transfer\Business\GeneratedFileFinder;
 
 use ReflectionClass;
-use SplFileInfo;
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\Finder\SplFileInfo;
 
 abstract class AbstractTransferFileFinder implements GeneratedFileFinderInterface
 {
@@ -46,7 +46,7 @@ abstract class AbstractTransferFileFinder implements GeneratedFileFinderInterfac
     }
 
     /**
-     * @param \SplFileInfo $fileEntry
+     * @param \Symfony\Component\Finder\SplFileInfo $fileEntry
      *
      * @return bool
      */
@@ -56,7 +56,7 @@ abstract class AbstractTransferFileFinder implements GeneratedFileFinderInterfac
             $fileEntry->getFilenameWithoutExtension()
         );
 
-        return $this->isOfSatisfyingType($transferClassName);
+        return $this->extendsExpectedBaseClass($transferClassName);
     }
 
     /**
@@ -92,7 +92,7 @@ abstract class AbstractTransferFileFinder implements GeneratedFileFinderInterfac
      *
      * @return bool
      */
-    protected function isOfSatisfyingType(string $transferClassName): bool
+    protected function extendsExpectedBaseClass(string $transferClassName): bool
     {
         $parentClassName = $this->getTransferParentClassName($transferClassName);
 

@@ -54,7 +54,7 @@ class PropelDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addUtilTextService(Container $container)
     {
-        $container->set(static::UTIL_TEXT_SERVICE, function () use ($container) {
+        $container->set(static::UTIL_TEXT_SERVICE, function (Container $container) {
             return new PropelToUtilTextServiceBridge($container->getLocator()->utilText()->service());
         });
 
@@ -68,7 +68,7 @@ class PropelDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addLogFacade(Container $container)
     {
-        $container->set(static::FACADE_LOG, function () use ($container) {
+        $container->set(static::FACADE_LOG, function (Container $container) {
             return new PropelToLogBridge($container->getLocator()->log()->facade());
         });
 
@@ -82,7 +82,7 @@ class PropelDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addTransferFacade(Container $container): Container
     {
-        $container->set(static::FACADE_TRANSFER, function () use ($container) {
+        $container->set(static::FACADE_TRANSFER, function (Container $container) {
             return new PropelToTransferFacadeBridge($container->getLocator()->transfer()->facade());
         });
 

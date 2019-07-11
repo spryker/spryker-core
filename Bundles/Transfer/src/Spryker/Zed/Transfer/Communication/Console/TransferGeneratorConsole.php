@@ -38,13 +38,13 @@ class TransferGeneratorConsole extends Console
      *
      * @return int|null
      */
-    public function execute(InputInterface $input, OutputInterface $output): ?int
+    protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $facade = $this->getFacade();
+        $transferFacade = $this->getFacade();
         $messenger = $this->getMessenger();
 
-        $facade->deleteGeneratedDataTransferObjects();
-        $facade->generateTransferObjects($messenger);
+        $transferFacade->deleteGeneratedDataTransferObjects();
+        $transferFacade->generateTransferObjects($messenger);
 
         return null;
     }
