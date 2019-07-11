@@ -32,6 +32,8 @@ use Spryker\Zed\Shipment\Business\Shipment\ShipmentReader;
 use Spryker\Zed\Shipment\Business\Shipment\ShipmentReaderInterface;
 use Spryker\Zed\Shipment\Business\Shipment\ShipmentSaver;
 use Spryker\Zed\Shipment\Business\Shipment\ShipmentSaverInterface;
+use Spryker\Zed\Shipment\Business\ShipmentExpense\ShipmentExpenseCreator;
+use Spryker\Zed\Shipment\Business\ShipmentExpense\ShipmentExpenseCreatorInterface;
 use Spryker\Zed\Shipment\Business\ShipmentExpense\ShipmentExpenseFilter;
 use Spryker\Zed\Shipment\Business\ShipmentExpense\ShipmentExpenseFilterInterface;
 use Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentFetcher;
@@ -422,9 +424,20 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
         return new ShipmentSaver(
             $this->createCheckoutMultiShipmentOrderSaver(),
             $this->createShipmentMethodExpander(),
-            $this->createExpenseSanitizer(),
             $this->getShipmentService(),
-            $this->createShipmentMapper()
+            $this->createShipmentExpenseCreator()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Shipment\Business\ShipmentExpense\ShipmentExpenseCreatorInterface
+     */
+    public function createShipmentExpenseCreator(): ShipmentExpenseCreatorInterface
+    {
+        return new ShipmentExpenseCreator(
+            $this->getShipmentService(),
+            $this->createShipmentMapper(),
+            $this->createExpenseSanitizer()
         );
     }
 
