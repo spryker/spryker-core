@@ -10,7 +10,6 @@ namespace Spryker\Service\Shipment;
 use Spryker\Service\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Service\Kernel\Container;
 use Spryker\Service\Shipment\Dependency\Service\ShipmentToCustomerServiceBridge;
-use Spryker\Service\Shipment\Dependency\Service\ShipmentToCustomerServiceInterface;
 
 /**
  * @method \Spryker\Service\Shipment\ShipmentConfig getConfig()
@@ -38,9 +37,9 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCustomerService(Container $container): Container
     {
-        $container[static::SERVICE_CUSTOMER] = function (Container $container): ShipmentToCustomerServiceInterface {
+        $container->set(static::SERVICE_CUSTOMER, function (Container $container) {
             return new ShipmentToCustomerServiceBridge($container->getLocator()->customer()->service());
-        };
+        });
 
         return $container;
     }

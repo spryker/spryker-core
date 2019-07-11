@@ -342,11 +342,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
      */
     public function createMultipleShipmentOrderHydrate(): ShipmentOrderHydrateInterface
     {
-        return new MultipleShipmentOrderHydrate(
-            $this->getRepository(),
-            $this->getSalesFacade(),
-            $this->getShipmentService()
-        );
+        return new MultipleShipmentOrderHydrate($this->getRepository(), $this->getSalesFacade(), $this->getConfig());
     }
 
     /**
