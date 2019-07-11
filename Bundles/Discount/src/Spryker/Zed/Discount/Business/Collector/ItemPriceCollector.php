@@ -44,7 +44,7 @@ class ItemPriceCollector extends BaseCollector implements CollectorInterface
      */
     public function collect(QuoteTransfer $quoteTransfer, ClauseTransfer $clauseTransfer)
     {
-        $this->currencyConverter->convertDecimalToCent($clauseTransfer);
+        $clauseTransfer = $this->currencyConverter->convertDecimalToCent($clauseTransfer);
 
         $discountableItems = [];
         foreach ($quoteTransfer->getItems() as $itemTransfer) {

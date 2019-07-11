@@ -31,16 +31,20 @@ class MoneyValueConverter implements MoneyValueConverterInterface
     /**
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ClauseTransfer
      */
-    public function convertDecimalToCent(ClauseTransfer $clauseTransfer)
+    public function convertDecimalToCent(ClauseTransfer $clauseTransfer): ClauseTransfer
     {
-        if ($clauseTransfer->getOperator() === IsNotIn::EXPRESSION ||
-            $clauseTransfer->getOperator() === IsIn::EXPRESSION) {
-            $this->convertListPrice($clauseTransfer);
+        $cloneClauseTransfer = clone $clauseTransfer;
+
+        if ($cloneClauseTransfer->getOperator() === IsNotIn::EXPRESSION ||
+            $cloneClauseTransfer->getOperator() === IsIn::EXPRESSION) {
+            $this->convertListPrice($cloneClauseTransfer);
         } else {
-            $this->convertSinglePrice($clauseTransfer);
+            $this->convertSinglePrice($cloneClauseTransfer);
         }
+
+        return $cloneClauseTransfer;
     }
 
     /**

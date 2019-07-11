@@ -49,12 +49,8 @@ class ItemPriceDecisionRule implements DecisionRuleInterface
         ItemTransfer $currentItemTransfer,
         ClauseTransfer $clauseTransfer
     ) {
+        $clauseTransfer = $this->moneyValueConverter->convertDecimalToCent($clauseTransfer);
 
-        $initialClauseTransferValue = $clauseTransfer->getValue();
-        $this->moneyValueConverter->convertDecimalToCent($clauseTransfer);
-        $isSatisfiedBy = $this->comparators->compare($clauseTransfer, $currentItemTransfer->getUnitPrice());
-        $clauseTransfer->setValue($initialClauseTransferValue);
-
-        return $isSatisfiedBy;
+        return $this->comparators->compare($clauseTransfer, $currentItemTransfer->getUnitPrice());
     }
 }
