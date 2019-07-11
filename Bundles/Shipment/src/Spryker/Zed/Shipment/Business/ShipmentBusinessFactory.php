@@ -237,7 +237,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->createExpenseSanitizer(),
             $this->getRepository(),
-            $this->getShipmentService()
+            $this->getConfig()
         );
     }
 
