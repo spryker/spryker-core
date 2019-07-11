@@ -121,7 +121,7 @@ class DropPostgreSqlDatabase implements DropDatabaseInterface
      */
     protected function getProcess($command)
     {
-        $process = new Process($command);
+        $process = new Process(explode(' ', $command));
 
         return $process;
     }

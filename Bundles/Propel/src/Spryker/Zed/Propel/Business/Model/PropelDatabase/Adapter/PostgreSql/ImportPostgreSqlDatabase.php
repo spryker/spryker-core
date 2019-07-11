@@ -83,7 +83,7 @@ class ImportPostgreSqlDatabase implements ImportDatabaseInterface
     {
         $this->exportPostgresPassword();
 
-        $process = new Process($command);
+        $process = new Process(explode(' ', $command));
         $process->run();
 
         if (!$process->isSuccessful()) {

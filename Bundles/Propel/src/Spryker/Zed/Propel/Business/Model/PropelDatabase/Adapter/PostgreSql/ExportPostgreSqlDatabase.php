@@ -77,7 +77,7 @@ class ExportPostgreSqlDatabase implements ExportDatabaseInterface
      */
     protected function runProcess($command)
     {
-        $process = new Process($command, null, $this->getEnvironmentVariables());
+        $process = new Process(explode(' ', $command), null, $this->getEnvironmentVariables());
         $process->inheritEnvironmentVariables(true);
         $process->run();
 

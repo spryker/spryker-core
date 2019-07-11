@@ -111,7 +111,7 @@ class CreatePostgreSqlDatabase implements CreateDatabaseInterface
      */
     protected function runProcess($command)
     {
-        $process = new Process($command);
+        $process = new Process(explode(' ', $command));
         $process->run(null, $this->getEnvironmentVariables());
 
         if (!$process->isSuccessful()) {
