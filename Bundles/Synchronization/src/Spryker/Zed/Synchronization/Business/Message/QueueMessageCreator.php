@@ -57,7 +57,7 @@ class QueueMessageCreator implements QueueMessageCreatorInterface
 
         if (!$queuePoolName) {
             throw new SynchronizationQueuePoolNotFoundException(
-                sprintf('You must specify either store column or SynchronizationQueuePoolName for %s resource.', $plugin->getResourceName())
+                sprintf('You must specify either store column or `SynchronizationQueuePoolName` for %s resource.', $plugin->getResourceName())
             );
         }
         $queueSendTransfer->setQueuePoolName($queuePoolName);
