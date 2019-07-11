@@ -15,7 +15,6 @@
 
         <property name="originUnitGrossPrice" type="int" />
         <property name="originUnitNetPrice" type="int" />
-        <property name="quantity" type="float" />
     </transfer>
 
     <transfer name="Quote">

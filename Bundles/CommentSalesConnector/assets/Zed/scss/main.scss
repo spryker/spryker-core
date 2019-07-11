@@ -1,0 +1,31 @@
+.comment-wrapper {
+  max-height: 300px;
+  overflow-y: scroll;
+}
+
+.comment-box {
+  padding: 16px;
+  margin-bottom: 16px;
+  background-color: #f3f3f4;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.comment-title {
+  font-weight: 600;
+}
+
+.comment-tag-list {
+  margin: 0;
+  padding: 0;
+}
+
+.tag {
+  display: inline-block;
+  margin: 0 8px 8px 0;
+  padding: 2px 8px;
+  background-color: #d4f0e8;
+  color: #4fc2a0;
+}

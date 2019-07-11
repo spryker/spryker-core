@@ -41,11 +41,6 @@ use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\SkuDecisionRulePlugin
 class SpecificationBuilderTest extends Unit
 {
     /**
-     * @var \SprykerTest\Zed\Discount\DiscountBusinessTester
-     */
-    protected $tester;
-
-    /**
      * @return void
      */
     public function testSpecificationBuildSingleClause()
@@ -184,8 +179,7 @@ class SpecificationBuilderTest extends Unit
      */
     protected function createComparatorOperators()
     {
-        $operators = (new OperatorProvider())
-            ->createComparators();
+        $operators = (new OperatorProvider())->createComparators();
         $comparatorOperators = new ComparatorOperators($operators);
 
         return $comparatorOperators;

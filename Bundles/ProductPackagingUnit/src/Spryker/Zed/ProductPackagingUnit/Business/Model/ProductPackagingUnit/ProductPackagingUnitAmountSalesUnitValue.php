@@ -47,10 +47,10 @@ class ProductPackagingUnitAmountSalesUnitValue implements ProductPackagingUnitAm
             ->requireConversion()
             ->requirePrecision();
 
-        $amountPerQuantity = $itemTransfer->getAmount() / $itemTransfer->getQuantity();
+        $amountPreQuantity = $itemTransfer->getAmount() / $itemTransfer->getQuantity();
 
         return $this->calculateNormalizedValue(
-            (int)round($amountPerQuantity),
+            (int)$amountPreQuantity,
             $itemTransfer->getAmountSalesUnit()->getConversion(),
             $itemTransfer->getAmountSalesUnit()->getPrecision()
         );

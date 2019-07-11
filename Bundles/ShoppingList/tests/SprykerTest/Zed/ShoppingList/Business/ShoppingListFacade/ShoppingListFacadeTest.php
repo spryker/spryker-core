@@ -160,31 +160,6 @@ class ShoppingListFacadeTest extends Unit
     }
 
     /**
-     * @dataProvider shoppingListItemQuantityDataProvider
-     *
-     * @param int|float $quantity
-     *
-     * @return void
-     */
-    public function testOwnerCanAddItemToShoppingList($quantity): void
-    {
-        // Arrange
-        $shoppingListTransfer = $this->tester->createShoppingList($this->ownerCompanyUserTransfer);
-        $shoppingListItemTransfer = $this->tester->buildShoppingListItem([
-            ShoppingListItemTransfer::ID_COMPANY_USER => $this->ownerCompanyUserTransfer->getIdCompanyUser(),
-            ShoppingListItemTransfer::FK_SHOPPING_LIST => $shoppingListTransfer->getIdShoppingList(),
-            ShoppingListItemTransfer::QUANTITY => $quantity,
-            ShoppingListItemTransfer::SKU => $this->product->getSku(),
-        ]);
-
-        // Act
-        $resultShoppingListItemTransfer = $this->tester->getFacade()->addItem($shoppingListItemTransfer);
-
-        // Assert
-        $this->assertNotNull($resultShoppingListItemTransfer->getIdShoppingListItem(), 'Owner should be able to add item to shopping list.');
-    }
-
-    /**
      * @return void
      */
     public function testCustomersShoppingListNameShouldBeUnique()
@@ -369,20 +344,16 @@ class ShoppingListFacadeTest extends Unit
     }
 
     /**
-     * @dataProvider shoppingListItemWithNonPositiveQuantityToShoppingListDataProvider
-     *
-     * @param int|float $quantity
-     *
      * @return void
      */
-    public function testOwnerCanNotAddItemWithNonPositiveQuantityToShoppingList($quantity): void
+    public function testOwnerCanAddItemToShoppingList()
     {
         // Arrange
         $shoppingListTransfer = $this->tester->createShoppingList($this->ownerCompanyUserTransfer);
         $shoppingListItemTransfer = $this->tester->buildShoppingListItem([
             ShoppingListItemTransfer::ID_COMPANY_USER => $this->ownerCompanyUserTransfer->getIdCompanyUser(),
             ShoppingListItemTransfer::FK_SHOPPING_LIST => $shoppingListTransfer->getIdShoppingList(),
-            ShoppingListItemTransfer::QUANTITY => $quantity,
+            ShoppingListItemTransfer::QUANTITY => 1,
             ShoppingListItemTransfer::SKU => $this->product->getSku(),
         ]);
 
@@ -390,36 +361,45 @@ class ShoppingListFacadeTest extends Unit
         $resultShoppingListItemTransfer = $this->tester->getFacade()->addItem($shoppingListItemTransfer);
 
         // Assert
-        $this->assertNull($resultShoppingListItemTransfer->getIdShoppingListItem(), "Owner should not be able to add item to shopping list.");
+        $this->assertNotNull($resultShoppingListItemTransfer->getIdShoppingListItem(), 'Owner should be able to add item to shopping list.');
     }
 
     /**
-     * @return array
-     */
-    public function shoppingListItemWithNonPositiveQuantityToShoppingListDataProvider(): array
-    {
-        return [
-            'zero stock' => [0],
-            'negative int stock' => [-1],
-            'negative float stock' => [-1.5],
-        ];
-    }
-
-    /**
-     * @dataProvider shoppingListItemQuantityDataProvider
-     *
-     * @param int|float $quantity
-     *
      * @return void
      */
-    public function testCustomerCanNotAddItemToSharedShoppingList($quantity): void
+    public function testOwnerCanNotAddItemWithNonPositiveQuantityToShoppingList()
+    {
+        $quantities = [0, -1];
+
+        foreach ($quantities as $quantity) {
+            // Arrange
+            $shoppingListTransfer = $this->tester->createShoppingList($this->ownerCompanyUserTransfer);
+            $shoppingListItemTransfer = $this->tester->buildShoppingListItem([
+                ShoppingListItemTransfer::ID_COMPANY_USER => $this->ownerCompanyUserTransfer->getIdCompanyUser(),
+                ShoppingListItemTransfer::FK_SHOPPING_LIST => $shoppingListTransfer->getIdShoppingList(),
+                ShoppingListItemTransfer::QUANTITY => $quantity,
+                ShoppingListItemTransfer::SKU => $this->product->getSku(),
+            ]);
+
+            // Act
+            $resultShoppingListItemTransfer = $this->tester->getFacade()->addItem($shoppingListItemTransfer);
+
+            // Assert
+            $this->assertNull($resultShoppingListItemTransfer->getIdShoppingListItem(), "Owner should not be able to add item with quantity '$quantity'' to shopping list.");
+        }
+    }
+
+    /**
+     * @return void
+     */
+    public function testCustomerCanNotAddItemToSharedShoppingList()
     {
         // Arrange
         $shoppingListTransfer = $this->tester->createShoppingList($this->ownerCompanyUserTransfer);
         $shoppingListItemTransfer = $this->tester->buildShoppingListItem([
             ShoppingListItemTransfer::ID_COMPANY_USER => $this->otherCompanyUserTransfer->getIdCompanyUser(),
             ShoppingListItemTransfer::FK_SHOPPING_LIST => $shoppingListTransfer->getIdShoppingList(),
-            ShoppingListItemTransfer::QUANTITY => $quantity,
+            ShoppingListItemTransfer::QUANTITY => 1,
             ShoppingListItemTransfer::SKU => $this->product->getSku(),
         ]);
 
@@ -431,20 +411,16 @@ class ShoppingListFacadeTest extends Unit
     }
 
     /**
-     * @dataProvider shoppingListItemQuantityDataProvider
-     *
-     * @param int|float $quantity
-     *
      * @return void
      */
-    public function testOwnerCanRemoveItemFromShoppingList($quantity): void
+    public function testOwnerCanRemoveItemFromShoppingList()
     {
         // Arrange
         $shoppingListTransfer = $this->tester->createShoppingList($this->ownerCompanyUserTransfer);
         $shoppingListItemTransfer = $this->tester->buildShoppingListItem([
             ShoppingListItemTransfer::ID_COMPANY_USER => $this->ownerCompanyUserTransfer->getIdCompanyUser(),
             ShoppingListItemTransfer::FK_SHOPPING_LIST => $shoppingListTransfer->getIdShoppingList(),
-            ShoppingListItemTransfer::QUANTITY => $quantity,
+            ShoppingListItemTransfer::QUANTITY => 1,
             ShoppingListItemTransfer::SKU => $this->product->getSku(),
         ]);
         $this->tester->getFacade()->addItem($shoppingListItemTransfer);
@@ -481,20 +457,16 @@ class ShoppingListFacadeTest extends Unit
     }
 
     /**
-     * @dataProvider shoppingListItemQuantityDataProvider
-     *
-     * @param int|float $quantity
-     *
      * @return void
      */
-    public function testOwnerCanGetListOfShoppingListItems($quantity): void
+    public function testOwnerCanGetListOfShoppingListItems()
     {
         // Arrange
         $fistShoppingListTransfer = $this->tester->createShoppingList($this->ownerCompanyUserTransfer);
         $shoppingListItemTransfer = $this->tester->buildShoppingListItem([
             ShoppingListItemTransfer::ID_COMPANY_USER => $this->ownerCompanyUserTransfer->getIdCompanyUser(),
             ShoppingListItemTransfer::FK_SHOPPING_LIST => $fistShoppingListTransfer->getIdShoppingList(),
-            ShoppingListItemTransfer::QUANTITY => $quantity,
+            ShoppingListItemTransfer::QUANTITY => 1,
             ShoppingListItemTransfer::SKU => $this->product->getSku(),
         ]);
         $this->tester->getFacade()->addItem($shoppingListItemTransfer);
@@ -503,7 +475,7 @@ class ShoppingListFacadeTest extends Unit
         $shoppingListItemTransfer = $this->tester->buildShoppingListItem([
             ShoppingListItemTransfer::ID_COMPANY_USER => $this->ownerCompanyUserTransfer->getIdCompanyUser(),
             ShoppingListItemTransfer::FK_SHOPPING_LIST => $secondShoppingListTransfer->getIdShoppingList(),
-            ShoppingListItemTransfer::QUANTITY => $quantity,
+            ShoppingListItemTransfer::QUANTITY => 1,
             ShoppingListItemTransfer::SKU => $this->product->getSku(),
         ]);
         $this->tester->getFacade()->addItem($shoppingListItemTransfer);
@@ -520,20 +492,16 @@ class ShoppingListFacadeTest extends Unit
     }
 
     /**
-     * @dataProvider shoppingListItemQuantityDataProvider
-     *
-     * @param int|float $quantity
-     *
      * @return void
      */
-    public function testCustomerCanGetItemListOfSharedShoppingList($quantity): void
+    public function testCustomerCanGetItemListOfSharedShoppingList()
     {
         // Arrange
         $shoppingListTransfer = $this->tester->createShoppingList($this->ownerCompanyUserTransfer);
         $shoppingListItemTransfer = $this->tester->buildShoppingListItem([
             ShoppingListItemTransfer::ID_COMPANY_USER => $this->ownerCompanyUserTransfer->getIdCompanyUser(),
             ShoppingListItemTransfer::FK_SHOPPING_LIST => $shoppingListTransfer->getIdShoppingList(),
-            ShoppingListItemTransfer::QUANTITY => $quantity,
+            ShoppingListItemTransfer::QUANTITY => 1,
             ShoppingListItemTransfer::SKU => $this->product->getSku(),
         ]);
         $this->tester->getFacade()->addItem($shoppingListItemTransfer);
@@ -559,20 +527,16 @@ class ShoppingListFacadeTest extends Unit
     }
 
     /**
-     * @dataProvider shoppingListItemQuantityDataProvider
-     *
-     * @param int|float $quantity
-     *
      * @return void
      */
-    public function testOnlyConcreteProductCanBeAddedToShoppingList($quantity): void
+    public function testOnlyConcreteProductCanBeAddedToShoppingList()
     {
         // Arrange
         $shoppingListTransfer = $this->tester->createShoppingList($this->ownerCompanyUserTransfer);
         $shoppingListItemTransfer = $this->tester->buildShoppingListItem([
             ShoppingListItemTransfer::ID_COMPANY_USER => $this->ownerCompanyUserTransfer->getIdCompanyUser(),
             ShoppingListItemTransfer::FK_SHOPPING_LIST => $shoppingListTransfer->getIdShoppingList(),
-            ShoppingListItemTransfer::QUANTITY => $quantity,
+            ShoppingListItemTransfer::QUANTITY => 1,
             ShoppingListItemTransfer::SKU => $this->product->getAbstractSku(),
         ]);
 
@@ -613,13 +577,9 @@ class ShoppingListFacadeTest extends Unit
     }
 
     /**
-     * @dataProvider shoppingListItemQuantityDataProvider
-     *
-     * @param int|float $quantity
-     *
      * @return void
      */
-    public function testSharedCompanyUserWithFullAccessPermissionCanAddItemToShoppingList($quantity): void
+    public function testSharedCompanyUserWithFullAccessPermissionCanAddItemToShoppingList()
     {
         // Arrange
         $shoppingListTransfer = $this->tester->createShoppingList($this->ownerCompanyUserTransfer);
@@ -633,7 +593,7 @@ class ShoppingListFacadeTest extends Unit
         $shoppingListItemTransfer = $this->tester->buildShoppingListItem([
             ShoppingListItemTransfer::ID_COMPANY_USER => $shoppingListCompanyUserTransfer->getIdCompanyUser(),
             ShoppingListItemTransfer::FK_SHOPPING_LIST => $shoppingListTransfer->getIdShoppingList(),
-            ShoppingListItemTransfer::QUANTITY => $quantity,
+            ShoppingListItemTransfer::QUANTITY => 1,
             ShoppingListItemTransfer::SKU => $this->product->getSku(),
         ]);
 
@@ -650,13 +610,9 @@ class ShoppingListFacadeTest extends Unit
     }
 
     /**
-     * @dataProvider shoppingListItemQuantityDataProvider
-     *
-     * @param int|float $quantity
-     *
      * @return void
      */
-    public function testSharedCompanyUserWithReadOnlyPermissionCanNotAddItemToShoppingList($quantity): void
+    public function testSharedCompanyUserWithReadOnlyPermissionCanNotAddItemToShoppingList()
     {
         // Arrange
         $shoppingListTransfer = $this->tester->createShoppingList($this->ownerCompanyUserTransfer);
@@ -670,7 +626,7 @@ class ShoppingListFacadeTest extends Unit
         $shoppingListItemTransfer = $this->tester->buildShoppingListItem([
             ShoppingListItemTransfer::ID_COMPANY_USER => $shoppingListCompanyUserTransfer->getIdCompanyUser(),
             ShoppingListItemTransfer::FK_SHOPPING_LIST => $shoppingListTransfer->getIdShoppingList(),
-            ShoppingListItemTransfer::QUANTITY => $quantity,
+            ShoppingListItemTransfer::QUANTITY => 1,
             ShoppingListItemTransfer::SKU => $this->product->getSku(),
         ]);
 
@@ -747,24 +703,16 @@ class ShoppingListFacadeTest extends Unit
     }
 
     /**
-     * @group qwe
-     *
-     * @dataProvider customerShoppingListItemQuantityCollectionDataProvider
-     *
-     * @param int|float $quantity1
-     * @param int|float $quantity2
-     * @param int|float $quantitySum
-     *
      * @return void
      */
-    public function testGetCustomerShoppingListCollection($quantity1, $quantity2, $quantitySum): void
+    public function testGetCustomerShoppingListCollection()
     {
         // Arrange
         $fistShoppingListTransfer = $this->tester->createShoppingList($this->ownerCompanyUserTransfer);
         $shoppingListItemTransfer = $this->tester->buildShoppingListItem([
             ShoppingListItemTransfer::ID_COMPANY_USER => $this->ownerCompanyUserTransfer->getIdCompanyUser(),
             ShoppingListItemTransfer::FK_SHOPPING_LIST => $fistShoppingListTransfer->getIdShoppingList(),
-            ShoppingListItemTransfer::QUANTITY => $quantity1,
+            ShoppingListItemTransfer::QUANTITY => 1,
             ShoppingListItemTransfer::SKU => $this->product->getSku(),
         ]);
         $this->tester->getFacade()->addItem($shoppingListItemTransfer);
@@ -772,7 +720,7 @@ class ShoppingListFacadeTest extends Unit
         $shoppingListItemTransfer = $this->tester->buildShoppingListItem([
             ShoppingListItemTransfer::ID_COMPANY_USER => $this->ownerCompanyUserTransfer->getIdCompanyUser(),
             ShoppingListItemTransfer::FK_SHOPPING_LIST => $fistShoppingListTransfer->getIdShoppingList(),
-            ShoppingListItemTransfer::QUANTITY => $quantity2,
+            ShoppingListItemTransfer::QUANTITY => 2,
             ShoppingListItemTransfer::SKU => $this->product->getSku(),
         ]);
         $this->tester->getFacade()->addItem($shoppingListItemTransfer);
@@ -781,18 +729,7 @@ class ShoppingListFacadeTest extends Unit
         $shoppingListItemResponseTransfer = $this->tester->getFacade()->getCustomerShoppingListCollection($this->ownerCompanyUserTransfer->getCustomer());
 
         // Assert
-        $this->assertEquals($quantitySum, $shoppingListItemResponseTransfer->getShoppingLists()[0]->getNumberOfItems(), 'Customer should get correct count of items in the shopping list.');
-    }
-
-    /**
-     * @return array
-     */
-    public function customerShoppingListItemQuantityCollectionDataProvider(): array
-    {
-        return [
-            'int stock' => [1, 2, 3],
-            'float stock' => [1.1, 2.2, 3.3],
-        ];
+        $this->assertSame(3, $shoppingListItemResponseTransfer->getShoppingLists()[0]->getNumberOfItems(), 'Customer should get correct count of items in the shopping list.');
     }
 
     /**
@@ -813,13 +750,9 @@ class ShoppingListFacadeTest extends Unit
     }
 
     /**
-     * @dataProvider shoppingListItemQuantityDataProvider
-     *
-     * @param int|float $quantity
-     *
      * @return void
      */
-    public function testAddItemsOwnerCanAddItemsToShoppingList($quantity): void
+    public function testAddItemsOwnerCanAddItemsToShoppingList(): void
     {
         // Arrange
         $customerTransfer = (clone $this->ownerCompanyUserTransfer->getCustomer())
@@ -829,13 +762,13 @@ class ShoppingListFacadeTest extends Unit
             ->setIdCompanyUser($customerTransfer->getCompanyUserTransfer()->getIdCompanyUser());
         $shoppingLisTransfer->addItem(
             $this->tester->buildShoppingListItem([
-                ShoppingListItemTransfer::QUANTITY => $quantity,
+                ShoppingListItemTransfer::QUANTITY => 1,
                 ShoppingListItemTransfer::SKU => $this->product->getSku(),
             ])
         );
         $shoppingLisTransfer->addItem(
             $this->tester->buildShoppingListItem([
-                ShoppingListItemTransfer::QUANTITY => $quantity,
+                ShoppingListItemTransfer::QUANTITY => 1,
                 ShoppingListItemTransfer::SKU => $this->productTwo->getSku(),
             ])
         );
@@ -852,13 +785,9 @@ class ShoppingListFacadeTest extends Unit
     }
 
     /**
-     * @dataProvider shoppingListItemQuantityDataProvider
-     *
-     * @param int|float $quantity
-     *
      * @return void
      */
-    public function testAddItemsOwnerCanNotAddIncorrectProductsToShoppingList($quantity): void
+    public function testAddItemsOwnerCanNotAddIncorrectProductsToShoppingList(): void
     {
         // Arrange
         $customerTransfer = (clone $this->ownerCompanyUserTransfer->getCustomer())
@@ -868,13 +797,13 @@ class ShoppingListFacadeTest extends Unit
             ->setIdCompanyUser($customerTransfer->getCompanyUserTransfer()->getIdCompanyUser());
         $shoppingListTransfer->addItem(
             $this->tester->buildShoppingListItem([
-                ShoppingListItemTransfer::QUANTITY => $quantity,
+                ShoppingListItemTransfer::QUANTITY => 1,
                 ShoppingListItemTransfer::SKU => $this->product->getSku(),
             ])
         );
         $shoppingListTransfer->addItem(
             $this->tester->buildShoppingListItem([
-                ShoppingListItemTransfer::QUANTITY => $quantity,
+                ShoppingListItemTransfer::QUANTITY => 1,
                 ShoppingListItemTransfer::SKU => uniqid('', true),
             ])
         );
@@ -891,13 +820,9 @@ class ShoppingListFacadeTest extends Unit
     }
 
     /**
-     * @dataProvider shoppingListItemQuantityDataProvider
-     *
-     * @param int|float $quantity
-     *
      * @return void
      */
-    public function testAddItemsCustomerWithoutAccessCanNotAddItemsToShoppingList($quantity): void
+    public function testAddItemsCustomerWithoutAccessCanNotAddItemsToShoppingList(): void
     {
         // Arrange
         $shoppingListTransfer = $this->tester->createShoppingList($this->ownerCompanyUserTransfer);
@@ -908,13 +833,13 @@ class ShoppingListFacadeTest extends Unit
             ->setIdCompanyUser($customerTransfer->getCompanyUserTransfer()->getIdCompanyUser());
         $shoppingLisTransfer->addItem(
             $this->tester->buildShoppingListItem([
-                ShoppingListItemTransfer::QUANTITY => $quantity,
+                ShoppingListItemTransfer::QUANTITY => 1,
                 ShoppingListItemTransfer::SKU => $this->product->getSku(),
             ])
         );
         $shoppingLisTransfer->addItem(
             $this->tester->buildShoppingListItem([
-                ShoppingListItemTransfer::QUANTITY => $quantity,
+                ShoppingListItemTransfer::QUANTITY => 1,
                 ShoppingListItemTransfer::SKU => uniqid('', true),
             ])
         );
@@ -928,16 +853,5 @@ class ShoppingListFacadeTest extends Unit
         // Assert
         $this->assertFalse($shoppingListResponseTransfer->getIsSuccess(), 'Owner should be able to add items to shopping list.');
         $this->assertCount(0, $shoppingListItemCollectionTransfer->getItems());
-    }
-
-    /**
-     * @return array
-     */
-    public function shoppingListItemQuantityDataProvider(): array
-    {
-        return [
-            'int stock' => [1],
-            'float stock' => [1.5],
-        ];
     }
 }
