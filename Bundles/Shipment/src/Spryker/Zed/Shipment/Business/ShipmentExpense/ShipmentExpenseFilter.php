@@ -12,6 +12,9 @@ use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Shipment\ShipmentConfig;
 
+/**
+ * @deprecated Use \Spryker\Zed\Shipment\Business\ShipmentExpense\MultiShipmentExpenseFilter instead
+ */
 class ShipmentExpenseFilter implements ShipmentExpenseFilterInterface
 {
     /**

@@ -389,7 +389,8 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
     public function filterObsoleteShipmentExpenses(CalculableObjectTransfer $calculableObjectTransfer): void
     {
         $this->getFactory()
-            ->createShipmentExpenseFilter()
+            ->createShipmentExpenseFilterStrategyResolver()
+            ->resolve($calculableObjectTransfer->getItems())
             ->filterObsoleteShipmentExpenses($calculableObjectTransfer);
     }
 }

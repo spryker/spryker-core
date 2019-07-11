@@ -32,6 +32,10 @@ use Spryker\Zed\Shipment\Business\Shipment\ShipmentReader;
 use Spryker\Zed\Shipment\Business\Shipment\ShipmentReaderInterface;
 use Spryker\Zed\Shipment\Business\Shipment\ShipmentSaver;
 use Spryker\Zed\Shipment\Business\Shipment\ShipmentSaverInterface;
+use Spryker\Zed\Shipment\Business\ShipmentExpense\MultiShipmentExpenseFilter;
+use Spryker\Zed\Shipment\Business\ShipmentExpense\MultiShipmentExpenseFilterInterface;
+use Spryker\Zed\Shipment\Business\ShipmentExpense\ShipmentExpenseCollectionRemover;
+use Spryker\Zed\Shipment\Business\ShipmentExpense\ShipmentExpenseCollectionRemoverInterface;
 use Spryker\Zed\Shipment\Business\ShipmentExpense\ShipmentExpenseCreator;
 use Spryker\Zed\Shipment\Business\ShipmentExpense\ShipmentExpenseCreatorInterface;
 use Spryker\Zed\Shipment\Business\ShipmentExpense\ShipmentExpenseFilter;
@@ -58,6 +62,8 @@ use Spryker\Zed\Shipment\Business\ShipmentMethod\ShipmentMethodUpdater;
 use Spryker\Zed\Shipment\Business\ShipmentMethod\ShipmentMethodUpdaterInterface;
 use Spryker\Zed\Shipment\Business\StrategyResolver\OrderSaverStrategyResolver;
 use Spryker\Zed\Shipment\Business\StrategyResolver\OrderSaverStrategyResolverInterface;
+use Spryker\Zed\Shipment\Business\StrategyResolver\ShipmentExpenseFilterStrategyResolver;
+use Spryker\Zed\Shipment\Business\StrategyResolver\ShipmentExpenseFilterStrategyResolverInterface;
 use Spryker\Zed\Shipment\Business\StrategyResolver\TaxRateCalculatorStrategyResolver;
 use Spryker\Zed\Shipment\Business\StrategyResolver\TaxRateCalculatorStrategyResolverInterface;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToSalesFacadeInterface;
@@ -173,6 +179,25 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     public function createShipmentExpenseFilter(): ShipmentExpenseFilterInterface
     {
         return new ShipmentExpenseFilter($this->getConfig());
+    }
+
+    /**
+     * @return \Spryker\Zed\Shipment\Business\ShipmentExpense\MultiShipmentExpenseFilterInterface
+     */
+    public function createMultiShipmentExpenseFilter(): MultiShipmentExpenseFilterInterface
+    {
+        return new MultiShipmentExpenseFilter(
+            $this->getShipmentService(),
+            $this->createShipmentExpenseCollectionRemover()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Shipment\Business\ShipmentExpense\ShipmentExpenseCollectionRemoverInterface
+     */
+    public function createShipmentExpenseCollectionRemover(): ShipmentExpenseCollectionRemoverInterface
+    {
+        return new ShipmentExpenseCollectionRemover($this->getShipmentService());
     }
 
     /**
@@ -380,6 +405,26 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
         };
 
         return new OrderSaverStrategyResolver($strategyContainer);
+    }
+
+    /**
+     * @deprecated Exists for Backward Compatibility reasons only. Use $this->createMultiShipmentExpenseFilter() instead.
+     *
+     * @return \Spryker\Zed\Shipment\Business\StrategyResolver\ShipmentExpenseFilterStrategyResolverInterface
+     */
+    public function createShipmentExpenseFilterStrategyResolver(): ShipmentExpenseFilterStrategyResolverInterface
+    {
+        $strategyContainer = [];
+
+        $strategyContainer[OrderSaverStrategyResolver::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT] = function () {
+            return $this->createShipmentExpenseFilter();
+        };
+
+        $strategyContainer[OrderSaverStrategyResolver::STRATEGY_KEY_WITH_MULTI_SHIPMENT] = function () {
+            return $this->createMultiShipmentExpenseFilter();
+        };
+
+        return new ShipmentExpenseFilterStrategyResolver($strategyContainer);
     }
 
     /**
