@@ -144,7 +144,7 @@ class TransferFacadeTest extends Unit
     /**
      * @return void
      */
-    protected function generateEntityTransfers():void
+    protected function generateEntityTransfers(): void
     {
         $this->tester->getFacade()->generateEntityTransferObjects($this->getMessenger());
     }
