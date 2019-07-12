@@ -43,6 +43,11 @@ class ShipmentTaxRateCalculationTest extends Unit
     public const DEFAULT_TAX_COUNTRY = 'DE';
 
     /**
+     * @var \SprykerTest\Zed\Shipment\ShipmentBusinessTester
+     */
+    protected $tester;
+
+    /**
      * @return void
      */
     public function testSetTaxRateWhenExemptTaxRateUsedShouldSetZeroTaxRate()
@@ -216,7 +221,8 @@ class ShipmentTaxRateCalculationTest extends Unit
     {
         return new ShipmentTaxRateCalculator(
             $this->createQueryContainerMock($countryTaxRate),
-            $this->createProductOptionToTaxBridgeMock()
+            $this->createProductOptionToTaxBridgeMock(),
+            $this->tester->getShipmentService()
         );
     }
 
