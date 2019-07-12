@@ -57,6 +57,7 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
         $productAbstractData = $this->repository->getProductAbstractSkuList($productAbstractIds);
 
         foreach ($productAbstractStorageEntities as $productAbstractStorageEntity) {
+            $productAbstractStorageEntity->setIsSendingToQueue($this->isSendingToQueue);
             $sku = $productAbstractData[$productAbstractStorageEntity->getFkProductAbstract()][static::KEY_SKU];
             $oldSku = $productAbstractStorageEntity->getSku();
             if ($oldSku === $sku) {
@@ -67,7 +68,6 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
             }
 
             $productAbstractStorageEntity->setSku($sku);
-            $productAbstractStorageEntity->setIsSendingToQueue($this->isSendingToQueue);
             $this->entityManager->saveProductAbstractStorageEntity($productAbstractStorageEntity);
         }
     }

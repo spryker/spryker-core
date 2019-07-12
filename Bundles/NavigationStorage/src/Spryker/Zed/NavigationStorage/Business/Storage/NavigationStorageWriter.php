@@ -94,6 +94,7 @@ class NavigationStorageWriter implements NavigationStorageWriterInterface
         $spyNavigationMenuTranslationStorageEntities = $this->findNavigationStorageEntitiesByNavigationIds($navigationIds);
         foreach ($spyNavigationMenuTranslationStorageEntities as $spyNavigationMenuTranslationStorageLocalizedEntities) {
             foreach ($spyNavigationMenuTranslationStorageLocalizedEntities as $spyNavigationMenuTranslationStorageLocalizedEntity) {
+                $spyNavigationMenuTranslationStorageLocalizedEntity->setIsSendingToQueue($this->isSendingToQueue);
                 $spyNavigationMenuTranslationStorageLocalizedEntity->delete();
             }
         }
@@ -169,7 +170,7 @@ class NavigationStorageWriter implements NavigationStorageWriterInterface
     /**
      * @param array $navigationIds
      *
-     * @return array
+     * @return \Orm\Zed\NavigationStorage\Persistence\SpyNavigationStorage[][]
      */
     protected function findNavigationStorageEntitiesByNavigationIds(array $navigationIds)
     {

@@ -82,6 +82,7 @@ class ProductReviewSearchWriter implements ProductReviewSearchWriterInterface
     {
         $productReviewSearchEntities = $this->findProductReviewSearchEntitiesByProductReviewIds($productReviewIds);
         foreach ($productReviewSearchEntities as $productReviewSearchEntity) {
+            $productReviewSearchEntity->setIsSendingToQueue($this->isSendingToQueue);
             $productReviewSearchEntity->delete();
         }
     }
@@ -166,7 +167,7 @@ class ProductReviewSearchWriter implements ProductReviewSearchWriterInterface
     /**
      * @param array $productReviewIds
      *
-     * @return array
+     * @return \Orm\Zed\ProductReviewSearch\Persistence\SpyProductReviewSearch[]
      */
     protected function findProductReviewSearchEntitiesByProductReviewIds(array $productReviewIds)
     {

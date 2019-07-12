@@ -87,6 +87,7 @@ class PriceProductConcreteStorageWriter implements PriceProductConcreteStorageWr
     {
         $priceProductConcreteStorageEntities = $this->findPriceProductConcreteStorageEntities($productConcreteIds);
         foreach ($priceProductConcreteStorageEntities as $priceProductConcreteStorageEntity) {
+            $priceProductConcreteStorageEntity->setIsSendingToQueue($this->isSendingToQueue);
             $priceProductConcreteStorageEntity->delete();
         }
     }

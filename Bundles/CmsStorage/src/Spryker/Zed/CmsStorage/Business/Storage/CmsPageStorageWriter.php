@@ -166,7 +166,7 @@ class CmsPageStorageWriter implements CmsPageStorageWriterInterface
     /**
      * @param int[] $cmsPageIds
      *
-     * @return array
+     * @return \Orm\Zed\CmsStorage\Persistence\SpyCmsPageStorage[][][]
      */
     protected function findCmsStorageEntities(array $cmsPageIds): array
     {
@@ -246,7 +246,7 @@ class CmsPageStorageWriter implements CmsPageStorageWriterInterface
     }
 
     /**
-     * @param array $cmsPageStorageEntities
+     * @param \Orm\Zed\CmsStorage\Persistence\SpyCmsPageStorage[][][] $cmsPageStorageEntities
      *
      * @return void
      */
@@ -255,6 +255,7 @@ class CmsPageStorageWriter implements CmsPageStorageWriterInterface
         foreach ($cmsPageStorageEntities as $cmsPageStorageEntity) {
             foreach ($cmsPageStorageEntity as $cmsPageStorageLocaleEntity) {
                 foreach ($cmsPageStorageLocaleEntity as $cmsPageStorageLocaleStoreEntity) {
+                    $cmsPageStorageLocaleStoreEntity->setIsSendingToQueue($this->isSendingToQueue);
                     $cmsPageStorageLocaleStoreEntity->delete();
                 }
             }

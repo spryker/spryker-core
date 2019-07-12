@@ -85,6 +85,7 @@ class UrlStorageWriter implements UrlStorageWriterInterface
     {
         $spyUrlStorageEntities = $this->findUrlStorageEntitiesByIds($urlIds);
         foreach ($spyUrlStorageEntities as $spyUrlStorageEntity) {
+            $spyUrlStorageEntity->setIsSendingToQueue($this->isSendingToQueue);
             $spyUrlStorageEntity->delete();
         }
     }
@@ -277,7 +278,7 @@ class UrlStorageWriter implements UrlStorageWriterInterface
     /**
      * @param array $urlIds
      *
-     * @return array
+     * @return \Orm\Zed\UrlStorage\Persistence\SpyUrlStorage[]
      */
     protected function findUrlStorageEntitiesByIds(array $urlIds)
     {

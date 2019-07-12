@@ -50,6 +50,10 @@ class FileManagerStorageEntityManager extends AbstractEntityManager implements F
             return false;
         }
 
+        $fileStorageEntity = $this->getFactory()
+            ->createFileManagerStorageMapper()
+            ->mapFileStorageTransferToEntity($fileStorageTransfer, $fileStorageEntity);
+
         $fileStorageEntity->delete();
 
         return true;

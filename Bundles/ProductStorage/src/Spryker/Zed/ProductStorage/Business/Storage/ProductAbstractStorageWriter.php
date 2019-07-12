@@ -107,6 +107,7 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
     protected function deleteProductAbstractStorageEntities(array $productAbstractStorageEntities)
     {
         foreach ($productAbstractStorageEntities as $productAbstractStorageEntity) {
+            $productAbstractStorageEntity->setIsSendingToQueue($this->isSendingToQueue);
             $productAbstractStorageEntity->delete();
         }
     }

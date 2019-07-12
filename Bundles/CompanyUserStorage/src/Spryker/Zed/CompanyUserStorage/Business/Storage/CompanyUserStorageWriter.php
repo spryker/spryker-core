@@ -125,6 +125,7 @@ class CompanyUserStorageWriter implements CompanyUserStorageWriterInterface
     protected function deleteStorageEntities(array $companyUserStorageEntities): void
     {
         foreach ($companyUserStorageEntities as $companyUserStorageEntity) {
+            $companyUserStorageEntity->setIsSendingToQueue($this->isSendingToQueue);
             $companyUserStorageEntity->delete();
         }
     }

@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\CategoryImageStorage\Persistence;
 
-use Generated\Shared\Transfer\CategoryImageStorageItemTransfer;
+use Generated\Shared\Transfer\SpyCategoryImageStorageEntityTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -16,40 +16,42 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 class CategoryImageStorageEntityManager extends AbstractEntityManager implements CategoryImageStorageEntityManagerInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\CategoryImageStorageItemTransfer $categoryImageStorageItemTransfer
+     * @param \Generated\Shared\Transfer\SpyCategoryImageStorageEntityTransfer $categoryImageStorageEntityTransfer
      *
      * @return void
      */
-    public function saveCategoryImageStorage(CategoryImageStorageItemTransfer $categoryImageStorageItemTransfer)
+    public function saveCategoryImageStorage(SpyCategoryImageStorageEntityTransfer $categoryImageStorageEntityTransfer)
     {
         $categoryImageStorageEntity = $this->getFactory()
             ->createSpyCategoryImageStorageQuery()
             ->filterByIdCategoryImageStorage(
-                $categoryImageStorageItemTransfer->getIdCategoryImageStorage()
+                $categoryImageStorageEntityTransfer->getIdCategoryImageStorage()
             )
             ->findOneOrCreate();
 
-        $categoryImageStorageEntity = $this->getFactory()
-            ->createCategoryImageStorageMapper()
-            ->mapCategoryImageStorageItemTransferToCategoryImageStorageEntity(
-                $categoryImageStorageItemTransfer,
-                $categoryImageStorageEntity
-            );
+        $categoryImageStorageEntity->fromArray(
+            $categoryImageStorageEntityTransfer->toArray()
+        );
+        $categoryImageStorageEntity->setIsSendingToQueue(
+            $this->getFactory()->getConfig()->isSendingToQueue()
+        );
 
         $categoryImageStorageEntity->save();
     }
 
     /**
-     * @param int $idCategoryImageStorage
-     *
-     * @return void
+     * {@inheritdoc}
      */
-    public function deleteCategoryImageStorage(int $idCategoryImageStorage)
+    public function deleteCategoryImageStorage(string $idCategoryImageStorageEntityTransfer)
     {
         $categoryImageStorageEntity = $this->getFactory()
             ->createSpyCategoryImageStorageQuery()
-            ->filterByIdCategoryImageStorage($idCategoryImageStorage)
+            ->filterByIdCategoryImageStorage($idCategoryImageStorageEntityTransfer)
             ->findOne();
+
+        $categoryImageStorageEntity->setIsSendingToQueue(
+            $this->getFactory()->getConfig()->isSendingToQueue()
+        );
 
         $categoryImageStorageEntity->delete();
     }

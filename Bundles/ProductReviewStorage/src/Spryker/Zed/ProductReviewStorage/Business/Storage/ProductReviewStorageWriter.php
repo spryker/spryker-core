@@ -61,18 +61,20 @@ class ProductReviewStorageWriter implements ProductReviewStorageWriterInterface
     {
         $productReviewStorageEntities = $this->findProductReviewStorageEntitiesByProductAbstractIds($productAbstractIds);
         foreach ($productReviewStorageEntities as $productReviewStorageEntity) {
+            $productReviewStorageEntity->setIsSendingToQueue($this->isSendingToQueue);
             $productReviewStorageEntity->delete();
         }
     }
 
     /**
-     * @param array $productReviewStorageEntities
+     * @param \Orm\Zed\ProductReviewStorage\Persistence\SpyProductAbstractReviewStorage[] $productReviewStorageEntities
      *
      * @return void
      */
     protected function deleteStorageData(array $productReviewStorageEntities)
     {
         foreach ($productReviewStorageEntities as $productReviewStorageEntity) {
+            $productReviewStorageEntity->setIsSendingToQueue($this->isSendingToQueue);
             $productReviewStorageEntity->delete();
         }
     }
@@ -120,7 +122,7 @@ class ProductReviewStorageWriter implements ProductReviewStorageWriterInterface
     /**
      * @param array $productAbstractIds
      *
-     * @return array
+     * @return \Orm\Zed\ProductReviewStorage\Persistence\SpyProductAbstractReviewStorage[]
      */
     protected function findProductReviewStorageEntitiesByProductAbstractIds(array $productAbstractIds)
     {

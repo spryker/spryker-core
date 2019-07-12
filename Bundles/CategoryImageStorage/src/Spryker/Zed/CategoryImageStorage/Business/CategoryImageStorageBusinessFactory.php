@@ -25,8 +25,7 @@ class CategoryImageStorageBusinessFactory extends AbstractBusinessFactory
     {
         return new CategoryImageStorageWriter(
             $this->getRepository(),
-            $this->getEntityManager(),
-            $this->getConfig()->isSendingToQueue()
+            $this->getEntityManager()
         );
     }
 }

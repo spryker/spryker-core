@@ -83,7 +83,7 @@ class CategoryNodeStorage implements CategoryNodeStorageInterface
     }
 
     /**
-     * @param array $spyCategoryNodeStorageEntities
+     * @param \Orm\Zed\CategoryStorage\Persistence\SpyCategoryNodeStorage[][] $spyCategoryNodeStorageEntities
      *
      * @return void
      */
@@ -91,6 +91,7 @@ class CategoryNodeStorage implements CategoryNodeStorageInterface
     {
         foreach ($spyCategoryNodeStorageEntities as $spyCategoryNodeStorageLocaleEntities) {
             foreach ($spyCategoryNodeStorageLocaleEntities as $spyCategoryNodeStorageLocaleEntity) {
+                $spyCategoryNodeStorageLocaleEntity->setIsSendingToQueue($this->isSendingToQueue);
                 $spyCategoryNodeStorageLocaleEntity->delete();
             }
         }
@@ -149,7 +150,7 @@ class CategoryNodeStorage implements CategoryNodeStorageInterface
     /**
      * @param array $categoryNodeIds
      *
-     * @return array
+     * @return \Orm\Zed\CategoryStorage\Persistence\SpyCategoryNodeStorage[][]
      */
     protected function findCategoryNodeStorageEntitiesByCategoryNodeIds(array $categoryNodeIds)
     {

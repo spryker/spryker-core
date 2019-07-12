@@ -89,6 +89,7 @@ class GlossaryTranslationStorageWriter implements GlossaryTranslationStorageWrit
         $spyGlossaryTranslationStorageEntities = $this->findGlossaryStorageEntitiesByGlossaryKeyIds($glossaryKeyIds);
         foreach ($spyGlossaryTranslationStorageEntities as $spyGlossaryTranslationStorageLocalizedEntities) {
             foreach ($spyGlossaryTranslationStorageLocalizedEntities as $spyGlossaryTranslationStorageLocalizedEntity) {
+                $spyGlossaryTranslationStorageLocalizedEntity->setIsSendingToQueue($this->isSendingToQueue);
                 $spyGlossaryTranslationStorageLocalizedEntity->delete();
             }
         }
@@ -148,7 +149,7 @@ class GlossaryTranslationStorageWriter implements GlossaryTranslationStorageWrit
     /**
      * @param array $glossaryKeyIds
      *
-     * @return array
+     * @return \Orm\Zed\GlossaryStorage\Persistence\SpyGlossaryStorage[][]
      */
     protected function findGlossaryStorageEntitiesByGlossaryKeyIds(array $glossaryKeyIds)
     {

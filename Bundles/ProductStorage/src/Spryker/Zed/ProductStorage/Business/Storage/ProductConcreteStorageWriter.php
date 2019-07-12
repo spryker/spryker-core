@@ -100,6 +100,7 @@ class ProductConcreteStorageWriter implements ProductConcreteStorageWriterInterf
     protected function deleteProductConcreteStorageEntities(array $productConcreteStorageEntities)
     {
         foreach ($productConcreteStorageEntities as $productConcreteStorageEntity) {
+            $productConcreteStorageEntity->setIsSendingToQueue($this->isSendingToQueue);
             $productConcreteStorageEntity->delete();
         }
     }

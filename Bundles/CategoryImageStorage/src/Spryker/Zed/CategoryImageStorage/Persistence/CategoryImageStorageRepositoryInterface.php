@@ -22,14 +22,14 @@ interface CategoryImageStorageRepositoryInterface
     /**
      * @param array $categoryIds
      *
-     * @return \Generated\Shared\Transfer\CategoryImageSetTransfer[]
+     * @return \Generated\Shared\Transfer\SpyCategoryImageSetEntityTransfer[]
      */
     public function getCategoryImageSetsByFkCategoryIn(array $categoryIds): array;
 
     /**
      * @param array $categoryIds
      *
-     * @return \Generated\Shared\Transfer\CategoryImageStorageItemTransfer[]
+     * @return \Generated\Shared\Transfer\SpyCategoryImageStorageEntityTransfer[]
      */
     public function getCategoryImageStorageByFkCategoryIn(array $categoryIds): array;
 

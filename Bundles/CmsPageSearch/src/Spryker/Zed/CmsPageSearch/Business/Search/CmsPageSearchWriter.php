@@ -100,7 +100,7 @@ class CmsPageSearchWriter implements CmsPageSearchWriterInterface
      */
     public function unpublish(array $cmsPageIds): void
     {
-        $this->deleteSearchEntities($cmsPageIds);
+        $this->deleteSearchEntitiesByCmsPageIds($cmsPageIds);
     }
 
     /**
@@ -142,13 +142,26 @@ class CmsPageSearchWriter implements CmsPageSearchWriterInterface
      *
      * @return void
      */
-    protected function deleteSearchEntities(array $cmsPageIds): void
+    protected function deleteSearchEntitiesByCmsPageIds(array $cmsPageIds): void
     {
         if (empty($cmsPageIds)) {
             return;
         }
 
-        $this->queryContainer->queryCmsPageSearchEntities($cmsPageIds)->delete();
+        $cmsPageSearchEntities = $this->queryContainer->queryCmsPageSearchEntities($cmsPageIds)->find();
+        $this->deleteCmsPageSearchEntities($cmsPageSearchEntities);
+    }
+
+    /**
+     * @param array $cmsPageSearchEntities
+     *
+     * @return void
+     */
+    protected function deleteCmsPageSearchEntities(array $cmsPageSearchEntities): void
+    {
+        foreach ($cmsPageSearchEntities as $cmsPageSearchEntity) {
+            $this->deleteSearchEntity($cmsPageSearchEntity);
+        }
     }
 
     /**
@@ -158,6 +171,7 @@ class CmsPageSearchWriter implements CmsPageSearchWriterInterface
      */
     protected function deleteSearchEntity(SpyCmsPageSearch $cmsPageSearchEntity): void
     {
+        $cmsPageSearchEntity->setIsSendingToQueue($this->isSendingToQueue);
         $cmsPageSearchEntity->delete();
     }
 

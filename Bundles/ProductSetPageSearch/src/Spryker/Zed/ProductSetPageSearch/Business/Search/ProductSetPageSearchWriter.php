@@ -100,6 +100,7 @@ class ProductSetPageSearchWriter implements ProductSetPageSearchWriterInterface
         $spyProductSetPageSearchEntities = $this->findProductSetPageSearchEntitiesByProductSetIds($productSetIds);
         foreach ($spyProductSetPageSearchEntities as $spyProductSetPageSearchEntityLocales) {
             foreach ($spyProductSetPageSearchEntityLocales as $spyProductSetPageSearchEntityLocale) {
+                $spyProductSetPageSearchEntityLocale->setIsSendingToQueue($this->isSendingToQueue);
                 $spyProductSetPageSearchEntityLocale->delete();
             }
         }
@@ -199,7 +200,7 @@ class ProductSetPageSearchWriter implements ProductSetPageSearchWriterInterface
     /**
      * @param array $productSetIds
      *
-     * @return array
+     * @return \Orm\Zed\ProductSetPageSearch\Persistence\SpyProductSetPageSearch[][]
      */
     protected function findProductSetPageSearchEntitiesByProductSetIds(array $productSetIds)
     {

@@ -145,6 +145,7 @@ class CmsBlockStorageWriter implements CmsBlockStorageWriterInterface
     protected function deleteStorageEntities(array $cmsBlockStorageEntities)
     {
         foreach ($cmsBlockStorageEntities as $cmsBlockStorageEntity) {
+            $cmsBlockStorageEntity->setIsSendingToQueue($this->isSendingToQueue);
             $cmsBlockStorageEntity->delete();
         }
     }

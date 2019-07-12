@@ -18,6 +18,7 @@
         <property name="data" type="string"/>
         <property name="locale" type="string"/>
         <property name="key" type="string"/>
+        <property name="isSendingToQueue" type="bool"/>
     </transfer>
 
     <transfer name="ContentTypeContext">

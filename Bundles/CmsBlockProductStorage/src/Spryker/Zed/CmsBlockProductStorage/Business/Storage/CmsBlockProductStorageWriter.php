@@ -64,6 +64,7 @@ class CmsBlockProductStorageWriter implements CmsBlockProductStorageWriterInterf
         $spyCmsBlockProductStorageEntities = $this->findCmsBlockProductStorageEntitiesByProductIds($productAbstractIds);
 
         foreach ($spyCmsBlockProductStorageEntities as $spyCmsBlockProductStorageEntity) {
+            $spyCmsBlockProductStorageEntity->setIsSendingToQueue($this->isSendingToQueue);
             if (isset($cmsBlockProductsTransfer[$spyCmsBlockProductStorageEntity->getFkProductAbstract()])) {
                 $this->storeData($cmsBlockProductsTransfer, $spyCmsBlockProductStorageEntities);
 
@@ -151,7 +152,7 @@ class CmsBlockProductStorageWriter implements CmsBlockProductStorageWriterInterf
     /**
      * @param array $productAbstractIds
      *
-     * @return array
+     * @return \Orm\Zed\CmsBlockProductStorage\Persistence\SpyCmsBlockProductStorage[]
      */
     protected function findCmsBlockProductStorageEntitiesByProductIds(array $productAbstractIds)
     {

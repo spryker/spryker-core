@@ -68,6 +68,7 @@ class AvailabilityStorage implements AvailabilityStorageInterface
     {
         $availabilityStorageEntityCollection = $this->findAvailabilityStorageEntitiesByAvailabilityAbstractIds($availabilityIds);
         foreach ($availabilityStorageEntityCollection as $availabilityStorageEntity) {
+            $availabilityStorageEntity->setIsSendingToQueue($this->isSendingToQueue);
             $availabilityStorageEntity->delete();
         }
     }

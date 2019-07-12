@@ -71,6 +71,7 @@ class ProductCategoryFilterStorageWriter implements ProductCategoryFilterStorage
     {
         $categoryFilterStorageEntities = $this->findProductCategoryFilterStorageEntitiesByCategoryIds($categoryIds);
         foreach ($categoryFilterStorageEntities as $categoryFilterStorageEntity) {
+            $categoryFilterStorageEntity->setIsSendingToQueue($this->isSendingToQueue);
             $categoryFilterStorageEntity->delete();
         }
     }
@@ -129,7 +130,7 @@ class ProductCategoryFilterStorageWriter implements ProductCategoryFilterStorage
     /**
      * @param array $idCategories
      *
-     * @return array
+     * @return \Orm\Zed\ProductCategoryFilterStorage\Persistence\SpyProductCategoryFilterStorage[]
      */
     protected function findProductCategoryFilterStorageEntitiesByCategoryIds(array $idCategories)
     {

@@ -67,6 +67,7 @@ class ProductLabelStorageWriter implements ProductLabelStorageWriterInterface
     {
         $spyProductAbstractLabelStorageEntities = $this->findProductAbstractLabelStorageEntitiesByProductAbstractIds($productAbstractIds);
         foreach ($spyProductAbstractLabelStorageEntities as $spyProductAbstractLabelStorageEntity) {
+            $spyProductAbstractLabelStorageEntity->setIsSendingToQueue($this->isSendingToQueue);
             $spyProductAbstractLabelStorageEntity->delete();
         }
     }
@@ -145,7 +146,7 @@ class ProductLabelStorageWriter implements ProductLabelStorageWriterInterface
     /**
      * @param array $productAbstractIds
      *
-     * @return array
+     * @return \Orm\Zed\ProductLabelStorage\Persistence\SpyProductAbstractLabelStorage[]
      */
     protected function findProductAbstractLabelStorageEntitiesByProductAbstractIds(array $productAbstractIds)
     {

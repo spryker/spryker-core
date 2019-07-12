@@ -141,6 +141,7 @@ class ProductAbstractImageStorageWriter implements ProductAbstractImageStorageWr
                 continue;
             }
 
+            $productAbstractImageStorageEntities[$idProductAbstract][$localeName]->setIsSendingToQueue($this->isSendingToQueue);
             $productAbstractImageStorageEntities[$idProductAbstract][$localeName]->delete();
             unset($productAbstractImageStorageEntities[$idProductAbstract][$localeName]);
         }

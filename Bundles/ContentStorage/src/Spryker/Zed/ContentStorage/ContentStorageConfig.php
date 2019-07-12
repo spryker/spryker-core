@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ContentStorage;
 
+use Spryker\Shared\ContentStorage\ContentStorageConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ContentStorageConfig extends AbstractBundleConfig
@@ -17,5 +18,13 @@ class ContentStorageConfig extends AbstractBundleConfig
     public function getSynchronizationPoolName(): ?string
     {
         return null;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isSendingToQueue(): bool
+    {
+        return $this->get(ContentStorageConstants::STORAGE_SYNC_ENABLED, true);
     }
 }

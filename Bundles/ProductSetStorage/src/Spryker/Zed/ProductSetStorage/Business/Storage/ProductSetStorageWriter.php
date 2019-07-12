@@ -67,6 +67,7 @@ class ProductSetStorageWriter implements ProductSetStorageWriterInterface
         $spyProductSetStorageEntities = $this->findProductSetStorageEntitiesByProductSetIds($productSetIds);
         foreach ($spyProductSetStorageEntities as $spyProductSetStorageEntityLocales) {
             foreach ($spyProductSetStorageEntityLocales as $spyProductSetStorageEntityLocale) {
+                $spyProductSetStorageEntityLocale->setIsSendingToQueue($this->isSendingToQueue);
                 $spyProductSetStorageEntityLocale->delete();
             }
         }
@@ -153,7 +154,7 @@ class ProductSetStorageWriter implements ProductSetStorageWriterInterface
     /**
      * @param array $productSetIds
      *
-     * @return array
+     * @return \Orm\Zed\ProductSetStorage\Persistence\SpyProductSetStorage[][]
      */
     protected function findProductSetStorageEntitiesByProductSetIds(array $productSetIds)
     {

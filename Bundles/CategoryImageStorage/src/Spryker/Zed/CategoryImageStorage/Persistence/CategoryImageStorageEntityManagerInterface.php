@@ -7,21 +7,21 @@
 
 namespace Spryker\Zed\CategoryImageStorage\Persistence;
 
-use Generated\Shared\Transfer\CategoryImageStorageItemTransfer;
+use Generated\Shared\Transfer\SpyCategoryImageStorageEntityTransfer;
 
 interface CategoryImageStorageEntityManagerInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\CategoryImageStorageItemTransfer $categoryImageStorageItemTransfer
+     * @param \Generated\Shared\Transfer\SpyCategoryImageStorageEntityTransfer $categoryImageStorageEntityTransfer
      *
      * @return void
      */
-    public function saveCategoryImageStorage(CategoryImageStorageItemTransfer $categoryImageStorageItemTransfer);
+    public function saveCategoryImageStorage(SpyCategoryImageStorageEntityTransfer $categoryImageStorageEntityTransfer);
 
     /**
-     * @param int $idCategoryImageStorage
+     * @param string $idCategoryImageStorageEntityTransfer
      *
      * @return void
      */
-    public function deleteCategoryImageStorage(int $idCategoryImageStorage);
+    public function deleteCategoryImageStorage(string $idCategoryImageStorageEntityTransfer);
 }

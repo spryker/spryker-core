@@ -29,6 +29,9 @@ class ProductPackagingUnitStorageEntityManager extends AbstractEntityManager imp
             ->findOneOrCreate();
 
         $productAbstractPackagingStorageEntity->setData($productAbstractPackagingStorageTransfer->toArray());
+        $productAbstractPackagingStorageEntity->setIsSendingToQueue(
+            $this->getFactory()->getConfig()->isSendingToQueue()
+        );
 
         $productAbstractPackagingStorageEntity->save();
     }
@@ -42,8 +45,12 @@ class ProductPackagingUnitStorageEntityManager extends AbstractEntityManager imp
     {
         $productAbstractPackagingStorageEntity = $this->getFactory()
             ->createSpyProductAbstractPackagingStorageQuery()
-            ->filterByFkProductAbstract($productAbstractPackagingStorageEntity->getFkProductAbstract());
+            ->filterByFkProductAbstract($productAbstractPackagingStorageEntity->getFkProductAbstract())
+            ->findOne();
 
+        $productAbstractPackagingStorageEntity->setIsSendingToQueue(
+            $this->getFactory()->getConfig()->isSendingToQueue()
+        );
         $productAbstractPackagingStorageEntity->delete();
     }
 }

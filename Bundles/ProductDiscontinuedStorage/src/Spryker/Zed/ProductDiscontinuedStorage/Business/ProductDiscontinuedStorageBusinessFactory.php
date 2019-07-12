@@ -44,7 +44,8 @@ class ProductDiscontinuedStorageBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductDiscontinuedUnpublisher(
             $this->getEntityManager(),
-            $this->getRepository()
+            $this->getRepository(),
+            $this->getConfig()
         );
     }
 

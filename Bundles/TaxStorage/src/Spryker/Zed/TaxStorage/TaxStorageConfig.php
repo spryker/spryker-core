@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\TaxStorage;
 
+use Spryker\Shared\TaxStorage\TaxStorageConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class TaxStorageConfig extends AbstractBundleConfig
@@ -16,7 +17,7 @@ class TaxStorageConfig extends AbstractBundleConfig
      */
     public function isSendingToQueue(): bool
     {
-        return true;
+        return $this->get(TaxStorageConstants::STORAGE_SYNC_ENABLED, true);
     }
 
     /**

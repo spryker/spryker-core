@@ -8,7 +8,6 @@
 namespace Spryker\Client\CategoryImageStorage\Storage;
 
 use Generated\Shared\Transfer\CategoryImageSetCollectionStorageTransfer;
-use Generated\Shared\Transfer\CategoryImageStorageItemDataTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\CategoryImageStorage\Dependency\CategoryImageStorageToStorageClientInterface;
 use Spryker\Client\CategoryImageStorage\Dependency\CategoryImageStorageToSynchronizationServiceInterface;
@@ -39,8 +38,6 @@ class CategoryImageStorageReader implements CategoryImageStorageReaderInterface
     }
 
     /**
-     * @deprecated Use `Spryker\Client\CategoryImageStorage\Storage\CategoryImageStorageReader::findCategoryImageStorageItemData()` instead.
-     *
      * @param int $idCategory
      * @param string $localeName
      *
@@ -58,26 +55,6 @@ class CategoryImageStorageReader implements CategoryImageStorageReaderInterface
     }
 
     /**
-     * @param int $idCategory
-     * @param string $localeName
-     *
-     * @return \Generated\Shared\Transfer\CategoryImageStorageItemDataTransfer|null
-     */
-    public function findCategoryImageStorageItemData(int $idCategory, string $localeName): ?CategoryImageStorageItemDataTransfer
-    {
-        $key = $this->generateKey($idCategory, $localeName);
-        $categoryImageStorageData = $this->storageClient->get($key);
-
-        if (!$categoryImageStorageData) {
-            return null;
-        }
-
-        return $this->mapToCategoryImageStorageItemData($categoryImageStorageData);
-    }
-
-    /**
-     * @deprecated Use `Spryker\Client\CategoryImageStorage\Storage\CategoryImageStorageReader::mapToCategoryImageStorageItemData()` instead.
-     *
      * @param array $categoryImageStorageData
      *
      * @return \Generated\Shared\Transfer\CategoryImageSetCollectionStorageTransfer
@@ -85,17 +62,6 @@ class CategoryImageStorageReader implements CategoryImageStorageReaderInterface
     protected function mapToCategoryImageStorage(array $categoryImageStorageData): CategoryImageSetCollectionStorageTransfer
     {
         return (new CategoryImageSetCollectionStorageTransfer())
-            ->fromArray($categoryImageStorageData, true);
-    }
-
-    /**
-     * @param array $categoryImageStorageData
-     *
-     * @return \Generated\Shared\Transfer\CategoryImageStorageItemDataTransfer
-     */
-    protected function mapToCategoryImageStorageItemData(array $categoryImageStorageData): CategoryImageStorageItemDataTransfer
-    {
-        return (new CategoryImageStorageItemDataTransfer())
             ->fromArray($categoryImageStorageData, true);
     }
 

@@ -72,6 +72,7 @@ class CategoryTreeStorage implements CategoryTreeStorageInterface
     {
         $spyCategoryMenuTranslationStorageEntities = $this->findCategoryStorageEntities();
         foreach ($spyCategoryMenuTranslationStorageEntities as $spyCategoryMenuTranslationStorageEntity) {
+            $spyCategoryMenuTranslationStorageEntity->setIsSendingToQueue($this->isSendingToQueue);
             $spyCategoryMenuTranslationStorageEntity->delete();
         }
     }
@@ -121,7 +122,7 @@ class CategoryTreeStorage implements CategoryTreeStorageInterface
     }
 
     /**
-     * @return array
+     * @return \Orm\Zed\CategoryStorage\Persistence\SpyCategoryTreeStorage[]
      */
     protected function findCategoryStorageEntities()
     {

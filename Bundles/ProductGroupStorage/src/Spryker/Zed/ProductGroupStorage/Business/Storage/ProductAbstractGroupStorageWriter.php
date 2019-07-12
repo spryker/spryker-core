@@ -69,6 +69,7 @@ class ProductAbstractGroupStorageWriter implements ProductAbstractGroupStorageWr
     {
         $spyProductAbstractGroupStorageEntities = $this->findProductAbstractGroupStorageEntitiesByProductAbstractIds($productAbstractIds);
         foreach ($spyProductAbstractGroupStorageEntities as $spyProductAbstractGroupStorageEntity) {
+            $spyProductAbstractGroupStorageEntity->setIsSendingToQueue($this->isSendingToQueue);
             $spyProductAbstractGroupStorageEntity->delete();
         }
     }
@@ -277,7 +278,7 @@ class ProductAbstractGroupStorageWriter implements ProductAbstractGroupStorageWr
     /**
      * @param array $productAbstractIds
      *
-     * @return array
+     * @return \Orm\Zed\ProductGroupStorage\Persistence\SpyProductAbstractGroupStorage[]
      */
     protected function findProductAbstractGroupStorageEntitiesByProductAbstractIds(array $productAbstractIds)
     {

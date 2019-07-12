@@ -88,6 +88,7 @@ class PriceProductAbstractStorageWriter implements PriceProductAbstractStorageWr
     {
         $priceProductAbstractStorageEntities = $this->findPriceProductAbstractStorageEntities($productAbstractIds);
         foreach ($priceProductAbstractStorageEntities as $priceProductAbstractStorageEntity) {
+            $priceProductAbstractStorageEntity->setIsSendingToQueue($this->isSendingToQueue);
             $priceProductAbstractStorageEntity->delete();
         }
     }

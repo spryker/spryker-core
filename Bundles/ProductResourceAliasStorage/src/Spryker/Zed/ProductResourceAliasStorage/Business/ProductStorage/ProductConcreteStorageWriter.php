@@ -57,6 +57,7 @@ class ProductConcreteStorageWriter implements ProductConcreteStorageWriterInterf
         $productConcreteData = $this->repository->getProductConcreteSkuList($productConcreteIds);
 
         foreach ($productConcreteStorageEntities as $productConcreteStorageEntity) {
+            $productConcreteStorageEntity->setIsSendingToQueue($this->isSendingToQueue);
             $sku = $productConcreteData[$productConcreteStorageEntity->getFkProduct()][static::KEY_SKU];
 
             $oldSku = $productConcreteStorageEntity->getSku();
@@ -68,7 +69,6 @@ class ProductConcreteStorageWriter implements ProductConcreteStorageWriterInterf
             }
 
             $productConcreteStorageEntity->setSku($sku);
-            $productConcreteStorageEntity->setIsSendingToQueue($this->isSendingToQueue);
             $this->entityManager->saveProductConcreteStorageEntity($productConcreteStorageEntity);
         }
     }

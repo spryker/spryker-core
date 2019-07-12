@@ -65,6 +65,7 @@ class RedirectStorageWriter implements RedirectStorageWriterInterface
     {
         $redirectStorageEntities = $this->findRedirectStorageEntitiesByIds($redirectIds);
         foreach ($redirectStorageEntities as $redirectStorageEntity) {
+            $redirectStorageEntity->setIsSendingToQueue($this->isSendingToQueue);
             $redirectStorageEntity->delete();
         }
     }
@@ -120,7 +121,7 @@ class RedirectStorageWriter implements RedirectStorageWriterInterface
     /**
      * @param array $redirectIds
      *
-     * @return array
+     * @return \Orm\Zed\UrlStorage\Persistence\SpyUrlRedirectStorage[]
      */
     protected function findRedirectStorageEntitiesByIds(array $redirectIds)
     {

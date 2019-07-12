@@ -10,6 +10,7 @@ namespace Spryker\Zed\ContentStorage\Persistence;
 use Orm\Zed\Content\Persistence\SpyContentQuery;
 use Orm\Zed\ContentStorage\Persistence\SpyContentStorageQuery;
 use Spryker\Zed\ContentStorage\ContentStorageDependencyProvider;
+use Spryker\Zed\ContentStorage\Dependency\Service\ContentStorageToUtilEncodingInterface;
 use Spryker\Zed\ContentStorage\Persistence\Propel\Mapper\ContentStorageMapper;
 use Spryker\Zed\ContentStorage\Persistence\Propel\Mapper\ContentStorageMapperInterface;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
@@ -48,7 +49,7 @@ class ContentStoragePersistenceFactory extends AbstractPersistenceFactory
     /**
      * @return \Spryker\Zed\ContentStorage\Dependency\Service\ContentStorageToUtilEncodingInterface
      */
-    public function getUtilEncoding()
+    public function getUtilEncoding(): ContentStorageToUtilEncodingInterface
     {
         return $this->getProvidedDependency(ContentStorageDependencyProvider::SERVICE_UTIL_ENCODING);
     }

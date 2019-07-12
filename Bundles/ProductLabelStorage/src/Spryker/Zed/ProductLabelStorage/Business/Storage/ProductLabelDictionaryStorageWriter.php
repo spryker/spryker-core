@@ -76,6 +76,7 @@ class ProductLabelDictionaryStorageWriter implements ProductLabelDictionaryStora
     {
         $spyProductStorageEntities = $this->findProductLabelDictionaryStorageEntities();
         foreach ($spyProductStorageEntities as $spyProductStorageEntity) {
+            $spyProductStorageEntity->setIsSendingToQueue($this->isSendingToQueue);
             $spyProductStorageEntity->delete();
         }
     }
@@ -153,7 +154,7 @@ class ProductLabelDictionaryStorageWriter implements ProductLabelDictionaryStora
     }
 
     /**
-     * @return array
+     * @return \Orm\Zed\ProductLabelStorage\Persistence\SpyProductLabelDictionaryStorage[]
      */
     protected function findProductLabelDictionaryStorageEntities()
     {

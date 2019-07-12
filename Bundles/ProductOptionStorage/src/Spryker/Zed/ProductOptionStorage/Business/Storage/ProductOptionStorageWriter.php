@@ -110,6 +110,9 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
         $productAbstractOptionStorageEntities = $this->findProductStorageOptionEntitiesByProductAbstractIds($productAbstractIds);
         foreach ($productAbstractOptionStorageEntities as $productAbstractOptionStorageEntityArray) {
             foreach ($productAbstractOptionStorageEntityArray as $productAbstractOptionStorageEntity) {
+                $productAbstractOptionStorageEntity->setIsSendingToQueue(
+                    $this->isSendingToQueue
+                );
                 $productAbstractOptionStorageEntity->delete();
             }
         }

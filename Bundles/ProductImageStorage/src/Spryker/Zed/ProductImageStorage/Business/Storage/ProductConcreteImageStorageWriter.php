@@ -117,6 +117,7 @@ class ProductConcreteImageStorageWriter implements ProductConcreteImageStorageWr
                     continue;
                 }
 
+                $productConcreteImageStorageEntity->setIsSendingToQueue($this->isSendingToQueue);
                 $productConcreteImageStorageEntity->delete();
             }
         }

@@ -8,15 +8,17 @@
 namespace Spryker\Zed\CategoryImageStorage\Business\Storage;
 
 use ArrayObject;
-use Generated\Shared\Transfer\CategoryImageStorageItemDataTransfer;
-use Generated\Shared\Transfer\CategoryImageStorageItemTransfer;
+use Generated\Shared\Transfer\CategoryImageSetCollectionStorageTransfer;
+use Generated\Shared\Transfer\CategoryImageSetStorageTransfer;
+use Generated\Shared\Transfer\CategoryImageStorageTransfer;
+use Generated\Shared\Transfer\SpyCategoryImageEntityTransfer;
+use Generated\Shared\Transfer\SpyCategoryImageSetEntityTransfer;
+use Generated\Shared\Transfer\SpyCategoryImageStorageEntityTransfer;
 use Spryker\Zed\CategoryImageStorage\Persistence\CategoryImageStorageEntityManagerInterface;
 use Spryker\Zed\CategoryImageStorage\Persistence\CategoryImageStorageRepositoryInterface;
 
 class CategoryImageStorageWriter implements CategoryImageStorageWriterInterface
 {
-    protected const STORAGE_KEY = 'category_images';
-
     /**
      * @var \Spryker\Zed\CategoryImageStorage\Persistence\CategoryImageStorageRepositoryInterface
      */
@@ -28,23 +30,15 @@ class CategoryImageStorageWriter implements CategoryImageStorageWriterInterface
     protected $entityManager;
 
     /**
-     * @var bool
-     */
-    protected $isSendingToQueue;
-
-    /**
      * @param \Spryker\Zed\CategoryImageStorage\Persistence\CategoryImageStorageRepositoryInterface $repository
      * @param \Spryker\Zed\CategoryImageStorage\Persistence\CategoryImageStorageEntityManagerInterface $entityManager
-     * @param bool $isSendingToQueue
      */
     public function __construct(
         CategoryImageStorageRepositoryInterface $repository,
-        CategoryImageStorageEntityManagerInterface $entityManager,
-        bool $isSendingToQueue
+        CategoryImageStorageEntityManagerInterface $entityManager
     ) {
         $this->repository = $repository;
         $this->entityManager = $entityManager;
-        $this->isSendingToQueue = $isSendingToQueue;
     }
 
     /**
@@ -54,12 +48,12 @@ class CategoryImageStorageWriter implements CategoryImageStorageWriterInterface
      */
     public function publish(array $categoryIds): void
     {
-        $indexedCategoryImageSetTransfers = $this->getImageSetsIndexedByCategoryIdAndLocale(
+        $imageSets = $this->getImageSetsIndexedByCategoryIdAndLocale(
             $this->repository->getCategoryImageSetsByFkCategoryIn($categoryIds)
         );
 
-        $indexedCategoryImageStorageItemTransfers = $this->findCategoryImageStorageItemTransfersByCategoryIds($categoryIds);
-        $this->storeData($indexedCategoryImageSetTransfers, $indexedCategoryImageStorageItemTransfers);
+        $spyCategoryImageStorageEntities = $this->findCategoryImageStorageTransfersByCategoryIds($categoryIds);
+        $this->storeData($imageSets, $spyCategoryImageStorageEntities);
     }
 
     /**
@@ -69,27 +63,25 @@ class CategoryImageStorageWriter implements CategoryImageStorageWriterInterface
      */
     public function unpublish(array $categoryIds): void
     {
-        $categoryImageStorageItemTransfers = $this->repository->getCategoryImageStorageByFkCategoryIn($categoryIds);
-        foreach ($categoryImageStorageItemTransfers as $categoryImageStorageItemTransfer) {
-            $categoryImageStorageItemTransfer->requireIdCategoryImageStorage();
+        $spyCategoryImageStorageEntities = $this->repository->getCategoryImageStorageByFkCategoryIn($categoryIds);
+        foreach ($spyCategoryImageStorageEntities as $spyCategoryImageStorageEntity) {
             $this->entityManager->deleteCategoryImageStorage(
-                $categoryImageStorageItemTransfer->getIdCategoryImageStorage()
+                $spyCategoryImageStorageEntity->getIdCategoryImageStorage()
             );
         }
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CategoryImageSetTransfer[] $categoryImageSetTransfers
+     * @param \Generated\Shared\Transfer\SpyCategoryImageSetEntityTransfer[] $categoryImageSets
      *
-     * @return \Generated\Shared\Transfer\CategoryImageSetTransfer[][][]
+     * @return \Generated\Shared\Transfer\SpyCategoryImageSetEntityTransfer[][][]
      */
-    protected function getImageSetsIndexedByCategoryIdAndLocale(array $categoryImageSetTransfers): array
+    protected function getImageSetsIndexedByCategoryIdAndLocale(array $categoryImageSets): array
     {
         $indexedCategoryImageSets = [];
-
-        foreach ($categoryImageSetTransfers as $categoryImageSetTransfer) {
-            if ($categoryImageSetTransfer->getIdCategory() && $categoryImageSetTransfer->getLocale()) {
-                $indexedCategoryImageSets[$categoryImageSetTransfer->getIdCategory()][$categoryImageSetTransfer->getLocale()->getLocaleName()][] = $categoryImageSetTransfer;
+        foreach ($categoryImageSets as $categoryImageSet) {
+            if ($categoryImageSet->getFkCategory() && $categoryImageSet->getSpyLocale()) {
+                $indexedCategoryImageSets[$categoryImageSet->getFkCategory()][$categoryImageSet->getSpyLocale()->getLocaleName()][] = $categoryImageSet;
             }
         }
 
@@ -97,97 +89,157 @@ class CategoryImageStorageWriter implements CategoryImageStorageWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CategoryImageSetTransfer[][][] $indexedCategoryImageSetTransfers
-     * @param \Generated\Shared\Transfer\CategoryImageStorageItemTransfer[][] $indexedCategoryImageStorageItemTransfers
+     * @param \Generated\Shared\Transfer\SpyCategoryImageSetEntityTransfer[][][] $imagesSets
+     * @param \Generated\Shared\Transfer\SpyCategoryImageStorageEntityTransfer[][] $spyCategoryImageStorageEntities
      *
      * @return void
      */
-    protected function storeData(array $indexedCategoryImageSetTransfers, array $indexedCategoryImageStorageItemTransfers): void
+    protected function storeData(array $imagesSets, array $spyCategoryImageStorageEntities): void
     {
-        foreach ($indexedCategoryImageSetTransfers as $idCategory => $categorizedImageSetTransfers) {
-            foreach ($categorizedImageSetTransfers as $localeName => $localizedImageSetTransfers) {
-                $categoryImageStorageItemTransfer = $this->getStorageEntityTransfer(
-                    $indexedCategoryImageStorageItemTransfers,
+        foreach ($imagesSets as $idCategory => $categorizedImageSets) {
+            foreach ($categorizedImageSets as $localeName => $localizedImageSets) {
+                $categoryImageStorageEntityTransfer = $this->getStorageEntityTransfer(
+                    $spyCategoryImageStorageEntities,
                     $idCategory,
                     $localeName
                 );
-                unset($indexedCategoryImageStorageItemTransfers[$idCategory][$localeName]);
-                $this->storeDataSet($categoryImageStorageItemTransfer, $localizedImageSetTransfers);
+                unset($spyCategoryImageStorageEntities[$idCategory][$localeName]);
+                $this->storeDataSet($categoryImageStorageEntityTransfer, $localizedImageSets);
             }
         }
 
-        $this->deleteStorageEntities($indexedCategoryImageStorageItemTransfers);
+        $this->deleteStorageEntities($spyCategoryImageStorageEntities);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CategoryImageStorageItemTransfer[][] $indexedCategoryImageStorageItemTransfers
+     * @param array $spyCategoryImageStorageEntities
      * @param int $idCategory
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\CategoryImageStorageItemTransfer
+     * @return \Generated\Shared\Transfer\SpyCategoryImageStorageEntityTransfer
      */
     protected function getStorageEntityTransfer(
-        array $indexedCategoryImageStorageItemTransfers,
+        array $spyCategoryImageStorageEntities,
         int $idCategory,
         string $localeName
-    ): CategoryImageStorageItemTransfer {
-        if (isset($indexedCategoryImageStorageItemTransfers[$idCategory][$localeName])) {
-            return $indexedCategoryImageStorageItemTransfers[$idCategory][$localeName];
+    ): SpyCategoryImageStorageEntityTransfer {
+        if (isset($spyCategoryImageStorageEntities[$idCategory][$localeName])) {
+            return $spyCategoryImageStorageEntities[$idCategory][$localeName];
         }
 
-        return (new CategoryImageStorageItemTransfer())
+        return (new SpyCategoryImageStorageEntityTransfer())
             ->setFkCategory($idCategory)
             ->setLocale($localeName);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CategoryImageStorageItemTransfer $categoryImageStorageItemTransfer
-     * @param \Generated\Shared\Transfer\CategoryImageSetTransfer[] $localizedImageSetTransfers
+     * @param \Generated\Shared\Transfer\SpyCategoryImageStorageEntityTransfer $spyCategoryImageStorage
+     * @param \Generated\Shared\Transfer\SpyCategoryImageSetEntityTransfer[] $imageSets
      *
      * @return void
      */
     protected function storeDataSet(
-        CategoryImageStorageItemTransfer $categoryImageStorageItemTransfer,
-        array $localizedImageSetTransfers
+        SpyCategoryImageStorageEntityTransfer $spyCategoryImageStorage,
+        array $imageSets
     ): void {
-        $categoryImageStorageItemDataTransfer = new CategoryImageStorageItemDataTransfer();
-        $categoryImageStorageItemDataTransfer->setIdCategory($categoryImageStorageItemTransfer->getFkCategory());
-        $categoryImageStorageItemDataTransfer->setImageSets(new ArrayObject($localizedImageSetTransfers));
+        $categoryStorageTransfer = new CategoryImageSetCollectionStorageTransfer();
+        $categoryStorageTransfer->setIdCategory($spyCategoryImageStorage->getFkCategory());
+        $categoryStorageTransfer->setImageSets(new ArrayObject(
+            $this->mapSpyCategoryImageSetEntityTransferCollection($imageSets)
+        ));
 
-        $categoryImageStorageItemTransfer->setData($categoryImageStorageItemDataTransfer);
-        $categoryImageStorageItemTransfer->setKey(static::STORAGE_KEY);
-        $categoryImageStorageItemTransfer->setIsSendingToQueue($this->isSendingToQueue);
-        $this->entityManager->saveCategoryImageStorage($categoryImageStorageItemTransfer);
+        $spyCategoryImageStorage->setData(json_encode($categoryStorageTransfer->toArray()));
+        $spyCategoryImageStorage->setKey('category_images');
+        $this->entityManager->saveCategoryImageStorage($spyCategoryImageStorage);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SpyCategoryImageSetEntityTransfer[] $spyCategoryImageSetTransferCollection
+     *
+     * @return \Generated\Shared\Transfer\CategoryImageSetStorageTransfer[]
+     */
+    protected function mapSpyCategoryImageSetEntityTransferCollection(array $spyCategoryImageSetTransferCollection): array
+    {
+        $categoryImageSetStorageTransferCollection = [];
+        foreach ($spyCategoryImageSetTransferCollection as $spyImageSetTransfer) {
+            $categoryImageSetStorageTransferCollection[] = $this->mapSpyCategoryImageSetEntityTransfer($spyImageSetTransfer);
+        }
+
+        return $categoryImageSetStorageTransferCollection;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SpyCategoryImageSetEntityTransfer $spyCategoryImageSetTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryImageSetStorageTransfer
+     */
+    protected function mapSpyCategoryImageSetEntityTransfer(SpyCategoryImageSetEntityTransfer $spyCategoryImageSetTransfer): CategoryImageSetStorageTransfer
+    {
+        $categoryImageSetStorageTransfer = new CategoryImageSetStorageTransfer();
+        $categoryImageSetStorageTransfer->setName(
+            $spyCategoryImageSetTransfer->getName()
+        );
+        $categoryImageSetStorageTransfer->setImages(
+            new ArrayObject($this->mapSpyCategoryImageEntityTransferCollection($spyCategoryImageSetTransfer))
+        );
+
+        return $categoryImageSetStorageTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SpyCategoryImageSetEntityTransfer $spyCategoryImageSetTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryImageStorageTransfer[]
+     */
+    protected function mapSpyCategoryImageEntityTransferCollection(SpyCategoryImageSetEntityTransfer $spyCategoryImageSetTransfer): array
+    {
+        $categoryImages = [];
+        foreach ($spyCategoryImageSetTransfer->getSpyCategoryImageSetToCategoryImages() as $categoryImageSetToCategoryImage) {
+            $categoryImages[] = $this->mapSpyCategoryImageEntityTransfer($categoryImageSetToCategoryImage->getSpyCategoryImage());
+        }
+
+        return $categoryImages;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SpyCategoryImageEntityTransfer $spyCategoryImageTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryImageStorageTransfer
+     */
+    protected function mapSpyCategoryImageEntityTransfer(SpyCategoryImageEntityTransfer $spyCategoryImageTransfer): CategoryImageStorageTransfer
+    {
+        return (new CategoryImageStorageTransfer())->fromArray($spyCategoryImageTransfer->toArray(), true);
     }
 
     /**
      * @param array $categoryIds
      *
-     * @return \Generated\Shared\Transfer\CategoryImageStorageItemTransfer[][]
+     * @return \Generated\Shared\Transfer\SpyCategoryImageStorageEntityTransfer[][]
      */
-    protected function findCategoryImageStorageItemTransfersByCategoryIds(array $categoryIds): array
+    protected function findCategoryImageStorageTransfersByCategoryIds(array $categoryIds): array
     {
-        $categoryImageStorageItemTransfers = $this->repository->getCategoryImageStorageByFkCategoryIn($categoryIds);
-        $indexedCategoryImageStorageItemTransfers = [];
+        $categoryImageStorageTransfers = $this->repository->getCategoryImageStorageByFkCategoryIn($categoryIds);
+        $categoryStorageEntitiesByIdAndLocale = [];
 
-        foreach ($categoryImageStorageItemTransfers as $categoryImageStorageItemTransfer) {
-            $indexedCategoryImageStorageItemTransfers[$categoryImageStorageItemTransfer->getFkCategory()][$categoryImageStorageItemTransfer->getLocale()] = $categoryImageStorageItemTransfer;
+        foreach ($categoryImageStorageTransfers as $categoryImageStorageTransfer) {
+            $categoryStorageEntitiesByIdAndLocale[$categoryImageStorageTransfer->getFkCategory()][$categoryImageStorageTransfer->getLocale()] = $categoryImageStorageTransfer;
         }
 
-        return $indexedCategoryImageStorageItemTransfers;
+        return $categoryStorageEntitiesByIdAndLocale;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CategoryImageStorageItemTransfer[][] $categoryImageStorageItemTransfers
+     * @param \Generated\Shared\Transfer\SpyCategoryImageStorageEntityTransfer[][] $spyCategoryImageStorageEntities
      *
      * @return void
      */
-    protected function deleteStorageEntities(array $categoryImageStorageItemTransfers): void
+    protected function deleteStorageEntities(array $spyCategoryImageStorageEntities): void
     {
-        foreach ($categoryImageStorageItemTransfers as $localizedCategoryImageStorageItemTransfers) {
-            foreach ($localizedCategoryImageStorageItemTransfers as $localizedCategoryImageStorageItemTransfer) {
+        foreach ($spyCategoryImageStorageEntities as $localizedImageStorageEntities) {
+            /** @var \Generated\Shared\Transfer\SpyCategoryImageStorageEntityTransfer $imageStorageEntityTransfer */
+            foreach ($localizedImageStorageEntities as $imageStorageEntityTransfer) {
                 $this->entityManager->deleteCategoryImageStorage(
-                    $localizedCategoryImageStorageItemTransfer->requireIdCategoryImageStorage()
+                    $imageStorageEntityTransfer->requireIdCategoryImageStorage()
                         ->getIdCategoryImageStorage()
                 );
             }

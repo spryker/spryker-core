@@ -82,6 +82,7 @@ class ProductSearchConfigStorageWriter implements ProductSearchConfigStorageWrit
     public function unpublish()
     {
         $spyProductStorageEntity = $this->findProductSearchConfigDictionaryStorageEntity();
+        $spyProductStorageEntity->setIsSendingToQueue($this->isSendingToQueue);
         $spyProductStorageEntity->delete();
     }
 
