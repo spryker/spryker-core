@@ -143,12 +143,12 @@ interface PriceProductMerchantRelationshipStorageRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductMerchantRelationshipTransfer[]
      */
-    public function getFilteredPriceProductConcreteMerchantRelationshipEntities(FilterTransfer $filterTransfer): array;
+    public function getFilteredPriceProductConcreteMerchantRelationships(FilterTransfer $filterTransfer): array;
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductMerchantRelationshipTransfer[]
      */
-    public function getFilteredPriceProductAbstractMerchantRelationshipEntities(FilterTransfer $filterTransfer): array;
+    public function getFilteredPriceProductAbstractMerchantRelationships(FilterTransfer $filterTransfer): array;
 }

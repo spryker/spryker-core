@@ -58,7 +58,7 @@ class PriceProductConcreteMerchantRelationEventResourceBulkRepositoryPlugin exte
             ->setOrderDirection(static::ORDER_DIRECTION);
 
         return $this->getRepository()
-            ->getFilteredPriceProductConcreteMerchantRelationshipEntities($filterTransfer);
+            ->getFilteredPriceProductConcreteMerchantRelationships($filterTransfer);
     }
 
     /**

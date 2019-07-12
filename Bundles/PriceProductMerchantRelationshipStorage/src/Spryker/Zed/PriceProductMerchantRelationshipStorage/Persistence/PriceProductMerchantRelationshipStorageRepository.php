@@ -393,6 +393,10 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
     {
         $query = $this->getFactory()->createPriceProductAbstractMerchantRelationshipStorageQuery();
 
+        if ($priceProductAbstractMerchantRelationshipStorageIds) {
+            $query->filterByIdPriceProductAbstractMerchantRelationshipStorage_In($priceProductAbstractMerchantRelationshipStorageIds);
+        }
+
         return $this->buildQueryFromCriteria($query, $filterTransfer)->find();
     }
 
@@ -401,15 +405,19 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
      *
      * @return \Generated\Shared\Transfer\PriceProductMerchantRelationshipTransfer[]
      */
-    public function getFilteredPriceProductConcreteMerchantRelationshipEntities(FilterTransfer $filterTransfer): array
+    public function getFilteredPriceProductConcreteMerchantRelationships(FilterTransfer $filterTransfer): array
     {
         $priceProductMerchantRelationshipQuery = $this->queryPriceProductMerchantRelationship()
             ->filterByFkProduct(null, Criteria::ISNOTNULL);
 
+        $priceProductMerchantRelationshipQuery = $this->applyFilterToQuery($priceProductMerchantRelationshipQuery, $filterTransfer);
+
+        $priceProductMerchantRelationshipEntityTransfers = $priceProductMerchantRelationshipQuery->find();
+
         return $this->getFactory()
             ->createPriceProductMerchantRelationshipMapper()
             ->mapEntitiesToPriceProductMerchantRelationshipTransferCollection(
-                $this->buildQueryFromCriteria($priceProductMerchantRelationshipQuery, $filterTransfer)->find()
+                $priceProductMerchantRelationshipEntityTransfers->getData()
             );
     }
 
@@ -418,15 +426,42 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
      *
      * @return \Generated\Shared\Transfer\PriceProductMerchantRelationshipTransfer[]
      */
-    public function getFilteredPriceProductAbstractMerchantRelationshipEntities(FilterTransfer $filterTransfer): array
+    public function getFilteredPriceProductAbstractMerchantRelationships(FilterTransfer $filterTransfer): array
     {
         $priceProductMerchantRelationshipQuery = $this->queryPriceProductMerchantRelationship()
             ->filterByFkProductAbstract(null, Criteria::ISNOTNULL);
 
+        $priceProductMerchantRelationshipQuery = $this->applyFilterToQuery($priceProductMerchantRelationshipQuery, $filterTransfer);
+
+        $priceProductMerchantRelationshipEntityTransfers = $priceProductMerchantRelationshipQuery->find();
+
         return $this->getFactory()
             ->createPriceProductMerchantRelationshipMapper()
             ->mapEntitiesToPriceProductMerchantRelationshipTransferCollection(
-                $this->buildQueryFromCriteria($priceProductMerchantRelationshipQuery, $filterTransfer)->find()
+                $priceProductMerchantRelationshipEntityTransfers->getData()
             );
+    }
+
+    /**
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $modelCriteria
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     */
+    protected function applyFilterToQuery(ModelCriteria $modelCriteria, FilterTransfer $filterTransfer): ModelCriteria
+    {
+        if ($filterTransfer->getLimit()) {
+            $modelCriteria->setLimit($filterTransfer->getLimit());
+        }
+
+        if ($filterTransfer->getOffset()) {
+            $modelCriteria->setOffset($filterTransfer->getOffset());
+        }
+
+        if ($filterTransfer->getOrderBy()) {
+            $modelCriteria->orderBy($filterTransfer->getOrderBy(), $filterTransfer->getOrderDirection() ?? Criteria::ASC);
+        }
+
+        return $modelCriteria;
     }
 }

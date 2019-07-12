@@ -8,35 +8,35 @@
 namespace Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence\Mapper\PriceProductMerchantRelationship;
 
 use Generated\Shared\Transfer\PriceProductMerchantRelationshipTransfer;
-use Generated\Shared\Transfer\SpyPriceProductMerchantRelationshipEntityTransfer;
+use Orm\Zed\PriceProductMerchantRelationship\Persistence\SpyPriceProductMerchantRelationship;
 
 class PriceProductMerchantRelationshipMapper implements PriceProductMerchantRelationshipMapperInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\SpyPriceProductMerchantRelationshipEntityTransfer $spyPriceProductMerchantRelationshipEntityTransfer
+     * @param \Orm\Zed\PriceProductMerchantRelationship\Persistence\SpyPriceProductMerchantRelationship $spyPriceProductMerchantRelationshipEntityTransfer
      * @param \Generated\Shared\Transfer\PriceProductMerchantRelationshipTransfer $priceProductMerchantRelationshipTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductMerchantRelationshipTransfer
      */
     public function mapEntityToPriceProductMerchantRelationshipTransfer(
-        SpyPriceProductMerchantRelationshipEntityTransfer $spyPriceProductMerchantRelationshipEntityTransfer,
+        SpyPriceProductMerchantRelationship $spyPriceProductMerchantRelationshipEntityTransfer,
         PriceProductMerchantRelationshipTransfer $priceProductMerchantRelationshipTransfer
     ): PriceProductMerchantRelationshipTransfer {
         return $priceProductMerchantRelationshipTransfer->fromArray($spyPriceProductMerchantRelationshipEntityTransfer->toArray(), true);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyPriceProductMerchantRelationshipEntityTransfer[] $spyPriceProductMerchantRelationshipEntityTransfers
+     * @param \Orm\Zed\PriceProductMerchantRelationship\Persistence\SpyPriceProductMerchantRelationship[] $priceProductMerchantRelationshipEntityTransfers
      *
      * @return \Generated\Shared\Transfer\PriceProductMerchantRelationshipTransfer[]
      */
-    public function mapEntitiesToPriceProductMerchantRelationshipTransferCollection(array $spyPriceProductMerchantRelationshipEntityTransfers): array
+    public function mapEntitiesToPriceProductMerchantRelationshipTransferCollection(array $priceProductMerchantRelationshipEntityTransfers): array
     {
         $priceProductMerchantRelationshipTransferCollection = [];
 
-        foreach ($spyPriceProductMerchantRelationshipEntityTransfers as $spyPriceProductMerchantRelationshipEntityTransfer) {
+        foreach ($priceProductMerchantRelationshipEntityTransfers as $priceProductMerchantRelationshipEntityTransfer) {
             $priceProductMerchantRelationshipTransferCollection[] = $this->mapEntityToPriceProductMerchantRelationshipTransfer(
-                $spyPriceProductMerchantRelationshipEntityTransfer,
+                $priceProductMerchantRelationshipEntityTransfer,
                 new PriceProductMerchantRelationshipTransfer()
             );
         }
