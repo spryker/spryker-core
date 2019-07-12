@@ -42,7 +42,6 @@ class MerchantRelationshipEditForm extends MerchantRelationshipCreateForm
             'choices' => array_flip($options[static::OPTION_COMPANY_CHOICES]),
             'mapped' => false,
             'data' => $options[static::OPTION_SELECTED_COMPANY],
-            'choices_as_values' => true,
             'disabled' => 'disabled',
             'constraints' => [
                 new NotBlank(),
@@ -64,7 +63,6 @@ class MerchantRelationshipEditForm extends MerchantRelationshipCreateForm
             'label' => static::MERCHANT_FIELD_LABEL,
             'placeholder' => static::MERCHANT_FIELD_PLACEHOLDER,
             'choices' => array_flip($choices),
-            'choices_as_values' => true,
             'disabled' => 'disabled',
             'constraints' => [
                 new NotBlank(),

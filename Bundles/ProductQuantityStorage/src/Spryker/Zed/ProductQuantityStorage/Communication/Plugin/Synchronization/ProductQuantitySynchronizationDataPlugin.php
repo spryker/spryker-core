@@ -60,7 +60,7 @@ class ProductQuantitySynchronizationDataPlugin extends AbstractPlugin implements
         $synchronizationDataTransfers = [];
         $productQuantityTransfers = $this->getRepository()->findProductQuantityStorageEntitiesByProductIds($ids);
 
-        if (empty($ids)) {
+        if ($ids === []) {
             $productQuantityTransfers = $this->getRepository()->findAllProductQuantityStorageEntities();
         }
 
