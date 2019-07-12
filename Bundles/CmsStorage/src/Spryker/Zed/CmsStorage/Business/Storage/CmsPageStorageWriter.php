@@ -112,12 +112,13 @@ class CmsPageStorageWriter implements CmsPageStorageWriterInterface
         $storeRelations = array_merge($storesWithSharedPersistence, [$storeName]);
 
         foreach ($pairedEntities as $pair) {
-            if (!in_array($pair[static::STORE_NAME], $storeRelations, true)) {
-                continue;
-            }
-
             $cmsPageEntity = $pair[static::CMS_PAGE_ENTITY];
             $cmsPageStorageEntity = $pair[static::CMS_PAGE_STORAGE_ENTITY];
+
+            if (!in_array($pair[static::STORE_NAME], $storeRelations, true)) {
+                $this->deleteStorageEntity($cmsPageStorageEntity);
+                continue;
+            }
 
             if ($cmsPageEntity === null || !$cmsPageEntity->getIsActive()) {
                 $this->deleteStorageEntity($cmsPageStorageEntity);
