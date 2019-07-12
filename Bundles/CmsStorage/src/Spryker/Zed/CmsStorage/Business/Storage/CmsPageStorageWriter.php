@@ -295,15 +295,12 @@ class CmsPageStorageWriter implements CmsPageStorageWriterInterface
         array $cmsPageEntities,
         array $cmsPageStorageEntities
     ): array {
-        $localeNames = $this->storeFacade->getCurrentStore()->getAvailableLocaleIsoCodes();
-
         $pairs = [];
 
         foreach ($cmsPageEntities as $cmsPageEntity) {
             [$pairs, $cmsPageStorageEntities] = $this->pairCmsPageEntityWithCmsPageStorageEntitiesByLocalesAndStores(
                 $cmsPageEntity,
                 $cmsPageStorageEntities,
-                $localeNames,
                 $pairs
             );
         }
@@ -316,7 +313,6 @@ class CmsPageStorageWriter implements CmsPageStorageWriterInterface
     /**
      * @param \Orm\Zed\Cms\Persistence\SpyCmsPage $cmsPageEntity
      * @param array $cmsPageStorageEntities
-     * @param array $localeNames
      * @param array $pairs
      *
      * @return array
@@ -324,16 +320,16 @@ class CmsPageStorageWriter implements CmsPageStorageWriterInterface
     protected function pairCmsPageEntityWithCmsPageStorageEntitiesByLocalesAndStores(
         SpyCmsPage $cmsPageEntity,
         array $cmsPageStorageEntities,
-        array $localeNames,
         array $pairs
     ): array {
         $idCmsPage = $cmsPageEntity->getIdCmsPage();
         $cmsPageStores = $cmsPageEntity->getSpyCmsPageStores();
 
-        foreach ($localeNames as $localeName) {
-            foreach ($cmsPageStores as $cmsPageStore) {
-                $storeName = $cmsPageStore->getSpyStore()->getName();
+        foreach ($cmsPageStores as $cmsPageStore) {
+            $storeName = $cmsPageStore->getSpyStore()->getName();
+            $localeNames = $this->storeFacade->getStoreByName($storeName)->getAvailableLocaleIsoCodes();
 
+            foreach ($localeNames as $localeName) {
                 $cmsPageStorageEntity = isset($cmsPageStorageEntities[$idCmsPage][$localeName][$storeName]) ?
                     $cmsPageStorageEntities[$idCmsPage][$localeName][$storeName] :
                     new SpyCmsPageStorage();
