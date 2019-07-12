@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Store\Persistence;
 
+use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -25,5 +26,40 @@ class StoreRepository extends AbstractRepository implements StoreRepositoryInter
             ->createStoreQuery()
             ->filterByName($name)
             ->exists();
+    }
+
+    /**
+     * @param string[] $storeNames
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     */
+    public function getStoreTransfersByStoreNames(array $storeNames): array
+    {
+        $storeEntities = $this->getFactory()
+            ->createStoreQuery()
+            ->filterByName_In($storeNames)
+            ->find();
+
+        if ($storeEntities->count() === 0) {
+            return [];
+        }
+
+        return $this->mapStoreEntitiesToStoreTransfers($storeEntities);
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Store\Persistence\SpyStore[] $storeEntities
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     */
+    protected function mapStoreEntitiesToStoreTransfers(ObjectCollection $storeEntities): array
+    {
+        $mapper = $this->getFactory()->createStoreMapper();
+        $storeTransfers = [];
+        foreach ($storeEntities as $storeEntity) {
+            $storeTransfers[] = $mapper->mapStoreEntityToStoreTransfer($storeEntity);
+        }
+
+        return $storeTransfers;
     }
 }

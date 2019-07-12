@@ -65,4 +65,22 @@ class CmsBlockProductStorageQueryContainer extends AbstractQueryContainer implem
             ->withColumn(SpyCmsBlockTableMap::COL_NAME, static::NAME)
             ->filterByIdCmsBlockProductConnector_In($cmsBlockProductIds);
     }
+
+    /**
+     * Specification:
+     * - Returns a a query for the table `spy_cms_block_product_connector` filtered by cms block product ids.
+     *
+     * @api
+     *
+     * @param int[] $cmsBlockProductIds
+     *
+     * @return \Orm\Zed\CmsBlockProductConnector\Persistence\SpyCmsBlockProductConnectorQuery
+     */
+    public function queryCmsBlockProductsByCmsBlockProductIds(array $cmsBlockProductIds): SpyCmsBlockProductConnectorQuery
+    {
+        return $this->getFactory()
+            ->getCmsBlockProductConnectorQuery()
+            ->queryCmsBlockProductConnector()
+            ->filterByIdCmsBlockProductConnector_In($cmsBlockProductIds);
+    }
 }

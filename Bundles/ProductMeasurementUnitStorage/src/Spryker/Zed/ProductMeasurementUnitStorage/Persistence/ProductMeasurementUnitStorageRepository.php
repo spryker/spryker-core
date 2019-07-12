@@ -104,4 +104,40 @@ class ProductMeasurementUnitStorageRepository extends AbstractRepository impleme
 
         return $this->buildQueryFromCriteria($query, $filterTransfer)->find();
     }
+
+    /**
+     * @module ProductMeasurementUnit
+     *
+     * @param int[] $salesUnitsIds
+     *
+     * @return \Generated\Shared\Transfer\SpyProductMeasurementSalesUnitEntityTransfer[]
+     */
+    public function getProductMeasurementSalesUnitEntityTransfersByIds(array $salesUnitsIds): array
+    {
+        $query = $this->getFactory()->getProductMeasurementSalesUnitQuery();
+
+        if ($salesUnitsIds !== []) {
+            $query->filterByIdProductMeasurementSalesUnit_In($salesUnitsIds);
+        }
+
+        return $this->buildQueryFromCriteria($query)->find();
+    }
+
+    /**
+     * @module ProductMeasurementUnit
+     *
+     * @param int[] $productMeasurementUnitIds
+     *
+     * @return \Generated\Shared\Transfer\SpyProductMeasurementUnitEntityTransfer[]
+     */
+    public function getProductMeasurementUnitEntityTransfersByIds(array $productMeasurementUnitIds): array
+    {
+        $query = $this->getFactory()->getProductMeasurementUnitQuery();
+
+        if ($productMeasurementUnitIds !== []) {
+            $query->filterByIdProductMeasurementUnit_In($productMeasurementUnitIds);
+        }
+
+        return $this->buildQueryFromCriteria($query)->find();
+    }
 }

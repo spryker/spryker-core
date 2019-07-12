@@ -8,4 +8,20 @@
         <property name="idProductAbstracts" type="array" />
     </transfer>
 
+    <transfer name="ProductAbstract">
+        <property name="idProductAbstract" type="int" />
+        <property name="sku" type="string" />
+        <property name="name" type="string" />
+    </transfer>
+
+    <transfer name="Pagination">
+        <property name="page" type="int"/>
+        <property name="lastPage" type="int"/>
+    </transfer>
+
+    <transfer name="ProductAbstractSuggestionCollection">
+        <property name="productAbstracts" type="ProductAbstract[]"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
 </transfers>

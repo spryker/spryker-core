@@ -9,6 +9,7 @@ namespace Spryker\Zed\CustomerAccessStorage\Communication\Plugin\Synchronization
 
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
+use Orm\Zed\CustomerAccessStorage\Persistence\Map\SpyUnauthenticatedCustomerAccessStorageTableMap;
 use Spryker\Shared\CustomerAccessStorage\CustomerAccessStorageConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataBulkRepositoryPluginInterface;
@@ -97,13 +98,13 @@ class CustomerAccessSynchronizationDataBulkPlugin extends AbstractPlugin impleme
         $synchronizationDataTransfers = [];
         $filterTransfer = $this->createFilterTransfer($offset, $limit);
 
-        $customerAccessStorageEntitityTransfers = $this->getRepository()->findFilteredCustomerAccessStorageEntities($filterTransfer, $ids);
+        $customerAccessStorageEntityTransfers = $this->getRepository()->findFilteredCustomerAccessStorageEntities($filterTransfer, $ids);
 
-        foreach ($customerAccessStorageEntitityTransfers as $customerAccessStorageEntitityTransfer) {
+        foreach ($customerAccessStorageEntityTransfers as $customerAccessStorageEntityTransfer) {
             $synchronizationDataTransfer = new SynchronizationDataTransfer();
-            $data = $customerAccessStorageEntitityTransfer->getData();
+            $data = $customerAccessStorageEntityTransfer->getData();
             $synchronizationDataTransfer->setData($data);
-            $synchronizationDataTransfer->setKey($customerAccessStorageEntitityTransfer->getKey());
+            $synchronizationDataTransfer->setKey($customerAccessStorageEntityTransfer->getKey());
             $synchronizationDataTransfers[] = $synchronizationDataTransfer;
         }
 
@@ -119,6 +120,7 @@ class CustomerAccessSynchronizationDataBulkPlugin extends AbstractPlugin impleme
     protected function createFilterTransfer(int $offset, int $limit): FilterTransfer
     {
         return (new FilterTransfer())
+            ->setOrderBy(SpyUnauthenticatedCustomerAccessStorageTableMap::COL_ID_UNAUTHENTICATED_CUSTOMER_ACCESS_STORAGE)
             ->setOffset($offset)
             ->setLimit($limit);
     }

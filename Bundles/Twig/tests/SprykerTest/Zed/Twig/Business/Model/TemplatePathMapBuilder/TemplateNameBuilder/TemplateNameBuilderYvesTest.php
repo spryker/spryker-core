@@ -45,10 +45,38 @@ class TemplateNameBuilderYvesTest extends Unit
     public function pathDataProvider()
     {
         return [
-            ['src/Namespace/Yves/Bundle/Theme/theme-name/Controller/index.twig', '@Bundle/Controller/index.twig'],
-            ['vendor/spryker/spryker/Bundles/Bundle/src/Namespace/Yves/Bundle/Theme/theme-name/Controller/index.twig', '@Bundle/Controller/index.twig'],
-            ['vendor/spryker/bundle/src/Namespace/Yves/Bundle/Theme/theme-name/Controller/index.twig', '@Bundle/Controller/index.twig'],
-            ['vendor/spryker/bundle/src/Namespace/Yves/Bundle/Theme/theme-name/Controller/SubDirectory/index.twig', '@Bundle/Controller/SubDirectory/index.twig'],
+            ['src/Organization/Yves/Module/Theme/theme-name/Controller/index.twig', '@Module/Controller/index.twig'],
+            ['vendor/spryker/spryker/Modules/Module/src/Organization/Yves/Module/Theme/theme-name/Controller/index.twig', '@Module/Controller/index.twig'],
+            ['vendor/spryker/Module/src/Organization/Yves/Module/Theme/theme-name/Controller/index.twig', '@Module/Controller/index.twig'],
+            ['vendor/spryker/Module/src/Organization/Yves/Module/Theme/theme-name/Controller/SubDirectory/index.twig', '@Module/Controller/SubDirectory/index.twig'],
+        ];
+    }
+
+    /**
+     * @dataProvider namespacedPathDataProvider
+     *
+     * @param string $path
+     * @param string $expectedTemplateName
+     *
+     * @return void
+     */
+    public function testBuildNamespacedTemplateName($path, $expectedTemplateName)
+    {
+        $templateNameBuilder = new TemplateNameBuilderYves();
+
+        $this->assertSame($expectedTemplateName, $templateNameBuilder->buildNamespacedTemplateName($path));
+    }
+
+    /**
+     * @return array
+     */
+    public function namespacedPathDataProvider()
+    {
+        return [
+            ['src/Organization/Yves/Module/Theme/theme-name/Controller/index.twig', '@Organization:Module/Controller/index.twig'],
+            ['vendor/spryker/spryker/Modules/Module/src/Organization/Yves/Module/Theme/theme-name/Controller/index.twig', '@Organization:Module/Controller/index.twig'],
+            ['vendor/spryker/Module/src/Organization/Yves/Module/Theme/theme-name/Controller/index.twig', '@Organization:Module/Controller/index.twig'],
+            ['vendor/spryker/Module/src/Organization/Yves/Module/Theme/theme-name/Controller/SubDirectory/index.twig', '@Organization:Module/Controller/SubDirectory/index.twig'],
         ];
     }
 }

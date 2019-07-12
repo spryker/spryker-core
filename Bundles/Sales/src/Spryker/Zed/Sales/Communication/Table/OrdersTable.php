@@ -155,7 +155,7 @@ class OrdersTable extends AbstractTable
         $customer = $this->sanitizeService->escapeHtml($customer);
 
         if (isset($item[SpySalesOrderTableMap::COL_CUSTOMER_REFERENCE])) {
-            $customerTransfer = $this->customerFacade->findCustomerByReference(
+            $customerTransfer = $this->customerFacade->findByReference(
                 $item[SpySalesOrderTableMap::COL_CUSTOMER_REFERENCE]
             );
 

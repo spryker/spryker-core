@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SharedCart\Persistence;
 
+use Generated\Shared\Transfer\CustomerCollectionTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\PermissionTransfer;
 use Generated\Shared\Transfer\QuoteCompanyUserTransfer;
@@ -451,5 +452,33 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
         return $this->getFactory()
             ->createQuoteShareDetailMapper()
             ->mapQuoteCompanyUserToShareDetailTransfer($quoteCompanyUserEntity);
+    }
+
+    /**
+     * @module Customer
+     * @module CompanyUser
+     *
+     * @param int $idQuote
+     *
+     * @return \Generated\Shared\Transfer\CustomerCollectionTransfer
+     */
+    public function getCustomerCollectionByQuote(int $idQuote): CustomerCollectionTransfer
+    {
+        $customerEntityCollection = $this->getFactory()->createSpyCustomerQuery()
+            ->joinWithCompanyUser()
+            ->useCompanyUserQuery()
+                ->joinWithSpyQuoteCompanyUser()
+                ->useSpyQuoteCompanyUserQuery()
+                    ->filterByFkQuote($idQuote)
+                ->endUse()
+            ->endUse()
+            ->find();
+
+        return $this->getFactory()
+            ->createCustomerMapper()
+            ->mapCustomerEntityCollectionToCustomerTransferCollection(
+                $customerEntityCollection,
+                new CustomerCollectionTransfer()
+            );
     }
 }
