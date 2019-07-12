@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @deprecated Use `\SprykerShop\Yves\Router\Plugin\EventDispatcher\RouterSslRedirectEventDispatcherPlugin` instead.
+ * @deprecated Use `\Spryker\Yves\Router\Plugin\EventDispatcher\RouterSslRedirectEventDispatcherPlugin` instead.
  *
  * @method \Spryker\Yves\Application\ApplicationConfig getConfig()
  */

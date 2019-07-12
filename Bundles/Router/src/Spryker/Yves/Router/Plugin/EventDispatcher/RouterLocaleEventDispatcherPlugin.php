@@ -18,9 +18,6 @@ use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Routing\RequestContextAwareInterface;
 
-/**
- * @deprecated Use `\SprykerShop\Yves\Router\Plugin\EventDispatcher\RouterLocaleEventDispatcherPlugin` instead.
- */
 class RouterLocaleEventDispatcherPlugin extends AbstractPlugin implements EventDispatcherPluginInterface
 {
     protected const EVENT_PRIORITY_KERNEL_REQUEST = 16;

@@ -30,7 +30,7 @@ interface ApplicationConstants
     public const YVES_THEME = 'YVES_THEME';
 
     /**
-     * @deprecated Use `\SprykerShop\Shared\Router\RouterConstants::IS_SSL_ENABLED` instead.
+     * @deprecated Use `\Spryker\Shared\Router\RouterConstants::YVES_IS_SSL_ENABLED` instead.
      *
      * Specification:
      * - If option set to true, the application will check if the request is secure and not excluded from https.
@@ -42,7 +42,7 @@ interface ApplicationConstants
     public const YVES_SSL_ENABLED = 'YVES_SSL_ENABLED';
 
     /**
-     * @deprecated Use `\SprykerShop\Shared\Router\RouterConstants::SSL_EXCLUDED_ROUTE_NAMES` instead.
+     * @deprecated Use `\Spryker\Shared\Router\RouterConstants::YVES_SSL_EXCLUDED_ROUTE_NAMES` instead.
      *
      * Specification:
      * - An array of HTTPS Excluded resources when ssl is enabled.
