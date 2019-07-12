@@ -133,7 +133,7 @@ class CmsBlockStorageWriter implements CmsBlockStorageWriterInterface
                 continue;
             }
 
-            if ($cmsBlockEntity[static::COLUMN_CMS_BLOCK_NAME] !== $cmsBlockStorageEntity->getFkCmsBlock()) {
+            if ($cmsBlockEntity[static::COLUMN_CMS_BLOCK_NAME] !== $cmsBlockStorageEntity->getName()) {
                 $this->deleteStorageEntity($cmsBlockStorageEntity);
                 $cmsBlockStorageEntity = new SpyCmsBlockStorage();
             }
