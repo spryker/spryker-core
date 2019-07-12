@@ -83,7 +83,7 @@ class ProductOptionTaxRateWithItemShipmentTaxRateCalculator implements Calculato
     /**
      * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
-     * @return string[]
+     * @return int[]
      */
     protected function getIdProductOptionValues(ArrayObject $itemTransfers): array
     {
@@ -125,7 +125,7 @@ class ProductOptionTaxRateWithItemShipmentTaxRateCalculator implements Calculato
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
-     * @return array
+     * @return int[]
      */
     protected function getProductOptionValueIds(ItemTransfer $itemTransfer): array
     {
