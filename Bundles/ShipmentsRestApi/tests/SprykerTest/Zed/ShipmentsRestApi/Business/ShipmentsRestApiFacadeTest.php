@@ -19,6 +19,7 @@ use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Zed\Shipment\Business\ShipmentFacade;
 use Spryker\Zed\ShipmentsRestApi\Business\ShipmentsRestApiBusinessFactory;
 use Spryker\Zed\ShipmentsRestApi\Dependency\Facade\ShipmentsRestApiToShipmentFacadeBridge;
+use Spryker\Zed\ShipmentsRestApi\Dependency\Facade\ShipmentsRestApiToShipmentServiceBridge;
 
 /**
  * Auto-generated group annotations
@@ -54,6 +55,7 @@ class ShipmentsRestApiFacadeTest extends Unit
      */
     public function testShipmentsRestApiFacadeWillMapShipmentToQuoteOnShipmentProvided(): void
     {
+//        $this->tester->provideShipmentServiceDependency();
         /** @var \Spryker\Zed\ShipmentsRestApi\Business\ShipmentsRestApiFacade $shipmentRestApiFacade */
         $shipmentRestApiFacade = $this->tester->getFacade();
         $shipmentRestApiFacade->setFactory($this->getMockShipmentsRestApiFactory());
@@ -220,11 +222,14 @@ class ShipmentsRestApiFacadeTest extends Unit
     {
         $mockFactory = $this->createPartialMock(
             ShipmentsRestApiBusinessFactory::class,
-            ['getShipmentFacade']
+            ['getShipmentFacade', 'getShipmentService']
         );
 
         $mockFactory->method('getShipmentFacade')
             ->willReturn(new ShipmentsRestApiToShipmentFacadeBridge($this->getMockShipmentFacade()));
+
+        $mockFactory->method('getShipmentService')
+            ->willReturn(new ShipmentsRestApiToShipmentServiceBridge($this->tester->getShipmentService()));
 
         return $mockFactory;
     }
@@ -262,11 +267,14 @@ class ShipmentsRestApiFacadeTest extends Unit
     {
         $mockFactory = $this->createPartialMock(
             ShipmentsRestApiBusinessFactory::class,
-            ['getShipmentFacade']
+            ['getShipmentFacade', 'getShipmentService']
         );
 
         $mockFactory->method('getShipmentFacade')
             ->willReturn(new ShipmentsRestApiToShipmentFacadeBridge($this->getMockShipmentFacadeWithShipmentNotFound()));
+
+        $mockFactory->method('getShipmentService')
+            ->willReturn(new ShipmentsRestApiToShipmentServiceBridge($this->tester->getShipmentService()));
 
         return $mockFactory;
     }
