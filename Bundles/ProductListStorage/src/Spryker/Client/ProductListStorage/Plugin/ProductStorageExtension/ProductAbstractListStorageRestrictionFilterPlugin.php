@@ -13,7 +13,7 @@ use Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductAbstractRest
 /**
  * @method \Spryker\Client\ProductListStorage\ProductListStorageClientInterface getClient()
  */
-class ProductListStorageAbstractRestrictionFilterPlugin extends AbstractPlugin implements ProductAbstractRestrictionFilterPluginInterface
+class ProductAbstractListStorageRestrictionFilterPlugin extends AbstractPlugin implements ProductAbstractRestrictionFilterPluginInterface
 {
     /**
      * {@inheritdoc}
