@@ -47,11 +47,11 @@ class GlossaryEventResourceQueryContainerPlugin extends AbstractPlugin implement
     {
         $query = $this->getQueryContainer()->queryGlossaryKeysByIds($ids);
 
-        if (empty($ids)) {
+        if ($ids === []) {
             $query->clear();
         }
 
-        return $query;
+        return $query->orderBy($this->getIdColumnName());
     }
 
     /**

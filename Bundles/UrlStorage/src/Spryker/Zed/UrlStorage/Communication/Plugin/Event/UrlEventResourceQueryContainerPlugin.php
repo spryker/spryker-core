@@ -47,11 +47,11 @@ class UrlEventResourceQueryContainerPlugin extends AbstractPlugin implements Eve
     {
         $query = $this->getQueryContainer()->queryUrls($ids);
 
-        if (empty($ids)) {
+        if ($ids === []) {
             $query->clear();
         }
 
-        return $query;
+        return $query->orderBy($this->getIdColumnName());
     }
 
     /**

@@ -57,11 +57,11 @@ class ProductAbstractSynchronizationDataPlugin extends AbstractPlugin implements
     {
         $query = $this->getQueryContainer()->queryProductAbstractStorageByIds($ids);
 
-        if (empty($ids)) {
+        if ($ids === []) {
             $query->clear();
         }
 
-        return $query;
+        return $query->orderByIdProductAbstractStorage();
     }
 
     /**

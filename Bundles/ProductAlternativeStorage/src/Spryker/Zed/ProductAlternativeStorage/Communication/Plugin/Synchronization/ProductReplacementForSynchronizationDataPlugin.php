@@ -104,7 +104,7 @@ class ProductReplacementForSynchronizationDataPlugin extends AbstractPlugin impl
      */
     protected function findProductReplacementForStorageEntities(array $ids): array
     {
-        if (empty($ids)) {
+        if ($ids === []) {
             return $this->getRepository()->findAllProductReplacementForStorageEntities();
         }
 

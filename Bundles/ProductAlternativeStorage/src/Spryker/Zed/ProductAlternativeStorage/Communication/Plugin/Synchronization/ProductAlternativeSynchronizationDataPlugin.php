@@ -104,7 +104,7 @@ class ProductAlternativeSynchronizationDataPlugin extends AbstractPlugin impleme
      */
     protected function findProductAlternativeStorageEntities(array $ids): array
     {
-        if (empty($ids)) {
+        if ($ids === []) {
             return $this->getRepository()->findAllProductAlternativeStorageEntities();
         }
 

@@ -21,6 +21,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\ProductOption\Business\ProductOptionBusinessFactory getFactory()
+ * @method \Spryker\Zed\ProductOption\Persistence\ProductOptionRepositoryInterface getRepository()
  */
 class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeInterface
 {
@@ -316,5 +317,20 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
         return $this->getFactory()
             ->createProductOptionGroupReader()
             ->checkProductOptionGroupExistenceByProductOptionValueId($idProductOptionValue);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int[] $productAbstractIds
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractOptionGroupStatusTransfer[]
+     */
+    public function getProductAbstractOptionGroupStatusesByProductAbstractIds(array $productAbstractIds): array
+    {
+        return $this->getRepository()
+            ->getProductAbstractOptionGroupStatusesByProductAbstractIds($productAbstractIds);
     }
 }

@@ -96,9 +96,9 @@ class ShoppingListStorageRepository extends AbstractRepository implements Shoppi
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      * @param int[] $shoppingListCustomerStorageEntityIds
      *
-     * @return \Generated\Shared\Transfer\SpyProductConcreteProductListStorageEntityTransfer[]
+     * @return \Generated\Shared\Transfer\SpyShoppingListCustomerStorageEntityTransfer[]
      */
-    public function findFilteredProductConcreteProductListStorageEntities(FilterTransfer $filterTransfer, array $shoppingListCustomerStorageEntityIds = []): array
+    public function findFilteredShoppingListCustomerStorageEntities(FilterTransfer $filterTransfer, array $shoppingListCustomerStorageEntityIds = []): array
     {
         $query = $this->getFactory()->createShoppingListCustomerStoragePropelQuery();
 
