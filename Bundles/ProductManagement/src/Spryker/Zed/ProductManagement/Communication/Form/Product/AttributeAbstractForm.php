@@ -207,7 +207,6 @@ class AttributeAbstractForm extends AbstractSubForm
                 $config['multiple'] = false;
                 $config['placeholder'] = '-';
                 $config['choices'] = array_flip($this->getChoiceList($name, $attributes[$name], $existingValue, $idLocale));
-                $config['choices_as_values'] = true;
 
                 if ($allowInput) {
                     $config['attr']['tags'] = true;

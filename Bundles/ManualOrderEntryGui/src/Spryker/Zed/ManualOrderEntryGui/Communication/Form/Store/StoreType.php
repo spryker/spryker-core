@@ -62,7 +62,6 @@ class StoreType extends AbstractType
             'property_path' => QuoteTransfer::MANUAL_ORDER . '.' . ManualOrderTransfer::STORE_CURRENCY,
             'label' => 'Store and Currency',
             'choices' => array_flip($storesList),
-            'choices_as_values' => true,
             'multiple' => false,
             'required' => true,
         ]);

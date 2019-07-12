@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SharedCart\Business;
 
+use Generated\Shared\Transfer\CustomerCollectionTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
@@ -299,4 +300,19 @@ interface SharedCartFacadeInterface
      * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
      */
     public function shareCartByResourceShareRequest(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer;
+
+    /**
+     * Specification:
+     *  - Finds all customers (including quote owner) that have access to the quote.
+     *  - QuoteTransfer.idQuote is required
+     *  - QuoteTransfer.customerReference is required
+     *  - QuoteTransfer.customerTransfer.customerReference is required
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerCollectionTransfer
+     */
+    public function getCustomerCollectionByQuote(QuoteTransfer $quoteTransfer): CustomerCollectionTransfer;
 }
