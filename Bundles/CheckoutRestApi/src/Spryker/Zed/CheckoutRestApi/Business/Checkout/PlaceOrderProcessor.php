@@ -314,7 +314,6 @@ class PlaceOrderProcessor implements PlaceOrderProcessorInterface
         }
         $restCheckoutResponseTransfer = (new RestCheckoutResponseTransfer())
             ->setIsSuccess(false);
-
         foreach ($checkoutResponseTransfer->getErrors() as $errorTransfer) {
             $restCheckoutResponseTransfer->addError(
                 (new RestCheckoutErrorTransfer())
