@@ -253,21 +253,9 @@ class CompanyRoleRepository extends AbstractRepository implements CompanyRoleRep
      */
     public function buildQueryFromCriteria(ModelCriteria $criteria, ?FilterTransfer $filterTransfer = null): ModelCriteria
     {
-        if (!$filterTransfer) {
-            return $criteria;
-        }
+        $criteria = parent::buildQueryFromCriteria($criteria, $filterTransfer);
 
-        if ($filterTransfer->getLimit()) {
-            $criteria->setLimit($filterTransfer->getLimit());
-        }
-
-        if ($filterTransfer->getOffset()) {
-            $criteria->setOffset($filterTransfer->getOffset());
-        }
-
-        if ($filterTransfer->getOrderBy() && $filterTransfer->getOrderDirection()) {
-            $criteria->orderBy($filterTransfer->getOrderBy(), $filterTransfer->getOrderDirection());
-        }
+        $criteria->setFormatter(ModelCriteria::FORMAT_OBJECT);
 
         return $criteria;
     }

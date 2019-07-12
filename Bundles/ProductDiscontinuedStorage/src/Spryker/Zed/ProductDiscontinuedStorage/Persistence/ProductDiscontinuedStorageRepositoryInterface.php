@@ -25,9 +25,9 @@ interface ProductDiscontinuedStorageRepositoryInterface
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     * @param int[] $productDiscontinuedStorageEntitityIds
+     * @param int[] $productDiscontinuedStorageEntityIds
      *
      * @return \Generated\Shared\Transfer\SpyProductDiscontinuedStorageEntityTransfer[]
      */
-    public function findFilteredProductDiscontinuedStorageEntities(FilterTransfer $filterTransfer, array $productDiscontinuedStorageEntitityIds = []): array;
+    public function findFilteredProductDiscontinuedStorageEntities(FilterTransfer $filterTransfer, array $productDiscontinuedStorageEntityIds = []): array;
 }

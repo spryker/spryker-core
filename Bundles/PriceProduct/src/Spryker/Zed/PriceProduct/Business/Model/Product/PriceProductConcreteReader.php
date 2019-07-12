@@ -229,4 +229,34 @@ class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
 
         return $priceProductTransfers;
     }
+
+    /**
+     * @param string[] $skus
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[][]
+     */
+    public function getProductConcretePricesByConcreteSkusAndCriteria(array $skus, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): array
+    {
+        $priceProductTransfers = $this->priceProductRepository->getProductConcretePricesByConcreteSkusAndCriteria($skus, $priceProductCriteriaTransfer);
+        $priceProductTransfers = $this->priceProductExpander->expandPriceProductTransfers($priceProductTransfers);
+        $priceProductTransfers = $this->pluginExecutor->executePriceExtractorPluginsForProductConcrete($priceProductTransfers);
+
+        return $this->indexPriceProductTransferByProductSku($priceProductTransfers);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[][]
+     */
+    protected function indexPriceProductTransferByProductSku(array $priceProductTransfers): array
+    {
+        $indexedPriceProductTransfers = [];
+        foreach ($priceProductTransfers as $priceProductTransfer) {
+            $indexedPriceProductTransfers[$priceProductTransfer->getSkuProduct()][] = $priceProductTransfer;
+        }
+
+        return $indexedPriceProductTransfers;
+    }
 }

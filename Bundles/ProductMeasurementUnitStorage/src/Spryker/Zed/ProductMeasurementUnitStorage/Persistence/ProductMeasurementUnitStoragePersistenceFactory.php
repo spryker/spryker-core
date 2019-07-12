@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductMeasurementUnitStorage\Persistence;
 
+use Orm\Zed\ProductMeasurementUnit\Persistence\SpyProductMeasurementSalesUnitQuery;
+use Orm\Zed\ProductMeasurementUnit\Persistence\SpyProductMeasurementUnitQuery;
 use Orm\Zed\ProductMeasurementUnitStorage\Persistence\SpyProductConcreteMeasurementUnitStorageQuery;
 use Orm\Zed\ProductMeasurementUnitStorage\Persistence\SpyProductMeasurementUnitStorageQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
@@ -14,6 +16,7 @@ use Spryker\Zed\ProductMeasurementUnitStorage\Persistence\Propel\Mapper\ProductC
 use Spryker\Zed\ProductMeasurementUnitStorage\Persistence\Propel\Mapper\ProductConcreteMeasurementUnitStorageMapperInterface;
 use Spryker\Zed\ProductMeasurementUnitStorage\Persistence\Propel\Mapper\ProductMeasurementUnitStorageMapper;
 use Spryker\Zed\ProductMeasurementUnitStorage\Persistence\Propel\Mapper\ProductMeasurementUnitStorageMapperInterface;
+use Spryker\Zed\ProductMeasurementUnitStorage\ProductMeasurementUnitStorageDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductMeasurementUnitStorage\ProductMeasurementUnitStorageConfig getConfig()
@@ -52,5 +55,21 @@ class ProductMeasurementUnitStoragePersistenceFactory extends AbstractPersistenc
     public function createProductConcreteMeasurementUnitStorageMapper(): ProductConcreteMeasurementUnitStorageMapperInterface
     {
         return new ProductConcreteMeasurementUnitStorageMapper();
+    }
+
+    /**
+     * @return \Orm\Zed\ProductMeasurementUnit\Persistence\SpyProductMeasurementSalesUnitQuery
+     */
+    public function getProductMeasurementSalesUnitQuery(): SpyProductMeasurementSalesUnitQuery
+    {
+        return $this->getProvidedDependency(ProductMeasurementUnitStorageDependencyProvider::PROPEL_QUERY_PRODUCT_MEASUREMENT_SALES_UNIT);
+    }
+
+    /**
+     * @return \Orm\Zed\ProductMeasurementUnit\Persistence\SpyProductMeasurementUnitQuery
+     */
+    public function getProductMeasurementUnitQuery(): SpyProductMeasurementUnitQuery
+    {
+        return $this->getProvidedDependency(ProductMeasurementUnitStorageDependencyProvider::PROPEL_QUERY_PRODUCT_MEASUREMENT_UNIT);
     }
 }
