@@ -70,7 +70,6 @@ class CustomerBusinessUnitAttachForm extends AbstractType
             'label' => 'Business Unit',
             'placeholder' => 'Business Unit name',
             'choices' => $options[static::OPTION_COMPANY_BUSINESS_UNIT_CHOICES],
-            'choices_as_values' => true,
             'required' => true,
         ]);
 

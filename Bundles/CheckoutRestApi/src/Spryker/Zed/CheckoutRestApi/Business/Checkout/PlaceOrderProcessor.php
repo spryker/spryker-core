@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CheckoutRestApi\Business\Checkout;
 
+use Generated\Shared\Transfer\CheckoutDataTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -53,12 +54,18 @@ class PlaceOrderProcessor implements PlaceOrderProcessorInterface
     protected $quoteMapperPlugins;
 
     /**
+     * @var \Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\CheckoutDataValidatorPluginInterface[]
+     */
+    protected $checkoutDataValidatorPlugins;
+
+    /**
      * @param \Spryker\Zed\CheckoutRestApi\Business\Checkout\Quote\QuoteReaderInterface $quoteReader
      * @param \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCartFacadeInterface $cartFacade
      * @param \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCheckoutFacadeInterface $checkoutFacade
      * @param \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToQuoteFacadeInterface $quoteFacade
      * @param \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCalculationFacadeInterface $calculationFacade
      * @param \Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\QuoteMapperPluginInterface[] $quoteMapperPlugins
+     * @param \Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\CheckoutDataValidatorPluginInterface[] $checkoutDataValidatorPlugins
      */
     public function __construct(
         QuoteReaderInterface $quoteReader,
@@ -66,7 +73,8 @@ class PlaceOrderProcessor implements PlaceOrderProcessorInterface
         CheckoutRestApiToCheckoutFacadeInterface $checkoutFacade,
         CheckoutRestApiToQuoteFacadeInterface $quoteFacade,
         CheckoutRestApiToCalculationFacadeInterface $calculationFacade,
-        array $quoteMapperPlugins
+        array $quoteMapperPlugins,
+        array $checkoutDataValidatorPlugins
     ) {
         $this->quoteReader = $quoteReader;
         $this->cartFacade = $cartFacade;
@@ -74,6 +82,7 @@ class PlaceOrderProcessor implements PlaceOrderProcessorInterface
         $this->quoteFacade = $quoteFacade;
         $this->calculationFacade = $calculationFacade;
         $this->quoteMapperPlugins = $quoteMapperPlugins;
+        $this->checkoutDataValidatorPlugins = $checkoutDataValidatorPlugins;
     }
 
     /**
@@ -83,6 +92,11 @@ class PlaceOrderProcessor implements PlaceOrderProcessorInterface
      */
     public function placeOrder(RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer): RestCheckoutResponseTransfer
     {
+        $checkoutResponseTransfer = $this->validateCheckoutData($restCheckoutRequestAttributesTransfer);
+        if (!$checkoutResponseTransfer->getIsSuccess()) {
+            return $this->createPlaceOrderErrorResponse($checkoutResponseTransfer);
+        }
+
         $quoteTransfer = $this->quoteReader->findCustomerQuoteByUuid($restCheckoutRequestAttributesTransfer);
 
         $restCheckoutResponseTransfer = $this->validateQuoteTransfer($quoteTransfer);
@@ -135,6 +149,47 @@ class PlaceOrderProcessor implements PlaceOrderProcessorInterface
         }
 
         return null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
+     *
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
+     */
+    protected function validateCheckoutData(RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer): CheckoutResponseTransfer
+    {
+        $checkoutResponseTransfer = (new CheckoutResponseTransfer())->setIsSuccess(true);
+        $checkoutDataTransfer = (new CheckoutDataTransfer())
+            ->fromArray($restCheckoutRequestAttributesTransfer->toArray(), true);
+
+        foreach ($this->checkoutDataValidatorPlugins as $checkoutDataValidatorPlugin) {
+            $validatedCheckoutData = $checkoutDataValidatorPlugin->validateCheckoutData($checkoutDataTransfer);
+            if (!$validatedCheckoutData->getIsSuccess()) {
+                $checkoutResponseTransfer = $this->appendCheckoutResponseErrors(
+                    $validatedCheckoutData,
+                    $checkoutResponseTransfer
+                );
+            }
+        }
+
+        return $checkoutResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $validatedCheckoutData
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
+     */
+    protected function appendCheckoutResponseErrors(
+        CheckoutResponseTransfer $validatedCheckoutData,
+        CheckoutResponseTransfer $checkoutResponseTransfer
+    ): CheckoutResponseTransfer {
+        foreach ($validatedCheckoutData->getErrors() as $checkoutErrorTransfer) {
+            $checkoutResponseTransfer->getErrors()->append($checkoutErrorTransfer);
+        }
+
+        return $checkoutResponseTransfer->setIsSuccess(false);
     }
 
     /**

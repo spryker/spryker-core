@@ -57,11 +57,11 @@ class ProductSetSynchronizationDataPlugin extends AbstractPlugin implements Sync
     {
         $query = $this->getQueryContainer()->queryProductSetPageSearchPageByIds($ids);
 
-        if (empty($ids)) {
+        if ($ids === []) {
             $query->clear();
         }
 
-        return $query;
+        return $query->orderByIdProductSetPageSearch();
     }
 
     /**

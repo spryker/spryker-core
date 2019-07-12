@@ -133,7 +133,6 @@ class FilterPreferencesForm extends AbstractAttributeKeyForm
         $builder->add(self::FIELD_FILTER_TYPE, ChoiceType::class, [
             'label' => 'Filter type',
             'choices' => array_flip($options[self::OPTION_FILTER_TYPE_CHOICES]),
-            'choices_as_values' => true,
             'constraints' => [
                 new NotBlank(),
             ],

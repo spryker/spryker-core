@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductOptionStorage\Persistence;
 use Orm\Zed\ProductOption\Persistence\Map\SpyProductAbstractProductOptionGroupTableMap;
 use Orm\Zed\ProductOption\Persistence\Map\SpyProductOptionGroupTableMap;
 use Orm\Zed\ProductOption\Persistence\Map\SpyProductOptionValueTableMap;
+use Orm\Zed\ProductOption\Persistence\SpyProductAbstractProductOptionGroupQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
@@ -68,6 +69,23 @@ class ProductOptionStorageQueryContainer extends AbstractQueryContainer implemen
             ->joinWith('SpyProductOptionValue.ProductOptionValuePrice')
             ->addAnd(SpyProductOptionGroupTableMap::COL_ACTIVE, true, Criteria::EQUAL)
             ->setFormatter(ModelCriteria::FORMAT_ARRAY);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param array $productAbstractIds
+     *
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductAbstractProductOptionGroupQuery
+     */
+    public function queryProductAbstractOptionsByProductAbstractIds(array $productAbstractIds): SpyProductAbstractProductOptionGroupQuery
+    {
+        return $this->getFactory()
+            ->getProductOptionQuery()
+            ->queryAllProductAbstractProductOptionGroups()
+            ->filterByFkProductAbstract_In($productAbstractIds);
     }
 
     /**

@@ -131,6 +131,10 @@ class TransferValidator implements TransferValidatorInterface
                 ));
             }
 
+            if ($this->isTransferEmpty($transfer)) {
+                continue;
+            }
+
             foreach ($transfer['property'] as $property) {
                 $type = $property['type'];
 
@@ -163,6 +167,16 @@ class TransferValidator implements TransferValidatorInterface
         }
 
         return $isValid;
+    }
+
+    /**
+     * @param array $transfer
+     *
+     * @return bool
+     */
+    protected function isTransferEmpty(array $transfer): bool
+    {
+        return empty($transfer['property']);
     }
 
     /**
