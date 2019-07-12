@@ -98,13 +98,11 @@ class QuoteRequestDataImportCommunicationTester extends Actor
      *
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer
      */
-    protected function createCompanyBusinessUnit($companyTransfer): CompanyBusinessUnitTransfer
+    protected function createCompanyBusinessUnit(CompanyTransfer $companyTransfer): CompanyBusinessUnitTransfer
     {
-        return $this->haveCompanyBusinessUnit(
-            [
-                CompanyBusinessUnitTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
-            ]
-        );
+        return $this->haveCompanyBusinessUnit([
+            CompanyBusinessUnitTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
+        ]);
     }
 
     /**

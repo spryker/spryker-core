@@ -179,6 +179,37 @@ class FileManagerBusinessTester extends Actor
     }
 
     /**
+     * @return int[]
+     */
+    public function insertFilesCollection(): array
+    {
+        $idFiles = [];
+        for ($i = 1; $i < 10; $i++) {
+            file_put_contents($this->getDocumentFullFileName($i . '_v1.txt'), 'file content');
+
+            $file = new SpyFile();
+            $file->setFileName($i . '.txt');
+            $file->save();
+
+            $idFiles[] = $file->getIdFile();
+
+            $fileInfo = new SpyFileInfo();
+            $fileInfo->setFile($file);
+            $fileInfo->setSize(10);
+            $fileInfo->setType('text');
+            $fileInfo->setVersion(1);
+            $fileInfo->setVersionName('v. 1');
+            $fileInfo->setStorageFileName($i . '_v1.txt');
+            $fileInfo->setExtension('txt');
+            $fileInfo->setCreatedAt('2017-06-06 00:00:00');
+            $fileInfo->setUpdatedAt('2017-06-06 00:00:00');
+            $fileInfo->save();
+        }
+
+        return $idFiles;
+    }
+
+    /**
      * @return \Orm\Zed\FileManager\Persistence\SpyFile
      */
     protected function insertFile()

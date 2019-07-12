@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\StoreTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface;
-use Spryker\Zed\ProductBundle\Dependency\Service\ProductBundleToUtilQuantityServiceInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
 use Spryker\Zed\ProductBundle\ProductBundleConfig;
 
@@ -44,29 +43,21 @@ class BasePreCheck
     protected $productBundleConfig;
 
     /**
-     * @var \Spryker\Zed\ProductBundle\Dependency\Service\ProductBundleToUtilQuantityServiceInterface
-     */
-    protected $utilQuantityService;
-
-    /**
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityInterface $availabilityFacade
      * @param \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface $productBundleQueryContainer
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\ProductBundle\ProductBundleConfig $productBundleConfig
-     * @param \Spryker\Zed\ProductBundle\Dependency\Service\ProductBundleToUtilQuantityServiceInterface $utilQuantityService
      */
     public function __construct(
         ProductBundleToAvailabilityInterface $availabilityFacade,
         ProductBundleQueryContainerInterface $productBundleQueryContainer,
         ProductBundleToStoreFacadeInterface $storeFacade,
-        ProductBundleConfig $productBundleConfig,
-        ProductBundleToUtilQuantityServiceInterface $utilQuantityService
+        ProductBundleConfig $productBundleConfig
     ) {
         $this->availabilityFacade = $availabilityFacade;
         $this->productBundleQueryContainer = $productBundleQueryContainer;
         $this->storeFacade = $storeFacade;
         $this->productBundleConfig = $productBundleConfig;
-        $this->utilQuantityService = $utilQuantityService;
     }
 
     /**
@@ -102,12 +93,9 @@ class BasePreCheck
 
             $sku = $bundledProductConcreteEntity->getSku();
             $totalBundledItemQuantity = $productBundleEntity->getQuantity() * $itemTransfer->getQuantity();
-            $isItemSellable = $this->checkIfItemIsSellable($items, $sku, $storeTransfer, $totalBundledItemQuantity);
-
-            if ($isItemSellable && $bundledProductConcreteEntity->getIsActive()) {
+            if ($this->checkIfItemIsSellable($items, $sku, $storeTransfer, $totalBundledItemQuantity) && $bundledProductConcreteEntity->getIsActive()) {
                 continue;
             }
-
             $unavailableBundleItems[] = [
                 static::ERROR_BUNDLE_ITEM_UNAVAILABLE_PARAMETER_BUNDLE_SKU => $itemTransfer->getSku(),
                 static::ERROR_BUNDLE_ITEM_UNAVAILABLE_PARAMETER_PRODUCT_SKU => $sku,
@@ -121,7 +109,7 @@ class BasePreCheck
      * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     * @param float $itemQuantity
+     * @param int $itemQuantity
      *
      * @return bool
      */
@@ -129,10 +117,10 @@ class BasePreCheck
         ArrayObject $items,
         $sku,
         StoreTransfer $storeTransfer,
-        $itemQuantity = 0.0
+        $itemQuantity = 0
     ) {
         $currentItemQuantity = $this->getAccumulatedItemQuantityForGivenSku($items, $sku);
-        $currentItemQuantity = $this->sumQuantities($currentItemQuantity, $itemQuantity);
+        $currentItemQuantity += $itemQuantity;
 
         return $this->availabilityFacade->isProductSellableForStore($sku, $currentItemQuantity, $storeTransfer);
     }
@@ -141,41 +129,18 @@ class BasePreCheck
      * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
      * @param string $sku
      *
-     * @return float
+     * @return int
      */
     protected function getAccumulatedItemQuantityForGivenSku(ArrayObject $items, $sku)
     {
-        $quantity = 0.0;
+        $quantity = 0;
         foreach ($items as $itemTransfer) {
             if ($itemTransfer->getSku() !== $sku) {
                 continue;
             }
-
-            $quantity = $this->sumQuantities($quantity, $itemTransfer->getQuantity());
+            $quantity += $itemTransfer->getQuantity();
         }
 
         return $quantity;
-    }
-
-    /**
-     * @param float $firstQuantity
-     * @param float $secondQuantity
-     *
-     * @return float
-     */
-    protected function sumQuantities(float $firstQuantity, float $secondQuantity): float
-    {
-        return $this->utilQuantityService->sumQuantities($firstQuantity, $secondQuantity);
-    }
-
-    /**
-     * @param float $firstQuantity
-     * @param float $secondQuantity
-     *
-     * @return float
-     */
-    protected function subtractQuantities(float $firstQuantity, float $secondQuantity): float
-    {
-        return $this->utilQuantityService->subtractQuantities($firstQuantity, $secondQuantity);
     }
 }

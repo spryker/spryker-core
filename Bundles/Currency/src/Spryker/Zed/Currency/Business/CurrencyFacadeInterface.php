@@ -110,4 +110,28 @@ interface CurrencyFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteValidationResponseTransfer
      */
     public function validateCurrencyInQuote(QuoteTransfer $quoteTransfer): QuoteValidationResponseTransfer;
+
+    /**
+     * Specification:
+     * - Finds currency by given ISO code.
+     *
+     * @api
+     *
+     * @param string $isoCode
+     *
+     * @return \Generated\Shared\Transfer\CurrencyTransfer|null
+     */
+    public function findCurrencyByIsoCode(string $isoCode): ?CurrencyTransfer;
+
+    /**
+     * Specification:
+     * - Gets currency transfers by array of iso codes.
+     *
+     * @api
+     *
+     * @param string[] $isoCodes
+     *
+     * @return \Generated\Shared\Transfer\CurrencyTransfer[]
+     */
+    public function getCurrencyTransfersByIsoCodes(array $isoCodes): array;
 }

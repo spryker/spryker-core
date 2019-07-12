@@ -89,11 +89,13 @@ class CompanyBusinessUnitDataImportPluginTest extends AbstractCompanyBusinessUni
     {
         $this->tester->truncateCompanyBusinessUnitRelations();
 
-        $this->tester->haveActiveCompany([CompanyTransfer::KEY => static::COMPANY_KEY]);
+        $companyTransfer = $this->tester->haveActiveCompany([CompanyTransfer::KEY => static::COMPANY_KEY]);
         $this->tester->haveCompanyBusinessUnit([
+            CompanyBusinessUnitTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
             CompanyBusinessUnitTransfer::KEY => static::COMPANY_BUSINESS_UNIT_KEY,
         ]);
         $this->tester->haveCompanyBusinessUnit([
+            CompanyBusinessUnitTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
             CompanyBusinessUnitTransfer::KEY => static::COMPANY_CHILD_BUSINESS_UNIT_KEY,
         ]);
         $dataImportConfigurationTransfer = $this->getDataImportConfigurationTransfer(

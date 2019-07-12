@@ -46,5 +46,6 @@ class RestRequestUpdater implements RestRequestUpdaterInterface
 
         $customerReference = $this->persistentCartClient->generateGuestCartCustomerReference($anonymousCustomerUniqueId);
         $restRequest->setRestUser((new RestUserTransfer())->setNaturalIdentifier($customerReference));
+        $restRequest->setUser('', $customerReference);
     }
 }

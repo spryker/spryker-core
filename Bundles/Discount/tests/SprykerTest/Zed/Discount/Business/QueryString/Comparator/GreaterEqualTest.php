@@ -26,11 +26,6 @@ use Spryker\Zed\Discount\Business\QueryString\Comparator\GreaterEqual;
 class GreaterEqualTest extends Unit
 {
     /**
-     * @var \SprykerTest\Zed\Discount\DiscountBusinessTester
-     */
-    protected $tester;
-
-    /**
      * @return void
      */
     public function testAcceptShouldReturnTrueWhenMoreEqualExpressionProvided()
@@ -46,101 +41,48 @@ class GreaterEqualTest extends Unit
     }
 
     /**
-     * @dataProvider compareWhenClauseValueIsBiggerThanProvidedShouldReturnTrueProvider
-     *
-     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
-     * @param string $withValue
-     *
      * @return void
      */
-    public function testCompareWhenClauseValueIsBiggerThanProvidedShouldReturnTrue(ClauseTransfer $clauseTransfer, string $withValue): void
+    public function testCompareWhenClauseValueIsBiggerThanProvidedShouldReturnTrue()
     {
         $moreEqual = $this->createMoreEqual();
 
-        $isMatching = $moreEqual->compare($clauseTransfer, $withValue);
+        $clauseTransfer = new ClauseTransfer();
+        $clauseTransfer->setValue('1');
+
+        $isMatching = $moreEqual->compare($clauseTransfer, '2');
 
         $this->assertTrue($isMatching);
     }
 
     /**
-     * @return array
-     */
-    public function compareWhenClauseValueIsBiggerThanProvidedShouldReturnTrueProvider(): array
-    {
-        return [
-            'int stock' => $this->createClauseData('1', '2'),
-            'float stock' => $this->createClauseData('1.1', '1.2'),
-        ];
-    }
-
-    /**
-     * @param string $clauseValue
-     * @param string $withValue
-     *
-     * @return array
-     */
-    protected function createClauseData(string $clauseValue, string $withValue): array
-    {
-        $clauseTransfer = new ClauseTransfer();
-        $clauseTransfer->setValue($clauseValue);
-
-        return [$clauseTransfer, $withValue];
-    }
-
-    /**
-     * @dataProvider compareWhenClauseValueIsSmallerThanProvidedShouldReturnFalseProvider
-     *
-     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
-     * @param string $withValue
-     *
      * @return void
      */
-    public function testCompareWhenClauseValueIsSmallerThanProvidedShouldReturnFalse(ClauseTransfer $clauseTransfer, string $withValue): void
+    public function testCompareWhenClauseValueIsSmallerThanProvidedShouldReturnFalse()
     {
         $moreEqual = $this->createMoreEqual();
 
-        $isMatching = $moreEqual->compare($clauseTransfer, $withValue);
+        $clauseTransfer = new ClauseTransfer();
+        $clauseTransfer->setValue('2');
+
+        $isMatching = $moreEqual->compare($clauseTransfer, '1');
 
         $this->assertFalse($isMatching);
     }
 
     /**
-     * @return array
-     */
-    public function compareWhenClauseValueIsSmallerThanProvidedShouldReturnFalseProvider(): array
-    {
-        return [
-            'int stock' => $this->createClauseData('2', '1'),
-            'float stock' => $this->createClauseData('1.2', '1.1'),
-        ];
-    }
-
-    /**
-     * @dataProvider compareWhenClauseValueIsEqualShouldReturnTrueProvider
-     *
-     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
-     * @param string $withValue
-     *
      * @return void
      */
-    public function testCompareWhenClauseValueIsEqualShouldReturnTrue(ClauseTransfer $clauseTransfer, string $withValue): void
+    public function testCompareWhenClauseValueIsEqualShouldReturnTrue()
     {
         $moreEqual = $this->createMoreEqual();
 
-        $isMatching = $moreEqual->compare($clauseTransfer, $withValue);
+        $clauseTransfer = new ClauseTransfer();
+        $clauseTransfer->setValue('1');
+
+        $isMatching = $moreEqual->compare($clauseTransfer, '1');
 
         $this->assertTrue($isMatching);
-    }
-
-    /**
-     * @return array
-     */
-    public function compareWhenClauseValueIsEqualShouldReturnTrueProvider(): array
-    {
-        return [
-            'int stock' => $this->createClauseData('1', '1'),
-            'float stock' => $this->createClauseData('1.2', '1.2'),
-        ];
     }
 
     /**

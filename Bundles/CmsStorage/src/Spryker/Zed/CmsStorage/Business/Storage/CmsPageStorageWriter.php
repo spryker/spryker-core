@@ -278,6 +278,10 @@ class CmsPageStorageWriter implements CmsPageStorageWriterInterface
      */
     protected function deleteStorageEntity(SpyCmsPageStorage $cmsPageStorageEntity): void
     {
+        if ($cmsPageStorageEntity->isNew() || $cmsPageStorageEntity->getKey() === null) {
+            return;
+        }
+
         $cmsPageStorageEntity->delete();
     }
 

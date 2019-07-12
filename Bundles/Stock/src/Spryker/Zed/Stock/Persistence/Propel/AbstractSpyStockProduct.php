@@ -21,22 +21,22 @@ use Orm\Zed\Stock\Persistence\Base\SpyStockProduct as BaseSpyStockProduct;
 abstract class AbstractSpyStockProduct extends BaseSpyStockProduct
 {
     /**
-     * @param float $amount
+     * @param int $amount
      *
      * @return void
      */
-    public function decrement(float $amount = 1.0)
+    public function decrement($amount = 1)
     {
         $this->setQuantity($this->getQuantity() - $amount);
         $this->save();
     }
 
     /**
-     * @param float $amount
+     * @param int $amount
      *
      * @return void
      */
-    public function increment(float $amount = 1.0)
+    public function increment($amount = 1)
     {
         $this->setQuantity($this->getQuantity() + $amount);
         $this->save();

@@ -8,6 +8,7 @@
         <property name="idQuote" type="int"/>
         <property name="items" type="Item[]" singular="item"/>
         <property name="quoteUpdateRequestAttributes" type="QuoteUpdateRequestAttributes"/>
+        <property name="quote" type="Quote"/>
     </transfer>
 
     <transfer name="QuoteSyncRequest">
@@ -19,6 +20,7 @@
         <property name="customer" type="Customer"/>
         <property name="idQuote" type="int"/>
         <property name="item" type="Item"/>
+        <property name="quote" type="Quote"/>
     </transfer>
 
     <transfer name="QuoteMergeRequest">

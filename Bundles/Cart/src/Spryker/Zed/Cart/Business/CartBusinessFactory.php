@@ -19,7 +19,6 @@ use Spryker\Zed\Cart\Business\StorageProvider\NonPersistentProvider;
 use Spryker\Zed\Cart\Business\StorageProvider\StorageProviderInterface;
 use Spryker\Zed\Cart\CartDependencyProvider;
 use Spryker\Zed\Cart\Dependency\Facade\CartToQuoteFacadeInterface;
-use Spryker\Zed\Cart\Dependency\Service\CartToUtilQuantityServiceInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -91,8 +90,7 @@ class CartBusinessFactory extends AbstractBusinessFactory
     {
         return new NonPersistentProvider(
             $this->getCartAddItemStrategyPlugins(),
-            $this->getCartRemoveItemStrategyPlugins(),
-            $this->getUtilQuantityService()
+            $this->getCartRemoveItemStrategyPlugins()
         );
     }
 
@@ -214,14 +212,6 @@ class CartBusinessFactory extends AbstractBusinessFactory
     public function getPostReloadItemsPlugins(): array
     {
         return $this->getProvidedDependency(CartDependencyProvider::PLUGINS_POST_RELOAD_ITEMS);
-    }
-
-    /**
-     * @return \Spryker\Zed\Cart\Dependency\Service\CartToUtilQuantityServiceInterface
-     */
-    public function getUtilQuantityService(): CartToUtilQuantityServiceInterface
-    {
-        return $this->getProvidedDependency(CartDependencyProvider::SERVICE_UTIL_QUANTITY);
     }
 
     /**
