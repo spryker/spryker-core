@@ -65,8 +65,7 @@ class PriceManager implements PriceManagerInterface
         $priceMode = $cartChangeTransfer->getQuote()->getPriceMode();
 
         $priceProductFilterTransfers = $this->createPriceProductFilterTransfers($cartChangeTransfer);
-        $priceProductTransfers = $this->priceProductFacade->getValidPrices($priceProductFilterTransfers);
-        $priceProductTransfers = $this->indexPriceProductTransfersBySku($priceProductTransfers);
+        $priceProductTransfers = $this->getIndexedPriceProductTransfersByPriceProductFilterTransfers($priceProductFilterTransfers);
 
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
             $priceProductTransfer = $this->getPriceProductTransferBySku($priceProductTransfers, $itemTransfer->getSku());
@@ -82,6 +81,18 @@ class PriceManager implements PriceManagerInterface
         }
 
         return $cartChangeTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer[] $priceProductFilterTransfers
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    protected function getIndexedPriceProductTransfersByPriceProductFilterTransfers(array $priceProductFilterTransfers): array
+    {
+        $priceProductTransfers = $this->priceProductFacade->getValidPrices($priceProductFilterTransfers);
+
+        return $this->indexPriceProductTransfersBySku($priceProductTransfers);
     }
 
     /**
@@ -148,13 +159,35 @@ class PriceManager implements PriceManagerInterface
         $itemTransfer->setPriceProduct($priceProductTransfer);
 
         if ($priceMode === $this->getNetPriceModeIdentifier()) {
-            $itemTransfer->setOriginUnitNetPrice($priceProductTransfer->getMoneyValue()->getNetAmount());
-            $itemTransfer->setOriginUnitGrossPrice(0);
-            $itemTransfer->setSumGrossPrice(0);
-
-            return $itemTransfer;
+            return $this->setOriginUnitNetPrice($itemTransfer, $priceProductTransfer);
         }
 
+        return $this->setOriginUnitGrossPrice($itemTransfer, $priceProductTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    protected function setOriginUnitNetPrice(ItemTransfer $itemTransfer, PriceProductTransfer $priceProductTransfer): ItemTransfer
+    {
+        $itemTransfer->setOriginUnitNetPrice($priceProductTransfer->getMoneyValue()->getNetAmount());
+        $itemTransfer->setOriginUnitGrossPrice(0);
+        $itemTransfer->setSumGrossPrice(0);
+
+        return $itemTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    protected function setOriginUnitGrossPrice(ItemTransfer $itemTransfer, PriceProductTransfer $priceProductTransfer): ItemTransfer
+    {
         $itemTransfer->setOriginUnitNetPrice(0);
         $itemTransfer->setOriginUnitGrossPrice($priceProductTransfer->getMoneyValue()->getGrossAmount());
         $itemTransfer->setSumNetPrice(0);
