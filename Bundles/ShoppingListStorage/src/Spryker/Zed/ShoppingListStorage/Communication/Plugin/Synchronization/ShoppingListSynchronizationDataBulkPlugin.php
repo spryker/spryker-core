@@ -66,7 +66,7 @@ class ShoppingListSynchronizationDataBulkPlugin extends AbstractPlugin implement
 
         foreach ($shoppingListCustomerStorageEntities as $shoppingListCustomerStorageEntity) {
             $synchronizationDataTransfer = new SynchronizationDataTransfer();
-            $synchronizationDataTransfer->setData(json_encode($shoppingListCustomerStorageEntity->getData()));
+            $synchronizationDataTransfer->setData($shoppingListCustomerStorageEntity->getData());
             $synchronizationDataTransfer->setKey($shoppingListCustomerStorageEntity->getKey());
             $synchronizationDataTransfers[] = $synchronizationDataTransfer;
         }
