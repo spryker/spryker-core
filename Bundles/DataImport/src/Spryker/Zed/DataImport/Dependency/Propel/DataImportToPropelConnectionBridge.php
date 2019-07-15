@@ -45,4 +45,12 @@ class DataImportToPropelConnectionBridge implements DataImportToPropelConnection
     {
         $this->propelConnection->commit();
     }
+
+    /**
+     * @return bool
+     */
+    public function rollBack()
+    {
+        return $this->propelConnection->rollBack();
+    }
 }
