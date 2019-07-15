@@ -95,7 +95,7 @@ class WebProfilerApplicationPlugin extends AbstractPlugin implements Application
             return $twig;
         });
 
-        $container->extend(RouterApplicationPlugin::SERVICE_CHAIN_ROUTER, function (ChainRouter $chainRouter, ContainerInterface $container) {
+        $container->extend(RouterApplicationPlugin::SERVICE_ROUTER, function (ChainRouter $chainRouter, ContainerInterface $container) {
             $chainRouter->add($this->getRouter($container), 10);
 
             return $chainRouter;
@@ -139,11 +139,11 @@ class WebProfilerApplicationPlugin extends AbstractPlugin implements Application
     protected function getRouteDefinitions(ContainerInterface $container): array
     {
         $profilerController = function () use ($container) {
-            return new ProfilerController($container->get(RouterApplicationPlugin::SERVICE_CHAIN_ROUTER), $container->get(static::SERVICE_PROFILER), $container->get(TwigApplicationPlugin::SERVICE_TWIG), $this->getDataCollectorPluginTemplates());
+            return new ProfilerController($container->get(RouterApplicationPlugin::SERVICE_ROUTER), $container->get(static::SERVICE_PROFILER), $container->get(TwigApplicationPlugin::SERVICE_TWIG), $this->getDataCollectorPluginTemplates());
         };
 
         $routerController = function () use ($container) {
-            return new RouterController($container->get(static::SERVICE_PROFILER), $container->get(TwigApplicationPlugin::SERVICE_TWIG), $container->get(RouterApplicationPlugin::SERVICE_CHAIN_ROUTER));
+            return new RouterController($container->get(static::SERVICE_PROFILER), $container->get(TwigApplicationPlugin::SERVICE_TWIG), $container->get(RouterApplicationPlugin::SERVICE_ROUTER));
         };
 
         $exceptionController = function () use ($container) {

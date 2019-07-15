@@ -19,6 +19,11 @@ use Symfony\Component\HttpKernel\TerminableInterface;
 class Application implements HttpKernelInterface, TerminableInterface
 {
     /**
+     * @uses \Symfony\Cmf\Component\Routing\ChainRouterInterface
+     */
+    public const SERVICE_ROUTER = 'routers';
+
+    /**
      * @var \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface[]
      */
     protected $plugins = [];

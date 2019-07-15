@@ -17,7 +17,7 @@ use Spryker\Yves\Router\Resolver\ControllerResolver;
  */
 class RouterApplicationPlugin extends AbstractPlugin implements ApplicationPluginInterface
 {
-    public const SERVICE_CHAIN_ROUTER = 'routers';
+    public const SERVICE_ROUTER = 'routers';
     public const SERVICE_CONTROLLER_RESOLVER = 'controller-resolver';
     public const SERVICE_ARGUMENT_RESOLVER = 'argument-resolver';
 
@@ -49,11 +49,11 @@ class RouterApplicationPlugin extends AbstractPlugin implements ApplicationPlugi
      */
     protected function provideRouter(ContainerInterface $container): ContainerInterface
     {
-        $container->set(static::SERVICE_CHAIN_ROUTER, function () {
+        $container->set(static::SERVICE_ROUTER, function () {
             return $this->getFactory()->createRouter();
         });
 
-        $container->configure(static::SERVICE_CHAIN_ROUTER, [
+        $container->configure(static::SERVICE_ROUTER, [
             'alias' => [
                 'url_generator',
                 'url_matcher',

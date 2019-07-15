@@ -9,6 +9,7 @@ namespace Spryker\Zed\Application\Communication\Plugin\ServiceProvider;
 
 use Silex\Application;
 use Silex\ServiceProviderInterface;
+use Spryker\Shared\Application\Application as SprykerApplication;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Cmf\Component\Routing\ChainRouter;
 
@@ -35,13 +36,13 @@ class RoutingServiceProvider extends AbstractPlugin implements ServiceProviderIn
     {
         $app['url_matcher'] = $app->share(function () use ($app) {
             /** @var \Symfony\Cmf\Component\Routing\ChainRouter $chainRouter */
-            $chainRouter = $app['routers'];
+            $chainRouter = $app[SprykerApplication::SERVICE_ROUTER];
             $chainRouter->setContext($app['request_context']);
 
             return $chainRouter;
         });
 
-        $app['routers'] = $app->share(function () {
+        $app[SprykerApplication::SERVICE_ROUTER] = $app->share(function () {
             return new ChainRouter();
         });
     }

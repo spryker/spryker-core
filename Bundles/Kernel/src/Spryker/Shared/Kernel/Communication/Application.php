@@ -21,11 +21,15 @@ class Application extends SilexApplication
     use UrlGeneratorTrait;
 
     public const REQUEST = 'request';
+
+    /**
+     * @deprecated Use `\Spryker\Shared\Application\Application::SERVICE_ROUTER` instead.
+     */
     public const ROUTERS = 'routers';
     public const REQUEST_STACK = 'request_stack';
 
     /**
-     * Adds a router to the list of routers.
+     * @deprecated Use
      *
      * @param \Symfony\Component\Routing\RouterInterface $router The router
      * @param int $priority The priority of the router
@@ -35,7 +39,7 @@ class Application extends SilexApplication
     public function addRouter(RouterInterface $router, $priority = 0)
     {
         /** @var \Pimple $this */
-        $this[self::ROUTERS] = $this->share($this->extend(self::ROUTERS, function (ChainRouter $chainRouter) use ($router, $priority) {
+        $this[static::ROUTERS] = $this->share($this->extend(static::ROUTERS, function (ChainRouter $chainRouter) use ($router, $priority) {
             $chainRouter->add($router, $priority);
 
             return $chainRouter;

@@ -127,7 +127,7 @@ class RouterLocaleEventDispatcherPlugin extends AbstractPlugin implements EventD
      */
     protected function getUrlMatcher(ContainerInterface $container): RequestContextAwareInterface
     {
-        return $container->get(RouterApplicationPlugin::SERVICE_CHAIN_ROUTER);
+        return $container->get(RouterApplicationPlugin::SERVICE_ROUTER);
     }
 
     /**

@@ -9,6 +9,7 @@ namespace Spryker\Zed\Application\Communication\Plugin\ServiceProvider;
 
 use Silex\Application;
 use Silex\ServiceProviderInterface;
+use Spryker\Shared\Application\Application as SprykerApplication;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
@@ -39,7 +40,7 @@ class UrlGeneratorServiceProvider extends AbstractPlugin implements ServiceProvi
         $app['url_generator'] = $app->share(function ($app) {
             $app->flush();
 
-            return $app['routers'];
+            return $app[SprykerApplication::SERVICE_ROUTER];
         });
     }
 

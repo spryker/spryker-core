@@ -65,7 +65,7 @@ class RouterListenerEventDispatcherPlugin extends AbstractPlugin implements Even
      * @return \Spryker\Yves\Router\Router\ChainRouter */
     protected function getChainRouter(ContainerInterface $container): ChainRouter
     {
-        return $container->get(RouterApplicationPlugin::SERVICE_CHAIN_ROUTER);
+        return $container->get(RouterApplicationPlugin::SERVICE_ROUTER);
     }
 
     /**
