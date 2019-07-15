@@ -8,9 +8,15 @@
 namespace Spryker\Zed\SharedCart\Communication\Plugin\Quote;
 
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteExpanderPluginInterface;
 
-class ShareDetailsQuoteExpanderPlugin implements QuoteExpanderPluginInterface
+/**
+ * @method \Spryker\Zed\SharedCart\Business\SharedCartFacadeInterface getFacade()
+ * @method \Spryker\Zed\SharedCart\SharedCartConfig getConfig()
+ * @method \Spryker\Zed\SharedCart\Communication\SharedCartCommunicationFactory getFactory()
+ */
+class ShareDetailsQuoteExpanderPlugin extends AbstractPlugin implements QuoteExpanderPluginInterface
 {
     /**
      * {@inheritdoc}
@@ -24,7 +30,11 @@ class ShareDetailsQuoteExpanderPlugin implements QuoteExpanderPluginInterface
      */
     public function expand(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        // TODO: introduce new facade method for expansion
+        $shareDetailTransfers = $this->getFacade()
+            ->getShareDetailsByIdQuote($quoteTransfer)
+            ->getShareDetails();
+
+        $quoteTransfer->setShareDetails($shareDetailTransfers);
 
         return $quoteTransfer;
     }
