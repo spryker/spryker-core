@@ -104,7 +104,7 @@ class ProductDiscontinuedSynchronizationDataPlugin extends AbstractPlugin implem
      */
     protected function findProductDiscontinuedStorageEntities(array $ids): array
     {
-        if (empty($ids)) {
+        if ($ids === []) {
             return $this->getRepository()->findAllProductDiscontinuedStorageEntities();
         }
 

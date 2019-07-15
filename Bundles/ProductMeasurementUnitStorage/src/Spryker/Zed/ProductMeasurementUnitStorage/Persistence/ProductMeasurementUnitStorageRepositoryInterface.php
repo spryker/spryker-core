@@ -50,4 +50,20 @@ interface ProductMeasurementUnitStorageRepositoryInterface
      * @return \Generated\Shared\Transfer\SpyProductConcreteMeasurementUnitStorageEntityTransfer[]
      */
     public function findFilteredProductConcreteMeasurementUnitStorageEntities(FilterTransfer $filterTransfer, array $productIds = []): array;
+
+    /**
+     * @module ProductMeasurementUnit
+     *
+     * @param int[] $salesUnitsIds
+     *
+     * @return \Generated\Shared\Transfer\SpyProductMeasurementSalesUnitEntityTransfer[]
+     */
+    public function getProductMeasurementSalesUnitEntityTransfersByIds(array $salesUnitsIds): array;
+
+    /**
+     * @param int[] $productMeasurementUnitIds
+     *
+     * @return \Generated\Shared\Transfer\SpyProductMeasurementUnitEntityTransfer[]
+     */
+    public function getProductMeasurementUnitEntityTransfersByIds(array $productMeasurementUnitIds): array;
 }
