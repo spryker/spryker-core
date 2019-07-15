@@ -13,11 +13,21 @@ use Spryker\Shared\Session\Exception\SessionHandlerNotFoundInSessionHandlerPoolE
 class SessionStorageHandlerPool implements SessionStorageHandlerPoolInterface
 {
     /**
-     * @var array
+     * @var \SessionHandlerInterface[]
      */
     protected $sessionHandler = [];
 
     /**
+     * @param \Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerProviderPluginInterface[] $sessionHandlerProviderPlugins
+     */
+    public function __construct(array $sessionHandlerProviderPlugins = [])
+    {
+        $this->setupSessionHandlersFromPlugins($sessionHandlerProviderPlugins);
+    }
+
+    /**
+     * @deprecated Will be removed with next major release.
+     *
      * @param \SessionHandlerInterface $sessionHandler
      * @param string $sessionHandlerName
      *
@@ -25,7 +35,9 @@ class SessionStorageHandlerPool implements SessionStorageHandlerPoolInterface
      */
     public function addHandler(SessionHandlerInterface $sessionHandler, $sessionHandlerName)
     {
-        $this->sessionHandler[$sessionHandlerName] = $sessionHandler;
+        if (!isset($this->sessionHandler[$sessionHandlerName])) {
+            $this->sessionHandler[$sessionHandlerName] = $sessionHandler;
+        }
 
         return $this;
     }
@@ -52,5 +64,17 @@ class SessionStorageHandlerPool implements SessionStorageHandlerPoolInterface
         );
 
         throw new SessionHandlerNotFoundInSessionHandlerPoolException($message);
+    }
+
+    /**
+     * @param \Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerProviderPluginInterface[] $sessionHandlerProviderPlugins
+     *
+     * @return void
+     */
+    protected function setupSessionHandlersFromPlugins(array $sessionHandlerProviderPlugins): void
+    {
+        foreach ($sessionHandlerProviderPlugins as $sessionHandlerProviderPlugin) {
+            $this->sessionHandler[$sessionHandlerProviderPlugin->getSessionHandlerName()] = $sessionHandlerProviderPlugin->getSessionHandler();
+        }
     }
 }

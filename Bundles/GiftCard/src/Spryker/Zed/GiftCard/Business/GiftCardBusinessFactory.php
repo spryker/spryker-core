@@ -223,6 +223,6 @@ class GiftCardBusinessFactory extends AbstractBusinessFactory
      */
     public function createShipmentMethodFilter()
     {
-        return new ShipmentMethodFilter();
+        return new ShipmentMethodFilter($this->getConfig());
     }
 }

@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="RestSharedCartsAttributes">
+        <property name="idCompanyUser" type="string" />
+        <property name="idCartPermissionGroup" type="int" />
+    </transfer>
+
+    <transfer name="ShareDetail">
+        <property name="uuid" type="string"/>
+        <property name="idCompanyUser" type="int" />
+        <property name="quotePermissionGroup" type="QuotePermissionGroup"/>
+        <property name="companyUser" type="CompanyUser" />
+    </transfer>
+
+    <transfer name="ShareDetailCollection">
+        <property name="shareDetails" type="ShareDetail[]" singular="shareDetail"/>
+    </transfer>
+
+    <transfer name="Quote">
+        <property name="uuid" type="string"/>
+    </transfer>
+
+    <transfer name="QuoteResponse">
+        <property name="quoteTransfer" type="Quote"/>
+        <property name="isSuccessful" type="bool"/>
+    </transfer>
+
+    <transfer name="QuotePermissionGroup">
+        <property name="idQuotePermissionGroup" type="int"/>
+    </transfer>
+
+    <transfer name="QuotePermissionGroupResponse">
+        <property name="quotePermissionGroups" type="QuotePermissionGroup[]" singular="quotePermissionGroup"/>
+        <property name="isSuccessful" type="bool"/>
+    </transfer>
+
+    <transfer name="QuoteCompanyUser">
+        <property name="idQuoteCompanyUser" type="int"/>
+        <property name="fkCompanyUser" type="int"/>
+        <property name="fkQuotePermissionGroup" type="int"/>
+        <property name="fkQuote" type="int"/>
+        <property name="quote" type="Quote"/>
+        <property name="uuid" type="string"/>
+    </transfer>
+
+    <transfer name="ShareCartRequest">
+        <property name="idCompanyUser" type="int"/>
+        <property name="shareDetails" type="ShareDetail[]" singular="shareDetail"/>
+        <property name="quoteUuid" type="string"/>
+        <property name="customerReference" type="string"/>
+    </transfer>
+
+    <transfer name="ShareCartResponse">
+        <property name="shareDetails" type="ShareDetail[]" singular="shareDetail"/>
+        <property name="isSuccessful" type="bool"/>
+        <property name="errorIdentifier" type="string"/>
+    </transfer>
+
+    <transfer name="ShareDetailCriteriaFilter">
+        <property name="idQuote" type="int"/>
+        <property name="idCompanyUser" type="int"/>
+    </transfer>
+
+    <transfer name="RestErrorMessage">
+        <property name="status" type="int" />
+        <property name="code" type="string" />
+        <property name="detail" type="string" />
+    </transfer>
+
+    <transfer name="CompanyUserStorage">
+        <property name="idCompanyUser" type="int"/>
+        <property name="idCompany" type="int"/>
+        <property name="uuid" type="string"/>
+    </transfer>
+
+    <transfer name="CompanyUser">
+        <property name="uuid" type="string" />
+    </transfer>
+
+</transfers>

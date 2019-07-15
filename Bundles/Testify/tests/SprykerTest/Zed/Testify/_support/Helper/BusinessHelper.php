@@ -18,6 +18,7 @@ use SprykerTest\Shared\Testify\Helper\ConfigHelper;
 class BusinessHelper extends Module
 {
     protected const BUSINESS_FACTORY_CLASS_NAME_PATTERN = '\%1$s\%2$s\%3$s\Business\%3$sBusinessFactory';
+    protected const BUSINESS_FACADE_CLASS_NAME_PATTERN = '\%1$s\%2$s\%3$s\Business\%3$sFacade';
 
     /**
      * @var array
@@ -50,12 +51,20 @@ class BusinessHelper extends Module
      */
     protected function createFacade(): AbstractFacade
     {
+        $className = $this->getFacadeClassName();
+
+        return new $className();
+    }
+
+    /**
+     * @return string
+     */
+    protected function getFacadeClassName(): string
+    {
         $config = Configuration::config();
         $namespaceParts = explode('\\', $config['namespace']);
 
-        $moduleName = lcfirst($namespaceParts[2]);
-
-        return $this->getLocator()->$moduleName()->facade();
+        return sprintf(static::BUSINESS_FACADE_CLASS_NAME_PATTERN, rtrim($namespaceParts[0], 'Test'), $namespaceParts[1], $namespaceParts[2]);
     }
 
     /**

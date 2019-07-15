@@ -346,4 +346,103 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
 
         return $this->buildQueryFromCriteria($priceProductStoreEntityQuery)->exists();
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return \Generated\Shared\Transfer\SpyPriceProductStoreEntityTransfer[]
+     */
+    public function findPriceProductStoresByPriceProduct(PriceProductTransfer $priceProductTransfer): array
+    {
+        $priceProductTransfer->requireMoneyValue();
+
+        $moneyValueTransfer = $priceProductTransfer->getMoneyValue();
+        $moneyValueTransfer->requireCurrency();
+
+        $priceProductStoreEntityQuery = $this->getFactory()
+            ->createPriceProductStoreQuery()
+            ->filterByFkPriceProduct($priceProductTransfer->getIdPriceProduct())
+            ->filterByFkCurrency($moneyValueTransfer->getCurrency()->getIdCurrency())
+            ->filterByFkStore($moneyValueTransfer->getFkStore());
+
+        return $this->buildQueryFromCriteria($priceProductStoreEntityQuery)->find();
+    }
+
+    /**
+     * @param string[] $concreteSkus
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function getProductAbstractPricesByConcreteSkusAndCriteria(
+        array $concreteSkus,
+        PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+    ): array {
+        $priceProductStoreQuery = $this->createBasePriceProductStoreQuery($priceProductCriteriaTransfer);
+        $priceProductStoreEntities = $priceProductStoreQuery
+            ->joinWithCurrency()
+            ->addAsColumn('product_sku', 'spy_product.sku')
+            ->innerJoinWithPriceProduct()
+            ->usePriceProductQuery()
+                ->innerJoinWithSpyProductAbstract()
+                ->useSpyProductAbstractQuery()
+                    ->innerJoinWithSpyProduct()
+                    ->useSpyProductQuery()
+                        ->filterBySku_In($concreteSkus)
+                    ->endUse()
+                ->endUse()
+            ->endUse()
+            ->find();
+
+        if (!$priceProductStoreEntities->count()) {
+            return [];
+        }
+
+        return $this->mapPriceProductStoreEntitiesToPriceProductTransfers($priceProductStoreEntities);
+    }
+
+    /**
+     * @param string[] $concreteSkus
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function getProductConcretePricesByConcreteSkusAndCriteria(
+        array $concreteSkus,
+        PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+    ): array {
+        $priceProductStoreQuery = $this->createBasePriceProductStoreQuery($priceProductCriteriaTransfer);
+        $priceProductStoreEntities = $priceProductStoreQuery
+            ->joinWithCurrency()
+            ->joinWithPriceProduct()
+            ->usePriceProductQuery()
+                ->innerJoinWithProduct()
+                ->useProductQuery()
+                    ->filterBySku_In($concreteSkus)
+                ->endUse()
+            ->endUse()
+            ->find();
+
+        if (!$priceProductStoreEntities->count()) {
+            return [];
+        }
+
+        return $this->mapPriceProductStoreEntitiesToPriceProductTransfers($priceProductStoreEntities);
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore[] $priceProductStoreEntities
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    protected function mapPriceProductStoreEntitiesToPriceProductTransfers(ObjectCollection $priceProductStoreEntities): array
+    {
+        $mapper = $this->getFactory()->createPriceProductMapper();
+        $priceProductTransfers = [];
+        foreach ($priceProductStoreEntities as $priceProductStoreEntity) {
+            $priceProductTransfers[] = $mapper->mapPriceProductStoreEntityToPriceProductTransfer($priceProductStoreEntity, new PriceProductTransfer());
+        }
+
+        return $priceProductTransfers;
+    }
 }

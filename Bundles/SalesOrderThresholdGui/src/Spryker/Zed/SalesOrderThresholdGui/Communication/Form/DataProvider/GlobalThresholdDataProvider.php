@@ -114,7 +114,7 @@ class GlobalThresholdDataProvider
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     protected function getStoreCurrencyList(): array
     {

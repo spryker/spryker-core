@@ -40,15 +40,11 @@ class ContentStorageEventResourceRepositoryPlugin extends AbstractPlugin impleme
      *
      * @param int[] $ids
      *
-     * @return \Generated\Shared\Transfer\ContentTransfer[]
+     * @return \Generated\Shared\Transfer\SpyContentEntityTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
      */
     public function getData(array $ids = []): array
     {
-        if (!empty($ids)) {
-            return $this->getRepository()->findContentByIds($ids)->getArrayCopy();
-        }
-
-        return $this->getRepository()->findAllContent()->getArrayCopy();
+        return $this->getRepository()->findContentByContentIds($ids);
     }
 
     /**

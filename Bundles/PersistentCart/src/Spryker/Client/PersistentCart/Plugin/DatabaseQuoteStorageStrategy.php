@@ -40,6 +40,7 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
      * Specification:
      *  - Makes zed request with item and customer.
      *  - Loads customer quote from database.
+     *  - Merges loaded quote with quote from session.
      *  - Adds item to quote.
      *  - Recalculates quote totals.
      *  - Save updated quote to database.
@@ -68,6 +69,7 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
      * Specification:
      *  - Makes zed request with items and customer.
      *  - Loads customer quote from database.
+     *  - Merges loaded quote with quote from session.
      *  - Adds items to quote.
      *  - Recalculates quote totals.
      *  - Saves updated quote to database.
@@ -100,6 +102,7 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
      * Specification:
      *  - Makes zed request with items and customer.
      *  - Loads customer quote from database.
+     *  - Merges loaded quote with quote from session.
      *  - Adds only items, that passed validation.
      *  - Recalculates quote totals.
      *  - Save updated quote to database.
@@ -133,6 +136,7 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
      * Specification:
      *  - Makes zed request with items and customer.
      *  - Loads customer quote from database.
+     *  - Merges loaded quote with quote from session.
      *  - Removes single item from quote.
      *  - Recalculates quote totals.
      *  - Save updated quote to database.
@@ -161,6 +165,7 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
      * Specification:
      *  - Makes zed request with items and customer.
      *  - Loads customer quote from database.
+     *  - Merges loaded quote with quote from session.
      *  - Removes items from quote.
      *  - Recalculates quote totals.
      *  - Save updated quote to database.
@@ -308,6 +313,7 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
         $quoteTransfer->setCustomer($this->getFactory()->getCustomerClient()->getCustomer());
         $quoteResponseTransfer = $this->getZedStub()->validateQuote($quoteTransfer);
         $this->updateQuote($quoteResponseTransfer);
+
         return $quoteResponseTransfer;
     }
 
@@ -335,6 +341,7 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
 
         $quoteResponseTransfer = $this->getZedStub()->updateAndReloadQuote($quoteUpdateRequestTransfer);
         $this->updateQuote($quoteResponseTransfer);
+
         return $quoteResponseTransfer;
     }
 
@@ -365,11 +372,14 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
     /**
      * @return \Generated\Shared\Transfer\PersistentCartChangeTransfer
      */
-    protected function createPersistentCartChangeTransfer()
+    protected function createPersistentCartChangeTransfer(): PersistentCartChangeTransfer
     {
         $persistentQuoteChange = new PersistentCartChangeTransfer();
         $persistentQuoteChange->setCustomer($this->getFactory()->getCustomerClient()->getCustomer());
-        $persistentQuoteChange->setIdQuote($this->getQuoteClient()->getQuote()->getIdQuote());
+
+        $sessionQuoteTransfer = $this->getQuoteClient()->getQuote();
+        $persistentQuoteChange->setIdQuote($sessionQuoteTransfer->getIdQuote());
+        $persistentQuoteChange->setQuote($sessionQuoteTransfer);
 
         return $persistentQuoteChange;
     }
@@ -377,11 +387,14 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
     /**
      * @return \Generated\Shared\Transfer\PersistentCartChangeQuantityTransfer
      */
-    protected function createPersistentCartChangeQuantityTransfer()
+    protected function createPersistentCartChangeQuantityTransfer(): PersistentCartChangeQuantityTransfer
     {
         $persistentQuoteChange = new PersistentCartChangeQuantityTransfer();
         $persistentQuoteChange->setCustomer($this->getFactory()->getCustomerClient()->getCustomer());
-        $persistentQuoteChange->setIdQuote($this->getQuoteClient()->getQuote()->getIdQuote());
+
+        $sessionQuoteTransfer = $this->getQuoteClient()->getQuote();
+        $persistentQuoteChange->setIdQuote($sessionQuoteTransfer->getIdQuote());
+        $persistentQuoteChange->setQuote($sessionQuoteTransfer);
 
         return $persistentQuoteChange;
     }

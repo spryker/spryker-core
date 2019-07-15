@@ -57,11 +57,11 @@ class CmsBlockProductSynchronizationDataPlugin extends AbstractPlugin implements
     {
         $query = $this->getQueryContainer()->queryCmsBlockProductStorageByIds($ids);
 
-        if (empty($ids)) {
+        if ($ids === []) {
             $query->clear();
         }
 
-        return $query;
+        return $query->orderByIdCmsBlockProductStorage();
     }
 
     /**

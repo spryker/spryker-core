@@ -60,4 +60,12 @@ interface ZedRequestConstants
      * @api
      */
     public const DIRECTORY_PERMISSION = 'ZED_REQUEST:DIRECTORY_PERMISSION';
+
+    /**
+     * Specification:
+     * - Enables the mode when a request to Zed can be repeated with the same data for debugging/testing needs.
+     *
+     * @api
+     */
+    public const ENABLE_REPEAT = 'ZED_REQUEST:ENABLE_REPEAT';
 }

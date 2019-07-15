@@ -10,6 +10,9 @@ namespace Spryker\Zed\Development\Business\Module\ModuleMatcher;
 use Generated\Shared\Transfer\ModuleFilterTransfer;
 use Generated\Shared\Transfer\ModuleTransfer;
 
+/**
+ * @deprecated Use `spryker/module-finder` instead.
+ */
 interface ModuleMatcherInterface
 {
     /**

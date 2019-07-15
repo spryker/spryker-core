@@ -176,21 +176,17 @@ class StockFacadeTest extends Unit
     }
 
     /**
-     * TODO no rollback on error
-     *
      * @return void
      */
     public function testCreateStockProductShouldThrowException()
     {
-        $this->markTestSkipped('Needs to be fixed first');
-
         $this->expectException(StockProductAlreadyExistsException::class);
         $this->expectExceptionMessage('Cannot duplicate entry: this stock type is already set for this product');
 
         $stockProductTransfer = (new StockProductTransfer())
             ->setStockType($this->stockEntity1->getName())
-            ->setQuantity(self::STOCK_QUANTITY_1)
-            ->setSku(self::CONCRETE_SKU);
+            ->setQuantity(static::STOCK_QUANTITY_1)
+            ->setSku(static::CONCRETE_SKU);
 
         $idStockProduct = $this->stockFacade->createStockProduct($stockProductTransfer);
 
@@ -198,7 +194,7 @@ class StockFacadeTest extends Unit
             ->filterByIdStockProduct($idStockProduct)
             ->findOne();
 
-        $this->assertEquals(self::STOCK_QUANTITY_1, $stockProductEntity->getQuantity());
+        $this->assertEquals(static::STOCK_QUANTITY_1, $stockProductEntity->getQuantity());
     }
 
     /**

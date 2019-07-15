@@ -27,6 +27,7 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Symfony\Component\Form\FormInterface;
 
 /**
+ * @method \Spryker\Zed\ContentGui\Business\ContentGuiFacade getFacade()
  * @method \Spryker\Zed\ContentGui\ContentGuiConfig getConfig()
  */
 class ContentGuiCommunicationFactory extends AbstractCommunicationFactory
@@ -72,16 +73,16 @@ class ContentGuiCommunicationFactory extends AbstractCommunicationFactory
 
     /**
      * @param string $contentType
-     * @param int|null $idContent
+     * @param string|null $contentKey
      *
      * @return \Spryker\Zed\ContentGui\Communication\Table\ContentByTypeTable
      */
-    public function createContentByTypeTable(string $contentType, ?int $idContent = null): ContentByTypeTable
+    public function createContentByTypeTable(string $contentType, ?string $contentKey = null): ContentByTypeTable
     {
         return new ContentByTypeTable(
             $contentType,
             $this->getPropelContentQuery(),
-            $idContent
+            $contentKey
         );
     }
 

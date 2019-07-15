@@ -25,6 +25,12 @@ module.exports = {
                         baseConfig.buttons = newConfig.buttons;
                     }
                     break;
+                case 'popover':
+                    var defaultPopoverOptions = $.summernote.options.popover;
+                    var extendedOptions = $.extend(defaultPopoverOptions, newConfig.popover);
+
+                    baseConfig.popover = extendedOptions;
+                    break;
                 default:
                     baseConfig[property] = newConfig[property];
             }

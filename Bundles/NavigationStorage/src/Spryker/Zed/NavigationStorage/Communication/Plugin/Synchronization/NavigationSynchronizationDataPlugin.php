@@ -61,11 +61,11 @@ class NavigationSynchronizationDataPlugin extends AbstractPlugin implements Sync
     {
         $query = $this->getQueryContainer()->queryNavigationStorageByNavigationIds($ids);
 
-        if (empty($ids)) {
+        if ($ids === []) {
             $query->clear();
         }
 
-        return $query;
+        return $query->orderByIdNavigationStorage();
     }
 
     /**

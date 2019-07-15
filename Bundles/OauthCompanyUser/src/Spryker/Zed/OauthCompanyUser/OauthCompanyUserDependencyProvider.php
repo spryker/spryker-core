@@ -10,6 +10,7 @@ namespace Spryker\Zed\OauthCompanyUser;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\OauthCompanyUser\Dependency\Facade\OauthCompanyUserToCompanyUserFacadeBridge;
+use Spryker\Zed\OauthCompanyUser\Dependency\Facade\OauthCompanyUserToCustomerFacadeBridge;
 use Spryker\Zed\OauthCompanyUser\Dependency\Facade\OauthCompanyUserToOauthFacadeBridge;
 use Spryker\Zed\OauthCompanyUser\Dependency\Service\OauthCompanyUserToUtilEncodingServiceBridge;
 
@@ -20,10 +21,13 @@ class OauthCompanyUserDependencyProvider extends AbstractBundleDependencyProvide
 {
     public const FACADE_COMPANY_USER = 'FACADE_COMPANY_USER';
     public const FACADE_OAUTH = 'FACADE_OAUTH';
+    public const FACADE_CUSTOMER = 'FACADE_CUSTOMER';
 
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     public const PLUGINS_OAUTH_COMPANY_USER_IDENTIFIER_EXPANDER = 'PLUGINS_OAUTH_COMPANY_USER_IDENTIFIER_EXPANDER';
+    public const PLUGINS_CUSTOMER_OAUTH_REQUEST_MAPPER = 'PLUGINS_CUSTOMER_OAUTH_REQUEST_MAPPER';
+    public const PLUGINS_CUSTOMER_EXPANDER = 'PLUGINS_CUSTOMER_EXPANDER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -36,8 +40,25 @@ class OauthCompanyUserDependencyProvider extends AbstractBundleDependencyProvide
 
         $container = $this->addOauthFacade($container);
         $container = $this->addCompanyUserFacade($container);
+        $container = $this->addCustomerFacade($container);
         $container = $this->addUtilEncodingService($container);
         $container = $this->addOauthCompanyUserIdentifierExpanderPlugins($container);
+        $container = $this->addCustomerOauthRequestMapperPlugins($container);
+        $container = $this->addCustomerExpanderPlugins($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function provideCommunicationLayerDependencies(Container $container): Container
+    {
+        $container = parent::provideCommunicationLayerDependencies($container);
+        $container = $this->addCompanyUserFacade($container);
+        $container = $this->addUtilEncodingService($container);
 
         return $container;
     }
@@ -75,6 +96,20 @@ class OauthCompanyUserDependencyProvider extends AbstractBundleDependencyProvide
      *
      * @return \Spryker\Zed\Kernel\Container
      */
+    protected function addCustomerFacade(Container $container): Container
+    {
+        $container[static::FACADE_CUSTOMER] = function (Container $container) {
+            return new OauthCompanyUserToCustomerFacadeBridge($container->getLocator()->customer()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     protected function addUtilEncodingService(Container $container): Container
     {
         $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
@@ -102,6 +137,50 @@ class OauthCompanyUserDependencyProvider extends AbstractBundleDependencyProvide
      * @return \Spryker\Zed\OauthCompanyUserExtension\Dependency\Plugin\OauthCompanyUserIdentifierExpanderPluginInterface[]
      */
     protected function getOauthCompanyUserIdentifierExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCustomerOauthRequestMapperPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_CUSTOMER_OAUTH_REQUEST_MAPPER] = function () {
+            return $this->getCustomerOauthRequestMapperPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCustomerExpanderPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_CUSTOMER_EXPANDER] = function () {
+            return $this->getCustomerExpanderPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\OauthCompanyUserExtension\Dependency\Plugin\CustomerOauthRequestMapperPluginInterface[]
+     */
+    protected function getCustomerOauthRequestMapperPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\OauthCompanyUserExtension\Dependency\Plugin\CustomerExpanderPluginInterface[]
+     */
+    protected function getCustomerExpanderPlugins(): array
     {
         return [];
     }
