@@ -55,14 +55,20 @@ class VolumePriceExtractor implements VolumePriceExtractorInterface
      */
     public function extractPriceProductVolumesForProductConcrete(array $priceProductTransfers): array
     {
-        $extractedPrices = $this->extractPriceProductVolumeTransfersFromArray($priceProductTransfers);
-
-        if (empty($extractedPrices) && !empty($priceProductTransfers)) {
-            $abstractProductPrices = $this->priceProductReader->getPriceProductAbstractFromPriceProduct(
-                $priceProductTransfers[0]
-            );
-            $extractedPrices = $this->extractPriceProductVolumeTransfersFromArray($abstractProductPrices);
+        if (empty($priceProductTransfers[0])) {
+            return $priceProductTransfers;
         }
+
+        $extractedPrices = $this->extractPriceProductVolumeTransfersFromArray($priceProductTransfers);
+        if (empty($extractedPrices)) {
+            return $priceProductTransfers;
+        }
+
+        $priceProductTransfer = $priceProductTransfers[0];
+        $abstractProductPrices = $this->priceProductReader
+            ->getPriceProductAbstractFromPriceProduct($priceProductTransfer);
+        $extractedPrices = $this->extractPriceProductVolumeTransfersFromArray($abstractProductPrices);
+        $extractedPrices = $this->setConcretePriceDataToPriceData($extractedPrices, $priceProductTransfer);
 
         return array_merge($extractedPrices, $priceProductTransfers);
     }
@@ -154,5 +160,25 @@ class VolumePriceExtractor implements VolumePriceExtractorInterface
             ->setPriceData($this->utilEncoding->encodeJson([]));
 
         return $volumePriceTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $concretePriceProductTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    protected function setConcretePriceDataToPriceData(
+        array $priceProductTransfers,
+        PriceProductTransfer $concretePriceProductTransfer
+    ): array {
+        $concretePriceProductSku = $concretePriceProductTransfer->getSkuProduct();
+        $concretePriceProductId = $concretePriceProductTransfer->getIdProduct();
+        foreach ($priceProductTransfers as $priceProductTransfer) {
+            $priceProductTransfer->setSkuProduct($concretePriceProductSku);
+            $priceProductTransfer->setIdProduct($concretePriceProductId);
+        }
+
+        return $priceProductTransfers;
     }
 }
