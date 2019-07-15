@@ -12,7 +12,10 @@ use Spryker\Client\StorageDatabase\StorageDatabaseConfig;
 
 class StorageTableNameResolver implements StorageTableNameResolverInterface
 {
-    protected const MESSAGE_INVALID_RESOURCE_TO_TABLE_CONFIGURATION_MAPPING_EXCEPTION = 'Invalid resource to table mapping configuration.';
+    protected const MESSAGE_INVALID_RESOURCE_TO_TABLE_CONFIGURATION_MAPPING_EXCEPTION = <<<EOT
+No table mapping was found for resource %s. Make sure that table mappings are configured correctly
+under `Spryker\Shared\StorageDatabase\StorageDatabaseConstants::RESOURCE_PREFIX_TO_STORAGE_TABLE_MAP` key.
+EOT;
 
     /**
      * @var \Spryker\Client\StorageDatabase\StorageDatabaseConfig
@@ -127,7 +130,9 @@ class StorageTableNameResolver implements StorageTableNameResolverInterface
         $resourceStorageTableName = $storageTableNameParts[$this->config->getStorageTableNameConfigKey()] ?? null;
 
         if (!$resourceStorageTableName) {
-            throw new InvalidRecourseToTableMappingConfigurationException(static::MESSAGE_INVALID_RESOURCE_TO_TABLE_CONFIGURATION_MAPPING_EXCEPTION);
+            throw new InvalidRecourseToTableMappingConfigurationException(
+                sprintf(static::MESSAGE_INVALID_RESOURCE_TO_TABLE_CONFIGURATION_MAPPING_EXCEPTION, $resourceName)
+            );
         }
 
         return $resourceStorageTableName;
