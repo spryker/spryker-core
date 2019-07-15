@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\MerchantRelationshipSalesOrderThreshold;
 
 use Codeception\Actor;
+use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
@@ -44,7 +45,9 @@ class MerchantRelationshipSalesOrderThresholdBusinessTester extends Actor
     public function createTestMerchantRelationship(string $key): MerchantRelationshipTransfer
     {
         $idMerchant = $this->haveMerchant()->getIdMerchant();
-        $idCompanyBusinessUnit = $this->haveCompanyBusinessUnit()->getIdCompanyBusinessUnit();
+        $idCompanyBusinessUnit = $this->haveCompanyBusinessUnit([
+            CompanyBusinessUnitTransfer::FK_COMPANY => $this->haveCompany()->getIdCompany(),
+        ])->getIdCompanyBusinessUnit();
 
         return $this->haveMerchantRelationship([
             SpyMerchantRelationshipEntityTransfer::MERCHANT_RELATIONSHIP_KEY => $key,

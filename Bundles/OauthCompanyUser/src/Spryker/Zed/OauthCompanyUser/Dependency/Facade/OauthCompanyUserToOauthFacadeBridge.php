@@ -7,6 +7,10 @@
 
 namespace Spryker\Zed\OauthCompanyUser\Dependency\Facade;
 
+use Generated\Shared\Transfer\OauthAccessTokenValidationRequestTransfer;
+use Generated\Shared\Transfer\OauthAccessTokenValidationResponseTransfer;
+use Generated\Shared\Transfer\OauthRequestTransfer;
+use Generated\Shared\Transfer\OauthResponseTransfer;
 use Generated\Shared\Transfer\OauthScopeTransfer;
 
 class OauthCompanyUserToOauthFacadeBridge implements OauthCompanyUserToOauthFacadeInterface
@@ -42,5 +46,25 @@ class OauthCompanyUserToOauthFacadeBridge implements OauthCompanyUserToOauthFaca
     public function getScopesByIdentifiers(array $customerScopes): array
     {
         return $this->oauthFacade->getScopesByIdentifiers($customerScopes);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OauthRequestTransfer $oauthRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\OauthResponseTransfer
+     */
+    public function processAccessTokenRequest(OauthRequestTransfer $oauthRequestTransfer): OauthResponseTransfer
+    {
+        return $this->oauthFacade->processAccessTokenRequest($oauthRequestTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OauthAccessTokenValidationRequestTransfer $authAccessTokenValidationRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\OauthAccessTokenValidationResponseTransfer
+     */
+    public function validateAccessToken(OauthAccessTokenValidationRequestTransfer $authAccessTokenValidationRequestTransfer): OauthAccessTokenValidationResponseTransfer
+    {
+        return $this->oauthFacade->validateAccessToken($authAccessTokenValidationRequestTransfer);
     }
 }

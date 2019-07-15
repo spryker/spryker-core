@@ -9,11 +9,13 @@ namespace SprykerTest\Zed\QuoteApproval\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CompanyUserTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\PermissionTransfer;
 use Generated\Shared\Transfer\QuoteApprovalRequestTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShareDetailCollectionTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Spryker\Zed\Permission\PermissionDependencyProvider;
 use Spryker\Zed\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInterface;
@@ -251,6 +253,47 @@ class QuoteApprovalFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testSanitizeQuoteApprovalSanitizeAllApprovalsFromQuoteAndRemovesFromDatabase(): void
+    {
+        //Assign
+        $quoteApprovalCreateRequestTransfer = $this->createValidQuoteApprovalCreateRequestTransfer();
+        $this->getFacade()->createQuoteApproval($quoteApprovalCreateRequestTransfer);
+
+        $quoteTransfer = $this->findQuoteById($quoteApprovalCreateRequestTransfer->getIdQuote());
+
+        //Act
+        $quoteTransfer = $this->getFacade()->sanitizeQuoteApproval($quoteTransfer);
+        $quoteApprovalTransfers = $this->getFacade()->getQuoteApprovalsByIdQuote($quoteApprovalCreateRequestTransfer->getIdQuote());
+
+        //Assert
+        $this->assertEmpty($quoteTransfer->getQuoteApprovals());
+        $this->assertEmpty($quoteApprovalTransfers);
+    }
+
+    /**
+     * @return void
+     */
+    public function testSanitizeQuoteApprovalSanitizeAllApprovalsFromQuoteWithoutRemoving(): void
+    {
+        //Assign
+        $quoteApprovalCreateRequestTransfer = $this->createValidQuoteApprovalCreateRequestTransfer();
+        $this->getFacade()->createQuoteApproval($quoteApprovalCreateRequestTransfer);
+
+        $quoteTransfer = $this->findQuoteById($quoteApprovalCreateRequestTransfer->getIdQuote());
+        $quoteTransfer->setIdQuote(null);
+
+        //Act
+        $quoteTransfer = $this->getFacade()->sanitizeQuoteApproval($quoteTransfer);
+        $quoteApprovalTransfers = $this->getFacade()->getQuoteApprovalsByIdQuote($quoteApprovalCreateRequestTransfer->getIdQuote());
+
+        //Assert
+        $this->assertEmpty($quoteTransfer->getQuoteApprovals());
+        $this->assertCount(1, $quoteApprovalTransfers);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\QuoteApprovalRequestTransfer $quoteApprovalCreateRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteApprovalRequestTransfer
@@ -387,11 +430,20 @@ class QuoteApprovalFacadeTest extends Unit
         $totalsTransfer->setGrandTotal($limitInCents);
 
         $companyUserTransfer = $this->haveCompanyUser();
+        $concreteProductTransfer = $this->tester->haveProduct();
 
         $quoteTransfer = $this->tester->havePersistentQuote(
             [
                 QuoteTransfer::CUSTOMER => $companyUserTransfer->getCustomer(),
                 QuoteTransfer::TOTALS => $totalsTransfer,
+                QuoteTransfer::STORE => [StoreTransfer::NAME => 'DE'],
+                QuoteTransfer::ITEMS => [
+                    [
+                        ItemTransfer::QUANTITY => 1,
+                        ItemTransfer::ID => $concreteProductTransfer->getIdProductConcrete(),
+                        ItemTransfer::SKU => $concreteProductTransfer->getSku(),
+                    ],
+                ],
             ]
         );
 

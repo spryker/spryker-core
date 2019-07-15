@@ -14,6 +14,9 @@ use Symfony\Component\Finder\SplFileInfo;
 use Zend\Filter\FilterChain;
 use Zend\Filter\Word\DashToCamelCase;
 
+/**
+ * @deprecated Use `spryker/module-finder` instead.
+ */
 class PackageFinder implements PackageFinderInterface
 {
     /**

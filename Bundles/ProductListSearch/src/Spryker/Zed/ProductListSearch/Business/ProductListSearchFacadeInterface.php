@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductListSearch\Business;
 
 use Generated\Shared\Transfer\ProductConcretePageSearchTransfer;
 use Generated\Shared\Transfer\ProductListMapTransfer;
+use Generated\Shared\Transfer\ProductPageLoadTransfer;
 
 interface ProductListSearchFacadeInterface
 {
@@ -62,4 +63,16 @@ interface ProductListSearchFacadeInterface
      * @return \Generated\Shared\Transfer\ProductListMapTransfer
      */
     public function mapProductDataToProductListMapTransfer(array $productData, ProductListMapTransfer $productListMapTransfer): ProductListMapTransfer;
+
+    /**
+     * Specification:
+     *  - Expand product page transfer with product list data.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductPageLoadTransfer $loadTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductPageLoadTransfer
+     */
+    public function expandProductPageData(ProductPageLoadTransfer $loadTransfer): ProductPageLoadTransfer;
 }

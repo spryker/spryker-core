@@ -168,6 +168,7 @@ class UniqueGlossaryUrlValidatorTest extends Unit
             UniqueUrl::OPTION_CMS_FACADE => $this->createCmsFacade(),
             UniqueUrl::OPTION_URL_FACADE => $this->createUrlFacade(),
         ]);
+
         return $uniqueUrlConstraint;
     }
 

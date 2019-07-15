@@ -10,6 +10,9 @@ namespace Spryker\Client\Storage\Redis;
 use Exception;
 use Predis\ClientInterface;
 
+/**
+ * @deprecated Use `Spryker\Client\StorageExtension\Dependency\Plugin\StoragePluginInterface` implementation instead.
+ */
 class Service implements ServiceInterface
 {
     public const KV_PREFIX = 'kv:';

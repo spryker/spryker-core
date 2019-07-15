@@ -1,13 +1,17 @@
-"Abstract Product List", "Abstract Product List"
-"Add more products", "Add more products"
-"Name","Name"
-"SKU","SKU"
-"ID","ID"
-"Image","Image"
-"Stores","Stores"
-"Status","Status"
-"Selected","Selected"
-"Actions","Actions"
-"Delete","Delete"
-"Move Up","Move Up"
-"Move Down","Move Down"
+"Abstract Product List","Abstrakte Produktliste"
+Actions,Aktionen
+"Add more products","Weitere Produkte hinzufügen"
+Delete,Löschen
+"Add to list","Zur Liste hinzufügen"
+"Move Down","Runter"
+"Move Up","Hoch"
+ID,ID
+Image,Bild
+Name,Name
+Selected,Ausgewählt
+SKU,SKU
+Status,Status
+Stores,Stores
+"content_product_abstract_list.template.default","Standard"
+"content_product_abstract_list.template.bottom-title","Titel unten"
+"content_product_abstract_list.template.top-title","Titel oben"

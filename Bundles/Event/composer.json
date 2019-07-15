@@ -6,7 +6,7 @@
   "require": {
     "php": ">=7.1",
     "spryker/error-handler": "^2.0.0",
-    "spryker/kernel": "^3.0.0",
+    "spryker/kernel": "^3.30.0",
     "spryker/log": "^3.0.0",
     "spryker/monolog": "^2.0.0",
     "spryker/queue": "^1.1.0",

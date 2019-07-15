@@ -473,6 +473,7 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::PLUGIN_STORE_RELATION_FORM_TYPE] = function () {
             return $this->getStoreRelationFormTypePlugin();
         };
+
         return $container;
     }
 

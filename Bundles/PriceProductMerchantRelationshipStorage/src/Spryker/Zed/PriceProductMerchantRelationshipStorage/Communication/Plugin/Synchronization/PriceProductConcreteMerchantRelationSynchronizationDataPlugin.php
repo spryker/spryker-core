@@ -14,6 +14,8 @@ use Spryker\Zed\PriceProductMerchantRelationshipStorage\PriceProductMerchantRela
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataRepositoryPluginInterface;
 
 /**
+ * @deprecated Use \Spryker\Zed\PriceProductMerchantRelationshipStorage\Communication\Plugin\Synchronization\PriceProductConcreteMerchantRelationSynchronizationDataBulkPlugin instead.
+ *
  * @method \Spryker\Zed\PriceProductMerchantRelationshipStorage\Business\PriceProductMerchantRelationshipStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\PriceProductMerchantRelationshipStorage\Communication\PriceProductMerchantRelationshipStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence\PriceProductMerchantRelationshipStorageRepositoryInterface getRepository()
@@ -113,7 +115,7 @@ class PriceProductConcreteMerchantRelationSynchronizationDataPlugin extends Abst
      */
     protected function findPriceProductConcreteMerchantRelationshipStorageEntities(array $ids = [])
     {
-        if (empty($ids)) {
+        if ($ids === []) {
             return $this->getRepository()
                 ->findAllPriceProductConcreteMerchantRelationshipStorageEntities();
         }

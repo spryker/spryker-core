@@ -6,10 +6,10 @@
   "require": {
     "php": ">=7.1",
     "spryker/calculation": "^4.0.0",
-    "spryker/cart-extension": "^1.7.0 || ^2.3.0",
-    "spryker/kernel": "^3.19.0",
+    "spryker/cart-extension": "^1.8.0 || ^2.4.0 || ^4.0.0",
+    "spryker/kernel": "^3.30.0",
     "spryker/messenger": "^3.1.0",
-    "spryker/quote": "^2.8.0",
+    "spryker/quote": "^2.10.0",
     "spryker/zed-request": "^3.6.0"
   },
   "require-dev": {

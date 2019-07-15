@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ContentBannerTermTransfer;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Required;
-use Symfony\Component\Validator\Constraints\Url;
 
 class ContentBannerConstraintsProvider implements ContentBannerConstraintsProviderInterface
 {
@@ -62,7 +61,6 @@ class ContentBannerConstraintsProvider implements ContentBannerConstraintsProvid
             new Required(),
             new NotBlank(),
             new Length(['max' => 1028]),
-            new Url(),
         ];
     }
 
@@ -75,7 +73,6 @@ class ContentBannerConstraintsProvider implements ContentBannerConstraintsProvid
             new Required(),
             new NotBlank(),
             new Length(['max' => 1028]),
-            new Url(),
         ];
     }
 

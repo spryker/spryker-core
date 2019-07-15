@@ -98,4 +98,20 @@ interface CompanyUnitAddressClientInterface
     public function saveCompanyBusinessUnitAddresses(
         CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
     ): void;
+
+    /**
+     * Specification:
+     * - Finds a company business unit address by uuid.
+     * - Makes zed request.
+     * - Requires uuid field to be set in CompanyUnitAddressTransfer taken as parameter.
+     *
+     * @api
+     *
+     * {@internal will work if UUID field is provided.}
+     *
+     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer
+     */
+    public function findCompanyBusinessUnitAddressByUuid(CompanyUnitAddressTransfer $companyUnitAddressTransfer): CompanyUnitAddressResponseTransfer;
 }

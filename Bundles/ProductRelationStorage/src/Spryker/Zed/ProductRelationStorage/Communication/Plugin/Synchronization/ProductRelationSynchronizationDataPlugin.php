@@ -57,11 +57,11 @@ class ProductRelationSynchronizationDataPlugin extends AbstractPlugin implements
     {
         $query = $this->getQueryContainer()->queryProductAbstractRelationStorageByIds($ids);
 
-        if (empty($ids)) {
+        if ($ids === []) {
             $query->clear();
         }
 
-        return $query;
+        return $query->orderByIdProductAbstractRelationStorage();
     }
 
     /**

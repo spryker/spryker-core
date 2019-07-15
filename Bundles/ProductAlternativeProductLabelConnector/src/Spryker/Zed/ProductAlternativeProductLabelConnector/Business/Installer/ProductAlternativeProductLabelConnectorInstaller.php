@@ -66,6 +66,8 @@ class ProductAlternativeProductLabelConnectorInstaller implements ProductAlterna
         if (!$this->productLabelFacade->findLabelByLabelName($this->config->getProductAlternativesLabelName())) {
             $productLabelTransfer = new ProductLabelTransfer();
             $productLabelTransfer->setName($this->config->getProductAlternativesLabelName());
+            $productLabelTransfer->setFrontEndReference($this->config->getProductAlternativesLabelFrontEndReference());
+
             $this->addDataToProductLabelTransfer($productLabelTransfer);
             $this->productLabelFacade->createLabel(
                 $productLabelTransfer
@@ -75,6 +77,7 @@ class ProductAlternativeProductLabelConnectorInstaller implements ProductAlterna
         $productLabelTransfer = $this->productLabelFacade->findLabelByLabelName($this->config->getProductAlternativesLabelName());
 
         if ($productLabelTransfer) {
+            $productLabelTransfer->setFrontEndReference($this->config->getProductAlternativesLabelFrontEndReference());
             $this->addDataToProductLabelTransfer($productLabelTransfer);
             $this->productLabelFacade->updateLabel($productLabelTransfer);
         }
