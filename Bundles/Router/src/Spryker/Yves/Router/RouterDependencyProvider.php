@@ -15,10 +15,10 @@ use Spryker\Yves\Kernel\Container;
  */
 class RouterDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const ROUTER_PLUGINS = 'router-plugins';
-    public const ROUTER_ROUTE_PROVIDER = 'router-controller-provider';
-    public const POST_ADD_ROUTE_MANIPULATOR = 'route manipulator';
-    public const ROUTER_ENHANCER_PLUGINS = 'router enhancer plugin';
+    public const ROUTER_PLUGINS = 'ROUTER_PLUGINS';
+    public const ROUTER_ROUTE_PROVIDER = 'ROUTER_ROUTE_PROVIDER';
+    public const POST_ADD_ROUTE_MANIPULATOR = 'POST_ADD_ROUTE_MANIPULATOR';
+    public const ROUTER_ENHANCER_PLUGINS = 'ROUTER_ENHANCER_PLUGINS';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container

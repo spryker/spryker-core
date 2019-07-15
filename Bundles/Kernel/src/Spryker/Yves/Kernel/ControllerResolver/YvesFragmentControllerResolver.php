@@ -13,7 +13,7 @@ use Spryker\Yves\Kernel\BundleControllerAction;
 use Spryker\Yves\Kernel\ClassResolver\Controller\ControllerResolver;
 
 /**
- * @deprecated Use `spryker-shop/router` instead.
+ * @deprecated Use `spryker/router` instead.
  */
 class YvesFragmentControllerResolver extends SilexControllerResolver
 {

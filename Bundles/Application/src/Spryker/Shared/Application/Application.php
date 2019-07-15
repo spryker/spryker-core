@@ -108,6 +108,8 @@ class Application implements HttpKernelInterface, TerminableInterface
     }
 
     /**
+     * @deprecated Will be removed without replacement. This method was only used for Silex Controller.
+     *
      * @return void
      */
     public function flushControllers()

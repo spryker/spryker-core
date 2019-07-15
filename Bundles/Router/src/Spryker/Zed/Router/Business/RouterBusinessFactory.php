@@ -33,7 +33,7 @@ class RouterBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\RouterExtension\Dependency\Plugin\RouterPluginInterface[]
      */
-    protected function getRouterPlugins(): array
+    public function getRouterPlugins(): array
     {
         return $this->getProvidedDependency(RouterDependencyProvider::ROUTER_PLUGINS);
     }
@@ -67,7 +67,7 @@ class RouterBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Router\Business\Loader\LoaderInterface
      */
-    protected function createClosureLoader(): LoaderInterface
+    public function createClosureLoader(): LoaderInterface
     {
         return new ClosureLoader();
     }
@@ -75,7 +75,7 @@ class RouterBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Router\Business\Resource\ResourceInterface
      */
-    protected function createResource(): ResourceInterface
+    public function createResource(): ResourceInterface
     {
         return new RouterResource(
             $this->getConfig()
@@ -85,7 +85,7 @@ class RouterBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\RouterExtension\Dependency\Plugin\RouterEnhancerPluginInterface[]
      */
-    protected function getRouterEnhancerPlugins(): array
+    public function getRouterEnhancerPlugins(): array
     {
         return $this->getProvidedDependency(RouterDependencyProvider::ROUTER_ENHANCER_PLUGINS);
     }

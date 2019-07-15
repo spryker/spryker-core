@@ -43,7 +43,7 @@ class RouterFactory extends AbstractFactory
     /**
      * @return \Spryker\Yves\RouterExtension\Dependency\Plugin\RouterPluginInterface[]
      */
-    protected function getRouterPlugins(): array
+    public function getRouterPlugins(): array
     {
         return $this->getProvidedDependency(RouterDependencyProvider::ROUTER_PLUGINS);
     }
@@ -64,7 +64,7 @@ class RouterFactory extends AbstractFactory
     /**
      * @return \Spryker\Yves\Router\Loader\LoaderInterface
      */
-    protected function createClosureLoader(): LoaderInterface
+    public function createClosureLoader(): LoaderInterface
     {
         return new ClosureLoader();
     }
@@ -72,7 +72,7 @@ class RouterFactory extends AbstractFactory
     /**
      * @return \Spryker\Yves\Router\Resource\ResourceInterface
      */
-    protected function createResource(): ResourceInterface
+    public function createResource(): ResourceInterface
     {
         return new RouterResource(
             $this->createRouteCollection(),
@@ -83,7 +83,7 @@ class RouterFactory extends AbstractFactory
     /**
      * @return \Spryker\Yves\Router\Route\RouteCollection
      */
-    protected function createRouteCollection(): RouteCollection
+    public function createRouteCollection(): RouteCollection
     {
         return new RouteCollection(
             $this->getRouteManipulatorPlugins()
@@ -93,7 +93,7 @@ class RouterFactory extends AbstractFactory
     /**
      * @return \Spryker\Yves\RouterExtension\Dependency\Plugin\PostAddRouteManipulatorPluginInterface[]
      */
-    protected function getRouteManipulatorPlugins(): array
+    public function getRouteManipulatorPlugins(): array
     {
         return $this->getProvidedDependency(RouterDependencyProvider::POST_ADD_ROUTE_MANIPULATOR);
     }
@@ -101,7 +101,7 @@ class RouterFactory extends AbstractFactory
     /**
      * @return \Spryker\Yves\RouterExtension\Dependency\Plugin\RouteProviderPluginInterface[]
      */
-    protected function getRouteProviderPlugins(): array
+    public function getRouteProviderPlugins(): array
     {
         return $this->getProvidedDependency(RouterDependencyProvider::ROUTER_ROUTE_PROVIDER);
     }
@@ -109,7 +109,7 @@ class RouterFactory extends AbstractFactory
     /**
      * @return \Spryker\Yves\RouterExtension\Dependency\Plugin\RouterEnhancerPluginInterface[]
      */
-    protected function getRouterEnhancerPlugins(): array
+    public function getRouterEnhancerPlugins(): array
     {
         return $this->getProvidedDependency(RouterDependencyProvider::ROUTER_ENHANCER_PLUGINS);
     }
