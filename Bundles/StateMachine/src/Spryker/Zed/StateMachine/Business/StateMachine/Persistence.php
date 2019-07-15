@@ -116,8 +116,8 @@ class Persistence implements PersistenceInterface
      */
     public function saveStateMachineItem(StateMachineItemTransfer $stateMachineItemTransfer, $stateName)
     {
-        if (isset($this->persistedStates[$stateName])) {
-            $stateMachineItemStateEntity = $this->persistedStates[$stateName];
+        if (isset($this->persistedStates[$stateMachineItemTransfer->getIdStateMachineProcess() . $stateName])) {
+            $stateMachineItemStateEntity = $this->persistedStates[$stateMachineItemTransfer->getIdStateMachineProcess() . $stateName];
         } else {
             $stateMachineItemTransfer->requireIdStateMachineProcess();
 
@@ -130,7 +130,7 @@ class Persistence implements PersistenceInterface
             if ($stateMachineItemStateEntity === null) {
                 $stateMachineItemStateEntity = $this->saveStateMachineItemEntity($stateMachineItemTransfer, $stateName);
             }
-            $this->persistedStates[$stateName] = $stateMachineItemStateEntity;
+            $this->persistedStates[$stateMachineItemTransfer->getIdStateMachineProcess() . $stateName] = $stateMachineItemStateEntity;
         }
 
         $stateMachineItemTransfer->setIdItemState($stateMachineItemStateEntity->getIdStateMachineItemState());
