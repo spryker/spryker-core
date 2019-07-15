@@ -23,7 +23,9 @@ class ItemRefundCalculator extends AbstractRefundCalculator
     public function calculateRefund(RefundTransfer $refundTransfer, OrderTransfer $orderTransfer, array $salesOrderItems)
     {
         foreach ($orderTransfer->getItems() as $itemTransfer) {
-            if ($this->shouldItemRefunded($itemTransfer, $salesOrderItems)) {
+            if ($this->shouldItemRefunded($itemTransfer, $salesOrderItems)
+                && !$this->isItemAdded($refundTransfer, $itemTransfer)
+            ) {
                 $refundTransfer->addItem($itemTransfer);
             }
         }
