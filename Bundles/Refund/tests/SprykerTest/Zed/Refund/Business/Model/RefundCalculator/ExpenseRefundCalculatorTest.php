@@ -80,7 +80,7 @@ class ExpenseRefundCalculatorTest extends AbstractRefundCalculatorTest
             $this->getSalesOrderItemOne(),
         ];
 
-        $refundTransfer = $this->getRefundTransferWithItem();
+        $refundTransfer = $this->getRefundTransferWithAmountAndItem();
 
         //Act
         $refundTransfer = $refundCalculationPlugin->calculateRefund($refundTransfer, $orderTransfer, $salesOrderItems);

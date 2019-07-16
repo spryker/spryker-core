@@ -98,12 +98,12 @@ class AbstractRefundCalculatorTest extends Unit
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer|null $itemTransfer
      * @param int $amount
+     * @param \Generated\Shared\Transfer\ItemTransfer|null $itemTransfer
      *
      * @return \Generated\Shared\Transfer\RefundTransfer
      */
-    protected function getRefundTransferWithItem(?ItemTransfer $itemTransfer = null, int $amount = 100): RefundTransfer
+    protected function getRefundTransferWithAmountAndItem(int $amount = 100, ?ItemTransfer $itemTransfer = null): RefundTransfer
     {
         $refundTransfer = new RefundTransfer();
         $refundTransfer->setAmount($amount);
