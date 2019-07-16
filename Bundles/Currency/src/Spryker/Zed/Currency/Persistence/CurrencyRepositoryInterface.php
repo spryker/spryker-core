@@ -17,4 +17,11 @@ interface CurrencyRepositoryInterface
      * @return \Generated\Shared\Transfer\CurrencyTransfer|null
      */
     public function findCurrencyByIsoCode(string $isoCode): ?CurrencyTransfer;
+
+    /**
+     * @param string[] $isoCodes
+     *
+     * @return \Generated\Shared\Transfer\CurrencyTransfer[]
+     */
+    public function getCurrencyTransfersByIsoCodes(array $isoCodes): array;
 }

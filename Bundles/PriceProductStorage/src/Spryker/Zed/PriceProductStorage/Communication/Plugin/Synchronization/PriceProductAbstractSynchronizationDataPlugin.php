@@ -57,11 +57,11 @@ class PriceProductAbstractSynchronizationDataPlugin extends AbstractPlugin imple
     {
         $query = $this->getQueryContainer()->queryPriceAbstractStorageByPriceAbstractIds($ids);
 
-        if (empty($ids)) {
+        if ($ids === []) {
             $query->clear();
         }
 
-        return $query;
+        return $query->orderByIdPriceProductAbstractStorage();
     }
 
     /**

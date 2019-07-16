@@ -16,8 +16,9 @@ use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\PriceCartConnector\Business\Filter\PriceProductFilter;
 use Spryker\Zed\PriceCartConnector\Business\Manager\PriceManager;
 use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartConnectorToCurrencyFacadeInterface;
+use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartConnectorToPriceProductAdapter;
 use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceInterface;
-use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceProductBridge;
+use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceProductInterface;
 use SprykerTest\Zed\PriceCartConnector\Business\Fixture\PriceProductFacadeStub;
 
 /**
@@ -147,13 +148,13 @@ class PriceManagerTest extends Unit
     }
 
     /**
-     * @param \Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceProductBridge $priceProductCartToPriceBridge
+     * @param \Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceProductInterface $priceProductCartToPriceBridge
      * @param \Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceInterface $priceFacadeMock
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\PriceCartConnector\Business\Filter\PriceProductFilterInterface
      */
     protected function createPriceProductFilterMock(
-        PriceCartToPriceProductBridge $priceProductCartToPriceBridge,
+        PriceCartToPriceProductInterface $priceProductCartToPriceBridge,
         PriceCartToPriceInterface $priceFacadeMock
     ) {
         return new PriceProductFilter(
@@ -178,7 +179,7 @@ class PriceManagerTest extends Unit
      */
     protected function createPriceManager(PriceProductFacadeStub $priceProductFacadeStub)
     {
-        $priceProductCartToPriceBridge = new PriceCartToPriceProductBridge($priceProductFacadeStub);
+        $priceProductCartToPriceAdapter = new PriceCartConnectorToPriceProductAdapter($priceProductFacadeStub);
 
         $priceFacadeMock = $this->createPriceFacadeBridgeMock();
 
@@ -191,9 +192,9 @@ class PriceManagerTest extends Unit
         $priceFacadeMock->method('getDefaultPriceMode')
             ->willReturn('GROSS_MODE');
 
-        $priceProductFilterMock = $this->createPriceProductFilterMock($priceProductCartToPriceBridge, $priceFacadeMock);
+        $priceProductFilterMock = $this->createPriceProductFilterMock($priceProductCartToPriceAdapter, $priceFacadeMock);
 
-        return new PriceManager($priceProductCartToPriceBridge, $priceFacadeMock, $priceProductFilterMock);
+        return new PriceManager($priceProductCartToPriceAdapter, $priceFacadeMock, $priceProductFilterMock);
     }
 
     /**

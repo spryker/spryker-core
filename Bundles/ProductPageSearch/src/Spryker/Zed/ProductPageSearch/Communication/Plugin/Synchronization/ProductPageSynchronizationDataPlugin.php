@@ -57,11 +57,11 @@ class ProductPageSynchronizationDataPlugin extends AbstractPlugin implements Syn
     {
         $query = $this->getQueryContainer()->queryProductAbstractSearchPageByIds($ids);
 
-        if (empty($ids)) {
+        if ($ids === []) {
             $query->clear();
         }
 
-        return $query;
+        return $query->orderByIdProductAbstractPageSearch();
     }
 
     /**

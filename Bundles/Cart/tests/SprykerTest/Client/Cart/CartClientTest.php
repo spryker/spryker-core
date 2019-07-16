@@ -106,17 +106,12 @@ class CartClientTest extends Unit
     }
 
     /**
-     * @dataProvider itemQuantitiesWithTwoVariants
-     *
-     * @param int|float $quantity1
-     * @param int|float $quantity2
-     *
      * @return void
      */
-    public function testChangeItemQuantityMustCallRemoveItemQuantityWhenPassedItemQuantityIsLowerThenInCartGivenItem($quantity1, $quantity2): void
+    public function testChangeItemQuantityMustCallRemoveItemQuantityWhenPassedItemQuantityIsLowerThenInCartGivenItem()
     {
         $itemTransfer = new ItemTransfer();
-        $itemTransfer->setQuantity($quantity1);
+        $itemTransfer->setQuantity(2);
         $itemTransfer->setSku('sku');
 
         $quoteTransfer = new QuoteTransfer();
@@ -142,23 +137,18 @@ class CartClientTest extends Unit
         $itemTransfer = new ItemTransfer();
         $itemTransfer->setSku('sku');
 
-        $quoteTransfer = $cartClientMock->changeItemQuantity('sku', null, $quantity2);
+        $quoteTransfer = $cartClientMock->changeItemQuantity('sku', null, 1);
 
         $this->assertInstanceOf('Generated\Shared\Transfer\QuoteTransfer', $quoteTransfer);
     }
 
     /**
-     * @dataProvider itemQuantitiesWithTwoVariants
-     *
-     * @param int|float $quantity1
-     * @param int|float $quantity2
-     *
      * @return void
      */
-    public function testChangeItemQuantityMustCallAddItemQuantityWhenPassedItemQuantityIsLowerThenInCartGivenItem($quantity1, $quantity2): void
+    public function testChangeItemQuantityMustCallAddItemQuantityWhenPassedItemQuantityIsLowerThenInCartGivenItem()
     {
         $itemTransfer = new ItemTransfer();
-        $itemTransfer->setQuantity($quantity2);
+        $itemTransfer->setQuantity(1);
         $itemTransfer->setSku('sku');
 
         $quoteTransfer = new QuoteTransfer();
@@ -184,33 +174,18 @@ class CartClientTest extends Unit
         $itemTransfer = new ItemTransfer();
         $itemTransfer->setSku('sku');
 
-        $quoteTransfer = $cartClientMock->changeItemQuantity('sku', null, $quantity1);
+        $quoteTransfer = $cartClientMock->changeItemQuantity('sku', null, 2);
 
         $this->assertInstanceOf('Generated\Shared\Transfer\QuoteTransfer', $quoteTransfer);
     }
 
     /**
-     * @return array
-     */
-    public function itemQuantitiesWithTwoVariants(): array
-    {
-        return [
-            'int stock' => [2, 1],
-            'float stock' => [2.2, 1.1],
-        ];
-    }
-
-    /**
-     * @dataProvider itemQuantitiesWithOneVariant
-     *
-     * @param int|float $quantity
-     *
      * @return void
      */
-    public function testGetItemCountReturnNumberOfItemsInCart($quantity): void
+    public function testGetItemCountReturnNumberOfItemsInCart()
     {
         $itemTransfer = new ItemTransfer();
-        $itemTransfer->setQuantity($quantity);
+        $itemTransfer->setQuantity(1);
         $itemTransfer->setSku('sku');
 
         $quoteTransfer = new QuoteTransfer();
@@ -223,17 +198,6 @@ class CartClientTest extends Unit
         $cartClientMock->method('getItemCounter')->willReturn(new ItemCountPlugin());
 
         $this->assertSame(1, $cartClientMock->getItemCount());
-    }
-
-    /**
-     * @return array
-     */
-    public function itemQuantitiesWithOneVariant(): array
-    {
-        return [
-            'int stock' => [1],
-            'float stock' => [1.1],
-        ];
     }
 
     /**
@@ -312,7 +276,7 @@ class CartClientTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Client\Cart\Dependency\Client\CartToQuoteInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject
      */
     private function getQuoteMock()
     {

@@ -9,7 +9,6 @@ namespace Spryker\Shared\Session\Business\Model;
 
 use Predis\Client;
 use Spryker\Shared\Config\Config;
-use Spryker\Shared\Config\Environment;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Session\Business\Handler\KeyGenerator\Redis\RedisLockKeyGenerator;
 use Spryker\Shared\Session\Business\Handler\KeyGenerator\Redis\RedisSessionKeyGenerator;
@@ -242,7 +241,7 @@ abstract class SessionFactory
     protected function getBucketName()
     {
         $storeName = Store::getInstance()->getStoreName();
-        $environment = Environment::getInstance()->getEnvironment();
+        $environment = $this->getEnvironmentName();
 
         return $storeName . '_' . $environment . '_' . self::BUCKET_NAME_POSTFIX;
     }
@@ -291,5 +290,15 @@ abstract class SessionFactory
         }
 
         return $hosts;
+    }
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
+     * @return string
+     */
+    protected function getEnvironmentName(): string
+    {
+        return APPLICATION_ENV;
     }
 }

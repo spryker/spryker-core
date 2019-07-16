@@ -9,6 +9,7 @@ namespace Spryker\Zed\PriceProductMerchantRelationshipStorage\Communication\Plug
 
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
+use Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\Map\SpyPriceProductAbstractMerchantRelationshipStorageTableMap;
 use Spryker\Shared\PriceProductMerchantRelationshipStorage\PriceProductMerchantRelationshipStorageConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PriceProductMerchantRelationshipStorage\PriceProductMerchantRelationshipStorageConfig;
@@ -122,6 +123,7 @@ class PriceProductAbstractMerchantRelationSynchronizationDataBulkPlugin extends 
     protected function createFilterTransfer(int $offset, int $limit): FilterTransfer
     {
         return (new FilterTransfer())
+            ->setOrderBy(SpyPriceProductAbstractMerchantRelationshipStorageTableMap::COL_ID_PRICE_PRODUCT_ABSTRACT_MERCHANT_RELATIONSHIP_STORAGE)
             ->setOffset($offset)
             ->setLimit($limit);
     }

@@ -57,11 +57,11 @@ class UrlSynchronizationDataPlugin extends AbstractPlugin implements Synchroniza
     {
         $query = $this->getQueryContainer()->queryUrlStorageByIds($ids);
 
-        if (empty($ids)) {
+        if ($ids === []) {
             $query->clear();
         }
 
-        return $query;
+        return $query->orderByIdUrlStorage();
     }
 
     /**

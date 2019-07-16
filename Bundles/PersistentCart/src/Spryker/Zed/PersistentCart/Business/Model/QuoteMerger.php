@@ -10,7 +10,6 @@ namespace Spryker\Zed\PersistentCart\Business\Model;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteMergeRequestTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\PersistentCart\Dependency\Service\PersistentCartToUtilQuantityServiceInterface;
 use Traversable;
 
 class QuoteMerger implements QuoteMergerInterface
@@ -21,20 +20,12 @@ class QuoteMerger implements QuoteMergerInterface
     protected $cartAddItemStrategyPlugins;
 
     /**
-     * @var \Spryker\Zed\PersistentCart\Dependency\Service\PersistentCartToUtilQuantityServiceInterface
-     */
-    protected $utilQuantityService;
-
-    /**
      * @param \Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationStrategyPluginInterface[] $cartAddItemStrategyPlugins
-     * @param \Spryker\Zed\PersistentCart\Dependency\Service\PersistentCartToUtilQuantityServiceInterface $utilQuantityService
      */
     public function __construct(
-        array $cartAddItemStrategyPlugins,
-        PersistentCartToUtilQuantityServiceInterface $utilQuantityService
+        array $cartAddItemStrategyPlugins
     ) {
         $this->cartAddItemStrategyPlugins = $cartAddItemStrategyPlugins;
-        $this->utilQuantityService = $utilQuantityService;
     }
 
     /**
@@ -129,22 +120,8 @@ class QuoteMerger implements QuoteMergerInterface
     protected function increaseExistingItem(array $existingItems, int $index, ItemTransfer $itemTransfer): void
     {
         $existingItemTransfer = $existingItems[$index];
-        $changedQuantity = $this->sumQuantities(
-            $existingItemTransfer->getQuantity(),
-            $itemTransfer->getQuantity()
-        );
+        $changedQuantity = $existingItemTransfer->getQuantity() + $itemTransfer->getQuantity();
 
         $existingItemTransfer->setQuantity($changedQuantity);
-    }
-
-    /**
-     * @param float $firstQuantity
-     * @param float $secondQuantity
-     *
-     * @return float
-     */
-    protected function sumQuantities(float $firstQuantity, float $secondQuantity): float
-    {
-        return $this->utilQuantityService->sumQuantities($firstQuantity, $secondQuantity);
     }
 }

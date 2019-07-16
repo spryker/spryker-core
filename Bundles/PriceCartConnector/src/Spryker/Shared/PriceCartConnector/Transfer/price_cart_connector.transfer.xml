@@ -16,7 +16,7 @@
 
         <property name="originUnitGrossPrice" type="int" />
         <property name="originUnitNetPrice" type="int" />
-        <property name="quantity" type="float" />
+        <property name="quantity" type="int" />
     </transfer>
 
     <transfer name="Quote">
@@ -34,7 +34,7 @@
         <property name="priceTypeName" type="string"/>
         <property name="sku" type="string"/>
         <property name="quote" type="Quote"/>
-        <property name="quantity" type="float"/>
+        <property name="quantity" type="int" />
     </transfer>
 
     <transfer name="CartChange">

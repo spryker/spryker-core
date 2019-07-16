@@ -92,7 +92,6 @@ class NavigationNodeFormType extends AbstractType
                     self::NODE_TYPE_LINK => 'Link',
                     self::NODE_TYPE_EXTERNAL_URL => 'External URL',
                 ]),
-                'choices_as_values' => true,
                 'choice_attr' => [
                     'Category' => ['data-url' => '/search-for-category'],
                     'CMS page' => ['data-url' => '/search-for-cms'],
