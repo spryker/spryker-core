@@ -141,7 +141,6 @@ class Operation implements OperationInterface
     public function addValid(CartChangeTransfer $cartChangeTransfer): QuoteTransfer
     {
         $cartChangeTransfer->requireQuote();
-        $cartChangeTransfer->setOperation(CartConstants::OPERATION_ADD);
 
         $quoteTransfer = $cartChangeTransfer->getQuote();
 
@@ -158,6 +157,7 @@ class Operation implements OperationInterface
             $currentCartChangeTransfer = new CartChangeTransfer();
             $currentCartChangeTransfer->setQuote($quoteTransfer);
             $currentCartChangeTransfer->setItems($itemsCollection);
+            $currentCartChangeTransfer->setOperation(CartConstants::OPERATION_ADD);
 
             $quoteTransfer = $this->addToCart($currentCartChangeTransfer)->getQuoteTransfer();
         }
