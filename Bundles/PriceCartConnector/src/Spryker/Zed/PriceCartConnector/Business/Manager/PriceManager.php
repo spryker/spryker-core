@@ -19,11 +19,6 @@ use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceProductInte
 class PriceManager implements PriceManagerInterface
 {
     /**
-     * @var string
-     */
-    protected static $netPriceModeIdentifier;
-
-    /**
      * @var \Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceProductInterface
      */
     protected $priceProductFacade;
@@ -91,9 +86,7 @@ class PriceManager implements PriceManagerInterface
     protected function setOriginUnitPrices(ItemTransfer $itemTransfer, CartChangeTransfer $cartChangeTransfer)
     {
         $priceProductFilterTransfer = $this->priceProductFilter->createPriceProductFilterTransfer($cartChangeTransfer, $itemTransfer);
-        $priceMode = $cartChangeTransfer->getQuote()->getPriceMode();
-
-        $this->setPrice($itemTransfer, $priceProductFilterTransfer, $priceMode);
+        $this->setPrice($itemTransfer, $priceProductFilterTransfer, $cartChangeTransfer->getQuote()->getPriceMode());
 
         return $itemTransfer;
     }
@@ -182,7 +175,7 @@ class PriceManager implements PriceManagerInterface
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
-     * @param string $priceMode
+     * @param string|null $priceMode
      *
      * @throws \Spryker\Zed\PriceCartConnector\Business\Exception\PriceMissingException
      *
@@ -191,7 +184,7 @@ class PriceManager implements PriceManagerInterface
     protected function setPrice(
         ItemTransfer $itemTransfer,
         PriceProductFilterTransfer $priceProductFilterTransfer,
-        $priceMode
+        ?string $priceMode
     ) {
         $priceProductTransfer = $this->priceProductFacade->findPriceProductFor($priceProductFilterTransfer);
 
@@ -206,7 +199,7 @@ class PriceManager implements PriceManagerInterface
 
         $itemTransfer->setPriceProduct($priceProductTransfer);
 
-        if ($priceMode === $this->getNetPriceModeIdentifier()) {
+        if ($priceMode === $this->priceFacade->getNetPriceModeIdentifier()) {
             $itemTransfer->setOriginUnitNetPrice($priceProductTransfer->getMoneyValue()->getNetAmount());
             $itemTransfer->setOriginUnitGrossPrice(0);
             $itemTransfer->setSumGrossPrice(0);
@@ -217,17 +210,5 @@ class PriceManager implements PriceManagerInterface
         $itemTransfer->setOriginUnitNetPrice(0);
         $itemTransfer->setOriginUnitGrossPrice($priceProductTransfer->getMoneyValue()->getGrossAmount());
         $itemTransfer->setSumNetPrice(0);
-    }
-
-    /**
-     * @return string
-     */
-    protected function getNetPriceModeIdentifier()
-    {
-        if (!static::$netPriceModeIdentifier) {
-            static::$netPriceModeIdentifier = $this->priceFacade->getNetPriceModeIdentifier();
-        }
-
-        return static::$netPriceModeIdentifier;
     }
 }
