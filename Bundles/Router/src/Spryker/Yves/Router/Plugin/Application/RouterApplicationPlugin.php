@@ -17,6 +17,10 @@ use Spryker\Yves\Router\Resolver\ControllerResolver;
  */
 class RouterApplicationPlugin extends AbstractPlugin implements ApplicationPluginInterface
 {
+    /**
+     * @see \Spryker\Shared\Application\Application::SERVICE_REQUEST_STACK
+     */
+    public const SERVICE_REQUEST_STACK = 'request_stack';
     public const SERVICE_ROUTER = 'routers';
     public const SERVICE_CONTROLLER_RESOLVER = 'controller-resolver';
     public const SERVICE_ARGUMENT_RESOLVER = 'argument-resolver';
@@ -53,7 +57,7 @@ class RouterApplicationPlugin extends AbstractPlugin implements ApplicationPlugi
             return $this->getFactory()->createRouter();
         });
 
-        $container->configure(static::SERVICE_ROUTER, [
+        $this->setBackwardsCompatibleServiceNames($container, static::SERVICE_ROUTER, [
             'alias' => [
                 'url_generator',
                 'url_matcher',
@@ -61,6 +65,20 @@ class RouterApplicationPlugin extends AbstractPlugin implements ApplicationPlugi
         ]);
 
         return $container;
+    }
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
+     * @param \Spryker\Service\Container\ContainerInterface $container
+     * @param string $serviceName
+     * @param array $configuration
+     *
+     * @return void
+     */
+    protected function setBackwardsCompatibleServiceNames(ContainerInterface $container, string $serviceName, array $configuration): void
+    {
+        $container->configure($serviceName, $configuration);
     }
 
     /**

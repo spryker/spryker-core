@@ -60,7 +60,7 @@ class RouterApplicationPlugin extends AbstractPlugin implements ApplicationPlugi
             return $this->getFacade()->getRouter();
         });
 
-        $container->configure(static::SERVICE_ROUTER, [
+        $this->setBackwardsCompatibleServiceNames($container, static::SERVICE_ROUTER, [
             'alias' => [
                 'url_generator',
                 'url_matcher',
@@ -68,6 +68,20 @@ class RouterApplicationPlugin extends AbstractPlugin implements ApplicationPlugi
         ]);
 
         return $container;
+    }
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
+     * @param \Spryker\Service\Container\ContainerInterface $container
+     * @param string $serviceName
+     * @param array $configuration
+     *
+     * @return void
+     */
+    protected function setBackwardsCompatibleServiceNames(ContainerInterface $container, string $serviceName, array $configuration): void
+    {
+        $container->configure($serviceName, $configuration);
     }
 
     /**

@@ -148,7 +148,7 @@ interface ApplicationConstants
     public const ELASTICA_CLIENT_CONFIGURATION = 'ELASTICA_CLIENT_CONFIGURATION';
 
     /**
-     * @deprecated Use `\Spryker\Shared\Router\RouterConstants::IS_SSL_ENABLED` instead.
+     * @deprecated Use `\Spryker\Shared\Router\RouterConstants::ZED_IS_SSL_ENABLED` instead.
      *
      * Specification:
      * - If option set to true, the application will check if the request is secure and not excluded from https.
@@ -160,7 +160,7 @@ interface ApplicationConstants
     public const ZED_SSL_ENABLED = 'ZED_SSL_ENABLED';
 
     /**
-     * @deprecated Use `\Spryker\Shared\Router\RouterConstants::SSL_EXCLUDED_ROUTE_NAMES` instead.
+     * @deprecated Use `\Spryker\Shared\Router\RouterConstants::ZED_SSL_EXCLUDED_ROUTE_NAMES` instead.
      *
      * Specification:
      * - An array of HTTPS Excluded module/controller pairs when ssl is enabled.

@@ -24,6 +24,16 @@ class Application implements HttpKernelInterface, TerminableInterface
     public const SERVICE_ROUTER = 'routers';
 
     /**
+     * @uses \Symfony\Component\HttpFoundation\Request
+     */
+    public const SERVICE_REQUEST = 'request';
+
+    /**
+     * @uses \Symfony\Component\HttpFoundation\RequestStack
+     */
+    public const SERVICE_REQUEST_STACK = 'request_stack';
+
+    /**
      * @var \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface[]
      */
     protected $plugins = [];

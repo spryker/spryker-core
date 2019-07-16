@@ -10,7 +10,7 @@ namespace Spryker\Yves\Application\Plugin\Provider;
 use Silex\ControllerProviderInterface as SilexControllerProviderInterface;
 
 /**
- * @deprecated Use `\SprykerShop\Yves\RouterExtension\Dependency\Plugin\RouteProviderPluginInterface` instead.
+ * @deprecated Use `\Spryker\Yves\RouterExtension\Dependency\Plugin\RouteProviderPluginInterface` instead.
  */
 interface ControllerProviderInterface extends SilexControllerProviderInterface
 {
