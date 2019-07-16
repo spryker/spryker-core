@@ -7,7 +7,13 @@
 
 namespace Spryker\Zed\Oms\Persistence;
 
+use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
+use Orm\Zed\Oms\Persistence\Map\SpyOmsOrderItemStateTableMap;
+use Orm\Zed\Oms\Persistence\Map\SpyOmsOrderProcessTableMap;
+use Orm\Zed\Sales\Persistence\Map\SpySalesOrderItemTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
+use Spryker\Zed\Oms\Business\Process\State;
 
 /**
  * @method \Spryker\Zed\Oms\Persistence\OmsPersistenceFactory getFactory()
@@ -15,6 +21,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
  */
 class OmsRepository extends AbstractRepository implements OmsRepositoryInterface
 {
+    protected const SUM_COLUMN = 'SUM';
+
     /**
      * @param int[] $processIds
      * @param int[] $stateBlackList
@@ -28,7 +36,54 @@ class OmsRepository extends AbstractRepository implements OmsRepositoryInterface
             ->find();
 
         return $this->getFactory()
-            ->createOrderItemMatrixMapper()
+            ->createOrderItemMapper()
             ->mapOrderItemMatrix($orderItemsMatrixResult->getArrayCopy());
+    }
+
+    /**
+     * @param \Spryker\Zed\Oms\Business\Process\State[] $states
+     * @param string $sku
+     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function getSalesOrderItemsBySkuAndStatesNames(array $states, string $sku, ?StoreTransfer $storeTransfer): array
+    {
+        $stateNames = array_unique(array_map(function (State $state) {
+            return $state->getName();
+        }, $states));
+
+        $salesOrderItemQuery = $this->getFactory()
+            ->getSalesQueryContainer()
+            ->querySalesOrderItem()
+            ->select([
+                SpySalesOrderItemTableMap::COL_SKU,
+                SpyOmsOrderProcessTableMap::COL_NAME,
+                SpyOmsOrderItemStateTableMap::COL_NAME,
+            ])->filterBySku($sku)
+            ->innerJoinProcess()
+            ->useStateQuery()
+            ->filterByName_In($stateNames)
+            ->endUse()
+            ->groupByFkOmsOrderItemState()
+            ->groupByFkOmsOrderProcess()
+            ->withColumn('SUM(' . SpySalesOrderItemTableMap::COL_QUANTITY . ')', static::SUM_COLUMN);
+
+        if ($storeTransfer !== null) {
+            $salesOrderItemQuery
+                ->useOrderQuery()
+                    ->filterByStore($storeTransfer->getName())
+                ->endUse();
+        }
+
+        $itemTransfers = [];
+        foreach ($salesOrderItemQuery->find() as $salesOrderItemEntityArray) {
+            $salesOrderItemEntityArray[SpySalesOrderItemTableMap::COL_QUANTITY] = $salesOrderItemEntityArray[static::SUM_COLUMN];
+            $itemTransfers[] = $this->getFactory()
+                ->createOrderItemMapper()
+                ->mapOrderItemEntityArrayToTransfer($salesOrderItemEntityArray, new ItemTransfer());
+        }
+
+        return $itemTransfers;
     }
 }

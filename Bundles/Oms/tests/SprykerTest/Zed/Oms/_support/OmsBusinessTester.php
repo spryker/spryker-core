@@ -8,6 +8,8 @@
 namespace SprykerTest\Zed\Oms;
 
 use Codeception\Actor;
+use ReflectionClass;
+use Spryker\Zed\Oms\Business\Util\ActiveProcessFetcher;
 
 /**
  * Inherited Methods
@@ -28,7 +30,14 @@ class OmsBusinessTester extends Actor
 {
     use _generated\OmsBusinessTesterActions;
 
-   /**
-    * Define custom actions here
-    */
+    /**
+     * @return void
+     */
+    public function resetReservedStatesCache(): void
+    {
+        $reflectionResolver = new ReflectionClass(ActiveProcessFetcher::class);
+        $reflectionProperty = $reflectionResolver->getProperty('reservedStatesCache');
+        $reflectionProperty->setAccessible(true);
+        $reflectionProperty->setValue([]);
+    }
 }

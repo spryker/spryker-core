@@ -7,10 +7,14 @@
 
 namespace Spryker\Zed\Oms\Persistence\Propel\Mapper;
 
+use Generated\Shared\Transfer\ItemStateTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
+use Orm\Zed\Oms\Persistence\Map\SpyOmsOrderItemStateTableMap;
+use Orm\Zed\Oms\Persistence\Map\SpyOmsOrderProcessTableMap;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderItemTableMap;
 use Spryker\Zed\Oms\Persistence\OmsQueryContainer;
 
-class OrderItemMatrixMapper
+class OrderItemMapper implements OrderItemMapperInterface
 {
     /**
      * @param array $orderItemsMatrixResult
@@ -30,5 +34,20 @@ class OrderItemMatrixMapper
         }
 
         return $orderItemsMatrix;
+    }
+
+    /**
+     * @param array $orderItemEntityArray
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    public function mapOrderItemEntityArrayToTransfer(array $orderItemEntityArray, ItemTransfer $itemTransfer): ItemTransfer
+    {
+        return $itemTransfer
+            ->setProcess($orderItemEntityArray[SpyOmsOrderProcessTableMap::COL_NAME])
+            ->setState((new ItemStateTransfer())->setName($orderItemEntityArray[SpyOmsOrderItemStateTableMap::COL_NAME]))
+            ->setSku($orderItemEntityArray[SpySalesOrderItemTableMap::COL_SKU])
+            ->setQuantity($orderItemEntityArray[SpySalesOrderItemTableMap::COL_QUANTITY]);
     }
 }

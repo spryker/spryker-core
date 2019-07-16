@@ -8,8 +8,10 @@
 namespace Spryker\Zed\Oms\Business\Util;
 
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\Zed\Oms\Business\Process\State;
 use Spryker\Zed\Oms\Dependency\Facade\OmsToStoreFacadeInterface;
 use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
+use Spryker\Zed\Oms\Persistence\OmsRepositoryInterface;
 
 class Reservation implements ReservationInterface
 {
@@ -34,21 +36,29 @@ class Reservation implements ReservationInterface
     protected $activeProcessFetcher;
 
     /**
+     * @var \Spryker\Zed\Oms\Persistence\OmsRepositoryInterface
+     */
+    protected $omsRepository;
+
+    /**
      * @param \Spryker\Zed\Oms\Business\Util\ActiveProcessFetcherInterface $activeProcessFetcher
      * @param \Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Oms\Dependency\Plugin\ReservationHandlerPluginInterface[] $reservationHandlerPlugins
      * @param \Spryker\Zed\Oms\Dependency\Facade\OmsToStoreFacadeInterface $storeFacade
+     * @param \Spryker\Zed\Oms\Persistence\OmsRepositoryInterface $omsRepository
      */
     public function __construct(
         ActiveProcessFetcherInterface $activeProcessFetcher,
         OmsQueryContainerInterface $queryContainer,
         array $reservationHandlerPlugins,
-        OmsToStoreFacadeInterface $storeFacade
+        OmsToStoreFacadeInterface $storeFacade,
+        OmsRepositoryInterface $omsRepository
     ) {
         $this->activeProcessFetcher = $activeProcessFetcher;
         $this->queryContainer = $queryContainer;
         $this->reservationHandlerPlugins = $reservationHandlerPlugins;
         $this->storeFacade = $storeFacade;
+        $this->omsRepository = $omsRepository;
     }
 
     /**
@@ -81,7 +91,6 @@ class Reservation implements ReservationInterface
         return $this->sumProductQuantitiesForSku(
             $this->activeProcessFetcher->getReservedStatesFromAllActiveProcesses(),
             $sku,
-            false,
             $storeTransfer
         );
     }
@@ -151,7 +160,6 @@ class Reservation implements ReservationInterface
     /**
      * @param \Spryker\Zed\Oms\Business\Process\StateInterface[] $states
      * @param string $sku
-     * @param bool $returnTest
      * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
      * @return int
@@ -159,24 +167,28 @@ class Reservation implements ReservationInterface
     protected function sumProductQuantitiesForSku(
         array $states,
         $sku,
-        $returnTest = true,
         ?StoreTransfer $storeTransfer = null
     ) {
+        $sumQuantity = 0;
+        $mappedStates = array_flip(array_map(function (State $state) {
+            return $state->getProcess()->getName() . $state->getName();
+        }, $states));
 
-        if ($storeTransfer) {
-            return (int)$this->queryContainer
-                ->sumProductQuantitiesForAllSalesOrderItemsBySkuForStore(
-                    $states,
-                    $sku,
-                    $storeTransfer->getName(),
-                    $returnTest
-                )
-                ->findOne();
+        $itemTransfers = $this->omsRepository->getSalesOrderItemsBySkuAndStatesNames($states, $sku, $storeTransfer);
+        foreach ($itemTransfers as $itemTransfer) {
+            $itemTransfer
+                ->requireQuantity()
+                ->requireProcess()
+                ->requireState()
+                ->getState()
+                    ->requireName();
+
+            if (array_key_exists($itemTransfer->getProcess() . $itemTransfer->getState()->getName(), $mappedStates)) {
+                $sumQuantity += $itemTransfer->getQuantity();
+            }
         }
 
-        return (int)$this->queryContainer
-            ->sumProductQuantitiesForAllSalesOrderItemsBySku($states, $sku, $returnTest)
-            ->findOne();
+        return $sumQuantity;
     }
 
     /**
