@@ -105,7 +105,6 @@ class CompanyBusinessUnitForm extends AbstractType
             'label' => 'Parent',
             'placeholder' => 'No parent',
             'choices' => $choicesValues,
-            'choices_as_values' => true,
             'required' => false,
             'choice_attr' => $choicesAttributes,
         ]);
@@ -178,7 +177,6 @@ class CompanyBusinessUnitForm extends AbstractType
             'label' => 'Company',
             'placeholder' => 'Select one',
             'choices' => $choices,
-            'choices_as_values' => true,
             'constraints' => [
                 new NotBlank(),
             ],
