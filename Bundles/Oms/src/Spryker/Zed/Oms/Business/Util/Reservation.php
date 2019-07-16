@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Oms\Business\Util;
 
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
-use Spryker\Zed\Oms\Business\Process\State;
 use Spryker\Zed\Oms\Dependency\Facade\OmsToStoreFacadeInterface;
 use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
 use Spryker\Zed\Oms\Persistence\OmsRepositoryInterface;
@@ -170,25 +170,49 @@ class Reservation implements ReservationInterface
         ?StoreTransfer $storeTransfer = null
     ) {
         $sumQuantity = 0;
-        $mappedStates = array_flip(array_map(function (State $state) {
-            return $state->getProcess()->getName() . $state->getName();
-        }, $states));
-
+        $mappedStates = $this->mapStatesByStateAndProcessNames($states);
         $itemTransfers = $this->omsRepository->getSalesOrderItemsBySkuAndStatesNames($states, $sku, $storeTransfer);
         foreach ($itemTransfers as $itemTransfer) {
-            $itemTransfer
-                ->requireQuantity()
-                ->requireProcess()
-                ->requireState()
-                ->getState()
-                    ->requireName();
+            $this->validateItemTransfer($itemTransfer);
 
-            if (array_key_exists($itemTransfer->getProcess() . $itemTransfer->getState()->getName(), $mappedStates)) {
-                $sumQuantity += $itemTransfer->getQuantity();
+            if (!isset($mappedStates[$itemTransfer->getProcess()][$itemTransfer->getState()->getName()])) {
+                continue;
             }
+
+            $sumQuantity += $itemTransfer->getQuantity();
         }
 
         return $sumQuantity;
+    }
+
+    /**
+     * @param \Spryker\Zed\Oms\Business\Process\StateInterface[] $states
+     *
+     * @return array
+     */
+    protected function mapStatesByStateAndProcessNames(array $states): array
+    {
+        $mapResult = [];
+        foreach ($states as $state) {
+            $mapResult[$state->getProcess()->getName()][$state->getName()] = $state;
+        }
+
+        return $mapResult;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return void
+     */
+    protected function validateItemTransfer(ItemTransfer $itemTransfer): void
+    {
+        $itemTransfer
+            ->requireQuantity()
+            ->requireProcess()
+            ->requireState()
+            ->getState()
+                ->requireName();
     }
 
     /**
