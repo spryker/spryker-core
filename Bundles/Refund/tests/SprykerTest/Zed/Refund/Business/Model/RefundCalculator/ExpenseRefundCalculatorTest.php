@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\Refund\Business\Model\RefundCalculator;
 
 use Generated\Shared\Transfer\RefundTransfer;
 use Spryker\Zed\Refund\Business\Model\RefundCalculator\ExpenseRefundCalculator;
+use Spryker\Zed\Refund\Business\Model\RefundCalculator\ItemRefundCalculator;
 
 /**
  * Auto-generated group annotations
@@ -26,7 +27,7 @@ class ExpenseRefundCalculatorTest extends AbstractRefundCalculatorTest
     /**
      * @return void
      */
-    public function testCalculateRefundForOrderWithoutAlreadyRefundedItemsShouldNotAddExpenses()
+    public function testCalculateRefundForOrderWithoutAlreadyRefundedItemsShouldNotAddExpenses(): void
     {
         $refundCalculationPlugin = new ExpenseRefundCalculator();
         $orderTransfer = $this->getOrderTransferWithoutRefundedItems();
@@ -44,7 +45,7 @@ class ExpenseRefundCalculatorTest extends AbstractRefundCalculatorTest
     /**
      * @return void
      */
-    public function testCalculateRefundShouldIncludeExpenseWhenLastItemOfOrderShouldBeRefunded()
+    public function testCalculateRefundShouldIncludeExpenseWhenLastItemOfOrderShouldBeRefunded(): void
     {
         $refundCalculationPlugin = new ExpenseRefundCalculator();
         $orderTransfer = $this->getOrderTransferWithRefundedItem();
@@ -57,5 +58,22 @@ class ExpenseRefundCalculatorTest extends AbstractRefundCalculatorTest
         $refundCalculationPlugin->calculateRefund($refundTransfer, $orderTransfer, $salesOrderItems);
 
         $this->assertSame(10, $refundTransfer->getAmount());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCalculateRefundShouldNotDuplicateItems(): void
+    {
+        $refundCalculationPlugin = new ItemRefundCalculator();
+        $orderTransfer = $this->getOrderTransferWithoutRefundedItems();
+        $salesOrderItems = [
+            $this->getSalesOrderItemOne(),
+        ];
+
+        $refundTransfer = $this->getRefundTransferWithItem();
+        $refundTransfer = $refundCalculationPlugin->calculateRefund($refundTransfer, $orderTransfer, $salesOrderItems);
+
+        $this->assertSame(1, $refundTransfer->getItems()->count());
     }
 }

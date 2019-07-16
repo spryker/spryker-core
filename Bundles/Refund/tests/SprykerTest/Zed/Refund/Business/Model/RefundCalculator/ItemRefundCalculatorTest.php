@@ -26,7 +26,7 @@ class ItemRefundCalculatorTest extends AbstractRefundCalculatorTest
     /**
      * @return void
      */
-    public function testCalculateRefundForOrderWithoutAlreadyRefundedItems()
+    public function testCalculateRefundForOrderWithoutAlreadyRefundedItems(): void
     {
         $refundCalculationPlugin = new ItemRefundCalculator();
         $orderTransfer = $this->getOrderTransferWithoutRefundedItems();
@@ -39,5 +39,22 @@ class ItemRefundCalculatorTest extends AbstractRefundCalculatorTest
         $refundCalculationPlugin->calculateRefund($refundTransfer, $orderTransfer, $salesOrderItems);
 
         $this->assertSame(100, $refundTransfer->getAmount());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCalculateRefundShouldNotDuplicateItems(): void
+    {
+        $refundCalculationPlugin = new ItemRefundCalculator();
+        $orderTransfer = $this->getOrderTransferWithoutRefundedItems();
+        $salesOrderItems = [
+            $this->getSalesOrderItemOne(),
+        ];
+
+        $refundTransfer = $this->getRefundTransferWithItem();
+        $refundTransfer = $refundCalculationPlugin->calculateRefund($refundTransfer, $orderTransfer, $salesOrderItems);
+
+        $this->assertSame(1, $refundTransfer->getItems()->count());
     }
 }
