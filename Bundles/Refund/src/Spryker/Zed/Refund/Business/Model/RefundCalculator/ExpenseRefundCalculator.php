@@ -23,13 +23,17 @@ class ExpenseRefundCalculator extends AbstractRefundCalculator
     {
         $refundableItemAmount = 0;
         foreach ($orderTransfer->getItems() as $itemTransfer) {
-            if ($this->shouldItemRefunded($itemTransfer, $salesOrderItems)
-                && !$this->isItemAdded($refundTransfer, $itemTransfer)
-            ) {
-                $refundTransfer->addItem($itemTransfer);
-            } else {
-                $refundableItemAmount += (int)$itemTransfer->getRefundableAmount();
+            if ($this->isItemAdded($refundTransfer, $itemTransfer)) {
+                continue;
             }
+
+            if ($this->shouldItemRefunded($itemTransfer, $salesOrderItems)) {
+                $refundTransfer->addItem($itemTransfer);
+
+                continue;
+            }
+
+            $refundableItemAmount += (int)$itemTransfer->getRefundableAmount();
         }
 
         if ($refundableItemAmount === 0) {
