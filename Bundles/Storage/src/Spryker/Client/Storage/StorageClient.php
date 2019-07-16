@@ -387,13 +387,14 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     /**
      * @api
      *
-     * @param mixed $pattern
+     * @param string $pattern
+     * @param int|null $limit
      *
      * @return array
      */
-    public function getKeys($pattern = '*')
+    public function getKeys($pattern = '*', ?int $limit = null)
     {
-        return $this->getService()->getKeys($pattern);
+        return $this->getService()->getKeys($pattern, $limit);
     }
 
     /**

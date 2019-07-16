@@ -120,29 +120,16 @@ interface StoragePluginInterface
     /**
      * Specification:
      * - Gets all keys filtered by pattern.
+     * - Limit the results (optional).
      *
      * @api
      *
      * @param string $pattern
+     * @param int|null $limit
      *
      * @return array
      */
-    public function getKeys(string $pattern): array;
-
-    /**
-     * Specification:
-     * - Returns an array with the current cursor and the keys.
-     * - The keys are filtered by PATTERN, scan the key up to COUNT, starting from CURSOR.
-     *
-     * @api
-     *
-     * @param string $pattern
-     * @param int $limit
-     * @param int|null $cursor
-     *
-     * @return array [string, string[]]
-     */
-    public function scanKeys(string $pattern, int $limit, ?int $cursor = 0): array;
+    public function getKeys(string $pattern, ?int $limit = null): array;
 
     /**
      * Specification:

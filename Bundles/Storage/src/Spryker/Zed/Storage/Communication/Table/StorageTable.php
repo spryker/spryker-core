@@ -68,7 +68,7 @@ class StorageTable extends AbstractTable
      */
     protected function prepareData(TableConfiguration $config)
     {
-        [$_cursor, $keys] = $this->storageClient->scanKeys($this->getSearchTerm(), static::DEFAULT_PAGE_LENGTH);
+        $keys = $this->storageClient->getKeys($this->getSearchTerm(), static::DEFAULT_PAGE_LENGTH);
         $keys = array_map(function (string $key) {
             return str_replace(static::KV_PREFIX, '', $key);
         }, $keys);

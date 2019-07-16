@@ -269,10 +269,11 @@ class Service implements ServiceInterface
 
     /**
      * @param string $pattern
+     * @param int|null $limit
      *
      * @return array
      */
-    public function getKeys($pattern)
+    public function getKeys($pattern, ?int $limit = null)
     {
         return $this->client->keys($this->getSearchPattern($pattern));
     }

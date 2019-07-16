@@ -150,12 +150,15 @@ class StorageRedisScanPlugin extends AbstractPlugin implements StoragePluginInte
      * @api
      *
      * @param string $pattern
+     * @param int|null $limit
      *
      * @return array
      */
-    public function getKeys(string $pattern): array
+    public function getKeys(string $pattern, ?int $limit = null): array
     {
-        return $this->scanKeys($pattern, $this->getCountItems())[1];
+        [$_cursor, $keys] = $this->scanKeys($pattern, $limit ?? $this->getCountItems());
+
+        return $keys;
     }
 
     /**
@@ -169,7 +172,7 @@ class StorageRedisScanPlugin extends AbstractPlugin implements StoragePluginInte
      *
      * @return array [string, string[]]
      */
-    public function scanKeys(string $pattern, int $limit, ?int $cursor = 0): array
+    protected function scanKeys(string $pattern, int $limit, ?int $cursor = 0): array
     {
         return $this->getClient()->scanKeys($pattern, $limit, $cursor);
     }
