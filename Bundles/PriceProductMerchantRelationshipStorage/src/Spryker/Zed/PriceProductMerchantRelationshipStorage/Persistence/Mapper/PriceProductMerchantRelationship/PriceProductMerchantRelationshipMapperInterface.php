@@ -28,5 +28,5 @@ interface PriceProductMerchantRelationshipMapperInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductMerchantRelationshipTransfer[]
      */
-    public function mapEntitiesToPriceProductMerchantRelationshipTransferCollection(array $priceProductMerchantRelationshipEntities): array
+    public function mapEntitiesToPriceProductMerchantRelationshipTransferCollection(array $priceProductMerchantRelationshipEntities): array;
 }
