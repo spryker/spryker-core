@@ -13,16 +13,16 @@ use Orm\Zed\PriceProductMerchantRelationship\Persistence\SpyPriceProductMerchant
 class PriceProductMerchantRelationshipMapper implements PriceProductMerchantRelationshipMapperInterface
 {
     /**
-     * @param \Orm\Zed\PriceProductMerchantRelationship\Persistence\SpyPriceProductMerchantRelationship $spyPriceProductMerchantRelationshipEntityTransfer
+     * @param \Orm\Zed\PriceProductMerchantRelationship\Persistence\SpyPriceProductMerchantRelationship $priceProductMerchantRelationshipEntity
      * @param \Generated\Shared\Transfer\PriceProductMerchantRelationshipTransfer $priceProductMerchantRelationshipTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductMerchantRelationshipTransfer
      */
     public function mapEntityToPriceProductMerchantRelationshipTransfer(
-        SpyPriceProductMerchantRelationship $spyPriceProductMerchantRelationshipEntityTransfer,
+        SpyPriceProductMerchantRelationship $priceProductMerchantRelationshipEntity,
         PriceProductMerchantRelationshipTransfer $priceProductMerchantRelationshipTransfer
     ): PriceProductMerchantRelationshipTransfer {
-        return $priceProductMerchantRelationshipTransfer->fromArray($spyPriceProductMerchantRelationshipEntityTransfer->toArray(), true);
+        return $priceProductMerchantRelationshipTransfer->fromArray($priceProductMerchantRelationshipEntity->toArray(), true);
     }
 
     /**
