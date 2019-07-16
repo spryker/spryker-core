@@ -1,3 +1,2 @@
 parameters:
     ignoreErrors:
-    - '#Empty array passed to foreach.#'

@@ -110,7 +110,7 @@ class ContentBannerWriterStep extends PublishAwareStep implements DataImportStep
         }
 
         if (!$defaultLocaleIsPresent) {
-            throw new InvalidDataException('Default locale is absent');
+            throw new InvalidDataException('Default locale is required.');
         }
     }
 

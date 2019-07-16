@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Content\Business\ContentValidator;
 
 use Generated\Shared\Transfer\ContentTransfer;
+use Spryker\Zed\Content\Business\ContentValidator\Constraints\NotWhitespace;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
@@ -33,7 +34,7 @@ class ContentConstraintsProvider implements ContentConstraintsProviderInterface
     protected function getNameConstraints(): array
     {
         return [
-            new NotBlank(),
+            new NotWhitespace(),
             new Required(),
             new Length(['max' => 255]),
         ];
@@ -45,7 +46,7 @@ class ContentConstraintsProvider implements ContentConstraintsProviderInterface
     protected function getDescriptionConstraints(): array
     {
         return [
-            new NotBlank(),
+            new NotWhitespace(),
             new Required(),
             new Length(['max' => 1024]),
         ];

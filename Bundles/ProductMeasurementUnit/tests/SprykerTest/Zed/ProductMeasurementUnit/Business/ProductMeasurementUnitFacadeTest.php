@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\ProductMeasurementUnit\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
@@ -349,5 +350,47 @@ class ProductMeasurementUnitFacadeTest extends Unit
             ->translateProductMeasurementSalesUnit($productMeasurementSalesUnitTransfer);
 
         $this->assertInstanceOf(ProductMeasurementSalesUnitTransfer::class, $productMeasurementSalesUnitTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindFilteredProductMeasurementSalesUnitTransfers(): void
+    {
+        // Assign
+        $code = 'MYCODE' . random_int(1, 100);
+        $productTransfer = $this->tester->haveProduct();
+        $productMeasurementUnitTransfer = $this->tester->haveProductMeasurementUnit([
+            SpyProductMeasurementUnitEntityTransfer::CODE => $code,
+        ]);
+        $productMeasurementBaseUnitTransfer = $this->tester->haveProductMeasurementBaseUnit(
+            $productTransfer->getFkProductAbstract(),
+            $productMeasurementUnitTransfer->getIdProductMeasurementUnit()
+        );
+        $productMeasurementBaseUnitTransfer->setProductMeasurementUnit($productMeasurementUnitTransfer);
+
+        $productMeasurementSalesUnitTransfer = $this->tester->haveProductMeasurementSalesUnit(
+            $productTransfer->getIdProductConcrete(),
+            $productMeasurementUnitTransfer->getIdProductMeasurementUnit(),
+            $productMeasurementBaseUnitTransfer->getIdProductMeasurementBaseUnit()
+        );
+
+        $productMeasurementSalesUnitTransfer->setProductMeasurementUnit($productMeasurementUnitTransfer);
+        $productMeasurementSalesUnitTransfer->setProductMeasurementBaseUnit($productMeasurementBaseUnitTransfer);
+
+        $quantitySalesUnitTransfer = (new ProductMeasurementSalesUnitTransfer())->fromArray($productMeasurementSalesUnitTransfer->toArray(), true);
+        $itemTransfer = new ItemTransfer();
+        $itemTransfer->setQuantitySalesUnit($quantitySalesUnitTransfer);
+
+        $filterTransfer = (new FilterTransfer())
+            ->setOffset(0)
+            ->setLimit(1);
+
+        //Act
+        $productMeasurementSalesUnitTransfers = $this->productMeasurementUnitFacade
+            ->findFilteredProductMeasurementSalesUnitTransfers($filterTransfer);
+
+        //Assert
+        $this->assertCount(1, $productMeasurementSalesUnitTransfers);
     }
 }

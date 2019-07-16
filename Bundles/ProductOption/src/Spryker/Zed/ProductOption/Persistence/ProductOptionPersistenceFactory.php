@@ -13,11 +13,13 @@ use Orm\Zed\ProductOption\Persistence\SpyProductOptionGroupQuery;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionValuePriceQuery;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionValueQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
+use Spryker\Zed\ProductOption\Persistence\Propel\Mapper\ProductOptionMapper;
 use Spryker\Zed\ProductOption\ProductOptionDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductOption\ProductOptionConfig getConfig()
  * @method \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductOption\Persistence\ProductOptionRepositoryInterface getRepository()
  */
 class ProductOptionPersistenceFactory extends AbstractPersistenceFactory
 {
@@ -59,6 +61,14 @@ class ProductOptionPersistenceFactory extends AbstractPersistenceFactory
     public function createProductAbstractProductOptionGroupQuery()
     {
         return SpyProductAbstractProductOptionGroupQuery::create();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOption\Persistence\Propel\Mapper\ProductOptionMapper
+     */
+    public function createProductOptionMapper(): ProductOptionMapper
+    {
+        return new ProductOptionMapper();
     }
 
     /**

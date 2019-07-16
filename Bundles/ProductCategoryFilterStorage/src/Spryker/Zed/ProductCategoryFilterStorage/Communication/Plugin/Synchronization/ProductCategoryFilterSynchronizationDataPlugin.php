@@ -57,11 +57,11 @@ class ProductCategoryFilterSynchronizationDataPlugin extends AbstractPlugin impl
     {
         $query = $this->getQueryContainer()->queryProductCategoryFilterStorageByFkCategories($ids);
 
-        if (empty($ids)) {
+        if ($ids === []) {
             $query->clear();
         }
 
-        return $query;
+        return $query->orderByIdProductCategoryFilterStorage();
     }
 
     /**
