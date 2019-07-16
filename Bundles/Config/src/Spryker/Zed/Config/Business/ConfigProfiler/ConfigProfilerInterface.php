@@ -5,15 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\Config\Profiler;
+namespace Spryker\Zed\Config\Business\ConfigProfiler;
 
-/**
- * @deprecated Will be removed without replacement.
- */
-interface ConfigProfilerCollectorInterface
+interface ConfigProfilerInterface
 {
     /**
      * @return array
      */
-    public function getConfigs();
+    public function getProfileData(): array;
 }

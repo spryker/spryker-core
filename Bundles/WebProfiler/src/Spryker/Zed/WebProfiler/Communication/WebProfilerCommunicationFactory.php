@@ -32,4 +32,12 @@ class WebProfilerCommunicationFactory extends AbstractCommunicationFactory
     {
         return new FilesystemLoader($this->getConfig()->getWebProfilerTemplatePaths(), 'WebProfiler');
     }
+
+    /**
+     * @return \Spryker\Shared\WebProfilerExtension\Dependency\Plugin\WebProfilerDataCollectorPluginInterface[]
+     */
+    public function getDataCollectorPlugins(): array
+    {
+        return $this->getProvidedDependency(WebProfilerDependencyProvider::PLUGINS_DATA_COLLECTORS);
+    }
 }
