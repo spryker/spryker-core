@@ -8,11 +8,12 @@
 namespace SprykerTest\Zed\Discount\Communication\Plugin\Sales;
 
 use Codeception\Test\Unit;
+use Generated\Shared\DataBuilder\QuoteBuilder;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\SaveOrderTransfer;
 use Orm\Zed\Sales\Persistence\Map\SpySalesDiscountTableMap;
-use Orm\Zed\Sales\Persistence\SpySalesDiscount;
 use Spryker\Zed\Discount\Communication\Plugin\Sales\DiscountOrderHydratePlugin;
-use Spryker\Zed\Sales\Business\SalesFacade;
 use Spryker\Zed\Sales\Business\SalesFacadeInterface;
 use Spryker\Zed\Sales\Dependency\Plugin\HydrateOrderPluginInterface;
 use SprykerTest\Zed\Sales\Helper\BusinessHelper;
@@ -35,7 +36,6 @@ class DiscountOrderHydratePluginTest extends Unit
 
     protected const DISCOUNT_NAME = 'Discount order saver tester';
     protected const FIELD_NAME_NAME = 'name';
-
     protected const FIELD_DISPLAY_NAME = 'display_name';
 
     /**
@@ -50,7 +50,9 @@ class DiscountOrderHydratePluginTest extends Unit
     {
         //Arrange
         $discountOrderHydratePlugin = $this->createDiscountOrderHydratePlugin();
-        $orderTransfer = $this->createOrder();
+        $this->tester->configureTestStateMachine([BusinessHelper::DEFAULT_OMS_PROCESS_NAME]);
+        $saveOrderTransfer = $this->tester->haveOrder(['unitPrice' => 1000], BusinessHelper::DEFAULT_OMS_PROCESS_NAME);
+        $orderTransfer = $this->createOrder($saveOrderTransfer);
         $this->createDiscountForOrder($orderTransfer);
 
         //Act
@@ -63,26 +65,41 @@ class DiscountOrderHydratePluginTest extends Unit
     /**
      * @return void
      */
-    public function testOrderWithSameDiscountNameShouldCorrectlyHydrateThem(): void
+    public function testOrderHydratedWithMultipleOrderItems(): void
     {
-        // Arrange
-        $orderTransfer = $this->createOrder();
-        $seedData = [
-            static::FIELD_DISPLAY_NAME => static::DISCOUNT_NAME,
-        ];
-        $this->createDiscountForOrder($orderTransfer, $seedData);
-        $this->createDiscountForOrder($orderTransfer, $seedData);
+        //Arrange
         $discountOrderHydratePlugin = $this->createDiscountOrderHydratePlugin();
+        $this->tester->configureTestStateMachine([BusinessHelper::DEFAULT_OMS_PROCESS_NAME]);
 
-        // Act
+        $quoteTransfer = (new QuoteBuilder())
+            ->withItem([ItemTransfer::QUANTITY => 1, ItemTransfer::UNIT_PRICE => 1000])
+            ->withItem([ItemTransfer::QUANTITY => 1, ItemTransfer::UNIT_PRICE => 1000])
+            ->withItem([ItemTransfer::QUANTITY => 1, ItemTransfer::UNIT_PRICE => 1000])
+            ->withCustomer()
+            ->withTotals()
+            ->withShippingAddress()
+            ->withBillingAddress()
+            ->withCurrency()
+            ->build();
+
+        $saveOrderTransfer = $this->tester
+            ->haveOrderFromQuote($quoteTransfer, BusinessHelper::DEFAULT_OMS_PROCESS_NAME);
+        $orderTransfer = $this->createOrder($saveOrderTransfer);
+
+        $this->createDiscountForOrder($orderTransfer);
+
+        //Act
         $orderTransfer = $discountOrderHydratePlugin->hydrate($orderTransfer);
 
-        // Assert
-        $calculatedDiscounts = $orderTransfer->getItems()[0]->getCalculatedDiscounts();
-        $this->assertCount(2, $calculatedDiscounts);
+        //Assert
+        foreach ($orderTransfer->getItems() as $itemTransfer) {
+            foreach ($itemTransfer->getCalculatedDiscounts() as $calculatedDiscountTransfer) {
+                $this->assertEquals(1, $calculatedDiscountTransfer->getQuantity());
+            }
+        }
 
-        foreach ($calculatedDiscounts as $calculatedDiscountTransfer) {
-            $this->assertEquals(1, $calculatedDiscountTransfer->getQuantity());
+        foreach ($orderTransfer->getCalculatedDiscounts() as $calculatedDiscountTransfer) {
+            $this->assertEquals(3, $calculatedDiscountTransfer->getQuantity());
         }
     }
 
@@ -99,6 +116,7 @@ class DiscountOrderHydratePluginTest extends Unit
             $this->getDiscountPhpFieldName(SpySalesDiscountTableMap::COL_FK_SALES_ORDER_ITEM) => $idSalesOrderItem,
             static::FIELD_NAME_AMOUNT => static::DISCOUNT_AMOUNT,
             static::FIELD_NAME_NAME => static::DISCOUNT_NAME,
+            static::FIELD_DISPLAY_NAME => static::DISCOUNT_NAME,
         ];
     }
 
@@ -126,18 +144,23 @@ class DiscountOrderHydratePluginTest extends Unit
      */
     protected function createSalesFacade(): SalesFacadeInterface
     {
-        return new SalesFacade();
+        /**
+         * @var \Spryker\Zed\Sales\Business\SalesFacadeInterface $salesFacade
+         */
+        $salesFacade = $this->tester->getLocator()->sales()->facade();
+
+        return $salesFacade;
     }
 
     /**
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    protected function createOrder(): OrderTransfer
+    protected function createOrder(SaveOrderTransfer $saveOrderTransfer): OrderTransfer
     {
         $salesFacade = $this->createSalesFacade();
 
-        $this->tester->configureTestStateMachine([BusinessHelper::DEFAULT_OMS_PROCESS_NAME]);
-        $saveOrderTransfer = $this->tester->haveOrder(['unitPrice' => 1000], BusinessHelper::DEFAULT_OMS_PROCESS_NAME);
         $orderTransfer = $salesFacade->getOrderByIdSalesOrder($saveOrderTransfer->getIdSalesOrder());
 
         return $orderTransfer;
@@ -145,18 +168,16 @@ class DiscountOrderHydratePluginTest extends Unit
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     * @param array $seedData
      *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesDiscount
+     * @return void
      */
-    protected function createDiscountForOrder(OrderTransfer $orderTransfer, $seedData = []): SpySalesDiscount
+    protected function createDiscountForOrder(OrderTransfer $orderTransfer): void
     {
         $orderTransfer->requireItems();
-        $orderItem = $orderTransfer->getItems()[0];
-        $additionalSeedData = $this->getSeedDataForSalesDiscount($orderTransfer->getIdSalesOrder(), $orderItem->getIdSalesOrderItem());
-        $seedData = array_merge($seedData, $additionalSeedData);
-        $spySalesDiscountEntity = $this->tester->haveSalesDiscount($seedData);
-
-        return $spySalesDiscountEntity;
+//        $orderItem = $orderTransfer->getItems()[0];
+        foreach ($orderTransfer->getItems() as $orderItem) {
+            $seedData = $this->getSeedDataForSalesDiscount($orderTransfer->getIdSalesOrder(), $orderItem->getIdSalesOrderItem());
+            $this->tester->haveSalesDiscount($seedData);
+        }
     }
 }
