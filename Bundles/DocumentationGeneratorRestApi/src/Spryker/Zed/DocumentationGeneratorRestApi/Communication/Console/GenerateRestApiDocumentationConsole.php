@@ -39,7 +39,7 @@ class GenerateRestApiDocumentationConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        if ($this->isDocumentationGenerationEnabled()) {
+        if ($this->getFactory()->getConfig()->isRestApiDocumentationGeneratorEnabled()) {
             $this->getFacade()->generateDocumentation();
 
             return static::CODE_SUCCESS;
@@ -48,15 +48,5 @@ class GenerateRestApiDocumentationConsole extends Console
         $this->error('This command intended to be used non production environment only!');
 
         return static::CODE_ERROR;
-    }
-
-    /**
-     * @deprecated Will be removed without replacement.
-     *
-     * @return bool
-     */
-    protected function isDocumentationGenerationEnabled(): bool
-    {
-        return in_array(APPLICATION_ENV, ['development', 'devtest'], true);
     }
 }

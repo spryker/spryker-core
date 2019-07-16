@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductListStorage\Communication\Plugin\Synchronization;
 
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
+use Orm\Zed\ProductListStorage\Persistence\Map\SpyProductAbstractProductListStorageTableMap;
 use Spryker\Shared\ProductListStorage\ProductListStorageConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataBulkRepositoryPluginInterface;
@@ -120,6 +121,7 @@ class ProductAbstractProductListSynchronizationDataBulkPlugin extends AbstractPl
     protected function createFilterTransfer(int $offset, int $limit): FilterTransfer
     {
         return (new FilterTransfer())
+            ->setOrderBy(SpyProductAbstractProductListStorageTableMap::COL_ID_PRODUCT_ABSTRACT_PRODUCT_LIST_STORAGE)
             ->setOffset($offset)
             ->setLimit($limit);
     }

@@ -57,11 +57,11 @@ class CmsPageSynchronizationDataPlugin extends AbstractPlugin implements Synchro
     {
         $query = $this->getQueryContainer()->queryCmsPageSearchEntities($ids);
 
-        if (empty($ids)) {
+        if ($ids === []) {
             $query->clear();
         }
 
-        return $query;
+        return $query->orderByIdCmsPageSearch();
     }
 
     /**
