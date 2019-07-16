@@ -34,6 +34,7 @@ var ContentItemEditor = function(options) {
     };
 
     this.getEditorConfig = function (baseConfig = '') {
+        var self = this;
         baseConfig = editorConfig.getGlobalConfig(baseConfig);
 
         if (!baseConfig) {
@@ -54,7 +55,12 @@ var ContentItemEditor = function(options) {
                 'editContentItem': ['editWidget', 'editContentItem', 'removeContentItem']
             },
             callbacks: {
-                onKeydown: this.onKeydownHandler
+                onKeydown: this.onKeydownHandler,
+                onChange: function () {
+                    var $editor = $(this);
+
+                    self.onChangeHandler($editor, self);
+                }
             },
             dialogsInBody: true
         };
@@ -125,6 +131,42 @@ var ContentItemEditor = function(options) {
             $editorRange.deleteContents();
             $editor.summernote('pasteHTML', ' ');
         }
+    };
+
+    this.onChangeHandler = function ($editor, self) {
+        var twigMacroReg = /.*\{{.*/;
+        var $editorRange = $editor.summernote('createRange');
+        var $editorNode = $($editorRange.sc);
+        var nodeContent = $editorNode.text();
+        var isTwigMacro = twigMacroReg.test(nodeContent);
+
+        if (isTwigMacro) {
+            var $editorParentNode = $editorNode.parents('p');
+
+            self.changeEditorNode($editorParentNode);
+        }
+    };
+
+    this.changeEditorNode = function ($editorParentNode) {
+        if ($editorParentNode.is('p')) {
+            var $elementForInsert = $(
+                '<div class="js-twig-macro">' +
+                $editorParentNode.html() +
+                '</div>'
+            );
+
+            $editorParentNode.replaceWith($elementForInsert);
+            this.putCaretInTheEnd($elementForInsert);
+        }
+    };
+
+    this.putCaretInTheEnd = function ($elementForInsert) {
+        var range = document.createRange();
+        range.selectNode($elementForInsert[0].childNodes[0]);
+        var selection = window.getSelection();
+        selection.removeAllRanges();
+        selection.addRange(range);
+        range.collapse(false);
     };
 
     this.generateDropdownList = function () {
