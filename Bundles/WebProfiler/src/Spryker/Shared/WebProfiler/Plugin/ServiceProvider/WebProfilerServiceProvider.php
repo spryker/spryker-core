@@ -43,10 +43,6 @@ use Symfony\Component\HttpKernel\Profiler\Profiler;
 use Symfony\Component\Stopwatch\Stopwatch;
 use Twig\Profiler\Profile;
 
-/**
- * @deprecated Use `\Spryker\Zed\WebProfiler\Communication\Plugin\Application\WebProfilerApplicationPlugin` instead.
- * @deprecated Use `\SprykerShop\Yves\WebProfilerWidget\Plugin\Application\WebProfilerApplicationPlugin` instead.
- */
 class WebProfilerServiceProvider implements ServiceProviderInterface, ControllerProviderInterface
 {
     /**

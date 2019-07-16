@@ -13,8 +13,6 @@ namespace Spryker\Shared\WebProfiler;
 interface WebProfilerConstants
 {
     /**
-     * @deprecated Use `\Spryker\Shared\WebProfiler\WebProfilerConstants::IS_WEB_PROFILER_ENABLED` instead.
-     *
      * Specification:
      * - Enable/disable web profiler.
      *
@@ -24,17 +22,9 @@ interface WebProfilerConstants
 
     /**
      * Specification:
-     * - Enable/disable the web profiler.
+     * - Path to profiler cache directory.
      *
      * @api
      */
-    public const IS_WEB_PROFILER_ENABLED = 'WEB_PROFILER_ZED:IS_WEB_PROFILER_ENABLED';
-
-    /**
-     * Specification:
-     * - Path to the profiler cache directory.
-     *
-     * @api
-     */
-    public const PROFILER_CACHE_DIRECTORY = 'WEB_PROFILER_ZED:PROFILER_CACHE_DIRECTORY';
+    public const PROFILER_CACHE_DIRECTORY = 'WEBPROFILER:PROFILER_CACHE_DIRECTORY';
 }

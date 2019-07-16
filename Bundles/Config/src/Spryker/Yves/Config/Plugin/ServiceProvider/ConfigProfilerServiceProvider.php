@@ -9,9 +9,6 @@ namespace Spryker\Yves\Config\Plugin\ServiceProvider;
 
 use Spryker\Shared\Config\Plugin\ServiceProvider\AbstractConfigProfilerServiceProvider as SharedConfigProfilerServiceProvider;
 
-/**
- * @deprecated Use `\Spryker\Yves\Config\Plugin\WebProfiler\WebProfilerConfigDataCollector` instead.
- */
 class ConfigProfilerServiceProvider extends SharedConfigProfilerServiceProvider
 {
     /**

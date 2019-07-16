@@ -9,9 +9,6 @@ namespace Spryker\Shared\WebProfiler\DataCollector;
 
 use Symfony\Component\HttpKernel\DataCollector\RequestDataCollector as SymfonyRequestDataCollector;
 
-/**
- * @deprecated Will be removed without replacement.
- */
 class RequestDataCollector extends SymfonyRequestDataCollector
 {
     /**
