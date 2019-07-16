@@ -1,0 +1,5 @@
+{
+  "include": {
+    "Cart": "Cart ^7.2.0 is required for a dependency on `operation` value of CartChangeTransfer"
+  }
+}
