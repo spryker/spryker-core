@@ -15,6 +15,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\HttpKernel;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\TerminableInterface;
+use Symfony\Component\Routing\Loader\ClosureLoader;
+use Symfony\Component\Routing\Router;
 
 class Application implements HttpKernelInterface, TerminableInterface
 {
@@ -129,8 +131,15 @@ class Application implements HttpKernelInterface, TerminableInterface
      */
     public function flushControllers()
     {
-        $this->container->get('routes')
-            ->addCollection($this->container->get('controllers')->flush());
+        /** @var \Symfony\Cmf\Component\Routing\ChainRouterInterface $chainRouter */
+        $chainRouter = $this->container->get(static::SERVICE_ROUTER);
+
+        $loader = new ClosureLoader();
+        $resource = function () {
+            return $this->container->get('controllers')->flush();
+        };
+        $router = new Router($loader, $resource, ['cache_dir' => sprintf('%s/data/%s/cache/%s/controller/', APPLICATION_ROOT_DIR, APPLICATION_STORE, APPLICATION)]);
+        $chainRouter->add($router, 1);
     }
 
     /**
