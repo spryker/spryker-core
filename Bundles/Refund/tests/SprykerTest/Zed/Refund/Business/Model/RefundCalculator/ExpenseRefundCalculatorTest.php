@@ -29,6 +29,7 @@ class ExpenseRefundCalculatorTest extends AbstractRefundCalculatorTest
      */
     public function testCalculateRefundForOrderWithoutAlreadyRefundedItemsShouldNotAddExpenses(): void
     {
+        //Arrange
         $refundCalculationPlugin = new ExpenseRefundCalculator();
         $orderTransfer = $this->getOrderTransferWithoutRefundedItems();
         $salesOrderItems = [
@@ -37,8 +38,11 @@ class ExpenseRefundCalculatorTest extends AbstractRefundCalculatorTest
 
         $refundTransfer = new RefundTransfer();
         $refundTransfer->setAmount(0);
+
+        //Act
         $refundCalculationPlugin->calculateRefund($refundTransfer, $orderTransfer, $salesOrderItems);
 
+        //Assert
         $this->assertSame(0, $refundTransfer->getAmount());
     }
 
@@ -47,6 +51,7 @@ class ExpenseRefundCalculatorTest extends AbstractRefundCalculatorTest
      */
     public function testCalculateRefundShouldIncludeExpenseWhenLastItemOfOrderShouldBeRefunded(): void
     {
+        //Arrange
         $refundCalculationPlugin = new ExpenseRefundCalculator();
         $orderTransfer = $this->getOrderTransferWithRefundedItem();
         $salesOrderItems = [
@@ -55,8 +60,11 @@ class ExpenseRefundCalculatorTest extends AbstractRefundCalculatorTest
 
         $refundTransfer = new RefundTransfer();
         $refundTransfer->setAmount(0);
+
+        //Act
         $refundCalculationPlugin->calculateRefund($refundTransfer, $orderTransfer, $salesOrderItems);
 
+        //Assert
         $this->assertSame(10, $refundTransfer->getAmount());
     }
 
@@ -65,6 +73,7 @@ class ExpenseRefundCalculatorTest extends AbstractRefundCalculatorTest
      */
     public function testCalculateRefundShouldNotDuplicateItems(): void
     {
+        //Arrange
         $refundCalculationPlugin = new ItemRefundCalculator();
         $orderTransfer = $this->getOrderTransferWithoutRefundedItems();
         $salesOrderItems = [
@@ -72,8 +81,11 @@ class ExpenseRefundCalculatorTest extends AbstractRefundCalculatorTest
         ];
 
         $refundTransfer = $this->getRefundTransferWithItem();
+
+        //Act
         $refundTransfer = $refundCalculationPlugin->calculateRefund($refundTransfer, $orderTransfer, $salesOrderItems);
 
+        //Assert
         $this->assertSame(1, $refundTransfer->getItems()->count());
     }
 }
