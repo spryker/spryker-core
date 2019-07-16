@@ -24,9 +24,9 @@ interface PriceProductMerchantRelationshipMapperInterface
     ): PriceProductMerchantRelationshipTransfer;
 
     /**
-     * @param \Orm\Zed\PriceProductMerchantRelationship\Persistence\SpyPriceProductMerchantRelationship[] $priceProductMerchantRelationshipEntityTransfers
+     * @param \Orm\Zed\PriceProductMerchantRelationship\Persistence\SpyPriceProductMerchantRelationship[] $priceProductMerchantRelationshipEntities
      *
      * @return \Generated\Shared\Transfer\PriceProductMerchantRelationshipTransfer[]
      */
-    public function mapEntitiesToPriceProductMerchantRelationshipTransferCollection(array $priceProductMerchantRelationshipEntityTransfers): array;
+    public function mapEntitiesToPriceProductMerchantRelationshipTransferCollection(array $priceProductMerchantRelationshipEntities): array
 }
