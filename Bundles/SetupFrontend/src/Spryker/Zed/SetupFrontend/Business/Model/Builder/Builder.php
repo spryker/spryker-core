@@ -8,6 +8,7 @@
 namespace Spryker\Zed\SetupFrontend\Business\Model\Builder;
 
 use Psr\Log\LoggerInterface;
+use Spryker\Zed\SetupFrontend\SetupFrontendConfig;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Process\Process;
 
@@ -19,11 +20,18 @@ class Builder implements BuilderInterface
     protected $buildCommand;
 
     /**
-     * @param string $buildCommand
+     * @var int|float|null
      */
-    public function __construct($buildCommand)
+    protected $processTimeout;
+
+    /**
+     * @param string $buildCommand
+     * @param int|float|null $processTimeout
+     */
+    public function __construct($buildCommand, ?$processTimeout = SetupFrontendConfig::DEFAULT_PROCESS_TIMEOUT)
     {
         $this->buildCommand = $buildCommand;
+        $this->processTimeout = $processTimeout;
     }
 
     /**
@@ -33,7 +41,7 @@ class Builder implements BuilderInterface
      */
     public function build(LoggerInterface $logger)
     {
-        $process = new Process($this->buildCommand, APPLICATION_ROOT_DIR, null, null, null);
+        $process = new Process($this->buildCommand, APPLICATION_ROOT_DIR, null, null, $this->processTimeout);
 
         $process->run(function ($type, $buffer) use ($logger) {
             $this->handleOutput($buffer, $logger);

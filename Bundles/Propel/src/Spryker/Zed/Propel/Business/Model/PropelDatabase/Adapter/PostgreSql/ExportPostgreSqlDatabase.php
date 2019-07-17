@@ -11,10 +11,24 @@ use RuntimeException;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Propel\PropelConstants;
 use Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\ExportDatabaseInterface;
+use Spryker\Zed\Propel\PropelConfig;
 use Symfony\Component\Process\Process;
 
 class ExportPostgreSqlDatabase implements ExportDatabaseInterface
 {
+    /**
+     * @var \Spryker\Zed\Propel\PropelConfig|null
+     */
+    protected $config;
+
+    /**
+     * @param \Spryker\Zed\Propel\PropelConfig|null $config
+     */
+    public function __construct(?PropelConfig $config = null)
+    {
+        $this->config = $config;
+    }
+
     /**
      * @param string $backupPath
      *
@@ -77,7 +91,7 @@ class ExportPostgreSqlDatabase implements ExportDatabaseInterface
      */
     protected function runProcess($command)
     {
-        $process = new Process($command, null, $this->getEnvironmentVariables());
+        $process = new Process($command, null, $this->getEnvironmentVariables(), null, $this->getProcessTimeout());
         $process->inheritEnvironmentVariables(true);
         $process->run();
 
@@ -106,5 +120,17 @@ class ExportPostgreSqlDatabase implements ExportDatabaseInterface
     protected function useSudo()
     {
         return Config::get(PropelConstants::USE_SUDO_TO_MANAGE_DATABASE, true);
+    }
+
+    /**
+     * @return int|float|null
+     */
+    protected function getProcessTimeout()
+    {
+        if (!$this->config) {
+            return PropelConfig::DEFAULT_PROCESS_TIMEOUT;
+        }
+
+        return $this->config->getProcessTimeout();
     }
 }

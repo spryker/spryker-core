@@ -8,10 +8,24 @@
 namespace Spryker\Zed\SetupFrontend\Business\Model\PackageManager;
 
 use Psr\Log\LoggerInterface;
+use Spryker\Zed\SetupFrontend\SetupFrontendConfig;
 use Symfony\Component\Process\Process;
 
 class NodeInstaller implements PackageManagerInstallerInterface
 {
+    /**
+     * @var \Spryker\Zed\SetupFrontend\SetupFrontendConfig|null
+     */
+    protected $config;
+
+    /**
+     * @param \Spryker\Zed\SetupFrontend\SetupFrontendConfig|null $config
+     */
+    public function __construct(?SetupFrontendConfig $config = null)
+    {
+        $this->config = $config;
+    }
+
     /**
      * @param \Psr\Log\LoggerInterface $logger
      *
@@ -51,7 +65,7 @@ class NodeInstaller implements PackageManagerInstallerInterface
      */
     protected function getProcess($command)
     {
-        $process = new Process($command);
+        $process = new Process($command, null, null, null, $this->getProcessTimeout());
         $process->setTimeout(null);
 
         return $process;
@@ -85,5 +99,17 @@ class NodeInstaller implements PackageManagerInstallerInterface
     protected function getDownloadCommand()
     {
         return 'curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -';
+    }
+
+    /**
+     * @return int|float|null
+     */
+    protected function getProcessTimeout()
+    {
+        if (!$this->config) {
+            return SetupFrontendConfig::DEFAULT_PROCESS_TIMEOUT;
+        }
+
+        return $this->config->getProcessTimeout();
     }
 }

@@ -16,6 +16,9 @@ class QueueConfig extends AbstractBundleConfig
     public const DEFAULT_INTERVAL_MILLISECONDS = 1000;
     public const DEFAULT_PROCESS_TRIGGER_INTERVAL_MICROSECONDS = 1000;
     public const DEFAULT_THRESHOLD = 59;
+    public const DEFAULT_PROCESS_TIMEOUT = 60;
+
+    protected const PROCESS_TIMEOUT = 60;
 
     /**
      * @return array|null
@@ -146,5 +149,17 @@ class QueueConfig extends AbstractBundleConfig
     public function getIsWorkerLoopEnabled(): bool
     {
         return $this->get(QueueConstants::QUEUE_WORKER_LOOP, false);
+    }
+
+    /**
+     * Specification:
+     * - Returns the value for the process timeout in seconds, after which an exception will be thrown.
+     * - Can return 0, 0.0 or null to disable timeout.
+     *
+     * @return int|float|null
+     */
+    public function getProcessTimeout()
+    {
+        return $this->get(static::PROCESS_TIMEOUT);
     }
 }

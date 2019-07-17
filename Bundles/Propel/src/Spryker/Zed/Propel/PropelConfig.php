@@ -16,6 +16,9 @@ class PropelConfig extends AbstractBundleConfig
 {
     public const DB_ENGINE_MYSQL = 'mysql';
     public const DB_ENGINE_PGSQL = 'pgsql';
+    public const DEFAULT_PROCESS_TIMEOUT = 60;
+
+    protected const PROCESS_TIMEOUT = 60;
 
     /**
      * Specification:
@@ -150,5 +153,17 @@ class PropelConfig extends AbstractBundleConfig
             'id-method-parameter',
             'behavior',
         ];
+    }
+
+    /**
+     * Specification:
+     * - Returns the value for the process timeout in seconds, after which an exception will be thrown.
+     * - Can return 0, 0.0 or null to disable timeout.
+     *
+     * @return int|float|null
+     */
+    public function getProcessTimeout()
+    {
+        return $this->get(static::PROCESS_TIMEOUT);
     }
 }

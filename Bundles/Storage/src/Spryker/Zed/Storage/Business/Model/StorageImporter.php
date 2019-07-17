@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Storage\Business\Model;
 
+use Spryker\Zed\Storage\StorageConfig;
 use Symfony\Component\Process\Process;
 
 /**
@@ -20,11 +21,18 @@ class StorageImporter implements StorageImporterInterface
     protected $destination;
 
     /**
-     * @param string $destination
+     * @var int|float|null
      */
-    public function __construct($destination)
+    protected $processTimeout;
+
+    /**
+     * @param string $destination
+     * @param int|float|null $processTimeout
+     */
+    public function __construct($destination, ?$processTimeout = StorageConfig::DEFAULT_PROCESS_TIMEOUT)
     {
         $this->destination = $destination;
+        $this->processTimeout = $processTimeout;
     }
 
     /**
@@ -35,7 +43,7 @@ class StorageImporter implements StorageImporterInterface
     public function import($source)
     {
         $command = sprintf('sudo cp %s %s', $source, $this->destination);
-        $process = new Process($command, APPLICATION_ROOT_DIR);
+        $process = new Process($command, APPLICATION_ROOT_DIR, null, null, $this->processTimeout);
         $process->run();
 
         if ($process->isSuccessful()) {

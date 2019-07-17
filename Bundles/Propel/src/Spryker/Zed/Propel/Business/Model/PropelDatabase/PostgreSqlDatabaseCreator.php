@@ -16,6 +16,19 @@ use Symfony\Component\Process\Process;
 class PostgreSqlDatabaseCreator implements DatabaseCreatorInterface
 {
     /**
+     * @var \Spryker\Zed\Propel\PropelConfig|null
+     */
+    protected $config;
+
+    /**
+     * @param \Spryker\Zed\Propel\PropelConfig|null $config
+     */
+    public function __construct(?PropelConfig $config = null)
+    {
+        $this->config = $config;
+    }
+
+    /**
      * @return string
      */
     public function getEngine()
@@ -117,7 +130,7 @@ class PostgreSqlDatabaseCreator implements DatabaseCreatorInterface
     {
         $this->exportPostgresPassword();
 
-        $process = new Process($command);
+        $process = new Process($command, null, null, null, $this->getProcessTimeout());
         $process->run();
 
         if (!$process->isSuccessful()) {
@@ -144,5 +157,17 @@ class PostgreSqlDatabaseCreator implements DatabaseCreatorInterface
     protected function useSudo()
     {
         return Config::get(PropelConstants::USE_SUDO_TO_MANAGE_DATABASE, true);
+    }
+
+    /**
+     * @return int|float|null
+     */
+    protected function getProcessTimeout()
+    {
+        if (!$this->config) {
+            return PropelConfig::DEFAULT_PROCESS_TIMEOUT;
+        }
+
+        return $this->config->getProcessTimeout();
     }
 }

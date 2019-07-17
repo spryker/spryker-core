@@ -12,11 +12,25 @@ use Spryker\Shared\Config\Config;
 use Spryker\Shared\Propel\PropelConstants;
 use Spryker\Zed\Propel\Business\Exception\UnSupportedCharactersInConfigurationValueException;
 use Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\CreateDatabaseInterface;
+use Spryker\Zed\Propel\PropelConfig;
 use Symfony\Component\Process\Process;
 
 class CreatePostgreSqlDatabase implements CreateDatabaseInterface
 {
     protected const SHELL_CHARACTERS_PATTERN = '/\$|`/i';
+
+    /**
+     * @var \Spryker\Zed\Propel\PropelConfig|null
+     */
+    protected $config;
+
+    /**
+     * @param \Spryker\Zed\Propel\PropelConfig|null $config
+     */
+    public function __construct(?PropelConfig $config = null)
+    {
+        $this->config = $config;
+    }
 
     /**
      * @return void
@@ -111,7 +125,7 @@ class CreatePostgreSqlDatabase implements CreateDatabaseInterface
      */
     protected function runProcess($command)
     {
-        $process = new Process($command);
+        $process = new Process($command, null, null, null, $this->getProcessTimeout());
         $process->run(null, $this->getEnvironmentVariables());
 
         if (!$process->isSuccessful()) {
@@ -159,5 +173,17 @@ class CreatePostgreSqlDatabase implements CreateDatabaseInterface
         return [
             'PGPASSWORD' => $this->getConfigValue(PropelConstants::ZED_DB_PASSWORD),
         ];
+    }
+
+    /**
+     * @return int|float|null
+     */
+    protected function getProcessTimeout()
+    {
+        if (!$this->config) {
+            return PropelConfig::DEFAULT_PROCESS_TIMEOUT;
+        }
+
+        return $this->config->getProcessTimeout();
     }
 }

@@ -11,10 +11,24 @@ use RuntimeException;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Propel\PropelConstants;
 use Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\ImportDatabaseInterface;
+use Spryker\Zed\Propel\PropelConfig;
 use Symfony\Component\Process\Process;
 
 class ImportMySqlDatabase implements ImportDatabaseInterface
 {
+    /**
+     * @var \Spryker\Zed\Propel\PropelConfig|null
+     */
+    protected $config;
+
+    /**
+     * @param \Spryker\Zed\Propel\PropelConfig|null $config
+     */
+    public function __construct(?PropelConfig $config = null)
+    {
+        $this->config = $config;
+    }
+
     /**
      * @param string $backupPath
      *
@@ -36,7 +50,7 @@ class ImportMySqlDatabase implements ImportDatabaseInterface
      */
     protected function runProcess($command)
     {
-        $process = new Process($command);
+        $process = new Process($command, null, null, null, $this->getProcessTimeout());
         $process->run();
 
         if (!$process->isSuccessful()) {
@@ -60,5 +74,17 @@ class ImportMySqlDatabase implements ImportDatabaseInterface
             Config::get(PropelConstants::ZED_DB_DATABASE),
             $backupPath
         );
+    }
+
+    /**
+     * @return int|float|null
+     */
+    protected function getProcessTimeout()
+    {
+        if (!$this->config) {
+            return PropelConfig::DEFAULT_PROCESS_TIMEOUT;
+        }
+
+        return $this->config->getProcessTimeout();
     }
 }

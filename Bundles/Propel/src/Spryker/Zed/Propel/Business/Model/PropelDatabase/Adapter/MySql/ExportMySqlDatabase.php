@@ -11,10 +11,26 @@ use RuntimeException;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Propel\PropelConstants;
 use Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\ExportDatabaseInterface;
+use Spryker\Zed\Propel\PropelConfig;
 use Symfony\Component\Process\Process;
 
 class ExportMySqlDatabase implements ExportDatabaseInterface
 {
+    protected const MINIMUM_PROCESS_TIMEOUT = 600;
+
+    /**
+     * @var \Spryker\Zed\Propel\PropelConfig|null
+     */
+    protected $config;
+
+    /**
+     * @param \Spryker\Zed\Propel\PropelConfig|null $config
+     */
+    public function __construct(?PropelConfig $config = null)
+    {
+        $this->config = $config;
+    }
+
     /**
      * @param string $backupPath
      *
@@ -36,7 +52,7 @@ class ExportMySqlDatabase implements ExportDatabaseInterface
      */
     protected function runProcess($command)
     {
-        $process = new Process($command, APPLICATION_ROOT_DIR, null, null, 600);
+        $process = new Process($command, APPLICATION_ROOT_DIR, null, null, $this->getProcessTimeout());
         $process->run();
 
         if (!$process->isSuccessful()) {
@@ -60,5 +76,19 @@ class ExportMySqlDatabase implements ExportDatabaseInterface
             Config::get(PropelConstants::ZED_DB_DATABASE),
             $backupPath
         );
+    }
+
+    /**
+     * @return int|float|null
+     */
+    protected function getProcessTimeout()
+    {
+        $configProcessTimeout = $this->config ? $this->config->getProcessTimeout() : 0;
+
+        if ($configProcessTimeout > static::MINIMUM_PROCESS_TIMEOUT) {
+            return $configProcessTimeout;
+        }
+
+        return static::MINIMUM_PROCESS_TIMEOUT;
     }
 }

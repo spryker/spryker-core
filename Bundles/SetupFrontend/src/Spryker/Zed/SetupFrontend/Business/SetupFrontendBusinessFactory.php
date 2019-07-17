@@ -25,7 +25,7 @@ class SetupFrontendBusinessFactory extends AbstractBusinessFactory
      */
     public function createPackageManagerInstaller()
     {
-        return new NodeInstaller();
+        return new NodeInstaller($this->getConfig());
     }
 
     /**
@@ -33,7 +33,10 @@ class SetupFrontendBusinessFactory extends AbstractBusinessFactory
      */
     public function createProjectInstaller()
     {
-        return new ProjectInstaller($this->getConfig()->getProjectInstallCommand());
+        return new ProjectInstaller(
+            $this->getConfig()->getProjectInstallCommand(),
+            $this->getConfig()->getProcessTimeout()
+        );
     }
 
     /**
@@ -59,7 +62,8 @@ class SetupFrontendBusinessFactory extends AbstractBusinessFactory
     {
         return new DependencyInstaller(
             $this->createYvesInstallerPathFinder(),
-            $this->getConfig()->getYvesInstallCommand()
+            $this->getConfig()->getYvesInstallCommand(),
+            $this->getConfig()->getProcessTimeout()
         );
     }
 
@@ -76,7 +80,7 @@ class SetupFrontendBusinessFactory extends AbstractBusinessFactory
      */
     public function createYvesBuilder()
     {
-        return new Builder($this->getConfig()->getYvesBuildCommand());
+        return new Builder($this->getConfig()->getYvesBuildCommand(), $this->getConfig()->getProcessTimeout());
     }
 
     /**
@@ -94,7 +98,8 @@ class SetupFrontendBusinessFactory extends AbstractBusinessFactory
     {
         return new DependencyInstaller(
             $this->createZedInstallerPathFinder(),
-            $this->getConfig()->getYvesInstallCommand()
+            $this->getConfig()->getYvesInstallCommand(),
+            $this->getConfig()->getProcessTimeout()
         );
     }
 
@@ -111,6 +116,6 @@ class SetupFrontendBusinessFactory extends AbstractBusinessFactory
      */
     public function createZedBuilder()
     {
-        return new Builder($this->getConfig()->getZedBuildCommand());
+        return new Builder($this->getConfig()->getZedBuildCommand(), $this->getConfig()->getProcessTimeout());
     }
 }
