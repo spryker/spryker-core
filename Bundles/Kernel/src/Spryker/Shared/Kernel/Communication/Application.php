@@ -11,7 +11,6 @@ use Silex\Application as SilexApplication;
 use Silex\Application\TranslationTrait;
 use Silex\Application\TwigTrait;
 use Silex\Application\UrlGeneratorTrait;
-use Spryker\Shared\Application\Application as SprykerApplication;
 use Symfony\Cmf\Component\Routing\ChainRouter;
 use Symfony\Component\Routing\RouterInterface;
 
@@ -48,7 +47,7 @@ class Application extends SilexApplication
     public function addRouter(RouterInterface $router, $priority = 0)
     {
         /** @var \Spryker\Service\Container\ContainerInterface $this */
-        $this->set(SprykerApplication::SERVICE_ROUTER, $this->extend(SprykerApplication::SERVICE_ROUTER, function (ChainRouter $chainRouter) use ($router, $priority) {
+        $this->set(static::ROUTERS, $this->extend(static::ROUTERS, function (ChainRouter $chainRouter) use ($router, $priority) {
             $chainRouter->add($router, $priority);
 
             return $chainRouter;
