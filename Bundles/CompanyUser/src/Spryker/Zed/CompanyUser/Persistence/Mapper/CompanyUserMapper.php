@@ -27,7 +27,6 @@ class CompanyUserMapper implements CompanyUserMapperInterface
     ): SpyCompanyUserEntityTransfer {
         $companyUserEntityTransfer = new SpyCompanyUserEntityTransfer();
         $companyUserEntityTransfer->fromArray($companyUserTransfer->toArray(false), true);
-        $companyUserEntityTransfer->setNew($companyUserTransfer->getIdCompanyUser() === null);
 
         return $companyUserEntityTransfer;
     }
@@ -40,11 +39,11 @@ class CompanyUserMapper implements CompanyUserMapperInterface
     public function mapEntityTransferToCompanyUserTransfer(
         SpyCompanyUserEntityTransfer $companyUserEntityTransfer
     ): CompanyUserTransfer {
-        $companyUserTransfer = (new CompanyUserTransfer())->fromArray($companyUserEntityTransfer->toArray(), true);
+        $companyUserTransfer = (new CompanyUserTransfer())->fromArray($companyUserEntityTransfer->modifiedToArray(), true);
 
         if ($companyUserEntityTransfer->getCustomer()) {
             $customerTransfer = (new CustomerTransfer())->fromArray(
-                $companyUserEntityTransfer->getCustomer()->toArray(),
+                $companyUserEntityTransfer->getCustomer()->modifiedToArray(),
                 true
             );
             $companyUserTransfer->setCustomer($customerTransfer);
@@ -52,7 +51,7 @@ class CompanyUserMapper implements CompanyUserMapperInterface
 
         if ($companyUserEntityTransfer->getCompany()) {
             $companyTransfer = (new CompanyTransfer())->fromArray(
-                $companyUserEntityTransfer->getCompany()->toArray(),
+                $companyUserEntityTransfer->getCompany()->modifiedToArray(),
                 true
             );
             $companyUserTransfer->setCompany($companyTransfer);
