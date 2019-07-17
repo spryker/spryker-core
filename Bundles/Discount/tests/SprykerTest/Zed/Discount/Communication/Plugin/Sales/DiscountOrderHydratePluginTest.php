@@ -107,15 +107,18 @@ class DiscountOrderHydratePluginTest extends Unit
     protected function getDataForOrderHydratorMultipleItemsMixedQuantity(): array
     {
         $quoteTransfer = $this->getMultipleItemsMixedQuantityQuote();
-
-        return [
-            $quoteTransfer,
-            [1, 2, 3],
-            [
+        $itemDiscountQuantities = [1, 2, 3];
+        $discountAmounts = [
             [50, 50],
             [50, 25],
             [50, 17],
-            ]];
+        ];
+
+        return [
+            $quoteTransfer,
+            $itemDiscountQuantities,
+            $discountAmounts,
+        ];
     }
 
     /**
@@ -134,13 +137,16 @@ class DiscountOrderHydratePluginTest extends Unit
     protected function getDataForOrderHydratorSingleItemHigherQuantity(): array
     {
         $quoteTransfer = $this->getSingleItemHigherQuantityQuote();
+        $itemDiscountQuantities = [3];
+        $discountAmounts = [
+            [50, 17],
+        ];
 
         return [
             $quoteTransfer,
-            [3],
-            [
-            [50, 17],
-            ]];
+            $itemDiscountQuantities,
+            $discountAmounts,
+        ];
     }
 
     /**
@@ -159,13 +165,16 @@ class DiscountOrderHydratePluginTest extends Unit
     protected function getDataForOrderHydratorSingleItem(): array
     {
         $quoteTransfer = $this->getSingleItemQuote();
+        $itemDiscountQuantities = [1];
+        $discountAmounts = [
+            [50, 50],
+        ];
 
         return [
             $quoteTransfer,
-            [1],
-            [
-            [50, 50],
-            ]];
+            $itemDiscountQuantities,
+            $discountAmounts,
+        ];
     }
 
     /**
@@ -186,15 +195,18 @@ class DiscountOrderHydratePluginTest extends Unit
     protected function getDataForOrderHydratorMultipleItem(): array
     {
         $quoteTransfer = $this->getMultipleItemsQuote();
+        $itemDiscountQuantities = [1, 1, 1];
+        $discountAmounts = [
+            [50, 50],
+            [50, 50],
+            [50, 50],
+        ];
 
         return [
             $quoteTransfer,
-            [1, 1, 1],
-            [
-            [50, 50],
-            [50, 50],
-            [50, 50],
-            ]];
+            $itemDiscountQuantities,
+            $discountAmounts,
+        ];
     }
 
     /**
@@ -238,14 +250,14 @@ class DiscountOrderHydratePluginTest extends Unit
      * @dataProvider orderHydratorDataProvider
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param array $discountQuantities
+     * @param int $discountQuantity
      * @param int $discountAmount
      *
      * @return void
      */
     public function testOrderHydratedShouldCorrectlyHydrateOrder(
         QuoteTransfer $quoteTransfer,
-        array $discountQuantities,
+        int $discountQuantity,
         int $discountAmount
     ): void {
         //Arrange
@@ -263,7 +275,7 @@ class DiscountOrderHydratePluginTest extends Unit
 
         //Assert
         foreach ($orderTransfer->getCalculatedDiscounts() as $calculatedDiscountTransfer) {
-            $this->assertEquals($discountQuantities[0], $calculatedDiscountTransfer->getQuantity(), 'Discount quantity does not match expected value');
+            $this->assertEquals($discountQuantity, $calculatedDiscountTransfer->getQuantity(), 'Discount quantity does not match expected value');
             $this->assertEquals($discountAmount, $calculatedDiscountTransfer->getSumAmount(), 'Discount sum amount does not match expected value');
         }
     }
@@ -274,8 +286,14 @@ class DiscountOrderHydratePluginTest extends Unit
     protected function getDataForOrderHydratorMultipleItemsMixedQuantityOrderLevel(): array
     {
         $quoteTransfer = $this->getMultipleItemsMixedQuantityQuote();
+        $discountQuantities = [6];
+        $discountAmount = 150;
 
-        return [$quoteTransfer, [6], 150];
+        return [
+            $quoteTransfer,
+            $discountQuantities,
+            $discountAmount,
+        ];
     }
 
     /**
@@ -284,8 +302,14 @@ class DiscountOrderHydratePluginTest extends Unit
     protected function getDataForOrderHydratorMultipleItemOrderLevel(): array
     {
         $quoteTransfer = $this->getMultipleItemsQuote();
+        $discountQuantity = 3;
+        $discountAmount = 150;
 
-        return [$quoteTransfer, [3], 150];
+        return [
+            $quoteTransfer,
+            $discountQuantity,
+            $discountAmount,
+        ];
     }
 
     /**
@@ -294,8 +318,14 @@ class DiscountOrderHydratePluginTest extends Unit
     protected function getDataForOrderHydratorSingleItemHigherQuantityOrderLevel(): array
     {
         $quoteTransfer = $this->getSingleItemHigherQuantityQuote();
+        $discountQuantity = 3;
+        $discountAmount = 50;
 
-        return [$quoteTransfer, [3], 50];
+        return [
+            $quoteTransfer,
+            $discountQuantity,
+            $discountAmount,
+        ];
     }
 
     /**
@@ -304,8 +334,14 @@ class DiscountOrderHydratePluginTest extends Unit
     protected function getDataForOrderHydratorSingleItemOrderLevel(): array
     {
         $quoteTransfer = $this->getSingleItemQuote();
+        $discountQuantity = 1;
+        $discountAmount = 50;
 
-        return [$quoteTransfer, [1], 50];
+        return [
+            $quoteTransfer,
+            $discountQuantity,
+            $discountAmount,
+        ];
     }
 
     /**
@@ -345,7 +381,6 @@ class DiscountOrderHydratePluginTest extends Unit
      */
     protected function getDiscountPhpFieldName(string $fieldName): string
     {
-
         return SpySalesDiscountTableMap::translateFieldName($fieldName, SpySalesDiscountTableMap::TYPE_COLNAME, SpySalesDiscountTableMap::TYPE_FIELDNAME);
     }
 
