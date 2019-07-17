@@ -25,7 +25,6 @@ class MerchantMapper implements MerchantMapperInterface
         $spyMerchant->fromArray(
             $merchantTransfer->toArray(false)
         );
-        $spyMerchant->setNew($merchantTransfer->getIdMerchant() === null);
 
         return $spyMerchant;
     }
