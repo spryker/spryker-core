@@ -35,7 +35,7 @@ class CompanyRoleMapper implements CompanyRoleMapperInterface
         CompanyRoleTransfer $companyRoleTransfer,
         SpyCompanyRole $spyCompanyRole
     ): SpyCompanyRole {
-        $spyCompanyRole->fromArray($companyRoleTransfer->modifiedToArray());
+        $spyCompanyRole->fromArray($companyRoleTransfer->toArray());
         $spyCompanyRole->setNew($companyRoleTransfer->getIdCompanyRole() === null);
 
         return $spyCompanyRole;
