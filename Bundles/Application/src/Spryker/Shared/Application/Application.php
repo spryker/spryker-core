@@ -138,7 +138,7 @@ class Application implements HttpKernelInterface, TerminableInterface
         $resource = function () {
             return $this->container->get('controllers')->flush();
         };
-        $router = new Router($loader, $resource, ['cache_dir' => sprintf('%s/data/%s/cache/%s/controller/', APPLICATION_ROOT_DIR, APPLICATION_STORE, APPLICATION)]);
+        $router = new Router($loader, $resource);
         $chainRouter->add($router, 1);
     }
 
