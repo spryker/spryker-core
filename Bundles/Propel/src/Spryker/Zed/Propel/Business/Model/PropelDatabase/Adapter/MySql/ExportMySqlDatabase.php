@@ -83,12 +83,14 @@ class ExportMySqlDatabase implements ExportDatabaseInterface
      */
     protected function getProcessTimeout()
     {
-        $configProcessTimeout = $this->config ? $this->config->getProcessTimeout() : 0;
+        $minimumProcessTimeout = static::MINIMUM_PROCESS_TIMEOUT;
+        $processTimeout = PropelConfig::DEFAULT_PROCESS_TIMEOUT;
 
-        if ($configProcessTimeout > static::MINIMUM_PROCESS_TIMEOUT) {
-            return $configProcessTimeout;
+        if ($this->config) {
+            $minimumProcessTimeout = $this->config->getMinimumMySqlDatabaseExportTimeout();
+            $processTimeout = $this->config->getProcessTimeout();
         }
 
-        return static::MINIMUM_PROCESS_TIMEOUT;
+        return $processTimeout > $minimumProcessTimeout ? $processTimeout : $minimumProcessTimeout;
     }
 }

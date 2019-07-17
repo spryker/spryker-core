@@ -178,6 +178,6 @@ class SetupConfig extends AbstractBundleConfig
      */
     public function getProcessTimeout()
     {
-        return $this->get(static::PROCESS_TIMEOUT);
+        return static::PROCESS_TIMEOUT;
     }
 }
