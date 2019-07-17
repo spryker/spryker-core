@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\SharedCart;
 
+use Generated\Shared\Transfer\CustomerCollectionTransfer;
 use Generated\Shared\Transfer\QuotePermissionGroupCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuotePermissionGroupResponseTransfer;
 use Generated\Shared\Transfer\QuotePermissionGroupTransfer;
@@ -178,5 +179,21 @@ class SharedCartClient extends AbstractClient implements SharedCartClientInterfa
         return $this->getFactory()
             ->createSwitchDefaultCartByResourceShare()
             ->switchDefaultCartByResourceShare($resourceShareRequestTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerCollectionTransfer
+     */
+    public function getCustomerCollectionByQuote(QuoteTransfer $quoteTransfer): CustomerCollectionTransfer
+    {
+        return $this->getFactory()
+            ->createZedSharedCartStub()
+            ->getCustomerCollectionByQuote($quoteTransfer);
     }
 }

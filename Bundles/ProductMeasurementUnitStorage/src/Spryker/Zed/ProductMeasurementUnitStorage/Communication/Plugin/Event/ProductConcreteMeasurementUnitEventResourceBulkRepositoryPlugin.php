@@ -84,6 +84,7 @@ class ProductConcreteMeasurementUnitEventResourceBulkRepositoryPlugin extends Ab
     protected function createFilterTransfer(int $offset, int $limit): FilterTransfer
     {
         return (new FilterTransfer())
+            ->setOrderBy(SpyProductMeasurementSalesUnitTableMap::COL_FK_PRODUCT)
             ->setOffset($offset)
             ->setLimit($limit);
     }

@@ -24,6 +24,8 @@ class DevelopmentConfig extends AbstractBundleConfig
     protected const NAMESPACE_SPRYKER_SDK = 'SprykerSdk';
     protected const NAMESPACE_SPRYKER_MERCHANT_PORTAL = 'SprykerMerchantPortal';
 
+    protected const GROUP_SPRYKER_TEST = 'SprykerTest';
+
     public const APPLICATION_NAMESPACES = [
         'Orm',
     ];
@@ -52,6 +54,8 @@ class DevelopmentConfig extends AbstractBundleConfig
     ];
 
     protected const INTERNAL_PACKAGE_DIRECTORIES = ['spryker', 'spryker-shop', 'spryker-merchant-portal'];
+
+    protected const TIMEOUT_DEFAULT = 4800;
 
     /**
      * @return int
@@ -275,6 +279,8 @@ class DevelopmentConfig extends AbstractBundleConfig
             'Egulias\\EmailValidator\\' => 'spryker/egulias',
             'Ramsey\\Uuid' => 'spryker/ramsey-uuid',
             'Doctrine\\Common\\Inflector' => 'spryker/doctrine-inflector',
+            'JsonPath\\' => 'spryker/json-path',
+            'JsonSchema\\' => 'spryker/json-schema',
         ];
     }
 
@@ -558,5 +564,29 @@ class DevelopmentConfig extends AbstractBundleConfig
     public function getInternalPackageDirectories(): array
     {
         return static::INTERNAL_PACKAGE_DIRECTORIES;
+    }
+
+    /**
+     * Specification:
+     * - Returns group names to run only tests that have all of the groups.
+     * - Example: ['Customer', 'Communication'] inclusive parameter runs tests Communication suite in Customer module.
+     *
+     * @api
+     *
+     * @return string[]
+     */
+    public function getDefaultInclusiveGroups(): array
+    {
+        return [
+            static::GROUP_SPRYKER_TEST,
+        ];
+    }
+
+    /**
+     * @return int
+     */
+    public function getProcessTimeout(): int
+    {
+        return static::TIMEOUT_DEFAULT;
     }
 }

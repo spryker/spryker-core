@@ -90,7 +90,6 @@ class CompanyUnitAddressForm extends AbstractType
             'label' => 'Company',
             'placeholder' => 'Select one',
             'choices' => array_flip($choices),
-            'choices_as_values' => true,
             'constraints' => [
                 new NotBlank(),
             ],
@@ -111,7 +110,6 @@ class CompanyUnitAddressForm extends AbstractType
             'label' => 'Country',
             'placeholder' => 'Select one',
             'choices' => array_flip($choices),
-            'choices_as_values' => true,
             'constraints' => [
                 new NotBlank(),
             ],

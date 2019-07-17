@@ -1,7 +1,5 @@
 parameters:
     ignoreErrors:
-        - '#Parameter \$resolver of method [a-zA-Z0-9\\]+::setDefaultOptions\(\) has invalid typehint type Symfony\\Component\\OptionsResolver\\OptionsResolverInterface#'
-        - '#Parameter \#1 \$resolver of method .+Form::configureOptions\(\) expects .+OptionsResolver, Symfony\\Component\\OptionsResolver\\OptionsResolverInterface given#'
         - '#Parameter \#1 \$v of method .+SpyOmsOrderItemStateHistory::setOrderItem\(\) expects .+SpySalesOrderItem|null, \$this\(Spryker\\Zed\\Sales\\Persistence\\Propel\\AbstractSpySalesOrderItem\) given#'
         - '#Call to an undefined static method Orm\\Zed\\Sales\\Persistence\\Base\\SpySalesOrder::getFkCustomer\(\)\.#'
         - '#Call to an undefined static method Orm\\Zed\\Sales\\Persistence\\Base\\SpySalesOrderQuery::filterByFkCustomer\(\)\.#'

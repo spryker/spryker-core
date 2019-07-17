@@ -50,7 +50,8 @@ class ApiCommunicationFactory extends AbstractCommunicationFactory
     public function createTransformer(ApiRequestTransfer $apiRequestTransfer)
     {
         return new Transformer(
-            $this->createFormatter($apiRequestTransfer->getFormatType())
+            $this->createFormatter($apiRequestTransfer->getFormatType()),
+            $this->getConfig()
         );
     }
 
