@@ -1,0 +1,2 @@
+message_key,owner_type,owner_key,customer_reference,message,tags
+test-message-key,quote,incorrect-comment-owner-key,test-comment-customer-reference,test-message,"[""test-tag""]"

@@ -45,9 +45,9 @@ class ProductOptionEventResourceQueryContainerPlugin extends AbstractPlugin impl
      */
     public function queryData(array $ids = []): ?ModelCriteria
     {
-        $query = $this->getQueryContainer()->queryProductOptionsByProductAbstractIds($ids);
+        $query = $this->getQueryContainer()->queryProductAbstractOptionsByProductAbstractIds($ids);
 
-        if (empty($ids)) {
+        if ($ids === []) {
             $query->clear();
         }
 

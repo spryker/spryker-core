@@ -27,6 +27,7 @@ class QuoteDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_QUOTE_DELETE_AFTER = 'PLUGINS_QUOTE_DELETE_AFTER';
     public const PLUGINS_QUOTE_VALIDATOR = 'PLUGINS_QUOTE_VALIDATOR';
     public const PLUGINS_QUOTE_EXPANDER = 'PLUGINS_QUOTE_EXPANDER';
+    public const PLUGINS_QUOTE_EXPAND_BEFORE_CREATE = 'PLUGINS_QUOTE_EXPAND_BEFORE_CREATE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -46,6 +47,7 @@ class QuoteDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addQuoteDeleteAfterPlugins($container);
         $container = $this->addQuoteValidatorPlugins($container);
         $container = $this->addQuoteExpanderPlugins($container);
+        $container = $this->addQuoteExpandBeforeCreatePlugins($container);
 
         return $container;
     }
@@ -151,6 +153,20 @@ class QuoteDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
+    protected function addQuoteExpandBeforeCreatePlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_QUOTE_EXPAND_BEFORE_CREATE] = function (Container $container): array {
+            return $this->getQuoteExpandBeforeCreatePlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     protected function addQuoteUpdateBeforePlugins(Container $container): Container
     {
         $container[self::PLUGINS_QUOTE_UPDATE_BEFORE] = function (Container $container) {
@@ -230,6 +246,14 @@ class QuoteDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteWritePluginInterface[]
      */
     protected function getQuoteUpdateAfterPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteExpandBeforeCreatePluginInterface[]
+     */
+    protected function getQuoteExpandBeforeCreatePlugins(): array
     {
         return [];
     }

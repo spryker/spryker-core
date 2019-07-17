@@ -6,7 +6,7 @@
   "require": {
     "php": ">=7.1",
     "spryker/customer-access": "^1.0.0",
-    "spryker/kernel": "^3.17.0",
+    "spryker/kernel": "^3.37.0",
     "spryker/propel-orm": "^1.5.0",
     "spryker/storage": "^3.0.0",
     "spryker/synchronization": "^0.2.0 || ^1.0.0",
