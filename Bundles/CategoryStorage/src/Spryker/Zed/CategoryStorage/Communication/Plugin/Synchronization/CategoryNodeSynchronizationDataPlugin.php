@@ -57,11 +57,11 @@ class CategoryNodeSynchronizationDataPlugin extends AbstractPlugin implements Sy
     {
         $query = $this->getQueryContainer()->queryCategoryNodeStorageByIds($ids);
 
-        if (empty($ids)) {
+        if ($ids === []) {
             $query->clear();
         }
 
-        return $query;
+        return $query->orderByIdCategoryNodeStorage();
     }
 
     /**

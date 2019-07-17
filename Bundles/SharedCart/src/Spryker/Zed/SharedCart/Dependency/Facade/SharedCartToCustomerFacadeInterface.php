@@ -7,10 +7,18 @@
 
 namespace Spryker\Zed\SharedCart\Dependency\Facade;
 
+use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 
 interface SharedCartToCustomerFacadeInterface
 {
+    /**
+     * @param string $customerReference
+     *
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
+     */
+    public function findCustomerByReference(string $customerReference): CustomerResponseTransfer;
+
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
