@@ -208,9 +208,9 @@ class Reservation implements ReservationInterface
     protected function validateItemTransfer(ItemTransfer $itemTransfer): void
     {
         $itemTransfer
-            ->requireQuantity()
             ->requireProcess()
             ->requireState()
+            ->requireQuantity()
             ->getState()
                 ->requireName();
     }

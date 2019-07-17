@@ -17,7 +17,6 @@ use Orm\Zed\Oms\Persistence\SpyOmsProductReservationQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
-use Spryker\Zed\Oms\Business\OmsFacade;
 use Spryker\Zed\Oms\Business\OmsFacadeInterface;
 use Spryker\Zed\Store\Business\StoreFacadeInterface;
 
@@ -70,16 +69,16 @@ class OmsFacadeSumReservedItemsTest extends Unit
         $this->createTestOrder('123', 'Test01', static::NOT_RESERVED_ITEM_STATE_EXCEPT_PROCESS_3);
         $this->createTestOrder('456', 'Test02', static::NOT_RESERVED_ITEM_STATE_EXCEPT_PROCESS_3);
 
-        $this->assertEquals(100, $this->createOmsFacade()->sumReservedProductQuantitiesForSku(static::ORDER_ITEM_SKU));
+        $this->assertEquals(100, $this->getOmsFacade()->sumReservedProductQuantitiesForSku(static::ORDER_ITEM_SKU));
 
         $order3 = $this->createTestOrder('789', 'Test03', 'new');
-        $this->assertEquals(150, $this->createOmsFacade()->sumReservedProductQuantitiesForSku(static::ORDER_ITEM_SKU));
+        $this->assertEquals(150, $this->getOmsFacade()->sumReservedProductQuantitiesForSku(static::ORDER_ITEM_SKU));
 
         foreach ($order3->getItems() as $orderItem) {
             $orderItem->setState($this->createOmsOrderItemState(static::NOT_RESERVED_ITEM_STATE_EXCEPT_PROCESS_3))->save();
         }
 
-        $this->assertEquals(100, $this->createOmsFacade()->sumReservedProductQuantitiesForSku(static::ORDER_ITEM_SKU));
+        $this->assertEquals(100, $this->getOmsFacade()->sumReservedProductQuantitiesForSku(static::ORDER_ITEM_SKU));
     }
 
     /**
@@ -90,7 +89,7 @@ class OmsFacadeSumReservedItemsTest extends Unit
         $this->createTestOrder((string)rand(), 'Test01', static::NOT_RESERVED_ITEM_STATE_EXCEPT_PROCESS_3);
 
         $storeTransfer = (new StoreTransfer())->setName(static::DE_STORE_NAME);
-        $reservationQuantity = $this->createOmsFacade()->getOmsReservedProductQuantityForSku(static::ORDER_ITEM_SKU, $storeTransfer);
+        $reservationQuantity = $this->getOmsFacade()->getOmsReservedProductQuantityForSku(static::ORDER_ITEM_SKU, $storeTransfer);
 
         $this->assertSame(50, $reservationQuantity);
     }
@@ -168,17 +167,17 @@ class OmsFacadeSumReservedItemsTest extends Unit
 
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderAddress $salesOrderAddressEntity
-     * @param string $reference
+     * @param string $orderReference
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrder
      */
-    protected function createSalesOrder(SpySalesOrderAddress $salesOrderAddressEntity, string $reference): SpySalesOrder
+    protected function createSalesOrder(SpySalesOrderAddress $salesOrderAddressEntity, string $orderReference): SpySalesOrder
     {
         $salesOrderEntity = new SpySalesOrder();
         $salesOrderEntity->setBillingAddress($salesOrderAddressEntity);
         $salesOrderEntity->setShippingAddress(clone $salesOrderAddressEntity);
-        $salesOrderEntity->setOrderReference($reference);
-        $salesOrderEntity->setStore(self::DE_STORE_NAME);
+        $salesOrderEntity->setOrderReference($orderReference);
+        $salesOrderEntity->setStore(static::DE_STORE_NAME);
         $salesOrderEntity->save();
 
         return $salesOrderEntity;
@@ -236,11 +235,11 @@ class OmsFacadeSumReservedItemsTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\Oms\Business\OmsFacadeInterface
+     * @return \Spryker\Zed\Kernel\Business\AbstractFacade|\Spryker\Zed\Oms\Business\OmsFacadeInterface
      */
-    protected function createOmsFacade(): OmsFacadeInterface
+    protected function getOmsFacade(): OmsFacadeInterface
     {
-        return new OmsFacade();
+        return $this->tester->getFacade();
     }
 
     /**

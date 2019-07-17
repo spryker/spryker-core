@@ -63,7 +63,7 @@ class OmsRepository extends AbstractRepository implements OmsRepositoryInterface
             ])->filterBySku($sku)
             ->innerJoinProcess()
             ->useStateQuery()
-            ->filterByName_In($stateNames)
+                ->filterByName_In($stateNames)
             ->endUse()
             ->groupByFkOmsOrderItemState()
             ->groupByFkOmsOrderProcess()

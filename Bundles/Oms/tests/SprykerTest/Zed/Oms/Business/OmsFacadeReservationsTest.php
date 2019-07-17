@@ -59,19 +59,19 @@ class OmsFacadeReservationsTest extends Unit
      */
     public function testImportReservationShouldHaveAmountInReservationTotals(): void
     {
-       //origin store
+        // Origin store
         $storeTransfer = $this->createStoreTransfer()->setName('AT');
 
         $availabilityReservationRequestTransfer = (new OmsAvailabilityReservationRequestBuilder([
-           OmsAvailabilityReservationRequestTransfer::SKU => 123,
-           OmsAvailabilityReservationRequestTransfer::VERSION => 1,
-           OmsAvailabilityReservationRequestTransfer::ORIGIN_STORE => $storeTransfer,
-           OmsAvailabilityReservationRequestTransfer::RESERVATION_AMOUNT => 1,
+            OmsAvailabilityReservationRequestTransfer::SKU => 123,
+            OmsAvailabilityReservationRequestTransfer::VERSION => 1,
+            OmsAvailabilityReservationRequestTransfer::ORIGIN_STORE => $storeTransfer,
+            OmsAvailabilityReservationRequestTransfer::RESERVATION_AMOUNT => 1,
         ]))->build();
 
         $this->getOmsFacade()->importReservation($availabilityReservationRequestTransfer);
 
-       //other store
+        // Other store
         $storeTransfer = $this->createStoreTransfer()->setName('DE');
         $reservedAmount = $this->getOmsFacade()->getOmsReservedProductQuantityForSku(123, $storeTransfer);
 

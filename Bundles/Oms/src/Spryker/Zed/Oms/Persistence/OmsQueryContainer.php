@@ -174,7 +174,7 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     /**
      * @api
      *
-     * @deprecated Will be removed without replacement.
+     * @deprecated Use `\Spryker\Zed\Oms\Persistence\OmsRepository::getSalesOrderItemsBySkuAndStatesNames()` instead.
      *
      * @param \Spryker\Zed\Oms\Business\Process\StateInterface[] $states
      * @param string $sku
