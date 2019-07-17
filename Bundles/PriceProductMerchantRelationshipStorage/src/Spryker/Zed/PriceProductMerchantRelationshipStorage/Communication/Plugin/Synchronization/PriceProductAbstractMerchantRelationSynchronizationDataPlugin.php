@@ -115,7 +115,7 @@ class PriceProductAbstractMerchantRelationSynchronizationDataPlugin extends Abst
      */
     protected function findPriceProductAbstractMerchantRelationshipStorageEntities(array $ids = []): array
     {
-        if (empty($ids)) {
+        if ($ids === []) {
             return $this->getRepository()
                 ->findAllPriceProductAbstractMerchantRelationshipStorageEntities();
         }

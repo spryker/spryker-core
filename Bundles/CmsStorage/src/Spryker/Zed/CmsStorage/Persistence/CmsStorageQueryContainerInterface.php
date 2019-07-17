@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CmsStorage\Persistence;
 
+use Orm\Zed\Cms\Persistence\SpyCmsPageQuery;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface CmsStorageQueryContainerInterface extends QueryContainerInterface
@@ -19,6 +20,18 @@ interface CmsStorageQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Cms\Persistence\SpyCmsPageQuery
      */
     public function queryCmsPageVersionByIds(array $cmsPageIds);
+
+    /**
+     * Specification:
+     * - Returns a a query for the table `spy_cms_page` filtered by cms page ids.
+     *
+     * @api
+     *
+     * @param array $cmsPageIds
+     *
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageQuery
+     */
+    public function queryCmsPageByIds(array $cmsPageIds): SpyCmsPageQuery;
 
     /**
      * @api

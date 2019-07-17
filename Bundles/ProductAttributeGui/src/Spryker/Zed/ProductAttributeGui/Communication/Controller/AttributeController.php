@@ -70,7 +70,7 @@ class AttributeController extends AbstractController
             ->getAttributeForm($dataProvider->getData(), $dataProvider->getOptions())
             ->handleRequest($request);
 
-        if (!$attributeForm->isValid()) {
+        if (!$attributeForm->isSubmitted() || !$attributeForm->isValid()) {
             return $this->viewResponse([
                 'form' => $attributeForm->createView(),
             ]);
@@ -179,7 +179,7 @@ class AttributeController extends AbstractController
             ->getAttributeForm($dataProvider->getData($idProductManagementAttribute), $dataProvider->getOptions($idProductManagementAttribute))
             ->handleRequest($request);
 
-        if (!$attributeForm->isValid()) {
+        if (!$attributeForm->isSubmitted() || !$attributeForm->isValid()) {
             return $this->viewResponse([
                 'form' => $attributeForm->createView(),
             ]);

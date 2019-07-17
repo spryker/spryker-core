@@ -9,10 +9,18 @@ namespace SprykerTest\Shared\Product\Helper;
 
 use ArrayObject;
 use Codeception\Module;
+use Generated\Shared\DataBuilder\LocalizedAttributesBuilder;
 use Generated\Shared\DataBuilder\ProductAbstractBuilder;
 use Generated\Shared\DataBuilder\ProductConcreteBuilder;
+use Generated\Shared\DataBuilder\StoreRelationBuilder;
+use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\Zed\Locale\Business\LocaleFacadeInterface;
+use Spryker\Zed\Store\Business\StoreFacadeInterface;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
@@ -77,6 +85,98 @@ class ProductDataHelper extends Module
         });
 
         return $productAbstractTransfer;
+    }
+
+    /**
+     * @param array $productConcreteOverride
+     * @param array $productAbstractOverride
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function haveFullProduct(
+        array $productConcreteOverride = [],
+        array $productAbstractOverride = []
+    ): ProductConcreteTransfer {
+        $allStoresRelation = $this->getAllStoresRelation()->toArray();
+
+        $localizedAttributes = (new LocalizedAttributesBuilder([
+            LocalizedAttributesTransfer::NAME => uniqid('Product #', true),
+        ]))->withLocale($this->getCurrentLocale()->toArray())->build()->toArray();
+
+        /** @var \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer */
+        $productAbstractTransfer = (new ProductAbstractBuilder($productAbstractOverride))
+            ->withLocalizedAttributes($localizedAttributes)
+            ->withStoreRelation($allStoresRelation)
+            ->build();
+
+        $productFacade = $this->getProductFacade();
+
+        $abstractProductId = $productFacade->createProductAbstract($productAbstractTransfer);
+        /** @var \Generated\Shared\Transfer\ProductConcreteTransfer $productAbstractTransfer */
+        $productConcreteTransfer = (new ProductConcreteBuilder(array_merge(['fkProductAbstract' => $abstractProductId], $productConcreteOverride)))
+            ->withLocalizedAttributes($localizedAttributes)
+            ->withStores($allStoresRelation)
+            ->build();
+        $productConcreteTransfer->setAbstractSku($productAbstractTransfer->getSku());
+
+        $productFacade->createProductConcrete($productConcreteTransfer);
+
+        $productFacade->createProductUrl(
+            $productAbstractTransfer->setIdProductAbstract($productConcreteTransfer->getFkProductAbstract())
+        );
+
+        $this->debug(sprintf(
+            'Inserted AbstractProduct: %d, Concrete Product: %d',
+            $abstractProductId,
+            $productConcreteTransfer->getIdProductConcrete()
+        ));
+
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($productConcreteTransfer) {
+            $this->cleanupProductConcrete($productConcreteTransfer->getIdProductConcrete());
+            $this->cleanupProductAbstract($productConcreteTransfer->getFkProductAbstract());
+        });
+
+        return $productConcreteTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\StoreRelationTransfer
+     */
+    protected function getAllStoresRelation(): StoreRelationTransfer
+    {
+        $stores = $this->getStoreFacade()->getAllStores();
+        $idStores = array_map(function (StoreTransfer $storeTransfer) {
+            return $storeTransfer->getIdStore();
+        }, $stores);
+
+        return (new StoreRelationBuilder([
+            StoreRelationTransfer::ID_STORES => $idStores,
+            StoreRelationTransfer::STORES => new ArrayObject($stores),
+        ]))->build();
+    }
+
+    /**
+     * @return \Spryker\Zed\Store\Business\StoreFacadeInterface
+     */
+    protected function getStoreFacade(): StoreFacadeInterface
+    {
+        return $this->getLocator()->store()->facade();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\LocaleTransfer
+     */
+    protected function getCurrentLocale(): LocaleTransfer
+    {
+        return $this->getLocaleFacade()->getCurrentLocale();
+    }
+
+    /**
+     * @return \Spryker\Zed\Locale\Business\LocaleFacadeInterface
+     */
+    protected function getLocaleFacade(): LocaleFacadeInterface
+    {
+        return $this->getLocator()->locale()->facade();
     }
 
     /**

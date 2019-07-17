@@ -53,10 +53,10 @@ class AvailabilityStorage implements AvailabilityStorageInterface
      */
     public function publish(array $availabilityIds)
     {
-        $availabilityEntitityCollection = $this->findAvailabilityAbstractEntities($availabilityIds);
+        $availabilityEntityCollection = $this->findAvailabilityAbstractEntities($availabilityIds);
         $availabilityStorageEntityCollection = $this->findAvailabilityStorageEntitiesByAvailabilityAbstractIds($availabilityIds);
 
-        $this->storeData($availabilityEntitityCollection, $availabilityStorageEntityCollection);
+        $this->storeData($availabilityEntityCollection, $availabilityStorageEntityCollection);
     }
 
     /**
