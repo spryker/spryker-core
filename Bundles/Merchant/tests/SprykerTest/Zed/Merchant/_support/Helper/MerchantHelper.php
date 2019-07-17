@@ -37,6 +37,7 @@ class MerchantHelper extends Module
         $this->debug(sprintf('Created Merchant: %d', $merchantTransfer->getIdMerchant()));
 
         $this->getDataCleanupHelper()->_addCleanup(function () use ($merchantTransfer) {
+            $this->debug(sprintf('Deleting Merchant: %s', $merchantTransfer->getIdMerchant()));
             $this->cleanupMerchant($merchantTransfer);
         });
 

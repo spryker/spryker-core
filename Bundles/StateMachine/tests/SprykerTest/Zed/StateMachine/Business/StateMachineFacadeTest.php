@@ -389,20 +389,20 @@ class StateMachineFacadeTest extends Unit
         $this->sleepIfMySql(1);
         $stateMachineItemTransfer = $stateMachineHandler->getItemStateUpdated();
 
-        $stateMachineItemsTransfers = $stateMachineFacade->getStateHistoryByStateItemIdentifier(
+        $stateMachineItemTransfers = $stateMachineFacade->getStateHistoryByStateItemIdentifier(
             $stateMachineItemTransfer->getIdStateMachineProcess(),
             $identifier
         );
 
-        $this->assertCount(3, $stateMachineItemsTransfers);
+        $this->assertCount(3, $stateMachineItemTransfers);
 
-        $stateMachineItemTransfer = array_shift($stateMachineItemsTransfers);
+        $stateMachineItemTransfer = array_shift($stateMachineItemTransfers);
         $this->assertEquals('invoice created', $stateMachineItemTransfer->getStateName());
 
-        $stateMachineItemTransfer = array_shift($stateMachineItemsTransfers);
+        $stateMachineItemTransfer = array_shift($stateMachineItemTransfers);
         $this->assertEquals('invoice sent', $stateMachineItemTransfer->getStateName());
 
-        $stateMachineItemTransfer = array_shift($stateMachineItemsTransfers);
+        $stateMachineItemTransfer = array_shift($stateMachineItemTransfers);
         $this->assertEquals('order exported', $stateMachineItemTransfer->getStateName());
     }
 
