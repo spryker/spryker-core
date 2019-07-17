@@ -28,7 +28,6 @@ class MerchantHelper extends Module
     {
         $merchantTransfer = (new MerchantBuilder($seedData))->build();
         $merchantTransfer->setIdMerchant(null);
-        $merchantTransfer = (new MerchantTransfer())->fromArray(array_filter($merchantTransfer->toArray()), false);
 
         $merchantTransfer = $this->getLocator()
             ->merchant()
