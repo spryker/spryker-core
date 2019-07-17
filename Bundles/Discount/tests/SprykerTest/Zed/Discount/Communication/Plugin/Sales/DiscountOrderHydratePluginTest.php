@@ -286,7 +286,7 @@ class DiscountOrderHydratePluginTest extends Unit
     protected function getDataForOrderHydratorMultipleItemsMixedQuantityOrderLevel(): array
     {
         $quoteTransfer = $this->getMultipleItemsMixedQuantityQuote();
-        $discountQuantities = [6];
+        $discountQuantities = 6;
         $discountAmount = 150;
 
         return [
