@@ -11,6 +11,7 @@ use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Orm\Zed\Sales\Persistence\Map\SpySalesDiscountTableMap;
 use Spryker\Zed\Discount\Communication\Plugin\Sales\DiscountOrderHydratePlugin;
@@ -52,7 +53,7 @@ class DiscountOrderHydratePluginTest extends Unit
         $discountOrderHydratePlugin = $this->createDiscountOrderHydratePlugin();
         $this->tester->configureTestStateMachine([BusinessHelper::DEFAULT_OMS_PROCESS_NAME]);
         $saveOrderTransfer = $this->tester->haveOrder(['unitPrice' => 1000], BusinessHelper::DEFAULT_OMS_PROCESS_NAME);
-        $orderTransfer = $this->createOrder($saveOrderTransfer);
+        $orderTransfer = $this->findOrder($saveOrderTransfer);
         $this->createDiscountForOrder($orderTransfer);
 
         //Act
@@ -63,28 +64,160 @@ class DiscountOrderHydratePluginTest extends Unit
     }
 
     /**
-     * @return void
+     * @return array
      */
-    public function testOrderHydratedWithMultipleOrderItems(): void
+    public function orderHydratorItemsDataProvider(): array
     {
-        //Arrange
-        $discountOrderHydratePlugin = $this->createDiscountOrderHydratePlugin();
-        $this->tester->configureTestStateMachine([BusinessHelper::DEFAULT_OMS_PROCESS_NAME]);
+        return [
+            'single item' => $this->getDataForOrderHydratorSingleItem(),
+            'single item higher quantity' => $this->getDataForOrderHydratorSingleItemHigherQuantity(),
+            'quote with multiple items' => $this->getDataForOrderHydratorMultipleItem(),
+            'quote with multiple items mixed quantity' => $this->getDataForOrderHydratorMultipleItemsMixedQuantity(),
+        ];
+    }
 
-        $quoteTransfer = (new QuoteBuilder())
-            ->withItem([ItemTransfer::QUANTITY => 1, ItemTransfer::UNIT_PRICE => 1000])
-            ->withItem([ItemTransfer::QUANTITY => 1, ItemTransfer::UNIT_PRICE => 1000])
-            ->withItem([ItemTransfer::QUANTITY => 1, ItemTransfer::UNIT_PRICE => 1000])
+    /**
+     * @return \Generated\Shared\DataBuilder\QuoteBuilder
+     */
+    protected function getBaseQuoteBuilder(): QuoteBuilder
+    {
+        return (new QuoteBuilder())
             ->withCustomer()
             ->withTotals()
             ->withShippingAddress()
             ->withBillingAddress()
-            ->withCurrency()
+            ->withCurrency();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function getMultipleItemsMixedQuantityQuote(): QuoteTransfer
+    {
+        return $this->getBaseQuoteBuilder()
+            ->withItem([ItemTransfer::QUANTITY => 1, ItemTransfer::UNIT_PRICE => 1000])
+            ->withAnotherItem([ItemTransfer::QUANTITY => 2, ItemTransfer::UNIT_PRICE => 1000])
+            ->withAnotherItem([ItemTransfer::QUANTITY => 3, ItemTransfer::UNIT_PRICE => 1000])
             ->build();
+    }
+
+    /**
+     * @return array
+     */
+    protected function getDataForOrderHydratorMultipleItemsMixedQuantity(): array
+    {
+        $quoteTransfer = $this->getMultipleItemsMixedQuantityQuote();
+
+        return [
+            $quoteTransfer,
+            [1, 2, 3],
+            [
+            [50, 50],
+            [50, 25],
+            [50, 17],
+            ]];
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function getSingleItemHigherQuantityQuote(): QuoteTransfer
+    {
+        return $this->getBaseQuoteBuilder()
+            ->withItem([ItemTransfer::QUANTITY => 3, ItemTransfer::UNIT_PRICE => 1000])
+            ->build();
+    }
+
+    /**
+     * @return array
+     */
+    protected function getDataForOrderHydratorSingleItemHigherQuantity(): array
+    {
+        $quoteTransfer = $this->getSingleItemHigherQuantityQuote();
+
+        return [
+            $quoteTransfer,
+            [3],
+            [
+            [50, 17],
+            ]];
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function getSingleItemQuote(): QuoteTransfer
+    {
+        return $this->getBaseQuoteBuilder()
+            ->withItem([ItemTransfer::QUANTITY => 1, ItemTransfer::UNIT_PRICE => 1000])
+            ->build();
+    }
+
+    /**
+     * @return array
+     */
+    protected function getDataForOrderHydratorSingleItem(): array
+    {
+        $quoteTransfer = $this->getSingleItemQuote();
+
+        return [
+            $quoteTransfer,
+            [1],
+            [
+            [50, 50],
+            ]];
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function getMultipleItemsQuote(): QuoteTransfer
+    {
+        return $this->getBaseQuoteBuilder()
+            ->withItem([ItemTransfer::QUANTITY => 1, ItemTransfer::UNIT_PRICE => 1000])
+            ->withAnotherItem([ItemTransfer::QUANTITY => 1, ItemTransfer::UNIT_PRICE => 1000])
+            ->withAnotherItem([ItemTransfer::QUANTITY => 1, ItemTransfer::UNIT_PRICE => 1000])
+            ->build();
+    }
+
+    /**
+     * @return array
+     */
+    protected function getDataForOrderHydratorMultipleItem(): array
+    {
+        $quoteTransfer = $this->getMultipleItemsQuote();
+
+        return [
+            $quoteTransfer,
+            [1, 1, 1],
+            [
+            [50, 50],
+            [50, 50],
+            [50, 50],
+            ]];
+    }
+
+    /**
+     * @dataProvider orderHydratorItemsDataProvider
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param array $itemDiscountQuantities
+     * @param array $discountAmounts
+     *
+     * @return void
+     */
+    public function testOrderHydratedShouldCorrectlyHydrateOrderItems(
+        QuoteTransfer $quoteTransfer,
+        array $itemDiscountQuantities,
+        array $discountAmounts
+    ): void {
+        //Arrange
+        $discountOrderHydratePlugin = $this->createDiscountOrderHydratePlugin();
+        $this->tester->configureTestStateMachine([BusinessHelper::DEFAULT_OMS_PROCESS_NAME]);
 
         $saveOrderTransfer = $this->tester
             ->haveOrderFromQuote($quoteTransfer, BusinessHelper::DEFAULT_OMS_PROCESS_NAME);
-        $orderTransfer = $this->createOrder($saveOrderTransfer);
+        $orderTransfer = $this->findOrder($saveOrderTransfer);
 
         $this->createDiscountForOrder($orderTransfer);
 
@@ -92,15 +225,100 @@ class DiscountOrderHydratePluginTest extends Unit
         $orderTransfer = $discountOrderHydratePlugin->hydrate($orderTransfer);
 
         //Assert
-        foreach ($orderTransfer->getItems() as $itemTransfer) {
+        foreach ($orderTransfer->getItems() as $index => $itemTransfer) {
             foreach ($itemTransfer->getCalculatedDiscounts() as $calculatedDiscountTransfer) {
-                $this->assertEquals(1, $calculatedDiscountTransfer->getQuantity());
+                $this->assertEquals($itemDiscountQuantities[$index], $calculatedDiscountTransfer->getQuantity(), 'Discount quantity does not match expected value');
+                $this->assertEquals($discountAmounts[$index][0], $calculatedDiscountTransfer->getSumAmount(), 'Discount sum amount does not match expected value');
+                $this->assertEquals($discountAmounts[$index][1], $calculatedDiscountTransfer->getUnitAmount(), 'Discount unit amount does not match expected value');
             }
         }
+    }
 
+    /**
+     * @dataProvider orderHydratorDataProvider
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param array $discountQuantities
+     * @param int $discountAmount
+     *
+     * @return void
+     */
+    public function testOrderHydratedShouldCorrectlyHydrateOrder(
+        QuoteTransfer $quoteTransfer,
+        array $discountQuantities,
+        int $discountAmount
+    ): void {
+        //Arrange
+        $discountOrderHydratePlugin = $this->createDiscountOrderHydratePlugin();
+        $this->tester->configureTestStateMachine([BusinessHelper::DEFAULT_OMS_PROCESS_NAME]);
+
+        $saveOrderTransfer = $this->tester
+            ->haveOrderFromQuote($quoteTransfer, BusinessHelper::DEFAULT_OMS_PROCESS_NAME);
+        $orderTransfer = $this->findOrder($saveOrderTransfer);
+
+        $this->createDiscountForOrder($orderTransfer);
+
+        //Act
+        $orderTransfer = $discountOrderHydratePlugin->hydrate($orderTransfer);
+
+        //Assert
         foreach ($orderTransfer->getCalculatedDiscounts() as $calculatedDiscountTransfer) {
-            $this->assertEquals(3, $calculatedDiscountTransfer->getQuantity());
+            $this->assertEquals($discountQuantities[0], $calculatedDiscountTransfer->getQuantity(), 'Discount quantity does not match expected value');
+            $this->assertEquals($discountAmount, $calculatedDiscountTransfer->getSumAmount(), 'Discount sum amount does not match expected value');
         }
+    }
+
+    /**
+     * @return array
+     */
+    protected function getDataForOrderHydratorMultipleItemsMixedQuantityOrderLevel(): array
+    {
+        $quoteTransfer = $this->getMultipleItemsMixedQuantityQuote();
+
+        return [$quoteTransfer, [6], 150];
+    }
+
+    /**
+     * @return array
+     */
+    protected function getDataForOrderHydratorMultipleItemOrderLevel(): array
+    {
+        $quoteTransfer = $this->getMultipleItemsQuote();
+
+        return [$quoteTransfer, [3], 150];
+    }
+
+    /**
+     * @return array
+     */
+    protected function getDataForOrderHydratorSingleItemHigherQuantityOrderLevel(): array
+    {
+        $quoteTransfer = $this->getSingleItemHigherQuantityQuote();
+
+        return [$quoteTransfer, [3], 50];
+    }
+
+    /**
+     * @return array
+     */
+    protected function getDataForOrderHydratorSingleItemOrderLevel(): array
+    {
+        $quoteTransfer = $this->getSingleItemQuote();
+
+        return [$quoteTransfer, [1], 50];
+    }
+
+    /**
+     * @return array
+     */
+    public function orderHydratorDataProvider(): array
+    {
+        return [
+            'single item' => $this->getDataForOrderHydratorSingleItemOrderLevel(),
+            'single item higher quantity' => $this->getDataForOrderHydratorSingleItemHigherQuantityOrderLevel(),
+            'quote with multiple items' => $this->getDataForOrderHydratorMultipleItemOrderLevel(),
+            'quote with multiple items mixed quantity' => $this->getDataForOrderHydratorMultipleItemsMixedQuantityOrderLevel(),
+        ];
     }
 
     /**
@@ -142,7 +360,7 @@ class DiscountOrderHydratePluginTest extends Unit
     /**
      * @return \Spryker\Zed\Sales\Business\SalesFacadeInterface
      */
-    protected function createSalesFacade(): SalesFacadeInterface
+    protected function getSalesFacade(): SalesFacadeInterface
     {
         /**
          * @var \Spryker\Zed\Sales\Business\SalesFacadeInterface $salesFacade
@@ -157,9 +375,9 @@ class DiscountOrderHydratePluginTest extends Unit
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    protected function createOrder(SaveOrderTransfer $saveOrderTransfer): OrderTransfer
+    protected function findOrder(SaveOrderTransfer $saveOrderTransfer): OrderTransfer
     {
-        $salesFacade = $this->createSalesFacade();
+        $salesFacade = $this->getSalesFacade();
 
         $orderTransfer = $salesFacade->getOrderByIdSalesOrder($saveOrderTransfer->getIdSalesOrder());
 
@@ -174,7 +392,6 @@ class DiscountOrderHydratePluginTest extends Unit
     protected function createDiscountForOrder(OrderTransfer $orderTransfer): void
     {
         $orderTransfer->requireItems();
-//        $orderItem = $orderTransfer->getItems()[0];
         foreach ($orderTransfer->getItems() as $orderItem) {
             $seedData = $this->getSeedDataForSalesDiscount($orderTransfer->getIdSalesOrder(), $orderItem->getIdSalesOrderItem());
             $this->tester->haveSalesDiscount($seedData);
