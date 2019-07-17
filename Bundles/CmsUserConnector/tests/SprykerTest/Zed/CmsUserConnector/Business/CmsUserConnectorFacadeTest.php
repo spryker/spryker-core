@@ -241,6 +241,7 @@ class CmsUserConnectorFacadeTest extends Unit
                 ],
             ],
         ];
+
         return $fixtures;
     }
 }

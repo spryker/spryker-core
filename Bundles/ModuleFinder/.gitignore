@@ -1,0 +1,23 @@
+# IDEs
+/.idea
+/.project
+/nbproject
+/.buildpath
+/.settings
+*.sublime-*
+*.AppleDouble
+*.AppleDB
+*.AppleDesktop
+
+# OS
+.DS_Store
+
+# grunt stuff
+.grunt
+.sass-cache
+/node_modules/
+/tests/_output/*
+_support/_generated/*
+!/tests/_output/.gitkeep
+
+/vendor/*

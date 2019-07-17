@@ -57,11 +57,11 @@ class ProductConcreteImageSynchronizationDataPlugin extends AbstractPlugin imple
     {
         $query = $this->getQueryContainer()->queryProductConcreteImageStorageByIds($ids);
 
-        if (empty($ids)) {
+        if ($ids === []) {
             $query->clear();
         }
 
-        return $query;
+        return $query->orderByIdProductConcreteImageStorage();
     }
 
     /**

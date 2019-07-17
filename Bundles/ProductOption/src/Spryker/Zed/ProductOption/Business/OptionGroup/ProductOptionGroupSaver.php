@@ -42,24 +42,32 @@ class ProductOptionGroupSaver implements ProductOptionGroupSaverInterface
     protected $productOptionValueSaver;
 
     /**
+     * @var \Spryker\Zed\ProductOptionExtension\Dependency\Plugin\ProductOptionValuesPreRemovePluginInterface[]
+     */
+    protected $productOptionValuesPreRemovePlugins;
+
+    /**
      * @param \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface $productOptionQueryContainer
      * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTouchFacadeInterface $touchFacade
      * @param \Spryker\Zed\ProductOption\Business\OptionGroup\TranslationSaverInterface $translationSaver
      * @param \Spryker\Zed\ProductOption\Business\OptionGroup\AbstractProductOptionSaverInterface $abstractProductOptionSaver
      * @param \Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValueSaverInterface $productOptionValueSaver
+     * @param \Spryker\Zed\ProductOptionExtension\Dependency\Plugin\ProductOptionValuesPreRemovePluginInterface[] $productOptionValuesPreRemovePlugins
      */
     public function __construct(
         ProductOptionQueryContainerInterface $productOptionQueryContainer,
         ProductOptionToTouchFacadeInterface $touchFacade,
         TranslationSaverInterface $translationSaver,
         AbstractProductOptionSaverInterface $abstractProductOptionSaver,
-        ProductOptionValueSaverInterface $productOptionValueSaver
+        ProductOptionValueSaverInterface $productOptionValueSaver,
+        array $productOptionValuesPreRemovePlugins
     ) {
         $this->productOptionQueryContainer = $productOptionQueryContainer;
         $this->touchFacade = $touchFacade;
         $this->translationSaver = $translationSaver;
         $this->abstractProductOptionSaver = $abstractProductOptionSaver;
         $this->productOptionValueSaver = $productOptionValueSaver;
+        $this->productOptionValuesPreRemovePlugins = $productOptionValuesPreRemovePlugins;
     }
 
     /**
@@ -74,6 +82,7 @@ class ProductOptionGroupSaver implements ProductOptionGroupSaverInterface
         $productOptionGroupEntity->save();
 
         $this->productOptionValueSaver->saveOptionValues($productOptionGroupTransfer, $productOptionGroupEntity);
+        $this->executePreRemoveProductOptionValuePlugins($productOptionGroupTransfer);
         $this->productOptionValueSaver->removeOptionValues($productOptionGroupTransfer, $productOptionGroupEntity);
 
         $this->abstractProductOptionSaver->assignProducts($productOptionGroupTransfer, $productOptionGroupEntity);
@@ -95,22 +104,13 @@ class ProductOptionGroupSaver implements ProductOptionGroupSaverInterface
      * @param int $idProductOptionGroup
      * @param bool $isActive
      *
-     * @throws \Spryker\Zed\ProductOption\Business\Exception\ProductOptionGroupNotFoundException
-     *
      * @return bool
      */
     public function toggleOptionActive($idProductOptionGroup, $isActive)
     {
         $productOptionGroupEntity = $this->getOptionGroupById($idProductOptionGroup);
 
-        if (!$productOptionGroupEntity) {
-            throw new ProductOptionGroupNotFoundException(
-                sprintf('Product option group with id "%d" not found', $idProductOptionGroup)
-            );
-        }
-
         $this->touchProductOptionGroupAbstractProducts($productOptionGroupEntity);
-
         $productOptionGroupEntity->setActive($isActive);
 
         return $productOptionGroupEntity->save() > 0;
@@ -119,13 +119,21 @@ class ProductOptionGroupSaver implements ProductOptionGroupSaverInterface
     /**
      * @param int $idProductOptionGroup
      *
+     * @throws \Spryker\Zed\ProductOption\Business\Exception\ProductOptionGroupNotFoundException
+     *
      * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup
      */
-    protected function getOptionGroupById($idProductOptionGroup)
+    protected function getOptionGroupById($idProductOptionGroup): SpyProductOptionGroup
     {
         $productOptionGroupEntity = $this->productOptionQueryContainer
             ->queryProductOptionGroupById($idProductOptionGroup)
             ->findOne();
+
+        if (!$productOptionGroupEntity) {
+            throw new ProductOptionGroupNotFoundException(
+                sprintf('Product Option Group with id "%d" not found', $idProductOptionGroup)
+            );
+        }
 
         return $productOptionGroupEntity;
     }
@@ -177,6 +185,18 @@ class ProductOptionGroupSaver implements ProductOptionGroupSaverInterface
                 ProductOptionConfig::RESOURCE_TYPE_PRODUCT_OPTION,
                 $productAbstractProductOptionEntity->getFkProductAbstract()
             );
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOptionGroupTransfer $productOptionGroupTransfer
+     *
+     * @return void
+     */
+    protected function executePreRemoveProductOptionValuePlugins(ProductOptionGroupTransfer $productOptionGroupTransfer): void
+    {
+        foreach ($this->productOptionValuesPreRemovePlugins as $productOptionValuesPreRemovePlugin) {
+            $productOptionValuesPreRemovePlugin->preRemove($productOptionGroupTransfer);
         }
     }
 

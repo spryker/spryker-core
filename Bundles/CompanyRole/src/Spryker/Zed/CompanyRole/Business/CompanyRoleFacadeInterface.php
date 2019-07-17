@@ -220,4 +220,32 @@ interface CompanyRoleFacadeInterface
      * @return \Generated\Shared\Transfer\CompanyRoleTransfer|null
      */
     public function findDefaultCompanyRoleByIdCompany(int $idCompany): ?CompanyRoleTransfer;
+
+    /**
+     * Specification:
+     * - Finds company role by CompanyRoleTransfer::idCompanyRole.
+     * - Returns null if company role does not exist.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyRoleTransfer|null
+     */
+    public function findCompanyRoleById(CompanyRoleTransfer $companyRoleTransfer): ?CompanyRoleTransfer;
+
+    /**
+     * Specification:
+     * - Finds a company role by uuid.
+     * - Requires uuid field to be set in CompanyRoleTransfer taken as parameter.
+     *
+     * @api
+     *
+     * {@internal will work if UUID field is provided.}
+     *
+     * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyRoleResponseTransfer
+     */
+    public function findCompanyRoleByUuid(CompanyRoleTransfer $companyRoleTransfer): CompanyRoleResponseTransfer;
 }

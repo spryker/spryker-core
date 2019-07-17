@@ -17,6 +17,12 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class EditCompanyUnitAddressController extends AbstractController
 {
+    /**
+     * @see \Spryker\Zed\CompanyUnitAddressGui\Communication\Controller\ListCompanyUnitAddressController::indexAction()
+     */
+    protected const COMPANY_UNIT_ADDRESS_LIST_URL = '/company-unit-address-gui/list-company-unit-address';
+
+    protected const MESSAGE_COMPANY_UNIT_ADDRESS_NOT_FOUND = 'Company unit address not found.';
     public const URL_PARAM_ID_COMPANY_UNIT_ADDRESS = 'id-company-unit-address';
 
     public const MESSAGE_COMPANY_UNIT_ADDRESS_UPDATE_SUCCESS = 'Company unit address has been successfully updated.';
@@ -37,8 +43,15 @@ class EditCompanyUnitAddressController extends AbstractController
             ->createCompanyUnitAddressForm($idCompanyUnitAddress)
             ->handleRequest($request);
 
+        if (!$companyUnitAddressForm->getData()->getIdCompanyUnitAddress()) {
+            $this->addErrorMessage(static::MESSAGE_COMPANY_UNIT_ADDRESS_NOT_FOUND);
+
+            return $this->redirectResponse(static::COMPANY_UNIT_ADDRESS_LIST_URL);
+        }
+
         if ($companyUnitAddressForm->isSubmitted()) {
             $this->updateCompanyUnitAddress($companyUnitAddressForm);
+
             return $this->redirectResponse((string)$request->headers->get(static::HEADER_REFERER));
         }
 

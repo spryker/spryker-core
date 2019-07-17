@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\ContentStorage;
 
-use Generated\Shared\Transfer\ExecutedContentStorageTransfer;
+use Generated\Shared\Transfer\ContentTypeContextTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -20,15 +20,15 @@ class ContentStorageClient extends AbstractClient implements ContentStorageClien
      *
      * @api
      *
-     * @param int $idContent
+     * @param string $contentKey
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\ExecutedContentStorageTransfer|null
+     * @return \Generated\Shared\Transfer\ContentTypeContextTransfer|null
      */
-    public function findContentById(int $idContent, string $localeName): ?ExecutedContentStorageTransfer
+    public function findContentTypeContextByKey(string $contentKey, string $localeName): ?ContentTypeContextTransfer
     {
         return $this->getFactory()
             ->createContentStorage()
-            ->findContentById($idContent, $localeName);
+            ->findContentTypeContextByKey($contentKey, $localeName);
     }
 }

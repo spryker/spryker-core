@@ -5,10 +5,10 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/kernel": "^3.0.0",
-    "spryker/product-bundle": "^2.0.0 || ^3.0.0 || ^4.0.0",
-    "spryker/product-discontinued": "^1.0.0",
-    "spryker/product-discontinued-extension": "^1.0.0",
+    "spryker/kernel": "^3.30.0",
+    "spryker/product-bundle": "^2.0.0 || ^3.0.0 || ^4.0.0 || ^6.0.0",
+    "spryker/product-discontinued": "^1.1.0",
+    "spryker/product-discontinued-extension": "^1.1.0",
     "spryker/propel-orm": "^1.1.0"
   },
   "require-dev": {
@@ -16,6 +16,9 @@
     "spryker/product": "*",
     "spryker/propel": "*",
     "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/product": "If you want to use Product plugins, minimum required version: 5.5.0 || 6.0.0"
   },
   "autoload": {
     "psr-4": {

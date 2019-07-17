@@ -87,7 +87,6 @@ class ProductListCategoryRelationFormType extends AbstractType
         $builder->add(static::FIELD_CATEGORY_IDS, Select2ComboBoxType::class, [
             'label' => 'Categories',
             'choices' => array_flip($options[ProductListAggregateFormType::OPTION_CATEGORY_IDS]),
-            'choices_as_values' => true,
             'multiple' => true,
             'required' => false,
         ]);

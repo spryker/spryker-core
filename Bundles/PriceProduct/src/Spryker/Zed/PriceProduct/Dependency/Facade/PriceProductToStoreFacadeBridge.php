@@ -49,4 +49,14 @@ class PriceProductToStoreFacadeBridge implements PriceProductToStoreFacadeInterf
     {
         return $this->storeFacade->getStoreById($idStore);
     }
+
+    /**
+     * @param string[] $storeNames
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     */
+    public function getStoreTransfersByStoreNames(array $storeNames): array
+    {
+        return $this->storeFacade->getStoreTransfersByStoreNames($storeNames);
+    }
 }

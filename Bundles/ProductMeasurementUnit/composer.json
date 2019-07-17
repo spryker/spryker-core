@@ -5,16 +5,16 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/cart-extension": "^1.2.0 || ^2.0.0",
+    "spryker/cart-extension": "^1.2.0 || ^2.0.0 || ^4.0.0",
     "spryker/event": "^2.0.0",
     "spryker/glossary": "^3.0.0",
-    "spryker/kernel": "^3.17.0",
+    "spryker/kernel": "^3.30.0",
     "spryker/persistent-cart-extension": "^1.0.0",
     "spryker/product": "^6.0.0",
     "spryker/propel-orm": "^1.6.0",
-    "spryker/sales": "^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0",
+    "spryker/sales": "^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0 || ^10.0.0",
     "spryker/sales-extension": "^1.1.0",
-    "spryker/store": "^1.0.0",
+    "spryker/store": "^1.1.0",
     "spryker/util-measurement-unit-conversion": "^0.1.0 || ^1.0.0"
   },
   "require-dev": {

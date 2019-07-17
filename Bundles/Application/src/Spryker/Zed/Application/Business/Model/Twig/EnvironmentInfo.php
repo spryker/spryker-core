@@ -11,6 +11,10 @@ use Spryker\Service\UtilNetwork\Model\Host;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Twig\TwigFunction;
 
+/**
+ * @deprecated Will be removed without replacement in the next major.
+ * If you use `environmentInfo` function in your twig files, please add it on your own.
+ */
 class EnvironmentInfo extends TwigFunction
 {
     /**

@@ -9,6 +9,7 @@ namespace Spryker\Zed\OauthCustomerConnector\Communication\Plugin\Oauth;
 
 use Generated\Shared\Transfer\OauthUserTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\OauthCustomerConnector\OauthCustomerConnectorConfig;
 use Spryker\Zed\OauthExtension\Dependency\Plugin\OauthUserProviderPluginInterface;
 
 /**
@@ -28,15 +29,11 @@ class CustomerOauthUserProviderPlugin extends AbstractPlugin implements OauthUse
      */
     public function accept(OauthUserTransfer $oauthUserTransfer): bool
     {
-        if (!$oauthUserTransfer->getClientId()) {
+        if ($oauthUserTransfer->getGrantType() !== OauthCustomerConnectorConfig::GRANT_TYPE_PASSWORD) {
             return false;
         }
 
-        if ($oauthUserTransfer->getClientId() === $this->getConfig()->getClientId()) {
-            return true;
-        }
-
-        return false;
+        return true;
     }
 
     /**

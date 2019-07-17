@@ -12,12 +12,12 @@ use Generated\Shared\Transfer\LocaleTransfer;
 class MailToRendererBridge implements MailToRendererInterface
 {
     /**
-     * @var \Twig_Environment
+     * @var \Twig\Environment
      */
     protected $twigEnvironment;
 
     /**
-     * @param \Twig_Environment $twigEnvironment
+     * @param \Twig\Environment $twigEnvironment
      */
     public function __construct($twigEnvironment)
     {

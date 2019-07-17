@@ -172,7 +172,6 @@ abstract class AbstractProductSetFormDataToTransferMapper
         foreach ($imageCollectionData as $i => $imageData) {
             $imageTransfer = new ProductImageTransfer();
             $imageTransfer->fromArray($imageData, true);
-            $imageTransfer->setSortOrder($i);
 
             $result[] = $imageTransfer;
         }

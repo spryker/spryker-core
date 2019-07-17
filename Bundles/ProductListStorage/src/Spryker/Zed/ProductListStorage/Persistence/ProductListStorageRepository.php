@@ -7,9 +7,11 @@
 
 namespace Spryker\Zed\ProductListStorage\Persistence;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\ProductCategory\Persistence\Map\SpyProductCategoryTableMap;
 use Orm\Zed\ProductList\Persistence\Map\SpyProductListProductConcreteTableMap;
+use Orm\Zed\ProductList\Persistence\Map\SpyProductListTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -29,12 +31,12 @@ class ProductListStorageRepository extends AbstractRepository implements Product
         /** @var \Orm\Zed\Product\Persistence\SpyProductQuery $productQuery */
         $productQuery = $this->getFactory()
             ->getProductPropelQuery()
-            ->select(SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT);
+            ->select([SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT, SpyProductTableMap::COL_ID_PRODUCT]);
 
         return $productQuery
             ->filterByIdProduct_In($productConcreteIds)
             ->find()
-            ->toArray();
+            ->toKeyValue(SpyProductTableMap::COL_ID_PRODUCT, SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT);
     }
 
     /**
@@ -169,5 +171,67 @@ class ProductListStorageRepository extends AbstractRepository implements Product
             ->distinct()
             ->find()
             ->toArray();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $productConcreteIds
+     *
+     * @return \Generated\Shared\Transfer\SpyProductConcreteProductListStorageEntityTransfer[]
+     */
+    public function findFilteredProductConcreteProductListStorageEntities(FilterTransfer $filterTransfer, array $productConcreteIds = []): array
+    {
+        $query = $this->getFactory()->createProductConcreteProductListStorageQuery();
+
+        if ($productConcreteIds) {
+            $query->filterByFkProduct_In($productConcreteIds);
+        }
+
+        return $this->buildQueryFromCriteria($query, $filterTransfer)->find();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $productAbstractIds
+     *
+     * @return \Generated\Shared\Transfer\SpyProductAbstractProductListStorageEntityTransfer[]
+     */
+    public function findFilteredProductAbstractProductListStorageEntities(FilterTransfer $filterTransfer, array $productAbstractIds = []): array
+    {
+        $query = $this->getFactory()->createProductAbstractProductListStorageQuery();
+
+        if ($productAbstractIds) {
+            $query->filterByFkProductAbstract_In($productAbstractIds);
+        }
+
+        return $this->buildQueryFromCriteria($query, $filterTransfer)->find();
+    }
+
+    /**
+     * @return int
+     */
+    public function getProductListWhitelistEnumValue(): int
+    {
+        return $this->getProductListTypeEnumValueByTypeName(SpyProductListTableMap::COL_TYPE_WHITELIST);
+    }
+
+    /**
+     * @return int
+     */
+    public function getProductListBlacklistEnumValue(): int
+    {
+        return $this->getProductListTypeEnumValueByTypeName(SpyProductListTableMap::COL_TYPE_BLACKLIST);
+    }
+
+    /**
+     * @param string $type
+     *
+     * @return int
+     */
+    protected function getProductListTypeEnumValueByTypeName(string $type): int
+    {
+        $enumForType = array_flip(SpyProductListTableMap::getValueSet(SpyProductListTableMap::COL_TYPE));
+
+        return $enumForType[$type];
     }
 }

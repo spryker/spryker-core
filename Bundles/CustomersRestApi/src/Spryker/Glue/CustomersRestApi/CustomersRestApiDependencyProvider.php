@@ -22,7 +22,15 @@ class CustomersRestApiDependencyProvider extends AbstractBundleDependencyProvide
      * @deprecated Will be removed in the next major.
      */
     public const CLIENT_SESSION = 'CLIENT_SESSION';
+
+    /**
+     * @deprecated Will be removed in the next major.
+     */
     public const PLUGINS_CUSTOMER_POST_REGISTER = 'PLUGINS_CUSTOMER_POST_REGISTER';
+
+    public const PLUGINS_CUSTOMER_EXPANDER = 'PLUGINS_CUSTOMER_EXPANDER';
+
+    public const PLUGINS_CUSTOMER_POST_CREATE = 'PLUGINS_CUSTOMER_POST_CREATE';
 
     /**
      * @param \Spryker\Glue\Kernel\Container $container
@@ -33,7 +41,8 @@ class CustomersRestApiDependencyProvider extends AbstractBundleDependencyProvide
     {
         $container = $this->addCustomerClient($container);
         $container = $this->addSessionClient($container);
-        $container = $this->addCustomerPostRegisterPlugins($container);
+        $container = $this->addCustomerPostCreatePlugins($container);
+        $container = $this->addCustomerExpanderPlugins($container);
 
         return $container;
     }
@@ -73,19 +82,41 @@ class CustomersRestApiDependencyProvider extends AbstractBundleDependencyProvide
      *
      * @return \Spryker\Glue\Kernel\Container
      */
-    protected function addCustomerPostRegisterPlugins(Container $container): Container
+    protected function addCustomerPostCreatePlugins(Container $container): Container
     {
-        $container[static::PLUGINS_CUSTOMER_POST_REGISTER] = function () {
-            return $this->getCustomerPostRegisterPlugins();
+        $container[static::PLUGINS_CUSTOMER_POST_CREATE] = function () {
+            return $this->getCustomerPostCreatePlugins();
         };
 
         return $container;
     }
 
     /**
-     * @return \Spryker\Glue\CustomersRestApiExtension\Dependency\Plugin\CustomerPostRegisterPluginInterface[]
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
      */
-    protected function getCustomerPostRegisterPlugins(): array
+    protected function addCustomerExpanderPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_CUSTOMER_EXPANDER] = function () {
+            return $this->getCustomerExpanderPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Glue\CustomersRestApiExtension\Dependency\Plugin\CustomerExpanderPluginInterface[]
+     */
+    protected function getCustomerExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Glue\CustomersRestApiExtension\Dependency\Plugin\CustomerPostCreatePluginInterface[]
+     */
+    protected function getCustomerPostCreatePlugins(): array
     {
         return [];
     }

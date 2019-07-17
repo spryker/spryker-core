@@ -122,7 +122,8 @@ class CompanyBusinessUnitFacade extends AbstractFacade implements CompanyBusines
     public function getCompanyBusinessUnitCollection(
         CompanyBusinessUnitCriteriaFilterTransfer $companyBusinessUnitCriteriaFilterTransfer
     ): CompanyBusinessUnitCollectionTransfer {
-        return $this->getRepository()
+        return $this->getFactory()
+            ->createCompanyBusinessUnitReader()
             ->getCompanyBusinessUnitCollection($companyBusinessUnitCriteriaFilterTransfer);
     }
 
@@ -203,5 +204,37 @@ class CompanyBusinessUnitFacade extends AbstractFacade implements CompanyBusines
         return $this->getFactory()
             ->createCompanyUserValidator()
             ->isUniqueCompanyUserByCustomer($companyUserTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idCompanyBusinessUnit
+     *
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer|null
+     */
+    public function findCompanyBusinessUnitById(int $idCompanyBusinessUnit): ?CompanyBusinessUnitTransfer
+    {
+        return $this->getRepository()->findCompanyBusinessUnitById($idCompanyBusinessUnit);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * {@internal will work if UUID field is provided.}
+     *
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer
+     */
+    public function findCompanyBusinessUnitByUuid(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): CompanyBusinessUnitResponseTransfer
+    {
+        return $this->getFactory()
+            ->createCompanyBusinessUnitReader()
+            ->findCompanyBusinessUnitByUuid($companyBusinessUnitTransfer);
     }
 }

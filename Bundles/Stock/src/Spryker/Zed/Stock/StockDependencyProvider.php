@@ -63,6 +63,7 @@ class StockDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::PLUGINS_STOCK_UPDATE] = function (Container $container) {
             return $this->getStockUpdateHandlerPlugins($container);
         };
+
         return $container;
     }
 
@@ -76,6 +77,7 @@ class StockDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::FACADE_PRODUCT] = function (Container $container) {
             return new StockToProductBridge($container->getLocator()->product()->facade());
         };
+
         return $container;
     }
 
@@ -89,6 +91,7 @@ class StockDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::FACADE_TOUCH] = function (Container $container) {
             return new StockToTouchBridge($container->getLocator()->touch()->facade());
         };
+
         return $container;
     }
 

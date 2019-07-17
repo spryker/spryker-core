@@ -117,6 +117,7 @@ class XmlBatchIterator implements CountableIteratorInterface
     public function count()
     {
         $this->next();
+
         return count($this->batchData);
     }
 }

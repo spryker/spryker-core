@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductQuantityStorage\Business;
 
+use Generated\Shared\Transfer\FilterTransfer;
+
 interface ProductQuantityStorageFacadeInterface
 {
     /**
@@ -42,4 +44,16 @@ interface ProductQuantityStorageFacadeInterface
      * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
      */
     public function findProductQuantityByProductIdsTransfers(array $productIds): array;
+
+    /**
+     * Specification:
+     * - Retrieves product quantity transfers according to given offset and limit.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractTransfer[]
+     */
+    public function findFilteredProductQuantityTransfers(FilterTransfer $filterTransfer): array;
 }

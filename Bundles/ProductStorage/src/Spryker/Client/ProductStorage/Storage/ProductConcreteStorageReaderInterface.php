@@ -33,6 +33,7 @@ interface ProductConcreteStorageReaderInterface
      * @return \Generated\Shared\Transfer\ProductConcreteStorageTransfer[]
      */
     public function getProductConcreteStorageTransfersForCurrentLocale(array $productIds): array;
+
     /**
      * @param int $idProductConcrete
      *

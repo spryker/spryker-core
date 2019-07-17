@@ -29,10 +29,13 @@ use SprykerTest\Zed\ProductOption\Business\MockProvider;
  */
 class AbstractProductOptionSaverTest extends MockProvider
 {
+    protected const VALUE_ID_PRODUCT_OPTION_GROUP = 1;
+    protected const VALUE_SKU_PRODUCT_ABSTRACT = '123';
+
     /**
      * @return void
      */
-    public function testAddProductAbstractToProductOptionGroupShouldAddProductToExistingGroup()
+    public function testAddProductAbstractToProductOptionGroupShouldAddProductToExistingGroup(): void
     {
         $touchFacadeMock = $this->createTouchFacadeMock();
         $touchFacadeMock->expects($this->once())
@@ -52,7 +55,7 @@ class AbstractProductOptionSaverTest extends MockProvider
             ->method('getProductAbstractBySku')
             ->willReturn(new SpyProductAbstract());
 
-        $isUpdated = $productOptionGroupSaverMock->addProductAbstractToProductOptionGroup('123', 1);
+        $isUpdated = $productOptionGroupSaverMock->addProductAbstractToProductOptionGroup(static::VALUE_SKU_PRODUCT_ABSTRACT, static::VALUE_ID_PRODUCT_OPTION_GROUP);
 
         $this->assertTrue($isUpdated);
     }
@@ -60,7 +63,7 @@ class AbstractProductOptionSaverTest extends MockProvider
     /**
      * @return void
      */
-    public function testAddProductAbstractToProductOptionShouldThrowExceptionWhenGroupDoesNotExist()
+    public function testAddProductAbstractToProductOptionShouldThrowExceptionWhenGroupDoesNotExist(): void
     {
         $this->expectException(ProductOptionGroupNotFoundException::class);
 
@@ -68,26 +71,32 @@ class AbstractProductOptionSaverTest extends MockProvider
 
         $productOptionGroupSaverMock->expects($this->once())
             ->method('getOptionGroupById')
-            ->willReturn(null);
+            ->with(static::VALUE_ID_PRODUCT_OPTION_GROUP)
+            ->willThrowException(new ProductOptionGroupNotFoundException());
 
-        $productOptionGroupSaverMock->addProductAbstractToProductOptionGroup('123', 1);
+        $productOptionGroupSaverMock->addProductAbstractToProductOptionGroup(static::VALUE_SKU_PRODUCT_ABSTRACT, static::VALUE_ID_PRODUCT_OPTION_GROUP);
     }
 
     /**
      * @return void
      */
-    public function testAddProductAbstractToProductOptionShouldThrowExceptionWhenAbstractProductDoesNotExists()
+    public function testAddProductAbstractToProductOptionShouldThrowExceptionWhenAbstractProductDoesNotExists(): void
     {
         $this->expectException(AbstractProductNotFoundException::class);
 
         $productOptionGroupEntityMock = $this->createProductOptionGroupEntityMock();
-
         $productOptionGroupSaverMock = $this->createAbstractProductOptionSaver();
+
         $productOptionGroupSaverMock->expects($this->once())
             ->method('getOptionGroupById')
             ->willReturn($productOptionGroupEntityMock);
 
-        $productOptionGroupSaverMock->addProductAbstractToProductOptionGroup('123', 1);
+        $productOptionGroupSaverMock->expects($this->once())
+            ->method('getProductAbstractBySku')
+            ->with(static::VALUE_SKU_PRODUCT_ABSTRACT)
+            ->willThrowException(new AbstractProductNotFoundException());
+
+        $productOptionGroupSaverMock->addProductAbstractToProductOptionGroup(static::VALUE_SKU_PRODUCT_ABSTRACT, static::VALUE_ID_PRODUCT_OPTION_GROUP);
     }
 
     /**

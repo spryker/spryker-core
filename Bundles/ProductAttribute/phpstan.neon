@@ -3,5 +3,4 @@ parameters:
         - '#Call to an undefined method .+Criteria::.+\(\).#'
         - '#Method .+ProductAttributeQueryContainer::query.+\(\) should return .+Spy.+Query but returns Propel\\Runtime\\ActiveQuery\\Criteria#'
         - '#Method .+ProductAttributeQueryContainer::query.+\(\) should return .+Spy.+Query but returns Propel\\Runtime\\ActiveQuery\\ModelCriteria#'
-        - '#Cannot access offset .+ on .+SpyProductAttributeKey#'
-        - '#Casting to \w+ something that.+s already \w+\.#'
+        - '#Binary operation "+=" between \(array|float|int\) and array results in an error.#'

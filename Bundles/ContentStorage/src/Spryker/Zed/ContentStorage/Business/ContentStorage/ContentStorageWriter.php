@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ContentStorage\Business\ContentStorage;
 
-use ArrayObject;
 use Generated\Shared\Transfer\ContentStorageTransfer;
 use Generated\Shared\Transfer\ContentTransfer;
 use Spryker\Shared\ContentStorage\ContentStorageConfig;
@@ -77,12 +76,12 @@ class ContentStorageWriter implements ContentStorageWriterInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ContentTransfer[] $contentTransfers
-     * @param \ArrayObject|\Generated\Shared\Transfer\ContentStorageTransfer[] $contentStorageTransfers
+     * @param \Generated\Shared\Transfer\ContentTransfer[] $contentTransfers
+     * @param \Generated\Shared\Transfer\ContentStorageTransfer[] $contentStorageTransfers
      *
      * @return bool
      */
-    protected function executePublishTransaction(ArrayObject $contentTransfers, ArrayObject $contentStorageTransfers): bool
+    protected function executePublishTransaction(iterable $contentTransfers, iterable $contentStorageTransfers): bool
     {
         $availableLocales = $this->localeFacade->getLocaleCollection();
         $contentStorageTransfers = $this->groupByIdContentAndLocale($contentStorageTransfers);
@@ -115,8 +114,10 @@ class ContentStorageWriter implements ContentStorageWriterInterface
             }
 
             $contentStorageTransfer->setFkContent($contentTransfer->getIdContent())
+                ->setContentKey($contentTransfer->getKey())
                 ->setLocale($availableLocale->getLocaleName())
                 ->setData($this->utilEncodingService->encodeJson([
+                    ContentStorageConfig::ID_CONTENT => $contentTransfer->getIdContent(),
                     ContentStorageConfig::TERM_KEY => $contentTransfer->getContentTermKey(),
                     ContentStorageConfig::CONTENT_KEY => $this->utilEncodingService->decodeJson($localizedContentTransfer->getParameters(), true),
                 ]));
@@ -143,11 +144,11 @@ class ContentStorageWriter implements ContentStorageWriterInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ContentStorageTransfer[] $contentStorageTransfers
+     * @param \Generated\Shared\Transfer\ContentStorageTransfer[] $contentStorageTransfers
      *
      * @return array
      */
-    protected function groupByIdContentAndLocale(ArrayObject $contentStorageTransfers): array
+    protected function groupByIdContentAndLocale(iterable $contentStorageTransfers): array
     {
         $contentStorageList = [];
 

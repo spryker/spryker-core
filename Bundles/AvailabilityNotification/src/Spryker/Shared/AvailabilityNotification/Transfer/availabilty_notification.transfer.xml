@@ -31,7 +31,7 @@
         <property name="availabilityNotificationSubscriptionMailData" type="AvailabilityNotificationSubscriptionMailData" />
     </transfer>
 
-    <transfer name="AvailabilityNotificationSubscriptionMailDataTransfer">
+    <transfer name="AvailabilityNotificationSubscriptionMailData">
         <property name="availabilityNotificationSubscription" type="AvailabilityNotificationSubscription" />
         <property name="availabilityUnsubscriptionLink" type="string" />
         <property name="productConcrete" type="ProductConcrete"/>

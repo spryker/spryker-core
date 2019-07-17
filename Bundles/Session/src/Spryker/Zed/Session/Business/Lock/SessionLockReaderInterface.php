@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\Session\Business\Lock;
 
+/**
+ * @deprecated Use `Spryker\Zed\SessionExtension\Dependency\Plugin\SessionLockReleaserPluginInterface` instead.
+ */
 interface SessionLockReaderInterface
 {
     /**

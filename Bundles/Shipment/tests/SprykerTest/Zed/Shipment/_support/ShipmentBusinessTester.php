@@ -8,6 +8,10 @@
 namespace SprykerTest\Zed\Shipment;
 
 use Codeception\Actor;
+use Generated\Shared\DataBuilder\CalculableObjectBuilder;
+use Generated\Shared\DataBuilder\QuoteBuilder;
+use Generated\Shared\DataBuilder\ShipmentBuilder;
+use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\ShipmentMethodsTransfer;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
@@ -123,5 +127,28 @@ class ShipmentBusinessTester extends Actor
     public function getDefaultStoreName()
     {
         return $this->getLocator()->store()->facade()->getCurrentStore()->getName();
+    }
+
+    /**
+     * @param array $originalQuoteSeed
+     *
+     * @return \Generated\Shared\Transfer\CalculableObjectTransfer
+     */
+    public function buildCalculableObjectTransfer(array $originalQuoteSeed = []): CalculableObjectTransfer
+    {
+        $shipmentTransfer = (new ShipmentBuilder())
+            ->build()
+            ->setMethod(
+                $this->haveShipmentMethod()
+            );
+
+        $originalQuoteTransfer = (new QuoteBuilder())
+            ->build()
+            ->setShipment($shipmentTransfer)
+            ->fromArray($originalQuoteSeed);
+
+        return (new CalculableObjectBuilder())
+            ->build()
+            ->setOriginalQuote($originalQuoteTransfer);
     }
 }

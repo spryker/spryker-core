@@ -7,12 +7,9 @@
 
 namespace Spryker\Glue\CompanyRolesRestApi\Controller;
 
-use Generated\Shared\Transfer\RestErrorMessageTransfer;
-use Spryker\Glue\CompanyRolesRestApi\CompanyRolesRestApiConfig;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\Kernel\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @method \Spryker\Glue\CompanyRolesRestApi\CompanyRolesRestApiFactory getFactory()
@@ -25,8 +22,13 @@ class CompanyRolesResourceController extends AbstractController
      *          "summary": [
      *              "Retrieves a company role by id."
      *          ],
+     *          "parameters": [{
+     *              "name": "Accept-Language",
+     *              "in": "header"
+     *          }],
      *          "responses": {
-     *              "501": "Not implemented."
+     *              "400": "Company role id is missing.",
+     *              "404": "Company role not found."
      *          }
      *     },
      *    "getCollection": {
@@ -45,10 +47,12 @@ class CompanyRolesResourceController extends AbstractController
      */
     public function getAction(RestRequestInterface $restRequest): RestResponseInterface
     {
-        $restErrorMessageTransfer = (new RestErrorMessageTransfer())
-            ->setStatus(Response::HTTP_NOT_IMPLEMENTED)
-            ->setDetail(CompanyRolesRestApiConfig::RESPONSE_DETAIL_RESOURCE_NOT_IMPLEMENTED);
+        if (!$restRequest->getResource()->getId()) {
+            return $this->getFactory()
+                ->createCompanyRoleRestResponseBuilder()
+                ->createResourceNotImplementedError();
+        }
 
-        return $this->getFactory()->getResourceBuilder()->createRestResponse()->addError($restErrorMessageTransfer);
+        return $this->getFactory()->createCompanyRoleReader()->getCurrentUserCompanyRole($restRequest);
     }
 }

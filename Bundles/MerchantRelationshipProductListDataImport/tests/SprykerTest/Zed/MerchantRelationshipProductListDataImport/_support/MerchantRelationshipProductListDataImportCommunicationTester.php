@@ -50,7 +50,13 @@ class MerchantRelationshipProductListDataImportCommunicationTester extends Actor
     ): MerchantRelationshipTransfer {
         $merchant = $this->haveMerchant();
 
-        $companyBusinessUnitSeed = $companyBusinessUnitOwnerKey ? [CompanyBusinessUnitTransfer::KEY => $companyBusinessUnitOwnerKey] : [];
+        $companyBusinessUnitSeed = [
+            CompanyBusinessUnitTransfer::FK_COMPANY => $this->haveCompany()->getIdCompany(),
+        ];
+
+        if ($companyBusinessUnitOwnerKey) {
+            $companyBusinessUnitSeed[CompanyBusinessUnitTransfer::KEY] = $companyBusinessUnitOwnerKey;
+        }
         $companyBusinessUnitOwner = $this->haveCompanyBusinessUnit($companyBusinessUnitSeed);
 
         $assigneeCompanyBusinessUnitCollectionTransfer = new CompanyBusinessUnitCollectionTransfer();
@@ -62,7 +68,10 @@ class MerchantRelationshipProductListDataImportCommunicationTester extends Actor
                     continue;
                 }
 
-                $companyBusinessUnit = $this->haveCompanyBusinessUnit([CompanyBusinessUnitTransfer::KEY => $businessUnitKey]);
+                $companyBusinessUnit = $this->haveCompanyBusinessUnit([
+                    CompanyBusinessUnitTransfer::KEY => $businessUnitKey,
+                    CompanyBusinessUnitTransfer::FK_COMPANY => $companyBusinessUnitOwner->getFkCompany(),
+                ]);
                 $companyBusinessUnits->append($companyBusinessUnit);
             }
             $assigneeCompanyBusinessUnitCollectionTransfer->setCompanyBusinessUnits($companyBusinessUnits);

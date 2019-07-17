@@ -102,6 +102,7 @@ class FileInfoExtractor
             if (array_search('_support', $pathParts)) {
                 return ['Spryker', 'tests', $pathParts[$testsDirectoryPosition - 1], '_support'];
             }
+
             return array_slice($pathParts, $testsDirectoryPosition + 2);
         }
 

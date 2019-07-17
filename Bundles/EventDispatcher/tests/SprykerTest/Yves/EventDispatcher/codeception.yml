@@ -1,0 +1,20 @@
+namespace: SprykerTest\Yves\EventDispatcher
+
+paths:
+    tests: .
+    data: ../../../_data
+    support: _support
+    log: ../../../_output
+
+coverage:
+    enabled: true
+    remote: false
+    whitelist: { include: ['../../../../src/*'] }
+
+suites:
+    yves:
+        path: .
+        class_name: EventDispatcherYvesTester
+        modules:
+            enabled:
+                - Asserts

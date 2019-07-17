@@ -66,6 +66,7 @@ class ProductConcretePageSynchronizationDataPlugin extends AbstractPlugin implem
             $synchronizationDataTransfer = new SynchronizationDataTransfer();
             $synchronizationDataTransfer->setData($productConcretePageSearchTransfer->getData());
             $synchronizationDataTransfer->setKey($productConcretePageSearchTransfer->getKey());
+            $synchronizationDataTransfer->setStore($productConcretePageSearchTransfer->getStore());
             $synchronizationDataTransfers[] = $synchronizationDataTransfer;
         }
 
