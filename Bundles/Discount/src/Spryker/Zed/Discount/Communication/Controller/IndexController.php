@@ -83,15 +83,15 @@ class IndexController extends AbstractController
         }
 
         $discountForm = $this->getFactory()->getDiscountForm($idDiscount, $discountConfiguratorTransfer);
-        $isDiscountFormSubmitted = $this->isDiscountFormSubmitted($request, $discountForm);
+        $isDiscountFormSubmittedSuccessfully = $this->isDiscountFormSubmittedSuccessfully($request, $discountForm);
 
         $voucherFormDataProvider = $this->getFactory()->createVoucherFormDataProvider();
         $voucherForm = $this->getFactory()->getVoucherForm(
             $voucherFormDataProvider->getData($idDiscount)
         );
-        $isVoucherFormSubmitted = $this->isVoucherFormSubmitted($request, $voucherForm);
+        $isVoucherFormSubmittedSuccessfully = $this->isVoucherFormSubmittedSuccessfully($request, $voucherForm);
 
-        if ($isDiscountFormSubmitted || $isVoucherFormSubmitted) {
+        if ($isDiscountFormSubmittedSuccessfully || $isVoucherFormSubmittedSuccessfully) {
             return $this->redirectResponse($this->createEditRedirectUrl($idDiscount));
         }
 
@@ -117,7 +117,7 @@ class IndexController extends AbstractController
      *
      * @return bool
      */
-    protected function isVoucherFormSubmitted(Request $request, FormInterface $voucherForm): bool
+    protected function isVoucherFormSubmittedSuccessfully(Request $request, FormInterface $voucherForm): bool
     {
         $voucherForm->handleRequest($request);
 
@@ -358,7 +358,7 @@ class IndexController extends AbstractController
      *
      * @return bool
      */
-    protected function isDiscountFormSubmitted(Request $request, FormInterface $discountForm): bool
+    protected function isDiscountFormSubmittedSuccessfully(Request $request, FormInterface $discountForm): bool
     {
         $discountForm->handleRequest($request);
 
