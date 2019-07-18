@@ -144,12 +144,13 @@ class ProductSetStorageWriter implements ProductSetStorageWriterInterface
      */
     protected function extractProductAbstractIdsFromProductSetLocalizedEntity(array $spyProductSetLocalizedEntity): array
     {
-        $productAbstractIds = [];
         $spyProductAbstractSetEntities = $spyProductSetLocalizedEntity['SpyProductSet']['SpyProductAbstractSets'];
 
         if (!$spyProductAbstractSetEntities[0]) {
-            return $productAbstractIds;
+            return [];
         }
+
+        $productAbstractIds = [];
 
         foreach ($spyProductAbstractSetEntities as $productAbstract) {
             $productAbstractIds[] = $productAbstract['fk_product_abstract'];
