@@ -29,7 +29,7 @@ Edit,Bearbeiten
 "Enter stock value. In case you create multiple variants, the stock can be managed under ""Product Variants"" and this input field will be ignored.","Bestandswert eingeben. Wenn mehrere Varianten erstellt werden, kann der Bestand unter ""Produktvarianten"" verwaltet werden und dieses Eingabefeld wird ignoriert."
 General,Allgemein
 "Gross price",Bruttopreis
-"Image Set",Bildmenge
+"Image Set",Bildersets
 "Image Sets",Bildersets
 Large,Groß
 "List Products","Liste der Produkte"
