@@ -17,8 +17,6 @@ interface MerchantRepositoryInterface
      * - Returns a MerchantTransfer by merchant id.
      * - Returns null in case a record is not found.
      *
-     * @api
-     *
      * @param int $idMerchant
      *
      * @return \Generated\Shared\Transfer\MerchantTransfer|null
@@ -30,8 +28,6 @@ interface MerchantRepositoryInterface
      * - Retrieves collection of all merchants.
      * - List of merchants is ordered by merchant name.
      *
-     * @api
-     *
      * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
      */
     public function getMerchants(): MerchantCollectionTransfer;
@@ -39,8 +35,6 @@ interface MerchantRepositoryInterface
     /**
      * Specification:
      * - Checks whether merchant key already exists.
-     *
-     * @api
      *
      * @param string $key
      *
