@@ -38,7 +38,7 @@ class ProductSetStorageQueryContainer extends AbstractQueryContainer implements 
             ->queryAllProductSetData()
             ->joinWithSpyLocale()
             ->joinWithSpyProductSet()
-            ->joinWith('SpyProductSet.SpyProductAbstractSet')
+            ->leftJoinWith('SpyProductSet.SpyProductAbstractSet')
             ->joinWith('SpyProductSet.SpyProductImageSet', Criteria::LEFT_JOIN)
             ->addJoinCondition('SpyProductImageSet', sprintf('(spy_product_image_set.fk_locale = %s or spy_product_image_set.fk_locale is null)', SpyProductSetDataTableMap::COL_FK_LOCALE))
             ->joinWith('SpyProductImageSet.SpyProductImageSetToProductImage', Criteria::LEFT_JOIN)
