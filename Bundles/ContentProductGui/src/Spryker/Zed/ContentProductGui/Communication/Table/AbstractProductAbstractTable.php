@@ -106,11 +106,11 @@ abstract class AbstractProductAbstractTable extends AbstractTable
     }
 
     /**
-     * @param string $link
+     * @param string|null $link
      *
      * @return string
      */
-    protected function getProductPreview(string $link): string
+    protected function getProductPreview(?string $link): string
     {
         if ($link) {
             return sprintf('<img src="%s">', $link);
