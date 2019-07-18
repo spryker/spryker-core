@@ -19,8 +19,6 @@ class CustomerAccessRepository extends AbstractRepository implements CustomerAcc
     /**
      * {@inheritdoc}
      *
-     * @api
-     *
      * @param string $contentType
      *
      * @return \Generated\Shared\Transfer\ContentTypeAccessTransfer|null
@@ -44,8 +42,6 @@ class CustomerAccessRepository extends AbstractRepository implements CustomerAcc
     /**
      * {@inheritdoc}
      *
-     * @api
-     *
      * @return \Generated\Shared\Transfer\CustomerAccessTransfer
      */
     public function getUnrestrictedContentTypes(): CustomerAccessTransfer
@@ -63,8 +59,6 @@ class CustomerAccessRepository extends AbstractRepository implements CustomerAcc
     /**
      * {@inheritdoc}
      *
-     * @api
-     *
      * @return \Generated\Shared\Transfer\CustomerAccessTransfer
      */
     public function getAllContentTypes(): CustomerAccessTransfer
@@ -81,8 +75,6 @@ class CustomerAccessRepository extends AbstractRepository implements CustomerAcc
 
     /**
      * {@inheritdoc}
-     *
-     * @api
      *
      * @return \Generated\Shared\Transfer\CustomerAccessTransfer
      */
