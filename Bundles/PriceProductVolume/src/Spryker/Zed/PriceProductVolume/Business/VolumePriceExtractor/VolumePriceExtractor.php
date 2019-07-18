@@ -55,15 +55,15 @@ class VolumePriceExtractor implements VolumePriceExtractorInterface
      */
     public function extractPriceProductVolumesForProductConcrete(array $priceProductTransfers): array
     {
-        if (empty($priceProductTransfers[0])) {
-            return $priceProductTransfers;
-        }
+        $extractedPrices = $this->extractPriceProductVolumeTransfersFromArray($priceProductTransfers);
 
-        $priceProductTransfer = $priceProductTransfers[0];
-        $abstractProductPrices = $this->priceProductReader
-            ->getPriceProductAbstractFromPriceProduct($priceProductTransfer);
-        $extractedPrices = $this->extractPriceProductVolumeTransfersFromArray($abstractProductPrices);
-        $extractedPrices = $this->setConcretePriceDataToPriceData($extractedPrices, $priceProductTransfer);
+        if (empty($extractedPrices) && !empty($priceProductTransfers)) {
+            $abstractProductPrices = $this->priceProductReader->getPriceProductAbstractFromPriceProduct(
+                $priceProductTransfers[0]
+            );
+            $extractedPrices = $this->extractPriceProductVolumeTransfersFromArray($abstractProductPrices);
+            $extractedPrices = $this->setConcretePriceDataToPriceData($extractedPrices, $priceProductTransfers[0]);
+        }
 
         return array_merge($extractedPrices, $priceProductTransfers);
     }
