@@ -147,7 +147,7 @@ class ProductSetStorageWriter implements ProductSetStorageWriterInterface
         $productAbstractIds = [];
         $spyProductAbstractSetEntities = $spyProductSetLocalizedEntity['SpyProductSet']['SpyProductAbstractSets'];
 
-        if (count($spyProductAbstractSetEntities) <= 1) {
+        if (!$spyProductAbstractSetEntities[0]) {
             return $productAbstractIds;
         }
 
