@@ -30,8 +30,8 @@ Incoming,Incoming
 "Indirect Outgoing","Indirect Outgoing"
 "Indirect Stability","Indirect Stability"
 "List all used plugins","List all used plugins"
-Module,module
 module,module
+Module,module
 "Module name","Module name"
 "Module overview","Module overview"
 Namespace,Namespace

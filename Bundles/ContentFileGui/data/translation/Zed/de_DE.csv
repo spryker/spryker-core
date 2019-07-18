@@ -1,14 +1,13 @@
-"File List","File List"
-"content_file_gui.template.text-link","Text link"
-"content_file_gui.template.file-icon-and-size","File icon and size"
-"Delete", "Delete"
-"Move Up", "Move Up"
-"Move Down", "Move Down"
-"File List", "Dateiliste"
-"Selected Files", "Ausgewählte Dateien"
-"Available Files", "Verfügbare Dateien"
-"File Name", "Dateiname"
-"ID", "ID"
-"Actions", "Actions"
-"Add to list", "Add to list"
-"Selected", "Selected"
+Actions,Actions
+"Add to list","Add to list"
+"Available Files","Verfügbare Dateien"
+content_file_gui.template.file-icon-and-size,"File icon and size"
+content_file_gui.template.text-link,"Text link"
+Delete,Delete
+"File List",Dateiliste
+"File Name",Dateiname
+ID,ID
+"Move Down","Move Down"
+"Move Up","Move Up"
+Selected,Selected
+"Selected Files","Ausgewählte Dateien"
