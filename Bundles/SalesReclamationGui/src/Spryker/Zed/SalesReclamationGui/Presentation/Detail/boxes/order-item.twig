@@ -80,7 +80,11 @@
 </td>
 <td>
     {% include [
-        '@Oms/RenderForm/_partial/reclamation-item-actions.twig',
-        '@SalesReclamationGui/Detail/_partial/reclamation-item-actions.twig'
-    ] %}
+        '@Oms/RenderForm/_partial/order-item-actions.twig',
+        '@SalesReclamationGui/Detail/_partial/reclamation-item-actions.twig',
+    ] ignore missing  with {
+        idSalesOrderItem: orderItem.idSalesOrderItem,
+        redirectUrl: changeStatusRedirectUrl,
+        eventsGroupedByItem: eventsGroupedByItem[orderItem.idSalesOrderItem],
+    } only %}
 </td>

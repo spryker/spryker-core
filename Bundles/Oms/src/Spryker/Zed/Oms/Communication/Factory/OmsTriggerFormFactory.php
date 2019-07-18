@@ -7,13 +7,8 @@
 
 namespace Spryker\Zed\Oms\Communication\Factory;
 
-use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\ReclamationTransfer;
 use Spryker\Zed\Oms\Communication\Form\DataProvider\OrderItemOmsTriggerFormDataProvider;
 use Spryker\Zed\Oms\Communication\Form\DataProvider\OrderOmsTriggerFormDataProvider;
-use Spryker\Zed\Oms\Communication\Form\DataProvider\ReclamationItemOmsTriggerFormDataProvider;
-use Spryker\Zed\Oms\Communication\Form\DataProvider\ReclamationOmsTriggerFormDataProvider;
 use Spryker\Zed\Oms\Communication\Form\OmsTriggerForm;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
@@ -50,74 +45,31 @@ class OmsTriggerFormFactory implements OmsTriggerFormFactoryInterface
     }
 
     /**
-     * @return \Spryker\Zed\Oms\Communication\Form\DataProvider\ReclamationOmsTriggerFormDataProvider
-     */
-    public function createReclamationOmsTriggerFormDataProvider(): ReclamationOmsTriggerFormDataProvider
-    {
-        return new ReclamationOmsTriggerFormDataProvider();
-    }
-
-    /**
-     * @return \Spryker\Zed\Oms\Communication\Form\DataProvider\ReclamationItemOmsTriggerFormDataProvider
-     */
-    public function createReclamationItemOmsTriggerFormDataProvider(): ReclamationItemOmsTriggerFormDataProvider
-    {
-        return new ReclamationItemOmsTriggerFormDataProvider();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param string $redirectUrl
      * @param string $event
+     * @param int $idSalesOrder
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getOrderOmsTriggerForm(OrderTransfer $orderTransfer, string $event): FormInterface
+    public function getOrderOmsTriggerForm(string $redirectUrl, string $event, int $idSalesOrder): FormInterface
     {
         $options = $this->createOrderOmsTriggerFormDataProvider()
-            ->getOrderOmsTriggerFormOptions($orderTransfer, $event);
+            ->getOrderOmsTriggerFormOptions($redirectUrl, $event, $idSalesOrder);
 
         return $this->formFactory->create(OmsTriggerForm::class, null, $options);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param string $redirectUrl
      * @param string $event
+     * @param int $idSalesOrderItem
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getOrderItemOmsTriggerForm(ItemTransfer $itemTransfer, string $event): FormInterface
+    public function getOrderItemOmsTriggerForm(string $redirectUrl, string $event, int $idSalesOrderItem): FormInterface
     {
         $options = $this->createOrderItemOmsTriggerFormDataProvider()
-            ->getOrderItemOmsTriggerFormOptions($itemTransfer, $event);
-
-        return $this->formFactory->create(OmsTriggerForm::class, null, $options);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ReclamationTransfer $reclamationTransfer
-     * @param string $event
-     *
-     * @return \Symfony\Component\Form\FormInterface
-     */
-    public function getReclamationOmsTriggerForm(ReclamationTransfer $reclamationTransfer, string $event): FormInterface
-    {
-        $options = $this->createReclamationOmsTriggerFormDataProvider()
-            ->getOrderOmsTriggerFormOptions($reclamationTransfer, $event);
-
-        return $this->formFactory->create(OmsTriggerForm::class, null, $options);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param string $event
-     * @param int $idReclamation
-     *
-     * @return \Symfony\Component\Form\FormInterface
-     */
-    public function getReclamationItemOmsTriggerForm(ItemTransfer $itemTransfer, string $event, int $idReclamation): FormInterface
-    {
-        $options = $this->createReclamationItemOmsTriggerFormDataProvider()
-            ->getOrderItemOmsTriggerFormOptions($itemTransfer, $event, $idReclamation);
+            ->getOrderItemOmsTriggerFormOptions($redirectUrl, $event, $idSalesOrderItem);
 
         return $this->formFactory->create(OmsTriggerForm::class, null, $options);
     }

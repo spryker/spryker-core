@@ -7,9 +7,13 @@
 
                 <div>
                     {% include [
-                        '@Oms/RenderForm/_partial/reclamation-actions.twig',
-                        '@SalesReclamationGui/Detail/_partial/reclamation-actions.twig'
-                    ] %}
+                        '@Oms/RenderForm/_partial/order-actions.twig',
+                        '@SalesReclamationGui/Detail/_partial/reclamation-actions.twig',
+                    ] ignore missing  with {
+                        redirectUrl: changeStatusRedirectUrl,
+                        idSalesOrder: idSalesOrder,
+                        events: events,
+                    } only %}
                 </div>
 
             {% endblock %}

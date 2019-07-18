@@ -73,5 +73,9 @@
     {% include [
         '@Oms/RenderForm/_partial/order-item-actions.twig',
         '@Sales/Detail/_partial/order-item-actions.twig',
-    ] %}
+    ] ignore missing  with {
+        redirectUrl: changeStatusRedirectUrl,
+        idSalesOrderItem: orderItem.idSalesOrderItem,
+        eventsGroupedByItem: eventsGroupedByItem[orderItem.IdSalesOrderItem],
+    } only %}
 </td>

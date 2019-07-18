@@ -9,7 +9,11 @@
                     {% include [
                         '@Oms/RenderForm/_partial/order-actions.twig',
                         '@Sales/Detail/_partial/order-actions.twig',
-                    ] %}
+                    ] ignore missing with {
+                        redirectUrl: changeStatusRedirectUrl,
+                        idSalesOrder: order.idSalesOrder,
+                        events: events,
+                    } only %}
                 </div>
 
             {% endblock %}

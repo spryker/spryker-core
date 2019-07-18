@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\Oms\Communication\Form\DataProvider;
 
-use Spryker\Service\UtilText\Model\Url\Url;
-
 class InitialOmsTriggerFormDataProvider
 {
     public const OMS_ACTION_ITEM_TRIGGER = 'submit-trigger-event-for-order-items';
@@ -20,15 +18,4 @@ class InitialOmsTriggerFormDataProvider
     public const QUERY_PARAM_REDIRECT = 'redirect';
 
     public const SUBMIT_BUTTON_CLASS = 'btn btn-primary btn-sm trigger-event';
-
-    /**
-     * @param string $route
-     * @param array $params
-     *
-     * @return string
-     */
-    protected function createRedirectLink(string $route, array $params): string
-    {
-        return Url::generate($route, $params);
-    }
 }

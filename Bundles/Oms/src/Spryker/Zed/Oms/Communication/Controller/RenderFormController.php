@@ -18,6 +18,12 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class RenderFormController extends AbstractController
 {
+    protected const KEY_ID_SALES_ORDER = 'idSalesOrder';
+    protected const KEY_EVENTS = 'events';
+    protected const KEY_REDIRECT_URL = 'redirectUrl';
+    protected const KEY_EVENTS_GROUPED_BY_ITEM = 'eventsGroupedByItem';
+    protected const KEY_ID_SALES_ORDER_ITEM = 'idSalesOrderItem';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -25,11 +31,12 @@ class RenderFormController extends AbstractController
      */
     public function orderAction(Request $request): array
     {
-        $orderTransfer = $request->attributes->get('order');
-        $events = $request->attributes->get('events');
+        $idSalesOrder = $request->attributes->get(static::KEY_ID_SALES_ORDER);
+        $events = $request->attributes->get(static::KEY_EVENTS);
+        $redirectUrl = $request->attributes->get(static::KEY_REDIRECT_URL);
         $orderOmsTriggerFormCollection = $this->getFactory()
-            ->createOmsTriggerFormCollector()
-            ->buildOrderOmsTriggerFormCollection($orderTransfer, $events);
+            ->createOmsTriggerFormCollectionBuilder()
+            ->buildOrderOmsTriggerFormCollection($redirectUrl, $events, $idSalesOrder);
 
         return $this->viewResponse([
             'formCollection' => $orderOmsTriggerFormCollection,
@@ -43,52 +50,15 @@ class RenderFormController extends AbstractController
      */
     public function orderItemAction(Request $request): array
     {
-        $itemTransfer = $request->attributes->get('item');
-        $eventsGroupedByItem = $request->attributes->get('eventsGroupedByItem');
+        $redirectUrl = $request->attributes->get(static::KEY_REDIRECT_URL);
+        $eventsGroupedByItem = $request->attributes->get(static::KEY_EVENTS_GROUPED_BY_ITEM);
+        $idSalesOrderItem = $request->attributes->get(static::KEY_ID_SALES_ORDER_ITEM);
         $orderItemOmsTriggerFormCollection = $this->getFactory()
-            ->createOmsTriggerFormCollector()
-            ->buildOrderItemOmsTriggerFormCollection($itemTransfer, $eventsGroupedByItem);
+            ->createOmsTriggerFormCollectionBuilder()
+            ->buildOrderItemOmsTriggerFormCollection($redirectUrl, $eventsGroupedByItem, $idSalesOrderItem);
 
         return $this->viewResponse([
             'formCollection' => $orderItemOmsTriggerFormCollection,
-        ]);
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return array
-     */
-    public function reclamationAction(Request $request): array
-    {
-        $reclamationTransfer = $request->attributes->get('reclamation');
-        $events = $request->attributes->get('events');
-        $reclamationOmsTriggerFormCollection = $this->getFactory()
-            ->createOmsTriggerFormCollector()
-            ->buildReclamationOmsTriggerFormCollection($reclamationTransfer, $events);
-
-        return $this->viewResponse([
-            'formCollection' => $reclamationOmsTriggerFormCollection,
-        ]);
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return array
-     */
-    public function reclamationItemAction(Request $request): array
-    {
-        $reclamationTransfer = $request->attributes->get('reclamation');
-        $eventsGroupedByItem = $request->attributes->get('eventsGroupedByItem');
-        $itemTransfer = $request->attributes->get('orderItem');
-
-        $reclamationItemsOmsTriggerFormCollection = $this->getFactory()
-            ->createOmsTriggerFormCollector()
-            ->buildReclamationItemOmsTriggerFormCollection($itemTransfer, $eventsGroupedByItem, $reclamationTransfer);
-
-        return $this->viewResponse([
-            'formCollection' => $reclamationItemsOmsTriggerFormCollection,
         ]);
     }
 }
