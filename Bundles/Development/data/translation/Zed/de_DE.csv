@@ -30,8 +30,8 @@ Incoming,Incoming
 "Indirect Outgoing","Indirect Outgoing"
 "Indirect Stability","Indirect Stability"
 "List all used plugins","Alle verwendeten Plug-ins auflisten"
-Module,Modul
 module,Modul
+Module,Modul
 "Module name",Modulname
 "Module overview",Modulübersicht
 Namespace,Namespace
