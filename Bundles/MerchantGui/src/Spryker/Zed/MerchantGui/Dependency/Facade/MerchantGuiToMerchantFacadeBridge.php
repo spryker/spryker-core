@@ -63,4 +63,14 @@ class MerchantGuiToMerchantFacadeBridge implements MerchantGuiToMerchantFacadeIn
     {
         return $this->merchantFacade->getMerchantById($merchantTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantTransfer|null
+     */
+    public function findMerchantById(MerchantTransfer $merchantTransfer): ?MerchantTransfer
+    {
+        return $this->merchantFacade->findMerchantById($merchantTransfer);
+    }
 }

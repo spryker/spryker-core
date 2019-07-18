@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/customer-offer-connector.svg)](https://travis-ci.org/spryker/customer-offer-connector)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/customer-offer-connector/badge.svg)](https://coveralls.io/github/spryker/customer-offer-connector)
 
-{{ADD DESCRIPTION HERE}}
+Contains plugin for offer module, which hydrates customer into an offer.
 
 ## Installation
 

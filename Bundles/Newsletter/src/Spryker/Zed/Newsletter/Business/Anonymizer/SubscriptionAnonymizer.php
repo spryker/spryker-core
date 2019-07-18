@@ -67,9 +67,9 @@ class SubscriptionAnonymizer implements SubscriptionAnonymizerInterface
     }
 
     /**
-     * @param \Orm\Zed\Newsletter\Persistence\Base\SpyNewsletterSubscriber $spyNewsletterSubscriber
+     * @param \Orm\Zed\Newsletter\Persistence\SpyNewsletterSubscriber $spyNewsletterSubscriber
      *
-     * @return \Orm\Zed\Newsletter\Persistence\Base\SpyNewsletterSubscriber
+     * @return \Orm\Zed\Newsletter\Persistence\SpyNewsletterSubscriber
      */
     protected function anonymizeSubscriber(SpyNewsletterSubscriber $spyNewsletterSubscriber)
     {

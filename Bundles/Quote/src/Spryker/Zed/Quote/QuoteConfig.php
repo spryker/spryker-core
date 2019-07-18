@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Quote;
 
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Shared\Quote\QuoteConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 /**
@@ -15,6 +16,8 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
  */
 class QuoteConfig extends AbstractBundleConfig
 {
+    protected const DEFAULT_GUEST_QUOTE_LIFETIME = 'P01M';
+
     /**
      * @return string
      */
@@ -34,5 +37,13 @@ class QuoteConfig extends AbstractBundleConfig
             QuoteTransfer::CURRENCY,
             QuoteTransfer::PRICE_MODE,
         ];
+    }
+
+    /**
+     * @return string
+     */
+    public function getGuestQuoteLifetime(): string
+    {
+        return $this->get(QuoteConstants::GUEST_QUOTE_LIFETIME, static::DEFAULT_GUEST_QUOTE_LIFETIME);
     }
 }

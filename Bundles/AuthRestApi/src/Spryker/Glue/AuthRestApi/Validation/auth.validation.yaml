@@ -1,0 +1,13 @@
+access-tokens:
+  post:
+    username:
+      - NotBlank
+      - Email
+    password:
+      - NotBlank
+
+refresh-tokens:
+  post:
+    refreshToken:
+      - Required
+      - NotBlank

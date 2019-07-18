@@ -34,7 +34,10 @@ class OfferStub implements OfferStubInterface
      */
     public function getOfferById(OfferTransfer $offerTransfer): OfferTransfer
     {
-        return $this->zedStub->call('/offer/gateway/get-offer-by-id', $offerTransfer);
+        /** @var \Generated\Shared\Transfer\OfferTransfer $offerTransfer */
+        $offerTransfer = $this->zedStub->call('/offer/gateway/get-offer-by-id', $offerTransfer);
+
+        return $offerTransfer;
     }
 
     /**
@@ -44,7 +47,10 @@ class OfferStub implements OfferStubInterface
      */
     public function getOffers(OfferListTransfer $offerListTransfer): OfferListTransfer
     {
-        return $this->zedStub->call('/offer/gateway/get-offers', $offerListTransfer);
+        /** @var \Generated\Shared\Transfer\OfferListTransfer $offerListTransfer */
+        $offerListTransfer = $this->zedStub->call('/offer/gateway/get-offers', $offerListTransfer);
+
+        return $offerListTransfer;
     }
 
     /**
@@ -54,6 +60,9 @@ class OfferStub implements OfferStubInterface
      */
     public function placeOffer(OfferTransfer $offerTransfer): OfferResponseTransfer
     {
-        return $this->zedStub->call('/offer/gateway/place-offer', $offerTransfer);
+        /** @var \Generated\Shared\Transfer\OfferResponseTransfer $offerResponseTransfer */
+        $offerResponseTransfer = $this->zedStub->call('/offer/gateway/place-offer', $offerTransfer);
+
+        return $offerResponseTransfer;
     }
 }

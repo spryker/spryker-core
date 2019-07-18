@@ -24,7 +24,7 @@ use Spryker\Shared\Money\Formatter\MoneyFormatterInterface;
  */
 class MoneyFormatterCollectionTest extends Unit
 {
-    const FORMATTER = 'formatter';
+    public const FORMATTER = 'formatter';
 
     /**
      * @return void
@@ -69,7 +69,7 @@ class MoneyFormatterCollectionTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\Money\Formatter\MoneyFormatterInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\Money\Formatter\MoneyFormatterInterface
      */
     protected function getFormatterMock()
     {

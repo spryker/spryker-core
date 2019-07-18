@@ -25,9 +25,9 @@ use Spryker\Shared\Money\Formatter\MoneyFormatterInterface;
  */
 class IntlMoneyFormatterWithoutCurrencyTest extends AbstractIntlMoneyFormatterTest
 {
-    const AMOUNT = '1000';
-    const CURRENCY = 'EUR';
-    const LOCALE = 'de_DE';
+    public const AMOUNT = '1000';
+    public const CURRENCY = 'EUR';
+    public const LOCALE = 'de_DE';
 
     /**
      * @return void

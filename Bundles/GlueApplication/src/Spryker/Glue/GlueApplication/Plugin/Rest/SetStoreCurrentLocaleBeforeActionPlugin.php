@@ -28,7 +28,7 @@ class SetStoreCurrentLocaleBeforeActionPlugin extends AbstractPlugin implements 
      */
     public function beforeAction(string $action, RestRequestInterface $restRequest): void
     {
-        //sets locale to whole current store, RPC calls to ZED will also receive this locale.
+        // Sets locale to whole current store, RPC calls to Zed will also receive this locale.
         Store::getInstance()
             ->setCurrentLocale(
                 $restRequest->getMetadata()->getLocale()

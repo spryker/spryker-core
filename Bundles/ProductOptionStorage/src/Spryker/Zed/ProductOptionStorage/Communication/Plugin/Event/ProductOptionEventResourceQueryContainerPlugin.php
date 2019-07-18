@@ -18,6 +18,7 @@ use Spryker\Zed\ProductOption\Dependency\ProductOptionEvents;
  * @method \Spryker\Zed\ProductOptionStorage\Persistence\ProductOptionStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductOptionStorage\Business\ProductOptionStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductOptionStorage\Communication\ProductOptionStorageCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductOptionStorage\ProductOptionStorageConfig getConfig()
  */
 class ProductOptionEventResourceQueryContainerPlugin extends AbstractPlugin implements EventResourceQueryContainerPluginInterface
 {
@@ -44,9 +45,9 @@ class ProductOptionEventResourceQueryContainerPlugin extends AbstractPlugin impl
      */
     public function queryData(array $ids = []): ?ModelCriteria
     {
-        $query = $this->getQueryContainer()->queryProductOptionsByProductAbstractIds($ids);
+        $query = $this->getQueryContainer()->queryProductAbstractOptionsByProductAbstractIds($ids);
 
-        if (empty($ids)) {
+        if ($ids === []) {
             $query->clear();
         }
 

@@ -23,8 +23,8 @@ use SprykerTest\Glue\Kernel\Fixtures\ConcreteFactory;
  */
 class AbstractFactoryTest extends Unit
 {
-    const TEST_KEY = 'test';
-    const TEST_VALUE = 'value';
+    public const TEST_KEY = 'test';
+    public const TEST_VALUE = 'value';
 
     /**
      * @return void
@@ -58,7 +58,7 @@ class AbstractFactoryTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\SprykerTest\Glue\Kernel\Fixtures\ConcreteFactory
+     * @return \PHPUnit\Framework\MockObject\MockObject|\SprykerTest\Glue\Kernel\Fixtures\ConcreteFactory
      */
     protected function getFactoryMock()
     {

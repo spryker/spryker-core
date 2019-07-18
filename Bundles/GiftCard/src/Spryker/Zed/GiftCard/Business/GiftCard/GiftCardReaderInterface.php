@@ -70,7 +70,7 @@ interface GiftCardReaderInterface
     /**
      * @param int $idSalesOrder
      *
-     * @return \ArrayObject|\Orm\Zed\GiftCard\Persistence\SpyPaymentGiftCard[]
+     * @return \Orm\Zed\GiftCard\Persistence\SpyPaymentGiftCard[]
      */
     public function getGiftCardPaymentsForOrder($idSalesOrder);
 

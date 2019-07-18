@@ -34,6 +34,7 @@ use Spryker\Zed\Url\UrlDependencyProvider;
 /**
  * @method \Spryker\Zed\Url\Persistence\UrlQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Url\UrlConfig getConfig()
+ * @method \Spryker\Zed\Url\Persistence\UrlRepositoryInterface getRepository()
  */
 class UrlBusinessFactory extends AbstractBusinessFactory
 {
@@ -78,7 +79,10 @@ class UrlBusinessFactory extends AbstractBusinessFactory
      */
     public function createUrlReader()
     {
-        return new UrlReader($this->getQueryContainer());
+        return new UrlReader(
+            $this->getQueryContainer(),
+            $this->getRepository()
+        );
     }
 
     /**
@@ -286,13 +290,16 @@ class UrlBusinessFactory extends AbstractBusinessFactory
      */
     protected function createUrlUpdaterAfterSaveObservers()
     {
-        return [
+        /** @var \Spryker\Zed\Url\Business\Url\UrlUpdaterAfterSaveObserverInterface[] $observers */
+        $observers = [
             $this->createUrlRedirectUpdateObserver(),
             $this->createUrlRedirectInjectionObserver(),
             $this->createUrlRedirectAppendObserver(),
             $this->createUrlUpdateObserver(),
             $this->createUrlAfterUpdatePluginObserver(),
         ];
+
+        return $observers;
     }
 
     /**

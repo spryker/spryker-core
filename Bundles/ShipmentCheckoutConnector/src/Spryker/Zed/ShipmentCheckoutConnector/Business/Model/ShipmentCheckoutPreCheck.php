@@ -15,7 +15,7 @@ use Spryker\Zed\ShipmentCheckoutConnector\Dependency\Facade\ShipmentCheckoutConn
 
 class ShipmentCheckoutPreCheck implements ShipmentCheckoutPreCheckInterface
 {
-    const TRANSLATION_KEY_SHIPMENT_NOT_VALID = 'checkout.pre.check.shipment.failed';
+    public const TRANSLATION_KEY_SHIPMENT_NOT_VALID = 'checkout.pre.check.shipment.failed';
 
     /**
      * @var \Spryker\Zed\ShipmentCheckoutConnector\Dependency\Facade\ShipmentCheckoutConnectorToShipmentFacadeInterface

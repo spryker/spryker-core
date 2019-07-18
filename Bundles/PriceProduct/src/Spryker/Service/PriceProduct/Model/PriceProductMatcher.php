@@ -57,6 +57,7 @@ class PriceProductMatcher implements PriceProductMatcherInterface
 
         $priceProductFilterTransfer = (new PriceProductFilterTransfer())
             ->fromArray($priceProductCriteriaTransfer->toArray(), true);
+        $priceProductFilterTransfer->setPriceTypeName($priceProductCriteriaTransfer->getPriceType());
 
         $priceProductTransfers = $this->applyPriceProductFilterPlugins($priceProductTransfers, $priceProductFilterTransfer);
 
@@ -111,6 +112,10 @@ class PriceProductMatcher implements PriceProductMatcherInterface
             ->requireMoneyValue();
 
         if (!$priceProductTransfer->getPriceDimension()->getType()) {
+            return false;
+        }
+
+        if ($priceProductCriteriaTransfer->getIdStore() !== $priceProductTransfer->getMoneyValue()->getFkStore()) {
             return false;
         }
 

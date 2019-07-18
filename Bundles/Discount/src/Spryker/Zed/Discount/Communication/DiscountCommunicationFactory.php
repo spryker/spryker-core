@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -30,21 +31,21 @@ use Symfony\Component\Form\FormInterface;
  * @method \Spryker\Zed\Discount\DiscountConfig getConfig()
  * @method \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Discount\Business\DiscountFacadeInterface getFacade()
+ * @method \Spryker\Zed\Discount\Persistence\DiscountRepositoryInterface getRepository()
  */
 class DiscountCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
      * @param int|null $idDiscount
+     * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer|null $discountConfiguratorTransfer
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getDiscountForm($idDiscount = null)
+    public function getDiscountForm($idDiscount = null, ?DiscountConfiguratorTransfer $discountConfiguratorTransfer = null)
     {
-        $discountDataProvider = $this->createDiscountDataProvider();
-
         return $this->getFormFactory()->create(
             DiscountForm::class,
-            $discountDataProvider->getData($idDiscount),
+            $discountConfiguratorTransfer ?: $this->createDiscountFormDataProvider()->getData($idDiscount),
             [
                 'data_class' => DiscountConfiguratorTransfer::class,
             ]
@@ -131,15 +132,18 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createJavascriptQueryBuilderTransformer()
     {
-        return new JavascriptQueryBuilderTransformer($this->getFacade());
+        /** @var \Spryker\Zed\Discount\Business\DiscountFacade $facade */
+        $facade = $this->getFacade();
+
+        return new JavascriptQueryBuilderTransformer($facade);
     }
 
     /**
      * @return \Spryker\Zed\Discount\Communication\Form\DataProvider\DiscountFormDataProvider
      */
-    protected function createDiscountDataProvider()
+    public function createDiscountFormDataProvider()
     {
-        $discountFormDataProvider = new DiscountFormDataProvider($this->getCurrencyFacade());
+        $discountFormDataProvider = new DiscountFormDataProvider($this->getFacade());
         $discountFormDataProvider->applyFormDataExpanderPlugins($this->getDiscountFormDataProviderExpanderPlugins());
 
         return $discountFormDataProvider;

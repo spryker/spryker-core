@@ -11,6 +11,7 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
  * @method \Spryker\Zed\Mail\MailConfig getConfig()
+ * @method \Spryker\Zed\Mail\Business\MailFacadeInterface getFacade()
  */
 class MailCommunicationFactory extends AbstractCommunicationFactory
 {

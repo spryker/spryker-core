@@ -14,8 +14,8 @@ use Spryker\Zed\Synchronization\Dependency\Service\SynchronizationToUtilEncoding
 
 class SynchronizationStorage implements SynchronizationInterface
 {
-    const KEY = 'key';
-    const VALUE = 'value';
+    public const KEY = 'key';
+    public const VALUE = 'value';
 
     /**
      * @var \Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToStorageClientInterface
@@ -124,5 +124,47 @@ class SynchronizationStorage implements SynchronizationInterface
     protected function getEncodedValue($value)
     {
         return $this->utilEncodingService->encodeJson($value);
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return void
+     */
+    public function writeBulk(array $data): void
+    {
+        $storageWriteMessages = [];
+        foreach ($data as $message) {
+            $key = $message['key'];
+            $value = $message['value'];
+
+            $storageWriteMessages[$key] = $value;
+        }
+
+        if ($storageWriteMessages === []) {
+            return;
+        }
+
+        $this->storageClient->setMulti($storageWriteMessages);
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return void
+     */
+    public function deleteBulk(array $data): void
+    {
+        $keysToDelete = [];
+
+        foreach ($data as $message) {
+            $keysToDelete[] = $message[static::KEY];
+        }
+
+        if ($keysToDelete === []) {
+            return;
+        }
+
+        $this->storageClient->deleteMulti($keysToDelete);
     }
 }

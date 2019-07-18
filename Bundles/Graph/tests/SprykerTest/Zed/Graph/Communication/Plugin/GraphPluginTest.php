@@ -25,12 +25,12 @@ use Spryker\Zed\Graph\Communication\Plugin\GraphPlugin;
  */
 class GraphPluginTest extends Unit
 {
-    const GRAPH_NAME = 'graph name';
-    const NODE_A = 'node A';
-    const NODE_B = 'node B';
-    const GROUP_NAME = 'group name';
-    const CLUSTER_NAME = 'cluster name';
-    const ATTRIBUTES = ['attribute' => 'value', 'html attribute' => '<h1>Html Value</h1>'];
+    public const GRAPH_NAME = 'graph name';
+    public const NODE_A = 'node A';
+    public const NODE_B = 'node B';
+    public const GROUP_NAME = 'group name';
+    public const CLUSTER_NAME = 'cluster name';
+    public const ATTRIBUTES = ['attribute' => 'value', 'html attribute' => '<h1>Html Value</h1>'];
 
     /**
      * @return void
@@ -121,11 +121,11 @@ class GraphPluginTest extends Unit
      */
     public function testRender()
     {
-        $this->assertInternalType('string', $this->getPluginMock()->render('svg'));
+        $this->assertIsString($this->getPluginMock()->render('svg'));
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Graph\Communication\Plugin\GraphPlugin
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Graph\Communication\Plugin\GraphPlugin
      */
     protected function getPluginMock()
     {

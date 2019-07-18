@@ -7,24 +7,26 @@
 
 namespace Spryker\Zed\Propel\Communication\Console;
 
-use Spryker\Shared\Config\Config;
-use Spryker\Shared\Propel\PropelConstants;
 use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Process\Process;
 
+/**
+ * @method \Spryker\Zed\Propel\Business\PropelFacadeInterface getFacade()
+ * @method \Spryker\Zed\Propel\Communication\PropelCommunicationFactory getFactory()
+ */
 class BuildModelConsole extends Console
 {
-    const COMMAND_NAME = 'propel:model:build';
+    public const COMMAND_NAME = 'propel:model:build';
+    public const COMMAND_DESCRIPTION = 'Build Propel2 classes';
 
     /**
      * @return void
      */
     protected function configure()
     {
-        $this->setName(self::COMMAND_NAME);
-        $this->setDescription('Build Propel2 classes');
+        $this->setName(static::COMMAND_NAME);
+        $this->setDescription(static::COMMAND_DESCRIPTION);
 
         parent::configure();
     }
@@ -35,23 +37,16 @@ class BuildModelConsole extends Console
      *
      * @return int
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $this->info('Build propel models');
+        $this->info($this->getDescription());
 
-        $config = Config::get(PropelConstants::PROPEL);
-        $command = 'APPLICATION_ENV=' . APPLICATION_ENV
-            . ' APPLICATION_STORE=' . APPLICATION_STORE
-            . ' APPLICATION_ROOT_DIR=' . APPLICATION_ROOT_DIR
-            . ' APPLICATION=' . APPLICATION
-            . ' vendor/bin/propel model:build --config-dir '
-            . $config['paths']['phpConfDir']
-            . ' --schema-dir ' . $config['paths']['schemaDir'] . ' --disable-namespace-auto-package';
+        $command = $this->getFactory()->createModelBuildCommand();
 
-        $process = new Process($command, APPLICATION_ROOT_DIR);
-
-        return $process->run(function ($type, $buffer) {
-            echo $buffer;
-        });
+        return $this->getFactory()->createPropelCommandRunner()->runCommand(
+            $command,
+            $this->getDefinition(),
+            $output
+        );
     }
 }

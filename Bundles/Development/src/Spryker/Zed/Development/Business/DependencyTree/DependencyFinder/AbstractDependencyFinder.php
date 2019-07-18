@@ -9,25 +9,19 @@ namespace Spryker\Zed\Development\Business\DependencyTree\DependencyFinder;
 
 use Spryker\Zed\Development\Business\DependencyTree\AbstractDependencyTree;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyTree;
-use Spryker\Zed\Development\Business\DependencyTree\FileInfoExtractor;
 use Symfony\Component\Finder\SplFileInfo;
 
 abstract class AbstractDependencyFinder
 {
-    const DEPENDS_LAYER = 'dependsLayer';
-    const LAYER_BUSINESS = 'Business';
-    const LAYER_PERSISTENCE = 'Persistence';
-    const LAYER_COMMUNICATION = 'Communication';
+    public const DEPENDS_LAYER = 'dependsLayer';
+    public const LAYER_BUSINESS = 'Business';
+    public const LAYER_PERSISTENCE = 'Persistence';
+    public const LAYER_COMMUNICATION = 'Communication';
 
     /**
      * @var \Spryker\Zed\Development\Business\DependencyTree\AbstractDependencyTree
      */
     private $dependencyTree;
-
-    /**
-     * @var \Spryker\Zed\Development\Business\DependencyTree\FileInfoExtractor
-     */
-    private $fileInfoExtractor;
 
     /**
      * @param \Spryker\Zed\Development\Business\DependencyTree\AbstractDependencyTree $dependencyTree
@@ -50,18 +44,6 @@ abstract class AbstractDependencyFinder
     }
 
     /**
-     * @param \Spryker\Zed\Development\Business\DependencyTree\FileInfoExtractor $fileInfoExtractor
-     *
-     * @return $this
-     */
-    public function setFileInfoExtractor(FileInfoExtractor $fileInfoExtractor)
-    {
-        $this->fileInfoExtractor = $fileInfoExtractor;
-
-        return $this;
-    }
-
-    /**
      * @param \Symfony\Component\Finder\SplFileInfo $fileInfo
      *
      * @return void
@@ -77,7 +59,7 @@ abstract class AbstractDependencyFinder
      */
     protected function addDependency(SplFileInfo $fileInfo, $to, array $dependencyInformation = [])
     {
-        $dependencyInformation[DependencyTree::META_FINDER] = get_class($this);
+        $dependencyInformation[DependencyTree::META_FINDER] = static::class;
         $dependencyInformation[DependencyTree::META_IN_TEST] = false;
 
         if (strpos($fileInfo->getPath(), '/tests/') !== false) {

@@ -30,8 +30,8 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSet;
  */
 class CsvReaderTest extends Unit
 {
-    const EXPECTED_NUMBER_OF_DATA_SETS_IN_CSV = 3;
-    const EXPECTED_NUMBER_OF_COLUMNS_IN_DATA_SET = 3;
+    public const EXPECTED_NUMBER_OF_DATA_SETS_IN_CSV = 3;
+    public const EXPECTED_NUMBER_OF_COLUMNS_IN_DATA_SET = 3;
 
     /**
      * @var \SprykerTest\Zed\DataImport\DataImportBusinessTester
@@ -199,7 +199,7 @@ class CsvReaderTest extends Unit
     public function testKeyReturnsCurrentDataSetPosition()
     {
         $csvReader = $this->getCsvReader(Configuration::dataDir() . 'import-standard.csv');
-        $this->assertInternalType('int', $csvReader->key());
+        $this->assertIsInt($csvReader->key());
     }
 
     /**

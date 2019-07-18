@@ -25,15 +25,15 @@ use SprykerTest\Shared\Twig\Stub\CacheStub;
  */
 class TwigFilesystemLoaderYvesTest extends Unit
 {
-    const PATH_TO_PROJECT = __DIR__ . '/Fixtures/src/ProjectNamespace/Yves/Bundle/Theme/default';
-    const PATH_TO_CORE = __DIR__ . '/Fixtures/vendor/spryker/bundle/src/CoreNamespace/Yves/Bundle/Theme/default';
-    const PATH_TO_CORE_NON_SPLIT = __DIR__ . '/Fixtures/vendor/spryker/spryker/Bundles/*/src/CoreNamespace/Yves/Bundle/Theme/default';
-    const PATH_TO_CORE_3RD_PARTY = __DIR__ . '/Fixtures/vendor/*/*/src/CoreNamespace/Yves/Bundle/Theme/default';
+    public const PATH_TO_PROJECT = __DIR__ . '/Fixtures/src/ProjectNamespace/Yves/Bundle/Theme/default';
+    public const PATH_TO_CORE = __DIR__ . '/Fixtures/vendor/spryker/bundle/src/CoreNamespace/Yves/Bundle/Theme/default';
+    public const PATH_TO_CORE_NON_SPLIT = __DIR__ . '/Fixtures/vendor/spryker/spryker/Bundles/*/src/CoreNamespace/Yves/Bundle/Theme/default';
+    public const PATH_TO_CORE_3RD_PARTY = __DIR__ . '/Fixtures/vendor/*/*/src/CoreNamespace/Yves/Bundle/Theme/default';
 
-    const CONTENT_PROJECT_FILE = 'project yves file' . PHP_EOL;
-    const CONTENT_CORE_FILE = 'core yves file' . PHP_EOL;
-    const CONTENT_CORE_NON_SPLIT_FILE = 'core yves non split file' . PHP_EOL;
-    const CONTENT_CORE_3RD_PARTY_FILE = 'core yves 3rd party file' . PHP_EOL;
+    public const CONTENT_PROJECT_FILE = 'project yves file' . PHP_EOL;
+    public const CONTENT_CORE_FILE = 'core yves file' . PHP_EOL;
+    public const CONTENT_CORE_NON_SPLIT_FILE = 'core yves non split file' . PHP_EOL;
+    public const CONTENT_CORE_3RD_PARTY_FILE = 'core yves 3rd party file' . PHP_EOL;
 
     /**
      * @return void
@@ -86,7 +86,7 @@ class TwigFilesystemLoaderYvesTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\Twig\TwigFilesystemLoader
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\Twig\TwigFilesystemLoader
      */
     protected function getFilesystemLoaderForSplitBundleConverterTest()
     {

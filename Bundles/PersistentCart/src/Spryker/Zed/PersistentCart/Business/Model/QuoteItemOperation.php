@@ -90,9 +90,13 @@ class QuoteItemOperation implements QuoteItemOperationInterface
         foreach ($itemTransferList as $itemTransfer) {
             $cartChangeTransfer->addItem($itemTransfer);
         }
-        $quoteTransfer = $this->cartFacade->add($cartChangeTransfer);
 
-        return $this->quoteResponseExpander->expand($this->quoteFacade->updateQuote($quoteTransfer));
+        $quoteResponseTransfer = $this->cartFacade->addToCart($cartChangeTransfer);
+        if (!$quoteResponseTransfer->getIsSuccessful()) {
+            return $this->quoteResponseExpander->expand($quoteResponseTransfer);
+        }
+
+        return $this->quoteResponseExpander->expand($this->quoteFacade->updateQuote($quoteResponseTransfer->getQuoteTransfer()));
     }
 
     /**
@@ -138,7 +142,9 @@ class QuoteItemOperation implements QuoteItemOperationInterface
 
         $cartChangeTransfer = $this->createCartChangeTransfer($quoteTransfer);
         foreach ($itemTransferList as $itemTransfer) {
-            $cartChangeTransfer->addItem($itemTransfer);
+            if (!empty($itemTransfer)) {
+                $cartChangeTransfer->addItem($itemTransfer);
+            }
         }
         $cartChangeTransfer = $this->cartChangeRequestExpander->removeItemRequestExpand($cartChangeTransfer);
         $quoteTransfer = $this->cartFacade->remove($cartChangeTransfer);
@@ -192,7 +198,7 @@ class QuoteItemOperation implements QuoteItemOperationInterface
      */
     protected function isQuoteWriteAllowed(QuoteTransfer $quoteTransfer, CustomerTransfer $customerTransfer): bool
     {
-        if (strcmp($customerTransfer->getCustomerReference(), $quoteTransfer->getCustomerReference()) === 0
+        if ($customerTransfer->getCustomerReference() === $quoteTransfer->getCustomerReference()
             || ($customerTransfer->getCompanyUserTransfer()
                 && $this->can('WriteSharedCartPermissionPlugin', $customerTransfer->getCompanyUserTransfer()->getIdCompanyUser(), $quoteTransfer->getIdQuote())
             )

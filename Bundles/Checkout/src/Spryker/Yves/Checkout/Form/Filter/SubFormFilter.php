@@ -103,6 +103,8 @@ class SubFormFilter implements SubFormFilterInterface
             }
         }
 
+        $subFormPluginCollection->reset();
+
         return $subFormPluginCollection;
     }
 }

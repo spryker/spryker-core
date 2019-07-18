@@ -11,6 +11,7 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\User\Business\Model\Installer;
 use Spryker\Zed\User\Business\Model\User;
 use Spryker\Zed\User\UserDependencyProvider;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
  * @method \Spryker\Zed\User\UserConfig getConfig()
@@ -25,9 +26,44 @@ class UserBusinessFactory extends AbstractBusinessFactory
     {
         return new User(
             $this->getQueryContainer(),
-            $this->getProvidedDependency(UserDependencyProvider::CLIENT_SESSION),
-            $this->getConfig()
+            $this->getSessionClient(),
+            $this->getConfig(),
+            $this->getPostSavePlugins(),
+            $this->getUserPreSavePlugins(),
+            $this->getUserTransferExpanderPlugins()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\UserExtension\Dependency\Plugin\UserPostSavePluginInterface[]
+     */
+    public function getPostSavePlugins(): array
+    {
+        return $this->getProvidedDependency(UserDependencyProvider::PLUGINS_POST_SAVE);
+    }
+
+    /**
+     * @return \Spryker\Zed\UserExtension\Dependency\Plugin\UserPreSavePluginInterface[]
+     */
+    public function getUserPreSavePlugins(): array
+    {
+        return $this->getProvidedDependency(UserDependencyProvider::PLUGINS_USER_PRE_SAVE);
+    }
+
+    /**
+     * @return \Spryker\Zed\UserExtension\Dependency\Plugin\UserTransferExpanderPluginInterface[]
+     */
+    public function getUserTransferExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(UserDependencyProvider::PLUGINS_USER_TRANSFER_EXPANDER);
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Session\SessionInterface
+     */
+    public function getSessionClient(): SessionInterface
+    {
+        return $this->getProvidedDependency(UserDependencyProvider::CLIENT_SESSION);
     }
 
     /**

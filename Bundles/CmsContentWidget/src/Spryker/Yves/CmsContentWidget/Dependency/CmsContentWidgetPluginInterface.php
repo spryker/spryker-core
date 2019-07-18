@@ -11,7 +11,7 @@ interface CmsContentWidgetPluginInterface
 {
     /**
      * Specification:
-     *  - Return callable function, that could be any callable which is accepted by Twig_SimpleFunction first parameter.
+     *  - Return callable function, that could be any callable which is accepted by TwigFunction first parameter.
      *  - This functions will be injected into Yves twig environment and can be used independently from cms.
      *
      * @api

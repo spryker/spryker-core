@@ -8,8 +8,14 @@
 namespace Spryker\Zed\PriceCartConnector\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\PriceCartConnector\Business\Filter\ItemFilterInterface;
+use Spryker\Zed\PriceCartConnector\Business\Filter\ItemsWithoutPriceFilter;
 use Spryker\Zed\PriceCartConnector\Business\Manager\PriceManager;
+use Spryker\Zed\PriceCartConnector\Business\Sanitizer\SourcePriceSanitizer;
+use Spryker\Zed\PriceCartConnector\Business\Sanitizer\SourcePriceSanitizerInterface;
 use Spryker\Zed\PriceCartConnector\Business\Validator\PriceProductValidator;
+use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartConnectorToCurrencyFacadeInterface;
+use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToMessengerInterface;
 use Spryker\Zed\PriceCartConnector\PriceCartConnectorDependencyProvider;
 
 /**
@@ -36,8 +42,29 @@ class PriceCartConnectorBusinessFactory extends AbstractBusinessFactory
     {
         return new PriceProductValidator(
             $this->getPriceProductFacade(),
-            $this->getPriceFacade()
+            $this->getPriceFacade(),
+            $this->getCurrencyFacade()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceCartConnector\Business\Filter\ItemFilterInterface
+     */
+    public function createItemsWithoutPriceFilter(): ItemFilterInterface
+    {
+        return new ItemsWithoutPriceFilter(
+            $this->getPriceFacade(),
+            $this->getPriceProductFacade(),
+            $this->getMessengerFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceCartConnector\Business\Sanitizer\SourcePriceSanitizerInterface
+     */
+    public function createSourcePriceSanitizer(): SourcePriceSanitizerInterface
+    {
+        return new SourcePriceSanitizer();
     }
 
     /**
@@ -54,5 +81,21 @@ class PriceCartConnectorBusinessFactory extends AbstractBusinessFactory
     protected function getPriceFacade()
     {
         return $this->getProvidedDependency(PriceCartConnectorDependencyProvider::FACADE_PRICE);
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToMessengerInterface
+     */
+    public function getMessengerFacade(): PriceCartToMessengerInterface
+    {
+        return $this->getProvidedDependency(PriceCartConnectorDependencyProvider::FACADE_MESSENGER);
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartConnectorToCurrencyFacadeInterface
+     */
+    public function getCurrencyFacade(): PriceCartConnectorToCurrencyFacadeInterface
+    {
+        return $this->getProvidedDependency(PriceCartConnectorDependencyProvider::FACADE_CURRENCY);
     }
 }

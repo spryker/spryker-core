@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -8,7 +9,7 @@ namespace Spryker\Zed\Tax\Business\Model;
 
 class AccruedTaxCalculator implements AccruedTaxCalculatorInterface
 {
-    const DEFAULT_BUCKET_NAME = 'default';
+    public const DEFAULT_BUCKET_NAME = 'default';
 
     /**
      * @var \Spryker\Zed\Tax\Business\Model\PriceCalculationHelperInterface
@@ -32,11 +33,11 @@ class AccruedTaxCalculator implements AccruedTaxCalculatorInterface
 
     /**
      * @param int $price Price as integer (e. g 15508 for 155.08)
-     * @param int $taxRate
+     * @param float $taxRate
      * @param bool $round
      * @param string|null $identifier
      *
-     * @return float
+     * @return int
      */
     public function getTaxValueFromPrice($price, $taxRate, $round = false, $identifier = null)
     {
@@ -59,7 +60,7 @@ class AccruedTaxCalculator implements AccruedTaxCalculatorInterface
      */
     public function getTaxValueFromNetPrice($price, $taxRate, $identifier = null)
     {
-        $taxAmount = $this->priceCalculationHelper->getTaxValueFromNetPrice($price, $taxRate);
+        $taxAmount = $this->priceCalculationHelper->getTaxValueFromNetPrice($price, $taxRate, false);
 
         $taxAmount += $this->getRoundingErrorDelta($identifier);
 
@@ -94,6 +95,7 @@ class AccruedTaxCalculator implements AccruedTaxCalculatorInterface
         if (isset(static::$roundingErrorBucket[$identifier])) {
             $roundingError = static::$roundingErrorBucket[$identifier];
             static::$roundingErrorBucket[$identifier] = 0;
+
             return $roundingError;
         }
 
@@ -107,10 +109,6 @@ class AccruedTaxCalculator implements AccruedTaxCalculatorInterface
      */
     public function resetRoundingErrorDelta($identifier = null)
     {
-        $br = static::$roundingErrorBucket;
-
-        $br = 11;
-
         static::$roundingErrorBucket = [];
         static::$roundingErrorBucket[static::DEFAULT_BUCKET_NAME] = 0;
     }

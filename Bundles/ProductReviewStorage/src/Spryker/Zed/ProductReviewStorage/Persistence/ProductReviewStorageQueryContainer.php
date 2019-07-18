@@ -16,9 +16,9 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class ProductReviewStorageQueryContainer extends AbstractQueryContainer implements ProductReviewStorageQueryContainerInterface
 {
-    const FIELD_FK_PRODUCT_ABSTRACT = ProductReviewStorageTransfer::ID_PRODUCT_ABSTRACT;
-    const FIELD_AVERAGE_RATING = ProductReviewStorageTransfer::AVERAGE_RATING;
-    const FIELD_COUNT = ProductReviewStorageTransfer::REVIEW_COUNT;
+    public const FIELD_FK_PRODUCT_ABSTRACT = ProductReviewStorageTransfer::ID_PRODUCT_ABSTRACT;
+    public const FIELD_AVERAGE_RATING = ProductReviewStorageTransfer::AVERAGE_RATING;
+    public const FIELD_COUNT = ProductReviewStorageTransfer::REVIEW_COUNT;
 
     /**
      * @api

@@ -45,10 +45,10 @@ class CmsBlockReader implements CmsBlockReaderInterface
             ->find()
             ->getFirst();
 
-        if ($spyCmsBlock) {
-            return $this->mapper->mapCmsBlockEntityToTransfer($spyCmsBlock);
+        if (!$spyCmsBlock) {
+            return null;
         }
 
-        return null;
+        return $this->mapper->mapCmsBlockEntityToTransfer($spyCmsBlock);
     }
 }

@@ -13,9 +13,29 @@ interface EventDispatcherInterface
 {
     /**
      * @param string $eventName
-     * @param \Generated\Shared\Transfer\EventEntityTransfer $eventTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $transfer
      *
      * @return void
      */
-    public function trigger($eventName, TransferInterface $eventTransfer);
+    public function trigger(string $eventName, TransferInterface $transfer);
+
+    /**
+     * @param string $eventName
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $transfers
+     *
+     * @return void
+     */
+    public function triggerBulk(string $eventName, array $transfers): void;
+
+    /**
+     * @param string $listenerName
+     * @param string $eventName
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $transfers
+     *
+     * @throws \Spryker\Zed\Event\Business\Exception\EventListenerNotFoundException
+     * @throws \Spryker\Zed\Event\Business\Exception\EventListenerAmbiguousException
+     *
+     * @return void
+     */
+    public function triggerByListenerName(string $listenerName, string $eventName, array $transfers): void;
 }

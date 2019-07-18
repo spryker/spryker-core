@@ -13,6 +13,7 @@ use Spryker\Zed\ProductCategoryStorage\ProductCategoryStorageDependencyProvider;
 /**
  * @method \Spryker\Zed\ProductCategoryStorage\Persistence\ProductCategoryStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductCategoryStorage\ProductCategoryStorageConfig getConfig()
+ * @method \Spryker\Zed\ProductCategoryStorage\Business\ProductCategoryStorageFacadeInterface getFacade()
  */
 class ProductCategoryStorageCommunicationFactory extends AbstractCommunicationFactory
 {

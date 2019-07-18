@@ -14,10 +14,11 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 /**
  * @method \Spryker\Zed\AvailabilityGui\Communication\AvailabilityGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\AvailabilityGui\AvailabilityGuiConfig getConfig()
  */
 class AvailabilityStockForm extends AbstractType
 {
-    const FIELD_STOCKS = 'stocks';
+    public const FIELD_STOCKS = 'stocks';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder

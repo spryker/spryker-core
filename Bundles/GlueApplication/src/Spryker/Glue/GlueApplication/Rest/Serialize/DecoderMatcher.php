@@ -32,7 +32,7 @@ class DecoderMatcher implements DecoderMatcherInterface
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\MetadataInterface $metadata
      *
-     * @return null|\Spryker\Glue\GlueApplication\Serialize\Decoder\DecoderInterface
+     * @return \Spryker\Glue\GlueApplication\Serialize\Decoder\DecoderInterface|null
      */
     public function match(MetadataInterface $metadata): ?DecoderInterface
     {

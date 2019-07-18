@@ -16,6 +16,7 @@ use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQu
  * @method \Spryker\Zed\UrlStorage\Persistence\UrlStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\UrlStorage\Business\UrlStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\UrlStorage\Communication\UrlStorageCommunicationFactory getFactory()
+ * @method \Spryker\Zed\UrlStorage\UrlStorageConfig getConfig()
  */
 class UrlRedirectSynchronizationDataPlugin extends AbstractPlugin implements SynchronizationDataQueryContainerPluginInterface
 {
@@ -56,11 +57,11 @@ class UrlRedirectSynchronizationDataPlugin extends AbstractPlugin implements Syn
     {
         $query = $this->getQueryContainer()->queryUrlStorageByIds($ids);
 
-        if (empty($ids)) {
+        if ($ids === []) {
             $query->clear();
         }
 
-        return $query;
+        return $query->orderByIdUrlStorage();
     }
 
     /**

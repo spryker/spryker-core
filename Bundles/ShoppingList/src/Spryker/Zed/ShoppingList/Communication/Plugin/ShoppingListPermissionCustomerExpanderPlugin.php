@@ -15,10 +15,13 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \Spryker\Zed\ShoppingList\Business\ShoppingListFacadeInterface getFacade()
  * @method \Spryker\Zed\ShoppingList\Communication\ShoppingListCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ShoppingList\ShoppingListConfig getConfig()
  */
 class ShoppingListPermissionCustomerExpanderPlugin extends AbstractPlugin implements CustomerTransferExpanderPluginInterface
 {
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer

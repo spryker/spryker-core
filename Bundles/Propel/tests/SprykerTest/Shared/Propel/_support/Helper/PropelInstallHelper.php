@@ -10,8 +10,6 @@ namespace SprykerTest\Shared\Propel\Helper;
 use Codeception\Configuration;
 use Codeception\Lib\ModuleContainer;
 use Codeception\Module;
-use Spryker\Shared\Config\Config;
-use Spryker\Shared\Propel\PropelConstants;
 use Spryker\Zed\Propel\Business\PropelFacade;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
@@ -42,7 +40,6 @@ class PropelInstallHelper extends Module
         $this->getFacade()->cleanPropelSchemaDirectory();
         $this->getFacade()->copySchemaFilesToTargetDirectory();
         $this->getFacade()->createDatabaseIfNotExists();
-        $this->getFacade()->convertConfig();
 
         $this->runCommands();
     }
@@ -74,11 +71,7 @@ class PropelInstallHelper extends Module
      */
     private function getModelBuildCommand()
     {
-        $config = Config::get(PropelConstants::PROPEL);
-        return $this->getBaseCommand()
-        . ' vendor/bin/propel model:build'
-        . $this->getConfigDirectoryForCommand($config)
-        . ' --schema-dir ' . $config['paths']['schemaDir'] . ' --disable-namespace-auto-package';
+        return $this->getBaseCommand() . ' vendor/bin/console propel:model:build';
     }
 
     /**
@@ -93,27 +86,11 @@ class PropelInstallHelper extends Module
     }
 
     /**
-     * @param array $config
-     *
      * @return string
-     */
-    private function getConfigDirectoryForCommand(array $config)
-    {
-        return ' --config-dir ' . $config['paths']['phpConfDir'];
-    }
-
-    /**
-     * @return array
      */
     private function createDiffCommand()
     {
-        $config = Config::get(PropelConstants::PROPEL);
-        $command = $this->getBaseCommand()
-            . ' vendor/bin/propel diff'
-            . $this->getConfigDirectoryForCommand($config)
-            . ' --schema-dir ' . $config['paths']['schemaDir'];
-
-        return $command;
+        return $this->getBaseCommand() . ' vendor/bin/console propel:diff';
     }
 
     /**
@@ -121,12 +98,7 @@ class PropelInstallHelper extends Module
      */
     private function createMigrateCommand()
     {
-        $config = Config::get(PropelConstants::PROPEL);
-        $command = $this->getBaseCommand()
-            . ' vendor/bin/propel migrate'
-            . $this->getConfigDirectoryForCommand($config);
-
-        return $command;
+        return $this->getBaseCommand() . ' vendor/bin/console propel:migrate';
     }
 
     /**

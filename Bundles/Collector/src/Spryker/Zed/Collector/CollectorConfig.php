@@ -17,13 +17,13 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class CollectorConfig extends AbstractBundleConfig
 {
-    const COLLECTOR_TOUCH_ID = 'collector_touch_id';
-    const COLLECTOR_RESOURCE_ID = 'collector_resource_id';
-    const COLLECTOR_STORAGE_KEY = 'collector_storage_key';
-    const COLLECTOR_SEARCH_KEY = 'collector_search_key';
+    public const COLLECTOR_TOUCH_ID = 'collector_touch_id';
+    public const COLLECTOR_RESOURCE_ID = 'collector_resource_id';
+    public const COLLECTOR_STORAGE_KEY = 'collector_storage_key';
+    public const COLLECTOR_SEARCH_KEY = 'collector_search_key';
 
-    const COLLECTOR_BULK_DELETE_QUERY_CLASS = 'BulkDeleteTouchByIdQuery';
-    const COLLECTOR_BULK_UPDATE_QUERY_CLASS = 'BulkUpdateTouchKeyByIdQuery';
+    public const COLLECTOR_BULK_DELETE_QUERY_CLASS = 'BulkDeleteTouchByIdQuery';
+    public const COLLECTOR_BULK_UPDATE_QUERY_CLASS = 'BulkUpdateTouchKeyByIdQuery';
 
     /**
      * @return string

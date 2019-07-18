@@ -10,6 +10,7 @@ namespace Spryker\Zed\Customer\Business;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CustomerCollectionTransfer;
+use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -159,7 +160,7 @@ interface CustomerFacadeInterface
      *      - Encrypts provided plain text password before update.
      * - Identifies customer by either customer ID, customer email, or password restoration key.
      * - Validates customer email information.
-     * - Updates customer data which is set in provided transfer object.
+     * - Updates customer data which is set in provided transfer object (including password property - dismantles newPassword property).
      * - Sends password restoration email if SendPasswordToken property is set in the provided transfer object.
      *
      * @api
@@ -260,6 +261,18 @@ interface CustomerFacadeInterface
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
     public function createAddress(AddressTransfer $addressTransfer);
+
+    /**
+     * Specification:
+     * - Retrieves customer address by address ID.
+     *
+     * @api
+     *
+     * @param int $idCustomerAddress
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer|null
+     */
+    public function findCustomerAddressById(int $idCustomerAddress): ?AddressTransfer;
 
     /**
      * Specification:
@@ -456,4 +469,17 @@ interface CustomerFacadeInterface
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function hydrateSalesOrderCustomerInformation(OrderTransfer $orderTransfer);
+
+    /**
+     * Specification:
+     *  - Finds customer by reference.
+     *  - Returns customer response transfer.
+     *
+     * @api
+     *
+     * @param string $customerReference
+     *
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
+     */
+    public function findCustomerByReference(string $customerReference): CustomerResponseTransfer;
 }

@@ -12,14 +12,14 @@ namespace Spryker\Service\UtilText\Model\Url;
  */
 class Url
 {
-    const SCHEME = 'scheme';
-    const HOST = 'host';
-    const PORT = 'port';
-    const USER = 'user';
-    const PASS = 'pass';
-    const PATH = 'path';
-    const QUERY = 'query';
-    const FRAGMENT = 'fragment';
+    public const SCHEME = 'scheme';
+    public const HOST = 'host';
+    public const PORT = 'port';
+    public const USER = 'user';
+    public const PASS = 'pass';
+    public const PATH = 'path';
+    public const QUERY = 'query';
+    public const FRAGMENT = 'fragment';
 
     /**
      * @var string
@@ -68,7 +68,7 @@ class Url
      *
      * @throws \Spryker\Service\UtilText\Model\Url\UrlInvalidException
      *
-     * @return $this
+     * @return self
      */
     public static function parse($url)
     {
@@ -100,7 +100,7 @@ class Url
      * @param array $query
      * @param array $options
      *
-     * @return $this
+     * @return self
      */
     public static function generate($url, array $query = [], array $options = [])
     {
@@ -176,10 +176,7 @@ class Url
      */
     protected function escape($url)
     {
-        $charset = mb_internal_encoding();
-        if ($charset === null) {
-            $charset = 'UTF-8';
-        }
+        $charset = mb_internal_encoding() ?: 'UTF-8';
 
         return htmlspecialchars($url, ENT_QUOTES | ENT_SUBSTITUTE, $charset);
     }

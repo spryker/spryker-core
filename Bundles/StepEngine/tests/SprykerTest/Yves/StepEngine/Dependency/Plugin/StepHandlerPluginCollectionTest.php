@@ -23,7 +23,7 @@ use Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginInterface
  */
 class StepHandlerPluginCollectionTest extends Unit
 {
-    const TEST_PLUGIN_NAME = 'test';
+    public const TEST_PLUGIN_NAME = 'test';
 
     /**
      * @return void
@@ -71,7 +71,7 @@ class StepHandlerPluginCollectionTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginInterface
      */
     private function getStepHandlerPlugin()
     {

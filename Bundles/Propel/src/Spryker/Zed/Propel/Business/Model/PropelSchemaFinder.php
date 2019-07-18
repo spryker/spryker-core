@@ -11,7 +11,7 @@ use Symfony\Component\Finder\Finder;
 
 class PropelSchemaFinder implements PropelSchemaFinderInterface
 {
-    const FILE_NAME_PATTERN = '*_*.schema.xml';
+    public const FILE_NAME_PATTERN = '*_*.schema.xml';
 
     /**
      * @var array

@@ -23,8 +23,8 @@ use Spryker\Zed\Product\Business\ProductFacade;
  */
 class AttributeKeyManagementTest extends Unit
 {
-    const UNIQUE_ATTRIBUTE_KEY_NOT_EXISTING_IN_DB = 'unique_attribute_key_not_existing_in_db';
-    const CHANGED_UNIQUE_ATTRIBUTE_KEY_NOT_EXISTING_IN_DB = 'changed_unique_attribute_key_not_existing_in_db';
+    public const UNIQUE_ATTRIBUTE_KEY_NOT_EXISTING_IN_DB = 'unique_attribute_key_not_existing_in_db';
+    public const CHANGED_UNIQUE_ATTRIBUTE_KEY_NOT_EXISTING_IN_DB = 'changed_unique_attribute_key_not_existing_in_db';
 
     /**
      * @var \Spryker\Zed\Product\Business\ProductFacade

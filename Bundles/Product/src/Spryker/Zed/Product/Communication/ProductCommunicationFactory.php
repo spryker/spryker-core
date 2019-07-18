@@ -12,6 +12,8 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 /**
  * @method \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Product\ProductConfig getConfig()
+ * @method \Spryker\Zed\Product\Persistence\ProductRepositoryInterface getRepository()
+ * @method \Spryker\Zed\Product\Business\ProductFacadeInterface getFacade()
  */
 class ProductCommunicationFactory extends AbstractCommunicationFactory
 {

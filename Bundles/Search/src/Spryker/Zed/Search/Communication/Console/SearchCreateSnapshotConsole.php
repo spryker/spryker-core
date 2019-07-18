@@ -14,14 +14,15 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\Search\Business\SearchFacadeInterface getFacade()
+ * @method \Spryker\Zed\Search\Communication\SearchCommunicationFactory getFactory()
  */
 class SearchCreateSnapshotConsole extends Console
 {
-    const COMMAND_NAME = 'search:snapshot:create';
-    const DESCRIPTION = 'This command will create a snapshot.';
+    public const COMMAND_NAME = 'search:snapshot:create';
+    public const DESCRIPTION = 'This command will create a snapshot.';
 
-    const ARGUMENT_SNAPSHOT_REPOSITORY = 'snapshot-repository';
-    const ARGUMENT_SNAPSHOT_NAME = 'snapshot-name';
+    public const ARGUMENT_SNAPSHOT_REPOSITORY = 'snapshot-repository';
+    public const ARGUMENT_SNAPSHOT_NAME = 'snapshot-name';
 
     /**
      * @return void

@@ -16,7 +16,7 @@ interface SearchHandlerInterface
      * @param \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface[] $resultFormatters
      * @param array $requestParameters
      *
-     * @return array
+     * @return array|\Elastica\ResultSet
      */
     public function search(QueryInterface $queryCriteria, array $resultFormatters = [], array $requestParameters = []);
 }

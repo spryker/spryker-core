@@ -14,6 +14,7 @@ use Spryker\Zed\Money\Communication\Form\Type\MoneyType;
 /**
  * @method \Spryker\Zed\Money\Business\MoneyFacadeInterface getFacade()
  * @method \Spryker\Zed\Money\Communication\MoneyCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Money\MoneyConfig getConfig()
  */
 class MoneyFormTypePlugin extends AbstractPlugin implements FormTypeInterface
 {

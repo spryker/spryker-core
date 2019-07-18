@@ -97,10 +97,6 @@ class CompanyBusinessUnitAddressWriter implements CompanyBusinessUnitAddressWrit
             $companyBusinessUnitTransfer
         );
 
-        if ($addressCollection->getCompanyUnitAddresses() === null) {
-            return $idAddresses;
-        }
-
         foreach ($addressCollection->getCompanyUnitAddresses() as $companyUnitAddress) {
             $idAddresses[] = $companyUnitAddress->getIdCompanyUnitAddress();
         }

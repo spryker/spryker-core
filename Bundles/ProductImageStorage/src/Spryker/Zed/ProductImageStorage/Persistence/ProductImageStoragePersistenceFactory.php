@@ -15,6 +15,7 @@ use Spryker\Zed\ProductImageStorage\ProductImageStorageDependencyProvider;
 /**
  * @method \Spryker\Zed\ProductImageStorage\ProductImageStorageConfig getConfig()
  * @method \Spryker\Zed\ProductImageStorage\Persistence\ProductImageStorageQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductImageStorage\Persistence\ProductImageStorageRepositoryInterface getRepository()
  */
 class ProductImageStoragePersistenceFactory extends AbstractPersistenceFactory
 {
@@ -32,6 +33,22 @@ class ProductImageStoragePersistenceFactory extends AbstractPersistenceFactory
     public function getProductImageQueryContainer()
     {
         return $this->getProvidedDependency(ProductImageStorageDependencyProvider::QUERY_CONTAINER_PRODUCT_IMAGE);
+    }
+
+    /**
+     * @return \Orm\Zed\Product\Persistence\SpyProductLocalizedAttributesQuery
+     */
+    public function getProductLocalizedAttributesQuery()
+    {
+        return $this->getProvidedDependency(ProductImageStorageDependencyProvider::PROPEL_QUERY_PRODUCT_LOCALIZED_ATTRIBUTES);
+    }
+
+    /**
+     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery
+     */
+    public function getProductImageSetQuery()
+    {
+        return $this->getProvidedDependency(ProductImageStorageDependencyProvider::PROPEL_QUERY_PRODUCT_IMAGE_SET);
     }
 
     /**

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Maintenance\Communication\Console;
 
+use InvalidArgumentException;
 use Spryker\Zed\Kernel\Communication\Console\Console;
 use Spryker\Zed\Maintenance\Business\Exception\InvalidApplicationNameException;
 use Symfony\Component\Console\Input\InputInterface;
@@ -16,11 +17,11 @@ use Symfony\Component\Console\Input\InputInterface;
  */
 abstract class AbstractMaintenanceConsole extends Console
 {
-    const ARGUMENT_APPLICATION = 'application';
+    public const ARGUMENT_APPLICATION = 'application';
 
-    const APPLICATION_ALL = 'all';
-    const APPLICATION_YVES = 'yves';
-    const APPLICATION_ZED = 'zed';
+    public const APPLICATION_ALL = 'all';
+    public const APPLICATION_YVES = 'yves';
+    public const APPLICATION_ZED = 'zed';
 
     /**
      * @var array
@@ -40,12 +41,31 @@ abstract class AbstractMaintenanceConsole extends Console
      */
     protected function getApplicationName(InputInterface $input)
     {
-        $applicationName = strtolower($input->getArgument(static::ARGUMENT_APPLICATION));
+        $applicationName = strtolower($this->getInputString($input, static::ARGUMENT_APPLICATION));
 
         if (!in_array($applicationName, $this->allowedApplications)) {
             throw new InvalidApplicationNameException(sprintf('Invalid application name. Given "%s" only on of "%s" is allowed.', $applicationName, implode(', ', $this->allowedApplications)));
         }
 
         return $applicationName;
+    }
+
+    /**
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     * @param string $argumentName
+     *
+     * @throws \InvalidArgumentException
+     *
+     * @return string
+     */
+    protected function getInputString(InputInterface $input, string $argumentName): string
+    {
+        $inputString = $input->getArgument($argumentName);
+
+        if (!is_string($inputString)) {
+            throw new InvalidArgumentException('Invalid input type, string expected');
+        }
+
+        return $inputString;
     }
 }

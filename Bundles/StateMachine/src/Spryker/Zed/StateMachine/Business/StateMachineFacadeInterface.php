@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -156,7 +157,7 @@ interface StateMachineFacadeInterface
      *
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
      *
-     * @return array
+     * @return string[]
      */
     public function getManualEventsForStateMachineItem(StateMachineItemTransfer $stateMachineItemTransfer);
 
@@ -170,7 +171,7 @@ interface StateMachineFacadeInterface
      *
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
      *
-     * @return array
+     * @return string[][]
      */
     public function getManualEventsForStateMachineItems(array $stateMachineItems);
 
@@ -215,29 +216,33 @@ interface StateMachineFacadeInterface
      * Specification:
      * - Loads state machine process from XML.
      * - Retrieves all items with state which have the provided flag.
+     * - Traverse the item state history in the given sort (ASC or DESC), ASC by default.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\StateMachineProcessTransfer $stateMachineProcessTransfer
      * @param string $flagName
+     * @param string $sort
      *
      * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
      */
-    public function getItemsWithFlag(StateMachineProcessTransfer $stateMachineProcessTransfer, $flagName);
+    public function getItemsWithFlag(StateMachineProcessTransfer $stateMachineProcessTransfer, $flagName, string $sort = 'ASC');
 
     /**
      * Specification:
      * - Loads state machine process from XML.
      * - Retrieves all items with state which have do not have the provided flag.
+     * - Traverse the item state history in the given sort (ASC or DESC), ASC by default.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\StateMachineProcessTransfer $stateMachineProcessTransfer
      * @param string $flagName
+     * @param string $sort
      *
      * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
      */
-    public function getItemsWithoutFlag(StateMachineProcessTransfer $stateMachineProcessTransfer, $flagName);
+    public function getItemsWithoutFlag(StateMachineProcessTransfer $stateMachineProcessTransfer, $flagName, string $sort = 'ASC');
 
     /**
      * Specification:

@@ -13,14 +13,17 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
+ * @deprecated Use `Spryker\Zed\StorageRedis\Communication\Console\StorageRedisImportRdbConsole` instead.
+ *
  * @method \Spryker\Zed\Storage\Business\StorageFacadeInterface getFacade()
+ * @method \Spryker\Zed\Storage\Communication\StorageCommunicationFactory getFactory()
  */
 class StorageImportRdbConsole extends Console
 {
-    const COMMAND_NAME = 'storage:redis:import';
-    const DESCRIPTION = 'This command will import a rdb file.';
+    public const COMMAND_NAME = 'storage:redis:import';
+    public const DESCRIPTION = 'This command will import a rdb file.';
 
-    const ARGUMENT_SOURCE = 'source';
+    public const ARGUMENT_SOURCE = 'source';
 
     /**
      * @return void

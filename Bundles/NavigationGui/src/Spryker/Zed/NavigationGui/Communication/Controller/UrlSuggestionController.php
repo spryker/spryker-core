@@ -13,12 +13,13 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\NavigationGui\Persistence\NavigationGuiQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\NavigationGui\Communication\NavigationGuiCommunicationFactory getFactory()
  */
 class UrlSuggestionController extends AbstractController
 {
-    const PARAM_TERM = 'term';
-    const PARAM_ID_LOCALE = 'id-locale';
-    const SUGGESTION_LIMIT = 10;
+    public const PARAM_TERM = 'term';
+    public const PARAM_ID_LOCALE = 'id-locale';
+    public const SUGGESTION_LIMIT = 10;
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

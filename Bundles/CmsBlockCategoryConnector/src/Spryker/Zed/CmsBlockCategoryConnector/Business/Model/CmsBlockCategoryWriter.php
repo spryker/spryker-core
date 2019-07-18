@@ -249,7 +249,7 @@ class CmsBlockCategoryWriter implements CmsBlockCategoryWriterInterface
     /**
      * @param int $idCategory
      *
-     * @return \Orm\Zed\Category\Persistence\SpyCategory
+     * @return \Orm\Zed\Category\Persistence\SpyCategory|null
      */
     protected function getCategoryById($idCategory)
     {

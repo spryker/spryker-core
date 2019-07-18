@@ -30,7 +30,7 @@ interface OfferClientInterface
 
     /**
      * Specification:
-     *  - Load offer from zed by id.
+     *  - Load offer from Zed by id.
      *
      * @api
      *

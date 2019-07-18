@@ -13,6 +13,8 @@ use Spryker\Zed\ProductListStorage\ProductListStorageDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductListStorage\ProductListStorageConfig getConfig()
+ * @method \Spryker\Zed\ProductListStorage\Persistence\ProductListStorageRepositoryInterface getRepository()
+ * @method \Spryker\Zed\ProductListStorage\Business\ProductListStorageFacadeInterface getFacade()
  */
 class ProductListStorageCommunicationFactory extends AbstractCommunicationFactory
 {

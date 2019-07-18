@@ -9,6 +9,6 @@ namespace Spryker\Shared\Calculation;
 
 interface CalculationPriceMode
 {
-    const PRICE_MODE_NET = 'NET_MODE';
-    const PRICE_MODE_GROSS = 'GROSS_MODE';
+    public const PRICE_MODE_NET = 'NET_MODE';
+    public const PRICE_MODE_GROSS = 'GROSS_MODE';
 }

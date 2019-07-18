@@ -15,10 +15,13 @@ use Spryker\Zed\ProductAlternativeDataImport\ProductAlternativeDataImportConfig;
 
 /**
  * @method \Spryker\Zed\ProductAlternativeDataImport\Business\ProductAlternativeDataImportFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductAlternativeDataImport\ProductAlternativeDataImportConfig getConfig()
  */
 class ProductAlternativeDataImportPlugin extends AbstractPlugin implements DataImportPluginInterface
 {
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
      *
      * @return \Generated\Shared\Transfer\DataImporterReportTransfer
@@ -29,6 +32,8 @@ class ProductAlternativeDataImportPlugin extends AbstractPlugin implements DataI
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getImportType(): string

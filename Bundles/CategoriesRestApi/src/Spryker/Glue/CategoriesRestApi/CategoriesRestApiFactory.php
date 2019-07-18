@@ -8,10 +8,10 @@
 namespace Spryker\Glue\CategoriesRestApi;
 
 use Spryker\Glue\CategoriesRestApi\Dependency\Client\CategoriesRestApiToCategoryStorageClientInterface;
-use Spryker\Glue\CategoriesRestApi\Processor\Category\CategoryReader;
-use Spryker\Glue\CategoriesRestApi\Processor\Category\CategoryReaderInterface;
 use Spryker\Glue\CategoriesRestApi\Processor\Mapper\CategoryMapper;
 use Spryker\Glue\CategoriesRestApi\Processor\Mapper\CategoryMapperInterface;
+use Spryker\Glue\CategoriesRestApi\Processor\Reader\CategoryReader;
+use Spryker\Glue\CategoriesRestApi\Processor\Reader\CategoryReaderInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
 
 /**
@@ -20,7 +20,7 @@ use Spryker\Glue\Kernel\AbstractFactory;
 class CategoriesRestApiFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Glue\CategoriesRestApi\Processor\Category\CategoryReaderInterface
+     * @return \Spryker\Glue\CategoriesRestApi\Processor\Reader\CategoryReaderInterface
      */
     public function createCategoryReader(): CategoryReaderInterface
     {

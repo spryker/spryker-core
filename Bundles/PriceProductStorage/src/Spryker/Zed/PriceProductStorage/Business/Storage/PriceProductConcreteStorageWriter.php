@@ -207,6 +207,7 @@ class PriceProductConcreteStorageWriter implements PriceProductConcreteStorageWr
         $priceProductCriteria = $this->getPriceCriteriaTransfer();
         foreach ($productAbstractIdMap as $idProductConcrete => $idProductAbstract) {
             $productConcretePriceProductTransfers = $this->priceProductFacade->findProductConcretePricesWithoutPriceExtraction($idProductConcrete, $idProductAbstract, $priceProductCriteria);
+            $priceGroups[$idProductConcrete] = [];
             foreach ($productConcretePriceProductTransfers as $priceProductTransfer) {
                 $storeName = $this->getStoreNameById($priceProductTransfer->getMoneyValue()->getFkStore());
                 $priceGroups[$idProductConcrete][$storeName][] = $priceProductTransfer;

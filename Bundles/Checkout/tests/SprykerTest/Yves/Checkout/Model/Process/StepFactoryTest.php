@@ -27,7 +27,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
  */
 class StepFactoryTest extends Unit
 {
-    const METHOD_HANDLER = 'method handler';
+    public const METHOD_HANDLER = 'method handler';
 
     /**
      * @return void
@@ -57,7 +57,7 @@ class StepFactoryTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Symfony\Component\Routing\Generator\UrlGeneratorInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Symfony\Component\Routing\Generator\UrlGeneratorInterface
      */
     private function getUrlGeneratorMock()
     {

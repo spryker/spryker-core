@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <company-gui>
+        <label>Company Account</label>
+        <title>Company Account</title>
+        <icon>fa-files-o</icon>
+        <pages>
+            <company-role-gui>
+                <label>Company Roles</label>
+                <title>Company Roles</title>
+                <bundle>company-role-gui</bundle>
+                <controller>list-company-role</controller>
+                <action>index</action>
+                <pages>
+                    <create-company-role>
+                        <label>Create Company Role</label>
+                        <title>Create Company Role</title>
+                        <bundle>company-role-gui</bundle>
+                        <controller>create-company-role</controller>
+                        <action>index</action>
+                        <visible>0</visible>
+                    </create-company-role>
+                    <edit-company-role>
+                        <label>Edit Company Role</label>
+                        <title>Edit Company Role</title>
+                        <bundle>company-role-gui</bundle>
+                        <controller>edit-company-role</controller>
+                        <action>index</action>
+                        <visible>0</visible>
+                    </edit-company-role>
+                    <delete-company-role>
+                        <label>Delete Company Role</label>
+                        <title>Delete Company Role</title>
+                        <bundle>company-role-gui</bundle>
+                        <controller>delete-company-role</controller>
+                        <action>delete</action>
+                        <visible>0</visible>
+                    </delete-company-role>
+                    <confirm-delete-company-role>
+                        <label>Confirm Delete Company Role</label>
+                        <title>Confirm Delete Company Role</title>
+                        <bundle>company-role-gui</bundle>
+                        <controller>delete-company-role</controller>
+                        <action>confirm-delete</action>
+                        <visible>0</visible>
+                    </confirm-delete-company-role>
+                </pages>
+            </company-role-gui>
+        </pages>
+    </company-gui>
+</config>

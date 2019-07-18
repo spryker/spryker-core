@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -18,6 +19,8 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 class CustomersResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface $resourceRouteCollection
@@ -27,12 +30,17 @@ class CustomersResourceRoutePlugin extends AbstractPlugin implements ResourceRou
     public function configure(ResourceRouteCollectionInterface $resourceRouteCollection): ResourceRouteCollectionInterface
     {
         $resourceRouteCollection
-            ->addPost('post', false);
+            ->addGet('get', true)
+            ->addPost('post', false)
+            ->addPatch('patch', true)
+            ->addDelete('delete', true);
 
         return $resourceRouteCollection;
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return string
@@ -43,16 +51,20 @@ class CustomersResourceRoutePlugin extends AbstractPlugin implements ResourceRou
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return string
      */
     public function getController(): string
     {
-        return 'customers-resource';
+        return 'customer-resource';
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return string

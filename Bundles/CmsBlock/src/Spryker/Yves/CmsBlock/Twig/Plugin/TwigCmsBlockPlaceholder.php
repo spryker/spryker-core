@@ -10,25 +10,27 @@ namespace Spryker\Yves\CmsBlock\Twig\Plugin;
 use Silex\Application;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use Spryker\Yves\Twig\Plugin\TwigFunctionPluginInterface;
-use Twig_SimpleFunction;
+use Twig\TwigFunction;
 
 /**
+ * @deprecated Use `Spryker\Yves\CmsBlock\Plugin\Twig\CmsBlockPlaceholderTwigPlugin` instead.
+ *
  * @method \Spryker\Client\CmsBlock\CmsBlockClientInterface getClient()
  * @method \Spryker\Yves\CmsBlock\CmsBlockFactory getFactory()
  */
 class TwigCmsBlockPlaceholder extends AbstractPlugin implements TwigFunctionPluginInterface
 {
-    const CMS_BLOCK_PREFIX_KEY = 'generated.cms.cms-block';
+    public const CMS_BLOCK_PREFIX_KEY = 'generated.cms.cms-block';
 
     /**
      * @param \Silex\Application $application
      *
-     * @return \Twig_SimpleFunction[]
+     * @return \Twig\TwigFunction[]
      */
     public function getFunctions(Application $application)
     {
         return [
-            new Twig_SimpleFunction('spyCmsBlockPlaceholder', function (array $context, $identifier) use ($application) {
+            new TwigFunction('spyCmsBlockPlaceholder', function (array $context, $identifier) use ($application) {
                 $placeholders = $context['placeholders'];
 
                 $translation = '';
@@ -65,6 +67,7 @@ class TwigCmsBlockPlaceholder extends AbstractPlugin implements TwigFunctionPlug
         }
 
         $renderedTwigContent = $twigRenderedPlugin->render([$identifier => $translation], $context);
+
         return $renderedTwigContent[$identifier];
     }
 

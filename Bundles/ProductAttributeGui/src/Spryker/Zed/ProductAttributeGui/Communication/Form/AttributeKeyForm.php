@@ -17,11 +17,12 @@ use Symfony\Component\Validator\Constraints\Regex;
 
 /**
  * @method \Spryker\Zed\ProductAttributeGui\Communication\ProductAttributeGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductAttributeGui\ProductAttributeGuiConfig getConfig()
  */
 class AttributeKeyForm extends AbstractType
 {
-    const FIELD_KEY = 'key';
-    const FIELD_KEY_HIDDEN_ID = 'key_hidden_id';
+    public const FIELD_KEY = 'key';
+    public const FIELD_KEY_HIDDEN_ID = 'key_hidden_id';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver

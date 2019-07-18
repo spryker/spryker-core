@@ -12,12 +12,15 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
+ * @deprecated Will be removed without replacement.
+ *
  * @method \Spryker\Zed\Setup\Business\SetupFacadeInterface getFacade()
+ * @method \Spryker\Zed\Setup\Communication\SetupCommunicationFactory getFactory()
  */
 class JenkinsEnableConsole extends Console
 {
-    const COMMAND_NAME = 'setup:jenkins:enable';
-    const DESCRIPTION = 'Enable Jenkins';
+    public const COMMAND_NAME = 'setup:jenkins:enable';
+    public const DESCRIPTION = 'Enable Jenkins';
 
     /**
      * @return void

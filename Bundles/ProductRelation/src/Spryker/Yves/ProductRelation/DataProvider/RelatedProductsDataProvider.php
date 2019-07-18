@@ -13,7 +13,7 @@ use Spryker\Yves\ProductRelation\Sorting\RelationSorterInterface;
 
 class RelatedProductsDataProvider implements ProductRelationDataProviderInterface
 {
-    const PARAMETER_ID_PRODUCT_ABSTRACT = 'idProductAbstract';
+    public const PARAMETER_ID_PRODUCT_ABSTRACT = 'idProductAbstract';
 
     /**
      * @var \Spryker\Client\ProductRelation\ProductRelationClientInterface
@@ -78,6 +78,7 @@ class RelatedProductsDataProvider implements ProductRelationDataProviderInterfac
         if (!isset($productRelationCollection[$this->getAcceptedType()])) {
             return null;
         }
+
         return $productRelationCollection[$this->getAcceptedType()];
     }
 }

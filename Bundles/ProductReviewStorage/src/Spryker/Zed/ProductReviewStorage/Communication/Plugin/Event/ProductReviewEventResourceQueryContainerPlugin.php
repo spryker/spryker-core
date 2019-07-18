@@ -18,6 +18,7 @@ use Spryker\Zed\ProductReview\Dependency\ProductReviewEvents;
  * @method \Spryker\Zed\ProductReviewStorage\Persistence\ProductReviewStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductReviewStorage\Business\ProductReviewStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductReviewStorage\Communication\ProductReviewStorageCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductReviewStorage\ProductReviewStorageConfig getConfig()
  */
 class ProductReviewEventResourceQueryContainerPlugin extends AbstractPlugin implements EventResourceQueryContainerPluginInterface
 {
@@ -46,11 +47,11 @@ class ProductReviewEventResourceQueryContainerPlugin extends AbstractPlugin impl
     {
         $query = $this->getQueryContainer()->queryProductReviewsByIds($ids);
 
-        if (empty($ids)) {
+        if ($ids === []) {
             $query->clear();
         }
 
-        return $query;
+        return $query->orderBy($this->getIdColumnName());
     }
 
     /**

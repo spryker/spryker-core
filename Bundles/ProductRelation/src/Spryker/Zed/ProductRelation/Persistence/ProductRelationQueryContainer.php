@@ -26,14 +26,14 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class ProductRelationQueryContainer extends AbstractQueryContainer implements ProductRelationQueryContainerInterface
 {
-    const COL_ASSIGNED_CATEGORIES = 'assignedCategories';
-    const COL_NUMBER_OF_RELATED_PRODUCTS = 'numberOfRelatedProducts';
-    const COL_CATEGORY_NAME = 'category_name';
-    const COL_NAME = 'name';
-    const COL_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
-    const COL_SKU = 'sku';
-    const COL_IS_ACTIVE_AGGREGATION = 'is_active_aggregation';
-    const COL_PRICE_PRODUCT = 'spy_price_product.price';
+    public const COL_ASSIGNED_CATEGORIES = 'assignedCategories';
+    public const COL_NUMBER_OF_RELATED_PRODUCTS = 'numberOfRelatedProducts';
+    public const COL_CATEGORY_NAME = 'category_name';
+    public const COL_NAME = 'name';
+    public const COL_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+    public const COL_SKU = 'sku';
+    public const COL_IS_ACTIVE_AGGREGATION = 'is_active_aggregation';
+    public const COL_PRICE_PRODUCT = 'spy_price_product.price';
 
     /**
      * @api

@@ -1,0 +1,17 @@
+endpoint_three:
+  post:
+    emailField:
+    - Email
+    stringField:
+    - NotBlank
+    - Regex:
+        pattern: '/\w*/'
+    integerField:
+    - Regex:
+        pattern: '/\d*/'
+  patch:
+    booleanField:
+    - IsTrue
+  get:
+    dateField:
+    - Date

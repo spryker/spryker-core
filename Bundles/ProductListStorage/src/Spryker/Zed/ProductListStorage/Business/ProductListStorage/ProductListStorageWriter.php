@@ -95,7 +95,7 @@ class ProductListStorageWriter implements ProductListStorageWriterInterface
     }
 
     /**
-     * @param array $productConcreteIds
+     * @param int[] $productConcreteIds
      *
      * @return void
      */

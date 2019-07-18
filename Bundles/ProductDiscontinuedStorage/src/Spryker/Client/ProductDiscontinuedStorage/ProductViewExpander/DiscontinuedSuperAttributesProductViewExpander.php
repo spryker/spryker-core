@@ -113,7 +113,7 @@ class DiscontinuedSuperAttributesProductViewExpander implements DiscontinuedSupe
      * @param string $attributeValueKey
      * @param \Generated\Shared\Transfer\AttributeMapStorageTransfer $attributeMapStorageTransfer
      *
-     * @return null|int
+     * @return int|null
      */
     protected function findIdProductConcreteByAttributeValueKey(string $attributeValueKey, AttributeMapStorageTransfer $attributeMapStorageTransfer): ?int
     {

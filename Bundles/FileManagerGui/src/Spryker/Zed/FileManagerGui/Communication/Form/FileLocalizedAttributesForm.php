@@ -16,6 +16,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
+/**
+ * @method \Spryker\Zed\FileManagerGui\FileManagerGuiConfig getConfig()
+ * @method \Spryker\Zed\FileManagerGui\Communication\FileManagerGuiCommunicationFactory getFactory()
+ */
 class FileLocalizedAttributesForm extends AbstractType
 {
     public const FIELD_ALT = 'alt';

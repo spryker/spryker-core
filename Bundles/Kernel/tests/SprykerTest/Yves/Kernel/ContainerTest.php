@@ -22,8 +22,8 @@ use Spryker\Yves\Kernel\Container;
  */
 class ContainerTest extends Unit
 {
-    const TEST_VALUE = 'foo';
-    const TEST_KEY = 'test.value';
+    public const TEST_VALUE = 'foo';
+    public const TEST_KEY = 'test.value';
 
     /**
      * @return void
@@ -45,6 +45,6 @@ class ContainerTest extends Unit
 
         $container = new Container($containerGlobals->getContainerGlobals());
 
-        $this->assertSame(self::TEST_VALUE, $container[self::TEST_KEY]);
+        $this->assertSame(self::TEST_VALUE, $container->get(self::TEST_KEY));
     }
 }

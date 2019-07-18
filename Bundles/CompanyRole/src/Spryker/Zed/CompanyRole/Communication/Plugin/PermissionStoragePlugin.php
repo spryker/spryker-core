@@ -13,10 +13,13 @@ use Spryker\Zed\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInt
 
 /**
  * @method \Spryker\Zed\CompanyRole\Business\CompanyRoleFacadeInterface getFacade()
+ * @method \Spryker\Zed\CompanyRole\CompanyRoleConfig getConfig()
  */
 class PermissionStoragePlugin extends AbstractPlugin implements PermissionStoragePluginInterface
 {
     /**
+     * @api
+     *
      * @param int|string $identifier
      *
      * @return \Generated\Shared\Transfer\PermissionCollectionTransfer

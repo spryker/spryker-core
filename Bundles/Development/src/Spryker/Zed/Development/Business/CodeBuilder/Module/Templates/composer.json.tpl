@@ -1,5 +1,6 @@
 {
   "name": "{namespaceDashed}/{moduleDashed}",
+  "type": "library",
   "description": "{module} module",
   "license": "proprietary",
   "require": {

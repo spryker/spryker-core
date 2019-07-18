@@ -11,6 +11,24 @@
                 <bundle>company-unit-address-gui</bundle>
                 <controller>list-company-unit-address</controller>
                 <action>index</action>
+                <pages>
+                    <add-company-unit-address>
+                        <label>Create Company Unit Address</label>
+                        <title>Create Company Unit Address</title>
+                        <bundle>company-unit-address-gui</bundle>
+                        <controller>add-company-unit-address</controller>
+                        <action>index</action>
+                        <visible>0</visible>
+                    </add-company-unit-address>
+                    <edit-company-unit-address>
+                        <label>Edit Company Unit Address</label>
+                        <title>Edit Company Unit Address</title>
+                        <bundle>company-unit-address-gui</bundle>
+                        <controller>edit-company-unit-address</controller>
+                        <action>index</action>
+                        <visible>0</visible>
+                    </edit-company-unit-address>
+                </pages>
             </company-unit-address-gui>
         </pages>
     </company-gui>

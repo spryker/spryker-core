@@ -1,5 +1,6 @@
 {
   "name": "spryker/guzzle",
+  "type": "library",
   "description": "Guzzle module",
   "license": "proprietary",
   "require": {

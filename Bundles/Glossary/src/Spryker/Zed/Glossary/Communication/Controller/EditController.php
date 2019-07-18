@@ -14,13 +14,15 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \Spryker\Zed\Glossary\Communication\GlossaryCommunicationFactory getFactory()
  * @method \Spryker\Zed\Glossary\Business\GlossaryFacadeInterface getFacade()
+ * @method \Spryker\Zed\Glossary\Persistence\GlossaryQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Glossary\Persistence\GlossaryRepositoryInterface getRepository()
  */
 class EditController extends AbstractController
 {
-    const FORM_UPDATE_TYPE = 'update';
-    const URL_PARAMETER_GLOSSARY_KEY = 'fk-glossary-key';
-    const MESSAGE_UPDATE_SUCCESS = 'Translation %d was updated successfully.';
-    const MESSAGE_UPDATE_ERROR = 'Glossary entry was not updated.';
+    public const FORM_UPDATE_TYPE = 'update';
+    public const URL_PARAMETER_GLOSSARY_KEY = 'fk-glossary-key';
+    public const MESSAGE_UPDATE_SUCCESS = 'Translation %d was updated successfully.';
+    public const MESSAGE_UPDATE_ERROR = 'Glossary entry was not updated.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -30,6 +32,7 @@ class EditController extends AbstractController
     public function indexAction(Request $request)
     {
         $idGlossaryKey = $this->castId($request->query->get(static::URL_PARAMETER_GLOSSARY_KEY));
+
         $formData = $this
             ->getFactory()
             ->createTranslationDataProvider()
@@ -37,6 +40,12 @@ class EditController extends AbstractController
                 $idGlossaryKey,
                 $this->getFactory()->getEnabledLocales()
             );
+
+        if ($formData === []) {
+            $this->addErrorMessage("Glossary with id %s doesn't exist", ['%s' => $idGlossaryKey]);
+
+            return $this->redirectResponse($this->getFactory()->getConfig()->getDefaultRedirectUrl());
+        }
 
         $glossaryForm = $this
             ->getFactory()
@@ -53,11 +62,13 @@ class EditController extends AbstractController
             $glossaryFacade = $this->getFacade();
 
             if ($glossaryFacade->saveGlossaryKeyTranslations($keyTranslationTransfer)) {
-                $this->addSuccessMessage(sprintf(static::MESSAGE_UPDATE_SUCCESS, $idGlossaryKey));
+                $this->addSuccessMessage(static::MESSAGE_UPDATE_SUCCESS, ['%d' => $idGlossaryKey]);
+
                 return $this->redirectResponse('/glossary');
             }
 
             $this->addErrorMessage(static::MESSAGE_UPDATE_ERROR);
+
             return $this->redirectResponse('/glossary');
         }
 

@@ -111,13 +111,15 @@ class CsvReader implements DataReaderInterface, ConfigurableDataReaderInterface,
     /**
      * @param \Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer $dataImportReaderConfigurationTransfer
      *
-     * @return void
+     * @return $this
      */
     public function configure(DataImporterReaderConfigurationTransfer $dataImportReaderConfigurationTransfer)
     {
         $this->csvReaderConfiguration->setDataImporterReaderConfigurationTransfer($dataImportReaderConfigurationTransfer);
 
         $this->configureReader();
+
+        return $this;
     }
 
     /**
@@ -172,7 +174,7 @@ class CsvReader implements DataReaderInterface, ConfigurableDataReaderInterface,
                     'Can not combine data set header with current data set. Keys: "%s", Values "%s"',
                     implode(', ', $this->dataSetKeys),
                     implode(', ', array_values($dataSetBeforeCombine))
-                ));
+                ), 0, $e);
             }
         }
 

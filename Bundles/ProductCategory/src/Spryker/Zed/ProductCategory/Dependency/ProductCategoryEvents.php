@@ -9,8 +9,8 @@ namespace Spryker\Zed\ProductCategory\Dependency;
 
 interface ProductCategoryEvents
 {
-    const PRODUCT_CATEGORY_ASSIGNED = 'ProductCategory.product.assigned';
-    const PRODUCT_CATEGORY_UNASSIGNED = 'ProductCategory.product.unassigned';
+    public const PRODUCT_CATEGORY_ASSIGNED = 'ProductCategory.product.assigned';
+    public const PRODUCT_CATEGORY_UNASSIGNED = 'ProductCategory.product.unassigned';
 
     /**
      * Specification
@@ -18,7 +18,7 @@ interface ProductCategoryEvents
      *
      * @api
      */
-    const PRODUCT_CATEGORY_PUBLISH = 'ProductCategory.category.publish';
+    public const PRODUCT_CATEGORY_PUBLISH = 'ProductCategory.category.publish';
 
     /**
      * Specification
@@ -26,7 +26,7 @@ interface ProductCategoryEvents
      *
      * @api
      */
-    const PRODUCT_CATEGORY_UNPUBLISH = 'ProductCategory.category.unpublish';
+    public const PRODUCT_CATEGORY_UNPUBLISH = 'ProductCategory.category.unpublish';
 
     /**
      * Specification
@@ -34,7 +34,7 @@ interface ProductCategoryEvents
      *
      * @api
      */
-    const ENTITY_SPY_PRODUCT_CATEGORY_CREATE = 'Entity.spy_product_category.create';
+    public const ENTITY_SPY_PRODUCT_CATEGORY_CREATE = 'Entity.spy_product_category.create';
 
     /**
      * Specification
@@ -42,7 +42,7 @@ interface ProductCategoryEvents
      *
      * @api
      */
-    const ENTITY_SPY_PRODUCT_CATEGORY_UPDATE = 'Entity.spy_product_category.update';
+    public const ENTITY_SPY_PRODUCT_CATEGORY_UPDATE = 'Entity.spy_product_category.update';
 
     /**
      * Specification
@@ -50,5 +50,5 @@ interface ProductCategoryEvents
      *
      * @api
      */
-    const ENTITY_SPY_PRODUCT_CATEGORY_DELETE = 'Entity.spy_product_category.delete';
+    public const ENTITY_SPY_PRODUCT_CATEGORY_DELETE = 'Entity.spy_product_category.delete';
 }

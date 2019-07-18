@@ -17,7 +17,7 @@ use Spryker\Zed\Collector\Persistence\Collector\AbstractPropelCollectorQuery;
 
 class CmsBlockCategoryConnectorCollector extends AbstractPropelCollectorQuery
 {
-    const COL_POSITIONS = 'positions';
+    public const COL_POSITIONS = 'positions';
 
     /**
      * @return void

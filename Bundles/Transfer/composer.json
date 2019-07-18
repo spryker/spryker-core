@@ -1,11 +1,12 @@
 {
   "name": "spryker/transfer",
+  "type": "library",
   "description": "Transfer module",
   "license": "proprietary",
   "require": {
     "fzaninotto/faker": "^1.6",
     "php": ">=7.1",
-    "spryker/kernel": "^3.17.0",
+    "spryker/kernel": "^3.30.0",
     "spryker/log": "^3.0.0",
     "spryker/symfony": "^3.0.0",
     "spryker/twig": "^3.0.0",
@@ -13,7 +14,8 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/testify": "*"
+    "spryker/propel": "*",
+    "spryker/testify": "^3.7.0"
   },
   "autoload": {
     "psr-4": {

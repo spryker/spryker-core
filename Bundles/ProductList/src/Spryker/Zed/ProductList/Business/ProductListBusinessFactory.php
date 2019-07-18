@@ -25,6 +25,8 @@ use Spryker\Zed\ProductList\Business\ProductListProductConcreteRelation\ProductL
 use Spryker\Zed\ProductList\Business\ProductListProductConcreteRelation\ProductListProductConcreteRelationReaderInterface;
 use Spryker\Zed\ProductList\Business\ProductListProductConcreteRelation\ProductListProductConcreteRelationWriter;
 use Spryker\Zed\ProductList\Business\ProductListProductConcreteRelation\ProductListProductConcreteRelationWriterInterface;
+use Spryker\Zed\ProductList\Business\ProductListRestrictionFilter\ProductListRestrictionFilter;
+use Spryker\Zed\ProductList\Business\ProductListRestrictionFilter\ProductListRestrictionFilterInterface;
 use Spryker\Zed\ProductList\Business\ProductListRestrictionValidator\ProductListRestrictionValidator;
 use Spryker\Zed\ProductList\Business\ProductListRestrictionValidator\ProductListRestrictionValidatorInterface;
 use Spryker\Zed\ProductList\Business\RestrictedItemsFilter\RestrictedItemsFilter;
@@ -48,8 +50,7 @@ class ProductListBusinessFactory extends AbstractBusinessFactory
     {
         return new RestrictedItemsFilter(
             $this->getMessengerFacade(),
-            $this->createProductListRestrictionValidator(),
-            $this->getProductFacade()
+            $this->createProductListRestrictionFilter()
         );
     }
 
@@ -59,7 +60,16 @@ class ProductListBusinessFactory extends AbstractBusinessFactory
     public function createProductListRestrictionValidator(): ProductListRestrictionValidatorInterface
     {
         return new ProductListRestrictionValidator(
-            $this->getProductFacade(),
+            $this->createProductListRestrictionFilter()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductList\Business\ProductListRestrictionFilter\ProductListRestrictionFilterInterface
+     */
+    public function createProductListRestrictionFilter(): ProductListRestrictionFilterInterface
+    {
+        return new ProductListRestrictionFilter(
             $this->createProductListReader()
         );
     }
@@ -72,7 +82,8 @@ class ProductListBusinessFactory extends AbstractBusinessFactory
         return new ProductListReader(
             $this->getRepository(),
             $this->createProductListCategoryRelationReader(),
-            $this->createProductListProductConcreteRelationReader()
+            $this->createProductListProductConcreteRelationReader(),
+            $this->getProductFacade()
         );
     }
 
@@ -84,7 +95,9 @@ class ProductListBusinessFactory extends AbstractBusinessFactory
         return new ProductListWriter(
             $this->getEntityManager(),
             $this->createProductListKeyGenerator(),
-            $this->getProductListPostSaverCollection()
+            $this->getProductListPostSaverCollection(),
+            $this->getProductListPreCreatePlugins(),
+            $this->getProductListPreUpdatePlugins()
         );
     }
 
@@ -162,6 +175,22 @@ class ProductListBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\ProductListExtension\Dependency\Plugin\ProductListPreCreatePluginInterface[]
+     */
+    public function getProductListPreCreatePlugins(): array
+    {
+        return $this->getProvidedDependency(ProductListDependencyProvider::PLUGINS_PRODUCT_LIST_PRE_CREATE);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductListExtension\Dependency\Plugin\ProductListPreUpdatePluginInterface[]
+     */
+    public function getProductListPreUpdatePlugins(): array
+    {
+        return $this->getProvidedDependency(ProductListDependencyProvider::PLUGINS_PRODUCT_LIST_PRE_UPDATE);
+    }
+
+    /**
      * @return \Spryker\Zed\ProductList\Business\KeyGenerator\ProductListKeyGeneratorInterface
      */
     public function createProductListKeyGenerator(): ProductListKeyGeneratorInterface
@@ -173,18 +202,18 @@ class ProductListBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductList\Dependency\Facade\ProductListToProductFacadeInterface
-     */
-    public function getProductFacade(): ProductListToProductFacadeInterface
-    {
-        return $this->getProvidedDependency(ProductListDependencyProvider::FACADE_PRODUCT);
-    }
-
-    /**
      * @return \Spryker\Zed\ProductList\Dependency\Facade\ProductListToMessengerFacadeInterface
      */
     public function getMessengerFacade(): ProductListToMessengerFacadeInterface
     {
         return $this->getProvidedDependency(ProductListDependencyProvider::FACADE_MESSENGER);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductList\Dependency\Facade\ProductListToProductFacadeInterface
+     */
+    protected function getProductFacade(): ProductListToProductFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductListDependencyProvider::FACADE_PRODUCT);
     }
 }

@@ -20,15 +20,15 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class CmsBlockCategoryStorageQueryContainer extends AbstractQueryContainer implements CmsBlockCategoryStorageQueryContainerInterface
 {
-    const POSITION = 'position';
-    const NAME = 'name';
+    public const POSITION = 'position';
+    public const NAME = 'name';
 
     /**
      * @api
      *
      * @param array $categoryIds
      *
-     * @return $this|\Orm\Zed\CmsBlockCategoryStorage\Persistence\SpyCmsBlockCategoryStorageQuery
+     * @return \Orm\Zed\CmsBlockCategoryStorage\Persistence\SpyCmsBlockCategoryStorageQuery
      */
     public function queryCmsBlockCategoryStorageByIds(array $categoryIds)
     {
@@ -42,7 +42,7 @@ class CmsBlockCategoryStorageQueryContainer extends AbstractQueryContainer imple
      *
      * @param array $categoryIds
      *
-     * @return $this|\Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnectorQuery
+     * @return \Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnectorQuery
      */
     public function queryCmsBlockCategories(array $categoryIds)
     {
@@ -64,6 +64,8 @@ class CmsBlockCategoryStorageQueryContainer extends AbstractQueryContainer imple
     /**
      * @api
      *
+     * @deprecated Use `\Spryker\Zed\CmsBlockCategoryStorage\Persistence\CmsBlockCategoryStorageQueryContainer::queryCmsBlockCategoriesByCmsCategoryIds()` instead.
+     *
      * @param int[] $cmsBlockCategoriesIds
      *
      * @return \Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnectorQuery
@@ -82,6 +84,23 @@ class CmsBlockCategoryStorageQueryContainer extends AbstractQueryContainer imple
             )
             ->withColumn(SpyCmsBlockCategoryPositionTableMap::COL_NAME, static::POSITION)
             ->withColumn(SpyCmsBlockTableMap::COL_NAME, static::NAME)
+            ->filterByIdCmsBlockCategoryConnector_In($cmsBlockCategoriesIds);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int[] $cmsBlockCategoriesIds
+     *
+     * @return \Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnectorQuery
+     */
+    public function queryCmsBlockCategoriesByCmsCategoryIds(array $cmsBlockCategoriesIds): SpyCmsBlockCategoryConnectorQuery
+    {
+        return $this->getFactory()
+            ->getCmsBlockCategoryConnectorQuery()
+            ->queryCmsBlockCategoryConnector()
             ->filterByIdCmsBlockCategoryConnector_In($cmsBlockCategoriesIds);
     }
 

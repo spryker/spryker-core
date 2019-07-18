@@ -13,11 +13,13 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\ProductLabelGui\Communication\ProductLabelGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductLabelGui\Persistence\ProductLabelGuiQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductLabelGui\Business\ProductLabelGuiFacadeInterface getFacade()
  */
 class SetStatusController extends AbstractController
 {
-    const PARAM_ID_PRODUCT_LABEL = 'id-product-label';
-    const PARAM_REDIRECT_URL = 'redirect-url';
+    public const PARAM_ID_PRODUCT_LABEL = 'id-product-label';
+    public const PARAM_REDIRECT_URL = 'redirect-url';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -33,10 +35,9 @@ class SetStatusController extends AbstractController
 
         $this->updateProductLabel($productLabelTransfer);
 
-        $this->addSuccessMessage(sprintf(
-            'Product label #%d successfully activated.',
-            $productLabelTransfer->getIdProductLabel()
-        ));
+        $this->addSuccessMessage('Product label #%d successfully activated.', [
+            '%d' => $productLabelTransfer->getIdProductLabel(),
+        ]);
 
         return $this->redirectResponse($this->getRedirectUrl($request));
     }
@@ -69,10 +70,9 @@ class SetStatusController extends AbstractController
 
         $this->updateProductLabel($productLabelTransfer);
 
-        $this->addSuccessMessage(sprintf(
-            'Product label #%d successfully deactivated.',
-            $productLabelTransfer->getIdProductLabel()
-        ));
+        $this->addSuccessMessage('Product label #%d successfully deactivated.', [
+            '%d' => $productLabelTransfer->getIdProductLabel(),
+        ]);
 
         return $this->redirectResponse($this->getRedirectUrl($request));
     }

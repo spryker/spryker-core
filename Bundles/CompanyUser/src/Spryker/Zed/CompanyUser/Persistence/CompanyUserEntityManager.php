@@ -12,12 +12,13 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
  * @method \Spryker\Zed\CompanyUser\Persistence\CompanyUserPersistenceFactory getFactory()
+ * @method \Generated\Shared\Transfer\SpyCompanyUserEntityTransfer save(\Generated\Shared\Transfer\SpyCompanyUserEntityTransfer $spyCompanyUserEntityTransfer)
  */
 class CompanyUserEntityManager extends AbstractEntityManager implements CompanyUserEntityManagerInterface
 {
+    protected const COLUMN_COMPANY_USER_IS_ACTIVE = 'IsActive';
+
     /**
-     * @api
-     *
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUserTransfer
@@ -30,14 +31,14 @@ class CompanyUserEntityManager extends AbstractEntityManager implements CompanyU
             ->mapCompanyUserTransferToEntityTransfer($companyUserTransfer);
         $entityTransfer = $this->save($entityTransfer);
 
-        return $this->getFactory()
+        $newCompanyUserTransfer = $this->getFactory()
             ->createCompanyUserMapper()
             ->mapEntityTransferToCompanyUserTransfer($entityTransfer);
+
+        return $companyUserTransfer->fromArray($newCompanyUserTransfer->modifiedToArray());
     }
 
     /**
-     * @api
-     *
      * @param int $idCompanyUser
      *
      * @return void
@@ -48,5 +49,24 @@ class CompanyUserEntityManager extends AbstractEntityManager implements CompanyU
             ->createCompanyUserQuery()
             ->filterByIdCompanyUser($idCompanyUser)
             ->delete();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer
+     */
+    public function updateCompanyUserStatus(
+        CompanyUserTransfer $companyUserTransfer
+    ): CompanyUserTransfer {
+        $this->getFactory()
+            ->createCompanyUserQuery()
+            ->filterByIdCompanyUser(
+                $companyUserTransfer->getIdCompanyUser()
+            )->update([
+                static::COLUMN_COMPANY_USER_IS_ACTIVE => $companyUserTransfer->getIsActive(),
+            ]);
+
+        return $companyUserTransfer;
     }
 }

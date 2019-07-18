@@ -9,5 +9,5 @@ namespace Spryker\Shared\ShipmentCheckoutConnector;
 
 class ShipmentCheckoutConnectorConfig
 {
-    const ERROR_CODE_SHIPMENT_FAILED = 'shipment failed';
+    public const ERROR_CODE_SHIPMENT_FAILED = 'shipment failed';
 }

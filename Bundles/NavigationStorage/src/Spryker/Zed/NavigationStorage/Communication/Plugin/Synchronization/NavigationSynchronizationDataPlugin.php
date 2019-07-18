@@ -16,6 +16,7 @@ use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQu
  * @method \Spryker\Zed\NavigationStorage\Persistence\NavigationStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\NavigationStorage\Business\NavigationStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\NavigationStorage\Communication\NavigationStorageCommunicationFactory getFactory()
+ * @method \Spryker\Zed\NavigationStorage\NavigationStorageConfig getConfig()
  */
 class NavigationSynchronizationDataPlugin extends AbstractPlugin implements SynchronizationDataQueryContainerPluginInterface
 {
@@ -60,11 +61,11 @@ class NavigationSynchronizationDataPlugin extends AbstractPlugin implements Sync
     {
         $query = $this->getQueryContainer()->queryNavigationStorageByNavigationIds($ids);
 
-        if (empty($ids)) {
+        if ($ids === []) {
             $query->clear();
         }
 
-        return $query;
+        return $query->orderByIdNavigationStorage();
     }
 
     /**

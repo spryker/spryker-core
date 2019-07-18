@@ -15,7 +15,7 @@ interface ProductSetEvents
      *
      * @api
      */
-    const PRODUCT_SET_PUBLISH = 'ProductSet.product_set.publish';
+    public const PRODUCT_SET_PUBLISH = 'ProductSet.product_set.publish';
 
     /**
      * Specification
@@ -23,7 +23,7 @@ interface ProductSetEvents
      *
      * @api
      */
-    const PRODUCT_SET_UNPUBLISH = 'ProductSet.product_set.unpublish';
+    public const PRODUCT_SET_UNPUBLISH = 'ProductSet.product_set.unpublish';
 
     /**
      * Specification
@@ -31,7 +31,7 @@ interface ProductSetEvents
      *
      * @api
      */
-    const ENTITY_SPY_PRODUCT_SET_CREATE = 'Entity.spy_product_set.create';
+    public const ENTITY_SPY_PRODUCT_SET_CREATE = 'Entity.spy_product_set.create';
 
     /**
      * Specification
@@ -39,7 +39,7 @@ interface ProductSetEvents
      *
      * @api
      */
-    const ENTITY_SPY_PRODUCT_SET_UPDATE = 'Entity.spy_product_set.update';
+    public const ENTITY_SPY_PRODUCT_SET_UPDATE = 'Entity.spy_product_set.update';
 
     /**
      * Specification
@@ -47,7 +47,7 @@ interface ProductSetEvents
      *
      * @api
      */
-    const ENTITY_SPY_PRODUCT_SET_DELETE = 'Entity.spy_product_set.delete';
+    public const ENTITY_SPY_PRODUCT_SET_DELETE = 'Entity.spy_product_set.delete';
 
     /**
      * Specification
@@ -55,7 +55,7 @@ interface ProductSetEvents
      *
      * @api
      */
-    const ENTITY_SPY_PRODUCT_ABSTRACT_SET_CREATE = 'Entity.spy_product_abstract_set.create';
+    public const ENTITY_SPY_PRODUCT_ABSTRACT_SET_CREATE = 'Entity.spy_product_abstract_set.create';
 
     /**
      * Specification
@@ -63,7 +63,7 @@ interface ProductSetEvents
      *
      * @api
      */
-    const ENTITY_SPY_PRODUCT_ABSTRACT_SET_UPDATE = 'Entity.spy_product_abstract_set.update';
+    public const ENTITY_SPY_PRODUCT_ABSTRACT_SET_UPDATE = 'Entity.spy_product_abstract_set.update';
 
     /**
      * Specification
@@ -71,7 +71,7 @@ interface ProductSetEvents
      *
      * @api
      */
-    const ENTITY_SPY_PRODUCT_ABSTRACT_SET_DELETE = 'Entity.spy_product_abstract_set.delete';
+    public const ENTITY_SPY_PRODUCT_ABSTRACT_SET_DELETE = 'Entity.spy_product_abstract_set.delete';
 
     /**
      * Specification
@@ -79,7 +79,7 @@ interface ProductSetEvents
      *
      * @api
      */
-    const ENTITY_SPY_PRODUCT_SET_DATA_CREATE = 'Entity.spy_product_set_data.create';
+    public const ENTITY_SPY_PRODUCT_SET_DATA_CREATE = 'Entity.spy_product_set_data.create';
 
     /**
      * Specification
@@ -87,7 +87,7 @@ interface ProductSetEvents
      *
      * @api
      */
-    const ENTITY_SPY_PRODUCT_SET_DATA_UPDATE = 'Entity.spy_product_set_data.update';
+    public const ENTITY_SPY_PRODUCT_SET_DATA_UPDATE = 'Entity.spy_product_set_data.update';
 
     /**
      * Specification
@@ -95,5 +95,5 @@ interface ProductSetEvents
      *
      * @api
      */
-    const ENTITY_SPY_PRODUCT_SET_DATA_DELETE = 'Entity.spy_product_set_data.delete';
+    public const ENTITY_SPY_PRODUCT_SET_DATA_DELETE = 'Entity.spy_product_set_data.delete';
 }

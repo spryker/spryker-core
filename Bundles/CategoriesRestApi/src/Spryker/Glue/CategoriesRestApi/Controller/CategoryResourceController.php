@@ -17,6 +17,22 @@ use Spryker\Glue\Kernel\Controller\AbstractController;
 class CategoryResourceController extends AbstractController
 {
     /**
+     * @Glue({
+     *     "getResourceById": {
+     *          "summary": [
+     *              "Retrieves a category node by id."
+     *          ],
+     *          "parameters": [{
+     *              "name": "Accept-Language",
+     *              "in": "header"
+     *          }],
+     *          "responses": {
+     *              "400": "Category node id has not been specified or invalid.",
+     *              "404": "Category node not found."
+     *          }
+     *     }
+     * })
+     *
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
@@ -25,6 +41,6 @@ class CategoryResourceController extends AbstractController
     {
         return $this->getFactory()
             ->createCategoryReader()
-            ->getCategoryNode($restRequest->getResource()->getId(), $restRequest->getMetadata()->getLocale());
+            ->readCategoryNode($restRequest);
     }
 }

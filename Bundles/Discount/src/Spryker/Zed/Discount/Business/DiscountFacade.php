@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Discount\Business;
 
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ClauseTransfer;
 use Generated\Shared\Transfer\CollectedDiscountTransfer;
 use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
@@ -20,6 +21,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\Discount\Business\DiscountBusinessFactory getFactory()
+ * @method \Spryker\Zed\Discount\Persistence\DiscountRepositoryInterface getRepository()
  */
 class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
 {
@@ -291,7 +293,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
-     * @return boolean
+     * @return bool
      */
     public function isTimeSatisfiedBy(
         QuoteTransfer $quoteTransfer,
@@ -442,6 +444,8 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      * {@inheritdoc}
      *
      * @api
+     *
+     * @deprecated use `findHydratedDiscountConfiguratorByIdDiscount()` instead.
      *
      * @param int $idDiscount
      *
@@ -676,5 +680,38 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     public function checkDiscountChanges(QuoteTransfer $resultQuoteTransfer, QuoteTransfer $sourceQuoteTransfer): void
     {
         $this->getFactory()->createQuoteChangeObserver()->checkDiscountChanges($resultQuoteTransfer, $sourceQuoteTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idDiscount
+     *
+     * @return \Generated\Shared\Transfer\DiscountConfiguratorTransfer|null
+     */
+    public function findHydratedDiscountConfiguratorByIdDiscount(int $idDiscount): ?DiscountConfiguratorTransfer
+    {
+        return $this->getFactory()
+            ->createDiscountConfiguratorHydrate()
+            ->findByIdDiscount($idDiscount);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return bool
+     */
+    public function validateVoucherDiscountsMaxUsage(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool
+    {
+        return $this->getFactory()
+            ->createQuoteVoucherDiscountMaxUsageValidator()
+            ->validate($quoteTransfer, $checkoutResponseTransfer);
     }
 }

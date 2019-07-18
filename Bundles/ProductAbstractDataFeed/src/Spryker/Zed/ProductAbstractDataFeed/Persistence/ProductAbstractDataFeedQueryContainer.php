@@ -18,15 +18,15 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class ProductAbstractDataFeedQueryContainer extends AbstractQueryContainer implements ProductAbstractDataFeedQueryContainerInterface
 {
-    const UPDATED_FROM_CONDITION = 'UPDATED_FROM_CONDITION';
-    const UPDATED_TO_CONDITION = 'UPDATED_TO_CONDITION';
+    public const UPDATED_FROM_CONDITION = 'UPDATED_FROM_CONDITION';
+    public const UPDATED_TO_CONDITION = 'UPDATED_TO_CONDITION';
 
     /**
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductAbstractDataFeedTransfer|null $productDataFeedTransfer
      *
-     * @return \Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     public function queryAbstractProductDataFeed(?ProductAbstractDataFeedTransfer $productDataFeedTransfer = null)
     {
@@ -47,9 +47,9 @@ class ProductAbstractDataFeedQueryContainer extends AbstractQueryContainer imple
     }
 
     /**
-     * @param \Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery $abstractProductQuery
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $abstractProductQuery
      *
-     * @return \Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     protected function applyGroupings(SpyProductAbstractQuery $abstractProductQuery)
     {
@@ -59,10 +59,10 @@ class ProductAbstractDataFeedQueryContainer extends AbstractQueryContainer imple
     }
 
     /**
-     * @param \Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery $abstractProductQuery
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $abstractProductQuery
      * @param \Generated\Shared\Transfer\ProductAbstractDataFeedTransfer $abstractProductDataFeedTransfer
      *
-     * @return \Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     protected function filterByUpdatedAt(
         SpyProductAbstractQuery $abstractProductQuery,

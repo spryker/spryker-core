@@ -64,9 +64,18 @@ interface ProductAlternativeStorageRepositoryInterface
     public function getIndexedProductAbstractIdToSkusByProductIds(array $productIds): array;
 
     /**
+     * @module Product
+     *
+     * @param int[] $productIds
+     *
+     * @return string[]
+     */
+    public function getIndexedProductConcreteIdToSkusByProductAbstractIds(array $productIds): array;
+
+    /**
      * @param string $sku
      *
-     * @return null|\Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorage
+     * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorage|null
      */
     public function findProductReplacementStorageEntitiesBySku(string $sku): ?SpyProductReplacementForStorage;
 
@@ -87,4 +96,28 @@ interface ProductAlternativeStorageRepositoryInterface
      * @return int[]
      */
     public function getReplacementsByConcreteProductId(int $idProductConcrete): array;
+
+    /**
+     * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductAlternativeStorage[]
+     */
+    public function findAllProductAlternativeStorageEntities(): array;
+
+    /**
+     * @param int[] $productAlternativeStorageIds
+     *
+     * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductAlternativeStorage[]
+     */
+    public function findProductAlternativeStorageEntitiesByIds(array $productAlternativeStorageIds): array;
+
+    /**
+     * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorage[]
+     */
+    public function findAllProductReplacementForStorageEntities(): array;
+
+    /**
+     * @param int[] $productReplacementForStorageIds
+     *
+     * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorage[]
+     */
+    public function findProductReplacementForStorageEntitiesByIds(array $productReplacementForStorageIds): array;
 }

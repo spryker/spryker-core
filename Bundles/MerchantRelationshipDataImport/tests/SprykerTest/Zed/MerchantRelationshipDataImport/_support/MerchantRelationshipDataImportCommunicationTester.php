@@ -8,6 +8,9 @@
 namespace SprykerTest\Zed\MerchantRelationshipDataImport;
 
 use Codeception\Actor;
+use Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery;
+use Orm\Zed\Merchant\Persistence\SpyMerchantQuery;
+use Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipQuery;
 
 /**
  * Inherited Methods
@@ -31,4 +34,52 @@ class MerchantRelationshipDataImportCommunicationTester extends Actor
    /**
     * Define custom actions here
     */
+
+    /**
+     * @return void
+     */
+    public function truncateCompanyBusinessUnitRelations(): void
+    {
+        $this->truncateTableRelations($this->getCompanyBusinessUnitQuery());
+    }
+
+    /**
+     * @return void
+     */
+    public function truncateMerchantRelationshipRelations(): void
+    {
+        $this->truncateTableRelations($this->getMerchantRelationshipQuery());
+    }
+
+    /**
+     * @return void
+     */
+    public function truncateMerchantRelations(): void
+    {
+        $this->truncateTableRelations($this->getMerchantQuery());
+    }
+
+    /**
+     * @return \Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery
+     */
+    protected function getCompanyBusinessUnitQuery(): SpyCompanyBusinessUnitQuery
+    {
+        return SpyCompanyBusinessUnitQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\Merchant\Persistence\SpyMerchantQuery
+     */
+    protected function getMerchantQuery(): SpyMerchantQuery
+    {
+        return SpyMerchantQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipQuery
+     */
+    protected function getMerchantRelationshipQuery(): SpyMerchantRelationshipQuery
+    {
+        return SpyMerchantRelationshipQuery::create();
+    }
 }

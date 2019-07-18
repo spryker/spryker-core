@@ -56,7 +56,7 @@
             <reference local="fk_shipment_method" foreign="id_shipment_method"/>
         </foreign-key>
 
-        <unique name="spy_shipment_method_price-fk_shipment_method-fk_currency-fk_store">
+        <unique name="spy_shipment_method_price-fk_shipment_method-fk_currency-fk_s">
             <unique-column name="fk_shipment_method"/>
             <unique-column name="fk_store"/>
             <unique-column name="fk_currency"/>

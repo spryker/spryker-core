@@ -78,7 +78,7 @@ class FlashMessageCleaner implements FlashMessageCleanerInterface
     }
 
     /**
-     * @param string[] $messages
+     * @param mixed[] $messages
      *
      * @return string[]
      */

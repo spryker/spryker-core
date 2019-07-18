@@ -14,12 +14,15 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \Spryker\Zed\SharedCart\Business\SharedCartFacadeInterface getFacade()
  * @method \Spryker\Zed\SharedCart\Communication\SharedCartCommunicationFactory getFactory()
+ * @method \Spryker\Zed\SharedCart\SharedCartConfig getConfig()
  */
 class QuotePermissionCustomerExpanderPlugin extends AbstractPlugin implements CustomerTransferExpanderPluginInterface
 {
     /**
      * Specification:
      *  - Add quote permissions for customer company user to customer.
+     *
+     * @api
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -12,7 +13,7 @@ interface ProductToUtilEncodingInterface
      * @param int|null $options
      * @param int|null $depth
      *
-     * @return string
+     * @return string|null
      */
     public function encodeJson($value, $options = null, $depth = null);
 
@@ -22,7 +23,7 @@ interface ProductToUtilEncodingInterface
      * @param int|null $depth
      * @param int|null $options
      *
-     * @return array
+     * @return array|null
      */
     public function decodeJson($jsonString, $assoc = false, $depth = null, $options = null);
 }

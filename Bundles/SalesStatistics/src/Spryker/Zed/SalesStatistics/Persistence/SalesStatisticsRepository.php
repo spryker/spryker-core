@@ -24,6 +24,7 @@ class SalesStatisticsRepository extends AbstractRepository implements SalesStati
     public const STATUS_NAME = 'status_name';
     public const TOTAL = 'total';
     public const ITEM_NAME = 'item_name';
+    public const ITEM_SKU = 'sku';
 
     /**
      * @param int $day
@@ -79,9 +80,10 @@ class SalesStatisticsRepository extends AbstractRepository implements SalesStati
     protected function getDataTopOrderStatistic(int $countProduct): array
     {
         return $this->getFactory()->createSalesOrderItemQuery()
-            ->select([static::ITEM_NAME, static::COUNT])
+            ->select([static::ITEM_NAME, static::ITEM_SKU, static::COUNT])
             ->withColumn('COUNT(' . SpySalesOrderItemTableMap::COL_NAME . ')', static::COUNT)
             ->withColumn(SpySalesOrderItemTableMap::COL_NAME, static::ITEM_NAME)
+            ->withColumn(SpySalesOrderItemTableMap::COL_SKU, static::ITEM_SKU)
             ->groupBy(SpySalesOrderItemTableMap::COL_NAME)
             ->limit($countProduct)
             ->orderBy(static::COUNT, Criteria::DESC)

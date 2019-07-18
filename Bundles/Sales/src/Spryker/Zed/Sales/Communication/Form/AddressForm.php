@@ -13,7 +13,6 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -21,28 +20,30 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  * @method \Spryker\Zed\Sales\Business\SalesFacadeInterface getFacade()
  * @method \Spryker\Zed\Sales\Communication\SalesCommunicationFactory getFactory()
  * @method \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Sales\SalesConfig getConfig()
+ * @method \Spryker\Zed\Sales\Persistence\SalesRepositoryInterface getRepository()
  */
 class AddressForm extends AbstractType
 {
-    const FIELD_SALUTATION = 'salutation';
-    const FIELD_FIRST_NAME = 'first_name';
-    const FIELD_MIDDLE_NAME = 'middle_name';
-    const FIELD_LAST_NAME = 'last_name';
-    const FIELD_EMAIL = 'email';
-    const FIELD_ADDRESS_1 = 'address1';
-    const FIELD_ADDRESS_2 = 'address2';
-    const FIELD_COMPANY = 'company';
-    const FIELD_CITY = 'city';
-    const FIELD_ZIP_CODE = 'zip_code';
-    const FIELD_PO_BOX = 'po_box';
-    const FIELD_PHONE = 'phone';
-    const FIELD_CELL_PHONE = 'cell_phone';
-    const FIELD_DESCRIPTION = 'description';
-    const FIELD_COMMENT = 'comment';
-    const FIELD_FK_COUNTRY = 'fkCountry';
+    public const FIELD_SALUTATION = 'salutation';
+    public const FIELD_FIRST_NAME = 'first_name';
+    public const FIELD_MIDDLE_NAME = 'middle_name';
+    public const FIELD_LAST_NAME = 'last_name';
+    public const FIELD_EMAIL = 'email';
+    public const FIELD_ADDRESS_1 = 'address1';
+    public const FIELD_ADDRESS_2 = 'address2';
+    public const FIELD_COMPANY = 'company';
+    public const FIELD_CITY = 'city';
+    public const FIELD_ZIP_CODE = 'zip_code';
+    public const FIELD_PO_BOX = 'po_box';
+    public const FIELD_PHONE = 'phone';
+    public const FIELD_CELL_PHONE = 'cell_phone';
+    public const FIELD_DESCRIPTION = 'description';
+    public const FIELD_COMMENT = 'comment';
+    public const FIELD_FK_COUNTRY = 'fkCountry';
 
-    const OPTION_SALUTATION_CHOICES = 'salutation_choices';
-    const OPTION_COUNTRY_CHOICES = 'country';
+    public const OPTION_SALUTATION_CHOICES = 'salutation_choices';
+    public const OPTION_COUNTRY_CHOICES = 'country';
 
     /**
      * @return string
@@ -76,11 +77,11 @@ class AddressForm extends AbstractType
     /**
      * @deprecated Use `configureOptions()` instead.
      *
-     * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *
      * @return void
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function setDefaultOptions(OptionsResolver $resolver)
     {
         $this->configureOptions($resolver);
     }
@@ -124,7 +125,6 @@ class AddressForm extends AbstractType
             'label' => 'Salutation',
             'placeholder' => '-select-',
             'choices' => array_flip($choices),
-            'choices_as_values' => true,
             'required' => false,
         ]);
 
@@ -208,7 +208,6 @@ class AddressForm extends AbstractType
             'label' => 'Country',
             'placeholder' => '-select-',
             'choices' => array_flip($choices),
-            'choices_as_values' => true,
             'constraints' => [
                 new NotBlank(),
             ],

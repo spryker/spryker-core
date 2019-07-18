@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-list-gui-extension",
+  "type": "library",
   "description": "ProductListGuiExtension module",
   "license": "proprietary",
   "require": {

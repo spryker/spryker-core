@@ -13,10 +13,11 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\ProductLabel\Business\ProductLabelFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface getQueryContainer()
  */
 class ProductLabelRelationUpdaterConsole extends Console
 {
-    const COMMAND_NAME = 'product-label:relations:update';
+    public const COMMAND_NAME = 'product-label:relations:update';
 
     /**
      * @return void
@@ -33,10 +34,12 @@ class ProductLabelRelationUpdaterConsole extends Console
      * @param \Symfony\Component\Console\Input\InputInterface $input
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
-     * @return void
+     * @return int|null
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->getFacade()->updateDynamicProductLabelRelations($this->getMessenger());
+
+        return null;
     }
 }

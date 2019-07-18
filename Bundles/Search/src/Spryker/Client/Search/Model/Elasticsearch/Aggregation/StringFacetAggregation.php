@@ -12,7 +12,7 @@ use Spryker\Client\Search\SearchConfig;
 
 class StringFacetAggregation extends AbstractTermsFacetAggregation
 {
-    const VALUE_SUFFIX = '-value';
+    public const VALUE_SUFFIX = '-value';
 
     /**
      * @var \Generated\Shared\Transfer\FacetConfigTransfer

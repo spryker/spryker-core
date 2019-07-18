@@ -7,67 +7,67 @@
 
 namespace Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence;
 
+use Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer;
+use Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductAbstractMerchantRelationshipStorage;
+use Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductConcreteMerchantRelationshipStorage;
+
 interface PriceProductMerchantRelationshipStorageEntityManagerInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer[] $priceProductMerchantRelationshipStorageTransferCollection
-     * @param array $existingPriceProductMerchantRelationshipStorageEntityMap
+     * @param \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer $priceProductMerchantRelationshipStorageTransfer
+     * @param \Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductAbstractMerchantRelationshipStorage $priceProductAbstractMerchantRelationshipStorageEntity
      *
      * @return void
      */
-    public function writePriceProductConcrete(
-        array $priceProductMerchantRelationshipStorageTransferCollection,
-        array $existingPriceProductMerchantRelationshipStorageEntityMap
+    public function updatePriceProductAbstract(
+        PriceProductMerchantRelationshipStorageTransfer $priceProductMerchantRelationshipStorageTransfer,
+        SpyPriceProductAbstractMerchantRelationshipStorage $priceProductAbstractMerchantRelationshipStorageEntity
     ): void;
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer[] $priceProductMerchantRelationshipStorageTransferCollection
-     * @param array $existingPriceProductMerchantRelationshipStorageEntityMap
+     * @param \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer $priceProductMerchantRelationshipStorageTransfer
      *
      * @return void
      */
-    public function writePriceProductAbstract(
-        array $priceProductMerchantRelationshipStorageTransferCollection,
-        array $existingPriceProductMerchantRelationshipStorageEntityMap
+    public function createPriceProductAbstract(
+        PriceProductMerchantRelationshipStorageTransfer $priceProductMerchantRelationshipStorageTransfer
     ): void;
 
     /**
-     * @param int $idCompanyBusinessUnit
-     * @param int $idProductAbstract
+     * @param \Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductAbstractMerchantRelationshipStorage[] $priceProductAbstractMerchantRelationshipStorageEntities
      *
      * @return void
      */
-    public function deletePriceProductAbstractByCompanyBusinessUnitAndIdProductAbstract(
-        int $idCompanyBusinessUnit,
-        int $idProductAbstract
+    public function deletePriceProductAbstractEntities(
+        array $priceProductAbstractMerchantRelationshipStorageEntities
     ): void;
 
     /**
-     * @param int $idCompanyBusinessUnit
-     * @param int $idProduct
+     * @param \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer $priceProductMerchantRelationshipStorageTransfer
+     * @param \Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductConcreteMerchantRelationshipStorage $priceProductConcreteMerchantRelationshipStorageEntity
      *
      * @return void
      */
-    public function deletePriceProductConcreteByCompanyBusinessUnitAndIdProduct(
-        int $idCompanyBusinessUnit,
-        int $idProduct
+    public function updatePriceProductConcrete(
+        PriceProductMerchantRelationshipStorageTransfer $priceProductMerchantRelationshipStorageTransfer,
+        SpyPriceProductConcreteMerchantRelationshipStorage $priceProductConcreteMerchantRelationshipStorageEntity
     ): void;
 
     /**
-     * @param int $idCompanyBusinessUnit
+     * @param \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer $priceProductMerchantRelationshipStorageTransfer
      *
      * @return void
      */
-    public function deletePriceProductAbstractByCompanyBusinessUnit(
-        int $idCompanyBusinessUnit
+    public function createPriceProductConcrete(
+        PriceProductMerchantRelationshipStorageTransfer $priceProductMerchantRelationshipStorageTransfer
     ): void;
 
     /**
-     * @param int $idCompanyBusinessUnit
+     * @param \Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductConcreteMerchantRelationshipStorage[] $priceProductConcreteMerchantRelationshipStorageEntities
      *
      * @return void
      */
-    public function deletePriceProductConcreteByCompanyBusinessUnit(
-        int $idCompanyBusinessUnit
+    public function deletePriceProductConcreteEntities(
+        array $priceProductConcreteMerchantRelationshipStorageEntities
     ): void;
 }

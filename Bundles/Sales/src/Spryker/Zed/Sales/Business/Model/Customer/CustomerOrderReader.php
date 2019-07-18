@@ -68,7 +68,7 @@ class CustomerOrderReader implements CustomerOrderReaderInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection $orderCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Sales\Persistence\SpySalesOrder[] $orderCollection
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\OrderTransfer[]
      */
@@ -76,7 +76,7 @@ class CustomerOrderReader implements CustomerOrderReaderInterface
     {
         $orders = new ArrayObject();
         foreach ($orderCollection as $salesOrderEntity) {
-            if (count($salesOrderEntity->getItems()) == 0) {
+            if ($salesOrderEntity->countItems() === 0) {
                 continue;
             }
 

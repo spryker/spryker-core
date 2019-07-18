@@ -12,6 +12,7 @@ use Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceTypeQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
+use Spryker\Zed\PriceProduct\Persistence\Propel\Mapper\PriceProductMapper;
 use Spryker\Zed\PriceProduct\Persistence\Propel\PriceDimensionQueryExpander\DefaultPriceQueryExpander;
 use Spryker\Zed\PriceProduct\Persistence\Propel\PriceDimensionQueryExpander\DefaultPriceQueryExpanderInterface;
 use Spryker\Zed\PriceProduct\PriceProductDependencyProvider;
@@ -19,6 +20,8 @@ use Spryker\Zed\PriceProduct\PriceProductDependencyProvider;
 /**
  * @method \Spryker\Zed\PriceProduct\PriceProductConfig getConfig()
  * @method \Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\PriceProduct\Persistence\PriceProductEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\PriceProduct\Persistence\PriceProductRepositoryInterface getRepository()
  */
 class PriceProductPersistenceFactory extends AbstractPersistenceFactory
 {
@@ -76,5 +79,13 @@ class PriceProductPersistenceFactory extends AbstractPersistenceFactory
     public function getPriceDimensionQueryCriteriaPlugins(): array
     {
         return $this->getProvidedDependency(PriceProductDependencyProvider::PLUGIN_PRICE_DIMENSION_QUERY_CRITERIA);
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProduct\Persistence\Propel\Mapper\PriceProductMapper
+     */
+    public function createPriceProductMapper(): PriceProductMapper
+    {
+        return new PriceProductMapper();
     }
 }

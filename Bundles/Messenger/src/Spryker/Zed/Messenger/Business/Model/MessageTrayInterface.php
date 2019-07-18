@@ -11,9 +11,9 @@ use Generated\Shared\Transfer\MessageTransfer;
 
 interface MessageTrayInterface
 {
-    const FLASH_MESSAGES_SUCCESS = 'flash.messages.success';
-    const FLASH_MESSAGES_ERROR = 'flash.messages.error';
-    const FLASH_MESSAGES_INFO = 'flash.messages.info';
+    public const FLASH_MESSAGES_SUCCESS = 'flash.messages.success';
+    public const FLASH_MESSAGES_ERROR = 'flash.messages.error';
+    public const FLASH_MESSAGES_INFO = 'flash.messages.info';
 
     /**
      * @param \Generated\Shared\Transfer\MessageTransfer $message

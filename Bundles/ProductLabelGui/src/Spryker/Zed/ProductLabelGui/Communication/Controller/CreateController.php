@@ -15,6 +15,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\ProductLabelGui\Communication\ProductLabelGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductLabelGui\Persistence\ProductLabelGuiQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductLabelGui\Business\ProductLabelGuiFacadeInterface getFacade()
  */
 class CreateController extends AbstractController
 {
@@ -87,10 +89,9 @@ class CreateController extends AbstractController
             );
         }
 
-        $this->addSuccessMessage(sprintf(
-            'Product label #%d successfully created.',
-            $productLabelTransfer->getIdProductLabel()
-        ));
+        $this->addSuccessMessage('Product label #%d successfully created.', [
+            '%d' => $productLabelTransfer->getIdProductLabel(),
+        ]);
 
         return true;
     }

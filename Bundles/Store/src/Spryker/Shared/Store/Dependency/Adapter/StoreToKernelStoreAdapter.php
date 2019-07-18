@@ -119,7 +119,7 @@ class StoreToKernelStoreAdapter implements StoreToStoreInterface
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getCountries()
     {
@@ -142,5 +142,13 @@ class StoreToKernelStoreAdapter implements StoreToStoreInterface
     public function getQueuePools()
     {
         return $this->store->getQueuePools();
+    }
+
+    /**
+     * @return string
+     */
+    public function getTimezone()
+    {
+        return $this->store->getContexts()['*']['timezone'] ?? '';
     }
 }

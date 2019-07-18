@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -18,7 +19,7 @@ use Spryker\Zed\Discount\Business\QueryString\Converter\MoneyValueConverterInter
 class BaseRuleTester extends Unit
 {
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface
      */
     protected function createComparatorMock()
     {
@@ -26,7 +27,7 @@ class BaseRuleTester extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Discount\Business\QueryString\Converter\MoneyValueConverterInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Discount\Business\QueryString\Converter\MoneyValueConverterInterface
      */
     protected function createCurrencyConverterMock()
     {

@@ -9,14 +9,19 @@ namespace Spryker\Client\ProductStorage\Plugin;
 
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
-use Spryker\Client\ProductStorage\Dependency\Plugin\ProductViewExpanderPluginInterface;
+use Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductConcreteViewExpanderExcluderPluginInterface;
+use Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductViewExpanderPluginInterface;
 
 /**
  * @method \Spryker\Client\ProductStorage\ProductStorageFactory getFactory()
  */
-class ProductViewVariantExpanderPlugin extends AbstractPlugin implements ProductViewExpanderPluginInterface
+class ProductViewVariantExpanderPlugin extends AbstractPlugin implements ProductViewExpanderPluginInterface, ProductConcreteViewExpanderExcluderPluginInterface
 {
     /**
+     * {@inheritdoc}
+     * - Expands the transfer object with the attribute map, product variant map.
+     * - Expands the transfer object with product concrete ID using the values of `selectedAttributes`.
+     *
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      * @param array $productData
      * @param string $localeName

@@ -47,7 +47,10 @@ class TwigBusinessFactory extends AbstractBusinessFactory
      */
     protected function createCacheWriterForZed()
     {
-        return new FilesystemCacheWriter($this->getConfig()->getCacheFilePath());
+        return new FilesystemCacheWriter(
+            $this->getConfig()->getCacheFilePath(),
+            $this->getConfig()->getPermissionMode()
+        );
     }
 
     /**
@@ -85,7 +88,10 @@ class TwigBusinessFactory extends AbstractBusinessFactory
      */
     protected function createCacheWriterForYves()
     {
-        return new FilesystemCacheWriter($this->getConfig()->getCacheFilePathForYves());
+        return new FilesystemCacheWriter(
+            $this->getConfig()->getCacheFilePathForYves(),
+            $this->getConfig()->getPermissionMode()
+        );
     }
 
     /**

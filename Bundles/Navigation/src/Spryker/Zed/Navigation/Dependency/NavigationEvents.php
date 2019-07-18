@@ -15,7 +15,7 @@ interface NavigationEvents
      *
      * @api
      */
-    const NAVIGATION_KEY_PUBLISH = 'Navigation.key.publish';
+    public const NAVIGATION_KEY_PUBLISH = 'Navigation.key.publish';
 
     /**
      * Specification
@@ -23,7 +23,7 @@ interface NavigationEvents
      *
      * @api
      */
-    const NAVIGATION_KEY_UNPUBLISH = 'Navigation.key.unpublish';
+    public const NAVIGATION_KEY_UNPUBLISH = 'Navigation.key.unpublish';
 
     /**
      * Specification
@@ -31,7 +31,7 @@ interface NavigationEvents
      *
      * @api
      */
-    const ENTITY_SPY_NAVIGATION_CREATE = 'Entity.spy_navigation.create';
+    public const ENTITY_SPY_NAVIGATION_CREATE = 'Entity.spy_navigation.create';
 
     /**
      * Specification
@@ -39,7 +39,7 @@ interface NavigationEvents
      *
      * @api
      */
-    const ENTITY_SPY_NAVIGATION_UPDATE = 'Entity.spy_navigation.update';
+    public const ENTITY_SPY_NAVIGATION_UPDATE = 'Entity.spy_navigation.update';
 
     /**
      * Specification
@@ -47,7 +47,7 @@ interface NavigationEvents
      *
      * @api
      */
-    const ENTITY_SPY_NAVIGATION_DELETE = 'Entity.spy_navigation.delete';
+    public const ENTITY_SPY_NAVIGATION_DELETE = 'Entity.spy_navigation.delete';
 
     /**
      * Specification
@@ -55,7 +55,7 @@ interface NavigationEvents
      *
      * @api
      */
-    const ENTITY_SPY_NAVIGATION_NODE_CREATE = 'Entity.spy_navigation_node.create';
+    public const ENTITY_SPY_NAVIGATION_NODE_CREATE = 'Entity.spy_navigation_node.create';
 
     /**
      * Specification
@@ -63,7 +63,7 @@ interface NavigationEvents
      *
      * @api
      */
-    const ENTITY_SPY_NAVIGATION_NODE_UPDATE = 'Entity.spy_navigation_node.update';
+    public const ENTITY_SPY_NAVIGATION_NODE_UPDATE = 'Entity.spy_navigation_node.update';
 
     /**
      * Specification
@@ -71,7 +71,7 @@ interface NavigationEvents
      *
      * @api
      */
-    const ENTITY_SPY_NAVIGATION_NODE_DELETE = 'Entity.spy_navigation_node.delete';
+    public const ENTITY_SPY_NAVIGATION_NODE_DELETE = 'Entity.spy_navigation_node.delete';
 
     /**
      * Specification
@@ -79,7 +79,7 @@ interface NavigationEvents
      *
      * @api
      */
-    const ENTITY_SPY_NAVIGATION_NODE_LOCALIZED_ATTRIBUTE_CREATE = 'Entity.spy_navigation_node_localized_attributes.create';
+    public const ENTITY_SPY_NAVIGATION_NODE_LOCALIZED_ATTRIBUTE_CREATE = 'Entity.spy_navigation_node_localized_attributes.create';
 
     /**
      * Specification
@@ -87,7 +87,7 @@ interface NavigationEvents
      *
      * @api
      */
-    const ENTITY_SPY_NAVIGATION_NODE_LOCALIZED_ATTRIBUTE_UPDATE = 'Entity.spy_navigation_node_localized_attributes.update';
+    public const ENTITY_SPY_NAVIGATION_NODE_LOCALIZED_ATTRIBUTE_UPDATE = 'Entity.spy_navigation_node_localized_attributes.update';
 
     /**
      * Specification
@@ -95,5 +95,5 @@ interface NavigationEvents
      *
      * @api
      */
-    const ENTITY_SPY_NAVIGATION_NODE_LOCALIZED_ATTRIBUTE_DELETE = 'Entity.spy_navigation_node_localized_attributes.delete';
+    public const ENTITY_SPY_NAVIGATION_NODE_LOCALIZED_ATTRIBUTE_DELETE = 'Entity.spy_navigation_node_localized_attributes.delete';
 }

@@ -11,10 +11,10 @@ use Spryker\Shared\Kernel\ClassResolver\AbstractClassResolver as SharedAbstractC
 
 abstract class AbstractClassResolver extends SharedAbstractClassResolver
 {
-    const KEY_NAMESPACE = '%namespace%';
-    const KEY_APPLICATION = '%application%';
-    const KEY_BUNDLE = '%bundle%';
-    const KEY_STORE = '%store%';
+    public const KEY_NAMESPACE = '%namespace%';
+    public const KEY_APPLICATION = '%application%';
+    public const KEY_BUNDLE = '%bundle%';
+    public const KEY_STORE = '%store%';
 
     /**
      * @param string $namespace

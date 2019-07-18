@@ -11,6 +11,7 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
  * @method \Spryker\Zed\GiftCardMailConnector\GiftCardMailConnectorConfig getConfig()
+ * @method \Spryker\Zed\GiftCardMailConnector\Business\GiftCardMailConnectorFacadeInterface getFacade()
  */
 class GiftCardMailConnectorCommunicationFactory extends AbstractCommunicationFactory
 {

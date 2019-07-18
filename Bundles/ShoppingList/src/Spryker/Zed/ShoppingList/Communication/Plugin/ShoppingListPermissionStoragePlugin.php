@@ -14,10 +14,13 @@ use Spryker\Zed\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInt
 /**
  * @method \Spryker\Zed\ShoppingList\Business\ShoppingListFacadeInterface getFacade()
  * @method \Spryker\Zed\ShoppingList\Communication\ShoppingListCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ShoppingList\ShoppingListConfig getConfig()
  */
 class ShoppingListPermissionStoragePlugin extends AbstractPlugin implements PermissionStoragePluginInterface
 {
     /**
+     * @api
+     *
      * @param int|string $idCompanyUser
      *
      * @return \Generated\Shared\Transfer\PermissionCollectionTransfer

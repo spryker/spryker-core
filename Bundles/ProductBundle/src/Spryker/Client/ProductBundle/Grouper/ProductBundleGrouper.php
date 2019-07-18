@@ -14,8 +14,8 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 class ProductBundleGrouper implements ProductBundleGrouperInterface
 {
-    const BUNDLE_ITEMS = 'bundleItems';
-    const BUNDLE_PRODUCT = 'bundleProduct';
+    public const BUNDLE_ITEMS = 'bundleItems';
+    public const BUNDLE_PRODUCT = 'bundleProduct';
     protected const GROUP_KEY_FORMAT = '%s_%s';
 
     /**
@@ -185,6 +185,7 @@ class ProductBundleGrouper implements ProductBundleGrouperInterface
                 $groupedBundleQuantity[$bundleGroupKey] += $bundleItemTransfer->getQuantity();
             }
         }
+
         return $groupedBundleQuantity;
     }
 
@@ -277,7 +278,7 @@ class ProductBundleGrouper implements ProductBundleGrouperInterface
     {
         foreach ($items as $cartItemTransfer) {
             if ($itemTransfer->getBundleItemIdentifier() === $cartItemTransfer->getRelatedBundleItemIdentifier()
-                && $cartItemTransfer->getProductOptions() && count($cartItemTransfer->getProductOptions()) > 0) {
+                && count($cartItemTransfer->getProductOptions()) > 0) {
                 return (array)$cartItemTransfer->getProductOptions();
             }
         }
@@ -286,7 +287,7 @@ class ProductBundleGrouper implements ProductBundleGrouperInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $groupedBundleItems
+     * @param array $groupedBundleItems
      * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $bundleItems
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
@@ -294,6 +295,7 @@ class ProductBundleGrouper implements ProductBundleGrouperInterface
     protected function updateGroupedBundleItemsAggregatedSubtotal(array $groupedBundleItems, ArrayObject $bundleItems)
     {
         foreach ($groupedBundleItems as $groupedBundle) {
+            /** @var \Generated\Shared\Transfer\ItemTransfer $groupedBundleItemTransfer */
             $groupedBundleItemTransfer = $groupedBundle[static::BUNDLE_PRODUCT];
 
             foreach ($bundleItems as $bundleItemTransfer) {

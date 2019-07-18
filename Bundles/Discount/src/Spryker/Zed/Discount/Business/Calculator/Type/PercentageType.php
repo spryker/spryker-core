@@ -70,7 +70,7 @@ class PercentageType implements CalculatorTypeInterface
     }
 
     /**
-     * @param float $number
+     * @param float|int|null $number
      *
      * @throws \Spryker\Zed\Discount\Business\Exception\CalculatorException
      *

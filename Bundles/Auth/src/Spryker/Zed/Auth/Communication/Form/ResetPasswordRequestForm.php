@@ -20,12 +20,13 @@ use Symfony\Component\Validator\Constraints\Required;
  * @method \Spryker\Zed\Auth\Business\AuthFacadeInterface getFacade()
  * @method \Spryker\Zed\Auth\Communication\AuthCommunicationFactory getFactory()
  * @method \Spryker\Zed\Auth\Persistence\AuthQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Auth\AuthConfig getConfig()
  */
 class ResetPasswordRequestForm extends AbstractType
 {
-    const FIELD_EMAIL = 'email';
-    const FIELD_SUBMIT = 'submit';
-    const FIELD_LOGIN = 'login';
+    public const FIELD_EMAIL = 'email';
+    public const FIELD_SUBMIT = 'submit';
+    public const FIELD_LOGIN = 'login';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder

@@ -14,15 +14,18 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\Glossary\GlossaryConfig getConfig()
+ */
 class GlossaryDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_TOUCH = 'touch facade';
+    public const FACADE_TOUCH = 'touch facade';
 
-    const FACADE_LOCALE = 'locale facade';
+    public const FACADE_LOCALE = 'locale facade';
 
-    const PLUGIN_VALIDATOR = 'validator plugin';
+    public const PLUGIN_VALIDATOR = 'validator plugin';
 
-    const FACADE_MESSENGER = 'messages';
+    public const FACADE_MESSENGER = 'messages';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

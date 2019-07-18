@@ -14,7 +14,7 @@
 
             {{ form_start(userForm) }}
 
-            {{ form_widget(userForm) }}
+            {% include '@User/_partials/user-form.twig' %}
 
             <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Create' | trans }}" />
             {{ form_end(userForm) }}

@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductStorage\Communication\Plugin\Event;
 
-use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
+use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Shared\ProductStorage\ProductStorageConstants;
 use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceQueryContainerPluginInterface;
@@ -18,6 +18,7 @@ use Spryker\Zed\Product\Dependency\ProductEvents;
  * @method \Spryker\Zed\ProductStorage\Persistence\ProductStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductStorage\Business\ProductStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductStorage\Communication\ProductStorageCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductStorage\ProductStorageConfig getConfig()
  */
 class ProductConcreteEventResourceQueryContainerPlugin extends AbstractPlugin implements EventResourceQueryContainerPluginInterface
 {
@@ -44,9 +45,9 @@ class ProductConcreteEventResourceQueryContainerPlugin extends AbstractPlugin im
      */
     public function queryData(array $ids = []): ?ModelCriteria
     {
-        $query = $this->getQueryContainer()->queryProductConcreteByIds($ids);
+        $query = $this->getQueryContainer()->queryProductConcreteByProductIds($ids);
 
-        if (empty($ids)) {
+        if ($ids === []) {
             $query->clear();
         }
 
@@ -74,6 +75,6 @@ class ProductConcreteEventResourceQueryContainerPlugin extends AbstractPlugin im
      */
     public function getIdColumnName(): ?string
     {
-        return SpyProductLocalizedAttributesTableMap::COL_FK_PRODUCT;
+        return SpyProductTableMap::COL_ID_PRODUCT;
     }
 }

@@ -59,4 +59,18 @@ class PermissionClient extends AbstractClient implements PermissionClientInterfa
             ->createPermissionExecutor()
             ->can($permissionKey, $context);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
+     */
+    public function findMergedRegisteredNonInfrastructuralPermissions(): PermissionCollectionTransfer
+    {
+        return $this->getFactory()
+            ->createZedPermissionStub()
+            ->findMergedRegisteredNonInfrastructuralPermissions();
+    }
 }

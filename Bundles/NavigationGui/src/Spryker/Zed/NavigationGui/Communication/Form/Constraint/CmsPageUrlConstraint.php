@@ -13,7 +13,7 @@ use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 
 class CmsPageUrlConstraint extends SymfonyConstraint
 {
-    const OPTION_URL_FACADE = 'urlFacade';
+    public const OPTION_URL_FACADE = 'urlFacade';
 
     /**
      * @var \Spryker\Zed\NavigationGui\Dependency\Facade\NavigationGuiToUrlInterface
@@ -38,6 +38,6 @@ class CmsPageUrlConstraint extends SymfonyConstraint
         $urlTransfer = new UrlTransfer();
         $urlTransfer->setUrl($value->getCmsPageUrl());
 
-        return $this->urlFacade->findUrl($urlTransfer);
+        return $this->urlFacade->findUrlCaseInsensitive($urlTransfer);
     }
 }

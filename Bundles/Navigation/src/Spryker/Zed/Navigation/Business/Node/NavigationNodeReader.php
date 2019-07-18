@@ -59,7 +59,7 @@ class NavigationNodeReader implements NavigationNodeReaderInterface
     /**
      * @param \Generated\Shared\Transfer\NavigationNodeTransfer $navigationNodeTransfer
      *
-     * @return \Orm\Zed\Navigation\Persistence\SpyNavigationNode
+     * @return \Orm\Zed\Navigation\Persistence\SpyNavigationNode|null
      */
     protected function findNavigationNodeEntity(NavigationNodeTransfer $navigationNodeTransfer)
     {
@@ -88,7 +88,7 @@ class NavigationNodeReader implements NavigationNodeReaderInterface
     }
 
     /**
-     * @param \Orm\Zed\Navigation\Persistence\Base\SpyNavigationNodeLocalizedAttributes $navigationNodeLocalizedAttributesEntity
+     * @param \Orm\Zed\Navigation\Persistence\SpyNavigationNodeLocalizedAttributes $navigationNodeLocalizedAttributesEntity
      *
      * @return \Generated\Shared\Transfer\NavigationNodeLocalizedAttributesTransfer
      */

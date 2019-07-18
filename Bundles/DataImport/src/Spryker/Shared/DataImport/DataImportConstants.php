@@ -17,5 +17,21 @@ interface DataImportConstants
      * - Root path to the import files.
      * - Can be used to have a small set of import data for e.g. testing or development.
      */
-    const IMPORT_FILE_ROOT_PATH = 'IMPORT_FILE_ROOT_PATH';
+    public const IMPORT_FILE_ROOT_PATH = 'IMPORT_FILE_ROOT_PATH';
+
+    /**
+     * Specification:
+     * - Defines data import queue reader chunk size.
+     *
+     * @api
+     */
+    public const QUEUE_READER_CHUNK_SIZE = 'DATA_IMPORT:QUEUE_READER_CHUNK_SIZE';
+
+    /**
+     * Specification:
+     * - Defines the size of the chunk to be used for writing messages into the queue in bulk.
+     *
+     * @api
+     */
+    public const QUEUE_WRITER_CHUNK_SIZE = 'DATA_IMPORT:QUEUE_WRITER_CHUNK_SIZE';
 }

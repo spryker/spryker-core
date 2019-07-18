@@ -19,8 +19,8 @@
 
             {{ form_label(form.taxRates) }}
             <div class="country-select-box">
-                {{ form_widget(form.taxRates) }}
                 {{ form_errors(form.taxRates) }}
+                {{ form_widget(form.taxRates) }}
             </div>
 
             <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Save' | trans }}" />

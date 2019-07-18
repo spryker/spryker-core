@@ -17,6 +17,8 @@ use Spryker\Client\Kernel\AbstractPlugin;
 class CustomerChangePriceUpdatePlugin extends AbstractPlugin implements CustomerSessionSetPluginInterface
 {
     /**
+     * @deprecated Please use this plugin only if Yves cart controller doesn't reload the items already.
+     *
      * Specification:
      * - Reloads cart items when logged in customer belongs to company and they business unit is assigned to MerchantRelationship.
      *

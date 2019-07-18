@@ -10,26 +10,39 @@ namespace Spryker\Zed\ProductSetGui\Communication\Form\Images;
 use Spryker\Zed\Gui\Communication\Form\Type\ImageType;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
 use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\LessThanOrEqual;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * @method \Spryker\Zed\ProductSetGui\Communication\ProductSetGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductSetGui\Persistence\ProductSetGuiQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductSetGui\ProductSetGuiConfig getConfig()
  */
 class ProductImageFormType extends AbstractType
 {
-    const FIELD_ID_PRODUCT_IMAGE = 'id_product_image';
-    const FIELD_IMAGE_SMALL = 'external_url_small';
-    const FIELD_IMAGE_LARGE = 'external_url_large';
-    const FIELD_SORT_ORDER = 'sort_order';
-    const FIELD_IMAGE_PREVIEW = 'image_preview';
-    const FIELD_IMAGE_PREVIEW_LARGE_URL = 'image_preview_large_url';
-    const FIELD_FK_IMAGE_SET_ID = 'fk_image_set_id';
+    public const FIELD_ID_PRODUCT_IMAGE = 'id_product_image';
+    public const FIELD_IMAGE_SMALL = 'external_url_small';
+    public const FIELD_IMAGE_LARGE = 'external_url_large';
+    public const FIELD_SORT_ORDER = 'sort_order';
+    public const FIELD_IMAGE_PREVIEW = 'image_preview';
+    public const FIELD_IMAGE_PREVIEW_LARGE_URL = 'image_preview_large_url';
+    public const FIELD_FK_IMAGE_SET_ID = 'fk_image_set_id';
 
-    const OPTION_IMAGE_PREVIEW_LARGE_URL = 'option_image_preview_large_url';
+    public const OPTION_IMAGE_PREVIEW_LARGE_URL = 'option_image_preview_large_url';
+
+    protected const MAX_SORT_ORDER_VALUE = 2147483647; // 32 bit integer
+    protected const MIN_SORT_ORDER_VALUE = 0;
+    protected const DEFAULT_SORT_ORDER_VALUE = 0;
+
+    /**
+     * @uses \Spryker\Zed\Gui\Communication\Form\Type\ImageType::OPTION_IMAGE_WIDTH
+     */
+    protected const OPTION_IMAGE_WIDTH = 'image_width';
 
     /**
      * @return string
@@ -59,12 +72,12 @@ class ProductImageFormType extends AbstractType
     {
         $this
             ->addProductImageIdHiddenField($builder)
-            ->addProductImageLargeUrlHiddenField($builder)
+            ->addProductImageLargeUrlField($builder)
             ->addImageSetIdHiddenField($builder)
             ->addImagePreviewField($builder)
             ->addImageSmallField($builder)
             ->addImageBigField($builder)
-            ->addOrderHiddenField($builder);
+            ->addSortOrderField($builder);
     }
 
     /**
@@ -84,9 +97,12 @@ class ProductImageFormType extends AbstractType
      *
      * @return $this
      */
-    protected function addProductImageLargeUrlHiddenField(FormBuilderInterface $builder)
+    protected function addProductImageLargeUrlField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_IMAGE_PREVIEW_LARGE_URL, HiddenType::class);
+        $builder->add(static::FIELD_IMAGE_PREVIEW_LARGE_URL, ImageType::class, [
+            'label' => false,
+            static::OPTION_IMAGE_WIDTH => 150,
+        ]);
 
         return $this;
     }
@@ -112,7 +128,7 @@ class ProductImageFormType extends AbstractType
     {
         $builder->add(static::FIELD_IMAGE_PREVIEW, ImageType::class, [
             'label' => false,
-            ImageType::OPTION_IMAGE_WIDTH => 150,
+            static::OPTION_IMAGE_WIDTH => 150,
         ]);
 
         return $this;
@@ -126,7 +142,7 @@ class ProductImageFormType extends AbstractType
     protected function addImageSmallField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_IMAGE_SMALL, TextType::class, [
-            'label' => 'Small Image URL *',
+            'label' => 'Small Image URL',
             'required' => true,
             'constraints' => [
                 new NotBlank(),
@@ -148,7 +164,7 @@ class ProductImageFormType extends AbstractType
     protected function addImageBigField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_IMAGE_LARGE, TextType::class, [
-            'label' => 'Large Image URL *',
+            'label' => 'Large Image URL',
             'required' => true,
             'constraints' => [
                 new NotBlank(),
@@ -167,9 +183,22 @@ class ProductImageFormType extends AbstractType
      *
      * @return $this
      */
-    protected function addOrderHiddenField(FormBuilderInterface $builder)
+    protected function addSortOrderField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_SORT_ORDER, HiddenType::class);
+        $builder->add(static::FIELD_SORT_ORDER, NumberType::class, [
+            'constraints' => [
+                new NotBlank(),
+                new LessThanOrEqual([
+                    'value' => static::MAX_SORT_ORDER_VALUE,
+                ]),
+                new GreaterThanOrEqual([
+                    'value' => static::MIN_SORT_ORDER_VALUE,
+                ]),
+            ],
+            'attr' => [
+                'data-sort-order' => static::DEFAULT_SORT_ORDER_VALUE,
+            ],
+        ]);
 
         return $this;
     }

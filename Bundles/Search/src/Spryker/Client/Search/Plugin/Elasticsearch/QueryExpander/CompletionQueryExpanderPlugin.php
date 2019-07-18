@@ -20,11 +20,11 @@ use Spryker\Client\Search\Exception\InvalidSearchQueryException;
  */
 class CompletionQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
 {
-    const AGGREGATION_NAME = 'completion';
+    public const AGGREGATION_NAME = 'completion';
 
-    const SIZE = 10;
+    public const SIZE = 10;
 
-    const SEARCH_WILDCARD = '.*';
+    public const SEARCH_WILDCARD = '.*';
 
     /**
      * @api
@@ -57,7 +57,7 @@ class CompletionQueryExpanderPlugin extends AbstractPlugin implements QueryExpan
             throw new InvalidSearchQueryException(sprintf(
                 'The base search query must implement %s in order to use %s.',
                 SearchStringGetterInterface::class,
-                get_class($this)
+                static::class
             ));
         }
 

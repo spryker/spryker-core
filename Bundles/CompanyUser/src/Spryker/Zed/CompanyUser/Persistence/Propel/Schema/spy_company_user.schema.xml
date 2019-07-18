@@ -3,6 +3,7 @@
 
     <table name="spy_company_user" phpName="SpyCompanyUser">
         <column name="id_company_user" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="is_active" required="true" type="BOOLEAN" default="true"/>
 
         <column name="fk_company" type="INTEGER" required="true"/>
         <column name="fk_customer" type="INTEGER" required="true"/>

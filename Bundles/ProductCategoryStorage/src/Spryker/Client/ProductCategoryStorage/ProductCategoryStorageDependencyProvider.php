@@ -12,10 +12,13 @@ use Spryker\Client\Kernel\Container;
 use Spryker\Client\ProductCategoryStorage\Dependency\Client\ProductCategoryStorageToStorageClientBridge;
 use Spryker\Client\ProductCategoryStorage\Dependency\Service\ProductCategoryStorageToSynchronizationServiceBridge;
 
+/**
+ * @method \Spryker\Client\ProductCategoryStorage\ProductCategoryStorageConfig getConfig()
+ */
 class ProductCategoryStorageDependencyProvider extends AbstractDependencyProvider
 {
-    const CLIENT_STORAGE = 'CLIENT_STORAGE';
-    const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
+    public const CLIENT_STORAGE = 'CLIENT_STORAGE';
+    public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container

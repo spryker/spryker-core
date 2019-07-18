@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd" name="zed"
+          namespace="Orm\Zed\Customer\Persistence"
+          package="src.Orm.Zed.Customer.Persistence"
+>
+
+    <table name="spy_customer_address" idMethod="native" allowPkInsert="true">
+        <column name="uuid" required="false" type="VARCHAR" size="255"/>
+        <unique name="spy_customer_address-unique-uuid">
+            <unique-column name="uuid"/>
+        </unique>
+        <behavior name="uuid">
+            <parameter name="key_prefix" value="customer_address"/>
+            <parameter name="key_columns" value="id_customer_address.fk_customer"/>
+        </behavior>
+    </table>
+
+</database>

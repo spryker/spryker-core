@@ -15,9 +15,9 @@ use Spryker\Client\Product\Dependency\Service\ProductToUtilEncodingBridge;
 
 class ProductDependencyProvider extends AbstractDependencyProvider
 {
-    const CLIENT_LOCALE = 'client locale';
-    const KV_STORAGE = 'kv storage';
-    const SERVICE_ENCODING = 'util encoding';
+    public const CLIENT_LOCALE = 'client locale';
+    public const KV_STORAGE = 'kv storage';
+    public const SERVICE_ENCODING = 'util encoding';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container

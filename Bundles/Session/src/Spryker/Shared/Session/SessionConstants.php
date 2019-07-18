@@ -12,58 +12,142 @@ namespace Spryker\Shared\Session;
  */
 interface SessionConstants
 {
-    const SESSION_HANDLER_COUCHBASE = 'couchbase';
-    const SESSION_HANDLER_REDIS = 'redis';
-    const SESSION_HANDLER_REDIS_LOCKING = 'redis_locking';
-    const SESSION_HANDLER_MYSQL = 'mysql';
-    const SESSION_HANDLER_FILE = 'file';
+    public const SESSION_IS_TEST = 'SESSION:SESSION_IS_TEST';
 
-    const SESSION_LIFETIME_BROWSER_SESSION = '0';
-    const SESSION_LIFETIME_1_HOUR = '3600';
-    const SESSION_LIFETIME_0_5_HOUR = '1800';
-    const SESSION_LIFETIME_1_DAY = '86400';
-    const SESSION_LIFETIME_2_DAYS = '172800';
-    const SESSION_LIFETIME_3_DAYS = '259200';
-    const SESSION_LIFETIME_30_DAYS = '2592000';
-    const SESSION_LIFETIME_1_YEAR = '31536000';
+    /**
+     * @deprecated Use `Spryker\Shared\SessionRedis\SessionRedisConstants::LOCKING_TIMEOUT_MILLISECONDS` instead.
+     */
+    public const SESSION_HANDLER_REDIS_LOCKING_TIMEOUT_MILLISECONDS = 'SESSION:SESSION_HANDLER_REDIS_LOCKING_TIMEOUT_MILLISECONDS';
 
-    const SESSION_IS_TEST = 'SESSION_IS_TEST';
+    /**
+     * @deprecated Use `Spryker\Shared\SessionRedis\SessionRedisConstants::LOCKING_RETRY_DELAY_MICROSECONDS` instead.
+     */
+    public const SESSION_HANDLER_REDIS_LOCKING_RETRY_DELAY_MICROSECONDS = 'SESSION:SESSION_HANDLER_REDIS_LOCKING_RETRY_DELAY_MICROSECONDS';
 
-    const SESSION_HANDLER_REDIS_LOCKING_TIMEOUT_MILLISECONDS = 'SESSION_HANDLER_REDIS_LOCKING_TIMEOUT_MILLISECONDS';
-    const SESSION_HANDLER_REDIS_LOCKING_RETRY_DELAY_MICROSECONDS = 'SESSION_HANDLER_REDIS_LOCKING_RETRY_DELAY_MICROSECONDS';
-    const SESSION_HANDLER_REDIS_LOCKING_LOCK_TTL_MILLISECONDS = 'SESSION_HANDLER_REDIS_LOCKING_LOCK_TTL_MILLISECONDS';
+    /**
+     * @deprecated Use `Spryker\Shared\SessionRedis\SessionRedisConstants::LOCKING_LOCK_TTL_MILLISECONDS` instead.
+     */
+    public const SESSION_HANDLER_REDIS_LOCKING_LOCK_TTL_MILLISECONDS = 'SESSION:SESSION_HANDLER_REDIS_LOCKING_LOCK_TTL_MILLISECONDS';
 
-    const YVES_SESSION_SAVE_HANDLER = 'YVES_SESSION_SAVE_HANDLER';
-    const YVES_SESSION_COOKIE_NAME = 'YVES_SESSION_NAME'; // Not YVES_SESSION_COOKIE_NAME for BC reasons!
-    const YVES_SESSION_COOKIE_SECURE = 'YVES_COOKIE_SECURE'; // Not YVES_SESSION_COOKIE_SECURE for BC reasons!
-    const YVES_SESSION_COOKIE_DOMAIN = 'YVES_SESSION_COOKIE_DOMAIN';
-    const YVES_SESSION_COOKIE_PATH = 'YVES_SESSION_COOKIE_PATH';
-    const YVES_SESSION_COOKIE_TIME_TO_LIVE = 'YVES_SESSION_COOKIE_TIME_TO_LIVE';
-    const YVES_SESSION_FILE_PATH = 'YVES_SESSION_FILE_PATH';
-    const YVES_SESSION_PERSISTENT_CONNECTION = 'YVES_SESSION_PERSISTENT_CONNECTION';
-    const YVES_SESSION_TIME_TO_LIVE = 'YVES_SESSION_TIME_TO_LIVE';
-    const YVES_SSL_ENABLED = 'YVES_SSL_ENABLED';
+    public const YVES_SESSION_SAVE_HANDLER = 'SESSION:YVES_SESSION_SAVE_HANDLER';
+    public const YVES_SESSION_COOKIE_NAME = 'SESSION:YVES_SESSION_COOKIE_NAME';
+    public const YVES_SESSION_COOKIE_SECURE = 'SESSION:YVES_SESSION_COOKIE_SECURE';
+    public const YVES_SESSION_COOKIE_DOMAIN = 'SESSION:YVES_SESSION_COOKIE_DOMAIN';
+    public const YVES_SESSION_COOKIE_PATH = 'SESSION:YVES_SESSION_COOKIE_PATH';
+    public const YVES_SESSION_COOKIE_TIME_TO_LIVE = 'SESSION:YVES_SESSION_COOKIE_TIME_TO_LIVE';
 
-    const YVES_SESSION_REDIS_PROTOCOL = 'YVES_SESSION_REDIS_PROTOCOL';
-    const YVES_SESSION_REDIS_PASSWORD = 'YVES_SESSION_REDIS_PASSWORD';
-    const YVES_SESSION_REDIS_HOST = 'YVES_SESSION_REDIS_HOST';
-    const YVES_SESSION_REDIS_PORT = 'YVES_SESSION_REDIS_PORT';
-    const YVES_SESSION_REDIS_DATABASE = 'YVES_SESSION_REDIS_DATABASE';
+    /**
+     * @deprecated Use `Spryker\Shared\SessionFile\SessionFileConstants::YVES_SESSION_FILE_PATH` instead.
+     */
+    public const YVES_SESSION_FILE_PATH = 'SESSION:YVES_SESSION_FILE_PATH';
+    public const YVES_SESSION_PERSISTENT_CONNECTION = 'SESSION:YVES_SESSION_PERSISTENT_CONNECTION';
+    public const YVES_SESSION_TIME_TO_LIVE = 'SESSION:YVES_SESSION_TIME_TO_LIVE';
+    public const YVES_SSL_ENABLED = 'SESSION:YVES_SSL_ENABLED';
 
-    const ZED_SSL_ENABLED = 'ZED_SSL_ENABLED';
-    const ZED_SESSION_SAVE_HANDLER = 'ZED_SESSION_SAVE_HANDLER';
-    const ZED_SESSION_COOKIE_NAME = 'ZED_SESSION_COOKIE_NAME';
-    const ZED_SESSION_COOKIE_SECURE = 'ZED_COOKIE_SECURE';
-    const ZED_SESSION_COOKIE_DOMAIN = 'ZED_SESSION_COOKIE_DOMAIN';
-    const ZED_SESSION_COOKIE_PATH = 'ZED_SESSION_COOKIE_PATH';
-    const ZED_SESSION_COOKIE_TIME_TO_LIVE = 'ZED_SESSION_COOKIE_TIME_TO_LIVE';
-    const ZED_SESSION_FILE_PATH = 'ZED_SESSION_FILE_PATH';
-    const ZED_SESSION_PERSISTENT_CONNECTION = 'ZED_SESSION_PERSISTENT_CONNECTION';
-    const ZED_SESSION_TIME_TO_LIVE = 'ZED_SESSION_TIME_TO_LIVE';
+    /**
+     * @deprecated Use `Spryker\Shared\SessionRedis\SessionRedisConstants::YVES_SESSION_REDIS_PROTOCOL` instead.
+     */
+    public const YVES_SESSION_REDIS_PROTOCOL = 'SESSION:YVES_SESSION_REDIS_PROTOCOL';
 
-    const ZED_SESSION_REDIS_PROTOCOL = 'ZED_SESSION_REDIS_PROTOCOL';
-    const ZED_SESSION_REDIS_HOST = 'ZED_SESSION_REDIS_HOST';
-    const ZED_SESSION_REDIS_PORT = 'ZED_SESSION_REDIS_PORT';
-    const ZED_SESSION_REDIS_PASSWORD = 'ZED_SESSION_REDIS_PASSWORD';
-    const ZED_SESSION_REDIS_DATABASE = 'ZED_SESSION_REDIS_DATABASE';
+    /**
+     * @deprecated Use `Spryker\Shared\SessionRedis\SessionRedisConstants::YVES_SESSION_REDIS_PASSWORD` instead.
+     */
+    public const YVES_SESSION_REDIS_PASSWORD = 'SESSION:YVES_SESSION_REDIS_PASSWORD';
+
+    /**
+     * @deprecated Use `Spryker\Shared\SessionRedis\SessionRedisConstants::YVES_SESSION_REDIS_HOST` instead.
+     */
+    public const YVES_SESSION_REDIS_HOST = 'SESSION:YVES_SESSION_REDIS_HOST';
+
+    /**
+     * @deprecated Use `Spryker\Shared\SessionRedis\SessionRedisConstants::YVES_SESSION_REDIS_PORT` instead.
+     */
+    public const YVES_SESSION_REDIS_PORT = 'SESSION:YVES_SESSION_REDIS_PORT';
+
+    /**
+     * @deprecated Use `Spryker\Shared\SessionRedis\SessionRedisConstants::YVES_SESSION_REDIS_DATABASE` instead.
+     */
+    public const YVES_SESSION_REDIS_DATABASE = 'SESSION:YVES_SESSION_REDIS_DATABASE';
+
+    /**
+     * Specification:
+     * - Defines a custom configuration for \Predis\Client when used as Yves session storage.
+     * - This configuration is used exclusively when set, e.g. no other storage configuration will be used for the client.
+     *
+     * @api
+     *
+     * @deprecated Use `Spryker\Shared\SessionRedis\SessionRedisConstants::YVES_SESSION_REDIS_DATA_SOURCE_NAMES` instead.
+     */
+    public const YVES_SESSION_PREDIS_CLIENT_CONFIGURATION = 'SESSION:YVES_SESSION_PREDIS_CLIENT_CONFIGURATION';
+
+    /**
+     * Specification:
+     * - Defines custom options for \Predis\Client when used as Yves session storage.
+     *
+     * @api
+     *
+     * @deprecated Use `Spryker\Shared\SessionRedis\SessionRedisConstants::YVES_SESSION_REDIS_CLIENT_OPTIONS` instead.
+     */
+    public const YVES_SESSION_PREDIS_CLIENT_OPTIONS = 'SESSION:YVES_SESSION_PREDIS_CLIENT_OPTIONS';
+
+    public const ZED_SSL_ENABLED = 'SESSION:ZED_SSL_ENABLED';
+    public const ZED_SESSION_SAVE_HANDLER = 'SESSION:ZED_SESSION_SAVE_HANDLER';
+    public const ZED_SESSION_COOKIE_NAME = 'SESSION:ZED_SESSION_COOKIE_NAME';
+    public const ZED_SESSION_COOKIE_SECURE = 'SESSION:ZED_SESSION_COOKIE_SECURE';
+    public const ZED_SESSION_COOKIE_DOMAIN = 'SESSION:ZED_SESSION_COOKIE_DOMAIN';
+    public const ZED_SESSION_COOKIE_PATH = 'SESSION:ZED_SESSION_COOKIE_PATH';
+    public const ZED_SESSION_COOKIE_TIME_TO_LIVE = 'SESSION:ZED_SESSION_COOKIE_TIME_TO_LIVE';
+
+    /**
+     * @deprecated Use `Spryker\Shared\SessionFile\SessionFileConstants::ZED_SESSION_FILE_PATH` instead.
+     */
+    public const ZED_SESSION_FILE_PATH = 'SESSION:ZED_SESSION_FILE_PATH';
+    public const ZED_SESSION_PERSISTENT_CONNECTION = 'SESSION:ZED_SESSION_PERSISTENT_CONNECTION';
+    public const ZED_SESSION_TIME_TO_LIVE = 'SESSION:ZED_SESSION_TIME_TO_LIVE';
+
+    /**
+     * @deprecated Use `Spryker\Shared\SessionRedis\SessionRedisConstants::ZED_SESSION_REDIS_PROTOCOL` instead.
+     */
+    public const ZED_SESSION_REDIS_PROTOCOL = 'SESSION:ZED_SESSION_REDIS_PROTOCOL';
+
+    /**
+     * @deprecated Use `Spryker\Shared\SessionRedis\SessionRedisConstants::ZED_SESSION_REDIS_HOST` instead.
+     */
+    public const ZED_SESSION_REDIS_HOST = 'SESSION:ZED_SESSION_REDIS_HOST';
+
+    /**
+     * @deprecated Use `Spryker\Shared\SessionRedis\SessionRedisConstants::ZED_SESSION_REDIS_PORT` instead.
+     */
+    public const ZED_SESSION_REDIS_PORT = 'SESSION:ZED_SESSION_REDIS_PORT';
+
+    /**
+     * @deprecated Use `Spryker\Shared\SessionRedis\SessionRedisConstants::ZED_SESSION_REDIS_PASSWORD` instead.
+     */
+    public const ZED_SESSION_REDIS_PASSWORD = 'SESSION:ZED_SESSION_REDIS_PASSWORD';
+
+    /**
+     * @deprecated Use `Spryker\Shared\SessionRedis\SessionRedisConstants::ZED_SESSION_REDIS_DATABASE` instead.
+     */
+    public const ZED_SESSION_REDIS_DATABASE = 'SESSION:ZED_SESSION_REDIS_DATABASE';
+
+    /**
+     * Specification:
+     * - Defines a custom configuration for \Predis\Client when used as Zed session storage.
+     * - This configuration is used exclusively when set, e.g. no other storage configuration will be used for the client.
+     *
+     * @api
+     *
+     * @deprecated Use `Spryker\Shared\SessionRedis\SessionRedisConstants::ZED_SESSION_REDIS_DATA_SOURCE_NAMES` instead.
+     */
+    public const ZED_SESSION_PREDIS_CLIENT_CONFIGURATION = 'SESSION:ZED_SESSION_PREDIS_CLIENT_CONFIGURATION';
+
+    /**
+     * Specification:
+     * - Defines custom options for \Predis\Client when used as Zed session storage.
+     *
+     * @api
+     *
+     * @deprecated Use `Spryker\Shared\SessionRedis\SessionRedisConstants::ZED_SESSION_REDIS_CLIENT_OPTIONS` instead.
+     */
+    public const ZED_SESSION_PREDIS_CLIENT_OPTIONS = 'SESSION:ZED_SESSION_PREDIS_CLIENT_OPTIONS';
 }

@@ -15,6 +15,7 @@ use Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributes;
 use Orm\Zed\ProductImageStorage\Persistence\SpyProductAbstractImageStorage;
 use Spryker\Zed\ProductImageStorage\Dependency\Facade\ProductImageStorageToProductImageInterface;
 use Spryker\Zed\ProductImageStorage\Persistence\ProductImageStorageQueryContainerInterface;
+use Spryker\Zed\ProductImageStorage\Persistence\ProductImageStorageRepositoryInterface;
 
 class ProductAbstractImageStorageWriter implements ProductAbstractImageStorageWriterInterface
 {
@@ -29,6 +30,11 @@ class ProductAbstractImageStorageWriter implements ProductAbstractImageStorageWr
     protected $queryContainer;
 
     /**
+     * @var \Spryker\Zed\ProductImageStorage\Persistence\ProductImageStorageRepositoryInterface
+     */
+    protected $repository;
+
+    /**
      * @var bool
      */
     protected $isSendingToQueue = true;
@@ -36,46 +42,146 @@ class ProductAbstractImageStorageWriter implements ProductAbstractImageStorageWr
     /**
      * @param \Spryker\Zed\ProductImageStorage\Dependency\Facade\ProductImageStorageToProductImageInterface $productImageFacade
      * @param \Spryker\Zed\ProductImageStorage\Persistence\ProductImageStorageQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\ProductImageStorage\Persistence\ProductImageStorageRepositoryInterface $repository
      * @param bool $isSendingToQueue
      */
-    public function __construct(ProductImageStorageToProductImageInterface $productImageFacade, ProductImageStorageQueryContainerInterface $queryContainer, $isSendingToQueue)
-    {
+    public function __construct(
+        ProductImageStorageToProductImageInterface $productImageFacade,
+        ProductImageStorageQueryContainerInterface $queryContainer,
+        ProductImageStorageRepositoryInterface $repository,
+        $isSendingToQueue
+    ) {
         $this->productImageFacade = $productImageFacade;
         $this->queryContainer = $queryContainer;
+        $this->repository = $repository;
         $this->isSendingToQueue = $isSendingToQueue;
     }
 
     /**
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return void
      */
     public function publish(array $productAbstractIds)
     {
-        $spyProductAbstractLocalizedEntities = $this->findProductAbstractLocalizedEntities($productAbstractIds);
+        $productAbstractLocalizedEntities = $this->findProductAbstractLocalizedEntities($productAbstractIds);
         $imageSets = [];
-        foreach ($spyProductAbstractLocalizedEntities as $spyProductAbstractLocalizedEntity) {
-            $generateProductAbstractImageSets = $this->generateProductAbstractImageSets($spyProductAbstractLocalizedEntity->getFkProductAbstract(), $spyProductAbstractLocalizedEntity->getFkLocale());
-            $imageSets[$spyProductAbstractLocalizedEntity->getFkProductAbstract()] = $generateProductAbstractImageSets;
+        $productAbstractImageSetsBulk = $this->getImageSetsIndexedByProductAbstractIdAndLocale(
+            $this->repository->getProductImageSetsByFkAbstractProductIn($productAbstractIds)
+        );
+        $defaultProductAbstractImageSetsBulk = $this->getImageSetsIndexedByProductAbstractId(
+            $this->repository->getDefaultAbstractProductImageSetsByIdAbstractProductIn($productAbstractIds)
+        );
+
+        foreach ($productAbstractLocalizedEntities as $productAbstractLocalizedEntity) {
+            $idProductAbstract = $productAbstractLocalizedEntity->getFkProductAbstract();
+            $idLocale = $productAbstractLocalizedEntity->getFkLocale();
+            $idAbstractAttributes = $productAbstractLocalizedEntity->getIdAbstractAttributes();
+
+            if (!isset($productAbstractImageSetsBulk[$idProductAbstract][$idLocale]) &&
+                !isset($defaultProductAbstractImageSetsBulk[$idProductAbstract])
+            ) {
+                continue;
+            }
+
+            if (isset($productAbstractImageSetsBulk[$idProductAbstract][$idLocale])) {
+                $imageSets[$idProductAbstract][$idAbstractAttributes] = $this->generateProductAbstractImageSets(
+                    $productAbstractImageSetsBulk[$idProductAbstract][$idLocale]
+                );
+
+                continue;
+            }
+
+            $imageSets[$idProductAbstract][$idAbstractAttributes] = $this->generateProductAbstractImageSets(
+                $defaultProductAbstractImageSetsBulk[$idProductAbstract]
+            );
         }
 
-        $spyProductAbstractImageStorageEntities = $this->findProductAbstractImageStorageEntitiesByProductAbstractIds($productAbstractIds);
-        $this->storeData($spyProductAbstractLocalizedEntities, $spyProductAbstractImageStorageEntities, $imageSets);
+        $productAbstractImageStorageEntities = $this->findProductAbstractImageStorageEntitiesByProductAbstractIds($productAbstractIds);
+        $this->storeData($productAbstractLocalizedEntities, $productAbstractImageStorageEntities, $imageSets);
     }
 
     /**
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return void
      */
     public function unpublish(array $productAbstractIds)
     {
-        $spyProductAbstractImageStorageEntities = $this->findProductAbstractImageStorageEntitiesByProductAbstractIds($productAbstractIds);
-        foreach ($spyProductAbstractImageStorageEntities as $spyProductAbstractImageStorageLocalizedEntities) {
-            foreach ($spyProductAbstractImageStorageLocalizedEntities as $spyProductAbstractImageStorageLocalizedEntity) {
-                $spyProductAbstractImageStorageLocalizedEntity->delete();
+        $imageSets = [];
+
+        $productAbstractLocalizedEntities = $this->findProductAbstractLocalizedEntities($productAbstractIds);
+        $defaultProductAbstractImageSetsBulk = $this->getImageSetsIndexedByProductAbstractId(
+            $this->repository->getDefaultAbstractProductImageSetsByIdAbstractProductIn($productAbstractIds)
+        );
+        $productAbstractImageSetsBulk = $this->getImageSetsIndexedByProductAbstractIdAndLocale(
+            $this->repository->getProductImageSetsByFkAbstractProductIn($productAbstractIds)
+        );
+        $productAbstractImageStorageEntities = $this->findProductAbstractImageStorageEntitiesByProductAbstractIds($productAbstractIds);
+
+        foreach ($productAbstractLocalizedEntities as $productAbstractLocalizedEntity) {
+            $idProductAbstract = $productAbstractLocalizedEntity->getFkProductAbstract();
+            $idLocale = $productAbstractLocalizedEntity->getFkLocale();
+            $idAbstractAttributes = $productAbstractLocalizedEntity->getIdAbstractAttributes();
+            $localeName = $productAbstractLocalizedEntity->getLocale()->getLocaleName();
+
+            if (isset($productAbstractImageSetsBulk[$idProductAbstract][$idLocale])) {
+                continue;
+            }
+
+            if (isset($defaultProductAbstractImageSetsBulk[$idProductAbstract])) {
+                $imageSets[$idProductAbstract][$idAbstractAttributes] = $this->generateProductAbstractImageSets(
+                    $defaultProductAbstractImageSetsBulk[$idProductAbstract]
+                );
+
+                continue;
+            }
+
+            if (!isset($productAbstractImageStorageEntities[$idProductAbstract][$localeName])) {
+                continue;
+            }
+
+            $productAbstractImageStorageEntities[$idProductAbstract][$localeName]->delete();
+            unset($productAbstractImageStorageEntities[$idProductAbstract][$localeName]);
+        }
+
+        $this->storeData($productAbstractLocalizedEntities, $productAbstractImageStorageEntities, $imageSets);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SpyProductImageSetEntityTransfer[] $productImageSets
+     *
+     * @return array
+     */
+    protected function getImageSetsIndexedByProductAbstractId(array $productImageSets): array
+    {
+        $indexedProductImageSets = [];
+
+        foreach ($productImageSets as $productImageSet) {
+            if ($productImageSet->getFkProductAbstract()) {
+                $indexedProductImageSets[$productImageSet->getFkProductAbstract()][] = $productImageSet;
             }
         }
+
+        return $indexedProductImageSets;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SpyProductImageSetEntityTransfer[] $productImageSets
+     *
+     * @return array
+     */
+    protected function getImageSetsIndexedByProductAbstractIdAndLocale(array $productImageSets): array
+    {
+        $indexedProductImageSets = [];
+
+        foreach ($productImageSets as $productImageSet) {
+            if ($productImageSet->getFkProductAbstract()) {
+                $indexedProductImageSets[$productImageSet->getFkProductAbstract()][$productImageSet->getFkLocale()][] = $productImageSet;
+            }
+        }
+
+        return $indexedProductImageSets;
     }
 
     /**
@@ -93,6 +199,10 @@ class ProductAbstractImageStorageWriter implements ProductAbstractImageStorageWr
             if (isset($spyProductAbstractImageStorageEntities[$idProduct][$localeName])) {
                 $this->storeDataSet($spyProductAbstractLocalizedEntity, $imagesSets, $spyProductAbstractImageStorageEntities[$idProduct][$localeName]);
 
+                continue;
+            }
+
+            if (!isset($imagesSets[$idProduct][$spyProductAbstractLocalizedEntity->getIdAbstractAttributes()])) {
                 continue;
             }
 
@@ -123,7 +233,7 @@ class ProductAbstractImageStorageWriter implements ProductAbstractImageStorageWr
 
         $productAbstractStorageTransfer = new ProductAbstractImageStorageTransfer();
         $productAbstractStorageTransfer->setIdProductAbstract($spyProductAbstractLocalizedEntity->getFkProductAbstract());
-        $productAbstractStorageTransfer->setImageSets($imageSets[$spyProductAbstractLocalizedEntity->getFkProductAbstract()]);
+        $productAbstractStorageTransfer->setImageSets($imageSets[$spyProductAbstractLocalizedEntity->getFkProductAbstract()][$spyProductAbstractLocalizedEntity->getIdAbstractAttributes()]);
 
         $spyProductAbstractImageStorage->setFkProductAbstract($spyProductAbstractLocalizedEntity->getFkProductAbstract());
         $spyProductAbstractImageStorage->setData($productAbstractStorageTransfer->toArray());
@@ -133,23 +243,20 @@ class ProductAbstractImageStorageWriter implements ProductAbstractImageStorageWr
     }
 
     /**
-     * @param int $idProductAbstract
-     * @param int $idLocale
+     * @param \Generated\Shared\Transfer\SpyProductImageSetEntityTransfer[] $productImageSetEntityTransfers
      *
-     * @return array
+     * @return \ArrayObject
      */
-    protected function generateProductAbstractImageSets($idProductAbstract, $idLocale)
+    protected function generateProductAbstractImageSets(array $productImageSetEntityTransfers)
     {
-        $imageSetTransfers = $this->productImageFacade->getCombinedAbstractImageSets(
-            $idProductAbstract,
-            $idLocale
-        );
-
         $imageSets = new ArrayObject();
-        foreach ($imageSetTransfers as $imageSetTransfer) {
+
+        foreach ($productImageSetEntityTransfers as $productImageSetEntityTransfer) {
             $imageSet = (new ProductImageSetStorageTransfer())
-                ->setName($imageSetTransfer->getName());
-            foreach ($imageSetTransfer->getProductImages() as $productImageTransfer) {
+                ->setName($productImageSetEntityTransfer->getName());
+            foreach ($productImageSetEntityTransfer->getSpyProductImageSetToProductImages() as $productImageSetToProductImageTransfer) {
+                $productImageTransfer = $productImageSetToProductImageTransfer->getSpyProductImage();
+
                 $imageSet->addImage((new ProductImageStorageTransfer())
                     ->setIdProductImage($productImageTransfer->getIdProductImage())
                     ->setExternalUrlLarge($productImageTransfer->getExternalUrlLarge())
@@ -174,7 +281,7 @@ class ProductAbstractImageStorageWriter implements ProductAbstractImageStorageWr
     /**
      * @param array $productAbstractIds
      *
-     * @return array
+     * @return \Orm\Zed\ProductImageStorage\Persistence\SpyProductAbstractImageStorage[][]
      */
     protected function findProductAbstractImageStorageEntitiesByProductAbstractIds(array $productAbstractIds)
     {

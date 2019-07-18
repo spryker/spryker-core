@@ -100,7 +100,7 @@ class CompanyUserInvitationFacadeWithUserPermissionTest extends Test
 
         $this->permissionCollectionTransfer = (new PermissionCollectionBuilder())->build();
         foreach (static::PERMISSION_PLUGINS as $permissionPlugin) {
-            $permissionTransfer = $this->tester->havePermission(new $permissionPlugin);
+            $permissionTransfer = $this->tester->havePermission(new $permissionPlugin());
             $this->permissionCollectionTransfer->addPermission($permissionTransfer);
         }
 

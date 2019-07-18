@@ -9,5 +9,5 @@ namespace Spryker\Shared\Navigation;
 
 class NavigationConfig
 {
-    const RESOURCE_TYPE_NAVIGATION_MENU = 'navigation_menu';
+    public const RESOURCE_TYPE_NAVIGATION_MENU = 'navigation_menu';
 }

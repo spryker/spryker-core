@@ -14,10 +14,14 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderCommentQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
+use Spryker\Zed\Sales\Persistence\Propel\Mapper\SalesExpenseMapper;
+use Spryker\Zed\Sales\Persistence\Propel\Mapper\SalesExpenseMapperInterface;
 
 /**
  * @method \Spryker\Zed\Sales\SalesConfig getConfig()
  * @method \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Sales\Persistence\SalesEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\Sales\Persistence\SalesRepositoryInterface getRepository()
  */
 class SalesPersistenceFactory extends AbstractPersistenceFactory
 {
@@ -69,5 +73,13 @@ class SalesPersistenceFactory extends AbstractPersistenceFactory
     public function createOmsOrderItemStateHistoryQuery()
     {
         return SpyOmsOrderItemStateHistoryQuery::create();
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Persistence\Propel\Mapper\SalesExpenseMapperInterface
+     */
+    public function createSalesExpenseMapper(): SalesExpenseMapperInterface
+    {
+        return new SalesExpenseMapper();
     }
 }

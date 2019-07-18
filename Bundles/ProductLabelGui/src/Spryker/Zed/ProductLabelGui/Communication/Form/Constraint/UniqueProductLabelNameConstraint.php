@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraint;
 
 class UniqueProductLabelNameConstraint extends Constraint
 {
-    const OPTION_QUERY_CONTAINER = 'queryContainer';
+    public const OPTION_QUERY_CONTAINER = 'queryContainer';
 
     /**
      * @var \Spryker\Zed\ProductLabelGui\Persistence\ProductLabelGuiQueryContainerInterface

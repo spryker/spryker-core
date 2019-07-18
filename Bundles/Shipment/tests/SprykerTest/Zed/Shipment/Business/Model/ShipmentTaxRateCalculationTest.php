@@ -39,8 +39,8 @@ use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainer;
  */
 class ShipmentTaxRateCalculationTest extends Unit
 {
-    const DEFAULT_TAX_RATE = 19;
-    const DEFAULT_TAX_COUNTRY = 'DE';
+    public const DEFAULT_TAX_RATE = 19;
+    public const DEFAULT_TAX_COUNTRY = 'DE';
 
     /**
      * @return void
@@ -223,7 +223,7 @@ class ShipmentTaxRateCalculationTest extends Unit
     /**
      * @param float|null $countryTaxRate
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Shipment\Persistence\ShipmentQueryContainer
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Shipment\Persistence\ShipmentQueryContainer
      */
     protected function createQueryContainerMock($countryTaxRate)
     {
@@ -251,7 +251,7 @@ class ShipmentTaxRateCalculationTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Shipment\Dependency\ShipmentToTaxBridge
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Shipment\Dependency\ShipmentToTaxBridge
      */
     protected function createProductOptionToTaxBridgeMock()
     {

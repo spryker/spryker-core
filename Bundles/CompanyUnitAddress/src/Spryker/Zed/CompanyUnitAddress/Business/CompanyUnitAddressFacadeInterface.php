@@ -18,6 +18,8 @@ interface CompanyUnitAddressFacadeInterface
     /**
      * Specification:
      * - Finds a company unit address by CompanyUnitAddressTransfer::idCompanyUnitAddress in the transfer
+     * - Extends returned company unit address transfer with country iso code.
+     * - Extends returned company unit address transfer with company business unit collection.
      *
      * @api
      *
@@ -43,6 +45,7 @@ interface CompanyUnitAddressFacadeInterface
      * Specification:
      * - Finds a company unit address by CompanyUnitAddressTransfer::idCompanyUnitAddress in the transfer
      * - Updates fields in a company unit address entity
+     * - Updates a list addresses assignment for company business unit
      *
      * @api
      *
@@ -68,6 +71,8 @@ interface CompanyUnitAddressFacadeInterface
     /**
      * Specification:
      * - Returns the company unit address collection.
+     * - Extends each returned company unit address transfer with country iso code.
+     * - Extends each returned company unit address transfer with company business unit collection.
      *
      * @api
      *
@@ -92,4 +97,33 @@ interface CompanyUnitAddressFacadeInterface
     public function saveCompanyBusinessUnitAddresses(
         CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
     ): void;
+
+    /**
+     * Specification:
+     * - Finds a company unit address by id.
+     * - Returns null if unit address does not exist.
+     * - Expands company business unit with extra data using plugins (CompanyUnitAddressHydratePluginInterface).
+     *
+     * @api
+     *
+     * @param int $idCompanyUnitAddress
+     *
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer|null
+     */
+    public function findCompanyUnitAddressById(int $idCompanyUnitAddress): ?CompanyUnitAddressTransfer;
+
+    /**
+     * Specification:
+     * - Retrieves a company unit address by uuid.
+     * - Requires uuid field to be set in CompanyUnitAddressTransfer taken as parameter.
+     *
+     * @api
+     *
+     * {@internal will work if UUID field is provided.}
+     *
+     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer
+     */
+    public function findCompanyBusinessUnitAddressByUuid(CompanyUnitAddressTransfer $companyUnitAddressTransfer): CompanyUnitAddressResponseTransfer;
 }

@@ -31,10 +31,13 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class OrderStateMachine implements OrderStateMachineInterface
 {
-    const BY_ITEM = 'byItem';
-    const BY_ORDER = 'byOrder';
-    const MAX_EVENT_REPEATS = 10;
-    const MAX_ON_ENTER = 50;
+    public const BY_ITEM = 'byItem';
+    public const BY_ORDER = 'byOrder';
+    public const MAX_EVENT_REPEATS = 10;
+    /**
+     * @deprecated Not in use anymore, will be removed in the next major.
+     */
+    public const MAX_ON_ENTER = 50;
 
     use DatabaseTransactionHandlerTrait;
 
@@ -262,8 +265,12 @@ class OrderStateMachine implements OrderStateMachineInterface
         $data = $this->makeDataReadOnly($data);
         $sourceStateBuffer = [];
         $processes = $this->getProcesses($orderItems);
+
         $orderItemsWithOnEnterEvent = $this->filterItemsWithOnEnterEvent($orderItems, $processes, $sourceStateBuffer);
         $this->triggerOnEnterEvents($orderItemsWithOnEnterEvent, $data);
+
+        $orderItemsWithTimeoutEvent = $this->filterItemsWithTimeoutEvent($orderItems, $processes);
+        $this->saveTimeoutEvents($orderItemsWithTimeoutEvent);
 
         return $this->returnData;
     }
@@ -661,7 +668,7 @@ class OrderStateMachine implements OrderStateMachineInterface
      *
      * @throws \LogicException
      *
-     * @return array
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem[][]
      */
     protected function filterItemsWithOnEnterEvent(array $orderItems, array $processes, array $sourceStateBuffer)
     {
@@ -733,7 +740,7 @@ class OrderStateMachine implements OrderStateMachineInterface
     }
 
     /**
-     * @param array $orderItemsWithOnEnterEvent
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[][] $orderItemsWithOnEnterEvent
      * @param \Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject $data
      *
      * @return void
@@ -904,6 +911,116 @@ class OrderStateMachine implements OrderStateMachineInterface
 
         if ($sourceStateIsReserved !== $targetStateIsReserved) {
             $this->reservation->updateReservationQuantity($sku);
+        }
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
+     * @param \Spryker\Zed\Oms\Business\Process\ProcessInterface[] $processes
+     *
+     * @throws \LogicException
+     *
+     * @return array
+     */
+    protected function filterItemsWithTimeoutEvent(array $orderItems, array $processes)
+    {
+        $orderItemsWithTimeoutEvent = [];
+        foreach ($orderItems as $orderItem) {
+            $stateId = $orderItem->getState()->getName();
+            $processId = $orderItem->getProcess()->getName();
+
+            if (!isset($processes[$processId])) {
+                throw new LogicException("Unknown process $processId");
+            }
+
+            $process = $processes[$processId];
+            $targetState = $process->getStateFromAllProcesses($stateId);
+
+            if ($targetState->hasTimeoutEvent()) {
+                $events = $targetState->getTimeoutEvents();
+                foreach ($events as $event) {
+                    if (array_key_exists($event->getName(), $orderItemsWithTimeoutEvent) === false) {
+                        $orderItemsWithTimeoutEvent[$event->getName()] = [];
+                    }
+                    $orderItemsWithTimeoutEvent[$event->getName()][] = $orderItem;
+                }
+            }
+        }
+
+        return $orderItemsWithTimeoutEvent;
+    }
+
+    /**
+     * @param array $orderItemsWithTimeoutEvent
+     *
+     * @return void
+     */
+    protected function saveTimeoutEvents(array $orderItemsWithTimeoutEvent)
+    {
+        foreach ($orderItemsWithTimeoutEvent as $eventId => $orderItems) {
+            $this->saveTimeoutEvent($eventId, $orderItems);
+        }
+    }
+
+    /**
+     * @param string $eventId
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
+     *
+     * @return void
+     */
+    protected function saveTimeoutEvent($eventId, array $orderItems)
+    {
+        if ($this->checkForEventRepetitions($eventId) === false) {
+            return;
+        }
+
+        $processes = $this->getProcesses($orderItems);
+        $orderItems = $this->filterAffectedOrderItems($eventId, $orderItems, $processes);
+        $sourceStateBuffer = $this->getStateByEvent($orderItems);
+        $orderGroup = $this->groupByOrderAndState($eventId, $orderItems, $processes);
+
+        foreach ($orderGroup as $groupedOrderItems) {
+            $this->saveOrderItemsTimeout($groupedOrderItems, $processes, $sourceStateBuffer);
+        }
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
+     *
+     * @return array
+     */
+    protected function getStateByEvent(array $orderItems)
+    {
+        $sourceStateBuffer = [];
+        foreach ($orderItems as $orderItem) {
+            $stateId = $orderItem->getState()->getName();
+            $sourceStateBuffer[$orderItem->getIdSalesOrderItem()] = $stateId;
+        }
+
+        return $sourceStateBuffer;
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
+     * @param \Spryker\Zed\Oms\Business\Process\ProcessInterface[] $processes
+     * @param array $sourceStateBuffer
+     *
+     * @return void
+     */
+    protected function saveOrderItemsTimeout(array $orderItems, array $processes, array $sourceStateBuffer)
+    {
+        $currentTime = new DateTime('now');
+        foreach ($orderItems as $orderItem) {
+            $process = $processes[$orderItem->getProcess()->getName()];
+
+            $sourceStateId = $sourceStateBuffer[$orderItem->getIdSalesOrderItem()];
+            $targetStateId = $orderItem->getState()->getName();
+            $targetState = $process->getStateFromAllProcesses($targetStateId);
+
+            if ($targetState->hasTimeoutEvent()) {
+                $this->timeout->dropOldTimeout($process, $sourceStateId, $orderItem);
+                $this->timeout->setNewTimeout($process, $orderItem, $currentTime);
+            }
         }
     }
 }

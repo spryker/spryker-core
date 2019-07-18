@@ -12,15 +12,17 @@ use Silex\ServiceProviderInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use Symfony\Bridge\Twig\Extension\HttpKernelRuntime;
 use Symfony\Component\HttpKernel\Fragment\FragmentHandler;
+use Twig\Environment;
 use Twig\RuntimeLoader\FactoryRuntimeLoader;
-use Twig_Environment;
 
 /**
+ * @deprecated Use \Spryker\Yves\Twig\Plugin\Application\TwigApplicationPlugin instead.
+ *
  * @method \Spryker\Yves\Twig\TwigFactory getFactory()
  */
 class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
-    const TWIG_LOADER_YVES = 'twig.loader.yves';
+    public const TWIG_LOADER_YVES = 'twig.loader.yves';
 
     /**
      * @param \Silex\Application $app
@@ -37,7 +39,7 @@ class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInter
             $app['twig'] = $app->share(
                 $app->extend(
                     'twig',
-                    function (Twig_Environment $twig) use ($app) {
+                    function (Environment $twig) use ($app) {
                         $callback = function () use ($app) {
                             $fragmentHandler = new FragmentHandler($app['request_stack'], $app['fragment.renderers']);
 

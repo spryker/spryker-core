@@ -16,7 +16,7 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
  */
 class IndexController extends AbstractController
 {
-    const ID_PRODUCT_ABSTRACT = 'id-product-abstract';
+    public const ID_PRODUCT_ABSTRACT = 'id-product-abstract';
 
     /**
      * @return array

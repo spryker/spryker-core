@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Cart\Business\Model;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 interface OperationInterface
@@ -25,6 +26,13 @@ interface OperationInterface
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function add(CartChangeTransfer $cartChangeTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function addToCart(CartChangeTransfer $cartChangeTransfer): QuoteResponseTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer

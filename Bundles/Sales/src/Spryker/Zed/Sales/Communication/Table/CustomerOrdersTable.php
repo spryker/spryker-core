@@ -122,7 +122,7 @@ class CustomerOrdersTable extends OrdersTable
     }
 
     /**
-     * @return $this|\Orm\Zed\Sales\Persistence\SpySalesOrderQuery
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
      */
     protected function buildQuery()
     {

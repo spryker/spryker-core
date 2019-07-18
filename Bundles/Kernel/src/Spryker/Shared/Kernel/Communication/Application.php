@@ -20,9 +20,9 @@ class Application extends SilexApplication
     use TwigTrait;
     use UrlGeneratorTrait;
 
-    const REQUEST = 'request';
-    const ROUTERS = 'routers';
-    const REQUEST_STACK = 'request_stack';
+    public const REQUEST = 'request';
+    public const ROUTERS = 'routers';
+    public const REQUEST_STACK = 'request_stack';
 
     /**
      * Adds a router to the list of routers.

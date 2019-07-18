@@ -168,16 +168,16 @@ class FileManagerFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testRead()
+    public function testReadsLatestVersionOfFile()
     {
         $fileManagerDataTransfer = $this->facade->findFileByIdFile($this->tester->getIdFile());
-        $this->assertEquals('first version of the file', $fileManagerDataTransfer->getContent());
+        $this->assertEquals('second version of the file', $fileManagerDataTransfer->getContent());
         $this->assertEquals('customer.txt', $fileManagerDataTransfer->getFile()->getFileName());
         $this->assertEquals($this->tester->getIdFile(), $fileManagerDataTransfer->getFile()->getIdFile());
-        $this->assertEquals('customer_v1.txt', $fileManagerDataTransfer->getFileInfo()->getStorageFileName());
+        $this->assertEquals('customer_v2.txt', $fileManagerDataTransfer->getFileInfo()->getStorageFileName());
         $this->assertEquals('txt', $fileManagerDataTransfer->getFileInfo()->getExtension());
-        $this->assertEquals('1', $fileManagerDataTransfer->getFileInfo()->getVersion());
-        $this->assertEquals('v. 1', $fileManagerDataTransfer->getFileInfo()->getVersionName());
+        $this->assertEquals('2', $fileManagerDataTransfer->getFileInfo()->getVersion());
+        $this->assertEquals('v. 2', $fileManagerDataTransfer->getFileInfo()->getVersionName());
         $this->assertEquals(10, $fileManagerDataTransfer->getFileInfo()->getSize());
     }
 
@@ -251,7 +251,7 @@ class FileManagerFacadeTest extends Unit
         $fileDirectoryTransfer->setIsActive(true);
         $fileDirectoryTransfer->setPosition(1);
         $fileDirectoryId = $this->facade->saveDirectory($fileDirectoryTransfer);
-        $this->assertInternalType('int', $fileDirectoryId);
+        $this->assertIsInt($fileDirectoryId);
 
         $file = new FileTransfer();
         $file->setFileContent('big directory file');
@@ -272,7 +272,7 @@ class FileManagerFacadeTest extends Unit
         $fileManagerDataTransfer->setFileInfo($fileInfo);
 
         $fileManagerDataTransfer = $this->facade->saveFile($fileManagerDataTransfer);
-        $this->assertInternalType('int', $fileManagerDataTransfer->getFile()->getIdFile());
+        $this->assertIsInt($fileManagerDataTransfer->getFile()->getIdFile());
         $this->assertFileExists(
             $this->tester->getDocumentFullFileName(
                 $fileDirectoryId . DIRECTORY_SEPARATOR . $fileManagerDataTransfer->getFile()->getIdFile() . '-v.1.txt'
@@ -395,6 +395,28 @@ class FileManagerFacadeTest extends Unit
         $this->assertInstanceOf(MimeTypeResponseTransfer::class, $mimeTypeResponseTransfer);
         $this->assertTrue($mimeTypeResponseTransfer->getIsSuccessful());
         $this->assertNull($this->findMimeTypeById(1)->getIdMimeType());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetFilesByIds(): void
+    {
+        // Arrange
+        $idFiles = $this->tester->insertFilesCollection();
+
+        // Act
+        $fileManagerDataTransfers = $this->facade->getFilesByIds($idFiles);
+
+        // Assert
+        $this->assertCount(9, $fileManagerDataTransfers);
+
+        foreach ($fileManagerDataTransfers as $fileManagerDataTransfer) {
+            $this->assertInstanceOf(FileManagerDataTransfer::class, $fileManagerDataTransfer);
+            $this->assertInstanceOf(FileTransfer::class, $fileManagerDataTransfer->getFile());
+            $this->assertInstanceOf(FileInfoTransfer::class, $fileManagerDataTransfer->getFileInfo());
+            $this->assertContains($fileManagerDataTransfer->getFile()->getIdFile(), $idFiles);
+        }
     }
 
     /**

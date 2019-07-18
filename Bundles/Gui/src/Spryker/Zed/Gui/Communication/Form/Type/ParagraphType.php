@@ -14,10 +14,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * @method \Spryker\Zed\Gui\Communication\GuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Gui\GuiConfig getConfig()
  */
 class ParagraphType extends AbstractType
 {
-    const OPTION_TEXT = 'text';
+    public const OPTION_TEXT = 'text';
 
     /**
      * @param \Symfony\Component\Form\FormView $view

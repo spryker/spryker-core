@@ -1,0 +1,3 @@
+company_user_key,customer_reference,company_key,is_default
+ComUser--1,DE--8,Test_ltd,
+ComUser--2,DE--9,Test_ltd,true

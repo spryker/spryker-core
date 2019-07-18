@@ -12,22 +12,22 @@ use SprykerTest\Zed\Discount\DiscountPresentationTester;
 
 class DiscountCreatePage
 {
-    const URL = '/discount/index/create';
+    public const URL = '/discount/index/create';
 
-    const MESSAGE_SUCCESSFUL_ALERT_CREATION = 'Discount successfully created, but not activated.';
-    const MESSAGE_SUCCESSFUL_ALERT_ACTIVATION = 'Discount successfully activated.';
+    public const MESSAGE_SUCCESSFUL_ALERT_CREATION = 'Discount successfully created, but not activated.';
+    public const MESSAGE_SUCCESSFUL_ALERT_ACTIVATION = 'Discount successfully activated.';
 
     // DATA
-    const DISCOUNT_VALID_EXCLUSIVE = 'validExclusiveDiscount';
-    const EMPTY_DISCOUNT = 'emptyDiscount';
-    const DISCOUNT_VALID_NOT_EXCLUSIVE = 'validNotExclusiveDiscount';
+    public const DISCOUNT_VALID_EXCLUSIVE = 'validExclusiveDiscount';
+    public const EMPTY_DISCOUNT = 'emptyDiscount';
+    public const DISCOUNT_VALID_NOT_EXCLUSIVE = 'validNotExclusiveDiscount';
 
     // Locators: Discount Tab
-    const BTN_CALCULATION_GET = '#btn-calculation-get';
-    const FIELD_DISCOUNT_QUERY = '#discount_discountCalculator_collector_query_string';
-    const DISCOUNT_CALCULATION_GROUP = '#builder_calculation_group_0';
-    const CURRENT_TAB = '.nav-tabs li.active';
-    const CURRENT_TAB_ERROR = '.nav-tabs li.active.error';
+    public const BTN_CALCULATION_GET = '#btn-calculation-get';
+    public const FIELD_DISCOUNT_QUERY = '#discount_discountCalculator_collector_query_string';
+    public const DISCOUNT_CALCULATION_GROUP = '#builder_calculation_group_0';
+    public const CURRENT_TAB = '.nav-tabs li.active';
+    public const CURRENT_TAB_ERROR = '.nav-tabs li.active.error';
 
     /**
      * @var array
@@ -76,15 +76,15 @@ class DiscountCreatePage
     }
 
     /**
-     * @param string $tabName
+     * @param string $dataTabId
      *
      * @return $this
      */
-    public function tab($tabName)
+    public function tab(string $dataTabId)
     {
-        $xpath = sprintf('//div[@class="tabs-container"]/ul/li/a[contains(., "%s")]', $tabName);
+        $xpath = sprintf('//div[@class="tabs-container"]/ul/li[@data-tab-content-id="%s"]/a', $dataTabId);
 
-        $this->tester->comment("At [$tabName] Tab");
+        $this->tester->comment("At [$dataTabId] Tab");
         $this->tester->click($xpath);
 
         return $this;
@@ -130,13 +130,13 @@ class DiscountCreatePage
         !$data['validFrom'] ?: $i->fillField('#discount_discountGeneral_valid_from', $data['validFrom']);
         !$data['validTo'] ?: $i->fillField('#discount_discountGeneral_valid_to', $data['validTo']);
 
-        $this->tab('Discount calculation');
+        $this->tab('tab-content-discount');
         !$data['calcType'] ?: $i->selectOption('#discount_discountCalculator_calculator_plugin', $data['calcType']);
         !$data['amount'] ?: $i->fillField('#discount_discountCalculator_moneyValueCollection_0_gross_amount', $data['amount']);
         $i->click(self::BTN_CALCULATION_GET);
         !$data['applyTo'] ?: $i->fillField(self::FIELD_DISCOUNT_QUERY, $data['applyTo']);
 
-        $this->tab('Conditions');
+        $this->tab('tab-content-conditions');
         $i->click('#btn-condition-get');
         $i->fillField('#discount_discountCondition_decision_rule_query_string', $data['applyWhen']);
         $i->click('#create-discount-button');

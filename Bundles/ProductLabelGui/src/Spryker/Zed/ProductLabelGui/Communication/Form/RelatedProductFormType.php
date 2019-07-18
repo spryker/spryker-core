@@ -18,13 +18,14 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * @method \Spryker\Zed\ProductLabelGui\Business\ProductLabelGuiFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductLabelGui\Communication\ProductLabelGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductLabelGui\Persistence\ProductLabelGuiQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductLabelGui\ProductLabelGuiConfig getConfig()
  */
 class RelatedProductFormType extends AbstractType
 {
-    const FIELD_ID_PRODUCT_LABEL = 'idProductLabel';
-    const FIELD_IDS_PRODUCT_ABSTRACT_CSV = 'idsProductAbstractCsv';
-    const FIELD_IDS_PRODUCT_ABSTRACT_TO_ASSIGN_CSV = 'idsProductAbstractToAssignCsv';
-    const FIELD_IDS_PRODUCT_ABSTRACT_TO_DE_ASSIGN_CSV = 'idsProductAbstractToDeAssignCsv';
+    public const FIELD_ID_PRODUCT_LABEL = 'idProductLabel';
+    public const FIELD_IDS_PRODUCT_ABSTRACT_CSV = 'idsProductAbstractCsv';
+    public const FIELD_IDS_PRODUCT_ABSTRACT_TO_ASSIGN_CSV = 'idsProductAbstractToAssignCsv';
+    public const FIELD_IDS_PRODUCT_ABSTRACT_TO_DE_ASSIGN_CSV = 'idsProductAbstractToDeAssignCsv';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver

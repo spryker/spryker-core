@@ -21,8 +21,8 @@ use Throwable;
 
 class ProductBundleStockWriter implements ProductBundleStockWriterInterface
 {
-    const IS_NEVER_OUT_OF_STOCK = 'is_never_out_of_stock';
-    const QUANTITY = 'quantity';
+    public const IS_NEVER_OUT_OF_STOCK = 'is_never_out_of_stock';
+    public const QUANTITY = 'quantity';
 
     /**
      * @var \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface
@@ -79,6 +79,7 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
 
         if ($bundleProductEntity === null) {
             $this->removeBundleStock($productConcreteTransfer);
+
             return $productConcreteTransfer;
         }
 
@@ -134,7 +135,7 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductBundle\Persistence\Base\SpyProductBundle[] $bundleItems
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductBundle\Persistence\SpyProductBundle[] $bundleItems
      *
      * @return array
      */
@@ -177,6 +178,7 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
                 static::IS_NEVER_OUT_OF_STOCK => $productStockEntity->getIsNeverOutOfStock(),
             ];
         }
+
         return $bundledItemStock;
     }
 
@@ -212,6 +214,7 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
                 static::IS_NEVER_OUT_OF_STOCK => $isAllNeverOutOfStock,
             ];
         }
+
         return $bundleTotalStockPerWarehouse;
     }
 
@@ -227,13 +230,14 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
         if (($bundleStock > $itemStock || $bundleStock == 0) && !$isNeverOutOfStock) {
             return true;
         }
+
         return false;
     }
 
     /**
      * @param string $sku
      *
-     * @return \Orm\Zed\ProductBundle\Persistence\SpyProductBundle
+     * @return \Orm\Zed\ProductBundle\Persistence\SpyProductBundle|null
      */
     protected function findProductBundleBySku($sku)
     {
@@ -341,6 +345,7 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
             $productStockEntity->setIsNeverOutOfStock(false);
             $productStockEntity->save();
         }
+
         return $bundleTotalStockPerWarehouse;
     }
 

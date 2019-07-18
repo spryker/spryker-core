@@ -1,0 +1,3 @@
+parameters:
+    ignoreErrors:
+        - '#Result of || is always false.#'

@@ -12,7 +12,7 @@ use Spryker\Client\Search\SearchConfig;
 
 class NumericFacetAggregation extends AbstractFacetAggregation
 {
-    const STATS_SUFFIX = '-stats';
+    public const STATS_SUFFIX = '-stats';
 
     /**
      * @var \Generated\Shared\Transfer\FacetConfigTransfer

@@ -11,7 +11,7 @@ use Symfony\Component\Form\DataTransformerInterface;
 
 class StringToArrayTransformer implements DataTransformerInterface
 {
-    const VALUE_SEPARATOR = ',';
+    public const VALUE_SEPARATOR = ',';
 
     /**
      * Transforms a value from the original representation to a transformed representation.

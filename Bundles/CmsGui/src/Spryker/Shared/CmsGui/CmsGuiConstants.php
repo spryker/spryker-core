@@ -19,7 +19,7 @@ interface CmsGuiConstants
      *
      * @api
      */
-    const CMS_PAGE_PREVIEW_URI = 'CMS_PAGE_PREVIEW_URI';
+    public const CMS_PAGE_PREVIEW_URI = 'CMS_PAGE_PREVIEW_URI';
 
     /**
      * Specification:

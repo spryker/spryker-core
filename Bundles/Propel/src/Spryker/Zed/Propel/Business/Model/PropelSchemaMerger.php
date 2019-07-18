@@ -9,13 +9,29 @@ namespace Spryker\Zed\Propel\Business\Model;
 
 use ArrayObject;
 use DOMDocument;
+use DOMElement;
+use DOMNodeList;
 use SimpleXMLElement;
 use Spryker\Service\UtilText\UtilTextService;
 use Spryker\Zed\Propel\Business\Exception\SchemaMergeException;
+use Spryker\Zed\Propel\PropelConfig;
 use Symfony\Component\Finder\SplFileInfo;
 
 class PropelSchemaMerger implements PropelSchemaMergerInterface
 {
+    /**
+     * @var \Spryker\Zed\Propel\PropelConfig|null
+     */
+    protected $config;
+
+    /**
+     * @param \Spryker\Zed\Propel\PropelConfig|null $config
+     */
+    public function __construct(?PropelConfig $config = null)
+    {
+        $this->config = $config;
+    }
+
     /**
      * @param \Symfony\Component\Finder\SplFileInfo[] $schemaFiles
      *
@@ -146,7 +162,9 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
             $mergeTargetXmlElement = $this->mergeSchemasRecursive($mergeTargetXmlElement, $schemaXmlElement);
         }
 
-        return $this->prettyPrint($mergeTargetXmlElement);
+        $content = $this->prettyPrint($mergeTargetXmlElement);
+
+        return $content;
     }
 
     /**
@@ -160,8 +178,7 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
         $dom->preserveWhiteSpace = false;
         $dom->formatOutput = true;
         $dom->loadXML($xml->asXML());
-
-        $this->moveConstraintNodesToTheBottom($dom);
+        $this->ensureElementHierarchy($dom);
 
         $callback = function ($matches) {
             $multiplier = (strlen($matches[1]) / 2) * 4;
@@ -264,25 +281,102 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
      *
      * @return void
      */
-    protected function moveConstraintNodesToTheBottom(DOMDocument $dom): void
+    protected function ensureElementHierarchy(DOMDocument $dom): void
     {
-        $nodesToMode = [];
-        foreach (['unique', 'foreign-key'] as $tagName) {
+        foreach ($dom->getElementsByTagName('table') as $tableDomElement) {
+            $this->ensureTableElementHierarchy($tableDomElement);
+        }
+    }
+
+    /**
+     * @param \DOMElement $tableDomElement
+     *
+     * @return void
+     */
+    protected function ensureTableElementHierarchy(DOMElement $tableDomElement): void
+    {
+        $elementHierarchy = ['unique', 'foreign-key'];
+
+        if ($this->hasConfig()) {
+            $elementHierarchy = $this->config->getTableElementHierarchy();
+        }
+
+        $nodesToOrder = $this->getNodesToOrder($tableDomElement, $elementHierarchy);
+
+        foreach ($nodesToOrder as $node) {
+            $node['parent']->removeChild($node['item']);
+            $node['parent']->appendChild($node['item']);
+        }
+    }
+
+    /**
+     * @param \DOMElement $dom
+     * @param array $elementHierarchy
+     *
+     * @return array
+     */
+    protected function getNodesToOrder(DOMElement $dom, array $elementHierarchy): array
+    {
+        $nodesToOrder = [];
+        foreach ($elementHierarchy as $tagName) {
             $items = $dom->getElementsByTagName($tagName);
+
+            if ($tagName === 'column') {
+                $items = $this->orderColumns($items);
+            }
+
             foreach ($items as $item) {
-                $nodesToMode[] = [
+                $nodesToOrder[] = [
                     'item' => $item,
                     'parent' => $item->parentNode,
                 ];
             }
         }
 
-        foreach ($nodesToMode as $node) {
-            $node['parent']->removeChild($node['item']);
+        return $nodesToOrder;
+    }
+
+    /**
+     * @param \DOMNodeList $nodeList
+     *
+     * @return array
+     */
+    protected function orderColumns(DOMNodeList $nodeList): array
+    {
+        $idColumns = [];
+        $fkColumns = [];
+        $otherColumns = [];
+
+        foreach ($nodeList as $node) {
+            $columnName = $node->attributes['name']->value;
+            if (strpos($columnName, 'id_') === 0) {
+                $idColumns[$columnName] = $node;
+                continue;
+            }
+            if (strpos($columnName, 'fk_') === 0) {
+                $fkColumns[$columnName] = $node;
+                continue;
+            }
+
+            $otherColumns[$columnName] = $node;
         }
 
-        foreach ($nodesToMode as $node) {
-            $node['parent']->appendChild($node['item']);
-        }
+        ksort($idColumns);
+        ksort($fkColumns);
+        ksort($otherColumns);
+
+        $nodes = array_merge($idColumns, $fkColumns, $otherColumns);
+
+        return $nodes;
+    }
+
+    /**
+     * @deprecated For BC reasons the PropelConfig is optional in the constructor. With the next major it will be required.
+     *
+     * @return bool
+     */
+    protected function hasConfig(): bool
+    {
+        return $this->config !== null;
     }
 }

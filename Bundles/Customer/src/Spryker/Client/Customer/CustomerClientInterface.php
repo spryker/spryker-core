@@ -8,6 +8,7 @@
 namespace Spryker\Client\Customer;
 
 use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 
 interface CustomerClientInterface
@@ -117,6 +118,28 @@ interface CustomerClientInterface
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     public function setCustomer(CustomerTransfer $customerTransfer);
+
+    /**
+     * Specification:
+     * - Stores provided customer information in session without executing plugins.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    public function setCustomerRawData(CustomerTransfer $customerTransfer): CustomerTransfer;
+
+    /**
+     * Specification:
+     * - Returns customer information from session without executing plugins.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null
+     */
+    public function findCustomerRawData(): ?CustomerTransfer;
 
     /**
      * Specification:
@@ -359,4 +382,38 @@ interface CustomerClientInterface
      * @return void
      */
     public function markCustomerAsDirty();
+
+    /**
+     * Specification:
+     * - Retrieves customer information using provided customer reference.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
+     */
+    public function findCustomerByReference(CustomerTransfer $customerTransfer): CustomerResponseTransfer;
+
+    /**
+     * Specification:
+     * - Returns customer secured pattern with applied customer access rules.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getCustomerSecuredPattern(): string;
+
+    /**
+     * Specification:
+     * - Retrieves customer by access token using AccessTokenAuthenticationHandlerPluginInterface.
+     *
+     * @api
+     *
+     * @param string $accessToken
+     *
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
+     */
+    public function getCustomerByAccessToken(string $accessToken): CustomerResponseTransfer;
 }

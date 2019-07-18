@@ -7,24 +7,26 @@
 
 namespace Spryker\Zed\Propel\Communication\Console;
 
-use Spryker\Shared\Config\Config;
-use Spryker\Shared\Propel\PropelConstants;
 use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Process\Process;
 
+/**
+ * @method \Spryker\Zed\Propel\Business\PropelFacadeInterface getFacade()
+ * @method \Spryker\Zed\Propel\Communication\PropelCommunicationFactory getFactory()
+ */
 class MigrateConsole extends Console
 {
-    const COMMAND_NAME = 'propel:migrate';
+    public const COMMAND_NAME = 'propel:migrate';
+    public const COMMAND_DESCRIPTION = 'Migrate database';
 
     /**
      * @return void
      */
     protected function configure()
     {
-        $this->setName(self::COMMAND_NAME);
-        $this->setDescription('Migrate database');
+        $this->setName(static::COMMAND_NAME);
+        $this->setDescription(static::COMMAND_DESCRIPTION);
 
         parent::configure();
     }
@@ -35,18 +37,16 @@ class MigrateConsole extends Console
      *
      * @return int
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $this->info('Run migrations');
+        $this->info($this->getDescription());
 
-        $config = Config::get(PropelConstants::PROPEL);
-        $command = 'vendor/bin/propel migrate --config-dir '
-            . $config['paths']['phpConfDir'];
+        $command = $this->getFactory()->createMigrationMigrateCommand();
 
-        $process = new Process($command, APPLICATION_ROOT_DIR);
-
-        return $process->run(function ($type, $buffer) {
-            echo $buffer;
-        });
+        return $this->getFactory()->createPropelCommandRunner()->runCommand(
+            $command,
+            $this->getDefinition(),
+            $output
+        );
     }
 }

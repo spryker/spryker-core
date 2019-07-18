@@ -18,14 +18,14 @@ use Spryker\Zed\ProductSetGui\Persistence\ProductSetGuiQueryContainerInterface;
 
 class ProductTable extends AbstractTable
 {
-    const TABLE_IDENTIFIER = 'product-table';
-    const COL_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
-    const COL_PREVIEW = 'preview';
-    const COL_SKU = 'sku';
-    const COL_NAME = ProductSetGuiQueryContainer::COL_ALIAS_NAME;
-    const COL_PRICE = 'price';
-    const COL_STATUS = 'status';
-    const COL_CHECKBOX = 'checkbox';
+    public const TABLE_IDENTIFIER = 'product-table';
+    public const COL_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+    public const COL_PREVIEW = 'preview';
+    public const COL_SKU = 'sku';
+    public const COL_NAME = ProductSetGuiQueryContainer::COL_ALIAS_NAME;
+    public const COL_PRICE = 'price';
+    public const COL_STATUS = 'status';
+    public const COL_CHECKBOX = 'checkbox';
 
     /**
      * @var \Spryker\Zed\ProductSetGui\Persistence\ProductSetGuiQueryContainerInterface

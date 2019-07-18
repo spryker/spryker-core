@@ -221,7 +221,7 @@ abstract class AbstractDataBuilder
     protected function generateDependencies(AbstractTransfer $transfer)
     {
         foreach ($this->nestedBuilders as $builderInfo) {
-            list($name, $dependencyBuilder, $randomize) = $builderInfo;
+            [$name, $dependencyBuilder, $randomize] = $builderInfo;
 
             if (!$randomize) { // add currently generated values
                 $dependencyBuilder->seed($this->seedData);
@@ -241,7 +241,7 @@ abstract class AbstractDataBuilder
                 call_user_func([$transfer, 'set' . $name], $nestedTransfer);
                 continue;
             }
-            throw new DependencyNotDefinedException(sprintf('Dependency "%s" not defined in "%s"', $name, get_class($this)));
+            throw new DependencyNotDefinedException(sprintf('Dependency "%s" not defined in "%s"', $name, static::class));
         }
     }
 
@@ -259,7 +259,7 @@ abstract class AbstractDataBuilder
         }
 
         // @codingStandardsIgnoreStart
-        return (string)eval("return \$this->faker->$rule;");
+        return eval("return \$this->faker->$rule;");
         // @codingStandardsIgnoreEnd
     }
 

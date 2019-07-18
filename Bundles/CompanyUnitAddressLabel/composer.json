@@ -1,5 +1,6 @@
 {
   "name": "spryker/company-unit-address-label",
+  "type": "library",
   "description": "CompanyUnitAddressLabel module",
   "license": "proprietary",
   "require": {
@@ -8,13 +9,19 @@
     "spryker/company-unit-address-extension": "^1.0.0",
     "spryker/company-unit-address-gui-extension": "^1.0.0",
     "spryker/gui": "^3.0.0",
-    "spryker/kernel": "^3.0.0",
+    "spryker/kernel": "^3.30.0",
     "spryker/propel-orm": "^1.0.0",
     "spryker/symfony": "^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/testify": "*"
+    "spryker/company": "*",
+    "spryker/company-business-unit": "*",
+    "spryker/country": "*",
+    "spryker/locale": "*",
+    "spryker/propel": "*",
+    "spryker/testify": "*",
+    "spryker/touch": "*"
   },
   "autoload": {
     "psr-4": {

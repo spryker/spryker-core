@@ -127,6 +127,7 @@ class IndexInstaller implements SearchInstallerInterface
             $mapping = $this->createMappingByName($mappingData, $mappingName, $index);
             $mappings = array_merge($mappings, $mapping->toArray());
         }
+
         return $mappings;
     }
 
@@ -145,6 +146,7 @@ class IndexInstaller implements SearchInstallerInterface
         foreach ($mappingData as $key => $value) {
             $mapping->setParam($key, $value);
         }
+
         return $mapping;
     }
 
@@ -265,12 +267,10 @@ class IndexInstaller implements SearchInstallerInterface
      */
     protected function getIndexState(Index $index): string
     {
-        if ($index->getClient()) {
-            $clusterState = $index->getClient()->getCluster()->getState();
+        $clusterState = $index->getClient()->getCluster()->getState();
 
-            if (isset($clusterState['metadata']['indices'][$index->getName()]['state'])) {
-                return $clusterState['metadata']['indices'][$index->getName()]['state'];
-            }
+        if (isset($clusterState['metadata']['indices'][$index->getName()]['state'])) {
+            return $clusterState['metadata']['indices'][$index->getName()]['state'];
         }
 
         throw new MissingIndexStateException('Can not determine index state.');
@@ -328,6 +328,7 @@ class IndexInstaller implements SearchInstallerInterface
     protected function getLastPathNumber(array $settingPathArray): int
     {
         end($settingPathArray);
+
         return key($settingPathArray);
     }
 }

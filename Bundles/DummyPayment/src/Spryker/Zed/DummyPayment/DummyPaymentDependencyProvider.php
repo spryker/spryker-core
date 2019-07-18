@@ -11,9 +11,12 @@ use Spryker\Zed\DummyPayment\Dependency\Facade\DummyPaymentToRefundBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\DummyPayment\DummyPaymentConfig getConfig()
+ */
 class DummyPaymentDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_REFUND = 'refund facade';
+    public const FACADE_REFUND = 'refund facade';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -37,6 +40,7 @@ class DummyPaymentDependencyProvider extends AbstractBundleDependencyProvider
         $container[self::FACADE_REFUND] = function (Container $container) {
             return new DummyPaymentToRefundBridge($container->getLocator()->refund()->facade());
         };
+
         return $container;
     }
 }

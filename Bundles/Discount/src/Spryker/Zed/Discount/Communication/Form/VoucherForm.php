@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -18,14 +19,16 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  * @method \Spryker\Zed\Discount\Business\DiscountFacadeInterface getFacade()
  * @method \Spryker\Zed\Discount\Communication\DiscountCommunicationFactory getFactory()
  * @method \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Discount\DiscountConfig getConfig()
+ * @method \Spryker\Zed\Discount\Persistence\DiscountRepositoryInterface getRepository()
  */
 class VoucherForm extends AbstractType
 {
-    const FIELD_QUANTITY = 'quantity';
-    const FIELD_CUSTOM_CODE = 'custom_code';
-    const FIELD_RANDOM_GENERATED_CODE_LENGTH = 'random_generated_code_length';
-    const FIELD_MAX_NUMBER_OF_USES = 'max_number_of_uses';
-    const FIELD_ID_DISCOUNT = 'id_discount';
+    public const FIELD_QUANTITY = 'quantity';
+    public const FIELD_CUSTOM_CODE = 'custom_code';
+    public const FIELD_RANDOM_GENERATED_CODE_LENGTH = 'random_generated_code_length';
+    public const FIELD_MAX_NUMBER_OF_USES = 'max_number_of_uses';
+    public const FIELD_ID_DISCOUNT = 'id_discount';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -93,7 +96,6 @@ class VoucherForm extends AbstractType
                 'placeholder' => 'No additional random characters',
                 'required' => false,
                 'choices' => array_flip($this->createCodeLengthRangeList()),
-                'choices_as_values' => true,
             ]
         );
 

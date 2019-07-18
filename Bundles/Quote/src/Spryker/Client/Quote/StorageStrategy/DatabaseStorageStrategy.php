@@ -9,6 +9,9 @@ namespace Spryker\Client\Quote\StorageStrategy;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Quote\Dependency\Client\QuoteToCustomerClientInterface;
+use Spryker\Client\Quote\QuoteLocker\QuoteLockerInterface;
+use Spryker\Client\Quote\QuoteValidator\QuoteEditStatusValidatorInterface;
+use Spryker\Client\Quote\QuoteValidator\QuoteLockStatusValidatorInterface;
 use Spryker\Client\Quote\Session\QuoteSessionInterface;
 use Spryker\Client\Quote\Zed\QuoteStubInterface;
 use Spryker\Shared\Quote\QuoteConfig;
@@ -31,18 +34,50 @@ class DatabaseStorageStrategy implements StorageStrategyInterface
     protected $quoteSession;
 
     /**
+     * @var \Spryker\Client\Quote\QuoteValidator\QuoteLockStatusValidatorInterface
+     */
+    protected $quoteLockStatusValidator;
+
+    /**
+     * @var \Spryker\Client\Quote\QuoteValidator\QuoteEditStatusValidatorInterface
+     */
+    protected $quoteEditStatusValidator;
+
+    /**
+     * @var \Spryker\Client\Quote\QuoteLocker\QuoteLockerInterface
+     */
+    protected $quoteLocker;
+
+    /**
+     * @var \Spryker\Client\QuoteExtension\Dependency\Plugin\DatabaseStrategyPreCheckPluginInterface[]
+     */
+    protected $databaseStrategyPreCheckPlugins;
+
+    /**
      * @param \Spryker\Client\Quote\Dependency\Client\QuoteToCustomerClientInterface $customerClient
      * @param \Spryker\Client\Quote\Zed\QuoteStubInterface $quoteStub
      * @param \Spryker\Client\Quote\Session\QuoteSessionInterface $quoteSession
+     * @param \Spryker\Client\Quote\QuoteValidator\QuoteLockStatusValidatorInterface $quoteLockStatusValidator
+     * @param \Spryker\Client\Quote\QuoteValidator\QuoteEditStatusValidatorInterface $quoteEditStatusValidator
+     * @param \Spryker\Client\Quote\QuoteLocker\QuoteLockerInterface $quoteLocker
+     * @param \Spryker\Client\QuoteExtension\Dependency\Plugin\DatabaseStrategyPreCheckPluginInterface[] $databaseStrategyPreCheckPlugins
      */
     public function __construct(
         QuoteToCustomerClientInterface $customerClient,
         QuoteStubInterface $quoteStub,
-        QuoteSessionInterface $quoteSession
+        QuoteSessionInterface $quoteSession,
+        QuoteLockStatusValidatorInterface $quoteLockStatusValidator,
+        QuoteEditStatusValidatorInterface $quoteEditStatusValidator,
+        QuoteLockerInterface $quoteLocker,
+        array $databaseStrategyPreCheckPlugins
     ) {
         $this->customerClient = $customerClient;
         $this->quoteStub = $quoteStub;
         $this->quoteSession = $quoteSession;
+        $this->quoteLockStatusValidator = $quoteLockStatusValidator;
+        $this->quoteEditStatusValidator = $quoteEditStatusValidator;
+        $this->quoteLocker = $quoteLocker;
+        $this->databaseStrategyPreCheckPlugins = $databaseStrategyPreCheckPlugins;
     }
 
     /**
@@ -58,6 +93,10 @@ class DatabaseStorageStrategy implements StorageStrategyInterface
      */
     public function isAllowed()
     {
+        if (!$this->executeDatabaseStrategyPreCheckPlugins()) {
+            return false;
+        }
+
         return $this->customerClient->isLoggedIn();
     }
 
@@ -80,6 +119,16 @@ class DatabaseStorageStrategy implements StorageStrategyInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteLocked(QuoteTransfer $quoteTransfer): bool
+    {
+        return $this->quoteLockStatusValidator->isQuoteLocked($quoteTransfer);
+    }
+
+    /**
      * @return $this
      */
     public function clearQuote()
@@ -90,5 +139,41 @@ class DatabaseStorageStrategy implements StorageStrategyInterface
         }
 
         return $this;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteEditable(QuoteTransfer $quoteTransfer): bool
+    {
+        return $this->quoteEditStatusValidator->isQuoteEditable($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function lockQuote(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        return $this->quoteLocker->lock($quoteTransfer);
+    }
+
+    /**
+     * @return bool
+     */
+    protected function executeDatabaseStrategyPreCheckPlugins(): bool
+    {
+        $quoteTransfer = $this->getQuote();
+
+        foreach ($this->databaseStrategyPreCheckPlugins as $databaseStrategyPreCheckPlugin) {
+            if (!$databaseStrategyPreCheckPlugin->check($quoteTransfer)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

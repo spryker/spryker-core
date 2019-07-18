@@ -27,11 +27,15 @@ class AclRoleFormDataProvider
     /**
      * @param int $idAclRole
      *
-     * @return array
+     * @return array|null
      */
     public function getData($idAclRole)
     {
-        $roleTransfer = $this->aclFacade->getRoleById($idAclRole);
+        $roleTransfer = $this->aclFacade->findRoleById($idAclRole);
+
+        if (!$roleTransfer) {
+            return null;
+        }
 
         return $roleTransfer->toArray();
     }

@@ -7,9 +7,12 @@
 
 namespace Spryker\Client\ProductImageStorage\Storage;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ProductConcreteImageStorageTransfer;
+use Spryker\Client\Kernel\Locator;
 use Spryker\Client\ProductImageStorage\Dependency\Client\ProductImageStorageToStorageInterface;
-use Spryker\Shared\ProductImageStorage\ProductImageStorageConfig;
+use Spryker\Client\ProductImageStorage\ProductImageStorageConfig;
+use Spryker\Shared\ProductImageStorage\ProductImageStorageConfig as ProductImageStorageConstants;
 
 class ProductConcreteImageStorageReader implements ProductConcreteImageStorageReaderInterface
 {
@@ -41,7 +44,33 @@ class ProductConcreteImageStorageReader implements ProductConcreteImageStorageRe
      */
     public function findProductImageConcreteStorageTransfer($idProductConcrete, $locale)
     {
-        $key = $this->productImageStorageKeyGenerator->generateKey(ProductImageStorageConfig::PRODUCT_CONCRETE_IMAGE_RESOURCE_NAME, $idProductConcrete, $locale);
+        if (ProductImageStorageConfig::isCollectorCompatibilityMode()) {
+            $clientLocatorClassName = Locator::class;
+            /** @var \Spryker\Client\Product\ProductClientInterface $productClient */
+            $productClient = $clientLocatorClassName::getInstance()->product()->client();
+            $collectorData = $productClient->getProductConcreteByIdAndLocale($idProductConcrete, $locale);
+
+            $imageSets = $collectorData['imageSets'];
+
+            $formattedImageSets = new ArrayObject();
+            foreach ($imageSets as $imageSetName => $images) {
+                $formattedImageSets[] = [
+                    'name' => $imageSetName,
+                    'images' => $images,
+                ];
+            }
+            $imageData = [
+                'id_product_construct' => $idProductConcrete,
+                'image_sets' => $formattedImageSets,
+            ];
+
+            $productImageStorageTransfer = new ProductConcreteImageStorageTransfer();
+            $productImageStorageTransfer->fromArray($imageData, true);
+
+            return $productImageStorageTransfer;
+        }
+
+        $key = $this->productImageStorageKeyGenerator->generateKey(ProductImageStorageConstants::PRODUCT_CONCRETE_IMAGE_RESOURCE_NAME, $idProductConcrete, $locale);
 
         return $this->findProductImageProductStorageTransfer($key);
     }

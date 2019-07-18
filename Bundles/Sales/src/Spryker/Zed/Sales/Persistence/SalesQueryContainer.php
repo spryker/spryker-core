@@ -228,13 +228,12 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
      *
      * @api
      *
-     * @param \Propel\Runtime\Collection\ObjectCollection $salesOrderItems
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[]|\Propel\Runtime\Collection\ObjectCollection $salesOrderItems
      *
      * @return void
      */
     public function fillOrderItemsWithLatestStates(ObjectCollection $salesOrderItems)
     {
-        /** @var \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItemEntity */
         foreach ($salesOrderItems as $orderItemEntity) {
             $criteria = new Criteria();
             $criteria->addDescendingOrderByColumn(SpyOmsOrderItemStateHistoryTableMap::COL_ID_OMS_ORDER_ITEM_STATE_HISTORY);

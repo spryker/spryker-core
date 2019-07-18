@@ -1,18 +1,17 @@
 {
   "name": "spryker/category-data-feed",
+  "type": "library",
   "description": "CategoryDataFeed module",
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
     "spryker/category": "^3.0.0 || ^4.0.0",
-    "spryker/kernel": "^3.0.0",
+    "spryker/kernel": "^3.30.0",
     "spryker/propel-orm": "^1.0.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*",
     "spryker/locale": "^3.0.0",
     "spryker/propel": "^3.0.0",
-    "spryker/silex": "^2.0.0",
     "spryker/testify": "*"
   },
   "autoload": {

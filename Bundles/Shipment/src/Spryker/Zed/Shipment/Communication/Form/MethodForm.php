@@ -22,26 +22,27 @@ use Symfony\Component\Validator\Constraints\Required;
  * @method \Spryker\Zed\Shipment\Business\ShipmentFacadeInterface getFacade()
  * @method \Spryker\Zed\Shipment\Communication\ShipmentCommunicationFactory getFactory()
  * @method \Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Shipment\ShipmentConfig getConfig()
  */
 class MethodForm extends AbstractType
 {
-    const FIELD_NAME_FIELD = 'name';
-    const FIELD_ID_FIELD = 'idShipmentMethod';
-    const FIELD_IS_ACTIVE = 'isActive';
-    const FIELD_AVAILABILITY_PLUGIN_FIELD = 'availabilityPlugin';
-    const FIELD_PRICE_PLUGIN_FIELD = 'pricePlugin';
-    const FIELD_DELIVERY_TIME_PLUGIN_FIELD = 'deliveryTimePlugin';
-    const FIELD_CARRIER_FIELD = 'fkShipmentCarrier';
-    const FIELD_TAX_SET_FIELD = 'fkTaxSet';
-    const FIELD_PRICES = 'prices';
+    public const FIELD_NAME_FIELD = 'name';
+    public const FIELD_ID_FIELD = 'idShipmentMethod';
+    public const FIELD_IS_ACTIVE = 'isActive';
+    public const FIELD_AVAILABILITY_PLUGIN_FIELD = 'availabilityPlugin';
+    public const FIELD_PRICE_PLUGIN_FIELD = 'pricePlugin';
+    public const FIELD_DELIVERY_TIME_PLUGIN_FIELD = 'deliveryTimePlugin';
+    public const FIELD_CARRIER_FIELD = 'fkShipmentCarrier';
+    public const FIELD_TAX_SET_FIELD = 'fkTaxSet';
+    public const FIELD_PRICES = 'prices';
 
-    const OPTION_CARRIER_CHOICES = 'carrier_choices';
-    const OPTION_AVAILABILITY_PLUGIN_CHOICE_LIST = 'availability_plugin_choice_list';
-    const OPTION_PRICE_PLUGIN_CHOICE_LIST = 'price_plugin_choice_list';
-    const OPTION_DELIVERY_TIME_PLUGIN_CHOICE_LIST = 'delivery_time_plugin_choice_list';
-    const OPTION_TAX_SETS = 'option_tax_sets';
-    const OPTION_MONEY_FACADE = 'money facade';
-    const OPTION_DATA_CLASS = 'data_class';
+    public const OPTION_CARRIER_CHOICES = 'carrier_choices';
+    public const OPTION_AVAILABILITY_PLUGIN_CHOICE_LIST = 'availability_plugin_choice_list';
+    public const OPTION_PRICE_PLUGIN_CHOICE_LIST = 'price_plugin_choice_list';
+    public const OPTION_DELIVERY_TIME_PLUGIN_CHOICE_LIST = 'delivery_time_plugin_choice_list';
+    public const OPTION_TAX_SETS = 'option_tax_sets';
+    public const OPTION_MONEY_FACADE = 'money facade';
+    public const OPTION_DATA_CLASS = 'data_class';
 
     /**
      * @return string
@@ -111,7 +112,6 @@ class MethodForm extends AbstractType
             'label' => 'Carrier',
             'placeholder' => 'Select one',
             'choices' => array_flip($options[self::OPTION_CARRIER_CHOICES]),
-            'choices_as_values' => true,
             'constraints' => [
                 new NotBlank(),
                 new Required(),
@@ -170,7 +170,6 @@ class MethodForm extends AbstractType
             'label' => 'Availability Plugin',
             'placeholder' => 'Select one',
             'choices' => array_flip($options[self::OPTION_AVAILABILITY_PLUGIN_CHOICE_LIST]),
-            'choices_as_values' => true,
             'required' => false,
         ]);
 
@@ -189,7 +188,6 @@ class MethodForm extends AbstractType
             'label' => 'Price Plugin',
             'placeholder' => 'Select one',
             'choices' => array_flip($options[self::OPTION_PRICE_PLUGIN_CHOICE_LIST]),
-            'choices_as_values' => true,
             'required' => false,
         ]);
 
@@ -208,7 +206,6 @@ class MethodForm extends AbstractType
             'label' => 'Delivery Time Plugin',
             'placeholder' => 'Select one',
             'choices' => array_flip($options[self::OPTION_DELIVERY_TIME_PLUGIN_CHOICE_LIST]),
-            'choices_as_values' => true,
             'required' => false,
         ]);
 
@@ -255,7 +252,6 @@ class MethodForm extends AbstractType
             [
                 'label' => 'Tax set',
                 'choices' => array_flip($options[self::OPTION_TAX_SETS]),
-                'choices_as_values' => true,
             ]
         );
 

@@ -13,14 +13,14 @@ use Spryker\Zed\ProductManagement\ProductManagementConfig;
 
 class ProductValidityActivityMessenger implements ProductValidityActivityMessengerInterface
 {
-    const DEACTIVATION_IN_FUTURE_MESSAGE = 'This product will be deactivated at %s GMT. Check the field "Valid To".';
-    const DEACTIVATION_NOW_MESSAGE = <<<'EOD'
+    public const DEACTIVATION_IN_FUTURE_MESSAGE = 'This product will be deactivated at %s GMT. Check the field "Valid To".';
+    public const DEACTIVATION_NOW_MESSAGE = <<<'EOD'
         This product will be deactivated shortly because validity overrules activity.
         Check the field "Valid To", it is set in past, to %s GMT.
 EOD;
 
-    const ACTIVATION_IN_FUTURE_MESSAGE = 'This product will be activated at %s GMT. Check the field "Valid From".';
-    const ACTIVATION_NOW_MESSAGE = <<<'EOD'
+    public const ACTIVATION_IN_FUTURE_MESSAGE = 'This product will be activated at %s GMT. Check the field "Valid From".';
+    public const ACTIVATION_NOW_MESSAGE = <<<'EOD'
         This product will be activated shortly because validity overrules activity.
         Check the field "Valid From", it is set in past, to %s GMT.
 EOD;

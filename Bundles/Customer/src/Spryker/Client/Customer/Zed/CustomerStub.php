@@ -8,6 +8,7 @@
 namespace Spryker\Client\Customer\Zed;
 
 use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Client\ZedRequest\ZedRequestClient;
 
@@ -271,5 +272,18 @@ class CustomerStub implements CustomerStubInterface
         $customerTransfer = $this->zedStub->call('/customer/gateway/anonymize-customer', $customerTransfer);
 
         return $customerTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
+     */
+    public function findCustomerByReference(CustomerTransfer $customerTransfer): CustomerResponseTransfer
+    {
+        /** @var \Generated\Shared\Transfer\CustomerResponseTransfer $customerResponseTransfer */
+        $customerResponseTransfer = $this->zedStub->call('/customer/gateway/find-customer-by-reference', $customerTransfer);
+
+        return $customerResponseTransfer;
     }
 }

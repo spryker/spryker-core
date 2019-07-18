@@ -20,20 +20,18 @@ use Spryker\Zed\ZedNavigation\Communication\Console\BuildNavigationConsole;
 class SetupConfig extends AbstractBundleConfig
 {
     /**
+     * @deprecated Use `getCronjobsDefinitionFilePath()` instead.
+     *
      * @return string
      */
-    public function getPathForJobsPHP()
+    public function getPathForJobsPHP(): string
     {
-        return implode(DIRECTORY_SEPARATOR, [
-            APPLICATION_ROOT_DIR,
-            'config',
-            'Zed',
-            'cronjobs',
-            'jobs.php',
-        ]);
+        return $this->getCronjobsDefinitionFilePath();
     }
 
     /**
+     * @deprecated Method will be removed without replacement.
+     *
      * @return string
      */
     public function getJenkinsUrl()
@@ -42,6 +40,8 @@ class SetupConfig extends AbstractBundleConfig
     }
 
     /**
+     * @deprecated Method will be removed without replacement.
+     *
      * @return string
      */
     public function getJenkinsDirectory()
@@ -50,6 +50,8 @@ class SetupConfig extends AbstractBundleConfig
     }
 
     /**
+     * @deprecated Method will be removed without replacement.
+     *
      * @return string
      */
     public function getJenkinsJobsDirectory()
@@ -66,6 +68,8 @@ class SetupConfig extends AbstractBundleConfig
     }
 
     /**
+     * @deprecated Will be removed without replacement. Use `vendor/bin/install` instead.
+     *
      * Please customize this stack on project level.
      *
      * @return array
@@ -95,5 +99,71 @@ class SetupConfig extends AbstractBundleConfig
             BuildNavigationConsole::COMMAND_NAME,
             SearchConsole::COMMAND_NAME,
         ];
+    }
+
+    /**
+     * @deprecated Method will be removed without replacement.
+     *
+     * Returns the path to the environment configuration of cronjob functionality.
+     *
+     * @return string
+     */
+    public function getCronjobsConfigFilePath(): string
+    {
+        return implode(DIRECTORY_SEPARATOR, [
+            APPLICATION_ROOT_DIR,
+            'config',
+            'Zed',
+            'cronjobs',
+            'cron.conf',
+        ]);
+    }
+
+    /**
+     * @deprecated Method will be removed without replacement.
+     *
+     * Returns the path to the cronjobs definition, their config and schedule.
+     *
+     * @return string
+     */
+    public function getCronjobsDefinitionFilePath(): string
+    {
+        return implode(DIRECTORY_SEPARATOR, [
+            APPLICATION_ROOT_DIR,
+            'config',
+            'Zed',
+            'cronjobs',
+            'jobs.php',
+        ]);
+    }
+
+    /**
+     * @deprecated Method will be removed without replacement.
+     *
+     * @return bool
+     */
+    public function isJenkinsCsrfProtectionEnabled(): bool
+    {
+        return $this->get(SetupConstants::JENKINS_CSRF_PROTECTION_ENABLED, false);
+    }
+
+    /**
+     * @deprecated Method will be removed without replacement.
+     *
+     * @return bool
+     */
+    public function isSchedulerEnabled(): bool
+    {
+        return APPLICATION_ENV !== 'production';
+    }
+
+    /**
+     * @deprecated Method will be removed without replacement.
+     *
+     * @return bool
+     */
+    public function isDeployVarsEnabled(): bool
+    {
+        return APPLICATION_ENV !== 'development';
     }
 }

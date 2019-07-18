@@ -7,8 +7,9 @@
 
 namespace Spryker\Shared\Kernel\ContainerMocker;
 
-use Spryker\Shared\Config\Environment;
+use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\ContainerInterface;
+use Spryker\Shared\Kernel\KernelConstants;
 
 trait ContainerMocker
 {
@@ -19,12 +20,12 @@ trait ContainerMocker
      */
     protected function overwriteForTesting(ContainerInterface $container)
     {
-        if (Environment::isNotTesting()) {
+        if (!$this->isContainerOverridingEnabled()) {
             return $container;
         }
 
         $containerGlobals = new ContainerGlobals();
-        $containerMocks = $containerGlobals->getContainerGlobals(get_class($this));
+        $containerMocks = $containerGlobals->getContainerGlobals(static::class);
         if (count($containerMocks) === 0) {
             return $container;
         }
@@ -34,5 +35,23 @@ trait ContainerMocker
         }
 
         return $container;
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isContainerOverridingEnabled(): bool
+    {
+        return Config::get(KernelConstants::ENABLE_CONTAINER_OVERRIDING, $this->getOverwriteContainerForTestingDefaultValue());
+    }
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
+     * @return bool
+     */
+    protected function getOverwriteContainerForTestingDefaultValue(): bool
+    {
+        return APPLICATION_ENV === 'devtest';
     }
 }

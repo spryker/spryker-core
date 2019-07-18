@@ -16,6 +16,7 @@ use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQu
  * @method \Spryker\Zed\CmsStorage\Persistence\CmsStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\CmsStorage\Business\CmsStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\CmsStorage\Communication\CmsStorageCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CmsStorage\CmsStorageConfig getConfig()
  */
 class CmsSynchronizationDataPlugin extends AbstractPlugin implements SynchronizationDataQueryContainerPluginInterface
 {
@@ -56,11 +57,11 @@ class CmsSynchronizationDataPlugin extends AbstractPlugin implements Synchroniza
     {
         $query = $this->getQueryContainer()->queryCmsPageStorageEntities($ids);
 
-        if (empty($ids)) {
+        if ($ids === []) {
             $query->clear();
         }
 
-        return $query;
+        return $query->orderByIdCmsPageStorage();
     }
 
     /**

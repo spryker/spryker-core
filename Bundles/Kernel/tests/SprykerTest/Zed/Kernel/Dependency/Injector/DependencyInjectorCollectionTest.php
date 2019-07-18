@@ -63,7 +63,7 @@ class DependencyInjectorCollectionTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Kernel\Dependency\Injector\DependencyInjectorInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Kernel\Dependency\Injector\DependencyInjectorInterface
      */
     private function getDependencyInjectorMock()
     {

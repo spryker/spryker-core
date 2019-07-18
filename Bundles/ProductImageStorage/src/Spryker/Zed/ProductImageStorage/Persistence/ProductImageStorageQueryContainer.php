@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductImageStorage\Persistence;
 
 use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageSetTableMap;
+use Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImageQuery;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
@@ -16,8 +17,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class ProductImageStorageQueryContainer extends AbstractQueryContainer implements ProductImageStorageQueryContainerInterface
 {
-    const FK_PRODUCT_ABSTRACT = 'fkProductAbstract';
-    const FK_PRODUCT = 'fkProduct';
+    public const FK_PRODUCT_ABSTRACT = 'fkProductAbstract';
+    public const FK_PRODUCT = 'fkProduct';
 
     /**
      * @api
@@ -137,6 +138,24 @@ class ProductImageStorageQueryContainer extends AbstractQueryContainer implement
             ->addAnd(SpyProductImageSetTableMap::COL_FK_PRODUCT_ABSTRACT, null, ModelCriteria::NOT_EQUAL);
 
         return $query;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int[] $productImageSetToProductImageIds
+     *
+     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImageQuery
+     */
+    public function queryProductImageSetToProductImageByIds(array $productImageSetToProductImageIds): SpyProductImageSetToProductImageQuery
+    {
+        return $this->getFactory()
+            ->getProductImageQueryContainer()
+            ->queryProductImageSetToProductImage()
+            ->innerJoinSpyProductImageSet()
+            ->filterByIdProductImageSetToProductImage_In($productImageSetToProductImageIds);
     }
 
     /**

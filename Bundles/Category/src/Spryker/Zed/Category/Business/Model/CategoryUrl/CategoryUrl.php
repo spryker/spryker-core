@@ -89,12 +89,13 @@ class CategoryUrl implements CategoryUrlInterface
         $categoryNodeUrl = $this->build($categoryNodeTransfer, $localeTransfer);
         $urlTransfer->setUrl($categoryNodeUrl);
 
-        if ($this->urlFacade->hasUrl($urlTransfer)) {
+        if ($this->urlFacade->hasUrlCaseInsensitive($urlTransfer)) {
             return;
         }
 
         if ($urlTransfer->getIdUrl()) {
             $this->urlFacade->updateUrl($urlTransfer);
+
             return;
         }
 
@@ -118,7 +119,7 @@ class CategoryUrl implements CategoryUrlInterface
      * @param \Generated\Shared\Transfer\NodeTransfer $categoryNodeTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNode[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return array
      */
     protected function getUrlPathPartsForCategoryNode(NodeTransfer $categoryNodeTransfer, LocaleTransfer $localeTransfer)
     {

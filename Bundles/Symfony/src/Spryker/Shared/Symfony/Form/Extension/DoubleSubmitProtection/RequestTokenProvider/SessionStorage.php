@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class SessionStorage implements StorageInterface
 {
-    const SESSION_KEY_PREFIX = 'req_';
+    public const SESSION_KEY_PREFIX = 'req_';
 
     /**
      * @var \Symfony\Component\HttpFoundation\Session\SessionInterface
@@ -55,10 +55,12 @@ class SessionStorage implements StorageInterface
      * @param string $formName
      * @param string $token
      *
-     * @return void
+     * @return string
      */
     public function setToken($formName, $token)
     {
         $this->session->set($this->keyPrefix . $formName, $token);
+
+        return $token;
     }
 }

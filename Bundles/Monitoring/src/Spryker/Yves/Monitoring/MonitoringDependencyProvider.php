@@ -11,10 +11,13 @@ use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use Spryker\Yves\Monitoring\Dependency\Service\MonitoringToUtilNetworkServiceBridge;
 
+/**
+ * @method \Spryker\Yves\Monitoring\MonitoringConfig getConfig()
+ */
 class MonitoringDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const MONITORING_SERVICE = 'monitoring service';
-    const SERVICE_NETWORK = 'util network service';
+    public const MONITORING_SERVICE = 'monitoring service';
+    public const SERVICE_NETWORK = 'util network service';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container

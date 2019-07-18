@@ -10,11 +10,14 @@ namespace Spryker\Zed\Api\Communication\Plugin;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
  * @method \Spryker\Zed\Api\Communication\ApiCommunicationFactory getFactory()
  * @method \Spryker\Zed\Api\Business\ApiFacadeInterface getFacade()
+ * @method \Spryker\Zed\Api\ApiConfig getConfig()
+ * @method \Spryker\Zed\Api\Persistence\ApiQueryContainerInterface getQueryContainer()
  */
 class ApiServiceProviderPlugin extends AbstractPlugin implements ServiceProviderInterface
 {
@@ -26,6 +29,8 @@ class ApiServiceProviderPlugin extends AbstractPlugin implements ServiceProvider
     protected $controllerListener;
 
     /**
+     * @api
+     *
      * @deprecated Please remove usage of this setter. The needed ControllerListenerInterface is now retrieved by the Factory.
      *
      * @param \Spryker\Zed\Api\Communication\Plugin\ApiControllerListenerInterface $controllerListener
@@ -38,19 +43,25 @@ class ApiServiceProviderPlugin extends AbstractPlugin implements ServiceProvider
     }
 
     /**
+     * @api
+     *
      * @param \Silex\Application $app
      *
      * @return void
      */
     public function register(Application $app)
     {
-        $this->getEventDispatcher($app)->addListener(
-            KernelEvents::CONTROLLER,
-            [
-                $this->getControllerListener(),
-                'onKernelController',
-            ]
-        );
+        $app['dispatcher'] = $app->share($app->extend('dispatcher', function (EventDispatcherInterface $dispatcher) {
+            $dispatcher->addListener(
+                KernelEvents::CONTROLLER,
+                [
+                    $this->getControllerListener(),
+                    'onKernelController',
+                ]
+            );
+
+            return $dispatcher;
+        }));
     }
 
     /**
@@ -66,21 +77,13 @@ class ApiServiceProviderPlugin extends AbstractPlugin implements ServiceProvider
     }
 
     /**
+     * @api
+     *
      * @param \Silex\Application $app
      *
      * @return void
      */
     public function boot(Application $app)
     {
-    }
-
-    /**
-     * @param \Silex\Application $app
-     *
-     * @return \Symfony\Component\EventDispatcher\EventDispatcherInterface
-     */
-    protected function getEventDispatcher(Application $app)
-    {
-        return $app['dispatcher'];
     }
 }

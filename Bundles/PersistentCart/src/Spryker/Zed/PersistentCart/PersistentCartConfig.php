@@ -9,6 +9,16 @@ namespace Spryker\Zed\PersistentCart;
 
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
+/**
+ * @method \Spryker\Shared\PersistentCart\PersistentCartConfig getSharedConfig()
+ */
 class PersistentCartConfig extends AbstractBundleConfig
 {
+    /**
+     * @return string
+     */
+    public function getPersistentCartAnonymousPrefix(): string
+    {
+        return $this->getSharedConfig()->getPersistentCartAnonymousPrefix();
+    }
 }

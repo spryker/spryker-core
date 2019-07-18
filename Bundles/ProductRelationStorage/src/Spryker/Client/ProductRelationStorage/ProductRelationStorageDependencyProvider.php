@@ -13,12 +13,15 @@ use Spryker\Client\ProductRelationStorage\Dependency\Client\ProductRelationStora
 use Spryker\Client\ProductRelationStorage\Dependency\Client\ProductRelationStorageToStorageClientBridge;
 use Spryker\Client\ProductRelationStorage\Dependency\Service\ProductRelationStorageToSynchronizationServiceBridge;
 
+/**
+ * @method \Spryker\Client\ProductRelationStorage\ProductRelationStorageConfig getConfig()
+ */
 class ProductRelationStorageDependencyProvider extends AbstractDependencyProvider
 {
-    const CLIENT_STORAGE = 'CLIENT_STORAGE';
-    const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
-    const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
-    const PLUGIN_RELATED_PRODUCT_EXPANDERS = 'PLUGIN_RELATED_PRODUCT_EXPANDERS';
+    public const CLIENT_STORAGE = 'CLIENT_STORAGE';
+    public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
+    public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
+    public const PLUGIN_RELATED_PRODUCT_EXPANDERS = 'PLUGIN_RELATED_PRODUCT_EXPANDERS';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container

@@ -45,8 +45,10 @@ class ProcessManager implements ProcessManagerInterface
         $process = $this->createProcess($command);
         $process->start();
 
-        $queueProcessTransfer = $this->createQueueProcessTransfer($queue, $process->getPid());
-        $this->saveProcess($queueProcessTransfer);
+        if ($process->isRunning()) {
+            $queueProcessTransfer = $this->createQueueProcessTransfer($queue, $process->getPid());
+            $this->saveProcess($queueProcessTransfer);
+        }
 
         return $process;
     }
@@ -58,6 +60,7 @@ class ProcessManager implements ProcessManagerInterface
      */
     public function getBusyProcessNumber($queueName)
     {
+        /** @var int[] $processIds */
         $processIds = $this->queryContainer
             ->queryProcessesByServerIdAndQueueName($this->serverUniqueId, $queueName)
             ->find();
@@ -72,6 +75,7 @@ class ProcessManager implements ProcessManagerInterface
      */
     public function flushIdleProcesses()
     {
+        /** @var int[] $processIds */
         $processIds = $this->queryContainer
             ->queryProcessesByServerId($this->serverUniqueId)
             ->find();
@@ -105,7 +109,7 @@ class ProcessManager implements ProcessManagerInterface
     }
 
     /**
-     * @param int $processId
+     * @param int|null $processId
      *
      * @return bool
      */

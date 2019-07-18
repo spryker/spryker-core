@@ -55,6 +55,18 @@ interface UserFacadeInterface
     public function getUserById($idUser);
 
     /**
+     * Specification:
+     * - Returns user by id if it exists.
+     *
+     * @api
+     *
+     * @param int $idUser
+     *
+     * @return \Generated\Shared\Transfer\UserTransfer|null
+     */
+    public function findUserById(int $idUser): ?UserTransfer;
+
+    /**
      * @api
      *
      * @param int $idUser
@@ -66,6 +78,8 @@ interface UserFacadeInterface
     /**
      * @api
      *
+     * @deprecated Use \Spryker\Zed\User\Business\UserFacadeInterface::createUser instead.
+     *
      * @param string $firstName
      * @param string $lastName
      * @param string $username
@@ -74,6 +88,20 @@ interface UserFacadeInterface
      * @return \Generated\Shared\Transfer\UserTransfer
      */
     public function addUser($firstName, $lastName, $username, $password);
+
+    /**
+     * Specification:
+     *  - Creates user from user transfer.
+     *  - Executes user post save plugins.
+     *  - Throws exception if username exist.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
+     *
+     * @return \Generated\Shared\Transfer\UserTransfer
+     */
+    public function createUser(UserTransfer $userTransfer): UserTransfer;
 
     /**
      * @api

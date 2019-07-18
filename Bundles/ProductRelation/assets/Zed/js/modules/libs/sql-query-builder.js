@@ -5,7 +5,6 @@
 
 'use strict';
 
-window.moment = require('moment');
 require('jquery-query-builder');
 
 var SqlQueryBuilder = function(options) {

@@ -2,8 +2,12 @@
 
 {% set widget_title = 'Edit MIME type' | trans %}
 
-{% block head_title widget_title %}
-{% block section_title widget_title %}
+{% block head_title %}
+    {{ widget_title | trans }}
+{% endblock %}
+{% block section_title %}
+    {{ widget_title | trans }}
+{% endblock %}
 
 {% block action %}
     {{ backActionButton('/file-manager-gui/mime-type', 'Back to MIME type list' | trans) }}

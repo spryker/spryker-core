@@ -9,13 +9,20 @@ namespace Spryker\Zed\PriceCartConnector;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartConnectorToCurrencyFacadeBridge;
+use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartConnectorToPriceProductAdapter;
+use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToMessengerFacadeBridge;
 use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceBridge;
-use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceProductBridge;
 
+/**
+ * @method \Spryker\Zed\PriceCartConnector\PriceCartConnectorConfig getConfig()
+ */
 class PriceCartConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_PRICE_PRODUCT = 'price product facade';
-    const FACADE_PRICE = 'price facade';
+    public const FACADE_PRICE_PRODUCT = 'price product facade';
+    public const FACADE_PRICE = 'price facade';
+    public const FACADE_MESSENGER = 'FACADE_MESSENGER';
+    public const FACADE_CURRENCY = 'FACADE_CURRENCY';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -26,6 +33,8 @@ class PriceCartConnectorDependencyProvider extends AbstractBundleDependencyProvi
     {
         $container = $this->addPriceProductFacade($container);
         $container = $this->addPriceFacade($container);
+        $container = $this->addMessengerFacade($container);
+        $container = $this->addCurrencyFacade($container);
 
         return $container;
     }
@@ -37,9 +46,10 @@ class PriceCartConnectorDependencyProvider extends AbstractBundleDependencyProvi
      */
     protected function addPriceProductFacade(Container $container)
     {
-        $container[static::FACADE_PRICE_PRODUCT] = function (Container $container) {
-            return new PriceCartToPriceProductBridge($container->getLocator()->priceProduct()->facade());
-        };
+        $container->set(static::FACADE_PRICE_PRODUCT, function (Container $container) {
+            return new PriceCartConnectorToPriceProductAdapter($container->getLocator()->priceProduct()->facade());
+        });
+
         return $container;
     }
 
@@ -50,9 +60,38 @@ class PriceCartConnectorDependencyProvider extends AbstractBundleDependencyProvi
      */
     protected function addPriceFacade(Container $container)
     {
-        $container[static::FACADE_PRICE] = function (Container $container) {
+        $container->set(static::FACADE_PRICE, function (Container $container) {
             return new PriceCartToPriceBridge($container->getLocator()->price()->facade());
-        };
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMessengerFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_MESSENGER, function (Container $container) {
+            return new PriceCartToMessengerFacadeBridge($container->getLocator()->messenger()->facade());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCurrencyFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_CURRENCY, function (Container $container) {
+            return new PriceCartConnectorToCurrencyFacadeBridge($container->getLocator()->currency()->facade());
+        });
+
         return $container;
     }
 }

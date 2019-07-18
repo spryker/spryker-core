@@ -13,9 +13,9 @@ use Spryker\Shared\Kernel\Store;
 
 abstract class AbstractClassResolver
 {
-    const KEY_NAMESPACE = '%namespace%';
-    const KEY_BUNDLE = '%bundle%';
-    const KEY_STORE = '%store%';
+    public const KEY_NAMESPACE = '%namespace%';
+    public const KEY_BUNDLE = '%bundle%';
+    public const KEY_STORE = '%store%';
 
     /**
      * @var string
@@ -209,6 +209,6 @@ abstract class AbstractClassResolver
      */
     protected function buildCacheKey()
     {
-        return get_class($this) . '-' . $this->classInfo->getCallerClassName();
+        return static::class . '-' . $this->classInfo->getCallerClassName();
     }
 }

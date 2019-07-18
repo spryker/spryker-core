@@ -1,5 +1,6 @@
 {
   "name": "spryker/offer-extension",
+  "type": "library",
   "description": "OfferExtension module",
   "license": "proprietary",
   "require": {

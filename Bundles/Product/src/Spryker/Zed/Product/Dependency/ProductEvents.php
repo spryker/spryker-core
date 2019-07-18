@@ -9,36 +9,20 @@ namespace Spryker\Zed\Product\Dependency;
 
 interface ProductEvents
 {
-    const PRODUCT_ABSTRACT_BEFORE_CREATE = 'Product.product_abstract.before.create';
-    const PRODUCT_ABSTRACT_BEFORE_UPDATE = 'Product.product_abstract.before.update';
+    public const PRODUCT_ABSTRACT_BEFORE_CREATE = 'Product.product_abstract.before.create';
+    public const PRODUCT_ABSTRACT_BEFORE_UPDATE = 'Product.product_abstract.before.update';
 
-    const PRODUCT_CONCRETE_BEFORE_CREATE = 'Product.product_concrete.before.create';
-    const PRODUCT_CONCRETE_BEFORE_UPDATE = 'Product.product_concrete.before.update';
+    public const PRODUCT_CONCRETE_BEFORE_CREATE = 'Product.product_concrete.before.create';
+    public const PRODUCT_CONCRETE_BEFORE_UPDATE = 'Product.product_concrete.before.update';
 
-    const PRODUCT_ABSTRACT_AFTER_UPDATE = 'Product.product_abstract.after.update';
-    const PRODUCT_ABSTRACT_AFTER_CREATE = 'Product.product_abstract.after.create';
+    public const PRODUCT_ABSTRACT_AFTER_UPDATE = 'Product.product_abstract.after.update';
+    public const PRODUCT_ABSTRACT_AFTER_CREATE = 'Product.product_abstract.after.create';
 
-    const PRODUCT_CONCRETE_AFTER_CREATE = 'Product.product_concrete.after.create';
-    const PRODUCT_CONCRETE_AFTER_UPDATE = 'Product.product_concrete.after.update';
+    public const PRODUCT_CONCRETE_AFTER_CREATE = 'Product.product_concrete.after.create';
+    public const PRODUCT_CONCRETE_AFTER_UPDATE = 'Product.product_concrete.after.update';
 
-    const PRODUCT_ABSTRACT_READ = 'Product.product_abstract.read';
-    const PRODUCT_CONCRETE_READ = 'Product.product_concrete.read';
-
-    /**
-     * Specification
-     * - This events will be used for product_abstract publishing
-     *
-     * @api
-     */
-    const PRODUCT_ABSTRACT_PUBLISH = 'Product.product_abstract.publish';
-
-    /**
-     * Specification
-     * - This events will be used for product_abstract un-publishing
-     *
-     * @api
-     */
-    const PRODUCT_ABSTRACT_UNPUBLISH = 'Product.product_abstract.unpublish';
+    public const PRODUCT_ABSTRACT_READ = 'Product.product_abstract.read';
+    public const PRODUCT_CONCRETE_READ = 'Product.product_concrete.read';
 
     /**
      * Specification
@@ -46,7 +30,7 @@ interface ProductEvents
      *
      * @api
      */
-    const PRODUCT_CONCRETE_PUBLISH = 'Product.product_concrete.publish';
+    public const PRODUCT_ABSTRACT_PUBLISH = 'Product.product_abstract.publish';
 
     /**
      * Specification
@@ -54,7 +38,23 @@ interface ProductEvents
      *
      * @api
      */
-    const PRODUCT_CONCRETE_UNPUBLISH = 'Product.product_concrete.unpublish';
+    public const PRODUCT_ABSTRACT_UNPUBLISH = 'Product.product_abstract.unpublish';
+
+    /**
+     * Specification
+     * - This events will be used for product_abstract publishing
+     *
+     * @api
+     */
+    public const PRODUCT_CONCRETE_PUBLISH = 'Product.product_concrete.publish';
+
+    /**
+     * Specification
+     * - This events will be used for product_abstract un-publishing
+     *
+     * @api
+     */
+    public const PRODUCT_CONCRETE_UNPUBLISH = 'Product.product_concrete.unpublish';
 
     /**
      * Specification:
@@ -62,7 +62,7 @@ interface ProductEvents
      *
      * @api
      */
-    const ENTITY_SPY_PRODUCT_CREATE = 'Entity.spy_product.create';
+    public const ENTITY_SPY_PRODUCT_CREATE = 'Entity.spy_product.create';
 
     /**
      * Specification:
@@ -70,7 +70,7 @@ interface ProductEvents
      *
      * @api
      */
-    const ENTITY_SPY_PRODUCT_UPDATE = 'Entity.spy_product.update';
+    public const ENTITY_SPY_PRODUCT_UPDATE = 'Entity.spy_product.update';
 
     /**
      * Specification:
@@ -78,7 +78,7 @@ interface ProductEvents
      *
      * @api
      */
-    const ENTITY_SPY_PRODUCT_DELETE = 'Entity.spy_product.delete';
+    public const ENTITY_SPY_PRODUCT_DELETE = 'Entity.spy_product.delete';
 
     /**
      * Specification:
@@ -86,7 +86,7 @@ interface ProductEvents
      *
      * @api
      */
-    const ENTITY_SPY_PRODUCT_LOCALIZED_ATTRIBUTES_CREATE = 'Entity.spy_product_localized_attributes.create';
+    public const ENTITY_SPY_PRODUCT_LOCALIZED_ATTRIBUTES_CREATE = 'Entity.spy_product_localized_attributes.create';
 
     /**
      * Specification:
@@ -94,7 +94,7 @@ interface ProductEvents
      *
      * @api
      */
-    const ENTITY_SPY_PRODUCT_LOCALIZED_ATTRIBUTES_UPDATE = 'Entity.spy_product_localized_attributes.update';
+    public const ENTITY_SPY_PRODUCT_LOCALIZED_ATTRIBUTES_UPDATE = 'Entity.spy_product_localized_attributes.update';
 
     /**
      * Specification:
@@ -102,7 +102,7 @@ interface ProductEvents
      *
      * @api
      */
-    const ENTITY_SPY_PRODUCT_LOCALIZED_ATTRIBUTES_DELETE = 'Entity.spy_product_localized_attributes.delete';
+    public const ENTITY_SPY_PRODUCT_LOCALIZED_ATTRIBUTES_DELETE = 'Entity.spy_product_localized_attributes.delete';
 
     /**
      * Specification:
@@ -110,7 +110,7 @@ interface ProductEvents
      *
      * @api
      */
-    const ENTITY_SPY_PRODUCT_ABSTRACT_CREATE = 'Entity.spy_product_abstract.create';
+    public const ENTITY_SPY_PRODUCT_ABSTRACT_CREATE = 'Entity.spy_product_abstract.create';
 
     /**
      * Specification:
@@ -118,7 +118,7 @@ interface ProductEvents
      *
      * @api
      */
-    const ENTITY_SPY_PRODUCT_ABSTRACT_UPDATE = 'Entity.spy_product_abstract.update';
+    public const ENTITY_SPY_PRODUCT_ABSTRACT_UPDATE = 'Entity.spy_product_abstract.update';
 
     /**
      * Specification:
@@ -126,7 +126,7 @@ interface ProductEvents
      *
      * @api
      */
-    const ENTITY_SPY_PRODUCT_ABSTRACT_DELETE = 'Entity.spy_product_abstract.delete';
+    public const ENTITY_SPY_PRODUCT_ABSTRACT_DELETE = 'Entity.spy_product_abstract.delete';
 
     /**
      * Specification:
@@ -134,7 +134,7 @@ interface ProductEvents
      *
      * @api
      */
-    const ENTITY_SPY_PRODUCT_ABSTRACT_LOCALIZED_ATTRIBUTES_CREATE = 'Entity.spy_product_abstract_localized_attributes.create';
+    public const ENTITY_SPY_PRODUCT_ABSTRACT_LOCALIZED_ATTRIBUTES_CREATE = 'Entity.spy_product_abstract_localized_attributes.create';
 
     /**
      * Specification:
@@ -142,7 +142,7 @@ interface ProductEvents
      *
      * @api
      */
-    const ENTITY_SPY_PRODUCT_ABSTRACT_LOCALIZED_ATTRIBUTES_UPDATE = 'Entity.spy_product_abstract_localized_attributes.update';
+    public const ENTITY_SPY_PRODUCT_ABSTRACT_LOCALIZED_ATTRIBUTES_UPDATE = 'Entity.spy_product_abstract_localized_attributes.update';
 
     /**
      * Specification:
@@ -150,7 +150,7 @@ interface ProductEvents
      *
      * @api
      */
-    const ENTITY_SPY_PRODUCT_ABSTRACT_LOCALIZED_ATTRIBUTES_DELETE = 'Entity.spy_product_abstract_localized_attributes.delete';
+    public const ENTITY_SPY_PRODUCT_ABSTRACT_LOCALIZED_ATTRIBUTES_DELETE = 'Entity.spy_product_abstract_localized_attributes.delete';
 
     /**
      * Specification:
@@ -158,7 +158,7 @@ interface ProductEvents
      *
      * @api
      */
-    const ENTITY_SPY_PRODUCT_ATTRIBUTE_KEY_CREATE = 'Entity.spy_product_attribute_key.create';
+    public const ENTITY_SPY_PRODUCT_ATTRIBUTE_KEY_CREATE = 'Entity.spy_product_attribute_key.create';
 
     /**
      * Specification:
@@ -166,7 +166,7 @@ interface ProductEvents
      *
      * @api
      */
-    const ENTITY_SPY_PRODUCT_ATTRIBUTE_KEY_UPDATE = 'Entity.spy_product_attribute_key.update';
+    public const ENTITY_SPY_PRODUCT_ATTRIBUTE_KEY_UPDATE = 'Entity.spy_product_attribute_key.update';
 
     /**
      * Specification:
@@ -174,7 +174,7 @@ interface ProductEvents
      *
      * @api
      */
-    const ENTITY_SPY_PRODUCT_ATTRIBUTE_KEY_DELETE = 'Entity.spy_product_attribute_key.delete';
+    public const ENTITY_SPY_PRODUCT_ATTRIBUTE_KEY_DELETE = 'Entity.spy_product_attribute_key.delete';
 
     /**
      * Specification:
@@ -182,7 +182,7 @@ interface ProductEvents
      *
      * @api
      */
-    const ENTITY_SPY_PRODUCT_ABSTRACT_STORE_CREATE = 'Entity.spy_product_abstract_store.create';
+    public const ENTITY_SPY_PRODUCT_ABSTRACT_STORE_CREATE = 'Entity.spy_product_abstract_store.create';
 
     /**
      * Specification:
@@ -190,7 +190,7 @@ interface ProductEvents
      *
      * @api
      */
-    const ENTITY_SPY_PRODUCT_ABSTRACT_STORE_UPDATE = 'Entity.spy_product_abstract_store.update';
+    public const ENTITY_SPY_PRODUCT_ABSTRACT_STORE_UPDATE = 'Entity.spy_product_abstract_store.update';
 
     /**
      * Specification:
@@ -198,5 +198,5 @@ interface ProductEvents
      *
      * @api
      */
-    const ENTITY_SPY_PRODUCT_ABSTRACT_STORE_DELETE = 'Entity.spy_product_abstract_store.delete';
+    public const ENTITY_SPY_PRODUCT_ABSTRACT_STORE_DELETE = 'Entity.spy_product_abstract_store.delete';
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -10,16 +11,16 @@ use Generated\Shared\Transfer\UrlTransfer;
 interface CmsGuiToUrlInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\UrlTransfer|string $urlTransfer Deprecated: String format is accepted for BC reasons only.
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
      * @return bool
      */
-    public function hasUrl($urlTransfer);
+    public function hasUrlCaseInsensitive(UrlTransfer $urlTransfer): bool;
 
     /**
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
      * @return \Generated\Shared\Transfer\UrlTransfer|null
      */
-    public function findUrl(UrlTransfer $urlTransfer);
+    public function findUrlCaseInsensitive(UrlTransfer $urlTransfer): ?UrlTransfer;
 }

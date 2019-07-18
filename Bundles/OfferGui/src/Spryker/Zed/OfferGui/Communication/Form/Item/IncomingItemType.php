@@ -15,6 +15,7 @@ use Symfony\Component\Validator\Constraints\Regex;
 
 /**
  * @method \Spryker\Zed\OfferGui\Communication\OfferGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\OfferGui\OfferGuiConfig getConfig()
  */
 class IncomingItemType extends AbstractType
 {
@@ -99,6 +100,7 @@ class IncomingItemType extends AbstractType
         if (!empty($options['validation_group'])) {
             $validationGroup = $options['validation_group'];
         }
+
         return $validationGroup;
     }
 }

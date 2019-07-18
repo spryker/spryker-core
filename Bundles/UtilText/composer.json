@@ -1,14 +1,20 @@
 {
   "name": "spryker/util-text",
+  "type": "library",
   "description": "UtilText module",
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/kernel": "^3.0.0"
+    "spryker/kernel": "^3.30.0"
+  },
+  "require-dev": {
+    "spryker/propel": "*",
+    "spryker/testify": "*"
   },
   "autoload": {
     "psr-4": {
-      "Spryker\\": "src/Spryker/"
+      "Spryker\\": "src/Spryker/",
+      "SprykerTest\\Shared\\UtilText\\Helper\\": "tests/SprykerTest/Shared/UtilText/_support/Helper/"
     }
   },
   "autoload-dev": {

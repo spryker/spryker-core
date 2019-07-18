@@ -10,10 +10,13 @@ namespace Spryker\Zed\ProductCategory\Persistence;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
+use Spryker\Zed\ProductCategory\Persistence\Mapper\CategoryMapper;
+use Spryker\Zed\ProductCategory\Persistence\Mapper\CategoryMapperInterface;
 
 /**
  * @method \Spryker\Zed\ProductCategory\ProductCategoryConfig getConfig()
  * @method \Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductCategory\Persistence\ProductCategoryRepositoryInterface getRepository()
  */
 class ProductCategoryPersistenceFactory extends AbstractPersistenceFactory
 {
@@ -31,5 +34,13 @@ class ProductCategoryPersistenceFactory extends AbstractPersistenceFactory
     public function createProductAbstractQuery()
     {
         return SpyProductAbstractQuery::create();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductCategory\Persistence\Mapper\CategoryMapperInterface
+     */
+    public function createCategoryMapper(): CategoryMapperInterface
+    {
+        return new CategoryMapper();
     }
 }

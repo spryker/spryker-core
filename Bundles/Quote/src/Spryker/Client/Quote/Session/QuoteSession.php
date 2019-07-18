@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class QuoteSession implements QuoteSessionInterface
 {
-    const QUOTE_SESSION_IDENTIFIER = 'quote session identifier';
+    public const QUOTE_SESSION_IDENTIFIER = 'quote session identifier';
 
     /**
      * @var \Symfony\Component\HttpFoundation\Session\SessionInterface
@@ -62,7 +62,7 @@ class QuoteSession implements QuoteSessionInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return void
+     * @return $this
      */
     public function setQuote(QuoteTransfer $quoteTransfer)
     {
@@ -72,6 +72,8 @@ class QuoteSession implements QuoteSessionInterface
 
         $this->session->set(static::QUOTE_SESSION_IDENTIFIER, $quoteTransfer);
         $this->updateCurrency($quoteTransfer);
+
+        return $this;
     }
 
     /**

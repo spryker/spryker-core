@@ -12,26 +12,23 @@ use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\Kernel\Exception\Controller\InvalidIdException;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\CmsBlockGui\Communication\CmsBlockGuiCommunicationFactory getFactory()
  */
 abstract class AbstractCmsBlockController extends AbstractController
 {
-    const URL_PARAM_ID_CMS_BLOCK = 'id-cms-block';
-    const REDIRECT_URL_DEFAULT = '/cms-block-gui/list-block';
-    const MESSAGE_CMS_BLOCK_INVALID_ID_ERROR = 'CMS block with provided ID doesn’t exist.';
+    public const URL_PARAM_ID_CMS_BLOCK = 'id-cms-block';
+    public const REDIRECT_URL_DEFAULT = '/cms-block-gui/list-block';
+    public const MESSAGE_CMS_BLOCK_INVALID_ID_ERROR = 'CMS block with provided ID doesn’t exist.';
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param int $idCmsBlock
      *
      * @return \Generated\Shared\Transfer\CmsBlockTransfer|null
      */
-    protected function findCmsBlockById(Request $request): ?CmsBlockTransfer
+    protected function findCmsBlockById(int $idCmsBlock): ?CmsBlockTransfer
     {
-        $idCmsBlock = $request->query->get(static::URL_PARAM_ID_CMS_BLOCK);
-
         try {
             $idCmsBlock = $this->castId($idCmsBlock);
         } catch (InvalidIdException $exception) {

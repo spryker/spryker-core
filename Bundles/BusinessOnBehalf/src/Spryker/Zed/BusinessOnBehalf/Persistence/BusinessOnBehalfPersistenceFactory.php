@@ -13,6 +13,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \Spryker\Zed\BusinessOnBehalf\BusinessOnBehalfConfig getConfig()
+ * @method \Spryker\Zed\BusinessOnBehalf\Persistence\BusinessOnBehalfEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\BusinessOnBehalf\Persistence\BusinessOnBehalfRepositoryInterface getRepository()
  */
 class BusinessOnBehalfPersistenceFactory extends AbstractPersistenceFactory
 {

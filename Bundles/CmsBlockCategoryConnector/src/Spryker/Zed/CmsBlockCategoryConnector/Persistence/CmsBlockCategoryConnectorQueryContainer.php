@@ -110,6 +110,7 @@ class CmsBlockCategoryConnectorQueryContainer extends AbstractQueryContainer imp
     public function queryCmsBlockCategoryWithBlocksByIdCategory($idCategory)
     {
         return $this->queryCmsBlockCategoryConnector()
+            ->orderByIdCmsBlockCategoryConnector()
             ->filterByFkCategory($idCategory)
             ->joinCmsBlock();
     }

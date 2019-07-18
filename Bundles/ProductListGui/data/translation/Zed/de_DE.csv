@@ -1,0 +1,33 @@
+"Add list","Liste hinzufügen"
+"Are you sure you want to remove this list? Removing this list will also remove all associated functionalities.","Sind Sie sicher, dass Sie diese Liste entfernen möchten? Durch das Entfernen dieser Liste werden auch alle zugehörigen Funktionalitäten entfernt."
+"Assign Categories","Kategorien zuweisen"
+"Assign Products","Produkte zuweisen"
+Back,Zurück
+"Back to Product Lists","Zurück zu Produktlisten"
+Blacklist,"Schwarze Liste"
+"Business Unit Owner Name","Name des Geschäftseinheiten-Inhabers"
+"Create a Product List","Produktliste erstellen"
+"Edit List","Liste bearbeiten"
+Export,Exportieren
+ID,ID
+"ID Merchant Relation","ID der Händlerbeziehung"
+"Import Product List","Produktliste importieren"
+"List of Product lists","Liste der Produktlisten"
+"Merchant Name",Händlername
+"Merchant relationship",Händlerbeziehung
+Name,Name
+"Overview of Product lists","Übersicht der Produktlisten"
+"Owner Type",Inhaberart
+"Product label #%d successfully created.","Produktetikett #% d wurde erfolgreich erstellt."
+"Product List ""%s"" has been successfully created.","Produktliste ""%s"" wurde erfolgreich erstellt."
+"Product List ""%s"" has been successfully updated.","Produktliste ""%s"" wurde erfolgreich aktualisiert."
+"Product List has been successfully removed.","Produktliste wurde erfolgreich entfernt."
+"Product List removal confirmation","Löschen der Produktliste bestätigt"
+"Products in this list","Produkte in dieser Liste"
+"Remove List","Liste entfernen"
+Save,Speichern
+"Select Products to assign","Produkte zur Zuweisung auswählen"
+Selected,Ausgewählt
+SKU,SKU
+Type,Typ
+Whitelist,Whitelist

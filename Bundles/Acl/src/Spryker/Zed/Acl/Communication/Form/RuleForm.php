@@ -13,23 +13,23 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * @method \Spryker\Zed\Acl\Business\AclFacadeInterface getFacade()
  * @method \Spryker\Zed\Acl\Communication\AclCommunicationFactory getFactory()
  * @method \Spryker\Zed\Acl\Persistence\AclQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Acl\AclConfig getConfig()
  */
 class RuleForm extends AbstractType
 {
-    const OPTION_TYPE = 'option_type';
+    public const OPTION_TYPE = 'option_type';
 
-    const FIELD_BUNDLE = 'bundle';
-    const FIELD_CONTROLLER = 'controller';
-    const FIELD_ACTION = 'action';
-    const FIELD_TYPE = 'type';
-    const FIELD_FK_ACL_ROLE = 'fk_acl_role';
+    public const FIELD_BUNDLE = 'bundle';
+    public const FIELD_CONTROLLER = 'controller';
+    public const FIELD_ACTION = 'action';
+    public const FIELD_TYPE = 'type';
+    public const FIELD_FK_ACL_ROLE = 'fk_acl_role';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -44,11 +44,11 @@ class RuleForm extends AbstractType
     /**
      * @deprecated Use `configureOptions()` instead.
      *
-     * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *
      * @return void
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function setDefaultOptions(OptionsResolver $resolver)
     {
         $this->configureOptions($resolver);
     }

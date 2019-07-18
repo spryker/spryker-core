@@ -16,9 +16,9 @@ use Spryker\Shared\Search\SearchConfig;
 
 class CategoryFacetConfigTransferBuilderPlugin extends AbstractPlugin implements FacetConfigTransferBuilderPluginInterface
 {
-    const NAME = 'category';
-    const PARAMETER_NAME = 'category';
-    const SIZE = 1000;
+    public const NAME = 'category';
+    public const PARAMETER_NAME = 'category';
+    public const SIZE = 1000;
 
     /**
      * @return \Generated\Shared\Transfer\FacetConfigTransfer

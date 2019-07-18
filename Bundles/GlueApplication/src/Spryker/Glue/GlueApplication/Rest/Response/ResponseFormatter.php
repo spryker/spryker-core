@@ -70,10 +70,11 @@ class ResponseFormatter implements ResponseFormatterInterface
 
         $responseData = $this->restResponseBuilder->buildResponse($restResponse, $restRequest);
         $responseData = $this->executeFormatDataResponsePlugins($restRequest, $responseData);
+        $restResponseStatus = $restResponse->getStatus() ?: $this->getStatusCode($restRequest->getMetadata());
 
         return new Response(
             $encoder->encode($responseData),
-            $this->getStatusCode($restRequest->getMetadata())
+            $restResponseStatus
         );
     }
 
@@ -109,8 +110,9 @@ class ResponseFormatter implements ResponseFormatterInterface
 
             $responseStatus = $responseErrorTransfer->getStatus();
 
-            $response[RestResponseInterface::RESPONSE_ERRORS][] = $responseErrorTransfer->toArray();
+            $response[RestResponseInterface::RESPONSE_ERRORS][] = $responseErrorTransfer->modifiedToArray();
         }
+
         return new Response(
             $encoder->encode($response),
             $responseStatus

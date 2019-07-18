@@ -1,13 +1,16 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
+
 namespace Spryker\Zed\Sales\Business;
 
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CommentTransfer;
+use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -57,10 +60,11 @@ interface SalesFacadeInterface
 
     /**
      * Specification:
-     * - Saves order and items to database
-     * - Sets "is test" flag
-     * - Updates checkout response with saved order data
-     * - Sets initial state for state machine
+     * - Saves order and items to Persistence.
+     * - Sets "is test" flag.
+     * - Updates checkout response with saved order data.
+     * - Sets initial state for state machine.
+     * - Executes `OrderPostSavePluginInterface` stack of plugins.
      *
      * @api
      *
@@ -75,10 +79,11 @@ interface SalesFacadeInterface
 
     /**
      * Specification:
-     * - Saves order and items to database
-     * - Sets "is test" flag
-     * - Updates checkout response with saved order data
-     * - Sets initial state for state machine
+     * - Saves order and items to Persistence.
+     * - Sets "is test" flag.
+     * - Updates checkout response with saved order data.
+     * - Sets initial state for state machine.
+     * - Executes `OrderPostSavePluginInterface` stack of plugins.
      *
      * @api
      *
@@ -113,7 +118,7 @@ interface SalesFacadeInterface
      * @param \Generated\Shared\Transfer\AddressTransfer $addressesTransfer
      * @param int $idAddress
      *
-     * @return boolean
+     * @return bool
      */
     public function updateOrderAddress(AddressTransfer $addressesTransfer, $idAddress);
 
@@ -146,6 +151,21 @@ interface SalesFacadeInterface
 
     /**
      * Specification:
+     *  - Returns a list of of orders for the given customer id and (optional) filters, without order items information.
+     *  - Aggregates order totals calls -> SalesAggregator
+     *  - Paginates order list for limited result
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
+     * @param int $idCustomer
+     *
+     * @return \Generated\Shared\Transfer\OrderListTransfer
+     */
+    public function getPaginatedCustomerOrdersOverview(OrderListTransfer $orderListTransfer, $idCustomer): OrderListTransfer;
+
+    /**
+     * Specification:
      *  - Returns the order for the given customer id and sales order id.
      *  - Aggregates order totals calls -> SalesAggregator
      *
@@ -159,7 +179,7 @@ interface SalesFacadeInterface
 
     /**
      * Specification:
-     * - Returns the order for the given sales oder id.
+     * - Returns the order for the given sales order id.
      *
      * @api
      *
@@ -168,6 +188,18 @@ interface SalesFacadeInterface
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function getOrderByIdSalesOrder($idSalesOrder);
+
+    /**
+     * Specification:
+     * - Returns the order for the given sales order id.
+     *
+     * @api
+     *
+     * @param int $idSalesOrder
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer|null
+     */
+    public function findOrderByIdSalesOrder(int $idSalesOrder): ?OrderTransfer;
 
     /**
      * Specification:
@@ -180,6 +212,20 @@ interface SalesFacadeInterface
      * @return \Generated\Shared\Transfer\OrderTransfer|null
      */
     public function findOrderByIdSalesOrderItem($idSalesOrderItem);
+
+    /**
+     * Specification:
+     * - Gets hydrated OrderTransfer by given order reference and customer reference.
+     * - OrderTransfer must have customerReference and orderReference, otherwise method fails.
+     * - Returns empty OrderTransfer if order entity not found in the database.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function getCustomerOrderByOrderReference(OrderTransfer $orderTransfer): OrderTransfer;
 
     /**
      *
@@ -196,4 +242,17 @@ interface SalesFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function expandSalesOrder(QuoteTransfer $quoteTransfer, ?CheckoutResponseTransfer $checkoutResponseTransfer = null);
+
+    /**
+     * Specification:
+     * - Creates sales expense entity from transfer object.
+     * - Adds sales expense to sales order.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
+     *
+     * @return \Generated\Shared\Transfer\ExpenseTransfer
+     */
+    public function createSalesExpense(ExpenseTransfer $expenseTransfer): ExpenseTransfer;
 }

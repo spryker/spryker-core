@@ -16,11 +16,13 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \Spryker\Zed\Customer\Business\CustomerFacadeInterface getFacade()
  * @method \Spryker\Zed\Customer\Communication\CustomerCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Customer\Persistence\CustomerRepositoryInterface getRepository()
  */
 class EditController extends AbstractController
 {
-    const MESSAGE_CUSTOMER_UPDATE_ERROR = 'Customer was not updated.';
-    const MESSAGE_CUSTOMER_UPDATE_SUCCESS = 'Customer was updated successfully.';
+    public const MESSAGE_CUSTOMER_UPDATE_ERROR = 'Customer was not updated.';
+    public const MESSAGE_CUSTOMER_UPDATE_SUCCESS = 'Customer was updated successfully.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

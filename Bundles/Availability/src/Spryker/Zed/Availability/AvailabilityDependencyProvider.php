@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Availability;
 
+use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToEventFacadeBridge;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsBridge;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToProductBridge;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockBridge;
@@ -16,15 +17,19 @@ use Spryker\Zed\Availability\Dependency\QueryContainer\AvailabilityToProductBrid
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\Availability\AvailabilityConfig getConfig()
+ */
 class AvailabilityDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_OMS = 'FACADE_OMS';
-    const FACADE_STOCK = 'FACADE_STOCK';
-    const FACADE_TOUCH = 'FACADE_TOUCH';
-    const FACADE_PRODUCT = 'FACADE_PRODUCT';
-    const FACADE_STORE = 'FACADE_STORE';
+    public const FACADE_EVENT = 'FACADE_EVENT';
+    public const FACADE_OMS = 'FACADE_OMS';
+    public const FACADE_STOCK = 'FACADE_STOCK';
+    public const FACADE_TOUCH = 'FACADE_TOUCH';
+    public const FACADE_PRODUCT = 'FACADE_PRODUCT';
+    public const FACADE_STORE = 'FACADE_STORE';
 
-    const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
+    public const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -38,6 +43,7 @@ class AvailabilityDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addTouchFacade($container);
         $container = $this->addProductFacade($container);
         $container = $this->addStoreFacade($container);
+        $container = $this->addEventFacade($container);
 
         return $container;
     }
@@ -73,11 +79,28 @@ class AvailabilityDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
+    protected function addEventFacade(Container $container): Container
+    {
+        $container[static::FACADE_EVENT] = function (Container $container) {
+            return new AvailabilityToEventFacadeBridge(
+                $container->getLocator()->event()->facade()
+            );
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     protected function addProductFacade(Container $container)
     {
         $container[static::FACADE_PRODUCT] = function (Container $container) {
             return new AvailabilityToProductBridge($container->getLocator()->product()->facade());
         };
+
         return $container;
     }
 
@@ -91,6 +114,7 @@ class AvailabilityDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::FACADE_TOUCH] = function (Container $container) {
             return new AvailabilityToTouchBridge($container->getLocator()->touch()->facade());
         };
+
         return $container;
     }
 
@@ -104,6 +128,7 @@ class AvailabilityDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::FACADE_STOCK] = function (Container $container) {
             return new AvailabilityToStockBridge($container->getLocator()->stock()->facade());
         };
+
         return $container;
     }
 
@@ -117,6 +142,7 @@ class AvailabilityDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::FACADE_OMS] = function (Container $container) {
             return new AvailabilityToOmsBridge($container->getLocator()->oms()->facade());
         };
+
         return $container;
     }
 
@@ -130,6 +156,7 @@ class AvailabilityDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::QUERY_CONTAINER_PRODUCT] = function (Container $container) {
             return new AvailabilityToProductQueryContainerBridge($container->getLocator()->product()->queryContainer());
         };
+
         return $container;
     }
 }

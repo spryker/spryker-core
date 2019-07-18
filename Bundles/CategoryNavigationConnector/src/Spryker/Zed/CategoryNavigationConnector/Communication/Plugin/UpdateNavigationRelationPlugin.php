@@ -14,10 +14,13 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \Spryker\Zed\CategoryNavigationConnector\Business\CategoryNavigationConnectorFacadeInterface getFacade()
  * @method \Spryker\Zed\CategoryNavigationConnector\Communication\CategoryNavigationConnectorCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CategoryNavigationConnector\CategoryNavigationConnectorConfig getConfig()
  */
 class UpdateNavigationRelationPlugin extends AbstractPlugin implements CategoryRelationUpdatePluginInterface
 {
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer $categoryTransfer
      *
      * @return void

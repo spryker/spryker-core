@@ -9,6 +9,9 @@ namespace Spryker\Service\FlysystemFtpFileSystem;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 
+/**
+ * @method \Spryker\Service\FlysystemFtpFileSystem\FlysystemFtpFileSystemConfig getConfig()
+ */
 class FlysystemFtpFileSystemDependencyProvider extends AbstractBundleDependencyProvider
 {
 }

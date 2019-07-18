@@ -27,7 +27,7 @@ use Spryker\Zed\Oms\Exception\CommandNotFoundException;
  */
 class CommandCollectionTest extends Unit
 {
-    const COMMAND_NAME = 'commandName';
+    public const COMMAND_NAME = 'commandName';
 
     /**
      * @return void
@@ -105,7 +105,7 @@ class CommandCollectionTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Oms\Dependency\Plugin\Command\CommandInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Oms\Dependency\Plugin\Command\CommandInterface
      */
     private function getCommandMock()
     {

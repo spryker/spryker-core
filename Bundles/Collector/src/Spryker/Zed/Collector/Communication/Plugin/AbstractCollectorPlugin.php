@@ -24,6 +24,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 abstract class AbstractCollectorPlugin extends AbstractPlugin implements CollectorPluginInterface
 {
     /**
+     * @api
+     *
      * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $baseQuery
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param \Spryker\Zed\Collector\Business\Model\BatchResultInterface $result
@@ -45,6 +47,8 @@ abstract class AbstractCollectorPlugin extends AbstractPlugin implements Collect
     );
 
     /**
+     * @api
+     *
      * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $baseQuery
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param \Spryker\Zed\Collector\Business\Model\BatchResultInterface $result

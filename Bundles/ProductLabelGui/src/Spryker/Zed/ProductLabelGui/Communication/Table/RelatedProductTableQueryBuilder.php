@@ -23,11 +23,11 @@ use Spryker\Zed\ProductLabelGui\ProductLabelGuiConfig;
 
 class RelatedProductTableQueryBuilder implements RelatedProductTableQueryBuilderInterface
 {
-    const RESULT_FIELD_PRODUCT_ABSTRACT_NAME = 'abstract_product_name';
-    const RESULT_FIELD_PRODUCT_ABSTRACT_PRICE = 'abstract_product_price';
-    const RESULT_FIELD_PRODUCT_ABSTRACT_CATEGORY_NAMES_CSV = 'abstract_product_category_names_csv';
-    const RESULT_FIELD_PRODUCT_ABSTRACT_RELATION_COUNT = 'abstract_product_relation_count';
-    const RESULT_FIELD_PRODUCT_CONCRETE_STATES_CSV = 'concrete_product_states_csv';
+    public const RESULT_FIELD_PRODUCT_ABSTRACT_NAME = 'abstract_product_name';
+    public const RESULT_FIELD_PRODUCT_ABSTRACT_PRICE = 'abstract_product_price';
+    public const RESULT_FIELD_PRODUCT_ABSTRACT_CATEGORY_NAMES_CSV = 'abstract_product_category_names_csv';
+    public const RESULT_FIELD_PRODUCT_ABSTRACT_RELATION_COUNT = 'abstract_product_relation_count';
+    public const RESULT_FIELD_PRODUCT_CONCRETE_STATES_CSV = 'concrete_product_states_csv';
 
     /**
      * @var \Spryker\Zed\ProductLabelGui\Dependency\QueryContainer\ProductLabelGuiToProductQueryContainerInterface
@@ -121,7 +121,7 @@ class RelatedProductTableQueryBuilder implements RelatedProductTableQueryBuilder
     }
 
     /**
-     * @param \Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery $query
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $query
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return void
@@ -139,7 +139,7 @@ class RelatedProductTableQueryBuilder implements RelatedProductTableQueryBuilder
     }
 
     /**
-     * @param \Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery $query
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $query
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return void
@@ -164,7 +164,7 @@ class RelatedProductTableQueryBuilder implements RelatedProductTableQueryBuilder
     }
 
     /**
-     * @param \Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery $query
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $query
      *
      * @return void
      */
@@ -181,7 +181,7 @@ class RelatedProductTableQueryBuilder implements RelatedProductTableQueryBuilder
     }
 
     /**
-     * @param \Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery $query
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $query
      * @param int|null $idProductLabel
      *
      * @return void
@@ -207,7 +207,7 @@ class RelatedProductTableQueryBuilder implements RelatedProductTableQueryBuilder
     }
 
     /**
-     * @param \Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery $query
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $query
      *
      * @return void
      */

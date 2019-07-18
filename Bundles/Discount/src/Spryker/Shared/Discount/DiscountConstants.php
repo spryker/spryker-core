@@ -18,7 +18,7 @@ interface DiscountConstants
      *
      * @api
      */
-    const TYPE_VOUCHER = 'voucher';
+    public const TYPE_VOUCHER = 'voucher';
 
     /**
      * Specification:
@@ -26,7 +26,7 @@ interface DiscountConstants
      *
      * @api
      */
-    const TYPE_CART_RULE = 'cart_rule';
+    public const TYPE_CART_RULE = 'cart_rule';
 
     /**
      * Specification:
@@ -34,7 +34,7 @@ interface DiscountConstants
      *
      * @api
      */
-    const MESSAGE_TYPE_SUCCESS = 'success';
+    public const MESSAGE_TYPE_SUCCESS = 'success';
 
     /**
      * Specification:
@@ -42,7 +42,7 @@ interface DiscountConstants
      *
      * @api
      */
-    const MESSAGE_TYPE_ERROR = 'error';
+    public const MESSAGE_TYPE_ERROR = 'error';
 
     /**
      * Specification:
@@ -50,7 +50,7 @@ interface DiscountConstants
      *
      * @api
      */
-    const DISCOUNT_COLLECTOR_STRATEGY_QUERY_STRING = 'query-string';
+    public const DISCOUNT_COLLECTOR_STRATEGY_QUERY_STRING = 'query-string';
 
     /**
      * Specification:
@@ -59,7 +59,7 @@ interface DiscountConstants
      *
      * @api
      */
-    const CALCULATOR_DEFAULT_INPUT_TYPE = 'calculator-default-input-type';
+    public const CALCULATOR_DEFAULT_INPUT_TYPE = 'calculator-default-input-type';
 
     /**
      * Specification:
@@ -68,5 +68,5 @@ interface DiscountConstants
      *
      * @api
      */
-    const CALCULATOR_MONEY_INPUT_TYPE = 'calculator-money-input-type';
+    public const CALCULATOR_MONEY_INPUT_TYPE = 'calculator-money-input-type';
 }

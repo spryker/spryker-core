@@ -16,6 +16,7 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  * @method \Spryker\Zed\ProductSetStorage\Persistence\ProductSetStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductSetStorage\Communication\ProductSetStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductSetStorage\Business\ProductSetStorageFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductSetStorage\ProductSetStorageConfig getConfig()
  */
 class ProductSetUrlStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
@@ -33,6 +34,7 @@ class ProductSetUrlStorageListener extends AbstractPlugin implements EventBulkHa
     {
         $this->preventTransaction();
         $productSetIds = $this->getValidProductSetIds($eventTransfers);
+
         if (empty($productSetIds)) {
             return;
         }

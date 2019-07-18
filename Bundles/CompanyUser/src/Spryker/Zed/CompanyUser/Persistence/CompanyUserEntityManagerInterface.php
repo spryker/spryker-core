@@ -26,4 +26,13 @@ interface CompanyUserEntityManagerInterface
      * @return void
      */
     public function deleteCompanyUserById(int $idCompanyUser): void;
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer
+     */
+    public function updateCompanyUserStatus(
+        CompanyUserTransfer $companyUserTransfer
+    ): CompanyUserTransfer;
 }

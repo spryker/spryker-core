@@ -97,7 +97,7 @@ class UrlRedirectValidator implements UrlRedirectValidatorInterface
     /**
      * @param string $sourceUrl
      *
-     * @return \Orm\Zed\Url\Persistence\SpyUrlRedirect
+     * @return \Orm\Zed\Url\Persistence\SpyUrlRedirect|null
      */
     protected function findUrlRedirectEntityBySourceUrl($sourceUrl)
     {

@@ -13,8 +13,8 @@ interface MetaDataProviderPluginInterface
 {
     /**
      * Specification:
-     *  - Provide additional data to zed request which will be send with which yves to zed.
-     *  - The meta data is part of \Spryker\Shared\ZedRequest\Client\AbstractRequest request object
+     *  - Provide additional data to Zed request which will be send with which yves to zed.
+     *  - The meta data is part of Spryker\Shared\ZedRequest\Client\AbstractRequest request object
      *  - The first parameter is request transfer as provided by high level client code (cart, calculation, sales)
      *
      * @api

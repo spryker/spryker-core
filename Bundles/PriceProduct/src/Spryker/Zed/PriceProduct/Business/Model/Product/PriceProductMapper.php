@@ -179,7 +179,8 @@ class PriceProductMapper implements PriceProductMapperInterface
             ->setPriceType($priceTypeTransfer)
             ->setPriceTypeName($priceTypeTransfer->getName())
             ->setMoneyValue($moneyValueTransfer)
-            ->setPriceDimension($priceProductDimensionTransfer);
+            ->setPriceDimension($priceProductDimensionTransfer)
+            ->setIsMergeable(true);
     }
 
     /**

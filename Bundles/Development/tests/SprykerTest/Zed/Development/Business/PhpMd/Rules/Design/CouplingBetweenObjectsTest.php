@@ -25,8 +25,8 @@ use Spryker\Zed\Development\Business\PhpMd\Rules\Design\CouplingBetweenObjects;
  */
 class CouplingBetweenObjectsTest extends Unit
 {
-    const NUMBER_OF_COUPLING_BETWEEN_OBJECTS = 2;
-    const THRESHOLD = 1;
+    public const NUMBER_OF_COUPLING_BETWEEN_OBJECTS = 2;
+    public const THRESHOLD = 1;
 
     /**
      * @dataProvider ignorableNodesProvider
@@ -73,7 +73,7 @@ class CouplingBetweenObjectsTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Development\Business\PhpMd\Rules\Design\CouplingBetweenObjects
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Development\Business\PhpMd\Rules\Design\CouplingBetweenObjects
      */
     protected function getCouplingBetweenObjectsMock()
     {
@@ -90,7 +90,7 @@ class CouplingBetweenObjectsTest extends Unit
      * @param string $fullyQualifiedClassName
      * @param string $nodeName
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\PHPMD\AbstractNode
+     * @return \PHPUnit\Framework\MockObject\MockObject|\PHPMD\AbstractNode
      */
     protected function getNodeMock($fullyQualifiedClassName, $nodeName)
     {

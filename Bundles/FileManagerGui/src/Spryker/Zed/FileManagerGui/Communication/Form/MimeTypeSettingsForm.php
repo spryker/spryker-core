@@ -13,6 +13,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 /**
  * @method \Spryker\Zed\FileManagerGui\Communication\FileManagerGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\FileManagerGui\FileManagerGuiConfig getConfig()
  */
 class MimeTypeSettingsForm extends AbstractType
 {

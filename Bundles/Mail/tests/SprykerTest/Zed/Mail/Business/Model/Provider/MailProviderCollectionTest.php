@@ -24,9 +24,9 @@ use Spryker\Zed\Mail\Dependency\Plugin\MailProviderPluginInterface;
  */
 class MailProviderCollectionTest extends Unit
 {
-    const TYPE_A = 'type a';
-    const TYPE_B = 'type b';
-    const MAIL_TYPE_ALL = '*';
+    public const TYPE_A = 'type a';
+    public const TYPE_B = 'type b';
+    public const MAIL_TYPE_ALL = '*';
 
     /**
      * @return void
@@ -118,7 +118,7 @@ class MailProviderCollectionTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Mail\Dependency\Plugin\MailProviderPluginInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Mail\Dependency\Plugin\MailProviderPluginInterface
      */
     protected function getMailProviderMock()
     {

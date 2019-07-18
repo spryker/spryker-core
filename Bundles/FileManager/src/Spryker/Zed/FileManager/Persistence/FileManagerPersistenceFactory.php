@@ -18,6 +18,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \Spryker\Zed\FileManager\FileManagerConfig getConfig()
+ * @method \Spryker\Zed\FileManager\Persistence\FileManagerEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\FileManager\Persistence\FileManagerRepositoryInterface getRepository()
  */
 class FileManagerPersistenceFactory extends AbstractPersistenceFactory
 {
@@ -26,7 +28,9 @@ class FileManagerPersistenceFactory extends AbstractPersistenceFactory
      */
     public function createFileQuery()
     {
-        return SpyFileQuery::create();
+        $spyFileQuery = SpyFileQuery::create();
+
+        return $spyFileQuery;
     }
 
     /**

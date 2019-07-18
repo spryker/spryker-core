@@ -65,4 +65,25 @@ class MultiCartRepository extends AbstractRepository implements MultiCartReposit
 
         return !$this->buildQueryFromCriteria($quoteQuery, $filterTransfer)->count();
     }
+
+    /**
+     * @param string $customerReference
+     *
+     * @return array
+     */
+    public function findCustomerQuoteData(string $customerReference): array
+    {
+        $quoteQuery = $this->getFactory()
+            ->createQuoteQuery();
+
+        $quoteQuery->filterByCustomerReference($customerReference)
+            ->clearSelectColumns()
+            ->addAsColumn(QuoteTransfer::ID_QUOTE, SpyQuoteTableMap::COL_ID_QUOTE)
+            ->addAsColumn(QuoteTransfer::IS_DEFAULT, SpyQuoteTableMap::COL_IS_DEFAULT)
+            ->addAsColumn(QuoteTransfer::NAME, SpyQuoteTableMap::COL_NAME);
+
+        return $quoteQuery->select([QuoteTransfer::ID_QUOTE, QuoteTransfer::IS_DEFAULT, QuoteTransfer::NAME])
+            ->find()
+            ->toArray();
+    }
 }

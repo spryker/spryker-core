@@ -7,14 +7,11 @@
 
 namespace Spryker\Zed\User\Dependency\Plugin;
 
-interface UsersTableExpanderPluginInterface
+use Spryker\Zed\UserExtension\Dependency\Plugin\UserTableActionExpanderPluginInterface;
+
+/**
+ * @deprecated Use \Spryker\Zed\UserExtension\Dependency\Plugin\UserTableActionExpanderPluginInterface instead.
+ */
+interface UsersTableExpanderPluginInterface extends UserTableActionExpanderPluginInterface
 {
-    /**
-     * @api
-     *
-     * @param array $user
-     *
-     * @return \Generated\Shared\Transfer\ButtonTransfer[]
-     */
-    public function getActionButtonDefinitions(array $user);
 }

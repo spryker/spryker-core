@@ -16,7 +16,7 @@ use Symfony\Component\Finder\SplFileInfo;
 
 class JsonIndexDefinitionLoader implements IndexDefinitionLoaderInterface
 {
-    const FILE_EXTENSION = '.json';
+    public const FILE_EXTENSION = '.json';
 
     /**
      * @var array

@@ -16,10 +16,11 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  * @method \Spryker\Zed\ProductSearch\Business\ProductSearchFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductSearch\Communication\ProductSearchCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductSearch\ProductSearchConfig getConfig()
  */
 class AttributeTranslationForm extends AbstractType
 {
-    const FIELD_KEY_TRANSLATION = 'key_translation';
+    public const FIELD_KEY_TRANSLATION = 'key_translation';
 
     /**
      * @return string

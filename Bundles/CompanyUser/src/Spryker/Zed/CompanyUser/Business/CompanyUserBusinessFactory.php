@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\CompanyUser\Business;
 
+use Spryker\Zed\CompanyUser\Business\CompanyUser\CompanyUserStatusHandler;
+use Spryker\Zed\CompanyUser\Business\CompanyUser\CompanyUserStatusHandlerInterface;
 use Spryker\Zed\CompanyUser\Business\Model\CompanyUser;
 use Spryker\Zed\CompanyUser\Business\Model\CompanyUserInterface;
 use Spryker\Zed\CompanyUser\Business\Model\CompanyUserPluginExecutor;
@@ -31,7 +33,19 @@ class CompanyUserBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->getEntityManager(),
             $this->getCustomerFacade(),
-            $this->createCompanyUserPluginExecutor()
+            $this->createCompanyUserPluginExecutor(),
+            $this->getCompanyUserSavePreCheckPlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyUser\Business\CompanyUser\CompanyUserStatusHandlerInterface
+     */
+    public function createCompanyUserStatusHandler(): CompanyUserStatusHandlerInterface
+    {
+        return new CompanyUserStatusHandler(
+            $this->getRepository(),
+            $this->getEntityManager()
         );
     }
 
@@ -44,7 +58,8 @@ class CompanyUserBusinessFactory extends AbstractBusinessFactory
             $this->getCompanyUserPreSavePlugins(),
             $this->getCompanyUserPostSavePlugins(),
             $this->getCompanyUserPostCreatePlugins(),
-            $this->getCompanyUserHydrationPlugins()
+            $this->getCompanyUserHydrationPlugins(),
+            $this->getCompanyUserPreDeletePlugins()
         );
     }
 
@@ -57,7 +72,7 @@ class CompanyUserBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserPostSavePluginInterface[]
+     * @return \Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserPreSavePluginInterface[]
      */
     protected function getCompanyUserPreSavePlugins(): array
     {
@@ -86,5 +101,21 @@ class CompanyUserBusinessFactory extends AbstractBusinessFactory
     protected function getCompanyUserHydrationPlugins(): array
     {
         return $this->getProvidedDependency(CompanyUserDependencyProvider::PLUGINS_COMPANY_USER_HYDRATE);
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserPreDeletePluginInterface[]
+     */
+    protected function getCompanyUserPreDeletePlugins(): array
+    {
+        return $this->getProvidedDependency(CompanyUserDependencyProvider::PLUGINS_COMPANY_USER_PRE_DELETE);
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserSavePreCheckPluginInterface[]
+     */
+    public function getCompanyUserSavePreCheckPlugins(): array
+    {
+        return $this->getProvidedDependency(CompanyUserDependencyProvider::PLUGINS_COMPANY_USER_SAVE_PRE_CHECK);
     }
 }

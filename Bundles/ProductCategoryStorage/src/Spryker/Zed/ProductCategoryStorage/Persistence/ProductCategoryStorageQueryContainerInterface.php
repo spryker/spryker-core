@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductCategoryStorage\Persistence;
 
+use Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface ProductCategoryStorageQueryContainerInterface extends QueryContainerInterface
@@ -23,11 +24,25 @@ interface ProductCategoryStorageQueryContainerInterface extends QueryContainerIn
     /**
      * @api
      *
+     * @deprecated Will be removed in the next major.
+     *
      * @param int[] $productCategoryIds
      *
      * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery
      */
     public function queryProductCategoryByIds($productCategoryIds);
+
+    /**
+     * Specification:
+     * - Returns a a query for the table `spy_product_category` filtered by primary ids.
+     *
+     * @api
+     *
+     * @param int[] $productCategoryIds
+     *
+     * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery
+     */
+    public function queryProductCategoryByProductCategoryIds($productCategoryIds): SpyProductCategoryQuery;
 
     /**
      * @api
@@ -97,4 +112,27 @@ interface ProductCategoryStorageQueryContainerInterface extends QueryContainerIn
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
      */
     public function queryCategoryIdsByNodeIds(array $nodeIds);
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
+     */
+    public function queryAllCategoriesWithAttributesAndOrderByDescendant();
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
+     */
+    public function queryAllCategoryNodes();
+
+    /**
+     * @api
+     *
+     * @param array $productAbstractIds
+     *
+     * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery
+     */
+    public function queryProductCategoryWithCategoryNodes(array $productAbstractIds);
 }

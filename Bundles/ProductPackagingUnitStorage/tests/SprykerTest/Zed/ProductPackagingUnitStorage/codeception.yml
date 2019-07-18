@@ -26,6 +26,9 @@ suites:
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
                 - \SprykerTest\Shared\Product\Helper\ProductDataHelper
                 - \SprykerTest\Zed\ProductPackagingUnitStorage\Helper\ProductPackagingUnitStorageHelper
+                - \SprykerTest\Zed\ProductPackagingUnit\Helper\ProductPackagingUnitHelper
+                - \SprykerTest\Zed\ProductPackagingUnit\Helper\ProductPackagingLeadProductHelper
+                - \SprykerTest\Zed\ProductPackagingUnit\Helper\ProductPackagingUnitTypeHelper
     Communication:
         path: Communication
         class_name: ProductPackagingUnitStorageCommunicationTester

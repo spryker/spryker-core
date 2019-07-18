@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\Wishlist;
 
+use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\WishlistCollectionTransfer;
 use Generated\Shared\Transfer\WishlistItemCollectionTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistMoveToCartRequestCollectionTransfer;
@@ -216,6 +218,20 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
             ->getCustomerClient()
             ->getCustomer();
 
+        return $this->getZedStub()->getCustomerWishlistCollection($customerTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistCollectionTransfer
+     */
+    public function getWishlistCollection(CustomerTransfer $customerTransfer): WishlistCollectionTransfer
+    {
         return $this->getZedStub()->getCustomerWishlistCollection($customerTransfer);
     }
 

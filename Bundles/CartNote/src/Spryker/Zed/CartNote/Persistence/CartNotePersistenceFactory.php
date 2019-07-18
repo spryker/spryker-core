@@ -10,6 +10,9 @@ namespace Spryker\Zed\CartNote\Persistence;
 use Spryker\Zed\CartNote\CartNoteDependencyProvider;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
+/**
+ * @method \Spryker\Zed\CartNote\Persistence\CartNoteEntityManagerInterface getEntityManager()
+ */
 class CartNotePersistenceFactory extends AbstractPersistenceFactory
 {
     /**

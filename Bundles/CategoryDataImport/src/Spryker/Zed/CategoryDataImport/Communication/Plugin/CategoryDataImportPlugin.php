@@ -14,10 +14,13 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\CategoryDataImport\Business\CategoryDataImportFacadeInterface getFacade()
+ * @method \Spryker\Zed\CategoryDataImport\CategoryDataImportConfig getConfig()
  */
 class CategoryDataImportPlugin extends AbstractPlugin implements DataImportPluginInterface
 {
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
      *
      * @return \Generated\Shared\Transfer\DataImporterReportTransfer
@@ -28,6 +31,8 @@ class CategoryDataImportPlugin extends AbstractPlugin implements DataImportPlugi
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getImportType()

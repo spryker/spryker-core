@@ -9,11 +9,11 @@ namespace Spryker\Zed\Category\Business\Tree\Formatter;
 
 class CategoryTreeFormatter
 {
-    const ID = 'id';
-    const ID_PARENT = 'parent';
-    const ROOT = 0;
-    const TEXT = 'text';
-    const CHILDREN = 'children';
+    public const ID = 'id';
+    public const ID_PARENT = 'parent';
+    public const ROOT = 0;
+    public const TEXT = 'text';
+    public const CHILDREN = 'children';
 
     /**
      * @var array

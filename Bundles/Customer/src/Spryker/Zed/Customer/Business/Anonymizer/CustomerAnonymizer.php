@@ -118,6 +118,7 @@ class CustomerAnonymizer implements CustomerAnonymizerInterface
             ->setSalutation(null)
             ->setGender(null)
             ->setDateOfBirth(null)
+            ->setPhone(null)
             ->setEmail($this->generateRandomEmail());
 
         return $customerTransfer;

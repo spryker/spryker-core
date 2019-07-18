@@ -16,7 +16,7 @@ use Spryker\Zed\ShipmentCartConnector\Dependency\Facade\ShipmentCartConnectorToS
 
 class ShipmentCartValidator implements ShipmentCartValidatorInterface
 {
-    const CART_PRE_CHECK_SHIPMENT_FAILED_TRANSLATION_KEY = 'cart.pre.check.shipment.failed';
+    public const CART_PRE_CHECK_SHIPMENT_FAILED_TRANSLATION_KEY = 'cart.pre.check.shipment.failed';
 
     /**
      * @var \Spryker\Zed\ShipmentCartConnector\Dependency\Facade\ShipmentCartConnectorToShipmentFacadeInterface

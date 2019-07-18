@@ -13,7 +13,7 @@ interface PropelAbstractClassValidatorInterface
 {
     /**
      * @param \Symfony\Component\Console\Output\OutputInterface $output
-     * @param null|string $module
+     * @param string|null $module
      *
      * @return bool
      */

@@ -14,11 +14,12 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\NavigationGui\Communication\NavigationGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\NavigationGui\Persistence\NavigationGuiQueryContainerInterface getQueryContainer()
  */
 class TreeController extends AbstractController
 {
-    const PARAM_ID_NAVIGATION = 'id-navigation';
-    const PARAM_NAVIGATION_TREE = 'navigation-tree';
+    public const PARAM_ID_NAVIGATION = 'id-navigation';
+    public const PARAM_NAVIGATION_TREE = 'navigation-tree';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

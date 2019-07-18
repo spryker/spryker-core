@@ -14,6 +14,8 @@ use Spryker\Zed\PersistentCartExtension\Dependency\Plugin\CartChangeRequestExpan
 /**
  * @method \Spryker\Zed\ProductBundle\Business\ProductBundleFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductBundle\Communication\ProductBundleCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductBundle\ProductBundleConfig getConfig()
+ * @method \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface getQueryContainer()
  */
 class RemoveBundleChangeRequestExpanderPlugin extends AbstractPlugin implements CartChangeRequestExpandPluginInterface
 {

@@ -16,7 +16,7 @@ use Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter\AbstractElasticse
  */
 class ProductSetPageSearchListResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlugin
 {
-    const NAME = 'productSets';
+    public const NAME = 'productSets';
 
     /**
      * @api

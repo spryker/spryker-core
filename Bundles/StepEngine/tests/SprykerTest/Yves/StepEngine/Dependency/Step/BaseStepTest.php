@@ -24,8 +24,8 @@ use SprykerTest\Yves\StepEngine\Dependency\Step\Fixtures\BaseStep;
  */
 class BaseStepTest extends Unit
 {
-    const STEP_ROUTE = 'stepRoute';
-    const ESCAPE_ROUTE = 'escapeRoute';
+    public const STEP_ROUTE = 'stepRoute';
+    public const ESCAPE_ROUTE = 'escapeRoute';
 
     /**
      * @return void
@@ -73,7 +73,7 @@ class BaseStepTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\Kernel\Transfer\AbstractTransfer
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
     private function getDataTransferMock()
     {

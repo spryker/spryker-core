@@ -31,8 +31,8 @@ use SprykerTest\Shared\ProductOption\Helper\ProductOptionGroupDataHelper;
  */
 class ProductOptionCartConnectorFacadeTest extends Unit
 {
-    const ID_PRODUCT_OPTION = 5;
-    const DUMMY_PRICE = 1500;
+    public const ID_PRODUCT_OPTION = 5;
+    public const DUMMY_PRICE = 1500;
 
     /**
      * @var \SprykerTest\Zed\ProductOptionCartConnector\ProductOptionCartConnectorBusinessTester
@@ -371,6 +371,27 @@ class ProductOptionCartConnectorFacadeTest extends Unit
 
         // Assert
         $this->assertEquals($expectedResult, $actualResponse->getIsSuccess());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCheckProductOptionExistenceShouldWriteErrorWhenOptionDoesNotExist()
+    {
+        $cartChangeTransfer = new CartChangeTransfer();
+
+        $itemTransfer = new ItemTransfer();
+
+        $productOptionTransfer = new ProductOptionTransfer();
+        $productOptionTransfer->setIdProductOptionValue(0);
+        $itemTransfer->addProductOption($productOptionTransfer);
+
+        $cartChangeTransfer->addItem($itemTransfer);
+
+        $cartPreCheckResponseTransfer = $this->productOptionCartConnectorFacade->checkProductOptionExistence($cartChangeTransfer);
+
+        $this->assertFalse($cartPreCheckResponseTransfer->getIsSuccess());
+        $this->assertCount(1, $cartPreCheckResponseTransfer->getMessages());
     }
 
     /**

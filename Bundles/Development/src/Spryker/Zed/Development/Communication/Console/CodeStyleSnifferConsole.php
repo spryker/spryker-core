@@ -16,16 +16,19 @@ use Zend\Filter\Word\UnderscoreToCamelCase;
 
 /**
  * @method \Spryker\Zed\Development\Business\DevelopmentFacadeInterface getFacade()
+ * @method \Spryker\Zed\Development\Communication\DevelopmentCommunicationFactory getFactory()
  */
 class CodeStyleSnifferConsole extends Console
 {
-    const COMMAND_NAME = 'code:sniff:style';
-    const OPTION_MODULE = 'module';
-    const OPTION_SNIFFS = 'sniffs';
-    const OPTION_DRY_RUN = 'dry-run';
-    const OPTION_FIX = 'fix';
-    const OPTION_EXPLAIN = 'explain';
-    const ARGUMENT_SUB_PATH = 'path';
+    public const COMMAND_NAME = 'code:sniff:style';
+    public const OPTION_MODULE = 'module';
+    public const OPTION_SNIFFS = 'sniffs';
+    public const OPTION_DRY_RUN = 'dry-run';
+    public const OPTION_FIX = 'fix';
+    public const OPTION_EXPLAIN = 'explain';
+    public const ARGUMENT_SUB_PATH = 'path';
+
+    protected const OPTION_LEVEL = 'level';
 
     /**
      * @return void
@@ -40,6 +43,7 @@ class CodeStyleSnifferConsole extends Console
 
         $this->addOption(static::OPTION_MODULE, 'm', InputOption::VALUE_OPTIONAL, 'Name of module to fix code style for. You can use dot syntax for namespaced ones, e.g. `SprykerEco.FooBar`. `Spryker.all`/`SprykerShop.all` is reserved for CORE internal usage.');
         $this->addOption(static::OPTION_SNIFFS, 's', InputOption::VALUE_OPTIONAL, 'Specific sniffs to run, comma separated list of codes');
+        $this->addOption(static::OPTION_LEVEL, 'l', InputOption::VALUE_OPTIONAL, 'Level of sniffs to execute - the higher the stricter');
         $this->addOption(static::OPTION_EXPLAIN, 'e', InputOption::VALUE_NONE, 'Explain the standard by showing the sniffs it includes');
         $this->addOption(static::OPTION_DRY_RUN, 'd', InputOption::VALUE_NONE, 'Dry-Run the command, display it only');
         $this->addOption(static::OPTION_FIX, 'f', InputOption::VALUE_NONE, 'Automatically fix errors that can be fixed');

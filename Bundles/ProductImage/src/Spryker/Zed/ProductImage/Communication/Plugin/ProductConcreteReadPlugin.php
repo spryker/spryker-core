@@ -14,10 +14,14 @@ use Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginReadInterface;
 /**
  * @method \Spryker\Zed\ProductImage\Business\ProductImageFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductImage\Communication\ProductImageCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductImage\ProductImageConfig getConfig()
+ * @method \Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainerInterface getQueryContainer()
  */
 class ProductConcreteReadPlugin extends AbstractPlugin implements ProductConcretePluginReadInterface
 {
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer

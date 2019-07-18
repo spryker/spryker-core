@@ -24,13 +24,13 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQueryContainerInterface
 {
-    const TRANSLATION = 'translation';
-    const TRANSLATION_IS_ACTIVE = 'translation_is_active';
-    const KEY_IS_ACTIVE = 'key_is_active';
-    const GLOSSARY_KEY = 'glossary_key';
-    const GLOSSARY_KEY_IS_ACTIVE = 'glossary_key_is_active';
-    const LOCALE = 'locale';
-    const VALUE = 'value';
+    public const TRANSLATION = 'translation';
+    public const TRANSLATION_IS_ACTIVE = 'translation_is_active';
+    public const KEY_IS_ACTIVE = 'key_is_active';
+    public const GLOSSARY_KEY = 'glossary_key';
+    public const GLOSSARY_KEY_IS_ACTIVE = 'glossary_key_is_active';
+    public const LOCALE = 'locale';
+    public const VALUE = 'value';
 
     /**
      * @api

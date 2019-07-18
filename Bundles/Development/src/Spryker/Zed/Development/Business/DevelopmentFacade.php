@@ -7,7 +7,14 @@
 
 namespace Spryker\Zed\Development\Business;
 
+use Generated\Shared\Transfer\ComposerJsonValidationRequestTransfer;
+use Generated\Shared\Transfer\ComposerJsonValidationResponseTransfer;
 use Generated\Shared\Transfer\DependencyCollectionTransfer;
+use Generated\Shared\Transfer\DependencyProviderCollectionTransfer;
+use Generated\Shared\Transfer\DependencyValidationRequestTransfer;
+use Generated\Shared\Transfer\DependencyValidationResponseTransfer;
+use Generated\Shared\Transfer\ModuleFilterTransfer;
+use Generated\Shared\Transfer\ModuleTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -41,6 +48,19 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     public function runTest($module, array $options = [])
     {
         $this->getFactory()->createCodeTester()->runTest($module, $options);
+    }
+
+    /**
+     * @api
+     *
+     * @param string|null $module
+     * @param array $options
+     *
+     * @return void
+     */
+    public function runFixtures($module, array $options = [])
+    {
+        $this->getFactory()->createCodeTester()->runFixtures($module, $options);
     }
 
     /**
@@ -88,30 +108,39 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     /**
      * @api
      *
-     * @param array $modules
+     * @internal
+     *
+     * @param \Generated\Shared\Transfer\ModuleTransfer[] $modules
      * @param bool $dryRun
      *
      * @return array
      */
-    public function updateComposerJsonInModules(array $modules, $dryRun = false)
+    public function updateComposerJsonInModules(array $modules, $dryRun = false): array
     {
         return $this->getFactory()->createComposerJsonUpdater()->update($modules, $dryRun);
     }
 
     /**
-     * @api
+     * {@inheritdoc}
      *
-     * @param string $module
+     * @api
+     * @internal
+     *
+     * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
+     * @param string|null $dependencyType
      *
      * @return \Generated\Shared\Transfer\DependencyCollectionTransfer
      */
-    public function showOutgoingDependenciesForModule(string $module): DependencyCollectionTransfer
+    public function showOutgoingDependenciesForModule(ModuleTransfer $moduleTransfer, ?string $dependencyType = null): DependencyCollectionTransfer
     {
-        return $this->getFactory()->createModuleDependencyParser()->parseOutgoingDependencies($module);
+        return $this->getFactory()->createModuleDependencyParser()->parseOutgoingDependencies($moduleTransfer, $dependencyType);
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
+     * @internal
      *
      * @param string $moduleName
      *
@@ -123,6 +152,10 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @deprecated Please use `getModules()` instead.
+     *
      * @api
      *
      * @return array
@@ -133,6 +166,8 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @deprecated Use `getAllModules()` instead.
@@ -402,5 +437,101 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     public function runPropelAbstractValidation(OutputInterface $output, ?string $module): bool
     {
         return $this->getFactory()->createPropelAbstractValidator()->validate($output, $module);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\DependencyValidationRequestTransfer $dependencyValidationRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\DependencyValidationResponseTransfer
+     */
+    public function validateModuleDependencies(DependencyValidationRequestTransfer $dependencyValidationRequestTransfer): DependencyValidationResponseTransfer
+    {
+        return $this->getFactory()->createDependencyValidator()->validate($dependencyValidationRequestTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ComposerJsonValidationRequestTransfer $composerJsonValidationRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ComposerJsonValidationResponseTransfer
+     */
+    public function validateComposerJson(ComposerJsonValidationRequestTransfer $composerJsonValidationRequestTransfer): ComposerJsonValidationResponseTransfer
+    {
+        return $this->getFactory()->createComposerJsonValidator()->validate($composerJsonValidationRequestTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ModuleFilterTransfer|null $moduleFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\DependencyProviderCollectionTransfer
+     */
+    public function getInProjectDependencyProviderUsedPlugins(?ModuleFilterTransfer $moduleFilterTransfer = null): DependencyProviderCollectionTransfer
+    {
+        return $this->getFactory()->createDependencyProviderUsedPluginFinder()->getUsedPlugins($moduleFilterTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ModuleFilterTransfer|null $moduleFilterTransfer
+     *
+     * @return array
+     */
+    public function getProjectModules(?ModuleFilterTransfer $moduleFilterTransfer = null): array
+    {
+        return $this->getFactory()->getModuleFinderFacade()->getProjectModules($moduleFilterTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ModuleFilterTransfer|null $moduleFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ModuleTransfer[]
+     */
+    public function getModules(?ModuleFilterTransfer $moduleFilterTransfer = null): array
+    {
+        return $this->getFactory()->getModuleFinderFacade()->getModules($moduleFilterTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @internal
+     *
+     * @return \Generated\Shared\Transfer\PackageTransfer[]
+     */
+    public function getPackages(): array
+    {
+        return $this->getFactory()->getModuleFinderFacade()->getPackages();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\ModuleOverviewTransfer[]
+     */
+    public function getModuleOverview(): array
+    {
+        return $this->getFactory()->createModuleOverview()->getOverview();
     }
 }

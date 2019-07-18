@@ -9,5 +9,5 @@ namespace SprykerTest\Zed\User\PageObject;
 
 class UserCreatePage
 {
-    const URL = '/user/edit/create';
+    public const URL = '/user/edit/create';
 }

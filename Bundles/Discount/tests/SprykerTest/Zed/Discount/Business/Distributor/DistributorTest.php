@@ -28,20 +28,20 @@ use Spryker\Zed\Discount\Business\Distributor\Distributor;
  */
 class DistributorTest extends Unit
 {
-    const ITEM_GROSS_PRICE_ZERO = 0;
-    const ITEM_GROSS_PRICE_1000 = 1000;
-    const ITEM_GROSS_PRICE_2000 = 2000;
-    const ITEM_GROSS_PRICE_4000 = 4000;
+    public const ITEM_GROSS_PRICE_ZERO = 0;
+    public const ITEM_GROSS_PRICE_1000 = 1000;
+    public const ITEM_GROSS_PRICE_2000 = 2000;
+    public const ITEM_GROSS_PRICE_4000 = 4000;
 
-    const DISCOUNT_AMOUNT_100 = 100;
-    const DISCOUNT_AMOUNT_200 = 200;
-    const DISCOUNT_AMOUNT_300 = 300;
-    const DISCOUNT_AMOUNT_400 = 400;
-    const DISCOUNT_AMOUNT_700 = 700;
-    const DISCOUNT_AMOUNT_4000 = 4000;
-    const DISCOUNT_AMOUNT_13333 = 133;
-    const DISCOUNT_AMOUNT_13334 = 134;
-    const DISCOUNT_AMOUNT_NEGATIVE = -100;
+    public const DISCOUNT_AMOUNT_100 = 100;
+    public const DISCOUNT_AMOUNT_200 = 200;
+    public const DISCOUNT_AMOUNT_300 = 300;
+    public const DISCOUNT_AMOUNT_400 = 400;
+    public const DISCOUNT_AMOUNT_700 = 700;
+    public const DISCOUNT_AMOUNT_4000 = 4000;
+    public const DISCOUNT_AMOUNT_13333 = 133;
+    public const DISCOUNT_AMOUNT_13334 = 134;
+    public const DISCOUNT_AMOUNT_NEGATIVE = -100;
 
     /**
      * @var \Spryker\Zed\Discount\Business\DiscountFacade

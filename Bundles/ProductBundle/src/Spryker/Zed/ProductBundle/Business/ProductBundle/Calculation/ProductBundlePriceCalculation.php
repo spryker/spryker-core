@@ -53,7 +53,7 @@ class ProductBundlePriceCalculation implements ProductBundlePriceCalculationInte
     }
 
     /**
-     * @param \Orm\Zed\Sales\Persistence\Base\SpySalesOrderItem $orderItemEntity
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItemEntity
      *
      * @return \Generated\Shared\Transfer\ItemTransfer
      */
@@ -185,7 +185,7 @@ class ProductBundlePriceCalculation implements ProductBundlePriceCalculationInte
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     * @param \Orm\Zed\Sales\Persistence\Base\SpySalesOrderItem $salesOrderItemEntity
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $salesOrderItemEntity
      * @param \Generated\Shared\Transfer\ItemTransfer[] $bundledProducts
      *
      * @return array

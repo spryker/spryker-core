@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
 class TransferServer
 {
     /**
-     * @var self
+     * @var self|null
      */
     protected static $instance;
 
@@ -76,6 +76,8 @@ class TransferServer
     }
 
     /**
+     * This method intended to be used in development environment only!
+     *
      * @return void
      */
     public function activateRepeating()

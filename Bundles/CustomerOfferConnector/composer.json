@@ -1,11 +1,12 @@
 {
   "name": "spryker/customer-offer-connector",
+  "type": "library",
   "description": "CustomerOfferConnector module",
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
     "spryker/customer": "^7.8.0",
-    "spryker/kernel": "^3.0.0",
+    "spryker/kernel": "^3.30.0",
     "spryker/offer-extension": "^1.0.0"
   },
   "require-dev": {

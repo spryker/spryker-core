@@ -11,10 +11,13 @@ use Propel\Runtime\Propel;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\Touch\TouchConfig getConfig()
+ */
 class TouchDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const PLUGIN_PROPEL_CONNECTION = 'propel connection plugin';
-    const SERVICE_DATA = 'util data service';
+    public const PLUGIN_PROPEL_CONNECTION = 'propel connection plugin';
+    public const SERVICE_DATA = 'util data service';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

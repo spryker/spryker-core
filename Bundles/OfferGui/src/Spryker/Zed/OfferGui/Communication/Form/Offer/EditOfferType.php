@@ -33,6 +33,10 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
+/**
+ * @method \Spryker\Zed\OfferGui\OfferGuiConfig getConfig()
+ * @method \Spryker\Zed\OfferGui\Communication\OfferGuiCommunicationFactory getFactory()
+ */
 class EditOfferType extends AbstractType
 {
     public const FIELD_ID_OFFER = 'idOffer';
@@ -178,7 +182,7 @@ class EditOfferType extends AbstractType
                 $data = $event->getData();
 
                 $storeCurrency = $data[static::FIELD_STORE_CURRENCY];
-                list($storeName, $currencyCode) = $this->getStoreAndCurrency($storeCurrency);
+                [$storeName, $currencyCode] = $this->getStoreAndCurrency($storeCurrency);
 
                 $data[static::FIELD_STORE_NAME] = $storeName;
                 $data[static::FIELD_CURRENCY_CODE] = $currencyCode;
@@ -299,8 +303,9 @@ class EditOfferType extends AbstractType
             ],
             'constraints' => [
                 new Callback(function ($items, ExecutionContextInterface $context) {
+                    /** @var \Generated\Shared\Transfer\ItemTransfer[] $items */
                     foreach ($items as $itemTransfer) {
-                        if ($itemTransfer->getSku() && empty($itemTransfer->getQuantity())) {
+                        if ($itemTransfer->getSku() && !$itemTransfer->getQuantity()) {
                             $context->buildViolation('One of selected products contains invalid quantity')
                                 ->addViolation();
                             break;
@@ -424,13 +429,14 @@ class EditOfferType extends AbstractType
         $quoteTransfer = $offerTransfer->getQuote();
         $storeName = $quoteTransfer->getStore()->getName();
         $currencyCode = $quoteTransfer->getCurrency()->getCode();
+
         return implode(';', [$storeName, $currencyCode]);
     }
 
     /**
      * @param string $storeCurrency
      *
-     * @return array
+     * @return string[]
      */
     private function getStoreAndCurrency(string $storeCurrency)
     {

@@ -15,8 +15,9 @@ use Spryker\Zed\ProductResourceAliasStorage\Communication\Plugin\Event\Listener\
 use Spryker\Zed\ProductResourceAliasStorage\Communication\Plugin\Event\Listener\ProductConcreteMappingResourceStorageListener;
 
 /**
- * @method \Spryker\Zed\ProductResourceAliasStorage\Business\ProductResourceAliasStorageFacade getFacade()
+ * @method \Spryker\Zed\ProductResourceAliasStorage\Business\ProductResourceAliasStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductResourceAliasStorage\Communication\ProductResourceAliasStorageCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductResourceAliasStorage\ProductResourceAliasStorageConfig getConfig()
  */
 class ProductResourceAliasStorageEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {

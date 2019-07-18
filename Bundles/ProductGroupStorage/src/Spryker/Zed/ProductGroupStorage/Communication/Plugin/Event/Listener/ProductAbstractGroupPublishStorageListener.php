@@ -15,6 +15,7 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  * @method \Spryker\Zed\ProductGroupStorage\Persistence\ProductGroupStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductGroupStorage\Communication\ProductGroupStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductGroupStorage\Business\ProductGroupStorageFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductGroupStorage\ProductGroupStorageConfig getConfig()
  */
 class ProductAbstractGroupPublishStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
 {

@@ -7,9 +7,13 @@
 
 namespace Spryker\Zed\SharedCart\Business\Model;
 
+use Generated\Shared\Transfer\QuoteCompanyUserTransfer;
 use Generated\Shared\Transfer\QuotePermissionGroupCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuotePermissionGroupTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShareCartRequestTransfer;
+use Generated\Shared\Transfer\ShareCartResponseTransfer;
+use Generated\Shared\Transfer\ShareDetailCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ShareDetailTransfer;
 use Generated\Shared\Transfer\SpyQuoteCompanyUserEntityTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
@@ -53,6 +57,112 @@ class QuoteCompanyUserWriter implements QuoteCompanyUserWriterInterface
     }
 
     /**
+     * @param int $idCompanyUser
+     *
+     * @return void
+     */
+    public function deleteShareRelationsForCompanyUserId(int $idCompanyUser): void
+    {
+        $this->sharedCartEntityManager
+            ->deleteShareRelationsForCompanyUserId($idCompanyUser);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShareCartRequestTransfer $shareCartRequestTransfer
+     *
+     * @return void
+     */
+    public function addQuoteCompanyUser(ShareCartRequestTransfer $shareCartRequestTransfer): void
+    {
+        $shareCartRequestTransfer->requireIdQuote()
+            ->requireShareDetails();
+
+        /** @var \Generated\Shared\Transfer\ShareDetailTransfer $shareDetailTransfer */
+        $shareDetailTransfer = $shareCartRequestTransfer->getShareDetails()->offsetGet(0);
+
+        $this->createNewQuoteCompanyUser($shareCartRequestTransfer->getIdQuote(), $shareDetailTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShareCartRequestTransfer $shareCartRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShareCartResponseTransfer
+     */
+    public function createQuoteCompanyUser(ShareCartRequestTransfer $shareCartRequestTransfer): ShareCartResponseTransfer
+    {
+        $shareCartRequestTransfer->requireIdQuote()
+            ->requireShareDetails();
+
+        /** @var \Generated\Shared\Transfer\ShareDetailTransfer $shareDetailTransfer */
+        $shareDetailTransfer = $shareCartRequestTransfer->getShareDetails()->offsetGet(0);
+        $shareDetailTransfer->requireQuotePermissionGroup()
+            ->requireIdCompanyUser();
+
+        $quoteCompanyUserTransfer = $this->sharedCartEntityManager->createQuoteCompanyUser(
+            $this->createQuoteCompanyUserTransfer($shareCartRequestTransfer)
+        );
+
+        if (!$quoteCompanyUserTransfer->getIdQuoteCompanyUser()) {
+            return (new ShareCartResponseTransfer())->setIsSuccessful(false);
+        }
+
+        $shareDetailCriteriaFilterTransfer = (new ShareDetailCriteriaFilterTransfer())
+            ->setIdQuote($shareCartRequestTransfer->getIdQuote())
+            ->setIdCompanyUser($shareDetailTransfer->getIdCompanyUser());
+
+        $shareDetailCollectionTransfer = $this->sharedCartRepository
+            ->getShareDetailCollectionByShareDetailCriteria($shareDetailCriteriaFilterTransfer);
+
+        return (new ShareCartResponseTransfer())->setIsSuccessful(true)
+            ->setShareDetails($shareDetailCollectionTransfer->getShareDetails());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShareCartRequestTransfer $shareCartRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShareCartResponseTransfer
+     */
+    public function updateQuoteCompanyUserPermissionGroup(ShareCartRequestTransfer $shareCartRequestTransfer): ShareCartResponseTransfer
+    {
+        $shareCartRequestTransfer->requireShareDetails();
+
+        /** @var \Generated\Shared\Transfer\ShareDetailTransfer $shareDetailTransfer */
+        $shareDetailTransfer = $shareCartRequestTransfer->getShareDetails()->offsetGet(0);
+        $shareDetailTransfer->requireIdQuoteCompanyUser()
+            ->requireQuotePermissionGroup();
+
+        $quoteCompanyUserTransfer = $this->sharedCartEntityManager->updateQuoteCompanyUserQuotePermissionGroup($shareDetailTransfer);
+        if (!$quoteCompanyUserTransfer) {
+            return (new ShareCartResponseTransfer())->setIsSuccessful(false);
+        }
+
+        $shareDetailCriteriaFilterTransfer = (new ShareDetailCriteriaFilterTransfer())
+            ->setIdQuoteCompanyUser($quoteCompanyUserTransfer->getIdQuoteCompanyUser());
+
+        $shareDetailCollectionTransfer = $this->sharedCartRepository
+            ->getShareDetailCollectionByShareDetailCriteria($shareDetailCriteriaFilterTransfer);
+
+        return (new ShareCartResponseTransfer())->setIsSuccessful(true)
+            ->setShareDetails($shareDetailCollectionTransfer->getShareDetails());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShareCartRequestTransfer $shareCartRequestTransfer
+     *
+     * @return void
+     */
+    public function deleteQuoteCompanyUser(ShareCartRequestTransfer $shareCartRequestTransfer): void
+    {
+        $shareCartRequestTransfer->requireShareDetails();
+
+        /** @var \Generated\Shared\Transfer\ShareDetailTransfer $shareDetailTransfer */
+        $shareDetailTransfer = $shareCartRequestTransfer->getShareDetails()->offsetGet(0);
+        $shareDetailTransfer->requireIdQuoteCompanyUser();
+
+        $this->sharedCartEntityManager->deleteQuoteCompanyUser($shareDetailTransfer->getIdQuoteCompanyUser());
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
@@ -61,9 +171,78 @@ class QuoteCompanyUserWriter implements QuoteCompanyUserWriterInterface
     {
         $currentQuoteCompanyUserIdCollection = $this->sharedCartRepository->findQuoteCompanyUserIdCollection($quoteTransfer->getIdQuote());
         $this->addNewQuoteCompanyUsers($quoteTransfer);
+        $this->updateExistingQuoteCompanyUsers($quoteTransfer, $currentQuoteCompanyUserIdCollection);
         $this->removeQuoteCompanyUsers((array)$quoteTransfer->getShareDetails(), $currentQuoteCompanyUserIdCollection);
 
         return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param int[] $storedQuoteCompanyUserIdIndexes
+     *
+     * @return void
+     */
+    protected function updateExistingQuoteCompanyUsers(
+        QuoteTransfer $quoteTransfer,
+        array $storedQuoteCompanyUserIdIndexes
+    ): void {
+        $quoteShareDetails = $quoteTransfer->getShareDetails();
+        $formQuoteCompanyUserIdIndexes = $this->indexQuoteCompanyUserId((array)$quoteShareDetails);
+
+        $commonQuoteCompanyUserIdIndexes = array_intersect(
+            $formQuoteCompanyUserIdIndexes,
+            $storedQuoteCompanyUserIdIndexes
+        );
+
+        $quoteTransfer->requireIdQuote();
+        $storedQuotePermissionGroupIdIndexes = $this->sharedCartRepository->findAllCompanyUserQuotePermissionGroupIdIndexes(
+            $quoteTransfer->getIdQuote()
+        );
+
+        foreach ($quoteShareDetails as $shareDetailTransfer) {
+            $this->updateCompanyUserQuotePermissionGroup($shareDetailTransfer, $commonQuoteCompanyUserIdIndexes, $storedQuotePermissionGroupIdIndexes);
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShareDetailTransfer $shareDetailTransfer
+     * @param int[] $commonQuoteCompanyUserIdIndexes
+     * @param int[] $storedQuotePermissionGroupIdIndexes
+     *
+     * @return void
+     */
+    protected function updateCompanyUserQuotePermissionGroup(
+        ShareDetailTransfer $shareDetailTransfer,
+        array $commonQuoteCompanyUserIdIndexes,
+        array $storedQuotePermissionGroupIdIndexes
+    ): void {
+        if (!$shareDetailTransfer->getIdQuoteCompanyUser()) {
+            return;
+        }
+
+        $shareDetailTransfer->requireIdCompanyUser()
+            ->requireQuotePermissionGroup();
+
+        if (in_array($shareDetailTransfer->getIdQuoteCompanyUser(), $commonQuoteCompanyUserIdIndexes, false)
+            && $this->isQuotePermissionGroupChanged($shareDetailTransfer, $storedQuotePermissionGroupIdIndexes)
+        ) {
+            $this->sharedCartEntityManager->updateCompanyUserQuotePermissionGroup($shareDetailTransfer);
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShareDetailTransfer $shareDetailTransfer
+     * @param int[] $storedQuotePermissionGroupIdIndexes
+     *
+     * @return bool
+     */
+    protected function isQuotePermissionGroupChanged(
+        ShareDetailTransfer $shareDetailTransfer,
+        array $storedQuotePermissionGroupIdIndexes
+    ): bool {
+        return $shareDetailTransfer->getQuotePermissionGroup()->getIdQuotePermissionGroup()
+            !== $storedQuotePermissionGroupIdIndexes[$shareDetailTransfer->getIdQuoteCompanyUser()];
     }
 
     /**
@@ -120,7 +299,7 @@ class QuoteCompanyUserWriter implements QuoteCompanyUserWriterInterface
 
     /**
      * @param \Generated\Shared\Transfer\ShareDetailTransfer[] $shareDetailTransferCollection
-     * @param array $currentQuoteCompanyUserIdCollection
+     * @param int[] $currentQuoteCompanyUserIdCollection
      *
      * @return void
      */
@@ -149,5 +328,23 @@ class QuoteCompanyUserWriter implements QuoteCompanyUserWriterInterface
         }
 
         return $quoteCompanyUserIdIndex;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShareCartRequestTransfer $shareCartRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteCompanyUserTransfer
+     */
+    protected function createQuoteCompanyUserTransfer(ShareCartRequestTransfer $shareCartRequestTransfer): QuoteCompanyUserTransfer
+    {
+        /** @var \Generated\Shared\Transfer\ShareDetailTransfer $shareDetailTransfer */
+        $shareDetailTransfer = $shareCartRequestTransfer->getShareDetails()->offsetGet(0);
+
+        return (new QuoteCompanyUserTransfer())
+            ->setFkQuote($shareCartRequestTransfer->getIdQuote())
+            ->setFkCompanyUser($shareDetailTransfer->getIdCompanyUser())
+            ->setFkQuotePermissionGroup(
+                $shareDetailTransfer->getQuotePermissionGroup()->getIdQuotePermissionGroup()
+            );
     }
 }

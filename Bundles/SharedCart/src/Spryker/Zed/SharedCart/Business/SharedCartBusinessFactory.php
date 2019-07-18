@@ -20,14 +20,25 @@ use Spryker\Zed\SharedCart\Business\Model\QuotePermissionGroupReader;
 use Spryker\Zed\SharedCart\Business\Model\QuotePermissionGroupReaderInterface;
 use Spryker\Zed\SharedCart\Business\Model\QuoteReader;
 use Spryker\Zed\SharedCart\Business\Model\QuoteReaderInterface;
+use Spryker\Zed\SharedCart\Business\QuoteCollectionExpander\SharedCartQuoteCollectionExpander;
+use Spryker\Zed\SharedCart\Business\QuoteCollectionExpander\SharedCartQuoteCollectionExpanderInterface;
+use Spryker\Zed\SharedCart\Business\QuoteCompanyUser\QuoteCompanyUserReader;
+use Spryker\Zed\SharedCart\Business\QuoteCompanyUser\QuoteCompanyUserReaderInterface;
 use Spryker\Zed\SharedCart\Business\QuoteResponseExpander\CustomerPermissionQuoteResponseExpander;
 use Spryker\Zed\SharedCart\Business\QuoteResponseExpander\CustomerShareCartQuoteResponseExpander;
 use Spryker\Zed\SharedCart\Business\QuoteResponseExpander\QuoteResponseExpander;
 use Spryker\Zed\SharedCart\Business\QuoteResponseExpander\QuoteResponseExpanderInterface;
 use Spryker\Zed\SharedCart\Business\QuoteResponseExpander\QuoteShareDetailsQuoteResponseExpander;
+use Spryker\Zed\SharedCart\Business\QuoteShareDetails\QuoteShareDetailsReader;
+use Spryker\Zed\SharedCart\Business\QuoteShareDetails\QuoteShareDetailsReaderInterface;
+use Spryker\Zed\SharedCart\Business\ResourceShare\ResourceShareQuoteCompanyUserWriter;
+use Spryker\Zed\SharedCart\Business\ResourceShare\ResourceShareQuoteCompanyUserWriterInterface;
+use Spryker\Zed\SharedCart\Business\ResourceShare\ResourceShareQuoteShare;
+use Spryker\Zed\SharedCart\Business\ResourceShare\ResourceShareQuoteShareInterface;
 use Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToCustomerFacadeInterface;
 use Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToPermissionFacadeInterface;
 use Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToQuoteFacadeInterface;
+use Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToStoreFacadeInterface as SharedCartToStoreFacadeInterface;
 use Spryker\Zed\SharedCart\SharedCartDependencyProvider;
 
 /**
@@ -58,7 +69,10 @@ class SharedCartBusinessFactory extends AbstractBusinessFactory
      */
     public function createCustomerShareCartQuoteResponseExpander(): QuoteResponseExpanderInterface
     {
-        return new CustomerShareCartQuoteResponseExpander($this->createQuoteReader());
+        return new CustomerShareCartQuoteResponseExpander(
+            $this->createQuoteReader(),
+            $this->getStoreFacade()
+        );
     }
 
     /**
@@ -127,6 +141,49 @@ class SharedCartBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\SharedCart\Business\QuoteShareDetails\QuoteShareDetailsReaderInterface
+     */
+    public function createQuoteShareDetailsReader(): QuoteShareDetailsReaderInterface
+    {
+        return new QuoteShareDetailsReader(
+            $this->getRepository(),
+            $this->getCustomerFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\SharedCart\Business\QuoteCompanyUser\QuoteCompanyUserReaderInterface
+     */
+    public function createQuoteCompanyUserReader(): QuoteCompanyUserReaderInterface
+    {
+        return new QuoteCompanyUserReader($this->getRepository());
+    }
+
+    /**
+     * @return \Spryker\Zed\SharedCart\Business\ResourceShare\ResourceShareQuoteShareInterface
+     */
+    public function createResourceShareQuoteShare(): ResourceShareQuoteShareInterface
+    {
+        return new ResourceShareQuoteShare(
+            $this->getRepository(),
+            $this->getQuoteFacade(),
+            $this->createResourceShareQuoteCompanyUserWriter()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\SharedCart\Business\ResourceShare\ResourceShareQuoteCompanyUserWriterInterface
+     */
+    public function createResourceShareQuoteCompanyUserWriter(): ResourceShareQuoteCompanyUserWriterInterface
+    {
+        return new ResourceShareQuoteCompanyUserWriter(
+            $this->getRepository(),
+            $this->getEntityManager(),
+            $this->createQuoteCompanyUserWriter()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToCustomerFacadeInterface
      */
     public function getCustomerFacade(): SharedCartToCustomerFacadeInterface
@@ -160,5 +217,25 @@ class SharedCartBusinessFactory extends AbstractBusinessFactory
             $this->createCustomerShareCartQuoteResponseExpander(),
             $this->createQuoteShareDetailsQuoteResponseExpander(),
         ];
+    }
+
+    /**
+     * @return \Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToStoreFacadeInterface
+     */
+    public function getStoreFacade(): SharedCartToStoreFacadeInterface
+    {
+        return $this->getProvidedDependency(SharedCartDependencyProvider::FACADE_STORE);
+    }
+
+    /**
+     * @return \Spryker\Zed\SharedCart\Business\QuoteCollectionExpander\SharedCartQuoteCollectionExpanderInterface
+     */
+    public function createSharedCartQuoteCollectionExpander(): SharedCartQuoteCollectionExpanderInterface
+    {
+        return new SharedCartQuoteCollectionExpander(
+            $this->createQuoteReader(),
+            $this->getStoreFacade(),
+            $this->createQuoteShareDetailsReader()
+        );
     }
 }

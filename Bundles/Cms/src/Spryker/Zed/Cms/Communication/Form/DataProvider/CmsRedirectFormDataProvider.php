@@ -30,13 +30,13 @@ class CmsRedirectFormDataProvider
      *
      * @return array
      */
-    public function getData($idUrl = null)
+    public function getData(?int $idUrl = null): array
     {
         if ($idUrl === null) {
             return [];
         }
 
-        /** @var \Orm\Zed\Url\Persistence\SpyUrl|\Orm\Zed\Url\Persistence\SpyUrlRedirect $urlRedirectEntity */
+        /** @var \Orm\Zed\Url\Persistence\SpyUrl|\Orm\Zed\Url\Persistence\SpyUrlRedirect|null $urlRedirectEntity */
         $urlRedirectEntity = $this
             ->cmsQueryContainer
             ->queryUrlByIdWithRedirect($idUrl)

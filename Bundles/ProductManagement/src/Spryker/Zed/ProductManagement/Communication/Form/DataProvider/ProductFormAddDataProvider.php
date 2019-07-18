@@ -10,15 +10,12 @@ namespace Spryker\Zed\ProductManagement\Communication\Form\DataProvider;
 class ProductFormAddDataProvider extends AbstractProductFormDataProvider
 {
     /**
+     * @param array|null $priceDimension
+     *
      * @return array
      */
-    public function getData()
+    public function getData(?array $priceDimension = null)
     {
-        $formData = [];
-        $defaults = $this->getDefaultFormFields();
-
-        $formData = array_merge($defaults, $formData);
-
-        return $formData;
+        return $this->getDefaultFormFields($priceDimension);
     }
 }

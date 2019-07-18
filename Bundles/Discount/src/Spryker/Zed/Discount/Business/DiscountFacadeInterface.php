@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 namespace Spryker\Zed\Discount\Business;
 
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ClauseTransfer;
 use Generated\Shared\Transfer\CollectedDiscountTransfer;
 use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
@@ -212,7 +214,7 @@ interface DiscountFacadeInterface
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
-     * @return boolean
+     * @return bool
      */
     public function isTimeSatisfiedBy(QuoteTransfer $quoteTransfer, ItemTransfer $itemTransfer, ClauseTransfer $clauseTransfer);
 
@@ -335,6 +337,8 @@ interface DiscountFacadeInterface
      * - return DiscountConfiguratorTransfer
      *
      * @api
+     *
+     * @deprecated Use `findHydratedDiscountConfiguratorByIdDiscount()` instead.
      *
      * @param int $idDiscount
      *
@@ -533,4 +537,33 @@ interface DiscountFacadeInterface
      * @return void
      */
     public function checkDiscountChanges(QuoteTransfer $resultQuoteTransfer, QuoteTransfer $sourceQuoteTransfer): void;
+
+    /**
+     * Specification:
+     * - Finds discount by id.
+     * - Hydrates data from entity to DiscountConfiguratorTransfer.
+     * - Returns NULL if discount doesn't exist.
+     *
+     * @api
+     *
+     * @param int $idDiscount
+     *
+     * @return \Generated\Shared\Transfer\DiscountConfiguratorTransfer|null
+     */
+    public function findHydratedDiscountConfiguratorByIdDiscount(int $idDiscount): ?DiscountConfiguratorTransfer;
+
+    /**
+     * Specification:
+     * - Validates voucher discounts on Max Usage in Quote.
+     * - Returns `true` if all used vouchers are under the usage limit.
+     * - Otherwise it returns `false` and adds messages to `$checkoutResponseTransfer`.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return bool
+     */
+    public function validateVoucherDiscountsMaxUsage(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool;
 }

@@ -22,9 +22,9 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class VersionPageController extends AbstractController
 {
-    const URL_PARAM_ID_CMS_PAGE = 'id-cms-page';
-    const URL_PARAM_VERSION = 'version';
-    const URL_PARAM_REDIRECT_URL = 'redirect-url';
+    public const URL_PARAM_ID_CMS_PAGE = 'id-cms-page';
+    public const URL_PARAM_VERSION = 'version';
+    public const URL_PARAM_REDIRECT_URL = 'redirect-url';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -45,11 +45,11 @@ class VersionPageController extends AbstractController
                 ->getCmsFacade()
                 ->publishWithVersion($idCmsPage);
 
-            $this->addSuccessMessage(sprintf('Page with version %d successfully published.', $cmsVersionTransfer->getVersion()));
+            $this->addSuccessMessage('Page with version %d successfully published.', ['%d' => $cmsVersionTransfer->getVersion()]);
         } catch (CannotActivatePageException $exception) {
             $this->addErrorMessage('Cannot publish the CMS page. Please fill in all placeholders for this page.');
 
-            return $this->redirectResponse($request->headers->get('referer'));
+            return $this->redirectResponseExternal($request->headers->get('referer'));
         }
 
         return $this->redirectResponse($redirectUrl);
@@ -91,7 +91,7 @@ class VersionPageController extends AbstractController
             ->createCmsVersionFormDataProvider();
 
         $versionForm = $this->getFactory()
-            ->createCmsVersionForm($cmsVersionFormDataProvider, $idCmsPage, $version)
+            ->getCmsVersionForm($cmsVersionFormDataProvider, $idCmsPage, $version)
             ->handleRequest($request);
 
         if ($versionForm->isSubmitted() && $versionForm->isValid()) {
@@ -138,7 +138,7 @@ class VersionPageController extends AbstractController
      * @param int $version
      * @param int $idCmsPage
      *
-     * @return null|string
+     * @return string|null
      */
     protected function submitVersionForm(Request $request, $version, $idCmsPage)
     {
@@ -162,7 +162,7 @@ class VersionPageController extends AbstractController
             return $redirectUrl;
         }
 
-        $this->addSuccessMessage(sprintf('Rollback applied successfully. Page with version %s published.', $cmsVersionTransfer->getVersion()));
+        $this->addSuccessMessage('Rollback applied successfully. Page with version %s published.', ['%s' => $cmsVersionTransfer->getVersion()]);
 
         return $redirectUrl;
     }
@@ -183,7 +183,7 @@ class VersionPageController extends AbstractController
             ->findCmsVersionByIdCmsPageAndVersion($idCmsPage, $version);
 
         if ($cmsTargetVersionTransfer === null) {
-            throw new NotFoundHttpException(sprintf('Cms page with version "%d" not found.', $version));
+            throw new NotFoundHttpException('Cms page with version "%d" not found.', [ '%d' => $version ]);
         }
 
         return $cmsVersionDataHelper->mapToCmsVersionDataTransfer($cmsTargetVersionTransfer);

@@ -1,5 +1,6 @@
 {
   "name": "spryker/quote-extension",
+  "type": "library",
   "description": "QuoteExtension module",
   "license": "proprietary",
   "require": {

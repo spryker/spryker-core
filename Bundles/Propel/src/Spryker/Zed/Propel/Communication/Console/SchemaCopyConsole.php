@@ -13,10 +13,11 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\Propel\Business\PropelFacadeInterface getFacade()
+ * @method \Spryker\Zed\Propel\Communication\PropelCommunicationFactory getFactory()
  */
 class SchemaCopyConsole extends Console
 {
-    const COMMAND_NAME = 'propel:schema:copy';
+    public const COMMAND_NAME = 'propel:schema:copy';
 
     /**
      * @return void
@@ -33,7 +34,7 @@ class SchemaCopyConsole extends Console
      * @param \Symfony\Component\Console\Input\InputInterface $input
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
-     * @return void
+     * @return int|null
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {

@@ -26,7 +26,7 @@ use Spryker\Zed\Graph\GraphConfig;
  */
 class GraphCommunicationFactoryTest extends Unit
 {
-    const GRAPH_NAME = 'graph name';
+    public const GRAPH_NAME = 'graph name';
 
     /**
      * @return void
@@ -84,7 +84,7 @@ class GraphCommunicationFactoryTest extends Unit
     /**
      * @param string|object $return
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Graph\GraphConfig
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Graph\GraphConfig
      */
     protected function getConfigMock($return)
     {

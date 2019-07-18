@@ -17,6 +17,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 /**
  * @method \Spryker\Zed\Offer\Business\OfferBusinessFactory getFactory()
  * @method \Spryker\Zed\Offer\Persistence\OfferRepositoryInterface getRepository()
+ * @method \Spryker\Zed\Offer\Persistence\OfferEntityManagerInterface getEntityManager()
  */
 class OfferFacade extends AbstractFacade implements OfferFacadeInterface
 {

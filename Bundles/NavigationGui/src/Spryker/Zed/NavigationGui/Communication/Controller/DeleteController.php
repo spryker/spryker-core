@@ -14,10 +14,11 @@ use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 
 /**
  * @method \Spryker\Zed\NavigationGui\Communication\NavigationGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\NavigationGui\Persistence\NavigationGuiQueryContainerInterface getQueryContainer()
  */
 class DeleteController extends AbstractController
 {
-    const PARAM_ID_NAVIGATION = 'id-navigation';
+    public const PARAM_ID_NAVIGATION = 'id-navigation';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -45,9 +46,9 @@ class DeleteController extends AbstractController
                 ->getNavigationFacade()
                 ->deleteNavigation($navigationTransfer);
 
-            $this->addSuccessMessage(sprintf('Navigation element %d was deleted successfully.', $idNavigation));
+            $this->addSuccessMessage('Navigation element %d was deleted successfully.', ['%d' => $idNavigation]);
         } else {
-            $this->addErrorMessage(sprintf('Navigation element %d was not found.', $idNavigation));
+            $this->addErrorMessage('Navigation element %d was not found.', ['%d' => $idNavigation]);
         }
 
         return $this->redirectResponse('/navigation-gui');

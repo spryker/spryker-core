@@ -11,7 +11,7 @@ use Propel\Runtime\ActiveQuery\Criteria;
 
 class Equal extends AbstractOperator
 {
-    const TYPE = 'equal';
+    public const TYPE = 'equal';
 
     /**
      * @return string

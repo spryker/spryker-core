@@ -1,71 +1,86 @@
 <?xml version="1.0"?>
 <config>
-    <maintenance>
+  <maintenance>
+    <pages>
+      <dependencies>
+        <label>Dependencies</label>
+        <title>Bundle dependencies</title>
+        <bundle>development</bundle>
+        <controller>dependency</controller>
+        <action>index</action>
+        <icon>fa-archive</icon>
         <pages>
-            <dependencies>
-                <label>Dependencies</label>
-                <title>Bundle dependencies</title>
-                <bundle>development</bundle>
-                <controller>dependency</controller>
-                <action>index</action>
-                <icon>fa-archive</icon>
-                <pages>
-                    <adjecency-matrix>
-                        <label>Adjacency Matrix</label>
-                        <title>Adjacency Matrix</title>
-                        <bundle>development</bundle>
-                        <controller>dependency</controller>
-                        <action>adjacency-matrix</action>
-                        <visible>0</visible>
-                    </adjecency-matrix>
-                </pages>
-            </dependencies>
-            <stability>
-                <label>Stability</label>
-                <title>Bundles stability</title>
-                <bundle>development</bundle>
-                <controller>dependency</controller>
-                <action>stability</action>
-                <icon>fa-globe</icon>
-
-                <pages>
-                    <outgoing-dependency-graph>
-                        <label>Outgoing Dependency Graph</label>
-                        <title>Outgoing Dependency Graph</title>
-                        <bundle>development</bundle>
-                        <controller>dependency</controller>
-                        <action>outgoing-graph</action>
-                        <visible>0</visible>
-                    </outgoing-dependency-graph>
-                </pages>
-            </stability>
-            <architecture-sniffer>
-                <label>Architecture Sniffer</label>
-                <title>Architecture Sniffer</title>
-                <bundle>development</bundle>
-                <controller>architecture</controller>
-                <action>index</action>
-                <icon>fa-code</icon>
-                <pages>
-                    <check-bundle>
-                        <label>Violations</label>
-                        <title>Violations</title>
-                        <bundle>development</bundle>
-                        <controller>architecture</controller>
-                        <action>check-bundle</action>
-                        <icon>fa-code</icon>
-                        <visible>0</visible>
-                    </check-bundle>
-                    <rules>
-                        <label>Rules</label>
-                        <title>Rules</title>
-                        <bundle>development</bundle>
-                        <controller>architecture</controller>
-                        <action>rules</action>
-                        <visible>0</visible>
-                    </rules>
-                </pages>
-            </architecture-sniffer>
+          <adjecency-matrix>
+            <label>Adjacency Matrix</label>
+            <title>Adjacency Matrix</title>
+            <bundle>development</bundle>
+            <controller>dependency</controller>
+            <action>adjacency-matrix</action>
+            <visible>0</visible>
+          </adjecency-matrix>
         </pages>
-    </maintenance>
+      </dependencies>
+      <stability>
+        <label>Stability</label>
+        <title>Bundles stability</title>
+        <bundle>development</bundle>
+        <controller>dependency</controller>
+        <action>stability</action>
+        <icon>fa-globe</icon>
+        <pages>
+          <outgoing-dependency-graph>
+            <label>Outgoing Dependency Graph</label>
+            <title>Outgoing Dependency Graph</title>
+            <bundle>development</bundle>
+            <controller>dependency</controller>
+            <action>outgoing-graph</action>
+            <visible>0</visible>
+          </outgoing-dependency-graph>
+        </pages>
+      </stability>
+      <architecture-sniffer>
+        <label>Architecture Sniffer</label>
+        <title>Architecture Sniffer</title>
+        <bundle>development</bundle>
+        <controller>architecture</controller>
+        <action>index</action>
+        <icon>fa-code</icon>
+        <pages>
+          <check-bundle>
+            <label>Violations</label>
+            <title>Violations</title>
+            <bundle>development</bundle>
+            <controller>architecture</controller>
+            <action>check-bundle</action>
+            <icon>fa-code</icon>
+            <visible>0</visible>
+          </check-bundle>
+          <rules>
+            <label>Rules</label>
+            <title>Rules</title>
+            <bundle>development</bundle>
+            <controller>architecture</controller>
+            <action>rules</action>
+            <visible>0</visible>
+          </rules>
+        </pages>
+      </architecture-sniffer>
+      <integration>
+        <label>Used Plugins</label>
+        <title>Used Plugins</title>
+        <bundle>development</bundle>
+        <controller>dependency-provider-plugin-usage</controller>
+        <action>index</action>
+        <icon>fa-globe</icon>
+      </integration>
+      <module-overview>
+        <label>Module overview</label>
+        <title>Module overview</title>
+        <bundle>development</bundle>
+        <controller>module-overview</controller>
+        <action>index</action>
+        <icon>fa-globe</icon>
+      </module-overview>
+    </pages>
+  </maintenance>
 </config>

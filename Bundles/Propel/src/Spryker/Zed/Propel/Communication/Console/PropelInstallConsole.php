@@ -8,19 +8,22 @@
 namespace Spryker\Zed\Propel\Communication\Console;
 
 use Spryker\Zed\Kernel\Communication\Console\Console;
-use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
+/**
+ * @method \Spryker\Zed\Propel\Business\PropelFacadeInterface getFacade()
+ * @method \Spryker\Zed\Propel\Communication\PropelCommunicationFactory getFactory()
+ */
 class PropelInstallConsole extends Console
 {
-    const OPTION_NO_DIFF = 'no-diff';
-    const OPTION_NO_DIFF_SHORTCUT = 'o';
-    const OPTION_NO_DIFF_DESCRIPTION = 'Runs without propel:diff';
+    public const OPTION_NO_DIFF = 'no-diff';
+    public const OPTION_NO_DIFF_SHORTCUT = 'o';
+    public const OPTION_NO_DIFF_DESCRIPTION = 'Runs without propel:diff';
 
-    const COMMAND_NAME = 'propel:install';
-    const DESCRIPTION = 'Runs config convert, create database, postgres compatibility, copy schemas, runs Diff, build models and migrate tasks';
+    public const COMMAND_NAME = 'propel:install';
+    public const DESCRIPTION = 'Runs config convert, create database, postgres compatibility, copy schemas, runs Diff, build models and migrate tasks';
 
     /**
      * @return void
@@ -60,28 +63,13 @@ class PropelInstallConsole extends Console
     }
 
     /**
-     * @param string $command
-     * @param array $arguments
-     *
-     * @return void
-     */
-    protected function runDependingCommand($command, array $arguments = [])
-    {
-        $command = $this->getApplication()->find($command);
-        $arguments['command'] = $command;
-        $input = new ArrayInput($arguments);
-        $command->run($input, $this->output);
-    }
-
-    /**
-     * @return array
+     * @return string[]
      */
     protected function getDependingCommands()
     {
         $noDiffOption = $this->input->getOption(self::OPTION_NO_DIFF);
 
         $dependingCommands = [
-            ConvertConfigConsole::COMMAND_NAME,
             CreateDatabaseConsole::COMMAND_NAME,
             PostgresqlCompatibilityConsole::COMMAND_NAME,
             SchemaCopyConsole::COMMAND_NAME,

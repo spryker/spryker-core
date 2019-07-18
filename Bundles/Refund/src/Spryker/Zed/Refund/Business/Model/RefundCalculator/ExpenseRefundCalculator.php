@@ -21,16 +21,22 @@ class ExpenseRefundCalculator extends AbstractRefundCalculator
      */
     public function calculateRefund(RefundTransfer $refundTransfer, OrderTransfer $orderTransfer, array $salesOrderItems)
     {
-        $refundedItemAmount = 0;
+        $refundableItemAmount = 0;
         foreach ($orderTransfer->getItems() as $itemTransfer) {
+            if ($this->isItemAdded($refundTransfer, $itemTransfer)) {
+                continue;
+            }
+
             if ($this->shouldItemRefunded($itemTransfer, $salesOrderItems)) {
                 $refundTransfer->addItem($itemTransfer);
-            } else {
-                $refundedItemAmount += (int)$itemTransfer->getRefundableAmount();
+
+                continue;
             }
+
+            $refundableItemAmount += (int)$itemTransfer->getRefundableAmount();
         }
 
-        if ($refundedItemAmount === 0) {
+        if ($refundableItemAmount === 0) {
             $refundTransfer->setExpenses($orderTransfer->getExpenses());
         }
 
@@ -47,10 +53,8 @@ class ExpenseRefundCalculator extends AbstractRefundCalculator
      */
     protected function calculateRefundableExpenseAmount(RefundTransfer $refundTransfer)
     {
-        if ($refundTransfer->getExpenses()) {
-            foreach ($refundTransfer->getExpenses() as $expenseTransfer) {
-                $refundTransfer->setAmount($refundTransfer->getAmount() + $expenseTransfer->getRefundableAmount());
-            }
+        foreach ($refundTransfer->getExpenses() as $expenseTransfer) {
+            $refundTransfer->setAmount($refundTransfer->getAmount() + $expenseTransfer->getRefundableAmount());
         }
     }
 
@@ -61,10 +65,8 @@ class ExpenseRefundCalculator extends AbstractRefundCalculator
      */
     protected function setCanceledExpenseAmount(RefundTransfer $refundTransfer)
     {
-        if ($refundTransfer->getExpenses()) {
-            foreach ($refundTransfer->getExpenses() as $expenseTransfer) {
-                $expenseTransfer->setCanceledAmount($expenseTransfer->getRefundableAmount());
-            }
+        foreach ($refundTransfer->getExpenses() as $expenseTransfer) {
+            $expenseTransfer->setCanceledAmount($expenseTransfer->getRefundableAmount());
         }
     }
 }

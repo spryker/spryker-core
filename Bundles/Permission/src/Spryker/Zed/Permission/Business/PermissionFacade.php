@@ -14,6 +14,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 /**
  * @method \Spryker\Zed\Permission\Persistence\PermissionRepositoryInterface getRepository()
  * @method \Spryker\Zed\Permission\Business\PermissionBusinessFactory getFactory()
+ * @method \Spryker\Zed\Permission\Persistence\PermissionEntityManagerInterface getEntityManager()
  */
 class PermissionFacade extends AbstractFacade implements PermissionFacadeInterface
 {
@@ -71,5 +72,33 @@ class PermissionFacade extends AbstractFacade implements PermissionFacadeInterfa
     public function findPermissionByKey(string $key): ?PermissionTransfer
     {
         return $this->getRepository()->findPermissionByKey($key);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
+     */
+    public function findMergedRegisteredNonInfrastructuralPermissions(): PermissionCollectionTransfer
+    {
+        return $this->getFactory()
+            ->createPermissionFinder()
+            ->findMergedRegisteredNonInfrastructuralPermissions();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $identifier
+     *
+     * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
+     */
+    public function getPermissionsByIdentifier(string $identifier): PermissionCollectionTransfer
+    {
+        return $this->getFactory()->createPermissionFinder()->getPermissionsByIdentifier($identifier);
     }
 }

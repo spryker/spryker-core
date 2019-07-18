@@ -47,11 +47,11 @@ abstract class AbstractFactory
             $this->container = $this->createContainerWithProvidedDependencies();
         }
 
-        if ($this->container->offsetExists($key) === false) {
+        if ($this->container->has($key) === false) {
             throw new ContainerKeyNotFoundException($this, $key);
         }
 
-        return $this->container[$key];
+        return $this->container->get($key);
     }
 
     /**
@@ -70,7 +70,7 @@ abstract class AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Kernel\Container|\Spryker\Shared\Kernel\ContainerInterface
+     * @return \Spryker\Client\Kernel\Container
      */
     protected function createContainer()
     {

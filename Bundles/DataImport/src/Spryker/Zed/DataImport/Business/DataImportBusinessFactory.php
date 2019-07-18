@@ -8,9 +8,19 @@
 namespace Spryker\Zed\DataImport\Business;
 
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
+use Generated\Shared\Transfer\DataImporterQueueReaderConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
+use Generated\Shared\Transfer\QueueDataImporterConfigurationTransfer;
+use Spryker\Zed\DataImport\Business\DataImporter\Queue\QueueDataImporter;
+use Spryker\Zed\DataImport\Business\DataImporter\Queue\QueueDataImporterInterface;
+use Spryker\Zed\DataImport\Business\DataImporter\Queue\QueueMessageHelper;
+use Spryker\Zed\DataImport\Business\DataImporter\Queue\QueueMessageHelperInterface;
+use Spryker\Zed\DataImport\Business\DataReader\QueueReader\QueueReader;
+use Spryker\Zed\DataImport\Business\DataWriter\QueueWriter\QueueWriter;
+use Spryker\Zed\DataImport\Business\DataWriter\QueueWriter\QueueWriterInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImporter;
 use Spryker\Zed\DataImport\Business\Model\DataImporterCollection;
+use Spryker\Zed\DataImport\Business\Model\DataImporterDataSetWriterAware;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\AddLocalesStep;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\LocalizedAttributesExtractorStep;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\RenameDataSetKeysStep;
@@ -27,6 +37,7 @@ use Spryker\Zed\DataImport\Business\Model\Dump\ImporterDumper;
 use Spryker\Zed\DataImport\Business\Model\Dump\ImporterDumperInterface;
 use Spryker\Zed\DataImport\Business\Model\Publisher\DataImporterPublisher;
 use Spryker\Zed\DataImport\DataImportDependencyProvider;
+use Spryker\Zed\DataImport\Dependency\Client\DataImportToQueueClientInterface;
 use Spryker\Zed\DataImport\Dependency\Facade\DataImportToEventFacadeInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
@@ -40,7 +51,10 @@ class DataImportBusinessFactory extends AbstractBusinessFactory
      */
     public function getImporter()
     {
-        return $this->createDataImporterCollection();
+        /** @var \Spryker\Zed\DataImport\Business\Model\DataImporterInterface $dataImporterCollection */
+        $dataImporterCollection = $this->createDataImporterCollection();
+
+        return $dataImporterCollection;
     }
 
     /**
@@ -73,11 +87,19 @@ class DataImportBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\DataImportExtension\Dependency\Plugin\DataSetWriterPluginInterface[]
+     */
+    public function getDefaultDataImportWriterPlugins()
+    {
+        return $this->getProvidedDependency(DataImportDependencyProvider::DATA_IMPORT_DEFAULT_WRITER_PLUGINS);
+    }
+
+    /**
      * @return \Spryker\Zed\DataImport\Business\Model\Publisher\DataImporterPublisherInterface
      */
     public function createDataImporterPublisher()
     {
-        return new DataImporterPublisher($this->getPublicEventFacade());
+        return new DataImporterPublisher();
     }
 
     /**
@@ -120,6 +142,44 @@ class DataImportBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QueueDataImporterConfigurationTransfer $queueDataImporterConfigurationTransfer
+     *
+     * @return \Spryker\Zed\DataImport\Business\DataImporter\Queue\QueueDataImporterInterface
+     */
+    public function createQueueDataImporter(QueueDataImporterConfigurationTransfer $queueDataImporterConfigurationTransfer): QueueDataImporterInterface
+    {
+        $dataReader = $this->createQueueReaderFromConfig(
+            $queueDataImporterConfigurationTransfer->getReaderConfiguration()
+        );
+
+        return new QueueDataImporter(
+            $queueDataImporterConfigurationTransfer->getImportType(),
+            $dataReader,
+            $this->getQueueClient(),
+            $this->createQueueMessageHelper()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\DataImport\Business\DataImporter\Queue\QueueMessageHelperInterface
+     */
+    public function createQueueMessageHelper(): QueueMessageHelperInterface
+    {
+        return new QueueMessageHelper($this->getUtilEncodingService());
+    }
+
+    /**
+     * @param string $importType
+     * @param \Spryker\Zed\DataImport\Business\Model\DataReader\DataReaderInterface $reader
+     *
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterBeforeImportAwareInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterAfterImportAwareInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterDataSetWriterAwareInterface
+     */
+    public function createDataImporterWriterAware($importType, DataReaderInterface $reader)
+    {
+        return new DataImporterDataSetWriterAware($importType, $reader);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer $dataImporterConfigurationTransfer
      *
      * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterBeforeImportAwareInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterAfterImportAwareInterface|\Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerAwareInterface
@@ -129,6 +189,18 @@ class DataImportBusinessFactory extends AbstractBusinessFactory
         $csvReader = $this->createCsvReaderFromConfig($dataImporterConfigurationTransfer->getReaderConfiguration());
 
         return $this->createDataImporter($dataImporterConfigurationTransfer->getImportType(), $csvReader);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer $dataImporterConfigurationTransfer
+     *
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterBeforeImportAwareInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterAfterImportAwareInterface|\Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerAwareInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterDataSetWriterAwareInterface|\Spryker\Zed\DataImport\Business\DataImporter\DataImporterImportGroupAwareInterface
+     */
+    public function getCsvDataImporterWriterAwareFromConfig(DataImporterConfigurationTransfer $dataImporterConfigurationTransfer)
+    {
+        $csvReader = $this->createCsvReaderFromConfig($dataImporterConfigurationTransfer->getReaderConfiguration());
+
+        return $this->createDataImporterWriterAware($dataImporterConfigurationTransfer->getImportType(), $csvReader);
     }
 
     /**
@@ -214,6 +286,47 @@ class DataImportBusinessFactory extends AbstractBusinessFactory
         return new ImporterDumper(
             $this->getImporter()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\DataImport\Business\DataWriter\QueueWriter\QueueWriterInterface
+     */
+    public function createQueueWriter(): QueueWriterInterface
+    {
+        return new QueueWriter(
+            $this->getQueueClient(),
+            $this->getUtilEncodingService()
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DataImporterQueueReaderConfigurationTransfer $queueReaderConfigurationTransfer
+     *
+     * @return \Spryker\Zed\DataImport\Business\DataReader\QueueReader\QueueReader|\Spryker\Zed\DataImport\Business\Model\DataReader\DataReaderInterface
+     */
+    public function createQueueReaderFromConfig(DataImporterQueueReaderConfigurationTransfer $queueReaderConfigurationTransfer): DataReaderInterface
+    {
+        return new QueueReader(
+            $this->getQueueClient(),
+            $this->createDataSet(),
+            $queueReaderConfigurationTransfer
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\DataImport\Dependency\Client\DataImportToQueueClientInterface
+     */
+    public function getQueueClient(): DataImportToQueueClientInterface
+    {
+        return $this->getProvidedDependency(DataImportDependencyProvider::CLIENT_QUEUE);
+    }
+
+    /**
+     * @return \Spryker\Zed\DataImport\Dependency\Service\DataImportToUtilEncodingServiceInterface
+     */
+    public function getUtilEncodingService()
+    {
+        return $this->getProvidedDependency(DataImportDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 
     /**

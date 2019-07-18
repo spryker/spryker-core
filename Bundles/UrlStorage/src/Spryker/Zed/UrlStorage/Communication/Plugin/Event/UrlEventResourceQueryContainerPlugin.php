@@ -18,6 +18,7 @@ use Spryker\Zed\Url\Dependency\UrlEvents;
  * @method \Spryker\Zed\UrlStorage\Persistence\UrlStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\UrlStorage\Business\UrlStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\UrlStorage\Communication\UrlStorageCommunicationFactory getFactory()
+ * @method \Spryker\Zed\UrlStorage\UrlStorageConfig getConfig()
  */
 class UrlEventResourceQueryContainerPlugin extends AbstractPlugin implements EventResourceQueryContainerPluginInterface
 {
@@ -46,11 +47,11 @@ class UrlEventResourceQueryContainerPlugin extends AbstractPlugin implements Eve
     {
         $query = $this->getQueryContainer()->queryUrls($ids);
 
-        if (empty($ids)) {
+        if ($ids === []) {
             $query->clear();
         }
 
-        return $query;
+        return $query->orderBy($this->getIdColumnName());
     }
 
     /**

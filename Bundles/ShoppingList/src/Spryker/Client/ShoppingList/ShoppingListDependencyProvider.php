@@ -25,6 +25,10 @@ class ShoppingListDependencyProvider extends AbstractDependencyProvider
     public const CLIENT_PRICE_PRODUCT = 'CLIENT_PRICE_PRODUCT';
     public const CLIENT_MESSENGER = 'CLIENT_MESSENGER';
 
+    public const PLUGINS_SHOPPING_LIST_ITEM_TO_ITEM_MAPPER = 'PLUGINS_SHOPPING_LIST_ITEM_TO_ITEM_MAPPER';
+    public const PLUGINS_QUOTE_ITEM_TO_ITEM_MAPPER = 'PLUGINS_QUOTE_ITEM_TO_ITEM_MAPPER';
+    public const PLUGINS_ADD_ITEM_SHOPPING_LIST_ITEM_MAPPER = 'PLUGINS_ADD_ITEM_SHOPPING_LIST_ITEM_MAPPER';
+
     /**
      * @param \Spryker\Client\Kernel\Container $container
      *
@@ -38,6 +42,10 @@ class ShoppingListDependencyProvider extends AbstractDependencyProvider
         $container = $this->addCustomerClient($container);
         $container = $this->addPriceProductClient($container);
         $container = $this->addMessengerClient($container);
+
+        $container = $this->addShoppingListItemToItemMapperPlugins($container);
+        $container = $this->addQuoteItemToItemMapperPlugins($container);
+        $container = $this->addAddItemShoppingListItemMapperPlugins($container);
 
         return $container;
     }
@@ -124,5 +132,71 @@ class ShoppingListDependencyProvider extends AbstractDependencyProvider
         };
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addShoppingListItemToItemMapperPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_SHOPPING_LIST_ITEM_TO_ITEM_MAPPER] = function () {
+            return $this->getShoppingListItemToItemMapperPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addQuoteItemToItemMapperPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_QUOTE_ITEM_TO_ITEM_MAPPER] = function () {
+            return $this->getQuoteItemToItemMapperPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addAddItemShoppingListItemMapperPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_ADD_ITEM_SHOPPING_LIST_ITEM_MAPPER] = function () {
+            return $this->getAddItemShoppingListItemMapperPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Client\ShoppingListExtension\Dependency\Plugin\ShoppingListItemToItemMapperPluginInterface[]
+     */
+    protected function getShoppingListItemToItemMapperPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Client\ShoppingListExtension\Dependency\Plugin\QuoteItemToItemMapperPluginInterface[]
+     */
+    protected function getQuoteItemToItemMapperPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Client\ShoppingListExtension\Dependency\Plugin\ShoppingListItemMapperPluginInterface[]
+     */
+    protected function getAddItemShoppingListItemMapperPlugins(): array
+    {
+        return [];
     }
 }

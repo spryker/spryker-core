@@ -53,7 +53,6 @@ class ProductListAggregateFormDataProvider
         $productListTransfer = $this->productListFormDataProvider->getData($idProductList);
         $productListCategoryRelation = $this->productListCategoryRelationFormDataProvider->getData($productListTransfer->getIdProductList());
 
-        /** @var \Generated\Shared\Transfer\ProductListProductConcreteRelationTransfer|null $productListProductConcreteRelationTransfer */
         $productListProductConcreteRelationTransfer = $productListTransfer->getProductListProductConcreteRelation();
         if ($productListProductConcreteRelationTransfer && $productListProductConcreteRelationTransfer->getProductIds()) {
             foreach ($productListTransfer->getProductListProductConcreteRelation()->getProductIds() as $productId) {

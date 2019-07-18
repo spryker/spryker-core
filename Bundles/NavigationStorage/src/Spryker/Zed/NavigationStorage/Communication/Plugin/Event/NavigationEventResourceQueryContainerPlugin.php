@@ -18,6 +18,7 @@ use Spryker\Zed\Navigation\Dependency\NavigationEvents;
  * @method \Spryker\Zed\NavigationStorage\Persistence\NavigationStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\NavigationStorage\Business\NavigationStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\NavigationStorage\Communication\NavigationStorageCommunicationFactory getFactory()
+ * @method \Spryker\Zed\NavigationStorage\NavigationStorageConfig getConfig()
  */
 class NavigationEventResourceQueryContainerPlugin extends AbstractPlugin implements EventResourceQueryContainerPluginInterface
 {
@@ -46,11 +47,11 @@ class NavigationEventResourceQueryContainerPlugin extends AbstractPlugin impleme
     {
         $query = $this->getQueryContainer()->queryNavigation($ids);
 
-        if (empty($ids)) {
+        if ($ids === []) {
             $query->clear();
         }
 
-        return $query;
+        return $query->orderBy($this->getIdColumnName());
     }
 
     /**

@@ -1,14 +1,15 @@
 {
   "name": "spryker/config",
+  "type": "library",
   "description": "Config module",
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/kernel": "^3.8.0",
+    "spryker/kernel": "^3.30.0",
     "spryker/symfony": "^3.0.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*",
+    "spryker/propel": "*",
     "spryker/silex": "*",
     "spryker/testify": "*",
     "spryker/twig": "*"

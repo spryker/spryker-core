@@ -78,7 +78,7 @@ class FileManagerGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param null|int $idFile
+     * @param int|null $idFile
      *
      * @return \Symfony\Component\Form\FormInterface
      */

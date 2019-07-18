@@ -121,7 +121,7 @@ interface SalesQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
-     * @param \Propel\Runtime\Collection\ObjectCollection $salesOrderItems
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[]|\Propel\Runtime\Collection\ObjectCollection $salesOrderItems
      *
      * @return void
      */

@@ -14,12 +14,12 @@ use Spryker\Client\ProductSet\Dependency\Client\ProductSetToStorageBridge;
 
 class ProductSetDependencyProvider extends AbstractDependencyProvider
 {
-    const CLIENT_SEARCH = 'CLIENT_SEARCH';
-    const CLIENT_STORAGE = 'CLIENT_STORAGE';
-    const CLIENT_LOCALE = 'CLIENT_LOCALE';
+    public const CLIENT_SEARCH = 'CLIENT_SEARCH';
+    public const CLIENT_STORAGE = 'CLIENT_STORAGE';
+    public const CLIENT_LOCALE = 'CLIENT_LOCALE';
 
-    const PLUGIN_PRODUCT_SET_LIST_RESULT_FORMATTERS = 'PLUGIN_PRODUCT_SET_SEARCH_RESULT_FORMATTERS';
-    const PLUGIN_PRODUCT_SET_LIST_QUERY_EXPANDERS = 'PLUGIN_PRODUCT_SET_SEARCH_QUERY_EXPANDERS';
+    public const PLUGIN_PRODUCT_SET_LIST_RESULT_FORMATTERS = 'PLUGIN_PRODUCT_SET_SEARCH_RESULT_FORMATTERS';
+    public const PLUGIN_PRODUCT_SET_LIST_QUERY_EXPANDERS = 'PLUGIN_PRODUCT_SET_SEARCH_QUERY_EXPANDERS';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container

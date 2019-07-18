@@ -18,10 +18,12 @@ use Spryker\Zed\Search\Dependency\Plugin\NamedPageMapInterface;
 /**
  * @method \Spryker\Zed\CategoryPageSearch\Communication\CategoryPageSearchCommunicationFactory getFactory()
  * @method \Spryker\Zed\CategoryPageSearch\Business\CategoryPageSearchFacadeInterface getFacade()
+ * @method \Spryker\Zed\CategoryPageSearch\CategoryPageSearchConfig getConfig()
+ * @method \Spryker\Zed\CategoryPageSearch\Persistence\CategoryPageSearchQueryContainerInterface getQueryContainer()
  */
 class CategoryNodeDataPageMapBuilder extends AbstractPlugin implements NamedPageMapInterface
 {
-    const TYPE_CATEGORY = 'category';
+    public const TYPE_CATEGORY = 'category';
 
     /**
      * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface $pageMapBuilder

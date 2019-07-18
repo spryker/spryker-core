@@ -19,12 +19,12 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class EditBlockController extends AbstractCmsBlockController
 {
-    const URL_PARAM_REDIRECT_URL = 'redirect-url';
+    public const URL_PARAM_REDIRECT_URL = 'redirect-url';
 
-    const MESSAGE_CMS_BLOCK_UPDATE_ERROR = 'Invalid data provided.';
-    const MESSAGE_CMS_BLOCK_UPDATE_SUCCESS = 'CMS Block was updated successfully.';
-    const MESSAGE_CMS_BLOCK_ACTIVATE_SUCCESS = 'CMS Block was activated successfully.';
-    const MESSAGE_CMS_BLOCK_DEACTIVATE_SUCCESS = 'CMS Block was deactivated successfully.';
+    public const MESSAGE_CMS_BLOCK_UPDATE_ERROR = 'Invalid data provided.';
+    public const MESSAGE_CMS_BLOCK_UPDATE_SUCCESS = 'CMS Block was updated successfully.';
+    public const MESSAGE_CMS_BLOCK_ACTIVATE_SUCCESS = 'CMS Block was activated successfully.';
+    public const MESSAGE_CMS_BLOCK_DEACTIVATE_SUCCESS = 'CMS Block was deactivated successfully.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -37,7 +37,8 @@ class EditBlockController extends AbstractCmsBlockController
             ->getCmsBlockFacade()
             ->syncTemplate($this->getFactory()->getConfig()->getTemplatePath());
 
-        $cmsBlockTransfer = $this->findCmsBlockById($request);
+        $idCmsBlock = $request->query->get(static::URL_PARAM_ID_CMS_BLOCK);
+        $cmsBlockTransfer = $this->findCmsBlockById($idCmsBlock);
 
         if (!$cmsBlockTransfer) {
             $this->addErrorMessage(static::MESSAGE_CMS_BLOCK_INVALID_ID_ERROR);
@@ -57,6 +58,7 @@ class EditBlockController extends AbstractCmsBlockController
 
             if ($isUpdated) {
                 $redirectUrl = $this->createEditCmsBlockUrl($cmsBlockTransfer->getIdCmsBlock());
+
                 return $this->redirectResponse($redirectUrl);
             }
         }

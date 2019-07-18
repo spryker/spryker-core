@@ -16,6 +16,9 @@ use Spryker\Zed\Offer\Dependency\Facade\OfferToMessengerFacadeBridge;
 use Spryker\Zed\Offer\Dependency\Facade\OfferToSalesFacadeBridge;
 use Spryker\Zed\Offer\Dependency\Service\OfferToUtilEncodingServiceBridge;
 
+/**
+ * @method \Spryker\Zed\Offer\OfferConfig getConfig()
+ */
 class OfferDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_CART = 'FACADE_CART';

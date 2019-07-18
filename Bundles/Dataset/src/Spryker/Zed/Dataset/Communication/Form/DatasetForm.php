@@ -27,6 +27,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  * @method \Spryker\Zed\Dataset\DatasetConfig getConfig()
  * @method \Spryker\Zed\Dataset\Business\DatasetFacadeInterface getFacade()
  * @method \Spryker\Zed\Dataset\Communication\DatasetCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Dataset\Persistence\DatasetRepositoryInterface getRepository()
  */
 class DatasetForm extends AbstractType
 {
@@ -157,6 +158,7 @@ class DatasetForm extends AbstractType
                 static::OPTION_AVAILABLE_LOCALES => $options[static::OPTION_AVAILABLE_LOCALES],
             ],
         ]);
+
         return $this;
     }
 

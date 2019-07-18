@@ -8,15 +8,23 @@
 namespace Spryker\Zed\ProductPageSearch\Persistence;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
+use Orm\Zed\Category\Persistence\Map\SpyCategoryClosureTableTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
+use Orm\Zed\Category\Persistence\Map\SpyCategoryTableMap;
+use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
 use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
+use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
+use Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery;
 use Orm\Zed\ProductCategory\Persistence\Map\SpyProductCategoryTableMap;
 use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageSetTableMap;
+use Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery;
 use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
+use Spryker\Zed\PropelOrm\Business\Model\Formatter\PropelArraySetFormatter;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 /**
@@ -24,8 +32,11 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
  */
 class ProductPageSearchQueryContainer extends AbstractQueryContainer implements ProductPageSearchQueryContainerInterface
 {
-    const FK_PRODUCT_ABSTRACT = 'fkProductAbstract';
-    const FK_CATEGORY = 'fkCategory';
+    public const FK_PRODUCT_ABSTRACT = 'fkProductAbstract';
+    public const FK_CATEGORY = 'fkCategory';
+    public const VIRT_COLUMN_ID_CATEGORY_NODE = 'id_category_node';
+    protected const COLUMN_ID_IMAGE_SET = 'id_image_set';
+    protected const PRODUCT_IMAGE_SET_LIMIT = 1;
 
     /**
      * @api
@@ -55,6 +66,7 @@ class ProductPageSearchQueryContainer extends AbstractQueryContainer implements 
                 ->endUse()
             ->endUse()
             ->filterByFkProductAbstract_In($productAbstractIds)
+            ->withColumn($this->getIdImageSetSubQuery(), static::COLUMN_ID_IMAGE_SET)
             ->setFormatter(ModelCriteria::FORMAT_ARRAY);
 
         $query
@@ -67,12 +79,25 @@ class ProductPageSearchQueryContainer extends AbstractQueryContainer implements 
             ->withColumn(SpyUrlTableMap::COL_URL, 'url');
 
         $query
-            ->join('SpyProductAbstract.SpyProductImageSet', Criteria::LEFT_JOIN)
-            ->addJoinCondition('SpyProductImageSet', sprintf('(spy_product_image_set.fk_locale = %s or spy_product_image_set.fk_locale is null)', SpyProductAbstractLocalizedAttributesTableMap::COL_FK_LOCALE))
-            ->withColumn(SpyProductImageSetTableMap::COL_ID_PRODUCT_IMAGE_SET, 'id_image_set');
-        ;
+            ->rightJoinWith('SpyProduct.SpyProductSearch')
+            ->addJoinCondition('SpyProductSearch', sprintf('spy_product_search.fk_locale = %s', SpyProductAbstractLocalizedAttributesTableMap::COL_FK_LOCALE));
 
         return $query;
+    }
+
+    /**
+     * @api
+     *
+     * @param int[] $productAbstractIds
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery
+     */
+    public function queryProductAbstractWithLocalizedAttributesByIds(array $productAbstractIds): SpyProductAbstractLocalizedAttributesQuery
+    {
+        return $this->getFactory()
+            ->getProductQueryContainer()
+            ->queryAllProductAbstractLocalizedAttributes()
+            ->filterByFkProductAbstract_In($productAbstractIds);
     }
 
     /**
@@ -223,5 +248,138 @@ class ProductPageSearchQueryContainer extends AbstractQueryContainer implements 
             ->getCategoryAttributeQuery()
             ->queryAllCategoryAttributes()
             ->filterByFkLocale($localeTransfer->getIdLocale());
+    }
+
+    /**
+     * @api
+     *
+     * @param array $productAbstractIds
+     *
+     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery
+     */
+    public function queryAllProductImageSetsByProductAbstractIds(array $productAbstractIds)
+    {
+        $productImageSetQuery = $this->getFactory()
+            ->getProductImageQueryContainer()
+            ->queryProductImageSet()
+            ->filterByFkProductAbstract_In($productAbstractIds)
+            ->joinWithSpyProductImageSetToProductImage()
+            ->joinWith('SpyProductImageSetToProductImage.SpyProductImage');
+
+        $productImageSetQuery = $this->sortProductImageSetToProductImageQuery($productImageSetQuery);
+
+        return $productImageSetQuery;
+    }
+
+    /**
+     * @api
+     *
+     * @param array $productAbstractIds
+     *
+     * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery
+     */
+    public function queryProductCategoriesByProductAbstractIds(array $productAbstractIds)
+    {
+        return $this->getFactory()->getProductCategoryQueryContainer()
+            ->queryProductCategoryMappings()
+            ->filterByFkProductAbstract_In($productAbstractIds)
+            ->useSpyCategoryQuery()
+                ->useNodeQuery()
+                    ->withColumn(SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE, static::VIRT_COLUMN_ID_CATEGORY_NODE)
+                ->endUse()
+            ->endUse();
+    }
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
+     */
+    public function queryAllCategoriesWithAttributesAndOrderByDescendant()
+    {
+        $nodeQuery = $this->getFactory()->getCategoryQueryContainer()->queryAllCategoryNodes();
+
+        $nodeQuery
+            ->useClosureTableQuery()
+                ->orderByFkCategoryNodeDescendant(Criteria::DESC)
+                ->orderByDepth(Criteria::DESC)
+                ->filterByDepth(null, Criteria::NOT_EQUAL)
+            ->endUse()
+            ->useCategoryQuery()
+                ->useAttributeQuery()
+                ->endUse()
+            ->endUse();
+
+        $nodeQuery
+            ->withColumn(SpyCategoryNodeTableMap::COL_FK_CATEGORY, 'fk_category')
+            ->withColumn(SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE, 'id_category_node')
+            ->withColumn(SpyCategoryClosureTableTableMap::COL_FK_CATEGORY_NODE_DESCENDANT, 'fk_category_node_descendant')
+            ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, 'name')
+            ->withColumn(SpyCategoryTableMap::COL_CATEGORY_KEY, 'category_key')
+            ->withColumn(SpyCategoryAttributeTableMap::COL_FK_LOCALE, 'fk_locale');
+
+        $nodeQuery->setFormatter(new PropelArraySetFormatter());
+
+        return $nodeQuery;
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idNode
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
+     */
+    public function queryCategoryNodeFullPath(int $idNode): SpyCategoryNodeQuery
+    {
+        return $this->getFactory()
+            ->getCategoryNodeQueryContainer()
+            ->useClosureTableQuery()
+                ->orderByFkCategoryNodeDescendant(Criteria::DESC)
+                ->orderByDepth(Criteria::DESC)
+                ->filterByFkCategoryNodeDescendant($idNode)
+            ->endUse()
+            ->withColumn(SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE, static::VIRT_COLUMN_ID_CATEGORY_NODE)
+            ->setFormatter(new PropelArraySetFormatter());
+    }
+
+    /**
+     * @return string
+     */
+    protected function getIdImageSetSubQuery(): string
+    {
+        $idImageSetSubQuery = $this->getFactory()
+            ->getProductImageQueryContainer()
+            ->queryProductImageSet()
+            ->addSelectColumn(SpyProductImageSetTableMap::COL_ID_PRODUCT_IMAGE_SET)
+            ->where(sprintf(
+                '(%s = %s AND (%s = %s OR %s IS NULL)) ',
+                SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT,
+                SpyProductImageSetTableMap::COL_FK_PRODUCT_ABSTRACT,
+                SpyProductImageSetTableMap::COL_FK_LOCALE,
+                SpyProductAbstractLocalizedAttributesTableMap::COL_FK_LOCALE,
+                SpyProductImageSetTableMap::COL_FK_LOCALE
+            ))
+            ->limit(static::PRODUCT_IMAGE_SET_LIMIT);
+
+        $params = [];
+
+        return sprintf('(%s)', $idImageSetSubQuery->createSelectSql($params));
+    }
+
+    /**
+     * @param \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery $productImageSetToProductImageQuery
+     *
+     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery
+     */
+    protected function sortProductImageSetToProductImageQuery(
+        SpyProductImageSetQuery $productImageSetToProductImageQuery
+    ): SpyProductImageSetQuery {
+        $productImageSetToProductImageQuery->useSpyProductImageSetToProductImageQuery()
+                ->orderBySortOrder()
+                ->orderByIdProductImageSetToProductImage()
+            ->endUse();
+
+        return $productImageSetToProductImageQuery;
     }
 }

@@ -1,15 +1,17 @@
 {
   "name": "spryker/graph",
+  "type": "library",
   "description": "Graph module",
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
     "spryker/graphviz": "^2.0.0",
-    "spryker/kernel": "^3.0.0",
+    "spryker/kernel": "^3.30.0",
     "spryker/util-text": "^1.1.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*",
+    "spryker/application": "*",
+    "spryker/propel": "*",
     "spryker/testify": "*"
   },
   "autoload": {

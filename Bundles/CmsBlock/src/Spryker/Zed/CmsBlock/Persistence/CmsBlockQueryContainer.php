@@ -17,7 +17,7 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
  */
 class CmsBlockQueryContainer extends AbstractQueryContainer implements CmsBlockQueryContainerInterface
 {
-    const COLUMN_TEMPLATE_NAME = 'template_name';
+    public const COLUMN_TEMPLATE_NAME = 'template_name';
 
     /**
      * @api

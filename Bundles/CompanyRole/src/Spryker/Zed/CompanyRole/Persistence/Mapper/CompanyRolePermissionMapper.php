@@ -29,7 +29,7 @@ class CompanyRolePermissionMapper implements CompanyRolePermissionMapperInterfac
         foreach ($spyCompanyRole->getSpyCompanyRoleToPermissionsJoinPermission() as $spyCompanyRoleToPermission) {
             $permissionTransfer = (new PermissionTransfer())
                 ->setIdPermission($spyCompanyRoleToPermission->getFkPermission())
-                ->setConfiguration(\json_decode($spyCompanyRoleToPermission->getConfiguration(), true))
+                ->setConfiguration(json_decode($spyCompanyRoleToPermission->getConfiguration(), true))
                 ->setKey($spyCompanyRoleToPermission->getPermission()->getKey());
 
             $permissionCollectionTransfer->addPermission($permissionTransfer);

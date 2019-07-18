@@ -38,7 +38,7 @@ class ProductCategoryFilterGuiQueryContainer extends AbstractQueryContainer impl
      *
      * @param int $idCategory
      *
-     * @return $this|\Propel\Runtime\ActiveQuery\ModelCriteria
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
     public function queryProductAbstractsInCategory($idCategory)
     {

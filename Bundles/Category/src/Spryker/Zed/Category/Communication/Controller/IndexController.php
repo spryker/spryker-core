@@ -18,10 +18,11 @@ use Symfony\Component\HttpFoundation\Response;
  * @method \Spryker\Zed\Category\Business\CategoryFacadeInterface getFacade()
  * @method \Spryker\Zed\Category\Communication\CategoryCommunicationFactory getFactory()
  * @method \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Category\Persistence\CategoryRepositoryInterface getRepository()
  */
 class IndexController extends AbstractController
 {
-    const PARAM_ID_CATEGORY_NODE = 'id-category-node';
+    public const PARAM_ID_CATEGORY_NODE = 'id-category-node';
 
     /**
      * @return array

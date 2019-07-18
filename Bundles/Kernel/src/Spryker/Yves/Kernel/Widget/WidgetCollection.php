@@ -7,23 +7,18 @@
 
 namespace Spryker\Yves\Kernel\Widget;
 
-use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
-use Spryker\Yves\Kernel\Exception\InvalidWidgetPluginException;
-use Spryker\Yves\Kernel\Exception\MissingWidgetPluginException;
+use Spryker\Yves\Kernel\Exception\MissingWidgetException;
 
 class WidgetCollection implements WidgetContainerInterface
 {
-    /**
-     * @var string[]
-     */
-    protected $widgets = [];
+    use WidgetContainerAwareTrait;
 
     /**
-     * @param string[] $widgetPlugins
+     * @param string[] $widgetClassNames
      */
-    public function __construct(array $widgetPlugins = [])
+    public function __construct(array $widgetClassNames = [])
     {
-        $this->addWidgets($widgetPlugins);
+        $this->addWidgets($widgetClassNames);
     }
 
     /**
@@ -39,61 +34,19 @@ class WidgetCollection implements WidgetContainerInterface
     /**
      * @param string $name
      *
-     * @throws \Spryker\Yves\Kernel\Exception\MissingWidgetPluginException
+     * @throws \Spryker\Yves\Kernel\Exception\MissingWidgetException
      *
      * @return string
      */
     public function getWidgetClassName(string $name)
     {
         if (!isset($this->widgets[$name])) {
-            throw new MissingWidgetPluginException(sprintf(
-                'Missing "%s" widget plugin. You need to register the widgets in the constructor of the WidgetCollection in order to use them.',
+            throw new MissingWidgetException(sprintf(
+                'Missing "%s" widget. You need to register the widgets in the constructor of the WidgetCollection in order to use them.',
                 $name
             ));
         }
 
         return $this->widgets[$name];
-    }
-
-    /**
-     * @param string[] $widgetClassNames
-     *
-     * @return void
-     */
-    protected function addWidgets(array $widgetClassNames)
-    {
-        foreach ($widgetClassNames as $widgetClassName) {
-            $this->addWidget($widgetClassName);
-        }
-    }
-
-    /**
-     * @param string $widgetClassName
-     *
-     * @return void
-     */
-    protected function addWidget(string $widgetClassName)
-    {
-        $this->assertClassIsWidgetPlugin($widgetClassName);
-
-        $this->widgets[$widgetClassName::getName()] = $widgetClassName;
-    }
-
-    /**
-     * @param string $widgetClassName
-     *
-     * @throws \Spryker\Yves\Kernel\Exception\InvalidWidgetPluginException
-     *
-     * @return void
-     */
-    protected function assertClassIsWidgetPlugin(string $widgetClassName)
-    {
-        if (!is_subclass_of($widgetClassName, WidgetPluginInterface::class)) {
-            throw new InvalidWidgetPluginException(sprintf(
-                'Invalid widget plugin %s. This class needs to implement %s.',
-                $widgetClassName,
-                WidgetPluginInterface::class
-            ));
-        }
     }
 }

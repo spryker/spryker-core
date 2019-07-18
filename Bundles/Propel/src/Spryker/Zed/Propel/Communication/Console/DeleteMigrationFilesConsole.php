@@ -13,11 +13,12 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\Propel\Business\PropelFacadeInterface getFacade()
+ * @method \Spryker\Zed\Propel\Communication\PropelCommunicationFactory getFactory()
  */
 class DeleteMigrationFilesConsole extends Console
 {
-    const COMMAND_NAME = 'propel:migration:delete';
-    const DESCRIPTION = 'Delete migration files directory.';
+    public const COMMAND_NAME = 'propel:migration:delete';
+    public const DESCRIPTION = 'Delete migration files directory.';
 
     /**
      * @return void

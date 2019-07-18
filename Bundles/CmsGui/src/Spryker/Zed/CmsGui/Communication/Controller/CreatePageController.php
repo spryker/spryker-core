@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -19,8 +20,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CreatePageController extends AbstractController
 {
-    const ERROR_MESSAGE_INVALID_DATA_PROVIDED = 'Page was not created.';
-    const MESSAGE_PAGE_CREATE_SUCCESS = 'Page was created successfully.';
+    public const ERROR_MESSAGE_INVALID_DATA_PROVIDED = 'Page was not created.';
+    public const MESSAGE_PAGE_CREATE_SUCCESS = 'Page was created successfully.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -60,6 +61,7 @@ class CreatePageController extends AbstractController
 
         if (!$pageForm->isValid()) {
             $this->addErrorMessage(static::ERROR_MESSAGE_INVALID_DATA_PROVIDED);
+
             return $result;
         }
 
@@ -69,6 +71,7 @@ class CreatePageController extends AbstractController
         }
 
         $this->addSuccessMessage(static::MESSAGE_PAGE_CREATE_SUCCESS);
+
         return $this->redirectResponse($redirectUrl);
     }
 

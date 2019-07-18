@@ -23,7 +23,7 @@ interface ProductPageSearchMapperInterface
      *
      * @return \Generated\Shared\Transfer\ProductPageSearchTransfer
      */
-    public function mapToProductPageSearchTransferFromJson($data);
+    public function mapToProductPageSearchTransferFromJson(string $data);
 
     /**
      * @param \Generated\Shared\Transfer\ProductPageSearchTransfer $productPageSearchTransfer

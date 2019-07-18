@@ -1,18 +1,22 @@
 {
   "name": "spryker/development",
+  "type": "library",
   "description": "Development module",
   "license": "proprietary",
   "require": {
+    "nette/di": "^2.4.7 || ^3.0",
     "php": ">=7.1",
     "spryker/config": "^3.0.0",
     "spryker/graph": "^3.0.0",
-    "spryker/kernel": "^3.22.0",
+    "spryker/kernel": "^3.30.0",
+    "spryker/module-finder": "^1.0.0",
     "spryker/symfony": "^3.0.0",
     "spryker/twig": "^3.0.0",
     "spryker/zend": "^2.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/propel": "*",
     "spryker/testify": "*"
   },
   "autoload": {

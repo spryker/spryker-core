@@ -141,8 +141,9 @@ class ResourceRouteLoaderTest extends Unit
         $resourceRouteLoader = $this->createResourceLoader([$resourceRoutePluginMock1, $resourceRoutePluginMock2], $versionResolverMock);
 
         $parents[][RequestConstantsInterface::ATTRIBUTE_TYPE] = 'parent-resource2';
+        $parents[][RequestConstantsInterface::ATTRIBUTE_TYPE] = 'tests';
 
-        $route = $resourceRouteLoader->load('tests', $parents, Request::create('/tests/1'));
+        $route = $resourceRouteLoader->load('tests', $parents, Request::create('/parent-resource2/2/tests/1'));
 
         $this->assertEquals('test-resource', $route[RequestConstantsInterface::ATTRIBUTE_CONTROLLER]);
         $this->assertEquals('testsRestApi', $route[RequestConstantsInterface::ATTRIBUTE_MODULE]);
@@ -244,6 +245,7 @@ class ResourceRouteLoaderTest extends Unit
             ->willReturnCallback(
                 function (ResourceRouteCollectionInterface $resourceRouteCollection) {
                     $resourceRouteCollection->addGet('get', true, [1 => 1]);
+
                     return $resourceRouteCollection;
                 }
             );

@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\Store;
 
+use Generated\Shared\Transfer\StoreTransfer;
+
 interface StoreClientInterface
 {
     /**
@@ -18,4 +20,16 @@ interface StoreClientInterface
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
     public function getCurrentStore();
+
+    /**
+     * Specification:
+     * - Retrieves a Store as a transfer object.
+     *
+     * @api
+     *
+     * @param string $storeName
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer
+     */
+    public function getStoreByName(string $storeName): StoreTransfer;
 }

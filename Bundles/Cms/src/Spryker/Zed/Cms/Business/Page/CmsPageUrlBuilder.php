@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -29,7 +30,7 @@ class CmsPageUrlBuilder implements CmsPageUrlBuilderInterface
      *
      * @return string
      */
-    public function buildPageUrl(CmsPageAttributesTransfer $cmsPageAttributesTransfer)
+    public function buildPageUrl(CmsPageAttributesTransfer $cmsPageAttributesTransfer): string
     {
         $cmsPageAttributesTransfer->requireUrl()
             ->requireLocaleName();
@@ -57,7 +58,7 @@ class CmsPageUrlBuilder implements CmsPageUrlBuilderInterface
      *
      * @return string
      */
-    public function getPageUrlPrefix(CmsPageAttributesTransfer $cmsPageAttributesTransfer)
+    public function getPageUrlPrefix(CmsPageAttributesTransfer $cmsPageAttributesTransfer): string
     {
         if (!$this->cmsConfig->appendPrefixToCmsPageUrl()) {
             return '';
@@ -73,7 +74,7 @@ class CmsPageUrlBuilder implements CmsPageUrlBuilderInterface
      *
      * @return string
      */
-    protected function extractLanguageCode($localeName)
+    protected function extractLanguageCode(string $localeName): string
     {
         $localeNameParts = explode('_', $localeName);
         $languageCode = $localeNameParts[0];

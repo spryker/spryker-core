@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -111,6 +112,7 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
     protected function createItemIsNotAvailableMessageTransfer($stock, $sku)
     {
         $translationKey = $this->getItemAvailabilityTranslationKey($stock);
+
         return $this->createCartMessageTransfer($stock, $translationKey, $sku);
     }
 
@@ -144,6 +146,7 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
         if ($stock <= 0) {
             $translationKey = static::CART_PRE_CHECK_ITEM_AVAILABILITY_EMPTY;
         }
+
         return $translationKey;
     }
 
@@ -151,7 +154,7 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return \Orm\Zed\Availability\Persistence\SpyAvailability
+     * @return \Orm\Zed\Availability\Persistence\SpyAvailability|null
      */
     protected function findAvailabilityEntityBySku($sku, StoreTransfer $storeTransfer)
     {
@@ -313,6 +316,7 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
         }
 
         $availability = $this->calculateRegularItemAvailability($itemTransfer, $itemsInCart, $storeTransfer);
+
         return $this->createItemIsNotAvailableMessageTransfer($availability, $itemTransfer->getSku());
     }
 }

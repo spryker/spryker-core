@@ -1,13 +1,18 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
+
 namespace Spryker\Zed\ProductOption\Business;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\ProductOptionCollectionTransfer;
+use Generated\Shared\Transfer\ProductOptionCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOptionGroupTransfer;
+use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\ProductOptionValueStorePricesRequestTransfer;
 use Generated\Shared\Transfer\ProductOptionValueTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -20,14 +25,15 @@ interface ProductOptionFacadeInterface
 {
     /**
      * Specification:
-     *  - Persist new product option group, update existing group if idOptionGroup is set
-     *  - Persist option values if provided
-     *  - Adds abstract products if provided in productsToBeAssigned array of primary keys
-     *  - Removes abstract products if provided in productsToBeDeAssigned array of primary keys
-     *  - Removes product option values if provided in productOptionValuesToBeRemoved array of primary keys
-     *  - Persists value and group name translations, add to glossary
+     *  - Persist new product option group, update existing group if idOptionGroup is set.
+     *  - Persist option values if provided.
+     *  - Adds abstract products if provided in productsToBeAssigned array of primary keys.
+     *  - Removes abstract products if provided in productsToBeDeAssigned array of primary keys.
+     *  - Executes ProductOptionValuesPreRemovePluginInterface plugins before removing product option values.
+     *  - Removes product option values if provided in productOptionValuesToBeRemoved array of primary keys.
+     *  - Persists value and group name translations, add to glossary.
      *  - Persists multi-currency value prices.
-     *  - Returns id of option group
+     *  - Returns id of option group.
      *
      * @api
      *
@@ -221,4 +227,69 @@ interface ProductOptionFacadeInterface
      * @return \Generated\Shared\Transfer\ProductOptionValueStorePricesResponseTransfer
      */
     public function getAllProductOptionValuePrices(ProductOptionValueStorePricesRequestTransfer $storePricesRequestTransfer);
+
+    /**
+     * Specification:
+     * - Retrieves product options by provided product option IDs.
+     * - Filters by product options group active flag using ProductOptionCriteriaTransfer::ProductOptionGroupIsActive.
+     * - Filters by product options group assignment to products using ProductOptionCriteriaTransfer::productConcreteSku.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductOptionCriteriaTransfer $productOptionCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductOptionCollectionTransfer
+     */
+    public function getProductOptionCollectionByProductOptionCriteria(ProductOptionCriteriaTransfer $productOptionCriteriaTransfer): ProductOptionCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Finds product option by product option value id.
+     *
+     * @api
+     *
+     * @param int $idProductOptionValue
+     *
+     * @return \Generated\Shared\Transfer\ProductOptionTransfer|null
+     */
+    public function findProductOptionByIdProductOptionValue(int $idProductOptionValue): ?ProductOptionTransfer;
+
+    /**
+     * Specification:
+     * - Checks if product option value exists.
+     *
+     * @api
+     *
+     * @deprecated Use checkProductOptionGroupExistenceByProductOptionValueId() instead
+     *
+     * @param int $idProductOptionValue
+     *
+     * @return bool
+     */
+    public function checkProductOptionValueExistence(int $idProductOptionValue): bool;
+
+    /**
+     * Specification:
+     * - Checks if product option group exists using product option value id.
+     *
+     * @api
+     *
+     * @param int $idProductOptionValue
+     *
+     * @return bool
+     */
+    public function checkProductOptionGroupExistenceByProductOptionValueId(int $idProductOptionValue): bool;
+
+    /**
+     * Specification:
+     * - Retrieves product option group name and status for all abstract products by provided IDs.
+     * - Returns ProductAbstractOptionGroupStatusTransfer[] array with 'idProductAbstract', 'isActive' and 'productOptionGroupName' values.
+     *
+     * @api
+     *
+     * @param int[] $productAbstractIds
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractOptionGroupStatusTransfer[]
+     */
+    public function getProductAbstractOptionGroupStatusesByProductAbstractIds(array $productAbstractIds): array;
 }

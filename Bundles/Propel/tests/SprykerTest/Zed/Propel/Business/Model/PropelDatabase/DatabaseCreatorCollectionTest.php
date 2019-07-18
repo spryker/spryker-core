@@ -24,7 +24,7 @@ use Spryker\Zed\Propel\Business\Model\PropelDatabase\DatabaseCreatorInterface;
  */
 class DatabaseCreatorCollectionTest extends Unit
 {
-    const TEST_ENGINE = 'testEngine';
+    public const TEST_ENGINE = 'testEngine';
 
     /**
      * @return void
@@ -74,7 +74,7 @@ class DatabaseCreatorCollectionTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Propel\Business\Model\PropelDatabase\DatabaseCreatorInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Propel\Business\Model\PropelDatabase\DatabaseCreatorInterface
      */
     private function getDatabaseCreatorMock()
     {

@@ -13,11 +13,13 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\ProductRelation\Business\ProductRelationFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductRelation\Persistence\ProductRelationQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductRelation\Communication\ProductRelationCommunicationFactory getFactory()
  */
 class ProductRelationUpdaterConsole extends Console
 {
-    const COMMAND_NAME = 'product-relation:update';
-    const COMMAND_DESCRIPTION = 'Updates all active product relations';
+    public const COMMAND_NAME = 'product-relation:update';
+    public const COMMAND_DESCRIPTION = 'Updates all active product relations';
 
     /**
      * @return void
@@ -32,7 +34,7 @@ class ProductRelationUpdaterConsole extends Console
      * @param \Symfony\Component\Console\Input\InputInterface $input
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
-     * @return void
+     * @return int|null
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {

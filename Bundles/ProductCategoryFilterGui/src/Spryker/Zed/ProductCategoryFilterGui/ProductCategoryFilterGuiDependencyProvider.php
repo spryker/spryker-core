@@ -20,18 +20,21 @@ use Spryker\Zed\ProductCategoryFilterGui\Dependency\QueryContainer\ProductCatego
 use Spryker\Zed\ProductCategoryFilterGui\Dependency\QueryContainer\ProductCategoryFilterGuiToProductCategoryQueryContainerBridge;
 use Spryker\Zed\ProductCategoryFilterGui\Dependency\Service\ProductCategoryFilterGuiToUtilEncodingServiceBridge;
 
+/**
+ * @method \Spryker\Zed\ProductCategoryFilterGui\ProductCategoryFilterGuiConfig getConfig()
+ */
 class ProductCategoryFilterGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_PRODUCT_CATEGORY_FILTER = 'FACADE_PRODUCT_CATEGORY_FILTER';
-    const FACADE_LOCALE = 'FACADE_LOCALE';
-    const FACADE_CATEGORY = 'FACADE_CATEGORY';
-    const FACADE_PRODUCT = 'FACADE_PRODUCT';
-    const FACADE_PRODUCT_SEARCH = 'FACADE_PRODUCT_SEARCH';
-    const QUERY_CONTAINER_CATEGORY = 'QUERY_CONTAINER_CATEGORY';
-    const QUERY_CONTAINER_PRODUCT_CATEGORY = 'QUERY_CONTAINER_PRODUCT_CATEGORY';
-    const CLIENT_CATALOG = 'CLIENT_CATALOG';
-    const CLIENT_PRODUCT_CATEGORY_FILTER = 'CLIENT_PRODUCT_CATEGORY_FILTER';
-    const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+    public const FACADE_PRODUCT_CATEGORY_FILTER = 'FACADE_PRODUCT_CATEGORY_FILTER';
+    public const FACADE_LOCALE = 'FACADE_LOCALE';
+    public const FACADE_CATEGORY = 'FACADE_CATEGORY';
+    public const FACADE_PRODUCT = 'FACADE_PRODUCT';
+    public const FACADE_PRODUCT_SEARCH = 'FACADE_PRODUCT_SEARCH';
+    public const QUERY_CONTAINER_CATEGORY = 'QUERY_CONTAINER_CATEGORY';
+    public const QUERY_CONTAINER_PRODUCT_CATEGORY = 'QUERY_CONTAINER_PRODUCT_CATEGORY';
+    public const CLIENT_CATALOG = 'CLIENT_CATALOG';
+    public const CLIENT_PRODUCT_CATEGORY_FILTER = 'CLIENT_PRODUCT_CATEGORY_FILTER';
+    public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

@@ -13,6 +13,7 @@ use Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginUpdateInterface;
 
 /**
  * @method \Spryker\Zed\CompanySupplier\Business\CompanySupplierFacadeInterface getFacade()
+ * @method \Spryker\Zed\CompanySupplier\CompanySupplierConfig getConfig()
  */
 class SupplierProductConcreteAfterUpdatePlugin extends AbstractPlugin implements ProductConcretePluginUpdateInterface
 {

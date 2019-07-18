@@ -1,5 +1,6 @@
 {
   "name": "spryker/company-unit-address-label-data-import",
+  "type": "library",
   "description": "CompanyUnitAddressLabelDataImport module",
   "license": "MIT",
   "require": {
@@ -7,10 +8,12 @@
     "spryker/company-unit-address": "^1.0.0",
     "spryker/company-unit-address-label": "^1.0.0",
     "spryker/data-import": "^1.2.0",
-    "spryker/kernel": "^3.0.0"
+    "spryker/kernel": "^3.30.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/country": "*",
+    "spryker/propel": "*",
     "spryker/testify": "*"
   },
   "autoload": {

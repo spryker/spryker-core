@@ -14,12 +14,13 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\Transfer\Business\TransferFacadeInterface getFacade()
+ * @method \Spryker\Zed\Transfer\Communication\TransferCommunicationFactory getFactory()
  */
 class ValidatorConsole extends Console
 {
-    const COMMAND_NAME = 'transfer:validate';
-    const COMMAND_DESCRIPTION = 'Validates transfer XML definition files';
-    const OPTION_BUNDLE = 'bundle';
+    public const COMMAND_NAME = 'transfer:validate';
+    public const COMMAND_DESCRIPTION = 'Validates transfer XML definition files';
+    public const OPTION_BUNDLE = 'bundle';
 
     /**
      * @return void
@@ -46,6 +47,7 @@ class ValidatorConsole extends Console
         $messenger = $this->getMessenger();
 
         $result = $this->getFacade()->validateTransferObjects($messenger, $this->input->getOptions());
+
         return $result ? static::CODE_SUCCESS : static::CODE_ERROR;
     }
 }

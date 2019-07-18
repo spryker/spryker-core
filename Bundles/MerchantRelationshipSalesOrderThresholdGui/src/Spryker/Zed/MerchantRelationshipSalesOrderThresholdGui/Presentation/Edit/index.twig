@@ -1,0 +1,110 @@
+{% extends '@MerchantRelationshipSalesOrderThresholdGui/_layout/layout.twig' %}
+
+{% set widget_title = 'Edit Merchant Relationhip Threshold' | trans ~ ': ' ~
+    merchantRelationship.ownerCompanyBusinessUnit.company.name ~ ' - ' ~
+    merchantRelationship.ownerCompanyBusinessUnit.name %}
+
+{% block head_title widget_title %}
+{% block section_title widget_title %}
+
+{% form_theme merchantRelationshipThresholdform _self %}
+{% block percent_widget %}
+    <div class="input-group">
+        <span class="input-group-addon">%</span>
+        {{- block('form_widget_simple') -}}
+    </div>
+{% endblock percent_widget %}
+
+{% block action %}
+    {{ backActionButton(url('/merchant-relationship-sales-order-threshold-gui'), 'Back to Merchant Relationship Thresholds' | trans) }}
+{% endblock %}
+
+{% set merchantRelationshipHardThresholdEnabled = merchantRelationshipThresholdform.hardThreshold.strategy.vars.choices|length > 0 %}
+{% set merchantRelationshipSoftThresholdEnabled = merchantRelationshipThresholdform.softThreshold.strategy.vars.choices|length > 0 %}
+
+{% block content %}
+    {% embed '@Gui/Partials/widget.twig' %}
+
+        {% block widget_content %}
+            {{ form_start(merchantRelationshipThresholdform) }}
+            {{ form_row(merchantRelationshipThresholdform.storeCurrency) }}
+
+            {% if merchantRelationshipHardThresholdEnabled %}
+                <div class="panel panel-default">
+                    <div class="panel-heading">{{ 'Hard Threshold' | trans }}</div>
+                    <div class="panel-body">
+                        {{ form_row(merchantRelationshipThresholdform.hardThreshold.strategy) }}
+                        {{ form_row(merchantRelationshipThresholdform.hardThreshold.threshold) }}
+                        {% for child in merchantRelationshipThresholdform if child.vars.attr.threshold_key is defined %}
+                            <div class="threshold_group_hard threshold-key-{{ child.vars.attr.threshold_key }}">
+                                {% include '@SalesOrderThresholdGui/_partials/form-row.twig' with {form: child} %}
+                            </div>
+                        {% endfor %}
+
+                        {% for localeTransfer in localeCollection %}
+                            {% if merchantRelationshipThresholdform.hardThreshold[localeTransfer.localeName] is defined %}
+                                {% embed '@Gui/Partials/localized-ibox.twig' with {'collapsed': (not loop.first), 'localeName': localeTransfer.localeName} %}
+                                    {% block content %}
+                                        {% for input in merchantRelationshipThresholdform.hardThreshold[localeTransfer.localeName] %}
+                                            <div class="form-group {% if input.vars.errors|length %}has-error{% endif %}">
+                                                {{ form_label(input) }}
+                                                {{ form_widget(input, {'attr': {'class': 'name-translation'}}) }}
+                                                {{ form_errors(input) }}
+                                            </div>
+                                        {% endfor %}
+                                    {% endblock %}
+                                {% endembed %}
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            {% else %}
+                {% do merchantRelationshipThresholdform.hardThreshold.setRendered %}
+            {% endif %}
+
+            {% if merchantRelationshipSoftThresholdEnabled %}
+                <div class="panel panel-default">
+                    <div class="panel-heading">{{ 'Soft Threshold' | trans }}</div>
+                    <div class="panel-body">
+                        {{ form_row(merchantRelationshipThresholdform.softThreshold.strategy) }}
+                        {{ form_row(merchantRelationshipThresholdform.softThreshold.threshold) }}
+                        {% for child in merchantRelationshipThresholdform.softThreshold if child.vars.attr.threshold_key is defined %}
+                            <div class="threshold_group_soft threshold-key-{{ child.vars.attr.threshold_key }}">
+                                {% include '@SalesOrderThresholdGui/_partials/form-row.twig' with {form: child} %}
+                            </div>
+                        {% endfor %}
+
+                        {% for localeTransfer in localeCollection %}
+                            {% if merchantRelationshipThresholdform.softThreshold[localeTransfer.localeName] is defined %}
+                                {% embed '@Gui/Partials/localized-ibox.twig' with {'collapsed': (not loop.first), 'localeName': localeTransfer.localeName} %}
+                                    {% block content %}
+                                        {% for input in merchantRelationshipThresholdform.softThreshold[localeTransfer.localeName] %}
+                                            <div class="form-group {% if input.vars.errors|length %}has-error{% endif %}">
+                                                {{ form_label(input) }}
+                                                {{ form_widget(input, {'attr': {'class': 'name-translation'}}) }}
+                                                {{ form_errors(input) }}
+                                            </div>
+                                        {% endfor %}
+                                    {% endblock %}
+                                {% endembed %}
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            {% else %}
+                {% do merchantRelationshipThresholdform.softThreshold.setRendered %}
+            {% endif %}
+
+            {{ form_widget(merchantRelationshipThresholdform) }}
+
+            <div class="well well-sm">
+                {{ 'You can use the the placeholders <code>{{threshold}}</code> and <code>{{fee}}</code>' | raw }}
+            </div>
+
+            <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Save' | trans }}"/>
+
+            {{ form_end(merchantRelationshipThresholdform) }}
+        {% endblock %}
+
+    {% endembed %}
+{% endblock %}

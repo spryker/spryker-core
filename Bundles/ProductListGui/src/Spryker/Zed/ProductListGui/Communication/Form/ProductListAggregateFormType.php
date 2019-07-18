@@ -18,6 +18,10 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
+/**
+ * @method \Spryker\Zed\ProductListGui\ProductListGuiConfig getConfig()
+ * @method \Spryker\Zed\ProductListGui\Communication\ProductListGuiCommunicationFactory getFactory()
+ */
 class ProductListAggregateFormType extends AbstractType
 {
     public const OPTION_CATEGORY_IDS = ProductListCategoryRelationTransfer::CATEGORY_IDS;
@@ -107,7 +111,7 @@ class ProductListAggregateFormType extends AbstractType
      *
      * @return $this
      */
-    protected function addAssignedProductIdsField(FormBuilderInterface $builder): self
+    protected function addAssignedProductIdsField(FormBuilderInterface $builder)
     {
         $builder->add(
             static::FIELD_ASSIGNED_PRODUCT_IDS,
@@ -122,7 +126,7 @@ class ProductListAggregateFormType extends AbstractType
      *
      * @return $this
      */
-    protected function addProductIdsToBeAssignedField(FormBuilderInterface $builder): self
+    protected function addProductIdsToBeAssignedField(FormBuilderInterface $builder)
     {
         $builder->add(
             static::FIELD_PRODUCT_IDS_TO_BE_ASSIGNED,
@@ -137,7 +141,7 @@ class ProductListAggregateFormType extends AbstractType
      *
      * @return $this
      */
-    protected function addProductIdsToBeDeassignedField(FormBuilderInterface $builder): self
+    protected function addProductIdsToBeDeassignedField(FormBuilderInterface $builder)
     {
         $builder->add(
             static::FIELD_PRODUCT_IDS_TO_BE_DEASSIGNED,
@@ -152,9 +156,8 @@ class ProductListAggregateFormType extends AbstractType
      *
      * @return $this
      */
-    protected function addProductListSubForm(FormBuilderInterface $builder): self
+    protected function addProductListSubForm(FormBuilderInterface $builder)
     {
-
         $builder->add(
             ProductListAggregateFormTransfer::PRODUCT_LIST,
             ProductListFormType::class
@@ -169,7 +172,7 @@ class ProductListAggregateFormType extends AbstractType
      *
      * @return $this
      */
-    protected function addOwnerTypeField($builder, $options): self
+    protected function addOwnerTypeField($builder, $options)
     {
         $builder->add(ProductListAggregateFormTransfer::OWNER_TYPE, ChoiceType::class, [
             'label' => 'Owner Type',
@@ -189,7 +192,7 @@ class ProductListAggregateFormType extends AbstractType
      *
      * @return $this
      */
-    protected function addProductListCategoryRelationSubForm(FormBuilderInterface $builder, array $options): self
+    protected function addProductListCategoryRelationSubForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add(
             ProductListAggregateFormTransfer::PRODUCT_LIST_CATEGORY_RELATION,
@@ -205,7 +208,7 @@ class ProductListAggregateFormType extends AbstractType
      *
      * @return $this
      */
-    protected function addProductListProductConcreteRelationSubForm(FormBuilderInterface $builder): self
+    protected function addProductListProductConcreteRelationSubForm(FormBuilderInterface $builder)
     {
         $builder->add(
             ProductListAggregateFormTransfer::PRODUCT_LIST_PRODUCT_CONCRETE_RELATION,

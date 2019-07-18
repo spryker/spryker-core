@@ -8,6 +8,8 @@
 namespace Spryker\Zed\Product\Business;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\PaginationTransfer;
+use Generated\Shared\Transfer\ProductAbstractSuggestionCollectionTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductAttributeKeyTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
@@ -227,6 +229,18 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
+     * - Returns concrete products transfers filtered by skus.
+     *
+     * @api
+     *
+     * @param string[] $skus
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function findProductConcretesBySkus(array $skus): array;
+
+    /**
+     * Specification:
      * - Returns the abstract product ID by given concrete product ID.
      *
      * @api
@@ -266,6 +280,22 @@ interface ProductFacadeInterface
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function getProductConcrete($concreteSku);
+
+    /**
+     * Specification:
+     * - Returns concrete product with attributes and localized attributes.
+     * - Throws exception if the concrete product is not found.
+     * - Triggers `ProductEvents::PRODUCT_CONCRETE_READ` event but doesn't trigger READ plugins.
+     *
+     * @api
+     *
+     * @deprecated Use `Spryker\Zed\Product\Business\ProductFacadeInterface::getProductConcretesByConcreteSkus()` instead.
+     *
+     * @param string $productConcreteSku
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function getRawProductConcreteBySku(string $productConcreteSku): ProductConcreteTransfer;
 
     /**
      * Specification:
@@ -681,7 +711,7 @@ interface ProductFacadeInterface
      * - Returns an associative array of attribute key - attribute value pairs of the persisted concrete product.
      * - The result is a combination of the concrete product's attributes and its abstract product's attributes.
      * - Includes localized abstract product and concrete products attribute keys when $localeTransfer is provided.
-
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
@@ -742,6 +772,20 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
+     * - Suggests product abstract transfers by name or SKU.
+     * - Uses pagination for returning suggestions.
+     *
+     * @api
+     *
+     * @param string $suggestion
+     * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractSuggestionCollectionTransfer
+     */
+    public function getPaginatedProductAbstractSuggestions(string $suggestion, PaginationTransfer $paginationTransfer): ProductAbstractSuggestionCollectionTransfer;
+
+    /**
+     * Specification:
      * - Suggests product concrete by name or SKU.
      *
      * @api
@@ -763,6 +807,19 @@ interface ProductFacadeInterface
      * @return int[]
      */
     public function findProductConcreteIdsByAbstractProductId(int $idProductAbstract): array;
+
+    /**
+     * Specification:
+     * - Returns product concrete ids by each product abstract id.
+     * - Keys are product concrete ids. Values are product abstract ids.
+     *
+     * @api
+     *
+     * @param int[] $productConcreteIds
+     *
+     * @return int[]
+     */
+    public function getProductAbstractIdsByProductConcreteIds(array $productConcreteIds): array;
 
     /**
      * Specification:
@@ -793,7 +850,7 @@ interface ProductFacadeInterface
      *
      * @param string[] $skus
      *
-     * @return array
+     * @return int[]
      */
     public function getProductConcreteIdsByConcreteSkus(array $skus): array;
 
@@ -814,4 +871,53 @@ interface ProductFacadeInterface
      * @return array
      */
     public function getProductConcreteSkusByConcreteIds(array $productIds): array;
+
+    /**
+     * Specification:
+     * - Returns the generated SKU for new concrete product that build from the given attributes or incremented value within the abstract product.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return string
+     */
+    public function generateProductConcreteSku(ProductAbstractTransfer $productAbstractTransfer, ProductConcreteTransfer $productConcreteTransfer): string;
+
+    /**
+     * Specification:
+     * - Returns concrete product transfers array by their product ids.
+     *
+     * @api
+     *
+     * @param int[] $productIds
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function getProductConcreteTransfersByProductIds(array $productIds): array;
+
+    /**
+     * Specification:
+     * - Returns concrete product transfers by product abstract ids.
+     *
+     * @api
+     *
+     * @param int[] $productAbstractIds
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function getProductConcreteTransfersByProductAbstractIds(array $productAbstractIds): array;
+
+    /**
+     * Specification:
+     * - Returns concrete products w/o joined data.
+     *
+     * @api
+     *
+     * @param array $productConcreteSkus
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function getRawProductConcreteTransfersByConcreteSkus(array $productConcreteSkus): array;
 }

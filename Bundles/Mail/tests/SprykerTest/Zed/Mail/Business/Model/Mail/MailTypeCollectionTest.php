@@ -25,7 +25,7 @@ use Spryker\Zed\Mail\Dependency\Plugin\MailTypePluginInterface;
  */
 class MailTypeCollectionTest extends Unit
 {
-    const MAIL_TYPE_A = 'mail type a';
+    public const MAIL_TYPE_A = 'mail type a';
 
     /**
      * @return void
@@ -92,7 +92,7 @@ class MailTypeCollectionTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Mail\Dependency\Plugin\MailTypePluginInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Mail\Dependency\Plugin\MailTypePluginInterface
      */
     protected function getMailTypeMock()
     {

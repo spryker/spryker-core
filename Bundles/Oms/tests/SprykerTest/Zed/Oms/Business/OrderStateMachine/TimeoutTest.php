@@ -25,9 +25,9 @@ use Spryker\Zed\Oms\Business\OrderStateMachine\Timeout;
  */
 class TimeoutTest extends Unit
 {
-    const CONDITION_NAME = 'conditionName';
-    const EVENT_PAY = 'pay';
-    const EVENT_SHIP = 'ship';
+    public const CONDITION_NAME = 'conditionName';
+    public const EVENT_PAY = 'pay';
+    public const EVENT_SHIP = 'ship';
 
     /**
      * @return void
@@ -84,7 +84,7 @@ class TimeoutTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachine
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachine
      */
     protected function createOrderStateMachine()
     {
@@ -97,7 +97,7 @@ class TimeoutTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Oms\Business\OrderStateMachine\TimeoutInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Oms\Business\OrderStateMachine\TimeoutInterface
      */
     private function createOmsTimeoutMock()
     {

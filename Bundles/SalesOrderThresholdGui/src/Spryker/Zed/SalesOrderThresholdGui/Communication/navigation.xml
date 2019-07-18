@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<config>
+    <threshold>
+        <label>Threshold</label>
+        <title>Threshold</title>
+        <icon>fa-angle-double-right</icon>
+        <pages>
+            <sales-order-threshold-global>
+                <label>Global threshold</label>
+                <title>Global threshold</title>
+                <bundle>sales-order-threshold-gui</bundle>
+                <controller>global</controller>
+                <action>index</action>
+                <icon>fa-angle-double-right</icon>
+            </sales-order-threshold-global>
+            <sales-order-threshold-settings>
+                <label>Threshold settings</label>
+                <title>Threshold settings</title>
+                <bundle>sales-order-threshold-gui</bundle>
+                <controller>settings</controller>
+                <action>index</action>
+                <icon>fa-angle-double-right</icon>
+            </sales-order-threshold-settings>
+        </pages>
+    </threshold>
+</config>
+

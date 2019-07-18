@@ -9,7 +9,9 @@ namespace Spryker\Shared\DummyPayment;
 
 interface DummyPaymentConfig
 {
-    const PROVIDER_NAME = 'DummyPayment';
-    const PAYMENT_METHOD_INVOICE = 'dummyPaymentInvoice';
-    const PAYMENT_METHOD_CREDIT_CARD = 'dummyPaymentCreditCard';
+    public const PROVIDER_NAME = 'DummyPayment';
+    public const PAYMENT_METHOD_INVOICE = 'dummyPaymentInvoice';
+    public const PAYMENT_METHOD_CREDIT_CARD = 'dummyPaymentCreditCard';
+    public const PAYMENT_METHOD_NAME_INVOICE = 'invoice';
+    public const PAYMENT_METHOD_NAME_CREDIT_CARD = 'credit card';
 }

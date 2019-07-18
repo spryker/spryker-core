@@ -14,6 +14,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\CustomerApi\Business\CustomerApiFacadeInterface getFacade()
+ * @method \Spryker\Zed\CustomerApi\CustomerApiConfig getConfig()
+ * @method \Spryker\Zed\CustomerApi\Persistence\CustomerApiQueryContainerInterface getQueryContainer()
  */
 class CustomerApiValidatorPlugin extends AbstractPlugin implements ApiValidatorPluginInterface
 {
@@ -28,6 +30,8 @@ class CustomerApiValidatorPlugin extends AbstractPlugin implements ApiValidatorP
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
      *
      * @return \Generated\Shared\Transfer\ApiValidationErrorTransfer[]

@@ -11,7 +11,7 @@ use Spryker\Shared\CmsContentWidget\Dependency\CmsContentWidgetConfigurationProv
 
 class CmsProductContentWidgetConfigurationProvider implements CmsContentWidgetConfigurationProviderInterface
 {
-    const FUNCTION_NAME = 'product';
+    public const FUNCTION_NAME = 'product';
 
     /**
      * @return string

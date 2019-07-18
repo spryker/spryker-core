@@ -36,6 +36,8 @@ class OauthCustomerConnectorToOauthFacadeBridge implements OauthCustomerConnecto
     }
 
     /**
+     * @deprecated Will be removed in the next major.
+     *
      * @param \Generated\Shared\Transfer\OauthClientTransfer $oauthClientTransfer
      *
      * @return \Generated\Shared\Transfer\OauthClientTransfer
@@ -43,5 +45,35 @@ class OauthCustomerConnectorToOauthFacadeBridge implements OauthCustomerConnecto
     public function saveClient(OauthClientTransfer $oauthClientTransfer): OauthClientTransfer
     {
         return $this->oauthFacade->saveClient($oauthClientTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OauthScopeTransfer $oauthScopeTransfer
+     *
+     * @return \Generated\Shared\Transfer\OauthScopeTransfer|null
+     */
+    public function findScopeByIdentifier(OauthScopeTransfer $oauthScopeTransfer): ?OauthScopeTransfer
+    {
+        return $this->oauthFacade->findScopeByIdentifier($oauthScopeTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OauthClientTransfer $oauthClientTransfer
+     *
+     * @return \Generated\Shared\Transfer\OauthClientTransfer|null
+     */
+    public function findClientByIdentifier(OauthClientTransfer $oauthClientTransfer): ?OauthClientTransfer
+    {
+        return $this->oauthFacade->findClientByIdentifier($oauthClientTransfer);
+    }
+
+    /**
+     * @param string[] $customerScopes
+     *
+     * @return \Generated\Shared\Transfer\OauthScopeTransfer[]
+     */
+    public function getScopesByIdentifiers(array $customerScopes): array
+    {
+        return $this->oauthFacade->getScopesByIdentifiers($customerScopes);
     }
 }

@@ -14,6 +14,8 @@ use Spryker\Zed\PriceProductMerchantRelationship\Persistence\Propel\PriceDimensi
 
 /**
  * @method \Spryker\Zed\PriceProductMerchantRelationship\PriceProductMerchantRelationshipConfig getConfig()
+ * @method \Spryker\Zed\PriceProductMerchantRelationship\Persistence\PriceProductMerchantRelationshipEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\PriceProductMerchantRelationship\Persistence\PriceProductMerchantRelationshipRepositoryInterface getRepository()
  */
 class PriceProductMerchantRelationshipPersistenceFactory extends AbstractPersistenceFactory
 {

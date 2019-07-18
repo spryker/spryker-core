@@ -16,10 +16,13 @@ use Symfony\Component\HttpFoundation\Request;
  * @method \Spryker\Zed\Tax\Communication\TaxCommunicationFactory getFactory()
  * @method \Spryker\Zed\Tax\Business\TaxFacadeInterface getFacade()
  * @method \Spryker\Zed\Tax\Persistence\TaxQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Tax\Persistence\TaxRepositoryInterface getRepository()
  */
 class RateController extends AbstractController
 {
-    const PARAM_URL_ID_TAX_RATE = 'id-tax-rate';
+    public const PARAM_URL_ID_TAX_RATE = 'id-tax-rate';
+
+    public const REDIRECT_URL_DEFAULT = '/tax/rate/list';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -46,8 +49,9 @@ class RateController extends AbstractController
             } else {
                 $taxRateTransfer = $this->getFacade()->createTaxRate($taxRateTransfer);
                 if ($taxRateTransfer->getIdTaxRate()) {
-                    $this->addSuccessMessage(sprintf('Tax rate %d was created successfully.', $taxRateTransfer->getIdTaxRate()));
+                    $this->addSuccessMessage('Tax rate %d was created successfully.', ['%d' => $taxRateTransfer->getIdTaxRate()]);
                     $redirectUrl = Url::generate('/tax/rate/edit', [static::PARAM_URL_ID_TAX_RATE => $taxRateTransfer->getIdTaxRate()])->build();
+
                     return $this->redirectResponse($redirectUrl);
                 }
             }
@@ -61,16 +65,22 @@ class RateController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function editAction(Request $request)
     {
         $idTaxRate = $this->castId($request->query->getInt(static::PARAM_URL_ID_TAX_RATE));
 
-        $taxRateTransfer = $this->getFacade()->getTaxRate($idTaxRate);
-        $taxRateFormDataProvider = $this->getFactory()->createTaxRateFormDataProvider($taxRateTransfer);
+        $taxRateFormDataProvider = $this->getFactory()->createTaxRateFormDataProvider();
+        $taxRateTransfer = $taxRateFormDataProvider->getData($idTaxRate);
 
-        $form = $this->getFactory()->getTaxRateForm($taxRateFormDataProvider);
+        if ($taxRateTransfer === null) {
+            $this->addErrorMessage("Tax rate with id %s doesn't exist", ["%s" => $idTaxRate]);
+
+            return $this->redirectResponse(static::REDIRECT_URL_DEFAULT);
+        }
+
+        $form = $this->getFactory()->getTaxRateForm($taxRateFormDataProvider, $taxRateTransfer);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -90,7 +100,7 @@ class RateController extends AbstractController
             } else {
                 $rowsAffected = $this->getFacade()->updateTaxRate($taxRateTransfer);
                 if ($rowsAffected > 0) {
-                    $this->addSuccessMessage(sprintf('Tax rate %d was updated successfully.', $idTaxRate));
+                    $this->addSuccessMessage('Tax rate %d was updated successfully.', ['%d' => $idTaxRate]);
                 }
             }
         }
@@ -104,13 +114,19 @@ class RateController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function viewAction(Request $request)
     {
         $idTaxRate = $this->castId($request->query->getInt(static::PARAM_URL_ID_TAX_RATE));
 
-        $taxRateTransfer = $this->getFacade()->getTaxRate($idTaxRate);
+        $taxRateTransfer = $this->getFacade()->findTaxRate($idTaxRate);
+
+        if ($taxRateTransfer === null) {
+            $this->addErrorMessage("Tax rate with id %s doesn't exist", ['%s' => $idTaxRate]);
+
+            return $this->redirectResponse(static::REDIRECT_URL_DEFAULT);
+        }
 
         return [
             'taxRate' => $taxRateTransfer,
@@ -118,18 +134,20 @@ class RateController extends AbstractController
     }
 
     /**
+     * @deprecated Use DeleteRateController::indexAction() instead.
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deleteAction(Request $request)
     {
-        $idTaxRate = $this->castId($request->query->getInt(static::PARAM_URL_ID_TAX_RATE));
+        $idTaxSet = $this->castId($request->query->get(static::PARAM_URL_ID_TAX_RATE));
+        $url = Url::generate('/tax/delete-rate', [
+            static::PARAM_URL_ID_TAX_RATE => $idTaxSet,
+        ])->build();
 
-        $this->getFacade()->deleteTaxRate($idTaxRate);
-        $this->addSuccessMessage(sprintf('Tax rate %d was deleted successfully.', $idTaxRate));
-
-        return $this->redirectResponse(Url::generate('/tax/rate/list')->build());
+        return $this->redirectResponse($url, 301);
     }
 
     /**

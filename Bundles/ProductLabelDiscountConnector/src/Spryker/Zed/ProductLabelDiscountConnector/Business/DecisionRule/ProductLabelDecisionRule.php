@@ -66,7 +66,7 @@ class ProductLabelDecisionRule implements ProductLabelDecisionRuleInterface
     /**
      * @param int $idProductAbstract
      *
-     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabel[]
+     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabel[]|\Propel\Runtime\Collection\ObjectCollection
      */
     protected function findValidProductLabelEntities($idProductAbstract)
     {

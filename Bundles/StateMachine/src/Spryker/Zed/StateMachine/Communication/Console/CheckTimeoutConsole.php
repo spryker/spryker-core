@@ -15,13 +15,15 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\StateMachine\Business\StateMachineFacadeInterface getFacade()
+ * @method \Spryker\Zed\StateMachine\Persistence\StateMachineQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\StateMachine\Communication\StateMachineCommunicationFactory getFactory()
  */
 class CheckTimeoutConsole extends Console
 {
-    const COMMAND_NAME = 'state-machine:check-timeout';
-    const COMMAND_DESCRIPTION = 'Check timeouts';
-    const ARGUMENT_STATE_MACHINE_NAME = 'state machine name';
-    const OPTION_STATE_MACHINE_NAME = 'state-machine-name';
+    public const COMMAND_NAME = 'state-machine:check-timeout';
+    public const COMMAND_DESCRIPTION = 'Check timeouts';
+    public const ARGUMENT_STATE_MACHINE_NAME = 'state machine name';
+    public const OPTION_STATE_MACHINE_NAME = 'state-machine-name';
 
     /**
      * @return void
@@ -51,7 +53,7 @@ class CheckTimeoutConsole extends Console
      * @param \Symfony\Component\Console\Input\InputInterface $input
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
-     * @return void
+     * @return int|null
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -63,10 +65,14 @@ class CheckTimeoutConsole extends Console
             $this->validateStateMachineNameOption($optionStateMachineName);
         }
         if ($isValidArgument === false) {
-            return;
+            return null;
         }
 
-        $this->getFacade()->checkTimeouts($isValidArgument === null ? $optionStateMachineName : $argumentStateMachineName);
+        $affected = $this->getFacade()->checkTimeouts($isValidArgument === null ? $optionStateMachineName : $argumentStateMachineName);
+
+        if ($output->isVerbose()) {
+            $output->writeln('Affected: ' . $affected);
+        }
     }
 
     /**

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -72,6 +73,23 @@ interface StateMachineQueryContainerInterface extends QueryContainerInterface
         $stateMachineName,
         $processName,
         array $states
+    );
+
+    /**
+     * @api
+     *
+     * @param string $stateMachineName
+     * @param string $processName
+     * @param string[] $states
+     * @param string $historySortDirection
+     *
+     * @return \Orm\Zed\StateMachine\Persistence\SpyStateMachineItemStateQuery
+     */
+    public function queryItemsByStateMachineProcessNameAndItemStates(
+        $stateMachineName,
+        $processName,
+        array $states,
+        string $historySortDirection
     );
 
     /**

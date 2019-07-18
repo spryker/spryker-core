@@ -13,10 +13,13 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \Spryker\Zed\SharedCart\Business\SharedCartFacadeInterface getFacade()
  * @method \Spryker\Zed\SharedCart\Communication\SharedCartCommunicationFactory getFactory()
+ * @method \Spryker\Zed\SharedCart\SharedCartConfig getConfig()
  */
 class SharedCartPermissionInstallerPlugin extends AbstractPlugin implements InstallerPluginInterface
 {
     /**
+     * @api
+     *
      * @return void
      */
     public function install()

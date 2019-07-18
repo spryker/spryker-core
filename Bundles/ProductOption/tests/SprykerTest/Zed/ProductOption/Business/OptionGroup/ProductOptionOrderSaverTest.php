@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -77,7 +78,7 @@ class ProductOptionOrderSaverTest extends MockProvider
     /**
      * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryFacadeInterface|null $glossaryFacadeMock
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionOrderSaver
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionOrderSaver
      */
     protected function createProductOptionOrderSaver(?ProductOptionToGlossaryFacadeInterface $glossaryFacadeMock = null)
     {
@@ -92,7 +93,7 @@ class ProductOptionOrderSaverTest extends MockProvider
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Orm\Zed\Sales\Persistence\SpySalesOrderItemOption
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Orm\Zed\Sales\Persistence\SpySalesOrderItemOption
      */
     protected function createSalesOrderItemOptionMock()
     {

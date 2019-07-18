@@ -43,7 +43,7 @@ class TransferDefinitionMergerTest extends Unit
 
     /**
      * @expectedException \Exception
-     * @expectedExceptionMessage Value mismatch for "Transfer.type" tranfer property. Value1: "int"; Value2: "string". To fix this, search for 'property name="type"' in the code base and fix the wrong one.
+     * @expectedExceptionMessage Value mismatch for "Transfer.propertyA" tranfer property. Value1: "int"; Value2: "string". To fix this, search for 'property name="propertyA"' in the code base and fix the wrong one.
      *
      * @return void
      */

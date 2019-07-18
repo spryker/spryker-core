@@ -18,10 +18,10 @@ interface EventHandlerInterface extends EventBaseHandlerInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer $eventTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $transfer
      * @param string $eventName
      *
      * @return void
      */
-    public function handle(TransferInterface $eventTransfer, $eventName);
+    public function handle(TransferInterface $transfer, $eventName);
 }

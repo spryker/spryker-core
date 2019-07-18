@@ -206,4 +206,18 @@ class MultiCartClient extends AbstractClient implements MultiCartClientInterface
     {
         return $this->getFactory()->createCartReader()->getQuoteCollectionByCriteria($quoteCriteriaFilterTransfer);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isQuoteDeletable(): bool
+    {
+        return $this->getFactory()
+            ->createCartDeleteChecker()
+            ->isQuoteDeletable();
+    }
 }

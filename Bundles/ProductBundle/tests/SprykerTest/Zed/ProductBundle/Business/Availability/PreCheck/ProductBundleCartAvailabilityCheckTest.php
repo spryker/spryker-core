@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -29,7 +30,7 @@ use Spryker\Zed\ProductBundle\ProductBundleConfig;
  */
 class ProductBundleCartAvailabilityCheckTest extends PreCheckMocks
 {
-    const ID_STORE = 1;
+    public const ID_STORE = 1;
 
     /**
      * return void
@@ -110,7 +111,7 @@ class ProductBundleCartAvailabilityCheckTest extends PreCheckMocks
      * @param \Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerInterface|null $availabilityQueryContainerMock
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface|null $storeFacadeMock
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\PreCheck\ProductBundleCartAvailabilityCheckInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\PreCheck\ProductBundleCartAvailabilityCheckInterface
      */
     protected function createProductBundleCartAvailabilityCheckMock(
         ?ProductBundleToAvailabilityInterface $availabilityFacadeMock = null,
@@ -143,7 +144,7 @@ class ProductBundleCartAvailabilityCheckTest extends PreCheckMocks
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface
      */
     protected function createStoreFacadeMock()
     {
@@ -151,7 +152,7 @@ class ProductBundleCartAvailabilityCheckTest extends PreCheckMocks
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductBundle\ProductBundleConfig
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductBundle\ProductBundleConfig
      */
     protected function createProductBundleConfigMock(): ProductBundleConfig
     {

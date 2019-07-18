@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\NavigationGui\Communication\NavigationGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\NavigationGui\Persistence\NavigationGuiQueryContainerInterface getQueryContainer()
  */
 class CreateController extends AbstractController
 {
@@ -32,7 +33,7 @@ class CreateController extends AbstractController
                 ->getNavigationFacade()
                 ->createNavigation($navigationTransfer);
 
-            $this->addSuccessMessage(sprintf('Navigation element %d was created successfully.', $navigationTransfer->getIdNavigation()));
+            $this->addSuccessMessage('Navigation element %d was created successfully.', ['%d' => $navigationTransfer->getIdNavigation()]);
 
             return $this->redirectResponse('/navigation-gui');
         }

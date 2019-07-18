@@ -1,0 +1,11 @@
+.price-volume-table {
+    margin-bottom: 15px;
+
+    td {
+        padding-bottom: 5px;
+
+        &:nth-of-type(even) {
+            padding-left: 15px;
+        }
+    }
+}

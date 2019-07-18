@@ -18,10 +18,10 @@ use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
  */
 class SuggestionByTypeQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
 {
-    const AGGREGATION_NAME = 'suggestion-by-type';
-    const NESTED_AGGREGATION_NAME = 'top-hits';
+    public const AGGREGATION_NAME = 'suggestion-by-type';
+    public const NESTED_AGGREGATION_NAME = 'top-hits';
 
-    const SIZE = 10;
+    public const SIZE = 10;
 
     /**
      * @api

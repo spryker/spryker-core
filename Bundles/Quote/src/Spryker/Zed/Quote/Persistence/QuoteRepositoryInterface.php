@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Quote\Persistence;
 
+use DateTime;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -18,19 +19,28 @@ interface QuoteRepositoryInterface
      * Specification:
      * - Find quote by customer reference.
      *
-     * @api
+     * @deprecated Use findQuoteByCustomerReferenceAndIdStore() instead.
      *
      * @param string $customerReference
      *
-     * @return null|\Generated\Shared\Transfer\QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer|null
      */
     public function findQuoteByCustomer($customerReference): ?QuoteTransfer;
 
     /**
      * Specification:
-     * - Find quote by quote id.
+     * - Find quote by customer reference and ID store.
      *
-     * @api
+     * @param string $customerReference
+     * @param int $idStore
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer|null
+     */
+    public function findQuoteByCustomerReferenceAndIdStore(string $customerReference, int $idStore): ?QuoteTransfer;
+
+    /**
+     * Specification:
+     * - Find quote by quote id.
      *
      * @param int $idQuote
      *
@@ -41,8 +51,6 @@ interface QuoteRepositoryInterface
     /**
      * Specification:
      * - Get quote collection filtered by criteria
-     *
-     * @api
      *
      * @param \Generated\Shared\Transfer\QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer
      *
@@ -56,4 +64,19 @@ interface QuoteRepositoryInterface
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function mapQuoteTransfer(SpyQuoteEntityTransfer $quoteEntityTransfer): QuoteTransfer;
+
+    /**
+     * @param \DateTime $lifetimeLimitDate
+     * @param int $limit
+     *
+     * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
+     */
+    public function findExpiredGuestQuotes(DateTime $lifetimeLimitDate, int $limit): QuoteCollectionTransfer;
+
+    /**
+     * @param string $uuidQuote
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer|null
+     */
+    public function findQuoteByUuid(string $uuidQuote): ?QuoteTransfer;
 }

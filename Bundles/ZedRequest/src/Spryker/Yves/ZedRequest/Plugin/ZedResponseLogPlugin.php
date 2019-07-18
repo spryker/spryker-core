@@ -17,7 +17,7 @@ class ZedResponseLogPlugin implements MiddlewareInterface
 {
     use LoggerTrait;
 
-    const NAME = 'guzzle response log middleware';
+    public const NAME = 'guzzle response log middleware';
 
     /**
      * @return string

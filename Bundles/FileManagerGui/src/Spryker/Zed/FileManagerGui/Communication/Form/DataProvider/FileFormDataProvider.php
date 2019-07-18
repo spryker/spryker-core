@@ -9,6 +9,7 @@ namespace Spryker\Zed\FileManagerGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\FileLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\FileTransfer;
+use Generated\Shared\Transfer\MimeTypeTransfer;
 use Spryker\Zed\FileManagerGui\Communication\Form\FileForm;
 use Spryker\Zed\FileManagerGui\Dependency\Facade\FileManagerGuiToFileManagerFacadeInterface;
 use Spryker\Zed\FileManagerGui\Dependency\Facade\FileManagerGuiToLocaleFacadeInterface;
@@ -79,12 +80,13 @@ class FileFormDataProvider
      */
     protected function getAllowedMimeTypes()
     {
+        /** @var \Generated\Shared\Transfer\MimeTypeTransfer[] $mimeTypes */
         $mimeTypes = $this->fileManagerFacade
             ->findAllowedMimeTypes()
             ->getItems()
             ->getArrayCopy();
 
-        return array_map(function ($mimeTypeTransfer) {
+        return array_map(function (MimeTypeTransfer $mimeTypeTransfer) {
             return $mimeTypeTransfer->getName();
         }, $mimeTypes);
     }

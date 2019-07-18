@@ -14,7 +14,7 @@ use Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface;
 
 class PaginationByHeaderFilterPreProcessor implements PreProcessorInterface
 {
-    const RANGE = 'range';
+    public const RANGE = 'range';
 
     /**
      * @var \Spryker\Zed\Api\ApiConfig

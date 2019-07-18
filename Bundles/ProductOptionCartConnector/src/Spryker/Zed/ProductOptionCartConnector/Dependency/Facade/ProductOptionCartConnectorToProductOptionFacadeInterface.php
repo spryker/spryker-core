@@ -22,4 +22,11 @@ interface ProductOptionCartConnectorToProductOptionFacadeInterface
      * @return \Generated\Shared\Transfer\ProductOptionTransfer
      */
     public function getProductOptionValueById($idProductOptionValue);
+
+    /**
+     * @param int $idProductOptionValue
+     *
+     * @return bool
+     */
+    public function checkProductOptionGroupExistenceByProductOptionValueId(int $idProductOptionValue): bool;
 }

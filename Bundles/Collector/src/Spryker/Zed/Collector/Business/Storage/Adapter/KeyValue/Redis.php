@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Collector\Business\Storage\Adapter\KeyValue;
 
 use Predis\Client;
-use Predis\Connection\ConnectionException;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Storage\StorageConstants;
 
@@ -25,7 +24,7 @@ abstract class Redis
     protected $config;
 
     /**
-     * @var \Predis\Client
+     * @var \Predis\Client|null
      */
     protected $resource;
 
@@ -81,7 +80,7 @@ abstract class Redis
     }
 
     /**
-     * @param resource $resource
+     * @param \Predis\Client $resource
      *
      * @return $this
      */
@@ -93,7 +92,7 @@ abstract class Redis
     }
 
     /**
-     * @return mixed
+     * @return \Predis\Client
      */
     protected function getResource()
     {
@@ -232,18 +231,12 @@ abstract class Redis
     }
 
     /**
-     * @throws \Predis\Connection\ConnectionException
-     *
      * @return void
      */
     public function connect()
     {
         if (!$this->resource) {
             $resource = new Client($this->config, $this->options);
-
-            if (!$resource) {
-                throw new ConnectionException($resource, 'Could not connect to redis server');
-            }
 
             $this->resource = $resource;
         }

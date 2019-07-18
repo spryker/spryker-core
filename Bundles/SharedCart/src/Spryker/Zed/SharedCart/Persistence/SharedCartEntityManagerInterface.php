@@ -8,8 +8,10 @@
 namespace Spryker\Zed\SharedCart\Persistence;
 
 use Generated\Shared\Transfer\PermissionTransfer;
+use Generated\Shared\Transfer\QuoteCompanyUserTransfer;
 use Generated\Shared\Transfer\QuotePermissionGroupTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShareDetailTransfer;
 use Generated\Shared\Transfer\SpyQuoteCompanyUserEntityTransfer;
 
 interface SharedCartEntityManagerInterface
@@ -74,4 +76,32 @@ interface SharedCartEntityManagerInterface
      * @return void
      */
     public function deleteQuoteCompanyUserByQuote(QuoteTransfer $quoteTransfer): void;
+
+    /**
+     * @param int $idCompanyUser
+     *
+     * @return void
+     */
+    public function deleteShareRelationsForCompanyUserId(int $idCompanyUser): void;
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteCompanyUserTransfer $quoteCompanyUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteCompanyUserTransfer
+     */
+    public function createQuoteCompanyUser(QuoteCompanyUserTransfer $quoteCompanyUserTransfer): QuoteCompanyUserTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ShareDetailTransfer $shareDetailTransfer
+     *
+     * @return void
+     */
+    public function updateCompanyUserQuotePermissionGroup(ShareDetailTransfer $shareDetailTransfer): void;
+
+    /**
+     * @param \Generated\Shared\Transfer\ShareDetailTransfer $shareDetailTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteCompanyUserTransfer|null
+     */
+    public function updateQuoteCompanyUserQuotePermissionGroup(ShareDetailTransfer $shareDetailTransfer): ?QuoteCompanyUserTransfer;
 }

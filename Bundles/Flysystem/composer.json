@@ -1,22 +1,23 @@
 {
   "name": "spryker/flysystem",
+  "type": "library",
   "description": "Flysystem module",
   "license": "proprietary",
   "require": {
     "league/flysystem": "^1.0",
     "php": ">=7.1",
     "spryker/file-system": "^1.0.0",
-    "spryker/kernel": "^3.5.0"
+    "spryker/kernel": "^3.30.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*",
     "spryker/flysystem-local-file-system": "*",
+    "spryker/propel": "*",
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/flysystem-local-file-system": "For handling local files.",
     "spryker/flysystem-aws3v3-file-system": "For handling AWS3v3 filesystem.",
-    "spryker/flysystem-ftp-file-system": "For handling FTP filesystem."
+    "spryker/flysystem-ftp-file-system": "For handling FTP filesystem.",
+    "spryker/flysystem-local-file-system": "For handling local files."
   },
   "autoload": {
     "psr-4": {

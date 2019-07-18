@@ -9,9 +9,8 @@ namespace SprykerTest\Zed\CategoryDataFeed\Persistence;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CategoryDataFeedTransfer;
-use Orm\Zed\Category\Persistence\Base\SpyCategoryQuery;
-use Orm\Zed\Locale\Persistence\Base\SpyLocaleQuery;
-use Spryker\Zed\Category\Persistence\CategoryQueryContainer;
+use Orm\Zed\Category\Persistence\SpyCategoryQuery;
+use Orm\Zed\Locale\Persistence\SpyLocaleQuery;
 use Spryker\Zed\CategoryDataFeed\Persistence\CategoryDataFeedQueryContainer;
 
 /**
@@ -106,8 +105,7 @@ class CategoryDataFeedQueryContainerTest extends Unit
      */
     protected function createCategoryDataFeedQueryContainer()
     {
-        $categoryQueryContainer = new CategoryQueryContainer();
-        $categoryDataFeedQueryContainer = new CategoryDataFeedQueryContainer($categoryQueryContainer);
+        $categoryDataFeedQueryContainer = new CategoryDataFeedQueryContainer();
 
         return $categoryDataFeedQueryContainer;
     }
@@ -135,7 +133,7 @@ class CategoryDataFeedQueryContainerTest extends Unit
     }
 
     /**
-     * @param \Orm\Zed\Category\Persistence\Base\SpyCategoryQuery $query
+     * @param \Orm\Zed\Category\Persistence\SpyCategoryQuery $query
      *
      * @return array
      */

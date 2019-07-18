@@ -13,17 +13,17 @@ use Spryker\Zed\Gui\Communication\Tabs\AbstractTabs;
 
 class ProductListAggregationTabs extends AbstractTabs
 {
-    const GENERAL_TAB_NAME = 'general';
-    const GENERAL_TAB_TITLE = 'General Information';
-    const GENERAL_TAB_TEMPLATE = '@ProductListGui/_partials/_tabs/general-information.twig';
+    public const GENERAL_TAB_NAME = 'general';
+    public const GENERAL_TAB_TITLE = 'General Information';
+    public const GENERAL_TAB_TEMPLATE = '@ProductListGui/_partials/_tabs/general-information.twig';
 
-    const CATEGORIES_TAB_NAME = 'product_list_category_relation';
-    const CATEGORIES_TAB_TITLE = 'Assign Categories';
-    const CATEGORIES_TAB_TEMPLATE = '@ProductListGui/_partials/_tabs/product-list-category-relation.twig';
+    public const CATEGORIES_TAB_NAME = 'product_list_category_relation';
+    public const CATEGORIES_TAB_TITLE = 'Assign Categories';
+    public const CATEGORIES_TAB_TEMPLATE = '@ProductListGui/_partials/_tabs/product-list-category-relation.twig';
 
-    const PRODUCTS_TAB_NAME = 'product_list_product_concrete_relation';
-    const PRODUCTS_TAB_TITLE = 'Assign Products';
-    const PRODUCTS_TAB_TEMPLATE = '@ProductListGui/_partials/_tabs/product-list-product-concrete-relation.twig';
+    public const PRODUCTS_TAB_NAME = 'product_list_product_concrete_relation';
+    public const PRODUCTS_TAB_TITLE = 'Assign Products';
+    public const PRODUCTS_TAB_TEMPLATE = '@ProductListGui/_partials/_tabs/product-list-product-concrete-relation.twig';
 
     /**
      * @param \Generated\Shared\Transfer\TabsViewTransfer $tabsViewTransfer
@@ -37,7 +37,7 @@ class ProductListAggregationTabs extends AbstractTabs
             ->addProductListProductConcreteRelationTab($tabsViewTransfer)
             ->setFooter($tabsViewTransfer);
 
-        $tabsViewTransfer->setIsNavigable(false);
+        $tabsViewTransfer->setIsNavigable(true);
 
         return $tabsViewTransfer;
     }
@@ -47,7 +47,7 @@ class ProductListAggregationTabs extends AbstractTabs
      *
      * @return $this
      */
-    protected function addGeneralInformationTab(TabsViewTransfer $tabsViewTransfer): self
+    protected function addGeneralInformationTab(TabsViewTransfer $tabsViewTransfer)
     {
         $tabItemTransfer = new TabItemTransfer();
         $tabItemTransfer
@@ -65,7 +65,7 @@ class ProductListAggregationTabs extends AbstractTabs
      *
      * @return $this
      */
-    protected function addProductListCategoryRelationTab(TabsViewTransfer $tabsViewTransfer): self
+    protected function addProductListCategoryRelationTab(TabsViewTransfer $tabsViewTransfer)
     {
         $tabItemTransfer = new TabItemTransfer();
         $tabItemTransfer
@@ -83,7 +83,7 @@ class ProductListAggregationTabs extends AbstractTabs
      *
      * @return $this
      */
-    protected function addProductListProductConcreteRelationTab(TabsViewTransfer $tabsViewTransfer): self
+    protected function addProductListProductConcreteRelationTab(TabsViewTransfer $tabsViewTransfer)
     {
         $tabItemTransfer = new TabItemTransfer();
         $tabItemTransfer

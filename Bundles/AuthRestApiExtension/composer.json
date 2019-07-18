@@ -1,0 +1,32 @@
+{
+  "name": "spryker/auth-rest-api-extension",
+  "type": "library",
+  "description": "AuthRestApiExtension module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.1"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/glue-application": "*",
+    "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/glue-application": "If you want to use plugins with glue application."
+  },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

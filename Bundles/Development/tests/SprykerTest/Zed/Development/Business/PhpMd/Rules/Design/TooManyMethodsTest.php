@@ -25,9 +25,9 @@ use Spryker\Zed\Development\Business\PhpMd\Rules\Design\TooManyMethods;
  */
 class TooManyMethodsTest extends Unit
 {
-    const THRESHOLD_LOW = 1;
-    const THRESHOLD_HIGH = 3;
-    const NUMBER_OF_METHODS = 2;
+    public const THRESHOLD_LOW = 1;
+    public const THRESHOLD_HIGH = 3;
+    public const NUMBER_OF_METHODS = 2;
 
     /**
      * @dataProvider ignorableNodesProvider
@@ -89,7 +89,7 @@ class TooManyMethodsTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Development\Business\PhpMd\Rules\Design\TooManyMethods
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Development\Business\PhpMd\Rules\Design\TooManyMethods
      */
     protected function getTooManyMethodsMock()
     {
@@ -106,7 +106,7 @@ class TooManyMethodsTest extends Unit
      * @param string $fullyQualifiedClassName
      * @param string $nodeName
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\PHPMD\AbstractNode
+     * @return \PHPUnit\Framework\MockObject\MockObject|\PHPMD\AbstractNode
      */
     protected function getNodeMock($fullyQualifiedClassName, $nodeName)
     {

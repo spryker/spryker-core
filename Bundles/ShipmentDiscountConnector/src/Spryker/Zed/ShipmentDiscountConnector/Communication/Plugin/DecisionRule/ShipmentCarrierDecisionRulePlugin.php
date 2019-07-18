@@ -17,10 +17,11 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\ShipmentDiscountConnector\Business\ShipmentDiscountConnectorFacadeInterface getFacade()
+ * @method \Spryker\Zed\ShipmentDiscountConnector\ShipmentDiscountConnectorConfig getConfig()
  */
 class ShipmentCarrierDecisionRulePlugin extends AbstractPlugin implements DecisionRulePluginInterface, DiscountRuleWithValueOptionsPluginInterface
 {
-    const DECISION_RULE_FIELD_NAME = 'shipment-carrier';
+    public const DECISION_RULE_FIELD_NAME = 'shipment-carrier';
 
     /**
      * {@inheritdoc}

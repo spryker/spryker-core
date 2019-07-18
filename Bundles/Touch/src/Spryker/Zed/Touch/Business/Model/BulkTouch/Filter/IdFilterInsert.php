@@ -9,7 +9,7 @@ namespace Spryker\Zed\Touch\Business\Model\BulkTouch\Filter;
 
 class IdFilterInsert extends AbstractIdFilter
 {
-    const CHUNK_SIZE = 250;
+    public const CHUNK_SIZE = 250;
 
     /**
      * @param array $ids
@@ -17,7 +17,7 @@ class IdFilterInsert extends AbstractIdFilter
      *
      * @return array
      */
-    public function filter(array $ids, $itemType)
+    public function filter(array $ids, string $itemType): array
     {
         $filteredIds = [];
         $itemIdChunks = array_chunk($ids, self::CHUNK_SIZE);

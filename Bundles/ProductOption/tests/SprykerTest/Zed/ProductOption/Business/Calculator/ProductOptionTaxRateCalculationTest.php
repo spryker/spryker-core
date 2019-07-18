@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -67,7 +68,7 @@ class ProductOptionTaxRateCalculationTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\PHPUnit_Framework_MockObject_Builder_InvocationMocker|\Spryker\Zed\ProductOption\Business\Calculator\ProductOptionTaxRateCalculator
+     * @return \PHPUnit\Framework\MockObject\MockObject|\PHPUnit\Framework\MockObject\InvocationMocker|\Spryker\Zed\ProductOption\Business\Calculator\ProductOptionTaxRateCalculator
      */
     protected function createProductItemTaxRateCalculator()
     {
@@ -81,7 +82,7 @@ class ProductOptionTaxRateCalculationTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\PHPUnit_Framework_MockObject_Builder_InvocationMocker|\Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\PHPUnit\Framework\MockObject\InvocationMocker|\Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface
      */
     protected function createQueryContainerMock()
     {
@@ -91,7 +92,7 @@ class ProductOptionTaxRateCalculationTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\PHPUnit_Framework_MockObject_Builder_InvocationMocker|\Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxFacadeBridge
+     * @return \PHPUnit\Framework\MockObject\MockObject|\PHPUnit\Framework\MockObject\InvocationMocker|\Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxFacadeBridge
      */
     protected function createProductOptionToTaxBridgeMock()
     {

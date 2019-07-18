@@ -7,11 +7,12 @@
 
 namespace SprykerTest\Zed\Product\Business\Product\Sku;
 
-use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\Product\Business\Product\Sku\SkuGenerator;
+use Spryker\Zed\Product\Business\Product\Sku\SkuIncrementGenerator;
 use Spryker\Zed\Product\Dependency\Service\ProductToUtilTextInterface;
+use SprykerTest\Zed\Product\Business\FacadeTestAbstract;
 
 /**
  * Auto-generated group annotations
@@ -24,7 +25,7 @@ use Spryker\Zed\Product\Dependency\Service\ProductToUtilTextInterface;
  * @group SkuGeneratorTest
  * Add your own group annotations below this line
  */
-class SkuGeneratorTest extends Unit
+class SkuGeneratorTest extends FacadeTestAbstract
 {
     /**
      * @return void
@@ -91,7 +92,7 @@ class SkuGeneratorTest extends Unit
 
         $formattedSku = $skuGenerator->generateProductConcreteSku($productAbstractTransfer, $productConcreteTransfer);
 
-        $this->assertTrue(\strlen($formattedSku) <= SkuGenerator::SKU_MAX_LENGTH);
+        $this->assertTrue(strlen($formattedSku) <= SkuGenerator::SKU_MAX_LENGTH);
     }
 
     /**
@@ -99,14 +100,22 @@ class SkuGeneratorTest extends Unit
      */
     protected function createSkuGenerator()
     {
-        return new SkuGenerator($this->createUtilTextServiceMock());
+        return new SkuGenerator($this->createUtilTextServiceMock(), $this->createSkuIncrementGeneratorMock());
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Product\Dependency\Service\ProductToUtilTextInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Product\Dependency\Service\ProductToUtilTextInterface
      */
     protected function createUtilTextServiceMock()
     {
         return $this->getMockBuilder(ProductToUtilTextInterface::class)->getMock();
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Business\Product\Sku\SkuIncrementGenerator
+     */
+    protected function createSkuIncrementGeneratorMock()
+    {
+        return new SkuIncrementGenerator($this->productConcreteManager);
     }
 }

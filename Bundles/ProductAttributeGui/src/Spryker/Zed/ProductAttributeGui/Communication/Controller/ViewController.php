@@ -18,8 +18,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ViewController extends AbstractController
 {
-    const PARAM_ID_PRODUCT_ABSTRACT = 'id-product-abstract';
-    const PARAM_ID_PRODUCT = 'id-product';
+    public const PARAM_ID_PRODUCT_ABSTRACT = 'id-product-abstract';
+    public const PARAM_ID_PRODUCT = 'id-product';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -60,6 +60,10 @@ class ViewController extends AbstractController
 
         $localesData = $this->getLocaleData();
 
+        $csrfForm = $this
+            ->getFactory()
+            ->getAttributeCsrfForm();
+
         return $this->viewResponse([
             'idProductAbstract' => $idProductAbstract,
             'attributeKeyForm' => $form->createView(),
@@ -71,6 +75,7 @@ class ViewController extends AbstractController
             'productAttributesJson' => json_encode($productAttributes),
             'metaAttributesJson' => json_encode($metaAttributes),
             'productAbstract' => $productAbstractTransfer,
+            'csrfForm' => $csrfForm->createView(),
         ]);
     }
 
@@ -116,6 +121,10 @@ class ViewController extends AbstractController
 
         $localesData = $this->getLocaleData();
 
+        $csrfForm = $this
+            ->getFactory()
+            ->getAttributeCsrfForm();
+
         return $this->viewResponse([
             'attributeKeyForm' => $form->createView(),
             'locales' => $localesData,
@@ -127,6 +136,7 @@ class ViewController extends AbstractController
             'metaAttributesJson' => json_encode($metaAttributes),
             'productAbstract' => $productAbstractTransfer,
             'product' => $productTransfer,
+            'csrfForm' => $csrfForm->createView(),
         ]);
     }
 

@@ -17,7 +17,7 @@ class ProductReviewStorageConfig extends AbstractBundleConfig
      *
      * @api
      */
-    const PRODUCT_ABSTRACT_REVIEW_SYNC_STORAGE_QUEUE = 'sync.storage.product';
+    public const PRODUCT_ABSTRACT_REVIEW_SYNC_STORAGE_QUEUE = 'sync.storage.product';
 
     /**
      * Specification:
@@ -25,7 +25,7 @@ class ProductReviewStorageConfig extends AbstractBundleConfig
      *
      * @api
      */
-    const PRODUCT_ABSTRACT_REVIEW_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.product.error';
+    public const PRODUCT_ABSTRACT_REVIEW_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.product.error';
 
     /**
      * Specification:
@@ -33,5 +33,5 @@ class ProductReviewStorageConfig extends AbstractBundleConfig
      *
      * @api
      */
-    const PRODUCT_ABSTRACT_REVIEW_RESOURCE_NAME = 'product_abstract_review';
+    public const PRODUCT_ABSTRACT_REVIEW_RESOURCE_NAME = 'product_abstract_review';
 }

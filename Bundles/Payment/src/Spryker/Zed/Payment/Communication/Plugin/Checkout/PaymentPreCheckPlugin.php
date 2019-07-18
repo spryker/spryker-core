@@ -14,10 +14,14 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\Payment\Business\PaymentFacadeInterface getFacade()
+ * @method \Spryker\Zed\Payment\PaymentConfig getConfig()
+ * @method \Spryker\Zed\Payment\Persistence\PaymentQueryContainerInterface getQueryContainer()
  */
 class PaymentPreCheckPlugin extends AbstractPlugin implements CheckoutPreConditionInterface
 {
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *

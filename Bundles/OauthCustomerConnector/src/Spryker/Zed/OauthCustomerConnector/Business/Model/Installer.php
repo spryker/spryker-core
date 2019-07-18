@@ -12,6 +12,9 @@ use Generated\Shared\Transfer\OauthScopeTransfer;
 use Spryker\Zed\OauthCustomerConnector\Dependency\Facade\OauthCustomerConnectorToOauthFacadeInterface;
 use Spryker\Zed\OauthCustomerConnector\OauthCustomerConnectorConfig;
 
+/**
+ * @deprecated Will be removed in the next major.
+ */
 class Installer implements InstallerInterface
 {
     /**
@@ -37,14 +40,22 @@ class Installer implements InstallerInterface
     }
 
     /**
+     * @deprecated Will be removed in the next major.
+     *
      * @return void
      */
     public function install(): void
     {
-        foreach ($this->oauthCustomerConnectorConfig->getCustomerScopes() as $scope) {
-            $oauthScopeTransfer = new OauthScopeTransfer();
-            $oauthScopeTransfer->setIdentifier($scope);
-            $this->oauthFacade->saveScope($oauthScopeTransfer);
+        $customerScopes = $this->oauthCustomerConnectorConfig->getCustomerScopes();
+        $oauthScopesTransfers = $this->getScopesByIdentifiers($customerScopes);
+
+        foreach ($customerScopes as $customerScope) {
+            if (!$this->isExistOauthScope($customerScope, $oauthScopesTransfers)) {
+                $oauthScopeTransfer = new OauthScopeTransfer();
+                $oauthScopeTransfer->setIdentifier($customerScope);
+
+                $oauthScopesTransfers[$customerScope] = $this->oauthFacade->saveScope($oauthScopeTransfer);
+            }
         }
 
         $oauthClientTransfer = new OauthClientTransfer();
@@ -52,12 +63,57 @@ class Installer implements InstallerInterface
             $this->oauthCustomerConnectorConfig->getClientId()
         );
 
-        $oauthClientTransfer->setSecret(
-            password_hash($this->oauthCustomerConnectorConfig->getClientSecret(), PASSWORD_BCRYPT)
-        );
-        $oauthClientTransfer->setIsConfidential(true);
-        $oauthClientTransfer->setName('Customer client');
+        if (!$this->isExistOauthClient($oauthClientTransfer)) {
+            $oauthClientTransfer->setSecret(
+                password_hash($this->oauthCustomerConnectorConfig->getClientSecret(), PASSWORD_BCRYPT)
+            );
+            $oauthClientTransfer->setIsConfidential(true);
+            $oauthClientTransfer->setName('Customer client');
 
-        $this->oauthFacade->saveClient($oauthClientTransfer);
+            $this->oauthFacade->saveClient($oauthClientTransfer);
+        }
+    }
+
+    /**
+     * @param string[] $customerScopes
+     *
+     * @return \Generated\Shared\Transfer\OauthScopeTransfer[] $oauthScopeTransfers
+     */
+    protected function getScopesByIdentifiers(array $customerScopes): array
+    {
+        $oauthScopesTransfersWithIdentifierKeys = [];
+        $oauthScopesTransfers = $this->oauthFacade->getScopesByIdentifiers($customerScopes);
+
+        foreach ($oauthScopesTransfers as $oauthScopeTransfer) {
+            $oauthScopesIdentifier = $oauthScopeTransfer->getIdentifier();
+            $oauthScopesTransfersWithIdentifierKeys[$oauthScopesIdentifier] = $oauthScopeTransfer;
+        }
+
+        return $oauthScopesTransfersWithIdentifierKeys;
+    }
+
+    /**
+     * @param string $oauthScopeIdentifier
+     * @param \Generated\Shared\Transfer\OauthScopeTransfer[] $oauthScopeTransfers
+     *
+     * @return bool
+     */
+    protected function isExistOauthScope(string $oauthScopeIdentifier, array $oauthScopeTransfers): bool
+    {
+        if (isset($oauthScopeTransfers[$oauthScopeIdentifier])) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OauthClientTransfer $oauthClientTransfer
+     *
+     * @return bool
+     */
+    protected function isExistOauthClient(OauthClientTransfer $oauthClientTransfer): bool
+    {
+        return $this->oauthFacade->findClientByIdentifier($oauthClientTransfer) !== null;
     }
 }

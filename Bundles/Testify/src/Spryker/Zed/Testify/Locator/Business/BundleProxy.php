@@ -23,50 +23,36 @@ class BundleProxy extends KernelBundleProxy
     use ContainerMocker;
 
     /**
-     * @var \Spryker\Zed\Testify\Locator\Business\BusinessLocator
-     */
-    private $locator;
-
-    /**
      * @var string
      */
-    private $bundle;
+    protected $moduleName;
+
+    /**
+     * @var \Spryker\Zed\Testify\Locator\Business\BusinessLocator
+     */
+    protected $innerLocator;
 
     /**
      * @param \Spryker\Zed\Testify\Locator\Business\BusinessLocator $locator
      */
     public function __construct(BusinessLocator $locator)
     {
-        $this->locator = $locator;
+        $this->innerLocator = $locator;
     }
 
     /**
-     * @param string $bundle
-     *
-     * @return $this
-     */
-    public function setBundle($bundle)
-    {
-        parent::setBundle($bundle);
-
-        $this->bundle = ucfirst($bundle);
-
-        return $this;
-    }
-
-    /**
-     * @param string $method
+     * @param string $methodName
      * @param array $arguments
      *
      * @return object
      */
-    public function __call($method, $arguments)
+    public function __call(string $methodName, array $arguments)
     {
-        if ($method === 'facade') {
-            return $this->createFacade($method, $arguments);
+        if ($methodName === 'facade') {
+            return $this->createFacade($methodName, $arguments);
         }
 
-        return parent::__call($method, $arguments);
+        return parent::__call($methodName, $arguments);
     }
 
     /**
@@ -75,7 +61,7 @@ class BundleProxy extends KernelBundleProxy
      *
      * @return \Spryker\Zed\Kernel\Business\AbstractFacade
      */
-    private function createFacade($method, array $arguments)
+    protected function createFacade($method, array $arguments)
     {
         $facade = $this->getFacade($method, $arguments);
         $factory = $this->getFactory($facade);
@@ -102,11 +88,11 @@ class BundleProxy extends KernelBundleProxy
     /**
      * @return \Spryker\Shared\Testify\Locator\TestifyConfiguratorInterface
      */
-    private function getConfigurator()
+    protected function getConfigurator()
     {
         $config = new TestifyConfig();
         $container = new Container();
-        $container->setLocator($this->locator);
+        $container->setLocator($this->innerLocator);
 
         return new TestifyConfigurator($container, $config);
     }
@@ -116,7 +102,7 @@ class BundleProxy extends KernelBundleProxy
      *
      * @return \Spryker\Zed\Kernel\Business\AbstractBusinessFactory
      */
-    private function getFactory(AbstractFacade $facade)
+    protected function getFactory(AbstractFacade $facade)
     {
         $factoryResolver = new FactoryResolver();
 
@@ -132,7 +118,7 @@ class BundleProxy extends KernelBundleProxy
      *
      * @return \Spryker\Zed\Kernel\Business\AbstractFacade
      */
-    private function getFacade($method, array $arguments)
+    protected function getFacade($method, array $arguments)
     {
         /** @var \Spryker\Zed\Kernel\Business\AbstractFacade $facade */
         $facade = parent::__call($method, $arguments);
@@ -145,7 +131,7 @@ class BundleProxy extends KernelBundleProxy
      *
      * @return \Spryker\Zed\Kernel\AbstractBundleDependencyProvider
      */
-    private function getDependencyProvider(AbstractFactory $factory)
+    protected function getDependencyProvider(AbstractFactory $factory)
     {
         $dependencyResolver = new DependencyProviderResolver();
 
@@ -157,7 +143,7 @@ class BundleProxy extends KernelBundleProxy
      *
      * @return \Spryker\Zed\Kernel\AbstractBundleConfig
      */
-    private function getBundleConfig(AbstractFactory $factory)
+    protected function getBundleConfig(AbstractFactory $factory)
     {
         $bundleConfigResolver = new BundleConfigResolver();
 

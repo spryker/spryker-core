@@ -16,15 +16,15 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class AttributeController extends AbstractController
 {
-    const PARAM_ID = 'id';
-    const PARAM_SEARCH_TEXT = 'q';
-    const PARAM_TERM = 'term';
-    const PARAM_LOCALE_CODE = 'locale_code';
+    public const PARAM_ID = 'id';
+    public const PARAM_SEARCH_TEXT = 'q';
+    public const PARAM_TERM = 'term';
+    public const PARAM_LOCALE_CODE = 'locale_code';
 
-    const MESSAGE_ATTRIBUTE_CREATE_SUCCESS = 'Product attribute was created successfully.';
-    const MESSAGE_ATTRIBUTE_CREATE_ERROR = 'Product attribute was not created.';
-    const MESSAGE_ATTRIBUTE_UPDATE_SUCCESS = 'Product attribute was updated successfully.';
-    const MESSAGE_TRANSLATION_UPDATE_SUCCESS = 'Translation was updated successfully.';
+    public const MESSAGE_ATTRIBUTE_CREATE_SUCCESS = 'Product attribute was created successfully.';
+    public const MESSAGE_ATTRIBUTE_CREATE_ERROR = 'Product attribute was not created.';
+    public const MESSAGE_ATTRIBUTE_UPDATE_SUCCESS = 'Product attribute was updated successfully.';
+    public const MESSAGE_TRANSLATION_UPDATE_SUCCESS = 'Translation was updated successfully.';
 
     /**
      * @return array
@@ -70,7 +70,7 @@ class AttributeController extends AbstractController
             ->getAttributeForm($dataProvider->getData(), $dataProvider->getOptions())
             ->handleRequest($request);
 
-        if (!$attributeForm->isValid()) {
+        if (!$attributeForm->isSubmitted() || !$attributeForm->isValid()) {
             return $this->viewResponse([
                 'form' => $attributeForm->createView(),
             ]);
@@ -87,6 +87,7 @@ class AttributeController extends AbstractController
 
         if (!$attributeTransfer->getIdProductManagementAttribute()) {
             $this->addErrorMessage(static::MESSAGE_ATTRIBUTE_CREATE_ERROR);
+
             return $this->redirectResponse(sprintf(
                 '/product-attribute-gui/attribute/translate?id=%d',
                 $attributeTransfer->getIdProductManagementAttribute()
@@ -94,6 +95,7 @@ class AttributeController extends AbstractController
         }
 
         $this->addSuccessMessage(static::MESSAGE_ATTRIBUTE_CREATE_SUCCESS);
+
         return $this->redirectResponse(sprintf(
             '/product-attribute-gui/attribute/translate?id=%d',
             $attributeTransfer->getIdProductManagementAttribute()
@@ -136,6 +138,7 @@ class AttributeController extends AbstractController
             ->translateProductManagementAttribute($productManagementAttributeTransfer);
 
         $this->addSuccessMessage(static::MESSAGE_TRANSLATION_UPDATE_SUCCESS);
+
         return $this->redirectResponse(sprintf(
             '/product-attribute-gui/attribute/view?id=%d',
             $idProductManagementAttribute
@@ -176,7 +179,7 @@ class AttributeController extends AbstractController
             ->getAttributeForm($dataProvider->getData($idProductManagementAttribute), $dataProvider->getOptions($idProductManagementAttribute))
             ->handleRequest($request);
 
-        if (!$attributeForm->isValid()) {
+        if (!$attributeForm->isSubmitted() || !$attributeForm->isValid()) {
             return $this->viewResponse([
                 'form' => $attributeForm->createView(),
             ]);
@@ -192,6 +195,7 @@ class AttributeController extends AbstractController
             ->updateProductManagementAttribute($attributeTransfer);
 
         $this->addSuccessMessage(static::MESSAGE_ATTRIBUTE_UPDATE_SUCCESS);
+
         return $this->redirectResponse(sprintf(
             '/product-attribute-gui/attribute/translate?id=%d',
             $attributeTransfer->getIdProductManagementAttribute()

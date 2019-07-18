@@ -1,16 +1,18 @@
 {
   "name": "spryker/product-alternative-data-import",
+  "type": "library",
   "description": "ProductAlternativeDataImport module",
   "license": "MIT",
   "require": {
     "php": ">=7.1",
     "spryker/data-import": "^1.2.0",
-    "spryker/kernel": "^3.0.0",
+    "spryker/kernel": "^3.30.0",
     "spryker/product": "^6.0.0",
     "spryker/product-alternative": "^1.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/propel": "*",
     "spryker/testify": "*"
   },
   "autoload": {

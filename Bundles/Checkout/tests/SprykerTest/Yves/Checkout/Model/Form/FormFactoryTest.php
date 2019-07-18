@@ -24,7 +24,7 @@ use Spryker\Yves\Kernel\Container;
  */
 class FormFactoryTest extends Unit
 {
-    const SUB_FORMS = 'forms';
+    public const SUB_FORMS = 'forms';
 
     /**
      * @return void

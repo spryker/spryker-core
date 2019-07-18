@@ -11,6 +11,7 @@ use ArrayObject;
 use Generated\Shared\Transfer\DependencyCollectionTransfer;
 use Generated\Shared\Transfer\DependencyModuleTransfer;
 use Generated\Shared\Transfer\DependencyTransfer;
+use Generated\Shared\Transfer\ModuleTransfer;
 
 class DependencyContainer implements DependencyContainerInterface
 {
@@ -20,14 +21,14 @@ class DependencyContainer implements DependencyContainerInterface
     protected $dependencyCollectionTransfer;
 
     /**
-     * @param string $module
+     * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
      *
-     * @return \Spryker\Zed\Development\Business\Dependency\DependencyContainer\DependencyContainerInterface
+     * @return $this
      */
-    public function initialize(string $module): DependencyContainerInterface
+    public function initialize(ModuleTransfer $moduleTransfer)
     {
         $this->dependencyCollectionTransfer = new DependencyCollectionTransfer();
-        $this->dependencyCollectionTransfer->setModule($module);
+        $this->dependencyCollectionTransfer->setModule($moduleTransfer);
 
         return $this;
     }
@@ -38,9 +39,9 @@ class DependencyContainer implements DependencyContainerInterface
      * @param bool $isOptional
      * @param bool $isTest
      *
-     * @return \Spryker\Zed\Development\Business\Dependency\DependencyContainer\DependencyContainerInterface
+     * @return $this
      */
-    public function addDependency(string $module, string $type, bool $isOptional = false, bool $isTest = false): DependencyContainerInterface
+    public function addDependency(string $module, string $type, bool $isOptional = false, bool $isTest = false)
     {
         $dependencyTransfer = new DependencyTransfer();
         $dependencyTransfer

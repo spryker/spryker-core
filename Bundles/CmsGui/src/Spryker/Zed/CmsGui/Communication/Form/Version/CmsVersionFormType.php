@@ -16,11 +16,12 @@ use Symfony\Component\Validator\Constraints\Required;
 
 /**
  * @method \Spryker\Zed\CmsGui\Communication\CmsGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CmsGui\CmsGuiConfig getConfig()
  */
 class CmsVersionFormType extends AbstractType
 {
-    const OPTION_VERSION_NAME_CHOICES = 'version_choices';
-    const CMS_VERSION = 'cms_version';
+    public const OPTION_VERSION_NAME_CHOICES = 'version_choices';
+    public const CMS_VERSION = 'cms_version';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -60,7 +61,6 @@ class CmsVersionFormType extends AbstractType
         $builder->add('version', ChoiceType::class, [
             'label' => false,
             'choices' => array_flip($choices),
-            'choices_as_values' => true,
             'required' => true,
             'constraints' => [
                 new Required(),

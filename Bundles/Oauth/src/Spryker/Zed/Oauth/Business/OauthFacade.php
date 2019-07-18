@@ -34,7 +34,7 @@ class OauthFacade extends AbstractFacade implements OauthFacadeInterface
      */
     public function processAccessTokenRequest(OauthRequestTransfer $oauthRequestTransfer): OauthResponseTransfer
     {
-        return $this->getFactory()->createAccessGrantExecutor()->executeByRequest($oauthRequestTransfer);
+        return $this->getFactory()->createAccessTokenRequestExecutor()->executeByRequest($oauthRequestTransfer);
     }
 
     /**
@@ -70,6 +70,8 @@ class OauthFacade extends AbstractFacade implements OauthFacadeInterface
      *
      * @api
      *
+     * @deprecated Will be removed in the next major.
+     *
      * @param \Generated\Shared\Transfer\OauthClientTransfer $oauthClientTransfer
      *
      * @return \Generated\Shared\Transfer\OauthClientTransfer
@@ -77,5 +79,61 @@ class OauthFacade extends AbstractFacade implements OauthFacadeInterface
     public function saveClient(OauthClientTransfer $oauthClientTransfer): OauthClientTransfer
     {
         return $this->getFactory()->createOauthClientWriter()->save($oauthClientTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OauthClientTransfer $oauthClientTransfer
+     *
+     * @return \Generated\Shared\Transfer\OauthClientTransfer|null
+     */
+    public function findClientByIdentifier(OauthClientTransfer $oauthClientTransfer): ?OauthClientTransfer
+    {
+        return $this->getFactory()->createOauthClientReader()->findClientByIdentifier($oauthClientTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OauthScopeTransfer $oauthScopeTransfer
+     *
+     * @return \Generated\Shared\Transfer\OauthScopeTransfer|null
+     */
+    public function findScopeByIdentifier(OauthScopeTransfer $oauthScopeTransfer): ?OauthScopeTransfer
+    {
+        return $this->getFactory()->createOauthScopeReader()->findScopeByIdentifier($oauthScopeTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string[] $customerScopes
+     *
+     * @return \Generated\Shared\Transfer\OauthScopeTransfer[]
+     */
+    public function getScopesByIdentifiers(array $customerScopes): array
+    {
+        return $this->getFactory()->createOauthScopeReader()->getScopesByIdentifiers($customerScopes);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function installOauthClient(): void
+    {
+        $this->getFactory()
+            ->createOauthClientInstaller()
+            ->install();
     }
 }

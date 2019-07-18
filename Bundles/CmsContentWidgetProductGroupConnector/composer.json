@@ -1,17 +1,15 @@
 {
   "name": "spryker/cms-content-widget-product-group-connector",
+  "type": "library",
   "description": "CmsContentWidgetProductGroupConnector module",
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
     "spryker/cms-content-widget": "^1.0.0",
-    "spryker/kernel": "^3.0.0"
+    "spryker/kernel": "^3.30.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/propel": "*",
-    "spryker/propel-orm": "^1.0.0",
-    "spryker/silex": "*",
     "spryker/testify": "*"
   },
   "autoload": {

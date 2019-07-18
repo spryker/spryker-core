@@ -32,4 +32,11 @@ interface ShoppingListWriterInterface
      * @return \Generated\Shared\Transfer\ShoppingListTransfer
      */
     public function saveShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
+     */
+    public function clearShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer;
 }

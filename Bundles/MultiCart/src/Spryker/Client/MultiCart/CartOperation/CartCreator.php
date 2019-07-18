@@ -87,16 +87,34 @@ class CartCreator implements CartCreatorInterface
      */
     public function duplicateQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
-        $quoteTransfer = clone $quoteTransfer;
-        $quoteTransfer->setName(
-            sprintf($this->multiCartConfig->getDuplicatedQuoteName(), $quoteTransfer->getName(), $this->dateTimeService->formatDateTime(date('Y-m-d H:i:s')))
-        );
-        $quoteTransfer->setIdQuote(null);
-        $quoteTransfer->setIsDefault(true);
-        $quoteTransfer->setCustomer(
-            $this->customerClient->getCustomer()
-        );
+        $duplicateQuoteTransfer = (new QuoteTransfer())
+            ->fromArray($this->filterDisallowedQuoteData($quoteTransfer), true)
+            ->setName(
+                sprintf($this->multiCartConfig->getDuplicatedQuoteName(), $quoteTransfer->getName(), $this->dateTimeService->formatDateTime(date('Y-m-d H:i:s')))
+            )
+            ->setIsDefault(true)
+            ->setCustomer(
+                $this->customerClient->getCustomer()
+            );
 
-        return $this->persistentCartClient->createQuote($quoteTransfer);
+        return $this->persistentCartClient->createQuote($duplicateQuoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return array
+     */
+    protected function filterDisallowedQuoteData(QuoteTransfer $quoteTransfer): array
+    {
+        $data = [];
+        $quoteData = $quoteTransfer->modifiedToArray(true, true);
+        foreach ($this->multiCartConfig->getQuoteFieldsAllowedForQuoteDuplicate() as $dataKey) {
+            if (isset($quoteData[$dataKey])) {
+                $data[$dataKey] = $quoteData[$dataKey];
+            }
+        }
+
+        return $data;
     }
 }

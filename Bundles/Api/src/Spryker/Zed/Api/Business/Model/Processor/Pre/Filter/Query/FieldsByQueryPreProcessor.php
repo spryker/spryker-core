@@ -12,7 +12,7 @@ use Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface;
 
 class FieldsByQueryPreProcessor implements PreProcessorInterface
 {
-    const FIELDS = 'fields';
+    public const FIELDS = 'fields';
 
     /**
      * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer

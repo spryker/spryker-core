@@ -21,7 +21,7 @@ use SprykerTest\Zed\Customer\CustomerCommunicationTester;
  */
 class EditControllerCest
 {
-    const NEW_FIRST_NAME = 'superMan';
+    public const NEW_FIRST_NAME = 'superMan';
 
     /**
      * @var \Generated\Shared\Transfer\CustomerTransfer

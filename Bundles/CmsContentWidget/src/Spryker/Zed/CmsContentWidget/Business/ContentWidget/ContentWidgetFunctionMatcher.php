@@ -12,8 +12,8 @@ use Generated\Shared\Transfer\CmsContentWidgetFunctionTransfer;
 
 class ContentWidgetFunctionMatcher implements ContentWidgetFunctionMatcherInterface
 {
-    const TWIG_FUNCTION_WITH_PARAMETER_REGEXP = '/{{(?:\s)?(?:&nbsp;)?([a-z_-]+)\(\[?(.*?)\]?\)(?:\s)?(?:&nbsp;)?}}/i';
-    const TRIM_WHITELIST = "'\" \t\n\r\v";
+    public const TWIG_FUNCTION_WITH_PARAMETER_REGEXP = '/{{(?:\s)?(?:&nbsp;)?([a-z_-]+)\(\[?(.*?)\]?\)(?:\s)?(?:&nbsp;)?}}/i';
+    public const TRIM_WHITELIST = "'\" \t\n\r\v";
 
     /**
      * @param string $content
@@ -73,6 +73,7 @@ class ContentWidgetFunctionMatcher implements ContentWidgetFunctionMatcherInterf
         foreach (explode(',', $functionMatch[2]) as $parameter) {
             $parameters[] = $this->sanitizeParameter($parameter);
         }
+
         return $parameters;
     }
 
@@ -101,6 +102,7 @@ class ContentWidgetFunctionMatcher implements ContentWidgetFunctionMatcherInterf
             PREG_SET_ORDER,
             0
         );
+
         return $functionMatches;
     }
 }

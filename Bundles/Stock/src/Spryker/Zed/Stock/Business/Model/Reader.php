@@ -26,8 +26,8 @@ use Traversable;
 
 class Reader implements ReaderInterface
 {
-    const MESSAGE_NO_RESULT = 'no stock set for this sku';
-    const ERROR_STOCK_TYPE_UNKNOWN = 'stock type unknown';
+    public const MESSAGE_NO_RESULT = 'no stock set for this sku';
+    public const ERROR_STOCK_TYPE_UNKNOWN = 'stock type unknown';
 
     /**
      * @var \Spryker\Zed\Stock\Persistence\StockQueryContainerInterface
@@ -76,7 +76,7 @@ class Reader implements ReaderInterface
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getStockTypes()
     {
@@ -404,6 +404,7 @@ class Reader implements ReaderInterface
     {
         $types = $this->stockConfig->getStoreToWarehouseMapping()[$storeTransfer->getName()];
 
+        /** @var \Orm\Zed\Stock\Persistence\SpyStockProduct[] $stockProducts */
         $stockProducts = $this->queryContainer
             ->queryStockByIdProductAndTypes($idProductConcrete, $types)
             ->find();
@@ -444,12 +445,13 @@ class Reader implements ReaderInterface
      */
     public function expandProductConcreteWithStocks(ProductConcreteTransfer $productConcreteTransfer)
     {
+        /** @var \Orm\Zed\Stock\Persistence\SpyStockProduct[] $stockProductCollection */
         $stockProductCollection = $this->queryContainer
             ->queryStockByProducts($productConcreteTransfer->requireIdProductConcrete()->getIdProductConcrete())
             ->innerJoinStock()
             ->find();
 
-        if ($stockProductCollection === null) {
+        if (!$stockProductCollection) {
             return $productConcreteTransfer;
         }
 
@@ -466,7 +468,7 @@ class Reader implements ReaderInterface
     /**
      * @param \Traversable|\Orm\Zed\Stock\Persistence\SpyStock[] $stockCollection
      *
-     * @return array
+     * @return string[]
      */
     protected function mapStockNames(Traversable $stockCollection)
     {
@@ -474,6 +476,7 @@ class Reader implements ReaderInterface
         foreach ($stockCollection as $stockEntity) {
             $types[$stockEntity->getName()] = $stockEntity->getName();
         }
+
         return $types;
     }
 }

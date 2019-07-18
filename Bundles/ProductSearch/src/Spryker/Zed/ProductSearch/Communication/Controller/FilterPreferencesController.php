@@ -18,11 +18,13 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class FilterPreferencesController extends AbstractController
 {
-    const PARAM_ID = 'id';
-    const PARAM_TERM = 'term';
+    public const PARAM_ID = 'id';
+    public const PARAM_TERM = 'term';
 
-    const MESSAGE_FILTER_PREFERENCE_CREATE_SUCCESS = 'Filter preference was created successfully.';
-    const MESSAGE_FILTER_PREFERENCE_UPDATE_SUCCESS = 'Filter preference was updated successfully.';
+    public const MESSAGE_FILTER_PREFERENCE_CREATE_SUCCESS = 'Filter preference was created successfully.';
+    public const MESSAGE_FILTER_PREFERENCE_UPDATE_SUCCESS = 'Filter preference was updated successfully.';
+
+    public const REDIRECT_URL_DEFAULT = '/product-search/filter-preferences';
 
     /**
      * @return array
@@ -75,6 +77,7 @@ class FilterPreferencesController extends AbstractController
             $productSearchAttributeTransfer = $this->getFacade()->createProductSearchAttribute($productSearchAttributeTransfer);
 
             $this->addSuccessMessage(static::MESSAGE_FILTER_PREFERENCE_CREATE_SUCCESS);
+
             return $this->redirectResponse(sprintf(
                 '/product-search/filter-preferences/view?%s=%d',
                 static::PARAM_ID,
@@ -101,9 +104,17 @@ class FilterPreferencesController extends AbstractController
             ->getFactory()
             ->createFilterPreferencesDataProvider();
 
+        $filterPreferencesFormData = $dataProvider->getData($idProductSearchAttribute);
+
+        if ($filterPreferencesFormData === []) {
+            $this->addErrorMessage("Attribute with id %s doesn't exist", ["%s" => $idProductSearchAttribute]);
+
+            return $this->redirectResponse(static::REDIRECT_URL_DEFAULT);
+        }
+
         $form = $this->getFactory()
             ->createFilterPreferencesForm(
-                $dataProvider->getData($idProductSearchAttribute),
+                $filterPreferencesFormData,
                 $dataProvider->getOptions($idProductSearchAttribute)
             )
             ->handleRequest($request);
@@ -117,6 +128,7 @@ class FilterPreferencesController extends AbstractController
             $productSearchAttributeTransfer = $this->getFacade()->updateProductSearchAttribute($productSearchAttributeTransfer);
 
             $this->addSuccessMessage(static::MESSAGE_FILTER_PREFERENCE_UPDATE_SUCCESS);
+
             return $this->redirectResponse(sprintf(
                 '/product-search/filter-preferences/view?%s=%d',
                 static::PARAM_ID,

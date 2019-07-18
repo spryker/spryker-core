@@ -265,8 +265,8 @@ class BridgeBuilder
      */
     protected function getBridgeBuilderData(string $source, string $target, array $methods): BridgeBuilderDataTransfer
     {
-        list($vendor, $module, $type) = $this->interpretInputParameter($source);
-        list($toVendor, $toModule, $toType) = $this->interpretInputParameter($target);
+        [$vendor, $module, $type] = $this->interpretInputParameter($source);
+        [$toVendor, $toModule, $toType] = $this->interpretInputParameter($target);
 
         $bridgeBuilderDataTransfer = new BridgeBuilderDataTransfer();
         $bridgeBuilderDataTransfer
@@ -359,23 +359,19 @@ class BridgeBuilder
      */
     protected function resolveModulePath(BridgeBuilderDataTransfer $bridgeBuilderDataTransfer): string
     {
-        switch ($bridgeBuilderDataTransfer->getVendor()) {
-            case 'Spryker':
-                return $this->config->getPathToCore() . $bridgeBuilderDataTransfer->getModule();
-
-            case 'SprykerShop':
-                return $this->config->getPathToShop() . $bridgeBuilderDataTransfer->getModule();
-
-            default:
-                $vendorDirectory = $this->normalizeNameForSplit($bridgeBuilderDataTransfer->getVendor());
-                $moduleDirectory = $this->normalizeNameForSplit($bridgeBuilderDataTransfer->getModule());
-
-                return implode(DIRECTORY_SEPARATOR, [
-                    APPLICATION_VENDOR_DIR,
-                    $vendorDirectory,
-                    $moduleDirectory,
-                ]);
+        $pathToInternalNamespace = $this->config->getPathToInternalNamespace($bridgeBuilderDataTransfer->getVendor());
+        if ($pathToInternalNamespace) {
+            return $pathToInternalNamespace . $bridgeBuilderDataTransfer->getModule();
         }
+
+        $vendorDirectory = $this->normalizeNameForSplit($bridgeBuilderDataTransfer->getVendor());
+        $moduleDirectory = $this->normalizeNameForSplit($bridgeBuilderDataTransfer->getModule());
+
+        return implode(DIRECTORY_SEPARATOR, [
+            APPLICATION_VENDOR_DIR,
+            $vendorDirectory,
+            $moduleDirectory,
+        ]);
     }
 
     /**
@@ -385,23 +381,19 @@ class BridgeBuilder
      */
     protected function resolveTargetModulePath(BridgeBuilderDataTransfer $bridgeBuilderDataTransfer): string
     {
-        switch ($bridgeBuilderDataTransfer->getToVendor()) {
-            case 'Spryker':
-                return $this->config->getPathToCore() . $bridgeBuilderDataTransfer->getToModule();
-
-            case 'SprykerShop':
-                return $this->config->getPathToShop() . $bridgeBuilderDataTransfer->getToModule();
-
-            default:
-                $vendorDirectory = $this->normalizeNameForSplit($bridgeBuilderDataTransfer->getToVendor());
-                $moduleDirectory = $this->normalizeNameForSplit($bridgeBuilderDataTransfer->getToModule());
-
-                return implode(DIRECTORY_SEPARATOR, [
-                    APPLICATION_VENDOR_DIR,
-                    $vendorDirectory,
-                    $moduleDirectory,
-                ]);
+        $pathToInternalNamespace = $this->config->getPathToInternalNamespace($bridgeBuilderDataTransfer->getToVendor());
+        if ($pathToInternalNamespace) {
+            return $pathToInternalNamespace . $bridgeBuilderDataTransfer->getToModule();
         }
+
+        $vendorDirectory = $this->normalizeNameForSplit($bridgeBuilderDataTransfer->getToVendor());
+        $moduleDirectory = $this->normalizeNameForSplit($bridgeBuilderDataTransfer->getToModule());
+
+        return implode(DIRECTORY_SEPARATOR, [
+            APPLICATION_VENDOR_DIR,
+            $vendorDirectory,
+            $moduleDirectory,
+        ]);
     }
 
     /**
@@ -530,7 +522,10 @@ class BridgeBuilder
             $methodReturnType = $this->getMethodReturnTypeFromDocComment($docComment);
 
             $returnStatementReplacement = static::FUNCTION_RETURN;
-            $returnMethodTypeHint = $this->getMethodTypeHintForFunction($methodReturnType);
+            $returnMethodTypeHint = '';
+            if ((string)$method->getReturnType()) {
+                $returnMethodTypeHint = $this->getMethodTypeHintForFunction($methodReturnType);
+            }
 
             if ($methodReturnType === 'void') {
                 $returnStatementReplacement = '';
@@ -626,6 +621,7 @@ class BridgeBuilder
     protected function getClassNameFromFqcn($fqcn): string
     {
         $arr = explode('\\', $fqcn);
+
         return end($arr);
     }
 
@@ -707,13 +703,14 @@ class BridgeBuilder
         if ($numberOfReturnParts === 1) {
             if (strpos($methodReturnType, '\\') !== false) {
                 $methodTypeHintArray = explode('\\', $methodReturnType);
+
                 return [
                     static::TYPE_HINT => static::NON_NULLABLE_RETURN_TYPE_HINT . end($methodTypeHintArray),
                     static::FQCN => ltrim($methodReturnType, '\\'),
                 ];
             }
 
-            return static::NON_NULLABLE_RETURN_TYPE_HINT . $methodReturnType;
+            return static::NON_NULLABLE_RETURN_TYPE_HINT . $this->arrayReturnTypeFix($methodReturnType);
         }
 
         $nullReturnTypeIndex = array_search('null', $methodReturnParts, true);
@@ -734,12 +731,23 @@ class BridgeBuilder
 
         if (strpos($methodTypeHint, '\\') !== false) {
             $methodTypeHintArray = explode('\\', $methodTypeHint);
+
             return [
                 static::TYPE_HINT => static::NULLABLE_RETURN_TYPE_HINT . end($methodTypeHintArray),
                 static::FQCN => ltrim($methodTypeHint, '\\'),
             ];
         }
 
-        return static::NULLABLE_RETURN_TYPE_HINT . $methodTypeHint;
+        return static::NULLABLE_RETURN_TYPE_HINT . $this->arrayReturnTypeFix($methodTypeHint);
+    }
+
+    /**
+     * @param string $returnType
+     *
+     * @return string
+     */
+    protected function arrayReturnTypeFix(string $returnType): string
+    {
+        return (strpos($returnType, '[]') === false) ? $returnType : 'array';
     }
 }

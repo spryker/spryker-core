@@ -18,11 +18,11 @@ use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
 
 class TransitionLog implements TransitionLogInterface
 {
-    const SAPI_CLI = 'cli';
-    const SAPI_PHPDBG = 'phpdbg';
-    const QUERY_STRING = 'QUERY_STRING';
-    const DOCUMENT_URI = 'DOCUMENT_URI';
-    const ARGV = 'argv';
+    public const SAPI_CLI = 'cli';
+    public const SAPI_PHPDBG = 'phpdbg';
+    public const QUERY_STRING = 'QUERY_STRING';
+    public const DOCUMENT_URI = 'DOCUMENT_URI';
+    public const ARGV = 'argv';
 
     /**
      * @var \Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface
@@ -248,7 +248,7 @@ class TransitionLog implements TransitionLogInterface
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
      *
-     * @return \Orm\Zed\Oms\Persistence\SpyOmsTransitionLog[]
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsTransitionLog[]|\Propel\Runtime\Collection\ObjectCollection
      */
     public function getLogForOrder(SpySalesOrder $order)
     {
@@ -258,7 +258,7 @@ class TransitionLog implements TransitionLogInterface
     /**
      * @param string $queryString
      *
-     * @return array
+     * @return string[]
      */
     protected function getParamsFromQueryString($queryString)
     {

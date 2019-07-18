@@ -7,14 +7,17 @@
 
 namespace Spryker\Shared\Config;
 
+/**
+ * @deprecated Will be removed without replacement. The usage should be replaced with specific parameter defined in the configiration.
+ */
 class Environment
 {
-    const DEFAULT_ENVIRONMENT = 'production';
+    public const DEFAULT_ENVIRONMENT = 'production';
 
-    const PRODUCTION = 'production';
-    const STAGING = 'staging';
-    const DEVELOPMENT = 'development';
-    const TESTING = 'devtest';
+    public const PRODUCTION = 'production';
+    public const STAGING = 'staging';
+    public const DEVELOPMENT = 'development';
+    public const TESTING = 'devtest';
 
     /**
      * @var string

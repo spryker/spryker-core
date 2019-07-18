@@ -16,6 +16,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\FileManager\Business\FileManagerBusinessFactory getFactory()
+ * @method \Spryker\Zed\FileManager\Persistence\FileManagerEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\FileManager\Persistence\FileManagerRepositoryInterface getRepository()
  */
 class FileManagerFacade extends AbstractFacade implements FileManagerFacadeInterface
 {
@@ -267,5 +269,19 @@ class FileManagerFacade extends AbstractFacade implements FileManagerFacadeInter
         return $this->getFactory()
             ->createMimeTypeReader()
             ->findAllowedMimeTypes();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int[] $idFiles
+     *
+     * @return \Generated\Shared\Transfer\FileManagerDataTransfer[]
+     */
+    public function getFilesByIds(array $idFiles): array
+    {
+        return $this->getFactory()->createFileReader()->getFilesByIds($idFiles);
     }
 }

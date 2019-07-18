@@ -17,7 +17,7 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class DiscountVoucherCodesTable extends AbstractTable
 {
-    const HEADER_COL_ACTIONS = 'Actions';
+    public const HEADER_COL_ACTIONS = 'Actions';
 
     /**
      * @var \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface
@@ -132,12 +132,12 @@ class DiscountVoucherCodesTable extends AbstractTable
             $generatedVoucherCodesQuery->filterByVoucherBatch($this->batchValue);
         }
 
-        $collectionObject = $this->runQuery($generatedVoucherCodesQuery, $config, true);
+        /** @var \Orm\Zed\Discount\Persistence\SpyDiscountVoucher[] $discountVoucherEntities */
+        $discountVoucherEntities = $this->runQuery($generatedVoucherCodesQuery, $config, true);
 
         $result = [];
 
-        /** @var \Orm\Zed\Discount\Persistence\SpyDiscountVoucher $discountVoucherEntity */
-        foreach ($collectionObject as $discountVoucherEntity) {
+        foreach ($discountVoucherEntities as $discountVoucherEntity) {
             $result[] = [
                 SpyDiscountVoucherTableMap::COL_CODE => $discountVoucherEntity->getCode(),
                 SpyDiscountVoucherTableMap::COL_NUMBER_OF_USES => (int)$discountVoucherEntity->getNumberOfUses(),

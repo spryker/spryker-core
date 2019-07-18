@@ -7,26 +7,28 @@
 
 namespace Spryker\Zed\Propel\Communication\Console;
 
-use Spryker\Shared\Config\Config;
-use Spryker\Shared\Propel\PropelConstants;
 use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Process\Process;
 
+/**
+ * @method \Spryker\Zed\Propel\Business\PropelFacadeInterface getFacade()
+ * @method \Spryker\Zed\Propel\Communication\PropelCommunicationFactory getFactory()
+ */
 class DiffConsole extends Console
 {
-    const COMMAND_NAME = 'propel:diff';
+    public const COMMAND_NAME = 'propel:diff';
+    public const COMMAND_DESCRIPTION = 'Generate diff for Propel2';
 
-    const PROCESS_TIMEOUT = 300;
+    public const PROCESS_TIMEOUT = 300;
 
     /**
      * @return void
      */
     protected function configure()
     {
-        $this->setName(self::COMMAND_NAME);
-        $this->setDescription('Generate diff for Propel2');
+        $this->setName(static::COMMAND_NAME);
+        $this->setDescription(static::COMMAND_DESCRIPTION);
 
         parent::configure();
     }
@@ -37,22 +39,16 @@ class DiffConsole extends Console
      *
      * @return int
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $this->runDependingCommand(SchemaCopyConsole::COMMAND_NAME);
+        $this->info($this->getDescription());
 
-        $this->info('Create diff');
+        $command = $this->getFactory()->createMigrationDiffCommand();
 
-        $config = Config::get(PropelConstants::PROPEL);
-        $command = 'vendor/bin/propel diff --config-dir '
-            . $config['paths']['phpConfDir']
-            . ' --schema-dir ' . $config['paths']['schemaDir'];
-
-        $process = new Process($command, APPLICATION_ROOT_DIR);
-        $process->setTimeout(self::PROCESS_TIMEOUT);
-
-        return $process->run(function ($type, $buffer) {
-            echo $buffer;
-        });
+        return $this->getFactory()->createPropelCommandRunner()->runCommand(
+            $command,
+            $this->getDefinition(),
+            $output
+        );
     }
 }

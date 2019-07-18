@@ -17,6 +17,27 @@ use Spryker\Glue\Kernel\AbstractRestResource;
 class ProductsRestApiResource extends AbstractRestResource implements ProductsRestApiResourceInterface
 {
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $sku
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
+     */
+    public function findProductAbstractBySku(string $sku, RestRequestInterface $restRequest): ?RestResourceInterface
+    {
+        return $this->getFactory()
+            ->createAbstractProductsReader()
+            ->findProductAbstractBySku($sku, $restRequest);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param string $sku
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
@@ -27,6 +48,40 @@ class ProductsRestApiResource extends AbstractRestResource implements ProductsRe
         return $this
             ->getFactory()
             ->createConcreteProductsReader()
-            ->findOneByProductConcrete($sku, $restRequest);
+            ->findProductConcreteBySku($sku, $restRequest);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idProductAbstract
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
+     */
+    public function findProductAbstractById(int $idProductAbstract, RestRequestInterface $restRequest): ?RestResourceInterface
+    {
+        return $this->getFactory()
+            ->createAbstractProductsReader()
+            ->findProductAbstractById($idProductAbstract, $restRequest);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idProductConcrete
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
+     */
+    public function findProductConcreteById(int $idProductConcrete, RestRequestInterface $restRequest): ?RestResourceInterface
+    {
+        return $this->getFactory()
+            ->createConcreteProductsReader()
+            ->findProductConcreteById($idProductConcrete, $restRequest);
     }
 }

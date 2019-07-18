@@ -13,8 +13,8 @@ use Throwable;
 
 class ErrorHandler
 {
-    const ZED = 'ZED';
-    const EXIT_CODE_ERROR = -1;
+    public const ZED = 'ZED';
+    public const EXIT_CODE_ERROR = -1;
 
     /**
      * @var \Spryker\Shared\ErrorHandler\ErrorLoggerInterface

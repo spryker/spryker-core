@@ -77,7 +77,12 @@ interface StoreToStoreInterface
     public function getStoresWithSharedPersistence();
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getCountries();
+
+    /**
+     * @return string
+     */
+    public function getTimezone();
 }

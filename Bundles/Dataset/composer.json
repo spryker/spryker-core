@@ -1,20 +1,24 @@
 {
   "name": "spryker/dataset",
+  "type": "library",
   "description": "Dataset module",
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
     "spryker/csv": "^3.0.0",
-    "spryker/gui": "^3.13.0",
-    "spryker/kernel": "^3.16.0",
+    "spryker/gui": "^3.17.0",
+    "spryker/kernel": "^3.30.0",
     "spryker/locale": "^3.1.0",
     "spryker/propel-orm": "^1.5.0",
     "spryker/symfony": "^3.1.2",
     "spryker/util-text": "^1.2.1"
   },
   "require-dev": {
+    "spryker/application": "*",
     "spryker/code-sniffer": "*",
-    "spryker/testify": "*"
+    "spryker/propel": "*",
+    "spryker/testify": "*",
+    "spryker/zed-navigation": "*"
   },
   "autoload": {
     "psr-4": {

@@ -29,7 +29,7 @@ use Spryker\Zed\StateMachine\StateMachineConfig;
 class StateMachineMocks extends Unit
 {
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\StateMachine\Business\Logger\TransitionLog
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\StateMachine\Business\Logger\TransitionLog
      */
     protected function createTransitionLogMock()
     {
@@ -39,7 +39,7 @@ class StateMachineMocks extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\StateMachine\Business\StateMachine\FinderInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\StateMachine\Business\StateMachine\FinderInterface
      */
     protected function createFinderMock()
     {
@@ -49,7 +49,7 @@ class StateMachineMocks extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\StateMachine\Business\StateMachine\HandlerResolverInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\StateMachine\Business\StateMachine\HandlerResolverInterface
      */
     protected function createHandlerResolverMock()
     {
@@ -59,7 +59,7 @@ class StateMachineMocks extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\StateMachine\Dependency\Plugin\StateMachineHandlerInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\StateMachine\Dependency\Plugin\StateMachineHandlerInterface
      */
     protected function createStateMachineHandlerMock()
     {
@@ -69,7 +69,7 @@ class StateMachineMocks extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\StateMachine\Business\StateMachine\PersistenceInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\StateMachine\Business\StateMachine\PersistenceInterface
      */
     protected function createPersistenceMock()
     {
@@ -79,7 +79,7 @@ class StateMachineMocks extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\StateMachine\Business\StateMachine\StateUpdaterInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\StateMachine\Business\StateMachine\StateUpdaterInterface
      */
     protected function createStateUpdaterMock()
     {
@@ -89,7 +89,7 @@ class StateMachineMocks extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\StateMachine\Dependency\Plugin\ConditionPluginInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\StateMachine\Dependency\Plugin\ConditionPluginInterface
      */
     protected function createConditionPluginMock()
     {
@@ -99,7 +99,7 @@ class StateMachineMocks extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\StateMachine\Business\StateMachine\BuilderInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\StateMachine\Business\StateMachine\BuilderInterface
      */
     public function createBuilderMock()
     {
@@ -109,7 +109,7 @@ class StateMachineMocks extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\StateMachine\Persistence\StateMachineQueryContainerInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\StateMachine\Persistence\StateMachineQueryContainerInterface
      */
     protected function createStateMachineQueryContainerMock()
     {
@@ -119,7 +119,7 @@ class StateMachineMocks extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\StateMachine\Business\Process\ProcessInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\StateMachine\Business\Process\ProcessInterface
      */
     protected function createProcessMock()
     {
@@ -129,7 +129,7 @@ class StateMachineMocks extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\StateMachine\Business\StateMachine\TimeoutInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\StateMachine\Business\StateMachine\TimeoutInterface
      */
     protected function createTimeoutMock()
     {
@@ -139,7 +139,7 @@ class StateMachineMocks extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\StateMachine\Business\StateMachine\PersistenceInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\StateMachine\Business\StateMachine\PersistenceInterface
      */
     protected function createStateMachinePersistenceMock()
     {
@@ -149,7 +149,7 @@ class StateMachineMocks extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Propel\Runtime\Connection\ConnectionInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Propel\Runtime\Connection\ConnectionInterface
      */
     protected function createPropelConnectionMock()
     {
@@ -159,7 +159,7 @@ class StateMachineMocks extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\StateMachine\Business\StateMachine\ConditionInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\StateMachine\Business\StateMachine\ConditionInterface
      */
     protected function createConditionMock()
     {
@@ -169,7 +169,7 @@ class StateMachineMocks extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\StateMachine\Dependency\Plugin\CommandPluginInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\StateMachine\Dependency\Plugin\CommandPluginInterface
      */
     protected function createCommandMock()
     {
@@ -179,17 +179,19 @@ class StateMachineMocks extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\StateMachine\StateMachineConfig
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\StateMachine\StateMachineConfig
      */
     protected function createStateMachineConfigMock()
     {
         $stateMachineConfigMock = $this->getMockBuilder(StateMachineConfig::class)->getMock();
+        $stateMachineConfigMock->method('getStateMachineItemLockExpirationInterval')
+            ->willReturn('1 minutes');
 
         return $stateMachineConfigMock;
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\StateMachine\Business\StateMachine\TriggerInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\StateMachine\Business\StateMachine\TriggerInterface
      */
     protected function createTriggerMock()
     {
@@ -199,7 +201,7 @@ class StateMachineMocks extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\StateMachine\Business\Lock\ItemLockInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\StateMachine\Business\Lock\ItemLockInterface
      */
     protected function createItemLockMock()
     {

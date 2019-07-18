@@ -1,15 +1,16 @@
 {
   "name": "spryker/flysystem-local-file-system",
+  "type": "library",
   "description": "FlysystemLocalFileSystem module",
   "license": "proprietary",
   "require": {
     "league/flysystem": "^1.0",
     "php": ">=7.1",
-    "spryker/kernel": "^3.5.0"
+    "spryker/kernel": "^3.30.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*",
     "spryker/flysystem": "*",
+    "spryker/propel": "*",
     "spryker/testify": "*"
   },
   "suggest": {

@@ -26,7 +26,7 @@ class BarcodeGenerator implements BarcodeGeneratorInterface
 
     /**
      * @param string $text
-     * @param null|string $generatorPlugin
+     * @param string|null $generatorPlugin
      *
      * @return \Generated\Shared\Transfer\BarcodeResponseTransfer
      */

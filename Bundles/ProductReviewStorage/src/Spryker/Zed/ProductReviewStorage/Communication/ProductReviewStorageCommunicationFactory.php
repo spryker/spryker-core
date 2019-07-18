@@ -13,6 +13,7 @@ use Spryker\Zed\ProductReviewStorage\ProductReviewStorageDependencyProvider;
 /**
  * @method \Spryker\Zed\ProductReviewStorage\Persistence\ProductReviewStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductReviewStorage\ProductReviewStorageConfig getConfig()
+ * @method \Spryker\Zed\ProductReviewStorage\Business\ProductReviewStorageFacadeInterface getFacade()
  */
 class ProductReviewStorageCommunicationFactory extends AbstractCommunicationFactory
 {

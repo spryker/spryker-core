@@ -18,15 +18,15 @@ class CheckoutDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @see \Spryker\Shared\Application\ApplicationConstants::FORM_FACTORY
      */
-    const FORM_FACTORY = 'FORM_FACTORY';
+    public const FORM_FACTORY = 'FORM_FACTORY';
 
-    const PAYMENT_METHOD_HANDLER = 'payment method handler';
-    const PAYMENT_SUB_FORMS = 'payment sub forms';
+    public const PAYMENT_METHOD_HANDLER = 'payment method handler';
+    public const PAYMENT_SUB_FORMS = 'payment sub forms';
 
-    const PLUGIN_PAYMENT_FILTERS = 'PLUGIN_PAYMENT_FILTERS';
-    const PLUGIN_APPLICATION = 'application plugin';
+    public const PLUGIN_PAYMENT_FILTERS = 'PLUGIN_PAYMENT_FILTERS';
+    public const PLUGIN_APPLICATION = 'application plugin';
 
-    const CLIENT_QUOTE = 'cart client';
+    public const CLIENT_QUOTE = 'cart client';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container

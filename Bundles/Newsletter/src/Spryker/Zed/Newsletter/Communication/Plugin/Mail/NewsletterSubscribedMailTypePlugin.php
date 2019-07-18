@@ -14,12 +14,16 @@ use Spryker\Zed\Mail\Dependency\Plugin\MailTypePluginInterface;
 /**
  * @method \Spryker\Zed\Newsletter\Business\NewsletterFacadeInterface getFacade()
  * @method \Spryker\Zed\Newsletter\Communication\NewsletterCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Newsletter\NewsletterConfig getConfig()
+ * @method \Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainerInterface getQueryContainer()
  */
 class NewsletterSubscribedMailTypePlugin extends AbstractPlugin implements MailTypePluginInterface
 {
-    const MAIL_TYPE = 'newsletter subscribed mail';
+    public const MAIL_TYPE = 'newsletter subscribed mail';
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getName()
@@ -28,6 +32,8 @@ class NewsletterSubscribedMailTypePlugin extends AbstractPlugin implements MailT
     }
 
     /**
+     * @api
+     *
      * @param \Spryker\Zed\Mail\Business\Model\Mail\Builder\MailBuilderInterface $mailBuilder
      *
      * @return void

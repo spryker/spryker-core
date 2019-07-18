@@ -16,12 +16,12 @@ use Spryker\Client\Wishlist\Dependency\Client\WishlistToProductBridge;
 
 class WishlistDependencyProvider extends AbstractDependencyProvider
 {
-    const SERVICE_ZED = 'SERVICE_ZED';
+    public const SERVICE_ZED = 'SERVICE_ZED';
 
-    const CLIENT_CART = 'CLIENT_CART';
-    const CLIENT_PRODUCT = 'CLIENT_PRODUCT';
-    const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
-    const CLIENT_PRICE_PRODUCT = 'CLIENT_PRICE_PRODUCT';
+    public const CLIENT_CART = 'CLIENT_CART';
+    public const CLIENT_PRODUCT = 'CLIENT_PRODUCT';
+    public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+    public const CLIENT_PRICE_PRODUCT = 'CLIENT_PRICE_PRODUCT';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -49,6 +49,7 @@ class WishlistDependencyProvider extends AbstractDependencyProvider
         $container[static::CLIENT_PRICE_PRODUCT] = function (Container $container) {
             return new WishlistToPriceProductClientClientBridge($container->getLocator()->priceProduct()->client());
         };
+
         return $container;
     }
 
@@ -62,6 +63,7 @@ class WishlistDependencyProvider extends AbstractDependencyProvider
         $container[static::CLIENT_CUSTOMER] = function (Container $container) {
             return new WishlistToCustomerBridge($container->getLocator()->customer()->client());
         };
+
         return $container;
     }
 
@@ -75,6 +77,7 @@ class WishlistDependencyProvider extends AbstractDependencyProvider
         $container[static::CLIENT_CART] = function (Container $container) {
             return new WishlistToCartBridge($container->getLocator()->cart()->client());
         };
+
         return $container;
     }
 
@@ -88,6 +91,7 @@ class WishlistDependencyProvider extends AbstractDependencyProvider
         $container[static::CLIENT_PRODUCT] = function (Container $container) {
             return new WishlistToProductBridge($container->getLocator()->product()->client());
         };
+
         return $container;
     }
 
@@ -101,6 +105,7 @@ class WishlistDependencyProvider extends AbstractDependencyProvider
         $container[static::SERVICE_ZED] = function (Container $container) {
             return $container->getLocator()->zedRequest()->client();
         };
+
         return $container;
     }
 }

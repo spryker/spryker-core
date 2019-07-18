@@ -9,24 +9,24 @@ namespace Spryker\Shared\Kernel\ClassResolver;
 
 class ClassInfo
 {
-    const TEST_NAMESPACE_SUFFIX = 'Test';
-    const KEY_NAMESPACE = 0;
-    const KEY_APPLICATION = 1;
-    const KEY_BUNDLE = 2;
-    const KEY_LAYER = 3;
+    public const TEST_NAMESPACE_SUFFIX = 'Test';
+    public const KEY_NAMESPACE = 0;
+    public const KEY_APPLICATION = 1;
+    public const KEY_BUNDLE = 2;
+    public const KEY_LAYER = 3;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $callerClassName;
 
     /**
      * @var string[]
      */
-    protected $callerClassParts;
+    protected $callerClassParts = [];
 
     /**
-     * @var \Spryker\Shared\Kernel\ClassResolver\BundleNameResolver
+     * @var \Spryker\Shared\Kernel\ClassResolver\BundleNameResolver|null
      */
     protected $bundleNameResolver;
 
@@ -48,12 +48,22 @@ class ClassInfo
 
         if ($this->isFullyQualifiedClassName($callerClass)) {
             $callerClassParts = explode('\\', ltrim($callerClass, '\\'));
-            $callerClassParts = $this->adjustTestNamespace($callerClassParts);
+            if ($this->shouldTestNamespaceBeAdjusted()) {
+                $callerClassParts = $this->adjustTestNamespace($callerClassParts);
+            }
         }
 
         $this->callerClassParts = $callerClassParts;
 
         return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    protected function shouldTestNamespaceBeAdjusted(): bool
+    {
+        return APPLICATION_ENV === 'devtest';
     }
 
     /**
@@ -67,7 +77,7 @@ class ClassInfo
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getCallerClassName()
     {

@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\PriceProductMerchantRelationshipStorage\Communication\Plugin\Event\Listener;
 
-use Orm\Zed\PriceProductMerchantRelationship\Persistence\Map\SpyPriceProductMerchantRelationshipTableMap;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
@@ -15,6 +14,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\PriceProductMerchantRelationshipStorage\Business\PriceProductMerchantRelationshipStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\PriceProductMerchantRelationshipStorage\Communication\PriceProductMerchantRelationshipStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence\PriceProductMerchantRelationshipStorageRepositoryInterface getRepository()
+ * @method \Spryker\Zed\PriceProductMerchantRelationshipStorage\PriceProductMerchantRelationshipStorageConfig getConfig()
  */
 class PriceProductMerchantRelationshipAbstractListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
@@ -30,52 +30,11 @@ class PriceProductMerchantRelationshipAbstractListener extends AbstractPlugin im
      */
     public function handleBulk(array $eventTransfers, $eventName): void
     {
-        $businessUnitProducts = $this->getBusinessUnitAbstractProducts($eventTransfers);
-        $this->getFacade()->publishAbstractPriceProductByBusinessUnitProducts($businessUnitProducts);
-    }
+        $priceProductMerchantRelationshipIds = $this->getFactory()
+            ->getEventBehaviorFacade()
+            ->getEventTransferIds($eventTransfers);
 
-    /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
-     *
-     * @return array
-     */
-    protected function getBusinessUnitAbstractProducts(array $eventTransfers): array
-    {
-        $businessUnitProducts =
-        $companyBusinessUnitIds = [];
-
-        foreach ($eventTransfers as $eventTransfer) {
-            $foreignKeys = $eventTransfer->getForeignKeys();
-            $idProductAbstract = null;
-            $idMerchantRelationship = null;
-            if ($foreignKeys) {
-                $idProductAbstract = $foreignKeys[SpyPriceProductMerchantRelationshipTableMap::COL_FK_PRODUCT_ABSTRACT];
-                if (!$idProductAbstract) {
-                    continue;
-                }
-                $idMerchantRelationship = $foreignKeys[SpyPriceProductMerchantRelationshipTableMap::COL_FK_MERCHANT_RELATIONSHIP];
-            } else {
-                $priceProductMerchantRelationship = $this->getRepository()
-                    ->findPriceProductMerchantRelationship((string)$eventTransfer->getId());
-
-                if (!$priceProductMerchantRelationship || !$priceProductMerchantRelationship->getFkProductAbstract()) {
-                    continue;
-                }
-
-                $idProductAbstract = $priceProductMerchantRelationship->getFkProductAbstract();
-                $idMerchantRelationship = $priceProductMerchantRelationship->getFkMerchantRelationship();
-            }
-
-            if (!isset($companyBusinessUnitIds[$idMerchantRelationship])) {
-                $companyBusinessUnitIds[$idMerchantRelationship] = $this->getRepository()
-                    ->findCompanyBusinessUnitIdsByMerchantRelationship($idMerchantRelationship);
-            }
-
-            foreach ($companyBusinessUnitIds[$idMerchantRelationship] as $businessUnitId) {
-                $businessUnitProducts[$businessUnitId][$idProductAbstract] = $idProductAbstract;
-            }
-        }
-
-        return $businessUnitProducts;
+        $this->getFacade()
+            ->publishAbstractPriceProductMerchantRelationship($priceProductMerchantRelationshipIds);
     }
 }

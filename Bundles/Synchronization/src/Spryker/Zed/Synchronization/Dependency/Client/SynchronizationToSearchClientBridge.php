@@ -47,6 +47,16 @@ class SynchronizationToSearchClientBridge implements SynchronizationToSearchClie
     }
 
     /**
+     * @param \Generated\Shared\Transfer\SearchDocumentTransfer[] $searchDocumentTransfers
+     *
+     * @return bool
+     */
+    public function writeBulk(array $searchDocumentTransfers): bool
+    {
+        return $this->searchClient->writeBulk($searchDocumentTransfers);
+    }
+
+    /**
      * @param array $dataSet
      * @param string|null $typeName
      * @param string|null $indexName
@@ -56,5 +66,15 @@ class SynchronizationToSearchClientBridge implements SynchronizationToSearchClie
     public function delete(array $dataSet, $typeName = null, $indexName = null)
     {
         return $this->searchClient->delete($dataSet, $typeName, $indexName);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SearchDocumentTransfer[] $searchDocumentTransfers
+     *
+     * @return bool
+     */
+    public function deleteBulk(array $searchDocumentTransfers): bool
+    {
+        return $this->searchClient->deleteBulk($searchDocumentTransfers);
     }
 }

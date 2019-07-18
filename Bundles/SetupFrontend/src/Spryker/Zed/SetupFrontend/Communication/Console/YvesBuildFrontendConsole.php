@@ -16,8 +16,8 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class YvesBuildFrontendConsole extends Console
 {
-    const COMMAND_NAME = 'frontend:yves:build';
-    const DESCRIPTION = 'This command will build Yves frontend.';
+    public const COMMAND_NAME = 'frontend:yves:build';
+    public const DESCRIPTION = 'This command will build Yves frontend.';
 
     /**
      * @return void
@@ -34,7 +34,7 @@ class YvesBuildFrontendConsole extends Console
      * @param \Symfony\Component\Console\Input\InputInterface $input
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
-     * @return int|null
+     * @return int
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {

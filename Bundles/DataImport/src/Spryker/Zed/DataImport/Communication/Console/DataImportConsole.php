@@ -10,6 +10,7 @@ namespace Spryker\Zed\DataImport\Communication\Console;
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
+use Spryker\Zed\DataImport\DataImportConfig;
 use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -18,40 +19,44 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\DataImport\Business\DataImportFacadeInterface getFacade()
+ * @method \Spryker\Zed\DataImport\Communication\DataImportCommunicationFactory getFactory()
  */
 class DataImportConsole extends Console
 {
-    const DEFAULT_IMPORTER_TYPE = 'full';
+    public const DEFAULT_IMPORTER_TYPE = 'full';
 
-    const DEFAULT_NAME = 'data:import';
-    const DEFAULT_DESCRIPTION = 'This command executes your importers (full-import). Add this command with another name e.g. "new DataImportConsole(\'data:import:category\')" to your ConsoleDependencyProvider and you can run a single DataImporter which is mapped to the latter part of the command name.';
+    public const DEFAULT_NAME = 'data:import';
+    public const DEFAULT_DESCRIPTION = 'This command executes your importers (full-import). Add this command with another name e.g. "new DataImportConsole(\'data:import:category\')" to your ConsoleDependencyProvider and you can run a single DataImporter which is mapped to the latter part of the command name.';
 
-    const IMPORTER_TYPE_DESCRIPTION = 'This command executes your "%s" importer.';
+    public const IMPORTER_TYPE_DESCRIPTION = 'This command executes your "%s" importer.';
 
-    const OPTION_FILE_NAME = 'file-name';
-    const OPTION_FILE_NAME_SHORT = 'f';
+    public const OPTION_FILE_NAME = 'file-name';
+    public const OPTION_FILE_NAME_SHORT = 'f';
 
-    const OPTION_OFFSET = 'offset';
-    const OPTION_OFFSET_SHORT = 'o';
+    public const OPTION_OFFSET = 'offset';
+    public const OPTION_OFFSET_SHORT = 'o';
 
-    const OPTION_LIMIT = 'limit';
-    const OPTION_LIMIT_SHORT = 'l';
+    public const OPTION_LIMIT = 'limit';
+    public const OPTION_LIMIT_SHORT = 'l';
 
-    const OPTION_CSV_DELIMITER = 'delimiter';
-    const OPTION_CSV_DELIMITER_SHORT = 'd';
+    public const OPTION_CSV_DELIMITER = 'delimiter';
+    public const OPTION_CSV_DELIMITER_SHORT = 'd';
 
-    const OPTION_CSV_ENCLOSURE = 'enclosure';
-    const OPTION_CSV_ENCLOSURE_SHORT = 'e';
+    public const OPTION_CSV_ENCLOSURE = 'enclosure';
+    public const OPTION_CSV_ENCLOSURE_SHORT = 'e';
 
-    const OPTION_CSV_ESCAPE = 'escape';
-    const OPTION_CSV_ESCAPE_SHORT = 's';
+    public const OPTION_CSV_ESCAPE = 'escape';
+    public const OPTION_CSV_ESCAPE_SHORT = 's';
 
-    const OPTION_CSV_HAS_HEADER = 'has-header';
-    const OPTION_CSV_HAS_HEADER_SHORT = 'r';
+    public const OPTION_CSV_HAS_HEADER = 'has-header';
+    public const OPTION_CSV_HAS_HEADER_SHORT = 'r';
 
-    const OPTION_THROW_EXCEPTION = 'throw-exception';
-    const OPTION_THROW_EXCEPTION_SHORT = 't';
-    const ARGUMENT_IMPORTER = 'importer';
+    public const OPTION_THROW_EXCEPTION = 'throw-exception';
+    public const OPTION_THROW_EXCEPTION_SHORT = 't';
+    public const ARGUMENT_IMPORTER = 'importer';
+
+    public const OPTION_IMPORT_GROUP = 'group';
+    public const OPTION_IMPORT_GROUP_SHORT = 'g';
 
     /**
      * @var \Symfony\Component\Console\Input\InputInterface
@@ -74,6 +79,7 @@ class DataImportConsole extends Console
         $this->addOption(static::OPTION_CSV_ENCLOSURE, static::OPTION_CSV_ENCLOSURE_SHORT, InputOption::VALUE_REQUIRED, 'Sets the csv enclosure.');
         $this->addOption(static::OPTION_CSV_ESCAPE, static::OPTION_CSV_ESCAPE_SHORT, InputOption::VALUE_REQUIRED, 'Sets the csv escape.');
         $this->addOption(static::OPTION_CSV_HAS_HEADER, static::OPTION_CSV_HAS_HEADER_SHORT, InputOption::VALUE_REQUIRED, 'Set this option to 0 (zero) to disable that the first row of the csv file is a used as keys for the data sets.', true);
+        $this->addOption(static::OPTION_IMPORT_GROUP, static::OPTION_IMPORT_GROUP_SHORT, InputOption::VALUE_REQUIRED, 'Defines the import group. Import group determines a specific subset of data importers to be used.', DataImportConfig::IMPORT_GROUP_FULL);
 
         if ($this->isAddedAsNamedDataImportCommand()) {
             $importerType = $this->getImporterType();
@@ -105,6 +111,14 @@ class DataImportConsole extends Console
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $dataImporterConfigurationTransfer = $this->buildDataImportConfiguration($input);
+
+        if (!$this->checkImportTypeAndGroupConfiguration($dataImporterConfigurationTransfer)) {
+            $this->error(
+                sprintf('No import group (except "%s") can be used when an import type is specified', DataImportConfig::IMPORT_GROUP_FULL)
+            );
+
+            return static::CODE_ERROR;
+        }
 
         $this->info(sprintf('<fg=white>Start "<fg=green>%s</>" import</>', $this->getImporterType($input)));
         $dataImportReportTransfer = $this->getFacade()->import($dataImporterConfigurationTransfer);
@@ -204,6 +218,7 @@ class DataImportConsole extends Console
         $dataImporterConfigurationTransfer = new DataImporterConfigurationTransfer();
         $dataImporterConfigurationTransfer
             ->setImportType($this->getImporterType($input))
+            ->setImportGroup($input->getOption(static::OPTION_IMPORT_GROUP))
             ->setThrowException(false);
 
         if ($input->hasParameterOption('--' . static::OPTION_THROW_EXCEPTION) || $input->hasParameterOption('-' . static::OPTION_THROW_EXCEPTION_SHORT)) {
@@ -236,5 +251,18 @@ class DataImportConsole extends Console
             ->setCsvHasHeader($input->getOption(static::OPTION_CSV_HAS_HEADER));
 
         return $dataImporterReaderConfiguration;
+    }
+
+    /**
+     * Checks that import type and import group are not used at the same time.
+     *
+     * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer $dataImporterConfigurationTransfer
+     *
+     * @return bool
+     */
+    protected function checkImportTypeAndGroupConfiguration(DataImporterConfigurationTransfer $dataImporterConfigurationTransfer): bool
+    {
+        return $dataImporterConfigurationTransfer->getImportType() === static::DEFAULT_IMPORTER_TYPE
+            || $dataImporterConfigurationTransfer->getImportGroup() === DataImportConfig::IMPORT_GROUP_FULL;
     }
 }

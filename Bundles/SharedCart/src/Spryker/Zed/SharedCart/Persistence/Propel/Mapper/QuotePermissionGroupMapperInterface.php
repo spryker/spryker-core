@@ -9,6 +9,7 @@ namespace Spryker\Zed\SharedCart\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\QuotePermissionGroupTransfer;
 use Generated\Shared\Transfer\SpyQuotePermissionGroupEntityTransfer;
+use Orm\Zed\SharedCart\Persistence\SpyQuotePermissionGroup;
 
 interface QuotePermissionGroupMapperInterface
 {
@@ -18,4 +19,15 @@ interface QuotePermissionGroupMapperInterface
      * @return \Generated\Shared\Transfer\QuotePermissionGroupTransfer
      */
     public function mapQuotePermissionGroup(SpyQuotePermissionGroupEntityTransfer $quotePermissionGroupEntityTransfer): QuotePermissionGroupTransfer;
+
+    /**
+     * @param \Orm\Zed\SharedCart\Persistence\SpyQuotePermissionGroup $quotePermissionGroupEntity
+     * @param \Generated\Shared\Transfer\QuotePermissionGroupTransfer $quotePermissionGroupTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuotePermissionGroupTransfer
+     */
+    public function mapQuotePermissionGroupEntityToQuotePermissionGroupTransfer(
+        SpyQuotePermissionGroup $quotePermissionGroupEntity,
+        QuotePermissionGroupTransfer $quotePermissionGroupTransfer
+    ): QuotePermissionGroupTransfer;
 }

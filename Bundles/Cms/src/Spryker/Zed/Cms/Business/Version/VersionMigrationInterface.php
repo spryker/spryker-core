@@ -15,5 +15,5 @@ interface VersionMigrationInterface
      *
      * @return void
      */
-    public function migrate($cmsVersionOriginData, $cmsVersionTargetData);
+    public function migrate(string $cmsVersionOriginData, string $cmsVersionTargetData): void;
 }

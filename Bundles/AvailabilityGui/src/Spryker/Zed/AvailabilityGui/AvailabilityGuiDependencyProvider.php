@@ -17,16 +17,19 @@ use Spryker\Zed\AvailabilityGui\Dependency\QueryContainer\AvailabilityGuiToProdu
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\AvailabilityGui\AvailabilityGuiConfig getConfig()
+ */
 class AvailabilityGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_LOCALE = 'locale facade';
-    const FACADE_STOCK = 'stock facade';
-    const FACADE_AVAILABILITY = 'availability facade';
-    const FACADE_STORE = 'store facade';
-    const FACADE_OMS = 'oms facade';
+    public const FACADE_LOCALE = 'locale facade';
+    public const FACADE_STOCK = 'stock facade';
+    public const FACADE_AVAILABILITY = 'availability facade';
+    public const FACADE_STORE = 'store facade';
+    public const FACADE_OMS = 'oms facade';
 
-    const QUERY_CONTAINER_AVAILABILITY = 'availability query container';
-    const QUERY_CONTAINER_PRODUCT_BUNDLE = 'product bundle query container';
+    public const QUERY_CONTAINER_AVAILABILITY = 'availability query container';
+    public const QUERY_CONTAINER_PRODUCT_BUNDLE = 'product bundle query container';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -80,6 +83,7 @@ class AvailabilityGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::QUERY_CONTAINER_PRODUCT_BUNDLE] = function (Container $container) {
             return new AvailabilityGuiToProductBundleQueryContainerBridge($container->getLocator()->productBundle()->queryContainer());
         };
+
         return $container;
     }
 
@@ -93,6 +97,7 @@ class AvailabilityGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::QUERY_CONTAINER_AVAILABILITY] = function (Container $container) {
             return new AvailabilityGuiToAvailabilityQueryContainerBridge($container->getLocator()->availability()->queryContainer());
         };
+
         return $container;
     }
 
@@ -106,6 +111,7 @@ class AvailabilityGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::FACADE_AVAILABILITY] = function (Container $container) {
             return new AvailabilityGuiToAvailabilityBridge($container->getLocator()->availability()->facade());
         };
+
         return $container;
     }
 
@@ -119,6 +125,7 @@ class AvailabilityGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::FACADE_STOCK] = function (Container $container) {
             return new AvailabilityGuiToStockBridge($container->getLocator()->stock()->facade());
         };
+
         return $container;
     }
 
@@ -132,6 +139,7 @@ class AvailabilityGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::FACADE_LOCALE] = function (Container $container) {
             return new AvailabilityGuiToLocaleBridge($container->getLocator()->locale()->facade());
         };
+
         return $container;
     }
 
@@ -145,6 +153,7 @@ class AvailabilityGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::FACADE_OMS] = function (Container $container) {
             return new AvailabilityGuiToOmsFacadeBridge($container->getLocator()->oms()->facade());
         };
+
         return $container;
     }
 }

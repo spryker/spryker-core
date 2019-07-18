@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -8,6 +9,7 @@ namespace Spryker\Zed\CmsGui\Dependency\Facade;
 use Generated\Shared\Transfer\CmsGlossaryTransfer;
 use Generated\Shared\Transfer\CmsPageAttributesTransfer;
 use Generated\Shared\Transfer\CmsPageTransfer;
+use Generated\Shared\Transfer\CmsVersionDataTransfer;
 
 interface CmsGuiToCmsInterface
 {
@@ -103,7 +105,7 @@ interface CmsGuiToCmsInterface
     /**
      * @param int $idCmsPage
      *
-     * @return bool
+     * @return void
      */
     public function revert($idCmsPage);
 
@@ -135,4 +137,11 @@ interface CmsGuiToCmsInterface
      * @return bool
      */
     public function syncTemplate($cmsTemplateFolderPath);
+
+    /**
+     * @param int $idCmsPage
+     *
+     * @return \Generated\Shared\Transfer\CmsVersionDataTransfer
+     */
+    public function getCmsVersionData(int $idCmsPage): CmsVersionDataTransfer;
 }

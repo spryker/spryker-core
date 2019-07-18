@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class PromotionProductMapper implements PromotionProductMapperInterface
 {
-    const URL_PARAM_VARIANT_ATTRIBUTES = 'attributes';
+    public const URL_PARAM_VARIANT_ATTRIBUTES = 'attributes';
 
     /**
      * @var \Spryker\Yves\DiscountPromotion\Dependency\Client\DiscountPromotionToProductInterface
@@ -77,6 +77,7 @@ class PromotionProductMapper implements PromotionProductMapperInterface
     protected function getSelectedAttributes(Request $request, $abstractSku)
     {
         $selectedAttributes = $request->query->get(static::URL_PARAM_VARIANT_ATTRIBUTES, []);
+
         return isset($selectedAttributes[$abstractSku]) ? $this->filterEmptyAttributes($selectedAttributes[$abstractSku]) : [];
     }
 

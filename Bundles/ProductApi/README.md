@@ -7,7 +7,7 @@ ProductApi provides REST API connection towards product functionality. Our API m
 ## Installation
 
 ```
-composer require spryker/customer-api
+composer require spryker/product-api
 ```
 
 ## Documentation

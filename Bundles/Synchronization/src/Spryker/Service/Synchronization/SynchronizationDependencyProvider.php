@@ -12,18 +12,20 @@ use Spryker\Service\Kernel\Container;
 
 class SynchronizationDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const SYNCHRONIZATION_STORAGE_KEY_GENERATOR_PLUGINS = 'SYNCHRONIZATION_STORAGE_KEY_GENERATOR_PLUGINS';
-    const SYNCHRONIZATION_SEARCH_KEY_GENERATOR_PLUGINS = 'SYNCHRONIZATION_SEARCH_KEY_GENERATOR_PLUGINS';
+    public const SYNCHRONIZATION_STORAGE_KEY_GENERATOR_PLUGINS = 'SYNCHRONIZATION_STORAGE_KEY_GENERATOR_PLUGINS';
+    public const SYNCHRONIZATION_SEARCH_KEY_GENERATOR_PLUGINS = 'SYNCHRONIZATION_SEARCH_KEY_GENERATOR_PLUGINS';
 
     /**
      * @param \Spryker\Service\Kernel\Container $container
      *
-     * @return void
+     * @return \Spryker\Service\Kernel\Container
      */
     public function provideServiceDependencies(Container $container)
     {
         $container = $this->addSynchronizationStorageKeyPlugins($container);
         $this->addSynchronizationSearchKeyPlugins($container);
+
+        return $container;
     }
 
     /**

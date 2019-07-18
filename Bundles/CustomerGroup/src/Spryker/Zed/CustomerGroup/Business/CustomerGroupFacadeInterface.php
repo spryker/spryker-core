@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CustomerGroup\Business;
 
+use Generated\Shared\Transfer\CustomerGroupCollectionTransfer;
 use Generated\Shared\Transfer\CustomerGroupTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 
@@ -101,6 +102,18 @@ interface CustomerGroupFacadeInterface
      * @return \Generated\Shared\Transfer\CustomerGroupTransfer|null
      */
     public function findCustomerGroupByIdCustomer($idCustomer);
+
+    /**
+     * Specification:
+     *  - Retrieves all customer groups by customer id
+     *
+     * @api
+     *
+     * @param int $idCustomer
+     *
+     * @return \Generated\Shared\Transfer\CustomerGroupCollectionTransfer
+     */
+    public function getCustomerGroupCollectionByIdCustomer(int $idCustomer): CustomerGroupCollectionTransfer;
 
     /**
      * Specification:

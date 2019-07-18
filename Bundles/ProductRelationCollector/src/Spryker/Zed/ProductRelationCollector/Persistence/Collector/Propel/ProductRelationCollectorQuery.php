@@ -15,9 +15,9 @@ use Spryker\Zed\Collector\Persistence\Collector\AbstractPropelCollectorQuery;
 
 class ProductRelationCollectorQuery extends AbstractPropelCollectorQuery
 {
-    const ID_PRODUCT_ABSTRACT = 'id_product_abstract';
-    const PRODUCT_RELATIONS = 'product_relations';
-    const IS_ACTIVE = 'is_active';
+    public const ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+    public const PRODUCT_RELATIONS = 'product_relations';
+    public const IS_ACTIVE = 'is_active';
 
     /**
      * @return void

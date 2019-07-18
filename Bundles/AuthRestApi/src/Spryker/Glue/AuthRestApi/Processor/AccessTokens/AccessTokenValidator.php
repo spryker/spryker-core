@@ -17,6 +17,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AccessTokenValidator implements AccessTokenValidatorInterface
 {
+    protected const REQUEST_ATTRIBUTE_IS_PROTECTED = 'is-protected';
+
     /**
      * @var \Spryker\Glue\AuthRestApi\Dependency\Client\AuthRestApiToOauthClientInterface
      */
@@ -38,30 +40,31 @@ class AccessTokenValidator implements AccessTokenValidatorInterface
      */
     public function validate(Request $request, RestRequestInterface $restRequest): ?RestErrorMessageTransfer
     {
-        $isProtected = $request->attributes->get('is-protected', false);
+        $isProtected = $request->attributes->get(static::REQUEST_ATTRIBUTE_IS_PROTECTED, false);
 
-        if ($isProtected === false) {
-            return null;
-        }
-
-        $authorizationToken = $request->headers->get('Authorization');
-        if (!$authorizationToken) {
+        $authorizationToken = $request->headers->get(AuthRestApiConfig::HEADER_AUTHORIZATION);
+        if (!$authorizationToken && $isProtected === true) {
             return $this->createErrorMessageTransfer(
-                'Missing access token.',
+                AuthRestApiConfig::RESPONSE_DETAIL_MISSING_ACCESS_TOKEN,
                 Response::HTTP_FORBIDDEN,
                 AuthRestApiConfig::RESPONSE_CODE_FORBIDDEN
             );
+        }
+
+        if (!$authorizationToken) {
+            return null;
         }
 
         $authAccessTokenValidationResponseTransfer = $this->validateAccessToken((string)$authorizationToken);
 
         if (!$authAccessTokenValidationResponseTransfer->getIsValid()) {
             return $this->createErrorMessageTransfer(
-                'Invalid access token.',
+                AuthRestApiConfig::RESPONSE_DETAIL_INVALID_ACCESS_TOKEN,
                 Response::HTTP_UNAUTHORIZED,
                 AuthRestApiConfig::RESPONSE_CODE_ACCESS_CODE_INVALID
             );
         }
+
         $this->setCustomerData($restRequest, $authAccessTokenValidationResponseTransfer);
 
         return null;
@@ -106,7 +109,6 @@ class AccessTokenValidator implements AccessTokenValidatorInterface
         RestRequestInterface $restRequest,
         OauthAccessTokenValidationResponseTransfer $authAccessTokenValidationResponseTransfer
     ): void {
-
         $customerIdentifier = json_decode($authAccessTokenValidationResponseTransfer->getOauthUserId(), true);
         $restRequest->setUser(
             $customerIdentifier['id_customer'],

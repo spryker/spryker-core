@@ -58,12 +58,15 @@ use Symfony\Component\Validator\Constraints\Valid;
  * @deprecated This class will be removed.
  *
  * @method \Spryker\Zed\Gui\Communication\GuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Gui\GuiConfig getConfig()
  */
 class ConstraintsPlugin extends AbstractPlugin
 {
-    const MAXIMUM_LENGTH_CONSTRAINT = 255;
+    public const MAXIMUM_LENGTH_CONSTRAINT = 255;
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getMandatoryConstraints()
@@ -76,6 +79,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getRequiredConstraints()
@@ -87,6 +92,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * @api
+     *
      * @param mixed $options
      *
      * @return \Symfony\Component\Validator\Constraints\NotBlank
@@ -97,6 +104,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * @api
+     *
      * @return \Symfony\Component\Validator\Constraints\Blank
      */
     public function createConstraintBlank()
@@ -105,6 +114,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * @api
+     *
      * @param mixed $options
      *
      * @return \Symfony\Component\Validator\Constraints\NotNull
@@ -115,6 +126,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * @api
+     *
      * @param mixed $options
      *
      * @return \Symfony\Component\Validator\Constraints\IsNull
@@ -125,6 +138,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * @api
+     *
      * @param mixed $options
      *
      * @return \Symfony\Component\Validator\Constraints\IsTrue
@@ -135,6 +150,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * @api
+     *
      * @param mixed $options
      *
      * @return \Symfony\Component\Validator\Constraints\IsFalse
@@ -145,6 +162,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * @api
+     *
      * @param mixed $options
      *
      * @return \Symfony\Component\Validator\Constraints\Type
@@ -155,6 +174,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * @api
+     *
      * @param mixed $options
      *
      * @return \Symfony\Component\Validator\Constraints\Email
@@ -165,6 +186,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * @api
+     *
      * @param mixed $options
      *
      * @return \Symfony\Component\Validator\Constraints\Length
@@ -175,6 +198,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * @api
+     *
      * @param mixed $options
      *
      * @return \Symfony\Component\Validator\Constraints\Url
@@ -185,6 +210,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * @api
+     *
      * @param mixed $options
      *
      * @return \Symfony\Component\Validator\Constraints\Regex
@@ -195,6 +222,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * @api
+     *
      * @param mixed $options
      *
      * @return \Symfony\Component\Validator\Constraints\Ip
@@ -205,6 +234,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * @api
+     *
      * @param mixed $options
      *
      * @return \Symfony\Component\Validator\Constraints\Uuid
@@ -215,6 +246,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * @api
+     *
      * @param mixed $options
      *
      * @return \Symfony\Component\Validator\Constraints\Range
@@ -225,6 +258,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * @api
+     *
      * @param mixed $options
      *
      * @return \Symfony\Component\Validator\Constraints\EqualTo
@@ -235,6 +270,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * @api
+     *
      * @param mixed $options
      *
      * @return \Symfony\Component\Validator\Constraints\NotEqualTo
@@ -245,6 +282,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * @api
+     *
      * @param mixed $options
      *
      * @return \Symfony\Component\Validator\Constraints\IdenticalTo
@@ -255,6 +294,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * @api
+     *
      * @param mixed $options
      *
      * @return \Symfony\Component\Validator\Constraints\NotIdenticalTo
@@ -265,6 +306,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * @api
+     *
      * @param mixed $options
      *
      * @return \Symfony\Component\Validator\Constraints\LessThan
@@ -275,6 +318,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * @api
+     *
      * @param mixed $options
      *
      * @return \Symfony\Component\Validator\Constraints\LessThanOrEqual
@@ -285,6 +330,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * @api
+     *
      * @param mixed $options
      *
      * @return \Symfony\Component\Validator\Constraints\GreaterThan
@@ -295,6 +342,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * @api
+     *
      * @param mixed $options
      *
      * @return \Symfony\Component\Validator\Constraints\GreaterThanOrEqual
@@ -305,6 +354,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * @api
+     *
      * @param mixed $options
      *
      * @return \Symfony\Component\Validator\Constraints\Date
@@ -315,6 +366,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * @api
+     *
      * @param mixed $options
      *
      * @return \Symfony\Component\Validator\Constraints\DateTime
@@ -325,6 +378,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * @api
+     *
      * @param mixed $options
      *
      * @return \Symfony\Component\Validator\Constraints\Time
@@ -335,6 +390,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * @api
+     *
      * @param mixed $options
      *
      * @return \Symfony\Component\Validator\Constraints\Choice
@@ -345,6 +402,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * @api
+     *
      * @param mixed $options
      *
      * @return \Symfony\Component\Validator\Constraints\Collection
@@ -355,6 +414,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * @api
+     *
      * @param mixed $options
      *
      * @return \Symfony\Component\Validator\Constraints\Count
@@ -365,6 +426,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * @api
+     *
      * @param mixed $options
      *
      * @return \Symfony\Component\Validator\Constraints\Language
@@ -375,6 +438,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * @api
+     *
      * @param mixed $options
      *
      * @return \Symfony\Component\Validator\Constraints\Locale
@@ -385,6 +450,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * @api
+     *
      * @param mixed $options
      *
      * @return \Symfony\Component\Validator\Constraints\Country
@@ -395,6 +462,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * @api
+     *
      * @param mixed $options
      *
      * @return \Symfony\Component\Validator\Constraints\File
@@ -405,6 +474,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * @api
+     *
      * @param mixed $options
      *
      * @return \Symfony\Component\Validator\Constraints\Image
@@ -415,6 +486,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * @api
+     *
      * @param mixed $options
      *
      * @return \Symfony\Component\Validator\Constraints\CardScheme
@@ -425,6 +498,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * @api
+     *
      * @param mixed $options
      *
      * @return \Symfony\Component\Validator\Constraints\Currency
@@ -435,6 +510,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * @api
+     *
      * @param mixed $options
      *
      * @return \Symfony\Component\Validator\Constraints\Luhn
@@ -445,6 +522,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * @api
+     *
      * @param mixed $options
      *
      * @return \Symfony\Component\Validator\Constraints\Iban
@@ -455,6 +534,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * @api
+     *
      * @param mixed $options
      *
      * @return \Symfony\Component\Validator\Constraints\Isbn
@@ -465,6 +546,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * @api
+     *
      * @param mixed $options
      *
      * @return \Symfony\Component\Validator\Constraints\Issn
@@ -475,6 +558,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * @api
+     *
      * @param mixed $options
      *
      * @return \Symfony\Component\Validator\Constraints\Callback
@@ -485,6 +570,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * @api
+     *
      * @param mixed $options
      *
      * @return \Symfony\Component\Validator\Constraints\Expression
@@ -495,6 +582,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * @api
+     *
      * @param mixed $options
      *
      * @return \Symfony\Component\Validator\Constraints\All
@@ -505,6 +594,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * @api
+     *
      * @param mixed $options
      *
      * @return \Symfony\Component\Security\Core\Validator\Constraints\UserPassword
@@ -515,6 +606,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * @api
+     *
      * @param mixed $options
      *
      * @return \Symfony\Component\Validator\Constraints\Valid
@@ -525,6 +618,8 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
+     * @api
+     *
      * @param mixed $options
      *
      * @return \Symfony\Component\Validator\Constraints\Required

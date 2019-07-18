@@ -15,6 +15,9 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductListStorage\Dependency\Facade\ProductListStorageToEventBehaviourFacadeBridge;
 use Spryker\Zed\ProductListStorage\Dependency\Facade\ProductListStorageToProductListFacadeBridge;
 
+/**
+ * @method \Spryker\Zed\ProductListStorage\ProductListStorageConfig getConfig()
+ */
 class ProductListStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const PROPEL_QUERY_PRODUCT = 'PROPEL_QUERY_PRODUCT';

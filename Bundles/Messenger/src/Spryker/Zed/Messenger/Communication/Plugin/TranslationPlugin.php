@@ -7,11 +7,13 @@
 
 namespace Spryker\Zed\Messenger\Communication\Plugin;
 
-use Spryker\Zed\Messenger\Dependency\Plugin\TranslationPluginInterface;
+use Spryker\Zed\MessengerExtension\Dependency\Plugin\TranslationPluginInterface;
 
 class TranslationPlugin implements TranslationPluginInterface
 {
     /**
+     * @api
+     *
      * @param string $keyName
      *
      * @return bool
@@ -22,6 +24,8 @@ class TranslationPlugin implements TranslationPluginInterface
     }
 
     /**
+     * @api
+     *
      * @param string $keyName
      * @param array $data
      *

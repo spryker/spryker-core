@@ -12,15 +12,18 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginCollection;
 use Spryker\Zed\Payment\Dependency\Plugin\Sales\PaymentHydratorPluginCollection;
 
+/**
+ * @method \Spryker\Zed\Payment\PaymentConfig getConfig()
+ */
 class PaymentDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const CHECKOUT_PLUGINS = 'checkout plugins';
-    const CHECKOUT_PRE_CHECK_PLUGINS = 'pre check';
-    const CHECKOUT_ORDER_SAVER_PLUGINS = 'order saver';
-    const CHECKOUT_POST_SAVE_PLUGINS = 'post save';
-    const PAYMENT_METHOD_FILTER_PLUGINS = 'PAYMENT_METHOD_FILTER_PLUGINS';
+    public const CHECKOUT_PLUGINS = 'checkout plugins';
+    public const CHECKOUT_PRE_CHECK_PLUGINS = 'pre check';
+    public const CHECKOUT_ORDER_SAVER_PLUGINS = 'order saver';
+    public const CHECKOUT_POST_SAVE_PLUGINS = 'post save';
+    public const PAYMENT_METHOD_FILTER_PLUGINS = 'PAYMENT_METHOD_FILTER_PLUGINS';
 
-    const PAYMENT_HYDRATION_PLUGINS = 'payment hydration plugins';
+    public const PAYMENT_HYDRATION_PLUGINS = 'payment hydration plugins';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

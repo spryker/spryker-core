@@ -14,6 +14,8 @@ use Spryker\Zed\Sales\Dependency\Plugin\HydrateOrderPluginInterface;
 /**
  * @method \Spryker\Zed\ProductBundle\Business\ProductBundleFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductBundle\Communication\ProductBundleCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductBundle\ProductBundleConfig getConfig()
+ * @method \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface getQueryContainer()
  */
 class ProductBundleOrderHydratePlugin extends AbstractPlugin implements HydrateOrderPluginInterface
 {

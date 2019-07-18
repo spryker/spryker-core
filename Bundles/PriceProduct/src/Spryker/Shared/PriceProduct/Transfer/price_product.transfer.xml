@@ -15,10 +15,29 @@
         <property name="priceType"  type="PriceType" />
         <property name="moneyValue" type="MoneyValue" />
         <property name="priceDimension" type="PriceProductDimension" />
+        <property name="groupKey" type="string" />
+        <property name="isMergeable" type="bool" />
+    </transfer>
+
+    <transfer name="MoneyValue">
+        <property name="idEntity" type="int" />
+        <property name="priceData" type="string" />
+        <property name="priceDataChecksum" type="string" />
+        <property name="fkCurrency" type="int" />
+        <property name="fkStore"  type="int"/>
+        <property name="currency" type="Currency" />
+        <property name="netAmount" type="int" />
+        <property name="grossAmount" type="int" />
+    </transfer>
+
+    <transfer name="Currency">
+        <property name="idCurrency" type="int" />
+        <property name="code" type="string" />
     </transfer>
 
     <transfer name="PriceProductDimension">
         <property name="type" type="string" />
+        <property name="name" type="string" />
         <property name="idPriceProductDefault" type="int" />
     </transfer>
 
@@ -43,6 +62,7 @@
 
     <transfer name="PriceProductFilter">
         <property name="currencyIsoCode" type="string" />
+        <property name="currency" type="Currency" />
         <property name="priceMode" type="string" />
         <property name="storeName" type="string" />
         <property name="priceTypeName" type="string" />
@@ -65,6 +85,10 @@
     <transfer name="CurrentProductPrice">
         <property name="price" type="int" />
         <property name="prices" type="array" singular="price" />
+        <property name="currency" type="Currency" />
+        <property name="priceMode" type="string" />
+        <property name="quantity" type="int" />
+        <property name="sumPrice" type="int" />
     </transfer>
 
 </transfers>

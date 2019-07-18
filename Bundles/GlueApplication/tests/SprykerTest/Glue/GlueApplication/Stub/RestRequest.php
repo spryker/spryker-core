@@ -27,7 +27,8 @@ class RestRequest
 
         $request = Request::create('/');
 
-        $restResource = new RestResource('test');
+        $restResource = new RestResource('test', 1);
+
         return (new RequestBuilder($restResource))
             ->addMetadata($metadata)
             ->addHttpRequest($request)
@@ -52,6 +53,7 @@ class RestRequest
             true,
             $version
         );
+
         return $metadata;
     }
 }

@@ -20,7 +20,7 @@ use Spryker\Shared\Config\Profiler;
  */
 class ProfilerTest extends Unit
 {
-    const PROFILE_KEY = 'profile-key';
+    public const PROFILE_KEY = 'profile-key';
 
     /**
      * @var \SprykerTest\Shared\Config\ConfigSharedTester
@@ -52,7 +52,7 @@ class ProfilerTest extends Unit
         $profileData = $profiler->getProfileData();
 
         $this->tester->assertProfileKey(static::PROFILE_KEY, $profileData);
-        $this->tester->assertProfileValue(get_class($this), $profileData[static::PROFILE_KEY]);
+        $this->tester->assertProfileValue(static::class, $profileData[static::PROFILE_KEY]);
     }
 
     /**
@@ -68,7 +68,7 @@ class ProfilerTest extends Unit
         $expectedProfileData = [
             static::PROFILE_KEY => [
                 Profiler::PROFILE_VALUE => [
-                    'class' => get_class($this),
+                    'class' => static::class,
                     'bool' => 'true',
                     'emptyArray' => '[]',
                 ],
@@ -105,7 +105,7 @@ class ProfilerTest extends Unit
         $profileData = $profiler->getProfileData();
 
         $this->tester->assertProfileKey(static::PROFILE_KEY, $profileData);
-        $this->tester->assertProfileDefaultValue(get_class($this), $profileData[static::PROFILE_KEY]);
+        $this->tester->assertProfileDefaultValue(static::class, $profileData[static::PROFILE_KEY]);
     }
 
     /**

@@ -19,6 +19,8 @@ use Symfony\Component\Validator\Constraints\Required;
 
 /**
  * @method \Spryker\Zed\CompanyBusinessUnitGui\Communication\CompanyBusinessUnitGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CompanyBusinessUnitGui\CompanyBusinessUnitGuiConfig getConfig()
+ * @method \Spryker\Zed\CompanyBusinessUnitGui\Business\CompanyBusinessUnitGuiFacadeInterface getFacade()
  */
 class CompanyBusinessUnitForm extends AbstractType
 {
@@ -80,7 +82,7 @@ class CompanyBusinessUnitForm extends AbstractType
      *
      * @return $this
      */
-    protected function addIdCompanyBusinessUnitField(FormBuilderInterface $builder): self
+    protected function addIdCompanyBusinessUnitField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_ID_COMPANY_BUSINESS_UNIT, HiddenType::class);
 
@@ -98,12 +100,11 @@ class CompanyBusinessUnitForm extends AbstractType
         FormBuilderInterface $builder,
         array $choicesValues,
         array $choicesAttributes
-    ): self {
+    ) {
         $builder->add(static::FIELD_FK_PARENT_COMPANY_BUSINESS_UNIT, ChoiceType::class, [
             'label' => 'Parent',
             'placeholder' => 'No parent',
             'choices' => $choicesValues,
-            'choices_as_values' => true,
             'required' => false,
             'choice_attr' => $choicesAttributes,
         ]);
@@ -116,7 +117,7 @@ class CompanyBusinessUnitForm extends AbstractType
      *
      * @return $this
      */
-    protected function addNameField(FormBuilderInterface $builder): self
+    protected function addNameField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_NAME, TextType::class, [
             'label' => 'Name',
@@ -131,7 +132,7 @@ class CompanyBusinessUnitForm extends AbstractType
      *
      * @return $this
      */
-    protected function addIbanField(FormBuilderInterface $builder): self
+    protected function addIbanField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_IBAN, TextType::class, [
             'label' => 'IBAN',
@@ -150,7 +151,7 @@ class CompanyBusinessUnitForm extends AbstractType
      *
      * @return $this
      */
-    protected function addBicField(FormBuilderInterface $builder): self
+    protected function addBicField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_BIC, TextType::class, [
             'label' => 'BIC',
@@ -170,13 +171,12 @@ class CompanyBusinessUnitForm extends AbstractType
      *
      * @return $this
      */
-    protected function addCompanyField(FormBuilderInterface $builder, array $choices): self
+    protected function addCompanyField(FormBuilderInterface $builder, array $choices)
     {
         $builder->add(static::FIELD_FK_COMPANY, ChoiceType::class, [
             'label' => 'Company',
             'placeholder' => 'Select one',
             'choices' => $choices,
-            'choices_as_values' => true,
             'constraints' => [
                 new NotBlank(),
             ],
@@ -202,7 +202,7 @@ class CompanyBusinessUnitForm extends AbstractType
      *
      * @return $this
      */
-    protected function addPluginForms(FormBuilderInterface $builder): AbstractType
+    protected function addPluginForms(FormBuilderInterface $builder)
     {
         foreach ($this->getFactory()->getCompanyBusinessUnitFormPlugins() as $formPlugin) {
             $formPlugin->buildForm($builder);

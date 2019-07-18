@@ -21,7 +21,7 @@ class ProductReviewDataHelper extends Module
     use DependencyHelperTrait;
     use LocatorHelperTrait;
 
-    const NAMESPACE_ROOT = '\\';
+    public const NAMESPACE_ROOT = '\\';
 
     /**
      * @param array $override

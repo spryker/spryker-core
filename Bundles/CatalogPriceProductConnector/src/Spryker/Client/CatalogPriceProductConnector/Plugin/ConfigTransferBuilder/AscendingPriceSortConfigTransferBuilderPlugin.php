@@ -17,7 +17,7 @@ use Spryker\Client\Kernel\AbstractPlugin;
  */
 class AscendingPriceSortConfigTransferBuilderPlugin extends AbstractPlugin implements SortConfigTransferBuilderPluginInterface
 {
-    const PARAMETER_NAME = 'price_asc';
+    public const PARAMETER_NAME = 'price_asc';
 
     /**
      * @return \Generated\Shared\Transfer\SortConfigTransfer

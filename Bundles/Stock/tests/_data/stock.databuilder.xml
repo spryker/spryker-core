@@ -6,6 +6,7 @@
     <transfer name="StockProduct">
         <property name="sku" dataBuilderRule="isbn10" />
         <property name="quantity" dataBuilderRule="randomDigitNotNull" />
+        <property name="isNeverOutOfStock" dataBuilderRule="numberBetween(0,1)" />
     </transfer>
 
     <transfer name="Type">

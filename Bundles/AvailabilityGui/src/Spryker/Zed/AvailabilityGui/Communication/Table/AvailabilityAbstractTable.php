@@ -21,13 +21,13 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class AvailabilityAbstractTable extends AbstractTable
 {
-    const TABLE_COL_ACTION = 'Actions';
-    const URL_PARAM_ID_PRODUCT_ABSTRACT = 'id-product';
-    const AVAILABLE = 'Available';
-    const NOT_AVAILABLE = 'Not available';
-    const IS_BUNDLE_PRODUCT = 'Is bundle product';
-    const IS_NEVER_OUT_OF_STOCK = 'isNeverOutOfStock';
-    const URL_PARAM_ID_STORE = 'id-store';
+    public const TABLE_COL_ACTION = 'Actions';
+    public const URL_PARAM_ID_PRODUCT_ABSTRACT = 'id-product';
+    public const AVAILABLE = 'Available';
+    public const NOT_AVAILABLE = 'Not available';
+    public const IS_BUNDLE_PRODUCT = 'Is bundle product';
+    public const IS_NEVER_OUT_OF_STOCK = 'isNeverOutOfStock';
+    public const URL_PARAM_ID_STORE = 'id-store';
 
     /**
      * @var \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
@@ -121,7 +121,7 @@ class AvailabilityAbstractTable extends AbstractTable
         foreach ($queryResult as $productAbstractEntity) {
             $haveBundledProducts = $this->haveBundledProducts($productAbstractEntity);
 
-            $isNeverOutOfStock = $this->isAllConcreteIsNeverOutOfStock($productAbstractEntity, $haveBundledProducts);
+            $isNeverOutOfStock = $this->isNeverOutOfStock($productAbstractEntity);
 
             $result[] = [
                 SpyProductAbstractTableMap::COL_SKU => $this->getProductEditPageLink($productAbstractEntity->getSku(), $productAbstractEntity->getIdProductAbstract()),
@@ -140,22 +140,12 @@ class AvailabilityAbstractTable extends AbstractTable
 
     /**
      * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
-     * @param bool $isBundle
      *
      * @return bool
      */
-    protected function isAllConcreteIsNeverOutOfStock(SpyProductAbstract $productAbstractEntity, bool $isBundle): bool
+    protected function isNeverOutOfStock(SpyProductAbstract $productAbstractEntity): bool
     {
-        $hasNeverOutOfStock = strpos($productAbstractEntity->getConcreteNeverOutOfStockSet(), 'true') !== false;
-        if ($isBundle && $hasNeverOutOfStock) {
-            return true;
-        }
-
-        if (strpos($productAbstractEntity->getConcreteNeverOutOfStockSet(), 'false') !== false) {
-            return false;
-        }
-
-        return true;
+        return strpos($productAbstractEntity->getConcreteNeverOutOfStockSet(), 'true') !== false;
     }
 
     /**
@@ -184,9 +174,10 @@ class AvailabilityAbstractTable extends AbstractTable
     protected function getAvailabilityLabel($quantity, $isNeverOutOfStock)
     {
         if ($quantity > 0 || $isNeverOutOfStock) {
-            return '<span class="label label-info">' . static::AVAILABLE . '</span>';
+            return $this->generateLabel(static::AVAILABLE, 'label-info');
         }
-        return '<span class="label">' . static::NOT_AVAILABLE . '</span>';
+
+        return $this->generateLabel(static::NOT_AVAILABLE, '');
     }
 
     /**
@@ -203,6 +194,7 @@ class AvailabilityAbstractTable extends AbstractTable
                 static::URL_PARAM_ID_STORE => $this->storeTransfer->getIdStore(),
             ]
         );
+
         return $this->generateViewButton($viewTaxSetUrl, 'View');
     }
 
@@ -249,7 +241,7 @@ class AvailabilityAbstractTable extends AbstractTable
                 continue;
             }
 
-            list($sku, $quantity) = $itemParts;
+            [$sku, $quantity] = $itemParts;
 
             $reservation += (int)$quantity;
             $reservation += $this->omsFacade->getReservationsFromOtherStores($sku, $this->storeTransfer);

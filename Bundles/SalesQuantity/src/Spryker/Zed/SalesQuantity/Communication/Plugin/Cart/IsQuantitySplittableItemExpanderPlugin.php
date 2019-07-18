@@ -13,10 +13,13 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\SalesQuantity\Business\SalesQuantityFacadeInterface getFacade()
+ * @method \Spryker\Zed\SalesQuantity\SalesQuantityConfig getConfig()
  */
 class IsQuantitySplittableItemExpanderPlugin extends AbstractPlugin implements ItemExpanderPluginInterface
 {
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer

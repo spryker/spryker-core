@@ -14,7 +14,7 @@
                     <ul>
                     {% for rule in rules %}
                         <li>
-                            <span class="label">{{ rule.priority }}</span> <b>{{ rule.name }}</b>
+                            <span class="label">{{ rule.priority }}</span> <b>{{ rule.name | trans }}</b>
                             <p>{{ rule.description }}</p>
                         </li>
                     {% endfor %}

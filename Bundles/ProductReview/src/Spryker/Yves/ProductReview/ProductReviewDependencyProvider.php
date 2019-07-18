@@ -13,7 +13,7 @@ use Spryker\Yves\Kernel\Plugin\Pimple;
 
 class ProductReviewDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
+    public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container

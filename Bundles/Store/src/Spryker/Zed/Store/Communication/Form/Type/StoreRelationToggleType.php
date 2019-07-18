@@ -20,16 +20,18 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * @method \Spryker\Zed\Store\Business\StoreFacadeInterface getFacade()
  * @method \Spryker\Zed\Store\Communication\StoreCommunicationFactory getFactory()
  * @method \Spryker\Zed\Store\StoreConfig getConfig()
+ * @method \Spryker\Zed\Store\Persistence\StoreQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Store\Persistence\StoreRepositoryInterface getRepository()
  */
 class StoreRelationToggleType extends AbstractType
 {
-    const FIELD_ID_ENTITY = 'id_entity';
-    const FIELD_ID_STORES = 'id_stores';
-    const FIELD_ID_STORES_DISABLED = 'id_stores_disabled';
+    public const FIELD_ID_ENTITY = 'id_entity';
+    public const FIELD_ID_STORES = 'id_stores';
+    public const FIELD_ID_STORES_DISABLED = 'id_stores_disabled';
 
-    const STORE_TOGGLE_NAME = 'Store relation';
+    public const STORE_TOGGLE_NAME = 'Store relation';
 
-    const MESSAGE_MULTI_STORE_PER_ZED_DISABLED = 'Multi-store per Zed feature is disabled';
+    public const MESSAGE_MULTI_STORE_PER_ZED_DISABLED = 'Multi-store per Zed feature is disabled';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -122,7 +124,6 @@ class StoreRelationToggleType extends AbstractType
                 'expanded' => true,
                 'multiple' => true,
                 'choices' => array_flip($this->getStoreNameMap()),
-                'choices_as_values' => true,
             ]
         );
 
@@ -148,7 +149,6 @@ class StoreRelationToggleType extends AbstractType
                 'property_path' => static::FIELD_ID_STORES,
                 'multiple' => true,
                 'choices' => array_flip($this->getStoreNameMap()),
-                'choices_as_values' => true,
             ]
         );
 

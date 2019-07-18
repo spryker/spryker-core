@@ -11,6 +11,9 @@ use Spryker\Glue\CategoriesRestApi\Dependency\Client\CategoriesRestApiToCategory
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
 
+/**
+ * @method \Spryker\Glue\CategoriesRestApi\CategoriesRestApiConfig getConfig()
+ */
 class CategoriesRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_CATEGORY_STORAGE = 'CLIENT_CATEGORY_STORAGE';

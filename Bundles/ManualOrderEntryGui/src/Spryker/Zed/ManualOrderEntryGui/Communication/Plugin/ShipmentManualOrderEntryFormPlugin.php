@@ -15,10 +15,13 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\ManualOrderEntryGui\Communication\ManualOrderEntryGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ManualOrderEntryGui\ManualOrderEntryGuiConfig getConfig()
  */
 class ShipmentManualOrderEntryFormPlugin extends AbstractPlugin implements ManualOrderEntryFormPluginInterface
 {
     /**
+     * @api
+     *
      * @var \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToShipmentFacadeInterface
      */
     protected $shipmentFacade;
@@ -29,6 +32,8 @@ class ShipmentManualOrderEntryFormPlugin extends AbstractPlugin implements Manua
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getName(): string
@@ -37,6 +42,8 @@ class ShipmentManualOrderEntryFormPlugin extends AbstractPlugin implements Manua
     }
 
     /**
+     * @api
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -48,6 +55,8 @@ class ShipmentManualOrderEntryFormPlugin extends AbstractPlugin implements Manua
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Symfony\Component\Form\FormInterface $form
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -64,6 +73,8 @@ class ShipmentManualOrderEntryFormPlugin extends AbstractPlugin implements Manua
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
@@ -74,6 +85,8 @@ class ShipmentManualOrderEntryFormPlugin extends AbstractPlugin implements Manua
     }
 
     /**
+     * @api
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *

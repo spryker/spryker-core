@@ -36,7 +36,10 @@ class WishlistStub implements WishlistStubInterface
      */
     public function createWishlist(WishlistTransfer $wishlistTransfer)
     {
-        return $this->zedStub->call('/wishlist/gateway/create-wishlist', $wishlistTransfer);
+        /** @var \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer */
+        $wishlistTransfer = $this->zedStub->call('/wishlist/gateway/create-wishlist', $wishlistTransfer);
+
+        return $wishlistTransfer;
     }
 
     /**
@@ -46,7 +49,10 @@ class WishlistStub implements WishlistStubInterface
      */
     public function validateAndCreateWishlist(WishlistTransfer $wishlistTransfer)
     {
-        return $this->zedStub->call('/wishlist/gateway/validate-and-create-wishlist', $wishlistTransfer);
+        /** @var \Generated\Shared\Transfer\WishlistResponseTransfer $wishlistResponseTransfer */
+        $wishlistResponseTransfer = $this->zedStub->call('/wishlist/gateway/validate-and-create-wishlist', $wishlistTransfer);
+
+        return $wishlistResponseTransfer;
     }
 
     /**
@@ -56,7 +62,10 @@ class WishlistStub implements WishlistStubInterface
      */
     public function updateWishlist(WishlistTransfer $wishlistTransfer)
     {
-        return $this->zedStub->call('/wishlist/gateway/update-wishlist', $wishlistTransfer);
+        /** @var \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer */
+        $wishlistTransfer = $this->zedStub->call('/wishlist/gateway/update-wishlist', $wishlistTransfer);
+
+        return $wishlistTransfer;
     }
 
     /**
@@ -66,7 +75,10 @@ class WishlistStub implements WishlistStubInterface
      */
     public function validateAndUpdateWishlist(WishlistTransfer $wishlistTransfer)
     {
-        return $this->zedStub->call('/wishlist/gateway/validate-and-update-wishlist', $wishlistTransfer);
+        /** @var \Generated\Shared\Transfer\WishlistResponseTransfer $wishlistResponseTransfer */
+        $wishlistResponseTransfer = $this->zedStub->call('/wishlist/gateway/validate-and-update-wishlist', $wishlistTransfer);
+
+        return $wishlistResponseTransfer;
     }
 
     /**
@@ -76,7 +88,10 @@ class WishlistStub implements WishlistStubInterface
      */
     public function removeWishlist(WishlistTransfer $wishlistTransfer)
     {
-        return $this->zedStub->call('/wishlist/gateway/remove-wishlist', $wishlistTransfer);
+        /** @var \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer */
+        $wishlistTransfer = $this->zedStub->call('/wishlist/gateway/remove-wishlist', $wishlistTransfer);
+
+        return $wishlistTransfer;
     }
 
     /**
@@ -86,7 +101,10 @@ class WishlistStub implements WishlistStubInterface
      */
     public function removeWishlistByName(WishlistTransfer $wishlistTransfer)
     {
-        return $this->zedStub->call('/wishlist/gateway/remove-wishlist-by-name', $wishlistTransfer);
+        /** @var \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer */
+        $wishlistTransfer = $this->zedStub->call('/wishlist/gateway/remove-wishlist-by-name', $wishlistTransfer);
+
+        return $wishlistTransfer;
     }
 
     /**
@@ -96,7 +114,10 @@ class WishlistStub implements WishlistStubInterface
      */
     public function addItem(WishlistItemTransfer $wishlistItemTransfer)
     {
-        return $this->zedStub->call('/wishlist/gateway/add-item', $wishlistItemTransfer);
+        /** @var \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer */
+        $wishlistItemTransfer = $this->zedStub->call('/wishlist/gateway/add-item', $wishlistItemTransfer);
+
+        return $wishlistItemTransfer;
     }
 
     /**
@@ -106,7 +127,10 @@ class WishlistStub implements WishlistStubInterface
      */
     public function removeItem(WishlistItemTransfer $wishlistItemTransfer)
     {
-        return $this->zedStub->call('/wishlist/gateway/remove-item', $wishlistItemTransfer);
+        /** @var \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer */
+        $wishlistItemTransfer = $this->zedStub->call('/wishlist/gateway/remove-item', $wishlistItemTransfer);
+
+        return $wishlistItemTransfer;
     }
 
     /**
@@ -116,7 +140,10 @@ class WishlistStub implements WishlistStubInterface
      */
     public function removeItemCollection(WishlistItemCollectionTransfer $wishlistItemTransferCollection)
     {
-        return $this->zedStub->call('/wishlist/gateway/remove-item-collection', $wishlistItemTransferCollection);
+        /** @var \Generated\Shared\Transfer\WishlistItemCollectionTransfer $wishlistItemCollectionTransfer */
+        $wishlistItemCollectionTransfer = $this->zedStub->call('/wishlist/gateway/remove-item-collection', $wishlistItemTransferCollection);
+
+        return $wishlistItemCollectionTransfer;
     }
 
     /**
@@ -126,7 +153,10 @@ class WishlistStub implements WishlistStubInterface
      */
     public function getWishlist(WishlistTransfer $wishlistTransfer)
     {
-        return $this->zedStub->call('/wishlist/gateway/get-wishlist', $wishlistTransfer);
+        /** @var \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer */
+        $wishlistTransfer = $this->zedStub->call('/wishlist/gateway/get-wishlist', $wishlistTransfer);
+
+        return $wishlistTransfer;
     }
 
     /**
@@ -136,7 +166,10 @@ class WishlistStub implements WishlistStubInterface
      */
     public function getWishlistOverview(WishlistOverviewRequestTransfer $wishlistOverviewRequestTransfer)
     {
-        return $this->zedStub->call('/wishlist/gateway/get-wishlist-overview', $wishlistOverviewRequestTransfer);
+        /** @var \Generated\Shared\Transfer\WishlistOverviewResponseTransfer $wishlistOverviewResponseTransfer */
+        $wishlistOverviewResponseTransfer = $this->zedStub->call('/wishlist/gateway/get-wishlist-overview', $wishlistOverviewRequestTransfer);
+
+        return $wishlistOverviewResponseTransfer;
     }
 
     /**
@@ -146,6 +179,9 @@ class WishlistStub implements WishlistStubInterface
      */
     public function getCustomerWishlistCollection(CustomerTransfer $customerTransfer)
     {
-        return $this->zedStub->call('/wishlist/gateway/get-customer-wishlist-collection', $customerTransfer);
+        /** @var \Generated\Shared\Transfer\WishlistCollectionTransfer $wishlistCollectionTransfer */
+        $wishlistCollectionTransfer = $this->zedStub->call('/wishlist/gateway/get-customer-wishlist-collection', $customerTransfer);
+
+        return $wishlistCollectionTransfer;
     }
 }

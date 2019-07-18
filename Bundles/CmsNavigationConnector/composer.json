@@ -1,15 +1,18 @@
 {
   "name": "spryker/cms-navigation-connector",
+  "type": "library",
   "description": "CmsNavigationConnector module",
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/cms": "^6.5.0",
-    "spryker/kernel": "^3.0.0",
+    "spryker/cms": "^6.5.0 || ^7.0.0",
+    "spryker/kernel": "^3.30.0",
     "spryker/navigation": "^2.3.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/locale": "*",
+    "spryker/propel": "*",
     "spryker/testify": "*"
   },
   "autoload": {

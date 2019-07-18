@@ -161,6 +161,18 @@ interface CompanyRoleFacadeInterface
 
     /**
      * Specification:
+     * - Returns ids of company users that have the assigned permission.
+     *
+     * @api
+     *
+     * @param string $permissionKey
+     *
+     * @return int[]
+     */
+    public function getCompanyUserIdsByPermissionKey(string $permissionKey): array;
+
+    /**
+     * Specification:
      * - Finds company roles according CompanyRoleCriteriaFilterTransfer
      *
      * @api
@@ -191,7 +203,49 @@ interface CompanyRoleFacadeInterface
      *
      * @api
      *
+     * @deprecated Use CompanyRoleFacadeInterface::findDefaultCompanyRoleByIdCompany() instead.
+     *
      * @return \Generated\Shared\Transfer\CompanyRoleTransfer
      */
     public function getDefaultCompanyRole(): CompanyRoleTransfer;
+
+    /**
+     * Specification:
+     * - Finds default company role for a given company by company id.
+     *
+     * @api
+     *
+     * @param int $idCompany
+     *
+     * @return \Generated\Shared\Transfer\CompanyRoleTransfer|null
+     */
+    public function findDefaultCompanyRoleByIdCompany(int $idCompany): ?CompanyRoleTransfer;
+
+    /**
+     * Specification:
+     * - Finds company role by CompanyRoleTransfer::idCompanyRole.
+     * - Returns null if company role does not exist.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyRoleTransfer|null
+     */
+    public function findCompanyRoleById(CompanyRoleTransfer $companyRoleTransfer): ?CompanyRoleTransfer;
+
+    /**
+     * Specification:
+     * - Finds a company role by uuid.
+     * - Requires uuid field to be set in CompanyRoleTransfer taken as parameter.
+     *
+     * @api
+     *
+     * {@internal will work if UUID field is provided.}
+     *
+     * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyRoleResponseTransfer
+     */
+    public function findCompanyRoleByUuid(CompanyRoleTransfer $companyRoleTransfer): CompanyRoleResponseTransfer;
 }

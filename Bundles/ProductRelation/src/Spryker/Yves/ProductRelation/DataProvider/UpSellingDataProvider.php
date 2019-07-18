@@ -15,8 +15,8 @@ use Spryker\Yves\ProductRelation\Sorting\RelationSorterInterface;
 
 class UpSellingDataProvider implements ProductRelationDataProviderInterface
 {
-    const PARAMETER_ABSTRACT_PRODUCT_IDS = 'abstractProductIds';
-    const PARAMETER_QUOTE_TRANSFER = 'quote';
+    public const PARAMETER_ABSTRACT_PRODUCT_IDS = 'abstractProductIds';
+    public const PARAMETER_QUOTE_TRANSFER = 'quote';
 
     /**
      * @var \Spryker\Client\ProductRelation\ProductRelationClientInterface
@@ -43,7 +43,7 @@ class UpSellingDataProvider implements ProductRelationDataProviderInterface
     /**
      * @param array $parameters , parameters can be (quote => QuoteTransfer, or array of abstract product ids [1,2,3])
      *
-     * @return \Generated\Shared\Transfer\StorageProductRelationsTransfer[]
+     * @return \Generated\Shared\Transfer\StorageProductAbstractRelationTransfer[]
      */
     public function buildTemplateData(array $parameters)
     {
@@ -85,10 +85,24 @@ class UpSellingDataProvider implements ProductRelationDataProviderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\StorageProductRelationsTransfer[] $upSellingProducts
-     * @param \Generated\Shared\Transfer\StorageProductRelationsTransfer[] $compareWithProducts
+     * @param array $productRelationCollection
      *
-     * @return \Generated\Shared\Transfer\StorageProductRelationsTransfer[]
+     * @return \Generated\Shared\Transfer\StorageProductRelationsTransfer|null
+     */
+    protected function extractProductRelationTransfer(array $productRelationCollection)
+    {
+        if (!isset($productRelationCollection[$this->getAcceptedType()])) {
+            return null;
+        }
+
+        return $productRelationCollection[$this->getAcceptedType()];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StorageProductAbstractRelationTransfer[] $upSellingProducts
+     * @param \Generated\Shared\Transfer\StorageProductAbstractRelationTransfer[] $compareWithProducts
+     *
+     * @return \Generated\Shared\Transfer\StorageProductAbstractRelationTransfer[]
      */
     protected function findNotIncludedAbstractProducts(array $upSellingProducts, array $compareWithProducts)
     {
@@ -99,19 +113,6 @@ class UpSellingDataProvider implements ProductRelationDataProviderInterface
                 return strcasecmp($a->getSku(), $b->getSku());
             }
         );
-    }
-
-    /**
-     * @param array $productRelationCollection
-     *
-     * @return \Generated\Shared\Transfer\StorageProductRelationsTransfer|null
-     */
-    protected function extractProductRelationTransfer(array $productRelationCollection)
-    {
-        if (!isset($productRelationCollection[$this->getAcceptedType()])) {
-            return null;
-        }
-        return $productRelationCollection[$this->getAcceptedType()];
     }
 
     /**

@@ -8,8 +8,10 @@
 namespace Spryker\Zed\SharedCart\Persistence;
 
 use Generated\Shared\Transfer\PermissionTransfer;
+use Generated\Shared\Transfer\QuoteCompanyUserTransfer;
 use Generated\Shared\Transfer\QuotePermissionGroupTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShareDetailTransfer;
 use Generated\Shared\Transfer\SpyQuoteCompanyUserEntityTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
@@ -138,5 +140,81 @@ class SharedCartEntityManager extends AbstractEntityManager implements SharedCar
             ->createQuoteCompanyUserQuery()
             ->filterByFkQuote($quoteTransfer->getIdQuote())
             ->delete();
+    }
+
+    /**
+     * @param int $idCompanyUser
+     *
+     * @return void
+     */
+    public function deleteShareRelationsForCompanyUserId(int $idCompanyUser): void
+    {
+        $this->getFactory()
+            ->createQuoteCompanyUserQuery()
+            ->filterByFkCompanyUser($idCompanyUser)
+            ->delete();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteCompanyUserTransfer $quoteCompanyUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteCompanyUserTransfer
+     */
+    public function createQuoteCompanyUser(QuoteCompanyUserTransfer $quoteCompanyUserTransfer): QuoteCompanyUserTransfer
+    {
+        $quoteCompanyUserEntity = $this->getFactory()
+            ->createQuoteCompanyUserQuery()
+            ->filterByFkCompanyUser($quoteCompanyUserTransfer->getFkCompanyUser())
+            ->filterByFkQuotePermissionGroup($quoteCompanyUserTransfer->getIdQuoteCompanyUser())
+            ->filterByFkQuote($quoteCompanyUserTransfer->getFkQuote())
+            ->findOneOrCreate();
+
+        $quoteCompanyUserEntity = $this->getFactory()->createQuoteCompanyUserMapper()
+            ->mapQuoteCompanyUserTransferToQuoteCompanyUserEntity($quoteCompanyUserTransfer, $quoteCompanyUserEntity);
+
+        $quoteCompanyUserEntity->save();
+
+        return $this->getFactory()->createQuoteCompanyUserMapper()
+            ->mapQuoteCompanyUserEntityToQuoteCompanyUserTransfer($quoteCompanyUserEntity, new QuoteCompanyUserTransfer());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShareDetailTransfer $shareDetailTransfer
+     *
+     * @return void
+     */
+    public function updateCompanyUserQuotePermissionGroup(ShareDetailTransfer $shareDetailTransfer): void
+    {
+        $quotePermissionGroupTransfer = $shareDetailTransfer->getQuotePermissionGroup();
+
+        $this->getFactory()
+            ->createQuoteCompanyUserQuery()
+            ->filterByIdQuoteCompanyUser($shareDetailTransfer->getIdQuoteCompanyUser())
+            ->update([
+                ucfirst(SpyQuoteCompanyUserEntityTransfer::FK_QUOTE_PERMISSION_GROUP) => $quotePermissionGroupTransfer->getIdQuotePermissionGroup(),
+            ]);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShareDetailTransfer $shareDetailTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteCompanyUserTransfer|null
+     */
+    public function updateQuoteCompanyUserQuotePermissionGroup(ShareDetailTransfer $shareDetailTransfer): ?QuoteCompanyUserTransfer
+    {
+        $quoteCompanyUserEntity = $this->getFactory()
+            ->createQuoteCompanyUserQuery()
+            ->filterByIdQuoteCompanyUser($shareDetailTransfer->getIdQuoteCompanyUser())
+            ->findOne();
+
+        if (!$quoteCompanyUserEntity) {
+            return null;
+        }
+
+        $quoteCompanyUserEntity->setFkQuotePermissionGroup($shareDetailTransfer->getQuotePermissionGroup()->getIdQuotePermissionGroup());
+        $quoteCompanyUserEntity->save();
+
+        return $this->getFactory()->createQuoteCompanyUserMapper()
+            ->mapQuoteCompanyUserEntityToQuoteCompanyUserTransfer($quoteCompanyUserEntity, new QuoteCompanyUserTransfer());
     }
 }

@@ -75,7 +75,43 @@ class SynchronizationFacade extends AbstractFacade implements SynchronizationFac
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
+     *
+     * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer[] $queueMessageTransfers
+     *
+     * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer[]
+     */
+    public function processSearchMessages(array $queueMessageTransfers): array
+    {
+        return $this->getFactory()
+            ->createSearchQueueMessageProcessor()
+            ->processMessages($queueMessageTransfers);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer[] $queueMessageTransfers
+     *
+     * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer[]
+     */
+    public function processStorageMessages(array $queueMessageTransfers): array
+    {
+        return $this->getFactory()
+            ->createStorageQueueMessageProcessor()
+            ->processMessages($queueMessageTransfers);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @deprecated Use SynchronizationFacade::executeResolvedPluginsBySourcesWithIds() instead.
      *
      * @param string[] $resources
      *
@@ -84,5 +120,32 @@ class SynchronizationFacade extends AbstractFacade implements SynchronizationFac
     public function executeResolvedPluginsBySources(array $resources)
     {
         $this->getFactory()->createExporterPluginResolver()->executeResolvedPluginsBySources($resources);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string[] $resources
+     * @param int[] $ids
+     *
+     * @return void
+     */
+    public function executeResolvedPluginsBySourcesWithIds(array $resources, array $ids)
+    {
+        $this->getFactory()->createExporterPluginResolver()->executeResolvedPluginsBySourcesWithIds($resources, $ids);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return string[]
+     */
+    public function getAvailableResourceNames(): array
+    {
+        return $this->getFactory()->createExporterPluginResolver()->getAvailableResourceNames();
     }
 }

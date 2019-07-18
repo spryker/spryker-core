@@ -13,10 +13,13 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \Spryker\Zed\DataImport\Business\DataImportFacadeInterface getFacade()
  * @method \Spryker\Zed\DataImport\Communication\DataImportCommunicationFactory getFactory()
+ * @method \Spryker\Zed\DataImport\DataImportConfig getConfig()
  */
 class DataImportPublisherPlugin extends AbstractPlugin implements DataImportAfterImportHookInterface
 {
     /**
+     * @api
+     *
      * @return void
      */
     public function afterImport()

@@ -15,6 +15,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
+ * @deprecated Will be removed without replacement. We should not throw an exception if the requested domain is not equal to configured one as it is not a security issue neither non-valid configuration.
+ *
  * @method \Spryker\Zed\Application\Business\ApplicationFacadeInterface getFacade()
  * @method \Spryker\Zed\Application\Communication\ApplicationCommunicationFactory getFactory()
  * @method \Spryker\Zed\Application\ApplicationConfig getConfig()
@@ -51,7 +53,7 @@ class AssertUrlConfigurationServiceProvider extends AbstractPlugin implements Se
      */
     protected function assertMatchingHostName(Request $request)
     {
-        $hostName = $request->getHttpHost();
+        $hostName = $request->getHost();
         if (!$hostName) {
             return;
         }

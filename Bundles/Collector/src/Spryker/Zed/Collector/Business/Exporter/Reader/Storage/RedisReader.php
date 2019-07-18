@@ -12,7 +12,7 @@ use Spryker\Zed\Collector\Business\Storage\Adapter\KeyValue\ReadInterface;
 
 class RedisReader implements ReaderInterface
 {
-    const READER_NAME = 'redis-reader';
+    public const READER_NAME = 'redis-reader';
 
     /**
      * @var \Spryker\Zed\Collector\Business\Storage\Adapter\KeyValue\ReadInterface
@@ -31,7 +31,7 @@ class RedisReader implements ReaderInterface
      * @param string $key
      * @param string $type
      *
-     * @return string
+     * @return mixed
      */
     public function read($key, $type = '')
     {

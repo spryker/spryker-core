@@ -14,6 +14,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \Spryker\Zed\Log\Communication\LogCommunicationFactory getFactory()
  * @method \Spryker\Zed\Log\Business\LogFacadeInterface getFacade()
+ * @method \Spryker\Zed\Log\LogConfig getConfig()
  */
 class ExceptionStreamHandlerPlugin extends AbstractPlugin implements LogHandlerPluginInterface
 {
@@ -35,6 +36,8 @@ class ExceptionStreamHandlerPlugin extends AbstractPlugin implements LogHandlerP
     }
 
     /**
+     * @api
+     *
      * @param array $record
      *
      * @return bool
@@ -45,6 +48,8 @@ class ExceptionStreamHandlerPlugin extends AbstractPlugin implements LogHandlerP
     }
 
     /**
+     * @api
+     *
      * @param array $record
      *
      * @return bool
@@ -55,6 +60,8 @@ class ExceptionStreamHandlerPlugin extends AbstractPlugin implements LogHandlerP
     }
 
     /**
+     * @api
+     *
      * @param array $records
      *
      * @return mixed
@@ -65,6 +72,8 @@ class ExceptionStreamHandlerPlugin extends AbstractPlugin implements LogHandlerP
     }
 
     /**
+     * @api
+     *
      * @param callable $callback
      *
      * @return \Monolog\Handler\HandlerInterface
@@ -75,6 +84,8 @@ class ExceptionStreamHandlerPlugin extends AbstractPlugin implements LogHandlerP
     }
 
     /**
+     * @api
+     *
      * @return callable
      */
     public function popProcessor()
@@ -83,6 +94,8 @@ class ExceptionStreamHandlerPlugin extends AbstractPlugin implements LogHandlerP
     }
 
     /**
+     * @api
+     *
      * @param \Monolog\Formatter\FormatterInterface $formatter
      *
      * @return \Monolog\Handler\HandlerInterface
@@ -93,6 +106,8 @@ class ExceptionStreamHandlerPlugin extends AbstractPlugin implements LogHandlerP
     }
 
     /**
+     * @api
+     *
      * @return \Monolog\Formatter\FormatterInterface
      */
     public function getFormatter()

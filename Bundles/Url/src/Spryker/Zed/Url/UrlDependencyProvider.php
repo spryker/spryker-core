@@ -13,21 +13,24 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Url\Dependency\UrlToLocaleBridge;
 use Spryker\Zed\Url\Dependency\UrlToTouchBridge;
 
+/**
+ * @method \Spryker\Zed\Url\UrlConfig getConfig()
+ */
 class UrlDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_LOCALE = 'locale facade';
-    const FACADE_TOUCH = 'touch facade';
+    public const FACADE_LOCALE = 'locale facade';
+    public const FACADE_TOUCH = 'touch facade';
 
-    const PLUGINS_URL_BEFORE_CREATE = 'PLUGINS_URL_BEFORE_CREATE';
-    const PLUGINS_URL_AFTER_CREATE = 'PLUGINS_URL_AFTER_CREATE';
-    const PLUGINS_URL_BEFORE_UPDATE = 'PLUGINS_URL_BEFORE_UPDATE';
-    const PLUGINS_URL_AFTER_UPDATE = 'PLUGINS_URL_AFTER_UPDATE';
-    const PLUGINS_URL_BEFORE_DELETE = 'PLUGINS_URL_BEFORE_DELETE';
-    const PLUGINS_URL_AFTER_DELETE = 'PLUGINS_URL_AFTER_DELETE';
+    public const PLUGINS_URL_BEFORE_CREATE = 'PLUGINS_URL_BEFORE_CREATE';
+    public const PLUGINS_URL_AFTER_CREATE = 'PLUGINS_URL_AFTER_CREATE';
+    public const PLUGINS_URL_BEFORE_UPDATE = 'PLUGINS_URL_BEFORE_UPDATE';
+    public const PLUGINS_URL_AFTER_UPDATE = 'PLUGINS_URL_AFTER_UPDATE';
+    public const PLUGINS_URL_BEFORE_DELETE = 'PLUGINS_URL_BEFORE_DELETE';
+    public const PLUGINS_URL_AFTER_DELETE = 'PLUGINS_URL_AFTER_DELETE';
     /**
      * @deprecated Use `getConnection()` method from query container instead.
      */
-    const PLUGIN_PROPEL_CONNECTION = 'propel connection plugin';
+    public const PLUGIN_PROPEL_CONNECTION = 'propel connection plugin';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -108,7 +111,7 @@ class UrlDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\Url\Dependency\Plugin\UrlUpdatePluginInterface[]
+     * @return \Spryker\Zed\Url\Dependency\Plugin\UrlDeletePluginInterface[]
      */
     protected function getUrlBeforeDeletePlugins()
     {
@@ -116,7 +119,7 @@ class UrlDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\Url\Dependency\Plugin\UrlUpdatePluginInterface[]
+     * @return \Spryker\Zed\Url\Dependency\Plugin\UrlDeletePluginInterface[]
      */
     protected function getUrlAfterDeletePlugins()
     {

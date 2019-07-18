@@ -12,11 +12,14 @@ use Spryker\Zed\CustomerGroup\Dependency\Service\CustomerGroupToUtilEncodingBrid
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\CustomerGroup\CustomerGroupConfig getConfig()
+ */
 class CustomerGroupDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const QUERY_CONTAINER_CUSTOMER = 'QUERY_CONTAINER_CUSTOMER';
-    const SERVICE_DATE_FORMATTER = 'date formatter';
-    const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+    public const QUERY_CONTAINER_CUSTOMER = 'QUERY_CONTAINER_CUSTOMER';
+    public const SERVICE_DATE_FORMATTER = 'date formatter';
+    public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

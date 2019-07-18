@@ -16,10 +16,10 @@ use Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface;
 
 class FilterPreferencesTable extends AbstractTable
 {
-    const COL_NAME = 'attribute_key';
-    const COL_POSITION = SpyProductSearchAttributeTableMap::COL_POSITION;
-    const COL_FILTER_TYPE = SpyProductSearchAttributeTableMap::COL_FILTER_TYPE;
-    const ACTIONS = 'actions';
+    public const COL_NAME = 'attribute_key';
+    public const COL_POSITION = SpyProductSearchAttributeTableMap::COL_POSITION;
+    public const COL_FILTER_TYPE = SpyProductSearchAttributeTableMap::COL_FILTER_TYPE;
+    public const ACTIONS = 'actions';
 
     /**
      * @var \Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface

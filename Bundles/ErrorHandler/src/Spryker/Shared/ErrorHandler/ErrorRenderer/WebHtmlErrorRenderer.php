@@ -12,7 +12,7 @@ use Spryker\Shared\ErrorHandler\ErrorHandlerConstants;
 
 class WebHtmlErrorRenderer implements ErrorRendererInterface
 {
-    const APPLICATION_ZED = 'ZED';
+    public const APPLICATION_ZED = 'ZED';
 
     /**
      * @var string

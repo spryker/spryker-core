@@ -20,16 +20,16 @@ use Spryker\Zed\ProductManagement\Communication\Helper\ProductTypeHelperInterfac
 
 class ProductTable extends AbstractProductTable
 {
-    const COL_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
-    const COL_NAME = 'name';
-    const COL_SKU = 'sku';
-    const COL_TAX_SET = 'tax_set';
-    const COL_VARIANT_COUNT = 'variants';
-    const COL_STATUS = 'status';
-    const COL_ACTIONS = 'actions';
-    const COL_IS_BUNDLE = 'is_bundle';
-    const COL_STORE_RELATION = 'store_relation';
-    const COL_PRODUCT_TYPE = 'product_type';
+    public const COL_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+    public const COL_NAME = 'name';
+    public const COL_SKU = 'sku';
+    public const COL_TAX_SET = 'tax_set';
+    public const COL_VARIANT_COUNT = 'variants';
+    public const COL_STATUS = 'status';
+    public const COL_ACTIONS = 'actions';
+    public const COL_IS_BUNDLE = 'is_bundle';
+    public const COL_STORE_RELATION = 'store_relation';
+    public const COL_PRODUCT_TYPE = 'product_type';
 
     /**
      * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface

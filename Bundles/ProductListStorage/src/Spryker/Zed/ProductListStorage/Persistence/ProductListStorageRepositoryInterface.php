@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductListStorage\Persistence;
 
+use Generated\Shared\Transfer\FilterTransfer;
+
 interface ProductListStorageRepositoryInterface
 {
     /**
@@ -38,6 +40,16 @@ interface ProductListStorageRepositoryInterface
     public function findProductConcreteProductListStorageEntities(array $productConcreteIds): array;
 
     /**
+     * @return \Orm\Zed\ProductListStorage\Persistence\SpyProductAbstractProductListStorage[]
+     */
+    public function findAllProductAbstractProductListStorageEntities(): array;
+
+    /**
+     * @return \Orm\Zed\ProductListStorage\Persistence\SpyProductConcreteProductListStorage[]
+     */
+    public function findAllProductConcreteProductListStorageEntities(): array;
+
+    /**
      * @param int[] $productListIds
      *
      * @return int[]
@@ -50,4 +62,30 @@ interface ProductListStorageRepositoryInterface
      * @return array
      */
     public function getProductAbstractIdsByCategoryIds(array $categoryIds): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $productConcreteIds
+     *
+     * @return \Generated\Shared\Transfer\SpyProductConcreteProductListStorageEntityTransfer[]
+     */
+    public function findFilteredProductConcreteProductListStorageEntities(FilterTransfer $filterTransfer, array $productConcreteIds = []): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $productAbstractIds
+     *
+     * @return \Generated\Shared\Transfer\SpyProductAbstractProductListStorageEntityTransfer[]
+     */
+    public function findFilteredProductAbstractProductListStorageEntities(FilterTransfer $filterTransfer, array $productAbstractIds = []): array;
+
+    /**
+     * @return int
+     */
+    public function getProductListWhitelistEnumValue(): int;
+
+    /**
+     * @return int
+     */
+    public function getProductListBlacklistEnumValue(): int;
 }

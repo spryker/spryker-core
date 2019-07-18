@@ -33,16 +33,17 @@ class ModuleBuilder
      * @var array
      */
     protected $files = [
+        '.coveralls.yml',
         '.gitattributes',
         '.gitignore',
-        '.coveralls.yml',
         '.travis.yml',
+        'CHANGELOG.md',
         'codecept.yml' => 'codeception.yml',
         'composer.json',
-        'phpstan.json',
-        'CHANGELOG.md',
-        'README.md',
         'LICENSE',
+        'phpstan.json',
+        'README.md',
+        'tooling.yml',
     ];
 
     /**
@@ -63,7 +64,7 @@ class ModuleBuilder
     {
         $namespace = static::NAMESPACE_SPRYKER;
         if (strpos($module, '.') !== false) {
-            list ($namespace, $module) = explode('.', $module, 2);
+            [$namespace, $module] = explode('.', $module, 2);
         }
 
         if ($module !== 'all') {
@@ -93,7 +94,7 @@ class ModuleBuilder
     /**
      * @param string $namespace
      *
-     * @return array
+     * @return string[]
      */
     protected function getModuleNames($namespace)
     {
@@ -209,7 +210,7 @@ class ModuleBuilder
     {
         $path = $this->getDirectoryName($namespace) . $this->getModuleName($module, $namespace) . DIRECTORY_SEPARATOR;
         if (!is_dir($path)) {
-            mkdir($path, 0770, true);
+            mkdir($path, $this->config->getPermissionMode(), true);
         }
 
         $filesystem = new Filesystem();
@@ -226,11 +227,9 @@ class ModuleBuilder
      */
     protected function getDirectoryName($namespace)
     {
-        if ($namespace === static::NAMESPACE_SPRYKER_SHOP) {
-            return $this->config->getPathToShop();
-        }
-        if ($namespace === static::NAMESPACE_SPRYKER) {
-            return $this->config->getPathToCore();
+        $pathToInternalNamespace = $this->config->getPathToInternalNamespace($namespace);
+        if ($pathToInternalNamespace) {
+            return $pathToInternalNamespace;
         }
 
         $folder = $this->camelCaseToDash($namespace);
@@ -246,7 +245,7 @@ class ModuleBuilder
      */
     protected function getModuleName($module, $namespace)
     {
-        if ($namespace === static::NAMESPACE_SPRYKER_SHOP || $namespace === static::NAMESPACE_SPRYKER) {
+        if (in_array($namespace, $this->config->getInternalNamespacesList(), true)) {
             return $module;
         }
 

@@ -14,6 +14,7 @@ use Spryker\Zed\ProductBarcode\Persistence\Mapper\ProductMapperInterface;
 
 /**
  * @method \Spryker\Zed\ProductBarcode\ProductBarcodeConfig getConfig()
+ * @method \Spryker\Zed\ProductBarcode\Persistence\ProductBarcodeRepositoryInterface getRepository()
  */
 class ProductBarcodePersistenceFactory extends AbstractPersistenceFactory
 {

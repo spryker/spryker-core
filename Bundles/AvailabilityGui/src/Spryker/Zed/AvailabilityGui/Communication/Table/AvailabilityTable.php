@@ -20,14 +20,16 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class AvailabilityTable extends AbstractTable
 {
-    const TABLE_COL_ACTION = 'Actions';
-    const URL_PARAM_ID_PRODUCT = 'id-product';
-    const URL_PARAM_ID_PRODUCT_ABSTRACT = 'id-abstract';
-    const URL_PARAM_SKU = 'sku';
-    const URL_PARAM_ID_STORE = 'id-store';
-    const URL_BACK_BUTTON = 'url-back-button';
+    public const TABLE_COL_ACTION = 'Actions';
+    public const URL_PARAM_ID_PRODUCT = 'id-product';
+    public const URL_PARAM_ID_PRODUCT_ABSTRACT = 'id-abstract';
+    public const URL_PARAM_SKU = 'sku';
+    public const URL_PARAM_ID_STORE = 'id-store';
+    public const URL_BACK_BUTTON = 'url-back-button';
 
-    const IS_BUNDLE_PRODUCT = 'Is bundle product';
+    public const IS_BUNDLE_PRODUCT = 'Is bundle product';
+
+    protected const NEVER_OUT_OF_STOCK_DEFAULT_VALUE = 'false';
 
     /**
      * @var int
@@ -138,7 +140,7 @@ class AvailabilityTable extends AbstractTable
             $isBundleProduct = $this->isBundleProduct($productItem[AvailabilityQueryContainer::ID_PRODUCT]);
 
             $isNeverOutOfStock = $this->isNeverOutOfStock(
-                $productItem[AvailabilityQueryContainer::CONCRETE_NEVER_OUT_OF_STOCK_SET],
+                $productItem[AvailabilityQueryContainer::CONCRETE_NEVER_OUT_OF_STOCK_SET] ?? static::NEVER_OUT_OF_STOCK_DEFAULT_VALUE,
                 $isBundleProduct
             );
 
@@ -159,18 +161,17 @@ class AvailabilityTable extends AbstractTable
 
     /**
      * @param string $neverOutOfStockSet
-     * @param bool $isBundle
+     * @param bool $isBundleProduct
      *
      * @return bool
      */
-    protected function isNeverOutOfStock(string $neverOutOfStockSet, bool $isBundle): bool
+    protected function isNeverOutOfStock(string $neverOutOfStockSet, bool $isBundleProduct): bool
     {
-        $hasNeverOutOfStock = strpos($neverOutOfStockSet, 'true') !== false;
-        if ($isBundle && $hasNeverOutOfStock) {
-            return true;
+        if ($isBundleProduct && strpos($neverOutOfStockSet, 'false') !== false) {
+            return false;
         }
 
-        return filter_var($neverOutOfStockSet, FILTER_VALIDATE_BOOLEAN) ?: false;
+        return strpos($neverOutOfStockSet, 'true') !== false;
     }
 
     /**
@@ -210,9 +211,11 @@ class AvailabilityTable extends AbstractTable
     {
         if (!$isBundle) {
             $availabilityEditUrl = $this->createAvailabilityEditUrl($productAbstract);
+
             return $this->generateEditButton($availabilityEditUrl, 'Edit Stock');
         }
         $viewBundleUrl = $this->createViewBundleUrl($productAbstract);
+
         return $this->generateViewButton($viewBundleUrl, 'View bundled products');
     }
 

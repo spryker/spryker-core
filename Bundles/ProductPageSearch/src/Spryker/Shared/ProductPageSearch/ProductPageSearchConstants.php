@@ -18,7 +18,7 @@ class ProductPageSearchConstants
      *
      * @api
      */
-    const PRODUCT_SYNC_SEARCH_QUEUE = 'sync.search.product';
+    public const PRODUCT_SYNC_SEARCH_QUEUE = 'sync.search.product';
 
     /**
      * Specification:
@@ -26,7 +26,7 @@ class ProductPageSearchConstants
      *
      * @api
      */
-    const PRODUCT_SYNC_SEARCH_ERROR_QUEUE = 'sync.search.product.error';
+    public const PRODUCT_SYNC_SEARCH_ERROR_QUEUE = 'sync.search.product.error';
 
     /**
      * Specification:
@@ -34,5 +34,20 @@ class ProductPageSearchConstants
      *
      * @api
      */
-    const PRODUCT_ABSTRACT_RESOURCE_NAME = 'product_abstract';
+    public const PRODUCT_ABSTRACT_RESOURCE_NAME = 'product_abstract';
+
+    /**
+     * Specification:
+     * - Resource name, will be used for key generating
+     *
+     * @api
+     */
+    public const PRODUCT_CONCRETE_RESOURCE_NAME = 'product_concrete';
+
+    /**
+     * @uses SearchConstants::FULL_TEXT_BOOSTED_BOOSTING_VALUE
+     *
+     * @api
+     */
+    public const FULL_TEXT_BOOSTED_BOOSTING_VALUE = 'FULL_TEXT_BOOSTED_BOOSTING_VALUE';
 }

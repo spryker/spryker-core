@@ -24,7 +24,7 @@ use SprykerTest\Yves\StepEngine\Process\Fixtures\StepMockWithBreadcrumbs;
  */
 class StepEngineWithBreadcrumbsTest extends AbstractStepEngineTest
 {
-    const FORM_NAME = 'formName';
+    public const FORM_NAME = 'formName';
 
     /**
      * @return void
@@ -37,12 +37,12 @@ class StepEngineWithBreadcrumbsTest extends AbstractStepEngineTest
         $stepEngine = new StepEngine($stepCollection, $this->getDataContainerMock(), $this->getStepBreadcrumbGeneratorMock());
         $response = $stepEngine->process($this->getRequest(self::STEP_ROUTE_A));
 
-        $this->assertInternalType('array', $response);
+        $this->assertIsArray($response);
         $this->assertArrayHasKey(StepEngine::TEMPLATE_VARIABLE_STEP_BREADCRUMBS, $response);
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Yves\StepEngine\Process\StepBreadcrumbGeneratorInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Yves\StepEngine\Process\StepBreadcrumbGeneratorInterface
      */
     protected function getStepBreadcrumbGeneratorMock()
     {
@@ -50,9 +50,9 @@ class StepEngineWithBreadcrumbsTest extends AbstractStepEngineTest
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer|null $dataTransfer
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Yves\StepEngine\Dependency\DataContainer\DataContainerInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Yves\StepEngine\Dependency\DataContainer\DataContainerInterface
      */
     protected function getDataContainerMock(?AbstractTransfer $dataTransfer = null)
     {

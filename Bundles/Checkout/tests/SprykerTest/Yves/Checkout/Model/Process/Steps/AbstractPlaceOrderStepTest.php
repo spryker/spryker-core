@@ -29,12 +29,12 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class AbstractPlaceOrderStepTest extends Unit
 {
-    const ORDER_REFERENCE = 'order reference';
-    const ESCAPE_ROUTE = 'escapeRoute';
-    const STEP_ROUTE = 'stepRoute';
-    const ERROR_CODE_123 = 123;
-    const ESCAPE_ROUTE_123 = 'escapeRoute123';
-    const EXTERNAL_REDIRECT_URL = 'externalRedirectUrl';
+    public const ORDER_REFERENCE = 'order reference';
+    public const ESCAPE_ROUTE = 'escapeRoute';
+    public const STEP_ROUTE = 'stepRoute';
+    public const ERROR_CODE_123 = 123;
+    public const ESCAPE_ROUTE_123 = 'escapeRoute123';
+    public const EXTERNAL_REDIRECT_URL = 'externalRedirectUrl';
 
     /**
      * @return void
@@ -106,7 +106,7 @@ class AbstractPlaceOrderStepTest extends Unit
     /**
      * @return void
      */
-    public function testPostConditionReturnFalseWHenNoOrderReferenceGiven()
+    public function testPostConditionReturnFalseWhenNoOrderReferenceGiven()
     {
         $abstractPlaceOrderStepMock = $this->getAbstractPlaceOrderStep(
             $this->getCheckoutClientMock()
@@ -185,7 +185,7 @@ class AbstractPlaceOrderStepTest extends Unit
     /**
      * @param \Spryker\Client\Checkout\CheckoutClientInterface $checkoutClient
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Yves\Checkout\Process\Steps\AbstractPlaceOrderStep
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Yves\Checkout\Process\Steps\AbstractPlaceOrderStep
      */
     protected function getAbstractPlaceOrderStep(CheckoutClientInterface $checkoutClient)
     {
@@ -198,7 +198,7 @@ class AbstractPlaceOrderStepTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Client\Checkout\CheckoutClientInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\Checkout\CheckoutClientInterface
      */
     private function getCheckoutClientMock()
     {

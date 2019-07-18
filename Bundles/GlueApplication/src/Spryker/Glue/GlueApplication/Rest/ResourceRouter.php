@@ -69,7 +69,7 @@ class ResourceRouter implements ResourceRouterInterface
 
         $resourceType = $this->getMainResource($resources);
         if ($httpRequest->getMethod() === Request::METHOD_OPTIONS) {
-            return $this->createOptionsRoute($resourceType);
+            return $this->createOptionsRoute($resourceType, $resources);
         }
 
         $route = $this->resourceRouteLoader->load(
@@ -78,11 +78,7 @@ class ResourceRouter implements ResourceRouterInterface
             $httpRequest
         );
 
-        if (!$route) {
-            return $this->createResourceNotFoundRoute();
-        }
-
-        if (!$this->isParentValid($route, $resources)) {
+        if (!$this->isValidRoute($route, $resources, $httpRequest)) {
             return $this->createResourceNotFoundRoute();
         }
 
@@ -196,18 +192,21 @@ class ResourceRouter implements ResourceRouterInterface
                 RequestConstantsInterface::ATTRIBUTE_IS_PROTECTED => $route[RequestConstantsInterface::ATTRIBUTE_CONFIGURATION]['is_protected'],
             ]
         );
+
         return $routeParams;
     }
 
     /**
      * @param array $resourceType
+     * @param array $resources
      *
      * @return array
      */
-    protected function createOptionsRoute(array $resourceType): array
+    protected function createOptionsRoute(array $resourceType, array $resources): array
     {
         $route = $this->createRoute('GlueApplication', 'Options', 'resource-options');
         $route[RequestConstantsInterface::ATTRIBUTE_TYPE] = $resourceType[RequestConstantsInterface::ATTRIBUTE_TYPE];
+        $route[RequestConstantsInterface::ATTRIBUTE_ALL_RESOURCES] = $resources;
 
         return $route;
     }
@@ -220,6 +219,34 @@ class ResourceRouter implements ResourceRouterInterface
      */
     protected function isParentValid(array $route, array $resources): bool
     {
-        return !isset($route[RequestConstantsInterface::ATTRIBUTE_PARENT_RESOURCE]) || $this->isValidPath($resources, $route);
+        if (isset($route[RequestConstantsInterface::ATTRIBUTE_PARENT_RESOURCE]) && count($resources) > 1) {
+            if ($route[RequestConstantsInterface::ATTRIBUTE_PARENT_RESOURCE] !== $resources[0][RequestConstantsInterface::ATTRIBUTE_TYPE]) {
+                return false;
+            }
+
+            return $this->isValidPath($resources, $route);
+        }
+
+        return $route[RequestConstantsInterface::ATTRIBUTE_TYPE] === $resources[0][RequestConstantsInterface::ATTRIBUTE_TYPE];
+    }
+
+    /**
+     * @param array|null $route
+     * @param array $resources
+     * @param \Symfony\Component\HttpFoundation\Request $httpRequest
+     *
+     * @return bool
+     */
+    protected function isValidRoute(?array $route, array $resources, Request $httpRequest): bool
+    {
+        if (!$route || !$this->isParentValid($route, $resources)) {
+            return false;
+        }
+
+        if ($httpRequest->getMethod() === Request::METHOD_POST && isset($this->getMainResource($resources)['id'])) {
+            return false;
+        }
+
+        return true;
     }
 }

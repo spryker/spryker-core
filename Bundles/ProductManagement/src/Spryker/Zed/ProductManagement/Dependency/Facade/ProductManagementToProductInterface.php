@@ -100,7 +100,7 @@ interface ProductManagementToProductInterface
     /**
      * @param int $idProductConcrete
      *
-     * @return bool
+     * @return void
      */
     public function activateProductConcrete($idProductConcrete);
 
@@ -109,7 +109,7 @@ interface ProductManagementToProductInterface
      *
      * @throws \Spryker\Zed\Product\Business\Exception\ProductConcreteNotFoundException
      *
-     * @return bool
+     * @return void
      */
     public function deactivateProductConcrete($idProductConcrete);
 
@@ -150,4 +150,19 @@ interface ProductManagementToProductInterface
      * @return void
      */
     public function touchProductConcrete($idProductConcrete);
+
+    /**
+     * @param string $sku
+     *
+     * @return int|null
+     */
+    public function findProductConcreteIdBySku($sku);
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return string
+     */
+    public function generateProductConcreteSku(ProductAbstractTransfer $productAbstractTransfer, ProductConcreteTransfer $productConcreteTransfer);
 }

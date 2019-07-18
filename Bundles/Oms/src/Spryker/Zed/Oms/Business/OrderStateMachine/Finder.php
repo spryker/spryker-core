@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Oms\Business\OrderStateMachine;
 
+use Exception;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Spryker\Shared\Oms\OmsConfig;
@@ -48,7 +49,7 @@ class Finder implements FinderInterface
     /**
      * @param int $idOrderItem
      *
-     * @return \Spryker\Zed\Oms\Business\Process\EventInterface[]
+     * @return string[]
      */
     public function getManualEvents($idOrderItem)
     {
@@ -62,7 +63,7 @@ class Finder implements FinderInterface
     /**
      * @param int $idSalesOrder
      *
-     * @return \Spryker\Zed\Oms\Business\Process\EventInterface[]
+     * @return string[][]
      */
     public function getManualEventsByIdSalesOrder($idSalesOrder)
     {
@@ -79,7 +80,7 @@ class Finder implements FinderInterface
     /**
      * @param int $idSalesOrder
      *
-     * @return array
+     * @return string[]
      */
     public function getDistinctManualEventsByIdSalesOrder($idSalesOrder)
     {
@@ -96,7 +97,7 @@ class Finder implements FinderInterface
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
      *
-     * @return \Spryker\Zed\Oms\Business\Process\EventInterface[]
+     * @return string[]
      */
     protected function getManualEventsByOrderItemEntity(SpySalesOrderItem $orderItem)
     {
@@ -117,6 +118,8 @@ class Finder implements FinderInterface
      * @param int $idOrder
      * @param string $flag
      *
+     * @throws \Exception
+     *
      * @return bool
      */
     public function isOrderFlagged($idOrder, $flag)
@@ -124,6 +127,10 @@ class Finder implements FinderInterface
         $order = $this->queryContainer
             ->querySalesOrderById($idOrder)
             ->findOne();
+
+        if ($order === null) {
+            throw new Exception('Order not found for id ' . $idOrder);
+        }
 
         $flaggedOrderItems = $this->getItemsByFlag($order, $flag, true);
 
@@ -134,6 +141,8 @@ class Finder implements FinderInterface
      * @param int $idOrder
      * @param string $flag
      *
+     * @throws \Exception
+     *
      * @return bool
      */
     public function isOrderFlaggedAll($idOrder, $flag)
@@ -142,25 +151,13 @@ class Finder implements FinderInterface
             ->querySalesOrderById($idOrder)
             ->findOne();
 
-        $orderItems = $this->queryContainer
-            ->querySalesOrderItemsByIdOrder($idOrder)
-            ->find();
+        if ($order === null) {
+            throw new Exception('Order not found for id ' . $idOrder);
+        }
 
         $flaggedOrderItems = $this->getItemsByFlag($order, $flag, true);
 
-        if (!$flaggedOrderItems) {
-            return false;
-        }
-
-        foreach ($orderItems as $orderItem) {
-            foreach ($flaggedOrderItems as $flaggedOrderItem) {
-                if ($flaggedOrderItem->getPrimaryKey() !== $orderItem->getPrimaryKey()) {
-                    return false;
-                }
-            }
-        }
-
-        return true;
+        return $flaggedOrderItems && (count($flaggedOrderItems) === count($order->getItems()));
     }
 
     /**
@@ -198,11 +195,13 @@ class Finder implements FinderInterface
     }
 
     /**
+     * @deprecated Not in use anymore.
+     *
      * @param \Spryker\Zed\Oms\Business\Process\StateInterface[] $states
      * @param string $sku
      * @param bool $returnTest
      *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem|null
      */
     protected function countOrderItemsForSku(array $states, $sku, $returnTest = true)
     {
@@ -212,8 +211,6 @@ class Finder implements FinderInterface
     }
 
     /**
-     * FIXME core-121 refactor method
-     *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
      *
      * @return array

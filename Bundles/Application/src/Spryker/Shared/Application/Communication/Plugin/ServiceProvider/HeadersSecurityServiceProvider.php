@@ -20,17 +20,22 @@ class HeadersSecurityServiceProvider implements ServiceProviderInterface
     /**
      * @const string
      */
-    const HEADER_X_FRAME_OPTIONS = 'X-Frame-Options';
+    public const HEADER_X_FRAME_OPTIONS = 'X-Frame-Options';
 
     /**
      * @const string
      */
-    const HEADER_X_CONTENT_TYPE_OPTIONS = 'X-Content-Type-Options';
+    public const HEADER_CONTENT_SECURITY_POLICY = 'Content-Security-Policy';
 
     /**
      * @const string
      */
-    const HEADER_X_XSS_PROTECTION = 'X-XSS-Protection';
+    public const HEADER_X_CONTENT_TYPE_OPTIONS = 'X-Content-Type-Options';
+
+    /**
+     * @const string
+     */
+    public const HEADER_X_XSS_PROTECTION = 'X-XSS-Protection';
 
     /**
      * {@inheritdoc}
@@ -67,6 +72,7 @@ class HeadersSecurityServiceProvider implements ServiceProviderInterface
         }
 
         $event->getResponse()->headers->set(static::HEADER_X_FRAME_OPTIONS, 'SAMEORIGIN');
+        $event->getResponse()->headers->set(static::HEADER_CONTENT_SECURITY_POLICY, 'frame-ancestors \'self\'');
         $event->getResponse()->headers->set(static::HEADER_X_CONTENT_TYPE_OPTIONS, 'nosniff');
         $event->getResponse()->headers->set(static::HEADER_X_XSS_PROTECTION, '1; mode=block');
     }

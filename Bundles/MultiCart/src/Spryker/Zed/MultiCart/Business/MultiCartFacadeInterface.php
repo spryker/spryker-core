@@ -30,7 +30,20 @@ interface MultiCartFacadeInterface
 
     /**
      * Specification:
-     * - Adds customer quote collection to quote response transfer after cart operation handling.
+     * - Finds customer quotes.
+     * - Mark first quote as default, if all customers quote are not default.
+     *
+     * @api
+     *
+     * @param string $customerReference
+     *
+     * @return void
+     */
+    public function initDefaultCustomerQuote(string $customerReference): void;
+
+    /**
+     * Specification:
+     * - Adds filtered by store customer quote collection to quote response transfer after cart operation handling.
      * - Replace quote with active quote if it exist.
      *
      * @api

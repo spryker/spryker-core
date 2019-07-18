@@ -1,5 +1,6 @@
 {
   "name": "spryker/company-supplier-data-import",
+  "type": "library",
   "description": "CompanySupplierDataImport module",
   "license": "MIT",
   "require": {
@@ -8,13 +9,15 @@
     "spryker/company-supplier": "^1.0.0",
     "spryker/currency": "^3.0.0",
     "spryker/data-import": "^1.2.0",
-    "spryker/kernel": "^3.0.0",
-    "spryker/price-product": "^1.0.0 || ^2.0.0",
+    "spryker/kernel": "^3.30.0",
+    "spryker/price-product": "^1.0.0 || ^2.0.0 || ^4.0.0",
     "spryker/product": "^5.0.0 || ^6.0.0",
     "spryker/store": "^1.5.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/propel": "*",
+    "spryker/propel-orm": "*",
     "spryker/testify": "*"
   },
   "autoload": {

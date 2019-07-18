@@ -9,10 +9,13 @@ namespace SprykerTest\Zed\Category\PageObject;
 
 class CategoryCreatePage extends Category
 {
-    const URL = '/category/create';
+    public const URL = '/category/create';
 
-    const FORM_SUBMIT_BUTTON = 'Create';
-    const SUCCESS_MESSAGE = 'The category was added successfully.';
+    public const FORM_SUBMIT_BUTTON = 'Save';
+    public const SUCCESS_MESSAGE = 'The category was added successfully.';
+    public const CLOSED_IBOX_SELECTORS = [
+        '#localizedAttributes-ibox-de_DE .ibox-tools',
+    ];
 
     /**
      * @param string $categoryKey

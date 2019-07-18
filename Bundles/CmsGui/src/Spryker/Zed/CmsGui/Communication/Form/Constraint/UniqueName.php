@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 
 class UniqueName extends SymfonyConstraint
 {
-    const OPTION_CMS_QUERY_CONTAINER = 'cmsQueryContainer';
+    public const OPTION_CMS_QUERY_CONTAINER = 'cmsQueryContainer';
 
     /**
      * @var \Spryker\Zed\CmsGui\Dependency\QueryContainer\CmsGuiToCmsQueryContainerInterface

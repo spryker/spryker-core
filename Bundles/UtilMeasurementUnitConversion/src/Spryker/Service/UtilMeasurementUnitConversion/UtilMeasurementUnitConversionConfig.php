@@ -25,7 +25,7 @@ class UtilMeasurementUnitConversionConfig extends AbstractBundleConfig
         'KILO' => [
             'KILO' => 1,
             'GRAM' => 1000,
-            'TONE' => 1000,
+            'TONE' => 0.001,
             'GBOU' => 35.274,
             'USOU' => 35.274,
             'PUND' => 2.2046,
@@ -174,7 +174,7 @@ class UtilMeasurementUnitConversionConfig extends AbstractBundleConfig
             'MMET' => 304.8,
             'KMET' => 0.0003048,
             'INCH' => 12,
-            'YARD' => 0.3,
+            'YARD' => 0.333333,
             'FOOT' => 1,
             'MILE' => 0.0001893939,
         ],

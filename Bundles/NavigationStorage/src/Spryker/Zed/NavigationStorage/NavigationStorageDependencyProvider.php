@@ -16,14 +16,17 @@ use Spryker\Zed\NavigationStorage\Dependency\QueryContainer\NavigationStorageToL
 use Spryker\Zed\NavigationStorage\Dependency\QueryContainer\NavigationStorageToNavigationQueryContainerBridge;
 use Spryker\Zed\NavigationStorage\Dependency\Service\NavigationStorageToUtilSanitizeServiceBridge;
 
+/**
+ * @method \Spryker\Zed\NavigationStorage\NavigationStorageConfig getConfig()
+ */
 class NavigationStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const QUERY_CONTAINER_NAVIGATION = 'QUERY_CONTAINER_NAVIGATION';
-    const QUERY_CONTAINER_LOCALE = 'QUERY_CONTAINER_LOCALE';
-    const FACADE_NAVIGATION = 'FACADE_NAVIGATION';
-    const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
-    const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
-    const STORE = 'store';
+    public const QUERY_CONTAINER_NAVIGATION = 'QUERY_CONTAINER_NAVIGATION';
+    public const QUERY_CONTAINER_LOCALE = 'QUERY_CONTAINER_LOCALE';
+    public const FACADE_NAVIGATION = 'FACADE_NAVIGATION';
+    public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
+    public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
+    public const STORE = 'store';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

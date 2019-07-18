@@ -12,13 +12,17 @@ use Zend\Filter\Word\UnderscoreToCamelCase;
 
 class EntityDefinitionNormalizer extends DefinitionNormalizer
 {
-    const KEY_TYPE = 'type';
-    const KEY_COLUMN = 'column';
-    const KEY_FOREIGN_KEY = 'foreign-key';
-    const KEY_ENTITY = 'Entity';
-    const FOREIGN_TABLE = 'foreignTable';
-    const KEY_PHP_NAME = 'phpName';
-    const ENTITY_NAMESPACE = 'entity-namespace';
+    protected const TYPE_MAPPING = [
+        'double' => 'float',
+    ];
+
+    public const KEY_TYPE = 'type';
+    public const KEY_COLUMN = 'column';
+    public const KEY_FOREIGN_KEY = 'foreign-key';
+    public const KEY_ENTITY = 'Entity';
+    public const FOREIGN_TABLE = 'foreignTable';
+    public const KEY_PHP_NAME = 'phpName';
+    public const ENTITY_NAMESPACE = 'entity-namespace';
 
     /**
      * @var \Spryker\Zed\Transfer\Business\Model\Generator\Helper\PluralizerInterface
@@ -109,11 +113,11 @@ class EntityDefinitionNormalizer extends DefinitionNormalizer
     protected function getTransferType($type)
     {
         $type = mb_strtolower($type);
-        if (!preg_match('/^int|^integer|^float|^string|^array|^\[\]|^bool|^boolean/', $type)) {
+        if (!preg_match('/^int|^integer|^float|^double|^string|^array|^\[\]|^bool|^boolean/', $type)) {
             return 'string';
         }
 
-        return $type;
+        return static::TYPE_MAPPING[$type] ?? $type;
     }
 
     /**
@@ -195,13 +199,14 @@ class EntityDefinitionNormalizer extends DefinitionNormalizer
                 }
             }
         }
+
         return $normalizedDefinition;
     }
 
     /**
      * @param array $transferDefinition
      *
-     * @return null|string
+     * @return string|null
      */
     protected function findEntityNamespace(array $transferDefinition)
     {
@@ -211,6 +216,7 @@ class EntityDefinitionNormalizer extends DefinitionNormalizer
 
         if (isset($transferDefinition[self::KEY_NAME])) {
             $entityName = str_replace('_', '', ucwords($transferDefinition[self::KEY_NAME], '_'));
+
             return $transferDefinition[self::ENTITY_NAMESPACE] . '\\' . $entityName;
         }
 

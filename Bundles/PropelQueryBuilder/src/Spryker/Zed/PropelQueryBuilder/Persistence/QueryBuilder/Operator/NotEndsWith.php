@@ -11,7 +11,7 @@ use Propel\Runtime\ActiveQuery\Criteria;
 
 class NotEndsWith extends EndsWith
 {
-    const TYPE = 'not_ends_with';
+    public const TYPE = 'not_ends_with';
 
     /**
      * @return string

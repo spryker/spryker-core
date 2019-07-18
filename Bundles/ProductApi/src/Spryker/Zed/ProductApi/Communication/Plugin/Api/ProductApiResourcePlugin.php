@@ -18,10 +18,14 @@ use Spryker\Zed\ProductApi\ProductApiConfig;
 /**
  * @method \Spryker\Zed\ProductApi\Business\ProductApiFacadeInterface getFacade()
  * @method \Spryker\Zed\Product\Communication\ProductCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductApi\ProductApiConfig getConfig()
+ * @method \Spryker\Zed\ProductApi\Persistence\ProductApiQueryContainerInterface getQueryContainer()
  */
 class ProductApiResourcePlugin extends AbstractPlugin implements ApiResourcePluginInterface
 {
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
      *
      * @return \Generated\Shared\Transfer\ApiItemTransfer
@@ -32,7 +36,7 @@ class ProductApiResourcePlugin extends AbstractPlugin implements ApiResourcePlug
     }
 
     /**
-     * @internal param ApiFilterTransfer $apiFilterTransfer
+     * @api
      *
      * @param int $id
      *
@@ -44,6 +48,8 @@ class ProductApiResourcePlugin extends AbstractPlugin implements ApiResourcePlug
     }
 
     /**
+     * @api
+     *
      * @param int $idProductAbstract
      * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
      *
@@ -55,6 +61,8 @@ class ProductApiResourcePlugin extends AbstractPlugin implements ApiResourcePlug
     }
 
     /**
+     * @api
+     *
      * @param int $idProductAbstract
      *
      * @throws \RuntimeException
@@ -67,6 +75,8 @@ class ProductApiResourcePlugin extends AbstractPlugin implements ApiResourcePlug
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ApiCollectionTransfer

@@ -41,7 +41,7 @@ class AbstractTransferTest extends Unit
         $this->assertSame('string', $transfer->getString());
         $this->assertSame(1, $transfer->getInt());
         $this->assertTrue($transfer->getBool());
-        $this->assertInternalType('array', $transfer->getArray());
+        $this->assertIsArray($transfer->getArray());
     }
 
     /**

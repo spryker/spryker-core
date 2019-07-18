@@ -11,13 +11,16 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductGroupCollector\Dependency\Facade\ProductGroupCollectorToCollectorBridge;
 
+/**
+ * @method \Spryker\Zed\ProductGroupCollector\ProductGroupCollectorConfig getConfig()
+ */
 class ProductGroupCollectorDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_COLLECTOR = 'FACADE_COLLECTOR';
+    public const FACADE_COLLECTOR = 'FACADE_COLLECTOR';
 
-    const SERVICE_DATA_READER = 'SERVICE_DATA_READER';
+    public const SERVICE_DATA_READER = 'SERVICE_DATA_READER';
 
-    const QUERY_CONTAINER_TOUCH = 'QUERY_CONTAINER_TOUCH';
+    public const QUERY_CONTAINER_TOUCH = 'QUERY_CONTAINER_TOUCH';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

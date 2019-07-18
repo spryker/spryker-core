@@ -18,9 +18,19 @@
         <property name="detail" type="string" />
     </transfer>
 
+    <transfer name="RestErrorCollection">
+        <property name="restErrors" type="RestErrorMessage[]" singular="restError"/>
+    </transfer>
+
     <transfer name="RestVersion">
         <property name="major" type="int" />
         <property name="minor" type="int" />
+    </transfer>
+
+    <transfer name="RestUser">
+        <property name="naturalIdentifier" type="string" />
+        <property name="surrogateIdentifier" type="int" />
+        <property name="scopes" type="string[]" singular="scope"/>
     </transfer>
 
 </transfers>

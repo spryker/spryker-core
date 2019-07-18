@@ -7,24 +7,33 @@
 
 namespace Spryker\Zed\ProductPageSearch\Business\Publisher;
 
+use Generated\Shared\Transfer\ProductPageLoadTransfer;
 use Generated\Shared\Transfer\ProductPageSearchTransfer;
+use Generated\Shared\Transfer\ProductPayloadTransfer;
 use Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearch;
+use Spryker\Shared\ProductPageSearch\ProductPageSearchConfig;
 use Spryker\Zed\ProductPageSearch\Business\Exception\PluginNotFoundException;
 use Spryker\Zed\ProductPageSearch\Business\Mapper\ProductPageSearchMapperInterface;
 use Spryker\Zed\ProductPageSearch\Business\Model\ProductPageSearchWriterInterface;
+use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToStoreFacadeInterface;
 use Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainerInterface;
 
 class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterface
 {
-    const PRODUCT_ABSTRACT_LOCALIZED_ENTITY = 'PRODUCT_ABSTRACT_LOCALIZED_ENTITY';
-    const PRODUCT_ABSTRACT_PAGE_SEARCH_ENTITY = 'PRODUCT_ABSTRACT_PAGE_SEARCH_ENTITY';
-    const STORE_NAME = 'STORE_NAME';
-    const LOCALE_NAME = 'LOCALE_NAME';
+    public const PRODUCT_ABSTRACT_LOCALIZED_ENTITY = 'PRODUCT_ABSTRACT_LOCALIZED_ENTITY';
+    public const PRODUCT_ABSTRACT_PAGE_SEARCH_ENTITY = 'PRODUCT_ABSTRACT_PAGE_SEARCH_ENTITY';
+    public const STORE_NAME = 'STORE_NAME';
+    public const LOCALE_NAME = 'LOCALE_NAME';
 
     /**
      * @var \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainerInterface
      */
     protected $queryContainer;
+
+    /**
+     * @var \Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductPageDataLoaderPluginInterface[]
+     */
+    protected $productPageDataLoaderPlugins = [];
 
     /**
      * @var \Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataExpanderInterface[]
@@ -42,22 +51,32 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
     protected $productPageSearchWriter;
 
     /**
+     * @var \Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToStoreFacadeInterface
+     */
+    protected $storeFacade;
+
+    /**
      * @param \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataExpanderInterface[] $pageDataExpanderPlugins
+     * @param \Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductPageDataLoaderPluginInterface[] $productPageDataLoaderPlugins
      * @param \Spryker\Zed\ProductPageSearch\Business\Mapper\ProductPageSearchMapperInterface $productPageSearchMapper
      * @param \Spryker\Zed\ProductPageSearch\Business\Model\ProductPageSearchWriterInterface $productPageSearchWriter
+     * @param \Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToStoreFacadeInterface $storeFacade
      */
     public function __construct(
         ProductPageSearchQueryContainerInterface $queryContainer,
         array $pageDataExpanderPlugins,
+        array $productPageDataLoaderPlugins,
         ProductPageSearchMapperInterface $productPageSearchMapper,
-        ProductPageSearchWriterInterface $productPageSearchWriter
+        ProductPageSearchWriterInterface $productPageSearchWriter,
+        ProductPageSearchToStoreFacadeInterface $storeFacade
     ) {
-
         $this->queryContainer = $queryContainer;
         $this->pageDataExpanderPlugins = $pageDataExpanderPlugins;
+        $this->productPageDataLoaderPlugins = $productPageDataLoaderPlugins;
         $this->productPageSearchMapper = $productPageSearchMapper;
         $this->productPageSearchWriter = $productPageSearchWriter;
+        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -116,6 +135,19 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
     {
         $pageDataExpanderPlugins = $this->getPageDataExpanderPlugins($pageDataExpanderPluginNames);
 
+        $payloadTransfers = [];
+        foreach ($productAbstractIds as $productAbstractId) {
+            $payloadTransfers[$productAbstractId] = (new ProductPayloadTransfer())->setIdProductAbstract($productAbstractId);
+        }
+
+        $productPageLoadTransfer = (new ProductPageLoadTransfer())
+            ->setProductAbstractIds($productAbstractIds)
+            ->setPayloadTransfers($payloadTransfers);
+
+        foreach ($this->productPageDataLoaderPlugins as $productPageDataLoaderPlugin) {
+            $productPageLoadTransfer = $productPageDataLoaderPlugin->expandProductPageDataTransfer($productPageLoadTransfer);
+        }
+
         $productAbstractLocalizedEntities = $this->findProductAbstractLocalizedEntities($productAbstractIds);
         $productAbstractPageSearchEntities = $this->findProductAbstractPageSearchEntities($productAbstractIds);
 
@@ -125,13 +157,14 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
             return;
         }
 
-        $this->storeData($productAbstractLocalizedEntities, $productAbstractPageSearchEntities, $pageDataExpanderPlugins, $isRefresh);
+        $this->storeData($productAbstractLocalizedEntities, $productAbstractPageSearchEntities, $pageDataExpanderPlugins, $productPageLoadTransfer, $isRefresh);
     }
 
     /**
      * @param array $productAbstractLocalizedEntities
      * @param \Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearch[] $productAbstractPageSearchEntities
      * @param \Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataExpanderInterface[] $pageDataExpanderPlugins
+     * @param \Generated\Shared\Transfer\ProductPageLoadTransfer $productPageLoadTransfer
      * @param bool $isRefresh
      *
      * @return void
@@ -140,18 +173,20 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
         array $productAbstractLocalizedEntities,
         array $productAbstractPageSearchEntities,
         array $pageDataExpanderPlugins,
+        ProductPageLoadTransfer $productPageLoadTransfer,
         $isRefresh = false
     ) {
         $pairedEntities = $this->pairProductAbstractLocalizedEntitiesWithProductAbstractPageSearchEntities(
             $productAbstractLocalizedEntities,
-            $productAbstractPageSearchEntities
+            $productAbstractPageSearchEntities,
+            $productPageLoadTransfer
         );
 
         foreach ($pairedEntities as $pairedEntity) {
             $productAbstractLocalizedEntity = $pairedEntity[static::PRODUCT_ABSTRACT_LOCALIZED_ENTITY];
             $productAbstractPageSearchEntity = $pairedEntity[static::PRODUCT_ABSTRACT_PAGE_SEARCH_ENTITY];
 
-            if ($productAbstractLocalizedEntity === null || !$this->isActive($productAbstractLocalizedEntity)) {
+            if ($productAbstractLocalizedEntity === null || !$this->isActual($productAbstractLocalizedEntity)) {
                 $this->deleteProductAbstractPageSearchEntity($productAbstractPageSearchEntity);
 
                 continue;
@@ -198,17 +233,16 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
         array $pageDataExpanderPlugins,
         $isRefresh = false
     ) {
-        $productAbstractPageSearchEntity->setStore($storeName);
-        $productAbstractPageSearchEntity->setLocale($localeName);
-
         $productPageSearchTransfer = $this->getProductPageSearchTransfer(
-            $pageDataExpanderPlugins,
             $productAbstractLocalizedEntity,
             $productAbstractPageSearchEntity,
-            $storeName,
             $isRefresh
         );
+
+        $productPageSearchTransfer->setStore($storeName);
         $productPageSearchTransfer->setLocale($localeName);
+
+        $this->expandPageSearchTransferWithPlugins($pageDataExpanderPlugins, $productAbstractLocalizedEntity, $productPageSearchTransfer);
 
         $searchDocument = $this->productPageSearchMapper->mapToSearchData($productPageSearchTransfer);
 
@@ -220,10 +254,10 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
      *
      * @return bool
      */
-    protected function isActive(array $productAbstractLocalizedEntity)
+    protected function isActual(array $productAbstractLocalizedEntity): bool
     {
         foreach ($productAbstractLocalizedEntity['SpyProductAbstract']['SpyProducts'] as $spyProduct) {
-            if ($spyProduct['is_active']) {
+            if ($spyProduct['is_active'] && $this->isSearchable($spyProduct, $productAbstractLocalizedEntity['fk_locale'])) {
                 return true;
             }
         }
@@ -232,32 +266,52 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
     }
 
     /**
-     * @param \Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataExpanderInterface[] $pageDataExpanderPlugins
+     * @param array $spyProduct
+     * @param int $idLocale
+     *
+     * @return bool
+     */
+    protected function isSearchable(array $spyProduct, int $idLocale): bool
+    {
+        foreach ($spyProduct['SpyProductSearches'] as $spyProductSearch) {
+            if ($spyProductSearch['fk_locale'] === $idLocale && $spyProductSearch['is_searchable'] === true) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Retrieves the ProductPageSearchTransfer from the storage entity (if it existed already) or populates it from the localized entity.
+     *
      * @param array $productAbstractLocalizedEntity
-     * @param \Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearch|null $productAbstractPageSearchEntity
-     * @param string $storeName
+     * @param \Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearch $productAbstractPageSearchEntity
      * @param bool $isRefresh
      *
      * @return \Generated\Shared\Transfer\ProductPageSearchTransfer
      */
     protected function getProductPageSearchTransfer(
-        array $pageDataExpanderPlugins,
         array $productAbstractLocalizedEntity,
-        ?SpyProductAbstractPageSearch $productAbstractPageSearchEntity,
-        $storeName,
+        SpyProductAbstractPageSearch $productAbstractPageSearchEntity,
         $isRefresh = false
-    ) {
-        if ($isRefresh && $productAbstractPageSearchEntity && $productAbstractPageSearchEntity->getStructuredData()) {
-            $productPageSearchTransfer = $this->productPageSearchMapper->mapToProductPageSearchTransferFromJson($productAbstractPageSearchEntity->getStructuredData());
-        } else {
-            $productPageSearchTransfer = $this->productPageSearchMapper->mapToProductPageSearchTransfer($productAbstractLocalizedEntity);
+    ): ProductPageSearchTransfer {
+        if ($isRefresh && !$productAbstractPageSearchEntity->isNew()) {
+            return $this->refreshProductPageSearchTransfer($productAbstractPageSearchEntity);
         }
 
-        $productPageSearchTransfer->setStore($storeName);
+        return $this->productPageSearchMapper->mapToProductPageSearchTransfer($productAbstractLocalizedEntity);
+    }
 
-        $this->expandPageSearchTransferWithPlugins($pageDataExpanderPlugins, $productAbstractLocalizedEntity, $productPageSearchTransfer);
-
-        return $productPageSearchTransfer;
+    /**
+     * @param \Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearch $productAbstractPageSearchEntity
+     *
+     * @return \Generated\Shared\Transfer\ProductPageSearchTransfer
+     */
+    protected function refreshProductPageSearchTransfer(
+        SpyProductAbstractPageSearch $productAbstractPageSearchEntity
+    ): ProductPageSearchTransfer {
+        return $this->productPageSearchMapper->mapToProductPageSearchTransferFromJson($productAbstractPageSearchEntity->getStructuredData());
     }
 
     /**
@@ -320,20 +374,24 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
      *
      * @param array $productAbstractLocalizedEntities
      * @param \Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearch[] $productAbstractPageSearchEntities
+     * @param \Generated\Shared\Transfer\ProductPageLoadTransfer $productPageLoadTransfer
      *
      * @return array
      */
     protected function pairProductAbstractLocalizedEntitiesWithProductAbstractPageSearchEntities(
         array $productAbstractLocalizedEntities,
-        array $productAbstractPageSearchEntities
+        array $productAbstractPageSearchEntities,
+        ProductPageLoadTransfer $productPageLoadTransfer
     ) {
         $mappedProductAbstractPageSearchEntities = $this->mapProductAbstractPageSearchEntities($productAbstractPageSearchEntities);
 
         $pairs = [];
+        $productPayloadTransfers = $productPageLoadTransfer->getPayloadTransfers();
         foreach ($productAbstractLocalizedEntities as $productAbstractLocalizedEntity) {
-            list($pairs, $mappedProductAbstractPageSearchEntities) = $this->pairProductAbstractLocalizedEntityWithProductAbstractPageSearchEntityByStoresAndLocale(
+            [$pairs, $mappedProductAbstractPageSearchEntities] = $this->pairProductAbstractLocalizedEntityWithProductAbstractPageSearchEntityByStoresAndLocale(
                 $productAbstractLocalizedEntity['fk_product_abstract'],
                 $productAbstractLocalizedEntity['Locale']['locale_name'],
+                $productPayloadTransfers[$productAbstractLocalizedEntity['fk_product_abstract']],
                 $productAbstractLocalizedEntity['SpyProductAbstract']['SpyProductAbstractStores'],
                 $productAbstractLocalizedEntity,
                 $mappedProductAbstractPageSearchEntities,
@@ -404,6 +462,7 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
     /**
      * @param int $idProductAbstract
      * @param string $localeName
+     * @param \Generated\Shared\Transfer\ProductPayloadTransfer $productPayloadTransfer
      * @param array $productAbstractStores
      * @param array $productAbstractLocalizedEntity
      * @param array $mappedProductAbstractPageSearchEntities
@@ -414,6 +473,7 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
     protected function pairProductAbstractLocalizedEntityWithProductAbstractPageSearchEntityByStoresAndLocale(
         $idProductAbstract,
         $localeName,
+        ProductPayloadTransfer $productPayloadTransfer,
         array $productAbstractStores,
         array $productAbstractLocalizedEntity,
         array $mappedProductAbstractPageSearchEntities,
@@ -421,10 +481,17 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
     ) {
         foreach ($productAbstractStores as $productAbstractStore) {
             $storeName = $productAbstractStore['SpyStore']['name'];
+            $productAbstractLocalizedEntity[ProductPageSearchConfig::PRODUCT_ABSTRACT_PAGE_LOAD_DATA] = $productPayloadTransfer;
 
             $searchEntity = isset($mappedProductAbstractPageSearchEntities[$idProductAbstract][$storeName][$localeName]) ?
                 $mappedProductAbstractPageSearchEntities[$idProductAbstract][$storeName][$localeName] :
                 new SpyProductAbstractPageSearch();
+
+            unset($mappedProductAbstractPageSearchEntities[$idProductAbstract][$storeName][$localeName]);
+
+            if (!$this->isValidStoreLocale($storeName, $localeName)) {
+                continue;
+            }
 
             $pairs[] = [
                 static::PRODUCT_ABSTRACT_LOCALIZED_ENTITY => $productAbstractLocalizedEntity,
@@ -432,10 +499,19 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
                 static::LOCALE_NAME => $localeName,
                 static::STORE_NAME => $storeName,
             ];
-
-            unset($mappedProductAbstractPageSearchEntities[$idProductAbstract][$storeName][$localeName]);
         }
 
         return [$pairs, $mappedProductAbstractPageSearchEntities];
+    }
+
+    /**
+     * @param string $storeName
+     * @param string $localeName
+     *
+     * @return bool
+     */
+    protected function isValidStoreLocale(string $storeName, string $localeName): bool
+    {
+        return in_array($localeName, $this->storeFacade->getStoreByName($storeName)->getAvailableLocaleIsoCodes());
     }
 }

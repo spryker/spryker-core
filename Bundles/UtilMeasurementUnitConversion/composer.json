@@ -1,13 +1,15 @@
 {
   "name": "spryker/util-measurement-unit-conversion",
+  "type": "library",
   "description": "UtilMeasurementUnitConversion module",
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/kernel": "^3.3.0"
+    "spryker/kernel": "^3.30.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/propel": "*",
     "spryker/testify": "*"
   },
   "autoload": {

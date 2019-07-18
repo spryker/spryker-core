@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
  */
 class QueryBuilderController extends AbstractController
 {
-    const URL_PARAM_ID_PRODUCT_RELATION = 'id-product-relation';
+    public const URL_PARAM_ID_PRODUCT_RELATION = 'id-product-relation';
 
     /**
      * @return \Symfony\Component\HttpFoundation\JsonResponse

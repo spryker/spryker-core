@@ -16,9 +16,9 @@ use Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartCo
 
 class ProductOptionValuePriceValidator implements ProductOptionValuePriceValidatorInterface
 {
-    const MESSAGE_ERROR_PRODUCT_OPTION_VALUE_PRICE_EXISTS = 'product-cart.validation.error.product-option-value-price-exists';
+    public const MESSAGE_ERROR_PRODUCT_OPTION_VALUE_PRICE_EXISTS = 'product-cart.validation.error.product-option-value-price-exists';
 
-    const MESSAGE_PARAM_SKU = '%sku%';
+    public const MESSAGE_PARAM_SKU = '%sku%';
 
     /**
      * @var \Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartConnectorToProductOptionFacadeInterface

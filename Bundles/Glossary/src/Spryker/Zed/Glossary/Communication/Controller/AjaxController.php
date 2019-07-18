@@ -15,10 +15,11 @@ use Symfony\Component\HttpFoundation\Request;
  * @method \Spryker\Zed\Glossary\Business\GlossaryFacadeInterface getFacade()
  * @method \Spryker\Zed\Glossary\Persistence\GlossaryQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Glossary\Communication\GlossaryCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Glossary\Persistence\GlossaryRepositoryInterface getRepository()
  */
 class AjaxController extends AbstractController
 {
-    const SEARCH_TERM = 'term';
+    public const SEARCH_TERM = 'term';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

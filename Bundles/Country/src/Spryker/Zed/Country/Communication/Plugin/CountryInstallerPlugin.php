@@ -13,10 +13,14 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \Spryker\Zed\Country\Communication\CountryCommunicationFactory getFactory()
  * @method \Spryker\Zed\Country\Business\CountryFacadeInterface getFacade()
+ * @method \Spryker\Zed\Country\CountryConfig getConfig()
+ * @method \Spryker\Zed\Country\Persistence\CountryQueryContainerInterface getQueryContainer()
  */
 class CountryInstallerPlugin extends AbstractPlugin implements InstallerPluginInterface
 {
     /**
+     * @api
+     *
      * @return void
      */
     public function install()

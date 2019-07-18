@@ -11,13 +11,17 @@ use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUserResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Client\Kernel\AbstractClient;
+use Spryker\Client\Kernel\PermissionAwareTrait;
 
 /**
  * @method \Spryker\Client\CompanyUser\CompanyUserFactory getFactory()
  */
 class CompanyUserClient extends AbstractClient implements CompanyUserClientInterface
 {
+    use PermissionAwareTrait;
+
     /**
      * {@inheritdoc}
      *
@@ -97,5 +101,86 @@ class CompanyUserClient extends AbstractClient implements CompanyUserClientInter
         return $this->getFactory()
             ->createZedCompanyUserStub()
             ->getCompanyUserById($companyUserTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @uses \SprykerShop\Shared\CompanyPage\Plugin\CompanyUserStatusChangePermissionPlugin
+     *
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
+     */
+    public function enableCompanyUser(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
+    {
+        if ($this->can('CompanyUserChangePermissionPlugin')) {
+            return $this->getFactory()
+                ->createZedCompanyUserStub()
+                ->enableCompanyUser($companyUserTransfer);
+        }
+
+        return (new CompanyUserResponseTransfer())
+            ->setCompanyUser($companyUserTransfer)
+            ->setIsSuccessful(false);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @uses \SprykerShop\Shared\CompanyPage\Plugin\CompanyUserStatusChangePermissionPlugin
+     *
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
+     */
+    public function disableCompanyUser(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
+    {
+        if ($this->can('CompanyUserChangePermissionPlugin')) {
+            return $this->getFactory()
+                ->createZedCompanyUserStub()
+                ->disableCompanyUser($companyUserTransfer);
+        }
+
+        return (new CompanyUserResponseTransfer())
+            ->setCompanyUser($companyUserTransfer)
+            ->setIsSuccessful(false);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
+     */
+    public function findCompanyUser(): ?CompanyUserTransfer
+    {
+        $customerTransfer = $this->getFactory()
+            ->getCustomerClient()
+            ->getCustomer();
+
+        return $customerTransfer ? $customerTransfer->getCompanyUserTransfer() : null;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
+     */
+    public function getActiveCompanyUsersByCustomerReference(
+        CustomerTransfer $customerTransfer
+    ): CompanyUserCollectionTransfer {
+        return $this->getFactory()
+            ->createZedCompanyUserStub()
+            ->getActiveCompanyUsersByCustomerReference($customerTransfer);
     }
 }

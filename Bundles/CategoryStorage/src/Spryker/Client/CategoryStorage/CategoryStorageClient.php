@@ -19,7 +19,7 @@ class CategoryStorageClient extends AbstractClient implements CategoryStorageCli
      *
      * @param string $locale
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer[]|\ArrayObject
      */
     public function getCategories($locale)
     {

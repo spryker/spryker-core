@@ -31,6 +31,6 @@ class LoggerConfigLoaderZed implements LoggerConfigLoaderInterface
     {
         $loggerClassName = Config::get(LogConstants::LOGGER_CONFIG_ZED);
 
-        return new $loggerClassName;
+        return new $loggerClassName();
     }
 }

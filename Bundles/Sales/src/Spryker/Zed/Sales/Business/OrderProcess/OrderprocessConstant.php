@@ -10,31 +10,31 @@ namespace Spryker\Zed\Sales\Business\OrderProcess;
 interface OrderprocessConstant
 {
     // STATE
-    const STATE_NEW = 'new';
+    public const STATE_NEW = 'new';
 
-    const STATE_EXPORTABLE = 'exportable';
+    public const STATE_EXPORTABLE = 'exportable';
 
-    const STATE_CLOSED = 'closed';
+    public const STATE_CLOSED = 'closed';
 
-    const STATE_FINALLY_CLOSED = 'finally closed';
+    public const STATE_FINALLY_CLOSED = 'finally closed';
 
-    const STATE_WAITING_FOR_PAYMENT = 'waiting for payment';
+    public const STATE_WAITING_FOR_PAYMENT = 'waiting for payment';
 
     // EVENT
-    const EVENT_ON_ENTER = 'onEnter';
+    public const EVENT_ON_ENTER = 'onEnter';
 
-    const EVENT_CLOSE = 'close';
+    public const EVENT_CLOSE = 'close';
 
-    const EVENT_START_INVOICE_CREATION = 'start invoice creation';
+    public const EVENT_START_INVOICE_CREATION = 'start invoice creation';
 
-    const EVENT_CHECK_DAILY_TIMEOUT = 'check daily timeout';
+    public const EVENT_CHECK_DAILY_TIMEOUT = 'check daily timeout';
 
-    const EVENT_CHECK_WEEKLY_TIMEOUT = 'check weekly timeout';
+    public const EVENT_CHECK_WEEKLY_TIMEOUT = 'check weekly timeout';
 
-    const EVENT_CHECK_MONTHLY_TIMEOUT = 'check monthly timeout';
+    public const EVENT_CHECK_MONTHLY_TIMEOUT = 'check monthly timeout';
 
-    const EVENT_REDIRECT_PAYMENT_CANCELLED_REGULAR = 'redirect payment cancelled regular';
+    public const EVENT_REDIRECT_PAYMENT_CANCELLED_REGULAR = 'redirect payment cancelled regular';
 
     // CONDITION
-    const RULE_ORDER_USED_CODE = 'order used code';
+    public const RULE_ORDER_USED_CODE = 'order used code';
 }

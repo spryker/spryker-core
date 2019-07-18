@@ -13,12 +13,12 @@ use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToSearchInt
 class ProductPageSearchBusinessFactoryMock extends ProductPageSearchBusinessFactory
 {
     /**
-     * @var \Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToSearchInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToSearchInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $searchFacadeMock;
 
     /**
-     * @param \Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToSearchInterface|\PHPUnit_Framework_MockObject_MockObject $searchFacadeMock
+     * @param \Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToSearchInterface|\PHPUnit\Framework\MockObject\MockObject $searchFacadeMock
      */
     public function __construct(ProductPageSearchToSearchInterface $searchFacadeMock)
     {

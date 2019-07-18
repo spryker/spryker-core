@@ -8,11 +8,14 @@
 namespace Spryker\Zed\Development\Business\Dependency\DependencyFinder;
 
 use Spryker\Zed\Development\Business\Dependency\DependencyContainer\DependencyContainerInterface;
+use Spryker\Zed\Development\Business\Dependency\DependencyFinder\Context\DependencyFinderContextInterface;
 use Spryker\Zed\Development\Business\Dependency\ModuleParser\UseStatementParserInterface;
 use Spryker\Zed\Development\DevelopmentConfig;
 
 class InternalDependencyFinder extends AbstractFileDependencyFinder
 {
+    public const TYPE_INTERNAL = 'internal';
+
     /**
      * @var \Spryker\Zed\Development\Business\Dependency\ModuleParser\UseStatementParserInterface
      */
@@ -34,20 +37,46 @@ class InternalDependencyFinder extends AbstractFileDependencyFinder
     }
 
     /**
-     * @param string $module
+     * @return string
+     */
+    public function getType(): string
+    {
+        return static::TYPE_INTERNAL;
+    }
+
+    /**
+     * @param \Spryker\Zed\Development\Business\Dependency\DependencyFinder\Context\DependencyFinderContextInterface $context
+     *
+     * @return bool
+     */
+    public function accept(DependencyFinderContextInterface $context): bool
+    {
+        if ($context->getDependencyType() !== null && $context->getDependencyType() !== $this->getType()) {
+            return false;
+        }
+
+        if ($context->getFileInfo()->getExtension() !== 'php') {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * @param \Spryker\Zed\Development\Business\Dependency\DependencyFinder\Context\DependencyFinderContextInterface $context
      * @param \Spryker\Zed\Development\Business\Dependency\DependencyContainer\DependencyContainerInterface $dependencyContainer
      *
      * @return \Spryker\Zed\Development\Business\Dependency\DependencyContainer\DependencyContainerInterface
      */
-    public function findDependencies(string $module, DependencyContainerInterface $dependencyContainer): DependencyContainerInterface
+    public function findDependencies(DependencyFinderContextInterface $context, DependencyContainerInterface $dependencyContainer): DependencyContainerInterface
     {
-        $dependencyModules = $this->getDependencyModules($module);
+        $dependencyModules = $this->getDependencyModules($context);
 
         foreach ($dependencyModules as $filePath => $modules) {
             foreach ($modules as $dependentModule) {
                 $dependencyContainer->addDependency(
                     $dependentModule,
-                    'spryker',
+                    $this->getType(),
                     $this->isOptional($filePath, $dependentModule),
                     $this->isTestFile($filePath)
                 );
@@ -65,24 +94,23 @@ class InternalDependencyFinder extends AbstractFileDependencyFinder
      */
     protected function isOptional(string $filePath, string $module): bool
     {
-        return ($this->isPluginFile($filePath) && !$this->isExtensionModule($module));
+        return ($this->isPluginFile($filePath) && !$this->isExtensionModule($module) && !$this->isTestFile($filePath));
     }
 
     /**
-     * @param string $module
+     * @param \Spryker\Zed\Development\Business\Dependency\DependencyFinder\Context\DependencyFinderContextInterface $context
      *
      * @return array
      */
-    protected function getDependencyModules(string $module): array
+    protected function getDependencyModules(DependencyFinderContextInterface $context): array
     {
         $dependencyModules = [];
-        $useStatements = $this->useStatementParser->getUseStatements($module);
+        $useStatements = $this->useStatementParser->getUseStatements($context->getFileInfo());
 
-        foreach ($useStatements as $fileName => $fileUseStatements) {
-            $modules = $this->getModuleNamesFromUseStatements($fileUseStatements, $module);
-            if (count($modules) > 0) {
-                $dependencyModules[$fileName] = array_unique($modules);
-            }
+        $modules = $this->getModuleNamesFromUseStatements($useStatements, $context->getModule()->getName());
+
+        if (count($modules) > 0) {
+            $dependencyModules[$context->getFileInfo()->getRealPath()] = array_unique($modules);
         }
 
         return $dependencyModules;
@@ -99,7 +127,7 @@ class InternalDependencyFinder extends AbstractFileDependencyFinder
         $dependentModules = [];
         foreach ($useStatements as $useStatement) {
             $useStatementFragments = explode('\\', $useStatement);
-            if (!in_array($useStatementFragments[0], $this->config->getInternalNamespaces())) {
+            if ($this->isIgnorableUseStatement($useStatementFragments)) {
                 continue;
             }
             $foreignModule = $useStatementFragments[2];
@@ -109,5 +137,15 @@ class InternalDependencyFinder extends AbstractFileDependencyFinder
         }
 
         return $dependentModules;
+    }
+
+    /**
+     * @param array $useStatementFragments
+     *
+     * @return bool
+     */
+    protected function isIgnorableUseStatement(array $useStatementFragments): bool
+    {
+        return (!in_array($useStatementFragments[0], $this->config->getInternalNamespaces()) || !in_array($useStatementFragments[1], $this->config->getApplications()));
     }
 }

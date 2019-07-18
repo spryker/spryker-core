@@ -21,6 +21,8 @@ class ProductViewVariantRestrictionPlugin extends AbstractPlugin implements Prod
      *
      * @api
      *
+     * @deprecated Will be removed without replacement. Not recommended to use with spryker/product-storage ^1.4.0.
+     *
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      * @param array $productData
      * @param string $localeName

@@ -11,9 +11,12 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ShipmentCheckoutConnector\Dependency\Facade\ShipmentCheckoutConnectorToShipmentFacadeBridge;
 
+/**
+ * @method \Spryker\Zed\ShipmentCheckoutConnector\ShipmentCheckoutConnectorConfig getConfig()
+ */
 class ShipmentCheckoutConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_SHIPMENT = 'FACADE_SHIPMENT';
+    public const FACADE_SHIPMENT = 'FACADE_SHIPMENT';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

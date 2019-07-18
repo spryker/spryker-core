@@ -5,7 +5,6 @@
 
 'use strict';
 
-require('ZedGui');
 var reSortList = require('./re-sort-list');
 
 $(document).ready(function() {

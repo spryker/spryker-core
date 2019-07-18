@@ -11,6 +11,9 @@ use Spryker\Zed\FileManager\Dependency\Service\FileManagerToFileSystemServiceBri
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\FileManager\FileManagerConfig getConfig()
+ */
 class FileManagerDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const SERVICE_FILE_SYSTEM = 'SERVICE_FILE_SYSTEM';

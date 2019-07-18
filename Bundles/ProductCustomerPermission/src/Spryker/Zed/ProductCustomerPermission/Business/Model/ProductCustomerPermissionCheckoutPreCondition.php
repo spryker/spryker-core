@@ -132,7 +132,7 @@ class ProductCustomerPermissionCheckoutPreCondition implements ProductCustomerPe
         $deniedProductAbstractNames = [];
 
         foreach ($quoteTransfer->getItems() as $quoteItem) {
-            if (!\in_array($quoteItem->getIdProductAbstract(), $allowedIdProductAbstracts, true)) {
+            if (!in_array($quoteItem->getIdProductAbstract(), $allowedIdProductAbstracts, true)) {
                 $deniedProductAbstractNames[] = $quoteItem->getName();
             }
         }

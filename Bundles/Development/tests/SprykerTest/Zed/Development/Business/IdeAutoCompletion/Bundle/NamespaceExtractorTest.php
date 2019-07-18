@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -29,7 +30,7 @@ class NamespaceExtractorTest extends Unit
     public function testReplacementOfRegularBaseDirectory()
     {
         $baseDirectory = '/foo/bar/baz/Bundle/src/';
-        $directory = new SplFileInfo('/foo/bar/baz/Bundle/src/Spryker/Application/Bundle', null, null);
+        $directory = new SplFileInfo('/foo/bar/baz/Bundle/src/Spryker/Application/Bundle', 'foo', 'bar');
         $namespaceExtractor = new NamespaceExtractor();
         $namespace = $namespaceExtractor->fromDirectory($directory, $baseDirectory);
 
@@ -42,7 +43,7 @@ class NamespaceExtractorTest extends Unit
     public function testReplacementOfAsteriskGlobPatternBaseDirectory()
     {
         $baseDirectory = '/foo/bar/baz/*/src/';
-        $directory = new SplFileInfo('/foo/bar/baz/Bundle/src/Spryker/Application/Bundle', null, null);
+        $directory = new SplFileInfo('/foo/bar/baz/Bundle/src/Spryker/Application/Bundle', 'foo', 'bar');
         $namespaceExtractor = new NamespaceExtractor();
         $namespace = $namespaceExtractor->fromDirectory($directory, $baseDirectory);
 
@@ -55,7 +56,7 @@ class NamespaceExtractorTest extends Unit
     public function testReplacementOfQuestionMarkGlobPatternBaseDirectory()
     {
         $baseDirectory = '/foo/bar/?az/Bundle/src/';
-        $directory = new SplFileInfo('/foo/bar/baz/Bundle/src/Spryker/Application/Bundle', null, null);
+        $directory = new SplFileInfo('/foo/bar/baz/Bundle/src/Spryker/Application/Bundle', 'foo', 'bar');
         $namespaceExtractor = new NamespaceExtractor();
         $namespace = $namespaceExtractor->fromDirectory($directory, $baseDirectory);
 
@@ -70,11 +71,11 @@ class NamespaceExtractorTest extends Unit
         $baseDirectory = '/foo/bar/{baz,spryker}/Bundle/src/';
         $namespaceExtractor = new NamespaceExtractor();
 
-        $directory = new SplFileInfo('/foo/bar/baz/Bundle/src/Spryker/Application/Bundle', null, null);
+        $directory = new SplFileInfo('/foo/bar/baz/Bundle/src/Spryker/Application/Bundle', 'foo', 'bar');
         $namespace = $namespaceExtractor->fromDirectory($directory, $baseDirectory);
         $this->assertSame('Spryker\Application\Bundle', $namespace);
 
-        $directory = new SplFileInfo('/foo/bar/spryker/Bundle/src/Spryker/Application/Bundle', null, null);
+        $directory = new SplFileInfo('/foo/bar/spryker/Bundle/src/Spryker/Application/Bundle', 'foo', 'bar');
         $namespace = $namespaceExtractor->fromDirectory($directory, $baseDirectory);
         $this->assertSame('Spryker\Application\Bundle', $namespace);
     }
@@ -87,11 +88,11 @@ class NamespaceExtractorTest extends Unit
         $baseDirectory = '/foo/bar/[bf]az/Bundle/src/';
         $namespaceExtractor = new NamespaceExtractor();
 
-        $directory = new SplFileInfo('/foo/bar/baz/Bundle/src/Spryker/Application/Bundle', null, null);
+        $directory = new SplFileInfo('/foo/bar/baz/Bundle/src/Spryker/Application/Bundle', 'foo', 'bar');
         $namespace = $namespaceExtractor->fromDirectory($directory, $baseDirectory);
         $this->assertSame('Spryker\Application\Bundle', $namespace);
 
-        $directory = new SplFileInfo('/foo/bar/faz/Bundle/src/Spryker/Application/Bundle', null, null);
+        $directory = new SplFileInfo('/foo/bar/faz/Bundle/src/Spryker/Application/Bundle', 'foo', 'bar');
         $namespace = $namespaceExtractor->fromDirectory($directory, $baseDirectory);
         $this->assertSame('Spryker\Application\Bundle', $namespace);
     }

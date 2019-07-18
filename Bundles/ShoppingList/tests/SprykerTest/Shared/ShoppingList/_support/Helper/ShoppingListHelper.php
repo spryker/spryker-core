@@ -45,6 +45,18 @@ class ShoppingListHelper extends Module
     }
 
     /**
+     * @param array $seed
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
+     */
+    public function haveShoppingListItem(array $seed = []): ShoppingListItemTransfer
+    {
+        return $this->getLocator()->shoppingList()->facade()->addItem(
+            $this->buildShoppingListItem($seed)
+        );
+    }
+
+    /**
      * @param string $name
      * @param array $permissionKeys
      *

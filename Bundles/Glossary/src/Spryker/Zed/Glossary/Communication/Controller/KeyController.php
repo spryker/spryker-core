@@ -17,10 +17,11 @@ use Symfony\Component\HttpFoundation\Request;
  * @method \Spryker\Zed\Glossary\Communication\GlossaryCommunicationFactory getFactory()
  * @method \Spryker\Zed\Glossary\Business\GlossaryFacadeInterface getFacade()
  * @method \Spryker\Zed\Glossary\Persistence\GlossaryQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Glossary\Persistence\GlossaryRepositoryInterface getRepository()
  */
 class KeyController extends AbstractController
 {
-    const TERM = 'term';
+    public const TERM = 'term';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -72,7 +73,7 @@ class KeyController extends AbstractController
             ->queryByKey($term)->find();
 
         $result = [];
-        if ($keys) {
+        if ($keys->count()) {
             $keys = $keys->toArray(null, false, TableMap::TYPE_COLNAME);
 
             foreach ($keys as $value) {

@@ -11,10 +11,13 @@ use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Orm\Zed\Wishlist\Persistence\SpyWishlistItemQuery;
 use Orm\Zed\Wishlist\Persistence\SpyWishlistQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
+use Spryker\Zed\Wishlist\Persistence\Mapper\WishlistMapper;
+use Spryker\Zed\Wishlist\Persistence\Mapper\WishlistMapperInterface;
 
 /**
  * @method \Spryker\Zed\Wishlist\WishlistConfig getConfig()
  * @method \Spryker\Zed\Wishlist\Persistence\WishlistQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Wishlist\Persistence\WishlistRepositoryInterface getRepository()
  */
 class WishlistPersistenceFactory extends AbstractPersistenceFactory
 {
@@ -40,5 +43,13 @@ class WishlistPersistenceFactory extends AbstractPersistenceFactory
     public function createProductQuery()
     {
         return SpyProductQuery::create();
+    }
+
+    /**
+     * @return \Spryker\Zed\Wishlist\Persistence\Mapper\WishlistMapperInterface
+     */
+    public function createWishlistMapper(): WishlistMapperInterface
+    {
+        return new WishlistMapper();
     }
 }

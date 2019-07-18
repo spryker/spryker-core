@@ -14,7 +14,7 @@ use Spryker\Shared\Kernel\Transfer\EntityTransferInterface;
 
 class TransferToEntityMapper implements TransferToEntityMapperInterface
 {
-    const PROPEL_SETTER_PREFIX = 'add';
+    public const PROPEL_SETTER_PREFIX = 'add';
 
     /**
      * @var array
@@ -37,7 +37,7 @@ class TransferToEntityMapper implements TransferToEntityMapperInterface
             }
 
             $parentEntitySetterMethodName = $this->findParentEntitySetterMethodName($propertyName, $entity);
-            if (is_array($value) || $value instanceof ArrayObject) {
+            if ($value instanceof ArrayObject) {
                 foreach ($value as $childTransfer) {
                     $childEntity = $this->mapEntityCollection($childTransfer);
                     $entity->$parentEntitySetterMethodName($childEntity);
@@ -61,7 +61,7 @@ class TransferToEntityMapper implements TransferToEntityMapperInterface
      */
     public function mapTransferCollection($transferClassName, ActiveRecordInterface $parentEntity)
     {
-        $transfer = new $transferClassName;
+        $transfer = new $transferClassName();
         $transfer->fromArray($parentEntity->toArray(TableMap::TYPE_FIELDNAME, true, [], true), true);
 
         return $transfer;
@@ -71,7 +71,7 @@ class TransferToEntityMapper implements TransferToEntityMapperInterface
      * @param string $relationName
      * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface $parentEntity
      *
-     * @return null|string
+     * @return string|null
      */
     protected function findParentEntitySetterMethodName($relationName, ActiveRecordInterface $parentEntity)
     {
@@ -91,6 +91,7 @@ class TransferToEntityMapper implements TransferToEntityMapperInterface
 
             return static::$setterCache[$relationName];
         }
+
         return null;
     }
 
@@ -102,7 +103,7 @@ class TransferToEntityMapper implements TransferToEntityMapperInterface
      */
     protected function mapEntity(array $transferArray, $entityNamespace)
     {
-        $entity = new $entityNamespace;
+        $entity = new $entityNamespace();
         $entity->fromArray($transferArray);
 
         if ($entity->getPrimaryKey()) {
@@ -120,6 +121,7 @@ class TransferToEntityMapper implements TransferToEntityMapperInterface
     protected function getTableMap(ActiveRecordInterface $entity)
     {
         $tableNameClass = $entity::TABLE_MAP;
+
         return $tableNameClass::getTableMap();
     }
 

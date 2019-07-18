@@ -24,8 +24,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class AbstractTableTest extends Unit
 {
-    const COL_ONE = 'one';
-    const COL_TWO = 'two';
+    public const COL_ONE = 'one';
+    public const COL_TWO = 'two';
 
     /**
      * @var \Spryker\Zed\Gui\Communication\Table\AbstractTable

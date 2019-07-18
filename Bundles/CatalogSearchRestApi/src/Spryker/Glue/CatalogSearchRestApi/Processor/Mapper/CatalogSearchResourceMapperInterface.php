@@ -6,15 +6,26 @@
 
 namespace Spryker\Glue\CatalogSearchRestApi\Processor\Mapper;
 
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
+use Generated\Shared\Transfer\PriceModeConfigurationTransfer;
+use Generated\Shared\Transfer\RestCatalogSearchAttributesTransfer;
 
 interface CatalogSearchResourceMapperInterface
 {
     /**
      * @param array $restSearchResponse
-     * @param string $currency
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     * @return \Generated\Shared\Transfer\RestCatalogSearchAttributesTransfer
      */
-    public function mapSearchResponseAttributesTransferToRestResponse(array $restSearchResponse, string $currency): RestResourceInterface;
+    public function mapSearchResultToRestAttributesTransfer(array $restSearchResponse): RestCatalogSearchAttributesTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\RestCatalogSearchAttributesTransfer $restSearchAttributesTransfer
+     * @param \Generated\Shared\Transfer\PriceModeConfigurationTransfer $priceModeInformation
+     *
+     * @return \Generated\Shared\Transfer\RestCatalogSearchAttributesTransfer
+     */
+    public function mapPrices(
+        RestCatalogSearchAttributesTransfer $restSearchAttributesTransfer,
+        PriceModeConfigurationTransfer $priceModeInformation
+    ): RestCatalogSearchAttributesTransfer;
 }

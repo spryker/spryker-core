@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -111,6 +112,7 @@ class SalesFacadeSaveOrderTest extends Unit
         $container[SalesDependencyProvider::QUERY_CONTAINER_LOCALE] = new LocaleQueryContainer();
         $container[SalesDependencyProvider::STORE] = Store::getInstance();
         $container[SalesDependencyProvider::ORDER_EXPANDER_PRE_SAVE_PLUGINS] = [];
+        $container[SalesDependencyProvider::PLUGINS_ORDER_POST_SAVE] = [];
         $container[SalesDependencyProvider::ORDER_ITEM_EXPANDER_PRE_SAVE_PLUGINS] = function (Container $container) {
             return [];
         };
@@ -410,6 +412,51 @@ class SalesFacadeSaveOrderTest extends Unit
         $checkoutResponseTransfer = $this->getValidBaseResponseTransfer();
         $this->salesFacade->saveOrder($quoteTransfer, $checkoutResponseTransfer);
         $this->assertNotNull($checkoutResponseTransfer->getSaveOrder()->getOrderReference());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreateSalesExpenseSavesExpense(): void
+    {
+        // Assign
+        $quoteTransfer = $this->getValidBaseQuoteTransfer();
+        $saveOrderTransfer = $this->createSaveOrderTransfer();
+        $this->salesFacade->saveSalesOrder($quoteTransfer, $saveOrderTransfer);
+        $expenseTransfer = $this->createExpenseTransfer();
+        $expenseTransfer->setFkSalesOrder($saveOrderTransfer->getIdSalesOrder());
+
+        // Act
+        $savedExpenseTransfer = $this->salesFacade->createSalesExpense($expenseTransfer);
+        $expenseTransfer->setIdSalesExpense($savedExpenseTransfer->getIdSalesExpense());
+
+        // Assert
+        $this->assertNotNull($savedExpenseTransfer->getIdSalesExpense());
+        $this->assertEquals($savedExpenseTransfer->toArray(), $expenseTransfer->toArray());
+    }
+
+    /**
+     * @param int $expensePrice
+     *
+     * @return \Generated\Shared\Transfer\ExpenseTransfer
+     */
+    protected function createExpenseTransfer(int $expensePrice = 100): ExpenseTransfer
+    {
+        $expenseTransfer = (new ExpenseTransfer())
+            ->setName('test expense')
+            ->setType('EXPENSE_TYPE')
+            ->setUnitPrice($expensePrice)
+            ->setSumPrice($expensePrice)
+            ->setUnitPriceToPayAggregation($expensePrice)
+            ->setSumPriceToPayAggregation($expensePrice)
+            ->setTaxRate(19.1)
+            ->setQuantity(1)
+            ->setUnitGrossPrice(0)
+            ->setSumGrossPrice(0)
+            ->setUnitNetPrice($expensePrice)
+            ->setSumNetPrice($expensePrice);
+
+        return $expenseTransfer;
     }
 
     /**

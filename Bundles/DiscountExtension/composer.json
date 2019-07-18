@@ -1,5 +1,6 @@
 {
   "name": "spryker/discount-extension",
+  "type": "library",
   "description": "DiscountExtension module",
   "license": "proprietary",
   "require": {

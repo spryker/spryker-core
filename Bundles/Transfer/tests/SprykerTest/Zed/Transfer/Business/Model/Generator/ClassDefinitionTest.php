@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\Transfer\Business\Model\Generator;
 
 use Codeception\Test\Unit;
 use Spryker\Zed\Transfer\Business\Model\Generator\ClassDefinition;
+use Spryker\Zed\Transfer\TransferConfig;
 
 /**
  * Auto-generated group annotations
@@ -32,7 +33,7 @@ class ClassDefinitionTest extends Unit
             'name' => 'name',
         ];
 
-        $classDefinition = new ClassDefinition();
+        $classDefinition = $this->createClassDefinition();
         $classDefinition->setDefinition($transferDefinition);
         $this->assertSame('NameTransfer', $classDefinition->getName());
     }
@@ -48,7 +49,7 @@ class ClassDefinitionTest extends Unit
             'property' => [$property],
         ];
 
-        $classDefinition = new ClassDefinition();
+        $classDefinition = $this->createClassDefinition();
         $classDefinition->setDefinition($transferDefinition);
 
         $properties = $classDefinition->getProperties();
@@ -74,6 +75,8 @@ class ClassDefinitionTest extends Unit
             'name' => $name,
             'type' => ($return === null) ? $type : $return,
             'bundles' => $bundles,
+            'is_typed_array' => false,
+            'is_associative' => false,
         ];
 
         if ($singular !== null) {
@@ -96,7 +99,7 @@ class ClassDefinitionTest extends Unit
             ],
         ];
 
-        $classDefinition = new ClassDefinition();
+        $classDefinition = $this->createClassDefinition();
         $classDefinition->setDefinition($transferDefinition);
 
         $properties = $classDefinition->getProperties();
@@ -121,7 +124,7 @@ class ClassDefinitionTest extends Unit
             'property' => [$this->getProperty('property1', 'array')],
         ];
 
-        $classDefinition = new ClassDefinition();
+        $classDefinition = $this->createClassDefinition();
         $classDefinition->setDefinition($transferDefinition);
 
         $properties = $classDefinition->getProperties();
@@ -140,7 +143,7 @@ class ClassDefinitionTest extends Unit
             'property' => [$this->getProperty('Property1', 'array')],
         ];
 
-        $classDefinition = new ClassDefinition();
+        $classDefinition = $this->createClassDefinition();
         $classDefinition->setDefinition($transferDefinition);
 
         $properties = $classDefinition->getProperties();
@@ -159,12 +162,12 @@ class ClassDefinitionTest extends Unit
             'property' => [$this->getProperty('property1', 'Type[]')],
         ];
 
-        $classDefinition = new ClassDefinition();
+        $classDefinition = $this->createClassDefinition();
         $classDefinition->setDefinition($transferDefinition);
 
         $properties = $classDefinition->getProperties();
         $givenProperty = $properties['property1'];
-        $expectedProperty = $this->getProperty('property1', 'Type[]', null, '\ArrayObject|\Generated\Shared\Transfer\TypeTransfer[]|null');
+        $expectedProperty = $this->getProperty('property1', 'Type[]', null, '\ArrayObject|\Generated\Shared\Transfer\TypeTransfer[]');
         $this->assertEquals($expectedProperty, $givenProperty);
     }
 
@@ -180,7 +183,7 @@ class ClassDefinitionTest extends Unit
             'property' => [$property],
         ];
 
-        $classDefinition = new ClassDefinition();
+        $classDefinition = $this->createClassDefinition();
         $classDefinition->setDefinition($transferDefinition);
 
         $properties = $classDefinition->getProperties();
@@ -199,7 +202,7 @@ class ClassDefinitionTest extends Unit
             'property' => [$this->getProperty('property1', 'string')],
         ];
 
-        $classDefinition = new ClassDefinition();
+        $classDefinition = $this->createClassDefinition();
         $classDefinition->setDefinition($transferDefinition);
 
         $methods = $classDefinition->getMethods();
@@ -223,7 +226,7 @@ class ClassDefinitionTest extends Unit
             'property' => [$this->getProperty('property1', 'string')],
         ];
 
-        $classDefinition = new ClassDefinition();
+        $classDefinition = $this->createClassDefinition();
         $classDefinition->setDefinition($transferDefinition);
 
         $methods = $classDefinition->getMethods();
@@ -243,7 +246,7 @@ class ClassDefinitionTest extends Unit
             'property' => [$this->getProperty('property1', 'Type[]')],
         ];
 
-        $classDefinition = new ClassDefinition();
+        $classDefinition = $this->createClassDefinition();
         $classDefinition->setDefinition($transferDefinition);
 
         $methods = $classDefinition->getMethods();
@@ -265,7 +268,7 @@ class ClassDefinitionTest extends Unit
             'property' => [$this->getProperty('property1', 'Type[]', null, null, $bundles)],
         ];
 
-        $classDefinition = new ClassDefinition();
+        $classDefinition = $this->createClassDefinition();
         $classDefinition->setDefinition($transferDefinition);
 
         $methods = $classDefinition->getMethods();
@@ -274,12 +277,43 @@ class ClassDefinitionTest extends Unit
         $this->assertEquals($expected, $given);
 
         $given = $methods['getProperty1'];
-        $expected = $this->getGetMethod('getProperty1', 'property1', null, '\\ArrayObject|\Generated\Shared\Transfer\TypeTransfer[]|null', null, 'PROPERTY1', $bundles);
+        $expected = $this->getGetMethod('getProperty1', 'property1', null, '\\ArrayObject|\Generated\Shared\Transfer\TypeTransfer[]', null, 'PROPERTY1', $bundles);
         $this->assertEquals($expected, $given);
 
         $given = $methods['addProperty1'];
         $expected = $this->getCollectionMethod('addProperty1', 'property1', 'property1', '\Generated\Shared\Transfer\TypeTransfer', null, 'TypeTransfer', 'PROPERTY1', $bundles);
         $this->assertEquals($expected, $given);
+    }
+
+    /**
+     * @return void
+     */
+    public function testTypedArray()
+    {
+        $bundles = ['Bundle1'];
+
+        $transferDefinition = [
+            'name' => 'name',
+            'property' => [$this->getProperty('property1', 'string[]', null, null, $bundles)],
+        ];
+
+        $classDefinition = $this->createClassDefinition();
+        $classDefinition->setDefinition($transferDefinition);
+
+        $properties = $classDefinition->getProperties();
+
+        $expected = [
+            "property1" => [
+                "name" => "property1",
+                "type" => "string[]",
+                "is_typed_array" => true,
+                "bundles" => [
+                    "Bundle1",
+                ],
+                "is_associative" => false,
+            ],
+        ];
+        $this->assertSame($expected, $properties);
     }
 
     /**
@@ -294,7 +328,7 @@ class ClassDefinitionTest extends Unit
             'property' => [$property],
         ];
 
-        $classDefinition = new ClassDefinition();
+        $classDefinition = $this->createClassDefinition();
         $classDefinition->setDefinition($transferDefinition);
 
         $methods = $classDefinition->getMethods();
@@ -303,7 +337,7 @@ class ClassDefinitionTest extends Unit
         $this->assertEquals($expected, $given);
 
         $given = $methods['getProperties'];
-        $expected = $this->getGetMethod('getProperties', 'properties', null, '\\ArrayObject|\Generated\Shared\Transfer\TypeTransfer[]|null', null, 'PROPERTIES');
+        $expected = $this->getGetMethod('getProperties', 'properties', null, '\\ArrayObject|\Generated\Shared\Transfer\TypeTransfer[]', null, 'PROPERTIES');
         $this->assertEquals($expected, $given);
 
         $given = $methods['addProperty'];
@@ -389,6 +423,7 @@ class ClassDefinitionTest extends Unit
     {
         $method = $this->getMethod($method, $property, $var, $return, $typeHint, $constant, $bundles);
         $method['parent'] = $parent;
+        $method['is_associative'] = false;
 
         return $method;
     }
@@ -407,7 +442,159 @@ class ClassDefinitionTest extends Unit
             'property' => [$property],
         ];
 
-        $classDefinition = new ClassDefinition();
+        $classDefinition = $this->createClassDefinition();
         $classDefinition->setDefinition($transferDefinition);
+    }
+
+    /**
+     * @param string $name
+     * @param string $type
+     * @param string|null $singular
+     * @param string|null $return
+     * @param array $bundles
+     * @param mixed $isAssociative
+     *
+     * @return array
+     */
+    private function getPropertyAssociative($name, $type, $singular = null, $return = null, array $bundles = [], $isAssociative = false)
+    {
+        $property = [
+            'name' => $name,
+            'type' => ($return === null) ? $type : $return,
+            'bundles' => $bundles,
+            'is_typed_array' => false,
+            'associative' => $isAssociative,
+        ];
+
+        if ($singular !== null) {
+            $property['singular'] = $singular;
+        }
+
+        return $property;
+    }
+
+    /**
+     * @return void
+     */
+    public function testTypedAssociativeSimpleArray()
+    {
+        $transferDefinition = [
+            'name' => 'name',
+            'property' => [$this->getPropertyAssociative('property1', 'string[]', null, null, [], true)],
+        ];
+
+        $classDefinition = $this->createClassDefinition();
+        $classDefinition->setDefinition($transferDefinition);
+
+        $properties = $classDefinition->getProperties();
+
+        $expected = [
+            "property1" => [
+                "name" => "property1",
+                "type" => "string[]",
+                "is_typed_array" => true,
+                "bundles" => [],
+                "is_associative" => true,
+            ],
+        ];
+        $this->assertSame($expected, $properties);
+    }
+
+    /**
+     * @return void
+     */
+    public function testTypedAssociativeCollectionArray()
+    {
+        $transferDefinition = [
+            'name' => 'name',
+            'property' => [$this->getPropertyAssociative('property1', 'Type[]', null, null, [], true)],
+        ];
+
+        $classDefinition = $this->createClassDefinition();
+        $classDefinition->setDefinition($transferDefinition);
+
+        $properties = $classDefinition->getProperties();
+
+        $expected = [
+            "property1" => [
+                "name" => "property1",
+                "type" => "\ArrayObject|\Generated\Shared\Transfer\TypeTransfer[]",
+                "is_typed_array" => false,
+                "bundles" => [],
+                "is_associative" => true,
+            ],
+        ];
+        $this->assertSame($expected, $properties);
+    }
+
+    /**
+     * @return void
+     */
+    public function testTypedYesAssociativeCollectionArray()
+    {
+        $transferDefinition = [
+            'name' => 'name',
+            'property' => [$this->getPropertyAssociative('property1', 'Type[]', null, null, [], "1")],
+        ];
+
+        $classDefinition = $this->createClassDefinition();
+        $classDefinition->setDefinition($transferDefinition);
+
+        $properties = $classDefinition->getProperties();
+
+        $expected = [
+            "property1" => [
+                "name" => "property1",
+                "type" => "\ArrayObject|\Generated\Shared\Transfer\TypeTransfer[]",
+                "is_typed_array" => false,
+                "bundles" => [],
+                "is_associative" => true,
+            ],
+        ];
+        $this->assertSame($expected, $properties);
+    }
+
+    /**
+     * @expectedException \Spryker\Zed\Transfer\Business\Exception\InvalidAssociativeTypeException
+     *
+     * @return void
+     */
+    public function testInvalidAssociativeTypeException()
+    {
+        $transferDefinition = [
+            'name' => 'name',
+            'property' => [$this->getPropertyAssociative('property1', 'string', null, null, [], true)],
+        ];
+
+        $classDefinition = $this->createClassDefinition();
+        $classDefinition->setDefinition($transferDefinition);
+    }
+
+    /**
+     * @expectedException \Spryker\Zed\Transfer\Business\Exception\InvalidAssociativeValueException
+     *
+     * @return void
+     */
+    public function testInvalidAssociativeValueException()
+    {
+        $transferDefinition = [
+            'name' => 'name',
+            'property' => [$this->getPropertyAssociative('properties', 'string[]', 'property', null, [], 'Yeah')],
+        ];
+
+        $classDefinition = $this->createClassDefinition();
+        $classDefinition->setDefinition($transferDefinition);
+    }
+
+    /**
+     * @return \Spryker\Zed\Transfer\Business\Model\Generator\ClassDefinition
+     */
+    protected function createClassDefinition(): ClassDefinition
+    {
+        $classDefinition = new ClassDefinition(
+            new TransferConfig()
+        );
+
+        return $classDefinition;
     }
 }

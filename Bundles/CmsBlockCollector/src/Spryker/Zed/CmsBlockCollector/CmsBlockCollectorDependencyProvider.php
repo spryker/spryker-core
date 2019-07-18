@@ -11,15 +11,18 @@ use Spryker\Zed\CmsBlockCollector\Dependency\Facade\CmsBlockCollectorToCollector
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\CmsBlockCollector\CmsBlockCollectorConfig getConfig()
+ */
 class CmsBlockCollectorDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_COLLECTOR = 'CMS_BLOCK_COLLECTOR:FACADE_COLLECTOR';
+    public const FACADE_COLLECTOR = 'CMS_BLOCK_COLLECTOR:FACADE_COLLECTOR';
 
-    const QUERY_CONTAINER_TOUCH = 'CMS_BLOCK_COLLECTOR:QUERY_CONTAINER_TOUCH';
+    public const QUERY_CONTAINER_TOUCH = 'CMS_BLOCK_COLLECTOR:QUERY_CONTAINER_TOUCH';
 
-    const SERVICE_DATA_READER = 'CMS_BLOCK_COLLECTOR:SERVICE_DATA_READER';
+    public const SERVICE_DATA_READER = 'CMS_BLOCK_COLLECTOR:SERVICE_DATA_READER';
 
-    const COLLECTOR_DATA_EXPANDER_PLUGINS = 'CMS_BLOCK_COLLECTOR:DATA_EXPANDER_PLUGINS';
+    public const COLLECTOR_DATA_EXPANDER_PLUGINS = 'CMS_BLOCK_COLLECTOR:DATA_EXPANDER_PLUGINS';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

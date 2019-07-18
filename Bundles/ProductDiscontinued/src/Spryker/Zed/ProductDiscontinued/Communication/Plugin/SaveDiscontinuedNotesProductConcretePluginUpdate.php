@@ -14,6 +14,7 @@ use Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginUpdateInterface;
 /**
  * @method \Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinuedFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductDiscontinued\Communication\ProductDiscontinuedCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductDiscontinued\ProductDiscontinuedConfig getConfig()
  */
 class SaveDiscontinuedNotesProductConcretePluginUpdate extends AbstractPlugin implements ProductConcretePluginUpdateInterface
 {
@@ -31,9 +32,6 @@ class SaveDiscontinuedNotesProductConcretePluginUpdate extends AbstractPlugin im
      */
     public function update(ProductConcreteTransfer $productConcreteTransfer)
     {
-        if (!$productConcreteTransfer->getDiscontinuedNotes()) {
-            return $productConcreteTransfer;
-        }
         foreach ($productConcreteTransfer->getDiscontinuedNotes() as $discontinuedNoteTransfer) {
             if ($discontinuedNoteTransfer->getNote() || $discontinuedNoteTransfer->getIdProductDiscontinuedNote()) {
                 $this->getFacade()->saveDiscontinuedNote($discontinuedNoteTransfer);

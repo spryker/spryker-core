@@ -9,10 +9,10 @@ namespace Spryker\Shared\CategoryExporter\Business;
 
 interface CategoryNodeKeyInterface
 {
-    const NODE_ID = 'node_id';
-    const NAME = 'name';
-    const URL = 'url';
-    const IMAGE = 'image';
-    const CHILDREN = 'children';
-    const PARENTS = 'parents';
+    public const NODE_ID = 'node_id';
+    public const NAME = 'name';
+    public const URL = 'url';
+    public const IMAGE = 'image';
+    public const CHILDREN = 'children';
+    public const PARENTS = 'parents';
 }

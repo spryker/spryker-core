@@ -7,18 +7,11 @@
 
 namespace Spryker\Client\CompanyUserInvitation\Plugin;
 
-use Spryker\Client\Kernel\AbstractPlugin;
-use Spryker\Shared\PermissionExtension\Dependency\Plugin\PermissionPluginInterface;
+use Spryker\Shared\CompanyUserInvitation\Plugin\ManageCompanyUserInvitationPermissionPlugin as SharedManageCompanyUserInvitationPermissionPlugin;
 
-class ManageCompanyUserInvitationPermissionPlugin extends AbstractPlugin implements PermissionPluginInterface
+/**
+ * @deprecated Please use \Spryker\Shared\CompanyUserInvitation\Plugin\ManageCompanyUserInvitationPermissionPlugin instead
+ */
+class ManageCompanyUserInvitationPermissionPlugin extends SharedManageCompanyUserInvitationPermissionPlugin
 {
-    public const KEY = 'ManageCompanyUserInvitationPermissionPlugin';
-
-    /**
-     * @return string
-     */
-    public function getKey(): string
-    {
-        return static::KEY;
-    }
 }

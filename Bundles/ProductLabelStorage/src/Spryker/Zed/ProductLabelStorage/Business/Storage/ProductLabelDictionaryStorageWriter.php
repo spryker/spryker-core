@@ -81,7 +81,7 @@ class ProductLabelDictionaryStorageWriter implements ProductLabelDictionaryStora
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[] $productLabelDictionaryItems
+     * @param array $productLabelDictionaryItems
      *
      * @return void
      */
@@ -126,7 +126,7 @@ class ProductLabelDictionaryStorageWriter implements ProductLabelDictionaryStora
     }
 
     /**
-     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelLocalizedAttributes[]
+     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelLocalizedAttributes[]|\Propel\Runtime\Collection\ObjectCollection
      */
     protected function findProductLabelLocalizedEntities()
     {

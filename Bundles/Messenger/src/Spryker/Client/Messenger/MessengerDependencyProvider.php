@@ -13,7 +13,7 @@ use Spryker\Client\Messenger\Dependency\Client\MessengerToSessionClientBridge;
 
 class MessengerDependencyProvider extends AbstractDependencyProvider
 {
-    const CLIENT_SESSION = 'SESSION CLIENT';
+    public const CLIENT_SESSION = 'SESSION CLIENT';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container

@@ -345,7 +345,7 @@ interface CategoryFacadeInterface
      * @param int $idNode
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
-     * @return array
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNode[]|\Propel\Runtime\Collection\ObjectCollection
      */
     public function getChildren($idNode, LocaleTransfer $localeTransfer);
 
@@ -405,7 +405,7 @@ interface CategoryFacadeInterface
      *
      * @deprecated Will be removed with next major release
      *
-     * @param array $categoryKey
+     * @param string $categoryKey
      * @param int $idLocale
      *
      * @return \Generated\Shared\Transfer\CategoryTransfer
@@ -481,6 +481,19 @@ interface CategoryFacadeInterface
 
     /**
      * Specification:
+     * - Checks if there is a category node on the same level with provided category by name
+     *
+     * @api
+     *
+     * @param string $name
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return bool
+     */
+    public function checkSameLevelCategoryByNameExists(string $name, CategoryTransfer $categoryTransfer): bool;
+
+    /**
+     * Specification:
      * - Retrieves collection with all categories from DB.
      *
      * @api
@@ -490,4 +503,40 @@ interface CategoryFacadeInterface
      * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
      */
     public function getAllCategoryCollection(LocaleTransfer $localeTransfer): CategoryCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Finds a Category transfer by id with category nodes and attributes.
+     * - Returns NULL if a Category does not exist.
+     *
+     * @api
+     *
+     * @param int $idCategory
+     *
+     * @return \Generated\Shared\Transfer\CategoryTransfer|null
+     */
+    public function findCategoryById(int $idCategory): ?CategoryTransfer;
+
+    /**
+     * Specification:
+     * - Retrieve category node path.
+     *
+     * @api
+     *
+     * @param int $idNode
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return string
+     */
+    public function getNodePath(int $idNode, LocaleTransfer $localeTransfer): string;
+
+    /**
+     * Specification:
+     * - Retrieve url to category list.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getCategoryListUrl(): string;
 }

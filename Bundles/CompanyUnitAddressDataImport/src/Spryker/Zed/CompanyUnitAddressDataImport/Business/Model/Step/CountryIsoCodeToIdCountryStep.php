@@ -42,7 +42,7 @@ class CountryIsoCodeToIdCountryStep implements DataImportStepInterface
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
-     * @return null|string
+     * @return string|null
      */
     protected function getIso2Code(DataSetInterface $dataSet)
     {
@@ -56,7 +56,7 @@ class CountryIsoCodeToIdCountryStep implements DataImportStepInterface
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
-     * @return null|string
+     * @return string|null
      */
     protected function getIso3Code(DataSetInterface $dataSet)
     {

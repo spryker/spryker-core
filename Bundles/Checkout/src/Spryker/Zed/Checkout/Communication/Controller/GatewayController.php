@@ -21,7 +21,7 @@ use Throwable;
  */
 class GatewayController extends AbstractGatewayController
 {
-    const MESSAGE_PLACE_ORDER_ERROR = 'Order can not be processed';
+    public const MESSAGE_PLACE_ORDER_ERROR = 'Order can not be processed';
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

@@ -11,6 +11,7 @@ use ArrayObject;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\ProductImage\Business\Transfer\ProductImageTransferMapperInterface;
+use Spryker\Zed\ProductImage\Dependency\Facade\ProductImageToLocaleInterface;
 use Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainerInterface;
 
 class Reader implements ReaderInterface
@@ -26,15 +27,23 @@ class Reader implements ReaderInterface
     protected $transferMapper;
 
     /**
+     * @var \Spryker\Zed\ProductImage\Dependency\Facade\ProductImageToLocaleInterface
+     */
+    protected $localeFacade;
+
+    /**
      * @param \Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainerInterface $productImageContainer
      * @param \Spryker\Zed\ProductImage\Business\Transfer\ProductImageTransferMapperInterface $transferMapper
+     * @param \Spryker\Zed\ProductImage\Dependency\Facade\ProductImageToLocaleInterface $localeFacade
      */
     public function __construct(
         ProductImageQueryContainerInterface $productImageContainer,
-        ProductImageTransferMapperInterface $transferMapper
+        ProductImageTransferMapperInterface $transferMapper,
+        ProductImageToLocaleInterface $localeFacade
     ) {
         $this->productImageContainer = $productImageContainer;
         $this->transferMapper = $transferMapper;
+        $this->localeFacade = $localeFacade;
     }
 
     /**
@@ -44,11 +53,12 @@ class Reader implements ReaderInterface
      */
     public function getProductImagesSetCollectionByProductAbstractId($idProductAbstract)
     {
-        $imageCollection = $this->productImageContainer
+        /** @var \Orm\Zed\ProductImage\Persistence\SpyProductImageSet[]|\Propel\Runtime\Collection\ObjectCollection $productImageSetCollection */
+        $productImageSetCollection = $this->productImageContainer
             ->queryImageSetByProductAbstractId($idProductAbstract)
             ->find();
 
-        return $this->transferMapper->mapProductImageSetCollection($imageCollection);
+        return $this->transferMapper->mapProductImageSetCollection($productImageSetCollection);
     }
 
     /**
@@ -61,6 +71,28 @@ class Reader implements ReaderInterface
         $imageCollection = $this->productImageContainer
             ->queryImageSetByProductId($idProduct)
             ->find();
+
+        return $this->transferMapper->mapProductImageSetCollection($imageCollection);
+    }
+
+    /**
+     * @param int $idProduct
+     *
+     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
+     */
+    public function getProductImagesSetCollectionByProductIdForCurrentLocale(int $idProduct): array
+    {
+        $idLocale = $this->localeFacade->getCurrentLocale()->getIdLocale();
+
+        $imageCollection = $this->productImageContainer
+            ->queryLocalizedConcreteProductImageSets($idProduct, $idLocale)
+            ->find();
+
+        if ($imageCollection->count() === 0) {
+            $imageCollection = $this->productImageContainer
+                ->queryDefaultConcreteProductImageSets($idProduct)
+                ->find();
+        }
 
         return $this->transferMapper->mapProductImageSetCollection($imageCollection);
     }
@@ -94,7 +126,7 @@ class Reader implements ReaderInterface
             $productAbstractTransfer->requireIdProductAbstract()->getIdProductAbstract()
         );
 
-        if ($imageSetCollection === null) {
+        if (!$imageSetCollection) {
             return $productAbstractTransfer;
         }
 
@@ -110,15 +142,15 @@ class Reader implements ReaderInterface
      */
     public function expandProductConcreteWithImageSets(ProductConcreteTransfer $productConcreteTransfer)
     {
-        $imageSetCollection = $this->getProductImagesSetCollectionByProductId(
+        $productImageSetCollection = $this->getProductImagesSetCollectionByProductId(
             $productConcreteTransfer->requireIdProductConcrete()->getIdProductConcrete()
         );
 
-        if ($imageSetCollection === null) {
+        if (!$productImageSetCollection) {
             return $productConcreteTransfer;
         }
 
-        $productConcreteTransfer->setImageSets(new ArrayObject($imageSetCollection));
+        $productConcreteTransfer->setImageSets(new ArrayObject($productImageSetCollection));
 
         return $productConcreteTransfer;
     }

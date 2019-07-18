@@ -7,10 +7,14 @@
 
 namespace Spryker\Zed\Country\Business;
 
+use Generated\Shared\Transfer\CheckoutDataTransfer;
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\CountryCollectionTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\Country\Business\CountryBusinessFactory getFactory()
+ * @method \Spryker\Zed\Country\Persistence\CountryRepositoryInterface getRepository()
  */
 class CountryFacade extends AbstractFacade implements CountryFacadeInterface
 {
@@ -67,6 +71,20 @@ class CountryFacade extends AbstractFacade implements CountryFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CheckoutDataTransfer $checkoutDataTransfer
+     *
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
+     */
+    public function validateCountryCheckoutData(CheckoutDataTransfer $checkoutDataTransfer): CheckoutResponseTransfer
+    {
+        return $this->getFactory()->createCountryCheckoutDataValidator()->validateCountryCheckoutData($checkoutDataTransfer);
+    }
+
+    /**
      * @api
      *
      * @param string $iso3Code
@@ -106,5 +124,21 @@ class CountryFacade extends AbstractFacade implements CountryFacadeInterface
             ->getPreferredCountryByName($countryName);
 
         return $countryTransfer;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CountryCollectionTransfer $countryCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\CountryCollectionTransfer
+     */
+    public function findCountriesByIso2Codes(CountryCollectionTransfer $countryCollectionTransfer): CountryCollectionTransfer
+    {
+        return $this->getFactory()
+            ->createCountryReader()
+            ->findCountriesByIso2Codes($countryCollectionTransfer);
     }
 }

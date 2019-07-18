@@ -12,10 +12,13 @@ use Spryker\Zed\CmsUserConnector\Dependency\QueryContainer\CmsUserConnectorToCms
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\CmsUserConnector\CmsUserConnectorConfig getConfig()
+ */
 class CmsUserConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_USER = 'FACADE_USER';
-    const QUERY_CONTAINER_CMS = 'QUERY_CONTAINER_CMS';
+    public const FACADE_USER = 'FACADE_USER';
+    public const QUERY_CONTAINER_CMS = 'QUERY_CONTAINER_CMS';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

@@ -10,9 +10,12 @@ namespace Spryker\Zed\Installer;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\Installer\InstallerConfig getConfig()
+ */
 class InstallerDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const INSTALLER_PLUGINS = 'installer plugins';
+    public const INSTALLER_PLUGINS = 'installer plugins';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

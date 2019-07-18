@@ -12,7 +12,7 @@ use Spryker\Zed\DataImport\DataImportConfig;
 
 class ProductAlternativeDataImportConfig extends DataImportConfig
 {
-    const IMPORT_TYPE_PRODUCT_ALTERNATIVE = 'product-alternative';
+    public const IMPORT_TYPE_PRODUCT_ALTERNATIVE = 'product-alternative';
 
     /**
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer

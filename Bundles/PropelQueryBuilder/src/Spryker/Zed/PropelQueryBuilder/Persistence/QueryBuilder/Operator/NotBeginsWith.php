@@ -11,7 +11,7 @@ use Propel\Runtime\ActiveQuery\Criteria;
 
 class NotBeginsWith extends BeginsWith
 {
-    const TYPE = 'not_begins_with';
+    public const TYPE = 'not_begins_with';
 
     /**
      * @return string

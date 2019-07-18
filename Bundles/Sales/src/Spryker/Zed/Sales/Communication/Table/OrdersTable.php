@@ -19,15 +19,17 @@ use Spryker\Zed\SalesExtension\Dependency\Plugin\SalesTablePluginInterface;
 
 class OrdersTable extends AbstractTable
 {
-    const URL = SalesTablePluginInterface::ROW_ACTIONS;
-    const ID_ORDER_ITEM_PROCESS = 'id-order-item-process';
-    const ID_ORDER_ITEM_STATE = 'id-order-item-state';
-    const FILTER = 'filter';
-    const URL_SALES_DETAIL = '/sales/detail';
-    const PARAM_ID_SALES_ORDER = 'id-sales-order';
-    const GRAND_TOTAL = 'GrandTotal';
-    const ITEM_STATE_NAMES_CSV = 'item_state_names_csv';
-    const NUMBER_OF_ORDER_ITEMS = 'number_of_order_items';
+    public const URL = SalesTablePluginInterface::ROW_ACTIONS;
+    public const ID_ORDER_ITEM_PROCESS = 'id-order-item-process';
+    public const ID_ORDER_ITEM_STATE = 'id-order-item-state';
+    public const FILTER = 'filter';
+    public const URL_SALES_DETAIL = '/sales/detail';
+    public const PARAM_ID_SALES_ORDER = 'id-sales-order';
+    public const GRAND_TOTAL = 'GrandTotal';
+    public const ITEM_STATE_NAMES_CSV = 'item_state_names_csv';
+    public const NUMBER_OF_ORDER_ITEMS = 'number_of_order_items';
+    protected const COLUMN_SEPARATOR = ' ';
+    protected const FULL_NAME_SEARCHABLE_FIELD_PATTERN = 'CONCAT(%s,\'%s\',%s)';
 
     /**
      * @var \Spryker\Zed\Sales\Communication\Table\OrdersTableQueryBuilderInterface
@@ -153,7 +155,7 @@ class OrdersTable extends AbstractTable
         $customer = $this->sanitizeService->escapeHtml($customer);
 
         if (isset($item[SpySalesOrderTableMap::COL_CUSTOMER_REFERENCE])) {
-            $customerTransfer = $this->customerFacade->findCustomerByReference(
+            $customerTransfer = $this->customerFacade->findByReference(
                 $item[SpySalesOrderTableMap::COL_CUSTOMER_REFERENCE]
             );
 
@@ -200,7 +202,7 @@ class OrdersTable extends AbstractTable
     /**
      * @param int $value
      * @param bool $includeSymbol
-     * @param null|string $currencyIsoCode
+     * @param string|null $currencyIsoCode
      *
      * @return string
      */
@@ -297,6 +299,7 @@ class OrdersTable extends AbstractTable
             SpySalesOrderTableMap::COL_ORDER_REFERENCE,
             SpySalesOrderTableMap::COL_CREATED_AT,
             SpySalesOrderTableMap::COL_EMAIL,
+            $this->getFullNameSearchableField(),
         ];
     }
 
@@ -334,7 +337,7 @@ class OrdersTable extends AbstractTable
                 static::NUMBER_OF_ORDER_ITEMS => $item[OrdersTableQueryBuilder::FIELD_NUMBER_OF_ORDER_ITEMS],
                 static::URL => implode(' ', $this->createActionUrls($item)),
             ];
-            $itemLine = $this->applyUIPlugins($itemLine);
+            $itemLine = $this->applyUiPlugins($itemLine);
             $results[] = $itemLine;
         }
 
@@ -346,7 +349,7 @@ class OrdersTable extends AbstractTable
      *
      * @return array
      */
-    protected function applyUIPlugins(array $itemLine): array
+    protected function applyUiPlugins(array $itemLine): array
     {
         foreach ($this->salesTablePlugins as $uiPlugin) {
             $itemLine = $uiPlugin->formatTableRow([$this, 'buttonGeneratorCallable'], $itemLine);
@@ -365,5 +368,18 @@ class OrdersTable extends AbstractTable
     public function buttonGeneratorCallable($url, $title, array $options)
     {
         return $this->generateButton($url, $title, $options);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getFullNameSearchableField(): string
+    {
+        return sprintf(
+            static::FULL_NAME_SEARCHABLE_FIELD_PATTERN,
+            SpySalesOrderTableMap::COL_FIRST_NAME,
+            static::COLUMN_SEPARATOR,
+            SpySalesOrderTableMap::COL_LAST_NAME
+        );
     }
 }

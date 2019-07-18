@@ -24,7 +24,7 @@ use Symfony\Component\Form\FormView;
  */
 class AbstractSubFormTypeTest extends Unit
 {
-    const TEMPLATE_PATH = 'abstract/sub/form/type';
+    public const TEMPLATE_PATH = 'abstract/sub/form/type';
 
     /**
      * @return void
@@ -40,7 +40,7 @@ class AbstractSubFormTypeTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Yves\StepEngine\Dependency\Form\AbstractSubFormType
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Yves\StepEngine\Dependency\Form\AbstractSubFormType
      */
     private function getAbstractSubFormTypeMock()
     {
@@ -51,7 +51,7 @@ class AbstractSubFormTypeTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Symfony\Component\Form\FormInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Symfony\Component\Form\FormInterface
      */
     private function getFormMock()
     {

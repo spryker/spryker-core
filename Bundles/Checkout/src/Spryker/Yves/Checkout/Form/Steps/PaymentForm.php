@@ -25,9 +25,9 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class PaymentForm extends AbstractType
 {
-    const PAYMENT_PROPERTY_PATH = QuoteTransfer::PAYMENT;
-    const PAYMENT_SELECTION = PaymentTransfer::PAYMENT_SELECTION;
-    const PAYMENT_SELECTION_PROPERTY_PATH = self::PAYMENT_PROPERTY_PATH . '.' . self::PAYMENT_SELECTION;
+    public const PAYMENT_PROPERTY_PATH = QuoteTransfer::PAYMENT;
+    public const PAYMENT_SELECTION = PaymentTransfer::PAYMENT_SELECTION;
+    public const PAYMENT_SELECTION_PROPERTY_PATH = self::PAYMENT_PROPERTY_PATH . '.' . self::PAYMENT_SELECTION;
 
     /**
      * @return string

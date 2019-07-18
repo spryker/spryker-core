@@ -22,10 +22,16 @@ use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
  */
 class FacetQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
 {
-    const AGGREGATION_FILTER_NAME = 'filter';
-    const AGGREGATION_GLOBAL_PREFIX = 'global-';
+    public const AGGREGATION_FILTER_NAME = 'filter';
+    public const AGGREGATION_GLOBAL_PREFIX = 'global-';
 
     /**
+     * {@inheritdoc}
+     * - Applies facet filters to query
+     * - Facet filter values that equal null, empty string or false are dropped other values are kept including 0(zero)
+     *
+     * @api
+     *
      * @param \Spryker\Client\Search\Dependency\Plugin\QueryInterface $searchQuery
      * @param array $requestParameters
      *
@@ -103,13 +109,19 @@ class FacetQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPl
 
     /**
      * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
-     * @param string $filterValue
+     * @param mixed $filterValue
      *
      * @return \Elastica\Query\AbstractQuery|null
      */
     protected function createFacetFilterQuery(FacetConfigTransfer $facetConfigTransfer, $filterValue)
     {
-        if (empty($filterValue)) {
+        if (is_array($filterValue) && empty(array_filter($filterValue, 'strlen'))) {
+            // returns null if $filterValue is array of values like null, empty string or false but not 0(zero)
+            return null;
+        }
+
+        if (empty($filterValue) && !is_numeric($filterValue)) {
+            // returns null if $filterValue equals null, empty string or false but not 0(zero)
             return null;
         }
 

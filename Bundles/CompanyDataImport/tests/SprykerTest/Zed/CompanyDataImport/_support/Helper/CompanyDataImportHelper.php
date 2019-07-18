@@ -9,43 +9,9 @@ namespace SprykerTest\Zed\CompanyDataImport\Helper;
 
 use Codeception\Module;
 use Orm\Zed\Company\Persistence\SpyCompanyQuery;
-use Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery;
-use Propel\Runtime\ActiveQuery\ModelCriteria;
-use Propel\Runtime\Map\RelationMap;
 
 class CompanyDataImportHelper extends Module
 {
-    /**
-     * @return void
-     */
-    public function ensureDatabaseTableIsEmpty(): void
-    {
-        $this->cleanTableRelations($this->getCompanyQuery());
-    }
-
-    /**
-     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
-     * @param array $processedEntities
-     *
-     * @return void
-     */
-    protected function cleanTableRelations(ModelCriteria $query, array $processedEntities = []): void
-    {
-        $relations = $query->getTableMap()->getRelations();
-
-        foreach ($relations as $relationMap) {
-            $relationType = $relationMap->getType();
-            $fullyQualifiedQueryModel = $relationMap->getLocalTable()->getClassname() . 'Query';
-            if ($relationType == RelationMap::ONE_TO_MANY && !in_array($fullyQualifiedQueryModel, $processedEntities)) {
-                $processedEntities[] = $fullyQualifiedQueryModel;
-                $fullyQualifiedQueryModelObject = $fullyQualifiedQueryModel::create();
-                $this->cleanTableRelations($fullyQualifiedQueryModelObject, $processedEntities);
-            }
-        }
-
-        $query->deleteAll();
-    }
-
     /**
      * @return void
      */
@@ -61,13 +27,5 @@ class CompanyDataImportHelper extends Module
     protected function getCompanyQuery(): SpyCompanyQuery
     {
         return SpyCompanyQuery::create();
-    }
-
-    /**
-     * @return \Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery
-     */
-    protected function getCompanyBusinessUnitQuery(): SpyCompanyBusinessUnitQuery
-    {
-        return SpyCompanyBusinessUnitQuery::create();
     }
 }

@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 
 class UniqueRelationTypeForProductAbstract extends SymfonyConstraint
 {
-    const OPTION_PRODUCT_RELATION_QUERY_CONTAINER = 'productRelationQueryContainer';
+    public const OPTION_PRODUCT_RELATION_QUERY_CONTAINER = 'productRelationQueryContainer';
 
     /**
      * @var \Spryker\Zed\ProductRelation\Persistence\ProductRelationQueryContainerInterface

@@ -18,4 +18,20 @@ class ProductListStorageConfig extends AbstractBundleConfig
     {
         return true;
     }
+
+    /**
+     * @return string|null
+     */
+    public function getProductAbstractProductListSynchronizationPoolName(): ?string
+    {
+        return null;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getProductConcreteProductListSynchronizationPoolName(): ?string
+    {
+        return null;
+    }
 }

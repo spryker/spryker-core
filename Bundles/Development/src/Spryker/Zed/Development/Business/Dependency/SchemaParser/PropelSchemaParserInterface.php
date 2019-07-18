@@ -7,14 +7,16 @@
 
 namespace Spryker\Zed\Development\Business\Dependency\SchemaParser;
 
+use Symfony\Component\Finder\SplFileInfo;
+
 interface PropelSchemaParserInterface
 {
     /**
-     * @param string $module
+     * @param \Symfony\Component\Finder\SplFileInfo $fileInfo
      *
      * @return string[]
      */
-    public function getForeignColumnNames(string $module): array;
+    public function getForeignColumnNames(SplFileInfo $fileInfo): array;
 
     /**
      * @param string $foreignReferenceColumnName

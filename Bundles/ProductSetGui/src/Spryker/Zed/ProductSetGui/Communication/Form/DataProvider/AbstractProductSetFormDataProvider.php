@@ -28,7 +28,7 @@ abstract class AbstractProductSetFormDataProvider
     /**
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
-     * @return null|string
+     * @return string|null
      */
     protected function getUrlPrefix(LocaleTransfer $localeTransfer)
     {

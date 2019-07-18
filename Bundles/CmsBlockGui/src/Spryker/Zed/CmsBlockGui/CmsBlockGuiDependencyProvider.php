@@ -16,18 +16,24 @@ use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
 use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\CmsBlockGui\CmsBlockGuiConfig getConfig()
+ */
 class CmsBlockGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_CMS_BLOCK = 'CMS_BLOCK_GUI:FACADE_CMS_BLOCK';
-    const FACADE_LOCALE = 'CMS_BLOCK_GUI:FACADE_LOCALE';
+    public const FACADE_CMS_BLOCK = 'CMS_BLOCK_GUI:FACADE_CMS_BLOCK';
+    public const FACADE_LOCALE = 'CMS_BLOCK_GUI:FACADE_LOCALE';
 
-    const QUERY_CONTAINER_CMS_BLOCK = 'CMS_BLOCK_GUI:QUERY_CONTAINER_CMS_BLOCK';
+    public const QUERY_CONTAINER_CMS_BLOCK = 'CMS_BLOCK_GUI:QUERY_CONTAINER_CMS_BLOCK';
 
-    const PLUGINS_CMS_BLOCK_FORM = 'CMS_BLOCK_GUI:PLUGINS_CMS_BLOCK_FORM';
-    const PLUGINS_CMS_BLOCK_VIEW = 'CMS_BLOCK_GUI:PLUGINS_CMS_BLOCK_VIEW';
-    const PLUGIN_STORE_RELATION_FORM_TYPE = 'PLUGIN_STORE_RELATION_FORM_TYPE';
+    public const PLUGINS_CMS_BLOCK_FORM = 'CMS_BLOCK_GUI:PLUGINS_CMS_BLOCK_FORM';
+    public const PLUGINS_CMS_BLOCK_VIEW = 'CMS_BLOCK_GUI:PLUGINS_CMS_BLOCK_VIEW';
+    public const PLUGIN_STORE_RELATION_FORM_TYPE = 'PLUGIN_STORE_RELATION_FORM_TYPE';
 
-    const TWIG_ENVIRONMENT = 'CMS_BLOCK_GUI:TWIG_ENVIRONMENT';
+    public const TWIG_ENVIRONMENT = 'CMS_BLOCK_GUI:TWIG_ENVIRONMENT';
+
+    public const PLUGINS_CMS_BLOCK_GLOSSARY_BEFORE_SAVE = 'PLUGINS_CMS_BLOCK_GLOSSARY_BEFORE_SAVE';
+    public const PLUGINS_CMS_BLOCK_GLOSSARY_AFTER_FIND = 'PLUGINS_CMS_BLOCK_GLOSSARY_AFTER_FIND';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -44,6 +50,8 @@ class CmsBlockGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCmsBlockViewPlugins($container);
         $container = $this->addTwigEnvironment($container);
         $container = $this->addStoreRelationFormTypePlugin($container);
+        $container = $this->addCmsBlockGlossaryAfterFindPlugins($container);
+        $container = $this->addCmsBlockGlossaryBeforeSavePlugins($container);
 
         return $container;
     }
@@ -149,11 +157,12 @@ class CmsBlockGuiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Twig_Environment
+     * @return \Twig\Environment
      */
     protected function getTwigEnvironment()
     {
         $pimplePlugin = new Pimple();
+
         return $pimplePlugin->getApplication()['twig'];
     }
 
@@ -186,5 +195,49 @@ class CmsBlockGuiDependencyProvider extends AbstractBundleDependencyProvider
                 FormTypeInterface::class
             )
         );
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCmsBlockGlossaryAfterFindPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_CMS_BLOCK_GLOSSARY_AFTER_FIND, function () {
+            return $this->getCmsBlockGlossaryAfterFindPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsBlockGuiExtension\Dependency\Plugin\CmsBlockGlossaryAfterFindPluginInterface[]
+     */
+    protected function getCmsBlockGlossaryAfterFindPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCmsBlockGlossaryBeforeSavePlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_CMS_BLOCK_GLOSSARY_BEFORE_SAVE, function () {
+            return $this->getCmsBlockGlossaryBeforeSavePlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsBlockGuiExtension\Dependency\Plugin\CmsBlockGlossaryBeforeSavePluginInterface[]
+     */
+    protected function getCmsBlockGlossaryBeforeSavePlugins(): array
+    {
+        return [];
     }
 }

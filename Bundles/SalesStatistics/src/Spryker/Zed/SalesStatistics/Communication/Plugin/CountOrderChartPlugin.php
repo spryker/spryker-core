@@ -16,6 +16,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \Spryker\Zed\SalesStatistics\Communication\SalesStatisticsCommunicationFactory getFactory()
  * @method \Spryker\Zed\SalesStatistics\Business\SalesStatisticsFacadeInterface getFacade()
+ * @method \Spryker\Zed\SalesStatistics\SalesStatisticsConfig getConfig()
  */
 class CountOrderChartPlugin extends AbstractPlugin implements ChartPluginInterface, DashboardPluginInterface
 {
@@ -24,6 +25,8 @@ class CountOrderChartPlugin extends AbstractPlugin implements ChartPluginInterfa
     public const DAYS = 7;
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getName(): string
@@ -32,6 +35,8 @@ class CountOrderChartPlugin extends AbstractPlugin implements ChartPluginInterfa
     }
 
     /**
+     * @api
+     *
      * @param string|null $dataIdentifier
      *
      * @return \Generated\Shared\Transfer\ChartDataTransfer
@@ -49,6 +54,8 @@ class CountOrderChartPlugin extends AbstractPlugin implements ChartPluginInterfa
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function render(): string

@@ -11,7 +11,7 @@ use Spryker\Shared\Kernel\AbstractLocator;
 
 class ResourceLocator extends AbstractLocator
 {
-    const SERVICE_SUFFIX = 'Resource';
+    public const SERVICE_SUFFIX = 'Resource';
 
     /**
      * @var string

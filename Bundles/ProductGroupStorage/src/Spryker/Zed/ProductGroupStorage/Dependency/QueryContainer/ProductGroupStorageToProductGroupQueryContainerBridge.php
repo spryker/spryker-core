@@ -23,9 +23,7 @@ class ProductGroupStorageToProductGroupQueryContainerBridge implements ProductGr
     }
 
     /**
-     * @api
-     *
-     * @return \Orm\Zed\ProductGroup\Persistence\SpyProductGroupQuery
+     * @return \Orm\Zed\ProductGroup\Persistence\SpyProductAbstractGroupQuery
      */
     public function queryAllProductAbstractGroups()
     {

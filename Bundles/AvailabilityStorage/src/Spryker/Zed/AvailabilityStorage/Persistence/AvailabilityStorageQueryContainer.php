@@ -8,6 +8,7 @@
 namespace Spryker\Zed\AvailabilityStorage\Persistence;
 
 use Orm\Zed\Availability\Persistence\Map\SpyAvailabilityAbstractTableMap;
+use Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
@@ -19,7 +20,7 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
  */
 class AvailabilityStorageQueryContainer extends AbstractQueryContainer implements AvailabilityStorageQueryContainerInterface
 {
-    const ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+    public const ID_PRODUCT_ABSTRACT = 'id_product_abstract';
 
     /**
      * @api
@@ -47,6 +48,23 @@ class AvailabilityStorageQueryContainer extends AbstractQueryContainer implement
         return $this->getFactory()
             ->createSpyAvailabilityStorageQuery()
             ->filterByFkAvailabilityAbstract_In($availabilityAbstractIds);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param array $availabilityAbstractIds
+     *
+     * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery
+     */
+    public function queryAvailabilityByAvailabilityAbstractIds(array $availabilityAbstractIds): SpyAvailabilityAbstractQuery
+    {
+        return $this->getFactory()
+            ->getAvailabilityQueryContainer()
+            ->queryAllAvailabilityAbstracts()
+            ->filterByIdAvailabilityAbstract_In($availabilityAbstractIds);
     }
 
     /**

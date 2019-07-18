@@ -7,33 +7,56 @@
 
 namespace Spryker\Zed\Twig\Communication\Plugin;
 
+use Spryker\Service\Container\ContainerInterface;
+use Spryker\Shared\Twig\TwigExtensionInterface;
+use Spryker\Shared\TwigExtension\Dependency\Plugin\TwigPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Twig_Environment;
-use Twig_ExtensionInterface;
+use Twig\Environment;
 
 /**
  * @method \Spryker\Zed\Twig\Communication\TwigCommunicationFactory getFactory()
  * @method \Spryker\Zed\Twig\Business\TwigFacadeInterface getFacade()
  */
-abstract class AbstractTwigExtensionPlugin extends AbstractPlugin implements Twig_ExtensionInterface
+abstract class AbstractTwigExtensionPlugin extends AbstractPlugin implements TwigPluginInterface, TwigExtensionInterface
 {
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Twig\Environment $twig
+     * @param \Spryker\Service\Container\ContainerInterface $container
+     *
+     * @return \Twig\Environment
+     */
+    public function extend(Environment $twig, ContainerInterface $container): Environment
+    {
+        $twig->addExtension($this);
+
+        return $twig;
+    }
+
     /**
      * Initializes the runtime environment.
      *
      * This is where you can load some file that contains filter functions for instance.
      *
-     * @param \Twig_Environment $environment The current Twig_Environment instance
+     * @api
+     *
+     * @param \Twig\Environment $environment The current Environment instance
      *
      * @return void
      */
-    public function initRuntime(Twig_Environment $environment)
+    public function initRuntime(Environment $environment)
     {
     }
 
     /**
      * Returns the token parser instances to add to the existing list.
      *
-     * @return array An array of Twig_TokenParserInterface or Twig_TokenParserBrokerInterface instances
+     * @api
+     *
+     * @return array An array of TokenParserInterface or TokenParserBrokerInterface instances
      */
     public function getTokenParsers()
     {
@@ -43,7 +66,9 @@ abstract class AbstractTwigExtensionPlugin extends AbstractPlugin implements Twi
     /**
      * Returns the node visitor instances to add to the existing list.
      *
-     * @return \Twig_NodeVisitorInterface[] An array of Twig_NodeVisitorInterface instances
+     * @api
+     *
+     * @return \Twig\NodeVisitor\NodeVisitorInterface[] An array of NodeVisitorInterface instances
      */
     public function getNodeVisitors()
     {
@@ -52,6 +77,8 @@ abstract class AbstractTwigExtensionPlugin extends AbstractPlugin implements Twi
 
     /**
      * Returns a list of filters to add to the existing list.
+     *
+     * @api
      *
      * @return array An array of filters
      */
@@ -63,6 +90,8 @@ abstract class AbstractTwigExtensionPlugin extends AbstractPlugin implements Twi
     /**
      * Returns a list of tests to add to the existing list.
      *
+     * @api
+     *
      * @return array An array of tests
      */
     public function getTests()
@@ -72,6 +101,8 @@ abstract class AbstractTwigExtensionPlugin extends AbstractPlugin implements Twi
 
     /**
      * Returns a list of functions to add to the existing list.
+     *
+     * @api
      *
      * @return array An array of functions
      */
@@ -83,6 +114,8 @@ abstract class AbstractTwigExtensionPlugin extends AbstractPlugin implements Twi
     /**
      * Returns a list of operators to add to the existing list.
      *
+     * @api
+     *
      * @return array An array of operators
      */
     public function getOperators()
@@ -93,10 +126,24 @@ abstract class AbstractTwigExtensionPlugin extends AbstractPlugin implements Twi
     /**
      * Returns a list of global variables to add to the existing list.
      *
+     * @api
+     *
      * @return array An array of global variables
      */
     public function getGlobals()
     {
         return [];
+    }
+
+    /**
+     * @api
+     *
+     * @deprecated since 1.26 (to be removed in 2.0), not used anymore internally
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return static::class;
     }
 }

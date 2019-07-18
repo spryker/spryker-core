@@ -18,7 +18,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class ViewController extends AbstractController
 {
-    const URL_PARAM_ID_PRODUCT_RELATION = 'id-product-relation';
+    public const URL_PARAM_ID_PRODUCT_RELATION = 'id-product-relation';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

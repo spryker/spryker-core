@@ -11,23 +11,23 @@ use Symfony\Component\Finder\SplFileInfo;
 
 class DependencyTree extends AbstractDependencyTree
 {
-    const META_FINDER = 'finder';
-    const META_FILE = 'file';
-    const META_IN_TEST = 'in test';
-    const META_IS_OPTIONAL = 'is optional';
-    const META_ORGANIZATION = 'organization';
-    const META_CLASS_NAME = 'class name';
-    const META_FOREIGN_BUNDLE = 'foreign bundle';
-    const META_FOREIGN_BUNDLE_IS_ENGINE = 'foreign bundle is engine';
-    const META_FOREIGN_LAYER = 'foreign layer';
-    const META_FOREIGN_CLASS_NAME = 'foreign class name';
-    const META_FOREIGN_IS_EXTERNAL = 'foreign is external';
-    const META_APPLICATION = 'application';
-    const META_MODULE = 'bundle';
-    const META_MODULE_IS_ENGINE = 'is engine';
-    const META_LAYER = 'layer';
-    const META_COMPOSER_NAME = 'composer name';
-    const META_COMPOSER_VERSION = 'composer version';
+    public const META_FINDER = 'finder';
+    public const META_FILE = 'file';
+    public const META_IN_TEST = 'in test';
+    public const META_IS_OPTIONAL = 'is optional';
+    public const META_ORGANIZATION = 'organization';
+    public const META_CLASS_NAME = 'class name';
+    public const META_FOREIGN_BUNDLE = 'foreign bundle';
+    public const META_FOREIGN_BUNDLE_IS_ENGINE = 'foreign bundle is engine';
+    public const META_FOREIGN_LAYER = 'foreign layer';
+    public const META_FOREIGN_CLASS_NAME = 'foreign class name';
+    public const META_FOREIGN_IS_EXTERNAL = 'foreign is external';
+    public const META_APPLICATION = 'application';
+    public const META_MODULE = 'bundle';
+    public const META_MODULE_IS_ENGINE = 'is engine';
+    public const META_LAYER = 'layer';
+    public const META_COMPOSER_NAME = 'composer name';
+    public const META_COMPOSER_VERSION = 'composer version';
 
     /**
      * @var \Spryker\Zed\Development\Business\DependencyTree\FileInfoExtractor

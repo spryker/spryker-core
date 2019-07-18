@@ -12,10 +12,15 @@ use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 
+/**
+ * @method \Spryker\Zed\ProductCategoryFilterGui\ProductCategoryFilterGuiConfig getConfig()
+ * @method \Spryker\Zed\ProductCategoryFilterGui\Persistence\ProductCategoryFilterGuiQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductCategoryFilterGui\Communication\ProductCategoryFilterGuiCommunicationFactory getFactory()
+ */
 class ProductCategoryFilterForm extends AbstractType
 {
-    const FIELD_FILTER_AUTOCOMPLETE = 'filter-autocomplete';
-    const FIELD_FILTERS = 'filters';
+    public const FIELD_FILTER_AUTOCOMPLETE = 'filter-autocomplete';
+    public const FIELD_FILTERS = 'filters';
 
     /**
      * @return string

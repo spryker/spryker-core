@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -35,9 +36,9 @@ use Spryker\Zed\Availability\Business\AvailabilityFacade;
  */
 class AvailabilityFacadeTest extends Unit
 {
-    const ABSTRACT_SKU = '123_availability_test';
-    const CONCRETE_SKU = '123_availability_test-concrete';
-    const ID_STORE = 1;
+    public const ABSTRACT_SKU = '123_availability_test';
+    public const CONCRETE_SKU = '123_availability_test-concrete';
+    public const ID_STORE = 1;
 
     /**
      * @return void

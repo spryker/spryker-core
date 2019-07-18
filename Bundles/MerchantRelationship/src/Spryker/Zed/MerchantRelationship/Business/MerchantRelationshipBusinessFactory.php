@@ -8,12 +8,15 @@
 namespace Spryker\Zed\MerchantRelationship\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\MerchantRelationship\Business\Expander\MerchantRelationshipExpander;
+use Spryker\Zed\MerchantRelationship\Business\Expander\MerchantRelationshipExpanderInterface;
 use Spryker\Zed\MerchantRelationship\Business\KeyGenerator\MerchantRelationshipKeyGenerator;
 use Spryker\Zed\MerchantRelationship\Business\KeyGenerator\MerchantRelationshipKeyGeneratorInterface;
 use Spryker\Zed\MerchantRelationship\Business\Model\MerchantRelationshipReader;
 use Spryker\Zed\MerchantRelationship\Business\Model\MerchantRelationshipReaderInterface;
 use Spryker\Zed\MerchantRelationship\Business\Model\MerchantRelationshipWriter;
 use Spryker\Zed\MerchantRelationship\Business\Model\MerchantRelationshipWriterInterface;
+use Spryker\Zed\MerchantRelationship\MerchantRelationshipDependencyProvider;
 
 /**
  * @method \Spryker\Zed\MerchantRelationship\Persistence\MerchantRelationshipRepositoryInterface getRepository()
@@ -30,7 +33,8 @@ class MerchantRelationshipBusinessFactory extends AbstractBusinessFactory
         return new MerchantRelationshipWriter(
             $this->getEntityManager(),
             $this->getRepository(),
-            $this->createMerchantRelationshipKeyGenerator()
+            $this->createMerchantRelationshipKeyGenerator(),
+            $this->getMerchantRelationshipPreDeletePlugins()
         );
     }
 
@@ -40,7 +44,8 @@ class MerchantRelationshipBusinessFactory extends AbstractBusinessFactory
     public function createMerchantRelationshipReader(): MerchantRelationshipReaderInterface
     {
         return new MerchantRelationshipReader(
-            $this->getRepository()
+            $this->getRepository(),
+            $this->createMerchantRelationshipExpander()
         );
     }
 
@@ -50,5 +55,21 @@ class MerchantRelationshipBusinessFactory extends AbstractBusinessFactory
     public function createMerchantRelationshipKeyGenerator(): MerchantRelationshipKeyGeneratorInterface
     {
         return new MerchantRelationshipKeyGenerator($this->getRepository());
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantRelationship\Business\Expander\MerchantRelationshipExpanderInterface
+     */
+    public function createMerchantRelationshipExpander(): MerchantRelationshipExpanderInterface
+    {
+        return new MerchantRelationshipExpander();
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantRelationshipExtension\Dependency\Plugin\MerchantRelationshipPreDeletePluginInterface[]
+     */
+    public function getMerchantRelationshipPreDeletePlugins(): array
+    {
+        return $this->getProvidedDependency(MerchantRelationshipDependencyProvider::PLUGINS_MERCHANT_RELATIONSHIP_PRE_DELETE);
     }
 }

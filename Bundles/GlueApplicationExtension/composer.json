@@ -1,5 +1,6 @@
 {
   "name": "spryker/glue-application-extension",
+  "type": "library",
   "description": "GlueApplicationExtension module",
   "license": "proprietary",
   "require": {

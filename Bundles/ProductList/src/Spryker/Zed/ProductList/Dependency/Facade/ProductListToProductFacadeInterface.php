@@ -10,18 +10,9 @@ namespace Spryker\Zed\ProductList\Dependency\Facade;
 interface ProductListToProductFacadeInterface
 {
     /**
-     * @param string $concreteSku
+     * @param int[] $productConcreteIds
      *
-     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
-     *
-     * @return int
+     * @return int[]
      */
-    public function getProductAbstractIdByConcreteSku($concreteSku): int;
-
-    /**
-     * @param string $sku
-     *
-     * @return int|null
-     */
-    public function findProductConcreteIdBySku(string $sku);
+    public function getProductAbstractIdsByProductConcreteIds(array $productConcreteIds): array;
 }

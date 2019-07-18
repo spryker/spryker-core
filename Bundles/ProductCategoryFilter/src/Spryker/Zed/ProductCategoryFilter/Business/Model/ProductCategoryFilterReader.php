@@ -44,6 +44,7 @@ class ProductCategoryFilterReader implements ProductCategoryFilterReaderInterfac
         if (!$productCategoryFilterEntity) {
             $productCategoryFilterTransfer = new ProductCategoryFilterTransfer();
             $productCategoryFilterTransfer->setFkCategory($categoryId);
+
             return $productCategoryFilterTransfer;
         }
 
@@ -72,7 +73,7 @@ class ProductCategoryFilterReader implements ProductCategoryFilterReaderInterfac
     /**
      * @param int $categoryId
      *
-     * @return \Orm\Zed\ProductCategoryFilter\Persistence\SpyProductCategoryFilter
+     * @return \Orm\Zed\ProductCategoryFilter\Persistence\SpyProductCategoryFilter|null
      */
     protected function getProductCategoryFilterEntityByCategoryId($categoryId)
     {

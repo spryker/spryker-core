@@ -9,6 +9,9 @@ namespace Spryker\Zed\Twig\Business\Model;
 
 use Zend\Filter\Word\CamelCaseToDash;
 
+/**
+ * @deprecated Use \Spryker\Zed\Twig\Communication\RouteResolver\RouteResolver instead.
+ */
 class RouteResolver
 {
     /**
@@ -18,7 +21,7 @@ class RouteResolver
      */
     public function buildRouteFromControllerServiceName($controllerServiceName)
     {
-        list($serviceName, $actionName) = explode(':', $controllerServiceName);
+        [$serviceName, $actionName] = explode(':', $controllerServiceName);
         $serviceNameParts = explode('.', $serviceName);
 
         $serviceNameParts[4] = $this->getCamelCaseToDash($serviceNameParts[4]);

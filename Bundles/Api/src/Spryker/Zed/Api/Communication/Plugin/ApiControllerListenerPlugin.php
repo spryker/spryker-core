@@ -22,12 +22,18 @@ use Throwable;
 /**
  * @method \Spryker\Zed\Api\Communication\ApiCommunicationFactory getFactory()
  * @method \Spryker\Zed\Api\Business\ApiFacadeInterface getFacade()
+ * @method \Spryker\Zed\Api\ApiConfig getConfig()
+ * @method \Spryker\Zed\Api\Persistence\ApiQueryContainerInterface getQueryContainer()
  */
 class ApiControllerListenerPlugin extends AbstractPlugin implements ApiControllerListenerInterface
 {
     use LoggerTrait;
 
+    protected const REQUEST_URI = 'REQUEST_URI';
+
     /**
+     * @api
+     *
      * @param \Symfony\Component\HttpKernel\Event\FilterControllerEvent $event
      *
      * @return callable|null
@@ -66,6 +72,7 @@ class ApiControllerListenerPlugin extends AbstractPlugin implements ApiControlle
             $this->logResponse($responseTransfer);
 
             $responseObject = new Response();
+
             return $this->transformToResponse($requestTransfer, $responseTransfer, $responseObject);
         };
 
@@ -131,7 +138,7 @@ class ApiControllerListenerPlugin extends AbstractPlugin implements ApiControlle
         $requestData = $request->request->all();
         $requestTransfer->setRequestData($requestData);
 
-        $requestTransfer->setRequestUri($serverData['REQUEST_URI']);
+        $requestTransfer->setRequestUri($serverData[static::REQUEST_URI]);
 
         return $requestTransfer;
     }
@@ -143,11 +150,13 @@ class ApiControllerListenerPlugin extends AbstractPlugin implements ApiControlle
      */
     protected function logRequest(ApiRequestTransfer $requestTransfer)
     {
+        $filteredApiRequestTransfer = $this->getFacade()->filterApiRequestTransfer($requestTransfer);
+
         $this->getLogger()->info(sprintf(
             'API request [%s %s]: %s',
             $requestTransfer->getRequestType(),
             $requestTransfer->getRequestUri(),
-            json_encode($requestTransfer->toArray())
+            json_encode($filteredApiRequestTransfer->toArray())
         ));
     }
 

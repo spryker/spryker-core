@@ -1,0 +1,41 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% if widget_title is not defined %}
+    {% set widget_title = 'Create Content Item' | trans %}
+{% endif %}
+
+{% block head_title widget_title %}
+{% block section_title 'Create Content Item' | trans ~ ': ' ~ contentName | trans %}
+
+{% block action %}
+    {{ backActionButton(backButton, 'Back to Content Items' | trans) }}
+{% endblock %}
+
+{% block content %}
+    {% block widget_content %}
+        <div class="row">
+            <div class="col-xs-12">
+                {{ form_start(contentForm, {attr: {novalidate: 'novalidate'}}) }}
+                    <div class="row">
+                        <div class="col-xs-12 col-md-12">
+                            {{ form_row(contentForm.name) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-md-12">
+                            {{ form_row(contentForm.description) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                        {{ tabs(contentTabs, {'contentForm' : contentForm} ) }}
+                        </div>
+                    </div>
+                {{ form_end(contentForm) }}
+            </div>
+        </div>
+        <script src="/assets/js/spryker-zed-content-clear.js"></script>
+        <link rel="stylesheet" href="/assets/css/spryker-zed-content-clear.css" />
+    {% endblock %}
+{% endblock %}
+

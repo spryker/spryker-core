@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class SuggestController extends AbstractController
 {
-    const PARAM_SEARCH_TEXT = 'q';
+    public const PARAM_SEARCH_TEXT = 'q';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

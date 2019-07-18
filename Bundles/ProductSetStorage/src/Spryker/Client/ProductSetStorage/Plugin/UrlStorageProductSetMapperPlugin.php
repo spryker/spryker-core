@@ -11,7 +11,9 @@ use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Generated\Shared\Transfer\UrlStorageResourceMapTransfer;
 use Generated\Shared\Transfer\UrlStorageTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
+use Spryker\Client\ProductSetStorage\ProductSetStorageConfig;
 use Spryker\Client\UrlStorage\Dependency\Plugin\UrlStorageResourceMapperPluginInterface;
+use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\ProductSetStorage\ProductSetStorageConstants;
 
 /**
@@ -46,6 +48,17 @@ class UrlStorageProductSetMapperPlugin extends AbstractPlugin implements UrlStor
      */
     protected function generateKey($idProductSet, $locale)
     {
+        if (ProductSetStorageConfig::isCollectorCompatibilityMode()) {
+            $collectorDataKey = sprintf(
+                '%s.%s.resource.product_set.%s',
+                strtolower(Store::getInstance()->getStoreName()),
+                strtolower($locale),
+                $idProductSet
+            );
+
+            return $collectorDataKey;
+        }
+
         $synchronizationDataTransfer = new SynchronizationDataTransfer();
         $synchronizationDataTransfer->setLocale($locale);
         $synchronizationDataTransfer->setReference($idProductSet);

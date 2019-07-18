@@ -12,7 +12,7 @@ use Spryker\Shared\Kernel\AbstractLocator;
 
 class ServiceLocator extends AbstractLocator
 {
-    const SERVICE_SUFFIX = 'Service';
+    public const SERVICE_SUFFIX = 'Service';
 
     /**
      * @var string

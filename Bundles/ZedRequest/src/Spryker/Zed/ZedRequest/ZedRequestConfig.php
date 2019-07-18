@@ -37,7 +37,7 @@ class ZedRequestConfig extends AbstractBundleConfig
     }
 
     /**
-     * @param null|string $bundleControllerAction
+     * @param string|null $bundleControllerAction
      *
      * @return string
      */
@@ -48,6 +48,32 @@ class ZedRequestConfig extends AbstractBundleConfig
             $fileName .= '_' . $bundleControllerAction;
         }
 
-        return $fileName . '.log';
+        return basename($fileName . '.log');
+    }
+
+    /**
+     * @return int
+     */
+    public function getPermissionMode(): int
+    {
+        return $this->get(ZedRequestConstants::DIRECTORY_PERMISSION, 0777);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isRepeatEnabled(): bool
+    {
+        return $this->get(ZedRequestConstants::ENABLE_REPEAT, $this->getEnableRepeatDefaultValue());
+    }
+
+    /**
+     * @deprecated Method will be removed without replacement.
+     *
+     * @return bool
+     */
+    protected function getEnableRepeatDefaultValue(): bool
+    {
+        return APPLICATION_ENV === 'development';
     }
 }

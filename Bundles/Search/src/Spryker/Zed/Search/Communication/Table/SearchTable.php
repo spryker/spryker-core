@@ -13,10 +13,10 @@ use Spryker\Zed\Search\Business\SearchFacadeInterface;
 
 class SearchTable extends AbstractTable
 {
-    const COL_ID = 'id';
-    const COL_INDEX = 'index';
-    const COL_TYPE = 'type';
-    const COL_SCORE = 'score';
+    public const COL_ID = 'id';
+    public const COL_INDEX = 'index';
+    public const COL_TYPE = 'type';
+    public const COL_SCORE = 'score';
 
     /**
      * @var \Spryker\Zed\Search\Business\SearchFacadeInterface

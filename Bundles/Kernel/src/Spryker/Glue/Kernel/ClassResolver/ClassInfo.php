@@ -11,7 +11,7 @@ use Spryker\Shared\Kernel\ClassResolver\ClassInfo as SharedClassInfo;
 
 class ClassInfo extends SharedClassInfo
 {
-    const KEY_LAYER = 3;
+    public const KEY_LAYER = 3;
 
     /**
      * @return string

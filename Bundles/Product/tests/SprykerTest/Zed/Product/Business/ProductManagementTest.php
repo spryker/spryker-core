@@ -306,7 +306,7 @@ class ProductManagementTest extends FacadeTestAbstract
     /**
      * @param int $idProductAbstract
      *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAbstract
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstract|null
      */
     protected function getProductAbstractEntityById($idProductAbstract)
     {
@@ -319,7 +319,7 @@ class ProductManagementTest extends FacadeTestAbstract
     /**
      * @param int $idProductAbstract
      *
-     * @return \Orm\Zed\Product\Persistence\SpyProduct
+     * @return \Orm\Zed\Product\Persistence\SpyProduct|null
      */
     protected function getProductConcreteEntityByAbstractId($idProductAbstract)
     {

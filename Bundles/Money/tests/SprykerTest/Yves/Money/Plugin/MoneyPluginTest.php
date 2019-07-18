@@ -24,13 +24,13 @@ use Spryker\Yves\Money\Plugin\MoneyPlugin;
  */
 class MoneyPluginTest extends Unit
 {
-    const AMOUNT_INTEGER = 1000;
-    const AMOUNT_FLOAT = 10.00;
-    const AMOUNT_STRING = '1000';
+    public const AMOUNT_INTEGER = 1000;
+    public const AMOUNT_FLOAT = 10.00;
+    public const AMOUNT_STRING = '1000';
 
-    const CURRENCY_EUR = 'EUR';
-    const LOCALE_DE_DE = 'de_DE';
-    const LOCALE_EN_US = 'en_US';
+    public const CURRENCY_EUR = 'EUR';
+    public const LOCALE_DE_DE = 'de_DE';
+    public const LOCALE_EN_US = 'en_US';
 
     /**
      * @return void
@@ -163,7 +163,7 @@ class MoneyPluginTest extends Unit
     {
         $moneyPlugin = new MoneyPlugin();
         $converted = $moneyPlugin->convertIntegerToDecimal(1000);
-        $this->assertInternalType('float', $converted);
+        $this->assertIsFloat($converted);
         $this->assertSame(10.00, $converted);
     }
 
@@ -174,7 +174,7 @@ class MoneyPluginTest extends Unit
     {
         $moneyPlugin = new MoneyPlugin();
         $converted = $moneyPlugin->convertDecimalToInteger(10.00);
-        $this->assertInternalType('int', $converted);
+        $this->assertIsInt($converted);
         $this->assertSame(1000, $converted);
     }
 }

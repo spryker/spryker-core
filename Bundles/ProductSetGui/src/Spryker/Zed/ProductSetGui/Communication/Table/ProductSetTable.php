@@ -20,14 +20,14 @@ use Spryker\Zed\ProductSetGui\Persistence\ProductSetGuiQueryContainerInterface;
 
 class ProductSetTable extends AbstractTable
 {
-    const TABLE_IDENTIFIER = 'product-set-table';
+    public const TABLE_IDENTIFIER = 'product-set-table';
 
-    const COL_ID_PRODUCT_SET = 'id_product_set';
-    const COL_NAME = ProductSetGuiQueryContainer::COL_ALIAS_NAME;
-    const COL_PRODUCT_COUNT = 'product_count';
-    const COL_WEIGHT = 'weight';
-    const COL_IS_ACTIVE = 'is_active';
-    const COL_ACTIONS = 'actions';
+    public const COL_ID_PRODUCT_SET = 'id_product_set';
+    public const COL_NAME = ProductSetGuiQueryContainer::COL_ALIAS_NAME;
+    public const COL_PRODUCT_COUNT = 'product_count';
+    public const COL_WEIGHT = 'weight';
+    public const COL_IS_ACTIVE = 'is_active';
+    public const COL_ACTIONS = 'actions';
 
     /**
      * @var \Spryker\Zed\ProductSetGui\Persistence\ProductSetGuiQueryContainerInterface
@@ -63,7 +63,7 @@ class ProductSetTable extends AbstractTable
         $config->setHeader([
             static::COL_ID_PRODUCT_SET => 'ID',
             static::COL_NAME => 'Name',
-            static::COL_PRODUCT_COUNT => '# of Products',
+            static::COL_PRODUCT_COUNT => 'Number of Products',
             static::COL_WEIGHT => 'Weight',
             static::COL_IS_ACTIVE => 'Status',
             static::COL_ACTIONS => 'Actions',
@@ -135,10 +135,10 @@ class ProductSetTable extends AbstractTable
     protected function getStatusLabel($status)
     {
         if (!$status) {
-            return '<span class="label label-danger">Inactive</span>';
+            return $this->generateLabel('Inactive', 'label-danger');
         }
 
-        return '<span class="label label-info">Active</span>';
+        return $this->generateLabel('Active', 'label-info');
     }
 
     /**

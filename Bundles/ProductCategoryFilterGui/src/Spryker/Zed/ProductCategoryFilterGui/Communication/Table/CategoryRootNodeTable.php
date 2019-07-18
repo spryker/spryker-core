@@ -14,7 +14,7 @@ use Spryker\Zed\ProductCategoryFilterGui\Dependency\QueryContainer\ProductCatego
 
 class CategoryRootNodeTable extends AbstractTable
 {
-    const TABLE_IDENTIFIER = 'root-node-table';
+    public const TABLE_IDENTIFIER = 'root-node-table';
 
     /**
      * @var \Spryker\Zed\ProductCategoryFilterGui\Dependency\QueryContainer\ProductCategoryFilterGuiToCategoryQueryContainerInterface

@@ -14,6 +14,7 @@ use Spryker\Zed\Refund\RefundDependencyProvider;
 /**
  * @method \Spryker\Zed\Refund\RefundConfig getConfig()
  * @method \Spryker\Zed\Refund\Persistence\RefundQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Refund\Business\RefundFacadeInterface getFacade()
  */
 class RefundCommunicationFactory extends AbstractCommunicationFactory
 {

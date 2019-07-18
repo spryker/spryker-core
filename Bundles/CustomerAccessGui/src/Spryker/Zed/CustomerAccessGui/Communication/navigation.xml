@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<config>
+    <customer>
+        <pages>
+            <customer-access>
+                <label>Customer Access</label>
+                <title>Customer Access</title>
+                <bundle>customer-access-gui</bundle>
+                <controller>index</controller>
+                <action>index</action>
+            </customer-access>
+        </pages>
+    </customer>
+</config>

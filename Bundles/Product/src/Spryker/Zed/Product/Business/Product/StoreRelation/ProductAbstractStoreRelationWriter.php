@@ -61,11 +61,13 @@ class ProductAbstractStoreRelationWriter implements ProductAbstractStoreRelation
      */
     protected function findStoreRelationIdStores(StoreRelationTransfer $storeRelationTransfer)
     {
-        if ($storeRelationTransfer->getIdStores() === null) {
+        /** @var int[]|null $ids */
+        $ids = $storeRelationTransfer->getIdStores();
+        if ($ids === null) {
             return [];
         }
 
-        return $storeRelationTransfer->getIdStores();
+        return $ids;
     }
 
     /**

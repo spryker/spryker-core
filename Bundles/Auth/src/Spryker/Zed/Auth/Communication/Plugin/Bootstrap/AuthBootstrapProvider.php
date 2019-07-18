@@ -16,6 +16,8 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \Spryker\Zed\Auth\Communication\AuthCommunicationFactory getFactory()
  * @method \Spryker\Zed\Auth\Business\AuthFacadeInterface getFacade()
+ * @method \Spryker\Zed\Auth\AuthConfig getConfig()
+ * @method \Spryker\Zed\Auth\Persistence\AuthQueryContainerInterface getQueryContainer()
  */
 class AuthBootstrapProvider extends AbstractPlugin implements ServiceProviderInterface
 {

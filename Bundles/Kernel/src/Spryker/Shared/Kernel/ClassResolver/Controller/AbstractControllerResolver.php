@@ -15,7 +15,7 @@ use Spryker\Shared\Kernel\Communication\BundleControllerActionInterface;
  */
 abstract class AbstractControllerResolver extends AbstractClassResolver
 {
-    const KEY_CONTROLLER = '%controller%';
+    public const KEY_CONTROLLER = '%controller%';
 
     /**
      * @var \Spryker\Shared\Kernel\Communication\BundleControllerActionInterface

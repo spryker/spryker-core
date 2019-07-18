@@ -37,14 +37,14 @@ class Helper
     public function getRouteFromDestination($destination)
     {
         if (strpos($destination, '::') !== false) {
-            list($controllerNamespaceName, $actionName) = explode('::', $destination);
+            [$controllerNamespaceName, $actionName] = explode('::', $destination);
         } elseif (strpos($destination, ':') !== false) {
-            list($serviceName, $actionName) = explode(':', $destination);
+            [$serviceName, $actionName] = explode(':', $destination);
             $controllerNamespaceName = get_class($this->app[$serviceName]);
         } else {
             throw new LogicException('Cannot parse destination');
         }
-        list($namespace, $application, $bundle, $layer, $controllerName) = explode('\\', $controllerNamespaceName);
+        [$namespace, $application, $bundle, $layer, $controllerName] = explode('\\', $controllerNamespaceName);
 
         $bundle = str_replace(Store::getInstance()->getStoreName(), '', $bundle);
 

@@ -144,7 +144,7 @@ class ProductCustomerPermissionSaver implements ProductCustomerPermissionSaverIn
     }
 
     /**
-     * @param \Traversable $existingEntities
+     * @param \Traversable|\Orm\Zed\ProductCustomerPermission\Persistence\SpyProductCustomerPermission[] $existingEntities
      *
      * @return int[]
      */

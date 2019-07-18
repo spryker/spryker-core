@@ -16,14 +16,14 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class CmsBlockProductStorageQueryContainer extends AbstractQueryContainer implements CmsBlockProductStorageQueryContainerInterface
 {
-    const NAME = 'name';
+    public const NAME = 'name';
 
     /**
      * @api
      *
      * @param array $productIds
      *
-     * @return $this|\Orm\Zed\CmsBlockProductStorage\Persistence\SpyCmsBlockProductStorageQuery
+     * @return \Orm\Zed\CmsBlockProductStorage\Persistence\SpyCmsBlockProductStorageQuery
      */
     public function queryCmsBlockProductStorageByIds(array $productIds)
     {
@@ -37,7 +37,7 @@ class CmsBlockProductStorageQueryContainer extends AbstractQueryContainer implem
      *
      * @param array $productIds
      *
-     * @return $this|\Orm\Zed\CmsBlockProductConnector\Persistence\SpyCmsBlockProductConnectorQuery
+     * @return \Orm\Zed\CmsBlockProductConnector\Persistence\SpyCmsBlockProductConnectorQuery
      */
     public function queryCmsBlockProducts(array $productIds)
     {
@@ -63,6 +63,24 @@ class CmsBlockProductStorageQueryContainer extends AbstractQueryContainer implem
             ->queryCmsBlockProductConnector()
             ->innerJoinCmsBlock()
             ->withColumn(SpyCmsBlockTableMap::COL_NAME, static::NAME)
+            ->filterByIdCmsBlockProductConnector_In($cmsBlockProductIds);
+    }
+
+    /**
+     * Specification:
+     * - Returns a a query for the table `spy_cms_block_product_connector` filtered by cms block product ids.
+     *
+     * @api
+     *
+     * @param int[] $cmsBlockProductIds
+     *
+     * @return \Orm\Zed\CmsBlockProductConnector\Persistence\SpyCmsBlockProductConnectorQuery
+     */
+    public function queryCmsBlockProductsByCmsBlockProductIds(array $cmsBlockProductIds): SpyCmsBlockProductConnectorQuery
+    {
+        return $this->getFactory()
+            ->getCmsBlockProductConnectorQuery()
+            ->queryCmsBlockProductConnector()
             ->filterByIdCmsBlockProductConnector_In($cmsBlockProductIds);
     }
 }

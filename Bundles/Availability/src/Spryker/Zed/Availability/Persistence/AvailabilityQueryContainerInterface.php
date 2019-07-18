@@ -14,7 +14,7 @@ interface AvailabilityQueryContainerInterface
      *
      * @param string $sku
      *
-     * @return \Orm\Zed\Availability\Persistence\Base\SpyAvailabilityQuery
+     * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityQuery
      */
     public function querySpyAvailabilityBySku($sku);
 
@@ -24,7 +24,7 @@ interface AvailabilityQueryContainerInterface
      * @param string $sku
      * @param int $idStore
      *
-     * @return \Orm\Zed\Availability\Persistence\Base\SpyAvailabilityQuery
+     * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityQuery
      */
     public function queryAvailabilityBySkuAndIdStore($sku, $idStore);
 
@@ -53,7 +53,7 @@ interface AvailabilityQueryContainerInterface
      * @param int $idAvailabilityAbstract
      * @param int $idStore
      *
-     * @return \Orm\Zed\Availability\Persistence\Base\SpyAvailabilityQuery
+     * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityQuery
      */
     public function querySumQuantityOfAvailabilityAbstract($idAvailabilityAbstract, $idStore);
 
@@ -65,7 +65,7 @@ interface AvailabilityQueryContainerInterface
      * @param int $idStore
      * @param array $stockNames
      *
-     * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery|\Orm\Zed\Product\Persistence\SpyProductAbstractQuery
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     public function queryAvailabilityAbstractWithStockByIdProductAbstractAndIdLocale($idProductAbstract, $idLocale, $idStore, array $stockNames = []);
 

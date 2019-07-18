@@ -27,7 +27,7 @@ use SprykerTest\Shared\ZedRequest\Client\Fixture\Transfer;
  */
 class AbstractHttpClientTest extends Unit
 {
-    const TRANSFER_VALUE = 'catface';
+    public const TRANSFER_VALUE = 'catface';
 
     /**
      * @return void
@@ -48,7 +48,7 @@ class AbstractHttpClientTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\SprykerTest\Shared\ZedRequest\Client\Fixture\AbstractHttpClient
+     * @return \PHPUnit\Framework\MockObject\MockObject|\SprykerTest\Shared\ZedRequest\Client\Fixture\AbstractHttpClient
      */
     protected function getAbstractRequestMock()
     {

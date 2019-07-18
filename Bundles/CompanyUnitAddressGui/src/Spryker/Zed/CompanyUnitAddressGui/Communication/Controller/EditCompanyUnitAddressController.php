@@ -17,12 +17,18 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class EditCompanyUnitAddressController extends AbstractController
 {
-    const URL_PARAM_ID_COMPANY_UNIT_ADDRESS = 'id-company-unit-address';
+    /**
+     * @see \Spryker\Zed\CompanyUnitAddressGui\Communication\Controller\ListCompanyUnitAddressController::indexAction()
+     */
+    protected const COMPANY_UNIT_ADDRESS_LIST_URL = '/company-unit-address-gui/list-company-unit-address';
 
-    const MESSAGE_COMPANY_UNIT_ADDRESS_UPDATE_SUCCESS = 'Company unit address has been successfully updated.';
-    const MESSAGE_COMPANY_UNIT_ADDRESS_UPDATE_ERROR = 'Company unit address update failed.';
+    protected const MESSAGE_COMPANY_UNIT_ADDRESS_NOT_FOUND = 'Company unit address not found.';
+    public const URL_PARAM_ID_COMPANY_UNIT_ADDRESS = 'id-company-unit-address';
 
-    const HEADER_REFERER = 'referer';
+    public const MESSAGE_COMPANY_UNIT_ADDRESS_UPDATE_SUCCESS = 'Company unit address has been successfully updated.';
+    public const MESSAGE_COMPANY_UNIT_ADDRESS_UPDATE_ERROR = 'Company unit address update failed.';
+
+    public const HEADER_REFERER = 'referer';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -37,8 +43,15 @@ class EditCompanyUnitAddressController extends AbstractController
             ->createCompanyUnitAddressForm($idCompanyUnitAddress)
             ->handleRequest($request);
 
+        if (!$companyUnitAddressForm->getData()->getIdCompanyUnitAddress()) {
+            $this->addErrorMessage(static::MESSAGE_COMPANY_UNIT_ADDRESS_NOT_FOUND);
+
+            return $this->redirectResponse(static::COMPANY_UNIT_ADDRESS_LIST_URL);
+        }
+
         if ($companyUnitAddressForm->isSubmitted()) {
             $this->updateCompanyUnitAddress($companyUnitAddressForm);
+
             return $this->redirectResponse((string)$request->headers->get(static::HEADER_REFERER));
         }
 

@@ -13,13 +13,14 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \Spryker\Zed\Shipment\Communication\ShipmentCommunicationFactory getFactory()
  * @method \Spryker\Zed\Shipment\Business\ShipmentFacadeInterface getFacade()
+ * @method \Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface getQueryContainer()
  */
 class MethodController extends AbstractController
 {
-    const ID_METHOD_PARAMETER = 'id-method';
+    public const ID_METHOD_PARAMETER = 'id-method';
 
-    const MESSAGE_UPDATE_SUCCESS = 'Shipment method "%s" was updated successfully.';
-    const MESSAGE_CREATE_SUCCESS = 'Shipment method "%s" was created successfully.';
+    public const MESSAGE_UPDATE_SUCCESS = 'Shipment method "%s" was updated successfully.';
+    public const MESSAGE_CREATE_SUCCESS = 'Shipment method "%s" was created successfully.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -38,7 +39,7 @@ class MethodController extends AbstractController
             $shipmentMethodTransfer = $form->getData();
             $this->getFacade()->createMethod($shipmentMethodTransfer);
 
-            $this->addSuccessMessage(sprintf(static::MESSAGE_CREATE_SUCCESS, $shipmentMethodTransfer->getName()));
+            $this->addSuccessMessage(static::MESSAGE_CREATE_SUCCESS, ['%s' => $shipmentMethodTransfer->getName()]);
 
             return $this->redirectResponse('/shipment');
         }
@@ -69,7 +70,7 @@ class MethodController extends AbstractController
 
                 $this->getFacade()
                     ->updateMethod($shipmentMethodTransfer);
-                $this->addSuccessMessage(sprintf(static::MESSAGE_UPDATE_SUCCESS, $shipmentMethodTransfer->getName()));
+                $this->addSuccessMessage(static::MESSAGE_UPDATE_SUCCESS, ['%s' => $shipmentMethodTransfer->getName()]);
 
                 return $this->redirectResponse('/shipment');
             }

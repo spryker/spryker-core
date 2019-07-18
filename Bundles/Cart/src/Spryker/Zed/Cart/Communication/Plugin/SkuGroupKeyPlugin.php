@@ -15,12 +15,15 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \Spryker\Zed\Cart\Business\CartFacadeInterface getFacade()
  * @method \Spryker\Zed\Cart\Communication\CartCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Cart\CartConfig getConfig()
  */
 class SkuGroupKeyPlugin extends AbstractPlugin implements ItemExpanderPluginInterface
 {
     public const GROUP_KEY_DELIMITER = '_';
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer

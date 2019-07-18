@@ -18,20 +18,20 @@ use Spryker\Zed\StateMachine\StateMachineConfig;
 
 class Builder implements BuilderInterface
 {
-    const STATE_NAME_ATTRIBUTE = 'name';
-    const STATE_DISPLAY_ATTRIBUTE = 'display';
+    public const STATE_NAME_ATTRIBUTE = 'name';
+    public const STATE_DISPLAY_ATTRIBUTE = 'display';
 
-    const PROCESS_NAME_ATTRIBUTE = 'name';
-    const PROCESS_FILE_ATTRIBUTE = 'file';
-    const PROCESS_MAIN_FLAG_ATTRIBUTE = 'main';
+    public const PROCESS_NAME_ATTRIBUTE = 'name';
+    public const PROCESS_FILE_ATTRIBUTE = 'file';
+    public const PROCESS_MAIN_FLAG_ATTRIBUTE = 'main';
 
-    const EVENT_COMMAND_ATTRIBUTE = 'command';
-    const EVENT_MANUAL_ATTRIBUTE = 'manual';
-    const EVENT_ON_ENTER_ATTRIBUTE = 'onEnter';
-    const EVENT_TIMEOUT_ATTRIBUTE = 'timeout';
+    public const EVENT_COMMAND_ATTRIBUTE = 'command';
+    public const EVENT_MANUAL_ATTRIBUTE = 'manual';
+    public const EVENT_ON_ENTER_ATTRIBUTE = 'onEnter';
+    public const EVENT_TIMEOUT_ATTRIBUTE = 'timeout';
 
-    const TRANSITION_CONDITION_ATTRIBUTE = 'condition';
-    const TRANSITION_HAPPY_PATH_ATTRIBUTE = 'happy';
+    public const TRANSITION_CONDITION_ATTRIBUTE = 'condition';
+    public const TRANSITION_HAPPY_PATH_ATTRIBUTE = 'happy';
 
     /**
      * @var \SimpleXMLElement
@@ -106,7 +106,7 @@ class Builder implements BuilderInterface
 
         $this->mergeSubProcessFiles($pathToXml);
 
-        list($processMap, $mainProcess) = $this->createMainSubProcess();
+        [$processMap, $mainProcess] = $this->createMainSubProcess();
 
         $stateToProcessMap = $this->createStates($processMap);
 
@@ -156,12 +156,12 @@ class Builder implements BuilderInterface
      */
     protected function recursiveMerge($fromXmlElement, $intoXmlNode, $prefix = null)
     {
+        /** @var \SimpleXMLElement[] $xmlElements */
         $xmlElements = $fromXmlElement->children();
-        if ($xmlElements === null) {
+        if (!$xmlElements) {
             return;
         }
 
-        /** @var \SimpleXMLElement $xmlElement */
         foreach ($xmlElements as $xmlElement) {
             $xmlElement = $this->prefixSubProcessElementValue($xmlElement, $prefix);
             $xmlElement = $this->prefixSubProcessElementAttributes($xmlElement, $prefix);
@@ -233,13 +233,21 @@ class Builder implements BuilderInterface
         if (!file_exists($pathToXml)) {
             throw new StateMachineException(
                 sprintf(
-                    'State machine xml file not found in "%s".',
+                    'State machine XML file not found in "%s".',
                     $pathToXml
                 )
             );
         }
 
         $xmlContents = file_get_contents($pathToXml);
+        if ($xmlContents === false) {
+            throw new StateMachineException(
+                sprintf(
+                    'State machine XML file "%s" could not be read.',
+                    $pathToXml
+                )
+            );
+        }
 
         return $this->loadXml($xmlContents);
     }
@@ -443,6 +451,7 @@ class Builder implements BuilderInterface
      */
     protected function createTransitions(array $stateToProcessMap, array $processMap, array $eventMap)
     {
+        /** @var \SimpleXMLElement $xmlProcess */
         foreach ($this->rootElement as $xmlProcess) {
             if (empty($xmlProcess->transitions)) {
                 continue;

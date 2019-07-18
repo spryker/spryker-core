@@ -11,13 +11,16 @@ use Spryker\Zed\Acl\Dependency\Facade\AclToUserBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\Acl\AclConfig getConfig()
+ */
 class AclDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_USER = 'user facade';
-    const FACADE_ACL = 'acl facade';
-    const QUERY_CONTAINER_USER = 'user query container';
-    const QUERY_CONTAINER_ACL = 'acl query container';
-    const SERVICE_DATE_FORMATTER = 'date formatter service';
+    public const FACADE_USER = 'user facade';
+    public const FACADE_ACL = 'acl facade';
+    public const QUERY_CONTAINER_USER = 'user query container';
+    public const QUERY_CONTAINER_ACL = 'acl query container';
+    public const SERVICE_DATE_FORMATTER = 'date formatter service';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

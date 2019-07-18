@@ -22,8 +22,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class ProductCategoryQueryContainer extends AbstractQueryContainer implements ProductCategoryQueryContainerInterface
 {
-    const COL_CATEGORY_NAME = 'category_name';
-    const VIRTUAL_COLUMN_ID_CATEGORY_NODE = 'id_category_node';
+    public const COL_CATEGORY_NAME = 'category_name';
+    public const VIRTUAL_COLUMN_ID_CATEGORY_NODE = 'id_category_node';
 
     /**
      * @api
@@ -149,7 +149,7 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
     /**
      * @api
      *
-     * @param string $term
+     * @param string|null $term
      * @param int $idCategory
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
@@ -175,7 +175,7 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
     /**
      * @api
      *
-     * @param string $term
+     * @param string|null $term
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery

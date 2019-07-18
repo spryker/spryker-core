@@ -16,9 +16,9 @@ use Zend\Filter\Word\DashToCamelCase;
 
 class RequireExternalUpdater implements UpdaterInterface
 {
-    const KEY_REQUIRE = 'require';
-    const RELEASE_OPERATOR = '^';
-    const KEY_NAME = 'name';
+    public const KEY_REQUIRE = 'require';
+    public const RELEASE_OPERATOR = '^';
+    public const KEY_NAME = 'name';
 
     /**
      * @var array

@@ -20,7 +20,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class IndexController extends AbstractController
 {
-    const URL_PARAM_ID_STORE = 'id-store';
+    public const URL_PARAM_ID_STORE = 'id-store';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -274,6 +274,7 @@ class IndexController extends AbstractController
         if (!$idStore) {
             $idStore = $this->getFactory()->getStoreFacade()->getCurrentStore()->getIdStore();
         }
+
         return $this->castId($idStore);
     }
 }

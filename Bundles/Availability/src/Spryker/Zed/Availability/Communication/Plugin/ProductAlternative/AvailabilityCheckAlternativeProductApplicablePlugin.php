@@ -13,6 +13,8 @@ use Spryker\Zed\ProductAlternativeExtension\Dependency\Plugin\AlternativeProduct
 /**
  * @method \Spryker\Zed\Availability\Business\AvailabilityBusinessFactory getFactory()
  * @method \Spryker\Zed\Availability\Business\AvailabilityFacadeInterface getFacade()
+ * @method \Spryker\Zed\Availability\AvailabilityConfig getConfig()
+ * @method \Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface getQueryContainer()
  */
 class AvailabilityCheckAlternativeProductApplicablePlugin extends AbstractPlugin implements AlternativeProductApplicablePluginInterface
 {

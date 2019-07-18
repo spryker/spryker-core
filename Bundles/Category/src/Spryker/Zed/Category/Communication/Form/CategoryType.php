@@ -27,24 +27,25 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  * @method \Spryker\Zed\Category\Business\CategoryFacadeInterface getFacade()
  * @method \Spryker\Zed\Category\Communication\CategoryCommunicationFactory getFactory()
  * @method \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Category\CategoryConfig getConfig()
+ * @method \Spryker\Zed\Category\Persistence\CategoryRepositoryInterface getRepository()
  */
 class CategoryType extends AbstractType
 {
-    const OPTION_PARENT_CATEGORY_NODE_CHOICES = 'parent_category_node_choices';
-    const OPTION_CATEGORY_QUERY_CONTAINER = 'category query container';
-    const OPTION_CATEGORY_TEMPLATE_CHOICES = 'category_template_choices';
+    public const OPTION_PARENT_CATEGORY_NODE_CHOICES = 'parent_category_node_choices';
+    public const OPTION_CATEGORY_QUERY_CONTAINER = 'category query container';
+    public const OPTION_CATEGORY_TEMPLATE_CHOICES = 'category_template_choices';
 
-    const FIELD_CATEGORY_KEY = 'category_key';
-    const FIELD_IS_ACTIVE = 'is_active';
-    const FIELD_IS_IN_MENU = 'is_in_menu';
-    const FIELD_IS_CLICKABLE = 'is_clickable';
-    const FIELD_IS_SEARCHABLE = 'is_searchable';
-    const FIELD_IS_MAIN = 'is_main';
-    const FIELD_PARENT_CATEGORY_NODE = 'parent_category_node';
-    const FIELD_EXTRA_PARENTS = 'extra_parents';
-    const FIELD_TEMPLATE = 'fk_category_template';
-
-    const FIELD_LOCALIZED_ATTRIBUTES = 'localized_attributes';
+    public const FIELD_CATEGORY_KEY = 'category_key';
+    public const FIELD_IS_ACTIVE = 'is_active';
+    public const FIELD_IS_IN_MENU = 'is_in_menu';
+    public const FIELD_IS_CLICKABLE = 'is_clickable';
+    public const FIELD_IS_SEARCHABLE = 'is_searchable';
+    public const FIELD_IS_MAIN = 'is_main';
+    public const FIELD_PARENT_CATEGORY_NODE = 'parent_category_node';
+    public const FIELD_EXTRA_PARENTS = 'extra_parents';
+    public const FIELD_TEMPLATE = 'fk_category_template';
+    public const FIELD_LOCALIZED_ATTRIBUTES = 'localized_attributes';
 
     /**
      * @var \Spryker\Zed\Category\Dependency\Plugin\CategoryFormPluginInterface[]
@@ -187,7 +188,6 @@ class CategoryType extends AbstractType
             'property_path' => 'parentCategoryNode',
             'label' => 'Parent',
             'choices' => $choices,
-            'choices_as_values' => true,
             'choice_label' => 'name',
             'choice_value' => 'idCategoryNode',
             'group_by' => 'path',
@@ -208,7 +208,6 @@ class CategoryType extends AbstractType
         $builder->add(self::FIELD_EXTRA_PARENTS, Select2ComboBoxType::class, [
             'label' => 'Additional Parents',
             'choices' => $choices,
-            'choices_as_values' => true,
             'choice_label' => 'name',
             'choice_value' => 'idCategoryNode',
             'multiple' => true,
@@ -239,7 +238,6 @@ class CategoryType extends AbstractType
         $builder->add(static::FIELD_TEMPLATE, Select2ComboBoxType::class, [
             'label' => 'Template',
             'choices' => array_flip($choices),
-            'choices_as_values' => true,
             'required' => true,
             'constraints' => [
                 new NotBlank(),

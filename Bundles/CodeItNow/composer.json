@@ -1,5 +1,6 @@
 {
   "name": "spryker/code-it-now",
+  "type": "library",
   "description": "CodeItNow module",
   "license": "proprietary",
   "require": {

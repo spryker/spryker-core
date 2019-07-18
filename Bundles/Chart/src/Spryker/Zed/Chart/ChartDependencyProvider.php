@@ -14,10 +14,13 @@ use Spryker\Zed\Chart\Communication\Plugin\Twig\TwigPieChartPlugin;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\Chart\ChartConfig getConfig()
+ */
 class ChartDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const PLUGIN_TWIG_CHART_FUNCTIONS = 'PLUGIN_TWIG_CHART_FUNCTIONS';
-    const PLUGIN_CHARTS = 'PLUGIN_CHARTS';
+    public const PLUGIN_TWIG_CHART_FUNCTIONS = 'PLUGIN_TWIG_CHART_FUNCTIONS';
+    public const PLUGIN_CHARTS = 'PLUGIN_CHARTS';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

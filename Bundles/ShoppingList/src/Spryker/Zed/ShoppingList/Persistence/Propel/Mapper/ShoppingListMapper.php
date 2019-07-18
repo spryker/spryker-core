@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ShoppingList\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
+use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use Generated\Shared\Transfer\SpyShoppingListEntityTransfer;
 use Orm\Zed\ShoppingList\Persistence\SpyShoppingList;
@@ -17,6 +18,19 @@ class ShoppingListMapper implements ShoppingListMapperInterface
     public const FIELD_FIRST_NAME = 'first_name';
     public const FIELD_LAST_NAME = 'last_name';
     public const FIELD_CREATED_AT = 'created_at';
+
+    /**
+     * @var \Spryker\Zed\ShoppingList\Persistence\Propel\Mapper\ShoppingListItemMapperInterface
+     */
+    protected $shoppingListItemMapper;
+
+    /**
+     * @param \Spryker\Zed\ShoppingList\Persistence\Propel\Mapper\ShoppingListItemMapperInterface $shoppingListItemMapper
+     */
+    public function __construct(ShoppingListItemMapperInterface $shoppingListItemMapper)
+    {
+        $this->shoppingListItemMapper = $shoppingListItemMapper;
+    }
 
     /**
      * @param \Generated\Shared\Transfer\SpyShoppingListEntityTransfer $shoppingListEntityTransfer
@@ -42,7 +56,10 @@ class ShoppingListMapper implements ShoppingListMapperInterface
 
         $this->addItemsCount($shoppingListEntityTransfer, $shoppingListTransfer);
 
-        return $shoppingListTransfer;
+        return $this->mapShoppingListItemCollectionTransferToShoppingListTransfer(
+            $this->shoppingListItemMapper->mapItemCollectionTransfer($shoppingListEntityTransfer->getSpyShoppingListItems()->getArrayCopy()),
+            $shoppingListTransfer
+        );
     }
 
     /**
@@ -75,6 +92,23 @@ class ShoppingListMapper implements ShoppingListMapperInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     */
+    protected function mapShoppingListItemCollectionTransferToShoppingListTransfer(
+        ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer,
+        ShoppingListTransfer $shoppingListTransfer
+    ): ShoppingListTransfer {
+        foreach ($shoppingListItemCollectionTransfer->getItems() as $shoppingListItemTransfer) {
+            $shoppingListTransfer->addItem($shoppingListItemTransfer);
+        }
+
+        return $shoppingListTransfer;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\SpyShoppingListEntityTransfer $shoppingListEntityTransfer
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
@@ -86,7 +120,11 @@ class ShoppingListMapper implements ShoppingListMapperInterface
     ): void {
         $numberOfItems = [];
         foreach ($shoppingListEntityTransfer->getSpyShoppingListItems() as $shoppingListItem) {
-            $numberOfItems[$shoppingListItem->getSku()] = 1;
+            if (!isset($numberOfItems[$shoppingListItem->getSku()])) {
+                $numberOfItems[$shoppingListItem->getSku()] = 0;
+            }
+
+            $numberOfItems[$shoppingListItem->getSku()] += $shoppingListItem->getQuantity();
         }
 
         $shoppingListTransfer->setNumberOfItems(array_sum($numberOfItems));

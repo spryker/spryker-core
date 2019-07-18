@@ -15,7 +15,7 @@ interface UrlEvents
      *
      * @api
      */
-    const ENTITY_SPY_URL_CREATE = 'Entity.spy_url.create';
+    public const ENTITY_SPY_URL_CREATE = 'Entity.spy_url.create';
 
     /**
      * Specification
@@ -23,7 +23,7 @@ interface UrlEvents
      *
      * @api
      */
-    const URL_PUBLISH = 'Url.publish';
+    public const URL_PUBLISH = 'Url.publish';
 
     /**
      * Specification
@@ -31,7 +31,7 @@ interface UrlEvents
      *
      * @api
      */
-    const URL_UNPUBLISH = 'Url.unpublish';
+    public const URL_UNPUBLISH = 'Url.unpublish';
 
     /**
      * Specification
@@ -39,7 +39,7 @@ interface UrlEvents
      *
      * @api
      */
-    const ENTITY_SPY_URL_UPDATE = 'Entity.spy_url.update';
+    public const ENTITY_SPY_URL_UPDATE = 'Entity.spy_url.update';
 
     /**
      * Specification
@@ -47,7 +47,7 @@ interface UrlEvents
      *
      * @api
      */
-    const ENTITY_SPY_URL_DELETE = 'Entity.spy_url.delete';
+    public const ENTITY_SPY_URL_DELETE = 'Entity.spy_url.delete';
 
     /**
      * Specification
@@ -55,7 +55,7 @@ interface UrlEvents
      *
      * @api
      */
-    const ENTITY_SPY_URL_REDIRECT_CREATE = 'Entity.spy_url_redirect.create';
+    public const ENTITY_SPY_URL_REDIRECT_CREATE = 'Entity.spy_url_redirect.create';
 
     /**
      * Specification
@@ -63,7 +63,7 @@ interface UrlEvents
      *
      * @api
      */
-    const ENTITY_SPY_URL_REDIRECT_UPDATE = 'Entity.spy_url_redirect.update';
+    public const ENTITY_SPY_URL_REDIRECT_UPDATE = 'Entity.spy_url_redirect.update';
 
     /**
      * Specification
@@ -71,5 +71,5 @@ interface UrlEvents
      *
      * @api
      */
-    const ENTITY_SPY_URL_REDIRECT_DELETE = 'Entity.spy_url_redirect.delete';
+    public const ENTITY_SPY_URL_REDIRECT_DELETE = 'Entity.spy_url_redirect.delete';
 }

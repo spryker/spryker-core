@@ -14,5 +14,5 @@ use Spryker\Zed\Category\CategoryConfig;
  */
 interface CategoryExporterConstants
 {
-    const RESOURCE_TYPE_CATEGORY_NODE = CategoryConfig::RESOURCE_TYPE_CATEGORY_NODE;
+    public const RESOURCE_TYPE_CATEGORY_NODE = CategoryConfig::RESOURCE_TYPE_CATEGORY_NODE;
 }

@@ -13,15 +13,18 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
+ * @internal
+ *
  * @method \Spryker\Zed\Development\Business\DevelopmentFacadeInterface getFacade()
+ * @method \Spryker\Zed\Development\Communication\DevelopmentCommunicationFactory getFactory()
  */
 class DependencyTreeBuilderConsole extends Console
 {
-    const COMMAND_NAME = 'dev:dependency:build-tree';
+    public const COMMAND_NAME = 'dev:dependency:build-tree';
 
-    const OPTION_APPLICATION = 'application';
-    const OPTION_MODULE = 'module';
-    const OPTION_LAYER = 'layer';
+    public const OPTION_APPLICATION = 'application';
+    public const OPTION_MODULE = 'module';
+    public const OPTION_LAYER = 'layer';
 
     /**
      * @return void
@@ -44,7 +47,7 @@ class DependencyTreeBuilderConsole extends Console
      * @param \Symfony\Component\Console\Input\InputInterface $input
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
-     * @return void
+     * @return int|null
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {

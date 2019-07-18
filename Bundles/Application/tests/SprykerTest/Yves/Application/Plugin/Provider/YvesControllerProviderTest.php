@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -23,8 +24,8 @@ use SprykerTest\Yves\Application\Plugin\Provider\Fixtures\ControllerProviderMock
  */
 class YvesControllerProviderTest extends Unit
 {
-    const METHOD_REQUIRE_HTTP = 'requireHttp';
-    const METHOD_REQUIRE_HTTPS = 'requireHttps';
+    public const METHOD_REQUIRE_HTTP = 'requireHttp';
+    public const METHOD_REQUIRE_HTTPS = 'requireHttps';
 
     /**
      * @return void
@@ -86,7 +87,7 @@ class YvesControllerProviderTest extends Unit
      * @param \Silex\Controller $controller
      * @param array $urls
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Unit\Spryker\Yves\Application\Plugin\Provider\Fixtures\ControllerProviderMock
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Unit\Spryker\Yves\Application\Plugin\Provider\Fixtures\ControllerProviderMock
      */
     protected function createControllerProviderMock($ssl, $controller, array $urls = [])
     {
@@ -100,9 +101,9 @@ class YvesControllerProviderTest extends Unit
 
     /**
      * @param string $methodName
-     * @param \PHPUnit_Framework_MockObject_Matcher_InvokedCount $callTimes
+     * @param \PHPUnit\Framework\MockObject\Matcher\InvokedCount $callTimes
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Silex\Controller
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Silex\Controller
      */
     private function getControllerMock($methodName, $callTimes)
     {

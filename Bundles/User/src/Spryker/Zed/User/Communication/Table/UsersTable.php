@@ -12,17 +12,23 @@ use Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
-use Spryker\Zed\User\Dependency\Plugin\UsersTableExpanderPluginInterface;
+use Spryker\Zed\User\Communication\Table\PluginExecutor\UserTablePluginExecutorInterface;
 use Spryker\Zed\User\Persistence\UserQueryContainerInterface;
 
 class UsersTable extends AbstractTable
 {
-    const ACTION = 'Action';
-    const UPDATE_USER_URL = '/user/edit/update';
-    const DEACTIVATE_USER_URL = '/user/edit/deactivate-user';
-    const ACTIVATE_USER_URL = '/user/edit/activate-user';
-    const DELETE_USER_URL = '/user/edit/delete';
-    const PARAM_ID_USER = 'id-user';
+    public const ACTION = 'Action';
+    public const UPDATE_USER_URL = '/user/edit/update';
+    public const DEACTIVATE_USER_URL = '/user/edit/deactivate-user';
+    public const ACTIVATE_USER_URL = '/user/edit/activate-user';
+    public const DELETE_USER_URL = '/user/edit/delete';
+
+    /**
+     * @see \Spryker\Zed\User\Communication\Controller\EditController::confirmDeleteAction()
+     */
+    public const CONFIRM_DELETE_USER_URL = '/user/edit/confirm-delete';
+
+    public const PARAM_ID_USER = 'id-user';
 
     /**
      * @var \Spryker\Zed\User\Persistence\UserQueryContainerInterface
@@ -35,20 +41,23 @@ class UsersTable extends AbstractTable
     protected $utilDateTimeService;
 
     /**
-     * @var \Spryker\Zed\User\Dependency\Plugin\UsersTableExpanderPluginInterface[]
+     * @var \Spryker\Zed\User\Communication\Table\PluginExecutor\UserTablePluginExecutorInterface
      */
-    protected $usersTableExpanderPlugins;
+    protected $userTablePluginExecutor;
 
     /**
      * @param \Spryker\Zed\User\Persistence\UserQueryContainerInterface $userQueryContainer
      * @param \Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface $utilDateTimeService
-     * @param \Spryker\Zed\User\Dependency\Plugin\UsersTableExpanderPluginInterface[] $userTableExpanderPlugins
+     * @param \Spryker\Zed\User\Communication\Table\PluginExecutor\UserTablePluginExecutorInterface $userTablePluginExecutor
      */
-    public function __construct(UserQueryContainerInterface $userQueryContainer, UtilDateTimeServiceInterface $utilDateTimeService, array $userTableExpanderPlugins)
-    {
+    public function __construct(
+        UserQueryContainerInterface $userQueryContainer,
+        UtilDateTimeServiceInterface $utilDateTimeService,
+        UserTablePluginExecutorInterface $userTablePluginExecutor
+    ) {
         $this->userQueryContainer = $userQueryContainer;
         $this->utilDateTimeService = $utilDateTimeService;
-        $this->usersTableExpanderPlugins = $userTableExpanderPlugins;
+        $this->userTablePluginExecutor = $userTablePluginExecutor;
     }
 
     /**
@@ -83,7 +92,19 @@ class UsersTable extends AbstractTable
             SpyUserTableMap::COL_LAST_NAME,
         ]);
 
+        $config = $this->executeConfigExpanderPlugins($config);
+
         return $config;
+    }
+
+    /**
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $tableConfiguration
+     *
+     * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
+     */
+    protected function executeConfigExpanderPlugins(TableConfiguration $tableConfiguration): TableConfiguration
+    {
+        return $this->userTablePluginExecutor->executeConfigExpanderPlugins($tableConfiguration);
     }
 
     /**
@@ -98,17 +119,27 @@ class UsersTable extends AbstractTable
 
         $results = [];
         foreach ($queryResults as $item) {
-            $results[] = [
+            $results[] = array_merge([
                 SpyUserTableMap::COL_USERNAME => $item[SpyUserTableMap::COL_USERNAME],
                 SpyUserTableMap::COL_FIRST_NAME => $item[SpyUserTableMap::COL_FIRST_NAME],
                 SpyUserTableMap::COL_LAST_NAME => $item[SpyUserTableMap::COL_LAST_NAME],
                 SpyUserTableMap::COL_LAST_LOGIN => $this->getLastLoginDateTime($item),
                 SpyUserTableMap::COL_STATUS => $this->createStatusLabel($item),
                 self::ACTION => implode(' ', $this->createActionButtons($item)),
-            ];
+            ], $this->executeDataExpanderPlugins($item));
         }
 
         return $results;
+    }
+
+    /**
+     * @param array $item
+     *
+     * @return array
+     */
+    protected function executeDataExpanderPlugins(array $item): array
+    {
+        return $this->userTablePluginExecutor->executeDataExpanderPlugins($item);
     }
 
     /**
@@ -129,9 +160,11 @@ class UsersTable extends AbstractTable
 
         $urls[] = $this->createStatusButton($user);
 
-        $urls[] = $this->generateRemoveButton(self::DELETE_USER_URL, 'Delete', [
+        $deleteUrl = Url::generate(static::CONFIRM_DELETE_USER_URL, [
             self::PARAM_ID_USER => $user[SpyUserTableMap::COL_ID_USER],
         ]);
+
+        $urls[] = $this->generateRemoveButton($deleteUrl, 'Delete');
 
         return $urls;
     }
@@ -143,20 +176,14 @@ class UsersTable extends AbstractTable
      */
     public function createStatusLabel(array $user)
     {
-        $statusLabel = '';
         switch ($user[SpyUserTableMap::COL_STATUS]) {
             case SpyUserTableMap::COL_STATUS_ACTIVE:
-                $statusLabel = '<span class="label label-success" title="Active">Active</span>';
-                break;
+                return $this->generateLabel('Active', 'label-success');
             case SpyUserTableMap::COL_STATUS_BLOCKED:
-                $statusLabel = '<span class="label label-danger" title="Deactivated">Deactivated</span>';
-                break;
+                return $this->generateLabel('Deactivated', 'label-danger');
             case SpyUserTableMap::COL_STATUS_DELETED:
-                $statusLabel = '<span class="label label-default" title="Deleted">Deleted</span>';
-                break;
+                return $this->generateLabel('Deleted', 'label-default');
         }
-
-        return $statusLabel;
     }
 
     /**
@@ -190,28 +217,11 @@ class UsersTable extends AbstractTable
      */
     protected function generateUsersTableExpanderPluginsActionButtons(array $user)
     {
+        $buttonTransfers = $this->userTablePluginExecutor->executeActionButtonExpanderPlugins($user);
+
         $actionButtons = [];
-        foreach ($this->usersTableExpanderPlugins as $usersTableExpanderPlugin) {
-            $actionButtons = array_merge(
-                $actionButtons,
-                $this->generateUsersTableExpanderPluginActionButtons($usersTableExpanderPlugin, $user)
-            );
-        }
-
-        return $actionButtons;
-    }
-
-    /**
-     * @param \Spryker\Zed\User\Dependency\Plugin\UsersTableExpanderPluginInterface $usersTableExpanderPlugin
-     * @param array $user
-     *
-     * @return string[]
-     */
-    protected function generateUsersTableExpanderPluginActionButtons(UsersTableExpanderPluginInterface $usersTableExpanderPlugin, array $user)
-    {
-        $pluginActionButtons = [];
-        foreach ($usersTableExpanderPlugin->getActionButtonDefinitions($user) as $buttonTransfer) {
-            $pluginActionButtons[] = $this->generateButton(
+        foreach ($buttonTransfers as $buttonTransfer) {
+            $actionButtons[] = $this->generateButton(
                 $buttonTransfer->getUrl(),
                 $buttonTransfer->getTitle(),
                 $buttonTransfer->getDefaultOptions(),
@@ -219,7 +229,7 @@ class UsersTable extends AbstractTable
             );
         }
 
-        return $pluginActionButtons;
+        return $actionButtons;
     }
 
     /**

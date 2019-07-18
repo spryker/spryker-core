@@ -7,24 +7,11 @@
 
 namespace Spryker\Zed\Messenger\Dependency\Plugin;
 
-interface TranslationPluginInterface
-{
-    /**
-     * @api
-     *
-     * @param string $keyName
-     *
-     * @return bool
-     */
-    public function hasKey($keyName);
+use Spryker\Zed\MessengerExtension\Dependency\Plugin\TranslationPluginInterface as ExtensionTranslationPluginInterface;
 
-    /**
-     * @api
-     *
-     * @param string $keyName
-     * @param array $data
-     *
-     * @return string
-     */
-    public function translate($keyName, array $data = []);
+/**
+ * @deprecated Use Spryker\Zed\MessengerExtension\Dependency\Plugin\TranslationPluginInterface instead.
+ */
+interface TranslationPluginInterface extends ExtensionTranslationPluginInterface
+{
 }

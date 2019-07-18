@@ -8,15 +8,22 @@
 namespace Spryker\Zed\Sales\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\Sales\Business\Expense\ExpenseWriter;
+use Spryker\Zed\Sales\Business\Expense\ExpenseWriterInterface;
 use Spryker\Zed\Sales\Business\Model\Address\OrderAddressUpdater;
 use Spryker\Zed\Sales\Business\Model\Comment\OrderCommentReader;
 use Spryker\Zed\Sales\Business\Model\Comment\OrderCommentSaver;
+use Spryker\Zed\Sales\Business\Model\Customer\CustomerOrderOverviewInterface;
 use Spryker\Zed\Sales\Business\Model\Customer\CustomerOrderReader;
+use Spryker\Zed\Sales\Business\Model\Customer\PaginatedCustomerOrderOverview;
 use Spryker\Zed\Sales\Business\Model\Customer\PaginatedCustomerOrderReader;
+use Spryker\Zed\Sales\Business\Model\Order\CustomerOrderOverviewHydrator;
+use Spryker\Zed\Sales\Business\Model\Order\CustomerOrderOverviewHydratorInterface;
 use Spryker\Zed\Sales\Business\Model\Order\OrderExpander;
 use Spryker\Zed\Sales\Business\Model\Order\OrderHydrator;
 use Spryker\Zed\Sales\Business\Model\Order\OrderReader;
 use Spryker\Zed\Sales\Business\Model\Order\OrderReferenceGenerator;
+use Spryker\Zed\Sales\Business\Model\Order\OrderRepositoryReader;
 use Spryker\Zed\Sales\Business\Model\Order\OrderSaver;
 use Spryker\Zed\Sales\Business\Model\Order\OrderUpdater;
 use Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaver;
@@ -28,7 +35,9 @@ use Spryker\Zed\Sales\SalesDependencyProvider;
 
 /**
  * @method \Spryker\Zed\Sales\SalesConfig getConfig()
+ * @method \Spryker\Zed\Sales\Persistence\SalesRepositoryInterface getRepository()
  * @method \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Sales\Persistence\SalesEntityManagerInterface getEntityManager()
  */
 class SalesBusinessFactory extends AbstractBusinessFactory
 {
@@ -57,6 +66,26 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Sales\Business\Model\Customer\CustomerOrderOverviewInterface
+     */
+    public function createPaginatedCustomerOrderOverview(): CustomerOrderOverviewInterface
+    {
+        return new PaginatedCustomerOrderOverview(
+            $this->getQueryContainer(),
+            $this->createCustomerOrderOverviewHydrator(),
+            $this->getOmsFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Business\Model\Order\CustomerOrderOverviewHydratorInterface
+     */
+    public function createCustomerOrderOverviewHydrator(): CustomerOrderOverviewHydratorInterface
+    {
+        return new CustomerOrderOverviewHydrator();
+    }
+
+    /**
      * @deprecated Use createSalesOrderSaver() instead.
      *
      * @return \Spryker\Zed\Sales\Business\Model\Order\OrderSaverInterface
@@ -72,7 +101,8 @@ class SalesBusinessFactory extends AbstractBusinessFactory
             $this->getStore(),
             $this->getOrderExpanderPreSavePlugins(),
             $this->createSalesOrderSaverPluginExecutor(),
-            $this->createOrderItemMapper()
+            $this->createOrderItemMapper(),
+            $this->getOrderPostSavePlugins()
         );
     }
 
@@ -90,7 +120,8 @@ class SalesBusinessFactory extends AbstractBusinessFactory
             $this->getStore(),
             $this->getOrderExpanderPreSavePlugins(),
             $this->createSalesOrderSaverPluginExecutor(),
-            $this->createOrderItemMapper()
+            $this->createOrderItemMapper(),
+            $this->getOrderPostSavePlugins()
         );
     }
 
@@ -110,6 +141,17 @@ class SalesBusinessFactory extends AbstractBusinessFactory
         return new OrderReader(
             $this->getQueryContainer(),
             $this->createOrderHydrator()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Business\Model\Order\OrderRepositoryReader
+     */
+    public function createOrderRepositoryReader()
+    {
+        return new OrderRepositoryReader(
+            $this->createOrderHydrator(),
+            $this->getRepository()
         );
     }
 
@@ -231,7 +273,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Sales\Dependency\Plugin\HydrateOrderPluginInterface[]
+     * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderExpanderPluginInterface[]
      */
     public function getHydrateOrderPlugins()
     {
@@ -278,5 +320,23 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     public function getItemTransformerStrategyPlugins(): array
     {
         return $this->getProvidedDependency(SalesDependencyProvider::ITEM_TRANSFORMER_STRATEGY_PLUGINS);
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderPostSavePluginInterface[]
+     */
+    public function getOrderPostSavePlugins(): array
+    {
+        return $this->getProvidedDependency(SalesDependencyProvider::PLUGINS_ORDER_POST_SAVE);
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Business\Expense\ExpenseWriterInterface
+     */
+    public function createExpenseWriter(): ExpenseWriterInterface
+    {
+        return new ExpenseWriter(
+            $this->getEntityManager()
+        );
     }
 }

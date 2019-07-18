@@ -1,0 +1,4 @@
+custom_endpoint:
+  post:
+    currencyCode:
+    - Currency

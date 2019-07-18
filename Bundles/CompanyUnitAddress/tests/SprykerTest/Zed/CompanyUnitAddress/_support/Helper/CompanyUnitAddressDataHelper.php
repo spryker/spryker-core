@@ -9,8 +9,8 @@ namespace SprykerTest\Zed\CompanyUnitAddress\Helper;
 
 use Codeception\Module;
 use Generated\Shared\DataBuilder\CompanyUnitAddressBuilder;
+use Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddressQuery;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
-use SprykerTest\Zed\Country\Helper\CountryDataHelper;
 
 class CompanyUnitAddressDataHelper extends Module
 {
@@ -23,32 +23,39 @@ class CompanyUnitAddressDataHelper extends Module
      */
     public function haveCompanyUnitAddress(array $seed = [])
     {
-        if (!isset($seed['fk_country'])) {
-            $countryTransfer = $this->getCountryDataHelper()->haveCountry();
-            $seed['fk_country'] = $countryTransfer->getIdCountry();
-        }
-
         $companyUnitAddressTransferBuilder = new CompanyUnitAddressBuilder($seed);
         $companyUnitAddressTransfer = $companyUnitAddressTransferBuilder->build();
 
+        $this->ensureCompanyUnitAddressWithKeyDoesNotExist($companyUnitAddressTransfer->getKey());
         $this->getCompanyUnitAddressFacade()->create($companyUnitAddressTransfer);
 
         return $companyUnitAddressTransfer;
     }
 
     /**
-     * @return \Spryker\Zed\CompanyUnitAddress\Business\CompanyUnitAddressFacadeInterface
+     * @param string $key
+     *
+     * @return void
+     */
+    public function ensureCompanyUnitAddressWithKeyDoesNotExist(string $key): void
+    {
+        $companyUnitAddressQuery = $this->getCompanyUnitAddressQuery();
+        $companyUnitAddressQuery->filterByKey($key)->delete();
+    }
+
+    /**
+     * @return \Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddressQuery
+     */
+    protected function getCompanyUnitAddressQuery(): SpyCompanyUnitAddressQuery
+    {
+        return SpyCompanyUnitAddressQuery::create();
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyUnitAddress\Business\CompanyUnitAddressFacadeInterface|\Spryker\Zed\Kernel\Business\AbstractFacade
      */
     protected function getCompanyUnitAddressFacade()
     {
         return $this->getLocator()->companyUnitAddress()->facade();
-    }
-
-    /**
-     * @return \Codeception\Module|\SprykerTest\Zed\Country\Helper\CountryDataHelper
-     */
-    protected function getCountryDataHelper(): CountryDataHelper
-    {
-        return $this->getModule('\\' . CountryDataHelper::class);
     }
 }

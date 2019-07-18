@@ -39,7 +39,7 @@ abstract class AbstractProductConcreteManagerSubject
     protected $readObservers = [];
 
     /**
-     * @var \Spryker\Zed\Product\Dependency\Facade\ProductToEventInterface
+     * @var \Spryker\Zed\Product\Dependency\Facade\ProductToEventInterface|null
      */
     protected $eventFacade;
 
@@ -171,6 +171,18 @@ abstract class AbstractProductConcreteManagerSubject
         $this->triggerEvent(ProductEvents::PRODUCT_CONCRETE_READ, $productConcreteTransfer);
 
         return $productConcreteTransfer;
+    }
+
+    /**
+     * @deprecated Will be removed, please trigger the event directly.
+     *
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return void
+     */
+    public function triggerProductConcreteReadEvent(ProductConcreteTransfer $productConcreteTransfer): void
+    {
+        $this->triggerEvent(ProductEvents::PRODUCT_CONCRETE_READ, $productConcreteTransfer);
     }
 
     /**

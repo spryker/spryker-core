@@ -13,8 +13,8 @@ use Spryker\Zed\UrlStorage\Persistence\UrlStorageQueryContainerInterface;
 
 class RedirectStorageWriter implements RedirectStorageWriterInterface
 {
-    const ID_URL_REDIRECT = 'id_url_redirect';
-    const FK_URL_REDIRECT = 'fkUrlRedirect';
+    public const ID_URL_REDIRECT = 'id_url_redirect';
+    public const FK_URL_REDIRECT = 'fkUrlRedirect';
 
     /**
      * @var \Spryker\Zed\UrlStorage\Dependency\Service\UrlStorageToUtilSanitizeServiceInterface

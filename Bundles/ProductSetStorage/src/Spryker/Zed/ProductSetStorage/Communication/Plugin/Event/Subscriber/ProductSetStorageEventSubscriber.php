@@ -17,13 +17,16 @@ use Spryker\Zed\ProductSetStorage\Communication\Plugin\Event\Listener\ProductSet
 use Spryker\Zed\ProductSetStorage\Communication\Plugin\Event\Listener\ProductSetProductImageSetImageStorageListener;
 use Spryker\Zed\ProductSetStorage\Communication\Plugin\Event\Listener\ProductSetProductImageSetStorageListener;
 use Spryker\Zed\ProductSetStorage\Communication\Plugin\Event\Listener\ProductSetProductImageStorageListener;
-use Spryker\Zed\ProductSetStorage\Communication\Plugin\Event\Listener\ProductSetStorageListener;
+use Spryker\Zed\ProductSetStorage\Communication\Plugin\Event\Listener\ProductSetStoragePublishListener;
+use Spryker\Zed\ProductSetStorage\Communication\Plugin\Event\Listener\ProductSetStorageUnpublishListener;
 use Spryker\Zed\ProductSetStorage\Communication\Plugin\Event\Listener\ProductSetUrlStorageListener;
 use Spryker\Zed\Url\Dependency\UrlEvents;
 
 /**
  * @method \Spryker\Zed\ProductSetStorage\Communication\ProductSetStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductSetStorage\Business\ProductSetStorageFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductSetStorage\ProductSetStorageConfig getConfig()
+ * @method \Spryker\Zed\ProductSetStorage\Persistence\ProductSetStorageQueryContainerInterface getQueryContainer()
  */
 class ProductSetStorageEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {
@@ -67,7 +70,7 @@ class ProductSetStorageEventSubscriber extends AbstractPlugin implements EventSu
      */
     protected function addProductSetPublishStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductSetEvents::PRODUCT_SET_PUBLISH, new ProductSetStorageListener());
+        $eventCollection->addListenerQueued(ProductSetEvents::PRODUCT_SET_PUBLISH, new ProductSetStoragePublishListener());
     }
 
     /**
@@ -77,7 +80,7 @@ class ProductSetStorageEventSubscriber extends AbstractPlugin implements EventSu
      */
     protected function addProductSetUnpublishStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductSetEvents::PRODUCT_SET_UNPUBLISH, new ProductSetStorageListener());
+        $eventCollection->addListenerQueued(ProductSetEvents::PRODUCT_SET_UNPUBLISH, new ProductSetStorageUnpublishListener());
     }
 
     /**
@@ -87,7 +90,7 @@ class ProductSetStorageEventSubscriber extends AbstractPlugin implements EventSu
      */
     protected function addProductSetCreateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductSetEvents::ENTITY_SPY_PRODUCT_SET_CREATE, new ProductSetStorageListener());
+        $eventCollection->addListenerQueued(ProductSetEvents::ENTITY_SPY_PRODUCT_SET_CREATE, new ProductSetStoragePublishListener());
     }
 
     /**
@@ -97,7 +100,7 @@ class ProductSetStorageEventSubscriber extends AbstractPlugin implements EventSu
      */
     protected function addProductSetUpdateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductSetEvents::ENTITY_SPY_PRODUCT_SET_UPDATE, new ProductSetStorageListener());
+        $eventCollection->addListenerQueued(ProductSetEvents::ENTITY_SPY_PRODUCT_SET_UPDATE, new ProductSetStoragePublishListener());
     }
 
     /**
@@ -107,7 +110,7 @@ class ProductSetStorageEventSubscriber extends AbstractPlugin implements EventSu
      */
     protected function addProductSetDeleteStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductSetEvents::ENTITY_SPY_PRODUCT_SET_DELETE, new ProductSetStorageListener());
+        $eventCollection->addListenerQueued(ProductSetEvents::ENTITY_SPY_PRODUCT_SET_DELETE, new ProductSetStorageUnpublishListener());
     }
 
     /**
@@ -137,7 +140,7 @@ class ProductSetStorageEventSubscriber extends AbstractPlugin implements EventSu
      */
     protected function addProductSetDataDeleteStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductSetEvents::ENTITY_SPY_PRODUCT_SET_DATA_DELETE, new ProductSetDataStorageListener());
+        $eventCollection->addListenerQueued(ProductSetEvents::ENTITY_SPY_PRODUCT_SET_DATA_DELETE, new ProductSetStorageUnpublishListener());
     }
 
     /**

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\PriceCartConnector\Business;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 interface PriceCartConnectorFacadeInterface
 {
@@ -36,4 +37,29 @@ interface PriceCartConnectorFacadeInterface
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
     public function validatePrices(CartChangeTransfer $cartChangeTransfer);
+
+    /**
+     * Specification:
+     *  - Removes items without price from quote.
+     *  - Adds note to messages about removed items.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function filterItemsWithoutPrice(QuoteTransfer $quoteTransfer): QuoteTransfer;
+
+    /**
+     * Specification:
+     * - Sets unit source prices as null in quote items.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function sanitizeSourcePrices(QuoteTransfer $quoteTransfer): QuoteTransfer;
 }

@@ -31,13 +31,13 @@ use Spryker\Zed\Kernel\Container;
  */
 class CartFacadeTest extends Unit
 {
-    const PRICE_TYPE_DEFAULT = 'DEFAULT';
-    const DUMMY_1_SKU_ABSTRACT_PRODUCT = 'ABSTRACT1';
-    const DUMMY_1_SKU_CONCRETE_PRODUCT = 'CONCRETE1';
-    const DUMMY_1_PRICE = 99;
-    const DUMMY_2_SKU_ABSTRACT_PRODUCT = 'ABSTRACT2';
-    const DUMMY_2_SKU_CONCRETE_PRODUCT = 'CONCRETE2';
-    const DUMMY_2_PRICE = 100;
+    public const PRICE_TYPE_DEFAULT = 'DEFAULT';
+    public const DUMMY_1_SKU_ABSTRACT_PRODUCT = 'ABSTRACT1';
+    public const DUMMY_1_SKU_CONCRETE_PRODUCT = 'CONCRETE1';
+    public const DUMMY_1_PRICE = 99;
+    public const DUMMY_2_SKU_ABSTRACT_PRODUCT = 'ABSTRACT2';
+    public const DUMMY_2_SKU_CONCRETE_PRODUCT = 'CONCRETE2';
+    public const DUMMY_2_PRICE = 100;
 
     /**
      * @var \Spryker\Zed\Cart\Business\CartFacadeInterface
@@ -68,7 +68,6 @@ class CartFacadeTest extends Unit
      */
     public function testAddToCart()
     {
-        $this->markTestSkipped('Tried to retrieve a concrete product with sku CONCRETE2, but it does not exist');
         $quoteTransfer = new QuoteTransfer();
         $cartItem = new ItemTransfer();
         $cartItem->setSku(self::DUMMY_1_SKU_CONCRETE_PRODUCT);
@@ -86,7 +85,7 @@ class CartFacadeTest extends Unit
         $cartChange->setQuote($quoteTransfer);
         $cartChange->addItem($newItem);
 
-        $changedCart = $this->cartFacade->addToCart($cartChange);
+        $changedCart = $this->cartFacade->add($cartChange);
 
         $this->assertCount(2, $changedCart->getItems());
 
@@ -105,45 +104,8 @@ class CartFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testIncreaseCartQuantity()
-    {
-        $this->markTestSkipped('Tried to retrieve a concrete product with sku CONCRETE1, but it does not exist');
-        $quoteTransfer = new QuoteTransfer();
-        $cartItem = new ItemTransfer();
-        $cartItem->setSku(self::DUMMY_1_SKU_CONCRETE_PRODUCT);
-        $cartItem->setQuantity(3);
-        $cartItem->setUnitGrossPrice(1);
-
-        $quoteTransfer->addItem($cartItem);
-
-        $newItem = new ItemTransfer();
-        $newItem->setId(self::DUMMY_1_SKU_CONCRETE_PRODUCT);
-        $newItem->setSku(self::DUMMY_1_SKU_CONCRETE_PRODUCT);
-        $newItem->setQuantity(1);
-        $newItem->setUnitGrossPrice(1);
-
-        $cartChange = new CartChangeTransfer();
-        $cartChange->setQuote($quoteTransfer);
-        $cartChange->addItem($newItem);
-
-        $changedCart = $this->cartFacade->increaseQuantity($cartChange);
-        $cartItems = $changedCart->getItems();
-        $this->assertCount(2, $cartItems);
-
-        /** @var \Generated\Shared\Transfer\ItemTransfer $changedItem */
-        $changedItem = $cartItems[1];
-        $this->assertEquals(3, $changedItem->getQuantity());
-
-        $changedItem = $cartItems[2];
-        $this->assertEquals(1, $changedItem->getQuantity());
-    }
-
-    /**
-     * @return void
-     */
     public function testRemoveFromCart()
     {
-        $this->markTestSkipped('Tried to retrieve a concrete product with sku CONCRETE2, but it does not exist');
         $quoteTransfer = new QuoteTransfer();
         $cartItem = new ItemTransfer();
         $cartItem->setId(self::DUMMY_2_SKU_CONCRETE_PRODUCT);
@@ -163,7 +125,7 @@ class CartFacadeTest extends Unit
         $cartChange->setQuote($quoteTransfer);
         $cartChange->addItem($newItem);
 
-        $changedCart = $this->cartFacade->removeFromCart($cartChange);
+        $changedCart = $this->cartFacade->remove($cartChange);
 
         $this->assertCount(0, $changedCart->getItems());
     }
@@ -171,32 +133,48 @@ class CartFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testDecreaseCartItem()
+    public function testCleanUpItemsRemoveKeyGroupPrefixFromQuoteItem(): void
     {
-        $this->markTestSkipped('Tried to retrieve a concrete product with sku CONCRETE1, but it does not exist');
+        // Arrange
         $quoteTransfer = new QuoteTransfer();
-        $cartItem = new ItemTransfer();
-        $cartItem->setSku(self::DUMMY_1_SKU_CONCRETE_PRODUCT);
-        $cartItem->setQuantity(3);
-        $cartItem->setUnitGrossPrice(1);
+        $cartItem = (new ItemTransfer())->setSku(self::DUMMY_1_SKU_CONCRETE_PRODUCT)
+            ->setQuantity(3)
+            ->setUnitGrossPrice(1)
+            ->setGroupKeyPrefix(uniqid('', true));
 
         $quoteTransfer->addItem($cartItem);
 
-        $newItem = new ItemTransfer();
-        $newItem->setSku(self::DUMMY_1_SKU_CONCRETE_PRODUCT);
-        $newItem->setQuantity(1);
-        $newItem->setUnitGrossPrice(1);
+        // Act
+        $this->cartFacade->cleanUpItems($quoteTransfer);
 
-        $cartChange = new CartChangeTransfer();
-        $cartChange->setQuote($quoteTransfer);
-        $cartChange->addItem($newItem);
+        // Assert
+        $this->assertNull($quoteTransfer->getItems()[0]->getGroupKeyPrefix());
+    }
 
-        $changedCart = $this->cartFacade->decreaseQuantity($cartChange);
-        $cartItems = $changedCart->getItems();
-        $this->assertCount(1, $cartItems);
-        /** @var \Generated\Shared\Transfer\ItemTransfer $changedItem */
-        $changedItem = $cartItems[0];
-        $this->assertEquals(2, $changedItem->getQuantity());
+    /**
+     * @return void
+     */
+    public function testCleanUpItemsRemoveKeyGroupPrefixFromQuoteItemIfMoreThanOne(): void
+    {
+        // Arrange
+        $quoteTransfer = new QuoteTransfer();
+        $cartItem = (new ItemTransfer())->setSku(self::DUMMY_1_SKU_CONCRETE_PRODUCT)
+            ->setQuantity(3)
+            ->setUnitGrossPrice(1)
+            ->setGroupKeyPrefix(uniqid('', true));
+
+        $newItem = (new ItemTransfer())->setSku(self::DUMMY_1_SKU_CONCRETE_PRODUCT)
+            ->setQuantity(1)
+            ->setUnitGrossPrice(1);
+
+        $quoteTransfer->addItem($cartItem);
+        $quoteTransfer->addItem($newItem);
+
+        // Act
+        $this->cartFacade->cleanUpItems($quoteTransfer);
+
+        // Assert
+        $this->assertNotNull($quoteTransfer->getItems()[0]->getGroupKeyPrefix());
     }
 
     /**

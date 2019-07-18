@@ -108,9 +108,6 @@ class MethodFormDataProvider
     protected function createTaxSetsList()
     {
         $taxSetCollection = $this->taxFacade->getTaxSets();
-        if (!$taxSetCollection) {
-            return [];
-        }
 
         $taxSetList = [];
         foreach ($taxSetCollection->getTaxSets() as $taxSetTransfer) {

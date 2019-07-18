@@ -34,7 +34,7 @@ class ProductOptionPresentationTester extends Actor
 {
     use _generated\ProductOptionPresentationTesterActions;
 
-    const LANGUAGE_SWITCH_XPATH = '//*[@id="option-value-translations"]/div[2]/div/div[1]/a';
+    public const LANGUAGE_SWITCH_XPATH = '//*[@id="option-value-translations"]/div[2]/div/div[1]/a';
 
     /**
      * @var array

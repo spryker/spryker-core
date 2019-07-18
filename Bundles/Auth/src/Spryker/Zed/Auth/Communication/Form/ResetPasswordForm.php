@@ -18,10 +18,11 @@ use Symfony\Component\Validator\Constraints\Required;
  * @method \Spryker\Zed\Auth\Business\AuthFacadeInterface getFacade()
  * @method \Spryker\Zed\Auth\Communication\AuthCommunicationFactory getFactory()
  * @method \Spryker\Zed\Auth\Persistence\AuthQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Auth\AuthConfig getConfig()
  */
 class ResetPasswordForm extends AbstractType
 {
-    const FIELD_PASSWORD = 'password';
+    public const FIELD_PASSWORD = 'password';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder

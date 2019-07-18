@@ -7,6 +7,7 @@
 namespace SprykerTest\Glue\GlueApplication\Rest\Response;
 
 use Codeception\Test\Unit;
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface;
 use Spryker\Glue\GlueApplication\Rest\Response\ResponsePagination;
 use Spryker\Glue\GlueApplication\Rest\Response\ResponsePaginationInterface;
 use SprykerTest\Glue\GlueApplication\Stub\RestRequest;
@@ -37,10 +38,10 @@ class ResponsePaginationTest extends Unit
 
         $pagination = $responsePagination->buildPaginationLinks($restResponse, $restRequest);
 
-        $this->assertArrayHasKey('first', $pagination);
-        $this->assertArrayHasKey('last', $pagination);
-        $this->assertArrayHasKey('next', $pagination);
-        $this->assertArrayHasKey('prev', $pagination);
+        $this->assertArrayHasKey(RestLinkInterface::LINK_FIRST, $pagination);
+        $this->assertArrayHasKey(RestLinkInterface::LINK_LAST, $pagination);
+        $this->assertArrayHasKey(RestLinkInterface::LINK_NEXT, $pagination);
+        $this->assertArrayHasKey(RestLinkInterface::LINK_PREV, $pagination);
     }
 
     /**

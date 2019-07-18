@@ -13,6 +13,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\PriceProductMerchantRelationship\Business\PriceProductMerchantRelationshipBusinessFactory getFactory()
+ * @method \Spryker\Zed\PriceProductMerchantRelationship\Persistence\PriceProductMerchantRelationshipEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\PriceProductMerchantRelationship\Persistence\PriceProductMerchantRelationshipRepositoryInterface getRepository()
  */
 class PriceProductMerchantRelationshipFacade extends AbstractFacade implements PriceProductMerchantRelationshipFacadeInterface
 {
@@ -76,5 +78,21 @@ class PriceProductMerchantRelationshipFacade extends AbstractFacade implements P
         return $this->getFactory()
             ->createPriceProductDimensionExpander()
             ->expand($priceProductDimensionTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idPriceProductStore
+     *
+     * @return void
+     */
+    public function deletePriceProductMerchantRelationshipByIdPriceProductStore(int $idPriceProductStore): void
+    {
+        $this->getFactory()
+            ->createMerchantRelationshipPriceWriter()
+            ->deleteByIdPriceProductStore($idPriceProductStore);
     }
 }

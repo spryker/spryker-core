@@ -13,6 +13,8 @@ use Spryker\Zed\ProductImageStorage\ProductImageStorageDependencyProvider;
 /**
  * @method \Spryker\Zed\ProductImageStorage\Persistence\ProductImageStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductImageStorage\ProductImageStorageConfig getConfig()
+ * @method \Spryker\Zed\ProductImageStorage\Persistence\ProductImageStorageRepositoryInterface getRepository()
+ * @method \Spryker\Zed\ProductImageStorage\Business\ProductImageStorageFacadeInterface getFacade()
  */
 class ProductImageStorageCommunicationFactory extends AbstractCommunicationFactory
 {

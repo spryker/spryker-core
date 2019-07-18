@@ -6,6 +6,7 @@
     <transfer name="MerchantRelationship">
         <property name="idMerchantRelationship" type="int" />
         <property name="merchantRelationshipKey" type="string" />
+        <property name="name" type="string" />
         <property name="fkMerchant" type="int" />
         <property name="fkCompanyBusinessUnit" type="int" description="ID of Business Unit Owner" />
         <property name="merchant" type="Merchant" />

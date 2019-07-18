@@ -14,6 +14,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\Dataset\Business\DatasetBusinessFactory getFactory()
+ * @method \Spryker\Zed\Dataset\Persistence\DatasetEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\Dataset\Persistence\DatasetRepositoryInterface getRepository()
  */
 class DatasetFacade extends AbstractFacade implements DatasetFacadeInterface
 {

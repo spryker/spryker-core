@@ -14,10 +14,11 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\ProductSetGui\Communication\ProductSetGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductSetGui\Persistence\ProductSetGuiQueryContainerInterface getQueryContainer()
  */
 class ViewController extends AbstractController
 {
-    const PARAM_ID = 'id';
+    public const PARAM_ID = 'id';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -36,10 +37,7 @@ class ViewController extends AbstractController
             ->findProductSet($productSetTransfer);
 
         if (!$productSetTransfer) {
-            $this->addErrorMessage(sprintf(
-                'Product Set #%d not found.',
-                $idProductSet
-            ));
+            $this->addErrorMessage('Product Set #%d not found.', ['%d' => $idProductSet]);
 
             return $this->redirectResponse(Url::generate('/product-set-gui')->build());
         }

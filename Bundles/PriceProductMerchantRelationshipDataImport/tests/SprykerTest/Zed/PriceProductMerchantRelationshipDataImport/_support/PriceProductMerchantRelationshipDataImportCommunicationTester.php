@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\PriceProductMerchantRelationshipDataImport;
 
 use Codeception\Actor;
+use Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipQuery;
 
 /**
  * Inherited Methods
@@ -31,4 +32,20 @@ class PriceProductMerchantRelationshipDataImportCommunicationTester extends Acto
    /**
     * Define custom actions here
     */
+
+    /**
+     * @return void
+     */
+    public function truncateMerchantRelationshipRelations(): void
+    {
+        $this->truncateTableRelations($this->getMerchantRelationshipQuery());
+    }
+
+    /**
+     * @return \Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipQuery
+     */
+    protected function getMerchantRelationshipQuery(): SpyMerchantRelationshipQuery
+    {
+        return SpyMerchantRelationshipQuery::create();
+    }
 }

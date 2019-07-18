@@ -1,0 +1,25 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'Tax Set deletion confirmation' %}
+
+{% block head_title widget_title %}
+{% block section_title widget_title %}
+
+{% block action %}
+    {{ backActionButton(app.request.headers.get('referer'), 'Back' | trans) }}
+{% endblock %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' %}
+
+        {% block widget_content %}
+
+            <a href="{{ app.request.headers.get('referer') }}" class="btn btn-back">{{ 'Back' | trans}}</a>
+            <a href="{{ url('/tax/delete-set/confirm', {'id-tax-set': idTaxSet}) }}" class="btn btn-danger safe-submit">{{ 'Delete Tax Set' | trans}}</a>
+
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}

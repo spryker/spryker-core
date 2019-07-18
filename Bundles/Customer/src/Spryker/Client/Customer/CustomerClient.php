@@ -8,6 +8,7 @@
 namespace Spryker\Client\Customer;
 
 use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
@@ -112,6 +113,40 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
         $customerTransfer = $this->getFactory()
             ->createSessionCustomerSession()
             ->setCustomer($customerTransfer);
+
+        return $customerTransfer;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    public function setCustomerRawData(CustomerTransfer $customerTransfer): CustomerTransfer
+    {
+        $customerTransfer = $this->getFactory()
+            ->createSessionCustomerSession()
+            ->setCustomerRawData($customerTransfer);
+
+        return $customerTransfer;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null
+     */
+    public function findCustomerRawData(): ?CustomerTransfer
+    {
+        $customerTransfer = $this->getFactory()
+            ->createSessionCustomerSession()
+            ->findCustomerRawData();
 
         return $customerTransfer;
     }
@@ -461,5 +496,51 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
         $this->getFactory()
             ->createSessionCustomerSession()
             ->markCustomerAsDirty();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
+     */
+    public function findCustomerByReference(CustomerTransfer $customerTransfer): CustomerResponseTransfer
+    {
+        return $this->getFactory()
+            ->createZedCustomerStub()
+            ->findCustomerByReference($customerTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getCustomerSecuredPattern(): string
+    {
+        return $this->getFactory()
+            ->createCustomerSecuredPattern()
+            ->getCustomerSecuredPattern();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $accessToken
+     *
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
+     */
+    public function getCustomerByAccessToken(string $accessToken): CustomerResponseTransfer
+    {
+        return $this->getFactory()
+            ->createCustomerAccessTokenReader()
+            ->getCustomerByAccessToken($accessToken);
     }
 }

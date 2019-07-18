@@ -84,13 +84,12 @@ class CompanyUnitAddressForm extends AbstractType
      *
      * @return $this
      */
-    protected function addCompanyField(FormBuilderInterface $builder, array $choices = []): self
+    protected function addCompanyField(FormBuilderInterface $builder, array $choices = [])
     {
         $builder->add(static::FIELD_FK_COMPANY, ChoiceType::class, [
             'label' => 'Company',
             'placeholder' => 'Select one',
             'choices' => array_flip($choices),
-            'choices_as_values' => true,
             'constraints' => [
                 new NotBlank(),
             ],
@@ -105,13 +104,12 @@ class CompanyUnitAddressForm extends AbstractType
      *
      * @return $this
      */
-    protected function addCountryField(FormBuilderInterface $builder, array $choices = []): self
+    protected function addCountryField(FormBuilderInterface $builder, array $choices = [])
     {
         $builder->add(static::FIELD_FK_COUNTRY, ChoiceType::class, [
             'label' => 'Country',
             'placeholder' => 'Select one',
             'choices' => array_flip($choices),
-            'choices_as_values' => true,
             'constraints' => [
                 new NotBlank(),
             ],

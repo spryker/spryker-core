@@ -12,8 +12,8 @@ use Symfony\Component\Finder\SplFileInfo;
 
 class LocatorService extends AbstractDependencyFinder
 {
-    const NO_LAYER = 'Default';
-    const BUNDLE = 'bundle';
+    public const NO_LAYER = 'Default';
+    public const BUNDLE = 'bundle';
 
     /**
      * @param \Symfony\Component\Finder\SplFileInfo $fileInfo

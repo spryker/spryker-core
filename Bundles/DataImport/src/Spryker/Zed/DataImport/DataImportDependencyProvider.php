@@ -9,21 +9,29 @@ namespace Spryker\Zed\DataImport;
 
 use Propel\Runtime\Propel;
 use Spryker\Shared\Kernel\Store;
+use Spryker\Zed\DataImport\Dependency\Client\DataImportToQueueClientBridge;
 use Spryker\Zed\DataImport\Dependency\Facade\DataImportToEventBridge;
 use Spryker\Zed\DataImport\Dependency\Facade\DataImportToTouchBridge;
 use Spryker\Zed\DataImport\Dependency\Propel\DataImportToPropelConnectionBridge;
+use Spryker\Zed\DataImport\Dependency\Service\DataImportToUtilEncodingServiceBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\DataImport\DataImportConfig getConfig()
+ */
 class DataImportDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_TOUCH = 'touch facade';
-    const FACADE_EVENT = 'event facade';
-    const PROPEL_CONNECTION = 'propel connection';
-    const DATA_IMPORTER_PLUGINS = 'IMPORTER_PLUGINS';
-    const DATA_IMPORT_BEFORE_HOOK_PLUGINS = 'DATA_IMPORT_BEFORE_HOOK_PLUGINS';
-    const DATA_IMPORT_AFTER_HOOK_PLUGINS = 'DATA_IMPORT_AFTER_HOOK_PLUGINS';
-    const STORE = 'store';
+    public const FACADE_TOUCH = 'touch facade';
+    public const FACADE_EVENT = 'event facade';
+    public const PROPEL_CONNECTION = 'propel connection';
+    public const DATA_IMPORTER_PLUGINS = 'IMPORTER_PLUGINS';
+    public const DATA_IMPORT_BEFORE_HOOK_PLUGINS = 'DATA_IMPORT_BEFORE_HOOK_PLUGINS';
+    public const DATA_IMPORT_AFTER_HOOK_PLUGINS = 'DATA_IMPORT_AFTER_HOOK_PLUGINS';
+    public const DATA_IMPORT_DEFAULT_WRITER_PLUGINS = 'DATA_IMPORT_DEFAULT_WRITER_PLUGINS';
+    public const CLIENT_QUEUE = 'CLIENT_QUEUE';
+    public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+    public const STORE = 'store';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -39,6 +47,9 @@ class DataImportDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addStore($container);
         $container = $this->addDataImportBeforeImportHookPlugins($container);
         $container = $this->addDataImportAfterImportHookPlugins($container);
+        $container = $this->addDataImportDefaultWriterPlugins($container);
+        $container = $this->addQueueClient($container);
+        $container = $this->addUtilEncodingService($container);
 
         return $container;
     }
@@ -169,5 +180,55 @@ class DataImportDependencyProvider extends AbstractBundleDependencyProvider
     protected function getDataImportAfterImportHookPlugins(): array
     {
         return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addDataImportDefaultWriterPlugins(Container $container): Container
+    {
+        $container[static::DATA_IMPORT_DEFAULT_WRITER_PLUGINS] = function () {
+            return $this->getDataImportDefaultWriterPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\DataImportExtension\Dependency\Plugin\DataSetWriterPluginInterface[]
+     */
+    protected function getDataImportDefaultWriterPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addQueueClient(Container $container): Container
+    {
+        $container[static::CLIENT_QUEUE] = function (Container $container) {
+            return new DataImportToQueueClientBridge($container->getLocator()->queue()->client());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUtilEncodingService(Container $container): Container
+    {
+        $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
+            return new DataImportToUtilEncodingServiceBridge($container->getLocator()->utilEncoding()->service());
+        };
+
+        return $container;
     }
 }

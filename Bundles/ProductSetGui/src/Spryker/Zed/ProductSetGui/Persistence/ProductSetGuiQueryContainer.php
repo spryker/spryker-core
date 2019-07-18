@@ -20,8 +20,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class ProductSetGuiQueryContainer extends AbstractQueryContainer implements ProductSetGuiQueryContainerInterface
 {
-    const COL_ALIAS_NAME = 'name';
-    const COL_ALIAS_POSITION = 'position';
+    public const COL_ALIAS_NAME = 'name';
+    public const COL_ALIAS_POSITION = 'position';
 
     /**
      * @api

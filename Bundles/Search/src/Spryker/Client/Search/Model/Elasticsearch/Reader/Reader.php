@@ -11,8 +11,8 @@ use Elastica\Client;
 
 class Reader implements ReaderInterface
 {
-    const READER_NAME = 'elastic-search-reader';
-    const META_ATTRIBUTE = '_meta';
+    public const READER_NAME = 'elastic-search-reader';
+    public const META_ATTRIBUTE = '_meta';
 
     /**
      * @var \Elastica\Client

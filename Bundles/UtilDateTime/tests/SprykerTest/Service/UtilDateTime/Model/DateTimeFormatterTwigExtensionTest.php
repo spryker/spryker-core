@@ -23,7 +23,7 @@ use Spryker\Shared\Twig\TwigFilter;
  */
 class DateTimeFormatterTwigExtensionTest extends Unit
 {
-    const DATE_TO_FORMAT = '1980-12-06 08:00:00';
+    public const DATE_TO_FORMAT = '1980-12-06 08:00:00';
 
     /**
      * @return void
@@ -66,7 +66,7 @@ class DateTimeFormatterTwigExtensionTest extends Unit
         $utilDateTimeServiceMock = $this->getUtilDateTimeServiceMock();
         $dateTimeFormatterTwigExtension = new DateTimeFormatterTwigExtension($utilDateTimeServiceMock);
 
-        $this->assertInternalType('array', $dateTimeFormatterTwigExtension->getFunctions());
+        $this->assertIsArray($dateTimeFormatterTwigExtension->getFunctions());
     }
 
     /**
@@ -106,7 +106,7 @@ class DateTimeFormatterTwigExtensionTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface
      */
     protected function getUtilDateTimeServiceMock()
     {

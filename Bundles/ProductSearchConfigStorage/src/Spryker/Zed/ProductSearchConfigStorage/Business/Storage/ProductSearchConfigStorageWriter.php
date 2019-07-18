@@ -103,7 +103,7 @@ class ProductSearchConfigStorageWriter implements ProductSearchConfigStorageWrit
     }
 
     /**
-     * @return \Orm\Zed\ProductSearchConfigStorage\Persistence\SpyProductSearchConfigStorage
+     * @return \Orm\Zed\ProductSearchConfigStorage\Persistence\SpyProductSearchConfigStorage|null
      */
     protected function findProductSearchConfigDictionaryStorageEntity()
     {

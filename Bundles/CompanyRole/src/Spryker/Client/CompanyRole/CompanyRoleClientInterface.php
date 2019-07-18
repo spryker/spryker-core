@@ -132,4 +132,34 @@ interface CompanyRoleClientInterface
      * @return \Generated\Shared\Transfer\CompanyRolePermissionResponseTransfer
      */
     public function updateCompanyRolePermission(PermissionTransfer $permissionTransfer): CompanyRolePermissionResponseTransfer;
+
+    /**
+     * Specification:
+     * - Retrieves non-infrastructural company role permissions.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
+     *
+     * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
+     */
+    public function findNonInfrastructuralCompanyRolePermissionsByIdCompanyRole(
+        CompanyRoleTransfer $companyRoleTransfer
+    ): PermissionCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Finds a company role by uuid.
+     * - Makes zed request.
+     * - Requires uuid field to be set in CompanyRoleTransfer taken as parameter.
+     *
+     * @api
+     *
+     * {@internal will work if UUID field is provided.}
+     *
+     * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyRoleResponseTransfer
+     */
+    public function findCompanyRoleByUuid(CompanyRoleTransfer $companyRoleTransfer): CompanyRoleResponseTransfer;
 }

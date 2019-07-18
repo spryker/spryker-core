@@ -9,7 +9,7 @@ namespace SprykerTest\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitWriter
 
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
-use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitPluginExecutor\CompanyBusinessUnitWriterPluginExecutorInterface;
+use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitPluginExecutor\CompanyBusinessUnitPluginExecutorInterface;
 use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitWriter\CompanyBusinessUnitWriter;
 use Spryker\Zed\CompanyBusinessUnit\Persistence\CompanyBusinessUnitEntityManagerInterface;
 use Spryker\Zed\CompanyBusinessUnit\Persistence\CompanyBusinessUnitRepositoryInterface;
@@ -38,19 +38,19 @@ class CompanyBusinessUnitWriterTest extends Test
     protected $companyBusinessUnitWriter;
 
     /**
-     * @var \Spryker\Zed\CompanyBusinessUnit\Persistence\CompanyBusinessUnitRepositoryInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Spryker\Zed\CompanyBusinessUnit\Persistence\CompanyBusinessUnitRepositoryInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $repositoryMock;
 
     /**
-     * @var \Spryker\Zed\CompanyBusinessUnit\Persistence\CompanyBusinessUnitEntityManagerInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Spryker\Zed\CompanyBusinessUnit\Persistence\CompanyBusinessUnitEntityManagerInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $entityManagerMock;
 
     /**
-     * @var \Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitPluginExecutor\CompanyBusinessUnitWriterPluginExecutorInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitPluginExecutor\CompanyBusinessUnitPluginExecutorInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected $companyBusinessUnitWriterPluginExecutorMock;
+    protected $companyBusinessUnitPluginExecutorMock;
 
     /**
      * @return void
@@ -59,12 +59,12 @@ class CompanyBusinessUnitWriterTest extends Test
     {
         $this->repositoryMock = $this->getMockBuilder(CompanyBusinessUnitRepositoryInterface::class)->getMock();
         $this->entityManagerMock = $this->getMockBuilder(CompanyBusinessUnitEntityManagerInterface::class)->getMock();
-        $this->companyBusinessUnitWriterPluginExecutorMock = $this->getMockBuilder(CompanyBusinessUnitWriterPluginExecutorInterface::class)->getMock();
+        $this->companyBusinessUnitPluginExecutorMock = $this->getMockBuilder(CompanyBusinessUnitPluginExecutorInterface::class)->getMock();
 
         $this->companyBusinessUnitWriter = new CompanyBusinessUnitWriter(
             $this->repositoryMock,
             $this->entityManagerMock,
-            $this->companyBusinessUnitWriterPluginExecutorMock
+            $this->companyBusinessUnitPluginExecutorMock
         );
     }
 

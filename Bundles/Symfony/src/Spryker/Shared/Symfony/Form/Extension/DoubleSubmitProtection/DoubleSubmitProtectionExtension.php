@@ -38,7 +38,7 @@ class DoubleSubmitProtectionExtension extends AbstractExtension
      * @param \Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\RequestTokenProvider\TokenGeneratorInterface $tokenGenerator
      * @param \Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\RequestTokenProvider\StorageInterface $tokenStorage
      * @param \Symfony\Component\Translation\TranslatorInterface|null $translator
-     * @param null|string $translationDomain
+     * @param string|null $translationDomain
      */
     public function __construct(
         TokenGeneratorInterface $tokenGenerator,

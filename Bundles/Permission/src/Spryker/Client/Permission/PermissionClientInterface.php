@@ -50,4 +50,14 @@ interface PermissionClientInterface
      * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
      */
     public function getRegisteredPermissions(): PermissionCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Finds permission plugin stack registered either in Zed or Client dependency provider.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
+     */
+    public function findMergedRegisteredNonInfrastructuralPermissions(): PermissionCollectionTransfer;
 }

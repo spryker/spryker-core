@@ -45,19 +45,19 @@ use SprykerTest\Service\FileSystem\Stub\FlysystemConfigStub;
  */
 class FileSystemServiceTest extends Unit
 {
-    const RESOURCE_FILE_NAME = 'fileName.jpg';
+    public const RESOURCE_FILE_NAME = 'fileName.jpg';
 
-    const FILE_SYSTEM_DOCUMENT = 'customerFileSystem';
-    const FILE_SYSTEM_PRODUCT_IMAGE = 'productFileSystem';
+    public const FILE_SYSTEM_DOCUMENT = 'customerFileSystem';
+    public const FILE_SYSTEM_PRODUCT_IMAGE = 'productFileSystem';
 
-    const ROOT_DIRECTORY = 'fileSystemRoot/uploads/';
-    const PATH_DOCUMENT = 'documents/';
-    const PATH_PRODUCT_IMAGE = 'images/product/';
+    public const ROOT_DIRECTORY = 'fileSystemRoot/uploads/';
+    public const PATH_DOCUMENT = 'documents/';
+    public const PATH_PRODUCT_IMAGE = 'images/product/';
 
-    const FILE_DOCUMENT = 'customer.txt';
-    const FILE_PRODUCT_IMAGE = 'image.png';
+    public const FILE_DOCUMENT = 'customer.txt';
+    public const FILE_PRODUCT_IMAGE = 'image.png';
 
-    const FILE_CONTENT = 'Hello World';
+    public const FILE_CONTENT = 'Hello World';
 
     /**
      * @var \Spryker\Service\FileSystem\FileSystemServiceInterface
@@ -524,23 +524,48 @@ class FileSystemServiceTest extends Unit
     /**
      * @return void
      */
-    public function testListContents()
+    public function testListContentsWithoutRecursiveShouldReturnOnlyFirstLevelFiles(): void
     {
-        $fileSystemListTransfer = new FileSystemListTransfer();
-        $fileSystemListTransfer->setFileSystemName(static::FILE_SYSTEM_DOCUMENT);
-        $fileSystemListTransfer->setPath('/');
-        $fileSystemListTransfer->setRecursive(true);
+        // Arrange
+        $fileSystemListTransfer = (new FileSystemListTransfer())
+            ->setFileSystemName(static::FILE_SYSTEM_DOCUMENT)
+            ->setPath('/')
+            ->setRecursive(false);
 
         $this->createDocumentFile();
+        $this->createDocumentFileInRoot();
 
+        // Act
         $content = $this->fileSystemService->listContents($fileSystemListTransfer);
 
-        $this->assertGreaterThan(0, count($content));
+        // Assert
+        $this->assertCount(1, $content);
     }
 
     /**
-     * @param null|string $content
-     * @param null|string $modifiedTimestamp
+     * @return void
+     */
+    public function testListContentsWithRecursiveShouldReturnAllLevelsFiles(): void
+    {
+        // Arrange
+        $fileSystemListTransfer = (new FileSystemListTransfer())
+            ->setFileSystemName(static::FILE_SYSTEM_DOCUMENT)
+            ->setPath('/')
+            ->setRecursive(true);
+
+        $this->createDocumentFile();
+        $this->createDocumentFileInRoot();
+
+        // Act
+        $content = $this->fileSystemService->listContents($fileSystemListTransfer);
+
+        // Assert
+        $this->assertCount(2, $content);
+    }
+
+    /**
+     * @param string|null $content
+     * @param string|null $modifiedTimestamp
      *
      * @return void
      */
@@ -563,8 +588,8 @@ class FileSystemServiceTest extends Unit
     }
 
     /**
-     * @param null|string $content
-     * @param null|string $modifiedTimestamp
+     * @param string|null $content
+     * @param string|null $modifiedTimestamp
      *
      * @return void
      */

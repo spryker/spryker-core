@@ -75,7 +75,7 @@ class AutoloadUpdaterTest extends Unit
         $composerJson = $this->getComposerJson();
         $composerJson['autoload-dev']['psr-4']['invalidNamespace'] = 'validDirectory/';
 
-        $updatedJson = $updatedJson = $this->updateJsonForTests($composerJson);
+        $updatedJson = $this->updateJsonForTests($composerJson);
 
         $this->assertSame($this->getComposerJson()['autoload-dev'], $updatedJson['autoload-dev']);
     }
@@ -193,7 +193,7 @@ class AutoloadUpdaterTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Development\Business\Composer\Updater\AutoloadUpdater
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Development\Business\Composer\Updater\AutoloadUpdater
      */
     protected function getAutoloadUpdaterMock()
     {

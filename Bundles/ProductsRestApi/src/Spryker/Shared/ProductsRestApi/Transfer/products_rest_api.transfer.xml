@@ -9,10 +9,12 @@
         <property name="description" type="string"/>
         <property name="attributes" type="array"/>
         <property name="superAttributesDefinition" type="array"/>
+        <property name="superAttributes" type="array"/>
         <property name="attributeMap" type="array"/>
         <property name="metaTitle" type="string"/>
         <property name="metaKeywords" type="string"/>
         <property name="metaDescription" type="string"/>
+        <property name="attributeNames" type="array"/>
     </transfer>
 
     <transfer name="ConcreteProductsRestAttributes">
@@ -24,6 +26,7 @@
         <property name="metaTitle" type="string"/>
         <property name="metaKeywords" type="string"/>
         <property name="metaDescription" type="string"/>
+        <property name="attributeNames" type="array"/>
     </transfer>
 
 </transfers>

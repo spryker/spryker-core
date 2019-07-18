@@ -16,7 +16,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class NavigationStorageQueryContainer extends AbstractQueryContainer implements NavigationStorageQueryContainerInterface
 {
-    const FK_NAVIGATION = 'fkNavigation';
+    public const FK_NAVIGATION = 'fkNavigation';
 
     /**
      * @api

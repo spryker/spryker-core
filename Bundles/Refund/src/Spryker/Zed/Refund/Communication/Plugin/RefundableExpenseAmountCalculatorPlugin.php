@@ -15,10 +15,14 @@ use Spryker\Zed\Refund\Dependency\Plugin\RefundCalculatorPluginInterface;
 /**
  * @method \Spryker\Zed\Refund\Business\RefundFacadeInterface getFacade()
  * @method \Spryker\Zed\Refund\Communication\RefundCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Refund\RefundConfig getConfig()
+ * @method \Spryker\Zed\Refund\Persistence\RefundQueryContainerInterface getQueryContainer()
  */
 class RefundableExpenseAmountCalculatorPlugin extends AbstractPlugin implements RefundCalculatorPluginInterface
 {
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\RefundTransfer $refundTransfer
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $salesOrderItems

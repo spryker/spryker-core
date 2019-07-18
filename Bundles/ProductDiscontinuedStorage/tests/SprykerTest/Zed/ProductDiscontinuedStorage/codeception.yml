@@ -14,7 +14,7 @@ coverage:
 suites:
     Business:
         path: Communication
-        class_name: ProductDiscontinuedStorageBusinessTester
+        class_name: ProductDiscontinuedStorageCommunicationTester
         modules:
             enabled:
                 - Asserts

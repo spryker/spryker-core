@@ -1,16 +1,20 @@
 {
   "name": "spryker/file-manager",
+  "type": "library",
   "description": "FileManager module",
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
     "spryker/file-system": "^1.0.0",
-    "spryker/kernel": "^3.0.0",
+    "spryker/kernel": "^3.30.0",
     "spryker/locale": "^3.0.0",
     "spryker/propel-orm": "^1.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/flysystem": "*",
+    "spryker/flysystem-local-file-system": "*",
+    "spryker/propel": "*",
     "spryker/testify": "*"
   },
   "autoload": {

@@ -11,10 +11,13 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
  * @method \Spryker\Zed\Setup\SetupConfig getConfig()
+ * @method \Spryker\Zed\Setup\Business\SetupFacadeInterface getFacade()
  */
 class SetupCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
+     * @deprecated Will be removed without replacement. Use `vendor/bin/install` instead.
+     *
      * @return array
      */
     public function getSetupInstallCommandNames()

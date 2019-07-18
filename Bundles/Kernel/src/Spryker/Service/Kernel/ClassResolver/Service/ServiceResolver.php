@@ -11,7 +11,7 @@ use Spryker\Service\Kernel\ClassResolver\AbstractClassResolver;
 
 class ServiceResolver extends AbstractClassResolver
 {
-    const CLASS_NAME_PATTERN = '\\%1$s\\Service\\%2$s%3$s\\%2$sService';
+    public const CLASS_NAME_PATTERN = '\\%1$s\\Service\\%2$s%3$s\\%2$sService';
 
     /**
      * @param object|string $callerClass

@@ -25,12 +25,18 @@ class ProductDiscontinuedMapper implements ProductDiscontinuedMapperInterface
     {
         $productDiscontinuedTransfer = (new ProductDiscontinuedTransfer())
             ->fromArray($productDiscontinuedEntity->toArray(), true);
-        if ($productDiscontinuedEntity->getProduct()) {
+
+        /** @var \Orm\Zed\Product\Persistence\SpyProduct|null $productEntity */
+        $productEntity = $productDiscontinuedEntity->getProduct();
+        if ($productEntity) {
             $productDiscontinuedTransfer->setSku(
                 $productDiscontinuedEntity->getProduct()->getSku()
             );
         }
-        if ($productDiscontinuedEntity->getSpyProductDiscontinuedNotes()) {
+
+        /** @var \Generated\Shared\Transfer\ProductDiscontinuedNoteTransfer[] $productDiscontinuedNotes */
+        $productDiscontinuedNotes = $productDiscontinuedEntity->getSpyProductDiscontinuedNotes();
+        if ($productDiscontinuedNotes) {
             $productDiscontinuedTransfer->setProductDiscontinuedNotes(
                 $this->mapProductDiscontinuedNotes($productDiscontinuedEntity)
             );

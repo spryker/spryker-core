@@ -12,10 +12,15 @@ use Spryker\Zed\MerchantRelationshipProductList\Business\CustomerExpander\Custom
 use Spryker\Zed\MerchantRelationshipProductList\Business\CustomerExpander\CustomerExpanderInterface;
 use Spryker\Zed\MerchantRelationshipProductList\Business\ProductList\ProductListReader;
 use Spryker\Zed\MerchantRelationshipProductList\Business\ProductList\ProductListReaderInterface;
+use Spryker\Zed\MerchantRelationshipProductList\Business\ProductList\ProductListWriter;
+use Spryker\Zed\MerchantRelationshipProductList\Business\ProductList\ProductListWriterInterface;
+use Spryker\Zed\MerchantRelationshipProductList\Dependency\Facade\MerchantRelationshipProductListToProductListFacadeInterface;
+use Spryker\Zed\MerchantRelationshipProductList\MerchantRelationshipProductListDependencyProvider;
 
 /**
  * @method \Spryker\Zed\MerchantRelationshipProductList\MerchantRelationshipProductListConfig getConfig()
  * @method \Spryker\Zed\MerchantRelationshipProductList\Persistence\MerchantRelationshipProductListRepositoryInterface getRepository()
+ * @method \Spryker\Zed\MerchantRelationshipProductList\Persistence\MerchantRelationshipProductListEntityManagerInterface getEntityManager()
  */
 class MerchantRelationshipProductListBusinessFactory extends AbstractBusinessFactory
 {
@@ -33,5 +38,24 @@ class MerchantRelationshipProductListBusinessFactory extends AbstractBusinessFac
     public function createCustomerExpander(): CustomerExpanderInterface
     {
         return new CustomerExpander($this->createProductListReader());
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantRelationshipProductList\Business\ProductList\ProductListWriterInterface
+     */
+    public function createProductListWriter(): ProductListWriterInterface
+    {
+        return new ProductListWriter(
+            $this->getRepository(),
+            $this->getProductListFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantRelationshipProductList\Dependency\Facade\MerchantRelationshipProductListToProductListFacadeInterface
+     */
+    public function getProductListFacade(): MerchantRelationshipProductListToProductListFacadeInterface
+    {
+        return $this->getProvidedDependency(MerchantRelationshipProductListDependencyProvider::FACADE_PRODUCT_LIST);
     }
 }

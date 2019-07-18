@@ -15,6 +15,7 @@ use Generated\Shared\DataBuilder\ProductOptionTranslationBuilder;
 use Generated\Shared\DataBuilder\ProductOptionValueBuilder;
 use Generated\Shared\Transfer\ProductOptionGroupTransfer;
 use Generated\Shared\Transfer\ProductOptionTranslationTransfer;
+use Generated\Shared\Transfer\ProductOptionValueTransfer;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
@@ -22,16 +23,16 @@ class ProductOptionGroupDataHelper extends Module
 {
     use LocatorHelperTrait;
 
-    const DEFAULT_STORE = 'DE';
-    const DEFAULT_CURRENCY = 'EUR';
+    public const DEFAULT_STORE = 'DE';
+    public const DEFAULT_CURRENCY = 'EUR';
 
-    const CURRENCY_CODE = 'currencyCode';
-    const STORE_NAME = 'storeName';
+    public const CURRENCY_CODE = 'currencyCode';
+    public const STORE_NAME = 'storeName';
 
     /**
      * @param array $override
      *
-     * @return \Generated\Shared\Transfer\ProductOptionGroupTransfer|\Spryker\Shared\Kernel\Transfer\AbstractTransfer
+     * @return \Generated\Shared\Transfer\ProductOptionGroupTransfer
      */
     public function haveProductOptionGroup(array $override = [])
     {
@@ -78,7 +79,7 @@ class ProductOptionGroupDataHelper extends Module
      * @param array $overrideGroup
      * @param array $overrideValues
      *
-     * @return \Generated\Shared\Transfer\ProductOptionGroupTransfer|\Spryker\Shared\Kernel\Transfer\AbstractTransfer
+     * @return \Generated\Shared\Transfer\ProductOptionGroupTransfer
      */
     public function haveProductOptionGroupWithValues(array $overrideGroup = [], array $overrideValues = [[[], [[]]]])
     {
@@ -87,17 +88,20 @@ class ProductOptionGroupDataHelper extends Module
             $this->createProductOptionTranslationTransfer($productOptionGroupTransfer->getName())
         );
 
-        foreach ($overrideValues as list($overrideValue, $overridePrices)) {
+        $idProductOptionGroup = $this->getProductOptionFacade()->saveProductOptionGroup($productOptionGroupTransfer);
+        $productOptionGroupTransfer->setIdProductOptionGroup($idProductOptionGroup);
+
+        foreach ($overrideValues as [$overrideValue, $overridePrices]) {
+            $overrideValue = array_merge($overrideValue, [
+                ProductOptionValueTransfer::FK_PRODUCT_OPTION_GROUP => $idProductOptionGroup,
+            ]);
+
             $productOptionValueTransfer = $this->createProductOptionValueTransfer($overrideValue, $overridePrices);
             $productOptionGroupTransfer->addProductOptionValue($productOptionValueTransfer);
             $productOptionGroupTransfer->addProductOptionValueTranslation(
                 $this->createProductOptionTranslationTransfer($productOptionValueTransfer->getValue())
             );
         }
-
-        $idProductOptionGroup = $this->getProductOptionFacade()->saveProductOptionGroup($productOptionGroupTransfer);
-
-        $productOptionGroupTransfer->setIdProductOptionGroup($idProductOptionGroup);
 
         return $productOptionGroupTransfer;
     }
@@ -129,6 +133,9 @@ class ProductOptionGroupDataHelper extends Module
                     ->setFkStore($this->getIdStore($storeName))
             );
         }
+
+        $idProductOptionValue = $this->getProductOptionFacade()->saveProductOptionValue($productOptionValueTransfer);
+        $productOptionValueTransfer->setIdProductOptionValue($idProductOptionValue);
 
         return $productOptionValueTransfer;
     }
@@ -172,7 +179,7 @@ class ProductOptionGroupDataHelper extends Module
     /**
      * @return \Spryker\Zed\ProductOption\Business\ProductOptionFacadeInterface
      */
-    protected function getProductOptionFacade()
+    public function getProductOptionFacade()
     {
         return $this->getLocator()->productOption()->facade();
     }

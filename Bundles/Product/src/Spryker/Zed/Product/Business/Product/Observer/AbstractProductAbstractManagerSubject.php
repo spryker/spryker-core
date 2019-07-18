@@ -39,7 +39,7 @@ abstract class AbstractProductAbstractManagerSubject
     protected $readObservers = [];
 
     /**
-     * @var \Spryker\Zed\Product\Dependency\Facade\ProductToEventInterface
+     * @var \Spryker\Zed\Product\Dependency\Facade\ProductToEventInterface|null
      */
     protected $eventFacade;
 

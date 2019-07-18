@@ -12,6 +12,8 @@
         <property name="availableLocaleIsoCodes" type="array" singular="availableLocaleCode" />
         <property name="queuePools" type="array" />
         <property name="storesWithSharedPersistence" type="array" singular="storeWithSharedPersistence" />
+        <property name="countries" type="array" singular="country" />
+        <property name="timezone" type="string" />
     </transfer>
 
     <transfer name="StoreRelation">
@@ -21,6 +23,15 @@
 
     <transfer name="Quote">
         <property name="store" type="Store" />
+    </transfer>
+
+    <transfer name="QuoteValidationResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="errors" type="QuoteError[]"/>
+    </transfer>
+
+    <transfer name="QuoteError">
+        <property name="message" type="string"/>
     </transfer>
 
 </transfers>

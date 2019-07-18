@@ -15,10 +15,13 @@ use Spryker\Zed\MerchantDataImport\MerchantDataImportConfig;
 
 /**
  * @method \Spryker\Zed\MerchantDataImport\Business\MerchantDataImportFacadeInterface getFacade()
+ * @method \Spryker\Zed\MerchantDataImport\MerchantDataImportConfig getConfig()
  */
 class MerchantDataImportPlugin extends AbstractPlugin implements DataImportPluginInterface
 {
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
      *
      * @return \Generated\Shared\Transfer\DataImporterReportTransfer
@@ -30,6 +33,8 @@ class MerchantDataImportPlugin extends AbstractPlugin implements DataImportPlugi
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getImportType(): string

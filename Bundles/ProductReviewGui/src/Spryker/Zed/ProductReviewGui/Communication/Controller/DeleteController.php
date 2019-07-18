@@ -14,10 +14,11 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\ProductReviewGui\Communication\ProductReviewGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductReviewGui\Persistence\ProductReviewGuiQueryContainerInterface getQueryContainer()
  */
 class DeleteController extends AbstractController
 {
-    const PARAM_ID = 'id';
+    public const PARAM_ID = 'id';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -35,10 +36,9 @@ class DeleteController extends AbstractController
             ->getProductReviewFacade()
             ->deleteProductReview($productSetTransfer);
 
-        $this->addSuccessMessage(sprintf(
-            'Product Review #%d deleted successfully.',
-            $productSetTransfer->getIdProductReview()
-        ));
+        $this->addSuccessMessage('Product Review #%d deleted successfully.', [
+            '%d' => $productSetTransfer->getIdProductReview(),
+        ]);
 
         return $this->redirectResponse(
             Url::generate('/product-review-gui')->build()

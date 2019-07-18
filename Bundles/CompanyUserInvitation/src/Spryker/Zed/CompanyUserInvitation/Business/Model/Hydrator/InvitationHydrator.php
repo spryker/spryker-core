@@ -24,7 +24,7 @@ class InvitationHydrator implements InvitationHydratorInterface
     protected $businessUnitCache = [];
 
     /**
-     * @var \Generated\Shared\Transfer\CompanyUserInvitationStatusTransfer
+     * @var \Generated\Shared\Transfer\CompanyUserInvitationStatusTransfer|null
      */
     protected $companyUserInvitationStatusTransfer;
 
@@ -32,11 +32,6 @@ class InvitationHydrator implements InvitationHydratorInterface
      * @var \Spryker\Zed\CompanyUserInvitation\Persistence\CompanyUserInvitationRepositoryInterface
      */
     protected $repository;
-
-    /**
-     * @var \Spryker\Zed\CompanyUserInvitation\Dependency\Facade\CompanyUserInvitationToCompanyUserFacadeInterface
-     */
-    protected $companyUserFacade;
 
     /**
      * @var \Spryker\Zed\CompanyUserInvitation\Dependency\Facade\CompanyUserInvitationToCompanyBusinessUnitFacadeInterface
@@ -47,6 +42,11 @@ class InvitationHydrator implements InvitationHydratorInterface
      * @var \Spryker\Zed\CompanyUserInvitation\Dependency\Service\CompanyUserInvitationToUtilTextInterface
      */
     protected $utilTextService;
+
+    /**
+     * @var \Spryker\Zed\CompanyUserInvitation\Dependency\Facade\CompanyUserInvitationToCompanyUserFacadeInterface
+     */
+    protected $companyUserFacade;
 
     /**
      * @param \Spryker\Zed\CompanyUserInvitation\Persistence\CompanyUserInvitationRepositoryInterface $repository

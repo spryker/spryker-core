@@ -12,26 +12,29 @@ use Spryker\Zed\Gui\Communication\Form\Type\ParagraphType;
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * @method \Spryker\Zed\CmsBlockCategoryConnector\Business\CmsBlockCategoryConnectorFacadeInterface getFacade()
  * @method \Spryker\Zed\CmsBlockCategoryConnector\Communication\CmsBlockCategoryConnectorCommunicationFactory getFactory()
  * @method \Spryker\Zed\CmsBlockCategoryConnector\Persistence\CmsBlockCategoryConnectorQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\CmsBlockCategoryConnector\CmsBlockCategoryConnectorConfig getConfig()
  */
 class CategoryType extends AbstractType
 {
-    const FIELD_CMS_BLOCKS = 'id_cms_blocks';
+    public const FIELD_CMS_BLOCKS = 'id_cms_blocks';
 
-    const OPTION_CMS_BLOCK_LIST = 'option-cms-block-list';
-    const OPTION_CMS_BLOCK_POSITION_LIST = 'option-cms-block-position-list';
-    const OPTION_WRONG_CMS_BLOCK_LIST = 'option-wrong-cms-block-list';
-    const OPTION_ASSIGNED_CMS_BLOCK_TEMPLATE_LIST = 'option-assigned-cms-block-template-list';
+    public const OPTION_CMS_BLOCK_LIST = 'option-cms-block-list';
+    public const OPTION_CMS_BLOCK_POSITION_LIST = 'option-cms-block-position-list';
+    public const OPTION_WRONG_CMS_BLOCK_LIST = 'option-wrong-cms-block-list';
+    public const OPTION_ASSIGNED_CMS_BLOCK_TEMPLATE_LIST = 'option-assigned-cms-block-template-list';
 
     /**
      * @var array
      */
-    const SUPPORTED_CATEGORY_TEMPLATE_LIST = [
+    public const SUPPORTED_CATEGORY_TEMPLATE_LIST = [
         CmsBlockCategoryConnectorConfig::CATEGORY_TEMPLATE_WITH_CMS_BLOCK,
         CmsBlockCategoryConnectorConfig::CATEGORY_TEMPLATE_ONLY_CMS_BLOCK,
     ];
@@ -85,14 +88,24 @@ class CategoryType extends AbstractType
                 'property_path' => static::FIELD_CMS_BLOCKS . '[' . $idCmsBlockCategoryPosition . ']',
                 'label' => 'CMS Blocks: ' . $positionName,
                 'choices' => array_flip($choices),
-                'choices_as_values' => true,
                 'multiple' => true,
                 'required' => false,
                 'attr' => [
                     'data-assigned-cms-blocks' => $this->getFactory()->getUtilEncodingService()->encodeJson($assignedForPosition),
                     'data-supported-templates' => $this->getFactory()->getUtilEncodingService()->encodeJson(static::SUPPORTED_CATEGORY_TEMPLATE_LIST),
                 ],
-            ]);
+            ])->get(static::FIELD_CMS_BLOCKS . '_' . $idCmsBlockCategoryPosition)->addEventListener(
+                FormEvents::PRE_SUBMIT,
+                function (FormEvent $event) {
+                    if (!$event->getData()) {
+                        return;
+                    }
+                    // Symfony Forms requires reset keys from Select2ComboBoxType to get correct items order
+                    $ids = array_values($event->getData());
+                    $event->setData($ids);
+                    $event->getForm()->setData($ids);
+                }
+            );
         }
 
         return $this;

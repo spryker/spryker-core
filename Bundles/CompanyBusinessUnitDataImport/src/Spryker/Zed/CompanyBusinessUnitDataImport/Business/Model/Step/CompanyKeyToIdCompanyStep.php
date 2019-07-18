@@ -17,33 +17,52 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 class CompanyKeyToIdCompanyStep implements DataImportStepInterface
 {
     /**
-     * @var array
+     * @var int[]
      */
-    protected $idCompanyCache = [];
+    protected $idCompanyListCache = [];
 
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
-     * @throws \Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException
-     *
      * @return void
      */
-    public function execute(DataSetInterface $dataSet)
+    public function execute(DataSetInterface $dataSet): void
     {
-        $companyKey = $dataSet[CompanyBusinessUnitDataSet::COMPANY_KEY];
-        if (!isset($this->idCompanyCache[$companyKey])) {
-            $companyQuery = new SpyCompanyQuery();
-            $idCompany = $companyQuery
-                ->select(SpyCompanyTableMap::COL_ID_COMPANY)
-                ->findOneByKey($companyKey);
+        $dataSet[CompanyBusinessUnitDataSet::ID_COMPANY] = $this->getIdCompanyByKey($dataSet[CompanyBusinessUnitDataSet::COMPANY_KEY]);
+    }
 
-            if (!$idCompany) {
-                throw new EntityNotFoundException(sprintf('Could not find company by key "%s"', $companyKey));
-            }
-
-            $this->idCompanyCache[$companyKey] = $idCompany;
+    /**
+     * @param string $companyKey
+     *
+     * @throws \Pyz\Zed\DataImport\Business\Exception\EntityNotFoundException
+     *
+     * @return int
+     */
+    protected function getIdCompanyByKey(string $companyKey): int
+    {
+        if (isset($this->idCompanyListCache[$companyKey])) {
+            return $this->idCompanyListCache[$companyKey];
         }
 
-        $dataSet[CompanyBusinessUnitDataSet::ID_COMPANY] = $this->idCompanyCache[$companyKey];
+        $idCompany = $this->createCompanyQuery()
+            ->filterByKey($companyKey)
+            ->select(SpyCompanyTableMap::COL_ID_COMPANY)
+            ->findOne();
+
+        if (!$idCompany) {
+            throw new EntityNotFoundException(sprintf('Could not find company by key "%s"', $companyKey));
+        }
+
+        $this->idCompanyListCache[$companyKey] = $idCompany;
+
+        return $this->idCompanyListCache[$companyKey];
+    }
+
+    /**
+     * @return \Orm\Zed\Company\Persistence\SpyCompanyQuery
+     */
+    protected function createCompanyQuery(): SpyCompanyQuery
+    {
+        return SpyCompanyQuery::create();
     }
 }

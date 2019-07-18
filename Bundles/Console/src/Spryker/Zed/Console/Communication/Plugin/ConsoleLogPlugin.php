@@ -10,7 +10,7 @@ namespace Spryker\Zed\Console\Communication\Plugin;
 use Spryker\Shared\Log\LoggerTrait;
 use Symfony\Component\Console\ConsoleEvents;
 use Symfony\Component\Console\Event\ConsoleCommandEvent;
-use Symfony\Component\Console\Event\ConsoleExceptionEvent;
+use Symfony\Component\Console\Event\ConsoleErrorEvent;
 use Symfony\Component\Console\Event\ConsoleTerminateEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -19,6 +19,8 @@ class ConsoleLogPlugin implements EventSubscriberInterface
     use LoggerTrait;
 
     /**
+     * @api
+     *
      * @param \Symfony\Component\Console\Event\ConsoleCommandEvent $event
      *
      * @return void
@@ -34,6 +36,8 @@ class ConsoleLogPlugin implements EventSubscriberInterface
     }
 
     /**
+     * @api
+     *
      * @param \Symfony\Component\Console\Event\ConsoleTerminateEvent $event
      *
      * @return void
@@ -44,13 +48,15 @@ class ConsoleLogPlugin implements EventSubscriberInterface
     }
 
     /**
-     * @param \Symfony\Component\Console\Event\ConsoleExceptionEvent $event
+     * @api
+     *
+     * @param \Symfony\Component\Console\Event\ConsoleErrorEvent $event
      *
      * @return void
      */
-    public function onConsoleException(ConsoleExceptionEvent $event)
+    public function onConsoleError(ConsoleErrorEvent $event)
     {
-        $exception = $event->getException();
+        $exception = $event->getError();
 
         $this->getLogger()->error(sprintf(
             'CLI command "%s" exception, message "%s"',
@@ -60,6 +66,8 @@ class ConsoleLogPlugin implements EventSubscriberInterface
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public static function getSubscribedEvents()
@@ -67,7 +75,7 @@ class ConsoleLogPlugin implements EventSubscriberInterface
         return [
             ConsoleEvents::COMMAND => ['onConsoleCommand'],
             ConsoleEvents::TERMINATE => ['onConsoleTerminate'],
-            ConsoleEvents::EXCEPTION => ['onConsoleException'],
+            ConsoleEvents::ERROR => ['onConsoleError'],
         ];
     }
 }

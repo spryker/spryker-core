@@ -11,9 +11,9 @@ use Generated\Shared\Transfer\FacetConfigTransfer;
 
 class NestedRangeQuery extends AbstractNestedQuery
 {
-    const RANGE_DIVIDER = '-';
-    const RANGE_MIN = 'min';
-    const RANGE_MAX = 'max';
+    public const RANGE_DIVIDER = '-';
+    public const RANGE_MIN = 'min';
+    public const RANGE_MAX = 'max';
 
     /**
      * @var \Generated\Shared\Transfer\FacetConfigTransfer

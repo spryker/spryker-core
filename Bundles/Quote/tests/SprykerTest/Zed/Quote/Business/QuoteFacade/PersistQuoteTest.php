@@ -124,6 +124,7 @@ class PersistQuoteTest extends Unit
      */
     protected function providePersistFilteredQuoteData()
     {
+        /** @var \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer */
         $quoteTransfer = (new QuoteBuilder())->build();
         $expectedQuoteTransfer = clone $quoteTransfer;
 
@@ -141,7 +142,7 @@ class PersistQuoteTest extends Unit
             ->addItem($itemTransfer2)
             ->setTotals($totalsTransfer)
             ->setPriceMode('foo')
-            ->setShippingAddress((new AddressBuilder)->build())
+            ->setShippingAddress((new AddressBuilder())->build())
             ->setBillingSameAsShipping(true)
             ->addCartRuleDiscount((new DiscountBuilder())->build());
 

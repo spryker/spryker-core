@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -56,7 +57,6 @@ class BundleFinder implements BundleFinderInterface
                 $bundleTransfer = $this->mergeWithPossibleExistingBundle($bundleTransfer, $bundleTransferCollection);
 
                 $bundleTransferCollection[$bundleTransfer->getName()] = $bundleTransfer;
-                $isInitializedBundleByName[$bundleDirectory->getBasename()] = true;
             }
         }
 

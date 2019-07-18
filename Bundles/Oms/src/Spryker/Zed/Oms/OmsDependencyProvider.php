@@ -20,24 +20,27 @@ use Spryker\Zed\Oms\Dependency\Service\OmsToUtilNetworkBridge;
 use Spryker\Zed\Oms\Dependency\Service\OmsToUtilSanitizeBridge;
 use Spryker\Zed\Oms\Dependency\Service\OmsToUtilTextBridge;
 
+/**
+ * @method \Spryker\Zed\Oms\OmsConfig getConfig()
+ */
 class OmsDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const CONDITION_PLUGINS = 'CONDITION_PLUGINS';
-    const COMMAND_PLUGINS = 'COMMAND_PLUGINS';
+    public const CONDITION_PLUGINS = 'CONDITION_PLUGINS';
+    public const COMMAND_PLUGINS = 'COMMAND_PLUGINS';
 
-    const QUERY_CONTAINER_SALES = 'QUERY_CONTAINER_SALES';
+    public const QUERY_CONTAINER_SALES = 'QUERY_CONTAINER_SALES';
 
-    const PLUGIN_GRAPH = 'PLUGIN_GRAPH';
-    const PLUGINS_RESERVATION = 'PLUGIN_RESERVATION';
-    const PLUGINS_RESERVATION_EXPORT = 'PLUGINS_RESERVATION_EXPORT';
+    public const PLUGIN_GRAPH = 'PLUGIN_GRAPH';
+    public const PLUGINS_RESERVATION = 'PLUGIN_RESERVATION';
+    public const PLUGINS_RESERVATION_EXPORT = 'PLUGINS_RESERVATION_EXPORT';
 
-    const FACADE_MAIL = 'FACADE_MAIL';
-    const FACADE_SALES = 'FACADE_SALES';
+    public const FACADE_MAIL = 'FACADE_MAIL';
+    public const FACADE_SALES = 'FACADE_SALES';
 
-    const FACADE_STORE = 'FACADE_STORE';
-    const FACADE_UTIL_TEXT = 'FACADE_UTIL_TEXT';
-    const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
-    const SERVICE_UTIL_NETWORK = 'SERVICE_UTIL_NETWORK';
+    public const FACADE_STORE = 'FACADE_STORE';
+    public const FACADE_UTIL_TEXT = 'FACADE_UTIL_TEXT';
+    public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
+    public const SERVICE_UTIL_NETWORK = 'SERVICE_UTIL_NETWORK';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -111,13 +114,15 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return void
+     * @return \Spryker\Zed\Kernel\Container
      */
     public function providePersistenceLayerDependencies(Container $container)
     {
         $container[self::QUERY_CONTAINER_SALES] = function (Container $container) {
             return new PersistenceOmsToSalesBridge($container->getLocator()->sales()->queryContainer());
         };
+
+        return $container;
     }
 
     /**
@@ -148,6 +153,7 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::PLUGINS_RESERVATION_EXPORT] = function (Container $container) {
             return $this->getReservationExportPlugins();
         };
+
         return $container;
     }
 
@@ -169,6 +175,7 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::FACADE_STORE] = function (Container $container) {
             return new OmsToStoreFacadeBridge($container->getLocator()->store()->facade());
         };
+
         return $container;
     }
 }

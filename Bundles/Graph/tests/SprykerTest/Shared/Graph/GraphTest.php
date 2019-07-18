@@ -21,12 +21,12 @@ use Spryker\Shared\Graph\GraphAdapterInterface;
  */
 class GraphTest extends Unit
 {
-    const GRAPH_NAME = 'graph name';
-    const NODE_A = 'node A';
-    const NODE_B = 'node B';
-    const GROUP_NAME = 'group name';
-    const CLUSTER_NAME = 'cluster name';
-    const ATTRIBUTES = ['attribute' => 'value', 'html attribute' => '<h1>Html Value</h1>'];
+    public const GRAPH_NAME = 'graph name';
+    public const NODE_A = 'node A';
+    public const NODE_B = 'node B';
+    public const GROUP_NAME = 'group name';
+    public const CLUSTER_NAME = 'cluster name';
+    public const ATTRIBUTES = ['attribute' => 'value', 'html attribute' => '<h1>Html Value</h1>'];
 
     /**
      * @return void
@@ -125,7 +125,7 @@ class GraphTest extends Unit
      */
     public function testRender()
     {
-        $this->assertInternalType('string', $this->getGraph()->render('svg'));
+        $this->assertIsString($this->getGraph()->render('svg'));
     }
 
     /**
@@ -133,7 +133,7 @@ class GraphTest extends Unit
      */
     public function testRenderWithFileName()
     {
-        $this->assertInternalType('string', $this->getGraph()->render('svg', 'filename'));
+        $this->assertIsString($this->getGraph()->render('svg', 'filename'));
     }
 
     /**
@@ -152,7 +152,7 @@ class GraphTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\Graph\GraphAdapterInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\Graph\GraphAdapterInterface
      */
     private function createAdapterMock()
     {

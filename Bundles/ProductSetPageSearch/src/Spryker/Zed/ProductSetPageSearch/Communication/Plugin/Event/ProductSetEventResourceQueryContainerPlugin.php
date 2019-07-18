@@ -18,6 +18,7 @@ use Spryker\Zed\ProductSet\Dependency\ProductSetEvents;
  * @method \Spryker\Zed\ProductSetPageSearch\Persistence\ProductSetPageSearchQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductSetPageSearch\Business\ProductSetPageSearchFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductSetPageSearch\Communication\ProductSetPageSearchCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductSetPageSearch\ProductSetPageSearchConfig getConfig()
  */
 class ProductSetEventResourceQueryContainerPlugin extends AbstractPlugin implements EventResourceQueryContainerPluginInterface
 {
@@ -46,11 +47,11 @@ class ProductSetEventResourceQueryContainerPlugin extends AbstractPlugin impleme
     {
         $query = $this->getQueryContainer()->queryProductSetByIds($ids);
 
-        if (empty($ids)) {
+        if ($ids === []) {
             $query->clear();
         }
 
-        return $query;
+        return $query->orderBy($this->getIdColumnName());
     }
 
     /**

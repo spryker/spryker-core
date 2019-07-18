@@ -9,7 +9,7 @@ namespace Spryker\Shared\CmsContentWidget\Dependency;
 
 interface CmsContentWidgetConfigurationProviderInterface
 {
-    const DEFAULT_TEMPLATE_IDENTIFIER = 'default';
+    public const DEFAULT_TEMPLATE_IDENTIFIER = 'default';
 
     /**
      * @return string

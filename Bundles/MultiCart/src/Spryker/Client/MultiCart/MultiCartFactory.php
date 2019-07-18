@@ -10,6 +10,8 @@ namespace Spryker\Client\MultiCart;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\MultiCart\CartOperation\CartCreator;
 use Spryker\Client\MultiCart\CartOperation\CartCreatorInterface;
+use Spryker\Client\MultiCart\CartOperation\CartDeleteChecker;
+use Spryker\Client\MultiCart\CartOperation\CartDeleteCheckerInterface;
 use Spryker\Client\MultiCart\CartOperation\CartReader;
 use Spryker\Client\MultiCart\CartOperation\CartReaderInterface;
 use Spryker\Client\MultiCart\CartOperation\CartUpdater;
@@ -160,5 +162,15 @@ class MultiCartFactory extends AbstractFactory
     public function getDateTimeService(): MultiCartToUtilDateTimeServiceInterface
     {
         return $this->getProvidedDependency(MultiCartDependencyProvider::SERVICE_DATETIME);
+    }
+
+    /**
+     * @return \Spryker\Client\MultiCart\CartOperation\CartDeleteCheckerInterface
+     */
+    public function createCartDeleteChecker(): CartDeleteCheckerInterface
+    {
+        return new CartDeleteChecker(
+            $this->createMultiCartStorage()
+        );
     }
 }

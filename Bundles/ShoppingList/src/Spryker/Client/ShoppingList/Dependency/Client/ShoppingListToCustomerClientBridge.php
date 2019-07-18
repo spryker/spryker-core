@@ -51,4 +51,18 @@ class ShoppingListToCustomerClientBridge implements ShoppingListToCustomerClient
     {
         return $this->customerClient->getCustomer();
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    public function getCustomerByEmail(CustomerTransfer $customerTransfer): CustomerTransfer
+    {
+        return $this->customerClient->getCustomerByEmail($customerTransfer);
+    }
 }

@@ -11,6 +11,7 @@ use Spryker\Zed\Event\Business\Dispatcher\EventDispatcher;
 use Spryker\Zed\Event\Business\Logger\EventLogger;
 use Spryker\Zed\Event\Business\Logger\LoggerConfig;
 use Spryker\Zed\Event\Business\Queue\Consumer\EventQueueConsumer;
+use Spryker\Zed\Event\Business\Queue\Forwarder\MessageForwarder;
 use Spryker\Zed\Event\Business\Queue\Producer\EventQueueProducer;
 use Spryker\Zed\Event\Business\Subscriber\SubscriberMerger;
 use Spryker\Zed\Event\EventDependencyProvider;
@@ -50,7 +51,15 @@ class EventBusinessFactory extends AbstractBusinessFactory
      */
     public function createEventQueueConsumer()
     {
-        return new EventQueueConsumer($this->createEventLogger(), $this->getUtilEncodingService());
+        return new EventQueueConsumer($this->createEventLogger(), $this->getUtilEncodingService(), $this->getConfig());
+    }
+
+    /**
+     * @return \Spryker\Zed\Event\Business\Queue\Forwarder\MessageForwarderInterface
+     */
+    public function createMessageForwarder()
+    {
+        return new MessageForwarder($this->getQueueClient());
     }
 
     /**

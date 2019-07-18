@@ -37,7 +37,7 @@ class ProductDiscontinuedProductBundleConnectorFacadeTest extends Unit
         // Arrange
         $bundledProduct = $this->tester->haveProduct();
         $bundleProduct = $this->tester->haveProduct();
-        (new SpyProductBundle)
+        (new SpyProductBundle())
             ->setQuantity(1)
             ->setFkProduct($bundleProduct->getIdProductConcrete())
             ->setFkBundledProduct($bundledProduct->getIdProductConcrete())

@@ -22,6 +22,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 class ProductLabelDictionaryCollectorStoragePlugin extends AbstractCollectorPlugin
 {
     /**
+     * @api
+     *
      * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $baseQuery
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param \Spryker\Zed\Collector\Business\Model\BatchResultInterface $result

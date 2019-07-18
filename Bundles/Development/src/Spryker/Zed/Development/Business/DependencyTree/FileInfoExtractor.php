@@ -13,7 +13,7 @@ use Zend\Filter\Word\CamelCaseToDash;
 
 class FileInfoExtractor
 {
-    const LAYER = 'Default';
+    public const LAYER = 'Default';
 
     /**
      * @param \Symfony\Component\Finder\SplFileInfo $fileInfo
@@ -102,6 +102,7 @@ class FileInfoExtractor
             if (array_search('_support', $pathParts)) {
                 return ['Spryker', 'tests', $pathParts[$testsDirectoryPosition - 1], '_support'];
             }
+
             return array_slice($pathParts, $testsDirectoryPosition + 2);
         }
 

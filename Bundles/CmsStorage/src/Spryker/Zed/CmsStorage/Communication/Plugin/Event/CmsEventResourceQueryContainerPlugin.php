@@ -18,6 +18,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\CmsStorage\Persistence\CmsStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\CmsStorage\Business\CmsStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\CmsStorage\Communication\CmsStorageCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CmsStorage\CmsStorageConfig getConfig()
  */
 class CmsEventResourceQueryContainerPlugin extends AbstractPlugin implements EventResourceQueryContainerPluginInterface
 {
@@ -44,7 +45,7 @@ class CmsEventResourceQueryContainerPlugin extends AbstractPlugin implements Eve
      */
     public function queryData(array $ids = []): ?ModelCriteria
     {
-        return $this->getQueryContainer()->queryCmsPageVersionByIds($ids);
+        return $this->getQueryContainer()->queryCmsPageByIds($ids);
     }
 
     /**

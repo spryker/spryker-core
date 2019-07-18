@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -33,7 +34,7 @@ use SprykerTest\Zed\StateMachine\Mocks\StateMachineMocks;
  */
 class FinderTest extends StateMachineMocks
 {
-    const TEST_STATE_MACHINE_NAME = 'TestStateMachine';
+    public const TEST_STATE_MACHINE_NAME = 'TestStateMachine';
 
     /**
      * @return void
@@ -146,7 +147,7 @@ class FinderTest extends StateMachineMocks
         $stateMachineItemStateQuery->method('find')->willReturn([$stateMachineItemEntity]);
 
         $stateMachineQueryContainerMock->expects($this->once())
-            ->method('queryItemsByIdStateMachineProcessAndItemStates')
+            ->method('queryItemsByStateMachineProcessNameAndItemStates')
             ->willReturn($stateMachineItemStateQuery);
 
         $finder = $this->createFinder(null, $builderMock, $stateMachineQueryContainerMock);

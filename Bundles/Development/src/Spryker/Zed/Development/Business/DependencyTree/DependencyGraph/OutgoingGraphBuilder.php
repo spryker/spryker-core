@@ -9,6 +9,8 @@ namespace Spryker\Zed\Development\Business\DependencyTree\DependencyGraph;
 
 use ArrayObject;
 use Generated\Shared\Transfer\DependencyCollectionTransfer;
+use Generated\Shared\Transfer\ModuleTransfer;
+use Generated\Shared\Transfer\OrganizationTransfer;
 use Spryker\Zed\Development\Business\Dependency\ManagerInterface;
 use Spryker\Zed\Development\Business\Dependency\ModuleDependencyParserInterface;
 use Spryker\Zed\Graph\Communication\Plugin\GraphPlugin;
@@ -115,21 +117,28 @@ class OutgoingGraphBuilder
     }
 
     /**
-     * @param string $bundleName
+     * @param string $moduleName
      * @param \ArrayObject $allDependencies
      *
      * @return void
      */
-    protected function buildGraph($bundleName, ArrayObject $allDependencies)
+    protected function buildGraph($moduleName, ArrayObject $allDependencies)
     {
-        $dependencies = $this->moduleDependencyParser->parseOutgoingDependencies($bundleName);
+        $organizationTransfer = new OrganizationTransfer();
+        $organizationTransfer->setName('Spryker');
+        $moduleTransfer = new ModuleTransfer();
+        $moduleTransfer
+            ->setName($moduleName)
+            ->setOrganization($organizationTransfer);
+
+        $dependencies = $this->moduleDependencyParser->parseOutgoingDependencies($moduleTransfer);
         $dependencies = $this->getBundleNames($dependencies);
 
-        if ($bundleName === $this->bundleName) {
+        if ($moduleName === $this->bundleName) {
             $dependencies = $this->filterBundles($dependencies);
         }
 
-        $allDependencies[$bundleName] = $dependencies;
+        $allDependencies[$moduleName] = $dependencies;
         foreach ($dependencies as $dependentBundle) {
             if (array_key_exists($dependentBundle, $allDependencies)) {
                 continue;

@@ -14,7 +14,7 @@ use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
 
 class ElasticsearchMarkerWriter implements WriterInterface, ConfigurableSearchWriterInterface
 {
-    const WRITER_NAME = 'elasticsearch-marker-writer';
+    public const WRITER_NAME = 'elasticsearch-marker-writer';
 
     /**
      * @var \Elastica\Client
@@ -79,12 +79,14 @@ class ElasticsearchMarkerWriter implements WriterInterface, ConfigurableSearchWr
      *
      * @param array $dataSet
      *
-     * @return void
+     * @return bool
      */
     public function delete(array $dataSet)
     {
         $mapping = new Mapping($this->getType());
-        $mapping->setMeta(['' => ''])->send(); // Empty mapping causes ClassCastException[java.util.ArrayList cannot be cast to java.util.Map]
+        $response = $mapping->setMeta(['' => ''])->send(); // Empty mapping causes ClassCastException[java.util.ArrayList cannot be cast to java.util.Map]
+
+        return $response->isOk();
     }
 
     /**

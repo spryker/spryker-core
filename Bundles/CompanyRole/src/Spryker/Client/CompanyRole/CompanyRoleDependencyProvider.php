@@ -8,6 +8,7 @@
 namespace Spryker\Client\CompanyRole;
 
 use Spryker\Client\CompanyRole\Dependency\Client\CompanyRoleToCustomerClientBridge;
+use Spryker\Client\CompanyRole\Dependency\Client\CompanyRoleToPermissionClientBridge;
 use Spryker\Client\CompanyRole\Dependency\Client\CompanyRoleToZedRequestClientBridge;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
@@ -16,6 +17,7 @@ class CompanyRoleDependencyProvider extends AbstractDependencyProvider
 {
     public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+    public const CLIENT_PERMISSION = 'CLIENT_PERMISSION';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -26,6 +28,7 @@ class CompanyRoleDependencyProvider extends AbstractDependencyProvider
     {
         $container = $this->addZedRequestClient($container);
         $container = $this->addCustomerClient($container);
+        $container = $this->addPermissionClient($container);
 
         return $container;
     }
@@ -53,6 +56,22 @@ class CompanyRoleDependencyProvider extends AbstractDependencyProvider
     {
         $container[static::CLIENT_CUSTOMER] = function (Container $container) {
             return new CompanyRoleToCustomerClientBridge($container->getLocator()->customer()->client());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addPermissionClient(Container $container): Container
+    {
+        $container[static::CLIENT_PERMISSION] = function (Container $container) {
+            return new CompanyRoleToPermissionClientBridge(
+                $container->getLocator()->permission()->client()
+            );
         };
 
         return $container;

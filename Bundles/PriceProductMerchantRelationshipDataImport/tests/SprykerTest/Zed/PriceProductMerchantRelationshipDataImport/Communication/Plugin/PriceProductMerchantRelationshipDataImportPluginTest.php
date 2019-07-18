@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\PriceProductMerchantRelationshipDataImport\Communication\Plugin;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
@@ -53,7 +54,7 @@ class PriceProductMerchantRelationshipDataImportPluginTest extends Unit
      */
     public function testImportImportsData(): void
     {
-        $this->tester->ensureDatabaseTableIsEmpty();
+        $this->tester->truncateMerchantRelationshipRelations();
         $this->tester->assertDatabaseTableIsEmpty();
 
         $this->createRelatedData();
@@ -99,7 +100,9 @@ class PriceProductMerchantRelationshipDataImportPluginTest extends Unit
      */
     protected function createMerchantRelationship(int $idMerchant, string $key): void
     {
-        $companyBusinessUnitTransfer = $this->tester->haveCompanyBusinessUnit();
+        $companyBusinessUnitTransfer = $this->tester->haveCompanyBusinessUnit([
+            CompanyBusinessUnitTransfer::FK_COMPANY => $this->tester->haveCompany()->getIdCompany(),
+        ]);
 
         $this->tester->haveMerchantRelationship([
             'merchantRelationshipKey' => $key,

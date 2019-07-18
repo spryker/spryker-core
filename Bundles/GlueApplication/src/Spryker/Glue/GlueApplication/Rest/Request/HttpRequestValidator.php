@@ -49,7 +49,7 @@ class HttpRequestValidator implements HttpRequestValidatorInterface
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Generated\Shared\Transfer\RestErrorMessageTransfer
+     * @return \Generated\Shared\Transfer\RestErrorMessageTransfer|null
      */
     public function validate(Request $request): ?RestErrorMessageTransfer
     {
@@ -109,11 +109,11 @@ class HttpRequestValidator implements HttpRequestValidatorInterface
 
         $availableMethods = $this->resourceRouteLoader->getAvailableMethods(
             $request->attributes->get(RequestConstantsInterface::ATTRIBUTE_TYPE),
-            $request->attributes->get(RequestConstantsInterface::ATTRIBUTE_PARENT_RESOURCE),
+            $request->attributes->get(RequestConstantsInterface::ATTRIBUTE_ALL_RESOURCES),
             $request
         );
 
-        if (!\in_array($requestedMethod, $availableMethods, false)) {
+        if (!in_array($requestedMethod, $availableMethods, false)) {
             return (new RestErrorMessageTransfer())
                 ->setDetail('Not allowed.')
                 ->setStatus(Response::HTTP_FORBIDDEN);
@@ -139,7 +139,7 @@ class HttpRequestValidator implements HttpRequestValidatorInterface
         $allowedHeaders = $this->config->getCorsAllowedHeaders();
 
         foreach ($requestedHeaders as $requestedHeader) {
-            if (\in_array($requestedHeader, $allowedHeaders, false)) {
+            if (in_array($requestedHeader, $allowedHeaders, false)) {
                 continue;
             }
 
@@ -147,6 +147,7 @@ class HttpRequestValidator implements HttpRequestValidatorInterface
                 ->setDetail('Not allowed.')
                 ->setStatus(Response::HTTP_FORBIDDEN);
         }
+
         return null;
     }
 
@@ -165,6 +166,7 @@ class HttpRequestValidator implements HttpRequestValidatorInterface
 
             return $restErrorMessageTransfer;
         }
+
         return null;
     }
 }

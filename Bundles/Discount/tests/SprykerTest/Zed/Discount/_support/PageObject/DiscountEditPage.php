@@ -11,7 +11,7 @@ use SprykerTest\Zed\Discount\DiscountPresentationTester;
 
 class DiscountEditPage
 {
-    const URL = '/discount/index/edit';
+    public const URL = '/discount/index/edit';
 
     /**
      * @var \SprykerTest\Zed\Discount\DiscountPresentationTester

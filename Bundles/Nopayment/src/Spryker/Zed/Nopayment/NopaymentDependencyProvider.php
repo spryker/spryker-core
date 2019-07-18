@@ -9,6 +9,9 @@ namespace Spryker\Zed\Nopayment;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 
+/**
+ * @method \Spryker\Zed\Nopayment\NopaymentConfig getConfig()
+ */
 class NopaymentDependencyProvider extends AbstractBundleDependencyProvider
 {
 }

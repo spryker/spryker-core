@@ -5,6 +5,4 @@
 
 'use strict';
 
-
-require('ZedGui');
 require('./re-sort/bootstrap');

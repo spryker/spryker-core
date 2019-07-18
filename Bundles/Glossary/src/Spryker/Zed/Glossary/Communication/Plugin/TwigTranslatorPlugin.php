@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use InvalidArgumentException;
 use Spryker\Zed\Twig\Communication\Plugin\AbstractTwigExtensionPlugin;
 use Symfony\Component\Translation\TranslatorInterface;
-use Twig_SimpleFilter;
+use Twig\TwigFilter;
 
 /**
  * @method \Spryker\Zed\Glossary\Business\GlossaryFacadeInterface getFacade()
@@ -20,16 +20,18 @@ use Twig_SimpleFilter;
 class TwigTranslatorPlugin extends AbstractTwigExtensionPlugin implements TranslatorInterface
 {
     /**
-     * @var \Generated\Shared\Transfer\LocaleTransfer
+     * @var \Generated\Shared\Transfer\LocaleTransfer|null
      */
     protected $localeTransfer;
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $localeName;
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getName()
@@ -38,13 +40,15 @@ class TwigTranslatorPlugin extends AbstractTwigExtensionPlugin implements Transl
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getFilters()
     {
         return [
-            new Twig_SimpleFilter('trans', [$this, 'trans']),
-            new Twig_SimpleFilter('transchoice', [$this, 'transchoice']),
+            new TwigFilter('trans', [$this, 'trans']),
+            new TwigFilter('transchoice', [$this, 'transchoice']),
         ];
     }
 
@@ -104,6 +108,7 @@ class TwigTranslatorPlugin extends AbstractTwigExtensionPlugin implements Transl
             if (!$this->getFacade()->hasTranslation($ids[0], $localeTransfer)) {
                 return $ids[0];
             }
+
             return $this->getFacade()->translate($ids[0], $parameters, $localeTransfer);
         }
 
@@ -119,6 +124,8 @@ class TwigTranslatorPlugin extends AbstractTwigExtensionPlugin implements Transl
     }
 
     /**
+     * @api
+     *
      * @param string $localeName
      *
      * @return $this
@@ -131,7 +138,9 @@ class TwigTranslatorPlugin extends AbstractTwigExtensionPlugin implements Transl
     }
 
     /**
-     * @return string
+     * @api
+     *
+     * @return string|null
      */
     public function getLocale()
     {
@@ -139,6 +148,8 @@ class TwigTranslatorPlugin extends AbstractTwigExtensionPlugin implements Transl
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return $this

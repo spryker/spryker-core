@@ -11,7 +11,7 @@ use Propel\Runtime\ActiveQuery\Criteria;
 
 class NotEqual extends Equal
 {
-    const TYPE = 'not_equal';
+    public const TYPE = 'not_equal';
 
     /**
      * @return string

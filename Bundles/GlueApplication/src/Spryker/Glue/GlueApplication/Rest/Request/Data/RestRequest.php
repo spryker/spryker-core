@@ -1,11 +1,12 @@
 <?php
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Glue\GlueApplication\Rest\Request\Data;
 
+use Generated\Shared\Transfer\RestUserTransfer;
 use Spryker\Glue\GlueApplication\Rest\Exception\UserAlreadySetException;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -63,9 +64,16 @@ class RestRequest implements RestRequestInterface
     protected $filters = [];
 
     /**
+     * @deprecated use $restUser instead.
+     *
      * @var \Spryker\Glue\GlueApplication\Rest\Request\Data\UserInterface|null
      */
     protected $user;
+
+    /**
+     * @var \Generated\Shared\Transfer\RestUserTransfer|null
+     */
+    protected $restUser;
 
     /**
      * @var \Symfony\Component\HttpFoundation\Request
@@ -78,13 +86,13 @@ class RestRequest implements RestRequestInterface
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\MetadataInterface $metadata
      * @param array $filters
      * @param array $sort
-     * @param null|\Spryker\Glue\GlueApplication\Rest\Request\Data\PageInterface $page
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\PageInterface|null $page
      * @param array $routeContext
      * @param array $parentResources
      * @param array $include
      * @param array $fields
      * @param bool $excludeRelationship
-     * @param null|\Spryker\Glue\GlueApplication\Rest\Request\Data\UserInterface $user
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\UserInterface|null $user
      */
     public function __construct(
         RestResourceInterface $resource,
@@ -118,7 +126,7 @@ class RestRequest implements RestRequestInterface
     /**
      * @param string $type
      *
-     * @return null|\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
      */
     public function findParentResourceByType(string $type): ?RestResourceInterface
     {
@@ -242,7 +250,9 @@ class RestRequest implements RestRequestInterface
     }
 
     /**
-     * @return \Spryker\Glue\GlueApplication\Rest\Request\Data\UserInterface
+     * @deprecated use getRestUser() instead.
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\Request\Data\UserInterface|null
      */
     public function getUser(): ?UserInterface
     {
@@ -250,6 +260,8 @@ class RestRequest implements RestRequestInterface
     }
 
     /**
+     * @deprecated use setRestUser() instead.
+     *
      * @param string $surrogateIdentifier
      * @param string $naturalIdentifier
      * @param array $scopes
@@ -258,13 +270,40 @@ class RestRequest implements RestRequestInterface
      *
      * @return void
      */
-    public function setUser(string $surrogateIdentifier, string $naturalIdentifier, array $scopes = []): void
-    {
+    public function setUser(
+        string $surrogateIdentifier,
+        string $naturalIdentifier,
+        array $scopes = []
+    ): void {
         if ($this->user) {
             throw new UserAlreadySetException('Rest request object already have user set.');
         }
 
         $this->user = new User($surrogateIdentifier, $naturalIdentifier, $scopes);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestUserTransfer|null $restUserTransfer
+     *
+     * @throws \Spryker\Glue\GlueApplication\Rest\Exception\UserAlreadySetException
+     *
+     * @return void
+     */
+    public function setRestUser(?RestUserTransfer $restUserTransfer): void
+    {
+        if ($this->restUser) {
+            throw new UserAlreadySetException('Rest request object already have user set.');
+        }
+
+        $this->restUser = $restUserTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\RestUserTransfer|null
+     */
+    public function getRestUser(): ?RestUserTransfer
+    {
+        return $this->restUser;
     }
 
     /**
@@ -281,5 +320,55 @@ class RestRequest implements RestRequestInterface
     public function getExcludeRelationship(): bool
     {
         return $this->excludeRelationship;
+    }
+
+    /**
+     * @return array|null
+     */
+    public function getAttributesDataFromRequest(): ?array
+    {
+        if (!isset($this->httpRequest->attributes->get(RestResourceInterface::RESOURCE_DATA)[RestResourceInterface::RESOURCE_ATTRIBUTES])) {
+            return null;
+        }
+
+        return $this->httpRequest->attributes->get(RestResourceInterface::RESOURCE_DATA)[RestResourceInterface::RESOURCE_ATTRIBUTES];
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\PageInterface $page
+     *
+     * @return void
+     */
+    public function setPage(PageInterface $page): void
+    {
+        $this->page = $page;
+    }
+
+    /**
+     * @param string[] $excludeParams
+     *
+     * @return string
+     */
+    public function getQueryString(array $excludeParams = []): string
+    {
+        $queryParams = $this->getHttpRequest()->query->all();
+        $queryParams = $this->filterQueryParams($queryParams, $excludeParams);
+
+        return urldecode(http_build_query($queryParams));
+    }
+
+    /**
+     * @param array $queryParams
+     * @param string[] $excludeParams
+     *
+     * @return array
+     */
+    protected function filterQueryParams(array $queryParams, array $excludeParams): array
+    {
+        foreach ($excludeParams as $param) {
+            unset($queryParams[$param]);
+        }
+
+        return $queryParams;
     }
 }

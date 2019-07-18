@@ -15,6 +15,7 @@ use Spryker\Zed\WishlistExtension\Dependency\Plugin\AddItemPreCheckPluginInterfa
 /**
  * @method \Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinuedFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductDiscontinued\Communication\ProductDiscontinuedCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductDiscontinued\ProductDiscontinuedConfig getConfig()
  */
 class ProductDiscontinuedAddItemPreCheckPlugin extends AbstractPlugin implements AddItemPreCheckPluginInterface
 {

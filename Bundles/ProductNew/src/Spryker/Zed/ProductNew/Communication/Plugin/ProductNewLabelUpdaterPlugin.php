@@ -12,10 +12,14 @@ use Spryker\Zed\ProductLabel\Dependency\Plugin\ProductLabelRelationUpdaterPlugin
 
 /**
  * @method \Spryker\Zed\ProductNew\Business\ProductNewFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductNew\ProductNewConfig getConfig()
+ * @method \Spryker\Zed\ProductNew\Persistence\ProductNewQueryContainerInterface getQueryContainer()
  */
 class ProductNewLabelUpdaterPlugin extends AbstractPlugin implements ProductLabelRelationUpdaterPluginInterface
 {
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\ProductLabelProductAbstractRelationsTransfer[]
      */
     public function findProductLabelProductAbstractRelationChanges()

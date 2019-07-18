@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -26,8 +27,8 @@ use Symfony\Component\Finder\SplFileInfo;
  */
 class ServiceMethodBuilderTest extends Unit
 {
-    const BASE_DIRECTORY = '/foo/bar/baz/*/src/';
-    const BUNDLE_DIRECTORY = '/foo/bar/baz/FooBundle/src/Spryker/Service/';
+    public const BASE_DIRECTORY = '/foo/bar/baz/*/src/';
+    public const BUNDLE_DIRECTORY = '/foo/bar/baz/FooBundle/src/Spryker/Service/';
 
     /**
      * @return void
@@ -38,7 +39,7 @@ class ServiceMethodBuilderTest extends Unit
         $methodBuilderMock
             ->expects($this->any())
             ->method('findFileByName')
-            ->willReturn(new SplFileInfo(static::BUNDLE_DIRECTORY . 'FooBundle/FooBundleServiceInterface.php', null, null));
+            ->willReturn(new SplFileInfo(static::BUNDLE_DIRECTORY . 'FooBundle/FooBundleServiceInterface.php', 'foo', 'bar'));
 
         $bundleMethodTransfer = $methodBuilderMock->getMethod($this->getBundleTransfer());
 
@@ -60,7 +61,7 @@ class ServiceMethodBuilderTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\ClientMethodBuilder
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\ClientMethodBuilder
      */
     protected function getServiceMethodBuilderMock()
     {
@@ -79,7 +80,7 @@ class ServiceMethodBuilderTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\NamespaceExtractorInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\NamespaceExtractorInterface
      */
     protected function getNamespaceExtractorMock()
     {

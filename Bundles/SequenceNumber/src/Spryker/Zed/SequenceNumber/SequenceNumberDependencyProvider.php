@@ -9,6 +9,9 @@ namespace Spryker\Zed\SequenceNumber;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 
+/**
+ * @method \Spryker\Zed\SequenceNumber\SequenceNumberConfig getConfig()
+ */
 class SequenceNumberDependencyProvider extends AbstractBundleDependencyProvider
 {
 }

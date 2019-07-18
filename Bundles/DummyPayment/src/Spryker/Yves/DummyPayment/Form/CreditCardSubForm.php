@@ -13,21 +13,20 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class CreditCardSubForm extends AbstractSubForm
 {
-    const PAYMENT_METHOD = 'credit_card';
+    public const PAYMENT_METHOD = 'credit_card';
 
-    const FIELD_CARD_TYPE = 'card_type';
-    const FIELD_CARD_NUMBER = 'card_number';
-    const FIELD_NAME_ON_CARD = 'name_on_card';
-    const FIELD_CARD_EXPIRES_MONTH = 'card_expires_month';
-    const FIELD_CARD_EXPIRES_YEAR = 'card_expires_year';
-    const FIELD_CARD_SECURITY_CODE = 'card_security_code';
+    public const FIELD_CARD_TYPE = 'card_type';
+    public const FIELD_CARD_NUMBER = 'card_number';
+    public const FIELD_NAME_ON_CARD = 'name_on_card';
+    public const FIELD_CARD_EXPIRES_MONTH = 'card_expires_month';
+    public const FIELD_CARD_EXPIRES_YEAR = 'card_expires_year';
+    public const FIELD_CARD_SECURITY_CODE = 'card_security_code';
 
-    const OPTION_CARD_EXPIRES_CHOICES_MONTH = 'month choices';
-    const OPTION_CARD_EXPIRES_CHOICES_YEAR = 'year choices';
+    public const OPTION_CARD_EXPIRES_CHOICES_MONTH = 'month choices';
+    public const OPTION_CARD_EXPIRES_CHOICES_YEAR = 'year choices';
 
     /**
      * @return string
@@ -68,11 +67,11 @@ class CreditCardSubForm extends AbstractSubForm
     /**
      * @deprecated Use `configureOptions()` instead.
      *
-     * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *
      * @return void
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function setDefaultOptions(OptionsResolver $resolver)
     {
         $this->configureOptions($resolver);
     }
@@ -177,7 +176,6 @@ class CreditCardSubForm extends AbstractSubForm
             [
                 'label' => 'dummyPaymentCreditCard.card_expires',
                 'choices' => array_flip($options[self::OPTIONS_FIELD_NAME][self::OPTION_CARD_EXPIRES_CHOICES_MONTH]),
-                'choices_as_values' => true,
                 'required' => true,
                 'constraints' => [
                     $this->createNotBlankConstraint(),
@@ -202,7 +200,6 @@ class CreditCardSubForm extends AbstractSubForm
             [
                 'label' => false,
                 'choices' => array_flip($options[self::OPTIONS_FIELD_NAME][self::OPTION_CARD_EXPIRES_CHOICES_YEAR]),
-                'choices_as_values' => true,
                 'required' => true,
                 'attr' => [
                     'placeholder' => 'Expires year',

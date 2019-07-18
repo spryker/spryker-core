@@ -8,22 +8,21 @@
 namespace Spryker\Zed\Setup\Communication\Controller;
 
 use ErrorException;
-use Spryker\Shared\Config\Config;
-use Spryker\Shared\Config\Environment;
-use Spryker\Shared\Setup\SetupConstants;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 
 /**
  * @deprecated Will be removed in 1.0.0.
+ * @method \Spryker\Zed\Setup\Business\SetupFacadeInterface getFacade()
+ * @method \Spryker\Zed\Setup\Communication\SetupCommunicationFactory getFactory()
  */
 class JenkinsController extends AbstractController
 {
-    const LOGFILE = 'jenkins.log';
-    const ROLE_ADMIN = 'admin';
-    const ROLE_REPORTING = 'reporting';
-    const ROLE_EMPTY = 'empty';
-    const DEFAULT_ROLE = self::ROLE_ADMIN;
-    const DEFAULT_AMOUNT_OF_DAYS_FOR_LOGFILE_ROTATION = 7;
+    public const LOGFILE = 'jenkins.log';
+    public const ROLE_ADMIN = 'admin';
+    public const ROLE_REPORTING = 'reporting';
+    public const ROLE_EMPTY = 'empty';
+    public const DEFAULT_ROLE = self::ROLE_ADMIN;
+    public const DEFAULT_AMOUNT_OF_DAYS_FOR_LOGFILE_ROTATION = 7;
 
     /**
      * @var array
@@ -35,13 +34,6 @@ class JenkinsController extends AbstractController
     ];
 
     /**
-     * @return void
-     */
-    public function init()
-    {
-    }
-
-    /**
      * @param string $url
      * @param string $body
      *
@@ -51,7 +43,7 @@ class JenkinsController extends AbstractController
      */
     private function callJenkins($url, $body = '')
     {
-        $postUrl = Config::get(SetupConstants::JENKINS_BASE_URL) . '/' . $url;
+        $postUrl = $this->getFactory()->getConfig()->getJenkinsUrl() . '/' . $url;
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $postUrl);
         curl_setopt($ch, CURLOPT_POST, 1);
@@ -84,7 +76,7 @@ class JenkinsController extends AbstractController
             return $schedule;
         }
 
-        if (Environment::isNotProduction()) {
+        if ($this->getFactory()->getConfig()->isSchedulerEnabled() === false) {
             // Non-production - don't run automatically via Jenkins
             return '';
         } else {
@@ -114,7 +106,7 @@ class JenkinsController extends AbstractController
      */
     protected function getCommand($command, $store)
     {
-        if (Environment::getInstance()->isNotDevelopment()) {
+        if ($this->getFactory()->getConfig()->isDeployVarsEnabled()) {
             return "<command>[ -f ../../../../../../../current/deploy/vars ] &amp;&amp; . ../../../../../../../current/deploy/vars
 [ -f ../../../../../../current/deploy/vars ] &amp;&amp; . ../../../../../../current/deploy/vars
 [ -f ../../../../../current/deploy/vars ] &amp;&amp; . ../../../../../current/deploy/vars
@@ -181,7 +173,7 @@ $command</command>";
     }
 
     /**
-     * @return bool|array
+     * @return string[]|false
      */
     protected function getRoles()
     {
@@ -195,11 +187,11 @@ $command</command>";
         ];
 
         $options = getopt($shortopts, $longopts);
-        if (array_key_exists('role', $options)) {
-            return explode(',', $options['role']);
-        } else {
+        if (!array_key_exists('role', $options)) {
             return false;
         }
+
+        return explode(',', $options['role']);
     }
 
     /**

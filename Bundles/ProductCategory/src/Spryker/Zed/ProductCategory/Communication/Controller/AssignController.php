@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -15,10 +16,12 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \Spryker\Zed\ProductCategory\Business\ProductCategoryFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductCategory\Communication\ProductCategoryCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductCategory\Persistence\ProductCategoryRepositoryInterface getRepository()
  */
 class AssignController extends AbstractController
 {
-    const PARAM_ID_CATEGORY = 'id-category';
+    public const PARAM_ID_CATEGORY = 'id-category';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -31,7 +34,7 @@ class AssignController extends AbstractController
         $categoryEntity = $this->getCategoryEntity($idCategory);
 
         if (!$categoryEntity) {
-            return new RedirectResponse('/category/root');
+            return new RedirectResponse($this->getFactory()->getCategoryFacade()->getCategoryListUrl());
         }
 
         $form = $this->getForm($idCategory);
@@ -53,12 +56,16 @@ class AssignController extends AbstractController
         $categoryProductsTable = $this->getCategoryProductsTable($idCategory, $localeTransfer);
         $productsTable = $this->getProductsTable($idCategory, $localeTransfer);
 
+        $categoryFacade = $this->getFactory()->getCategoryFacade();
+        $categoryPath = $categoryFacade->getNodePath($idCategory, $localeTransfer);
+
         return $this->viewResponse([
             'idCategory' => $idCategory,
             'form' => $form->createView(),
             'productCategoriesTable' => $categoryProductsTable->render(),
             'productsTable' => $productsTable->render(),
             'currentCategory' => $categoryEntity->toArray(),
+            'categoryPath' => $categoryPath,
             'currentLocale' => $localeTransfer->getLocaleName(),
         ]);
     }
@@ -66,7 +73,7 @@ class AssignController extends AbstractController
     /**
      * @param int $idCategory
      *
-     * @return null|\Orm\Zed\Category\Persistence\SpyCategory
+     * @return \Orm\Zed\Category\Persistence\SpyCategory|null
      */
     protected function getCategoryEntity($idCategory)
     {
@@ -76,7 +83,8 @@ class AssignController extends AbstractController
             ->findOne();
 
         if (!$categoryEntity) {
-            $this->addErrorMessage(sprintf('The category with id "%s" does not exist.', $idCategory));
+            $this->addErrorMessage('The category with id "%s" does not exist.', ['%s' => $idCategory]);
+
             return null;
         }
 

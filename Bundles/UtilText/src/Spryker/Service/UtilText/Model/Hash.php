@@ -9,9 +9,9 @@ namespace Spryker\Service\UtilText\Model;
 
 class Hash implements HashInterface
 {
-    const SHA256 = 'sha256';
-    const SHA512 = 'sha512';
-    const MD5 = 'md5';
+    public const SHA256 = 'sha256';
+    public const SHA512 = 'sha512';
+    public const MD5 = 'md5';
 
     /**
      * @param mixed $value

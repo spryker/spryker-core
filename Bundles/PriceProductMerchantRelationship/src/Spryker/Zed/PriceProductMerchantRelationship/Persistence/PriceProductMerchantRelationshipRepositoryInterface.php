@@ -8,6 +8,7 @@
 namespace Spryker\Zed\PriceProductMerchantRelationship\Persistence;
 
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
+use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\QueryCriteriaTransfer;
 
 interface PriceProductMerchantRelationshipRepositoryInterface
@@ -23,4 +24,11 @@ interface PriceProductMerchantRelationshipRepositoryInterface
      * @return \Generated\Shared\Transfer\QueryCriteriaTransfer
      */
     public function buildUnconditionalMerchantRelationshipPriceDimensionQueryCriteria(): QueryCriteriaTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return string|null
+     */
+    public function findIdByPriceProductTransfer(PriceProductTransfer $priceProductTransfer): ?string;
 }

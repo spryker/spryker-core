@@ -13,6 +13,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\ProductBarcode\Business\ProductBarcodeBusinessFactory getFactory()
+ * @method \Spryker\Zed\ProductBarcode\Persistence\ProductBarcodeRepositoryInterface getRepository()
  */
 class ProductBarcodeFacade extends AbstractFacade implements ProductBarcodeFacadeInterface
 {

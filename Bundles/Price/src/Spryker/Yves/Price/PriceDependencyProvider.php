@@ -11,9 +11,12 @@ use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use Spryker\Yves\Price\Dependency\Client\PriceToQuoteClientBridge;
 
+/**
+ * @method \Spryker\Yves\Price\PriceConfig getConfig()
+ */
 class PriceDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const CLIENT_QUOTE = 'CLIENT_QUOTE';
+    public const CLIENT_QUOTE = 'CLIENT_QUOTE';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container

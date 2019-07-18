@@ -46,6 +46,10 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
             'filtered multi-valued integer facets' => $this->createMultiValuedFilteredIntegerFacetData(),
             'filtered single category facet' => $this->createFilteredCategoryFacetData(),
             'filtered mixed facets' => $this->createFilteredMixedFacetData(),
+            'filtered single incorrect value facet' => $this->createFilteredIncorrectStringFacetData(),
+            'filtered multiple incorrect value facets' => $this->createMultiFilteredIncorrectValuesFacetData(),
+            'filtered string facet with multiple incorrect values' => $this->createFilteredStringFacetDataWithMultipleIncorrectValues(),
+            'filtered zero value facets' => $this->createFilteredZeroValuesFacetData(),
         ];
     }
 
@@ -60,9 +64,9 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
             ->addFilter((new Nested())
                 ->setPath(PageIndexMap::STRING_FACET)
                 ->setQuery((new BoolQuery())
-                    ->addFilter((new Term)
+                    ->addFilter((new Term())
                         ->setTerm(PageIndexMap::STRING_FACET_FACET_NAME, 'foo'))
-                    ->addFilter((new Term)
+                    ->addFilter((new Term())
                         ->setTerm(PageIndexMap::STRING_FACET_FACET_VALUE, 'asdf'))));
 
         $parameters = [
@@ -82,23 +86,23 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
             ->addFilter((new Nested())
                 ->setPath(PageIndexMap::STRING_FACET)
                 ->setQuery((new BoolQuery())
-                    ->addFilter((new Term)
+                    ->addFilter((new Term())
                         ->setTerm(PageIndexMap::STRING_FACET_FACET_NAME, 'foo'))
-                    ->addFilter((new Term)
+                    ->addFilter((new Term())
                         ->setTerm(PageIndexMap::STRING_FACET_FACET_VALUE, 'asdf'))))
             ->addFilter((new Nested())
                 ->setPath(PageIndexMap::STRING_FACET)
                 ->setQuery((new BoolQuery())
-                    ->addFilter((new Term)
+                    ->addFilter((new Term())
                         ->setTerm(PageIndexMap::STRING_FACET_FACET_NAME, 'bar'))
-                    ->addFilter((new Term)
+                    ->addFilter((new Term())
                         ->setTerm(PageIndexMap::STRING_FACET_FACET_VALUE, 'qwer'))))
             ->addFilter((new Nested())
                 ->setPath(PageIndexMap::STRING_FACET)
                 ->setQuery((new BoolQuery())
-                    ->addFilter((new Term)
+                    ->addFilter((new Term())
                         ->setTerm(PageIndexMap::STRING_FACET_FACET_NAME, 'baz'))
-                    ->addFilter((new Term)
+                    ->addFilter((new Term())
                         ->setTerm(PageIndexMap::STRING_FACET_FACET_VALUE, 'yxcv'))));
 
         $parameters = [
@@ -121,9 +125,9 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
             ->addFilter((new Nested())
                 ->setPath(PageIndexMap::STRING_FACET)
                 ->setQuery((new BoolQuery())
-                    ->addFilter((new Term)
+                    ->addFilter((new Term())
                         ->setTerm(PageIndexMap::STRING_FACET_FACET_NAME, 'foo'))
-                    ->addFilter((new Terms)
+                    ->addFilter((new Terms())
                         ->setTerms(PageIndexMap::STRING_FACET_FACET_VALUE, ['asdf', 'qwer']))));
         $parameters = [
             'foo-param' => [
@@ -158,23 +162,23 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
                 ->addShould((new Nested())
                     ->setPath(PageIndexMap::STRING_FACET)
                     ->setQuery((new BoolQuery())
-                        ->addFilter((new Term)
+                        ->addFilter((new Term())
                             ->setTerm(PageIndexMap::STRING_FACET_FACET_NAME, 'foo'))
-                        ->addFilter((new Term)
+                        ->addFilter((new Term())
                             ->setTerm(PageIndexMap::STRING_FACET_FACET_VALUE, 'asdf'))))
                 ->addShould((new Nested())
                     ->setPath(PageIndexMap::STRING_FACET)
                     ->setQuery((new BoolQuery())
-                        ->addFilter((new Term)
+                        ->addFilter((new Term())
                             ->setTerm(PageIndexMap::STRING_FACET_FACET_NAME, 'foo'))
-                        ->addFilter((new Term)
+                        ->addFilter((new Term())
                             ->setTerm(PageIndexMap::STRING_FACET_FACET_VALUE, 'qwer'))))
                 ->addShould((new Nested())
                     ->setPath(PageIndexMap::STRING_FACET)
                     ->setQuery((new BoolQuery())
-                        ->addFilter((new Term)
+                        ->addFilter((new Term())
                             ->setTerm(PageIndexMap::STRING_FACET_FACET_NAME, 'foo'))
-                        ->addFilter((new Term)
+                        ->addFilter((new Term())
                             ->setTerm(PageIndexMap::STRING_FACET_FACET_VALUE, 'yxcv')))));
 
         $parameters = [
@@ -198,9 +202,9 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
             ->addFilter((new Nested())
                 ->setPath(PageIndexMap::INTEGER_FACET)
                 ->setQuery((new BoolQuery())
-                    ->addFilter((new Term)
+                    ->addFilter((new Term())
                         ->setTerm(PageIndexMap::INTEGER_FACET_FACET_NAME, 'foo'))
-                    ->addFilter((new Term)
+                    ->addFilter((new Term())
                         ->setTerm(PageIndexMap::INTEGER_FACET_FACET_VALUE, 123))));
 
         $parameters = [
@@ -243,7 +247,7 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
             ->addFilter((new Nested())
                 ->setPath(PageIndexMap::INTEGER_FACET)
                 ->setQuery((new BoolQuery())
-                    ->addFilter((new Term)
+                    ->addFilter((new Term())
                         ->setTerm(PageIndexMap::INTEGER_FACET_FACET_NAME, 'foo'))
                     ->addFilter((new Range())
                         ->addField(PageIndexMap::INTEGER_FACET_FACET_VALUE, [
@@ -252,7 +256,7 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
                 ->addFilter((new Nested())
                 ->setPath(PageIndexMap::INTEGER_FACET)
                 ->setQuery((new BoolQuery())
-                    ->addFilter((new Term)
+                    ->addFilter((new Term())
                         ->setTerm(PageIndexMap::INTEGER_FACET_FACET_NAME, 'bar'))
                     ->addFilter((new Range())
                         ->addField(PageIndexMap::INTEGER_FACET_FACET_VALUE, [
@@ -262,7 +266,7 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
                 ->addFilter((new Nested())
                 ->setPath(PageIndexMap::INTEGER_FACET)
                 ->setQuery((new BoolQuery())
-                    ->addFilter((new Term)
+                    ->addFilter((new Term())
                         ->setTerm(PageIndexMap::INTEGER_FACET_FACET_NAME, 'baz'))
                     ->addFilter((new Range())
                         ->addField(PageIndexMap::INTEGER_FACET_FACET_VALUE, [
@@ -315,7 +319,7 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
                 ->addFilter((new Nested())
                 ->setPath(PageIndexMap::INTEGER_FACET)
                 ->setQuery((new BoolQuery())
-                    ->addFilter((new Term)
+                    ->addFilter((new Term())
                         ->setTerm(PageIndexMap::INTEGER_FACET_FACET_NAME, 'foo'))
                     ->addFilter((new Range())
                         ->addField(PageIndexMap::INTEGER_FACET_FACET_VALUE, [
@@ -324,7 +328,7 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
                 ->addFilter((new Nested())
                 ->setPath(PageIndexMap::INTEGER_FACET)
                 ->setQuery((new BoolQuery())
-                    ->addFilter((new Term)
+                    ->addFilter((new Term())
                         ->setTerm(PageIndexMap::INTEGER_FACET_FACET_NAME, 'bar'))
                     ->addFilter((new Range())
                         ->addField(PageIndexMap::INTEGER_FACET_FACET_VALUE, [
@@ -333,7 +337,7 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
                 ->addFilter((new Nested())
                 ->setPath(PageIndexMap::INTEGER_FACET)
                 ->setQuery((new BoolQuery())
-                    ->addFilter((new Term)
+                    ->addFilter((new Term())
                         ->setTerm(PageIndexMap::INTEGER_FACET_FACET_NAME, 'baz'))
                     ->addFilter((new Range())
                         ->addField(PageIndexMap::INTEGER_FACET_FACET_VALUE, []))));
@@ -361,21 +365,21 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
             ->addFilter((new Nested())
                 ->setPath(PageIndexMap::INTEGER_FACET)
                 ->setQuery((new BoolQuery())
-                    ->addFilter((new Term)
+                    ->addFilter((new Term())
                         ->setTerm(PageIndexMap::INTEGER_FACET_FACET_NAME, 'foo'))
-                    ->addFilter((new Term)
+                    ->addFilter((new Term())
                         ->setTerm(PageIndexMap::INTEGER_FACET_FACET_VALUE, 123))))
             ->addFilter((new Nested())
                 ->setPath(PageIndexMap::INTEGER_FACET)
                 ->setQuery((new BoolQuery())
-                    ->addFilter((new Term)
+                    ->addFilter((new Term())
                         ->setTerm(PageIndexMap::INTEGER_FACET_FACET_NAME, 'bar'))
-                    ->addFilter((new Term)
+                    ->addFilter((new Term())
                         ->setTerm(PageIndexMap::INTEGER_FACET_FACET_VALUE, 456))))
             ->addFilter((new Nested())
                 ->setPath(PageIndexMap::INTEGER_FACET)
                 ->setQuery((new BoolQuery())
-                    ->addFilter((new Term)
+                    ->addFilter((new Term())
                         ->setTerm(PageIndexMap::INTEGER_FACET_FACET_NAME, 'baz'))
                     // "baz" is range type so we expect a range filter
                     ->addFilter((new Range())
@@ -410,23 +414,23 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
                 ->addShould((new Nested())
                     ->setPath(PageIndexMap::INTEGER_FACET)
                     ->setQuery((new BoolQuery())
-                        ->addFilter((new Term)
+                        ->addFilter((new Term())
                             ->setTerm(PageIndexMap::INTEGER_FACET_FACET_NAME, 'foo'))
-                        ->addFilter((new Term)
+                        ->addFilter((new Term())
                             ->setTerm(PageIndexMap::INTEGER_FACET_FACET_VALUE, 123))))
                 ->addShould((new Nested())
                     ->setPath(PageIndexMap::INTEGER_FACET)
                     ->setQuery((new BoolQuery())
-                        ->addFilter((new Term)
+                        ->addFilter((new Term())
                             ->setTerm(PageIndexMap::INTEGER_FACET_FACET_NAME, 'foo'))
-                        ->addFilter((new Term)
+                        ->addFilter((new Term())
                             ->setTerm(PageIndexMap::INTEGER_FACET_FACET_VALUE, 456))))
                 ->addShould((new Nested())
                     ->setPath(PageIndexMap::INTEGER_FACET)
                     ->setQuery((new BoolQuery())
-                        ->addFilter((new Term)
+                        ->addFilter((new Term())
                             ->setTerm(PageIndexMap::INTEGER_FACET_FACET_NAME, 'foo'))
-                        ->addFilter((new Term)
+                        ->addFilter((new Term())
                             ->setTerm(PageIndexMap::INTEGER_FACET_FACET_VALUE, 789)))));
 
         $parameters = [
@@ -447,7 +451,7 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
     {
         $searchConfig = $this->createCategorySearchConfig();
         $expectedQuery = (new BoolQuery())
-            ->addFilter((new Term)
+            ->addFilter((new Term())
                 ->setTerm(PageIndexMap::CATEGORY_ALL_PARENTS, 'c1'));
 
         $parameters = [
@@ -467,24 +471,105 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
             ->addFilter((new Nested())
                 ->setPath(PageIndexMap::STRING_FACET)
                 ->setQuery((new BoolQuery())
-                    ->addFilter((new Term)
+                    ->addFilter((new Term())
                         ->setTerm(PageIndexMap::STRING_FACET_FACET_NAME, 'foo'))
-                    ->addFilter((new Term)
+                    ->addFilter((new Term())
                         ->setTerm(PageIndexMap::STRING_FACET_FACET_VALUE, 'asdf'))))
             ->addFilter((new Nested())
                 ->setPath(PageIndexMap::INTEGER_FACET)
                 ->setQuery((new BoolQuery())
-                    ->addFilter((new Term)
+                    ->addFilter((new Term())
                         ->setTerm(PageIndexMap::INTEGER_FACET_FACET_NAME, 'bar'))
-                    ->addFilter((new Term)
+                    ->addFilter((new Term())
                         ->setTerm(PageIndexMap::INTEGER_FACET_FACET_VALUE, 456))))
-            ->addFilter((new Term)
+            ->addFilter((new Term())
                 ->setTerm(PageIndexMap::CATEGORY_ALL_PARENTS, 'c1'));
 
         $parameters = [
             'foo-param' => 'asdf',
             'bar-param' => 456,
             'baz-param' => 'c1',
+        ];
+
+        return [$searchConfig, $expectedQuery, $parameters];
+    }
+
+    /**
+     * @return array
+     */
+    protected function createFilteredIncorrectStringFacetData()
+    {
+        $searchConfig = $this->createMixedSearchConfig();
+        $expectedQuery = new BoolQuery();
+
+        $parameters = [
+            'baz-param' => '',
+        ];
+
+        return [$searchConfig, $expectedQuery, $parameters];
+    }
+
+    /**
+     * @return array
+     */
+    protected function createMultiFilteredIncorrectValuesFacetData()
+    {
+        $searchConfig = $this->createMixedSearchConfig();
+        $expectedQuery = (new BoolQuery());
+
+        $parameters = [
+            'foo-param' => false,
+            'bar-param' => null,
+            'baz-param' => '',
+        ];
+
+        return [$searchConfig, $expectedQuery, $parameters];
+    }
+
+    /**
+     * @return array
+     */
+    protected function createFilteredStringFacetDataWithMultipleIncorrectValues()
+    {
+        $searchConfig = $this->createMixedSearchConfig();
+        $expectedQuery = new BoolQuery();
+
+        $parameters = [
+            'foo-param' => [
+                false,
+                null,
+                '',
+            ],
+        ];
+
+        return [$searchConfig, $expectedQuery, $parameters];
+    }
+
+    /**
+     * @return array
+     */
+    protected function createFilteredZeroValuesFacetData()
+    {
+        $searchConfig = $this->createMixedSearchConfig();
+        $expectedQuery = (new BoolQuery())
+            ->addFilter((new Nested())
+                ->setPath(PageIndexMap::STRING_FACET)
+                ->setQuery((new BoolQuery())
+                    ->addFilter((new Term())
+                        ->setTerm(PageIndexMap::STRING_FACET_FACET_NAME, 'foo'))
+                    ->addFilter((new Term())
+                        ->setTerm(PageIndexMap::STRING_FACET_FACET_VALUE, '0'))))
+            ->addFilter((new Nested())
+                ->setPath(PageIndexMap::INTEGER_FACET)
+                ->setQuery((new BoolQuery())
+                    ->addFilter((new Term())
+                        ->setTerm(PageIndexMap::INTEGER_FACET_FACET_NAME, 'bar'))
+                    ->addFilter((new Term())
+                        ->setTerm(PageIndexMap::INTEGER_FACET_FACET_VALUE, 0))));
+
+        $parameters = [
+            'foo-param' => '0',
+            'bar-param' => 0,
         ];
 
         return [$searchConfig, $expectedQuery, $parameters];

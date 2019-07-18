@@ -25,7 +25,7 @@ use Spryker\Shared\Session\Model\SessionStorage\SessionStorageHandlerPool;
  */
 class SessionStorageHandlerPoolTest extends Unit
 {
-    const CONFIGURED_HANDLER_NAME = 'handler name';
+    public const CONFIGURED_HANDLER_NAME = 'handler name';
 
     /**
      * @return void
@@ -52,7 +52,7 @@ class SessionStorageHandlerPoolTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\SessionHandlerInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\SessionHandlerInterface
      */
     protected function getSessionHandlerInterfaceMock()
     {

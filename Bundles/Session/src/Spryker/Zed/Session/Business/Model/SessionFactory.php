@@ -7,19 +7,44 @@
 
 namespace Spryker\Zed\Session\Business\Model;
 
-use Spryker\Shared\Config\Config;
 use Spryker\Shared\Session\Business\Model\SessionFactory as SharedSessionFactory;
-use Spryker\Shared\Session\SessionConstants;
+use Spryker\Shared\Session\Dependency\Service\SessionToMonitoringServiceInterface;
 
 class SessionFactory extends SharedSessionFactory
 {
+    /**
+     * @var int
+     */
+    protected $sessionLifeTime;
+
+    /**
+     * @var \Spryker\Shared\Session\Dependency\Service\SessionToMonitoringServiceInterface
+     */
+    protected $monitoringService;
+
+    /**
+     * @param int $sessionLifeTime
+     * @param \Spryker\Shared\Session\Dependency\Service\SessionToMonitoringServiceInterface $monitoringService
+     */
+    public function __construct(int $sessionLifeTime, SessionToMonitoringServiceInterface $monitoringService)
+    {
+        $this->sessionLifeTime = $sessionLifeTime;
+        $this->monitoringService = $monitoringService;
+    }
+
     /**
      * @return int
      */
     public function getSessionLifetime()
     {
-        $lifetime = (int)Config::get(SessionConstants::ZED_SESSION_TIME_TO_LIVE);
+        return $this->sessionLifeTime;
+    }
 
-        return $lifetime;
+    /**
+     * @return \Spryker\Shared\Session\Dependency\Service\SessionToMonitoringServiceInterface
+     */
+    public function getMonitoringService(): SessionToMonitoringServiceInterface
+    {
+        return $this->monitoringService;
     }
 }

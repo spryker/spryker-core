@@ -12,8 +12,8 @@ interface SearchConfig
     /**
      * Available facet types
      */
-    const FACET_TYPE_ENUMERATION = 'enumeration';
-    const FACET_TYPE_RANGE = 'range';
-    const FACET_TYPE_PRICE_RANGE = 'price-range';
-    const FACET_TYPE_CATEGORY = 'category';
+    public const FACET_TYPE_ENUMERATION = 'enumeration';
+    public const FACET_TYPE_RANGE = 'range';
+    public const FACET_TYPE_PRICE_RANGE = 'price-range';
+    public const FACET_TYPE_CATEGORY = 'category';
 }

@@ -15,7 +15,7 @@ class LocaleDataHelper extends Module
 {
     use LocatorHelperTrait;
 
-    const LOCALE_NAME_LENGTH_LIMIT = 5;
+    public const LOCALE_NAME_LENGTH_LIMIT = 5;
 
     /**
      * @param array $seedData

@@ -13,6 +13,9 @@ use Spryker\Zed\CompanyUnitAddress\Dependency\Facade\CompanyUnitAddressToLocaleF
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\CompanyUnitAddress\CompanyUnitAddressConfig getConfig()
+ */
 class CompanyUnitAddressDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_COUNTRY = 'FACADE_COUNTRY';

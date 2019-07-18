@@ -16,7 +16,7 @@ use Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter\AbstractElasticse
  */
 class RatingAggregationResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlugin
 {
-    const NAME = 'ratingAggregation';
+    public const NAME = 'ratingAggregation';
 
     /**
      * @return string

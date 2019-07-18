@@ -14,16 +14,16 @@ use Spryker\Service\UtilNetwork\Model\Host;
  */
 class ServerProcessor
 {
-    const EXTRA = 'server';
+    public const EXTRA = 'server';
 
-    const URL = 'url';
-    const IS_HTTPS = 'is_https';
-    const HOST_NAME = 'hostname';
-    const USER_AGENT = 'user_agent';
-    const USER_IP = 'user_ip';
-    const REQUEST_METHOD = 'request_method';
-    const REFERER = 'referer';
-    const RECORD_EXTRA = 'extra';
+    public const URL = 'url';
+    public const IS_HTTPS = 'is_https';
+    public const HOST_NAME = 'hostname';
+    public const USER_AGENT = 'user_agent';
+    public const USER_IP = 'user_ip';
+    public const REQUEST_METHOD = 'request_method';
+    public const REFERER = 'referer';
+    public const RECORD_EXTRA = 'extra';
 
     /**
      * @param array $record

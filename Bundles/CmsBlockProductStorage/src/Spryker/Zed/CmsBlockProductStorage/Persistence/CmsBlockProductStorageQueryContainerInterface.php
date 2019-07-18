@@ -26,7 +26,7 @@ interface CmsBlockProductStorageQueryContainerInterface extends QueryContainerIn
      *
      * @param array $productIds
      *
-     * @return $this|\Orm\Zed\CmsBlockProductConnector\Persistence\SpyCmsBlockProductConnectorQuery
+     * @return \Orm\Zed\CmsBlockProductConnector\Persistence\SpyCmsBlockProductConnectorQuery
      */
     public function queryCmsBlockProducts(array $productIds);
 
@@ -38,4 +38,15 @@ interface CmsBlockProductStorageQueryContainerInterface extends QueryContainerIn
      * @return \Orm\Zed\CmsBlockProductConnector\Persistence\SpyCmsBlockProductConnectorQuery
      */
     public function queryCmsBlockProductsByIds(array $cmsBlockProductIds): SpyCmsBlockProductConnectorQuery;
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int[] $cmsBlockProductIds
+     *
+     * @return \Orm\Zed\CmsBlockProductConnector\Persistence\SpyCmsBlockProductConnectorQuery
+     */
+    public function queryCmsBlockProductsByCmsBlockProductIds(array $cmsBlockProductIds): SpyCmsBlockProductConnectorQuery;
 }

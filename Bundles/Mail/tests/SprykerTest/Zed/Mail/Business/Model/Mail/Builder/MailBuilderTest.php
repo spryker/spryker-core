@@ -32,11 +32,11 @@ use Spryker\Zed\Mail\Dependency\Facade\MailToGlossaryInterface;
  */
 class MailBuilderTest extends Unit
 {
-    const SUBJECT = 'subject';
-    const TEMPLATE_NAME_HTML = 'html.template.name';
-    const TEMPLATE_NAME_TEXT = 'text.template.name';
-    const EMAIL = 'email';
-    const NAME = 'name';
+    public const SUBJECT = 'subject';
+    public const TEMPLATE_NAME_HTML = 'html.template.name';
+    public const TEMPLATE_NAME_TEXT = 'text.template.name';
+    public const EMAIL = 'email';
+    public const NAME = 'name';
 
     /**
      * @return void
@@ -223,7 +223,7 @@ class MailBuilderTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Mail\Dependency\Facade\MailToGlossaryInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Mail\Dependency\Facade\MailToGlossaryInterface
      */
     protected function getGlossaryFacadeMock()
     {

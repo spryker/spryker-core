@@ -14,7 +14,7 @@ interface HttpRequestValidatorInterface
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Generated\Shared\Transfer\RestErrorMessageTransfer
+     * @return \Generated\Shared\Transfer\RestErrorMessageTransfer|null
      */
     public function validate(Request $request): ?RestErrorMessageTransfer;
 }

@@ -16,8 +16,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 class StepEngine implements StepEngineInterface
 {
-    const TEMPLATE_VARIABLE_PREVIOUS_STEP_URL = 'previousStepUrl';
-    const TEMPLATE_VARIABLE_STEP_BREADCRUMBS = 'stepBreadcrumbs';
+    public const TEMPLATE_VARIABLE_PREVIOUS_STEP_URL = 'previousStepUrl';
+    public const TEMPLATE_VARIABLE_STEP_BREADCRUMBS = 'stepBreadcrumbs';
 
     /**
      * @var \Spryker\Yves\StepEngine\Process\StepCollectionInterface
@@ -30,7 +30,7 @@ class StepEngine implements StepEngineInterface
     protected $dataContainer;
 
     /**
-     * @var \Spryker\Yves\StepEngine\Process\StepBreadcrumbGeneratorInterface
+     * @var \Spryker\Yves\StepEngine\Process\StepBreadcrumbGeneratorInterface|null
      */
     protected $stepBreadcrumbGenerator;
 
@@ -65,7 +65,7 @@ class StepEngine implements StepEngineInterface
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
      * @param \Spryker\Yves\StepEngine\Form\FormCollectionHandlerInterface|null $formCollection
      *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
@@ -125,7 +125,7 @@ class StepEngine implements StepEngineInterface
     /**
      * @param \Spryker\Yves\StepEngine\Dependency\Step\StepInterface $currentStep
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
      *
      * @return void
      */
@@ -139,8 +139,8 @@ class StepEngine implements StepEngineInterface
     /**
      * @param \Spryker\Yves\StepEngine\Dependency\Step\StepInterface $currentStep
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $formTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $formTransfer
      *
      * @return void
      */
@@ -168,7 +168,7 @@ class StepEngine implements StepEngineInterface
 
     /**
      * @param \Spryker\Yves\StepEngine\Dependency\Step\StepInterface $currentStep
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
      * @param \Spryker\Yves\StepEngine\Form\FormCollectionHandlerInterface|null $formCollection
      *
      * @return array

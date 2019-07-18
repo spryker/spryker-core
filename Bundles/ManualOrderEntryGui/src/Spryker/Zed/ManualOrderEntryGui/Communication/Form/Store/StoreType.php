@@ -16,6 +16,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * @method \Spryker\Zed\ManualOrderEntryGui\Communication\ManualOrderEntryGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ManualOrderEntryGui\ManualOrderEntryGuiConfig getConfig()
  */
 class StoreType extends AbstractType
 {
@@ -55,13 +56,12 @@ class StoreType extends AbstractType
      *
      * @return $this
      */
-    protected function addStoreField(FormBuilderInterface $builder, array $storesList): self
+    protected function addStoreField(FormBuilderInterface $builder, array $storesList)
     {
         $builder->add(static::FIELD_STORE, Select2ComboBoxType::class, [
             'property_path' => QuoteTransfer::MANUAL_ORDER . '.' . ManualOrderTransfer::STORE_CURRENCY,
             'label' => 'Store and Currency',
             'choices' => array_flip($storesList),
-            'choices_as_values' => true,
             'multiple' => false,
             'required' => true,
         ]);

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -15,29 +16,19 @@ use Orm\Zed\Glossary\Persistence\SpyGlossaryKey;
 use Spryker\Zed\Cms\Business\Exception\MissingPlaceholdersException;
 use Spryker\Zed\Cms\Business\Exception\TemplateFileNotFoundException;
 use Spryker\Zed\Cms\CmsConfig;
-use Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleInterface;
+use Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleFacadeInterface;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainer;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
 
 class CmsGlossaryReader implements CmsGlossaryReaderInterface
 {
     /**
-     * @deprecated Use CmsConfig::getPlaceholderPattern()
-     */
-    const CMS_PLACEHOLDER_PATTERN = '';
-
-    /**
-     * @deprecated Use CmsConfig::getPlaceholderValuePattern()
-     */
-    const CMS_PLACEHOLDER_VALUE_PATTERN = '';
-
-    /**
      * @var \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface
      */
     protected $cmsQueryContainer;
 
     /**
-     * @var \Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleInterface
+     * @var \Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleFacadeInterface
      */
     protected $localeFacade;
 
@@ -48,12 +39,12 @@ class CmsGlossaryReader implements CmsGlossaryReaderInterface
 
     /**
      * @param \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface $cmsQueryContainer
-     * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleInterface $localeFacade
+     * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleFacadeInterface $localeFacade
      * @param \Spryker\Zed\Cms\CmsConfig $cmsConfig
      */
     public function __construct(
         CmsQueryContainerInterface $cmsQueryContainer,
-        CmsToLocaleInterface $localeFacade,
+        CmsToLocaleFacadeInterface $localeFacade,
         CmsConfig $cmsConfig
     ) {
         $this->cmsQueryContainer = $cmsQueryContainer;
@@ -66,7 +57,7 @@ class CmsGlossaryReader implements CmsGlossaryReaderInterface
      *
      * @return \Generated\Shared\Transfer\CmsGlossaryTransfer|null
      */
-    public function findPageGlossaryAttributes($idCmsPage)
+    public function findPageGlossaryAttributes(int $idCmsPage): ?CmsGlossaryTransfer
     {
         $cmsPageEntity = $this->getCmsPageEntity($idCmsPage);
 
@@ -90,17 +81,17 @@ class CmsGlossaryReader implements CmsGlossaryReaderInterface
     /**
      * @return string
      */
-    protected function getPlaceholderPattern()
+    protected function getPlaceholderPattern(): string
     {
-        return static::CMS_PLACEHOLDER_PATTERN ?: $this->cmsConfig->getPlaceholderPattern();
+        return $this->cmsConfig->getPlaceholderPattern();
     }
 
     /**
      * @return string
      */
-    protected function getPlaceholderValuePattern()
+    protected function getPlaceholderValuePattern(): string
     {
-        return static::CMS_PLACEHOLDER_VALUE_PATTERN ?: $this->cmsConfig->getPlaceholderValuePattern();
+        return $this->cmsConfig->getPlaceholderValuePattern();
     }
 
     /**
@@ -108,7 +99,7 @@ class CmsGlossaryReader implements CmsGlossaryReaderInterface
      *
      * @return array
      */
-    protected function findPagePlaceholders(SpyCmsPage $cmsPageEntity)
+    protected function findPagePlaceholders(SpyCmsPage $cmsPageEntity): array
     {
         $cmsPageArray = $cmsPageEntity->toArray();
         $templateFiles = $this->cmsConfig->getTemplateRealPaths($cmsPageArray[CmsQueryContainer::TEMPLATE_PATH]);
@@ -133,7 +124,7 @@ class CmsGlossaryReader implements CmsGlossaryReaderInterface
      *
      * @return array
      */
-    protected function getTemplatePlaceholders($templateFile)
+    protected function getTemplatePlaceholders(string $templateFile): array
     {
         if (!$this->fileExists($templateFile)) {
             throw new TemplateFileNotFoundException(
@@ -164,7 +155,7 @@ class CmsGlossaryReader implements CmsGlossaryReaderInterface
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMapping[]
      */
-    protected function createKeyMappingByPlaceholder(array $placeholders, $idCmsPage)
+    protected function createKeyMappingByPlaceholder(array $placeholders, int $idCmsPage): array
     {
         $glossaryKeyMappingCollection = $this->getGlossaryMappingCollection($placeholders, $idCmsPage);
 
@@ -172,6 +163,7 @@ class CmsGlossaryReader implements CmsGlossaryReaderInterface
         foreach ($glossaryKeyMappingCollection as $glossaryKeyMappingEntity) {
             $placeholderMap[$glossaryKeyMappingEntity->getPlaceholder()] = $glossaryKeyMappingEntity;
         }
+
         return $placeholderMap;
     }
 
@@ -179,16 +171,18 @@ class CmsGlossaryReader implements CmsGlossaryReaderInterface
      * @param \Orm\Zed\Glossary\Persistence\SpyGlossaryKey $glossaryKeyEntity
      * @param int $idLocale
      *
-     * @return null|string
+     * @return string|null
      */
-    protected function findTranslation(SpyGlossaryKey $glossaryKeyEntity, $idLocale)
+    protected function findTranslation(SpyGlossaryKey $glossaryKeyEntity, int $idLocale): ?string
     {
         foreach ($glossaryKeyEntity->getSpyGlossaryTranslations() as $glossaryTranslationEntity) {
             if ($glossaryTranslationEntity->getFkLocale() !== $idLocale) {
                 continue;
             }
+
             return $glossaryTranslationEntity->getValue();
         }
+
         return null;
     }
 
@@ -198,7 +192,7 @@ class CmsGlossaryReader implements CmsGlossaryReaderInterface
      *
      * @return \Generated\Shared\Transfer\CmsGlossaryAttributesTransfer
      */
-    protected function mapGlossaryAttributeTransfer(SpyCmsPage $cmsPageEntity, $pagePlaceholder)
+    protected function mapGlossaryAttributeTransfer(SpyCmsPage $cmsPageEntity, string $pagePlaceholder): CmsGlossaryAttributesTransfer
     {
         $glossaryAttributeTransfer = new CmsGlossaryAttributesTransfer();
         $glossaryAttributeTransfer->fromArray($cmsPageEntity->toArray(), true);
@@ -217,9 +211,9 @@ class CmsGlossaryReader implements CmsGlossaryReaderInterface
      */
     protected function addGlossaryAttributeTranslations(
         array $glossaryKeyEntityMap,
-        $pagePlaceholder,
+        string $pagePlaceholder,
         CmsGlossaryAttributesTransfer $glossaryAttributeTransfer
-    ) {
+    ): void {
         $availableLocales = $this->localeFacade->getAvailableLocales();
 
         foreach ($availableLocales as $idLocale => $localeName) {
@@ -248,9 +242,9 @@ class CmsGlossaryReader implements CmsGlossaryReaderInterface
     /**
      * @param int $idCmsPage
      *
-     * @return \Orm\Zed\Cms\Persistence\SpyCmsPage
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPage|null
      */
-    protected function getCmsPageEntity($idCmsPage)
+    protected function getCmsPageEntity(int $idCmsPage): ?SpyCmsPage
     {
         $cmsPageEntity = $this->cmsQueryContainer
             ->queryPageWithTemplatesAndUrlByIdPage($idCmsPage)
@@ -265,7 +259,7 @@ class CmsGlossaryReader implements CmsGlossaryReaderInterface
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMapping[]|\Propel\Runtime\Collection\ObjectCollection
      */
-    protected function getGlossaryMappingCollection(array $placeholders, $idCmsPage)
+    protected function getGlossaryMappingCollection(array $placeholders, int $idCmsPage)
     {
         $glossaryKeyMappingCollection = $this->cmsQueryContainer
             ->queryGlossaryKeyMappingByPlaceholdersAndIdPage($placeholders, $idCmsPage)
@@ -283,7 +277,7 @@ class CmsGlossaryReader implements CmsGlossaryReaderInterface
     protected function setTranslationValue(
         SpyCmsGlossaryKeyMapping $glossaryKeyMappingEntity,
         CmsPlaceholderTranslationTransfer $cmsPlaceholderTranslationTransfer
-    ) {
+    ): void {
         $cmsPlaceholderTranslationTransfer->requireFkLocale();
 
         $glossaryKeyEntity = $glossaryKeyMappingEntity->getGlossaryKey();
@@ -296,9 +290,11 @@ class CmsGlossaryReader implements CmsGlossaryReaderInterface
      *
      * @return string
      */
-    protected function readTemplateContents($templateFile)
+    protected function readTemplateContents(string $templateFile): string
     {
-        return file_get_contents($templateFile);
+        $templateFileContent = file_get_contents($templateFile);
+
+        return $templateFileContent;
     }
 
     /**
@@ -306,7 +302,7 @@ class CmsGlossaryReader implements CmsGlossaryReaderInterface
      *
      * @return bool
      */
-    protected function fileExists($templateFile)
+    protected function fileExists(string $templateFile): bool
     {
         return file_exists($templateFile);
     }

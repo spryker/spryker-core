@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\Store;
 
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -26,5 +27,20 @@ class StoreClient extends AbstractClient implements StoreClientInterface
         return $this->getFactory()
             ->createStoreReader()
             ->getCurrentStore();
+    }
+
+    /**
+     *
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer
+     */
+    public function getStoreByName(string $storeName): StoreTransfer
+    {
+        return $this->getFactory()
+            ->createStoreReader()
+            ->getStoreByName($storeName);
     }
 }

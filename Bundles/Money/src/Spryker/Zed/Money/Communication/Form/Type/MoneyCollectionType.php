@@ -20,10 +20,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * @method \Spryker\Zed\Money\Communication\MoneyCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Money\MoneyConfig getConfig()
+ * @method \Spryker\Zed\Money\Business\MoneyFacadeInterface getFacade()
  */
 class MoneyCollectionType extends AbstractCollectionType
 {
-    const OPTION_AMOUNT_PER_STORE = 'amount_per_store';
+    public const OPTION_AMOUNT_PER_STORE = 'amount_per_store';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -83,6 +85,7 @@ class MoneyCollectionType extends AbstractCollectionType
             $event->setData(
                 $moneyCollectionInitialDataProvider->getInitialData()
             );
+
             return;
         }
 
@@ -133,6 +136,7 @@ class MoneyCollectionType extends AbstractCollectionType
         if ($options['entry_type'] === TextType::class) {
             $options['entry_type'] = MoneyType::class;
         }
+
         return $options;
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -19,13 +20,13 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class EditPageController extends AbstractController
 {
-    const URL_PARAM_ID_CMS_PAGE = 'id-cms-page';
-    const URL_PARAM_REDIRECT_URL = 'redirect-url';
-    const ERROR_MESSAGE_INVALID_DATA_PROVIDED = 'Invalid data provided.';
-    const MESSAGE_TEMPLATE_SELECT_ERROR = 'Selected template doesn\'t exist anymore.';
-    const MESSAGE_PAGE_UPDATE_SUCCESS = 'Page was updated successfully.';
-    const MESSAGE_PAGE_ACTIVATION_SUCCESS = 'Page was activated successfully.';
-    const MESSAGE_PAGE_DEACTIVATION_SUCCESS = 'Page was deactivated successfully.';
+    public const URL_PARAM_ID_CMS_PAGE = 'id-cms-page';
+    public const URL_PARAM_REDIRECT_URL = 'redirect-url';
+    public const ERROR_MESSAGE_INVALID_DATA_PROVIDED = 'Invalid data provided.';
+    public const MESSAGE_TEMPLATE_SELECT_ERROR = 'Selected template doesn\'t exist anymore.';
+    public const MESSAGE_PAGE_UPDATE_SUCCESS = 'Page was updated successfully.';
+    public const MESSAGE_PAGE_ACTIVATION_SUCCESS = 'Page was activated successfully.';
+    public const MESSAGE_PAGE_DEACTIVATION_SUCCESS = 'Page was deactivated successfully.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -45,8 +46,16 @@ class EditPageController extends AbstractController
         $cmsPageFormTypeDataProvider = $this->getFactory()
             ->createCmsPageFormTypeDataProvider();
 
+        $cmsPageTransfer = $cmsPageFormTypeDataProvider->getData($idCmsPage);
+
+        if ($cmsPageTransfer === null) {
+            $this->addErrorMessage("'Cms page with id %s doesn't exist'", ["%s" => $idCmsPage]);
+
+            return $this->redirectResponse($this->getFactory()->getConfig()->getDefaultRedirectUrl());
+        }
+
         $pageForm = $this->getFactory()
-            ->createCmsPageForm($cmsPageFormTypeDataProvider, $idCmsPage)
+            ->createCmsPageForm($cmsPageFormTypeDataProvider, $idCmsPage, $cmsPageTransfer)
             ->handleRequest($request);
 
         if ($pageForm->isSubmitted()) {
@@ -54,6 +63,7 @@ class EditPageController extends AbstractController
 
             if ($isUpdated) {
                 $redirectUrl = $this->createEditPageUrl($idCmsPage);
+
                 return $this->redirectResponse($redirectUrl);
             }
         }
@@ -71,6 +81,7 @@ class EditPageController extends AbstractController
             ->findCmsPageById($idCmsPage);
 
         $pageTabs = $this->getFactory()->createPageTabs();
+
         return [
             'pageTabs' => $pageTabs->createView(),
             'pageForm' => $pageForm->createView(),
@@ -104,6 +115,7 @@ class EditPageController extends AbstractController
         }
 
         $this->addErrorMessage(static::ERROR_MESSAGE_INVALID_DATA_PROVIDED);
+
         return false;
     }
 

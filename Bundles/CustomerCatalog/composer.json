@@ -1,11 +1,12 @@
 {
   "name": "spryker/customer-catalog",
+  "type": "library",
   "description": "CustomerCatalog module",
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
     "spryker/customer": "^7.0.0",
-    "spryker/kernel": "^3.0.0"
+    "spryker/kernel": "^3.30.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

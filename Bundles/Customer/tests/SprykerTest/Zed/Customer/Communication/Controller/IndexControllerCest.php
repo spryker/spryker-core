@@ -8,7 +8,6 @@
 namespace SprykerTest\Zed\Customer\Communication\Controller;
 
 use Codeception\Util\Stub;
-
 use Generated\Shared\DataBuilder\CustomerBuilder;
 use Spryker\Zed\Customer\CustomerDependencyProvider;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToMailInterface;
@@ -82,8 +81,12 @@ class IndexControllerCest
         $i->amOnPage('/customer/add?redirectUrl=' . urlencode('/customer'));
         $i->submitForm(['name' => 'customer'], $formData);
 
-        $i->listDataTable('/customer/index/table');
-        $i->seeInLastRow([2 => $email]);
+        $i->listDataTable('/customer/index/table', [
+            'order' => [
+                0 => ['dir' => 'desc'],
+            ],
+        ]);
+        $i->seeInFirstRow([2 => $email]);
     }
 
     /**

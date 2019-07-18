@@ -15,7 +15,7 @@ use Generated\Shared\Transfer\SortSearchResultTransfer;
  */
 class SortedResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlugin
 {
-    const NAME = 'sort';
+    public const NAME = 'sort';
 
     /**
      * @return string

@@ -9,7 +9,7 @@ namespace SprykerTest\Zed\PriceDataFeed\Persistence;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\PriceDataFeedTransfer;
-use Orm\Zed\PriceProduct\Persistence\Base\SpyPriceProductQuery;
+use Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery;
 use Spryker\Zed\PriceDataFeed\Persistence\PriceDataFeedQueryContainer;
 use Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainer;
 
@@ -102,7 +102,7 @@ class PriceDataFeedQueryContainerTest extends Unit
     }
 
     /**
-     * @param \Orm\Zed\PriceProduct\Persistence\Base\SpyPriceProductQuery $query
+     * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery $query
      *
      * @return array
      */

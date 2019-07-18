@@ -19,30 +19,34 @@ use Spryker\Zed\Sales\Dependency\Facade\SalesToSequenceNumberBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToUserBridge;
 use Spryker\Zed\Sales\Dependency\Service\SalesToUtilSanitizeBridge;
 
+/**
+ * @method \Spryker\Zed\Sales\SalesConfig getConfig()
+ */
 class SalesDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_COUNTRY = 'FACADE_COUNTRY';
-    const FACADE_OMS = 'FACADE_OMS';
-    const FACADE_SEQUENCE_NUMBER = 'FACADE_SEQUENCE_NUMBER';
-    const FACADE_USER = 'FACADE_USER';
-    const SERVICE_DATE_FORMATTER = 'SERVICE_DATE_FORMATTER';
-    const FACADE_MONEY = 'FACADE_MONEY';
-    const FACADE_CUSTOMER = 'FACADE_CUSTOMER';
-    const QUERY_CONTAINER_LOCALE = 'QUERY_CONTAINER_LOCALE';
-    const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
-    const STORE = 'STORE';
+    public const FACADE_COUNTRY = 'FACADE_COUNTRY';
+    public const FACADE_OMS = 'FACADE_OMS';
+    public const FACADE_SEQUENCE_NUMBER = 'FACADE_SEQUENCE_NUMBER';
+    public const FACADE_USER = 'FACADE_USER';
+    public const SERVICE_DATE_FORMATTER = 'SERVICE_DATE_FORMATTER';
+    public const FACADE_MONEY = 'FACADE_MONEY';
+    public const FACADE_CUSTOMER = 'FACADE_CUSTOMER';
+    public const QUERY_CONTAINER_LOCALE = 'QUERY_CONTAINER_LOCALE';
+    public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
+    public const STORE = 'STORE';
 
-    const ORDER_EXPANDER_PRE_SAVE_PLUGINS = 'ORDER_EXPANDER_PRE_SAVE_PLUGINS';
-    const HYDRATE_ORDER_PLUGINS = 'HYDRATE_ORDER_PLUGINS';
-    const ORDER_ITEM_EXPANDER_PRE_SAVE_PLUGINS = 'ORDER_ITEM_EXPANDER_PRE_SAVE_PLUGINS';
-    const ITEM_TRANSFORMER_STRATEGY_PLUGINS = 'ITEM_TRANSFORMER_STRATEGY_PLUGINS';
-    const UI_SALES_TABLE_PLUGINS = 'UI_SALES_TABLE_PLUGINS';
+    public const ORDER_EXPANDER_PRE_SAVE_PLUGINS = 'ORDER_EXPANDER_PRE_SAVE_PLUGINS';
+    public const HYDRATE_ORDER_PLUGINS = 'HYDRATE_ORDER_PLUGINS';
+    public const ORDER_ITEM_EXPANDER_PRE_SAVE_PLUGINS = 'ORDER_ITEM_EXPANDER_PRE_SAVE_PLUGINS';
+    public const ITEM_TRANSFORMER_STRATEGY_PLUGINS = 'ITEM_TRANSFORMER_STRATEGY_PLUGINS';
+    public const UI_SALES_TABLE_PLUGINS = 'UI_SALES_TABLE_PLUGINS';
+    public const PLUGINS_ORDER_POST_SAVE = 'PLUGINS_ORDER_POST_SAVE';
 
     /**
      * @deprecated Will be removed in the next major version.
      */
-    const FACADE_LOCALE = 'LOCALE_FACADE';
-    const FACADE_CALCULATION = 'FACADE_CALCULATION';
+    public const FACADE_LOCALE = 'LOCALE_FACADE';
+    public const FACADE_CALCULATION = 'FACADE_CALCULATION';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -62,6 +66,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCustomerFacade($container);
         $container = $this->addOrderItemExpanderPreSavePlugins($container);
         $container = $this->addItemTransformerStrategyPlugins($container);
+        $container = $this->addOrderPostSavePlugins($container);
 
         return $container;
     }
@@ -310,6 +315,20 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addOrderPostSavePlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_ORDER_POST_SAVE] = function () {
+            return $this->getOrderPostSavePlugins();
+        };
+
+        return $container;
+    }
+
+    /**
      * @return \Spryker\Zed\Sales\Dependency\Plugin\OrderExpanderPreSavePluginInterface[]
      */
     protected function getOrderExpanderPreSavePlugins()
@@ -318,7 +337,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\Sales\Dependency\Plugin\HydrateOrderPluginInterface[]
+     * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderExpanderPluginInterface[]
      */
     protected function getOrderHydrationPlugins()
     {
@@ -347,5 +366,13 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     protected function getSalesTablePlugins()
     {
          return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderPostSavePluginInterface[]
+     */
+    protected function getOrderPostSavePlugins()
+    {
+        return [];
     }
 }

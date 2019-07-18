@@ -14,8 +14,8 @@ use Spryker\Zed\Collector\Persistence\Collector\AbstractPropelCollectorQuery;
 
 class NavigationMenuCollectorQuery extends AbstractPropelCollectorQuery
 {
-    const FIELD_ID_NAVIGATION = 'id_navigation';
-    const FIELD_NAVIGATION_KEY = 'navigation_key';
+    public const FIELD_ID_NAVIGATION = 'id_navigation';
+    public const FIELD_NAVIGATION_KEY = 'navigation_key';
 
     /**
      * @return void

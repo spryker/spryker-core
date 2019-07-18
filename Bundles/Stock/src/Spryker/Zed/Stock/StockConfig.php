@@ -11,8 +11,8 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class StockConfig extends AbstractBundleConfig
 {
-    const TOUCH_STOCK_TYPE = 'stock-type';
-    const TOUCH_STOCK_PRODUCT = 'stock-product';
+    public const TOUCH_STOCK_TYPE = 'stock-type';
+    public const TOUCH_STOCK_PRODUCT = 'stock-product';
 
     /**
      * Store to warehouse mapping, so that stock updates knows how to update availability

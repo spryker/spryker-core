@@ -53,4 +53,45 @@ interface QuoteClientInterface
      * @return string
      */
     public function getStorageStrategy();
+
+    /**
+     * Specification:
+     * - Returns true if quote is locked.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteLocked(QuoteTransfer $quoteTransfer): bool;
+
+    /**
+     * Specification:
+     * - Returns false if quote locked.
+     * - Returns true if quote has empty id.
+     * - Returns true if customer has `WriteSharedCartPermission`.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteEditable(QuoteTransfer $quoteTransfer): bool;
+
+    /**
+     * Specification:
+     *  - Locks quote by setting `isLocked` transfer property to true.
+     *  - Low level Quote locking (use CartClientInterface for features).
+     *
+     * @see CartClientInterface::lockQuote()
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function lockQuote(QuoteTransfer $quoteTransfer): QuoteTransfer;
 }

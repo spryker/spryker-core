@@ -16,8 +16,8 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class InstallProjectDependenciesConsole extends Console
 {
-    const COMMAND_NAME = 'frontend:project:install-dependencies';
-    const DESCRIPTION = 'This command will install project dependencies.';
+    public const COMMAND_NAME = 'frontend:project:install-dependencies';
+    public const DESCRIPTION = 'This command will install project dependencies.';
 
     /**
      * @return void

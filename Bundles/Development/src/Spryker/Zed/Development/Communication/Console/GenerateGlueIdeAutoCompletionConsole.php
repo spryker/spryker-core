@@ -13,10 +13,11 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\Development\Business\DevelopmentFacadeInterface getFacade()
+ * @method \Spryker\Zed\Development\Communication\DevelopmentCommunicationFactory getFactory()
  */
 class GenerateGlueIdeAutoCompletionConsole extends Console
 {
-    const COMMAND_NAME = 'dev:ide:generate-glue-auto-completion';
+    public const COMMAND_NAME = 'dev:ide:generate-glue-auto-completion';
 
     /**
      * @return void
@@ -33,7 +34,7 @@ class GenerateGlueIdeAutoCompletionConsole extends Console
      * @param \Symfony\Component\Console\Input\InputInterface $input
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
-     * @return void
+     * @return int|null
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {

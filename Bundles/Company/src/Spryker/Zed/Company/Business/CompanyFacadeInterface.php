@@ -73,4 +73,32 @@ interface CompanyFacadeInterface
      * @return \Generated\Shared\Transfer\CompanyCollectionTransfer
      */
     public function getCompanies(): CompanyCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Finds a company by id.
+     * - Returns null if company does not exist.
+     *
+     * @api
+     *
+     * @param int $idCompany
+     *
+     * @return \Generated\Shared\Transfer\CompanyTransfer|null
+     */
+    public function findCompanyById(int $idCompany): ?CompanyTransfer;
+
+    /**
+     * Specification:
+     * - Finds a company by uuid.
+     * - Requires uuid field to be set in CompanyTransfer taken as parameter.
+     *
+     * @api
+     *
+     * {@internal will work if UUID field is provided.}
+     *
+     * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyResponseTransfer
+     */
+    public function findCompanyByUuid(CompanyTransfer $companyTransfer): CompanyResponseTransfer;
 }

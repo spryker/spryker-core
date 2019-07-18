@@ -13,10 +13,11 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\Propel\Business\PropelFacadeInterface getFacade()
+ * @method \Spryker\Zed\Propel\Communication\PropelCommunicationFactory getFactory()
  */
 class DatabaseDropConsole extends Console
 {
-    const COMMAND_NAME = 'propel:database:drop';
+    public const COMMAND_NAME = 'propel:database:drop';
 
     /**
      * @return void

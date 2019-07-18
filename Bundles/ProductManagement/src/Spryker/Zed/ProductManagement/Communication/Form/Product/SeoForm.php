@@ -18,9 +18,9 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class SeoForm extends AbstractSubForm
 {
-    const FIELD_META_TITLE = 'meta_title';
-    const FIELD_META_KEYWORDS = 'meta_keywords';
-    const FIELD_META_DESCRIPTION = 'meta_description';
+    public const FIELD_META_TITLE = 'meta_title';
+    public const FIELD_META_KEYWORDS = 'meta_keywords';
+    public const FIELD_META_DESCRIPTION = 'meta_description';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder

@@ -23,6 +23,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 class ProductSearchConfigExtensionCollectorPlugin extends AbstractCollectorPlugin
 {
     /**
+     * @api
+     *
      * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $baseQuery
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param \Spryker\Zed\Collector\Business\Model\BatchResultInterface $result

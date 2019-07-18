@@ -13,10 +13,14 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \Spryker\Zed\CmsBlockCategoryConnector\Business\CmsBlockCategoryConnectorFacadeInterface getFacade()
  * @method \Spryker\Zed\CmsBlockCategoryConnector\Communication\CmsBlockCategoryConnectorCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CmsBlockCategoryConnector\CmsBlockCategoryConnectorConfig getConfig()
+ * @method \Spryker\Zed\CmsBlockCategoryConnector\Persistence\CmsBlockCategoryConnectorQueryContainerInterface getQueryContainer()
  */
 class CmsBlockCategoryListViewPlugin extends AbstractPlugin implements CmsBlockViewPluginInterface
 {
     /**
+     * @api
+     *
      * @param int $idCmsBlock
      * @param int $idLocale
      *
@@ -29,6 +33,8 @@ class CmsBlockCategoryListViewPlugin extends AbstractPlugin implements CmsBlockV
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getName()

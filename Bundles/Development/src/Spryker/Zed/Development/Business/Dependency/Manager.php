@@ -8,6 +8,9 @@
 namespace Spryker\Zed\Development\Business\Dependency;
 
 use Generated\Shared\Transfer\DependencyCollectionTransfer;
+use Generated\Shared\Transfer\ModuleTransfer;
+use Generated\Shared\Transfer\OrganizationTransfer;
+use Spryker\Zed\Development\DevelopmentConfig;
 use Symfony\Component\Finder\Finder;
 use Zend\Filter\FilterChain;
 use Zend\Filter\Word\DashToCamelCase;
@@ -20,18 +23,18 @@ class Manager implements ManagerInterface
     protected $moduleParser;
 
     /**
-     * @var string[]
+     * @var \Spryker\Zed\Development\DevelopmentConfig
      */
-    protected $moduleDirectories;
+    protected $config;
 
     /**
      * @param \Spryker\Zed\Development\Business\Dependency\ModuleDependencyParserInterface $moduleParser
-     * @param array $moduleDirectories
+     * @param \Spryker\Zed\Development\DevelopmentConfig $config
      */
-    public function __construct(ModuleDependencyParserInterface $moduleParser, array $moduleDirectories)
+    public function __construct(ModuleDependencyParserInterface $moduleParser, DevelopmentConfig $config)
     {
         $this->moduleParser = $moduleParser;
-        $this->moduleDirectories = array_filter($moduleDirectories, 'is_dir');
+        $this->config = $config;
     }
 
     /**
@@ -45,7 +48,14 @@ class Manager implements ManagerInterface
 
         $incomingDependencies = [];
         foreach ($allForeignModules as $foreignModule) {
-            $moduleDependencyCollectionTransfer = $this->moduleParser->parseOutgoingDependencies($foreignModule);
+            $organizationTransfer = new OrganizationTransfer();
+            $organizationTransfer->setName('Spryker');
+            $moduleTransfer = new ModuleTransfer();
+            $moduleTransfer
+                ->setName($moduleName)
+                ->setOrganization($organizationTransfer);
+
+            $moduleDependencyCollectionTransfer = $this->moduleParser->parseOutgoingDependencies($moduleTransfer);
             $dependencyModule = $this->findDependencyTo($moduleName, $moduleDependencyCollectionTransfer);
 
             if ($dependencyModule) {
@@ -113,7 +123,7 @@ class Manager implements ManagerInterface
         $filterChain->attach(new DashToCamelCase());
 
         foreach ($modules as $module) {
-            $allModules[] = $filterChain->filter($module->getFilename());
+            $allModules[$module->getPathname()] = $filterChain->filter($module->getFilename());
         }
         asort($allModules);
 
@@ -125,7 +135,8 @@ class Manager implements ManagerInterface
      */
     protected function collectCoreModules()
     {
-        $modules = (new Finder())->directories()->depth('== 0')->in($this->moduleDirectories);
+        $moduleDirectories = array_filter($this->config->getPathsToInternalNamespace(), 'is_dir');
+        $modules = (new Finder())->directories()->depth('== 0')->in($moduleDirectories);
 
         return $modules;
     }

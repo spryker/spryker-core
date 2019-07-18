@@ -16,8 +16,8 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ZedInstallDependenciesConsole extends Console
 {
-    const COMMAND_NAME = 'frontend:zed:install-dependencies';
-    const DESCRIPTION = 'This command will install Zed Module dependencies.';
+    public const COMMAND_NAME = 'frontend:zed:install-dependencies';
+    public const DESCRIPTION = 'This command will install Zed Module dependencies.';
 
     /**
      * @return void

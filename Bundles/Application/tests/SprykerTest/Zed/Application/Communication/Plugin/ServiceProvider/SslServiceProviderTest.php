@@ -25,7 +25,7 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class SslServiceProviderTest extends Unit
 {
-    const EXPECTED_CONTENT = 'not redirected';
+    public const EXPECTED_CONTENT = 'not redirected';
 
     /**
      * @var \SprykerTest\Zed\Application\ApplicationCommunicationTester

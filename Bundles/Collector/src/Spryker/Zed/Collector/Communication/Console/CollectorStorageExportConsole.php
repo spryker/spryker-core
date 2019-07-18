@@ -16,8 +16,8 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class CollectorStorageExportConsole extends AbstractCollectorConsole
 {
-    const COMMAND_NAME = 'collector:storage:export';
-    const COMMAND_DESCRIPTION = 'Collector export storage';
+    public const COMMAND_NAME = 'collector:storage:export';
+    public const COMMAND_DESCRIPTION = 'Collector export storage';
 
     /**
      * @return void

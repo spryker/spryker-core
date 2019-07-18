@@ -76,6 +76,19 @@ class Writer implements WriterInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\SearchDocumentTransfer[] $searchDocumentTransfers
+     *
+     * @return bool
+     */
+    public function writeBulk(array $searchDocumentTransfers): bool
+    {
+        $documents = $this->mapTransferToDocuments($searchDocumentTransfers);
+        $response = $this->client->addDocuments($documents);
+
+        return $response->isOk();
+    }
+
+    /**
      * @param array $dataSet
      * @param string|null $typeName
      * @param string|null $indexName
@@ -121,6 +134,19 @@ class Writer implements WriterInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\SearchDocumentTransfer[] $searchDocumentTransfers
+     *
+     * @return bool
+     */
+    public function deleteBulk(array $searchDocumentTransfers): bool
+    {
+        $documents = $this->mapTransferToDocuments($searchDocumentTransfers);
+        $response = $this->client->deleteDocuments($documents);
+
+        return $response->isOk();
+    }
+
+    /**
      * @return string
      */
     public function getName()
@@ -148,6 +174,28 @@ class Writer implements WriterInterface
             $document = clone $documentPrototype;
             $document->setId($key);
             $document->setData($data);
+            $documents[] = $document;
+        }
+
+        return $documents;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SearchDocumentTransfer[] $searchDocumentTransfers
+     *
+     * @return \Elastica\Document[]
+     */
+    protected function mapTransferToDocuments(array $searchDocumentTransfers): array
+    {
+        $documentPrototype = new Document();
+        $documents = [];
+
+        foreach ($searchDocumentTransfers as $searchDocumentTransfer) {
+            $document = clone $documentPrototype;
+            $document->setId($searchDocumentTransfer->getId());
+            $document->setData($searchDocumentTransfer->getData());
+            $document->setType($searchDocumentTransfer->getType() ?: $this->type);
+            $document->setIndex($searchDocumentTransfer->getIndex() ?: $this->index);
             $documents[] = $document;
         }
 

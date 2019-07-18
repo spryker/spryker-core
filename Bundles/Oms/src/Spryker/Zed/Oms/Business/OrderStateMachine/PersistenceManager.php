@@ -16,10 +16,6 @@ use Spryker\Zed\Oms\OmsConfig;
 
 class PersistenceManager implements PersistenceManagerInterface
 {
-    protected static $stateEntityBuffer = [];
-
-    protected static $processEntityBuffer = [];
-
     /**
      * @var \Spryker\Zed\Oms\OmsConfig
      */
@@ -40,10 +36,6 @@ class PersistenceManager implements PersistenceManagerInterface
      */
     public function getStateEntity($stateName)
     {
-        if (array_key_exists($stateName, self::$stateEntityBuffer)) {
-            return self::$stateEntityBuffer[$stateName];
-        }
-
         $stateEntity = SpyOmsOrderItemStateQuery::create()->findOneByName($stateName);
 
         if ($stateEntity === null) {
@@ -51,8 +43,6 @@ class PersistenceManager implements PersistenceManagerInterface
             $stateEntity->setName($stateName);
             $stateEntity->save();
         }
-
-        $stateBuffer[$stateName] = $stateEntity;
 
         return $stateEntity;
     }
@@ -73,10 +63,6 @@ class PersistenceManager implements PersistenceManagerInterface
             ));
         }
 
-        if (array_key_exists($processName, self::$processEntityBuffer)) {
-            return self::$processEntityBuffer[$processName];
-        }
-
         $processEntity = SpyOmsOrderProcessQuery::create()->findOneByName($processName);
 
         if ($processEntity === null) {
@@ -84,8 +70,6 @@ class PersistenceManager implements PersistenceManagerInterface
             $processEntity->setName($processName);
             $processEntity->save();
         }
-
-        $processBuffer[$processName] = $processEntity;
 
         return $processEntity;
     }

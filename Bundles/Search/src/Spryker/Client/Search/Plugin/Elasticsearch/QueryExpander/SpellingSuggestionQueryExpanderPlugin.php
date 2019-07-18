@@ -15,9 +15,9 @@ use Generated\Shared\Search\PageIndexMap;
  */
 class SpellingSuggestionQueryExpanderPlugin extends AbstractSuggestionExpanderPlugin
 {
-    const SUGGESTION_NAME = 'spelling-suggestion';
+    public const SUGGESTION_NAME = 'spelling-suggestion';
 
-    const SIZE = 1;
+    public const SIZE = 1;
 
     /**
      * @param \Elastica\Query $query

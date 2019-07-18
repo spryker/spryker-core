@@ -12,12 +12,15 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductLabelCollector\Dependency\Facade\ProductLabelCollectorToCollectorBridge;
 use Spryker\Zed\ProductLabelCollector\Dependency\Facade\ProductLabelCollectorToProductLabelBridge;
 
+/**
+ * @method \Spryker\Zed\ProductLabelCollector\ProductLabelCollectorConfig getConfig()
+ */
 class ProductLabelCollectorDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_PRODUCT_LABEL = 'FACADE_PRODUCT_LABEL';
-    const FACADE_COLLECTOR = 'FACADE_COLLECTOR';
-    const SERVICE_DATA_READER = 'SERVICE_DATA_READER';
-    const QUERY_CONTAINER_TOUCH = 'QUERY_CONTAINER_TOUCH';
+    public const FACADE_PRODUCT_LABEL = 'FACADE_PRODUCT_LABEL';
+    public const FACADE_COLLECTOR = 'FACADE_COLLECTOR';
+    public const SERVICE_DATA_READER = 'SERVICE_DATA_READER';
+    public const QUERY_CONTAINER_TOUCH = 'QUERY_CONTAINER_TOUCH';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

@@ -93,7 +93,7 @@ class Repeater implements RepeaterInterface
 
         $directory = dirname($filePath);
         if (!is_dir($directory)) {
-            mkdir($directory, 0755, true);
+            mkdir($directory, $this->getConfig()->getPermissionMode(), true);
         }
 
         file_put_contents($filePath, $string);
@@ -116,7 +116,7 @@ class Repeater implements RepeaterInterface
             return [];
         }
 
-        return unserialize($content);
+        return unserialize($content, ['allowed_classes' => false]);
     }
 
     /**

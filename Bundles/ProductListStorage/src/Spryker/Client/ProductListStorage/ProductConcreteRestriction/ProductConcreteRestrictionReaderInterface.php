@@ -10,9 +10,9 @@ namespace Spryker\Client\ProductListStorage\ProductConcreteRestriction;
 interface ProductConcreteRestrictionReaderInterface
 {
     /**
-     * @param int $idProductConcrete
+     * @param int $idProduct
      *
      * @return bool
      */
-    public function isProductConcreteRestricted(int $idProductConcrete): bool;
+    public function isProductConcreteRestricted(int $idProduct): bool;
 }

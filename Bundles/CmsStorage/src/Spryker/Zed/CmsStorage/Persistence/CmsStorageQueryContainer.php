@@ -9,6 +9,8 @@ namespace Spryker\Zed\CmsStorage\Persistence;
 
 use Orm\Zed\Cms\Persistence\Map\SpyCmsPageTableMap;
 use Orm\Zed\Cms\Persistence\Map\SpyCmsVersionTableMap;
+use Orm\Zed\Cms\Persistence\SpyCmsPageQuery;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
@@ -47,7 +49,28 @@ class CmsStorageQueryContainer extends AbstractQueryContainer implements CmsStor
             ->joinWithSpyUrl()
             ->joinWith('SpyUrl.SpyLocale')
             ->joinWithSpyCmsVersion()
-            ->where(sprintf('%s = (%s)', SpyCmsVersionTableMap::COL_VERSION, $this->getMaxVersionSubQuery()));
+            ->where(sprintf('%s = (%s)', SpyCmsVersionTableMap::COL_VERSION, $this->getMaxVersionSubQuery()))
+            ->joinWithSpyCmsPageStore(Criteria::LEFT_JOIN)
+            ->useSpyCmsPageStoreQuery()
+                ->joinWithSpyStore()
+            ->endUse();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param array $cmsPageIds
+     *
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageQuery
+     */
+    public function queryCmsPageByIds(array $cmsPageIds): SpyCmsPageQuery
+    {
+        return $this->getFactory()
+            ->getCmsQueryContainer()
+            ->queryPages()
+            ->filterByIdCmsPage_In($cmsPageIds);
     }
 
     /**

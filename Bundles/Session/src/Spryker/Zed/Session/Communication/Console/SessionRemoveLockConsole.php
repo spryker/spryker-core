@@ -15,14 +15,15 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\Session\Business\SessionFacadeInterface getFacade()
+ * @method \Spryker\Zed\Session\Communication\SessionCommunicationFactory getFactory()
  */
 class SessionRemoveLockConsole extends Console
 {
-    const COMMAND_NAME = 'session:lock:remove';
-    const OPTION_HELP = 'help';
-    const OPTION_APPLICATION_YVES = 'yves';
-    const OPTION_APPLICATION_ZED = 'zed';
-    const ARGUMENT_SESSION_ID = 'session_id';
+    public const COMMAND_NAME = 'session:lock:remove';
+    public const OPTION_HELP = 'help';
+    public const OPTION_APPLICATION_YVES = 'yves';
+    public const OPTION_APPLICATION_ZED = 'zed';
+    public const ARGUMENT_SESSION_ID = 'session_id';
 
     /**
      * @return void

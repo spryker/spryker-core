@@ -72,7 +72,12 @@ class ResponseFormatterTest extends Unit
         $response = $responseFormatter->format($restResponse, $restRequest);
 
         $this->assertEquals(Response::HTTP_BAD_REQUEST, $response->getStatusCode());
-        $this->assertEquals('{"errors":[{"status":400,"code":1,"detail":"error"}]}', $response->getContent());
+
+        $responseObject = json_decode($response->getContent());
+        $this->assertNotEmpty($responseObject->errors);
+        $this->assertEquals(($responseObject->errors[0])->status, 400);
+        $this->assertEquals(($responseObject->errors[0])->code, 1);
+        $this->assertEquals(($responseObject->errors[0])->detail, "error");
     }
 
     /**

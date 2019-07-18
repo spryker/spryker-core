@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductList\Persistence;
 
 use Generated\Shared\Transfer\ProductListTransfer;
+use Orm\Zed\ProductList\Persistence\SpyProductList;
 use Orm\Zed\ProductList\Persistence\SpyProductListCategory;
 use Orm\Zed\ProductList\Persistence\SpyProductListProductConcrete;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
@@ -22,21 +23,63 @@ class ProductListEntityManager extends AbstractEntityManager implements ProductL
      *
      * @return \Generated\Shared\Transfer\ProductListTransfer
      */
-    public function saveProductList(ProductListTransfer $productListTransfer): ProductListTransfer
+    public function createProductList(ProductListTransfer $productListTransfer): ProductListTransfer
     {
-        /** @var \Generated\Shared\Transfer\ProductListCategoryRelationTransfer|null $productListCategoryRelationTransfer */
-        $productListCategoryRelationTransfer = $productListTransfer->getProductListCategoryRelation();
-        /** @var \Generated\Shared\Transfer\ProductListProductConcreteRelationTransfer|null $productListProductConcreteRelationTransfer */
-        $productListProductConcreteRelationTransfer = $productListTransfer->getProductListProductConcreteRelation();
+        $productListTransfer = $this->saveProductListEntity(new SpyProductList(), $productListTransfer);
+
+        return $productListTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductListTransfer
+     */
+    public function updateProductList(ProductListTransfer $productListTransfer): ProductListTransfer
+    {
+        $productListTransfer->requireIdProductList();
 
         $productListEntity = $this->getFactory()
             ->createProductListQuery()
-            ->filterByIdProductList($productListTransfer->getIdProductList())
-            ->findOneOrCreate();
+            ->findOneByIdProductList($productListTransfer->getIdProductList());
 
-        $productListEntity->fromArray($productListTransfer->toArray());
+        $productListTransfer = $this->saveProductListEntity($productListEntity, $productListTransfer);
+
+        return $productListTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\ProductList\Persistence\SpyProductList $productListEntity
+     * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductListTransfer
+     */
+    protected function saveProductListEntity(SpyProductList $productListEntity, ProductListTransfer $productListTransfer): ProductListTransfer
+    {
+        $productListEntity = $this->getFactory()
+            ->createProductListMapper()
+            ->mapProductListTransferToEntity($productListTransfer, $productListEntity);
+
         $productListEntity->save();
-        $productListTransfer->fromArray($productListEntity->toArray(), true);
+
+        $productListTransfer = $this->getFactory()
+            ->createProductListMapper()
+            ->mapEntityToProductListTransfer($productListEntity, $productListTransfer);
+
+        $productListTransfer = $this->saveProductListRelation($productListTransfer);
+
+        return $productListTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductListTransfer
+     */
+    protected function saveProductListRelation(ProductListTransfer $productListTransfer): ProductListTransfer
+    {
+        $productListCategoryRelationTransfer = $productListTransfer->getProductListCategoryRelation();
+        $productListProductConcreteRelationTransfer = $productListTransfer->getProductListProductConcreteRelation();
 
         if ($productListCategoryRelationTransfer) {
             $productListCategoryRelationTransfer->setIdProductList($productListTransfer->getIdProductList());
@@ -145,10 +188,10 @@ class ProductListEntityManager extends AbstractEntityManager implements ProductL
      */
     public function addProductConcreteRelations(int $idProductList, array $productIds): void
     {
-        foreach ($productIds as $idProductConcrete) {
+        foreach ($productIds as $idProduct) {
             $productListProductConcreteEntity = new SpyProductListProductConcrete();
             $productListProductConcreteEntity->setFkProductList($idProductList)
-                ->setFkProduct($idProductConcrete)
+                ->setFkProduct($idProduct)
                 ->save();
         }
     }

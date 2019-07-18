@@ -26,7 +26,7 @@ use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterfac
  */
 class SellableTest extends Unit
 {
-    const SKU_PRODUCT = 'sku-123-321';
+    public const SKU_PRODUCT = 'sku-123-321';
 
     /**
      * @return void
@@ -111,7 +111,7 @@ class SellableTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface
      */
     protected function createStockFacadeMock()
     {
@@ -120,7 +120,7 @@ class SellableTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsInterface
      */
     protected function createOmsFacadeMock()
     {
@@ -129,7 +129,7 @@ class SellableTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface
      */
     protected function createStoreFacade()
     {

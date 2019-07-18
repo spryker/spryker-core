@@ -11,6 +11,9 @@ use Exception;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\Permission\PermissionConfig getConfig()
+ */
 class PermissionDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_PERMISSION = 'CLIENT_PERMISSION';

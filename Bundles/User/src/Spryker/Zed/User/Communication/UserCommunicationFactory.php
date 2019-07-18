@@ -8,14 +8,17 @@
 namespace Spryker\Zed\User\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\User\Business\UserFacade;
 use Spryker\Zed\User\Communication\Form\DataProvider\UserFormDataProvider;
 use Spryker\Zed\User\Communication\Form\DataProvider\UserUpdateFormDataProvider;
 use Spryker\Zed\User\Communication\Form\ResetPasswordForm;
+use Spryker\Zed\User\Communication\Form\UserDeleteConfirmForm;
 use Spryker\Zed\User\Communication\Form\UserForm;
 use Spryker\Zed\User\Communication\Form\UserUpdateForm;
+use Spryker\Zed\User\Communication\Table\PluginExecutor\UserTablePluginExecutor;
+use Spryker\Zed\User\Communication\Table\PluginExecutor\UserTablePluginExecutorInterface;
 use Spryker\Zed\User\Communication\Table\UsersTable;
 use Spryker\Zed\User\UserDependencyProvider;
+use Symfony\Component\Form\FormInterface;
 
 /**
  * @method \Spryker\Zed\User\Persistence\UserQueryContainerInterface getQueryContainer()
@@ -25,11 +28,9 @@ use Spryker\Zed\User\UserDependencyProvider;
 class UserCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @param \Spryker\Zed\User\Business\UserFacade $userFacade
-     *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createResetPasswordForm(UserFacade $userFacade)
+    public function createResetPasswordForm()
     {
         return $this->getFormFactory()->create(ResetPasswordForm::class);
     }
@@ -42,7 +43,19 @@ class UserCommunicationFactory extends AbstractCommunicationFactory
         return new UsersTable(
             $this->getQueryContainer(),
             $this->getProvidedDependency(UserDependencyProvider::SERVICE_DATE_FORMATTER),
-            $this->getUsersTableExtenderPlugins()
+            $this->createUserTablePluginExecutor()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\User\Communication\Table\PluginExecutor\UserTablePluginExecutorInterface
+     */
+    public function createUserTablePluginExecutor(): UserTablePluginExecutorInterface
+    {
+        return new UserTablePluginExecutor(
+            $this->getUserTableActionExpanderPlugins(),
+            $this->getUserTableConfigExpanderPlugins(),
+            $this->getUserTableDataExpanderPlugins()
         );
     }
 
@@ -58,6 +71,14 @@ class UserCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @return \Spryker\Zed\UserExtension\Dependency\Plugin\UserFormExpanderPluginInterface[]
+     */
+    public function getFormExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(UserDependencyProvider::PLUGINS_USER_FORM_EXPANDER);
+    }
+
+    /**
      * @param array $data
      * @param array $options
      *
@@ -66,6 +87,14 @@ class UserCommunicationFactory extends AbstractCommunicationFactory
     public function createUpdateUserForm(array $data = [], array $options = [])
     {
         return $this->getFormFactory()->create(UserUpdateForm::class, $data, $options);
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getUserDeleteConfirmForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(UserDeleteConfirmForm::class);
     }
 
     /**
@@ -99,10 +128,26 @@ class UserCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\User\Dependency\Plugin\UsersTableExpanderPluginInterface[]
+     * @return \Spryker\Zed\UserExtension\Dependency\Plugin\UserTableActionExpanderPluginInterface[]
      */
-    protected function getUsersTableExtenderPlugins()
+    protected function getUserTableActionExpanderPlugins(): array
     {
-        return $this->getProvidedDependency(UserDependencyProvider::PLUGINS_USERS_TABLE_EXTENDER);
+        return $this->getProvidedDependency(UserDependencyProvider::PLUGINS_USER_TABLE_ACTION_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\UserExtension\Dependency\Plugin\UserTableConfigExpanderPluginInterface[]
+     */
+    protected function getUserTableConfigExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(UserDependencyProvider::PLUGINS_USER_TABLE_CONFIG_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\UserExtension\Dependency\Plugin\UserTableDataExpanderPluginInterface[]
+     */
+    protected function getUserTableDataExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(UserDependencyProvider::PLUGINS_USER_TABLE_DATA_EXPANDER);
     }
 }

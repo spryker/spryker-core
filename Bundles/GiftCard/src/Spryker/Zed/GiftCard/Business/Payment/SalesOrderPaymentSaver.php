@@ -24,7 +24,9 @@ class SalesOrderPaymentSaver implements SalesOrderPaymentSaverInterface
      */
     protected $giftCardPaymentSaverPlugins;
 
-    /** @var \Spryker\Zed\GiftCard\GiftCardConfig */
+    /**
+     * @var \Spryker\Zed\GiftCard\GiftCardConfig
+     */
     protected $giftCardConfig;
 
     /**

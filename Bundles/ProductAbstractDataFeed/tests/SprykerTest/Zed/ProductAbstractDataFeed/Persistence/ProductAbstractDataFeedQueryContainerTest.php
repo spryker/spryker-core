@@ -9,8 +9,8 @@ namespace SprykerTest\Zed\ProductAbstractDataFeed\Persistence;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ProductAbstractDataFeedTransfer;
-use Orm\Zed\Locale\Persistence\Base\SpyLocaleQuery;
-use Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery;
+use Orm\Zed\Locale\Persistence\SpyLocaleQuery;
+use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Spryker\Zed\Product\Persistence\ProductQueryContainer;
 use Spryker\Zed\ProductAbstractDataFeed\Persistence\ProductAbstractDataFeedQueryContainer;
 
@@ -257,7 +257,7 @@ class ProductAbstractDataFeedQueryContainerTest extends Unit
     }
 
     /**
-     * @param \Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery $query
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $query
      *
      * @return array
      */

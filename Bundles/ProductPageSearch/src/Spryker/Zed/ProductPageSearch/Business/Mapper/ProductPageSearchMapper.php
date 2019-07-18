@@ -85,15 +85,14 @@ class ProductPageSearchMapper implements ProductPageSearchMapperInterface
      *
      * @return \Generated\Shared\Transfer\ProductPageSearchTransfer
      */
-    public function mapToProductPageSearchTransferFromJson($data)
+    public function mapToProductPageSearchTransferFromJson(string $data)
     {
-        $productAbstractPageSearchTransfer = new ProductPageSearchTransfer();
         $decodedData = $this->utilEncoding->decodeJson($data, true);
-        if (!is_array($decodedData)) {
-            throw new EncodedDataNotValidException('Invalid ProductPageSearchTransfer data');
+        if (is_array($decodedData)) {
+            return (new ProductPageSearchTransfer())->fromArray($decodedData);
         }
 
-        return $productAbstractPageSearchTransfer->fromArray($decodedData);
+        throw new EncodedDataNotValidException('Invalid ProductPageSearchTransfer data');
     }
 
     /**

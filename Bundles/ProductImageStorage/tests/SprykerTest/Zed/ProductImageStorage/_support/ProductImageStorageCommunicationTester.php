@@ -8,6 +8,8 @@
 namespace SprykerTest\Zed\ProductImageStorage;
 
 use Codeception\Actor;
+use Generated\Shared\DataBuilder\ProductImageBuilder;
+use Generated\Shared\Transfer\ProductImageTransfer;
 
 /**
  * Inherited Methods
@@ -32,9 +34,9 @@ class ProductImageStorageCommunicationTester extends Actor
     * Define custom actions here
     */
 
-    const PARAM_PROJECT = 'PROJECT';
+    public const PARAM_PROJECT = 'PROJECT';
 
-    const PROJECT_SUITE = 'suite';
+    public const PROJECT_SUITE = 'suite';
 
     /**
      * @return bool
@@ -46,5 +48,20 @@ class ProductImageStorageCommunicationTester extends Actor
         }
 
         return false;
+    }
+
+    /**
+     * @param int $sortOrder
+     *
+     * @return \Generated\Shared\Transfer\ProductImageTransfer
+     */
+    public function createProductImageTransferWithSortOrder(int $sortOrder): ProductImageTransfer
+    {
+        /** @var \Generated\Shared\Transfer\ProductImageTransfer $productImageTransfer */
+        $productImageTransfer = (new ProductImageBuilder())
+            ->seed([ProductImageTransfer::SORT_ORDER => $sortOrder])
+            ->build();
+
+        return $productImageTransfer;
     }
 }

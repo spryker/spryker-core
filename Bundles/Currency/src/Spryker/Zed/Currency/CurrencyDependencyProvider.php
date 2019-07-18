@@ -8,16 +8,19 @@
 namespace Spryker\Zed\Currency;
 
 use Spryker\Shared\Currency\Dependency\Internationalization\CurrencyToInternationalizationBridge;
-use Spryker\Zed\Currency\Dependency\Facade\CurrencyToStoreBridge;
+use Spryker\Zed\Currency\Dependency\Facade\CurrencyToStoreFacadeBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Symfony\Component\Intl\Intl;
 
+/**
+ * @method \Spryker\Zed\Currency\CurrencyConfig getConfig()
+ */
 class CurrencyDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_STORE = 'STORE_FACADE';
+    public const FACADE_STORE = 'STORE_FACADE';
 
-    const INTERNATIONALIZATION = 'internationalization';
+    public const INTERNATIONALIZATION = 'internationalization';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -37,29 +40,37 @@ class CurrencyDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addInternationalization(Container $container)
+    public function providePersistenceLayerDependencies(Container $container)
     {
-        $container[static::INTERNATIONALIZATION] = function () {
-            $currencyToInternationalizationBridge = new CurrencyToInternationalizationBridge(
-                Intl::getCurrencyBundle()
-            );
-
-            return $currencyToInternationalizationBridge;
-        };
+        $container = $this->addInternationalization($container);
 
         return $container;
     }
 
-      /**
-       * @param \Spryker\Zed\Kernel\Container $container
-       *
-       * @return \Spryker\Zed\Kernel\Container
-       */
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addInternationalization(Container $container)
+    {
+        $container->set(static::INTERNATIONALIZATION, function () {
+            return new CurrencyToInternationalizationBridge(Intl::getCurrencyBundle());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     protected function addStoreFacade(Container $container)
     {
-        $container[static::FACADE_STORE] = function (Container $container) {
-            return new CurrencyToStoreBridge($container->getLocator()->store()->facade());
-        };
+        $container->set(static::FACADE_STORE, function (Container $container) {
+            return new CurrencyToStoreFacadeBridge($container->getLocator()->store()->facade());
+        });
 
         return $container;
     }

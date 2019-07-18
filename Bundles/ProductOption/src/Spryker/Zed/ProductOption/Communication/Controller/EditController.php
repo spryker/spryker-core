@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -42,7 +43,7 @@ class EditController extends BaseOptionController
                 ]
             )->build();
 
-            $this->addSuccessMessage('Product option group modifed.');
+            $this->addSuccessMessage('Product option group modified.');
 
             return $this->redirectResponse($redirectUrl);
         }

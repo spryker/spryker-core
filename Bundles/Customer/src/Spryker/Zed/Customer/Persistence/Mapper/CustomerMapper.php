@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\Customer\Persistence\Mapper;
 
+use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Orm\Zed\Customer\Persistence\SpyCustomerAddress;
 
 class CustomerMapper implements CustomerMapperInterface
 {
@@ -25,5 +27,15 @@ class CustomerMapper implements CustomerMapperInterface
             );
 
         return $customerTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\Customer\Persistence\SpyCustomerAddress $customerAddressEntity
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer
+     */
+    public function mapCustomerAddressEntityToTransfer(SpyCustomerAddress $customerAddressEntity): AddressTransfer
+    {
+        return (new AddressTransfer())->fromArray($customerAddressEntity->toArray(), true);
     }
 }

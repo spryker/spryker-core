@@ -58,6 +58,8 @@ class PropelFacade extends AbstractFacade implements PropelFacadeInterface
      *
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @return void
      */
     public function convertConfig()
@@ -225,5 +227,32 @@ class PropelFacade extends AbstractFacade implements PropelFacadeInterface
     public function validateSchemaFiles(): SchemaValidationTransfer
     {
         return $this->getFactory()->createSchemaValidator()->validate();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\SchemaValidationTransfer
+     */
+    public function validateSchemaXmlFiles(): SchemaValidationTransfer
+    {
+        return $this->getFactory()->createSchemaXmlValidator()->validate();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function dropDatabaseTables(): void
+    {
+        $this->getFactory()
+            ->createPropelDatabaseAdapterCollection()
+            ->getAdapter()
+            ->dropTables();
     }
 }

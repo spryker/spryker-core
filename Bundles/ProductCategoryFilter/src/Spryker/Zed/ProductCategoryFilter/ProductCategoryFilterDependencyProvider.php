@@ -12,10 +12,13 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductCategoryFilter\Dependency\Facade\ProductCategoryFilterToTouchFacadeBridge;
 use Spryker\Zed\ProductCategoryFilter\Dependency\Service\ProductCategoryFilterToUtilEncodingServiceBridge;
 
+/**
+ * @method \Spryker\Zed\ProductCategoryFilter\ProductCategoryFilterConfig getConfig()
+ */
 class ProductCategoryFilterDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_TOUCH = 'FACADE_TOUCH';
-    const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+    public const FACADE_TOUCH = 'FACADE_TOUCH';
+    public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

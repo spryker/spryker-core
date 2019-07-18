@@ -13,7 +13,7 @@ use Spryker\Zed\Collector\Business\Exporter\Reader\ReaderInterface;
 
 class ElasticsearchReader implements ReaderInterface, ConfigurableSearchReaderInterface
 {
-    const READER_NAME = 'elastic-search-reader';
+    public const READER_NAME = 'elastic-search-reader';
 
     /**
      * @var \Elastica\Client
@@ -44,7 +44,7 @@ class ElasticsearchReader implements ReaderInterface, ConfigurableSearchReaderIn
      * @param string $key
      * @param string $type
      *
-     * @return \Elastica\Document
+     * @return mixed
      */
     public function read($key, $type = '')
     {

@@ -228,7 +228,7 @@ class ProductSearchAttributeMapTest extends AbstractProductSearchFacadeTest
 
     /**
      * @param string $attributeKey
-     * @param boolean|bool $synced
+     * @param bool $synced
      *
      * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributeMap
      */

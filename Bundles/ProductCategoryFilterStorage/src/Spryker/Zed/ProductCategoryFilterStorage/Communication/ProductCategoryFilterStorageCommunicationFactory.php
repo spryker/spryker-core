@@ -13,6 +13,7 @@ use Spryker\Zed\ProductCategoryFilterStorage\ProductCategoryFilterStorageDepende
 /**
  * @method \Spryker\Zed\ProductCategoryFilterStorage\Persistence\ProductCategoryFilterStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductCategoryFilterStorage\ProductCategoryFilterStorageConfig getConfig()
+ * @method \Spryker\Zed\ProductCategoryFilterStorage\Business\ProductCategoryFilterStorageFacadeInterface getFacade()
  */
 class ProductCategoryFilterStorageCommunicationFactory extends AbstractCommunicationFactory
 {

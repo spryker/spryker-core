@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<database name="zed"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd"
+    namespace="Namespace"
+    package="Package">
+
+    <table name="table_a" phpName="TableA">
+        <id-method-parameter value="table_a_pk_seq"/>
+        <index name="index-table_a-fk_column">
+            <index-column name="fk_column"/>
+        </index>
+        <column name="column_b" type="INTEGER" />
+    </table>
+
+</database>

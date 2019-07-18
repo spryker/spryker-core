@@ -32,9 +32,9 @@ use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
  */
 class FinderTest extends Unit
 {
-    const STATE_DISPLAY_VALUE = 'name display value';
-    const STATE_SUB_PROCESS_DISPLAY_VALUE = 'sub process state display value';
-    const TEST_STATE_MACHINE_NAME = 'StateMachine01';
+    public const STATE_DISPLAY_VALUE = 'name display value';
+    public const STATE_SUB_PROCESS_DISPLAY_VALUE = 'sub process state display value';
+    public const TEST_STATE_MACHINE_NAME = 'StateMachine01';
 
     /**
      * @return void
@@ -110,7 +110,7 @@ class FinderTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface
      */
     protected function createOmsQueryContainer()
     {
@@ -118,7 +118,7 @@ class FinderTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Oms\Business\Util\DrawerInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Oms\Business\Util\DrawerInterface
      */
     protected function createDrawerMock()
     {
@@ -155,6 +155,7 @@ class FinderTest extends Unit
         $omsOrderItemStateEntity = new SpyOmsOrderItemState();
         $omsOrderItemStateEntity->setName('new');
         $salesOrderItemEntity->setState($omsOrderItemStateEntity);
+
         return $salesOrderItemEntity;
     }
 }

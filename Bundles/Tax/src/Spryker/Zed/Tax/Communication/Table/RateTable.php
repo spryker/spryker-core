@@ -18,9 +18,9 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class RateTable extends AbstractTable
 {
-    const TABLE_COL_ACTIONS = 'Actions';
-    const URL_PARAM_ID_TAX_RATE = 'id-tax-rate';
-    const COUNTRY_NOT_AVAILABLE = 'N/A';
+    public const TABLE_COL_ACTIONS = 'Actions';
+    public const URL_PARAM_ID_TAX_RATE = 'id-tax-rate';
+    public const COUNTRY_NOT_AVAILABLE = 'N/A';
 
     /**
      * @var \Orm\Zed\Tax\Persistence\SpyTaxRateQuery
@@ -92,9 +92,9 @@ class RateTable extends AbstractTable
         $query = $this->taxRateQuery
             ->leftJoinCountry(SpyCountryTableMap::TABLE_NAME);
 
+        /** @var \Orm\Zed\Tax\Persistence\SpyTaxRate[] $queryResult */
         $queryResult = $this->runQuery($query, $config, true);
 
-        /** @var \Orm\Zed\Tax\Persistence\SpyTaxRate $taxRateEntity */
         foreach ($queryResult as $taxRateEntity) {
             $result[] = [
                 SpyTaxRateTableMap::COL_ID_TAX_RATE => $taxRateEntity->getIdTaxRate(),
@@ -105,6 +105,7 @@ class RateTable extends AbstractTable
                 self::TABLE_COL_ACTIONS => $this->getActionButtons($taxRateEntity),
             ];
         }
+
         return $result;
     }
 
@@ -136,6 +137,7 @@ class RateTable extends AbstractTable
                 self::URL_PARAM_ID_TAX_RATE => $taxRateEntity->getIdTaxRate(),
             ]
         );
+
         return $this->generateEditButton($editTaxRateUrl, 'Edit');
     }
 
@@ -152,6 +154,7 @@ class RateTable extends AbstractTable
                 self::URL_PARAM_ID_TAX_RATE => $taxRateEntity->getIdTaxRate(),
             ]
         );
+
         return $this->generateViewButton($viewTaxRateUrl, 'View');
     }
 
@@ -163,7 +166,7 @@ class RateTable extends AbstractTable
     protected function createDeleteButton(SpyTaxRate $taxRateEntity)
     {
         $deleteTaxRateUrl = Url::generate(
-            '/tax/rate/delete',
+            '/tax/delete-rate',
             [
                 self::URL_PARAM_ID_TAX_RATE => $taxRateEntity->getIdTaxRate(),
             ]
@@ -180,8 +183,11 @@ class RateTable extends AbstractTable
     protected function getCountryName(SpyTaxRate $taxRateEntity)
     {
         $countryName = self::COUNTRY_NOT_AVAILABLE;
-        if ($taxRateEntity->getCountry()) {
-            $countryName = $taxRateEntity->getCountry()->getName();
+
+        /** @var \Orm\Zed\Country\Persistence\SpyCountry|null $countryEntity */
+        $countryEntity = $taxRateEntity->getCountry();
+        if ($countryEntity) {
+            $countryName = $countryEntity->getName();
         }
 
         return $countryName;

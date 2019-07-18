@@ -14,7 +14,6 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -25,17 +24,19 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  * @method \Spryker\Zed\Glossary\Business\GlossaryFacadeInterface getFacade()
  * @method \Spryker\Zed\Glossary\Communication\GlossaryCommunicationFactory getFactory()
  * @method \Spryker\Zed\Glossary\Persistence\GlossaryQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Glossary\GlossaryConfig getConfig()
+ * @method \Spryker\Zed\Glossary\Persistence\GlossaryRepositoryInterface getRepository()
  */
 class TranslationForm extends AbstractType
 {
-    const FIELD_GLOSSARY_KEY = 'glossary_key';
-    const FIELD_LOCALES = 'locales';
+    public const FIELD_GLOSSARY_KEY = 'glossary_key';
+    public const FIELD_LOCALES = 'locales';
 
-    const OPTION_LOCALES = 'locales';
+    public const OPTION_LOCALES = 'locales';
 
-    const GROUP_UNIQUE_GLOSSARY_KEY_CHECK = 'unique_glossary_key_check';
+    public const GROUP_UNIQUE_GLOSSARY_KEY_CHECK = 'unique_glossary_key_check';
 
-    const TYPE_DATA = 'data';
+    public const TYPE_DATA = 'data';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -96,7 +97,6 @@ class TranslationForm extends AbstractType
             'constraints' => $this->getFieldDefaultConstraints(),
             'entry_options' => [
                 'attr' => [
-                    'class' => 'html-editor',
                     'rows' => 10,
                 ],
             ],
@@ -142,11 +142,11 @@ class TranslationForm extends AbstractType
     /**
      * @deprecated Use `configureOptions()` instead.
      *
-     * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *
      * @return void
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function setDefaultOptions(OptionsResolver $resolver)
     {
         $this->configureOptions($resolver);
     }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -59,7 +60,7 @@ class ProductOptionValueSaverTest extends MockProvider
     /**
      * @uses SpyProductOptionValue::save()
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Orm\Zed\ProductOption\Persistence\SpyProductOptionValue
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Orm\Zed\ProductOption\Persistence\SpyProductOptionValue
      */
     protected function createProductOptionValueEntityMock()
     {
@@ -71,7 +72,7 @@ class ProductOptionValueSaverTest extends MockProvider
     /**
      * @uses ProductOptionValueSaver::createProductOptionValueEntity()
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValueSaverInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValueSaverInterface
      */
     protected function createProductOptionValueSaver()
     {

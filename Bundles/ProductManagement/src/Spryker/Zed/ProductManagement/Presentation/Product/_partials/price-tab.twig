@@ -2,12 +2,13 @@
 
 <div class="well">
     {% filter trans|raw %}
-        <h3>Price & Tax</h3>
-        <p>Below you can choose between your predefined tax sets and edit the price of your product.</p>
-        <p><i>Note: The price that you edit here is only displayed in the shop catalog and the product detail page for the non configured product (Not product variant)</i></p>
+        <h3>{{ 'Price & Tax' | trans }}</h3>
+        <p>{{ 'Below you can choose between your predefined tax sets and edit the price of your product.' | trans }}</p>
+        <p><i>{{ 'Note: The price that you edit here is only displayed in the shop catalog and the product detail page for the non configured product (Not product variant)' | trans }}</i></p>
     {% endfilter %}
 </div>
 
+{{ include('@ProductManagement/_partials/price_dimension_filter.twig', {priceDimensionForm: form.price_dimension}) }}
 {{ include('@ProductManagement/_partials/product_price_collection.twig', {moneyValueFormViewCollection: form.prices}) }}
 
 {{ form_row(form.tax_rate) }}

@@ -103,7 +103,7 @@ class CartUpdater implements CartUpdaterInterface
         if ($quoteResponseTransfer->getIsSuccessful()) {
             $this->quoteClient->setQuote($quoteResponseTransfer->getQuoteTransfer());
         }
-        $this->zedRequestClient->addFlashMessagesFromLastZedRequest();
+        $this->zedRequestClient->addResponseMessagesToMessenger();
 
         return $quoteResponseTransfer;
     }
@@ -119,7 +119,10 @@ class CartUpdater implements CartUpdaterInterface
             $this->customerClient->getCustomer()
         );
         $quoteUpdateRequestTransfer = $this->createQuoteUpdateRequest($quoteTransfer);
-        $quoteUpdateRequestTransfer->getQuoteUpdateRequestAttributes()->setItems(new ArrayObject());
+        $quoteUpdateRequestTransfer->getQuoteUpdateRequestAttributes()
+            ->setItems(new ArrayObject())
+            ->setTotals(null)
+            ->setExpenses(new ArrayObject());
 
         return $this->persistentCartClient->updateQuote($quoteUpdateRequestTransfer);
     }

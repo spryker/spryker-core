@@ -9,13 +9,13 @@ namespace Spryker\Zed\Category\Dependency;
 
 interface CategoryEvents
 {
-    const CATEGORY_BEFORE_CREATE = 'Category.before.create';
-    const CATEGORY_BEFORE_UPDATE = 'Category.before.update';
-    const CATEGORY_BEFORE_DELETE = 'Category.before.delete';
+    public const CATEGORY_BEFORE_CREATE = 'Category.before.create';
+    public const CATEGORY_BEFORE_UPDATE = 'Category.before.update';
+    public const CATEGORY_BEFORE_DELETE = 'Category.before.delete';
 
-    const CATEGORY_AFTER_CREATE = 'Category.after.create';
-    const CATEGORY_AFTER_UPDATE = 'Category.after.update';
-    const CATEGORY_AFTER_DELETE = 'Category.after.delete';
+    public const CATEGORY_AFTER_CREATE = 'Category.after.create';
+    public const CATEGORY_AFTER_UPDATE = 'Category.after.update';
+    public const CATEGORY_AFTER_DELETE = 'Category.after.delete';
 
     /**
      * Specification:
@@ -23,7 +23,7 @@ interface CategoryEvents
      *
      * @api
      */
-    const ENTITY_SPY_CATEGORY_CREATE = 'Entity.spy_category.create';
+    public const ENTITY_SPY_CATEGORY_CREATE = 'Entity.spy_category.create';
 
     /**
      * Specification:
@@ -31,7 +31,7 @@ interface CategoryEvents
      *
      * @api
      */
-    const ENTITY_SPY_CATEGORY_UPDATE = 'Entity.spy_category.update';
+    public const ENTITY_SPY_CATEGORY_UPDATE = 'Entity.spy_category.update';
 
     /**
      * Specification:
@@ -39,7 +39,7 @@ interface CategoryEvents
      *
      * @api
      */
-    const ENTITY_SPY_CATEGORY_DELETE = 'Entity.spy_category.delete';
+    public const ENTITY_SPY_CATEGORY_DELETE = 'Entity.spy_category.delete';
 
     /**
      * Specification:
@@ -47,7 +47,7 @@ interface CategoryEvents
      *
      * @api
      */
-    const ENTITY_SPY_CATEGORY_ATTRIBUTE_CREATE = 'Entity.spy_category_attribute.create';
+    public const ENTITY_SPY_CATEGORY_ATTRIBUTE_CREATE = 'Entity.spy_category_attribute.create';
 
     /**
      * Specification:
@@ -55,7 +55,7 @@ interface CategoryEvents
      *
      * @api
      */
-    const ENTITY_SPY_CATEGORY_ATTRIBUTE_UPDATE = 'Entity.spy_category_attribute.update';
+    public const ENTITY_SPY_CATEGORY_ATTRIBUTE_UPDATE = 'Entity.spy_category_attribute.update';
 
     /**
      * Specification:
@@ -63,7 +63,7 @@ interface CategoryEvents
      *
      * @api
      */
-    const ENTITY_SPY_CATEGORY_ATTRIBUTE_DELETE = 'Entity.spy_category_attribute.delete';
+    public const ENTITY_SPY_CATEGORY_ATTRIBUTE_DELETE = 'Entity.spy_category_attribute.delete';
 
     /**
      * Specification:
@@ -71,7 +71,7 @@ interface CategoryEvents
      *
      * @api
      */
-    const ENTITY_SPY_CATEGORY_CLOSURE_TABLE_CREATE = 'Entity.spy_category_closure_table.create';
+    public const ENTITY_SPY_CATEGORY_CLOSURE_TABLE_CREATE = 'Entity.spy_category_closure_table.create';
 
     /**
      * Specification:
@@ -79,7 +79,7 @@ interface CategoryEvents
      *
      * @api
      */
-    const ENTITY_SPY_CATEGORY_CLOSURE_TABLE_UPDATE = 'Entity.spy_category_closure_table.update';
+    public const ENTITY_SPY_CATEGORY_CLOSURE_TABLE_UPDATE = 'Entity.spy_category_closure_table.update';
 
     /**
      * Specification:
@@ -87,7 +87,7 @@ interface CategoryEvents
      *
      * @api
      */
-    const ENTITY_SPY_CATEGORY_CLOSURE_TABLE_DELETE = 'Entity.spy_category_closure_table.delete';
+    public const ENTITY_SPY_CATEGORY_CLOSURE_TABLE_DELETE = 'Entity.spy_category_closure_table.delete';
 
     /**
      * Specification:
@@ -95,7 +95,7 @@ interface CategoryEvents
      *
      * @api
      */
-    const ENTITY_SPY_CATEGORY_NODE_CREATE = 'Entity.spy_category_node.create';
+    public const ENTITY_SPY_CATEGORY_NODE_CREATE = 'Entity.spy_category_node.create';
 
     /**
      * Specification:
@@ -103,7 +103,7 @@ interface CategoryEvents
      *
      * @api
      */
-    const ENTITY_SPY_CATEGORY_NODE_UPDATE = 'Entity.spy_category_node.update';
+    public const ENTITY_SPY_CATEGORY_NODE_UPDATE = 'Entity.spy_category_node.update';
 
     /**
      * Specification:
@@ -111,7 +111,7 @@ interface CategoryEvents
      *
      * @api
      */
-    const ENTITY_SPY_CATEGORY_NODE_DELETE = 'Entity.spy_category_node.delete';
+    public const ENTITY_SPY_CATEGORY_NODE_DELETE = 'Entity.spy_category_node.delete';
 
     /**
      * Specification:
@@ -119,7 +119,7 @@ interface CategoryEvents
      *
      * @api
      */
-    const ENTITY_SPY_CATEGORY_TEMPLATE_CREATE = 'Entity.spy_category_template.create';
+    public const ENTITY_SPY_CATEGORY_TEMPLATE_CREATE = 'Entity.spy_category_template.create';
 
     /**
      * Specification:
@@ -127,7 +127,7 @@ interface CategoryEvents
      *
      * @api
      */
-    const ENTITY_SPY_CATEGORY_TEMPLATE_UPDATE = 'Entity.spy_category_template.update';
+    public const ENTITY_SPY_CATEGORY_TEMPLATE_UPDATE = 'Entity.spy_category_template.update';
 
     /**
      * Specification:
@@ -135,7 +135,7 @@ interface CategoryEvents
      *
      * @api
      */
-    const ENTITY_SPY_CATEGORY_TEMPLATE_DELETE = 'Entity.spy_category_template.delete';
+    public const ENTITY_SPY_CATEGORY_TEMPLATE_DELETE = 'Entity.spy_category_template.delete';
 
     /**
      * Specification:
@@ -143,7 +143,7 @@ interface CategoryEvents
      *
      * @api
      */
-    const CATEGORY_NODE_PUBLISH = 'Category.node.publish';
+    public const CATEGORY_NODE_PUBLISH = 'Category.node.publish';
 
     /**
      * Specification:
@@ -151,7 +151,7 @@ interface CategoryEvents
      *
      * @api
      */
-    const CATEGORY_NODE_UNPUBLISH = 'Category.node.unpublish';
+    public const CATEGORY_NODE_UNPUBLISH = 'Category.node.unpublish';
 
     /**
      * Specification:
@@ -159,7 +159,7 @@ interface CategoryEvents
      *
      * @api
      */
-    const CATEGORY_TREE_PUBLISH = 'Category.tree.publish';
+    public const CATEGORY_TREE_PUBLISH = 'Category.tree.publish';
 
     /**
      * Specification:
@@ -167,5 +167,5 @@ interface CategoryEvents
      *
      * @api
      */
-    const CATEGORY_TREE_UNPUBLISH = 'Category.tree.unpublish';
+    public const CATEGORY_TREE_UNPUBLISH = 'Category.tree.unpublish';
 }

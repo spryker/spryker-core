@@ -22,8 +22,8 @@ use Symfony\Component\Filesystem\Filesystem;
  */
 class PropelSchemaWriterTest extends AbstractPropelSchemaTest
 {
-    const TEST_FILE_NAME = 'test_file';
-    const TEST_CONTENT = 'some test content';
+    public const TEST_FILE_NAME = 'test_file';
+    public const TEST_CONTENT = 'some test content';
 
     /**
      * @return void

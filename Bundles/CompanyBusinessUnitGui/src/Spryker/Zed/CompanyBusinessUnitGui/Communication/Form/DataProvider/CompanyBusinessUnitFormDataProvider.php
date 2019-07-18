@@ -56,7 +56,7 @@ class CompanyBusinessUnitFormDataProvider
      */
     public function getOptions(?int $idCompanyBusinessUnit = null): array
     {
-        list($choicesValues, $choicesAttributes) = $this->prepareUnitParentAttributeMap($idCompanyBusinessUnit);
+        [$choicesValues, $choicesAttributes] = $this->prepareUnitParentAttributeMap($idCompanyBusinessUnit);
 
         return [
             'data_class' => CompanyBusinessUnitTransfer::class,
@@ -74,13 +74,12 @@ class CompanyBusinessUnitFormDataProvider
     protected function findCompanyBusinessUnitTransfer(?int $idCompanyBusinessUnit = null): CompanyBusinessUnitTransfer
     {
         $companyBusinessUnitTransfer = new CompanyBusinessUnitTransfer();
+
         if (!$idCompanyBusinessUnit) {
             return $companyBusinessUnitTransfer;
         }
 
-        return $this->companyBusinessUnitFacade->getCompanyBusinessUnitById(
-            $companyBusinessUnitTransfer->setIdCompanyBusinessUnit($idCompanyBusinessUnit)
-        );
+        return $this->companyBusinessUnitFacade->findCompanyBusinessUnitById($idCompanyBusinessUnit) ?? $companyBusinessUnitTransfer;
     }
 
     /**

@@ -35,7 +35,7 @@ interface CurrencyQueryContainerInterface
      *
      * @param array $isoCodes
      *
-     * @return $this|\Orm\Zed\Currency\Persistence\SpyCurrencyQuery
+     * @return \Orm\Zed\Currency\Persistence\SpyCurrencyQuery
      */
     public function queryCurrenciesByIsoCodes(array $isoCodes);
 }
