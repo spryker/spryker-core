@@ -410,9 +410,9 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
         $priceProductMerchantRelationshipQuery = $this->queryPriceProductMerchantRelationship()
             ->filterByFkProduct(null, Criteria::ISNOTNULL);
 
-        $priceProductMerchantRelationshipQuery = $this->applyFilterToQuery($priceProductMerchantRelationshipQuery, $filterTransfer);
-
-        $priceProductMerchantRelationshipEntityTransfers = $priceProductMerchantRelationshipQuery->find();
+        $priceProductMerchantRelationshipEntityTransfers = $this->buildQueryFromCriteria($priceProductMerchantRelationshipQuery, $filterTransfer)
+            ->setFormatter(ModelCriteria::FORMAT_OBJECT)
+            ->find();
 
         return $this->getFactory()
             ->createPriceProductMerchantRelationshipMapper()
@@ -431,37 +431,14 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
         $priceProductMerchantRelationshipQuery = $this->queryPriceProductMerchantRelationship()
             ->filterByFkProductAbstract(null, Criteria::ISNOTNULL);
 
-        $priceProductMerchantRelationshipQuery = $this->applyFilterToQuery($priceProductMerchantRelationshipQuery, $filterTransfer);
-
-        $priceProductMerchantRelationshipEntityTransfers = $priceProductMerchantRelationshipQuery->find();
+        $priceProductMerchantRelationshipEntityTransfers = $this->buildQueryFromCriteria($priceProductMerchantRelationshipQuery, $filterTransfer)
+            ->setFormatter(ModelCriteria::FORMAT_OBJECT)
+            ->find();
 
         return $this->getFactory()
             ->createPriceProductMerchantRelationshipMapper()
             ->mapEntitiesToPriceProductMerchantRelationshipTransferCollection(
                 $priceProductMerchantRelationshipEntityTransfers->getData()
             );
-    }
-
-    /**
-     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $modelCriteria
-     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
-     */
-    protected function applyFilterToQuery(ModelCriteria $modelCriteria, FilterTransfer $filterTransfer): ModelCriteria
-    {
-        if ($filterTransfer->getLimit()) {
-            $modelCriteria->setLimit($filterTransfer->getLimit());
-        }
-
-        if ($filterTransfer->getOffset()) {
-            $modelCriteria->setOffset($filterTransfer->getOffset());
-        }
-
-        if ($filterTransfer->getOrderBy()) {
-            $modelCriteria->orderBy($filterTransfer->getOrderBy(), $filterTransfer->getOrderDirection() ?? Criteria::ASC);
-        }
-
-        return $modelCriteria;
     }
 }

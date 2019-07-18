@@ -70,7 +70,7 @@ class PriceProductAbstractMerchantRelationEventResourceBulkRepositoryPlugin exte
      */
     public function getEventName(): string
     {
-        return PriceProductMerchantRelationshipEvents::ENTITY_SPY_PRICE_PRODUCT_MERCHANT_RELATIONSHIP_CREATE;
+        return PriceProductMerchantRelationshipEvents::PRICE_ABSTRACT_PUBLISH;
     }
 
     /**
