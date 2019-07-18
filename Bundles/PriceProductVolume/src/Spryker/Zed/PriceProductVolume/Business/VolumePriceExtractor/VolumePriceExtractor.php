@@ -62,7 +62,7 @@ class VolumePriceExtractor implements VolumePriceExtractorInterface
                 $priceProductTransfers[0]
             );
             $extractedPrices = $this->extractPriceProductVolumeTransfersFromArray($abstractProductPrices);
-            $extractedPrices = $this->setConcretePriceDataToPriceData($extractedPrices, $priceProductTransfers[0]);
+            $extractedPrices = $this->mapConcretePriceDataToExtractedPrice($extractedPrices, $priceProductTransfers[0]);
         }
 
         return array_merge($extractedPrices, $priceProductTransfers);
@@ -163,15 +163,16 @@ class VolumePriceExtractor implements VolumePriceExtractorInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    protected function setConcretePriceDataToPriceData(
+    protected function mapConcretePriceDataToExtractedPrice(
         array $priceProductTransfers,
         PriceProductTransfer $concretePriceProductTransfer
     ): array {
-        $concretePriceProductSku = $concretePriceProductTransfer->getSkuProduct();
-        $concretePriceProductId = $concretePriceProductTransfer->getIdProduct();
+        $concretePriceProductSku = $concretePriceProductTransfer->requireSkuProduct()->getSkuProduct();
+        $concretePriceProductId = $concretePriceProductTransfer->requireIdProduct()->getIdProduct();
         foreach ($priceProductTransfers as $priceProductTransfer) {
-            $priceProductTransfer->setSkuProduct($concretePriceProductSku);
-            $priceProductTransfer->setIdProduct($concretePriceProductId);
+            $priceProductTransfer
+                ->setSkuProduct($concretePriceProductSku)
+                ->setIdProduct($concretePriceProductId);
         }
 
         return $priceProductTransfers;
