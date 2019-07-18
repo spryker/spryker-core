@@ -5,15 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductPageSearch\Dependency\Facade;
+namespace Spryker\Zed\ProductStorage\Dependency\Facade;
 
-interface ProductPageSearchToStoreFacadeInterface
+interface ProductStorageToStoreFacadeInterface
 {
-    /**
-     * @return \Generated\Shared\Transfer\StoreTransfer[]
-     */
-    public function getAllStores();
-
     /**
      * @param string $storeName
      *
