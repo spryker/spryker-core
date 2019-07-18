@@ -87,7 +87,11 @@ class ResourcePluginAnalyzer implements ResourcePluginAnalyzerInterface
                     $this->getParentResource($plugin, $resourceRoutesPluginsProviderPlugin->getResourceRoutePlugins())
                 );
 
-                $this->processMethods($plugin, $resourcePath, $pathAnnotationsTransfer);
+                $this->processMethods(
+                    $plugin,
+                    $pathAnnotationsTransfer,
+                    $this->getParentResource($plugin, $resourceRoutesPluginsProviderPlugin->getResourceRoutePlugins())
+                );
             }
         }
 
@@ -100,16 +104,19 @@ class ResourcePluginAnalyzer implements ResourcePluginAnalyzerInterface
 
     /**
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
-     * @param string $resourcePath
      * @param \Generated\Shared\Transfer\PathAnnotationsTransfer $pathAnnotationsTransfer
+     * @param array|null $parentResource
      *
      * @return void
      */
-    protected function processMethods(ResourceRoutePluginInterface $plugin, string $resourcePath, PathAnnotationsTransfer $pathAnnotationsTransfer): void
+    protected function processMethods(ResourceRoutePluginInterface $plugin, PathAnnotationsTransfer $pathAnnotationsTransfer, ?array $parentResource): void
     {
-        $this->processGetResourceByIdPath($plugin, $resourcePath, $pathAnnotationsTransfer->getGetResourceById());
-        $this->processGetResourceCollectionPath($plugin, $resourcePath, $pathAnnotationsTransfer->getGetCollection());
-        $this->processPostResourcePath($plugin, $resourcePath, $pathAnnotationsTransfer->getPost());
+        $resourcePath = '/' . $plugin->getResourceType();
+        $resourcePathWithParent = $this->parseParentToPath($resourcePath, $parentResource);
+
+        $this->processGetResourceByIdPath($plugin, $resourcePathWithParent, $pathAnnotationsTransfer->getGetResourceById());
+        $this->processGetResourceCollectionPath($plugin, $resourcePathWithParent, $pathAnnotationsTransfer->getGetCollection());
+        $this->processPostResourcePath($plugin, $resourcePathWithParent, $pathAnnotationsTransfer->getPost());
         $this->processPatchResourcePath($plugin, $resourcePath, $pathAnnotationsTransfer->getPatch());
         $this->processDeleteResourcePath($plugin, $resourcePath, $pathAnnotationsTransfer->getDelete());
     }
