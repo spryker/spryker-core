@@ -93,6 +93,11 @@ class PriceProductVolumeFacadeTest extends Unit
 
         $priceProductTransfer->setMoneyValue($moneyValueTransfer);
 
+        $productConcreteTransfer = $this->tester->haveProduct();
+        $priceProductTransfer
+            ->setIdProduct($productConcreteTransfer->getIdProductConcrete())
+            ->setSkuProduct($productConcreteTransfer->getSku());
+
         return $priceProductTransfer;
     }
 

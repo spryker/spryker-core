@@ -168,11 +168,8 @@ class VolumePriceExtractor implements VolumePriceExtractorInterface
         PriceProductTransfer $concretePriceProductTransfer
     ): array {
         $concretePriceProductSku = $concretePriceProductTransfer->requireSkuProduct()->getSkuProduct();
-        $concretePriceProductId = $concretePriceProductTransfer->requireIdProduct()->getIdProduct();
         foreach ($priceProductTransfers as $priceProductTransfer) {
-            $priceProductTransfer
-                ->setSkuProduct($concretePriceProductSku)
-                ->setIdProduct($concretePriceProductId);
+            $priceProductTransfer->setSkuProduct($concretePriceProductSku);
         }
 
         return $priceProductTransfers;
