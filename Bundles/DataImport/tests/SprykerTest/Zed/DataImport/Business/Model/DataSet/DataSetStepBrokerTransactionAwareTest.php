@@ -8,7 +8,9 @@
 namespace SprykerTest\Zed\DataImport\Business\Model\DataSet;
 
 use Codeception\Test\Unit;
+use Exception;
 use Spryker\Zed\DataImport\Business\Exception\TransactionException;
+use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\DataImportDependencyProvider;
 use Spryker\Zed\DataImport\Dependency\Propel\DataImportToPropelConnectionInterface;
 
@@ -141,6 +143,22 @@ class DataSetStepBrokerTransactionAwareTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testTransactionRollBackOnWriterException(): void
+    {
+        //Arrange
+        $this->tester->setDependency(DataImportDependencyProvider::PROPEL_CONNECTION, $this->createPropelConnectionMockWithExpectedRollBack());
+
+        $dataImportStepMock = $this->createDataImportStepMockWithExpectedExceptionOnExecute();
+        $dataSetStepBrokerTransactionAware = $this->tester->getFactory()->createTransactionAwareDataSetStepBroker();
+        $dataSetStepBrokerTransactionAware->addStep($dataImportStepMock);
+
+        //Act
+        $dataSetStepBrokerTransactionAware->execute($this->tester->getFactory()->createDataSet());
+    }
+
+    /**
      * @param int $beginTransactionCalledCount
      * @param int $endTransactionCalledCount
      * @param mixed $isInTransaction
@@ -150,13 +168,38 @@ class DataSetStepBrokerTransactionAwareTest extends Unit
     private function getPropelConnectionMock($beginTransactionCalledCount, $endTransactionCalledCount, ...$isInTransaction)
     {
         $mockBuilder = $this->getMockBuilder(DataImportToPropelConnectionInterface::class)
-            ->setMethods(['inTransaction', 'beginTransaction', 'endTransaction']);
+            ->setMethods(['inTransaction', 'beginTransaction', 'endTransaction', 'rollBack']);
 
         $propelConnectionMock = $mockBuilder->getMock();
 
         $propelConnectionMock->method('inTransaction')->will($this->onConsecutiveCalls(...$isInTransaction));
         $propelConnectionMock->expects($this->exactly($beginTransactionCalledCount))->method('beginTransaction');
         $propelConnectionMock->expects($this->exactly($endTransactionCalledCount))->method('endTransaction');
+
+        return $propelConnectionMock;
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
+     */
+    protected function createDataImportStepMockWithExpectedExceptionOnExecute()
+    {
+        $dataImportStepMockBuilder = $this->getMockBuilder(DataImportStepInterface::class)
+            ->setMethods(['execute']);
+        $dataImportStepMock = $dataImportStepMockBuilder->getMock();
+        $dataImportStepMock->expects($this->once())->method('execute')->willThrowException(new Exception());
+        $this->expectException(Exception::class);
+
+        return $dataImportStepMock;
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\DataImport\Dependency\Propel\DataImportToPropelConnectionInterface
+     */
+    protected function createPropelConnectionMockWithExpectedRollBack()
+    {
+        $propelConnectionMock = $this->getPropelConnectionMock(1, 0, false);
+        $propelConnectionMock->expects($this->exactly(1))->method('rollBack');
 
         return $propelConnectionMock;
     }
