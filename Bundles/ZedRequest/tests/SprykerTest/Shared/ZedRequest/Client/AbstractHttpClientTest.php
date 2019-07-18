@@ -48,7 +48,7 @@ class AbstractHttpClientTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\SprykerTest\Shared\ZedRequest\Client\Fixture\AbstractHttpClient
+     * @return \PHPUnit\Framework\MockObject\MockObject|\SprykerTest\Shared\ZedRequest\Client\Fixture\AbstractHttpClient
      */
     protected function getAbstractRequestMock()
     {

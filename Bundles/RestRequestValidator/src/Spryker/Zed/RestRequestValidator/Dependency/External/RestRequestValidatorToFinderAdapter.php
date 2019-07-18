@@ -24,9 +24,9 @@ class RestRequestValidatorToFinderAdapter implements RestRequestValidatorToFinde
     /**
      * @param array $dirs
      *
-     * @return \Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToFinderAdapterInterface
+     * @return $this
      */
-    public function in(array $dirs): RestRequestValidatorToFinderAdapterInterface
+    public function in(array $dirs)
     {
         $this->finder->in($dirs);
 
@@ -36,9 +36,9 @@ class RestRequestValidatorToFinderAdapter implements RestRequestValidatorToFinde
     /**
      * @param string $pattern
      *
-     * @return \Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToFinderAdapterInterface
+     * @return $this
      */
-    public function name(string $pattern): RestRequestValidatorToFinderAdapterInterface
+    public function name(string $pattern)
     {
         $this->finder->name($pattern);
 
@@ -62,9 +62,9 @@ class RestRequestValidatorToFinderAdapter implements RestRequestValidatorToFinde
     }
 
     /**
-     * @return \Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToFinderAdapterInterface
+     * @return $this
      */
-    public function reset(): RestRequestValidatorToFinderAdapterInterface
+    public function reset()
     {
         $this->finder = Finder::create();
 

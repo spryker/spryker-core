@@ -32,16 +32,11 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
             return [];
         }
 
-        $productAlternativeStorageEntities = $this->getFactory()
+        return $this->getFactory()
             ->createProductAlternativeStoragePropelQuery()
             ->filterByFkProduct_In($productIds)
-            ->find();
-
-        if (!$productAlternativeStorageEntities->count()) {
-            return [];
-        }
-
-        return $productAlternativeStorageEntities->getArrayCopy();
+            ->find()
+            ->getArrayCopy();
     }
 
     /**
@@ -136,6 +131,7 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
             ->getProductAbstractPropelQuery();
         $productAbstractQuery->filterByIdProductAbstract_In($productIds)
             ->addAsColumn(ProductAbstractTransfer::SKU, SpyProductAbstractTableMap::COL_SKU);
+
         return $productAbstractQuery->select([SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, ProductAbstractTransfer::SKU])
             ->find()
             ->toArray(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT);
@@ -213,5 +209,55 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
             ->select([SpyProductAlternativeTableMap::COL_FK_PRODUCT])
             ->find()
             ->toArray();
+    }
+
+    /**
+     * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductAlternativeStorage[]
+     */
+    public function findAllProductAlternativeStorageEntities(): array
+    {
+        return $this->getFactory()
+            ->createProductAlternativeStoragePropelQuery()
+            ->find()
+            ->getArrayCopy();
+    }
+
+    /**
+     * @param int[] $productAlternativeStorageIds
+     *
+     * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductAlternativeStorage[]
+     */
+    public function findProductAlternativeStorageEntitiesByIds(array $productAlternativeStorageIds): array
+    {
+        return $this->getFactory()
+            ->createProductAlternativeStoragePropelQuery()
+            ->filterByIdProductAlternativeStorage_In($productAlternativeStorageIds)
+            ->find()
+            ->getArrayCopy();
+    }
+
+    /**
+     * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorage[]
+     */
+    public function findAllProductReplacementForStorageEntities(): array
+    {
+        return $this->getFactory()
+            ->createProductReplacementForStoragePropelQuery()
+            ->find()
+            ->getArrayCopy();
+    }
+
+    /**
+     * @param int[] $productReplacementForStorageIds
+     *
+     * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorage[]
+     */
+    public function findProductReplacementForStorageEntitiesByIds(array $productReplacementForStorageIds): array
+    {
+        return $this->getFactory()
+            ->createProductReplacementForStoragePropelQuery()
+            ->filterByIdProductReplacementForStorage_In($productReplacementForStorageIds)
+            ->find()
+            ->getArrayCopy();
     }
 }

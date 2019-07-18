@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Client\Kernel\Locator;
 use Spryker\Client\ProductStorage\Filter\ProductAbstractAttributeMapRestrictionFilterInterface;
 use Spryker\Client\ProductStorage\ProductStorageConfig;
+use Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductViewExpanderPluginInterface;
 use Spryker\Shared\Kernel\Store;
 use Zend\Filter\FilterChain;
 use Zend\Filter\StringToLower;
@@ -21,7 +22,7 @@ class ProductStorageDataMapper implements ProductStorageDataMapperInterface
     /**
      * @var \Spryker\Client\ProductStorage\Dependency\Plugin\ProductViewExpanderPluginInterface[]
      */
-    protected $productAbstractStorageExpanderPlugins;
+    protected $productStorageExpanderPlugins;
 
     /**
      * @var \Spryker\Client\ProductStorage\Filter\ProductAbstractAttributeMapRestrictionFilterInterface
@@ -29,6 +30,8 @@ class ProductStorageDataMapper implements ProductStorageDataMapperInterface
     protected $productAbstractVariantsRestrictionFilter;
 
     /**
+     * @uses ProductStorageDataMapper::filterProductStorageExpanderPlugins()
+     *
      * @param \Spryker\Client\ProductStorage\Dependency\Plugin\ProductViewExpanderPluginInterface[] $storageProductExpanderPlugins
      * @param \Spryker\Client\ProductStorage\Filter\ProductAbstractAttributeMapRestrictionFilterInterface $productAbstractVariantsRestrictionFilter
      */
@@ -36,7 +39,7 @@ class ProductStorageDataMapper implements ProductStorageDataMapperInterface
         array $storageProductExpanderPlugins,
         ProductAbstractAttributeMapRestrictionFilterInterface $productAbstractVariantsRestrictionFilter
     ) {
-        $this->productAbstractStorageExpanderPlugins = $storageProductExpanderPlugins;
+        $this->productStorageExpanderPlugins = array_filter($storageProductExpanderPlugins, [$this, 'filterProductStorageExpanderPlugins']);
         $this->productAbstractVariantsRestrictionFilter = $productAbstractVariantsRestrictionFilter;
     }
 
@@ -53,7 +56,7 @@ class ProductStorageDataMapper implements ProductStorageDataMapperInterface
         $productViewTransfer = $this->createProductViewTransfer($productStorageData);
         $productViewTransfer->setSelectedAttributes($selectedAttributes);
 
-        foreach ($this->productAbstractStorageExpanderPlugins as $productViewExpanderPlugin) {
+        foreach ($this->productStorageExpanderPlugins as $productViewExpanderPlugin) {
             $productViewTransfer = $productViewExpanderPlugin->expandProductViewTransfer($productViewTransfer, $productStorageData, $locale);
         }
 
@@ -121,5 +124,15 @@ class ProductStorageDataMapper implements ProductStorageDataMapperInterface
         }
 
         return $filteredData;
+    }
+
+    /**
+     * @param \Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductViewExpanderPluginInterface $storageProductExpanderPlugin
+     *
+     * @return bool
+     */
+    protected function filterProductStorageExpanderPlugins(ProductViewExpanderPluginInterface $storageProductExpanderPlugin): bool
+    {
+        return true;
     }
 }

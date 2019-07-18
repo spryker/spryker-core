@@ -25,7 +25,10 @@ use Spryker\Zed\CmsGui\Communication\Mapper\CmsVersionMapper;
 use Spryker\Zed\CmsGui\Communication\Table\CmsPageTable;
 use Spryker\Zed\CmsGui\Communication\Tabs\GlossaryTabs;
 use Spryker\Zed\CmsGui\Communication\Tabs\PageTabs;
+use Spryker\Zed\CmsGui\Communication\Updater\CmsGlossaryUpdater;
+use Spryker\Zed\CmsGui\Communication\Updater\CmsGlossaryUpdaterInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
 use Symfony\Component\Form\FormInterface;
 
 /**
@@ -66,6 +69,8 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @deprecated use instead getCmsVersionForm
+     *
      * @param \Spryker\Zed\CmsGui\Communication\Form\DataProvider\CmsVersionDataProvider $cmsVersionDataProvider
      * @param int|null $idCmsPage
      * @param int|null $version
@@ -73,6 +78,18 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
      * @return \Symfony\Component\Form\FormInterface
      */
     public function createCmsVersionForm(CmsVersionDataProvider $cmsVersionDataProvider, $idCmsPage = null, $version = null)
+    {
+        return $this->getCmsVersionForm($cmsVersionDataProvider, $idCmsPage, $version);
+    }
+
+    /**
+     * @param \Spryker\Zed\CmsGui\Communication\Form\DataProvider\CmsVersionDataProvider $cmsVersionDataProvider
+     * @param int|null $idCmsPage
+     * @param int|null $version
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getCmsVersionForm(CmsVersionDataProvider $cmsVersionDataProvider, ?int $idCmsPage = null, ?int $version = null): FormInterface
     {
         return $this->getFormFactory()->create(
             CmsVersionFormType::class,
@@ -82,6 +99,8 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @deprecated use instead getCmsPageForm
+     *
      * @param \Spryker\Zed\CmsGui\Communication\Form\DataProvider\CmsPageFormTypeDataProvider $cmsPageFormTypeDataProvider
      * @param int|null $idCmsPage
      * @param \Generated\Shared\Transfer\CmsPageTransfer|null $cmsPageTransfer
@@ -93,7 +112,7 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
         $idCmsPage = null,
         ?CmsPageTransfer $cmsPageTransfer = null
     ): FormInterface {
-        $cmsPageTransfer = $cmsPageTransfer?: $cmsPageFormTypeDataProvider->getData($idCmsPage);
+        $cmsPageTransfer = $cmsPageTransfer ?: $cmsPageFormTypeDataProvider->getData($idCmsPage);
 
         return $this->getFormFactory()->create(
             CmsPageFormType::class,
@@ -103,15 +122,26 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @deprecated use instead getCmsGlossaryForm
+     *
      * @param \Spryker\Zed\CmsGui\Communication\Form\DataProvider\CmsGlossaryFormTypeDataProvider $cmsGlossaryFormTypeDataProvider
      * @param int $idCmsPage
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createCmsGlossaryForm(
-        CmsGlossaryFormTypeDataProvider $cmsGlossaryFormTypeDataProvider,
-        $idCmsPage
-    ) {
+    public function createCmsGlossaryForm(CmsGlossaryFormTypeDataProvider $cmsGlossaryFormTypeDataProvider, $idCmsPage)
+    {
+        return $this->getCmsGlossaryForm($cmsGlossaryFormTypeDataProvider, $idCmsPage);
+    }
+
+    /**
+     * @param \Spryker\Zed\CmsGui\Communication\Form\DataProvider\CmsGlossaryFormTypeDataProvider $cmsGlossaryFormTypeDataProvider
+     * @param int $idCmsPage
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getCmsGlossaryForm(CmsGlossaryFormTypeDataProvider $cmsGlossaryFormTypeDataProvider, int $idCmsPage): FormInterface
+    {
         return $this->getFormFactory()->create(
             CmsGlossaryFormType::class,
             $cmsGlossaryFormTypeDataProvider->getData($idCmsPage),
@@ -144,9 +174,12 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Spryker\Zed\CmsGui\Communication\Form\DataProvider\CmsGlossaryFormTypeDataProvider
      */
-    public function createCmsGlossaryFormTypeDataProvider()
+    public function createCmsGlossaryFormTypeDataProvider(): CmsGlossaryFormTypeDataProvider
     {
-        return new CmsGlossaryFormTypeDataProvider($this->getCmsFacade());
+        return new CmsGlossaryFormTypeDataProvider(
+            $this->getCmsFacade(),
+            $this->createCmsGlossaryUpdater()
+        );
     }
 
     /**
@@ -210,7 +243,15 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Twig_Environment
+     * @return \Spryker\Zed\CmsGui\Communication\Updater\CmsGlossaryUpdaterInterface
+     */
+    public function createCmsGlossaryUpdater(): CmsGlossaryUpdaterInterface
+    {
+        return new CmsGlossaryUpdater($this->getCmsGlossaryAfterFindPlugins(), $this->getCmsGlossaryBeforeSavePlugins());
+    }
+
+    /**
+     * @return \Twig\Environment
      */
     protected function getTwigEnvironment()
     {
@@ -279,5 +320,29 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getCreateGlossaryExpanderPlugins()
     {
         return $this->getProvidedDependency(CmsGuiDependencyProvider::PLUGINS_CREATE_GLOSSARY_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\Kernel\Communication\Form\FormTypeInterface
+     */
+    public function getStoreRelationFormTypePlugin(): FormTypeInterface
+    {
+        return $this->getProvidedDependency(CmsGuiDependencyProvider::PLUGIN_STORE_RELATION_FORM_TYPE);
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsGuiExtension\Dependency\Plugin\CmsGlossaryAfterFindPluginInterface[]
+     */
+    public function getCmsGlossaryAfterFindPlugins(): array
+    {
+        return $this->getProvidedDependency(CmsGuiDependencyProvider::PLUGINS_CMS_GLOSSARY_AFTER_FIND);
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsGuiExtension\Dependency\Plugin\CmsGlossaryBeforeSavePluginInterface[]
+     */
+    public function getCmsGlossaryBeforeSavePlugins(): array
+    {
+        return $this->getProvidedDependency(CmsGuiDependencyProvider::PLUGINS_CMS_GLOSSARY_BEFORE_SAVE);
     }
 }

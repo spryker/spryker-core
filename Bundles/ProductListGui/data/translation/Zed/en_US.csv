@@ -1,0 +1,33 @@
+"Add list","Add list"
+"Are you sure you want to remove this list? Removing this list will also remove all associated functionalities.","Are you sure you want to remove this list? Removing this list will also remove all associated functionalities."
+"Assign Categories","Assign Categories"
+"Assign Products","Assign Products"
+Back,Back
+"Back to Product Lists","Back to Product Lists"
+Blacklist,Blacklist
+"Business Unit Owner Name","Business Unit Owner Name"
+"Create a Product List","Create a Product List"
+"Edit List","Edit List"
+Export,Export
+ID,ID
+"ID Merchant Relation","ID Merchant Relation"
+"Import Product List","Import Product List"
+"List of Product lists","List of Product lists"
+"Merchant Name","Merchant Name"
+"Merchant relationship","Merchant relationship"
+Name,Name
+"Overview of Product lists","Overview of Product lists"
+"Owner Type","Owner Type"
+"Product label #%d successfully created.","Product label #%d successfully created."
+"Product List ""%s"" has been successfully created.","Product List ""%s"" has been successfully created."
+"Product List ""%s"" has been successfully updated.","Product List ""%s"" has been successfully updated."
+"Product List has been successfully removed.","Product List has been successfully removed."
+"Product List removal confirmation","Product List was successfully removed"
+"Products in this list","Products in this list"
+"Remove List","Remove List"
+Save,Save
+"Select Products to assign","Select Products to assign"
+Selected,Selected
+SKU,SKU
+Type,Type
+Whitelist,Whitelist

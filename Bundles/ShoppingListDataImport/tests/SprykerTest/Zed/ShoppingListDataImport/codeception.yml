@@ -30,4 +30,5 @@ suites:
                 - \SprykerTest\Zed\CompanyBusinessUnit\Helper\CompanyBusinessUnitHelper
                 - \SprykerTest\Shared\ShoppingList\Helper\ShoppingListHelper
                 - \SprykerTest\Zed\ShoppingListDataImport\Helper\ShoppingListDataImportHelper
+                - \SprykerTest\Shared\Testify\Helper\TableRelationsCleanupHelper
                 - \SprykerTest\Shared\Product\Helper\ProductDataHelper

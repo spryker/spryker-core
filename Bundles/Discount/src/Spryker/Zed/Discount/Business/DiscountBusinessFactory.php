@@ -53,6 +53,7 @@ use Spryker\Zed\Discount\Business\QueryString\Tokenizer;
 use Spryker\Zed\Discount\Business\QueryString\Validator;
 use Spryker\Zed\Discount\Business\QuoteChangeObserver\QuoteChangeObserver;
 use Spryker\Zed\Discount\Business\QuoteChangeObserver\QuoteChangeObserverInterface;
+use Spryker\Zed\Discount\Business\QuoteDiscountValidator\QuoteDiscountMaxUsageValidator;
 use Spryker\Zed\Discount\Business\Voucher\VoucherCode;
 use Spryker\Zed\Discount\Business\Voucher\VoucherEngine;
 use Spryker\Zed\Discount\Business\Voucher\VoucherValidator;
@@ -62,6 +63,7 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 /**
  * @method \Spryker\Zed\Discount\DiscountConfig getConfig()
  * @method \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Discount\Persistence\DiscountRepositoryInterface getRepository()
  */
 class DiscountBusinessFactory extends AbstractBusinessFactory
 {
@@ -638,5 +640,15 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     public function createDiscountableItemTransformer(): DiscountableItemTransformerInterface
     {
         return new DiscountableItemTransformer();
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\QuoteDiscountValidator\QuoteDiscountMaxUsageValidator
+     */
+    public function createQuoteVoucherDiscountMaxUsageValidator(): QuoteDiscountMaxUsageValidator
+    {
+        return new QuoteDiscountMaxUsageValidator(
+            $this->getRepository()
+        );
     }
 }

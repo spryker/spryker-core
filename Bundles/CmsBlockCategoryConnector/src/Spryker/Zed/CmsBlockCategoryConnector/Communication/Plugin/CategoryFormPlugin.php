@@ -22,6 +22,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 class CategoryFormPlugin extends AbstractPlugin implements CategoryFormPluginInterface, CategoryRelationUpdatePluginInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder

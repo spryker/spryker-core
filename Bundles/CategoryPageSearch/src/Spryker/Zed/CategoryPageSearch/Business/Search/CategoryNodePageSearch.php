@@ -196,11 +196,11 @@ class CategoryNodePageSearch implements CategoryNodePageSearchInterface
     }
 
     /**
-     * @param array $categoryNodeIds
+     * @param int[] $categoryNodeIds
      *
      * @return array
      */
-    protected function getCategoryTrees(array $categoryNodeIds)
+    protected function getCategoryTrees(array $categoryNodeIds): array
     {
         $localeNames = $this->store->getLocales();
         $locales = $this->queryContainer->queryLocalesWithLocaleNames($localeNames)->find();
@@ -208,7 +208,8 @@ class CategoryNodePageSearch implements CategoryNodePageSearchInterface
         $categoryNodeTree = [];
         $this->disableInstancePooling();
         foreach ($locales as $locale) {
-            $categoryNodes = $this->queryContainer->queryCategoryNodeTree($categoryNodeIds, $locale->getIdLocale())->find()->toKeyIndex();
+            $categoryNodes = $this->queryContainer->queryWholeCategoryNodeTree($categoryNodeIds, $locale->getIdLocale())->find()->toKeyIndex();
+
             foreach ($categoryNodeIds as $categoryNodeId) {
                 if (isset($categoryNodes[$categoryNodeId])) {
                     $categoryNodeTree[$categoryNodeId][$locale->getLocaleName()] = $categoryNodes[$categoryNodeId];

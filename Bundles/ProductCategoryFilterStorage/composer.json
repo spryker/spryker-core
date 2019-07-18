@@ -6,10 +6,11 @@
   "require": {
     "php": ">=7.1",
     "spryker/event-behavior": "^1.1.0",
-    "spryker/kernel": "^3.21.0",
+    "spryker/kernel": "^3.30.0",
     "spryker/product-category-filter": "^1.1.0",
     "spryker/storage": "^3.4.0",
     "spryker/synchronization": "^0.2.0 || ^1.0.0",
+    "spryker/synchronization-behavior": "^1.0.0",
     "spryker/synchronization-extension": "^1.0.0",
     "spryker/util-encoding": "^2.0.0"
   },

@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<database
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        name="zed"
+        xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd"
+        namespace="Orm\Zed\User\Persistence"
+        package="src.Orm.Zed.User.Persistence">
+
+    <table name="spy_user">
+        <column name="fk_locale" type="INTEGER" required="false"/>
+
+        <foreign-key name="spy_user-fk_locale" foreignTable="spy_locale">
+            <reference local="fk_locale" foreign="id_locale"/>
+        </foreign-key>
+    </table>
+
+</database>

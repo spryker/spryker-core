@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\PriceProduct\Business\Model\PriceType;
 
+use Generated\Shared\Transfer\PriceTypeTransfer;
 use Spryker\Zed\PriceProduct\Business\Exception\UnknownPriceProductTypeException;
 use Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface;
 use Spryker\Zed\PriceProduct\PriceProductConfig;
@@ -63,6 +64,20 @@ class PriceProductTypeReader implements PriceProductTypeReaderInterface
         }
 
         return $priceTypes;
+    }
+
+    /**
+     * @param string $priceTypeName
+     *
+     * @return \Generated\Shared\Transfer\PriceTypeTransfer|null
+     */
+    public function findPriceTypeByName(string $priceTypeName): ?PriceTypeTransfer
+    {
+        if ($this->hasPriceType($priceTypeName) === false) {
+            return null;
+        }
+
+        return $this->productPriceTypeMapper->mapFromEntity(static::$priceTypeCache[$priceTypeName]);
     }
 
     /**

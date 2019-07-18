@@ -57,11 +57,11 @@ class ProductReviewSynchronizationDataPlugin extends AbstractPlugin implements S
     {
         $query = $this->getQueryContainer()->queryProductReviewSearchByIds($ids);
 
-        if (empty($ids)) {
+        if ($ids === []) {
             $query->clear();
         }
 
-        return $query;
+        return $query->orderByIdProductReviewSearch();
     }
 
     /**

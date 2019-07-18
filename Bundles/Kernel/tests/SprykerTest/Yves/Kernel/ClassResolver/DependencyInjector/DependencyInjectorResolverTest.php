@@ -10,10 +10,10 @@ namespace SprykerTest\Yves\Kernel\ClassResolver\DependencyInjector;
 use Codeception\Test\Unit;
 use ReflectionClass;
 use Spryker\Shared\Kernel\ClassResolver\AbstractClassResolver;
-use Spryker\Shared\Kernel\ContainerInterface;
-use Spryker\Shared\Kernel\Dependency\Injector\DependencyInjectorCollectionInterface;
-use Spryker\Shared\Kernel\Dependency\Injector\DependencyInjectorInterface;
 use Spryker\Yves\Kernel\ClassResolver\DependencyInjector\DependencyInjectorResolver;
+use Spryker\Yves\Kernel\Container;
+use Spryker\Yves\Kernel\Dependency\Injector\DependencyInjectorCollectionInterface;
+use Spryker\Yves\Kernel\Dependency\Injector\DependencyInjectorInterface;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
@@ -85,7 +85,7 @@ class DependencyInjectorResolverTest extends Unit
     /**
      * @param array $methods
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Yves\Kernel\ClassResolver\DependencyInjector\DependencyInjectorResolver
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Yves\Kernel\ClassResolver\DependencyInjector\DependencyInjectorResolver
      */
     protected function getResolverMock(array $methods)
     {
@@ -222,10 +222,10 @@ class DependencyInjectorResolverTest extends Unit
         $fileContent = '<?php'
             . PHP_EOL . 'namespace ' . implode('\\', $classNameParts) . ';'
             . PHP_EOL . 'use ' . DependencyInjectorInterface::class . ';'
-            . PHP_EOL . 'use ' . ContainerInterface::class . ';'
+            . PHP_EOL . 'use ' . Container::class . ';'
             . PHP_EOL . 'class ' . $class . ' implements DependencyInjectorInterface'
             . PHP_EOL . '{'
-            . PHP_EOL . 'public function inject(ContainerInterface $container){}'
+            . PHP_EOL . 'public function inject(Container $container): Container {}'
             . PHP_EOL . '}';
 
         $directoryParts = [

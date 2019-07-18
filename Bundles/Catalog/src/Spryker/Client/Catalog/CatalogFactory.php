@@ -8,9 +8,16 @@
 namespace Spryker\Client\Catalog;
 
 use Spryker\Client\Catalog\Listing\CatalogViewModePersistence;
+use Spryker\Client\Catalog\ProductConcreteReader\ProductConcreteReader;
+use Spryker\Client\Catalog\ProductConcreteReader\ProductConcreteReaderInterface;
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\Search\Dependency\Plugin\PaginationConfigBuilderInterface;
+use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 use Spryker\Client\Search\Dependency\Plugin\SearchStringSetterInterface;
 
+/**
+ * @method \Spryker\Client\Catalog\CatalogConfig getConfig()
+ */
 class CatalogFactory extends AbstractFactory
 {
     /**
@@ -51,6 +58,39 @@ class CatalogFactory extends AbstractFactory
     public function createCatalogViewModePersistence()
     {
         return new CatalogViewModePersistence();
+    }
+
+    /**
+     * @return \Spryker\Client\Catalog\ProductConcreteReader\ProductConcreteReaderInterface
+     */
+    public function createProductConcreteReader(): ProductConcreteReaderInterface
+    {
+        return new ProductConcreteReader(
+            $this->getConfig(),
+            $this->getSearchClient(),
+            $this->getProductConcretePageSearchQueryPlugin(),
+            $this->getProductConcretePageSearchQueryExpanderPlugins(),
+            $this->getProductConcretePageSearchResultFormatterPlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\Search\Dependency\Plugin\PaginationConfigBuilderInterface
+     */
+    public function getPaginationConfigBuilder(): PaginationConfigBuilderInterface
+    {
+        $paginationConfigBuilder = $this->getProvidedDependency(CatalogDependencyProvider::PLUGIN_PAGINATION_CONFIG_BUILDER);
+        $paginationConfigBuilder->setPagination($this->getConfig()->getPaginationConfig());
+
+        return $paginationConfigBuilder;
+    }
+
+    /**
+     * @return \Spryker\Client\Catalog\CatalogConfig
+     */
+    public function getCatalogConfig(): CatalogConfig
+    {
+        return $this->getConfig();
     }
 
     /**
@@ -131,5 +171,29 @@ class CatalogFactory extends AbstractFactory
     public function getCatalogSearchCounterQueryExpanderPlugins(): array
     {
         return $this->getProvidedDependency(CatalogDependencyProvider::PLUGINS_CATALOG_SEARCH_COUNT_QUERY_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
+     */
+    public function getProductConcretePageSearchQueryPlugin(): QueryInterface
+    {
+        return $this->getProvidedDependency(CatalogDependencyProvider::PLUGIN_PRODUCT_CONCRETE_CATALOG_SEARCH_QUERY);
+    }
+
+    /**
+     * @return \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface[]
+     */
+    public function getProductConcretePageSearchResultFormatterPlugins(): array
+    {
+        return $this->getProvidedDependency(CatalogDependencyProvider::PLUGINS_PRODUCT_CONCRETE_CATALOG_SEARCH_RESULT_FORMATTER);
+    }
+
+    /**
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]
+     */
+    public function getProductConcretePageSearchQueryExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(CatalogDependencyProvider::PLUGINS_PRODUCT_CONCRETE_CATALOG_SEARCH_QUERY_EXPANDER);
     }
 }

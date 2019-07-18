@@ -68,7 +68,7 @@ class NumberOfChildrenTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Development\Business\PhpMd\Rules\Design\NumberOfChildren
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Development\Business\PhpMd\Rules\Design\NumberOfChildren
      */
     protected function getNumberOfChildrenMock()
     {
@@ -84,7 +84,7 @@ class NumberOfChildrenTest extends Unit
     /**
      * @param string $fullyQualifiedClassName
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\PHPMD\AbstractNode
+     * @return \PHPUnit\Framework\MockObject\MockObject|\PHPMD\AbstractNode
      */
     protected function getNodeMock($fullyQualifiedClassName)
     {

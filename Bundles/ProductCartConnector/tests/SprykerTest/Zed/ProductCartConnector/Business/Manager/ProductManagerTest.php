@@ -117,8 +117,8 @@ class ProductManagerTest extends Unit
         $mockProductFacade = $this->getMockProductFacade();
 
         $mockProductFacade->expects($this->once())
-            ->method('getProductConcrete')
-            ->will($this->returnValue($returnValue));
+            ->method('getRawProductConcreteTransfersByConcreteSkus')
+            ->will($this->returnValue([$returnValue]));
 
         $mockProductFacade->expects($this->once())
             ->method('getLocalizedProductConcreteName')
@@ -133,18 +133,26 @@ class ProductManagerTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @return \Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     private function getMockProductFacade()
     {
         return $this->getMockBuilder(ProductCartConnectorToProductInterface::class)
-            ->setMethods(['getProductConcrete', 'getLocalizedProductConcreteName', 'hasProductAbstract', 'hasProductConcrete', 'isProductConcreteActive'])
+            ->setMethods([
+                'getProductConcrete',
+                'getLocalizedProductConcreteName',
+                'hasProductAbstract',
+                'hasProductConcrete',
+                'isProductConcreteActive',
+                'getRawProductConcreteBySku',
+                'getRawProductConcreteTransfersByConcreteSkus',
+            ])
             ->disableOriginalConstructor()
             ->getMock();
     }
 
     /**
-     * @return \Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToLocaleInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @return \Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToLocaleInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     private function getMockLocaleFacade()
     {

@@ -207,7 +207,6 @@ class AttributeAbstractForm extends AbstractSubForm
                 $config['multiple'] = false;
                 $config['placeholder'] = '-';
                 $config['choices'] = array_flip($this->getChoiceList($name, $attributes[$name], $existingValue, $idLocale));
-                $config['choices_as_values'] = true;
 
                 if ($allowInput) {
                     $config['attr']['tags'] = true;
@@ -248,10 +247,13 @@ class AttributeAbstractForm extends AbstractSubForm
         foreach ($valueCollection as $entity) {
             $data = $entity->toArray();
             $value = $data['value'];
+            $originalValue = $value;
+
             if (isset($data['translation'])) {
                 $value = $data['translation'];
             }
-            $result[$value] = $value;
+
+            $result[$originalValue] = $value;
         }
 
         return $result;

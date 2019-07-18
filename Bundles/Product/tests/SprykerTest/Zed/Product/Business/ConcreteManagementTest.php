@@ -8,7 +8,6 @@
 namespace SprykerTest\Zed\Product\Business;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 use Spryker\Shared\Product\ProductConfig;
 use Spryker\Zed\Product\Business\Exception\MissingProductException;
 
@@ -98,9 +97,9 @@ class ConcreteManagementTest extends FacadeTestAbstract
 
         $this->productFacade->touchProductConcrete($this->productConcreteTransfer->getIdProductConcrete());
 
-        $this->assertTouchEntry($this->productConcreteTransfer->getIdProductConcrete(), ProductConfig::RESOURCE_TYPE_PRODUCT_CONCRETE, SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE);
-        $this->assertTouchEntry($this->productConcreteTransfer->getFkProductAbstract(), ProductConfig::RESOURCE_TYPE_PRODUCT_ABSTRACT, SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE);
-        $this->assertTouchEntry($this->productConcreteTransfer->getFkProductAbstract(), ProductConfig::RESOURCE_TYPE_ATTRIBUTE_MAP, SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE);
+        $this->tester->assertTouchActive(ProductConfig::RESOURCE_TYPE_PRODUCT_CONCRETE, $this->productConcreteTransfer->getIdProductConcrete());
+        $this->tester->assertTouchActive(ProductConfig::RESOURCE_TYPE_PRODUCT_ABSTRACT, $this->productConcreteTransfer->getFkProductAbstract());
+        $this->tester->assertTouchActive(ProductConfig::RESOURCE_TYPE_ATTRIBUTE_MAP, $this->productConcreteTransfer->getFkProductAbstract());
     }
 
     /**
@@ -112,10 +111,9 @@ class ConcreteManagementTest extends FacadeTestAbstract
 
         $this->productFacade->touchProductConcreteActive($this->productAbstractTransfer->getIdProductAbstract());
 
-        $this->assertTouchEntry(
-            $this->productAbstractTransfer->getIdProductAbstract(),
+        $this->tester->assertTouchActive(
             ProductConfig::RESOURCE_TYPE_PRODUCT_CONCRETE,
-            SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE
+            $this->productAbstractTransfer->getIdProductAbstract()
         );
     }
 
@@ -127,17 +125,15 @@ class ConcreteManagementTest extends FacadeTestAbstract
         $this->createNewProductAndAssertNoTouchExists();
 
         $this->productFacade->touchProductConcreteActive($this->productAbstractTransfer->getIdProductAbstract());
-        $this->assertTouchEntry(
-            $this->productAbstractTransfer->getIdProductAbstract(),
+        $this->tester->assertTouchActive(
             ProductConfig::RESOURCE_TYPE_PRODUCT_CONCRETE,
-            SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE
+            $this->productAbstractTransfer->getIdProductAbstract()
         );
 
         $this->productFacade->touchProductConcreteInactive($this->productAbstractTransfer->getIdProductAbstract());
-        $this->assertTouchEntry(
-            $this->productAbstractTransfer->getIdProductAbstract(),
+        $this->tester->assertTouchInactive(
             ProductConfig::RESOURCE_TYPE_PRODUCT_CONCRETE,
-            SpyTouchTableMap::COL_ITEM_EVENT_INACTIVE
+            $this->productAbstractTransfer->getIdProductAbstract()
         );
     }
 
@@ -150,10 +146,9 @@ class ConcreteManagementTest extends FacadeTestAbstract
 
         $this->productFacade->touchProductConcreteDelete($this->productAbstractTransfer->getIdProductAbstract());
 
-        $this->assertTouchEntry(
-            $this->productAbstractTransfer->getIdProductAbstract(),
+        $this->tester->assertTouchDeleted(
             ProductConfig::RESOURCE_TYPE_PRODUCT_CONCRETE,
-            SpyTouchTableMap::COL_ITEM_EVENT_DELETED
+            $this->productAbstractTransfer->getIdProductAbstract()
         );
     }
 
@@ -342,36 +337,7 @@ class ConcreteManagementTest extends FacadeTestAbstract
         $idProductConcrete = $this->productConcreteManager->createProductConcrete($this->productConcreteTransfer);
         $this->productConcreteTransfer->setIdProductConcrete($idProductConcrete);
 
-        $this->assertNoTouchEntry($this->productConcreteTransfer->getIdProductConcrete(), ProductConfig::RESOURCE_TYPE_PRODUCT_CONCRETE);
-    }
-
-    /**
-     * @param int $idProductAbstract
-     * @param string $touchType
-     *
-     * @return void
-     */
-    protected function assertNoTouchEntry($idProductAbstract, $touchType)
-    {
-        $touchEntity = $this->getProductTouchEntity($touchType, $idProductAbstract);
-
-        $this->assertNull($touchEntity);
-    }
-
-    /**
-     * @param int $idProductAbstract
-     * @param string $touchType
-     * @param string $status
-     *
-     * @return void
-     */
-    protected function assertTouchEntry($idProductAbstract, $touchType, $status)
-    {
-        $touchEntity = $this->getProductTouchEntity($touchType, $idProductAbstract);
-
-        $this->assertEquals($touchType, $touchEntity->getItemType());
-        $this->assertEquals($idProductAbstract, $touchEntity->getItemId());
-        $this->assertEquals($status, $touchEntity->getItemEvent());
+        $this->tester->assertNoTouchEntry(ProductConfig::RESOURCE_TYPE_PRODUCT_CONCRETE, $this->productConcreteTransfer->getIdProductConcrete());
     }
 
     /**
@@ -416,19 +382,6 @@ class ConcreteManagementTest extends FacadeTestAbstract
         return $this->productQueryContainer
             ->queryProduct()
             ->filterByIdProduct($idProductConcrete)
-            ->findOne();
-    }
-
-    /**
-     * @param string $touchType
-     * @param int $idProductAbstract
-     *
-     * @return \Orm\Zed\Touch\Persistence\SpyTouch|null
-     */
-    protected function getProductTouchEntity($touchType, $idProductAbstract)
-    {
-        return $this->touchQueryContainer
-            ->queryTouchEntriesByItemTypeAndItemIds($touchType, [$idProductAbstract])
             ->findOne();
     }
 }

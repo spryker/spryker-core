@@ -34,7 +34,7 @@ class MerchantRelationshipEditForm extends MerchantRelationshipCreateForm
      *
      * @return $this
      */
-    protected function addCompanyDisabledField(FormBuilderInterface $builder, array $options): self
+    protected function addCompanyDisabledField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_FK_COMPANY, Select2ComboBoxType::class, [
             'label' => static::COMPANY_FIELD_LABEL,
@@ -42,7 +42,6 @@ class MerchantRelationshipEditForm extends MerchantRelationshipCreateForm
             'choices' => array_flip($options[static::OPTION_COMPANY_CHOICES]),
             'mapped' => false,
             'data' => $options[static::OPTION_SELECTED_COMPANY],
-            'choices_as_values' => true,
             'disabled' => 'disabled',
             'constraints' => [
                 new NotBlank(),
@@ -58,13 +57,12 @@ class MerchantRelationshipEditForm extends MerchantRelationshipCreateForm
      *
      * @return $this
      */
-    protected function addMerchantDisabledField(FormBuilderInterface $builder, array $choices): self
+    protected function addMerchantDisabledField(FormBuilderInterface $builder, array $choices)
     {
         $builder->add(static::FIELD_FK_MERCHANT, Select2ComboBoxType::class, [
             'label' => static::MERCHANT_FIELD_LABEL,
             'placeholder' => static::MERCHANT_FIELD_PLACEHOLDER,
             'choices' => array_flip($choices),
-            'choices_as_values' => true,
             'disabled' => 'disabled',
             'constraints' => [
                 new NotBlank(),

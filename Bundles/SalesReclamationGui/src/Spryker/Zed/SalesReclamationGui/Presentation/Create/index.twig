@@ -1,0 +1,34 @@
+{% extends '@Application/Layout/layout.twig' %}
+
+{% block section_title %}
+    {{ 'Create reclamation' | trans }}
+{% endblock %}
+
+{% block action %}
+    {{ backActionButton('/sales', '
+    Back to Orders' | trans) }}
+{% endblock %}
+
+{% block content %}
+    <form action="/sales-reclamation-gui/create" method="POST">
+        <input type="hidden" name="id-sales-order" value="{{ reclamation.order.idSalesOrder }}" />
+
+        <div id="items">
+            {%- include '@SalesReclamationGui/Create/boxes/items.twig' with {
+                'reclamation': reclamation,
+            } -%}
+        </div>
+
+        <input type="submit" value="Create Reclamation" class="btn btn-primary"/>
+    </form>
+{% endblock %}
+
+{% block head_css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/assets/css/spryker-zed-sales-reclamation-main.css">
+{% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+    <script src="/assets/js/spryker-zed-sales-reclamation-gui-main.js" />
+{% endblock %}

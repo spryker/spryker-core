@@ -5,10 +5,7 @@
 
 'use strict';
 
-require('ZedGui');
+const CmsContentEditor = require('./cms-content-editor');
 
-var CmsContentEditor = require('./cms-content-editor');
-
-$(document).ready(function () {
-    new CmsContentEditor();
-});
+const editor = new CmsContentEditor(window.editorConfiguration.cmsContentWidgetConfigData);
+window.editorConfiguration.cms = editor.getEditorConfig('cms');

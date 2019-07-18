@@ -55,7 +55,7 @@ class CompanyUserInvitationMailTypePlugin extends AbstractPlugin implements Mail
      *
      * @return $this
      */
-    protected function setSubject(MailBuilderInterface $mailBuilder): self
+    protected function setSubject(MailBuilderInterface $mailBuilder)
     {
         $mailBuilder->setSubject('mail.company.user.invitation.subject');
 
@@ -67,7 +67,7 @@ class CompanyUserInvitationMailTypePlugin extends AbstractPlugin implements Mail
      *
      * @return $this
      */
-    protected function setHtmlTemplate(MailBuilderInterface $mailBuilder): self
+    protected function setHtmlTemplate(MailBuilderInterface $mailBuilder)
     {
         $mailBuilder->setHtmlTemplate(static::HTML_TEMPLATE);
 
@@ -79,7 +79,7 @@ class CompanyUserInvitationMailTypePlugin extends AbstractPlugin implements Mail
      *
      * @return $this
      */
-    protected function setTextTemplate(MailBuilderInterface $mailBuilder): self
+    protected function setTextTemplate(MailBuilderInterface $mailBuilder)
     {
         $mailBuilder->setTextTemplate(static::TEXT_TEMPLATE);
 
@@ -91,7 +91,7 @@ class CompanyUserInvitationMailTypePlugin extends AbstractPlugin implements Mail
      *
      * @return $this
      */
-    protected function setSender(MailBuilderInterface $mailBuilder): self
+    protected function setSender(MailBuilderInterface $mailBuilder)
     {
         $mailBuilder->setSender('mail.sender.email', 'mail.sender.name');
 
@@ -103,7 +103,7 @@ class CompanyUserInvitationMailTypePlugin extends AbstractPlugin implements Mail
      *
      * @return $this
      */
-    protected function setRecipient(MailBuilderInterface $mailBuilder): self
+    protected function setRecipient(MailBuilderInterface $mailBuilder)
     {
         $mailTransfer = $mailBuilder->getMailTransfer()->getCompanyUserInvitation();
         $mailBuilder->addRecipient(

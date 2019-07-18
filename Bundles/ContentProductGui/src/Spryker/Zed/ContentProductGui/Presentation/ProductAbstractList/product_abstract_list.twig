@@ -1,0 +1,31 @@
+{% set deleteButtonTemplate %}
+    <a href="#" onclick="return false;" class="js-delete-product-abstract btn btn-xs btn-outline btn-danger">
+        <i class="fa fa-trash"></i>
+        {{ 'Delete' | trans }}
+    </a>
+    <a href="#" data-direction="up" onclick="return false;" class="js-reorder-product-abstract btn btn-xs btn-outline btn-create">
+        <i class="fa fa-arrow-up"></i>
+        {{ 'Move Up' | trans }}
+    </a>
+    <a href="#" data-direction="down" onclick="return false;" class="js-reorder-product-abstract btn btn-xs btn-outline btn-create">
+        <i class="fa fa-arrow-down"></i>
+        {{ 'Move Down' | trans }}
+    </a>
+{% endset %}
+<div
+    class="id-product-abstract-fields"
+    id="localized-contents-{{ form.parent.vars.name }}"
+    data-prototype="{{ form_widget(form.idProductAbstracts.vars.prototype) | e }}"
+    data-delete-button="{{ deleteButtonTemplate | e }}"
+>
+    <div class="js-selected-products-wrapper">
+        {% for idProductAbstract in form.idProductAbstracts %}
+            {{ form_widget(idProductAbstract) }}
+        {% endfor %}
+    </div>
+    {{ form.vars.tables.productAbstractSelectedTable.render | raw }}
+        <h2>{{ 'Add more products' | trans }}</h2>
+    {{ form.vars.tables.productAbstractViewTable.render | raw }}
+</div>
+<link rel="stylesheet" href="/assets/css/spryker-zed-abstract-product-add.css" />
+<script src="/assets/js/spryker-zed-abstract-product-add.js"></script>

@@ -73,7 +73,7 @@ class ProductListFormType extends AbstractType
      *
      * @return $this
      */
-    protected function addIdProductListField(FormBuilderInterface $builder): self
+    protected function addIdProductListField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_ID_PRODUCT_LIST, HiddenType::class);
 
@@ -85,7 +85,7 @@ class ProductListFormType extends AbstractType
      *
      * @return $this
      */
-    protected function addTitleField(FormBuilderInterface $builder): self
+    protected function addTitleField(FormBuilderInterface $builder)
     {
         $builder->add(
             static::FIELD_TITLE,
@@ -108,7 +108,7 @@ class ProductListFormType extends AbstractType
      *
      * @return $this
      */
-    protected function addTypeFiled(FormBuilderInterface $builder): self
+    protected function addTypeFiled(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_TYPE, ChoiceType::class, [
             'label' => 'Type',
@@ -133,7 +133,7 @@ class ProductListFormType extends AbstractType
      *
      * @return $this
      */
-    protected function executeOwnerTypeFormExpanderPlugins(FormBuilderInterface $builder, array $options): self
+    protected function executeOwnerTypeFormExpanderPlugins(FormBuilderInterface $builder, array $options)
     {
         foreach ($this->getFactory()->getProductListOwnerTypeFormExpanderPlugins() as $productListOwnerTypeFormExpanderPlugin) {
             $productListOwnerTypeFormExpanderPlugin->buildForm($builder, $options);

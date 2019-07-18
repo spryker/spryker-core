@@ -66,7 +66,7 @@ class ProductListCategoryRelationFormType extends AbstractType
      *
      * @return $this
      */
-    protected function addIdProductListField(FormBuilderInterface $builder): self
+    protected function addIdProductListField(FormBuilderInterface $builder)
     {
         $builder->add(
             static::FIELD_ID_PRODUCT_LIST,
@@ -82,12 +82,11 @@ class ProductListCategoryRelationFormType extends AbstractType
      *
      * @return $this
      */
-    protected function addCategoryIdsField(FormBuilderInterface $builder, array $options): self
+    protected function addCategoryIdsField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_CATEGORY_IDS, Select2ComboBoxType::class, [
             'label' => 'Categories',
             'choices' => array_flip($options[ProductListAggregateFormType::OPTION_CATEGORY_IDS]),
-            'choices_as_values' => true,
             'multiple' => true,
             'required' => false,
         ]);

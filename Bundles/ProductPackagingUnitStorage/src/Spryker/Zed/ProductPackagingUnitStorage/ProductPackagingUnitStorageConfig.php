@@ -20,9 +20,19 @@ class ProductPackagingUnitStorageConfig extends AbstractBundleConfig
     }
 
     /**
+     * @deprecated Use ProductPackagingUnitStorageConfig::getProductAbstractPackagingSynchronizationPoolName() instead.
+     *
      * @return string|null
      */
     public function getProductPackagingUnitSynchronizationPoolName(): ?string
+    {
+        return null;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getProductAbstractPackagingSynchronizationPoolName(): ?string
     {
         return null;
     }

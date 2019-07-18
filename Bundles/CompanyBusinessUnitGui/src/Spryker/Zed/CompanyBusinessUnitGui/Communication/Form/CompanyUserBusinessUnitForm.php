@@ -56,14 +56,13 @@ class CompanyUserBusinessUnitForm extends AbstractType
      *
      * @return $this
      */
-    protected function addCompanyBusinessUnitCollectionField(FormBuilderInterface $builder, array $options): self
+    protected function addCompanyBusinessUnitCollectionField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_FK_COMPANY_BUSINESS_UNIT, ChoiceType::class, [
             'label' => 'Business Unit',
             'placeholder' => 'Business Unit name',
             'choices' => $options[static::OPTION_VALUES_BUSINESS_UNITS_CHOICES],
             'choice_attr' => $options[static::OPTION_ATTRIBUTES_BUSINESS_UNITS_CHOICES],
-            'choices_as_values' => true,
             'required' => true,
             'attr' => [
                 'template_path' => $this->getTemplatePath(),

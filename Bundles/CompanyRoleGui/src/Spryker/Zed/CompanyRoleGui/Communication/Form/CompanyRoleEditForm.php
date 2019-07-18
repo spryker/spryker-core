@@ -18,7 +18,7 @@ class CompanyRoleEditForm extends CompanyRoleCreateForm
      *
      * @return $this
      */
-    protected function addFkCompanyField(FormBuilderInterface $builder, array $options): CompanyRoleCreateForm
+    protected function addFkCompanyField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_FK_COMPANY, ChoiceType::class, [
             'choices' => $options[static::OPTION_COMPANY_CHOICES],

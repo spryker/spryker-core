@@ -10,9 +10,9 @@
         <thead>
         <tr>
             <th>Sku</th>
-            <th class="center">Price</th>
-            <th class="center">Stock</th>
-            <th class="no-sort">Action</th>
+            <th class="center">{{ 'Price' | trans }}</th>
+            <th class="center">{{ 'Stock' | trans }}</th>
+            <th class="no-sort">{{ 'Action' | trans }}</th>
         </tr>
         </thead>
         <tbody>
@@ -41,7 +41,9 @@
                     <td>-</td>
                 {% endif %}
                 <td class="center no-sort">
-                    <a href="/product-management/edit/variant?id-product={{ product.idProductConcrete }}&id-product-abstract={{ product.fkProductAbstract }}" target="_blank">Edit</a>
+                    <a href="/product-management/edit/variant?id-product={{ product.idProductConcrete }}&id-product-abstract={{ product.fkProductAbstract }}" target="_blank">
+                        {{ 'Edit' | trans }}
+                    </a>
                 </td>
             </tr>
         {% endfor %}
@@ -49,9 +51,9 @@
         <tfoot>
         <tr>
             <th>Sku</th>
-            <th class="center">Price</th>
-            <th class="center">Stock</th>
-            <th class="no-sort">Action</th>
+            <th class="center">{{ 'Price' | trans }}</th>
+            <th class="center">{{ 'Stock' | trans }}</th>
+            <th class="no-sort">{{ 'Action' | trans }}</th>
         </tr>
         </tfoot>
     </table>

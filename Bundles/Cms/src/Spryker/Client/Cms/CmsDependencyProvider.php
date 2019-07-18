@@ -13,8 +13,6 @@ use Spryker\Client\Kernel\Container;
 
 class CmsDependencyProvider extends AbstractDependencyProvider
 {
-    public const KV_STORAGE = 'kv storage';
-
     public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
 
     /**
@@ -22,13 +20,9 @@ class CmsDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    public function provideServiceLayerDependencies(Container $container)
+    public function provideServiceLayerDependencies(Container $container): Container
     {
-        $container[static::KV_STORAGE] = function (Container $container) {
-            return $container->getLocator()->storage()->client();
-        };
-
-        $this->addZedRequestClient($container);
+        $container = $this->addZedRequestClient($container);
 
         return $container;
     }
@@ -38,7 +32,7 @@ class CmsDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addZedRequestClient(Container $container)
+    protected function addZedRequestClient(Container $container): Container
     {
         $container[static::CLIENT_ZED_REQUEST] = function (Container $container) {
             return new CmsToZedRequestBridge($container->getLocator()->zedRequest()->client());

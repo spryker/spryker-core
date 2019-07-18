@@ -56,7 +56,7 @@ class MailBuilder implements MailBuilderInterface
     public function getMailTransfer()
     {
         if (!$this->mailTransfer) {
-            throw new MissingMailTransferException(sprintf('No MailTransfer set in "%s".', get_class($this)));
+            throw new MissingMailTransferException(sprintf('No MailTransfer set in "%s".', static::class));
         }
 
         return $this->mailTransfer;

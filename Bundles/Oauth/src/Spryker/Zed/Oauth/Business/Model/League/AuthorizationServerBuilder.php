@@ -42,7 +42,8 @@ class AuthorizationServerBuilder implements AuthorizationServerBuilderInterface
             $this->repositoryBuilder->createAccessTokenRepository(),
             $this->repositoryBuilder->createScopeRepository(),
             $this->oauthConfig->getPrivateKeyPath(),
-            $this->oauthConfig->getEncryptionKey()
+            $this->oauthConfig->getEncryptionKey(),
+            new BearerTokenResponse()
         );
     }
 }

@@ -1,0 +1,24 @@
+"Add Merchant relation","Händlerbeziehung hinzufügen"
+"Assigned Business Units","Zugewiesene Business Units"
+"Back to Merchant relations","Zurück zu Handelsbeziehungen"
+"Business Unit Owner","Inhaber der Geschäftseinheit"
+Company,Firma
+Confirm,bestätigt
+"Create Merchant Relation","Händlerbeziehung erstellen"
+"Edit Merchant Relation","Händlerbeziehung bearbeiten"
+"Edit Merchant Relation:","Händlerbeziehung bearbeiten:"
+"List of Merchant relation","Liste der Händlerbeziehungen"
+Merchant,Händler
+"Merchant Name",Händlername
+"Merchant relation created successfully.","Händlerrelation erfolgreich erstellt."
+"Merchant relation deleted successfully.","Händlerrelation erfolgreich gelöscht."
+"Merchant relation has not been created.","Händlerrelation wurde nicht erstellt."
+"Merchant relation is not found.","Händlerrelation wurde nicht gefunden."
+"Merchant relation updated successfully.","Händlerrelation erfolgreich aktualisiert."
+"Merchant Relations",Händlerrelationen
+"Merchant Relationship with id %s doesn't exists.","Händlerbeziehung mit der ID %s existiert nicht."
+Merchants,Händler
+"Overview of Merchant relation","Übersicht der Händlerbeziehung"
+Save,Speichern
+"Select Company","Firma auswählen"
+"Select merchant","Händler auswählen"

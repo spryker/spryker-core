@@ -1,0 +1,27 @@
+Activate,Aktivieren
+"Add a Cms block","CMS-Block hinzufügen"
+"Add a Cms page","CMS-Seite hinzufügen"
+"Add CMS Block","CMS-Block hinzufügen"
+"Add CMS Page","CMS-Seite hinzufügen"
+"Add CMS Redirect","CMS-Redirect hinzufügen"
+"Back to CMS","Zurück zu CMS"
+"CMS blocks",CMS-Blöcke
+Deactivate,Deaktivieren
+"Delete CMS Block","CMS-Block löschen"
+"Delete CMS Page","CMS-Seite löschen"
+"Edit a Cms Block","Einen Cms-Block bearbeiten"
+"Edit a Cms page","Eine CMS-Seite bearbeiten"
+"From Url","Von URL"
+"ID redirect URL is not set.","ID redirect URL ist nicht gesetzt"
+Loading...,"Laden ..."
+"New template(s) detected and added to the template list.","Neue Vorlage(n) erkannt und der Vorlagenliste hinzugefügt."
+"Redirect status code",Redirect-Statuscode
+"Redirect was created successfully.","Redirect wurde erfolgreich erstellt."
+"Redirect was deleted successfully.","Redirect wurde erfolgreich gelöscht."
+"Redirect was updated successfully.","Redirect wurde erfolgreich aktualisiert."
+Redirects,Weiterleitungen
+Save,Speichern
+"Save All","Alle speichern"
+"To Url","An URL"
+"URL is already used.","URL wird bereits verwendet."
+"URL must start with a slash","URL muss mit einem Schrägstrich beginnen"

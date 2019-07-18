@@ -10,6 +10,7 @@ namespace Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\Constraint\ThresholdStrategyConstraint;
 use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\DataProvider\MerchantRelationshipThresholdDataProvider;
 use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdGroup\Resolver\MerchantRelationshipThresholdDataProviderResolver;
 use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdGroup\Resolver\MerchantRelationshipThresholdDataProviderResolverInterface;
@@ -111,6 +112,16 @@ class MerchantRelationshipSalesOrderThresholdGuiCommunicationFactory extends Abs
             $this->getConfig(),
             $this->getSalesOrderThresholdFormExpanderPlugins()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\Constraint\ThresholdStrategyConstraint
+     */
+    public function createThresholdStrategyConstraint(): ThresholdStrategyConstraint
+    {
+        return new ThresholdStrategyConstraint([
+            ThresholdStrategyConstraint::OPTION_SALES_ORDER_THRESHOLD_FORM_EXPANDER_PLUGINS => $this->getSalesOrderThresholdFormExpanderPlugins(),
+        ]);
     }
 
     /**

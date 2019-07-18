@@ -66,6 +66,8 @@ class CategoryNode implements CategoryNodeInterface, CategoryNodeDeleterInterfac
     }
 
     /**
+     * @deprecated Use \Spryker\Zed\Category\Business\Model\CategoryReaderInterface::findCategoryById() instead.
+     *
      * @param int $idCategory
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
@@ -131,6 +133,7 @@ class CategoryNode implements CategoryNodeInterface, CategoryNodeDeleterInterfac
 
         if ($categoryTransfer->getIsActive()) {
             $this->categoryToucher->touchCategoryNodeActiveRecursively($idCategoryNode);
+
             return;
         }
 

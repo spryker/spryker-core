@@ -7,9 +7,11 @@
 
 namespace Spryker\Zed\Cart\Business\Model;
 
+use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Cart\Dependency\Facade\CartToMessengerInterface;
+use Spryker\Zed\Cart\Dependency\Facade\CartToQuoteFacadeInterface;
 
 class QuoteValidator implements QuoteValidatorInterface
 {
@@ -29,18 +31,26 @@ class QuoteValidator implements QuoteValidatorInterface
     protected $messengerFacade;
 
     /**
+     * @var \Spryker\Zed\Cart\Dependency\Facade\CartToQuoteFacadeInterface
+     */
+    protected $quoteFacade;
+
+    /**
      * @param \Spryker\Zed\Cart\Business\Model\OperationInterface $operation
      * @param \Spryker\Zed\Cart\Business\Model\QuoteChangeObserverInterface $changeNote
      * @param \Spryker\Zed\Cart\Dependency\Facade\CartToMessengerInterface $messengerFacade
+     * @param \Spryker\Zed\Cart\Dependency\Facade\CartToQuoteFacadeInterface $quoteFacade
      */
     public function __construct(
         OperationInterface $operation,
         QuoteChangeObserverInterface $changeNote,
-        CartToMessengerInterface $messengerFacade
+        CartToMessengerInterface $messengerFacade,
+        CartToQuoteFacadeInterface $quoteFacade
     ) {
         $this->operation = $operation;
         $this->changeNote = $changeNote;
         $this->messengerFacade = $messengerFacade;
+        $this->quoteFacade = $quoteFacade;
     }
 
     /**
@@ -50,34 +60,49 @@ class QuoteValidator implements QuoteValidatorInterface
      */
     public function validate(QuoteTransfer $quoteTransfer)
     {
-        $quoteValidationResponseTransfer = new QuoteResponseTransfer();
-        $quoteValidationResponseTransfer
+        $quoteResponseTransfer = new QuoteResponseTransfer();
+        $quoteResponseTransfer
             ->setQuoteTransfer($quoteTransfer)
             ->setIsSuccessful(false);
 
+        if ($this->quoteFacade->isQuoteLocked($quoteTransfer)) {
+            $quoteResponseTransfer->setIsSuccessful(true);
+
+            return $quoteResponseTransfer;
+        }
+
         if (!count($quoteTransfer->getItems())) {
-            return $quoteValidationResponseTransfer;
+            return $quoteResponseTransfer;
         }
 
         $originalQuoteTransfer = clone $quoteTransfer;
         $quoteTransfer = $this->operation->reloadItems($quoteTransfer);
         $this->changeNote->checkChanges($quoteTransfer, $originalQuoteTransfer);
 
-        $quoteValidationResponseTransfer
-            ->setIsSuccessful($this->checkErrorMessages())
-            ->setQuoteTransfer($quoteTransfer);
+        $quoteResponseTransfer = $this->addErrorsToQuoteResponse($quoteResponseTransfer);
+        $quoteResponseTransfer->setQuoteTransfer($quoteTransfer);
 
-        return $quoteValidationResponseTransfer;
+        return $quoteResponseTransfer;
     }
 
     /**
-     * @return bool
+     * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    protected function checkErrorMessages()
+    protected function addErrorsToQuoteResponse(QuoteResponseTransfer $quoteResponseTransfer): QuoteResponseTransfer
     {
         /** @var \Generated\Shared\Transfer\FlashMessagesTransfer|null $storedMessages */
         $storedMessages = $this->messengerFacade->getStoredMessages();
 
-        return !$storedMessages || count($storedMessages->getErrorMessages()) === 0;
+        if (!$storedMessages || count($storedMessages->getErrorMessages()) === 0) {
+            return $quoteResponseTransfer->setIsSuccessful(true);
+        }
+
+        foreach ($storedMessages->getErrorMessages() as $errorMessage) {
+            $quoteResponseTransfer->addError((new QuoteErrorTransfer())->setMessage($errorMessage));
+        }
+
+        return $quoteResponseTransfer;
     }
 }

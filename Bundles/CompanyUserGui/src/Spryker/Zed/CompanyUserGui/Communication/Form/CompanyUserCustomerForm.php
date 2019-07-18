@@ -91,7 +91,7 @@ class CompanyUserCustomerForm extends AbstractType
      *
      * @return $this
      */
-    protected function addIdCustomerField(FormBuilderInterface $builder): self
+    protected function addIdCustomerField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_ID_CUSTOMER, HiddenType::class);
 
@@ -103,7 +103,7 @@ class CompanyUserCustomerForm extends AbstractType
      *
      * @return $this
      */
-    protected function addEmailField(FormBuilderInterface $builder): self
+    protected function addEmailField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_EMAIL, EmailType::class, [
             'label' => 'Email',
@@ -119,13 +119,12 @@ class CompanyUserCustomerForm extends AbstractType
      *
      * @return $this
      */
-    protected function addSalutationField(FormBuilderInterface $builder, array $choices): self
+    protected function addSalutationField(FormBuilderInterface $builder, array $choices)
     {
         $builder->add(static::FIELD_SALUTATION, ChoiceType::class, [
             'label' => 'Salutation',
             'placeholder' => 'Select one',
             'choices' => $choices,
-            'choices_as_values' => true,
             'required' => false,
         ]);
 
@@ -137,7 +136,7 @@ class CompanyUserCustomerForm extends AbstractType
      *
      * @return $this
      */
-    protected function addFirstNameField(FormBuilderInterface $builder): self
+    protected function addFirstNameField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_FIRST_NAME, TextType::class, [
             'label' => 'First Name',
@@ -152,7 +151,7 @@ class CompanyUserCustomerForm extends AbstractType
      *
      * @return $this
      */
-    protected function addLastNameField(FormBuilderInterface $builder): self
+    protected function addLastNameField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_LAST_NAME, TextType::class, [
             'label' => 'Last Name',
@@ -168,13 +167,12 @@ class CompanyUserCustomerForm extends AbstractType
      *
      * @return $this
      */
-    protected function addGenderField(FormBuilderInterface $builder, array $choices): self
+    protected function addGenderField(FormBuilderInterface $builder, array $choices)
     {
         $builder->add(static::FIELD_GENDER, ChoiceType::class, [
             'label' => 'Gender',
             'placeholder' => 'Select one',
             'choices' => $choices,
-            'choices_as_values' => true,
             'constraints' => [
                 new Required(),
             ],
@@ -189,7 +187,7 @@ class CompanyUserCustomerForm extends AbstractType
      *
      * @return $this
      */
-    protected function addSendPasswordField(FormBuilderInterface $builder): self
+    protected function addSendPasswordField(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_SEND_PASSWORD_TOKEN, CheckboxType::class, [
             'label' => 'Send password token through email',
@@ -204,7 +202,7 @@ class CompanyUserCustomerForm extends AbstractType
      *
      * @return $this
      */
-    protected function addPhoneField(FormBuilderInterface $builder): self
+    protected function addPhoneField(FormBuilderInterface $builder)
     {
         $phoneConstraints = [
             new Length(['max' => 255]),
@@ -224,7 +222,7 @@ class CompanyUserCustomerForm extends AbstractType
      *
      * @return $this
      */
-    protected function addDateOfBirthField(FormBuilderInterface $builder): self
+    protected function addDateOfBirthField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_DATE_OF_BIRTH, DateType::class, [
             'label' => 'Date of birth',

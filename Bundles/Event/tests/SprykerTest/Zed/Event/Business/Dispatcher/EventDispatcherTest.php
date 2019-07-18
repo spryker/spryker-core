@@ -165,7 +165,7 @@ class EventDispatcherTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Event\Business\Queue\Producer\EventQueueProducerInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Event\Business\Queue\Producer\EventQueueProducerInterface
      */
     protected function createQueueProducerMock()
     {
@@ -174,7 +174,7 @@ class EventDispatcherTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Event\Business\Logger\EventLoggerInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Event\Business\Logger\EventLoggerInterface
      */
     protected function createEventLoggerMock()
     {
@@ -183,7 +183,7 @@ class EventDispatcherTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Event\Dependency\Plugin\EventHandlerInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Event\Dependency\Plugin\EventHandlerInterface
      */
     protected function createEventListenerMock()
     {
@@ -192,7 +192,7 @@ class EventDispatcherTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject
+     * @return \PHPUnit\Framework\MockObject\MockObject
      */
     protected function createTransferMock()
     {
@@ -201,7 +201,7 @@ class EventDispatcherTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Event\Dependency\Service\EventToUtilEncodingInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Event\Dependency\Service\EventToUtilEncodingInterface
      */
     protected function createUtilEncodingMock()
     {

@@ -58,7 +58,7 @@ class AbstractFactoryTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\SprykerTest\Glue\Kernel\Fixtures\ConcreteFactory
+     * @return \PHPUnit\Framework\MockObject\MockObject|\SprykerTest\Glue\Kernel\Fixtures\ConcreteFactory
      */
     protected function getFactoryMock()
     {

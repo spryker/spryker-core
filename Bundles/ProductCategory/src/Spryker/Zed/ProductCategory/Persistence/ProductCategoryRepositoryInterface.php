@@ -18,4 +18,11 @@ interface ProductCategoryRepositoryInterface
      * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
      */
     public function getCategoryTransferCollectionByIdProductAbstract(int $idProductAbstract, int $idLocale): CategoryCollectionTransfer;
+
+    /**
+     * @param int[] $categoryIds
+     *
+     * @return int[]
+     */
+    public function getProductConcreteIdsByCategoryIds(array $categoryIds): array;
 }

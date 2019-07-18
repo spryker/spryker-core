@@ -1,0 +1,17 @@
+"A customer can not be assigned to multiple users at a time.","Ein Kunde kann nicht mehreren Nutzern gleichzeitig zugewiesen werden."
+Assign,Zuweisen
+"Assign Customers","Kunden zuweisen"
+"Assign Customers to User:","Kunden einem User zuweisen"
+Assigned,Zugewiesen
+"Assigned Zed User Reference","Zugewiesene Zed-Benutzerreferenz"
+"Customer E-mail","E-Mail des Kunden"
+"Customer-user connections are updated.","Kunden-User Verbindungen wurden aktualisiert."
+"Customers to be assigned","Kunden zur Zuweisung"
+"Deselected customers","Aus der Auswahl entfernte Kunden"
+Female,Weiblich
+"List Users","Liste der Benutzer"
+Male,Männlich
+Save,Speichern
+"Select customers to assign","Kunden zur Zuweisung auswählen"
+"User couldn't be found","Nutzer wurde nicht gefunden"
+"Your unsaved modification will be lost, are you sure to continue?","Ihre nicht gespeicherten Änderungen gehen verloren, möchten Sie trotzdem fortfahren?"

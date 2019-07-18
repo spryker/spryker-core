@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\MultiCart\Plugin;
 
-use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
@@ -22,6 +21,7 @@ class DefaultQuoteUpdatePlugin extends AbstractPlugin implements QuoteUpdatePlug
     /**
      * Specification:
      * - Extract Customer Default Quote Collection and saves it to customer session.
+     * - Sets provided CustomerTransfer in newly created Quote when no other default Quote was found.
      *
      * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
      *
@@ -33,7 +33,7 @@ class DefaultQuoteUpdatePlugin extends AbstractPlugin implements QuoteUpdatePlug
             return $quoteResponseTransfer;
         }
 
-        $defaultQuoteTransfer = $this->getDefaultQuote($quoteResponseTransfer->getCustomerQuotes());
+        $defaultQuoteTransfer = $this->getDefaultQuote($quoteResponseTransfer);
         $defaultQuoteTransfer = $this->updateSessionQuote($defaultQuoteTransfer);
         $this->getFactory()->getQuoteClient()->setQuote($defaultQuoteTransfer);
         $quoteResponseTransfer->setQuoteTransfer($defaultQuoteTransfer);
@@ -42,12 +42,14 @@ class DefaultQuoteUpdatePlugin extends AbstractPlugin implements QuoteUpdatePlug
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteCollectionTransfer $quoteCollectionTransfer
+     * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function getDefaultQuote(QuoteCollectionTransfer $quoteCollectionTransfer): QuoteTransfer
+    protected function getDefaultQuote(QuoteResponseTransfer $quoteResponseTransfer): QuoteTransfer
     {
+        $quoteCollectionTransfer = $quoteResponseTransfer->getCustomerQuotes();
+
         foreach ($quoteCollectionTransfer->getQuotes() as $quoteTransfer) {
             if ($quoteTransfer->getIsDefault()) {
                 return $quoteTransfer;
@@ -58,6 +60,7 @@ class DefaultQuoteUpdatePlugin extends AbstractPlugin implements QuoteUpdatePlug
             $quoteTransfer = $quoteCollectionTransfer->getQuotes()->offsetGet(0);
         }
         $quoteTransfer->setIsDefault(true);
+        $quoteTransfer->setCustomer($quoteResponseTransfer->getCustomer());
 
         return $quoteTransfer;
     }

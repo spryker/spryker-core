@@ -30,7 +30,7 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_MAIL = 'FACADE_MAIL';
 
     /**
-     * @deprecated use SERVICE_UTIL_DATE_TIME instead
+     * @deprecated Use SERVICE_UTIL_DATE_TIME instead.
      */
     public const SERVICE_DATE_FORMATTER = 'SERVICE_DATE_FORMATTER';
     public const SERVICE_UTIL_VALIDATE = 'SERVICE_UTIL_VALIDATE';
@@ -295,6 +295,7 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::SUB_REQUEST_HANDLER] = function () {
             $pimple = new Pimple();
+
             return $pimple->getApplication()['sub_request'];
         };
 

@@ -23,6 +23,28 @@ class ProductsRestApiToProductStorageClientBridge implements ProductsRestApiToPr
     }
 
     /**
+     * @param int $idProductConcrete
+     * @param string $localeName
+     *
+     * @return array|null
+     */
+    public function findProductConcreteStorageData(int $idProductConcrete, string $localeName): ?array
+    {
+        return $this->productStorageClient->findProductConcreteStorageData($idProductConcrete, $localeName);
+    }
+
+    /**
+     * @param int $idProductAbstract
+     * @param string $localeName
+     *
+     * @return array|null
+     */
+    public function findProductAbstractStorageData(int $idProductAbstract, string $localeName): ?array
+    {
+        return $this->productStorageClient->findProductAbstractStorageData($idProductAbstract, $localeName);
+    }
+
+    /**
      * @param string $mappingType
      * @param string $identifier
      * @param string $localeName

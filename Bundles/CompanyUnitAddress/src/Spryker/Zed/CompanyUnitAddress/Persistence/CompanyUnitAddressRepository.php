@@ -23,8 +23,6 @@ class CompanyUnitAddressRepository extends AbstractRepository implements Company
     /**
      * {@inheritdoc}
      *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer
@@ -51,8 +49,6 @@ class CompanyUnitAddressRepository extends AbstractRepository implements Company
 
     /**
      * {@inheritdoc}
-     *
-     * @api
      *
      * @param \Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer $criteriaFilterTransfer
      *
@@ -99,6 +95,70 @@ class CompanyUnitAddressRepository extends AbstractRepository implements Company
         $collectionTransfer->setPagination($criteriaFilterTransfer->getPagination());
 
         return $collectionTransfer;
+    }
+
+    /**
+     * @module Country
+     * @module CompanyBusinessUnit
+     *
+     * @param int $idCompanyUnitAddress
+     *
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer|null
+     */
+    public function findCompanyUnitAddressById(int $idCompanyUnitAddress): ?CompanyUnitAddressTransfer
+    {
+        $companyUnitAddressQuery = $this->getFactory()
+            ->createCompanyUnitAddressQuery()
+            ->filterByIdCompanyUnitAddress($idCompanyUnitAddress)
+            ->leftJoinWithCountry()
+            ->useSpyCompanyUnitAddressToCompanyBusinessUnitQuery(null, Criteria::LEFT_JOIN)
+                ->leftJoinWithCompanyBusinessUnit()
+            ->endUse();
+
+        /**
+         * @var \Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddress|null
+         */
+        $companyUnitAddressEntity = $companyUnitAddressQuery->findOne();
+
+        if (!$companyUnitAddressEntity) {
+            return null;
+        }
+
+        return $this->getFactory()
+            ->createCompanyUniAddressMapper()
+            ->mapCompanyUnitAddressEntityToCompanyUnitAddressTransfer($companyUnitAddressEntity, new CompanyUnitAddressTransfer());
+    }
+
+    /**
+     * @module CompanyBusinessUnit
+     * @module Country
+     *
+     * @param string $companyBusinessUnitAddressUuid
+     *
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer|null
+     */
+    public function findCompanyBusinessUnitAddressByUuid(string $companyBusinessUnitAddressUuid): ?CompanyUnitAddressTransfer
+    {
+        /** @var \Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddress|null $companyUnitAddressEntity */
+        $companyUnitAddressEntity = $this->getFactory()
+            ->createCompanyUnitAddressQuery()
+            ->filterByUuid($companyBusinessUnitAddressUuid)
+            ->leftJoinWithCountry()
+            ->useSpyCompanyUnitAddressToCompanyBusinessUnitQuery(null, Criteria::LEFT_JOIN)
+                ->leftJoinCompanyBusinessUnit()
+            ->endUse()
+            ->findOne();
+
+        if (!$companyUnitAddressEntity) {
+            return null;
+        }
+
+        return $this->getFactory()
+            ->createCompanyUniAddressMapper()
+            ->mapCompanyUnitAddressEntityToCompanyUnitAddressTransfer(
+                $companyUnitAddressEntity,
+                new CompanyUnitAddressTransfer()
+            );
     }
 
     /**

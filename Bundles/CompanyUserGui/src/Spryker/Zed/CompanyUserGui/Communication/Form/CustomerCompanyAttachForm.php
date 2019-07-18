@@ -64,13 +64,12 @@ class CustomerCompanyAttachForm extends AbstractType
      *
      * @return $this
      */
-    protected function addCompanyField(FormBuilderInterface $builder, array $choices): self
+    protected function addCompanyField(FormBuilderInterface $builder, array $choices)
     {
         $builder->add(static::FIELD_FK_COMPANY, ChoiceType::class, [
             'label' => 'Company',
             'placeholder' => 'Company name',
             'choices' => $choices,
-            'choices_as_values' => true,
             'constraints' => [
                 new NotBlank(),
                 new GreaterThan([
@@ -88,7 +87,7 @@ class CustomerCompanyAttachForm extends AbstractType
      *
      * @return $this
      */
-    protected function executeAttachCustomerFormExpanderPlugins(FormBuilderInterface $builder): self
+    protected function executeAttachCustomerFormExpanderPlugins(FormBuilderInterface $builder)
     {
         foreach ($this->getFactory()->getCompanyUserAttachCustomerFormExpanderPlugins() as $attachCustomerFormExpanderPlugin) {
             $builder = $attachCustomerFormExpanderPlugin->expand($builder);

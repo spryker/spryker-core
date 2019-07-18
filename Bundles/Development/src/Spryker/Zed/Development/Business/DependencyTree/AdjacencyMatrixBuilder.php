@@ -61,7 +61,7 @@ class AdjacencyMatrixBuilder implements AdjacencyMatrixBuilderInterface
             if ($bundle === 'external' || $foreignBundle === 'external' || $bundle === 'Business') {
                 continue;
             }
-            $info = $this->matrix[$bundle][$foreignBundle];
+            $info = $this->matrix[$bundle][$foreignBundle] ?? [];
 
             $info[] = $dependency[DependencyTree::META_CLASS_NAME] . ' => ' . $dependency[DependencyTree::META_FOREIGN_CLASS_NAME];
 

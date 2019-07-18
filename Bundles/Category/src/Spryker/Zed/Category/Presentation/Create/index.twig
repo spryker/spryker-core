@@ -7,7 +7,7 @@
 {% block section_title %}{{ widget_title }}{% endblock %}
 
 {% block action %}
-    {{ backActionButton('/category/root', 'List of categories' | trans) }}
+    {% include ['@CategoryGui/_partials/back-button.twig', '@Category/_partials/back-button.twig'] %}
 {% endblock %}
 
 {% block content %}
@@ -17,27 +17,10 @@
 
             {{ form_start(categoryForm) }}
                 {% do categoryForm.localized_attributes.setRendered %}
-                {{ form_widget(categoryForm) }}
-
-                <hr />
-                <p><strong>{{ 'Translations' | trans }}</strong></p>
-
-                {% for localizedAttributes in categoryForm.localized_attributes %}
-                    {% set localeName = localizedAttributes.vars.value.locale.localeName %}
-
-                    {% embed '@Gui/Partials/localized-ibox.twig' with {
-                        localeName: localeName,
-                        collapsed: false
-                    } %}
-                        {% block content %}
-                            {{ form_widget(localizedAttributes) }}
-                        {% endblock %}
-                    {% endembed %}
-                {% endfor %}
-
-                <hr />
-
-                <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Create' | trans }}"/>
+                {{ tabs(categoryFormTabs, {
+                    'categoryForm': categoryForm,
+                    'currentLocale': currentLocale
+                }) }}
             {{ form_end(categoryForm) }}
 
         {% endblock %}
@@ -55,4 +38,3 @@
     <script src="/assets/js/spryker-zed-category-main.js"></script>
     <script src="/assets/js/spryker-zed-cms-block-category-connector-main.js"></script>
 {% endblock %}
-

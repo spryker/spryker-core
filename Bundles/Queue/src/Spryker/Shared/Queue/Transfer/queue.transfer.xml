@@ -25,4 +25,15 @@
         <property name="workerPid" type="int" />
         <property name="queueName" type="string" />
     </transfer>
+
+    <transfer name="QueueDumpRequest">
+        <property name="queueName" type="string" />
+        <property name="limit" type="int" />
+        <property name="format" type="string" />
+        <property name="acknowledge" type="bool"/>
+    </transfer>
+
+    <transfer name="QueueDumpResponse">
+        <property name="message" type="string" />
+    </transfer>
 </transfers>

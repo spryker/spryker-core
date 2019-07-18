@@ -1,0 +1,42 @@
+"Add Customer","Kunde hinzufügen"
+"Add new Address","Neue Adresse hinzufügen"
+"Address Line 1","Adresszeile 1"
+"Address Line 2","Adresszeile 2"
+"Address Line 3","Adresszeile 3"
+Back,Zurück
+"Back to Customer View","Zurück zu Kundenansicht"
+"Back to Customers","Zurück zu Kunden"
+"Back to Manage Addresses","Zurück zu Adressen verwalten"
+City,Stadt
+Company,Firma
+Country,Land
+"Customer deletion confirmation","Löschen des Kunden bestätigt"
+"Customer does not exist","Kunde existiert nicht"
+"Customer Reference",Kundenreferenz
+"Customer successfully deleted","Kunde wurde erfolgreich gelöscht."
+"Customer was created successfully.","Kunde wurde erfolgreich erstellt."
+"Customer was not created.","Kunde wurde nicht erstellt."
+"Customer was not updated.","Kunde wurde nicht aktualisiert."
+"Customer was updated successfully.","Kunde wurde erfolgreich aktualisiert."
+"Date of birth",Geburtsdatum
+Delete,Löschen
+"Delete account","Konto löschen"
+"Edit Address","Adresse bearbeiten"
+"Edit Customer","Kunde bearbeiten"
+Email,E-Mail
+"First Name",Vorname
+"First name",Vorname
+Gender,Geschlecht
+"Last name",Nachname
+"List Customers","Liste der Kunden"
+Locale,Locale
+Phone,Telefon
+"Registered at","Eingetragen bei"
+Salutation,Anrede
+Save,Speichern
+"Select one","Eins auswählen"
+"Send password token through email","Passwort-Token per E-Mail senden"
+View,Ansicht
+"View Customer","Kunden anzeigen"
+"Zed Account Reference",Zed-Konto-Referenz
+ZipCode,Postleitzahl

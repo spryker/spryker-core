@@ -26,6 +26,11 @@ use Spryker\Zed\Product\Business\ProductFacade;
 class ProductFacadeTest extends Unit
 {
     /**
+     * @var \SprykerTest\Zed\Product\ProductBusinessTester
+     */
+    protected $tester;
+
+    /**
      * @var \Spryker\Zed\Product\Business\ProductFacadeInterface
      */
     protected $productFacade;
@@ -37,6 +42,7 @@ class ProductFacadeTest extends Unit
     {
         parent::setUp();
 
+        $this->tester->setUpDatabase();
         $this->productFacade = new ProductFacade();
     }
 
@@ -51,6 +57,39 @@ class ProductFacadeTest extends Unit
         );
 
         $this->assertSame($this->getExpectedProductConcreteSku(), $sku);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductConcreteTransfersByProductIdsRetrievesAllSpecifiedProductconcreteAsTransferWithId(): void
+    {
+        $productConcreteIds = $this->tester->getProductConcreteIds();
+
+        $this->assertTrue(count($productConcreteIds) > 0);
+        $productConcreteTransfers = $this->tester->getProductFacade()->getProductConcreteTransfersByProductIds($productConcreteIds);
+        $this->assertSame(count($productConcreteIds), count($productConcreteTransfers));
+
+        foreach ($productConcreteTransfers as $productConcreteTransfer) {
+            $this->assertInstanceOf(ProductConcreteTransfer::class, $productConcreteTransfer);
+            $this->assertContains($productConcreteTransfer->getIdProductConcrete(), $productConcreteIds);
+        }
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductConcreteTransfersByProductAbstractIds(): void
+    {
+        $productAbstractIds = $this->tester->getProductAbstractIds();
+
+        $this->assertTrue(count($productAbstractIds) > 0);
+        $productConcreteTransfers = $this->tester->getProductFacade()->getProductConcreteTransfersByProductAbstractIds($productAbstractIds);
+
+        foreach ($productConcreteTransfers as $productConcreteTransfer) {
+            $this->assertInstanceOf(ProductConcreteTransfer::class, $productConcreteTransfer);
+            $this->assertContains($productConcreteTransfer->getFkProductAbstract(), $productAbstractIds);
+        }
     }
 
     /**

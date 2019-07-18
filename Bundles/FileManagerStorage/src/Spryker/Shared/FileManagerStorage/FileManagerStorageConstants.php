@@ -27,4 +27,12 @@ interface FileManagerStorageConstants
      * @api
      */
     public const FILE_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.file.error';
+
+    /**
+     * Specification:
+     * - Resource name, this will use for key generating.
+     *
+     * @api
+     */
+    public const RESOURCE_NAME = 'file';
 }

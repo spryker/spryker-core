@@ -17,4 +17,11 @@ interface ProductMeasurementBaseUnitReaderInterface
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer|null
      */
     public function findProductMeasurementBaseUnitByIdProduct(int $idProduct): ?ProductMeasurementUnitTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function expandProductConcreteTransferWithBaseMeasurementUnit(array $productConcreteTransfers): array;
 }

@@ -5,7 +5,6 @@
 
 'use strict';
 
-require('ZedGui');
 var safeChecks = require('ZedGuiModules/libs/safe-checks');
 
 $(document).ready(function() {

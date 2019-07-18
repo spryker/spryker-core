@@ -1,0 +1,57 @@
+Activate,Activate
+"Back to CMS","Back to CMS"
+by,by
+"Cms page with id %s doesn't exist","Cms page with id %s doesn't exist"
+Compare,Compare
+"Content Management","Content Management"
+"Create CMS Page","Create CMS Page"
+"Create new CMS Page","Create new CMS Page"
+"Create page","Create page"
+"Created at:","Created at:"
+Deactivate,Deactivate
+Description:,Description:
+"Discard Draft","Discard Draft"
+"Edit CMS Page:","Edit CMS Page:"
+"Edit page","Edit page"
+"Edit placeholders","Edit placeholders"
+"Edit Placeholders:","Edit Placeholders:"
+"Fill in general page information","Fill in general page information"
+"Fill in SEO information","Fill in SEO information"
+"In Shop","In Shop"
+"In Zed","In Zed"
+"Is active:","Is active:"
+"Is searchable:","Is searchable:"
+Keywords:,Keywords:
+"List of CMS pages","List of CMS pages"
+Locale,Locale
+"Meta Description","Meta Description"
+"Meta Keywords","Meta Keywords"
+"Meta Title","Meta Title"
+"Missing placeholders for selected template.","Missing placeholders for selected template."
+n/a,n/a
+Name,Name
+Name:,Name:
+on,on
+"Overview of CMS Pages","Overview of CMS Pages"
+Page,Page
+"Page was updated successfully","Page was updated successfully"
+"Page with version %d successfully published.","Page with version %d successfully published."
+Pages,Pages
+"Placeholder translations successfully updated","Placeholder translations successfully updated"
+Publish,Publish
+"Rollback to Selected Version","Rollback to Selected Version"
+Save,Save
+Template:,Template:
+Title:,Title:
+"Translation key:","Translation key:"
+Url,Url
+Urls,Urls
+"Valid from:","Valid from (included):"
+"Valid to:","Valid to (excluded):"
+"Version History","Version History"
+"Version History:","Version History:"
+View,View
+"View CMS Page:","View CMS Page:"
+"You are editing a <br>draft </b> page. To make your changes visible in Yves, publish the page. Publishing the page will create a new version for this page","You are editing a <b>draft </b> page. To make your changes visible in Storefront, publish the page. Publishing the page will create a new version for this page."
+"You are viewing a published page. It was published","You are viewing a published page. It was published"
+"You can edit the page or placeholders to modify the current working draft. You can publish the current working draft to create a new version","You can edit the page or placeholders to modify the current working draft. You can publish the current working draft to create a new version"

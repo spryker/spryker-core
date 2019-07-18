@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="RestCheckoutRequestAttributes">
+        <property name="shipment" type="RestShipment"/>
+    </transfer>
+
+    <transfer name="RestShipment">
+        <property name="idShipmentMethod" type="int" restRequestParameter="required"/>
+    </transfer>
+
+    <transfer name="Quote">
+        <property name="shipment" type="Shipment"/>
+        <property name="expenses" type="Expense[]" singular="expense"/>
+    </transfer>
+
+    <transfer name="Shipment">
+        <property name="method" type="ShipmentMethod"/>
+        <property name="shipmentSelection" type="string"/>
+    </transfer>
+
+    <transfer name="ShipmentMethod">
+        <property name="id" type="int"/>
+        <property name="idShipmentMethod" type="int" />
+    </transfer>
+
+    <transfer name="Expense">
+        <property name="type" type="string" />
+        <property name="unitNetPrice" type="int" />
+        <property name="unitGrossPrice" type="int" />
+        <property name="quantity" type="int" />
+    </transfer>
+
+    <transfer name="CheckoutData">
+        <property name="shipment" type="RestShipment" />
+    </transfer>
+
+    <transfer name="CheckoutResponse">
+        <property name="isSuccess" type="bool" />
+        <property name="errors" type="CheckoutError[]" singular="error" />
+    </transfer>
+
+    <transfer name="CheckoutError">
+        <property name="message" type="string" />
+    </transfer>
+
+</transfers>

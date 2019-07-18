@@ -10,11 +10,18 @@
  * @type {string}
  */
 const companyFieldPath = 'select#company-user_fk_company';
+
 /**
  * @see \Spryker\Zed\CompanyUserBusinessUnitGui\Communication\Form\CompanyUserBusinessUnitChoiceFormType
  * @type {string}
  */
 const parentFieldPath = 'select#company-user_fk_company_business_unit';
+
+/**
+ * @type {string}
+ */
+const parentAllOptionsFieldId = 'all-options';
+
 /**
  * @see \Spryker\Zed\CompanyUserBusinessUnitGui\Communication\Form\DataProvider\CompanyUserBusinessUnitFormDataProvider::OPTION_ATTRIBUTE_DATA
  * @type {string}
@@ -24,6 +31,7 @@ const attributeIdCompany = 'id_company';
 function initialize() {
     const companyField = new CompanyFieldHandler();
 
+    companyField.cloneOptions();
     companyField.addListenerOnCompany();
 }
 
@@ -38,6 +46,10 @@ function CompanyFieldHandler() {
         }
     }
 
+    function cloneOptions() {
+        $('<div id="' + parentAllOptionsFieldId + '" class="hidden"></div>').html($parentField.html()).insertAfter($parentField);
+    }
+
     /**
      * @returns {bool}
      */
@@ -46,28 +58,41 @@ function CompanyFieldHandler() {
     }
 
     function setParentNames() {
+        restoreAllParentOptions();
         $parentField.children().each(toggleOption);
 
         blinkParentField();
     }
 
     function toggleOption() {
-        const companyId = parseInt(getCompanyId());
+        const companyId = getCompanyId();
         const $parentOption = $(this);
 
-        if ($parentOption.data(attributeIdCompany) === companyId) {
-            $parentOption.show();
-        } else {
-            $parentOption.removeAttr("selected");
-            $parentOption.hide();
+        if (!$parentOption.val()) {
+            $parentField.attr('disabled', true);
+
+            return;
         }
+
+        if (!companyId || $parentOption.data(attributeIdCompany) == companyId) {
+            return;
+        }
+
+        $parentField.attr('disabled', false);
+        $parentOption.remove();
     }
 
     /**
-     * @returns Null|{string}
+     * @returns NaN|{string}
      */
     function getCompanyId() {
-        return $companyField.val();
+        return parseInt($companyField.val());
+    }
+
+    function restoreAllParentOptions() {
+        const $parentAllOptionsField = $('#' + parentAllOptionsFieldId);
+
+        $parentField.html($parentAllOptionsField.html());
     }
 
     function blinkParentField() {
@@ -76,6 +101,7 @@ function CompanyFieldHandler() {
 
     return {
         addListenerOnCompany: addListenerOnCompany,
+        cloneOptions: cloneOptions,
     };
 }
 

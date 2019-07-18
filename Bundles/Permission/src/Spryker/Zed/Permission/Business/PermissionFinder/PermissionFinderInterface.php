@@ -32,4 +32,11 @@ interface PermissionFinderInterface
      * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
      */
     public function findMergedRegisteredNonInfrastructuralPermissions(): PermissionCollectionTransfer;
+
+    /**
+     * @param string $identifier
+     *
+     * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
+     */
+    public function getPermissionsByIdentifier(string $identifier): PermissionCollectionTransfer;
 }

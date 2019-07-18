@@ -58,13 +58,12 @@ class ShipmentType extends AbstractType
      *
      * @return $this
      */
-    protected function addStoreField(FormBuilderInterface $builder, array $shipmentMethods): self
+    protected function addStoreField(FormBuilderInterface $builder, array $shipmentMethods)
     {
         $builder->add(static::FIELD_SHIPMENT_METHOD, Select2ComboBoxType::class, [
             'property_path' => QuoteTransfer::SHIPMENT . '.' . ShipmentTransfer::METHOD . '.' . ShipmentMethodTransfer::ID_SHIPMENT_METHOD,
             'label' => 'Selecting a shipment method',
             'choices' => array_flip($shipmentMethods),
-            'choices_as_values' => true,
             'multiple' => false,
             'required' => true,
         ]);

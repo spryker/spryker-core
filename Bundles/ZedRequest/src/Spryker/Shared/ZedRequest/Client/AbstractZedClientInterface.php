@@ -31,4 +31,19 @@ interface AbstractZedClientInterface
      * @return \Spryker\Shared\ZedRequest\Client\ResponseInterface
      */
     public function getLastResponse();
+
+    /**
+     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     */
+    public function getInfoStatusMessages(): array;
+
+    /**
+     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     */
+    public function getErrorStatusMessages(): array;
+
+    /**
+     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     */
+    public function getSuccessStatusMessages(): array;
 }

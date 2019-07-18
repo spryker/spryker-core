@@ -52,7 +52,7 @@ class PaymentType extends AbstractType
      *
      * @return $this
      */
-    protected function addPaymentMethods(FormBuilderInterface $builder, array $options): self
+    protected function addPaymentMethods(FormBuilderInterface $builder, array $options)
     {
         $paymentSubFormPlugins = $this->getFactory()
             ->getPaymentMethodSubFormPlugins();
@@ -71,7 +71,7 @@ class PaymentType extends AbstractType
      *
      * @return $this
      */
-    protected function addPaymentMethodChoices(FormBuilderInterface $builder, array $paymentMethodChoices): self
+    protected function addPaymentMethodChoices(FormBuilderInterface $builder, array $paymentMethodChoices)
     {
         $builder->add(
             static::PAYMENT_SELECTION,
@@ -100,7 +100,7 @@ class PaymentType extends AbstractType
      *
      * @return $this
      */
-    protected function addPaymentMethodSubForms(FormBuilderInterface $builder, array $paymentMethodSubForms, array $options): self
+    protected function addPaymentMethodSubForms(FormBuilderInterface $builder, array $paymentMethodSubForms, array $options)
     {
         foreach ($paymentMethodSubForms as $paymentMethodSubForm) {
             $builder->add(

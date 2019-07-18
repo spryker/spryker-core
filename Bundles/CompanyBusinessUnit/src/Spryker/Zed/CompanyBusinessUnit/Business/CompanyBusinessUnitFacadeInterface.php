@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTreeNodeCollectionTransfer;
 use Generated\Shared\Transfer\CompanyResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserResponseTransfer;
+use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 
 interface CompanyBusinessUnitFacadeInterface
@@ -90,6 +91,7 @@ interface CompanyBusinessUnitFacadeInterface
     /**
      * Specification:
      * - Returns the business units for the given company and filters.
+     * - Executes company business unit transfer expander plugins on each item in the collection.
      *
      * @api
      *
@@ -150,4 +152,48 @@ interface CompanyBusinessUnitFacadeInterface
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitTreeNodeCollectionTransfer
      */
     public function getCustomerCompanyBusinessUnitTree(CustomerTransfer $customerTransfer): CompanyBusinessUnitTreeNodeCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Checks if company user already exists by customer id and company business unit id.
+     * - Ignores company user by CompanyUserTransfer::idCompanyUser.
+     * - Returns true in isSuccessful property if CompanyUserTransfer::fkCompanyBusinessUnit or CompanyUserTransfer::fkCustomer is empty.
+     * - Returns false in isSuccessful property if column fk_customer doesn't exist.
+     * - Returns false in isSuccessful property if company user already exists and adds error message to messages collection.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
+     */
+    public function isUniqueCompanyUserByCustomer(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer;
+
+    /**
+     * Specification:
+     * - Finds company business unit by id.
+     * - Returns null if business unit does not exist.
+     *
+     * @api
+     *
+     * @param int $idCompanyBusinessUnit
+     *
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer|null
+     */
+    public function findCompanyBusinessUnitById(int $idCompanyBusinessUnit): ?CompanyBusinessUnitTransfer;
+
+    /**
+     * Specification:
+     * - Retrieves a company business unit by uuid.
+     * - Requires uuid to be set on CompanyBusinessUnitTransfer provided as a parameter.
+     *
+     * @api
+     *
+     * {@internal will work if UUID field is provided.}
+     *
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer
+     */
+    public function findCompanyBusinessUnitByUuid(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): CompanyBusinessUnitResponseTransfer;
 }

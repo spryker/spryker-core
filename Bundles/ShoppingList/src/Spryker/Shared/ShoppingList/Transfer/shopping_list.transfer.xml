@@ -15,7 +15,7 @@
         <property name="idCompanyUser" type="int" />
         <property name="sharedCompanyUsers" type="ShoppingListCompanyUser[]" />
         <property name="sharedCompanyBusinessUnits" type="ShoppingListCompanyBusinessUnit[]" />
-        <property name="items" type="ShoppingListItem[]" />
+        <property name="items" type="ShoppingListItem[]" singular="item"/>
     </transfer>
 
     <transfer name="ShoppingListCollection">
@@ -146,6 +146,14 @@
     <transfer name="ShoppingListPreAddItemCheckResponse">
         <property name="isSuccess" type="bool"/>
         <property name="messages" type="Message[]" singular="message"/>
+    </transfer>
+
+    <transfer name="CurrentProductPrice">
+        <property name="sumPrice" type="int"/>
+    </transfer>
+
+    <transfer name="ProductView">
+        <property name="currentProductPrice" type="CurrentProductPrice" />
     </transfer>
 
 </transfers>

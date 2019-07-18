@@ -270,6 +270,7 @@ class BundledProductTable extends AbstractTable
         if (!$productConcreteEntity->getIsNeverOutOfStock()) {
             $availability = $this->availabilityFacade->calculateStockForProduct($productConcreteEntity->getSku());
         }
+
         return $availability;
     }
 }

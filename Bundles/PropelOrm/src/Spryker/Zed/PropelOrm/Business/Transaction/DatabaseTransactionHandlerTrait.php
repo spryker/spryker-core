@@ -15,7 +15,7 @@ use Propel\Runtime\Propel;
 use Throwable;
 
 /**
- * @deprecated use \Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait instead
+ * @deprecated Use \Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait instead.
  */
 trait DatabaseTransactionHandlerTrait
 {

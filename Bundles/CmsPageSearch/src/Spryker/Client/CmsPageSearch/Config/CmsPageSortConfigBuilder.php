@@ -39,7 +39,7 @@ class CmsPageSortConfigBuilder implements SortConfigBuilderInterface
      *
      * @return $this
      */
-    public function addSort(SortConfigTransfer $sortConfigTransfer): SortConfigBuilderInterface
+    public function addSort(SortConfigTransfer $sortConfigTransfer)
     {
         $this->assertSortConfigTransfer($sortConfigTransfer);
 

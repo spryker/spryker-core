@@ -23,6 +23,9 @@ use SprykerTest\Zed\Kernel\Communication\Controller\Fixtures\MockController;
  */
 class AbstractControllerTest extends Unit
 {
+    /**
+     * @deprecated Please use phpunit's additional internal methods methods instead of the deprecated `assertInternalType()`.
+     */
     public const EXPECTED_INTERNAL_TYPE = 'int';
 
     /**
@@ -45,7 +48,7 @@ class AbstractControllerTest extends Unit
         $result = $controller->indexAction($input);
 
         $this->assertSame($expected, $result);
-        $this->assertInternalType(self::EXPECTED_INTERNAL_TYPE, $result);
+        $this->assertIsInt($result);
     }
 
     /**

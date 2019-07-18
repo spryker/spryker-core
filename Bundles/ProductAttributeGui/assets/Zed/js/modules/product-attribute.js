@@ -5,7 +5,6 @@
 
 'use strict';
 
-require('ZedGui');
 require('../../sass/main.scss');
 
 
@@ -171,6 +170,7 @@ function AttributeManager() {
         var form = $('form#attribute_values_form');
         var idProductAbstract = $('#attribute_values_form_hidden_product_abstract_id').val();
         var idProduct = $('#attribute_values_form_hidden_product_id').val();
+        var csrfToken = $('#csrf-token').val();
         var formData = [];
 
         $('[data-is_attribute_input]').each(function(index, value) {
@@ -206,11 +206,18 @@ function AttributeManager() {
         var formDataJson = JSON.stringify(formData);
         var actionUrl = form.attr('action');
 
+        var actionData = {
+            'json': formDataJson,
+            'id-product-abstract': idProductAbstract,
+            'id-product': idProduct,
+            'csrf-token': csrfToken
+        };
+
         $.ajax({
             url: actionUrl,
             type: 'POST',
             dataType: 'application/json',
-            data: 'json=' + formDataJson + '&id-product-abstract=' + idProductAbstract + '&id-product=' + idProduct,
+            data: $.param(actionData),
             complete: function(jqXHR) {
                 if(jqXHR.readyState === 4) {
                     _attributeManager.resetRemovedKeysCache();

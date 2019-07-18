@@ -12,6 +12,7 @@ use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryTableMap;
 use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
 use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
@@ -61,6 +62,41 @@ class CategoryPageSearchQueryContainer extends AbstractQueryContainer implements
             ->where(SpyCategoryTableMap::COL_IS_IN_MENU . ' = ?', true);
 
         return $query;
+    }
+
+    /**
+     * @api
+     *
+     * @module Url
+     * @module Category
+     *
+     * @param int[] $categoryNodeIds
+     * @param int $idLocale
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
+     */
+    public function queryWholeCategoryNodeTree(array $categoryNodeIds, int $idLocale): SpyCategoryNodeQuery
+    {
+        /** @var \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery $categoryNodeQuery */
+        $categoryNodeQuery = $this->getFactory()
+            ->getCategoryQueryContainer()
+            ->queryAllCategoryNodes()
+            ->filterByIdCategoryNode_In($categoryNodeIds)
+            ->joinWithSpyUrl()
+            ->useSpyUrlQuery(null, Criteria::INNER_JOIN)
+                ->filterByFkLocale($idLocale)
+            ->endUse()
+            ->joinWithCategory()
+            ->useCategoryQuery()
+                ->joinWithAttribute()
+                ->useAttributeQuery()
+                    ->filterByFkLocale($idLocale)
+                ->endUse()
+                ->filterByIsActive(true)
+                ->joinWithCategoryTemplate()
+            ->endUse();
+
+        return $categoryNodeQuery;
     }
 
     /**

@@ -51,7 +51,7 @@ class MerchantForm extends AbstractType
      *
      * @return $this
      */
-    protected function addIdMerchantField(FormBuilderInterface $builder): self
+    protected function addIdMerchantField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_ID_MERCHANT, HiddenType::class);
 
@@ -63,7 +63,7 @@ class MerchantForm extends AbstractType
      *
      * @return $this
      */
-    protected function addNameField(FormBuilderInterface $builder): self
+    protected function addNameField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_NAME, TextType::class, [
             'label' => static::LABEL_NAME,

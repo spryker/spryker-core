@@ -24,7 +24,7 @@ class ContainerTest extends Unit
     /**
      * @return void
      */
-    public function testGetLocatorShouldReturnInstanceOFLocator()
+    public function testGetLocatorShouldReturnInstanceOfLocator()
     {
         $container = new Container();
 

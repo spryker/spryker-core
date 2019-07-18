@@ -169,7 +169,7 @@ class ProductSetStorageWriter implements ProductSetStorageWriterInterface
     /**
      * @param array $spyProductSetLocalizedEntity
      *
-     * @return array|\ArrayObject
+     * @return \ArrayObject|\Generated\Shared\Transfer\ProductImageSetStorageTransfer[]
      */
     protected function getProductImageSets(array $spyProductSetLocalizedEntity)
     {

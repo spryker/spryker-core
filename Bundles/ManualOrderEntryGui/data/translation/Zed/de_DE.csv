@@ -1,0 +1,38 @@
+"<- Prev Step","<-vorheriger Schritt"
+"Add Item","Element hinzufügen"
+"Add Voucher","Gutschein hinzufügen"
+"Added Items","Hinzugefügte Artikel"
+"Billing address",Rechnungsadresse
+"Billing same as shipping","Rechnungsadresse wie Lieferadresse"
+"Create Customer","Kunde erstellen"
+"Create Order","Auftrag erstellen"
+"Customer is registered successfully.","Kunde wurde erfolgreich eingetragen."
+Discounts,Rabatte
+"Dummy payment invoice","Dummy Zahlung auf Rechnung"
+"Grand Total",Gesamtsumme
+"Invalid data provided.","Ungültige Daten angegeben."
+"Manual Order Entry","Manuelle Bestellungseingabe"
+Name,Name
+"Next Step ->","Nächster Schritt ->"
+"Order is created successfully.","Bestellung erfolgreich erstellt."
+"Order Source","Quelle der Bestellung"
+Payment,Bezahlung
+"Price to pay","Zu zahlender Preis"
+Quantity,Menge
+Redeem,Einlösen
+Sales,Verkauf
+Save,Speichern
+"Select Customer","Kunden auswählen"
+"Select Products","Produkte auswählen"
+"Selecting a shipment method","Versandart wird ausgewählt"
+Shipping,Versand
+"Shipping address",Lieferadresse
+Sku,SKU
+"Sub Total",Zwischensumme
+Submit,Absenden
+"Submit order","Bestellung abschicken"
+"Submit Order","Bestellung abschicken"
+"Sum Gross Price","Summe Bruttopreis"
+Tax,Steuer
+"Unit Gross Price","Bruttopreis pro Einheit"
+Vouchers,Gutscheine

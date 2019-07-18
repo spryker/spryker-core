@@ -7,6 +7,10 @@
 
 namespace Spryker\Zed\Transfer\Business\Model\Generator;
 
+/**
+ * @method string getName()
+ * @method string getTransferName()
+ */
 interface DataBuilderDefinitionInterface extends DefinitionInterface
 {
     /**

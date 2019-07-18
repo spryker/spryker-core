@@ -1,0 +1,32 @@
+{
+  "name": "spryker/locale-extension",
+  "type": "library",
+  "description": "LocaleExtension module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.1"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/container": "*",
+    "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/container": "If you want to use Locale Plugins"
+  },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

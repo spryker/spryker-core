@@ -9,6 +9,7 @@ namespace Spryker\Zed\Product\Business\Transfer;
 
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\SpyProductEntityTransfer;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Propel\Runtime\Collection\ObjectCollection;
@@ -90,6 +91,26 @@ class ProductTransferMapper implements ProductTransferMapperInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\SpyProductEntityTransfer $productEntityTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function mapSpyProductEntityTransferToProductConcreteTransfer(SpyProductEntityTransfer $productEntityTransfer): ProductConcreteTransfer
+    {
+        $productTransfer = $this->mapProductConcreteFromData($productEntityTransfer->toArray());
+        $attributes = $this->attributeEncoder->decodeAttributes($productEntityTransfer->getAttributes());
+        $productTransfer->setAttributes($attributes)
+                        ->setIdProductConcrete($productEntityTransfer->getIdProduct());
+
+        $productAbstractEntityTransfer = $productEntityTransfer->getSpyProductAbstract();
+        if ($productAbstractEntityTransfer !== null) {
+            $productTransfer->setAbstractSku($productAbstractEntityTransfer->getSku());
+        }
+
+        return $productTransfer;
+    }
+
+    /**
      * @param \Orm\Zed\Product\Persistence\SpyProduct[]|\Propel\Runtime\Collection\ObjectCollection $productCollection
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
@@ -113,6 +134,16 @@ class ProductTransferMapper implements ProductTransferMapperInterface
     {
         $productData = $productEntity->toArray();
 
+        return $this->mapProductConcreteFromData($productData);
+    }
+
+    /**
+     * @param array $productData
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    protected function mapProductConcreteFromData(array $productData): ProductConcreteTransfer
+    {
         if (isset($productData[ProductConcreteTransfer::ATTRIBUTES])) {
             unset($productData[ProductConcreteTransfer::ATTRIBUTES]);
         }

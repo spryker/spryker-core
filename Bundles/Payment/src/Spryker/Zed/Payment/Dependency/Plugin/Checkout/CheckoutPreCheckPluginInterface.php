@@ -27,7 +27,7 @@ interface CheckoutPreCheckPluginInterface extends CheckoutPluginInterface
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
      *
-     * @return bool
+     * @return void
      */
     public function execute(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse);
 }

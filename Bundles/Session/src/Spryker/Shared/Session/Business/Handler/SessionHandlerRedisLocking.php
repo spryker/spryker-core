@@ -13,6 +13,9 @@ use Spryker\Shared\Session\Business\Handler\Exception\LockCouldNotBeAcquiredExce
 use Spryker\Shared\Session\Business\Handler\KeyGenerator\SessionKeyGeneratorInterface;
 use Spryker\Shared\Session\Business\Handler\Lock\SessionLockerInterface;
 
+/**
+ * @deprecated Use `Spryker\Shared\SessionRedis\Handler\SessionHandlerRedisLocking` instead.
+ */
 class SessionHandlerRedisLocking implements SessionHandlerInterface
 {
     public const KEY_PREFIX = 'session:';
@@ -96,7 +99,7 @@ class SessionHandlerRedisLocking implements SessionHandlerInterface
         if (!$this->locker->lock($this->keyGenerator->generateSessionKey($sessionId))) {
             throw new LockCouldNotBeAcquiredException(sprintf(
                 '%s could not acquire access to the session %s',
-                get_class($this),
+                static::class,
                 $sessionId
             ));
         }

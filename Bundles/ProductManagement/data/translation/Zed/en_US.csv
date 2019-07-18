@@ -1,0 +1,77 @@
+Activate,Activate
+"Add General Information","Add General Information"
+"Add image","Add image"
+"Add image set","Add image set"
+"Add Product Concrete","Add Product Concrete"
+"Add Variant","Add Variant"
+"Assigned products","Assigned products"
+Attributes,Attributes
+"Available in stores","Available in stores"
+"Below are the product variants listed. Each variant may be edited independent from the others.","Below are the product variants listed. Each variant may be edited independent from the others."
+"Below the name and description for your product can be edited for different locales (in different languages).","Below the name and description for your product can be edited for different locales (in different languages)."
+"Below you can choose between your predefined tax sets and edit the price of your product.","Below you can choose between your predefined tax sets and edit the price of your product."
+"Bundle availability based on assigned products:","Bundle availability based on assigned products:"
+Categories,Categories
+"CMS Block list","CMS Block list"
+"Configurable Product Attributes","Configurable Product Attributes"
+"Contains bundles","Contains bundles"
+"Create a Product","Create a Product"
+"Create Bundle Product","Create Bundle Product"
+"Create Product","Create Product"
+Deactivate,Deactivate
+Default,Default
+"Delete image","Delete image"
+"Delete image set","Delete image set"
+Edit,Edit
+"Edit Product Abstract","Edit Product Abstract"
+"Edit Product Concrete","Edit Product Concrete"
+"Enter price.","Enter price."
+"Enter stock value. In case you create multiple variants, the stock can be managed under ""Product Variants"" and this input field will be ignored.","Enter stock value. In case you create multiple variants, the stock can be managed under ""Product Variants"" and this input field will be ignored."
+General,General
+"Gross price","Gross price"
+"Image Set","Image Set"
+"Image Sets","Image Sets"
+Large,Large
+"List Products","List of products"
+"Manage Attributes","Manage Attributes"
+"Merchant Price Dimension","Merchant Price Dimension"
+"Multiple images can be grouped to an image set. An image set has a name for identification and may contain a small and a large version of each image","Multiple images can be grouped to an image set. An image set has a name for identification and may contain a small and a large version of each image"
+n/a,n/a
+"Net price","Net price"
+"Never out of stock","Never out of stock"
+"No categories found.","No categories found."
+"No records","No records"
+"Note: Deactivated product variants are not available in the shop anymore.","Note: Deactivated product variants are not available in the shop anymore."
+"Note: Image sets can be used for different purposes such as being displayed in the catalog or the product detail page or elsewhere.","Note: Image sets can be used for different purposes such as being displayed in the catalog or the product detail page or elsewhere."
+"Note: Meta data are snippets of text describing a page’s content. The meta data appear only in the page’s code, not in its content.","Note: Meta data are snippets of text describing a page’s content. The meta data appear only in the page’s code, not in its content."
+"Note: The price that you edit here is only displayed in the shop catalog and the product detail page for the non configured product (Not product variant)","Note: The price that you edit here is only displayed in the shop catalog and the product detail page for the non configured product (Not product variant)"
+"Note: The SKU is not editable after saving anymore.","Note: The SKU is not editable after saving anymore."
+"Note: The SKU prefix, just like the SKUs of your product variants, are not editable after saving anymore.","Note: The SKU prefix, just like the SKUs of your product variants, are not editable after saving anymore."
+"Price & Tax","Price & Tax"
+"Price & Taxes","Price & Taxes"
+"Product bundle does not have variants!","Product bundle does not have variants!"
+"Product Group ID","Product Group ID"
+"Product Groups","Product Groups"
+"Product has been activated.","Product has been activated."
+"Product has been deactivated.","Product has been deactivated."
+"Product ID","Product ID"
+"Product Image(s)","Product Image(s)"
+"Product type","Product type"
+"Product variants","Product variants"
+Quantity,Quantity
+Save,Save
+"Search engine optimization (SEO) is the process of affecting the visibility of a website or a web page in a web search engine's unpaid results — often referred to as ""natural,"" ""organic,"" or ""earned"" results.","Search engine optimization (SEO) is the process of affecting the visibility of a website or a web page in a web search engine's unpaid results — often referred to as ""natural,"" ""organic,"" or ""earned"" results."
+"Select attributes and corresponding values.","Select attributes and corresponding values."
+"SEO (Meta Information)","SEO (Meta Information)"
+Small,Small
+"Stock Type","Stock Type"
+"Store relation","Store relation"
+"Tax Set","Tax Set"
+"The product [%s] does not exist.","The product [%s] does not exist."
+"The product [%s] was saved successfully.","The product [%s] was saved successfully."
+"The product [%s] you are trying to edit, does not exist.","The product [%s] you are trying to edit, does not exist."
+"There is no super attribute defined. <a href=""%url%"">Define super attributes</a> in order to be able to create variants.","There is no super attribute defined. <a href=""%url%"">Define super attributes</a> in order to be able to create variants."
+Type,Type
+Variants,Variants
+"View Product Abstract","View Product Abstract"
+"View Product Concrete","View Product Concrete"

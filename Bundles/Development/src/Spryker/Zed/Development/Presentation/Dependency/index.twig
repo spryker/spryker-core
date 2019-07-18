@@ -5,19 +5,21 @@
     {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Dependency graphs of all core modules' } %}
         {% block widget_content %}
             <div class="spy-layout sparse">
-                <p><a href="/development/dependency/simple?build-tree=true">Simple Dependency Graph</a> | <a href="/development/dependency/adjacency-matrix?build-tree=true">Adjacency Matrix</a></p>
+                <p>
+                    <a href="/development/dependency/simple?build-tree=true">{{ 'Simple Dependency Graph' | trans }}</a> |
+                    <a href="/development/dependency/adjacency-matrix?build-tree=true">{{ 'Adjacency Matrix' | trans }}</a></p>
 
                 <table class="table-condensed table-hover table-striped table-dependency">
-                    {% for bundle in bundles %}
+                    {% for module in modules %}
                         <tr>
-                            <td class="text-right">{{ bundle }}</td>
+                            <td class="text-right">{{ module.name }}</td>
                             <td>
-                                <a class="btn btn-xs btn-default" href="{{ url('/development/dependency/incoming', {bundle: bundle}) }}">in</a>&nbsp;
-                                <a class="btn btn-xs btn-default" href="{{ url('/development/dependency/outgoing', {bundle: bundle}) }}">out</a>&nbsp;
-                                <a class="btn btn-xs btn-default" href="{{ url('/development/dependency/outgoing-graph', {bundle: bundle}) }}">out graph</a>&nbsp;
-                                <a class="btn btn-xs btn-default" href="{{ url('/development/dependency/simple', {bundle: bundle}) }}">simple</a>&nbsp;
-                                <a class="btn btn-xs btn-default" href="{{ url('/development/dependency/dependency-tree-graph', {bundle: bundle}) }}">detailed</a>&nbsp;
-                                <a class="btn btn-xs btn-default" href="{{ url('/development/dependency/adjacency-matrix', {bundle: bundle}) }}">adjacency</a>
+                                <a class="btn btn-xs btn-default" href="{{ url('/development/dependency/incoming', {bundle: module.name}) }}">{{ 'in' | trans }}</a>&nbsp;
+                                <a class="btn btn-xs btn-default" href="{{ url('/development/dependency/outgoing', {bundle: module.name}) }}">{{ 'out' | trans }}</a>&nbsp;
+                                <a class="btn btn-xs btn-default" href="{{ url('/development/dependency/outgoing-graph', {bundle: module.name}) }}">{{ 'out graph' | trans }}</a>&nbsp;
+                                <a class="btn btn-xs btn-default" href="{{ url('/development/dependency/simple', {bundle: module.name}) }}">{{ 'simple' | trans }}</a>&nbsp;
+                                <a class="btn btn-xs btn-default" href="{{ url('/development/dependency/dependency-tree-graph', {bundle: module.name}) }}">{{ 'detailed' | trans }}</a>&nbsp;
+                                <a class="btn btn-xs btn-default" href="{{ url('/development/dependency/adjacency-matrix', {bundle: module.name}) }}">{{ 'adjacency' | trans }}</a>
                             </td>
                         </tr>
                     {% endfor %}

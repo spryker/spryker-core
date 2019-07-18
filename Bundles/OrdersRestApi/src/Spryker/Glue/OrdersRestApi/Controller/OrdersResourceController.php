@@ -26,6 +26,7 @@ class OrdersResourceController extends AbstractController
      *              "name": "Accept-Language",
      *              "in": "header"
      *          }],
+     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\RestOrderDetailsAttributesTransfer",
      *          "responses": {
      *              "404": "Order not found."
      *          }

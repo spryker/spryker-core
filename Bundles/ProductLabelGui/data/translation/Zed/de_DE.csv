@@ -1,0 +1,35 @@
+"# of Other Labels","# anderer Labels"
+Activate,Aktivieren
+"Assigned products","Zugeordnete Produkte"
+"Available products","Verfügbare Produkte"
+"Back to Product Labels","Zurück zu Produkt-Labels"
+Categories,Kategorien
+"Create a Product Label","Produktlabel erstellen"
+"Create Product Label","Produkt-Label erstellen"
+"De-select all","Alle Markierungen aufheben"
+Deactivate,Deaktivieren
+Edit,Bearbeiten
+"Edit Product Label","Produktlabel bearbeiten"
+"Is Exclusive","Ist exklusiv."
+"List of Product Labels","Liste der Produktlabels"
+"Missing or wrong request data","Fehlende oder falsche Abfragedaten"
+"Overview of Product Labels","Übersicht der Produktlabels"
+"Prioritize Product Labels","Produktlabels priorisieren"
+Priority,Priorität
+"Product label #%d successfully activated.","Produktlabel #%d erfolgreich aktiviert."
+"Product label #%d successfully deactivated.","Produktlabel #%d erfolgreich deaktiviert"
+"Product label #%d successfully updated.","Produktlabel #%d erfolgreich aktualisiert."
+"Product label priority updated successfully.","Priorität des Produktlabels erfolgreich aktualisiert."
+"Products Applied to","Zutreffende Produkte"
+"Products for this label are assigned dynamically, you can't manage relations manually.","Produkte für dieses Label werden dynamisch zugewiesen – Sie können Beziehungen nicht manuell verwalten."
+"Products to which this label applies","Produkte, auf die dieses Label zutrifft"
+Save,Speichern
+"Select all","Alle auswählen"
+"Selected products to assign","Ausgewählte Produkte, die zugeordnet werden sollen"
+"Selected products to de-assign","Ausgewählte Produkte, deren Zuordnung rückgängig gemacht werden soll"
+Translations,Übersetzungen
+"Valid from","Gültig von"
+"Valid to","Gültig bis"
+Validity,Gültigkeit
+View,Ansicht
+"View Product Label","Produktlabel ansehen"
