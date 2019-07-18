@@ -82,10 +82,6 @@ class ResourcePluginAnalyzer implements ResourcePluginAnalyzerInterface
                 $pathAnnotationsTransfer = $this->glueAnnotationsAnalyser->getResourceParametersFromPlugin($plugin);
                 $this->resourceRouteCollection = new ResourceRouteCollection();
                 $this->resourceRouteCollection = $plugin->configure($this->resourceRouteCollection);
-                $resourcePath = $this->parseParentToPath(
-                    '/' . $plugin->getResourceType(),
-                    $this->getParentResource($plugin, $resourceRoutesPluginsProviderPlugin->getResourceRoutePlugins())
-                );
 
                 $this->processMethods(
                     $plugin,
