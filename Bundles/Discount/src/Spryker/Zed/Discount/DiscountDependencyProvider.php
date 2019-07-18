@@ -57,6 +57,7 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGIN_DISCOUNTABLE_ITEM_TRANSFORMER_STRATEGY = 'PLUGIN_DISCOUNTABLE_ITEM_TRANSFORMER_STRATEGY';
     public const DECISION_RULE_PLUGINS = 'DECISION_RULE_PLUGINS';
     public const CALCULATOR_PLUGINS = 'CALCULATOR_PLUGINS';
+    public const COLLECTED_DISCOUNT_GROUPING_PLUGINS = 'COLLECTED_DISCOUNT_GROUPING_PLUGINS';
     public const COLLECTOR_PLUGINS = 'COLLECTOR_PLUGINS';
     public const PLUGIN_STORE_RELATION_FORM_TYPE = 'PLUGIN_STORE_RELATION_FORM_TYPE';
 
@@ -69,6 +70,7 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = $this->addMessengerFacade($container);
         $container = $this->addCalculatorPlugins($container);
+        $container = $this->addCollectedDiscountGroupingPlugins($container);
         $container = $this->addDecisionRulePlugins($container);
         $container = $this->addCollectorPlugins($container);
         $container = $this->addDiscountableItemFilterPlugins($container);
@@ -114,6 +116,14 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
             static::PLUGIN_CALCULATOR_PERCENTAGE => new PercentagePlugin(),
             static::PLUGIN_CALCULATOR_FIXED => new FixedPlugin(),
         ];
+    }
+
+    /**
+     * @return \Spryker\Zed\DiscountExtension\Dependency\Plugin\CollectedDiscountGroupingStrategyPluginInterface[]
+     */
+    protected function getCollectedDiscountGroupingPlugins(): array
+    {
+        return [];
     }
 
     /**
@@ -208,6 +218,20 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::CALCULATOR_PLUGINS] = function () {
             return $this->getAvailableCalculatorPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCollectedDiscountGroupingPlugins(Container $container): Container
+    {
+        $container[static::COLLECTED_DISCOUNT_GROUPING_PLUGINS] = function () {
+            return $this->getCollectedDiscountGroupingPlugins();
         };
 
         return $container;
