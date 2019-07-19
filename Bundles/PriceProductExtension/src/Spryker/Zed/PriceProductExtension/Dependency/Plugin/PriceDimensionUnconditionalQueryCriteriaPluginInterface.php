@@ -13,9 +13,7 @@ interface PriceDimensionUnconditionalQueryCriteriaPluginInterface extends PriceD
 {
     /**
      * Specification:
-     *  - Builds an unconditional expander for default price criteria when querying prices from database,
-     *    it could contain joins, selected columns, conditions for later filtering.
-     *  - This method should always return QueryCriteriaTransfer with join and columns to select all prices without conditions.
+     *  - Returns QueryCriteriaTransfer which provides criteria filters to select all prices without conditions.
      *
      * @api
      *

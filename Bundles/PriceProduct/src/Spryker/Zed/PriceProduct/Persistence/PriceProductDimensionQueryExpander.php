@@ -19,7 +19,7 @@ class PriceProductDimensionQueryExpander implements PriceProductDimensionQueryEx
     /**
      * @var \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionQueryCriteriaPluginInterface[]
      */
-    protected $priceDimensionQueryCriteriaPlugins = [];
+    protected $priceDimensionQueryCriteriaPlugins;
 
     /**
      * @param \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionQueryCriteriaPluginInterface[] $priceProductDimensionQueryCriteriaPlugins
