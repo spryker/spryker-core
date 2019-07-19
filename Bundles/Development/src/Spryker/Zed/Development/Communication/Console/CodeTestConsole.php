@@ -19,11 +19,16 @@ use Symfony\Component\Console\Output\OutputInterface;
 class CodeTestConsole extends Console
 {
     public const COMMAND_NAME = 'code:test';
+
     public const OPTION_MODULE = 'module';
     public const OPTION_MODULE_ALL = 'all';
     public const OPTION_INITIALIZE = 'initialize';
     public const OPTION_GROUP = 'group';
     public const OPTION_TYPE_EXCLUDE = 'exclude';
+
+    public const OPTION_CONFIG_PATH = 'config';
+
+    protected const CODECEPTION_CONFIG_FILE_NAME = 'codeception.yml';
 
     /**
      * @return void
@@ -64,6 +69,31 @@ class CodeTestConsole extends Console
             $this->warning('Make sure you ran `codecept build` already.');
         }
 
-        $this->getFacade()->runTest($module, $this->input->getOptions());
+        $this->getFacade()->runTest(
+            $module,
+            $this->extendOptions($input)
+        );
+    }
+
+    /**
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     *
+     * @return array
+     */
+    protected function extendOptions(InputInterface $input): array
+    {
+        $options = $input->getOptions();
+
+        $options[static::OPTION_CONFIG_PATH] = $this->getCodeceptionConfigPath();
+
+        return $options;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getCodeceptionConfigPath(): string
+    {
+        return APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . static::CODECEPTION_CONFIG_FILE_NAME;
     }
 }

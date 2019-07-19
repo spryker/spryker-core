@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductPackagingUnitStorage;
 
 use Orm\Zed\Product\Persistence\SpyProductQuery;
+use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingLeadProductQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductPackagingUnitStorage\Dependency\Facade\ProductPackagingUnitStorageToEventBehaviorFacadeBridge;
@@ -19,6 +20,7 @@ use Spryker\Zed\ProductPackagingUnitStorage\Dependency\Facade\ProductPackagingUn
 class ProductPackagingUnitStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const PROPEL_QUERY_PRODUCT = 'PROPEL_QUERY_PRODUCT';
+    public const PROPEL_QUERY_PRODUCT_PACKAGING_LEAD_PRODUCT = 'PROPEL_QUERY_PRODUCT_PACKAGING_LEAD_PRODUCT';
     public const FACADE_PRODUCT_PACKAGING_UNIT = 'FACADE_PRODUCT_PACKAGING_UNIT';
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
 
@@ -58,6 +60,7 @@ class ProductPackagingUnitStorageDependencyProvider extends AbstractBundleDepend
     public function providePersistenceLayerDependencies(Container $container): Container
     {
         $container = $this->addProductPropelQuery($container);
+        $container = $this->addProductPackagingLeadProductPropelQuery($container);
 
         return $container;
     }
@@ -72,6 +75,20 @@ class ProductPackagingUnitStorageDependencyProvider extends AbstractBundleDepend
         $container[static::PROPEL_QUERY_PRODUCT] = function () {
             return SpyProductQuery::create();
         };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductPackagingLeadProductPropelQuery(Container $container): Container
+    {
+        $container->set(static::PROPEL_QUERY_PRODUCT_PACKAGING_LEAD_PRODUCT, function () {
+            return SpyProductPackagingLeadProductQuery::create();
+        });
 
         return $container;
     }

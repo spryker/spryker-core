@@ -54,11 +54,11 @@ class TaxProductSynchronizationDataPlugin extends AbstractPlugin implements Sync
      */
     public function getData(array $ids = []): array
     {
-        if (count($ids)) {
-            return $this->getRepository()->getSynchronizationDataTransfersFromTaxProductStoragesByProductAbstractIds($ids);
+        if ($ids === []) {
+            return $this->getRepository()->getAllSynchronizationDataTransfersFromTaxProductStorages();
         }
 
-        return $this->getRepository()->getAllSynchronizationDataTransfersFromTaxProductStorages();
+        return $this->getRepository()->getSynchronizationDataTransfersFromTaxProductStoragesByProductAbstractIds($ids);
     }
 
     /**
