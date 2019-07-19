@@ -9,6 +9,7 @@ namespace Spryker\Client\Search;
 
 use Spryker\Client\Kernel\AbstractClient;
 use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
+use Spryker\Client\SearchExtension\Dependency\Response\ResponseInterface;
 
 /**
  * @method \Spryker\Client\Search\SearchFactory getFactory()
@@ -226,5 +227,47 @@ class SearchClient extends AbstractClient implements SearchClientInterface
             ->getFactory()
             ->createWriter()
             ->deleteBulk($searchDocumentTransfers);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string|null $indexName
+     *
+     * @return int
+     */
+    public function getTotalCount(?string $indexName = null): int
+    {
+        return $this->getFactory()->createSearchDelegator()->getTotalCount($indexName);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string|null $indexName
+     *
+     * @return array
+     */
+    public function getMetaData(?string $indexName = null): array
+    {
+        return $this->getFactory()->createSearchDelegator()->getMetaData($indexName);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string|null $indexName
+     *
+     * @return \Spryker\Client\SearchExtension\Dependency\Response\ResponseInterface
+     */
+    public function deleteIndices(?string $indexName = null): ResponseInterface
+    {
+        return $this->getFactory()->createSearchDelegator()->delete($indexName);
     }
 }

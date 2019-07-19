@@ -78,7 +78,7 @@ class JsonIndexDefinitionLoader implements IndexDefinitionLoaderInterface
     protected function getJsonFiles()
     {
         $finder = new Finder();
-        $finder->in($this->sourceDirectories)->name('*' . self::FILE_EXTENSION)->notName('search.json');
+        $finder->in($this->sourceDirectories)->name('*' . self::FILE_EXTENSION);
 
         return $finder;
     }
@@ -92,9 +92,7 @@ class JsonIndexDefinitionLoader implements IndexDefinitionLoaderInterface
      */
     protected function getDefinitionByStores(SplFileInfo $jsonFile, array $indexDefinitions, array $definitionData)
     {
-
         foreach ($this->storePrefixes as $storePrefix) {
-//                $indexName = sprintf('%s_%s', $storePrefix, $mappingType);
             $indexName = $this->getIndexName($jsonFile, $storePrefix);
 
             if (isset($indexDefinitions[$indexName])) {
@@ -173,7 +171,6 @@ class JsonIndexDefinitionLoader implements IndexDefinitionLoaderInterface
     {
         array_walk($stores, function (&$store) {
             $store = mb_strtolower($store) . '_';
-//            $store = mb_strtolower($store);
         });
 
         return $stores;

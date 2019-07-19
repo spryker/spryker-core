@@ -7,13 +7,16 @@
 
 namespace Spryker\Client\Search\Model\Handler;
 
-use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
+use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 
+/**
+ * @deprecated Use `\Spryker\Client\Search\Search\SearcherInterface` instead.
+ */
 interface SearchHandlerInterface
 {
     /**
-     * @param \Spryker\Client\Search\Dependency\Plugin\QueryInterface $queryCriteria
-     * @param \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface[] $resultFormatters
+     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $queryCriteria
+     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface[] $resultFormatters
      * @param array $requestParameters
      *
      * @return array|\Elastica\ResultSet
