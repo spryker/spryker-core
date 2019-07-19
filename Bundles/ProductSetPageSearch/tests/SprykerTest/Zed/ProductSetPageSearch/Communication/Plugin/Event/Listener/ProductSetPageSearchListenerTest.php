@@ -11,7 +11,6 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\EventEntityTransfer;
 use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageSetTableMap;
 use Orm\Zed\ProductSet\Persistence\Map\SpyProductAbstractSetTableMap;
-use Orm\Zed\ProductSet\Persistence\Map\SpyProductSetDataTableMap;
 use Orm\Zed\ProductSetPageSearch\Persistence\SpyProductSetPageSearchQuery;
 use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
 use PHPUnit\Framework\SkippedTestError;
@@ -19,7 +18,6 @@ use Spryker\Zed\ProductImage\Dependency\ProductImageEvents;
 use Spryker\Zed\ProductSet\Dependency\ProductSetEvents;
 use Spryker\Zed\ProductSetPageSearch\Business\ProductSetPageSearchFacade;
 use Spryker\Zed\ProductSetPageSearch\Communication\Plugin\Event\Listener\ProductAbstractProductSetPageSearchListener;
-use Spryker\Zed\ProductSetPageSearch\Communication\Plugin\Event\Listener\ProductSetDataPageSearchListener;
 use Spryker\Zed\ProductSetPageSearch\Communication\Plugin\Event\Listener\ProductSetPageProductImageSearchListener;
 use Spryker\Zed\ProductSetPageSearch\Communication\Plugin\Event\Listener\ProductSetPageProductImageSetImageSearchListener;
 use Spryker\Zed\ProductSetPageSearch\Communication\Plugin\Event\Listener\ProductSetPageProductImageSetSearchListener;
@@ -80,31 +78,6 @@ class ProductSetPageSearchListenerTest extends Unit
             (new EventEntityTransfer())->setId(1),
         ];
         $productSetPageSearchListener->handleBulk($eventTransfers, ProductSetEvents::PRODUCT_SET_PUBLISH);
-
-        // Assert
-        $afterCount = SpyProductSetPageSearchQuery::create()->count();
-        $this->assertGreaterThan($beforeCount, $afterCount);
-        $this->assertProductSetPageSearch();
-    }
-
-    /**
-     * @return void
-     */
-    public function testProductSetDataPageSearchListenerStoreData()
-    {
-        SpyProductSetPageSearchQuery::create()->filterByFkProductSet(1)->delete();
-        $beforeCount = SpyProductSetPageSearchQuery::create()->count();
-
-        // Act
-        $productSetDataPageSearchListener = new ProductSetDataPageSearchListener();
-        $productSetDataPageSearchListener->setFacade($this->getProductSetPageSearchFacade());
-
-        $eventTransfers = [
-            (new EventEntityTransfer())->setForeignKeys([
-                SpyProductSetDataTableMap::COL_FK_PRODUCT_SET => 1,
-            ]),
-        ];
-        $productSetDataPageSearchListener->handleBulk($eventTransfers, ProductSetEvents::ENTITY_SPY_PRODUCT_SET_DATA_CREATE);
 
         // Assert
         $afterCount = SpyProductSetPageSearchQuery::create()->count();

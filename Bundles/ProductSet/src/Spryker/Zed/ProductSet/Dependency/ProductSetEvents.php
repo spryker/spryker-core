@@ -72,28 +72,4 @@ interface ProductSetEvents
      * @api
      */
     public const ENTITY_SPY_PRODUCT_ABSTRACT_SET_DELETE = 'Entity.spy_product_abstract_set.delete';
-
-    /**
-     * Specification
-     * - This events will be used for spy_product_set_data entity creation
-     *
-     * @api
-     */
-    public const ENTITY_SPY_PRODUCT_SET_DATA_CREATE = 'Entity.spy_product_set_data.create';
-
-    /**
-     * Specification
-     * - This events will be used for spy_product_set_data entity changes
-     *
-     * @api
-     */
-    public const ENTITY_SPY_PRODUCT_SET_DATA_UPDATE = 'Entity.spy_product_set_data.update';
-
-    /**
-     * Specification
-     * - This events will be used for spy_product_set_data entity deletion
-     *
-     * @api
-     */
-    public const ENTITY_SPY_PRODUCT_SET_DATA_DELETE = 'Entity.spy_product_set_data.delete';
 }
