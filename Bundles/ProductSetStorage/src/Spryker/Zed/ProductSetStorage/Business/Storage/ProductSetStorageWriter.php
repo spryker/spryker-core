@@ -138,21 +138,21 @@ class ProductSetStorageWriter implements ProductSetStorageWriterInterface
     }
 
     /**
-     * @param array $spyProductSetLocalizedEntity
+     * @param array $productSetLocalizedEntity
      *
      * @return int[]
      */
-    protected function extractProductAbstractIdsFromProductSetLocalizedEntity(array $spyProductSetLocalizedEntity): array
+    protected function extractProductAbstractIdsFromProductSetLocalizedEntity(array $productSetLocalizedEntity): array
     {
-        $spyProductAbstractSetEntities = $spyProductSetLocalizedEntity['SpyProductSet']['SpyProductAbstractSets'];
+        $productAbstractSetEntities = $productSetLocalizedEntity['SpyProductSet']['SpyProductAbstractSets'];
 
-        if (!$spyProductAbstractSetEntities[0]) {
+        if (!$productAbstractSetEntities[0]) {
             return [];
         }
 
         $productAbstractIds = [];
 
-        foreach ($spyProductAbstractSetEntities as $productAbstract) {
+        foreach ($productAbstractSetEntities as $productAbstract) {
             $productAbstractIds[] = $productAbstract['fk_product_abstract'];
         }
 
@@ -166,7 +166,7 @@ class ProductSetStorageWriter implements ProductSetStorageWriterInterface
      */
     protected function findProductSetLocalizedEntities(array $productSetIds)
     {
-        return $this->queryContainer->queryProductSetDataByIds($productSetIds)->find()->getData();
+        return $this->queryContainer->queryProductSetDataByProductSetIds($productSetIds)->find()->getData();
     }
 
     /**
