@@ -43,7 +43,7 @@ abstract class AbstractProductRestrictionFilter implements ProductRestrictionFil
 
         $productListStorageTransfers = $this->getProductListStorageTransfers($productIds);
 
-        return $this->filterProductIds($productIds, $productListStorageTransfers, $customerWhitelistIds, $customerBlacklistIds);
+        return $this->filterProductIdsByCustomerProductLists($productIds, $productListStorageTransfers, $customerWhitelistIds, $customerBlacklistIds);
     }
 
     /**
@@ -54,7 +54,7 @@ abstract class AbstractProductRestrictionFilter implements ProductRestrictionFil
      *
      * @return int[]
      */
-    protected function filterProductIds(array $productIds, array $productListStorageTransfers, array $customerWhitelistIds, array $customerBlacklistIds): array
+    protected function filterProductIdsByCustomerProductLists(array $productIds, array $productListStorageTransfers, array $customerWhitelistIds, array $customerBlacklistIds): array
     {
         if (!$productListStorageTransfers || (!$customerBlacklistIds && !$customerWhitelistIds)) {
             return $productIds;
