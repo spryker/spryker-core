@@ -63,34 +63,6 @@ class CartReader implements CartReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function readByIdentifier(string $uuidCart, RestRequestInterface $restRequest): RestResponseInterface
-    {
-        $customerReference = $restRequest->getRestUser()->getNaturalIdentifier();
-
-        $quoteTransfer = (new QuoteTransfer())
-            ->setCustomerReference($customerReference)
-            ->setCustomer((new CustomerTransfer())->setCustomerReference($customerReference))
-            ->setUuid($uuidCart);
-
-        $quoteResponseTransfer = $this->cartsRestApiClient->findQuoteByUuid($quoteTransfer);
-        if (!$quoteResponseTransfer->getIsSuccessful()) {
-            return $this->cartRestResponseBuilder->createFailedErrorResponse($quoteResponseTransfer->getErrors());
-        }
-
-        $cartResource = $this->cartsResourceMapper->mapCartsResource(
-            $quoteResponseTransfer->getQuoteTransfer(),
-            $restRequest
-        );
-
-        return $this->cartRestResponseBuilder->createCartRestResponse($cartResource);
-    }
-
-    /**
-     * @param string $uuidCart
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
     public function getCustomerQuoteByUuid(string $uuidCart, RestRequestInterface $restRequest): RestResponseInterface
     {
         $customerTransfer = (new CustomerTransfer())
