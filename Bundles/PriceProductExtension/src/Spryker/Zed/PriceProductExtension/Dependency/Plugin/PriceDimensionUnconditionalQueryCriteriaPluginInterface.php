@@ -9,7 +9,7 @@ namespace Spryker\Zed\PriceProductExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\QueryCriteriaTransfer;
 
-interface PriceDimensionUnconditionalQueryCriteriaPluginInterface extends PriceDimensionQueryCriteriaPluginInterface
+interface PriceDimensionUnconditionalQueryCriteriaPluginInterface
 {
     /**
      * Specification:
