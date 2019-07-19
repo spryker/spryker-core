@@ -11,8 +11,4 @@ use Exception;
 
 class PathPatternInvalidException extends Exception
 {
-    /**
-     * @var string
-     */
-    protected $message = 'Your directory path patterns is wrong. Please check it.';
 }
