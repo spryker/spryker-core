@@ -8,6 +8,8 @@
 namespace SprykerTest\Client\Price;
 
 use Codeception\Actor;
+use Spryker\Client\Price\PriceModeCache\PriceModeCache;
+use Spryker\Client\Price\PriceModeCache\PriceModeCacheInterface;
 
 /**
  * Inherited Methods
@@ -27,4 +29,12 @@ use Codeception\Actor;
 class PriceClientTester extends Actor
 {
     use _generated\PriceClientTesterActions;
+
+    /**
+     * @return \Spryker\Client\Price\PriceModeCache\PriceModeCacheInterface
+     */
+    public function createPriceModeCache(): PriceModeCacheInterface
+    {
+        return new PriceModeCache();
+    }
 }

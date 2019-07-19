@@ -9,8 +9,6 @@ namespace SprykerTest\Client\Price;
 
 use Codeception\Test\Unit;
 use Spryker\Client\Price\PriceConfig;
-use Spryker\Client\Price\PriceModeCache\PriceModeCache;
-use Spryker\Client\Price\PriceModeCache\PriceModeCacheInterface;
 
 /**
  * Auto-generated group annotations
@@ -35,7 +33,7 @@ class PriceClientTest extends Unit
     protected function setUp(): void
     {
         parent::setUp();
-        $this->createPriceModeCache()->invalidate();
+        $this->tester->createPriceModeCache()->invalidate();
     }
 
     /**
@@ -44,7 +42,7 @@ class PriceClientTest extends Unit
     protected function tearDown(): void
     {
         parent::tearDown();
-        $this->createPriceModeCache()->invalidate();
+        $this->tester->createPriceModeCache()->invalidate();
     }
 
     /**
@@ -69,7 +67,7 @@ class PriceClientTest extends Unit
     {
         //Arrange
         $priceClient = $this->tester->getLocator()->price()->client();
-        $this->createPriceModeCache()->cache(static::CACHED_PRICE_MODE);
+        $this->tester->createPriceModeCache()->cache(static::CACHED_PRICE_MODE);
 
         //Act
         $priceMode = $priceClient->getCurrentPriceMode();
@@ -85,7 +83,7 @@ class PriceClientTest extends Unit
     {
         //Arrange
         $priceClient = $this->tester->getLocator()->price()->client();
-        $this->createPriceModeCache()->cache(static::CACHED_PRICE_MODE);
+        $this->tester->createPriceModeCache()->cache(static::CACHED_PRICE_MODE);
         $defaultPriceMode = $this->createPriceConfig()->getDefaultPriceMode();
 
         //Act
@@ -95,14 +93,6 @@ class PriceClientTest extends Unit
         //Assert
         $this->assertNotNull($priceModeCache);
         $this->assertEquals($defaultPriceMode, $priceModeCache);
-    }
-
-    /**
-     * @return \Spryker\Client\Price\PriceModeCache\PriceModeCacheInterface
-     */
-    protected function createPriceModeCache(): PriceModeCacheInterface
-    {
-        return new PriceModeCache();
     }
 
     /**
