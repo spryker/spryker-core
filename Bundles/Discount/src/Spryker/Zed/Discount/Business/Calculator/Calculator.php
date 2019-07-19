@@ -169,7 +169,7 @@ class Calculator implements CalculatorInterface
     }
 
     /**
-     * - Filters exclusive discounts returning only one, or return all discounts.
+     * - Filters exclusive discounts returning an array of only one exclusive discount, or return all.
      *
      * @param \Generated\Shared\Transfer\CollectedDiscountTransfer[] $collectedDiscountTransfers
      *
@@ -177,12 +177,9 @@ class Calculator implements CalculatorInterface
      */
     protected function filterExclusiveDiscounts(array $collectedDiscountTransfers): array
     {
-        $exclusiveDiscounts = [];
         foreach ($collectedDiscountTransfers as $collectedDiscountTransfer) {
             if ($collectedDiscountTransfer->getDiscount()->getIsExclusive()) {
-                $exclusiveDiscounts[] = $collectedDiscountTransfer;
-
-                return $exclusiveDiscounts;
+                return [$collectedDiscountTransfer];
             }
         }
 

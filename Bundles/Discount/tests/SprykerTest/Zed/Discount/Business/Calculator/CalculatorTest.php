@@ -448,13 +448,10 @@ class CalculatorTest extends Unit
         $collectedDiscounts = $calculator->calculate($discounts, $quoteTransfer);
 
         $this->assertCount(2, $collectedDiscounts);
-        $discountAmounts = array_reduce($collectedDiscounts, function (array $amounts, CollectedDiscountTransfer $collectedDiscountTransfer) {
-            $amounts[] = $collectedDiscountTransfer->getDiscount()->getAmount();
-
-            return $amounts;
-        }, []);
-
-        $this->assertEmpty(array_diff($discountAmounts, [20, 30]));
+        $discountAmounts = array_map(function (CollectedDiscountTransfer $collectedDiscountTransfer) {
+            return $collectedDiscountTransfer->getDiscount()->getAmount();
+        }, $collectedDiscounts);
+        $this->assertEqualsCanonicalizing($discountAmounts, [20, 30]);
     }
 
     /**

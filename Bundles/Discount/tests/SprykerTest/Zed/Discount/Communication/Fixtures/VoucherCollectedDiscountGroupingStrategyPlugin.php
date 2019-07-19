@@ -28,8 +28,6 @@ class VoucherCollectedDiscountGroupingStrategyPlugin implements CollectedDiscoun
      * {@inheritDoc}
      *
      * @return string
-     * @api
-     *
      */
     public function getGroupName(): string
     {
