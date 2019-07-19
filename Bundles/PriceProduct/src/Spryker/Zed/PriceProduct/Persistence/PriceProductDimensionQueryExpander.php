@@ -64,6 +64,12 @@ class PriceProductDimensionQueryExpander implements PriceProductDimensionQueryEx
 
         foreach ($this->priceDimensionQueryCriteriaPlugins as $priceDimensionQueryCriteriaPlugin) {
             if (!($priceDimensionQueryCriteriaPlugin instanceof PriceDimensionUnconditionalQueryCriteriaPluginInterface)) {
+                $this->executePriceProductStoreQueryWithPriceDimensionForDeletePlugin(
+                    $priceProductStoreQuery,
+                    $priceProductCriteriaTransfer,
+                    $priceDimensionQueryCriteriaPlugin
+                );
+
                 continue;
             }
 
@@ -75,6 +81,33 @@ class PriceProductDimensionQueryExpander implements PriceProductDimensionQueryEx
         }
 
         return $priceProductStoreQuery;
+    }
+
+    /**
+     * @deprecated this method exists for BC reasons only.
+     *
+     * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery $priceProductStoreQuery
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+     * @param \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionQueryCriteriaPluginInterface $priceDimensionQueryCriteriaPlugin
+     *
+     * @return void
+     */
+    protected function executePriceProductStoreQueryWithPriceDimensionForDeletePlugin(
+        SpyPriceProductStoreQuery $priceProductStoreQuery,
+        PriceProductCriteriaTransfer $priceProductCriteriaTransfer,
+        PriceDimensionQueryCriteriaPluginInterface $priceDimensionQueryCriteriaPlugin
+    ): void {
+        $priceDimensionQueryCriteriaTransfer = $this->runPlugin(
+            $priceProductStoreQuery,
+            $priceProductCriteriaTransfer,
+            $priceDimensionQueryCriteriaPlugin
+        );
+
+        if (!$priceDimensionQueryCriteriaTransfer) {
+            return;
+        }
+
+        $this->filterEmptyDimensions($priceProductStoreQuery, $priceDimensionQueryCriteriaTransfer);
     }
 
     /**
