@@ -47,11 +47,11 @@ class CategoryPageEventResourceQueryContainerPlugin extends AbstractPlugin imple
     {
         $query = $this->getQueryContainer()->queryCategoryNodesByIds($ids);
 
-        if (empty($ids)) {
+        if ($ids === []) {
             $query->clear();
         }
 
-        return $query;
+        return $query->orderBy($this->getIdColumnName());
     }
 
     /**

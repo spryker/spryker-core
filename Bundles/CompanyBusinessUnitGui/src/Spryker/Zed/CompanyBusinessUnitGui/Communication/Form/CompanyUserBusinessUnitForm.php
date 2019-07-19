@@ -63,7 +63,6 @@ class CompanyUserBusinessUnitForm extends AbstractType
             'placeholder' => 'Business Unit name',
             'choices' => $options[static::OPTION_VALUES_BUSINESS_UNITS_CHOICES],
             'choice_attr' => $options[static::OPTION_ATTRIBUTES_BUSINESS_UNITS_CHOICES],
-            'choices_as_values' => true,
             'required' => true,
             'attr' => [
                 'template_path' => $this->getTemplatePath(),

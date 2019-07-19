@@ -14,8 +14,8 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\PriceCartConnector\Business\Manager\PriceManager;
+use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartConnectorToPriceProductAdapter;
 use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceInterface;
-use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceProductBridge;
 use SprykerTest\Zed\PriceCartConnector\Business\Fixture\PriceProductFacadeStub;
 
 /**
@@ -151,7 +151,7 @@ class PriceManagerTest extends Unit
      */
     protected function createPriceManager(PriceProductFacadeStub $priceProductFacadeStub)
     {
-        $priceProductCartToPriceBridge = new PriceCartToPriceProductBridge($priceProductFacadeStub);
+        $priceProductCartToPriceBridge = new PriceCartConnectorToPriceProductAdapter($priceProductFacadeStub);
 
         $priceFacadeMock = $this->createPriceFacadeBridgeMock();
 

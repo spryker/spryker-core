@@ -61,22 +61,11 @@ class ProductOptionGroupReader implements ProductOptionGroupReaderInterface
     /**
      * @param int $idProductOptionGroup
      *
-     * @throws \Spryker\Zed\ProductOption\Business\Exception\ProductOptionGroupNotFoundException
-     *
      * @return \Generated\Shared\Transfer\ProductOptionGroupTransfer
      */
     public function getProductOptionGroupById($idProductOptionGroup)
     {
-        $productOptionGroupEntity = $this->queryProductGroupById($idProductOptionGroup);
-
-        if (!$productOptionGroupEntity) {
-            throw new ProductOptionGroupNotFoundException(
-                sprintf(
-                    'Product option group with id "%d" not found.',
-                    $idProductOptionGroup
-                )
-            );
-        }
+        $productOptionGroupEntity = $this->getProductOptionGroupEntityWithValuesAndValuePricesById((int)$idProductOptionGroup);
 
         return $this->hydrateProductOptionGroupTransfer($productOptionGroupEntity);
     }
@@ -229,13 +218,24 @@ class ProductOptionGroupReader implements ProductOptionGroupReaderInterface
     /**
      * @param int $idProductOptionGroup
      *
+     * @throws \Spryker\Zed\ProductOption\Business\Exception\ProductOptionGroupNotFoundException
+     *
      * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup
      */
-    protected function queryProductGroupById($idProductOptionGroup)
+    protected function getProductOptionGroupEntityWithValuesAndValuePricesById($idProductOptionGroup): SpyProductOptionGroup
     {
         $productOptionGroupCollection = $this->productOptionQueryContainer
             ->queryProductOptionGroupWithProductOptionValuesAndProductOptionValuePricesById($idProductOptionGroup)
             ->find();
+
+        if ($productOptionGroupCollection->count() === 0) {
+            throw new ProductOptionGroupNotFoundException(
+                sprintf(
+                    'Product Option Group with id "%d" not found.',
+                    $idProductOptionGroup
+                )
+            );
+        }
 
         return $productOptionGroupCollection->getFirst();
     }

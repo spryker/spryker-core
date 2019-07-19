@@ -562,4 +562,20 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
             ->createPriceProductDefaultRemover()
             ->removePriceProductDefaultsForPriceProduct($priceProductTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer[] $priceProductFilterTransfers
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function getValidPrices(array $priceProductFilterTransfers): array
+    {
+        return $this->getFactory()
+            ->createReaderModel()
+            ->getValidPrices($priceProductFilterTransfers);
+    }
 }
