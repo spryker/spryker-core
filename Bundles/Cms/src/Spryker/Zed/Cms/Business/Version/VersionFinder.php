@@ -10,7 +10,6 @@ namespace Spryker\Zed\Cms\Business\Version;
 use Generated\Shared\Transfer\CmsVersionDataTransfer;
 use Generated\Shared\Transfer\CmsVersionTransfer;
 use Orm\Zed\Cms\Persistence\SpyCmsPage;
-use Spryker\Zed\Cms\Business\Exception\MissingPageException;
 use Spryker\Zed\Cms\Business\Version\Mapper\VersionDataMapperInterface;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
 
@@ -134,8 +133,6 @@ class VersionFinder implements VersionFinderInterface
     /**
      * @param int $idCmsPage
      *
-     * @throws \Spryker\Zed\Cms\Business\Exception\MissingPageException
-     *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsPage
      */
     protected function getCmsPage(int $idCmsPage): SpyCmsPage
@@ -143,15 +140,6 @@ class VersionFinder implements VersionFinderInterface
         $cmsPageCollection = $this->queryContainer
             ->queryCmsPageWithAllRelationsByIdPage($idCmsPage)
             ->find();
-
-        if ($cmsPageCollection->count() === 0) {
-            throw new MissingPageException(
-                sprintf(
-                    'There is no valid Cms page with this id: %d . If the page exists. please check the placeholders',
-                    $idCmsPage
-                )
-            );
-        }
 
         return $cmsPageCollection->getFirst();
     }
