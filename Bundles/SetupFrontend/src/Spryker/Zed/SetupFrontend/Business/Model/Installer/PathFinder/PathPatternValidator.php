@@ -7,35 +7,27 @@
 
 namespace Spryker\Zed\SetupFrontend\Business\Model\Installer\PathFinder;
 
+use Spryker\Zed\SetupFrontend\Business\Model\Exception\PathPatternInvalidException;
+
 class PathPatternValidator implements PathPatternValidatorInterface
 {
+    protected const EXCEPTION_MESSAGE = 'Path pattern %s is invalid';
+
     /**
      * @param string[] $pathPatterns
      *
-     * @return bool
+     * @throws \Spryker\Zed\SetupFrontend\Business\Model\Exception\PathPatternInvalidException
+     *
+     * @return void
      */
-    public function isValidPathPatterns(array $pathPatterns): bool
+    public function validatePathPatterns(array $pathPatterns): void
     {
         foreach ($pathPatterns as $pathPattern) {
             $directoryCollection = glob($pathPattern);
 
             if (count($directoryCollection) === 0) {
-                return false;
+                throw new PathPatternInvalidException(sprintf(static::EXCEPTION_MESSAGE, $pathPattern));
             }
         }
-
-        return true;
-    }
-
-    /**
-     * @param string $pathPattern
-     *
-     * @return bool
-     */
-    protected function isPathPatternValid(string $pathPattern): bool
-    {
-        $directoryCollection = glob($pathPattern);
-
-        return !(count($directoryCollection) === 0);
     }
 }

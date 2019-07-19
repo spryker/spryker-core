@@ -12,7 +12,7 @@ interface PathPatternValidatorInterface
     /**
      * @param string[] $pathPatterns
      *
-     * @return bool
+     * @return void
      */
-    public function isValidPathPatterns(array $pathPatterns): bool;
+    public function validatePathPatterns(array $pathPatterns): void;
 }
