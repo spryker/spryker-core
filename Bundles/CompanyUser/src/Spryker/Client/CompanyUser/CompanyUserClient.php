@@ -108,7 +108,7 @@ class CompanyUserClient extends AbstractClient implements CompanyUserClientInter
      *
      * @api
      *
-     * @uses \SprykerShop\Shared\CompanyPage\Plugin\CompanyUserStatusChangePermissionPlugin
+     * @uses \Spryker\Client\CompanyUser\Plugin\CompanyUserStatusChangePermissionPlugin
      *
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
@@ -132,7 +132,7 @@ class CompanyUserClient extends AbstractClient implements CompanyUserClientInter
      *
      * @api
      *
-     * @uses \SprykerShop\Shared\CompanyPage\Plugin\CompanyUserStatusChangePermissionPlugin
+     * @uses \Spryker\Client\CompanyUser\Plugin\CompanyUserStatusChangePermissionPlugin
      *
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
