@@ -36,7 +36,13 @@ interface ZedRequestConstants
 
     public const TRANSFER_DEBUG_SESSION_FORWARD_ENABLED = 'TRANSFER_DEBUG_SESSION_FORWARD_ENABLED';
     public const TRANSFER_DEBUG_SESSION_NAME = 'TRANSFER_DEBUG_SESSION_NAME';
+    /**
+     * @deprecated Will be removed in next major.
+     */
     public const TRANSFER_PASSWORD = 'TRANSFER_PASSWORD';
+    /**
+     * @deprecated Will be removed in next major.
+     */
     public const TRANSFER_USERNAME = 'TRANSFER_USERNAME';
 
     public const ZED_API_SSL_ENABLED = 'ZED_API_SSL_ENABLED';
