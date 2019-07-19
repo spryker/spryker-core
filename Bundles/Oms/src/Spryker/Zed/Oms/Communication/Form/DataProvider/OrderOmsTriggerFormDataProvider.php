@@ -9,7 +9,7 @@ namespace Spryker\Zed\Oms\Communication\Form\DataProvider;
 
 use Spryker\Zed\Oms\Communication\Form\OmsTriggerForm;
 
-class OrderOmsTriggerFormDataProvider extends InitialOmsTriggerFormDataProvider
+class OrderOmsTriggerFormDataProvider extends AbstractOmsTriggerFormDataProvider
 {
     /**
      * @param string $redirectUrl
@@ -18,7 +18,7 @@ class OrderOmsTriggerFormDataProvider extends InitialOmsTriggerFormDataProvider
      *
      * @return array
      */
-    public function getOrderOmsTriggerFormOptions(string $redirectUrl, string $event, int $idSalesOrder): array
+    public function getOptions(string $redirectUrl, string $event, int $idSalesOrder): array
     {
         return [
             OmsTriggerForm::OPTION_OMS_ACTION => static::OMS_ACTION_ORDER_TRIGGER,

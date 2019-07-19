@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Oms\Communication\Form\DataProvider;
 
-class InitialOmsTriggerFormDataProvider
+abstract class AbstractOmsTriggerFormDataProvider
 {
     public const OMS_ACTION_ITEM_TRIGGER = 'submit-trigger-event-for-order-items';
     public const OMS_ACTION_ORDER_TRIGGER = 'submit-trigger-event-for-order';
@@ -18,4 +18,13 @@ class InitialOmsTriggerFormDataProvider
     public const QUERY_PARAM_REDIRECT = 'redirect';
 
     public const SUBMIT_BUTTON_CLASS = 'btn btn-primary btn-sm trigger-event';
+
+    /**
+     * @param string $redirectUrl
+     * @param string $event
+     * @param int $idSalesOrderItem
+     *
+     * @return array
+     */
+    abstract public function getOptions(string $redirectUrl, string $event, int $idSalesOrderItem): array;
 }

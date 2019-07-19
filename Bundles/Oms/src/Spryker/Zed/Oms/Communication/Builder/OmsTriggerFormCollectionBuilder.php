@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Oms\Communication\Collector;
+namespace Spryker\Zed\Oms\Communication\Builder;
 
 use Spryker\Zed\Oms\Communication\Factory\OmsTriggerFormFactoryInterface;
 

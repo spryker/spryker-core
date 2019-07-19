@@ -8,8 +8,8 @@
 namespace Spryker\Zed\Oms\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\Oms\Communication\Collector\OmsTriggerFormCollectionBuilder;
-use Spryker\Zed\Oms\Communication\Collector\OmsTriggerFormCollectionBuilderInterface;
+use Spryker\Zed\Oms\Communication\Builder\OmsTriggerFormCollectionBuilder;
+use Spryker\Zed\Oms\Communication\Builder\OmsTriggerFormCollectionBuilderInterface;
 use Spryker\Zed\Oms\Communication\Factory\OmsTriggerFormFactory;
 use Spryker\Zed\Oms\Communication\Factory\OmsTriggerFormFactoryInterface;
 use Spryker\Zed\Oms\Communication\Table\TransitionLogTable;
@@ -41,7 +41,7 @@ class OmsCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\Oms\Communication\Collector\OmsTriggerFormCollectionBuilderInterface
+     * @return \Spryker\Zed\Oms\Communication\Builder\OmsTriggerFormCollectionBuilderInterface
      */
     public function createOmsTriggerFormCollectionBuilder(): OmsTriggerFormCollectionBuilderInterface
     {

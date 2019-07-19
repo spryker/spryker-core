@@ -54,7 +54,7 @@ class OmsTriggerFormFactory implements OmsTriggerFormFactoryInterface
     public function getOrderOmsTriggerForm(string $redirectUrl, string $event, int $idSalesOrder): FormInterface
     {
         $options = $this->createOrderOmsTriggerFormDataProvider()
-            ->getOrderOmsTriggerFormOptions($redirectUrl, $event, $idSalesOrder);
+            ->getOptions($redirectUrl, $event, $idSalesOrder);
 
         return $this->formFactory->create(OmsTriggerForm::class, null, $options);
     }
@@ -69,7 +69,7 @@ class OmsTriggerFormFactory implements OmsTriggerFormFactoryInterface
     public function getOrderItemOmsTriggerForm(string $redirectUrl, string $event, int $idSalesOrderItem): FormInterface
     {
         $options = $this->createOrderItemOmsTriggerFormDataProvider()
-            ->getOrderItemOmsTriggerFormOptions($redirectUrl, $event, $idSalesOrderItem);
+            ->getOptions($redirectUrl, $event, $idSalesOrderItem);
 
         return $this->formFactory->create(OmsTriggerForm::class, null, $options);
     }

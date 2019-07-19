@@ -9,7 +9,7 @@ namespace Spryker\Zed\Oms\Communication\Form\DataProvider;
 
 use Spryker\Zed\Oms\Communication\Form\OmsTriggerForm;
 
-class OrderItemOmsTriggerFormDataProvider extends InitialOmsTriggerFormDataProvider
+class OrderItemOmsTriggerFormDataProvider extends AbstractOmsTriggerFormDataProvider
 {
     public const ROUTE_REDIRECT = '/sales/detail';
 
@@ -20,7 +20,7 @@ class OrderItemOmsTriggerFormDataProvider extends InitialOmsTriggerFormDataProvi
      *
      * @return array
      */
-    public function getOrderItemOmsTriggerFormOptions(string $redirectUrl, string $event, int $idSalesOrderItem): array
+    public function getOptions(string $redirectUrl, string $event, int $idSalesOrderItem): array
     {
         return [
             OmsTriggerForm::OPTION_OMS_ACTION => static::OMS_ACTION_ITEM_TRIGGER,
