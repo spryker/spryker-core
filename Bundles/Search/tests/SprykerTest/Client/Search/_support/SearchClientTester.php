@@ -21,7 +21,8 @@ use Codeception\Actor;
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
- *
+ * @method \Spryker\Client\Search\SearchClientInterface getClient()
+ * @method \Spryker\Client\Search\SearchFactory getFactory()
  * @SuppressWarnings(PHPMD)
  */
 class SearchClientTester extends Actor

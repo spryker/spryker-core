@@ -8,6 +8,7 @@
 namespace Spryker\Client\Search;
 
 use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
+use Spryker\Client\SearchExtension\Dependency\Response\ResponseInterface;
 
 interface SearchClientInterface
 {
@@ -165,4 +166,40 @@ interface SearchClientInterface
      * @return bool
      */
     public function deleteBulk(array $searchDocumentTransfers): bool;
+
+    /**
+     * Specification:
+     * - @TODO
+     *
+     * @api
+     *
+     * @param string|null $indexName
+     *
+     * @return int
+     */
+    public function getTotalCount(?string $indexName = null): int;
+
+    /**
+     * Specification:
+     * - @TODO
+     *
+     * @api
+     *
+     * @param string|null $indexName
+     *
+     * @return array
+     */
+    public function getMetaData(?string $indexName = null): array;
+
+    /**
+     * Specification:
+     * - @TODO
+     *
+     * @api
+     *
+     * @param string|null $indexName
+     *
+     * @return \Spryker\Client\SearchExtension\Dependency\Response\ResponseInterface
+     */
+    public function deleteIndices(?string $indexName = null): ResponseInterface;
 }

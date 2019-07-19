@@ -31,7 +31,7 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
         $this
             ->getFactory()
             ->createSearchInstaller($messenger)
-            ->install();
+            ->install($messenger);
     }
 
     /**
@@ -39,9 +39,11 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
      *
      * @api
      *
+     * @param string|null $indexName
+     *
      * @return int
      */
-    public function getTotalCount()
+    public function getTotalCount(?string $indexName = null)
     {
         return $this
             ->getFactory()
@@ -54,29 +56,32 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
      *
      * @api
      *
+     * @param string|null $indexName
+     *
      * @return array
      */
-    public function getMetaData()
+    public function getMetaData(?string $indexName = null)
     {
         return $this
             ->getFactory()
-            ->createSearchIndexManager()
+            ->createSearchIndexManager($indexName)
             ->getMetaData();
     }
 
     /**
-     * Specification:
-     * - Removes the current index
+     * {@inheritdoc}
      *
      * @api
      *
+     * @param string|null $indexName
+     *
      * @return \Elastica\Response
      */
-    public function delete()
+    public function delete(?string $indexName = null)
     {
         return $this
             ->getFactory()
-            ->createSearchIndexManager()
+            ->createSearchIndexManager($indexName)
             ->delete();
     }
 
@@ -170,8 +175,7 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
      */
     public function generatePageIndexMap(LoggerInterface $messenger)
     {
-        $this
-            ->getFactory()
+        $this->getFactory()
             ->createIndexMapInstaller($messenger)
             ->install();
     }

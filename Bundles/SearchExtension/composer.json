@@ -1,0 +1,33 @@
+{
+  "name": "spryker/search-extension",
+  "description": "SearchExtension module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.1"
+  },
+  "require-dev": {
+    "spryker/elastica": "'",
+    "spryker/code-sniffer": "*",
+    "spryker/log": "*",
+    "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/log": "If you want to use InstallerPluginInterface: ^1.0.0.",
+    "spryker/elastica": "TODO-needs-to-be-replaced-with-some-spryker-result-set."
+  },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

@@ -7,7 +7,9 @@
 
 namespace Spryker\Shared\Search;
 
-interface SearchConfig
+use Spryker\Shared\Kernel\AbstractSharedConfig;
+
+class SearchConfig extends AbstractSharedConfig
 {
     /**
      * Available facet types
@@ -16,4 +18,12 @@ interface SearchConfig
     public const FACET_TYPE_RANGE = 'range';
     public const FACET_TYPE_PRICE_RANGE = 'price-range';
     public const FACET_TYPE_CATEGORY = 'category';
+
+    /**
+     * @return array
+     */
+    public function getIndexNameNap(): array
+    {
+        return $this->get(SearchConstants::INDEX_NAME_MAP, []);
+    }
 }

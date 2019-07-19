@@ -34,34 +34,43 @@ interface SearchFacadeInterface
 
     /**
      * Specification:
-     * - Returns the total number of documents in the current index
+     * - Returns the total number of documents in the current index if no indexName is passed.
+     * - Returns the total number of documents in the passed indexName.
      *
      * @api
+     *
+     * @param string|null $indexName
      *
      * @return int
      */
-    public function getTotalCount();
+    public function getTotalCount(?string $indexName = null);
 
     /**
      * Specification:
-     * - Returns the metadata information from the current index
-     * - Returns empty array if the index is not installed
+     * - Returns the metadata information from the current index if no indexName is passed.
+     * - Returns the metadata information from the passed indexName.
+     * - Returns an empty array if the index is not installed.
      *
      * @api
+     *
+     * @param string|null $indexName
      *
      * @return array
      */
-    public function getMetaData();
+    public function getMetaData(?string $indexName = null);
 
     /**
      * Specification:
-     * - Removes the current index
+     * - Removes the current index if no indexName is passed.
+     * - Removes the passed indexName.
      *
      * @api
      *
+     * @param string|null $indexName
+     *
      * @return \Elastica\Response
      */
-    public function delete();
+    public function delete(?string $indexName = null);
 
     /**
      * Specification:
