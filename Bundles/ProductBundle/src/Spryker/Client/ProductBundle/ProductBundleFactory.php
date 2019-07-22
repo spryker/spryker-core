@@ -8,7 +8,6 @@
 namespace Spryker\Client\ProductBundle;
 
 use Spryker\Client\Kernel\AbstractFactory;
-use Spryker\Client\ProductBundle\Dependency\Service\ProductBundleToUtilQuantityServiceInterface;
 use Spryker\Client\ProductBundle\Grouper\ProductBundleGrouper;
 use Spryker\Client\ProductBundle\QuoteChangeRequestExpander\QuoteChangeRequestExpander;
 use Spryker\Client\ProductBundle\QuoteChangeRequestExpander\QuoteChangeRequestExpanderInterface;
@@ -24,7 +23,7 @@ class ProductBundleFactory extends AbstractFactory
      */
     public function createProductBundleGrouper()
     {
-        return new ProductBundleGrouper($this->getUtilQuantityService());
+        return new ProductBundleGrouper();
     }
 
     /**
@@ -32,7 +31,7 @@ class ProductBundleFactory extends AbstractFactory
      */
     public function createQuoteChangeRequestExpander(): QuoteChangeRequestExpanderInterface
     {
-        return new QuoteChangeRequestExpander($this->getUtilQuantityService());
+        return new QuoteChangeRequestExpander();
     }
 
     /**
@@ -40,7 +39,7 @@ class ProductBundleFactory extends AbstractFactory
      */
     public function createBundleProductQuoteItemFinder(): BundleProductQuoteItemFinderInterface
     {
-        return new BundleProductQuoteItemFinder($this->getUtilQuantityService());
+        return new BundleProductQuoteItemFinder();
     }
 
     /**
@@ -49,13 +48,5 @@ class ProductBundleFactory extends AbstractFactory
     public function createQuoteBundleItemsFinder(): QuoteBundleItemsFinderInterface
     {
         return new QuoteBundleItemsFinder();
-    }
-
-    /**
-     * @return \Spryker\Client\ProductBundle\Dependency\Service\ProductBundleToUtilQuantityServiceInterface
-     */
-    public function getUtilQuantityService(): ProductBundleToUtilQuantityServiceInterface
-    {
-        return $this->getProvidedDependency(ProductBundleDependencyProvider::SERVICE_UTIL_QUANTITY);
     }
 }

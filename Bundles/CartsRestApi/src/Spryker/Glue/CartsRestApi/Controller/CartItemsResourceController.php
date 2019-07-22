@@ -54,6 +54,7 @@ class CartItemsResourceController extends AbstractController
     /**
      * @Glue({
      *     "patch": {
+     *          "path": "/carts/{cartId}/items/{itemId}",
      *          "summary": [
      *              "Updates cart item quantity."
      *          ],
@@ -88,6 +89,7 @@ class CartItemsResourceController extends AbstractController
     /**
      * @Glue({
      *     "delete": {
+     *          "path": "/carts/{cartId}/items/{itemId}",
      *          "summary": [
      *              "Removes item from the cart."
      *          ],

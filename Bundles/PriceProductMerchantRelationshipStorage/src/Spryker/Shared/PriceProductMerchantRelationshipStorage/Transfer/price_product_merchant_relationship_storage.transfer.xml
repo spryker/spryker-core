@@ -31,4 +31,12 @@
         <property name="currencyCode" type="string" />
     </transfer>
 
+    <transfer name="PriceProductMerchantRelationship">
+        <property name="idPriceProductMerchantRelationship" type="int" />
+        <property name="fkPriceProductStore" type="int" />
+        <property name="fkMerchantRelationship" type="int" />
+        <property name="fkProduct" type="int" />
+        <property name="fkProductAbstract" type="int" />
+    </transfer>
+
 </transfers>

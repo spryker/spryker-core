@@ -26,11 +26,17 @@ use Spryker\Zed\Locale\Business\LocaleFacade;
 class GlossaryFacadeTest extends Unit
 {
     public const GLOSSARY_KEY = 'glossary_key';
+    protected const TRANSLATION = 'translation';
 
     /**
      * @var array
      */
     private $locales = [];
+
+    /**
+     * @var \SprykerTest\Zed\Glossary\GlossaryBusinessTester
+     */
+    protected $tester;
 
     /**
      * @return void
@@ -136,5 +142,27 @@ class GlossaryFacadeTest extends Unit
         $translatedKeyChanged = $glossaryFacade->getTranslation($formData[self::GLOSSARY_KEY], $locale);
 
         $this->assertNotSame($translatedKey->getValue(), $translatedKeyChanged->getValue());
+    }
+
+    /**
+     * @return void
+     */
+    public function testTranslationsCanBeFoundInBulk(): void
+    {
+        //Arrange
+        $glossaryFacade = $this->getGlossaryFacade();
+        $localeFacade = $this->getLocaleFacade();
+        $localeTransfers = $localeFacade->getLocaleCollection();
+        $seedData = ['glossaryKey' => static::GLOSSARY_KEY];
+        foreach ($localeTransfers as $localeTransfer) {
+            $seedData['locales'][$localeTransfer->getLocaleName()] = static::TRANSLATION;
+        }
+        $this->tester->haveTranslation($seedData);
+
+        //Act
+        $translations = $glossaryFacade->getTranslationsByGlossaryKeyAndLocales(static::GLOSSARY_KEY, $localeTransfers);
+
+        //Assert
+        $this->assertCount(count($localeTransfers), $translations);
     }
 }

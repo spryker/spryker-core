@@ -8,6 +8,8 @@
 namespace Spryker\Zed\Product\Business;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\PaginationTransfer;
+use Generated\Shared\Transfer\ProductAbstractSuggestionCollectionTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductAttributeKeyTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
@@ -286,6 +288,8 @@ interface ProductFacadeInterface
      * - Triggers `ProductEvents::PRODUCT_CONCRETE_READ` event but doesn't trigger READ plugins.
      *
      * @api
+     *
+     * @deprecated Use `Spryker\Zed\Product\Business\ProductFacadeInterface::getProductConcretesByConcreteSkus()` instead.
      *
      * @param string $productConcreteSku
      *
@@ -768,6 +772,20 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
+     * - Suggests product abstract transfers by name or SKU.
+     * - Uses pagination for returning suggestions.
+     *
+     * @api
+     *
+     * @param string $suggestion
+     * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractSuggestionCollectionTransfer
+     */
+    public function getPaginatedProductAbstractSuggestions(string $suggestion, PaginationTransfer $paginationTransfer): ProductAbstractSuggestionCollectionTransfer;
+
+    /**
+     * Specification:
      * - Suggests product concrete by name or SKU.
      *
      * @api
@@ -890,4 +908,16 @@ interface ProductFacadeInterface
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
     public function getProductConcreteTransfersByProductAbstractIds(array $productAbstractIds): array;
+
+    /**
+     * Specification:
+     * - Returns concrete products w/o joined data.
+     *
+     * @api
+     *
+     * @param array $productConcreteSkus
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function getRawProductConcreteTransfersByConcreteSkus(array $productConcreteSkus): array;
 }

@@ -25,4 +25,11 @@ interface PriceProductCriteriaBuilderInterface
      * @return \Generated\Shared\Transfer\PriceProductCriteriaTransfer
      */
     public function buildCriteriaWithDefaultValues($priceTypeName = null): PriceProductCriteriaTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer[] $priceProductFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductCriteriaTransfer[]
+     */
+    public function buildCriteriaTransfersFromFilterTransfersIndexedBySku(array $priceProductFilterTransfer): array;
 }

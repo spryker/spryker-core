@@ -18,7 +18,6 @@ use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface;
 use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerInterface;
-use Spryker\Zed\ProductBundle\Dependency\Service\ProductBundleToUtilQuantityServiceInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
 use Spryker\Zed\ProductBundle\ProductBundleConfig;
 
@@ -40,23 +39,15 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
      * @param \Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerInterface $availabilityQueryContainer
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\ProductBundle\ProductBundleConfig $productBundleConfig
-     * @param \Spryker\Zed\ProductBundle\Dependency\Service\ProductBundleToUtilQuantityServiceInterface $utilQuantityService
      */
     public function __construct(
         ProductBundleToAvailabilityInterface $availabilityFacade,
         ProductBundleQueryContainerInterface $productBundleQueryContainer,
         ProductBundleToAvailabilityQueryContainerInterface $availabilityQueryContainer,
         ProductBundleToStoreFacadeInterface $storeFacade,
-        ProductBundleConfig $productBundleConfig,
-        ProductBundleToUtilQuantityServiceInterface $utilQuantityService
+        ProductBundleConfig $productBundleConfig
     ) {
-        parent::__construct(
-            $availabilityFacade,
-            $productBundleQueryContainer,
-            $storeFacade,
-            $productBundleConfig,
-            $utilQuantityService
-        );
+        parent::__construct($availabilityFacade, $productBundleQueryContainer, $storeFacade, $productBundleConfig);
 
         $this->availabilityQueryContainer = $availabilityQueryContainer;
     }
@@ -93,12 +84,11 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
      * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
      * @param string $sku
      *
-     * @return float
+     * @return int
      */
     protected function getAccumulatedItemQuantityForBundledProductsByGivenSku(ArrayObject $items, $sku)
     {
-        $quantity = 0.0;
-
+        $quantity = 0;
         foreach ($items as $itemTransfer) {
             if (!$itemTransfer->getRelatedBundleItemIdentifier()) {
                 continue;
@@ -107,15 +97,14 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
             if ($itemTransfer->getSku() !== $sku) {
                 continue;
             }
-
-            $quantity = $this->sumQuantities($quantity, $itemTransfer->getQuantity());
+            $quantity += $itemTransfer->getQuantity();
         }
 
         return $quantity;
     }
 
     /**
-     * @param float $stock
+     * @param int $stock
      * @param string $sku
      *
      * @return \Generated\Shared\Transfer\MessageTransfer
@@ -128,7 +117,7 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
     }
 
     /**
-     * @param float $stock
+     * @param int $stock
      * @param string $translationKey
      * @param string $sku
      *
@@ -147,29 +136,18 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
     }
 
     /**
-     * @param float $stock
+     * @param int $stock
      *
      * @return string
      */
     protected function getItemAvailabilityTranslationKey($stock)
     {
         $translationKey = static::CART_PRE_CHECK_ITEM_AVAILABILITY_FAILED;
-        if ($this->isQuantityLessOrEqual($stock, 0)) {
+        if ($stock <= 0) {
             $translationKey = static::CART_PRE_CHECK_ITEM_AVAILABILITY_EMPTY;
         }
 
         return $translationKey;
-    }
-
-    /**
-     * @param float $firstQuantity
-     * @param float $secondQuantity
-     *
-     * @return bool
-     */
-    protected function isQuantityLessOrEqual(float $firstQuantity, float $secondQuantity): bool
-    {
-        return $this->utilQuantityService->isQuantityLessOrEqual($firstQuantity, $secondQuantity);
     }
 
     /**
@@ -202,7 +180,7 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
      * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemsInCart
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return float
+     * @return int
      */
     protected function calculateRegularItemAvailability(
         ItemTransfer $itemTransfer,
@@ -219,7 +197,9 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
             $itemTransfer->getSku()
         );
 
-        return $this->subtractQuantities($itemAvailability, $bundledItemsQuantity);
+        $availabilityAfterBundling = $itemAvailability - $bundledItemsQuantity;
+
+        return $availabilityAfterBundling;
     }
 
     /**

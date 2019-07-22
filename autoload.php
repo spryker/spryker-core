@@ -81,7 +81,7 @@ $autoloader = function ($className) {
     }
     // This block can completely be removed when all bundles have the new test structure
 
-    // Helper in new structure
+    // Works for classes under _support subdirectory in new structure
     if ($classNameParts[0] === 'SprykerTest') {
         $bundle = $classNameParts[2];
         $rest = array_slice($classNameParts, 3);

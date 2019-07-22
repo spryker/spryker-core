@@ -7,10 +7,11 @@
     "php": ">=7.1",
     "spryker/config": "^3.0.0",
     "spryker/error-handler": "^2.0.0",
-    "spryker/kernel": "^3.0.0"
+    "spryker/kernel": "^3.30.0"
   },
   "require-dev": {
     "spryker/application": "*",
+    "spryker/code-sniffer": "*",
     "spryker/log": "^3.0.0",
     "spryker/propel": "*",
     "spryker/testify": "*"

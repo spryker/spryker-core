@@ -19,6 +19,7 @@ use Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\AddressColle
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\CustomerDataProvider;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\CustomersListDataProvider;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\ItemCollectionDataProvider;
+use Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\OrderDataProvider;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\OrderSourceListDataProvider;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\PaymentDataProvider;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\ProductCollectionDataProvider;
@@ -26,6 +27,7 @@ use Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\ShipmentData
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\StoreDataProvider;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\SummaryDataProvider;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\VoucherDataProvider;
+use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Order\OrderType;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\OrderSource\OrderSourceListType;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Payment\PaymentType;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Product\ItemCollectionType;
@@ -59,7 +61,6 @@ use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToProdu
 use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToShipmentFacadeInterface;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToStoreFacadeInterface;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\QueryContainer\ManualOrderEntryGuiToCustomerQueryContainerInterface;
-use Spryker\Zed\ManualOrderEntryGui\Dependency\Service\ManualOrderEntryGuiToUtilQuantityServiceInterface;
 use Spryker\Zed\ManualOrderEntryGui\ManualOrderEntryGuiDependencyProvider;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -92,14 +93,6 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
     public function getCartFacade(): ManualOrderEntryGuiToCartFacadeInterface
     {
         return $this->getProvidedDependency(ManualOrderEntryGuiDependencyProvider::FACADE_CART);
-    }
-
-    /**
-     * @return \Spryker\Zed\ManualOrderEntryGui\Dependency\Service\ManualOrderEntryGuiToUtilQuantityServiceInterface
-     */
-    public function getUtilQuantityService(): ManualOrderEntryGuiToUtilQuantityServiceInterface
-    {
-        return $this->getProvidedDependency(ManualOrderEntryGuiDependencyProvider::SERVICE_UTIL_QUANTITY);
     }
 
     /**
@@ -585,8 +578,7 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
     {
         return new ProductFormHandler(
             $this->getCartFacade(),
-            $this->getProductFacade(),
-            $this->getUtilQuantityService()
+            $this->getProductFacade()
         );
     }
 
@@ -597,8 +589,7 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
     {
         return new ItemFormHandler(
             $this->getCartFacade(),
-            $this->getMessengerFacade(),
-            $this->getUtilQuantityService()
+            $this->getMessengerFacade()
         );
     }
 
@@ -640,5 +631,28 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
         return new OrderSourceFormHandler(
             $this->getManualOrderEntryFacade()
         );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createOrderForm(QuoteTransfer $quoteTransfer): FormInterface
+    {
+        $formDataProvider = $this->createOrderDataProvider();
+
+        return $this->getFormFactory()->create(
+            OrderType::class,
+            $formDataProvider->getOptions($quoteTransfer)
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\OrderDataProvider
+     */
+    public function createOrderDataProvider(): OrderDataProvider
+    {
+        return new OrderDataProvider();
     }
 }

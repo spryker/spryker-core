@@ -1,15 +1,13 @@
-"Delete","Löschen"
-"Add","Hinzufügen"
-"Product Set","Produktset"
-"ID","ID"
-"Name","Name"
-"Number of Products","# von Produkten"
-"Status","Status"
-"Actions","Aktionen"
+Actions,Aktionen
+Add,Hinzufügen
 "Available Product Sets","Verfügbare Produktgruppen"
 "Clear locale","Gebietsschema löschen"
+content_product_set_gui.template.cart-button-btm,"In den Warenkorb Button unten"
+content_product_set_gui.template.cart-button-top,"In den Warenkorb Button oben"
+content_product_set_gui.template.default,Standard
+Delete,Löschen
+ID,ID
+Name,Name
+"Number of Products","# von Produkten"
 "Product Set","Produkt Set"
-"content_product_set_gui.template.default","Standard"
-"content_product_set_gui.template.cart-button-btm","Cart Button Unten"
-"content_product_set_gui.template.cart-button-top","In den Warenkorb Button oben"
-"content_product_set_gui.template.cart-button-btm","In den Warenkorb Button unten"
+Status,Status

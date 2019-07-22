@@ -11,8 +11,6 @@ use Silex\Provider\FormServiceProvider;
 use Silex\Provider\HttpFragmentServiceProvider;
 use Silex\Provider\ServiceControllerServiceProvider;
 use Silex\Provider\ValidatorServiceProvider;
-use Spryker\Shared\Application\ServiceProvider\HeadersSecurityServiceProvider;
-use Spryker\Shared\Config\Environment;
 use Spryker\Shared\ErrorHandler\Plugin\ServiceProvider\WhoopsErrorHandlerServiceProvider;
 use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\HeaderServiceProvider;
 use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\MvcRoutingServiceProvider;
@@ -64,7 +62,6 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addInternalCallServiceProviders($container);
         $container = $this->addInternalCallServiceProvidersWithAuthentication($container);
         $container = $this->addApplicationPlugins($container);
-        $container = $this->addEnvironment($container);
 
         return $container;
     }
@@ -91,10 +88,9 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
             new HeaderServiceProvider(),
             new TranslationServiceProvider(),
             new SubRequestServiceProvider(),
-            new HeadersSecurityServiceProvider(),
         ];
 
-        if (Environment::isDevelopment()) {
+        if ($this->getConfig()->isPrettyErrorHandlerEnabled()) {
             $providers[] = new WhoopsErrorHandlerServiceProvider();
         }
 
@@ -195,28 +191,6 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
         });
 
         return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addEnvironment(Container $container): Container
-    {
-        $container->set(static::ENVIRONMENT, function () {
-            return $this->getEnvironment();
-        });
-
-        return $container;
-    }
-
-    /**
-     * @return \Spryker\Shared\Config\Environment
-     */
-    protected function getEnvironment(): Environment
-    {
-        return Environment::getInstance();
     }
 
     /**

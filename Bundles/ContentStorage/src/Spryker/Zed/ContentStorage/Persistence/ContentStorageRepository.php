@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ContentStorage\Persistence;
 
-use ArrayObject;
 use Generated\Shared\Transfer\ContentStorageTransfer;
 use Generated\Shared\Transfer\ContentTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -21,21 +20,20 @@ class ContentStorageRepository extends AbstractRepository implements ContentStor
     /**
      * @param int[] $contentIds
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ContentStorageTransfer[]
+     * @return \Generated\Shared\Transfer\ContentStorageTransfer[]
      */
-    public function findContentStorageByContentIds(array $contentIds): ArrayObject
+    public function findContentStorageByContentIds(array $contentIds): array
     {
-        $contentStorageTransfers = new ArrayObject();
+        $contentStorageTransfers = [];
         $contentStorageEntities = $this->getFactory()
             ->createContentStorageQuery()
             ->filterByFkContent($contentIds, Criteria::IN)
             ->find();
 
         foreach ($contentStorageEntities as $contentStorageEntity) {
-            $contentStorageTransfer = $this->getFactory()
+            $contentStorageTransfers[] = $this->getFactory()
                 ->createContentStorageMapper()
                 ->mapContentStorageEntityToTransfer($contentStorageEntity, new ContentStorageTransfer());
-            $contentStorageTransfers->append($contentStorageTransfer);
         }
 
         return $contentStorageTransfers;
@@ -44,11 +42,11 @@ class ContentStorageRepository extends AbstractRepository implements ContentStor
     /**
      * @param array $contentIds
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ContentTransfer[]
+     * @return \Generated\Shared\Transfer\ContentTransfer[]
      */
-    public function findContentByIds(array $contentIds): ArrayObject
+    public function findContentByIds(array $contentIds): array
     {
-        $contentTransfers = new ArrayObject();
+        $contentTransfers = [];
         $contentEntities = $this->getFactory()
             ->getContentQuery()
             ->filterByIdContent($contentIds, Criteria::IN)
@@ -56,55 +54,46 @@ class ContentStorageRepository extends AbstractRepository implements ContentStor
             ->find();
 
         foreach ($contentEntities as $contentEntity) {
-            $contentStorageTransfer = $this->getFactory()
+            $contentTransfers[] = $this->getFactory()
                 ->createContentStorageMapper()
                 ->mapContentEntityToTransfer($contentEntity, new ContentTransfer());
-            $contentTransfers->append($contentStorageTransfer);
         }
 
         return $contentTransfers;
     }
 
     /**
-     * @return \ArrayObject|\Generated\Shared\Transfer\ContentStorageTransfer[]
+     * @return \Generated\Shared\Transfer\ContentStorageTransfer[]
      */
-    public function findAllContentStorage(): ArrayObject
+    public function findAllContentStorage(): array
     {
-        $contentStorageTransfers = new ArrayObject();
+        $contentStorageTransfers = [];
         $contentStorageEntities = $this->getFactory()
             ->createContentStorageQuery()
             ->find();
 
         foreach ($contentStorageEntities as $contentStorageEntity) {
-            $contentStorageTransfer = $this->getFactory()
+            $contentStorageTransfers[] = $this->getFactory()
                 ->createContentStorageMapper()
                 ->mapContentStorageEntityToTransfer($contentStorageEntity, new ContentStorageTransfer());
-            $contentStorageTransfers->append($contentStorageTransfer);
         }
 
         return $contentStorageTransfers;
     }
 
     /**
-     * @return \ArrayObject|\Generated\Shared\Transfer\ContentTransfer[]
+     * @param array $contentIds
+     *
+     * @return \Generated\Shared\Transfer\SpyContentEntityTransfer[]
      */
-    public function findAllContent(): ArrayObject
+    public function findContentByContentIds(array $contentIds): array
     {
-        $contentTransfers = new ArrayObject();
-        $contentEntities = $this->getFactory()
-            ->getContentQuery()
-            ->useSpyContentLocalizedQuery()
-                ->joinSpyLocale()
-            ->endUse()
-            ->find();
+        $query = $this->getFactory()->getContentQuery();
 
-        foreach ($contentEntities as $contentEntity) {
-            $contentStorageTransfer = $this->getFactory()
-                ->createContentStorageMapper()
-                ->mapContentEntityToTransfer($contentEntity, new ContentTransfer());
-            $contentTransfers->append($contentStorageTransfer);
+        if ($contentIds !== []) {
+            $query->filterByIdContent_In($contentIds);
         }
 
-        return $contentTransfers;
+        return $this->buildQueryFromCriteria($query)->find();
     }
 }

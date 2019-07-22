@@ -279,4 +279,17 @@ interface ProductOptionFacadeInterface
      * @return bool
      */
     public function checkProductOptionGroupExistenceByProductOptionValueId(int $idProductOptionValue): bool;
+
+    /**
+     * Specification:
+     * - Retrieves product option group name and status for all abstract products by provided IDs.
+     * - Returns ProductAbstractOptionGroupStatusTransfer[] array with 'idProductAbstract', 'isActive' and 'productOptionGroupName' values.
+     *
+     * @api
+     *
+     * @param int[] $productAbstractIds
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractOptionGroupStatusTransfer[]
+     */
+    public function getProductAbstractOptionGroupStatusesByProductAbstractIds(array $productAbstractIds): array;
 }
