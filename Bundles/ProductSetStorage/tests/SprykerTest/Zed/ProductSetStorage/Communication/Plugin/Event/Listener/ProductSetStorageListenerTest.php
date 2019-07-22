@@ -13,7 +13,6 @@ use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageSetTableMap;
 use Orm\Zed\ProductSet\Persistence\Map\SpyProductAbstractSetTableMap;
 use Orm\Zed\ProductSetStorage\Persistence\SpyProductSetStorageQuery;
 use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
-use PHPUnit\Framework\SkippedTestError;
 use Spryker\Zed\ProductImage\Dependency\ProductImageEvents;
 use Spryker\Zed\ProductSet\Dependency\ProductSetEvents;
 use Spryker\Zed\ProductSetStorage\Business\ProductSetStorageBusinessFactory;
@@ -50,17 +49,11 @@ class ProductSetStorageListenerTest extends Unit
     protected $tester;
 
     /**
-     * @throws \PHPUnit\Framework\SkippedTestError
-     *
      * @return void
      */
     protected function setUp()
     {
         parent::setUp();
-
-        if (!$this->tester->isSuiteProject()) {
-            throw new SkippedTestError('Warning: not in suite environment');
-        }
     }
 
     /**
@@ -112,21 +105,30 @@ class ProductSetStorageListenerTest extends Unit
     /**
      * @return void
      */
-    public function testProductSetStorageUnpublishListener(): void
+    public function testProductSetStoragePublishUnpublishListener(): void
     {
+        // Prepare
+        $productSetTransfers = $this->tester->createProductSets(5);
+        $this->publishProductSetTransfers($productSetTransfers);
+        $productSetBeforeCount = SpyProductSetStorageQuery::create()->count();
+
+        $productSetDeletedId = $productSetTransfers[0]->getIdProductSet();
+        $this->tester->deleteProductSetStorageByFkProductSet($productSetDeletedId);
+
         // Prepare
         $productSetStorageUnpublishListener = new ProductSetStorageUnpublishListener();
         $productSetStorageUnpublishListener->setFacade($this->getProductSetStorageFacade());
 
         $eventTransfers = [
-            (new EventEntityTransfer())->setId(1),
+            (new EventEntityTransfer())->setId($productSetDeletedId),
         ];
 
         // Act
         $productSetStorageUnpublishListener->handleBulk($eventTransfers, ProductSetEvents::PRODUCT_SET_UNPUBLISH);
 
         // Assert
-        $this->assertSame(0, SpyProductSetStorageQuery::create()->filterByFkProductSet(1)->count());
+        $this->assertSame(0, SpyProductSetStorageQuery::create()->filterByFkProductSet($productSetDeletedId)->count());
+        $this->assertSame($productSetBeforeCount, SpyProductSetStorageQuery::create()->count() + 1);
     }
 
     /**
@@ -356,5 +358,26 @@ class ProductSetStorageListenerTest extends Unit
         $this->assertNotNull($spyProductSetStorage);
         $data = $spyProductSetStorage->getData();
         $this->assertSame('HP Product Set', $data['name']);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductSetTransfer[] $productSetTransfers
+     *
+     * @return void
+     */
+    public function publishProductSetTransfers(array $productSetTransfers): void
+    {
+        if ($productSetTransfers === []) {
+            return;
+        }
+
+        $eventTransfers = [];
+        foreach ($productSetTransfers as $productSetTransfer) {
+            $eventTransfers[] = (new EventEntityTransfer())->setId($productSetTransfer->getIdProductSet());
+        }
+
+        $productSetStoragePublishListener = new ProductSetStoragePublishListener();
+        $productSetStoragePublishListener->setFacade($this->getProductSetStorageFacade());
+        $productSetStoragePublishListener->handleBulk($eventTransfers, ProductSetEvents::PRODUCT_SET_PUBLISH);
     }
 }

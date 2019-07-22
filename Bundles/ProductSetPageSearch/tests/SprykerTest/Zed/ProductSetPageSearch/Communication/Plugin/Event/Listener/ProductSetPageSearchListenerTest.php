@@ -22,6 +22,8 @@ use Spryker\Zed\ProductSetPageSearch\Communication\Plugin\Event\Listener\Product
 use Spryker\Zed\ProductSetPageSearch\Communication\Plugin\Event\Listener\ProductSetPageProductImageSetImageSearchListener;
 use Spryker\Zed\ProductSetPageSearch\Communication\Plugin\Event\Listener\ProductSetPageProductImageSetSearchListener;
 use Spryker\Zed\ProductSetPageSearch\Communication\Plugin\Event\Listener\ProductSetPageSearchListener;
+use Spryker\Zed\ProductSetPageSearch\Communication\Plugin\Event\Listener\ProductSetPageSearchPublishListener;
+use Spryker\Zed\ProductSetPageSearch\Communication\Plugin\Event\Listener\ProductSetPageSearchUnpublishListener;
 use Spryker\Zed\ProductSetPageSearch\Communication\Plugin\Event\Listener\ProductSetPageUrlSearchListener;
 use Spryker\Zed\ProductSetPageSearch\Dependency\Facade\ProductSetPageSearchToSearchBridge;
 use Spryker\Zed\ProductSetPageSearch\Persistence\ProductSetPageSearchQueryContainer;
@@ -83,6 +85,35 @@ class ProductSetPageSearchListenerTest extends Unit
         $afterCount = SpyProductSetPageSearchQuery::create()->count();
         $this->assertGreaterThan($beforeCount, $afterCount);
         $this->assertProductSetPageSearch();
+    }
+
+    /**
+     * @return void
+     */
+    public function testProductSetSearchUnpublishListener(): void
+    {
+        // Prepare
+        $productSetTransfers = $this->tester->createProductSets(5);
+        $this->publishProductSetTransfers($productSetTransfers);
+        $productSetBeforeCount = SpyProductSetPageSearchQuery::create()->count();
+
+        $productSetDeletedId = $productSetTransfers[0]->getIdProductSet();
+        $this->tester->deleteProductSetSearchByFkProductSet($productSetDeletedId);
+
+        // Prepare
+        $productSetSearchUnpublishListener = new ProductSetPageSearchUnpublishListener();
+        $productSetSearchUnpublishListener->setFacade($this->getProductSetPageSearchFacade());
+
+        $eventTransfers = [
+            (new EventEntityTransfer())->setId($productSetDeletedId),
+        ];
+
+        // Act
+        $productSetSearchUnpublishListener->handleBulk($eventTransfers, ProductSetEvents::PRODUCT_SET_UNPUBLISH);
+
+        // Assert
+        $this->assertSame(0, SpyProductSetPageSearchQuery::create()->filterByFkProductSet($productSetDeletedId)->count());
+        $this->assertSame($productSetBeforeCount, SpyProductSetPageSearchQuery::create()->count() + 1);
     }
 
     /**
@@ -245,5 +276,26 @@ class ProductSetPageSearchListenerTest extends Unit
         $data = $productSet->getStructuredData();
         $encodedData = json_decode($data, true);
         $this->assertSame('HP Product Set', $encodedData['name']);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductSetTransfer[] $productSetTransfers
+     *
+     * @return void
+     */
+    public function publishProductSetTransfers(array $productSetTransfers): void
+    {
+        if ($productSetTransfers === []) {
+            return;
+        }
+
+        $eventTransfers = [];
+        foreach ($productSetTransfers as $productSetTransfer) {
+            $eventTransfers[] = (new EventEntityTransfer())->setId($productSetTransfer->getIdProductSet());
+        }
+
+        $productSetPageSearchPublishListener = new ProductSetPageSearchPublishListener();
+        $productSetPageSearchPublishListener->setFacade($this->getProductSetPageSearchFacade());
+        $productSetPageSearchPublishListener->handleBulk($eventTransfers, ProductSetEvents::PRODUCT_SET_PUBLISH);
     }
 }

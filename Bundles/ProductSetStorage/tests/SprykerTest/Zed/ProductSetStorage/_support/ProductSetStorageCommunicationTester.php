@@ -58,6 +58,29 @@ class ProductSetStorageCommunicationTester extends Actor
     }
 
     /**
+     * @param int $productSetAmount
+     *
+     * @return \Generated\Shared\Transfer\ProductSetTransfer[]
+     */
+    public function createProductSets(int $productSetAmount): array
+    {
+        $productSetTransfers = [];
+        for ($i = 0; $i < $productSetAmount; $i++) {
+            $productImageTransferSortedSecond = $this->createProductImageTransferWithSortOrder(1);
+            $productImageTransferSortedThird = $this->createProductImageTransferWithSortOrder(2);
+            $productImageTransferSortedFirst = $this->createProductImageTransferWithSortOrder(0);
+
+            $productSetTransfers[] = $this->createProductSetWithProductImages([
+                $productImageTransferSortedSecond,
+                $productImageTransferSortedThird,
+                $productImageTransferSortedFirst,
+            ]);
+        }
+
+        return $productSetTransfers;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ProductImageTransfer[] $productImageTransfers
      *
      * @return \Generated\Shared\Transfer\ProductSetTransfer
