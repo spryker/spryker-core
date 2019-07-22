@@ -13,8 +13,6 @@ interface CmsEntityManagerInterface
      * Specification:
      * - Adds new relations between stores and cms page
      *
-     * @api
-     *
      * @param array $idStores
      * @param int $idCmsPage
      *
@@ -25,8 +23,6 @@ interface CmsEntityManagerInterface
     /**
      * Specification:
      * - Remove relations between stores and cms page
-     *
-     * @api
      *
      * @param array $idStores
      * @param int $idCmsPage

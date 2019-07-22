@@ -16,8 +16,6 @@ interface CompanyRepositoryInterface
      * Specification:
      *  - Retrieve a company by CompanyTransfer::idCompany in the transfer
      *
-     * @api
-     *
      * @param int $idCompany
      *
      * @return \Generated\Shared\Transfer\CompanyTransfer
@@ -28,8 +26,6 @@ interface CompanyRepositoryInterface
      * Specification:
      * - Retrieve stores related to company
      *
-     * @api
-     *
      * @param int $idCompany
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\StoreTransfer[]
@@ -39,8 +35,6 @@ interface CompanyRepositoryInterface
     /**
      * Specification:
      * - Retrieves collection of all companies
-     *
-     * @api
      *
      * @return \Generated\Shared\Transfer\CompanyCollectionTransfer
      */
