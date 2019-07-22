@@ -105,7 +105,7 @@ class ProductSetStorageListenerTest extends Unit
     /**
      * @return void
      */
-    public function testProductSetStoragePublishUnpublishListener(): void
+    public function testProductSetStorageUnpublishListener(): void
     {
         // Prepare
         $productSetTransfers = $this->tester->createProductSets(5);
