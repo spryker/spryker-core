@@ -139,7 +139,8 @@ class QuoteItemAdder implements QuoteItemAdderInterface
         CartItemRequestTransfer $cartItemRequestTransfer
     ): PersistentCartChangeTransfer {
         return (new PersistentCartChangeTransfer())
-            ->fromArray($quoteTransfer->toArray(), true)
+            ->setIdQuote($quoteTransfer->getIdQuote())
+            ->setCustomer($quoteTransfer->getCustomer())
             ->addItem((new ItemTransfer())
                 ->setSku($cartItemRequestTransfer->getSku())
                 ->setQuantity($cartItemRequestTransfer->getQuantity()));
