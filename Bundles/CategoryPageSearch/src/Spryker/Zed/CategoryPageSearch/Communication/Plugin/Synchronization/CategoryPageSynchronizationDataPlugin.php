@@ -57,11 +57,11 @@ class CategoryPageSynchronizationDataPlugin extends AbstractPlugin implements Sy
     {
         $query = $this->getQueryContainer()->queryCategoryNodePageSearchByIds($ids);
 
-        if (empty($ids)) {
+        if ($ids === []) {
             $query->clear();
         }
 
-        return $query;
+        return $query->orderByIdCategoryNodePageSearch();
     }
 
     /**

@@ -112,7 +112,6 @@ class CmsPageFormType extends AbstractType
         $builder->add(static::FIELD_FK_TEMPLATE, ChoiceType::class, [
             'label' => 'Template',
             'choices' => array_flip($choices),
-            'choices_as_values' => true,
         ]);
 
         return $this;

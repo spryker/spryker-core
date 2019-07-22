@@ -536,7 +536,6 @@ class ProductFormAdd extends AbstractType
             'label' => 'Tax Set',
             'required' => true,
             'choices' => array_flip($options[static::OPTION_TAX_RATES]),
-            'choices_as_values' => true,
             'placeholder' => '-',
             'constraints' => [
                 new NotBlank(),

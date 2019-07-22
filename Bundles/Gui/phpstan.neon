@@ -1,6 +1,4 @@
 parameters:
     ignoreErrors:
     - '#Function twig_escape_filter not found.#'
-    - '#.+ has invalid typehint type Symfony\\Component\\OptionsResolver\\OptionsResolverInterface.#'
-    - '#Call to method setDefault\(\) on an unknown class Symfony\\Component\\OptionsResolver\\OptionsResolverInterface.#'
     - '#Class Symfony\\Bridge\\Twig\\Form\\TwigRenderer not found.#'

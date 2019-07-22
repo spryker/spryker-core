@@ -9,6 +9,7 @@ namespace Spryker\Zed\ShoppingListStorage\Communication\Plugin\Synchronization;
 
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
+use Orm\Zed\ShoppingListStorage\Persistence\Map\SpyShoppingListCustomerStorageTableMap;
 use Spryker\Shared\ShoppingListStorage\ShoppingListStorageConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataBulkRepositoryPluginInterface;
@@ -61,7 +62,7 @@ class ShoppingListSynchronizationDataBulkPlugin extends AbstractPlugin implement
         $synchronizationDataTransfers = [];
         $filterTransfer = $this->createFilterTransfer($offset, $limit);
 
-        $shoppingListCustomerStorageEntities = $this->getRepository()->findFilteredProductConcreteProductListStorageEntities($filterTransfer, $ids);
+        $shoppingListCustomerStorageEntities = $this->getRepository()->findFilteredShoppingListCustomerStorageEntities($filterTransfer, $ids);
 
         foreach ($shoppingListCustomerStorageEntities as $shoppingListCustomerStorageEntity) {
             $synchronizationDataTransfer = new SynchronizationDataTransfer();
@@ -118,6 +119,7 @@ class ShoppingListSynchronizationDataBulkPlugin extends AbstractPlugin implement
     protected function createFilterTransfer(int $offset, int $limit): FilterTransfer
     {
         return (new FilterTransfer())
+            ->setOrderBy(SpyShoppingListCustomerStorageTableMap::COL_ID_SHOPPING_LIST_CUSTOMER_STORAGE)
             ->setOffset($offset)
             ->setLimit($limit);
     }

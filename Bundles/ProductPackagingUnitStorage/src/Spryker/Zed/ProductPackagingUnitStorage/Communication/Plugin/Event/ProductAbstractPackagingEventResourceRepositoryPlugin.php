@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductPackagingUnitStorage\Communication\Plugin\Event;
 
-use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
+use Orm\Zed\ProductPackagingUnit\Persistence\Map\SpyProductPackagingLeadProductTableMap;
 use Spryker\Shared\ProductPackagingUnitStorage\ProductPackagingUnitStorageConfig;
 use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceRepositoryPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -41,15 +41,11 @@ class ProductAbstractPackagingEventResourceRepositoryPlugin extends AbstractPlug
      *
      * @param int[] $productAbstractIds
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractPackagingStorageTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
+     * @return \Generated\Shared\Transfer\SpyProductPackagingLeadProductEntityTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
      */
     public function getData(array $productAbstractIds = []): array
     {
-        if (!$productAbstractIds) {
-            $productAbstractIds = $this->getRepository()->findProductAbstractIdsWithProductPackagingUnit();
-        }
-
-        return $this->getFacade()->getProductAbstractPackagingStorageTransfersByProductAbstractIds($productAbstractIds);
+        return $this->getRepository()->getProductPackagingLeadProductEntityTransfersByProductAbstractIds($productAbstractIds);
     }
 
     /**
@@ -75,6 +71,6 @@ class ProductAbstractPackagingEventResourceRepositoryPlugin extends AbstractPlug
      */
     public function getIdColumnName(): ?string
     {
-        return SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT;
+        return SpyProductPackagingLeadProductTableMap::COL_FK_PRODUCT_ABSTRACT;
     }
 }

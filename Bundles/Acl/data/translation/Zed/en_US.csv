@@ -7,7 +7,7 @@ Action,Action
 "Assigned Rules","Assigned Rules"
 Bundle,Bundle
 Controller,Controller
-"Could not modify root role node!","Could not modify node"
+"Could not modify root role node!","You are not allowed to edit the root role."
 Create,Create
 "Create Group","Create Group"
 "Create new Role","Create new Role"
@@ -34,8 +34,8 @@ Role,Role
 "Role list","Role list"
 "Role name","Role name"
 "Role was successfully removed.","Role was successfully removed."
-roles,Roles
 Roles,Roles
+roles,Roles
 "Root group","Root group"
 Rule,Rule
 "Rule successfully added.","Rule successfully added."
