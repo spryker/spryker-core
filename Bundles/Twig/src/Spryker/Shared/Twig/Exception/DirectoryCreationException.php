@@ -9,6 +9,6 @@ namespace Spryker\Shared\Twig\Exception;
 
 use Exception;
 
-class PermissionDeniedException extends Exception
+class DirectoryCreationException extends Exception
 {
 }

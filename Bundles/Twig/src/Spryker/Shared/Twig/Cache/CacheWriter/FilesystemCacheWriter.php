@@ -7,8 +7,9 @@
 
 namespace Spryker\Shared\Twig\Cache\CacheWriter;
 
+use ErrorException;
 use Spryker\Shared\Twig\Cache\CacheWriterInterface;
-use Spryker\Shared\Twig\Exception\PermissionDeniedException;
+use Spryker\Shared\Twig\Exception\DirectoryCreationException;
 
 class FilesystemCacheWriter implements CacheWriterInterface
 {
@@ -47,9 +48,11 @@ class FilesystemCacheWriter implements CacheWriterInterface
 
         $directory = dirname($this->cacheFilePath);
         if (!is_dir($directory)) {
-            $this->assertDirectoryIsWritable($directory);
-
-            mkdir($directory, $this->permissionMode, true);
+            try {
+                mkdir($directory, $this->permissionMode, true);
+            } catch (ErrorException $exception) {
+                $this->throwDirectoryCreationException($directory, $exception);
+            }
         }
 
         file_put_contents($this->cacheFilePath, $cacheFileContent);
@@ -61,17 +64,18 @@ class FilesystemCacheWriter implements CacheWriterInterface
 
     /**
      * @param string $directory
+     * @param \ErrorException $exception
      *
-     * @throws \Spryker\Shared\Twig\Exception\PermissionDeniedException
+     * @throws \Spryker\Shared\Twig\Exception\DirectoryCreationException
      *
      * @return void
      */
-    protected function assertDirectoryIsWritable(string $directory): void
+    protected function throwDirectoryCreationException(string $directory, ErrorException $exception): void
     {
-        if (!is_writable($directory)) {
-            throw new PermissionDeniedException(
-                sprintf('Couldn\'t create directory "%s".', $directory)
-            );
-        }
+        throw new DirectoryCreationException(
+            sprintf('Couldn\'t create directory "%s".', $directory),
+            $exception->getCode(),
+            $exception
+        );
     }
 }
