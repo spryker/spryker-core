@@ -110,7 +110,7 @@ class ProductSetStorageListenerTest extends Unit
         // Prepare
         $productSetTransfers = $this->tester->createProductSets(5);
         $this->publishProductSetTransfers($productSetTransfers);
-        $productSetBeforeCount = SpyProductSetStorageQuery::create()->count();
+        $productSetBeforeUnpublish = SpyProductSetStorageQuery::create()->count();
 
         $productSetDeletedId = $productSetTransfers[0]->getIdProductSet();
         $this->tester->deleteProductSetStorageByFkProductSet($productSetDeletedId);
@@ -128,7 +128,7 @@ class ProductSetStorageListenerTest extends Unit
 
         // Assert
         $this->assertSame(0, SpyProductSetStorageQuery::create()->filterByFkProductSet($productSetDeletedId)->count());
-        $this->assertSame($productSetBeforeCount, SpyProductSetStorageQuery::create()->count() + 1);
+        $this->assertGreaterThanOrEqual($productSetBeforeUnpublish, SpyProductSetStorageQuery::create()->count());
     }
 
     /**

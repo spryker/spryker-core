@@ -95,7 +95,7 @@ class ProductSetPageSearchListenerTest extends Unit
         // Prepare
         $productSetTransfers = $this->tester->createProductSets(5);
         $this->publishProductSetTransfers($productSetTransfers);
-        $productSetBeforeCount = SpyProductSetPageSearchQuery::create()->count();
+        $productSetBeforeUnpublish = SpyProductSetPageSearchQuery::create()->count();
 
         $productSetDeletedId = $productSetTransfers[0]->getIdProductSet();
         $this->tester->deleteProductSetSearchByFkProductSet($productSetDeletedId);
@@ -113,7 +113,7 @@ class ProductSetPageSearchListenerTest extends Unit
 
         // Assert
         $this->assertSame(0, SpyProductSetPageSearchQuery::create()->filterByFkProductSet($productSetDeletedId)->count());
-        $this->assertSame($productSetBeforeCount, SpyProductSetPageSearchQuery::create()->count() + 1);
+        $this->assertGreaterThanOrEqual($productSetBeforeUnpublish, SpyProductSetPageSearchQuery::create()->count());
     }
 
     /**
