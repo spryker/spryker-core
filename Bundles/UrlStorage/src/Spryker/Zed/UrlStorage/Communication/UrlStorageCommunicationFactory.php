@@ -14,6 +14,7 @@ use Spryker\Zed\UrlStorage\UrlStorageDependencyProvider;
  * @method \Spryker\Zed\UrlStorage\Persistence\UrlStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\UrlStorage\UrlStorageConfig getConfig()
  * @method \Spryker\Zed\UrlStorage\Business\UrlStorageFacadeInterface getFacade()
+ * @method \Spryker\Zed\UrlStorage\Persistence\UrlStorageRepositoryInterface getRepository()
  */
 class UrlStorageCommunicationFactory extends AbstractCommunicationFactory
 {
