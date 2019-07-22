@@ -8,6 +8,8 @@
 namespace SprykerTest\Zed\ProductSetPageSearch;
 
 use Codeception\Actor;
+use Generated\Shared\Transfer\ProductSetTransfer;
+use Spryker\Zed\ProductSet\Business\ProductSetFacadeInterface;
 
 /**
  * Inherited Methods
@@ -61,5 +63,23 @@ class ProductSetPageSearchCommunicationTester extends Actor
         }
 
         return $productSetTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductSetTransfer $productSetTransfer
+     *
+     * @return void
+     */
+    public function deleteProductSet(ProductSetTransfer $productSetTransfer): void
+    {
+        $this->getProductSetFacade()->deleteProductSet($productSetTransfer);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductSet\Business\ProductSetFacadeInterface
+     */
+    protected function getProductSetFacade(): ProductSetFacadeInterface
+    {
+        return $this->getLocator()->productSet()->facade();
     }
 }
