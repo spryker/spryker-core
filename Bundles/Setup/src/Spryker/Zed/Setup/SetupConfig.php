@@ -19,8 +19,6 @@ use Spryker\Zed\ZedNavigation\Communication\Console\BuildNavigationConsole;
 
 class SetupConfig extends AbstractBundleConfig
 {
-    protected const PROCESS_TIMEOUT = 60;
-
     /**
      * @deprecated Use `getCronjobsDefinitionFilePath()` instead.
      *
@@ -167,17 +165,5 @@ class SetupConfig extends AbstractBundleConfig
     public function isDeployVarsEnabled(): bool
     {
         return APPLICATION_ENV !== 'development';
-    }
-
-    /**
-     * Specification:
-     * - Returns the value for the process timeout in seconds, after which an exception will be thrown.
-     * - Can return int, float or null to disable timeout.
-     *
-     * @return int|float|null
-     */
-    public function getProcessTimeout()
-    {
-        return static::PROCESS_TIMEOUT;
     }
 }
