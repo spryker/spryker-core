@@ -113,7 +113,7 @@ class ProductSetPageSearchListenerTest extends Unit
 
         // Assert
         $this->assertSame(0, SpyProductSetPageSearchQuery::create()->filterByFkProductSet($productSetDeletedId)->count());
-        $this->assertGreaterThanOrEqual($productSetBeforeUnpublish, SpyProductSetPageSearchQuery::create()->count());
+        $this->assertGreaterThanOrEqual(SpyProductSetPageSearchQuery::create()->count(), $productSetBeforeUnpublish);
     }
 
     /**

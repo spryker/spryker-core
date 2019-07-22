@@ -66,15 +66,7 @@ class ProductSetStorageCommunicationTester extends Actor
     {
         $productSetTransfers = [];
         for ($i = 0; $i < $productSetAmount; $i++) {
-            $productImageTransferSortedSecond = $this->createProductImageTransferWithSortOrder(1);
-            $productImageTransferSortedThird = $this->createProductImageTransferWithSortOrder(2);
-            $productImageTransferSortedFirst = $this->createProductImageTransferWithSortOrder(0);
-
-            $productSetTransfers[] = $this->createProductSetWithProductImages([
-                $productImageTransferSortedSecond,
-                $productImageTransferSortedThird,
-                $productImageTransferSortedFirst,
-            ]);
+            $productSetTransfers[] = $this->haveProductSet();
         }
 
         return $productSetTransfers;

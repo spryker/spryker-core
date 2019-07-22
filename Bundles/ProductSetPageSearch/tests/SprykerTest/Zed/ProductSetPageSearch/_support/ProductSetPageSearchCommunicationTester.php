@@ -8,11 +8,7 @@
 namespace SprykerTest\Zed\ProductSetPageSearch;
 
 use Codeception\Actor;
-use Generated\Shared\DataBuilder\LocalizedProductSetBuilder;
-use Generated\Shared\DataBuilder\ProductSetBuilder;
-use Generated\Shared\Transfer\ProductSetTransfer;
 use Orm\Zed\ProductSetPageSearch\Persistence\SpyProductSetPageSearchQuery;
-use Spryker\Zed\ProductSet\Business\ProductSetFacadeInterface;
 
 /**
  * Inherited Methods
@@ -62,27 +58,10 @@ class ProductSetPageSearchCommunicationTester extends Actor
     {
         $productSetTransfers = [];
         for ($i = 0; $i < $productSetAmount; $i++) {
-            $productSetTransfers[] = $this->createProductSetTransfer();
+            $productSetTransfers[] = $this->haveProductSet();
         }
 
         return $productSetTransfers;
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\ProductSetTransfer
-     */
-    public function createProductSetTransfer(): ProductSetTransfer
-    {
-        $localizedProductSetTransfer = (new LocalizedProductSetBuilder())->withProductSetData()->build();
-        $localizedProductSetTransfer->setLocale($this->haveLocale());
-
-        $productAbstractTransfer = $this->haveProductAbstract();
-
-        $productSetTransfer = (new ProductSetBuilder())->withImageSet()->build();
-        $productSetTransfer->addLocalizedData($localizedProductSetTransfer);
-        $productSetTransfer->setIdProductAbstracts([$productAbstractTransfer->getIdProductAbstract()]);
-
-        return $this->getProductSetFacade()->createProductSet($productSetTransfer);
     }
 
     /**
@@ -93,13 +72,5 @@ class ProductSetPageSearchCommunicationTester extends Actor
     public function deleteProductSetSearchByFkProductSet(int $fkProductSet): void
     {
         SpyProductSetPageSearchQuery::create()->filterByFkProductSet($fkProductSet)->delete();
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductSet\Business\ProductSetFacadeInterface
-     */
-    protected function getProductSetFacade(): ProductSetFacadeInterface
-    {
-        return $this->getLocator()->productSet()->facade();
     }
 }
