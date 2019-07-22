@@ -90,27 +90,20 @@ class ContentBannerWriterStep extends PublishAwareStep implements DataImportStep
             ->find()
             ->delete();
 
-        $defaultLocaleIsPresent = false;
         foreach ($localizedBannerTerms as $idLocale => $localizedBannerTerm) {
             if (!$idLocale) {
                 $idLocale = null;
-                $defaultLocaleIsPresent = true;
             }
 
             $localizedContentBannerEntity = SpyContentLocalizedQuery::create()
                 ->filterByFkContent($idContentBannerTerm)
                 ->filterByFkLocale($idLocale)
                 ->findOneOrCreate();
-
             $localizedContentBannerEntity->setParameters(
                 $this->getEncodedParameters($localizedBannerTerm)
             );
 
             $localizedContentBannerEntity->save();
-        }
-
-        if (!$defaultLocaleIsPresent) {
-            throw new InvalidDataException('Default locale is required.');
         }
     }
 
