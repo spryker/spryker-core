@@ -9,7 +9,6 @@ namespace Spryker\Zed\Oms\Communication\Form;
 
 use Spryker\Service\UtilText\Model\Url\Url;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -28,7 +27,7 @@ class OmsTriggerForm extends AbstractType
     public const OPTION_EVENT = 'OPTION_EVENT';
     public const OPTION_SUBMIT_BUTTON_CLASS = 'OPTION_SUBMIT_BUTTON_CLASS';
 
-    public const FIELD_SUBMIT = 'submit';
+    public const BUTTON_SUBMIT = 'submit';
 
     protected const ROUTE_OMS_TRIGGER = '/oms/trigger/';
 
@@ -40,7 +39,7 @@ class OmsTriggerForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this->addSubmitField($builder, $options)
+        $this->addSubmitButton($builder, $options)
             ->setAction($builder, $options);
     }
 
@@ -60,20 +59,12 @@ class OmsTriggerForm extends AbstractType
     }
 
     /**
-     * @return string
-     */
-    public function getParent(): string
-    {
-        return FormType::class;
-    }
-
-    /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
      * @return $this
      */
-    protected function addSubmitField(FormBuilderInterface $builder, array $options)
+    protected function addSubmitButton(FormBuilderInterface $builder, array $options)
     {
         $fieldOptions = [
             'label' => $options[static::OPTION_EVENT],
@@ -85,7 +76,7 @@ class OmsTriggerForm extends AbstractType
             ];
         }
 
-        $builder->add(static::FIELD_SUBMIT, SubmitType::class, $fieldOptions);
+        $builder->add(static::BUTTON_SUBMIT, SubmitType::class, $fieldOptions);
 
         return $this;
     }

@@ -20,6 +20,7 @@ use Symfony\Component\HttpFoundation\Request;
 class TriggerController extends AbstractController
 {
     protected const ROUTE_REDIRECT_DEFAULT = '/';
+    protected const ERROR_INVALID_FORM = 'Form is invalid';
 
     /**
      * @deprecated use submitTriggerEventForOrderItemsAction instead
@@ -50,6 +51,8 @@ class TriggerController extends AbstractController
         $redirect = $request->query->get('redirect', static::ROUTE_REDIRECT_DEFAULT);
 
         if (!$this->isValidPostRequest($request)) {
+            $this->addErrorMessage(static::ERROR_INVALID_FORM);
+
             return $this->redirectResponse($redirect);
         }
 
@@ -94,6 +97,8 @@ class TriggerController extends AbstractController
         $redirect = $request->query->get('redirect', static::ROUTE_REDIRECT_DEFAULT);
 
         if (!$this->isValidPostRequest($request)) {
+            $this->addErrorMessage(static::ERROR_INVALID_FORM);
+
             return $this->redirectResponse($redirect);
         }
 
@@ -145,10 +150,11 @@ class TriggerController extends AbstractController
      */
     protected function isTriggerFormValid(Request $request): bool
     {
-        return $this->getFactory()
+        $form = $this->getFactory()
             ->createOmsTriggerFormFactory()
             ->createOmsTriggerForm()
-            ->handleRequest($request)
-            ->isValid();
+            ->handleRequest($request);
+
+        return $form->isSubmitted() && $form->isValid();
     }
 }

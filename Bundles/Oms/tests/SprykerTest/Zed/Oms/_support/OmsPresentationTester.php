@@ -31,10 +31,6 @@ class OmsPresentationTester extends Actor
 {
     use _generated\OmsPresentationTesterActions;
 
-   /**
-    * Define custom actions here
-    */
-
     /**
      * @param array $orderData
      * @param string $omsProcessName

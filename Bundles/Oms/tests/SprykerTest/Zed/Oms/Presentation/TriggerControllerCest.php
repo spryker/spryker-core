@@ -8,6 +8,8 @@
 namespace SprykerTest\Zed\Oms\Presentation;
 
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
+use Spryker\Zed\Sales\Business\SalesFacadeInterface;
 use SprykerTest\Zed\Oms\OmsPresentationTester;
 use SprykerTest\Zed\Oms\PageObject\OrderDetailPage;
 
@@ -26,27 +28,58 @@ class TriggerControllerCest
     protected const XPATH_CHANGE_STATUS_FORM = '.oms-trigger-form';
 
     /**
-     * @var \Spryker\Zed\Sales\Business\SalesFacadeInterface
-     */
-    protected $salesFacade;
-
-    /**
-     * @var \Generated\Shared\Transfer\OrderTransfer
-     */
-    protected $orderTransfer;
-
-    /**
      * @param \SprykerTest\Zed\Oms\OmsPresentationTester $i
      *
      * @return void
      */
-    public function _before(OmsPresentationTester $i)
+    public function testOrderStatusShouldBeChangedAfterFormSubmit(OmsPresentationTester $i): void
     {
-        $this->salesFacade = $i->getSalesFacade();
+        $salesFacade = $i->getSalesFacade();
+        // Assign
+        $i->amZed();
+        $i->amLoggedInUser();
+        $orderTransfer = $this->createOrder($i);
+        $itemTransfer = $orderTransfer->getItems()[0];
+        $initialState = $itemTransfer->getState()->getName();
 
+        // Act
+        $i->amOnPage(
+            sprintf(OrderDetailPage::URL_PATTERN, $orderTransfer->getIdSalesOrder())
+        );
+        $i->submitForm(static::XPATH_CHANGE_STATUS_FORM, []);
+        $i->waitForElement(static::XPATH_CHANGE_STATUS_FORM);
+
+        $latestItemTransfer = $this->getItemLatestData($salesFacade, $orderTransfer);
+
+        // Assert
+        $i->see($latestItemTransfer->getState()->getName());
+
+        $i->assertNotEquals($initialState, $latestItemTransfer->getState()->getName());
+    }
+
+    /**
+     * @param \Spryker\Zed\Sales\Business\SalesFacadeInterface $salesFacade
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    protected function getItemLatestData(SalesFacadeInterface $salesFacade, OrderTransfer $orderTransfer): ItemTransfer
+    {
+        return $salesFacade->findOrderByIdSalesOrder(
+            $orderTransfer->getIdSalesOrder()
+        )->getItems()[0];
+    }
+
+    /**
+     * @param \SprykerTest\Zed\Oms\OmsPresentationTester $i
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    protected function createOrder(OmsPresentationTester $i): OrderTransfer
+    {
         $productTransfer = $i->haveProduct();
 
-        $this->orderTransfer = $i->haveOrderTransfer([
+        return $i->haveOrderTransfer([
             'unitPrice' => 100,
             'sumPrice' => 100,
             'unitPriceToPayAggregation' => 100,
@@ -62,43 +95,5 @@ class TriggerControllerCest
                 'net_total' => 500,
             ],
         ], static::OMS_ACTIVE_PROCESS);
-    }
-
-    /**
-     * @param \SprykerTest\Zed\Oms\OmsPresentationTester $i
-     *
-     * @return void
-     */
-    public function testOrderStatusShouldBeChangedAfterFormSubmit(OmsPresentationTester $i)
-    {
-        // Assign
-        $i->amZed();
-        $i->amLoggedInUser();
-        $itemTransfer = $this->orderTransfer->getItems()[0];
-        $initialState = $itemTransfer->getState()->getName();
-
-        // Act
-        $i->amOnPage(
-            sprintf(OrderDetailPage::URL_PATTERN, $this->orderTransfer->getIdSalesOrder())
-        );
-        $i->submitForm(static::XPATH_CHANGE_STATUS_FORM, []);
-        $i->waitForElement(static::XPATH_CHANGE_STATUS_FORM);
-
-        $latestItemTransfer = $this->getItemLatestData();
-
-        // Assert
-        $i->see($latestItemTransfer->getState()->getName());
-
-        $i->assertNotEquals($initialState, $latestItemTransfer->getState()->getName());
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\ItemTransfer
-     */
-    protected function getItemLatestData(): ItemTransfer
-    {
-        return $this->salesFacade->findOrderByIdSalesOrder(
-            $this->orderTransfer->getIdSalesOrder()
-        )->getItems()[0];
     }
 }

@@ -24,7 +24,6 @@
     "spryker/product": "*",
     "spryker/propel": "*",
     "spryker/testify": "*",
-    "spryker/zed-navigation": "*"
   },
   "suggest": {
     "spryker/checkout": "If you want to use Checkout plugins."
