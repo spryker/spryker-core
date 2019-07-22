@@ -92,15 +92,12 @@ class ProductSetPageSearchListenerTest extends Unit
      */
     public function testProductSetSearchUnpublishListener(): void
     {
-        // Prepare
+        // Arrange
         $productSetTransfers = $this->tester->createProductSets(5);
         $this->publishProductSetTransfers($productSetTransfers);
         $productSetBeforeUnpublish = SpyProductSetPageSearchQuery::create()->count();
-
         $productSetDeletedId = $productSetTransfers[0]->getIdProductSet();
-        $this->tester->deleteProductSetSearchByFkProductSet($productSetDeletedId);
 
-        // Prepare
         $productSetSearchUnpublishListener = new ProductSetPageSearchUnpublishListener();
         $productSetSearchUnpublishListener->setFacade($this->getProductSetPageSearchFacade());
 

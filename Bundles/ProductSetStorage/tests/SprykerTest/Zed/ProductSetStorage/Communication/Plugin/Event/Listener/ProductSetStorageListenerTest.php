@@ -107,15 +107,12 @@ class ProductSetStorageListenerTest extends Unit
      */
     public function testProductSetStorageUnpublishListener(): void
     {
-        // Prepare
+        // Arrange
         $productSetTransfers = $this->tester->createProductSets(5);
         $this->publishProductSetTransfers($productSetTransfers);
         $productSetBeforeUnpublish = SpyProductSetStorageQuery::create()->count();
-
         $productSetDeletedId = $productSetTransfers[0]->getIdProductSet();
-        $this->tester->deleteProductSetStorageByFkProductSet($productSetDeletedId);
 
-        // Prepare
         $productSetStorageUnpublishListener = new ProductSetStorageUnpublishListener();
         $productSetStorageUnpublishListener->setFacade($this->getProductSetStorageFacade());
 

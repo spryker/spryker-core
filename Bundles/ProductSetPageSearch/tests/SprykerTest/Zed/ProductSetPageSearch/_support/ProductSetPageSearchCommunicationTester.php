@@ -8,7 +8,6 @@
 namespace SprykerTest\Zed\ProductSetPageSearch;
 
 use Codeception\Actor;
-use Orm\Zed\ProductSetPageSearch\Persistence\SpyProductSetPageSearchQuery;
 
 /**
  * Inherited Methods
@@ -62,15 +61,5 @@ class ProductSetPageSearchCommunicationTester extends Actor
         }
 
         return $productSetTransfers;
-    }
-
-    /**
-     * @param int $fkProductSet
-     *
-     * @return void
-     */
-    public function deleteProductSetSearchByFkProductSet(int $fkProductSet): void
-    {
-        SpyProductSetPageSearchQuery::create()->filterByFkProductSet($fkProductSet)->delete();
     }
 }
