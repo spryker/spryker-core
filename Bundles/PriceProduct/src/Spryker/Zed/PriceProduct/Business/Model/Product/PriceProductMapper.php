@@ -181,7 +181,7 @@ class PriceProductMapper implements PriceProductMapperInterface
             ->setMoneyValue($moneyValueTransfer)
             ->setPriceDimension($priceProductDimensionTransfer)
             ->setIsMergeable(true)
-            ->setSkuProduct($this->findProductSkuValue($priceProductEntity));
+            ->setSkuProduct($this->findProductSku($priceProductEntity));
     }
 
     /**
@@ -207,7 +207,7 @@ class PriceProductMapper implements PriceProductMapperInterface
      *
      * @return string|null
      */
-    protected function findProductSkuValue(SpyPriceProduct $priceProductEntity): ?string
+    protected function findProductSku(SpyPriceProduct $priceProductEntity): ?string
     {
         $productEntity = $priceProductEntity->getProduct();
         if ($productEntity === null) {
