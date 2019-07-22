@@ -35,7 +35,12 @@ class SetupFrontendConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return array
+     * Specification:
+     * - Returns the public directory for Yves assets.
+     *
+     * @api
+     *
+     * @return string[]
      */
     public function getYvesAssetsDirectories()
     {
@@ -61,6 +66,11 @@ class SetupFrontendConfig extends AbstractBundleConfig
     }
 
     /**
+     * Specification:
+     * - Returns the command to build Yves assets.
+     *
+     * @api
+     *
      * @return string
      */
     public function getYvesBuildCommand()
