@@ -50,12 +50,12 @@ class CompanyUnitAddressMapper implements CompanyUnitAddressMapperInterface
     ): CompanyUnitAddressCollectionTransfer {
         $companyUnitAddressCollectionTransfer = new CompanyUnitAddressCollectionTransfer();
         foreach ($companyUnitAddressEntityTransfers as $companyUnitAddressEntityTransfer) {
-            $unitAddressTransfer = $this->mapEntityTransferToCompanyUnitAddressTransfer(
+            $companyUnitAddressTransfer = $this->mapEntityTransferToCompanyUnitAddressTransfer(
                 $companyUnitAddressEntityTransfer,
                 new CompanyUnitAddressTransfer()
             );
 
-            $companyUnitAddressCollectionTransfer->addCompanyUnitAddress($unitAddressTransfer);
+            $companyUnitAddressCollectionTransfer->addCompanyUnitAddress($companyUnitAddressTransfer);
         }
 
         return $companyUnitAddressCollectionTransfer;
