@@ -57,9 +57,7 @@ var ContentItemEditor = function(options) {
             callbacks: {
                 onKeydown: this.onKeydownHandler,
                 onChange: function () {
-                    var $editor = $(this);
-
-                    self.onChangeHandler($editor, self);
+                    self.onChangeHandler($(this), self);
                 }
             },
             dialogsInBody: true
@@ -134,35 +132,39 @@ var ContentItemEditor = function(options) {
     };
 
     this.onChangeHandler = function ($editor, self) {
-        var twigMacroReg = /.*\{{.*/;
+        var twigMacroRegExp = /.*\{{.*/;
         var $editorRange = $editor.summernote('createRange');
         var $editorNode = $($editorRange.sc);
         var nodeContent = $editorNode.text();
-        var isTwigMacro = twigMacroReg.test(nodeContent);
+        var isTwigMacro = twigMacroRegExp.test(nodeContent);
 
-        if (isTwigMacro) {
-            var $editorParentNode = $editorNode.parents('p');
-
-            self.changeEditorNode($editorParentNode);
+        if (!isTwigMacro) {
+            return;
         }
+
+        var $editorParentNode = $editorNode.parents('p');
+
+        self.changeEditorNode($editorParentNode);
     };
 
     this.changeEditorNode = function ($editorParentNode) {
-        if ($editorParentNode.is('p')) {
-            var $elementForInsert = $(
-                '<div class="js-twig-macro">' +
-                $editorParentNode.html() +
-                '</div>'
-            );
-
-            $editorParentNode.replaceWith($elementForInsert);
-            this.putCaretInTheEnd($elementForInsert);
+        if (!$editorParentNode.is('p')) {
+            return;
         }
+
+        var $elementForInsert = $(
+            '<div class="js-twig-macro">' +
+            $editorParentNode.html() +
+            '</div>'
+        );
+
+        $editorParentNode.replaceWith($elementForInsert);
+        this.putCaretInTheEnd($elementForInsert);
     };
 
-    this.putCaretInTheEnd = function ($elementForInsert) {
+    this.putCaretInTheEnd = function ($insertedElement) {
         var range = document.createRange();
-        range.selectNode($elementForInsert[0].childNodes[0]);
+        range.selectNode($insertedElement[0].childNodes[0]);
         var selection = window.getSelection();
         selection.removeAllRanges();
         selection.addRange(range);

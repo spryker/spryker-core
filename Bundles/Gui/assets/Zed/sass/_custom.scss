@@ -137,10 +137,8 @@ body.login {
 
 .note-editor {
     .note-editable {
-        p {
-            & + div {
-                margin-bottom: 10px;
-            }
+        p + div {
+            margin-bottom: 10px;
         }
     }
 }
