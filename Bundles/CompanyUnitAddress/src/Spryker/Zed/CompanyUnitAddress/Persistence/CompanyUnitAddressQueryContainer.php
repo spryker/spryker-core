@@ -29,6 +29,9 @@ class CompanyUnitAddressQueryContainer extends AbstractQueryContainer implements
     /**
      * @api
      *
+     * @module Company
+     * @module Country
+     *
      * @return \Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddressQuery
      */
     public function queryCompanyUnitAddressWithCompanyAndCountry(): SpyCompanyUnitAddressQuery
