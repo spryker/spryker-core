@@ -37,7 +37,10 @@ class ProductSetStorageListener extends AbstractPlugin implements EventBulkHandl
         $this->preventTransaction();
         $productSetIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
 
-        if ($eventName === ProductSetEvents::ENTITY_SPY_PRODUCT_SET_DELETE || $eventName === ProductSetEvents::PRODUCT_SET_UNPUBLISH) {
+        if ($eventName === ProductSetEvents::ENTITY_SPY_PRODUCT_SET_DELETE ||
+            $eventName === ProductSetEvents::ENTITY_SPY_PRODUCT_SET_DATA_DELETE ||
+            $eventName === ProductSetEvents::PRODUCT_SET_UNPUBLISH
+        ) {
             $this->getFacade()->unpublish($productSetIds);
 
             return;
