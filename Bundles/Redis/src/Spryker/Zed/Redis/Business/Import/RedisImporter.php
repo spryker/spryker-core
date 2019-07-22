@@ -13,14 +13,14 @@ use Symfony\Component\Process\Process;
 class RedisImporter implements RedisImporterInterface
 {
     /**
-     * @var \Spryker\Zed\Redis\RedisConfig|null
+     * @var \Spryker\Zed\Redis\RedisConfig
      */
     protected $config;
 
     /**
-     * @param \Spryker\Zed\Redis\RedisConfig|null $config
+     * @param \Spryker\Zed\Redis\RedisConfig $config
      */
-    public function __construct(?RedisConfig $config = null)
+    public function __construct(RedisConfig $config)
     {
         $this->config = $config;
     }
@@ -34,7 +34,7 @@ class RedisImporter implements RedisImporterInterface
     public function import(string $source, string $destination): bool
     {
         $command = $this->buildImportCliCommand($source, $destination);
-        $process = new Process($command, APPLICATION_ROOT_DIR, null, null, $this->getProcessTimeout());
+        $process = new Process($command, APPLICATION_ROOT_DIR, null, null, $this->config->getProcessTimeout());
         $process->run();
 
         return $process->isSuccessful();
@@ -49,17 +49,5 @@ class RedisImporter implements RedisImporterInterface
     protected function buildImportCliCommand(string $source, string $destination): string
     {
         return sprintf('sudo cp %s %s', $source, $destination);
-    }
-
-    /**
-     * @return int|float|null
-     */
-    protected function getProcessTimeout()
-    {
-        if (!$this->config) {
-            return RedisConfig::DEFAULT_PROCESS_TIMEOUT;
-        }
-
-        return $this->config->getProcessTimeout();
     }
 }

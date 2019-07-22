@@ -16,10 +16,8 @@ class PropelConfig extends AbstractBundleConfig
 {
     public const DB_ENGINE_MYSQL = 'mysql';
     public const DB_ENGINE_PGSQL = 'pgsql';
-    public const DEFAULT_PROCESS_TIMEOUT = 60;
 
-    protected const PROCESS_TIMEOUT = 60;
-    protected const MINIMUM_MYSQL_DATABASE_EXPORT_PROCESS_TIMEOUT = 600;
+    protected const PROCESS_TIMEOUT = 600;
 
     /**
      * Specification:
@@ -159,24 +157,12 @@ class PropelConfig extends AbstractBundleConfig
     /**
      * Specification:
      * - Returns the value for the process timeout in seconds, after which an exception will be thrown.
-     * - Can return 0, 0.0 or null to disable timeout.
+     * - Can return int, float or null to disable timeout.
      *
      * @return int|float|null
      */
     public function getProcessTimeout()
     {
         return static::PROCESS_TIMEOUT;
-    }
-
-    /**
-     * Specification:
-     * - Returns the value for the process timeout in seconds to be used in `Spryker\Zed\Propel\Business\Model\PropelDatabase\Adapter\MySql\ExportMySqlDatabase::runProcess()`.
-     * - Can return 0, 0.0 or null to disable timeout.
-     *
-     * @return int|float|null
-     */
-    public function getMinimumMySqlDatabaseExportTimeout()
-    {
-        return static::MINIMUM_MYSQL_DATABASE_EXPORT_PROCESS_TIMEOUT;
     }
 }

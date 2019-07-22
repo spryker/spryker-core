@@ -23,14 +23,14 @@ use Spryker\Zed\Propel\PropelConfig;
 class AdapterFactory implements AdapterFactoryInterface
 {
     /**
-     * @var \Spryker\Zed\Propel\PropelConfig|null
+     * @var \Spryker\Zed\Propel\PropelConfig
      */
     protected $config;
 
     /**
-     * @param \Spryker\Zed\Propel\PropelConfig|null $config
+     * @param \Spryker\Zed\Propel\PropelConfig $config
      */
-    public function __construct(?PropelConfig $config = null)
+    public function __construct(PropelConfig $config)
     {
         $this->config = $config;
     }

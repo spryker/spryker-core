@@ -26,20 +26,20 @@ class ProcessManager implements ProcessManagerInterface
     protected $serverUniqueId;
 
     /**
-     * @var int|float|null
+     * @var \Spryker\Zed\Queue\QueueConfig
      */
-    protected $processTimeout;
+    protected $config;
 
     /**
      * @param \Spryker\Zed\Queue\Persistence\QueueQueryContainerInterface $queryContainer
      * @param string $serverUniqueId
-     * @param int|float|null $processTimeout
+     * @param \Spryker\Zed\Queue\QueueConfig $config
      */
-    public function __construct(QueueQueryContainerInterface $queryContainer, $serverUniqueId, ?$processTimeout = QueueConfig::DEFAULT_PROCESS_TIMEOUT)
+    public function __construct(QueueQueryContainerInterface $queryContainer, $serverUniqueId, QueueConfig $config)
     {
         $this->queryContainer = $queryContainer;
         $this->serverUniqueId = $serverUniqueId;
-        $this->processTimeout = $processTimeout;
+        $this->config = $config;
     }
 
     /**
@@ -195,6 +195,6 @@ class ProcessManager implements ProcessManagerInterface
      */
     protected function createProcess($command)
     {
-        return new Process($command, null, null, null, $this->processTimeout);
+        return new Process($command, null, null, null, $this->config->getProcessTimeout());
     }
 }

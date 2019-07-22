@@ -16,7 +16,6 @@ class StorageConfig extends AbstractBundleConfig
      * @deprecated Use `Spryker\Zed\StorageRedis\StorageRedisConfig::DEFAULT_REDIS_DATABASE` instead.
      */
     public const DEFAULT_REDIS_DATABASE = 0;
-    public const DEFAULT_PROCESS_TIMEOUT = 60;
 
     protected const PROCESS_TIMEOUT = 60;
 
@@ -44,9 +43,11 @@ class StorageConfig extends AbstractBundleConfig
     }
 
     /**
+     * @deprecated Use `Spryker\Zed\Redis\RedisConfig::getProcessTimeout()` instead.
+     *
      * Specification:
      * - Returns the value for the process timeout in seconds, after which an exception will be thrown.
-     * - Can return 0, 0.0 or null to disable timeout.
+     * - Can return int, float or null to disable timeout.
      *
      * @return int|float|null
      */

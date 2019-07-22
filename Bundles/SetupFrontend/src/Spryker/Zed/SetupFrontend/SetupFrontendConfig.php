@@ -12,10 +12,6 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class SetupFrontendConfig extends AbstractBundleConfig
 {
-    public const DEFAULT_PROCESS_TIMEOUT = 60;
-
-    protected const PROCESS_TIMEOUT = 60;
-
     /**
      * @return array
      */
@@ -110,17 +106,5 @@ class SetupFrontendConfig extends AbstractBundleConfig
     public function getZedBuildCommand()
     {
         return 'npm run zed';
-    }
-
-    /**
-     * Specification:
-     * - Returns the value for the process timeout in seconds, after which an exception will be thrown.
-     * - Can return 0, 0.0 or null to disable timeout.
-     *
-     * @return int|float|null
-     */
-    public function getProcessTimeout()
-    {
-        return static::PROCESS_TIMEOUT;
     }
 }

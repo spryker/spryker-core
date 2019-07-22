@@ -8,7 +8,6 @@
 namespace Spryker\Zed\SetupFrontend\Business\Model\Installer;
 
 use Psr\Log\LoggerInterface;
-use Spryker\Zed\SetupFrontend\SetupFrontendConfig;
 use Symfony\Component\Process\Process;
 
 class ProjectInstaller implements DependencyInstallerInterface
@@ -19,18 +18,11 @@ class ProjectInstaller implements DependencyInstallerInterface
     protected $installCommand;
 
     /**
-     * @var int|float|null
-     */
-    protected $processTimeout;
-
-    /**
      * @param string $installCommand
-     * @param int|float|null $processTimeout
      */
-    public function __construct($installCommand, ?$processTimeout = SetupFrontendConfig::DEFAULT_PROCESS_TIMEOUT)
+    public function __construct($installCommand)
     {
         $this->installCommand = $installCommand;
-        $this->processTimeout = $processTimeout;
     }
 
     /**
@@ -40,7 +32,7 @@ class ProjectInstaller implements DependencyInstallerInterface
      */
     public function install(LoggerInterface $logger)
     {
-        $process = new Process($this->installCommand, APPLICATION_ROOT_DIR, null, null, $this->processTimeout);
+        $process = new Process($this->installCommand, APPLICATION_ROOT_DIR, null, null, null);
         $process->run(function ($type, $buffer) use ($logger) {
             $logger->info($buffer);
         });

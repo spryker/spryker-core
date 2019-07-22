@@ -14,14 +14,14 @@ use Symfony\Component\Process\Process;
 class RedisExporter implements RedisExporterInterface
 {
     /**
-     * @var \Spryker\Zed\Redis\RedisConfig|null
+     * @var \Spryker\Zed\Redis\RedisConfig
      */
     protected $config;
 
     /**
-     * @param \Spryker\Zed\Redis\RedisConfig|null $config
+     * @param \Spryker\Zed\Redis\RedisConfig $config
      */
-    public function __construct(?RedisConfig $config = null)
+    public function __construct(RedisConfig $config)
     {
         $this->config = $config;
     }
@@ -41,7 +41,7 @@ class RedisExporter implements RedisExporterInterface
         }
 
         $command = $this->buildExportCliCommand($destination, $redisPort);
-        $process = new Process($command, APPLICATION_ROOT_DIR, null, null, $this->getProcessTimeout());
+        $process = new Process($command, APPLICATION_ROOT_DIR, null, null, $this->config->getProcessTimeout());
         $process->run();
 
         return $process->isSuccessful();
@@ -56,17 +56,5 @@ class RedisExporter implements RedisExporterInterface
     protected function buildExportCliCommand(string $destination, ?int $redisPort = null): string
     {
         return sprintf('redis-cli -p %s --rdb %s', $redisPort, $destination);
-    }
-
-    /**
-     * @return int|float|null
-     */
-    protected function getProcessTimeout()
-    {
-        if (!$this->config) {
-            return RedisConfig::DEFAULT_PROCESS_TIMEOUT;
-        }
-
-        return $this->config->getProcessTimeout();
     }
 }

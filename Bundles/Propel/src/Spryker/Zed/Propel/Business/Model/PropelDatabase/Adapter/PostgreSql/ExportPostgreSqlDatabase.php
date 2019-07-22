@@ -17,14 +17,14 @@ use Symfony\Component\Process\Process;
 class ExportPostgreSqlDatabase implements ExportDatabaseInterface
 {
     /**
-     * @var \Spryker\Zed\Propel\PropelConfig|null
+     * @var \Spryker\Zed\Propel\PropelConfig
      */
     protected $config;
 
     /**
-     * @param \Spryker\Zed\Propel\PropelConfig|null $config
+     * @param \Spryker\Zed\Propel\PropelConfig $config
      */
-    public function __construct(?PropelConfig $config = null)
+    public function __construct(PropelConfig $config)
     {
         $this->config = $config;
     }
@@ -91,7 +91,7 @@ class ExportPostgreSqlDatabase implements ExportDatabaseInterface
      */
     protected function runProcess($command)
     {
-        $process = new Process($command, null, $this->getEnvironmentVariables(), null, $this->getProcessTimeout());
+        $process = new Process($command, null, $this->getEnvironmentVariables(), null, $this->config->getProcessTimeout());
         $process->inheritEnvironmentVariables(true);
         $process->run();
 
@@ -120,17 +120,5 @@ class ExportPostgreSqlDatabase implements ExportDatabaseInterface
     protected function useSudo()
     {
         return Config::get(PropelConstants::USE_SUDO_TO_MANAGE_DATABASE, true);
-    }
-
-    /**
-     * @return int|float|null
-     */
-    protected function getProcessTimeout()
-    {
-        if (!$this->config) {
-            return PropelConfig::DEFAULT_PROCESS_TIMEOUT;
-        }
-
-        return $this->config->getProcessTimeout();
     }
 }

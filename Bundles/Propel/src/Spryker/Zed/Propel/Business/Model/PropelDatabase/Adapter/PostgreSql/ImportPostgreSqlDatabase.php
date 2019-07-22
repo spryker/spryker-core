@@ -17,14 +17,14 @@ use Symfony\Component\Process\Process;
 class ImportPostgreSqlDatabase implements ImportDatabaseInterface
 {
     /**
-     * @var \Spryker\Zed\Propel\PropelConfig|null
+     * @var \Spryker\Zed\Propel\PropelConfig
      */
     protected $config;
 
     /**
-     * @param \Spryker\Zed\Propel\PropelConfig|null $config
+     * @param \Spryker\Zed\Propel\PropelConfig $config
      */
-    public function __construct(?PropelConfig $config = null)
+    public function __construct(PropelConfig $config)
     {
         $this->config = $config;
     }
@@ -97,7 +97,7 @@ class ImportPostgreSqlDatabase implements ImportDatabaseInterface
     {
         $this->exportPostgresPassword();
 
-        $process = new Process($command, null, null, null, $this->getProcessTimeout());
+        $process = new Process($command, null, null, null, $this->config->getProcessTimeout());
         $process->run();
 
         if (!$process->isSuccessful()) {
@@ -126,17 +126,5 @@ class ImportPostgreSqlDatabase implements ImportDatabaseInterface
     protected function useSudo()
     {
         return Config::get(PropelConstants::USE_SUDO_TO_MANAGE_DATABASE, true);
-    }
-
-    /**
-     * @return int|float|null
-     */
-    protected function getProcessTimeout()
-    {
-        if (!$this->config) {
-            return PropelConfig::DEFAULT_PROCESS_TIMEOUT;
-        }
-
-        return $this->config->getProcessTimeout();
     }
 }

@@ -16,23 +16,16 @@ use Symfony\Component\Process\Process;
 class StorageExporter implements StorageExporterInterface
 {
     /**
-     * @var int
+     * @var \Spryker\Zed\Storage\StorageConfig
      */
-    protected $redisPort;
+    protected $config;
 
     /**
-     * @var int|float|null
+     * @param \Spryker\Zed\Storage\StorageConfig $config
      */
-    protected $processTimeout;
-
-    /**
-     * @param int $redisPort
-     * @param int|float|null $processTimeout
-     */
-    public function __construct($redisPort, ?$processTimeout = StorageConfig::DEFAULT_PROCESS_TIMEOUT)
+    public function __construct(StorageConfig $config)
     {
-        $this->redisPort = $redisPort;
-        $this->processTimeout = $processTimeout;
+        $this->config = $config;
     }
 
     /**
@@ -42,8 +35,8 @@ class StorageExporter implements StorageExporterInterface
      */
     public function export($destination)
     {
-        $command = sprintf('redis-cli -p %s --rdb %s', $this->redisPort, $destination);
-        $process = new Process($command, APPLICATION_ROOT_DIR, null, null, $this->processTimeout);
+        $command = sprintf('redis-cli -p %s --rdb %s', $this->config->getRedisPort(), $destination);
+        $process = new Process($command, APPLICATION_ROOT_DIR, null, null, $this->config->getProcessTimeout());
         $process->run();
 
         if ($process->isSuccessful()) {

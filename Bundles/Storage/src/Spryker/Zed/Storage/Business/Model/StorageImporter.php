@@ -16,23 +16,16 @@ use Symfony\Component\Process\Process;
 class StorageImporter implements StorageImporterInterface
 {
     /**
-     * @var string
+     * @var \Spryker\Zed\Storage\StorageConfig
      */
-    protected $destination;
+    protected $config;
 
     /**
-     * @var int|float|null
+     * @param \Spryker\Zed\Storage\StorageConfig $config
      */
-    protected $processTimeout;
-
-    /**
-     * @param string $destination
-     * @param int|float|null $processTimeout
-     */
-    public function __construct($destination, ?$processTimeout = StorageConfig::DEFAULT_PROCESS_TIMEOUT)
+    public function __construct(StorageConfig $config)
     {
-        $this->destination = $destination;
-        $this->processTimeout = $processTimeout;
+        $this->config = $config;
     }
 
     /**
@@ -42,8 +35,8 @@ class StorageImporter implements StorageImporterInterface
      */
     public function import($source)
     {
-        $command = sprintf('sudo cp %s %s', $source, $this->destination);
-        $process = new Process($command, APPLICATION_ROOT_DIR, null, null, $this->processTimeout);
+        $command = sprintf('sudo cp %s %s', $source, $this->config->getRdbDumpPath());
+        $process = new Process($command, APPLICATION_ROOT_DIR, null, null, $this->config->getProcessTimeout());
         $process->run();
 
         if ($process->isSuccessful()) {

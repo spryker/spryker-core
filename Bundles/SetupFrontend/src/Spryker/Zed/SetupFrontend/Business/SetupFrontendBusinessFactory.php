@@ -25,7 +25,7 @@ class SetupFrontendBusinessFactory extends AbstractBusinessFactory
      */
     public function createPackageManagerInstaller()
     {
-        return new NodeInstaller($this->getConfig());
+        return new NodeInstaller();
     }
 
     /**
@@ -33,10 +33,7 @@ class SetupFrontendBusinessFactory extends AbstractBusinessFactory
      */
     public function createProjectInstaller()
     {
-        return new ProjectInstaller(
-            $this->getConfig()->getProjectInstallCommand(),
-            $this->getConfig()->getProcessTimeout()
-        );
+        return new ProjectInstaller($this->getConfig()->getProjectInstallCommand());
     }
 
     /**
@@ -62,8 +59,7 @@ class SetupFrontendBusinessFactory extends AbstractBusinessFactory
     {
         return new DependencyInstaller(
             $this->createYvesInstallerPathFinder(),
-            $this->getConfig()->getYvesInstallCommand(),
-            $this->getConfig()->getProcessTimeout()
+            $this->getConfig()->getYvesInstallCommand()
         );
     }
 
@@ -80,7 +76,7 @@ class SetupFrontendBusinessFactory extends AbstractBusinessFactory
      */
     public function createYvesBuilder()
     {
-        return new Builder($this->getConfig()->getYvesBuildCommand(), $this->getConfig()->getProcessTimeout());
+        return new Builder($this->getConfig()->getYvesBuildCommand());
     }
 
     /**
@@ -98,8 +94,7 @@ class SetupFrontendBusinessFactory extends AbstractBusinessFactory
     {
         return new DependencyInstaller(
             $this->createZedInstallerPathFinder(),
-            $this->getConfig()->getZedInstallCommand(),
-            $this->getConfig()->getProcessTimeout()
+            $this->getConfig()->getZedInstallCommand()
         );
     }
 
@@ -116,6 +111,6 @@ class SetupFrontendBusinessFactory extends AbstractBusinessFactory
      */
     public function createZedBuilder()
     {
-        return new Builder($this->getConfig()->getZedBuildCommand(), $this->getConfig()->getProcessTimeout());
+        return new Builder($this->getConfig()->getZedBuildCommand());
     }
 }

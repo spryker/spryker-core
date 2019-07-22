@@ -172,7 +172,7 @@ class SetupConfig extends AbstractBundleConfig
     /**
      * Specification:
      * - Returns the value for the process timeout in seconds, after which an exception will be thrown.
-     * - Can return 0, 0.0 or null to disable timeout.
+     * - Can return int, float or null to disable timeout.
      *
      * @return int|float|null
      */
