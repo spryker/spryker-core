@@ -15,6 +15,7 @@
         <property name="metaKeywords" type="string"/>
         <property name="metaDescription" type="string"/>
         <property name="attributeNames" type="array"/>
+        <property name="url" type="array"/>
     </transfer>
 
     <transfer name="ConcreteProductsRestAttributes">
