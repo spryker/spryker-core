@@ -304,7 +304,7 @@ class Console extends SymfonyCommand
     {
         $width = $this->getTerminalWidth() - mb_strlen($message) - 1;
         $width = max(0, $width);
-        $message .=  str_repeat(' ', $width);
+        $message .= str_repeat(' ', $width);
 
         $this->output->writeln('<error>' . str_repeat(' ', $this->getTerminalWidth()) . '</error>');
         $this->output->writeln(sprintf('<error> %s</error>', $message));
@@ -323,7 +323,7 @@ class Console extends SymfonyCommand
 
         $width = $this->getTerminalWidth() - mb_strlen($message) - 1;
         $width = max(0, $width);
-        $message .=  str_repeat(' ', $width);
+        $message .= str_repeat(' ', $width);
 
         $this->output->writeln('<warning>' . str_repeat(' ', $this->getTerminalWidth()) . '</warning>');
         $this->output->writeln(sprintf('<warning> %s</warning>', $message));
@@ -342,7 +342,7 @@ class Console extends SymfonyCommand
 
         $width = $this->getTerminalWidth() - mb_strlen($message) - 1;
         $width = max(0, $width);
-        $message .=  str_repeat(' ', $width);
+        $message .= str_repeat(' ', $width);
 
         $this->output->writeln('<success>' . str_repeat(' ', $this->getTerminalWidth()) . '</success>');
         $this->output->writeln(sprintf('<success> %s</success>', $message));
