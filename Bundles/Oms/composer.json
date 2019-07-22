@@ -23,7 +23,7 @@
     "spryker/config": "*",
     "spryker/product": "*",
     "spryker/propel": "*",
-    "spryker/testify": "*",
+    "spryker/testify": "*"
   },
   "suggest": {
     "spryker/checkout": "If you want to use Checkout plugins."
