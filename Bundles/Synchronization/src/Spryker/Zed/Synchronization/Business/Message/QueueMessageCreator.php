@@ -10,11 +10,25 @@ namespace Spryker\Zed\Synchronization\Business\Message;
 use Generated\Shared\Transfer\QueueSendMessageTransfer;
 use Generated\Shared\Transfer\SynchronizationQueueMessageTransfer;
 use Spryker\Zed\Synchronization\Business\Exception\SynchronizationQueuePoolNotFoundException;
+use Spryker\Zed\Synchronization\Dependency\Service\SynchronizationToUtilEncodingServiceInterface;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataPluginInterface;
 
 class QueueMessageCreator implements QueueMessageCreatorInterface
 {
     protected const WRITE = 'write';
+
+    /**
+     * @var \Spryker\Zed\Synchronization\Dependency\Service\SynchronizationToUtilEncodingServiceInterface
+     */
+    protected $encodingService;
+
+    /**
+     * @param \Spryker\Zed\Synchronization\Dependency\Service\SynchronizationToUtilEncodingServiceInterface $encodingService
+     */
+    public function __construct(SynchronizationToUtilEncodingServiceInterface $encodingService)
+    {
+        $this->encodingService = $encodingService;
+    }
 
     /**
      * @param \Generated\Shared\Transfer\SynchronizationQueueMessageTransfer $synchronizationQueueMessageTransfer
@@ -46,7 +60,9 @@ class QueueMessageCreator implements QueueMessageCreatorInterface
     protected function createQueueSendMessageTransfer(array $message, SynchronizationDataPluginInterface $plugin, $store = null): QueueSendMessageTransfer
     {
         $queueSendTransfer = new QueueSendMessageTransfer();
-        $queueSendTransfer->setBody(json_encode($message));
+        $queueSendTransfer->setBody(
+            $this->encodingService->encodeJson($message)
+        );
         $queuePoolName = $plugin->getSynchronizationQueuePoolName();
 
         if ($store) {
