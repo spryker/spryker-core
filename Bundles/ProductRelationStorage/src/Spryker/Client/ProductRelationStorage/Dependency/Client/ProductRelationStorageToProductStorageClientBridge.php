@@ -32,4 +32,15 @@ class ProductRelationStorageToProductStorageClientBridge implements ProductRelat
     {
         return $this->productStorageClient->getProductAbstractStorageData($idProductAbstract, $localeName);
     }
+
+    /**
+     * @param int[] $productAbstractIds
+     * @param string $localeName
+     *
+     * @return array
+     */
+    public function getBulkProductAbstractStorageDataByProductAbstractIdsAndLocaleName(array $productAbstractIds, string $localeName): array
+    {
+        return $this->productStorageClient->getBulkProductAbstractStorageDataByProductAbstractIdsAndLocaleName($productAbstractIds, $localeName);
+    }
 }

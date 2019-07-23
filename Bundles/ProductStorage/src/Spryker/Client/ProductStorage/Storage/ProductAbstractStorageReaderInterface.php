@@ -42,4 +42,12 @@ interface ProductAbstractStorageReaderInterface
      * @return array|null
      */
     public function findProductAbstractStorageDataByMapping(string $mappingType, string $identifier, string $localeName): ?array;
+
+    /**
+     * @param int[] $productAbstractIds
+     * @param string $localeName
+     *
+     * @return array
+     */
+    public function getBulkProductAbstractStorageDataByProductAbstractIdsAndLocaleName(array $productAbstractIds, string $localeName): array;
 }
