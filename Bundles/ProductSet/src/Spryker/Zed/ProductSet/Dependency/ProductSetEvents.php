@@ -74,8 +74,6 @@ interface ProductSetEvents
     public const ENTITY_SPY_PRODUCT_ABSTRACT_SET_DELETE = 'Entity.spy_product_abstract_set.delete';
 
     /**
-     * @deprecated Not used anymore. Will be removed with next major release.
-     *
      * Specification
      * - This events will be used for spy_product_set_data entity creation
      *
@@ -84,8 +82,6 @@ interface ProductSetEvents
     public const ENTITY_SPY_PRODUCT_SET_DATA_CREATE = 'Entity.spy_product_set_data.create';
 
     /**
-     * @deprecated Not used anymore. Will be removed with next major release.
-     *
      * Specification
      * - This events will be used for spy_product_set_data entity changes
      *
@@ -94,8 +90,6 @@ interface ProductSetEvents
     public const ENTITY_SPY_PRODUCT_SET_DATA_UPDATE = 'Entity.spy_product_set_data.update';
 
     /**
-     * @deprecated Not used anymore. Will be removed with next major release.
-     *
      * Specification
      * - This events will be used for spy_product_set_data entity deletion
      *
