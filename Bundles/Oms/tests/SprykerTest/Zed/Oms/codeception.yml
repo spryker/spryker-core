@@ -44,22 +44,3 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\ZedBootstrap:
                     depends: \SprykerTest\Shared\Testify\Helper\BundleConfig
 
-    Presentation:
-      path: Presentation
-      class_name: OmsPresentationTester
-      modules:
-        enabled:
-          - Asserts
-          - \SprykerTest\Shared\Testify\Helper\Environment
-          - \SprykerTest\Shared\Testify\Helper\ConfigHelper
-          - \SprykerTest\Shared\Config\Helper\ConfigInit
-          - \SprykerTest\Shared\Testify\Helper\LocatorHelper
-          - WebDriver:
-              url: ''
-              browser: chrome
-              window_size: 1920x1080
-              host: 0.0.0.0
-              restart: false
-          - \SprykerTest\Zed\Oms\Helper\OmsHelper
-          - \SprykerTest\Shared\Product\Helper\ProductDataHelper
-          - \SprykerTest\Shared\Sales\Helper\SalesDataHelper
