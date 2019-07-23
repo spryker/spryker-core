@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CartsRestApi\Business\QuoteItem;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CartItemRequestTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\PersistentCartChangeTransfer;
@@ -139,10 +140,11 @@ class QuoteItemAdder implements QuoteItemAdderInterface
         CartItemRequestTransfer $cartItemRequestTransfer
     ): PersistentCartChangeTransfer {
         return (new PersistentCartChangeTransfer())
-            ->setIdQuote($quoteTransfer->getIdQuote())
-            ->setCustomer($quoteTransfer->getCustomer())
-            ->addItem((new ItemTransfer())
-                ->setSku($cartItemRequestTransfer->getSku())
-                ->setQuantity($cartItemRequestTransfer->getQuantity()));
+            ->fromArray($quoteTransfer->toArray(), true)
+            ->setItems(new ArrayObject([
+                (new ItemTransfer())
+                    ->setSku($cartItemRequestTransfer->getSku())
+                    ->setQuantity($cartItemRequestTransfer->getQuantity()),
+            ]));
     }
 }
