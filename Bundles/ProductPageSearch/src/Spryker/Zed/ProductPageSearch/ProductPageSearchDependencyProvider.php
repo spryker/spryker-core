@@ -28,6 +28,7 @@ use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToProductBr
 use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToProductSearchBridge;
 use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToSearchBridge;
 use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToStoreFacadeBridge;
+use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToStoreFacadeInterface;
 use Spryker\Zed\ProductPageSearch\Dependency\QueryContainer\ProductPageSearchToCategoryQueryContainerBridge;
 use Spryker\Zed\ProductPageSearch\Dependency\QueryContainer\ProductPageSearchToProductCategoryQueryContainerBridge;
 use Spryker\Zed\ProductPageSearch\Dependency\QueryContainer\ProductPageSearchToProductImageQueryContainerBridge;
@@ -98,27 +99,23 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
             return new ProductPageSearchToProductSearchBridge($container->getLocator()->productSearch()->facade());
         };
 
-        $container[self::FACADE_PRICE_PRODUCT] = function (Container $container) {
+        $container[static::FACADE_PRICE_PRODUCT] = function (Container $container) {
             return new ProductPageSearchToPriceProductBridge($container->getLocator()->priceProduct()->facade());
         };
 
-        $container[self::FACADE_STORE] = function (Container $container) {
-            return new ProductPageSearchToStoreFacadeBridge($container->getLocator()->store()->facade());
-        };
-
-        $container[self::FACADE_CATEGORY] = function (Container $container) {
+        $container[static::FACADE_CATEGORY] = function (Container $container) {
             return new ProductPageSearchToCategoryBridge($container->getLocator()->category()->facade());
         };
 
-        $container[self::QUERY_CONTAINER_PRODUCT_IMAGE] = function (Container $container) {
+        $container[static::QUERY_CONTAINER_PRODUCT_IMAGE] = function (Container $container) {
             return new ProductPageSearchToProductImageQueryContainerBridge($container->getLocator()->productImage()->queryContainer());
         };
 
-        $container[self::QUERY_CONTAINER_PRODUCT_CATEGORY] = function (Container $container) {
+        $container[static::QUERY_CONTAINER_PRODUCT_CATEGORY] = function (Container $container) {
             return new ProductPageSearchToProductCategoryQueryContainerBridge($container->getLocator()->productCategory()->queryContainer());
         };
 
-        $container[self::QUERY_CONTAINER_CATEGORY] = function (Container $container) {
+        $container[static::QUERY_CONTAINER_CATEGORY] = function (Container $container) {
             return new ProductPageSearchToCategoryQueryContainerBridge($container->getLocator()->category()->queryContainer());
         };
 
@@ -144,6 +141,7 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
 
         $container = $this->addPriceProductService($container);
         $container = $this->addPriceFacade($container);
+        $container = $this->addStoreFacade($container);
 
         return $container;
     }
@@ -163,7 +161,7 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
             return new ProductPageSearchToProductBridge($container->getLocator()->product()->facade());
         };
 
-        $container[self::FACADE_SEARCH] = function (Container $container) {
+        $container[static::FACADE_SEARCH] = function (Container $container) {
             return new ProductPageSearchToSearchBridge($container->getLocator()->search()->facade());
         };
 
@@ -179,6 +177,8 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
             return $this->getDataLoaderPlugins();
         };
 
+        $container = $this->addStoreFacade($container);
+
         return $container;
     }
 
@@ -193,19 +193,19 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
             return new ProductPageSearchToProductQueryContainerBridge($container->getLocator()->product()->queryContainer());
         };
 
-        $container[self::QUERY_CONTAINER_PRICE] = function (Container $container) {
+        $container[static::QUERY_CONTAINER_PRICE] = function (Container $container) {
             return new ProductPageToPriceProductQueryContainerBridge($container->getLocator()->priceProduct()->queryContainer());
         };
 
-        $container[self::QUERY_CONTAINER_PRODUCT_IMAGE] = function (Container $container) {
+        $container[static::QUERY_CONTAINER_PRODUCT_IMAGE] = function (Container $container) {
             return new ProductPageSearchToProductImageQueryContainerBridge($container->getLocator()->productImage()->queryContainer());
         };
 
-        $container[self::QUERY_CONTAINER_PRODUCT_CATEGORY] = function (Container $container) {
+        $container[static::QUERY_CONTAINER_PRODUCT_CATEGORY] = function (Container $container) {
             return new ProductPageSearchToProductCategoryQueryContainerBridge($container->getLocator()->productCategory()->queryContainer());
         };
 
-        $container[self::QUERY_CONTAINER_CATEGORY] = function (Container $container) {
+        $container[static::QUERY_CONTAINER_CATEGORY] = function (Container $container) {
             return new ProductPageSearchToCategoryQueryContainerBridge($container->getLocator()->category()->queryContainer());
         };
 
@@ -244,9 +244,21 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
     protected function addPriceFacade(Container $container): Container
     {
         $container[static::FACADE_PRICE] = function (Container $container): ProductPageSearchToPriceFacadeInterface {
-            return new ProductPageSearchToPriceFacadeBridge(
-                $container->getLocator()->price()->facade()
-            );
+            return new ProductPageSearchToPriceFacadeBridge($container->getLocator()->price()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addStoreFacade(Container $container): Container
+    {
+        $container[static::FACADE_STORE] = function (Container $container): ProductPageSearchToStoreFacadeInterface {
+            return new ProductPageSearchToStoreFacadeBridge($container->getLocator()->store()->facade());
         };
 
         return $container;
