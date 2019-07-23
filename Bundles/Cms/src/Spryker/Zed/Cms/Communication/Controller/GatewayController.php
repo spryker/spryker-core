@@ -27,7 +27,7 @@ class GatewayController extends AbstractGatewayController
             $cmsVersionDataTransfer = $this->getFacade()
                 ->getCmsVersionData($flattenedLocaleCmsPageDataRequestTransfer->getIdCmsPage());
         } catch (MissingPageException $e) {
-            return new FlattenedLocaleCmsPageDataRequestTransfer();
+            return $flattenedLocaleCmsPageDataRequestTransfer;
         }
 
         $localeCmsPageDataTransfer = $this->getFacade()
