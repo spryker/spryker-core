@@ -24,6 +24,7 @@ class ProductSetDataPageSearchUnpublishListener extends AbstractPlugin implement
 
     /**
      * {@inheritdoc}
+     * - Handles product sets unpublish event.
      *
      * @api
      *

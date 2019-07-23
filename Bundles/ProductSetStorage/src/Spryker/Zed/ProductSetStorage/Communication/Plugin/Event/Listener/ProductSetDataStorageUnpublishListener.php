@@ -24,6 +24,7 @@ class ProductSetDataStorageUnpublishListener extends AbstractPlugin implements E
 
     /**
      * {@inheritdoc}
+     * - Handles product sets unpublish event.
      *
      * @api
      *
