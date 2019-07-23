@@ -9,7 +9,7 @@
     "spryker/kernel": "^3.30.0",
     "spryker/merchant-relationship": "^1.4.0",
     "spryker/price-product": "^2.0.0 || ^4.0.0",
-    "spryker/price-product-extension": "^1.0.0",
+    "spryker/price-product-extension": "^1.2.0",
     "spryker/product": "^6.1.0",
     "spryker/propel-orm": "^1.6.2",
     "spryker/symfony": "^3.1.5"
