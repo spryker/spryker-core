@@ -57,11 +57,11 @@ class CmsBlockSynchronizationDataPlugin extends AbstractPlugin implements Synchr
     {
         $query = $this->getQueryContainer()->queryCmsBlockStorageEntities($ids);
 
-        if (empty($ids)) {
+        if ($ids === []) {
             $query->clear();
         }
 
-        return $query;
+        return $query->orderByIdCmsBlockStorage();
     }
 
     /**

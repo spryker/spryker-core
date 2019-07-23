@@ -1,14 +1,15 @@
 "Abstract Product List","Abstract Product List"
-"content_product_abstract_list.template.default","Default"
-"content_product_abstract_list.template.top-title","Top Title"
 Actions,Actions
-"Add more products","Add more products"
-Delete,Delete
-Inactive,Inactive
 Active,Active
-Add to list,Add to list
+"Add more products","Add more products"
+"Add to list","Add to list"
+content_product_abstract_list.template.bottom-title,"Bottom Title"
+content_product_abstract_list.template.default,Default
+content_product_abstract_list.template.top-title,"Top Title"
+Delete,Delete
 ID,ID
 Image,Image
+Inactive,Inactive
 "Move Down","Move Down"
 "Move Up","Move Up"
 Name,Name
@@ -16,6 +17,3 @@ Selected,Selected
 SKU,SKU
 Status,Status
 Stores,Stores
-"content_product_abstract_list.template.default","Default"
-"content_product_abstract_list.template.bottom-title","Bottom Title"
-"content_product_abstract_list.template.top-title","Top Title"

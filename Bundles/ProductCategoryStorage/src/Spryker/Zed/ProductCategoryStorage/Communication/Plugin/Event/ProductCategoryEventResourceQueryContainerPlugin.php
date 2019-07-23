@@ -45,9 +45,9 @@ class ProductCategoryEventResourceQueryContainerPlugin extends AbstractPlugin im
      */
     public function queryData(array $ids = []): ?ModelCriteria
     {
-        $query = $this->getQueryContainer()->queryProductCategoryByIds($ids);
+        $query = $this->getQueryContainer()->queryProductCategoryByProductCategoryIds($ids);
 
-        if (empty($ids)) {
+        if ($ids === []) {
             $query->clear();
         }
 
