@@ -59,7 +59,7 @@ class CreateController extends AbstractController
             $modifiedData = $data->modifiedToArray();
             $quoteTransfer->fromArray($modifiedData);
 
-            if ($form->isValid()) {
+            if ($form->isSubmitted() === true && $form->isValid() === true) {
                 $quoteTransfer = $formPlugin->handleData($quoteTransfer, $form, $request);
             } else {
                 $allFormsAreValid = false;
@@ -70,7 +70,7 @@ class CreateController extends AbstractController
 
         $orderForm = $this->getFactory()->createOrderForm($quoteTransfer);
         $orderForm->handleRequest($request);
-        if (!$orderForm->isValid()) {
+        if ($orderForm->isSubmitted() === false || $orderForm->isValid() === false) {
             $allFormsAreValid = false;
         }
 
