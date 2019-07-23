@@ -14,6 +14,7 @@ use Spryker\Zed\ProductImage\Dependency\ProductImageEvents;
 use Spryker\Zed\ProductSet\Dependency\ProductSetEvents;
 use Spryker\Zed\ProductSetPageSearch\Communication\Plugin\Event\Listener\ProductAbstractProductSetPageSearchListener;
 use Spryker\Zed\ProductSetPageSearch\Communication\Plugin\Event\Listener\ProductSetDataPageSearchListener;
+use Spryker\Zed\ProductSetPageSearch\Communication\Plugin\Event\Listener\ProductSetDataPageSearchUnpublishListener;
 use Spryker\Zed\ProductSetPageSearch\Communication\Plugin\Event\Listener\ProductSetPageProductImageSearchListener;
 use Spryker\Zed\ProductSetPageSearch\Communication\Plugin\Event\Listener\ProductSetPageProductImageSetImageSearchListener;
 use Spryker\Zed\ProductSetPageSearch\Communication\Plugin\Event\Listener\ProductSetPageProductImageSetSearchListener;
@@ -44,6 +45,9 @@ class ProductSetPageSearchEventSubscriber extends AbstractPlugin implements Even
         $this->addProductSetPageCreateSearchListener($eventCollection);
         $this->addProductSetPageUpdateSearchListener($eventCollection);
         $this->addProductSetPageDeleteSearchListener($eventCollection);
+        $this->addProductSetDataPageCreateSearchListener($eventCollection);
+        $this->addProductSetDataPageUpdateSearchListener($eventCollection);
+        $this->addProductSetDataPageDeleteSearchListener($eventCollection);
         $this->addProductAbstractProductSetPageCreateSearchListener($eventCollection);
         $this->addProductAbstractProductSetPageUpdateSearchListener($eventCollection);
         $this->addProductAbstractProductSetPageDeleteSearchListener($eventCollection);
@@ -122,8 +126,6 @@ class ProductSetPageSearchEventSubscriber extends AbstractPlugin implements Even
     }
 
     /**
-     * @deprecated Not used anymore. Will be removed with next major release.
-     *
      * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
@@ -134,8 +136,6 @@ class ProductSetPageSearchEventSubscriber extends AbstractPlugin implements Even
     }
 
     /**
-     * @deprecated Not used anymore. Will be removed with next major release.
-     *
      * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
@@ -146,15 +146,13 @@ class ProductSetPageSearchEventSubscriber extends AbstractPlugin implements Even
     }
 
     /**
-     * @deprecated Not used anymore. Will be removed with next major release.
-     *
      * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
      */
     protected function addProductSetDataPageDeleteSearchListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductSetEvents::ENTITY_SPY_PRODUCT_SET_DATA_DELETE, new ProductSetPageSearchUnpublishListener());
+        $eventCollection->addListenerQueued(ProductSetEvents::ENTITY_SPY_PRODUCT_SET_DATA_DELETE, new ProductSetDataPageSearchUnpublishListener());
     }
 
     /**

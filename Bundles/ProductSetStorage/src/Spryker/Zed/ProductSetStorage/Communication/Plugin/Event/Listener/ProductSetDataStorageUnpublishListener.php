@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductSetPageSearch\Communication\Plugin\Event\Listener;
+namespace Spryker\Zed\ProductSetStorage\Communication\Plugin\Event\Listener;
 
 use Orm\Zed\ProductSet\Persistence\Map\SpyProductSetDataTableMap;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
@@ -13,16 +13,18 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
- * @method \Spryker\Zed\ProductSetPageSearch\Persistence\ProductSetPageSearchQueryContainerInterface getQueryContainer()
- * @method \Spryker\Zed\ProductSetPageSearch\Communication\ProductSetPageSearchCommunicationFactory getFactory()
- * @method \Spryker\Zed\ProductSetPageSearch\Business\ProductSetPageSearchFacadeInterface getFacade()
- * @method \Spryker\Zed\ProductSetPageSearch\ProductSetPageSearchConfig getConfig()
+ * @method \Spryker\Zed\ProductSetStorage\Persistence\ProductSetStorageQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductSetStorage\Communication\ProductSetStorageCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductSetStorage\Business\ProductSetStorageFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductSetStorage\ProductSetStorageConfig getConfig()
  */
-class ProductSetDataPageSearchListener extends AbstractPlugin implements EventBulkHandlerInterface
+class ProductSetDataStorageUnpublishListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     use DatabaseTransactionHandlerTrait;
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
@@ -38,6 +40,6 @@ class ProductSetDataPageSearchListener extends AbstractPlugin implements EventBu
             SpyProductSetDataTableMap::COL_FK_PRODUCT_SET
         );
 
-        $this->getFacade()->publish($productSetIds);
+        $this->getFacade()->unpublish($productSetIds);
     }
 }

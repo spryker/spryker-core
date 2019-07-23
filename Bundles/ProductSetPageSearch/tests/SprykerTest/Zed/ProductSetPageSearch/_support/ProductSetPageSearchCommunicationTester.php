@@ -8,6 +8,8 @@
 namespace SprykerTest\Zed\ProductSetPageSearch;
 
 use Codeception\Actor;
+use Generated\Shared\DataBuilder\LocalizedProductSetBuilder;
+use Generated\Shared\DataBuilder\ProductSetBuilder;
 use Generated\Shared\Transfer\ProductSetTransfer;
 use Spryker\Zed\ProductSet\Business\ProductSetFacadeInterface;
 
@@ -51,18 +53,24 @@ class ProductSetPageSearchCommunicationTester extends Actor
     }
 
     /**
-     * @param int $productSetAmount
-     *
-     * @return \Generated\Shared\Transfer\ProductSetTransfer[]
+     * @return \Generated\Shared\Transfer\ProductSetTransfer
      */
-    public function createProductSets(int $productSetAmount): array
+    public function generateProductSetTransfer(): ProductSetTransfer
     {
-        $productSetTransfers = [];
-        for ($i = 0; $i < $productSetAmount; $i++) {
-            $productSetTransfers[] = $this->haveProductSet();
-        }
+        $localizedProductSetTransfer = (new LocalizedProductSetBuilder())
+            ->withProductSetData()
+            ->build()
+            ->setLocale($this->haveLocale());
 
-        return $productSetTransfers;
+        $productSetTransfer = (new ProductSetBuilder())
+            ->build()
+            ->addLocalizedData($localizedProductSetTransfer)
+            ->setIdProductAbstracts([
+                $this->haveProductAbstract()->getIdProductAbstract(),
+                $this->haveProductAbstract()->getIdProductAbstract(),
+            ]);
+
+        return $this->getProductSetFacade()->createProductSet($productSetTransfer);
     }
 
     /**

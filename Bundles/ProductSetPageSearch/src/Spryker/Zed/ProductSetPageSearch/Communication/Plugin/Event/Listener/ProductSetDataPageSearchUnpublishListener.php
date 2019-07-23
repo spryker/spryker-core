@@ -18,11 +18,13 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  * @method \Spryker\Zed\ProductSetPageSearch\Business\ProductSetPageSearchFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductSetPageSearch\ProductSetPageSearchConfig getConfig()
  */
-class ProductSetDataPageSearchListener extends AbstractPlugin implements EventBulkHandlerInterface
+class ProductSetDataPageSearchUnpublishListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     use DatabaseTransactionHandlerTrait;
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
@@ -33,11 +35,12 @@ class ProductSetDataPageSearchListener extends AbstractPlugin implements EventBu
     public function handleBulk(array $eventTransfers, $eventName)
     {
         $this->preventTransaction();
+
         $productSetIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys(
             $eventTransfers,
             SpyProductSetDataTableMap::COL_FK_PRODUCT_SET
         );
 
-        $this->getFacade()->publish($productSetIds);
+        $this->getFacade()->unpublish($productSetIds);
     }
 }

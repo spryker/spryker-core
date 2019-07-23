@@ -45,6 +45,9 @@ use SprykerTest\Zed\ProductSetPageSearch\ProductSetPageSearchConfigMock;
  */
 class ProductSetPageSearchListenerTest extends Unit
 {
+    protected const MESSAGE_PRODUCT_SET_NOT_DELETED = 'Product set has not been removed.';
+    protected const MESSAGE_UNNECESSARY_PRODUCT_SET_DELETED = 'Unnecessary product set was has been removed.';
+
     /**
      * @var \SprykerTest\Zed\ProductSetPageSearch\ProductSetPageSearchCommunicationTester
      */
@@ -93,7 +96,11 @@ class ProductSetPageSearchListenerTest extends Unit
     public function testProductSetSearchUnpublishListener(): void
     {
         // Arrange
-        $productSetTransfers = $this->tester->createProductSets(5);
+        $productSetTransfers = [
+            $this->tester->generateProductSetTransfer(),
+            $this->tester->generateProductSetTransfer(),
+            $this->tester->generateProductSetTransfer(),
+        ];
         $this->publishProductSetTransfers($productSetTransfers);
         $productSetBeforeUnpublish = SpyProductSetPageSearchQuery::create()->count();
         $productSetDeletedId = $productSetTransfers[0]->getIdProductSet();
@@ -110,8 +117,16 @@ class ProductSetPageSearchListenerTest extends Unit
         $productSetSearchUnpublishListener->handleBulk($eventTransfers, ProductSetEvents::PRODUCT_SET_UNPUBLISH);
 
         // Assert
-        $this->assertSame(0, SpyProductSetPageSearchQuery::create()->filterByFkProductSet($productSetDeletedId)->count());
-        $this->assertGreaterThanOrEqual(SpyProductSetPageSearchQuery::create()->count(), $productSetBeforeUnpublish);
+        $this->assertSame(
+            0,
+            SpyProductSetPageSearchQuery::create()->filterByFkProductSet($productSetDeletedId)->count(),
+            static::MESSAGE_PRODUCT_SET_NOT_DELETED
+        );
+        $this->assertGreaterThan(
+            SpyProductSetPageSearchQuery::create()->count(),
+            $productSetBeforeUnpublish,
+            static::MESSAGE_UNNECESSARY_PRODUCT_SET_DELETED
+        );
     }
 
     /**

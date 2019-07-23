@@ -58,18 +58,31 @@ class ProductSetStorageCommunicationTester extends Actor
     }
 
     /**
-     * @param int $productSetAmount
-     *
-     * @return \Generated\Shared\Transfer\ProductSetTransfer[]
+     * @return \Generated\Shared\Transfer\ProductSetTransfer
      */
-    public function createProductSets(int $productSetAmount): array
+    public function generateProductSetTransfer(): ProductSetTransfer
     {
-        $productSetTransfers = [];
-        for ($i = 0; $i < $productSetAmount; $i++) {
-            $productSetTransfers[] = $this->haveProductSet();
-        }
+//         $productSetTransfer = $this->haveProductSet([
+//            ProductSetTransfer::ID_PRODUCT_ABSTRACTS => [
+//                $this->haveProductAbstract()->getIdProductAbstract(),
+//                $this->haveProductAbstract()->getIdProductAbstract(),
+//            ],
+//        ]);
 
-        return $productSetTransfers;
+        $localizedProductSetTransfer = (new LocalizedProductSetBuilder())
+            ->withProductSetData()
+            ->build()
+            ->setLocale($this->haveLocale());
+
+        $productSetTransfer = (new ProductSetBuilder())
+            ->build()
+            ->addLocalizedData($localizedProductSetTransfer)
+            ->setIdProductAbstracts([
+                $this->haveProductAbstract()->getIdProductAbstract(),
+                $this->haveProductAbstract()->getIdProductAbstract(),
+            ]);
+
+        return $this->getProductSetFacade()->createProductSet($productSetTransfer);
     }
 
     /**

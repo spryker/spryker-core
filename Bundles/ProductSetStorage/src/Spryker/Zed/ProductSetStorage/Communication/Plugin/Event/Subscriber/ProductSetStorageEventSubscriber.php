@@ -14,6 +14,7 @@ use Spryker\Zed\ProductImage\Dependency\ProductImageEvents;
 use Spryker\Zed\ProductSet\Dependency\ProductSetEvents;
 use Spryker\Zed\ProductSetStorage\Communication\Plugin\Event\Listener\ProductAbstractProductSetStorageListener;
 use Spryker\Zed\ProductSetStorage\Communication\Plugin\Event\Listener\ProductSetDataStorageListener;
+use Spryker\Zed\ProductSetStorage\Communication\Plugin\Event\Listener\ProductSetDataStorageUnpublishListener;
 use Spryker\Zed\ProductSetStorage\Communication\Plugin\Event\Listener\ProductSetProductImageSetImageStorageListener;
 use Spryker\Zed\ProductSetStorage\Communication\Plugin\Event\Listener\ProductSetProductImageSetStorageListener;
 use Spryker\Zed\ProductSetStorage\Communication\Plugin\Event\Listener\ProductSetProductImageStorageListener;
@@ -44,6 +45,9 @@ class ProductSetStorageEventSubscriber extends AbstractPlugin implements EventSu
         $this->addProductSetCreateStorageListener($eventCollection);
         $this->addProductSetUpdateStorageListener($eventCollection);
         $this->addProductSetDeleteStorageListener($eventCollection);
+        $this->addProductSetDataCreateStorageListener($eventCollection);
+        $this->addProductSetDataUpdateStorageListener($eventCollection);
+        $this->addProductSetDataDeleteStorageListener($eventCollection);
         $this->addProductAbstractProductSetCreateStorageListener($eventCollection);
         $this->addProductAbstractProductSetUpdateStorageListener($eventCollection);
         $this->addProductAbstractProductSetDeleteStorageListener($eventCollection);
@@ -111,8 +115,6 @@ class ProductSetStorageEventSubscriber extends AbstractPlugin implements EventSu
     }
 
     /**
-     * @deprecated Not used anymore. Will be removed with next major release.
-     *
      * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
@@ -123,8 +125,6 @@ class ProductSetStorageEventSubscriber extends AbstractPlugin implements EventSu
     }
 
     /**
-     * @deprecated Not used anymore. Will be removed with next major release.
-     *
      * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
@@ -135,15 +135,13 @@ class ProductSetStorageEventSubscriber extends AbstractPlugin implements EventSu
     }
 
     /**
-     * @deprecated Not used anymore. Will be removed with next major release.
-     *
      * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
      */
     protected function addProductSetDataDeleteStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductSetEvents::ENTITY_SPY_PRODUCT_SET_DATA_DELETE, new ProductSetStorageUnpublishListener());
+        $eventCollection->addListenerQueued(ProductSetEvents::ENTITY_SPY_PRODUCT_SET_DATA_DELETE, new ProductSetDataStorageUnpublishListener());
     }
 
     /**

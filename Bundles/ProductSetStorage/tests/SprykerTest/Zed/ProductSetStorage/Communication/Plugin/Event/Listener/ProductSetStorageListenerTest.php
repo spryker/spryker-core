@@ -13,6 +13,7 @@ use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageSetTableMap;
 use Orm\Zed\ProductSet\Persistence\Map\SpyProductAbstractSetTableMap;
 use Orm\Zed\ProductSetStorage\Persistence\SpyProductSetStorageQuery;
 use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
+use PHPUnit\Framework\SkippedTestError;
 use Spryker\Zed\ProductImage\Dependency\ProductImageEvents;
 use Spryker\Zed\ProductSet\Dependency\ProductSetEvents;
 use Spryker\Zed\ProductSetStorage\Business\ProductSetStorageBusinessFactory;
@@ -43,17 +44,26 @@ use SprykerTest\Zed\ProductSetStorage\ProductSetStorageConfigMock;
  */
 class ProductSetStorageListenerTest extends Unit
 {
+    protected const MESSAGE_PRODUCT_SET_NOT_DELETED = 'Product set has not been removed.';
+    protected const MESSAGE_UNNECESSARY_PRODUCT_SET_DELETED = 'Unnecessary product set was has been removed.';
+
     /**
      * @var \SprykerTest\Zed\ProductSetStorage\ProductSetStorageCommunicationTester
      */
     protected $tester;
 
     /**
+     * @throws \PHPUnit\Framework\SkippedTestError
+     *
      * @return void
      */
     protected function setUp()
     {
         parent::setUp();
+
+        if (!$this->tester->isSuiteProject()) {
+            throw new SkippedTestError('Warning: not in suite environment');
+        }
     }
 
     /**
@@ -108,8 +118,13 @@ class ProductSetStorageListenerTest extends Unit
     public function testProductSetStorageUnpublishListener(): void
     {
         // Arrange
-        $productSetTransfers = $this->tester->createProductSets(5);
+        $productSetTransfers = [
+            $this->tester->generateProductSetTransfer(),
+            $this->tester->generateProductSetTransfer(),
+            $this->tester->generateProductSetTransfer(),
+        ];
         $this->publishProductSetTransfers($productSetTransfers);
+
         $productSetBeforeUnpublish = SpyProductSetStorageQuery::create()->count();
         $productSetDeletedId = $productSetTransfers[0]->getIdProductSet();
         $this->tester->deleteProductSet($productSetTransfers[0]);
@@ -125,8 +140,16 @@ class ProductSetStorageListenerTest extends Unit
         $productSetStorageUnpublishListener->handleBulk($eventTransfers, ProductSetEvents::PRODUCT_SET_UNPUBLISH);
 
         // Assert
-        $this->assertSame(0, SpyProductSetStorageQuery::create()->filterByFkProductSet($productSetDeletedId)->count());
-        $this->assertGreaterThanOrEqual(SpyProductSetStorageQuery::create()->count(), $productSetBeforeUnpublish);
+        $this->assertSame(
+            0,
+            SpyProductSetStorageQuery::create()->filterByFkProductSet($productSetDeletedId)->count(),
+            static::MESSAGE_PRODUCT_SET_NOT_DELETED
+        );
+        $this->assertGreaterThan(
+            SpyProductSetStorageQuery::create()->count(),
+            $productSetBeforeUnpublish,
+            static::MESSAGE_UNNECESSARY_PRODUCT_SET_DELETED
+        );
     }
 
     /**
