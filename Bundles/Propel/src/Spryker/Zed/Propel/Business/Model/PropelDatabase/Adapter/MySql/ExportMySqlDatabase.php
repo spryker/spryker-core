@@ -16,8 +16,6 @@ use Symfony\Component\Process\Process;
 
 class ExportMySqlDatabase implements ExportDatabaseInterface
 {
-    protected const MINIMUM_PROCESS_TIMEOUT = 600;
-
     /**
      * @var \Spryker\Zed\Propel\PropelConfig
      */
