@@ -11,8 +11,6 @@ use Spryker\Zed\SetupFrontend\Business\Model\Exception\PathPatternInvalidExcepti
 
 class PathPatternValidator implements PathPatternValidatorInterface
 {
-    protected const EXCEPTION_MESSAGE = 'Path pattern %s is invalid';
-
     /**
      * @param string[] $pathPatterns
      *
@@ -26,7 +24,7 @@ class PathPatternValidator implements PathPatternValidatorInterface
             $directoryCollection = glob($pathPattern);
 
             if (count($directoryCollection) === 0) {
-                throw new PathPatternInvalidException(sprintf(static::EXCEPTION_MESSAGE, $pathPattern));
+                throw new PathPatternInvalidException(sprintf('Path pattern %s is invalid', $pathPattern));
             }
         }
     }
