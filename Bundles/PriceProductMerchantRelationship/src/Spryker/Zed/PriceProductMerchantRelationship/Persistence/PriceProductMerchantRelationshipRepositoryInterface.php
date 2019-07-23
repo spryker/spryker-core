@@ -14,8 +14,6 @@ use Generated\Shared\Transfer\QueryCriteriaTransfer;
 interface PriceProductMerchantRelationshipRepositoryInterface
 {
     /**
-     * @api
-     *
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\QueryCriteriaTransfer|null
