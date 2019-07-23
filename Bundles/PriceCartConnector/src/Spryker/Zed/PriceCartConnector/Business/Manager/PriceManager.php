@@ -18,7 +18,7 @@ use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceProductInte
 
 class PriceManager implements PriceManagerInterface
 {
-    protected const ERROR_MESSAGE_NOT_EXISTING_PRICE = 'Cart item "%s" can not be priced.';
+    protected const ERROR_MESSAGE_CART_ITEM_CAN_NOT_BE_PRICED = 'Cart item "%s" can not be priced.';
 
     /**
      * @var string
@@ -108,7 +108,7 @@ class PriceManager implements PriceManagerInterface
         if (!isset($priceProductTransfers[$sku])) {
             throw new PriceMissingException(
                 sprintf(
-                    static::ERROR_MESSAGE_NOT_EXISTING_PRICE,
+                    static::ERROR_MESSAGE_CART_ITEM_CAN_NOT_BE_PRICED,
                     $sku
                 )
             );
