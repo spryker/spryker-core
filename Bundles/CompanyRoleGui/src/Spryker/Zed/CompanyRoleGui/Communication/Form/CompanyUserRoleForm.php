@@ -75,7 +75,6 @@ class CompanyUserRoleForm extends AbstractType
             'choices' => $options[static::OPTION_VALUES_ROLES_CHOICES],
             'choice_attr' => $options[static::OPTION_ATTRIBUTES_ROLES_CHOICES],
             'constraints' => $this->createCompanyRoleCollectionConstraints(),
-            'choices_as_values' => true,
             'label' => false,
             'expanded' => true,
             'required' => true,

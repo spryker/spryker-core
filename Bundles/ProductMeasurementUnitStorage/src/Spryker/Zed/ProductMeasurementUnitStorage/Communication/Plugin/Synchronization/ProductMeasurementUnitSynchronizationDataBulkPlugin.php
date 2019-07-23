@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductMeasurementUnitStorage\Communication\Plugin\Synchro
 
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
+use Orm\Zed\ProductMeasurementUnitStorage\Persistence\Map\SpyProductMeasurementUnitStorageTableMap;
 use Spryker\Shared\ProductMeasurementUnitStorage\ProductMeasurementUnitStorageConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataBulkRepositoryPluginInterface;
@@ -118,6 +119,7 @@ class ProductMeasurementUnitSynchronizationDataBulkPlugin extends AbstractPlugin
     protected function createFilterTransfer(int $offset, int $limit): FilterTransfer
     {
         return (new FilterTransfer())
+            ->setOrderBy(SpyProductMeasurementUnitStorageTableMap::COL_ID_PRODUCT_MEASUREMENT_UNIT_STORAGE)
             ->setOffset($offset)
             ->setLimit($limit);
     }
