@@ -7,11 +7,14 @@
 
 namespace SprykerTest\Zed\ProductSetPageSearch;
 
+use ArrayObject;
 use Codeception\Actor;
 use Generated\Shared\DataBuilder\LocalizedProductSetBuilder;
-use Generated\Shared\DataBuilder\ProductSetBuilder;
+use Generated\Shared\Transfer\EventEntityTransfer;
 use Generated\Shared\Transfer\ProductSetTransfer;
-use Spryker\Zed\ProductSet\Business\ProductSetFacadeInterface;
+use Spryker\Zed\ProductSet\Dependency\ProductSetEvents;
+use Spryker\Zed\ProductSetPageSearch\Business\ProductSetPageSearchFacade;
+use Spryker\Zed\ProductSetPageSearch\Communication\Plugin\Event\Listener\ProductSetPageSearchPublishListener;
 
 /**
  * Inherited Methods
@@ -62,32 +65,34 @@ class ProductSetPageSearchCommunicationTester extends Actor
             ->build()
             ->setLocale($this->haveLocale());
 
-        $productSetTransfer = (new ProductSetBuilder())
-            ->build()
-            ->addLocalizedData($localizedProductSetTransfer)
-            ->setIdProductAbstracts([
+        return $this->haveProductSet([
+            ProductSetTransfer::LOCALIZED_DATA => new ArrayObject([$localizedProductSetTransfer]),
+            ProductSetTransfer::ID_PRODUCT_ABSTRACTS => [
                 $this->haveProductAbstract()->getIdProductAbstract(),
                 $this->haveProductAbstract()->getIdProductAbstract(),
-            ]);
-
-        return $this->getProductSetFacade()->createProductSet($productSetTransfer);
+            ],
+        ]);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductSetTransfer $productSetTransfer
+     * @param \Generated\Shared\Transfer\ProductSetTransfer[] $productSetTransfers
+     * @param \Spryker\Zed\ProductSetPageSearch\Business\ProductSetPageSearchFacade $productSetPageSearchFacade
      *
      * @return void
      */
-    public function deleteProductSet(ProductSetTransfer $productSetTransfer): void
+    public function publishProductSetTransfers(array $productSetTransfers, ProductSetPageSearchFacade $productSetPageSearchFacade): void
     {
-        $this->getProductSetFacade()->deleteProductSet($productSetTransfer);
-    }
+        if ($productSetTransfers === []) {
+            return;
+        }
 
-    /**
-     * @return \Spryker\Zed\ProductSet\Business\ProductSetFacadeInterface
-     */
-    protected function getProductSetFacade(): ProductSetFacadeInterface
-    {
-        return $this->getLocator()->productSet()->facade();
+        $eventTransfers = [];
+        foreach ($productSetTransfers as $productSetTransfer) {
+            $eventTransfers[] = (new EventEntityTransfer())->setId($productSetTransfer->getIdProductSet());
+        }
+
+        (new ProductSetPageSearchPublishListener())
+            ->setFacade($productSetPageSearchFacade)
+            ->handleBulk($eventTransfers, ProductSetEvents::PRODUCT_SET_PUBLISH);
     }
 }

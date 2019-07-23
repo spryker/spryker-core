@@ -123,8 +123,7 @@ class ProductSetStorageListenerTest extends Unit
             $this->tester->generateProductSetTransfer(),
             $this->tester->generateProductSetTransfer(),
         ];
-        $this->publishProductSetTransfers($productSetTransfers);
-
+        $this->tester->publishProductSetTransfers($productSetTransfers, $this->getProductSetStorageFacade());
         $productSetBeforeUnpublish = SpyProductSetStorageQuery::create()->count();
         $productSetDeletedId = $productSetTransfers[0]->getIdProductSet();
         $this->tester->deleteProductSet($productSetTransfers[0]);
@@ -379,26 +378,5 @@ class ProductSetStorageListenerTest extends Unit
         $this->assertNotNull($spyProductSetStorage);
         $data = $spyProductSetStorage->getData();
         $this->assertSame('HP Product Set', $data['name']);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductSetTransfer[] $productSetTransfers
-     *
-     * @return void
-     */
-    public function publishProductSetTransfers(array $productSetTransfers): void
-    {
-        if ($productSetTransfers === []) {
-            return;
-        }
-
-        $eventTransfers = [];
-        foreach ($productSetTransfers as $productSetTransfer) {
-            $eventTransfers[] = (new EventEntityTransfer())->setId($productSetTransfer->getIdProductSet());
-        }
-
-        $productSetStoragePublishListener = new ProductSetStoragePublishListener();
-        $productSetStoragePublishListener->setFacade($this->getProductSetStorageFacade());
-        $productSetStoragePublishListener->handleBulk($eventTransfers, ProductSetEvents::PRODUCT_SET_PUBLISH);
     }
 }

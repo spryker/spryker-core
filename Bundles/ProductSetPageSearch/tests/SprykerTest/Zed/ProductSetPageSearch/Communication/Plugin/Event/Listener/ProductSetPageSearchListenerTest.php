@@ -24,7 +24,6 @@ use Spryker\Zed\ProductSetPageSearch\Communication\Plugin\Event\Listener\Product
 use Spryker\Zed\ProductSetPageSearch\Communication\Plugin\Event\Listener\ProductSetPageProductImageSetImageSearchListener;
 use Spryker\Zed\ProductSetPageSearch\Communication\Plugin\Event\Listener\ProductSetPageProductImageSetSearchListener;
 use Spryker\Zed\ProductSetPageSearch\Communication\Plugin\Event\Listener\ProductSetPageSearchListener;
-use Spryker\Zed\ProductSetPageSearch\Communication\Plugin\Event\Listener\ProductSetPageSearchPublishListener;
 use Spryker\Zed\ProductSetPageSearch\Communication\Plugin\Event\Listener\ProductSetPageSearchUnpublishListener;
 use Spryker\Zed\ProductSetPageSearch\Communication\Plugin\Event\Listener\ProductSetPageUrlSearchListener;
 use Spryker\Zed\ProductSetPageSearch\Dependency\Facade\ProductSetPageSearchToSearchBridge;
@@ -56,6 +55,11 @@ class ProductSetPageSearchListenerTest extends Unit
     protected $tester;
 
     /**
+     * @var \Spryker\Zed\ProductSet\Business\ProductSetFacadeInterface
+     */
+    protected $productSetFacadeInterface;
+
+    /**
      * @throws \PHPUnit\Framework\SkippedTestError
      *
      * @return void
@@ -67,6 +71,8 @@ class ProductSetPageSearchListenerTest extends Unit
         if (!$this->tester->isSuiteProject()) {
             throw new SkippedTestError('Warning: not in suite environment');
         }
+
+        $this->productSetFacadeInterface = $this->tester->getLocator()->productSet()->facade();
     }
 
     /**
@@ -128,10 +134,10 @@ class ProductSetPageSearchListenerTest extends Unit
             $this->tester->generateProductSetTransfer(),
             $this->tester->generateProductSetTransfer(),
         ];
-        $this->publishProductSetTransfers($productSetTransfers);
+        $this->tester->publishProductSetTransfers($productSetTransfers, $this->getProductSetPageSearchFacade());
         $productSetBeforeUnpublish = SpyProductSetPageSearchQuery::create()->count();
         $productSetDeletedId = $productSetTransfers[0]->getIdProductSet();
-        $this->tester->deleteProductSet($productSetTransfers[0]);
+        $this->productSetFacadeInterface->deleteProductSet($productSetTransfers[0]);
 
         $productSetSearchUnpublishListener = new ProductSetPageSearchUnpublishListener();
         $productSetSearchUnpublishListener->setFacade($this->getProductSetPageSearchFacade());
@@ -316,26 +322,5 @@ class ProductSetPageSearchListenerTest extends Unit
         $data = $productSet->getStructuredData();
         $encodedData = json_decode($data, true);
         $this->assertSame('HP Product Set', $encodedData['name']);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductSetTransfer[] $productSetTransfers
-     *
-     * @return void
-     */
-    public function publishProductSetTransfers(array $productSetTransfers): void
-    {
-        if ($productSetTransfers === []) {
-            return;
-        }
-
-        $eventTransfers = [];
-        foreach ($productSetTransfers as $productSetTransfer) {
-            $eventTransfers[] = (new EventEntityTransfer())->setId($productSetTransfer->getIdProductSet());
-        }
-
-        $productSetPageSearchPublishListener = new ProductSetPageSearchPublishListener();
-        $productSetPageSearchPublishListener->setFacade($this->getProductSetPageSearchFacade());
-        $productSetPageSearchPublishListener->handleBulk($eventTransfers, ProductSetEvents::PRODUCT_SET_PUBLISH);
     }
 }
