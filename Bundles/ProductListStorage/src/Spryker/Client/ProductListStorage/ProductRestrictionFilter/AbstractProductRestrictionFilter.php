@@ -100,20 +100,20 @@ abstract class AbstractProductRestrictionFilter implements ProductRestrictionFil
 
     /**
      * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\ProductAbstractProductListStorageTransfer|\Generated\Shared\Transfer\ProductConcreteProductListStorageTransfer $productListStorageTransfer
-     * @param array $customerBlackListIds
-     * @param array $customerWhiteListIds
+     * @param array $customerBlacklistIds
+     * @param array $customerWhitelistIds
      *
      * @return bool
      */
     protected function isProductRestricted(
         AbstractTransfer $productListStorageTransfer,
-        array $customerBlackListIds,
-        array $customerWhiteListIds
+        array $customerBlacklistIds,
+        array $customerWhitelistIds
     ): bool {
-        $isProductInBlacklist = count(array_intersect($productListStorageTransfer->getIdBlacklists(), $customerBlackListIds));
-        $isProductInWhitelist = count(array_intersect($productListStorageTransfer->getIdWhitelists(), $customerWhiteListIds));
+        $isProductInBlacklist = count(array_intersect($productListStorageTransfer->getIdBlacklists(), $customerBlacklistIds));
+        $isProductInWhitelist = count(array_intersect($productListStorageTransfer->getIdWhitelists(), $customerWhitelistIds));
 
-        return $isProductInBlacklist || (count($customerWhiteListIds) && !$isProductInWhitelist);
+        return $isProductInBlacklist || (count($customerWhitelistIds) && !$isProductInWhitelist);
     }
 
     /**
