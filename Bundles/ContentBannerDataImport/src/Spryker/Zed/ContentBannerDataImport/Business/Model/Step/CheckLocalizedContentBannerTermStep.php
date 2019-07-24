@@ -41,7 +41,12 @@ class CheckLocalizedContentBannerTermStep implements DataImportStepInterface
     public function execute(DataSetInterface $dataSet): void
     {
         $validatedContentBannerTerms = [];
+        $defaultLocaleIsPresent = false;
         foreach ($dataSet[ContentBannerDataSetInterface::CONTENT_LOCALIZED_BANNER_TERMS] as $idLocale => $contentBannerTerm) {
+            if (!$idLocale) {
+                $defaultLocaleIsPresent = true;
+            }
+
             $validationResult = $this->contentBanner->validateContentBannerTerm($contentBannerTerm);
 
             if (!$validationResult->getIsSuccess()) {
@@ -56,6 +61,10 @@ class CheckLocalizedContentBannerTermStep implements DataImportStepInterface
                 );
             }
             $validatedContentBannerTerms[$idLocale] = $contentBannerTerm;
+        }
+
+        if (!$defaultLocaleIsPresent) {
+            throw new InvalidDataException('Default locale is required.');
         }
 
         $dataSet[ContentBannerDataSetInterface::CONTENT_LOCALIZED_BANNER_TERMS] = $validatedContentBannerTerms;
