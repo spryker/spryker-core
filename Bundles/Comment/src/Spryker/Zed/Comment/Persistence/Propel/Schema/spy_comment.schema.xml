@@ -101,11 +101,6 @@
         <foreign-key name="spy_comment_to_comment_tag-fk_comment_tag" foreignTable="spy_comment_tag">
             <reference local="fk_comment_tag" foreign="id_comment_tag"/>
         </foreign-key>
-
-        <unique name="spy_comment_comment-unique-fk_comment-fk_comment_tag">
-            <unique-column name="fk_comment"/>
-            <unique-column name="fk_comment_tag"/>
-        </unique>
     </table>
 
 </database>
