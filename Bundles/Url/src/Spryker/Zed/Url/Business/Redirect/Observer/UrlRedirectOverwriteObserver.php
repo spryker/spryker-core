@@ -74,9 +74,11 @@ class UrlRedirectOverwriteObserver implements UrlCreatorBeforeSaveObserverInterf
         if (!$urlRedirectEntity) {
             return;
         }
-        $clearRedirectRelation = $urlTransfer->getIdUrl() ? false : true;
+        if (!$urlTransfer->getIdUrl()) {
+            $urlRedirectEntity = $this->clearUrlToUrlRedirectRelation($urlRedirectEntity);
+        }
 
-        $this->deleteUrlRedirectEntity($urlRedirectEntity, $clearRedirectRelation);
+        $this->deleteUrlRedirectEntity($urlRedirectEntity);
     }
 
     /**
@@ -93,16 +95,11 @@ class UrlRedirectOverwriteObserver implements UrlCreatorBeforeSaveObserverInterf
 
     /**
      * @param \Orm\Zed\Url\Persistence\SpyUrlRedirect $urlRedirectEntity
-     * @param bool $clearRedirectRelation
      *
      * @return void
      */
-    protected function deleteUrlRedirectEntity(SpyUrlRedirect $urlRedirectEntity, $clearRedirectRelation)
+    protected function deleteUrlRedirectEntity(SpyUrlRedirect $urlRedirectEntity)
     {
-        if ($clearRedirectRelation) {
-            $urlRedirectEntity = $this->clearUrlToUrlRedirectRelation($urlRedirectEntity);
-        }
-
         $urlRedirectTransfer = new UrlRedirectTransfer();
         $urlRedirectTransfer->setIdUrlRedirect($urlRedirectEntity->getIdUrlRedirect());
 
@@ -120,6 +117,7 @@ class UrlRedirectOverwriteObserver implements UrlCreatorBeforeSaveObserverInterf
             $urlEntity->setFkResourceRedirect(null);
             $urlEntity->save();
         }
+
         $urlRedirectEntity->clearSpyUrls();
 
         return $urlRedirectEntity;
