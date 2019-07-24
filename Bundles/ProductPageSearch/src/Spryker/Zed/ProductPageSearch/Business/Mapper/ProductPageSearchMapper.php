@@ -142,6 +142,10 @@ class ProductPageSearchMapper implements ProductPageSearchMapperInterface
         $concreteDescriptions = [];
 
         foreach ($concreteProducts as $concreteProduct) {
+            if ($this->isSearchable($concreteProduct, $idLocale) === false) {
+                continue;
+            }
+
             $concreteSkus[] = $concreteProduct['sku'];
             $concreteAttributes[] = $concreteProduct['attributes'];
             $this->setConcreteLocalizedProductData(
@@ -160,6 +164,23 @@ class ProductPageSearchMapper implements ProductPageSearchMapperInterface
             'concreteLocalizedAttributes' => implode(', ', $concreteLocalizedAttributes),
             'concreteDescriptions' => implode(', ', $concreteDescriptions),
         ];
+    }
+
+    /**
+     * @param array $concreteProduct
+     * @param int $idLocale
+     *
+     * @return bool
+     */
+    protected function isSearchable(array $concreteProduct, int $idLocale): bool
+    {
+        foreach ($concreteProduct['SpyProductSearches'] as $spyProductSearch) {
+            if ($spyProductSearch['fk_locale'] === $idLocale && $spyProductSearch['is_searchable'] === true) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
