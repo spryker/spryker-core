@@ -304,7 +304,7 @@ class QuoteRequestFacade extends AbstractFacade implements QuoteRequestFacadeInt
      *
      * @return void
      */
-    public function deleteQuoteRequestsForCompanyUser(int $idCompanyUser): void
+    public function deleteQuoteRequestsByIdCompanyUser(int $idCompanyUser): void
     {
         $this->getFactory()
             ->createQuoteRequestCleaner()

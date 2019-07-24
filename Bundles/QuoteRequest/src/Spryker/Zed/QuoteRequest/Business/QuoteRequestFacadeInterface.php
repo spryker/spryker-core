@@ -285,5 +285,5 @@ interface QuoteRequestFacadeInterface
      *
      * @return void
      */
-    public function deleteQuoteRequestsForCompanyUser(int $idCompanyUser): void;
+    public function deleteQuoteRequestsByIdCompanyUser(int $idCompanyUser): void;
 }
