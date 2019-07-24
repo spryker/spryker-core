@@ -132,7 +132,7 @@ var ContentItemEditor = function(options) {
     };
 
     this.onChangeHandler = function ($editor, self) {
-        var twigMacroRegExp = /.*\{{.*/;
+        var twigMacroRegExp = /.*\{{.*}}/;
         var $editorRange = $editor.summernote('createRange');
         var $editorNode = $($editorRange.sc);
         var nodeContent = $editorNode.text();
@@ -153,7 +153,7 @@ var ContentItemEditor = function(options) {
         }
 
         var $elementForInsert = $(
-            '<div class="js-twig-macro">' +
+            '<div>' +
             $editorParentNode.html() +
             '</div>'
         );
