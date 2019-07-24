@@ -279,13 +279,12 @@ interface QuoteRequestFacadeInterface
      * Specification:
      * - Retrieves Quote Request entities for specific Company User.
      * - Deletes found entities from the database.
-     * - Uses QuoteRequestFilterTransfer::idCompanyUser.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
+     * @param int $idCompanyUser
      *
      * @return void
      */
-    public function deleteQuoteRequestsForCompanyUser(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): void;
+    public function deleteQuoteRequestsForCompanyUser(int $idCompanyUser): void;
 }

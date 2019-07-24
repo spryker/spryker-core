@@ -130,28 +130,28 @@ class QuoteRequestEntityManager extends AbstractEntityManager implements QuoteRe
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     * @param int[] $quoteRequestIds
      *
      * @return void
      */
-    public function deleteQuoteRequest(QuoteRequestTransfer $quoteRequestTransfer): void
+    public function deleteQuoteRequestsByIds(array $quoteRequestIds): void
     {
         $this->getFactory()
             ->getQuoteRequestPropelQuery()
-            ->filterByIdQuoteRequest($quoteRequestTransfer->getIdQuoteRequest())
+            ->filterByIdQuoteRequest_In($quoteRequestIds)
             ->delete();
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     * @param int[] $quoteRequestIds
      *
      * @return void
      */
-    public function deleteQuoteRequestVersions(QuoteRequestTransfer $quoteRequestTransfer): void
+    public function deleteQuoteRequestVersionsByQuoteRequestIds(array $quoteRequestIds): void
     {
         $this->getFactory()
             ->getQuoteRequestVersionPropelQuery()
-            ->filterByFkQuoteRequest($quoteRequestTransfer->getIdQuoteRequest())
+            ->filterByFkQuoteRequest_In($quoteRequestIds)
             ->delete();
     }
 }

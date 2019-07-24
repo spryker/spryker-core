@@ -58,16 +58,16 @@ interface QuoteRequestEntityManagerInterface
     public function updateQuoteRequestStatus(string $quoteRequestReference, string $fromStatus, string $toStatus): bool;
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     * @param int[] $quoteRequestIds
      *
      * @return void
      */
-    public function deleteQuoteRequest(QuoteRequestTransfer $quoteRequestTransfer): void;
+    public function deleteQuoteRequestsByIds(array $quoteRequestIds): void;
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     * @param int[] $quoteRequestIds
      *
      * @return void
      */
-    public function deleteQuoteRequestVersions(QuoteRequestTransfer $quoteRequestTransfer): void;
+    public function deleteQuoteRequestVersionsByQuoteRequestIds(array $quoteRequestIds): void;
 }

@@ -9,7 +9,6 @@ namespace Spryker\Zed\QuoteRequest\Business\Writer;
 
 use DateTime;
 use Generated\Shared\Transfer\MessageTransfer;
-use Generated\Shared\Transfer\QuoteRequestCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
@@ -138,39 +137,6 @@ class QuoteRequestTerminator implements QuoteRequestTerminatorInterface
 
         $quoteRequestTransfer->setStatus(SharedQuoteRequestConfig::STATUS_CLOSED);
         $this->quoteRequestEntityManager->updateQuoteRequest($quoteRequestTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
-     *
-     * @return void
-     */
-    public function deleteQuoteRequestsForCompanyUser(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): void
-    {
-        $quoteRequestFilterTransfer->requireIdCompanyUser();
-
-        $quoteRequestCollectionTransfer = $this->quoteRequestRepository->getQuoteRequestCollectionByFilter($quoteRequestFilterTransfer);
-
-        if (!$quoteRequestCollectionTransfer->getQuoteRequests()->count()) {
-            return;
-        }
-
-        $this->getTransactionHandler()->handleTransaction(function () use ($quoteRequestCollectionTransfer) {
-            $this->executeDeleteQuoteRequestTransaction($quoteRequestCollectionTransfer);
-        });
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteRequestCollectionTransfer $quoteRequestCollectionTransfer
-     *
-     * @return void
-     */
-    protected function executeDeleteQuoteRequestTransaction(QuoteRequestCollectionTransfer $quoteRequestCollectionTransfer): void
-    {
-        foreach ($quoteRequestCollectionTransfer->getQuoteRequests() as $quoteRequestTransfer) {
-            $this->quoteRequestEntityManager->deleteQuoteRequestVersions($quoteRequestTransfer);
-            $this->quoteRequestEntityManager->deleteQuoteRequest($quoteRequestTransfer);
-        }
     }
 
     /**

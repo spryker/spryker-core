@@ -300,14 +300,14 @@ class QuoteRequestFacade extends AbstractFacade implements QuoteRequestFacadeInt
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
+     * @param int $idCompanyUser
      *
      * @return void
      */
-    public function deleteQuoteRequestsForCompanyUser(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): void
+    public function deleteQuoteRequestsForCompanyUser(int $idCompanyUser): void
     {
         $this->getFactory()
-            ->createQuoteRequestTerminator()
-            ->deleteQuoteRequestsForCompanyUser($quoteRequestFilterTransfer);
+            ->createQuoteRequestCleaner()
+            ->deleteQuoteRequestsByIdCompanyUser($idCompanyUser);
     }
 }

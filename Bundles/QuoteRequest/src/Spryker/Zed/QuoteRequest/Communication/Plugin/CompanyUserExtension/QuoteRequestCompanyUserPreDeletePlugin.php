@@ -8,7 +8,6 @@
 namespace Spryker\Zed\QuoteRequest\Communication\Plugin\CompanyUserExtension;
 
 use Generated\Shared\Transfer\CompanyUserTransfer;
-use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserPreDeletePluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
@@ -31,10 +30,8 @@ class QuoteRequestCompanyUserPreDeletePlugin extends AbstractPlugin implements C
      */
     public function preDelete(CompanyUserTransfer $companyUserTransfer): void
     {
-        $quoteRequestFilterTransfer = (new QuoteRequestFilterTransfer())->setIdCompanyUser(
+        $this->getFacade()->deleteQuoteRequestsForCompanyUser(
             $companyUserTransfer->getIdCompanyUser()
         );
-
-        $this->getFacade()->deleteQuoteRequestsForCompanyUser($quoteRequestFilterTransfer);
     }
 }

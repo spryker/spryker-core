@@ -31,11 +31,4 @@ interface QuoteRequestTerminatorInterface
      * @return void
      */
     public function closeQuoteRequest(QuoteTransfer $quoteTransfer): void;
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
-     *
-     * @return void
-     */
-    public function deleteQuoteRequestsForCompanyUser(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): void;
 }
