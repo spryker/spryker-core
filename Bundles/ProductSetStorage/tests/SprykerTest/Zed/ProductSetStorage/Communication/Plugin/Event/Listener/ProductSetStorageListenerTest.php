@@ -11,6 +11,7 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\EventEntityTransfer;
 use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageSetTableMap;
 use Orm\Zed\ProductSet\Persistence\Map\SpyProductAbstractSetTableMap;
+use Orm\Zed\ProductSet\Persistence\Map\SpyProductSetDataTableMap;
 use Orm\Zed\ProductSetStorage\Persistence\SpyProductSetStorageQuery;
 use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
 use PHPUnit\Framework\SkippedTestError;
@@ -19,6 +20,7 @@ use Spryker\Zed\ProductSet\Dependency\ProductSetEvents;
 use Spryker\Zed\ProductSetStorage\Business\ProductSetStorageBusinessFactory;
 use Spryker\Zed\ProductSetStorage\Business\ProductSetStorageFacade;
 use Spryker\Zed\ProductSetStorage\Communication\Plugin\Event\Listener\ProductAbstractProductSetStorageListener;
+use Spryker\Zed\ProductSetStorage\Communication\Plugin\Event\Listener\ProductSetDataStorageListener;
 use Spryker\Zed\ProductSetStorage\Communication\Plugin\Event\Listener\ProductSetProductImageSetImageStorageListener;
 use Spryker\Zed\ProductSetStorage\Communication\Plugin\Event\Listener\ProductSetProductImageSetStorageListener;
 use Spryker\Zed\ProductSetStorage\Communication\Plugin\Event\Listener\ProductSetProductImageStorageListener;
@@ -171,6 +173,31 @@ class ProductSetStorageListenerTest extends Unit
 
         // Act
         $productAbstractProductSetStorageListener->handleBulk($eventTransfers, ProductSetEvents::ENTITY_SPY_PRODUCT_ABSTRACT_SET_CREATE);
+
+        // Assert
+        $this->assertProductSetStorage($productSetStorageCount);
+    }
+
+    /**
+     * @return void
+     */
+    public function testProductSetDataStorageListenerStoreData(): void
+    {
+        // Prepare
+        $this->tester->deleteProductSetStorageByFkProductSet(1);
+        $productSetStorageCount = SpyProductSetStorageQuery::create()->count();
+
+        $productSetDataStorageListener = new ProductSetDataStorageListener();
+        $productSetDataStorageListener->setFacade($this->getProductSetStorageFacade());
+
+        $eventTransfers = [
+            (new EventEntityTransfer())->setForeignKeys([
+                SpyProductSetDataTableMap::COL_FK_PRODUCT_SET => 1,
+            ]),
+        ];
+
+        // Act
+        $productSetDataStorageListener->handleBulk($eventTransfers, ProductSetEvents::ENTITY_SPY_PRODUCT_SET_DATA_CREATE);
 
         // Assert
         $this->assertProductSetStorage($productSetStorageCount);

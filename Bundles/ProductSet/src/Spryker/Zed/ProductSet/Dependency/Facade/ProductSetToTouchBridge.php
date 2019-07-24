@@ -31,7 +31,7 @@ class ProductSetToTouchBridge implements ProductSetToTouchInterface
      */
     public function touchActive($itemType, $idItem, $keyChange = false)
     {
-        return $this->touchFacade->touchActive($itemType, $idItem);
+        return $this->touchFacade->touchActive($itemType, $idItem, $keyChange);
     }
 
     /**
