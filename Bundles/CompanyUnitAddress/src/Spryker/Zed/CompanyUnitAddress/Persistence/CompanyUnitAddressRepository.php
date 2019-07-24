@@ -63,7 +63,7 @@ class CompanyUnitAddressRepository extends AbstractRepository implements Company
 
         $companyUnitAddressQuery = $this->setCompanyUnitAddressQueryFilters($companyUnitAddressQuery, $criteriaFilterTransfer);
 
-        $companyUnitAddressQuery->leftJoinWithCountry()
+        $companyUnitAddressQuery->innerJoinWithCountry()
             ->leftJoinWithSpyCompanyUnitAddressToCompanyBusinessUnit()
             ->useSpyCompanyUnitAddressToCompanyBusinessUnitQuery(null, Criteria::LEFT_JOIN)
                 ->leftJoinWithCompanyBusinessUnit()
