@@ -5,18 +5,15 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\UrlIdentifiersRestApi\Processor\UrlIdentifier;
+namespace Spryker\Glue\UrlIdentifiersRestApi\Processor\UrlIdentifier\Reader;
 
 use Generated\Shared\Transfer\ResourceIdentifierTransfer;
-use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Generated\Shared\Transfer\RestUrlIdentifierAttributesTransfer;
 use Generated\Shared\Transfer\UrlStorageTransfer;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\UrlIdentifiersRestApi\Dependency\Client\UrlIdentifiersRestApiToUrlStorageClientInterface;
-use Spryker\Glue\UrlIdentifiersRestApi\UrlIdentifiersRestApiConfig;
-use Symfony\Component\HttpFoundation\Response;
+use Spryker\Glue\UrlIdentifiersRestApi\Processor\UrlIdentifier\ResponseBuilder\UrlIdentifierResponseBuilderInterface;
 
 class UrlIdentifiersReader implements UrlIdentifiersReaderInterface
 {
@@ -28,9 +25,9 @@ class UrlIdentifiersReader implements UrlIdentifiersReaderInterface
     protected $urlStorageClient;
 
     /**
-     * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
+     * @var \Spryker\Glue\UrlIdentifiersRestApi\Processor\UrlIdentifier\ResponseBuilder\UrlIdentifierResponseBuilderInterface
      */
-    protected $restResourceBuilder;
+    protected $urlIdentifierResponseBuilder;
 
     /**
      * @var \Spryker\Glue\UrlIdentifiersRestApiExtension\Dependency\Plugin\ResourceIdentifierProviderPluginInterface[]
@@ -39,16 +36,16 @@ class UrlIdentifiersReader implements UrlIdentifiersReaderInterface
 
     /**
      * @param \Spryker\Glue\UrlIdentifiersRestApi\Dependency\Client\UrlIdentifiersRestApiToUrlStorageClientInterface $urlStorageClient
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
-     * @param \Spryker\Glue\UrlIdentifiersRestApiExtension\Dependency\Plugin\ResourceIdentifierProviderPluginInterface[] $resourceIdentifierProviderPlugins
+     * @param \Spryker\Glue\UrlIdentifiersRestApi\Processor\UrlIdentifier\ResponseBuilder\UrlIdentifierResponseBuilderInterface $urlIdentifierResponseBuilder
+     * @param array $resourceIdentifierProviderPlugins
      */
     public function __construct(
         UrlIdentifiersRestApiToUrlStorageClientInterface $urlStorageClient,
-        RestResourceBuilderInterface $restResourceBuilder,
+        UrlIdentifierResponseBuilderInterface $urlIdentifierResponseBuilder,
         array $resourceIdentifierProviderPlugins
     ) {
         $this->urlStorageClient = $urlStorageClient;
-        $this->restResourceBuilder = $restResourceBuilder;
+        $this->urlIdentifierResponseBuilder = $urlIdentifierResponseBuilder;
         $this->resourceIdentifierProviderPlugins = $resourceIdentifierProviderPlugins;
     }
 
@@ -62,23 +59,26 @@ class UrlIdentifiersReader implements UrlIdentifiersReaderInterface
         $urlRequestParameter = $restRequest->getHttpRequest()->get(static::URL_REQUEST_PARAMETER);
 
         if (!$urlRequestParameter) {
-            return $this->createUrlRequestParamMissingErrorResponse();
+            return $this->urlIdentifierResponseBuilder->createUrlRequestParamMissingErrorResponse();
         }
 
         $urlStorageTransfer = $this->getUrlStorageTransfer($urlRequestParameter);
 
         if (!$urlStorageTransfer) {
-            return $this->createUrlNotFoundErrorResponse();
+            return $this->urlIdentifierResponseBuilder->createUrlNotFoundErrorResponse();
         }
 
         $resourceIdentifierTransfer = $this->provideResourceIdentifierByUrlStorageTransfer($urlStorageTransfer);
         if (!$resourceIdentifierTransfer) {
-            return $this->createUrlNotFoundErrorResponse();
+            return $this->urlIdentifierResponseBuilder->createUrlNotFoundErrorResponse();
         }
 
-        $restUrlIdentifierAttributesTransfer = (new RestUrlIdentifierAttributesTransfer())->fromArray($resourceIdentifierTransfer->toArray(), true);
+        $restUrlIdentifierAttributesTransfer = $this->mapResourceIdentifierTransferToRestUrlIdentifierAttributesTransfer(
+            $resourceIdentifierTransfer,
+            new RestUrlIdentifierAttributesTransfer()
+        );
 
-        return $this->createUrlIdentifiersResourceResponse((string)$urlStorageTransfer->getIdUrl(), $restUrlIdentifierAttributesTransfer);
+        return $this->urlIdentifierResponseBuilder->createUrlIdentifiersResourceResponse((string)$urlStorageTransfer->getIdUrl(), $restUrlIdentifierAttributesTransfer);
     }
 
     /**
@@ -113,58 +113,26 @@ class UrlIdentifiersReader implements UrlIdentifiersReaderInterface
     protected function provideResourceIdentifierByUrlStorageTransfer(UrlStorageTransfer $urlStorageTransfer): ?ResourceIdentifierTransfer
     {
         foreach ($this->resourceIdentifierProviderPlugins as $resourceIdentifierProviderPlugin) {
-            if ($resourceIdentifierProviderPlugin->isApplicable($urlStorageTransfer)) {
-                return $resourceIdentifierProviderPlugin->provideResourceIdentifierByUrlStorageTransfer($urlStorageTransfer);
+            if (!$resourceIdentifierProviderPlugin->isApplicable($urlStorageTransfer)) {
+                continue;
             }
+
+            return $resourceIdentifierProviderPlugin->provideResourceIdentifierByUrlStorageTransfer($urlStorageTransfer);
         }
 
         return null;
     }
 
     /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    protected function createUrlRequestParamMissingErrorResponse(): RestResponseInterface
-    {
-        return $this->restResourceBuilder->createRestResponse()
-            ->addError(
-                (new RestErrorMessageTransfer())
-                    ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
-                    ->setCode(UrlIdentifiersRestApiConfig::RESPONSE_CODE_URL_REQUEST_PARAMETER_MISSING)
-                    ->setDetail(UrlIdentifiersRestApiConfig::RESPONSE_DETAIL_URL_REQUEST_PARAMETER_MISSING)
-            );
-    }
-
-    /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    protected function createUrlNotFoundErrorResponse(): RestResponseInterface
-    {
-        return $this->restResourceBuilder->createRestResponse()
-            ->addError(
-                (new RestErrorMessageTransfer())
-                    ->setStatus(Response::HTTP_NOT_FOUND)
-                    ->setCode(UrlIdentifiersRestApiConfig::RESPONSE_CODE_URL_NOT_FOUND)
-                    ->setDetail(UrlIdentifiersRestApiConfig::RESPONSE_DETAIL_URL_NOT_FOUND)
-            );
-    }
-
-    /**
-     * @param string $urlIdentifierId
+     * @param \Generated\Shared\Transfer\ResourceIdentifierTransfer $resourceIdentifierTransfer
      * @param \Generated\Shared\Transfer\RestUrlIdentifierAttributesTransfer $restUrlIdentifierAttributesTransfer
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     * @return \Generated\Shared\Transfer\RestUrlIdentifierAttributesTransfer
      */
-    protected function createUrlIdentifiersResourceResponse(
-        string $urlIdentifierId,
+    protected function mapResourceIdentifierTransferToRestUrlIdentifierAttributesTransfer(
+        ResourceIdentifierTransfer $resourceIdentifierTransfer,
         RestUrlIdentifierAttributesTransfer $restUrlIdentifierAttributesTransfer
-    ): RestResponseInterface {
-        return $this->restResourceBuilder->createRestResponse()->addResource(
-            $this->restResourceBuilder->createRestResource(
-                UrlIdentifiersRestApiConfig::RESOURCE_URL_IDENTIFIERS,
-                $urlIdentifierId,
-                $restUrlIdentifierAttributesTransfer
-            )
-        );
+    ): RestUrlIdentifierAttributesTransfer {
+        return $restUrlIdentifierAttributesTransfer->fromArray($resourceIdentifierTransfer->toArray(), true);
     }
 }
