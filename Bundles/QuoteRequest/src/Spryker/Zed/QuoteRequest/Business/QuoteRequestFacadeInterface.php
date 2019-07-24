@@ -274,4 +274,18 @@ interface QuoteRequestFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
     public function getQuoteRequest(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestResponseTransfer;
+
+    /**
+     * Specification:
+     * - Retrieves "Request for Quote" entities for Company User with requested ID.
+     * - Deletes entities if any were found.
+     * - Uses QuoteRequestFilterTransfer::idCompanyUser.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
+     *
+     * @return void
+     */
+    public function deleteQuoteRequestsForCompanyUser(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): void;
 }
