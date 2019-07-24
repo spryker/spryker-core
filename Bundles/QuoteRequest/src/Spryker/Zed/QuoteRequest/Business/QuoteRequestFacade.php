@@ -296,7 +296,7 @@ class QuoteRequestFacade extends AbstractFacade implements QuoteRequestFacadeInt
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      *
      * @api
      *

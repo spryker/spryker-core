@@ -21,7 +21,7 @@ class QuoteRequestCompanyUserPreDeletePlugin extends AbstractPlugin implements C
 {
     /**
      * {@inheritDoc}
-     * - Deletes all Requests for Quote assigned to a Company User.
+     * - Deletes all Quote Requests assigned to Company User.
      *
      * @api
      *
