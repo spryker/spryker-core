@@ -21,7 +21,8 @@ class UrlIdentifiersRestApiFactory extends AbstractFactory
     {
         return new UrlIdentifiersReader(
             $this->getUrlStorageClient(),
-            $this->getResourceBuilder()
+            $this->getResourceBuilder(),
+            $this->getResourceIdentifierProviderPlugins()
         );
     }
 
@@ -31,5 +32,13 @@ class UrlIdentifiersRestApiFactory extends AbstractFactory
     public function getUrlStorageClient(): UrlIdentifiersRestApiToUrlStorageClientInterface
     {
         return $this->getProvidedDependency(UrlIdentifiersRestApiDependencyProvider::CLIENT_URL_STORAGE);
+    }
+
+    /**
+     * @return \Spryker\Glue\UrlIdentifiersRestApiExtension\Dependency\Plugin\ResourceIdentifierProviderPluginInterface[]
+     */
+    public function getResourceIdentifierProviderPlugins(): array
+    {
+        return $this->getProvidedDependency(UrlIdentifiersRestApiDependencyProvider::PLUGINS_RESOURCE_IDENTIFIER_PROVIDER);
     }
 }

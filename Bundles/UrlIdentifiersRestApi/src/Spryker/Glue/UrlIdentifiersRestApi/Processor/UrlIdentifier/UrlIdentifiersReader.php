@@ -7,7 +7,9 @@
 
 namespace Spryker\Glue\UrlIdentifiersRestApi\Processor\UrlIdentifier;
 
+use Generated\Shared\Transfer\ResourceIdentifierTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
+use Generated\Shared\Transfer\RestUrlIdentifierAttributesTransfer;
 use Generated\Shared\Transfer\UrlStorageTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
@@ -31,15 +33,23 @@ class UrlIdentifiersReader implements UrlIdentifiersReaderInterface
     protected $restResourceBuilder;
 
     /**
+     * @var \Spryker\Glue\UrlIdentifiersRestApiExtension\Dependency\Plugin\ResourceIdentifierProviderPluginInterface[]
+     */
+    protected $resourceIdentifierProviderPlugins;
+
+    /**
      * @param \Spryker\Glue\UrlIdentifiersRestApi\Dependency\Client\UrlIdentifiersRestApiToUrlStorageClientInterface $urlStorageClient
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
+     * @param \Spryker\Glue\UrlIdentifiersRestApiExtension\Dependency\Plugin\ResourceIdentifierProviderPluginInterface[] $resourceIdentifierProviderPlugins
      */
     public function __construct(
         UrlIdentifiersRestApiToUrlStorageClientInterface $urlStorageClient,
-        RestResourceBuilderInterface $restResourceBuilder
+        RestResourceBuilderInterface $restResourceBuilder,
+        array $resourceIdentifierProviderPlugins
     ) {
         $this->urlStorageClient = $urlStorageClient;
         $this->restResourceBuilder = $restResourceBuilder;
+        $this->resourceIdentifierProviderPlugins = $resourceIdentifierProviderPlugins;
     }
 
     /**
@@ -61,7 +71,54 @@ class UrlIdentifiersReader implements UrlIdentifiersReaderInterface
             return $this->createUrlNotFoundErrorResponse();
         }
 
-        return $this->restResourceBuilder->createRestResponse();
+        $resourceIdentifierTransfer = $this->provideResourceIdentifierByUrlStorageTransfer($urlStorageTransfer);
+        if (!$resourceIdentifierTransfer) {
+            return $this->createUrlNotFoundErrorResponse();
+        }
+
+        $restUrlIdentifierAttributesTransfer = (new RestUrlIdentifierAttributesTransfer())->fromArray($resourceIdentifierTransfer->toArray(), true);
+
+        return $this->createUrlIdentifiersResourceResponse((string)$urlStorageTransfer->getIdUrl(), $restUrlIdentifierAttributesTransfer);
+    }
+
+    /**
+     * @param string $urlRequestParameter
+     *
+     * @return \Generated\Shared\Transfer\UrlStorageTransfer|null
+     */
+    protected function getUrlStorageTransfer(string $urlRequestParameter): ?UrlStorageTransfer
+    {
+        $urlStorageTransfer = $this->urlStorageClient->findUrlStorageTransferByUrl($urlRequestParameter);
+
+        if (!$urlStorageTransfer) {
+            return null;
+        }
+
+        if (!$urlStorageTransfer->getFkResourceRedirect()) {
+            return $urlStorageTransfer;
+        }
+
+        $urlStorageTransfer = $this->urlStorageClient->findUrlRedirectStorageById(
+            $urlStorageTransfer->getFkResourceRedirect()
+        );
+
+        return $this->getUrlStorageTransfer($urlStorageTransfer->getToUrl());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\UrlStorageTransfer $urlStorageTransfer
+     *
+     * @return \Generated\Shared\Transfer\ResourceIdentifierTransfer|null
+     */
+    protected function provideResourceIdentifierByUrlStorageTransfer(UrlStorageTransfer $urlStorageTransfer): ?ResourceIdentifierTransfer
+    {
+        foreach ($this->resourceIdentifierProviderPlugins as $resourceIdentifierProviderPlugin) {
+            if ($resourceIdentifierProviderPlugin->isApplicable($urlStorageTransfer)) {
+                return $resourceIdentifierProviderPlugin->provideResourceIdentifierByUrlStorageTransfer($urlStorageTransfer);
+            }
+        }
+
+        return null;
     }
 
     /**
@@ -93,26 +150,21 @@ class UrlIdentifiersReader implements UrlIdentifiersReaderInterface
     }
 
     /**
-     * @param string $urlRequestParameter
+     * @param string $urlIdentifierId
+     * @param \Generated\Shared\Transfer\RestUrlIdentifierAttributesTransfer $restUrlIdentifierAttributesTransfer
      *
-     * @return \Generated\Shared\Transfer\UrlStorageTransfer|null
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function getUrlStorageTransfer(string $urlRequestParameter): ?UrlStorageTransfer
-    {
-        $urlStorageTransfer = $this->urlStorageClient->findUrlStorageTransferByUrl($urlRequestParameter);
-
-        if (!$urlStorageTransfer) {
-            return null;
-        }
-
-        if (!$urlStorageTransfer->getFkResourceRedirect()) {
-            return $urlStorageTransfer;
-        }
-
-        $urlStorageTransfer = $this->urlStorageClient->findUrlRedirectStorageById(
-            $urlStorageTransfer->getFkResourceRedirect()
+    protected function createUrlIdentifiersResourceResponse(
+        string $urlIdentifierId,
+        RestUrlIdentifierAttributesTransfer $restUrlIdentifierAttributesTransfer
+    ): RestResponseInterface {
+        return $this->restResourceBuilder->createRestResponse()->addResource(
+            $this->restResourceBuilder->createRestResource(
+                UrlIdentifiersRestApiConfig::RESOURCE_URL_IDENTIFIERS,
+                $urlIdentifierId,
+                $restUrlIdentifierAttributesTransfer
+            )
         );
-
-        return $this->getUrlStorageTransfer($urlStorageTransfer->getToUrl());
     }
 }
