@@ -277,8 +277,7 @@ interface QuoteRequestFacadeInterface
 
     /**
      * Specification:
-     * - Retrieves Quote Request entities for specific Company User.
-     * - Deletes found entities from the database.
+     * - Deletes Quote Requests assigned to a specific Company User from the database.
      *
      * @api
      *
