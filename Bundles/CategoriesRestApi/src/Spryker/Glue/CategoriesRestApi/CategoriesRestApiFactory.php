@@ -34,7 +34,7 @@ class CategoriesRestApiFactory extends AbstractFactory
     /**
      * @return \Spryker\Glue\CategoriesRestApi\Dependency\Client\CategoriesRestApiToCategoryStorageClientInterface
      */
-    protected function getCategoryStorageClient(): CategoriesRestApiToCategoryStorageClientInterface
+    public function getCategoryStorageClient(): CategoriesRestApiToCategoryStorageClientInterface
     {
         return $this->getProvidedDependency(CategoriesRestApiDependencyProvider::CLIENT_CATEGORY_STORAGE);
     }
@@ -42,7 +42,7 @@ class CategoriesRestApiFactory extends AbstractFactory
     /**
      * @return \Spryker\Glue\CategoriesRestApi\Processor\Mapper\CategoryMapperInterface
      */
-    protected function createCategoryMapper(): CategoryMapperInterface
+    public function createCategoryMapper(): CategoryMapperInterface
     {
         return new CategoryMapper();
     }

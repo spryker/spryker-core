@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\ProductsRestApi\Plugin\UrlIdentifiersRestApi;
+namespace Spryker\Glue\CategoriesRestApi\Plugin\UrlIdentifiersRestApi;
 
 use Generated\Shared\Transfer\ResourceIdentifierTransfer;
 use Generated\Shared\Transfer\UrlStorageTransfer;
@@ -13,13 +13,13 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 use Spryker\Glue\UrlIdentifiersRestApiExtension\Dependency\Plugin\ResourceIdentifierProviderPluginInterface;
 
 /**
- * @method \Spryker\Glue\ProductsRestApi\ProductsRestApiFactory getFactory()
+ * @method \Spryker\Glue\CategoriesRestApi\CategoriesRestApiFactory getFactory()
  */
-class ProductAbstractResourceIdentifierProviderPlugin extends AbstractPlugin implements ResourceIdentifierProviderPluginInterface
+class CategoryNodeResourceIdentifierProviderPlugin extends AbstractPlugin implements ResourceIdentifierProviderPluginInterface
 {
     /**
      * {@inheritdoc}
-     * - Returns true if the UrlStorageTransfer::fkResourceProductAbstract is not null.
+     * - Returns true if the UrlStorageTransfer::fkResourceCategorynode is not null.
      *
      * @api
      *
@@ -29,13 +29,13 @@ class ProductAbstractResourceIdentifierProviderPlugin extends AbstractPlugin imp
      */
     public function isApplicable(UrlStorageTransfer $urlStorageTransfer): bool
     {
-        return $urlStorageTransfer->getFkResourceProductAbstract() !== null;
+        return $urlStorageTransfer->getFkResourceCategorynode() !== null;
     }
 
     /**
      * {@inheritdoc}
-     * - Looks up the product abstract in the key-value storage by id given in UrlStorageTransfer.
-     * - Returns the ResourceIdentifierTransfer with the type and id of the product abstract.
+     * - Creates ResourceIdentifierTransfer from the data in UrlStorageTransfer.
+     * - Returns ResourceIdentifierTransfer on success, null otherwise.
      *
      * @api
      *
@@ -46,7 +46,7 @@ class ProductAbstractResourceIdentifierProviderPlugin extends AbstractPlugin imp
     public function provideResourceIdentifierByUrlStorageTransfer(UrlStorageTransfer $urlStorageTransfer): ?ResourceIdentifierTransfer
     {
         return $this->getFactory()
-            ->createProductAbstractStorageReader()
-            ->provideResourceIdentifierByUrlStorageTransfer($urlStorageTransfer);
+            ->createCategoryMapper()
+            ->mapUrlStorageTransferToResourceIdentifierTransfer($urlStorageTransfer, new ResourceIdentifierTransfer());
     }
 }

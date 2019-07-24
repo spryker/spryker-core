@@ -9,9 +9,12 @@ namespace Spryker\Glue\CategoriesRestApi\Processor\Mapper;
 
 use ArrayObject;
 use Generated\Shared\Transfer\CategoryNodeStorageTransfer;
+use Generated\Shared\Transfer\ResourceIdentifierTransfer;
 use Generated\Shared\Transfer\RestCategoryNodesAttributesTransfer;
 use Generated\Shared\Transfer\RestCategoryTreesAttributesTransfer;
 use Generated\Shared\Transfer\RestCategoryTreesTransfer;
+use Generated\Shared\Transfer\UrlStorageTransfer;
+use Spryker\Glue\CategoriesRestApi\CategoriesRestApiConfig;
 
 class CategoryMapper implements CategoryMapperInterface
 {
@@ -47,5 +50,19 @@ class CategoryMapper implements CategoryMapperInterface
                 $categoryNodeStorageTransfer->toArray(),
                 true
             );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\UrlStorageTransfer $urlStorageTransfer
+     * @param \Generated\Shared\Transfer\ResourceIdentifierTransfer $resourceIdentifierTransfer
+     *
+     * @return \Generated\Shared\Transfer\ResourceIdentifierTransfer
+     */
+    public function mapUrlStorageTransferToResourceIdentifierTransfer(
+        UrlStorageTransfer $urlStorageTransfer,
+        ResourceIdentifierTransfer $resourceIdentifierTransfer
+    ): ResourceIdentifierTransfer {
+        return $resourceIdentifierTransfer->setType(CategoriesRestApiConfig::RESOURCE_CATEGORY_NODES)
+            ->setId($urlStorageTransfer->getFkResourceCategorynode());
     }
 }
