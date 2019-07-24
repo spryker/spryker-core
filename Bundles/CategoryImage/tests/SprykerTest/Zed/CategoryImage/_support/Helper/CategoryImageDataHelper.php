@@ -38,7 +38,7 @@ class CategoryImageDataHelper extends Module
     public function haveCategoryImageSetForCategory(CategoryTransfer $categoryTransfer, array $seedData = []): CategoryImageSetTransfer
     {
         $seedData = $seedData + [
-                'idCategory' => $categoryTransfer->getIdCategory(),
+                CategoryImageSetTransfer::ID_CATEGORY => $categoryTransfer->getIdCategory(),
             ];
         $categoryImageSetTransfer = $this->buildCategoryImageSetTransfer($seedData);
         $categoryTransfer->addImageSet($categoryImageSetTransfer);
@@ -131,7 +131,7 @@ class CategoryImageDataHelper extends Module
             ->delete();
 
         SpyCategoryImageQuery::create()
-            ->filterByIdCategoryImage($idCategoryImageCollection)
+            ->filterByIdCategoryImage_In($idCategoryImageCollection)
             ->delete();
 
         SpyCategoryImageSetQuery::create()

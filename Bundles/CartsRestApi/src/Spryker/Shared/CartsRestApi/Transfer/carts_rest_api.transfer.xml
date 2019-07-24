@@ -93,6 +93,7 @@
         <property name="uuid" type="string" />
         <property name="customerReference" type="string" />
         <property name="companyUserId" type="int" />
+        <property name="name" type="string" />
     </transfer>
 
     <transfer name="QuoteUpdateRequestAttributes">

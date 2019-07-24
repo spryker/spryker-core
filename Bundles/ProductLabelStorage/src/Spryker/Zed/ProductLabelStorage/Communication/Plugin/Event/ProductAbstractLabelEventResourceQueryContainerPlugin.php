@@ -45,9 +45,9 @@ class ProductAbstractLabelEventResourceQueryContainerPlugin extends AbstractPlug
      */
     public function queryData(array $ids = []): ?ModelCriteria
     {
-        $query = $this->getQueryContainer()->queryProductLabelProductAbstractByIds($ids);
+        $query = $this->getQueryContainer()->queryProductLabelProductAbstractByPrimaryIds($ids);
 
-        if (empty($ids)) {
+        if ($ids === []) {
             $query->clear();
         }
 

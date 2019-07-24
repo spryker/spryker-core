@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductOptionStorage\Persistence;
 
+use Orm\Zed\ProductOption\Persistence\SpyProductAbstractProductOptionGroupQuery;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface ProductOptionStorageQueryContainerInterface extends QueryContainerInterface
@@ -37,6 +38,18 @@ interface ProductOptionStorageQueryContainerInterface extends QueryContainerInte
      * @return \Orm\Zed\ProductOption\Persistence\SpyProductAbstractProductOptionGroupQuery
      */
     public function queryProductOptionsByProductAbstractIds(array $productAbstractIds);
+
+    /**
+     * Specification:
+     * - Returns a a query for the table `spy_product_abstract_product_option_group` filtered by product abstract ids.
+     *
+     * @api
+     *
+     * @param array $productAbstractIds
+     *
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductAbstractProductOptionGroupQuery
+     */
+    public function queryProductAbstractOptionsByProductAbstractIds(array $productAbstractIds): SpyProductAbstractProductOptionGroupQuery;
 
     /**
      * @api

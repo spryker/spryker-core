@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SharedCart\Communication\Controller;
 
+use Generated\Shared\Transfer\CustomerCollectionTransfer;
 use Generated\Shared\Transfer\QuotePermissionGroupCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuotePermissionGroupResponseTransfer;
 use Generated\Shared\Transfer\QuotePermissionGroupTransfer;
@@ -47,5 +48,15 @@ class GatewayController extends AbstractGatewayController
     public function findQuotePermissionGroupByIdAction(QuotePermissionGroupTransfer $quotePermissionGroupTransfer): QuotePermissionGroupResponseTransfer
     {
         return $this->getFacade()->findQuotePermissionGroupById($quotePermissionGroupTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerCollectionTransfer
+     */
+    public function getCustomerCollectionByQuoteAction(QuoteTransfer $quoteTransfer): CustomerCollectionTransfer
+    {
+        return $this->getFacade()->getCustomerCollectionByQuote($quoteTransfer);
     }
 }

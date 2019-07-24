@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Shipment\Business;
 
+use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -255,4 +256,16 @@ interface ShipmentFacadeInterface
      * @return bool
      */
     public function isShipmentMethodActive($idShipmentMethod);
+
+    /**
+     * Specification:
+     * - Filters obsolete shipment expenses from Quote if shipment method is not set.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return void
+     */
+    public function filterObsoleteShipmentExpenses(CalculableObjectTransfer $calculableObjectTransfer): void;
 }

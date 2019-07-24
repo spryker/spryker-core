@@ -6,7 +6,7 @@
   "require": {
     "php": ">=7.1",
     "spryker/event-behavior": "^1.1.0",
-    "spryker/kernel": "^3.21.0",
+    "spryker/kernel": "^3.30.0",
     "spryker/log": "^3.0.0",
     "spryker/price-product": "^2.11.0 || ^4.0.0",
     "spryker/price-product-storage-extension": "^1.0.0",

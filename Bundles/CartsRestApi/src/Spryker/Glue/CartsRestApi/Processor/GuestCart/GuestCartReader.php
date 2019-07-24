@@ -7,6 +7,9 @@
 
 namespace Spryker\Glue\CartsRestApi\Processor\GuestCart;
 
+use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Client\CartsRestApi\CartsRestApiClientInterface;
 use Spryker\Glue\CartsRestApi\Processor\Cart\CartReaderInterface;
 use Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\GuestCartRestResponseBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
@@ -25,15 +28,23 @@ class GuestCartReader implements GuestCartReaderInterface
     protected $cartReader;
 
     /**
+     * @var \Spryker\Client\CartsRestApi\CartsRestApiClientInterface
+     */
+    protected $cartsRestApiClient;
+
+    /**
      * @param \Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\GuestCartRestResponseBuilderInterface $guestCartRestResponseBuilder
      * @param \Spryker\Glue\CartsRestApi\Processor\Cart\CartReaderInterface $cartReader
+     * @param \Spryker\Client\CartsRestApi\CartsRestApiClientInterface $cartsRestApiClient
      */
     public function __construct(
         GuestCartRestResponseBuilderInterface $guestCartRestResponseBuilder,
-        CartReaderInterface $cartReader
+        CartReaderInterface $cartReader,
+        CartsRestApiClientInterface $cartsRestApiClient
     ) {
         $this->guestCartRestResponseBuilder = $guestCartRestResponseBuilder;
         $this->cartReader = $cartReader;
+        $this->cartsRestApiClient = $cartsRestApiClient;
     }
 
     /**
@@ -44,7 +55,21 @@ class GuestCartReader implements GuestCartReaderInterface
      */
     public function readByIdentifier(string $uuidCart, RestRequestInterface $restRequest): RestResponseInterface
     {
-        return $this->cartReader->readByIdentifier($uuidCart, $restRequest);
+        $customerReference = $restRequest->getRestUser()->getNaturalIdentifier();
+
+        $quoteTransfer = (new QuoteTransfer())
+            ->setCustomerReference($customerReference)
+            ->setCustomer((new CustomerTransfer())->setCustomerReference($customerReference))
+            ->setUuid($uuidCart);
+
+        $quoteResponseTransfer = $this->cartsRestApiClient->findQuoteByUuid($quoteTransfer);
+
+        if (!$quoteResponseTransfer->getIsSuccessful()) {
+            return $this->guestCartRestResponseBuilder->createFailedErrorResponse($quoteResponseTransfer->getErrors());
+        }
+
+        return $this->guestCartRestResponseBuilder
+            ->createGuestCartRestResponse($quoteResponseTransfer->getQuoteTransfer());
     }
 
     /**
