@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\Kernel\Locator;
 use Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToStorageClientInterface;
 use Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToSynchronizationServiceInterface;
-use Spryker\Client\ProductStorage\Exception\ProductAbstractDataCacheNotFoundException;
+use Spryker\Client\ProductStorage\Exception\NotFoundProductAbstractDataCacheException;
 use Spryker\Client\ProductStorage\Filter\ProductAbstractAttributeMapRestrictionFilterInterface;
 use Spryker\Client\ProductStorage\ProductStorageConfig;
 use Spryker\Shared\Kernel\Store;
@@ -241,14 +241,14 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
      * @param int $idProductAbstract
      * @param string $localeName
      *
-     * @throws \Spryker\Client\ProductStorage\Exception\ProductAbstractDataCacheNotFoundException
+     * @throws \Spryker\Client\ProductStorage\Exception\NotFoundProductAbstractDataCacheException
      *
      * @return array
      */
     protected function getProductAbstractDataCacheByIdProductAbstractAndLocaleName(int $idProductAbstract, string $localeName): array
     {
         if (!$this->hasProductAbstractDataCacheByIdProductAbstractAndLocaleName($idProductAbstract, $localeName)) {
-            throw new ProductAbstractDataCacheNotFoundException();
+            throw new NotFoundProductAbstractDataCacheException();
         }
 
         return static::$productsAbstractDataCache[$idProductAbstract][$localeName];

@@ -9,6 +9,6 @@ namespace Spryker\Client\ProductStorage\Exception;
 
 use Exception;
 
-class ProductAbstractDataCacheNotFoundException extends Exception
+class NotFoundProductAbstractDataCacheException extends Exception
 {
 }
