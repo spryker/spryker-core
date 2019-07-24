@@ -36,7 +36,7 @@
         </index>
 
         <behavior name="uuid">
-            <parameter name="key_columns" value="id_product_configurable_bundle_slot.fk_product_configurable_bundle"/>
+            <parameter name="key_columns" value="id_product_configurable_bundle_slot"/>
         </behavior>
 
         <foreign-key name="spy_product_configurable_bundle_slot-fk_product_conf_bundle" foreignTable="spy_product_configurable_bundle">
