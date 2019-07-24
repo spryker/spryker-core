@@ -1,0 +1,7 @@
+{% for event in events %}
+    <a class="btn btn-primary trigger-order-event"
+       data-id-sales-order="{{ reclamation.order.idSalesOrder }}"
+       data-id-sales-reclamation="{{ reclamation.idSalesReclamation }}"
+       data-event="{{ event }}" href="#">{{ event }}
+    </a>
+{% endfor %}
